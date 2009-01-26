@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 /*ProcessSerialItems.php takes the posted variables and adds to the SerialItems array
  in either the cartclass->LineItems->SerialItems or the POClass->LineItems->SerialItems */
 
@@ -12,25 +12,25 @@ if ( isset($_POST['AddBatches']) && $_POST['AddBatches']!='') {
 		if(strlen($_POST['SerialNo' . $i])>0){
 			if ($ItemMustExist){
 				$ExistingBundleQty = ValidBundleRef($StockID, $LocationOut, $_POST['SerialNo' . $i]);
-				if ($ExistingBundleQty >0 or ($ExistingBundleQty==1 and $IsCrediot=true)){
+				if ($ExistingBundleQty >0 or ($ExistingBundleQty==1 and $IsCredit=true)){
 					$AddThisBundle = true;
 					/*If the user enters a duplicate serial number the later one over-writes
 					the first entered one - no warning given though ? */
 					if ($_POST['Qty' . $i] > $ExistingBundleQty){
 						if ($LineItem->Serialised ==1){
 							echo '<BR>';
-							prnMsg ( $_POST['SerialNo' . $i] . ' ' . 
+							prnMsg ( $_POST['SerialNo' . $i] . ' ' .
 								 _('has already been sold'),'warning' );
 							$AddThisBundle = false;
 						} elseif ($ExistingBundleQty==0) { /* and its a batch */
 							echo '<BR>';
-							prnMsg ( _('There is none of') . ' '. $_POST['SerialNo' . $i] . 
+							prnMsg ( _('There is none of') . ' '. $_POST['SerialNo' . $i] .
 								' '. _('remaining').'.', 'warn');
 							$AddThisBundle = false;
 						} else {
 							echo '<BR>';
-						 	prnMsg (  _('There is only'). ' ' . $ExistingBundleQty . 
-									' '._('of') . ' ' . $_POST['SerialNo' . $i] . ' '. _('remaining') . '. ' . 
+						 	prnMsg (  _('There is only'). ' ' . $ExistingBundleQty .
+									' '._('of') . ' ' . $_POST['SerialNo' . $i] . ' '. _('remaining') . '. ' .
 									_('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll'),
 									'warn');
 							$_POST['Qty' . $i] = $ExistingBundleQty;
@@ -53,7 +53,7 @@ if ( isset($_POST['AddBatches']) && $_POST['AddBatches']!='') {
 				$SerialError = false;
 				$NewQty = ($InOutModifier>0?1:-1) * $_POST['Qty' . $i];
 				$NewSerialNo = $_POST['SerialNo' . $i];
-				
+
 				if ($LineItem->Serialised){
 					$ExistingQty = ValidBundleRef($StockID, $LocationOut, $NewSerialNo);
 					if ($NewQty == 1 && $ExistingQty != 0){
@@ -79,15 +79,15 @@ if ( isset($_POST['AddBatches']) && $_POST['AddBatches']!='') {
 		} else {
 			list($SerialNo, $Qty) = explode ('/|/', $_POST['Bundles'][$i]);
             if ($Qty != 0) {
-			
-				$LineItem->SerialItems[$SerialNo] = 
+
+				$LineItem->SerialItems[$SerialNo] =
 					new SerialItem ($SerialNo,  $Qty*($InOutModifier>0?1:-1) );
 			}
 		}
 	}
 
 } /*end if the user hit the enter button on Keyed Entry */
- 
+
  /********************************************
    Add a Sequence of Items and save entries
  ********************************************/
@@ -98,13 +98,13 @@ if ( isset($_POST['AddSequence']) && $_POST['AddSequence']!='') {
 	if ($BeginNo > $EndNo){
 		prnMsg( _('To Add Items Sequentially, the Begin Number must be less than the End Number'), 'error');
 	} else {
-		$sql = "SELECT serialno FROM stockserialitems 
-			WHERE serialno BETWEEN '". $BeginNo . "' AND '". $EndNo . "' 
+		$sql = "SELECT serialno FROM stockserialitems
+			WHERE serialno BETWEEN '". $BeginNo . "' AND '". $EndNo . "'
 			AND stockid = '". $StockID."' AND loccode='". $LocationOut . "'";
 		$Qty = ($InOutModifier>0?1:0);
 		if ($LineItem->Serialised == 1){
 			$sql .= " AND quantity = ".$Qty;
-		} 
+		}
 		$SeqItems = DB_query($sql,$db);
 
 		while ($myrow=db_fetch_array($SeqItems)) {
@@ -122,7 +122,7 @@ $valid = true;
 if ($_POST['EntryType']=='FILE' && isset($_POST['ValidateFile'])){
 
 	$filename = $_SESSION['CurImportFile']['tmp_name'];
-	
+
 	$handle = fopen($filename, 'r');
 	$TotalLines=0;
 	$LineItem->SerialItemsValid=false;
@@ -174,8 +174,8 @@ if ($_POST['EntryType']=='FILE' && isset($_POST['ValidateFile'])){
 									echo '<BR>' . _('There is none of'). ' <a href="/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> '. _('remaining') .'.';
 									$AddThisBundle = false;
 							} else {
-									echo '<BR>'. _('There is only') . ' ' . $ExistingBundleQty . ' '. _('of') . ' ' . 
-												'<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> ' . _('remaining') . '. '. 
+									echo '<BR>'. _('There is only') . ' ' . $ExistingBundleQty . ' '. _('of') . ' ' .
+												'<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> ' . _('remaining') . '. '.
 												_('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll');
 									$NewQty = $ExistingBundleQty;
 									$AddThisBundle = true;
@@ -219,10 +219,10 @@ if ($_POST['EntryType']=='FILE' && isset($_POST['ValidateFile'])){
 	//we've saved the info we need from the file, so get rid of it
 }
 /********************************************
-  Revalidate Array of Items 
+  Revalidate Array of Items
      The point of this is to allow "copying" an array of items from 1 object to another, checking them, and insuring that nothing else
 	 is added. So, after the validation, we will exit and NOT allow more items to be added.
-				
+
 ********************************************/
 if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
 	$invalid_imports = 0;
@@ -271,8 +271,8 @@ if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
 									echo '<BR>' . _('There is none of'). ' <a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> '. _('remaining') .'.';
 									$AddThisBundle = false;
 							} else {
-									echo '<BR>'. _('There is only') . ' ' . $ExistingBundleQty . ' '. _('of') . ' ' . 
-												'<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> ' . _('remaining') . '. '. 
+									echo '<BR>'. _('There is only') . ' ' . $ExistingBundleQty . ' '. _('of') . ' ' .
+												'<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> ' . _('remaining') . '. '.
 												_('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll');
 									$NewQty = $ExistingBundleQty;
 									$AddThisBundle = true;
@@ -317,7 +317,7 @@ if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
 	}
 	include('includes/footer.inc');
 	exit;
-	
+
 }//ReValidate
 
 /********************************************
