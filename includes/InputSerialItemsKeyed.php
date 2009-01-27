@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -75,7 +75,7 @@ echo '<TABLE>';
 echo $tableheader;
 
 
-echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?=' . $SID . '" METHOD="POST">
+echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?=' . $SID . '" name="Ga6uF5Wa" METHOD="POST">
       <input type=hidden name=LineNo value="' . $LineNo . '">
       <input type=hidden name=StockID value="' . $StockID . '">
       <input type=hidden name=EntryType value="KEYED">';
@@ -125,5 +125,9 @@ echo '</FORM></TD><TD valign=top>';
 if ($ShowExisting){
 	include('includes/InputSerialItemsExisting.php');
 }
-echo '</TD></TR></TABLE>'; /*end of nested table */
+echo '</TD></TR></TABLE><script type="text/javascript">
+//<![CDATA[
+document.Ga6uF5Wa.SerialNo0.focus();
+//]]>
+</script>'; /*end of nested table */
 ?>
