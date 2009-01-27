@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.42 $ */
+/* $Revision: 1.43 $ */
 
 $PageSecurity = 2;
 
@@ -9,6 +9,9 @@ include('includes/header.inc');
 include('includes/Wiki.php');
 include('includes/SQL_CommonFunctions.inc');
 
+if (!isset($_SESSION['CustomerID'])){
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Search for Customers') . '';
+}
 
 if (!isset($_SESSION['CustomerID'])){ //initialise if not already done
 	$_SESSION['CustomerID']="";

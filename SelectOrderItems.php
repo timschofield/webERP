@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.78 $ */
+/* $Revision: 1.79 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -547,11 +547,12 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 if ($_SESSION['RequireCustomerSelection'] ==1
 	OR !isset($_SESSION['Items']->DebtorNo)
 	OR $_SESSION['Items']->DebtorNo=='') {
+	
+
+	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . 
+	' ' . _('Enter an Order or Quotation') . ' : ' . _('Search for the Customer Branch.') . '</P>';
+	echo '<DIV CLASS="page_help_text">' . _('Orders/Quotations are placed against the Customer Branch.  A Customer may have several Branches.') . '</DIV>';
 	?>
-
-	<BR><BR><FONT SIZE=3><B><?php echo _('Customer Branch selection') . "</b>" . _(' Search for the Customer Branch.') ; ?></B></FONT>
-	<BR><BR><FONT SIZE=1><?php echo _('Orders/Quotations are placed against the Customer Branch.  A Customer may have several Branches.') ; ?></FONT>
-
 	<FORM ACTION="<?php echo $_SERVER['PHP_SELF'] . '?' .SID; ?>" METHOD=POST>
 	<B><?php echo '<BR>' . $msg; ?></B>
 	<TABLE CELLPADDING=3 COLSPAN=4>

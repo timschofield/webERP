@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -643,8 +643,9 @@ $ErrMsg = _('The bank accounts could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve the bank acconts was');
 $AccountsResults = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
-echo '<p><b>' . _('Enter customer receipts:') . '</b>' . _('To enter a payment TO a customer (ie. to pay out a credit note), enter a negative payment amount.') . '</p>';
-echo '<table><tr><td>' . _('Bank Account') . ':</td>
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Enter Receipt') . '" ALT="">' . ' ' . _('Enter Customer Receipt') . '</P>';
+echo '<DIV CLASS="page_help_text">' . _('To enter a payment TO a customer (ie. to pay out a credit note), enter a negative payment amount.') . '</DIV>';
+echo '<CENTER><BR><table><tr><td>' . _('Bank Account') . ':</td>
 				 <td><select tabindex=1 name="BankAccount">';
 
 if (DB_num_rows($AccountsResults)==0){
@@ -935,10 +936,10 @@ if (((isset($_SESSION['CustomerRecord'])
 	echo $msg;
 	echo '<br/><u>' . _('Select A Customer') . '</u></b>';
 	echo '<table cellpadding=3 colspan=4>';
-	echo '<tr><td>' . _('Text in the') . ' ' . '<b>' . _('name') . '</b>:</td>';
+	echo '<tr><td>' . _('Text in the Customer') . ' ' . '<b>' . _('name') . '</b>:</td>';
 	echo '<td><input tabindex=9 type="text" name="Keywords" size=20 maxlength=25></td>';
 	echo '<td><font size=3><b>' . _('OR') . '</b></font></td>';
-	echo '<td>' . _('Text extract in the customer') . ' ' . '<b>' . _('code') . '</b>:</td>';
+	echo '<td>' . _('Text extract in the Customer') . ' ' . '<b>' . _('code') . '</b>:</td>';
 	echo '<td><input tabindex=10 type="text" name="CustCode" size=15 maxlength=18></td>';
 	echo '</tr></table>';
 	echo '<center>';

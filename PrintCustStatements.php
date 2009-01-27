@@ -1,14 +1,32 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 2;
 
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']!=''){
+if (isset($_GET['PrintPDF'])) {
+$printPDF = $_GET['PrintPDF']; 
+$_POST['PrintPDF'] = $PrintPDF;
+}  
 
+if (!isset($_GET['PrintPDF'])) {
+}
+
+
+if (isset($_GET['FromCust'])) {
+$getFrom = $_GET['FromCust'];
+$_POST['FromCust'] = $getFrom;
+}
+if (isset($_GET['ToCust'])) {
+$getTo = $_GET['ToCust'];
+$_POST['ToCust'] = $getTo;
+}
+
+
+If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']!=''){
 	$_POST['FromCust'] = strtoupper($_POST['FromCust']);
 
 	If (!isset($_POST['ToCust'])){
@@ -16,7 +34,6 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 	} else {
 		$_POST['ToCust'] = strtoupper($_POST['ToCust']);
 	}
-
 	include('includes/PDFStarter.php');
 
 	$pdf->addinfo('Title', _('Customer Statements') );
@@ -61,7 +78,7 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 	if (DB_Num_Rows($StatementResults) == 0){
 		$title = _('Print Statments') . ' - ' . _('No Customers Found');
 	        require('includes/header.inc');
-		echo '<div align=center><br><br><br>';
+		echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . _('Print Customer Account Statements') . '';
 		prnMsg( _('There were no Customers matching your selection of '). $_POST['FromCust']. ' - '.
 			$_POST['ToCust'].'.' , 'error');
 		echo '</div>';
@@ -397,7 +414,7 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 
 	$title = _('Select Statements to Print');
 	include('includes/header.inc');
-        echo '<BR><BR><BR>';
+	echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . _('Print Customer Account Statements') . '';
 	if (!isset($_POST['FromCust']) || $_POST['FromCust']=='') {
 
 	/*if FromTransNo is not set then show a form to allow input of either a single statement number or a range of statements to be printed. Also get the last statement number created to show the user where the current range is up to */
