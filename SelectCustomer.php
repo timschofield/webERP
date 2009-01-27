@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.43 $ */
+/* $Revision: 1.44 $ */
 
 $PageSecurity = 2;
 
@@ -452,9 +452,11 @@ if (isset($result)) {
 	if (DB_num_rows($result)<>0){
 
 		if (isset($_POST['CSV'])) {
-			printf("Code, Customer Name, Address1, Address2, Address3, Address4, Contact, Type, Phone, Fax");
+			echo '<BR><DIV class="page_title_text">' . _('Comma Seperated Values (CSV) Search Result') . '</DIV>';
+			echo '<DIV class="page_help_text">' . _('CSV data can be copied and used to import data into software such as a spreadsheet.') . '</DIV><BR>';
+			printf("<DIV class=csv>Code, Customer Name, Address1, Address2, Address3, Address4, Contact, Type, Phone, Fax");
 			while ($myrow2=DB_fetch_array($result)) {
-				printf("<br><FONT SIZE=1>%s,
+				printf("<br>%s,
                         %s,
                         %s,
                         %s,
@@ -463,7 +465,7 @@ if (isset($result)) {
                         %s,
                         %s,
                         %s,
-                        %s</FONT>",
+                        %s",
                         $myrow2['debtorno'],
                         str_replace(',', '',$myrow2['name']),
                         str_replace(',', '',$myrow2['address1']),
@@ -476,6 +478,7 @@ if (isset($result)) {
                         $myrow2['faxno']);
 
 			}
+		echo '</DIV>';
 		}
 		if (!isset($_POST['CSV'])) {
   			DB_data_seek($result, ($_POST['PageOffset']-1)*$_SESSION['DisplayRecordsMax']);

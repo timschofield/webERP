@@ -104,6 +104,19 @@ div.warn {
 	background-color:#fa0;
 	color: black;
 	border: 1px solid black;
+	PADDING-LEFT: 3px;
+        Z-INDEX: 1;
+        width: 50%;
+        FLOAT: none;
+        VISIBILITY: visible;
+        MARGIN: 0 auto;
+        POSITION: static;
+        font-family: Verdana, Arial, Helvetica;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-weight: normal;
+        font-size: 10px;
+        TEXT-ALIGN:center;
 }
 
 div.success {
@@ -128,7 +141,39 @@ div.success {
 div.info {
 	background-color:#5d70f8;
 	color: white;
-	border: 1px solid white;
+	border: 1px solid black;
+	PADDING-LEFT: 3px;
+        Z-INDEX: 1;
+        width: 50%;
+        FLOAT: none;
+        VISIBILITY: visible;
+        MARGIN: 0 auto;
+        POSITION: static;
+        font-family: Verdana, Arial, Helvetica;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-weight: normal;
+        font-size: 10px;
+        TEXT-ALIGN:center;
+}
+
+div.csv {
+        background-color:lightgray;
+        color: black;
+        border: 1px solid black;
+        PADDING-LEFT: 3px;
+        Z-INDEX: 1;
+        width: 50%;
+        FLOAT: none;
+        VISIBILITY: visible;
+        MARGIN: 0 auto;
+        POSITION: static;
+        font-family: Verdana, Arial, Helvetica;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-weight: normal;
+        font-size: 10px;
+        TEXT-ALIGN:center;
 }
 
 .EvenTableRows {
