@@ -83,8 +83,21 @@ td {
 div.error {
 	background-color:red;
 	color: white;
-	font-style: italic; font-weight:bold;
+	font-style: italic; 
+	font-weight:bold;
 	border: 3px solid red;
+	PADDING-LEFT: 3px;
+        Z-INDEX: 1;
+        width: 50%;
+        FLOAT: none;
+        VISIBILITY: visible;
+        MARGIN: 0 auto;
+        POSITION: static;
+        font-family: Verdana, Arial, Helvetica;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-size: 12px;
+        TEXT-ALIGN:center;
 }
 
 div.warn {
@@ -97,6 +110,19 @@ div.success {
 	background-color:#b9ecb4;
 	color: #008000;
 	border: 1px solid #008000;
+        PADDING-LEFT: 3px;
+        Z-INDEX: 1;
+        width: 50%;
+        FLOAT: none;
+        VISIBILITY: visible;
+        MARGIN: 0 auto;
+        POSITION: static;
+        font-family: Verdana, Arial, Helvetica;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-weight: normal;
+        font-size: 10px;
+        TEXT-ALIGN:center;
 }
 
 div.info {
@@ -413,6 +439,54 @@ span.main_menu_nolink {
 	
 	padding-top: 2px;
 	padding-bottom: 2px;
+}
+
+.page_title_text {
+	font-family: Verdana, Arial, Helvetica;
+        padding-top: 2px;
+        padding-bottom: 2px;
+	font-weight: bold;
+	font-size: 12px;
+	color: black;
+	TEXT-ALIGN:center;
+}
+
+DIV.page_help_text {
+	BORDER: #a52a2a 1px solid;
+	PADDING-LEFT: 3px;
+	Z-INDEX: 1;
+	width: 50%;
+	FLOAT: none;
+	VISIBILITY: visible;
+	MARGIN: 0 auto;
+	POSITION: static;
+	background-color: lightgray;
+	font-family: Verdana, Arial, Helvetica;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-weight: normal;
+        font-size: 10px;
+        color: black;
+	TEXT-ALIGN:center;
+}
+
+DIV.system_check {
+        BORDER: #a52a2a 1px solid;
+        PADDING-LEFT: 3px;
+        Z-INDEX: 1;
+        width: 40%;
+        FLOAT: none;
+        VISIBILITY: visible;
+        MARGIN: 0 auto;
+        POSITION: static;
+        background-color: lightgray;
+        font-family: Verdana, Arial, Helvetica;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-weight: normal;
+        font-size: 10px;
+        color: black;
+        TEXT-ALIGN:left;
 }
 
 span.menu_group_nolink {
