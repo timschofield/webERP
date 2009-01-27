@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity = 15;
 
@@ -62,10 +62,9 @@ if (isset($_POST['submit'])) {
 			// Add new record on submit
 
 			$sql = "INSERT INTO debtortype
-						(typeid,
-			 			 typename)
-				VALUES ('',
-					'" . $_POST['typename'] . "')";
+						(typename)
+					VALUES ('" . $_POST['typename'] . "')";
+
 
 			$msg = _('Customer type') . ' ' . $_POST["typename"] .  ' ' . _('has been created');
 			$checkSql = "SELECT count(typeid)
