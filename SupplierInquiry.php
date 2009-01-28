@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -10,7 +10,8 @@ include('includes/session.inc');
 $title = _('Supplier Inquiry');
 include('includes/header.inc');
 
-echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
+// This is already linked from the menu
+//echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
 
 // always figure out the SQL required from the inputs available
 
@@ -112,8 +113,9 @@ if ($NIL_BALANCE == True){
 	$SupplierRecord['overdue2'] = 0;
 }
 
-echo '<CENTER><FONT SIZE=3>' . _('Supplier') . ' :<B> ' . $SupplierRecord['suppname'] . ' </FONT></B> - (' . _('All amounts stated in') . 
-	  ' ' . $SupplierRecord['currency'] . ')<BR><BR>' . _('Terms') . ':<B> ' . $SupplierRecord['terms'] . '</B>';
+echo '<P class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" TITLE="' . 
+	_('Supplier') . '" ALT="">' . ' ' . _('Supplier') . ' : ' . $SupplierRecord['suppname'] . ' - (' . _('All amounts stated in') . 
+	  ' ' . $SupplierRecord['currency'] . ')<BR><BR>' . _('Terms') . ': ' . $SupplierRecord['terms'] . '</P>';
 
 if (isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])){
 

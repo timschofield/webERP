@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.42 $ */
+/* $Revision: 1.43 $ */
 
 $PageSecurity = 3;
 
@@ -27,7 +27,8 @@ if (isset($_GET['SelectedBranch'])){
 	$SelectedBranch = strtoupper($_POST['SelectedBranch']);
 }
 
-echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</A><BR>';
+// This link is already available on the menu on this page
+//echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</A><BR>';
 
 if (isset($Errors)) {
 	unset($Errors);
@@ -358,8 +359,8 @@ if (!isset($SelectedBranch)){
 	$TotalEnable = 0;
 	$TotalDisable = 0;
 	if ($myrow) {
-		echo '<BR><CENTER><B>'._('Branches defined for'). ' '. $DebtorNo . ' - ' . $myrow[0] . '</B>';
-		echo '<table border=1>';
+		echo '<P Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" TITLE="' . _('Customer') . '" ALT="">' . ' ' . _('Branches defined for'). ' '. $DebtorNo . ' - ' . $myrow[0] . '</P>';
+		echo '<CENTER><table border=1>';
 		echo "<tr><th>"._('Code')."</th>
 			<th>"._('Name')."</th>
 			<th>"._('Branch Contact')."</th>

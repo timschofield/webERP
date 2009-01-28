@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -115,7 +115,10 @@ if ($NIL_BALANCE==True){
 	$CustomerRecord['overdue2']=0;
 }
 
-echo '<CENTER><BR><FONT SIZE=3></B>' . _('Customer') . ' :<B> ' . $CustomerRecord['name'] . ' </FONT></B> - (' . _('All amounts stated in') . ' ' . $CustomerRecord['currency'] . ')<BR><BR>' . _('Terms') . ':<B> ' . $CustomerRecord['terms'] . '</B><BR>' . _('Credit Limit') . ': <B></FONT> ' . number_format($CustomerRecord['creditlimit'],0) . '  </B>' . _('Credit Status') . ':<B></FONT> ' . $CustomerRecord['reasondescription'] . '</B>';
+	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" TITLE="' . 
+	_('Customer') . '" ALT="">' . ' ' . _('Customer') . ' : ' . $CustomerRecord['name'] . ' - (' . _('All amounts stated in') . 
+	' ' . $CustomerRecord['currency'] . ')<BR><BR>' . _('Terms') . ' : ' . $CustomerRecord['terms'] . '<BR>' . _('Credit Limit') . 
+	': ' . number_format($CustomerRecord['creditlimit'],0) . ' ' . _('Credit Status') . ': ' . $CustomerRecord['reasondescription'] . '';
 
 if ($CustomerRecord['dissallowinvoices']!=0){
 	echo '<BR><FONT COLOR=RED SIZE=4><B>' . _('ACCOUNT ON HOLD') . '</FONT></B><BR>';

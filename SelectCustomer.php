@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.45 $ */
+/* $Revision: 1.46 $ */
 
 $PageSecurity = 2;
 
@@ -413,7 +413,7 @@ if (isset($result)) {
 		}
 
 		if ($ListPageMax >1) {
-			echo "<P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+			echo "<CENTER><P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 
 			echo '<SELECT NAME="PageOffset">';
 
@@ -704,7 +704,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!=0) {
        	$sql = 'SELECT * FROM debtortypenotes where typeid="' . $CustomerType . '" ORDER BY date DESC';
        	$result = DB_query($sql,$db);
 		if (DB_num_rows($result)<>0){
-			echo '<br><center><img src="'.$rootpath.'/css/'.$theme.'/images/folder_add.png" TITLE="' . _('Customer Type (Group) Notes') . '" ALT="">' . ' ' . _('Customer Type (Group) Notes for:)' . '<b> ' . $CustomerTypeName . '</b>') . '</center><br>';
+			echo '<br><center><img src="'.$rootpath.'/css/'.$theme.'/images/folder_add.png" TITLE="' . _('Customer Type (Group) Notes') . '" ALT="">' . ' ' . _('Customer Type (Group) Notes for:' . '<b> ' . $CustomerTypeName . '</b>') . '</center><br>';
        		echo '<CENTER><table border=1 width=45%>';
        		echo '<tr>
                      	<th>' . _('date') . '</th>
