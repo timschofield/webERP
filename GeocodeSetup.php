@@ -75,13 +75,14 @@ if (isset($_POST['submit'])) {
 					map_height,
 					map_width,
 					map_host)
-					VALUES (' .
-					$_POST['geocode_key'] . ", '" .
+					VALUES (' . "'" .
+					$_POST['geocodeid'] . "', '" .
+					$_POST['geocode_key'] . "', '" .
 					$_POST['center_long'] . "', '" .
 					$_POST['center_lat'] . "', '" .
 					$_POST['map_height'] . "', '" .
-					$_POST['map_width'] . "', 1)" .
-					$_POST['map_host'] . "', 1)";
+					$_POST['map_width'] . "', '" .
+					$_POST['map_host'] . "')";
 		} else {
 			$sql = 'INSERT INTO geocode_param (
 					geocodeid,
@@ -91,13 +92,13 @@ if (isset($_POST['submit'])) {
 					map_height,
 					map_width,
 					map_host)
-					VALUES (' .
-					$_POST['geocodeid'] . ", '" .
+					VALUES (' . "'" .
+					$_POST['geocodeid'] . "', '" .
 					$_POST['geocode_key'] . "', '" .
 					$_POST['center_long'] . "', '" .
 					$_POST['center_lat'] . "', '" .
 					$_POST['map_height'] . "', '" .
-					$_POST['map_width'] . "')" .
+					$_POST['map_width'] . "', '" .
 					$_POST['map_host'] . "')";
 		}
 
