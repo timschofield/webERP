@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.44 $ */
+/* $Revision: 1.45 $ */
 
 $PageSecurity = 2;
 
@@ -9,13 +9,14 @@ include('includes/header.inc');
 include('includes/Wiki.php');
 include('includes/SQL_CommonFunctions.inc');
 
-if (!isset($_SESSION['CustomerID'])){
-echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Search for Customers') . '';
-}
-
 if (!isset($_SESSION['CustomerID'])){ //initialise if not already done
 	$_SESSION['CustomerID']="";
 }
+
+if ($_SESSION['CustomerID'] ==0){
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Search for Customers') . '';
+}
+
 if (!isset($_SESSION['CustomerType'])){ //initialise if not already done
 	$_SESSION['CustomerType']="";
 }
@@ -219,8 +220,6 @@ if (!isset($_POST['Select'])){
 	$_POST['Select']="";
 }
 
-echo '<BR>';
-
 if ($_POST['Select']!="" or
 	($_SESSION['CustomerID']!=""
 	and !isset($_POST['Keywords'])
@@ -246,11 +245,12 @@ if ($_POST['Select']!="" or
 		$phone = $myrow[1];
 	}
 	unset($result);
-	echo '<CENTER><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" TITLE="' . _('Customer') . '" ALT=""><FONT SIZE=3>' . ' ' . _('Customer') . ' :<B> ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' ' . $phone . _('</b> has been selected') . '.<BR>' . _('Select a menu option to operate using this customer') . '.</FONT><BR><br>';
+	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" TITLE="' . _('Customer') . '" ALT="">' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' ' . $phone . _(' has been selected') . '</P>';
+	echo '<DIV CLASS="page_help_text">' . _('Select a menu option to operate using this customer') . '.</DIV><br>';
 
 	$_POST['Select'] = NULL;
 
-	echo '<TABLE BORDER=2 CELLPADDING=4><TR><TH>' . _('Customer Inquiries') . '</TH>
+	echo '<CENTER><TABLE BORDER=2 CELLPADDING=4><TR><TH>' . _('Customer Inquiries') . '</TH>
 			<TH>' . _('Customer Maintenance') . '</TH></TR>';
 
 	echo '<TR><TD WIDTH=50% class="menu_group_items">';
@@ -452,7 +452,7 @@ if (isset($result)) {
 	if (DB_num_rows($result)<>0){
 
 		if (isset($_POST['CSV'])) {
-			echo '<BR><DIV class="page_title_text">' . _('Comma Seperated Values (CSV) Search Result') . '</DIV>';
+			echo '<BR><P class="page_title_text">' . _('Comma Seperated Values (CSV) Search Result') . '</P>';
 			echo '<DIV class="page_help_text">' . _('CSV data can be copied and used to import data into software such as a spreadsheet.') . '</DIV><BR>';
 			printf("<DIV class=csv>Code, Customer Name, Address1, Address2, Address3, Address4, Contact, Type, Phone, Fax");
 			while ($myrow2=DB_fetch_array($result)) {

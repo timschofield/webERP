@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.38 $ */
+/* $Revision: 1.39 $ */
 
 $PageSecurity = 2;
 
@@ -8,6 +8,11 @@ $title = _('Search Suppliers');
 include('includes/header.inc');
 include('includes/Wiki.php');
 include('includes/SQL_CommonFunctions.inc');
+
+if (!isset($_SESSION['SupplierID'])){
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Search for Suppliers') . '';
+}
+
 
 // only get geocode information if integration is on, and supplier has been selected
 if ($_SESSION['geocode_integration']==1 AND isset($_SESSION['SupplierID'])){
@@ -172,8 +177,9 @@ if (isset($_SESSION['SupplierID'])){
 	   $myrow = DB_fetch_row($SupplierNameResult);
 	   $SupplierName = $myrow[0];
 	}
-	echo '<FONT SIZE=3><P><CENTER><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" TITLE="' . _('Supplier') . '" ALT="">' . ' ' . _('Supplier') . ' : <B>' . $_SESSION['SupplierID']  . " - $SupplierName</B> " . _('has been selected') . '.<BR>' . _('Select a menu option to operate using this supplier.') . '<P></FONT>';
-	echo '<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
+	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" TITLE="' . _('Supplier') . '" ALT="">' . ' ' . _('Supplier') . ' : <B>' . $_SESSION['SupplierID']  . " - $SupplierName</B> " . _('has been selected') . '.</P>';
+	echo '<DIV CLASS="page_help_text">' . _('Select a menu option to operate using this supplier.') . '</DIV>';
+	echo '<BR><CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
 	echo "<TR>
 		<TH WIDTH=33%>" . _('Supplier Inquiries') . "</TH>
 		<TH WIDTH=33%>". _('Supplier Transactions') . "</TH>

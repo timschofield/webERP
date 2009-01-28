@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 15;
 
@@ -18,6 +18,9 @@ if (isset($Errors)) {
 }
 
 $Errors = array();
+
+echo '<P class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" TITLE="' . _('Customer Types') . '" ALT="">' . _('Customer Type Setup') . '</P>';
+echo '<DIV class="page_help_text">' . _('Add/edit/delete Customer Types') . '</DIV><BR>';
 
 if (isset($_POST['submit'])) {
 
@@ -197,8 +200,7 @@ if (isset($SelectedType)) {
 if (! isset($_GET['delete'])) {
 
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	echo '<CENTER><FONT SIZE=4 COLOR=blue><B><U>' . _('Customer Type Setup') . '</B></U></FONT>';
-	echo '<P><TABLE BORDER=1>'; //Main table
+	echo '<P><CENTER><TABLE BORDER=1>'; //Main table
 	echo '<TD><TABLE>'; // First column
 
 

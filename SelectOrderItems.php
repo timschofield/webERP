@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.79 $ */
+/* $Revision: 1.80 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -555,7 +555,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	?>
 	<FORM ACTION="<?php echo $_SERVER['PHP_SELF'] . '?' .SID; ?>" METHOD=POST>
 	<B><?php echo '<BR>' . $msg; ?></B>
-	<TABLE CELLPADDING=3 COLSPAN=4>
+	<CENTER><TABLE CELLPADDING=3 COLSPAN=4>
 	<TR>
 	<TD><FONT SIZE=1><?php echo _('Part of the Customer Branch Name'); ?>:</FONT></TD>
 	<TD><INPUT TABINDEX=1 TYPE="Text" NAME="CustKeywords" SIZE=20	MAXLENGTH=25></TD>
@@ -674,7 +674,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 	} else { /*Not cancelling the order */
 
-		echo '<BR><BR><CENTER><FONT SIZE=4><B>';
+		echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" TITLE="' . _('Order') . '" ALT="">' . ' ';
 
 		if ($_SESSION['Items']->Quotation==1){
 			echo _('Quotation for') . ' ';
@@ -688,7 +688,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '</B>&nbsp;' . _('From Location') . ':<B> ' . $_SESSION['Items']->LocationName;
 		echo '</B><BR>' . _('Sales Type') . '/' . _('Price List') . ':<B> ' . $_SESSION['Items']->SalesTypeName;
 		echo '</B><BR>' . _('Terms') . ':<B> ' . $_SESSION['Items']->PaymentTerms;
-		echo '</B><BR><BR></FONT></CENTER>';
+		echo '</P>';
 	}
 
 	If (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
@@ -1108,7 +1108,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
-		echo '<CENTER>
+		echo '<BR><CENTER>
 			<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>
 			<TR BGCOLOR=#800000>';
 		if($_SESSION['Items']->DefaultPOLine == 1){
