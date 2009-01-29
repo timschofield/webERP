@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 $PageSecurity = 5;
 
@@ -29,7 +29,11 @@ if (!isset($_SESSION['PaymentDetail'])){
 	$_SESSION['PaymentDetail']->GLItemCounter = 1;
 }
 
-echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><BR>';
+//note this is already linked from this page
+//echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><BR>';
+
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Payment Entry') . '" ALT="">' . ' ' . _('Payment Entry') . '</P>';
+echo '<DIV CLASS="page_help_text">' . _('Use this screen to enter payments FROM your bank account.  Note: To enter a payment FROM a supplier, first select the Supplier, click Enter a Payment to, or Receipt from the Supplier, and use a negative Payment amount on this form.') . '</DIV><BR><CENTER>';
 
 if (isset($_GET['SupplierID'])){
 	/*The page was called with a supplierID check it is valid and default the inputs for Supplier Name and currency of payment */

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 7;
 
@@ -60,13 +60,15 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
  	$_POST["ShowTransactions"] = True;
 }
 
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Bank Matching') . '" ALT="">' . ' ' . _('Bank Account Matching') . '</P>';
+echo '<DIV CLASS="page_help_text">' . _('Use this screen to match webERP deposits and receipts to your Bank Statement.') . '</DIV><BR><CENTER>';
 
 echo "<FORM ACTION='". $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 
 echo "<INPUT TYPE=HIDDEN Name=Type Value=$Type>";
 
-echo '<TABLE><TR>';
-echo '<TD ALIGN=RIGHT>' . _('Bank Account') . ':</TD><TD COLSPAN=3><SELECT tabindex="1" name="BankAccount">';
+echo '<CENTER><TABLE><TR>';
+echo '<TD ALIGN=LEFT>' . _('Bank Account') . ':</TD><TD COLSPAN=3><SELECT tabindex="1" name="BankAccount">';
 
 $sql = "SELECT accountcode, bankaccountname FROM bankaccounts";
 $resultBankActs = DB_query($sql,$db);
