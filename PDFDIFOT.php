@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity = 3;
 include ('includes/session.inc');
@@ -30,8 +30,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
         $_POST['DaysAcceptable'] = 1;
      }
 
-     echo '<TR><TD>' . _('Enter the number of days considered acceptable between delivery requested date and invoice
-     date(ie the date dispatched)') . ":</TD><TD><INPUT TYPE=text NAME='DaysAcceptable' MAXLENGTH=2 SIZE=2 VALUE=" . $_POST['DaysAcceptable'] . "></TD></TR>";
+     echo '<TR><TD>' . _('Enter the number of days considered acceptable between delivery requested date and invoice date(ie the date dispatched)') . ":</TD><TD><INPUT TYPE=text NAME='DaysAcceptable' MAXLENGTH=2 SIZE=2 VALUE=" . $_POST['DaysAcceptable'] . "></TD></TR>";
      echo '<TR><TD>' . _('Inventory Category') . '</TD><TD>';
 
      $sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
