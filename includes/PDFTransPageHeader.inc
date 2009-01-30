@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 /* R&OS PHP-pdf class code to head up a new page */
 
 if (!$FirstPage){ /* only initiate a new page if its not the first */
@@ -111,6 +111,21 @@ if ($InvOrCredit=='Invoice') {
 
 	$pdf->addText($XPos, $YPos, $FontSize, _('Delivered To') . ':');
 	$XPos +=80;
+// Before trying to call htmlspecialchars_decode, check that its supported, if not substitute a compatible version
+if (!function_exists('htmlspecialchars_decode')) {
+        function htmlspecialchars_decode($str, $options="") {
+                $trans = get_html_translation_table(HTML_SPECIALCHARS, $options);
+
+                $decode = ARRAY();
+                foreach ($trans AS $char=>$entity) {
+                        $decode[$entity] = $char;
+                }
+
+                $str = strtr($str, $decode);
+
+                return $str;
+        }
+}
 	$pdf->addText($XPos, $YPos, $FontSize, htmlspecialchars_decode($myrow['deliverto']));
 	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['deladd1']);
 	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['deladd2']);
@@ -171,7 +186,7 @@ $pdf->addText($Left_Margin+90, $YPos, $FontSize, $myrow['taxref']);
 /*Print a vertical line */
 $pdf->line($Left_Margin+248, $YPos+$line_height+3,$Left_Margin+248, $YPos - 8);
 
-$pdf->addText($Left_Margin + 252, $YPos, $FontSize, _('Your Order No') . ':');
+$pdf->addText($Left_Margin + 252, $YPos, $FontSize, _('Customer Order Ref.') . ':');
 $pdf->addText($Left_Margin+330, $YPos, $FontSize, $myrow['customerref']);
 
 /*Print a vertical line */

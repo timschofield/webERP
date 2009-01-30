@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.89 $ */
+/* $Revision: 1.1 $ */
 // User configurable variables
 //---------------------------------------------------
 

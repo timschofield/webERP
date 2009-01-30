@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 1;
 
@@ -450,7 +450,7 @@ If (isset($PrintPDF)
 			if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg')) {
             	$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -60,$YPos-15,0,20);
 			}
-            $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:****** Bank Account:*******'));
+            $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:**** Bank Account:*****'));
 			$FontSize=10;
 		} else {
 			$pdf->addText($Page_Width-$Right_Margin-220, $YPos-($line_height*3)-6,$FontSize, _('TOTAL CREDIT'));
@@ -584,7 +584,7 @@ exit;
 	/*if FromTransNo is not set then show a form to allow input of either a single invoice number or a range of invoices to be printed. Also get the last invoice number created to show the user where the current range is up to */
 
 		echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD='POST'><CENTER><TABLE>";
-		echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . _('Print Invoices or Credit Notes') . '';
+		echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . _('Print Invoices or Credit Notes (Portrait Mode)') . '';
 		echo '<TR><TD>' . _('Print Invoices or Credit Notes') . '</TD><TD><SELECT name=InvOrCredit>';
 		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)){
 

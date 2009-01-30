@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.37 $ */
+/* $Revision: 1.38 $ */
 
 $PageSecurity = 1;
 
@@ -392,6 +392,8 @@ If (isset($PrintPDF)
 	/* Print out the payment terms */
 
   		$pdf->addTextWrap($Left_Margin+5,$YPos+3,280,$FontSize,_('Payment Terms') . ': ' . $myrow['terms']);
+            $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:***** Bank Account:*****'));
+                        $FontSize=10;
 
 		$FontSize =8;
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-12,280,$FontSize,$myrow['invtext']);
@@ -433,7 +435,6 @@ If (isset($PrintPDF)
 			$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -280,$YPos-20,0,40);
 		}
 			$pdf->addText($Page_Width-$Right_Margin-472, $YPos - ($line_height*3)+32,$FontSize, '');
-
 
 			$FontSize=10;
 		} else {
@@ -571,9 +572,8 @@ exit;
 
 
 	/*if FromTransNo is not set then show a form to allow input of either a single invoice number or a range of invoices to be printed. Also get the last invoice number created to show the user where the current range is up to */
-
 		echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD='POST'><CENTER><TABLE>";
-
+                echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . _('Print Invoices or Credit Notes (Landscape Mode)') . '';
 		echo '<TR><TD>' . _('Print Invoices or Credit Notes') . '</TD><TD><SELECT name=InvOrCredit>';
 		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)){
 
@@ -613,14 +613,14 @@ exit;
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 
-		echo '<P>' . _('The last invoice created was number') . ' ' . $myrow[0] . '<BR>' . _('If only a single invoice is required') . ', ' . _('enter the invoice number to print in the Start transaction number to print field and leave the End transaction number to print field blank') . '. ' . _('Only use the end invoice to print field if you wish to print a sequential range of invoices');
+		echo '<DIV CLASS="page_help_text"><B>' . _('The last invoice created was number') . ' ' . $myrow[0] . '</B><BR>' . _('If only a single invoice is required') . ', ' . _('enter the invoice number to print in the Start transaction number to print field and leave the End transaction number to print field blank') . '. ' . _('Only use the end invoice to print field if you wish to print a sequential range of invoices') . '';
 
-		$sql = 'SELECT typeno FROM systypes WHERE typeid=11';
+                $sql = 'SELECT typeno FROM systypes WHERE typeid=11';
 
-		$result = DB_query($sql,$db);
-		$myrow = DB_fetch_row($result);
+                $result = DB_query($sql,$db);
+                $myrow = DB_fetch_row($result);
 
-		echo '<P>' . _('The last credit note created was number') . ' ' . $myrow[0] . '<BR>' . _('A sequential range can be printed using the same method as for invoices above') . '. ' . _('A single credit note can be printed by only entering a start transaction number');
+                echo '<BR><B>' . _('The last credit note created was number') . ' ' . $myrow[0] . '</B><BR>' . _('A sequential range can be printed using the same method as for invoices above') . '. ' . _('A single credit note can be printed by only entering a start transaction number') . '</DIV';
 
 	} else {
 

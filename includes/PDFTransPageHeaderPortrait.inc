@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* R&OS PHP-pdf class code to head up a new page */
 
 if (!$FirstPage){ /* only initiate a new page if its not the first */
@@ -13,9 +13,9 @@ $pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -100,$YPos-80,0,60);
 $FontSize =15;
 if ($InvOrCredit=='Invoice') {
 
-        $pdf->addText($Page_Width/2 - 60, $YPos, $FontSize, _('INVOICE') . ' ');
+        $pdf->addText($Page_Width/2 - 60, $YPos, $FontSize, _('TAX INVOICE') . ' ');
 } else {
-	$pdf->addText($Page_Width/2 - 60, $YPos, $FontSize, _('CREDIT NOTE') . ' ');
+	$pdf->addText($Page_Width/2 - 60, $YPos, $FontSize, _('TAX CREDIT NOTE') . ' ');
 }
 
 $FontSize = 10;
@@ -153,12 +153,27 @@ $LineHeight = 10;
 $LineCount = 0;
 
 if ($InvOrCredit=='Invoice') {
-	$pdf->addText($XPos, $YPos-$LineCount*$LineHeight, $FontSize, _('Delivered To') . ':');
+	$pdf->addText($XPos, $YPos-$LineCount*$LineHeight, $FontSize, _('Delivered To (check Dispatch Detail)') . ':');
   $FontSize = 10;
   $LineHeight = 13;
 	$XPos +=20;
 	$LineCount += 1;
-	$pdf->addText($XPos, $YPos-$LineCount*$LineHeight, $FontSize, $myrow['deliverto']);
+// Before trying to call htmlspecialchars_decode, check that its supported, if not substitute a compatible version
+if (!function_exists('htmlspecialchars_decode')) {
+        function htmlspecialchars_decode($str, $options="") {
+                $trans = get_html_translation_table(HTML_SPECIALCHARS, $options);
+
+                $decode = ARRAY();
+                foreach ($trans AS $char=>$entity) {
+                        $decode[$entity] = $char;
+                }
+
+                $str = strtr($str, $decode);
+
+                return $str;
+        }
+}
+	$pdf->addText($XPos, $YPos-$LineCount*$LineHeight, $FontSize, htmlspecialchars_decode($myrow['deliverto']));
 	$LineCount += 1;
 	$pdf->addText($XPos, $YPos-$LineCount*$LineHeight, $FontSize, $myrow['deladd1']);
 	$LineCount += 1;
@@ -222,7 +237,7 @@ $LineCount = 0;
 $pdf->addText($Left_Margin+2, $YPos-$LineCount*$LineHeight, $FontSize, _('Cust. Tax Ref') . ':');
 /*Print a vertical line */
 $pdf->line($Left_Margin+178, $YPos+$LineHeight,$Left_Margin+178, $YPos-$LineHeight*2+4);
-$pdf->addText($Left_Margin+180, $YPos-$LineCount*$LineHeight, $FontSize, _('Cust. Order No') . ':');
+$pdf->addText($Left_Margin+180, $YPos-$LineCount*$LineHeight, $FontSize, _('Cust. Reference No.') . ':');
 /*Print a vertical line */
 $pdf->line($Left_Margin+358, $YPos+$LineHeight,$Left_Margin+358, $YPos-$LineHeight*2+4);
 $pdf->addText($Left_Margin+360, $YPos-$LineCount*$LineHeight, $FontSize, _('Sales Person') . ':');
