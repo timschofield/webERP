@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 2;
 
@@ -8,6 +8,8 @@ include('includes/session.inc');
 $title = _('Customer Transactions Inquiry');
 include('includes/header.inc');
 
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Transaction Inquiry') . '" ALT="">' . ' ' . _('Transaction Inquiry') . '</P>';
+echo '<DIV CLASS="page_help_text">' . _('Choose which type of transaction to report on.') . '</DIV><BR>';
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
 
@@ -75,7 +77,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
    $DbgMsg =  _('The SQL that failed was');
    $TransResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
 
-   echo '<TABLE CELLPADDING=2 BORDER=2>';
+   echo '<CENTER><TABLE CELLPADDING=2 BORDER=2>';
 
    $tableheader = "<TR>
 			<TH>" . _('Type') . "</TH>
