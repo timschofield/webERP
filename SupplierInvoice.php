@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing 
@@ -18,7 +18,11 @@ $title = _('Enter Supplier Invoice');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
+//this is available from the menu on this page already
+//echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
+
+echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Supplier Invoice') . '" ALT="">' . ' '
+        . _('Enter Supplier Invoice:') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 
 if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 
@@ -156,7 +160,7 @@ if the link is not active then OvAmount must be entered manually. */
 
 if (!isset($_POST['PostInvoice'])){
 	
-	if (isset($_POST['GRNS']) and $_POST['GRNS'] == _('Enter Against Goods Recd')){
+	if (isset($_POST['GRNS']) and $_POST['GRNS'] == _('Enter Against Goods Received')){
 		/*This ensures that any changes in the page are stored in the session before calling the grn page */
 		echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/SuppInvGRNs.php?" . SID . "'>";
 		echo '<P>' . _('You should automatically be forwarded to the entry of invoices against goods received page') .
@@ -197,7 +201,7 @@ if (!isset($_POST['PostInvoice'])){
 		</TR>
 		</TABLE>';
 	
-	echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
+	echo "<BR><FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 	
 	echo '<TABLE>';
 	
@@ -215,7 +219,7 @@ if (!isset($_POST['PostInvoice'])){
 			<TD><INPUT TYPE=TEXT SIZE=11 MAXLENGTH=10 NAME='ExRate' VALUE=" . $_SESSION['SuppTrans']->ExRate . '></TD></TR>';
 	echo '</TABLE>';
 	
-	echo "<BR><CENTER><INPUT TYPE=SUBMIT NAME='GRNS' VALUE='" . _('Enter Against Goods Recd') . "'> ";
+	echo "<BR><CENTER><INPUT TYPE=SUBMIT NAME='GRNS' VALUE='" . _('Enter Against Goods Received') . "'> ";
 	
 	echo "<INPUT TYPE=SUBMIT NAME='Shipts' VALUE='" . _('Enter Against Shipment') . "'> ";
 	
@@ -289,7 +293,7 @@ if (!isset($_POST['PostInvoice'])){
 	if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){
 	
 		if (count($_SESSION['SuppTrans']->GLCodes) > 0){
-			echo '<TABLE CELLPADDING=2>';
+			echo '<BR><TABLE CELLPADDING=2>';
 			$TableHeader = "<TR><TH>" . _('Account') .
 					"</TH><TH>" . _('Name') .
 					"</TH><TH>" . _('Amount') . '<BR>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TH>
@@ -328,7 +332,7 @@ if (!isset($_POST['PostInvoice'])){
 		
 		$_SESSION['SuppTrans']->OvAmount = $TotalGRNValue + $TotalGLValue + $TotalShiptValue;
 		
-		echo '<TABLE><TR><TD>' . _('Amount in supplier currency') . ':</TD><TD COLSPAN=2 ALIGN=RIGHT>' .
+		echo '<BR><TABLE><TR><TD>' . _('Amount in supplier currency') . ':</TD><TD COLSPAN=2 ALIGN=RIGHT>' .
 			number_format( $_SESSION['SuppTrans']->OvAmount,2) . '</TD></TR>';
 	} else {
 		echo '<TABLE><TR><TD>' . _('Amount in supplier currency') .
@@ -336,7 +340,7 @@ if (!isset($_POST['PostInvoice'])){
 			number_format( $_SESSION['SuppTrans']->OvAmount,2) . '></TD></TR>';
 	}
 	
-	echo "<TR><TD COLSPAN=2><INPUT TYPE=Submit NAME='ToggleTaxMethod' VALUE='" . _('Change Tax Calculation Method') .
+	echo "<TR><TD COLSPAN=2><INPUT TYPE=Submit NAME='ToggleTaxMethod' VALUE='" . _('Update Tax Calculation') .
 		"'></TD><TD><SELECT NAME='OverRideTax'>";
 	
 	if ($_POST['OverRideTax']=='Man'){
