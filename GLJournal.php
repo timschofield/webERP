@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 include('includes/DefineJournalClass.php');
 
@@ -286,7 +286,7 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 	$result=DB_query($SQL,$db);
 	echo '<option value=0>0 - None';
 	while ($myrow=DB_fetch_array($result)){
-    	if ($_POST['tag']==$myrow["tagref"]){
+    	if (isset($_POST['tag']) and $_POST['tag']==$myrow["tagref"]){
 			echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
     	} else {
 			echo '<option value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
@@ -308,9 +308,9 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 			ORDER BY accountcode';
 
 	$result=DB_query($sql, $db);
-	echo '<td><select name="GLCode" onChange="return assignComboToInput(this,'.GLManualCode.')">';
+	echo '<td><select name="GLCode" onChange="return assignComboToInput(this,'.'GLManualCode'.')">';
 	while ($myrow=DB_fetch_array($result)){
-    	if ($_POST['tag']==$myrow['accountcode']){
+    	if (isset($_POST['tag']) and $_POST['tag']==$myrow['accountcode']){
 			echo '<option selected value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'].' - ' .$myrow['accountname'];
     	} else {
 			echo '<option value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'].' - ' .$myrow['accountname'];
@@ -330,10 +330,10 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 
 
 	echo '</tr><tr><th>' . _('Debit') . "</th>".'<td><input type=Text Name = "Debit"  onKeyPress="return restrictToNumbers(this, event)" ' .
-				'onChange="numberFormat(this,2); eitherOr(this, '.Credit.')"'.
+				'onChange="numberFormat(this,2); eitherOr(this, '.'Credit'.')"'.
 				'onFocus="return setTextAlign(this, '."'".'right'."'".')" Maxlength=12 size=10 value=' . $_POST['Debit'] . '></td>';
 	echo '</tr><tr><th>' . _('Credit') . "</th>".'<td><input type=Text Name = "Credit" onKeyPress="return restrictToNumbers(this, event)" ' .
-				'onChange="numberFormat(this,2); eitherOr(this, '.Debit.')"'.
+				'onChange="numberFormat(this,2); eitherOr(this, '.'Debit'.')"'.
 				'onFocus="return setTextAlign(this, '."'".'right'."'".')" Maxlength=12 size=10 value=' . $_POST['Credit'] . '></td>';
 	echo '</tr><tr><th></th><th>' . _('GL Narrative') . "</th>";
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.39 $ */
+/* $Revision: 1.40 $ */
 
 $PageSecurity = 2;
 
@@ -368,7 +368,7 @@ if (isset($ListPageMax) and $ListPageMax >1) {
 
 echo '</FORM>';
 // Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
-If ($_SESSION['SupplierID']!='') {
+if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID']!='') {
 if ($_SESSION['geocode_integration']==1){
 if ($lat ==0){
 echo '<center><br>';
