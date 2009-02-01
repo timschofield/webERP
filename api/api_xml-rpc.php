@@ -386,6 +386,30 @@
 		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
 	}
 	$doc .= '</table>';
+	$InsertSalesType_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$InsertSalesType_doc = $doc;
+
+	function xmlrpc_InsertSalesType($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesType(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
+	unset($Parameter);
+	unset($ReturnValue);
+	unset($doc);
+	unset($Description);
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
 	$GetHoldReasonList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
 	$GetHoldReasonList_doc = $doc;
 
@@ -1471,6 +1495,31 @@
 		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
 	}
 	$doc .= '</table>';
+	$StockCatPropertyList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$StockCatPropertyList_doc = $doc;
+
+	function xmlrpc_StockCatPropertyList($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(StockCatPropertyList($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval(),
+				 			$xmlrpcmsg->getParam(3)->scalarval())));
+	}
+	
+	unset($Parameter);
+	unset($ReturnValue);
+	unset($doc);
+	unset($Description);
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
 	$GetGLAccountList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
 	$GetGLAccountList_doc = $doc;
 
@@ -2140,6 +2189,10 @@
 			"function" => "xmlrpc_GetSalesTypeDetails",
 			"signature" => $GetSalesTypeDetails_sig,
 			"docstring" => $GetSalesTypeDetails_doc),
+		"weberp.xmlrpc_InsertSalesType" => array(
+			"function" => "xmlrpc_InsertSalesType",
+			"signature" => $InsertSalesType_sig,
+			"docstring" => $InsertSalesType_doc),
 		"weberp.xmlrpc_GetHoldReasonList" => array(
 			"function" => "xmlrpc_GetHoldReasonList",
 			"signature" => $GetHoldReasonList_sig,
@@ -2328,7 +2381,11 @@
 			"function" => "xmlrpc_SearchStockCategories",
 			"signature" => $SearchStockCategories_sig,
 			"docstring" => $SearchStockCategories_doc),
-		"weberp.xmlrpc_GetGLAccountList" => array(
+		"weberp.xmlrpc_StockCatPropertyList" => array(
+			"function" => "xmlrpc_StockCatPropertyList",
+			"signature" => $StockCatPropertyList_sig,
+			"docstring" => $StockCatPropertyList_doc),
+	"weberp.xmlrpc_GetGLAccountList" => array(
 			"function" => "xmlrpc_GetGLAccountList",
 			"signature" => $GetGLAccountList_sig,
 			"docstring" => $GetGLAccountList_doc),
