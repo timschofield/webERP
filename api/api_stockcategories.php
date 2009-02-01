@@ -158,11 +158,37 @@
 		$i=0;
 		$CategoryList = array();
 		while ($myrow=DB_fetch_array($result)) {
-			$CategoryList[$i]['categoryid']=$myrow[0];
-			$CategoryList[$i]['categorydescription']=$myrow[1];
+			$CategoryList[1][$i]['categoryid']=$myrow[0];
+			$CategoryList[1][$i]['categorydescription']=$myrow[1];
 			$i++;
 		}
 		return $CategoryList;
 	}
+	
+	function StockCatPropertyList($Label, $Category, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$sql='select stockitemproperties.stockid, description from stockitemproperties
+		 inner join stockcatproperties 
+		 on stockitemproperties.stkcatpropid=stockcatproperties.stkcatpropid
+		 inner join stockmaster 
+		 on stockitemproperties.stockid=stockmaster.stockid 
+		 where stockitemproperties.value like "'.$Label.'" and 
+		 stockcatproperties.categoryid="'.$Category.'"';
+		$result = DB_Query($sql, $db);
+		$i=0;
+		$ItemList = array();
+		$ItemList[0]=0;
+		while ($myrow=DB_fetch_array($result)) {
+			$ItemList[1][$i]['stockid']=$myrow[0];
+			$ItemList[1][$i]['description']=$myrow[1];
+			$i++;
+		}
+		return $ItemList;
+	}				
 
 ?>
