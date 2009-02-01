@@ -1,6 +1,6 @@
 WEB-ERP Installation
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 Upgrading
 
@@ -32,7 +32,7 @@ Note: It is worth printing this document off and checking off the steps as you g
 
 Pre-requisites:
 
-- A working PHP web server - v 4.3 or later - with support for mysql or postgres databases, gd, gettext and ftp
+- A working PHP web server - v 5.0 or later - with support for mysql or postgres databases, gd, gettext and ftp
 - A working MySQL or Postgres server (MySql version 4.1 or above - innodb tables must be enabled - this normally requires modifying your my.cnf file (normally under /etc/my.cnf or the mysql data directory - see the MySQL manual).
 
 Installing these components are well covered elsewhere - but if you need to install these components the recommended solution under windows would be to download and install apache2triad - http://apache2triad.net/ or under windows or *nix download and install XAMP - http://www.apachefriends.org/en/xampp.html
@@ -89,6 +89,8 @@ Under *nix copy the archive to the the web server's root directory and then run:
 unzip webERP_XXX.zip
 
 this will create the webERP directory under the web server root directory and put all the scripts in that directory.
+
+Finally the file config.distrib.php should be renamed to config.php
 
 
 2. Creating the Database
