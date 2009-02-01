@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 7;
 
@@ -90,9 +90,9 @@ if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
 }
 
 echo '<TR><TD>' . _('Show') . ' ' . $TypeName . ' ' . _('before') . ':</TD>
-	<TD><INPUT tabindex="2" TYPE=TEXT NAME="BeforeDate" SIZE=12 MAXLENGTH=10 Value="' . $_POST['BeforeDate'] . '"></TD>';
+	<TD><INPUT tabindex="2" TYPE=TEXT NAME="BeforeDate" SIZE=12 MAXLENGTH=10 onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" Value="' . $_POST['BeforeDate'] . '"></TD>';
 echo '<TD>' . _('but after') . ':</TD>
-	<TD><INPUT tabindex="3" TYPE=TEXT NAME="AfterDate" SIZE=12 MAXLENGTH=10 Value="' . $_POST['AfterDate'] . '"></TD></TR>';
+	<TD><INPUT tabindex="3" TYPE=TEXT NAME="AfterDate" SIZE=12 MAXLENGTH=10 onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" Value="' . $_POST['AfterDate'] . '"></TD></TR>';
 echo '<TR><TD COLSPAN=3>' . _('Choose outstanding') . ' ' . $TypeName . ' ' . _('only or all') . ' ' . $TypeName . ' ' . _('in the date range') . ':</TD>
 	<TD><SELECT tabindex="4" NAME="Ostg_or_All">';
 
@@ -261,7 +261,7 @@ if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!=
 				<td ALIGN=RIGHT>%s</td>
 				<td ALIGN=RIGHT>%s</td>
 				<td ALIGN=CENTER><INPUT TYPE='checkbox' NAME='Clear_%s'><INPUT TYPE=HIDDEN NAME='BankTrans_%s' VALUE=%s></td>
-				<td COLSPAN=2><INPUT TYPE='text' MAXLENGTH=15 SIZE=15 NAME='AmtClear_%s'></td>
+				<td COLSPAN=2><INPUT TYPE='text' MAXLENGTH=15 SIZE=15 onKeyPress='return restrictToNumbers(this, event)'  onChange='numberFormat(this,2)' onFocus='return setTextAlign(this, ".'"'."right".'"'.")'  NAME='AmtClear_%s'></td>
 				</tr>",
 				$myrow['ref'],
 				$myrow['banktranstype'],
