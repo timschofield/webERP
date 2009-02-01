@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 $PageSecurity = 5;
 
@@ -695,7 +695,7 @@ if (DB_num_rows($AccountsResults)==0){
 
 
 echo '<tr><td>' . _('Date Paid') . ':</td>
-	<td><input type="text" name="DatePaid" maxlength=10 size=11 value="' . $_SESSION['PaymentDetail']->DatePaid . '"></td>
+	<td><input type="text" name="DatePaid" maxlength=10 size=11 onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['PaymentDetail']->DatePaid . '"></td>
 	</tr>';
 
 
@@ -847,7 +847,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	$result=DB_query($SQL,$db);
 	echo '<OPTION value=0>0 - None';
 	while ($myrow=DB_fetch_array($result)){
-    	if ($_POST['tag']==$myrow["tagref"]){
+    	if (isset($_POST['tag']) and $_POST['tag']==$myrow["tagref"]){
 		echo '<OPTION selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
     	} else {
 			echo '<OPTION value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
@@ -857,10 +857,19 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 // End select tag
 
 	/*now set up a GLCode field to select from avaialble GL accounts */
-	echo '<tr><td>' . _('Enter GL Account Manually') . ':</td>
-		<td><input type=Text Name="GLManualCode" Maxlength=12 SIZE=12 VALUE=' . $_POST['GLManualCode'] . '></td></tr>';
+	if (isset($_POST['GLManualCode'])) {
+		echo '<tr><td>' . _('Enter GL Account Manually') . ':</td>
+			<td><input type=Text Name="GLManualCode" Maxlength=12 SIZE=12onChange="return inArray(this, this.value, GLCode.options,'.
+		"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' .
+			' onKeyPress="return restrictToNumbers(this, event)" VALUE='. $_POST['GLManualCode'] .'  ></td></tr>';
+	} else {
+		echo '<tr><td>' . _('Enter GL Account Manually') . ':</td>
+			<td><input type=Text Name="GLManualCode" Maxlength=12 SIZE=12 onChange="return inArray(this, this.value, GLCode.options,'.
+		"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' .
+			' onKeyPress="return restrictToNumbers(this, event)"></td></tr>';		
+	}
 	echo '<tr><td>' . _('Select GL Account') . ':</td>
-		<td><select name="GLCode">';
+		<td><select name="GLCode" onChange="return assignComboToInput(this,'.'GLManualCode'.')">';
 
 	$SQL = 'SELECT accountcode,
 					accountname
@@ -873,7 +882,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	   prnMsg(_('No General ledger accounts have been set up yet') . ' - ' . _('payments cannot be analysed against GL accounts until the GL accounts are set up'),'error');
 	} else {
 		while ($myrow=DB_fetch_array($result)){
-		    if ($_POST['GLCode']==$myrow["accountcode"]){
+		    if (isset($_POST['GLCode']) and $_POST['GLCode']==$myrow["accountcode"]){
 			echo '<OPTION selectED value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
 		    } else {
 			echo '<OPTION value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
@@ -884,8 +893,18 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 
 	echo '<tr><td>'. _('Cheque/Voucher Number') .'</td><td><input type="text" name="cheque" Maxlength=12 SIZE=12></td></tr>';
 
-	echo '<tr><td>' . _('GL Narrative') . ':</td><td><input type="text" name="GLNarrative" maxlength=50 size=52 value="' . $_POST['GLNarrative'] . '"></td></tr>';
-	echo '<tr><td>' . _('Amount') . ' (' . $_SESSION['PaymentDetail']->Currency . '):</td><td><input type=Text Name="GLAmount" Maxlength=12 SIZE=12 VALUE=' . $_POST['GLAmount'] . '></td></tr>';
+	if (isset($_POST['GLNarrative'])) {
+		echo '<tr><td>' . _('GL Narrative') . ':</td><td><input type="text" name="GLNarrative" maxlength=50 size=52 value="' . $_POST['GLNarrative'] . '"></td></tr>';
+	} else {
+		echo '<tr><td>' . _('GL Narrative') . ':</td><td><input type="text" name="GLNarrative" maxlength=50 size=52></td></tr>';		
+	}
+	
+	if (isset($_POST['GLAmount'])) {
+		echo '<tr><td>' . _('Amount') . ' (' . $_SESSION['PaymentDetail']->Currency . '):</td><td><input type=Text Name="GLAmount" Maxlength=12 SIZE=12 onKeyPress="return restrictToNumbers(this, event)"  onChange="numberFormat(this,2)" onFocus="return setTextAlign(this, '."'".'right'."'".')" VALUE=' . $_POST['GLAmount'] . '></td></tr>';		
+	} else {
+		echo '<tr><td>' . _('Amount') . ' (' . $_SESSION['PaymentDetail']->Currency . '):</td><td><input type=Text Name="GLAmount" Maxlength=12 SIZE=12 onKeyPress="return restrictToNumbers(this, event)"  onChange="numberFormat(this,2)" onFocus="return setTextAlign(this, '."'".'right'."'".')"></td></tr>';
+	}	
+
 	echo '</table>';
 	echo '<center><input type=submit name="Process" value="' . _('Accept') . '"><input type=submit name="Cancel" value="' . _('Cancel') . '"></center>';
 

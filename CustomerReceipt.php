@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -131,7 +131,14 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ //always proc
 
 if (isset($_POST['Process'])){ //user hit submit a new entry to the receipt batch
 
-   $_SESSION['ReceiptBatch']->add_to_batch($_POST['Amount'],
+	if (!isset($_POST['GLCode'])) {
+		$_POST['GLCode']=1;
+	}
+	if (!isset($_POST['tag'])) {
+		$_POST['tag']=0;
+	}
+	
+	$_SESSION['ReceiptBatch']->add_to_batch($_POST['Amount'],
    											$_POST['CustomerID'],
 											$_POST['Discount'],
 											$_POST['Narrative'],
@@ -463,13 +470,13 @@ if (isset($_POST['CommitBatch'])){
 if (isset($_POST['Search'])){
 /*Will only be true if clicked to search for a customer code */
 
-	If ($_POST['Keywords'] AND $_POST['CustCode']) {
+	if ($_POST['Keywords'] AND $_POST['CustCode']) {
 		$msg=_('Customer name keywords have been used in preference to the customer code extract entered');
 	}
-	If ($_POST['Keywords']=="" AND $_POST['CustCode']=="") {
+	if ($_POST['Keywords']=="" AND $_POST['CustCode']=="") {
 		$msg=_('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search');
 	} else {
-		If (strlen($_POST['Keywords'])>0) {
+		if (strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 
 			$i=0;
@@ -674,7 +681,7 @@ if (!Is_Date($_SESSION['ReceiptBatch']->DateBanked)){
 }
 
 echo '<tr><td>' . _('Date Banked') . ':</td>
-		<td><input tabindex=2 type="text" name="DateBanked" maxlength=10 size=11 value="' . $_SESSION['ReceiptBatch']->DateBanked . '"></td></tr>';
+		<td><input tabindex=2 type="text" name="DateBanked" maxlength=10 size=11 onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['ReceiptBatch']->DateBanked . '"></td></tr>';
 echo '<tr><td>' . _('Currency') . ':</td>
 		<td><select tabindex=3 name="Currency">';
 
@@ -717,7 +724,7 @@ if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['ReceiptBatch']->Curre
 		$_SESSION['ReceiptBatch']->ExRate = $SuggestedExRate;
 	}
 	echo '<tr><td>' . _('Receipt Exchange Rate') . ':</td>
-			<td><input tabindex=4 type="text" name="ExRate" maxlength=10 size=12 value="' . $_SESSION['ReceiptBatch']->ExRate . '"></td>
+			<td><input tabindex=4 type="text" name="ExRate" maxlength=10 size=12  onKeyPress="return restrictToNumbers(this, event)" onChange="numberFormat(this,2)" onFocus="return setTextAlign(this, '."'".'right'."'".')" value="' . $_SESSION['ReceiptBatch']->ExRate . '"></td>
 			<td>' . $SuggestedExRateText . ' <i>' . _('The exchange rate between the currency of the bank account currency and the currency of the receipt') . '. 1 ' . $_SESSION['ReceiptBatch']->AccountCurrency . ' = ? ' . $_SESSION['ReceiptBatch']->Currency . '</i></td></tr>';
 }
 
@@ -831,9 +838,9 @@ if (isset($_SESSION['CustomerRecord'])
 		<td align=right>' . number_format(($_SESSION['CustomerRecord']['balance'] - $_SESSION['CustomerRecord']['due']),2) . '</td>
 		<td align=right>' . number_format(($_SESSION['CustomerRecord']['due']-$_SESSION['CustomerRecord']['overdue1']),2) . '</td>
 		<td align=right>' . number_format(($_SESSION['CustomerRecord']['overdue1']-$_SESSION['CustomerRecord']['overdue2']) ,2) . '</td>
-		' . number_format($_SESSION['CustomerRecord']['overdue2'],2) . '</td>
+		<td align=right>' . number_format($_SESSION['CustomerRecord']['overdue2'],2) . '</td>
 		</tr>
-		</table>';
+		</table><br>';
 
 	echo '<center><table>';
 
@@ -860,7 +867,7 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 	$result=DB_query($SQL,$db);
 	echo '<OPTION value=0>0 - None';
 	while ($myrow=DB_fetch_array($result)){
-    	if ($_POST['tag']==$myrow["tagref"]){
+    	if (isset($_POST['tag']) and $_POST['tag']==$myrow["tagref"]){
 		echo '<OPTION selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
     	} else {
 			echo '<OPTION value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
@@ -910,12 +917,12 @@ if (((isset($_SESSION['CustomerRecord'])
 		$_POST['Narrative']='';
 	}
 	echo '<tr><td>' . _('Amount of Receipt') . ':</td>
-		<td><input tabindex=9 type="text" name="Amount" maxlength=12 size=13 value="' . $_POST['Amount'] . '"></td>
+		<td><input tabindex=9 type="text" name="Amount" maxlength=12 size=13 onKeyPress="return restrictToNumbers(this, event)"  onChange="numberFormat(this,2)" onFocus="return setTextAlign(this, '."'".'right'."'".')" value="' . $_POST['Amount'] . '"></td>
 	</tr>';
 
 	if (!isset($_POST['GLEntry'])){
 		echo '<tr><td>' . _('Amount of Discount') . ':</td>
-			<td><input tabindex=10 type="text" name="Discount" maxlength=12 size=13 value="' . $_POST['Discount'] . '"> ' . _('agreed prompt payment discount is') . ' ' . $DisplayDiscountPercent . '</td></TR>';
+			<td><input tabindex=10 type="text" name="Discount" maxlength=12 size=13 onKeyPress="return restrictToNumbers(this, event)"  onChange="numberFormat(this,2)" onFocus="return setTextAlign(this, '."'".'right'."'".')" value="' . $_POST['Discount'] . '"> ' . _('agreed prompt payment discount is') . ' ' . $DisplayDiscountPercent . '</td></TR>';
 	} else {
 		echo '<input tabindex=11 type="hidden" name="Discount" Value=0>';
 	}
