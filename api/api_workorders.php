@@ -174,11 +174,11 @@
 			$WorkOrder['loccode']=$WorkOrderDetails['loccode'];
 		}
 		if (isset($WorkOrderDetails['requiredby'])){
-			$Errors=VerifyRequiredByDate($WorkOrderDetails['requiredby'], sizeof($Errors), $Errors, $db);
+//			$Errors=VerifyRequiredByDate($WorkOrderDetails['requiredby'], sizeof($Errors), $Errors, $db);
 			$WorkOrder['requiredby']=$WorkOrderDetails['requiredby'];
 		}
 		if (isset($WorkOrderDetails['startdate'])){
-			$Errors=VerifyStartDate($WorkOrderDetails['startdate'], sizeof($Errors), $Errors, $db);
+//			$Errors=VerifyStartDate($WorkOrderDetails['startdate'], sizeof($Errors), $Errors, $db);
 			$WorkOrder['startdate']=$WorkOrderDetails['startdate'];
 		}
 		if (isset($WorkOrderDetails['costissued'])){
