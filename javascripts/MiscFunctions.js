@@ -23,7 +23,7 @@ function restrictToNumbers(myfield, e) {
 	keychar = String.fromCharCode(key);
 	if ((key==null) || (key==0) || (key==8) || (key==9) || (key==13) || (key==27) ) {
 		return true;
-	} else if ((("0123456789,.").indexOf(keychar) > -1)) {
+	} else if ((("0123456789,.-").indexOf(keychar) > -1)) {
 		return true;
 	} else {
 		return false;
