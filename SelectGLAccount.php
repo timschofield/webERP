@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 8;
 
@@ -82,7 +82,8 @@ If (isset($_POST['Select'])) {
 if (!isset($AccountID)) {
 
 
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD=POST>";
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Search for General Ledger Accounts'); 
+echo "<br><center><FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD=POST>";
 
 if(strlen($msg)>1){
 	prnMsg($msg,'info');
@@ -94,11 +95,11 @@ echo '<TABLE CELLPADDING=3 COLSPAN=4>
 	<TD><INPUT TYPE='Text' NAME='Keywords' SIZE=20 MAXLENGTH=25></TD>
 	<TD><FONT SIZE=3><B>" .  _('OR') . "</B></FONT></TD>
 	<TD><FONT SIZE=1>" . _('Enter Account No. to search from') . ":</FONT></TD>
-	<TD><INPUT TYPE='Text' NAME='GLCode' SIZE=15 MAXLENGTH=18></TD>
+	<TD><INPUT TYPE='Text' NAME='GLCode' SIZE=15 MAXLENGTH=18 onKeyPress='return restrictToNumbers(this, event)' ></TD>
 	</TR>
-	</TABLE>";
+	</TABLE><br>";
 
-echo '<CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE=' . _('Search Now') . '">
+echo '<INPUT TYPE=SUBMIT NAME="Search" VALUE=' . _('Search Now') . '">
 	<INPUT TYPE=SUBMIT ACTION=RESET VALUE="' . _('Reset') .'"></CENTER>';
 
 
