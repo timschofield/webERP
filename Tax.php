@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -75,8 +75,8 @@ If (isset($_POST['TaxAuthority']) AND
 		$YPos -=$line_height;
 	}
 
-	$Ouputs =0;
-	$OuputTax =0;
+	$Outputs =0;
+	$OutputTax =0;
 	$Inputs =0;
 	$InputTax =0;
 
