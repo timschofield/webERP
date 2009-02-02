@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.46 $ */
+/* $Revision: 1.47 $ */
 
 $PageSecurity = 2;
 
@@ -13,7 +13,7 @@ if (!isset($_SESSION['CustomerID'])){ //initialise if not already done
 	$_SESSION['CustomerID']="";
 }
 
-if ($_SESSION['CustomerID'] ==0){
+if ($_SESSION['CustomerID'] ==""){
 echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Search for Customers') . '';
 }
 
@@ -21,7 +21,7 @@ if (!isset($_SESSION['CustomerType'])){ //initialise if not already done
 	$_SESSION['CustomerType']="";
 }
 // only run geocode if integration is turned on and customer has been selected
-if ($_SESSION['geocode_integration']==1 AND $_SESSION['CustomerID'] <>0){
+if ($_SESSION['geocode_integration']==1 AND $_SESSION['CustomerID'] !=""){
 
 	$sql="SELECT * FROM geocode_param WHERE 1";
 	$ErrMsg = _('An error occurred in retrieving the information');
@@ -549,7 +549,7 @@ if (!isset($_POST['CSV'])) {
 }
 
 // Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
-if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!=0) {
+if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!="") {
 	if ($_SESSION['geocode_integration']==1){
 		echo '<center><br>';
 		if ($lat ==0){
@@ -566,7 +566,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!=0) {
 	}
 	// Extended Customer Info only if selected in Configuration
 	if ($_SESSION['Extended_CustomerInfo']==1){
-		if ($_SESSION['CustomerID']!=0){
+		if ($_SESSION['CustomerID']!=""){
 			$sql = "SELECT debtortype.typeid, debtortype.typename
                         FROM debtorsmaster, debtortype
 			WHERE debtorsmaster.typeid = debtortype.typeid
@@ -648,7 +648,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!=0) {
 			}//END WHILE LIST LOOP
 			echo '</CENTER></table>';
 		} else {
-			if ($_SESSION['CustomerID']!=0){
+			if ($_SESSION['CustomerID']!=""){
 				echo '<center><br><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" TITLE="' . _('Customer Contacts') . '" ALT=""><a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Contact') . '</a><br></center>';
 			}
 		}
@@ -695,7 +695,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!=0) {
    			}//END WHILE LIST LOOP
       		echo '</CENTER></table>';
 		} else {
-			if ($_SESSION['CustomerID']!=0){
+			if ($_SESSION['CustomerID']!=""){
 				echo '<center><br><img src="'.$rootpath.'/css/'.$theme.'/images/note_add.png" TITLE="' . _('Customer Notes') . '" ALT=""><a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Note for this Customer') . '</a><br></center>';
 			}
 		}
@@ -743,7 +743,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!=0) {
        		}//END WHILE LIST LOOP
        		echo '</CENTER></table>';
 		} else {
-			if ($_SESSION['CustomerID']!=0){
+			if ($_SESSION['CustomerID']!=""){
 				echo '<center><br><img src="'.$rootpath.'/css/'.$theme.'/images/folder_add.png" TITLE="' . _('Customer Group Notes') . '" ALT=""><a href="AddCustomerTypeNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Group Note') . '</a><br></center>';
 			}
 		}
