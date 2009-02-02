@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 10;
 
@@ -257,7 +257,7 @@ echo '<P>';
 
 if (! isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo "<FORM METHOD='post' name='AccountGroups' action=" . $_SERVER['PHP_SELF'] . '?' . SID . ' name="AccountGroups">';
 
 	if (isset($_GET['SelectedAccountGroup'])) {
 		//editing an existing account group
@@ -306,7 +306,7 @@ if (! isset($_GET['delete'])) {
 		}
 
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedAccountGroup' VALUE='" . $_POST['SelectedAccountGroup'] . "'>";
-		echo '<CENTER><TABLE><TR><TD>' . _('Acount Group Name') . ':' . '</TD><TD><input tabindex="1" ' . 
+		echo '<CENTER><TABLE><TR><TD>' . _('Account Group Name') . ':' . '</TD><TD><input tabindex="1" ' . 
 		(in_array('GroupName',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="GroupName" SIZE=30 MAXLENGTH=30 value="'
 		 . $_POST['GroupName'] . '"></TD></TR>';
 	}
@@ -367,15 +367,17 @@ if (! isset($_GET['delete'])) {
 
 	echo '<TR><TD>' . _('Sequence In TB') . ':' . '</TD>';
 	echo '<TD><INPUT tabindex="5" ' . (in_array('SequenceInTB',$Errors) ? 'class="inputerror"' : '' ) .
-		' TYPE=Text MAXLENGTH=4 name=SequenceInTB VALUE=' . $_POST['SequenceInTB'] . '></TD></TR>';
+		' TYPE=Text MAXLENGTH=4 name=SequenceInTB onKeyPress="return restrictToNumbers(this, event)" 
+		 VALUE=' . $_POST['SequenceInTB'] . '></TD></TR>';
 
 	echo '</TABLE>';
 
 	echo '<CENTER><input tabindex="6" type=Submit name=submit value=' . _('Enter Information') . '>';
 
-	echo '</FORM>';
+	echo "<script>defaultControl(document.AccountGroups.GroupName);</script>";
+	
+	echo '</form>';
 
 } //end if record deleted no point displaying form to add record
-
 include('includes/footer.inc');
 ?>
