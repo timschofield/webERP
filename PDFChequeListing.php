@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 3;
 include('includes/SQL_CommonFunctions.inc');
@@ -12,7 +12,7 @@ if (isset($_POST['FromDate']) AND !Is_Date($_POST['FromDate'])){
 	$InputError=1;
 	unset($_POST['FromDate']);
 }
-if (!Is_Date($_POST['ToDate']) AND isset($_POST['ToDate'])){
+if (isset($_POST['ToDate']) and !Is_Date($_POST['ToDate'])){
 	$msg = _('The date to must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	$InputError=1;
 	unset($_POST['ToDate']);
@@ -32,10 +32,10 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
      echo '<CENTER><TABLE>
      			<TR>
 				<TD>' . _('Enter the date from which cheques are to be listed') . ":</TD>
-				<TD><INPUT TYPE=text NAME='FromDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></TD>
+				<TD><INPUT TYPE=text NAME='FromDate' MAXLENGTH=10 SIZE=10 onChange='return isDate(this, this.value, ".'"'.$_SESSION['DefaultDateFormat'].'"'.")'  VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></TD>
 			</TR>";
      echo '<TR><TD>' . _('Enter the date to which cheques are to be listed') . ":</TD>
-     		<TD><INPUT TYPE=text NAME='ToDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></TD>
+     		<TD><INPUT TYPE=text NAME='ToDate' MAXLENGTH=10 SIZE=10 onChange='return isDate(this, this.value, ".'"'.$_SESSION['DefaultDateFormat'].'"'.")'  VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></TD>
 	</TR>";
      echo '<TR><TD>' . _('Bank Account') . '</TD><TD>';
 
