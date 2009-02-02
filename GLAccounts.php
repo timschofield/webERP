@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 10;
 include('includes/session.inc');
@@ -213,7 +213,7 @@ if (isset($_POST['submit'])) {
 
 if (!isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] .  '?' . SID . "'>";
+	echo "<FORM METHOD='post' name='GLAccounts' action='" . $_SERVER['PHP_SELF'] .  '?' . SID . "'>";
 
 	if (isset($SelectedAccount)) {
 		//editing an existing account
@@ -232,7 +232,7 @@ if (!isset($_GET['delete'])) {
 		echo "<CENTER><TABLE><TR><TD>" . _('Account Code') . ":</TD><TD>" . $_POST['AccountCode'] . "</TD></TR>";
 	} else {
 		echo "<CENTER><TABLE>";
-		echo "<TR><TD>" . _('Account Code') . ":</TD><TD><INPUT TYPE=TEXT NAME='AccountCode' SIZE=11 MAXLENGTH=10></TD></TR>";
+		echo "<TR><TD>" . _('Account Code') . ":</TD><TD><INPUT TYPE=TEXT NAME='AccountCode' SIZE=11 onKeyPress='return restrictToNumbers(this, event)'  MAXLENGTH=10></TD></TR>";
 	}
 
 	if (!isset($_POST['AccountName'])) {$_POST['AccountName']='';}
@@ -252,6 +252,12 @@ if (!isset($_GET['delete'])) {
 		echo $myrow[0] . "'>" . $myrow[0];
 	}
 
+	if (!isset($_GET['SelectedAccount']) or $_GET['SelectedAccount']=='') {
+		echo "<script>defaultControl(document.GLAccounts.AccountCode);</script>";
+	} else {
+		echo "<script>defaultControl(document.GLAccounts.AccountName);</script>";
+	}
+	
 	?>
 
 	</SELECT></TD></TR>
