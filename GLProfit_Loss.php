@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 8;
 
@@ -23,10 +23,13 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	if (Date('m') > $_SESSION['YearEnd']){
 		/*Dates in SQL format */
 		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')));
+		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')));
 	} else {
 		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
+		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 	}
-
+	$period=GetPeriod($FromDate, $db);
+	
 	/*Show a form to allow input of criteria for profit and loss to show */
 	echo '<CENTER><TABLE><TR><TD>'._('Select Period From').":</TD><TD><SELECT Name='FromPeriod'>";
 
@@ -52,15 +55,16 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 	echo '</SELECT></TD></TR>';
 	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']==''){
-		$sql = 'SELECT MAX(periodno) FROM periods';
+		$lastDate = date("Y-m-d",mktime(0,0,0,Date('m')+1,0,Date('Y')));
+		$sql = "SELECT periodno FROM periods where lastdate_in_period = '$lastDate'";
 		$MaxPrd = DB_query($sql,$db);
 		$MaxPrdrow = DB_fetch_row($MaxPrd);
+		$DefaultToPeriod = (int) ($MaxPrdrow[0]);
 
-		$DefaultToPeriod = (int) ($MaxPrdrow[0]-1);
 	} else {
 		$DefaultToPeriod = $_POST['ToPeriod'];
 	}
-
+	
 	echo '<TR><TD>' . _('Select Period To') . ":</TD><TD><SELECT Name='ToPeriod'>";
 
 	$RetResult = DB_data_seek($Periods,0);
@@ -830,8 +834,11 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 		$PeriodLYProfitLoss += $AccountPeriodLY;
 
 		for ($i=0;$i<=$Level;$i++){
+			if (!isset($GrpPrdLY[$i])) {$GrpPrdLY[$i]=0;}
 			$GrpPrdLY[$i] +=$AccountPeriodLY;
+			if (!isset($GrpPrdActual[$i])) {$GrpPrdActual[$i]=0;}
 			$GrpPrdActual[$i] +=$AccountPeriodActual;
+			if (!isset($GrpPrdBudget[$i])) {$GrpPrdBudget[$i]=0;}
 			$GrpPrdBudget[$i] +=$AccountPeriodBudget;
 		}
 		$SectionPrdLY +=$AccountPeriodLY;
@@ -1093,7 +1100,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 		$Section = $myrow['sectioninaccounts'];
 
-		if ($_POST['Detail']=='Detailed'){
+		if ($_POST['Detail']=='Detailed' and isset($Sections[$myrow['sectioninaccounts']])){
 			printf('<TR>
 				<td COLSPAN=6><FONT SIZE=4 COLOR=BLUE><B>%s</B></FONT></TD>
 				</TR>',
