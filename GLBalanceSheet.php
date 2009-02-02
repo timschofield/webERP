@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 
@@ -11,19 +11,25 @@ $title = _('Balance Sheet');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
 
-if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'])){
+if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'])){
 
 	/*Show a form to allow input of criteria for TB to show */
 	include('includes/header.inc');
 	echo "<FORM METHOD='POST' ACTION=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo '<CENTER><TABLE><TR><TD>'._('Select the balance date').":</TD><TD><SELECT Name='BalancePeriodEnd'>";
 
+	$periodno=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+	$sql = 'SELECT lastdate_in_period FROM periods WHERE periodno='.$periodno;
+	$result = DB_query($sql,$db);
+	$myrow=DB_fetch_array($result, $db);
+	$lastdate_in_period=$myrow[0];
+	
 	$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
 	$Periods = DB_query($sql,$db);
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
-		if( isset($_POST['BalancePeriodEnd']) and $_POST['BalancePeriodEnd']== $myrow['periodno']){
-			echo '<OPTION SELECTED VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']);
+		if( $myrow['periodno']== $periodno){
+			echo '<OPTION SELECTED VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($lastdate_in_period);
 		} else {
 			echo '<OPTION VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']);
 		}
@@ -618,7 +624,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 	
 	$Section = $myrow['sectioninaccounts'];
 
-	if ($_POST['Detail']=='Detailed'){
+	if (isset($myrow['sectioninaccounts']) and $_POST['Detail']=='Detailed'){
 		printf('<TR>
 			<TD COLSPAN=6><FONT SIZE=4 COLOR=BLUE><B>%s</B></FONT></TD>
 			</TR>',
