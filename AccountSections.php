@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 10;
 
@@ -212,7 +212,7 @@ echo '<P>';
 
 if (! isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo "<FORM METHOD='post' name='AccountSections' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 	if (isset($_GET['SelectedSectionID'])) {
 		//editing an existing section
@@ -252,7 +252,7 @@ if (! isset($_GET['delete'])) {
 		echo "<CENTER><TABLE>
 			<TR>
 			<TD>" . _('Section Number') . ':' . '</TD>
-			<TD><input tabindex="1" ' . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) ." type='Text' name='SectionID' SIZE=4 MAXLENGTH=4 value='" . $_POST['SectionID'] . "'></TD></TR>";
+			<TD><input tabindex="1" ' . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) ." type='Text' name='SectionID' onKeyPress='return restrictToNumbers(this, event)'  SIZE=4 MAXLENGTH=4 value='" . $_POST['SectionID'] . "'></TD></TR>";
 	}
 	echo "<TR><TD>" . _('Section Description') . ':' . '</TD>
 		<TD><input tabindex="2" ' . (in_array('SectionName',$Errors) ?  'class="inputerror"' : '' ) ." type='Text' name='SectionName' SIZE=30 MAXLENGTH=30 value='" . $_POST['SectionName'] . "'></TD>
@@ -260,6 +260,12 @@ if (! isset($_GET['delete'])) {
 	echo '</TABLE>';
 
 	echo '<CENTER><input tabindex="3" type=Submit name=submit value=' . _('Enter Information') . '>';
+
+	if (!isset($_GET['SelectedSectionID']) or $_GET['SelectedSectionID']=='') {
+		echo "<script>defaultControl(document.AccountSections.SectionID);</script>";
+	} else {
+		echo "<script>defaultControl(document.AccountSections.SectionName);</script>";
+	}
 
 	echo '</FORM>';
 
