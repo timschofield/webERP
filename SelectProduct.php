@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.38 $ */
+/* $Revision: 1.39 $ */
 
 $PageSecurity = 2;
 
@@ -55,7 +55,7 @@ if (DB_num_rows($result1) == 0) {
 <CENTER>
 <FORM ACTION="<?php echo $_SERVER['PHP_SELF'] . '?' . SID; ?>" METHOD=POST>
 <B><?php echo $msg; ?></B>
-<?php echo '<BR>' . _('Search for Inventory Items:'); ?>
+<?php echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Search for Inventory Items'); ?>
 <TABLE>
 <TR>
 <TD><?php echo _('In Stock Category'); ?>:
@@ -422,7 +422,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
     $Its_A_Kitset = false;
     $Its_A_Labour_Item = false;
 
-    echo '<CENTER><TABLE BORDER=1><TR><TH colspan=3><font size=4>' . $StockID . ' - ' . $myrow['description'] . ' </font></TH></TR>';
+    echo '<CENTER><TABLE BORDER=1><TR><TH colspan=3><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" TITLE="' . _('Inventory') . '" ALT=""><B>' . ' ' . $StockID . ' - ' . $myrow['description'] . '</TH></TR></B>';
 
     echo '<TR><TD width="40%">
             <TABLE>'; //nested table
