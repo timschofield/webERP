@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
@@ -15,12 +15,12 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); //this reads in the Accounts Sections array
 
 
-if ($_POST['FromPeriod'] > $_POST['ToPeriod']){
+if (isset($_POST['FromPeriod']) and isset($_POST['ToPeriod']) and $_POST['FromPeriod'] > $_POST['ToPeriod']){
 	prnMsg(_('The selected period from is actually after the period to! Please re-select the reporting period'),'error');
 	$_POST['SelectADifferentPeriod']=_('Select A Different Period');
 }
 
-if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['SelectADifferentPeriod']==_('Select A Different Period')){
+if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])){
 
 	include  ('includes/header.inc');
 	echo '<FORM METHOD="POST" ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
@@ -28,10 +28,13 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 	if (Date('m') > $_SESSION['YearEnd']){
 		/*Dates in SQL format */
 		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')));
+		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')));
 	} else {
 		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
+		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 	}
-
+	$period=GetPeriod($FromDate, $db);
+	
 	/*Show a form to allow input of criteria for TB to show */
 	echo '<CENTER><TABLE><TR><TD>' . _('Select Period From:') . '</TD><TD><SELECT Name="FromPeriod">';
 	$nextYear = date("Y-m-d",strtotime("+1 Year"));
@@ -57,7 +60,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 
 	echo '</SELECT></TD></TR>';
 	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']==''){
-		$lastDate = date("Y-m-d",strtotime("last day"));
+		$lastDate = date("Y-m-d",mktime(0,0,0,Date('m')+1,0,Date('Y')));
 		$sql = "SELECT periodno FROM periods where lastdate_in_period = '$lastDate'";
 		$MaxPrd = DB_query($sql,$db);
 		$MaxPrdrow = DB_fetch_row($MaxPrd);
@@ -548,6 +551,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 
 		}
 
+		if (!isset($GrpActual[$Level])) {$GrpActual[$Level]=0;}
+		if (!isset($GrpBudget[$Level])) {$GrpBudget[$Level]=0;}
+		if (!isset($GrpPrdActual[$Level])) {$GrpPrdActual[$Level]=0;}
+		if (!isset($GrpPrdBudget[$Level])) {$GrpPrdBudget[$Level]=0;}
 		$GrpActual[$Level] +=$myrow['monthactual'];
 		$GrpBudget[$Level] +=$myrow['monthbudget'];
 		$GrpPrdActual[$Level] +=$AccountPeriodActual;
@@ -625,7 +632,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 				$Level--;
 				
 				$j++;
-			} while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0);
+			} while (isset($ParentGroups[$Level]) and ($myrow['groupname']!=$ParentGroups[$Level] and $Level>0));
 			
 			if ($Level >0){	
 				printf('<TR>
