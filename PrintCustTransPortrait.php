@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 1;
 
@@ -409,10 +409,10 @@ If (isset($PrintPDF)
 		$YPos = $Bottom_Margin+(3*$line_height);
 	/* Print out the payment terms */
 
-  		$pdf->addTextWrap($Left_Margin+5,$YPos+3,180,$FontSize,_('Payment Terms') . ': ' . $myrow['terms']);
+  		$pdf->addTextWrap($Left_Margin+5,$YPos+3,280,$FontSize,_('Payment Terms') . ': ' . $myrow['terms']);
 
 		$FontSize =8;
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-12,280,$FontSize,$myrow['invtext']);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-5,280,$FontSize,$myrow['invtext']);
 		if (strlen($LeftOvers)>0){
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-24,280,$FontSize,$LeftOvers);
 			if (strlen($LeftOvers)>0){

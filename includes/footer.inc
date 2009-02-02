@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 
 	echo '<BR><BR>';
 	echo '</TD>';
@@ -19,7 +19,7 @@
 
 	echo '<TR>';
 	echo '<TD ALIGN="center">';
- 	echo '<A HREF="http://www.weberp.org" TARGET="_blank"><IMG SRC="'. $rootpath . '/' . $_SESSION['LogoFile'] . '" WIDTH=20% BORDER="0" ALT="" TITLE="webERP ' . _('Copyright') . ' &copy; webrp.org - ' . date('Y') . '"></A>';
+ 	echo '<A HREF="http://www.weberp.org" TARGET="_blank"><IMG SRC="'. $rootpath . '/' . $_SESSION['LogoFile'] . '" WIDTH=10% BORDER="0" ALT="" TITLE="webERP ' . _('Copyright') . ' &copy; webrp.org - ' . date('Y') . '"></A>';
  	echo '<BR>' . _('Version') . ' - ' . $Version;
 
 	echo '</TD></TR>';
