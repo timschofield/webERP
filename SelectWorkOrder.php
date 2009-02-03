@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 
@@ -8,6 +8,7 @@ include('includes/session.inc');
 $title = _('Search Work Orders');
 include('includes/header.inc');
 
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . $title;
 echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] .'?' .SID . ' METHOD=POST>';
 
 
@@ -372,6 +373,8 @@ If (isset($StockItemsResult)) {
 
 	echo '</TABLE>';
 }
+
+echo "<script>defaultControl(document.forms[0].WO);</script>";
 
 ?>
 </FORM>
