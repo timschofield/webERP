@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 10;
 
@@ -10,8 +10,8 @@ $title = _('Work Order Entry');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
-
-if ($_REQUEST['WO']!=''){
+ echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . $title;
+if (isset($_REQUEST['WO']) and $_REQUEST['WO']!=''){
 	$_POST['WO'] = $_REQUEST['WO'];
     $EditingExisting = true;
 } else {
@@ -371,7 +371,7 @@ if (isset($_POST['submit'])) { //The update button has been clicked
     }
 }
 
-echo '<FORM METHOD="post" action="' . $_SERVER['PHP_SELF'] . '">';
+echo '<FORM METHOD="post" action="' . $_SERVER['PHP_SELF'] . '" name="form">';
 
 echo '<CENTER><TABLE>';
 
@@ -446,7 +446,7 @@ if (!isset($_POST['RequiredBy'])){
 }
 
 echo '<tr><td class="label">' . _('Required By') . ':</td>
-		  <td><input type="textbox" name="RequiredBy" size=12 maxlength=12 value="' . $_POST['RequiredBy'] . '"></td></tr>';
+		  <td><input type="textbox" name="RequiredBy"  size=12 maxlength=12 value="' . $_POST['RequiredBy'] . '" onChange="return isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')'.'"'.'></td></tr>';
 
 if (isset($WOResult)){
 	echo '<tr><td class="label">' . _('Accumulated Costs') . ':</td>
@@ -465,8 +465,8 @@ echo '<tr><th>' . _('Output Item') . '</th>
 if (isset($NumberOfOutputs)){
 	for ($i=1;$i<=$NumberOfOutputs;$i++){
 		echo '<tr><td><input type="hidden" name="OutputItem' . $i . '" value="' . $_POST['OutputItem' .$i] . '">' . $_POST['OutputItem' . $i] . ' - ' . $_POST['OutputItemDesc' .$i] . '</td>
-		  		<td><input type="textbox" name="OutputQty' . $i . '" value=' . $_POST['OutputQty' . $i] . ' size=10 maxlength=10></td>
-		  		<td align="right"><input type="hidden" name="RecdQty' . $i . '" value=' . $_POST['RecdQty' .$i] . '>' . $_POST['RecdQty' .$i] .'</td>
+		  		<td><input type="text" STYLE="text-align: right" name="OutputQty' . $i . '" value=' . $_POST['OutputQty' . $i] . ' size=10 onKeyPress="return restrictToNumbers(this, event)" maxlength=10></td>
+		  		<td><input type="hidden" name="RecdQty' . $i . '" value=' . $_POST['RecdQty' .$i] . '>' . $_POST['RecdQty' .$i] .'</td>
 		  		<td align="right">' . ($_POST['OutputQty' . $i] - $_POST['RecdQty' .$i]) . '</td>';
 		if ($_POST['Controlled'.$i]==1){
 			echo '<td><input type=textbox name="NextLotSNRef' .$i . '" value="' . $_POST['NextLotSNRef'.$i] . '"></td>';
@@ -522,14 +522,8 @@ while ($myrow1 = DB_fetch_array($result1)) {
 		</TABLE>
 		<CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>">
 
-<script language='JavaScript' type='text/javascript'>
-
-   	document.forms[0].StockCode.select();
-   	document.forms[0].StockCode.focus();
-
-</script>
-
 <?php
+
 echo '</CENTER>';
 
 if (isset($SearchResult)) {
@@ -580,7 +574,7 @@ if (isset($SearchResult)) {
 						$myrow['description'],
 						$myrow['units'],
 						$ImageSource,
-						$_SERVER['PHP_SELF'] . '?' . SID . 'WO=' . $_POST['WO'] . '&NewItem=' . $myrow['stockid']);
+						$_SERVER['PHP_SELF'] . '?' . SID . 'WO=' . $_POST['WO'] . '&NewItem=' . $myrow['stockid'].'&Line='.$i);
 
 				$j++;
 				If ($j == 25){
@@ -594,6 +588,12 @@ if (isset($SearchResult)) {
 
 }#end if SearchResults to show
 
+
+if (!isset($_GET['NewItem']) or $_GET['NewItem']=='') {
+	echo "<script>defaultControl(document.forms[0].StockCode);</script>";
+} else {
+	echo "<script>defaultControl(document.forms[0].OutputQty".$_GET['Line'].");</script>";
+}
 
 
 echo '</FORM>';
