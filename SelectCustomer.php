@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.47 $ */
+/* $Revision: 1.48 $ */
 
 $PageSecurity = 2;
 
@@ -14,7 +14,7 @@ if (!isset($_SESSION['CustomerID'])){ //initialise if not already done
 }
 
 if ($_SESSION['CustomerID'] ==""){
-echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Search for Customers') . '';
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" TITLE="' . _('Customer') . '" ALT="">' . ' ' . _('Customers') . '';
 }
 
 if (!isset($_SESSION['CustomerType'])){ //initialise if not already done
@@ -284,7 +284,7 @@ if ($_POST['Select']!="" or
   	if (!isset($_SESSION['SalesmanLogin']) or $_SESSION['SalesmanLogin']==''){
     	echo '<a href="' . $rootpath . '/Customers.php?">' . _('Add a New Customer') . '</a><br>';
     }
-	echo '</TD></TR></TABLE><BR></CENTER>';
+	echo '</TD></TR></TABLE></CENTER>';
 }
 
 ?>
@@ -292,7 +292,8 @@ if ($_POST['Select']!="" or
 <FORM ACTION="<?php echo $_SERVER['PHP_SELF'] . '?' . SID; ?>" METHOD=POST>
 <CENTER>
 <B><?php echo $msg; ?></B>
-<?php echo _('Search for Customers:') . '<br><br>'; ?>
+<?php echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Search for Customers');
+?>
 <TABLE CELLPADDING=3 COLSPAN=4>
 <TR>
 <TD><?php echo _('Enter a partial Name'); ?>:</TD>

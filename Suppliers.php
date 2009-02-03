@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.36 $ */
+/* $Revision: 1.37 $ */
 
 $PageSecurity = 5;
 
@@ -301,7 +301,9 @@ if (isset($_GET['SupplierID'])){
 	unset($SupplierID);
 }
 
-echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
+// This is aleady linked from this page
+//echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Suppliers') . '';
 
 $InputError = 0;
 
@@ -370,27 +372,27 @@ if (isset($_POST['submit'])) {
 		$SQL_SupplierSince = FormatDateForSQL($_POST['SupplierSince']);
 
 if ($_SESSION['geocode_integration']==1 ){
- 	 // Get the lat/long from our geocoding host
-	$sql = "SELECT * FROM geocode_param WHERE 1";
-	$ErrMsg = _('An error occurred in retrieving the information');
-	$resultgeo = DB_query($sql, $db, $ErrMsg);
-	$row = DB_fetch_array($resultgeo);
-	$api_key = $row['geocode_key'];
-	$map_host = $row['map_host'];
-	define("MAPS_HOST", $map_host);
-	define("KEY", $api_key);
+// Get the lat/long from our geocoding host
+$sql = "SELECT * FROM geocode_param WHERE 1";
+$ErrMsg = _('An error occurred in retrieving the information');
+$resultgeo = DB_query($sql, $db, $ErrMsg);
+$row = DB_fetch_array($resultgeo);
+$api_key = $row['geocode_key'];
+$map_host = $row['map_host'];
+define("MAPS_HOST", $map_host);
+define("KEY", $api_key);
 
-	$address = $_POST["Address1"] . ", " . $_POST["Address2"] . ", " . $_POST["Address3"] . ", " . $_POST["Address4"];
+$address = $_POST["Address1"] . ", " . $_POST["Address2"] . ", " . $_POST["Address3"] . ", " . $_POST["Address4"];
 
-	$base_url = "http://" . MAPS_HOST . "/maps/geo?output=xml" . "&key=" . KEY;
-	$request_url = $base_url . "&q=" . urlencode($address);
-	$xml = simplexml_load_file($request_url) or die(_('url not loading'));
+$base_url = "http://" . MAPS_HOST . "/maps/geo?output=xml" . "&key=" . KEY;
+$request_url = $base_url . "&q=" . urlencode($address);
+$xml = simplexml_load_file($request_url) or die("url not loading");
 
-    $coordinates = $xml->Response->Placemark->Point->coordinates;
-    $coordinatesSplit = split(",", $coordinates);
-    // Format: Longitude, Latitude, Altitude
-    $latitude = $coordinatesSplit[1];
-    $longitude = $coordinatesSplit[0];
+      $coordinates = $xml->Response->Placemark->Point->coordinates;
+      $coordinatesSplit = split(",", $coordinates);
+      // Format: Longitude, Latitude, Altitude
+      $latitude = $coordinatesSplit[1];
+      $longitude = $coordinatesSplit[0];
 
     $status = $xml->Response->Status->code;
     if (strcmp($status, "200") == 0) {
@@ -411,19 +413,19 @@ if ($_SESSION['geocode_integration']==1 ){
 }
 		if (!isset($_POST['New'])) {
 
-			$SuppTransSQL = "SELECT COUNT(supplierno)
-									FROM supptrans
-									WHERE supplierno='".$SupplierID ."'";
-			$SuppResult = DB_query($SuppTransSQL, $db);
-			$SuppTrans = DB_fetch_row($SuppResult);
+			$supptranssql = "SELECT COUNT(supplierno)
+													FROM supptrans
+													WHERE supplierno='".$SupplierID ."'";
+			$suppresult = DB_query($supptranssql, $db);
+			$supptrans = DB_fetch_row($suppresult);
 
-			$SuppCurrSQL = "SELECT currcode
-									FROM suppliers
-									WHERE supplierid='".$SupplierID ."'";
-			$CurrResult = DB_query($SuppCurrSQL, $db);
-			$SuppCurr = DB_fetch_row($CurrResult);
+			$suppcurrssql = "SELECT currcode
+													FROM suppliers
+													WHERE supplierid='".$SupplierID ."'";
+			$currresult = DB_query($suppcurrssql, $db);
+			$suppcurr = DB_fetch_row($currresult);
 
-			if ($SuppTrans[0] == 0) {
+			if ($supptrans == 0) {
 				$sql = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "',
 							address1='" . $_POST['Address1'] . "',
 							address2='" . $_POST['Address2'] . "',

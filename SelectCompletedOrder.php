@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 1;
 
@@ -50,7 +50,7 @@ If (isset($_POST['ResetPart'])) {
 }
 
 If (isset($OrderNumber)) {
-	echo _('Order Number') . ' - ' . $OrderNumber;
+	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" TITLE="' . _('Sales Order') . '" ALT="">' . ' ' . _('Order Number') . ' - ' . $OrderNumber . '</P>';
 } elseif (isset($CustomerRef)) {
 	echo _('Customer Ref') . ' - ' . $CustomerRef;
 } else {

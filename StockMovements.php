@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 2;
 
@@ -18,13 +18,14 @@ if (isset($_GET['StockID'])){
 }
 
 
-echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'>" .  _('Back to Items') . '</A><BR>';
+// This is already linked from this page
+//echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'>" .  _('Back to Items') . '</A><BR>';
 
 $result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='$StockID'",$db);
 $myrow = DB_fetch_row($result);
-echo '<CENTER><BR><FONT SIZE=3>' . _('Item') . ' :<B> ' . $StockID . ' - ' . $myrow[0] . ' </B>  (' . _('in units of') . ' :<B> ' . $myrow[1] . ')</B></FONT><BR><BR>';
+echo '<P Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" TITLE="' . _('Inventory') . '" ALT=""><B>' . ' ' . $StockID . ' - ' . $myrow['0'] . ' : ' . _('in units of') . ' : ' . $myrow[1] . '';
 
-echo "<FORM ACTION='". $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
+echo "<CENTER><FORM ACTION='". $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 echo _('Stock Code') . ":<INPUT TYPE=TEXT NAME='StockID' SIZE=21 VALUE='$StockID' MAXLENGTH=20>";
 
 echo '  ' . _('From Stock Location') . ":<SELECT NAME='StockLocation'> ";

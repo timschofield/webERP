@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 
 $PageSecurity = 2;
@@ -19,7 +19,8 @@ if (isset($_GET['StockID'])){
 	$StockID = '';
 }
 
-echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</A><BR>';
+// This is already linked from this page
+//echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</A><BR>';
 
 $result = DB_query("SELECT description,
                            units,
@@ -41,7 +42,8 @@ $DecimalPlaces = $myrow[3];
 $Serialised = $myrow[4];
 $Controlled = $myrow[5];
 
-echo '<CENTER><BR><FONT SIZE=3>' . _('Item') . ' :<B> ' . $StockID . ' - ' . $myrow[0] . ' </B>  (' . _('in units of') . ' :<B> ' . $myrow[1] . ')</B></FONT><BR><BR>';
+echo '<P Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" TITLE="' . _('Inventory') . '" ALT=""><B>' . ' ' . $StockID . ' - ' . $myrow['0'] . ' : ' . _('in units of') . ' : ' . $myrow[1] . '';
+
 $Its_A_KitSet_Assembly_Or_Dummy =False;
 if ($myrow[2]=='K'){
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
@@ -54,10 +56,10 @@ if ($myrow[2]=='K'){
 	prnMsg( _('This is an dummy part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'),'info');
 }
 
-echo '<HR><FORM ACTION="' . $_SERVER['PHP_SELF'] . '?'. SID . '" METHOD=POST>';
+echo '<CENTER><FORM ACTION="' . $_SERVER['PHP_SELF'] . '?'. SID . '" METHOD=POST>';
 echo _('Stock Code') . ':<input type=text name="StockID" size=21 value="' . $StockID . '" maxlength=20>';
 
-echo ' <INPUT TYPE=SUBMIT NAME="ShowStatus" VALUE="' . _('Show Stock Status') . '"><HR>';
+echo ' <INPUT TYPE=SUBMIT NAME="ShowStatus" VALUE="' . _('Show Stock Status') . '">';
 
 $sql = "SELECT locstock.loccode,
                locations.locationname,
@@ -232,7 +234,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 //end of page full new headings if
 }
 //end of while loop
-echo '</TABLE><HR>';
+echo '</TABLE>';
 
 if (isset($_GET['DebtorNo'])){
 	$DebtorNo = trim(strtoupper($_GET['DebtorNo']));
@@ -338,9 +340,8 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	}
 }
 //end of displaying price history for a debtor
-echo '<hr>';
 
-echo '<A HREF="' . $rootpath . '/StockMovements.php?' . SID . '&StockID=' . $StockID . '">' . _('Show Movements') . '</A>';
+echo '<BR><A HREF="' . $rootpath . '/StockMovements.php?' . SID . '&StockID=' . $StockID . '">' . _('Show Movements') . '</A>';
 echo '<BR><A HREF="' . $rootpath . '/StockUsage.php?' . SID . '&StockID=' . $StockID . '">' . _('Show Usage') . '</A>';
 echo '<BR><A HREF="' . $rootpath . '/SelectSalesOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</A>';
 echo '<BR><A HREF="' . $rootpath . '/SelectCompletedOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</A>';

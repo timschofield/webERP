@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -458,7 +458,7 @@ if (isset($_POST['CommitBatch'])){
 
    prnMsg( _('Receipt batch') . ' ' . $_SESSION['ReceiptBatch']->BatchNo . ' ' . _('has been successfully entered into the database'),'success');
 
-   echo '<BR><A HREF="' . $rootpath . '/PDFBankingSummary.php?BatchNo=' . $_SESSION['ReceiptBatch']->BatchNo . '">' . _('Print PDF Batch Summary') . '</A>';
+   echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . '<A HREF="' . $rootpath . '/PDFBankingSummary.php?BatchNo=' . $_SESSION['ReceiptBatch']->BatchNo . '">' . _('Print PDF Batch Summary') . '</A></P>';
    unset($_SESSION['ReceiptBatch']);
    include('includes/footer.inc');
    exit;
@@ -766,7 +766,7 @@ echo '</table>
 if (isset($_SESSION['ReceiptBatch'])){
 	/* Now show the entries made so far */
 
-	echo '<font size=3 color=blue>' . $_SESSION['ReceiptBatch']->ReceiptType . ' - ' . _('Banked into the') . " " . $_SESSION['ReceiptBatch']->BankAccountName . ' ' . _('on') . ' ' . $_SESSION['ReceiptBatch']->DateBanked . '</font>';
+	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Banked') . '" ALT="">' . ' ' . $_SESSION['ReceiptBatch']->ReceiptType . ' - ' . _('Banked into the') . " " . $_SESSION['ReceiptBatch']->BankAccountName . ' ' . _('on') . ' ' . $_SESSION['ReceiptBatch']->DateBanked . '</P>';
 
 	echo '<table width=100% border=1><tr>
    			<th>' . _('Amount') .'<br/>' . _('Received') . '</th>
@@ -818,7 +818,7 @@ if (isset($_SESSION['CustomerRecord'])
 		AND isset($_SESSION['ReceiptBatch'])){
 /*a customer is selected  */
 
-	echo '<br><center><font size=4>' . $_SESSION['CustomerRecord']['name'] . ' </font></b> - (' . _('All amounts stated in') . ' ' . $_SESSION['CustomerRecord']['currency'] . ')</center><br><b><font color=blue>' . _('Terms') . ': ' . $_SESSION['CustomerRecord']['terms'] . '<br/>' . _('Credit Limit') . ': </b></font> ' . number_format($_SESSION['CustomerRecord']['creditlimit'],0) . '  <B><FONT COLOR=BLUE>' . _('Credit Status') . ':</B></FONT> ' . $_SESSION['CustomerRecord']['reasondescription'];
+	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" TITLE="' . _('Customer') . '" ALT="">' . ' ' . $_SESSION['CustomerRecord']['name'] . ' - (' . _('All amounts stated in') . ' ' . $_SESSION['CustomerRecord']['currency'] . ')' . _('Terms') . ': ' . $_SESSION['CustomerRecord']['terms'] . '<br/>' . _('Credit Limit') . ': ' . number_format($_SESSION['CustomerRecord']['creditlimit'],0) . '  ' . _('Credit Status') . ': ' . $_SESSION['CustomerRecord']['reasondescription'];
 
 	if ($_SESSION['CustomerRecord']['dissallowinvoices']!=0){
 	   echo '<br><font color=red size=4><b>' . _('ACCOUNT ON HOLD') . '</font></b><br/>';
@@ -941,7 +941,7 @@ if (((isset($_SESSION['CustomerRecord'])
         echo '<B>';
 
 	echo $msg;
-	echo '<br/><u>' . _('Select A Customer') . '</u></b>';
+	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" TITLE="' . _('Customer') . '" ALT="">' . ' ' . _('Select a Customer') . '</b>';
 	echo '<table cellpadding=3 colspan=4>';
 	echo '<tr><td>' . _('Text in the Customer') . ' ' . '<b>' . _('name') . '</b>:</td>';
 	echo '<td><input tabindex=9 type="text" name="Keywords" size=20 maxlength=25></td>';

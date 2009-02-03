@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.40 $ */
+/* $Revision: 1.41 $ */
 
 $PageSecurity = 2;
 
@@ -10,7 +10,7 @@ include('includes/Wiki.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if (!isset($_SESSION['SupplierID'])){
-echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Search for Suppliers') . '';
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Suppliers') . '';
 }
 
 
@@ -224,7 +224,8 @@ echo '</TD></TR></TABLE>';
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD=POST>";
 echo '<B>' . $msg;
-echo '</B><CENTER><P>' . _('Search for Suppliers:') . '</P>
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Search for Suppliers') . '
+
 	<TABLE CELLPADDING=3 COLSPAN=4>
 	<TR>
 	<TD>' . _('Enter a partial Name') . ':</FONT></TD>
