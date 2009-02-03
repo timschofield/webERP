@@ -26,7 +26,8 @@ if (isset($_POST['update'])) {
 }
 
 //If an account hasn't been selected then select one here.
-echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . ' METHOD=POST>';
+ echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . $title;
+ echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . ' METHOD=POST>';
 echo '<CENTER><TABLE>';
 
 echo '</BR><TR><TD>'.  _('Select GL Account').  ":</TD><TD><SELECT name='SelectedAccount'>";
@@ -63,7 +64,7 @@ if (!isset($NextCode)) {$NextCode='';}
 echo '<INPUT TYPE=HIDDEN NAME=PrevAccount VALUE='.$PrevCode.'>';
 echo '<INPUT TYPE=HIDDEN NAME=NextAccount VALUE='.$NextCode.'>';
 echo '</TABLE>';
-echo "<TABLE><TR><TD><INPUT TYPE=SUBMIT name=Previous value='" . _('Prev Account') . "'></TD>";
+echo "<br><TABLE><TR><TD><INPUT TYPE=SUBMIT name=Previous value='" . _('Prev Account') . "'></TD>";
 echo "<TD><INPUT TYPE=SUBMIT name=Select value='" . _('Select Account') . "'></TD>";
 echo "<TD><INPUT TYPE=SUBMIT name=Next value='" . _('Next Account') . "'></TD></TR>";
 echo '</TABLE></BR>';
@@ -131,8 +132,8 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 
 // Table Headers
 
-	echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . ' METHOD=POST>';
-	echo '<CENTER><TABLE>';
+	echo '<FORM name="form" ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . ' METHOD=POST>';
+	echo '<CENTER><br><TABLE>';
 	echo '<TR><TH COLSPAN=3>'. _('Last Financial Year') .'</TH>';
 	echo '<TH COLSPAN=3>'. _('This Financial Year') .'</TH>';
 	echo '<TH COLSPAN=3>'. _('Next Financial Year') .'</TH></TR>';
@@ -161,10 +162,10 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 		echo '<TD BGCOLOR="d2e5e8" ALIGN="RIGHT">'.number_format($budget[$CurrentYearEndPeriod-(24-$i)],2,'.','').'</TD>';
 		echo '<TD BGCOLOR="a9d3e7">'. $PeriodEnd[$CurrentYearEndPeriod-(12-$i)] .'</TD>';
 		echo '<TD BGCOLOR="d2e5e8" ALIGN="RIGHT">'.number_format($actual[$CurrentYearEndPeriod-(12-$i)],2,'.','').'</TD>';
-		echo '<TD><INPUT TYPE="TEXT" STYLE="text-align: right" SIZE=14 NAME='.$i.'this'.' VALUE="'.number_format($budget[$CurrentYearEndPeriod-(12-$i)],2,'.','').'"></TD>';
+		echo '<TD><INPUT TYPE="TEXT" onChange="numberFormat(this,2)" onKeyPress="return restrictToNumbers(this, event)" STYLE="text-align: right" SIZE=14 NAME='.$i.'this'.' VALUE="'.number_format($budget[$CurrentYearEndPeriod-(12-$i)],2,'.','').'"></TD>';
 		echo '<TD BGCOLOR="a9d3e7">'. $PeriodEnd[$CurrentYearEndPeriod+($i)] .'</TD>';
 		echo '<TD BGCOLOR="d2e5e8" ALIGN="RIGHT">'.number_format($actual[$CurrentYearEndPeriod+($i)],2,'.','').'</TD>';
-		echo '<TD><INPUT TYPE="TEXT" STYLE="text-align: right" SIZE=14 NAME='.$i.'next'.' VALUE='.number_format($budget[$CurrentYearEndPeriod+($i)],2,'.','').'></TD>';
+		echo '<TD><INPUT TYPE="TEXT" onChange="numberFormat(this,2)" onKeyPress="return restrictToNumbers(this, event)" STYLE="text-align: right" SIZE=14 NAME='.$i.'next'.' VALUE='.number_format($budget[$CurrentYearEndPeriod+($i)],2,'.','').'></TD>';
 		echo '</TR>';
 		$LastYearActual=$LastYearActual+$actual[$CurrentYearEndPeriod-(24-$i)];
 		$LastYearBudget=$LastYearBudget+$budget[$CurrentYearEndPeriod-(24-$i)];
@@ -186,11 +187,13 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 	echo '<TH ALIGN="RIGHT">'.number_format($NextYearActual,2,'.',''). '</TH>';
 	echo '<TH ALIGN="RIGHT">'.number_format($NextYearBudget,2,'.',''). '</TH></TR>';
 	echo '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>'._('Annual Budget').'</td>';
-	echo '<td><INPUT TYPE=TEXT size=14 NAME="AnnualAmount"></td>';
+	echo '<td><INPUT onChange="numberFormat(this,2)" onKeyPress="return restrictToNumbers(this, event)" TYPE=TEXT size=14 NAME="AnnualAmount" STYLE="text-align: right"></td>';
 	echo '<td><INPUT TYPE=Submit name="apportion" value="Apportion budget"></td>';
 	echo '</tr>';
 	echo '</TABLE>';
 	echo '<INPUT TYPE=HIDDEN NAME="SelectedAccount" VALUE='.$SelectedAccount.'>';
+
+	echo "<script>defaultControl(document.form.1next);</script>";
 	echo '</BR><INPUT TYPE=SUBMIT name=update value="' . _('Update') . '"></CENTER></FORM>';
 
 	$SQL="SELECT MIN(periodno) FROM periods";
