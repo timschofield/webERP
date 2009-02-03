@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 include('includes/DefineJournalClass.php');
 
@@ -410,6 +410,12 @@ if (ABS($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDe
 } elseif(count($_SESSION['JournalDetail']->GLEntries)>0) {
 	echo '<br><br>';
 	prnMsg(_('The journal must balance ie debits equal to credits before it can be processed'),'warn');
+}
+
+if (!isset($_GET['NewJournal']) or $_GET['NewJournal']=='') {
+	echo "<script>defaultControl(document.form.GLManualCode);</script>";
+} else {
+	echo "<script>defaultControl(document.form.JournalProcessDate);</script>";
 }
 
 echo '</form>';
