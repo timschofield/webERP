@@ -12,7 +12,9 @@ if (isset($_GET['SelectedTag'])) {
 	$myrow = DB_fetch_array($result,$db);
 	$ref=$myrow[0];
 	$description=$myrow[1];
-	$department=$myrow[2];
+} else {
+	$description='';
+	$_GET['SelectedTag']='';
 }
 
 if (isset($_POST['submit'])) {
@@ -26,7 +28,7 @@ if (isset($_POST['update'])) {
 	$result= DB_query($sql,$db);
 }
 
-echo "<center><FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+echo "<center><FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . ' name="form">';
 echo '<BR><table><tr>';
 
 
@@ -34,7 +36,7 @@ echo '<td>'. _('Description') . '</td>
 		<td><input type="text" SIZE=30 MAXLENGTH=30 name="description" value="'.$description.'"></td><td>
 		<input type="hidden" name="reference" value="'.$_GET['SelectedTag'].'">';
 
-if ($_GET['Action']=='edit') {
+if (isset($_GET['Action']) and $_GET['Action']=='edit') {
 	echo '<CENTER><input type=Submit name=update value=' . _('Update') . '>';
 } else {
 	echo '<CENTER><input type=Submit name=submit value=' . _('Insert') . '>';
@@ -57,6 +59,8 @@ while ($myrow = DB_fetch_array($result,$db)){
 }
 
 echo '</table><p></p></center>';
+
+echo "<script>defaultControl(document.form.description);</script>";
 
 include('includes/footer.inc');
 
