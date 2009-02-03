@@ -1,3 +1,8 @@
+function defaultControl (control) {
+    control.select();
+	control.focus();	
+}
+
 function setTextAlign(control, alignment) {
 	control.style.textAlign=alignment;
 }
