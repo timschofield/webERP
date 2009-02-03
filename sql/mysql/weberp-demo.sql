@@ -2030,7 +2030,7 @@ CREATE TABLE `www_users` (
   `modulesallowed` varchar(20) NOT NULL default '',
   `blocked` tinyint(4) NOT NULL default '0',
   `displayrecordsmax` int(11) NOT NULL default '0',
-  `theme` varchar(30) NOT NULL default 'fresh',
+  `theme` varchar(30) NOT NULL default 'jelly',
   `language` varchar(5) NOT NULL default 'en_GB',
   PRIMARY KEY  (`userid`),
   KEY `CustomerID` (`customerid`),
