@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -13,16 +13,16 @@ if (isset($_GET['StockID'])){
 }
 
 if (!isset($_POST['StockID'])) {
-	echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . "?" . SID ." METHOD=POST><B><BR></B>" .
-	 _('Select a manufactured part') . " (" . _('or Assembly or Kit part') . ") " .
+	echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . "?" . SID ." METHOD=POST><B><BR></B>".
+	'<DIV CLASS="page_help_text">'. _('Select a manufactured part') . " (" . _('or Assembly or Kit part') . ") " .
 	 _('to view the costed bill of materials') . "." . "<BR><FONT SIZE=1>" .
 	 _('Parts must be defined in the stock item entry') . "/" . _('modification screen as manufactured') . 
-     ", " . _('kits or assemblies to be available for construction of a bill of material') .
-     "</FONT><TABLE CELLPADDING=3 COLSPAN=4><TR><TD><FONT SIZE=1>" . _('Enter text extracts in the') . 
+     ", " . _('kits or assemblies to be available for construction of a bill of material').'</div>'
+	."</FONT><br><TABLE align='center' CELLPADDING=3 COLSPAN=4><TR><TD><FONT SIZE=1>" . _('Enter text extracts in the') . 
 	 " <B>" . _('description') . "</B>:</FONT></TD><TD><INPUT tabindex='1' TYPE='Text' NAME='Keywords' SIZE=20 MAXLENGTH=25></TD>
 	 <TD><FONT SIZE=3><B>" . _('OR') . "</B></FONT></TD><TD><FONT SIZE=1>" . _('Enter extract of the') . 
      " <B>" . _('Stock Code') . "</B>:</FONT></TD><TD><INPUT tabindex='2' TYPE='Text' NAME='StockCode' SIZE=15 MAXLENGTH=20></TD>
-	 </TR></TABLE><CENTER><INPUT tabindex='3' TYPE=SUBMIT NAME='Search' VALUE=" . _('Search Now') . "></CENTER>";
+	 </TR></TABLE><br><CENTER><INPUT tabindex='3' TYPE=SUBMIT NAME='Search' VALUE=" . _('Search Now') . "></CENTER><br>";
 }
 
 if (isset($_POST['Search'])){
@@ -94,7 +94,7 @@ if (isset($_POST['Search'])){
 
 if (isset($result) AND !isset($SelectedParent)) {
 
-	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
+	echo '<br><hr><br><table align="center" CELLPADDING=2 COLSPAN=7 BORDER=1>';
 	$TableHeader = '<TR><TH>' . _('Code') . '</TH>
 				<TH>' . _('Description') . '</TH>
 				<TH>' . _('On Hand') . '</TH>
@@ -133,7 +133,7 @@ if (isset($result) AND !isset($SelectedParent)) {
 	}
 //end of while loop
 
-	echo '</TABLE>';
+	echo '</TABLE><br>';
 
 }
 
@@ -219,6 +219,11 @@ if (isset($StockID) and $StockID!=""){
 } else { //no stock item entered
 	prnMsg(_('Enter a stock item code above') . ', ' . _('to view the costed bill of material for'),'info');
 }
+
+if (!isset($_POST['StockID']) or $_POST['StockID']=='') {
+	echo "<script>defaultControl(document.forms[0].StockCode);</script>";
+}
+
 echo '</form>';
 include('includes/footer.inc');
 ?>
