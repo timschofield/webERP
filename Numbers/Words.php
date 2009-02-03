@@ -17,7 +17,7 @@
 // | Authors: Piotr Klaban <makler@man.torun.pl>                          |
 // +----------------------------------------------------------------------+
 //
-// $Id: Words.php,v 1.1 2006-11-17 05:59:52 daintree Exp $
+// $Id: Words.php,v 1.2 2009-02-03 22:44:42 tim_schofield Exp $
 //
 
 /**
@@ -58,12 +58,12 @@ class Numbers_Words
      */
     function toWords($num, $locale = 'en_US') {
 
-        include_once("Numbers/Words/lang.${locale}.php");
+        include_once("Numbers/Words/lang.$locale.php");
 
-        $classname = "Numbers_Words_${locale}";
+        $classname = "Numbers_Words_$locale";
 
         if (!class_exists($classname)) {
-            return Numbers_Words::raiseError("Unable to include the Numbers/Words/lang.${locale}.php file");
+            return Numbers_Words::raiseError("Unable to include the Numbers/Words/lang.$locale.php file");
         }
 
         $methods = get_class_methods($classname);
