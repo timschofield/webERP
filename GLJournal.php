@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 include('includes/DefineJournalClass.php');
 
@@ -192,7 +192,9 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 		}
 
 		if ($AllowThisPosting){
-
+			if (!isset($_POST['GLAmount'])) {
+				$_POST['GLAmount']=0;
+			}
 			$SQL = 'SELECT accountname FROM chartmaster WHERE accountcode=' . $_POST['GLCode'];
 			$Result=DB_query($SQL,$db);
 			$myrow=DB_fetch_array($Result);
@@ -231,8 +233,7 @@ echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post name="fo
 
 echo '<p><center>
 	<table border=0 width=100%>
-		<tr><font size=3 color=blue><b>' . _('Journal Line Entry') . '</b></font></tr>
-		<tr><hr></tr>';
+	<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . $title.'<tr><hr></tr>';
 
 // A new table in the first column of the main table
 
@@ -335,6 +336,7 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 	echo '</tr><tr><th>' . _('Credit') . "</th>".'<td><input type=Text Name = "Credit" onKeyPress="return restrictToNumbers(this, event)" ' .
 				'onChange="numberFormat(this,2); eitherOr(this, '.'Debit'.')"'.
 				'onFocus="return setTextAlign(this, '."'".'right'."'".')" Maxlength=12 size=10 value=' . $_POST['Credit'] . '></td>';
+	echo '</tr><tr><td></td><td></td><th>'. _('Narrative'). '</th>';
 	echo '</tr><tr><th></th><th>' . _('GL Narrative') . "</th>";
 
 	echo "<td><input type='text' name='GLNarrative' maxlength=100 size=100 value='" . $_POST['GLNarrative'] . "'></td>";
@@ -344,7 +346,7 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 
 
 	echo "<center>
-				<table width=85% border=1>
+				<table border =1 width=85%><tr><td><table width=100%>
 					<tr>
 						<th>"._('GL Tag')."</th>
 						<th>"._('GL Account')."</th>
@@ -394,7 +396,7 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 							</tr>';
 						}
 
-			echo '<tr><td></td>
+			echo '<tr class="EvenTableRows"><td></td>
 					<td align=right><b> Total </b></td>
 					<td align=right><b>' . number_format($debittotal,2) . '</b></td>
 					<td align=right><b>' . number_format($credittotal,2) . '</b></td>';
@@ -403,7 +405,7 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 					number_format(abs($debittotal-$credittotal),2);
 			}
 			if ($debittotal>$credittotal) {echo ' Credit';} else if ($debittotal<$credittotal) {echo ' Debit';}
-			echo '</b></td></tr></table>';
+			echo '</b></td></tr></table></td></tr></table>';
 
 if (ABS($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDetail']->GLItemCounter > 0){
 	echo "<br><br><input type=submit name='CommitBatch' value='"._('Accept and Process Journal')."'>";
