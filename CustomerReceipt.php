@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -132,10 +132,16 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ //always proc
 if (isset($_POST['Process'])){ //user hit submit a new entry to the receipt batch
 
 	if (!isset($_POST['GLCode'])) {
-		$_POST['GLCode']=1;
+		$_POST['GLCode']='';
 	}
 	if (!isset($_POST['tag'])) {
-		$_POST['tag']=0;
+		$_POST['tag']='';
+	}
+	if (!isset($_POST['CustomerID'])) {
+		$_POST['CustomerID']='';
+	}
+	if (!isset($_POST['CustomerName'])) {
+		$_POST['CustomerName']='';
 	}
 	
 	$_SESSION['ReceiptBatch']->add_to_batch($_POST['Amount'],
