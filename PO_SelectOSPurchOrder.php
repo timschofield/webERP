@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 2;
 
@@ -133,8 +133,9 @@ if (isset($_POST['SearchParts'])){
 */
 
 if (!isset($OrderNumber) or $OrderNumber==''){
-
-	echo _('order number') . ': <INPUT type=text name="OrderNumber" MAXLENGTH =8 SIZE=9>  ' . _('Into Stock Location') . ':<SELECT name="StockLocation"> ';
+	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . $title;
+	echo '<br><br>&nbsp;&nbsp;<a href="' . $rootpath . '/PO_Header.php?' .SID . '&NewOrder=Yes">' . _('Add Purchase Order') . '</a></center>';
+	echo '<center>'._('order number') . ': <INPUT type=text name="OrderNumber" MAXLENGTH =8 SIZE=9>  ' . _('Into Stock Location') . ':<SELECT name="StockLocation"> ';
 	$sql = 'SELECT loccode, locationname FROM locations';
 	$resultStkLocs = DB_query($sql,$db);
 	while ($myrow=DB_fetch_array($resultStkLocs)){
@@ -151,8 +152,7 @@ if (!isset($OrderNumber) or $OrderNumber==''){
 		}
 	}
 
-	echo '</SELECT>  <INPUT TYPE=SUBMIT NAME="SearchOrders" VALUE="' . _('Search Purchase Orders') . '">';
-	echo '&nbsp;&nbsp;<a href="' . $rootpath . '/PO_Header.php?' .SID . '&NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
+	echo '</SELECT>  <INPUT TYPE=SUBMIT NAME="SearchOrders" VALUE="' . _('Search Purchase Orders') . '"></center>';
 }
 
 $SQL='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription';
@@ -161,10 +161,8 @@ $result1 = DB_query($SQL,$db);
 ?>
 
 <HR>
-<FONT SIZE=1><?php echo _('To search for purchase orders for a specific part use the part selection facilities below'); ?> </FONT>
-<INPUT TYPE=SUBMIT NAME="SearchParts" VALUE="<?php echo _('Search Parts Now'); ?>">
-<INPUT TYPE=SUBMIT NAME="ResetPart" VALUE="<?php echo _('Show All'); ?>">
-<TABLE>
+<FONT SIZE=1><div class='page_help_text'><?php echo _('To search for purchase orders for a specific part use the part selection facilities below'); ?></div> </FONT>
+<br><TABLE align="center">
 <TR>
 <TD><FONT SIZE=1><?php echo _('Select a stock category'); ?>:</FONT>
 <SELECT NAME="StockCat">
@@ -184,7 +182,9 @@ while ($myrow1 = DB_fetch_array($result1)) {
 <TD><FONT SIZE 3><B><?php echo _('OR'); ?> </B></FONT><FONT SIZE=1><?php echo _('Enter extract of the'); ?> <B><?php echo _('Stock Code'); ?></B>:</FONT></TD>
 <TD><INPUT TYPE="Text" NAME="StockCode" SIZE=15 MAXLENGTH=18></TD>
 </TR>
-</TABLE>
+</TABLE><br>
+<table align="center"><tr><td><INPUT TYPE=SUBMIT NAME="SearchParts" VALUE="<?php echo _('Search Parts Now'); ?>">
+<INPUT TYPE=SUBMIT NAME="ResetPart" VALUE="<?php echo _('Show All'); ?>"></td></tr></table>
 
 <HR>
 
@@ -450,6 +450,7 @@ If (isset($StockItemsResult)) {
 
 	echo '</TABLE>';
 }
+echo "<script>defaultControl(document.forms[0].StockCode);</script>";
 
 echo '</form>';
 include('includes/footer.inc');
