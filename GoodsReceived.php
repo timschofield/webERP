@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 $PageSecurity = 11;
 
@@ -14,9 +14,9 @@ include('includes/header.inc');
 
 echo '<A HREF="'. $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '">' . _('Back to Purchase Orders'). '</A><BR>';
 
-if ($_GET['PONumber']<=0 AND !isset($_SESSION['PO'])) {
+if (isset($_GET['PONumber']) and $_GET['PONumber']<=0 and !isset($_SESSION['PO'])) {
 	/* This page can only be called with a purchase order number for invoicing*/
-	echo '<CENTER><A HREF="' . $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '">'.
+	echo '<CENTER><A HREF= "' . $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '">'.
 		_('Select a purchase order to receive').'</A></CENTER>';
 	echo '<BR>'. _('This page can only be opened if a purchase order has been selected') . '. ' . _('Please select a purchase order first');
 	include ('includes/footer.inc');
@@ -106,7 +106,7 @@ if (count($_SESSION['PO']->LineItems)>0){
 			echo '<input type=hidden name="RecvQty_' . $LnItm->LineNo . '" value="' . $LnItm->ReceiveQty . '"><a href="GoodsReceivedControlled.php?' . SID . '&LineNo=' . $LnItm->LineNo . '">' . number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '</a></TD>';
 
 		} else {
-			echo '<input type=text name="RecvQty_' . $LnItm->LineNo . '" maxlength=10 SIZE=10 value="' . $LnItm->ReceiveQty . '"></TD>';
+			echo '<input type=text name="RecvQty_' . $LnItm->LineNo . '" maxlength=10 SIZE=10 onKeyPress="return restrictToNumbers(this, event)" onFocus="return setTextAlign(this, '."'".'right'."'".')" value="' . $LnItm->ReceiveQty . '"></TD>';
 		}
 
 		echo '<TD ALIGN=RIGHT><FONT size=2>' . $DisplayPrice . '</TD>';
@@ -124,6 +124,7 @@ if (count($_SESSION['PO']->LineItems)>0){
 		}
 		echo '</TR>';
 	}//foreach(LineItem)
+	echo "<script>defaultControl(document.forms[0].RecvQty_$LnItm->LineNo);</script>";
 }//If count(LineItems) > 0
 
 $DisplayTotal = number_format($_SESSION['PO']->total,2);
@@ -567,9 +568,9 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 	if (!isset($_POST['DefaultReceivedDate'])){
 	   $_POST['DefaultReceivedDate'] = Date($_SESSION['DefaultDateFormat']);
 	}
-	echo '<TABLE><TR><TD>'. _('Date Goods/Service Received'). ':</TD><TD><INPUT TYPE=text MAXLENGTH=10 SIZE=10 name=DefaultReceivedDate value="' . $_POST['DefaultReceivedDate'] . '"></TD></TR>';
+	echo '<TABLE><TR><TD>'. _('Date Goods/Service Received'). ':</TD><TD><INPUT TYPE=text MAXLENGTH=10 SIZE=10 onChange="return isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" name=DefaultReceivedDate value="' . $_POST['DefaultReceivedDate'] . '"></TD></TR>';
 
-	echo '</TABLE><CENTER><INPUT TYPE=SUBMIT NAME=Update Value=' . _('Update') . '><P>';
+	echo '</TABLE><br><CENTER><INPUT TYPE=SUBMIT NAME=Update Value=' . _('Update') . '><P>';
 	echo '<INPUT TYPE=SUBMIT NAME="ProcessGoodsReceived" Value="' . _('Process Goods Received') . '"></CENTER>';
 }
 
