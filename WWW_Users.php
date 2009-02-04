@@ -1,24 +1,24 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 $PageSecurity=15;
 
-
-if ($_POST['UserID'] == $_POST['ID']) {
-	$_POST['Language'] = $_POST['UserLanguage'];
+If (isset($_POST['UserID']) AND isset($_POST['ID'])){
+	if ($_POST['UserID'] == $_POST['ID']) {
+		$_POST['Language'] = $_POST['UserLanguage'];
+	}
 }
-
 include('includes/session.inc');
 
 $ModuleList = array(_('Orders'), 
-			_('Receivables'), 
-			_('Payables'), 
-			_('Purchasing'), 
-			_('Inventory'), 
-			_('Manufacturing'), 
-			_('General Ledger'), 
-			_('Setup'));
+					_('Receivables'), 
+					_('Payables'), 
+					_('Purchasing'), 
+					_('Inventory'), 
+					_('Manufacturing'), 
+					_('General Ledger'), 
+					_('Setup'));
 
 $title = _('User Maintenance');
 include('includes/header.inc');
@@ -396,7 +396,7 @@ foreach ($SecurityRoles as $SecKey => $SecVal) {
 	}
 }
 echo '</SELECT></TD></TR>';
-echo "<INPUT TYPE='hidden' NAME='ID' VALUE='".$_SESSION['UserID']."'>";
+echo '<INPUT TYPE="hidden" NAME="ID" VALUE="'.$_SESSION['UserID'].'">';
 
 echo '<TR><TD>' . _('Default Location') . ":</TD>
 	<TD><SELECT name='DefaultLocation'>";
