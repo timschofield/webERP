@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity=9;
 
@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 		/*SelectedWC could also exist if submit had not been clicked this code
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
-
+		
 		$sql = "UPDATE workcentres SET location = '" . $_POST['Location'] . "',
 						description = '" . $_POST['Description'] . "',
 						overheadrecoveryact =" . $_POST['OverheadRecoveryAct'] . ",
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 		$msg = _('The new work centre has been added to the database');
 	}
 	//run the SQL from either of the above possibilites
-
+	
 	if ($InputError !=1){
 		$result = DB_query($sql,$db,_('The update/addition of the work centre failed because'));
 		prnMsg($msg,'success');
@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'BOM'
-
+	
 	$sql= "SELECT COUNT(*) FROM bom WHERE bom.workcentreadded='$SelectedWC'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
@@ -108,7 +108,8 @@ if (!isset($SelectedWC)) {
 then none of the above are true and the list of work centres will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
-
+	echo '<P class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . $title;
+	
 	$sql = 'SELECT workcentres.code,
 			workcentres.description,
 			locations.locationname,
@@ -119,7 +120,6 @@ or deletion of the records*/
 		WHERE workcentres.location = locations.loccode';
 
 	$result = DB_query($sql,$db);
-
 	echo "<CENTER><table border=1>
 		<tr BGCOLOR =#800000><th>" . _('WC Code') . "</th>
 				<th>" . _('Description') . "</th>
@@ -155,6 +155,7 @@ or deletion of the records*/
 //end of ifs and buts!
 
 if (isset($SelectedWC)) {
+	echo '<P class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . $title;
 	echo "<CENTER><A HREF='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Show all Work Centres') . '</A></CENTER>';
 }
 
@@ -253,10 +254,16 @@ if (!isset($_POST['OverheadPerHour'])) {
 
 echo '</TD></TR>';
 echo '<TR><TD>' . _('Overhead Per Hour') . ":</TD>
-	<TD><input type='Text' name='OverheadPerHour' SIZE=6 MAXLENGTH=6 value=" . $_POST['OverheadPerHour'] . '></TD></TR>
+	<TD><input type='Text' name='OverheadPerHour' SIZE=6 MAXLENGTH=6 onKeyPress='return restrictToNumbers(this, event)' value=" . $_POST['OverheadPerHour'] . '></TD></TR>
 	</TABLE>';
 
-echo "<CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'>";
+echo "<br><CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'>";
+
+if (!isset($_GET['SelectedWC']) or $_GET['SelectedWC']=='') {
+	echo "<script>defaultControl(document.forms[0].Code);</script>";
+} else {
+	echo "<script>defaultControl(document.forms[0].Description);</script>";
+}
 
 echo '</FORM>';
 include('includes/footer.inc');
