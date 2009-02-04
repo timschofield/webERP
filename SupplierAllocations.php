@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 /*
 	This page can be called with...
@@ -29,6 +29,9 @@ $title = _('Supplier Payment') . '/' . _('Credit Note Allocations');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
+
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Supplier Allocations') . '" ALT="">' . ' ' . _('Supplier Allocations') . '</P><CENTER>';
+
 
 if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 

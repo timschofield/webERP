@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 2;
 
@@ -8,12 +8,16 @@ include('includes/session.inc');
 $title = _('Search Outstanding Sales Orders');
 include('includes/header.inc');
 
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" TITLE="' . _('Sales') . '" ALT="">' . ' ' . _('Outstanding Sales Orders') . '</P><CENTER> ';
+
 echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] .'?' .SID . ' METHOD=POST>';
 
 
 If (isset($_POST['ResetPart'])){
      unset($_REQUEST['SelectedStockItem']);
 }
+
+echo '<CENTER><P>';
 
 If (isset($_REQUEST['OrderNumber']) AND $_REQUEST['OrderNumber']!='') {
 	$_REQUEST['OrderNumber'] = trim($_REQUEST['OrderNumber']);

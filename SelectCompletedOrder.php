@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 1;
 
@@ -9,6 +9,9 @@ include('includes/session.inc');
 $title = _('Search All Sales Orders');
 
 include('includes/header.inc');
+
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Search Sales Orders') . '</P><CENTER>';
+
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID ."' METHOD=POST>";
 
