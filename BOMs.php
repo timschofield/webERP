@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 $PageSecurity = 9;
 
@@ -210,7 +210,8 @@ $InputError = 0;
 if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Component
 	$SelectedParent = $Select;
 	unset($Select);// = NULL;
-
+	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . $title.'<br>';
+	
 	If (isset($SelectedParent) AND isset($_POST['Submit'])) {
 
 		//editing a component need to do some validation of inputs
@@ -410,7 +411,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			break;
 	}
 
-	echo "<BR><FONT COLOR=BLUE SIZE=3><B> $SelectedParent - " . $myrow[0] . ' ('. $MBdesc. ') </FONT></B>';
+	echo "<center><BR><FONT COLOR=BLUE SIZE=3><B> $SelectedParent - " . $myrow[0] . ' ('. $MBdesc. ') </FONT></B>';
 
 	echo '<BR><A HREF=' . $_SERVER['PHP_SELF'] . '?' . SID . '>' . _('Select a Different BOM') . '</A></CENTER>';
 
@@ -527,7 +528,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		}
 	}
 	// *** end POPAD&T
-	echo "</table></CENTER>";
+	echo "</table></CENTER><br>";
 
 	if (! isset($_GET['delete'])) {
 
@@ -557,7 +558,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$_POST['AutoIssue'] = $myrow['autoissue'];
 
 			prnMsg(_('Edit the details of the selected component in the fields below') . '. <BR>' . _('Click on the Enter Information button to update the component details'),'info');
-			echo "<INPUT TYPE=HIDDEN NAME='SelectedParent' VALUE='$SelectedParent'>";
+			echo "<br><INPUT TYPE=HIDDEN NAME='SelectedParent' VALUE='$SelectedParent'>";
 			echo "<INPUT TYPE=HIDDEN NAME='SelectedComponent' VALUE='$SelectedComponent'>";
 			echo '<CENTER><TABLE><TR><TD>' . _('Component') . ':</TD><TD><B>' . $SelectedComponent . '</B></TD></TR>';
 
@@ -652,7 +653,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		echo "</SELECT></TD></TR><TR><TD>" . _('Quantity') . ": </TD><TD>
 		    <INPUT " . (in_array('Quantity',$Errors) ?  'class="inputerror"' : '' ) ."
-		     tabindex='4' TYPE='Text' name='Quantity' SIZE=10 MAXLENGTH=8 VALUE=";
+		     tabindex='4' TYPE='Text' name='Quantity' onKeyPress='return restrictToNumbers(this, event)' SIZE=10 MAXLENGTH=8 VALUE=";
 		if (isset($_POST['Quantity'])){
 			echo $_POST['Quantity'];
 		} else {
@@ -670,10 +671,10 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		echo "<TR><TD>" . _('Effective After') . " (" . $_SESSION['DefaultDateFormat'] . "):</TD>
 		  <TD><INPUT " . (in_array('EffectiveAfter',$Errors) ?  'class="inputerror"' : '' ) .
-			" tabindex='5' TYPE='Text' name='EffectiveAfter' SIZE=11 MAXLENGTH=10 VALUE=" . $_POST['EffectiveAfter'] .">
+			" tabindex='5' TYPE='Text' name='EffectiveAfter' onChange='return isDate(this, this.value, ".'"'.$_SESSION['DefaultDateFormat'].'"'.")' SIZE=11 MAXLENGTH=10 VALUE=" . $_POST['EffectiveAfter'] .">
 		  </TD></TR><TR><TD>" . _('Effective To') . " (" . $_SESSION['DefaultDateFormat'] . "):</TD><TD>
 		  <INPUT  " . (in_array('EffectiveTo',$Errors) ?  'class="inputerror"' : '' ) .
-			" tabindex='6' TYPE='Text' name='EffectiveTo' SIZE=11 MAXLENGTH=10 VALUE=" . $_POST['EffectiveTo'] ."></TD></TR>";
+			" tabindex='6' TYPE='Text' name='EffectiveTo' onChange='return isDate(this, this.value, ".'"'.$_SESSION['DefaultDateFormat'].'"'.")' SIZE=11 MAXLENGTH=10 VALUE=" . $_POST['EffectiveTo'] ."></TD></TR>";
 		
 		if ($ParentMBflag=='M'){
 			echo '<TR><TD>' . _('Auto Issue this Component to Work Orders') . ':</TD>
@@ -697,7 +698,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			echo '<INPUT TYPE=HIDDEN NAME="AutoIssue" VALUE=0>';
 		}
 
-		echo "</TABLE><CENTER><input tabindex='8' type='Submit' name='Submit' value=" . _('Enter Information') . "></FORM>";
+		echo "</TABLE><br><CENTER><input tabindex='8' type='Submit' name='Submit' value=" . _('Enter Information') . "></FORM>";
 
 	} //end if record deleted no point displaying form to add record
 
@@ -773,20 +774,21 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 if (!isset($SelectedParent)) {
 
+	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . $title;
 	echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . "?" . SID ." METHOD=POST><B><BR>" . $msg ."</B>" .
-	 _('Select a manufactured part') . " (" . _('or Assembly or Kit part') . ") " .
-	 _('to maintain the bill of material for using the options below') . "." . "<BR><FONT SIZE=1>" .
+	'<DIV CLASS="page_help_text">'. _('Select a manufactured part') . " (" . _('or Assembly or Kit part') . ") " .
+		 _('to maintain the bill of material for using the options below') . "." . "<BR><FONT SIZE=1>" .
 	 _('Parts must be defined in the stock item entry') . "/" . _('modification screen as manufactured') . 
-     ", " . _('kits or assemblies to be available for construction of a bill of material') .
-     "</FONT><TABLE CELLPADDING=3 COLSPAN=4><TR><TD><FONT SIZE=1>" . _('Enter text extracts in the') . 
+     ", " . _('kits or assemblies to be available for construction of a bill of material') .'</div>'.
+     "</FONT><br><TABLE align='center' CELLPADDING=3 COLSPAN=4><TR><TD><FONT SIZE=1>" . _('Enter text extracts in the') . 
 	 " <B>" . _('description') . "</B>:</FONT></TD><TD><INPUT tabindex='1' TYPE='Text' NAME='Keywords' SIZE=20 MAXLENGTH=25></TD>
 	 <TD><FONT SIZE=3><B>" . _('OR') . "</B></FONT></TD><TD><FONT SIZE=1>" . _('Enter extract of the') . 
      " <B>" . _('Stock Code') . "</B>:</FONT></TD><TD><INPUT tabindex='2' TYPE='Text' NAME='StockCode' SIZE=15 MAXLENGTH=18></TD>
-	 </TR></TABLE><CENTER><INPUT tabindex='3' TYPE=SUBMIT NAME='Search' VALUE=" . _('Search Now') . "></CENTER>";
+	 </TR></TABLE><br><CENTER><INPUT tabindex='3' TYPE=SUBMIT NAME='Search' VALUE=" . _('Search Now') . "></CENTER>";
 
 If (isset($result) AND !isset($SelectedParent)) {
 
-	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
+	echo '<br><TABLE align="center" CELLPADDING=2 COLSPAN=7 BORDER=1>';
 	$TableHeader = '<TR><TH>' . _('Code') . '</TH>
 				<TH>' . _('Description') . '</TH>
 				<TH>' . _('On Hand') . '</TH>
@@ -830,6 +832,12 @@ If (isset($result) AND !isset($SelectedParent)) {
 
 }
 //end if results to show
+
+if (!isset($SelectedParent) or $SelectedParent=='') {
+	echo "<script>defaultControl(document.forms[0].StockCode);</script>";
+} else {
+	echo "<script>defaultControl(document.form.JournalProcessDate);</script>";
+}
 
 echo "</FORM>";
 
