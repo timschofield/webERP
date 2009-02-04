@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.53 $ */
+/* $Revision: 1.54 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -384,17 +384,17 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 		if ($_POST['Quotation']==0) { /*then its not a quotation its a real order */
 
-			echo '<CENTER><p><img src="'.$rootpath.'/css/'.$theme.'/images/print.png" TITLE="' . _('Print') . '" ALT=""><a  target="_blank" href="' . $rootpath . '/PrintCustOrder.php?' . SID . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' .'</a>';
-			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/print.png" TITLE="' . _('Print') . '" ALT=""><a  target="_blank" href="' . $rootpath . '/PrintCustOrder_generic.php?' . SID . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Laser') . ')' .'</a>';
+			echo '<CENTER><p><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . '<a target="_blank" href="' . $rootpath . '/PrintCustOrder.php?' . SID . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' .'</a>';
+			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . '<a  target="_blank" href="' . $rootpath . '/PrintCustOrder_generic.php?' . SID . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Laser') . ')' .'</a>';
 
-			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/report.png" TITLE="' . _('Invoice') . '" ALT=""><a href="' . $rootpath . '/ConfirmDispatch_Invoice.php?' . SID . '&OrderNumber=' . $OrderNo .'">'. _('Confirm Order Delivery Quantities and Produce Invoice') .'</a></CENTER>';
+			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" TITLE="' . _('Invoice') . '" ALT="">' . ' ' . '<a href="' . $rootpath . '/ConfirmDispatch_Invoice.php?' . SID . '&OrderNumber=' . $OrderNo .'">'. _('Confirm Dispatch and Produce Invoice') .'</a></CENTER>';
 
 		} else {
 			/*link to print the quotation */
-			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" TITLE="' . _('Order') . '" ALT="">a href="' . $rootpath . '/PDFQuotation.php?' . SID . '&QuotationNo=' . $OrderNo . '">'. _('Print Quotation') .'</a>';
+			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" TITLE="' . _('Order') . '" ALT="">' . ' ' . '<a href="' . $rootpath . '/PDFQuotation.php?' . SID . '&QuotationNo=' . $OrderNo . '">'. _('Print Quotation') .'</a>';
 
 		}
-		echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" TITLE="' . _('Order') . '" ALT=""><a href="'. $rootpath .'/SelectOrderItems.php?' . SID . '&NewOrder=Yes">'. _('Add Sales Order') .'</a>';
+		echo '<CENTER><p><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" TITLE="' . _('Order') . '" ALT="">' . ' ' . '<a href="'. $rootpath .'/SelectOrderItems.php?' . SID . '&NewOrder=Yes">'. _('Add Sales Order') .'</a>';
 	} else {
 		/*its a customer logon so thank them */
 		prnMsg(_('Thank you for your business'),'success');

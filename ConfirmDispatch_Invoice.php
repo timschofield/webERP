@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.50 $ */
+/* $Revision: 1.51 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -1410,9 +1410,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	echo _('Invoice number'). ' '. $InvoiceNo .' '. _('processed'). '<BR>';
 
 	if ($_SESSION['InvoicePortraitFormat']==0){
-		echo '<img src="'.$rootpath.'/css/'.$theme.'/images/print.png" TITLE="' . _('Print') . '" ALT=""><A target="_blank" HREF="'.$rootpath.'/PrintCustTrans.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). '</A><BR>';
+		echo '<img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . '<A target="_blank" HREF="'.$rootpath.'/PrintCustTrans.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). ' (' . _('Landscape') . ')</A><BR>';
 	} else {
-		echo '<A target="_blank" HREF="'.$rootpath.'/PrintCustTransPortrait.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). '</A><BR>';
+		echo '<img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . '<A target="_blank" HREF="'.$rootpath.'/PrintCustTransPortrait.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). ' (' . _('Portrait') . ')</A><BR>';
 	}
 	echo '<A HREF="'.$rootpath.'/SelectSalesOrder.php?' . SID . '">'. _('Select another order for invoicing'). '</A><BR>';
 	echo '<A HREF="'.$rootpath.'/SelectOrderItems.php?' . SID . 'NewOrder=Yes">'._('Sales Order Entry').'</A><BR>';
