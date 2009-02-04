@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.49 $ */
+/* $Revision: 1.50 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -14,7 +14,8 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/FreightCalculation.inc');
 include('includes/GetSalesTransGLCodes.inc');
 
-echo '<A HREF="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Back to Sales Orders'). '</A><BR>';
+// This is not required
+//echo '<A HREF="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Back to Sales Orders'). '</A><BR>';
 
 if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 	/* This page can only be called with an order number for invoicing*/
@@ -239,8 +240,10 @@ set all the necessary session variables changed by the POST  */
 if ($_SESSION['Items']->SpecialInstructions) {
   prnMsg($_SESSION['Items']->SpecialInstructions,'warn');
 }
-echo '<BR><BR><CENTER><FONT SIZE=4>' . _('Customer Code') . ':<B> ' . $_SESSION['Items']->DebtorNo;
-echo '</B>&nbsp;' . _('Customer Name') . ' :<B> ' . $_SESSION['Items']->CustomerName. '</B></FONT><FONT SIZE=3>';
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" TITLE="' . _('Confirm Invoice') . '" ALT="">' . ' ' . _('Confirm Dispatch and Invoice');
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" TITLE="' . _('Customer') . '" ALT="">' . ' ' . _('Customer Code') . ' :<B> ' . $_SESSION['Items']->DebtorNo;
+//echo '<BR><BR><CENTER><FONT SIZE=4>' . _('Customer Code') . ':<B> ' . $_SESSION['Items']->DebtorNo;
+echo '</B>&nbsp;' . _('Customer Name') . ' :<B> ' . $_SESSION['Items']->CustomerName. '</B>';
 //echo '<CENTER><FONT SIZE=4><B><U>' . $_SESSION['Items']->CustomerName . '</U></B></FONT><FONT SIZE=3> - ' .
 echo '<BR>' . _('Invoice amounts stated in') . ' ' . $_SESSION['Items']->DefaultCurrency . '</CENTER>';
 
@@ -1407,7 +1410,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	echo _('Invoice number'). ' '. $InvoiceNo .' '. _('processed'). '<BR>';
 
 	if ($_SESSION['InvoicePortraitFormat']==0){
-		echo '<A target="_blank" HREF="'.$rootpath.'/PrintCustTrans.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). '</A><BR>';
+		echo '<img src="'.$rootpath.'/css/'.$theme.'/images/print.png" TITLE="' . _('Print') . '" ALT=""><A target="_blank" HREF="'.$rootpath.'/PrintCustTrans.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). '</A><BR>';
 	} else {
 		echo '<A target="_blank" HREF="'.$rootpath.'/PrintCustTransPortrait.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). '</A><BR>';
 	}
