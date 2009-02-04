@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -121,7 +121,7 @@ If (isset($_POST['PrintPDF'])
 
 	$title=_('Bill Of Material Listing');
 	include('includes/header.inc');
-
+	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . $title;
 	if (!isset($_POST['FromCriteria']) || !isset($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
@@ -133,7 +133,8 @@ If (isset($_POST['PrintPDF'])
 		echo '<TR><TD>' . _('To Inventory Part Code') . ':' . "</TD><TD><INPUT tabindex='2' TYPE=text name=ToCriteria SIZE=20 MAXLENGTH=20 VALUE='zzzzzzz'></TD></TR>";
 
 
-		echo "</TABLE><INPUT tabindex='3' TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
+		echo "</TABLE><br><INPUT tabindex='3' TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
+	echo "<script>defaultControl(document.forms[0].FromCriteria);</script>";
 	}
 	include('includes/footer.inc');;
 
