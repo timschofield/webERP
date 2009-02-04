@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 /* Definition of the PurchOrder class to hold all the information for a purchase order and delivery
 */
 
@@ -159,7 +159,7 @@ Class LineDetails {
 		$this->StockID =$StockItem;
 		$this->Controlled = $Controlled;
 		$this->Serialised = $Serialised;
-		$this->StkModClass = $StkModClass;
+//		$this->StkModClass = $StkModClass;
 		$this->DecimalPlaces=$DecimalPlaces;
 		$this->ItemDescription = $ItemDescr;
 		$this->Quantity = $Qty;
@@ -175,7 +175,7 @@ Class LineDetails {
 		} else {
 			$this->ShiptRef = 0;
 		}
-		$this->Completed = $Completed;
+//		$this->Completed = $Completed;
 		$this->GLActName = $GLActName;
 		$this->ReceiveQty =0;	/*initialise these last two only */
 		$this->StandardCost =0;
