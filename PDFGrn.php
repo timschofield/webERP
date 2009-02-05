@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -46,7 +46,7 @@ while ($myrow=DB_fetch_array($result)) {
 
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-(10*$counter+80),300-$Left_Margin,$FontSize, _('Date of Receipt: ').$Date);
 
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-(10*$counter+130),300-$Left_Margin,$FontSize, _('Signed for ').$From.'______________________');
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-(10*$counter+130),300-$Left_Margin,$FontSize, _('Signed for ').'______________________');
 
 $pdfcode = $pdf->output();
 $len = strlen($pdfcode);
