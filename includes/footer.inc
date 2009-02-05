@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.37 $ */
+/* $Revision: 1.38 $ */
 
 	echo '</td>';
 	echo '</tr>';
@@ -26,9 +26,9 @@
 	echo '<tr><td align="center" class="footer">webERP ' . _('Copyright') . ' &copy; weberp.org - '.date('Y').'</td></tr>';
 
 	if(isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] == 'on'){
-		echo '<tr><td align="center"><a href="http://sourceforge.net"><img src="https://sflogo.sourceforge.net/sflogo.php?group_id=70949&amp;type=1" width="88" height="31" alt="SourceForge.net Logo" /></a></td></tr>';
+		echo '<tr><td align="center"><a href="https://sourceforge.net/projects/web-erp"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=70949&type=12" width="120" height="30" border="0" alt="Get webERP web-based ERP Accounting at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a></td></tr>';
 	} else {
-       	echo '<tr><td align="center"><a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=70949&amp;type=1" width="88" height="31"  alt="SourceForge.net Logo" /></a></td></tr>';
+       	echo '<tr><td align="center"><a href="http://sourceforge.net/projects/web-erp"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=70949&type=12" width="120" height="30" border="0" alt="Get webERP web-based ERP Accounting at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a></td></tr>';
 	}
 
 	echo '</table>';
