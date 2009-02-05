@@ -27,6 +27,7 @@ body {
 	padding: 0px;
 	direction: rtl;
 }
+img {border:none;}
 
 /*links before selection */
 a {
