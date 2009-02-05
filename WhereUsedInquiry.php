@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 2;
 
@@ -15,7 +15,7 @@ if (isset($_GET['StockID'])){
 }
 
 echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</A><BR>';
-
+ echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . $title;
 if (isset($StockID)){
 	$result = DB_query("SELECT description, 
 					units, 
@@ -28,14 +28,20 @@ if (isset($StockID)){
 		include('includes/footer.inc');
 		exit;
 	}
-	echo "<BR><FONT COLOR=BLUE SIZE=3><B>$StockID - $myrow[0] </B>  (" . _('in units of') . ' ' . $myrow[1] . ')</FONT>';
+	echo "<br><BR><FONT COLOR=BLUE SIZE=3><B>$StockID - $myrow[0] </B>  (" . _('in units of') . ' ' . $myrow[1] . ')</FONT>';
 }
 
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?'. SID ."' METHOD=POST>";
-echo _('Enter an Item Code') . ": <input type=text name='StockID' size=21 maxlength=20 value='$StockID' >";
+echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?'. SID ."' METHOD=POST><center>";
+
+if (isset($StockID)) {
+	echo _('Enter an Item Code') . ": <input type=text name='StockID' size=21 maxlength=20 value='$StockID' >";
+} else {
+	echo _('Enter an Item Code') . ": <input type=text name='StockID' size=21 maxlength=20>";	
+}
+
 echo "<INPUT TYPE=SUBMIT NAME='ShowWhereUsed' VALUE='" . _('Show Where Used') . "'>";
 
-echo '<HR>';
+echo '</center><HR>';
 
 if (isset($StockID)) {
 
@@ -86,6 +92,9 @@ if (isset($StockID)) {
     		echo '</TABLE>';
 	}
 } // StockID is set
+
+echo "<script>defaultControl(document.forms[0].StockID);</script>";
+
 
 echo '</FORM>';
 
