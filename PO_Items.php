@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 
 
 $PageSecurity = 4;
@@ -549,7 +549,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 		   } else {
 			    prnMsg( _('Cannot Enter this order line') . ':<br>' . _('Either the part code') . " '" . strtoupper($_POST['StockID']) . "' " . _('does not exist in the database or the part is an assembly or kit or dummy part and therefore cannot be purchased'),'warn');
 			     if ($debug==1){
-				    echo '<br>$sql';
+				    echo '<br>';
 			     }
 		   }
 
