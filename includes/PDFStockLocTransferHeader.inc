@@ -33,10 +33,12 @@ $LeftOvers2 = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize, _('to').'
 /*Draw a rectangle to put the headings in     */
 $BoxHeight =20;
 $FontSize=12;
-$pdf->line($Left_Margin, $YPos+$BoxHeight,$Page_Width-$Right_Margin, $YPos+$BoxHeight);
-$pdf->line($Left_Margin, $YPos+$BoxHeight,$Left_Margin, $YPos);
+$YPos-=20;
 $pdf->line($Left_Margin, $YPos,$Page_Width-$Right_Margin, $YPos);
-$pdf->line($Page_Width-$Right_Margin, $YPos+$BoxHeight,$Page_Width-$Right_Margin, $YPos);
+$pdf->line($Left_Margin, $YPos,$Left_Margin, $YPos-$BoxHeight);
+$pdf->line($Left_Margin, $YPos-$BoxHeight,$Page_Width-$Right_Margin, $YPos-$BoxHeight);
+$pdf->line($Page_Width-$Right_Margin, $YPos,$Page_Width-$Right_Margin, $YPos-$BoxHeight);
+$YPos -=20;
 
 $YPos +=5;
 
