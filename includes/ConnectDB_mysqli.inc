@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 /* PeterMoulding.com
 20071102 Change from mysql to mysqli;
@@ -59,9 +59,9 @@ function DB_query ($SQL,
 		if ($TrapErrors){
 			require_once($PathPrefix . 'includes/header.inc');
 		}
-		prnMsg($ErrorMessage.'<BR>' . DB_error_msg($Conn),'error', _('Database Error'));
+		prnMsg($ErrorMessage.'<br />' . DB_error_msg($Conn),'error', _('Database Error'));
 		if ($debug==1){
-			prnMsg($DebugMessage. "<BR>$SQL<BR>",'error',_('Database SQL Failure'));
+			prnMsg($DebugMessage. "<br />$SQL<br />",'error',_('Database SQL Failure'));
 		}
 		if ($Transaction){
 			$SQL = 'rollback';

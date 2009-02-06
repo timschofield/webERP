@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.61 $ */
+/* $Revision: 1.62 $ */
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -137,7 +137,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 			if (DB_num_rows($Sec_Result)==0){
 				$title = _('Account Error Report');
 				include($PathPrefix . 'includes/header.inc');
-				echo '<BR><BR><BR>';
+				echo '<br /><br /><br />';
 				prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'),'error');
 				include($PathPrefix . 'includes/footer.inc');
 				exit;
@@ -150,7 +150,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 			}
 
 
-			echo "<META HTTP-EQUIV='refresh' CONTENT='0; URL=" . $_SERVER['PHP_SELF'] . "?" . SID . "'>";
+			echo '<meta http-equiv="refresh" content="0" url="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 			exit;
 		} else {     // Incorrect password
 			// 5 login attempts, show failed login screen
@@ -164,7 +164,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 				$Auth_Result = DB_query($sql, $db);
 				die(include($PathPrefix . 'includes/FailedLogin.php'));
 			}
-			$demo_text = '<FONT SIZE="3" COLOR="red"><b>' .  _('incorrect password') . '</B></FONT><BR><B>' . _('The user/password combination') . '<BR>' . _('is not a valid user of the system') . '</B>';
+			$demo_text = '<font size="3" color="red"><b>' .  _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
 			die(include($PathPrefix . 'includes/Login.php'));
 		}
 	}		// End of userid/password check
@@ -297,7 +297,7 @@ if ($_SESSION['HTTPS_Only']==1){
 if (!is_array($_SESSION['AllowedPageSecurityTokens']) AND !isset($AllowAnyone)) {
 	$title = _('Account Error Report');
 	include($PathPrefix . 'includes/header.inc');
-	echo '<BR><BR><BR>';
+	echo '<br /><br /><br />';
 	prnMsg(_('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'),'error');
 	include($PathPrefix . 'includes/footer.inc');
 	exit;
@@ -307,16 +307,16 @@ if (!isset($AllowAnyone)){
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
 		$title = _('Security Permissions Problem');
 		include($PathPrefix . 'includes/header.inc');
-		echo '<TR>
-			<TD CLASS="menu_group_items">
-				<TABLE WIDTH="100%" CLASS="table_index">
-					<TR><TD CLASS="menu_group_item">';
-		echo '<B><FONT SIZE="+1"><CENTER>' . _('The security settings on your account do not permit you to access this function') . '</FONT></B></CENTER>';
+		echo '<tr>
+			<td class="menu_group_items">
+				<table width="100%" class="table_index">
+					<tr><td class="menu_group_item">';
+		echo '<b><font style="size:+1; text-align:center;">' . _('The security settings on your account do not permit you to access this function') . '</font></b>';
 
-		echo '</TD>
-		</TR>
-		</TABLE>
-		</TD>';
+		echo '</td>
+		</tr>
+		</table>
+		</td>';
 
 		include($PathPrefix . 'includes/footer.inc');
 		exit;

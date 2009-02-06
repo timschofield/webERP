@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 10;
 
@@ -303,10 +303,10 @@ if (! isset($_GET['delete'])) {
 			$_POST['PandL']='';
 		}
 
+		echo '<table style="margin: 10px auto;"><tr><td>';
 		echo '<input  type="hidden" name="SelectedAccountGroup" value="' . $_POST['SelectedAccountGroup'] . '" />';
-		echo '<CENTER><table><tr><td>' . _('Account Group Name') . ':' . '</td><td><input tabindex="1" ' . 
-		(in_array('GroupName',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="GroupName" SIZE=30 MAXLENGTH=30 value="'
-		 . $_POST['GroupName'] . '"></td></tr>';
+		echo _('Account Group Name') . ':' . '</td><td>
+		<input tabindex="1" ' . (in_array('GroupName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="GroupName" size="50" maxlength="50" value="' . $_POST['GroupName'] . '" /></td></tr>';
 	}
 	echo '<tr><td>' . _('Parent Group') . ':' . '</td>
 	<td><select tabindex="2" ' . (in_array('ParentGroupName',$Errors) ?  'class="selecterror"' : '' ) .
@@ -356,7 +356,7 @@ if (! isset($_GET['delete'])) {
 		echo '<option value="1">' . _('Yes').'</option>';
 	}
 	if ($_POST['PandL']==0) {
-		echo '<option selected value="0">' . _('No').'</option>';
+		echo '<option selected="selected" value="0">' . _('No').'</option>';
 	} else {
 		echo '<option value="0">' . _('No').'</option>';
 	}
