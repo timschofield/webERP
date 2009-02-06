@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity =1;
 include('includes/session.inc');
@@ -18,7 +18,7 @@ if (!isset($_GET['TransferNo'])){
 
 $FontSize=10;
 $pdf->addinfo('Title', _('Inventory Location Transfer BOL') );
-$pdf->addinfo('Subject', _('Inventory Location Transfer BOL') . ' # ' . $_GET['Trf_ID']);
+$pdf->addinfo('Subject', _('Inventory Location Transfer BOL') . ' # ' . $_GET['TransferNo']);
 
 $ErrMsg = _('An error occurred retrieving the items on the transfer'). '.' . '<P>'. _('This page must be called with a location transfer reference number').'.';
 $DbgMsg = _('The SQL that failed while retrieving the items on the transfer was');
