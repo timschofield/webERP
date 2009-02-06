@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 $PageSecurity=15;
 
@@ -490,6 +490,8 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 	if (is_dir("css/$ThemeName") AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != 'CVS'){
 
 		if (isset($_POST['Theme']) and $_POST['Theme'] == $ThemeName){
+			echo "<OPTION SELECTED VALUE='$ThemeName'>$ThemeName";
+		} else if (!isset($_POST['Theme']) and ($_SESSION['DefaultTheme']==$ThemeName)) {
 			echo "<OPTION SELECTED VALUE='$ThemeName'>$ThemeName";
 		} else {
 			echo "<OPTION VALUE='$ThemeName'>$ThemeName";
