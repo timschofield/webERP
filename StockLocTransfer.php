@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 /* contributed by Chris Bice */
 
 $PageSecurity = 11;
@@ -25,10 +25,10 @@ If (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 			unset($_POST['StockQTY' . $i]);
 		}
 	}
+	$ErrorMessage='';
 	for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
-
-		$_POST['StockID' . $i]=trim(strtoupper($_POST['StockID' . $i]));
-		if ($_POST['StockID' . $i]!=''){
+		if (isset($_POST['StockID' . $i]) and $_POST['StockID' . $i]!=''){
+			$_POST['StockID' . $i]=trim(strtoupper($_POST['StockID' . $i]));
 			$result = DB_query("SELECT COUNT(stockid) FROM stockmaster WHERE stockid='" . $_POST['StockID' . $i] . "'",$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]==0){
@@ -118,6 +118,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 	If (isset($InputError) and $InputError==true){
 		echo '<BR>';
+		
 		prnMsg($ErrorMessage, 'error');
 		echo '<BR>';
 
@@ -180,7 +181,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 			}
 			echo '<TR>
 				<TD><input type=text name="StockID' . $i .'" size=21  maxlength=20 Value="' . $_POST['StockID' . $i] . '"></TD>
-				<TD><input type=text name="StockQTY' . $i .'" size=5 maxlength=4 Value="' . $_POST['StockQTY' . $i] . '"></TD>
+				<TD><input type=text name="StockQTY' . $i .'" size=5 maxlength=4 onkeypress="return restrictToNumbers(this, event)" onFocus="return setTextAlign(this, '."'".'right'."'".')"  Value="' . $_POST['StockQTY' . $i] . '"></TD>
 			</TR>';
 		}
 	}else {
@@ -198,13 +199,14 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		}
 		echo '<TR>
 			<td><input type=text name="StockID' . $i .'" size=21  maxlength=20 Value="' . $_POST['StockID' . $i] . '"></td>
-			<td><input type=text name="StockQTY' . $i .'" size=5 maxlength=4 Value="' . $_POST['StockQTY' . $i] . '"></td>
+			<td><input type=text name="StockQTY' . $i .'" size=5 maxlength=4 onkeypress="return restrictToNumbers(this, event)"  onFocus="return setTextAlign(this, '."'".'right'."'".')"  Value="' . $_POST['StockQTY' . $i] . '"></td>
 		</tr>';
 		$i++;
 	}
 
 	echo '</table><br>
 		<input type=hidden name="LinesCounter" value='. $i .'><INPUT TYPE=SUBMIT NAME="EnterMoreItems" VALUE="'. _('Add More Items'). '"><INPUT TYPE=SUBMIT NAME="Submit" VALUE="'. _('Create Transfer Shipment'). '"><BR><HR>';
+	echo '<script  type="text/javascript">defaultControl(document.forms[0].StockID0);</script>';
 	echo '</FORM></CENTER>';
 	include('includes/footer.inc');
 }

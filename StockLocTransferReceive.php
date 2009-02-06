@@ -13,7 +13,7 @@ include('includes/SQL_CommonFunctions.inc');
 if (isset($_GET['NewTransfer'])){
 	unset($_SESSION['Transfer']);
 }
-if ( $_SESSION['Transfer']->TrfID == ''){
+if ( isset($_SESSION['Transfer']) and $_SESSION['Transfer']->TrfID == ''){
 	unset($_SESSION['Transfer']);
 }
 
@@ -43,7 +43,7 @@ if(isset($_POST['ProcessTransfer'])){
 			prnMsg( _('The Quantity entered plus the Quantity Previously Received can not be greater than the Total Quantity shipped for').' '. $TrfLine->StockID , 'error');
 			$InputError = True;
 		}
-                if ($_POST['CancelBalance' . $i]==1){
+                if (isset($_POST['CancelBalance' . $i]) and $_POST['CancelBalance' . $i]==1){
                     $_SESSION['Transfer']->TransferItem[$i]->CancelBalance=1;
                 } else {
                      $_SESSION['Transfer']->TransferItem[$i]->CancelBalance=0;
@@ -366,12 +366,12 @@ if(isset($_GET['Trf_ID'])){
 		WHERE reference =" . $_GET['Trf_ID'] . " ORDER BY loctransfers.stockid";
 
 
-	$ErrMsg = _('The details of transfer number') . ' ' . $Trf_ID . ' ' . _('could not be retrieved because') .' ';
+	$ErrMsg = _('The details of transfer number') . ' ' . $_GET['Trf_ID'] . ' ' . _('could not be retrieved because') .' ';
 	$DbgMsg = _('The SQL to retrieve the transfer was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	if(DB_num_rows($result) == 0){
-		echo '</table></form><H3>' . _('Transfer') . ' #' . $Trf_ID . ' '. _('Does Not Exist') . '</H3><HR>';
+		echo '</table></form><H3>' . _('Transfer') . ' #' . $_GET['Trf_ID'] . ' '. _('Does Not Exist') . '</H3><HR>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -415,7 +415,7 @@ if (isset($_SESSION['Transfer'])){
 
 	$i = 0; //Line Item Array pointer
 
-	echo "<CENTER><TABLE BORDER=1>";
+	echo "<br><CENTER><TABLE BORDER=1>";
 
 	$tableheader = '<TR>
 			<TH>'. _('Item Code') . '</TH>
@@ -436,7 +436,7 @@ if (isset($_SESSION['Transfer'])){
 			<td>' . $TrfLine->ItemDescription . '</td>';
 
 		echo '<td ALIGN=RIGHT>' . number_format($TrfLine->ShipQty, $TrfLine->DecimalPlaces) . '</TD>';
-		if (is_numeric($_POST['Qty' . $i])){
+		if (isset($_POST['Qty' . $i]) and is_numeric($_POST['Qty' . $i])){
 			$_SESSION['Transfer']->TransferItem[$i]->Quantity= $_POST['Qty' . $i];
 			$Qty = $_POST['Qty' . $i];
 		} else {
@@ -447,11 +447,11 @@ if (isset($_SESSION['Transfer'])){
 		if ($TrfLine->Controlled==1){
 			echo '<TD ALIGN=RIGHT><INPUT TYPE=HIDDEN NAME="Qty' . $i . '" VALUE="' . $Qty . '"><A HREF="' . $rootpath .'/StockTransferControlled.php?' . SID . '&TransferItem=' . $i . '">' . $Qty . '</A></td>';
 		} else {
-			echo '<TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME="Qty' . $i . '" MAXLENGTH=10 SIZE=10 VALUE="' . $Qty . '"></td>';
+			echo '<TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME="Qty' . $i . '" MAXLENGTH=10 onKeyPress="return restrictToNumbers(this, event)" onFocus="return setTextAlign(this, '."'".'right'."'".')" SIZE=10 VALUE="' . $Qty . '"></td>';
 		}
 
 		echo '<td>' . $TrfLine->PartUnit . '</TD>';
-                if ($TrfLine->CancelBalance==1){
+                if (isset($TrfLine->CancelBalance) and $TrfLine->CancelBalance==1){
                    echo '<td><input type="checkbox" checked name="CancelBalance' . $i . '" value=1></td>';
                 } else {
                    echo '<td><input type="checkbox" name="CancelBalance' . $i . '" value=0></td>';
@@ -523,6 +523,8 @@ if (isset($_SESSION['Transfer'])){
 		}
 
 		echo '</table></CENTER>';
+	} else if (!isset($_POST['ProcessTransfer'])) {
+		prnMsg(_('There are no incoming transfers to this location'), 'info');
 	}
 	echo '</FORM>';
 }
