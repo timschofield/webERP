@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.62 $ */
+/* $Revision: 1.63 $ */
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -252,10 +252,10 @@ if (empty($_SESSION['LogoFile'])) {
 		$incompanydir = scandir($dir,1);
 		if ($incompanydir !== FALSE) {
 			foreach($incompanydir as $logofilename)
-				if (strncasecmp($logofilename,'logo.',5) === 0 AND
-					is_readable($dir . $logofilename) AND
+				if (strncasecmp($logofilename,'logo.jpg',8) === 0 AND
+				is_readable($dir . $logofilename) AND
 					is_file($dir . $logofilename)) {
-					$logo = $logofilename;
+				$logo = $logofilename;
 				break;
 			}
 
@@ -268,16 +268,16 @@ if (empty($_SESSION['LogoFile'])) {
 	}
 
 	/* Find a logo in companies/<company of this session> */
-	if (!empty($_SESSION['DatabaseName']))
+	if (!empty($_SESSION['DatabaseName'])) 
 		$_SESSION['LogoFile'] = findLogoFile($_SESSION['DatabaseName'], $PathPrefix);
 
 	/* Find a default logo in companies/weberp */
-	if (empty($_SESSION['LogoFile']))
-		$_SESSION['LogoFile'] = findLogoFile('weberp', $PathPrefix);
+//	if (empty($_SESSION['LogoFile']))
+//		$_SESSION['LogoFile'] = findLogoFile('weberp', $PathPrefix);
 
 	/* Last fallback: take a fixed name */
-	if (empty($_SESSION['LogoFile']))
-		$_SESSION['LogoFile'] = 'weberp/logo.jpg';
+//	if (empty($_SESSION['LogoFile']))
+//		$_SESSION['LogoFile'] = 'companies/weberp/logo.jpg';
 }
 
 if ($_SESSION['HTTPS_Only']==1){
