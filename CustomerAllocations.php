@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 /*
 Call this page with:
@@ -337,15 +337,6 @@ if (isset($_GET['AllocTrans'])) {
 }
 
 
-//
-//========[ SHOW OUR FORM ]===========
-//
-	// Page Border
-//	echo '<table border=1 width=100%><tr><td bgcolor="#FFFFFF">';
-
-	// Context Navigation and Title
-//	echo '<table width=100%>
-//			<td width=40% align=left><a href="'. $rootpath . '/SelectCustomer.php?&'. SID .'">' . _('Back to Customers') . '</a></td>';
 	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Allocate Receipt') . '" ALT="">' . ' ' . _('Allocate Receipts') . '</P><CENTER>';
 
 	$TableHeader = "<tr>
