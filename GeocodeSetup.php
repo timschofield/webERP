@@ -265,7 +265,7 @@ if (!isset($_GET['delete'])) {
 	<CENTER><input tabindex=4 type='Submit' name='submit' value='" . _('Enter Information') . "'<BR><BR>
 	</FORM>";
 echo '<DIV class="page_help_text">' . _('When ready, click on the link below to run the GeoCode process.  This will Geocode all Branches and Suppliers.  This may take some time. Errors will be returned to the screen.') . '</p>';
-echo '<p>Suppliers and Customer Branches are geocoded when being entered/updated.  You can rerun the geocode process from this screen at any time.</p></DIV><BR>';
+echo '<p>' . _('Suppliers and Customer Branches are geocoded when being entered/updated.  You can rerun the geocode process from this screen at any time.') . '</p></DIV><BR>';
 
 echo '<CENTER><a href="' . $rootpath . '/geocode.php">' . _('Run GeoCode process (may take a long time)') . '</a></Center></p>';
 echo '<a href="' . $rootpath . '/geo_displaymap_customers.php">' . _('Display Map of Customer Branches') . '</a></Center>';
