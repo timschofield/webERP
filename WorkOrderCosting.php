@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 11;
 
@@ -118,8 +118,9 @@ echo '<tr><th>' . _('Item') . '</th>
 			</tr>';
 
 $RequirementsResult = DB_query("SELECT t.stockid, t.description, t.decimalplaces,
-                                       (t.requiredqty) as requiredqty, (t.expectedcost) as expectedcost,
-                                       ((t.stdcost)/(t.qtypu)) AS costperqty
+                                    (t.requiredqty) as requiredqty,
+                                    (t.expectedcost) as expectedcost,
+                                    (t.stdcost) AS costperqty
                                 FROM (SELECT worequirements.stockid,
                                              stockmaster.description,
                                              stockmaster.decimalplaces,
