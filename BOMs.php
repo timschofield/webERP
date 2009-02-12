@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 $PageSecurity = 9;
 
@@ -123,8 +123,6 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 			}
 			if ($ParentMBflag!='M' AND $ParentMBflag!='G'){
 				$AutoIssue = _('N/A');
-			} elseif ($myrow[7]=='G'){//phantom items are treated as autoissue, whether or not the autoissue flag is set
-				$AutoIssue = _('N/A');
 			} elseif ($myrow[9]==0 AND $myrow[8]==1){//autoissue and not controlled
 				$AutoIssue = _('Yes');
 			} elseif ($myrow[9]==0) {
@@ -133,7 +131,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 				$AutoIssue = _('N/A');
 			}
 			
-			if ($myrow[7]=='D' OR $myrow[7]=='K' OR $myrow[7]=='A'){
+			if ($myrow[7]=='D' OR $myrow[7]=='K' OR $myrow[7]=='A' OR $myrow[7]=='G'){
 				$QuantityOnHand = _('N/A');
 			} else {
 				$QuantityOnHand = number_format($myrow[10],$myrow[11]);
@@ -488,7 +486,26 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	 	} //end while loop
 	 	echo '</CENTER>';
 	}
+	// Display Phantom/Ghosts
+	$sql = "SELECT bom.parent, stockmaster.description, stockmaster.mbflag
+		FROM bom, stockmaster
+		WHERE bom.component='".$SelectedParent."'
+		AND stockmaster.stockid=bom.parent
+		AND stockmaster.mbflag='G'";
 
+	$ErrMsg = _('Could not retrieve the description of the parent part because');
+	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
+	$result=DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	if( DB_num_rows($result) > 0 ) {
+		echo (($reqnl)?'<BR>':'').'<CENTER>'._('Phantom').' : ';
+	 	$ix = 0;
+	 	while ($myrow = DB_fetch_array($result)){
+	 	   echo (($ix)?', ':'').'<A href="'.$_SERVER['PHP_SELF'] . '?' . SID . 'Select='.$myrow['parent'].'">'.
+			$myrow['description'].'&nbsp;('.$myrow['parent'].')</A>';
+			$ix++;
+	 	} //end while loop
+	 	echo '</CENTER>';
+	}
 	echo "<CENTER><table border=1>";
 
     // *** POPAD&T
@@ -589,7 +606,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 					AND stockmaster.stockid != '$SelectedParent'
 					ORDER BY stockmaster.stockid";
 
-			} else { /*Its either a normal manufac item or a kitset - controlled items ok */
+			} else { /*Its either a normal manufac item, phantom, kitset - controlled items ok */
 				$sql = "SELECT stockmaster.stockid,
 						stockmaster.description
 					FROM stockmaster INNER JOIN stockcategory
@@ -813,8 +830,8 @@ If (isset($result) AND !isset($SelectedParent)) {
 			echo '<tr class="OddTableRows">';;
 			$k++;
 		}
-		if ($myrow['mbflag']=='A' OR $myrow['mbflag']=='K'){
-			$StockOnHand = 'N/A';
+		if ($myrow['mbflag']=='A' OR $myrow['mbflag']=='K' OR $myrow['mbflag']=='G'){
+			$StockOnHand = _('N/A');
 		} else {
 			$StockOnHand = number_format($myrow['totalonhand'],2);
 		}
