@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 11;
 
@@ -173,26 +173,11 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
                                             WHERE wo=" . $_POST['WO'] . "
                                             AND parentstockid='" . $_POST['StockID'] . "'",
                                             $db);
-            $InsWORequirments = DB_query("INSERT INTO worequirements (wo,
-                                                        parentstockid,
-                                                        stockid,
-                                                        qtypu,
-                                                        stdcost,
-                                                        autoissue)
-                                                    SELECT " . $_POST['WO'] . ",
-                                                        bom.parent,
-                                                        bom.component,
-                                                        bom.quantity,
-                                                        materialcost+labourcost+overheadcost,
-                                                        bom.autoissue
-                                                    FROM bom INNER JOIN stockmaster
-                                                    ON bom.component=stockmaster.stockid
-                                                    WHERE parent='" . $_POST['StockID'] . "'
-                                                    AND loccode ='" . $WORow['loccode'] . "'",
-                                            $db);
+
+			//Recursively insert real component requirements
+			WoRealRequirements($db, $_POST['WO'], $WORow['loccode'], $_POST['StockID']);
 
             //Need to check this against the current standard cost and do a cost update if necessary
-
             $sql = "SELECT materialcost+labourcost+overheadcost AS cost,
                           sum(quantity) AS totalqoh
                     FROM stockmaster INNER JOIN locstock

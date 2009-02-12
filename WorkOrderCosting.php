@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 11;
 
@@ -152,14 +152,14 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 		<td>' .  $RequirementsRow['description'] . '</td>';
 
 	$IssuesResult = DB_query("SELECT trandate,
-					qty,
-					standardcost
-				FROM stockmoves
-				WHERE stockmoves.type=28
-				AND reference = '" . $_POST['WO'] . "'
-				AND stockid = '" . $RequirementsRow['stockid'] . "'",
-				$db,
-				_('Could not retrieve the issues of the item because:'));
+									qty,
+									standardcost
+								FROM stockmoves
+								WHERE stockmoves.type=28
+								AND reference = '" . $_POST['WO'] . "'
+								AND stockid = '" . $RequirementsRow['stockid'] . "'",
+								$db,
+								_('Could not retrieve the issues of the item because:'));
 	$IssueQty =0;
 	$IssueCost=0;
 

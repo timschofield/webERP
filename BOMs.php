@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 $PageSecurity = 9;
 
@@ -121,7 +121,9 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 				$DrillLink = $_SERVER['PHP_SELF'] . '?' . SID;
 				$DrillID=$myrow[0];
 			}
-			if ($ParentMBflag!='M'){
+			if ($ParentMBflag!='M' AND $ParentMBflag!='G'){
+				$AutoIssue = _('N/A');
+			} elseif ($myrow[7]=='G'){//phantom items are treated as autoissue, whether or not the autoissue flag is set
 				$AutoIssue = _('N/A');
 			} elseif ($myrow[9]==0 AND $myrow[8]==1){//autoissue and not controlled
 				$AutoIssue = _('Yes');
@@ -135,7 +137,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 				$QuantityOnHand = _('N/A');
 			} else {
 				$QuantityOnHand = number_format($myrow[10],$myrow[11]);
-			} 
+			}
 			printf("<td>%s</td>
 				<td>%s</td>
 			    <td>%s</td>
@@ -409,6 +411,9 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		case 'K':
 			$MBdesc = _('Kit Set');
 			break;
+		case 'G':
+			$MBdesc = _('Phantom');
+			break;
 	}
 
 	echo "<center><BR><FONT COLOR=BLUE SIZE=3><B> $SelectedParent - " . $myrow[0] . ' ('. $MBdesc. ') </FONT></B>';
@@ -676,7 +681,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		  <INPUT  " . (in_array('EffectiveTo',$Errors) ?  'class="inputerror"' : '' ) .
 			" tabindex='6' TYPE='Text' name='EffectiveTo' onChange='return isDate(this, this.value, ".'"'.$_SESSION['DefaultDateFormat'].'"'.")' SIZE=11 MAXLENGTH=10 VALUE=" . $_POST['EffectiveTo'] ."></TD></TR>";
 		
-		if ($ParentMBflag=='M'){
+		if ($ParentMBflag=='M' OR $ParentMBflag=='G'){
 			echo '<TR><TD>' . _('Auto Issue this Component to Work Orders') . ':</TD>
 				<TD>
 				<SELECT tabindex="7" name="AutoIssue">';
@@ -738,7 +743,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 					locstock
 				WHERE stockmaster.stockid = locstock.stockid
 				AND stockmaster.description " . LIKE . " '$SearchString'
-				AND (stockmaster.mbflag='M' OR stockmaster.mbflag='K' OR stockmaster.mbflag='A')
+				AND (stockmaster.mbflag='M' OR stockmaster.mbflag='K' OR stockmaster.mbflag='A' OR stockmaster.mbflag='G')
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.units,
@@ -757,6 +762,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				AND stockmaster.stockid " . LIKE  . "'%" . $_POST['StockCode'] . "%'
 				AND (stockmaster.mbflag='M'
 					OR stockmaster.mbflag='K'
+					OR stockmaster.mbflag='G'
 					OR stockmaster.mbflag='A')
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.61 $ */
+/* $Revision: 1.62 $ */
 
 $PageSecurity = 11;
 
@@ -170,9 +170,9 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'Serialised';
 		$i++;
 	}
-	if (($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K' OR $_POST['MBFlag']=='D') AND $_POST['Controlled']==1){
+	if (($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K' OR $_POST['MBFlag']=='D' OR $_POST['MBFlag']=='G') AND $_POST['Controlled']==1){
 		$InputError = 1;
-		prnMsg(_('Assembly/Kitset/Service/Labour items cannot also be controlled items') . '. ' . _('Assemblies/Dummies and Kitsets are not physical items and batch/serial control is therefore not appropriate'),'error');
+		prnMsg(_('Assembly/Kitset/Phantom/Service/Labour items cannot also be controlled items') . '. ' . _('Assemblies/Dummies/Phantom and Kitsets are not physical items and batch/serial control is therefore not appropriate'),'error');
 		$Errors[$i] = 'Controlled';
 		$i++;
 	}
@@ -207,18 +207,19 @@ if (isset($_POST['submit'])) {
 			$stkqtychk = DB_fetch_row($result);
 
 			if ($OldMBFlag != $_POST['MBFlag']){
-				if (($OldMBFlag == 'M' OR $OldMBFlag=='B') AND ($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K' OR $_POST['MBFlag']=='D')){ /*then need to check that there is no stock holding first */
-					if ($stkqtychk[0]!=0){
+				if (($OldMBFlag == 'M' OR $OldMBFlag=='B') AND ($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K' OR $_POST['MBFlag']=='D' OR $_POST['MBFlag']=='G')){ /*then need to check that there is no stock holding first */
+					/* stock holding OK for phantom (ghost) items */
+					if ($stkqtychk[0]!=0 AND $OldMBFlag!='G'){
 						$InputError=1;
 						prnMsg( _('The make or buy flag cannot be changed from') . ' ' . $OldMBFlag . ' ' . _('to') . ' ' . $_POST['MBFlag'] . ' ' . _('where there is a quantity of stock on hand at any location') . '. ' . _('Currently there are') . ' ' . $stkqtychk[0] .  ' ' . _('on hand') , 'errror');
 					}
-
+					/* don't allow controlled/serialized  */
 					if ($_POST['Controlled']==1){
 						$InputError=1;
-						prnMsg( _('The make or buy flag cannot be changed from') . ' ' . $OldMBFlag . ' ' . _('to') . ' ' . $_POST['MBFlag'] . ' ' . _('where the item is to be lot controlled') . '. ' . _('Kitset, dummy and assembly items cannot be lot controlled'), 'error');
+						prnMsg( _('The make or buy flag cannot be changed from') . ' ' . $OldMBFlag . ' ' . _('to') . ' ' . $_POST['MBFlag'] . ' ' . _('where the item is to be lot controlled') . '. ' . _('Kitset, phantom, dummy and assembly items cannot be lot controlled'), 'error');
 					}
 				}
-				/*now check that if the item is being changed to a kitset, there are no items on order sales or purchase orders*/
+				/*now check that if the item is being changed to a kitset, there are no items on sales orders or purchase orders*/
 				if ($_POST['MBFlag']=='K') {
 					$sql = "SELECT quantity-qtyinvoiced
 						FROM salesorderdetails
@@ -247,9 +248,9 @@ if (isset($_POST['submit'])) {
 						prnMsg( _('The make or buy flag cannot be changed to'). ' ' . $_POST['MBFlag'] . ' '. _('where there is a quantity outstanding to be received on purchase orders') . '. ' . _('Currently there are'). ' ' . $ChkPurchOrds[0] . ' '. _('yet to be received'). 'error');
 					}
 				}
-				/*now check that if it is was a Manufactured, Kitset or Assembly and is being changed to a purchased or dummy - that no BOM exists */
 
-				if (($OldMBFlag=='M' OR $OldMBFlag =='K' OR $OldMBFlag=='A') AND ($_POST['MBFlag']=='B' OR $_POST['MBFlag']=='D')) {
+				/*now check that if it was a Manufactured, Kitset, Phantom or Assembly and is being changed to a purchased or dummy - that no BOM exists */
+				if (($OldMBFlag=='M' OR $OldMBFlag =='K' OR $OldMBFlag=='A' OR $OldMBFlag=='G') AND ($_POST['MBFlag']=='B' OR $_POST['MBFlag']=='D')) {
 					$sql = "SELECT COUNT(*) FROM bom WHERE parent = '$StockID'";
 					$result = DB_query($sql,$db);
 					$ChkBOM = DB_fetch_row($result);
@@ -259,8 +260,8 @@ if (isset($_POST['submit'])) {
 					}
 				}
 
-				/*now check that if it was Manufac or Purchased and is being changed to assembly or kitset, it is not a component on an existing BOM */
-				if (($OldMBFlag=='M' OR $OldMBFlag =='B' OR $OldMBFlag=='D') AND ($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K')) {
+				/*now check that if it was Manufac, Phantom or Purchased and is being changed to assembly or kitset, it is not a component on an existing BOM */
+				if (($OldMBFlag=='M' OR $OldMBFlag =='B' OR $OldMBFlag=='D' OR $OldMBFlag=='G') AND ($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K')) {
 					$sql = "SELECT COUNT(*) FROM bom WHERE component = '$StockID'";
 					$result = DB_query($sql,$db);
 					$ChkBOM = DB_fetch_row($result);
@@ -272,7 +273,6 @@ if (isset($_POST['submit'])) {
 			}
 
 			/* Do some checks for changes in the Serial & Controlled setups */
-
 			if ($OldControlled != $_POST['Controlled'] AND $stkqtychk[0]!=0){
 				$InputError=1;
 				prnMsg( _('You can not change a Non-Controlled Item to Controlled (or back from Controlled to non-controlled when there is currently stock on hand for the item') , 'error');
@@ -742,6 +742,11 @@ if (!isset($_POST['MBFlag']) or $_POST['MBFlag']=='M'){
 	echo '<OPTION SELECTED VALUE="M">' . _('Manufactured');
 } else {
 	echo '<OPTION VALUE="M">' . _('Manufactured');
+}
+if (!isset($_POST['MBFlag']) or $_POST['MBFlag']=='G' OR !isset($_POST['MBFlag']) OR $_POST['MBFlag']==''){
+	echo '<OPTION SELECTED VALUE="G">' . _('Phantom');
+} else {
+	echo '<OPTION VALUE="G">' . _('Phantom');
 }
 if (!isset($_POST['MBFlag']) or $_POST['MBFlag']=='B' OR !isset($_POST['MBFlag']) OR $_POST['MBFlag']==''){
 	echo '<OPTION SELECTED VALUE="B">' . _('Purchased');

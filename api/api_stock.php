@@ -65,7 +65,7 @@
 
 /* Check the mbflag has a valid value */
 	function VerifyMBFlag($mbflag,$i, $Errors) {
-		if ($mbflag!='M' and $mbflag!='K' and $mbflag!='A' and $mbflag!='B' and $mbflag!='D') {
+		if ($mbflag!='M' and $mbflag!='K' and $mbflag!='A' and $mbflag!='B' and $mbflag!='D' and $mbflag!='G') {
 			$Errors[$i] = IncorrectMBFlag;
 		}
 		return $Errors;

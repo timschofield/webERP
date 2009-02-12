@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 10;
 
@@ -57,7 +57,7 @@ if (isset($_POST['Search'])){
 
 		if ($_POST['StockCat']=='All'){
 			$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
+					CONCAT(CASE mbflag WHEN 'G' THEN '(PHANTOM) ' ELSE '' END, stockmaster.description) as description,
 					stockmaster.units
 					FROM stockmaster,
 					stockcategory
@@ -65,11 +65,11 @@ if (isset($_POST['Search'])){
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 					AND stockmaster.description " . LIKE . " '$SearchString'
 					AND stockmaster.discontinued=0
-					AND mbflag='M'
+					AND (mbflag='M' OR mbflag='G')
 					ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
+					CONCAT(CASE mbflag WHEN 'G' THEN '(PHANTOM) ' ELSE '' END, stockmaster.description) as description,
 					stockmaster.units
 					FROM stockmaster, stockcategory
 					WHERE  stockmaster.categoryid=stockcategory.categoryid
@@ -77,7 +77,7 @@ if (isset($_POST['Search'])){
 					AND stockmaster.discontinued=0
 					AND stockmaster.description " . LIKE . " '" . $SearchString . "'
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					AND mbflag='M'
+					AND (mbflag='M' OR mbflag='G')
 					ORDER BY stockmaster.stockid";
 		}
 
@@ -88,18 +88,18 @@ if (isset($_POST['Search'])){
 
 		if ($_POST['StockCat']=='All'){
 			$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
+					CONCAT(CASE mbflag WHEN 'G' THEN '(PHANTOM) ' ELSE '' END, stockmaster.description) as description,
 					stockmaster.units
 					FROM stockmaster, stockcategory
 					WHERE stockmaster.categoryid=stockcategory.categoryid
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 					AND stockmaster.discontinued=0
-					AND mbflag='M'
+					AND (mbflag='M' OR mbflag='G')
 					ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
+					CONCAT(CASE mbflag WHEN 'G' THEN '(PHANTOM) ' ELSE '' END, stockmaster.description) as description,
 					stockmaster.units
 					FROM stockmaster, stockcategory
 					WHERE stockmaster.categoryid=stockcategory.categoryid
@@ -107,30 +107,30 @@ if (isset($_POST['Search'])){
 					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 					AND stockmaster.discontinued=0
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					AND mbflag='M'
+					AND (mbflag='M' OR mbflag='G')
 					ORDER BY stockmaster.stockid";
 		}
 	} else {
 		if ($_POST['StockCat']=='All'){
 			$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
+					CONCAT(CASE mbflag WHEN 'G' THEN '(PHANTOM) ' ELSE '' END, stockmaster.description) as description,
 					stockmaster.units
 					FROM stockmaster, stockcategory
 					WHERE  stockmaster.categoryid=stockcategory.categoryid
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 					AND stockmaster.discontinued=0
-					AND mbflag='M'
+					AND (mbflag='M' OR mbflag='G')
 					ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
+					CONCAT(CASE mbflag WHEN 'G' THEN '(PHANTOM) ' ELSE '' END, stockmaster.description) as description,
 					stockmaster.units
 					FROM stockmaster, stockcategory
 					WHERE stockmaster.categoryid=stockcategory.categoryid
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 					AND stockmaster.discontinued=0
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					AND mbflag='M'
+					AND (mbflag='M' OR mbflag='G')
 					ORDER BY stockmaster.stockid";
 		  }
 	}
@@ -202,7 +202,11 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 		if (!isset($EOQ) OR $EOQ==0){
 			$EOQ=1;
 		}
-		$sql[] = "INSERT INTO woitems (wo,
+		
+        $Result = DB_Txn_Begin($db);
+		
+		// insert parent item info
+		$sql = "INSERT INTO woitems (wo,
 	                             stockid,
 	                             qtyreqd,
 	                             stdcost)
@@ -211,31 +215,16 @@ if (isset($NewItem) AND isset($_POST['WO'])){
                          " . $EOQ . ",
                           " . $Cost . "
                           )";
+		$ErrMsg = _('The work order item could not be added');
+		$result = DB_query($sql,$db,$ErrMsg);
 
-		$sql[] = "INSERT INTO worequirements (wo,
-                                            parentstockid,
-                                            stockid,
-                                            qtypu,
-                                            stdcost,
-                                            autoissue)
-      	                 SELECT " . $_POST['WO'] . ",
-        	                           bom.parent,
-                                       bom.component,
-                                       bom.quantity,
-                                       (materialcost+labourcost+overheadcost)*bom.quantity,
-                                       autoissue
-                         FROM bom INNER JOIN stockmaster
-                         ON bom.component=stockmaster.stockid
-                         WHERE parent='" . $NewItem . "'
-                         AND loccode ='" . $_POST['StockLocation'] . "'";
+		//Recursively insert real component requirements
+		WoRealRequirements($db, $_POST['WO'], $_POST['StockLocation'], $NewItem);
 
-         //run the SQL from either of the above possibilites
-         $ErrMsg = _('The work order item could not be added');
-         foreach ($sql as $sql_stmt){
-                 $result = DB_query($sql_stmt,$db,$ErrMsg);
-         } //end for each $sql statement
-         unset($NewItem);
-      } //end if there were no input errors
+        $result = DB_Txn_Commit($db);
+		
+		unset($NewItem);
+	} //end if there were no input errors
 } //adding a new item to the work order
 
 

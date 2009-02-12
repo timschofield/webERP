@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -58,7 +58,7 @@ if (isset($_POST['Search'])){
 					locstock
 				WHERE stockmaster.stockid = locstock.stockid
 				AND stockmaster.description " . LIKE . " '$SearchString'
-				AND (stockmaster.mbflag='M' OR stockmaster.mbflag='K' OR stockmaster.mbflag='A')
+				AND (stockmaster.mbflag='M' OR stockmaster.mbflag='K' OR stockmaster.mbflag='A' OR stockmaster.mbflag='G')
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.units,
@@ -77,6 +77,7 @@ if (isset($_POST['Search'])){
 				AND stockmaster.stockid " . LIKE  . "'%" . $_POST['StockCode'] . "%'
 				AND (stockmaster.mbflag='M'
 					OR stockmaster.mbflag='K'
+					OR stockmaster.mbflag='G'
 					OR stockmaster.mbflag='A')
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,

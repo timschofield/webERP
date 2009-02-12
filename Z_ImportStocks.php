@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 /* Script to make stock locations for all parts that do not have stock location records set up*/
 
 
@@ -162,9 +162,13 @@ if ($_FILES['userfile']['name']) { //start file processing
 			$InputError = 1;
 			prnMsg(_('The item can only be serialised if there is lot control enabled already') . '. ' . _('Batch control') . ' - ' . _('with any number of items in a lot/bundle/roll is enabled when controlled is enabled') . '. ' . _('Serialised control requires that only one item is in the batch') . '. ' . _('For serialised control') . ', ' . _('both controlled and serialised must be enabled'),'error');
 		} 
-		if (($myrow[5]=='A' OR $$myrow[5]=='K' OR $myrow[5]=='D') AND $myrow[8]==1){
+		if ($mbflag!='M' and $mbflag!='K' and $mbflag!='A' and $mbflag!='B' and $mbflag!='D' and $mbflag!='G') {
 			$InputError = 1;
-			prnMsg(_('Assembly/Kitset/Service items cannot also be controlled items') . '. ' . _('Assemblies/Dummies and Kitsets are not physical items and batch/serial control is therefore not appropriate'),'error');
+			prnMsg(_('Items must be of MBFlag type Manufactured(M), Assembly(A), Kit-Set(K), Purchased(B), Dummy(D) or Phantom(G)'),'error');
+		}
+		if (($myrow[5]=='A' OR $$myrow[5]=='K' OR $myrow[5]=='D' OR $myrow[5]=='G') AND $myrow[8]==1){
+			$InputError = 1;
+			prnMsg(_('Assembly/Kitset/Phantom/Service items cannot also be controlled items') . '. ' . _('Assemblies, Dummies and Kitsets are not physical items and batch/serial control is therefore not appropriate'),'error');
 		} 
 		if (trim($myrow[3])==''){
 			$InputError = 1;

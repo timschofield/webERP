@@ -1,5 +1,6 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+<P>12/2/09 Matt Taylor: BOMInquiry.php BOMs.php Stocks.php WorkOrderReceive.php WorOrderEntry.php includes/SQL_CommonFunctions.inc Z_ImportStocks.php - modifications to allow Phantom Items - a new class of item type G - ghost (since P for Phantom could mean purchased). These allow sub-components to be included in the top level of a bill of material as a single line making BOMs simpler to follow and create - the components of ghosts/phantoms are exploded automatically on work order entry so the full requirements show against the work order.
 <P>10/2/09 Tim: weberp-new.sql - Update data for factor companies and debtortype.
 <P>10/2/09 Tim: WorkOrderCosting.php - Correct sql to correctly calculate costings.
 <P>09/2/09 Tim: CustomerAllocations.php - Remove commented code that was preventing gettext from working
