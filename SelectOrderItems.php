@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.82 $ */
+/* $Revision: 1.83 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -75,48 +75,48 @@ if (isset($_GET['ModifyOrderNumber'])
 /*read in all the guff from the selected order into the Items cart  */
 
 	$OrderHeaderSQL = 'SELECT salesorders.debtorno,
-		debtorsmaster.name,
-		salesorders.branchcode,
-		salesorders.customerref,
-		salesorders.comments,
-		salesorders.orddate,
-		salesorders.ordertype,
-		salestypes.sales_type,
-		salesorders.shipvia,
-		salesorders.deliverto,
-		salesorders.deladd1,
-		salesorders.deladd2,
-		salesorders.deladd3,
-		salesorders.deladd4,
-		salesorders.deladd5,
-		salesorders.deladd6,
-		salesorders.contactphone,
-		salesorders.contactemail,
-		salesorders.freightcost,
-		salesorders.deliverydate,
-		debtorsmaster.currcode,
-		paymentterms.terms,
-		salesorders.fromstkloc,
-		salesorders.printedpackingslip,
-		salesorders.datepackingslipprinted,
-		salesorders.quotation,
-		salesorders.deliverblind,
-		debtorsmaster.customerpoline,
-		locations.locationname,
-		custbranch.estdeliverydays
-	FROM salesorders,
-		debtorsmaster,
-		salestypes,
-		custbranch,
-		paymentterms,
-		locations
-	WHERE salesorders.ordertype=salestypes.typeabbrev
-	AND salesorders.debtorno = debtorsmaster.debtorno
-	AND salesorders.debtorno = custbranch.debtorno
-	AND salesorders.branchcode = custbranch.branchcode
-	AND debtorsmaster.paymentterms=paymentterms.termsindicator
-	AND locations.loccode=salesorders.fromstkloc
-	AND salesorders.orderno = ' . $_GET['ModifyOrderNumber'];
+								debtorsmaster.name,
+								salesorders.branchcode,
+								salesorders.customerref,
+								salesorders.comments,
+								salesorders.orddate,
+								salesorders.ordertype,
+								salestypes.sales_type,
+								salesorders.shipvia,
+								salesorders.deliverto,
+								salesorders.deladd1,
+								salesorders.deladd2,
+								salesorders.deladd3,
+								salesorders.deladd4,
+								salesorders.deladd5,
+								salesorders.deladd6,
+								salesorders.contactphone,
+								salesorders.contactemail,
+								salesorders.freightcost,
+								salesorders.deliverydate,
+								debtorsmaster.currcode,
+								paymentterms.terms,
+								salesorders.fromstkloc,
+								salesorders.printedpackingslip,
+								salesorders.datepackingslipprinted,
+								salesorders.quotation,
+								salesorders.deliverblind,
+								debtorsmaster.customerpoline,
+								locations.locationname,
+								custbranch.estdeliverydays
+							FROM salesorders,
+								debtorsmaster,
+								salestypes,
+								custbranch,
+								paymentterms,
+								locations
+							WHERE salesorders.ordertype=salestypes.typeabbrev
+							AND salesorders.debtorno = debtorsmaster.debtorno
+							AND salesorders.debtorno = custbranch.debtorno
+							AND salesorders.branchcode = custbranch.branchcode
+							AND debtorsmaster.paymentterms=paymentterms.termsindicator
+							AND locations.loccode=salesorders.fromstkloc
+							AND salesorders.orderno = ' . $_GET['ModifyOrderNumber'];
 
 
 	$ErrMsg =  _('The order cannot be retrieved because');
@@ -722,6 +722,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						stockcategory
 					WHERE stockmaster.categoryid=stockcategory.categoryid
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+					AND stockmaster.mbflag <>'G'
 					AND stockmaster.description " . LIKE . " '$SearchString'
 					AND stockmaster.discontinued=0
 					ORDER BY stockmaster.stockid";
@@ -732,6 +733,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					FROM stockmaster, stockcategory
 					WHERE  stockmaster.categoryid=stockcategory.categoryid
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+					AND stockmaster.mbflag <>'G'
 					AND stockmaster.discontinued=0
 					AND stockmaster.description " . LIKE . " '" . $SearchString . "'
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
@@ -751,6 +753,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					WHERE stockmaster.categoryid=stockcategory.categoryid
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
+					AND stockmaster.mbflag <>'G'
 					AND stockmaster.discontinued=0
 					ORDER BY stockmaster.stockid";
 			} else {
@@ -761,6 +764,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					WHERE stockmaster.categoryid=stockcategory.categoryid
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
+					AND stockmaster.mbflag <>'G'
 					AND stockmaster.discontinued=0
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 					ORDER BY stockmaster.stockid";
@@ -774,6 +778,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					FROM stockmaster, stockcategory
 					WHERE  stockmaster.categoryid=stockcategory.categoryid
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+					AND stockmaster.mbflag <>'G'
 					AND stockmaster.discontinued=0
 					ORDER BY stockmaster.stockid";
 			} else {
@@ -783,6 +788,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					FROM stockmaster, stockcategory
 					WHERE stockmaster.categoryid=stockcategory.categoryid
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+					AND stockmaster.mbflag <>'G'
 					AND stockmaster.discontinued=0
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 					ORDER BY stockmaster.stockid";
@@ -887,7 +893,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							bom.quantity
 							FROM bom
 							WHERE bom.parent='" . $NewItem . "'
-							AND bom.effectiveto > '" . Date("Y-m-d") . "'
+							AND bom.effectiveto > '" . Date('Y-m-d') . "'
 							AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
 
 					$ErrMsg =  _('Could not retrieve kitset components from the database because') . ' ';
@@ -900,6 +906,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						include('includes/SelectOrderItems_IntoCart.inc');
 					}
 
+				} elseif ($myrow['mbflag']=='G'){
+					prnMsg(_('Phantom assemblies cannot be sold, these items exist only as bills of materials used in other manufactured items. The following item has not been added to the order:') . ' ' . $NewItem, 'warn');
 				} else { /*Its not a kit set item*/
 					include('includes/SelectOrderItems_IntoCart.inc');
 				}

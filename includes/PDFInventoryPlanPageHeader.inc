@@ -14,13 +14,20 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['Compa
 $YPos -=$line_height;
 
 $FontSize=10;
+
+if ($_POST['SupplierID']=="0"){ //no supplier selected its a stock category report
+	$ReportTitle = _('Inventory Planning for Categories Between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria'];
+} else { //supplier selected its just planning for products from the supplier
+	$ReportTitle = _('Inventory Planning for Products From') . ' ' . $SupplerName;
+}
+
 if ($_POST['Location']=='All'){
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos,450,$FontSize,_('Inventory Planning for Categories Between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria'] . ' ' . _('for all stock locations'));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos,450,$FontSize, $ReportTitle . ' ' . _('for all stock locations'));
 
 } else {
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos,450,$FontSize,_('Inventory Planning for Categories Between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria'] . ' ' . _('for stock at') . ' ' . $_POST['Location']);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos,450,$FontSize, $ReportTitle . ' ' . _('for stock at') . ' ' . $_POST['Location']);
 
 }
 

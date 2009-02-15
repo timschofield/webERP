@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity = 10;
 
@@ -57,7 +57,7 @@ if (isset($_POST['Search'])){
 
 		if ($_POST['StockCat']=='All'){
 			$SQL = "SELECT stockmaster.stockid,
-					CONCAT(CASE mbflag WHEN 'G' THEN '(PHANTOM) ' ELSE '' END, stockmaster.description) as description,
+					stockmaster.description,
 					stockmaster.units
 					FROM stockmaster,
 					stockcategory
@@ -65,11 +65,11 @@ if (isset($_POST['Search'])){
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 					AND stockmaster.description " . LIKE . " '$SearchString'
 					AND stockmaster.discontinued=0
-					AND (mbflag='M' OR mbflag='G')
+					AND mbflag='M'
 					ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
-					CONCAT(CASE mbflag WHEN 'G' THEN '(PHANTOM) ' ELSE '' END, stockmaster.description) as description,
+					stockmaster.description,
 					stockmaster.units
 					FROM stockmaster, stockcategory
 					WHERE  stockmaster.categoryid=stockcategory.categoryid
@@ -77,7 +77,7 @@ if (isset($_POST['Search'])){
 					AND stockmaster.discontinued=0
 					AND stockmaster.description " . LIKE . " '" . $SearchString . "'
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					AND (mbflag='M' OR mbflag='G')
+					AND mbflag='M'
 					ORDER BY stockmaster.stockid";
 		}
 
@@ -88,18 +88,18 @@ if (isset($_POST['Search'])){
 
 		if ($_POST['StockCat']=='All'){
 			$SQL = "SELECT stockmaster.stockid,
-					CONCAT(CASE mbflag WHEN 'G' THEN '(PHANTOM) ' ELSE '' END, stockmaster.description) as description,
+					stockmaster.description,
 					stockmaster.units
 					FROM stockmaster, stockcategory
 					WHERE stockmaster.categoryid=stockcategory.categoryid
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 					AND stockmaster.discontinued=0
-					AND (mbflag='M' OR mbflag='G')
+					AND mbflag='M'
 					ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
-					CONCAT(CASE mbflag WHEN 'G' THEN '(PHANTOM) ' ELSE '' END, stockmaster.description) as description,
+					stockmaster.description,
 					stockmaster.units
 					FROM stockmaster, stockcategory
 					WHERE stockmaster.categoryid=stockcategory.categoryid
@@ -107,30 +107,30 @@ if (isset($_POST['Search'])){
 					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 					AND stockmaster.discontinued=0
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					AND (mbflag='M' OR mbflag='G')
+					AND mbflag='M'
 					ORDER BY stockmaster.stockid";
 		}
 	} else {
 		if ($_POST['StockCat']=='All'){
 			$SQL = "SELECT stockmaster.stockid,
-					CONCAT(CASE mbflag WHEN 'G' THEN '(PHANTOM) ' ELSE '' END, stockmaster.description) as description,
+					stockmaster.description,
 					stockmaster.units
 					FROM stockmaster, stockcategory
 					WHERE  stockmaster.categoryid=stockcategory.categoryid
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 					AND stockmaster.discontinued=0
-					AND (mbflag='M' OR mbflag='G')
+					AND mbflag='M'
 					ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
-					CONCAT(CASE mbflag WHEN 'G' THEN '(PHANTOM) ' ELSE '' END, stockmaster.description) as description,
+					stockmaster.description,
 					stockmaster.units
 					FROM stockmaster, stockcategory
 					WHERE stockmaster.categoryid=stockcategory.categoryid
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 					AND stockmaster.discontinued=0
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					AND (mbflag='M' OR mbflag='G')
+					AND mbflag='M'
 					ORDER BY stockmaster.stockid";
 		  }
 	}
@@ -159,10 +159,10 @@ if (isset($_POST['Search'])){
 if (isset($NewItem) AND isset($_POST['WO'])){
       $InputError=false;
 	  $CheckItemResult = DB_query("SELECT mbflag,
-						eoq
-					FROM stockmaster
-					WHERE stockid='" . $NewItem . "'",
-					$db);
+											eoq
+											FROM stockmaster
+											WHERE stockid='" . $NewItem . "'",
+											$db);
 	  if (DB_num_rows($CheckItemResult)==1){
 	  		$CheckItemRow = DB_fetch_array($CheckItemResult);
 	  		$EOQ = $CheckItemRow['eoq'];
@@ -175,10 +175,10 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 	  		$InputError = true;
 	  }
 	  $CheckItemResult = DB_query("SELECT stockid
-					FROM woitems
-					WHERE stockid='" . $NewItem . "'
-					AND wo=" .$_POST['WO'],
-					$db);
+									FROM woitems
+									WHERE stockid='" . $NewItem . "'
+									AND wo=" .$_POST['WO'],
+									$db);
 	  if(DB_num_rows($CheckItemResult)==1){
 	  		prnMsg(_('This item is already on the work order and cannot be added again'),'warn');
 	  		$InputError=true;
@@ -218,7 +218,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 		$ErrMsg = _('The work order item could not be added');
 		$result = DB_query($sql,$db,$ErrMsg);
 
-		//Recursively insert real component requirements
+		//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
 		WoRealRequirements($db, $_POST['WO'], $_POST['StockLocation'], $NewItem);
 
         $result = DB_Txn_Commit($db);
@@ -314,10 +314,10 @@ if (isset($_POST['submit'])) { //The update button has been clicked
                  unset($_POST['QtyRecd'.$i]);
                  unset($_POST['NetLotSNRef'.$i]);
         }
-		echo "<br><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>" . _('Enter a new work order') . "</A>";
-		echo "<br><a href='" . $rootpath . "/SelectWorkOrder.php?" . SID . "'>" . _('Select an existing work order') . "</A>";
-		echo '<br><a href="'. $rootpath . '/WorkOrderCosting.php?' . SID . '&WO=' .  $_REQUEST['WO'] . '">' . _('Go to Costing'). '</A>';
-		echo "<br><br>";
+		echo '<br><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Enter a new work order') . '</a>';
+		echo '<br><a href="' . $rootpath . '/SelectWorkOrder.php?' . SID . '">' . _('Select an existing work order') . '</a>';
+		echo '<br><a href="'. $rootpath . '/WorkOrderCosting.php?' . SID . '&WO=' .  $_REQUEST['WO'] . '">' . _('Go to Costing'). '</a>';
+		echo '<br><br>';
 	}
 } elseif (isset($_POST['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -360,9 +360,9 @@ if (isset($_POST['submit'])) { //The update button has been clicked
     }
 }
 
-echo '<FORM METHOD="post" action="' . $_SERVER['PHP_SELF'] . '" name="form">';
+echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="form">';
 
-echo '<CENTER><TABLE>';
+echo '<center><table>';
 
 
 $sql="SELECT workorders.loccode,
@@ -537,8 +537,8 @@ if (isset($SearchResult)) {
 				if (function_exists('imagecreatefrompng') ){
 					$ImageSource = '<IMG SRC="GetStockImage.php?SID&automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($myrow['stockid']). '&text=&width=64&height=64">';
 				} else {
-					if(file_exists($_SERVER['DOCUMENT_ROOT'] . $rootpath. '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg')) {
-						$ImageSource = '<IMG SRC="' .$_SERVER['DOCUMENT_ROOT'] . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg">';
+					if(file_exists($_SERVER['DOCUMENT_ROOT'] . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg')) {
+						$ImageSource = '<IMG SRC="' .$_SERVER['DOCUMENT_ROOT'] . $rootpath .  '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg">';
 					} else {
 						$ImageSource = _('No Image');
 					}
@@ -552,13 +552,13 @@ if (isset($SearchResult)) {
 					$k=1;
 				}
 
-				printf("<TD><FONT SIZE=1>%s</FONT></TD>
-						<TD><FONT SIZE=1>%s</FONT></TD>
-						<TD><FONT SIZE=1>%s</FONT></TD>
-						<TD>%s</TD>
-						<TD><FONT SIZE=1><A HREF='%s'>"
-						. _('Add to Work Order') . '</A></FONT></TD>
-						</TR>',
+				printf("<td><font size=1>%s</font></td>
+						<td><font size=1>%s</font></td>
+						<td><font size=1>%s</font></td>
+						<td>%s</td>
+						<td><font size=1><a href='%s'>"
+						. _('Add to Work Order') . '</a></font></td>
+						</tr>',
 						$myrow['stockid'],
 						$myrow['description'],
 						$myrow['units'],
@@ -573,7 +573,7 @@ if (isset($SearchResult)) {
 			} //end if not already on work order
 		}//end of while loop
 	} //end if more than 1 row to show
-	echo '</TABLE>';
+	echo '</table>';
 
 }#end if SearchResults to show
 
@@ -585,7 +585,7 @@ if (!isset($_GET['NewItem']) or $_GET['NewItem']=='') {
 }
 
 
-echo '</FORM>';
+echo '</form>';
 
 include('includes/footer.inc');
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 /* Common SQL Functions */
 
@@ -282,28 +282,27 @@ function WoRealRequirements($db, $woid, $loccode, $stockid, $qty=1, $parentid=""
 	//     - the same component could occur in multiple dissolved phantom assemblies
 	//     - need to sum quantities of multiple component occurences
 	if ($parentid != $stockid) {
-		$sql = "
-			UPDATE worequirements
-			INNER JOIN (
-				SELECT CAST('" . $woid . "' AS SIGNED) as wo,
-					CAST('NODE-1' AS CHAR) as parentstockid,
-					bom.component AS stockid,
-					bom.quantity*1 AS qtypu,
-					materialcost+labourcost+overheadcost AS stdcost,
-					bom.autoissue
-				FROM bom INNER JOIN stockmaster
-				ON bom.component=stockmaster.stockid
-				WHERE bom.parent='" . $stockid . "'
-				AND bom.loccode ='" . $loccode . "'
-				AND stockmaster.mbflag<>'G'
-				AND bom.component IN (
-					SELECT stockid
-					FROM worequirements
-					WHERE wo = " . $woid . "
-					AND parentstockid = '". $parentid . "'
-				)
-			) AS g ON g.wo=worequirements.wo AND g.parentstockid=worequirements.parentstockid AND g.stockid=worequirements.stockid
-			SET worequirements.qtypu=worequirements.qtypu+g.qtypu";
+		$sql = "UPDATE worequirements
+					INNER JOIN (
+						SELECT CAST('" . $woid . "' AS SIGNED) as wo,
+							CAST('NODE-1' AS CHAR) as parentstockid,
+							bom.component AS stockid,
+							bom.quantity*1 AS qtypu,
+							materialcost+labourcost+overheadcost AS stdcost,
+							bom.autoissue
+						FROM bom INNER JOIN stockmaster
+						ON bom.component=stockmaster.stockid
+						WHERE bom.parent='" . $stockid . "'
+						AND bom.loccode ='" . $loccode . "'
+						AND stockmaster.mbflag<>'G'
+						AND bom.component IN (
+							SELECT stockid
+							FROM worequirements
+							WHERE wo = " . $woid . "
+							AND parentstockid = '". $parentid . "'
+						)
+					) AS g ON g.wo=worequirements.wo AND g.parentstockid=worequirements.parentstockid AND g.stockid=worequirements.stockid
+					SET worequirements.qtypu=worequirements.qtypu+g.qtypu";
 		$result = DB_query($sql, $db);
 	}
 

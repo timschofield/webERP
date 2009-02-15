@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.62 $ */
+/* $Revision: 1.63 $ */
 
 $PageSecurity = 11;
 
@@ -39,7 +39,7 @@ if (isset($StockID)) {
 </script>
 
 <?php
-echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</A><BR>' . "\n";
+echo '<a href="' . $rootpath . '/SelectProduct.php?' . SID . '">' . _('Back to Items') . '</A><BR>' . "\n";
 
 
 if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {

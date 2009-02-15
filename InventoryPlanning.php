@@ -10,7 +10,7 @@ If (isset($_POST['PrintPDF'])
 	AND isset($_POST['ToCriteria'])
 	AND strlen($_POST['ToCriteria'])>=1){
 
-        include ('includes/class.pdf.php');
+    include ('includes/class.pdf.php');
 
 	/* A4_Landscape */
 
@@ -43,29 +43,58 @@ If (isset($_POST['PrintPDF'])
 
       /*Now figure out the inventory data to report for the category range under review
       need QOH, QOO, QDem, Sales Mth -1, Sales Mth -2, Sales Mth -3, Sales Mth -4*/
+    		  
 	if ($_POST['Location']=='All'){
-		$SQL = "SELECT stockmaster.categoryid,
-				stockmaster.description,
-				stockcategory.categorydescription,
-				locstock.stockid,
-				SUM(locstock.quantity) AS qoh
-			FROM locstock,
-				stockmaster,
-				stockcategory
-			WHERE locstock.stockid=stockmaster.stockid
-			AND stockmaster.categoryid=stockcategory.categoryid
-			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
-			AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
-			AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
-			GROUP BY stockmaster.categoryid,
-				stockmaster.description,
-				stockcategory.categorydescription,
-				locstock.stockid,
-				stockmaster.stockid
-			ORDER BY stockmaster.categoryid,
-				stockmaster.stockid";
+					
+		if($_POST['SupplierID']=='0'){ //no supplier selected use stock categories
+			
+			$SQL = "SELECT stockmaster.categoryid,
+						stockmaster.description,
+						stockcategory.categorydescription,
+						locstock.stockid,
+						SUM(locstock.quantity) AS qoh
+					FROM locstock,
+						stockmaster,
+						stockcategory
+					WHERE locstock.stockid=stockmaster.stockid
+					AND stockmaster.categoryid=stockcategory.categoryid
+					AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
+					AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
+					AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+					GROUP BY stockmaster.categoryid,
+						stockmaster.description,
+						stockcategory.categorydescription,
+						locstock.stockid,
+						stockmaster.stockid
+					ORDER BY stockmaster.categoryid,
+						stockmaster.stockid";
+		} else { //a supplier is selected planning for just a single supplier
+			$SQL = "SELECT stockmaster.categoryid,
+						stockmaster.description,
+						stockcategory.categorydescription,
+						locstock.stockid,
+						SUM(locstock.quantity) AS qoh
+					FROM locstock,
+						stockmaster,
+						stockcategory,
+						purchdata
+					WHERE locstock.stockid=stockmaster.stockid
+					AND stockmaster.categoryid=stockcategory.categoryid
+					AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
+					AND purchdata.stockid=stockmaster.stockid
+					AND purchdata.supplierno = '" . $_POST['SupplierID'] . "'
+					AND purchdata.preferred=1
+					GROUP BY stockmaster.categoryid,
+						stockmaster.description,
+						stockcategory.categorydescription,
+						locstock.stockid,
+						stockmaster.stockid
+					ORDER BY stockmaster.categoryid,
+						stockmaster.stockid";	
+		}
 	} else {
-		$SQL = "SELECT stockmaster.categoryid,
+		if ($_POST['SupplierID']=="0"){ //No supplier selected use category selection
+			$SQL = "SELECT stockmaster.categoryid,
 					locstock.stockid,
 					stockmaster.description,
 					stockcategory.categorydescription,
@@ -81,6 +110,26 @@ If (isset($_POST['PrintPDF'])
 				AND locstock.loccode = '" . $_POST['Location'] . "'
 				ORDER BY stockmaster.categoryid,
 					stockmaster.stockid";
+		} else { //a supplier is selected use the supplier selection
+			$SQL = "SELECT stockmaster.categoryid,
+						stockmaster.description,
+						stockcategory.categorydescription,
+						locstock.stockid,
+						locstock.quantity AS qoh
+					FROM locstock,
+						stockmaster,
+						stockcategory,
+						purchdata
+					WHERE locstock.stockid=stockmaster.stockid
+					AND stockmaster.categoryid=stockcategory.categoryid
+					AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
+					AND purchdata.stockid=stockmaster.stockid
+					AND purchdata.supplierno = '" . $_POST['SupplierID'] . "'
+					AND locstock.loccode = '" . $_POST['Location'] . "'
+					AND purchdata.preferred=1
+					ORDER BY stockmaster.categoryid,
+					stockmaster.stockid";	
+		}
 
 	}
 	$InventoryResult = DB_query($SQL,$db,'','',false,false);
@@ -89,13 +138,21 @@ If (isset($_POST['PrintPDF'])
 	  $title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  include('includes/header.inc');
 	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   echo "<BR><A HREF='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</A>';
+	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</A>';
 	   if ($debug==1){
-	      echo "<BR>$SQL";
+	      echo "<br>$SQL";
 	   }
 	   include('includes/footer.inc');
 	   exit;
 	}
+	
+	if ($_POST['SupplierID']!='0'){
+		//need to get supplier name for the report heading
+		$SuppNameResult =DB_query("SELECT suppname FROM suppliers WHERE supplierid='" .  $_POST['SupplierID'] . "'",$db);
+		$SuppNameRow = DB_fetch_row($SuppNameResult);
+		$SupplerName = $SuppNameRow[0];
+	}
+	
 	$Period_0_Name = strftime('%b',mktime(0,0,0,Date('m'),Date('d'),Date('Y')));
 	$Period_1_Name = strftime('%b',mktime(0,0,0,Date('m')-1,Date('d'),Date('Y')));
 	$Period_2_Name = strftime('%b',mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
@@ -369,24 +426,32 @@ If (isset($_POST['PrintPDF'])
 			echo "<OPTION VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . " - " . $myrow['categorydescription'];
 		}
 		echo '</SELECT></TD></TR>';
+		echo '<TR><TD>' . _('Or Supplier') . ':</TD><TD><SELECT name="SupplierID">';
 
-		echo '<TR><TD>' . _('For Inventory in Location') . ":</TD><TD><SELECT name='Location'>";
+		$SupplierResult = DB_query('SELECT supplierid, suppname FROM suppliers',$db);
+		echo '<option selected value="0">' . _('Use Category Selection') . '</option>';
+		While ($myrow = DB_fetch_array($SupplierResult)){
+			echo '<option value="' . $myrow['supplierid'] . '">' . $myrow['supplierid'] . " - " . $myrow['suppname'];
+		}
+		echo '</select></td></tr>';
+
+		echo '<tr><td>' . _('For Inventory in Location') . ':</td><td><select name="Location">';
 		$sql = 'SELECT loccode, locationname FROM locations';
 		$LocnResult=DB_query($sql,$db);
 
-		echo "<OPTION Value='All'>" . _('All Locations');
+		echo '<option Value="All">' . _('All Locations');
 
 		while ($myrow=DB_fetch_array($LocnResult)){
-		          echo "<OPTION Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+		          echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		      		}
-		echo '</SELECT></TD></TR>';
+		echo '</select></td></tr>';
 
-		echo '<TR><TD>' . _('Maximum No Months Holding') . ":</TD><TD><SELECT name='NumberMonthsHolding'>";
-		echo '<OPTION SELECTED Value=3>' . _('Three Months');
-		echo '<OPTION Value=4>' . _('Four Months');
-		echo '</SELECT></TD></TR>';
+		echo '<tr><td>' . _('Maximum No Months Holding') . ':</td><td><select name="NumberMonthsHolding">';
+		echo '<option selected value="3">' . _('Three Months');
+		echo '<option value="4">' . _('Four Months');
+		echo '</select></td></tr>';
 
-		echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
+		echo '</table><input type=submit Name="PrintPDF" Value="' . _('Print PDF') . '"></center>';
 	}
 	include('includes/footer.inc');
 
