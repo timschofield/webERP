@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 11;
 
@@ -8,13 +8,13 @@ $title = _('Work Order Costing');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<A HREF="'. $rootpath . '/SelectWorkOrder.php?' . SID . '">' . _('Back to Work Orders'). '</A><BR>';
+echo '<a href="'. $rootpath . '/SelectWorkOrder.php?' . SID . '">' . _('Back to Work Orders'). '</a><br>';
 
-echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
 
 if (!isset($_REQUEST['WO'])) {
 	/* This page can only be called with a work order number */
-	echo '<CENTER><A HREF="' . $rootpath . '/SelectWorkOrder.php?' . SID . '">'.
+	echo '<center><A HREF="' . $rootpath . '/SelectWorkOrder.php?' . SID . '">'.
 		_('Select a work order').'</A></CENTER>';
 	prnMsg(_('This page can only be opened if a work order has been selected.'),'info');
 	include ('includes/footer.inc');
@@ -124,7 +124,7 @@ $RequirementsResult = DB_query("SELECT t.stockid, t.description, t.decimalplaces
                                 FROM (SELECT worequirements.stockid,
                                              stockmaster.description,
                                              stockmaster.decimalplaces,
-                                             AVG(worequirements.stdcost) as stdcost,
+                                             (stockmaster.materialcost) as stdcost,
                                              SUM(worequirements.qtypu*woitems.qtyreqd) AS requiredqty,
                                              SUM(worequirements.stdcost*woitems.qtyreqd) AS expectedcost,
                                              AVG(worequirements.qtypu) as qtypu
@@ -195,7 +195,7 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 	} else {
 		$CostVar = 0;
 	}
-	$UsageVar =($RequirementsRow['requiredqty']-$IssueQty)*$RequirementsRow['costperqty'];
+	$UsageVar =($RequirementsRow['requiredqty']-$IssueQty)*($RequirementsRow['costperqty']);
 
 	echo '<td colspan="2"></td><td align="right">'  . number_format($RequirementsRow['requiredqty'],$RequirementsRow['decimalplaces']) . '</td>
 				<td align="right">' . number_format($RequirementsRow['expectedcost'],2) . '</td>
