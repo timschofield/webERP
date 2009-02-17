@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.38 $ */
+/* $Revision: 1.39 $ */
 
 $PageSecurity = 1;
 
@@ -36,7 +36,7 @@ If (!isset($_POST['ToTransNo'])
 
 $FirstTrans = $FromTransNo; /*Need to start a new page only on subsequent transactions */
 
-If (isset($PrintPDF)
+If (isset($PrintPDF) or isset($_GET['PrintPDF'])
 	AND $PrintPDF!=''
 	AND isset($FromTransNo)
 	AND isset($InvOrCredit)
@@ -162,7 +162,7 @@ If (isset($PrintPDF)
 			AND custbranch.salesman=salesman.salesmancode
 			AND salesorders.fromstkloc=locations.loccode';
 
-		if ($_POST['PrintEDI']=='No'){
+		if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No'){
 			$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
 		}
 	} else {
@@ -505,35 +505,41 @@ if (isset($_GET['FromTransNo'])){
 $result=DB_query($sql,$db);
 // Loop the result set and add appendfile if the field is not 0
 while ($row=DB_fetch_array($result)){
-if ($row['appendfile'] !='0' AND $row['appendfile'] !=='none') {
-$pdf->setFiles(array('invoice.pdf','pdf_append/' . $row['appendfile']));
-$pdf->concat();
-$pdf->Output('newpdf.pdf','I');
-exit;
-// If the appendfile field is empty, just print the invoice without any appended pages
-} else {
-$pdf->setFiles(array('invoice.pdf'));
-$pdf->concat();
-$pdf->Output('newpdf.pdf','D');
-exit;
-}
+    if ($row['appendfile'] !='0' AND $row['appendfile'] !=='none') {
+        $pdf->setFiles(array('invoice.pdf','pdf_append/' . $row['appendfile']));
+        $pdf->concat();
+        $pdf->Output('newpdf.pdf','I');
+        exit;
+        // If the appendfile field is empty, just print the invoice without any appended pages
+    } else if (isset($_GET['Email'])) {
+        $pdf->setFiles(array('invoice.pdf'));
+        $pdf->concat();
+        $pdfcode = $pdf->Output();
+    } else {
+        // If the appendfile field is empty, just print the invoice without any appended pages
+        $pdf->setFiles(array('invoice.pdf'));
+        $pdf->concat();
+        $pdf->Output('newpdf.pdf','D');
+        exit;
+    }
 }
 //End FPDI Concat
 
-	if ($len <1020){
+/*	if ($len <1020){
 		include('includes/header.inc');
 		echo '<P>' . _('There were no transactions to print in the range selected');
 		include('includes/footer.inc');
 		exit;
-	}
+	}*/
 
 	if (isset($_GET['Email'])){ //email the invoice to address supplied
+		include('includes/header.inc');
 
 		include ('includes/htmlMimeMail.php');
 
 		$mail = new htmlMimeMail();
-		$filename = $_SESSION['reports_dir'] . '/' . $InvOrCredit . $_GET['FromTransNo'] . '.pdf';
-		$fp = fopen($filename, 'wb');
+		$filename = $_SESSION['reports_dir'] . '/Invoice.pdf';
+    	$fp = fopen( $_SESSION['reports_dir'] . '/Invoice.pdf','wb');
 		fwrite ($fp, $pdfcode);
 		fclose ($fp);
 
