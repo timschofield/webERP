@@ -79,3 +79,4 @@ INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('Extended_SupplierInfo
 
 ALTER TABLE salesglpostings MODIFY COLUMN area VARCHAR(3) NOT NULL;
 ALTER TABLE salesanalysis MODIFY COLUMN area VARCHAR(3) NOT NULL;
+ALTER TABLE `debtortrans` CHANGE `trandate` `trandate` DATE NOT NULL DEFAULT '0000-00-00';
