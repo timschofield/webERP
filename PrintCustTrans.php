@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.39 $ */
+/* $Revision: 1.40 $ */
 
 $PageSecurity = 1;
 
@@ -446,7 +446,7 @@ If (isset($PrintPDF) or isset($_GET['PrintPDF'])
 	    $FromTransNo++;
 	} /* end loop to print invoices */
 
-	$pdfcode = $pdf->output("invoice.pdf", "F");
+	$pdfcode = $pdf->output($_SESSION['reports_dir'] . '/Invoice.pdf', "F");
 	$len = strlen($pdfcode);
 
 
@@ -512,9 +512,9 @@ while ($row=DB_fetch_array($result)){
         exit;
         // If the appendfile field is empty, just print the invoice without any appended pages
     } else if (isset($_GET['Email'])) {
-        $pdf->setFiles(array('invoice.pdf'));
+        $pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf'));
         $pdf->concat();
-        $pdfcode = $pdf->Output();
+        $pdfcode = $pdf->Output($_SESSION['reports_dir'] . '/Invoice.pdf');
     } else {
         // If the appendfile field is empty, just print the invoice without any appended pages
         $pdf->setFiles(array('invoice.pdf'));

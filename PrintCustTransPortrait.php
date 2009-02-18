@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 1;
 
@@ -462,7 +462,7 @@ If (isset($PrintPDF)
 	} /* end loop to print invoices */
 
 //	$pdfcode = $pdf->output();
-	$pdfcode = $pdf->output("invoice.pdf", "F");
+	$pdfcode = $pdf->output($_SESSION['reports_dir'] . '/Invoice.pdf', "F");
 	$len = strlen($pdfcode);
 // Start FPDI concatination to append PDF files conditionally to the invoice
 // This part taken from FPDI example page
@@ -524,9 +524,9 @@ while ($row=DB_fetch_array($result)){
         exit;
         // If the appendfile field is empty, just print the invoice without any appended pages
     } else if (isset($_GET['Email'])) {
-        $pdf->setFiles(array('invoice.pdf'));
+        $pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf'));
         $pdf->concat();
-        $pdfcode = $pdf->Output();
+        $pdfcode = $pdf->Output($_SESSION['reports_dir'] . '/Invoice.pdf');
     } else {
         // If the appendfile field is empty, just print the invoice without any appended pages
         $pdf->setFiles(array('invoice.pdf'));
@@ -536,12 +536,12 @@ while ($row=DB_fetch_array($result)){
     }
 }//End FPDI Concat
 
-	if ($len <1020){
+/*	if ($len <1020){
 		include('includes/header.inc');
 		echo '<P>' . _('There were no transactions to print in the range selected');
 		include('includes/footer.inc');
 		exit;
-	}
+	}*/
 
 	if (isset($_GET['Email'])){ //email the invoice to address supplied
 		include('includes/header.inc');
