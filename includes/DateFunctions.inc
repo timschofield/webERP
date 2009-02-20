@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 
 /*
 date validation and parsing functions
@@ -677,23 +677,31 @@ function GetPeriod ($TransDate, &$db) {
 	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d'){
 		$TransDate = mktime(0,0,0,$Date_array[1],$Date_array[2],$Date_array[0]);
 	}
+	
+	if (strlen($_SESSION['ProhibitPostingsBefore'])>=8){ //then the ProhibitPostingsBefore configuration is set
+		$Date_array = explode('-', $_SESSION['ProhibitPostingsBefore']);
+	
+		$ProhibitPostingsBefore = mktime(0,0,0,$Date_array[1],$Date_array[2],$Date_array[0]);
 
-	$Date_array = explode('-', $_SESSION['ProhibitPostingsBefore']);
-	$ProhibitPostingsBefore=mktime(0,0,0,$Date_array[1],$Date_array[2],$Date_array[0]);
-
-	/* If transaction date is in a closed period use the month end of that period */
-	if ($TransDate < $ProhibitPostingsBefore) {
-		$TransDate = $ProhibitPostingsBefore;
+		/* If transaction date is in a closed period use the month end of that period */
+		if ($TransDate < $ProhibitPostingsBefore) {
+			$TransDate = $ProhibitPostingsBefore;
+		}
 	}
-
 	/* Find the unix timestamp of the last period end date in periods table */
 	$sql = 'SELECT MAX(lastdate_in_period), MAX(periodno) from periods';
 	$result = DB_query($sql, $db);
 	$myrow=DB_fetch_row($result);
-	$Date_array = explode('-', $myrow[0]);
-	$LastPeriodEnd = mktime(0,0,0,$Date_array[1]+2,0,(int)$Date_array[0]);
-	$LastPeriod = $myrow[1];
-
+	if (is_null($myrow[0])){
+		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (0,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y'))) . "')",$db,_('Could not insert first period'));
+		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (1,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+2,0,Date('Y'))) . "')",$db,_('Could not insert second period'));
+		$LastPeriod=1;
+		$LastPeriodEnd = mktime(0,0,0,Date('m')+2,0,Date('Y'));
+	} else {
+		$Date_array = explode('-', $myrow[0]);
+		$LastPeriodEnd = mktime(0,0,0,$Date_array[1]+2,0,(int)$Date_array[0]);
+		$LastPeriod = $myrow[1];
+	}
 	/* Find the unix timestamp of the first period end date in periods table */
 	$sql = 'SELECT MIN(lastdate_in_period), MIN(periodno) from periods';
 	$result = DB_query($sql, $db);
@@ -701,7 +709,7 @@ function GetPeriod ($TransDate, &$db) {
 	$Date_array = explode('-', $myrow[0]);
 	$FirstPeriodEnd = mktime(0,0,0,$Date_array[1],0,(int)$Date_array[0]);
 	$FirstPeriod = $myrow[1];
-
+	
 	/* If the period number doesn't exist */
 	if (!PeriodExists($TransDate, $db)) {
 		/* if the transaction is after the last period */
