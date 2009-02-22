@@ -1,12 +1,19 @@
-<P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
+<p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 
 <P>20/2/09 Phil: Nailed the creation of loads of periods on setting up a new system - the GetPeriod function was being called before the GLPostings function - the GetPeriod function now creates the first couple of periods if none exist.
-<P>/2/2/09 Matt Taylor: BOMInquiry.php BOMs.php Stocks.php WorkOrderReceive.php WorOrderEntry.php includes/SQL_CommonFunctions.inc Z_Im/ortStocks.php - modifications to allow Phantom Items - a new class of item type G - ghost (since P for Phantom could mean purchased). These allow sub-components to be included in the top level of a bill of material as a single line making BOMs simpler to follow and create - the components of ghosts/phantoms are exploded automatically on work order entry so the full requirements show against the work order.
+<p>18/2/09 Tim: PrintCustTrans.php and PrintCustTransPortrait.php - Update to correctly email invoice to customer
+<p>17/2/09 Phil: sql/mysql/upgrade3.09-3.10.sql - Changed debtortrans.trandate to date from datetime
+<p>17/2/09 Tim: PrintCustTransPortrait.php - Update to correctly email invoice to customer
+<p>17/2/09 Tim: WorkOrderCosting.php - Correctly calculate cost variances
+<p>17/2/09 Tim: PrintCustTrans. - Update to correctly email invoice to customer
+<P>12/2/09 Matt Taylor: BOMInquiry.php BOMs.php Stocks.php WorkOrderReceive.php WorOrderEntry.php includes/SQL_CommonFunctions.inc Z_Im/ortStocks.php - modifications to allow Phantom Items - a new class of item type G - ghost (since P for Phantom could mean purchased). These allow sub-components to be included in the top level of a bill of material as a single line making BOMs simpler to follow and create - the components of ghosts/phantoms are exploded automatically on work order entry so the full requirements show against the work order.
+<p>11/2/09 Moxx consulting: first commit of web based install UI 
 <P>10/2/09 Tim: weberp-new.sql - Update data for factor companies and debtortype.
 <P>10/2/09 Tim: WorkOrderCosting.php - Correct sql to correctly calculate costings.
 <P>09/2/09 Tim: CustomerAllocations.php - Remove commented code that was preventing gettext from working
 <P>09/2/09 Tim: Correct messages.po file for v3.10
-<P>09/2/09 Tim: GeocodeSetup.php - Correct the lack of gettext function.
+<P>09/2/09 Harald Ringehahn: GeocodeSetup.php - Correct the lack of gettext function.
+<p>08/2/09 Tim: sessions.inc - Correction for logo search
 <P>
 <P><B>Version 3.10
 <P>06 February 2009</B>
