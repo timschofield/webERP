@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 10;
 
@@ -135,7 +135,7 @@ if (isset($_POST['submit'])) {
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg( _('Cannot delete this account section because general ledger accounts groups have been created using this section'),'warn');
-		echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('general ledger accounts groups that refer to this account section') . '</FONT>';
+		echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('general ledger accounts groups that refer to this account section') . '</font>';
 
 	} else {
 		//Fetch section name
@@ -173,8 +173,9 @@ if (isset($_POST['submit'])) {
 
 	$ErrMsg = _('Could not get account group sections because');
 	$result = DB_query($sql,$db,$ErrMsg);
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 
-	echo "<center><table>
+	echo "<table>
 		<tr>
 		<th>" . _('Section Number') . "</th>
 		<th>" . _('Section Description') . "</th>
@@ -191,28 +192,28 @@ if (isset($_POST['submit'])) {
 			$k++;
 		}
 
-		echo '<TD>' . $myrow[0] . '</TD><TD>' . $myrow[1] . '</TD>';
-		echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedSectionID=' . $myrow[0] . '">' . _('Edit') . '</A></TD>';
+		echo '<td>' . $myrow[0] . '</td><td>' . $myrow[1] . '</td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedSectionID=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
 		if ( $myrow[0] == '1' || $myrow[0] == '2' ) {
-			echo '<TD><b>'._('Restricted').'</b></TD>';
+			echo '<td><b>'._('Restricted').'</b></td>';
 		} else {
-			echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedSectionID=' . $myrow[0] . '&delete=1">' . _('Delete') .'</A></TD>';
+			echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedSectionID=' . $myrow[0] . '&delete=1">' . _('Delete') .'</a></td>';
 		}
 
 	} //END WHILE LIST LOOP
-	echo '</table></CENTER><p>';
+	echo '</table><p>';
 } //end of ifs and buts!
 
 
-if (isset($_POST['SelectedSectionID']) OR isset($_GET['SelectedSectionID'])) {
-	echo '<CENTER><A HREF=' . $_SERVER['PHP_SELF'] . '?' . SID .'>' . _('Review Account Sections') . '</a></Center>';
+if (isset($_POST['SelectedSectionID']) or isset($_GET['SelectedSectionID'])) {
+	echo '<div class="centre"><a href=' . $_SERVER['PHP_SELF'] . '?' . SID .'>' . _('Review Account Sections') . '</a></div>';
 }
 
-echo '<P>';
+echo '<p>';
 
 if (! isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' name='AccountSections' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo "<form method='post' name='AccountSections' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 	if (isset($_GET['SelectedSectionID'])) {
 		//editing an existing section
@@ -232,10 +233,10 @@ if (! isset($_GET['delete'])) {
 			$_POST['SectionID'] = $myrow['sectionid'];
 			$_POST['SectionName']  = $myrow['sectionname'];
 
-			echo "<INPUT TYPE=HIDDEN NAME='SelectedSectionID' VALUE='" . $_POST['SectionID'] . "'>";
-			echo "<CENTER><TABLE>
-			<TD>" . _('Section Number') . ':' . "</TD>
-			<TD>" . $_POST['SectionID'] . "</TD>";
+			echo "<input type=hidden name='SelectedSectionID' value='" . $_POST['SectionID'] . "'>";
+			echo "<table>
+			<td>" . _('Section Number') . ':' . "</td>
+			<td>" . $_POST['SectionID'] . "</td>";
 		}
 
 	}  else {
@@ -249,17 +250,17 @@ if (! isset($_GET['delete'])) {
 		if (!isset($_POST['SectionName'])) {
 			$_POST['SectionName']='';
 		}
-		echo "<CENTER><TABLE>
-			<TR>
-			<TD>" . _('Section Number') . ':' . '</TD>
-			<TD><input tabindex="1" ' . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) ." type='Text' name='SectionID' onKeyPress='return restrictToNumbers(this, event)'  SIZE=4 MAXLENGTH=4 value='" . $_POST['SectionID'] . "'></TD></TR>";
+		echo "<table>
+			<tr>
+			<td>" . _('Section Number') . ':' . '</td>
+			<td><input tabindex="1" ' . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) ." type='text' name='SectionID' onKeyPress='return restrictToNumbers(this, event)'  size=4 maxlength=4 value='" . $_POST['SectionID'] . "'></td></tr>";
 	}
-	echo "<TR><TD>" . _('Section Description') . ':' . '</TD>
-		<TD><input tabindex="2" ' . (in_array('SectionName',$Errors) ?  'class="inputerror"' : '' ) ." type='Text' name='SectionName' SIZE=30 MAXLENGTH=30 value='" . $_POST['SectionName'] . "'></TD>
-		</TR>";
-	echo '</TABLE>';
+	echo "<tr><td>" . _('Section Description') . ':' . '</td>
+		<td><input tabindex="2" ' . (in_array('SectionName',$Errors) ?  'class="inputerror"' : '' ) ." type='text' name='SectionName' size=30 maxlength=30 value='" . $_POST['SectionName'] . "'></td>
+		</tr>";
 
-	echo '<CENTER><input tabindex="3" type=Submit name=submit value=' . _('Enter Information') . '>';
+	echo '<tr><td></td><td colspan=2><input tabindex="3" type=Submit name=submit value=' . _('Enter Information') . '></td></tr>';
+	echo '</table>';
 
 	if (!isset($_GET['SelectedSectionID']) or $_GET['SelectedSectionID']=='') {
 		echo "<script>defaultControl(document.AccountSections.SectionID);</script>";
@@ -267,7 +268,7 @@ if (! isset($_GET['delete'])) {
 		echo "<script>defaultControl(document.AccountSections.SectionName);</script>";
 	}
 
-	echo '</FORM>';
+	echo '</form>';
 
 } //end if record deleted no point displaying form to add record
 
