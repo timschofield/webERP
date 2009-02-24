@@ -46,6 +46,12 @@ a:hover {
 
 table {
   background-color: #EEEEFF;
+  margin: 0 auto;
+}
+
+div.centre {
+  margin: 0 auto;
+  text-align:center;
 }
 
 /*table detail items default format */

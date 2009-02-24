@@ -42,7 +42,14 @@ a:hover {
 	text-decoration: none;
 	
 }
-
+font.good {
+    font-weight: bold;
+    color: green;
+}
+font.bad {
+    font-weight: bold;
+    color:red;
+}
 input{
   	background: url(images/input.png) #eee;
 	color:#000;
@@ -72,8 +79,13 @@ table {
   background-color: #eee;
   border: 0px 0px 2px 2px #222 solid;
   background: #eee;
+  margin: 0 auto;
 }
 
+div.centre {
+  margin: 0 auto;
+  text-align:center;
+}
 /*table detail items default format */
 td {
 	font-family: Verdana, Arial, Helvetica;
