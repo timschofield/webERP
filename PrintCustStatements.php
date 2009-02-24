@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 2;
 
@@ -396,8 +396,8 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 
 	if (isset($pdf)){
 
-
-	$pdfcode = $pdf->output();
+// Here we output the actual PDF file, we have given the file a name (this could perhaps be a variable based on the Customer name), and outputted via the "I" Inline method
+	$pdfcode = $pdf->output("Customer_Statement.pdf", "I");
 	$len = strlen($pdfcode);
 	header('Content-type: application/pdf');
 	header('Content-Length: ' . $len);
