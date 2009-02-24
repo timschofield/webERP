@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.44 $ */
+/* $Revision: 1.45 $ */
 
 $PageSecurity = 3;
 
@@ -10,7 +10,7 @@ include('includes/header.inc');
 
 if (isset($_GET['DebtorNo'])) {
 	$DebtorNo = strtoupper($_GET['DebtorNo']);
-}elseif (isset($_POST['DebtorNo'])){
+} else if (isset($_POST['DebtorNo'])){
 	$DebtorNo = strtoupper($_POST['DebtorNo']);
 }
 
@@ -23,7 +23,7 @@ if (!isset($DebtorNo)) {
 
 if (isset($_GET['SelectedBranch'])){
 	$SelectedBranch = strtoupper($_GET['SelectedBranch']);
-}elseif (isset($_POST['SelectedBranch'])){
+} else if (isset($_POST['SelectedBranch'])){
 	$SelectedBranch = strtoupper($_POST['SelectedBranch']);
 }
 
@@ -115,19 +115,19 @@ if (isset($_POST['submit'])) {
     	$status = $xml->Response->Status->code;
     	if (strcmp($status, "200") == 0) {
       		// Successful geocode
-      $geocode_pending = false;
-      $coordinates = $xml->Response->Placemark->Point->coordinates;
-      $coordinatesSplit = split(",", $coordinates);
-      // Format: Longitude, Latitude, Altitude
-      $latitude = $coordinatesSplit[1];
-      $longitude = $coordinatesSplit[0];
-    } else {
-      // failure to geocode
-      $geocode_pending = false;
-      echo '<DIV class="page_help_text"><b>Geocode Notice:</b> Address: ' . $address . ' failed to geocode. ';
-      echo 'Received status ' . $status . '</DIV>';
-    }
-}
+	    	$geocode_pending = false;
+      		$coordinates = $xml->Response->Placemark->Point->coordinates;
+      		$coordinatesSplit = split(",", $coordinates);
+      		// Format: Longitude, Latitude, Altitude
+      		$latitude = $coordinatesSplit[1];
+      		$longitude = $coordinatesSplit[0];
+    	} else {
+      		// failure to geocode
+      		$geocode_pending = false;
+      		echo '<DIV class="page_help_text"><b>Geocode Notice:</b> Address: ' . $address . ' failed to geocode. ';
+      		echo 'Received status ' . $status . '</DIV>';
+    	}
+	}
 	if (isset($SelectedBranch) AND $InputError !=1) {
 
 		/*SelectedBranch could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the 	delete code below*/
@@ -164,11 +164,11 @@ if (isset($_POST['submit'])) {
 
 		$msg = $_POST['BrName'] . ' '._('branch has been updated.');
 
-	} elseif ($InputError !=1) {
+	} else if ($InputError !=1) {
 
 	/*Selected branch is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Customer Branches form */
 
-			$sql = "INSERT INTO custbranch (branchcode,
+        $sql = "INSERT INTO custbranch (branchcode,
 						debtorno,
 						brname,
 						braddress1,
@@ -229,9 +229,9 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['CustBranchCode'] ."',
 					" . $_POST['DeliverBlind'] . "
 					)";
-		}
+	}
 
-		$msg = _('Customer branch<b>').' ' . $_POST['BranchCode'] . ': ' . $_POST['BrName'] . ' '._('</b>has been added, add another branch, or return to <a href=index.php>Main Menu</a>');
+	$msg = _('Customer branch<b>').' ' . $_POST['BranchCode'] . ': ' . $_POST['BrName'] . ' '._('</b>has been added, add another branch, or return to <a href=index.php>Main Menu</a>');
 
 	//run the SQL from either of the above possibilites
 
@@ -270,8 +270,8 @@ if (isset($_POST['submit'])) {
 		unset($_POST['CustBranchCode']);
 		unset($_POST['DeliverBlind']);
 		unset($SelectedBranch);
-
-} elseif ($_GET['delete']=='yes') {
+    }
+} else if (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorTrans'
@@ -325,7 +325,6 @@ if (isset($_POST['submit'])) {
 		}
 	} //end ifs to test if the branch can be deleted
 
-}
 }
 if (!isset($SelectedBranch)){
 
@@ -448,7 +447,7 @@ if (isset($SelectedBranch)) {
 }
 echo '<BR>';
 
-if (! isset($_GET['delete'])) {
+if (!isset($_GET['delete'])) {
 
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] .'?' . SID . '>';
 
