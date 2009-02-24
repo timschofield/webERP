@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $PageSecurity = 3;
 include('includes/session.inc');
 $title = _('Customer Notes');
@@ -16,7 +16,7 @@ if (isset($_POST['DebtorNo'])){
 } elseif (isset($_GET['DebtorNo'])){
 	$DebtorNo = $_GET['DebtorNo'];
 }
-echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID .'&DebtorNo='.$DebtorNo."'>" . _('Back to Select Customer') . '</A><BR>';
+echo "<a href='" . $rootpath . '/SelectCustomer.php?' . SID .'&DebtorNo='.$DebtorNo."'>" . _('Back to Select Customer') . '</a><br>';
 if ( isset($_POST['submit']) ) {
 
 	//initialise no input errors assumed initially before we test
@@ -36,11 +36,11 @@ if ( isset($_POST['submit']) ) {
 		prnMsg( _("The contact's notes may not be empty"), 'error');
 	}
 	
-	if ($Id AND $InputError !=1) {
+	if (isset($Id) and $InputError !=1) {
 	
 		$sql = "UPDATE custnotes SET 
 				note='" . $_POST['note'] . "',
-				date='" . $_POST['date'] . "',
+				date='" . FormatDateForSQL($_POST['date']) . "',
 				href='" . $_POST['href'] . "',
 				priority='" . $_POST['priority'] . "'
 			WHERE debtorno ='".$DebtorNo."' 
@@ -53,7 +53,7 @@ if ( isset($_POST['submit']) ) {
 					'" . $DebtorNo. "',
 					'" . $_POST['href'] . "',
 					'" . $_POST['note'] . "',
-					'" . $_POST['date'] . "',
+					'" . FormatDateForSQL($_POST['date']) . "',
 					'" . $_POST['priority'] . "'
 					)";
 		$msg = _('The contact notes record has been added');
@@ -68,8 +68,11 @@ if ( isset($_POST['submit']) ) {
 		unset($Id);
 		unset($_POST['note']);
 		unset($_POST['noteid']);
+		unset($_POST['date']);
+		unset($_POST['href']);
+		unset($_POST['priority']);
 	}
-	} elseif ($_GET['delete']) {
+} elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
@@ -90,14 +93,14 @@ if (!isset($Id)) {
 	$SQLname='SELECT * from debtorsmaster where debtorno="'.$DebtorNo.'"';
 	$Result = DB_query($SQLname,$db);
 	$row = DB_fetch_array($Result);
-	echo '<center>' . _('Notes for Customer: <b>') .$row['name'].'</b>';
+	echo '<div class="centre">' . _('Notes for Customer: <b>') .$row['name'].'</b></div>';
 	
 	
 	$sql = "SELECT * FROM custnotes where debtorno='".$DebtorNo."' ORDER BY date DESC";
 	$result = DB_query($sql,$db);
 			//echo '<br>'.$sql;
 
-	echo '<CENTER><table border=1>';
+	echo '<table border=1>';
 	echo '<tr>
 			<th>' . _('Date') . '</th>
 			<th>' . _('Note') . '</th>
@@ -120,7 +123,7 @@ if (!isset($Id)) {
 				<td>%s</td>
 				<td><a href="%sId=%s&DebtorNo=%s">'. _('Edit').' </td>
 				<td><a href="%sId=%s&DebtorNo=%s&delete=1">'. _('Delete'). '</td></tr>',
-				$myrow[4],
+				ConvertSQLDate($myrow[4]),
 				$myrow[3],
 				$myrow[2],
 				$myrow[5],
@@ -133,14 +136,13 @@ if (!isset($Id)) {
 			
 	}
 	//END WHILE LIST LOOP
-	echo '</CENTER></table>';
+	echo '</table>';
 }
-if (isset($Id)) {  ?>
-	<Center><a href="<?php echo $_SERVER['PHP_SELF'] . '?' . SID .'&DebtorNo='.$DebtorNo;?>"><?=_('Review all notes for this Customer')?></a></Center>
-<?php } ?>
-<P>
+if (isset($Id)) {  
+	echo '<div class="centre"><a href="'.$_SERVER['PHP_SELF'] . '?' . SID .'&DebtorNo='.$DebtorNo.'"><?='._('Review all notes for this Customer').'</a></div>';
+} 
+echo '<P>';
 
-<?php
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '&DebtorNo='.$DebtorNo.'">';
@@ -158,32 +160,48 @@ if (!isset($_GET['delete'])) {
 		
 		$_POST['noteid'] = $myrow['noteid'];
 		$_POST['note']	= $myrow['note'];
-		$_POST['WWW']  = $myrow['href'];
+		$_POST['href']  = $myrow['href'];
 		$_POST['date']  = $myrow['date'];
 		$_POST['priority']  = $myrow['priority'];
 		$_POST['debtorno']  = $myrow['debtorno'];
 		echo '<input type=hidden name="Id" value='. $Id .'>';
 		echo '<input type=hidden name="Con_ID" value=' . $_POST['noteid'] . '>';
 		echo '<input type=hidden name="DebtorNo" value=' . $_POST['debtorno'] . '>';
-		echo '<center><table><tr><td>'. _('Note ID').':</td><td>' . $_POST['noteid'] . '</td></tr>';
+		echo '<table><tr><td>'. _('Note ID').':</td><td>' . $_POST['noteid'] . '</td></tr>';
 	} else {
-		echo '<center><table>';
+		echo '<table>';
 	}
-	?>
-	<tr><td><?php echo _('Contact Note');?>:</TD>
-	<td><textarea name="note"><?php echo $_POST['note']; ?></textarea></td></tr>
-	<tr><td><?php echo _('WWW');?>:</td>
-	<td><input type="Text" name="href" value="<?php echo $_POST['href']; ?>" size=35 maxlength=100></td></tr>
-	<tr><td><?php echo _('Date');?>:</td>
-	<td><input type="Text" name="date" value="<?php echo $_POST['date']; ?>" size=10 maxlength=10></td></tr>
-	<tr><td><?php echo _('Priority');?>:</TD>
-	<td><input type="Text" name="priority" value="<?php echo $_POST['priority']; ?>" size=1 maxlength=3></td></td>
-	</table></center>
-	<center><input type="Submit" name="submit" value="<?php echo _('Enter Information');?>"></center>
 
-	</form>
+	echo '<tr><td>' . _('Contact Note'). '</td>';
+    if (isset($_POST['note'])) {
+        echo '<td><textarea name="note">' .$_POST['note'] . '</textarea></td></tr>';
+    } else {
+        echo '<td><textarea name="note"></textarea></td></tr>';
+    }
+	echo '<tr><td>'. _('WWW').'</td>';
+    if (isset($_POST['href'])) {
+        echo '<td><input type="Text" name="href" value="'.$_POST['href'].'" size=35 maxlength=100></td></tr>';
+    } else {
+        echo '<td><input type="Text" name="href" size=35 maxlength=100></td></tr>';
+    }
+	echo '<tr><td>' . _('Date') .'</td>';
+    if (isset($_POST['date'])) {
+        echo '<td><input type="Text" name="date" value="'.ConvertSQLDate($_POST['date']).'" size=10 maxlength=10></td></tr>';
+    } else {
+        echo '<td><input type="Text" name="date" size=10 maxlength=10></td></tr>';
+    }
+	echo '<tr><td>'. _('Priority'). '</TD>';
+    if (isset($_POST['priority'])) {
+        echo '<td><input type="Text" name="priority" value="' .$_POST['priority']. '" size=1 maxlength=3></td></td>';
+    } else {
+        echo '<td><input type="Text" name="priority" size=1 maxlength=3></td></td>';
+    }
+	echo '</table>';
+	echo '<div class="centre"><input type="Submit" name="submit" value="'._('Enter Information').'"></div>';
+
+	echo '</form>';
 	
-	<?php } //end if record deleted no point displaying form to add record 
+} //end if record deleted no point displaying form to add record 
 
 include('includes/footer.inc');
 ?>

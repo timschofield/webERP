@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -141,7 +141,7 @@ if (!isset($SelectedArea)) {
 	$sql = 'SELECT * FROM areas';
 	$result = DB_query($sql,$db);
 
-	echo '<CENTER><table border=1>';
+	echo '<table border=1>';
 	echo "<tr>
 		<th>" . _('Area Code') . "</th>
 		<th>" . _('Area Name') . '</th>';
@@ -157,26 +157,26 @@ if (!isset($SelectedArea)) {
 			$k++;
 		}
 
-		echo '<TD>' . $myrow[0] . '</TD>';
-		echo '<TD>' . $myrow[1] . '</TD>';
-		echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedArea=' . $myrow[0] . '">' . _('Edit') . '</A></TD>';
-		echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedArea=' . $myrow[0] . '&delete=yes">' . _('Delete') . '</A></TD>';
+		echo '<td>' . $myrow[0] . '</td>';
+		echo '<td>' . $myrow[1] . '</td>';
+		echo '<td><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedArea=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedArea=' . $myrow[0] . '&delete=yes">' . _('Delete') . '</a></td>';
 
 	}
 	//END WHILE LIST LOOP
-	echo '</TABLE></CENTER>';
+	echo '</table>';
 }
 
 //end of ifs and buts!
 
 if (isset($SelectedArea)) {
-	echo "<CENTER><A HREF='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Review Areas Defined') . '</A></CENTER>';
+	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Review Areas Defined') . '</a></div>';
 }
 
 
 if (!isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 	if (isset($SelectedArea)) {
 		//editing an existing area
@@ -194,7 +194,7 @@ if (!isset($_GET['delete'])) {
 
 		echo '<INPUT TYPE=HIDDEN NAME=SelectedArea VALUE=' . $SelectedArea . '>';
 		echo '<INPUT TYPE=HIDDEN NAME=AreaCode VALUE=' .$_POST['AreaCode'] . '>';
-		echo '<CENTER><TABLE><TR><TD>' . _('Area Code') . ':</TD><TD>' . $_POST['AreaCode'] . '</TD></TR>';
+		echo '<table><tr><td>' . _('Area Code') . ':</td><td>' . $_POST['AreaCode'] . '</td></tr>';
 
 	} else {
 		if (!isset($_POST['AreaCode'])) {
@@ -203,20 +203,19 @@ if (!isset($_GET['delete'])) {
 		if (!isset($_POST['AreaDescription'])) {
 			$_POST['AreaDescription'] = '';
 		}
-		echo '<CENTER><TABLE>
+		echo '<TABLE>
 			<TR>
 				<TD>' . _('Area Code') . ':</TD>
 				<TD><input tabindex="1" ' . (in_array('AreaCode',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="AreaCode" value="' . $_POST['AreaCode'] . '" SIZE=3 MAXLENGTH=3></TD>
 			</TR>';
 	}
 
-	echo '<TR><TD>' . _('Area Name') . ':</TD>
-		<TD><input tabindex="2" ' . (in_array('AreaDescription',$Errors) ?  'class="inputerror"' : '' ) .'  type="Text" name="AreaDescription" value="' . $_POST['AreaDescription'] .'" SIZE=26 MAXLENGTH=25></TD>
-		</TR>
-	</TABLE>';
+	echo '<tr><td>' . _('Area Name') . ':</td>
+		<td><input tabindex="2" ' . (in_array('AreaDescription',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="AreaDescription" value="' . $_POST['AreaDescription'] .'" size=26 maxlength=25></td>
+		</tr>
+	</table>';
 
-	echo "<CENTER><input tabindex='3' type='Submit' name='submit' value=" . _('Enter Information') .">
-		</FORM>";
+	echo '<br><div class="centre"><input tabindex="3" type="Submit" name="submit" value=' . _('Enter Information') .'></div></form>';
 
  } //end if record deleted no point displaying form to add record
 

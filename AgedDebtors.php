@@ -2,7 +2,7 @@
 
 $PageSecurity = 2;
 include('includes/session.inc');
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 
 If (isset($_POST['PrintPDF'])
@@ -433,7 +433,7 @@ If (isset($_POST['PrintPDF'])
 		if ($debug==1){
 			prnMsg($SQL,'info');
 		}
-		echo "<BR><A HREF='$rootpath/index.php'>" . _('Back to the menu') . '</A>';
+		echo "<br><a href='$rootpath/index.php'>" . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -452,34 +452,36 @@ If (isset($_POST['PrintPDF'])
 	$title=_('Aged Debtor Analysis');
 	include('includes/header.inc');
 
+    echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
+
 	if ((!isset($_POST['FromCriteria']) || !isset($_POST['ToCriteria']))) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
+		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
 
-		echo '<TR><TD>' . _('From Customer Code') . ':' . "</FONT></TD><TD><input tabindex='1' Type=text maxlength=6 size=7 name=FromCriteria value='0'></TD></TR>";
-		echo '<TR><TD>' . _('To Customer Code') . ':' . "</TD><TD><input tabindex='2' Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></TD></TR>";
+		echo '<tr><td>' . _('From Customer Code') . ':' . "</font></td><td><input tabindex='1' Type=text maxlength=6 size=7 name=FromCriteria value='0'></td></tr>";
+		echo '<tr><td>' . _('To Customer Code') . ':' . "</td><td><input tabindex='2' Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></td></tr>";
 
-		echo '<TR><TD>' . _('All balances or overdues only') . ':' . "</TD><TD><SELECT tabindex='3' name='All_Or_Overdues'>";
-		echo "<OPTION SELECTED Value='All'>" . _('All customers with balances');
-		echo "<OPTION Value='OverduesOnly'>" . _('Overdue accounts only');
-		echo "<OPTION Value='HeldOnly'>" . _('Held accounts only');
-		echo '</SELECT></TD></TR>';
+		echo '<tr><td>' . _('All balances or overdues only') . ':' . "</td><td><select tabindex='3' name='All_Or_Overdues'>";
+		echo "<option selected Value='All'>" . _('All customers with balances');
+		echo "<option Value='OverduesOnly'>" . _('Overdue accounts only');
+		echo "<option Value='HeldOnly'>" . _('Held accounts only');
+		echo '</select></td></tr>';
 
-		echo '<TR><TD>' . _('Only Show Customers Of') . ':' . "</TD><TD><SELECT tabindex='4' name='Salesman'>";
+		echo '<tr><td>' . _('Only Show Customers Of') . ':' . "</td><td><select tabindex='4' name='Salesman'>";
 
 		$sql = 'SELECT salesmancode, salesmanname FROM salesman';
 
 		$result=DB_query($sql,$db);
-		echo "<OPTION Value=''></OPTION>";
+		echo "<option value=''></option>";
 		while ($myrow=DB_fetch_array($result)){
-				echo "<OPTION Value='" . $myrow['salesmancode'] . "'>" . $myrow['salesmanname'];
+				echo "<option value='" . $myrow['salesmancode'] . "'>" . $myrow['salesmanname'];
 		}
-		echo '</SELECT></TD></TR>';
+		echo '</select></td></tr>';
 
 
-		echo '<TR><TD>' . _('Only show customers trading in') . ':' . "</TD><TD><SELECT tabindex='5' name='Currency'>";
+		echo '<tr><td>' . _('Only show customers trading in') . ':' . "</td><td><select tabindex='5' name='Currency'>";
 
 		$sql = 'SELECT currency, currabrev FROM currencies';
 
@@ -488,20 +490,20 @@ If (isset($_POST['PrintPDF'])
 
 		while ($myrow=DB_fetch_array($result)){
 		      if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
-				echo "<OPTION SELECTED Value='" . $myrow['currabrev'] . "'>" . $myrow['currency'];
+				echo "<option selected value='" . $myrow['currabrev'] . "'>" . $myrow['currency'];
 		      } else {
-			      echo "<OPTION Value='" . $myrow['currabrev'] . "'>" . $myrow['currency'];
+			      echo "<option value='" . $myrow['currabrev'] . "'>" . $myrow['currency'];
 		      }
 		}
-		echo '</SELECT></TD></TR>';
+		echo '</select></td></tr>';
 
-		echo '<TR><TD>' . _('Summary or detailed report') . ':' . "</TD>
-			<TD><SELECT tabindex='6' name='DetailedReport'>";
-		echo "<OPTION SELECTED Value='No'>" . _('Summary Report');
-		echo "<OPTION Value='Yes'>" . _('Detailed Report');
-		echo '</SELECT></TD></TR>';
+		echo '<tr><td>' . _('Summary or detailed report') . ':' . "</td>
+			<td><select tabindex='6' name='DetailedReport'>";
+		echo "<option selected value='No'>" . _('Summary Report');
+		echo "<option value='Yes'>" . _('Detailed Report');
+		echo '</select></td></tr>';
 
-		echo "</TABLE><INPUT tabindex='7' TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') , "'></CENTER>";
+		echo '</table><br><div class="centre"><input tabindex="7" type=submit name="PrintPDF" value="' . _('Print PDF') , '"></div>';
 	}
 	include('includes/footer.inc');
 

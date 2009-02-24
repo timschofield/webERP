@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 3;
 include('includes/session.inc');
 $title = _('Customer Contacts');
@@ -16,7 +16,8 @@ if (isset($_POST['DebtorNo'])){
 } elseif (isset($_GET['DebtorNo'])){
 	$DebtorNo = $_GET['DebtorNo'];
 }
-echo "<A HREF='" . $rootpath . '/Customers.php?' . SID .'&DebtorNo='.$DebtorNo."'>" . _('Back to Customers') . '</A><BR>';
+echo "<a href='" . $rootpath . '/Customers.php?' . SID .'&DebtorNo='.$DebtorNo."'>" . _('Back to Customers') . '</a><br>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 if ( isset($_POST['submit']) ) {
 
 	//initialise no input errors assumed initially before we test
@@ -25,7 +26,7 @@ if ( isset($_POST['submit']) ) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if (!is_long((integer)$_POST['Con_ID'])) {
+	if (isset($_POST['Con_ID']) and !is_long((integer)$_POST['Con_ID'])) {
 		$InputError = 1;
 		prnMsg( _('The Contact must be an integer.'), 'error');
 	} elseif (strlen($_POST['conName']) >40) {
@@ -36,7 +37,7 @@ if ( isset($_POST['submit']) ) {
 		prnMsg( _("The contact's name may not be empty"), 'error');
 	}
 
-	if ($Id AND $InputError !=1) {
+	if (isset($Id) and ($Id and $InputError !=1)) {
 
 		$sql = "UPDATE custcontacts SET
 				contactname='" . $_POST['conName'] . "',
@@ -63,10 +64,13 @@ if ( isset($_POST['submit']) ) {
 		$result = DB_query($sql,$db);
 				//echo '<br>'.$sql;
 
-		echo '<BR>';
+		echo '<br>';
 		prnMsg($msg, 'success');
 		unset($Id);
 		unset($_POST['conName']);
+		unset($_POST['conRole']);
+		unset($_POST['conPhone']);
+		unset($_POST['conNotes']);
 		unset($_POST['Con_ID']);
 	}
 	} elseif (isset($_GET['delete']) and $_GET['delete']) {
@@ -79,7 +83,7 @@ if ( isset($_POST['submit']) ) {
 				$result = DB_query($sql,$db);
 						//echo '<br>'.$sql;
 
-				echo '<BR>';
+				echo '<br>';
 				prnMsg( _('The contact record has been deleted'), 'success');
 				unset($Id);
 				unset($_GET['delete']);
@@ -90,14 +94,14 @@ if (!isset($Id)) {
 	$SQLname='SELECT * from debtorsmaster where debtorno="'.$DebtorNo.'"';
 	$Result = DB_query($SQLname,$db);
 	$row = DB_fetch_array($Result);
-	echo '<center>' . _('Contacts for Customer: <b>') .$row['name'].'</b>';
+	echo '<div class="centre">' . _('Contacts for Customer: <b>') .$row['name'].'</b></div><br>';
 
 
 	$sql = "SELECT * FROM custcontacts where debtorno='".$DebtorNo."' ORDER BY contid";
 	$result = DB_query($sql,$db);
 			//echo '<br>'.$sql;
 
-	echo '<CENTER><table border=1>';
+	echo '<table border=1>';
 	echo '<tr>
 			<th>' . _('Name') . '</th>
 			<th>' . _('Role') . '</th>
@@ -133,10 +137,10 @@ if (!isset($Id)) {
 
 	}
 	//END WHILE LIST LOOP
-	echo '</CENTER></table>';
+	echo '</table>';
 }
 if (isset($Id)) {  ?>
-	<Center><a href="<?php echo $_SERVER['PHP_SELF'] . '?' . SID .'&DebtorNo='.$DebtorNo;?>"><?=_('Review all contacts for this Customer')?></a></Center>
+	<div class="centre"><a href="<?php echo $_SERVER['PHP_SELF'] . '?' . SID .'&DebtorNo='.$DebtorNo;?>"><?=_('Review all contacts for this Customer')?></a></div>
 <?php } ?>
 <P>
 
@@ -165,25 +169,40 @@ if (!isset($_GET['delete'])) {
 		echo '<input type=hidden name="Id" value='. $Id .'>';
 		echo '<input type=hidden name="Con_ID" value=' . $_POST['Con_ID'] . '>';
 		echo '<input type=hidden name="DebtorNo" value=' . $_POST['debtorno'] . '>';
-		echo '<center><table><tr><td>'. _('Contact Code').':</td><td>' . $_POST['Con_ID'] . '</td></tr>';
+		echo '<table><tr><td>'. _('Contact Code').':</td><td>' . $_POST['Con_ID'] . '</td></tr>';
 	} else {
-		echo '<center><table>';
+		echo '<table>';
 	}
-	?>
-	<tr><td><?php echo _('Contact Name');?>:</TD>
-	<td><input type="Text" name="conName" value="<?php echo $_POST['conName']; ?>" size=35 maxlength=40></td></tr>
-	<tr><td><?php echo _('Role');?>:</td>
-	<td><input type="Text" name="conRole" value="<?php echo $_POST['conRole']; ?>" size=35 maxlength=40></td></tr>
-	<tr><td><?php echo _('Phone');?>:</td>
-	<td><input type="Text" name="conPhone" value="<?php echo $_POST['conPhone']; ?>" size=35 maxlength=40></td></tr>
-	<tr><td><?php echo _('Notes');?>:</TD>
-	<td><textarea name="conNotes"><?php echo $_POST['conNotes']; ?></textarea><U
-	</table></center>
-	<center><input type="Submit" name="submit" value="<?php echo _('Enter Information');?>"></center>
 
-	</form>
+	echo '<tr><td>'. _('Contact Name') . '</td>';
+    if (isset($_POST['conName'])) {
+        echo '<td><input type="Text" name="conName" value="' . $_POST['conName']. '" size=35 maxlength=40></td></tr>';
+    } else {
+        echo '<td><input type="Text" name="conName" size=35 maxlength=40></td></tr>';
+    }
+	echo '<tr><td>' . _('Role') . '</td>';
+    if (isset($_POST['conRole'])) {
+        echo '<td><input type="text" name="conRole" value="'. $_POST['conRole']. '" size=35 maxlength=40></td></tr>';
+    } else {
+        echo '<td><input type="text" name="conRole" size=35 maxlength=40></td></tr>';
+    }
+	echo '<tr><td>' . _('Phone') . '</td>';
+    if (isset($_POST['conPhone'])) {
+        echo '<td><input type="Text" name="conPhone" value="' . $_POST['conPhone'] . '" size=35 maxlength=40></td></tr>';
+    } else {
+        echo '<td><input type="Text" name="conPhone"" size=35 maxlength=40></td></tr>';
+    }
+	echo '<tr><td>' . _('Notes') . '</td>';
+    if (isset($_POST['conNotes'])) {
+        echo '<td><textarea name="conNotes">'. $_POST['conNotes'] . '</textarea></table>';
+    } else {
+       echo '<td><textarea name="conNotes"></textarea></table>';
+    }
+	echo '<br><div class="centre"><input type="Submit" name="submit" value="'. _('Enter Information') . '"></div>';
 
-	<?php } //end if record deleted no point displaying form to add record
+	echo '</form>';
+
+} //end if record deleted no point displaying form to add record
 
 include('includes/footer.inc');
 ?>

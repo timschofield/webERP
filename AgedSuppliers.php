@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -264,47 +264,49 @@ If (isset($_POST['PrintPDF'])
 	$title = _('Aged Supplier Analysis');
 	include('includes/header.inc');
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
+
 	if (!isset($_POST['FromCriteria']) OR !isset($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD='POST'><CENTER><TABLE>";
+		echo "<form sction='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method='POST'><table>";
 
-		echo '<TR><TD>' . _('From Supplier Code') . ":</FONT></TD>
-			<TD><input tabindex='1' Type=text maxlength=6 size=7 name=FromCriteria value='1'></TD>
-		</TR>";
-		echo '<TR><TD>' . _('To Supplier Code') . ":</TD>
-			<TD><input tabindex='2' Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></TD>
-		</TR>";
+		echo '<tr><td>' . _('From Supplier Code') . ":</font></td>
+			<td><input tabindex='1' type=text maxlength=6 size=7 name=FromCriteria value='1'></td>
+		</tr>";
+		echo '<tr><td>' . _('To Supplier Code') . ":</td>
+			<td><input tabindex='2' Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></td>
+		</tr>";
 
-		echo '<TR><TD>' . _('All balances or overdues only') . ':' . "</TD>
-			<TD><SELECT tabindex='3' name='All_Or_Overdues'>";
-		echo "<OPTION SELECTED Value='All'>" . _('All suppliers with balances');
-		echo "<OPTION Value='OverduesOnly'>" . _('Overdue accounts only');
-		echo '</SELECT></TD></TR>';
+		echo '<tr><td>' . _('All balances or overdues only') . ':' . "</td>
+			<td><select tabindex='3' name='All_Or_Overdues'>";
+		echo "<option selected value='All'>" . _('All suppliers with balances');
+		echo "<option value='OverduesOnly'>" . _('Overdue accounts only');
+		echo '</select></td></tr>';
 
-		echo '<TR><TD>' . _('For suppliers trading in') . ':' . "</TD>
-			<TD><SELECT tabindex='4' name='Currency'>";
+		echo '<tr><td>' . _('For suppliers trading in') . ':' . "</td>
+			<td><select tabindex='4' name='Currency'>";
 
 		$sql = 'SELECT currency, currabrev FROM currencies';
 		$result=DB_query($sql,$db);
 
 		while ($myrow=DB_fetch_array($result)){
 		      if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
-				echo "<OPTION SELECTED Value='" . $myrow["currabrev"] . "'>" . $myrow['currency'];
+				echo "<option selected value='" . $myrow["currabrev"] . "'>" . $myrow['currency'];
 		      } else {
-			      echo "<OPTION Value='" . $myrow['currabrev'] . "'>" . $myrow['currency'];
+			      echo "<option value='" . $myrow['currabrev'] . "'>" . $myrow['currency'];
 		      }
 		}
-		echo '</SELECT></TD></TR>';
+		echo '</select></td></tr>';
 
-		echo '<TR><TD>' . _('Summary or Detailed Report') . ':' . "</TD>
-			<TD><SELECT tabindex='5' name='DetailedReport'>";
-		echo "<OPTION SELECTED Value='No'>" . _('Summary Report');
-		echo "<OPTION Value='Yes'>" . _('Detailed Report');
-		echo '</SELECT></TD></TR>';
+		echo '<tr><td>' . _('Summary or Detailed Report') . ':' . "</td>
+			<td><select tabindex='5' name='DetailedReport'>";
+		echo "<option selected value='No'>" . _('Summary Report');
+		echo "<option value='Yes'>" . _('Detailed Report');
+		echo '</select></td></tr>';
 
-		echo "</TABLE><INPUT tabindex='6' TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
+		echo '</table><br><div class="centre"><input tabindex="6" type=submit name="PrintPDF" value="' . _('Print PDF') . '"></div>';
 	}
 	include('includes/footer.inc');
 } /*end of else not PrintPDF */
