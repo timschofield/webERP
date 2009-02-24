@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /*PDF page header for aged analysis reports */
 $PageNumber++;
 if ($PageNumber>1){
@@ -25,7 +25,7 @@ if (trim($_POST['Salesman'])!=''){
 }
 $pdf->addText($Left_Margin, $YPos,$FontSize, $HeadingLine1);
 $pdf->addText($Left_Margin, $YPos-$line_height,$FontSize, $HeadingLine2);
-if ($HeadingLine3 != ''){
+if (isset($HeadingLine3) and $HeadingLine3 != ''){
 	$pdf->addText($Left_Margin, $YPos-$line_height*2,$FontSize, $HeadingLine3);
 }
 $FontSize = 8;
