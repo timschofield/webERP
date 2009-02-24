@@ -1,5 +1,6 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 
+<P>24/2/09 Murray: fixes to PrintCustStatements to allow being called from SelectCustomer.php, so customer statements can be printed from Selected Customer.
 <P>20/2/09 Phil: Nailed the creation of loads of periods on setting up a new system - the GetPeriod function was being called before the GLPostings function - the GetPeriod function now creates the first couple of periods if none exist.
 <p>18/2/09 Tim: PrintCustTrans.php and PrintCustTransPortrait.php - Update to correctly email invoice to customer
 <p>17/2/09 Phil: sql/mysql/upgrade3.09-3.10.sql - Changed debtortrans.trandate to date from datetime

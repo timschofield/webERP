@@ -1,14 +1,20 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 2;
 
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 
+// If this file is called from another script, we set the required POST variables from the GET
+// We call this file from SelectCustomer.php when a customer is selected and we want a statement printed
 if (isset($_GET['PrintPDF'])) {
-$printPDF = $_GET['PrintPDF']; 
+$FromCust = $_GET['FromCust'];
+$ToCust = $_GET['ToCust'];
+$PrintPDF = $_GET['PrintPDF']; 
+$_POST['FromCust'] = $FromCust;
+$_POST['ToCust'] = $ToCust;
 $_POST['PrintPDF'] = $PrintPDF;
 }  
 

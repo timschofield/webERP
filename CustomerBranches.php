@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.43 $ */
+/* $Revision: 1.44 $ */
 
 $PageSecurity = 3;
 
@@ -124,8 +124,8 @@ if (isset($_POST['submit'])) {
     } else {
       // failure to geocode
       $geocode_pending = false;
-      echo "<p>Address: " . $address . " failed to geocode.\n";
-      echo "Received status " . $status . "\n</p>";
+      echo '<DIV class="page_help_text"><b>Geocode Notice:</b> Address: ' . $address . ' failed to geocode. ';
+      echo 'Received status ' . $status . '</DIV>';
     }
 }
 	if (isset($SelectedBranch) AND $InputError !=1) {
