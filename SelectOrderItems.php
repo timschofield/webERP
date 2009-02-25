@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.83 $ */
+/* $Revision: 1.84 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -131,7 +131,7 @@ if (isset($_GET['ModifyOrderNumber'])
 		$_SESSION['Items']->Branch = $myrow['branchcode'];
 		$_SESSION['Items']->CustomerName = $myrow['name'];
 		$_SESSION['Items']->CustRef = $myrow['customerref'];
-		$_SESSION['Items']->Comments = $myrow['comments'];
+		$_SESSION['Items']->Comments = stripcslashes($myrow['comments']);
 		$_SESSION['Items']->PaymentTerms =$myrow['terms'];
 		$_SESSION['Items']->DefaultSalesType =$myrow['ordertype'];
 		$_SESSION['Items']->SalesTypeName =$myrow['sales_type'];
