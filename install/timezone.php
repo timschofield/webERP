@@ -32,8 +32,12 @@ while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
     $row++;
 		for ($c=0; $c < $num; $c++) {
 			$timezone=$data[$c];
-			$c++;	
-			echo "<OPTION value='".$timezone."'>".$timezone;
+			$c++;
+            if ($timezone==date_default_timezone_get()) {
+                echo "<OPTION selected value='".$timezone."'>".$timezone;
+            } else {
+                echo "<OPTION value='".$timezone."'>".$timezone;
+            }
 	}
 }
 ?>

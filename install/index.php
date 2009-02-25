@@ -2,95 +2,37 @@
 error_reporting(E_ALL);
 ini_set("display_errors", "On");
 // Start a session
-if(!defined('SESSION_STARTED'))
-{
+if(!defined('SESSION_STARTED')) {
 	session_name('ba_session_id');
 	session_start();
 	define('SESSION_STARTED', true);
 }
 
 // Check if the page has been reloaded
-if(!isset($_GET['sessions_checked']) || $_GET['sessions_checked'] != 'true')
-{
+if(!isset($_GET['sessions_checked']) || $_GET['sessions_checked'] != 'true') {
 	// Set session variable
 	$_SESSION['session_support'] = '<font class="good">Enabled</font>';
 	// Reload page
 	header('Location: index.php?sessions_checked=true');
 	exit(0);
-}
-else
-{
+} else {
 	// Check if session variable has been saved after reload
-	if(isset($_SESSION['session_support']))
-	{
+	if(isset($_SESSION['session_support'])) {
 		$session_support = $_SESSION['session_support'];
 	}
-	else
-	{
+	else {
 		$session_support = '<font class="bad">Disabled</font>';
 	}
 }
-$path_to_root = "..";
+$path_to_root = '..';
 //include_once($path_to_root.'/config.php');
 $comp_path = $path_to_root."/companies";
-
-
-echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
-echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">';
-echo '<head>';
-echo '<title>WebERP Installation Wizard</title>';
-// Use an inline style sheet
-//<link href="../css/jelly/default.css" rel="stylesheet" type="text/css">
-echo '<STYLE>';
-echo '
-TR {
-        font-family: Verdana, Arial, Helvetica;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        font-weight: bold;
-        font-size: 14px;
-        color: black;
-        TEXT-ALIGN:center;
-}
-H1 {
-        font-family: Verdana, Arial, Helvetica;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        font-weight: bold;
-        font-size: 14px;
-        color: black;
-        TEXT-ALIGN:center;
-}
-.page_title_text {
-        font-family: Verdana, Arial, Helvetica;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        font-weight: bold;
-        font-size: 12px;
-        color: black;
-        TEXT-ALIGN:center;
-}
-DIV.page_help_text {
-        BORDER: #a52a2a 1px solid;
-        PADDING-LEFT: 3px;
-        Z-INDEX: 1;
-        width: 50%;
-        FLOAT: none;
-        VISIBILITY: visible;
-        MARGIN: 0 auto;
-        POSITION: static;
-        background-color: lightgray;
-        font-family: Verdana, Arial, Helvetica;
-        padding-top: 1px;
-        padding-bottom: 1px;
-        font-weight: normal;
-        font-size: 10px;
-        color: black;
-        TEXT-ALIGN:center;
-}';
-echo '</STYLE>';
 ?>
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>WebERP Installation Wizard</title>
+<link href="../css/jelly/default.css" rel="stylesheet" type="text/css">
 <script language="javascript" type="text/javascript">
 
 function change_os(type) {
@@ -115,13 +57,21 @@ function change_data(type) {
 		
 	}
 }
-<?php
-echo '</script>';
-echo '</head>';
-echo '<body>';
 
-echo '<form name="weberp_installation_wizard" action="save.php" method="post">';
-?>
+</script>
+</head>
+<body>
+
+<table cellpadding="0" cellspacing="0" border="0" width="750" align="center">
+<tr>
+	<td width="100%" align="center" style="font-size: 20px;">
+		<font style="color: #FFFFFF;">WebERP</font>
+		<font style="color: #DDDDDD;">Installation Wizard</font>
+	</td>
+</tr>
+</table>
+
+<form name="weberp_installation_wizard" action="save.php" method="post">
 <input type="hidden" name="url" value="" />
 <input type="hidden" name="password_fieldname" value="admin_password" />
 <input type="hidden" name="remember" id="remember" value="true" />
@@ -130,10 +80,11 @@ echo '<form name="weberp_installation_wizard" action="save.php" method="post">';
 <table cellpadding="0" cellspacing="0" border="0" width="750" align="center" style="margin-top: 10px;">
 <tr>
 	<td class="content">
+			<h2>Welcome to the WebERP Installation Wizard.</h2>
 		<center>
-		<img src="<?php echo $path_to_root; ?>/companies/weberp/logo.jpg" width="250" height="50" alt="Logo" />
-		<P CLASS="page_title_text">WebERP Installation Wizard</P>
+			<img src="<?php echo "../companies/weberp/logo.jpg"; ?>" width="250" height="50" alt="Logo" />
 		</center>
+
 
 		<?php
 		if(isset($_SESSION['message']) AND $_SESSION['message'] != '') {
@@ -142,7 +93,7 @@ echo '<form name="weberp_installation_wizard" action="save.php" method="post">';
 		?>
 		<table cellpadding="3" cellspacing="0" width="100%" align="center">
 		<tr>
-			<td colspan="8"><h1>Step 1</h1><DIV class="page_help_text">Please check the following requirements are met before continuing.</DIV></td>
+			<td colspan="8"><h1>Step 1</h1>Please check the following requirements are met before continuing...</td>
 		</tr>
 		<?php if($session_support != '<font class="good">Enabled</font>') { ?>
 		<tr>
@@ -177,7 +128,7 @@ echo '<form name="weberp_installation_wizard" action="save.php" method="post">';
 		</table>
 		<table cellpadding="3" cellspacing="0" width="100%" align="center">
 		<tr>
-			<td colspan="8"><h1>Step 2</h1><DIV class="page_help_text">Please check the following files/folders are writeable before continuing.</DIV>
+			<td colspan="8"><h1>Step 2</h1>Please check the following files/folders are writeable before continuing...</td>
 		</tr>
 		<tr>
 			<td style="color: #666666;">config.php</td>
@@ -190,7 +141,7 @@ echo '<form name="weberp_installation_wizard" action="save.php" method="post">';
 		</table>
 		<table cellpadding="3" cellspacing="0" width="100%" align="center">
 		<tr>
-			<td colspan="2"><h1>Step 3</h1><DIV class="page_help_text">Please check your path settings...</DIV>
+			<td colspan="2"><h1>Step 3</h1>Please check your path settings...</td>
 		</tr>
 		<tr>
 			<td width="125" style="color: #666666;">
@@ -208,7 +159,7 @@ echo '<form name="weberp_installation_wizard" action="save.php" method="post">';
 		</table>
 		<table cellpadding="5" cellspacing="0" width="100%" align="center">
 		<tr>
-			<td colspan="3"><h1>Step 4</h1><DIV class="page_help_text">Please specify your operating system information below.</DIV>
+			<td colspan="3"><h1>Step 4</h1>Please specify your operating system information below...</td>
 		</tr>
 		<tr height="50">
 			<td width="170">
@@ -249,9 +200,8 @@ echo '<form name="weberp_installation_wizard" action="save.php" method="post">';
 			</td>
 		</tr>
 		<tr>
-			<td style="color: #666666;">Database Name:</td>
+			<td style="color: #666666;"></td>
 			<td>
-				<input type="text" tabindex="8" name="database_name" style="width: 98%;" value="<?php if(isset($_SESSION['database_name'])) { echo $_SESSION['database_name']; } else { echo 'weberp'; } ?>" />
 			</td>
 			<td>&nbsp;</td>
 			<td style="color: #666666;">Password:</td>
@@ -269,7 +219,7 @@ echo '<form name="weberp_installation_wizard" action="save.php" method="post">';
 			</td>
 		</tr>
 		<tr>
-			<td colspan="5"><h1>Step 5</h1><DIV class="page_help_text">Please enter the training company name below (you can create your own company later)...</DIV>
+			<td colspan="5"><h1>Step 5</h1>Please enter the company name below...</td>
 		</tr>
 		<tr>
 			<td style="color: #666666;" colspan="1">Company Name:</td>
@@ -279,15 +229,12 @@ echo '<form name="weberp_installation_wizard" action="save.php" method="post">';
 		</tr>
 		<tr>
 			<td width="170">
-				Database:
+				Install the test company :
 			</td>
 		
 			<td width="180">
-				<input type="radio" tabindex="14" name="db_file" id="db_file_demo" value="demo"<?php if(!isset($_SESSION['db_file']) OR $_SESSION['db_file'] == 'demo') { echo ' checked'; } ?> />
-				<font style="cursor: pointer;" onclick="javascript: change_data('demo');">Demo Data</font>
-				
-				<input type="radio" tabindex="15" name="db_file" id="db_file_new" value="new"<?php if(isset($_SESSION['db_file']) AND $_SESSION['db_file'] == 'new') { echo ' checked'; } ?> />
-				<font style="cursor: pointer;" onclick="javascript: change_data('new');">New Data</font>
+				<input type="checkbox" tabindex="14" name="db_file" id="db_file_demo" value="demo"<?php if(!isset($_SESSION['db_file']) OR $_SESSION['db_file'] == 'demo') { echo ' checked'; } ?> />
+				<font style="cursor: pointer;" onclick="javascript: change_data('demo');">weberpdemo company</font>
 			</td>
 		</tr>
 		<tr>
@@ -305,7 +252,7 @@ echo '<form name="weberp_installation_wizard" action="save.php" method="post">';
 			</td>
 		</tr>
 		<tr>
-			<td colspan="5"><h1>Step 6</h1><DIV class="page_help_text">Please enter your Administrator account details below...</DIV>
+			<td colspan="5"><h1>Step 6</h1>Please enter your Administrator account details below...</td>
 		</tr>
 		<tr>
 			<td style="color: #666666;">Username:</td>
@@ -338,7 +285,14 @@ echo '<form name="weberp_installation_wizard" action="save.php" method="post">';
 			<td colspan="4">
 				<table cellpadding="0" cellspacing="0" width="100%" border="0">
 				<tr valign="top">
-					<td><DIV class="page_help_text">Please note: WebERP is released under the <a href="http://www.gnu.org/licenses/gpl.html" target="_blank" tabindex="19">GNU General Public License</a> By clicking install, you are accepting the license.</DIV>
+					<td>Please note: &nbsp;</td>
+					<td>
+						WebERP is released under the
+						<a href="http://www.gnu.org/licenses/gpl.html" target="_blank" tabindex="19">GNU General Public License</a>
+						<br />
+						By clicking install, you are accepting the license.
+					</td>
+				</tr>
 				</table>
 			</td>
 			<td colspan="1" align="right">

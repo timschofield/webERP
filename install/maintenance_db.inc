@@ -9,7 +9,7 @@ function write_config_db($new = false)
 		$tb_pref_counter++;
 	$n = count($db_connections);
 	$msg = "<?php\n\n";
-	$msg .= "/* \$Revision: 1.1 $ */\n";
+	$msg .= "/* \$Revision: 1.2 $ */\n";
 	$msg .= "// User configurable variables\n";
 	$msg .= "//---------------------------------------------------\n\n";
 	$msg .= "//DefaultLanguage to use for the login screen and the setup of new users - the users language selection will override\n";
