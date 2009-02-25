@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /* pdf-php by R&OS code to set up a new sales order page */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -62,7 +62,7 @@ $pdf->addText($XPos, $YPos,$FontSize, $_GET['TransNo']);
 
 $XPos=609;
 $YPos=96;
-$LeftOvers = $pdf->addTextWrap($XPos,$YPos,170,$FontSize,$myrow['comments']);
+$LeftOvers = $pdf->addTextWrap($XPos,$YPos,170,$FontSize,stripcslashes($myrow['comments']));
 
 if (strlen($LeftOvers)>1){
 	$LeftOvers = $pdf->addTextWrap($XPos,$YPos-14,170,$FontSize,$LeftOvers);
