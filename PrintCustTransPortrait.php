@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 1;
 
@@ -529,7 +529,7 @@ while ($row=DB_fetch_array($result)){
         $pdfcode = $pdf->Output($_SESSION['reports_dir'] . '/Invoice.pdf');
     } else {
         // If the appendfile field is empty, just print the invoice without any appended pages
-        $pdf->setFiles(array('invoice.pdf'));
+        $pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf'));
         $pdf->concat();
         $pdf->Output('newpdf.pdf','D');
         exit;
