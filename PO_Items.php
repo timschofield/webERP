@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 
 $PageSecurity = 4;
@@ -115,6 +115,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		     } /* end of the loop round the detail line items on the order */
 		     echo '<p>';
 		     prnMsg(_('Purchase order') . ' ' . $_SESSION['PO']->OrderNo . ' ' . _('on') . ' ' . $_SESSION['PO']->SupplierName . ' ' . _('has been created'),'success');
+		     echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . _('Print Purchase Order') . '';
 		     echo '<br><a target="_blank" href="'.$rootpath.'/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $_SESSION['PO']->OrderNo . '">' . _('Print Purchase Order') . '</a>';
 		 } else { /*its an existing order need to update the old order info */
 
@@ -718,7 +719,9 @@ if (isset($_GET['NewItem'])){ /* NewItem is set from the part selection list as 
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 
-echo '<center>' . _('Purchase Order') . ': <font color=blue size=4><b>' . $_SESSION['PO']->OrderNo . ' ' . $_SESSION['PO']->SupplierName . ' </b></font> - ' . _('All amounts stated in') . ' ' . $_SESSION['PO']->CurrCode . '<br>';
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" TITLE="' . _('Purchase Order') . '" ALT="">' . ' ' . _('Purchase Order') . '';
+
+echo ' : ' . _('Purchase Order') . ' : <b>' . $_SESSION['PO']->OrderNo . ' ' . $_SESSION['PO']->SupplierName . ' </b></font> - ' . _('All amounts stated in') . ' ' . $_SESSION['PO']->CurrCode . '<br>';
 
 echo '<center><b>' . _('Order Summary') . '</b>';
 echo '<table cellpadding=2 colspan=7 border=1>';

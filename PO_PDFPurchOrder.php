@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -360,7 +360,7 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 	} else {
 		echo '</TABLE>';
 	}
-	echo '<BR><INPUT TYPE=SUBMIT NAME="DoIt" VALUE="' . _('OK') . '">';
+	echo '<BR><CENTER><INPUT TYPE=SUBMIT NAME="DoIt" VALUE="' . _('PROCESS') . '">';
 	echo '</FORM>';
 	include('includes/footer.inc');
 }

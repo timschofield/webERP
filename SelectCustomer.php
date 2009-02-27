@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.48 $ */
+/* $Revision: 1.49 $ */
 
 $PageSecurity = 2;
 
@@ -598,10 +598,18 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!="") {
         	echo "<TR><TH WIDTH=33%>" . _('Customer Data') . "</TH></TR>";
 			echo '<TR><TD VALIGN=TOP>';    /* Customer Data */
 			//echo _('Distance to this customer:') . '<b>TBA</b><br>';
-			echo _('Last Paid Date:') . ' <b>' . ConvertSQLDate($myrow['lastpaiddate']) . '</b> ' . $myrow['lastpaiddays'] . ' ' . _('days') . '<br>';
+			if ($myrow['lastpaiddate'] ==0) {
+				echo _('Never paid from this customer.') . '<br>';
+			} else {
+				echo _('Last Paid Date:') . ' <b>' . ConvertSQLDate($myrow['lastpaiddate']) . '</b> ' . $myrow['lastpaiddays'] . ' ' . _('days') . '<br>';
+			}
 			echo _('Last Paid Amount (inc tax):') . ' <b>' . number_format($myrow['lastpaid'],2) . '</b><br>';
 			echo _('Customer since:') . ' <b>' . ConvertSQLDate($myrow['clientsince']) . '</b> ' . $myrow['customersincedays'] . ' ' .  _('days') . '<br>';
-			echo _('Total Spend from this Customer (inc tax):') . ' <b>' . number_format($row['total'],2) . '</b><br>';
+			if ($row['total'] ==0) {
+				echo _('No Spend from this Customer.') . '</b><br>';
+			} else {
+				echo _('Total Spend from this Customer (inc tax):') . ' <b>' . number_format($row['total'],2) . '</b><br>';
+			}
 			echo _('Customer Type:') . ' <b>' . $CustomerTypeName . '</b><br>';
 			echo '</th></tr></table>';
 		}

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 
 $PageSecurity = 11;
 
@@ -43,7 +43,9 @@ if (isset($_GET['PONumber']) and $_GET['PONumber']<=0 and !isset($_SESSION['PO']
 /* Always display quantities received and recalc balance for all items on the order */
 
 
-echo '<CENTER><FONT SIZE=4><B><U>'. _('Receive purchase order'). ' '. $_SESSION['PO']->OrderNo .' '. _('from'). ' ' . $_SESSION['PO']->SupplierName . ' </U></B></FONT></CENTER><BR>';
+echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" TITLE="' . _('Receive') . '" ALT="">' . ' ' . _('Receive Purchase Order') . '';
+
+echo ' : '. $_SESSION['PO']->OrderNo .' '. _('from'). ' ' . $_SESSION['PO']->SupplierName . ' </U></B></FONT></CENTER><BR>';
 echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
 
 echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 /*
  *      PO_Header.php
@@ -285,8 +285,8 @@ if (isset($_POST['Select'])) {
 
 if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO']->SupplierID) OR $_SESSION['PO']->SupplierID == '' ) {
 
-	echo '<BR><BR><FONT SIZE=3><B>' . _('Supplier Selection') . "</B></FONT><BR>
-	<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD=POST>";
+	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" TITLE="' . _('Purchase Order') . '" ALT="">' . ' ' . _('Purchase Order: Select Supplier') . '';
+	echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD=POST>";
 	if (strlen($msg)>1){
 		prnMsg($msg,'warn');
 	}
@@ -355,8 +355,11 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO']->Suppli
 	/* everything below here only do if a supplier is selected */
 
 	echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD=POST>";
+	
+	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" TITLE="' . _('Purchase Order') . '" ALT="">' . ' ' . _('Purchase Order') . '';
 
-	echo '<CENTER>' . _('Purchase Order') . ': <FONT COLOR=BLUE SIZE=4><B>' . $_SESSION['PO']->OrderNo . ' ' . $_SESSION['PO']->SupplierName . '</U> </B></FONT> - ' . _('All amounts stated in') . ' ' . $_SESSION['PO']->CurrCode . '<BR><BR>';
+	echo ':' . $_SESSION['PO']->OrderNo . ' ' . $_SESSION['PO']->SupplierName . '</U> </B></FONT> - ' . _('All amounts stated in') . ' ' . $_SESSION['PO']->CurrCode . '<BR><BR>';
+	echo '<CENTER>';
 
 	/* 2008-08-19 ToPu -- debugging purpose */
 	if (isset($purch_item)) {
@@ -379,8 +382,8 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO']->Suppli
 
 	/* Set up form for entry of order header stuff */
 
-    if((!isset($_POST['StkLocation']) or $_POST['StkLocation']=='') AND (isset($_SESSION['PO']->Location) AND $_SESSION['PO']->Location!='')){
- 	    /* The session variables are set but the form variables have
+	if ((!isset($_POST['StkLocation']) or $_POST['StkLocation']) AND (isset($_SESSION['PO']->Location) AND $_SESSION['PO']->Location != '')) {
+	    /* The session variables are set but the form variables have
 	     * been lost --
 	     * need to restore the form variables from the session */
 	    $_POST['StkLocation'] = $_SESSION['PO']->Location;

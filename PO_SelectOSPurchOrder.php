@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 2;
 
@@ -44,8 +44,8 @@ If (isset($OrderNumber) && $OrderNumber!='') {
 	}
 } else {
 	If (isset($SelectedSupplier)) {
-		echo '<BR>' . _('For supplier') . ': ' . $SelectedSupplier . ' ' . _('and') . ' ';
-		echo '<input type=hidden name="SelectedSupplier" value="' . $SelectedSupplier . '">';
+		echo '<BR><DIV CLASS="page_help_text">' . _('For supplier') . ': ' . $SelectedSupplier . ' ' . _('and') . ' ';
+		echo '<input type=hidden name="SelectedSupplier" value="' . $SelectedSupplier . '"></DIV>';
 	}
 	If (isset($SelectedStockItem)) {
 		 echo _('for the part') . ': ' . $SelectedStockItem . ' ' . _('and') . ' <input type=hidden name="SelectedStockItem" value="' . $SelectedStockItem . '">';
