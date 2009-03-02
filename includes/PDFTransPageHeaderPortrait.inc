@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /* R&OS PHP-pdf class code to head up a new page */
 
 if (!$FirstPage){ /* only initiate a new page if its not the first */
@@ -8,7 +8,7 @@ if (!$FirstPage){ /* only initiate a new page if its not the first */
 
 $YPos = $Page_Height - $Top_Margin;
 
-$pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -100,$YPos-80,0,60);
+$pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -115,$YPos-35,0,35);
 
 $FontSize =15;
 if ($InvOrCredit=='Invoice') {
