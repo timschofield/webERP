@@ -160,6 +160,8 @@ class Cpdf extends PDF_Language {
 		$tmp .= sprintf('%.3f',$x0).' '.sprintf('%.3f',$y0).' cm';
 		$x0=0;
 		$y0=0;
+		} else {
+			$tmp='';
 		}
 		
 		$t1 = $astart;
