@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.49 $ */
+/* $Revision: 1.50 $ */
 
 $PageSecurity = 2;
 
@@ -71,6 +71,11 @@ if ($_SESSION['geocode_integration']==1 AND $_SESSION['CustomerID'] !=""){
 	<?php
 }
 $msg="";
+
+if (isset($_POST['Go1']) or isset($_POST['Go2'])) {
+  $_POST['PageOffset'] = (isset($_POST['Go1']) ? $_POST['PageOffset1'] : $_POST['PageOffset2']);
+  $_POST['Go'] = '';
+}
 
 if (!isset($_POST['PageOffset'])) {
   $_POST['PageOffset'] = 1;
@@ -413,10 +418,12 @@ if (isset($result)) {
 			}
 		}
 
+		echo "<INPUT TYPE=\"hidden\" NAME=\"PageOffset\" VALUE=\"". $_POST['PageOffset'] ."\"/>";
+
 		if ($ListPageMax >1) {
 			echo "<CENTER><P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 
-			echo '<SELECT NAME="PageOffset">';
+			echo '<SELECT NAME="PageOffset1">';
 
 			$ListPage=1;
 			while($ListPage <= $ListPageMax) {
@@ -428,7 +435,7 @@ if (isset($result)) {
 				$ListPage++;
 			}
 			echo '</SELECT>
-				<INPUT TYPE=SUBMIT NAME="Go" VALUE="' . _('Go') . '">
+				<INPUT TYPE=SUBMIT NAME="Go1" VALUE="' . _('Go') . '">
 				<INPUT TYPE=SUBMIT NAME="Previous" VALUE="' . _('Previous') . '">
 				<INPUT TYPE=SUBMIT NAME="Next" VALUE="' . _('Next') . '">';
  			echo '<P>';
@@ -529,7 +536,7 @@ if (!isset($_POST['CSV'])) {
 	if (isset($ListPageMax) and $ListPageMax>1) {
 		echo "<P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 
-		echo '<SELECT NAME="PageOffset">';
+		echo '<SELECT NAME="PageOffset2">';
 
 		$ListPage=1;
 		while($ListPage <= $ListPageMax) {
@@ -541,7 +548,7 @@ if (!isset($_POST['CSV'])) {
 			$ListPage++;
 		}
 		echo '</SELECT>
-			<INPUT TYPE=SUBMIT NAME="Go" VALUE="' . _('Go') . '">
+			<INPUT TYPE=SUBMIT NAME="Go2" VALUE="' . _('Go') . '">
 			<INPUT TYPE=SUBMIT NAME="Previous" VALUE="' . _('Previous') . '">
 			<INPUT TYPE=SUBMIT NAME="Next" VALUE="' . _('Next') . '">';
 	}
