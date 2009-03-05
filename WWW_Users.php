@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 $PageSecurity=15;
 
@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if (strlen($_POST['UserID'])<4){
+	if (strlen($_POST['UserID'])<3){
 		$InputError = 1;
 		prnMsg(_('The user ID entered must be at least 4 characters long'),'error');
 	} elseif (ContainsIllegalCharacters($_POST['UserID'])) {
