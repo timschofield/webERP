@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -12,6 +12,8 @@ if (isset($_GET['SelectedGroup'])){
 } elseif (isset($_POST['SelectedGroup'])){
 	$SelectedGroup = $_POST['SelectedGroup'];
 }
+
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 
 if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 
@@ -85,7 +87,7 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	$Result = DB_query($sql,$db,_('Could not get tax authorities in the selected tax group'));
 	
 	while ($myrow=DB_fetch_row($Result)){
-		
+
 		if (is_numeric($_POST['CalcOrder_' . $myrow[0]]) AND $_POST['CalcOrder_' . $myrow[0]] <5){
 		
 			$sql = 'UPDATE taxgrouptaxes 
@@ -137,7 +139,7 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 			$result = DB_query($sql,$db);
 			$sql="DELETE FROM taxgroups WHERE taxgroupid=" . $_GET['SelectedGroup'];
 			$result = DB_query($sql,$db);
-			prnMsg( $_GET['GroupName'] . ' ' . _('tax group has been deleted') . '!','success');
+			prnMsg( $_GET['GroupID'] . ' ' . _('tax group has been deleted') . '!','success');
 		}
 	} //end if taxgroup used in other tables
 	unset($SelectedGroup);
@@ -154,13 +156,13 @@ if (!isset($SelectedGroup)) {
 	$result = DB_query($sql,$db);
 
 	if( DB_num_rows($result) == 0 ) {
-		echo '<CENTER>';
+		echo '<div class="centre">';
 		prnMsg(_('There are no tax groups configured.'),'info');
-		echo '</CENTER>';
+		echo '</div>';
 	} else {
-		echo '<CENTER><table border=1>';
-		echo "<TR><TH>" . _('Group No') . "</TH>
-			<TH>" . _('Tax Group') . "</TH></TR>";
+		echo '<table border=1>';
+		echo "<tr><th>" . _('Group No') . "</th>
+			<th>" . _('Tax Group') . "</th></tr>";
 	
 		$k=0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
@@ -174,8 +176,8 @@ if (!isset($SelectedGroup)) {
 	
 			printf("<td>%s</td>
 				<td>%s</td>
-				<td><a href=\"%s&SelectedGroup=%s\">" . _('Edit') . "</A></TD>
-				<TD><A HREF=\"%s&SelectedGroup=%s&Delete=1&GroupID=%s\">" . _('Delete') . "</A></TD>
+				<td><a href=\"%s&SelectedGroup=%s\">" . _('Edit') . "</a></td>
+				<td><a href=\"%s&SelectedGroup=%s&Delete=1&GroupID=%s\">" . _('Delete') . "</a></td>
 				</tr>",
 				$myrow['taxgroupid'],
 				$myrow['taxgroupdescription'],
@@ -186,13 +188,13 @@ if (!isset($SelectedGroup)) {
 				urlencode($myrow['taxgroupdescription']));
 	
 		} //END WHILE LIST LOOP
-		echo '</TABLE></CENTER>';
+		echo '</table>';
 	}
 } //end of ifs and buts!
 
 
 if (isset($SelectedGroup)) {
-	echo "<CENTER><A HREF='" . $_SERVER['PHP_SELF'] ."?" . SID . "'>" . _('Review Existing Groups') . '</A></CENTER>';
+	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] ."?" . SID . '">' . _('Review Existing Groups') . '</a></div>';
 }
 
 if (isset($SelectedGroup)) {
@@ -211,23 +213,24 @@ if (isset($SelectedGroup)) {
 		$_POST['GroupName'] = $myrow['taxgroupdescription'];
 	}
 }
-echo '<BR>';
-echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+echo '<br>';
+echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 if( isset($_POST['SelectedGroup'])) {
-	echo "<INPUT TYPE=HIDDEN NAME='SelectedGroup' VALUE='" . $_POST['SelectedGroup'] . "'>";
+	echo "<input type=hidden name='SelectedGroup' value='" . $_POST['SelectedGroup'] . "'>";
 }
-echo '<CENTER><TABLE>';
+echo '<table>';
 
 if (!isset($_POST['GroupName'])) {
 	$_POST['GroupName']='';
+	echo '<tr><td>' . _('Tax Group') . ":</td>
+		<td><input type='text' name='GroupName' size=40 maxlength=40 value='" . $_POST['GroupName'] . "'></td></tr>";
+	echo '</table>
+		<br><div class="centre"><input type="submit" name="submit" value="' . _('Enter Group') . '"></div></form>';
 }
-echo '<TR><TD>' . _('Tax Group') . ":</TD>
-	<TD><INPUT TYPE='text' name='GroupName' SIZE=40 MAXLENGTH=40 VALUE='" . $_POST['GroupName'] . "'></TD></TR>";
-echo "</TABLE>
-	<CENTER><input type='Submit' name='submit' value='" . _('Enter Group') . "'></CENTER></FORM>";
 
 if (isset($SelectedGroup)) {
-
+	echo '</table>';
+	
 	$sql = 'SELECT taxid, 
 			description as taxname 
 			FROM taxauthorities
@@ -254,37 +257,80 @@ if (isset($SelectedGroup)) {
 		$TaxAuthRow[$i] = $myrow;
 		$i++;
 	}
-		
+	
+	/* the order and tax on tax will only be an issue if more than one tax authority in the group */
+	if (count($TaxAuthsUsed)>0) { 
+		echo '<div class="centre"><font size=3 color=blue>'._('Calculation Order').'</font></div><br>';
+		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID .'">';
+		echo '<input type=hidden name="SelectedGroup" value="' . $SelectedGroup .'">';
+		echo '<table>';
+			
+		echo '<tr><th>'._('Tax Authority').'</th>
+			<th>'._('Order').'</th>
+			<th>'._('Tax on Prior Taxes').'</th></tr>';
+		$k=0; //row colour counter
+		for ($i=1;$i < count($TaxAuthRow)+1;$i++) {
+			if ($k==1){
+				echo '<tr class="OddTableRows">';
+				$k=0;
+			} else {
+				echo '<tr class="EvenTableRows">';
+				$k=1;
+			}
+			
+			if ($TaxAuthRow[$i]['calculationorder']==0){
+				$TaxAuthRow[$i]['calculationorder'] = $i;
+			}
+			
+			echo '<td>' . $TaxAuthRow[$i]['taxname'] . '</td><td>'.
+				'<input type="text" name="CalcOrder_' . $TaxAuthRow[$i]['taxauthid'] . '" value="' . $TaxAuthRow[$i]['calculationorder'] . '" size=2 maxlength=2></td>';
+			echo '<td><select name="TaxOnTax_' . $TaxAuthRow[$i]['taxauthid'] . '">';
+			if ($TaxAuthRow[$i]['taxontax']==1){
+				echo '<option selected value=1>' . _('Yes');
+				echo '<option value=0>' . _('No');
+			} else {
+				echo '<option value=1>' . _('Yes');
+				echo '<option selected value=0>' . _('No');
+			}
+			echo '</select></td></tr>';       
+			
+		}
+		echo '</table>';
+		echo '<br><div class="centre"><input type="submit" name="UpdateOrder" value="' . _('Update Order') . '"></div>';
+	}
+	
+	echo '</form>';
+	
 	if (DB_num_rows($Result)>0 ) {
-		echo '<BR>';
-		echo '<CENTER><TABLE><TR>';
-		echo "<TH colspan=4 ALIGN=CENTER>"._('Assigned Taxes')."</TH>";
-		echo '<TD></TD>';
-		echo "<TH colspan=2 ALIGN=CENTER>"._('Available Taxes')."</TH>";
-		echo '</TR>';
-		echo '<TR>';
-		
-		echo "<TH>" . _('Tax Auth ID') . '</TH>';
-		echo "<TH>" . _('Tax Authority Name') . '</TH>';
-		echo "<TH>" . _('Calculation Order') . '</TH>';
-		echo "<TH>" . _('Tax on Prior Tax(es)') . '</TH>';
-		echo '<TD></TD>';
-		echo "<TH>" . _('Tax Auth ID') . '</TH>';
-		echo "<TH>" . _('Tax Authority Name') . '</TH>';
-		echo '</TR>';
+		echo '<br>';
+		echo '<table><tr>';
+		echo "<th colspan=4>"._('Assigned Taxes')."</th>";
+		echo '<th></th>';
+		echo "<th colspan=2>"._('Available Taxes')."</th>";
+		echo '</tr>';
+
+		echo '<tr>';		
+		echo "<th>" . _('Tax Auth ID') . '</th>';
+		echo "<th>" . _('Tax Authority Name') . '</th>';
+		echo "<th>" . _('Calculation Order') . '</th>';
+		echo "<th>" . _('Tax on Prior Tax(es)') . '</th>';
+		echo '<th></th>';
+		echo "<th>" . _('Tax Auth ID') . '</th>';
+		echo "<th>" . _('Tax Authority Name') . '</th>';
+		echo '</tr>';
 		
 	} else {
-		echo '<BR><CENTER>' . _('There are no tax authorities defined to allocate to this tax group');
+		echo '<br><div class="centre">' . _('There are no tax authorities defined to allocate to this tax group').'</div>';
 	}
 	
 	$k=0; //row colour counter
 	while($AvailRow = DB_fetch_array($Result)) {
 				
 		if ($k==1){
-			echo '<TR class="EvenTableRows">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<TR class="OddTableRows">';
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 		$TaxAuthUsedPointer = array_search($AvailRow['taxid'],$TaxAuthsUsed);
@@ -297,13 +343,13 @@ if (isset($SelectedGroup)) {
 				$TaxOnTax = _('No');
 			}
 			
-			printf("<TD>%s</TD>
-				<TD>%s</TD>
-				<TD>%s</TD>
-				<TD>%s</TD>
-				<TD><A href=\"%s&SelectedGroup=%s&remove=1&TaxAuthority=%s\">" . _('Remove') . "</A></TD>
-				<TD>&nbsp;</TD>
-				<TD>&nbsp;</TD>",
+			printf("<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td><a href=\"%s&SelectedGroup=%s&remove=1&TaxAuthority=%s\">" . _('Remove') . "</a></td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>",
 				$AvailRow['taxid'],
 				$AvailRow['taxname'],
 				$TaxAuthRow[$TaxAuthUsedPointer]['calculationorder'],
@@ -314,14 +360,14 @@ if (isset($SelectedGroup)) {
 				);
 			
 		} else {
-			printf("<TD>&nbsp;</TD>
-				<TD>&nbsp;</TD>
-				<TD>&nbsp;</TD>
-				<TD>&nbsp;</TD>
-				<TD>&nbsp;</TD>
-				<TD>%s</TD>
-				<TD>%s</TD>
-				<TD><A href=\"%s&SelectedGroup=%s&add=1&TaxAuthority=%s\">" . _('Add') . "</A></TD>",
+			printf("<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td><a href=\"%s&SelectedGroup=%s&add=1&TaxAuthority=%s\">" . _('Add') . "</a></td>",
 				$AvailRow['taxid'],
 				$AvailRow['taxname'],
 				$_SERVER['PHP_SELF']  . "?" . SID,
@@ -329,53 +375,10 @@ if (isset($SelectedGroup)) {
 				$AvailRow['taxid']
 				);
 		}	
-		echo '</TR>';
+		echo '</tr>';
 	}
-	echo '</TABLE></CENTER>';
+	echo '</table>';
 	
-	/* the order and tax on tax will only be an issue if more than one tax authority in the group */
-	if (count($TaxAuthsUsed)>1) { 
-		echo '<BR><CENTER><FONT SIZE=3 COLOR=BLUE>'._('Calculation Order').'</FONT></CENTER>';
-		echo '<FORM METHOD="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID .'">';
-		echo '<INPUT TYPE=HIDDEN NAME="SelectedGroup" VALUE="' . $SelectedGroup .'">';
-		echo '<CENTER><TABLE>';
-			
-		echo '<TR><TH>'._('Tax Authority').'</TH>
-			<TH>'._('Order').'</TH>
-			<TH>'._('Tax on Prior Taxes').'</TH></TR>';
-		$k=0; //row colour counter
-		for ($i=1;$i < count($TaxAuthRow)+1;$i++) {
-			if ($k==1){
-				echo '<TR class="OddTableRows">';
-				$k=0;
-			} else {
-				echo '<TR class="EvenTableRows">';
-				$k=1;
-			}
-			
-			if ($TaxAuthRow[$i]['calculationorder']==0){
-				$TaxAuthRow[$i]['calculationorder'] = $i;
-			}
-			
-			echo '<TD>' . $TaxAuthRow[$i]['taxname'] . '</TD><TD>'.
-				'<INPUT TYPE="Text" NAME="CalcOrder_' . $TaxAuthRow[$i]['taxauthid'] . '" VALUE="' . $TaxAuthRow[$i]['calculationorder'] . '" size=2 maxlength=2></TD>';
-			echo '<TD><SELECT NAME="TaxOnTax_' . $TaxAuthRow[$i]['taxauthid'] . '">';
-			if ($TaxAuthRow[$i]['taxontax']==1){
-				echo '<OPTION SELECTED VALUE=1>' . _('Yes');
-				echo '<OPTION VALUE=0>' . _('No');
-			} else {
-				echo '<OPTION VALUE=1>' . _('Yes');
-				echo '<OPTION SELECTED VALUE=0>' . _('No');
-			}
-			echo '</SELECT></TD></TR>';       
-			
-		}
-		echo '</TABLE></CENTER>';
-		echo '<CENTER><input type="Submit" name="UpdateOrder" value="' . _('Update Order') . '"></CENTER>';
-	}
-	
-	echo '</FORM>';
-		
 }
 
 include('includes/footer.inc');
