@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -222,14 +222,14 @@ echo '<table>';
 
 if (!isset($_POST['GroupName'])) {
 	$_POST['GroupName']='';
-	echo '<tr><td>' . _('Tax Group') . ":</td>
-		<td><input type='text' name='GroupName' size=40 maxlength=40 value='" . $_POST['GroupName'] . "'></td></tr>";
-	echo '</table>
-		<br><div class="centre"><input type="submit" name="submit" value="' . _('Enter Group') . '"></div></form>';
 }
+echo '<tr><td>' . _('Tax Group') . ":</td>
+		<td><input type='text' name='GroupName' size=40 maxlength=40 value='" . $_POST['GroupName'] . "'></td>";
+echo '<td><input type="submit" name="submit" value="' . _('Enter Group') . '"></td></tr></form>';
+
 
 if (isset($SelectedGroup)) {
-	echo '</table>';
+	echo '</table><br>';
 	
 	$sql = 'SELECT taxid, 
 			description as taxname 
@@ -260,7 +260,7 @@ if (isset($SelectedGroup)) {
 	
 	/* the order and tax on tax will only be an issue if more than one tax authority in the group */
 	if (count($TaxAuthsUsed)>0) { 
-		echo '<div class="centre"><font size=3 color=blue>'._('Calculation Order').'</font></div><br>';
+		echo '<div class="centre"><font size=3 color=blue>'._('Calculation Order').'</font></div>';
 		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID .'">';
 		echo '<input type=hidden name="SelectedGroup" value="' . $SelectedGroup .'">';
 		echo '<table>';
@@ -283,8 +283,10 @@ if (isset($SelectedGroup)) {
 			}
 			
 			echo '<td>' . $TaxAuthRow[$i]['taxname'] . '</td><td>'.
-				'<input type="text" name="CalcOrder_' . $TaxAuthRow[$i]['taxauthid'] . '" value="' . $TaxAuthRow[$i]['calculationorder'] . '" size=2 maxlength=2></td>';
-			echo '<td><select name="TaxOnTax_' . $TaxAuthRow[$i]['taxauthid'] . '">';
+				'<input type="text" name="CalcOrder_' . $TaxAuthRow[$i]['taxauthid'] . '" value="' . 
+					$TaxAuthRow[$i]['calculationorder'] . '" size=2 maxlength=2 onKeyPress="return restrictToNumbers(this, event)" 
+					 style="width: 100%;text-align:right"></td>';
+			echo '<td><select name="TaxOnTax_' . $TaxAuthRow[$i]['taxauthid'] . '" style="width: 100%">';
 			if ($TaxAuthRow[$i]['taxontax']==1){
 				echo '<option selected value=1>' . _('Yes');
 				echo '<option value=0>' . _('No');
