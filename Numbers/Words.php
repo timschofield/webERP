@@ -17,7 +17,7 @@
 // | Authors: Piotr Klaban <makler@man.torun.pl>                          |
 // +----------------------------------------------------------------------+
 //
-// $Id: Words.php,v 1.2 2009-02-03 22:44:42 tim_schofield Exp $
+// $Id: Words.php,v 1.3 2009-03-08 10:51:53 tim_schofield Exp $
 //
 
 /**
@@ -56,8 +56,10 @@ class Numbers_Words
      * @author Piotr Klaban <makler@man.torun.pl>
      * @since  PHP 4.2.3
      */
-    function toWords($num, $locale = 'en_US') {
-
+    function toWords($num, $locale) {
+		if ($locale=='') {
+			$locale='en_US';
+		}
         include_once("Numbers/Words/lang.$locale.php");
 
         $classname = "Numbers_Words_$locale";
