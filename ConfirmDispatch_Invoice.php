@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.51 $ */
+/* $Revision: 1.52 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -108,7 +108,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 		$_SESSION['Items']->Location = $myrow['fromstkloc'];
 		$_SESSION['Items']->FreightCost = $myrow['freightcost'];
 		$_SESSION['Old_FreightCost'] = $myrow['freightcost'];
-		$_POST['ChargeFreightCost'] = $_SESSION['Old_FreightCost'];
+//		$_POST['ChargeFreightCost'] = $_SESSION['Old_FreightCost'];
 		$_SESSION['Items']->Orig_OrderDate = $myrow['orddate'];
 		$_SESSION['CurrencyRate'] = $myrow['currency_rate'];
 		$_SESSION['Items']->TaxGroup = $myrow['taxgroupid'];
@@ -337,6 +337,7 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 	$TaxLineTotal =0; //initialise tax total for the line
 
 	foreach ($LnItm->Taxes AS $Tax) {
+		$TaxTotals[$Tax->TaxAuthID]=0;
 		if ($i>0){
 			echo '<BR>';
 		}
@@ -383,9 +384,7 @@ depending on the business logic required this condition may not be required.
 It seems unfair to charge the customer twice for freight if the order
 was not fully delivered the first time ?? */
 
-if ($_SESSION['Items']->Any_Already_Delivered()==1) {
-	$_POST['ChargeFreightCost'] = 0;
-} elseif(!isset($_SESSION['Items']->FreightCost)) {
+if(!isset($_SESSION['Items']->FreightCost)) {
 	if ($_SESSION['DoFreightCalc']==True){
 		list ($FreightCost, $BestShipper) = CalcFreightCost($_SESSION['Items']->total,
 								$_SESSION['Items']->BrAdd2,
@@ -437,9 +436,16 @@ if ($_SESSION['DoFreightCalc']==True){
 	echo '<TD COLSPAN=3></TD>';
 }
 $j++;
-echo '<TD COLSPAN=2 ALIGN=RIGHT>'. _('Charge Freight Cost inc Tax').'</TD>
-	<TD><INPUT tabindex='.$j.' TYPE=TEXT SIZE=10 MAXLENGTH=12 NAME=ChargeFreightCost VALUE=' . $_SESSION['Items']->FreightCost . '></TD>';
 
+if ($_SESSION['Items']->Any_Already_Delivered()==1 and (!isset($_SESSION['Items']->FreightCost) or $_POST['ChargeFreightCost']==0)) {
+	echo '<TD COLSPAN=2 ALIGN=RIGHT>'. _('Charge Freight Cost inc Tax').'</TD>
+		<TD><INPUT tabindex='.$j.' TYPE=TEXT SIZE=10 MAXLENGTH=12 NAME=ChargeFreightCost VALUE=0></TD>';
+	$_SESSION['Items']->FreightCost=0;
+} else {
+	echo '<TD COLSPAN=2 ALIGN=RIGHT>'. _('Charge Freight Cost inc Tax').'</TD>
+		<TD><INPUT tabindex='.$j.' TYPE=TEXT SIZE=10 MAXLENGTH=12 NAME=ChargeFreightCost VALUE=' . $_SESSION['Items']->FreightCost . '></TD>';
+	$_POST['ChargeFreightCost'] = $_SESSION['Items']->FreightCost;
+}
 
 $FreightTaxTotal =0; //initialise tax total
 
