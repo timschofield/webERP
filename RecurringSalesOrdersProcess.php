@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 /*need to allow this script to run from Cron or windows scheduler */
 $AllowAnyone = true;
@@ -191,8 +191,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		/* Now Get the area where the sale is to from the branches table */
 
 		$SQL = "SELECT area,
-				defaultshipvia,
-				taxauthority
+				defaultshipvia
 			FROM custbranch
 			WHERE custbranch.debtorno ='". $RecurrOrderRow['debtorno'] . "'
 			AND custbranch.branchcode = '" . $RecurrOrderRow['branchcode'] . "'";
@@ -202,7 +201,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$myrow = DB_fetch_row($Result);
 		$Area = $myrow[0];
 		$DefaultShipVia = $myrow[1];
-		$CustTaxAuth = $myrow[2];
+//		$CustTaxAuth = $myrow[2];
 		DB_free_result($Result);
 
 		$SQL = "SELECT rate
