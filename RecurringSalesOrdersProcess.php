@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 /*need to allow this script to run from Cron or windows scheduler */
 $AllowAnyone = true;
@@ -112,12 +112,12 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				'" . $RecurrOrderRow['ordertype'] . "',
 				" . $RecurrOrderRow['shipvia'] .",
 				'" . $RecurrOrderRow['deliverto'] . "',
-				'" . $RecurrOrderRow['bradd1'] . "',
-				'" . $RecurrOrderRow['bradd2'] . "',
-				'" . $RecurrOrderRow['bradd3'] . "',
-				'" . $RecurrOrderRow['bradd4'] . "',
-				'" . $RecurrOrderRow['bradd5'] . "',
-				'" . $RecurrOrderRow['bradd6'] . "',
+				'" . $RecurrOrderRow['deladd1'] . "',
+				'" . $RecurrOrderRow['deladd2'] . "',
+				'" . $RecurrOrderRow['deladd3'] . "',
+				'" . $RecurrOrderRow['deladd4'] . "',
+				'" . $RecurrOrderRow['deladd5'] . "',
+				'" . $RecurrOrderRow['deladd6'] . "',
 				'" . $RecurrOrderRow['contactphone'] . "',
 				'" . $RecurrOrderRow['contactemail'] . "',
 				" . $RecurrOrderRow['freightcost'] .",
@@ -263,7 +263,10 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 			$TaxTotals =array();
 
 			while ($myrow = DB_fetch_array($GetTaxRatesResult)){
-
+				if (!isset($TaxTotals[$myrow['taxauthid']]['FXAmount'])) {
+					$TaxTotals[$myrow['taxauthid']]['FXAmount']=0;
+				}
+				$TaxAuthID=$myrow['taxauthid'];
 				$TaxTotals[$myrow['taxauthid']]['GLCode'] = $myrow['taxglcode'];
 				$TaxTotals[$myrow['taxauthid']]['TaxRate'] = $myrow['taxrate'];
 				$TaxTotals[$myrow['taxauthid']]['TaxAuthDescription'] = $myrow['description'];
@@ -550,8 +553,8 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 					" . $InvoiceNo . ",
 					'" . $DelDate. "',
 					" . $PeriodNo . ",
-					" . $Tax['TaxGLCode'] . ",
-					'" . $RecurrOrderRow['debtorno'] . "-" . $Tax['Description'] . "',
+					" . $Tax['GLCode'] . ",
+					'" . $RecurrOrderRow['debtorno'] . "-" . $Tax['TaxAuthDescription'] . "',
 					" . (-$Tax['FXAmount']/$CurrencyRate) . "
 					)";
 
@@ -676,7 +679,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 							taxamount)
 				VALUES (' . $DebtorTransID . ',
 					' . $TaxAuthID . ',
-					' . $TaxAmount/$_SESSION['CurrencyRate'] . ')';
+					' . $Tax['FXAmount']/$CurrencyRate . ')';
 
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction taxes records could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction taxes record was used');
