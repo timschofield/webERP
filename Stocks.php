@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.63 $ */
+/* $Revision: 1.64 $ */
 
 $PageSecurity = 11;
 
@@ -624,6 +624,10 @@ echo '<TR><TD>' . _('Part Description') . ' (' . _('long') . '):</TD><TD><textar
 // developed with examples from http://au2.php.net/manual/en/function.opendir.php
 function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '', $char_length = 60) {
 	$teller = 0;
+	if (!file_exists($dir)) {
+		mkdir($dir);
+		chmod($dir, 0777);
+	}
 	if ($handle = opendir($dir)) {
 		$mydir = "<select name=".$select_name.">\n";
 		$mydir .= '<OPTION VALUE=0>none';
