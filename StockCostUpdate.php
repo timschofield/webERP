@@ -1,8 +1,8 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
-$PageSecurity = 2; /*viewing possible with inquiries but not mods */
+$PageSecurity = 9; /*viewing possible with inquiries but not mods */
 
 $UpdateSecurity =10;
 

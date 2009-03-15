@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.76 $ */
+/* $Revision: 1.77 $ */
 
 
 $PageSecurity = 1;
@@ -675,7 +675,22 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/BOMListing.php?' . SID . "'><LI>" . _('Bills Of Material Listing') . '</LI></A>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/MRPReport.php?' . SID . "'><LI>" . _('MRP') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/MRPShortages.php?' . SID . "'><LI>" . _('MRP Shortages') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/MRPPlannedPurchaseOrders.php?' . SID . "'><LI>" . _('MRP Suggested Purchase Orders') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/MRPReschedules.php?' . SID . "'><LI>" . _('MRP Reschedules Required') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -697,6 +712,23 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 								<?php echo "<A HREF='" . $rootpath . '/BOMs.php?' . SID . "'><LI>" . _('Bills Of Material') . '</LI></A>'; ?>
 							</td>
 							</tr>
+							
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/MRPDemands.php?' . SID . "'><LI>" . _('Master Schedule') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/MRPCreateDemands.php?' . SID . "'><LI>" . _('Auto Create Master Schedule') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/MRP.php?' . SID . "'><LI>" . _('MRP Calculation') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							
 						</table>
 					</td>
 
@@ -925,6 +957,18 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<A HREF='" . $rootpath . '/UnitsOfMeasure.php?' . SID . "'><LI>" . _('Units of Measure') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							<tr></tr>
+							
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/MRPCalendar.php?' . SID . "'><LI>" . _('MRP Available Production Days') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/MRPDemandTypes.php?' . SID . "'><LI>" . _('MRP Demand Types') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>

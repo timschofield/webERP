@@ -1,7 +1,8 @@
 <?php
-/* $Revision: 1.39 $ */
+/* $Revision: 1.40 $ */
 
 $PageSecurity = 2;
+$PricesSecurity = 9;
 
 include('includes/session.inc');
 
@@ -467,76 +468,77 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
             <TH align=right>' . _('Weight') . ':</TH><TD align=right>' . number_format($myrow['kgs'], 3) . '</TD>
             <TH align=right>' . _('EOQ') . ':</TH><TD align=right>' . number_format($myrow['eoq'],$myrow['decimalplaces']) . '</TD></TR>';
 
-    echo '<tr><th>' . _('Sell Price') . ':</th><td>';
+	if (! in_array($PricesSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)){
+    	echo '<tr><th>' . _('Sell Price') . ':</th><td>';
 
-    $PriceResult = DB_query("SELECT typeabbrev, price FROM prices
+    	$PriceResult = DB_query("SELECT typeabbrev, price FROM prices
                                 WHERE currabrev ='" . $_SESSION['CompanyRecord']['currencydefault'] . "'
                                 AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
                                 AND debtorno=''
                                 AND branchcode=''
                                 AND stockid='".$StockID."'",
                                 $db);
-    if ($myrow['mbflag'] == 'K' OR $myrow['mbflag'] == 'A') {
-        $CostResult = DB_query("SELECT SUM(bom.quantity*
-                        (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) AS cost
-                    FROM bom INNER JOIN
-                        stockmaster
-                    ON bom.component=stockmaster.stockid
-                    WHERE bom.parent='" . $StockID . "'
-                    AND bom.effectiveto > '" . Date("Y-m-d") . "'
-                    AND bom.effectiveafter < '" . Date("Y-m-d") . "'",
-                    $db);
-        $CostRow = DB_fetch_row($CostResult);
-        $Cost = $CostRow[0];
-    } else {
-        $Cost = $myrow['cost'];
-    }
+		if ($myrow['mbflag'] == 'K' OR $myrow['mbflag'] == 'A') {
+			$CostResult = DB_query("SELECT SUM(bom.quantity*
+							(stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) AS cost
+						FROM bom INNER JOIN
+							stockmaster
+						ON bom.component=stockmaster.stockid
+						WHERE bom.parent='" . $StockID . "'
+						AND bom.effectiveto > '" . Date("Y-m-d") . "'
+						AND bom.effectiveafter < '" . Date("Y-m-d") . "'",
+						$db);
+			$CostRow = DB_fetch_row($CostResult);
+			$Cost = $CostRow[0];
+		} else {
+			$Cost = $myrow['cost'];
+		}
 
-    if (DB_num_rows($PriceResult) == 0) {
-        echo _('No Default Price Set in Home Currency');
-        $Price = 0;
-    } else {
-        $PriceRow = DB_fetch_row($PriceResult);
-        $Price = $PriceRow[1];
-        echo $PriceRow[0] . '</td><td align=right>' . number_format($Price, 2) . '</td>
-            <th align=right>' . _('Gross Profit') . '</th><td align=right>';
-            if ($Price > 0) {
-                $GP = number_format(($Price - $Cost) * 100 / $Price, 2);
-            } else {
-                $GP = _('N/A');
-            }
-            echo $GP.'%'. '</td></tr>';
-            echo '</td></tr>';
-        while ($PriceRow = DB_fetch_row($PriceResult)) {
-            $Price = $PriceRow[1];
-            echo '<tr><td></td><th>' . $PriceRow[0] . '</th><td align=right>' . number_format($Price,2) . '</td>
-            <th align=right>' . _('Gross Profit') . '</th><td align=right>';
-            if ($Price > 0) {
-                $GP = number_format(($Price - $Cost) * 100 / $Price, 2);
-            } else {
-                $GP = _('N/A');
-            }
-            echo $GP.'%'. '</td></tr>';
-            echo '</td></tr>';
-        }
-    }
-    if ($myrow['mbflag'] == 'K' OR $myrow['mbflag'] == 'A') {
-        $CostResult = DB_query("SELECT SUM(bom.quantity*
-                        (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) AS cost
-                    FROM bom INNER JOIN
-                        stockmaster
-                    ON bom.component=stockmaster.stockid
-                    WHERE bom.parent='" . $StockID . "'
-                    AND bom.effectiveto > '" . Date("Y-m-d") . "'
-                    AND bom.effectiveafter < '" . Date("Y-m-d") . "'",
-                    $db);
-        $CostRow = DB_fetch_row($CostResult);
-        $Cost = $CostRow[0];
-    } else {
-        $Cost = $myrow['cost'];
-    }
-    echo '<th align=right>' . _('Cost') . '</th><td align=right colspan=2>' . number_format($Cost,3) . '</td>';
-
+		if (DB_num_rows($PriceResult) == 0) {
+			echo _('No Default Price Set in Home Currency');
+			$Price = 0;
+		} else {
+			$PriceRow = DB_fetch_row($PriceResult);
+			$Price = $PriceRow[1];
+			echo $PriceRow[0] . '</td><td align=right>' . number_format($Price, 2) . '</td>
+				<th align=right>' . _('Gross Profit') . '</th><td align=right>';
+				if ($Price > 0) {
+					$GP = number_format(($Price - $Cost) * 100 / $Price, 2);
+				} else {
+					$GP = _('N/A');
+				}
+				echo $GP.'%'. '</td></tr>';
+				echo '</td></tr>';
+			while ($PriceRow = DB_fetch_row($PriceResult)) {
+				$Price = $PriceRow[1];
+				echo '<tr><td></td><th>' . $PriceRow[0] . '</th><td align=right>' . number_format($Price,2) . '</td>
+				<th align=right>' . _('Gross Profit') . '</th><td align=right>';
+				if ($Price > 0) {
+					$GP = number_format(($Price - $Cost) * 100 / $Price, 2);
+				} else {
+					$GP = _('N/A');
+				}
+				echo $GP.'%'. '</td></tr>';
+				echo '</td></tr>';
+			}
+		}
+		if ($myrow['mbflag'] == 'K' OR $myrow['mbflag'] == 'A') {
+			$CostResult = DB_query("SELECT SUM(bom.quantity*
+							(stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) AS cost
+						FROM bom INNER JOIN
+							stockmaster
+						ON bom.component=stockmaster.stockid
+						WHERE bom.parent='" . $StockID . "'
+						AND bom.effectiveto > '" . Date("Y-m-d") . "'
+						AND bom.effectiveafter < '" . Date("Y-m-d") . "'",
+						$db);
+			$CostRow = DB_fetch_row($CostResult);
+			$Cost = $CostRow[0];
+		} else {
+			$Cost = $myrow['cost'];
+		}
+		echo '<th align=right>' . _('Cost') . '</th><td align=right colspan=2>' . number_format($Cost,3) . '</td>';
+	} //end of if PricesSecuirty allows viewing of prices
     echo '</table>'; //end of first nested table
    // Item Category Property mod: display the item properties
        echo '<table>';

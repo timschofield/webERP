@@ -15,110 +15,127 @@ if (isset($_GET['StockID'])){
 }
 
 
-echo '<HR><FORM ACTION="' . $_SERVER['PHP_SELF'] . '?'. SID . '" METHOD=POST>';
+echo '<hr><form action="' . $_SERVER['PHP_SELF'] . '?'. SID . '" method=post>';
 
 $sql = "SELECT loccode,
 		locationname
 	FROM locations";
 $resultStkLocs = DB_query($sql,$db);
 
-echo '<TABLE><TR><TD>';
+echo '<table><tr><td>';
 
-echo '<TABLE><TR><TD>' . _('From Stock Location') . ':</TD><TD><SELECT name="StockLocation"> ';
+echo '<table><tr><td>' . _('From Stock Location') . ':</td><td><select name="StockLocation"> ';
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All'){
 		if ($myrow['loccode'] == $_POST['StockLocation']){
-		     echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		     echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-		     echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		     echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-		 echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		 echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		 $_POST['StockLocation']=$myrow['loccode'];
 	} else {
-		 echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
 }
-echo '</SELECT></TD></TR>';
+echo '</select></td></tr>';
 
 $SQL='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription';
 $result1 = DB_query($SQL,$db);
 if (DB_num_rows($result1)==0){
-	echo '</TABLE></TD></TR>
-		</TABLE>
-		<P>';
+	echo '</table></td></tr>
+		</table>
+		<p>';
 	prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
-	echo '<BR><A HREF="' . $rootpath . '/StockCategories.php?' . SID .'">' . _('Define Stock Categories') . '</A>';
+	echo '<br><a href="' . $rootpath . '/StockCategories.php?' . SID .'">' . _('Define Stock Categories') . '</A>';
 	include ('includes/footer.inc');
 	exit;
 }
 
-echo '<TR><TD>' . _('In Stock Category') . ':</TD><TD><SELECT NAME="StockCat">';
+echo '<tr><td>' . _('In Stock Category') . ':</td><td><select name="StockCat">';
 if (!isset($_POST['StockCat'])){
 	$_POST['StockCat']='All';
 }
 if ($_POST['StockCat']=='All'){
-	echo '<OPTION SELECTED VALUE="All">' . _('All');
+	echo '<option selected value="All">' . _('All') . '</option>';
 } else {
-	echo '<OPTION VALUE="All">' . _('All');
+	echo '<option value="All">' . _('All') . '</option>';
 }
 while ($myrow1 = DB_fetch_array($result1)) {
 	if ($myrow1['categoryid']==$_POST['StockCat']){
-		echo '<OPTION SELECTED VALUE="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
+		echo '<option selected value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	} else {
-		echo '<OPTION VALUE="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
+		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	}
 }
 
-echo '</SELECT></TD></TR></TABLE>';
+echo '</select></td></tr>';
+
+
+echo '<tr><td>' . _('Shown Only Items Where Available Less Than Re-order Quantity') . ':</td><td><select name="BelowReorderQuantity">';
+if (!isset($_POST['BelowReorderQuantity'])){
+	$_POST['BelowReorderQuantity']='All';
+}
+if ($_POST['BelowReorderQuantity']=='All'){
+	echo '<option selected value="All">' . _('All') . '</option>';
+	echo '<option value="Below">' . _('Only Items Below Re-order Quantity') . '</option>';
+} else {
+	echo '<option value="All">' . _('All') . '</option>';
+	echo '<option selected value="Below">' . _('Only Items Below Re-order Quantity') . '</option>';
+}
 
 
 
-echo '</TD><TD VALIGN=CENTER><INPUT TYPE=SUBMIT NAME="ShowStatus" VALUE="' . _('Show Stock Status') . '">';
+echo '</td></tr></table>';
 
-echo '</TD></TR></TABLE>';
-echo '<HR>';
+
+
+echo '</td><td valign=center><input type=submit name="ShowStatus" value="' . _('Show Stock Status') . '">';
+
+echo '</td></tr></table>';
+echo '<hr>';
 
 
 if (isset($_POST['ShowStatus'])){
 
 	if ($_POST['StockCat']=='All') {
 		$sql = "SELECT locstock.stockid,
-				stockmaster.description,
-				locstock.loccode,
-				locations.locationname,
-				locstock.quantity,
-				locstock.reorderlevel,
-				stockmaster.decimalplaces,
-				stockmaster.serialised,
-				stockmaster.controlled
-			FROM locstock,
-				stockmaster,
-				locations
-			WHERE locstock.stockid=stockmaster.stockid
-			AND locstock.loccode = '$_POST[StockLocation]'
-			AND locstock.loccode=locations.loccode
-			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
-			ORDER BY locstock.stockid";
+						stockmaster.description,
+						locstock.loccode,
+						locations.locationname,
+						locstock.quantity,
+						locstock.reorderlevel,
+						stockmaster.decimalplaces,
+						stockmaster.serialised,
+						stockmaster.controlled
+					FROM locstock,
+						stockmaster,
+						locations
+					WHERE locstock.stockid=stockmaster.stockid
+						AND locstock.loccode = '$_POST[StockLocation]'
+						AND locstock.loccode=locations.loccode
+						AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
+					ORDER BY locstock.stockid";
 	} else {
 		$sql = "SELECT locstock.stockid,
-				stockmaster.description,
-				locstock.loccode,
-				locations.locationname,
-				locstock.quantity,
-				locstock.reorderlevel,
-				stockmaster.decimalplaces,
-				stockmaster.serialised,
-				stockmaster.controlled
-			FROM locstock,
-				stockmaster,
-				locations
-			WHERE locstock.stockid=stockmaster.stockid
-			AND locstock.loccode = '$_POST[StockLocation]'
-			AND locstock.loccode=locations.loccode
-			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
-			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-			ORDER BY locstock.stockid";
+						stockmaster.description,
+						locstock.loccode,
+						locations.locationname,
+						locstock.quantity,
+						locstock.reorderlevel,
+						stockmaster.decimalplaces,
+						stockmaster.serialised,
+						stockmaster.controlled
+					FROM locstock,
+						stockmaster,
+						locations
+					WHERE locstock.stockid=stockmaster.stockid
+						AND locstock.loccode = '$_POST[StockLocation]'
+						AND locstock.loccode=locations.loccode
+						AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
+						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					ORDER BY locstock.stockid";
 	}
 
 
@@ -126,17 +143,17 @@ if (isset($_POST['ShowStatus'])){
 	$DbgMsg = _('The SQL that failed was');
 	$LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-	echo '<TABLE CELLPADDING=5 CELLSPACING=4 BORDER=0>';
+	echo '<table cellpadding=5 cellspacing=4 border=0>';
 
-	$tableheader = '<TR>
-			<TH>' . _('StockID') . '</TH>
-			<TH>' . _('Description') . '</TH>
-			<TH>' . _('Quantity On Hand') . '</TH>
-			<TH>' . _('Re-Order Level') . '</FONT></TH>
-			<TH>' . _('Demand') . '</TH>
-			<TH>' . _('Available') . '</TH>
-			<TH>' . _('On Order') . '</TH>
-			</TR>';
+	$tableheader = '<tr>
+					<th>' . _('StockID') . '</th>
+					<th>' . _('Description') . '</th>
+					<th>' . _('Quantity On Hand') . '</th>
+					<th>' . _('Re-Order Level') . '</th>
+					<th>' . _('Demand') . '</th>
+					<th>' . _('Available') . '</th>
+					<th>' . _('On Order') . '</th>
+					</tr>';
 	echo $tableheader;
 	$j = 1;
 	$k=0; //row colour counter
@@ -144,10 +161,10 @@ if (isset($_POST['ShowStatus'])){
 	while ($myrow=DB_fetch_array($LocStockResult)) {
 
 		if ($k==1){
-			echo '<TR class="OddTableRows">';
+			echo '<tr class="OddTableRows">';
 			$k=0;
 		} else {
-			echo '<TR class="EvenTableRows">';
+			echo '<tr class="EvenTableRows">';
 			$k=1;
 		}
 
@@ -224,40 +241,43 @@ if (isset($_POST['ShowStatus'])){
 			$QOOQty = 0;
 		}
 
+		if (($_POST['BelowReorderQuantity']=='Below' AND ($myrow['quantity']-$myrow['reorderlevel']-$DemandQty)<0) 
+				OR $_POST['BelowReorderQuantity']=='All' ){
+			
+			printf("<td><a target='_blank' href='StockStatus.php?StockID=%s'>%s</td>
+					<td>%s</td>
+					<td ALIGN=RIGHT>%s</td>
+					<td ALIGN=RIGHT>%s</td>
+					<td ALIGN=RIGHT>%s</td>
+					<td ALIGN=RIGHT>%s</td>
+					<td ALIGN=RIGHT>%s</td>",
+					strtoupper($myrow['stockid']),
+					strtoupper($myrow['stockid']),
+					$myrow['description'],
+					number_format($myrow['quantity'],$myrow['decimalplaces']),
+					number_format($myrow['reorderlevel'],$myrow['decimalplaces']),
+					number_format($DemandQty,$myrow['decimalplaces']),
+					number_format($myrow['quantity'] - $DemandQty,$myrow['decimalplaces']),
+					number_format($QOO,$myrow['decimalplaces']));
+		
+			if ($myrow['serialised'] ==1){ /*The line is a serialised item*/
 
-		printf("<td><a target='_blank' href='StockStatus.php?StockID=%s'>%s</td>
-			<td>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>",
-			strtoupper($myrow['stockid']),
-			strtoupper($myrow['stockid']),
-			$myrow['description'],
-			number_format($myrow['quantity'],0),
-			number_format($myrow['reorderlevel'],0),
-			number_format($DemandQty,0),
-			number_format($myrow['quantity'] - $DemandQty,0),
-			number_format($QOO,0));
+				echo '<td><a target="_blank" href="' . $rootpath . '/StockSerialItems.php?' . SID . '&Serialised=Yes&Location=' . $myrow['loccode'] . '&StockID=' . $StockID . '">' . _('Serial Numbers') . '</a></td></tr>';
+			} elseif ($myrow['controlled']==1){
+				echo '<td><a target="_blank" href="' . $rootpath . '/StockSerialItems.php?' . SID . '&Location=' . $myrow['loccode'] . '&StockID=' . $StockID . '">' . _('Batches') . '</a></td></tr>';
+			}
 
-		if ($myrow['serialised'] ==1){ /*The line is a serialised item*/
-
-			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockSerialItems.php?' . SID . '&Serialised=Yes&Location=' . $myrow['loccode'] . '&StockID=' . $StockID . '">' . _('Serial Numbers') . '</A></TD></TR>';
-		} elseif ($myrow['controlled']==1){
-			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockSerialItems.php?' . SID . '&Location=' . $myrow['loccode'] . '&StockID=' . $StockID . '">' . _('Batches') . '</A></TD></TR>';
-		}
-
-		$j++;
-		If ($j == 12){
-			$j=1;
-			echo $tableheader;
-		}
-	//end of page full new headings if
+			$j++;
+			If ($j == 20){
+				$j=1;
+				echo $tableheader;
+			}
+		//end of page full new headings if
+		} //end of if BelowOrderQuantity or all items
 	}
 	//end of while loop
 
-	echo '</TABLE><HR>';
+	echo '</table><hr>';
 	echo '</form>';
 } /* Show status button hit */
 include('includes/footer.inc');

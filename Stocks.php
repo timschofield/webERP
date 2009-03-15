@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.64 $ */
+/* $Revision: 1.65 $ */
 
 $PageSecurity = 11;
 
@@ -182,6 +182,18 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'CategoryID';
 		$i++;
 	}
+	if (!is_numeric($_POST['Pansize'])) {
+		$InputError = 1;
+		prnMsg(_('Pansize quantity must be numeric'),'error');
+		$Errors[$i] = 'Pansize';
+		$i++;
+	}
+	if (!is_numeric($_POST['Shrinkfactor'])) {
+		$InputError = 1;
+		prnMsg(_('Shringage factor quantity must be numeric'),'error');
+		$Errors[$i] = 'Shrinkfactor';
+		$i++;
+	}
 
 	if ($InputError !=1){
 		if ($_POST['Serialised']==1){ /*Not appropriate to have several dp on serial items */
@@ -302,7 +314,9 @@ if (isset($_POST['submit'])) {
 							discountcategory='" . $_POST['DiscountCategory'] . "',
 							taxcatid=" . $_POST['TaxCat'] . ",
 							decimalplaces=" . $_POST['DecimalPlaces'] . ",
-							appendfile='" . $_POST['ItemPDF'] . "'
+							appendfile='" . $_POST['ItemPDF'] . "',
+							shrinkfactor=" . $_POST['shrinkfactor'] . ",
+							pansize=" . $_POST['pansize'] . "
 					WHERE stockid='$StockID'";
 
 				$ErrMsg = _('The stock item could not be updated because');
@@ -360,7 +374,9 @@ if (isset($_POST['submit'])) {
 							discountcategory,
 							taxcatid,
 							decimalplaces,
-							appendfile)
+							appendfile,
+							shrinkfactor,
+							pansize)
 						VALUES ('$StockID',
 							'" . $_POST['Description'] . "',
 							'" . $_POST['LongDescription'] . "',
@@ -378,7 +394,9 @@ if (isset($_POST['submit'])) {
 							'" . $_POST['DiscountCategory'] . "',
 							" . $_POST['TaxCat'] . ",
 							" . $_POST['DecimalPlaces']. ",
-							'" . $_POST['ItemPDF']. "'
+							'" . $_POST['ItemPDF']. "',
+							" . $_POST['ShrinkFactor'] . ",
+							" . $_POST['PanSize'] . "
 							)";
 
 				$ErrMsg =  _('The item could not be added because');
@@ -415,6 +433,8 @@ if (isset($_POST['submit'])) {
 						unset($_POST['DiscountCategory']);
 						unset($_POST['DecimalPlaces']);
 						unset($_POST['ItemPDF']);
+						unset($_POST['ShrinkFactor']);
+						unset($_POST['PanSize']);
 						unset($StockID);
 					}//ALL WORKED SO RESET THE FORM VARIABLES
 				}//THE INSERT OF THE NEW CODE WORKED SO BANG IN THE STOCK LOCATION RECORDS TOO
@@ -704,6 +724,12 @@ if (!isset($_POST['DecimalPlaces']) or $_POST['DecimalPlaces']==''){
 if (!isset($_POST['Discontinued']) or $_POST['Discontinued']==''){
     $_POST['Discontinued']=0;
 }
+if (!isset($_POST['Pansize'])) {
+	$_POST['Pansize']=0;
+}
+if (!isset($_POST['ShrinkFactor'])) {
+	$_POST['ShrinkFactor']=0;
+}
 
 
 echo '<TR><TD>' . _('Economic Order Quantity') . ':</TD><TD><input ' . (in_array('EOQ',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="EOQ" SIZE=12 MAXLENGTH=10 Value="' . $_POST['EOQ'] . '"></TD></TR>';
@@ -853,7 +879,17 @@ while ($myrow = DB_fetch_array($result)) {
 	}
 } //end while loop
 
-echo '</SELECT></TD></TR>';
+echo '</select></td></tr>';
+
+echo '<tr>
+        <td>' . _('Pan Size') . ':</td>
+	    <td><input type="Text" name="Pansize" size="6" maxlength="6" value=' . $_POST['Pansize'] . '></td>
+	</tr>	
+     <tr>
+        <td>' . _('Shrinkage Factor') . ':</td>
+	    <td><input type="Text" name="ShrinkFactor" size="6" maxlength="6" value=' . $_POST['Shrinkfactor'] . '></td>
+	</tr>';
+
 
  if (function_exists('imagecreatefrompng')){
 	$StockImgLink = '<img src="GetStockImage.php?SID&automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
