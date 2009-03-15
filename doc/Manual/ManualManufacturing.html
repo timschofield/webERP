@@ -8,6 +8,7 @@
 Manufacturing - simply the combination of items to make other items can be implemented effective from webERP version 3.06.
 <br>It has been possible to build bills of material for manufactured items for some time but the functionality that allows the materials to be issued from stock and manufactured items received into stock was introduced with 3.06. This is the purpose of the work order.
 <br>Functionality to add labour items to work orders and post recovery amounts to a profit and loss account for issues of labour to a work order was added after 3.09 (Sept 2008).
+<br>Functionality to set up a master production schedule and explode bills of materials into the components required to manufacture this demand and calculate the required orders to be placed/rescheduled (MRP) was added by Mark Yeager in March 2009.
 <br><br>
 Bills of material now allow components to be defined as "auto-issue". Components set up to auto-issue, automatically create the issue transactions against the work order based on the bill of material quantities on the entry of receipts of a finished item against the work order. This decreases the administration of work orders for those components with relatively low value and limited possibility for any usage variance. It is not recommended that this feature be used on components where the final requirement for it could vary with for example yield differences between work orders. Work orders take the value of components and materials issued and divide this total cost between the output items to arrive at a cost per unit for all output items. The process for performing this calculation is called "closing" the work order.
 <br><br>
@@ -46,7 +47,50 @@ The quantity received of the item is maintained automatically against the work o
 The selection of work orders allows the costing to be viewed. The work order costing shows all the issues of materials and components against the work order as compared against the bill of material requirments - as they were when the first reciept of manufactured stock was received against the work order. The variances on the work order in terms of the usage of components and the expected cost of materials/components issued to the work order are displayed. Closing the work order takes these variances and if general ledger integration to inventory is enabled then journals are created to write back the work in progress balance. Of course if there are several manufactured output items on the work order then the variances are apportioned between the items based on the quantity of the item received multipled by the expected cost as a proportion of the total expected cost of all items received on the work order. The detail of how the postings created depends on whether weighted average costing is used or standard costing.
 <ul>
 <li><b>Standard Costing:</b> Under standard costing the entire variances are taken to the profit and loss account.  The usage variance is taken to the general ledger account specified in the manufactured item's stock category record. The cost variance is taken to the item's purchase price variance account on the stock category record.</li>
-<li><b>Weighted Average Costing:</b> If not all the stock manufactured on the work order remains on hand - perhaps some is sold - then the variance relating to the proportion that is left on hand is taken to the value of stock e.g. a negative variance increases the value of stock. A stock cost adjustment is also created (irrespective of whether the GL integration is enabled).
+<li><b>Weighted Average Costing:</b> If not all the stock manufactured on the work order remains on hand - perhaps some is sold - then the variance relating to the proportion that is left on hand is taken to the value of stock e.g. a negative variance increases the value of stock. A stock cost adjustment is also created (irrespective of whether the GL integration is enabled).</li>
+</ul>
+<br><br>
+<font size="+1"><b>Material Requirements Planning (MRP)</b></font>
+<br><br>
+It is one thing to plan for purchasing where the item being sold is the item to be purchased. Things get more complicated when the item being sold is manufactured - each of the components in the bill of material need to be available before the item being sold can be manufactured. Where the components in turn are also manufactured then the complexity compounds - this is the material requirements planning calculations are for.
+<br><br>
+For the curious, here (in the developers own words) are the basic steps of the MRP calculations: First, I create a levels table by examining the bom table and finding a level number for each part; for instance, a part with nothing under it in a bom structure is a level 0 part, a part with 7 levels of parts below it is level 7. Next, I create an mrpsupplies table and an mrprequirements table. Supplies are from the current quantity on hand, open purchase orders, and work orders. Requirements are from open sales orders, worequirements records for open work orders, parts below their reorder levels, and demands the users can enter in an mrpdemands table for sales forecasting. Then I read through the levels table, starting at the highest level, and net the supplies and requirements for every part. If there is not enough supply, an mrpplannedorder record is created, and, if that part has parts below it in the bom structure, a requirement record is created for those lower level parts based on the net requirement for the top level part times the quantity per assembly for the component, with a schedule date based on the lead time for the part.
+<br><br>
+The MRP system uses certain order modifiers to inflate the requirement quantity. The EOQ from stockmaster is used, together with the item shrinkage factor and pan size. 
+<br><br>
+There are a few programs to use before running an MRP.
 
-
+<br><br>
+Prerequisites
+<br><br>
+Each item that requires a shrinkage factor or pan size to be set up must be defined in the stock item maintenance form all items need to have an EOQ (Economic Order Quantity - the most efficient or required order quantity) set up.
+<br><br>
+From the Setup Menu - MRPCalendar.php creates a calendar of valid dates for manufacturing. That way if the system schedules a planned work order for a part for a Friday and a component has a lead time of 5 days, the system will schedule the component for the preceding Friday rather than the preceding Sunday. To create the calendar, you enter a starting and ending date range and can opt to exclude Saturdays, Sundays, or any other day of the week. After the original creation, individual days can be set to be valid or invalid manufacturing days.
+<br><br>
+It is important to remember that this is "infinite capacity" MRP - i.e. orders will be created based on the demand requirements without any constraints on the ability/capacity to manufacture the order... currently the system is only implemented to calculate and report orders required and further analysis is required to figure out how to manufacture the required orders.
+<br><br>
+From the Setup Menu the demand types need to be defined - by default webERP sets up a single Forecast demand type - which should be adequete for many businesses without further additional demand types. However, the system has ability to add additional demand types (the script MRPDemandTypes.php maintains a table of user-defined types of demands; for instance, F for Forecast or S for sales or whatever the user wants to use. 
+<br><br>
+There are two programs for users to enter the demands. 
+<br><br>
+MRPDemands.php can be used to enter single demands at a time. There is also
+a List Selection button that will list all demands for a part, if a part is entered, or all demands for a demand type, if no part is entered; when the parts are displayed, there are buttons to Edit or Delete. The Delete Demand Type button deletes all of the particular demand
+that is selected. 
+<br><br>
+MRPCreateDemands.php can be used to generate a Master Production Schedule. The user selects a demand type, stock category, inventory location, and then enters a date range for sales orders to include. The program will generate demands beginning from the Start Date For Distribution
+for the number of periods – either weeks or months – that the user selects. Parts can be excluded based on their total sales quantity or total sales dollar. A multiplier can be used to increase the quantity; an example from my company is that we wanted to forecast for a year and
+a half, so rather than look at the last year and a half sales, we looked at the most recent 6 months and multiplied that times 3. An example of the distribution is if in a certain sales period a part had a quantity of 15 and the Distribution Period was months and the Numbre of
+Periods was 6, the first three months of records would have a quantity of 3 each and the last 3 would have a quantity of two. Dates are calculated based on the manufacturing calendar.
+<br><br>
+MRP.php runs the MRP itself. It is a regenerative process that purges all of the old files and creates new ones. There is a selection to chose the location for inventory. Days Leeway can be entered, so purchase order and work order dates scheduled within the leeway of the calculated
+need date are considered valid; the system does not actually change the dates in the work orders or purchase orders, but there is a report of those orders that the MRP estimates should be changed. And there are check boxes to select if MRP Demands, eoq, pan size, and shrinkage
+factor should be used. The MRP runs pretty quickly. The system I am running it against is not as large as most long running systems, but, with about 3,000 parts, a few hundred open sales orders and purchase orders, a half a dozen demands for assemblies that go 7 levels deep and
+have close to a thousand parts, plus individual demands for a few hundred other parts, I run this on a 3 and a half year old iMac with 1 gig of memory and it takes less than a minute. I also tried it on my web host, which is in Chicago, while I’m in New Jersey about 30 miles west
+of New York, and it took less than 20 seconds.
+<br><br>
+As I said, the MRP doesn’t change or create webERP purchase orders or work orders. I think it might be dangerous to do that automatically, without some sort of human oversight. In the 2.0 version, I might have some sort of screen that will bring up what I call MRP Planned Orders and
+allow users to generate purchase orders or work orders from them. Right now, there are several reports to show the results of the MRP. MRPReschedules.php shows those work orders and purchase orders that the system calculates should have their dates changed; if there is no requirement
+for the orders, a CANCEL message is displayed. MRPPlannedWorkOrders.php and MRPPlannedPurchaseOrders.php show orders that the MRP calculates should be created. The reports can be created showing every individual order needed and the source of its requirement, or the orders can be consolidated into weekly or monthly orders. MRPReport.php shows the supply and demand for individual parts. On the demand side, it shows the type of order that created the demand, the top level part for that demand, and the order number – in the case of user entered MRP demands, the order number is system generated. The supply side shows orders that make up the supply and in the case of Planned orders created by the MRP, it shows the type of demand
+the supply was planned to cover and the order number for that demand. Finally, there is MRPShortages.php that shows those parts that have a demand that is greater than the supply. The dollar total might be a little misleading because if there is a sales order for an assembly
+without enough supply to cover it, that will show up on the report, but so will all of the components that are needed to build the assembly. I haven’t quite decided if I should exclude the components or not. 
 <!-- Help End: Manufacturing -->
