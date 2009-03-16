@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.77 $ */
+/* $Revision: 1.78 $ */
 
 
 $PageSecurity = 1;
@@ -671,6 +671,21 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<A HREF='" . $rootpath . '/WhereUsedInquiry.php?' . SID . "'><LI>" . _('Where Used Inquiry') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/BOMIndented.php?' . SID . "'><LI>" . _('Indented Bill Of Material Listing') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/BOMExtendedQuantity.php?' . SID . "'><LI>" . _('List Components Required') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/BOMIndentedReverse.php?' . SID . "'><LI>" . _('Indented Where Used Listing') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>

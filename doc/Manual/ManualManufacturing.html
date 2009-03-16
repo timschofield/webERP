@@ -65,6 +65,8 @@ Prerequisites
 <br><br>
 Each item that requires a shrinkage factor or pan size to be set up must be defined in the stock item maintenance form all items need to have an EOQ (Economic Order Quantity - the most efficient or required order quantity) set up.
 <br><br>
+Pansize : This modifier is sometimes called the order multiple. It allows you to create planned orders in even multiples. This is especially useful if you are required by your suppliers to place orders in specific lot sizes. It is also a useful modifier is you have established your own production run sizes. This modifier causes MRP to inflate the required order quantity to an even increment of the pansize value. As with all modifiers you do need to be careful with this modifier as its use could lead to excess inventories
+<br><br>
 From the Setup Menu - MRPCalendar.php creates a calendar of valid dates for manufacturing. That way if the system schedules a planned work order for a part for a Friday and a component has a lead time of 5 days, the system will schedule the component for the preceding Friday rather than the preceding Sunday. To create the calendar, you enter a starting and ending date range and can opt to exclude Saturdays, Sundays, or any other day of the week. After the original creation, individual days can be set to be valid or invalid manufacturing days.
 <br><br>
 It is important to remember that this is "infinite capacity" MRP - i.e. orders will be created based on the demand requirements without any constraints on the ability/capacity to manufacture the order... currently the system is only implemented to calculate and report orders required and further analysis is required to figure out how to manufacture the required orders.
