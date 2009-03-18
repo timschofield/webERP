@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.65 $ */
+/* $Revision: 1.66 $ */
 
 $PageSecurity = 11;
 
@@ -188,10 +188,10 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'Pansize';
 		$i++;
 	}
-	if (!is_numeric($_POST['Shrinkfactor'])) {
+	if (!is_numeric($_POST['ShrinkFactor'])) {
 		$InputError = 1;
-		prnMsg(_('Shringage factor quantity must be numeric'),'error');
-		$Errors[$i] = 'Shrinkfactor';
+		prnMsg(_('Shrinkage factor quantity must be numeric'),'error');
+		$Errors[$i] = 'ShrinkFactor';
 		$i++;
 	}
 
@@ -315,8 +315,8 @@ if (isset($_POST['submit'])) {
 							taxcatid=" . $_POST['TaxCat'] . ",
 							decimalplaces=" . $_POST['DecimalPlaces'] . ",
 							appendfile='" . $_POST['ItemPDF'] . "',
-							shrinkfactor=" . $_POST['shrinkfactor'] . ",
-							pansize=" . $_POST['pansize'] . "
+							shrinkfactor=" . $_POST['ShrinkFactor'] . ",
+							pansize=" . $_POST['Pansize'] . "
 					WHERE stockid='$StockID'";
 
 				$ErrMsg = _('The stock item could not be updated because');
@@ -887,7 +887,7 @@ echo '<tr>
 	</tr>	
      <tr>
         <td>' . _('Shrinkage Factor') . ':</td>
-	    <td><input type="Text" name="ShrinkFactor" size="6" maxlength="6" value=' . $_POST['Shrinkfactor'] . '></td>
+	    <td><input type="Text" name="ShrinkFactor" size="6" maxlength="6" value=' . $_POST['ShrinkFactor'] . '></td>
 	</tr>';
 
 
