@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.40 $ */
+/* $Revision: 1.41 $ */
 
 $PageSecurity = 2;
 $PricesSecurity = 9;
@@ -703,7 +703,7 @@ $PropertyOptionValue . '</option>';
                 </TABLE>';//end of nested table
 
     echo '</TD>'; //end cell of master table
-    if ($myrow['mbflag'] == 'B') {
+    if ($myrow['mbflag'] == 'B'or ($myrow['mbflag'] == 'M')) {
         echo '<TD WIDTH="50%" VALIGN="TOP"><TABLE>
             <TR><TH width="50%">' . _('Supplier') . '</TH>
                 <TH width="15%">' . _('Cost') . '</TH>
