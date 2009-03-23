@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.37 $ */
+/* $Revision: 1.38 $ */
 
 $PageSecurity = 5;
 
@@ -371,46 +371,48 @@ if (isset($_POST['submit'])) {
 
 		$SQL_SupplierSince = FormatDateForSQL($_POST['SupplierSince']);
 
-if ($_SESSION['geocode_integration']==1 ){
-// Get the lat/long from our geocoding host
-$sql = "SELECT * FROM geocode_param WHERE 1";
-$ErrMsg = _('An error occurred in retrieving the information');
-$resultgeo = DB_query($sql, $db, $ErrMsg);
-$row = DB_fetch_array($resultgeo);
-$api_key = $row['geocode_key'];
-$map_host = $row['map_host'];
-define("MAPS_HOST", $map_host);
-define("KEY", $api_key);
+		$latitude = 0;
+		$longitude = 0;
+		if ($_SESSION['geocode_integration']==1 ){
+			// Get the lat/long from our geocoding host
+			$sql = "SELECT * FROM geocode_param WHERE 1";
+			$ErrMsg = _('An error occurred in retrieving the information');
+			$resultgeo = DB_query($sql, $db, $ErrMsg);
+			$row = DB_fetch_array($resultgeo);
+			$api_key = $row['geocode_key'];
+			$map_host = $row['map_host'];
+			define("MAPS_HOST", $map_host);
+			define("KEY", $api_key);
 
-$address = $_POST["Address1"] . ", " . $_POST["Address2"] . ", " . $_POST["Address3"] . ", " . $_POST["Address4"];
+			$address = $_POST["Address1"] . ", " . $_POST["Address2"] . ", " . $_POST["Address3"] . ", " . $_POST["Address4"];
 
-$base_url = "http://" . MAPS_HOST . "/maps/geo?output=xml" . "&key=" . KEY;
-$request_url = $base_url . "&q=" . urlencode($address);
-$xml = simplexml_load_file($request_url) or die("url not loading");
+			$base_url = "http://" . MAPS_HOST . "/maps/geo?output=xml" . "&key=" . KEY;
+			$request_url = $base_url . "&q=" . urlencode($address);
 
-      $coordinates = $xml->Response->Placemark->Point->coordinates;
-      $coordinatesSplit = split(",", $coordinates);
-      // Format: Longitude, Latitude, Altitude
-      $latitude = $coordinatesSplit[1];
-      $longitude = $coordinatesSplit[0];
+			$xml = simplexml_load_file($request_url) or die("url not loading");
 
-    $status = $xml->Response->Status->code;
-    if (strcmp($status, "200") == 0) {
-      // Successful geocode
-      $geocode_pending = false;
-      $coordinates = $xml->Response->Placemark->Point->coordinates;
-      $coordinatesSplit = split(",", $coordinates);
-      // Format: Longitude, Latitude, Altitude
-      $latitude = $coordinatesSplit[1];
-      $longitude = $coordinatesSplit[0];
-    } else {
-      // failure to geocode
-      $geocode_pending = false;
-      echo "<p>Address: " . $address . " failed to geocode.\n";
-      echo "Received status " . $status . "
-\n</p>";
-    }
-}
+			$coordinates = $xml->Response->Placemark->Point->coordinates;
+			$coordinatesSplit = split(",", $coordinates);
+			// Format: Longitude, Latitude, Altitude
+			$latitude = $coordinatesSplit[1];
+			$longitude = $coordinatesSplit[0];
+
+			$status = $xml->Response->Status->code;
+			if (strcmp($status, "200") == 0) {
+			// Successful geocode
+				$geocode_pending = false;
+				$coordinates = $xml->Response->Placemark->Point->coordinates;
+				$coordinatesSplit = split(",", $coordinates);
+				// Format: Longitude, Latitude, Altitude
+				$latitude = $coordinatesSplit[1];
+				$longitude = $coordinatesSplit[0];
+			} else {
+			// failure to geocode
+				$geocode_pending = false;
+				echo "<p>Address: " . $address . " failed to geocode.\n";
+				echo "Received status " . $status . "\n</p>";
+			}
+		}
 		if (!isset($_POST['New'])) {
 
 			$supptranssql = "SELECT COUNT(supplierno)
