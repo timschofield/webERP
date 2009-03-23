@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 $PageSecurity = 10;
 
 include('includes/session.inc');
@@ -13,6 +13,7 @@ if (isset($_GET['SelectedSalesPostingID'])){
 	$SelectedSalesPostingID =$_POST['SelectedSalesPostingID'];
 }
 
+$InputError=false;
 
 if (isset($_POST['submit'])) {
 
