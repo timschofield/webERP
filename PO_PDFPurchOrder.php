@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -121,14 +121,14 @@ if (isset($OrderNo) && $OrderNo != "" && $OrderNo > 0){
 	}// 1 valid record
 }//if there is a valid order number
 
-If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
+if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 
 	$PaperSize = 'A4_Landscape';
 
 	include('includes/PDFStarter.php');
 
 	$pdf->addinfo('Title', _('Purchase Order') );
-	$pdf->addinfo('Subject', _('Purchase Order Number').' ' . $_GET['OrderNo']);
+	$pdf->addinfo('Subject', _('Purchase Order Number').' ' . $OrderNo);
 
 	$line_height=16;
 	   /* Then there's an order to print and its not been printed already (or its been flagged for reprinting)
@@ -360,7 +360,7 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 	} else {
 		echo '</TABLE>';
 	}
-	echo '<BR><CENTER><INPUT TYPE=SUBMIT NAME="DoIt" VALUE="' . _('PROCESS') . '">';
+	echo '<BR><CENTER><INPUT TYPE=SUBMIT NAME="DoIt" VALUE="' . _('Process') . '">';
 	echo '</FORM>';
 	include('includes/footer.inc');
 }
