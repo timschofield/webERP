@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 $PageSecurity = 5;
 
@@ -494,8 +494,8 @@ if (isset($_POST['CommitBatch'])){
   }
 
   /*now enter the BankTrans entry */
-
-  $SQL="INSERT INTO banktrans (transno,
+if ($Transtype==22) {
+	$SQL="INSERT INTO banktrans (transno,
 					type,
 					bankact,
 					ref,
@@ -505,7 +505,7 @@ if (isset($_POST['CommitBatch'])){
 					banktranstype,
 					amount,
 					currcode) ";
-  $SQL= $SQL . "VALUES (" . $TransNo . ",
+	$SQL= $SQL . "VALUES (" . $TransNo . ",
 				" . $Transtype . ",
 				" . $_SESSION['PaymentDetail']->Account . ",
 				'" . $_SESSION['PaymentDetail']->Narrative . "',
@@ -519,7 +519,36 @@ if (isset($_POST['CommitBatch'])){
 
 	$ErrMsg = _('Cannot insert a bank transaction because');
 	$DbgMsg = _('Cannot insert a bank transaction using the SQL');
-	$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+	$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);	
+} else {
+	foreach ($_SESSION['PaymentDetail']->GLItems as $PaymentItem) {
+		$SQL="INSERT INTO banktrans (transno,
+					type,
+					bankact,
+					ref,
+					exrate,
+					functionalexrate,
+					transdate,
+					banktranstype,
+					amount,
+					currcode) ";
+		$SQL= $SQL . "VALUES (" . $TransNo . ",
+				" . $Transtype . ",
+				" . $_SESSION['PaymentDetail']->Account . ",
+				'" . $PaymentItem->cheque . "',
+				" . $_SESSION['PaymentDetail']->ExRate . " ,
+				" . $_SESSION['PaymentDetail']->FunctionalExRate . ",
+				'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
+				'" . $_SESSION['PaymentDetail']->Paymenttype . "',
+				" . -$PaymentItem->Amount . ",
+				'" . $_SESSION['PaymentDetail']->Currency . "'
+			)";
+
+		$ErrMsg = _('Cannot insert a bank transaction because');
+		$DbgMsg = _('Cannot insert a bank transaction using the SQL');
+		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+	}
+}
 
   $SQL = "COMMIT";
   $ErrMsg = _('Cannot commit the changes because');
