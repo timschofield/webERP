@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.36 $ */
+/* $Revision: 1.37 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing 
@@ -21,8 +21,17 @@ include('includes/SQL_CommonFunctions.inc');
 //this is available from the menu on this page already
 //echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
 
+if (!isset($_SESSION['SuppTrans']->SupplierName)) {
+	$sql='SELECT suppname FROM suppliers WHERE supplierid="'.$_GET['SupplierID'].'"';
+	$result = DB_query($sql,$db);
+	$myrow = DB_fetch_row($result);
+	$SupplierName=$myrow[0];
+} else {
+	$SupplierName=$_SESSION['SuppTrans']->SupplierName;
+}
+
 echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Supplier Invoice') . '" ALT="">' . ' '
-        . _('Enter Supplier Invoice:') . ' ' . $_SESSION['SuppTrans']->SupplierName;
+        . _('Enter Supplier Invoice:') . ' ' . $SupplierName;
 
 if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 
@@ -43,6 +52,7 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 /*Now retrieve supplier information - name, currency, default ex rate, terms, tax rate etc */
 
 	 $sql = "SELECT suppliers.suppname,
+	 		suppliers.supplierid,
 	 		paymentterms.terms,
 			paymentterms.daysbeforedue,
 			paymentterms.dayinfollowingmonth,
@@ -363,7 +373,7 @@ if (!isset($_POST['PostInvoice'])){
 		
 		/*If a tax rate is entered that is not the same as it was previously then recalculate automatically the tax amounts */
 		
-		if ($_POST['OverRideTax']=='Auto' OR !isset($_POST['OverRideTax'])){
+		if (isset($_POST['OverRideTax']) and ($_POST['OverRideTax']=='Auto' OR !isset($_POST['OverRideTax']))){
 		
 			echo  ' <INPUT TYPE=TEXT NAME=TaxRate' . $Tax->TaxCalculationOrder . ' MAXLENGTH=4 SIZE=4 VALUE=' . $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100 . '>%';
 			
@@ -384,7 +394,9 @@ if (!isset($_POST['PostInvoice'])){
 			echo '</TD><TD ALIGN=RIGHT>' . number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2);
 			
 		} else { /*Tax being entered manually accept the taxamount entered as is*/
-			
+			if (!isset($_POST['TaxAmount'  . $Tax->TaxCalculationOrder])) {
+				$_POST['TaxAmount'  . $Tax->TaxCalculationOrder]=0;
+			}
 			$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_POST['TaxAmount'  . $Tax->TaxCalculationOrder];
 			
 			echo  ' <INPUT TYPE=HIDDEN NAME=TaxRate' . $Tax->TaxCalculationOrder . ' VALUE=' . $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100 . '>';
