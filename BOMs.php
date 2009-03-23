@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 
 $PageSecurity = 9;
 
@@ -663,7 +663,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		}
 
 		while ($myrow = DB_fetch_array($result)) {
-			if ($myrow['code']==$_POST['WorkCentreAdded']) {
+			if (isset($_POST['WorkCentreAdded']) and $myrow['code']==$_POST['WorkCentreAdded']) {
 				echo "<OPTION SELECTED VALUE='";
 			} else {
 				echo "<OPTION VALUE='";
