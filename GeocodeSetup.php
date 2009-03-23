@@ -48,10 +48,6 @@ if (isset($_POST['submit'])) {
 		if (isset($_POST['geocode_key']) and $_POST['geocode_key'] > 0){
 			$sql = "UPDATE geocode_param SET
 					geocode_key='" . $_POST['geocode_key'] . "',
-					WHERE geocodeid = $SelectParam";
-		} else {
-			$sql = "UPDATE geocode_param SET
-					geocode_key='" . $_POST['geocode_key'] . "',
 					center_long='" . $_POST['center_long'] . "',
 					center_lat='" . $_POST['center_lat'] . "',
 					map_height='" . $_POST['map_height'] . "',
@@ -75,8 +71,8 @@ if (isset($_POST['submit'])) {
 					map_height,
 					map_width,
 					map_host)
-					VALUES (' . "'" .
-					$_POST['geocodeid'] . "', '" .
+					VALUES (' . "'
+					', '" .
 					$_POST['geocode_key'] . "', '" .
 					$_POST['center_long'] . "', '" .
 					$_POST['center_lat'] . "', '" .
@@ -229,12 +225,12 @@ if (!isset($_GET['delete'])) {
 		if (!isset($_POST['geocodeid'])) {
 			$_POST['geocodeid'] = '';
 		}
-		echo '<CENTER><TABLE>
-			<TR>
-				<TD>'. _('Geocode Code') .":</TD>
-				<TD><input " . (in_array('geocodeid',$Errors) ? 'class="inputerror"' : '' ) .
-					" tabindex=1 type='Text' name='geocodeid' VALUE='". $_POST['geocodeid'] ."' SIZE=3 MAXLENGTH=2></TD>
-			</TR>";
+		echo '<CENTER><TABLE>';
+//			<TR>
+//				<TD>'. _('Geocode Code') .":</TD>
+//				<TD><input " . (in_array('geocodeid',$Errors) ? 'class="inputerror"' : '' ) .
+//					" tabindex=1 type='Text' name='geocodeid' VALUE='". $_POST['geocodeid'] ."' SIZE=3 MAXLENGTH=2></TD>
+//			</TR>";
 	}
 
 	if (!isset($_POST['geocode_key'])) {
