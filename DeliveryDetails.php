@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.54 $ */
+/* $Revision: 1.55 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -19,7 +19,7 @@ include('includes/SQL_CommonFunctions.inc');
 
 // This is not required on this page
 //echo '<a href="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Back to Sales Orders'). '</a><br>';
-
+unset($_SESSION['WarnOnce']);
 if (!isset($_SESSION['Items']) OR !isset($_SESSION['Items']->DebtorNo)){
 	prnMsg(_('This page can only be read if an order has been entered') . '. ' . _('To enter an order select customer transactions then sales order entry'),'error');
 	include('includes/footer.inc');
@@ -128,7 +128,7 @@ if (isset($_POST['Update'])
 			WHERE custbranch.branchcode='."'" . $_SESSION['Items']->Branch . "'".
 			' AND custbranch.debtorno = '."'" . $_SESSION['Items']->DebtorNo . "'";
 
-		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
+		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items']->CustomerName . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
 		$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 		if (DB_num_rows($result)==0){
@@ -140,6 +140,12 @@ if (isset($_POST['Update'])
 			}
 			include('includes/footer.inc');
 			exit;
+		}
+		if (!isset($_POST['SpecialInstructions'])) {
+			$_POST['SpecialInstructions']='';
+		}
+		if (!isset($_POST['DeliveryDays'])){
+			$_POST['DeliveryDays']=0;
 		}
 		if (!isset($_SESSION['Items'])) {
 			$myrow = DB_fetch_row($result);
@@ -193,7 +199,7 @@ if (isset($_POST['Update'])
 		and show a link to set them up
 		- if shippers defined but the default shipper is bogus then use the first shipper defined
 		*/
-		if ((!isset($BestShipper) and $BestShipper=='') AND ($_POST['ShipVia']=='' || !isset($_POST['ShipVia']))){
+		if ((isset($BestShipper) and $BestShipper=='') AND ($_POST['ShipVia']=='' || !isset($_POST['ShipVia']))){
 			$sql =  'SELECT shipper_id
 						FROM shippers
 						WHERE shipper_id=' . $_SESSION['Default_Shipper'];
@@ -384,10 +390,10 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 		if ($_POST['Quotation']==0) { /*then its not a quotation its a real order */
 
-			echo '<CENTER><p><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . '<a target="_blank" href="' . $rootpath . '/PrintCustOrder.php?' . SID . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' .'</a>';
+			echo '<div class="centre"><p><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . '<a target="_blank" href="' . $rootpath . '/PrintCustOrder.php?' . SID . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' .'</a>';
 			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . '<a  target="_blank" href="' . $rootpath . '/PrintCustOrder_generic.php?' . SID . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Laser') . ')' .'</a>';
 
-			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" TITLE="' . _('Invoice') . '" ALT="">' . ' ' . '<a href="' . $rootpath . '/ConfirmDispatch_Invoice.php?' . SID . '&OrderNumber=' . $OrderNo .'">'. _('Confirm Dispatch and Produce Invoice') .'</a></CENTER>';
+			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" TITLE="' . _('Invoice') . '" ALT="">' . ' ' . '<a href="' . $rootpath . '/ConfirmDispatch_Invoice.php?' . SID . '&OrderNumber=' . $OrderNo .'">'. _('Confirm Dispatch and Produce Invoice') .'</a></div>';
 
 		} else {
 			/*link to print the quotation */
