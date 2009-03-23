@@ -821,7 +821,7 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `geocode_param` (
-  `geocodeid` varchar(4) NOT NULL default '',
+  `geocodeid` tinyint(4) NOT NULL auto_increment '',
   `geocode_key` varchar(200) NOT NULL default '',
   `center_long` varchar(20) NOT NULL default '',
   `center_lat` varchar(20) NOT NULL default '',
