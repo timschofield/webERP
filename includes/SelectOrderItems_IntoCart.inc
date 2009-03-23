@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 /*SelectOrderItems_IntoCart.inc
 
@@ -103,11 +103,11 @@ if ($AlreadyOnThisOrder!=1){
 				$Discount = 0;
 			}
 
-			$Price = GetPrice ($NewItem, $_SESSION['Items']->DebtorNo,$_SESSION['Items']->Branch, $db);
+			$Price = GetPrice($NewItem, $_SESSION['Items']->DebtorNo,$_SESSION['Items']->Branch, $db);
 
 			$WithinCreditLimit = true;
 
-			if (!isset($WarnOnce) and $_SESSION['Items']->SpecialInstructions) {
+			if (!isset($_SESSION['WarnOnce']) and $_SESSION['Items']->SpecialInstructions) {
 			  	prnMsg($_SESSION['Items']->SpecialInstructions,'warn');
 		        	$WarnOnce=1;
                   	}
@@ -116,8 +116,8 @@ if ($AlreadyOnThisOrder!=1){
 				$_SESSION['Items']->CreditAvailable -= round(($NewItemQty * $Price * (1- $Discount)),2);
 
 				if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items']->CreditAvailable <=0){
-					if ($WarnOnce < 2) prnMsg(_('The customer account will breach their credit limit'),'warn');
-					$WarnOnce=2;
+					if (isset($_SESSION['WarnOnce']) and $_SESSION['WarnOnce'] < 2) prnMsg(_('The customer account will breach their credit limit'),'warn');
+					$_SESSION['WarnOnce']=2;
 				} elseif ($_SESSION['CheckCreditLimits']==2 AND $_SESSION['Items']->CreditAvailable <=0){
 					prnMsg(_('No more lines can be added to this order the customer account is currently at or over their credit limit'),'warn');
 					$WithinCreditLimit = false;
