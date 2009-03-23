@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 15;
 
@@ -89,7 +89,7 @@ if (isset($_POST['submit'])) {
 					WHERE confname='DefaultCustomerType'";
 		$result = DB_query($sql,$db);
 		$CustomerTypeRow = DB_fetch_row($result);
-		$CustomerTypeList = $CustomerTypeRow[0];
+		$DefaultCustomerType = $CustomerTypeRow[0];
 
 	// Does it exist
 		$checkSql = "SELECT count(*)
@@ -220,7 +220,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['typename']  = $myrow['typename'];
 
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedType' VALUE=" . $SelectedType . ">";
-		echo "<INPUT TYPE=HIDDEN NAME='TypeAbbrev' VALUE=" . $_POST['typeid'] . ">";
+		echo "<INPUT TYPE=HIDDEN NAME='typeid' VALUE=" . $_POST['typeid'] . ">";
 		echo "<CENTER><TABLE> <TR><TD>";
 
 		// We dont allow the user to change an existing type code
