@@ -1,5 +1,9 @@
 <?php
 
+/*State the Current Revision
+//revision 1.14
+*/
+
 /* Check that the custmerref field is 50 characters or less long */
 	function VerifyCustomerRef($customerref, $i, $Errors) {
 		if (strlen($customerref)>50) {
@@ -176,14 +180,6 @@
 		return $Errors;
 	}
 
-/* Verify that the quantity invoiced is numeric */
-	function VerifyQuantityInvoiced($quantity, $i, $Errors) {
-		if (!is_numeric($quantity)) {
-			$Errors[$i] = InvalidInvoicedQuantity;
-		}
-		return $Errors;
-	}
-
 /* Verify that the discount percent is numeric */
 	function VerifyDiscountPercent($discountpercent, $i, $Errors) {
 		if (!is_numeric($discountpercent) or $discountpercent>100) {
@@ -204,36 +200,6 @@
 	function VerifyPOLine($poline, $i, $Errors) {
 		if (strlen($poline)>10) {
 			$Errors[$i] = InvalidPOLine;
-		}
-		return $Errors;
-	}
-
-/* Check that the actual dispatch is a valid date. The date
- * must be in the same format as the date format specified in the
- * target webERP company */
-	function VerifyActualDispatchDate($dispatchdate, $i, $Errors, $db) {
-		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
-		$result=DB_query($sql, $db);
-		$myrow=DB_fetch_array($result);
-		$DateFormat=$myrow[0];
-		$DateArray=explode('/',$dispatchdate);
-		if ($DateFormat=='d/m/Y') {
-			$Day=$DateArray[0];
-			$Month=$DateArray[1];
-			$Year=$DateArray[2];
-		}
-		if ($DateFormat=='m/d/Y') {
-			$Day=$DateArray[1];
-			$Month=$DateArray[0];
-			$Year=$DateArray[2];
-		}
-		if ($DateFormat=='Y/m/d') {
-			$Day=$DateArray[2];
-			$Month=$DateArray[1];
-			$Year=$DateArray[0];
-		}
-		if (!checkdate(intval($Month), intval($Day), intval($Year))) {
-			$Errors[$i] = InvalidActualDispatchDate;
 		}
 		return $Errors;
 	}
@@ -264,14 +230,6 @@
 		}
 		if (!checkdate(intval($Month), intval($Day), intval($Year))) {
 			$Errors[$i] = InvalidItemDueDate;
-		}
-		return $Errors;
-	}
-
-/* Verify that the completed flag is a 1 or 0 */
-	function VerifyCompleted($completed, $i, $Errors) {
-		if ($completed!=0 and $completed!=1) {
-			$Errors[$i] = InvalidCompletedFlag;
 		}
 		return $Errors;
 	}
@@ -492,8 +450,9 @@
 			$Errors=VerifyQuantity($OrderLine['quantity'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderLine['discountpercent'])){
-			$OrderLine['discountpercent'] = $OrderLine['discountpercent'] / 100;
+			//$OrderLine['discountpercent'] = $OrderLine['discountpercent'] * 100;
 			$Errors=VerifyDiscountPercent($OrderLine['discountpercent'], sizeof($Errors), $Errors);
+			$OrderLine['discountpercent'] = $OrderLine['discountpercent']/100;
 		}
 		if (isset($OrderLine['narrative'])){
 			$Errors=VerifyNarrative($OrderLine['narrative'], sizeof($Errors), $Errors);
@@ -544,24 +503,16 @@
 		if (isset($OrderLine['quantity'])){
 			$Errors=VerifyQuantity($OrderLine['quantity'], sizeof($Errors), $Errors);
 		}
-		if (isset($OrderLine['qtyinvoiced'])){
-			$Errors=VerifyQuantityInvoiced($OrderLine['qtyinvoiced'], sizeof($Errors), $Errors);
-		}
 		if (isset($OrderLine['discountpercent'])){
-			$OrderLine['discountpercent'] = $OrderLine['discountpercent'] / 100;
+			//$OrderLine['discountpercent'] = $OrderLine['discountpercent'] * 100;
 			$Errors=VerifyDiscountPercent($OrderLine['discountpercent'], sizeof($Errors), $Errors);
+			$OrderLine['discountpercent'] = $OrderLine['discountpercent']/100;
 		}
 		if (isset($OrderLine['narrative'])){
-			$Errors=VerifyDiscountPercent($OrderLine['narrative'], sizeof($Errors), $Errors);
-		}
-		if (isset($OrderLine['actualdispatchdate'])){
-			$Errors=VerifyActualDispatchDate($OrderLine['actualdispatchdate'], sizeof($Errors), $Errors);
+			$Errors=VerifyNarrative($OrderLine['narrative'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderLine['itemdue'])){
 			$Errors=VerifyItemDueDate($OrderLine['itemdue'], sizeof($Errors), $Errors);
-		}
-		if (isset($OrderLine['completed'])){
-			$Errors=VerifyCompleted($OrderLine['completed'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderLine['poline'])){
 			$Errors=VerifyPOLine($OrderLine['poline'], sizeof($Errors), $Errors);
@@ -570,8 +521,11 @@
 		foreach ($OrderLine as $key => $value) {
 			$sql .= $key.'="'.$value.'", ';
 		}
-		$sql = substr($sql,0,-2).' WHERE orderno="'.$OrderLine['orderno'].'" and
-				" orderlineno='.$OrderLine['orderlineno'];
+		//$sql = substr($sql,0,-2).' WHERE orderno="'.$OrderLine['orderno'].'" and
+			//	" orderlineno='.$OrderLine['orderlineno'];
+		$sql = substr($sql,0,-2).' WHERE orderno="'.$OrderLine['orderno'].'" and stkcode="'.$OrderLine['stkcode'].'"';
+				//echo $sql;
+				//exit;
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
 			echo DB_error_no($db);
@@ -582,5 +536,53 @@
 			}
 		}
 		return $Errors;
+	}
+	
+/* This function takes a Order Header ID  and returns an associative array containing
+   the database record for that Order. If the Order Header ID doesn't exist
+   then it returns an $Errors array.
+*/
+	function GetSalesOrderHeader($OrderNo, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$Errors=VerifyOrderHeaderExists($OrderNo, sizeof($Errors), $Errors, $db);
+		if (sizeof($Errors)!=0) {
+			return $Errors;
+		}
+		$sql='SELECT * FROM salesorders WHERE orderno="'.$OrderNo.'"';
+		$result = DB_Query($sql, $db);
+		if (sizeof($Errors)==0) {
+			return DB_fetch_array($result);
+		} else {
+			return $Errors;
+		}
+	}
+	
+/* This function takes a Order Header ID  and returns an associative array containing
+   the database record for that Order. If the Order Header ID doesn't exist
+   then it returns an $Errors array.
+*/
+	function GetSalesOrderLine($OrderNo, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$Errors=VerifyOrderHeaderExists($OrderNo, sizeof($Errors), $Errors, $db);
+		if (sizeof($Errors)!=0) {
+			return $Errors;
+		}
+		$sql='SELECT * FROM salesorderdetails WHERE orderno="'.$OrderNo.'"';
+		$result = DB_Query($sql, $db);
+		if (sizeof($Errors)==0) {
+			return DB_fetch_array($result);
+		} else {
+			return $Errors;
+		}
 	}
 ?>
