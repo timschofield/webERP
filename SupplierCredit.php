@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 /*This page is very largely the same as the SupplierInvoice.php script
 the same result could have been acheived by using if statements in that script and just having the one
@@ -374,7 +374,7 @@ foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 	
 	/*If a tax rate is entered that is not the same as it was previously then recalculate automatically the tax amounts */
 	
-	if ($_POST['OverRideTax']=='Auto' OR !isset($_POST['OverRideTax'])){
+	if (!isset($_POST['OverRideTax']) or $_POST['OverRideTax']=='Auto'){
 	
 		echo  ' <INPUT TYPE=TEXT NAME=TaxRate' . $Tax->TaxCalculationOrder . ' MAXLENGTH=4 SIZE=4 VALUE=' . $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100 . '>%';
 		
