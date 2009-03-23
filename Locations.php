@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 $PageSecurity = 11;
 
@@ -33,8 +33,8 @@ if (isset($_POST['submit'])) {
 	if (isset($SelectedLocation) AND $InputError !=1) {
 
 		/* Set the managed field to 1 if it is checked, otherwise 0 */
-		if($_POST['Managed'] == 'on'){
-			 $_POST['Managed'] = 1;
+		if(isset($_POST['Managed']) and $_POST['Managed'] == 'on'){
+			$_POST['Managed'] = 1;
 		} else {
 			$_POST['Managed'] = 0;
 		}
