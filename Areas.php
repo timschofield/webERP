@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -67,7 +67,6 @@ if (isset($_POST['submit'])) {
 		/*SelectedArea could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
 		$sql = "UPDATE areas SET
-				areacode='" . $_POST['AreaCode'] . "',
 				areadescription='" . $_POST['AreaDescription'] . "'
 			WHERE areacode = '$SelectedArea'";
 
