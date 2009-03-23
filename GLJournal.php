@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 include('includes/DefineJournalClass.php');
 
@@ -258,7 +258,7 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 		echo "<option selected value = 'Normal'>" . _('Normal');
 	}
 
-	echo '</se;ect></td>
+	echo '</select></td>
 			</tr>
 		</table>';
 	/* close off the table in the first column  */
