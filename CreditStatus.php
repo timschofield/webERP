@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 3;
 include('includes/session.inc');
@@ -234,11 +234,13 @@ if (!isset($_GET['delete'])) {
 		<TD><INPUT " . (in_array('ReasonDescription',$Errors) ? 'class="inputerror"' : '' ) .
 		 " tabindex=2 TYPE='text' name='ReasonDescription' VALUE='". $_POST['ReasonDescription'] ."' SIZE=28 MAXLENGTH=30>
 	</TD></TR>
-	<TR><TD>". _('Disallow Invoices') . "</TD>
-	<TD><INPUT tabindex=3 TYPE='checkbox' name='DisallowInvoices'></TD></TR>
-	</TABLE>
-	<CENTER><input tabindex=4 type='Submit' name='submit' value='" . _('Enter Information') . "'>
-	</FORM>";
+	<TR><TD>". _('Disallow Invoices') . "</TD>";
+	if (isset($_POST['DisallowInvoices']) and $_POST['DisallowInvoices']==1) {
+		echo "<TD><INPUT tabindex=3 TYPE='checkbox' checked name='DisallowInvoices'></TD></TR>";
+	} else {
+		echo "<TD><INPUT tabindex=3 TYPE='checkbox' name='DisallowInvoices'></TD></TR>";		
+	}
+	echo "</TABLE><CENTER><input tabindex=4 type='Submit' name='submit' value='" . _('Enter Information') . "'></FORM>";
 } //end if record deleted no point displaying form to add record
 include('includes/footer.inc');
 ?>
