@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 
 $PageSecurity = 4;
@@ -721,7 +721,7 @@ echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 
 echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" TITLE="' . _('Purchase Order') . '" ALT="">' . ' ' . _('Purchase Order') . '';
 
-echo ' : ' . _('Purchase Order') . ' : <b>' . $_SESSION['PO']->OrderNo . ' ' . $_SESSION['PO']->SupplierName . ' </b></font> - ' . _('All amounts stated in') . ' ' . $_SESSION['PO']->CurrCode . '<br>';
+echo ' : <b>' . $_SESSION['PO']->OrderNo . ' ' . $_SESSION['PO']->SupplierName . ' </b></font> - ' . _('All amounts stated in') . ' ' . $_SESSION['PO']->CurrCode . '<br>';
 
 echo '<center><b>' . _('Order Summary') . '</b>';
 echo '<table cellpadding=2 colspan=7 border=1>';
