@@ -27,11 +27,8 @@ CREATE TABLE mrpcalendar (
 	manufacturingflag smallint(6) NOT NULL default "1",
 	INDEX (daynumber),
 	PRIMARY KEY (calendardate)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO mrpdemandtypes (mrpdemandtype,
-							description)
-				VALUES ('FOR',
-						'Forecast');
+INSERT INTO mrpdemandtypes (mrpdemandtype,description) VALUES ('FOR','Forecast');
 
 ALTER TABLE `geocode_param` CHANGE `geocodeid` `geocodeid` TINYINT( 4 ) NOT NULL AUTO_INCREMENT 
