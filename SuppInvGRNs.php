@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -102,7 +102,7 @@ if (isset($_GET['Delete'])){
 /*Show all the selected GRNs so far from the SESSION['SuppTrans']->GRNs array */
 
 echo '<CENTER><FONT SIZE=4 COLOR=BLUE>' . _('Invoiced Goods Received Selected');
-echo '<TABLE CELLPADDING=1>';
+echo '</font><TABLE CELLPADDING=1>';
 
 $tableheader = "<TR BGCOLOR=#800000>
 			<TH>" . _('Sequence') . " #</TH>
@@ -168,7 +168,7 @@ $SQL = "SELECT grnbatch,
 $GRNResults = DB_query($SQL,$db);
 
 if (DB_num_rows($GRNResults)==0){
-	prnMsg(_('There are no outstanding goods received from') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . _('that have not been invoiced by them') . '<BR>' . _('The goods must first be received using the link below to select purchase orders to receive'),'error');
+	prnMsg(_('There are no outstanding goods received from') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . _('that have not been invoiced by them') . '<BR>' . _('The goods must first be received using the link below to select purchase orders to receive'),'warn');
 	echo "<P><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . 'SupplierID=' . $_SESSION['SuppTrans']->SupplierID ."'>" . _('Select Purchase Orders to receive') .'</A>';
 	include('includes/footer.inc');
 	exit;
