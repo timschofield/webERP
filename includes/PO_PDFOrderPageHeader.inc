@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 /*
 	R & OS PHP-PDF class code to set up a new page
 	a new page is implicit on the establishment of a new pdf object so
@@ -27,7 +27,7 @@ if ($ViewingOnly!=0) {
 	$pdf->addText($XPos,$YPos-$line_height,$FontSize, _('SUPPLIERS') . ' - ' . _('THIS IS NOT AN ORDER') );
 }
 
-$Ypos -= ($line_height*3);
+$YPos -= ($line_height*3);
 $FontSize=10;
 $XPos = $Page_Width-$Right_Margin-50;
 $pdf->addText($XPos,$YPos +40, $FontSize, _('Page') . ': ' .$PageNumber);
