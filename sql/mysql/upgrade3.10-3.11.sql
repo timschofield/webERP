@@ -32,3 +32,5 @@ CREATE TABLE mrpcalendar (
 INSERT INTO mrpdemandtypes (mrpdemandtype,description) VALUES ('FOR','Forecast');
 
 ALTER TABLE `geocode_param` CHANGE `geocodeid` `geocodeid` TINYINT( 4 ) NOT NULL AUTO_INCREMENT 
+
+INSERT INTO `factorcompanies` ( `id` , `coyname` ) VALUES (null, "None");
