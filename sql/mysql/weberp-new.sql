@@ -827,7 +827,8 @@ CREATE TABLE `geocode_param` (
   `center_lat` varchar(20) NOT NULL default '',
   `map_height` varchar(10) NOT NULL default '',
   `map_width` varchar(10) NOT NULL default '',
-  `map_host` varchar(50) NOT NULL default ''
+  `map_host` varchar(50) NOT NULL default '',
+  PRIMARY KEY  (`geocodeid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
