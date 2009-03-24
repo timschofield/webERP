@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -385,8 +385,7 @@ if (isset($_POST['CommitBatch'])){
 
                 /*now enter the BankTrans entry */
 
-   foreach ($_SESSION['ReceiptBatch']->Items as $ReceiptItem) {
-		$SQL='INSERT INTO banktrans (type,
+                $SQL='INSERT INTO banktrans (type,
    						transno,
 						bankact,
 						ref,
@@ -404,13 +403,12 @@ if (isset($_POST['CommitBatch'])){
                       		" . $_SESSION['ReceiptBatch']->FunctionalExRate . ",
                       		'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
                       		'" . $_SESSION['ReceiptBatch']->ReceiptType . "',
-                      		" . ($ReceiptItem->Amount * $_SESSION['ReceiptBatch']->FunctionalExRate * $_SESSION['ReceiptBatch']->ExRate) . ",
+                      		" . ($BatchReceiptsTotal * $_SESSION['ReceiptBatch']->FunctionalExRate * $_SESSION['ReceiptBatch']->ExRate) . ",
                       		'" . $_SESSION['ReceiptBatch']->Currency . "'
                         )";
               $DbgMsg = _('The SQL that failed to insert the bank account transaction was');
               $ErrMsg = _('Cannot insert a bank transaction');
               $result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-   }
       }
       if ($BatchDebtorTotal!=0){
 		/* Now Credit Debtors account with receipts + discounts */
