@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 // User configurable variables
 //---------------------------------------------------
 
@@ -12,7 +12,7 @@ $allow_demo_mode = True;
 
 // webERP version
 
-$Version = '3.09cvs';
+$Version = '3.10';
 
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
