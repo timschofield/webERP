@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 
 $PageSecurity = 2;
@@ -58,7 +58,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 	echo '<BR><BR><CENTER><TABLE BGCOLOR="#CCCCCC">';
 	echo '<TR>
 		<TH>' . _('Customer Code') . ':</TH>
-		<TD class="EvenTableRows"><FONT COLOR=BLUE><B><A HREF="' . $rootpath . '/SelectCustomer.php?Select=' . $_SESSION['CustomerID'] . '">' . $_SESSION['CustomerID'] . '</A></B></TD>
+		<TD class="EvenTableRows"><FONT COLOR=BLUE><B><A HREF="' . $rootpath . '/SelectCustomer.php?Select=' . $_SESSION['debtorno'] . '">' . $myrow['debtorno'] . '</A></B></TD>
 		<TH>' . _('Customer Name') . ':</TH><TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['name'] . '</B></TD>
 	</TR>';
 	echo '<TR>
