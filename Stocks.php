@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.66 $ */
+/* $Revision: 1.67 $ */
 
 $PageSecurity = 11;
 
@@ -396,7 +396,7 @@ if (isset($_POST['submit'])) {
 							" . $_POST['DecimalPlaces']. ",
 							'" . $_POST['ItemPDF']. "',
 							" . $_POST['ShrinkFactor'] . ",
-							" . $_POST['PanSize'] . "
+							" . $_POST['Pansize'] . "
 							)";
 
 				$ErrMsg =  _('The item could not be added because');
@@ -434,7 +434,7 @@ if (isset($_POST['submit'])) {
 						unset($_POST['DecimalPlaces']);
 						unset($_POST['ItemPDF']);
 						unset($_POST['ShrinkFactor']);
-						unset($_POST['PanSize']);
+						unset($_POST['Pansize']);
 						unset($StockID);
 					}//ALL WORKED SO RESET THE FORM VARIABLES
 				}//THE INSERT OF THE NEW CODE WORKED SO BANG IN THE STOCK LOCATION RECORDS TOO
