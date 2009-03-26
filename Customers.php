@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 $PageSecurity = 3;
 
@@ -422,24 +422,27 @@ if (!isset($DebtorNo)) {
 // Show Sales Type drop down list
 	$result=DB_query('SELECT typeabbrev, sales_type FROM salestypes ',$db);
 	if (DB_num_rows($result)==0){
-		$DataError =1;
-		echo '<TR><TD COLSPAN=2>' . prnMsg(_('No sales types/price lists defined'),'error') . '</TD></TR>';
-	} else {
-		echo '<TR><TD>' . _('Sales Type/Price List') . ":</TD>
-			<TD><SELECT tabindex=9 name='SalesType'>";
+               $DataError =1;
+               echo '<a href="SalesTypes.php?" target="_parent">Setup Types</a>';
+               echo '<TR><TD COLSPAN=2>' . prnMsg(_('No sales types/price lists defined'),'error') . '</TD></TR>';
+       } else {
+               echo '<TR><TD>' . _('Sales Type/Price List') . ":</TD>
+                       <TD><SELECT tabindex=9 name='SalesType'>";
 
-		while ($myrow = DB_fetch_array($result)) {
-			echo "<OPTION VALUE='". $myrow['typeabbrev'] . "'>" . $myrow['sales_type'];
-		} //end while loop
-		DB_data_seek($result,0);
-		echo '</SELECT></TD></TR>';
-	}
+               while ($myrow = DB_fetch_array($result)) {
+                       echo "<OPTION VALUE='". $myrow['typeabbrev'] . "'>" . $myrow['sales_type'];
+               } //end while loop
+               DB_data_seek($result,0);
+               echo '</SELECT></TD></TR>';
+       }
+
 // Show Customer Type drop down list
-        $result=DB_query('SELECT typeid, typename FROM debtortype ',$db);
-        if (DB_num_rows($result)==0){
-                $DataError =1;
-                echo '<TR><TD COLSPAN=2>' . prnMsg(_('No Customer types/price lists defined'),'error') . '</TD></TR>';
-        } else {
+       $result=DB_query('SELECT typeid, typename FROM debtortype ',$db);
+       if (DB_num_rows($result)==0){
+               $DataError =1;
+               echo '<a href="SalesTypes.php?" target="_parent">Setup Types</a>';
+               echo '<TR><TD COLSPAN=2>' . prnMsg(_('No Customer types/price lists defined'),'error') . '</TD></TR>';
+	        } else {
                 echo '<TR><TD>' . _('Customer Type') . ":</TD>
                         <TD><SELECT tabindex=9 name='typeid'>";
 

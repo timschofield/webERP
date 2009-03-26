@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.50 $ */
+/* $Revision: 1.51 $ */
 
 $PageSecurity = 2;
 
@@ -352,33 +352,34 @@ if (isset($_POST['CustPhone'])) {
 
 <?php
 if (isset($_POST['CustType'])) {
-	// Show Customer Type drop down list
-	$result2=DB_query('SELECT typeid, typename FROM debtortype ',$db);
-	// Error if no customer types setup
-	if (DB_num_rows($result2)==0){
-		$DataError =1;
-		echo '<TR><TD COLSPAN=2>' . prnMsg(_('No Customer types defined'),'error') . '</TD></TR>';
-	} else {
-		// If OK show select box with option selected
-		echo '<SELECT NAME="CustType">';
-		while ($myrow = DB_fetch_array($result2)) {
-			if ($_POST['CustType']==$myrow['typename']){
-            	echo "<OPTION SELECTED VALUE='". $myrow['typename'] . "'>" . $myrow['typename'];
-            } else {
-				echo "<OPTION VALUE='". $myrow['typename'] . "'>" . $myrow['typename'];
-			}
-		} //end while loop
-		DB_data_seek($result2,0);
-		echo '</SELECT></TD></TR>';
-	}
+  // Show Customer Type drop down list
+  $result2=DB_query('SELECT typeid, typename FROM debtortype ',$db);
+  // Error if no customer types setup
+  if (DB_num_rows($result2)==0){
+      $DataError =1;
+      echo '<a href="CustomerTypes.php?" target="_parent">Setup Types</a>';
+      echo '<TR><TD COLSPAN=2>' . prnMsg(_('No Customer types defined'),'error') . '</TD></TR>';
+  } else {
+      // If OK show select box with option selected
+      echo '<SELECT NAME="CustType">';
+      while ($myrow = DB_fetch_array($result2)) {
+          if ($_POST['CustType']==$myrow['typename']){
+              echo "<OPTION SELECTED VALUE='". $myrow['typename'] . "'>" . $myrow['typename'];
+          } else {
+              echo "<OPTION VALUE='". $myrow['typename'] . "'>" . $myrow['typename'];
+          }
+      } //end while loop
+      DB_data_seek($result2,0);
+      echo '</SELECT></TD></TR>';
+  }
 } else {
-	// No option selected yet, so show Customer Type drop down list
-	$result2=DB_query('SELECT typeid, typename FROM debtortype ',$db);
-	// Error if no customer types setup
-	if (DB_num_rows($result2)==0){
-		$DataError =1;
-		echo '<TR><TD COLSPAN=2>' . prnMsg(_('No Customer types defined'),'error') . '</TD></TR>';
-	} else {
+  // No option selected yet, so show Customer Type drop down list
+  $result2=DB_query('SELECT typeid, typename FROM debtortype ',$db);
+  // Error if no customer types setup
+  if (DB_num_rows($result2)==0){
+      $DataError =1;
+      echo '<a href="CustomerTypes.php?" target="_parent">Setup Types</a>';
+      echo '<TR><TD COLSPAN=2>' . prnMsg(_('No Customer types defined'),'error') . '</TD></TR>';	} else {
 		// if OK show select box with available options to choose
 		echo '<SELECT NAME="CustType">';
 		while ($myrow = DB_fetch_array($result2)) {
