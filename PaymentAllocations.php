@@ -1,7 +1,6 @@
 <?php
 
-/* $Revision: 1.4 $ */
-
+/* $Revision: 1.5 $ */
 /*
 	This page is called from SupplierInquiry.php when the 'view payments' button is selected
 */
@@ -30,7 +29,11 @@ include('includes/SQL_CommonFunctions.inc');
 $SuppID = $_GET['SuppID'];
 $InvID = $_GET['InvID'];
 
-echo "<BR><CENTER><FONT SIZE=4 COLOR=BLUE>Payment Allocation for Supplier: '$SuppID' and Invoice: '$InvID'</FONT>";
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Payments') . '" ALT="">' . ' ' . _('Payment Allocation for Supplier') . ': ' . $SuppID . _(' and') . ' ' . _('Invoice') . ': ' . $InvID;
+
+echo '<DIV CLASS="page_help_text">' . _('This shows how the payment to the supplier was allocated') . '<a href="SupplierInquiry.php?&SupplierID=' . $SuppID . '"><BR> ' . _('Back to supplier inquiry') . '</a></DIV><BR>';
+
+//echo "<BR><CENTER><FONT SIZE=4 COLOR=BLUE>Payment Allocation for Supplier: '$SuppID' and Invoice: '$InvID'</FONT>";
 
 //	$_SESSION['SuppID'] = new SupplierID;
 //	$_SESSION['InvID'] = new InvoiceID;

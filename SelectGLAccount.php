@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 8;
 
@@ -16,7 +16,9 @@ If (isset($_POST['Select'])) {
 	$result = DB_query("SELECT accountname FROM chartmaster WHERE accountcode=" . $_POST['Select'],$db);
 	$myrow = DB_fetch_row($result);
 
-	echo '<p>' . _('Account Code') . ' <B>' . $_POST['Select'] . ' - ' . $myrow[0]  . ' </B>' . _('has been selected') . '. <br>' . _('Select one of the links below to operate using this Account') . '.';
+	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Search for General Ledger Accounts');
+
+	echo '<DIV class="page_help_text">' . _('Account Code') . ' <B>' . $_POST['Select'] . ' - ' . $myrow[0]  . ' </B>' . _('has been selected') . '. <br>' . _('Select one of the links below to operate using this Account') . '.</DIV><CENTER>';
 	$AccountID = $_POST['Select'];
 	$_POST['Select'] = NULL;
 
