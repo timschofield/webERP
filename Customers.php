@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 
 $PageSecurity = 3;
 
@@ -381,8 +381,8 @@ if (isset($_POST['Add'])){
 	$Add = $_GET['Add'];
 }
 
-
-echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</A><BR>';
+// This link is already on menu bar
+//echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</A><BR>';
 
 if (!isset($DebtorNo)) {
 

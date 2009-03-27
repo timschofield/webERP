@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -192,6 +192,7 @@ $tableheader = "<TR BGCOLOR =#800000>
 		<TH>" . _('More Info') . "</TH>
 		<TH>" . _('More Info') . "</TH>
 		<TH>" . _('More Info') . "</TH>
+		<TH>" . _('More Info') . "</TH>
 		<TH>" . _('More Info') . "</TH></TR>";
 
 echo $tableheader;
@@ -222,10 +223,12 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				<td ALIGN=RIGHT>%s</td>
 				<td ALIGN=RIGHT>%s</td>";
 	$credit_invoice_str = "<td><a href='%s/Credit_Invoice.php?InvoiceNumber=%s'>" . _('Credit ') ."<IMG SRC='%s/credit.gif' TITLE='" . _('Click to credit the invoice') . "'></a></td>";
-	$preview_invoice_str = "<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice'>" . _('Preview ') . "<IMG SRC='%s/preview.gif' TITLE='" . _('Click to preview the invoice') . "'></a></td>
-		<td><a target='_blank' href='%s/EmailCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice'>" . _('Email ') . "<IMG SRC='%s/email.gif' TITLE='" . _('Click to email the invoice') . "'></a></td>";
-	$preview_credit_str = "<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'>" . _('Preview') . " <IMG SRC='%s/preview.gif' TITLE='" . _('Click to preview the credit note') . "'></a></td>
-				<td><a target='_blank' href='%s/EmailCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'>" . _('Email') . " <IMG SRC='%s/email.gif' TITLE='" . _('Click to email the credit note') . "'></a></td>";
+$preview_invoice_str = "<td><a href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice'>" . _('HTML ') . "<IMG SRC='%s/preview.gif' TITLE='" . _('Click to preview the invoice') . "'></a></td>
+<td><a href='%s/PrintCustTransPortrait.php?FromTransNo=%s&InvOrCredit=Invoice&PrintPDF=True'>" . _('PDF ') . "<IMG SRC='%s/pdf.png' TITLE='" . _('Click for PDF') . "'></a></td>
+		<td><a href='%s/EmailCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice'>" . _('Email ') . "<IMG SRC='%s/email.gif' TITLE='" . _('Click to email the invoice') . "'></a></td>";
+	$preview_credit_str = "<td><a href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'>" . _('HTML ') . " <IMG SRC='%s/preview.gif' TITLE='" . _('Click to preview the credit note') . "'></a></td>
+<td><a href='" .$rootpath."/PrintCustTransPortrait.php?FromTransNo=%s&InvOrCredit=Credit&PrintPDF=True'>" . _('PDF ') . "<IMG SRC='" .$rootpath."/css/".$theme."/images/pdf.png' TITLE='" . _('Click for PDF') . "'></a></td>
+				<td><a href='%s/EmailCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'>" . _('Email') . " <IMG SRC='%s/email.gif' TITLE='" . _('Click to email the credit note') . "'></a></td>";
 
 	if (in_array(3,$_SESSION['AllowedPageSecurityTokens']) && $myrow['type']==10){ /*Show a link to allow an invoice to be credited */
 
@@ -233,7 +236,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 			printf($base_formatstr .
 				$credit_invoice_str .
 				$preview_invoice_str .
-				"<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Entries') . "<A></td>
+				"<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Entries ') . "<IMG SRC='" .$rootpath."/css/".$theme."/images/gl.png' TITLE='" . _('View the GL Entries') . "'></a></td>
 				</tr>",
 				$myrow['typename'],
 				$myrow['transno'],
@@ -248,6 +251,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$rootpath,
 				$myrow['transno'],
 				$rootpath.'/css/'.$theme.'/images',
+				$rootpath,
+                                $myrow['transno'],
+                                $rootpath.'/css/'.$theme.'/images',
 				$rootpath,
 				$myrow['transno'],
 				$rootpath.'/css/'.$theme.'/images',
@@ -302,6 +308,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 			$myrow['transno'],
 			$rootpath.'/css/'.$theme.'/images',
 			$rootpath,
+                        $myrow['transno'],
+                        $rootpath.'/css/'.$theme.'/images',
+			$rootpath,
 			$myrow['transno'],
 			$rootpath.'/css/'.$theme.'/images');
 
@@ -309,8 +318,8 @@ while ($myrow=DB_fetch_array($TransResult)) {
 		if ($_SESSION['CompanyRecord']['gllink_debtors']== 1 AND in_array(8,$_SESSION['AllowedPageSecurityTokens'])){
 			printf($base_formatstr .
 				$preview_credit_str .
-				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'>" . _('Allocation') . "<IMG SRC='%s/allocation.gif' TITLE='" . _('Click to allocate funds') . "'></a></td>
-				<td><A HREF='%s/GLTransInquiry.php?%sTypeID=%s&TransNo=%s'>" . _('View GL Entries') . '<A></td></tr>',
+				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'>" . _('Allocation') . "<IMG SRC='" .$rootpath."/css/".$theme."/images/allocation.png' TITLE='" . _('Click to allocate funds') . "'></a></td>
+				<td><A HREF='%s/GLTransInquiry.php?%sTypeID=%s&TransNo=%s'>" . _('View GL Entries') . '<A><IMG SRC="' .$rootpath.'/css/'.$theme.'/images/gl.png" TITLE="' . _('View the GL Entries') . '"></a></td></tr>',
 				$myrow['typename'],
 				$myrow['transno'],
 				ConvertSQLDate($myrow['trandate']),
@@ -324,12 +333,12 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$rootpath,
 				$myrow['transno'],
 				$rootpath.'/css/'.$theme.'/images',
+				$myrow['transno'],
 				$rootpath,
 				$myrow['transno'],
 				$rootpath.'/css/'.$theme.'/images',
 				$rootpath,
 				$myrow['id'],
-				$rootpath.'/css/'.$theme.'/images',
 				$rootpath,
 				SID,
 				$myrow['type'],
@@ -337,7 +346,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 		} else {
 			printf($base_formatstr .
 				$preview_credit_str .
-				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'>" . _('Allocation') . "<IMG SRC='%s/allocation.gif' TITLE='" . _('Click to allocate funds') . "'></a></td>
+				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'>" . _('Allocation') . "<IMG SRC='%s/allocation.png' TITLE='" . _('Click to allocate funds') . "'></a></td>
 				</tr>",
 				$myrow['typename'],
 				$myrow['transno'],
@@ -352,6 +361,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$rootpath,
 				$myrow['transno'],
 				$rootpath.'/css/'.$theme.'/images',
+				$rootpath,
+                                $myrow['transno'],
+                                $rootpath.'/css/'.$theme.'/images',
 				$rootpath,
 				$myrow['transno'],
 				$rootpath.'/css/'.$theme.'/images',
@@ -362,8 +374,8 @@ while ($myrow=DB_fetch_array($TransResult)) {
 	} elseif ($myrow['type']==12 AND $myrow['totalamount']<0) { /*its a receipt  which could have an allocation*/
 		if ($_SESSION['CompanyRecord']['gllink_debtors']== 1 AND in_array(8,$_SESSION['AllowedPageSecurityTokens'])){
 			printf($base_formatstr .
-				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'>" . _('Allocation') . "</a></td>
-				<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Entries') . "<A></td>
+				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'>" . _('Allocation') . "<IMG SRC='" .$rootpath."/css/".$theme."/images/allocation.png' TITLE='" . _('Click to allocate funds') . "'></a></td>
+				<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Entries') . "<IMG SRC='" .$rootpath."/css/".$theme."/images/gl.png' TITLE='" . _('View the GL Entries') . "'></a></td>
 				</tr>",
 				$myrow['typename'],
 				$myrow['transno'],
@@ -383,7 +395,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$myrow['transno']);
 		} else {
 			printf($base_formatstr .
-				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'>" . _('Allocation') . "</a></td>
+				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'>" . _('Allocation') . "<IMG SRC='" .$rootpath."/css/".$theme."/images/allocation.png' TITLE='" . _('Click to allocate funds') . "'></a></td>
 				</tr>",
 				$myrow['typename'],
 				$myrow['transno'],
