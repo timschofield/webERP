@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 
 $PageSecurity = 4;
@@ -746,8 +746,16 @@ if (count($_SESSION['PO']->LineItems)>0){
 
 		if ($POLine->Deleted==false) {
 		$LineTotal =	$POLine->Quantity * $POLine->Price;
-		$DisplayLineTotal = number_format($LineTotal,2);
+// Note decimal places should not fixed at 2, use POLine->DecimalPlaces instead
+//		$DisplayLineTotal = number_format($LineTotal,2);
+		$DisplayLineTotal = number_format($LineTotal,$POLine->DecimalPlaces);
+// Note if the price is greater than 1 use 2 decimal place, if the price is a fraction of 1, use 4 decimal places
+// This should help display where item-price is a fraction
+	if ($POLine->Price > 1) {
 		$DisplayPrice = number_format($POLine->Price,2);
+	} else {
+		$DisplayPrice = number_format($POLine->Price,4);
+	}		
 		$DisplayQuantity = number_format($POLine->Quantity,$POLine->DecimalPlaces);
 
 		if ($k==1){
@@ -763,7 +771,7 @@ if (count($_SESSION['PO']->LineItems)>0){
     }
 
     $DisplayTotal = number_format($_SESSION['PO']->total,2);
-    echo '<tr><td colspan=6 align=rifgt>' . _('TOTAL Excl Tax') . '</td><td align=right><b>' . $DisplayTotal . '</b></td></tr></table>';
+    echo '<tr><td colspan=6 align=right>' . _('TOTAL') . _(' excluding Tax') . '</td><td align=right><b>' . $DisplayTotal . '</b></td></tr></table>';
 
 	if (!isset($_POST['StockID']) and !isset($_GET['Edit'])) {
  	/*show a form for putting in a new line item with or without a stock entry */
