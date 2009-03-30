@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.42 $ */
+/* $Revision: 1.43 $ */
 
 $PageSecurity = 1;
 
@@ -506,20 +506,21 @@ $result=DB_query($sql,$db);
  // Loop the result set and add appendfile if the field is not 0 or none
 while ($row=DB_fetch_array($result)){
     if ($row['appendfile'] !='0' AND $row['appendfile'] !=='none') {
-	$pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf','companies/' . $_SESSION['DatabaseName'] . '/pdf_append/' . $row['appendfile'])); 
+		$pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf','companies/' . $_SESSION['DatabaseName'] . '/pdf_append/' . $row['appendfile'])); 
         $pdf->concat();
-	$pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','I');
+		$pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','I');
         exit;
 	 // If EMAIL is selected, send the invoice via email, this is not appending pages yet though        
     } else if (isset($_GET['Email'])) {
+
         $pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf'));
         $pdf->concat();
-	$pdfcode = $pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','D');    
+		$pdfcode = $pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf');    
     } else {
 	 // If the appendfile field is empty and EMAIL is not selected, just print the invoice without any appended pages       
-	$pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf'));
+		$pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf'));
         $pdf->concat();
-	$pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','D');
+		$pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','D');
         exit;
     }
 }

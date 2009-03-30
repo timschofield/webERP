@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 1;
 
@@ -526,7 +526,7 @@ while ($row=DB_fetch_array($result)){
     } else if (isset($_GET['Email'])) {
         $pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf'));
         $pdf->concat();
-        $pdfcode = $pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','I');
+        $pdfcode = $pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf');
     } else {
         // If the appendfile field is empty and EMAIL is not selected, just print the invoice without any appended pages
         $pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf'));
