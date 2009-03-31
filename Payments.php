@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 $PageSecurity = 5;
 
@@ -33,7 +33,7 @@ if (!isset($_SESSION['PaymentDetail'])){
 //echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><BR>';
 
 echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Payment Entry') . '" ALT="">' . ' ' . _('Payment Entry') . '</P>';
-echo '<DIV CLASS="page_help_text">' . _('Use this screen to enter payments FROM your bank account.  Note: To enter a payment FROM a supplier, first select the Supplier, click Enter a Payment to, or Receipt from the Supplier, and use a negative Payment amount on this form.') . '</DIV><BR><CENTER>';
+echo '<DIV CLASS="page_help_text">' . _('Use this screen to enter payments FROM your bank account.  <BR>Note: To enter a payment FROM a supplier, first select the Supplier, click Enter a Payment to, or Receipt from the Supplier, and use a negative Payment amount on this form.') . '</DIV><BR><CENTER>';
 
 if (isset($_GET['SupplierID'])){
 	/*The page was called with a supplierID check it is valid and default the inputs for Supplier Name and currency of payment */
@@ -535,7 +535,7 @@ if ($Transtype==22) {
 		$SQL= $SQL . "VALUES (" . $TransNo . ",
 				" . $Transtype . ",
 				" . $_SESSION['PaymentDetail']->Account . ",
-				'" . $PaymentItem->cheque . "',
+				'" . $_SESSION['PaymentDetail']->Narrative . "',
 				" . $_SESSION['PaymentDetail']->ExRate . " ,
 				" . $_SESSION['PaymentDetail']->FunctionalExRate . ",
 				'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
@@ -685,7 +685,8 @@ if ($_SESSION['PaymentDetail']->BankAccountName!=""){
 
 echo ' ' . _('on') . ' ' . $_SESSION['PaymentDetail']->DatePaid . '</FONT>';
 
-echo '<br><font color=blue>' . _('Note: To enter a payment FROM ') . $_SESSION['PaymentDetail']->SuppName . _(' use a negative Payment amount.');
+// Note this is duplicated
+//echo '<DIV CLASS="page_help_text">' . _('Note: To enter a payment FROM ') . $_SESSION['PaymentDetail']->SuppName . _(' use a negative Payment amount.');
 
 echo '<P><table>';
 
