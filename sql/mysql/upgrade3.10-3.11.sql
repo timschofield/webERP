@@ -35,3 +35,7 @@ ALTER TABLE `geocode_param` add PRIMARY KEY (`geocodeid`);
 ALTER TABLE `geocode_param` CHANGE `geocodeid` `geocodeid` TINYINT( 4 ) NOT NULL AUTO_INCREMENT;
 
 INSERT INTO `factorcompanies` ( `id` , `coyname` ) VALUES (null, "None");
+
+ALTER TABLE `custcontacts` CHANGE `role` `role` VARCHAR( 40 ) NOT NULL;
+ALTER TABLE `custcontacts` CHANGE `phoneno` `phoneno` VARCHAR( 20 ) NOT NULL;
+ALTER TABLE `custcontacts` CHANGE `notes` `notes` VARCHAR( 255 ) NOT NULL;
