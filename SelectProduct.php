@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.41 $ */
+/* $Revision: 1.42 $ */
 
 $PageSecurity = 2;
 $PricesSecurity = 9;
@@ -575,11 +575,12 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 . ':</th>';
                switch ($PropertyRow['controltype']) {
                        case 0; //textbox
-                               echo '<td align=right width=60>' . $PropertyValue;
+                               echo '<td align=right width=60><input type="text" name="PropValue' . 
+                               	$PropertyCounter . '" value="'. $PropertyValue.'">';
                                break;
                        case 1; //select box
                                $OptionValues = explode(',',$PropertyRow['defaultvalue']);
-                                echo '<td align=left width=60><select name="PropValue' .$PropertyCounter . '">';                               echo '<select name="PropValue' . $PropertyCounter . '">';
+                                echo '<td align=left width=60><select name="PropValue' .$PropertyCounter . '">';
                                foreach ($OptionValues as $PropertyOptionValue) {
                                        if ($PropertyOptionValue == $PropertyValue) {
                                                echo '<option selected value="' . $PropertyOptionValue . '">' .
