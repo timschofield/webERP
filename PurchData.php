@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 4;
 
@@ -190,7 +190,8 @@ if (!isset($_GET['Edit'])){
 					purchdata.preferred
 			FROM purchdata INNER JOIN suppliers
 				ON purchdata.supplierno=suppliers.supplierid
-			WHERE purchdata.stockid = '" . $StockID . "'";
+			WHERE purchdata.stockid = '" . $StockID . "' 
+			ORDER BY purchdata.effectivefrom DESC";
 
    $ErrMsg =  _('The supplier purchasing details for the selected part could not be retrieved because');
    $PurchDataResult = DB_query($sql, $db,$ErrMsg);
