@@ -1112,7 +1112,7 @@ CREATE TABLE `purchdata` (
   `leadtime` smallint(6) NOT NULL default '1',
   `preferred` tinyint(4) NOT NULL default '0',
   `effectivefrom` date NOT NULL,
-  PRIMARY KEY  (`supplierno`,`stockid`),
+  PRIMARY KEY (`supplierno`,`stockid`, `effectivefrom`),
   KEY `StockID` (`stockid`),
   KEY `SupplierNo` (`supplierno`),
   KEY `Preferred` (`preferred`),
