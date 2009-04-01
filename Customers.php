@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.36 $ */
+/* $Revision: 1.37 $ */
 
 $PageSecurity = 3;
 
@@ -340,12 +340,14 @@ if(isset($reset)){
 	unset($_POST['DiscountCode']);
 	unset($_POST['PymtDiscount']);
 	unset($_POST['CreditLimit']);
-	unset($_POST['SalesType']);
+// Leave Sales Type set so as to faciltate fast customer setup
+//	unset($_POST['SalesType']);
 	unset($_POST['DebtorNo']);
 	unset($_POST['InvAddrBranch']);
 	unset($_POST['TaxRef']);
 	unset($_POST['CustomerPOLine']);
-	unset($_POST['typeid']);
+// Leave Type ID set so as to faciltate fast customer setup
+//	unset($_POST['typeid']);
 }
 
 /*DebtorNo could be set from a post or a get when passed as a parameter to this page */

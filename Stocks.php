@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.67 $ */
+/* $Revision: 1.68 $ */
 
 $PageSecurity = 11;
 
@@ -419,7 +419,8 @@ if (isset($_POST['submit'])) {
 							href='SelectProduct.php?StockID=$StockID'>$StockID</a>" . ' '. _('has been added to the database'),'success');						unset($_POST['LongDescription']);
 						unset($_POST['Description']);
 						unset($_POST['EOQ']);
-						unset($_POST['CategoryID']);
+// Leave Category ID set for ease of batch entry
+//						unset($_POST['CategoryID']);
 						unset($_POST['Units']);
 						unset($_POST['MBFlag']);
 						unset($_POST['Discontinued']);
