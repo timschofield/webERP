@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 1;
 
@@ -93,14 +93,10 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,  
 				stockmaster.units, 
 				SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qdem 
-			FROM stockmaster, 
-				locstock, 
-				salesorderdetails,
-				purchorderdetails 
-			WHERE stockmaster.stockid=locstock.stockid 
-			AND stockmaster.stockid=purchorderdetails.itemcode 
-			AND stockmaster.stockid = salesorderdetails.stkcode 
-			AND salesorderdetails.completed =0 
+			FROM (((stockmaster LEFT JOIN salesorderdetails on stockmaster.stockid = salesorderdetails.stkcode) 
+				 LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid)
+				 LEFT JOIN purchorderdetails on stockmaster.stockid = purchorderdetails.itemcode) 
+			WHERE salesorderdetails.completed =0 
 			AND stockmaster.description " . LIKE . "'$SearchString' 
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "' 
 			GROUP BY stockmaster.stockid, 
@@ -116,14 +112,10 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,  
 				SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qdem, 
 				stockmaster.units 
-			FROM stockmaster, 
-				locstock, 
-				salesorderdetails,
-				purchorderdetails 
-			WHERE stockmaster.stockid=locstock.stockid 
-			AND stockmaster.stockid=purchorderdetails.itemcode 
-			AND stockmaster.stockid = salesorderdetails.stkcode 
-			AND salesorderdetails.completed =0 
+			FROM (((stockmaster LEFT JOIN salesorderdetails on stockmaster.stockid = salesorderdetails.stkcode) 
+				 LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid)
+				 LEFT JOIN purchorderdetails on stockmaster.stockid = purchorderdetails.itemcode) 
+			WHERE salesorderdetails.completed =0 
 			AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%' 
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "' 
 			GROUP BY stockmaster.stockid, 
@@ -139,14 +131,10 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,  
 				SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qdem, 
 				stockmaster.units 
-			FROM stockmaster, 
-				locstock, 
-				salesorderdetails,
-				purchorderdetails 
-			WHERE stockmaster.stockid=locstock.stockid 
-			AND stockmaster.stockid=purchorderdetails.itemcode 
-			AND stockmaster.stockid = salesorderdetails.stkcode 
-			AND salesorderdetails.completed =0 
+			FROM (((stockmaster LEFT JOIN salesorderdetails on stockmaster.stockid = salesorderdetails.stkcode) 
+				 LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid)
+				 LEFT JOIN purchorderdetails on stockmaster.stockid = purchorderdetails.itemcode) 
+			WHERE salesorderdetails.completed =0 
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "' 
 			GROUP BY stockmaster.stockid, 
 				stockmaster.description, 
