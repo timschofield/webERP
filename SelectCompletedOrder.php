@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 1;
 
@@ -96,7 +96,7 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 			FROM (((stockmaster LEFT JOIN salesorderdetails on stockmaster.stockid = salesorderdetails.stkcode) 
 				 LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid)
 				 LEFT JOIN purchorderdetails on stockmaster.stockid = purchorderdetails.itemcode) 
-			WHERE salesorderdetails.completed =0 
+			WHERE salesorderdetails.completed =1 
 			AND stockmaster.description " . LIKE . "'$SearchString' 
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "' 
 			GROUP BY stockmaster.stockid, 
@@ -115,7 +115,7 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 			FROM (((stockmaster LEFT JOIN salesorderdetails on stockmaster.stockid = salesorderdetails.stkcode) 
 				 LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid)
 				 LEFT JOIN purchorderdetails on stockmaster.stockid = purchorderdetails.itemcode) 
-			WHERE salesorderdetails.completed =0 
+			WHERE salesorderdetails.completed =1 
 			AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%' 
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "' 
 			GROUP BY stockmaster.stockid, 
@@ -134,7 +134,7 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 			FROM (((stockmaster LEFT JOIN salesorderdetails on stockmaster.stockid = salesorderdetails.stkcode) 
 				 LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid)
 				 LEFT JOIN purchorderdetails on stockmaster.stockid = purchorderdetails.itemcode) 
-			WHERE salesorderdetails.completed =0 
+			WHERE salesorderdetails.completed =1 
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "' 
 			GROUP BY stockmaster.stockid, 
 				stockmaster.description, 
