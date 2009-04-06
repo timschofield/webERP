@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.68 $ */
+/* $Revision: 1.69 $ */
 
 $PageSecurity = 11;
 
@@ -28,15 +28,6 @@ if (isset($StockID)) {
 }
 
 ?>
-
-<script LANGUAGE="JavaScript">
-	function ReloadForm(form)
-	{
-		document.ItemForm.UpdateCategories.click();
-		//var val=ItemForm.StockID.value;
-		//self.location='Stocks.php?&StockID=' + ItemForm.StockID.value;
-	}
-</script>
 
 <?php
 echo '<a href="' . $rootpath . '/SelectProduct.php?' . SID . '">' . _('Back to Items') . '</A><BR>' . "\n";
@@ -684,8 +675,7 @@ echo '<TR><TD>' . _('PDF attachment (.pdf)') . ':' . "\n</TD><TD>" . select_file
 echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="ItemPicture" name="ItemPicture"></td></tr>';
 // EOR Add Image upload for New Item  - by Ori
 
- echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID" onChange="ReloadForm(this.form)">';
-// echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID"">';
+ echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID" onChange="ReloadForm(ItemForm.UpdateCategories)">';
 
 $sql = 'SELECT categoryid, categorydescription FROM stockcategory';
 $ErrMsg = _('The stock categories could not be retrieved because');

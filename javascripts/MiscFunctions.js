@@ -2,7 +2,10 @@ function defaultControl (control) {
     control.select();
 	control.focus();	
 }
-
+function ReloadForm(formbutton)
+{
+	formbutton.click();
+}
 function setTextAlign(control, alignment) {
 	control.style.textAlign=alignment;
 }
