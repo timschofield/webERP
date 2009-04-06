@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.78 $ */
+/* $Revision: 1.79 $ */
 
 
 $PageSecurity = 1;
@@ -680,7 +680,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/BOMExtendedQuantity.php?' . SID . "'><LI>" . _('List Components Required') . '</LI></A>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/BOMExtendedQty.php?' . SID . "'><LI>" . _('List Components Required') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
