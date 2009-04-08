@@ -57,7 +57,9 @@ input{
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 }
-
+input.number{
+	text-align: right;
+}
 input:hover{
 	background: url(images/inputh.png) #eee;
 	color:#000;
@@ -91,7 +93,9 @@ td {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 }
-
+td.number {
+	text-align: right;
+}
 div.error {
 	background-color:red;
 	color: white;

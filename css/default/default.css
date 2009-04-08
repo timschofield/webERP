@@ -59,7 +59,9 @@ td {
 	font-size: 12px;
 
 }
-
+td.number {
+	text-align: right;
+}
 .EvenTableRows {
 	background-color: #CCCCCC;
 }
@@ -118,7 +120,9 @@ input {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 }
-
+input.number{
+	text-align: right;
+}
 select {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;

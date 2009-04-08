@@ -59,12 +59,16 @@ td {
 	font-family: Tahoma, Verdana, Arial, Helvetica;
 	font-size: 12px;
 }
-
+td.number {
+	text-align: right;
+}
 input {
 	font-family: Tahoma, Verdana, Arial, Helvetica;
 	font-size: 12px;
 }
-
+input.number{
+	text-align: right;
+}
 select {
 	font-family: Tahoma, Verdana, Arial, Helvetica;
 	font-size: 12px;
