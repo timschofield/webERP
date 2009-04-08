@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 11;
 include('includes/session.inc');
@@ -13,6 +13,8 @@ if (isset($Errors)) {
 	
 $Errors = array();	
 $i=1;
+
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 
 if (isset($_POST['submit'])) {
 
@@ -78,6 +80,60 @@ if (isset($_POST['submit'])) {
 	prnMsg( _('The discount matrix record has been deleted'),'success');
 }
 
+echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+
+
+echo '<table>';
+
+$sql = 'SELECT typeabbrev,
+		sales_type
+	FROM salestypes';
+
+$result = DB_query($sql, $db);
+
+echo '<tr><td>' . _('Customer Price List') . ' (' . _('Sales Type') . '):</td><td>';
+
+echo "<select tabindex=1 name='SalesType'>";
+
+while ($myrow = DB_fetch_array($result)){
+	if (isset($_POST['SalesType']) and $myrow['typeabbrev']==$_POST['SalesType']){
+		echo "<option selected value='" . $myrow['typeabbrev'] . "'>" . $myrow['sales_type'];
+	} else {
+		echo "<option value='" . $myrow['typeabbrev'] . "'>" . $myrow['sales_type'];
+	}
+}
+
+echo '</select>';
+
+
+$sql = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory <>''";
+$result = DB_query($sql, $db);
+if (DB_num_rows($result) > 0) {
+	echo '<tr><td>'. _('Discount Category Code') .': </td>';
+	echo '<td><select name="DiscountCategory">';
+
+	while ($myrow = DB_fetch_array($result)){
+		if ($myrow['discountcategory']==$_POST['DiscCat']){
+			echo "<option selected value='" . $myrow['discountcategory'] . "'>" . $myrow['discountcategory'];
+		} else {
+			echo "<option value='" . $myrow['discountcategory'] . "'>" . $myrow['discountcategory'];
+		}
+		echo '</option>';
+	}
+	echo '</select></td>';
+}
+
+echo '<tr><td>' . _('Quantity Break') . ":</td><td><input class='number' tabindex=3 "
+	 . (in_array('QuantityBreak',$Errors) ? "class='inputerror'" : "")
+	 ." type='text' name='QuantityBreak' size=10 maxlength=10 onKeyPress='return restrictToNumbers(this, event)'></td></tr>";
+
+echo '<tr><td>' . _('Discount Rate') . " (%):</td><td><input class='number' tabindex=4 "
+	. (in_array('DiscountRate',$Errors) ? "class='inputerror'" : "") .
+		"type='text' name='DiscountRate' size=4 maxlength=4 onKeyPress='return restrictToNumbers(this, event)'></td></tr>";
+echo '</table><br>';
+
+echo "<div class='centre'><input tabindex=5 type='submit' name='submit' value='" . _('Enter Information') . "'></div><hr>";
+
 $sql = 'SELECT sales_type,
 		salestype,
 		discountcategory,
@@ -91,7 +147,7 @@ $sql = 'SELECT sales_type,
 
 $result = DB_query($sql,$db);
 
-echo '<CENTER><table>';
+echo '<table>';
 echo "<tr><th>" . _('Sales Type') . "</th>
 	<th>" . _('Discount Category') . "</th>
 	<th>" . _('Quantity Break') . "</th>
@@ -111,8 +167,8 @@ while ($myrow = DB_fetch_array($result)) {
 
 	printf("<td>%s</td>
 		<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
+		<td class='number'>%s</td>
+		<td class='number'>%s</td>
 		<td><a href='%s'>" . _('Delete') . '</td>
 		</tr>',
 		$myrow['sales_type'],
@@ -123,50 +179,9 @@ while ($myrow = DB_fetch_array($result)) {
 
 }
 
-echo '</TABLE><HR>';
+echo '</table>';
 
-echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-
-
-echo '<TABLE>';
-
-$sql = 'SELECT typeabbrev,
-		sales_type
-	FROM salestypes';
-
-$result = DB_query($sql, $db);
-
-echo '<TR><TD>' . _('Customer Price List') . ' (' . _('Sales Type') . '):</TD><TD>';
-
-echo "<SELECT TABINDEX=1 NAME='SalesType'>";
-
-while ($myrow = DB_fetch_array($result)){
-	if (isset($_POST['SalesType']) and $myrow['typeabbrev']==$_POST['SalesType']){
-		echo "<OPTION SELECTED VALUE='" . $myrow['typeabbrev'] . "'>" . $myrow['sales_type'];
-	} else {
-		echo "<OPTION VALUE='" . $myrow['typeabbrev'] . "'>" . $myrow['sales_type'];
-	}
-}
-
-echo '</SELECT>';
-
-
-echo '<TR><TD>' . _('Discount Category Code') . ':</TD><TD>';
-if (!isset($_POST['DiscCat'])) {$_POST['DiscCat']='';}
-echo "<INPUT TABINDEX=2 TYPE='Text' NAME='DiscountCategory' MAXLENGTH=2 SIZE=2 VALUE='" . $_POST['DiscCat'] . "'></TD></TR>";
-
-echo '<TR><TD>' . _('Quantity Break') . ":</TD><TD><input tabindex=3 "
-	 . (in_array('QuantityBreak',$Errors) ? "class='inputerror'" : "")
-	 ." type='Text' name='QuantityBreak' SIZE=10 MAXLENGTH=10></TD></TR>";
-
-echo '<TR><TD>' . _('Discount Rate') . " (%):</TD><TD><input tabindex=4 "
-	. (in_array('DiscountRate',$Errors) ? "class='inputerror'" : "") .
-		"type='Text' name='DiscountRate' SIZE=4 MAXLENGTH=4></TD></TR>";
-echo '</TABLE>';
-
-echo "<CENTER><input tabindex=5 type='Submit' name='submit' value='" . _('Enter Information') . "'></CENTER>";
-
-echo '</FORM>';
+echo '</form>';
 
 include('includes/footer.inc');
 ?>
