@@ -9,12 +9,12 @@ prnMsg(_('This script will perform any modifications to the database since v 3.1
 
 if (!isset($_POST['DoUpgrade'])) {
     echo "<br><form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
-    echo '<center><input type=submit name=DoUpgrade value="' . _('Perform Upgrade') . '"></center>';
+    echo '<div class="centre"><input type=submit name=DoUpgrade value="' . _('Perform Upgrade') . '"></div>';
     echo '</form';
 }
 
 if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
-    echo '<center><table><tr><td>' . _('Inserting default Debtor type') . '</td>';
+    echo '<table><tr><td>' . _('Inserting default Debtor type') . '</td>';
     $sql='SELECT count(typeid)
             FROM debtortype
             WHERE typeid=1';
@@ -48,7 +48,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
     } else {
         echo '<td>' . _('Success') . '</td></tr>';
     }
-    echo '</table></center>';
+    echo '</table>';
 }
 
 include('includes/footer.inc');
