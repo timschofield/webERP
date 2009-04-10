@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.63 $ */
+/* $Revision: 1.64 $ */
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -124,8 +124,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 			}
 
 			$sql = "UPDATE www_users SET lastvisitdate='". date("Y-m-d H:i:s") ."'
-					WHERE www_users.userid='" . DB_escape_string($_POST['UserNameEntryField']) . "'
-					AND www_users.password='" . CryptPass(DB_escape_string($_POST['Password'])) ."'";
+					WHERE www_users.userid='" . DB_escape_string($_POST['UserNameEntryField']) . "'";
 			$Auth_Result = DB_query($sql, $db);
 
 			/*get the security tokens that the user has access to */
