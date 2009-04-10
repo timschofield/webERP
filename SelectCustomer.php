@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.51 $ */
+/* $Revision: 1.52 $ */
 
 $PageSecurity = 2;
 
@@ -9,6 +9,9 @@ include('includes/header.inc');
 include('includes/Wiki.php');
 include('includes/SQL_CommonFunctions.inc');
 
+if (isset($_GET['Select'])) {
+	$_SESSION['CustomerID']=$_GET['Select'];
+}
 if (!isset($_SESSION['CustomerID'])){ //initialise if not already done
 	$_SESSION['CustomerID']="";
 }
