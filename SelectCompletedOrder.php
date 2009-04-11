@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 1;
 
@@ -10,10 +10,17 @@ $title = _('Search All Sales Orders');
 
 include('includes/header.inc');
 
-echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Search Sales Orders') . '</P><CENTER>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Search Sales Orders') . '</p>';
 
+echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID ."' method=post>";
 
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID ."' METHOD=POST>";
+if (isset($_POST['completed'])) {
+	$completed='=1';
+	$ShowChecked='checked="checked"';
+} else {
+	$completed='>=0';
+	$ShowChecked='';
+}
 
 if (isset($_GET['SelectedStockItem'])){
 	$SelectedStockItem = $_GET['SelectedStockItem'];
@@ -48,21 +55,21 @@ if (isset($CustomerRef) and $CustomerRef==''){
 if (isset($SelectedCustomer) and $SelectedCustomer==''){
 	unset($SelectedCustomer);
 }
-If (isset($_POST['ResetPart'])) {
+if (isset($_POST['ResetPart'])) {
 		unset($SelectedStockItem);
 }
 
-If (isset($OrderNumber)) {
-	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" TITLE="' . _('Sales Order') . '" ALT="">' . ' ' . _('Order Number') . ' - ' . $OrderNumber . '</P>';
+if (isset($OrderNumber)) {
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Sales Order') . '" alt="">' . ' ' . _('Order Number') . ' - ' . $OrderNumber . '</p>';
 } elseif (isset($CustomerRef)) {
 	echo _('Customer Ref') . ' - ' . $CustomerRef;
 } else {
-	If (isset($SelectedCustomer)) {
+	if (isset($SelectedCustomer)) {
 		echo _('For customer') . ': ' . $SelectedCustomer .' ' . _('and') . ' ';
 		echo "<input type=hidden name='SelectedCustomer' value='$SelectedCustomer'>";
 	}
 
-	If (isset($SelectedStockItem)) {
+	if (isset($SelectedStockItem)) {
 
 		echo _('for the part') . ': ' . $SelectedStockItem . ' ' . _('and') . ' ' ."<input type=hidden name='SelectedStockItem' value='$SelectedStockItem'>";
 
@@ -72,10 +79,10 @@ If (isset($OrderNumber)) {
 
 if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 
-	If ($_POST['Keywords']!='' AND $_POST['StockCode']!='') {
+	if ($_POST['Keywords']!='' AND $_POST['StockCode']!='') {
 		echo _('Stock description keywords have been used in preference to the Stock code extract entered');
 	}
-	If ($_POST['Keywords']!='') {
+	if ($_POST['Keywords']!='') {
 		//insert wildcard characters in spaces
 
 		$i=0;
@@ -86,8 +93,9 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 			$i=strpos($_POST['Keywords'],' ',$i) +1;
 		}
 		$SearchString = $SearchString. substr($_POST['Keywords'],$i).'%';
-
-		$SQL = "SELECT stockmaster.stockid, 
+		
+		if (isset($_POST['completed'])) {
+			$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description, 
 				SUM(locstock.quantity) AS qoh,  
 				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,  
@@ -103,10 +111,28 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 				stockmaster.description, 
 				stockmaster.units 
 			ORDER BY stockmaster.stockid";
+		} else {
+			$SQL = "SELECT stockmaster.stockid, 
+				stockmaster.description, 
+				SUM(locstock.quantity) AS qoh,  
+				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,  
+				stockmaster.units, 
+				SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qdem 
+			FROM (((stockmaster LEFT JOIN salesorderdetails on stockmaster.stockid = salesorderdetails.stkcode) 
+				 LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid)
+				 LEFT JOIN purchorderdetails on stockmaster.stockid = purchorderdetails.itemcode) 
+			WHERE stockmaster.description " . LIKE . "'$SearchString' 
+			AND stockmaster.categoryid='" . $_POST['StockCat'] . "' 
+			GROUP BY stockmaster.stockid, 
+				stockmaster.description, 
+				stockmaster.units 
+			ORDER BY stockmaster.stockid";
+		}
 
 	} elseif ($_POST['StockCode']!=''){
 
-		$SQL = "SELECT stockmaster.stockid, 
+		if (isset($_POST['completed'])) {
+			$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description, 
 				SUM(locstock.quantity) AS qoh, 
 				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,  
@@ -122,10 +148,8 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 				stockmaster.description, 
 				stockmaster.units 
 			ORDER BY stockmaster.stockid";
-
-	} elseif ($_POST['StockCode']=='' AND $_POST['Keywords']=='' AND $_POST['StockCat']!='') {
-		
-		$SQL = "SELECT stockmaster.stockid, 
+		} else {
+			$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description, 
 				SUM(locstock.quantity) AS qoh, 
 				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,  
@@ -134,12 +158,48 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 			FROM (((stockmaster LEFT JOIN salesorderdetails on stockmaster.stockid = salesorderdetails.stkcode) 
 				 LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid)
 				 LEFT JOIN purchorderdetails on stockmaster.stockid = purchorderdetails.itemcode) 
-			WHERE salesorderdetails.completed =1 
+			WHERE stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%' 
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "' 
 			GROUP BY stockmaster.stockid, 
 				stockmaster.description, 
 				stockmaster.units 
 			ORDER BY stockmaster.stockid";
+		}
+
+	} elseif ($_POST['StockCode']=='' AND $_POST['Keywords']=='' AND $_POST['StockCat']!='') {
+		
+		if (isset($_POST['completed'])) {
+			$SQL = "SELECT stockmaster.stockid, 
+				stockmaster.description, 
+				SUM(locstock.quantity) AS qoh, 
+				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,  
+				SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qdem, 
+				stockmaster.units 
+			FROM (((stockmaster LEFT JOIN salesorderdetails on stockmaster.stockid = salesorderdetails.stkcode) 
+				 LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid)
+				 LEFT JOIN purchorderdetails on stockmaster.stockid = purchorderdetails.itemcode) 
+			WHERE salesorderdetails.completed=1 
+			AND stockmaster.categoryid='" . $_POST['StockCat'] . "' 
+			GROUP BY stockmaster.stockid, 
+				stockmaster.description, 
+				stockmaster.units 
+			ORDER BY stockmaster.stockid";
+		} else {
+			$SQL = "SELECT stockmaster.stockid, 
+				stockmaster.description, 
+				SUM(locstock.quantity) AS qoh, 
+				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,  
+				SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qdem, 
+				stockmaster.units 
+			FROM (((stockmaster LEFT JOIN salesorderdetails on stockmaster.stockid = salesorderdetails.stkcode) 
+				 LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid)
+				 LEFT JOIN purchorderdetails on stockmaster.stockid = purchorderdetails.itemcode) 
+			WHERE stockmaster.categoryid='" . $_POST['StockCat'] . "' 
+			GROUP BY stockmaster.stockid, 
+				stockmaster.description, 
+				stockmaster.units 
+			ORDER BY stockmaster.stockid";
+		}
 
 	}
 
@@ -156,7 +216,7 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 		  	$SelectedStockItem = $myrow[0];
 			$_POST['SearchOrders']='True';
 		  	unset($StockItemsResult);
-		  	echo '<BR>' . _('For the part') . ': ' . $SelectedStockItem . ' ' . _('and') . " <input type=hidden name='SelectedStockItem' value='$SelectedStockItem'>";
+		  	echo '<br>' . _('For the part') . ': ' . $SelectedStockItem . ' ' . _('and') . " <input type=hidden name='SelectedStockItem' value='$SelectedStockItem'>";
 		}
 	}
 } else if (isset($_POST['SearchOrders']) AND Is_Date($_POST['OrdersAfterDate'])==1) {
@@ -180,6 +240,7 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 				AND debtorsmaster.debtorno = custbranch.debtorno 
 				AND salesorders.orderno=". $OrderNumber ." 
 				AND salesorders.quotation=0 
+				AND salesorderdetails.completed".$completed." 
 				GROUP BY salesorders.orderno,
 					debtorsmaster.name, 
 					custbranch.brname, 
@@ -206,6 +267,7 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 				AND debtorsmaster.debtorno = custbranch.debtorno 
 				AND salesorders.customerref like '%". $CustomerRef."%'
 				AND salesorders.quotation=0 
+				AND salesorderdetails.completed".$completed." 
 				GROUP BY salesorders.orderno,
 					debtorsmaster.name, 
 					custbranch.brname, 
@@ -240,6 +302,7 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 					AND salesorders.debtorno='" . $SelectedCustomer ."' 
 					AND salesorders.orddate >= '" . $DateAfterCriteria ."' 
 					AND salesorders.quotation=0 
+					AND salesorderdetails.completed".$completed." 
 					GROUP BY salesorders.orderno, 
 						debtorsmaster.name, 
 						custbranch.brname, 
@@ -267,6 +330,7 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 					AND salesorders.debtorno='" . $SelectedCustomer . "' 
 					AND salesorders.orddate >= '" . $DateAfterCriteria . "' 
 					AND salesorders.quotation=0 
+					AND salesorderdetails.completed".$completed." 
 					GROUP BY salesorders.orderno, 
 						debtorsmaster.name, 
 						custbranch.brname, 
@@ -296,6 +360,7 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 					AND salesorderdetails.stkcode='". $SelectedStockItem ."'  
 					AND salesorders.orddate >= '" . $DateAfterCriteria . "' 
 					AND salesorders.quotation=0 
+					AND salesorderdetails.completed".$completed." 
 					GROUP BY salesorders.orderno, 
 						debtorsmaster.name, 
 						custbranch.brname, 
@@ -322,6 +387,7 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 					AND debtorsmaster.debtorno = custbranch.debtorno 
 					AND salesorders.orddate >= '$DateAfterCriteria' 
 					AND salesorders.quotation=0 
+					AND salesorderdetails.completed".$completed." 
 					GROUP BY salesorders.orderno, 
 						debtorsmaster.name, 
 						custbranch.brname, 
@@ -331,15 +397,14 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 						salesorders.deliverto
 					ORDER BY salesorders.orderno";
 			}
-
 		} //end selected customer
 	} //end not order number selected
 
 	$SalesOrdersResult = DB_query($SQL,$db);
 
 	if (DB_error_no($db) !=0) {
-		echo '<BR>' . _('No orders were returned by the SQL because') . ' ' . DB_error_msg($db);
-		echo "<BR>$SQL";
+		echo '<br>' . _('No orders were returned by the SQL because') . ' ' . DB_error_msg($db);
+		echo "<br>$SQL";
 	}
 
 }//end of which button clicked options
@@ -347,61 +412,62 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 if (!isset($_POST['OrdersAfterDate']) OR $_POST['OrdersAfterDate'] == '' OR ! Is_Date($_POST['OrdersAfterDate'])){
 	$_POST['OrdersAfterDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
 }
-echo "<TABLE>";
+echo "<table>";
 if (!isset($OrderNumber) or $OrderNumber==''){
-	echo '<TR><TD>' . _('Order Number') . ':</TD><TD>' . "<INPUT type=text name='OrderNumber' MAXLENGTH =8 SIZE=9></TD><TD rowspan=2>" . _('for all orders placed after') .
-			": </TD><TD rowspan=2><INPUT type=text name='OrdersAfterDate' MAXLENGTH =10 SIZE=11 value=" . $_POST['OrdersAfterDate'] . "></td><td rowspan=2>" .
-			"<INPUT TYPE=SUBMIT NAME='SearchOrders' VALUE='" . _('Search Orders') . "'></TD></TR>";
-	echo '<TR><TD>' . _('Customer Ref') . ':</TD><TD>' . "<INPUT type=text name='CustomerRef' MAXLENGTH =8 SIZE=9></TD></TR>";
+	echo '<tr><td>' . _('Order Number') . ':</td><td>' . "<input type='text' name='OrderNumber' maxlength =8 size=9></td><td>" . _('for all orders placed after') .
+			": </td><td><input type='text' name='OrdersAfterDate' maxlength =10 size=11 value=" . $_POST['OrdersAfterDate'] . "></td><td>" .
+			"<input type='submit' name='SearchOrders' value='" . _('Search Orders') . "'></td></tr>";
+	echo '<tr><td>' . _('Customer Ref') . ':</td><td>' . "<input type='text' name='CustomerRef' maxlength =8 size=9></td>
+			<td></td><td colspan=2><input type='checkbox' ".$ShowChecked." name='completed' />".('Show Completed orders only') . "</td></tr>";
 }
-echo '</TABLE>';
+echo '</table>';
 
 if (!isset($SelectedStockItem)) {
 	$SQL='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription';
 	$result1 = DB_query($SQL,$db);
 
-   echo '<HR>';
-   echo '<FONT SIZE=1>' . _('To search for sales orders for a specific part use the part selection facilities below') . '</FONT>';
-   echo '<INPUT TYPE=SUBMIT NAME="SearchParts" VALUE="' . _('Search Parts Now') . '">';
+   echo '<hr>';
+   echo '<div class="centre"><font size=1>' . _('To search for sales orders for a specific part use the part selection facilities below') . '   </font>';
+   echo '<input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '">';
    
    if (count($_SESSION['AllowedPageSecurityTokens'])>1){
-   	echo '<INPUT TYPE=SUBMIT NAME="ResetPart" VALUE="' . _('Show All') . '">';
+   	echo '<input type=submit name="ResetPart" value="' . _('Show All') . '"></div>';
    }
-   echo '<TABLE>';
-   echo '<TR><TD><FONT SIZE=1>' . _('Select a stock category') . ':</FONT>';
-   echo '<SELECT NAME="StockCat">';
+   echo '<table>';
+   echo '<tr><td><font size=1>' . _('Select a stock category') . ':</font>';
+   echo '<select name="StockCat">';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
 		if (isset($_POST['StockCat']) and $myrow1['categoryid'] == $_POST['StockCat']){
-			echo "<OPTION SELECTED VALUE='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
+			echo "<option selected value='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
 		} else {
-			echo "<OPTION VALUE='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
+			echo "<option value='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
 		}
 	}
 
-   echo '</SELECT>';
-   echo '<TD><FONT SIZE=1>' . _('Enter text extracts in the description') . ':</FONT></TD>';
-   echo '<TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25></TD></TR>';
-   echo '<TR><TD></TD>';
-   echo '<TD><FONT SIZE 3><B> ' ._('OR') . ' </B></FONT><FONT SIZE=1>' . _('Enter extract of the Stock Code') . ':</FONT></TD>';
-   echo '<TD><INPUT TYPE="Text" NAME="StockCode" SIZE=15 MAXLENGTH=18></TD>';
-   echo '</TR>';
-   echo '</TABLE>';
+   echo '</select>';
+   echo '<td><font size=1>' . _('Enter text extracts in the description') . ':</font></td>';
+   echo '<td><input type="text" name="Keywords" size=20 maxlength=25></td></tr>';
+   echo '<tr><td></td>';
+   echo '<td><font size=3><b> ' ._('OR') . ' </b></font><font size=1>' . _('Enter extract of the Stock Code') . ':</font></td>';
+   echo '<td><input type="text" name="StockCode" size=15 maxlength=18></td>';
+   echo '</tr>';
+   echo '</table>';
 
-   echo '<HR>';
+   echo '<hr>';
 
 }
 
 If (isset($StockItemsResult)) {
 
-	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
+	echo '<table cellpadding=2 colspan=7 border=2>';
 
-	$TableHeadings = "<TR><TH>" . _('Code') . "</TH>" .
-				"<TH>" . _('Description') . "</TH>" .
-				"<TH>" . _('On Hand') . '</TH>' .
-				"<TH>" . _('Purchase Orders') . '</TH>' .
-				"<TH>" . _('Sales Orders') . "</TH>" .
-				"<TH>" . _('Units') . '</TH></TR>';
+	$TableHeadings = "<tr><th>" . _('Code') . "</th>" .
+				"<th>" . _('Description') . "</th>" .
+				"<th>" . _('On Hand') . '</th>' .
+				"<th>" . _('Purchase Orders') . '</th>' .
+				"<th>" . _('Sales Orders') . "</th>" .
+				"<th>" . _('Units') . '</th></tr>';
 
 	echo $TableHeadings;
 
@@ -418,12 +484,12 @@ If (isset($StockItemsResult)) {
 			$k++;
 		}
 
-		printf("<td><FONT SIZE=1><INPUT TYPE=SUBMIT NAME='SelectedStockItem' VALUE='%s'</FONT></td>
-			<td><FONT SIZE=1>%s</FONT></td>
-			<td ALIGN=RIGHT><FONT SIZE=1>%s</FONT></td>
-			<td ALIGN=RIGHT><FONT SIZE=1>%s</FONT></td>
-			<td ALIGN=RIGHT><FONT SIZE=1>%s</FONT></td>
-			<td><FONT SIZE=1>%s</FONT></td></tr>", 
+		printf("<td><font size=1><input type='submit' name='SelectedStockItem' value='%s'</font></td>
+			<td><font size=1>%s</font></td>
+			<td align=right><font size=1>%s</font></td>
+			<td align=right><font size=1>%s</font></td>
+			<td align=right><font size=1>%s</font></td>
+			<td><font size=1>%s</font></td></tr>", 
 			$myrow['stockid'], 
 			$myrow['description'], 
 			$myrow['qoh'], 
@@ -435,7 +501,7 @@ If (isset($StockItemsResult)) {
 	}
 //end of while loop
 
-	echo '</TABLE>';
+	echo '</table>';
 
 }
 //end if stock search results to show
@@ -444,16 +510,16 @@ If (isset($SalesOrdersResult)) {
 
 /*show a table of the orders returned by the SQL */
 
-	echo '<TABLE CELLPADDING=2 COLSPAN=6 WIDTH=100%>';
+	echo '<table cellpadding=2 colspan=6 width=100%>';
 
-	$tableheader = "<TR><TH>" . _('Order') . " #</TH>
-			<TH>" . _('Customer') . "</TH>
-			<TH>" . _('Branch') . "</TH>
-			<TH>" . _('Cust Order') . " #</TH>
-			<TH>" . _('Order Date') . "</TH>
-			<TH>" . _('Req Del Date') . "</TH>
-			<TH>" . _('Delivery To') . "</TH>
-			<TH>" . _('Order Total') . "</TH></TR>";
+	$tableheader = "<tr><th>" . _('Order') . " #</th>
+			<th>" . _('Customer') . "</th>
+			<th>" . _('Branch') . "</th>
+			<th>" . _('Cust Order') . " #</th>
+			<th>" . _('Order Date') . "</th>
+			<th>" . _('Req Del Date') . "</th>
+			<th>" . _('Delivery To') . "</th>
+			<th>" . _('Order Total') . "</th></tr>";
 
 	echo $tableheader;
 
@@ -475,14 +541,14 @@ If (isset($SalesOrdersResult)) {
 		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 		$FormatedOrderValue = number_format($myrow['ordervalue'],2);
 
-		printf("<td><A target='_blank' HREF='%s'>%s</A></td>
+		printf("<td><a target='_blank' href='%s'>%s</a></td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
-			<td ALIGN=RIGHT>%s</td>
+			<td align=right>%s</td>
 			</tr>", 
 			$ViewPage, 
 			$myrow['orderno'], 
@@ -498,7 +564,7 @@ If (isset($SalesOrdersResult)) {
 	}
 //end of while loop
 
-	echo '</TABLE>';
+	echo '</table>';
 
 }
 
