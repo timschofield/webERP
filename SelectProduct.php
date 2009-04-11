@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.43 $ */
+/* $Revision: 1.44 $ */
 
 $PageSecurity = 2;
 $PricesSecurity = 9;
@@ -100,7 +100,7 @@ if (isset($_POST['StockCode'])) {
 
 echo '</td></tr></table><br>';
 
-echo '<div class="centre"><input type=submit name="Search" value="'. _('Search Now') . '"><hr>';
+echo '<div class="centre"><input type=submit name="Search" value="'. _('Search Now') . '"></div><hr>';
 
 
 // end of showing search facilities
@@ -459,7 +459,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
             <th align=right>' . _('Weight') . ':</th><td align=right>' . number_format($myrow['kgs'], 3) . '</td>
             <th align=right>' . _('EOQ') . ':</th><td align=right>' . number_format($myrow['eoq'],$myrow['decimalplaces']) . '</td></tr>';
 
-	if (! in_array($PricesSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)){
+	if (in_array($PricesSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)){
     	echo '<tr><th>' . _('Sell Price') . ':</th><td>';
 
     	$PriceResult = DB_query("SELECT typeabbrev, price FROM prices
