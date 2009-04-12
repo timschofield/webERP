@@ -6222,8 +6222,6 @@ INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',1);
 
 INSERT INTO `custallocns` VALUES (1,'15.9500','2007-08-02',2,1);
 
-<<<<<<< weberp-demo.sql
-=======
 --
 -- Dumping data for table `custbranch`
 --
@@ -6235,8 +6233,6 @@ INSERT INTO `custbranch` VALUES ('JOLOMU','JOLOMU','Lorrima Productions Inc','32
 INSERT INTO `custbranch` VALUES ('QUARTER','QUARTER','Quarter Back to Back','1356 Union Drive','Holborn','England','','','',0.000000,0.000000,5,'FL','ERI',0,'123456','1234567','','','TOR',3,1,1,0,'','','','','','','','');
 INSERT INTO `custbranch` VALUES ('QUIC','QUICK','Quick Brown PLC','Fox Street','Jumped Over','The Lazy Dog','','','',0.000000,0.000000,1,'FL','ERI',0,'','','','','TOR',1,1,1,0,'','','','','','','','');
 INSERT INTO `custbranch` VALUES ('SLOW','QUICK','Slow Dog','Hunstman Road','Woofton','','','','',0.000000,0.000000,1,'TR','ERI',0,'','','Staffordshire Terrier','','TOR',2,1,1,0,'','','','','','','','');
->>>>>>> 1.89
-
 --
 -- Dumping data for table `custcontacts`
 --
