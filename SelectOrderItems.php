@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.85 $ */
+/* $Revision: 1.86 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -598,18 +598,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$k=1;
 			}
 
-			printf("<td><input tabindex=".number_format($j+5)." type=submit name='Select' value='%s - %s'</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				</tr>",
-				$myrow['debtorno'],
-				$myrow['branchcode'],
-				$myrow['brname'],
-				$myrow['contactname'],
-				$myrow['phoneno'],
-				$myrow['faxno']);
+			printf('<td><input tabindex='.number_format($j+5).' type=submit name="Select" value="%s - %s"</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>',
+					$myrow['debtorno'],
+					$myrow['branchcode'],
+					$myrow['brname'],
+					$myrow['contactname'],
+					$myrow['phoneno'],
+					$myrow['faxno']);
 
 			$j++;
 //end of page full new headings if
@@ -629,10 +629,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		if($_SESSION['ExistingOrder']!=0) { //need to check that not already dispatched
 
-			$sql = "SELECT qtyinvoiced
+			$sql = 'SELECT qtyinvoiced
 					FROM salesorderdetails
-					WHERE orderno=" . $_SESSION['ExistingOrder'] . "
-					AND qtyinvoiced>0";
+					WHERE orderno=' . $_SESSION['ExistingOrder'] . '
+					AND qtyinvoiced>0';
 
 			$InvQties = DB_query($sql,$db);
 
@@ -940,7 +940,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if (isset($_POST['Quantity_' . $OrderLine->LineNumber])){
 
 				$Quantity = $_POST['Quantity_' . $OrderLine->LineNumber];
-				$Price = $_POST['Price_' . $OrderLine->LineNumber];
+				
+				if ($OrderLine->Price == $_POST['Price_' . $OrderLine->LineNumber]
+							AND ABS($OrderLine->DiscountPercent - ($_POST['Discount_' . $OrderLine->LineNumber]/100)) < 0.001
+							AND is_numeric($_POST['GPPercent_' . $OrderLine->LineNumber])
+							AND $_POST['GPPercent_' . $OrderLine->LineNumber]<100
+							AND $_POST['GPPercent_' . $OrderLine->LineNumber]>0) {
+					
+					$Price = round($OrderLine->StandardCost/(1 -(($_POST['GPPercent_' . $OrderLine->LineNumber]+$_POST['Discount_' . $OrderLine->LineNumber])/100)),3);
+				} else {
+					$Price = $_POST['Price_' . $OrderLine->LineNumber];
+				}
 				$DiscountPercentage = $_POST['Discount_' . $OrderLine->LineNumber];
 				if ($_SESSION['AllowOrderLineItemNarrative'] == 1) {
 					$Narrative = $_POST['Narrative_' . $OrderLine->LineNumber];
@@ -950,8 +960,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$ItemDue = $_POST['ItemDue_' . $OrderLine->LineNumber];
 				$POLine = $_POST['POLine_' . $OrderLine->LineNumber];
 
-				if (!isset($OrderLine->Disc)) {
-					$OrderLine->Disc = 0;
+				if (!isset($OrderLine->DiscountPercent)) {
+					$OrderLine->DiscountPercent = 0;
 				}
 
 				if(!Is_Date($ItemDue)) {
@@ -972,7 +982,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				} elseif ($_SESSION['Items']->LineItems[$OrderLine->LineNumber]->QtyInv > $Quantity){
 					prnMsg( _('You are attempting to make the quantity ordered a quantity less than has already been invoiced') . '. ' . _('The quantity delivered and invoiced cannot be modified retrospectively'),'warn');
-				} elseif ($OrderLine->Quantity !=$Quantity OR $OrderLine->Price != $Price OR ABS($OrderLine->Disc -$DiscountPercentage/100) >0.001 OR $OrderLine->Narrative != $Narrative OR $OrderLine->ItemDue != $ItemDue OR $OrderLine->POLine != $POLine) {
+				} elseif ($OrderLine->Quantity !=$Quantity OR $OrderLine->Price != $Price OR ABS($OrderLine->DiscountPercent -$DiscountPercentage/100) >0.001 OR $OrderLine->Narrative != $Narrative OR $OrderLine->ItemDue != $ItemDue OR $OrderLine->POLine != $POLine) {
 					$_SESSION['Items']->update_cart_item($OrderLine->LineNumber,
 										$Quantity,
 										$Price,
@@ -1010,11 +1020,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if ($myrow=DB_fetch_array($KitResult)){
 		   	if ($myrow['mbflag']=='K'){	/*It is a kit set item */
 				$sql = "SELECT bom.component,
-			    		bom.quantity
-					FROM bom
-					WHERE bom.parent='" . $NewItem . "'
-					AND bom.effectiveto > '" . Date('Y-m-d') . "'
-					AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+							bom.quantity
+						FROM bom
+						WHERE bom.parent='" . $NewItem . "'
+						AND bom.effectiveto > '" . Date('Y-m-d') . "'
+						AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
 
 				$ErrMsg = _('Could not retrieve kitset components from the database because');
 				$KitResult = DB_query($sql,$db,$ErrMsg);
@@ -1042,10 +1052,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	If (isset($NewItem_array) && isset($_POST['order_items'])){
 /* get the item details from the database and hold them in the cart object make the quantity 1 by default then add it to the cart */
 /*Now figure out if the item is a kit set - the field MBFlag='K'*/
-		foreach($NewItem_array as $NewItem => $NewItemQty)
-		{
-				if($NewItemQty > 0)
-				{
+		foreach($NewItem_array as $NewItem => $NewItemQty) {
+				if($NewItemQty > 0)	{
 					$sql = "SELECT stockmaster.mbflag
 							FROM stockmaster
 							WHERE stockmaster.stockid='". $NewItem ."'";
@@ -1060,11 +1068,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					if ($myrow=DB_fetch_array($KitResult)){
 						if ($myrow['mbflag']=='K'){	/*It is a kit set item */
 							$sql = "SELECT bom.component,
-								bom.quantity
-								FROM bom
-								WHERE bom.parent='" . $NewItem . "'
-								AND bom.effectiveto > '" . Date('Y-m-d') . "'
-								AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+											bom.quantity
+											FROM bom
+											WHERE bom.parent='" . $NewItem . "'
+											AND bom.effectiveto > '" . Date('Y-m-d') . "'
+											AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
 
 							$ErrMsg = _('Could not retrieve kitset components from the database because');
 							$KitResult = DB_query($sql,$db,$ErrMsg);
@@ -1110,10 +1118,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				}
 			}
 			$result = DB_query("SELECT MAX(discountrate) AS discount
-						FROM discountmatrix
-						WHERE salestype='" .  $_SESSION['Items']->DefaultSalesType . "'
-						AND discountcategory ='" . $OrderLine->DiscCat . "'
-						AND quantitybreak <" . $QuantityOfDiscCat,$db);
+									FROM discountmatrix
+									WHERE salestype='" .  $_SESSION['Items']->DefaultSalesType . "'
+									AND discountcategory ='" . $OrderLine->DiscCat . "'
+									AND quantitybreak <" . $QuantityOfDiscCat,$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]!=0){ /* need to update the lines affected */
 				foreach ($_SESSION['Items']->LineItems as $StkItems_2) {
@@ -1141,17 +1149,24 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			<th>' . _('Quantity') . '</th>
 			<th>' . _('QOH') . '</th>
 			<th>' . _('Unit') . '</th>
-			<th>' . _('Price') . '</th>
-			<th>' . _('Discount') . '</th>
-			<th>' . _('Total') . '</th>
-			<th>' . _('Due Date') . '</th></tr>';
+			<th>' . _('Price') . '</th>';
+		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){	
+			echo '<th>' . _('Discount') . '</th>
+				  <th>' . _('GP %') . '</th>';
+		}
+		echo '<th>' . _('Total') . '</th>
+			  <th>' . _('Due Date') . '</th></tr>';
 
 		$_SESSION['Items']->total = 0;
 		$_SESSION['Items']->totalVolume = 0;
 		$_SESSION['Items']->totalWeight = 0;
 		$k =0;  //row colour counter
 		foreach ($_SESSION['Items']->LineItems as $OrderLine) {
-
+			if ($OrderLine->Price !=0){
+				$GPPercent = number_format((($OrderLine->Price * (1 - $OrderLine->DiscountPercent)) - $OrderLine->StandardCost)*100/$OrderLine->Price,1);
+			} else {
+				$GPPercent = 0;
+			}
 			$LineTotal = $OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
 			$DisplayLineTotal = number_format($LineTotal,2);
 			$DisplayDiscount = number_format(($OrderLine->DiscountPercent * 100),2);
@@ -1191,7 +1206,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				/*OK to display with discount if it is an internal user with appropriate permissions */
 
 				echo '<td><input type=text name="Price_' . $OrderLine->LineNumber . '" size=16 maxlength=16 value=' . $OrderLine->Price . '></td>
-					<td><input type=text name="Discount_' . $OrderLine->LineNumber . '" size=5 maxlength=4 value=' . ($OrderLine->DiscountPercent * 100) . '>%</td>';
+					<td><input type=text name="Discount_' . $OrderLine->LineNumber . '" size=5 maxlength=4 value=' . ($OrderLine->DiscountPercent * 100) . '>%</td>
+					<td><input type=text name="GPPercent_' . $OrderLine->LineNumber . '" size=5 maxlength=4 value=' . $GPPercent . '>%</td>';	
 
 			} else {
 				echo '<td align=right>' . $OrderLine->Price . '</td><td></td>';
@@ -1227,7 +1243,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		} /* end of loop around items */
 
 		$DisplayTotal = number_format($_SESSION['Items']->total,2);
-		echo '<tr><td></td><td><b>' . _('TOTAL Excl Tax/Freight') . '</b></td><td colspan=6 align=right>' . $DisplayTotal . '</td></tr></table>';
+		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
+			$ColSpanNumber = 7;
+		} else {
+			$ColSpanNumber = 5;
+		}
+		echo '<tr><td></td><td><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
+							<td colspan="' . $ColSpanNumber . '" align="right">' . $DisplayTotal . '</td></tr></table>';
 
 		$DisplayVolume = number_format($_SESSION['Items']->totalVolume,2);
 		$DisplayWeight = number_format($_SESSION['Items']->totalWeight,2);

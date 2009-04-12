@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 /*SelectOrderItems_IntoCart.inc
 
@@ -31,20 +31,20 @@ if (count($_SESSION['Items']->LineItems)>0 AND $_SESSION['SO_AllowSameItemMultip
 if ($AlreadyOnThisOrder!=1){
 
     $sql = "SELECT stockmaster.description,
-    		stockmaster.stockid,
-		stockmaster.units,
-		stockmaster.volume,
-		stockmaster.kgs,
-		(materialcost+labourcost+overheadcost) AS standardcost,
-		locstock.quantity,
-		stockmaster.mbflag,
-		stockmaster.discountcategory,
-		stockmaster.decimalplaces,
-		stockmaster.discontinued
-	FROM stockmaster INNER JOIN locstock
-	ON stockmaster.stockid=locstock.stockid
-	WHERE locstock.loccode='" . $_SESSION['Items']->Location . "'
-	AND stockmaster.stockid = '". $NewItem . "'";
+				stockmaster.stockid,
+				stockmaster.units,
+				stockmaster.volume,
+				stockmaster.kgs,
+				(materialcost+labourcost+overheadcost) AS standardcost,
+				locstock.quantity,
+				stockmaster.mbflag,
+				stockmaster.discountcategory,
+				stockmaster.decimalplaces,
+				stockmaster.discontinued
+			FROM stockmaster INNER JOIN locstock
+			ON stockmaster.stockid=locstock.stockid
+			WHERE locstock.loccode='" . $_SESSION['Items']->Location . "'
+			AND stockmaster.stockid = '". $NewItem . "'";
 
     $ErrMsg = _('The details for') . ' ' . $NewItem . ' ' . _('could not be retrieved because');
     $DbgMsg = _('The SQL used to retrieve the pricing details but failed was');
@@ -55,7 +55,7 @@ if ($AlreadyOnThisOrder!=1){
 
     } elseif ($myItemRow = DB_fetch_array($result1)){
 
-    		if ($myItemRow['discontinued']==1){
+    	if ($myItemRow['discontinued']==1){
 			prnMsg(_('The item') . ' ' . $NewItem . ' ' . _('could not be added to the order because it has been flagged as obsolete'),'error',_('Obsolete Item'));
 
 		} elseif (($_SESSION['AllowSalesOfZeroCostItems'] == false
@@ -73,7 +73,7 @@ if ($AlreadyOnThisOrder!=1){
 
 		   	if ($_SESSION['ExistingOrder']!=0){
 				$UpdateDB = 'Yes';
-				$result = DB_query("SELECT MAX(orderlineno) AS newlineno FROM  salesorderdetails WHERE orderno=".$_SESSION['ExistingOrder'],$db);
+				$result = DB_query('SELECT MAX(orderlineno) AS newlineno FROM  salesorderdetails WHERE orderno=' . $_SESSION['ExistingOrder'],$db);
 				$MaxNumRow = DB_fetch_row($result);
 				if ($MaxNumRow[0] != "" && $MaxNumRow[0] > 0) {
 					$NewLineNo = $MaxNumRow[0]+1;
@@ -109,8 +109,8 @@ if ($AlreadyOnThisOrder!=1){
 
 			if (!isset($_SESSION['WarnOnce']) and $_SESSION['Items']->SpecialInstructions) {
 			  	prnMsg($_SESSION['Items']->SpecialInstructions,'warn');
-		        	$WarnOnce=1;
-                  	}
+		       	$WarnOnce=1;
+            }
 			if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn
 											and 2 for prohibit sales */
 				$_SESSION['Items']->CreditAvailable -= round(($NewItemQty * $Price * (1- $Discount)),2);
@@ -144,20 +144,18 @@ if ($AlreadyOnThisOrder!=1){
 							'', /*Narrative - none yet */
 							$UpdateDB,
 							$NewLineNo,
-							"",
-							"",
+							'',
+							'',
 							$NewItemDue,
 							$NewPOLine
 							)==1){
 
 		      		$_SESSION['Items']->LineItems[($_SESSION['Items']->LineCounter -1)]->StandardCost = $myItemRow['standardcost'];
+				}
 			}
-		}
-             } else {
+         } else {
 			prnMsg(_('The item code') . ' ' . $NewItem . ' ' . _('does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered'),'warn');
 	     }
 	}
-
 } /* end of if not already on the order */
-
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -200,17 +200,17 @@ Class Cart {
 			global $db;
 			if ($this->Some_Already_Delivered($LineNumber)==0){
 				/* nothing has been delivered, delete it. */
-				$result = DB_query("DELETE FROM salesorderdetails
-							WHERE orderno=" . $_SESSION['ExistingOrder'] . "
-							AND orderlineno=" . $LineNumber,
-							$db,
-							_('The order line could not be deleted because')
-							);
+				$result = DB_query('DELETE FROM salesorderdetails
+									WHERE orderno=' . $_SESSION['ExistingOrder'] . '
+									AND orderlineno=' . $LineNumber,
+									$db,
+									_('The order line could not be deleted because')
+									);
 				prnMsg( _('Deleted Line Number'). ' ' . $LineNumber . ' ' . _('from existing Order Number').' ' . $_SESSION['ExistingOrder'], 'success');
 			} else {
 				/* something has been delivered. Clear the remaining Qty and Mark Completed */
-				$result = DB_query("UPDATE salesorderdetails SET quantity=qtyinvoiced, completed=1
-									WHERE orderno=".$_SESSION['ExistingOrder']." AND orderlineno=" . $LineNumber ,
+				$result = DB_query('UPDATE salesorderdetails SET quantity=qtyinvoiced, completed=1
+									WHERE orderno='.$_SESSION['ExistingOrder'].' AND orderlineno=' . $LineNumber ,
 									$db,
 								   _('The order line could not be updated as completed because')
 								   );
@@ -413,26 +413,26 @@ Class LineDetails {
 	Var $POLine;
 
 	function LineDetails ($LineNumber,
-				$StockItem,
-				$Descr,
-				$Qty,
-				$Prc,
-				$DiscPercent,
-				$UOM,
-				$Volume,
-				$Weight,
-				$QOHatLoc,
-				$MBflag,
-				$ActDispatchDate,
-				$QtyInvoiced,
-				$DiscCat,
-				$Controlled,
-				$Serialised,
-				$DecimalPlaces,
-				$Narrative,
-				$TaxCategory,
-				$ItemDue,
-				$POLine	){
+							$StockItem,
+							$Descr,
+							$Qty,
+							$Prc,
+							$DiscPercent,
+							$UOM,
+							$Volume,
+							$Weight,
+							$QOHatLoc,
+							$MBflag,
+							$ActDispatchDate,
+							$QtyInvoiced,
+							$DiscCat,
+							$Controlled,
+							$Serialised,
+							$DecimalPlaces,
+							$Narrative,
+							$TaxCategory,
+							$ItemDue,
+							$POLine	){
 
 /* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNumber = $LineNumber;
