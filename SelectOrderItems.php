@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.86 $ */
+/* $Revision: 1.87 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -1163,7 +1163,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$k =0;  //row colour counter
 		foreach ($_SESSION['Items']->LineItems as $OrderLine) {
 			if ($OrderLine->Price !=0){
-				$GPPercent = number_format((($OrderLine->Price * (1 - $OrderLine->DiscountPercent)) - $OrderLine->StandardCost)*100/$OrderLine->Price,1);
+				$GPPercent = (($OrderLine->Price * (1 - $OrderLine->DiscountPercent)) - $OrderLine->StandardCost)*100/$OrderLine->Price;
 			} else {
 				$GPPercent = 0;
 			}

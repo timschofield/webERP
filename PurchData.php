@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 4;
 
@@ -108,7 +108,8 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 				leadtime=" . $_POST['LeadTime'] . ",
 				preferred=" . $_POST['Preferred'] . "
 		WHERE purchdata.stockid='$StockID'
-		AND purchdata.supplierno='$SupplierID'";
+		AND purchdata.supplierno='$SupplierID'
+		AND purchdata.effectivefrom='" . $_POST['WasEffectiveFrom'] . "'";
 
 
      $ErrMsg = _('The supplier purchasing details could not be update because');
@@ -319,7 +320,7 @@ if (!isset($SupplierID)) {
 
 if (isset($_GET['Edit'])){
     echo '<TR><TD>' . _('Supplier Code') . ':</TD>
-    	<TD><INPUT TYPE=HIDDEN NAME="SupplierID" VALUE="' . $SupplierID . '">' . $SupplierID . ' - ' . $SuppName . '</TD></TR>';
+    	<TD><INPUT TYPE=HIDDEN NAME="SupplierID" VALUE="' . $SupplierID . '">' . $SupplierID . ' - ' . $SuppName . '<INPUT TYPE=HIDDEN NAME="WasEffectiveFrom" VALUE="' . $myrow['effectivefrom'] . '"></TD></TR>';
 } else {
     echo '<TR><TD>' . _('Supplier Code') . ':</TD>
     	<TD><INPUT TYPE=TEXT NAME="SupplierID" MAXLENGTH=10 SIZE=11 VALUE="' . $SupplierID . '">';
