@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.88 $ */
+/* $Revision: 1.89 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -344,20 +344,20 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 
 	// Now check to ensure this account is not on hold */
 	$sql = "SELECT debtorsmaster.name,
-			holdreasons.dissallowinvoices,
-			debtorsmaster.salestype,
-			salestypes.sales_type,
-			debtorsmaster.currcode,
-			debtorsmaster.customerpoline,
-			paymentterms.terms
-		FROM debtorsmaster,
-			holdreasons,
-			salestypes,
-			paymentterms
-		WHERE debtorsmaster.salestype=salestypes.typeabbrev
-		AND debtorsmaster.holdreason=holdreasons.reasoncode
-		AND debtorsmaster.paymentterms=paymentterms.termsindicator
-		AND debtorsmaster.debtorno = '" . $_POST['Select'] . "'";
+					holdreasons.dissallowinvoices,
+					debtorsmaster.salestype,
+					salestypes.sales_type,
+					debtorsmaster.currcode,
+					debtorsmaster.customerpoline,
+					paymentterms.terms
+			FROM debtorsmaster,
+				holdreasons,
+				salestypes,
+				paymentterms
+			WHERE debtorsmaster.salestype=salestypes.typeabbrev
+			AND debtorsmaster.holdreason=holdreasons.reasoncode
+			AND debtorsmaster.paymentterms=paymentterms.termsindicator
+			AND debtorsmaster.debtorno = '" . $_POST['Select'] . "'";
 
 	$ErrMsg = _('The details of the customer selected') . ': ' .  $_POST['Select'] . ' ' . _('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the customer details and failed was') . ':';
@@ -465,13 +465,13 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 #DefaultSalesType will not have been set as above
 
 	$sql = "SELECT debtorsmaster.name,
-			holdreasons.dissallowinvoices,
-			debtorsmaster.salestype,
-			debtorsmaster.currcode,
-			debtorsmaster.customerpoline
-		FROM debtorsmaster, holdreasons
-		WHERE debtorsmaster.holdreason=holdreasons.reasoncode
-		AND debtorsmaster.debtorno = '" . $_SESSION['Items']->DebtorNo . "'";
+					holdreasons.dissallowinvoices,
+					debtorsmaster.salestype,
+					debtorsmaster.currcode,
+					debtorsmaster.customerpoline
+			FROM debtorsmaster, holdreasons
+			WHERE debtorsmaster.holdreason=holdreasons.reasoncode
+			AND debtorsmaster.debtorno = '" . $_SESSION['Items']->DebtorNo . "'";
 
 	if (isset($_POST['Select'])) {
 		$ErrMsg = _('The details for the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
@@ -499,22 +499,22 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 	// the order process will ask for branch details later anyway
 
 		$sql = "SELECT custbranch.brname,
-			custbranch.braddress1,
-			custbranch.braddress2,
-			custbranch.braddress3,
-			custbranch.braddress4,
-			custbranch.braddress5,
-			custbranch.braddress6,
-			custbranch.phoneno,
-			custbranch.email,
-			custbranch.defaultlocation,
-			custbranch.deliverblind,
-			custbranch.estdeliverydays,
-			locations.locationname
-			FROM custbranch INNER JOIN locations
-			ON custbranch.defaultlocation=locations.loccode
-			WHERE custbranch.branchcode='" . $_SESSION['Items']->Branch . "'
-			AND custbranch.debtorno = '" . $_SESSION['Items']->DebtorNo . "'";
+						custbranch.braddress1,
+						custbranch.braddress2,
+						custbranch.braddress3,
+						custbranch.braddress4,
+						custbranch.braddress5,
+						custbranch.braddress6,
+						custbranch.phoneno,
+						custbranch.email,
+						custbranch.defaultlocation,
+						custbranch.deliverblind,
+						custbranch.estdeliverydays,
+						locations.locationname
+				FROM custbranch INNER JOIN locations
+				ON custbranch.defaultlocation=locations.loccode
+				WHERE custbranch.branchcode='" . $_SESSION['Items']->Branch . "'
+				AND custbranch.debtorno = '" . $_SESSION['Items']->DebtorNo . "'";
 
 		if (isset($_POST['Select'])) {
 			$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
@@ -716,28 +716,28 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			if ($_POST['StockCat']=='All'){
 				$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.units
-					FROM stockmaster,
-						stockcategory
-					WHERE stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.description " . LIKE . " '$SearchString'
-					AND stockmaster.discontinued=0
-					ORDER BY stockmaster.stockid";
+								stockmaster.description,
+								stockmaster.units
+						FROM stockmaster,
+								stockcategory
+						WHERE stockmaster.categoryid=stockcategory.categoryid
+						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						AND stockmaster.mbflag <>'G'
+						AND stockmaster.description " . LIKE . " '$SearchString'
+						AND stockmaster.discontinued=0
+						ORDER BY stockmaster.stockid";
 			} else {
 				$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.units
-					FROM stockmaster, stockcategory
-					WHERE  stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.discontinued=0
-					AND stockmaster.description " . LIKE . " '" . $SearchString . "'
-					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid";
+								stockmaster.description,
+								stockmaster.units
+						FROM stockmaster, stockcategory
+						WHERE  stockmaster.categoryid=stockcategory.categoryid
+						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						AND stockmaster.mbflag <>'G'
+						AND stockmaster.discontinued=0
+						AND stockmaster.description " . LIKE . " '" . $SearchString . "'
+						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+						ORDER BY stockmaster.stockid";
 			}
 
 		} elseif (strlen($_POST['StockCode'])>0){
@@ -747,51 +747,51 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			if ($_POST['StockCat']=='All'){
 				$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.units
-					FROM stockmaster, stockcategory
-					WHERE stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.discontinued=0
-					ORDER BY stockmaster.stockid";
+								stockmaster.description,
+								stockmaster.units
+						FROM stockmaster, stockcategory
+						WHERE stockmaster.categoryid=stockcategory.categoryid
+						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
+						AND stockmaster.mbflag <>'G'
+						AND stockmaster.discontinued=0
+						ORDER BY stockmaster.stockid";
 			} else {
 				$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.units
-					FROM stockmaster, stockcategory
-					WHERE stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.discontinued=0
-					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid";
+								stockmaster.description,
+								stockmaster.units
+						FROM stockmaster, stockcategory
+						WHERE stockmaster.categoryid=stockcategory.categoryid
+						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
+						AND stockmaster.mbflag <>'G'
+						AND stockmaster.discontinued=0
+						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+						ORDER BY stockmaster.stockid";
 			}
 
 		} else {
 			if ($_POST['StockCat']=='All'){
 				$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.units
-					FROM stockmaster, stockcategory
-					WHERE  stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.discontinued=0
-					ORDER BY stockmaster.stockid";
+								stockmaster.description,
+								stockmaster.units
+						FROM stockmaster, stockcategory
+						WHERE  stockmaster.categoryid=stockcategory.categoryid
+						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						AND stockmaster.mbflag <>'G'
+						AND stockmaster.discontinued=0
+						ORDER BY stockmaster.stockid";
 			} else {
 				$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.units
-					FROM stockmaster, stockcategory
-					WHERE stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.discontinued=0
-					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid";
+								stockmaster.description,
+								stockmaster.units
+						FROM stockmaster, stockcategory
+						WHERE stockmaster.categoryid=stockcategory.categoryid
+						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						AND stockmaster.mbflag <>'G'
+						AND stockmaster.discontinued=0
+						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+						ORDER BY stockmaster.stockid";
 			  }
 		}
 
@@ -946,8 +946,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							AND is_numeric($_POST['GPPercent_' . $OrderLine->LineNumber])
 							AND $_POST['GPPercent_' . $OrderLine->LineNumber]<100
 							AND $_POST['GPPercent_' . $OrderLine->LineNumber]>0) {
-					
-					$Price = round($OrderLine->StandardCost/(1 -(($_POST['GPPercent_' . $OrderLine->LineNumber]+$_POST['Discount_' . $OrderLine->LineNumber])/100)),3);
+					if ($_SESSION['Items']->DefaultCurrency != $_SESSION['CompanyRecord']['currencydefault']){
+							$ExRateResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['Items']->DefaultCurrency . "'",$db);
+							if (DB_num_rows($ExRateResult)>0){
+								$ExRateRow = DB_fetch_row($ExRateResult);
+								$ExRate = $ExRateRow[0];
+							} else {
+								$ExRate =1;
+							}
+					} else {
+						$ExRate = 1;
+					}
+					$Price = round(($OrderLine->StandardCost*$ExRate)/(1 -(($_POST['GPPercent_' . $OrderLine->LineNumber]+$_POST['Discount_' . $OrderLine->LineNumber])/100)),3);
 				} else {
 					$Price = $_POST['Price_' . $OrderLine->LineNumber];
 				}
@@ -1153,6 +1163,19 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){	
 			echo '<th>' . _('Discount') . '</th>
 				  <th>' . _('GP %') . '</th>';
+			if (!isset($ExRate)){
+				if ($_SESSION['Items']->DefaultCurrency != $_SESSION['CompanyRecord']['currencydefault']){
+					$ExRateResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['Items']->DefaultCurrency . "'",$db);
+					if (DB_num_rows($ExRateResult)>0){
+						$ExRateRow = DB_fetch_row($ExRateResult);
+						$ExRate = $ExRateRow[0];
+					} else {
+						$ExRate =1;
+					}
+				} else {
+					$ExRate = 1;
+				}
+			}
 		}
 		echo '<th>' . _('Total') . '</th>
 			  <th>' . _('Due Date') . '</th></tr>';
@@ -1163,7 +1186,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$k =0;  //row colour counter
 		foreach ($_SESSION['Items']->LineItems as $OrderLine) {
 			if ($OrderLine->Price !=0){
-				$GPPercent = number_format((($OrderLine->Price * (1 - $OrderLine->DiscountPercent)) - $OrderLine->StandardCost)*100/$OrderLine->Price,1);
+				$GPPercent = (($OrderLine->Price * (1 - $OrderLine->DiscountPercent)) - ($OrderLine->StandardCost * $ExRate))*100/$OrderLine->Price;
 			} else {
 				$GPPercent = 0;
 			}
@@ -1199,8 +1222,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				echo '<br>'.$OrderLine->QtyInv.' of '.$OrderLine->Quantity.' invoiced';
 			}
 			echo '</td>
-		<td>' . $OrderLine->QOHatLoc . '</td>
-		<td>' . $OrderLine->Units . '</td>';
+					<td>' . $OrderLine->QOHatLoc . '</td>
+					<td>' . $OrderLine->Units . '</td>';
 
 			if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 				/*OK to display with discount if it is an internal user with appropriate permissions */
