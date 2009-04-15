@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.87 $ */
+/* $Revision: 1.88 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -555,7 +555,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	echo '<div class="page_help_text">' . _('Orders/Quotations are placed against the Customer Branch.  A Customer may have several Branches.') . '</div>';
 	?>
 	<form action="<?php echo $_SERVER['PHP_SELF'] . '?' .SID; ?>" name="SelectCustomer" method=post>
-	<b><?php echo '<br>' . $msg; ?></b>
+	<b><?php echo '<p>' . $msg; ?></p>
 	<table cellpadding=3 colspan=4>
 	<tr>
 	<td><h5><?php echo _('Part of the Customer Branch Name'); ?>:</h5></td>
@@ -685,21 +685,21 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		echo _('Customer') . ':<b> ' . $_SESSION['Items']->DebtorNo;
 		echo '</b>&nbsp;' . _('Customer Name') . ': ' . $_SESSION['Items']->CustomerName;
-		echo '</b><br>' . _('Deliver To') . ':<b> ' . $_SESSION['Items']->DeliverTo;
+		echo '</b><div class="page_help_text">' . '<b>' . _('Default Options (can be modified during order):') . '</b><br>' . _('Deliver To') . ':<b> ' . $_SESSION['Items']->DeliverTo;
 		echo '</b>&nbsp;' . _('From Location') . ':<b> ' . $_SESSION['Items']->LocationName;
 		echo '</b><br>' . _('Sales Type') . '/' . _('Price List') . ':<b> ' . $_SESSION['Items']->SalesTypeName;
 		echo '</b><br>' . _('Terms') . ':<b> ' . $_SESSION['Items']->PaymentTerms;
-		echo '</p>';
+		echo '</B></div>';
 	}
 
 	If (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 
 		If ($_POST['Keywords']!=='' AND $_POST['StockCode']=='') {
-			$msg='<br>' . _('Order Item description has been used in search') . '.<br>';
+			$msg='</B><DIV class="page_help_text">' . _('Order Item description has been used in search') . '.</DIV>';
 		} elseif ($_POST['StockCode']!=='' AND $_POST['Keywords']=='') {
-			$msg='<br>' . _('Stock Code has been used in search') . '.<br>';
+			$msg='</B><DIV class="page_help_text">' . _('Stock Code has been used in search') . '.</DIV>';
 		} elseif ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
-			$msg='<br>' . _('Stock Category has been used in search') . '.<br>';
+			$msg='</B><DIV class="page_help_text">' . _('Stock Category has been used in search') . '.</DIV>';
 		}
 		If (isset($_POST['Keywords']) AND strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
@@ -1163,7 +1163,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$k =0;  //row colour counter
 		foreach ($_SESSION['Items']->LineItems as $OrderLine) {
 			if ($OrderLine->Price !=0){
-				$GPPercent = (($OrderLine->Price * (1 - $OrderLine->DiscountPercent)) - $OrderLine->StandardCost)*100/$OrderLine->Price;
+				$GPPercent = number_format((($OrderLine->Price * (1 - $OrderLine->DiscountPercent)) - $OrderLine->StandardCost)*100/$OrderLine->Price,1);
 			} else {
 				$GPPercent = 0;
 			}
@@ -1278,7 +1278,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			ORDER BY categorydescription";
 		$result1 = DB_query($SQL,$db);
 
-		echo '<div class="centre"><b>' . $msg . '</b><br><b>' . _('Search for Order Items') . '</b></div><br>';
+		echo '<div class="centre"><b><p>' . $msg . '</b></p>';
+		echo '<P class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ';
+		echo _('Search for Order Items') . '</p></div><br>';
 		echo '<table><tr><td><b>' . _('Select a Stock Category') . ':</b></td><td><select tabindex=1 name="StockCat">';
 
 		if (!isset($_POST['StockCat'])){
@@ -1316,7 +1318,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 			echo '<input tabindex=6 type=submit name="ChangeCustomer" value="' . _('Change Customer') . '"></div>';
-			echo '<div class="centre"><br><br><a tabindex=7 target="_blank" href="' . $rootpath . '/Stocks.php?' . SID . '"><b>' . _('Add a New Stock Item') . '</b></a></div>';
+			echo '<br></b>';
+// Add some useful help as the order progresses
+			if (isset($SearchResult)) {
+			echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
+			}
+			echo '<br>';
+// Remove add stock item link, as this should be done through inventory
+//			echo '<div class="centre"><br><br><a tabindex=7 target="_blank" href="' . $rootpath . '/Stocks.php?' . SID . '"><b>' . _('Add a New Stock Item') . '</b></a></div>';
 		}
 
 		if (isset($SearchResult)) {

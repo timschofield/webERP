@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.55 $ */
+/* $Revision: 1.56 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -88,11 +88,21 @@ if (isset($_POST['Update'])
 	}
 
 */
-
+// Check the date is OK
 	if(!Is_Date($_POST['DeliveryDate'])) {
 		$InputErrors =1;
-		prnMsg(_('An invalid date entry was made') . '. ' . _('The date entry for the despatch date must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
+		prnMsg(_('An invalid date entry was made') . '. ' . _('The date entry must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
 	}
+// Check the date is OK
+	if(!Is_Date($_POST['QuoteDate'])) {
+                $InputErrors =1;
+                prnMsg(_('An invalid date entry was made') . '. ' . _('The date entry must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
+        }
+// Check the date is OK
+        if(!Is_Date($_POST['ConfirmedDate'])) {
+                $InputErrors =1;
+                prnMsg(_('An invalid date entry was made') . '. ' . _('The date entry must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
+        }
 
 	 /* This check is not appropriate where orders need to be entered in retrospectively in some cases this check will be appropriate and this should be uncommented
 
@@ -164,6 +174,8 @@ if (isset($_POST['Update'])
 			$_SESSION['Items']->SpecialInstructions = $myrow[12];
 			$_SESSION['Items']->DeliveryDays = $myrow[13];
 			$_SESSION['Items']->DeliveryDate = $_POST['DeliveryDate'];
+			$_SESSION['Items']->QuoteDate = $_POST['QuoteDate'];
+			$_SESSION['Items']->ConfirmedDate = $_POST['ConfirmedDate'];
 			$_SESSION['Items']->CustRef = $_POST['CustRef'];
 			$_SESSION['Items']->Comments = $_POST['Comments'];
 			$_SESSION['Items']->FreightCost = round($_POST['FreightCost'],2);
@@ -184,6 +196,8 @@ if (isset($_POST['Update'])
 			$_SESSION['Items']->SpecialInstructions = $_POST['SpecialInstructions'];
 			$_SESSION['Items']->DeliveryDays = $_POST['DeliveryDays'];
 			$_SESSION['Items']->DeliveryDate = $_POST['DeliveryDate'];
+			$_SESSION['Items']->QuoteDate = $_POST['QuoteDate'];
+                        $_SESSION['Items']->ConfirmedDate = $_POST['ConfirmedDate'];
 			$_SESSION['Items']->CustRef = $_POST['CustRef'];
 			$_SESSION['Items']->Comments = $_POST['Comments'];
 			$_SESSION['Items']->FreightCost = round($_POST['FreightCost'],2);
@@ -297,6 +311,8 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 /* finally write the order header to the database and then the order line details - a transaction would	be good here */
 
 	$DelDate = FormatDateforSQL($_SESSION['Items']->DeliveryDate);
+	$QuotDate = FormatDateforSQL($_SESSION['Items']->QuoteDate);
+	$ConfDate = FormatDateforSQL($_SESSION['Items']->ConfirmedDate);
 
 	$Result = DB_Txn_Begin($db);
 
@@ -320,6 +336,8 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 				freightcost,
 				fromstkloc,
 				deliverydate,
+				quotedate,
+				confirmeddate,
 				quotation,
                 deliverblind)
 			VALUES (
@@ -342,6 +360,8 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 				' . $_SESSION['Items']->FreightCost .',
 				'."'" . $_SESSION['Items']->Location ."'".',
 				'."'" . $DelDate . "'".',
+				'."'" . $QuotDate . "'".',
+				'."'" . $ConfDate . "'".',
 				' . $_SESSION['Items']->Quotation . ',
 				' . $_SESSION['Items']->DeliverBlind .'
                 )';
@@ -416,6 +436,8 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 /* update the order header then update the old order line details and insert the new lines */
 
 	$DelDate = FormatDateforSQL($_SESSION['Items']->DeliveryDate);
+	$QuotDate = FormatDateforSQL($_SESSION['Items']->QuoteDate);
+	$ConfDate = FormatDateforSQL($_SESSION['Items']->ConfirmedDate);
 
 	$Result = DB_Txn_Begin($db);
 
@@ -427,6 +449,8 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 				ordertype = '."'" . $_SESSION['Items']->DefaultSalesType . "'".',
 				shipvia = ' . $_POST['ShipVia'] .',
 				deliverydate = '."'" . DB_escape_string($_SESSION['Items']->DeliveryDate) . "'".',
+				quotedate = '."'" . DB_escape_string($_SESSION['Items']->QuoteDate) . "'".',
+				confirmeddate = '."'" . DB_escape_string($_SESSION['Items']->ConfirmedDate) . "'".',
 				deliverto = '."'" . DB_escape_string($_SESSION['Items']->DeliverTo) . "'".',
 				deladd1 = '."'" . DB_escape_string($_SESSION['Items']->DelAdd1) . "'".',
 				deladd2 = '."'" . DB_escape_string($_SESSION['Items']->DelAdd2) . "'".',
@@ -439,6 +463,8 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 				freightcost = ' . $_SESSION['Items']->FreightCost .',
 				fromstkloc = '."'" . $_SESSION['Items']->Location ."'".',
 				deliverydate = '."'" . $DelDate . "'".',
+				quotedate = '."'" . $QuotDate . "'".',
+				confirmeddate = '."'" . $ConfDate . "'".',
 				printedpackingslip = ' . $_POST['ReprintPackingSlip'] . ',
 				quotation = ' . $_SESSION['Items']->Quotation . ',
 				deliverblind = ' . $_SESSION['Items']->DeliverBlind . '
@@ -664,10 +690,17 @@ while ($myrow=DB_fetch_row($StkLocsResult)){
 
 echo '</select></td></tr>';
 
-
+// Set the default date to earliest possible date if not set already
 if (!$_SESSION['Items']->DeliveryDate) {
 	$_SESSION['Items']->DeliveryDate = Date($_SESSION['DefaultDateFormat'],$EarliestDispatch);
 }
+if (!$_SESSION['Items']->QuoteyDate) {
+        $_SESSION['Items']->QuoteDate = Date($_SESSION['DefaultDateFormat'],$EarliestDispatch);
+}
+if (!$_SESSION['Items']->ConfirmedDate) {
+        $_SESSION['Items']->ConfirmedDate = Date($_SESSION['DefaultDateFormat'],$EarliestDispatch);
+}
+
 
 if($_SESSION['DefaultDateFormat']=='d/m/Y'){
 	$jdf=0;
@@ -675,10 +708,21 @@ if($_SESSION['DefaultDateFormat']=='d/m/Y'){
 	$jdf=1;
 }
 
+// The estimated Dispatch date or Delivery date for this order
 echo '<tr>
-	<td>'. _('Dispatch Date') .':</td>
+	<td>'. _('Estimated Delivery Date') .':</td>
 	<td><input type="Text" SIZE=15 MAXLENGTH=14 name="DeliveryDate" value="' . $_SESSION['Items']->DeliveryDate . '"></td>
 	</tr>';
+// The date when a quote was issued to the customer
+echo '<tr>
+	<td>'. _('Quote Date') .':</td>
+	<td><input type="Text" SIZE=15 MAXLENGTH=14 name="QuoteDate" value="' . $_SESSION['Items']->QuoteDate . '"></td>
+	</tr>';
+// The date when the customer confirmed their order
+echo '<tr>
+        <td>'. _('Confirmed Order Date') .':</td>
+        <td><input type="Text" SIZE=15 MAXLENGTH=14 name="ConfirmedDate" value="' . $_SESSION['Items']->ConfirmedDate . '"></td>
+        </tr>';
 
 echo '<tr>
 	<td>'. _('Delivery Address 1') . ':</td>
