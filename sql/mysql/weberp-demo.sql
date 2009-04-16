@@ -1574,6 +1574,8 @@ CREATE TABLE `salesorders` (
   `freightcost` double NOT NULL default '0',
   `fromstkloc` varchar(5) NOT NULL default '',
   `deliverydate` date NOT NULL default '0000-00-00',
+  `quotedate` date NOT NULL default '0000-00-00',
+  `confirmeddate` date NOT NULL default '0000-00-00',
   `printedpackingslip` tinyint(4) NOT NULL default '0',
   `datepackingslipprinted` date NOT NULL default '0000-00-00',
   `quotation` tinyint(4) NOT NULL default '0',
