@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.45 $ */
+/* $Revision: 1.46 $ */
 
 $PageSecurity = 3;
 
@@ -88,7 +88,9 @@ if (isset($_POST['submit'])) {
 	if (!isset($_POST['EstDeliveryDays'])) {
 		$_POST['EstDeliveryDays']=1;
 	}
-
+	
+	$latitude=0.0;
+	$longitude=0.0;
 	if ($_SESSION['geocode_integration']==1 ){
 		// Get the lat/long from our geocoding host
 		$sql = "SELECT * FROM geocode_param WHERE 1";
@@ -139,8 +141,8 @@ if (isset($_POST['submit'])) {
 						braddress4 = '" . $_POST['BrAddress4'] . "',
 						braddress5 = '" . $_POST['BrAddress5'] . "',
 						braddress6 = '" . $_POST['BrAddress6'] . "',
-						lat = '" . $latitude . "',
-						lng = '" . $longitude . "',
+						lat = " . $latitude . ",
+						lng = " . $longitude . ",
 						specialinstructions = '" . $_POST['specialinstructions'] . "',
 						phoneno='" . $_POST['PhoneNo'] . "',
 						faxno='" . $_POST['FaxNo'] . "',
@@ -207,8 +209,8 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['BrAddress4'] . "',
 					'" . $_POST['BrAddress5'] . "',
 					'" . $_POST['BrAddress6'] . "',
-					'" . $latitude . "',
-					'" . $longitude . "',
+					" . $latitude . ",
+					" . $longitude . ",
 					'" . $_POST['specialinstructions'] . "',
 					" . $_POST['EstDeliveryDays'] . ",
 					" . $_POST['FwdDate'] . ",
