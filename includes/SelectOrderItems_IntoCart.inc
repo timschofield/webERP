@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 /*SelectOrderItems_IntoCart.inc
 
@@ -147,10 +147,9 @@ if ($AlreadyOnThisOrder!=1){
 							'',
 							'',
 							$NewItemDue,
-							$NewPOLine
+							$NewPOLine,
+							$myItemRow['standardcost']
 							)==1){
-
-		      		$_SESSION['Items']->LineItems[($_SESSION['Items']->LineCounter -1)]->StandardCost = $myItemRow['standardcost'];
 				}
 			}
          } else {

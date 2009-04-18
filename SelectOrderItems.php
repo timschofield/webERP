@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.89 $ */
+/* $Revision: 1.90 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -179,6 +179,7 @@ if (isset($_GET['ModifyOrderNumber'])
 									stockmaster.mbflag,
 									stockmaster.discountcategory,
 									stockmaster.decimalplaces,
+									stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standardcost,
 									salesorderdetails.completed
 									FROM salesorderdetails INNER JOIN stockmaster
 									ON salesorderdetails.stkcode = stockmaster.stockid
@@ -194,30 +195,32 @@ if (isset($_GET['ModifyOrderNumber'])
 			while ($myrow=db_fetch_array($LineItemsResult)) {
 					if ($myrow['completed']==0){
 						$_SESSION['Items']->add_to_cart($myrow['stkcode'],
-								$myrow['quantity'],
-								$myrow['description'],
-								$myrow['unitprice'],
-								$myrow['discountpercent'],
-								$myrow['units'],
-								$myrow['volume'],
-								$myrow['kgs'],
-								$myrow['qohatloc'],
-								$myrow['mbflag'],
-								$myrow['actualdispatchdate'],
-								$myrow['qtyinvoiced'],
-								$myrow['discountcategory'],
-								0,	/*Controlled*/
-								0,	/*Serialised */
-								$myrow['decimalplaces'],
-								$myrow['narrative'],
-								'No', /* Update DB */
-								$myrow['orderlineno'],
-//								ConvertSQLDate($myrow['itemdue']),
-								0,
-								'',
-								$myrow['itemdue'],
-								$myrow['poline']
-								);
+														$myrow['quantity'],
+														$myrow['description'],
+														$myrow['unitprice'],
+														$myrow['discountpercent'],
+														$myrow['units'],
+														$myrow['volume'],
+														$myrow['kgs'],
+														$myrow['qohatloc'],
+														$myrow['mbflag'],
+														$myrow['actualdispatchdate'],
+														$myrow['qtyinvoiced'],
+														$myrow['discountcategory'],
+														0,	/*Controlled*/
+														0,	/*Serialised */
+														$myrow['decimalplaces'],
+														$myrow['narrative'],
+														'No', /* Update DB */
+														$myrow['orderlineno'],
+						//								ConvertSQLDate($myrow['itemdue']),
+														0,
+														'',
+														$myrow['itemdue'],
+														$myrow['poline'],
+														$myrow['standardcost']
+														);
+								
 				/*Just populating with existing order - no DBUpdates */
 					}
 					$LastLineNo = $myrow['orderlineno'];
@@ -946,6 +949,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							AND is_numeric($_POST['GPPercent_' . $OrderLine->LineNumber])
 							AND $_POST['GPPercent_' . $OrderLine->LineNumber]<100
 							AND $_POST['GPPercent_' . $OrderLine->LineNumber]>0) {
+
 					if ($_SESSION['Items']->DefaultCurrency != $_SESSION['CompanyRecord']['currencydefault']){
 							$ExRateResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['Items']->DefaultCurrency . "'",$db);
 							if (DB_num_rows($ExRateResult)>0){
@@ -958,6 +962,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						$ExRate = 1;
 					}
 					$Price = round(($OrderLine->StandardCost*$ExRate)/(1 -(($_POST['GPPercent_' . $OrderLine->LineNumber]+$_POST['Discount_' . $OrderLine->LineNumber])/100)),3);
+
 				} else {
 					$Price = $_POST['Price_' . $OrderLine->LineNumber];
 				}

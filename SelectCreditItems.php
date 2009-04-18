@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
@@ -484,9 +484,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 											'',
 											'No',
 											-1,
-											$myrow['taxcatid']) ==1){
+											$myrow['taxcatid'],
+											'',
+											'',
+											'',
+											$myrow['standardcost']) ==1){
 
-						$_SESSION['CreditItems']->LineItems[$LineNumber]->StandardCost = $myrow['standardcost'];
 
 						$_SESSION['CreditItems']->GetTaxes($LineNumber);
 
@@ -624,24 +627,26 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 										$_SESSION['CreditItems']->DebtorNo,
 										$_SESSION['CreditItems']->Branch,
 										$db),
-									0,
-									$myrow['units'],
-									$myrow['volume'],
-									$myrow['kgs'],
-									0,
-									$myrow['mbflag'],
-									Date($_SESSION['DefaultDateFormat']),
-									0,
-									$myrow['discountcategory'],
-									$myrow['controlled'],
-									$myrow['serialised'],
-									$myrow['decimalplaces'],
-									'',
-									'No',
-									-1,
-									$myrow['taxcatid']) ==1){
-
-					$_SESSION['CreditItems']->LineItems[$LineNumber]->StandardCost = $myrow['standardcost'];
+										0,
+										$myrow['units'],
+										$myrow['volume'],
+										$myrow['kgs'],
+										0,
+										$myrow['mbflag'],
+										Date($_SESSION['DefaultDateFormat']),
+										0,
+										$myrow['discountcategory'],
+										$myrow['controlled'],
+										$myrow['serialised'],
+										$myrow['decimalplaces'],
+										'',
+										'No',
+										-1,
+										$myrow['taxcatid'],
+										'',
+										'',
+										'',
+										$myrow['standardcost']) ==1){
 
 					$_SESSION['CreditItems']->GetTaxes($LineNumber);
 

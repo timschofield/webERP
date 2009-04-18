@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -90,7 +90,8 @@ Class Cart {
 				$TaxCategory=0,
 				$vtigerProductID='',
 				$ItemDue = '',
-				$POLine=''){
+				$POLine='',
+				$StandardCost=0){
 
 
 		if (isset($StockID) AND $StockID!="" AND $Qty>0 AND isset($Qty)){
@@ -123,7 +124,8 @@ Class Cart {
 									$Narrative,
 									$TaxCategory,
 									$ItemDue,
-									$POLine);
+									$POLine,
+									$StandardCost);
 			$this->ItemsOrdered++;
 
 			if ($UpdateDB=='Yes'){
@@ -353,20 +355,20 @@ Class Cart {
 		  exit();
 		}
 
-		$SQL = "SELECT taxgrouptaxes.calculationorder,
+		$SQL = 'SELECT taxgrouptaxes.calculationorder,
 					taxauthorities.description,
 					taxgrouptaxes.taxauthid,
 					taxauthorities.taxglcode,
 					taxgrouptaxes.taxontax,
 					taxauthrates.taxrate
-			FROM taxauthrates INNER JOIN taxgrouptaxes ON
-				taxauthrates.taxauthority=taxgrouptaxes.taxauthid
-				INNER JOIN taxauthorities ON
-				taxauthrates.taxauthority=taxauthorities.taxid
-			WHERE taxgrouptaxes.taxgroupid=" . $this->TaxGroup . "
-			AND taxauthrates.dispatchtaxprovince=" . $this->DispatchTaxProvince . "
-			AND taxauthrates.taxcatid = " . $TaxCatID . "
-			ORDER BY taxgrouptaxes.calculationorder";
+				FROM taxauthrates INNER JOIN taxgrouptaxes ON
+					taxauthrates.taxauthority=taxgrouptaxes.taxauthid
+					INNER JOIN taxauthorities ON
+					taxauthrates.taxauthority=taxauthorities.taxid
+				WHERE taxgrouptaxes.taxgroupid=' . $this->TaxGroup . '
+				AND taxauthrates.dispatchtaxprovince=' . $this->DispatchTaxProvince . '
+				AND taxauthrates.taxcatid = ' . $TaxCatID . '
+				ORDER BY taxgrouptaxes.calculationorder';
 
 		$ErrMsg = _('The taxes and rates for this item could not be retreived because');
 		$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);
@@ -432,7 +434,8 @@ Class LineDetails {
 							$Narrative,
 							$TaxCategory,
 							$ItemDue,
-							$POLine	){
+							$POLine,
+							$StandardCost){
 
 /* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNumber = $LineNumber;
@@ -464,6 +467,7 @@ Class LineDetails {
 		$this->WorkOrderNo = 0;
 		$this->ItemDue = $ItemDue;
 		$this->POLine = $POLine;
+		$this->StandardCost = $StandardCost;
 	} //end constructor function for LineDetails
 
 }

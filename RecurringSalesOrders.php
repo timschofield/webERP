@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
 include('includes/DefineCartClass.php');
@@ -29,36 +29,36 @@ if ($_GET['NewRecurringOrder']=='Yes'){
 		/*read in all the guff from the selected order into the Items cart  */
 
 		$OrderHeaderSQL = 'SELECT recurringsalesorders.debtorno,
-				debtorsmaster.name,
-				recurringsalesorders.branchcode,
-				recurringsalesorders.customerref,
-				recurringsalesorders.comments,
-				recurringsalesorders.orddate,
-				recurringsalesorders.ordertype,
-				salestypes.sales_type,
-				recurringsalesorders.shipvia,
-				recurringsalesorders.deliverto,
-				recurringsalesorders.deladd1,
-				recurringsalesorders.deladd2,
-				recurringsalesorders.deladd3,
-				recurringsalesorders.deladd4,
-				recurringsalesorders.deladd5,
-				recurringsalesorders.deladd6,
-				recurringsalesorders.contactphone,
-				recurringsalesorders.contactemail,
-				recurringsalesorders.freightcost,
-				debtorsmaster.currcode,
-				recurringsalesorders.fromstkloc,
-				recurringsalesorders.frequency,
-				recurringsalesorders.stopdate,
-				recurringsalesorders.lastrecurrence,
-				recurringsalesorders.autoinvoice
-			FROM recurringsalesorders, 
-				debtorsmaster, 
-				salestypes
-			WHERE recurringsalesorders.ordertype=salestypes.typeabbrev
-			AND recurringsalesorders.debtorno = debtorsmaster.debtorno
-			AND recurringsalesorders.recurrorderno = ' . $_GET['ModifyRecurringSalesOrder'];
+									debtorsmaster.name,
+									recurringsalesorders.branchcode,
+									recurringsalesorders.customerref,
+									recurringsalesorders.comments,
+									recurringsalesorders.orddate,
+									recurringsalesorders.ordertype,
+									salestypes.sales_type,
+									recurringsalesorders.shipvia,
+									recurringsalesorders.deliverto,
+									recurringsalesorders.deladd1,
+									recurringsalesorders.deladd2,
+									recurringsalesorders.deladd3,
+									recurringsalesorders.deladd4,
+									recurringsalesorders.deladd5,
+									recurringsalesorders.deladd6,
+									recurringsalesorders.contactphone,
+									recurringsalesorders.contactemail,
+									recurringsalesorders.freightcost,
+									debtorsmaster.currcode,
+									recurringsalesorders.fromstkloc,
+									recurringsalesorders.frequency,
+									recurringsalesorders.stopdate,
+									recurringsalesorders.lastrecurrence,
+									recurringsalesorders.autoinvoice
+								FROM recurringsalesorders, 
+									debtorsmaster, 
+									salestypes
+								WHERE recurringsalesorders.ordertype=salestypes.typeabbrev
+								AND recurringsalesorders.debtorno = debtorsmaster.debtorno
+								AND recurringsalesorders.recurrorderno = ' . $_GET['ModifyRecurringSalesOrder'];
 
 		$ErrMsg =  _('The order cannot be retrieved because');
 		$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg);
@@ -100,23 +100,23 @@ if ($_GET['NewRecurringOrder']=='Yes'){
 
 	/*need to look up customer name from debtors master then populate the line items array with the sales order details records */
 			$LineItemsSQL = "SELECT recurrsalesorderdetails.stkcode,
-					stockmaster.description,
-					stockmaster.volume,
-					stockmaster.kgs,
-					stockmaster.units,
-					recurrsalesorderdetails.unitprice,
-					recurrsalesorderdetails.quantity,
-					recurrsalesorderdetails.discountpercent,
-					recurrsalesorderdetails.narrative,
-					locstock.quantity as qohatloc,
-					stockmaster.mbflag,
-					stockmaster.discountcategory,
-					stockmaster.decimalplaces
-					FROM recurrsalesorderdetails INNER JOIN stockmaster
-					ON recurrsalesorderdetails.stkcode = stockmaster.stockid
-					INNER JOIN locstock ON locstock.stockid = stockmaster.stockid
-					WHERE  locstock.loccode = '" . $myrow['fromstkloc'] . "'
-					AND recurrsalesorderdetails.recurrorderno =" . $_GET['ModifyRecurringSalesOrder'];
+									stockmaster.description,
+									stockmaster.volume,
+									stockmaster.kgs,
+									stockmaster.units,
+									recurrsalesorderdetails.unitprice,
+									recurrsalesorderdetails.quantity,
+									recurrsalesorderdetails.discountpercent,
+									recurrsalesorderdetails.narrative,
+									locstock.quantity as qohatloc,
+									stockmaster.mbflag,
+									stockmaster.discountcategory,
+									stockmaster.decimalplaces
+									FROM recurrsalesorderdetails INNER JOIN stockmaster
+									ON recurrsalesorderdetails.stkcode = stockmaster.stockid
+									INNER JOIN locstock ON locstock.stockid = stockmaster.stockid
+									WHERE  locstock.loccode = '" . $myrow['fromstkloc'] . "'
+									AND recurrsalesorderdetails.recurrorderno =" . $_GET['ModifyRecurringSalesOrder'];
 	
 			$ErrMsg = _('The line items of the order cannot be retrieved because');
 			$LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg);
@@ -201,51 +201,51 @@ If (isset($_POST['Process'])) {
 			$DelDate = FormatDateforSQL($_SESSION['Items']->DeliveryDate);
 	
 			$HeaderSQL = "INSERT INTO recurringsalesorders (
-					debtorno,
-					branchcode,
-					customerref,
-					comments,
-					orddate,
-					ordertype,
-					deliverto,
-					deladd1,
-					deladd2,
-					deladd3,
-					deladd4,
-					deladd5,
-					deladd6,
-					contactphone,
-					contactemail,
-					freightcost,
-					fromstkloc,
-					shipvia,
-					lastrecurrence,
-					stopdate,
-					frequency,
-					autoinvoice)
-				VALUES (
-					'" . $_SESSION['Items']->DebtorNo . "',
-					'" . $_SESSION['Items']->Branch . "',
-					'". $_SESSION['Items']->CustRef ."',
-					'". $_SESSION['Items']->Comments ."',
-					'" . Date("Y-m-d H:i") . "',
-					'" . $_SESSION['Items']->DefaultSalesType . "',
-					'" . $_SESSION['Items']->DeliverTo . "',
-					'" . $_SESSION['Items']->BrAdd1 . "',
-					'" . $_SESSION['Items']->BrAdd2 . "',
-					'" . $_SESSION['Items']->BrAdd3 . "',
-					'" . $_SESSION['Items']->BrAdd4 . "',
-					'" . $_SESSION['Items']->BrAdd5 . "',
-					'" . $_SESSION['Items']->BrAdd6 . "',
-					'" . $_SESSION['Items']->PhoneNo . "',
-					'" . $_SESSION['Items']->Email . "',
-					" . $_SESSION['Items']->FreightCost .",
-					'" . $_SESSION['Items']->Location ."',
-					'" . $_SESSION['Items']->ShipVia ."',
-					'" . FormatDateforSQL($_POST['StartDate']) . "',
-					'" . FormatDateforSQL($_POST['StopDate']) . "',
-					" . $_POST['Frequency'] .',
-					' . $_POST['AutoInvoice'] . ')';
+										debtorno,
+										branchcode,
+										customerref,
+										comments,
+										orddate,
+										ordertype,
+										deliverto,
+										deladd1,
+										deladd2,
+										deladd3,
+										deladd4,
+										deladd5,
+										deladd6,
+										contactphone,
+										contactemail,
+										freightcost,
+										fromstkloc,
+										shipvia,
+										lastrecurrence,
+										stopdate,
+										frequency,
+										autoinvoice)
+									VALUES (
+										'" . $_SESSION['Items']->DebtorNo . "',
+										'" . $_SESSION['Items']->Branch . "',
+										'". $_SESSION['Items']->CustRef ."',
+										'". $_SESSION['Items']->Comments ."',
+										'" . Date("Y-m-d H:i") . "',
+										'" . $_SESSION['Items']->DefaultSalesType . "',
+										'" . $_SESSION['Items']->DeliverTo . "',
+										'" . $_SESSION['Items']->BrAdd1 . "',
+										'" . $_SESSION['Items']->BrAdd2 . "',
+										'" . $_SESSION['Items']->BrAdd3 . "',
+										'" . $_SESSION['Items']->BrAdd4 . "',
+										'" . $_SESSION['Items']->BrAdd5 . "',
+										'" . $_SESSION['Items']->BrAdd6 . "',
+										'" . $_SESSION['Items']->PhoneNo . "',
+										'" . $_SESSION['Items']->Email . "',
+										" . $_SESSION['Items']->FreightCost .",
+										'" . $_SESSION['Items']->Location ."',
+										'" . $_SESSION['Items']->ShipVia ."',
+										'" . FormatDateforSQL($_POST['StartDate']) . "',
+										'" . FormatDateforSQL($_POST['StopDate']) . "',
+										" . $_POST['Frequency'] .',
+										' . $_POST['AutoInvoice'] . ')';
 
 			$ErrMsg = _('The recurring order cannot be added because');
 			$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);

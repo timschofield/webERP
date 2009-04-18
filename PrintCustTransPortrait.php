@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 $PageSecurity = 1;
 
@@ -1087,23 +1087,22 @@ function PrintLinesToBottom () {
 	global $Bottom_Margin;
 	global $line_height;
 
-
 /*draw the vertical column lines right to the bottom */
-	$pdf->line($Left_Margin+97, $TopOfColHeadings+12,$Left_Margin+97,$Bottom_Margin);
+	$pdf->line($Left_Margin+78, $TopOfColHeadings+12,$Left_Margin+78,$Bottom_Margin);
 
 	/*Print a column vertical line */
-	$pdf->line($Left_Margin+350, $TopOfColHeadings+12,$Left_Margin+350,$Bottom_Margin);
+	$pdf->line($Left_Margin+268, $TopOfColHeadings+12,$Left_Margin+268,$Bottom_Margin);
 
 	/*Print a column vertical line */
-	$pdf->line($Left_Margin+450, $TopOfColHeadings+12,$Left_Margin+450,$Bottom_Margin);
+	$pdf->line($Left_Margin+348, $TopOfColHeadings+12,$Left_Margin+348,$Bottom_Margin);
 
 	/*Print a column vertical line */
-	$pdf->line($Left_Margin+550, $TopOfColHeadings+12,$Left_Margin+550,$Bottom_Margin);
+	$pdf->line($Left_Margin+388, $TopOfColHeadings+12,$Left_Margin+388,$Bottom_Margin);
 
 	/*Print a column vertical line */
-	$pdf->line($Left_Margin+587, $TopOfColHeadings+12,$Left_Margin+587,$Bottom_Margin);
+	$pdf->line($Left_Margin+418, $TopOfColHeadings+12,$Left_Margin+418,$Bottom_Margin);
 
-	$pdf->line($Left_Margin+640, $TopOfColHeadings+12,$Left_Margin+640,$Bottom_Margin);
+	$pdf->line($Left_Margin+448, $TopOfColHeadings+12,$Left_Margin+448,$Bottom_Margin);
 
 	$PageNumber++;
 

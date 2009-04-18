@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.52 $ */
+/* $Revision: 1.53 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -158,30 +158,29 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 			while ($myrow=db_fetch_array($LineItemsResult)) {
 
 				$_SESSION['Items']->add_to_cart($myrow['stkcode'],
-						$myrow['quantity'],
-						$myrow['description'],
-						$myrow['unitprice'],
-						$myrow['discountpercent'],
-						$myrow['units'],
-						$myrow['volume'],
-						$myrow['kgs'],
-						0,
-						$myrow['mbflag'],
-						$myrow['actualdispatchdate'],
-						$myrow['qtyinvoiced'],
-						$myrow['discountcategory'],
-						$myrow['controlled'],
-						$myrow['serialised'],
-						$myrow['decimalplaces'],
-						$myrow['narrative'],
-						'No',
-						$myrow['orderlineno'],
-						$myrow['taxcatid'],
-						'',
-						$myrow['itemdue'],
-						$myrow['poline']);	/*NB NO Updates to DB */
-
-				$_SESSION['Items']->LineItems[$myrow['orderlineno']]->StandardCost = $myrow['standardcost'];
+												$myrow['quantity'],
+												$myrow['description'],
+												$myrow['unitprice'],
+												$myrow['discountpercent'],
+												$myrow['units'],
+												$myrow['volume'],
+												$myrow['kgs'],
+												0,
+												$myrow['mbflag'],
+												$myrow['actualdispatchdate'],
+												$myrow['qtyinvoiced'],
+												$myrow['discountcategory'],
+												$myrow['controlled'],
+												$myrow['serialised'],
+												$myrow['decimalplaces'],
+												$myrow['narrative'],
+												'No',
+												$myrow['orderlineno'],
+												$myrow['taxcatid'],
+												'',
+												$myrow['itemdue'],
+												$myrow['poline'],
+												$myrow['standardcost']);	/*NB NO Updates to DB */
 
 				/*Calculate the taxes applicable to this line item from the customer branch Tax Group and Item Tax Category */
 

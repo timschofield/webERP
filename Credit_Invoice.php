@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 $PageSecurity =3;
 
 
@@ -33,37 +33,37 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 
 
 	$InvoiceHeaderSQL = "SELECT DISTINCT
-				debtortrans.id as transid,
-				debtortrans.debtorno,
-				debtorsmaster.name,
-				debtortrans.branchcode,
-				debtortrans.reference,
-				debtortrans.invtext,
-				debtortrans.order_,
-				debtortrans.trandate,
-				debtortrans.tpe,
-				debtortrans.shipvia,
-				debtortrans.ovfreight,
-				debtortrans.rate AS currency_rate,
-				debtorsmaster.currcode,
-				custbranch.defaultlocation,
-				custbranch.taxgroupid,
-				stockmoves.loccode,
-				locations.taxprovinceid
-			FROM debtortrans INNER JOIN debtorsmaster ON
-				debtortrans.debtorno = debtorsmaster.debtorno
-				INNER JOIN custbranch ON 
-				debtortrans.branchcode = custbranch.branchcode
-				AND debtortrans.debtorno = custbranch.debtorno
-				INNER JOIN currencies ON
-				debtorsmaster.currcode = currencies.currabrev
-				INNER JOIN stockmoves ON
-				stockmoves.transno=debtortrans.transno
-				INNER JOIN locations ON
-				stockmoves.loccode = locations.loccode
-			WHERE debtortrans.transno = " . $_GET['InvoiceNumber'] . "
-				AND debtortrans.type=10
-				AND stockmoves.type=10";
+								debtortrans.id as transid,
+								debtortrans.debtorno,
+								debtorsmaster.name,
+								debtortrans.branchcode,
+								debtortrans.reference,
+								debtortrans.invtext,
+								debtortrans.order_,
+								debtortrans.trandate,
+								debtortrans.tpe,
+								debtortrans.shipvia,
+								debtortrans.ovfreight,
+								debtortrans.rate AS currency_rate,
+								debtorsmaster.currcode,
+								custbranch.defaultlocation,
+								custbranch.taxgroupid,
+								stockmoves.loccode,
+								locations.taxprovinceid
+							FROM debtortrans INNER JOIN debtorsmaster ON
+								debtortrans.debtorno = debtorsmaster.debtorno
+								INNER JOIN custbranch ON 
+								debtortrans.branchcode = custbranch.branchcode
+								AND debtortrans.debtorno = custbranch.debtorno
+								INNER JOIN currencies ON
+								debtorsmaster.currcode = currencies.currabrev
+								INNER JOIN stockmoves ON
+								stockmoves.transno=debtortrans.transno
+								INNER JOIN locations ON
+								stockmoves.loccode = locations.loccode
+							WHERE debtortrans.transno = " . $_GET['InvoiceNumber'] . "
+								AND debtortrans.type=10
+								AND stockmoves.type=10";
 
 	$ErrMsg = _('A credit cannot be produced for the selected invoice') . '. ' . _('The invoice details cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the invoice details was');
@@ -98,30 +98,30 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 
 
 		$LineItemsSQL = "SELECT stockmoves.stkmoveno,
-					stockmoves.stockid,
-					stockmaster.description,
-					stockmaster.volume,
-					stockmaster.kgs,
-					stockmaster.mbflag,
-					stockmaster.controlled,
-					stockmaster.serialised,
-					stockmaster.decimalplaces,
-					stockmaster.taxcatid,
-					stockmaster.units,
-					stockmaster.discountcategory,
-					(stockmoves.price * " . $_SESSION['CurrencyRate'] . ") AS price, -
-					stockmoves.qty as quantity,
-					stockmoves.discountpercent,
-					stockmoves.trandate,
-					stockmaster.materialcost 
-						+ stockmaster.labourcost 
-						+ stockmaster.overheadcost AS standardcost,
-					stockmoves.narrative
-				FROM stockmoves, stockmaster
-				WHERE stockmoves.stockid = stockmaster.stockid
-				AND stockmoves.transno =" . $_GET['InvoiceNumber'] . "
-				AND stockmoves.type=10
-				AND stockmoves.show_on_inv_crds=1";
+								stockmoves.stockid,
+								stockmaster.description,
+								stockmaster.volume,
+								stockmaster.kgs,
+								stockmaster.mbflag,
+								stockmaster.controlled,
+								stockmaster.serialised,
+								stockmaster.decimalplaces,
+								stockmaster.taxcatid,
+								stockmaster.units,
+								stockmaster.discountcategory,
+								(stockmoves.price * " . $_SESSION['CurrencyRate'] . ") AS price, -
+								stockmoves.qty as quantity,
+								stockmoves.discountpercent,
+								stockmoves.trandate,
+								stockmaster.materialcost 
+									+ stockmaster.labourcost 
+									+ stockmaster.overheadcost AS standardcost,
+								stockmoves.narrative
+							FROM stockmoves, stockmaster
+							WHERE stockmoves.stockid = stockmaster.stockid
+							AND stockmoves.transno =" . $_GET['InvoiceNumber'] . "
+							AND stockmoves.type=10
+							AND stockmoves.show_on_inv_crds=1";
 
 		$ErrMsg = _('This invoice can not be credited using this program') . '. ' . _('A manual credit note will need to be prepared') . '. ' . _('The line items of the order cannot be retrieved because');
 		$Dbgmsg = _('The SQL used to get the transaction header was');
@@ -135,37 +135,39 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 				$LineNumber = $_SESSION['CreditItems']->LineCounter;
 				
 				$_SESSION['CreditItems']->add_to_cart($myrow['stockid'],
-								$myrow['quantity'],
-								$myrow['description'],
-								$myrow['price'],
-								$myrow['discountpercent'],
-								$myrow['units'],
-								$myrow['volume'],
-								$myrow['kgs'],
-								0,
-								$myrow['mbflag'],
-								$myrow['trandate'],
-								0,
-								$myrow['discountcategory'],
-								$myrow['controlled'],
-								$myrow['serialised'],
-								$myrow['decimalplaces'],
-								$myrow['narrative'],
-								'No',
-								-1,
-								$myrow['taxcatid']
-								);
-
-				$_SESSION['CreditItems']->LineItems[$LineNumber]->StandardCost = $myrow['standardcost'];
+														$myrow['quantity'],
+														$myrow['description'],
+														$myrow['price'],
+														$myrow['discountpercent'],
+														$myrow['units'],
+														$myrow['volume'],
+														$myrow['kgs'],
+														0,
+														$myrow['mbflag'],
+														$myrow['trandate'],
+														0,
+														$myrow['discountcategory'],
+														$myrow['controlled'],
+														$myrow['serialised'],
+														$myrow['decimalplaces'],
+														$myrow['narrative'],
+														'No',
+														-1,
+														$myrow['taxcatid'],
+														'',
+														'',
+														'',
+														$myrow['standardcost']
+														);
 				$_SESSION['CreditItems']->GetExistingTaxes($LineNumber, $myrow['stkmoveno']);
 				
 				if ($myrow['controlled']==1){/* Populate the SerialItems array too*/
 
-					$SQL = "SELECT 	serialno,
-							moveqty
-						FROM stockserialmoves
-						WHERE stockmoveno=" . $myrow['stkmoveno'] . "
-						AND stockid = '" . $myrow['stockid'] . "'";
+					$SQL = 'SELECT 	serialno,
+									moveqty
+							FROM stockserialmoves
+							WHERE stockmoveno=' . $myrow['stkmoveno'] . "
+							AND stockid = '" . $myrow['stockid'] . "'";
 
 					$ErrMsg = _('This invoice can not be credited using this program') . '. ' . _('A manual credit note will need to be prepared') . '. ' . _('The line item') . ' ' . $myrow['stockid'] . ' ' . _('is controlled but the serial numbers or batch numbers could not be retrieved because');
 					$DbgMsg = _('The SQL used to get the controlled item details was');
@@ -448,9 +450,9 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 /* SQL to process the postings for sales credit notes... First Get the area where the credit note is to from the branches table */
 
 	$SQL = "SELECT area 
-		FROM custbranch 
-		WHERE custbranch.debtorno ='". $_SESSION['CreditItems']->DebtorNo . "' 
-		AND custbranch.branchcode = '" . $_SESSION['CreditItems']->Branch . "'";
+				FROM custbranch 
+			WHERE custbranch.debtorno ='". $_SESSION['CreditItems']->DebtorNo . "' 
+				AND custbranch.branchcode = '" . $_SESSION['CreditItems']->Branch . "'";
 
 	$Result = DB_query($SQL,$db);
 	$myrow = DB_fetch_row($Result);
