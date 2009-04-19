@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.56 $ */
+/* $Revision: 1.57 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -60,9 +60,9 @@ if (isset($_POST['Update'])
 		$InputErrors =1;
 		prnMsg(_('You should enter the street address in the box provided') . '. ' . _('Orders cannot be accepted without a valid street address'),'error');
 	}
-	if (strpos($_POST['BrAdd1'],_('Box'))>0){
-		prnMsg(_('You have entered the word') . ' "' . _('Box') . '" ' . _('in the street address') . '. ' . _('Items cannot be delivered to') . ' ' ._('box') . ' ' . _('addresses'),'warn');
-	}
+//	if (strpos($_POST['BrAdd1'],_('Box'))>0){
+//		prnMsg(_('You have entered the word') . ' "' . _('Box') . '" ' . _('in the street address') . '. ' . _('Items cannot be delivered to') . ' ' ._('box') . ' ' . _('addresses'),'warn');
+//	}
 	if (!is_numeric($_POST['FreightCost'])){
 		$InputErrors =1;
 		prnMsg( _('The freight cost entered is expected to be numeric'),'error');
@@ -117,8 +117,12 @@ if (isset($_POST['Update'])
 
 		if ($_SESSION['DoFreightCalc']==True){
 		      list ($_POST['FreightCost'], $BestShipper) = CalcFreightCost($_SESSION['Items']->total, $_POST['BrAdd2'], $_POST['BrAdd3'], $_SESSION['Items']->totalVolume, $_SESSION['Items']->totalWeight, $_SESSION['Items']->Location, $db);
- 		      $_POST['FreightCost'] = round($_POST['FreightCost'],2);
-		      $_POST['ShipVia'] = $BestShipper;
+			if ( !empty($BestShipper) ){
+      			$_POST['FreightCost'] = round($_POST['FreightCost'],2);
+      			$_POST['ShipVia'] = $BestShipper;
+			} else {
+      			prnMsg(_($_POST['FreightCost']),'warn');
+			}		
 		}
 		$sql = 'SELECT custbranch.brname,
 				custbranch.braddress1,
