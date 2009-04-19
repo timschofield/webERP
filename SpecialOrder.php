@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 4;
 
@@ -306,8 +306,9 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
  		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 		/*Get the auto increment value of the order number created from the SQL above */
-		$_SESSION['SPL']->PurchOrderNo = DB_Last_Insert_ID($db,'purchorders','orderno');
-
+//		$_SESSION['SPL']->PurchOrderNo = DB_Last_Insert_ID($db,'purchorders','orderno');
+ 		$_SESSION['SPL']->PurchOrderNo = GetNextTransNo(18, $db);
+		
 
 		/*Insert the purchase order detail records */
 		foreach ($_SESSION['SPL']->LineItems as $SPLLine) {
@@ -457,8 +458,9 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		$ErrMsg = _('The sales order cannot be added because');
 		$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
 
-		$SalesOrderNo = DB_Last_Insert_ID($db,'salesorders','orderno');
-
+//		$SalesOrderNo = DB_Last_Insert_ID($db,'salesorders','orderno');
+		$SalesOrderNo = GetNextTransNo(30, $db);
+		
 		$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (orderno,
 									stkcode,
 									unitprice,
