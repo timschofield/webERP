@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -479,7 +479,7 @@ if (isset($_POST['Search'])){
 	if ($_POST['Keywords'] AND $_POST['CustCode']) {
 		$msg=_('Customer name keywords have been used in preference to the customer code extract entered');
 	}
-	if ($_POST['Keywords']=="" AND $_POST['CustCode']=="") {
+	if ($_POST['Keywords']=="" AND $_POST['CustCode']=="" AND $_POST['CustInvNo']=="") {
 		$msg=_('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search');
 	} else {
 		if (strlen($_POST['Keywords'])>0) {
@@ -505,8 +505,14 @@ if (isset($_POST['Search'])){
 				FROM debtorsmaster
 				WHERE debtorsmaster.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%'
 				AND debtorsmaster.currcode= '" . $_SESSION['ReceiptBatch']->Currency . "'";
+		} elseif (strlen($_POST['CustInvNo'])>0){
+			$SQL = "SELECT debtortrans.debtorno,
+					debtorsmaster.name
+				FROM debtorsmaster LEFT JOIN debtortrans
+				ON debtorsmaster.debtorno=debtortrans.debtorno
+				WHERE debtortrans.transno " . LIKE . " '%" . $_POST['CustInvNo'] . "%'
+				AND debtorsmaster.currcode= '" . $_SESSION['ReceiptBatch']->Currency . "'";
 		}
-
 		$CustomerSearchResult = DB_query($SQL,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			prnMsg(_('The searched customer records requested cannot be retrieved because') . ' - ' . DB_error_msg($db),'error');
@@ -950,10 +956,13 @@ if (((isset($_SESSION['CustomerRecord'])
 	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" TITLE="' . _('Customer') . '" ALT="">' . ' ' . _('Select a Customer') . '</b>';
 	echo '<table cellpadding=3 colspan=4>';
 	echo '<tr><td>' . _('Text in the Customer') . ' ' . '<b>' . _('name') . '</b>:</td>';
-	echo '<td><input tabindex=9 type="text" name="Keywords" size=20 maxlength=25></td>';
+	echo '<td><input tabindex=9 type="text" name="Keywords" size=15 maxlength=25></td>';
 	echo '<td><font size=3><b>' . _('OR') . '</b></font></td>';
 	echo '<td>' . _('Text extract in the Customer') . ' ' . '<b>' . _('code') . '</b>:</td>';
-	echo '<td><input tabindex=10 type="text" name="CustCode" size=15 maxlength=18></td>';
+	echo '<td><input tabindex=10 type="text" name="CustCode" size=10 maxlength=18></td>';
+	echo '<td><font size=3><b>' . _('OR') . '</b></font></td>';
+	echo '<td>' . _('Customer invoice number') . ':</td>';
+	echo '<td><input tabindex=11 type="text" name="CustInvNo" size=8 maxlength=8></td>';
 	echo '</tr></table>';
 	echo '<center>';
 	echo '<input tabindex=11 type=submit name="Search" value="' . _('Search Now') . '">';
