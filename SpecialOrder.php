@@ -1,12 +1,13 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 4;
 
 include('includes/DefineSpecialOrderClass.php');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');
+include('includes/SQL_CommonFunctions.inc');
 
 $title = _('Special Order Entry');
 
@@ -110,7 +111,7 @@ if (!isset($_SESSION['SPL']->BranchCode)){
 } else {
 	echo '<BR><FONT SIZE=4 COLOR=BLUE>' . _('Purchase from') . ' ' . $_SESSION['SPL']->SupplierName . ' ' . _('in') . ' ' . $_SESSION['SPL']->SuppCurrCode . ' ' . _('for') . ' ' . $_SESSION['SPL']->CustomerName . ' (' . $_SESSION['SPL']->CustCurrCode . ') - ' . _('delivered to') . ' ' . $_SESSION['SPL']->BranchName . ' ' . _('branch');
 }
-
+echo '</font>';
 /*if the branch details and delivery details have not been entered then select them from the list */
 if (!isset($_SESSION['SPL']->BranchCode)){
 
