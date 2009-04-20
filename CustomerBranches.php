@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.46 $ */
+/* $Revision: 1.47 $ */
 
 $PageSecurity = 3;
 
@@ -88,9 +88,7 @@ if (isset($_POST['submit'])) {
 	if (!isset($_POST['EstDeliveryDays'])) {
 		$_POST['EstDeliveryDays']=1;
 	}
-	
-	$latitude=0.0;
-	$longitude=0.0;
+
 	if ($_SESSION['geocode_integration']==1 ){
 		// Get the lat/long from our geocoding host
 		$sql = "SELECT * FROM geocode_param WHERE 1";
@@ -101,6 +99,10 @@ if (isset($_POST['submit'])) {
 		$map_host = $row['map_host'];
 		define("MAPS_HOST", $map_host);
 		define("KEY", $api_key);
+		if ($map_host=="") {
+		// check that some sane values are setup already in geocode tables, if not skip the geocoding but add the record anyway.
+                echo '<DIV CLASS="warn">' . _('Warning - Geocode Integration is enabled, but no hosts are setup.  Go to Geocode Setup') . '</DIV>';
+                } else {
 
 		$address = $_POST["BrAddress1"] . ", " . $_POST["BrAddress2"] . ", " . $_POST["BrAddress3"] . ", " . $_POST["BrAddress4"];
 
@@ -130,6 +132,7 @@ if (isset($_POST['submit'])) {
       		echo 'Received status ' . $status . '</DIV>';
     	}
 	}
+	}
 	if (isset($SelectedBranch) AND $InputError !=1) {
 
 		/*SelectedBranch could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the 	delete code below*/
@@ -141,8 +144,8 @@ if (isset($_POST['submit'])) {
 						braddress4 = '" . $_POST['BrAddress4'] . "',
 						braddress5 = '" . $_POST['BrAddress5'] . "',
 						braddress6 = '" . $_POST['BrAddress6'] . "',
-						lat = " . $latitude . ",
-						lng = " . $longitude . ",
+						lat = '" . $latitude . "',
+						lng = '" . $longitude . "',
 						specialinstructions = '" . $_POST['specialinstructions'] . "',
 						phoneno='" . $_POST['PhoneNo'] . "',
 						faxno='" . $_POST['FaxNo'] . "',
@@ -209,8 +212,8 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['BrAddress4'] . "',
 					'" . $_POST['BrAddress5'] . "',
 					'" . $_POST['BrAddress6'] . "',
-					" . $latitude . ",
-					" . $longitude . ",
+					'" . $latitude . "',
+					'" . $longitude . "',
 					'" . $_POST['specialinstructions'] . "',
 					" . $_POST['EstDeliveryDays'] . ",
 					" . $_POST['FwdDate'] . ",

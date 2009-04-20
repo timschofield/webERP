@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.38 $ */
+/* $Revision: 1.39 $ */
 
 $PageSecurity = 5;
 
@@ -383,7 +383,10 @@ if (isset($_POST['submit'])) {
 			$map_host = $row['map_host'];
 			define("MAPS_HOST", $map_host);
 			define("KEY", $api_key);
-
+			// check that some sane values are setup already in geocode tables, if not skip the geocoding but add the record anyway.
+			if ($map_host=="") {
+			echo '<DIV CLASS="warn">' . _('Warning - Geocode Integration is enabled, but no hosts are setup.  Go to Geocode Setup') . '</DIV>';
+			} else {
 			$address = $_POST["Address1"] . ", " . $_POST["Address2"] . ", " . $_POST["Address3"] . ", " . $_POST["Address4"];
 
 			$base_url = "http://" . MAPS_HOST . "/maps/geo?output=xml" . "&key=" . KEY;
@@ -411,6 +414,7 @@ if (isset($_POST['submit'])) {
 				$geocode_pending = false;
 				echo "<p>Address: " . $address . " failed to geocode.\n";
 				echo "Received status " . $status . "\n</p>";
+			}
 			}
 		}
 		if (!isset($_POST['New'])) {
