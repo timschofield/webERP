@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.90 $ */
+/* $Revision: 1.91 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -1159,6 +1159,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if($_SESSION['Items']->DefaultPOLine == 1){
 			echo '<th>' . _('PO Line') . '</th>';
 		}
+		echo '<DIV CLASS="page_help_text">' . _('Quantity (required) - Enter the number of units ordered.  Price (required) - Enter the unit price.  Discount (optional) - Enter a percentage discount.  GP% (optional) - Enter a percentage Gross Profit (GP) to add to the unit cost.  Due Date (optional) - Enter a date for delivery.') . '</DIV><BR>';
 		echo '<th>' . _('Item Code') . '</th>
 			<th>' . _('Item Description') . '</th>
 			<th>' . _('Quantity') . '</th>
