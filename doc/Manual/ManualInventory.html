@@ -132,7 +132,7 @@ A kit set of other stock items that should be exploded into its components when 
 <br><br>
 A service item that has no physical stock associated with it. This if for use with service companies that are not interested in retaining stock quantities by location. However, the same sales analysis and movement history is retained - showing the amounts of the service sold/credited.
 <br><br>
-This field is relevant for MRP and production scheduling (not implemented yet). This field can also be set to Service Inventory Item - which then disables stock quantity tracking at the locations and in total. Service stock items are used for invoicing services and labour or even physical items which do not require tracking. The stock movement records are still created and are available to recall on invoicing and credit note inquiries. Inventory adjustments are not allowed for Service Inventory Items. Assembly items can have sales analysis records created for them, but no stock quantity is maintained and stock movement records are created for the components. Assemblies would normally be used where the warehouse keeps the components of the item for several different purposes and only assembles the items as they are picked for dispatch.
+This field is relevant for MRP and production scheduling. This field can also be set to Service Inventory Item - which then disables stock quantity tracking at the locations and in total. Service stock items are used for invoicing services and labour or even physical items which do not require tracking. The stock movement records are still created and are available to recall on invoicing and credit note inquiries. Inventory adjustments are not allowed for Service Inventory Items. Assembly items can have sales analysis records created for them, but no stock quantity is maintained and stock movement records are created for the components. Assemblies would normally be used where the warehouse keeps the components of the item for several different purposes and only assembles the items as they are picked for dispatch.
 <br><br>
 <font size="+1"><b>Setting Up Assembly Items</b></font>
 <br><br>
@@ -369,13 +369,13 @@ When purchase invoices are entered at a determined exchange rate for an item, th
 <br><br>
 <font size="+1"><b>Material Usage Variance Account</b></font>
 <br><br>
-NOT YET IMPLEMENTED:
+This account is used when a work order is closed and the quantity of material of this category issued to the work order is different to the requirements from the bill of materials of the item(s) being made on this work order. The difference is evaluated at the standard cost of the component item.
 <br><br>
 This general ledger account is used by the works orders to post the variances between the actual material issued to a work order and the standard requirements of the work order based on the number of finished items resulting from the work order. This field will not be used if the company preferences flag for "Create GL entries for stock transactions (at standard cost)" is not enabled.
 <br><br>
 <font size="+1"><b>Type of Resource</b></font>
 <br><br>
-NOT YET IMPLEMENTED:
+The type can be finished goods, raw materials, dummy or labour. Finished goods and labour are purely for reporting. Labour type items will alter the display of the data input form to allow selection of labour recovery accounts - these are profit and loss accounts as opposed to normal stock accounts that are balance sheet accounts.
 <br><br>
 This field declares the type of resource that the stock category represents and is one of Finished Goods, Raw Materials, Labour or Dummy Inventory. This field is used to distinguish labour type stock items from other components for the purposes of calculating work centre overhead in the cost roll up. It is also used for ordering stock reports to ensure raw materials and finished goods are grouped together.
 
@@ -500,9 +500,17 @@ since the page has no output - it would be pointless running it in a web browser
 
 <font size="+1"><b>Inventory Planning Report</b></font>
 <br><br>
-This report shows the usage of stock items over the previous four months together with the current stock, outstanding sales orders and outstanding purchase orders. It suggests a re-order quantity based on a number of months times the maximum of the previous four months monthly stock usage (from all stock locations), less the on hand stock and purchase orders. It will not suit all purposes but certainly does provide good information from which to base purchasing decisions.
+This report shows the usage of stock items over the previous four months together with the current stock, outstanding sales orders and outstanding purchase orders. It suggests a re-order quantity based on a selectable number of months stock to have in the supply chain multiplied by the maximum of the previous four months monthly stock usage (from all stock locations), less the on hand stock and purchase orders. It will not suit all purposes but certainly does provide good information from which to base purchasing decisions.
 <br><br>
-The Inventory Planning Report is run from the Inventory tab of the main menu under the Inquiries and Reports section.
+Another inventory planning report - title Inventory Planning based on preferred suppliers uses the data in the purchasing data table specifically the data for the supplier selected as the preferred supplier for the item. The lead time in days for the item is used is divided by 30 to get the monthly lead time and this is added to the user selectable buffer stock holding period. The lead time plus the buffer stock holding period is added together to calculate the total supply chain stock holding period. This stock holding period is then multipled by the average of the last 4 months stock to get the quantity required in the supply chain. The report suggests a quantity to reorder if applicable by using the calculated quantity then deducting quantities already on order and in stock and adding outstanding sales order demand. This report shows in supplier code order then in order of the item code for each preferred supplier.
+<br>This report shows:
+<ul>
+<li>The average quantity of the items for the last 4 months</li>
+<li>The maximum quantity sold in any of the last 4 months</li>
+<li>The standard deviation of the quantities sold over the last 4 months. This is meant to give a guide to the variability of demand relative to the average. If the standard deviation is 0 then it means the same amount was sold each month and the average is the same as actual sales over the last 4 months. The standard deviation is the average of differences between actual month usage over the last 4 months and the average over the 4 months and the actual quantity in future months could reasonably be expected to be (on average) the average over the 4 months +/- the standard deviation quantity.</li>
+</ul>
+<br><br>
+The Inventory Planning Reports are run from the Inventory tab of the main menu under the Inquiries and Reports section.
 
 <!-- Help End: InventoryPlanning -->
 

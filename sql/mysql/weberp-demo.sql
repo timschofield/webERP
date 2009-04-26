@@ -7279,21 +7279,6 @@ INSERT INTO `salesman` VALUES ('PHO','Phone Contact','','',0,'0',0);
 -- Dumping data for table `salesorderdetails`
 --
 
-INSERT INTO `salesorderdetails` VALUES (0,1,'DVD-DHWV',1,15.95,2,0,0,'2007-06-26 00:00:00',0,'',NULL,NULL);
-INSERT INTO `salesorderdetails` VALUES (0,2,'DVD-LTWP',0,5.4,2,0,0,'0000-00-00 00:00:00',0,'',NULL,NULL);
-INSERT INTO `salesorderdetails` VALUES (1,1,'DVD-LTWP',1,14.5,1,0,0,'2007-06-26 00:00:00',1,'',NULL,NULL);
-INSERT INTO `salesorderdetails` VALUES (1,2,'DVD-TOPGUN',0,5.25,1,0,0,'0000-00-00 00:00:00',0,'',NULL,NULL);
-
---
--- Dumping data for table `salesorders`
---
-
-INSERT INTO `salesorders` VALUES (1,'QUARTER','QUARTER','',NULL,' Inv 1','2007-06-25','DE',1,'1356 Union Drive','Holborn','England','','','','123456','','Quarter Back to Back',1,0,'TOR','2007-06-26',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (2,'QUARTER','QUARTER','',NULL,'','2007-06-27','DE',1,'1356 Union Drive','Holborn','England','','','','123456','','Quarter Back to Back',1,0,'TOR','2007-06-28',0,'0000-00-00',0);
-
---
--- Dumping data for table `salestypes`
---
 
 INSERT INTO `salestypes` VALUES ('DE','Default Price List');
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.79 $ */
+/* $Revision: 1.80 $ */
 
 
 $PageSecurity = 1;
@@ -553,6 +553,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<A HREF='" . $rootpath . '/InventoryPlanning.php?' . SID . "'><LI>" . _('Inventory Planning Report') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/InventoryPlanningPrefSupplier.php?' . SID . "'><LI>" . _('Inventory Planning Based On Preferred Supplier Data') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
