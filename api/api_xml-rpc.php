@@ -10,7 +10,7 @@
 	$Description = _('This function is used to insert a new customer into the webERP database.');
 	$Parameter[0]['name'] = _('Customer Details');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-			._('The field names can be found ').'<a href="Z_DescribeTable.php?table=debtorsmaster">'._('here ').'</a>'
+			._('The field names can be found ').'<a href="../../Z_DescribeTable.php?table=debtorsmaster">'._('here ').'</a>'
 			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
 			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.')
 			.'<p>'._('If the Create Debtor Codes Automatically flag is set, then anything sent in the debtorno field will be ignored, and the debtorno field will be set automatically.');
@@ -47,7 +47,7 @@
 	$Description = _('This function is used to insert a new customer branch into the webERP database.');
 	$Parameter[0]['name'] = _('Branch Details');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-			._('The field names can be found ').'<a href="Z_DescribeTable.php?table=custbranch">'._('here ').'</a>'
+			._('The field names can be found ').'<a href="../../Z_DescribeTable.php?table=custbranch">'._('here ').'</a>'
 			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
 			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
 	$Parameter[1]['name'] = _('User name');
@@ -83,7 +83,7 @@
 	$Description = _('This function is used to modify a customer which is already setup in the webERP database.');
 	$Parameter[0]['name'] = _('Customer Details');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-			._('The field names can be found ').'<a href="Z_DescribeTable.php?table=debtorsmaster">'._('here ').'</a>'
+			._('The field names can be found ').'<a href="../../Z_DescribeTable.php?table=debtorsmaster">'._('here ').'</a>'
 			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
 			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.')
 			.'<p>'._('The debtorno must already exist in the weberp database.');
@@ -121,7 +121,7 @@
 	$Description = _('This function is used to modify a customer branch which is already setup in the webERP database.');
 	$Parameter[0]['name'] = _('Branch Details');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-			._('The field names can be found ').'<a href="Z_DescribeTable.php?table=custbranch">'._('here ').'</a>'
+			._('The field names can be found ').'<a href="../../Z_DescribeTable.php?table=custbranch">'._('here ').'</a>'
 			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
 			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.')
 			.'<p>'._('The branchcode/debtorno combination must already exist in the weberp database.');
@@ -1582,7 +1582,7 @@
 	$Description = _('This function is used to insert a new supplier into the webERP database.');
 	$Parameter[0]['name'] = _('Supplier Details');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-			._('The field names can be found ').'<a href="Z_DescribeTable.php?table=suppliers">'._('here ').'</a>'
+			._('The field names can be found ').'<a href="../../Z_DescribeTable.php?table=suppliers">'._('here ').'</a>'
 			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
 			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
 	$Parameter[1]['name'] = _('User name');
@@ -1618,7 +1618,7 @@
 	$Description = _('This function is used to modify a supplier which is already setup in the webERP database.');
 	$Parameter[0]['name'] = _('Supplier Details');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-			._('The field names can be found ').'<a href="Z_DescribeTable.php?table=suppliers">'._('here ').'</a>'
+			._('The field names can be found ').'<a href="../../Z_DescribeTable.php?table=suppliers">'._('here ').'</a>'
 			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
 			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.')
 			.'<p>'._('The supplierid must already exist in the weberp database.');
@@ -1888,7 +1888,7 @@
 	$Description = _('This function is used to insert new purchasing data into the webERP database.');
 	$Parameter[0]['name'] = _('Purchasing data');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-			._('The field names can be found ').'<a href="Z_DescribeTable.php?table=purchdata">'._('here ').'</a>'
+			._('The field names can be found ').'<a href="../../Z_DescribeTable.php?table=purchdata">'._('here ').'</a>'
 			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
 			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
 	$Parameter[1]['name'] = _('User name');
@@ -1924,7 +1924,7 @@
 	$Description = _('This function is used to modify purchasing data into the webERP database.');
 	$Parameter[0]['name'] = _('Purchasing data');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-			._('The field names can be found ').'<a href="Z_DescribeTable.php?table=purchdata">'._('here ').'</a>'
+			._('The field names can be found ').'<a href="../../Z_DescribeTable.php?table=purchdata">'._('here ').'</a>'
 			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
 			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
 	$Parameter[1]['name'] = _('User name');
@@ -1960,7 +1960,7 @@
 	$Description = _('This function is used to insert a new work order into the webERP database. Currently this works only for single line orders.');
 	$Parameter[0]['name'] = _('Work order details');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-			._('The field names can be found ').'<a href="Z_DescribeTable.php?table=workorders">'._('here ').'</a>'
+			._('The field names can be found ').'<a href="../../Z_DescribeTable.php?table=workorders">'._('here ').'</a>'
 			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
 			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
 	$Parameter[1]['name'] = _('User name');
