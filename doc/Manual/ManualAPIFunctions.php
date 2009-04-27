@@ -3,7 +3,7 @@
 
 $PageSecurity = 1;
 $PathPrefix= $_SERVER['HTTP_HOST'].$rootpath.'/../../';
-include('../../includes/session.inc');
+//include('../../includes/session.inc');
 include('../../xmlrpc/lib/xmlrpc.inc');
 include('../../api/api_errorcodes.php');
 

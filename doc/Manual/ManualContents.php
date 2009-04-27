@@ -1,4 +1,5 @@
-<!-- This table of contents allows the choice to display one section or select multiple sections to format for print.
+<?php
+/* This table of contents allows the choice to display one section or select multiple sections to format for print.
      Selecting multiple sections is for printing
 -->
 
@@ -17,11 +18,12 @@
 
 		 Comments beginning with Help Begin and Help End denote the beginning and end of a section that goes into the online help.
 		 What section is named after Help Begin: and there can be multiple sections separated with a comma.
--->
+-->';*/
+$PageSecurity=1;
+$PathPrefix='../../';
+include($PathPrefix.'includes/session.inc');
 
-<?php
 include('ManualHeader.html');
-
 ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 <?php
