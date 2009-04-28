@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.57 $ */
+/* $Revision: 1.58 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -668,7 +668,7 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 echo '<BR><table><tr>
 	<td>'. _('Deliver To') .':</td>
-	<td><input type=text size=42 max=40 name="DeliverTo" value="' . $_SESSION['Items']->DeliverTo . '"></td>
+	<td><input type=text size=42 maxlength=40 name="DeliverTo" value="' . $_SESSION['Items']->DeliverTo . '"></td>
 </tr>';
 
 echo '<tr>
@@ -730,43 +730,43 @@ echo '<tr>
 
 echo '<tr>
 	<td>'. _('Delivery Address 1') . ':</td>
-	<td><input type=text size=42 max=40 name="BrAdd1" value="' . $_SESSION['Items']->DelAdd1 . '"></td>
+	<td><input type=text size=42 maxlength=40 name="BrAdd1" value="' . $_SESSION['Items']->DelAdd1 . '"></td>
 </tr>';
 
 echo '<tr>
 	<td>'. _('Delivery Address 2') . ':</td>
-	<td><input type=text size=42 max=40 name="BrAdd2" value="' . $_SESSION['Items']->DelAdd2 . '"></td>
+	<td><input type=text size=42 maxlength=40 name="BrAdd2" value="' . $_SESSION['Items']->DelAdd2 . '"></td>
 </tr>';
 
 echo '<tr>
 	<td>'. _('Delivery Address 3') . ':</td>
-	<td><input type=text size=42 max=40 name="BrAdd3" value="' . $_SESSION['Items']->DelAdd3 . '"></td>
+	<td><input type=text size=42 maxlength=40 name="BrAdd3" value="' . $_SESSION['Items']->DelAdd3 . '"></td>
 </tr>';
 
 echo '<tr>
 	<td>'. _('Delivery Address 4') . ':</td>
-	<td><input type=text size=42 max=40 name="BrAdd4" value="' . $_SESSION['Items']->DelAdd4 . '"></td>
+	<td><input type=text size=42 maxlength=40 name="BrAdd4" value="' . $_SESSION['Items']->DelAdd4 . '"></td>
 </tr>';
 
 echo '<tr>
 	<td>'. _('Delivery Address 5') . ':</td>
-	<td><input type=text size=42 max=40 name="BrAdd5" value="' . $_SESSION['Items']->DelAdd5 . '"></td>
+	<td><input type=text size=42 maxlength=40 name="BrAdd5" value="' . $_SESSION['Items']->DelAdd5 . '"></td>
 </tr>';
 
 echo '<tr>
 	<td>'. _('Delivery Address 6') . ':</td>
-	<td><input type=text size=42 max=40 name="BrAdd6" value="' . $_SESSION['Items']->DelAdd6 . '"></td>
+	<td><input type=text size=42 maxlength=40 name="BrAdd6" value="' . $_SESSION['Items']->DelAdd6 . '"></td>
 </tr>';
 
 echo '<tr>
 	<td>'. _('Contact Phone Number') .':</td>
-	<td><input type=text size=25 max=25 name="PhoneNo" value="' . $_SESSION['Items']->PhoneNo . '"></td>
+	<td><input type=text size=25 maxlength=25 name="PhoneNo" value="' . $_SESSION['Items']->PhoneNo . '"></td>
 </tr>';
 
-echo '<tr><td>' . _('Contact Email') . ':</td><td><input type=text size=40 max=38 name="Email" value="' . $_SESSION['Items']->Email . '"></td></tr>';
+echo '<tr><td>' . _('Contact Email') . ':</td><td><input type=text size=40 maxlength=38 name="Email" value="' . $_SESSION['Items']->Email . '"></td></tr>';
 
 echo '<tr><td>'. _('Customer Reference') .':</td>
-	<td><input type=text size=25 max=25 name="CustRef" value="' . $_SESSION['Items']->CustRef . '"></td>
+	<td><input type=text size=25 maxlength=25 name="CustRef" value="' . $_SESSION['Items']->CustRef . '"></td>
 </tr>';
 
 echo '<tr>

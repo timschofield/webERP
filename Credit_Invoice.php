@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 $PageSecurity =3;
 
 
@@ -320,7 +320,7 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 
 	$DisplayLineTotal = number_format($LineTotal,2);
 	$j++;
-	echo "<TD><INPUT tabindex=".$j." TYPE=TEXT NAME='Price_" . $LnItm->LineNumber . "' MAXLENGTH=6 SIZE=6 VALUE=" . $LnItm->Price . "></TD>
+	echo "<TD><INPUT tabindex=".$j." TYPE=TEXT NAME='Price_" . $LnItm->LineNumber . "' MAXLENGTH=12 SIZE=6 VALUE=" . $LnItm->Price . "></TD>
 	<TD><INPUT tabindex=".$j." TYPE=TEXT NAME='Discount_" . $LnItm->LineNumber . "' MAXLENGTH=3 SIZE=3 VALUE=" . ($LnItm->DiscountPercent * 100) . "></TD>
 	<TD ALIGN=RIGHT>$DisplayLineTotal</TD>";
 	
