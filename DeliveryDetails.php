@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.58 $ */
+/* $Revision: 1.59 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -319,61 +319,65 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 	$ConfDate = FormatDateforSQL($_SESSION['Items']->ConfirmedDate);
 
 	$Result = DB_Txn_Begin($db);
-
+	
+	$OrderNo = GetNextTransNo(30, $db);
+	
 	$HeaderSQL = 'INSERT INTO salesorders (
-				debtorno,
-				branchcode,
-				customerref,
-				comments,
-				orddate,
-				ordertype,
-				shipvia,
-				deliverto,
-				deladd1,
-				deladd2,
-				deladd3,
-				deladd4,
-				deladd5,
-				deladd6,
-				contactphone,
-				contactemail,
-				freightcost,
-				fromstkloc,
-				deliverydate,
-				quotedate,
-				confirmeddate,
-				quotation,
-                deliverblind)
-			VALUES (
-				'."'" . $_SESSION['Items']->DebtorNo . "'".',
-				'."'" . $_SESSION['Items']->Branch . "'".',
-				'."'". DB_escape_string($_SESSION['Items']->CustRef) ."'".',
-				'."'". DB_escape_string($_SESSION['Items']->Comments) ."'".',
-				'."'" . Date("Y-m-d H:i") . "'".',
-				'."'" . $_SESSION['Items']->DefaultSalesType . "'".',
-				' . $_POST['ShipVia'] .',
-				'."'". DB_escape_string($_SESSION['Items']->DeliverTo) . "'".',
-				'."'" . DB_escape_string($_SESSION['Items']->DelAdd1) . "'".',
-				'."'" . DB_escape_string($_SESSION['Items']->DelAdd2) . "'".',
-				'."'" . DB_escape_string($_SESSION['Items']->DelAdd3) . "'".',
-				'."'" . DB_escape_string($_SESSION['Items']->DelAdd4) . "'".',
-				'."'" . DB_escape_string($_SESSION['Items']->DelAdd5) . "'".',
-				'."'" . DB_escape_string($_SESSION['Items']->DelAdd6) . "'".',
-				'."'" . $_SESSION['Items']->PhoneNo . "'".',
-				'."'" . $_SESSION['Items']->Email . "'".',
-				' . $_SESSION['Items']->FreightCost .',
-				'."'" . $_SESSION['Items']->Location ."'".',
-				'."'" . $DelDate . "'".',
-				'."'" . $QuotDate . "'".',
-				'."'" . $ConfDate . "'".',
-				' . $_SESSION['Items']->Quotation . ',
-				' . $_SESSION['Items']->DeliverBlind .'
-                )';
+								orderno,
+								debtorno,
+								branchcode,
+								customerref,
+								comments,
+								orddate,
+								ordertype,
+								shipvia,
+								deliverto,
+								deladd1,
+								deladd2,
+								deladd3,
+								deladd4,
+								deladd5,
+								deladd6,
+								contactphone,
+								contactemail,
+								freightcost,
+								fromstkloc,
+								deliverydate,
+								quotedate,
+								confirmeddate,
+								quotation,
+								deliverblind)
+							VALUES (
+								'. $OrderNo . ',
+								'."'" . $_SESSION['Items']->DebtorNo . "'".',
+								'."'" . $_SESSION['Items']->Branch . "'".',
+								'."'". DB_escape_string($_SESSION['Items']->CustRef) ."'".',
+								'."'". DB_escape_string($_SESSION['Items']->Comments) ."'".',
+								'."'" . Date("Y-m-d H:i") . "'".',
+								'."'" . $_SESSION['Items']->DefaultSalesType . "'".',
+								' . $_POST['ShipVia'] .',
+								'."'". DB_escape_string($_SESSION['Items']->DeliverTo) . "'".',
+								'."'" . DB_escape_string($_SESSION['Items']->DelAdd1) . "'".',
+								'."'" . DB_escape_string($_SESSION['Items']->DelAdd2) . "'".',
+								'."'" . DB_escape_string($_SESSION['Items']->DelAdd3) . "'".',
+								'."'" . DB_escape_string($_SESSION['Items']->DelAdd4) . "'".',
+								'."'" . DB_escape_string($_SESSION['Items']->DelAdd5) . "'".',
+								'."'" . DB_escape_string($_SESSION['Items']->DelAdd6) . "'".',
+								'."'" . $_SESSION['Items']->PhoneNo . "'".',
+								'."'" . $_SESSION['Items']->Email . "'".',
+								' . $_SESSION['Items']->FreightCost .',
+								'."'" . $_SESSION['Items']->Location ."'".',
+								'."'" . $DelDate . "'".',
+								'."'" . $QuotDate . "'".',
+								'."'" . $ConfDate . "'".',
+								' . $_SESSION['Items']->Quotation . ',
+								' . $_SESSION['Items']->DeliverBlind .'
+								)';
 
 	$ErrMsg = _('The order cannot be added because');
 	$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
 
-	$OrderNo = GetNextTransNo(30, $db);
+	
 	$StartOf_LineItemsSQL = 'INSERT INTO salesorderdetails (
 						orderlineno,
 						orderno,

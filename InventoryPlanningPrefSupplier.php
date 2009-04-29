@@ -385,7 +385,7 @@ if (isset($_POST['PrintPDF'])){
 		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 60, $FontSize, $InventoryPlan['stockid'], 'left');
 		$LeftOvers = $pdf->addTextWrap(100, $YPos, 150,6,$InventoryPlan['description'],'left');
 		$AverageOfLast4Months = $SalesRow['4mthtotal']/4;
-		$LeftOvers = $pdf->addTextWrap(251, $YPos, 50,$FontSize,number_format($AverageOfLast4Months,0),'right');
+		$LeftOvers = $pdf->addTextWrap(251, $YPos, 50,$FontSize,number_format($AverageOfLast4Months,1),'right');
 		
 		$MaxMthSales = Max($SalesRow['prd1'], $SalesRow['prd2'], $SalesRow['prd3'], $SalesRow['prd4']);
 		$LeftOvers = $pdf->addTextWrap(309, $YPos, 50,$FontSize,number_format($MaxMthSales,0),'right');
