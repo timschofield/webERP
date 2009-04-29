@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 11;
 
@@ -355,12 +355,12 @@ if (! isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 	
 	echo '<input type="submit" name="UpdateTypes" style="visibility:hidden;width:1px" value="Not Seen">';
-	if (isset($_POST['StockType']) and $_POST['StockType']!='L') {
-		$Result = $BSAccountsResult;
-		echo '<tr><td>' . _('Stock GL Code');
-	} else {
+	if (isset($_POST['StockType']) and $_POST['StockType']=='L') {
 		$Result = $PnLAccountsResult;
 		echo '<tr><td>' . _('Recovery GL Code');
+	} else {
+		$Result = $BSAccountsResult;
+		echo '<tr><td>' . _('Stock GL Code');
 	}
 	echo ':</td><td><select name="StockAct">';
 	
