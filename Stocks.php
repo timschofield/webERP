@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.69 $ */
+/* $Revision: 1.70 $ */
 
 $PageSecurity = 11;
 
@@ -30,7 +30,7 @@ if (isset($StockID)) {
 ?>
 
 <?php
-echo '<a href="' . $rootpath . '/SelectProduct.php?' . SID . '">' . _('Back to Items') . '</A><BR>' . "\n";
+echo '<a href="' . $rootpath . '/SelectProduct.php?' . SID . '">' . _('Back to Items') . '</a><br>' . "\n";
 
 
 if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
@@ -159,6 +159,18 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The item can only be serialised if there is lot control enabled already') . '. ' . _('Batch control') . ' - ' . _('with any number of items in a lot/bundle/roll is enabled when controlled is enabled') . '. ' . _('Serialised control requires that only one item is in the batch') . '. ' . _('For serialised control') . ', ' . _('both controlled and serialised must be enabled'),'error');
 		$Errors[$i] = 'Serialised';
+		$i++;
+	}
+	if ($_POST['NextSerialNo']!=0 AND $_POST['Serialised']==0){
+		$InputError = 1;
+		prnMsg(_('The item can only have automatically generated serial numbers if it is a serialised item'),'error');
+		$Errors[$i] = 'NextSerialNo';
+		$i++;
+	}
+	if ($_POST['NextSerialNo']!=0 AND $_POST['MBFlag']!='M'){
+		$InputError = 1;
+		prnMsg(_('The item can only have automatically generated serial numbers if it is a manufactured item'),'error');
+		$Errors[$i] = 'NextSerialNo';
 		$i++;
 	}
 	if (($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K' OR $_POST['MBFlag']=='D' OR $_POST['MBFlag']=='G') AND $_POST['Controlled']==1){
@@ -307,7 +319,8 @@ if (isset($_POST['submit'])) {
 							decimalplaces=" . $_POST['DecimalPlaces'] . ",
 							appendfile='" . $_POST['ItemPDF'] . "',
 							shrinkfactor=" . $_POST['ShrinkFactor'] . ",
-							pansize=" . $_POST['Pansize'] . "
+							pansize=" . $_POST['Pansize'] . ",
+							nextserialno=" . $_POST['NextSerialNo'] . "
 					WHERE stockid='$StockID'";
 
 				$ErrMsg = _('The stock item could not be updated because');
@@ -521,10 +534,10 @@ if (isset($_POST['submit'])) {
 		$result = DB_Txn_Commit($db);
 
 		prnMsg(_('Deleted the stock master record for') . ' ' . $StockID . '....' .
-		'<BR>. . ' . _('and all the location stock records set up for the part') .
-		'<BR>. . .' . _('and any bill of material that may have been set up for the part') .
-		'<BR> . . . .' . _('and any purchasing data that may have been set up for the part') .
-		'<BR> . . . . .' . _('and any prices that may have been set up for the part'),'success');
+		'<br>. . ' . _('and all the location stock records set up for the part') .
+		'<br>. . .' . _('and any bill of material that may have been set up for the part') .
+		'<br> . . . .' . _('and any purchasing data that may have been set up for the part') .
+		'<br> . . . . .' . _('and any prices that may have been set up for the part'),'success');
 		unset($_POST['LongDescription']);
 		unset($_POST['Description']);
 		unset($_POST['EOQ']);
@@ -562,28 +575,29 @@ if (!isset($StockID) or $StockID=='') {
 	$New = true;
 	echo '<input type="hidden" name="New" value="1">'. "\n";
 
-	echo '<TR><TD>'. _('Item Code'). ':</TD><TD><INPUT ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  TYPE="TEXT" NAME="StockID" SIZE=21 MAXLENGTH=20></TD></TR>'. "\n";
+	echo '<tr><td>'. _('Item Code'). ':</td><td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="StockID" size=21 maxlength=20></td></tr>'. "\n";
 
 } elseif (!isset($_POST['UpdateCategories']) and $InputError!=1) { // Must be modifying an existing item and no changes made yet
 
 	$sql = "SELECT stockid,
-			description,
-			longdescription,
-			categoryid,
-			units,
-			mbflag,
-			discontinued,
-			controlled,
-			serialised,
-			perishable,
-			eoq,
-			volume,
-			kgs,
-			barcode,
-			discountcategory,
-			taxcatid,
-			decimalplaces,
-			appendfile
+					description,
+					longdescription,
+					categoryid,
+					units,
+					mbflag,
+					discontinued,
+					controlled,
+					serialised,
+					perishable,
+					eoq,
+					volume,
+					kgs,
+					barcode,
+					discountcategory,
+					taxcatid,
+					decimalplaces,
+					appendfile,
+					nextserialno
 		FROM stockmaster
 		WHERE stockid = '$StockID'";
 
@@ -606,15 +620,14 @@ if (!isset($StockID) or $StockID=='') {
 	$_POST['DiscountCategory']  = $myrow['discountcategory'];
 	$_POST['TaxCat'] = $myrow['taxcatid'];
 	$_POST['DecimalPlaces'] = $myrow['decimalplaces'];
-    // add PDF attachment code
     $_POST['ItemPDF']  = $myrow['appendfile'];
-    // end PDF attachment code
+	$_POST['NextSerialNo'] = $myrow['nextserialno'];
 
-	echo '<TR><TD>' . _('Item Code') . ':</TD><TD>'.$StockID.'</TD></TR>'. "\n";
+	echo '<tr><td>' . _('Item Code') . ':</td><td>'.$StockID.'</td></tr>'. "\n";
 	echo '<input type="Hidden" name="StockID" value='.$StockID.'>'. "\n";
 
 } else { // some changes were made to the data so don't re-set form variables to DB ie the code above
-	echo '<TR><TD>' . _('Item Code') . ':</TD><TD>'.$StockID.'</TD></TR>';
+	echo '<tr><td>' . _('Item Code') . ':</td><td>'.$StockID.'</td></tr>';
 	echo "<input type='Hidden' name='StockID' value='$StockID'>";
 }
 
@@ -623,14 +636,14 @@ if (isset($_POST['Description'])) {
 } else {
 	$Description ='';
 }
-echo '<TR><TD>' . _('Part Description') . ' (' . _('short') . '):</TD><TD><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Description" SIZE=52 MAXLENGTH=50 value="' . htmlentities($Description,ENT_QUOTES,_('ISO-8859-1')) . '"></TD></TR>'."\n";
+echo '<tr><td>' . _('Part Description') . ' (' . _('short') . '):</td><td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Description" SIZE=52 MAXLENGTH=50 value="' . htmlentities($Description,ENT_QUOTES,_('ISO-8859-1')) . '"></TD></TR>'."\n";
 
 if (isset($_POST['LongDescription'])) {
 	$LongDescription = AddCarriageReturns($_POST['LongDescription']);
 } else {
 	$LongDescription ='';
 }
-echo '<TR><TD>' . _('Part Description') . ' (' . _('long') . '):</TD><TD><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols=40 rows=4>' . stripslashes($LongDescription) . '</textarea></TD></TR>'."\n";
+echo '<tr><td>' . _('Part Description') . ' (' . _('long') . '):</td><td><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols=40 rows=4>' . stripslashes($LongDescription) . '</textarea></td></tr>'."\n";
 
 // Generate selection drop down from pdf_append directory - by emdx,
 // developed with examples from http://au2.php.net/manual/en/function.opendir.php
@@ -721,140 +734,149 @@ if (!isset($_POST['Pansize'])) {
 if (!isset($_POST['ShrinkFactor'])) {
 	$_POST['ShrinkFactor']=0;
 }
+if (!isset($_POST['NextSerialNo'])) {
+	$_POST['NextSerialNo']=0;
+}
 
 
-echo '<TR><TD>' . _('Economic Order Quantity') . ':</TD><TD><input ' . (in_array('EOQ',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="EOQ" SIZE=12 MAXLENGTH=10 Value="' . $_POST['EOQ'] . '"></TD></TR>';
+echo '<tr><td>' . _('Economic Order Quantity') . ':</td><td><input ' . (in_array('EOQ',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="EOQ" SIZE=12 MAXLENGTH=10 Value="' . $_POST['EOQ'] . '"></TD></TR>';
 
-echo '<TR><TD>' . _('Packaged Volume (metres cubed)') . ':</TD><TD><input ' . (in_array('Volume',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="Volume" SIZE=12 MAXLENGTH=10 value="' . $_POST['Volume'] . '"></TD></TR>';
+echo '<tr><td>' . _('Packaged Volume (metres cubed)') . ':</td><td><input ' . (in_array('Volume',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="Volume" SIZE=12 MAXLENGTH=10 value="' . $_POST['Volume'] . '"></TD></TR>';
 
-echo '<TR><TD>' . _('Packaged Weight (KGs)') . ':</TD><TD><input ' . (in_array('KGS',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="KGS" SIZE=12 MAXLENGTH=10 value="' . $_POST['KGS'] . '"></TD></TR>';
+echo '<tr><td>' . _('Packaged Weight (KGs)') . ':</td><td><input ' . (in_array('KGS',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="KGS" SIZE=12 MAXLENGTH=10 value="' . $_POST['KGS'] . '"></TD></TR>';
 
-echo '<TR><TD>' . _('Units of Measure') . ':</TD><TD><SELECT ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="Units">';
+echo '<tr><td>' . _('Units of Measure') . ':</td><td><select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="Units">';
 
 
 $sql = 'SELECT unitname FROM unitsofmeasure ORDER by unitname';
 $UOMResult = DB_query($sql,$db);
 
 if (!isset($_POST['Units'])) {
-	$UOMrow['unitname']='each';
+	$UOMrow['unitname']=_('each');
 }
 while( $UOMrow = DB_fetch_array($UOMResult) ) {
      if (isset($_POST['Units']) and $_POST['Units']==$UOMrow['unitname']){
-	    echo "<OPTION SELECTED Value='" . $UOMrow['unitname'] . "'>" . $UOMrow['unitname'];
+	    echo '<option selected value="' . $UOMrow['unitname'] . '">' . $UOMrow['unitname'] . '</option>';
      } else {
-	    echo "<OPTION Value='" . $UOMrow['unitname'] . "'>" . $UOMrow['unitname'];
+	    echo '<option value="' . $UOMrow['unitname'] . '">' . $UOMrow['unitname']  . '</option>';
      }
 }
 
-echo '</SELECT></TD></TR>';
+echo '</select></td></tr>';
 
-echo '<TR><TD>' . _('Assembly, Kit, Manufactured or Service/Labour') . ':</TD><TD><SELECT name="MBFlag">';
+echo '<tr><td>' . _('Assembly, Kit, Manufactured or Service/Labour') . ':</td><td><select name="MBFlag">';
 if ($_POST['MBFlag']=='A'){
-	echo '<OPTION SELECTED VALUE="A">' . _('Assembly');
+	echo '<option selected value="A">' . _('Assembly') . '</option>';
 } else {
-	echo '<OPTION VALUE="A">' . _('Assembly');
+	echo '<option value="A">' . _('Assembly') . '</option>';
 }
 if (!isset($_POST['MBFlag']) or $_POST['MBFlag']=='K'){
-	echo '<OPTION SELECTED VALUE="K">' . _('Kit');
+	echo '<option selected value="K">' . _('Kit') . '</option>';
 } else {
-	echo '<OPTION VALUE="K">' . _('Kit');
+	echo '<option value="K">' . _('Kit') . '</option>';
 }
 if (!isset($_POST['MBFlag']) or $_POST['MBFlag']=='M'){
-	echo '<OPTION SELECTED VALUE="M">' . _('Manufactured');
+	echo '<option selected value="M">' . _('Manufactured') . '</option>';
 } else {
-	echo '<OPTION VALUE="M">' . _('Manufactured');
+	echo '<option value="M">' . _('Manufactured') . '</option>';
 }
 if (!isset($_POST['MBFlag']) or $_POST['MBFlag']=='G' OR !isset($_POST['MBFlag']) OR $_POST['MBFlag']==''){
-	echo '<OPTION SELECTED VALUE="G">' . _('Phantom');
+	echo '<option selected value="G">' . _('Phantom') . '</option>';
 } else {
-	echo '<OPTION VALUE="G">' . _('Phantom');
+	echo '<option value="G">' . _('Phantom') . '</option>';
 }
 if (!isset($_POST['MBFlag']) or $_POST['MBFlag']=='B' OR !isset($_POST['MBFlag']) OR $_POST['MBFlag']==''){
-	echo '<OPTION SELECTED VALUE="B">' . _('Purchased');
+	echo '<option selected value="B">' . _('Purchased') . '</option>';
 } else {
-	echo '<OPTION VALUE="B">' . _('Purchased');
+	echo '<option value="B">' . _('Purchased') . '</option>';
 }
 
 if (isset($_POST['MBFlag']) and $_POST['MBFlag']=='D'){
-	echo '<OPTION SELECTED VALUE="D">' . _('Service/Labour');
+	echo '<option selected value="D">' . _('Service/Labour') . '</option>';
 } else {
-	echo '<OPTION VALUE="D">' . _('Service/Labour');
+	echo '<option value="D">' . _('Service/Labour') . '</option>';
 }
 
-echo '</SELECT></TD></TR>';
+echo '</select></td></tr>';
 
-echo '<TR><TD>' . _('Current or Obsolete') . ':</TD><TD><SELECT name="Discontinued">';
+echo '<tr><td>' . _('Current or Obsolete') . ':</td><td><select name="Discontinued">';
 if ($_POST['Discontinued']==0){
-	echo '<OPTION SELECTED VALUE=0>' . _('Current');
+	echo '<option selected value=0>' . _('Current') . '</option>';
 } else {
-	echo '<OPTION VALUE=0>' . _('Current');
+	echo '<option value=0>' . _('Current') . '</option>';
 }
 if ($_POST['Discontinued']==1){
-	echo '<OPTION SELECTED VALUE=1>' . _('Obsolete');
+	echo '<option selected value=1>' . _('Obsolete') . '</option>';
 } else {
-	echo '<OPTION VALUE=1>' . _('Obsolete');
+	echo '<option value=1>' . _('Obsolete') . '</option>';
 }
-echo '</SELECT></TD></TR>';
+echo '</select></td></tr>';
 
-echo '<TR><TD>' . _('Batch, Serial or Lot Control') . ':</TD><TD><SELECT name="Controlled">';
+echo '<tr><td>' . _('Batch, Serial or Lot Control') . ':</td><td><select name="Controlled">';
 
 if ($_POST['Controlled']==0){
-	echo '<OPTION SELECTED VALUE=0>' . _('No Control');
+	echo '<option selected value=0>' . _('No Control') . '</option>';
 } else {
-        echo '<OPTION VALUE=0>' . _('No Control');
+        echo '<option value=0>' . _('No Control') . '</option>';
 }
 if ($_POST['Controlled']==1){
-	echo '<OPTION SELECTED VALUE=1>' . _('Controlled');
+	echo '<option selected value=1>' . _('Controlled'). '</option>';
 } else {
-	echo '<OPTION VALUE=1>' . _('Controlled');
+	echo '<option value=1>' . _('Controlled'). '</option>';
 }
-echo '</SELECT></TD></TR>';
+echo '</select></td></tr>';
 
-echo '<TR><TD>' . _('Serialised') . ':</TD><TD><SELECT ' . (in_array('Serialised',$Errors) ?  'class="selecterror"' : '' ) .'  name="Serialised">';
+echo '<tr><td>' . _('Serialised') . ':</td><td><select ' . (in_array('Serialised',$Errors) ?  'class="selecterror"' : '' ) .'  name="Serialised">';
 
 if ($_POST['Serialised']==0){
-        echo '<OPTION SELECTED VALUE=0>' . _('No');
+        echo '<Option selected value=0>' . _('No'). '</option>';
 } else {
-        echo '<OPTION VALUE=0>' . _('No');
+        echo '<option value=0>' . _('No'). '</option>';
 }
 if ($_POST['Serialised']==1){
-        echo '<OPTION SELECTED VALUE=1>' . _('Yes');
+        echo '<option selected value=1>' . _('Yes') . '</option>';
 } else {
-        echo '<OPTION VALUE=1>' . _('Yes');
+        echo '<option value=1>' . _('Yes'). '</option>';
 }
-echo '</SELECT><i>' . _('Note') . ', ' . _('this has no effect if the item is not Controlled') . '</i></TD></TR>';
+echo '</select><i>' . _('Note') . ', ' . _('this has no effect if the item is not Controlled') . '</i></td></tr>';
 
-echo '<TR><TD>' . _('Perishable') . ':</TD><TD><SELECT name="Perishable">';
+if ($_POST['Serialised']==1 AND $_POST['MBFlag']=='M'){
+	echo '<tr><td>' . _('Next Serial No (>0 for auto numbering)') . ':</td><td><input ' . (in_array('NextSerialNo',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="NextSerialNo" size=15 maxlength=15 value="' . $_POST['NextSerialNo'] . '"><td></tr>';
+} else {
+	echo '<input type="hidden" name="NextSerialNo" value="0">';
+}	
+
+echo '<tr><td>' . _('Perishable') . ':</td><td><select name="Perishable">';
 
 if (!isset($_POST['Perishable']) or $_POST['Perishable']==0){
-        echo '<OPTION SELECTED VALUE=0>' . _('No');
+        echo '<option selected value=0>' . _('No'). '</option>';
 } else {
-        echo '<OPTION VALUE=0>' . _('No');
+        echo '<option value=0>' . _('No'). '</option>';
 }
 if (isset($_POST['Perishable']) and $_POST['Perishable']==1){
-        echo '<OPTION SELECTED VALUE=1>' . _('Yes');
+        echo '<option selected value=1>' . _('Yes'). '</option>';
 } else {
-        echo '<OPTION VALUE=1>' . _('Yes');
+        echo '<option value=1>' . _('Yes'). '</option>';
 }
-echo '</SELECT></TD></TR>';
+echo '</select></td></tr>';
 
-echo '<TR><TD>' . _('Decimal Places for display Quantity') . ':</TD><TD><input type="Text" name="DecimalPlaces" SIZE=1 MAXLENGTH=1 value="' . $_POST['DecimalPlaces'] . '"><TD></TR>';
+echo '<tr><td>' . _('Decimal Places for display Quantity') . ':</td><td><input type="text" name="DecimalPlaces" size=1 maxlength=1 value="' . $_POST['DecimalPlaces'] . '"><td></tr>';
 
 if (isset($_POST['BarCode'])) {
 	$BarCode = $_POST['BarCode'];
 } else {
 	$BarCode='';
 }
-echo '<TR><TD>' . _('Bar Code') . ':</TD><TD><input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="Text" name="BarCode" SIZE=22 MAXLENGTH=20 value="' . $BarCode . '"></TD></TR>';
+echo '<tr><td>' . _('Bar Code') . ':</td><td><input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="Text" name="BarCode" SIZE=22 MAXLENGTH=20 value="' . $BarCode . '"></TD></TR>';
 
 if (isset($_POST['DiscountCategory'])) {
 	$DiscountCategory = $_POST['DiscountCategory'];
 } else {
 	$DiscountCategory='';
 }
-echo '<TR><TD>' . _('Discount Category') . ':</TD><TD><input type="Text" name="DiscountCategory" SIZE=2 MAXLENGTH=2 value="' . $DiscountCategory . '"></TD></TR>';
+echo '<tr><td>' . _('Discount Category') . ':</td><td><input type="Text" name="DiscountCategory" SIZE=2 MAXLENGTH=2 value="' . $DiscountCategory . '"></TD></TR>';
 
-echo '<TR><TD>' . _('Tax Category') . ':</TD><TD><SELECT NAME="TaxCat">';
+echo '<tr><td>' . _('Tax Category') . ':</td><td><select name="TaxCat">';
 $sql = 'SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname';
 $result = DB_query($sql, $db);
 
@@ -864,9 +886,9 @@ if (!isset($_POST['TaxCat'])){
 
 while ($myrow = DB_fetch_array($result)) {
 	if ($_POST['TaxCat'] == $myrow['taxcatid']){
-		echo '<OPTION SELECTED VALUE=' . $myrow['taxcatid'] . '>' . $myrow['taxcatname'];
+		echo '<option selected value=' . $myrow['taxcatid'] . '>' . $myrow['taxcatname'] . '</option>';
 	} else {
-		echo '<OPTION VALUE=' . $myrow['taxcatid'] . '>' . $myrow['taxcatname'];
+		echo '<option value=' . $myrow['taxcatid'] . '>' . $myrow['taxcatname'] . '</option>';
 	}
 } //end while loop
 
@@ -971,11 +993,11 @@ if (isset($New)) {
 
 	echo '<input type="submit" name="submit" value="' . _('Update') . '">';
 	echo '<input type="submit" name="UpdateCategories" style="visibility:hidden;width:1px" value="' . _('Categories') . '">';
-	echo '<P>';
+	echo '<p>';
 	prnMsg( _('Only click the Delete button if you are sure you wish to delete the item!') .  _('Checks will be made to ensure that there are no stock movements, sales analysis records, sales order items or purchase order items for the item') . '. ' . _('No deletions will be allowed if they exist'), 'warn', _('WARNING'));
-	echo '<P><input type="Submit" name="delete" value="' . _('Delete This Item') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';
+	echo '<p><input type="Submit" name="delete" value="' . _('Delete This Item') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';
 }
 
-echo '</FORM></CENTER>';
+echo '</form></center>';
 include('includes/footer.inc');
 ?>

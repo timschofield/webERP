@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 /*need to allow this script to run from Cron or windows scheduler */
 $AllowAnyone = true;
@@ -66,7 +66,7 @@ if (DB_num_rows($RecurrOrdersDueResult)==0){
 	exit;
 }
 
-echo '<BR>The number of recurring orders to process is : ' . DB_num_rows($RecurrOrdersDueResult);
+prnMsg(_('The number of recurring orders to process is') .' : ' . DB_num_rows($RecurrOrdersDueResult),'info');
 
 while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 
@@ -81,66 +81,67 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 
 	$DelDate = FormatDateforSQL(DateAdd(ConvertSQLDate($RecurrOrderRow['lastrecurrence']),'d',(365/$RecurrOrderRow['frequency'])));
 
-	echo '<BR>Date calculated for the next recurrence was: ' . $DelDate;
-
+	echo '<BR>' . _('Date calculated for the next recurrence was') .': ' . $DelDate;
+	$OrderNo = GetNextTransNo(30, $db);
+	
 	$HeaderSQL = "INSERT INTO salesorders (
-				debtorno,
-				branchcode,
-				customerref,
-				comments,
-				orddate,
-				ordertype,
-				shipvia,
-				deliverto,
-				deladd1,
-				deladd2,
-				deladd3,
-				deladd4,
-				deladd5,
-				deladd6,
-				contactphone,
-				contactemail,
-				freightcost,
-				fromstkloc,
-				deliverydate )
-			VALUES (
-				'" . $RecurrOrderRow['debtorno'] . "',
-				'" . $RecurrOrderRow['branchcode'] . "',
-				'". $RecurrOrderRow['customerref'] ."',
-				'". $RecurrOrderRow['comments'] ."',
-				'" . $DelDate . "',
-				'" . $RecurrOrderRow['ordertype'] . "',
-				" . $RecurrOrderRow['shipvia'] .",
-				'" . $RecurrOrderRow['deliverto'] . "',
-				'" . $RecurrOrderRow['deladd1'] . "',
-				'" . $RecurrOrderRow['deladd2'] . "',
-				'" . $RecurrOrderRow['deladd3'] . "',
-				'" . $RecurrOrderRow['deladd4'] . "',
-				'" . $RecurrOrderRow['deladd5'] . "',
-				'" . $RecurrOrderRow['deladd6'] . "',
-				'" . $RecurrOrderRow['contactphone'] . "',
-				'" . $RecurrOrderRow['contactemail'] . "',
-				" . $RecurrOrderRow['freightcost'] .",
-				'" . $RecurrOrderRow['fromstkloc'] ."',
-				'" . $DelDate . "')";
+							orderno,
+							debtorno,
+							branchcode,
+							customerref,
+							comments,
+							orddate,
+							ordertype,
+							shipvia,
+							deliverto,
+							deladd1,
+							deladd2,
+							deladd3,
+							deladd4,
+							deladd5,
+							deladd6,
+							contactphone,
+							contactemail,
+							freightcost,
+							fromstkloc,
+							deliverydate )
+						VALUES (
+							' . $OrderNo . ',
+							'" . $RecurrOrderRow['debtorno'] . "',
+							'" . $RecurrOrderRow['branchcode'] . "',
+							'". $RecurrOrderRow['customerref'] ."',
+							'". $RecurrOrderRow['comments'] ."',
+							'" . $DelDate . "',
+							'" . $RecurrOrderRow['ordertype'] . "',
+							" . $RecurrOrderRow['shipvia'] .",
+							'" . $RecurrOrderRow['deliverto'] . "',
+							'" . $RecurrOrderRow['deladd1'] . "',
+							'" . $RecurrOrderRow['deladd2'] . "',
+							'" . $RecurrOrderRow['deladd3'] . "',
+							'" . $RecurrOrderRow['deladd4'] . "',
+							'" . $RecurrOrderRow['deladd5'] . "',
+							'" . $RecurrOrderRow['deladd6'] . "',
+							'" . $RecurrOrderRow['contactphone'] . "',
+							'" . $RecurrOrderRow['contactemail'] . "',
+							" . $RecurrOrderRow['freightcost'] .",
+							'" . $RecurrOrderRow['fromstkloc'] ."',
+							'" . $DelDate . "')";
 
 	$ErrMsg = _('The order cannot be added because');
 	$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg,true);
-
-	$OrderNo = GetNextTransNo(30, $db);
 
 	$EmailText = _('A new order has been created from a recurring order template for customer') .' ' .  $RecurrOrderRow['debtorno'] . ' ' . $RecurrOrderRow['branchcode'] . "\n" . _('The order number is:') . ' ' . $OrderNo;
 
 	/*need to look up RecurringOrder from the template and populate the line RecurringOrder array with the sales order details records */
 	$LineItemsSQL = "SELECT recurrsalesorderdetails.stkcode,
-				recurrsalesorderdetails.unitprice,
-				recurrsalesorderdetails.quantity,
-				recurrsalesorderdetails.discountpercent,
-				recurrsalesorderdetails.narrative,
-				stockmaster.taxcatid
-			FROM recurrsalesorderdetails INNER JOIN stockmaster
-				ON recurrsalesorderdetails.stkcode = stockmaster.stockid
-			WHERE recurrsalesorderdetails.recurrorderno =" . $RecurrOrderRow['recurrorderno'];
+							recurrsalesorderdetails.unitprice,
+							recurrsalesorderdetails.quantity,
+							recurrsalesorderdetails.discountpercent,
+							recurrsalesorderdetails.narrative,
+							stockmaster.taxcatid
+						FROM recurrsalesorderdetails INNER JOIN stockmaster
+							ON recurrsalesorderdetails.stkcode = stockmaster.stockid
+						WHERE recurrsalesorderdetails.recurrorderno =" . $RecurrOrderRow['recurrorderno'];
 
 	$ErrMsg = _('The line items of the recurring order cannot be retrieved because');
 	$LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg);
@@ -152,23 +153,23 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$OrderTotal =0; //intialise
 		$OrderLineTotal =0;
 		$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (
-						orderno,
-						orderlineno,
-						stkcode,
-						unitprice,
-						quantity,
-						discountpercent,
-						narrative)
-					VALUES (" . $OrderNo . ', ';
+																orderno,
+																orderlineno,
+																stkcode,
+																unitprice,
+																quantity,
+																discountpercent,
+																narrative)
+															VALUES (" . $OrderNo . ', ';
 
 		while ($RecurrOrderLineRow=DB_fetch_array($LineItemsResult)) {
 			$LineItemsSQL = $StartOf_LineItemsSQL .
-					' ' . $LineCounter . ",
-					'" . $RecurrOrderLineRow['stkcode'] . "',
-					". $RecurrOrderLineRow['unitprice'] . ',
-					' . $RecurrOrderLineRow['quantity'] . ',
-					' . floatval($RecurrOrderLineRow['discountpercent']) . ",
-					'" . $RecurrOrderLineRow['narrative'] . "')";
+												' ' . $LineCounter . ",
+												'" . $RecurrOrderLineRow['stkcode'] . "',
+												". $RecurrOrderLineRow['unitprice'] . ',
+												' . $RecurrOrderLineRow['quantity'] . ',
+												' . floatval($RecurrOrderLineRow['discountpercent']) . ",
+												'" . $RecurrOrderLineRow['narrative'] . "')";
 
 			$Ins_LineItemResult = DB_query($LineItemsSQL,$db,_('Could not insert the order lines from the recurring order template'),true);	/*Populating a new order line items*/
 			$LineCounter ++;
@@ -191,10 +192,10 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		/* Now Get the area where the sale is to from the branches table */
 
 		$SQL = "SELECT area,
-				defaultshipvia
-			FROM custbranch
-			WHERE custbranch.debtorno ='". $RecurrOrderRow['debtorno'] . "'
-			AND custbranch.branchcode = '" . $RecurrOrderRow['branchcode'] . "'";
+						defaultshipvia
+				FROM custbranch
+				WHERE custbranch.debtorno ='". $RecurrOrderRow['debtorno'] . "'
+				AND custbranch.branchcode = '" . $RecurrOrderRow['branchcode'] . "'";
 
 		$ErrMsg = _('Unable to determine the area where the sale is to, from the customer branches table, please select an area for this branch');
 		$Result = DB_query($SQL,$db, $ErrMsg);
@@ -224,8 +225,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
 	/*Start an SQL transaction */
-		$SQL = "BEGIN";
-		$Result = DB_query($SQL,$db);
+		$result = DB_Txn_Begin($db);
 
 		$TotalFXNetInvoice = 0;
 		$TotalFXTax = 0;
@@ -668,12 +668,6 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$DebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
 
 
-
-
-
-
-
-
 		$SQL = 'INSERT INTO debtortranstaxes (debtortransid,
 							taxauthid,
 							taxamount)
@@ -685,14 +679,9 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$DbgMsg = _('The following SQL to insert the debtor transaction taxes record was used');
  		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
+		$Result = DB_Txn_Commit($db);
 
-
-
-
-		$SQL='COMMIT';
-		$Result = DB_query($SQL,$db);
-
-		echo _('Invoice number'). ' '. $InvoiceNo .' '. _('processed'). '<BR>';
+		prnMsg(_('Invoice number'). ' '. $InvoiceNo .' '. _('processed'),'success');
 
 		$EmailText .= "\n" . _('This recurring order was set to produce the invoice automatically on invoice number') . ' ' . $InvoiceNo;
 	} /*end if the recurring order is set to auto invoice */
@@ -709,7 +698,6 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 	}
 
 }/*end while there are recurring orders due to have a new order created */
-
 
 include('includes/footer.inc');
 ?>
