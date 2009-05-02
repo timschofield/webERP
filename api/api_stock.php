@@ -274,6 +274,11 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
+		$PageSecurity =11; //The authorisation required to go to the stock modification script
+		if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) 
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
 		foreach ($StockItemDetails as $key => $value) {
 			$StockItemDetails[$key] = DB_escape_string($value);
 		}
