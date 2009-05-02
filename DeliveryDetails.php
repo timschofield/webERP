@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.59 $ */
+/* $Revision: 1.60 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -404,6 +404,15 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 					'."'" . FormatDateForSQL($StockItem->ItemDue) . "'".'
 				)';
 		$Ins_LineItemResult = DB_query($LineItemsSQL,$db);
+		
+		/*Now check to see if AutoCreateWOs is on */
+		if ($_SESSION['AutoCreateWOs']==1){ //oh yeah its all on!
+			if ($StockItem->MBFlag=='M') { //the item is manufactured - need to create the WO
+				
+		
+		
+			} // the item was manufactured
+		}//auto create WOs in on
 	} /* inserted line items into sales order details */
 
 

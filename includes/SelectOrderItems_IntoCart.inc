@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 /*SelectOrderItems_IntoCart.inc
 
@@ -40,7 +40,10 @@ if ($AlreadyOnThisOrder!=1){
 				stockmaster.mbflag,
 				stockmaster.discountcategory,
 				stockmaster.decimalplaces,
-				stockmaster.discontinued
+				stockmaster.discontinued,
+				stockmaster.serialised,
+				stockmaster.eoq,
+				stockmaster.nextserialno
 			FROM stockmaster INNER JOIN locstock
 			ON stockmaster.stockid=locstock.stockid
 			WHERE locstock.loccode='" . $_SESSION['Items']->Location . "'
@@ -139,7 +142,7 @@ if ($AlreadyOnThisOrder!=1){
 							0, /*Qty Invoiced */
 							$myItemRow['discountcategory'],
 							0, /*Controlled - dont care */
-							0, /*serialised - dont care */
+							$myItemRow['serialised'], /* need to know for autocreation wos */
 							$myItemRow['decimalplaces'],
 							'', /*Narrative - none yet */
 							$UpdateDB,
@@ -148,8 +151,10 @@ if ($AlreadyOnThisOrder!=1){
 							'',
 							$NewItemDue,
 							$NewPOLine,
-							$myItemRow['standardcost']
-							)==1){
+							$myItemRow['standardcost'],
+							$myItemRow['eoq'],
+							$myItemRow['nextserialno']
+														)==1){
 				}
 			}
          } else {

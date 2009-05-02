@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.36 $ */
+/* $Revision: 1.37 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -69,29 +69,31 @@ Class Cart {
 	}
 
 	function add_to_cart($StockID,
-				$Qty,
-				$Descr,
-				$Price,
-				$Disc=0,
-				$UOM,
-				$Volume,
-				$Weight,
-				$QOHatLoc=0,
-				$MBflag='B',
-				$ActDispatchDate=NULL,
-				$QtyInvoiced=0,
-				$DiscCat='',
-				$Controlled=0,
-				$Serialised=0,
-				$DecimalPlaces=0,
-				$Narrative='',
-				$UpdateDB='No',
-				$LineNumber=-1,
-				$TaxCategory=0,
-				$vtigerProductID='',
-				$ItemDue = '',
-				$POLine='',
-				$StandardCost=0){
+							$Qty,
+							$Descr,
+							$Price,
+							$Disc=0,
+							$UOM,
+							$Volume,
+							$Weight,
+							$QOHatLoc=0,
+							$MBflag='B',
+							$ActDispatchDate=NULL,
+							$QtyInvoiced=0,
+							$DiscCat='',
+							$Controlled=0,
+							$Serialised=0,
+							$DecimalPlaces=0,
+							$Narrative='',
+							$UpdateDB='No',
+							$LineNumber=-1,
+							$TaxCategory=0,
+							$vtigerProductID='',
+							$ItemDue = '',
+							$POLine='',
+							$StandardCost=0,
+							$EOQ=1,
+							$NextSerialNo=0){
 
 
 		if (isset($StockID) AND $StockID!="" AND $Qty>0 AND isset($Qty)){
@@ -125,7 +127,9 @@ Class Cart {
 									$TaxCategory,
 									$ItemDue,
 									$POLine,
-									$StandardCost);
+									$StandardCost,
+									$EOQ,
+									$NextSerialNo);
 			$this->ItemsOrdered++;
 
 			if ($UpdateDB=='Yes'){
@@ -413,6 +417,8 @@ Class LineDetails {
 	Var $WorkOrderNo;
 	Var $ItemDue;
 	Var $POLine;
+	Var $EOQ;
+	Var $NextSerialNo;
 
 	function LineDetails ($LineNumber,
 							$StockItem,
@@ -435,7 +441,9 @@ Class LineDetails {
 							$TaxCategory,
 							$ItemDue,
 							$POLine,
-							$StandardCost){
+							$StandardCost,
+							$EOQ,
+							$NextSerialNo){
 
 /* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNumber = $LineNumber;
@@ -468,6 +476,8 @@ Class LineDetails {
 		$this->ItemDue = $ItemDue;
 		$this->POLine = $POLine;
 		$this->StandardCost = $StandardCost;
+		$this->EOQ = $EOQ;
+		$this->NextSerialNo = $NextSerialNo;
 	} //end constructor function for LineDetails
 
 }

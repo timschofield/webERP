@@ -311,6 +311,7 @@
 		}
 		$FieldNames='';
 		$FieldValues='';
+		$OrderHeader['orderno'] = GetNextTransNo(30);
 		foreach ($OrderHeader as $key => $value) {
 			$FieldNames.=$key.', ';
 			$FieldValues.='"'.$value.'", ';
@@ -323,13 +324,7 @@
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
-				$sql='SELECT MAX(orderno)
-						FROM salesorders
-						WHERE debtorno="'.$OrderHeader['debtorno'].'"';
-				$result = DB_Query($sql, $db);
-				$myrow=DB_fetch_row($result);
-				$OrderNo=$myrow[0];
-				$Errors[1]=$OrderNo;
+				$Errors[1]=$OrderHeader['orderno'];
 			}
 		}
 		return $Errors;

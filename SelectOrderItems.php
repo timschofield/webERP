@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.91 $ */
+/* $Revision: 1.92 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -167,6 +167,9 @@ if (isset($_GET['ModifyOrderNumber'])
 									stockmaster.volume,
 									stockmaster.kgs,
 									stockmaster.units,
+									stockmaster.serialised,
+									stockmaster.nextserialno,
+									stockmaster.eoq,
 									salesorderdetails.unitprice,
 									salesorderdetails.quantity,
 									salesorderdetails.discountpercent,
@@ -208,7 +211,7 @@ if (isset($_GET['ModifyOrderNumber'])
 														$myrow['qtyinvoiced'],
 														$myrow['discountcategory'],
 														0,	/*Controlled*/
-														0,	/*Serialised */
+														$myrow['serialised'],
 														$myrow['decimalplaces'],
 														$myrow['narrative'],
 														'No', /* Update DB */
@@ -218,8 +221,10 @@ if (isset($_GET['ModifyOrderNumber'])
 														'',
 														$myrow['itemdue'],
 														$myrow['poline'],
-														$myrow['standardcost']
-														);
+														$myrow['standardcost'],
+														$myrow['eoq'],
+														$myrow['nextserialno']
+																				);
 								
 				/*Just populating with existing order - no DBUpdates */
 					}
