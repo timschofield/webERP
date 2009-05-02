@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 11;
 
@@ -8,18 +8,6 @@ include('includes/session.inc');
 $title = _('Stock Category Maintenance');
 
 include('includes/header.inc');
-?>
-
-<script LANGUAGE="JavaScript">
-	function ReloadForm(form)
-	{
-		document.CategoryForm.UpdateTypes.click();
-		//var val=ItemForm.StockID.value;
-		//self.location='Stocks.php?&StockID=' + ItemForm.StockID.value;
-	}
-</script>
-
-<?php
 
 if (isset($_GET['SelectedCategory'])){
 	$SelectedCategory = strtoupper($_GET['SelectedCategory']);
@@ -264,8 +252,8 @@ if (! isset($_GET['delete'])) {
 
 	if (isset($SelectedCategory)) {
 		//editing an existing stock category
-
-		$sql = "SELECT categoryid,
+		if (!isset($_POST['UpdateTypes'])) {
+			$sql = "SELECT categoryid,
                    	stocktype,
                    	categorydescription,
                    	stockact,
@@ -276,18 +264,18 @@ if (! isset($_GET['delete'])) {
                    FROM stockcategory
                    WHERE categoryid='" . $SelectedCategory . "'";
 
-		$result = DB_query($sql, $db);
-		$myrow = DB_fetch_array($result);
+			$result = DB_query($sql, $db);
+			$myrow = DB_fetch_array($result);
 
-		$_POST['CategoryID'] = $myrow['categoryid'];
-		$_POST['StockType']  = $myrow['stocktype'];
-		$_POST['CategoryDescription']  = $myrow['categorydescription'];
-		$_POST['StockAct']  = $myrow['stockact'];
-		$_POST['AdjGLAct']  = $myrow['adjglact'];
-		$_POST['PurchPriceVarAct']  = $myrow['purchpricevaract'];
-		$_POST['MaterialUseageVarAc']  = $myrow['materialuseagevarac'];
-		$_POST['WIPAct']  = $myrow['wipact'];
-
+			$_POST['CategoryID'] = $myrow['categoryid'];
+			$_POST['StockType']  = $myrow['stocktype'];
+			$_POST['CategoryDescription']  = $myrow['categorydescription'];
+			$_POST['StockAct']  = $myrow['stockact'];
+			$_POST['AdjGLAct']  = $myrow['adjglact'];
+			$_POST['PurchPriceVarAct']  = $myrow['purchpricevaract'];
+			$_POST['MaterialUseageVarAc']  = $myrow['materialuseagevarac'];
+			$_POST['WIPAct']  = $myrow['wipact'];
+		}
 		echo '<input type=hidden name="SelectedCategory" value="' . $SelectedCategory . '">';
 		echo '<input type=hidden name="CategoryID" value="' . $_POST['CategoryID'] . '">';
 		echo '<center><table><tr><td>' . _('Category Code') . ':</td><td>' . $_POST['CategoryID'] . '</td></tr>';
@@ -330,7 +318,7 @@ if (! isset($_GET['delete'])) {
 
 
 	echo '<tr><td>' . _('Stock Type') . ':</td>
-            <td><select name="StockType" onChange="ReloadForm(this.form)" >';
+            <td><select name="StockType" onChange="ReloadForm(CategoryForm.UpdateTypes)" >';
 		if (isset($_POST['StockType']) and $_POST['StockType']=='F') {
 			echo '<option selected value="F">' . _('Finished Goods');
 		} else {
