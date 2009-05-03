@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.60 $ */
+/* $Revision: 1.61 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -312,7 +312,7 @@ UNTIL ONLINE CREDIT CARD PROCESSING IS PERFORMED ASSUME OK TO PROCESS
 
 if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 
-/* finally write the order header to the database and then the order line details - a transaction would	be good here */
+/* finally write the order header to the database and then the order line details */
 
 	$DelDate = FormatDateforSQL($_SESSION['Items']->DeliveryDate);
 	$QuotDate = FormatDateforSQL($_SESSION['Items']->QuoteDate);
@@ -379,17 +379,17 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 	
 	$StartOf_LineItemsSQL = 'INSERT INTO salesorderdetails (
-						orderlineno,
-						orderno,
-						stkcode,
-						unitprice,
-						quantity,
-						discountpercent,
-						narrative,
-						poline,
-						itemdue)
-					VALUES (';
-
+											orderlineno,
+											orderno,
+											stkcode,
+											unitprice,
+											quantity,
+											discountpercent,
+											narrative,
+											poline,
+											itemdue)
+										VALUES (';
+	$DbgMsg = _('The SQL that failed was');
 	foreach ($_SESSION['Items']->LineItems as $StockItem) {
 
 		$LineItemsSQL = $StartOf_LineItemsSQL .
@@ -403,18 +403,150 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 					'."'" . $StockItem->POLine . "'".',
 					'."'" . FormatDateForSQL($StockItem->ItemDue) . "'".'
 				)';
-		$Ins_LineItemResult = DB_query($LineItemsSQL,$db);
+		$ErrMsg = _('Unable to add the sales order line');
+		$Ins_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg,true);
 		
-		/*Now check to see if AutoCreateWOs is on */
-		if ($_SESSION['AutoCreateWOs']==1){ //oh yeah its all on!
-			if ($StockItem->MBFlag=='M') { //the item is manufactured - need to create the WO
+		/*Now check to see if the item is manufactured 
+		 * 			and AutoCreateWOs is on 
+		 * 			and it is a real order (not just a quotation)*/
 				
+		if ($StockItem->MBflag=='M' 
+			AND $_SESSION['AutoCreateWOs']==1 
+			AND $_SESSION['Items']->Quotation!=1){ //oh yeah its all on!	
 		
-		
-			} // the item was manufactured
-		}//auto create WOs in on
-	} /* inserted line items into sales order details */
+			echo '<br>Now getting the data to see if we need a new work order';
+			
+			//now get the data required to test to see if we need to make a new WO
+			$QOHResult = DB_query("SELECT SUM(quantity) FROM locstock WHERE stockid='" . $StockItem->StockID . "'",$db);
+			$QOHRow = DB_fetch_row($QOHResult);
+			$QOH = $QOHRow[0];
+			
+			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
+					FROM salesorderdetails
+					WHERE salesorderdetails.stkcode = '" . $StockItem->StockID . "'
+					AND salesorderdetails.completed = 0";
+			$DemandResult = DB_query($SQL,$db);
+			$DemandRow = DB_fetch_row($DemandResult);
+			$QuantityDemand = $DemandRow[0];
+	
+			$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
+					FROM salesorderdetails,
+						bom,
+						stockmaster
+					WHERE salesorderdetails.stkcode=bom.parent
+					AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
+					AND bom.component='" . $StockItem->StockID . "'
+					AND stockmaster.stockid=bom.parent
+					AND stockmaster.mbflag='A'
+					AND salesorderdetails.completed=0";
+			$AssemblyDemandResult = DB_query($SQL,$db);
+			$AssemblyDemandRow = DB_fetch_row($AssemblyDemandResult);
+			$QuantityAssemblyDemand = $AssemblyDemandRow[0];
+			
+			$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) as qtyonorder
+					FROM purchorderdetails,
+						purchorders
+					WHERE purchorderdetails.orderno = purchorders.orderno
+					AND purchorderdetails.itemcode = '" . $StockItem->StockID . "'
+					AND purchorderdetails.completed = 0";
+			$PurchOrdersResult = DB_query($SQL,$db);
+			$PurchOrdersRow = DB_fetch_row($PurchOrdersResult);
+			$QuantityPurchOrders = $PurchOrdersRow[0];
+			
+			$SQL = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) as qtyonorder
+					FROM woitems INNER JOIN workorders
+					ON woitems.wo=workorders.wo
+					WHERE woitems.stockid = '" . $StockItem->StockID . "'
+					AND workorders.closed = 0";
+			$WorkOrdersResult = DB_query($SQL,$db);
+			$WorkOrdersRow = DB_fetch_row($WorkOrdersResult);
+			$QuantityWorkOrders = $WorkOrdersRow[0];
 
+			//Now we have the data - do we need to make any more?
+			$ShortfallQuantity = $QOH-$QuantityDemand-$QuantityAssemblyDemand+$QuantityPurchOrders+$QuantityWorkOrders;
+			
+			if ($ShortfallQuantity < 0) { //then we need to make a work order
+				//How many should the work order be for??
+				if ($ShortfallQuantity + $StockItem->EOQ < 0){
+					$WOQuantity = -$ShortfallQuantity;
+				} else {
+					$WOQuantity = $StockItem->EOQ;
+				}
+					
+				$WONo = GetNextTransNo(40,$db);
+				$ErrMsg = _('Unable to insert a new work order for the sales order item');
+				$InsWOResult = DB_query("INSERT INTO workorders (wo,
+												 loccode,
+												 requiredby,
+												 startdate)
+								 VALUES (" . $WONo . ",
+										'" . $_SESSION['DefaultFactoryLocation'] . "',
+										'" . Date('Y-m-d') . "',
+										'" . Date('Y-m-d'). "')",
+										$db,$ErrMsg,$DbgMsg,true);
+				//Need to get the latest BOM to roll up cost
+				$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
+													FROM stockmaster INNER JOIN bom
+													ON stockmaster.stockid=bom.component
+													WHERE bom.parent='" . $StockItem->StockID . "'
+													AND bom.loccode='" . $_SESSION['DefaultFactoryLocation'] . "'",
+										$db);
+				$CostRow = DB_fetch_row($CostResult);
+				if (is_null($CostRow[0]) OR $CostRow[0]==0){
+					$Cost =0;
+					prnMsg(_('In automatically creating a work order for') . ' ' . $StockItem->StockID . ' ' . _('an item on this sales order, the cost of this item as accumulated from the sum of the component costs is nil. This could be because there is no bill of material set up ... you may wish to double check this'),'warn');
+				} else {
+					$Cost = $CostRow[0];
+				}
+						
+				// insert parent item info
+				$sql = "INSERT INTO woitems (wo,
+											 stockid,
+											 qtyreqd,
+											 stdcost)
+								 VALUES ( " . $WONo . ",
+										 '" . $StockItem->StockID . "',
+										 " . $WOQuantity . ",
+										  " . $Cost . ")";
+				$ErrMsg = _('The work order item could not be added');
+				$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+
+				//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
+				WoRealRequirements($db, $WONo, $_SESSION['DefaultFactoryLocation'], $StockItem->StockID);
+
+				$FactoryManagerEmail = _('A new work order has been created for') . 
+									":\n" . $StockItem->StockID . ' - ' . $StockItem->Descr . ' x ' . $WOQuantity . ' ' . $StockItem->UOM .
+									"\n" . _('These are for') . ' ' . $_SESSION['Items']->CustomerName . ' ' . _('there order ref') . ': '  . $_SESSION['Items']->CustRef . ' ' ._('our order number') . ': ' . $OrderNo;
+									
+				if ($StockItem->Serialised AND $StockItem->NextSerialNo>0){
+						//then we must create the serial numbers for the new WO also
+						$FactoryManagerEmail .= "\n" . _('The following serial numbers have been reserved for this work order') . ':';
+						
+						for ($i=0;$i<$WOQuantity;$i++){
+							
+							$sql = 'INSERT INTO woserialnos (wo,
+															stockid,
+															serialno)
+												VALUES (' . $WONo . ",	
+														'" . $StockItem->StockID . "',
+														" . ($StockItem->NextSerialNo + $i)	 . ')';
+							$ErrMsg = _('The serial number for the work order item could not be added');
+							$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+							$FactoryManagerEmail .= "\n" . ($StockItem->NextSerialNo + $i);		
+						} //end loop around creation of woserialnos	
+						$NewNextSerialNo = ($StockItem->NextSerialNo + $WOQuantity +1);
+						$ErrMsg = _('Could not update the new next serial number for the item');
+						$UpdateNextSerialNoResult = DB_query('UPDATE stockmaster SET nextserialno=' . $NewNextSerialNo . " WHERE stockid='" . $StockItem->StockID . "'",$db,$ErrMsg,$DbgMsg,true);
+				} // end if the item is serialised and nextserialno is set
+	
+				$EmailSubject = _('New Work Order Number') . ' ' . $WONo . ' ' . _('for') . ' ' . $StockItem->StockID . ' x ' . $WOQuantity;
+				//Send email to the Factory Manager
+				mail($_SESSION['FactoryManagerEmail'],$EmailSubject,$FactoryManagerEmail);									
+			} //end if with this sales order there is a shortfall of stock - need to create the WO
+		}//end if auto create WOs in on
+	} /* end inserted line items into sales order details */
+	
+	$result = DB_Txn_Commit($db);	
 
 	if ($_SESSION['Items']->Quotation==1){
 		prnMsg(_('Quotation Number') . ' ' . $OrderNo . ' ' . _('has been entered'),'success');
