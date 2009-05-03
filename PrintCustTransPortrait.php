@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 $PageSecurity = 1;
 
@@ -292,9 +292,13 @@ If (isset($PrintPDF)
 				} else {
 					$DisplayDiscount = number_format($myrow2['discountpercent']*100,2) . '%';
 				}
-
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos,71,$FontSize,$myrow2['stockid']);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+80,$YPos,186,$FontSize,$myrow2['description']);
+				$lines=1;
+				while ($LeftOvers!='') {
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+80,$YPos-(10*$lines),186,$FontSize,$LeftOvers);
+					$lines++;
+				}
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+270,$YPos,76,$FontSize,$DisplayPrice,'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,36,$FontSize,$DisplayQty,'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+390,$YPos,26,$FontSize,$myrow2['units'],'center');
@@ -309,7 +313,7 @@ If (isset($PrintPDF)
 
 					if ($myrow2['serialised']==1){
 						while ($ControlledMovtRow = DB_fetch_array($GetControlMovts)){
-							$YPos -= 10;
+							$YPos -= (10*$lines);
 							$LeftOvers = $pdf->addTextWrap($Left_Margin+82,$YPos,100,$FontSize,$ControlledMovtRow['serialno'],'left');
 							if ($YPos-$line_height <= $Bottom_Margin){
 								/* head up a new invoice/credit note page */
@@ -320,7 +324,7 @@ If (isset($PrintPDF)
 						}
 					} else {
 						while ($ControlledMovtRow = DB_fetch_array($GetControlMovts)){
-							$YPos -= 10;
+							$YPos -= (10*$lines);
 							$LeftOvers = $pdf->addTextWrap($Left_Margin+82,$YPos,100,$FontSize,(-$ControlledMovtRow['moveqty']) . ' x ' . $ControlledMovtRow['serialno'],'left');
 							if ($YPos-$line_height <= $Bottom_Margin){
 								/* head up a new invoice/credit note page */
@@ -332,7 +336,7 @@ If (isset($PrintPDF)
 						}
 					}
 				}
-				$YPos -= ($line_height);
+				$YPos -= ($FontSize*$lines);
 
 				$Narrative = $myrow2['narrative'];
 				while (strlen($Narrative)>1){
