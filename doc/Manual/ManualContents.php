@@ -621,7 +621,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 <?php
   } else {
 ?>
-              <A HREF="#Manufacturing">General Ledger</A>
+              <A HREF="#Manufacturing">Manufacturing</A>
 <?php
   }
 ?>
@@ -632,6 +632,31 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Work Order Receipts</LI>
                 <LI>Work Order Issues</LI>
                 <LI>Closing Work Orders</LI>
+              </UL>
+              <BR>
+            </LI>
+            <LI>
+<?php
+  if (!isset($_POST['Submit'])) {
+?>
+              <input type="checkbox" name="SelectMRP">
+              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=MRP'; ?>">
+              Maaterial Requirements Planning</A>
+<?php
+  } else {
+?>
+              <A HREF="#MRP">Material Requirements Planning</A>
+<?php
+  }
+?>
+              <UL>
+                <LI>MRP Overview</LI>
+                <LI>Base Data Required</LI>
+                <LI>Production Calendar</LI>
+                <LI>Master (Production) Schedule</LI>
+                <LI>Running The MRP Calculation</LI>
+                <LI>How It Works</LI>
+                <LI>MRP Reports</LI>
               </UL>
               <BR>
             </LI>
@@ -937,6 +962,9 @@ if ($_GET['ViewTopic'] == 'GeneralLedger' OR isset($_POST['SelectGeneralLedger']
 }
 if ($_GET['ViewTopic'] == 'Manufacturing' OR isset($_POST['SelectManufacturing'])) {
   include('ManualManufacturing.html');
+}
+if ($_GET['ViewTopic'] == 'MRP' OR isset($_POST['SelectMRP'])) {
+  include('ManualMRP.html');
 }
 if ($_GET['ViewTopic'] == 'ReportBuilder' OR isset($_POST['SelectReportBuilder'])) {
   include('ManualReportBuilder.html');
