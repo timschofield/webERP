@@ -22,7 +22,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
     $myrow=DB_fetch_array($result);
     if ($myrow[0]==0) {
         $sql='INSERT INTO `debtortype` ( `typeid` , `typename` ) VALUES (1, "Default")';
-        $result=DB_query($result);
+        $result=DB_query($sql, $db);
         if (DB_error_no($db)==0) {
             echo '<td>' . _('Success') . '</td></tr>';
         } else {
@@ -39,7 +39,35 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
     $myrow=DB_fetch_array($result);
     if ($myrow[0]==0) {
         $sql='INSERT INTO `factorcompanies` ( `id` , `coyname` ) VALUES (null, "None")';
-        $result=DB_query($result);
+        $result=DB_query($sql, $db);
+        if (DB_error_no($db)==0) {
+            echo '<td>' . _('Success') . '</td></tr>';
+        } else {
+            echo '<td>' . _('Failed') . '</td></tr>';
+        }
+    } else {
+        echo '<td>' . _('Success') . '</td></tr>';
+    }
+    echo '<tr><td>' . _('Adding quotedate to salesorders table') . '</td>';
+    $sql='DESCRIBE `salesorders` `quotedate`';
+    $result=DB_query($sql, $db);
+    if (DB_num_rows($result)==0) {
+        $sql='ALTER TABLE `salesorders` ADD `quotedate` date NOT NULL default "0000-00-00"';
+        $result=DB_query($sql, $db);
+        if (DB_error_no($db)==0) {
+            echo '<td>' . _('Success') . '</td></tr>';
+        } else {
+            echo '<td>' . _('Failed') . '</td></tr>';
+        }
+    } else {
+        echo '<td>' . _('Success') . '</td></tr>';
+    }
+    echo '<tr><td>' . _('Adding confirmeddate to salesorders table') . '</td>';
+    $sql='DESCRIBE `salesorders` `confirmeddate`';
+    $result=DB_query($sql, $db);
+    if (DB_num_rows($result)==0) {
+        $sql='ALTER TABLE `salesorders` ADD `confirmeddate` date NOT NULL default "0000-00-00"';
+        $result=DB_query($sql, $db);
         if (DB_error_no($db)==0) {
             echo '<td>' . _('Success') . '</td></tr>';
         } else {
