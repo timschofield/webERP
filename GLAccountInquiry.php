@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 
 $PageSecurity = 8;
@@ -20,6 +20,8 @@ if (isset($_POST['Period'])){
 } elseif (isset($_GET['Period'])){
 	$SelectedPeriod = $_GET['Period'];
 }
+
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('General Ledger Account Inquiry') . '" ALT="">' . ' ' . _('General Ledger Account Inquiry') . '</P>';
 
 echo "<FORM METHOD='POST' ACTION=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
