@@ -1578,6 +1578,8 @@ CREATE TABLE `salesorders` (
   `printedpackingslip` tinyint(4) NOT NULL default '0',
   `datepackingslipprinted` date NOT NULL default '0000-00-00',
   `quotation` tinyint(4) NOT NULL default '0',
+  `quotedate` date NOT NULL default '0000-00-00',
+  `confirmeddate` date NOT NULL default '0000-00-00',
   PRIMARY KEY  (`orderno`),
   KEY `DebtorNo` (`debtorno`),
   KEY `OrdDate` (`orddate`),
@@ -2704,7 +2706,6 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 --
 
 INSERT INTO `www_users` VALUES ('admin','weberp','Demonstration user','','','','MEL',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'jelly','en_GB');
-INSERT INTO `www_users` VALUES ('tims','0ddf97e70f0d8e93f5f2dbf28d61c72fd059f221','','','','','MEL',6,'2009-02-06 08:57:06','','A4','1,1,1,1,1,1,1,1,',0,50,'jelly','en_GB');
 
 --
 -- Dumping data for table `edi_orders_segs`
