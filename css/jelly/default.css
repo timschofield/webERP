@@ -83,7 +83,9 @@ table {
   background: #eee;
   margin: 0 auto;
 }
-
+.dpTbl {
+	border: solid navy 1px;
+}
 div.centre {
   margin: 0 auto;
   text-align:center;
@@ -92,6 +94,28 @@ div.centre {
 td {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
+	text-align: left;
+}
+.dpTD {
+	border: 0;
+	width:20px;
+	background-color: #EEEEEE;	
+	text-align:right;
+	cursor:pointer;	
+}
+.dpDayHighlight {
+	border: 0;
+	width:20px;
+	background-color: yellow;
+	text-align:right;
+	cursor:pointer;	
+}
+.dpTDHover {
+	border: 0;
+	width:20px;
+	background-color: #CCCCCC;
+	text-align:right;
+	cursor:pointer;	
 }
 td.number {
 	text-align: right;
@@ -205,6 +229,7 @@ th {
 	background-color: #ccc;
 	font-size: 12px;
 	color: #330000;
+	text-align: center;
 }
 
 select {background:#eee;
@@ -570,7 +595,6 @@ span.menu_group_nolink {
 #footer {
 	background: #eee url(images/bar.png) 0px 0px repeat-x;
 	position: relative;
-
 }
 
 .footer {
@@ -578,6 +602,7 @@ span.menu_group_nolink {
 	color: black;
 	font-weight: normal;
 	font-size: 8px;
+	text-align: center;
 }
 .legal {
 	font-family: Arial, Helvetica, sans-serif;

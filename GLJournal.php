@@ -1,12 +1,13 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 include('includes/DefineJournalClass.php');
 
 $PageSecurity = 10;
 include('includes/session.inc');
 $title = _('Journal Entry');
+
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -231,8 +232,7 @@ if (!isset($_SESSION['JournalDetail']->JnlDate)){
 echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post name="form">';
 
 
-echo '<p><center>
-	<table border=0 width=100%>
+echo '<p><table border=0 width=100%>
 	<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . $title.'<tr><hr></tr>';
 
 // A new table in the first column of the main table
@@ -244,8 +244,7 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 
 	echo '<tr>
 			<td colspan=5 align=center><table border=0 width=30%><tr><td>'._('Date to Process Journal').":</td>
-			<td><input type='text' name='JournalProcessDate' maxlength=10 size=11" .
-					" onChange='return isDate(this, this.value, ".'"'.$_SESSION['DefaultDateFormat'].'"'.")' value='" .
+			<td><input type='text' class='date' alt='".$_SESSION['DefaultDateFormat']."' name='JournalProcessDate' maxlength=10 size=11 value='" .
 						 $_SESSION['JournalDetail']->JnlDate . "'></td>";
 	echo '<td>' . _('Type') . ':</td>
 			<td><select name=JournalType>';
@@ -274,7 +273,7 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 
 /* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
-echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
+echo '<div class="centre"><font size=3 color=blue>' . _('Journal Line Entry') . '</font></div>';
 
 	//Select the tag
 	echo '<tr><td><select name="tag">';
@@ -299,9 +298,9 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 	if (!isset($_POST['GLManualCode'])) {
 		$_POST['GLManualCode']='';
 	}
-	echo '<td><input type=Text Name="GLManualCode" Maxlength=12 size=12 onChange="return inArray(this, this.value, GLCode.options,'.
+	echo '<td><input class="number" type=Text Name="GLManualCode" Maxlength=12 size=12 onChange="inArray(this.value, GLCode.options,'.
 		"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' .
-			' onKeyPress="return restrictToNumbers(this, event)" VALUE='. $_POST['GLManualCode'] .'  ></td>';
+			' VALUE='. $_POST['GLManualCode'] .'  ></td>';
 
 	$sql='SELECT accountcode,
 				accountname
@@ -330,23 +329,22 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 	}
 
 
-	echo '</tr><tr><th>' . _('Debit') . "</th>".'<td><input type=Text Name = "Debit"  onKeyPress="return restrictToNumbers(this, event)" ' .
-				'onChange="numberFormat(this,2); eitherOr(this, '.'Credit'.')"'.
-				'onFocus="return setTextAlign(this, '."'".'right'."'".')" Maxlength=12 size=10 value=' . $_POST['Debit'] . '></td>';
-	echo '</tr><tr><th>' . _('Credit') . "</th>".'<td><input type=Text Name = "Credit" onKeyPress="return restrictToNumbers(this, event)" ' .
-				'onChange="numberFormat(this,2); eitherOr(this, '.'Debit'.')"'.
-				'onFocus="return setTextAlign(this, '."'".'right'."'".')" Maxlength=12 size=10 value=' . $_POST['Credit'] . '></td>';
+	echo '</tr><tr><th>' . _('Debit') . "</th>".'<td><input type=Text class="number" Name = "Debit" ' .
+				'onChange="eitherOr(this, '.'Credit'.')"'.
+				'Maxlength=12 size=10 value=' . $_POST['Debit'] . '></td>';
+	echo '</tr><tr><th>' . _('Credit') . "</th>".'<td><input type=Text class="number" Name = "Credit" ' .
+				'onChange="eitherOr(this, '.'Debit'.')"'.
+				'Maxlength=12 size=10 value=' . $_POST['Credit'] . '></td>';
 	echo '</tr><tr><td></td><td></td><th>'. _('Narrative'). '</th>';
 	echo '</tr><tr><th></th><th>' . _('GL Narrative') . "</th>";
 
 	echo "<td><input type='text' name='GLNarrative' maxlength=100 size=100 value='" . $_POST['GLNarrative'] . "'></td>";
 
 	echo '</tr></table>'; /*Close the main table */
-	echo "<center><input type=submit name=Process value='" . _('Accept') . "'></center><br><hr><br>";
+	echo "<div class='centre'><input type=submit name=Process value='" . _('Accept') . "'></div><br><hr><br>";
 
 
-	echo "<center>
-				<table border =1 width=85%><tr><td><table width=100%>
+	echo "<table border =1 width=85%><tr><td><table width=100%>
 					<tr>
 						<th>"._('GL Tag')."</th>
 						<th>"._('GL Account')."</th>
@@ -380,14 +378,14 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 							echo "<td>" . $JournalItem->GLCode . ' - ' . $JournalItem->GLActName . "</td>";
 								if($JournalItem->Amount>0)
 								{
-								echo "<td align=right>" . number_format($JournalItem->Amount,2) . '</td><td></td>';
+								echo "<td class='number'>" . number_format($JournalItem->Amount,2) . '</td><td></td>';
 								$debittotal=$debittotal+$JournalItem->Amount;
 								}
 								elseif($JournalItem->Amount<0)
 								{
 									$credit=(-1 * $JournalItem->Amount);
 								echo "<td></td>
-										<td align=right>" . number_format($credit,2) . '</td>';
+										<td class='number'>" . number_format($credit,2) . '</td>';
 								$credittotal=$credittotal+$credit;
 								}
 
@@ -398,8 +396,8 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 
 			echo '<tr class="EvenTableRows"><td></td>
 					<td align=right><b> Total </b></td>
-					<td align=right><b>' . number_format($debittotal,2) . '</b></td>
-					<td align=right><b>' . number_format($credittotal,2) . '</b></td>';
+					<td align=right class="number"><b>' . number_format($debittotal,2) . '</b></td>
+					<td align=right class="number"><b>' . number_format($credittotal,2) . '</b></td>';
 			if ($debittotal!=$credittotal) {
 				echo '<td align=center style="background-color: #fddbdb"><b>Required to balance - ' .
 					number_format(abs($debittotal-$credittotal),2);
@@ -408,7 +406,7 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 			echo '</b></td></tr></table></td></tr></table>';
 
 if (ABS($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDetail']->GLItemCounter > 0){
-	echo "<br><br><input type=submit name='CommitBatch' value='"._('Accept and Process Journal')."'>";
+	echo "<br><br><div class='centre'><input type=submit name='CommitBatch' value='"._('Accept and Process Journal')."'></div>";
 } elseif(count($_SESSION['JournalDetail']->GLEntries)>0) {
 	echo '<br><br>';
 	prnMsg(_('The journal must balance ie debits equal to credits before it can be processed'),'warn');

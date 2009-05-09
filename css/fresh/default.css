@@ -46,6 +46,9 @@ table {
   background-color: #B4BB86;
   margin: 0 auto;
 }
+.dpTbl {
+	border: solid navy 1px;
+}
 
 div.centre {
   margin: 0 auto;
@@ -56,6 +59,28 @@ div.centre {
 td {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
+	text-align: left;
+}
+.dpTD {
+	border: 0;
+	width:20px;
+	background-color: #EEEEEE;	
+	text-align:right;
+	cursor:pointer;	
+}
+.dpDayHighlight {
+	border: 0;
+	width:20px;
+	background-color: yellow;
+	text-align:right;
+	cursor:pointer;	
+}
+.dpTDHover {
+	border: 0;
+	width:20px;
+	background-color: #CCCCCC;
+	text-align:right;
+	cursor:pointer;	
 }
 td.number {
 	text-align: right;
@@ -73,6 +98,7 @@ th {
 	font-size: 12px;
 	background-color: #777C59;
 	color: white;
+	text-align: center;
 }
 
 div.error {
@@ -395,6 +421,7 @@ a.footer {
 	color: black;
 	font-weight: normal;
 	font-size: 8px;
+	text-align: center;
 }
 .legal {
 	font-family: Arial, Helvetica, sans-serif;

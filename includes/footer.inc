@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.38 $ */
+/* $Revision: 1.39 $ */
 
 	echo '</td>';
 	echo '</tr>';
@@ -17,18 +17,18 @@
 	echo '<table width="100%" id="footer">';
 
 	echo '<tr>';
-	echo '<td align="center">';
+	echo '<td class="footer">';
  	echo '<a href="http://www.weberp.org" rel="external"><img src="'. $rootpath . '/' . $_SESSION['LogoFile'] . '" width="120" alt="webERP" title="webERP ' . _('Copyright') . ' &copy; webrp.org - ' . date('Y') . '" /></a>';
  	echo '<br />' . _('Version') . ' - ' . $Version;
 
 	echo '</td></tr>';
 
-	echo '<tr><td align="center" class="footer">webERP ' . _('Copyright') . ' &copy; weberp.org - '.date('Y').'</td></tr>';
+	echo '<tr><td class="footer">webERP ' . _('Copyright') . ' &copy; weberp.org - '.date('Y').'</td></tr>';
 
 	if(isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] == 'on'){
-		echo '<tr><td align="center"><a href="https://sourceforge.net/projects/web-erp"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=70949&type=12" width="120" height="30" border="0" alt="Get webERP web-based ERP Accounting at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a></td></tr>';
+		echo '<tr><td class="footer"><a href="https://sourceforge.net/projects/web-erp"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=70949&type=12" width="120" height="30" border="0" alt="Get webERP web-based ERP Accounting at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a></td></tr>';
 	} else {
-       	echo '<tr><td align="center"><a href="http://sourceforge.net/projects/web-erp"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=70949&type=12" width="120" height="30" border="0" alt="Get webERP web-based ERP Accounting at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a></td></tr>';
+       	echo '<tr><td class="footer"><a href="http://sourceforge.net/projects/web-erp"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=70949&type=12" width="120" height="30" border="0" alt="Get webERP web-based ERP Accounting at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a></td></tr>';
 	}
 
 	echo '</table>';
