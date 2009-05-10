@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.61 $ */
+/* $Revision: 1.62 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -523,16 +523,24 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 						$FactoryManagerEmail .= "\n" . _('The following serial numbers have been reserved for this work order') . ':';
 						
 						for ($i=0;$i<$WOQuantity;$i++){
-							
-							$sql = 'INSERT INTO woserialnos (wo,
-															stockid,
-															serialno)
-												VALUES (' . $WONo . ",	
-														'" . $StockItem->StockID . "',
-														" . ($StockItem->NextSerialNo + $i)	 . ')';
-							$ErrMsg = _('The serial number for the work order item could not be added');
-							$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
-							$FactoryManagerEmail .= "\n" . ($StockItem->NextSerialNo + $i);		
+										
+							$result = DB_query("SELECT serialno FROM stockserialitems
+												WHERE serialno='" . ($StockItem->NextSerialNo + $i) . "'
+												AND stockid='" . $StockItem->StockID ."'",$db);
+							if (DB_num_rows($result)!=0){
+								$WOQuantity++;
+								prnMsg(($StockItem->NextSerialNo + $i) . ': ' . _('This automatically generated serial number already exists - it cannot be added to the work order'),'error');
+							} else {
+								$sql = 'INSERT INTO woserialnos (wo,
+																stockid,
+																serialno)
+													VALUES (' . $WONo . ",	
+															'" . $StockItem->StockID . "',
+															" . ($StockItem->NextSerialNo + $i)	 . ')';
+								$ErrMsg = _('The serial number for the work order item could not be added');
+								$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+								$FactoryManagerEmail .= "\n" . ($StockItem->NextSerialNo + $i);
+							}
 						} //end loop around creation of woserialnos	
 						$NewNextSerialNo = ($StockItem->NextSerialNo + $WOQuantity +1);
 						$ErrMsg = _('Could not update the new next serial number for the item');
