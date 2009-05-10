@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.48 $ */
+/* $Revision: 1.49 $ */
 
 $PageSecurity =15;
 
@@ -252,7 +252,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['DefaultFactoryLocation'] != $_POST['X_DefaultFactoryLocation']){
 			$sql[] = "UPDATE config SET confvalue='" . $_POST['X_DefaultFactoryLocation'] . "' WHERE confname='DefaultFactoryLocation'";
 		}
-		
+		if ($_SESSION['DefineControlledOnWOEntry'] != $_POST['X_DefineControlledOnWOEntry']){
+			$sql[] = "UPDATE config SET confvalue='" . $_POST['X_DefineControlledOnWOEntry'] . "' WHERE confname='DefineControlledOnWOEntry'";
+		}
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 1 ) {
 			$result = DB_Txn_Begin($db);
@@ -827,6 +829,16 @@ echo '</select></td><td>' . _('Setting this parameter to Yes prevents invoicing 
 echo '<tr><td>' . _('Months of Audit Trail to Retain') . ':</td>
 	<td><input type="text" name="X_MonthsAuditTrail" size=3 maxlength=2 value="' . $_SESSION['MonthsAuditTrail'] . '"></td><td>' . _('If this parameter is set to 0 (zero) then no audit trail is retained. An audit trail is a log of which users performed which additions updates and deletes of database records. The full SQL is retained') . '</td>
 </tr>';
+
+//DefineControlledOnWOEntry
+echo '<tr><td>' . _('Controlled Items Defined At Work Order Entrry') . ':</td>
+	<td><select Name="X_DefineControlledOnWOEntry">
+	<option '.($_SESSION['DefineControlledOnWOEntry']?'selected ':'').'value="1">'._('Yes').'
+	<option '.(!$_SESSION['DefineControlledOnWOEntry']?'selected ':'').'value="0">'._('No').'
+	</select></td>
+	<td>' . _('This parameter must be set to yes to ensure that controlled items are defined at the time of the work order creation. Otherwise controlled items (serial numbers and batch/roll/lot references) are entered at the time the finished items are received against the work order') . '</td></tr>';
+
+//AutoCreateWOs
 echo '<tr><td>' . _('Auto Create Work Orders') . ':</td>
 		<td>
 		<select name="X_AutoCreateWOs">';

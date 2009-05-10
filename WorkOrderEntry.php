@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 10;
 
@@ -159,13 +159,18 @@ if (isset($_POST['Search'])){
 if (isset($NewItem) AND isset($_POST['WO'])){
       $InputError=false;
 	  $CheckItemResult = DB_query("SELECT mbflag,
-											eoq
+											eoq,
+											controlled
 											FROM stockmaster
 											WHERE stockid='" . $NewItem . "'",
 											$db);
 	  if (DB_num_rows($CheckItemResult)==1){
 	  		$CheckItemRow = DB_fetch_array($CheckItemResult);
-	  		$EOQ = $CheckItemRow['eoq'];
+			if ($CheckItemRow['controlled']==1 AND $_SESSION['DefineControlledOnWOEntry']==1){ //need to add serial nos or batches to determine quantity
+				$EOQ = 0;
+			} else {
+				$EOQ = $CheckItemRow['eoq'];
+			}
 	  		if ($CheckItemRow['mbflag']!='M'){
 	  			prnMsg(_('The item selected cannot be addded to a work order because it is not a manufactured item'),'warn');
 	  			$InputError=true;
@@ -179,7 +184,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 									WHERE stockid='" . $NewItem . "'
 									AND wo=" .$_POST['WO'],
 									$db);
-	  if(DB_num_rows($CheckItemResult)==1){
+	  if (DB_num_rows($CheckItemResult)==1){
 	  		prnMsg(_('This item is already on the work order and cannot be added again'),'warn');
 	  		$InputError=true;
 	  }
@@ -199,7 +204,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 		} else {
 				$Cost = $CostRow[0];
 		}
-		if (!isset($EOQ) OR $EOQ==0){
+		if (!isset($EOQ)){
 			$EOQ=1;
 		}
 		
@@ -271,7 +276,7 @@ if (isset($_POST['submit'])) { //The update button has been clicked
     			if (isset($_POST['QtyRecd'.$i]) and $_POST['QtyRecd'.$i]>$_POST['OutputQty'.$i]){
     					$_POST['OutputQty'.$i]=$_POST['QtyRecd'.$i]; //OutputQty must be >= Qty already reced
     			}
-    			if ($_POST['RecdQty'.$i]==0){ // can only change location cost if QtyRecd=0
+    			if ($_POST['RecdQty'.$i]==0 AND $_POST['HasWOSerialNos'.$i]==false){ // can only change location cost if QtyRecd=0
 	    				$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
                                                         FROM stockmaster INNER JOIN bom
                                                         ON stockmaster.stockid=bom.component
@@ -290,7 +295,7 @@ if (isset($_POST['submit'])) { //The update button has been clicked
     			                                 stdcost =" . $Cost . "
     			                  WHERE wo=" . $_POST['WO'] . "
                                   AND stockid='" . $_POST['OutputItem'.$i] . "'";
-      			} else {
+      			} elseif ($_POST['HasWOSerialNos'.$i]==false) {
     			    	$sql[] = "UPDATE woitems SET qtyreqd =  ". $_POST['OutputQty' . $i] . ",
     			                                 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."'
     			                  WHERE wo=" . $_POST['WO'] . "
@@ -313,6 +318,7 @@ if (isset($_POST['submit'])) { //The update button has been clicked
                  unset($_POST['OutputQty'.$i]);
                  unset($_POST['QtyRecd'.$i]);
                  unset($_POST['NetLotSNRef'.$i]);
+                 unset($_POST['HasWOSerialNos'.$i]);
         }
 		echo '<br><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Enter a new work order') . '</a>';
 		echo '<br><a href="' . $rootpath . '/SelectWorkOrder.php?' . SID . '">' . _('Select an existing work order') . '</a>';
@@ -334,27 +340,35 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 	}
 
 	if ($CancelDelete==false) { //ie all tests proved ok to delete
-		// delete the work order requirements
-    		$sql="DELETE FROM worequirements WHERE wo=" . $_POST['WO'];
-		$ErrMsg=_('The work order requirements could not be deleted');
-    		$result = DB_query($sql,$db,$ErrMsg);
-                //delete the items on the work order
+		DB_Txn_Begin($db);
+		//delete the worequirements
+		$sql = "DELETE FROM worequirements WHERE wo=" . $_POST['WO'];
+        $result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+		//delete the items on the work order
 		$sql = "DELETE FROM woitems WHERE wo=" . $_POST['WO'];
-                $result = DB_query($sql,$db,$ErrMsg);
+        $result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+        //delete the controlled items defined in wip
+		$sql="DELETE FROM woserialnos WHERE wo=" . $_POST['WO'];
+    	$ErrMsg=_('The work order serial numbers could not be deleted');
+		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		// delete the actual work order
 		$sql="DELETE FROM workorders WHERE wo=" . $_POST['WO'];
-    		$ErrMsg=_('The work order could not be deleted');
-		$result = DB_query($sql,$db,$ErrMsg);
-		prnMsg(_('The work order has been deleted'),'success');
+    	$ErrMsg=_('The work order could not be deleted');
+		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+
+		DB_Txn_Commit($db);	
+        prnMsg(_('The work order has been deleted'),'success');
+
 
 		echo "<P><A HREF='" . $rootpath . "/SelectWorkOrder.php?" . SID . "'>" . _('Select an existing outstanding work order') . "</A>";
 		unset($_POST['WO']);
 		for ($i=1;$i<=$_POST['NumberOfOutputs'];$i++){
           	     unset($_POST['OutputItem'.$i]);
-                 unset($_POST['OutputQty'.$i]);
-                 unset($_POST['QtyRecd'.$i]);
-                 unset($_POST['NetLotSNRef'.$i]);
-        }
+                     unset($_POST['OutputQty'.$i]);
+                     unset($_POST['QtyRecd'.$i]);
+                     unset($_POST['NetLotSNRef'.$i]);
+                     unset($_POST['HasWOSerialNos'.$i]);
+                 }
         include('includes/footer.inc');
         exit;
     }
@@ -390,7 +404,8 @@ if (DB_num_rows($WOResult)==1){
 										stdcost,
 										nextlotsnref,
 										controlled,
-										serialised
+										serialised,
+										nextserialno
 								FROM woitems INNER JOIN stockmaster
 								ON woitems.stockid=stockmaster.stockid
 								WHERE wo=' .$_POST['WO'],$db,$ErrMsg);
@@ -402,9 +417,19 @@ if (DB_num_rows($WOResult)==1){
 				$_POST['OutputItemDesc'.$i]=$WOItem['description'];
 				$_POST['OutputQty' . $i]= $WOItem['qtyreqd'];
 		  		$_POST['RecdQty' .$i] =$WOItem['qtyrecd'];
-		  		$_POST['NextLotSNRef' .$i]=$WOItem['nextlotsnref'];
+		  		if ($WOItem['serialised']==1 AND $WOItem['nextserialno']>0){
+		  		   $_POST['NextLotSNRef' .$i]=$WOItem['nextserialno'];
+		  		} else {
+                   $_POST['NextLotSNRef' .$i]=$WOItem['nextlotserialno'];
+                }
 		  		$_POST['Controlled'.$i] =$WOItem['controlled'];
 		  		$_POST['Serialised'.$i] =$WOItem['serialised'];
+		  		$HasWOSerialNosResult = DB_query('SELECT * FROM woserialnos WHERE wo=' . $_POST['WO'],$db);
+		  		if (DB_num_rows($HasWOSerialNosResult)>0){
+		  		   $_POST['HasWOSerialNos']=true;
+		  		} else {
+                   $_POST['HasWOSerialNos']=false;
+                }
 		  		$i++;
 	}
 }
@@ -453,19 +478,33 @@ echo '<tr><th>' . _('Output Item') . '</th>
 
 if (isset($NumberOfOutputs)){
 	for ($i=1;$i<=$NumberOfOutputs;$i++){
-		echo '<tr><td><input type="hidden" name="OutputItem' . $i . '" value="' . $_POST['OutputItem' .$i] . '">' . $_POST['OutputItem' . $i] . ' - ' . $_POST['OutputItemDesc' .$i] . '</td>
-		  		<td><input type="text" STYLE="text-align: right" name="OutputQty' . $i . '" value=' . $_POST['OutputQty' . $i] . ' size=10 onKeyPress="return restrictToNumbers(this, event)" maxlength=10></td>
-		  		<td><input type="hidden" name="RecdQty' . $i . '" value=' . $_POST['RecdQty' .$i] . '>' . $_POST['RecdQty' .$i] .'</td>
+		echo '<tr><td><input type="hidden" name="OutputItem' . $i . '" value="' . $_POST['OutputItem' .$i] . '">' . $_POST['OutputItem' . $i] . ' - ' . $_POST['OutputItemDesc' .$i] . '</td>';
+		if ($_POST['Controlled'.$i]==1 AND $_SESSION['DefineControlledOnWOEntry']==1){
+			echo '<td style="text-align: right">' . $_POST['OutputQty' . $i] . '</td>';
+			echo '<input type="hidden" name="OutputQty' . $i .'" value=' . $_POST['OutputQty' . $i] . '>';
+		} else {		
+		  	echo'<td><input type="text" style="text-align: right" name="OutputQty' . $i . '" value=' . $_POST['OutputQty' . $i] . ' size=10 onKeyPress="return restrictToNumbers(this, event)" maxlength=10></td>';
+		}
+		 echo '<td><input type="hidden" name="RecdQty' . $i . '" value=' . $_POST['RecdQty' .$i] . '>' . $_POST['RecdQty' .$i] .'</td>
 		  		<td align="right">' . ($_POST['OutputQty' . $i] - $_POST['RecdQty' .$i]) . '</td>';
 		if ($_POST['Controlled'.$i]==1){
-			echo '<td><input type=textbox name="NextLotSNRef' .$i . '" value="' . $_POST['NextLotSNRef'.$i] . '"></td>';
+			echo '<td><input type="text" name="NextLotSNRef' .$i . '" value="' . $_POST['NextLotSNRef'.$i] . '"></td>';
+		    if ($_SESSION['DefineControlledOnWOEntry']==1){
+				if ($_POST['Serialised' . $i]==1){
+					$LotOrSN = _('S/Ns');
+				} else {
+					$LotOrSN = _('Batches');
+				}
+				echo '<td><a href="' . $rootpath . '/WOSerialNos.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $_POST['OutputItem' .$i] . '&Description=' . $_POST['OutputItemDesc' .$i] . '&Serialised=' . $_POST['Serialised' .$i] . '&NextSerialNo=' . $_POST['NextLotSNRef' .$i] . '">' . $LotOrSN . '</a>';
+			}
 		}
 		echo '</tr>';
+		echo '<input type="hidden" name="Controlled' . $i .'" value="' . $_POST['Controlled' . $i] . '">';
+		echo '<input type="hidden" name="Serialised' . $i .'" value="' . $_POST['Serialised' . $i] . '">';
+		echo '<input type="hidden" name="HasWOSerialNos' . $i .'" value="' . $_POST['HasWOSerialNos' . $i] . '">';
 	}
 	echo '<input type=hidden name="NumberOfOutputs" value=' . ($i -1).'>';
 }
-
-
 echo '</table>';
 
 echo '<center>';

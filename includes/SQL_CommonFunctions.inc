@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 /* Common SQL Functions */
 
@@ -244,12 +244,14 @@ function UpdateCost($db, $item) {
 }
 
 /* Accepts work order information and iterates through the bom, inserting real components (dissolving phantom assemblies) */
-function WoRealRequirements($db, $woid, $loccode, $stockid, $qty=1, $parentid="") {
+function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID="") {
 
 	// remember, 'G' is for ghost (phantom part type)
 
 	// all components should be referenced to the initial parent
-	if ($parentid == "") $parentid = $stockid;
+	if ($ParentID == "") {
+		$ParentID = $StockID;
+	}
 
 	// insert new real immediate components of this item
 	$sql = "INSERT INTO worequirements (wo,
@@ -258,22 +260,22 @@ function WoRealRequirements($db, $woid, $loccode, $stockid, $qty=1, $parentid=""
 				qtypu,
 				stdcost,
 				autoissue)
-			SELECT " . $woid . ",
-				'" . $parentid . "',
+			SELECT " . $WO . ",
+				'" . $ParentID . "',
 				bom.component,
-				bom.quantity*" . $qty . ",
+				bom.quantity*" . $Qty . ",
 				materialcost+labourcost+overheadcost,
 				bom.autoissue
 			FROM bom INNER JOIN stockmaster
 			ON bom.component=stockmaster.stockid
-			WHERE bom.parent='" . $stockid . "'
-			AND bom.loccode ='" . $loccode . "'
+			WHERE bom.parent='" . $StockID . "'
+			AND bom.loccode ='" . $LocCode . "'
 			AND stockmaster.mbflag<>'G'
 			AND bom.component NOT IN (
 				SELECT stockid
 				FROM worequirements
-				WHERE wo = " . $woid . "
-				AND parentstockid = '" . $parentid . "'
+				WHERE wo = " . $WO . "
+				AND parentstockid = '" . $ParentID . "'
 			)";
 	$result = DB_query($sql, $db);
 
@@ -281,10 +283,10 @@ function WoRealRequirements($db, $woid, $loccode, $stockid, $qty=1, $parentid=""
 	// otherwise, we could encounter a uniqueness violation:
 	//     - the same component could occur in multiple dissolved phantom assemblies
 	//     - need to sum quantities of multiple component occurences
-	if ($parentid != $stockid) {
+	if ($ParentID != $StockID) {
 		$sql = "UPDATE worequirements
 					INNER JOIN (
-						SELECT CAST('" . $woid . "' AS SIGNED) as wo,
+						SELECT CAST('" . $WO . "' AS SIGNED) as wo,
 							CAST('NODE-1' AS CHAR) as parentstockid,
 							bom.component AS stockid,
 							bom.quantity*1 AS qtypu,
@@ -292,16 +294,18 @@ function WoRealRequirements($db, $woid, $loccode, $stockid, $qty=1, $parentid=""
 							bom.autoissue
 						FROM bom INNER JOIN stockmaster
 						ON bom.component=stockmaster.stockid
-						WHERE bom.parent='" . $stockid . "'
-						AND bom.loccode ='" . $loccode . "'
+						WHERE bom.parent='" . $StockID . "'
+						AND bom.loccode ='" . $LocCode . "'
 						AND stockmaster.mbflag<>'G'
 						AND bom.component IN (
 							SELECT stockid
 							FROM worequirements
-							WHERE wo = " . $woid . "
-							AND parentstockid = '". $parentid . "'
+							WHERE wo = " . $WO . "
+							AND parentstockid = '". $ParentID . "'
 						)
-					) AS g ON g.wo=worequirements.wo AND g.parentstockid=worequirements.parentstockid AND g.stockid=worequirements.stockid
+					) AS g ON g.wo=worequirements.wo 
+						AND g.parentstockid=worequirements.parentstockid 
+						AND g.stockid=worequirements.stockid
 					SET worequirements.qtypu=worequirements.qtypu+g.qtypu";
 		$result = DB_query($sql, $db);
 	}
@@ -312,12 +316,12 @@ function WoRealRequirements($db, $woid, $loccode, $stockid, $qty=1, $parentid=""
 				bom.quantity
 			FROM bom INNER JOIN stockmaster
 			ON bom.component=stockmaster.stockid
-			WHERE parent='" . $stockid . "'
-			AND loccode ='" . $loccode . "'
+			WHERE parent='" . $StockID . "'
+			AND loccode ='" . $LocCode . "'
 			AND stockmaster.mbflag='G'";
 	$result = DB_query($sql, $db);
 	while ($MyRow=DB_fetch_array($result)) {
-		WoRealRequirements($db, $woid, $loccode, $MyRow['component'], $MyRow['quantity'], $parentid);
+		WoRealRequirements($db, $WO, $LocCode, $MyRow['component'], $MyRow['quantity'], $ParentID);
 	}
 
 }
