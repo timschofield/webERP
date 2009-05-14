@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -195,15 +195,15 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 
 			$OrderTotal += ($POLine['unitprice']*$POLine['quantityord']);
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos,64,$FontSize,$POLine['itemcode'], 'left');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300,$YPos,85,$FontSize,$DisplayQty, 'right');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300+85+3,$YPos,37,$FontSize,$POLine['units'], 'left');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300+85+3+37,$YPos,60,$FontSize,$DisplayDelDate, 'left');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300+85+40+60,$YPos,85,$FontSize,$DisplayPrice, 'right');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300+85+40+60+85,$YPos,85,$FontSize,$DisplayLineTotal, 'right');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64,$YPos,300,$FontSize,$ItemDescription, 'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos,94,$FontSize,$POLine['itemcode'], 'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+94+270,$YPos,85,$FontSize,$DisplayQty, 'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+94+270+85+3,$YPos,37,$FontSize,$POLine['units'], 'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+94+270+85+3+37,$YPos,60,$FontSize,$DisplayDelDate, 'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+94+270+85+40+60,$YPos,85,$FontSize,$DisplayPrice, 'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+94+270+85+40+60+85,$YPos,85,$FontSize,$DisplayLineTotal, 'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+94,$YPos,270,$FontSize,$ItemDescription, 'left');
 			if (strlen($LeftOvers)>1){
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64,$YPos-$line_height,300,$FontSize,$LeftOvers, 'left');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+1+94,$YPos-$line_height,270,$FontSize,$LeftOvers, 'left');
 				$YPos-=$line_height;
 			}
 
@@ -231,7 +231,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		}
 		$YPos = $Bottom_Margin + $line_height;
 		$pdf->addText(450,$YPos, 14, _('Order Total - excl tax'). ' ' . $POHeader['currcode']);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300+85+40+60+75,$YPos,95,14,$DisplayOrderTotal, 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+1+94+270+85+40+60+75,$YPos,95,14,$DisplayOrderTotal, 'right');
 
 	} /*end if there are order details to show on the order*/
     //} /* end of check to see that there was an order selected to print */
@@ -360,7 +360,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	} else {
 		echo '</TABLE>';
 	}
-	echo '<BR><CENTER><INPUT TYPE=SUBMIT NAME="DoIt" VALUE="' . _('Process') . '">';
+	echo '<BR><CENTER><INPUT TYPE=SUBMIT NAME="DoIt" VALUE="' . _('OK') . '">';
 	echo '</FORM>';
 	include('includes/footer.inc');
 }
