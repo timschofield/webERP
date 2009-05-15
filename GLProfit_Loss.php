@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 8;
 
@@ -8,7 +8,6 @@ include ('includes/session.inc');
 $title = _('Profit and Loss');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
-
 
 if (isset($_POST['FromPeriod']) and ($_POST['FromPeriod'] > $_POST['ToPeriod'])){
 	prnMsg(_('The selected period from is actually after the period to') . '! ' . _('Please reselect the reporting period'),'error');
@@ -18,6 +17,9 @@ if (isset($_POST['FromPeriod']) and ($_POST['FromPeriod'] > $_POST['ToPeriod']))
 if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])){
 
 	include('includes/header.inc');
+
+echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . _('Print Profit and Loss Report') . '';
+
 	echo "<FORM METHOD='POST' ACTION=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	
 	if (Date('m') > $_SESSION['YearEnd']){
@@ -86,8 +88,8 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 	echo '</TABLE>';
 
-	echo "<INPUT TYPE=SUBMIT Name='ShowPL' Value='"._('Show Statement of Profit and Loss')."'></CENTER>";
-	echo "<CENTER><INPUT TYPE=SUBMIT Name='PrintPDF' Value='"._('PrintPDF')."'></CENTER>";
+	echo "<BR><INPUT TYPE=SUBMIT Name='ShowPL' Value='"._('Show on Screen (HTML)')."'></CENTER>";
+	echo "<BR><CENTER><INPUT TYPE=SUBMIT Name='PrintPDF' Value='"._('Produce PDF Report')."'></CENTER>";
 
 	/*Now do the posting while the user is thinking about the period to select */
 
