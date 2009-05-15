@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.39 $ */
+/* $Revision: 1.40 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
@@ -38,7 +38,7 @@
 		echo '<tr>';
 		echo '<td align="left" style="width:100%;" class="quick_menu_left">';
 		echo _('Company'). ': ' . stripslashes($_SESSION['CompanyRecord']['coyname']) . ' - <a href="' .  $rootpath . '/UserSettings.php?' . SID . '">' . _('User name') . ': ' . stripslashes($_SESSION['UsersRealName']) . '</a>';
-		echo '<br />' . $title . '</td>';
+		echo ' ' . $title . '</td>';
 
 		echo '<td class="quick_menu_tabs">';
 		echo '<table cellpadding="0" cellspacing="0" class="quick_menu_tabs"><tr>';
