@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 include('includes/DefineJournalClass.php');
 
@@ -267,9 +267,9 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 	/* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
 	/*now set up a GLCode field to select from avaialble GL accounts */
-	echo '<tr><th>' . _('GL Tag') . "</th>";
-	echo '<th>' . _('GL Account Code') . "</th>";
-	echo '<th>' . _('Select GL Account') . "</th></tr>";
+	echo '<tr><th>' . _('GL Tag') . '</th>';
+	echo '<th>' . _('GL Account Code') . '</th>';
+	echo '<th>' . _('Select GL Account') . '</th></tr>';
 
 /* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
@@ -286,7 +286,7 @@ echo '<div class="centre"><font size=3 color=blue>' . _('Journal Line Entry') . 
 	$result=DB_query($SQL,$db);
 	echo '<option value=0>0 - None';
 	while ($myrow=DB_fetch_array($result)){
-    	if (isset($_POST['tag']) and $_POST['tag']==$myrow["tagref"]){
+    	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
 			echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
     	} else {
 			echo '<option value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
@@ -338,7 +338,7 @@ echo '<div class="centre"><font size=3 color=blue>' . _('Journal Line Entry') . 
 	echo '</tr><tr><td></td><td></td><th>'. _('Narrative'). '</th>';
 	echo '</tr><tr><th></th><th>' . _('GL Narrative') . "</th>";
 
-	echo "<td><input type='text' name='GLNarrative' maxlength=100 size=100 value='" . $_POST['GLNarrative'] . "'></td>";
+	echo '<td><input type="text" name="GLNarrative" maxlength=100 size=100 value="' . $_POST['GLNarrative'] . '"></td>';
 
 	echo '</tr></table>'; /*Close the main table */
 	echo "<div class='centre'><input type=submit name=Process value='" . _('Accept') . "'></div><br><hr><br>";

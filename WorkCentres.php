@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity=9;
 
@@ -181,34 +181,34 @@ if (isset($SelectedWC)) {
 	$_POST['OverheadRecoveryAct']  = $myrow['overheadrecoveryact'];
 	$_POST['OverheadPerHour']  = $myrow['overheadperhour'];
 
-	echo '<INPUT TYPE=HIDDEN NAME=SelectedWC VALUE=' . $SelectedWC . '>';
-	echo "<INPUT TYPE=HIDDEN NAME=Code VALUE='" . $_POST['Code'] . "'>";
-	echo '<CENTER><TABLE><TR><TD>' ._('Work Centre Code') . ':</TD><TD>' . $_POST['Code'] . '</TD></TR>';
+	echo '<input type=hidden name="SelectedWC" value=' . $SelectedWC . '>';
+	echo '<input type=hidden name="Code" value="' . $_POST['Code'] . '">';
+	echo '<center><table><tr><td>' ._('Work Centre Code') . ':</td><td>' . $_POST['Code'] . '</td></tr>';
 
 } else { //end of if $SelectedWC only do the else when a new record is being entered
 	if (!isset($_POST['Code'])) {
 		$_POST['Code'] = '';
 	}
-	echo '<CENTER><TABLE><TR>
-			<TD>' . _('Work Centre Code') . ":</TD>
-			<TD><input type='Text' name='Code' SIZE=6 MAXLENGTH=5 value='" . $_POST['Code'] . "'></TD>
-			</TR>";
+	echo '<center><table><tr>
+			<td>' . _('Work Centre Code') . ":</td>
+			<td><input type='Text' name='Code' size=6 maxlength=5 value='" . $_POST['Code'] . "'></td>
+			</tr>";
 }
 
 $SQL = 'SELECT locationname,
 		loccode
-	FROM locations';
+		FROM locations';	
 $result = DB_query($SQL,$db);
 
 if (!isset($_POST['Description'])) {
 	$_POST['Description'] = '';
 }
 
-echo '<TR><TD>' . _('Work Centre Description') . ":</TD>
-	<TD><input type='Text' name='Description' SIZE=21 MAXLENGTH=20 value='" . $_POST['Description'] . "'></TD>
-	</TR>
-	<TR><TD>" . _('Location') . ":</TD>
-		<TD><SELECT name='Location'>";
+echo '<tr><td>' . _('Work Centre Description') . ":</td>
+	<td><input type='Text' name='Description' SIZE=21 MAXLENGTH=20 value='" . $_POST['Description'] . "'></td>
+	</tr>
+	<tr><td>" . _('Location') . ":</td>
+		<td><SELECT name='Location'>";
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['Location']) and $myrow['loccode']==$_POST['Location']) {
@@ -223,9 +223,9 @@ while ($myrow = DB_fetch_array($result)) {
 DB_free_result($result);
 
 
-echo '</SELECT></TD></TR>
-	<TR><TD>' . _('Overhead Recovery GL Account') . ":</TD>
-		<TD><SELECT name='OverheadRecoveryAct'>";
+echo '</SELECT></td></tr>
+	<tr><td>' . _('Overhead Recovery GL Account') . ":</td>
+		<td><SELECT name='OverheadRecoveryAct'>";
 
 //SQL to poulate account selection boxes
 $SQL = 'SELECT accountcode,
@@ -252,12 +252,12 @@ if (!isset($_POST['OverheadPerHour'])) {
 	$_POST['OverheadPerHour']=0;
 }
 
-echo '</TD></TR>';
-echo '<TR><TD>' . _('Overhead Per Hour') . ":</TD>
-	<TD><input type='Text' name='OverheadPerHour' SIZE=6 MAXLENGTH=6 onKeyPress='return restrictToNumbers(this, event)' value=" . $_POST['OverheadPerHour'] . '></TD></TR>
-	</TABLE>';
+echo '</td></tr>';
+echo '<tr><td>' . _('Overhead Per Hour') . ':</td>
+	<td><input type="Text" name="OverheadPerHour" size=6 maxlength=6 onKeyPress="return restrictToNumbers(this, event)" value=' . $_POST['OverheadPerHour'] . '></td></tr>
+	</table>';
 
-echo "<br><CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'>";
+echo '<br><center><input type="Submit" name="submit" value="' . _('Enter Information') . '">';
 
 if (!isset($_GET['SelectedWC']) or $_GET['SelectedWC']=='') {
 	echo "<script>defaultControl(document.forms[0].Code);</script>";
@@ -265,6 +265,6 @@ if (!isset($_GET['SelectedWC']) or $_GET['SelectedWC']=='') {
 	echo "<script>defaultControl(document.forms[0].Description);</script>";
 }
 
-echo '</FORM>';
+echo '</form>';
 include('includes/footer.inc');
 ?>

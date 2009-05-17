@@ -1,17 +1,23 @@
-CREATE DATABASE weberpdemo;
-USE weberpdemo;
 SET FOREIGN_KEY_CHECKS = 0;
--- MySQL dump 10.11
+-- MySQL dump 10.13  Distrib 5.1.31, for pc-linux-gnu (i686)
 --
--- Host: localhost    Database: weberp
+-- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	5.0.67-0ubuntu6
+-- Server version	5.1.31
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO,MYSQL40' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Current Database: `weberpdemo`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `weberpdemo` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `weberpdemo`;
 
 --
 -- Table structure for table `accountgroups`
@@ -20,17 +26,16 @@ SET FOREIGN_KEY_CHECKS = 0;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `accountgroups` (
-  `groupname` char(30) NOT NULL default '',
-  `sectioninaccounts` int(11) NOT NULL default '0',
-  `pandl` tinyint(4) NOT NULL default '1',
-  `sequenceintb` smallint(6) NOT NULL default '0',
+  `groupname` char(30) NOT NULL DEFAULT '',
+  `sectioninaccounts` int(11) NOT NULL DEFAULT '0',
+  `pandl` tinyint(4) NOT NULL DEFAULT '1',
+  `sequenceintb` smallint(6) NOT NULL DEFAULT '0',
   `parentgroupname` varchar(30) NOT NULL,
-  PRIMARY KEY  (`groupname`),
+  PRIMARY KEY (`groupname`),
   KEY `SequenceInTB` (`sequenceintb`),
   KEY `sectioninaccounts` (`sectioninaccounts`),
-  KEY `parentgroupname` (`parentgroupname`),
-  CONSTRAINT `accountgroups_ibfk_1` FOREIGN KEY (`sectioninaccounts`) REFERENCES `accountsection` (`sectionid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `parentgroupname` (`parentgroupname`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -40,10 +45,10 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `accountsection` (
-  `sectionid` int(11) NOT NULL default '0',
+  `sectionid` int(11) NOT NULL DEFAULT '0',
   `sectionname` text NOT NULL,
-  PRIMARY KEY  (`sectionid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`sectionid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -54,9 +59,9 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `areas` (
   `areacode` char(3) NOT NULL,
-  `areadescription` varchar(25) NOT NULL default '',
-  PRIMARY KEY  (`areacode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `areadescription` varchar(25) NOT NULL DEFAULT '',
+  PRIMARY KEY (`areacode`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -66,17 +71,17 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `assetmanager` (
-  `id` int(11) NOT NULL auto_increment,
-  `serialno` varchar(30) NOT NULL default '',
-  `assetglcode` int(11) NOT NULL default '0',
-  `depnglcode` int(11) NOT NULL default '0',
-  `description` varchar(30) NOT NULL default '',
-  `lifetime` int(11) NOT NULL default '0',
-  `location` varchar(15) NOT NULL default '',
-  `cost` double NOT NULL default '0',
-  `depn` double NOT NULL default '0',
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `serialno` varchar(30) NOT NULL DEFAULT '',
+  `assetglcode` int(11) NOT NULL DEFAULT '0',
+  `depnglcode` int(11) NOT NULL DEFAULT '0',
+  `description` varchar(30) NOT NULL DEFAULT '',
+  `lifetime` int(11) NOT NULL DEFAULT '0',
+  `location` varchar(15) NOT NULL DEFAULT '',
+  `cost` double NOT NULL DEFAULT '0',
+  `depn` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -86,12 +91,11 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `audittrail` (
-  `transactiondate` datetime NOT NULL default '0000-00-00 00:00:00',
-  `userid` varchar(20) NOT NULL default '',
+  `transactiondate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `userid` varchar(20) NOT NULL DEFAULT '',
   `querystring` text,
-  KEY `UserID` (`userid`),
-  CONSTRAINT `audittrail_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `www_users` (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `UserID` (`userid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -101,17 +105,16 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `bankaccounts` (
-  `accountcode` int(11) NOT NULL default '0',
+  `accountcode` int(11) NOT NULL DEFAULT '0',
   `currcode` char(3) NOT NULL,
-  `bankaccountname` char(50) NOT NULL default '',
-  `bankaccountnumber` char(50) NOT NULL default '',
-  `bankaddress` char(50) default NULL,
-  PRIMARY KEY  (`accountcode`),
+  `bankaccountname` char(50) NOT NULL DEFAULT '',
+  `bankaccountnumber` char(50) NOT NULL DEFAULT '',
+  `bankaddress` char(50) DEFAULT NULL,
+  PRIMARY KEY (`accountcode`),
   KEY `currcode` (`currcode`),
   KEY `BankAccountName` (`bankaccountname`),
-  KEY `BankAccountNumber` (`bankaccountnumber`),
-  CONSTRAINT `bankaccounts_ibfk_1` FOREIGN KEY (`accountcode`) REFERENCES `chartmaster` (`accountcode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `BankAccountNumber` (`bankaccountnumber`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -121,27 +124,25 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `banktrans` (
-  `banktransid` bigint(20) NOT NULL auto_increment,
-  `type` smallint(6) NOT NULL default '0',
-  `transno` bigint(20) NOT NULL default '0',
-  `bankact` int(11) NOT NULL default '0',
-  `ref` varchar(50) NOT NULL default '',
-  `amountcleared` double NOT NULL default '0',
-  `exrate` double NOT NULL default '1' COMMENT 'From bank account currency to payment currency',
-  `functionalexrate` double NOT NULL default '1' COMMENT 'Account currency to functional currency',
-  `transdate` date NOT NULL default '0000-00-00',
-  `banktranstype` varchar(30) NOT NULL default '',
-  `amount` double NOT NULL default '0',
-  `currcode` char(3) NOT NULL default '',
-  PRIMARY KEY  (`banktransid`),
+  `banktransid` bigint(20) NOT NULL AUTO_INCREMENT,
+  `type` smallint(6) NOT NULL DEFAULT '0',
+  `transno` bigint(20) NOT NULL DEFAULT '0',
+  `bankact` int(11) NOT NULL DEFAULT '0',
+  `ref` varchar(50) NOT NULL DEFAULT '',
+  `amountcleared` double NOT NULL DEFAULT '0',
+  `exrate` double NOT NULL DEFAULT '1' COMMENT 'From bank account currency to payment currency',
+  `functionalexrate` double NOT NULL DEFAULT '1' COMMENT 'Account currency to functional currency',
+  `transdate` date NOT NULL DEFAULT '0000-00-00',
+  `banktranstype` varchar(30) NOT NULL DEFAULT '',
+  `amount` double NOT NULL DEFAULT '0',
+  `currcode` char(3) NOT NULL DEFAULT '',
+  PRIMARY KEY (`banktransid`),
   KEY `BankAct` (`bankact`,`ref`),
   KEY `TransDate` (`transdate`),
   KEY `TransType` (`banktranstype`),
   KEY `Type` (`type`,`transno`),
-  KEY `CurrCode` (`currcode`),
-  CONSTRAINT `banktrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
-  CONSTRAINT `banktrans_ibfk_2` FOREIGN KEY (`bankact`) REFERENCES `bankaccounts` (`accountcode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `CurrCode` (`currcode`)
+) TYPE=MyISAM AUTO_INCREMENT=5;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -151,27 +152,23 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `bom` (
-  `parent` char(20) NOT NULL default '',
-  `component` char(20) NOT NULL default '',
-  `workcentreadded` char(5) NOT NULL default '',
-  `loccode` char(5) NOT NULL default '',
-  `effectiveafter` date NOT NULL default '0000-00-00',
-  `effectiveto` date NOT NULL default '9999-12-31',
-  `quantity` double NOT NULL default '1',
-  `autoissue` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`parent`,`component`,`workcentreadded`,`loccode`),
+  `parent` char(20) NOT NULL DEFAULT '',
+  `component` char(20) NOT NULL DEFAULT '',
+  `workcentreadded` char(5) NOT NULL DEFAULT '',
+  `loccode` char(5) NOT NULL DEFAULT '',
+  `effectiveafter` date NOT NULL DEFAULT '0000-00-00',
+  `effectiveto` date NOT NULL DEFAULT '9999-12-31',
+  `quantity` double NOT NULL DEFAULT '1',
+  `autoissue` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`parent`,`component`,`workcentreadded`,`loccode`),
   KEY `Component` (`component`),
   KEY `EffectiveAfter` (`effectiveafter`),
   KEY `EffectiveTo` (`effectiveto`),
   KEY `LocCode` (`loccode`),
   KEY `Parent` (`parent`,`effectiveafter`,`effectiveto`,`loccode`),
   KEY `Parent_2` (`parent`),
-  KEY `WorkCentreAdded` (`workcentreadded`),
-  CONSTRAINT `bom_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `bom_ibfk_2` FOREIGN KEY (`component`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `bom_ibfk_3` FOREIGN KEY (`workcentreadded`) REFERENCES `workcentres` (`code`),
-  CONSTRAINT `bom_ibfk_4` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `WorkCentreAdded` (`workcentreadded`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -181,14 +178,13 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `buckets` (
-  `workcentre` char(5) NOT NULL default '',
-  `availdate` datetime NOT NULL default '0000-00-00 00:00:00',
-  `capacity` double NOT NULL default '0',
-  PRIMARY KEY  (`workcentre`,`availdate`),
+  `workcentre` char(5) NOT NULL DEFAULT '',
+  `availdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `capacity` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`workcentre`,`availdate`),
   KEY `WorkCentre` (`workcentre`),
-  KEY `AvailDate` (`availdate`),
-  CONSTRAINT `buckets_ibfk_1` FOREIGN KEY (`workcentre`) REFERENCES `workcentres` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `AvailDate` (`availdate`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -198,17 +194,15 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `chartdetails` (
-  `accountcode` int(11) NOT NULL default '0',
-  `period` smallint(6) NOT NULL default '0',
-  `budget` double NOT NULL default '0',
-  `actual` double NOT NULL default '0',
-  `bfwd` double NOT NULL default '0',
-  `bfwdbudget` double NOT NULL default '0',
-  PRIMARY KEY  (`accountcode`,`period`),
-  KEY `Period` (`period`),
-  CONSTRAINT `chartdetails_ibfk_1` FOREIGN KEY (`accountcode`) REFERENCES `chartmaster` (`accountcode`),
-  CONSTRAINT `chartdetails_ibfk_2` FOREIGN KEY (`period`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `accountcode` int(11) NOT NULL DEFAULT '0',
+  `period` smallint(6) NOT NULL DEFAULT '0',
+  `budget` double NOT NULL DEFAULT '0',
+  `actual` double NOT NULL DEFAULT '0',
+  `bfwd` double NOT NULL DEFAULT '0',
+  `bfwdbudget` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`accountcode`,`period`),
+  KEY `Period` (`period`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -218,15 +212,14 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `chartmaster` (
-  `accountcode` int(11) NOT NULL default '0',
-  `accountname` char(50) NOT NULL default '',
-  `group_` char(30) NOT NULL default '',
-  PRIMARY KEY  (`accountcode`),
+  `accountcode` int(11) NOT NULL DEFAULT '0',
+  `accountname` char(50) NOT NULL DEFAULT '',
+  `group_` char(30) NOT NULL DEFAULT '',
+  PRIMARY KEY (`accountcode`),
   KEY `AccountCode` (`accountcode`),
   KEY `AccountName` (`accountname`),
-  KEY `Group_` (`group_`),
-  CONSTRAINT `chartmaster_ibfk_1` FOREIGN KEY (`group_`) REFERENCES `accountgroups` (`groupname`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `Group_` (`group_`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -236,18 +229,18 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `cogsglpostings` (
-  `id` int(11) NOT NULL auto_increment,
-  `area` char(2) NOT NULL default '',
-  `stkcat` varchar(6) NOT NULL default '',
-  `glcode` int(11) NOT NULL default '0',
-  `salestype` char(2) NOT NULL default 'AN',
-  PRIMARY KEY  (`id`),
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `area` char(2) NOT NULL DEFAULT '',
+  `stkcat` varchar(6) NOT NULL DEFAULT '',
+  `glcode` int(11) NOT NULL DEFAULT '0',
+  `salestype` char(2) NOT NULL DEFAULT 'AN',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `Area_StkCat` (`area`,`stkcat`,`salestype`),
   KEY `Area` (`area`),
   KEY `StkCat` (`stkcat`),
   KEY `GLCode` (`glcode`),
   KEY `SalesType` (`salestype`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) TYPE=MyISAM AUTO_INCREMENT=4;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -257,34 +250,34 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `companies` (
-  `coycode` int(11) NOT NULL default '1',
-  `coyname` varchar(50) NOT NULL default '',
-  `gstno` varchar(20) NOT NULL default '',
-  `companynumber` varchar(20) NOT NULL default '0',
-  `regoffice1` varchar(40) NOT NULL default '',
-  `regoffice2` varchar(40) NOT NULL default '',
-  `regoffice3` varchar(40) NOT NULL default '',
-  `regoffice4` varchar(40) NOT NULL default '',
-  `regoffice5` varchar(20) NOT NULL default '',
-  `regoffice6` varchar(15) NOT NULL default '',
-  `telephone` varchar(25) NOT NULL default '',
-  `fax` varchar(25) NOT NULL default '',
-  `email` varchar(55) NOT NULL default '',
-  `currencydefault` varchar(4) NOT NULL default '',
-  `debtorsact` int(11) NOT NULL default '70000',
-  `pytdiscountact` int(11) NOT NULL default '55000',
-  `creditorsact` int(11) NOT NULL default '80000',
-  `payrollact` int(11) NOT NULL default '84000',
-  `grnact` int(11) NOT NULL default '72000',
-  `exchangediffact` int(11) NOT NULL default '65000',
-  `purchasesexchangediffact` int(11) NOT NULL default '0',
-  `retainedearnings` int(11) NOT NULL default '90000',
-  `gllink_debtors` tinyint(1) default '1',
-  `gllink_creditors` tinyint(1) default '1',
-  `gllink_stock` tinyint(1) default '1',
-  `freightact` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`coycode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `coycode` int(11) NOT NULL DEFAULT '1',
+  `coyname` varchar(50) NOT NULL DEFAULT '',
+  `gstno` varchar(20) NOT NULL DEFAULT '',
+  `companynumber` varchar(20) NOT NULL DEFAULT '0',
+  `regoffice1` varchar(40) NOT NULL DEFAULT '',
+  `regoffice2` varchar(40) NOT NULL DEFAULT '',
+  `regoffice3` varchar(40) NOT NULL DEFAULT '',
+  `regoffice4` varchar(40) NOT NULL DEFAULT '',
+  `regoffice5` varchar(20) NOT NULL DEFAULT '',
+  `regoffice6` varchar(15) NOT NULL DEFAULT '',
+  `telephone` varchar(25) NOT NULL DEFAULT '',
+  `fax` varchar(25) NOT NULL DEFAULT '',
+  `email` varchar(55) NOT NULL DEFAULT '',
+  `currencydefault` varchar(4) NOT NULL DEFAULT '',
+  `debtorsact` int(11) NOT NULL DEFAULT '70000',
+  `pytdiscountact` int(11) NOT NULL DEFAULT '55000',
+  `creditorsact` int(11) NOT NULL DEFAULT '80000',
+  `payrollact` int(11) NOT NULL DEFAULT '84000',
+  `grnact` int(11) NOT NULL DEFAULT '72000',
+  `exchangediffact` int(11) NOT NULL DEFAULT '65000',
+  `purchasesexchangediffact` int(11) NOT NULL DEFAULT '0',
+  `retainedearnings` int(11) NOT NULL DEFAULT '90000',
+  `gllink_debtors` tinyint(1) DEFAULT '1',
+  `gllink_creditors` tinyint(1) DEFAULT '1',
+  `gllink_stock` tinyint(1) DEFAULT '1',
+  `freightact` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`coycode`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -294,10 +287,10 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `config` (
-  `confname` varchar(35) NOT NULL default '',
+  `confname` varchar(35) NOT NULL DEFAULT '',
   `confvalue` text NOT NULL,
-  PRIMARY KEY  (`confname`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`confname`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -307,21 +300,18 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `contractbom` (
-  `contractref` char(20) NOT NULL default '',
-  `component` char(20) NOT NULL default '',
-  `workcentreadded` char(5) NOT NULL default '',
-  `loccode` char(5) NOT NULL default '',
-  `quantity` double NOT NULL default '1',
-  PRIMARY KEY  (`contractref`,`component`,`workcentreadded`,`loccode`),
+  `contractref` char(20) NOT NULL DEFAULT '',
+  `component` char(20) NOT NULL DEFAULT '',
+  `workcentreadded` char(5) NOT NULL DEFAULT '',
+  `loccode` char(5) NOT NULL DEFAULT '',
+  `quantity` double NOT NULL DEFAULT '1',
+  PRIMARY KEY (`contractref`,`component`,`workcentreadded`,`loccode`),
   KEY `Component` (`component`),
   KEY `LocCode` (`loccode`),
   KEY `ContractRef` (`contractref`),
   KEY `WorkCentreAdded` (`workcentreadded`),
-  KEY `WorkCentreAdded_2` (`workcentreadded`),
-  CONSTRAINT `contractbom_ibfk_1` FOREIGN KEY (`workcentreadded`) REFERENCES `workcentres` (`code`),
-  CONSTRAINT `contractbom_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
-  CONSTRAINT `contractbom_ibfk_3` FOREIGN KEY (`component`) REFERENCES `stockmaster` (`stockid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `WorkCentreAdded_2` (`workcentreadded`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -331,15 +321,14 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `contractreqts` (
-  `contractreqid` int(11) NOT NULL auto_increment,
-  `contract` char(20) NOT NULL default '',
-  `component` char(40) NOT NULL default '',
-  `quantity` double NOT NULL default '1',
-  `priceperunit` decimal(20,4) NOT NULL default '0.0000',
-  PRIMARY KEY  (`contractreqid`),
-  KEY `Contract` (`contract`),
-  CONSTRAINT `contractreqts_ibfk_1` FOREIGN KEY (`contract`) REFERENCES `contracts` (`contractref`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `contractreqid` int(11) NOT NULL AUTO_INCREMENT,
+  `contract` char(20) NOT NULL DEFAULT '',
+  `component` char(40) NOT NULL DEFAULT '',
+  `quantity` double NOT NULL DEFAULT '1',
+  `priceperunit` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  PRIMARY KEY (`contractreqid`),
+  KEY `Contract` (`contract`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -349,36 +338,33 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `contracts` (
-  `contractref` varchar(20) NOT NULL default '',
-  `contractdescription` varchar(50) NOT NULL default '',
-  `debtorno` varchar(10) NOT NULL default '',
-  `branchcode` varchar(10) NOT NULL default '',
-  `status` varchar(10) NOT NULL default 'Quotation',
-  `categoryid` varchar(6) NOT NULL default '',
-  `typeabbrev` char(2) NOT NULL default '',
-  `orderno` int(11) NOT NULL default '0',
-  `quotedpricefx` decimal(20,4) NOT NULL default '0.0000',
-  `margin` double NOT NULL default '1',
-  `woref` varchar(20) NOT NULL default '',
-  `requireddate` datetime NOT NULL default '0000-00-00 00:00:00',
-  `canceldate` datetime NOT NULL default '0000-00-00 00:00:00',
-  `quantityreqd` double NOT NULL default '1',
+  `contractref` varchar(20) NOT NULL DEFAULT '',
+  `contractdescription` varchar(50) NOT NULL DEFAULT '',
+  `debtorno` varchar(10) NOT NULL DEFAULT '',
+  `branchcode` varchar(10) NOT NULL DEFAULT '',
+  `status` varchar(10) NOT NULL DEFAULT 'Quotation',
+  `categoryid` varchar(6) NOT NULL DEFAULT '',
+  `typeabbrev` char(2) NOT NULL DEFAULT '',
+  `orderno` int(11) NOT NULL DEFAULT '0',
+  `quotedpricefx` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `margin` double NOT NULL DEFAULT '1',
+  `woref` varchar(20) NOT NULL DEFAULT '',
+  `requireddate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `canceldate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `quantityreqd` double NOT NULL DEFAULT '1',
   `specifications` longblob NOT NULL,
-  `datequoted` datetime NOT NULL default '0000-00-00 00:00:00',
-  `units` varchar(15) NOT NULL default 'Each',
+  `datequoted` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `units` varchar(15) NOT NULL DEFAULT 'Each',
   `drawing` longblob NOT NULL,
-  `rate` double NOT NULL default '1',
-  PRIMARY KEY  (`contractref`),
+  `rate` double NOT NULL DEFAULT '1',
+  PRIMARY KEY (`contractref`),
   KEY `OrderNo` (`orderno`),
   KEY `CategoryID` (`categoryid`),
   KEY `Status` (`status`),
   KEY `TypeAbbrev` (`typeabbrev`),
   KEY `WORef` (`woref`),
-  KEY `DebtorNo` (`debtorno`,`branchcode`),
-  CONSTRAINT `contracts_ibfk_1` FOREIGN KEY (`debtorno`, `branchcode`) REFERENCES `custbranch` (`debtorno`, `branchcode`),
-  CONSTRAINT `contracts_ibfk_2` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`),
-  CONSTRAINT `contracts_ibfk_3` FOREIGN KEY (`typeabbrev`) REFERENCES `salestypes` (`typeabbrev`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `DebtorNo` (`debtorno`,`branchcode`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -388,14 +374,14 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `currencies` (
-  `currency` char(20) NOT NULL default '',
-  `currabrev` char(3) NOT NULL default '',
-  `country` char(50) NOT NULL default '',
-  `hundredsname` char(15) NOT NULL default 'Cents',
-  `rate` double NOT NULL default '1',
-  PRIMARY KEY  (`currabrev`),
+  `currency` char(20) NOT NULL DEFAULT '',
+  `currabrev` char(3) NOT NULL DEFAULT '',
+  `country` char(50) NOT NULL DEFAULT '',
+  `hundredsname` char(15) NOT NULL DEFAULT 'Cents',
+  `rate` double NOT NULL DEFAULT '1',
+  PRIMARY KEY (`currabrev`),
   KEY `Country` (`country`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -405,18 +391,16 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `custallocns` (
-  `id` int(11) NOT NULL auto_increment,
-  `amt` decimal(20,4) NOT NULL default '0.0000',
-  `datealloc` date NOT NULL default '0000-00-00',
-  `transid_allocfrom` int(11) NOT NULL default '0',
-  `transid_allocto` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `amt` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `datealloc` date NOT NULL DEFAULT '0000-00-00',
+  `transid_allocfrom` int(11) NOT NULL DEFAULT '0',
+  `transid_allocto` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
   KEY `DateAlloc` (`datealloc`),
   KEY `TransID_AllocFrom` (`transid_allocfrom`),
-  KEY `TransID_AllocTo` (`transid_allocto`),
-  CONSTRAINT `custallocns_ibfk_1` FOREIGN KEY (`transid_allocfrom`) REFERENCES `debtortrans` (`id`),
-  CONSTRAINT `custallocns_ibfk_2` FOREIGN KEY (`transid_allocto`) REFERENCES `debtortrans` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `TransID_AllocTo` (`transid_allocto`)
+) TYPE=MyISAM AUTO_INCREMENT=3;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -426,53 +410,47 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `custbranch` (
-  `branchcode` varchar(10) NOT NULL default '',
-  `debtorno` varchar(10) NOT NULL default '',
-  `brname` varchar(40) NOT NULL default '',
-  `braddress1` varchar(40) NOT NULL default '',
-  `braddress2` varchar(40) NOT NULL default '',
-  `braddress3` varchar(40) NOT NULL default '',
-  `braddress4` varchar(50) NOT NULL default '',
-  `braddress5` varchar(20) NOT NULL default '',
-  `braddress6` varchar(15) NOT NULL default '',
-  `lat` float(10,6) NOT NULL default '0.000000',
-  `lng` float(10,6) NOT NULL default '0.000000',
-  `estdeliverydays` smallint(6) NOT NULL default '1',
+  `branchcode` varchar(10) NOT NULL DEFAULT '',
+  `debtorno` varchar(10) NOT NULL DEFAULT '',
+  `brname` varchar(40) NOT NULL DEFAULT '',
+  `braddress1` varchar(40) NOT NULL DEFAULT '',
+  `braddress2` varchar(40) NOT NULL DEFAULT '',
+  `braddress3` varchar(40) NOT NULL DEFAULT '',
+  `braddress4` varchar(50) NOT NULL DEFAULT '',
+  `braddress5` varchar(20) NOT NULL DEFAULT '',
+  `braddress6` varchar(15) NOT NULL DEFAULT '',
+  `lat` float(10,6) NOT NULL DEFAULT '0.000000',
+  `lng` float(10,6) NOT NULL DEFAULT '0.000000',
+  `estdeliverydays` smallint(6) NOT NULL DEFAULT '1',
   `area` char(3) NOT NULL,
-  `salesman` varchar(4) NOT NULL default '',
-  `fwddate` smallint(6) NOT NULL default '0',
-  `phoneno` varchar(20) NOT NULL default '',
-  `faxno` varchar(20) NOT NULL default '',
-  `contactname` varchar(30) NOT NULL default '',
-  `email` varchar(55) NOT NULL default '',
-  `defaultlocation` varchar(5) NOT NULL default '',
-  `taxgroupid` tinyint(4) NOT NULL default '1',
-  `defaultshipvia` int(11) NOT NULL default '1',
-  `deliverblind` tinyint(1) default '1',
-  `disabletrans` tinyint(4) NOT NULL default '0',
-  `brpostaddr1` varchar(40) NOT NULL default '',
-  `brpostaddr2` varchar(40) NOT NULL default '',
-  `brpostaddr3` varchar(30) NOT NULL default '',
-  `brpostaddr4` varchar(20) NOT NULL default '',
-  `brpostaddr5` varchar(20) NOT NULL default '',
-  `brpostaddr6` varchar(15) NOT NULL default '',
+  `salesman` varchar(4) NOT NULL DEFAULT '',
+  `fwddate` smallint(6) NOT NULL DEFAULT '0',
+  `phoneno` varchar(20) NOT NULL DEFAULT '',
+  `faxno` varchar(20) NOT NULL DEFAULT '',
+  `contactname` varchar(30) NOT NULL DEFAULT '',
+  `email` varchar(55) NOT NULL DEFAULT '',
+  `defaultlocation` varchar(5) NOT NULL DEFAULT '',
+  `taxgroupid` tinyint(4) NOT NULL DEFAULT '1',
+  `defaultshipvia` int(11) NOT NULL DEFAULT '1',
+  `deliverblind` tinyint(1) DEFAULT '1',
+  `disabletrans` tinyint(4) NOT NULL DEFAULT '0',
+  `brpostaddr1` varchar(40) NOT NULL DEFAULT '',
+  `brpostaddr2` varchar(40) NOT NULL DEFAULT '',
+  `brpostaddr3` varchar(30) NOT NULL DEFAULT '',
+  `brpostaddr4` varchar(20) NOT NULL DEFAULT '',
+  `brpostaddr5` varchar(20) NOT NULL DEFAULT '',
+  `brpostaddr6` varchar(15) NOT NULL DEFAULT '',
   `specialinstructions` text NOT NULL,
-  `custbranchcode` varchar(30) NOT NULL default '',
-  PRIMARY KEY  (`branchcode`,`debtorno`),
+  `custbranchcode` varchar(30) NOT NULL DEFAULT '',
+  PRIMARY KEY (`branchcode`,`debtorno`),
   KEY `BrName` (`brname`),
   KEY `DebtorNo` (`debtorno`),
   KEY `Salesman` (`salesman`),
   KEY `Area` (`area`),
   KEY `DefaultLocation` (`defaultlocation`),
   KEY `DefaultShipVia` (`defaultshipvia`),
-  KEY `taxgroupid` (`taxgroupid`),
-  CONSTRAINT `custbranch_ibfk_1` FOREIGN KEY (`debtorno`) REFERENCES `debtorsmaster` (`debtorno`),
-  CONSTRAINT `custbranch_ibfk_2` FOREIGN KEY (`area`) REFERENCES `areas` (`areacode`),
-  CONSTRAINT `custbranch_ibfk_3` FOREIGN KEY (`salesman`) REFERENCES `salesman` (`salesmancode`),
-  CONSTRAINT `custbranch_ibfk_4` FOREIGN KEY (`defaultlocation`) REFERENCES `locations` (`loccode`),
-  CONSTRAINT `custbranch_ibfk_6` FOREIGN KEY (`defaultshipvia`) REFERENCES `shippers` (`shipper_id`),
-  CONSTRAINT `custbranch_ibfk_7` FOREIGN KEY (`taxgroupid`) REFERENCES `taxgroups` (`taxgroupid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `taxgroupid` (`taxgroupid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -482,14 +460,14 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `custcontacts` (
-  `contid` int(11) NOT NULL auto_increment,
+  `contid` int(11) NOT NULL AUTO_INCREMENT,
   `debtorno` varchar(10) NOT NULL,
   `contactname` varchar(40) NOT NULL,
-  `role` varchar(10) NOT NULL,
-  `phoneno` int(10) NOT NULL,
-  `notes` varchar(40) NOT NULL,
-  PRIMARY KEY  (`contid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `role` varchar(40) NOT NULL,
+  `phoneno` varchar(20) NOT NULL,
+  `notes` varchar(255) NOT NULL,
+  PRIMARY KEY (`contid`)
+) TYPE=MyISAM AUTO_INCREMENT=6;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -499,14 +477,14 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `custnotes` (
-  `noteid` tinyint(4) NOT NULL auto_increment,
-  `debtorno` varchar(10) NOT NULL default '0',
+  `noteid` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `debtorno` varchar(10) NOT NULL DEFAULT '0',
   `href` varchar(100) NOT NULL,
   `note` varchar(200) NOT NULL,
-  `date` date NOT NULL default '0000-00-00',
+  `date` date NOT NULL DEFAULT '0000-00-00',
   `priority` varchar(20) NOT NULL,
-  PRIMARY KEY  (`noteid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`noteid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -516,37 +494,37 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `debtorsmaster` (
-  `debtorno` varchar(10) NOT NULL default '',
-  `name` varchar(40) NOT NULL default '',
-  `address1` varchar(40) NOT NULL default '',
-  `address2` varchar(40) NOT NULL default '',
-  `address3` varchar(40) NOT NULL default '',
-  `address4` varchar(50) NOT NULL default '',
-  `address5` varchar(20) NOT NULL default '',
-  `address6` varchar(15) NOT NULL default '',
-  `currcode` char(3) NOT NULL default '',
-  `salestype` char(2) NOT NULL default '',
-  `clientsince` datetime NOT NULL default '0000-00-00 00:00:00',
-  `holdreason` smallint(6) NOT NULL default '0',
-  `paymentterms` char(2) NOT NULL default 'f',
-  `discount` double NOT NULL default '0',
-  `pymtdiscount` double NOT NULL default '0',
-  `lastpaid` double NOT NULL default '0',
-  `lastpaiddate` datetime default NULL,
-  `creditlimit` double NOT NULL default '1000',
-  `invaddrbranch` tinyint(4) NOT NULL default '0',
-  `discountcode` char(2) NOT NULL default '',
-  `ediinvoices` tinyint(4) NOT NULL default '0',
-  `ediorders` tinyint(4) NOT NULL default '0',
-  `edireference` varchar(20) NOT NULL default '',
-  `editransport` varchar(5) NOT NULL default 'email',
-  `ediaddress` varchar(50) NOT NULL default '',
-  `ediserveruser` varchar(20) NOT NULL default '',
-  `ediserverpwd` varchar(20) NOT NULL default '',
-  `taxref` varchar(20) NOT NULL default '',
-  `customerpoline` tinyint(1) NOT NULL default '0',
-  `typeid` tinyint(4) NOT NULL default '1',
-  PRIMARY KEY  (`debtorno`),
+  `debtorno` varchar(10) NOT NULL DEFAULT '',
+  `name` varchar(40) NOT NULL DEFAULT '',
+  `address1` varchar(40) NOT NULL DEFAULT '',
+  `address2` varchar(40) NOT NULL DEFAULT '',
+  `address3` varchar(40) NOT NULL DEFAULT '',
+  `address4` varchar(50) NOT NULL DEFAULT '',
+  `address5` varchar(20) NOT NULL DEFAULT '',
+  `address6` varchar(15) NOT NULL DEFAULT '',
+  `currcode` char(3) NOT NULL DEFAULT '',
+  `salestype` char(2) NOT NULL DEFAULT '',
+  `clientsince` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `holdreason` smallint(6) NOT NULL DEFAULT '0',
+  `paymentterms` char(2) NOT NULL DEFAULT 'f',
+  `discount` double NOT NULL DEFAULT '0',
+  `pymtdiscount` double NOT NULL DEFAULT '0',
+  `lastpaid` double NOT NULL DEFAULT '0',
+  `lastpaiddate` datetime DEFAULT NULL,
+  `creditlimit` double NOT NULL DEFAULT '1000',
+  `invaddrbranch` tinyint(4) NOT NULL DEFAULT '0',
+  `discountcode` char(2) NOT NULL DEFAULT '',
+  `ediinvoices` tinyint(4) NOT NULL DEFAULT '0',
+  `ediorders` tinyint(4) NOT NULL DEFAULT '0',
+  `edireference` varchar(20) NOT NULL DEFAULT '',
+  `editransport` varchar(5) NOT NULL DEFAULT 'email',
+  `ediaddress` varchar(50) NOT NULL DEFAULT '',
+  `ediserveruser` varchar(20) NOT NULL DEFAULT '',
+  `ediserverpwd` varchar(20) NOT NULL DEFAULT '',
+  `taxref` varchar(20) NOT NULL DEFAULT '',
+  `customerpoline` tinyint(1) NOT NULL DEFAULT '0',
+  `typeid` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`debtorno`),
   KEY `Currency` (`currcode`),
   KEY `HoldReason` (`holdreason`),
   KEY `Name` (`name`),
@@ -554,13 +532,8 @@ CREATE TABLE `debtorsmaster` (
   KEY `SalesType` (`salestype`),
   KEY `EDIInvoices` (`ediinvoices`),
   KEY `EDIOrders` (`ediorders`),
-  KEY `debtorsmaster_ibfk_5` (`typeid`),
-  CONSTRAINT `debtorsmaster_ibfk_1` FOREIGN KEY (`holdreason`) REFERENCES `holdreasons` (`reasoncode`),
-  CONSTRAINT `debtorsmaster_ibfk_2` FOREIGN KEY (`currcode`) REFERENCES `currencies` (`currabrev`),
-  CONSTRAINT `debtorsmaster_ibfk_3` FOREIGN KEY (`paymentterms`) REFERENCES `paymentterms` (`termsindicator`),
-  CONSTRAINT `debtorsmaster_ibfk_4` FOREIGN KEY (`salestype`) REFERENCES `salestypes` (`typeabbrev`),
-  CONSTRAINT `debtorsmaster_ibfk_5` FOREIGN KEY (`typeid`) REFERENCES `debtortype` (`typeid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `debtorsmaster_ibfk_5` (`typeid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -570,29 +543,29 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `debtortrans` (
-  `id` int(11) NOT NULL auto_increment,
-  `transno` int(11) NOT NULL default '0',
-  `type` smallint(6) NOT NULL default '0',
-  `debtorno` varchar(10) NOT NULL default '',
-  `branchcode` varchar(10) NOT NULL default '',
-  `trandate` datetime NOT NULL default '0000-00-00 00:00:00',
-  `prd` smallint(6) NOT NULL default '0',
-  `settled` tinyint(4) NOT NULL default '0',
-  `reference` varchar(20) NOT NULL default '',
-  `tpe` char(2) NOT NULL default '',
-  `order_` int(11) NOT NULL default '0',
-  `rate` double NOT NULL default '0',
-  `ovamount` double NOT NULL default '0',
-  `ovgst` double NOT NULL default '0',
-  `ovfreight` double NOT NULL default '0',
-  `ovdiscount` double NOT NULL default '0',
-  `diffonexch` double NOT NULL default '0',
-  `alloc` double NOT NULL default '0',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `transno` int(11) NOT NULL DEFAULT '0',
+  `type` smallint(6) NOT NULL DEFAULT '0',
+  `debtorno` varchar(10) NOT NULL DEFAULT '',
+  `branchcode` varchar(10) NOT NULL DEFAULT '',
+  `trandate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `prd` smallint(6) NOT NULL DEFAULT '0',
+  `settled` tinyint(4) NOT NULL DEFAULT '0',
+  `reference` varchar(20) NOT NULL DEFAULT '',
+  `tpe` char(2) NOT NULL DEFAULT '',
+  `order_` int(11) NOT NULL DEFAULT '0',
+  `rate` double NOT NULL DEFAULT '0',
+  `ovamount` double NOT NULL DEFAULT '0',
+  `ovgst` double NOT NULL DEFAULT '0',
+  `ovfreight` double NOT NULL DEFAULT '0',
+  `ovdiscount` double NOT NULL DEFAULT '0',
+  `diffonexch` double NOT NULL DEFAULT '0',
+  `alloc` double NOT NULL DEFAULT '0',
   `invtext` text,
-  `shipvia` varchar(10) NOT NULL default '',
-  `edisent` tinyint(4) NOT NULL default '0',
-  `consignment` varchar(15) NOT NULL default '',
-  PRIMARY KEY  (`id`),
+  `shipvia` varchar(10) NOT NULL DEFAULT '',
+  `edisent` tinyint(4) NOT NULL DEFAULT '0',
+  `consignment` varchar(15) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
   KEY `DebtorNo` (`debtorno`,`branchcode`),
   KEY `Order_` (`order_`),
   KEY `Prd` (`prd`),
@@ -602,11 +575,8 @@ CREATE TABLE `debtortrans` (
   KEY `TranDate` (`trandate`),
   KEY `TransNo` (`transno`),
   KEY `Type_2` (`type`,`transno`),
-  KEY `EDISent` (`edisent`),
-  CONSTRAINT `debtortrans_ibfk_1` FOREIGN KEY (`debtorno`) REFERENCES `custbranch` (`debtorno`),
-  CONSTRAINT `debtortrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
-  CONSTRAINT `debtortrans_ibfk_3` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `EDISent` (`edisent`)
+) TYPE=MyISAM AUTO_INCREMENT=7;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -616,14 +586,12 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `debtortranstaxes` (
-  `debtortransid` int(11) NOT NULL default '0',
-  `taxauthid` tinyint(4) NOT NULL default '0',
-  `taxamount` double NOT NULL default '0',
-  PRIMARY KEY  (`debtortransid`,`taxauthid`),
-  KEY `taxauthid` (`taxauthid`),
-  CONSTRAINT `debtortranstaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`),
-  CONSTRAINT `debtortranstaxes_ibfk_2` FOREIGN KEY (`debtortransid`) REFERENCES `debtortrans` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `debtortransid` int(11) NOT NULL DEFAULT '0',
+  `taxauthid` tinyint(4) NOT NULL DEFAULT '0',
+  `taxamount` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`debtortransid`,`taxauthid`),
+  KEY `taxauthid` (`taxauthid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -633,10 +601,10 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `debtortype` (
-  `typeid` tinyint(4) NOT NULL auto_increment,
+  `typeid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `typename` varchar(100) NOT NULL,
-  PRIMARY KEY  (`typeid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`typeid`)
+) TYPE=MyISAM AUTO_INCREMENT=2;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -646,14 +614,14 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `debtortypenotes` (
-  `noteid` tinyint(4) NOT NULL auto_increment,
-  `typeid` tinyint(4) NOT NULL default '0',
+  `noteid` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `typeid` tinyint(4) NOT NULL DEFAULT '0',
   `href` varchar(100) NOT NULL,
   `note` varchar(200) NOT NULL,
-  `date` date NOT NULL default '0000-00-00',
+  `date` date NOT NULL DEFAULT '0000-00-00',
   `priority` varchar(20) NOT NULL,
-  PRIMARY KEY  (`noteid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`noteid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -667,15 +635,13 @@ CREATE TABLE `deliverynotes` (
   `deliverynotelineno` tinyint(4) NOT NULL,
   `salesorderno` int(11) NOT NULL,
   `salesorderlineno` int(11) NOT NULL,
-  `qtydelivered` double NOT NULL default '0',
-  `printed` tinyint(4) NOT NULL default '0',
-  `invoiced` tinyint(4) NOT NULL default '0',
-  `deliverydate` date NOT NULL default '0000-00-00',
-  PRIMARY KEY  (`deliverynotenumber`,`deliverynotelineno`),
-  KEY `deliverynotes_ibfk_2` (`salesorderno`,`salesorderlineno`),
-  CONSTRAINT `deliverynotes_ibfk_1` FOREIGN KEY (`salesorderno`) REFERENCES `salesorders` (`orderno`),
-  CONSTRAINT `deliverynotes_ibfk_2` FOREIGN KEY (`salesorderno`, `salesorderlineno`) REFERENCES `salesorderdetails` (`orderno`, `orderlineno`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `qtydelivered` double NOT NULL DEFAULT '0',
+  `printed` tinyint(4) NOT NULL DEFAULT '0',
+  `invoiced` tinyint(4) NOT NULL DEFAULT '0',
+  `deliverydate` date NOT NULL DEFAULT '0000-00-00',
+  PRIMARY KEY (`deliverynotenumber`,`deliverynotelineno`),
+  KEY `deliverynotes_ibfk_2` (`salesorderno`,`salesorderlineno`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -685,16 +651,15 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `discountmatrix` (
-  `salestype` char(2) NOT NULL default '',
-  `discountcategory` char(2) NOT NULL default '',
-  `quantitybreak` int(11) NOT NULL default '1',
-  `discountrate` double NOT NULL default '0',
-  PRIMARY KEY  (`salestype`,`discountcategory`,`quantitybreak`),
+  `salestype` char(2) NOT NULL DEFAULT '',
+  `discountcategory` char(2) NOT NULL DEFAULT '',
+  `quantitybreak` int(11) NOT NULL DEFAULT '1',
+  `discountrate` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`salestype`,`discountcategory`,`quantitybreak`),
   KEY `QuantityBreak` (`quantitybreak`),
   KEY `DiscountCategory` (`discountcategory`),
-  KEY `SalesType` (`salestype`),
-  CONSTRAINT `discountmatrix_ibfk_1` FOREIGN KEY (`salestype`) REFERENCES `salestypes` (`typeabbrev`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `SalesType` (`salestype`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -704,11 +669,11 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `edi_orders_seg_groups` (
-  `seggroupno` tinyint(4) NOT NULL default '0',
-  `maxoccur` int(4) NOT NULL default '0',
-  `parentseggroup` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`seggroupno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `seggroupno` tinyint(4) NOT NULL DEFAULT '0',
+  `maxoccur` int(4) NOT NULL DEFAULT '0',
+  `parentseggroup` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`seggroupno`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -718,14 +683,14 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `edi_orders_segs` (
-  `id` int(11) NOT NULL auto_increment,
-  `segtag` char(3) NOT NULL default '',
-  `seggroup` tinyint(4) NOT NULL default '0',
-  `maxoccur` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `segtag` char(3) NOT NULL DEFAULT '',
+  `seggroup` tinyint(4) NOT NULL DEFAULT '0',
+  `maxoccur` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
   KEY `SegTag` (`segtag`),
   KEY `SegNo` (`seggroup`)
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8;
+) TYPE=MyISAM AUTO_INCREMENT=96;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -735,16 +700,16 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `ediitemmapping` (
-  `supporcust` varchar(4) NOT NULL default '',
-  `partnercode` varchar(10) NOT NULL default '',
-  `stockid` varchar(20) NOT NULL default '',
-  `partnerstockid` varchar(50) NOT NULL default '',
-  PRIMARY KEY  (`supporcust`,`partnercode`,`stockid`),
+  `supporcust` varchar(4) NOT NULL DEFAULT '',
+  `partnercode` varchar(10) NOT NULL DEFAULT '',
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `partnerstockid` varchar(50) NOT NULL DEFAULT '',
+  PRIMARY KEY (`supporcust`,`partnercode`,`stockid`),
   KEY `PartnerCode` (`partnercode`),
   KEY `StockID` (`stockid`),
   KEY `PartnerStockID` (`partnerstockid`),
   KEY `SuppOrCust` (`supporcust`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -754,16 +719,16 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `edimessageformat` (
-  `id` int(11) NOT NULL auto_increment,
-  `partnercode` varchar(10) NOT NULL default '',
-  `messagetype` varchar(6) NOT NULL default '',
-  `section` varchar(7) NOT NULL default '',
-  `sequenceno` int(11) NOT NULL default '0',
-  `linetext` varchar(70) NOT NULL default '',
-  PRIMARY KEY  (`id`),
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `partnercode` varchar(10) NOT NULL DEFAULT '',
+  `messagetype` varchar(6) NOT NULL DEFAULT '',
+  `section` varchar(7) NOT NULL DEFAULT '',
+  `sequenceno` int(11) NOT NULL DEFAULT '0',
+  `linetext` varchar(70) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `PartnerCode` (`partnercode`,`messagetype`,`sequenceno`),
   KEY `Section` (`section`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -773,20 +738,20 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `factorcompanies` (
-  `id` int(11) NOT NULL auto_increment,
-  `coyname` varchar(50) NOT NULL default '',
-  `address1` varchar(40) NOT NULL default '',
-  `address2` varchar(40) NOT NULL default '',
-  `address3` varchar(40) NOT NULL default '',
-  `address4` varchar(40) NOT NULL default '',
-  `address5` varchar(20) NOT NULL default '',
-  `address6` varchar(15) NOT NULL default '',
-  `contact` varchar(25) NOT NULL default '',
-  `telephone` varchar(25) NOT NULL default '',
-  `fax` varchar(25) NOT NULL default '',
-  `email` varchar(55) NOT NULL default '',
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `coyname` varchar(50) NOT NULL DEFAULT '',
+  `address1` varchar(40) NOT NULL DEFAULT '',
+  `address2` varchar(40) NOT NULL DEFAULT '',
+  `address3` varchar(40) NOT NULL DEFAULT '',
+  `address4` varchar(40) NOT NULL DEFAULT '',
+  `address5` varchar(20) NOT NULL DEFAULT '',
+  `address6` varchar(15) NOT NULL DEFAULT '',
+  `contact` varchar(25) NOT NULL DEFAULT '',
+  `telephone` varchar(25) NOT NULL DEFAULT '',
+  `fax` varchar(25) NOT NULL DEFAULT '',
+  `email` varchar(55) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) TYPE=MyISAM AUTO_INCREMENT=4;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -796,24 +761,22 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `freightcosts` (
-  `shipcostfromid` int(11) NOT NULL auto_increment,
-  `locationfrom` varchar(5) NOT NULL default '',
-  `destination` varchar(40) NOT NULL default '',
-  `shipperid` int(11) NOT NULL default '0',
-  `cubrate` double NOT NULL default '0',
-  `kgrate` double NOT NULL default '0',
-  `maxkgs` double NOT NULL default '999999',
-  `maxcub` double NOT NULL default '999999',
-  `fixedprice` double NOT NULL default '0',
-  `minimumchg` double NOT NULL default '0',
-  PRIMARY KEY  (`shipcostfromid`),
+  `shipcostfromid` int(11) NOT NULL AUTO_INCREMENT,
+  `locationfrom` varchar(5) NOT NULL DEFAULT '',
+  `destination` varchar(40) NOT NULL DEFAULT '',
+  `shipperid` int(11) NOT NULL DEFAULT '0',
+  `cubrate` double NOT NULL DEFAULT '0',
+  `kgrate` double NOT NULL DEFAULT '0',
+  `maxkgs` double NOT NULL DEFAULT '999999',
+  `maxcub` double NOT NULL DEFAULT '999999',
+  `fixedprice` double NOT NULL DEFAULT '0',
+  `minimumchg` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`shipcostfromid`),
   KEY `Destination` (`destination`),
   KEY `LocationFrom` (`locationfrom`),
   KEY `ShipperID` (`shipperid`),
-  KEY `Destination_2` (`destination`,`locationfrom`,`shipperid`),
-  CONSTRAINT `freightcosts_ibfk_1` FOREIGN KEY (`locationfrom`) REFERENCES `locations` (`loccode`),
-  CONSTRAINT `freightcosts_ibfk_2` FOREIGN KEY (`shipperid`) REFERENCES `shippers` (`shipper_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `Destination_2` (`destination`,`locationfrom`,`shipperid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -823,14 +786,15 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `geocode_param` (
-  `geocodeid` varchar(4) NOT NULL default '',
-  `geocode_key` varchar(200) NOT NULL default '',
-  `center_long` varchar(20) NOT NULL default '',
-  `center_lat` varchar(20) NOT NULL default '',
-  `map_height` varchar(10) NOT NULL default '',
-  `map_width` varchar(10) NOT NULL default '',
-  `map_host` varchar(50) NOT NULL default ''
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `geocodeid` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `geocode_key` varchar(200) NOT NULL DEFAULT '',
+  `center_long` varchar(20) NOT NULL DEFAULT '',
+  `center_lat` varchar(20) NOT NULL DEFAULT '',
+  `map_height` varchar(10) NOT NULL DEFAULT '',
+  `map_width` varchar(10) NOT NULL DEFAULT '',
+  `map_host` varchar(50) NOT NULL DEFAULT '',
+  PRIMARY KEY (`geocodeid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -840,19 +804,19 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `gltrans` (
-  `counterindex` int(11) NOT NULL auto_increment,
-  `type` smallint(6) NOT NULL default '0',
-  `typeno` bigint(16) NOT NULL default '1',
-  `chequeno` int(11) NOT NULL default '0',
-  `trandate` date NOT NULL default '0000-00-00',
-  `periodno` smallint(6) NOT NULL default '0',
-  `account` int(11) NOT NULL default '0',
-  `narrative` varchar(200) NOT NULL default '',
-  `amount` double NOT NULL default '0',
-  `posted` tinyint(4) NOT NULL default '0',
-  `jobref` varchar(20) NOT NULL default '',
-  `tag` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`counterindex`),
+  `counterindex` int(11) NOT NULL AUTO_INCREMENT,
+  `type` smallint(6) NOT NULL DEFAULT '0',
+  `typeno` bigint(16) NOT NULL DEFAULT '1',
+  `chequeno` int(11) NOT NULL DEFAULT '0',
+  `trandate` date NOT NULL DEFAULT '0000-00-00',
+  `periodno` smallint(6) NOT NULL DEFAULT '0',
+  `account` int(11) NOT NULL DEFAULT '0',
+  `narrative` varchar(200) NOT NULL DEFAULT '',
+  `amount` double NOT NULL DEFAULT '0',
+  `posted` tinyint(4) NOT NULL DEFAULT '0',
+  `jobref` varchar(20) NOT NULL DEFAULT '',
+  `tag` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`counterindex`),
   KEY `Account` (`account`),
   KEY `ChequeNo` (`chequeno`),
   KEY `PeriodNo` (`periodno`),
@@ -860,11 +824,8 @@ CREATE TABLE `gltrans` (
   KEY `TranDate` (`trandate`),
   KEY `TypeNo` (`typeno`),
   KEY `Type_and_Number` (`type`,`typeno`),
-  KEY `JobRef` (`jobref`),
-  CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
-  CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
-  CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `JobRef` (`jobref`)
+) TYPE=MyISAM AUTO_INCREMENT=123;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -874,24 +835,22 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `grns` (
-  `grnbatch` smallint(6) NOT NULL default '0',
-  `grnno` int(11) NOT NULL auto_increment,
-  `podetailitem` int(11) NOT NULL default '0',
-  `itemcode` varchar(20) NOT NULL default '',
-  `deliverydate` date NOT NULL default '0000-00-00',
-  `itemdescription` varchar(100) NOT NULL default '',
-  `qtyrecd` double NOT NULL default '0',
-  `quantityinv` double NOT NULL default '0',
-  `supplierid` varchar(10) NOT NULL default '',
-  `stdcostunit` double NOT NULL default '0',
-  PRIMARY KEY  (`grnno`),
+  `grnbatch` smallint(6) NOT NULL DEFAULT '0',
+  `grnno` int(11) NOT NULL AUTO_INCREMENT,
+  `podetailitem` int(11) NOT NULL DEFAULT '0',
+  `itemcode` varchar(20) NOT NULL DEFAULT '',
+  `deliverydate` date NOT NULL DEFAULT '0000-00-00',
+  `itemdescription` varchar(100) NOT NULL DEFAULT '',
+  `qtyrecd` double NOT NULL DEFAULT '0',
+  `quantityinv` double NOT NULL DEFAULT '0',
+  `supplierid` varchar(10) NOT NULL DEFAULT '',
+  `stdcostunit` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`grnno`),
   KEY `DeliveryDate` (`deliverydate`),
   KEY `ItemCode` (`itemcode`),
   KEY `PODetailItem` (`podetailitem`),
-  KEY `SupplierID` (`supplierid`),
-  CONSTRAINT `grns_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`supplierid`),
-  CONSTRAINT `grns_ibfk_2` FOREIGN KEY (`podetailitem`) REFERENCES `purchorderdetails` (`podetailitem`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `SupplierID` (`supplierid`)
+) TYPE=MyISAM AUTO_INCREMENT=15;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -901,13 +860,13 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `holdreasons` (
-  `reasoncode` smallint(6) NOT NULL default '1',
-  `reasondescription` char(30) NOT NULL default '',
-  `dissallowinvoices` tinyint(4) NOT NULL default '-1',
-  PRIMARY KEY  (`reasoncode`),
+  `reasoncode` smallint(6) NOT NULL DEFAULT '1',
+  `reasondescription` char(30) NOT NULL DEFAULT '',
+  `dissallowinvoices` tinyint(4) NOT NULL DEFAULT '-1',
+  PRIMARY KEY (`reasoncode`),
   KEY `ReasonCode` (`reasoncode`),
   KEY `ReasonDescription` (`reasondescription`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -917,18 +876,18 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `lastcostrollup` (
-  `stockid` char(20) NOT NULL default '',
-  `totalonhand` double NOT NULL default '0',
-  `matcost` decimal(20,4) NOT NULL default '0.0000',
-  `labcost` decimal(20,4) NOT NULL default '0.0000',
-  `oheadcost` decimal(20,4) NOT NULL default '0.0000',
-  `categoryid` char(6) NOT NULL default '',
-  `stockact` int(11) NOT NULL default '0',
-  `adjglact` int(11) NOT NULL default '0',
-  `newmatcost` decimal(20,4) NOT NULL default '0.0000',
-  `newlabcost` decimal(20,4) NOT NULL default '0.0000',
-  `newoheadcost` decimal(20,4) NOT NULL default '0.0000'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `stockid` char(20) NOT NULL DEFAULT '',
+  `totalonhand` double NOT NULL DEFAULT '0',
+  `matcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `labcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `oheadcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `categoryid` char(6) NOT NULL DEFAULT '',
+  `stockact` int(11) NOT NULL DEFAULT '0',
+  `adjglact` int(11) NOT NULL DEFAULT '0',
+  `newmatcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `newlabcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `newoheadcost` decimal(20,4) NOT NULL DEFAULT '0.0000'
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -938,24 +897,23 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `locations` (
-  `loccode` varchar(5) NOT NULL default '',
-  `locationname` varchar(50) NOT NULL default '',
-  `deladd1` varchar(40) NOT NULL default '',
-  `deladd2` varchar(40) NOT NULL default '',
-  `deladd3` varchar(40) NOT NULL default '',
-  `deladd4` varchar(40) NOT NULL default '',
-  `deladd5` varchar(20) NOT NULL default '',
-  `deladd6` varchar(15) NOT NULL default '',
-  `tel` varchar(30) NOT NULL default '',
-  `fax` varchar(30) NOT NULL default '',
-  `email` varchar(55) NOT NULL default '',
-  `contact` varchar(30) NOT NULL default '',
-  `taxprovinceid` tinyint(4) NOT NULL default '1',
-  `managed` int(11) default '0',
-  PRIMARY KEY  (`loccode`),
-  KEY `taxprovinceid` (`taxprovinceid`),
-  CONSTRAINT `locations_ibfk_1` FOREIGN KEY (`taxprovinceid`) REFERENCES `taxprovinces` (`taxprovinceid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `loccode` varchar(5) NOT NULL DEFAULT '',
+  `locationname` varchar(50) NOT NULL DEFAULT '',
+  `deladd1` varchar(40) NOT NULL DEFAULT '',
+  `deladd2` varchar(40) NOT NULL DEFAULT '',
+  `deladd3` varchar(40) NOT NULL DEFAULT '',
+  `deladd4` varchar(40) NOT NULL DEFAULT '',
+  `deladd5` varchar(20) NOT NULL DEFAULT '',
+  `deladd6` varchar(15) NOT NULL DEFAULT '',
+  `tel` varchar(30) NOT NULL DEFAULT '',
+  `fax` varchar(30) NOT NULL DEFAULT '',
+  `email` varchar(55) NOT NULL DEFAULT '',
+  `contact` varchar(30) NOT NULL DEFAULT '',
+  `taxprovinceid` tinyint(4) NOT NULL DEFAULT '1',
+  `managed` int(11) DEFAULT '0',
+  PRIMARY KEY (`loccode`),
+  KEY `taxprovinceid` (`taxprovinceid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -965,15 +923,13 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `locstock` (
-  `loccode` varchar(5) NOT NULL default '',
-  `stockid` varchar(20) NOT NULL default '',
-  `quantity` double NOT NULL default '0',
-  `reorderlevel` bigint(20) NOT NULL default '0',
-  PRIMARY KEY  (`loccode`,`stockid`),
-  KEY `StockID` (`stockid`),
-  CONSTRAINT `locstock_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
-  CONSTRAINT `locstock_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `loccode` varchar(5) NOT NULL DEFAULT '',
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `quantity` double NOT NULL DEFAULT '0',
+  `reorderlevel` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`loccode`,`stockid`),
+  KEY `StockID` (`stockid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -983,22 +939,66 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `loctransfers` (
-  `reference` int(11) NOT NULL default '0',
-  `stockid` varchar(20) NOT NULL default '',
-  `shipqty` int(11) NOT NULL default '0',
-  `recqty` int(11) NOT NULL default '0',
-  `shipdate` date NOT NULL default '0000-00-00',
-  `recdate` date NOT NULL default '0000-00-00',
-  `shiploc` varchar(7) NOT NULL default '',
-  `recloc` varchar(7) NOT NULL default '',
+  `reference` int(11) NOT NULL DEFAULT '0',
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `shipqty` int(11) NOT NULL DEFAULT '0',
+  `recqty` int(11) NOT NULL DEFAULT '0',
+  `shipdate` date NOT NULL DEFAULT '0000-00-00',
+  `recdate` date NOT NULL DEFAULT '0000-00-00',
+  `shiploc` varchar(7) NOT NULL DEFAULT '',
+  `recloc` varchar(7) NOT NULL DEFAULT '',
   KEY `Reference` (`reference`,`stockid`),
   KEY `ShipLoc` (`shiploc`),
   KEY `RecLoc` (`recloc`),
+  KEY `StockID` (`stockid`)
+) TYPE=MyISAM COMMENT='Stores Shipments To And From Locations';
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `mrpcalendar`
+--
+
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `mrpcalendar` (
+  `calendardate` date NOT NULL,
+  `daynumber` int(6) NOT NULL,
+  `manufacturingflag` smallint(6) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`calendardate`),
+  KEY `daynumber` (`daynumber`)
+) TYPE=MyISAM;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `mrpdemands`
+--
+
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `mrpdemands` (
+  `demandid` int(11) NOT NULL AUTO_INCREMENT,
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `mrpdemandtype` varchar(6) NOT NULL DEFAULT '',
+  `quantity` double NOT NULL DEFAULT '0',
+  `duedate` date NOT NULL DEFAULT '0000-00-00',
+  PRIMARY KEY (`demandid`),
   KEY `StockID` (`stockid`),
-  CONSTRAINT `loctransfers_ibfk_1` FOREIGN KEY (`shiploc`) REFERENCES `locations` (`loccode`),
-  CONSTRAINT `loctransfers_ibfk_2` FOREIGN KEY (`recloc`) REFERENCES `locations` (`loccode`),
-  CONSTRAINT `loctransfers_ibfk_3` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Stores Shipments To And From Locations';
+  KEY `mrpdemands_ibfk_1` (`mrpdemandtype`)
+) TYPE=MyISAM;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `mrpdemandtypes`
+--
+
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `mrpdemandtypes` (
+  `mrpdemandtype` varchar(6) NOT NULL DEFAULT '',
+  `description` char(30) NOT NULL DEFAULT '',
+  PRIMARY KEY (`mrpdemandtype`),
+  KEY `mrpdemandtype` (`mrpdemandtype`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1008,22 +1008,19 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `orderdeliverydifferenceslog` (
-  `orderno` int(11) NOT NULL default '0',
-  `invoiceno` int(11) NOT NULL default '0',
-  `stockid` varchar(20) NOT NULL default '',
-  `quantitydiff` double NOT NULL default '0',
-  `debtorno` varchar(10) NOT NULL default '',
-  `branch` varchar(10) NOT NULL default '',
-  `can_or_bo` char(3) NOT NULL default 'CAN',
-  PRIMARY KEY  (`orderno`,`invoiceno`,`stockid`),
+  `orderno` int(11) NOT NULL DEFAULT '0',
+  `invoiceno` int(11) NOT NULL DEFAULT '0',
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `quantitydiff` double NOT NULL DEFAULT '0',
+  `debtorno` varchar(10) NOT NULL DEFAULT '',
+  `branch` varchar(10) NOT NULL DEFAULT '',
+  `can_or_bo` char(3) NOT NULL DEFAULT 'CAN',
+  PRIMARY KEY (`orderno`,`invoiceno`,`stockid`),
   KEY `StockID` (`stockid`),
   KEY `DebtorNo` (`debtorno`,`branch`),
   KEY `Can_or_BO` (`can_or_bo`),
-  KEY `OrderNo` (`orderno`),
-  CONSTRAINT `orderdeliverydifferenceslog_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `orderdeliverydifferenceslog_ibfk_2` FOREIGN KEY (`debtorno`, `branch`) REFERENCES `custbranch` (`debtorno`, `branchcode`),
-  CONSTRAINT `orderdeliverydifferenceslog_ibfk_3` FOREIGN KEY (`orderno`) REFERENCES `salesorders` (`orderno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `OrderNo` (`orderno`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1033,12 +1030,12 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `paymentmethods` (
-  `paymentid` tinyint(4) NOT NULL auto_increment,
-  `paymentname` varchar(15) NOT NULL default '',
-  `paymenttype` int(11) NOT NULL default '1',
-  `receipttype` int(11) NOT NULL default '1',
-  PRIMARY KEY  (`paymentid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `paymentid` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `paymentname` varchar(15) NOT NULL DEFAULT '',
+  `paymenttype` int(11) NOT NULL DEFAULT '1',
+  `receipttype` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`paymentid`)
+) TYPE=MyISAM AUTO_INCREMENT=4;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1048,14 +1045,14 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `paymentterms` (
-  `termsindicator` char(2) NOT NULL default '',
-  `terms` char(40) NOT NULL default '',
-  `daysbeforedue` smallint(6) NOT NULL default '0',
-  `dayinfollowingmonth` smallint(6) NOT NULL default '0',
-  PRIMARY KEY  (`termsindicator`),
+  `termsindicator` char(2) NOT NULL DEFAULT '',
+  `terms` char(40) NOT NULL DEFAULT '',
+  `daysbeforedue` smallint(6) NOT NULL DEFAULT '0',
+  `dayinfollowingmonth` smallint(6) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`termsindicator`),
   KEY `DaysBeforeDue` (`daysbeforedue`),
   KEY `DayInFollowingMonth` (`dayinfollowingmonth`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1065,11 +1062,11 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `periods` (
-  `periodno` smallint(6) NOT NULL default '0',
-  `lastdate_in_period` date NOT NULL default '0000-00-00',
-  PRIMARY KEY  (`periodno`),
+  `periodno` smallint(6) NOT NULL DEFAULT '0',
+  `lastdate_in_period` date NOT NULL DEFAULT '0000-00-00',
+  PRIMARY KEY (`periodno`),
   KEY `LastDate_in_Period` (`lastdate_in_period`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1079,21 +1076,18 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `prices` (
-  `stockid` varchar(20) NOT NULL default '',
-  `typeabbrev` char(2) NOT NULL default '',
-  `currabrev` char(3) NOT NULL default '',
-  `debtorno` varchar(10) NOT NULL default '',
-  `price` decimal(20,4) NOT NULL default '0.0000',
-  `branchcode` varchar(10) NOT NULL default '',
-  PRIMARY KEY  (`stockid`,`typeabbrev`,`currabrev`,`debtorno`),
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `typeabbrev` char(2) NOT NULL DEFAULT '',
+  `currabrev` char(3) NOT NULL DEFAULT '',
+  `debtorno` varchar(10) NOT NULL DEFAULT '',
+  `price` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `branchcode` varchar(10) NOT NULL DEFAULT '',
+  PRIMARY KEY (`stockid`,`typeabbrev`,`currabrev`,`debtorno`),
   KEY `CurrAbrev` (`currabrev`),
   KEY `DebtorNo` (`debtorno`),
   KEY `StockID` (`stockid`),
-  KEY `TypeAbbrev` (`typeabbrev`),
-  CONSTRAINT `prices_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `prices_ibfk_2` FOREIGN KEY (`currabrev`) REFERENCES `currencies` (`currabrev`),
-  CONSTRAINT `prices_ibfk_3` FOREIGN KEY (`typeabbrev`) REFERENCES `salestypes` (`typeabbrev`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `TypeAbbrev` (`typeabbrev`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1103,22 +1097,20 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `purchdata` (
-  `supplierno` char(10) NOT NULL default '',
-  `stockid` char(20) NOT NULL default '',
-  `price` decimal(20,4) NOT NULL default '0.0000',
-  `suppliersuom` char(50) NOT NULL default '',
-  `conversionfactor` double NOT NULL default '1',
-  `supplierdescription` char(50) NOT NULL default '',
-  `leadtime` smallint(6) NOT NULL default '1',
-  `preferred` tinyint(4) NOT NULL default '0',
+  `supplierno` char(10) NOT NULL DEFAULT '',
+  `stockid` char(20) NOT NULL DEFAULT '',
+  `price` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `suppliersuom` char(50) NOT NULL DEFAULT '',
+  `conversionfactor` double NOT NULL DEFAULT '1',
+  `supplierdescription` char(50) NOT NULL DEFAULT '',
+  `leadtime` smallint(6) NOT NULL DEFAULT '1',
+  `preferred` tinyint(4) NOT NULL DEFAULT '0',
   `effectivefrom` date NOT NULL,
-  PRIMARY KEY (`supplierno`,`stockid`, `effectivefrom`),
+  PRIMARY KEY (`supplierno`,`stockid`,`effectivefrom`),
   KEY `StockID` (`stockid`),
   KEY `SupplierNo` (`supplierno`),
-  KEY `Preferred` (`preferred`),
-  CONSTRAINT `purchdata_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `purchdata_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `Preferred` (`preferred`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1128,31 +1120,30 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `purchorderdetails` (
-  `podetailitem` int(11) NOT NULL auto_increment,
-  `orderno` int(11) NOT NULL default '0',
-  `itemcode` varchar(20) NOT NULL default '',
-  `deliverydate` date NOT NULL default '0000-00-00',
-  `itemdescription` varchar(100) NOT NULL default '',
-  `glcode` int(11) NOT NULL default '0',
-  `qtyinvoiced` double NOT NULL default '0',
-  `unitprice` double NOT NULL default '0',
-  `actprice` double NOT NULL default '0',
-  `stdcostunit` double NOT NULL default '0',
-  `quantityord` double NOT NULL default '0',
-  `quantityrecd` double NOT NULL default '0',
-  `shiptref` int(11) NOT NULL default '0',
-  `jobref` varchar(20) NOT NULL default '',
-  `completed` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`podetailitem`),
+  `podetailitem` int(11) NOT NULL AUTO_INCREMENT,
+  `orderno` int(11) NOT NULL DEFAULT '0',
+  `itemcode` varchar(20) NOT NULL DEFAULT '',
+  `deliverydate` date NOT NULL DEFAULT '0000-00-00',
+  `itemdescription` varchar(100) NOT NULL DEFAULT '',
+  `glcode` int(11) NOT NULL DEFAULT '0',
+  `qtyinvoiced` double NOT NULL DEFAULT '0',
+  `unitprice` double NOT NULL DEFAULT '0',
+  `actprice` double NOT NULL DEFAULT '0',
+  `stdcostunit` double NOT NULL DEFAULT '0',
+  `quantityord` double NOT NULL DEFAULT '0',
+  `quantityrecd` double NOT NULL DEFAULT '0',
+  `shiptref` int(11) NOT NULL DEFAULT '0',
+  `jobref` varchar(20) NOT NULL DEFAULT '',
+  `completed` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`podetailitem`),
   KEY `DeliveryDate` (`deliverydate`),
   KEY `GLCode` (`glcode`),
   KEY `ItemCode` (`itemcode`),
   KEY `JobRef` (`jobref`),
   KEY `OrderNo` (`orderno`),
   KEY `ShiptRef` (`shiptref`),
-  KEY `Completed` (`completed`),
-  CONSTRAINT `purchorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `purchorders` (`orderno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `Completed` (`completed`)
+) TYPE=MyISAM AUTO_INCREMENT=4;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1162,31 +1153,29 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `purchorders` (
-  `orderno` int(11) NOT NULL auto_increment,
-  `supplierno` varchar(10) NOT NULL default '',
+  `orderno` int(11) NOT NULL AUTO_INCREMENT,
+  `supplierno` varchar(10) NOT NULL DEFAULT '',
   `comments` longblob,
-  `orddate` datetime NOT NULL default '0000-00-00 00:00:00',
-  `rate` double NOT NULL default '1',
-  `dateprinted` datetime default NULL,
-  `allowprint` tinyint(4) NOT NULL default '1',
-  `initiator` varchar(10) default NULL,
-  `requisitionno` varchar(15) default NULL,
-  `intostocklocation` varchar(5) NOT NULL default '',
-  `deladd1` varchar(40) NOT NULL default '',
-  `deladd2` varchar(40) NOT NULL default '',
-  `deladd3` varchar(40) NOT NULL default '',
-  `deladd4` varchar(40) NOT NULL default '',
-  `deladd5` varchar(20) NOT NULL default '',
-  `deladd6` varchar(15) NOT NULL default '',
-  `contact` varchar(30) NOT NULL default '',
-  PRIMARY KEY  (`orderno`),
+  `orddate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `rate` double NOT NULL DEFAULT '1',
+  `dateprinted` datetime DEFAULT NULL,
+  `allowprint` tinyint(4) NOT NULL DEFAULT '1',
+  `initiator` varchar(10) DEFAULT NULL,
+  `requisitionno` varchar(15) DEFAULT NULL,
+  `intostocklocation` varchar(5) NOT NULL DEFAULT '',
+  `deladd1` varchar(40) NOT NULL DEFAULT '',
+  `deladd2` varchar(40) NOT NULL DEFAULT '',
+  `deladd3` varchar(40) NOT NULL DEFAULT '',
+  `deladd4` varchar(40) NOT NULL DEFAULT '',
+  `deladd5` varchar(20) NOT NULL DEFAULT '',
+  `deladd6` varchar(15) NOT NULL DEFAULT '',
+  `contact` varchar(30) NOT NULL DEFAULT '',
+  PRIMARY KEY (`orderno`),
   KEY `OrdDate` (`orddate`),
   KEY `SupplierNo` (`supplierno`),
   KEY `IntoStockLocation` (`intostocklocation`),
-  KEY `AllowPrintPO` (`allowprint`),
-  CONSTRAINT `purchorders_ibfk_1` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`),
-  CONSTRAINT `purchorders_ibfk_2` FOREIGN KEY (`intostocklocation`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `AllowPrintPO` (`allowprint`)
+) TYPE=MyISAM AUTO_INCREMENT=3;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1196,38 +1185,37 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `recurringsalesorders` (
-  `recurrorderno` int(11) NOT NULL auto_increment,
-  `debtorno` varchar(10) NOT NULL default '',
-  `branchcode` varchar(10) NOT NULL default '',
-  `customerref` varchar(50) NOT NULL default '',
-  `buyername` varchar(50) default NULL,
+  `recurrorderno` int(11) NOT NULL AUTO_INCREMENT,
+  `debtorno` varchar(10) NOT NULL DEFAULT '',
+  `branchcode` varchar(10) NOT NULL DEFAULT '',
+  `customerref` varchar(50) NOT NULL DEFAULT '',
+  `buyername` varchar(50) DEFAULT NULL,
   `comments` longblob,
-  `orddate` date NOT NULL default '0000-00-00',
-  `ordertype` char(2) NOT NULL default '',
-  `shipvia` int(11) NOT NULL default '0',
-  `deladd1` varchar(40) NOT NULL default '',
-  `deladd2` varchar(40) NOT NULL default '',
-  `deladd3` varchar(40) NOT NULL default '',
-  `deladd4` varchar(40) default NULL,
-  `deladd5` varchar(20) NOT NULL default '',
-  `deladd6` varchar(15) NOT NULL default '',
-  `contactphone` varchar(25) default NULL,
-  `contactemail` varchar(25) default NULL,
-  `deliverto` varchar(40) NOT NULL default '',
-  `freightcost` double NOT NULL default '0',
-  `fromstkloc` varchar(5) NOT NULL default '',
-  `lastrecurrence` date NOT NULL default '0000-00-00',
-  `stopdate` date NOT NULL default '0000-00-00',
-  `frequency` tinyint(4) NOT NULL default '1',
-  `autoinvoice` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`recurrorderno`),
+  `orddate` date NOT NULL DEFAULT '0000-00-00',
+  `ordertype` char(2) NOT NULL DEFAULT '',
+  `shipvia` int(11) NOT NULL DEFAULT '0',
+  `deladd1` varchar(40) NOT NULL DEFAULT '',
+  `deladd2` varchar(40) NOT NULL DEFAULT '',
+  `deladd3` varchar(40) NOT NULL DEFAULT '',
+  `deladd4` varchar(40) DEFAULT NULL,
+  `deladd5` varchar(20) NOT NULL DEFAULT '',
+  `deladd6` varchar(15) NOT NULL DEFAULT '',
+  `contactphone` varchar(25) DEFAULT NULL,
+  `contactemail` varchar(25) DEFAULT NULL,
+  `deliverto` varchar(40) NOT NULL DEFAULT '',
+  `freightcost` double NOT NULL DEFAULT '0',
+  `fromstkloc` varchar(5) NOT NULL DEFAULT '',
+  `lastrecurrence` date NOT NULL DEFAULT '0000-00-00',
+  `stopdate` date NOT NULL DEFAULT '0000-00-00',
+  `frequency` tinyint(4) NOT NULL DEFAULT '1',
+  `autoinvoice` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`recurrorderno`),
   KEY `debtorno` (`debtorno`),
   KEY `orddate` (`orddate`),
   KEY `ordertype` (`ordertype`),
   KEY `locationindex` (`fromstkloc`),
-  KEY `branchcode` (`branchcode`,`debtorno`),
-  CONSTRAINT `recurringsalesorders_ibfk_1` FOREIGN KEY (`branchcode`, `debtorno`) REFERENCES `custbranch` (`branchcode`, `debtorno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `branchcode` (`branchcode`,`debtorno`)
+) TYPE=MyISAM AUTO_INCREMENT=8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1237,17 +1225,15 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `recurrsalesorderdetails` (
-  `recurrorderno` int(11) NOT NULL default '0',
-  `stkcode` varchar(20) NOT NULL default '',
-  `unitprice` double NOT NULL default '0',
-  `quantity` double NOT NULL default '0',
-  `discountpercent` double NOT NULL default '0',
+  `recurrorderno` int(11) NOT NULL DEFAULT '0',
+  `stkcode` varchar(20) NOT NULL DEFAULT '',
+  `unitprice` double NOT NULL DEFAULT '0',
+  `quantity` double NOT NULL DEFAULT '0',
+  `discountpercent` double NOT NULL DEFAULT '0',
   `narrative` text NOT NULL,
   KEY `orderno` (`recurrorderno`),
-  KEY `stkcode` (`stkcode`),
-  CONSTRAINT `recurrsalesorderdetails_ibfk_1` FOREIGN KEY (`recurrorderno`) REFERENCES `recurringsalesorders` (`recurrorderno`),
-  CONSTRAINT `recurrsalesorderdetails_ibfk_2` FOREIGN KEY (`stkcode`) REFERENCES `stockmaster` (`stockid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `stkcode` (`stkcode`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1257,23 +1243,22 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `reportcolumns` (
-  `reportid` smallint(6) NOT NULL default '0',
-  `colno` smallint(6) NOT NULL default '0',
-  `heading1` varchar(15) NOT NULL default '',
-  `heading2` varchar(15) default NULL,
-  `calculation` tinyint(1) NOT NULL default '0',
-  `periodfrom` smallint(6) default NULL,
-  `periodto` smallint(6) default NULL,
-  `datatype` varchar(15) default NULL,
-  `colnumerator` tinyint(4) default NULL,
-  `coldenominator` tinyint(4) default NULL,
-  `calcoperator` char(1) default NULL,
-  `budgetoractual` tinyint(1) NOT NULL default '0',
-  `valformat` char(1) NOT NULL default 'N',
-  `constant` double NOT NULL default '0',
-  PRIMARY KEY  (`reportid`,`colno`),
-  CONSTRAINT `reportcolumns_ibfk_1` FOREIGN KEY (`reportid`) REFERENCES `reportheaders` (`reportid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `reportid` smallint(6) NOT NULL DEFAULT '0',
+  `colno` smallint(6) NOT NULL DEFAULT '0',
+  `heading1` varchar(15) NOT NULL DEFAULT '',
+  `heading2` varchar(15) DEFAULT NULL,
+  `calculation` tinyint(1) NOT NULL DEFAULT '0',
+  `periodfrom` smallint(6) DEFAULT NULL,
+  `periodto` smallint(6) DEFAULT NULL,
+  `datatype` varchar(15) DEFAULT NULL,
+  `colnumerator` tinyint(4) DEFAULT NULL,
+  `coldenominator` tinyint(4) DEFAULT NULL,
+  `calcoperator` char(1) DEFAULT NULL,
+  `budgetoractual` tinyint(1) NOT NULL DEFAULT '0',
+  `valformat` char(1) NOT NULL DEFAULT 'N',
+  `constant` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`reportid`,`colno`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1283,18 +1268,18 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `reportfields` (
-  `id` int(8) NOT NULL auto_increment,
-  `reportid` int(5) NOT NULL default '0',
-  `entrytype` varchar(15) NOT NULL default '',
-  `seqnum` int(3) NOT NULL default '0',
-  `fieldname` varchar(35) NOT NULL default '',
-  `displaydesc` varchar(25) NOT NULL default '',
-  `visible` enum('1','0') NOT NULL default '1',
-  `columnbreak` enum('1','0') NOT NULL default '1',
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `reportid` int(5) NOT NULL DEFAULT '0',
+  `entrytype` varchar(15) NOT NULL DEFAULT '',
+  `seqnum` int(3) NOT NULL DEFAULT '0',
+  `fieldname` varchar(35) NOT NULL DEFAULT '',
+  `displaydesc` varchar(25) NOT NULL DEFAULT '',
+  `visible` enum('1','0') NOT NULL DEFAULT '1',
+  `columnbreak` enum('1','0') NOT NULL DEFAULT '1',
   `params` text,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY (`id`),
   KEY `reportid` (`reportid`)
-) ENGINE=MyISAM AUTO_INCREMENT=1805 DEFAULT CHARSET=utf8;
+) TYPE=MyISAM AUTO_INCREMENT=1805;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1304,27 +1289,27 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `reportheaders` (
-  `reportid` smallint(6) NOT NULL auto_increment,
-  `reportheading` varchar(80) NOT NULL default '',
-  `groupbydata1` varchar(15) NOT NULL default '',
-  `newpageafter1` tinyint(1) NOT NULL default '0',
-  `lower1` varchar(10) NOT NULL default '',
-  `upper1` varchar(10) NOT NULL default '',
-  `groupbydata2` varchar(15) default NULL,
-  `newpageafter2` tinyint(1) NOT NULL default '0',
-  `lower2` varchar(10) default NULL,
-  `upper2` varchar(10) default NULL,
-  `groupbydata3` varchar(15) default NULL,
-  `newpageafter3` tinyint(1) NOT NULL default '0',
-  `lower3` varchar(10) default NULL,
-  `upper3` varchar(10) default NULL,
-  `groupbydata4` varchar(15) NOT NULL default '',
-  `newpageafter4` tinyint(1) NOT NULL default '0',
-  `upper4` varchar(10) NOT NULL default '',
-  `lower4` varchar(10) NOT NULL default '',
-  PRIMARY KEY  (`reportid`),
+  `reportid` smallint(6) NOT NULL AUTO_INCREMENT,
+  `reportheading` varchar(80) NOT NULL DEFAULT '',
+  `groupbydata1` varchar(15) NOT NULL DEFAULT '',
+  `newpageafter1` tinyint(1) NOT NULL DEFAULT '0',
+  `lower1` varchar(10) NOT NULL DEFAULT '',
+  `upper1` varchar(10) NOT NULL DEFAULT '',
+  `groupbydata2` varchar(15) DEFAULT NULL,
+  `newpageafter2` tinyint(1) NOT NULL DEFAULT '0',
+  `lower2` varchar(10) DEFAULT NULL,
+  `upper2` varchar(10) DEFAULT NULL,
+  `groupbydata3` varchar(15) DEFAULT NULL,
+  `newpageafter3` tinyint(1) NOT NULL DEFAULT '0',
+  `lower3` varchar(10) DEFAULT NULL,
+  `upper3` varchar(10) DEFAULT NULL,
+  `groupbydata4` varchar(15) NOT NULL DEFAULT '',
+  `newpageafter4` tinyint(1) NOT NULL DEFAULT '0',
+  `upper4` varchar(10) NOT NULL DEFAULT '',
+  `lower4` varchar(10) NOT NULL DEFAULT '',
+  PRIMARY KEY (`reportid`),
   KEY `ReportHeading` (`reportheading`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) TYPE=MyISAM AUTO_INCREMENT=2;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1334,10 +1319,10 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `reportlinks` (
-  `table1` varchar(25) NOT NULL default '',
-  `table2` varchar(25) NOT NULL default '',
-  `equation` varchar(75) NOT NULL default ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `table1` varchar(25) NOT NULL DEFAULT '',
+  `table2` varchar(25) NOT NULL DEFAULT '',
+  `equation` varchar(75) NOT NULL DEFAULT ''
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1347,68 +1332,68 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `reports` (
-  `id` int(5) NOT NULL auto_increment,
-  `reportname` varchar(30) NOT NULL default '',
-  `reporttype` char(3) NOT NULL default 'rpt',
-  `groupname` varchar(9) NOT NULL default 'misc',
-  `defaultreport` enum('1','0') NOT NULL default '0',
-  `papersize` varchar(15) NOT NULL default 'A4,210,297',
-  `paperorientation` enum('P','L') NOT NULL default 'P',
-  `margintop` int(3) NOT NULL default '10',
-  `marginbottom` int(3) NOT NULL default '10',
-  `marginleft` int(3) NOT NULL default '10',
-  `marginright` int(3) NOT NULL default '10',
-  `coynamefont` varchar(20) NOT NULL default 'Helvetica',
-  `coynamefontsize` int(3) NOT NULL default '12',
-  `coynamefontcolor` varchar(11) NOT NULL default '0,0,0',
-  `coynamealign` enum('L','C','R') NOT NULL default 'C',
-  `coynameshow` enum('1','0') NOT NULL default '1',
-  `title1desc` varchar(50) NOT NULL default '%reportname%',
-  `title1font` varchar(20) NOT NULL default 'Helvetica',
-  `title1fontsize` int(3) NOT NULL default '10',
-  `title1fontcolor` varchar(11) NOT NULL default '0,0,0',
-  `title1fontalign` enum('L','C','R') NOT NULL default 'C',
-  `title1show` enum('1','0') NOT NULL default '1',
-  `title2desc` varchar(50) NOT NULL default 'Report Generated %date%',
-  `title2font` varchar(20) NOT NULL default 'Helvetica',
-  `title2fontsize` int(3) NOT NULL default '10',
-  `title2fontcolor` varchar(11) NOT NULL default '0,0,0',
-  `title2fontalign` enum('L','C','R') NOT NULL default 'C',
-  `title2show` enum('1','0') NOT NULL default '1',
-  `filterfont` varchar(10) NOT NULL default 'Helvetica',
-  `filterfontsize` int(3) NOT NULL default '8',
-  `filterfontcolor` varchar(11) NOT NULL default '0,0,0',
-  `filterfontalign` enum('L','C','R') NOT NULL default 'L',
-  `datafont` varchar(10) NOT NULL default 'Helvetica',
-  `datafontsize` int(3) NOT NULL default '10',
-  `datafontcolor` varchar(10) NOT NULL default 'black',
-  `datafontalign` enum('L','C','R') NOT NULL default 'L',
-  `totalsfont` varchar(10) NOT NULL default 'Helvetica',
-  `totalsfontsize` int(3) NOT NULL default '10',
-  `totalsfontcolor` varchar(11) NOT NULL default '0,0,0',
-  `totalsfontalign` enum('L','C','R') NOT NULL default 'L',
-  `col1width` int(3) NOT NULL default '25',
-  `col2width` int(3) NOT NULL default '25',
-  `col3width` int(3) NOT NULL default '25',
-  `col4width` int(3) NOT NULL default '25',
-  `col5width` int(3) NOT NULL default '25',
-  `col6width` int(3) NOT NULL default '25',
-  `col7width` int(3) NOT NULL default '25',
-  `col8width` int(3) NOT NULL default '25',
-  `table1` varchar(25) NOT NULL default '',
-  `table2` varchar(25) default NULL,
-  `table2criteria` varchar(75) default NULL,
-  `table3` varchar(25) default NULL,
-  `table3criteria` varchar(75) default NULL,
-  `table4` varchar(25) default NULL,
-  `table4criteria` varchar(75) default NULL,
-  `table5` varchar(25) default NULL,
-  `table5criteria` varchar(75) default NULL,
-  `table6` varchar(25) default NULL,
-  `table6criteria` varchar(75) default NULL,
-  PRIMARY KEY  (`id`),
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `reportname` varchar(30) NOT NULL DEFAULT '',
+  `reporttype` char(3) NOT NULL DEFAULT 'rpt',
+  `groupname` varchar(9) NOT NULL DEFAULT 'misc',
+  `defaultreport` enum('1','0') NOT NULL DEFAULT '0',
+  `papersize` varchar(15) NOT NULL DEFAULT 'A4,210,297',
+  `paperorientation` enum('P','L') NOT NULL DEFAULT 'P',
+  `margintop` int(3) NOT NULL DEFAULT '10',
+  `marginbottom` int(3) NOT NULL DEFAULT '10',
+  `marginleft` int(3) NOT NULL DEFAULT '10',
+  `marginright` int(3) NOT NULL DEFAULT '10',
+  `coynamefont` varchar(20) NOT NULL DEFAULT 'Helvetica',
+  `coynamefontsize` int(3) NOT NULL DEFAULT '12',
+  `coynamefontcolor` varchar(11) NOT NULL DEFAULT '0,0,0',
+  `coynamealign` enum('L','C','R') NOT NULL DEFAULT 'C',
+  `coynameshow` enum('1','0') NOT NULL DEFAULT '1',
+  `title1desc` varchar(50) NOT NULL DEFAULT '%reportname%',
+  `title1font` varchar(20) NOT NULL DEFAULT 'Helvetica',
+  `title1fontsize` int(3) NOT NULL DEFAULT '10',
+  `title1fontcolor` varchar(11) NOT NULL DEFAULT '0,0,0',
+  `title1fontalign` enum('L','C','R') NOT NULL DEFAULT 'C',
+  `title1show` enum('1','0') NOT NULL DEFAULT '1',
+  `title2desc` varchar(50) NOT NULL DEFAULT 'Report Generated %date%',
+  `title2font` varchar(20) NOT NULL DEFAULT 'Helvetica',
+  `title2fontsize` int(3) NOT NULL DEFAULT '10',
+  `title2fontcolor` varchar(11) NOT NULL DEFAULT '0,0,0',
+  `title2fontalign` enum('L','C','R') NOT NULL DEFAULT 'C',
+  `title2show` enum('1','0') NOT NULL DEFAULT '1',
+  `filterfont` varchar(10) NOT NULL DEFAULT 'Helvetica',
+  `filterfontsize` int(3) NOT NULL DEFAULT '8',
+  `filterfontcolor` varchar(11) NOT NULL DEFAULT '0,0,0',
+  `filterfontalign` enum('L','C','R') NOT NULL DEFAULT 'L',
+  `datafont` varchar(10) NOT NULL DEFAULT 'Helvetica',
+  `datafontsize` int(3) NOT NULL DEFAULT '10',
+  `datafontcolor` varchar(10) NOT NULL DEFAULT 'black',
+  `datafontalign` enum('L','C','R') NOT NULL DEFAULT 'L',
+  `totalsfont` varchar(10) NOT NULL DEFAULT 'Helvetica',
+  `totalsfontsize` int(3) NOT NULL DEFAULT '10',
+  `totalsfontcolor` varchar(11) NOT NULL DEFAULT '0,0,0',
+  `totalsfontalign` enum('L','C','R') NOT NULL DEFAULT 'L',
+  `col1width` int(3) NOT NULL DEFAULT '25',
+  `col2width` int(3) NOT NULL DEFAULT '25',
+  `col3width` int(3) NOT NULL DEFAULT '25',
+  `col4width` int(3) NOT NULL DEFAULT '25',
+  `col5width` int(3) NOT NULL DEFAULT '25',
+  `col6width` int(3) NOT NULL DEFAULT '25',
+  `col7width` int(3) NOT NULL DEFAULT '25',
+  `col8width` int(3) NOT NULL DEFAULT '25',
+  `table1` varchar(25) NOT NULL DEFAULT '',
+  `table2` varchar(25) DEFAULT NULL,
+  `table2criteria` varchar(75) DEFAULT NULL,
+  `table3` varchar(25) DEFAULT NULL,
+  `table3criteria` varchar(75) DEFAULT NULL,
+  `table4` varchar(25) DEFAULT NULL,
+  `table4criteria` varchar(75) DEFAULT NULL,
+  `table5` varchar(25) DEFAULT NULL,
+  `table5criteria` varchar(75) DEFAULT NULL,
+  `table6` varchar(25) DEFAULT NULL,
+  `table6criteria` varchar(75) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `name` (`reportname`,`groupname`)
-) ENGINE=MyISAM AUTO_INCREMENT=136 DEFAULT CHARSET=utf8;
+) TYPE=MyISAM AUTO_INCREMENT=136;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1418,21 +1403,21 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `salesanalysis` (
-  `typeabbrev` char(2) NOT NULL default '',
-  `periodno` smallint(6) NOT NULL default '0',
-  `amt` double NOT NULL default '0',
-  `cost` double NOT NULL default '0',
-  `cust` varchar(10) NOT NULL default '',
-  `custbranch` varchar(10) NOT NULL default '',
-  `qty` double NOT NULL default '0',
-  `disc` double NOT NULL default '0',
-  `stockid` varchar(20) NOT NULL default '',
+  `typeabbrev` char(2) NOT NULL DEFAULT '',
+  `periodno` smallint(6) NOT NULL DEFAULT '0',
+  `amt` double NOT NULL DEFAULT '0',
+  `cost` double NOT NULL DEFAULT '0',
+  `cust` varchar(10) NOT NULL DEFAULT '',
+  `custbranch` varchar(10) NOT NULL DEFAULT '',
+  `qty` double NOT NULL DEFAULT '0',
+  `disc` double NOT NULL DEFAULT '0',
+  `stockid` varchar(20) NOT NULL DEFAULT '',
   `area` varchar(3) NOT NULL,
-  `budgetoractual` tinyint(1) NOT NULL default '0',
-  `salesperson` char(3) NOT NULL default '',
-  `stkcategory` varchar(6) NOT NULL default '',
-  `id` int(11) NOT NULL auto_increment,
-  PRIMARY KEY  (`id`),
+  `budgetoractual` tinyint(1) NOT NULL DEFAULT '0',
+  `salesperson` char(3) NOT NULL DEFAULT '',
+  `stkcategory` varchar(6) NOT NULL DEFAULT '',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
   KEY `CustBranch` (`custbranch`),
   KEY `Cust` (`cust`),
   KEY `PeriodNo` (`periodno`),
@@ -1441,9 +1426,8 @@ CREATE TABLE `salesanalysis` (
   KEY `TypeAbbrev` (`typeabbrev`),
   KEY `Area` (`area`),
   KEY `BudgetOrActual` (`budgetoractual`),
-  KEY `Salesperson` (`salesperson`),
-  CONSTRAINT `salesanalysis_ibfk_1` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `Salesperson` (`salesperson`)
+) TYPE=MyISAM AUTO_INCREMENT=5;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1453,11 +1437,11 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `salescat` (
-  `salescatid` tinyint(4) NOT NULL auto_increment,
-  `parentcatid` tinyint(4) default NULL,
-  `salescatname` varchar(30) default NULL,
-  PRIMARY KEY  (`salescatid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `salescatid` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `parentcatid` tinyint(4) DEFAULT NULL,
+  `salescatname` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`salescatid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1467,14 +1451,12 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `salescatprod` (
-  `salescatid` tinyint(4) NOT NULL default '0',
-  `stockid` varchar(20) NOT NULL default '',
-  PRIMARY KEY  (`salescatid`,`stockid`),
+  `salescatid` tinyint(4) NOT NULL DEFAULT '0',
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`salescatid`,`stockid`),
   KEY `salescatid` (`salescatid`),
-  KEY `stockid` (`stockid`),
-  CONSTRAINT `salescatprod_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `salescatprod_ibfk_2` FOREIGN KEY (`salescatid`) REFERENCES `salescat` (`salescatid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `stockid` (`stockid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1484,18 +1466,18 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `salesglpostings` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `area` varchar(3) NOT NULL,
-  `stkcat` varchar(6) NOT NULL default '',
-  `discountglcode` int(11) NOT NULL default '0',
-  `salesglcode` int(11) NOT NULL default '0',
-  `salestype` char(2) NOT NULL default 'AN',
-  PRIMARY KEY  (`id`),
+  `stkcat` varchar(6) NOT NULL DEFAULT '',
+  `discountglcode` int(11) NOT NULL DEFAULT '0',
+  `salesglcode` int(11) NOT NULL DEFAULT '0',
+  `salestype` char(2) NOT NULL DEFAULT 'AN',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `Area_StkCat` (`area`,`stkcat`,`salestype`),
   KEY `Area` (`area`),
   KEY `StkCat` (`stkcat`),
   KEY `SalesType` (`salestype`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) TYPE=MyISAM AUTO_INCREMENT=3;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1505,15 +1487,15 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `salesman` (
-  `salesmancode` char(3) NOT NULL default '',
-  `salesmanname` char(30) NOT NULL default '',
-  `smantel` char(20) NOT NULL default '',
-  `smanfax` char(20) NOT NULL default '',
-  `commissionrate1` double NOT NULL default '0',
-  `breakpoint` decimal(10,0) NOT NULL default '0',
-  `commissionrate2` double NOT NULL default '0',
-  PRIMARY KEY  (`salesmancode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `salesmancode` char(3) NOT NULL DEFAULT '',
+  `salesmanname` char(30) NOT NULL DEFAULT '',
+  `smantel` char(20) NOT NULL DEFAULT '',
+  `smanfax` char(20) NOT NULL DEFAULT '',
+  `commissionrate1` double NOT NULL DEFAULT '0',
+  `breakpoint` decimal(10,0) NOT NULL DEFAULT '0',
+  `commissionrate2` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`salesmancode`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1523,26 +1505,24 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `salesorderdetails` (
-  `orderlineno` int(11) NOT NULL default '0',
-  `orderno` int(11) NOT NULL default '0',
-  `stkcode` varchar(20) NOT NULL default '',
-  `qtyinvoiced` double NOT NULL default '0',
-  `unitprice` double NOT NULL default '0',
-  `quantity` double NOT NULL default '0',
-  `estimate` tinyint(4) NOT NULL default '0',
-  `discountpercent` double NOT NULL default '0',
-  `actualdispatchdate` datetime NOT NULL default '0000-00-00 00:00:00',
-  `completed` tinyint(1) NOT NULL default '0',
+  `orderlineno` int(11) NOT NULL DEFAULT '0',
+  `orderno` int(11) NOT NULL DEFAULT '0',
+  `stkcode` varchar(20) NOT NULL DEFAULT '',
+  `qtyinvoiced` double NOT NULL DEFAULT '0',
+  `unitprice` double NOT NULL DEFAULT '0',
+  `quantity` double NOT NULL DEFAULT '0',
+  `estimate` tinyint(4) NOT NULL DEFAULT '0',
+  `discountpercent` double NOT NULL DEFAULT '0',
+  `actualdispatchdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `completed` tinyint(1) NOT NULL DEFAULT '0',
   `narrative` text,
-  `itemdue` date default NULL COMMENT 'Due date for line item.  Some customers require \r\nacknowledgements with due dates by line item',
-  `poline` varchar(10) default NULL COMMENT 'Some Customers require acknowledgements with a PO line number for each sales line',
-  PRIMARY KEY  (`orderlineno`,`orderno`),
+  `itemdue` date DEFAULT NULL COMMENT 'Due date for line item.  Some customers require \r\nacknowledgements with due dates by line item',
+  `poline` varchar(10) DEFAULT NULL COMMENT 'Some Customers require acknowledgements with a PO line number for each sales line',
+  PRIMARY KEY (`orderlineno`,`orderno`),
   KEY `OrderNo` (`orderno`),
   KEY `StkCode` (`stkcode`),
-  KEY `Completed` (`completed`),
-  CONSTRAINT `salesorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `salesorders` (`orderno`),
-  CONSTRAINT `salesorderdetails_ibfk_2` FOREIGN KEY (`stkcode`) REFERENCES `stockmaster` (`stockid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `Completed` (`completed`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1552,47 +1532,42 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `salesorders` (
-  `orderno` int(11) NOT NULL auto_increment,
-  `debtorno` varchar(10) NOT NULL default '',
-  `branchcode` varchar(10) NOT NULL default '',
-  `customerref` varchar(50) NOT NULL default '',
-  `buyername` varchar(50) default NULL,
+  `orderno` int(11) NOT NULL,
+  `debtorno` varchar(10) NOT NULL DEFAULT '',
+  `branchcode` varchar(10) NOT NULL DEFAULT '',
+  `customerref` varchar(50) NOT NULL DEFAULT '',
+  `buyername` varchar(50) DEFAULT NULL,
   `comments` longblob,
-  `orddate` date NOT NULL default '0000-00-00',
-  `ordertype` char(2) NOT NULL default '',
-  `shipvia` int(11) NOT NULL default '0',
-  `deladd1` varchar(40) NOT NULL default '',
-  `deladd2` varchar(40) NOT NULL default '',
-  `deladd3` varchar(40) NOT NULL default '',
-  `deladd4` varchar(40) default NULL,
-  `deladd5` varchar(20) NOT NULL default '',
-  `deladd6` varchar(15) NOT NULL default '',
-  `contactphone` varchar(25) default NULL,
-  `contactemail` varchar(40) default NULL,
-  `deliverto` varchar(40) NOT NULL default '',
-  `deliverblind` tinyint(1) default '1',
-  `freightcost` double NOT NULL default '0',
-  `fromstkloc` varchar(5) NOT NULL default '',
-  `deliverydate` date NOT NULL default '0000-00-00',
-  `quotedate` date NOT NULL default '0000-00-00',
-  `confirmeddate` date NOT NULL default '0000-00-00',
-  `printedpackingslip` tinyint(4) NOT NULL default '0',
-  `datepackingslipprinted` date NOT NULL default '0000-00-00',
-  `quotation` tinyint(4) NOT NULL default '0',
-  `quotedate` date NOT NULL default '0000-00-00',
-  `confirmeddate` date NOT NULL default '0000-00-00',
-  PRIMARY KEY  (`orderno`),
+  `orddate` date NOT NULL DEFAULT '0000-00-00',
+  `ordertype` char(2) NOT NULL DEFAULT '',
+  `shipvia` int(11) NOT NULL DEFAULT '0',
+  `deladd1` varchar(40) NOT NULL DEFAULT '',
+  `deladd2` varchar(40) NOT NULL DEFAULT '',
+  `deladd3` varchar(40) NOT NULL DEFAULT '',
+  `deladd4` varchar(40) DEFAULT NULL,
+  `deladd5` varchar(20) NOT NULL DEFAULT '',
+  `deladd6` varchar(15) NOT NULL DEFAULT '',
+  `contactphone` varchar(25) DEFAULT NULL,
+  `contactemail` varchar(40) DEFAULT NULL,
+  `deliverto` varchar(40) NOT NULL DEFAULT '',
+  `deliverblind` tinyint(1) DEFAULT '1',
+  `freightcost` double NOT NULL DEFAULT '0',
+  `fromstkloc` varchar(5) NOT NULL DEFAULT '',
+  `deliverydate` date NOT NULL DEFAULT '0000-00-00',
+  `quotedate` date NOT NULL DEFAULT '0000-00-00',
+  `confirmeddate` date NOT NULL DEFAULT '0000-00-00',
+  `printedpackingslip` tinyint(4) NOT NULL DEFAULT '0',
+  `datepackingslipprinted` date NOT NULL DEFAULT '0000-00-00',
+  `quotation` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`orderno`),
   KEY `DebtorNo` (`debtorno`),
   KEY `OrdDate` (`orddate`),
   KEY `OrderType` (`ordertype`),
   KEY `LocationIndex` (`fromstkloc`),
   KEY `BranchCode` (`branchcode`,`debtorno`),
   KEY `ShipVia` (`shipvia`),
-  KEY `quotation` (`quotation`),
-  CONSTRAINT `salesorders_ibfk_1` FOREIGN KEY (`branchcode`, `debtorno`) REFERENCES `custbranch` (`branchcode`, `debtorno`),
-  CONSTRAINT `salesorders_ibfk_2` FOREIGN KEY (`shipvia`) REFERENCES `shippers` (`shipper_id`),
-  CONSTRAINT `salesorders_ibfk_3` FOREIGN KEY (`fromstkloc`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `quotation` (`quotation`)
+) TYPE=MyISAM AUTO_INCREMENT=7;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1602,11 +1577,11 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `salestypes` (
-  `typeabbrev` char(2) NOT NULL default '',
-  `sales_type` char(20) NOT NULL default '',
-  PRIMARY KEY  (`typeabbrev`),
+  `typeabbrev` char(2) NOT NULL DEFAULT '',
+  `sales_type` char(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`typeabbrev`),
   KEY `Sales_Type` (`sales_type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1616,12 +1591,12 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `scripts` (
-  `pageid` smallint(4) NOT NULL auto_increment,
-  `filename` varchar(50) NOT NULL default '',
+  `pageid` smallint(4) NOT NULL AUTO_INCREMENT,
+  `filename` varchar(50) NOT NULL DEFAULT '',
   `pagedescription` text NOT NULL,
-  PRIMARY KEY  (`pageid`),
+  PRIMARY KEY (`pageid`),
   KEY `FileName` (`filename`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Index of all scripts';
+) TYPE=MyISAM AUTO_INCREMENT=167 COMMENT='Index of all scripts';
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1631,14 +1606,12 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `securitygroups` (
-  `secroleid` int(11) NOT NULL default '0',
-  `tokenid` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`secroleid`,`tokenid`),
+  `secroleid` int(11) NOT NULL DEFAULT '0',
+  `tokenid` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`secroleid`,`tokenid`),
   KEY `secroleid` (`secroleid`),
-  KEY `tokenid` (`tokenid`),
-  CONSTRAINT `securitygroups_secroleid_fk` FOREIGN KEY (`secroleid`) REFERENCES `securityroles` (`secroleid`),
-  CONSTRAINT `securitygroups_tokenid_fk` FOREIGN KEY (`tokenid`) REFERENCES `securitytokens` (`tokenid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `tokenid` (`tokenid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1648,10 +1621,10 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `securityroles` (
-  `secroleid` int(11) NOT NULL auto_increment,
+  `secroleid` int(11) NOT NULL AUTO_INCREMENT,
   `secrolename` text NOT NULL,
-  PRIMARY KEY  (`secroleid`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`secroleid`)
+) TYPE=MyISAM AUTO_INCREMENT=9;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1661,10 +1634,10 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `securitytokens` (
-  `tokenid` int(11) NOT NULL default '0',
+  `tokenid` int(11) NOT NULL DEFAULT '0',
   `tokenname` text NOT NULL,
-  PRIMARY KEY  (`tokenid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`tokenid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1674,20 +1647,18 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `shipmentcharges` (
-  `shiptchgid` int(11) NOT NULL auto_increment,
-  `shiptref` int(11) NOT NULL default '0',
-  `transtype` smallint(6) NOT NULL default '0',
-  `transno` int(11) NOT NULL default '0',
-  `stockid` varchar(20) NOT NULL default '',
-  `value` double NOT NULL default '0',
-  PRIMARY KEY  (`shiptchgid`),
+  `shiptchgid` int(11) NOT NULL AUTO_INCREMENT,
+  `shiptref` int(11) NOT NULL DEFAULT '0',
+  `transtype` smallint(6) NOT NULL DEFAULT '0',
+  `transno` int(11) NOT NULL DEFAULT '0',
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `value` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`shiptchgid`),
   KEY `TransType` (`transtype`,`transno`),
   KEY `ShiptRef` (`shiptref`),
   KEY `StockID` (`stockid`),
-  KEY `TransType_2` (`transtype`),
-  CONSTRAINT `shipmentcharges_ibfk_1` FOREIGN KEY (`shiptref`) REFERENCES `shipments` (`shiptref`),
-  CONSTRAINT `shipmentcharges_ibfk_2` FOREIGN KEY (`transtype`) REFERENCES `systypes` (`typeid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `TransType_2` (`transtype`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1697,20 +1668,19 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `shipments` (
-  `shiptref` int(11) NOT NULL default '0',
-  `voyageref` varchar(20) NOT NULL default '0',
-  `vessel` varchar(50) NOT NULL default '',
-  `eta` datetime NOT NULL default '0000-00-00 00:00:00',
-  `accumvalue` double NOT NULL default '0',
-  `supplierid` varchar(10) NOT NULL default '',
-  `closed` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`shiptref`),
+  `shiptref` int(11) NOT NULL DEFAULT '0',
+  `voyageref` varchar(20) NOT NULL DEFAULT '0',
+  `vessel` varchar(50) NOT NULL DEFAULT '',
+  `eta` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `accumvalue` double NOT NULL DEFAULT '0',
+  `supplierid` varchar(10) NOT NULL DEFAULT '',
+  `closed` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`shiptref`),
   KEY `ETA` (`eta`),
   KEY `SupplierID` (`supplierid`),
   KEY `ShipperRef` (`voyageref`),
-  KEY `Vessel` (`vessel`),
-  CONSTRAINT `shipments_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`supplierid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `Vessel` (`vessel`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1720,11 +1690,11 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `shippers` (
-  `shipper_id` int(11) NOT NULL auto_increment,
-  `shippername` char(40) NOT NULL default '',
-  `mincharge` double NOT NULL default '0',
-  PRIMARY KEY  (`shipper_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `shipper_id` int(11) NOT NULL AUTO_INCREMENT,
+  `shippername` char(40) NOT NULL DEFAULT '',
+  `mincharge` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`shipper_id`)
+) TYPE=MyISAM AUTO_INCREMENT=11;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1734,18 +1704,18 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `stockcategory` (
-  `categoryid` char(6) NOT NULL default '',
-  `categorydescription` char(20) NOT NULL default '',
-  `stocktype` char(1) NOT NULL default 'F',
-  `stockact` int(11) NOT NULL default '0',
-  `adjglact` int(11) NOT NULL default '0',
-  `purchpricevaract` int(11) NOT NULL default '80000',
-  `materialuseagevarac` int(11) NOT NULL default '80000',
-  `wipact` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`categoryid`),
+  `categoryid` char(6) NOT NULL DEFAULT '',
+  `categorydescription` char(20) NOT NULL DEFAULT '',
+  `stocktype` char(1) NOT NULL DEFAULT 'F',
+  `stockact` int(11) NOT NULL DEFAULT '0',
+  `adjglact` int(11) NOT NULL DEFAULT '0',
+  `purchpricevaract` int(11) NOT NULL DEFAULT '80000',
+  `materialuseagevarac` int(11) NOT NULL DEFAULT '80000',
+  `wipact` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`categoryid`),
   KEY `CategoryDescription` (`categorydescription`),
   KEY `StockType` (`stocktype`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1755,15 +1725,15 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `stockcatproperties` (
-  `stkcatpropid` int(11) NOT NULL auto_increment,
+  `stkcatpropid` int(11) NOT NULL AUTO_INCREMENT,
   `categoryid` char(6) NOT NULL,
   `label` text NOT NULL,
-  `controltype` tinyint(4) NOT NULL default '0',
-  `defaultvalue` varchar(100) NOT NULL default '''''',
-  `reqatsalesorder` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`stkcatpropid`),
+  `controltype` tinyint(4) NOT NULL DEFAULT '0',
+  `defaultvalue` varchar(100) NOT NULL DEFAULT '''''',
+  `reqatsalesorder` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`stkcatpropid`),
   KEY `categoryid` (`categoryid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) TYPE=MyISAM AUTO_INCREMENT=4;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1773,14 +1743,12 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `stockcheckfreeze` (
-  `stockid` varchar(20) NOT NULL default '',
-  `loccode` varchar(5) NOT NULL default '',
-  `qoh` double NOT NULL default '0',
-  PRIMARY KEY  (`stockid`,`loccode`),
-  KEY `LocCode` (`loccode`),
-  CONSTRAINT `stockcheckfreeze_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `stockcheckfreeze_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `loccode` varchar(5) NOT NULL DEFAULT '',
+  `qoh` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`stockid`,`loccode`),
+  KEY `LocCode` (`loccode`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1790,17 +1758,15 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `stockcounts` (
-  `id` int(11) NOT NULL auto_increment,
-  `stockid` varchar(20) NOT NULL default '',
-  `loccode` varchar(5) NOT NULL default '',
-  `qtycounted` double NOT NULL default '0',
-  `reference` varchar(20) NOT NULL default '',
-  PRIMARY KEY  (`id`),
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `loccode` varchar(5) NOT NULL DEFAULT '',
+  `qtycounted` double NOT NULL DEFAULT '0',
+  `reference` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
   KEY `StockID` (`stockid`),
-  KEY `LocCode` (`loccode`),
-  CONSTRAINT `stockcounts_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `stockcounts_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `LocCode` (`loccode`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1813,10 +1779,10 @@ CREATE TABLE `stockitemproperties` (
   `stockid` varchar(20) NOT NULL,
   `stkcatpropid` int(11) NOT NULL,
   `value` varchar(50) NOT NULL,
-  PRIMARY KEY  (`stockid`,`stkcatpropid`),
+  PRIMARY KEY (`stockid`,`stkcatpropid`),
   KEY `stockid` (`stockid`),
   KEY `value` (`value`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1826,32 +1792,35 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `stockmaster` (
-  `stockid` varchar(20) NOT NULL default '',
-  `categoryid` varchar(6) NOT NULL default '',
-  `description` varchar(50) NOT NULL default '',
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `categoryid` varchar(6) NOT NULL DEFAULT '',
+  `description` varchar(50) NOT NULL DEFAULT '',
   `longdescription` text NOT NULL,
-  `units` varchar(20) NOT NULL default 'each',
-  `mbflag` char(1) NOT NULL default 'B',
-  `lastcurcostdate` date NOT NULL default '1800-01-01',
-  `actualcost` decimal(20,4) NOT NULL default '0.0000',
-  `lastcost` decimal(20,4) NOT NULL default '0.0000',
-  `materialcost` decimal(20,4) NOT NULL default '0.0000',
-  `labourcost` decimal(20,4) NOT NULL default '0.0000',
-  `overheadcost` decimal(20,4) NOT NULL default '0.0000',
-  `lowestlevel` smallint(6) NOT NULL default '0',
-  `discontinued` tinyint(4) NOT NULL default '0',
-  `controlled` tinyint(4) NOT NULL default '0',
-  `eoq` double NOT NULL default '0',
-  `volume` decimal(20,4) NOT NULL default '0.0000',
-  `kgs` decimal(20,4) NOT NULL default '0.0000',
-  `barcode` varchar(50) NOT NULL default '',
-  `discountcategory` char(2) NOT NULL default '',
-  `taxcatid` tinyint(4) NOT NULL default '1',
-  `serialised` tinyint(4) NOT NULL default '0',
-  `appendfile` varchar(40) NOT NULL default 'none',
-  `perishable` tinyint(1) NOT NULL default '0',
-  `decimalplaces` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`stockid`),
+  `units` varchar(20) NOT NULL DEFAULT 'each',
+  `mbflag` char(1) NOT NULL DEFAULT 'B',
+  `lastcurcostdate` date NOT NULL DEFAULT '1800-01-01',
+  `actualcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `lastcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `materialcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `labourcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `overheadcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `lowestlevel` smallint(6) NOT NULL DEFAULT '0',
+  `discontinued` tinyint(4) NOT NULL DEFAULT '0',
+  `controlled` tinyint(4) NOT NULL DEFAULT '0',
+  `eoq` double NOT NULL DEFAULT '0',
+  `volume` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `kgs` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `barcode` varchar(50) NOT NULL DEFAULT '',
+  `discountcategory` char(2) NOT NULL DEFAULT '',
+  `taxcatid` tinyint(4) NOT NULL DEFAULT '1',
+  `serialised` tinyint(4) NOT NULL DEFAULT '0',
+  `appendfile` varchar(40) NOT NULL DEFAULT 'none',
+  `perishable` tinyint(1) NOT NULL DEFAULT '0',
+  `decimalplaces` tinyint(4) NOT NULL DEFAULT '0',
+  `nextserialno` bigint(20) NOT NULL DEFAULT '0',
+  `pansize` double NOT NULL DEFAULT '0',
+  `shrinkfactor` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`stockid`),
   KEY `CategoryID` (`categoryid`),
   KEY `Description` (`description`),
   KEY `LastCurCostDate` (`lastcurcostdate`),
@@ -1859,10 +1828,8 @@ CREATE TABLE `stockmaster` (
   KEY `StockID` (`stockid`,`categoryid`),
   KEY `Controlled` (`controlled`),
   KEY `DiscountCategory` (`discountcategory`),
-  KEY `taxcatid` (`taxcatid`),
-  CONSTRAINT `stockmaster_ibfk_1` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`),
-  CONSTRAINT `stockmaster_ibfk_2` FOREIGN KEY (`taxcatid`) REFERENCES `taxcategories` (`taxcatid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `taxcatid` (`taxcatid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1872,25 +1839,25 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `stockmoves` (
-  `stkmoveno` int(11) NOT NULL auto_increment,
-  `stockid` varchar(20) NOT NULL default '',
-  `type` smallint(6) NOT NULL default '0',
-  `transno` int(11) NOT NULL default '0',
-  `loccode` varchar(5) NOT NULL default '',
-  `trandate` date NOT NULL default '0000-00-00',
-  `debtorno` varchar(10) NOT NULL default '',
-  `branchcode` varchar(10) NOT NULL default '',
-  `price` decimal(20,4) NOT NULL default '0.0000',
-  `prd` smallint(6) NOT NULL default '0',
-  `reference` varchar(40) NOT NULL default '',
-  `qty` double NOT NULL default '1',
-  `discountpercent` double NOT NULL default '0',
-  `standardcost` double NOT NULL default '0',
-  `show_on_inv_crds` tinyint(4) NOT NULL default '1',
-  `newqoh` double NOT NULL default '0',
-  `hidemovt` tinyint(4) NOT NULL default '0',
+  `stkmoveno` int(11) NOT NULL AUTO_INCREMENT,
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `type` smallint(6) NOT NULL DEFAULT '0',
+  `transno` int(11) NOT NULL DEFAULT '0',
+  `loccode` varchar(5) NOT NULL DEFAULT '',
+  `trandate` date NOT NULL DEFAULT '0000-00-00',
+  `debtorno` varchar(10) NOT NULL DEFAULT '',
+  `branchcode` varchar(10) NOT NULL DEFAULT '',
+  `price` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `prd` smallint(6) NOT NULL DEFAULT '0',
+  `reference` varchar(40) NOT NULL DEFAULT '',
+  `qty` double NOT NULL DEFAULT '1',
+  `discountpercent` double NOT NULL DEFAULT '0',
+  `standardcost` double NOT NULL DEFAULT '0',
+  `show_on_inv_crds` tinyint(4) NOT NULL DEFAULT '1',
+  `newqoh` double NOT NULL DEFAULT '0',
+  `hidemovt` tinyint(4) NOT NULL DEFAULT '0',
   `narrative` text,
-  PRIMARY KEY  (`stkmoveno`),
+  PRIMARY KEY (`stkmoveno`),
   KEY `DebtorNo` (`debtorno`),
   KEY `LocCode` (`loccode`),
   KEY `Prd` (`prd`),
@@ -1900,12 +1867,8 @@ CREATE TABLE `stockmoves` (
   KEY `Type` (`type`),
   KEY `Show_On_Inv_Crds` (`show_on_inv_crds`),
   KEY `Hide` (`hidemovt`),
-  KEY `reference` (`reference`),
-  CONSTRAINT `stockmoves_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
-  CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
-  CONSTRAINT `stockmoves_ibfk_4` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `reference` (`reference`)
+) TYPE=MyISAM AUTO_INCREMENT=42;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1915,16 +1878,15 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `stockmovestaxes` (
-  `stkmoveno` int(11) NOT NULL default '0',
-  `taxauthid` tinyint(4) NOT NULL default '0',
-  `taxrate` double NOT NULL default '0',
-  `taxontax` tinyint(4) NOT NULL default '0',
-  `taxcalculationorder` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`stkmoveno`,`taxauthid`),
+  `stkmoveno` int(11) NOT NULL DEFAULT '0',
+  `taxauthid` tinyint(4) NOT NULL DEFAULT '0',
+  `taxrate` double NOT NULL DEFAULT '0',
+  `taxontax` tinyint(4) NOT NULL DEFAULT '0',
+  `taxcalculationorder` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`stkmoveno`,`taxauthid`),
   KEY `taxauthid` (`taxauthid`),
-  KEY `calculationorder` (`taxcalculationorder`),
-  CONSTRAINT `stockmovestaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `calculationorder` (`taxcalculationorder`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1934,18 +1896,17 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `stockserialitems` (
-  `stockid` varchar(20) NOT NULL default '',
-  `loccode` varchar(5) NOT NULL default '',
-  `serialno` varchar(30) NOT NULL default '',
-  `expirationdate` datetime NOT NULL default '0000-00-00 00:00:00',
-  `quantity` double NOT NULL default '0',
-  PRIMARY KEY  (`stockid`,`serialno`,`loccode`),
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `loccode` varchar(5) NOT NULL DEFAULT '',
+  `serialno` varchar(30) NOT NULL DEFAULT '',
+  `expirationdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `quantity` double NOT NULL DEFAULT '0',
+  `qualitytext` text NOT NULL,
+  PRIMARY KEY (`stockid`,`serialno`,`loccode`),
   KEY `StockID` (`stockid`),
   KEY `LocCode` (`loccode`),
-  KEY `serialno` (`serialno`),
-  CONSTRAINT `stockserialitems_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `stockserialitems_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `serialno` (`serialno`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1955,18 +1916,16 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `stockserialmoves` (
-  `stkitmmoveno` int(11) NOT NULL auto_increment,
-  `stockmoveno` int(11) NOT NULL default '0',
-  `stockid` varchar(20) NOT NULL default '',
-  `serialno` varchar(30) NOT NULL default '',
-  `moveqty` double NOT NULL default '0',
-  PRIMARY KEY  (`stkitmmoveno`),
+  `stkitmmoveno` int(11) NOT NULL AUTO_INCREMENT,
+  `stockmoveno` int(11) NOT NULL DEFAULT '0',
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `serialno` varchar(30) NOT NULL DEFAULT '',
+  `moveqty` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`stkitmmoveno`),
   KEY `StockMoveNo` (`stockmoveno`),
   KEY `StockID_SN` (`stockid`,`serialno`),
-  KEY `serialno` (`serialno`),
-  CONSTRAINT `stockserialmoves_ibfk_1` FOREIGN KEY (`stockmoveno`) REFERENCES `stockmoves` (`stkmoveno`),
-  CONSTRAINT `stockserialmoves_ibfk_2` FOREIGN KEY (`stockid`, `serialno`) REFERENCES `stockserialitems` (`stockid`, `serialno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `serialno` (`serialno`)
+) TYPE=MyISAM AUTO_INCREMENT=67;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1976,18 +1935,16 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `suppallocs` (
-  `id` int(11) NOT NULL auto_increment,
-  `amt` double NOT NULL default '0',
-  `datealloc` date NOT NULL default '0000-00-00',
-  `transid_allocfrom` int(11) NOT NULL default '0',
-  `transid_allocto` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `amt` double NOT NULL DEFAULT '0',
+  `datealloc` date NOT NULL DEFAULT '0000-00-00',
+  `transid_allocfrom` int(11) NOT NULL DEFAULT '0',
+  `transid_allocto` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
   KEY `TransID_AllocFrom` (`transid_allocfrom`),
   KEY `TransID_AllocTo` (`transid_allocto`),
-  KEY `DateAlloc` (`datealloc`),
-  CONSTRAINT `suppallocs_ibfk_1` FOREIGN KEY (`transid_allocfrom`) REFERENCES `supptrans` (`id`),
-  CONSTRAINT `suppallocs_ibfk_2` FOREIGN KEY (`transid_allocto`) REFERENCES `supptrans` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `DateAlloc` (`datealloc`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1997,19 +1954,18 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `suppliercontacts` (
-  `supplierid` varchar(10) NOT NULL default '',
-  `contact` varchar(30) NOT NULL default '',
-  `position` varchar(30) NOT NULL default '',
-  `tel` varchar(30) NOT NULL default '',
-  `fax` varchar(30) NOT NULL default '',
-  `mobile` varchar(30) NOT NULL default '',
-  `email` varchar(55) NOT NULL default '',
-  `ordercontact` tinyint(1) NOT NULL default '0',
-  PRIMARY KEY  (`supplierid`,`contact`),
+  `supplierid` varchar(10) NOT NULL DEFAULT '',
+  `contact` varchar(30) NOT NULL DEFAULT '',
+  `position` varchar(30) NOT NULL DEFAULT '',
+  `tel` varchar(30) NOT NULL DEFAULT '',
+  `fax` varchar(30) NOT NULL DEFAULT '',
+  `mobile` varchar(30) NOT NULL DEFAULT '',
+  `email` varchar(55) NOT NULL DEFAULT '',
+  `ordercontact` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`supplierid`,`contact`),
   KEY `Contact` (`contact`),
-  KEY `SupplierID` (`supplierid`),
-  CONSTRAINT `suppliercontacts_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`supplierid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `SupplierID` (`supplierid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2019,40 +1975,36 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `suppliers` (
-  `supplierid` varchar(10) NOT NULL default '',
-  `suppname` varchar(40) NOT NULL default '',
-  `address1` varchar(40) NOT NULL default '',
-  `address2` varchar(40) NOT NULL default '',
-  `address3` varchar(40) NOT NULL default '',
-  `address4` varchar(50) NOT NULL default '',
-  `address5` varchar(20) NOT NULL default '',
-  `address6` varchar(15) NOT NULL default '',
-  `lat` float(10,6) NOT NULL default '0.000000',
-  `lng` float(10,6) NOT NULL default '0.000000',
-  `currcode` char(3) NOT NULL default '',
-  `suppliersince` date NOT NULL default '0000-00-00',
-  `paymentterms` char(2) NOT NULL default '',
-  `lastpaid` double NOT NULL default '0',
-  `lastpaiddate` datetime default NULL,
-  `bankact` varchar(30) NOT NULL default '',
-  `bankref` varchar(12) NOT NULL default '',
-  `bankpartics` varchar(12) NOT NULL default '',
-  `remittance` tinyint(4) NOT NULL default '1',
-  `taxgroupid` tinyint(4) NOT NULL default '1',
-  `factorcompanyid` int(11) NOT NULL default '1',
-  `taxref` varchar(20) NOT NULL default '',
-  PRIMARY KEY  (`supplierid`),
+  `supplierid` varchar(10) NOT NULL DEFAULT '',
+  `suppname` varchar(40) NOT NULL DEFAULT '',
+  `address1` varchar(40) NOT NULL DEFAULT '',
+  `address2` varchar(40) NOT NULL DEFAULT '',
+  `address3` varchar(40) NOT NULL DEFAULT '',
+  `address4` varchar(50) NOT NULL DEFAULT '',
+  `address5` varchar(20) NOT NULL DEFAULT '',
+  `address6` varchar(15) NOT NULL DEFAULT '',
+  `lat` float(10,6) NOT NULL DEFAULT '0.000000',
+  `lng` float(10,6) NOT NULL DEFAULT '0.000000',
+  `currcode` char(3) NOT NULL DEFAULT '',
+  `suppliersince` date NOT NULL DEFAULT '0000-00-00',
+  `paymentterms` char(2) NOT NULL DEFAULT '',
+  `lastpaid` double NOT NULL DEFAULT '0',
+  `lastpaiddate` datetime DEFAULT NULL,
+  `bankact` varchar(30) NOT NULL DEFAULT '',
+  `bankref` varchar(12) NOT NULL DEFAULT '',
+  `bankpartics` varchar(12) NOT NULL DEFAULT '',
+  `remittance` tinyint(4) NOT NULL DEFAULT '1',
+  `taxgroupid` tinyint(4) NOT NULL DEFAULT '1',
+  `factorcompanyid` int(11) NOT NULL DEFAULT '1',
+  `taxref` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`supplierid`),
   KEY `CurrCode` (`currcode`),
   KEY `PaymentTerms` (`paymentterms`),
   KEY `SupplierID` (`supplierid`),
   KEY `SuppName` (`suppname`),
   KEY `taxgroupid` (`taxgroupid`),
-  KEY `suppliers_ibfk_4` (`factorcompanyid`),
-  CONSTRAINT `suppliers_ibfk_1` FOREIGN KEY (`currcode`) REFERENCES `currencies` (`currabrev`),
-  CONSTRAINT `suppliers_ibfk_2` FOREIGN KEY (`paymentterms`) REFERENCES `paymentterms` (`termsindicator`),
-  CONSTRAINT `suppliers_ibfk_3` FOREIGN KEY (`taxgroupid`) REFERENCES `taxgroups` (`taxgroupid`),
-  CONSTRAINT `suppliers_ibfk_4` FOREIGN KEY (`factorcompanyid`) REFERENCES `factorcompanies` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `suppliers_ibfk_4` (`factorcompanyid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2062,22 +2014,22 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `supptrans` (
-  `transno` int(11) NOT NULL default '0',
-  `type` smallint(6) NOT NULL default '0',
-  `supplierno` varchar(10) NOT NULL default '',
-  `suppreference` varchar(20) NOT NULL default '',
-  `trandate` date NOT NULL default '0000-00-00',
-  `duedate` date NOT NULL default '0000-00-00',
-  `settled` tinyint(4) NOT NULL default '0',
-  `rate` double NOT NULL default '1',
-  `ovamount` double NOT NULL default '0',
-  `ovgst` double NOT NULL default '0',
-  `diffonexch` double NOT NULL default '0',
-  `alloc` double NOT NULL default '0',
+  `transno` int(11) NOT NULL DEFAULT '0',
+  `type` smallint(6) NOT NULL DEFAULT '0',
+  `supplierno` varchar(10) NOT NULL DEFAULT '',
+  `suppreference` varchar(20) NOT NULL DEFAULT '',
+  `trandate` date NOT NULL DEFAULT '0000-00-00',
+  `duedate` date NOT NULL DEFAULT '0000-00-00',
+  `settled` tinyint(4) NOT NULL DEFAULT '0',
+  `rate` double NOT NULL DEFAULT '1',
+  `ovamount` double NOT NULL DEFAULT '0',
+  `ovgst` double NOT NULL DEFAULT '0',
+  `diffonexch` double NOT NULL DEFAULT '0',
+  `alloc` double NOT NULL DEFAULT '0',
   `transtext` text,
-  `hold` tinyint(4) NOT NULL default '0',
-  `id` int(11) NOT NULL auto_increment,
-  PRIMARY KEY  (`id`),
+  `hold` tinyint(4) NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `TypeTransNo` (`transno`,`type`),
   KEY `DueDate` (`duedate`),
   KEY `Hold` (`hold`),
@@ -2087,10 +2039,8 @@ CREATE TABLE `supptrans` (
   KEY `SuppReference` (`suppreference`),
   KEY `TranDate` (`trandate`),
   KEY `TransNo` (`transno`),
-  KEY `Type` (`type`),
-  CONSTRAINT `supptrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
-  CONSTRAINT `supptrans_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `Type` (`type`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2100,14 +2050,12 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `supptranstaxes` (
-  `supptransid` int(11) NOT NULL default '0',
-  `taxauthid` tinyint(4) NOT NULL default '0',
-  `taxamount` double NOT NULL default '0',
-  PRIMARY KEY  (`supptransid`,`taxauthid`),
-  KEY `taxauthid` (`taxauthid`),
-  CONSTRAINT `supptranstaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`),
-  CONSTRAINT `supptranstaxes_ibfk_2` FOREIGN KEY (`supptransid`) REFERENCES `supptrans` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `supptransid` int(11) NOT NULL DEFAULT '0',
+  `taxauthid` tinyint(4) NOT NULL DEFAULT '0',
+  `taxamount` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`supptransid`,`taxauthid`),
+  KEY `taxauthid` (`taxauthid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2117,12 +2065,12 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `systypes` (
-  `typeid` smallint(6) NOT NULL default '0',
-  `typename` char(50) NOT NULL default '',
-  `typeno` int(11) NOT NULL default '1',
-  PRIMARY KEY  (`typeid`),
+  `typeid` smallint(6) NOT NULL DEFAULT '0',
+  `typename` char(50) NOT NULL DEFAULT '',
+  `typeno` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`typeid`),
   KEY `TypeNo` (`typeno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2132,10 +2080,10 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `tags` (
-  `tagref` tinyint(4) NOT NULL auto_increment,
+  `tagref` tinyint(4) NOT NULL AUTO_INCREMENT,
   `tagdescription` varchar(50) NOT NULL,
-  PRIMARY KEY  (`tagref`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`tagref`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2145,20 +2093,18 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `taxauthorities` (
-  `taxid` tinyint(4) NOT NULL auto_increment,
-  `description` varchar(20) NOT NULL default '',
-  `taxglcode` int(11) NOT NULL default '0',
-  `purchtaxglaccount` int(11) NOT NULL default '0',
-  `bank` varchar(50) NOT NULL default '',
-  `bankacctype` varchar(20) NOT NULL default '',
-  `bankacc` varchar(50) NOT NULL default '',
-  `bankswift` varchar(30) NOT NULL default '',
-  PRIMARY KEY  (`taxid`),
+  `taxid` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `description` varchar(20) NOT NULL DEFAULT '',
+  `taxglcode` int(11) NOT NULL DEFAULT '0',
+  `purchtaxglaccount` int(11) NOT NULL DEFAULT '0',
+  `bank` varchar(50) NOT NULL DEFAULT '',
+  `bankacctype` varchar(20) NOT NULL DEFAULT '',
+  `bankacc` varchar(50) NOT NULL DEFAULT '',
+  `bankswift` varchar(30) NOT NULL DEFAULT '',
+  PRIMARY KEY (`taxid`),
   KEY `TaxGLCode` (`taxglcode`),
-  KEY `PurchTaxGLAccount` (`purchtaxglaccount`),
-  CONSTRAINT `taxauthorities_ibfk_1` FOREIGN KEY (`taxglcode`) REFERENCES `chartmaster` (`accountcode`),
-  CONSTRAINT `taxauthorities_ibfk_2` FOREIGN KEY (`purchtaxglaccount`) REFERENCES `chartmaster` (`accountcode`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+  KEY `PurchTaxGLAccount` (`purchtaxglaccount`)
+) TYPE=MyISAM AUTO_INCREMENT=14;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2168,18 +2114,15 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `taxauthrates` (
-  `taxauthority` tinyint(4) NOT NULL default '1',
-  `dispatchtaxprovince` tinyint(4) NOT NULL default '1',
-  `taxcatid` tinyint(4) NOT NULL default '0',
-  `taxrate` double NOT NULL default '0',
-  PRIMARY KEY  (`taxauthority`,`dispatchtaxprovince`,`taxcatid`),
+  `taxauthority` tinyint(4) NOT NULL DEFAULT '1',
+  `dispatchtaxprovince` tinyint(4) NOT NULL DEFAULT '1',
+  `taxcatid` tinyint(4) NOT NULL DEFAULT '0',
+  `taxrate` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`taxauthority`,`dispatchtaxprovince`,`taxcatid`),
   KEY `TaxAuthority` (`taxauthority`),
   KEY `dispatchtaxprovince` (`dispatchtaxprovince`),
-  KEY `taxcatid` (`taxcatid`),
-  CONSTRAINT `taxauthrates_ibfk_1` FOREIGN KEY (`taxauthority`) REFERENCES `taxauthorities` (`taxid`),
-  CONSTRAINT `taxauthrates_ibfk_2` FOREIGN KEY (`taxcatid`) REFERENCES `taxcategories` (`taxcatid`),
-  CONSTRAINT `taxauthrates_ibfk_3` FOREIGN KEY (`dispatchtaxprovince`) REFERENCES `taxprovinces` (`taxprovinceid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `taxcatid` (`taxcatid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2189,10 +2132,10 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `taxcategories` (
-  `taxcatid` tinyint(4) NOT NULL auto_increment,
-  `taxcatname` varchar(30) NOT NULL default '',
-  PRIMARY KEY  (`taxcatid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+  `taxcatid` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `taxcatname` varchar(30) NOT NULL DEFAULT '',
+  PRIMARY KEY (`taxcatid`)
+) TYPE=MyISAM AUTO_INCREMENT=6;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2202,10 +2145,10 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `taxgroups` (
-  `taxgroupid` tinyint(4) NOT NULL auto_increment,
-  `taxgroupdescription` varchar(30) NOT NULL default '',
-  PRIMARY KEY  (`taxgroupid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `taxgroupid` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `taxgroupdescription` varchar(30) NOT NULL DEFAULT '',
+  PRIMARY KEY (`taxgroupid`)
+) TYPE=MyISAM AUTO_INCREMENT=4;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2215,16 +2158,14 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `taxgrouptaxes` (
-  `taxgroupid` tinyint(4) NOT NULL default '0',
-  `taxauthid` tinyint(4) NOT NULL default '0',
-  `calculationorder` tinyint(4) NOT NULL default '0',
-  `taxontax` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`taxgroupid`,`taxauthid`),
+  `taxgroupid` tinyint(4) NOT NULL DEFAULT '0',
+  `taxauthid` tinyint(4) NOT NULL DEFAULT '0',
+  `calculationorder` tinyint(4) NOT NULL DEFAULT '0',
+  `taxontax` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`taxgroupid`,`taxauthid`),
   KEY `taxgroupid` (`taxgroupid`),
-  KEY `taxauthid` (`taxauthid`),
-  CONSTRAINT `taxgrouptaxes_ibfk_1` FOREIGN KEY (`taxgroupid`) REFERENCES `taxgroups` (`taxgroupid`),
-  CONSTRAINT `taxgrouptaxes_ibfk_2` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `taxauthid` (`taxauthid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2234,10 +2175,10 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `taxprovinces` (
-  `taxprovinceid` tinyint(4) NOT NULL auto_increment,
-  `taxprovincename` varchar(30) NOT NULL default '',
-  PRIMARY KEY  (`taxprovinceid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `taxprovinceid` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `taxprovincename` varchar(30) NOT NULL DEFAULT '',
+  PRIMARY KEY (`taxprovinceid`)
+) TYPE=MyISAM AUTO_INCREMENT=2;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2247,10 +2188,10 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `unitsofmeasure` (
-  `unitid` tinyint(4) NOT NULL auto_increment,
-  `unitname` varchar(15) NOT NULL default '',
-  PRIMARY KEY  (`unitid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+  `unitid` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `unitname` varchar(15) NOT NULL DEFAULT '',
+  PRIMARY KEY (`unitid`)
+) TYPE=MyISAM AUTO_INCREMENT=7;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2261,16 +2202,14 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `woitems` (
   `wo` int(11) NOT NULL,
-  `stockid` char(20) NOT NULL default '',
-  `qtyreqd` double NOT NULL default '1',
-  `qtyrecd` double NOT NULL default '0',
+  `stockid` char(20) NOT NULL DEFAULT '',
+  `qtyreqd` double NOT NULL DEFAULT '1',
+  `qtyrecd` double NOT NULL DEFAULT '0',
   `stdcost` double NOT NULL,
-  `nextlotsnref` varchar(20) default '',
-  PRIMARY KEY  (`wo`,`stockid`),
-  KEY `stockid` (`stockid`),
-  CONSTRAINT `woitems_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `woitems_ibfk_2` FOREIGN KEY (`wo`) REFERENCES `workorders` (`wo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nextlotsnref` varchar(20) DEFAULT '',
+  PRIMARY KEY (`wo`,`stockid`),
+  KEY `stockid` (`stockid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2283,16 +2222,13 @@ CREATE TABLE `worequirements` (
   `wo` int(11) NOT NULL,
   `parentstockid` varchar(20) NOT NULL,
   `stockid` varchar(20) NOT NULL,
-  `qtypu` double NOT NULL default '1',
-  `stdcost` double NOT NULL default '0',
-  `autoissue` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`wo`,`parentstockid`,`stockid`),
+  `qtypu` double NOT NULL DEFAULT '1',
+  `stdcost` double NOT NULL DEFAULT '0',
+  `autoissue` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`wo`,`parentstockid`,`stockid`),
   KEY `stockid` (`stockid`),
-  KEY `worequirements_ibfk_3` (`parentstockid`),
-  CONSTRAINT `worequirements_ibfk_1` FOREIGN KEY (`wo`) REFERENCES `workorders` (`wo`),
-  CONSTRAINT `worequirements_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `worequirements_ibfk_3` FOREIGN KEY (`wo`, `parentstockid`) REFERENCES `woitems` (`wo`, `stockid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `worequirements_ibfk_3` (`parentstockid`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2302,18 +2238,17 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `workcentres` (
-  `code` char(5) NOT NULL default '',
-  `location` char(5) NOT NULL default '',
-  `description` char(20) NOT NULL default '',
-  `capacity` double NOT NULL default '1',
-  `overheadperhour` decimal(10,0) NOT NULL default '0',
-  `overheadrecoveryact` int(11) NOT NULL default '0',
-  `setuphrs` decimal(10,0) NOT NULL default '0',
-  PRIMARY KEY  (`code`),
+  `code` char(5) NOT NULL DEFAULT '',
+  `location` char(5) NOT NULL DEFAULT '',
+  `description` char(20) NOT NULL DEFAULT '',
+  `capacity` double NOT NULL DEFAULT '1',
+  `overheadperhour` decimal(10,0) NOT NULL DEFAULT '0',
+  `overheadrecoveryact` int(11) NOT NULL DEFAULT '0',
+  `setuphrs` decimal(10,0) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`code`),
   KEY `Description` (`description`),
-  KEY `Location` (`location`),
-  CONSTRAINT `workcentres_ibfk_1` FOREIGN KEY (`location`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `Location` (`location`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2324,17 +2259,32 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `workorders` (
   `wo` int(11) NOT NULL,
-  `loccode` char(5) NOT NULL default '',
-  `requiredby` date NOT NULL default '0000-00-00',
-  `startdate` date NOT NULL default '0000-00-00',
-  `costissued` double NOT NULL default '0',
-  `closed` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`wo`),
+  `loccode` char(5) NOT NULL DEFAULT '',
+  `requiredby` date NOT NULL DEFAULT '0000-00-00',
+  `startdate` date NOT NULL DEFAULT '0000-00-00',
+  `costissued` double NOT NULL DEFAULT '0',
+  `closed` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`wo`),
   KEY `LocCode` (`loccode`),
   KEY `StartDate` (`startdate`),
-  KEY `RequiredBy` (`requiredby`),
-  CONSTRAINT `worksorders_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `RequiredBy` (`requiredby`)
+) TYPE=MyISAM;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `woserialnos`
+--
+
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `woserialnos` (
+  `wo` int(11) NOT NULL,
+  `stockid` varchar(20) NOT NULL,
+  `serialno` varchar(30) NOT NULL,
+  `quantity` double NOT NULL DEFAULT '1',
+  `qualitytext` text NOT NULL,
+  PRIMARY KEY (`wo`,`stockid`,`serialno`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2344,27 +2294,26 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `www_users` (
-  `userid` varchar(20) NOT NULL default '',
+  `userid` varchar(20) NOT NULL DEFAULT '',
   `password` text NOT NULL,
-  `realname` varchar(35) NOT NULL default '',
-  `customerid` varchar(10) NOT NULL default '',
-  `phone` varchar(30) NOT NULL default '',
-  `email` varchar(55) default NULL,
-  `defaultlocation` varchar(5) NOT NULL default '',
-  `fullaccess` int(11) NOT NULL default '1',
-  `lastvisitdate` datetime default NULL,
-  `branchcode` varchar(10) NOT NULL default '',
-  `pagesize` varchar(20) NOT NULL default 'A4',
-  `modulesallowed` varchar(20) NOT NULL default '',
-  `blocked` tinyint(4) NOT NULL default '0',
-  `displayrecordsmax` int(11) NOT NULL default '0',
-  `theme` varchar(30) NOT NULL default 'fresh',
-  `language` varchar(5) NOT NULL default 'en_GB',
-  PRIMARY KEY  (`userid`),
+  `realname` varchar(35) NOT NULL DEFAULT '',
+  `customerid` varchar(10) NOT NULL DEFAULT '',
+  `phone` varchar(30) NOT NULL DEFAULT '',
+  `email` varchar(55) DEFAULT NULL,
+  `defaultlocation` varchar(5) NOT NULL DEFAULT '',
+  `fullaccess` int(11) NOT NULL DEFAULT '1',
+  `lastvisitdate` datetime DEFAULT NULL,
+  `branchcode` varchar(10) NOT NULL DEFAULT '',
+  `pagesize` varchar(20) NOT NULL DEFAULT 'A4',
+  `modulesallowed` varchar(20) NOT NULL DEFAULT '',
+  `blocked` tinyint(4) NOT NULL DEFAULT '0',
+  `displayrecordsmax` int(11) NOT NULL DEFAULT '0',
+  `theme` varchar(30) NOT NULL DEFAULT 'fresh',
+  `language` varchar(5) NOT NULL DEFAULT 'en_GB',
+  PRIMARY KEY (`userid`),
   KEY `CustomerID` (`customerid`),
-  KEY `DefaultLocation` (`defaultlocation`),
-  CONSTRAINT `www_users_ibfk_1` FOREIGN KEY (`defaultlocation`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `DefaultLocation` (`defaultlocation`)
+) TYPE=MyISAM;
 SET character_set_client = @saved_cs_client;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -2373,17 +2322,17 @@ SET character_set_client = @saved_cs_client;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-02-09  9:03:17
--- MySQL dump 10.11
+-- Dump completed on 2009-05-17  4:31:59
+-- MySQL dump 10.13  Distrib 5.1.31, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	5.0.67-0ubuntu6
+-- Server version	5.1.31
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO,MYSQL40' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
@@ -2430,6 +2379,632 @@ INSERT INTO `areas` VALUES ('TR','Toronto');
 -- Dumping data for table `assetmanager`
 --
 
+
+--
+-- Dumping data for table `audittrail`
+--
+
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1128)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1127)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1126)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1124)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1125)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1122)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1123)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1120)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1121)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1119)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1118)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1117)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1115)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1116)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1113)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1114)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1111)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1112)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1110)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1109)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1107)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1108)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1106)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1105)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1102)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1103)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1104)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1101)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1100)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1099)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1096)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1097)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1098)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1095)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1094)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1093)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1092)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1091)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1090)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1087)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1088)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1089)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1086)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1085)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1083)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1084)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1082)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1080)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1081)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1078)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1079)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1077)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1075)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1076)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1073)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1074)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1072)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1070)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1071)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1069)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1067)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1068)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1066)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1064)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1065)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1063)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1061)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1062)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1060)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1059)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1058)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1056)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1057)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1054)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1055)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1053)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1052)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1050)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1051)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1049)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1047)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1048)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1046)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1044)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1045)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1043)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1042)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1041)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1039)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1040)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1037)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1038)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1036)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1035)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1033)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1034)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1032)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1030)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1031)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1029)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1027)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1028)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1026)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1025)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1024)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1022)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1023)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1020)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1021)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1019)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1018)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1016)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1017)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1015)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1013)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1014)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1012)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1010)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1011)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1008)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1009)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1006)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1007)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1005)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1003)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1004)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1001)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1002)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1000)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO worequirements (wo,\n				parentstockid,\n				stockid,\n				qtypu,\n				stdcost,\n				autoissue)\n			SELECT 10,\n				\'SLICE\',\n				bom.component,\n				bom.quantity*1,\n				materialcost+labourcost+overheadcost,\n				bom.autoissue\n			FROM bom INNER JOIN stockmaster\n			ON bom.component=stockmaster.stockid\n			WHERE bom.parent=\'SLICE\'\n			AND bom.loccode =\'MEL\'\n			AND stockmaster.mbflag&lt;&gt;\'G\'\n			AND bom.component NOT IN (\n				SELECT stockid\n				FROM worequirements\n				WHERE wo = 10\n				AND parentstockid = \'SLICE\'\n			)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woitems (wo,\n											 stockid,\n											 qtyreqd,\n											 stdcost)\n								 VALUES ( 10,\n										 \'SLICE\',\n										 300,\n										  0.60085)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO workorders (wo,\n												 loccode,\n												 requiredby,\n												 startdate)\n								 VALUES (10,\n										\'MEL\',\n										\'2009-05-03\',\n										\'2009-05-03\')');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO salesorderdetails (\n											orderlineno,\n											orderno,\n											stkcode,\n											unitprice,\n											quantity,\n											discountpercent,\n											narrative,\n											poline,\n											itemdue)\n										VALUES (0,\n					11,\n					\'SLICE\',\n					.25,\n					100,\n					0,\n					\'\',\n					\'\',\n					\'2009/05/03\'\n				)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO salesorders (\n								orderno,\n								debtorno,\n								branchcode,\n								customerref,\n								comments,\n								orddate,\n								ordertype,\n								shipvia,\n								deliverto,\n								deladd1,\n								deladd2,\n								deladd3,\n								deladd4,\n								deladd5,\n								deladd6,\n								contactphone,\n								contactemail,\n								freightcost,\n								fromstkloc,\n								deliverydate,\n								quotedate,\n								confirmeddate,\n								quotation,\n								deliverblind)\n							VALUES (\n								11,\n								\'DUMBLE\',\n								\'DUMBLE\',\n								\'\',\n								\'\',\n								\'2009-05-03 17:57\',\n								\'DE\',\n								10,\n								\'Dumbledoor McGonagal &amp;amp;amp; Co\',\n								\'Hogwarts castle\',\n								\'Platform 9.75\',\n								\'\',\n								\'\',\n								\'\',\n								\'\',\n								\'Owls only\',\n								\'mmgonagal@hogwarts.edu.uk\',\n								0,\n								\'TOR\',\n								\'2009/05/04\',\n								\'2009/05/04\',\n								\'2009/05/04\',\n								0,\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:56:01','admin','INSERT INTO salesorderdetails (\n											orderlineno,\n											orderno,\n											stkcode,\n											unitprice,\n											quantity,\n											discountpercent,\n											narrative,\n											poline,\n											itemdue)\n										VALUES (0,\n					10,\n					\'SLICE\',\n					.25,\n					100,\n					0,\n					\'\',\n					\'\',\n					\'2009/05/03\'\n				)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:56:01','admin','INSERT INTO salesorders (\n								orderno,\n								debtorno,\n								branchcode,\n								customerref,\n								comments,\n								orddate,\n								ordertype,\n								shipvia,\n								deliverto,\n								deladd1,\n								deladd2,\n								deladd3,\n								deladd4,\n								deladd5,\n								deladd6,\n								contactphone,\n								contactemail,\n								freightcost,\n								fromstkloc,\n								deliverydate,\n								quotedate,\n								confirmeddate,\n								quotation,\n								deliverblind)\n							VALUES (\n								10,\n								\'DUMBLE\',\n								\'DUMBLE\',\n								\'\',\n								\'\',\n								\'2009-05-03 17:56\',\n								\'DE\',\n								10,\n								\'Dumbledoor McGonagal &amp;amp;amp; Co\',\n								\'Hogwarts castle\',\n								\'Platform 9.75\',\n								\'\',\n								\'\',\n								\'\',\n								\'\',\n								\'Owls only\',\n								\'mmgonagal@hogwarts.edu.uk\',\n								0,\n								\'TOR\',\n								\'2009/05/04\',\n								\'2009/05/04\',\n								\'2009/05/04\',\n								0,\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:46:55','admin','INSERT INTO salesorderdetails (\n											orderlineno,\n											orderno,\n											stkcode,\n											unitprice,\n											quantity,\n											discountpercent,\n											narrative,\n											poline,\n											itemdue)\n										VALUES (0,\n					9,\n					\'SLICE\',\n					.25,\n					100,\n					0,\n					\'\',\n					\'\',\n					\'2009/05/03\'\n				)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:46:50','admin','UPDATE salesorderdetails\n						SET quantity=100,\n						unitprice=.25,\n						discountpercent=0,\n						narrative =\'\',\n						itemdue = \'03/05/2009\',\n						poline = \'\'\n					WHERE orderno=0\n					AND orderlineno=0');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:46:55','admin','INSERT INTO salesorders (\n								orderno,\n								debtorno,\n								branchcode,\n								customerref,\n								comments,\n								orddate,\n								ordertype,\n								shipvia,\n								deliverto,\n								deladd1,\n								deladd2,\n								deladd3,\n								deladd4,\n								deladd5,\n								deladd6,\n								contactphone,\n								contactemail,\n								freightcost,\n								fromstkloc,\n								deliverydate,\n								quotedate,\n								confirmeddate,\n								quotation,\n								deliverblind)\n							VALUES (\n								9,\n								\'DUMBLE\',\n								\'DUMBLE\',\n								\'\',\n								\'\',\n								\'2009-05-03 17:46\',\n								\'DE\',\n								10,\n								\'Dumbledoor McGonagal &amp;amp;amp; Co\',\n								\'Hogwarts castle\',\n								\'Platform 9.75\',\n								\'\',\n								\'\',\n								\'\',\n								\'\',\n								\'Owls only\',\n								\'mmgonagal@hogwarts.edu.uk\',\n								0,\n								\'TOR\',\n								\'2009/05/04\',\n								\'2009/05/04\',\n								\'2009/05/04\',\n								0,\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:37:47','admin','DELETE FROM salesorders WHERE salesorders.orderno=8');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:37:47','admin','DELETE FROM salesorderdetails WHERE salesorderdetails.orderno =8');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:36:30','admin','INSERT INTO salesorderdetails (\n											orderlineno,\n											orderno,\n											stkcode,\n											unitprice,\n											quantity,\n											discountpercent,\n											narrative,\n											poline,\n											itemdue)\n										VALUES (0,\n					8,\n					\'SLICE\',\n					.25,\n					100,\n					0,\n					\'\',\n					\'\',\n					\'2009/05/03\'\n				)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:36:30','admin','INSERT INTO salesorders (\n								orderno,\n								debtorno,\n								branchcode,\n								customerref,\n								comments,\n								orddate,\n								ordertype,\n								shipvia,\n								deliverto,\n								deladd1,\n								deladd2,\n								deladd3,\n								deladd4,\n								deladd5,\n								deladd6,\n								contactphone,\n								contactemail,\n								freightcost,\n								fromstkloc,\n								deliverydate,\n								quotedate,\n								confirmeddate,\n								quotation,\n								deliverblind)\n							VALUES (\n								8,\n								\'DUMBLE\',\n								\'DUMBLE\',\n								\'\',\n								\'\',\n								\'2009-05-03 17:36\',\n								\'DE\',\n								10,\n								\'Dumbledoor McGonagal &amp;amp;amp; Co\',\n								\'Hogwarts castle\',\n								\'Platform 9.75\',\n								\'\',\n								\'\',\n								\'\',\n								\'\',\n								\'Owls only\',\n								\'mmgonagal@hogwarts.edu.uk\',\n								0,\n								\'TOR\',\n								\'2009/05/04\',\n								\'2009/05/04\',\n								\'2009/05/04\',\n								0,\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:36:00','admin','DELETE FROM salesorderdetails WHERE salesorderdetails.orderno =6');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:36:00','admin','DELETE FROM salesorders WHERE salesorders.orderno=6');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:36:24','admin','UPDATE salesorderdetails\n						SET quantity=100,\n						unitprice=.25,\n						discountpercent=0,\n						narrative =\'\',\n						itemdue = \'03/05/2009\',\n						poline = \'\'\n					WHERE orderno=0\n					AND orderlineno=0');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:34:43','admin','DELETE FROM woitems WHERE wo=4');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:34:43','admin','DELETE FROM workorders WHERE wo=4');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:35:26','admin','DELETE FROM salesorderdetails\n									WHERE orderno=7\n									AND orderlineno=0');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:34:43','admin','DELETE FROM worequirements WHERE wo=4');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:31:32','admin','INSERT INTO salesorderdetails (\n											orderlineno,\n											orderno,\n											stkcode,\n											unitprice,\n											quantity,\n											discountpercent,\n											narrative,\n											poline,\n											itemdue)\n										VALUES (0,\n					7,\n					\'SLICE\',\n					.25,\n					10,\n					0,\n					\'\',\n					\'\',\n					\'2009/05/03\'\n				)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:31:32','admin','INSERT INTO salesorders (\n								orderno,\n								debtorno,\n								branchcode,\n								customerref,\n								comments,\n								orddate,\n								ordertype,\n								shipvia,\n								deliverto,\n								deladd1,\n								deladd2,\n								deladd3,\n								deladd4,\n								deladd5,\n								deladd6,\n								contactphone,\n								contactemail,\n								freightcost,\n								fromstkloc,\n								deliverydate,\n								quotedate,\n								confirmeddate,\n								quotation,\n								deliverblind)\n							VALUES (\n								7,\n								\'DUMBLE\',\n								\'DUMBLE\',\n								\'\',\n								\'\',\n								\'2009-05-03 17:31\',\n								\'DE\',\n								10,\n								\'Dumbledoor McGonagal &amp;amp;amp; Co\',\n								\'Hogwarts castle\',\n								\'Platform 9.75\',\n								\'\',\n								\'\',\n								\'\',\n								\'\',\n								\'Owls only\',\n								\'mmgonagal@hogwarts.edu.uk\',\n								0,\n								\'TOR\',\n								\'2009/05/04\',\n								\'2009/05/04\',\n								\'2009/05/04\',\n								0,\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:28:49','admin','DELETE FROM stockitemproperties\n										WHERE stockid =\'SLICE\'');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:31:20','admin','UPDATE salesorderdetails\n						SET quantity=10,\n						unitprice=.25,\n						discountpercent=0,\n						narrative =\'\',\n						itemdue = \'03/05/2009\',\n						poline = \'\'\n					WHERE orderno=0\n					AND orderlineno=0');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:28:49','admin','UPDATE stockmaster\n						SET longdescription=\'Slice Of Bread\',\n							description=\'Slice Of Bread\',\n							discontinued=0,\n							controlled=1,\n							serialised=1,\n							perishable=0,\n							categoryid=\'FOOD\',\n							units=\'each\',\n							mbflag=\'M\',\n							eoq=0,\n							volume=0.0000,\n							kgs=0.0000,\n							barcode=\'\',\n							discountcategory=\'\',\n							taxcatid=1,\n							decimalplaces=0,\n							appendfile=\'0\',\n							shrinkfactor=0,\n							pansize=0,\n							nextserialno=1000\n					WHERE stockid=\'SLICE\'');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:28:38','admin','DELETE FROM stockitemproperties\n										WHERE stockid =\'SLICE\'');
+INSERT INTO `audittrail` VALUES ('2009-05-02 17:20:38','admin','UPDATE config SET confvalue=\'phil@logicworks.co.nz\' WHERE confname=\'FactoryManagerEmail\'');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:28:38','admin','UPDATE stockmaster\n						SET longdescription=\'Slice Of Bread\',\n							description=\'Slice Of Bread\',\n							discontinued=0,\n							controlled=1,\n							serialised=1,\n							perishable=0,\n							categoryid=\'FOOD\',\n							units=\'each\',\n							mbflag=\'M\',\n							eoq=0,\n							volume=0.0000,\n							kgs=0.0000,\n							barcode=\'\',\n							discountcategory=\'\',\n							taxcatid=1,\n							decimalplaces=0,\n							appendfile=\'0\',\n							shrinkfactor=0,\n							pansize=0,\n							nextserialno=0\n					WHERE stockid=\'SLICE\'');
+INSERT INTO `audittrail` VALUES ('2009-05-02 17:20:38','admin','UPDATE config SET confvalue = \'companies/weberpdemo/reportwriter\' WHERE confname = \'reports_dir\'');
+INSERT INTO `audittrail` VALUES ('2009-05-02 17:20:38','admin','UPDATE config SET confvalue = \'2009-03-31\' WHERE confname = \'ProhibitPostingsBefore\'');
+INSERT INTO `audittrail` VALUES ('2009-05-02 17:20:38','admin','UPDATE config SET confvalue = \'companies/weberpdemo/part_pics\' WHERE confname = \'part_pics_dir\'');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:42:48','admin','DELETE FROM stockitemproperties\n										WHERE stockid =\'DVD-CASE\'');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:42:36','admin','INSERT INTO stockitemproperties (stockid,\n																			stkcatpropid,\n																			value)\n														VALUES (\'DVD-CASE\',\n																3,\n																\'0\')');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:42:48','admin','UPDATE stockmaster\n						SET longdescription=\'webERP Demo DVD Case\',\n							description=\'webERP Demo DVD Case\',\n							discontinued=0,\n							controlled=1,\n							serialised=1,\n							perishable=0,\n							categoryid=\'DVD\',\n							units=\'each\',\n							mbflag=\'M\',\n							eoq=0,\n							volume=0.0000,\n							kgs=0.0000,\n							barcode=\'\',\n							discountcategory=\'\',\n							taxcatid=1,\n							decimalplaces=0,\n							appendfile=\'0\',\n							shrinkfactor=0,\n							pansize=0,\n							nextserialno=25440\n					WHERE stockid=\'DVD-CASE\'');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:42:36','admin','INSERT INTO stockitemproperties (stockid,\n																			stkcatpropid,\n																			value)\n														VALUES (\'DVD-CASE\',\n																2,\n																\'\')');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:42:36','admin','INSERT INTO stockitemproperties (stockid,\n																			stkcatpropid,\n																			value)\n														VALUES (\'DVD-CASE\',\n																1,\n																\'\')');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:42:36','admin','DELETE FROM stockitemproperties\n										WHERE stockid =\'DVD-CASE\'');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:42:36','admin','UPDATE stockmaster\n						SET longdescription=\'webERP Demo DVD Case\',\n							description=\'webERP Demo DVD Case\',\n							discontinued=0,\n							controlled=1,\n							serialised=1,\n							perishable=0,\n							categoryid=\'AIRCON\',\n							units=\'each\',\n							mbflag=\'M\',\n							eoq=0,\n							volume=0.0000,\n							kgs=0.0000,\n							barcode=\'\',\n							discountcategory=\'\',\n							taxcatid=1,\n							decimalplaces=0,\n							appendfile=\'0\',\n							shrinkfactor=0,\n							pansize=0,\n							nextserialno=25440\n					WHERE stockid=\'DVD-CASE\'');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:41:26','admin','INSERT INTO stockitemproperties (stockid,\n																			stkcatpropid,\n																			value)\n														VALUES (\'DVD-CASE\',\n																3,\n																\'0\')');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:41:26','admin','INSERT INTO stockitemproperties (stockid,\n																			stkcatpropid,\n																			value)\n														VALUES (\'DVD-CASE\',\n																2,\n																\'\')');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:41:26','admin','INSERT INTO stockitemproperties (stockid,\n																			stkcatpropid,\n																			value)\n														VALUES (\'DVD-CASE\',\n																1,\n																\'\')');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:41:26','admin','DELETE FROM stockitemproperties\n										WHERE stockid =\'DVD-CASE\'');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:41:26','admin','UPDATE stockmaster\n						SET longdescription=\'webERP Demo DVD Case\',\n							description=\'webERP Demo DVD Case\',\n							discontinued=0,\n							controlled=1,\n							serialised=1,\n							perishable=0,\n							categoryid=\'AIRCON\',\n							units=\'each\',\n							mbflag=\'M\',\n							eoq=0,\n							volume=0.0000,\n							kgs=0.0000,\n							barcode=\'\',\n							discountcategory=\'\',\n							taxcatid=1,\n							decimalplaces=0,\n							appendfile=\'0\',\n							shrinkfactor=0,\n							pansize=0\n					WHERE stockid=\'DVD-CASE\'');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:41:07','admin','INSERT INTO stockitemproperties (stockid,\n																			stkcatpropid,\n																			value)\n														VALUES (\'DVD-CASE\',\n																3,\n																\'0\')');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:41:07','admin','INSERT INTO stockitemproperties (stockid,\n																			stkcatpropid,\n																			value)\n														VALUES (\'DVD-CASE\',\n																2,\n																\'\')');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:41:07','admin','INSERT INTO stockitemproperties (stockid,\n																			stkcatpropid,\n																			value)\n														VALUES (\'DVD-CASE\',\n																1,\n																\'\')');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:41:07','admin','DELETE FROM stockitemproperties\n										WHERE stockid =\'DVD-CASE\'');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:41:07','admin','UPDATE stockmaster\n						SET longdescription=\'webERP Demo DVD Case\',\n							description=\'webERP Demo DVD Case\',\n							discontinued=0,\n							controlled=1,\n							serialised=1,\n							perishable=0,\n							categoryid=\'AIRCON\',\n							units=\'each\',\n							mbflag=\'M\',\n							eoq=0,\n							volume=0.0000,\n							kgs=0.0000,\n							barcode=\'\',\n							discountcategory=\'\',\n							taxcatid=1,\n							decimalplaces=0,\n							appendfile=\'0\',\n							shrinkfactor=0,\n							pansize=0\n					WHERE stockid=\'DVD-CASE\'');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:40:05','admin','INSERT INTO stockitemproperties (stockid,\n																			stkcatpropid,\n																			value)\n														VALUES (\'DVD-CASE\',\n																3,\n																\'0\')');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:40:05','admin','INSERT INTO stockitemproperties (stockid,\n																			stkcatpropid,\n																			value)\n														VALUES (\'DVD-CASE\',\n																2,\n																\'\')');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:40:05','admin','DELETE FROM stockitemproperties\n										WHERE stockid =\'DVD-CASE\'');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:40:05','admin','INSERT INTO stockitemproperties (stockid,\n																			stkcatpropid,\n																			value)\n														VALUES (\'DVD-CASE\',\n																1,\n																\'\')');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:40:05','admin','UPDATE stockmaster\n						SET longdescription=\'webERP Demo DVD Case\',\n							description=\'webERP Demo DVD Case\',\n							discontinued=0,\n							controlled=1,\n							serialised=1,\n							perishable=0,\n							categoryid=\'AIRCON\',\n							units=\'each\',\n							mbflag=\'B\',\n							eoq=0,\n							volume=0.0000,\n							kgs=0.0000,\n							barcode=\'\',\n							discountcategory=\'\',\n							taxcatid=1,\n							decimalplaces=0,\n							appendfile=\'0\',\n							shrinkfactor=0,\n							pansize=0\n					WHERE stockid=\'DVD-CASE\'');
+INSERT INTO `audittrail` VALUES ('2009-04-29 21:24:43','admin','UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted=\'2009-04-29\' WHERE salesorders.orderno=6');
+INSERT INTO `audittrail` VALUES ('2009-04-30 21:35:31','admin','UPDATE www_users\n				SET displayrecordsmax=50,\n					theme=\'jelly\',\n					language=\'en_GB\',\n					email=\'\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2009-04-29 21:20:06','admin','UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted=\'2009-04-29\' WHERE salesorders.orderno=6');
+INSERT INTO `audittrail` VALUES ('2009-04-29 21:23:24','admin','UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted=\'2009-04-29\' WHERE salesorders.orderno=6');
+INSERT INTO `audittrail` VALUES ('2009-04-29 21:19:53','admin','UPDATE salesorderdetails SET unitprice=20,\n								quantity=10,\n								discountpercent=0,\n								completed=0,\n								poline=\'\',\n								itemdue=\'2009/04/30\'\n					WHERE salesorderdetails.orderno=6\n					AND salesorderdetails.orderlineno=\'0\'');
+INSERT INTO `audittrail` VALUES ('2009-04-29 21:19:53','admin','UPDATE salesorders\n			SET debtorno = \'DUMBLE\',\n				branchcode = \'DUMBLE\',\n				customerref = \'\',\n				comments = \'This is a long bit of text to test the output on several lines of the packing slip and get an idea of how it looks without too much bull keeping everyone asleep\',\n				ordertype = \'DE\',\n				shipvia = 10,\n				deliverydate = \'30/04/2009\',\n				quotedate = \'30/04/2009\',\n				confirmeddate = \'30/04/2009\',\n				deliverto = \'Dumbledoor McGonagal &amp;amp;amp;amp; Co\',\n				deladd1 = \'Hogwarts castle\',\n				deladd2 = \'Platform 9.75\',\n				deladd3 = \'\',\n				deladd4 = \'\',\n				deladd5 = \'\',\n				deladd6 = \'\',\n				contactphone = \'Owls only\',\n				contactemail = \'mmgonagal@hogwarts.edu.uk\',\n				freightcost = 0,\n				fromstkloc = \'TOR\',\n				deliverydate = \'2009/04/30\',\n				quotedate = \'2009/04/30\',\n				confirmeddate = \'2009/04/30\',\n				printedpackingslip = 1,\n				quotation = 0,\n				deliverblind = 1\n			WHERE salesorders.orderno=6');
+INSERT INTO `audittrail` VALUES ('2009-04-29 21:18:42','admin','UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted=\'2009-04-29\' WHERE salesorders.orderno=6');
+INSERT INTO `audittrail` VALUES ('2009-04-29 20:50:48','admin','UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted=\'2009-04-29\' WHERE salesorders.orderno=6');
+INSERT INTO `audittrail` VALUES ('2009-04-29 20:34:52','admin','UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted=\'2009-04-29\' WHERE salesorders.orderno=6');
+INSERT INTO `audittrail` VALUES ('2009-04-29 20:24:09','admin','UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted=\'2009-04-29\' WHERE salesorders.orderno=6');
+INSERT INTO `audittrail` VALUES ('2009-04-29 20:24:07','admin','INSERT INTO salesorderdetails (\n						orderlineno,\n						orderno,\n						stkcode,\n						unitprice,\n						quantity,\n						discountpercent,\n						narrative,\n						poline,\n						itemdue)\n					VALUES (0,\n					6,\n					\'DVD-CASE\',\n					20,\n					10,\n					0,\n					\'\',\n					\'\',\n					\'2009/04/29\'\n				)');
+INSERT INTO `audittrail` VALUES ('2009-04-29 20:24:07','admin','INSERT INTO salesorders (\n								orderno,\n								debtorno,\n								branchcode,\n								customerref,\n								comments,\n								orddate,\n								ordertype,\n								shipvia,\n								deliverto,\n								deladd1,\n								deladd2,\n								deladd3,\n								deladd4,\n								deladd5,\n								deladd6,\n								contactphone,\n								contactemail,\n								freightcost,\n								fromstkloc,\n								deliverydate,\n								quotedate,\n								confirmeddate,\n								quotation,\n								deliverblind)\n							VALUES (\n								6,\n								\'DUMBLE\',\n								\'DUMBLE\',\n								\'\',\n								\'\',\n								\'2009-04-29 20:24\',\n								\'DE\',\n								10,\n								\'Dumbledoor McGonagal &amp;amp;amp; Co\',\n								\'Hogwarts castle\',\n								\'Platform 9.75\',\n								\'\',\n								\'\',\n								\'\',\n								\'\',\n								\'Owls only\',\n								\'mmgonagal@hogwarts.edu.uk\',\n								0,\n								\'TOR\',\n								\'2009/04/30\',\n								\'2009/04/30\',\n								\'2009/04/30\',\n								0,\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-04-29 20:24:03','admin','UPDATE salesorderdetails\n						SET quantity=10,\n						unitprice=20,\n						discountpercent=0,\n						narrative =\'\',\n						itemdue = \'29/04/2009\',\n						poline = \'\'\n					WHERE orderno=0\n					AND orderlineno=0');
+INSERT INTO `audittrail` VALUES ('2009-04-29 20:01:39','admin','INSERT INTO salesorderdetails (\n						orderlineno,\n						orderno,\n						stkcode,\n						unitprice,\n						quantity,\n						discountpercent,\n						narrative,\n						poline,\n						itemdue)\n					VALUES (0,\n					5,\n					\'DVD-CASE\',\n					20,\n					10,\n					0,\n					\'\',\n					\'\',\n					\'2009/04/29\'\n				)');
+INSERT INTO `audittrail` VALUES ('2009-04-29 20:01:39','admin','INSERT INTO salesorders (\n				debtorno,\n				branchcode,\n				customerref,\n				comments,\n				orddate,\n				ordertype,\n				shipvia,\n				deliverto,\n				deladd1,\n				deladd2,\n				deladd3,\n				deladd4,\n				deladd5,\n				deladd6,\n				contactphone,\n				contactemail,\n				freightcost,\n				fromstkloc,\n				deliverydate,\n				quotedate,\n				confirmeddate,\n				quotation,\n                deliverblind)\n			VALUES (\n				\'DUMBLE\',\n				\'DUMBLE\',\n				\'\',\n				\'\',\n				\'2009-04-29 20:01\',\n				\'DE\',\n				10,\n				\'Dumbledoor McGonagal &amp;amp;amp; Co\',\n				\'Hogwarts castle\',\n				\'Platform 9.75\',\n				\'\',\n				\'\',\n				\'\',\n				\'\',\n				\'Owls only\',\n				\'mmgonagal@hogwarts.edu.uk\',\n				0,\n				\'TOR\',\n				\'2009/04/30\',\n				\'2009/04/30\',\n				\'2009/04/30\',\n				0,\n				1\n                )');
+INSERT INTO `audittrail` VALUES ('2009-04-29 20:01:33','admin','UPDATE salesorderdetails\n						SET quantity=10,\n						unitprice=20,\n						discountpercent=0,\n						narrative =\'\',\n						itemdue = \'29/04/2009\',\n						poline = \'\'\n					WHERE orderno=0\n					AND orderlineno=0');
+INSERT INTO `audittrail` VALUES ('2009-04-29 19:57:57','admin','INSERT INTO salesorderdetails (\n						orderlineno,\n						orderno,\n						stkcode,\n						unitprice,\n						quantity,\n						discountpercent,\n						narrative,\n						poline,\n						itemdue)\n					VALUES (0,\n					4,\n					\'DVD-CASE\',\n					20,\n					10,\n					0,\n					\'\',\n					\'\',\n					\'2009/04/30\'\n				)');
+INSERT INTO `audittrail` VALUES ('2009-04-29 19:57:57','admin','INSERT INTO salesorders (\n				debtorno,\n				branchcode,\n				customerref,\n				comments,\n				orddate,\n				ordertype,\n				shipvia,\n				deliverto,\n				deladd1,\n				deladd2,\n				deladd3,\n				deladd4,\n				deladd5,\n				deladd6,\n				contactphone,\n				contactemail,\n				freightcost,\n				fromstkloc,\n				deliverydate,\n				quotation,\n                		deliverblind)\n			VALUES (\n				\'DUMBLE\',\n				\'DUMBLE\',\n				\'\',\n				\'\',\n				\'2009-04-29 19:57\',\n				\'DE\',\n				10,\n				\'Dumbledoor McGonagal &amp; Co\',\n				\'Hogwarts castle\',\n				\'Platform 9.75\',\n				\'\',\n				\'\',\n				\'\',\n				\'\',\n				\'Owls only\',\n				\'mmgonagal@hogwarts.edu.uk\',\n				0,\n				\'TOR\',\n				\'2009/04/30\',\n				0,\n				1\n                )');
+INSERT INTO `audittrail` VALUES ('2009-04-29 19:57:49','admin','UPDATE salesorderdetails\n						SET quantity=10,\n						unitprice=20,\n						discountpercent=0,\n						narrative =\'\',\n						itemdue = \'30/04/2009\',\n						poline = \'\'\n					WHERE orderno=0\n					AND orderlineno=0');
+INSERT INTO `audittrail` VALUES ('2009-04-29 19:57:01','admin','INSERT INTO salesorderdetails (\n						orderlineno,\n						orderno,\n						stkcode,\n						unitprice,\n						quantity,\n						discountpercent,\n						narrative,\n						poline,\n						itemdue)\n					VALUES (0,\n					3,\n					\'DVD-CASE\',\n					20,\n					4,\n					0,\n					\'\',\n					\'\',\n					\'2009/04/30\'\n				)');
+INSERT INTO `audittrail` VALUES ('2009-04-29 19:57:01','admin','INSERT INTO salesorders (\n				debtorno,\n				branchcode,\n				customerref,\n				comments,\n				orddate,\n				ordertype,\n				shipvia,\n				deliverto,\n				deladd1,\n				deladd2,\n				deladd3,\n				deladd4,\n				deladd5,\n				deladd6,\n				contactphone,\n				contactemail,\n				freightcost,\n				fromstkloc,\n				deliverydate,\n				quotation,\n                		deliverblind)\n			VALUES (\n				\'DUMBLE\',\n				\'DUMBLE\',\n				\'\',\n				\'\',\n				\'2009-04-29 19:57\',\n				\'DE\',\n				10,\n				\'Dumbledoor McGonagal &amp; Co\',\n				\'Hogwarts castle\',\n				\'Platform 9.75\',\n				\'\',\n				\'\',\n				\'\',\n				\'\',\n				\'Owls only\',\n				\'mmgonagal@hogwarts.edu.uk\',\n				0,\n				\'TOR\',\n				\'2009/04/30\',\n				0,\n				1\n                )');
+INSERT INTO `audittrail` VALUES ('2009-04-29 19:56:57','admin','UPDATE salesorderdetails\n						SET quantity=4,\n						unitprice=20,\n						discountpercent=0,\n						narrative =\'\',\n						itemdue = \'30/04/2009\',\n						poline = \'\'\n					WHERE orderno=0\n					AND orderlineno=0');
+INSERT INTO `audittrail` VALUES ('2009-04-25 07:36:20','admin','DELETE FROM audittrail\n						WHERE  transactiondate &lt;= \'2009-03-25\'');
+INSERT INTO `audittrail` VALUES ('2009-04-29 19:56:28','admin','UPDATE www_users\n				SET displayrecordsmax=50,\n					theme=\'professional\',\n					language=\'en_GB\',\n					email=\'\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2009-04-25 07:36:20','admin','UPDATE config\n				SET confvalue=\'2009-04-25\'\n				WHERE confname=\'DB_Maintenance_LastRun\'');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1129)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1130)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1131)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1132)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1133)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1134)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1135)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1136)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1137)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1138)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1139)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1140)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1141)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1142)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1143)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1144)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1145)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1146)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1147)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1148)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1149)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1150)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1151)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1152)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1153)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1154)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1155)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1156)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1157)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1158)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1159)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1160)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1161)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1162)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1163)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1164)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1165)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1166)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1167)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1168)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1169)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1170)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1171)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1172)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1173)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1174)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1175)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1176)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1177)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1178)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1179)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1180)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1181)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1182)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1183)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1184)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1185)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1186)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1187)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1188)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1189)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1190)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1191)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1192)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1193)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1194)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1195)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1196)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1197)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1198)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1199)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1200)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1201)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1202)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1203)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1204)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1205)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1206)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1207)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1208)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1209)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1210)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1211)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1212)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1213)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1214)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1215)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1216)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1217)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1218)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1219)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1220)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1221)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1222)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1223)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1224)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1225)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1226)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1227)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1228)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1229)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1230)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1231)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1232)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1233)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1234)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1235)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1236)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1237)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1238)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1239)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1240)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1241)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1242)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1243)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1244)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1245)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1246)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1247)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1248)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1249)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1250)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1251)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1252)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1253)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1254)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1255)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1256)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1257)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1258)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1259)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1260)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1261)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1262)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1263)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1264)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1265)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1266)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1267)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1268)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1269)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1270)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1271)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1272)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1273)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1274)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1275)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1276)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1277)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1278)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1279)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1280)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1281)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1282)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1283)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1284)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1285)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1286)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1287)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1288)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1289)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1290)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1291)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1292)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1293)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1294)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1295)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1296)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1297)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1298)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 17:57:18','admin','INSERT INTO woserialnos (wo,\n															stockid,\n															serialno)\n												VALUES (10,	\n														\'SLICE\',\n														1299)');
+INSERT INTO `audittrail` VALUES ('2009-05-03 20:57:39','admin','UPDATE workorders SET requiredby=\'2009/05/03\',\n												loccode=\'MEL\'\n			        	    WHERE wo=10');
+INSERT INTO `audittrail` VALUES ('2009-05-03 20:57:39','admin','UPDATE woitems SET qtyreqd =  300,\n    			                                 nextlotsnref = \'25001\',\n    			                                 stdcost =0.60085\n    			                  WHERE wo=10\n                                  AND stockid=\'SLICE\'');
+INSERT INTO `audittrail` VALUES ('2009-05-03 20:57:42','admin','INSERT INTO workorders (wo,\n                                                     loccode,\n                                                     requiredby,\n                                                     startdate)\n                                     VALUES (11,\n                                            \'MEL\',\n                                            \'2009-05-03\',\n                                            \'2009-05-03\')');
+INSERT INTO `audittrail` VALUES ('2009-05-03 21:01:49','admin','INSERT INTO workorders (wo,\n                                                     loccode,\n                                                     requiredby,\n                                                     startdate)\n                                     VALUES (12,\n                                            \'MEL\',\n                                            \'2009-05-03\',\n                                            \'2009-05-03\')');
+INSERT INTO `audittrail` VALUES ('2009-05-03 21:01:56','admin','DELETE FROM worequirements WHERE wo=12');
+INSERT INTO `audittrail` VALUES ('2009-05-03 21:01:56','admin','DELETE FROM woitems WHERE wo=12');
+INSERT INTO `audittrail` VALUES ('2009-05-03 21:01:56','admin','DELETE FROM workorders WHERE wo=12');
+INSERT INTO `audittrail` VALUES ('2009-05-09 10:56:19','admin','INSERT INTO workorders (wo,\n                                                     loccode,\n                                                     requiredby,\n                                                     startdate)\n                                     VALUES (13,\n                                            \'MEL\',\n                                            \'2009-05-09\',\n                                            \'2009-05-09\')');
+INSERT INTO `audittrail` VALUES ('2009-05-09 10:56:48','admin','INSERT INTO woitems (wo,\n	                             stockid,\n	                             qtyreqd,\n	                             stdcost)\n	         VALUES ( 13,\n                         \'DVD_ACTION\',\n                         1,\n                          16.22\n                          )');
+INSERT INTO `audittrail` VALUES ('2009-05-09 10:56:48','admin','INSERT INTO worequirements (wo,\n				parentstockid,\n				stockid,\n				qtypu,\n				stdcost,\n				autoissue)\n			SELECT 13,\n				\'DVD_ACTION\',\n				bom.component,\n				bom.quantity*1,\n				materialcost+labourcost+overheadcost,\n				bom.autoissue\n			FROM bom INNER JOIN stockmaster\n			ON bom.component=stockmaster.stockid\n			WHERE bom.parent=\'DVD_ACTION\'\n			AND bom.loccode =\'MEL\'\n			AND stockmaster.mbflag&lt;&gt;\'G\'\n			AND bom.component NOT IN (\n				SELECT stockid\n				FROM worequirements\n				WHERE wo = 13\n				AND parentstockid = \'DVD_ACTION\'\n			)');
+INSERT INTO `audittrail` VALUES ('2009-05-09 10:57:24','admin','DELETE FROM worequirements WHERE wo=13');
+INSERT INTO `audittrail` VALUES ('2009-05-09 10:57:24','admin','DELETE FROM woitems WHERE wo=13');
+INSERT INTO `audittrail` VALUES ('2009-05-09 10:57:24','admin','DELETE FROM woserialnos WHERE wo=13');
+INSERT INTO `audittrail` VALUES ('2009-05-09 10:57:24','admin','DELETE FROM workorders WHERE wo=13');
+INSERT INTO `audittrail` VALUES ('2009-05-09 14:13:49','admin','DELETE FROM woserialnos \r\n						WHERE wo=10 \r\n						AND stockid=\'SLICE\'\r\n						AND serialno=\'1001\'');
+INSERT INTO `audittrail` VALUES ('2009-05-09 14:15:11','admin','DELETE FROM woserialnos \r\n						WHERE wo=10 \r\n						AND stockid=\'SLICE\'\r\n						AND serialno=\'1002\'');
+INSERT INTO `audittrail` VALUES ('2009-05-09 14:15:11','admin','UPDATE woitems SET qtyreqd=qtyreqd-1\r\n						WHERE wo=10\r\n						AND stockid = \'SLICE\'');
+INSERT INTO `audittrail` VALUES ('2009-05-09 14:19:18','admin','DELETE FROM woserialnos \r\n						WHERE wo=10 \r\n						AND stockid=\'SLICE\'\r\n						AND serialno=\'1004\'');
+INSERT INTO `audittrail` VALUES ('2009-05-09 14:19:18','admin','UPDATE woitems SET qtyreqd=qtyreqd-1\r\n						WHERE wo=10\r\n						AND stockid = \'SLICE\'');
+INSERT INTO `audittrail` VALUES ('2009-05-09 14:20:03','admin','DELETE FROM woserialnos \r\n						WHERE wo=10 \r\n						AND stockid=\'SLICE\'\r\n						AND serialno=\'1000\'');
+INSERT INTO `audittrail` VALUES ('2009-05-09 14:20:03','admin','UPDATE woitems SET qtyreqd=qtyreqd-1\r\n						WHERE wo=10\r\n						AND stockid = \'SLICE\'');
+INSERT INTO `audittrail` VALUES ('2009-05-09 14:20:50','admin','DELETE FROM woserialnos \r\n						WHERE wo=10 \r\n						AND stockid=\'SLICE\'\r\n						AND serialno=\'1003\'');
+INSERT INTO `audittrail` VALUES ('2009-05-09 14:20:50','admin','UPDATE woitems SET qtyreqd=qtyreqd-1\r\n						WHERE wo=10\r\n						AND stockid = \'SLICE\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 13:57:33','admin','UPDATE www_users\n				SET displayrecordsmax=50,\n					theme=\'jelly\',\n					language=\'nl_NL\',\n					email=\'\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 14:01:28','admin','UPDATE www_users\n				SET displayrecordsmax=50,\n					theme=\'jelly\',\n					language=\'nl_NL\',\n					email=\'\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 14:55:35','admin','UPDATE www_users\n				SET displayrecordsmax=50,\n					theme=\'jelly\',\n					language=\'en_GB\',\n					email=\'\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 14:55:45','admin','UPDATE www_users\n				SET displayrecordsmax=50,\n					theme=\'gel\',\n					language=\'en_GB\',\n					email=\'\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 14:55:51','admin','UPDATE www_users\n				SET displayrecordsmax=50,\n					theme=\'fresh\',\n					language=\'en_GB\',\n					email=\'\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 14:56:06','admin','UPDATE www_users\n				SET displayrecordsmax=50,\n					theme=\'silverwolf\',\n					language=\'en_GB\',\n					email=\'\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 14:56:44','admin','UPDATE www_users\n				SET displayrecordsmax=50,\n					theme=\'default\',\n					language=\'en_GB\',\n					email=\'\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:01:24','admin','UPDATE www_users\n				SET displayrecordsmax=50,\n					theme=\'fresh\',\n					language=\'en_GB\',\n					email=\'\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:01:44','admin','UPDATE www_users\n				SET displayrecordsmax=50,\n					theme=\'professional\',\n					language=\'en_GB\',\n					email=\'\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:04:47','admin','UPDATE config SET confvalue = \'companies/weberpdemo/part_pics\' WHERE confname = \'part_pics_dir\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:04:47','admin','UPDATE config SET confvalue = \'companies/weberpdemo/reportwriter\' WHERE confname = \'reports_dir\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:04:47','admin','UPDATE config SET confvalue = \'WackoWiki\' WHERE confname = \'WikiApp\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:04:47','admin','UPDATE config SET confvalue=\'phil@logicworks.co.nz\' WHERE confname=\'FactoryManagerEmail\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:04:47','admin','UPDATE config SET confvalue=\'0\' WHERE confname=\'DefineControlledOnWOEntry\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO periods (periodno, lastdate_in_period) VALUES (23, \'2009/04/30\')');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO chartdetails (accountcode, period)\n						SELECT chartmaster.accountcode, periods.periodno\n							FROM chartmaster\n								CROSS  JOIN periods\n						WHERE ( chartmaster.accountcode, periods.periodno ) NOT\n							IN ( SELECT chartdetails.accountcode, chartdetails.period FROM chartdetails )');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO periods (periodno, lastdate_in_period) VALUES (24, \'2009/05/31\')');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO chartdetails (accountcode, period)\n						SELECT chartmaster.accountcode, periods.periodno\n							FROM chartmaster\n								CROSS  JOIN periods\n						WHERE ( chartmaster.accountcode, periods.periodno ) NOT\n							IN ( SELECT chartdetails.accountcode, chartdetails.period FROM chartdetails )');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO periods (periodno, lastdate_in_period) VALUES (25, \'2009/06/30\')');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO chartdetails (accountcode, period)\n						SELECT chartmaster.accountcode, periods.periodno\n							FROM chartmaster\n								CROSS  JOIN periods\n						WHERE ( chartmaster.accountcode, periods.periodno ) NOT\n							IN ( SELECT chartdetails.accountcode, chartdetails.period FROM chartdetails )');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO debtortrans (\n	 		transno,\n	 		type,\n			debtorno,\n			branchcode,\n			trandate,\n			prd,\n			tpe,\n			ovamount,\n			ovgst,\n			ovfreight,\n			rate,\n			invtext)\n		  VALUES (2,\n		  	11,\n			\'DUMBLE\',\n			\'DUMBLE\',\n			\'2009-05-16\', 24,\n			\'DE\',\n			-2.4,\n			0,\n		  	0,\n			0.8,\n			\'\'\n		)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO debtortranstaxes (debtortransid,\n							taxauthid,\n							taxamount)\n				VALUES (4,\n					13,\n					0)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockmoves\n							(stockid,\n							type,\n							transno,\n							loccode,\n							trandate,\n							debtorno,\n							branchcode,\n							price,\n							prd,\n							qty,\n							discountpercent,\n							standardcost,\n							reference,\n							newqoh,\n							narrative)\n						VALUES (\n							\'SLICE\',\n							11,\n							2,\n							\'TOR\',\n							\'2009-05-16\',\n							\'DUMBLE\',\n							\'DUMBLE\',\n							0.15,\n							24,\n							20,\n							0,\n							0.6009,\n							\'\',\n							20,\n							\'\'\n						)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockmovestaxes (stkmoveno,\n										taxauthid,\n										taxrate,\n										taxcalculationorder,\n										taxontax)\n							VALUES (35,\n								13,\n								0,\n								0,\n								0)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12400\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12400\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12401\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12401\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12402\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12402\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12403\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12403\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12404\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12404\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12405\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12405\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12406\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12406\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12407\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12407\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12408\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12408\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12409\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12409\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12410\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12410\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12411\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12411\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12412\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12412\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12413\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12413\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12414\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12414\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12415\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12415\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12416\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12416\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12417\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12417\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12418\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12418\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialitems (\n								stockid,\n								loccode,\n								serialno,\n								quantity)\n								VALUES (\n								\'SLICE\',\n								\'TOR\',\n								\'12419\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO stockserialmoves (\n								stockmoveno,\n								stockid,\n								serialno,\n								moveqty)\n							VALUES (\n								35,\n								\'SLICE\',\n								\'12419\',\n								1\n								)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','UPDATE locstock\n						SET locstock.quantity = locstock.quantity + 20\n						WHERE locstock.stockid = \'SLICE\'\n						AND locstock.loccode = \'TOR\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT salesanalysis (\n				    	typeabbrev,\n					periodno,\n					amt,\n					cost,\n					cust,\n					custbranch,\n					qty,\n					disc,\n					stockid,\n					area,\n					budgetoractual,\n					salesperson,\n					stkcategory)\n					SELECT \'DE\',\n					24,\n					-3,\n					-12.018,\n					\'DUMBLE\',\n					\'DUMBLE\',\n					-20,\n					0,\n					\'SLICE\',\n					custbranch.area,\n					1,\n					custbranch.salesman,\n					stockmaster.categoryid\n					FROM stockmaster,\n						custbranch\n					WHERE stockmaster.stockid = \'SLICE\'\n					AND custbranch.debtorno = \'DUMBLE\'\n					AND custbranch.branchcode=\'DUMBLE\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO gltrans (\n				  		type,\n						typeno,\n						trandate,\n						periodno,\n						account,\n						narrative,\n						amount)\n					VALUES (\n						11,\n						2,\n						\'2009-05-16\',\n						24,\n						5000,\n						\'DUMBLE - SLICE x 20 @ 0.6009\',\n						-12.018)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO gltrans (\n					     		type,\n							typeno,\n							trandate,\n							periodno,\n							account,\n							narrative,\n							amount)\n						VALUES (\n							11,\n							2,\n							\'2009-05-16\',\n							24, 1460,\n							\'DUMBLE - SLICE x 20 @ 0.6009\',\n							12.018\n							)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO gltrans (\n						type,\n						typeno,\n						trandate,\n						periodno,\n						account,\n						narrative,\n						amount)\n					VALUES (\n						11,\n						2,\n						\'2009-05-16\',\n						24,\n						4100,\n						\'DUMBLE - SLICE x 20 @ .12\',\n						3\n						)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:45:17','admin','INSERT INTO gltrans (\n					type,\n					typeno,\n					trandate,\n					periodno,\n					account,\n					narrative,\n					amount)\n				VALUES (\n					11,\n					2,\n					\'2009-05-16\',\n					24,\n					1100,\n					\'DUMBLE\',\n					-3)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:46:43','admin','UPDATE salesorders\n			SET debtorno = \'DUMBLE\',\n				branchcode = \'DUMBLE\',\n				customerref = \'\',\n				comments = \'\',\n				ordertype = \'DE\',\n				shipvia = 10,\n				deliverydate = \'04/05/2009\',\n				quotedate = \'18/05/2009\',\n				confirmeddate = \'18/05/2009\',\n				deliverto = \'Dumbledoor McGonagal &amp;amp;amp;amp; Co\',\n				deladd1 = \'Hogwarts castle\',\n				deladd2 = \'Platform 9.75\',\n				deladd3 = \'\',\n				deladd4 = \'\',\n				deladd5 = \'\',\n				deladd6 = \'\',\n				contactphone = \'Owls only\',\n				contactemail = \'mmgonagal@hogwarts.edu.uk\',\n				freightcost = 0,\n				fromstkloc = \'MEL\',\n				deliverydate = \'2009/05/04\',\n				quotedate = \'2009/05/18\',\n				confirmeddate = \'2009/05/18\',\n				printedpackingslip = 0,\n				quotation = 0,\n				deliverblind = 1\n			WHERE salesorders.orderno=10');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:46:43','admin','UPDATE salesorderdetails SET unitprice=0.25,\n								quantity=100,\n								discountpercent=0,\n								completed=0,\n								poline=\'\',\n								itemdue=\'2009/05/17\'\n					WHERE salesorderdetails.orderno=10\n					AND salesorderdetails.orderlineno=\'0\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:47:48','admin','UPDATE salesorders\n			SET debtorno = \'DUMBLE\',\n				branchcode = \'DUMBLE\',\n				customerref = \'\',\n				comments = \'\',\n				ordertype = \'DE\',\n				shipvia = 10,\n				deliverydate = \'04/05/2009\',\n				quotedate = \'18/05/2009\',\n				confirmeddate = \'18/05/2009\',\n				deliverto = \'Dumbledoor McGonagal &amp;amp;amp;amp;amp; Co\',\n				deladd1 = \'Hogwarts castle\',\n				deladd2 = \'Platform 9.75\',\n				deladd3 = \'\',\n				deladd4 = \'\',\n				deladd5 = \'\',\n				deladd6 = \'\',\n				contactphone = \'Owls only\',\n				contactemail = \'mmgonagal@hogwarts.edu.uk\',\n				freightcost = 0,\n				fromstkloc = \'TOR\',\n				deliverydate = \'2009/05/04\',\n				quotedate = \'2009/05/18\',\n				confirmeddate = \'2009/05/18\',\n				printedpackingslip = 0,\n				quotation = 0,\n				deliverblind = 1\n			WHERE salesorders.orderno=10');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:47:48','admin','UPDATE salesorderdetails SET unitprice=0.25,\n								quantity=100,\n								discountpercent=0,\n								completed=0,\n								poline=\'\',\n								itemdue=\'2009/05/17\'\n					WHERE salesorderdetails.orderno=10\n					AND salesorderdetails.orderlineno=\'0\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE salesorders SET comments = CONCAT(comments,\' Inv \',\'2\') WHERE orderno= 10');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO debtortrans (\n			transno,\n			type,\n			debtorno,\n			branchcode,\n			trandate,\n			prd,\n			reference,\n			tpe,\n			order_,\n			ovamount,\n			ovgst,\n			ovfreight,\n			rate,\n			invtext,\n			shipvia,\n			consignment\n			)\n		VALUES (\n			2,\n			10,\n			\'DUMBLE\',\n			\'DUMBLE\',\n			\'2009/05/18\',\n			24,\n			\'\',\n			\'DE\',\n			10,\n			5,\n			0,\n			0,\n			0.8,\n			\'\',\n			10,\n			\'\'\n		)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO debtortranstaxes (debtortransid,\n							taxauthid,\n							taxamount)\n				VALUES (5,\n					13,\n					0)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO orderdeliverydifferenceslog (\n					orderno,\n					invoiceno,\n					stockid,\n					quantitydiff,\n					debtorno,\n					branch,\n					can_or_bo\n				)\n				VALUES (\n					10,\n					2,\n					\'SLICE\',\n					80,\n					\'DUMBLE\',\n					\'DUMBLE\',\n					\'BO\'\n				)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE salesorderdetails\n					SET qtyinvoiced = qtyinvoiced + 20,\n					actualdispatchdate = \'2009/05/18\'\n					WHERE orderno = 10\n					AND orderlineno = \'0\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE locstock\n					SET quantity = locstock.quantity - 20\n					WHERE locstock.stockid = \'SLICE\'\n					AND loccode = \'TOR\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockmoves (\n						stockid,\n						type,\n						transno,\n						loccode,\n						trandate,\n						debtorno,\n						branchcode,\n						price,\n						prd,\n						reference,\n						qty,\n						discountpercent,\n						standardcost,\n						newqoh,\n						narrative )\n					VALUES (\'SLICE\',\n						10,\n						2,\n						\'TOR\',\n						\'2009/05/18\',\n						\'DUMBLE\',\n						\'DUMBLE\',\n						0.3125,\n						24,\n						\'10\',\n						-20,\n						0,\n						0.6009,\n						0,\n						\'\' )');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockmovestaxes (stkmoveno,\n									taxauthid,\n									taxrate,\n									taxcalculationorder,\n									taxontax)\n						VALUES (36,\n							13,\n							0,\n							0,\n							0)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12400\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12400\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12401\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12401\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12402\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12402\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12403\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12403\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12404\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12404\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12405\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12405\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12406\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12406\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12407\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12407\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12408\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12408\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12409\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12409\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12410\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12410\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12411\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12411\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12412\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12412\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12413\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12413\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12414\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12414\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12415\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12415\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12416\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12416\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12417\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12417\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12418\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12418\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE stockserialitems\n							SET quantity= quantity - 1\n							WHERE stockid=\'SLICE\'\n							AND loccode=\'TOR\'\n							AND serialno=\'12419\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO stockserialmoves (stockmoveno,\n										stockid,\n										serialno,\n										moveqty)\n						VALUES (36,\n							\'SLICE\',\n							\'12419\',\n							-1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','UPDATE salesanalysis\n					SET amt=amt+6.25,\n					cost=cost+12.018,\n					qty=qty +20,\n					disc=disc+0\n					WHERE salesanalysis.area=\'TR\'\n					AND salesanalysis.salesperson=\'ERI\'\n					AND typeabbrev =\'DE\'\n					AND periodno = 24\n					AND cust LIKE \'DUMBLE\'\n					AND custbranch LIKE \'DUMBLE\'\n					AND stockid LIKE \'SLICE\'\n					AND salesanalysis.stkcategory =\'FOOD\'\n					AND budgetoractual=1');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO gltrans (\n							type,\n							typeno,\n							trandate,\n							periodno,\n							account,\n							narrative,\n							amount\n							)\n					VALUES (\n						10,\n						2,\n						\'2009/05/18\',\n						24,\n						5000,\n						\'DUMBLE - SLICE x 20 @ 0.6009\',\n						12.018\n					)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO gltrans (\n							type,\n							typeno,\n							trandate,\n							periodno,\n							account,\n							narrative,\n							amount)\n					VALUES (\n						10,\n						2,\n						\'2009/05/18\',\n						24,\n						1460,\n						\'DUMBLE - SLICE x 20 @ 0.6009\',\n						-12.018\n					)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO gltrans (\n							type,\n							typeno,\n							trandate,\n							periodno,\n							account,\n							narrative,\n							amount\n						)\n					VALUES (\n						10,\n						2,\n						\'2009/05/18\',\n						24,\n						4100,\n						\'DUMBLE - SLICE x 20 @ 0.25\',\n						-6.25\n					)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:08','admin','INSERT INTO gltrans (\n						type,\n						typeno,\n						trandate,\n						periodno,\n						account,\n						narrative,\n						amount\n						)\n					VALUES (\n						10,\n						2,\n						\'2009/05/18\',\n						24,\n						1100,\n						\'DUMBLE\',\n						6.25\n					)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE debtortrans\n			SET alloc = alloc + 5,\n			settled=1\n			WHERE transno = 2\n			AND type=10');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO debtortrans (transno,\n					type,\n					debtorno,\n					branchcode,\n					trandate,\n					prd,\n					reference,\n					tpe,\n					order_,\n					ovamount,\n					ovgst,\n					ovfreight,\n					rate,\n					invtext,\n					alloc,\n					settled)\n		VALUES (3,\n			11,\n			\'DUMBLE\',\n			\'DUMBLE\',\n			\'2009/05/16\',\n			24, \'Inv-2\',\n			\'DE\',\n			10,\n			-5,\n			0, 0,\n			0.8,\n			\'\',\n			-5,\n			1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO debtortranstaxes (debtortransid,\n							taxauthid,\n							taxamount)\n				VALUES (6,\n					13,\n					0)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO custallocns (amt,\n						transid_allocfrom,\n						transid_allocto,\n						datealloc)\n			VALUES (5,\n				6,\n				5,\n				\'2009-05-16\')');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE salesorderdetails\n							SET qtyinvoiced = qtyinvoiced - 20,\n								completed=0\n						WHERE orderno = 10\n						AND stkcode = \'SLICE\'\n						AND orderlineno=0');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE locstock\n						SET locstock.quantity = locstock.quantity + 20\n						WHERE locstock.stockid = \'SLICE\'\n						AND loccode = \'TOR\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockmoves (\n								stockid,\n								type,\n								transno,\n								loccode,\n								trandate,\n								debtorno,\n								branchcode,\n								price,\n								prd,\n								reference,\n								qty,\n								discountpercent,\n								standardcost,\n								newqoh,\n								narrative)\n						VALUES (\'SLICE\',\n							11,\n							3,\n							\'TOR\',\n							\'2009/05/16\',\n							\'DUMBLE\',\n							\'DUMBLE\',\n							0.31,\n							24,\n							\'Ex Inv - 2\',\n							20,\n							0,\n							0.6009,\n							20,\n							\'\')');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12400\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12400\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12401\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12401\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12402\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12402\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12403\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12403\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12404\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12404\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12405\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12405\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12406\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12406\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12407\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12407\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12408\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12408\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12409\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12409\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12410\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12410\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12411\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12411\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12412\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12412\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12413\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12413\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12414\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12414\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12415\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12415\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12416\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12416\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12417\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12417\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12418\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12418\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE stockserialitems\n									SET quantity= quantity + 1\n									WHERE stockid=\'SLICE\'\n									AND loccode=\'TOR\'\n									AND serialno=\'12419\'');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (37, \'SLICE\', \'12419\', 1)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO stockmovestaxes (stkmoveno,\n									taxauthid,\n									taxrate,\n									taxcalculationorder,\n									taxontax)\n						VALUES (62,\n							13,\n							0,\n							0,\n							0)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','UPDATE salesanalysis\n							SET amt=amt-6.25,\n							cost=cost-12.018,\n							qty=qty-20,\n							disc=disc-0\n						WHERE salesanalysis.area=\'TR\'\n						AND salesanalysis.salesperson=\'ERI\'\n						AND typeabbrev =\'DE\'\n						AND periodno = 24\n						AND cust = \'DUMBLE\'\n						AND custbranch = \'DUMBLE\'\n						AND stockid = \'SLICE\'\n						AND salesanalysis.stkcategory =\'FOOD\'\n						AND budgetoractual=1');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO gltrans (type,\n								typeno,\n								trandate,\n								periodno,\n								account,\n								narrative,\n								amount)\n						VALUES (11,\n							3,\n							\'2009/05/16\',\n							24,\n							5000,\n							\'DUMBLE - SLICE x 20 @ 0.6009\',\n							-12.02\n							)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO gltrans (type,\n									typeno,\n									trandate,\n									periodno,\n									account,\n									narrative,\n									amount)\n							VALUES (11,\n								3,\n								\'2009/05/16\',\n								24,\n								1460,\n								\'DUMBLE - SLICE x 20 @ 0.6009\',\n								12.02)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO gltrans (type,\n								typeno,\n								trandate,\n								periodno,\n								account,\n								narrative,\n								amount)\n						VALUES (11,\n							3,\n							\'2009/05/16\',\n							24,\n							4100,\n							\'DUMBLE - SLICE x 20 @ 0.25000\',\n							6.25\n							)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:49:57','admin','INSERT INTO gltrans (type,\n							typeno,\n							trandate,\n							periodno,\n							account,\n							narrative,\n							amount)\n					VALUES (11,\n						3,\n						\'2009/05/16\',\n						24,\n						1100,\n						\'DUMBLE\',\n						-6.25\n					)');
+INSERT INTO `audittrail` VALUES ('2009-05-16 15:57:00','admin','INSERT INTO workorders (wo,\n                                                     loccode,\n                                                     requiredby,\n                                                     startdate)\n                                     VALUES (14,\n                                            \'MEL\',\n                                            \'2009-05-16\',\n                                            \'2009-05-16\')');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:44:31','admin','DELETE FROM worequirements\n                                            WHERE wo=10\n                                            AND parentstockid=\'SLICE\'');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:44:31','admin','INSERT INTO worequirements (wo,\n				parentstockid,\n				stockid,\n				qtypu,\n				stdcost,\n				autoissue)\n			SELECT 10,\n				\'SLICE\',\n				bom.component,\n				bom.quantity*1,\n				materialcost+labourcost+overheadcost,\n				bom.autoissue\n			FROM bom INNER JOIN stockmaster\n			ON bom.component=stockmaster.stockid\n			WHERE bom.parent=\'SLICE\'\n			AND bom.loccode =\'MEL\'\n			AND stockmaster.mbflag&lt;&gt;\'G\'\n			AND bom.component NOT IN (\n				SELECT stockid\n				FROM worequirements\n				WHERE wo = 10\n				AND parentstockid = \'SLICE\'\n			)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:44:31','admin','INSERT INTO gltrans (type,\n                                typeno,\n                                trandate,\n                                periodno,\n                                account,\n                                narrative,\n                                amount)\n                            VALUES (35,\n                                18,\n                                \'2009-05-17\',\n                                24,\n                                5700,\n                                \'Cost roll on release of WO: 10 - SLICE cost was 0.6009 changed to 0.60085 x Quantity on hand of 20\',\n                                0.00099999999999989)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:44:31','admin','INSERT INTO gltrans (type,\n                                typeno,\n                                trandate,\n                                periodno,\n                                account,\n                                narrative,\n                                amount)\n                            VALUES (35,\n                                18,\n                                \'2009-05-17\',\n                                24,\n                                1460,\n                                \'Cost roll on release of WO: 10 - SLICE cost was 0.6009 changed to 0.60085 x Quantity on hand of 20\',\n                                -0.00099999999999989)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:44:31','admin','UPDATE stockmaster SET\n                            materialcost=0.60085,\n                            labourcost=0,\n                            overheadcost=0,\n                            lastcost=0.6009\n                        WHERE stockid=\'SLICE\'');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:44:31','admin','UPDATE locstock\n                            SET quantity = quantity - 1.5\n                            WHERE locstock.stockid = \'BREAD\'\n                            AND loccode = \'MEL\'');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:44:31','admin','INSERT INTO stockmoves (stockid,\n                                            type,\n                                            transno,\n                                            loccode,\n                                            trandate,\n                                            prd,\n                                            reference,\n                                            price,\n                                            qty,\n                                            standardcost,\n                                            newqoh)\n                        VALUES (\'BREAD\',\n                            28,\n                            6,\n                            \'MEL\',\n                            \'2009-05-17\',\n                            24,\n                            \'10\',\n                            6.0085,\n                            -1.5,\n                            6.0085,\n                            86.5)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:44:31','admin','UPDATE workorders SET\n                        costissued = costissued+9.01275\n                    WHERE wo=10');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:44:31','admin','INSERT INTO gltrans (type,\n                                    typeno,\n                                    trandate,\n                                    periodno,\n                                    account,\n                                    narrative,\n                                    amount)\n                            VALUES (28,\n                                6,\n                                \'2009-05-17\',\n                                24,\n                                1440,\n                                \'10 - SLICE Component: BREAD - 15 x 0.1 @ 6.01\',\n                                9.01275)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:44:31','admin','INSERT INTO gltrans (type,\n                                    typeno,\n                                    trandate,\n                                    periodno,\n                                    account,\n                                    narrative,\n                                    amount)\n                            VALUES (28,\n                                6,\n                                \'2009-05-17\',\n                                24,\n                                1460,\n                                \'10 - SLICE -&gt; BREAD - 15 x 0.1 @ 6.01\',\n                                -9.01275)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:44:31','admin','UPDATE locstock\n                SET quantity = locstock.quantity + 15\n                WHERE locstock.stockid = \'SLICE\'\n                AND loccode = \'MEL\'');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:44:31','admin','INSERT INTO stockmoves (stockid,\n                                        type,\n                                        transno,\n                                        loccode,\n                                        trandate,\n                                        price,\n                                        prd,\n                                        reference,\n                                        qty,\n                                        standardcost,\n                                        newqoh)\n                    VALUES (\'SLICE\',\n                            26,\n                            5,\n                            \'MEL\',\n                            \'2009-05-17\',\n                            0.60085,\n                            24,\n                            \'10\',\n                            15,\n                            0.60085,\n                            15)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:44:31','admin','INSERT INTO stockserialitems (stockid,\n																	loccode,\n																	serialno,\n																	quantity,\n																	qualitytext)\n											VALUES (\'SLICE\',\n													\'MEL\',\n													\'1017\',\n													1,\n													\'\')');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:44:31','admin','INSERT INTO stockserialmoves (stockmoveno,\n																	stockid,\n																	serialno,\n																	moveqty)\n										VALUES (39,\n												\'SLICE\',\n												\'1017\',\n												1)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','DELETE FROM worequirements\n                                            WHERE wo=10\n                                            AND parentstockid=\'SLICE\'');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','INSERT INTO worequirements (wo,\n				parentstockid,\n				stockid,\n				qtypu,\n				stdcost,\n				autoissue)\n			SELECT 10,\n				\'SLICE\',\n				bom.component,\n				bom.quantity*1,\n				materialcost+labourcost+overheadcost,\n				bom.autoissue\n			FROM bom INNER JOIN stockmaster\n			ON bom.component=stockmaster.stockid\n			WHERE bom.parent=\'SLICE\'\n			AND bom.loccode =\'MEL\'\n			AND stockmaster.mbflag&lt;&gt;\'G\'\n			AND bom.component NOT IN (\n				SELECT stockid\n				FROM worequirements\n				WHERE wo = 10\n				AND parentstockid = \'SLICE\'\n			)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','INSERT INTO gltrans (type,\n                                typeno,\n                                trandate,\n                                periodno,\n                                account,\n                                narrative,\n                                amount)\n                            VALUES (35,\n                                19,\n                                \'2009-05-17\',\n                                24,\n                                5700,\n                                \'Cost roll on release of WO: 10 - SLICE cost was 0.6009 changed to 0.60085 x Quantity on hand of 35\',\n                                0.0017499999999998)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','INSERT INTO gltrans (type,\n                                typeno,\n                                trandate,\n                                periodno,\n                                account,\n                                narrative,\n                                amount)\n                            VALUES (35,\n                                19,\n                                \'2009-05-17\',\n                                24,\n                                1460,\n                                \'Cost roll on release of WO: 10 - SLICE cost was 0.6009 changed to 0.60085 x Quantity on hand of 35\',\n                                -0.0017499999999998)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','UPDATE stockmaster SET\n                            materialcost=0.60085,\n                            labourcost=0,\n                            overheadcost=0,\n                            lastcost=0.6009\n                        WHERE stockid=\'SLICE\'');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','UPDATE locstock\n                            SET quantity = quantity - 0.3\n                            WHERE locstock.stockid = \'BREAD\'\n                            AND loccode = \'MEL\'');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','INSERT INTO stockmoves (stockid,\n                                            type,\n                                            transno,\n                                            loccode,\n                                            trandate,\n                                            prd,\n                                            reference,\n                                            price,\n                                            qty,\n                                            standardcost,\n                                            newqoh)\n                        VALUES (\'BREAD\',\n                            28,\n                            7,\n                            \'MEL\',\n                            \'2009-05-17\',\n                            24,\n                            \'10\',\n                            6.0085,\n                            -0.3,\n                            6.0085,\n                            86.2)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','UPDATE workorders SET\n                        costissued = costissued+1.80255\n                    WHERE wo=10');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','INSERT INTO gltrans (type,\n                                    typeno,\n                                    trandate,\n                                    periodno,\n                                    account,\n                                    narrative,\n                                    amount)\n                            VALUES (28,\n                                7,\n                                \'2009-05-17\',\n                                24,\n                                1440,\n                                \'10 - SLICE Component: BREAD - 3 x 0.1 @ 6.01\',\n                                1.80255)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','INSERT INTO gltrans (type,\n                                    typeno,\n                                    trandate,\n                                    periodno,\n                                    account,\n                                    narrative,\n                                    amount)\n                            VALUES (28,\n                                7,\n                                \'2009-05-17\',\n                                24,\n                                1460,\n                                \'10 - SLICE -&gt; BREAD - 3 x 0.1 @ 6.01\',\n                                -1.80255)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','UPDATE locstock\n                SET quantity = locstock.quantity + 3\n                WHERE locstock.stockid = \'SLICE\'\n                AND loccode = \'MEL\'');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','INSERT INTO stockmoves (stockid,\n                                        type,\n                                        transno,\n                                        loccode,\n                                        trandate,\n                                        price,\n                                        prd,\n                                        reference,\n                                        qty,\n                                        standardcost,\n                                        newqoh)\n                    VALUES (\'SLICE\',\n                            26,\n                            7,\n                            \'MEL\',\n                            \'2009-05-17\',\n                            0.60085,\n                            24,\n                            \'10\',\n                            3,\n                            0.60085,\n                            18)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','INSERT INTO stockserialitems (stockid,\n																	loccode,\n																	serialno,\n																	quantity,\n																	qualitytext)\n											VALUES (\'SLICE\',\n													\'MEL\',\n													\'1005\',\n													1,\n													\'\')');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','INSERT INTO stockserialmoves (stockmoveno,\n																	stockid,\n																	serialno,\n																	moveqty)\n										VALUES (41,\n												\'SLICE\',\n												\'1005\',\n												1)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','DELETE FROM	woserialnos \n											WHERE wo=10\n											AND stockid=\'SLICE\' \n											AND serialno=\'1005\'');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','INSERT INTO stockserialitems (stockid,\n																	loccode,\n																	serialno,\n																	quantity,\n																	qualitytext)\n											VALUES (\'SLICE\',\n													\'MEL\',\n													\'1006\',\n													1,\n													\'\')');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','INSERT INTO stockserialmoves (stockmoveno,\n																	stockid,\n																	serialno,\n																	moveqty)\n										VALUES (41,\n												\'SLICE\',\n												\'1006\',\n												1)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','DELETE FROM	woserialnos \n											WHERE wo=10\n											AND stockid=\'SLICE\' \n											AND serialno=\'1006\'');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','INSERT INTO stockserialitems (stockid,\n																	loccode,\n																	serialno,\n																	quantity,\n																	qualitytext)\n											VALUES (\'SLICE\',\n													\'MEL\',\n													\'1017\',\n													1,\n													\'\')');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','INSERT INTO stockserialmoves (stockmoveno,\n																	stockid,\n																	serialno,\n																	moveqty)\n										VALUES (41,\n												\'SLICE\',\n												\'1017\',\n												1)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','DELETE FROM	woserialnos \n											WHERE wo=10\n											AND stockid=\'SLICE\' \n											AND serialno=\'1017\'');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','INSERT INTO gltrans (type,\n                                    typeno,\n                                    trandate,\n                                    periodno,\n                                    account,\n                                    narrative,\n                                    amount)\n                            VALUES (26,\n                                7,\n                                \'2009-05-17\',\n                                24,\n                                1460,\n                                \'10 SLICE - Slice Of Bread x 3 @ 0.60\',\n                                1.80255)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','INSERT INTO gltrans (type,\n                                    typeno,\n                                    trandate,\n                                    periodno,\n                                    account,\n                                    narrative,\n                                    amount)\n                            VALUES (26,\n                                7,\n                                \'2009-05-17\',\n                                24,\n                                1440,\n                                \'10 SLICE - Slice Of Bread x 3 @ 0.60\',\n                                -1.80255)');
+INSERT INTO `audittrail` VALUES ('2009-05-17 15:55:21','admin','UPDATE woitems\n                                    SET qtyrecd=qtyrecd+3,\n                                        nextlotsnref=\'1017\'\n                                    WHERE wo=10\n                                    AND stockid=\'SLICE\'');
 
 --
 -- Dumping data for table `bankaccounts`
@@ -5706,6 +6281,447 @@ INSERT INTO `chartdetails` VALUES (9100,19,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (9100,20,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (9100,21,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (9100,22,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1010,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1020,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1030,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1040,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1050,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1060,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1070,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1080,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1090,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1100,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1150,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1200,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1250,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1300,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1350,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1400,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1420,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1440,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1460,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1500,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1550,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1600,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1620,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1650,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1670,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1700,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1710,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1720,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1730,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1740,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1750,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1760,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1770,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1780,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1790,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1800,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1850,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1900,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2010,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2020,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2050,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2100,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2150,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2200,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2230,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2250,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2300,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2310,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2320,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2330,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2340,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2350,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2360,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2400,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2410,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2420,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2450,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2460,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2470,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2480,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2500,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2550,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2560,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2600,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2700,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2720,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2740,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2760,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2800,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2900,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (3100,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (3200,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (3300,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (3400,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (3500,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4100,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4200,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4500,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4600,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4700,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4800,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4900,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5000,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5100,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5200,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5500,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5600,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5700,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5800,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5900,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6100,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6150,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6200,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6250,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6300,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6400,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6500,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6550,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6590,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6600,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6700,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6800,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6900,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7020,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7030,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7040,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7050,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7060,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7070,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7080,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7090,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7100,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7150,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7200,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7210,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7220,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7230,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7240,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7260,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7280,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7300,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7350,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7390,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7400,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7450,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7500,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7550,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7600,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7610,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7620,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7630,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7640,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7650,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7660,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7700,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7750,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7800,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7900,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8100,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8200,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8300,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8400,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8500,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8600,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8900,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (9100,23,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1010,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1020,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1030,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1040,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1050,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1060,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1070,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1080,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1090,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1100,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1150,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1200,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1250,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1300,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1350,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1400,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1420,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1440,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1460,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1500,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1550,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1600,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1620,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1650,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1670,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1700,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1710,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1720,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1730,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1740,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1750,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1760,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1770,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1780,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1790,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1800,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1850,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1900,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2010,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2020,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2050,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2100,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2150,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2200,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2230,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2250,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2300,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2310,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2320,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2330,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2340,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2350,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2360,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2400,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2410,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2420,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2450,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2460,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2470,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2480,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2500,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2550,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2560,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2600,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2700,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2720,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2740,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2760,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2800,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2900,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (3100,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (3200,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (3300,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (3400,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (3500,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4100,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4200,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4500,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4600,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4700,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4800,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4900,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5000,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5100,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5200,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5500,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5600,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5700,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5800,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5900,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6100,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6150,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6200,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6250,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6300,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6400,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6500,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6550,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6590,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6600,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6700,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6800,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6900,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7020,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7030,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7040,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7050,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7060,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7070,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7080,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7090,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7100,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7150,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7200,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7210,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7220,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7230,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7240,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7260,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7280,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7300,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7350,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7390,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7400,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7450,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7500,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7550,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7600,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7610,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7620,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7630,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7640,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7650,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7660,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7700,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7750,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7800,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7900,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8100,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8200,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8300,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8400,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8500,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8600,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8900,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (9100,24,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1010,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1020,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1030,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1040,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1050,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1060,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1070,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1080,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1090,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1100,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1150,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1200,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1250,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1300,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1350,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1400,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1420,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1440,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1460,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1500,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1550,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1600,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1620,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1650,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1670,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1700,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1710,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1720,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1730,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1740,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1750,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1760,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1770,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1780,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1790,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1800,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1850,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1900,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2010,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2020,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2050,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2100,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2150,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2200,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2230,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2250,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2300,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2310,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2320,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2330,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2340,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2350,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2360,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2400,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2410,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2420,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2450,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2460,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2470,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2480,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2500,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2550,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2560,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2600,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2700,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2720,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2740,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2760,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2800,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2900,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (3100,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (3200,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (3300,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (3400,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (3500,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4100,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4200,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4500,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4600,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4700,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4800,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4900,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5000,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5100,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5200,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5500,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5600,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5700,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5800,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5900,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6100,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6150,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6200,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6250,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6300,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6400,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6500,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6550,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6590,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6600,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6700,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6800,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (6900,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7020,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7030,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7040,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7050,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7060,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7070,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7080,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7090,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7100,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7150,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7200,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7210,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7220,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7230,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7240,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7260,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7280,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7300,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7350,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7390,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7400,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7450,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7500,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7550,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7600,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7610,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7620,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7630,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7640,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7650,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7660,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7700,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7750,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7800,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (7900,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8100,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8200,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8300,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8400,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8500,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8600,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8900,25,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (9100,25,0,0,0,0);
 
 --
 -- Dumping data for table `chartmaster`
@@ -5885,7 +6901,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','AUD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','30');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2009-01-29');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2009-04-25');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultCustomerType','1');
@@ -5916,13 +6932,13 @@ INSERT INTO `config` VALUES ('OverChargeProportion','30');
 INSERT INTO `config` VALUES ('OverReceiveProportion','20');
 INSERT INTO `config` VALUES ('PackNoteFormat','1');
 INSERT INTO `config` VALUES ('PageLength','48');
-INSERT INTO `config` VALUES ('part_pics_dir','companies/weberp/part_pics');
+INSERT INTO `config` VALUES ('part_pics_dir','companies/weberpdemo/part_pics');
 INSERT INTO `config` VALUES ('PastDueDays1','30');
 INSERT INTO `config` VALUES ('PastDueDays2','60');
 INSERT INTO `config` VALUES ('PO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('ProhibitJournalsToControlAccounts','1');
 INSERT INTO `config` VALUES ('ProhibitNegativeStock','1');
-INSERT INTO `config` VALUES ('ProhibitPostingsBefore','2006-06-30');
+INSERT INTO `config` VALUES ('ProhibitPostingsBefore','2009-03-31');
 INSERT INTO `config` VALUES ('QuickEntries','10');
 INSERT INTO `config` VALUES ('RadioBeaconFileCounter','/home/RadioBeacon/FileCounter');
 INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server user name');
@@ -5931,16 +6947,20 @@ INSERT INTO `config` VALUES ('RadioBeaconStockLocation','BL');
 INSERT INTO `config` VALUES ('RadioBraconFTP_server','192.168.2.2');
 INSERT INTO `config` VALUES ('RadioBreaconFilePrefix','ORDXX');
 INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
-INSERT INTO `config` VALUES ('reports_dir','companies/weberp/reports');
+INSERT INTO `config` VALUES ('reports_dir','companies/weberpdemo/reportwriter');
 INSERT INTO `config` VALUES ('RomalpaClause','Ownership will not pass to the buyer until the goods have been paid for in full.');
 INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','Tax Ref');
 INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','0');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
-INSERT INTO `config` VALUES ('WikiApp','Disabled');
+INSERT INTO `config` VALUES ('WikiApp','WackoWiki');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
 INSERT INTO `config` VALUES ('YearEnd','3');
+INSERT INTO `config` VALUES ('AutoCreateWOs','1');
+INSERT INTO `config` VALUES ('DefaultFactoryLocation','MEL');
+INSERT INTO `config` VALUES ('FactoryManagerEmail','phil@logicworks.co.nz');
+INSERT INTO `config` VALUES ('DefineControlledOnWOEntry','1');
 
 --
 -- Dumping data for table `contractbom`
@@ -5972,6 +6992,7 @@ INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',1);
 --
 
 INSERT INTO `custallocns` VALUES (1,'15.9500','2007-08-02',2,1);
+INSERT INTO `custallocns` VALUES (2,'5.0000','2009-05-16',6,5);
 
 --
 -- Dumping data for table `custbranch`
@@ -5984,14 +7005,15 @@ INSERT INTO `custbranch` VALUES ('JOLOMU','JOLOMU','Lorrima Productions Inc','32
 INSERT INTO `custbranch` VALUES ('QUARTER','QUARTER','Quarter Back to Back','1356 Union Drive','Holborn','England','','','',0.000000,0.000000,5,'FL','ERI',0,'123456','1234567','','','TOR',3,1,1,0,'','','','','','','','');
 INSERT INTO `custbranch` VALUES ('QUIC','QUICK','Quick Brown PLC','Fox Street','Jumped Over','The Lazy Dog','','','',0.000000,0.000000,1,'FL','ERI',0,'','','','','TOR',1,1,1,0,'','','','','','','','');
 INSERT INTO `custbranch` VALUES ('SLOW','QUICK','Slow Dog','Hunstman Road','Woofton','','','','',0.000000,0.000000,1,'TR','ERI',0,'','','Staffordshire Terrier','','TOR',2,1,1,0,'','','','','','','','');
+
 --
 -- Dumping data for table `custcontacts`
 --
 
-INSERT INTO `custcontacts` VALUES (2,'ANGRY','Hamish McKay','CEO',12334302,'Whisky drinker single malt only');
-INSERT INTO `custcontacts` VALUES (3,'ANGRY','Gavin McDonald','Purchasing',12334990,'Golfer, 5 handicap');
-INSERT INTO `custcontacts` VALUES (4,'ANGRY','Bill (William) Wallace','Mover and ',10292811,'English hater!');
-INSERT INTO `custcontacts` VALUES (5,'ANGRY','Bob (Robert) Bruce','Chairman',10292811,'');
+INSERT INTO `custcontacts` VALUES (2,'ANGRY','Hamish McKay','CEO','12334302','Whisky drinker single malt only');
+INSERT INTO `custcontacts` VALUES (3,'ANGRY','Gavin McDonald','Purchasing','12334990','Golfer, 5 handicap');
+INSERT INTO `custcontacts` VALUES (4,'ANGRY','Bill (William) Wallace','Mover and ','10292811','English hater!');
+INSERT INTO `custcontacts` VALUES (5,'ANGRY','Bob (Robert) Bruce','Chairman','10292811','');
 
 --
 -- Dumping data for table `custnotes`
@@ -6015,6 +7037,9 @@ INSERT INTO `debtorsmaster` VALUES ('QUICK','Quick Brown PLC','Fox Street','Jump
 INSERT INTO `debtortrans` VALUES (1,1,10,'QUARTER','QUARTER','2007-06-26 00:00:00',2,0,'','DE',1,1,46.4,0,0,0,0,15.95,'Some narrative for testing the output on the printed invoice','1',0,'');
 INSERT INTO `debtortrans` VALUES (2,1,11,'QUARTER','QUARTER','2007-08-02 00:00:00',3,1,'Inv-1','DE',1,1,-15.95,0,0,0,0,-15.95,'','',0,'');
 INSERT INTO `debtortrans` VALUES (3,2,12,'ANGRY','','2009-02-04 00:00:00',21,0,'Cash ','',0,1,-99,0,0,0,0,0,'','',0,'');
+INSERT INTO `debtortrans` VALUES (4,2,11,'DUMBLE','DUMBLE','2009-05-16 00:00:00',24,0,'','DE',0,0.8,-2.4,0,0,0,0,0,'','',0,'');
+INSERT INTO `debtortrans` VALUES (5,2,10,'DUMBLE','DUMBLE','2009-05-18 00:00:00',24,1,'','DE',10,0.8,5,0,0,0,0,5,'','10',0,'');
+INSERT INTO `debtortrans` VALUES (6,3,11,'DUMBLE','DUMBLE','2009-05-16 00:00:00',24,1,'Inv-2','DE',10,0.8,-5,0,0,0,0,-5,'','',0,'');
 
 --
 -- Dumping data for table `debtortranstaxes`
@@ -6022,6 +7047,9 @@ INSERT INTO `debtortrans` VALUES (3,2,12,'ANGRY','','2009-02-04 00:00:00',21,0,'
 
 INSERT INTO `debtortranstaxes` VALUES (1,13,0);
 INSERT INTO `debtortranstaxes` VALUES (2,13,0);
+INSERT INTO `debtortranstaxes` VALUES (4,13,0);
+INSERT INTO `debtortranstaxes` VALUES (5,13,0);
+INSERT INTO `debtortranstaxes` VALUES (6,13,0);
 
 --
 -- Dumping data for table `debtortype`
@@ -6031,6 +7059,11 @@ INSERT INTO `debtortype` VALUES (1,'Default');
 
 --
 -- Dumping data for table `debtortypenotes`
+--
+
+
+--
+-- Dumping data for table `deliverynotes`
 --
 
 
@@ -6197,6 +7230,8 @@ INSERT INTO `edi_orders_segs` VALUES (95,'UNT',50,1);
 --
 
 INSERT INTO `factorcompanies` VALUES (1,'None','','','','','','','','','','');
+INSERT INTO `factorcompanies` VALUES (2,'None','','','','','','','','','','');
+INSERT INTO `factorcompanies` VALUES (3,'None','','','','','','','','','','');
 
 --
 -- Dumping data for table `freightcosts`
@@ -6310,6 +7345,28 @@ INSERT INTO `gltrans` VALUES (97,25,31,0,'2009-02-05',21,1460,'PO: 2 GOTSTUFF - 
 INSERT INTO `gltrans` VALUES (98,25,31,0,'2009-02-05',21,2150,'PO: 2 GOTSTUFF - SALT - Salt x 1 @ 2.50',-2.5,1,'',0);
 INSERT INTO `gltrans` VALUES (99,17,17,0,'2009-02-05',21,5700,'BREAD x 100 @ 6.0085 ',-600.85,1,'',0);
 INSERT INTO `gltrans` VALUES (100,17,17,0,'2009-02-05',21,1460,'BREAD x 100 @ 6.0085 ',600.85,1,'',0);
+INSERT INTO `gltrans` VALUES (101,11,2,0,'2009-05-16',24,5000,'DUMBLE - SLICE x 20 @ 0.6009',-12.018,0,'',0);
+INSERT INTO `gltrans` VALUES (102,11,2,0,'2009-05-16',24,1460,'DUMBLE - SLICE x 20 @ 0.6009',12.018,0,'',0);
+INSERT INTO `gltrans` VALUES (103,11,2,0,'2009-05-16',24,4100,'DUMBLE - SLICE x 20 @ .12',3,0,'',0);
+INSERT INTO `gltrans` VALUES (104,11,2,0,'2009-05-16',24,1100,'DUMBLE',-3,0,'',0);
+INSERT INTO `gltrans` VALUES (105,10,2,0,'2009-05-18',24,5000,'DUMBLE - SLICE x 20 @ 0.6009',12.018,0,'',0);
+INSERT INTO `gltrans` VALUES (106,10,2,0,'2009-05-18',24,1460,'DUMBLE - SLICE x 20 @ 0.6009',-12.018,0,'',0);
+INSERT INTO `gltrans` VALUES (107,10,2,0,'2009-05-18',24,4100,'DUMBLE - SLICE x 20 @ 0.25',-6.25,0,'',0);
+INSERT INTO `gltrans` VALUES (108,10,2,0,'2009-05-18',24,1100,'DUMBLE',6.25,0,'',0);
+INSERT INTO `gltrans` VALUES (109,11,3,0,'2009-05-16',24,5000,'DUMBLE - SLICE x 20 @ 0.6009',-12.02,0,'',0);
+INSERT INTO `gltrans` VALUES (110,11,3,0,'2009-05-16',24,1460,'DUMBLE - SLICE x 20 @ 0.6009',12.02,0,'',0);
+INSERT INTO `gltrans` VALUES (111,11,3,0,'2009-05-16',24,4100,'DUMBLE - SLICE x 20 @ 0.25000',6.25,0,'',0);
+INSERT INTO `gltrans` VALUES (112,11,3,0,'2009-05-16',24,1100,'DUMBLE',-6.25,0,'',0);
+INSERT INTO `gltrans` VALUES (113,35,18,0,'2009-05-17',24,5700,'Cost roll on release of WO: 10 - SLICE cost was 0.6009 changed to 0.60085 x Quantity on hand of 20',0.00099999999999989,0,'',0);
+INSERT INTO `gltrans` VALUES (114,35,18,0,'2009-05-17',24,1460,'Cost roll on release of WO: 10 - SLICE cost was 0.6009 changed to 0.60085 x Quantity on hand of 20',-0.00099999999999989,0,'',0);
+INSERT INTO `gltrans` VALUES (115,28,6,0,'2009-05-17',24,1440,'10 - SLICE Component: BREAD - 15 x 0.1 @ 6.01',9.01275,0,'',0);
+INSERT INTO `gltrans` VALUES (116,28,6,0,'2009-05-17',24,1460,'10 - SLICE -> BREAD - 15 x 0.1 @ 6.01',-9.01275,0,'',0);
+INSERT INTO `gltrans` VALUES (117,35,19,0,'2009-05-17',24,5700,'Cost roll on release of WO: 10 - SLICE cost was 0.6009 changed to 0.60085 x Quantity on hand of 35',0.0017499999999998,0,'',0);
+INSERT INTO `gltrans` VALUES (118,35,19,0,'2009-05-17',24,1460,'Cost roll on release of WO: 10 - SLICE cost was 0.6009 changed to 0.60085 x Quantity on hand of 35',-0.0017499999999998,0,'',0);
+INSERT INTO `gltrans` VALUES (119,28,7,0,'2009-05-17',24,1440,'10 - SLICE Component: BREAD - 3 x 0.1 @ 6.01',1.80255,0,'',0);
+INSERT INTO `gltrans` VALUES (120,28,7,0,'2009-05-17',24,1460,'10 - SLICE -> BREAD - 3 x 0.1 @ 6.01',-1.80255,0,'',0);
+INSERT INTO `gltrans` VALUES (121,26,7,0,'2009-05-17',24,1460,'10 SLICE - Slice Of Bread x 3 @ 0.60',1.80255,0,'',0);
+INSERT INTO `gltrans` VALUES (122,26,7,0,'2009-05-17',24,1440,'10 SLICE - Slice Of Bread x 3 @ 0.60',-1.80255,0,'',0);
 
 --
 -- Dumping data for table `grns`
@@ -6354,7 +7411,7 @@ INSERT INTO `locations` VALUES ('TOR','Toronto','Level 100 ','CN Tower','Toronto
 -- Dumping data for table `locstock`
 --
 
-INSERT INTO `locstock` VALUES ('MEL','BREAD',88,0);
+INSERT INTO `locstock` VALUES ('MEL','BREAD',86.2,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-CASE',0,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-DHWV',-12,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-LTWP',-3,0);
@@ -6369,7 +7426,7 @@ INSERT INTO `locstock` VALUES ('MEL','FUJI9901ASS',0,0);
 INSERT INTO `locstock` VALUES ('MEL','HIT3042-4',0,0);
 INSERT INTO `locstock` VALUES ('MEL','HIT3043-5',0,0);
 INSERT INTO `locstock` VALUES ('MEL','SALT',6.7,0);
-INSERT INTO `locstock` VALUES ('MEL','SLICE',0,0);
+INSERT INTO `locstock` VALUES ('MEL','SLICE',18,0);
 INSERT INTO `locstock` VALUES ('MEL','YEAST',0,0);
 INSERT INTO `locstock` VALUES ('TOR','BREAD',12,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-CASE',0,0);
@@ -6386,7 +7443,7 @@ INSERT INTO `locstock` VALUES ('TOR','FUJI9901ASS',0,0);
 INSERT INTO `locstock` VALUES ('TOR','HIT3042-4',0,0);
 INSERT INTO `locstock` VALUES ('TOR','HIT3043-5',0,0);
 INSERT INTO `locstock` VALUES ('TOR','SALT',0,0);
-INSERT INTO `locstock` VALUES ('TOR','SLICE',0,0);
+INSERT INTO `locstock` VALUES ('TOR','SLICE',20,0);
 INSERT INTO `locstock` VALUES ('TOR','YEAST',0,0);
 
 --
@@ -6401,9 +7458,26 @@ INSERT INTO `loctransfers` VALUES (21,'BREAD',1,0,'2009-02-05','0000-00-00','MEL
 INSERT INTO `loctransfers` VALUES (22,'BREAD',1,0,'2009-02-05','0000-00-00','MEL','TOR');
 
 --
+-- Dumping data for table `mrpcalendar`
+--
+
+
+--
+-- Dumping data for table `mrpdemands`
+--
+
+
+--
+-- Dumping data for table `mrpdemandtypes`
+--
+
+INSERT INTO `mrpdemandtypes` VALUES ('FOR','Forecast');
+
+--
 -- Dumping data for table `orderdeliverydifferenceslog`
 --
 
+INSERT INTO `orderdeliverydifferenceslog` VALUES (10,2,'SLICE',80,'DUMBLE','DUMBLE','BO');
 
 --
 -- Dumping data for table `paymentmethods`
@@ -6448,6 +7522,9 @@ INSERT INTO `periods` VALUES (19,'2008-12-31');
 INSERT INTO `periods` VALUES (20,'2009-01-31');
 INSERT INTO `periods` VALUES (21,'2009-02-28');
 INSERT INTO `periods` VALUES (22,'2009-03-31');
+INSERT INTO `periods` VALUES (23,'2009-04-30');
+INSERT INTO `periods` VALUES (24,'2009-05-31');
+INSERT INTO `periods` VALUES (25,'2009-06-30');
 
 --
 -- Dumping data for table `prices`
@@ -6997,6 +8074,7 @@ INSERT INTO `reports` VALUES (135,'Currency Price List','rpt','inv','1','A4:210:
 INSERT INTO `salesanalysis` VALUES ('DE',2,31.9,10.5,'QUARTER','QUARTER',2,0,'DVD-DHWV','FL',1,'ERI','DVD',1);
 INSERT INTO `salesanalysis` VALUES ('DE',2,14.5,2.85,'QUARTER','QUARTER',1,0,'DVD-LTWP','FL',1,'ERI','DVD',2);
 INSERT INTO `salesanalysis` VALUES ('DE',3,-15.95,-5.25,'QUARTER','QUARTER',-1,0,'DVD-DHWV','FL',1,'ERI','DVD',3);
+INSERT INTO `salesanalysis` VALUES ('DE',24,-3,-12.018,'DUMBLE','DUMBLE',-20,0,'SLICE','TR',1,'ERI','FOOD',4);
 
 --
 -- Dumping data for table `salescat`
@@ -7028,6 +8106,27 @@ INSERT INTO `salesman` VALUES ('PHO','Phone Contact','','',0,'0',0);
 -- Dumping data for table `salesorderdetails`
 --
 
+INSERT INTO `salesorderdetails` VALUES (0,5,'DVD-CASE',0,20,10,0,0,'0000-00-00 00:00:00',0,'','2009-04-29','');
+INSERT INTO `salesorderdetails` VALUES (0,4,'DVD-CASE',0,20,10,0,0,'0000-00-00 00:00:00',0,'','2009-04-30','');
+INSERT INTO `salesorderdetails` VALUES (0,9,'SLICE',0,0.25,100,0,0,'0000-00-00 00:00:00',0,'','2009-05-03','');
+INSERT INTO `salesorderdetails` VALUES (0,10,'SLICE',0,0.25,100,0,0,'2009-05-18 00:00:00',0,'','2009-05-17','');
+INSERT INTO `salesorderdetails` VALUES (0,11,'SLICE',0,0.25,100,0,0,'0000-00-00 00:00:00',0,'','2009-05-03','');
+
+--
+-- Dumping data for table `salesorders`
+--
+
+INSERT INTO `salesorders` VALUES (1,'DUMBLE','DUMBLE','',NULL,'','2009-04-29','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal & Co',1,0,'TOR','2009-04-30','0000-00-00','0000-00-00',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (2,'DUMBLE','DUMBLE','',NULL,'','2009-04-29','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal & Co',1,0,'TOR','2009-04-30','0000-00-00','0000-00-00',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (3,'DUMBLE','DUMBLE','',NULL,'','2009-04-29','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal &amp;amp; Co',1,0,'TOR','2009-04-30','2009-04-30','2009-04-30',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (9,'DUMBLE','DUMBLE','',NULL,'','2009-05-03','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal &amp;amp; Co',1,0,'TOR','2009-05-04','2009-05-04','2009-05-04',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (10,'DUMBLE','DUMBLE','',NULL,' Inv 2','2009-05-03','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal &amp;amp;amp;amp; C',1,0,'TOR','2009-05-04','2009-05-18','2009-05-18',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (7,'DUMBLE','DUMBLE','',NULL,'','2009-05-03','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal &amp;amp; Co',1,0,'TOR','2009-05-04','2009-05-04','2009-05-04',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (11,'DUMBLE','DUMBLE','',NULL,'','2009-05-03','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal &amp;amp; Co',1,0,'TOR','2009-05-04','2009-05-04','2009-05-04',0,'0000-00-00',0);
+
+--
+-- Dumping data for table `salestypes`
+--
 
 INSERT INTO `salestypes` VALUES ('DE','Default Price List');
 
@@ -7339,23 +8438,23 @@ INSERT INTO `stockcatproperties` VALUES (3,'AIRCON','inverter',2,'',0);
 -- Dumping data for table `stockmaster`
 --
 
-INSERT INTO `stockmaster` VALUES ('BREAD','FOOD','Bread','Bread','each','M','1800-01-01','0.0000','8.8785','6.0085','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0);
-INSERT INTO `stockmaster` VALUES ('DVD-CASE','AIRCON','webERP Demo DVD Case','webERP Demo DVD Case','each','B','1800-01-01','0.0000','0.0000','0.3000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,1,'none',0,0);
-INSERT INTO `stockmaster` VALUES ('DVD-DHWV','DVD','Die Hard With A Vengeance Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 122 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','5.5000','2.3200','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0);
-INSERT INTO `stockmaster` VALUES ('DVD-LTWP','AIRCON','Lethal Weapon Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r\n<br />\r\nLanguages: English, Deutsch.\r\n<br />\r\nSubtitles: English, Deutsch, Spanish.\r\n<br />\r\nAudio: Dolby Surround 5.1.\r\n<br />\r\nPicture Format: 16:9 Wide-Screen.\r\n<br />\r\nLength: (approx) 100 minutes.\r\n<br />\r\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','2.6600','2.7000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0);
-INSERT INTO `stockmaster` VALUES ('DVD-TOPGUN','DVD','Top Gun DVD','Top Gun DVD','each','B','1800-01-01','0.0000','0.0000','6.5000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,0);
-INSERT INTO `stockmaster` VALUES ('DVD-UNSG','DVD','Under Siege Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 98 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0);
-INSERT INTO `stockmaster` VALUES ('DVD-UNSG2','DVD','Under Siege 2 - Dark Territory','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r<br />\nLanguages: English, Deutsch.\r<br />\nSubtitles: English, Deutsch, Spanish.\r<br />\nAudio: Dolby Surround 5.1.\r<br />\nPicture Format: 16:9 Wide-Screen.\r<br />\nLength: (approx) 98 minutes.\r<br />\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0);
-INSERT INTO `stockmaster` VALUES ('DVD_ACTION','DVD','Action Series Bundle','Under Seige I and Under Seige II\r\n','each','M','1800-01-01','0.0000','0.0000','16.2200','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0);
-INSERT INTO `stockmaster` VALUES ('FLOUR','AIRCON','High Grade Flour','High Grade Flour','kgs','B','1800-01-01','0.0000','0.0000','3.8900','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,1);
-INSERT INTO `stockmaster` VALUES ('FUJI990101','AIRCON','Fujitsu 990101 Split type Indoor Unit 3.5kw','Fujitsu 990101 Split type Indoor Unit 3.5kw Heat Pump with mounting screws and isolating switch','each','B','1800-01-01','0.0000','995.7138','1015.6105','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,4);
-INSERT INTO `stockmaster` VALUES ('FUJI990102','AIRCON','Fujitsu 990102 split type A/C Outdoor unit 3.5kw','Fujitsu 990102 split type A/C Outdoor unit 3.5kw with 5m piping & insulation','each','B','1800-01-01','0.0000','0.0000','633.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0);
-INSERT INTO `stockmaster` VALUES ('FUJI9901ASS','AIRCON','Fujitsu 990101 Split type A/C 3.5kw complete','Fujitsu 990101 Split type A/C 3.5kw complete with indoor and outdoor units 5m pipe and insulation isolating switch. 5 year warranty','each','A','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0);
-INSERT INTO `stockmaster` VALUES ('HIT3042-4','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor Unit - wall hung complete with brackets and screws. 220V-240V AC\r\n5 year guaranttee','each','M','1800-01-01','0.0000','0.0000','853.0000','0.0000','0.0000',0,0,1,5,'0.4000','7.8000','','',1,1,'none',0,0);
-INSERT INTO `stockmaster` VALUES ('HIT3043-5','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor unit - including 5m piping for fitting to HIT3042-4 indoor unit\r\n5 year guaranttee','each','B','1800-01-01','0.0000','0.0000','1235.0000','0.0000','0.0000',0,0,1,5,'0.8500','16.0000','','',1,1,'none',0,0);
-INSERT INTO `stockmaster` VALUES ('SALT','BAKE','Salt','Salt','kgs','B','1800-01-01','0.0000','1.2000','2.5000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,3);
-INSERT INTO `stockmaster` VALUES ('SLICE','FOOD','Slice Of Bread','Slice Of Bread','each','M','1800-01-01','0.0000','0.0000','0.6009','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0);
-INSERT INTO `stockmaster` VALUES ('YEAST','BAKE','Yeast','Yeast','kgs','B','1800-01-01','0.0000','3.8500','5.0000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,3);
+INSERT INTO `stockmaster` VALUES ('BREAD','FOOD','Bread','Bread','each','M','1800-01-01','0.0000','8.8785','6.0085','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0);
+INSERT INTO `stockmaster` VALUES ('DVD-CASE','DVD','webERP Demo DVD Case','webERP Demo DVD Case','each','M','1800-01-01','0.0000','0.0000','0.3000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,1,'0',0,0,25440,0,0);
+INSERT INTO `stockmaster` VALUES ('DVD-DHWV','DVD','Die Hard With A Vengeance Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 122 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','5.5000','2.3200','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,0,0,0);
+INSERT INTO `stockmaster` VALUES ('DVD-LTWP','AIRCON','Lethal Weapon Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r\n<br />\r\nLanguages: English, Deutsch.\r\n<br />\r\nSubtitles: English, Deutsch, Spanish.\r\n<br />\r\nAudio: Dolby Surround 5.1.\r\n<br />\r\nPicture Format: 16:9 Wide-Screen.\r\n<br />\r\nLength: (approx) 100 minutes.\r\n<br />\r\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','2.6600','2.7000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,0,0,0);
+INSERT INTO `stockmaster` VALUES ('DVD-TOPGUN','DVD','Top Gun DVD','Top Gun DVD','each','B','1800-01-01','0.0000','0.0000','6.5000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0);
+INSERT INTO `stockmaster` VALUES ('DVD-UNSG','DVD','Under Siege Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 98 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,0,0,0);
+INSERT INTO `stockmaster` VALUES ('DVD-UNSG2','DVD','Under Siege 2 - Dark Territory','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r<br />\nLanguages: English, Deutsch.\r<br />\nSubtitles: English, Deutsch, Spanish.\r<br />\nAudio: Dolby Surround 5.1.\r<br />\nPicture Format: 16:9 Wide-Screen.\r<br />\nLength: (approx) 98 minutes.\r<br />\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,0,0,0);
+INSERT INTO `stockmaster` VALUES ('DVD_ACTION','DVD','Action Series Bundle','Under Seige I and Under Seige II\r\n','each','M','1800-01-01','0.0000','0.0000','16.2200','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0);
+INSERT INTO `stockmaster` VALUES ('FLOUR','AIRCON','High Grade Flour','High Grade Flour','kgs','B','1800-01-01','0.0000','0.0000','3.8900','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,1,0,0,0);
+INSERT INTO `stockmaster` VALUES ('FUJI990101','AIRCON','Fujitsu 990101 Split type Indoor Unit 3.5kw','Fujitsu 990101 Split type Indoor Unit 3.5kw Heat Pump with mounting screws and isolating switch','each','B','1800-01-01','0.0000','995.7138','1015.6105','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,4,0,0,0);
+INSERT INTO `stockmaster` VALUES ('FUJI990102','AIRCON','Fujitsu 990102 split type A/C Outdoor unit 3.5kw','Fujitsu 990102 split type A/C Outdoor unit 3.5kw with 5m piping & insulation','each','B','1800-01-01','0.0000','0.0000','633.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0);
+INSERT INTO `stockmaster` VALUES ('FUJI9901ASS','AIRCON','Fujitsu 990101 Split type A/C 3.5kw complete','Fujitsu 990101 Split type A/C 3.5kw complete with indoor and outdoor units 5m pipe and insulation isolating switch. 5 year warranty','each','A','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0);
+INSERT INTO `stockmaster` VALUES ('HIT3042-4','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor Unit - wall hung complete with brackets and screws. 220V-240V AC\r\n5 year guaranttee','each','M','1800-01-01','0.0000','0.0000','853.0000','0.0000','0.0000',0,0,1,5,'0.4000','7.8000','','',1,1,'none',0,0,0,0,0);
+INSERT INTO `stockmaster` VALUES ('HIT3043-5','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor unit - including 5m piping for fitting to HIT3042-4 indoor unit\r\n5 year guaranttee','each','B','1800-01-01','0.0000','0.0000','1235.0000','0.0000','0.0000',0,0,1,5,'0.8500','16.0000','','',1,1,'none',0,0,0,0,0);
+INSERT INTO `stockmaster` VALUES ('SALT','BAKE','Salt','Salt','kgs','B','1800-01-01','0.0000','1.2000','2.5000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,3,0,0,0);
+INSERT INTO `stockmaster` VALUES ('SLICE','FOOD','Slice Of Bread','Slice Of Bread','each','M','1800-01-01','0.0000','0.6009','0.6009','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,1,'0',0,0,1000,0,0);
+INSERT INTO `stockmaster` VALUES ('YEAST','BAKE','Yeast','Yeast','kgs','B','1800-01-01','0.0000','3.8500','5.0000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,3,0,0,0);
 
 --
 -- Dumping data for table `stockmoves`
@@ -7394,6 +8493,13 @@ INSERT INTO `stockmoves` VALUES (31,'BREAD',16,18,'MEL','2009-02-06','','','0.00
 INSERT INTO `stockmoves` VALUES (32,'BREAD',16,18,'TOR','2009-02-06','','','0.0000',21,'From Melbourne',1,0,0,1,11,0,NULL);
 INSERT INTO `stockmoves` VALUES (33,'BREAD',16,19,'MEL','2009-02-06','','','0.0000',21,'To Toronto',-1,0,0,1,88,0,NULL);
 INSERT INTO `stockmoves` VALUES (34,'BREAD',16,19,'TOR','2009-02-06','','','0.0000',21,'From Melbourne',1,0,0,1,12,0,NULL);
+INSERT INTO `stockmoves` VALUES (35,'SLICE',11,2,'TOR','2009-05-16','DUMBLE','DUMBLE','0.1500',24,'',20,0,0.6009,1,20,0,'');
+INSERT INTO `stockmoves` VALUES (36,'SLICE',10,2,'TOR','2009-05-18','DUMBLE','DUMBLE','0.3125',24,'10',-20,0,0.6009,1,0,0,'');
+INSERT INTO `stockmoves` VALUES (37,'SLICE',11,3,'TOR','2009-05-16','DUMBLE','DUMBLE','0.3100',24,'Ex Inv - 2',20,0,0.6009,1,20,0,'');
+INSERT INTO `stockmoves` VALUES (38,'BREAD',28,6,'MEL','2009-05-17','','','6.0085',24,'10',-1.5,0,6.0085,1,86.5,0,NULL);
+INSERT INTO `stockmoves` VALUES (39,'SLICE',26,5,'MEL','2009-05-17','','','0.6009',24,'10',15,0,0.60085,1,15,0,NULL);
+INSERT INTO `stockmoves` VALUES (40,'BREAD',28,7,'MEL','2009-05-17','','','6.0085',24,'10',-0.3,0,6.0085,1,86.2,0,NULL);
+INSERT INTO `stockmoves` VALUES (41,'SLICE',26,7,'MEL','2009-05-17','','','0.6009',24,'10',3,0,0.60085,1,18,0,NULL);
 
 --
 -- Dumping data for table `stockmovestaxes`
@@ -7402,13 +8508,39 @@ INSERT INTO `stockmoves` VALUES (34,'BREAD',16,19,'TOR','2009-02-06','','','0.00
 INSERT INTO `stockmovestaxes` VALUES (10,13,0,0,0);
 INSERT INTO `stockmovestaxes` VALUES (11,13,0,0,0);
 INSERT INTO `stockmovestaxes` VALUES (12,13,0,0,0);
+INSERT INTO `stockmovestaxes` VALUES (35,13,0,0,0);
+INSERT INTO `stockmovestaxes` VALUES (36,13,0,0,0);
+INSERT INTO `stockmovestaxes` VALUES (62,13,0,0,0);
 
 --
 -- Dumping data for table `stockserialitems`
 --
 
-INSERT INTO `stockserialitems` VALUES ('DVD-TOPGUN','MEL','23','0000-00-00 00:00:00',-1);
-INSERT INTO `stockserialitems` VALUES ('FLOUR','MEL','5433','0000-00-00 00:00:00',-4);
+INSERT INTO `stockserialitems` VALUES ('DVD-TOPGUN','MEL','23','0000-00-00 00:00:00',-1,'');
+INSERT INTO `stockserialitems` VALUES ('FLOUR','MEL','5433','0000-00-00 00:00:00',-4,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12400','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12401','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12402','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12403','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12404','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12405','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12406','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12407','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12408','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12409','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12410','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12411','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12412','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12413','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12414','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12415','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12416','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12417','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12418','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','TOR','12419','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','MEL','1005','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','MEL','1006','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('SLICE','MEL','1017','0000-00-00 00:00:00',1,'');
 
 --
 -- Dumping data for table `stockserialmoves`
@@ -7416,6 +8548,70 @@ INSERT INTO `stockserialitems` VALUES ('FLOUR','MEL','5433','0000-00-00 00:00:00
 
 INSERT INTO `stockserialmoves` VALUES (1,3,'DVD-TOPGUN','23',1);
 INSERT INTO `stockserialmoves` VALUES (2,9,'FLOUR','5433',4);
+INSERT INTO `stockserialmoves` VALUES (3,35,'SLICE','12400',1);
+INSERT INTO `stockserialmoves` VALUES (4,35,'SLICE','12401',1);
+INSERT INTO `stockserialmoves` VALUES (5,35,'SLICE','12402',1);
+INSERT INTO `stockserialmoves` VALUES (6,35,'SLICE','12403',1);
+INSERT INTO `stockserialmoves` VALUES (7,35,'SLICE','12404',1);
+INSERT INTO `stockserialmoves` VALUES (8,35,'SLICE','12405',1);
+INSERT INTO `stockserialmoves` VALUES (9,35,'SLICE','12406',1);
+INSERT INTO `stockserialmoves` VALUES (10,35,'SLICE','12407',1);
+INSERT INTO `stockserialmoves` VALUES (11,35,'SLICE','12408',1);
+INSERT INTO `stockserialmoves` VALUES (12,35,'SLICE','12409',1);
+INSERT INTO `stockserialmoves` VALUES (13,35,'SLICE','12410',1);
+INSERT INTO `stockserialmoves` VALUES (14,35,'SLICE','12411',1);
+INSERT INTO `stockserialmoves` VALUES (15,35,'SLICE','12412',1);
+INSERT INTO `stockserialmoves` VALUES (16,35,'SLICE','12413',1);
+INSERT INTO `stockserialmoves` VALUES (17,35,'SLICE','12414',1);
+INSERT INTO `stockserialmoves` VALUES (18,35,'SLICE','12415',1);
+INSERT INTO `stockserialmoves` VALUES (19,35,'SLICE','12416',1);
+INSERT INTO `stockserialmoves` VALUES (20,35,'SLICE','12417',1);
+INSERT INTO `stockserialmoves` VALUES (21,35,'SLICE','12418',1);
+INSERT INTO `stockserialmoves` VALUES (22,35,'SLICE','12419',1);
+INSERT INTO `stockserialmoves` VALUES (23,36,'SLICE','12400',-1);
+INSERT INTO `stockserialmoves` VALUES (24,36,'SLICE','12401',-1);
+INSERT INTO `stockserialmoves` VALUES (25,36,'SLICE','12402',-1);
+INSERT INTO `stockserialmoves` VALUES (26,36,'SLICE','12403',-1);
+INSERT INTO `stockserialmoves` VALUES (27,36,'SLICE','12404',-1);
+INSERT INTO `stockserialmoves` VALUES (28,36,'SLICE','12405',-1);
+INSERT INTO `stockserialmoves` VALUES (29,36,'SLICE','12406',-1);
+INSERT INTO `stockserialmoves` VALUES (30,36,'SLICE','12407',-1);
+INSERT INTO `stockserialmoves` VALUES (31,36,'SLICE','12408',-1);
+INSERT INTO `stockserialmoves` VALUES (32,36,'SLICE','12409',-1);
+INSERT INTO `stockserialmoves` VALUES (33,36,'SLICE','12410',-1);
+INSERT INTO `stockserialmoves` VALUES (34,36,'SLICE','12411',-1);
+INSERT INTO `stockserialmoves` VALUES (35,36,'SLICE','12412',-1);
+INSERT INTO `stockserialmoves` VALUES (36,36,'SLICE','12413',-1);
+INSERT INTO `stockserialmoves` VALUES (37,36,'SLICE','12414',-1);
+INSERT INTO `stockserialmoves` VALUES (38,36,'SLICE','12415',-1);
+INSERT INTO `stockserialmoves` VALUES (39,36,'SLICE','12416',-1);
+INSERT INTO `stockserialmoves` VALUES (40,36,'SLICE','12417',-1);
+INSERT INTO `stockserialmoves` VALUES (41,36,'SLICE','12418',-1);
+INSERT INTO `stockserialmoves` VALUES (42,36,'SLICE','12419',-1);
+INSERT INTO `stockserialmoves` VALUES (43,37,'SLICE','12400',1);
+INSERT INTO `stockserialmoves` VALUES (44,37,'SLICE','12401',1);
+INSERT INTO `stockserialmoves` VALUES (45,37,'SLICE','12402',1);
+INSERT INTO `stockserialmoves` VALUES (46,37,'SLICE','12403',1);
+INSERT INTO `stockserialmoves` VALUES (47,37,'SLICE','12404',1);
+INSERT INTO `stockserialmoves` VALUES (48,37,'SLICE','12405',1);
+INSERT INTO `stockserialmoves` VALUES (49,37,'SLICE','12406',1);
+INSERT INTO `stockserialmoves` VALUES (50,37,'SLICE','12407',1);
+INSERT INTO `stockserialmoves` VALUES (51,37,'SLICE','12408',1);
+INSERT INTO `stockserialmoves` VALUES (52,37,'SLICE','12409',1);
+INSERT INTO `stockserialmoves` VALUES (53,37,'SLICE','12410',1);
+INSERT INTO `stockserialmoves` VALUES (54,37,'SLICE','12411',1);
+INSERT INTO `stockserialmoves` VALUES (55,37,'SLICE','12412',1);
+INSERT INTO `stockserialmoves` VALUES (56,37,'SLICE','12413',1);
+INSERT INTO `stockserialmoves` VALUES (57,37,'SLICE','12414',1);
+INSERT INTO `stockserialmoves` VALUES (58,37,'SLICE','12415',1);
+INSERT INTO `stockserialmoves` VALUES (59,37,'SLICE','12416',1);
+INSERT INTO `stockserialmoves` VALUES (60,37,'SLICE','12417',1);
+INSERT INTO `stockserialmoves` VALUES (61,37,'SLICE','12418',1);
+INSERT INTO `stockserialmoves` VALUES (62,37,'SLICE','12419',1);
+INSERT INTO `stockserialmoves` VALUES (63,39,'SLICE','1017',1);
+INSERT INTO `stockserialmoves` VALUES (64,41,'SLICE','1005',1);
+INSERT INTO `stockserialmoves` VALUES (65,41,'SLICE','1006',1);
+INSERT INTO `stockserialmoves` VALUES (66,41,'SLICE','1017',1);
 
 --
 -- Dumping data for table `suppallocs`
@@ -7456,8 +8652,8 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',2);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',2);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',1);
-INSERT INTO `systypes` VALUES (11,'Credit Note',1);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',2);
+INSERT INTO `systypes` VALUES (11,'Credit Note',3);
 INSERT INTO `systypes` VALUES (12,'Receipt',3);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',22);
@@ -7468,14 +8664,14 @@ INSERT INTO `systypes` VALUES (21,'Debit Note',3);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',4);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
 INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',31);
-INSERT INTO `systypes` VALUES (26,'Work Order Receipt',3);
-INSERT INTO `systypes` VALUES (28,'Work Order Issue',5);
+INSERT INTO `systypes` VALUES (26,'Work Order Receipt',7);
+INSERT INTO `systypes` VALUES (28,'Work Order Issue',7);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
-INSERT INTO `systypes` VALUES (30,'Sales Order',2);
+INSERT INTO `systypes` VALUES (30,'Sales Order',11);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
-INSERT INTO `systypes` VALUES (35,'Cost Update',17);
+INSERT INTO `systypes` VALUES (35,'Cost Update',19);
 INSERT INTO `systypes` VALUES (36,'Exchange Difference',1);
-INSERT INTO `systypes` VALUES (40,'Work Order',9);
+INSERT INTO `systypes` VALUES (40,'Work Order',14);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
 INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',0);
 
@@ -7563,7 +8759,7 @@ INSERT INTO `unitsofmeasure` VALUES (6,'pack');
 --
 
 INSERT INTO `woitems` VALUES (3,'DVD_ACTION',10,10,18.4,'');
-INSERT INTO `woitems` VALUES (4,'SLICE',100,0,0,'');
+INSERT INTO `woitems` VALUES (10,'SLICE',296,3,0.60085,'1017');
 INSERT INTO `woitems` VALUES (5,'BREAD',12,0,11.39,'');
 
 --
@@ -7575,10 +8771,10 @@ INSERT INTO `worequirements` VALUES (3,'DVD_ACTION','DVD-DHWV',1,5.25,1);
 INSERT INTO `worequirements` VALUES (3,'DVD_ACTION','DVD-LTWP',1,2.85,1);
 INSERT INTO `worequirements` VALUES (3,'DVD_ACTION','DVD-UNSG',1,5,1);
 INSERT INTO `worequirements` VALUES (3,'DVD_ACTION','DVD-UNSG2',1,5,1);
-INSERT INTO `worequirements` VALUES (4,'SLICE','BREAD',0.1,0,1);
 INSERT INTO `worequirements` VALUES (5,'BREAD','FLOUR',1.4,3.89,0);
 INSERT INTO `worequirements` VALUES (5,'BREAD','SALT',0.025,2.5,1);
 INSERT INTO `worequirements` VALUES (5,'BREAD','YEAST',0.1,5,0);
+INSERT INTO `worequirements` VALUES (10,'SLICE','BREAD',0.1,6.0085,1);
 
 --
 -- Dumping data for table `workcentres`
@@ -7591,18 +8787,318 @@ INSERT INTO `workcentres` VALUES ('ASS','TOR','Assembly',1,'50',1,'0');
 --
 
 INSERT INTO `workorders` VALUES (3,'MEL','2007-06-13','2007-06-13',198,1);
-INSERT INTO `workorders` VALUES (4,'MEL','2007-06-21','2007-06-21',0,0);
+INSERT INTO `workorders` VALUES (10,'MEL','2009-05-03','2009-05-03',10.8153,0);
 INSERT INTO `workorders` VALUES (5,'MEL','2007-06-21','2007-06-21',16.31,0);
 INSERT INTO `workorders` VALUES (6,'MEL','2007-07-15','2007-07-15',0,0);
 INSERT INTO `workorders` VALUES (7,'MEL','2008-07-26','2008-07-26',0,0);
 INSERT INTO `workorders` VALUES (8,'MEL','2008-07-26','2008-07-26',0,0);
 INSERT INTO `workorders` VALUES (9,'MEL','2009-02-04','2009-02-04',0,0);
+INSERT INTO `workorders` VALUES (11,'MEL','2009-05-03','2009-05-03',0,0);
+INSERT INTO `workorders` VALUES (14,'MEL','2009-05-16','2009-05-16',0,0);
+
+--
+-- Dumping data for table `woserialnos`
+--
+
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1007',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1008',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1009',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1010',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1011',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1012',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1013',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1014',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1015',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1016',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1018',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1019',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1020',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1021',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1022',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1023',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1024',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1025',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1026',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1027',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1028',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1029',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1030',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1031',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1032',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1033',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1034',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1035',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1036',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1037',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1038',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1039',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1040',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1041',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1042',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1043',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1044',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1045',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1046',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1047',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1048',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1049',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1050',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1051',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1052',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1053',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1054',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1055',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1056',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1057',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1058',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1059',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1060',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1061',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1062',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1063',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1064',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1065',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1066',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1067',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1068',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1069',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1070',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1071',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1072',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1073',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1074',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1075',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1076',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1077',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1078',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1079',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1080',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1081',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1082',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1083',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1084',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1085',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1086',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1087',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1088',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1089',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1090',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1091',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1092',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1093',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1094',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1095',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1096',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1097',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1098',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1099',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1100',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1101',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1102',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1103',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1104',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1105',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1106',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1107',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1108',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1109',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1110',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1111',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1112',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1113',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1114',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1115',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1116',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1117',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1118',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1119',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1120',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1121',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1122',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1123',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1124',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1125',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1126',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1127',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1128',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1129',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1130',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1131',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1132',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1133',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1134',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1135',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1136',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1137',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1138',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1139',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1140',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1141',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1142',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1143',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1144',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1145',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1146',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1147',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1148',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1149',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1150',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1151',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1152',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1153',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1154',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1155',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1156',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1157',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1158',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1159',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1160',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1161',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1162',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1163',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1164',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1165',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1166',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1167',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1168',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1169',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1170',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1171',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1172',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1173',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1174',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1175',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1176',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1177',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1178',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1179',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1180',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1181',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1182',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1183',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1184',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1185',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1186',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1187',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1188',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1189',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1190',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1191',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1192',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1193',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1194',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1195',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1196',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1197',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1198',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1199',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1200',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1201',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1202',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1203',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1204',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1205',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1206',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1207',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1208',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1209',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1210',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1211',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1212',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1213',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1214',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1215',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1216',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1217',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1218',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1219',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1220',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1221',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1222',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1223',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1224',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1225',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1226',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1227',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1228',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1229',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1230',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1231',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1232',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1233',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1234',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1235',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1236',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1237',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1238',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1239',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1240',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1241',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1242',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1243',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1244',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1245',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1246',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1247',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1248',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1249',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1250',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1251',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1252',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1253',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1254',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1255',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1256',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1257',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1258',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1259',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1260',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1261',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1262',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1263',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1264',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1265',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1266',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1267',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1268',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1269',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1270',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1271',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1272',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1273',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1274',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1275',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1276',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1277',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1278',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1279',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1280',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1281',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1282',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1283',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1284',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1285',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1286',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1287',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1288',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1289',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1290',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1291',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1292',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1293',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1294',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1295',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1296',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1297',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1298',1,'');
+INSERT INTO `woserialnos` VALUES (10,'SLICE','1299',1,'');
 
 --
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','weberp','Demonstration user','','','','MEL',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'jelly','en_GB');
+INSERT INTO `www_users` VALUES ('admin','weberp','Demonstration user','','','','MEL',8,'2009-05-17 14:03:53','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
+INSERT INTO `www_users` VALUES ('tims','0ddf97e70f0d8e93f5f2dbf28d61c72fd059f221','','','','','MEL',6,'2009-02-06 08:57:06','','A4','1,1,1,1,1,1,1,1,',0,50,'jelly','en_GB');
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -7610,5 +9106,5 @@ INSERT INTO `www_users` VALUES ('admin','weberp','Demonstration user','','','','
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-02-09  9:03:22
+-- Dump completed on 2009-05-17  4:31:59
 SET FOREIGN_KEY_CHECKS = 1;

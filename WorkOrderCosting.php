@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 11;
 
@@ -28,15 +28,15 @@ if (!isset($_REQUEST['WO'])) {
 
 $ErrMsg = _('Could not retrieve the details of the selected work order');
 $WOResult = DB_query("SELECT workorders.loccode,
-			locations.locationname,
-			workorders.requiredby,
-			workorders.startdate,
-			workorders.closed
-			FROM workorders INNER JOIN locations
-			ON workorders.loccode=locations.loccode
-			WHERE workorders.wo=" . $_POST['WO'],
-		$db,
-		$ErrMsg);
+							locations.locationname,
+							workorders.requiredby,
+							workorders.startdate,
+							workorders.closed
+							FROM workorders INNER JOIN locations
+							ON workorders.loccode=locations.loccode
+							WHERE workorders.wo=" . $_POST['WO'],
+						$db,
+						$ErrMsg);
 
 if (DB_num_rows($WOResult)==0){
 	prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
@@ -57,24 +57,24 @@ echo '<center><table cellpadding=2 border=0>
 
 
 $WOItemsResult = DB_query("SELECT woitems.stockid,
-				stockmaster.description,
-				stockmaster.decimalplaces,
-				stockmaster.units,
-				stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS currcost,
-				woitems.qtyreqd,
-				woitems.qtyrecd,
-				woitems.stdcost,
-				stockcategory.materialuseagevarac,
-				stockcategory.purchpricevaract,
-				stockcategory.wipact,
-				stockcategory.stockact
-		FROM woitems INNER JOIN stockmaster
-		ON woitems.stockid=stockmaster.stockid
-		INNER JOIN stockcategory
-		ON stockmaster.categoryid=stockcategory.categoryid
-		WHERE woitems.wo=". $_POST['WO'],
-			$db,
-			$ErrMsg);
+									stockmaster.description,
+									stockmaster.decimalplaces,
+									stockmaster.units,
+									stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS currcost,
+									woitems.qtyreqd,
+									woitems.qtyrecd,
+									woitems.stdcost,
+									stockcategory.materialuseagevarac,
+									stockcategory.purchpricevaract,
+									stockcategory.wipact,
+									stockcategory.stockact
+							FROM woitems INNER JOIN stockmaster
+							ON woitems.stockid=stockmaster.stockid
+							INNER JOIN stockcategory
+							ON stockmaster.categoryid=stockcategory.categoryid
+							WHERE woitems.wo=". $_POST['WO'],
+							$db,
+							$ErrMsg);
 
 echo  '<table><tr><th>' . _('Item') . '</th>
 		<th>' . _('Description') . '</th>
@@ -474,6 +474,11 @@ If (isset($_POST['Close'])) {
 				_('Could not update the work order to closed because:'),
 				_('The SQL used to close the work order was:'),
 				true);
+	$DeleteAnyWOSerialNos = DB_query('DELETE FROM woserialnos WHERE wo=' . $_POST['WO'],
+										$db,
+										_('Could not delete the predefined work order serial numbers'),
+										_('The SQL used to delete the predefined serial numbers was:'),
+										true);
 	$TransResult = DB_Txn_Commit($db);
 	if ($_SESSION['CompanyRecord']['gllink_stock']==1){
 		if ($_SESSION['WeightedAverageCosting']==1){
@@ -498,9 +503,7 @@ if ($WorkOrderRow['closed']==0){
 	echo '<tr><td colspan="9">' . _('This work order is closed and cannot accept additional issues of materials or receipts of manufactured items') . '</td></tr>';
 }
 echo '</table>';
-
-
-echo '</FORM>';
+echo '</form>';
 
 include('includes/footer.inc');
 ?>

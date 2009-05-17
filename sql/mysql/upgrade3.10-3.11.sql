@@ -61,4 +61,5 @@ INSERT INTO config (confname, confvalue) VALUES ('FactoryManagerEmail','manager@
 INSERT INTO config (`confname`,`confvalue`) VALUES ('DefineControlledOnWOEntry', '1');
 
 ALTER TABLE `stockmaster` ADD `nextserialno` BIGINT NOT NULL DEFAULT '0';
-ALTER TABLE `salesorders` CHANGE `orderno` `orderno` INT( 11 ) NOT NULL 
+ALTER TABLE `salesorders` CHANGE `orderno` `orderno` INT( 11 ) NOT NULL;
+ALTER TABLE `stockserialitems` ADD `qualitytext` TEXT NOT NULL;

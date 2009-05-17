@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.70 $ */
+/* $Revision: 1.71 $ */
 
 $PageSecurity = 11;
 
@@ -739,11 +739,11 @@ if (!isset($_POST['NextSerialNo'])) {
 }
 
 
-echo '<tr><td>' . _('Economic Order Quantity') . ':</td><td><input ' . (in_array('EOQ',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="EOQ" SIZE=12 MAXLENGTH=10 Value="' . $_POST['EOQ'] . '"></TD></TR>';
+echo '<tr><td>' . _('Economic Order Quantity') . ':</td><td><input ' . (in_array('EOQ',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" class="number" name="EOQ" size=12 maxlength=10 value="' . $_POST['EOQ'] . '"></td></tr>';
 
-echo '<tr><td>' . _('Packaged Volume (metres cubed)') . ':</td><td><input ' . (in_array('Volume',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="Volume" SIZE=12 MAXLENGTH=10 value="' . $_POST['Volume'] . '"></TD></TR>';
+echo '<tr><td>' . _('Packaged Volume (metres cubed)') . ':</td><td><input ' . (in_array('Volume',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" class="number" name="Volume" size=12 maxlength=10 value="' . $_POST['Volume'] . '"></td></tr>';
 
-echo '<tr><td>' . _('Packaged Weight (KGs)') . ':</td><td><input ' . (in_array('KGS',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="KGS" SIZE=12 MAXLENGTH=10 value="' . $_POST['KGS'] . '"></TD></TR>';
+echo '<tr><td>' . _('Packaged Weight (KGs)') . ':</td><td><input ' . (in_array('KGS',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" class="number" name="KGS" size=12 maxlength=10 value="' . $_POST['KGS'] . '"></td></tr>';
 
 echo '<tr><td>' . _('Units of Measure') . ':</td><td><select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="Units">';
 
@@ -896,11 +896,11 @@ echo '</select></td></tr>';
 
 echo '<tr>
         <td>' . _('Pan Size') . ':</td>
-	    <td><input type="Text" name="Pansize" size="6" maxlength="6" value=' . $_POST['Pansize'] . '></td>
+	    <td><input type="Text" class="number" name="Pansize" size="6" maxlength="6" value=' . $_POST['Pansize'] . '></td>
 	</tr>	
      <tr>
         <td>' . _('Shrinkage Factor') . ':</td>
-	    <td><input type="Text" name="ShrinkFactor" size="6" maxlength="6" value=' . $_POST['ShrinkFactor'] . '></td>
+	    <td><input type="Text" class="number" name="ShrinkFactor" size="6" maxlength="6" value=' . $_POST['ShrinkFactor'] . '></td>
 	</tr>';
 
 

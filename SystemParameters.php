@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.49 $ */
+/* $Revision: 1.50 $ */
 
 $PageSecurity =15;
 
@@ -836,7 +836,7 @@ echo '<tr><td>' . _('Controlled Items Defined At Work Order Entrry') . ':</td>
 	<option '.($_SESSION['DefineControlledOnWOEntry']?'selected ':'').'value="1">'._('Yes').'
 	<option '.(!$_SESSION['DefineControlledOnWOEntry']?'selected ':'').'value="0">'._('No').'
 	</select></td>
-	<td>' . _('This parameter must be set to yes to ensure that controlled items are defined at the time of the work order creation. Otherwise controlled items (serial numbers and batch/roll/lot references) are entered at the time the finished items are received against the work order') . '</td></tr>';
+	<td>' . _('When set to yes, controlled items are defined at the time of the work order creation. Otherwise controlled items (serial numbers and batch/roll/lot references) are entered at the time the finished items are received against the work order') . '</td></tr>';
 
 //AutoCreateWOs
 echo '<tr><td>' . _('Auto Create Work Orders') . ':</td>
