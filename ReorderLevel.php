@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 // ReorderLevel.php - Report of parts with quantity below reorder level
 // Shows if there are other locations that have quantities for the parts that are short
 $PageSecurity = 2;
@@ -158,6 +158,8 @@ If (isset($_POST['PrintPDF'])) {
 
 	$title=_('Reorder Level Reporting');
 	include('includes/header.inc');
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" TITLE="' . _('Inventory') . '" ALT="">' . ' ' . _('Inventory Reorder Level Report') . '';
+echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div><br>';
 
 	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><center><table>";
 	$sql = "SELECT loccode,

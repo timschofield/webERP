@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 // InventoryQuantities.php - Report of parts with quantity. Sorts by part and shows
 // all locations where there are quantities of the part
 $PageSecurity = 2;
@@ -151,6 +151,9 @@ If (isset($_POST['PrintPDF'])) {
 
 	$title=_('Inventory Quantities Reporting');
 	include('includes/header.inc');
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" TITLE="' . _('Inventory') . '" ALT="">' . ' ' . _('Inventory Quantities Report') . '';
+echo '<div class="page_help_text">' . _('Use this report to display the quantity of Inventory items in different categories.') . '</div><br>';
+
 
 	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><center><table>";
 	echo '<table><tr><td>';
