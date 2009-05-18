@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 // ReorderLevel.php - Report of parts with quantity below reorder level
 // Shows if there are other locations that have quantities for the parts that are short
 $PageSecurity = 2;
@@ -115,8 +115,8 @@ If (isset($_POST['PrintPDF'])) {
 						$pdf->addTextWrap(310,$YPos,60,$FontSize,$myrow2['loccode'],'left',0,$fill);
 						$pdf->addTextWrap(370,$YPos,50,$FontSize,number_format($myrow2['quantity'],
 															$myrow2['decimalplaces']),'right',0,$fill);
-						$pdf->addTextWrap(420,$YPos,50,$FontSize,number_format($myrow['reorderlevel'],
-				                                    $myrow['decimalplaces']),'right',0,$fill);
+						$pdf->addTextWrap(420,$YPos,50,$FontSize,number_format($myrow2['reorderlevel'],
+				                                    $myrow2['decimalplaces']),'right',0,$fill);
 			
 					if ($YPos < $Bottom_Margin + $line_height){
 					   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
