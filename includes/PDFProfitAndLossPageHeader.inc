@@ -17,7 +17,7 @@
 	$YPos -= $line_height;
 	$FontSize =10;
 	$pdf->selectFont('./fonts/Helvetica-Bold.afm');
-	$Heading = _('Profit and loss for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate;
+	$Heading = _('Profit and loss for the ') . $NumberOfMonths . _(' months to ') . _('and including ') . $PeriodToDate;
 	$pdf->addText($Left_Margin, $YPos, $FontSize, $Heading);
 
 	$FontSize = 8;
