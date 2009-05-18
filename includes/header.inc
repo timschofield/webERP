@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.41 $ */
+/* $Revision: 1.42 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
@@ -37,10 +37,8 @@
 		echo '<table cellpadding="0" cellspacing="0" border="0" id="quick_menu" class="quick_menu">';
 		echo '<tr>';
 		echo '<td align="left" style="width:100%;" class="quick_menu_left">';
-// Use icons for company and user data, saves screen realestate, use ALT tag in case theme icon not avail.
-		echo '<img src="'.$rootpath.'/css/'.$theme.'/images/company.png" TITLE="' . _('Company') . '" ALT="' . _('Company') . '">';
-		echo ': ' . stripslashes($_SESSION['CompanyRecord']['coyname']) . ' - <a href="' .  $rootpath . '/UserSettings.php?' . SID . '"><img src="'.$rootpath.'/css/'.$theme.'/images/user.png" TITLE="User" ALT="' . _('User') . '">: ' . stripslashes($_SESSION['UsersRealName']) . '</a>';
-		echo ' ' . $title . '</td>';
+		echo stripslashes($_SESSION['CompanyRecord']['coyname']) . ': <a href="' .  $rootpath . '/UserSettings.php?' . SID . '">' . stripslashes($_SESSION['UsersRealName']) . '</a>';
+		echo '<br />' . $title . '</td>';
 
 		echo '<td class="quick_menu_tabs">';
 		echo '<table cellpadding="0" cellspacing="0" class="quick_menu_tabs"><tr>';

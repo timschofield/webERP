@@ -1,5 +1,6 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 
+<p>18/5/09  Phil: Changed header to show page title on a second line and remove labels/icons for company and user name
 <p>18/5/09  Phil: Rewrite of the function to get the logo file in session.inc to avoid use/dependency of scandir function only became available in php 5.
 <p>18/05/09 Phil: WorkOrderReceive.php did not play well with numeric nextlotSN - also changes to accomodate receiving of predefined lots/serial numbers where this option is set in the config parameters. Closing work orders now also deletes outstanding predefined lots/serial numbers where they have not already been received.
 <p>18/05/09 Murray: mod to header menu to save screen real-estate
@@ -176,16 +177,6 @@
 <p>24/02/09 Tim: Z_Upgrade3.10.php - Script for upgrading stable versions
 <P>24/2/09 Murray: fixes to PrintCustStatements to output PDF doc name rather than script name.
 <P>24/2/09 Murray: fixes to PrintCustStatements to allow being called from SelectCustomer.php, so customer statements can be printed from Selected Customer.
-<P>20/2/09 Phil: Nailed the creation of loads of periods on setting up a new system - the GetPeriod function was being called before the GLPostings function - the GetPeriod function now creates the first couple of periods if none exist.
-<p>18/2/09 Tim: PrintCustTrans.php and PrintCustTransPortrait.php - Update to correctly email invoice to customer
-<p>17/2/09 Phil: sql/mysql/upgrade3.09-3.10.sql - Changed debtortrans.trandate to date from datetime
-<p>17/2/09 Tim: PrintCustTransPortrait.php - Update to correctly email invoice to customer
-<p>17/2/09 Tim: WorkOrderCosting.php - Correctly calculate cost variances
-<p>17/2/09 Tim: PrintCustTrans. - Update to correctly email invoice to customer
-<P>12/2/09 Matt Taylor: BOMInquiry.php BOMs.php Stocks.php WorkOrderReceive.php WorOrderEntry.php includes/SQL_CommonFunctions.inc Z_Im/ortStocks.php - modifications to allow Phantom Items - a new class of item type G - ghost (since P for Phantom could mean purchased). These allow sub-components to be included in the top level of a bill of material as a single line making BOMs simpler to follow and create - the components of ghosts/phantoms are exploded automatically on work order entry so the full requirements show against the work order.
-<p>11/2/09 Moxx consulting: first commit of web based install UI 
-<P>10/2/09 Tim: weberp-new.sql - Update data for factor companies and debtortype.
-<P>10/2/09 Tim: WorkOrderCosting.php - Correct sql to correctly calculate costings.
 <P>20/2/09 Phil: Nailed the creation of loads of periods on setting up a new system - the GetPeriod function was being called before the GLPostings function - the GetPeriod function now creates the first couple of periods if none exist.
 <p>18/2/09 Tim: PrintCustTrans.php and PrintCustTransPortrait.php - Update to correctly email invoice to customer
 <p>17/2/09 Phil: sql/mysql/upgrade3.09-3.10.sql - Changed debtortrans.trandate to date from datetime
