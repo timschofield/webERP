@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.64 $ */
+/* $Revision: 1.65 $ */
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -240,17 +240,22 @@ If (isset($_POST['Theme']) && ($_SESSION['UsersRealName'] == $_POST['RealName'])
  * we are not in session (i.e. before login)
  */
 if (empty($_SESSION['LogoFile'])) {
-	/* find a logo in companies/$companydir
+	/* find a logo in companies/$CompanyDir
 	 * (nice side effect of function:
 	 * variables are local, so we will never
 	 * cause name clashes)
 	 */
 
-	function findLogoFile($companydir, $PathPrefix) {
-		$dir = $PathPrefix.'companies/' . $companydir . '/';
-		$incompanydir = scandir($dir,1);
-		if ($incompanydir !== FALSE) {
-			foreach($incompanydir as $logofilename)
+	function findLogoFile($CompanyDir, $PathPrefix) {
+		$dir = $PathPrefix.'companies/' . $CompanyDir . '/';
+		$DirHandle = dir($dir);
+		while ($DirEntry = $DirHandle->read() ){
+			if ($DirEntry != '.' AND $DirEntry !='..'){
+				$InCompanyDir[] = $DirEntry; //make an array of all files under company directory
+			}
+		} //loop through list of files in the company directory 
+		if ($InCompanyDir !== FALSE) {
+			foreach($InCompanyDir as $logofilename)
 				if (strncasecmp($logofilename,'logo.jpg',8) === 0 AND
 				is_readable($dir . $logofilename) AND
 					is_file($dir . $logofilename)) {
@@ -261,22 +266,16 @@ if (empty($_SESSION['LogoFile'])) {
 			if (empty($logo)) {
 				return null;
 			} else {
-				return 'companies/' .$companydir .'/'. $logo;
+				return 'companies/' .$CompanyDir .'/'. $logo;
 			}
-		}
+		} //end listing of files under company directory is not empty
 	}
 
 	/* Find a logo in companies/<company of this session> */
-	if (!empty($_SESSION['DatabaseName'])) 
+	if (!empty($_SESSION['DatabaseName'])) {
 		$_SESSION['LogoFile'] = findLogoFile($_SESSION['DatabaseName'], $PathPrefix);
+	}
 
-	/* Find a default logo in companies/weberp */
-//	if (empty($_SESSION['LogoFile']))
-//		$_SESSION['LogoFile'] = findLogoFile('weberp', $PathPrefix);
-
-	/* Last fallback: take a fixed name */
-//	if (empty($_SESSION['LogoFile']))
-//		$_SESSION['LogoFile'] = 'companies/weberp/logo.jpg';
 }
 
 if ($_SESSION['HTTPS_Only']==1){
