@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.62 $ */
+/* $Revision: 1.63 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -567,7 +567,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 		if ($_POST['Quotation']==0) { /*then its not a quotation its a real order */
 
-			echo '<div class="centre"><p><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . '<a target="_blank" href="' . $rootpath . '/PrintCustOrder.php?' . SID . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' .'</a>';
+			echo '<div style="text-align:center"><p><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . '<a target="_blank" href="' . $rootpath . '/PrintCustOrder.php?' . SID . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' .'</a>';
 			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . '<a  target="_blank" href="' . $rootpath . '/PrintCustOrder_generic.php?' . SID . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Laser') . ')' .'</a>';
 
 			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" TITLE="' . _('Invoice') . '" ALT="">' . ' ' . '<a href="' . $rootpath . '/ConfirmDispatch_Invoice.php?' . SID . '&OrderNumber=' . $OrderNo .'">'. _('Confirm Dispatch and Produce Invoice') .'</a></div>';
@@ -868,17 +868,17 @@ if($_SESSION['DefaultDateFormat']=='d/m/Y'){
 // The estimated Dispatch date or Delivery date for this order
 echo '<tr>
 	<td>'. _('Estimated Delivery Date') .':</td>
-	<td><input type="Text" SIZE=15 MAXLENGTH=14 name="DeliveryDate" value="' . $_SESSION['Items']->DeliveryDate . '"></td>
+	<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="Text" SIZE=15 MAXLENGTH=14 name="DeliveryDate" value="' . $_SESSION['Items']->DeliveryDate . '"></td>
 	</tr>';
 // The date when a quote was issued to the customer
 echo '<tr>
 	<td>'. _('Quote Date') .':</td>
-	<td><input type="Text" SIZE=15 MAXLENGTH=14 name="QuoteDate" value="' . $_SESSION['Items']->QuoteDate . '"></td>
+	<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="Text" SIZE=15 MAXLENGTH=14 name="QuoteDate" value="' . $_SESSION['Items']->QuoteDate . '"></td>
 	</tr>';
 // The date when the customer confirmed their order
 echo '<tr>
         <td>'. _('Confirmed Order Date') .':</td>
-        <td><input type="Text" SIZE=15 MAXLENGTH=14 name="ConfirmedDate" value="' . $_SESSION['Items']->ConfirmedDate . '"></td>
+        <td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="Text" SIZE=15 MAXLENGTH=14 name="ConfirmedDate" value="' . $_SESSION['Items']->ConfirmedDate . '"></td>
         </tr>';
 
 echo '<tr>
