@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.92 $ */
+/* $Revision: 1.93 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -576,7 +576,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	<td><input tabindex=3 type="Text" name="CustPhone" size=15	maxlength=18></td>
 	</tr>
 	</table>
-	<br><div class="centre"><input tabindex=4 type=submit name="SearchCust" value="<?php echo _('Search Now'); ?>">
+	<br><div style="text-align:center;"><input tabindex=4 type=submit name="SearchCust" value="<?php echo _('Search Now'); ?>">
 	<input tabindex=5 type=submit action=reset value="<?php echo _('Reset'); ?>"></div>
 	<?php
 
@@ -1294,7 +1294,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
                        </tr></table>';
 
 
-		echo '<br><div class="centre"><input type=submit name="Recalculate" Value="' . _('Re-Calculate') . '">
+		echo '<br><div style="text-align:center"><input type=submit name="Recalculate" Value="' . _('Re-Calculate') . '">
                 <input type=submit name="DeliveryDetails" value="' . _('Enter Delivery Details and Confirm Order') . '"></div><hr>';
 
 	} # end of if lines
@@ -1343,7 +1343,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		<td><input tabindex=3 type="Text" name="StockCode" size=15 maxlength=18 value="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></td>
 		</tr>
 		</table><br>
-		<div class="centre"><input tabindex=4 type=submit name="Search" value="<?php echo _('Search Now'); ?>">
+		<div  style="text-align:center;"><input tabindex=4 type=submit name="Search" value="<?php echo _('Search Now'); ?>">
 		<input tabindex=5 type=submit name="QuickEntry" value="<?php echo _('Use Quick Entry'); ?>">
 
 		<?php
@@ -1491,7 +1491,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 	#end of while loop
 			echo '<tr><td align=center><input type="hidden" name="previous" value='.number_format($Offset-1).'><input tabindex='.number_format($j+7).' type="submit" name="Prev" value="Prev"></td>';
-			echo '<td align=center colspan=6><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+8).' type="submit" value="Order"></td>';
+			echo '<td style="text-align:center" colspan=6><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+8).' type="submit" value="Order"></td>';
 			echo '<td align=center><input type="hidden" name="nextlist" value='.number_format($Offset+1).'><input tabindex='.number_format($j+9).' type="submit" name="Next" value="Next"></td></tr>';
 			echo '</table></form>';
 			echo $jsCall;
@@ -1531,7 +1531,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	  	}
 		if ($_SESSION['Items']->ItemsOrdered >=1){
-      		echo '<br><div class="centre"><input type=submit name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');"></div>';
+      		echo '<br><div style="text-align:center"><input type=submit name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');"></div>';
 		}
 	}#end of else not selecting a customer
 
