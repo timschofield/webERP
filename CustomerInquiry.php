@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -141,7 +141,7 @@ echo '<TR><TD ALIGN=RIGHT>' . number_format($CustomerRecord['balance'],2) . '</T
 	</TABLE>';
 
 echo "<BR><CENTER><FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
-echo _('Show all transactions after') . ": <INPUT tabindex=1 type=text name='TransAfterDate' Value='" . $_POST['TransAfterDate'] . "' MAXLENGTH =10 SIZE=12>" .
+echo _('Show all transactions after') . ": <INPUT tabindex=1 type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' id='datepicker' name='TransAfterDate' Value='" . $_POST['TransAfterDate'] . "' MAXLENGTH =10 SIZE=12>" .
 		"	<INPUT tabindex=2 TYPE=SUBMIT NAME='Refresh Inquiry' VALUE='" . _('Refresh Inquiry') . "'></FORM><BR>";
 
 $DateAfterCriteria = FormatDateForSQL($_POST['TransAfterDate']);
