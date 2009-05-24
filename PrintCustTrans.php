@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.43 $ */
+/* $Revision: 1.44 $ */
 
 $PageSecurity = 1;
 
@@ -392,7 +392,7 @@ If (isset($PrintPDF) or isset($_GET['PrintPDF'])
 	/* Print out the payment terms */
 
   		$pdf->addTextWrap($Left_Margin+5,$YPos+3,280,$FontSize,_('Payment Terms') . ': ' . $myrow['terms']);
-            $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:***** Bank Account:*****'));
+//      $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:***** Bank Account:*****'));
                         $FontSize=10;
 
 		$FontSize =8;

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 11;
 
@@ -668,7 +668,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
             unset($_POST['SerialNo'.$i]);
             unset($_POST['BatchRef'.$i]);
             unset($_POST['Qty'.$i]);
-			uset($_POST['QualityText'.$i]);
+			unset($_POST['QualityText'.$i]);
 			unset($_POST['QtyReqd'.$i]);
         }
         /*end of process work order goods received entry */

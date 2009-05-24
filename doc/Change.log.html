@@ -1,5 +1,6 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 
+<p>22/5/09 Phil: Fixed bogus Bank Account details line in PrintCustTrans.php and PrintCustTrans_Portrait - also fixed string parameter sent to get_html_translation_table function used in a substitute htmlspecialchars_decode function
 <p>18/5/09  Phil: Changed header to show page title on a second line and remove labels/icons for company and user name
 <p>18/5/09  Phil: Rewrite of the function to get the logo file in session.inc to avoid use/dependency of scandir function only became available in php 5.
 <p>18/05/09 Phil: WorkOrderReceive.php did not play well with numeric nextlotSN - also changes to accomodate receiving of predefined lots/serial numbers where this option is set in the config parameters. Closing work orders now also deletes outstanding predefined lots/serial numbers where they have not already been received.

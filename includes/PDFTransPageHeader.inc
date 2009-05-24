@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 /* R&OS PHP-pdf class code to head up a new page */
 
 if (!$FirstPage){ /* only initiate a new page if its not the first */
@@ -113,8 +113,8 @@ if ($InvOrCredit=='Invoice') {
 	$XPos +=80;
 // Before trying to call htmlspecialchars_decode, check that its supported, if not substitute a compatible version
 if (!function_exists('htmlspecialchars_decode')) {
-        function htmlspecialchars_decode($str, $options="") {
-                $trans = get_html_translation_table(HTML_SPECIALCHARS, $options);
+        function htmlspecialchars_decode($str) {
+                $trans = get_html_translation_table(HTML_SPECIALCHARS);
 
                 $decode = ARRAY();
                 foreach ($trans AS $char=>$entity) {
