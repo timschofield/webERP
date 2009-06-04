@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 2;
 
@@ -40,8 +40,8 @@ if (!isset($_POST['FromDate'])){
 if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
-echo '<TD>' . _('From') . ":</TD><TD><INPUT tabindex=2 TYPE=TEXT NAME='FromDate' MAXLENGTH=10 SIZE=11 VALUE=" . $_POST['FromDate'] . '></TD>';
-echo '<TD>' . _('To') . ":</TD><TD><INPUT tabindex=3 TYPE=TEXT NAME='ToDate' MAXLENGTH=10 SIZE=11 VALUE=" . $_POST['ToDate'] . '></TD>';
+echo '<TD>' . _('From') . ':</TD><TD><INPUT tabindex="2" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" TYPE="TEXT" NAME="FromDate" MAXLENGTH="10" SIZE="11" VALUE="' . $_POST['FromDate'] . '"></TD>';
+echo '<TD>' . _('To') . ':</TD><TD><INPUT tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" TYPE="TEXT" NAME="ToDate" MAXLENGTH="10" SIZE="11" VALUE="' . $_POST['ToDate'] . '"></TD>';
 
 echo "</TR></TABLE><INPUT tabindex=4 TYPE=SUBMIT NAME='ShowResults' VALUE='" . _('Show Transactions') . "'>";
 echo '<HR>';
