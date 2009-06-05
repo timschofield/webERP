@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.80 $ */
+/* $Revision: 1.81 $ */
 
 
 $PageSecurity = 1;
@@ -545,6 +545,16 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 								<?php echo "<A HREF='" . $rootpath . '/StockUsage.php?' . SID . "'><LI>" . _('Inventory Item Usage') . '</LI></A>'; ?>
 							</td>
 							</tr>
+							<tr>
+                                                        <td class="menu_group_item">
+                                                                <?php echo "<A HREF='" . $rootpath . '/InventoryQuantities.php?' . SID . "'><LI>" . _('Inventory Quantities') . '</LI></A>'; ?>
+                                                        </td>
+                                                        </tr>
+							<tr>
+                                                        <td class="menu_group_item">
+                                                                <?php echo "<A HREF='" . $rootpath . '/ReorderLevel.php?' . SID . "'><LI>" . _('Reorder Level') . '</LI></A>'; ?>
+                                                        </td>
+                                                        </tr>
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<A HREF='" . $rootpath . '/InventoryValuation.php?' . SID . "'><LI>" . _('Inventory Valuation Report') . '</LI></A>'; ?>
