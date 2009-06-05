@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.39 $ */
+/* $Revision: 1.40 $ */
 
 $PageSecurity = 5;
 
@@ -615,7 +615,7 @@ if (!isset($SupplierID)) {
 	echo '<TR><TD>' . _('Address Line 4 (Postal Code)') . ":</TD><TD><INPUT TYPE='text' name='Address4' SIZE=42 MAXLENGTH=40></TD></TR>";
 
 	$DateString = Date($_SESSION['DefaultDateFormat']);
-	echo '<TR><TD>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] . "):</TD><TD><INPUT TYPE='text' NAME='SupplierSince' VALUE=$DateString SIZE=12 MAXLENGTH=10></TD></TR>";
+	echo '<TR><TD>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] . "):</TD><TD><INPUT TYPE='text' class='date' alt='".$_SESSION['DefaultDateFormat']."' NAME='SupplierSince' VALUE=$DateString SIZE=12 MAXLENGTH=10></TD></TR>";
 	echo '<TR><TD>' . _('Bank Particulars') . ":</TD><TD><INPUT TYPE='text' NAME='BankPartics' SIZE=13 MAXLENGTH=12></TD></TR>";
 	echo '<TR><TD>' . _('Bank reference') . ":</TD><TD><INPUT TYPE='text' NAME='BankRef' VALUE=0 SIZE=13 MAXLENGTH=12></TD></TR>";
 	echo '<TR><TD>' . _('Bank Account No') . ":</TD><TD><INPUT TYPE='text' NAME='BankAct' SIZE=31 MAXLENGTH=30></TD></TR>";
