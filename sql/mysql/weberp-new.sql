@@ -35,7 +35,7 @@ CREATE TABLE `accountgroups` (
   KEY `SequenceInTB` (`sequenceintb`),
   KEY `sectioninaccounts` (`sectioninaccounts`),
   KEY `parentgroupname` (`parentgroupname`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -48,7 +48,7 @@ CREATE TABLE `accountsection` (
   `sectionid` int(11) NOT NULL DEFAULT '0',
   `sectionname` text NOT NULL,
   PRIMARY KEY (`sectionid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -61,7 +61,7 @@ CREATE TABLE `areas` (
   `areacode` char(3) NOT NULL,
   `areadescription` varchar(25) NOT NULL DEFAULT '',
   PRIMARY KEY (`areacode`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -81,7 +81,7 @@ CREATE TABLE `assetmanager` (
   `cost` double NOT NULL DEFAULT '0',
   `depn` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -95,7 +95,7 @@ CREATE TABLE `audittrail` (
   `userid` varchar(20) NOT NULL DEFAULT '',
   `querystring` text,
   KEY `UserID` (`userid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -114,7 +114,7 @@ CREATE TABLE `bankaccounts` (
   KEY `currcode` (`currcode`),
   KEY `BankAccountName` (`bankaccountname`),
   KEY `BankAccountNumber` (`bankaccountnumber`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -142,7 +142,7 @@ CREATE TABLE `banktrans` (
   KEY `TransType` (`banktranstype`),
   KEY `Type` (`type`,`transno`),
   KEY `CurrCode` (`currcode`)
-) TYPE=MyISAM AUTO_INCREMENT=5;
+) TYPE=innodb AUTO_INCREMENT=5;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -168,7 +168,7 @@ CREATE TABLE `bom` (
   KEY `Parent` (`parent`,`effectiveafter`,`effectiveto`,`loccode`),
   KEY `Parent_2` (`parent`),
   KEY `WorkCentreAdded` (`workcentreadded`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -184,7 +184,7 @@ CREATE TABLE `buckets` (
   PRIMARY KEY (`workcentre`,`availdate`),
   KEY `WorkCentre` (`workcentre`),
   KEY `AvailDate` (`availdate`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -202,7 +202,7 @@ CREATE TABLE `chartdetails` (
   `bfwdbudget` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`accountcode`,`period`),
   KEY `Period` (`period`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -219,7 +219,7 @@ CREATE TABLE `chartmaster` (
   KEY `AccountCode` (`accountcode`),
   KEY `AccountName` (`accountname`),
   KEY `Group_` (`group_`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -240,7 +240,7 @@ CREATE TABLE `cogsglpostings` (
   KEY `StkCat` (`stkcat`),
   KEY `GLCode` (`glcode`),
   KEY `SalesType` (`salestype`)
-) TYPE=MyISAM AUTO_INCREMENT=4;
+) TYPE=innodb AUTO_INCREMENT=4;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -277,7 +277,7 @@ CREATE TABLE `companies` (
   `gllink_stock` tinyint(1) DEFAULT '1',
   `freightact` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`coycode`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -290,7 +290,7 @@ CREATE TABLE `config` (
   `confname` varchar(35) NOT NULL DEFAULT '',
   `confvalue` text NOT NULL,
   PRIMARY KEY (`confname`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -311,7 +311,7 @@ CREATE TABLE `contractbom` (
   KEY `ContractRef` (`contractref`),
   KEY `WorkCentreAdded` (`workcentreadded`),
   KEY `WorkCentreAdded_2` (`workcentreadded`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -328,7 +328,7 @@ CREATE TABLE `contractreqts` (
   `priceperunit` decimal(20,4) NOT NULL DEFAULT '0.0000',
   PRIMARY KEY (`contractreqid`),
   KEY `Contract` (`contract`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -364,7 +364,7 @@ CREATE TABLE `contracts` (
   KEY `TypeAbbrev` (`typeabbrev`),
   KEY `WORef` (`woref`),
   KEY `DebtorNo` (`debtorno`,`branchcode`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -381,7 +381,7 @@ CREATE TABLE `currencies` (
   `rate` double NOT NULL DEFAULT '1',
   PRIMARY KEY (`currabrev`),
   KEY `Country` (`country`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -400,7 +400,7 @@ CREATE TABLE `custallocns` (
   KEY `DateAlloc` (`datealloc`),
   KEY `TransID_AllocFrom` (`transid_allocfrom`),
   KEY `TransID_AllocTo` (`transid_allocto`)
-) TYPE=MyISAM AUTO_INCREMENT=3;
+) TYPE=innodb AUTO_INCREMENT=3;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -450,7 +450,7 @@ CREATE TABLE `custbranch` (
   KEY `DefaultLocation` (`defaultlocation`),
   KEY `DefaultShipVia` (`defaultshipvia`),
   KEY `taxgroupid` (`taxgroupid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -467,7 +467,7 @@ CREATE TABLE `custcontacts` (
   `phoneno` varchar(20) NOT NULL,
   `notes` varchar(255) NOT NULL,
   PRIMARY KEY (`contid`)
-) TYPE=MyISAM AUTO_INCREMENT=6;
+) TYPE=innodb AUTO_INCREMENT=6;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -484,7 +484,7 @@ CREATE TABLE `custnotes` (
   `date` date NOT NULL DEFAULT '0000-00-00',
   `priority` varchar(20) NOT NULL,
   PRIMARY KEY (`noteid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -533,7 +533,7 @@ CREATE TABLE `debtorsmaster` (
   KEY `EDIInvoices` (`ediinvoices`),
   KEY `EDIOrders` (`ediorders`),
   KEY `debtorsmaster_ibfk_5` (`typeid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -576,7 +576,7 @@ CREATE TABLE `debtortrans` (
   KEY `TransNo` (`transno`),
   KEY `Type_2` (`type`,`transno`),
   KEY `EDISent` (`edisent`)
-) TYPE=MyISAM AUTO_INCREMENT=7;
+) TYPE=innodb AUTO_INCREMENT=7;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -591,7 +591,7 @@ CREATE TABLE `debtortranstaxes` (
   `taxamount` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`debtortransid`,`taxauthid`),
   KEY `taxauthid` (`taxauthid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -604,7 +604,7 @@ CREATE TABLE `debtortype` (
   `typeid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `typename` varchar(100) NOT NULL,
   PRIMARY KEY (`typeid`)
-) TYPE=MyISAM AUTO_INCREMENT=2;
+) TYPE=innodb AUTO_INCREMENT=2;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -621,7 +621,7 @@ CREATE TABLE `debtortypenotes` (
   `date` date NOT NULL DEFAULT '0000-00-00',
   `priority` varchar(20) NOT NULL,
   PRIMARY KEY (`noteid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -641,7 +641,7 @@ CREATE TABLE `deliverynotes` (
   `deliverydate` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`deliverynotenumber`,`deliverynotelineno`),
   KEY `deliverynotes_ibfk_2` (`salesorderno`,`salesorderlineno`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -659,7 +659,7 @@ CREATE TABLE `discountmatrix` (
   KEY `QuantityBreak` (`quantitybreak`),
   KEY `DiscountCategory` (`discountcategory`),
   KEY `SalesType` (`salestype`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -673,7 +673,7 @@ CREATE TABLE `edi_orders_seg_groups` (
   `maxoccur` int(4) NOT NULL DEFAULT '0',
   `parentseggroup` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`seggroupno`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -690,7 +690,7 @@ CREATE TABLE `edi_orders_segs` (
   PRIMARY KEY (`id`),
   KEY `SegTag` (`segtag`),
   KEY `SegNo` (`seggroup`)
-) TYPE=MyISAM AUTO_INCREMENT=96;
+) TYPE=innodb AUTO_INCREMENT=96;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -709,7 +709,7 @@ CREATE TABLE `ediitemmapping` (
   KEY `StockID` (`stockid`),
   KEY `PartnerStockID` (`partnerstockid`),
   KEY `SuppOrCust` (`supporcust`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -728,7 +728,7 @@ CREATE TABLE `edimessageformat` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `PartnerCode` (`partnercode`,`messagetype`,`sequenceno`),
   KEY `Section` (`section`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -751,7 +751,7 @@ CREATE TABLE `factorcompanies` (
   `fax` varchar(25) NOT NULL DEFAULT '',
   `email` varchar(55) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=4;
+) TYPE=innodb AUTO_INCREMENT=4;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -776,7 +776,7 @@ CREATE TABLE `freightcosts` (
   KEY `LocationFrom` (`locationfrom`),
   KEY `ShipperID` (`shipperid`),
   KEY `Destination_2` (`destination`,`locationfrom`,`shipperid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -794,7 +794,7 @@ CREATE TABLE `geocode_param` (
   `map_width` varchar(10) NOT NULL DEFAULT '',
   `map_host` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`geocodeid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -825,7 +825,7 @@ CREATE TABLE `gltrans` (
   KEY `TypeNo` (`typeno`),
   KEY `Type_and_Number` (`type`,`typeno`),
   KEY `JobRef` (`jobref`)
-) TYPE=MyISAM AUTO_INCREMENT=123;
+) TYPE=innodb AUTO_INCREMENT=123;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -850,7 +850,7 @@ CREATE TABLE `grns` (
   KEY `ItemCode` (`itemcode`),
   KEY `PODetailItem` (`podetailitem`),
   KEY `SupplierID` (`supplierid`)
-) TYPE=MyISAM AUTO_INCREMENT=15;
+) TYPE=innodb AUTO_INCREMENT=15;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -866,7 +866,7 @@ CREATE TABLE `holdreasons` (
   PRIMARY KEY (`reasoncode`),
   KEY `ReasonCode` (`reasoncode`),
   KEY `ReasonDescription` (`reasondescription`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -887,7 +887,7 @@ CREATE TABLE `lastcostrollup` (
   `newmatcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `newlabcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `newoheadcost` decimal(20,4) NOT NULL DEFAULT '0.0000'
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -913,7 +913,7 @@ CREATE TABLE `locations` (
   `managed` int(11) DEFAULT '0',
   PRIMARY KEY (`loccode`),
   KEY `taxprovinceid` (`taxprovinceid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -929,7 +929,7 @@ CREATE TABLE `locstock` (
   `reorderlevel` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`loccode`,`stockid`),
   KEY `StockID` (`stockid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -951,7 +951,7 @@ CREATE TABLE `loctransfers` (
   KEY `ShipLoc` (`shiploc`),
   KEY `RecLoc` (`recloc`),
   KEY `StockID` (`stockid`)
-) TYPE=MyISAM COMMENT='Stores Shipments To And From Locations';
+) TYPE=innodb COMMENT='Stores Shipments To And From Locations';
 SET character_set_client = @saved_cs_client;
 
 --
@@ -966,7 +966,7 @@ CREATE TABLE `mrpcalendar` (
   `manufacturingflag` smallint(6) NOT NULL DEFAULT '1',
   PRIMARY KEY (`calendardate`),
   KEY `daynumber` (`daynumber`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -984,7 +984,7 @@ CREATE TABLE `mrpdemands` (
   PRIMARY KEY (`demandid`),
   KEY `StockID` (`stockid`),
   KEY `mrpdemands_ibfk_1` (`mrpdemandtype`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -998,7 +998,7 @@ CREATE TABLE `mrpdemandtypes` (
   `description` char(30) NOT NULL DEFAULT '',
   PRIMARY KEY (`mrpdemandtype`),
   KEY `mrpdemandtype` (`mrpdemandtype`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1020,7 +1020,7 @@ CREATE TABLE `orderdeliverydifferenceslog` (
   KEY `DebtorNo` (`debtorno`,`branch`),
   KEY `Can_or_BO` (`can_or_bo`),
   KEY `OrderNo` (`orderno`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1035,7 +1035,7 @@ CREATE TABLE `paymentmethods` (
   `paymenttype` int(11) NOT NULL DEFAULT '1',
   `receipttype` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`paymentid`)
-) TYPE=MyISAM AUTO_INCREMENT=4;
+) TYPE=innodb AUTO_INCREMENT=4;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1052,7 +1052,7 @@ CREATE TABLE `paymentterms` (
   PRIMARY KEY (`termsindicator`),
   KEY `DaysBeforeDue` (`daysbeforedue`),
   KEY `DayInFollowingMonth` (`dayinfollowingmonth`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1066,7 +1066,7 @@ CREATE TABLE `periods` (
   `lastdate_in_period` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`periodno`),
   KEY `LastDate_in_Period` (`lastdate_in_period`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1087,7 +1087,7 @@ CREATE TABLE `prices` (
   KEY `DebtorNo` (`debtorno`),
   KEY `StockID` (`stockid`),
   KEY `TypeAbbrev` (`typeabbrev`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1110,7 +1110,7 @@ CREATE TABLE `purchdata` (
   KEY `StockID` (`stockid`),
   KEY `SupplierNo` (`supplierno`),
   KEY `Preferred` (`preferred`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1143,7 +1143,7 @@ CREATE TABLE `purchorderdetails` (
   KEY `OrderNo` (`orderno`),
   KEY `ShiptRef` (`shiptref`),
   KEY `Completed` (`completed`)
-) TYPE=MyISAM AUTO_INCREMENT=4;
+) TYPE=innodb AUTO_INCREMENT=4;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1175,7 +1175,7 @@ CREATE TABLE `purchorders` (
   KEY `SupplierNo` (`supplierno`),
   KEY `IntoStockLocation` (`intostocklocation`),
   KEY `AllowPrintPO` (`allowprint`)
-) TYPE=MyISAM AUTO_INCREMENT=3;
+) TYPE=innodb AUTO_INCREMENT=3;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1215,7 +1215,7 @@ CREATE TABLE `recurringsalesorders` (
   KEY `ordertype` (`ordertype`),
   KEY `locationindex` (`fromstkloc`),
   KEY `branchcode` (`branchcode`,`debtorno`)
-) TYPE=MyISAM AUTO_INCREMENT=8;
+) TYPE=innodb AUTO_INCREMENT=8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1233,7 +1233,7 @@ CREATE TABLE `recurrsalesorderdetails` (
   `narrative` text NOT NULL,
   KEY `orderno` (`recurrorderno`),
   KEY `stkcode` (`stkcode`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1258,7 +1258,7 @@ CREATE TABLE `reportcolumns` (
   `valformat` char(1) NOT NULL DEFAULT 'N',
   `constant` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`reportid`,`colno`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1279,7 +1279,7 @@ CREATE TABLE `reportfields` (
   `params` text,
   PRIMARY KEY (`id`),
   KEY `reportid` (`reportid`)
-) TYPE=MyISAM AUTO_INCREMENT=1805;
+) TYPE=innodb AUTO_INCREMENT=1805;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1309,7 +1309,7 @@ CREATE TABLE `reportheaders` (
   `lower4` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`reportid`),
   KEY `ReportHeading` (`reportheading`)
-) TYPE=MyISAM AUTO_INCREMENT=2;
+) TYPE=innodb AUTO_INCREMENT=2;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1322,7 +1322,7 @@ CREATE TABLE `reportlinks` (
   `table1` varchar(25) NOT NULL DEFAULT '',
   `table2` varchar(25) NOT NULL DEFAULT '',
   `equation` varchar(75) NOT NULL DEFAULT ''
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1393,7 +1393,7 @@ CREATE TABLE `reports` (
   `table6criteria` varchar(75) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`reportname`,`groupname`)
-) TYPE=MyISAM AUTO_INCREMENT=136;
+) TYPE=innodb AUTO_INCREMENT=136;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1427,7 +1427,7 @@ CREATE TABLE `salesanalysis` (
   KEY `Area` (`area`),
   KEY `BudgetOrActual` (`budgetoractual`),
   KEY `Salesperson` (`salesperson`)
-) TYPE=MyISAM AUTO_INCREMENT=5;
+) TYPE=innodb AUTO_INCREMENT=5;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1441,7 +1441,7 @@ CREATE TABLE `salescat` (
   `parentcatid` tinyint(4) DEFAULT NULL,
   `salescatname` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`salescatid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1456,7 +1456,7 @@ CREATE TABLE `salescatprod` (
   PRIMARY KEY (`salescatid`,`stockid`),
   KEY `salescatid` (`salescatid`),
   KEY `stockid` (`stockid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1477,7 +1477,7 @@ CREATE TABLE `salesglpostings` (
   KEY `Area` (`area`),
   KEY `StkCat` (`stkcat`),
   KEY `SalesType` (`salestype`)
-) TYPE=MyISAM AUTO_INCREMENT=3;
+) TYPE=innodb AUTO_INCREMENT=3;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1495,7 +1495,7 @@ CREATE TABLE `salesman` (
   `breakpoint` decimal(10,0) NOT NULL DEFAULT '0',
   `commissionrate2` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`salesmancode`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1522,7 +1522,7 @@ CREATE TABLE `salesorderdetails` (
   KEY `OrderNo` (`orderno`),
   KEY `StkCode` (`stkcode`),
   KEY `Completed` (`completed`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1567,7 +1567,7 @@ CREATE TABLE `salesorders` (
   KEY `BranchCode` (`branchcode`,`debtorno`),
   KEY `ShipVia` (`shipvia`),
   KEY `quotation` (`quotation`)
-) TYPE=MyISAM AUTO_INCREMENT=7;
+) TYPE=innodb AUTO_INCREMENT=7;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1581,7 +1581,7 @@ CREATE TABLE `salestypes` (
   `sales_type` char(20) NOT NULL DEFAULT '',
   PRIMARY KEY (`typeabbrev`),
   KEY `Sales_Type` (`sales_type`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1596,7 +1596,7 @@ CREATE TABLE `scripts` (
   `pagedescription` text NOT NULL,
   PRIMARY KEY (`pageid`),
   KEY `FileName` (`filename`)
-) TYPE=MyISAM AUTO_INCREMENT=167 COMMENT='Index of all scripts';
+) TYPE=innodb AUTO_INCREMENT=167 COMMENT='Index of all scripts';
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1611,7 +1611,7 @@ CREATE TABLE `securitygroups` (
   PRIMARY KEY (`secroleid`,`tokenid`),
   KEY `secroleid` (`secroleid`),
   KEY `tokenid` (`tokenid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1624,7 +1624,7 @@ CREATE TABLE `securityroles` (
   `secroleid` int(11) NOT NULL AUTO_INCREMENT,
   `secrolename` text NOT NULL,
   PRIMARY KEY (`secroleid`)
-) TYPE=MyISAM AUTO_INCREMENT=9;
+) TYPE=innodb AUTO_INCREMENT=9;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1637,7 +1637,7 @@ CREATE TABLE `securitytokens` (
   `tokenid` int(11) NOT NULL DEFAULT '0',
   `tokenname` text NOT NULL,
   PRIMARY KEY (`tokenid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1658,7 +1658,7 @@ CREATE TABLE `shipmentcharges` (
   KEY `ShiptRef` (`shiptref`),
   KEY `StockID` (`stockid`),
   KEY `TransType_2` (`transtype`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1680,7 +1680,7 @@ CREATE TABLE `shipments` (
   KEY `SupplierID` (`supplierid`),
   KEY `ShipperRef` (`voyageref`),
   KEY `Vessel` (`vessel`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1694,7 +1694,7 @@ CREATE TABLE `shippers` (
   `shippername` char(40) NOT NULL DEFAULT '',
   `mincharge` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`shipper_id`)
-) TYPE=MyISAM AUTO_INCREMENT=11;
+) TYPE=innodb AUTO_INCREMENT=11;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1715,7 +1715,7 @@ CREATE TABLE `stockcategory` (
   PRIMARY KEY (`categoryid`),
   KEY `CategoryDescription` (`categorydescription`),
   KEY `StockType` (`stocktype`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1733,7 +1733,7 @@ CREATE TABLE `stockcatproperties` (
   `reqatsalesorder` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`stkcatpropid`),
   KEY `categoryid` (`categoryid`)
-) TYPE=MyISAM AUTO_INCREMENT=4;
+) TYPE=innodb AUTO_INCREMENT=4;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1748,7 +1748,7 @@ CREATE TABLE `stockcheckfreeze` (
   `qoh` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`stockid`,`loccode`),
   KEY `LocCode` (`loccode`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1766,7 +1766,7 @@ CREATE TABLE `stockcounts` (
   PRIMARY KEY (`id`),
   KEY `StockID` (`stockid`),
   KEY `LocCode` (`loccode`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1782,7 +1782,7 @@ CREATE TABLE `stockitemproperties` (
   PRIMARY KEY (`stockid`,`stkcatpropid`),
   KEY `stockid` (`stockid`),
   KEY `value` (`value`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1829,7 +1829,7 @@ CREATE TABLE `stockmaster` (
   KEY `Controlled` (`controlled`),
   KEY `DiscountCategory` (`discountcategory`),
   KEY `taxcatid` (`taxcatid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1868,7 +1868,7 @@ CREATE TABLE `stockmoves` (
   KEY `Show_On_Inv_Crds` (`show_on_inv_crds`),
   KEY `Hide` (`hidemovt`),
   KEY `reference` (`reference`)
-) TYPE=MyISAM AUTO_INCREMENT=42;
+) TYPE=innodb AUTO_INCREMENT=42;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1886,7 +1886,7 @@ CREATE TABLE `stockmovestaxes` (
   PRIMARY KEY (`stkmoveno`,`taxauthid`),
   KEY `taxauthid` (`taxauthid`),
   KEY `calculationorder` (`taxcalculationorder`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1906,7 +1906,7 @@ CREATE TABLE `stockserialitems` (
   KEY `StockID` (`stockid`),
   KEY `LocCode` (`loccode`),
   KEY `serialno` (`serialno`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1925,7 +1925,7 @@ CREATE TABLE `stockserialmoves` (
   KEY `StockMoveNo` (`stockmoveno`),
   KEY `StockID_SN` (`stockid`,`serialno`),
   KEY `serialno` (`serialno`)
-) TYPE=MyISAM AUTO_INCREMENT=67;
+) TYPE=innodb AUTO_INCREMENT=67;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1944,7 +1944,7 @@ CREATE TABLE `suppallocs` (
   KEY `TransID_AllocFrom` (`transid_allocfrom`),
   KEY `TransID_AllocTo` (`transid_allocto`),
   KEY `DateAlloc` (`datealloc`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1965,7 +1965,7 @@ CREATE TABLE `suppliercontacts` (
   PRIMARY KEY (`supplierid`,`contact`),
   KEY `Contact` (`contact`),
   KEY `SupplierID` (`supplierid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2004,7 +2004,7 @@ CREATE TABLE `suppliers` (
   KEY `SuppName` (`suppname`),
   KEY `taxgroupid` (`taxgroupid`),
   KEY `suppliers_ibfk_4` (`factorcompanyid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2040,7 +2040,7 @@ CREATE TABLE `supptrans` (
   KEY `TranDate` (`trandate`),
   KEY `TransNo` (`transno`),
   KEY `Type` (`type`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2055,7 +2055,7 @@ CREATE TABLE `supptranstaxes` (
   `taxamount` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`supptransid`,`taxauthid`),
   KEY `taxauthid` (`taxauthid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2070,7 +2070,7 @@ CREATE TABLE `systypes` (
   `typeno` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`typeid`),
   KEY `TypeNo` (`typeno`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2083,7 +2083,7 @@ CREATE TABLE `tags` (
   `tagref` tinyint(4) NOT NULL AUTO_INCREMENT,
   `tagdescription` varchar(50) NOT NULL,
   PRIMARY KEY (`tagref`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2104,7 +2104,7 @@ CREATE TABLE `taxauthorities` (
   PRIMARY KEY (`taxid`),
   KEY `TaxGLCode` (`taxglcode`),
   KEY `PurchTaxGLAccount` (`purchtaxglaccount`)
-) TYPE=MyISAM AUTO_INCREMENT=14;
+) TYPE=innodb AUTO_INCREMENT=14;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2122,7 +2122,7 @@ CREATE TABLE `taxauthrates` (
   KEY `TaxAuthority` (`taxauthority`),
   KEY `dispatchtaxprovince` (`dispatchtaxprovince`),
   KEY `taxcatid` (`taxcatid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2135,7 +2135,7 @@ CREATE TABLE `taxcategories` (
   `taxcatid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `taxcatname` varchar(30) NOT NULL DEFAULT '',
   PRIMARY KEY (`taxcatid`)
-) TYPE=MyISAM AUTO_INCREMENT=6;
+) TYPE=innodb AUTO_INCREMENT=6;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2148,7 +2148,7 @@ CREATE TABLE `taxgroups` (
   `taxgroupid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `taxgroupdescription` varchar(30) NOT NULL DEFAULT '',
   PRIMARY KEY (`taxgroupid`)
-) TYPE=MyISAM AUTO_INCREMENT=4;
+) TYPE=innodb AUTO_INCREMENT=4;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2165,7 +2165,7 @@ CREATE TABLE `taxgrouptaxes` (
   PRIMARY KEY (`taxgroupid`,`taxauthid`),
   KEY `taxgroupid` (`taxgroupid`),
   KEY `taxauthid` (`taxauthid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2178,7 +2178,7 @@ CREATE TABLE `taxprovinces` (
   `taxprovinceid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `taxprovincename` varchar(30) NOT NULL DEFAULT '',
   PRIMARY KEY (`taxprovinceid`)
-) TYPE=MyISAM AUTO_INCREMENT=2;
+) TYPE=innodb AUTO_INCREMENT=2;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2191,7 +2191,7 @@ CREATE TABLE `unitsofmeasure` (
   `unitid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `unitname` varchar(15) NOT NULL DEFAULT '',
   PRIMARY KEY (`unitid`)
-) TYPE=MyISAM AUTO_INCREMENT=7;
+) TYPE=innodb AUTO_INCREMENT=7;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2209,7 +2209,7 @@ CREATE TABLE `woitems` (
   `nextlotsnref` varchar(20) DEFAULT '',
   PRIMARY KEY (`wo`,`stockid`),
   KEY `stockid` (`stockid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2228,7 +2228,7 @@ CREATE TABLE `worequirements` (
   PRIMARY KEY (`wo`,`parentstockid`,`stockid`),
   KEY `stockid` (`stockid`),
   KEY `worequirements_ibfk_3` (`parentstockid`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2248,7 +2248,7 @@ CREATE TABLE `workcentres` (
   PRIMARY KEY (`code`),
   KEY `Description` (`description`),
   KEY `Location` (`location`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2268,7 +2268,7 @@ CREATE TABLE `workorders` (
   KEY `LocCode` (`loccode`),
   KEY `StartDate` (`startdate`),
   KEY `RequiredBy` (`requiredby`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2284,7 +2284,7 @@ CREATE TABLE `woserialnos` (
   `quantity` double NOT NULL DEFAULT '1',
   `qualitytext` text NOT NULL,
   PRIMARY KEY (`wo`,`stockid`,`serialno`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2313,7 +2313,7 @@ CREATE TABLE `www_users` (
   PRIMARY KEY (`userid`),
   KEY `CustomerID` (`customerid`),
   KEY `DefaultLocation` (`defaultlocation`)
-) TYPE=MyISAM;
+) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

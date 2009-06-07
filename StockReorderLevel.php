@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 
 $PageSecurity = 4;
@@ -63,7 +63,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		$k=1;
 	}
 
-	if (isset($_POST['UpdateData']) AND is_numeric($_POST[$myrow['loccode']]) AND $_POST[$myrow['loccode']]>0){
+	if (isset($_POST['UpdateData']) AND is_numeric($_POST[$myrow['loccode']]) AND $_POST[$myrow['loccode']]>=0){
 
 	   $myrow['reorderlevel'] = $_POST[$myrow['loccode']];
 	   $sql = 'UPDATE locstock SET reorderlevel = ' . $_POST[$myrow['loccode']] . "
