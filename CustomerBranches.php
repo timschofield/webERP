@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.48 $ */
+/* $Revision: 1.49 $ */
 
 $PageSecurity = 3;
 
@@ -147,8 +147,8 @@ if (isset($_POST['submit'])) {
 						braddress4 = '" . $_POST['BrAddress4'] . "',
 						braddress5 = '" . $_POST['BrAddress5'] . "',
 						braddress6 = '" . $_POST['BrAddress6'] . "',
-						lat = " . $latitude . ",
-						lng = " . $longitude . ",
+						lat = '" . $latitude . "',
+						lng = '" . $longitude . "',
 						specialinstructions = '" . $_POST['specialinstructions'] . "',
 						phoneno='" . $_POST['PhoneNo'] . "',
 						faxno='" . $_POST['FaxNo'] . "',
@@ -215,8 +215,8 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['BrAddress4'] . "',
 					'" . $_POST['BrAddress5'] . "',
 					'" . $_POST['BrAddress6'] . "',
-					" . $latitude . ",
-					" . $longitude . ",
+					'" . $latitude . "',
+					'" . $longitude . "',
 					'" . $_POST['specialinstructions'] . "',
 					" . $_POST['EstDeliveryDays'] . ",
 					" . $_POST['FwdDate'] . ",
@@ -433,7 +433,7 @@ if (!isset($SelectedBranch)){
 
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
-		echo '<B><CENTER>'._('No Branches are defined for').' - '.$myrow[0].'</CENTER></B>';
+		echo '<BR><DIV class="page_help_text">'._('No Branches are defined for').' - '.$myrow[0]. '. ' . _('You must have a minimum of one branch for each Customer. Please add a branch now.') .'</DIV>';
 		$_POST['BranchCode'] = substr($DebtorNo,0,10);
 		$_POST['BrName'] = $myrow[0];
 		$_POST['BrAddress1'] = $myrow[1];
@@ -456,7 +456,6 @@ if (isset($SelectedBranch)) {
 echo '<BR>';
 
 if (!isset($_GET['delete'])) {
-
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] .'?' . SID . '>';
 
 	if (isset($SelectedBranch)) {
@@ -561,7 +560,8 @@ if (!isset($_GET['delete'])) {
 		if (!isset($_POST['BranchCode'])) {
 			$_POST['BranchCode']='';
 		}
-		echo '<CENTER><b>'._('Add a Branch').'</b><br><TABLE><TR><TD>'._('Branch Code'). ':</TD>
+		echo '<P Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" TITLE="' . _('Customer') . '" ALT="">' . ' ' . _('Add a Branch').'</P>';
+echo '<TABLE><TR><TD>'._('Branch Code'). ':</TD>
 		<TD><input ' .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) .
 				" tabindex=1 type='Text' name='BranchCode' SIZE=12 MAXLENGTH=10 value=" . $_POST['BranchCode'] . '></TD></TR>';
 		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];
