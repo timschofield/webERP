@@ -19,7 +19,7 @@
 body {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px;
-	background-color: #fff;
+	background: #fff;
 	margin-left: 0px;
 	margin-top: 0px;
 	margin-bottom: 0px;
@@ -82,7 +82,7 @@ textarea:hover{
 	border: 1px 1px 1px 1px #000 solid;
 }
 table {
-  background-color: #eee;
+  background: #eee;
   border: 0px 0px 2px 2px #222 solid;
   background: #eee;
   margin: 0 auto;
@@ -100,24 +100,27 @@ td {
 	font-size: 12px;
 	text-align:left;
 }
+input.address3 {
+	text-transform: uppercase;
+}
 .dpTD {
 	border: 0;
 	width:20px;
-	background-color: #EEEEEE;	
+	background: #EEEEEE;	
 	text-align:right;
 	cursor:pointer;	
 }
 .dpDayHighlight {
 	border: 0;
 	width:20px;
-	background-color: yellow;
+	background: yellow;
 	text-align:right;
 	cursor:pointer;	
 }
 .dpTDHover {
 	border: 0;
 	width:20px;
-	background-color: #CCCCCC;
+	background: #CCCCCC;
 	text-align:right;
 	cursor:pointer;	
 }
@@ -125,7 +128,7 @@ td.number {
 	text-align: right;
 }
 div.error {
-	background-color:red;
+	background:red;
 	color: white;
 	font-style: italic; 
 	font-weight:bold;
@@ -145,7 +148,7 @@ div.error {
 }
 
 div.warn {
-	background-color:#fa0;
+	background:#fa0;
 	color: black;
 	border: 1px solid black;
 	PADDING-LEFT: 3px;
@@ -164,7 +167,7 @@ div.warn {
 }
 
 div.success {
-	background-color:#b9ecb4;
+	background:#b9ecb4;
 	color: #008000;
 	border: 1px solid #008000;
         PADDING-LEFT: 3px;
@@ -183,7 +186,7 @@ div.success {
 }
 
 div.info {
-	background-color:#5d70f8;
+	background:#5d70f8;
 	color: white;
 	border: 1px solid black;
 	PADDING-LEFT: 3px;
@@ -202,7 +205,7 @@ div.info {
 }
 
 div.csv {
-        background-color:lightgray;
+        background:lightgray;
         color: black;
         border: 1px solid black;
         PADDING-LEFT: 3px;
@@ -221,16 +224,16 @@ div.csv {
 }
 
 .EvenTableRows {
-	background-color: #CCCCCC;
+	background: #CCCCCC;
 }
 
 .OddTableRows {
-	background-color: #EEEEEE;
+	background: #EEEEEE;
 }
 
 th {
 	font-weight: normal;
-	background-color: #ccc;
+	background: #ccc;
 	font-size: 12px;
 	color: #330000;
 	text-align: center;
@@ -246,7 +249,7 @@ select {background:#eee;
 #topMenu {
 	width: 100%;
 	color: black;
-	background-color: white;
+	background: white;
 	border: none;
 }
 
@@ -272,7 +275,7 @@ select {background:#eee;
 #mainMenu {
 	width: 100%;
 	color: black;
-	background-color: white;
+	background: white;
 	border: none;
 	margin: 0px;
 	padding: 0px;
@@ -288,13 +291,13 @@ select {background:#eee;
 }
 
 .login {
-	background-color: white;
+	background: white;
 	border: none;
 }
 
 .callout_main {
 	font-family: Verdana, Arial, Helvetica;
-	background-color: white;
+	background: white;
 	border: none;
 	width: 100%;
 	margin: 0px;
@@ -302,7 +305,7 @@ select {background:#eee;
 }
 
 .main_page {
-	background-color: white;
+	background: white;
 	border: none;
 	width: 100%;
 	margin: 0px;
@@ -312,7 +315,7 @@ select {background:#eee;
 
 /* Main page heading with quick menu within */
 .quick_menu {
-	background-color: #ccc;
+	background: #ccc;
 	border: none;
 	margin: 0px;
 	padding: 0px;
@@ -388,7 +391,7 @@ background: url(images/gelblueh.png) 0px -2px repeat-x;
 }
 /*the Select Customer / Item / Supplier Menu tabs */
 .system_menu_tabs {
-	background-color: white;
+	background: white;
 	white-space: nowrap;
 	border: none;
 	margin-left: 6px;
@@ -412,7 +415,7 @@ background: url(images/gelblueh.png) 0px -2px repeat-x;
 .main_area {
 	border: none;
 	width: 100%;
-	background-color: white;
+	background: white;
 }
 
 .main_menu {
@@ -481,7 +484,7 @@ span.main_menu_nolink {
 }
 
 .menu_group_img {
-	background-color: #CCCCCC;
+	background: #CCCCCC;
 	text-align: center;
 	width: 90px;
 	position: relative;
@@ -542,6 +545,8 @@ span.main_menu_nolink {
 }
 
 DIV.page_help_text {
+	background: lightgrey url(images/help.png) center left no-repeat;
+	padding-top:2px; 
 	BORDER: #a52a2a 1px solid;
 	PADDING-LEFT: 3px;
 	Z-INDEX: 1;
@@ -550,9 +555,7 @@ DIV.page_help_text {
 	VISIBILITY: visible;
 	MARGIN: 0 auto;
 	POSITION: static;
-	background-color: lightgray;
 	font-family: Verdana, Arial, Helvetica;
-        padding-top: 1px;
         padding-bottom: 1px;
         font-weight: normal;
         font-size: 10px;
@@ -569,7 +572,7 @@ DIV.system_check {
         VISIBILITY: visible;
         MARGIN: 0 auto;
         POSITION: static;
-        background-color: lightgray;
+        background: lightgray;
         font-family: Verdana, Arial, Helvetica;
         padding-top: 1px;
         padding-bottom: 1px;
@@ -629,12 +632,12 @@ span.menu_group_nolink {
 	font-family: "Times New Roman", Times, serif;
 	font-size: 9px;
 	color: white;
-  	background-color: #336699;
+  	background: #336699;
 }
 
 .dingbat {
 	font-family: Arial, Helvetica, sans-serif;
-	background-color: #99CC99;
+	background: #99CC99;
   color: #006666;
 	font-weight: bolder;
 	font-size: medium;
@@ -650,20 +653,20 @@ input.small {
 }
 
 input.inputerror {
-	background-color: #fddbdb;
+	background:  red;
 }
 
 textarea.texterror {
-	background-color: #fddbdb;
+	background: red;
 }
 
 select.selecterror {
-	background-color: #fddbdb;
+	background: red;
 }
 
 .tableheader {
 	font-weight: normal;
-	background-color: #cccce5;
+	background: #cccce5;
 	color: #330000;
 }
 
@@ -677,10 +680,10 @@ select.selecterror {
 	font-style:normal;
 	font-size:12px;
 	color:black;
-	background-color:#cccccc;
+	background:#cccccc;
 }
 
 .OsRow {
-	background-color: #234567;
+	background: #234567;
 	color: white;
 }
