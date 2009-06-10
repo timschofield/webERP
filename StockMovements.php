@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 2;
 
@@ -56,8 +56,8 @@ if (!isset($_POST['BeforeDate']) OR !Is_Date($_POST['BeforeDate'])){
 if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
    $_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date("m")-3,Date("d"),Date("y")));
 }
-echo ' ' . _('Show Movements before') . ": <INPUT TYPE=TEXT NAME='BeforeDate' SIZE=12 MAXLENGTH=12 VALUE='" . $_POST['BeforeDate'] . "'>";
-echo ' ' . _('But after') . ": <INPUT TYPE=TEXT NAME='AfterDate' SIZE=12 MAXLENGTH=12 VALUE='" . $_POST['AfterDate'] . "'>";
+echo ' ' . _('Show Movements before') . ': <INPUT TYPE=TEXT NAME="BeforeDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" SIZE="12" MAXLENGTH="12" VALUE="' . $_POST['BeforeDate'] . '">';
+echo ' ' . _('But after') . ': <INPUT TYPE=TEXT NAME="AfterDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" SIZE="12" MAXLENGTH="12" VALUE="' . $_POST['AfterDate'] . '">';
 echo "     <INPUT TYPE=SUBMIT NAME='ShowMoves' VALUE='" . _('Show Stock Movements') . "'>";
 echo '<HR>';
 
