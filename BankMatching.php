@@ -1,25 +1,25 @@
 <?php
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 7;
 
 include("includes/session.inc");
+$title = _('Bank Account Matching');
+include('includes/header.inc');
 
 if ((isset($_GET["Type"]) and $_GET["Type"]=='Receipts') OR (isset($_POST["Type"]) and $_POST["Type"]=='Receipts')){
 	$Type = 'Receipts';
 	$TypeName =_('Receipts');
-	$title = _('Bank Account Deposits Matching');
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" TITLE="' . _('Bank Matching') . '" ALT="">' . ' ' . _('Bank Account Matching - Receipts') . '</P>';
 } elseif ((isset($_GET["Type"]) and $_GET["Type"]=='Payments') OR (isset($_POST["Type"]) and $_POST["Type"]=='Payments')) {
 	$Type = 'Payments';
 	$TypeName =_('Payments');
-	$title = _('Bank Account Payments Matching');
+echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_delete.png" TITLE="' . _('Bank Matching') . '" ALT="">' . ' ' . _('Bank Account Matching - Payments') . '</P>';
 } else {
 	prnMsg(_('This page must be called with a bank transaction type') . '. ' . _('It should not be called directly'),'error');
 	include ('includes/footer.inc');
 	exit;
 }
-
-include('includes/header.inc');
 
 if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 	for ($Counter=1;$Counter <= $_POST['RowCounter']; $Counter++){
@@ -60,8 +60,7 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
  	$_POST["ShowTransactions"] = True;
 }
 
-echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Bank Matching') . '" ALT="">' . ' ' . _('Bank Account Matching') . '</P>';
-echo '<DIV CLASS="page_help_text">' . _('Use this screen to match webERP deposits and receipts to your Bank Statement.') . '</DIV><BR><CENTER>';
+echo '<DIV CLASS="page_help_text">' . _('Use this screen to match webERP Receipts and Payments to your Bank Statement.  Check your bank statement and click the check-box when you find the matching transaction.') . '</DIV><BR><CENTER>';
 
 echo "<FORM ACTION='". $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 
@@ -89,10 +88,12 @@ if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
    $_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date("m")-3,Date("d"),Date("y")));
 }
 
-echo '<TR><TD>' . _('Show') . ' ' . $TypeName . ' ' . _('before') . ':</TD>
-	<TD><INPUT tabindex="2" TYPE=TEXT NAME="BeforeDate" SIZE=12 MAXLENGTH=10 onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" Value="' . $_POST['BeforeDate'] . '"></TD>';
-echo '<TD>' . _('but after') . ':</TD>
-	<TD><INPUT tabindex="3" TYPE=TEXT NAME="AfterDate" SIZE=12 MAXLENGTH=10 onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" Value="' . $_POST['AfterDate'] . '"></TD></TR>';
+// Change to allow input of FROM DATE and then TO DATE, instead of previous back-to-front method, add datepicker
+echo '<TR><TD>' . _('Show') . ' ' . $TypeName . ' ' . _('from') . ':</TD>
+        <TD><INPUT tabindex="3" TYPE="text" NAME="AfterDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" SIZE="12" MAXLENGTH="10" onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" Value="' . $_POST['AfterDate'] . '"></TD></TR>';
+
+echo '<TD>' . _('to') . ':</TD>
+	<TD><INPUT tabindex="2" TYPE="text" NAME="BeforeDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" SIZE="12" MAXLENGTH="10" onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" Value="' . $_POST['BeforeDate'] . '"></TD>';
 echo '<TR><TD COLSPAN=3>' . _('Choose outstanding') . ' ' . $TypeName . ' ' . _('only or all') . ' ' . $TypeName . ' ' . _('in the date range') . ':</TD>
 	<TD><SELECT tabindex="4" NAME="Ostg_or_All">';
 
