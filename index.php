@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.81 $ */
+/* $Revision: 1.82 $ */
 
 
 $PageSecurity = 1;
@@ -164,9 +164,13 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</td>
 							</tr>
 							<tr>
-							<tr>
 							<td class="menu_group_item">
 								<?php echo "<A HREF='" . $rootpath . '/PDFDIFOT.php?' . SID . "'><LI>" . _('Delivery In Full On Time (DIFOT) Report') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/SalesInquiry.php?' . SID . "'><LI>" . _('Sales Order Detail Or Summary Inquiries') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -444,6 +448,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<A HREF='" . $rootpath . '/PO_SelectPurchOrder.php?' . SID . "'><LI>" . _('Purchase Order Inquiry') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/POReport.php?' . SID . "'><LI>" . _('Purchase Order Detail Or Summary Inquiries') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
