@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.53 $ */
+/* $Revision: 1.54 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -335,8 +335,8 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 	$i=0; // initialise the number of taxes iterated through
 	$TaxLineTotal =0; //initialise tax total for the line
 
+
 	foreach ($LnItm->Taxes AS $Tax) {
-		$TaxTotals[$Tax->TaxAuthID]=0;
 		if ($i>0){
 			echo '<BR>';
 		}
