@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.63 $ */
+/* $Revision: 1.64 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -605,9 +605,9 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 				comments = '."'". DB_escape_string($_SESSION['Items']->Comments) ."'".',
 				ordertype = '."'" . $_SESSION['Items']->DefaultSalesType . "'".',
 				shipvia = ' . $_POST['ShipVia'] .',
-				deliverydate = '."'" . DB_escape_string($_SESSION['Items']->DeliveryDate) . "'".',
-				quotedate = '."'" . DB_escape_string($_SESSION['Items']->QuoteDate) . "'".',
-				confirmeddate = '."'" . DB_escape_string($_SESSION['Items']->ConfirmedDate) . "'".',
+				deliverydate = '."'" . FormatDateForSQL(DB_escape_string($_SESSION['Items']->DeliveryDate)) . "'".',
+				quotedate = '."'" . FormatDateForSQL(DB_escape_string($_SESSION['Items']->QuoteDate)) . "'".',
+				confirmeddate = '."'" . FormatDateForSQL(DB_escape_string($_SESSION['Items']->ConfirmedDate)) . "'".',
 				deliverto = '."'" . DB_escape_string($_SESSION['Items']->DeliverTo) . "'".',
 				deladd1 = '."'" . DB_escape_string($_SESSION['Items']->DelAdd1) . "'".',
 				deladd2 = '."'" . DB_escape_string($_SESSION['Items']->DelAdd2) . "'".',
