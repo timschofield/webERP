@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -196,6 +196,17 @@ if (isset($_POST['ProcessStockChange'])){
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
 
+	echo '<BR>' . _('Changing any image files');
+	if (file_exists($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.jpg')) {
+		if (rename($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.jpg', 
+			$_SESSION['part_pics_dir'] . '/' .$_POST['NewStockID'].'.jpg')) {
+				echo ' ... ' . _('completed');
+			} else {
+				echo ' ... ' . _('failed');
+			}
+	} else {
+		echo ' ... ' . _('completed');		
+	}
 
 	echo '<BR>' . _('Changing the item properties table records') . ' - ' . _('parents');
 	$sql = "UPDATE stockitemproperties SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
