@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.54 $ */
+/* $Revision: 1.55 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -374,7 +374,8 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 	}
 	echo '</TR>';
 	if (strlen($LnItm->Narrative)>1){
-		echo $RowStarter . '<TD COLSPAN=12>' . $LnItm->Narrative . '</TD></TR>';
+		$narrative=str_replace('\r\n','<br>', $LnItm->Narrative);
+		echo $RowStarter . '<TD COLSPAN=12>' . $narrative . '</TD></TR>';
 	}
 }//end foreach ($line)
 
@@ -1014,7 +1015,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",
 						" . ($QtyOnHandPrior - $OrderLine->QtyDispatched) . ",
-						'" . $OrderLine->Narrative . "' )";
+						'" . DB_escape_string($OrderLine->Narrative) . "' )";
 			} else {
             // its an assembly or dummy and assemblies/dummies always have nil stock (by definition they are made up at the time of dispatch  so new qty on hand will be nil
 				$SQL = "INSERT INTO stockmoves (
@@ -1045,7 +1046,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						" . -$OrderLine->QtyDispatched . ",
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",
-						'" . $OrderLine->Narrative . "')";
+						'" . DB_escape_string($OrderLine->Narrative) . "')";
 			}
 
 

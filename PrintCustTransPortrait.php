@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 $PageSecurity = 1;
 
@@ -337,9 +337,11 @@ If (isset($PrintPDF)
 					}
 				}
 				$YPos -= ($FontSize*$lines);
-
 				$Narrative = $myrow2['narrative'];
-				while (strlen($Narrative)>1){
+
+				$lines=explode('\r\n',$Narrative);
+				for ($i=0;$i<sizeOf($lines);$i++) {
+				while (strlen($lines[$i])>1){
 					if ($YPos-$line_height <= $Bottom_Margin){
 						/* head up a new invoice/credit note page */
 						/*draw the vertical column lines right to the bottom */
@@ -347,10 +349,11 @@ If (isset($PrintPDF)
 	   		        	include ('includes/PDFTransPageHeaderPortrait.inc');
 			   		} //end if need a new page headed up
 			   		/*increment a line down for the next line item */
-			   		if (strlen($Narrative)>1){
-						$Narrative = $pdf->addTextWrap($Left_Margin+85,$YPos,181,$FontSize,$Narrative);
+			   		if (strlen($lines[$i])>1){
+						$lines[$i] = $pdf->addTextWrap($Left_Margin+85,$YPos,181,$FontSize,$lines[$i]);
 					}
 					$YPos -= ($line_height);
+				}
 				}
 				if ($YPos <= $Bottom_Margin){
 
