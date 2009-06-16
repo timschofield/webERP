@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.93 $ */
+/* $Revision: 1.94 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -57,7 +57,7 @@ if (isset($_GET['NewOrder'])){
 }
 
 // removed to improve UI layout 
-//echo '<A HREF="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Back to Sales Orders'). '</A><BR>';
+//echo '<a href="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Back to Sales Orders'). '</a><br>';
 
 if (isset($_GET['ModifyOrderNumber'])
 	AND $_GET['ModifyOrderNumber']!=''){
@@ -219,7 +219,7 @@ if (isset($_GET['ModifyOrderNumber'])
 						//								ConvertSQLDate($myrow['itemdue']),
 														0,
 														'',
-														$myrow['itemdue'],
+														FormatDateForSQL($myrow['itemdue']),
 														$myrow['poline'],
 														$myrow['standardcost'],
 														$myrow['eoq'],
@@ -424,7 +424,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 			prnMsg(_('The branch details for branch code') . ': ' . $_SESSION['Items']->Branch . ' ' . _('against customer code') . ': ' . $_POST['Select'] . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
 
 			if ($debug==1){
-				echo '<BR>' . _('The SQL that failed to get the branch details was') . ':<BR>' . $sql;
+				echo '<br>' . _('The SQL that failed to get the branch details was') . ':<br>' . $sql;
 			}
 			include('includes/footer.inc');
 			exit;
@@ -486,7 +486,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 	} else {
 		$ErrMsg = '';
 	}
-	$DbgMsg = _('SQL used to retrieve the customer details was') . ':<BR>' . $sql;
+	$DbgMsg = _('SQL used to retrieve the customer details was') . ':<br>' . $sql;
 	$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	$myrow = DB_fetch_row($result);
@@ -568,10 +568,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	<tr>
 	<td><h5><?php echo _('Part of the Customer Branch Name'); ?>:</h5></td>
 	<td><input tabindex=1 type="Text" name="CustKeywords" size=20	maxlength=25></td>
-	<td><h2><B><?php echo _('OR'); ?></B></h2></td>
+	<td><h2><b><?php echo _('OR'); ?></b></h2></td>
 	<td><h5><?php echo _('Part of the Customer Branch Code'); ?>:</h5></td>
 	<td><input tabindex=2 type="Text" name="CustCode" size=15	maxlength=18></td>
-	<td><h2><B><?php echo _('OR'); ?></B></h2></td>
+	<td><h2><b><?php echo _('OR'); ?></b></h2></td>
 	<td><h5><?php echo _('Part of the Branch Phone Number'); ?>:</h5></td>
 	<td><input tabindex=3 type="Text" name="CustPhone" size=15	maxlength=18></td>
 	</tr>
@@ -648,7 +648,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				$OK_to_delete=0;
 
-				prnMsg( _('There are lines on this order that have already been invoiced. Please delete only the lines on the order that are no longer required') . '<P>' . _('There is an option on confirming a dispatch/invoice to automatically cancel any balance on the order at the time of invoicing if you know the customer will not want the back order'),'warn');
+				prnMsg( _('There are lines on this order that have already been invoiced. Please delete only the lines on the order that are no longer required') . '<p>' . _('There is an option on confirming a dispatch/invoice to automatically cancel any balance on the order at the time of invoicing if you know the customer will not want the back order'),'warn');
 			}
 		}
 
@@ -697,17 +697,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '</b>&nbsp;' . _('From Location') . ':<b> ' . $_SESSION['Items']->LocationName;
 		echo '</b><br>' . _('Sales Type') . '/' . _('Price List') . ':<b> ' . $_SESSION['Items']->SalesTypeName;
 		echo '</b><br>' . _('Terms') . ':<b> ' . $_SESSION['Items']->PaymentTerms;
-		echo '</B></div>';
+		echo '</b></div>';
 	}
 
 	If (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 
 		If ($_POST['Keywords']!=='' AND $_POST['StockCode']=='') {
-			$msg='</B><DIV class="page_help_text">' . _('Order Item description has been used in search') . '.</DIV>';
+			$msg='</b><div class="page_help_text">' . _('Order Item description has been used in search') . '.</div>';
 		} elseif ($_POST['StockCode']!=='' AND $_POST['Keywords']=='') {
-			$msg='</B><DIV class="page_help_text">' . _('Stock Code has been used in search') . '.</DIV>';
+			$msg='</b><div class="page_help_text">' . _('Stock Code has been used in search') . '.</div>';
 		} elseif ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
-			$msg='</B><DIV class="page_help_text">' . _('Stock Category has been used in search') . '.</DIV>';
+			$msg='</b><div class="page_help_text">' . _('Stock Category has been used in search') . '.</div>';
 		}
 		If (isset($_POST['Keywords']) AND strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
@@ -822,7 +822,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			prnMsg (_('There are no products available meeting the criteria specified'),'info');
 
 			if ($debug==1){
-				prnMsg(_('The SQL statement used was') . ':<BR>' . $SQL,'info');
+				prnMsg(_('The SQL statement used was') . ':<br>' . $SQL,'info');
 			}
 		}
 		if (DB_num_rows($SearchResult)==1){
@@ -1016,7 +1016,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 	}
 	if (isset($_POST['DeliveryDetails'])){
-		echo '<META HTTP-EQUIV="Refresh" CONTENT="0; URL=' . $rootpath . '/DeliveryDetails.php?' . SID . '">';
+		echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/DeliveryDetails.php?' . SID . '">';
 		prnMsg(_('You should automatically be forwarded to the entry of the delivery details page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
            '<a href="' . $rootpath . '/DeliveryDetails.php?' . SID . '">' . _('click here') . '</a> ' . _('to continue') . 'info');
 	   	exit;
@@ -1164,7 +1164,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if($_SESSION['Items']->DefaultPOLine == 1){
 			echo '<th>' . _('PO Line') . '</th>';
 		}
-		echo '<DIV CLASS="page_help_text">' . _('Quantity (required) - Enter the number of units ordered.  Price (required) - Enter the unit price.  Discount (optional) - Enter a percentage discount.  GP% (optional) - Enter a percentage Gross Profit (GP) to add to the unit cost.  Due Date (optional) - Enter a date for delivery.') . '</DIV><BR>';
+		echo '<div class="page_help_text">' . _('Quantity (required) - Enter the number of units ordered.  Price (required) - Enter the unit price.  Discount (optional) - Enter a percentage discount.  GP% (optional) - Enter a percentage Gross Profit (GP) to add to the unit cost.  Due Date (optional) - Enter a date for delivery.') . '</div><br>';
 		echo '<th>' . _('Item Code') . '</th>
 			<th>' . _('Item Description') . '</th>
 			<th>' . _('Quantity') . '</th>
@@ -1228,7 +1228,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?' . SID . '&StockID=' . $OrderLine->StockID . '&DebtorNo=' . $_SESSION['Items']->DebtorNo . '">' . $OrderLine->StockID . '</a></td>
 				<td>' . $OrderLine->ItemDescription . '</td>';
 
-			echo '<td><input tabindex=2 type=tect name="Quantity_' . $OrderLine->LineNumber . '" size=6 maxlength=6 value=' . $OrderLine->Quantity . '>';
+			echo '<td><input class="number" onKeyPress="return restrictToNumbers(this, event)" tabindex=2 type=tect name="Quantity_' . $OrderLine->LineNumber . '" size=6 maxlength=6 value=' . $OrderLine->Quantity . '>';
 			if ($QtyRemain != $QtyOrdered){
 				echo '<br>'.$OrderLine->QtyInv.' of '.$OrderLine->Quantity.' invoiced';
 			}
@@ -1239,9 +1239,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 				/*OK to display with discount if it is an internal user with appropriate permissions */
 
-				echo '<td><input type=text name="Price_' . $OrderLine->LineNumber . '" size=16 maxlength=16 value=' . $OrderLine->Price . '></td>
-					<td><input type=text name="Discount_' . $OrderLine->LineNumber . '" size=5 maxlength=4 value=' . ($OrderLine->DiscountPercent * 100) . '>%</td>
-					<td><input type=text name="GPPercent_' . $OrderLine->LineNumber . '" size=5 maxlength=4 value=' . $GPPercent . '>%</td>';	
+				echo '<td><input class="number" onKeyPress="return restrictToNumbers(this, event)"  type=text name="Price_' . $OrderLine->LineNumber . '" size=16 maxlength=16 value=' . $OrderLine->Price . '></td>
+					<td><input class="number" onKeyPress="return restrictToNumbers(this, event)"  type=text name="Discount_' . $OrderLine->LineNumber . '" size=5 maxlength=4 value=' . ($OrderLine->DiscountPercent * 100) . '>%</td>
+					<td><input class="number" onKeyPress="return restrictToNumbers(this, event)"  type=text name="GPPercent_' . $OrderLine->LineNumber . '" size=5 maxlength=4 value=' . $GPPercent . '>%</td>';	
 
 			} else {
 				echo '<td align=right>' . $OrderLine->Price . '</td><td></td>';
@@ -1259,7 +1259,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$_SESSION['Items']->LineItems[$OrderLine->LineNumber]->ItemDue= $LineDueDate;
 			}
 
-			echo '<td><input type=text name="ItemDue_' . $OrderLine->LineNumber . '" size=10 maxlength=10 value=' . $LineDueDate . '></td>';
+			echo '<td><input onChange="return isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"  type=text name="ItemDue_' . $OrderLine->LineNumber . '" size=10 maxlength=10 value=' . $LineDueDate . '></td>';
 
 			echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . $RemTxt . '</a></td></tr>';
 
@@ -1313,7 +1313,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$result1 = DB_query($SQL,$db);
 
 		echo '<div class="centre"><b><p>' . $msg . '</b></p>';
-		echo '<P class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ';
+		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ';
 		echo _('Search for Order Items') . '</p></div><br>';
 		echo '<table><tr><td><b>' . _('Select a Stock Category') . ':</b></td><td><select tabindex=1 name="StockCat">';
 
@@ -1464,14 +1464,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				$Available = $qoh - $DemandQty + $OnOrder;
 
-				printf('<td>%s</font></TD>
-					<td>%s</TD>
-					<td>%s</TD>
+				printf('<td>%s</font></td>
+					<td>%s</td>
+					<td>%s</td>
 					<td style="text-align:center">%s</td>
 					<td style="text-align:center">%s</td>
 					<td style="text-align:center">%s</td>
 					<td style="text-align:center">%s</td>
-					<td><font size=1><input tabindex='.number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
+					<td><font size=1><input class="number" onKeyPress="return restrictToNumbers(this, event)"  tabindex='.number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
 					</td>
 					</tr>',
 					$myrow['stockid'],
