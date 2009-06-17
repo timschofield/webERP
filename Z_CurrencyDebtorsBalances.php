@@ -1,12 +1,12 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
 $title=_('Currency Debtor Balances');
 include('includes/header.inc');
 
-echo '<FONT SIZE=4><B>' . _('Debtors Balances By Currency Totals') . '</B></FONT>';
+echo '<font size=4><b>' . _('Debtors Balances By Currency Totals') . '</b></font>';
 
 $sql = 'SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight-alloc) AS currencybalance,
 		currcode,
@@ -20,22 +20,22 @@ $result = DB_query($sql,$db);
 
 $LocalTotal =0;
 
-echo '<TABLE>';
+echo '<table>';
 
 while ($myrow=DB_fetch_array($result)){
 
-	echo '<TR><TD><FONT SIZE=4>' . _('Total Debtor Balances in') . ' </FONT></TD>
-		<TD><FONT SIZE=4>' . $myrow['currcode'] . '</FONT></TD>
-		<TD ALIGN=RIGHT><FONT SIZE=4>' . number_format($myrow['currencybalance'],2) . '</FONT></TD>
-		<TD><FONT SIZE=4> in ' . $_SESSION['CompanyRecord']['currencydefault'] . '</FONT></TD>
-		<TD ALIGN=RIGHT><FONT SIZE=4>' . number_format($myrow['localbalance'],2) . '</FONT></TD></TR>';
+	echo '<tr><td><font size=4>' . _('Total Debtor Balances in') . ' </font></td>
+		<td><font size=4>' . $myrow['currcode'] . '</font></td>
+		<td align=right><font size=4>' . number_format($myrow['currencybalance'],2) . '</font></td>
+		<td><font size=4> in ' . $_SESSION['CompanyRecord']['currencydefault'] . '</font></td>
+		<td align=right><font size=4>' . number_format($myrow['localbalance'],2) . '</font></td></tr>';
 	$LocalTotal += $myrow['localbalance'];
 }
 
-echo '<TR><TD COLSPAN=4><FONT SIZE=4>' . _('Total Balances in local currency') . ':</FONT></TD>
-	<TD ALIGN=RIGHT><FONT SIZE=4>' . number_format($LocalTotal,2) . '</FONT></TD></TR>';
+echo '<tr><td colspan=4><font size=4>' . _('Total Balances in local currency') . ':</font></td>
+	<td align=right><font size=4>' . number_format($LocalTotal,2) . '</font></td></tr>';
 
-echo '</TABLE>';
+echo '</table>';
 
 include('includes/footer.inc');
 ?>

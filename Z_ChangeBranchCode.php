@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -194,17 +194,17 @@ if (isset($_POST['ProcessCustomerChange'])){
 
 }
 
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?=" . $SID . "' METHOD=POST>";
+echo "<form action='" . $_SERVER['PHP_SELF'] . "?=" . $SID . "' method=post>";
 
-echo '<P><CENTER><TABLE>
-<TR><TD>' . _('Customer Code') . ":</TD><TD><INPUT TYPE=Text NAME='DebtorNo' SIZE=20 MAXLENGTH=20></TD></TR>
-<TR><TD>" . _('Existing Branch Code') . ":</TD><TD><INPUT TYPE=Text NAME='OldBranchCode' SIZE=20 MAXLENGTH=20></TD></TR>
-<TR><TD>" . _('New Branch Code') . ":</TD><TD><INPUT TYPE=Text NAME='NewBranchCode' SIZE=20 MAXLENGTH=20></TD></TR>
-</TABLE>";
+echo '<p><table>
+<tr><td>' . _('Customer Code') . ":</td><td><input type=Text name='DebtorNo' size=20 maxlength=20></td></tr>
+<tr><td>" . _('Existing Branch Code') . ":</td><td><input type=Text name='OldBranchCode' size=20 maxlength=20></td></tr>
+<tr><td>" . _('New Branch Code') . ":</td><td><input type=Text name='NewBranchCode' size=20 maxlength=20></td></tr>
+</table>";
 
-echo "<INPUT TYPE=SUBMIT NAME='ProcessCustomerChange' VALUE='" . _('Process') . "'>";
+echo "<input type=submit name='ProcessCustomerChange' VALUE='" . _('Process') . "'>";
 
-echo '</FORM>';
+echo '</form>';
 
 include("includes/footer.inc");
 ?>

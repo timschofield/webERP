@@ -24,7 +24,7 @@ if (isset($_POST['update'])) {
    	$FieldNames = explode(',', $buffer);
    	$SuccessStyle='style="color:green; font-weight:bold"';
    	$FailureStyle='style="color:red; font-weight:bold"';
-   	echo '<center><table><tr><th>'. _('Part Code') .'</th><th>'. _('Result') . '</th><th>'. _('Comments') .'</th></tr>';
+   	echo '<table><tr><th>'. _('Part Code') .'</th><th>'. _('Result') . '</th><th>'. _('Comments') .'</th></tr>';
    	$successes=0;
    	$failures=0;
  	while (!feof ($fp)) {
@@ -61,7 +61,7 @@ if (isset($_POST['update'])) {
 	}
 	echo '<tr><td>'.$successes._(' records successfully imported') .'</td></tr>';
 	echo '<tr><td>'.$failures._(' records failed to import') .'</td></tr>';
-	echo '</table></center>';
+	echo '</table>';
 	fclose ($fp);
 } else {
 	$sql = 'select * from locations';
@@ -69,14 +69,14 @@ if (isset($_POST['update'])) {
 	if (DB_num_rows($result)==0) {
 		prnMsg( _('No locations have been set up. At least one location should be set up first'), "error");
 	} else {
-		prnMsg( _('Select a csv file containing the details of the parts that you wish to import into webERP. '). '<BR>' .
+		prnMsg( _('Select a csv file containing the details of the parts that you wish to import into webERP. '). '<br>' .
 			 _('The first line must contain the field names that you wish to import. ').
 			 '<a href ="Z_DescribeTable.php?table=stockmaster">' . _('The field names can be found here'). '</a>', 'info');
-		echo '<center><form name="ItemForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '?' .SID .'">';
+		echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '?' .SID .'">';
 		echo '<table><tr><td>'._('File to import').'</td>'.
 			'<td><input type="file" id="ImportFile" name="ImportFile"></td></tr></table>';
-		echo '<input type="submit" name="update" value="Process">';
-		echo '</form></center>';
+		echo '<div class="centre"><input type="submit" name="update" value="Process"></div>';
+		echo '</form>';
 	}
 }
 

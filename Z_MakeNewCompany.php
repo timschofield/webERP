@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 15;
 
@@ -35,8 +35,8 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 	} else {
 				
 		$_POST['NewCompany'] = strtolower($_POST['NewCompany']);
-		echo '<CENTER>';
-		echo '<FORM METHOD="post" ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+		echo '<div class="centre">';
+		echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 		/* check for directory existence */
 		if (!file_exists('./companies/' . $_POST['NewCompany']) 
 				AND (isset($_FILES['LogoFile']) AND $_FILES['LogoFile']['name'] !='')) {
@@ -128,7 +128,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 				} //end of for loop around the lines of the sql script
 			} //end if CreateDB was checked
 			
-			prnMsg (_('Attempting to create the new company directories') . '.....<BR>', 'info');
+			prnMsg (_('Attempting to create the new company directories') . '.....<br>', 'info');
 			$Result = mkdir('./companies/' . $_POST['NewCompany']);
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/part_pics');
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/EDI_Incoming_Orders');
@@ -157,8 +157,8 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 				prnMsg('_FILES[LogoFile][name] ' ._('is blank'),'info');
 			}
 			
-  			echo '</FORM>';
-	  		echo '</CENTER>';
+  			echo '</form>';
+	  		echo '</div>';
 			include('includes/footer.inc');
 			exit;
 		}
@@ -187,12 +187,12 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 		
 		prnMsg (_('The new company database has been created for' . ' ' . $_POST['NewCompany'] . '. ' . _('The company details and parameters should now be set up for the new company. NB: Only a single user "demo" is defined with the password "weberp" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
 		
-		echo '<P><A HREF="' . $rootpath . '/CompanyPreferences.php?' . SID .'">' . _('Set Up New Company Details') . '</A>';
-		echo '<P><A HREF="' . $rootpath . '/SystemParameters.php?' . SID .'">' . _('Set Up Configuration Details') . '</A>';
-		echo '<P><A HREF="' . $rootpath . '/WWW_Users.php?' . SID .'">' . _('Set Up User Accounts') . '</A>';
+		echo '<p><a href="' . $rootpath . '/CompanyPreferences.php?' . SID .'">' . _('Set Up New Company Details') . '</a>';
+		echo '<p><a href="' . $rootpath . '/SystemParameters.php?' . SID .'">' . _('Set Up Configuration Details') . '</a>';
+		echo '<p><a href="' . $rootpath . '/WWW_Users.php?' . SID .'">' . _('Set Up User Accounts') . '</a>';
 		
-		echo '</FORM>';
-		echo '</CENTER>';
+		echo '</form>';
+		echo '</div>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -200,23 +200,23 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 }
 
 
-echo '<CENTER>';
-echo '<BR>';
-prnMsg (_('This utility will create a new company') . '<BR><BR>' .
+echo '<div class="centre">';
+echo '<br>';
+prnMsg (_('This utility will create a new company') . '<br><br>' .
 		_('If the company name already exists then you cannot recreate it'), 'info', _('PLEASE NOTE'));
-echo '<BR>';
-echo '<FORM METHOD="post" ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . ' enctype="multipart/form-data">';
+echo '<br>';
+echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' enctype="multipart/form-data">';
 
-echo '<TABLE><TR>';
-echo '<TD>' . _('Enter up to 32 character lower case character abbreviation for the company') . '</TD>
-	<TD><INPUT TYPE="TEXT" SIZE="33" MAXLENGTH=32 NAME="NewCompany"></TD></TR>
-	<TR><TD>'. _('Logo Image File (.jpg)') . ':</TD><TD><INPUT TYPE="FILE" ID="LogoFile" NAME="LogoFile"></TD></TR>
-	<TR><TD>' . _('Create Database?') . '</TD><TD><INPUT TYPE="CHECKBOX" NAME="CreateDB"></TD></TR>
-	</TABLE>';
+echo '<table><tr>';
+echo '<td>' . _('Enter up to 32 character lower case character abbreviation for the company') . '</td>
+	<td><input type="TEXT" size="33" maxlength=32 name="NewCompany"></td></tr>
+	<tr><td>'. _('Logo Image File (.jpg)') . ':</td><td><input type="FILE" ID="LogoFile" name="LogoFile"></td></tr>
+	<tr><td>' . _('Create Database?') . '</td><td><input type="CHECKBOX" name="CreateDB"></td></tr>
+	</table>';
 
-echo '<BR><INPUT TYPE="SUBMIT" NAME="submit" VALUE="' . _('Proceed') . '">&nbsp;&nbsp;&nbsp;&nbsp;';
-echo '</FORM>';
-echo '</CENTER>';
+echo '<br><input type="SUBMIT" name="submit" VALUE="' . _('Proceed') . '">&nbsp;&nbsp;&nbsp;&nbsp;';
+echo '</form>';
+echo '</div>';
 
 include('includes/footer.inc');
 ?>

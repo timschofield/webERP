@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 /* Steve Kitchen */
 
@@ -18,42 +18,40 @@ $PathToDefault		= './locale/en_GB/LC_MESSAGES/messages.po';
 $FilesToInclude	= '*php includes/*.php includes/*.inc';
 $xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 
-echo "<BR>&nbsp;<A HREF='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</A>";
-echo '<BR><BR>&nbsp;' . _('Utility page to rebuild the system default language file');
+echo "<br>&nbsp;<a href='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
+echo '<br><br>&nbsp;' . _('Utility page to rebuild the system default language file');
 
 if (isset($_POST['submit'])) {
 
-	echo '<CENTER>';
-	echo '<BR><TABLE><TR><TD>';
-	echo '<FORM METHOD="post" ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<br><table><tr><td>';
+	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 /* Run xgettext to recreate the default message.po language file */
 
-	prnMsg (_('Rebuilding the default language file ') . '.....<BR>', 'info', ' ');
+	prnMsg (_('Rebuilding the default language file ') . '.....<br>', 'info', ' ');
 
 	system($xgettextCmd);	
 
-	prnMsg (_('Done') .  '. ' . _('You should now edit the default language file header') . '<BR>', 'info', ' ');
+	prnMsg (_('Done') .  '. ' . _('You should now edit the default language file header') . '<br>', 'info', ' ');
 
-	echo "<CENTER><A HREF='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the menu') . "</A></CENTER>";
-	echo '</FORM>';
-	echo '</TD></TR></TABLE>';
-	echo '</CENTER>';
+	echo "<div class='centre'><a href='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the menu') . "</a></div>";
+	echo '</form>';
+	echo '</td></tr></table>';
 	
 } else {		/* set up the page for editing */
 
-	echo '<CENTER>';
-	echo '<BR>';
-	prnMsg (_('Every new language creates a new translation file from the system default one') . '.<BR>' .
-          _('This utility will recreate the system default language file by going through all the script files to get all the strings') . '.<BR>' .
-          _('This is not usually necessary but if done before a new language is created then that language will have any new or recently modified strings') . '.<BR>' .
+	echo '<div class="centre">';
+	echo '<br>';
+	prnMsg (_('Every new language creates a new translation file from the system default one') . '.<br>' .
+          _('This utility will recreate the system default language file by going through all the script files to get all the strings') . '.<br>' .
+          _('This is not usually necessary but if done before a new language is created then that language will have any new or recently modified strings') . '.<br>' .
           _('Existing languages are not affected.') . '.', 'info', _('PLEASE NOTE'));
-	echo '<BR>';
-	echo '<FORM METHOD="post" ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<br>';
+	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
-	echo '<INPUT TYPE="Submit" NAME="submit" VALUE="' . _('Proceed') . '">&nbsp;&nbsp;';
-	echo '</FORM>';
-	echo '</CENTER>';
+	echo '<input type="Submit" name="submit" VALUE="' . _('Proceed') . '">&nbsp;&nbsp;';
+	echo '</form>';
+	echo '</div>';
 
 }
 

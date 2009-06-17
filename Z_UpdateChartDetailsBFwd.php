@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity=15;
 include ('includes/session.inc');
@@ -8,7 +8,7 @@ $title = _('Recalculation of Brought Forward Balances in Chart Details Table');
 include('includes/header.inc');
 
 
-echo "<FORM METHOD='POST' ACTION=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 if ($_POST['FromPeriod'] > $_POST['ToPeriod']){
 	prnMsg(_('The selected period from is actually after the period to') . '. ' . _('Please re-select the reporting period'),'error');
@@ -21,7 +21,7 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 
 
 /*Show a form to allow input of criteria for TB to show */
-	echo '<CENTER><TABLE><TR><TD>' . _('Select Period From') . ":</TD><TD><SELECT Name='FromPeriod'>";
+	echo '<table><tr><td>' . _('Select Period From') . ":</td><td><select Name='FromPeriod'>";
 
 	$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno';
 	$Periods = DB_query($sql,$db);
@@ -29,11 +29,11 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
 
-		echo '<OPTION VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
+		echo '<option VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 
 	}
 
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 
 	$sql = 'SELECT MAX(periodno) FROM periods';
 	$MaxPrd = DB_query($sql,$db);
@@ -41,21 +41,21 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 
 	$DefaultToPeriod = (int) ($MaxPrdrow[0]-1);
 
-	echo '<TR><TD>' . _('Select Period To') . ":</TD><TD><SELECT Name='ToPeriod'>";
+	echo '<tr><td>' . _('Select Period To') . ":</td><td><select Name='ToPeriod'>";
 
 	$RetResult = DB_data_seek($Periods,0);
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
 
 		if($myrow['periodno']==$DefaultToPeriod){
-			echo '<OPTION SELECTED VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
+			echo '<option selected VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 		} else {
-			echo '<OPTION VALUE =' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
+			echo '<option VALUE =' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 		}
 	}
-	echo '</SELECT></TD></TR></TABLE>';
+	echo '</select></td></tr></table>';
 
-	echo "<INPUT TYPE=SUBMIT Name='recalc' Value='" . _('Do the Recalculation') . "'></CENTER></FORM>";
+	echo "<div class='centre'><input type=submit Name='recalc' Value='" . _('Do the Recalculation') . "'></div></form>";
 
 } else {  /*OK do the updates */
 
@@ -71,7 +71,7 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 			$CFwd = $myrow['bfwd'] + $myrow['actual'];
 			$CFwdBudget = $myrow['bfwdbudget'] + $myrow['budget'];
 
-			echo '<BR>' . _('Account Code') . ': ' . $myrow['accountcode'] . ' ' . _('Period') .': ' . $myrow['period'];
+			echo '<br>' . _('Account Code') . ': ' . $myrow['accountcode'] . ' ' . _('Period') .': ' . $myrow['period'];
 
 			$sql = 'UPDATE chartdetails SET bfwd=' . $CFwd . ', bfwdbudget=' . $CFwdBudget . ' WHERE period=' . ($myrow['period'] +1) . ' AND  accountcode = ' . $myrow['accountcode'];
 

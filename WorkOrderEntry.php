@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 $PageSecurity = 10;
 
@@ -10,7 +10,7 @@ $title = _('Work Order Entry');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
- echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . $title;
+ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
 if (isset($_REQUEST['WO']) and $_REQUEST['WO']!=''){
 	$_POST['WO'] = $_REQUEST['WO'];
     $EditingExisting = true;
@@ -145,7 +145,7 @@ if (isset($_POST['Search'])){
 		prnMsg (_('There are no products available meeting the criteria specified'),'info');
 
 		if ($debug==1){
-			prnMsg(_('The SQL statement used was') . ':<BR>' . $SQL,'info');
+			prnMsg(_('The SQL statement used was') . ':<br>' . $SQL,'info');
 		}
 	}
 	if (DB_num_rows($SearchResult)==1){
@@ -306,7 +306,7 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 		//run the SQL from either of the above possibilites
         $ErrMsg = _('The work order could not be added/updated');
         foreach ($sql as $sql_stmt){
-        //	echo '<BR>' . $sql_stmt;
+        //	echo '<br>' . $sql_stmt;
             $result = DB_query($sql_stmt,$db,$ErrMsg);
 
         }
@@ -360,7 +360,7 @@ if (isset($_POST['submit'])) { //The update button has been clicked
         prnMsg(_('The work order has been deleted'),'success');
 
 
-		echo "<P><A HREF='" . $rootpath . "/SelectWorkOrder.php?" . SID . "'>" . _('Select an existing outstanding work order') . "</A>";
+		echo "<p><a href='" . $rootpath . "/SelectWorkOrder.php?" . SID . "'>" . _('Select an existing outstanding work order') . "</a>";
 		unset($_POST['WO']);
 		for ($i=1;$i<=$_POST['NumberOfOutputs'];$i++){
           	     unset($_POST['OutputItem'.$i]);
@@ -376,7 +376,7 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 
 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="form">';
 
-echo '<center><table>';
+echo '<table>';
 
 
 $sql="SELECT workorders.loccode,
@@ -467,7 +467,7 @@ if (isset($WOResult)){
 			  <td>' . number_format($myrow['costissued'],2) . '</td></tr>';
 }
 echo '</table>
-		<P><table>';
+		<p><table>';
 echo '<tr><th>' . _('Output Item') . '</th>
 		  <th>' . _('Qty Required') . '</th>
 		  <th>' . _('Qty Received') . '</th>
@@ -507,12 +507,11 @@ if (isset($NumberOfOutputs)){
 }
 echo '</table>';
 
-echo '<center>';
-echo '<hr><input type=submit name="submit" value="' . _('Update') . '">';
+echo '<div class="centre"><hr><input type=submit name="submit" value="' . _('Update') . '">';
 
-echo '<BR><P><INPUT TYPE=SUBMIT NAME="delete" VALUE="' . _('Delete This Work Order') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';
+echo '<br><p><input type=submit name="delete" VALUE="' . _('Delete This Work Order') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';
 
-echo '<hr>';
+echo '<hr></div>';
 
 $SQL="SELECT categoryid,
 			categorydescription
@@ -521,47 +520,47 @@ $SQL="SELECT categoryid,
 		ORDER BY categorydescription";
 	$result1 = DB_query($SQL,$db);
 
-echo '<TABLE><TR><TD><FONT SIZE=2>' . _('Select a stock category') . ':</FONT><SELECT NAME="StockCat">';
+echo '<table><tr><td><font size=2>' . _('Select a stock category') . ':</font><select name="StockCat">';
 
 if (!isset($_POST['StockCat'])){
-	echo '<OPTION SELECTED VALUE="All">' . _('All');
+	echo '<option selected VALUE="All">' . _('All');
 	$_POST['StockCat'] ='All';
 } else {
-	echo '<OPTION VALUE="All">' . _('All');
+	echo '<option VALUE="All">' . _('All');
 }
 
 while ($myrow1 = DB_fetch_array($result1)) {
 
 	if ($_POST['StockCat']==$myrow1['categoryid']){
-		echo '<OPTION SELECTED VALUE=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
+		echo '<option selected VALUE=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
 	} else {
-		echo '<OPTION VALUE='. $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
+		echo '<option VALUE='. $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
 	}
 }
 ?>
 
-</SELECT>
-<TD><FONT SIZE=2><?php echo _('Enter text extracts in the'); ?> <B><?php echo _('description'); ?></B>:</FONT></TD>
-<TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25 VALUE="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>"></TD></TR>
-<TR><TD></TD>
-		<TD><FONT SIZE 3><B><?php echo _('OR'); ?> </B></FONT><FONT SIZE=2><?php echo _('Enter extract of the'); ?> <B><?php echo _('Stock Code'); ?></B>:</FONT></TD>
-	    <TD><INPUT TYPE="Text" NAME="StockCode" SIZE=15 MAXLENGTH=18 VALUE="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></TD>
-		</TR>
-		</TABLE>
-		<CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>">
+</select>
+<td><font size=2><?php echo _('Enter text extracts in the'); ?> <b><?php echo _('description'); ?></b>:</font></td>
+<td><input type="Text" name="Keywords" size=20 maxlength=25 VALUE="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>"></td></tr>
+<tr><td></td>
+		<td><font SIZE 3><b><?php echo _('OR'); ?> </b></font><font size=2><?php echo _('Enter extract of the'); ?> <b><?php echo _('Stock Code'); ?></b>:</font></td>
+	    <td><input type="Text" name="StockCode" size=15 maxlength=18 VALUE="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></td>
+		</tr>
+		</table>
+		<div class="centre"><input type=submit name="Search" VALUE="<?php echo _('Search Now'); ?>">
 
 <?php
 
-echo '</CENTER>';
+echo '</div>';
 
 if (isset($SearchResult)) {
 
 	if (DB_num_rows($SearchResult)>1){
 
-		echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
-		$TableHeader = '<TR><TH>' . _('Code') . '</TH>
-                   			<TH>' . _('Description') . '</TH>
-                   			<TH>' . _('Units') . '</TH></TR>';
+		echo '<table cellpadding=2 colspan=7 BORDER=1>';
+		$TableHeader = '<tr><th>' . _('Code') . '</th>
+                   			<th>' . _('Description') . '</th>
+                   			<th>' . _('Units') . '</th></tr>';
 		echo $TableHeader;
 		$j = 1;
 		$k=0; //row colour counter

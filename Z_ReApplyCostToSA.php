@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity=15;
 
@@ -10,27 +10,27 @@ include('includes/header.inc');
 
 $Period = 42;
 
-echo "<FORM METHOD='POST' ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+echo "<form method='POST' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 
 $SQL = 'SELECT MonthName(lastdate_in_period) AS mnth,
 		YEAR(lastdate_in_period) AS yr,
 		periodno
 	FROM periods';
-echo '<P><CENTER>' . _('Select the Period to update the costs for') . ":<SELECT NAME='PeriodNo'>";
+echo '<p><div class="centre">' . _('Select the Period to update the costs for') . ":<select name='PeriodNo'>";
 $result = DB_query($SQL,$db);
 
-echo '<OPTION SELECTED VALUE=0>' . _('No Period Selected');
+echo '<option selected VALUE=0>' . _('No Period Selected');
 
 while ($PeriodInfo=DB_fetch_array($result)){
 
-	echo '<OPTION VALUE=' . $PeriodInfo['periodno'] . '>' . $PeriodInfo['mnth'] . ' ' . $PeriodInfo['Yr'];
+	echo '<option VALUE=' . $PeriodInfo['periodno'] . '>' . $PeriodInfo['mnth'] . ' ' . $PeriodInfo['Yr'];
 
 }
 
-echo '</SELECT>';
+echo '</select>';
 
-echo "<P><INPUT TYPE=SUBMIT NAME='UpdateSalesAnalysis' VALUE='" . _('Update Sales Analysis Costs') ."'></CENTER>";
-echo '</FORM';
+echo "<p><input type=submit name='UpdateSalesAnalysis' VALUE='" . _('Update Sales Analysis Costs') ."'></div>";
+echo '</form>';
 
 if (isset($_POST['UpdateSalesAnalysis']) AND $_POST['PeriodNo']!=0){
 	$sql = 'SELECT stockmaster.stockid,

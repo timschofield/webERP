@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity=15;
 
@@ -81,7 +81,7 @@ if (isset($_POST['submit']) || isset($_GET['remove']) || isset($_GET['add']) ) {
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg( _('Cannot delete this role because user accounts are setup using it'),'warn');
-		echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('user accounts that have this security role setting') . '</FONT>';
+		echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('user accounts that have this security role setting') . '</font>';
 	} else {
 		$sql="DELETE FROM securitygroups WHERE secroleid=" . $_GET['SelectedRole'];
 		$result = DB_query($sql,$db);
@@ -104,7 +104,7 @@ if (!isset($SelectedRole)) {
 		ORDER BY secroleid";
 	$result = DB_query($sql,$db);
 
-	echo '<CENTER><table border=1>';
+	echo '<table border=1>';
 	echo "<tr><th>" . _('Role') . "</th></tr>";
 
 	$k=0; //row colour counter
@@ -121,8 +121,8 @@ if (!isset($SelectedRole)) {
 		/*The SecurityHeadings array is defined in config.php */
 
 		printf("<td>%s</td>
-			<td><a href=\"%s&SelectedRole=%s\">" . _('Edit') . "</A></TD>
-			<TD><A HREF=\"%s&SelectedRole=%s&delete=1&SecRoleName=%s\">" . _('Delete') . "</A></TD>
+			<td><a href=\"%s&SelectedRole=%s\">" . _('Edit') . "</a></td>
+			<td><a href=\"%s&SelectedRole=%s&delete=1&SecRoleName=%s\">" . _('Delete') . "</a></td>
 			</tr>",
 			$myrow['secrolename'],
 			$_SERVER['PHP_SELF']  . "?" . SID,
@@ -132,12 +132,12 @@ if (!isset($SelectedRole)) {
 			urlencode($myrow['secrolename']));
 
 	} //END WHILE LIST LOOP
-	echo '</TABLE></CENTER>';
+	echo '</table>';
 } //end of ifs and buts!
 
 
 if (isset($SelectedRole)) {
-	echo "<CENTER><A HREF='" . $_SERVER['PHP_SELF'] ."?" . SID . "'>" . _('Review Existing Roles') . '</A></CENTER>';
+	echo "<div class='centre'><a href='" . $_SERVER['PHP_SELF'] ."?" . SID . "'>" . _('Review Existing Roles') . '</a></div>';
 }
 
 if (isset($SelectedRole)) {
@@ -156,19 +156,19 @@ if (isset($SelectedRole)) {
 		$_POST['SecRoleName'] = $myrow['secrolename'];
 	}
 }
-echo '<BR>';
-echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+echo '<br>';
+echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 if( isset($_POST['SelectedRole'])) {
-	echo "<INPUT TYPE=HIDDEN NAME='SelectedRole' VALUE='" . $_POST['SelectedRole'] . "'>";
+	echo "<input type=hidden name='SelectedRole' VALUE='" . $_POST['SelectedRole'] . "'>";
 }
-echo '<CENTER><TABLE>';
+echo '<table>';
 if (!isset($_POST['SecRoleName'])) {
 	$_POST['SecRoleName']='';
 }
-echo '<TR><TD>' . _('Role') . ":</TD>
-	<TD><INPUT TYPE='text' name='SecRoleName' SIZE=40 MAXLENGTH=40 VALUE='" . $_POST['SecRoleName'] . "'></TR>";
-echo "</TABLE>
-	<CENTER><input type='Submit' name='submit' value='" . _('Enter Role') . "'></CENTER></FORM>";
+echo '<tr><td>' . _('Role') . ":</td>
+	<td><input type='text' name='SecRoleName' size=40 maxlength=40 VALUE='" . $_POST['SecRoleName'] . "'></tr>";
+echo "</table>
+	<div class='centre'><input type='Submit' name='submit' value='" . _('Enter Role') . "'></div></form>";
 
 if (isset($SelectedRole)) {
 	$sql = 'SELECT tokenid, tokenname 
@@ -187,28 +187,28 @@ if (isset($SelectedRole)) {
 		$i++;
 	} 
 	
-	echo '<CENTER><TABLE><TR>';
+	echo '<table><tr>';
 	
 	if (DB_num_rows($Result)>0 ) {
-		echo "<TH colspan=3><CENTER>"._('Assigned Security Tokens')."</CENTER></TH>";
-		echo "<TH colspan=3><CENTER>"._('Available Security Tokens')."</CENTER></TH>";
+		echo "<th colspan=3><div class='centre'>"._('Assigned Security Tokens')."</div></th>";
+		echo "<th colspan=3><div class='centre'>"._('Available Security Tokens')."</div></th>";
 	}
-	echo '</TR>';
+	echo '</tr>';
 	
 	$k=0; //row colour counter
 	while($AvailRow = DB_fetch_array($Result)) {
 				
 		if ($k==1){
-			echo '<TR class="EvenTableRows">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<TR class="OddTableRows">';
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 		
 		if (in_array($AvailRow['tokenid'],$TokensUsed)){
-			printf("<TD>%s</TD><TD>%s</TD>
-				<TD><A href=\"%s&SelectedRole=%s&remove=1&PageToken=%s\">" . _('Remove') . "</A></TD><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD>",
+			printf("<td>%s</td><td>%s</td>
+				<td><a href=\"%s&SelectedRole=%s&remove=1&PageToken=%s\">" . _('Remove') . "</a></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>",
 				$AvailRow['tokenid'],
 				$AvailRow['tokenname'],
 				$_SERVER['PHP_SELF']  . "?" . SID,
@@ -216,12 +216,12 @@ if (isset($SelectedRole)) {
 				$AvailRow['tokenid'] 
 				);
 		} else {
-			printf("<TD>&nbsp;</TD>
-				<TD>&nbsp;</TD>
-				<TD>&nbsp;</TD>
-				<TD>%s</TD>
-				<TD>%s</TD>
-				<TD><A href=\"%s&SelectedRole=%s&add=1&PageToken=%s\">" . _('Add') . "</A></TD>",
+			printf("<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td><a href=\"%s&SelectedRole=%s&add=1&PageToken=%s\">" . _('Add') . "</a></td>",
 				$AvailRow['tokenid'],
 				$AvailRow['tokenname'],
 				$_SERVER['PHP_SELF']  . "?" . SID,
@@ -229,9 +229,9 @@ if (isset($SelectedRole)) {
 				$AvailRow['tokenid'] 
 				);
 		}	
-		echo '</TR>';
+		echo '</tr>';
 	}
-	echo '</TABLE>';
+	echo '</table>';
 }
 
 include('includes/footer.inc');

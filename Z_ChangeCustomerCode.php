@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -12,7 +12,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 /*First check the customer code exists */
 	$result=DB_query("SELECT debtorno FROM debtorsmaster WHERE debtorno='" . $_POST['OldDebtorNo'] . "'",$db);
 	if (DB_num_rows($result)==0){
-		prnMsg ('<BR><BR>' . _('The customer code') . ': ' . $_POST['OldDebtorNo'] . ' ' . _('does not currently exist as a customer code in the system'),'error');
+		prnMsg ('<br><br>' . _('The customer code') . ': ' . $_POST['OldDebtorNo'] . ' ' . _('does not currently exist as a customer code in the system'),'error');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -219,20 +219,20 @@ if (isset($_POST['ProcessCustomerChange'])){
 
 }
 
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?=" . $SID . "' METHOD=POST>";
+echo "<form action='" . $_SERVER['PHP_SELF'] . "?=" . $SID . "' method=post>";
 
-echo '<P><CENTER><TABLE>
-	<TR><TD>' . _('Existing Debtor Code') . ":</TD>
-		<TD><INPUT TYPE=Text NAME='OldDebtorNo' SIZE=20 MAXLENGTH=20></TD>
-	</TR>";
-echo '<TR><TD> ' . _('New Debtor Code') . ":</TD>
-	<TD><INPUT TYPE=Text NAME='NewDebtorNo' SIZE=20 MAXLENGTH=20></TD>
-	</TR>
-	</TABLE>";
+echo '<p><table>
+	<tr><td>' . _('Existing Debtor Code') . ":</td>
+		<td><input type=Text name='OldDebtorNo' size=20 maxlength=20></td>
+	</tr>";
+echo '<tr><td> ' . _('New Debtor Code') . ":</td>
+	<td><input type=Text name='NewDebtorNo' size=20 maxlength=20></td>
+	</tr>
+	</table>";
 
-echo "<INPUT TYPE=SUBMIT NAME='ProcessCustomerChange' VALUE='" . _('Process') . "'>";
+echo "<input type=submit name='ProcessCustomerChange' VALUE='" . _('Process') . "'>";
 
-echo '</FORM>';
+echo '</form>';
 
 include('includes/footer.inc');
 

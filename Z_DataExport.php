@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity=15;
 
@@ -70,9 +70,9 @@ if ( isset($_POST['pricelist']) ) {
 		$title = _('Price List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
-		echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</A>';
+		echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</a>';
 		if ($debug==1){
-			echo '<BR>'. $SQL;
+			echo '<br>'. $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -166,9 +166,9 @@ if ( isset($_POST['pricelist']) ) {
 		$title = _('Customer List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Customer List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
-		echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</A>';
+		echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</a>';
 		if ($debug==1){
-			echo '<BR>'. $SQL;
+			echo '<br>'. $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -257,9 +257,9 @@ if ( isset($_POST['pricelist']) ) {
 		$title = _('Salesman List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Salesman List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
-		echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</A>';
+		echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</a>';
 		if ($debug==1){
-			echo '<BR>'. $SQL;
+			echo '<br>'. $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -306,9 +306,9 @@ if ( isset($_POST['pricelist']) ) {
 		$title = _('Security Token List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Image List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
-		echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</A>';
+		echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</a>';
 		if ($debug==1){
-			echo '<BR>'. $SQL;
+			echo '<br>'. $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -345,9 +345,9 @@ if ( isset($_POST['pricelist']) ) {
 		$title = _('Security Token List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Security Token List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
-		echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</A>';
+		echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</a>';
 		if ($debug==1){
-			echo '<BR>'. $SQL;
+			echo '<br>'. $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -381,9 +381,9 @@ if ( isset($_POST['pricelist']) ) {
 		$title = _('Security Role List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Security Role List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
-		echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</A>';
+		echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</a>';
 		if ($debug==1){
-			echo '<BR>'. $SQL;
+			echo '<br>'. $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -417,9 +417,9 @@ if ( isset($_POST['pricelist']) ) {
 		$title = _('Security Group List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Security Group List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
-		echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</A>';
+		echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</a>';
 		if ($debug==1){
-			echo '<BR>'. $SQL;
+			echo '<br>'. $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -471,9 +471,9 @@ if ( isset($_POST['pricelist']) ) {
 		$title = _('Security User List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Security User List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
-		echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</A>';
+		echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</a>';
 		if ($debug==1){
-			echo '<BR>'. $SQL;
+			echo '<br>'. $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -534,102 +534,102 @@ if ( isset($_POST['pricelist']) ) {
 		
 	// SELECT EXPORT FOR PRICE LIST
 	
-	echo "<BR><CENTER>";
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
-	echo '<CENTER><TABLE>';
-	echo '<TR><TH colspan=2>' . _('Price List Export') . '</TH></TR>';
+	echo "<br>";
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo '<table>';
+	echo '<tr><th colspan=2>' . _('Price List Export') . '</th></tr>';
 	$sql = 'SELECT sales_type, typeabbrev FROM salestypes';
 	$SalesTypesResult=DB_query($sql,$db);
-	echo '<TR><TD>' . _('For Sales Type/Price List') . ':</TD>';
-	echo '<TD><SELECT name="SalesType">';
+	echo '<tr><td>' . _('For Sales Type/Price List') . ':</td>';
+	echo '<td><select name="SalesType">';
 	while ($myrow=DB_fetch_array($SalesTypesResult)){
-	          echo '<OPTION Value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'];
+	          echo '<option Value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'];
 	}
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 	
 	$sql = 'SELECT loccode, locationname FROM locations';
 	$SalesTypesResult=DB_query($sql,$db);
-	echo '<TR><TD>' . _('For Location') . ':</TD>';
-	echo '<TD><SELECT name="Location">';
+	echo '<tr><td>' . _('For Location') . ':</td>';
+	echo '<td><select name="Location">';
 	while ($myrow=DB_fetch_array($SalesTypesResult)){
-	          echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+	          echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 	}
-	echo '</SELECT></TD></TR>';
-	echo "</TABLE>";
-	echo "<CENTER><input type='Submit' name='pricelist' value='" . _('Export') . "'></CENTER>";
-	echo "</FORM></CENTER><BR>";
+	echo '</select></td></tr>';
+	echo "</table>";
+	echo "<div class='centre'><input type='Submit' name='pricelist' value='" . _('Export') . "'></div>";
+	echo "</form><br>";
 
 	// SELECT EXPORT FOR CUSTOMER LIST
 	
 	
-	echo "<BR><CENTER>";
+	echo "<br>";
 	// Export Stock For Location
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
-	echo '<CENTER><TABLE>';
-	echo '<TR><TH colspan=2>' . _('Customer List Export') . '</TH></TR>';
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo '<table>';
+	echo '<tr><th colspan=2>' . _('Customer List Export') . '</th></tr>';
 	
 	$sql = 'SELECT loccode, locationname FROM locations';
 	$SalesTypesResult=DB_query($sql,$db);
-	echo '<TR><TD>' . _('For Location') . ':</TD>';
-	echo '<TD><SELECT name="Location">';
+	echo '<tr><td>' . _('For Location') . ':</td>';
+	echo '<td><select name="Location">';
 	while ($myrow=DB_fetch_array($SalesTypesResult)){
-	          echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+	          echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 	}
-	echo '</SELECT></TD></TR>';
-	echo "</TABLE>";
-	echo "<CENTER><input type='Submit' name='custlist' value='" . _('Export') . "'></CENTER>";
-	echo "</FORM></CENTER><BR>";
+	echo '</select></td></tr>';
+	echo "</table>";
+	echo "<div class='centre'><input type='Submit' name='custlist' value='" . _('Export') . "'></div>";
+	echo "</form><br>";
 
 	// SELECT EXPORT FOR SALES MAN
 	
-	echo "<BR><CENTER>";
+	echo "<br>";
 	// Export Stock For Location
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
-	echo '<CENTER><TABLE>';
-	echo '<TR><TH colspan=2>' . _('Salesman List Export') . '</TH></TR>';
-	echo "</TABLE>";
-	echo "<CENTER><input type='Submit' name='salesmanlist' value='" . _('Export') . "'></CENTER>";
-	echo "</FORM></CENTER><BR>";
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo '<table>';
+	echo '<tr><th colspan=2>' . _('Salesman List Export') . '</th></tr>';
+	echo "</table>";
+	echo "<div class='centre'><div class='centre'><input type='Submit' name='salesmanlist' value='" . _('Export') . "'></div>";
+	echo "</form><br>";
 	
 	// SELECT EXPORT FOR IMAGES
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
-	echo '<CENTER><TABLE>';
-	echo '<TR><TH colspan=2>' . _('Image List Export') . '</TH></TR>';
-	echo "</TABLE>";
-	echo "<CENTER><input type='Submit' name='imagelist' value='" . _('Export') . "'></CENTER>";
-	echo "</FORM></CENTER><BR>";
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo '<table>';
+	echo '<tr><th colspan=2>' . _('Image List Export') . '</th></tr>';
+	echo "</table>";
+	echo "<div class='centre'><input type='Submit' name='imagelist' value='" . _('Export') . "'></div>";
+	echo "</form><br>";
 
 	// SELECT EXPORT SECURITY TOKENS
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
-	echo '<CENTER><TABLE>';
-	echo '<TR><TH colspan=2>' . _('Security Token List Export') . '</TH></TR>';
-	echo "</TABLE>";
-	echo "<CENTER><input type='Submit' name='sectokenlist' value='" . _('Export') . "'></CENTER>";
-	echo "</FORM></CENTER><BR>";
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo '<table>';
+	echo '<tr><th colspan=2>' . _('Security Token List Export') . '</th></tr>';
+	echo "</table>";
+	echo "<div class='centre'><input type='Submit' name='sectokenlist' value='" . _('Export') . "'></div>";
+	echo "</form><br>";
 	
 	// SELECT EXPORT SECURITY ROLES
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
-	echo '<CENTER><TABLE>';
-	echo '<TR><TH colspan=2>' . _('Security Role List Export') . '</TH></TR>';
-	echo "</TABLE>";
-	echo "<CENTER><input type='Submit' name='secrolelist' value='" . _('Export') . "'></CENTER>";
-	echo "</FORM></CENTER><BR>";
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo '<table>';
+	echo '<tr><th colspan=2>' . _('Security Role List Export') . '</th></tr>';
+	echo "</table>";
+	echo "<div class='centre'><input type='Submit' name='secrolelist' value='" . _('Export') . "'></div>";
+	echo "</form><br>";
 
 	// SELECT EXPORT SECURITY GROUPS
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
-	echo '<CENTER><TABLE>';
-	echo '<TR><TH colspan=2>' . _('Security Group List Export') . '</TH></TR>';
-	echo "</TABLE>";
-	echo "<CENTER><input type='Submit' name='secgrouplist' value='" . _('Export') . "'></CENTER>";
-	echo "</FORM></CENTER><BR>";
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo '<table>';
+	echo '<tr><th colspan=2>' . _('Security Group List Export') . '</th></tr>';
+	echo "</table>";
+	echo "<div class='centre'><input type='Submit' name='secgrouplist' value='" . _('Export') . "'></div>";
+	echo "</form><br>";
 
 	// SELECT EXPORT SECURITY USERS
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
-	echo '<CENTER><TABLE>';
-	echo '<TR><TH colspan=2>' . _('Security User List Export') . '</TH></TR>';
-	echo "</TABLE>";
-	echo "<CENTER><input type='Submit' name='secuserlist' value='" . _('Export') . "'></CENTER>";
-	echo "</FORM></CENTER><BR>";
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo '<table>';
+	echo '<tr><th colspan=2>' . _('Security User List Export') . '</th></tr>';
+	echo "</table>";
+	echo "<div class='centre'><input type='Submit' name='secuserlist' value='" . _('Export') . "'></div>";
+	echo "</form><br>";
 	
 
 	include('includes/footer.inc');

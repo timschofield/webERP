@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity=15;
 
@@ -8,15 +8,15 @@ include ('includes/session.inc');
 $title = _('Recalculation of GL Balances in Chart Details Table');
 include('includes/header.inc');
 
-echo "<FORM METHOD='POST' ACTION=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 if (!isset($_POST['FromPeriod'])){
 
 /*Show a form to allow input of criteria for TB to show */
-	echo '<CENTER><TABLE>
-                             <TR>
-                                 <TD>' . _('Select Period From') . ":</TD>
-                                 <TD><SELECT Name='FromPeriod'>";
+	echo '<table>
+                             <tr>
+                                 <td>' . _('Select Period From') . ":</td>
+                                 <td><select Name='FromPeriod'>";
 
 	$sql = 'SELECT periodno,
                        lastdate_in_period
@@ -24,14 +24,16 @@ if (!isset($_POST['FromPeriod'])){
 	$Periods = DB_query($sql,$db);
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
-		echo '<OPTION VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
+		echo '<option VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 	}
 
-	echo '</SELECT></TD>
-             </TR>
-             </TABLE>';
+	echo '</select></td>
+             </tr>
+             </table>';
 
-	echo "<INPUT TYPE=SUBMIT Name='recalc' Value='" . _('Do the Recalculation') . "'   onclick=\"return confirm('" . _('Are you sure you wish to re-post all general ledger transactions since the selected period .... this can take some time?') . '\');"></CENTER></FORM>';
+	echo "<div class='centre'><input type=submit Name='recalc' Value='" . _('Do the Recalculation') . "' 
+	  onclick=\"return confirm('" . _('Are you sure you wish to re-post all general ledger transactions since the selected period
+	   .... this can take some time?') . '\');"></div></form>';
 
 } else {  /*OK do the updates */
 

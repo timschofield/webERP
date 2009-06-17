@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /* Steve Kitchen */
 /* Up front menu for language file maintenance */
 
@@ -23,13 +23,13 @@ if (!is_writable('./locale/' . $_SESSION['Language'])) {
 }
 else
 {
-	echo '<P><A HREF="' . $rootpath . '/Z_poRebuildDefault.php?' . SID . '">'.  _('Rebuild the System Default Language File') . '</A>';
-	echo '<P><A HREF="' . $rootpath . '/Z_poAddLanguage.php?' . SID . '">' . _('Add a New Language to the System') .'</A>';
-	echo '<P><A HREF="' . $rootpath . '/Z_poEditLangHeader.php?' . SID . '">'. _('Edit a Language File Header') . '</A>';
-	echo '<P><A HREF="' . $rootpath . '/Z_poEditLangModule.php?' . SID . '">'. _('Edit a Language File Module') . '</A>';
-	echo '<P><A HREF="' . $rootpath . '/Z_poEditLangRemaining.php?' . SID . '">'. _('Edit Remaining Strings For This Language') . '</A>';
-	echo '<P><A HREF="' . $rootpath . '/locale/'.$_SESSION['Language'].'/LC_MESSAGES/messages.po' . SID . '">'. _('Download messages.po file') . '</A>';
-	echo '<P><A HREF="' . $rootpath . '/locale/'.$_SESSION['Language'].'/LC_MESSAGES/messages.mo' . SID . '">'. _('Download messages.mo file') . '</A>';
+	echo '<p><a href="' . $rootpath . '/Z_poRebuildDefault.php?' . SID . '">'.  _('Rebuild the System Default Language File') . '</a>';
+	echo '<p><a href="' . $rootpath . '/Z_poAddLanguage.php?' . SID . '">' . _('Add a New Language to the System') .'</a>';
+	echo '<p><a href="' . $rootpath . '/Z_poEditLangHeader.php?' . SID . '">'. _('Edit a Language File Header') . '</a>';
+	echo '<p><a href="' . $rootpath . '/Z_poEditLangModule.php?' . SID . '">'. _('Edit a Language File Module') . '</a>';
+	echo '<p><a href="' . $rootpath . '/Z_poEditLangRemaining.php?' . SID . '">'. _('Edit Remaining Strings For This Language') . '</a>';
+	echo '<p><a href="' . $rootpath . '/locale/'.$_SESSION['Language'].'/LC_MESSAGES/messages.po' . SID . '">'. _('Download messages.po file') . '</a>';
+	echo '<p><a href="' . $rootpath . '/locale/'.$_SESSION['Language'].'/LC_MESSAGES/messages.mo' . SID . '">'. _('Download messages.mo file') . '</a>';
 }
 
 include('includes/footer.inc');

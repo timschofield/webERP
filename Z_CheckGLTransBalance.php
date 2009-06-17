@@ -1,12 +1,12 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
 $title=_('Check Period Sales Ledger Control Account');
 include('includes/header.inc');
 
-echo '<TABLE>';
+echo '<table>';
 
 $Header = "<tr>
 		<th>" . _('Type') . "</th>
@@ -44,10 +44,10 @@ while ($OutOfWackRow = DB_fetch_array($OutOfWackResult)){
 	} else {
 		$RowCounter++;
 	}
-	echo "<TR><TD><A HREF='" . $rootpath . "/GLTransInquiry.php?" . SID . "&TypeID=" . $OutOfWackRow['type'] . "&TransNo=" . $OutOfWackRow['typeno'] . "'>" . $OutOfWackRow['typename'] . '</A></TD><TD ALIGN=RIGHT>' . $OutOfWackRow['typeno'] . '</TD><TD ALIGN=RIGHT>' . $OutOfWackRow['periodno'] . '</TD><TD ALIGN=RIGHT>' . number_format($OutOfWackRow['nettot'],3) . '</TD></TR>';
+	echo "<tr><td><a href='" . $rootpath . "/GLTransInquiry.php?" . SID . "&TypeID=" . $OutOfWackRow['type'] . "&TransNo=" . $OutOfWackRow['typeno'] . "'>" . $OutOfWackRow['typename'] . '</a></td><td align=right>' . $OutOfWackRow['typeno'] . '</td><td align=right>' . $OutOfWackRow['periodno'] . '</td><td align=right>' . number_format($OutOfWackRow['nettot'],3) . '</td></tr>';
 
 }
-echo '</TABLE>';
+echo '</table>';
 
 include('includes/footer.inc');
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 /*This page shows the serial numbers created for a works order 
  * - creating automatically from the last serial number counter in the stockmaster or by manual entry 
  * - If the item is lot controlled then the lot reference and the quantity in the lot can be entered 
@@ -39,7 +39,7 @@ if (isset($_GET['StockID'])){ //the page was called for the first time - get var
 	$NextSerialNo = $_POST['NextSerialNo'];
 }
 
-echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="" ALT="">' . ' ' . _('For Work Order Number') . ' ' . $WO . ' ' . _('and output item') . ' ' . $StockID . ' - ' . $Description;
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="" alt="">' . ' ' . _('For Work Order Number') . ' ' . $WO . ' ' . _('and output item') . ' ' . $StockID . ' - ' . $Description;
 
 $DbgMsg = _('The SQL that failed was');
 

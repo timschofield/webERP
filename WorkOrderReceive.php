@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 11;
 
@@ -8,15 +8,15 @@ $title = _('Receive Work Order');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<A HREF="'. $rootpath . '/SelectWorkOrder.php?' . SID . '">' . _('Back to Work Orders'). '</A><BR>';
-echo '<A HREF="'. $rootpath . '/WorkOrderCosting.php?' . SID . '&WO=' .  $_REQUEST['WO'] . '">' . _('Back to Costing'). '</A><BR>';
+echo '<a href="'. $rootpath . '/SelectWorkOrder.php?' . SID . '">' . _('Back to Work Orders'). '</a><br>';
+echo '<a href="'. $rootpath . '/WorkOrderCosting.php?' . SID . '&WO=' .  $_REQUEST['WO'] . '">' . _('Back to Costing'). '</a><br>';
 
-echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 
 if (!isset($_REQUEST['WO']) OR !isset($_REQUEST['StockID'])) {
     /* This page can only be called with a purchase order number for invoicing*/
-    echo '<CENTER><A HREF="' . $rootpath . '/SelectWorkOrder.php?' . SID . '">'.
-        _('Select a work order to receive').'</A></CENTER>';
+    echo '<div class="centre"><a href="' . $rootpath . '/SelectWorkOrder.php?' . SID . '">'.
+        _('Select a work order to receive').'</a></div>';
     prnMsg(_('This page can only be opened if a work order has been selected. Please select a work order to receive first'),'info');
     include ('includes/footer.inc');
     exit;
@@ -659,7 +659,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
         $Result = DB_Txn_Commit($db);
 
         prnMsg(_('The receipt of') . ' ' . $QuantityReceived . ' ' . $WORow['units'] . ' ' . _('of')  . ' ' . $_POST['StockID'] . ' - ' . $WORow['description'] . ' ' . _('against work order') . ' '. $_POST['WO'] . ' ' . _('has been processed'),'info');
-        echo "<A HREF='$rootpath/SelectWorkOrder.php?" . SID . "'>" . _('Select a different work order for receiving finished stock against'). '</A>';
+        echo "<a href='$rootpath/SelectWorkOrder.php?" . SID . "'>" . _('Select a different work order for receiving finished stock against'). '</a>';
         unset($_POST['WO']);
         unset($_POST['StockID']);
         unset($_POST['IntoLocation']);
@@ -721,7 +721,7 @@ if ($WORow['closed']==1){
 if (!isset($_POST['ReceivedDate'])){
     $_POST['ReceivedDate'] = Date($_SESSION['DefaultDateFormat']);
 }
-echo '<center><table cellpadding=2 border=0>
+echo '<table cellpadding=2 border=0>
         <tr><td>' . _('Receive work order') . ':</td>
 			<td>' . $_POST['WO'] .'</td><td>' . _('Item') . ':</td>
 			<td>' . $_POST['StockID'] . ' - ' . $WORow['description'] . '</td></tr>
@@ -860,7 +860,7 @@ echo '</table>';
 
 
 
-echo '</FORM>';
+echo '</form>';
 
 include('includes/footer.inc');
 ?>

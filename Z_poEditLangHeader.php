@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 /* Steve Kitchen */
 
@@ -14,9 +14,9 @@ include('includes/header.inc');
 /* Your webserver user MUST have read/write access to here, 
 	otherwise you'll be wasting your time */
 
-echo "<BR>&nbsp;<A HREF='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</A>";
-echo '<BR><BR>&nbsp;' . _('Utility to edit a language file header');
-echo '<BR>&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
+echo "<br>&nbsp;<a href='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
+echo '<br><br>&nbsp;' . _('Utility to edit a language file header');
+echo '<br>&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
   
 $PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
 $PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
@@ -29,13 +29,12 @@ for ($i=1; $i<=17; $i++){	/* message.po header is 17 lines long - this is easily
 
 if (isset($_POST['submit'])) {
 
-	echo '<CENTER>';
-	echo '<BR><TABLE><TR><TD>';
-	echo '<FORM METHOD="post" ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<br><table><tr><td>';
+	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 /* write the new header then the rest of the language file to a new file */
 
-	prnMsg (_('Writing the language file header') . '.....<BR>', 'info', ' ');
+	prnMsg (_('Writing the language file header') . '.....<br>', 'info', ' ');
 	
 	$fpOut = fopen($PathToNewLanguage, 'w');
 
@@ -43,7 +42,7 @@ if (isset($_POST['submit'])) {
 		$Result = fputs($fpOut, stripslashes($_POST['Header_'.$i])."\n");
 	}
 
-	prnMsg (_('Writing the rest of the language file') . '.....<BR>', 'info', ' ');
+	prnMsg (_('Writing the rest of the language file') . '.....<br>', 'info', ' ');
 
 	while (!feof($fpIn)) {
 		$FileContents = fgets($fpIn);
@@ -65,12 +64,11 @@ if (isset($_POST['submit'])) {
 			$Result = unlink($PathToLanguage . '.bak');
 		}
 
-	prnMsg (_('Done') . '<BR>', 'info', ' ');
+	prnMsg (_('Done') . '<br>', 'info', ' ');
 
-	echo '</FORM>';
-	echo '</TD></TR></TABLE>';
-	echo '</CENTER>';
-	
+	echo '</form>';
+	echo '</td></tr></table>';
+
 } else {
 
 	$Result = fclose($fpIn);
@@ -80,32 +78,31 @@ if (!is_writable('./locale/' . $_SESSION['Language'])) {
 }
 else
 {
-  echo '<BR><BR>&nbsp;' . _('To change language click on the user name at the top left, change to language desired and click Modify');
-  echo '<BR>&nbsp;' . _('Make sure you have selected the correct language to translate!');
-  echo '<BR>&nbsp;' . _('When finished modifying you must click on Modify at the bottom in order to save changes');
-	echo '<CENTER>';
-	echo '<BR>';
-	prnMsg (_('Your existing translation file (messages.po) will be backed up as messages.po.old') . '<BR><BR>' . 
+  echo '<br><br>&nbsp;' . _('To change language click on the user name at the top left, change to language desired and click Modify');
+  echo '<br>&nbsp;' . _('Make sure you have selected the correct language to translate!');
+  echo '<br>&nbsp;' . _('When finished modifying you must click on Modify at the bottom in order to save changes');
+	echo '<div class="centre">';
+	echo '<br>';
+	prnMsg (_('Your existing translation file (messages.po) will be backed up as messages.po.old') . '<br><br>' . 
 				_('Make sure you know what you are doing BEFORE you edit the header'), 'info', _('PLEASE NOTE'));
-	echo '<BR>';
-	echo '<FORM METHOD="post" ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<br></div>';
+	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
-	echo '<TABLE><TR><TH" COLSPAN="2" ALIGN="center">'. _('Language File Header for') . ' "' . $_POST['language'] . '"</TH></TR>';
-	echo '<TR><TD COLSPAN="2"></TD></TR>';
+	echo '<table><tr><th" colspan="2" ALIGN="center">'. _('Language File Header for') . ' "' . $_POST['language'] . '"</th></tr>';
+	echo '<tr><td colspan="2"></td></tr>';
 
 	for ($i=1; $i<=17; $i++) {
 
-		echo '<TR>';
-		echo '<TD>' . _('Header Line') . ' # ' . $i . '</TD>';
-		echo '<TD><INPUT TYPE="text" SIZE="80" NAME="Header_' . $i . '" VALUE="' . $LanguageHeader[$i] . '"></TD>';
-		echo '</TR>';
+		echo '<tr>';
+		echo '<td>' . _('Header Line') . ' # ' . $i . '</td>';
+		echo '<td><input type="text" size="80" name="Header_' . $i . '" VALUE="' . $LanguageHeader[$i] . '"></td>';
+		echo '</tr>';
 	}
 
-	echo '</TABLE>';
-	echo '<BR><CENTER><INPUT TYPE="Submit" NAME="submit" VALUE="' . _('Modify') . '">&nbsp;&nbsp;';
-	echo '<INPUT TYPE="hidden" NAME="language" VALUE="' . $_POST['language'] . '"></CENTER>';
-	echo '</FORM>';
-	echo '</CENTER>';
+	echo '</table>';
+	echo '<br><div class="centre"><input type="Submit" name="submit" VALUE="' . _('Modify') . '">&nbsp;&nbsp;';
+	echo '<input type="hidden" name="language" VALUE="' . $_POST['language'] . '"></div>';
+	echo '</form>';
 }
 }
 include('includes/footer.inc');

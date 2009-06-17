@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -19,7 +19,7 @@ include('includes/header.inc');
 	echo '<table width=100%>
 			<td width=37% align=left><a href="'. $rootpath . '/index.php?&Application=AR'. SID .'">' . _('Back to Customers') . '</a></td>
 			<td align=left><font size=4 color=blue><u><b>' . _('Debtors Control Integrity') . '</b></u></font></td>
-	      </table><p><center>';
+	      </table><p>';
 
 	echo '<table border=1>'; //Main table
 	echo '<td><table>'; // First column
@@ -163,7 +163,7 @@ include('includes/header.inc');
 		echo '</table></form>';
 	}
 
-echo '</center></td></tr></table>'; // end Page Border
+echo '</td></tr></table>'; // end Page Border
 include('includes/footer.inc');
 
 ?>

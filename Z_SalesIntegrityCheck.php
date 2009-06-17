@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 // Script to do some Sales Integrity checks
 // No SQL updates or Inserts - so safe to run
@@ -12,7 +12,7 @@ $title = _('Sales Integrity');
 include('includes/header.inc');
 
 
-echo '<CENTER><FONT SIZE=4 COLOR=blue><U><B>' . _('Sales Integrity Check') . '</B></U></FONT></CENTER>';
+echo '<div class="centre"><font size=4 color=blue><U><b>' . _('Sales Integrity Check') . '</b></U></font></div>';
 
 echo '<br><br>'._('Check every Invoice has a Sales Order').'<br>';
 echo '<br><br>'._('Check every Invoice has a Tax Entry').'<br>';

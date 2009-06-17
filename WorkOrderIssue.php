@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 11;
 
@@ -8,15 +8,15 @@ $title = _('Issue Materials To Work Order');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<A HREF="'. $rootpath . '/SelectWorkOrder.php?' . SID . '">' . _('Back to Work Orders'). '</A><BR>';
-echo '<A HREF="'. $rootpath . '/WorkOrderCosting.php?' . SID . '&WO=' .  $_REQUEST['WO'] . '">' . _('Back to Costing'). '</A><BR>';
+echo '<a href="'. $rootpath . '/SelectWorkOrder.php?' . SID . '">' . _('Back to Work Orders'). '</a><br>';
+echo '<a href="'. $rootpath . '/WorkOrderCosting.php?' . SID . '&WO=' .  $_REQUEST['WO'] . '">' . _('Back to Costing'). '</a><br>';
 
-echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 
 if (!isset($_REQUEST['WO']) OR !isset($_REQUEST['StockID'])) {
     /* This page can only be called with a purchase order number for invoicing*/
-    echo '<CENTER><A HREF="' . $rootpath . '/SelectWorkOrder.php?' . SID . '">'.
-        _('Select a work order to issue materials to').'</A></CENTER>';
+    echo '<div class="centre"><a href="' . $rootpath . '/SelectWorkOrder.php?' . SID . '">'.
+        _('Select a work order to issue materials to').'</a></div>';
     prnMsg(_('This page can only be opened if a work order has been selected. Please select a work order to issue materials to first'),'info');
     include ('includes/footer.inc');
     exit;
@@ -340,8 +340,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
         $Result = DB_Txn_Commit($db);
 
         prnMsg(_('The issue of') . ' ' . $QuantityIssued . ' ' . _('of')  . ' ' . $_POST['IssueItem'] . ' ' . _('against work order') . ' '. $_POST['WO'] . ' ' . _('has been processed'),'info');
-        echo '<p><ul><li><A HREF="' . $rootpath . '/WorkOrderIssue.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $_POST['StockID'] . '">' . _('Issue more components to this work order') . '</a></li>';
-        echo '<li><A HREF="' . $rootpath . '/SelectWorkOrder.php?' . SID . '">' . _('Select a different work order for issuing materials and components against'). '</a></li></ul>';
+        echo '<p><ul><li><a href="' . $rootpath . '/WorkOrderIssue.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $_POST['StockID'] . '">' . _('Issue more components to this work order') . '</a></li>';
+        echo '<li><a href="' . $rootpath . '/SelectWorkOrder.php?' . SID . '">' . _('Select a different work order for issuing materials and components against'). '</a></li></ul>';
         unset($_POST['WO']);
         unset($_POST['StockID']);
         unset($_POST['IssueItem']);
@@ -470,7 +470,7 @@ if (isset($_POST['Search'])){
         prnMsg (_('There are no products available meeting the criteria specified'),'info');
 
         if ($debug==1){
-            prnMsg(_('The SQL statement used was') . ':<BR>' . $SQL,'info');
+            prnMsg(_('The SQL statement used was') . ':<br>' . $SQL,'info');
         }
     }
     if (DB_num_rows($SearchResult)==1){
@@ -522,7 +522,7 @@ if ($WORow['closed']==1){
 if (!isset($_POST['IssuedDate'])){
     $_POST['IssuedDate'] = Date($_SESSION['DefaultDateFormat']);
 }
-echo '<center><table cellpadding=2 border=0>
+echo '<table cellpadding=2 border=0>
     <tr><td class="label">' . _('Issue to work order') . ':</td><td>' . $_POST['WO'] .'</td><td class="label">' . _('Item') . ':</td><td>' . $_POST['StockID'] . ' - ' . $WORow['description'] . '</td></tr>
      <tr><td class="label">' . _('Manufactured at') . ':</td><td>' . $WORow['locationname'] . '</td><td class="label">' . _('Required By') . ':</td><td>' . ConvertSQLDate($WORow['requiredby']) . '</td></tr>
      <tr><td class="label">' . _('Quantity Ordered') . ':</td><td align=right>' . number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td><td colspan=2>' . $WORow['units'] . '</td></tr>
@@ -610,34 +610,34 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
             ORDER BY categorydescription";
         $result1 = DB_query($SQL,$db);
 
-    echo '<table><tr><td><font size=2>' . _('Select a stock category') . ':</FONT><SELECT NAME="StockCat">';
+    echo '<table><tr><td><font size=2>' . _('Select a stock category') . ':</font><select name="StockCat">';
 
     if (!isset($_POST['StockCat'])){
-        echo "<OPTION SELECTED VALUE='All'>" . _('All');
+        echo "<option selected VALUE='All'>" . _('All');
         $_POST['StockCat'] ='All';
     } else {
-        echo "<OPTION VALUE='All'>" . _('All');
+        echo "<option VALUE='All'>" . _('All');
     }
 
     while ($myrow1 = DB_fetch_array($result1)) {
 
         if ($_POST['StockCat']==$myrow1['categoryid']){
-            echo '<OPTION SELECTED VALUE=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
+            echo '<option selected VALUE=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
         } else {
-            echo '<OPTION VALUE='. $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
+            echo '<option VALUE='. $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
         }
     }
     ?>
 
-    </SELECT>
-    <TD><FONT SIZE=2><?php echo _('Enter text extracts in the'); ?> <B><?php echo _('description'); ?></B>:</FONT></TD>
-    <TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25 VALUE="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>"></TD></TR>
-    <TR><TD></TD>
-            <TD><FONT SIZE 3><B><?php echo _('OR'); ?> </B></FONT><FONT SIZE=2><?php echo _('Enter extract of the'); ?> <B><?php echo _('Stock Code'); ?></B>:</FONT></TD>
-        <TD><INPUT TYPE="Text" NAME="StockCode" SIZE=15 MAXLENGTH=18 VALUE="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></TD>
-            </TR>
-            </TABLE>
-            <CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>">
+    </select>
+    <td><font size=2><?php echo _('Enter text extracts in the'); ?> <b><?php echo _('description'); ?></b>:</font></td>
+    <td><input type="Text" name="Keywords" size=20 maxlength=25 VALUE="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>"></td></tr>
+    <tr><td></td>
+            <td><font SIZE 3><b><?php echo _('OR'); ?> </b></font><font size=2><?php echo _('Enter extract of the'); ?> <b><?php echo _('Stock Code'); ?></b>:</font></td>
+        <td><input type="Text" name="StockCode" size=15 maxlength=18 VALUE="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></td>
+            </tr>
+            </table>
+            <div class="centre"><input type=submit name="Search" VALUE="<?php echo _('Search Now'); ?>">
 
     <script language='JavaScript' type='text/javascript'>
 
@@ -647,16 +647,16 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
     </script>
 
     <?php
-    echo '</CENTER>';
+    echo '</div>';
 
     if (isset($SearchResult)) {
 
         if (DB_num_rows($SearchResult)>1){
 
-            echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
-            $TableHeader = '<TR><TH>' . _('Code') . '</TH>
-                        <TH>' . _('Description') . '</TH>
-                        <TH>' . _('Units') . '</TH></TR>';
+            echo '<table cellpadding=2 colspan=7 BORDER=1>';
+            $TableHeader = '<tr><th>' . _('Code') . '</th>
+                        <th>' . _('Description') . '</th>
+                        <th>' . _('Units') . '</th></tr>';
             echo $TableHeader;
             $j = 1;
             $k=0; //row colour counter
@@ -679,21 +679,21 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
                     }
 
                     if ($k==1){
-                        echo '<TR class="OddTableRows">';
+                        echo '<tr class="OddTableRows">';
                         $k=0;
                     } else {
-                        echo '<TR class="EvenTableRows">';
+                        echo '<tr class="EvenTableRows">';
                         $k=1;
                     }
 
                     $IssueLink = $_SERVER['PHP_SELF'] . '?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $_POST['StockID'] . '&IssueItem=' . $myrow['stockid'] . '&FromLocation=' . $_POST['FromLocation'];
-                    printf("<TD><FONT SIZE=1>%s</FONT></TD>
-                            <TD><FONT SIZE=1>%s</FONT></TD>
-                            <TD><FONT SIZE=1>%s</FONT></TD>
-                            <TD>%s</TD>
-                            <TD><FONT SIZE=1><A HREF='%s'>"
-                            . _('Add to Work Order') . '</A></FONT></TD>
-                            </TR>',
+                    printf("<td><font size=1>%s</font></td>
+                            <td><font size=1>%s</font></td>
+                            <td><font size=1>%s</font></td>
+                            <td>%s</td>
+                            <td><font size=1><a href='%s'>"
+                            . _('Add to Work Order') . '</a></font></td>
+                            </tr>',
                             $myrow['stockid'],
                             $myrow['description'],
                             $myrow['units'],
@@ -708,7 +708,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
                 } //end if not already on work order
             }//end of while loop
         } //end if more than 1 row to show
-        echo '</TABLE>';
+        echo '</table>';
     }#end if SearchResults to show
 } else{ //There is an item selected to issue
 
@@ -779,7 +779,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
     }
 } //end if selecting new item to issue or entering the issued item quantites
 echo '</table>';
-echo '</FORM>';
+echo '</form>';
 
 include('includes/footer.inc');
 ?>

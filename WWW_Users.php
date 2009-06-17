@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 
 $PageSecurity=15;
 
@@ -430,7 +430,7 @@ echo '<tr><td>' . _('Customer Code') . ":</td>
 	<td><input type='text' name='Cust' size=10 maxlength=8 value='" . $_POST['Cust'] . "'></td></tr>";
 
 echo '<tr><td>' . _('Branch Code') . ":</td>
-	<td><input type='text' name='BranchCode' SIZE=10 MAXLENGTH=8 VALUE='" . $_POST['BranchCode'] ."'></td></tr>";
+	<td><input type='text' name='BranchCode' size=10 maxlength=8 VALUE='" . $_POST['BranchCode'] ."'></td></tr>";
 
 
 

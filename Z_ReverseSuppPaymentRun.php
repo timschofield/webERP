@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 /* Script to delete all supplier payments entered or created from a payment run on a specified day
  */
@@ -83,10 +83,10 @@ if (isset($_POST['RevPayts']) AND Is_Date($_POST['PaytDate'])==1){
 }
 
 
-echo "<FORM METHOD=POST ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
-echo '<BR>' . _('Enter the date of the payment run') . ": <INPUT TYPE=text name='PaytDate' maxlength=11 size=11 value='" . $_POST['PaytDate'] . "'>";
-echo "<INPUT TYPE=submit name='RevPayts' value='" . _('Reverse Supplier Payments on the Date Entered') . "'>";
-echo '</FORM>';
+echo "<form method=post action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+echo '<br>' . _('Enter the date of the payment run') . ": <input type=text name='PaytDate' maxlength=11 size=11 value='" . $_POST['PaytDate'] . "'>";
+echo "<input type=submit name='RevPayts' value='" . _('Reverse Supplier Payments on the Date Entered') . "'>";
+echo '</form>';
 
 include('includes/footer.inc');
 ?>

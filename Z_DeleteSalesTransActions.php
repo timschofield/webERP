@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -134,50 +134,50 @@ if (isset($_POST['ProcessDeletions'])){
 	prnMsg(_('It is necessary to re-post the remaining general ledger transactions for the general ledger to get back in sync with the transatiions that remain. This is an option from the Z_index.php page'),'warn');
 }
 
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?=' . $SID . "' METHOD=POST>";
+echo "<form action='" . $_SERVER['PHP_SELF'] . '?=' . $SID . "' method=post>";
 
-echo '<P><CENTER><TABLE>
-	<TR><TD>' . _('Delete All Sales Analysis') . '</TD>
-		<TD><INPUT TYPE=checkbox NAME=SalesAnalysis></TD>
-	</TR>
-	<TR><TD>' . _('Delete All statement transactions') . '</TD>
-		<TD><INPUT TYPE=checkbox NAME=DebtorTrans></TD>
-	</TR>
-	<TR><TD>' . _('Zero All stock balances') . '</TD>
-		<TD><INPUT TYPE=checkbox NAME=ZeroStock></TD>
-	</TR>
-	<TR><TD>' . _('Make Invoiced Qty Of All Sales Orders Nil') . '</TD>
-		<TD><INPUT TYPE=checkbox NAME=ZeroSalesOrders></TD>
-	</TR>
-	<TR><TD>' . _('Delete All Sales Orders') . '</TD>
-		<TD><INPUT TYPE=checkbox NAME=SalesOrders></TD>
-	</TR>
-	<TR><TD>' . _('Zero Received Qty of all purchase orders') . '</TD>
-		<TD><INPUT TYPE=checkbox NAME=ZeroPurchOrders></TD>
-	</TR>
-	<TR><TD>' . _('Delete All Purchase Orders') . '</TD>
-		<TD><INPUT TYPE=checkbox NAME=PurchOrders></TD>
-	</TR>
-	<TR><TD>' . _('Delete All Sales related stock movements') . '</TD>
-		<TD><INPUT TYPE=checkbox NAME=SalesStockMoves></TD>
-	</TR>
-	<TR><TD>' . _('Delete All Stock Receipt stock movements') . '</TD>
-		<TD><INPUT TYPE=checkbox NAME=ReceiptStockMoves></TD>
-	</TR>
-	<TR><TD>' . _('Delete All Sales GL Transactions') . '</TD>
-		<TD><INPUT TYPE=checkbox NAME=SalesGL></TD>
-	</TR>
-	<TR><TD>' . _('Delete All Stock GL Transactions') . '</TD>
-		<TD><INPUT TYPE=checkbox NAME=StockGL></TD>
-	</TR>
-	<TR><TD>' . _('Delete All PO Goods Received (GRNs)') . '</TD>
-		<TD><INPUT TYPE=checkbox NAME=GRNs></TD>
-	</TR>
-</TABLE>';
+echo '<p><table>
+	<tr><td>' . _('Delete All Sales Analysis') . '</td>
+		<td><input type=checkbox name=SalesAnalysis></td>
+	</tr>
+	<tr><td>' . _('Delete All statement transactions') . '</td>
+		<td><input type=checkbox name=DebtorTrans></td>
+	</tr>
+	<tr><td>' . _('Zero All stock balances') . '</td>
+		<td><input type=checkbox name=ZeroStock></td>
+	</tr>
+	<tr><td>' . _('Make Invoiced Qty Of All Sales Orders Nil') . '</td>
+		<td><input type=checkbox name=ZeroSalesOrders></td>
+	</tr>
+	<tr><td>' . _('Delete All Sales Orders') . '</td>
+		<td><input type=checkbox name=SalesOrders></td>
+	</tr>
+	<tr><td>' . _('Zero Received Qty of all purchase orders') . '</td>
+		<td><input type=checkbox name=ZeroPurchOrders></td>
+	</tr>
+	<tr><td>' . _('Delete All Purchase Orders') . '</td>
+		<td><input type=checkbox name=PurchOrders></td>
+	</tr>
+	<tr><td>' . _('Delete All Sales related stock movements') . '</td>
+		<td><input type=checkbox name=SalesStockMoves></td>
+	</tr>
+	<tr><td>' . _('Delete All Stock Receipt stock movements') . '</td>
+		<td><input type=checkbox name=ReceiptStockMoves></td>
+	</tr>
+	<tr><td>' . _('Delete All Sales GL Transactions') . '</td>
+		<td><input type=checkbox name=SalesGL></td>
+	</tr>
+	<tr><td>' . _('Delete All Stock GL Transactions') . '</td>
+		<td><input type=checkbox name=StockGL></td>
+	</tr>
+	<tr><td>' . _('Delete All PO Goods Received (GRNs)') . '</td>
+		<td><input type=checkbox name=GRNs></td>
+	</tr>
+</table>';
 
-echo '<INPUT TYPE=SUBMIT NAME=ProcessDeletions VALUE="' . _('Process') . '"  onclick="return confirm(\'' . _('Are You Really REALLY Sure?') . '\');">';
+echo '<input type=submit name=ProcessDeletions VALUE="' . _('Process') . '"  onclick="return confirm(\'' . _('Are You Really REALLY Sure?') . '\');">';
 
-echo '</FORM>';
+echo '</form>';
 
 include('includes/footer.inc');
 ?>

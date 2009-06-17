@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 15;
 include ('includes/session.inc');
@@ -23,23 +23,23 @@ $sql = 'SELECT debtortrans.type,
 $result =DB_query($sql,$db);
 
 if (DB_num_rows($result)>0){
-	echo '<TABLE><TR>
-		<TD>' . _('Type') . '</TD>
-		<TD>' . _('Trans No') . '</TD>
-		<TD>' . _('Ov Amt') . '</TD>
-		<TD>' . _('Allocated') . '</TD>
-		<TD>' . _('Tot Allcns') . '</TD></TR>';
+	echo '<table><tr>
+		<td>' . _('Type') . '</td>
+		<td>' . _('Trans No') . '</td>
+		<td>' . _('Ov Amt') . '</td>
+		<td>' . _('Allocated') . '</td>
+		<td>' . _('Tot Allcns') . '</td></tr>';
 
 	$RowCounter =0;
 	while ($myrow=DB_fetch_array($result)){
 
 
-		printf ('<TR>
-			<TD>%s</TD>
-			<TD>%s<TD ALIGN=RIGHT>%f.2</TD>
-			<TD ALIGN=RIGHT>%f.2</TD>
-			<TD ALIGN=RIGHT>%f.2</TD>
-			</TR>',
+		printf ('<tr>
+			<td>%s</td>
+			<td>%s<td align=right>%f.2</td>
+			<td align=right>%f.2</td>
+			<td align=right>%f.2</td>
+			</tr>',
 			$myrow['type'],
 			$myrow['transno'],
 			$myrow['ovamount'],
@@ -47,15 +47,15 @@ if (DB_num_rows($result)>0){
 			$myrow['totallocfrom']);
 		$RowCounter++;
 		if ($RowCounter==20){
-			echo '<TR><TD>' . _('Type') . '</TD>
-				<TD>' . _('Trans No') . '</TD>
-				<TD>' . _('Ov Amt') . '</TD>
-				<TD>' . _('Allocated') . '</TD>
-				<TD>' . _('Tot Allcns') . '</TD></TR>';
+			echo '<tr><td>' . _('Type') . '</td>
+				<td>' . _('Trans No') . '</td>
+				<td>' . _('Ov Amt') . '</td>
+				<td>' . _('Allocated') . '</td>
+				<td>' . _('Tot Allcns') . '</td></tr>';
 			$RowCounter=0;
 		}
 	}
-	echo '</TABLE>';
+	echo '</table>';
 } else {
 	prnMsg(_('There are no inconsistent allocations') . ' - ' . _('all is well'),'info');
 }

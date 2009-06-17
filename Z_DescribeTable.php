@@ -9,7 +9,7 @@ include('includes/header.inc');
 $sql='DESCRIBE '.$_GET['table'];
 $result=DB_query($sql, $db);
 
-echo '<center><table><tr>';
+echo '<table><tr>';
 echo '<th>'._('Field name').'</th>';
 echo '<th>'._('Field type').'</th>';
 echo '<th>'._('Can field be null').'</th>';
@@ -20,7 +20,7 @@ while ($myrow=DB_fetch_row($result)) {
 	echo $myrow[2] .'</td><td>';
 	echo $myrow[4] .'</td></tr>';
 }
-
+echo '</table>';
 include('includes/footer.inc');
 
 

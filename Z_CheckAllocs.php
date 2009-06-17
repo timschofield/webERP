@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /*This page adds the total of allocation records and compares this to the recorded allocation total in DebtorTrans table */
 
 $PageSecurity = 2;
@@ -33,10 +33,10 @@ if (DB_num_rows($result)==0){
 while ($myrow = DB_fetch_array($result)){
 	$AllocToID = $myrow['id'];
 
-	echo '<BR>' . _('Allocations made against') . ' ' . $myrow['debtorno'] . ' ' . _('Invoice Number') . ': ' . $myrow['transno'];
-	echo '<BR>' . _('Orginal Invoice Total') . ': '. $myrow['totamt'];
-	echo '<BR>' . _('Total amount recorded as allocated against it') . ': ' . $myrow['alloc'];
-	echo '<BR>' . _('Total of allocation records') . ': ' . $myrow['totalalloc'];
+	echo '<br>' . _('Allocations made against') . ' ' . $myrow['debtorno'] . ' ' . _('Invoice Number') . ': ' . $myrow['transno'];
+	echo '<br>' . _('Orginal Invoice Total') . ': '. $myrow['totamt'];
+	echo '<br>' . _('Total amount recorded as allocated against it') . ': ' . $myrow['alloc'];
+	echo '<br>' . _('Total of allocation records') . ': ' . $myrow['totalalloc'];
 
 	$sql = 'SELECT type,
 			transno,
@@ -53,15 +53,15 @@ while ($myrow = DB_fetch_array($result)){
 	$ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because');
 	$TransResult = DB_query($sql,$db,$ErrMsg);
 
-	echo '<TABLE CELLPADDING=2 BORDER=2>';
+	echo '<table cellpadding=2 BORDER=2>';
 
-	$tableheader = "<TR>
-				<TH>" . _('Type') . "</TH>
-				<TH>" . _('Number') . "</TH>
-				<TH>" . _('Reference') . "</TH>
-				<TH>" . _('Ex Rate') . "</TH>
-				<TH>" . _('Amount') . "</TH>
-				<TH>" . _('Alloc') . "</TH></TR>";
+	$tableheader = "<tr>
+				<th>" . _('Type') . "</th>
+				<th>" . _('Number') . "</th>
+				<th>" . _('Reference') . "</th>
+				<th>" . _('Ex Rate') . "</th>
+				<th>" . _('Amount') . "</th>
+				<th>" . _('Alloc') . "</th></tr>";
 	echo $tableheader;
 
 	$RowCounter = 1;
@@ -87,8 +87,8 @@ while ($myrow = DB_fetch_array($result)){
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>
+			<td align=right>%s</td>
+			<td align=right>%s</td>
 			</tr>",
 			$TransType,
 			$myrow1['transno'],
@@ -106,11 +106,11 @@ while ($myrow = DB_fetch_array($result)){
 		$AllocsTotal +=$myrow1['amt'];
 	}
 	//end of while loop
-	echo "<TR><TD COLSPAN = 6 ALIGN=RIGHT>" . number_format($AllocsTotal,2) . '</TD></TR>';
-	echo '</TABLE><HR>';
+	echo "<tr><td colspan = 6 align=right>" . number_format($AllocsTotal,2) . '</td></tr>';
+	echo '</table><hr>';
 }
 
-echo '</FORM></CENTER>';
+echo '</form>';
 
 include('includes/footer.inc');
 

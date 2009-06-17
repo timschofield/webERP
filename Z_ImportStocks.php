@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /* Script to make stock locations for all parts that do not have stock location records set up*/
 
 
@@ -285,11 +285,11 @@ if ($_FILES['userfile']['name']) { //start file processing
 	';
 	
 	echo "
-		<FORM ENCTYPE='multipart/form-data' ACTION='Z_ImportStocks.php' METHOD=POST>
-			<INPUT TYPE='hidden' name='MAX_FILE_SIZE' value='1000000'>" .
-			_('Upload file') . ": <INPUT NAME='userfile' TYPE='file'>
-			<INPUT TYPE='submit' VALUE='" . _('Send File') . "'>
-		</FORM>
+		<form ENCtype='multipart/form-data' action='Z_ImportStocks.php' method=post>
+			<input type='hidden' name='MAX_FILE_SIZE' value='1000000'>" .
+			_('Upload file') . ": <input name='userfile' type='file'>
+			<input type='submit' VALUE='" . _('Send File') . "'>
+		</form>
 	";
 
 }
