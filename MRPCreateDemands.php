@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 // MRPCreateDemands.php - Create mrpdemands based on sales order history
 
 $PageSecurity=9;
@@ -101,7 +101,8 @@ $calendarsql = "SELECT COUNT(*),cal2.calendardate
 					LEFT JOIN mrpcalendar as cal2 
 					  ON mrpcalendar.daynumber = cal2.daynumber
 				  WHERE mrpcalendar.calendardate = '$datearray[0]'
-					AND cal2.manufacturingflag='1'";
+					AND cal2.manufacturingflag='1'
+					GROUP BY cal2.calendardate";
 $resultdate = DB_query($calendarsql,$db);
 $myrowdate=DB_fetch_array($resultdate);
 // If find date based on manufacturing calendar, change date in array
@@ -126,7 +127,8 @@ for ($i = 1; $i <= ( $_POST['PeriodNumber'] - 1); $i++) {
 						LEFT JOIN mrpcalendar as cal2 
 						  ON mrpcalendar.daynumber = cal2.daynumber
 					  WHERE mrpcalendar.calendardate = '$datearray[$i]'
-						AND cal2.manufacturingflag='1'";
+						AND cal2.manufacturingflag='1'
+						GROUP BY cal2.calendardate";
 	$resultdate = DB_query($calendarsql,$db);
 	$myrowdate=DB_fetch_array($resultdate);
 	// If find date based on manufacturing calendar, change date in array

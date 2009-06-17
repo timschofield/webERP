@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity=9;
 
@@ -756,7 +756,8 @@ function CreateLowerLevelRequirement(&$db,
 	                        LEFT JOIN mrpcalendar as cal2 
 	                          ON (mrpcalendar.daynumber - $leadtime) = cal2.daynumber
 	                      WHERE mrpcalendar.calendardate = '$topdate'
-	                        AND cal2.manufacturingflag='1'";
+	                        AND cal2.manufacturingflag='1'
+	                        GROUP BY cal2.calendardate";
         $resultdate = DB_query($calendarsql,$db);
         $myrowdate=DB_fetch_array($resultdate);
         $newdate = $myrowdate[1];
