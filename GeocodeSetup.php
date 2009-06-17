@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedParam could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the delete code below*/
 
-		if (isset($_POST['geocode_key']) and $_POST['geocode_key'] > 0){
+		if (isset($_POST['geocode_key']) and isset($_POST['geocode_key']) ){
 			$sql = "UPDATE geocode_param SET
 					geocode_key='" . $_POST['geocode_key'] . "',
 					center_long='" . $_POST['center_long'] . "',
