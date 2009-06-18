@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -61,9 +61,9 @@ If (isset($_POST['TaxAuthority']) AND
 		$title = _('Taxation Reporting Error');
 		include('includes/header.inc');
 		echo _('The accounts receiveable transation details could not be retrieved because') . ' ' . DB_error_msg($db);
-		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		if ($debug==1){
-			echo "<BR>$SQL";
+			echo "<br>$SQL";
 		}
 		include('includes/footer.inc');
 		exit;
@@ -156,9 +156,9 @@ If (isset($_POST['TaxAuthority']) AND
 		$title = _('Taxation Reporting Error');
 		include('includes/header.inc');
 		echo _('The accounts payable transation details could not be retrieved because') . ' ' . DB_error_msg($db);
-		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		if ($debug==1){
-			echo "<BR>$SQL";
+			echo "<br>$SQL";
 		}
 		include('includes/footer.inc');
 		exit;
@@ -278,27 +278,27 @@ If (isset($_POST['TaxAuthority']) AND
 	$title=_('Tax Reporting');
 	include('includes/header.inc');
 
-	echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
+	echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table>";
 
-	echo '<TR><TD>' . _('Tax Authority To Report On:') . ':</FONT></TD>
-			<TD><SELECT name=TaxAuthority>';
+	echo '<tr><td>' . _('Tax Authority To Report On:') . ':</font></td>
+			<td><select name=TaxAuthority>';
 			
 	$result = DB_query('SELECT taxid, description FROM taxauthorities',$db);
 	while ($myrow = DB_fetch_array($result)){
-		echo '<OPTION Value=' . $myrow['taxid'] . '>' . $myrow['description'];
+		echo '<option Value=' . $myrow['taxid'] . '>' . $myrow['description'];
 	}
-	echo '</SELECT></TD></TR>';
-	echo '<TR><TD>' . _('Return Covering') . ':</FONT></TD>
-			<TD><SELECT name=NoOfPeriods>
-			<OPTION Value=1>' . _('One Month') .
-			'<OPTION SELECTED Value=2>' ._('Two Months') .
-			'<OPTION VALUE=3>' . _('Quarter') .
-			'<OPTION VALUE=6>' . _('Six Months') .
-			'</SELECT></TD></TR>';
+	echo '</select></td></tr>';
+	echo '<tr><td>' . _('Return Covering') . ':</font></td>
+			<td><select name=NoOfPeriods>
+			<option Value=1>' . _('One Month') .
+			'<option selected Value=2>' ._('Two Months') .
+			'<option VALUE=3>' . _('Quarter') .
+			'<option VALUE=6>' . _('Six Months') .
+			'</select></td></tr>';
 
 
-	echo '<TR><TD>' . _('Return To') . ":</TD>
-			<TD><SELECT Name='ToPeriod'>";
+	echo '<tr><td>' . _('Return To') . ":</td>
+			<td><select Name='ToPeriod'>";
 
 
 	$DefaultPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),0,Date('Y'))),$db);
@@ -312,25 +312,25 @@ If (isset($_POST['TaxAuthority']) AND
 
 	while ($myrow = DB_fetch_array($Periods,$db)){
 		if ($myrow['periodno']==$DefaultPeriod){
-			echo '<OPTION SELECTED VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']);
+			echo '<option selected VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']);
 		} else {
-			echo '<OPTION VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']);
+			echo '<option VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']);
 		}
 	}
 
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 
-	echo '<TR><TD>' . _('Detail Or Summary Only') . ":</FONT></TD>
-			<TD><SELECT name='DetailOrSummary'>
-			<OPTION Value='Detail'>" . _('Detail and Summary') .
-			"<OPTION SELECTED Value='Summary'>" . _('Summary Only') .
-			"</SELECT></TD></TR>";
+	echo '<tr><td>' . _('Detail Or Summary Only') . ":</font></td>
+			<td><select name='DetailOrSummary'>
+			<option Value='Detail'>" . _('Detail and Summary') .
+			"<option selected Value='Summary'>" . _('Summary Only') .
+			"</select></td></tr>";
 
 
-	echo "</TABLE>
-		<INPUT TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'>
-		</CENTER>
-		</FORM>";
+	echo "</table>
+		<div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'>
+		</div>
+		</form>";
 
 	include('includes/footer.inc');
 } /*end of else not PrintPDF */

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 2;
 
@@ -9,28 +9,28 @@ $title = _('Supplier Transactions Inquiry');
 include('includes/header.inc');
 
 
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
+echo "<form action='" . $_SERVER['PHP_SELF'] . "' method=post>";
 
-echo '<CENTER><TABLE CELLPADDING=2><TR>';
+echo '<table cellpadding=2><tr>';
 
-echo '<TD>' . _('Type') . ":</TD><TD><SELECT name='TransType'> ";
+echo '<td>' . _('Type') . ":</td><td><select name='TransType'> ";
 
 $sql = 'SELECT typeid, typename FROM systypes WHERE typeid >= 20 AND typeid <= 23';
 $resultTypes = DB_query($sql,$db);
 
-echo "<OPTION Value='All'> All";
+echo "<option Value='All'> All";
 while ($myrow=DB_fetch_array($resultTypes)){
 	if (isset($_POST['TransType'])){
 		if ($myrow['typeid'] == $_POST['TransType']){
-		     echo "<OPTION SELECTED Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
+		     echo "<option selected Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
 		} else {
-		     echo "<OPTION Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
+		     echo "<option Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
 		}
 	} else {
-		     echo "<OPTION Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
+		     echo "<option Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
 	}
 }
-echo '</SELECT></TD>';
+echo '</select></td>';
 
 if (!isset($_POST['FromDate'])){
 	$_POST['FromDate']=Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
@@ -38,13 +38,13 @@ if (!isset($_POST['FromDate'])){
 if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
-echo '<TD>' . _('From') . ":</TD><TD><INPUT TYPE=TEXT NAME='FromDate' MAXLENGTH=10 SIZE=11 VALUE=" . $_POST['FromDate'] . '></TD>';
-echo '<TD>' . _('To') . ":</TD><TD><INPUT TYPE=TEXT NAME='ToDate' MAXLENGTH=10 SIZE=11 VALUE=" . $_POST['ToDate'] . '></TD>';
+echo '<td>' . _('From') . ":</td><td><input type=TEXT class='date' alt='".$_SESSION['DefaultDateFormat']. "' name='FromDate' maxlength=10 size=11 VALUE=" . $_POST['FromDate'] . '></td>';
+echo '<td>' . _('To') . ":</td><td><input type=TEXT class='date' alt='".$_SESSION['DefaultDateFormat']. "' name='ToDate' maxlength=10 size=11 VALUE=" . $_POST['ToDate'] . '></td>';
 
-echo "</TR></TABLE><INPUT TYPE=SUBMIT NAME='ShowResults' VALUE='" . _('Show Transactions') . "'>";
-echo '<HR>';
+echo "</tr></table><div class='centre'><input type=submit name='ShowResults' VALUE='" . _('Show Transactions') . "'>";
+echo '<hr>';
 
-echo '</FORM></CENTER>';
+echo '</form></div>';
 
 if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
    $SQL_FromDate = FormatDateForSQL($_POST['FromDate']);
@@ -78,19 +78,19 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
    $ErrMsg = _('The supplier transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
    $DbgMsg =  _('The SQL that failed was');
 
-   echo '<TABLE CELLPADDING=2 BORDER=2>';
+   echo '<table cellpadding=2 BORDER=2>';
 
-   $tableheader = "<TR>
-			<TH>" . _('Type') . "</TH>
-			<TH>" . _('Number') . "</TH>
-			<TH>" . _('Supp Ref') . "</TH>
-			<TH>" . _('Date') . "</TH>
-			<TH>" . _('Supplier') . "</TH>
-			<TH>" . _('Comments') . "</TH>
-			<TH>" . _('Due Date') . "</TH>
-			<TH>" . _('Ex Rate') . "</TH>
-			<TH>" . _('Amount') . "</TH>
-			<TH>" . _('Currency') . '</TH></TR>';
+   $tableheader = "<tr>
+			<th>" . _('Type') . "</th>
+			<th>" . _('Number') . "</th>
+			<th>" . _('Supp Ref') . "</th>
+			<th>" . _('Date') . "</th>
+			<th>" . _('Supplier') . "</th>
+			<th>" . _('Comments') . "</th>
+			<th>" . _('Due Date') . "</th>
+			<th>" . _('Ex Rate') . "</th>
+			<th>" . _('Amount') . "</th>
+			<th>" . _('Currency') . '</th></tr>';
 	echo $tableheader;
 
 	$RowCounter = 1;
@@ -113,8 +113,8 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>
+			<td align=right>%s</td>
+			<td align=right>%s</td>
 			<td>%s</td></tr>",
 			$myrow['typename'],
 			$myrow['transno'],
@@ -138,19 +138,19 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 					_('Could not retrieve the GL transactions for this AP transaction'));
 		
 		if (DB_num_rows($GLTransResult)==0){
-			echo '<TR><TD COLSPAN=10>' . _('There are no GL transactions created for the above AP transaction') . '</TD></TR>';
+			echo '<tr><td colspan=10>' . _('There are no GL transactions created for the above AP transaction') . '</td></tr>';
 		} else {
-			echo '<TR><TD COLSPAN=2></TD><TD COLSPAN=8><TABLE>';
-			echo '<TR BGCOLOR=#FFFFFF><TD COLSPAN=2><B>' . _('GL Account') . '</B></TD><TD><B>' . _('Local Amount') . '</B></TD><TD><B>' . _('Narrative') . '</B></TD></TR>';
+			echo '<tr><td colspan=2></td><td colspan=8><table>';
+			echo '<tr bgcolor=#FFFFFF><td colspan=2><b>' . _('GL Account') . '</b></td><td><b>' . _('Local Amount') . '</b></td><td><b>' . _('Narrative') . '</b></td></tr>';
 			$CheckGLTransBalance =0;
 			while ($GLTransRow = DB_fetch_array($GLTransResult)){
 
-				printf('<TR>
-					<TD>%s</TD>
-					<TD>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD>%s</TD>
-					</TR>',
+				printf('<tr>
+					<td>%s</td>
+					<td>%s</td>
+					<td align=right>%s</td>
+					<td>%s</td>
+					</tr>',
 					$GLTransRow['account'],
 					$GLTransRow['accountname'],
 					$GLTransRow['amount'],
@@ -159,9 +159,9 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 				$CheckGLTransBalance += $GLTransRow['amount'];
 			}
 			if (round($CheckGLTransBalance,5)!= 0){
-				echo '<TR><TD COLSPAN=4 BGCOLOR=RED><B>' . _('The GL transactions for this AP transaction are out of balance by') .  ' ' . $CheckGLTransBalance . '</B></TD></TR>';
+				echo '<tr><td colspan=4 bgcolor=RED><b>' . _('The GL transactions for this AP transaction are out of balance by') .  ' ' . $CheckGLTransBalance . '</b></td></tr>';
 			}
-			echo '</TABLE></TD></TR>';
+			echo '</table></td></tr>';
 		}
 
 		$RowCounter++;
@@ -173,7 +173,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 	}
 	//end of while loop
 
- echo '</TABLE>';
+ echo '</table>';
 }
 
 include('includes/footer.inc');

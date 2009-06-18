@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.50 $ */
+/* $Revision: 1.51 $ */
 
 $PageSecurity =15;
 
@@ -277,14 +277,14 @@ if (isset($_POST['submit'])) {
 
 } /* end of if submit */
 
-echo '<FORM METHOD="post" action=' . $_SERVER['PHP_SELF'] . '>';
-echo '<CENTER><TABLE BORDER=1>';
+echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '>';
+echo '<table BORDER=1>';
 
-$TableHeader = '<tr><TH>' . _('System Variable Name') . '</TH>
-	<TH>' . _('Value') . '</TH>
-	<TH>' . _('Notes') . '</TH>';
+$TableHeader = '<tr><th>' . _('System Variable Name') . '</th>
+	<th>' . _('Value') . '</th>
+	<th>' . _('Notes') . '</th>';
 
-echo '<tr><TH COLSPAN=3><CENTER>' . _('General Settings') . '</CENTER></TH></tr>';
+echo '<tr><th colspan=3>' . _('General Settings') . '</th></tr>';
 echo $TableHeader;
 
 // DefaultDateFormat
@@ -311,22 +311,22 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 echo '</select></td>
 	<td>' . _('The default theme is used for new users who have not yet defined the display colour scheme theme of their choice') . '</td></tr>';
 
-echo '<tr><TH COLSPAN=3><CENTER>' . _('Accounts Receivable/Payable Settings') . '</CENTER></TH></tr>';
+echo '<tr><th colspan=3>' . _('Accounts Receivable/Payable Settings') . '</th></tr>';
 
 // PastDueDays1
 echo '<tr><td>' . _('First Overdue Deadline in (days)') . ':</td>
-	<td><input type="Text" Name="X_PastDueDays1" value="' . $_SESSION['PastDueDays1'] . '" SIZE=3 maxlength=3></td>
+	<td><input type="Text" class="number" Name="X_PastDueDays1" value="' . $_SESSION['PastDueDays1'] . '" size=3 maxlength=3></td>
 	<td>' . _('Customer and supplier balances are displayed as overdue by this many days. This parameter is used on customer and supplier enquiry screens and aged listings') . '</td></tr>';
 
 // PastDueDays2
 echo '<tr><td>' . _('Second Overdue Deadline in (days)') . ':</td>
-	<td><input type="Text" Name="X_PastDueDays2" value="' . $_SESSION['PastDueDays2'] . '" SIZE=3 maxlength=3></td>
+	<td><input type="Text" class="number" Name="X_PastDueDays2" value="' . $_SESSION['PastDueDays2'] . '" size=3 maxlength=3></td>
 	<td>' . _('As above but the next level of overdue') . '</td></tr>';
 
 
 // DefaultCreditLimit
 echo '<tr><td>' . _('Default Credit Limit') . ':</td>
-	<td><input type="Text" Name="X_DefaultCreditLimit" value="' . $_SESSION['DefaultCreditLimit'] . '" SIZE=6 maxlength=12></td>
+	<td><input type="Text" class="number" Name="X_DefaultCreditLimit" value="' . $_SESSION['DefaultCreditLimit'] . '" size=6 maxlength=12></td>
 	<td>' . _('The default used in new customer set up') . '</td></tr>';
 
 // Check Credit Limits
@@ -353,7 +353,7 @@ echo '<tr><td>' . _('Romalpa Clause') . ':</td>
 
 // QuickEntries
 echo '<tr><td>' . _('Quick Entries') . ':</td>
-	<td><input type="Text" Name="X_QuickEntries" value="' . $_SESSION['QuickEntries'] . '" SIZE=3 maxlength=2></td>
+	<td><input type="Text" class="number" Name="X_QuickEntries" value="' . $_SESSION['QuickEntries'] . '" size=3 maxlength=2></td>
 	<td>' . _('This parameter defines the layout of the sales order entry screen. The number of fields available for quick entries. Any number from 1 to 99 can be entered.') . '</td></tr>';
 
 //'AllowOrderLineItemNarrative'
@@ -467,7 +467,7 @@ echo '<tr><td>' . _('Do Freight Calculation') . ':</td>
 
 //FreightChargeAppliesIfLessThan
 echo '<tr><td>' . _('Apply freight charges if an order is less than') . ':</td>
-	<td><input type="Text" Name="X_FreightChargeAppliesIfLessThan" SIZE=6 maxlength=12 value="' . $_SESSION['FreightChargeAppliesIfLessThan'] . '"></td>
+	<td><input type="Text" class="number" Name="X_FreightChargeAppliesIfLessThan" size=6 maxlength=12 value="' . $_SESSION['FreightChargeAppliesIfLessThan'] . '"></td>
 	<td>' . _('This parameter is only effective if Do Freight Calculation is set to Yes. If it is set to 0 then freight is always charged. The total order value is compared to this value in deciding whether or not to charge freight') .'</td></tr>';
 
 
@@ -504,7 +504,7 @@ echo '</select></td>
 
 //TaxAuthorityReferenceName
 echo '<tr><td>' . _('TaxAuthorityReferenceName') . ':</td>
-	<td><input type="Text" Name="X_TaxAuthorityReferenceName" SIZE=16 maxlength=25 value="' . $_SESSION['TaxAuthorityReferenceName'] . '"></td>
+	<td><input type="Text" Name="X_TaxAuthorityReferenceName" size=16 maxlength=25 value="' . $_SESSION['TaxAuthorityReferenceName'] . '"></td>
 	<td>' . _('This parameter is what is displayed on tax invoices and credits for the tax authority of the company eg. in Australian this would by A.B.N.: - in NZ it would be GST No: in the UK it would be VAT Regn. No') .'</td></tr>';
 
 // CountryOfOperation
@@ -548,12 +548,12 @@ echo '<tr><td>' . _('Check Price Charged vs Order Price') . ':</td>
 
 // OverChargeProportion
 echo '<tr><td>' . _('Allowed Over Charge Proportion') . ':</td>
-	<td><input type="Text" Name="X_OverChargeProportion" SIZE=4 maxlength=3 value="' . $_SESSION['OverChargeProportion'] . '"></td>
+	<td><input type="Text" class="number" Name="X_OverChargeProportion" size=4 maxlength=3 value="' . $_SESSION['OverChargeProportion'] . '"></td>
 	<td>' . _('If check price charges vs Order price is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to price') .'</td></tr>';
 
 // OverReceiveProportion
 echo '<tr><td>' . _('Allowed Over Receive Proportion') . ':</td>
-	<td><input type="Text" Name="X_OverReceiveProportion" SIZE=4 maxlength=3 value="' . $_SESSION['OverReceiveProportion'] . '"></td>
+	<td><input type="Text" class="number" Name="X_OverReceiveProportion" size=4 maxlength=3 value="' . $_SESSION['OverReceiveProportion'] . '"></td>
 	<td>' . _('If check quantity charged vs delivery quantity is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to delivery') .'</td></tr>';
 
 // PO_AllowSameItemMultipleTimes
@@ -570,7 +570,7 @@ echo '<tr><td>' . _('Sales Order Allows Same Item Multiple Times') . ':</td>
 	<option '.(!$_SESSION['SO_AllowSameItemMultipleTimes']?'selected ':'').'value="0">'._('No').'
 	</select></td><td>&nbsp;</td></tr>';
 
-echo '<tr><TH COLSPAN=3><CENTER>' . _('General Settings') . '</CENTER></TH></tr>';
+echo '<tr><th colspan=3>' . _('General Settings') . '</th></tr>';
 echo $TableHeader;
 
 // YearEnd
@@ -595,18 +595,18 @@ echo '</select></td>
 
 //PageLength
 echo '<tr><td>' . _('Report Page Length') . ':</td>
-	<td><input type="text" name="X_PageLength" size=4 maxlength=6 value="' . $_SESSION['PageLength'] . '"></td><td>&nbsp;</td>
+	<td><input type="text" class="number" name="X_PageLength" size=4 maxlength=6 value="' . $_SESSION['PageLength'] . '"></td><td>&nbsp;</td>
 </tr>';
 
 //DefaultDisplayRecordsMax
 echo '<tr><td>' . _('Default Maximum Number of Records to Show') . ':</td>
-	<td><input type="text" name="X_DefaultDisplayRecordsMax" SIZE=4 maxlength=3 value="' . $_SESSION['DefaultDisplayRecordsMax'] . '"></td>
+	<td><input type="text" class="number" name="X_DefaultDisplayRecordsMax" size=4 maxlength=3 value="' . $_SESSION['DefaultDisplayRecordsMax'] . '"></td>
 	<td>' . _('When pages have code to limit the number of returned records - such as select customer, select supplier and select item, then this will be the default number of records to show for a user who has not changed this for themselves in user settings.') . '</td>
 	</tr>';
 
 //MaxImageSize
 echo '<tr><td>' . _('Maximum Size in KB of uploaded images') . ':</td>
-	<td><input type="text" name="X_MaxImageSize" SIZE=4 maxlength=3 value="' . $_SESSION['MaxImageSize'] . '"></td>
+	<td><input type="text" class="number" name="X_MaxImageSize" size=4 maxlength=3 value="' . $_SESSION['MaxImageSize'] . '"></td>
 	<td>' . _('Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.') .'</td>
 </tr>';
 
@@ -827,7 +827,7 @@ echo '</select></td><td>' . _('Setting this parameter to Yes prevents invoicing 
 
 //Months of Audit Trail to Keep
 echo '<tr><td>' . _('Months of Audit Trail to Retain') . ':</td>
-	<td><input type="text" name="X_MonthsAuditTrail" size=3 maxlength=2 value="' . $_SESSION['MonthsAuditTrail'] . '"></td><td>' . _('If this parameter is set to 0 (zero) then no audit trail is retained. An audit trail is a log of which users performed which additions updates and deletes of database records. The full SQL is retained') . '</td>
+	<td><input type="text" class="number" name="X_MonthsAuditTrail" size=3 maxlength=2 value="' . $_SESSION['MonthsAuditTrail'] . '"></td><td>' . _('If this parameter is set to 0 (zero) then no audit trail is retained. An audit trail is a log of which users performed which additions updates and deletes of database records. The full SQL is retained') . '</td>
 </tr>';
 
 //DefineControlledOnWOEntry
@@ -872,7 +872,7 @@ echo '<tr><td>' . _('Factory Manager Email Address') . ':</td>
 	<td>' . _('Work orders automatically created when sales orders are entered will be emailed to this address') .'</td></tr>';
 
 
-echo '</TABLE><input type="Submit" Name="submit" value="' . _('Update') . '"></CENTER></FORM>';
+echo '</table><div class="centre"><input type="Submit" Name="submit" value="' . _('Update') . '"></div></form>';
 
 include('includes/footer.inc');
 ?>

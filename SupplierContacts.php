@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity=5;
 
@@ -16,12 +16,12 @@ if (isset($_GET['SupplierID'])){
 	$SupplierID = $_POST['SupplierID'];
 }
 
-echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
+echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><br>';
 
 if (!isset($SupplierID)) {
-	echo '<P><P>';
-	prnMsg(_('This page must be called with the supplier code of the supplier for whom you wish to edit the contacts') . '<BR>' . _('When the page is called from within the system this will always be the case') .
-			'<BR>' . _('Select a supplier first, then select the link to add/edit/delete contacts'),'info');
+	echo '<p><p>';
+	prnMsg(_('This page must be called with the supplier code of the supplier for whom you wish to edit the contacts') . '<br>' . _('When the page is called from within the system this will always be the case') .
+			'<br>' . _('Select a supplier first, then select the link to add/edit/delete contacts'),'info');
 	include('includes/footer.inc');
 	exit;
 }
@@ -111,7 +111,7 @@ if (isset($_POST['submit'])) {
 
 	$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 
-	echo '<BR>' . _('Supplier contact has been deleted') . '<p>';
+	echo '<br>' . _('Supplier contact has been deleted') . '<p>';
 
 }
 
@@ -123,8 +123,8 @@ if (!isset($SelectedContact)){
 			contact, 
 			position, 
 			tel, 
-			fax, 
-			email
+			suppliercontacts.fax, 
+			suppliercontacts.email
 		FROM suppliercontacts, 
 			suppliers
 		WHERE suppliercontacts.supplierid=suppliers.supplierid
@@ -134,25 +134,25 @@ if (!isset($SelectedContact)){
 	$myrow = DB_fetch_row($result);
 
 	if ($myrow) {
-		echo '<B>' . _('Contacts Defined for') . " - $myrow[0]</B>";
+		echo '<div class="centre"><b>' . _('Contacts Defined for') . " - $myrow[0]</b></div>";
 	}
 
-	echo "<TABLE BORDER=1>\n";
-	echo "<TR><TH>" . _('Name') . "</TH>
-			<TH>" . _('Position') . "</TH>
-			<TH>" . _('Phone No') . "</TH>
-			<TH>" . _('Fax No') . "</TH><TH>" . _('Email') .
-			"</TH></TR>\n";
+	echo "<table border=1>\n";
+	echo "<tr><th>" . _('Name') . "</th>
+			<th>" . _('Position') . "</th>
+			<th>" . _('Phone No') . "</th>
+			<th>" . _('Fax No') . "</th><th>" . _('Email') .
+			"</th></tr>\n";
 
 	do {
-		printf("<TR><TD>%s</TD>
-				<TD>%s</TD>
-				<TD>%s</TD>
-				<TD>%s</TD>
-				<TD><A HREF='mailto:%s'>%s</TD>
-				<TD><A HREF='%s&SupplierID=%s&SelectedContact=%s'>" . _('Edit') . "</TD>
-				<TD><A HREF='%s&SupplierID=%s&SelectedContact=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this contact?') . "');\">" .  _('Delete') . '</TD>
-				</TR>',
+		printf("<tr><td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td><a href='mailto:%s'>%s</td>
+				<td><a href='%s&SupplierID=%s&SelectedContact=%s'>" . _('Edit') . "</td>
+				<td><a href='%s&SupplierID=%s&SelectedContact=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this contact?') . "');\">" .  _('Delete') . '</td>
+				</tr>',
 				$myrow[1],
 				$myrow[2],
 				$myrow[3],
@@ -173,16 +173,16 @@ if (!isset($SelectedContact)){
 
 //end of ifs and buts!
 
-echo '</TABLE><P>';
+echo '</table><p>';
 
 if (isset($SelectedContact)) {
-	echo "<CENTER><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "SupplierID=$SupplierID" . "'>" .
-		  _('Show all the supplier contacts for') . ' ' . $SupplierID . '</A></CENTER></P>';
+	echo "<div class='centre'><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "SupplierID=$SupplierID" . "'>" .
+		  _('Show all the supplier contacts for') . ' ' . $SupplierID . '</a></div></p>';
 }
 
 if (! isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 
 	if (isset($SelectedContact)) {
 		//editing an existing branch
@@ -206,16 +206,16 @@ if (! isset($_GET['delete'])) {
 		$_POST['Fax']  = $myrow['fax'];
 		$_POST['Email']  = $myrow['email'];
 		$_POST['Mobile']  = $myrow['mobile'];
-		echo "<INPUT TYPE=HIDDEN NAME='SelectedContact' VALUE='" . $_POST['Contact'] . "'>";
-		echo "<INPUT TYPE=HIDDEN NAME='Contact' VALUE='" . $_POST['Contact'] . "'>";
-		echo '<CENTER><TABLE><TR><TD>' . _('Contact') . ':</TD><TD>' . $_POST['Contact'] . '</TD></TR>';
+		echo "<input type=hidden name='SelectedContact' VALUE='" . $_POST['Contact'] . "'>";
+		echo "<input type=hidden name='Contact' VALUE='" . $_POST['Contact'] . "'>";
+		echo '<table><tr><td>' . _('Contact') . ':</td><td>' . $_POST['Contact'] . '</td></tr>';
 
 	} else { //end of if $SelectedContact only do the else when a new record is being entered
 		if (!isset($_POST['Contact'])) {
 			$_POST['Contact']='';
 		}
-		echo '<CENTER><TABLE><TR><TD>' . _('Contact Name') . ":</TD>
-				<TD><INPUT TYPE='Text' NAME='Contact' SIZE=41 MAXLENGTH=40 VALUE='" . $_POST['Contact'] . "'></TD></TR>";
+		echo '<table><tr><td>' . _('Contact Name') . ":</td>
+				<td><input type='Text' name='Contact' size=41 maxlength=40 VALUE='" . $_POST['Contact'] . "'></td></tr>";
 	}
 	if (!isset($_POST['Position'])) {
 		$_POST['Position']='';
@@ -233,21 +233,21 @@ if (! isset($_GET['delete'])) {
 		$_POST['Email'] = '';
 	}
 
-	echo "<INPUT TYPE=hidden NAME='SupplierID' VALUE='" . $SupplierID . "'>
-		<TR><TD>" . _('Position') . ":</TD>
-		<TD><INPUT TYPE=text NAME='Position' SIZE=31 MAXLENGTH=30 VALUE='" . $_POST['Position'] . "'></TD></TR>
-		<TR><TD>" . _('Telephone No') . ":</TD>
-		<TD><INPUT TYPE=text NAME='Tel' SIZE=31 MAXLENGTH=30 VALUE='" . $_POST['Tel'] . "'></TD></TR>
-		<TR><TD>" . _('Facsimile No') . ":</TD>
-		<TD><INPUT TYPE=text NAME='Fax' SIZE=31 MAXLENGTH=30 VALUE='" . $_POST['Fax'] . "'></TD></TR>
-		<TR><TD>" . _('Mobile No') . ":</TD>
-		<TD><INPUT TYPE=text NAME='Mobile' SIZE=31 MAXLENGTH=30 VALUE='" . $_POST['Mobile'] . "'></TD></TR>
-		<TR><TD><A HREF='Mailto:" . $_POST['Email'] . "'>" . _('Email') . ":</A></TD>
-		<TD><INPUT TYPE=text NAME='Email' SIZE=51 MAXLENGTH=50 VALUE='" . $_POST['Email'] . "'></TD></TR>
-		</TABLE>";
+	echo "<input type=hidden name='SupplierID' VALUE='" . $SupplierID . "'>
+		<tr><td>" . _('Position') . ":</td>
+		<td><input type=text name='Position' size=31 maxlength=30 VALUE='" . $_POST['Position'] . "'></td></tr>
+		<tr><td>" . _('Telephone No') . ":</td>
+		<td><input type=text name='Tel' size=31 maxlength=30 VALUE='" . $_POST['Tel'] . "'></td></tr>
+		<tr><td>" . _('Facsimile No') . ":</td>
+		<td><input type=text name='Fax' size=31 maxlength=30 VALUE='" . $_POST['Fax'] . "'></td></tr>
+		<tr><td>" . _('Mobile No') . ":</td>
+		<td><input type=text name='Mobile' size=31 maxlength=30 VALUE='" . $_POST['Mobile'] . "'></td></tr>
+		<tr><td><a href='Mailto:" . $_POST['Email'] . "'>" . _('Email') . ":</a></td>
+		<td><input type=text name='Email' size=51 maxlength=50 VALUE='" . $_POST['Email'] . "'></td></tr>
+		</table>";
 
-	echo "<CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Enter Information') . "'>";
-	echo '</FORM>';
+	echo "<div class='centre'><input type='Submit' name='submit' VALUE='" . _('Enter Information') . "'>";
+	echo '</div></form>';
 
 } //end if record deleted no point displaying form to add record
 

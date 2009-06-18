@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice or credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing/crediting and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -17,7 +17,7 @@ include('includes/header.inc');
 
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('To enter a supplier invoice or credit note the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice or supplier credit note must be clicked on'),'info');
-	echo "<BR><A HREF='$rootpath/SelectSupplier.php?" . SID ."'>" . _('Select A Supplier') . '</A>';
+	echo "<br><a href='$rootpath/SelectSupplier.php?" . SID ."'>" . _('Select A Supplier') . '</a>';
 	include('includes/footer.inc');
 	exit;
 	/*It all stops here if there aint no supplier selected and transaction initiated ie $_SESSION['SuppTrans'] started off*/
@@ -38,7 +38,7 @@ if (isset($_POST['AddGLCodeToTrans']) and $_POST['AddGLCodeToTrans'] == _('Enter
 		WHERE accountcode=' . $_POST['GLCode'];
 	$result = DB_query($sql, $db);
 	if (DB_num_rows($result) == 0){
-		prnMsg(_('The account code entered is not a valid code') . '. ' . _('This line cannot be added to the transaction') . '.<BR>' . _('You can use the selection box to select the account you want'),'error');
+		prnMsg(_('The account code entered is not a valid code') . '. ' . _('This line cannot be added to the transaction') . '.<br>' . _('You can use the selection box to select the account you want'),'error');
 		$InputError = True;
 	} else {
 		$myrow = DB_fetch_row($result);
@@ -78,34 +78,34 @@ if (isset($_GET['Delete'])){
 
 /*Show all the selected GLCodes so far from the SESSION['SuppInv']->GLCodes array */
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
-	echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('General Ledger') . '" ALT="">' . ' ' 
+	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger') . '" alt="">' . ' ' 
 	. _('General Ledger Analysis of Invoice From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 } else {
-	echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('General Ledger') . '" ALT="">' . ' '
+	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger') . '" alt="">' . ' '
 	. _('General Ledger Analysis of Credit Note From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 }
-echo '</P><CENTER><TABLE CELLPADDING=2>';
+echo '</p><table cellpadding=2>';
 
-$TableHeader = "<TR>
-		<TH>" . _('Account') . "</TH>
-		<TH>" . _('Name') . "</TH>
-		<TH>" . _('Amount') . '<BR>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TH>
-		<TH>" . _('Job') . "</TH>
-		<TH>" . _('Narrative') . '</TH>
-		</TR>';
+$TableHeader = "<tr>
+		<th>" . _('Account') . "</th>
+		<th>" . _('Name') . "</th>
+		<th>" . _('Amount') . '<br>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</th>
+		<th>" . _('Job') . "</th>
+		<th>" . _('Narrative') . '</th>
+		</tr>';
 echo $TableHeader;
 $TotalGLValue=0;
 
 foreach ( $_SESSION['SuppTrans']->GLCodes as $EnteredGLCode){
 
-	echo '<TR>
-		<TD>' . $EnteredGLCode->GLCode . '</TD>
-		<TD>' . $EnteredGLCode->GLActName . '</TD>
-		<TD ALIGN=RIGHT>' . number_format($EnteredGLCode->Amount,2) . '</TD>
-		<TD>' .$EnteredGLCode->JobRef . '</TD>
-		<TD>' . $EnteredGLCode->Narrative . "</TD>
-		<TD><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $EnteredGLCode->Counter . "'>" . _('Delete') . '</A></TD>
-		</TR>';
+	echo '<tr>
+		<td>' . $EnteredGLCode->GLCode . '</td>
+		<td>' . $EnteredGLCode->GLActName . '</td>
+		<td align=right>' . number_format($EnteredGLCode->Amount,2) . '</td>
+		<td>' .$EnteredGLCode->JobRef . '</td>
+		<td>' . $EnteredGLCode->Narrative . "</td>
+		<td><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $EnteredGLCode->Counter . "'>" . _('Delete') . '</a></td>
+		</tr>';
 
 	$TotalGLValue = $TotalGLValue + $EnteredGLCode->Amount;
 
@@ -116,33 +116,33 @@ foreach ( $_SESSION['SuppTrans']->GLCodes as $EnteredGLCode){
 	}
 }
 
-echo '<TR>
-	<TD COLSPAN=2 ALIGN=RIGHT><FONT SIZE=4 COLOR=BLUE>' . _('Total') . ':</FONT></TD>
-	<TD ALIGN=RIGHT><FONT SIZE=4 COLOR=BLUE><U>' . number_format($TotalGLValue,2) . '</U></FONT></TD>
-	</TR>
-	</TABLE>';
+echo '<tr>
+	<td colspan=2 align=right><font size=4 color=BLUE>' . _('Total') . ':</font></td>
+	<td align=right><font size=4 color=BLUE><U>' . number_format($TotalGLValue,2) . '</U></font></td>
+	</tr>
+	</table>';
 
 
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
-	echo "<BR><A HREF='$rootpath/SupplierInvoice.php?" . SID . "'>" . _('Back to Invoice Entry') . '</A><HR>';
+	echo "<br><a href='$rootpath/SupplierInvoice.php?" . SID . "'>" . _('Back to Invoice Entry') . '</a><hr>';
 } else {
-	echo "<BR><A HREF='$rootpath/SupplierCredit.php?" . SID . "'>" . _('Back to Credit Note Entry') . '</A><HR>';
+	echo "<br><a href='$rootpath/SupplierCredit.php?" . SID . "'>" . _('Back to Credit Note Entry') . '</a><hr>';
 }
 
 /*Set up a form to allow input of new GL entries */
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
+echo "<form action='" . $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
 
-echo '<TABLE>';
+echo '<table>';
 if (!isset($_POST['GLCode'])) {
 	$_POST['GLCode']='';
 }
-echo '<TR>
-	<TD>' . _('Account Code') . ":</TD>
-	<TD><INPUT TYPE='Text' NAME='GLCode' SIZE=12 MAXLENGTH=11 VALUE=" .  $_POST['GLCode'] . '></TD>
-	</TR>';
-echo '<TR>
-	<TD>' . _('Account Selection') . ':<BR><FONT SIZE=1>' . _('If you know the code enter it above') . '<BR>' . _('otherwise select the account from the list') . "</FONT></TD>
-	<TD><SELECT NAME='AcctSelection'>";
+echo '<tr>
+	<td>' . _('Account Code') . ":</td>
+	<td><input type='Text' name='GLCode' size=12 maxlength=11 VALUE=" .  $_POST['GLCode'] . '></td>
+	</tr>';
+echo '<tr>
+	<td>' . _('Account Selection') . ':<br><font size=1>' . _('If you know the code enter it above') . '<br>' . _('otherwise select the account from the list') . "</font></td>
+	<td><select name='AcctSelection'>";
 
 $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 
@@ -150,47 +150,47 @@ $result = DB_query($sql, $db);
 
 while ($myrow = DB_fetch_array($result)) {
 	if ($myrow['accountcode'] == $_POST['AcctSelection']) {
-		echo '<OPTION SELECTED VALUE=';
+		echo '<option selected VALUE=';
 	} else {
-		echo '<OPTION VALUE=';
+		echo '<option VALUE=';
 	}
 	echo $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
-	echo '</OPTION>';
+	echo '</option>';
 }
 
-echo '</SELECT>
-	</TD>
-	</TR>';
+echo '</select>
+	</td>
+	</tr>';
 if (!isset($_POST['Amount'])) {
 	$_POST['Amount']=0;
 }
-echo '<TR>
-	<TD>' . _('Amount') . ":</TD>
-	<TD><INPUT TYPE='Text' NAME='Amount' SIZE=12 MAXLENGTH=11 VALUE=" .  $_POST['Amount'] . '></TD>
-	</TR>';
+echo '<tr>
+	<td>' . _('Amount') . ":</td>
+	<td><input type='Text' class='number' name='Amount' size=12 maxlength=11 VALUE=" .  $_POST['Amount'] . '></td>
+	</tr>';
 	if (!isset($_POST['JobRef'])) {
 		$_POST['JobRef']='';
 	}
-echo '<TR>
-	<TD>' . _('Contract Ref') . ":</TD>
-	<TD><INPUT TYPE='Text' NAME='JobRef' SIZE=21 MAXLENGTH=20 VALUE=" . $_POST['JobRef'] . ">";
+echo '<tr>
+	<td>' . _('Contract Ref') . ":</td>
+	<td><input type='Text' name='JobRef' size=21 maxlength=20 VALUE=" . $_POST['JobRef'] . ">";
 	 
 	 /* Once the contract stuff is written then it would be appropriate to have:
-	  <A TARGET='_blank' HREF='$rootpath/ContractsList.php?" . SID . "'>" . _('View Open Contracts/Jobs') . '</A> */
+	  <a TARGET='_blank' href='$rootpath/ContractsList.php?" . SID . "'>" . _('View Open Contracts/Jobs') . '</a> */
 	  
-echo ' </TD>
-	</TR>';
+echo ' </td>
+	</tr>';
 	if (!isset($_POST['Narrative'])) {
 		$_POST['Narrative']='';
 	}
-echo '<TR>
-	<TD>' . _('Narrative') . ":</TD>
-	<TD><TEXTAREA NAME='Narrative' COLS=40 ROWS=2>" .  $_POST['Narrative'] . '</TEXTAREA></TD>
-	</TR>
-	</TABLE>';
+echo '<tr>
+	<td>' . _('Narrative') . ":</td>
+	<td><TEXTAREA name='Narrative' COLS=40 ROWS=2>" .  $_POST['Narrative'] . '</TEXTAREa></td>
+	</tr>
+	</table>';
 
-echo "<INPUT TYPE='Submit' NAME='AddGLCodeToTrans' VALUE='" . _('Enter GL Line') . "'>";
+echo "<input type='Submit' name='AddGLCodeToTrans' VALUE='" . _('Enter GL Line') . "'>";
 
-echo '</FORM>';
+echo '</form>';
 include('includes/footer.inc');
 ?>

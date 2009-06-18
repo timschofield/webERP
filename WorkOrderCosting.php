@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 11;
 
@@ -10,12 +10,12 @@ include('includes/SQL_CommonFunctions.inc');
 
 echo '<a href="'. $rootpath . '/SelectWorkOrder.php?' . SID . '">' . _('Back to Work Orders'). '</a><br>';
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 
 if (!isset($_REQUEST['WO'])) {
 	/* This page can only be called with a work order number */
-	echo '<center><A HREF="' . $rootpath . '/SelectWorkOrder.php?' . SID . '">'.
-		_('Select a work order').'</A></CENTER>';
+	echo '<div class="centre><a href="' . $rootpath . '/SelectWorkOrder.php?' . SID . '">'.
+		_('Select a work order').'</a></div>';
 	prnMsg(_('This page can only be opened if a work order has been selected.'),'info');
 	include ('includes/footer.inc');
 	exit;
@@ -46,7 +46,7 @@ if (DB_num_rows($WOResult)==0){
 $WorkOrderRow = DB_fetch_array($WOResult);
 
 
-echo '<center><table cellpadding=2 border=0>
+echo '<table cellpadding=2 border=0>
 	<tr><td class="label">' . _('Work order') . ':</td>
 		<td>' . $_POST['WO'] .'</td>
 	 	<td class="label">' . _('Manufactured at') . ':</td>
@@ -93,9 +93,9 @@ while ($WORow = DB_fetch_array($WOItemsResult)){
 	 			<td align=right>' . number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
 	 			<td>' . $WORow['units'] . '</td>
 	 			<td align=right>' . number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
-	 			<td align=right><A HREF="'. $rootpath . '/WorkOrderStatus.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Status') . '</a></td>
-                <td align=right><A HREF="'. $rootpath . '/WorkOrderReceive.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Receive') . '</a></td>
-                <td align=right><A HREF="'. $rootpath . '/WorkOrderIssue.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Issue') . '</a></td>
+	 			<td align=right><a href="'. $rootpath . '/WorkOrderStatus.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Status') . '</a></td>
+                <td align=right><a href="'. $rootpath . '/WorkOrderReceive.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Receive') . '</a></td>
+                <td align=right><a href="'. $rootpath . '/WorkOrderIssue.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Issue') . '</a></td>
  			</tr>';
 
 	$TotalStdValueRecd +=($WORow['stdcost']*$WORow['qtyrecd']);
@@ -498,7 +498,7 @@ If (isset($_POST['Close'])) {
 
 
 if ($WorkOrderRow['closed']==0){
-	echo '<tr><td colspan="9" align="center"><input type=submit name="Close" value="' . _('Close This Work Order') . '" onclick="return confirm(\'' . _('Closing the work order takes the variances to the general ledger (if integrated). The work order will no longer be able to have manufactured goods received entered against it or materials issued to it.') . '  ' . _('Are You Sure?') . '\');"></td></tr>';
+	echo '<tr><td colspan="9"><div class="centre"><input type=submit name="Close" value="' . _('Close This Work Order') . '" onclick="return confirm(\'' . _('Closing the work order takes the variances to the general ledger (if integrated). The work order will no longer be able to have manufactured goods received entered against it or materials issued to it.') . '  ' . _('Are You Sure?') . '\');"></div></td></tr>';
 } else {
 	echo '<tr><td colspan="9">' . _('This work order is closed and cannot accept additional issues of materials or receipts of manufactured items') . '</td></tr>';
 }

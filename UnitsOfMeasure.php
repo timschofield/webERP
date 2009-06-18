@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 15;
 
@@ -137,14 +137,14 @@ if (isset($_POST['submit'])) {
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg( _('Cannot delete this unit of measure because inventory items have been created using this unit of measure'),'warn');
-			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('inventory items that refer to this unit of measure') . '</FONT>';
+			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('inventory items that refer to this unit of measure') . '</font>';
 		} else {
 			$sql= "SELECT COUNT(*) FROM contracts WHERE units ".LIKE." '" . $OldMeasureName . "'";
 			$result = DB_query($sql,$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]>0) {
 				prnMsg( _('Cannot delete this unit of measure because contracts have been created using this unit of measure'),'warn');
-				echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('contracts that refer to this unit of measure') . '</FONT>';
+				echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('contracts that refer to this unit of measure') . '</font>';
 			} else {
 				$sql="DELETE FROM unitsofmeasure WHERE unitname ".LIKE."'" . $OldMeasureName . "'";
 				$result = DB_query($sql,$db);
@@ -179,41 +179,41 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = _('Could not get unit of measures because');
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	echo "<CENTER><TABLE>
-		<TR>
-		<TH>" . _('Units of Measure') . "</TH>
-		</TR>";
+	echo "<table>
+		<tr>
+		<th>" . _('Units of Measure') . "</th>
+		</tr>";
 
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
 
 		if ($k==1){
-			echo '<TR class="EvenTableRows">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<TR class="OddTableRows">';
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
-		echo '<TD>' . $myrow[1] . '</TD>';
-		echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedMeasureID=' . $myrow[0] . '">' . _('Edit') . '</A></TD>';
-		echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedMeasureID=' . $myrow[0] . '&delete=1">' . _('Delete') .'</A></TD>';
-		echo '</TR>';
+		echo '<td>' . $myrow[1] . '</td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedMeasureID=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedMeasureID=' . $myrow[0] . '&delete=1">' . _('Delete') .'</a></td>';
+		echo '</tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</table></CENTER><p>';
+	echo '</table><p>';
 } //end of ifs and buts!
 
 
 if (isset($SelectedMeasureID)) {
-	echo '<CENTER><A HREF=' . $_SERVER['PHP_SELF'] . '?' . SID .'>' . _('Review Units of Measure') . '</a></Center>';
+	echo '<div class="centre"><a href=' . $_SERVER['PHP_SELF'] . '?' . SID .'>' . _('Review Units of Measure') . '</a></div>';
 }
 
-echo '<P>';
+echo '<p>';
 
 if (! isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 	if (isset($SelectedMeasureID)) {
 		//editing an existing section
@@ -233,23 +233,23 @@ if (! isset($_GET['delete'])) {
 			$_POST['MeasureID'] = $myrow['unitid'];
 			$_POST['MeasureName']  = $myrow['unitname'];
 
-			echo "<INPUT TYPE=HIDDEN NAME='SelectedMeasureID' VALUE='" . $_POST['MeasureID'] . "'>";
-			echo "<CENTER><TABLE>";
+			echo "<input type=hidden name='SelectedMeasureID' VALUE='" . $_POST['MeasureID'] . "'>";
+			echo "<table>";
 		}
 
 	}  else {
 		$_POST['MeasureName']='';
-		echo "<CENTER><TABLE>";
+		echo "<table>";
 	}
-	echo "<TR>
-		<TD>" . _('Unit of Measure') . ':' . "</TD>
-		<TD><input type='Text' name='MeasureName' SIZE=30 MAXLENGTH=30 value='" . $_POST['MeasureName'] . "'></TD>
-		</TR>";
-	echo '</TABLE>';
+	echo "<tr>
+		<td>" . _('Unit of Measure') . ':' . "</td>
+		<td><input type='Text' name='MeasureName' size=30 maxlength=30 value='" . $_POST['MeasureName'] . "'></td>
+		</tr>";
+	echo '</table>';
 
-	echo '<CENTER><input type=Submit name=submit value=' . _('Enter Information') . '>';
+	echo '<div class="centre"><input type=Submit name=submit value=' . _('Enter Information') . '></div>';
 
-	echo '</FORM>';
+	echo '</form>';
 
 } //end if record deleted no point displaying form to add record
 

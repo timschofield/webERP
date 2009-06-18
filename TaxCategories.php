@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 15;
 
@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg( _('Cannot delete this tax category because inventory items have been created using this tax category'),'warn');
-			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('inventory items that refer to this tax category') . '</FONT>';
+			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('inventory items that refer to this tax category') . '</font>';
 		} else {
 			$sql = 'DELETE FROM taxauthrates WHERE taxcatid = ' . $SelectedTaxCategory;
 			$result = DB_query($sql,$db);
@@ -161,41 +161,41 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = _('Could not get tax categories because');
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	echo "<CENTER><TABLE>
-		<TR>
-		<TH>" . _('Tax Categories') . "</TH>
-		</TR>";
+	echo "<table>
+		<tr>
+		<th>" . _('Tax Categories') . "</th>
+		</tr>";
 
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
 
 		if ($k==1){
-			echo '<TR class="EvenTableRows">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<TR class="OddTableRows">';
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
-		echo '<TD>' . $myrow[1] . '</TD>';
-		echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedTaxCategory=' . $myrow[0] . '">' . _('Edit') . '</A></TD>';
-		echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedTaxCategory=' . $myrow[0] . '&delete=1">' . _('Delete') .'</A></TD>';
-		echo '</TR>';
+		echo '<td>' . $myrow[1] . '</td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedTaxCategory=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedTaxCategory=' . $myrow[0] . '&delete=1">' . _('Delete') .'</a></td>';
+		echo '</tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</table></CENTER><p>';
+	echo '</table><p>';
 } //end of ifs and buts!
 
 
 if (isset($SelectedTaxCategory)) {
-	echo '<CENTER><A HREF=' . $_SERVER['PHP_SELF'] . '?' . SID .'>' . _('Review Tax Categories') . '</A></CENTER>';
+	echo '<div class="centre"><a href=' . $_SERVER['PHP_SELF'] . '?' . SID .'>' . _('Review Tax Categories') . '</a></div>';
 }
 
-echo '<P>';
+echo '<p>';
 
 if (! isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 	if (isset($SelectedTaxCategory)) {
 		//editing an existing section
@@ -214,23 +214,23 @@ if (! isset($_GET['delete'])) {
 
 			$_POST['TaxCategoryName']  = $myrow['taxcatname'];
 
-			echo "<INPUT TYPE=HIDDEN NAME='SelectedTaxCategory' VALUE='" . $myrow['taxcatid'] . "'>";
-			echo "<CENTER><TABLE>";
+			echo "<input type=hidden name='SelectedTaxCategory' VALUE='" . $myrow['taxcatid'] . "'>";
+			echo "<table>";
 		}
 
 	}  else {
 		$_POST['TaxCategoryName']='';
-		echo "<CENTER><TABLE>";
+		echo "<table>";
 	}
-	echo "<TR>
-		<TD>" . _('Tax Category Name') . ':' . "</TD>
-		<TD><input type='Text' name='TaxCategoryName' SIZE=30 MAXLENGTH=30 value='" . $_POST['TaxCategoryName'] . "'></TD>
-		</TR>";
-	echo '</TABLE>';
+	echo "<tr>
+		<td>" . _('Tax Category Name') . ':' . "</td>
+		<td><input type='Text' name='TaxCategoryName' size=30 maxlength=30 value='" . $_POST['TaxCategoryName'] . "'></td>
+		</tr>";
+	echo '</table>';
 
-	echo '<CENTER><input type=Submit name=submit value=' . _('Enter Information') . '>';
+	echo '<div class="centre"><input type=Submit name=submit value=' . _('Enter Information') . '></div>';
 
-	echo '</FORM>';
+	echo '</form>';
 
 } //end if record deleted no point displaying form to add record
 

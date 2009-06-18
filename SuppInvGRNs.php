@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -141,7 +141,8 @@ echo '<tr>
 	<td colspan=5 align=right><font size=4 color=BLUE>' . _('Total Value of Goods Charged') . ':</font></td>
 	<td align=right><font size=4 color=BLUE><U>' . number_format($TotalValueCharged,2) . '</U></font></td>
 </tr>';
-echo "</table><br><a href='$rootpath/SupplierInvoice.php?" . SID ."'>" . _('Back to Invoice Entry') . '</a><hr>';
+echo "</table>";
+echo "<div class='centre'><br><a href='$rootpath/SupplierInvoice.php?" . SID ."'>" . _('Back to Invoice Entry') . '</a><hr></div>';
 
 
 /* Now get all the outstanding GRNs for this supplier from the database*/
@@ -169,13 +170,13 @@ $GRNResults = DB_query($SQL,$db);
 
 if (DB_num_rows($GRNResults)==0){
 	prnMsg(_('There are no outstanding goods received from') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . _('that have not been invoiced by them') . '<br>' . _('The goods must first be received using the link below to select purchase orders to receive'),'warn');
-	echo "<p><a href='$rootpath/PO_SelectOSPurchOrder.php?" . SID . 'SupplierID=' . $_SESSION['SuppTrans']->SupplierID ."'>" . _('Select Purchase Orders to receive') .'</a>';
+	echo "<div class='centre'><p><a href='$rootpath/PO_SelectOSPurchOrder.php?" . SID . 'SupplierID=' . $_SESSION['SuppTrans']->SupplierID ."'>" . _('Select Purchase Orders to receive') .'</a></div>';
 	include('includes/footer.inc');
 	exit;
 }
 
 /*Set up a table to show the GRNs outstanding for selection */
-echo "<form ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
+echo "<form action='" . $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
 
 if (!isset( $_SESSION['SuppTransTmp'])){
     $_SESSION['SuppTransTmp'] = new SuppTrans;
@@ -214,7 +215,7 @@ if (isset($_GET['Modify'])){
     $GRNNo = $_GET['Modify'];
     $GRNTmp = $_SESSION['SuppTrans']->GRNs[$GRNNo];
 
-	echo '<p><font size=4 color=BLUE><b>' . _('GRN Selected For Adding To A Purchase Invoice') . '</font></b>';
+	echo '<p><div class="centre"><font size=4 color=BLUE><b>' . _('GRN Selected For Adding To A Purchase Invoice') . '</font></b></div>';
 	echo "<table>
 		<tr bgcolor=#800000>
 			<th>" . _('Sequence') . " #</th>
@@ -229,9 +230,9 @@ if (isset($_GET['Modify'])){
 		<td>' . $GRNTmp->GRNNo . '</td>
 		<td>' . $GRNTmp->ItemCode . ' ' . $GRNTmp->ItemDescription . '</td>
 		<td align=right>' . number_format($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv,2) . "</td>
-		<td><input type=Text Name='This_QuantityInv' Value=" . $GRNTmp->This_QuantityInv . ' size=11 maxlength=10></td>
+		<td><input type=Text class='number' Name='This_QuantityInv' Value=" . $GRNTmp->This_QuantityInv . ' size=11 maxlength=10></td>
 		<td align=right>' . $GRNTmp->OrderPrice . '</td>
-		<td><input type=Text Name="ChgPrice" Value=' . $GRNTmp->ChgPrice . ' size=11 maxlength=10></td>
+		<td><input type=Text class="number" Name="ChgPrice" Value=' . $GRNTmp->ChgPrice . ' size=11 maxlength=10></td>
 	</tr>';
 	echo '</table>';
 
@@ -242,7 +243,7 @@ if (isset($_GET['Modify'])){
 		echo "<input type=hidden name='ShiptRef' Value='" . $GRNTmp->ShiptRef . "'>";
 //	}
 
-	echo "<p><input type=Submit Name='ModifyGRN' Value='" . _('Modify Line') . "'>";
+	echo "<div class='centre'><p><input type=Submit Name='ModifyGRN' Value='" . _('Modify Line') . "'></div>";
 
 
 	echo "<input type=hidden name='GRNNumber' VALUE=" . $GRNTmp->GRNNo . '>';
@@ -304,7 +305,7 @@ else {
 		}
         }
         echo '</table>';
-        echo "<p><input type=Submit Name='AddGRNToTrans' Value='" . _('Add to Invoice') . "'>";
+        echo "<div class='centre'><p><input type=Submit Name='AddGRNToTrans' Value='" . _('Add to Invoice') . "'></div>";
     }
 }
 

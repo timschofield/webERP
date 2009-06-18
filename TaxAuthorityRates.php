@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 11; // only allow accountant access
 
@@ -14,10 +14,10 @@ include('includes/session.inc');
 $title = _('Tax Rates');
 include('includes/header.inc');
 
-/* <-- $Revision: 1.15 $ --> */
+/* <-- $Revision: 1.16 $ --> */
 
 if (!isset($TaxAuthority)){
-	prnMsg(_('This page can only be called after selecting the tax authority to edit the rates for') . '. ' . _('Please select the Rates link from the tax authority page') . ".<BR><A HREF='$rootpath/TaxAuthorities.php'>" . _('click here') . '</A> ' . _('to go to the Tax Authority page'),'error');
+	prnMsg(_('This page can only be called after selecting the tax authority to edit the rates for') . '. ' . _('Please select the Rates link from the tax authority page') . ".<br><a href='$rootpath/TaxAuthorities.php'>" . _('click here') . '</a> ' . _('to go to the Tax Authority page'),'error');
 	include ('includes/footer.inc');
 	exit;
 }
@@ -51,11 +51,11 @@ if (isset($_POST['UpdateRates'])){
 
 $TaxAuthDetail = DB_query('SELECT description FROM taxauthorities WHERE taxid=' . $TaxAuthority,$db);
 $myrow = DB_fetch_row($TaxAuthDetail);
-echo '<FONT SIZE=3 COLOR=BLUE><B>' . _('Update') . ' ' . $myrow[0] . ' ' . _('Rates') . '</B></FONT>';
+echo '<font size=3 color=BLUE><b>' . _('Update') . ' ' . $myrow[0] . ' ' . _('Rates') . '</b></font>';
 
-echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID .'" METHOD=POST>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'" method=post>';
 
-echo '<INPUT TYPE=HIDDEN NAME="TaxAuthority" VALUE=' . $TaxAuthority . '>';
+echo '<input type=hidden name="TaxAuthority" VALUE=' . $TaxAuthority . '>';
 
 $TaxRatesResult = DB_query('SELECT taxauthrates.taxcatid,
 						taxcategories.taxcatname,
@@ -75,7 +75,7 @@ $TaxRatesResult = DB_query('SELECT taxauthrates.taxcatid,
 
 if (DB_num_rows($TaxRatesResult)>0){
 
-	echo '<center><table cellpadding=2 border=2>';
+	echo '<table cellpadding=2 border=2>';
 	$TableHeader = '<tr><th>' . _('Deliveries From') . '<br>' . _('Tax Province') . '</th>
 						<th>' . _('Tax Category') . '</th>
 						<th>' . _('Tax Rate') . ' %</th></tr>';
@@ -100,7 +100,7 @@ if (DB_num_rows($TaxRatesResult)>0){
 
 		printf('<td>%s</td>
 			<td>%s</td>
-			<td><input type=text name=%s maxlength=5 size=5 value=%s></td>
+			<td><input type=text class="number" name=%s maxlength=5 size=5 value=%s></td>
 			</tr>',
 			$myrow['taxprovincename'],
 			$myrow['taxcatname'],
@@ -111,19 +111,20 @@ if (DB_num_rows($TaxRatesResult)>0){
 
 	}
 //end of while loop
-echo '</TABLE>';
-echo "<BR><INPUT TYPE=SUBMIT NAME='UpdateRates' VALUE='" . _('Update Rates') . "'></CENTER>";
+echo '</table>';
+echo "<br><div class='centre'><input type=submit name='UpdateRates' VALUE='" . _('Update Rates') . "'>";
 } //end if tax taxcatid/rates to show 
 	else {
 	prnMsg(_('There are no tax rates to show - perhaps the dispatch tax province records have not yet been created?'),'warn');
 }
 
-echo '</FORM>';
+echo '</form>';
 
-echo '<BR><A HREF="' . $rootpath . '/TaxAuthorities.php?' . SID . '">' . _('Tax Authorities') .  '</A>';
-echo '<BR><A HREF="' . $rootpath . '/TaxGroups.php?' . SID . '">' . _('Tax Groupings') .  '</A>';
-echo '<BR><A HREF="' . $rootpath . '/TaxCategories.php?' . SID . '">' . _('Tax Categories') .  '</A>';
-echo '<BR><A HREF="' . $rootpath . '/TaxProvinces.php?' . SID . '">' . _('Dispatch Tax Provinces') .  '</A>';
+echo '<br><br><a href="' . $rootpath . '/TaxAuthorities.php?' . SID . '">' . _('Tax Authorities') .  '</a>';
+echo '<br><a href="' . $rootpath . '/TaxGroups.php?' . SID . '">' . _('Tax Groupings') .  '</a>';
+echo '<br><a href="' . $rootpath . '/TaxCategories.php?' . SID . '">' . _('Tax Categories') .  '</a>';
+echo '<br><a href="' . $rootpath . '/TaxProvinces.php?' . SID . '">' . _('Dispatch Tax Provinces') .  '</a>';
+echo '</div>';
 
 include( 'includes/footer.inc' );
 ?>

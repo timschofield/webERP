@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -11,13 +11,13 @@ $title = _('Supplier Inquiry');
 include('includes/header.inc');
 
 // This is already linked from the menu
-//echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
+//echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><br>';
 
 // always figure out the SQL required from the inputs available
 
 if(!isset($_GET['SupplierID']) AND !isset($_SESSION['SupplierID'])){
-	echo '<BR>' . _('To display the enquiry a Supplier must first be selected from the Supplier selection screen') . 
-		  "<BR><CENTER><A HREF='". $rootpath . "/SelectSupplier.php'>" . _('Select a Supplier to Inquire On') . '</A></CENTER>';
+	echo '<br>' . _('To display the enquiry a Supplier must first be selected from the Supplier selection screen') . 
+		  "<br><div class='centre'>><a href='". $rootpath . "/SelectSupplier.php'>" . _('Select a Supplier to Inquire On') . '</a></div>';
 	exit;
 } else {
 	if (isset($_GET['SupplierID'])){
@@ -113,9 +113,9 @@ if ($NIL_BALANCE == True){
 	$SupplierRecord['overdue2'] = 0;
 }
 
-echo '<P class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" TITLE="' . 
-	_('Supplier') . '" ALT="">' . ' ' . _('Supplier') . ' : ' . $SupplierRecord['suppname'] . ' - (' . _('All amounts stated in') . 
-	  ' ' . $SupplierRecord['currency'] . ')<BR><BR>' . _('Terms') . ': ' . $SupplierRecord['terms'] . '</P>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . 
+	_('Supplier') . '" alt="">' . ' ' . _('Supplier') . ' : ' . $SupplierRecord['suppname'] . ' - (' . _('All amounts stated in') . 
+	  ' ' . $SupplierRecord['currency'] . ')<br><br>' . _('Terms') . ': ' . $SupplierRecord['terms'] . '</p>';
 
 if (isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])){
 
@@ -131,23 +131,23 @@ if (isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])){
 
 }
 
-echo "<TABLE WIDTH=100% BORDER=1><TR><TH>" . _('Total Balance') . 
-	  "</TH><TH>" . _('Current') . 
-	  "</TH><TH>" . _('Now Due') . 
-	  "</TH><TH>" . $_SESSION['PastDueDays1'] . '-' . $_SESSION['PastDueDays2'] . 
+echo "<table WIDTH=100% BORDER=1><tr><th>" . _('Total Balance') . 
+	  "</th><th>" . _('Current') . 
+	  "</th><th>" . _('Now Due') . 
+	  "</th><th>" . $_SESSION['PastDueDays1'] . '-' . $_SESSION['PastDueDays2'] . 
 	  ' ' . _('Days Overdue') . 
-	  "</TH><TH>" . _('Over') . ' ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</TH></TR>';
+	  "</th><th>" . _('Over') . ' ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</th></tr>';
 
-echo '<TR><TD ALIGN=RIGHT>' . number_format($SupplierRecord['balance'],2) . 
-	  '</TD><TD ALIGN=RIGHT>' . number_format(($SupplierRecord['balance'] - $SupplierRecord['due']),2) . 
-	  '</TD><TD ALIGN=RIGHT>' . number_format(($SupplierRecord['due']-$SupplierRecord['overdue1']),2) . 
-	  '</TD><TD ALIGN=RIGHT>' . number_format(($SupplierRecord['overdue1']-$SupplierRecord['overdue2']) ,2) . 
-	  '</TD><TD ALIGN=RIGHT>' . number_format($SupplierRecord['overdue2'],2) . '</TD></TR></TABLE>';
+echo '<tr><td align=right>' . number_format($SupplierRecord['balance'],2) . 
+	  '</td><td align=right>' . number_format(($SupplierRecord['balance'] - $SupplierRecord['due']),2) . 
+	  '</td><td align=right>' . number_format(($SupplierRecord['due']-$SupplierRecord['overdue1']),2) . 
+	  '</td><td align=right>' . number_format(($SupplierRecord['overdue1']-$SupplierRecord['overdue2']) ,2) . 
+	  '</td><td align=right>' . number_format($SupplierRecord['overdue2'],2) . '</td></tr></table>';
 
-echo "<BR><CENTER><FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
-echo _('Show all transactions after') . ': ' ."<INPUT TYPE=text class='date' alt='".$_SESSION['DefaultDateFormat']."' NAME='TransAfterDate' VALUE='" . 
-	  $_POST['TransAfterDate'] . "' MAXLENGTH =10 SIZE=10> <INPUT TYPE=SUBMIT NAME='Refresh Inquiry' VALUE='" . _('Refresh Inquiry') . "'></FORM><BR>";
-
+echo "<br><div class='centre'><form action='" . $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
+echo _('Show all transactions after') . ': ' ."<input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='TransAfterDate' VALUE='" . 
+	  $_POST['TransAfterDate'] . "' MAXLENGTH =10 size=10> <input type=submit name='Refresh Inquiry' VALUE='" . _('Refresh Inquiry') . "'></form><br>";
+echo '</div>';
 $DateAfterCriteria = FormatDateForSQL($_POST['TransAfterDate']);
 
 $SQL = "SELECT supptrans.id, 
@@ -176,7 +176,8 @@ $DbgMsg = _('The SQL that failed was');
 $TransResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($TransResult) == 0){
-	echo '<P>' . _('There are no transactions to display since') . ' ' . $_POST['TransAfterDate'];
+	echo '<p><div class="centre">' . _('There are no transactions to display since') . ' ' . $_POST['TransAfterDate'];
+	echo '</div>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -184,17 +185,17 @@ if (DB_num_rows($TransResult) == 0){
 /*show a table of the transactions returned by the SQL */
 
 
-echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7>';
-$TableHeader = "<TR BGCOLOR =#800000><TH>" . _('Trans') . ' #' . 
-		"</TH><TH>" . _('Type') . 
-		"</TH><TH>" . _('Supplier Ref') . 
-		"</TH><TH>" . _('Date') . 
-		"</TH><TH>" . _('Total') . 
-		"</TH><TH>" . _('Allocated') . 
-		"</TH><TH>" . _('Balance') . 
-		"</TH><TH>" . _('Comments') . 
-		"</TH><TH>" . _('More Info') .
-		"</TH><TH>" . _('More Info') . '</TD></TR>';
+echo '<table cellpadding=2 colspan=7>';
+$TableHeader = "<tr BGCOLOR =#800000><th>" . _('Trans') . ' #' . 
+		"</th><th>" . _('Type') . 
+		"</th><th>" . _('Supplier Ref') . 
+		"</th><th>" . _('Date') . 
+		"</th><th>" . _('Total') . 
+		"</th><th>" . _('Allocated') . 
+		"</th><th>" . _('Balance') . 
+		"</th><th>" . _('Comments') . 
+		"</th><th>" . _('More Info') .
+		"</th><th>" . _('More Info') . '</td></tr>';
 
 echo $TableHeader;
 
@@ -210,12 +211,12 @@ while ($myrow=DB_fetch_array($TransResult)) {
 		$HoldValue = _('Release');
 	}
 	if ($myrow['hold'] == 1){
-//		echo "<TR BGCOLOR='#DD99BB'>";
+//		echo "<tr bgcolor='#DD99BB'>";
 	}elseif ($k == 1){
-		echo '<TR CLASS="EvenTableRows">';
+		echo '<tr class="EvenTableRows">';
 		$k = 0;
 	} else {
-		echo '<TR CLASS="OddTableRows">';
+		echo '<tr class="OddTableRows">';
 		$k = 1;
 	}
 
@@ -228,16 +229,16 @@ while ($myrow=DB_fetch_array($TransResult)) {
 
 			/*The trans is settled so don't show option to hold */
 
-				printf("<TD>%s</TD>
-					<TD>%s</TD>
-					<TD>%s</TD>
-					<TD>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD ALIGN=LEFT>%s</TD>
-					<TD><A TARGET='_blank' HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Postings') . "</A></td>
-					<TD><A HREF='%s/PaymentAllocations.php?%sSuppID=%s&InvID=%s'>" . _('View Payments') . '</A></TD></tr>',
+				printf("<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td align=right>%s</td>
+					<td align=right>%s</td>
+					<td align=right>%s</td>
+					<td align=left>%s</td>
+					<td><a TARGET='_blank' href='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Postings') . "</a></td>
+					<td><a href='%s/PaymentAllocations.php?%sSuppID=%s&InvID=%s'>" . _('View Payments') . '</a></td></tr>',
 					$myrow['transno'],
 					$myrow['typename'],
 					$myrow['suppreference'],
@@ -257,17 +258,17 @@ while ($myrow=DB_fetch_array($TransResult)) {
 
 			} else {
 
-				printf("<TD>%s</TD>
-					<TD>%s</TD>
-					<TD>%s</TD>
-					<TD>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD ALIGN=LEFT>%s</TD>
-					<TD><A HREF='%s?%s&HoldType=%s&HoldTrans=%s&HoldStatus=%s&FromDate=%s'>%s</A></TD>
-					<TD><A TARGET='_blank' HREF='%s/GLTransInquiry.php?TypeID=%s&TransNo=%s'>" .
-						  _('View GL Postings') . '</A></TD></TR>',
+				printf("<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td align=right>%s</td>
+					<td align=right>%s</td>
+					<td align=right>%s</td>
+					<td align=left>%s</td>
+					<td><a href='%s?%s&HoldType=%s&HoldTrans=%s&HoldStatus=%s&FromDate=%s'>%s</a></td>
+					<td><a TARGET='_blank' href='%s/GLTransInquiry.php?TypeID=%s&TransNo=%s'>" .
+						  _('View GL Postings') . '</a></td></tr>',
 					$myrow['transno'],
 					$myrow['typename'],
 					$myrow['suppreference'],
@@ -294,15 +295,15 @@ while ($myrow=DB_fetch_array($TransResult)) {
 
 			/*The trans is settled so don't show option to hold */
 
-				printf("<TD>%s</TD>
-					<TD>%s</TD>
-                                        <TD>%s</TD>
-					<TD>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD ALIGN=LEFT>%s</TD>
-					</TD></TR>",
+				printf("<td>%s</td>
+					<td>%s</td>
+                                        <td>%s</td>
+					<td>%s</td>
+					<td align=right>%s</td>
+					<td align=right>%s</td>
+					<td align=right>%s</td>
+					<td align=left>%s</td>
+					</td></tr>",
 					$myrow['transno'],
 					$myrow['typename'],
 					$myrow['suppreference'],
@@ -314,16 +315,16 @@ while ($myrow=DB_fetch_array($TransResult)) {
 
 			} else {
 
-				printf("<TD>%s</TD>
-					<TD>%s</TD>
-					<TD>%s</TD>
-					<TD>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD ALIGN=LEFT>%s</TD>
-					<TD><A HREF='%s?%s&HoldType=%s&HoldTrans=%s&HoldStatus=%s&FromDate=%s'>%s</A></TD>
-                                        <TD><A HREF='%s/PaymentAllocations.php?%sSuppID=%s&InvID=%s'>" . _('View Payments') . "</A></TR>",
+				printf("<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td align=right>%s</td>
+					<td align=right>%s</td>
+					<td align=right>%s</td>
+					<td align=left>%s</td>
+					<td><a href='%s?%s&HoldType=%s&HoldTrans=%s&HoldStatus=%s&FromDate=%s'>%s</a></td>
+                                        <td><a href='%s/PaymentAllocations.php?%sSuppID=%s&InvID=%s'>" . _('View Payments') . "</a></tr>",
 					$myrow['transno'],
 					$myrow['typename'],
 					$myrow['suppreference'],
@@ -351,19 +352,19 @@ while ($myrow=DB_fetch_array($TransResult)) {
 
 		if ($_SESSION['CompanyRecord']['gllink_creditors'] == True){
 
-			printf("<TD>%s</TD>
-				<TD>%s</TD>
-				<TD>%s</TD>
-				<TD>%s</TD>
-				<TD ALIGN=RIGHT>%s</TD>
-				<TD ALIGN=RIGHT>%s</TD>
-				<TD ALIGN=RIGHT>%s</TD>
-				<TD ALIGN=LEFT>%s</TD>
-				<TD><A HREF='%s/SupplierAllocations.php?%sAllocTrans=%s'>" .
-					  _('View Allocations') . "</A></TD>
-				<TD><A TARGET='_blank' HREF='%s/GLTransInquiry.php?%sTypeID=%s&TransNo=%s'>" .
-					  _('View GL Postings') . '</A></TD>
-				</TR>',
+			printf("<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td align=right>%s</td>
+				<td align=right>%s</td>
+				<td align=right>%s</td>
+				<td align=left>%s</td>
+				<td><a href='%s/SupplierAllocations.php?%sAllocTrans=%s'>" .
+					  _('View Allocations') . "</a></td>
+				<td><a TARGET='_blank' href='%s/GLTransInquiry.php?%sTypeID=%s&TransNo=%s'>" .
+					  _('View GL Postings') . '</a></td>
+				</tr>',
 				$myrow['transno'],
 				$myrow['typename'],
 				$myrow['suppreference'],
@@ -382,16 +383,16 @@ while ($myrow=DB_fetch_array($TransResult)) {
 
 		} else { /*Not linked to GL */
 
-			printf("<TD>%s</TD>
-				<TD>%s</TD>
-				<TD>%s</TD>
-				<TD>%s</TD>
-				<TD ALIGN=RIGHT>%s</TD>
-				<TD ALIGN=RIGHT>%s</TD>
-				<TD ALIGN=RIGHT>%s</TD>
-				<TD ALIGN=LEFT>%s</TD>
-				<TD><A HREF='%s/SupplierAllocations.php?%sAllocTrans=%s'>" . _('View Allocations') . '</A></TD>
-				</TR>',
+			printf("<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td align=right>%s</td>
+				<td align=right>%s</td>
+				<td align=right>%s</td>
+				<td align=left>%s</td>
+				<td><a href='%s/SupplierAllocations.php?%sAllocTrans=%s'>" . _('View Allocations') . '</a></td>
+				</tr>',
 				$myrow['transno'],
 				$myrow['typename'],
 				$myrow['suppreference'],
@@ -414,6 +415,6 @@ while ($myrow=DB_fetch_array($TransResult)) {
 
 //end of while loop
 
-echo '</TABLE>';
+echo '</table>';
 include('includes/footer.inc');
 ?>

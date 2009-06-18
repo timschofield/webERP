@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 $PageSecurity=1;
 
@@ -89,7 +89,7 @@ if (isset($_POST['Modify'])) {
 	}
 }
 
-echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 If (!isset($_POST['DisplayRecordsMax']) OR $_POST['DisplayRecordsMax']=='') {
 
@@ -97,22 +97,22 @@ If (!isset($_POST['DisplayRecordsMax']) OR $_POST['DisplayRecordsMax']=='') {
 
 }
 
-echo '<CENTER><TABLE><TR><TD>' . _('User ID') . ':</TD><TD>';
-echo $_SESSION['UserID'] . '</TD></TR>';
+echo '<table><tr><td>' . _('User ID') . ':</td><td>';
+echo $_SESSION['UserID'] . '</td></tr>';
 
-echo '<TR><TD>' . _('User Name') . ':</TD><TD>';
-echo $_SESSION['UsersRealName'] . '</TD>
-		<INPUT TYPE="hidden" NAME="RealName" VALUE="'.$_SESSION['UsersRealName'].'"<TD></TR>';
+echo '<tr><td>' . _('User Name') . ':</td><td>';
+echo $_SESSION['UsersRealName'] . '</td>
+		<input type="hidden" name="RealName" VALUE="'.$_SESSION['UsersRealName'].'"<td></tr>';
 
-echo '<TR>
-	<TD>' . _('Maximum Number of Records to Display') . ":</TD>
-	<TD><INPUT TYPE='Text' name='DisplayRecordsMax' SIZE=3 MAXLENGTH=3 VALUE=" . $_POST['DisplayRecordsMax'] . " ></TD>
-	</TR>";
+echo '<tr>
+	<td>' . _('Maximum Number of Records to Display') . ":</td>
+	<td><input type='Text' class='number' name='DisplayRecordsMax' size=3 maxlength=3 VALUE=" . $_POST['DisplayRecordsMax'] . " ></td>
+	</tr>";
 	
 	
-echo '<TR>
-	<TD>' . _('Language') . ":</TD>
-	<TD><SELECT name='Language'>";
+echo '<tr>
+	<td>' . _('Language') . ":</td>
+	<td><select name='Language'>";
 
 	$LangDirHandle = dir('locale/');
 
@@ -122,19 +122,19 @@ echo '<TR>
 		if (is_dir('locale/' . $LanguageEntry) AND $LanguageEntry != '..' AND $LanguageEntry != 'CVS' AND $LanguageEntry!='.'){
 	
 			if ($_SESSION['Language'] == $LanguageEntry){
-				echo "<OPTION SELECTED VALUE='$LanguageEntry'>$LanguageEntry";
+				echo "<option selected VALUE='$LanguageEntry'>$LanguageEntry";
 			} else {
-				echo "<OPTION VALUE='$LanguageEntry'>$LanguageEntry";
+				echo "<option VALUE='$LanguageEntry'>$LanguageEntry";
 			}
 		}
 	}
 	
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 
 	
-echo '<TR>
-	<TD>' . _('Theme') . ":</TD>
-	<TD><SELECT name='Theme'>";
+echo '<tr>
+	<td>' . _('Theme') . ":</td>
+	<td><select name='Theme'>";
 
 $ThemeDirectory = dir('css/');
 
@@ -144,9 +144,9 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 	if (is_dir("css/$ThemeName") AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != 'CVS'){
 
 		if ($_SESSION['Theme'] == $ThemeName){
-			echo "<OPTION SELECTED VALUE='$ThemeName'>$ThemeName";
+			echo "<option selected VALUE='$ThemeName'>$ThemeName";
 		} else {
-			echo "<OPTION VALUE='$ThemeName'>$ThemeName";
+			echo "<option VALUE='$ThemeName'>$ThemeName";
 		}
 	}
 }
@@ -157,13 +157,13 @@ if (!isset($_POST['passcheck'])) {
 if (!isset($_POST['pass'])) {
 	$_POST['pass']='';
 }
-echo '</SELECT></TD></TR>
-	<TR><TD>' . _('New Password') . ":</TD>
-	<TD><input type='password' name='pass' size=20 value='" .  $_POST['pass'] . "'></TD></TR>
-	<TR><TD>" . _('Confirm Password') . ":</TD>
-	<TD><input type='password' name='passcheck' size=20  value='" . $_POST['passcheck'] . "'></TD></TR>
+echo '</select></td></tr>
+	<tr><td>' . _('New Password') . ":</td>
+	<td><input type='password' name='pass' size=20 value='" .  $_POST['pass'] . "'></td></tr>
+	<tr><td>" . _('Confirm Password') . ":</td>
+	<td><input type='password' name='passcheck' size=20  value='" . $_POST['passcheck'] . "'></td></tr>
 	<tr><td colspan=2 align='center'><i>" . _('If you leave the password boxes empty your password will not change') . '</i></td></tr>
-	<TR><TD>' . _('Email') . ':</TD>';
+	<tr><td>' . _('Email') . ':</td>';
 
 $sql = "SELECT email from www_users WHERE userid = '" . $_SESSION['UserID'] . "'";
 $result = DB_query($sql,$db);
@@ -172,10 +172,10 @@ if(!isset($_POST['email'])){
 	$_POST['email'] = $myrow['email'];
 }
 
-echo "<TD><input type=text name='email' size=40 value='" . $_POST['email'] . "'></TD></TR>
-	</TABLE></CENTER>
-	<CENTER><input type='Submit' name='Modify' value=" . _('Modify') . '></CENTER>
-	</FORM>';
+echo "<td><input type=text name='email' size=40 value='" . $_POST['email'] . "'></td></tr>
+	</table>
+	<div class='centre'><input type='Submit' name='Modify' value=" . _('Modify') . '></div>
+	</form>';
 
 include('includes/footer.inc');
 

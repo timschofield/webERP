@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity =10;
 include('includes/session.inc');
 $title = _('System Check');
@@ -41,8 +41,8 @@ function getModuleSetting($pModuleName,$pSetting) {
  $vModules = parsePHPModules();
  return $vModules[$pModuleName][$pSetting];
 }
-echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" TITLE="' . _('System Check') . '" ALT="">' . ' ' . _('System Check') . '</P><CENTER>';
-echo '<DIV class="system_check">';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('System Check') . '" alt="">' . ' ' . _('System Check') . '</p>';
+echo '<div class="system_check">';
 echo '<h3>PHP Settings</h3>';
 echo '<p>PHP version: ' . phpversion();
 echo '<p>GD Module: ' . getModuleSetting('gd','GD Version') . '</p>';

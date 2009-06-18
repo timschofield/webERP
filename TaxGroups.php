@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -125,14 +125,14 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg( _('Cannot delete this tax group because some customer branches are setup using it'),'warn');
-		echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer branches referring to this tax group');
+		echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer branches referring to this tax group');
 	} else {
 		$sql= "SELECT COUNT(*) FROM suppliers WHERE taxgroupid=" . $_GET['SelectedGroup'];
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg( _('Cannot delete this tax group because some suppliers are setup using it'),'warn');
-			echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('suppliers referring to this tax group');
+			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('suppliers referring to this tax group');
 		} else {
 	
 			$sql="DELETE FROM taxgrouptaxes WHERE taxgroupid=" . $_GET['SelectedGroup'];
@@ -283,9 +283,9 @@ if (isset($SelectedGroup)) {
 			}
 			
 			echo '<td>' . $TaxAuthRow[$i]['taxname'] . '</td><td>'.
-				'<input type="text" name="CalcOrder_' . $TaxAuthRow[$i]['taxauthid'] . '" value="' . 
+				'<input type="text" class="number" name="CalcOrder_' . $TaxAuthRow[$i]['taxauthid'] . '" value="' . 
 					$TaxAuthRow[$i]['calculationorder'] . '" size=2 maxlength=2 onKeyPress="return restrictToNumbers(this, event)" 
-					 style="width: 100%;text-align:right"></td>';
+					 style="width: 100%"></td>';
 			echo '<td><select name="TaxOnTax_' . $TaxAuthRow[$i]['taxauthid'] . '" style="width: 100%">';
 			if ($TaxAuthRow[$i]['taxontax']==1){
 				echo '<option selected value=1>' . _('Yes');

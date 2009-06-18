@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.39 $ */
+/* $Revision: 1.40 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing 
@@ -19,7 +19,7 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 //this is available from the menu on this page already
-//echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
+//echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><br>';
 
 if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 	$sql='SELECT suppname FROM suppliers WHERE supplierid="'.$_GET['SupplierID'].'"';
@@ -30,9 +30,9 @@ if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 	$SupplierName=$_SESSION['SuppTrans']->SupplierName;
 }
 
-echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Supplier Invoice') . '" ALT="">' . ' '
+echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Supplier Invoice') . '" alt="">' . ' '
         . _('Enter Supplier Invoice:') . ' ' . $SupplierName;
-
+echo '</div>';
 if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 
  /*It must be a new invoice entry - clear any existing invoice details from the SuppTrans object and initiate a newy*/
@@ -118,7 +118,7 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 } elseif (!isset( $_SESSION['SuppTrans'])){
 
 	prnMsg( _('To enter a supplier invoice the supplier must first be selected from the supplier selection screen'),'warn');
-	echo "<BR><A HREF='$rootpath/SelectSupplier.php?" . SID ."'>" . _('Select A Supplier to Enter an Invoice For') . '</A>';
+	echo "<br><a href='$rootpath/SelectSupplier.php?" . SID ."'>" . _('Select A Supplier to Enter an Invoice For') . '</a>';
 	include('includes/footer.inc');
 	exit;
 
@@ -172,119 +172,119 @@ if (!isset($_POST['PostInvoice'])){
 	
 	if (isset($_POST['GRNS']) and $_POST['GRNS'] == _('Enter Against Goods Received')){
 		/*This ensures that any changes in the page are stored in the session before calling the grn page */
-		echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/SuppInvGRNs.php?" . SID . "'>";
-		echo '<P>' . _('You should automatically be forwarded to the entry of invoices against goods received page') .
+		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . "/SuppInvGRNs.php?" . SID . "'>";
+		echo '<p>' . _('You should automatically be forwarded to the entry of invoices against goods received page') .
 			'. ' . _('If this does not happen') .' (' . _('if the browser does not support META Refresh') . ') ' .
-			"<A HREF='" . $rootpath . "/SuppInvGRNs.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.<BR>';
+			"<a href='" . $rootpath . "/SuppInvGRNs.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.<br>';
 		exit;
 	}
 	if (isset($_POST['Shipts']) and $_POST['Shipts'] == _('Enter Against Shipment')){
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
-		echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/SuppShiptChgs.php?" . SID . "'>";
-		echo '<P>' . _('You should automatically be forwarded to the entry of invoices against shipments page') .
+		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . "/SuppShiptChgs.php?" . SID . "'>";
+		echo '<p>' . _('You should automatically be forwarded to the entry of invoices against shipments page') .
 			'. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' .
-			"<A HREF='" . $rootpath . "/SuppShiptChgs.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.<BR>';
+			"<a href='" . $rootpath . "/SuppShiptChgs.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.<br>';
 		exit;
 	}
 	if (isset($_POST['GL']) and $_POST['GL'] == _('Enter General Ledger Analysis')){
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
-		echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/SuppTransGLAnalysis.php?" . SID . "'>";
-		echo '<P>' . _('You should automatically be forwarded to the entry of invoices against the general ledger page') .
+		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . "/SuppTransGLAnalysis.php?" . SID . "'>";
+		echo '<p>' . _('You should automatically be forwarded to the entry of invoices against the general ledger page') .
 			'. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' .
-			"<A HREF='" . $rootpath . "/SuppTransGLAnalysis.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.<BR>';
+			"<a href='" . $rootpath . "/SuppTransGLAnalysis.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.<br>';
 		exit;
 	}
 	
 	/* everything below here only do if a Supplier is selected
 	fisrt add a header to show who we are making an invoice for */
 	
-	echo "<CENTER><TABLE BORDER=2 COLSPAN=4><TR><TH>" . _('Supplier') .
-		"</TH><TH>" . _('Currency') .
-		"</TH><TH>" . _('Terms').
-		"</TH><TH>" . _('Tax Authority') . '</TH></TR>';
+	echo "<table BORDER=2 colspan=4><tr><th>" . _('Supplier') .
+		"</th><th>" . _('Currency') .
+		"</th><th>" . _('Terms').
+		"</th><th>" . _('Tax Authority') . '</th></tr>';
 	
-	echo '<TR><TD><FONT COLOR=blue><B>' . $_SESSION['SuppTrans']->SupplierID . ' - ' .
-		$_SESSION['SuppTrans']->SupplierName . '</B></FONT></TD>
-		<TD ALIGN=CENTER><FONT COLOR=blue><B>' .  $_SESSION['SuppTrans']->CurrCode . '</B></FONT></TD>
-		<TD><FONT COLOR=blue><B>' . $_SESSION['SuppTrans']->TermsDescription . '</B></FONT></TD>
-		<TD><FONT COLOR=blue><B>' . $_SESSION['SuppTrans']->TaxGroupDescription . '</B></FONT></TD>
-		</TR>
-		</TABLE>';
+	echo '<tr><td><font color=blue><b>' . $_SESSION['SuppTrans']->SupplierID . ' - ' .
+		$_SESSION['SuppTrans']->SupplierName . '</b></font></td>
+		<th><font color=blue><b>' .  $_SESSION['SuppTrans']->CurrCode . '</b></font></th>
+		<td><font color=blue><b>' . $_SESSION['SuppTrans']->TermsDescription . '</b></font></td>
+		<td><font color=blue><b>' . $_SESSION['SuppTrans']->TaxGroupDescription . '</b></font></td>
+		</tr>
+		</table>';
 	
-	echo "<BR><FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
+	echo "<br><form action='" . $_SERVER['PHP_SELF'] . "?" . SID . "' method=post name=form1>";
 	
-	echo '<TABLE>';
+	echo '<table>';
 	
-	echo '<TR><TD>' . _('Supplier Invoice Reference') . ":</TD>
-		<TD><FONT SIZE=2><INPUT TYPE=TEXT SIZE=20 MAXLENGTH=20 NAME=SuppReference VALUE='" .
-		$_SESSION['SuppTrans']->SuppReference . "'></TD>";
+	echo '<tr><td>' . _('Supplier Invoice Reference') . ":</td>
+		<td><font size=2><input type=TEXT size=20 maxlength=20 name=SuppReference VALUE='" .
+		$_SESSION['SuppTrans']->SuppReference . "'></td>";
 	
 	if (!isset($_SESSION['SuppTrans']->TranDate)){
 		$_SESSION['SuppTrans']->TranDate= Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
 	}
-	echo '<TD>' . _('Invoice Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ') :</TD>
-			<TD><INPUT TYPE="TEXT" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" SIZE="11" MAXLENGTH="10" NAME="TranDate" VALUE="' . $_SESSION['SuppTrans']->TranDate . '"></TD>';
+	echo '<td>' . _('Invoice Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ') :</td>
+			<td><input type="TEXT" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="11" maxlength="10" name="TranDate" VALUE="' . $_SESSION['SuppTrans']->TranDate . '"></td>';
 	
-	echo '<TD>' . _('Exchange Rate') . ":</TD>
-			<TD><INPUT TYPE=TEXT SIZE=11 MAXLENGTH=10 NAME='ExRate' VALUE=" . $_SESSION['SuppTrans']->ExRate . '></TD></TR>';
-	echo '</TABLE>';
+	echo '<td>' . _('Exchange Rate') . ":</td>
+			<td><input type=TEXT class='number' size=11 maxlength=10 name='ExRate' VALUE=" . $_SESSION['SuppTrans']->ExRate . '></td></tr>';
+	echo '</table>';
 	
-	echo "<BR><CENTER><INPUT TYPE=SUBMIT NAME='GRNS' VALUE='" . _('Enter Against Goods Received') . "'> ";
+	echo "<br><div class='centre'><input type=submit name='GRNS' VALUE='" . _('Enter Against Goods Received') . "'> ";
 	
-	echo "<INPUT TYPE=SUBMIT NAME='Shipts' VALUE='" . _('Enter Against Shipment') . "'> ";
+	echo "<input type=submit name='Shipts' VALUE='" . _('Enter Against Shipment') . "'> ";
 	
 	if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){
-		echo "<INPUT TYPE=SUBMIT NAME='GL' VALUE='" . _('Enter General Ledger Analysis') . "'></CENTER>";
+		echo "<input type=submit name='GL' VALUE='" . _('Enter General Ledger Analysis') . "'></div>";
 	} else {
-		echo '</CENTER>';
+		echo '</div>';
 	}
 	
 	
 	if (count( $_SESSION['SuppTrans']->GRNs)>0){   /*if there are any GRNs selected for invoicing then */
 		/*Show all the selected GRNs so far from the SESSION['SuppInv']->GRNs array */
 	
-		echo '<TABLE CELLPADDING=2>';
-		$tableheader = "<TR BGCOLOR=#800000><TH>" . _('Seq') . " #</TH>
-				<TH>" . _('Item Code') . "</TH>
-				<TH>" . _('Description') . "</TH>
-				<TH>" . _('Quantity Charged') . "</TH>
-				<TH>" . _('Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TH>
-				<TH>" . _('Line Total') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TH></TR>';
+		echo '<table cellpadding=2>';
+		$tableheader = "<tr bgcolor=#800000><th>" . _('Seq') . " #</th>
+				<th>" . _('Item Code') . "</th>
+				<th>" . _('Description') . "</th>
+				<th>" . _('Quantity Charged') . "</th>
+				<th>" . _('Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</th>
+				<th>" . _('Line Total') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th></tr>';
 		echo $tableheader;
 	
 		$TotalGRNValue = 0;
 	
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 	
-			echo '<TR><TD>' . $EnteredGRN->GRNNo . '</TD><TD>' . $EnteredGRN->ItemCode .
-				'</TD><TD>' . $EnteredGRN->ItemDescription . '</TD><TD ALIGN=RIGHT>' .
-				number_format($EnteredGRN->This_QuantityInv,2) . '</TD><TD ALIGN=RIGHT>' .
-				number_format($EnteredGRN->ChgPrice,2) . '</TD><TD ALIGN=RIGHT>' .
-				number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,2) . '</TD>
-				</TR>';
+			echo '<tr><td>' . $EnteredGRN->GRNNo . '</td><td>' . $EnteredGRN->ItemCode .
+				'</td><td>' . $EnteredGRN->ItemDescription . '</td><td align=right>' .
+				number_format($EnteredGRN->This_QuantityInv,2) . '</td><td align=right>' .
+				number_format($EnteredGRN->ChgPrice,2) . '</td><td align=right>' .
+				number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,2) . '</td>
+				</tr>';
 	
 			$TotalGRNValue = $TotalGRNValue + ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv);
 	
 		}
 	
-		echo '<TR><TD COLSPAN=5 ALIGN=RIGHT><FONT COLOR=blue>' . _('Total Value of Goods Charged') . ':</FONT></TD>
-			<TD ALIGN=RIGHT><FONT COLOR=blue><U>' . number_format($TotalGRNValue,2) . '</U></FONT></TD></TR>';
-		echo '</TABLE>';
+		echo '<tr><td colspan=5 align=right><font color=blue>' . _('Total Value of Goods Charged') . ':</font></td>
+			<td align=right><font color=blue><U>' . number_format($TotalGRNValue,2) . '</U></font></td></tr>';
+		echo '</table>';
 	}
 	
 	if (count( $_SESSION['SuppTrans']->Shipts) > 0){   /*if there are any Shipment charges on the invoice*/
 	
-		echo '<TABLE CELLPADDING=2>';
-		$TableHeader = "<TR><TH>" . _('Shipment') . "</TH>
-				<TH>" . _('Amount') . '</TH></TR>';
+		echo '<table cellpadding=2>';
+		$TableHeader = "<tr><th>" . _('Shipment') . "</th>
+				<th>" . _('Amount') . '</th></tr>';
 		echo $TableHeader;
 	
 		$TotalShiptValue = 0;
 	
 		foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef){
 	
-			echo '<TR><TD>' . $EnteredShiptRef->ShiptRef . '</TD><TD ALIGN=RIGHT>' .
-				number_format($EnteredShiptRef->Amount,2) . '</TD></TR>';
+			echo '<tr><td>' . $EnteredShiptRef->ShiptRef . '</td><td align=right>' .
+				number_format($EnteredShiptRef->Amount,2) . '</td></tr>';
 	
 			$TotalShiptValue = $TotalShiptValue + $EnteredShiptRef->Amount;
 	
@@ -295,39 +295,39 @@ if (!isset($_POST['PostInvoice'])){
 			}
 		}
 	
-		echo '<TR><TD COLSPAN=2 ALIGN=RIGHT><FONT SIZE=4 COLOR=blue>' . _('Total') . ':</FONT></TD>
-			<TD ALIGN=RIGHT><FONT SIZE=4 COLOR=BLUE><U>' .  number_format($TotalShiptValue,2) . '</U></FONT></TD></TR></TABLE>';
+		echo '<tr><td colspan=2 align=right><font size=4 color=blue>' . _('Total') . ':</font></td>
+			<td align=right><font size=4 color=BLUE><U>' .  number_format($TotalShiptValue,2) . '</U></font></td></tr></table>';
 	}
 	
 	
 	if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){
 	
 		if (count($_SESSION['SuppTrans']->GLCodes) > 0){
-			echo '<BR><TABLE CELLPADDING=2>';
-			$TableHeader = "<TR><TH>" . _('Account') .
-					"</TH><TH>" . _('Name') .
-					"</TH><TH>" . _('Amount') . '<BR>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TH>
-					<TH>" . _('Shipment') ."</TH>
-					<TH>" . _('Job') . 	"</TH>
-					<TH>" . _('Narrative') . '</TH></TR>';
+			echo '<br><table cellpadding=2>';
+			$TableHeader = "<tr><th>" . _('Account') .
+					"</th><th>" . _('Name') .
+					"</th><th>" . _('Amount') . '<br>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</th>
+					<th>" . _('Shipment') ."</th>
+					<th>" . _('Job') . 	"</th>
+					<th>" . _('Narrative') . '</th></tr>';
 			echo $TableHeader;
 	
 			$TotalGLValue = 0;
 	
 			foreach ($_SESSION['SuppTrans']->GLCodes as $EnteredGLCode){
 	
-				echo '<TR><TD>' . $EnteredGLCode->GLCode . '</TD><TD>' . $EnteredGLCode->GLActName .
-					'</TD><TD ALIGN=RIGHT>' . number_format($EnteredGLCode->Amount,2) .
-					'</TD><TD>' . $EnteredGLCode->ShiptRef . '</TD><TD>' .$EnteredGLCode->JobRef .
-					'</TD><TD>' . $EnteredGLCode->Narrative . '</TD></TR>';
+				echo '<tr><td>' . $EnteredGLCode->GLCode . '</td><td>' . $EnteredGLCode->GLActName .
+					'</td><td align=right>' . number_format($EnteredGLCode->Amount,2) .
+					'</td><td>' . $EnteredGLCode->ShiptRef . '</td><td>' .$EnteredGLCode->JobRef .
+					'</td><td>' . $EnteredGLCode->Narrative . '</td></tr>';
 	
 				$TotalGLValue = $TotalGLValue + $EnteredGLCode->Amount;
 	
 			}
 	
-			echo '<TR><TD COLSPAN=2 ALIGN=RIGHT><FONT SIZE=4 COLOR=blue>' . _('Total') .  ':</FONT></TD>
-					<TD ALIGN=RIGHT><FONT SIZE=4 COLOR=blue><U>' .  number_format($TotalGLValue,2) . '</U></FONT></TD>
-				</TR></TABLE>';
+			echo '<tr><td colspan=2 align=right><font size=4 color=blue>' . _('Total') .  ':</font></td>
+					<td align=right><font size=4 color=blue><U>' .  number_format($TotalGLValue,2) . '</U></font></td>
+				</tr></table>';
 		}
 	
 		if (!isset($TotalGRNValue)){
@@ -342,29 +342,29 @@ if (!isset($_POST['PostInvoice'])){
 		
 		$_SESSION['SuppTrans']->OvAmount = $TotalGRNValue + $TotalGLValue + $TotalShiptValue;
 		
-		echo '<BR><TABLE><TR><TD>' . _('Amount in supplier currency') . ':</TD><TD COLSPAN=2 ALIGN=RIGHT>' .
-			number_format( $_SESSION['SuppTrans']->OvAmount,2) . '</TD></TR>';
+		echo '<br><table><tr><td>' . _('Amount in supplier currency') . ':</td><td colspan=2 align=right>' .
+			number_format( $_SESSION['SuppTrans']->OvAmount,2) . '</td></tr>';
 	} else {
-		echo '<TABLE><TR><TD>' . _('Amount in supplier currency') .
-			':</TD><TD COLSPAN=2 ALIGN=RIGHT><INPUT TYPE=TEXT SIZE=12 MAXLENGTH=10 NAME=OvAmount VALUE=' .
-			number_format( $_SESSION['SuppTrans']->OvAmount,2) . '></TD></TR>';
+		echo '<table><tr><td>' . _('Amount in supplier currency') .
+			':</td><td colspan=2 align=right><input type=TEXT size=12 maxlength=10 name=OvAmount VALUE=' .
+			number_format( $_SESSION['SuppTrans']->OvAmount,2) . '></td></tr>';
 	}
 	
-	echo "<TR><TD COLSPAN=2><INPUT TYPE=Submit NAME='ToggleTaxMethod' VALUE='" . _('Update Tax Calculation') .
-		"'></TD><TD><SELECT NAME='OverRideTax'>";
+	echo "<tr><td colspan=2><input type=Submit name='ToggleTaxMethod' VALUE='" . _('Update Tax Calculation') .
+		"'></td><td><select name='OverRideTax' onChange='ReloadForm(form1.ToggleTaxMethod)'>";
 	
 	if ($_POST['OverRideTax']=='Man'){
-		echo "<OPTION VALUE='Auto'>" . _('Automatic') . "<OPTION SELECTED VALUE='Man'>" . _('Manual');
+		echo "<option VALUE='Auto'>" . _('Automatic') . "<option selected VALUE='Man'>" . _('Manual');
 	} else {
-		echo "<OPTION SELECTED VALUE='Auto'>" . _('Automatic') . "<OPTION VALUE='Man'>" . _('Manual');
+		echo "<option selected VALUE='Auto'>" . _('Automatic') . "<option VALUE='Man'>" . _('Manual');
 	}
 	
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 	$TaxTotal =0; //initialise tax total
 		
 	foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 		
-		echo '<TR><TD>'  . $Tax->TaxAuthDescription . '</TD><TD>';
+		echo '<tr><td>'  . $Tax->TaxAuthDescription . '</td><td>';
 		
 		/*Set the tax rate to what was entered */
 		if (isset($_POST['TaxRate'  . $Tax->TaxCalculationOrder])){
@@ -375,7 +375,7 @@ if (!isset($_POST['PostInvoice'])){
 		
 		if (!isset($_POST['OverRideTax']) or $_POST['OverRideTax']=='Auto'){
 		
-			echo  ' <INPUT TYPE=TEXT NAME=TaxRate' . $Tax->TaxCalculationOrder . ' MAXLENGTH=4 SIZE=4 VALUE=' . $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100 . '>%';
+			echo  ' <input type=TEXT class="number" name=TaxRate' . $Tax->TaxCalculationOrder . ' maxlength=4 size=4 VALUE=' . $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100 . '>%';
 			
 			/*Now recaluclate the tax depending on the method */
 			if ($Tax->TaxOnTax ==1){
@@ -389,9 +389,9 @@ if (!isset($_POST['PostInvoice'])){
 			}
 			
 			
-			echo '<INPUT TYPE=HIDDEN NAME="TaxAmount'  . $Tax->TaxCalculationOrder . '"  VALUE=' . round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2) . '>';
+			echo '<input type=hidden name="TaxAmount'  . $Tax->TaxCalculationOrder . '"  VALUE=' . round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2) . '>';
 			
-			echo '</TD><TD ALIGN=RIGHT>' . number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2);
+			echo '</td><td align=right>' . number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2);
 			
 		} else { /*Tax being entered manually accept the taxamount entered as is*/
 //			if (!isset($_POST['TaxAmount'  . $Tax->TaxCalculationOrder])) {
@@ -399,25 +399,25 @@ if (!isset($_POST['PostInvoice'])){
 //			}
 			$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_POST['TaxAmount'  . $Tax->TaxCalculationOrder];
 			
-			echo  ' <INPUT TYPE=HIDDEN NAME=TaxRate' . $Tax->TaxCalculationOrder . ' VALUE=' . $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100 . '>';
+			echo  ' <input type=hidden name=TaxRate' . $Tax->TaxCalculationOrder . ' VALUE=' . $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100 . '>';
 
-			echo '</TD><TD><INPUT TYPE=TEXT SIZE=12 MAXLENGTH=12 NAME="TaxAmount'  . $Tax->TaxCalculationOrder . '"  VALUE=' . round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2) . '>';
+			echo '</td><td><input type=TEXT class="number" size=12 maxlength=12 name="TaxAmount'  . $Tax->TaxCalculationOrder . '"  VALUE=' . round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2) . '>';
 		}
 		
 		$TaxTotal += $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount;
-		echo '</TD></TR>';	
+		echo '</td></tr>';	
 	}
 	
 	$_SESSION['SuppTrans']->OvAmount = round($_SESSION['SuppTrans']->OvAmount,2);
 	
 	$DisplayTotal = number_format(( $_SESSION['SuppTrans']->OvAmount + $TaxTotal), 2);
 	
-	echo '<TR><TD>' . _('Invoice Total') . ':</TD><TD COLSPAN=2 ALIGN=RIGHT><B>' . $DisplayTotal . '</B></TD></TR></TABLE>';
+	echo '<tr><td>' . _('Invoice Total') . ':</td><td colspan=2 align=right><b>' . $DisplayTotal . '</b></td></tr></table>';
 	
-	echo '<TABLE><TR><TD>' . _('Comments') . '</TD><TD><TEXTAREA NAME=Comments COLS=40 ROWS=2>' .
-		$_SESSION['SuppTrans']->Comments . '</TEXTAREA></TD></TR></TABLE>';
+	echo '<table><tr><td>' . _('Comments') . '</td><td><TEXTAREA name=Comments COLS=40 ROWS=2>' .
+		$_SESSION['SuppTrans']->Comments . '</TEXTAREa></td></tr></table>';
 	
-	echo "<P><INPUT TYPE=SUBMIT NAME='PostInvoice' VALUE='" . _('Enter Invoice') . "'>";
+	echo "<p><div class='centre'><input type=submit name='PostInvoice' VALUE='" . _('Enter Invoice') . "'></div>";
 	
 } else { //do the postings -and dont show the button to process
 
@@ -843,7 +843,7 @@ then do the updates and inserts to process the invoice entered */
 
 			if ($debug == 1 AND ( abs($_SESSION['SuppTrans']->OvAmount/ $_SESSION['SuppTrans']->ExRate) - $LocalTotal) >0.009999){
 
-				echo '<P>' . _('The total posted to the debit accounts is') . ' ' .
+				echo '<p>' . _('The total posted to the debit accounts is') . ' ' .
 						$LocalTotal . ' ' . _('but the sum of OvAmount converted at ExRate') . ' = ' .
 						( $_SESSION['SuppTrans']->OvAmount / $_SESSION['SuppTrans']->ExRate);
 			}
@@ -1030,7 +1030,7 @@ then do the updates and inserts to process the invoice entered */
 		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
 		prnMsg(_('Supplier invoice number') . ' ' . $InvoiceNo . ' ' . _('has been processed'),'success');
-		echo "<P><A HREF='$rootpath/SupplierInvoice.php?&SupplierID=" .$_SESSION['SuppTrans']->SupplierID . "'>" . _('Enter another Invoice for this Supplier') . '</A>';
+		echo "<p><a href='$rootpath/SupplierInvoice.php?&SupplierID=" .$_SESSION['SuppTrans']->SupplierID . "'>" . _('Enter another Invoice for this Supplier') . '</a>';
 		unset( $_SESSION['SuppTrans']->GRNs);
 		unset( $_SESSION['SuppTrans']->Shipts);
 		unset( $_SESSION['SuppTrans']->GLCodes);
@@ -1039,6 +1039,6 @@ then do the updates and inserts to process the invoice entered */
 
 } /*end of process invoice */
 
-echo '</FORM>';
+echo '</form>';
 include('includes/footer.inc');
 ?>
