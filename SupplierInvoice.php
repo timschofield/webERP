@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.40 $ */
+/* $Revision: 1.41 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing 
@@ -173,25 +173,25 @@ if (!isset($_POST['PostInvoice'])){
 	if (isset($_POST['GRNS']) and $_POST['GRNS'] == _('Enter Against Goods Received')){
 		/*This ensures that any changes in the page are stored in the session before calling the grn page */
 		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . "/SuppInvGRNs.php?" . SID . "'>";
-		echo '<p>' . _('You should automatically be forwarded to the entry of invoices against goods received page') .
+		echo '<DIV class="centre">' . _('You should automatically be forwarded to the entry of invoices against goods received page') .
 			'. ' . _('If this does not happen') .' (' . _('if the browser does not support META Refresh') . ') ' .
-			"<a href='" . $rootpath . "/SuppInvGRNs.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.<br>';
+			"<a href='" . $rootpath . "/SuppInvGRNs.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.</DIV><br>';
 		exit;
 	}
 	if (isset($_POST['Shipts']) and $_POST['Shipts'] == _('Enter Against Shipment')){
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . "/SuppShiptChgs.php?" . SID . "'>";
-		echo '<p>' . _('You should automatically be forwarded to the entry of invoices against shipments page') .
+		echo '<DIV class="centre">' . _('You should automatically be forwarded to the entry of invoices against shipments page') .
 			'. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' .
-			"<a href='" . $rootpath . "/SuppShiptChgs.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.<br>';
+			"<a href='" . $rootpath . "/SuppShiptChgs.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.</DIV><br>';
 		exit;
 	}
 	if (isset($_POST['GL']) and $_POST['GL'] == _('Enter General Ledger Analysis')){
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . "/SuppTransGLAnalysis.php?" . SID . "'>";
-		echo '<p>' . _('You should automatically be forwarded to the entry of invoices against the general ledger page') .
+		echo '<DIV class="centre">' . _('You should automatically be forwarded to the entry of invoices against the general ledger page') .
 			'. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' .
-			"<a href='" . $rootpath . "/SuppTransGLAnalysis.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.<br>';
+			"<a href='" . $rootpath . "/SuppTransGLAnalysis.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.</DIV><br>';
 		exit;
 	}
 	
@@ -1030,7 +1030,7 @@ then do the updates and inserts to process the invoice entered */
 		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
 		prnMsg(_('Supplier invoice number') . ' ' . $InvoiceNo . ' ' . _('has been processed'),'success');
-		echo "<p><a href='$rootpath/SupplierInvoice.php?&SupplierID=" .$_SESSION['SuppTrans']->SupplierID . "'>" . _('Enter another Invoice for this Supplier') . '</a>';
+		echo '<p class="centre"><a href="' . $rootpath . '/SupplierInvoice.php?&SupplierID=' .$_SESSION['SuppTrans']->SupplierID . '>' . _('Enter another Invoice for this Supplier') . '</a>';
 		unset( $_SESSION['SuppTrans']->GRNs);
 		unset( $_SESSION['SuppTrans']->Shipts);
 		unset( $_SESSION['SuppTrans']->GLCodes);
