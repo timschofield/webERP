@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 
 $PageSecurity = 4;
@@ -16,15 +16,15 @@ if (isset($_GET['StockID'])){
 }
 
 
-echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</A><BR>';
+echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><br>';
 
 $result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='$StockID'", $db);
 $myrow = DB_fetch_row($result);
 
-echo '<BR><FONT COLOR=BLUE SIZE=3><B>' . $StockID . ' - ' . $myrow[0] . '</B>  (' . _('In Units of') . ' ' . $myrow[1] . ')</FONT>';
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
-echo _('Stock Code') . ":<INPUT TYPE=TEXT NAME='StockID' SIZE=21 VALUE='$StockID' MAXLENGTH=20>";
-echo "     <INPUT TYPE=SUBMIT NAME='Show' VALUE='" . _('Show Re-Order Levels') . "'><HR>";
+echo '<div class="centre"><br><font color=BLUE size=3><b>' . $StockID . ' - ' . $myrow[0] . '</b>  (' . _('In Units of') . ' ' . $myrow[1] . ')</font>';
+echo "<form action='" . $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
+echo _('Stock Code') . ":<input type=TEXT name='StockID' size=21 VALUE='$StockID' maxlength=20>";
+echo "     <input type=submit name='Show' VALUE='" . _('Show Re-Order Levels') . "'><hr></div>";
 
 $sql = "SELECT locstock.loccode,
 		locations.locationname,
@@ -41,13 +41,13 @@ $DbgMsg = _('The SQL that failed was');
 
 $LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-echo "<CENTER><TABLE CELLPADDING=2 BORDER=2>";
+echo "<table cellpadding=2 BORDER=2>";
 
-$TableHeader = "<TR>
-		<TH>" . _('Location') . "</TH>
-		<TH>" . _('Quantity On Hand') . "</TH>
-		<TH>" . _('Re-Order Level') . "</TH>
-		</TR>";
+$TableHeader = "<tr>
+		<th>" . _('Location') . "</th>
+		<th>" . _('Quantity On Hand') . "</th>
+		<th>" . _('Re-Order Level') . "</th>
+		</tr>";
 
 echo $TableHeader;
 $j = 1;
@@ -73,9 +73,9 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 	}
 
-	printf("<TD>%s</TD>
-		<TD ALIGN=RIGHT>%s</TD>
-		<TD><INPUT TYPE=TEXT NAME=%s MAXLENGTH=10 SIZE=10 VALUE=%s></TD>",
+	printf("<td>%s</td>
+		<td align=right>%s</td>
+		<td><input type=TEXT class='number' name=%s maxlength=10 size=10 VALUE=%s></td>",
 		$myrow['locationname'],
 		number_format($myrow['quantity']),
 		$myrow['loccode'],
@@ -89,12 +89,12 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 }
 //end of while loop
 
-echo "</TABLE><INPUT TYPE=SUBMIT NAME='UpdateData' VALUE='" . _('Update') . "'><HR>";
-echo "<A HREF='$rootpath/StockMovements.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Movements') . '</A>';
-echo "<BR><A HREF='$rootpath/StockUsage.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Usage') . '</A>';
-echo "<BR><A HREF='$rootpath/SelectSalesOrder.php?" . SID . "&SelectedStockItem=$StockID'>" . _('Search Outstanding Sales Orders') . '</A>';
-echo "<BR><A HREF='$rootpath/SelectCompletedOrder.php?" . SID . "&SelectedStockItem=$StockID'>" . _('Search Completed Sales Orders') . '</A>';
+echo "</table><div class='centre'><input type=submit name='UpdateData' VALUE='" . _('Update') . "'><hr>";
+echo "<a href='$rootpath/StockMovements.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Movements') . '</a>';
+echo "<br><a href='$rootpath/StockUsage.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Usage') . '</a>';
+echo "<br><a href='$rootpath/SelectSalesOrder.php?" . SID . "&SelectedStockItem=$StockID'>" . _('Search Outstanding Sales Orders') . '</a>';
+echo "<br><a href='$rootpath/SelectCompletedOrder.php?" . SID . "&SelectedStockItem=$StockID'>" . _('Search Completed Sales Orders') . '</a>';
 
-echo '</FORM>';
+echo '</div></form>';
 include('includes/footer.inc');
 ?>

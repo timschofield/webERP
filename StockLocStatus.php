@@ -48,7 +48,7 @@ if (DB_num_rows($result1)==0){
 		</table>
 		<p>';
 	prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
-	echo '<br><a href="' . $rootpath . '/StockCategories.php?' . SID .'">' . _('Define Stock Categories') . '</A>';
+	echo '<br><a href="' . $rootpath . '/StockCategories.php?' . SID .'">' . _('Define Stock Categories') . '</a>';
 	include ('includes/footer.inc');
 	exit;
 }
@@ -91,9 +91,9 @@ echo '</td></tr></table>';
 
 
 
-echo '</td><td valign=center><input type=submit name="ShowStatus" value="' . _('Show Stock Status') . '">';
+echo '</td></tr></table><br><div class="centre"><input type=submit name="ShowStatus" value="' . _('Show Stock Status') . '">';
 
-echo '</td></tr></table>';
+echo '</div>';
 echo '<hr>';
 
 
@@ -246,11 +246,11 @@ if (isset($_POST['ShowStatus'])){
 			
 			printf("<td><a target='_blank' href='StockStatus.php?StockID=%s'>%s</td>
 					<td>%s</td>
-					<td ALIGN=RIGHT>%s</td>
-					<td ALIGN=RIGHT>%s</td>
-					<td ALIGN=RIGHT>%s</td>
-					<td ALIGN=RIGHT>%s</td>
-					<td ALIGN=RIGHT>%s</td>",
+					<td align=right>%s</td>
+					<td align=right>%s</td>
+					<td align=right>%s</td>
+					<td align=right>%s</td>
+					<td align=right>%s</td>",
 					strtoupper($myrow['stockid']),
 					strtoupper($myrow['stockid']),
 					$myrow['description'],

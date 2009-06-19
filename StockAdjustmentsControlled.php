@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockAdjustment.php');
 
@@ -13,9 +13,9 @@ include('includes/header.inc');
 
 if (!isset($_SESSION['Adjustment'])) {
 	/* This page can only be called when a stock adjustment is pending */
-	echo '<CENTER><A HREF="' . $rootpath . '/StockAdjustments.php?' . SID . '&NewAdjustment=Yes">'. _('Enter A Stock Adjustment'). '</A><br>';
-	prnMsg( _('This page can only be opened if a stock adjustment for a controlled item has been entered').'<BR>','error');
-	echo '</CENTER>';
+	echo '<div class="centre"><a href="' . $rootpath . '/StockAdjustments.php?' . SID . '&NewAdjustment=Yes">'. _('Enter A Stock Adjustment'). '</a><br>';
+	prnMsg( _('This page can only be opened if a stock adjustment for a controlled item has been entered').'<br>','error');
+	echo '</div>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -30,29 +30,29 @@ $LineItem = &$_SESSION['Adjustment'];
 
 //Make sure this item is really controlled
 if ( $LineItem->Controlled != 1 ){
-	echo '<CENTER><A HREF="' . $rootpath . '/StockAdjustments.php?' . SID . '&NewAdjustment=Yes">'._('Enter A Stock Adjustment').'</A></CENTER>';
-	prnMsg('<BR>'. _('Notice') . ' - ' . _('The adjusted item must be defined as controlled to require input of the batch numbers or serial numbers being adjusted'),'error');
+	echo '<a href="' . $rootpath . '/StockAdjustments.php?' . SID . '&NewAdjustment=Yes">'._('Enter A Stock Adjustment').'</a>';
+	prnMsg('<br>'. _('Notice') . ' - ' . _('The adjusted item must be defined as controlled to require input of the batch numbers or serial numbers being adjusted'),'error');
 	include('includes/footer.inc');
 	exit;
 }
 
 /*****  get the page going now... *****/
-echo '<CENTER>';
+echo '<div class="centre">';
 
-echo '<br><a href="'.$rootpath.'/StockAdjustments.php?'  . SID .'">' . _('Back to Adjustment Screen') . '</A>';
+echo '<br><a href="'.$rootpath.'/StockAdjustments.php?'  . SID .'">' . _('Back to Adjustment Screen') . '</a>';
 
-echo '<br><FONT SIZE=2><B>'. _('Adjustment of controlled item').' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription ;
+echo '<br><font size=2><b>'. _('Adjustment of controlled item').' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription ;
 
 /** vars needed by InputSerialItem : **/
 $LocationOut = $_SESSION['Adjustment']->StockLocation;
 $StockID = $LineItem->StockID;
 if ($LineItem->AdjustmentType == 'ADD'){
-	echo '<BR>'. _('Adding Items').'...';
+	echo '<br>'. _('Adding Items').'...';
 	$ItemMustExist = false;
 	$InOutModifier = 1;
 	$ShowExisting = false;
 } elseif  ($LineItem->AdjustmentType == 'REMOVE'){
-	echo '<BR>'._('Removing Items').'...';
+	echo '<br>'._('Removing Items').'...';
 	$ItemMustExist = true;
 	$InOutModifier = -1;
 	$ShowExisting = true;
@@ -61,7 +61,7 @@ if ($LineItem->AdjustmentType == 'ADD'){
 	include('includes/footer.inc');
 	exit;
 }
-echo '</B></FONT>';
+echo '</b></font></div>';
 include ('includes/InputSerialItems.php');
 
 /*TotalQuantity set inside this include file from the sum of the bundles

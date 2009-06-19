@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 11;
 
@@ -167,8 +167,8 @@ if (isset($_POST['submit'])  && $EditName == 1 ) { // Creating or updating a cat
 // ----------------------------------------------------------------------------------------
 // Calculate Path for navigation 
 
-$CategoryPath = '<A href="'.$_SERVER['PHP_SELF'] . '?' . SID . 
-			'&ParentCategory=0">' . htmlentities(_('Main'), ENT_QUOTES, _('ISO-8859-1')) . '</A>' . "&nbsp;\\&nbsp;";
+$CategoryPath = '<a href="'.$_SERVER['PHP_SELF'] . '?' . SID . 
+			'&ParentCategory=0">' . htmlentities(_('Main'), ENT_QUOTES, _('ISO-8859-1')) . '</a>' . "&nbsp;\\&nbsp;";
 $TempPath = '';
 if (isset($ParentCategory)) {
 	$TmpParentID = $ParentCategory;
@@ -184,9 +184,9 @@ for($Buzy = (isset($TmpParentID) && ($TmpParentID <> ''));
 		if (DB_num_rows($result) > 0) {
 			$row = DB_fetch_array($result);
 			$LastParentName =  htmlentities($row['salescatname'], ENT_QUOTES, _('ISO-8859-1'));
-			$TempPath = '<A href="'.$_SERVER['PHP_SELF'] . '?' . SID . 
+			$TempPath = '<a href="'.$_SERVER['PHP_SELF'] . '?' . SID . 
 				'&ParentCategory='.$TmpParentID.'">'.$LastParentName . 
-				'</A>'."&nbsp;\\&nbsp;".$TempPath;
+				'</a>'."&nbsp;\\&nbsp;".$TempPath;
 			$TmpParentID = $row['parentcatid']; // Set For Next Round
 		} else {
 			$Buzy = false;
@@ -197,9 +197,9 @@ for($Buzy = (isset($TmpParentID) && ($TmpParentID <> ''));
 
 $CategoryPath = $CategoryPath.$TempPath;
 
-echo '<p><center><i>'._("Selected Sales Category Path").'</i>&nbsp;:&nbsp;'. 
+echo '<p><div class="centre"><i>'._("Selected Sales Category Path").'</i>&nbsp;:&nbsp;'. 
 	$CategoryPath .
-	'&nbsp;*&nbsp;</b></center></p>';
+	'&nbsp;*&nbsp;</b></div></p>';
 
 // END Calculate Path for navigation 
 // ----------------------------------------------------------------------------------------
@@ -221,7 +221,7 @@ $sql = "SELECT salescatid,
 $result = DB_query($sql,$db);
 
 
-echo '<p><center>';
+echo '<p>';
 if (DB_num_rows($result) == 0) {
 	prnMsg(_('There are no categories defined at this level.'));
 } else {
@@ -276,7 +276,7 @@ if (DB_num_rows($result) == 0) {
 	//END WHILE LIST LOOP
 	echo '</table>';
 }
-echo '</center></p>';
+echo '</p>';
 
 // END display Categories
 // ----------------------------------------------------------------------------------------
@@ -286,7 +286,7 @@ echo '</center></p>';
 // ----------------------------------------------------------------------------------------
 // Show New or Edit Category
 
-echo '<p><FORM ENCTYPE="MULTIPART/FORM-DATA" METHOD="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+echo '<p><form ENCtype="MULTIPART/FORM-DATA" method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 
 // This array will contain the stockids in use for this category
 if (isset($SelectedCategory)) {
@@ -302,8 +302,8 @@ if (isset($SelectedCategory)) {
 	$_POST['ParentCategory']  = $myrow['parentcatid'];
 	$_POST['SalesCatName']  = $myrow['salescatname'];
 
-	echo '<INPUT TYPE=HIDDEN NAME="SelectedCategory" VALUE="' . $SelectedCategory . '">';
-	echo '<INPUT TYPE=HIDDEN NAME="ParentCategory" VALUE="' . 
+	echo '<input type=hidden name="SelectedCategory" VALUE="' . $SelectedCategory . '">';
+	echo '<input type=hidden name="ParentCategory" VALUE="' . 
 		(isset($_POST['ParentCatId'])?($_POST['ParentCategory']):('0')) . '">';
 	$FormCaps = _('Edit Sub Category');
 
@@ -312,26 +312,26 @@ if (isset($SelectedCategory)) {
 	if (isset($ParentCategory)) {
 		$_POST['ParentCategory']  = $ParentCategory;
 	}
-	echo '<INPUT TYPE=HIDDEN NAME="ParentCategory" VALUE="' . 
+	echo '<input type=hidden name="ParentCategory" VALUE="' . 
 		(isset($_POST['ParentCategory'])?($_POST['ParentCategory']):('0')) . '">';
 	$FormCaps = _('New Sub Category');
 }
-echo '<INPUT TYPE=HIDDEN NAME="EditName" VALUE="1">';
-echo '<CENTER><TABLE>';
+echo '<input type=hidden name="EditName" VALUE="1">';
+echo '<table>';
 echo '<tr><th colspan="2">' . $FormCaps . '</th></tr>';
-echo '<TR><TD>' . _('Category Name') . ':</TD>
-            <TD><input type="Text" name="SalesCatName" SIZE=20 MAXLENGTH=20 value="' . 
-			$_POST['SalesCatName'] . '"></TD></TR>';
+echo '<tr><td>' . _('Category Name') . ':</td>
+            <td><input type="Text" name="SalesCatName" size=20 maxlength=20 value="' . 
+			$_POST['SalesCatName'] . '"></td></tr>';
 // Image upload only if we have a selected category			
 if (isset($SelectedCategory)) {
-	echo '<TR><TD>'. _('Image File (.jpg)') . ':</TD>
-		<TD><input type="file" id="ItemPicture" name="ItemPicture"></TD></TR>';
+	echo '<tr><td>'. _('Image File (.jpg)') . ':</td>
+		<td><input type="file" id="ItemPicture" name="ItemPicture"></td></tr>';
 }		
 	
-echo '</TABLE>';
-echo '<CENTER><input type="Submit" name="submit" value="' . _('Submit Information') . '">';
+echo '</table>';
+echo '<div class="centre"><input type="Submit" name="submit" value="' . _('Submit Information') . '"></div>';
 
-echo '</FORM></p>';
+echo '</form></p>';
 
 // END Show New or Edit Category
 // ----------------------------------------------------------------------------------------
@@ -369,17 +369,17 @@ $sql = "SELECT stockid, description FROM stockmaster ORDER BY stockid";
 $result = DB_query($sql,$db);
 if($result && DB_num_rows($result)) {
 	// continue id stock id in the stockid array
-	echo '<p><FORM ENCTYPE="MULTIPART/FORM-DATA" METHOD="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	echo '<p><form ENCtype="MULTIPART/FORM-DATA" method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 	if( isset($SelectedCategory) ) { // If we selected a category we need to keep it selected
-		echo '<INPUT TYPE=HIDDEN NAME="SelectedCategory" VALUE="' . $SelectedCategory . '">';
+		echo '<input type=hidden name="SelectedCategory" VALUE="' . $SelectedCategory . '">';
 	}
-	echo '<INPUT TYPE=HIDDEN NAME="ParentCategory" VALUE="' . 
+	echo '<input type=hidden name="ParentCategory" VALUE="' . 
 		(isset($_POST['ParentCategory'])?($_POST['ParentCategory']):('0')) . '">';
 	
-	echo '<CENTER>';
-	echo '<TABLE>';
+	echo '';
+	echo '<table>';
 	echo '<tr><th colspan="2">'._('Add Inventory to this category.').'</th></tr>';
-	echo '<TR><TD>' . _('Select Inv. Item') . ':</TD><TD>';
+	echo '<tr><td>' . _('Select Inv. Item') . ':</td><td>';
 	echo '<select name="AddStockID">';
 	while( $myrow = DB_fetch_array($result) ) {
 		if ( !array_keys( $stockids, $myrow['stockid']  ) ) {
@@ -391,14 +391,14 @@ if($result && DB_num_rows($result)) {
 		}
 	}
 	echo '</select>';
-	echo '</TD></TR></TABLE></CENTER>';
-	echo '<CENTER><input type="Submit" name="submit" value="' . _('Add Inventory Item') . '">';
-	echo '</center>';
-	echo '</FORM></p>';
+	echo '</td></tr></table>';
+	echo '<div class="centre"><input type="Submit" name="submit" value="' . _('Add Inventory Item') . '"></div>';
+	echo '';
+	echo '</form></p>';
 } else {
-	echo "<p><center>";
+	echo "<p>";
 	echo prnMsg( _("No more Inventory items to add.") );
-	echo "</center></p>";
+	echo "</p>";
 }
 if( $result ) {
 	DB_free_result($result);
@@ -409,7 +409,7 @@ unset($stockids);
 
 // ----------------------------------------------------------------------------------------
 // Always Show Stock In Category
-echo '<p><center>';
+echo '<p>';
 $sql = "SELECT scp.stockid, sm.description FROM salescatprod scp
 			LEFT JOIN stockmaster sm ON sm.stockid = scp.stockid
 			WHERE scp.salescatid". (isset($ParentCategory)?('='.$ParentCategory):' is NULL') . " 
@@ -418,10 +418,10 @@ $sql = "SELECT scp.stockid, sm.description FROM salescatprod scp
 $result = DB_query($sql,$db);
 if($result ) {
 	if( DB_num_rows($result)) {
-		echo '<TABLE>';
+		echo '<table>';
 		echo '<tr><th colspan="3">'._('Inventory items in this category.').'</th></tr>';
-		echo '<TR><TH>' . _('Stock Code') . '</TH>';
-		echo '<TH>' . _('Description') . '</TH></TR>';
+		echo '<tr><th>' . _('Stock Code') . '</th>';
+		echo '<th>' . _('Description') . '</th></tr>';
 
 		$k=0; //row colour counter
 
@@ -434,20 +434,20 @@ if($result ) {
 				$k=1;
 			}
 			
-			echo '<TD>' . htmlentities($myrow['stockid'], ENT_QUOTES, _('ISO-8859-1')) . '</TD>';
-			echo '<TD>' . htmlentities($myrow['description'], ENT_QUOTES, _('ISO-8859-1')) . '</TD>';
-			echo '<TD><A href="'.$_SERVER['PHP_SELF'] . '?' . SID . 
+			echo '<td>' . htmlentities($myrow['stockid'], ENT_QUOTES, _('ISO-8859-1')) . '</td>';
+			echo '<td>' . htmlentities($myrow['description'], ENT_QUOTES, _('ISO-8859-1')) . '</td>';
+			echo '<td><a href="'.$_SERVER['PHP_SELF'] . '?' . SID . 
 					'&ParentCategory='.$ParentCategory.'&DelStockID='.$myrow['stockid'].'">'. 
 					_('Remove').
-					'</A></TD></TR>';
+					'</a></td></tr>';
 		}
-		echo '</TABLE>';
+		echo '</table>';
 	} else {
 		prnMsg(_("No Inventory items in this category."));
 	}
 	DB_free_result($result);
 }
-echo '</center></p>';
+echo '</p>';
 
 
 

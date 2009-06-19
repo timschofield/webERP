@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 8;
 
@@ -16,15 +16,15 @@ If (isset($_POST['Select'])) {
 	$result = DB_query("SELECT accountname FROM chartmaster WHERE accountcode=" . $_POST['Select'],$db);
 	$myrow = DB_fetch_row($result);
 
-	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Search for General Ledger Accounts');
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Search for General Ledger Accounts');
 
-	echo '<DIV class="page_help_text">' . _('Account Code') . ' <B>' . $_POST['Select'] . ' - ' . $myrow[0]  . ' </B>' . _('has been selected') . '. <br>' . _('Select one of the links below to operate using this Account') . '.</DIV><CENTER>';
+	echo '<div class="page_help_text">' . _('Account Code') . ' <b>' . $_POST['Select'] . ' - ' . $myrow[0]  . ' </b>' . _('has been selected') . '. <br>' . _('Select one of the links below to operate using this Account') . '.</div>';
 	$AccountID = $_POST['Select'];
 	$_POST['Select'] = NULL;
 
-	echo '<BR><A HREF="' . $rootpath . '/GLAccounts.php?' . SID . '&SelectedAccount=' . $AccountID . '">' . _('Edit Account') . '</A>';
-	echo '<BR><A HREF="' . $rootpath . '/GLAccountInquiry.php?' . SID . '&Account=' . $AccountID . '">' . _('Account Inquiry') . '</A>';
-	echo '<CENTER><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID .  '">' . _('New Search') . '</A></CENTER>';
+	echo '<br><a href="' . $rootpath . '/GLAccounts.php?' . SID . '&SelectedAccount=' . $AccountID . '">' . _('Edit Account') . '</a>';
+	echo '<br><a href="' . $rootpath . '/GLAccountInquiry.php?' . SID . '&Account=' . $AccountID . '">' . _('Account Inquiry') . '</a>';
+	echo '<div class="centre><a href="' . $_SERVER['PHP_SELF'] . '?' . SID .  '">' . _('New Search') . '</a></div>';
 
 } elseif (isset($_POST['Search'])){
 
@@ -84,35 +84,35 @@ If (isset($_POST['Select'])) {
 if (!isset($AccountID)) {
 
 
-echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . _('Search for General Ledger Accounts'); 
-echo "<br><center><FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD=POST>";
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Search for General Ledger Accounts'); 
+echo "<br><form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method=post>";
 
 if(strlen($msg)>1){
 	prnMsg($msg,'info');
 }
 
-echo '<TABLE CELLPADDING=3 COLSPAN=4>
-	<TR>
-	<TD><FONT SIZE=1>' . _('Enter extract of text in the Account name') .":</FONT></TD>
-	<TD><INPUT TYPE='Text' NAME='Keywords' SIZE=20 MAXLENGTH=25></TD>
-	<TD><FONT SIZE=3><B>" .  _('OR') . "</B></FONT></TD>
-	<TD><FONT SIZE=1>" . _('Enter Account No. to search from') . ":</FONT></TD>
-	<TD><INPUT TYPE='Text' NAME='GLCode' SIZE=15 MAXLENGTH=18 onKeyPress='return restrictToNumbers(this, event)' ></TD>
-	</TR>
-	</TABLE><br>";
+echo '<table cellpadding=3 colspan=4>
+	<tr>
+	<td><font size=1>' . _('Enter extract of text in the Account name') .":</font></td>
+	<td><input type='Text' name='Keywords' size=20 maxlength=25></td>
+	<td><font size=3><b>" .  _('OR') . "</b></font></td>
+	<td><font size=1>" . _('Enter Account No. to search from') . ":</font></td>
+	<td><input type='Text' name='GLCode' size=15 maxlength=18 onKeyPress='return restrictToNumbers(this, event)' ></td>
+	</tr>
+	</table><br>";
 
-echo '<INPUT TYPE=SUBMIT NAME="Search" VALUE=' . _('Search Now') . '">
-	<INPUT TYPE=SUBMIT ACTION=RESET VALUE="' . _('Reset') .'"></CENTER>';
+echo '<div class="centre"><input type=submit name="Search" VALUE=' . _('Search Now') . '">
+	<input type=submit action=RESET VALUE="' . _('Reset') .'"></div>';
 
 
 If (isset($result)) {
 
-	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
+	echo '<table cellpadding=2 colspan=7 BORDER=2>';
 
-	$TableHeader = '<TR><TH>' . _('Code') . '</TH>
-                      <TH>' . _('Account Name') . '</TH>
-                      <TH>' . _('Group') . '</TH>
-                      <TH>' . _('Account Type') . '</TH></TR>';
+	$TableHeader = '<tr><th>' . _('Code') . '</th>
+                      <th>' . _('Account Name') . '</th>
+                      <th>' . _('Group') . '</th>
+                      <th>' . _('Account Type') . '</th></tr>';
 
 	echo $TableHeader;
 
@@ -120,10 +120,10 @@ If (isset($result)) {
 
 	while ($myrow=DB_fetch_array($result)) {
 
-		printf("<tr><td><FONT SIZE=1><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s'</FONT></td>
-                <td><FONT SIZE=1>%s</FONT></td>
-                <td><FONT SIZE=1>%s</FONT></td>
-                <td><FONT SIZE=1>%s</FONT></td>
+		printf("<tr><td><font size=1><input type=submit name='Select' VALUE='%s'</font></td>
+                <td><font size=1>%s</font></td>
+                <td><font size=1>%s</font></td>
+                <td><font size=1>%s</font></td>
                 </tr>",
                 $myrow['accountcode'],
                 $myrow['accountname'],
@@ -140,14 +140,14 @@ If (isset($result)) {
 	}
 //end of while loop
 
-	echo '</TABLE>';
+	echo '</table>';
 
 }
 //end if results to show
 
 ?>
 
-</FORM>
+</form>
 
 <?php } //end AccountID already selected
 

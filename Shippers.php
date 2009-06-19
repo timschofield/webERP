@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 15;
 
@@ -61,7 +61,7 @@ if ( isset($_POST['submit']) ) {
 	//run the SQL from either of the above possibilites
 	if ($InputError !=1) {
 		$result = DB_query($sql,$db);
-		echo '<BR>';
+		echo '<br>';
 		prnMsg($msg, 'success');
 		unset($SelectedShipper);
 		unset($_POST['ShipperName']);
@@ -78,7 +78,7 @@ if ( isset($_POST['submit']) ) {
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		$CancelDelete = 1;
-		echo '<BR>';
+		echo '<br>';
 		prnMsg( _('Cannot delete this shipper because sales orders have been created using this shipper') . '. ' . _('There are'). ' '. 
 			$myrow[0] . ' '. _('sales orders using this shipper code'), 'error');
 
@@ -90,7 +90,7 @@ if ( isset($_POST['submit']) ) {
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			$CancelDelete = 1;
-			echo '<BR>';
+			echo '<br>';
 			prnMsg( _('Cannot delete this shipper because invoices have been created using this shipping company') . '. ' . _('There are').  ' ' .
 				$myrow[0] . ' ' . _('invoices created using this shipping company'), 'error');
 		} else {
@@ -98,14 +98,14 @@ if ( isset($_POST['submit']) ) {
 			if ($_SESSION['Default_Shipper']==$SelectedShipper) {
 
 				$CancelDelete = 1;
-				echo '<BR>';
+				echo '<br>';
 				prnMsg( _('Cannot delete this shipper because it is defined as the default shipping company in the configuration file'), 'error');
 
 			} else {
 
 				$sql="DELETE FROM shippers WHERE shipper_id=$SelectedShipper";
 				$result = DB_query($sql,$db);
-				echo '<BR>';
+				echo '<br>';
 				prnMsg( _('The shipper record has been deleted'), 'success');;
 			}
 		}
@@ -124,7 +124,7 @@ or deletion of the records*/
 	$sql = "SELECT * FROM shippers ORDER BY shipper_id";
 	$result = DB_query($sql,$db);
 
-	echo '<CENTER><table border=1>
+	echo '<table border=1>
 		<tr><th>'. _('Shipper ID'). '</th><th>'. _('Shipper Name'). '</th></tr>';
 
 	$k=0; //row colour counter
@@ -149,21 +149,21 @@ or deletion of the records*/
 			$myrow[0]);
 	}
 	//END WHILE LIST LOOP
-	echo '</CENTER></table>';
+	echo '</table>';
 }
 
 
 if (isset($SelectedShipper)) {  ?>
-	<Center><a href="<?php echo $_SERVER['PHP_SELF'] . '?' . SID;?>"><?=_('REVIEW RECORDS')?></a></Center>
+	<div class='centre'><a href="<?php echo $_SERVER['PHP_SELF'] . '?' . SID;?>"><?=_('REVIEW RECORDS')?></a></div>
 <?php } ?>
 
-<P>
+<p>
 
 <?php
 
 if (!isset($_GET['delete'])) {
 
-	echo '<FORM METHOD="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 
 	if (isset($SelectedShipper)) {
 		//editing an existing Shipper
@@ -176,25 +176,25 @@ if (!isset($_GET['delete'])) {
 		$_POST['Shipper_ID'] = $myrow['shipper_id'];
 		$_POST['ShipperName']	= $myrow['shippername'];
 
-		echo '<INPUT TYPE=HIDDEN NAME="SelectedShipper" VALUE='. $SelectedShipper .'>';
-		echo '<INPUT TYPE=HIDDEN NAME="Shipper_ID" VALUE=' . $_POST['Shipper_ID'] . '>';
-		echo '<CENTER><TABLE><TR><TD>'. _('Shipper Code').':</TD><TD>' . $_POST['Shipper_ID'] . '</TD></TR>';
+		echo '<input type=hidden name="SelectedShipper" VALUE='. $SelectedShipper .'>';
+		echo '<input type=hidden name="Shipper_ID" VALUE=' . $_POST['Shipper_ID'] . '>';
+		echo '<table><tr><td>'. _('Shipper Code').':</td><td>' . $_POST['Shipper_ID'] . '</td></tr>';
 	} else {
-		echo "<CENTER><TABLE>";
+		echo "<table>";
 	}
 	if (!isset($_POST['ShipperName'])) {
 		$_POST['ShipperName']='';
 	}
 
-	echo '<TR><TD>'. _('Shipper Name') .':</TD>
-	<TD><input type="Text" name="ShipperName"'. (in_array('ShipperName',$Errors) ? 'class="inputerror"' : '' ) .
-		' value="'. $_POST['ShipperName'] .'" SIZE=35 MAXLENGTH=40></TD></TR>
+	echo '<tr><td>'. _('Shipper Name') .':</td>
+	<td><input type="Text" name="ShipperName"'. (in_array('ShipperName',$Errors) ? 'class="inputerror"' : '' ) .
+		' value="'. $_POST['ShipperName'] .'" size=35 maxlength=40></td></tr>
 
-	</TABLE></CENTER>
+	</table>
 
-	<CENTER><input type="Submit" name="submit" value="'. _('Enter Information').'"></CENTER>
+	<div class="centre"><input type="Submit" name="submit" value="'. _('Enter Information').'"></div>
 
-	</FORM>';
+	</form>';
 
 } //end if record deleted no point displaying form to add record 
 

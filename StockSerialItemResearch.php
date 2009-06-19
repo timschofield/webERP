@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 3;
 
@@ -19,12 +19,12 @@ if (isset($_POST['serialno'])) {
 $SN = $SN;
 
 ?>
-<DIV ALIGN=CENTER>
-<BR>
-<FORM NAME=SNRESEARCH METHOD=POST ACTION="<?php echo $_SERVER['PHP_SELF']; ?>">
-<?php echo _('Serial Number') ?>: <INPUT ID="serialno" NAME="serialno" SIZE=21 MAXLENGTH=20 VALUE="<?php echo $SN; ?>"> &nbsp; 
-<INPUT TYPE=SUBMIT NAME=submit>
-</FORM>
+<div class="centre">
+<br>
+<form name=SNRESEARCH method=post action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<?php echo _('Serial Number') ?>: <input ID="serialno" name="serialno" size=21 maxlength=20 VALUE="<?php echo $SN; ?>"> &nbsp; 
+<input type=submit name=submit>
+</form>
 <SCRIPT>
 document.getElementById('serialno').focus();
 </SCRIPT>
@@ -64,7 +64,7 @@ if ($SN!='') {
 		prnMsg( _('No History found for Serial Number'). ': <b>'.$SN.'</b>' , 'warn');
 	} else {
 		echo '<h4>'. _('Details for Serial Item').': <b>'.$SN.'</b><br>'. _('Length').'='.strlen($SN).'</h4>';
-		echo '<TABLE BORDER=1>';
+		echo '<table BORDER=1>';
 		echo "<tr><th>" . _('StockID') . "</th>
 			<th>" . _('CurInvQty') . "</th>
 			<th>" . _('Move Qty') . "</th>
@@ -105,10 +105,10 @@ if ($SN!='') {
 				$myrow[13]
 			);
 		} //END WHILE LIST LOOP
-		echo '</TABLE>';
+		echo '</table>';
 	} // ELSE THERE WHERE ROWS
 }//END OF POST IS SET
-echo '</DIV>';
+echo '</div>';
 
 include('includes/footer.inc');
 ?>

@@ -8,28 +8,28 @@ $title = _('All Stock Movements By Location');
 
 include('includes/header.inc');
 
-echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 
-echo '  ' . _('From Stock Location') . ':<SELECT name="StockLocation"> ';
+echo '  ' . _('From Stock Location') . ':<select name="StockLocation"> ';
 
 $sql = 'SELECT loccode, locationname FROM locations';
 $resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All'){
 		if ($myrow['loccode'] == $_POST['StockLocation']){
-		     echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		     echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		} else {
-		     echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		     echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		}
 	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-		 echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		 $_POST['StockLocation']=$myrow['loccode'];
 	} else {
-		 echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 	}
 }
 
-echo '</SELECT><BR>';
+echo '</select><br>';
 
 if (!isset($_POST['BeforeDate']) OR !Is_Date($_POST['BeforeDate'])){
    $_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -37,10 +37,10 @@ if (!isset($_POST['BeforeDate']) OR !Is_Date($_POST['BeforeDate'])){
 if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
    $_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,Date('d'),Date('y')));
 }
-echo ' ' . _('Show Movements before') . ': <INPUT TYPE=TEXT NAME="BeforeDate" SIZE=12 MAXLENGTH=12 Value="' . $_POST['BeforeDate'] . '">';
-echo ' ' . _('But after') . ': <INPUT TYPE=TEXT NAME="AfterDate" SIZE=12 MAXLENGTH=12 Value="' . $_POST['AfterDate'] . '">';
-echo ' <INPUT TYPE=SUBMIT NAME="ShowMoves" VALUE="' . _('Show Stock Movements') . '">';
-echo '<HR>';
+echo ' ' . _('Show Movements before') . ': <input type=TEXT name="BeforeDate" size=12 maxlength=12 Value="' . $_POST['BeforeDate'] . '">';
+echo ' ' . _('But after') . ': <input type=TEXT name="AfterDate" size=12 maxlength=12 Value="' . $_POST['AfterDate'] . '">';
+echo ' <input type=submit name="ShowMoves" VALUE="' . _('Show Stock Movements') . '">';
+echo '<hr>';
 
 
 $SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);
@@ -71,18 +71,18 @@ $sql = "SELECT stockmoves.stockid,
 $ErrMsg = _('The stock movements for the selected criteria could not be retrieved because');
 $MovtsResult = DB_query($sql, $db,$ErrMsg);
 
-echo '<TABLE CELLPADDING=5 CELLSPACING=4 BORDER=0>';
-$tableheader = '<TR>
-		<TH>' . _('Item Code') . '</TH>
-		<TH>' . _('Type') . '</TH>
-		<TH>' . _('Trans No') . '</TH>
-		<TH>' . _('Date') . '</TH>
-		<TH>' . _('Customer') . '</TH>
-		<TH>' . _('Quantity') . '</TH>
-		<TH>' . _('Reference') . '</TH>
-		<TH>' . _('Price') . '</TH>
-		<TH>' . _('Discount') . '</TH>
-		</TR>';
+echo '<table cellpadding=5 CELLSPACING=4 BORDER=0>';
+$tableheader = '<tr>
+		<th>' . _('Item Code') . '</th>
+		<th>' . _('Type') . '</th>
+		<th>' . _('Trans No') . '</th>
+		<th>' . _('Date') . '</th>
+		<th>' . _('Customer') . '</th>
+		<th>' . _('Quantity') . '</th>
+		<th>' . _('Reference') . '</th>
+		<th>' . _('Price') . '</th>
+		<th>' . _('Discount') . '</th>
+		</tr>';
 echo $tableheader;
 
 $j = 1;
@@ -91,10 +91,10 @@ $k=0; //row colour counter
 while ($myrow=DB_fetch_array($MovtsResult)) {
 
 	if ($k==1){
-		echo '<TR class="OddTableRows">';
+		echo '<tr class="OddTableRows">';
 		$k=0;
 	} else {
-		echo '<TR class="EvenTableRows">';
+		echo '<tr class="EvenTableRows">';
 		$k=1;
 	}
 
@@ -106,10 +106,10 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
-			<td ALIGN=RIGHT>%s</td>
+			<td align=right>%s</td>
 			<td>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>
+			<td align=right>%s</td>
+			<td align=right>%s</td>
 			</tr>",
 			strtoupper($myrow['stockid']),
 			strtoupper($myrow['stockid']),
@@ -131,7 +131,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 }
 //end of while loop
 
-echo '</TABLE><HR>';
+echo '</table><hr>';
 echo '</form>';
 
 include('includes/footer.inc');

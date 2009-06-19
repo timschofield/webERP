@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 
 $PageSecurity = 2;
@@ -20,7 +20,7 @@ if (isset($_GET['StockID'])){
 }
 
 // This is already linked from this page
-//echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</A><BR>';
+//echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><br>';
 
 $result = DB_query("SELECT description,
                            units,
@@ -42,7 +42,7 @@ $DecimalPlaces = $myrow[3];
 $Serialised = $myrow[4];
 $Controlled = $myrow[5];
 
-echo '<P Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" TITLE="' . _('Inventory') . '" ALT=""><B>' . ' ' . $StockID . ' - ' . $myrow['0'] . ' : ' . _('in units of') . ' : ' . $myrow[1] . '';
+echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt=""><b>' . ' ' . $StockID . ' - ' . $myrow['0'] . ' : ' . _('in units of') . ' : ' . $myrow[1] . '';
 
 $Its_A_KitSet_Assembly_Or_Dummy =False;
 if ($myrow[2]=='K'){
@@ -56,10 +56,10 @@ if ($myrow[2]=='K'){
 	prnMsg( _('This is an dummy part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'),'info');
 }
 
-echo '<CENTER><FORM ACTION="' . $_SERVER['PHP_SELF'] . '?'. SID . '" METHOD=POST>';
+echo '<div class="centre"><form action="' . $_SERVER['PHP_SELF'] . '?'. SID . '" method=post>';
 echo _('Stock Code') . ':<input type=text name="StockID" size=21 value="' . $StockID . '" maxlength=20>';
 
-echo ' <INPUT TYPE=SUBMIT NAME="ShowStatus" VALUE="' . _('Show Stock Status') . '">';
+echo ' <input type=submit name="ShowStatus" VALUE="' . _('Show Stock Status') . '"></div>';
 
 $sql = "SELECT locstock.loccode,
                locations.locationname,
@@ -76,22 +76,22 @@ $ErrMsg = _('The stock held at each location cannot be retrieved because');
 $DbgMsg = _('The SQL that was used to update the stock item and failed was');
 $LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-echo '<TABLE CELLPADDING=2 BORDER=0>';
+echo '<br><table cellpadding=2 BORDER=0>';
 
 if ($Its_A_KitSet_Assembly_Or_Dummy == True){
-	$tableheader = '<TR>
-			<TH>' . _('Location') . '</TH>
-			<TH>' . _('Demand') . '</TH>
-			</TR>';
+	$tableheader = '<tr>
+			<th>' . _('Location') . '</th>
+			<th>' . _('Demand') . '</th>
+			</tr>';
 } else {
-	$tableheader = '<TR>
-			<TH>' . _('Location') . '</TH>
-			<TH>' . _('Quantity On Hand') . '</TH>
-			<TH>' . _('Re-Order Level') . '</FONT></TH>
-			<TH>' . _('Demand') . '</TH>
-			<TH>' . _('Available') . '</TH>
-			<TH>' . _('On Order') . '</TH>
-			</TR>';
+	$tableheader = '<tr>
+			<th>' . _('Location') . '</th>
+			<th>' . _('Quantity On Hand') . '</th>
+			<th>' . _('Re-Order Level') . '</font></th>
+			<th>' . _('Demand') . '</th>
+			<th>' . _('Available') . '</th>
+			<th>' . _('On Order') . '</th>
+			</tr>';
 }
 echo $tableheader;
 $j = 1;
@@ -200,13 +200,13 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 			$QOO +=  $QOORow[0];
 		}
 
-		echo '<TD>' . $myrow['locationname'] . '</TD>';
+		echo '<td>' . $myrow['locationname'] . '</td>';
 
-		printf("<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>",
+		printf("<td align=right>%s</td>
+			<td align=right>%s</td>
+			<td align=right>%s</td>
+			<td align=right>%s</td>
+			<td align=right>%s</td>",
 			number_format($myrow['quantity'], $DecimalPlaces),
 			number_format($myrow['reorderlevel'], $DecimalPlaces),
 			number_format($DemandQty, $DecimalPlaces),
@@ -216,16 +216,16 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 		if ($Serialised ==1){ /*The line is a serialised item*/
 
-			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockSerialItems.php?' . SID . '&Serialised=Yes&Location=' . $myrow['loccode'] . '&StockID=' .$StockID . '">' . _('Serial Numbers') . '</A></TD></TR>';
+			echo '<td><a target="_blank" href="' . $rootpath . '/StockSerialItems.php?' . SID . '&Serialised=Yes&Location=' . $myrow['loccode'] . '&StockID=' .$StockID . '">' . _('Serial Numbers') . '</a></td></tr>';
 		} elseif ($Controlled==1){
-			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockSerialItems.php?' . SID . '&Location=' . $myrow['loccode'] . '&StockID=' .$StockID . '">' . _('Batches') . '</A></TD></TR>';
+			echo '<td><a target="_blank" href="' . $rootpath . '/StockSerialItems.php?' . SID . '&Location=' . $myrow['loccode'] . '&StockID=' .$StockID . '">' . _('Batches') . '</a></td></tr>';
 		}
 
 	} else {
 	/* It must be a dummy, assembly or kitset part */
 
 		printf("<td>%s</td>
-			<td ALIGN=RIGHT>%s</td>
+			<td align=right>%s</td>
 			</tr>",
 			$myrow['locationname'],
 			number_format($DemandQty, $DecimalPlaces)
@@ -234,7 +234,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 //end of page full new headings if
 }
 //end of while loop
-echo '</TABLE>';
+echo '</table>';
 
 if (isset($_GET['DebtorNo'])){
 	$DebtorNo = trim(strtoupper($_GET['DebtorNo']));
@@ -295,13 +295,13 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	}
 	if (isset($PriceHistory)) {
 	  echo '<p>' . _('Pricing history for sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo;
-	  echo '<TABLE CELLPADDING=2 BORDER=0>';
-	  $tableheader = "<TR>
-			<TH>" . _('Date Range') . "</TH>
-			<TH>" . _('Quantity') . "</TH>
-			<TH>" . _('Price') . "</TH>
-			<TH>" . _('Discount') . "</TH>
-			</TR>";
+	  echo '<table cellpadding=2 BORDER=0>';
+	  $tableheader = "<tr>
+			<th>" . _('Date Range') . "</th>
+			<th>" . _('Quantity') . "</th>
+			<th>" . _('Price') . "</th>
+			<th>" . _('Discount') . "</th>
+			</tr>";
 
 	  $j = 0;
 	  $k = 0; //row colour counter
@@ -314,25 +314,25 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 		}
 
 		if ($k==1){
-			echo '<TR CLASS="EvenTableRows">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<TR CLASS="OddTableRows">';
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 
-			printf("<TD>%s</TD>
-			<TD ALIGN=RIGHT>%s</TD>
-			<TD ALIGN=RIGHT>%s</TD>
-			<TD ALIGN=RIGHT>%s%%</TD>
-			</TR>",
+			printf("<td>%s</td>
+			<td align=right>%s</td>
+			<td align=right>%s</td>
+			<td align=right>%s%%</td>
+			</tr>",
 			$ph[0],
 			number_format($ph[1],$DecimalPlaces),
 			number_format($ph[2],2),
 			number_format($ph[3]*100,2)
 			);
 	  }
-	 echo '</TABLE>';
+	 echo '</table>';
 	 }
 	//end of while loop
 	else {
@@ -340,16 +340,16 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	}
 }
 //end of displaying price history for a debtor
-
-echo '<BR><A HREF="' . $rootpath . '/StockMovements.php?' . SID . '&StockID=' . $StockID . '">' . _('Show Movements') . '</A>';
-echo '<BR><A HREF="' . $rootpath . '/StockUsage.php?' . SID . '&StockID=' . $StockID . '">' . _('Show Usage') . '</A>';
-echo '<BR><A HREF="' . $rootpath . '/SelectSalesOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</A>';
-echo '<BR><A HREF="' . $rootpath . '/SelectCompletedOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</A>';
+echo '<div class="centre">';
+echo '<br><a href="' . $rootpath . '/StockMovements.php?' . SID . '&StockID=' . $StockID . '">' . _('Show Movements') . '</a>';
+echo '<br><a href="' . $rootpath . '/StockUsage.php?' . SID . '&StockID=' . $StockID . '">' . _('Show Usage') . '</a>';
+echo '<br><a href="' . $rootpath . '/SelectSalesOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';
+echo '<br><a href="' . $rootpath . '/SelectCompletedOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
 if ($Its_A_KitSet_Assembly_Or_Dummy ==False){
-	echo '<BR><A HREF="' . $rootpath . '/PO_SelectOSPurchOrder.php?' .SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</A>';
+	echo '<br><a href="' . $rootpath . '/PO_SelectOSPurchOrder.php?' .SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</a>';
 }
 
-echo '</FORM></CENTER>';
+echo '</form></div>';
 include('includes/footer.inc');
 
 ?>

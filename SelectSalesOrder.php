@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 2;
 
@@ -475,7 +475,7 @@ If (isset($StockItemsResult)) {
 		if ($_POST['Quotations']=='Orders_Only'){
 			printf("<td><a href='%s'>%s</a></td>
 				<td><a href='%s'>" . _('Invoice') . "</a></td>
-				<td><A target='_blank' HREF='%s'>" . $PrintText . "</a></td>
+				<td><a target='_blank' href='%s'>" . $PrintText . "</a></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>

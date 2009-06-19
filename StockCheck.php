@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -38,9 +38,9 @@ If (isset($_POST['PrintPDF'])
 			$title = _('Stock Freeze') . ' - ' . _('Problem Report') . '.... ';
 			include('includes/header.inc');
 			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg($db),'error');
-			echo '<BR><A HREF="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</A>';
+			echo '<br><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
-	      			echo '<BR>' . $sql;
+	      			echo '<br>' . $sql;
 			}
 			include('includes/footer.inc');
 			exit;
@@ -59,9 +59,9 @@ if (DB_error_no($db) !=0) {
 			$title = _('Stock Freeze') . ' - ' . _('Problem Report') . '.... ';
 			include('includes/header.inc');
 			prnMsg(_('The old quantities could not be deleted from the freeze file because') . ' ' . DB_error_msg($db),'error');
-			echo '<BR><A HREF="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</A>';
+			echo '<br><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
-	      			echo '<BR>' . $sql;
+	      			echo '<br>' . $sql;
 			}
 			include('includes/footer.inc');
 			exit;
@@ -88,16 +88,16 @@ if (DB_error_no($db) !=0) {
 			$title = _('Stock Freeze') . ' - ' . _('Problem Report') . '.... ';
 			include('includes/header.inc');
 			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg($db),'error');
-			echo '<BR><A HREF="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</A>';
+			echo '<br><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
-	      			echo '<BR>' . $sql;
+	      			echo '<br>' . $sql;
 			}
 			include('includes/footer.inc');
 			exit;
 		} else {
 			$title = _('Stock Check Freeze Update');
 			include('includes/header.inc');
-			echo '<P><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Print Check Sheets') . '</A>';
+			echo '<p><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Print Check Sheets') . '</a>';
 			prnMsg( _('Added to the stock check file sucessfully'),'success');
 			include('includes/footer.inc');
 			exit;
@@ -138,9 +138,9 @@ if (DB_error_no($db) !=0) {
 		$title = _('Stock Sheets') . ' - ' . _('Problem Report') . '.... ';
 		include('includes/header.inc');
 		prnMsg( _('The inventory quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg($db),'error');
-		echo '<BR><A HREF="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</A>';
+		echo '<br><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
-	      	echo '<BR>' . $SQL;
+	      	echo '<br>' . $SQL;
 		}
 		include ('includes/footer.inc');
 		exit;
@@ -182,9 +182,9 @@ if (DB_error_no($db) !=0) {
 	 			 $title = _('Stock Check Sheets') . ' - ' . _('Problem Report') . '.... ';
 		  		include('includes/header.inc');
 		   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg($db), 'error');
-	   			echo '<BR><A HREF="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</A>';
+	   			echo '<br><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
 	   			if ($debug==1){
-	      				echo '<BR>' . $SQL;
+	      				echo '<br>' . $SQL;
 		   		}
 		   		echo '</body</html>';
 	   			exit;
@@ -212,7 +212,7 @@ if (DB_error_no($db) !=0) {
 			if (DB_error_no($db) !=0) {
 				prnMsg(_('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because') . ' - ' . DB_error_msg($db),'error');
 				if ($debug==1){
-		   			echo '<BR>' . _('The SQL that failed was') . ' ' . $sql;
+		   			echo '<br>' . _('The SQL that failed was') . ' ' . $sql;
 				}
 				exit;
 			}
@@ -251,7 +251,7 @@ if (DB_error_no($db) !=0) {
 		$title = _('Print Price List Error');
 		include('includes/header.inc');
 		echo '<p>' . _('There were no stock check sheets to print out for the categories specified');
-		echo '<BR><A HREF="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</A>';
+		echo '<br><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
       } else {
@@ -275,78 +275,78 @@ if (DB_error_no($db) !=0) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . ' METHOD="POST"><CENTER><TABLE>';
+		echo '<form action=' . $_SERVER['PHP_SELF'] . ' method="POST"><table>';
 
-		echo '<TR><TD>' . _('From Inventory Category Code') . ':</FONT></TD><TD><SELECT name="FromCriteria">';
+		echo '<tr><td>' . _('From Inventory Category Code') . ':</font></td><td><select name="FromCriteria">';
 
 		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
 		$CatResult= DB_query($sql,$db);
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo '<OPTION VALUE="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+			echo '<option VALUE="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 		}
-		echo '</SELECT></TD></TR>';
+		echo '</select></td></tr>';
 
-		echo '<TR><TD>' . _('To Inventory Category Code') . ':</TD><TD><SELECT name="ToCriteria">';
+		echo '<tr><td>' . _('To Inventory Category Code') . ':</td><td><select name="ToCriteria">';
 
 		/*Set the index for the categories result set back to 0 */
 		DB_data_seek($CatResult,0);
 
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo '<OPTION VALUE="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+			echo '<option VALUE="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 		}
-		echo '</SELECT></TD></TR>';
+		echo '</select></td></tr>';
 
-		echo '<TR><TD>' . _('For Inventory in Location') . ':</TD><TD><SELECT name="Location">';
+		echo '<tr><td>' . _('For Inventory in Location') . ':</td><td><select name="Location">';
 		$sql = 'SELECT loccode, locationname FROM locations';
 		$LocnResult=DB_query($sql,$db);
 
 		while ($myrow=DB_fetch_array($LocnResult)){
-		          echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		          echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
      		}
-		echo '</SELECT></TD></TR>';
+		echo '</select></td></tr>';
 
-		echo '<TR><TD>' . _('Action for Stock Check Freeze') . ':</TD><TD><SELECT name="MakeStkChkData">';
+		echo '<tr><td>' . _('Action for Stock Check Freeze') . ':</td><td><select name="MakeStkChkData">';
 
 		if (!isset($_POST['MakeStkChkData'])){
 			$_POST['MakeStkChkData'] = 'PrintOnly';
 		}
 		if ($_POST['MakeStkChkData'] =='New'){
-			echo '<OPTION SELECTED VALUE="New">' . _('Make new stock check data file');
+			echo '<option selected VALUE="New">' . _('Make new stock check data file');
 		} else {
-			echo '<OPTION VALUE="New">' . _('Make new stock check data file');
+			echo '<option VALUE="New">' . _('Make new stock check data file');
 		}
 		if ($_POST['MakeStkChkData'] =='AddUpdate'){
-			echo '<OPTION SELECTED VALUE="AddUpdate">' . _('Add/update existing stock check file');
+			echo '<option selected VALUE="AddUpdate">' . _('Add/update existing stock check file');
 		} else {
-			echo '<OPTION VALUE="AddUpdate">' . _('Add/update existing stock check file');
+			echo '<option VALUE="AddUpdate">' . _('Add/update existing stock check file');
 		}
 		if ($_POST['MakeStkChkData'] =='PrintOnly'){
-			echo '<OPTION SELECTED VALUE="PrintOnly">' . _('Print Stock Check Sheets Only');
+			echo '<option selected VALUE="PrintOnly">' . _('Print Stock Check Sheets Only');
 		} else {
-			echo '<OPTION VALUE="PrintOnly">' . _('Print Stock Check Sheets Only');
+			echo '<option VALUE="PrintOnly">' . _('Print Stock Check Sheets Only');
 		}
-		echo '</SELECT></TD></TR>';
+		echo '</select></td></tr>';
 		
-		echo '<TR><TD>' . _('Show system quantity on sheets') . ':</TD><TD>';
+		echo '<tr><td>' . _('Show system quantity on sheets') . ':</td><td>';
 		
 		if ($_POST['ShowInfo'] == false){
-		        echo "<INPUT TYPE=CHECKBOX NAME='ShowInfo' VALUE=FALSE>";
+		        echo "<input type=CHECKBOX name='ShowInfo' VALUE=FALSE>";
 		} else {
-	        	echo "<INPUT TYPE=CHECKBOX NAME='ShowInfo' VALUE=TRUE>";
+	        	echo "<input type=CHECKBOX name='ShowInfo' VALUE=TRUE>";
 		}
-		echo "</TD></TR>";
+		echo "</td></tr>";
 																		
-		echo '<TR><TD>' . _('Only print items with non zero quantities') . ':</TD><TD>';
+		echo '<tr><td>' . _('Only print items with non zero quantities') . ':</td><td>';
 		if ($_POST['NonZerosOnly'] == false){
-		        echo "<INPUT TYPE=CHECKBOX NAME='NonZerosOnly' VALUE=FALSE>";
+		        echo "<input type=CHECKBOX name='NonZerosOnly' VALUE=FALSE>";
 		} else {
-		        echo "<INPUT TYPE=CHECKBOX NAME='NonZerosOnly' VALUE=TRUE>";
+		        echo "<input type=CHECKBOX name='NonZerosOnly' VALUE=TRUE>";
 		}
               
-	       	echo '</TD></TR></TABLE><INPUT TYPE=Submit Name="PrintPDF" Value="' . _('Print and Process') . '"></CENTER></FORM>';
+	       	echo '</td></tr></table><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print and Process') . '"></div></form>';
 	}
-	echo '</body></html>';
-
+	include('includes/footer.inc');
+		
 } /*end of else not PrintPDF */
 
 ?>

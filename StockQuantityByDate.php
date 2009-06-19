@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 /* Contributed by Chris Bice - gettext by Kitch*/
 
 
@@ -11,58 +11,58 @@ include('includes/session.inc');
 $title = _('Stock On Hand By Date');
 include('includes/header.inc');
 
-echo "<HR><FORM ACTION='" . $_SERVER['PHP_SELF'] . "?". SID . "' METHOD=POST>";
+echo "<hr><form action='" . $_SERVER['PHP_SELF'] . "?". SID . "' method=post>";
 
 $sql = 'SELECT categoryid, categorydescription FROM stockcategory';
 $resultStkLocs = DB_query($sql, $db);
 
-echo '<CENTER><TABLE><TR>';
-echo '<TD>' . _('For Stock Category') . ":</TD>
-	<TD><SELECT NAME='StockCategory'> ";
+echo '<table><tr>';
+echo '<td>' . _('For Stock Category') . ":</td>
+	<td><select name='StockCategory'> ";
 
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockCategory']) AND $_POST['StockCategory']!='All'){
 		if ($myrow['categoryid'] == $_POST['StockCategory']){
-		     echo "<OPTION SELECTED VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
+		     echo "<option selected VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
 		} else {
-		     echo "<OPTION VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
+		     echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
 		}
 	}else {
-		 echo "<OPTION VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
+		 echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
 	}
 }
-echo '</SELECT></TD>';
+echo '</select></td>';
 
 $sql = 'SELECT loccode, locationname FROM locations';
 $resultStkLocs = DB_query($sql, $db);
 
-echo '<TD>' . _('For Stock Location') . ":</TD>
-	<TD><SELECT NAME='StockLocation'> ";
+echo '<td>' . _('For Stock Location') . ":</td>
+	<td><select name='StockLocation'> ";
 
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All'){
 		if ($myrow['loccode'] == $_POST['StockLocation']){
-		     echo "<OPTION SELECTED VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+		     echo "<option selected VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		} else {
-		     echo "<OPTION VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+		     echo "<option VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		}
 	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-		 echo "<OPTION SELECTED VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+		 echo "<option selected VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		 $_POST['StockLocation']=$myrow['loccode'];
 	} else {
-		 echo "<OPTION VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+		 echo "<option VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 	}
 }
-echo '</SELECT></TD>';
+echo '</select></td>';
 
 if (!isset($_POST['OnHandDate'])){
 	$_POST['OnHandDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date("m"),0,Date("y")));
 }
 
-echo '<TD>' . _("On-Hand On Date") . ":</TD>
-	<TD><INPUT TYPE=TEXT NAME='OnHandDate' SIZE=12 MAXLENGTH=12 VALUE='" . $_POST['OnHandDate'] . "'></TD></TR>";
-echo "<TR><TD COLSPAN=6 ALIGN=CENTER><INPUT TYPE=SUBMIT NAME='ShowStatus' VALUE='" . _('Show Stock Status') ."'></TD></TR></TABLE>";
-echo '</FORM><HR>';
+echo '<td>' . _("On-Hand On Date") . ":</td>
+	<td><input type=TEXT class='date' alt='".$_SESSION['DefaultDateFormat']."' name='OnHandDate' size=12 maxlength=12 VALUE='" . $_POST['OnHandDate'] . "'></td></tr>";
+echo "<tr><td colspan=6><div class='centre'><input type=submit name='ShowStatus' VALUE='" . _('Show Stock Status') ."'></div></td></tr></table>";
+echo '</form><hr>';
 
 $TotalQuantity = 0;
 
@@ -82,12 +82,12 @@ if(isset($_POST['ShowStatus']) AND is_date($_POST['OnHandDate']))
 
 	$SQLOnHandDate = FormatDateForSQL($_POST['OnHandDate']);
 
-	echo '<TABLE CELLPADDING=5 CELLSPACING=4 BORDER=0>';
+	echo '<table cellpadding=5 cellspacing=4 border=0>';
 
-	$tableheader = "<TR>
-				<TH>" . _('Item Code') . "</TH>
-				<TH>" . _('Description') . "</TH>
-				<TH>" . _('Quantity On Hand') . "</TH></TR>";
+	$tableheader = "<tr>
+				<th>" . _('Item Code') . "</th>
+				<th>" . _('Description') . "</th>
+				<th>" . _('Quantity On Hand') . "</th></tr>";
 	echo $tableheader;
 
 	while ($myrows=DB_fetch_array($StockResult)) {
@@ -112,25 +112,25 @@ if(isset($_POST['ShowStatus']) AND is_date($_POST['OnHandDate']))
 		while ($LocQtyRow=DB_fetch_array($LocStockResult)) {
 
 			if ($k==1){
-				echo '<TR class="OddTableRows">';
+				echo '<tr class="OddTableRows">';
 				$k=0;
 			} else {
-				echo '<TR class="EvenTableRows">';
+				echo '<tr class="EvenTableRows">';
 				$k=1;
 			}
 
 			if($NumRows == 0){
-				printf("<TD><A TARGET='_blank' HREF='StockStatus.php?%s'>%s</TD>
-					<TD>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>",
+				printf("<td><a TARGET='_blank' href='StockStatus.php?%s'>%s</td>
+					<td>%s</td>
+					<td align=right>%s</td>",
 					SID . '&StockID=' . strtoupper($myrows['stockid']),
 					strtoupper($myrows['stockid']),
 					$myrows['description'],
 					0);
 			} else {
-				printf("<TD><A TARGET='_blank' HREF='StockStatus.php?%s'>%s</TD>
-					<TD>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>",
+				printf("<td><a TARGET='_blank' href='StockStatus.php?%s'>%s</td>
+					<td>%s</td>
+					<td align=right>%s</td>",
 					SID . '&StockID=' . strtoupper($myrows['stockid']),
 					strtoupper($myrows['stockid']),
 					$myrows['description'],
@@ -147,7 +147,7 @@ if(isset($_POST['ShowStatus']) AND is_date($_POST['OnHandDate']))
 		}
 
 	}//end of while loop
-	echo '<TR><TD>' . _('Total Quantity') . ": " . $TotalQuantity . '</TD></TR></TABLE>';
+	echo '<tr><td>' . _('Total Quantity') . ": " . $TotalQuantity . '</td></tr></table>';
 }
 
 include('includes/footer.inc');

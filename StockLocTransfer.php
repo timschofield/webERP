@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 /* contributed by Chris Bice */
 
 $PageSecurity = 11;
@@ -17,7 +17,7 @@ If (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 	$result = DB_query("SELECT * FROM loctransfers WHERE reference='" . $_POST['Trf_ID'] . "'",$db);
 	if (DB_num_rows($result)!=0){
 		$InputError = true;
-		$ErrorMessage = _('This transaction has already been entered') . '. ' . _('Please start over now').'<BR>';
+		$ErrorMessage = _('This transaction has already been entered') . '. ' . _('Please start over now').'<br>';
 		unset($_POST['submit']);
 		unset($_POST['EnterMoreItems']);
 		for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
@@ -33,18 +33,18 @@ If (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]==0){
 				$InputError = True;
-				$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('is not set up in the database') . '. ' . _('Only valid parts can be entered for transfers'). '<BR>';
+				$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('is not set up in the database') . '. ' . _('Only valid parts can be entered for transfers'). '<br>';
 				$_POST['LinesCounter'] -= 10;
 			}
 			DB_free_result( $result );
 			if (!is_numeric($_POST['StockQTY' . $i])){
 				$InputError = True;
-				$ErrorMessage .= _('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. _('for part code'). ' ' . $_POST['StockID' . $i] . ' '. _('is not numeric') . '. ' . _('The quantity entered for transfers is expected to be numeric').'<BR>';
+				$ErrorMessage .= _('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. _('for part code'). ' ' . $_POST['StockID' . $i] . ' '. _('is not numeric') . '. ' . _('The quantity entered for transfers is expected to be numeric').'<br>';
 				$_POST['LinesCounter'] -= 10;
 			}
 			if ($_POST['StockQTY' . $i] <= 0){
 				$InputError = True;
-				$ErrorMessage .= _('The quantity entered for').' '. $_POST['StockID' . $i] . ' ' . _('is less than or equal to 0') . '. ' . _('Please correct this or remove the item').'<BR>';
+				$ErrorMessage .= _('The quantity entered for').' '. $_POST['StockID' . $i] . ' ' . _('is less than or equal to 0') . '. ' . _('Please correct this or remove the item').'<br>';
 
 			}
 			// Only if stock exist at this location
@@ -52,7 +52,7 @@ If (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0] <= 0){
 				$InputError = True;
-				$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('does not have stock available for transfer.') . '.<BR>';
+				$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('does not have stock available for transfer.') . '.<br>';
 				$_POST['LinesCounter'] -= 10;
 			}
 			DB_free_result( $result );
@@ -61,7 +61,7 @@ If (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 	}//for all LinesCounter
 	if ($TotalItems == 0){
 		$InputError = True;
-		$ErrorMessage .= _('You must enter at least 1 Stock Item to transfer').'<BR>';
+		$ErrorMessage .= _('You must enter at least 1 Stock Item to transfer').'<br>';
 	}
 
 /*Ship location and Receive location are different */
@@ -98,8 +98,8 @@ if(isset($_POST['Submit']) AND $InputError==False){
         DB_Txn_Commit($db);
 
 	prnMsg( _('The inventory transfer records have been created successfully'),'success');
-	echo '<P><A HREF="'.$rootpath.'/PDFStockLocTransfer.php?' . SID . 'TransferNo=' . $_POST['Trf_ID'] . '">'.
-		_('Print the Transfer Docket'). '</A>';
+	echo '<p><a href="'.$rootpath.'/PDFStockLocTransfer.php?' . SID . 'TransferNo=' . $_POST['Trf_ID'] . '">'.
+		_('Print the Transfer Docket'). '</a>';
 	unset($_SESSION['DispatchingTransfer']);
 	unset($_SESSION['Transfer']);
 
@@ -117,57 +117,57 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	}
 
 	If (isset($InputError) and $InputError==true){
-		echo '<BR>';
+		echo '<br>';
 		
 		prnMsg($ErrorMessage, 'error');
-		echo '<BR>';
+		echo '<br>';
 
 	}
 
-	echo '<HR><FORM ACTION="' . $_SERVER['PHP_SELF'] . '?'. SID . '" METHOD=POST>';
+	echo '<hr><form action="' . $_SERVER['PHP_SELF'] . '?'. SID . '" method=post>';
 
-	echo '<input type=HIDDEN NAME="Trf_ID" VALUE="' . $Trf_ID . '"><h2>'. _('Inventory Location Transfer Shipment Reference').' # '. $Trf_ID. '</h2>';
+	echo '<div class="centre"><input type=hidden name="Trf_ID" VALUE="' . $Trf_ID . '"><h2>'. _('Inventory Location Transfer Shipment Reference').' # '. $Trf_ID. '</h2>';
 
 	$sql = 'SELECT loccode, locationname FROM locations';
 	$resultStkLocs = DB_query($sql,$db);
-	echo _('From Stock Location').':<SELECT name="FromStockLocation">';
+	echo _('From Stock Location').':<select name="FromStockLocation">';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['FromStockLocation'])){
 			if ($myrow['loccode'] == $_POST['FromStockLocation']){
-				echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+				echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 			} else {
-				echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+				echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 			}
 		} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-			echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 			$_POST['FromStockLocation']=$myrow['loccode'];
 		} else {
-			echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		}
 	}
-	echo '</SELECT>';
+	echo '</select>';
 
 	DB_data_seek($resultStkLocs,0); //go back to the start of the locations result
-	echo _('To Stock Location').':<SELECT name="ToStockLocation">';
+	echo _('To Stock Location').':<select name="ToStockLocation">';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['ToStockLocation'])){
 			if ($myrow['loccode'] == $_POST['ToStockLocation']){
-				echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+				echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 			} else {
-				echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+				echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 			}
 		} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-			echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 			$_POST['ToStockLocation']=$myrow['loccode'];
 		} else {
-			echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		}
 	}
-	echo '</SELECT><BR>';
+	echo '</select></div><br>';
 
-	echo '<CENTER><TABLE>';
+	echo '<table>';
 
-	$tableheader = '<TR><TH>'. _('Item Code'). '</TH><TH>'. _('Quantity'). '</TH></TR>';
+	$tableheader = '<tr><th>'. _('Item Code'). '</th><th>'. _('Quantity'). '</th></tr>';
 	echo $tableheader;
 
 	$k=0; /* row counter */
@@ -179,10 +179,10 @@ if(isset($_POST['Submit']) AND $InputError==False){
 				echo $tableheader;
 				$k=0;
 			}
-			echo '<TR>
-				<TD><input type=text name="StockID' . $i .'" size=21  maxlength=20 Value="' . $_POST['StockID' . $i] . '"></TD>
-				<TD><input type=text name="StockQTY' . $i .'" size=5 maxlength=4 onkeypress="return restrictToNumbers(this, event)" onFocus="return setTextAlign(this, '."'".'right'."'".')"  Value="' . $_POST['StockQTY' . $i] . '"></TD>
-			</TR>';
+			echo '<tr>
+				<td><input type=text name="StockID' . $i .'" size=21  maxlength=20 Value="' . $_POST['StockID' . $i] . '"></td>
+				<td><input type=text name="StockQTY' . $i .'" size=5 maxlength=4 onkeypress="return restrictToNumbers(this, event)" onFocus="return setTextAlign(this, '."'".'right'."'".')"  Value="' . $_POST['StockQTY' . $i] . '"></td>
+			</tr>';
 		}
 	}else {
 		$i = 0;
@@ -197,17 +197,17 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		if (!isset($_POST['StockQTY' . $i])) {
 			$_POST['StockQTY' . $i]=0;
 		}
-		echo '<TR>
+		echo '<tr>
 			<td><input type=text name="StockID' . $i .'" size=21  maxlength=20 Value="' . $_POST['StockID' . $i] . '"></td>
 			<td><input type=text name="StockQTY' . $i .'" size=5 maxlength=4 onkeypress="return restrictToNumbers(this, event)"  onFocus="return setTextAlign(this, '."'".'right'."'".')"  Value="' . $_POST['StockQTY' . $i] . '"></td>
 		</tr>';
 		$i++;
 	}
 
-	echo '</table><br>
-		<input type=hidden name="LinesCounter" value='. $i .'><INPUT TYPE=SUBMIT NAME="EnterMoreItems" VALUE="'. _('Add More Items'). '"><INPUT TYPE=SUBMIT NAME="Submit" VALUE="'. _('Create Transfer Shipment'). '"><BR><HR>';
+	echo '</table><br><div class="centre">
+		<input type=hidden name="LinesCounter" value='. $i .'><input type=submit name="EnterMoreItems" VALUE="'. _('Add More Items'). '"><input type=submit name="Submit" VALUE="'. _('Create Transfer Shipment'). '"><br><hr>';
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].StockID0);</script>';
-	echo '</FORM></CENTER>';
+	echo '</form></div>';
 	include('includes/footer.inc');
 }
 ?>

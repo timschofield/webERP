@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.44 $ */
+/* $Revision: 1.45 $ */
 
 $PageSecurity = 2;
 $PricesSecurity = 9;
@@ -279,7 +279,7 @@ if (isset($result) AND !isset($_POST['Select'])) {
             $_POST['PageOffset'] = $ListPageMax;
         }
         if ($ListPageMax > 1) {
-            echo "<div class='centre'><P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+            echo "<div class='centre'><p>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 
             echo '<select name="PageOffset">';
 
@@ -357,24 +357,24 @@ if (isset($result) AND !isset($_POST['Select'])) {
 
         echo '</table><br>';
 /*      if ($ListPageMax >1) {
-            echo "<P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+            echo "<p>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 
-            echo '<SELECT NAME="Page>';
+            echo '<select name="Page>';
 
             $ListPage=1;
             while($ListPage <= $ListPageMax) {
                 if ($ListPage == $_POST['PageOffset']) {
-                    echo '<OPTION VALUE=' . $ListPage . ' SELECTED>' . $ListPage . '</OPTION>';
+                    echo '<option VALUE=' . $ListPage . ' selected>' . $ListPage . '</option>';
                 } else {
-                    echo '<OPTION VALUE=' . $ListPage . '>' . $ListPage . '</OPTION>';
+                    echo '<option VALUE=' . $ListPage . '>' . $ListPage . '</option>';
                 }
                 $ListPage++;
             }
-            echo '</SELECT>
-                <INPUT TYPE=SUBMIT NAME="Go" VALUE="' . _('Go') . '">
-                <INPUT TYPE=SUBMIT NAME="Previous" VALUE="' . _('Previous') . '">
-                <INPUT TYPE=SUBMIT NAME="Next" VALUE="' . _('Next') . '">';
-            echo '<P>';
+            echo '</select>
+                <input type=submit name="Go" VALUE="' . _('Go') . '">
+                <input type=submit name="Previous" VALUE="' . _('Previous') . '">
+                <input type=submit name="Next" VALUE="' . _('Next') . '">';
+            echo '<p>';
         } */
     }
 }
@@ -692,7 +692,7 @@ $PropertyOptionValue . '</option>';
     echo '<tr><th align=right width="15%">' . _('Quantity On Hand') . ':</th><td width="17%" align=right>' . $QOH . '</td></tr>';
     echo '<tr><th align=right width="15%">' . _('Quantity Demand') . ':</th><td width="17%" align=right>' . number_format($Demand,$myrow['decimalplaces']) . '</td></tr>';
     echo '<tr><th align=right width="15%">' . _('Quantity On Order') . ':</th><td width="17%" align=right>' . $QOO . '</td></tr>
-                </TABLE>';//end of nested table
+                </table>';//end of nested table
 
     echo '</td>'; //end cell of master table
     if ($myrow['mbflag'] == 'B'or ($myrow['mbflag'] == 'M')) {

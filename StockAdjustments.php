@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
@@ -303,7 +303,7 @@ if (!isset($_SESSION['Adjustment'])) {
 	$Controlled = $_SESSION['Adjustment']->Controlled;
 	$Quantity = $_SESSION['Adjustment']->Quantity;
 }
-echo '<table><tr><td>'. _('Stock Code'). ':</td><td><input type=text name="StockID" size=21 value="' . $StockID . '" maxlength=20> <input type=SUBMIT name="CheckCode" VALUE="'._('Check Part').'"></td></tr>';
+echo '<table><tr><td>'. _('Stock Code'). ':</td><td><input type=text name="StockID" size=21 value="' . $StockID . '" maxlength=20> <input type=submit name="CheckCode" VALUE="'._('Check Part').'"></td></tr>';
 
 if (isset($_SESSION['Adjustment']) and strlen($_SESSION['Adjustment']->ItemDescription)>1){
 	echo '<tr><td colspan=3><font color=BLUE size=3>' . $_SESSION['Adjustment']->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Adjustment']->PartUnit . ' ) - ' . _('Unit Cost').' = ' . $_SESSION['Adjustment']->StandardCost . '</font></td></tr>';
@@ -349,11 +349,11 @@ if ($Controlled==1){
 			prnMsg( _('Please select a location and press') . ' "' . _('Enter Stock Adjustment') . '" ' . _('below to enter Controlled Items'), 'info');
 		}
 } else {
-	echo '<input type=TEXT name="Quantity" size=12 maxlength=12 Value="' . $Quantity . '">';
+	echo '<input type=TEXT class="number" name="Quantity" size=12 maxlength=12 Value="' . $Quantity . '">';
 }
 echo '</td></tr>';
 
-echo '</table><br><input type=SUBMIT name="EnterAdjustment" VALUE="'. _('Enter Stock Adjustment'). '">';
+echo '</table><div class="centre"><br><input type=submit name="EnterAdjustment" VALUE="'. _('Enter Stock Adjustment'). '">';
 echo '<hr>';
 
 if (!isset($_POST['StockLocation'])) {
@@ -366,6 +366,6 @@ echo '<br><a href="'.$rootpath.'/StockUsage.php?' . SID . '&StockID=' . $StockID
 echo '<br><a href="'.$rootpath.'/SelectSalesOrder.php?' . SID . '&SelectedStockItem='. $StockID .'&StockLocation=' . $_POST['StockLocation'] . '">'. _('Search Outstanding Sales Orders').'</a>';
 echo '<br><a href="'.$rootpath.'/SelectCompletedOrder.php?' . SID . '&SelectedStockItem=' . $StockID .'">'._('Search Completed Sales Orders').'</a>';
 
-echo '</form>';
+echo '</div></form>';
 include('includes/footer.inc');
 ?>

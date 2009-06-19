@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
@@ -16,9 +16,9 @@ include('includes/header.inc');
 
 if (!isset($_SESSION['Transfer'])) {
 	/* This page can only be called when a stock Transfer is pending */
-	echo '<CENTER><A HREF="' . $rootpath . '/StockTransfers.php?' . SID . '&NewTransfer=Yes">'._('Enter A Stock Transfer').'</A><br>';
-	prnMsg( _('This page can only be opened if a Stock Transfer for a Controlled Item has been initiated').'<BR>','error');
-	echo '</CENTER>';
+	echo '<div class="centre"><a href="' . $rootpath . '/StockTransfers.php?' . SID . '&NewTransfer=Yes">'._('Enter A Stock Transfer').'</a><br>';
+	prnMsg( _('This page can only be opened if a Stock Transfer for a Controlled Item has been initiated').'<br>','error');
+	echo '</div>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -42,27 +42,27 @@ if (isset($TransferItem)){ /*we are in a bulk transfer */
 //Make sure this item is really controlled
 if ($LineItem->Controlled != 1 ){
 	if (isset($TransferItem)){
-		echo '<CENTER><A HREF="' . $rootpath . '/StockLocTransferReceive.php?' . SID . '>'._('Receive A Stock Transfer').'</A></CENTER>';
+		echo '<div class="centre"><a href="' . $rootpath . '/StockLocTransferReceive.php?' . SID . '>'._('Receive A Stock Transfer').'</a></div>';
 	} else {
-		echo '<CENTER><A HREF="' . $rootpath . '/StockTransfers.php?' . SID . '&NewTransfer=Yes">'._('Enter A Stock Transfer').'</A></CENTER>';
+		echo '<div class="centre"><a href="' . $rootpath . '/StockTransfers.php?' . SID . '&NewTransfer=Yes">'._('Enter A Stock Transfer').'</a></div>';
 	}
-	prnMsg('<BR>'. _('Notice') . ' - ' . _('The transferred item must be defined as controlled to require input of the batch numbers or serial numbers being transferred'),'error');
+	prnMsg('<br>'. _('Notice') . ' - ' . _('The transferred item must be defined as controlled to require input of the batch numbers or serial numbers being transferred'),'error');
 	include('includes/footer.inc');
 	exit;
 }
 
-echo '<CENTER>';
+echo '<div class="centre">';
 
 if (isset($TransferItem)){
 
 	echo _('Transfer Items is set equal to') . ' ' . $TransferItem;
 	
-	echo '<br><a href="'.$rootpath.'/StockLocTransferReceive.php?'  . SID . '">'._('Back To Transfer Screen').'</A>';
+	echo '<br><a href="'.$rootpath.'/StockLocTransferReceive.php?'  . SID . '">'._('Back To Transfer Screen').'</a>';
 } else {
-	echo '<br><a href="'.$rootpath.'/StockTransfers.php?'  . SID . '">'._('Back To Transfer Screen').'</A>';
+	echo '<br><a href="'.$rootpath.'/StockTransfers.php?'  . SID . '">'._('Back To Transfer Screen').'</a>';
 }
 
-echo '<br><FONT SIZE=2><B>'. _('Transfer of controlled item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . '</B></FONT>';
+echo '<br><font size=2><b>'. _('Transfer of controlled item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . '</b></font></div>';
 
 /** vars needed by InputSerialItem : **/
 $LocationOut = $_SESSION['Transfer']->StockLocationFrom;

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 2;
 
@@ -8,8 +8,8 @@ include('includes/session.inc');
 $title = _('Search Work Orders');
 include('includes/header.inc');
 
-echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . $title;
-echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] .'?' .SID . ' METHOD=POST>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
+echo '<form action=' . $_SERVER['PHP_SELF'] .'?' .SID . ' method=post>';
 
 
 If (isset($_POST['ResetPart'])){
@@ -115,7 +115,7 @@ if (!isset($StockID)) {
 
 	if (!isset($_REQUEST['WO']) or ($_REQUEST['WO']=='')){
 
-		echo _('Work Order number') . ": <INPUT type=text name='WO' MAXLENGTH =8 SIZE=9>&nbsp " . _('Processing at') . ":<SELECT name='StockLocation'> ";
+		echo _('Work Order number') . ": <input type=text name='WO' MAXLENGTH =8 size=9>&nbsp " . _('Processing at') . ":<select name='StockLocation'> ";
 
 		$sql = 'SELECT loccode, locationname FROM locations';
 
@@ -124,34 +124,34 @@ if (!isset($StockID)) {
 		while ($myrow=DB_fetch_array($resultStkLocs)){
 			if (isset($_POST['StockLocation'])){
 				if ($myrow['loccode'] == $_POST['StockLocation']){
-				     echo "<OPTION SELECTED Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+				     echo "<option selected Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 				} else {
-				     echo "<OPTION Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+				     echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 				}
 			} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-				 echo "<OPTION SELECTED Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+				 echo "<option selected Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 			} else {
-				 echo "<OPTION Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+				 echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 			}
 		}
 
-		echo '</SELECT> &nbsp&nbsp';
-		echo '<SELECT NAME="ClosedOrOpen">';
+		echo '</select> &nbsp&nbsp';
+		echo '<select name="ClosedOrOpen">';
 
 		if ($_GET['ClosedOrOpen']=='Closed_Only'){
 			$_POST['ClosedOrOpen']='Closed_Only';
 		}
 
 		if ($_POST['ClosedOrOpen']=='Closed_Only'){
-			echo '<OPTION SELECTED VALUE="Closed_Only">' . _('Closed Work Orders Only');
-			echo '<OPTION VALUE="Open_Only">' . _('Open Work Orders Only');
+			echo '<option selected VALUE="Closed_Only">' . _('Closed Work Orders Only');
+			echo '<option VALUE="Open_Only">' . _('Open Work Orders Only');
 		} else {
-			echo '<OPTION VALUE="Closed_Only">' . _('Closed Work Orders Only');
-			echo '<OPTION SELECTED VALUE="Open_Only">' . _('Open Work Orders Only');
+			echo '<option VALUE="Closed_Only">' . _('Closed Work Orders Only');
+			echo '<option selected VALUE="Open_Only">' . _('Open Work Orders Only');
 		}
 
-		echo '</SELECT> &nbsp&nbsp';
-		echo "<INPUT TYPE=SUBMIT NAME='SearchOrders' VALUE='" . _('Search') . "'>";
+		echo '</select> &nbsp&nbsp';
+		echo "<input type=submit name='SearchOrders' VALUE='" . _('Search') . "'>";
     	echo '&nbsp;&nbsp;<a href="' . $rootpath . '/WorkOrderEntry.php?' . SID . '">' . _('New Work Order') . '</a>';
 	}
 
@@ -162,39 +162,39 @@ if (!isset($StockID)) {
 
 	$result1 = DB_query($SQL,$db);
 
-	echo '<HR>
-		<FONT SIZE=1>' . _('To search for work orders for a specific item use the item selection facilities below') . "</FONT>
-		<INPUT TYPE=SUBMIT NAME='SearchParts' VALUE='" . _('Search Items Now') . "'>
-		<INPUT TYPE=SUBMIT NAME='ResetPart' VALUE='" . _('Show All') . "'>
-      <TABLE>
-      	<TR>
-      		<TD><FONT SIZE=1>" . _('Select a stock category') . ":</FONT>
-      			<SELECT NAME='StockCat'>";
+	echo '<hr>
+		<font size=1>' . _('To search for work orders for a specific item use the item selection facilities below') . "</font>
+		<input type=submit name='SearchParts' VALUE='" . _('Search Items Now') . "'>
+		<input type=submit name='ResetPart' VALUE='" . _('Show All') . "'>
+      <table>
+      	<tr>
+      		<td><font size=1>" . _('Select a stock category') . ":</font>
+      			<select name='StockCat'>";
 
 	while ($myrow1 = DB_fetch_array($result1)) {
-		echo "<OPTION VALUE='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
+		echo "<option VALUE='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
 	}
 
-      echo '</SELECT>
-      		<TD><FONT SIZE=1>' . _('Enter text extract(s) in the description') . ":</FONT></TD>
-      		<TD><INPUT TYPE='Text' NAME='Keywords' SIZE=20 MAXLENGTH=25></TD>
-	</TR>
-      	<TR><TD></TD>
-      		<TD><FONT SIZE 3><B>" . _('OR') . ' </B></FONT><FONT SIZE=1>' . _('Enter extract of the Stock Code') . "</B>:</FONT></TD>
-      		<TD><INPUT TYPE='Text' NAME='StockCode' SIZE=15 MAXLENGTH=18></TD>
-      	</TR>
-      </TABLE>
-      <HR>";
+      echo '</select>
+      		<td><font size=1>' . _('Enter text extract(s) in the description') . ":</font></td>
+      		<td><input type='Text' name='Keywords' size=20 maxlength=25></td>
+	</tr>
+      	<tr><td></td>
+      		<td><font SIZE 3><b>" . _('OR') . ' </b></font><font size=1>' . _('Enter extract of the Stock Code') . "</b>:</font></td>
+      		<td><input type='Text' name='StockCode' size=15 maxlength=18></td>
+      	</tr>
+      </table>
+      <hr>";
 
 If (isset($StockItemsResult)) {
 
-	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
-	$TableHeader = "<TR>
-				<TH>" . _('Code') . "</TH>
-				<TH>" . _('Description') . "</TH>
-				<TH>" . _('On Hand') . "</TH>
-				<TH>" . _('Units') . "</TH>
-			</TR>";
+	echo '<table cellpadding=2 colspan=7 BORDER=2>';
+	$TableHeader = "<tr>
+				<th>" . _('Code') . "</th>
+				<th>" . _('Description') . "</th>
+				<th>" . _('On Hand') . "</th>
+				<th>" . _('Units') . "</th>
+			</tr>";
 	echo $TableHeader;
 
 	$j = 1;
@@ -210,9 +210,9 @@ If (isset($StockItemsResult)) {
 			$k++;
 		}
 
-		printf("<td><INPUT TYPE=SUBMIT NAME='SelectedStockItem' VALUE='%s'</td>
+		printf("<td><input type=submit name='SelectedStockItem' VALUE='%s'</td>
 			<td>%s</td>
-			<td ALIGN=RIGHT>%s</td>
+			<td align=right>%s</td>
 			<td>%s</td>
 			</tr>",
 			$myrow['stockid'],
@@ -229,7 +229,7 @@ If (isset($StockItemsResult)) {
 	}
 //end of while loop
 
-	echo '</TABLE>';
+	echo '</table>';
 
 }
 //end if stock search results to show
@@ -299,21 +299,21 @@ If (isset($StockItemsResult)) {
 
 	/*show a table of the orders returned by the SQL */
 
-	echo '<TABLE CELLPADDING=2 COLSPAN=7 WIDTH=100%>';
+	echo '<table cellpadding=2 colspan=7 WIDTH=100%>';
 
 
-	$tableheader = "<TR>
-				<TH>" . _('Modify') . "</TH>
-				<TH>" . _('Status') . "</TH>
-				<TH>" . _('Receive') . "</TH>
-				<TH>" . _('Issue To') . "</TH>
-				<TH>" . _('Costing') . "</TH>
-				<TH>" . _('Item') . "</TH>
-				<TH>" . _('Quantity Required') . "</TH>
-				<TH>" . _('Quantity Received') . "</TH>
-				<TH>" . _('Quantity Outstanding') . "</TH>
-				<TH>" . _('Required Date') . "</TH>
-				</TR>";
+	$tableheader = "<tr>
+				<th>" . _('Modify') . "</th>
+				<th>" . _('Status') . "</th>
+				<th>" . _('Receive') . "</th>
+				<th>" . _('Issue To') . "</th>
+				<th>" . _('Costing') . "</th>
+				<th>" . _('Item') . "</th>
+				<th>" . _('Quantity Required') . "</th>
+				<th>" . _('Quantity Received') . "</th>
+				<th>" . _('Quantity Outstanding') . "</th>
+				<th>" . _('Required Date') . "</th>
+				</tr>";
 
 	echo $tableheader;
 
@@ -338,11 +338,11 @@ If (isset($StockItemsResult)) {
 		$FormatedRequiredByDate = ConvertSQLDate($myrow['requiredby']);
 
 
-		printf("<td><A HREF='%s'>%s</A></td>
-				<td><A HREF='%s'>" . _('Status') . "</A></td>
-				<td><A HREF='%s'>" . _('Receive') . "</A></td>
-				<td><A HREF='%s'>" . _('Issue To') . "</A></td>
-				<td><A HREF='%s'>" . _('Costing') . "</A></td>
+		printf("<td><a href='%s'>%s</a></td>
+				<td><a href='%s'>" . _('Status') . "</a></td>
+				<td><a href='%s'>" . _('Receive') . "</a></td>
+				<td><a href='%s'>" . _('Issue To') . "</a></td>
+				<td><a href='%s'>" . _('Costing') . "</a></td>
 				<td>%s - %s</td>
 				<td align=right>%s</td>
 				<td align=right>%s</td>
@@ -371,13 +371,13 @@ If (isset($StockItemsResult)) {
 	}
 	//end of while loop
 
-	echo '</TABLE>';
+	echo '</table>';
 }
 
 echo "<script>defaultControl(document.forms[0].WO);</script>";
 
 ?>
-</FORM>
+</form>
 
 <?php }
 

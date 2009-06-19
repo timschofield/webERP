@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 3;
 
@@ -146,7 +146,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
-			prnMsg(_('Cannot delete this salesperson because sales analysis records refer to them') , '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records that refer to this salesperson'),'error');
+			prnMsg(_('Cannot delete this salesperson because sales analysis records refer to them') , '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records that refer to this salesperson'),'error');
 		} else {
 
 			$sql="DELETE FROM salesman WHERE salesmancode='$SelectedSaleperson'";
@@ -178,7 +178,7 @@ or deletion of the records*/
 		FROM salesman";
 	$result = DB_query($sql,$db);
 
-	echo '<CENTER><TABLE BORDER=1>';
+	echo '<table BORDER=1>';
 	echo "<tr><th>" . _('Code') . "</th>
 		<th>" . _('Name') . "</th>
 		<th>" . _('Telephone') . "</th>
@@ -195,9 +195,9 @@ or deletion of the records*/
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
+		<td class=number>%s</td>
+		<td class=number>%s</td>
+		<td class=number>%s</td>
 		<td><a href=\"%sSelectedSaleperson=%s\">". _('Edit') . "</a></td>
 		<td><a href=\"%sSelectedSaleperson=%s&delete=1\">" . _('Delete') . "</a></td>
 		</tr>",
@@ -214,16 +214,16 @@ or deletion of the records*/
 		$myrow[0]);
 
 	} //END WHILE LIST LOOP
-	echo '</table></CENTER>';
+	echo '</table>';
 } //end of ifs and buts!
 
 if (isset($SelectedSaleperson)) {
-	echo "<CENTER><A HREF='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Show All Sales People') . "</A></CENTER>";
+	echo "<div class='centre'><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Show All Sales People') . "</a></div>";
 }
 
 if (! isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 	if (isset($SelectedSaleperson)) {
 		//editing an existing Sales-person
@@ -250,15 +250,15 @@ if (! isset($_GET['delete'])) {
 		$_POST['CommissionRate2']  = $myrow['commissionrate2'];
 
 
-		echo "<INPUT TYPE=HIDDEN NAME='SelectedSaleperson' VALUE='" . $SelectedSaleperson . "'>";
-		echo "<INPUT TYPE=HIDDEN NAME='SalesmanCode' VALUE='" . $_POST['SalesmanCode'] . "'>";
-		echo '<CENTER><TABLE> <TR><TD>' . _('Salesperson code') . ':</TD><TD>';
-		echo $_POST['SalesmanCode'] . '</TD></TR>';
+		echo "<input type=hidden name='SelectedSaleperson' VALUE='" . $SelectedSaleperson . "'>";
+		echo "<input type=hidden name='SalesmanCode' VALUE='" . $_POST['SalesmanCode'] . "'>";
+		echo '<table> <tr><td>' . _('Salesperson code') . ':</td><td>';
+		echo $_POST['SalesmanCode'] . '</td></tr>';
 
 	} else { //end of if $SelectedSaleperson only do the else when a new record is being entered
 
-		echo '<CENTER><TABLE><TR><TD>' . _('Salesperson code') . ":</TD>
-			<TD><input type='Text' ". (in_array('SalesmanCode',$Errors) ? 'class="inputerror"' : '' ) ." name='SalesmanCode' SIZE=3 MAXLENGTH=3></TD></TR>";
+		echo '<table><tr><td>' . _('Salesperson code') . ":</td>
+			<td><input type='Text' ". (in_array('SalesmanCode',$Errors) ? 'class="inputerror"' : '' ) ." name='SalesmanCode' size=3 maxlength=3></td></tr>";
 	}
 	if (!isset($_POST['SalesmanName'])){
 	  $_POST['SalesmanName']='';
@@ -280,18 +280,18 @@ if (! isset($_GET['delete'])) {
 	}
 
 
-	echo '<TR><TD>' . _('Salesperson Name') . ":</TD><TD><INPUT TYPE='text' ". (in_array('SalesmanName',$Errors) ? 'class="inputerror"' : '' ) ." name='SalesmanName'  SIZE=30 MAXLENGTH=30 VALUE='" . $_POST['SalesmanName'] . "'></TD></TR>";
-	echo '<TR><TD>' . _('Telephone No') . ":</TD><TD><INPUT TYPE='Text' name='SManTel' SIZE=20 MAXLENGTH=20 VALUE='" . $_POST['SManTel'] . "'></TD></TR>";
-	echo '<TR><TD>' . _('Facsimile No') . ":</TD><TD><INPUT TYPE='Text' name='SManFax' SIZE=20 MAXLENGTH=20 VALUE='" . $_POST['SManFax'] . "'></TD></TR>";
-	echo '<TR><TD>' . _('Commission Rate 1') . ":</TD><TD><INPUT TYPE='Text' name='CommissionRate1' SIZE=5 MAXLENGTH=5 VALUE=" . $_POST['CommissionRate1'] . '></TD></TR>';
-	echo '<TR><TD>' . _('Breakpoint') . ":</TD><TD><INPUT TYPE='Text' name='Breakpoint' SIZE=6 MAXLENGTH=6 VALUE=" . $_POST['Breakpoint'] . '></TD></TR>';
-	echo '<TR><TD>' . _('Commission Rate 2') . ":</TD><TD><INPUT TYPE='Text' name='CommissionRate2' SIZE=5 MAXLENGTH=5 VALUE=" . $_POST['CommissionRate2']. '></TD></TR>';
+	echo '<tr><td>' . _('Salesperson Name') . ":</td><td><input type='text' ". (in_array('SalesmanName',$Errors) ? 'class="inputerror"' : '' ) ." name='SalesmanName'  size=30 maxlength=30 VALUE='" . $_POST['SalesmanName'] . "'></td></tr>";
+	echo '<tr><td>' . _('Telephone No') . ":</td><td><input type='Text' name='SManTel' size=20 maxlength=20 VALUE='" . $_POST['SManTel'] . "'></td></tr>";
+	echo '<tr><td>' . _('Facsimile No') . ":</td><td><input type='Text' name='SManFax' size=20 maxlength=20 VALUE='" . $_POST['SManFax'] . "'></td></tr>";
+	echo '<tr><td>' . _('Commission Rate 1') . ":</td><td><input type='Text' class=number name='CommissionRate1' size=5 maxlength=5 VALUE=" . $_POST['CommissionRate1'] . '></td></tr>';
+	echo '<tr><td>' . _('Breakpoint') . ":</td><td><input type='Text' class=number name='Breakpoint' size=6 maxlength=6 VALUE=" . $_POST['Breakpoint'] . '></td></tr>';
+	echo '<tr><td>' . _('Commission Rate 2') . ":</td><td><input type='Text' class=number name='CommissionRate2' size=5 maxlength=5 VALUE=" . $_POST['CommissionRate2']. '></td></tr>';
 
-	echo '</TABLE>';
+	echo '</table>';
 
-	echo "<CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'></CENTER>";
+	echo "<div class='centre'><input type='Submit' name='submit' value='" . _('Enter Information') . "'></div>";
 
-	echo '</FORM>';
+	echo '</form>';
 
 } //end if record deleted no point displaying form to add record
 

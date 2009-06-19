@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 11;
 
@@ -184,7 +184,7 @@ or deletion of the records*/
 	$sql = "SELECT * FROM stockcategory";
 	$result = DB_query($sql,$db);
 
-	echo "<BR><CENTER><table border=1>\n";
+	echo "<br><table border=1>\n";
 	echo '<tr><th>' . _('Cat Code') . '</th>
             <th>' . _('Description') . '</th>
             <th>' . _('Type') . '</th>
@@ -207,11 +207,11 @@ or deletion of the records*/
 		printf("<td>%s</td>
             		<td>%s</td>
             		<td>%s</td>
-            		<td ALIGN=RIGHT>%s</td>
-            		<td ALIGN=RIGHT>%s</td>
-            		<td ALIGN=RIGHT>%s</td>
-            		<td ALIGN=RIGHT>%s</td>
-            		<td ALIGN=RIGHT>%s</td>
+            		<td align=right>%s</td>
+            		<td align=right>%s</td>
+            		<td align=right>%s</td>
+            		<td align=right>%s</td>
+            		<td align=right>%s</td>
             		<td><a href=\"%sSelectedCategory=%s\">" . _('Edit') . "</td>
             		<td><a href=\"%sSelectedCategory=%s&delete=yes\" onclick=\"return confirm('" . _('Are you sure you wish to delete this stock category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . "');\">" . _('Delete') . "</td>
             		</tr>",
@@ -229,7 +229,7 @@ or deletion of the records*/
             		$myrow[0]);
 	}
 	//END WHILE LIST LOOP
-	echo '</table></CENTER>';
+	echo '</table>';
 }
 
 //end of ifs and buts!
@@ -239,16 +239,16 @@ or deletion of the records*/
 <p>
 <?php
 if (isset($SelectedCategory)) {  ?>
-	<Center><a href="<?php echo $_SERVER['PHP_SELF'] . '?' . SID;?>"><?php echo _('Show All Stock Categories'); ?></a></Center>
+	<div class='centre'><a href="<?php echo $_SERVER['PHP_SELF'] . '?' . SID;?>"><?php echo _('Show All Stock Categories'); ?></a></div>
 <?php } ?>
 
-<P>
+<p>
 
 <?php
 
 if (! isset($_GET['delete'])) {
 
-	echo '<FORM name="CategoryForm" METHOD="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	echo '<form name="CategoryForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 
 	if (isset($SelectedCategory)) {
 		//editing an existing stock category
@@ -278,14 +278,14 @@ if (! isset($_GET['delete'])) {
 		}
 		echo '<input type=hidden name="SelectedCategory" value="' . $SelectedCategory . '">';
 		echo '<input type=hidden name="CategoryID" value="' . $_POST['CategoryID'] . '">';
-		echo '<center><table><tr><td>' . _('Category Code') . ':</td><td>' . $_POST['CategoryID'] . '</td></tr>';
+		echo '<table><tr><td>' . _('Category Code') . ':</td><td>' . $_POST['CategoryID'] . '</td></tr>';
 
 	} else { //end of if $SelectedCategory only do the else when a new record is being entered
 		if (!isset($_POST['CategoryID'])) {
 			$_POST['CategoryID'] = '';
 		}
-		echo '<center><table><tr><td>' . _('Category Code') . ':</td>
-                             <TD><input type="Text" name="CategoryID" size=7 maxlength=6 value="' . $_POST['CategoryID'] . '"></td></tr>';
+		echo '<table><tr><td>' . _('Category Code') . ':</td>
+                             <td><input type="Text" name="CategoryID" size=7 maxlength=6 value="' . $_POST['CategoryID'] . '"></td></tr>';
 	}
 
 	//SQL to poulate account selection boxes
@@ -513,10 +513,10 @@ if (! isset($_GET['delete'])) {
 	} /* end if there is a category selected */
 
 
-	echo '<CENTER><input type="Submit" name="submit" value="' . _('Enter Information') . '">';
+	echo '<div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';
 
 
-	echo '</FORM>';
+	echo '</form>';
 
 } //end if record deleted no point displaying form to add record
 

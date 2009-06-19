@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 
@@ -33,7 +33,7 @@ $DecimalPlaces = $myrow[3];
 $Serialised = $myrow[4];
 $Controlled = $myrow[5];
 
-echo "<BR><FONT COLOR=BLUE SIZE=3><B>$StockID - $myrow[0] </B>  (" . _('In units of') . ' ' . $myrow[1] . ')</FONT>';
+echo "<br><font color=BLUE size=3><b>$StockID - $myrow[0] </b>  (" . _('In units of') . ' ' . $myrow[1] . ')</font>';
 
 if ($myrow[2]=='K' OR $myrow[2]=='A' OR $myrow[2]=='D'){
 
@@ -43,9 +43,9 @@ if ($myrow[2]=='K' OR $myrow[2]=='A' OR $myrow[2]=='D'){
 }
 
 if ($Serialised==1){
-	echo '<BR><B>' . _('Serialised items in') . ' ';
+	echo '<br><b>' . _('Serialised items in') . ' ';
 } else {
-	echo '<BR><B>' . _('Controlled items in') . ' ';
+	echo '<br><b>' . _('Controlled items in') . ' ';
 }
 
 
@@ -70,24 +70,24 @@ $sql = "SELECT serialno,
 $ErrMsg = _('The serial numbers/batches held cannot be retrieved because');
 $LocStockResult = DB_query($sql, $db, $ErrMsg);
 
-echo '<CENTER><TABLE CELLPADDING=2 BORDER=0>';
+echo '<table cellpadding=2 BORDER=0>';
 
 if ($Serialised == 1){
-	$tableheader = "<TR>
-			<TH>" . _('Serial Number') . "</TH>
-			<TH>" . _('Serial Number') . "</TH>
-			<TH>" . _('Serial Number') . "</TH>
-			</TR>";
+	$tableheader = "<tr>
+			<th>" . _('Serial Number') . "</th>
+			<th>" . _('Serial Number') . "</th>
+			<th>" . _('Serial Number') . "</th>
+			</tr>";
 } else {
-	$tableheader = "<TR>
-			<TH>" . _('Batch/Bundle Ref') . "</TH>
-			<TH>" . _('Quantity On Hand') . "</TH>
-			<TH>" . _('Batch/Bundle Ref') . "</TH>
-			<TH>" . _('Quantity On Hand') . "</TH>
-   			<TH>" . _('Batch/Bundle Ref') . "</TH>
-			<TH>" . _('Quantity On Hand') . "</TH>
+	$tableheader = "<tr>
+			<th>" . _('Batch/Bundle Ref') . "</th>
+			<th>" . _('Quantity On Hand') . "</th>
+			<th>" . _('Batch/Bundle Ref') . "</th>
+			<th>" . _('Quantity On Hand') . "</th>
+   			<th>" . _('Batch/Bundle Ref') . "</th>
+			<th>" . _('Quantity On Hand') . "</th>
 
-   			</TR>";
+   			</tr>";
 }
 echo $tableheader;
 $TotalQuantity =0;
@@ -98,10 +98,10 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 	if ($Col==0 AND $BGColor=='#EEEEEE'){
 		$BGColor ='#CCCCCC';
-		echo '<TR class="EvenTableRows">';
+		echo '<tr class="EvenTableRows">';
 	} elseif ($Col==0){
 		$BGColor ='#EEEEEE';
-		echo '<TR class="OddTableRows">';
+		echo '<tr class="OddTableRows">';
 	}
 
 	$TotalQuantity += $myrow['quantity'];
@@ -112,7 +112,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		);
 	} else {
 		printf("<td>%s</td>
-			<td ALIGN=RIGHT>%s</td>",
+			<td align=right>%s</td>",
 			$myrow['serialno'],
 			number_format($myrow['quantity'],$DecimalPlaces)
 			);
@@ -125,14 +125,14 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 //end of page full new headings if
 	$Col++;
 	if ($Col==3){
-		echo '</TR>';
+		echo '</tr>';
 		$Col=0;
 	}
 }
 //end of while loop
 
-echo '</TABLE><HR>';
-echo '<BR><B>' . _('Total quantity') . ': ' . number_format($TotalQuantity, $DecimalPlaces) . '<BR>';
+echo '</table><hr>';
+echo '<div class="centre"><br><b>' . _('Total quantity') . ': ' . number_format($TotalQuantity, $DecimalPlaces) . '<br></div>';
 
 echo '</form>';
 include('includes/footer.inc');

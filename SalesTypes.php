@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 15;
 
@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	} elseif ($_POST['TypeAbbrev']=='' OR $_POST['TypeAbbrev']==' ' OR $_POST['TypeAbbrev']=='  ') {
 		$InputError = 1;
-		prnMsg('<BR>' . _('The sales type (price list) code cannot be an empty string or spaces'),'error');
+		prnMsg('<br>' . _('The sales type (price list) code cannot be an empty string or spaces'),'error');
 		$Errors[$i] = 'SalesType';
 		$i++;
 	} elseif (strlen($_POST['Sales_Type']) >20) {
@@ -182,20 +182,20 @@ or deletion of the records*/
 	$sql = 'SELECT * FROM salestypes';
 	$result = DB_query($sql,$db);
 
-	echo '<CENTER><TABLE BORDER=1>';
+	echo '<table BORDER=1>';
 	echo "<tr>
-		<TH>" . _('Type Code') . "</TH>
-		<TH>" . _('Type Name') . "</TH>
-	</TR>";
+		<th>" . _('Type Code') . "</th>
+		<th>" . _('Type Name') . "</th>
+	</tr>";
 
 $k=0; //row colour counter
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($k==1){
-		echo '<TR class="EvenTableRows">';
+		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo '<TR class="OddTableRows">';
+		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
 
@@ -210,20 +210,20 @@ while ($myrow = DB_fetch_row($result)) {
 		$_SERVER['PHP_SELF'] . '?' . SID, $myrow[0]);
 	}
 	//END WHILE LIST LOOP
-	echo '</table></CENTER>';
+	echo '</table>';
 }
 
 //end of ifs and buts!
 if (isset($SelectedType)) {
 
-	echo '<CENTER><P><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Show All Sales Types Defined') . '</A></CENTER><p>';
+	echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Show All Sales Types Defined') . '</a></div><p>';
 }
 if (! isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	echo '<CENTER><FONT SIZE=4 COLOR=blue><B><U>' . _('Sales Type/Price List Setup') . '</B></U></FONT>';
-	echo '<P><TABLE BORDER=1>'; //Main table
-	echo '<TD><TABLE>'; // First column
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<div class="centre"><font size=4 color=blue><b><U>' . _('Sales Type/Price List Setup') . '</b></U></font></div>';
+	echo '<p><table border=1>'; //Main table
+	echo '<td><table>'; // First column
 
 
 	// The user wish to EDIT an existing type
@@ -241,34 +241,34 @@ if (! isset($_GET['delete'])) {
 		$_POST['TypeAbbrev'] = $myrow['typeabbrev'];
 		$_POST['Sales_Type']  = $myrow['sales_type'];
 
-		echo "<INPUT TYPE=HIDDEN NAME='SelectedType' VALUE=" . $SelectedType . ">";
-		echo "<INPUT TYPE=HIDDEN NAME='TypeAbbrev' VALUE=" . $_POST['TypeAbbrev'] . ">";
-		echo "<CENTER><TABLE> <TR><TD>" . _('Type Code') . ":</TD><TD>";
+		echo "<input type=hidden name='SelectedType' VALUE=" . $SelectedType . ">";
+		echo "<input type=hidden name='TypeAbbrev' VALUE=" . $_POST['TypeAbbrev'] . ">";
+		echo "<table> <tr><td>" . _('Type Code') . ":</td><td>";
 
 		// We dont allow the user to change an existing type code
 
-		echo $_POST['TypeAbbrev'] . '</TD></TR>';
+		echo $_POST['TypeAbbrev'] . '</td></tr>';
 
 	} else 	{
 
 		// This is a new type so the user may volunteer a type code
 
-		echo "<CENTER><TABLE><TR><TD>" . _('Type Code') . ":</TD><TD><INPUT TYPE='Text'
-				" . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) ." SIZE=3 MAXLENGTH=2 name='TypeAbbrev'></TD></TR>";
+		echo "<table><tr><td>" . _('Type Code') . ":</td><td><input type='Text'
+				" . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) ." size=3 maxlength=2 name='TypeAbbrev'></td></tr>";
 
 	}
 
 	if (!isset($_POST['Sales_Type'])) {
 		$_POST['Sales_Type']='';
 	}
-	echo "<TR><TD>" . _('Sales Type Name') . ":</TD><TD><input type='Text' name='Sales_Type' value='" . $_POST['Sales_Type'] . "'></TD></TR>";
+	echo "<tr><td>" . _('Sales Type Name') . ":</td><td><input type='Text' name='Sales_Type' value='" . $_POST['Sales_Type'] . "'></td></tr>";
 
-   	echo '</TABLE>'; // close table in first column
-   	echo '</TD></TR></TABLE>'; // close main table
+   	echo '</table>'; // close table in first column
+   	echo '</td></tr></table>'; // close main table
 
-	echo '<P><INPUT TYPE=submit NAME=submit VALUE="' . _('Accept') . '"><INPUT TYPE=submit NAME=Cancel VALUE="' . _('Cancel') . '"></CENTER>';
+	echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
 
-	echo '</FORM>';
+	echo '</form>';
 
 } // end if user wish to delete
 

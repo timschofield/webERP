@@ -123,7 +123,7 @@ if(isset($_POST['ProcessTransfer'])){
 							AND loccode='" . $_SESSION['Transfer']->StockLocationFrom . "'
 							AND serialno='" . $Item->BundleRef . "'";
 
-						$Result = DB_query($SQL,$db,'<BR>' . _('Could not determine if the serial item exists') );
+						$Result = DB_query($SQL,$db,'<br>' . _('Could not determine if the serial item exists') );
 						$SerialItemExistsRow = DB_fetch_row($Result);
 
 						if ($SerialItemExistsRow[0]==1){
@@ -235,7 +235,7 @@ if(isset($_POST['ProcessTransfer'])){
 							AND loccode='" . $_SESSION['Transfer']->StockLocationTo . "'
 							AND serialno='" . $Item->BundleRef . "'";
 
-						$Result = DB_query($SQL,$db,'<BR>'. _('Could not determine if the serial item exists') );
+						$Result = DB_query($SQL,$db,'<br>'. _('Could not determine if the serial item exists') );
 						$SerialItemExistsRow = DB_fetch_row($Result);
 
 
@@ -371,7 +371,7 @@ if(isset($_GET['Trf_ID'])){
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	if(DB_num_rows($result) == 0){
-		echo '</table></form><H3>' . _('Transfer') . ' #' . $_GET['Trf_ID'] . ' '. _('Does Not Exist') . '</H3><HR>';
+		echo '</table></form><H3>' . _('Transfer') . ' #' . $_GET['Trf_ID'] . ' '. _('Does Not Exist') . '</H3><hr>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -407,50 +407,50 @@ if(isset($_GET['Trf_ID'])){
 
 if (isset($_SESSION['Transfer'])){
 	//Begin Form for receiving shipment
-	echo '<HR><FORM ACTION="' . $_SERVER['PHP_SELF'] . '?'. SID . '" METHOD=POST>';
+	echo '<hr><form action="' . $_SERVER['PHP_SELF'] . '?'. SID . '" method=post>';
 	echo '<a href="'.$_SERVER['PHP_SELF']. '?' . SID . '&NewTransfer=true">'. _('Select A Different Transfer').'</a>';
-	echo '<H2>' . _('Location Transfer Reference'). ' #' . $_SESSION['Transfer']->TrfID . ' '. _('from').' ' . $_SESSION['Transfer']->StockLocationFromName . ' '. _('to'). ' ' . $_SESSION['Transfer']->StockLocationToName . '</H2>';
+	echo '<div class="centre"><H2>' . _('Location Transfer Reference'). ' #' . $_SESSION['Transfer']->TrfID . ' '. _('from').' ' . $_SESSION['Transfer']->StockLocationFromName . ' '. _('to'). ' ' . $_SESSION['Transfer']->StockLocationToName . '</H2></div>';
 
 	prnMsg(_('Please Verify Shipment Quantities Receivied'),'info');
 
 	$i = 0; //Line Item Array pointer
 
-	echo "<br><CENTER><TABLE BORDER=1>";
+	echo "<br><table border=1>";
 
-	$tableheader = '<TR>
-			<TH>'. _('Item Code') . '</TH>
-			<TH>'. _('Item Description'). '</TH>
-			<TH>'. _('Quantity Dispatched'). '</TH>
-			<TH>'. _('Quantity Received'). '</TH>
-			<TH>'. _('Quantity To Receive'). '</TH>
-			<TH>'. _('Units'). '</TH>
-            <TH>'. _('Cancel Balance') . '</TH>
-			</TR>';
+	$tableheader = '<tr>
+			<th>'. _('Item Code') . '</th>
+			<th>'. _('Item Description'). '</th>
+			<th>'. _('Quantity Dispatched'). '</th>
+			<th>'. _('Quantity Received'). '</th>
+			<th>'. _('Quantity To Receive'). '</th>
+			<th>'. _('Units'). '</th>
+            <th>'. _('Cancel Balance') . '</th>
+			</tr>';
 
 	echo $tableheader;
 
 	foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
 
-		echo '<TR>
+		echo '<tr>
 			<td>' . $TrfLine->StockID . '</td>
 			<td>' . $TrfLine->ItemDescription . '</td>';
 
-		echo '<td ALIGN=RIGHT>' . number_format($TrfLine->ShipQty, $TrfLine->DecimalPlaces) . '</TD>';
+		echo '<td align=right>' . number_format($TrfLine->ShipQty, $TrfLine->DecimalPlaces) . '</td>';
 		if (isset($_POST['Qty' . $i]) and is_numeric($_POST['Qty' . $i])){
 			$_SESSION['Transfer']->TransferItem[$i]->Quantity= $_POST['Qty' . $i];
 			$Qty = $_POST['Qty' . $i];
 		} else {
 			$Qty = $TrfLine->Quantity;
 		}
-                echo '<td ALIGN=RIGHT>' . number_format($TrfLine->PrevRecvQty, $TrfLine->DecimalPlaces) . '</TD>';
+                echo '<td>' . number_format($TrfLine->PrevRecvQty, $TrfLine->DecimalPlaces) . '</td>';
 
 		if ($TrfLine->Controlled==1){
-			echo '<TD ALIGN=RIGHT><INPUT TYPE=HIDDEN NAME="Qty' . $i . '" VALUE="' . $Qty . '"><A HREF="' . $rootpath .'/StockTransferControlled.php?' . SID . '&TransferItem=' . $i . '">' . $Qty . '</A></td>';
+			echo '<td><input type=hidden name="Qty' . $i . '" VALUE="' . $Qty . '"><a href="' . $rootpath .'/StockTransferControlled.php?' . SID . '&TransferItem=' . $i . '">' . $Qty . '</a></td>';
 		} else {
-			echo '<TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME="Qty' . $i . '" MAXLENGTH=10 onKeyPress="return restrictToNumbers(this, event)" onFocus="return setTextAlign(this, '."'".'right'."'".')" SIZE=10 VALUE="' . $Qty . '"></td>';
+			echo '<td><input type=TEXT class="number" name="Qty' . $i . '" maxlength=10 onKeyPress="return restrictToNumbers(this, event)" onFocus="return setTextAlign(this, '."'".'right'."'".')" size=10 VALUE="' . $Qty . '"></td>';
 		}
 
-		echo '<td>' . $TrfLine->PartUnit . '</TD>';
+		echo '<td>' . $TrfLine->PartUnit . '</td>';
                 if (isset($TrfLine->CancelBalance) and $TrfLine->CancelBalance==1){
                    echo '<td><input type="checkbox" checked name="CancelBalance' . $i . '" value=1></td>';
                 } else {
@@ -459,41 +459,41 @@ if (isset($_SESSION['Transfer'])){
 
 		if ($TrfLine->Controlled==1){
 			if ($TrfLine->Serialised==1){
-				echo '<TD><A HREF="' . $rootpath .'/StockTransferControlled.php?' . SID . '&TransferItem=' . $i . '">' . _('Enter Serial Numbers') . '</A></td>';
+				echo '<td><a href="' . $rootpath .'/StockTransferControlled.php?' . SID . '&TransferItem=' . $i . '">' . _('Enter Serial Numbers') . '</a></td>';
 			} else {
-				echo '<TD><A HREF="' . $rootpath .'/StockTransferControlled.php?' . SID . '&TransferItem=' . $i . '">' . _('Enter Batch Refs') . '</A></td>';
+				echo '<td><a href="' . $rootpath .'/StockTransferControlled.php?' . SID . '&TransferItem=' . $i . '">' . _('Enter Batch Refs') . '</a></td>';
 			}
 		}
 
-		echo '</TR>';
+		echo '</tr>';
 
 		$i++; /* the array of TransferItem s is indexed numerically and i matches the index no */
 	} /*end of foreach TransferItem */
 
 	echo '</table><br />
-		<INPUT TYPE=SUBMIT NAME="ProcessTransfer" VALUE="'. _('Process Inventory Transfer'). '"><BR />
-		</form>
-		</CENTER>';
+		<div class="centre"><input type=submit name="ProcessTransfer" VALUE="'. _('Process Inventory Transfer'). '"><bR />
+		</form></div>';
 
 } else { /*Not $_SESSION['Transfer'] set */
 
-	echo '<HR><FORM ACTION="' . $_SERVER['PHP_SELF'] . '?'. SID . '" METHOD=POST>';
+	echo '<hr><form action="' . $_SERVER['PHP_SELF'] . '?'. SID . '" method=post name=form1>';
 
 	$LocResult = DB_query("SELECT locationname, loccode FROM locations",$db);
 
-	echo '<TABLE BORDER=0>';
-	echo '<TR><TD>'. _('Select Location Receiving Into'). ':</TD><TD><SELECT NAME = "RecLocation">';
+	echo '<table BORDER=0>';
+	echo '<tr><td>'. _('Select Location Receiving Into'). ':</td><td>';
+	echo '<select NAME = "RecLocation" onChange=ReloadForm(form1.RefreshTransferList)>';
 	if (!isset($_POST['RecLocation'])){
 		$_POST['RecLocation'] = $_SESSION['UserStockLocation'];
 	}
 	while ($myrow=DB_fetch_array($LocResult)){
 		if ($myrow['loccode'] == $_POST['RecLocation']){
-			echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		} else {
-			echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		}
 	}
-	echo '</SELECT><INPUT TYPE=SUBMIT NAME="RefreshTransferList" VALUE="' . _('Refresh Transfer List') . '"></TD></TR></TABLE><P>';
+	echo '</select><input type=submit name="RefreshTransferList" VALUE="' . _('Refresh Transfer List') . '"></td></tr></table><p>';
 
 	$sql = "SELECT DISTINCT reference,
 				locations.locationname as trffromloc,
@@ -506,27 +506,27 @@ if (isset($_SESSION['Transfer'])){
 	$TrfResult = DB_query($sql,$db);
 	if (DB_num_rows($TrfResult)>0){
 
-		echo '<CENTER><TABLE BORDER=0>';
+		echo '<table BORDER=0>';
 
-		echo '<TR>
-			<TH>'. _('Transfer Ref'). '</TH>
-			<TH>'. _('Transfer From'). '</TH>
-			<TH>'. _('Dispatch Date'). '</TH></TR>';
+		echo '<tr>
+			<th>'. _('Transfer Ref'). '</th>
+			<th>'. _('Transfer From'). '</th>
+			<th>'. _('Dispatch Date'). '</th></tr>';
 
 		while ($myrow=DB_fetch_array($TrfResult)){
 
-			echo '<TR><TD ALIGN=RIGHT>' . $myrow['reference'] . '</TD>
-				<TD>' . $myrow['trffromloc'] . '</TD>
-				<TD>' . ConvertSQLDate($myrow['shipdate']) . '</TD>
-				<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Trf_ID=' . $myrow['reference'] . '">'. _('Receive'). '</A></TD></TR>';
+			echo '<tr><td align=right>' . $myrow['reference'] . '</td>
+				<td>' . $myrow['trffromloc'] . '</td>
+				<td>' . ConvertSQLDate($myrow['shipdate']) . '</td>
+				<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Trf_ID=' . $myrow['reference'] . '">'. _('Receive'). '</a></td></tr>';
 
 		}
 
-		echo '</table></CENTER>';
+		echo '</table>';
 	} else if (!isset($_POST['ProcessTransfer'])) {
 		prnMsg(_('There are no incoming transfers to this location'), 'info');
 	}
-	echo '</FORM>';
+	echo '</form>';
 }
 include('includes/footer.inc');
 ?>

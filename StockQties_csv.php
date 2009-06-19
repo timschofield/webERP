@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 5;
 
@@ -11,7 +11,7 @@ function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(",", "", $str);
 }
 
-echo '<P>' . _('Making a comma seperated values file of the current stock quantities');
+echo '<p>' . _('Making a comma seperated values file of the current stock quantities');
 
 $ErrMsg = _('The SQL to get the stock quantites failed with the message');
 
@@ -40,7 +40,7 @@ While ($myrow = DB_fetch_row($result)){
 
 fclose($fp);
 
-echo "<P><A HREF='" . $rootpath . '/' . $_SESSION['reports_dir'] . "/StockQties.csv'>" . _('click here') . '</A> ' . _('to view the file') . '<BR>';
+echo "<p><a href='" . $rootpath . '/' . $_SESSION['reports_dir'] . "/StockQties.csv'>" . _('click here') . '</a> ' . _('to view the file') . '<br>';
 
 include('includes/footer.inc');
 

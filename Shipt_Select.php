@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 11;
 
@@ -26,7 +26,7 @@ if (isset($_GET['SelectedSupplier'])){
 	$SelectedSupplier=$_POST['SelectedSupplier'];
 }
 
-echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 
 
 If (isset($_POST['ResetPart'])) {
@@ -35,7 +35,7 @@ If (isset($_POST['ResetPart'])) {
 
 If (isset($ShiptRef) && $ShiptRef!="") {
 	if (!is_numeric($ShiptRef)){
-		  echo '<BR>';
+		  echo '<br>';
 		  prnMsg( _('The Shipment Number entered MUST be numeric') );
 		  unset ($ShiptRef);
 	} else {
@@ -43,7 +43,7 @@ If (isset($ShiptRef) && $ShiptRef!="") {
 	}
 } else {
 	If ($SelectedSupplier) {
-		echo '<BR>' ._('For supplier'). ': '. $SelectedSupplier . ' ' . _('and'). ' ';
+		echo '<br>' ._('For supplier'). ': '. $SelectedSupplier . ' ' . _('and'). ' ';
 		echo '<input type=hidden name="SelectedSupplier" value="'. $SelectedSupplier. '">';
 	}
 	If (isset($SelectedStockItem)) {
@@ -55,7 +55,7 @@ If (isset($ShiptRef) && $ShiptRef!="") {
 if (isset($_POST['SearchParts'])) {
 
 	If ($_POST['Keywords'] AND $_POST['StockCode']) {
-		echo '<BR>';
+		echo '<br>';
 		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'),'info');
 	}
 	$SQL = "SELECT stockmaster.stockid,
@@ -109,39 +109,39 @@ if (isset($_POST['SearchParts'])) {
 
 
 if (!isset($ShiptRef) or $ShiptRef==""){
-
-	echo _('Shipment Number'). ': <INPUT type=text name="ShiptRef" MAXLENGTH =10 SIZE=10> '.
-		_('Into Stock Location').' :<SELECT name="StockLocation"> ';
+	echo '<div class="centre">';
+	echo _('Shipment Number'). ': <input type=text name="ShiptRef" MAXLENGTH =10 size=10> '.
+		_('Into Stock Location').' :<select name="StockLocation"> ';
 	$sql = "SELECT loccode, locationname FROM locations";
 	$resultStkLocs = DB_query($sql,$db);
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['StockLocation'])){
 			if ($myrow['loccode'] == $_POST['StockLocation']){
-			echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 			} else {
-			echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 			}
 		} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
 			$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
-			echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		} else {
-			echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		}
 	}
 
-	echo '</SELECT>';
-	echo ' <SELECT NAME="OpenOrClosed">';
+	echo '</select>';
+	echo ' <select name="OpenOrClosed">';
 	if ($_POST['OpenOrClosed']==1){
-		echo '<OPTION SELECTED VALUE=1>'. _('Closed Shipments Only');
-		echo '<OPTION VALUE=0>'. _('Open Shipments Only');
+		echo '<option selected VALUE=1>'. _('Closed Shipments Only');
+		echo '<option VALUE=0>'. _('Open Shipments Only');
 	} else {
 		$_POST['OpenOrClosed']=0;
-		echo '<OPTION VALUE=1>'. _('Closed Shipments Only');
-		echo '<OPTION SELECTED VALUE=0>'. _('Open Shipments Only');
+		echo '<option VALUE=1>'. _('Closed Shipments Only');
+		echo '<option selected VALUE=0>'. _('Open Shipments Only');
 	}
-	echo '</SELECT>';
+	echo '</select>';
 
-	echo '<BR><CENTER><INPUT TYPE=SUBMIT NAME="SearchShipments" VALUE="'. _('Search Shipments'). '">';
+	echo '<br><input type=submit name="SearchShipments" VALUE="'. _('Search Shipments'). '"></div>';
 }
 
 $SQL="SELECT categoryid, 
@@ -153,46 +153,46 @@ $result1 = DB_query($SQL,$db);
 
 ?>
 
-<HR>
-<FONT SIZE=1><?php echo _('To search for shipments for a specific part use the part selection facilities below');?></FONT>
-<INPUT TYPE=SUBMIT NAME="SearchParts" VALUE="<?php echo _('Search Parts Now');?>">
-<INPUT TYPE=SUBMIT NAME="ResetPart" VALUE="<?php echo _('Show All');?>">
-<TABLE>
-<TR>
-<TD><FONT SIZE=1><?php echo _('Select a stock category');?>:</FONT>
-<SELECT NAME="StockCat">
+<hr><div class='centre'>
+<font size=1><?php echo _('To search for shipments for a specific part use the part selection facilities below');?></font>
+<input type=submit name="SearchParts" VALUE="<?php echo _('Search Parts Now');?>">
+<input type=submit name="ResetPart" VALUE="<?php echo _('Show All');?>"></div>
+<table>
+<tr>
+<td><font size=1><?php echo _('Select a stock category');?>:</font>
+<select name="StockCat">
 <?php
 while ($myrow1 = DB_fetch_array($result1)) {
 	if (isset($_POST['StockCat']) and $myrow1['categoryid']==$_POST['StockCat']){
-		echo '<OPTION SELECTED VALUE="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
+		echo '<option selected VALUE="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
 	} else {
-		echo '<OPTION VALUE="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
+		echo '<option VALUE="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
 	}
 }
 ?>
-</SELECT>
-<TD><FONT SIZE=1><?php echo _('Enter text extracts in the');?> <B><?php echo _('description');?></B>:</FONT></TD>
-<TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25></TD></TR>
-<TR><TD></TD>
-<TD><FONT SIZE 3><B><?php echo _('OR');?> </B></FONT><FONT SIZE=1><?php echo _('Enter extract of the');?> <B><?php echo _('Stock Code');?></B>:</FONT></TD>
-<TD><INPUT TYPE="Text" NAME="StockCode" SIZE=15 MAXLENGTH=18></TD>
-</TR>
-</TABLE>
+</select>
+<td><font size=1><?php echo _('Enter text extracts in the');?> <b><?php echo _('description');?></b>:</font></td>
+<td><input type="Text" name="Keywords" size=20 maxlength=25></td></tr>
+<tr><td></td>
+<td><font SIZE 3><b><?php echo _('OR');?> </b></font><font size=1><?php echo _('Enter extract of the');?> <b><?php echo _('Stock Code');?></b>:</font></td>
+<td><input type="Text" name="StockCode" size=15 maxlength=18></td>
+</tr>
+</table>
 
-<HR>
+<hr>
 
 <?php
 
 If (isset($StockItemsResult)) {
 
-	echo "<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>";
-	$TableHeader = '<TR>
-			<TH>'. _('Code').'</TH>
-			<TH>'. _('Description').'</TH>
-			<TH>'. _('On Hand').'</TH>
-			<TH>'. _('Orders') . '<BR>' . _('Outstanding').'</TH>
-			<TH>'. _('Units').'</TH>
-			</TR>';
+	echo "<table cellpadding=2 colspan=7 BORDER=2>";
+	$TableHeader = '<tr>
+			<th>'. _('Code').'</th>
+			<th>'. _('Description').'</th>
+			<th>'. _('On Hand').'</th>
+			<th>'. _('Orders') . '<br>' . _('Outstanding').'</th>
+			<th>'. _('Units').'</th>
+			</tr>';
 
 	echo $TableHeader;
 
@@ -210,10 +210,10 @@ If (isset($StockItemsResult)) {
 		}
 /*
 Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand     Orders Ostdg	Units	 */
-		printf('<td><INPUT TYPE=SUBMIT NAME="SelectedStockItem" VALUE="%s"</td>
+		printf('<td><input type=submit name="SelectedStockItem" VALUE="%s"</td>
 			<td>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>
+			<td align=right>%s</td>
+			<td align=right>%s</td>
 			<td>%s</td></tr>',
 			$myrow['stockid'], $myrow['description'], $myrow['qoh'], $myrow['qord'],$myrow['units']);
 
@@ -226,7 +226,7 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 	}
 //end of while loop
 
-	echo '</TABLE>';
+	echo '</table>';
 
 }
 //end if stock search results to show
@@ -286,14 +286,14 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 	if (DB_num_rows($ShipmentsResult)>0){
 		/*show a table of the shipments returned by the SQL */
 
-		echo '<TABLE CELLPADDING=2 COLSPAN=7 WIDTH=100%>';
-		$TableHeader = '<TR>
-				<TH>'. _('Shipment'). '</TH>
-				<TH>'. _('Supplier'). '</TH>
-				<TH>'. _('Vessel'). '</TH>
-				<TH>'. _('Voyage'). '</TH>
-				<TH>'. _('Expected Arrival'). '</TH>
-				</TR>';
+		echo '<table cellpadding=2 colspan=7 WIDTH=100%>';
+		$TableHeader = '<tr>
+				<th>'. _('Shipment'). '</th>
+				<th>'. _('Supplier'). '</th>
+				<th>'. _('Vessel'). '</th>
+				<th>'. _('Voyage'). '</th>
+				<th>'. _('Expected Arrival'). '</th>
+				</tr>';
 
 		echo $TableHeader;
 
@@ -325,9 +325,9 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td><A HREF="%s">'._('Costing').'</A></td>
-					<td><A HREF="%s">'._('Modify').'</A></td>
-					<td><A HREF="%s"><B>'._('Close').'</B></A></td>
+					<td><a href="%s">'._('Costing').'</a></td>
+					<td><a href="%s">'._('Modify').'</a></td>
+					<td><a href="%s"><b>'._('Close').'</b></a></td>
 					</tr>', 
 					$myrow['shiptref'], 
 					$myrow['suppname'], 
@@ -344,7 +344,7 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td><A HREF="%s">'._('Costing').'</A></td>
+					<td><a href="%s">'._('Costing').'</a></td>
 					</tr>', 
 					$myrow['shiptref'], 
 					$myrow['suppname'], 
@@ -362,10 +362,10 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 		}
 		//end of while loop
 
-		echo '</TABLE>';
+		echo '</table>';
 	} // end if shipments to show
 }
 
-echo '</FORM>';
+echo '</form>';
 include('includes/footer.inc');
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 2;
 
@@ -14,50 +14,50 @@ Function GrpByDataOptions ($GroupByDataX){
 
 /*Sales analysis headers group by data options */
  if ($GroupByDataX == 'Sales Area'){
-     echo '<OPTION SELECTED Value="Sales Area">' . _('Sales Area');
+     echo '<option selected Value="Sales Area">' . _('Sales Area');
  } else {
-    echo '<OPTION Value="Sales Area">' . _('Sales Area');
+    echo '<option Value="Sales Area">' . _('Sales Area');
  }
  if ($GroupByDataX == 'Product Code'){
-     echo '<OPTION SELECTED Value="Product Code">' . _('Product Code');
+     echo '<option selected Value="Product Code">' . _('Product Code');
  } else {
-    echo '<OPTION Value="Product Code">' . _('Product Code');
+    echo '<option Value="Product Code">' . _('Product Code');
  }
  if ($GroupByDataX == 'Customer Code'){
-     echo '<OPTION SELECTED Value="Customer Code">' . _('Customer Code');
+     echo '<option selected Value="Customer Code">' . _('Customer Code');
  } else {
-    echo '<OPTION Value="Customer Code">' . _('Customer Code');
+    echo '<option Value="Customer Code">' . _('Customer Code');
  }
  if ($GroupByDataX == 'Sales Type'){
-     echo '<OPTION SELECTED Value="Sales Type">' . _('Sales Type');
+     echo '<option selected Value="Sales Type">' . _('Sales Type');
  } else {
-    echo '<OPTION Value="Sales Type">' . _('Sales Type');
+    echo '<option Value="Sales Type">' . _('Sales Type');
  }
  if ($GroupByDataX == 'Product Type'){
-     echo '<OPTION SELECTED Value="Product Type">' . _('Product Type');
+     echo '<option selected Value="Product Type">' . _('Product Type');
  } else {
-    echo '<OPTION Value="Product Type">' . _('Product Type');
+    echo '<option Value="Product Type">' . _('Product Type');
  }
  if ($GroupByDataX == 'Customer Branch'){
-     echo '<OPTION SELECTED Value="Customer Branch">' . _('Customer Branch');
+     echo '<option selected Value="Customer Branch">' . _('Customer Branch');
  } else {
-    echo '<OPTION Value="Customer Branch">' . _('Customer Branch');
+    echo '<option Value="Customer Branch">' . _('Customer Branch');
  }
  if ($GroupByDataX == 'Sales Person'){
-     echo '<OPTION SELECTED Value="Sales Person">' . _('Sales Person');
+     echo '<option selected Value="Sales Person">' . _('Sales Person');
  } else {
-    echo '<OPTION Value="Sales Person">' . _('Sales Person');
+    echo '<option Value="Sales Person">' . _('Sales Person');
  }
  if ($GroupByDataX=='Not Used' OR $GroupByDataX == '' OR ! isset($GroupByDataX) OR is_null($GroupByDataX)){
-     echo "<OPTION SELECTED VALUE='Not Used'>" . _('Not Used');
+     echo "<option selected VALUE='Not Used'>" . _('Not Used');
  } else {
-    echo "<OPTION VALUE='Not Used'>" . _('Not Used');
+    echo "<option VALUE='Not Used'>" . _('Not Used');
  }
 }
 
 /* end of function  */
 
-echo '<P>';
+echo '<p>';
 
 if (isset($_GET['SelectedReport'])){
 	$SelectedReport = $_GET['SelectedReport'];
@@ -261,7 +261,7 @@ if (isset($_POST['submit'])) {
 	$DbgMsg = _('The SQL used to delete the report headers was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-	echo "<P>" . _('Report Deleted') . '<P>';
+	echo "<p>" . _('Report Deleted') . '<p>';
 	unset($SelectedReport);
 	include ('includes/footer.inc');
 	exit;
@@ -278,7 +278,7 @@ or deletion of the records*/
 	$sql = "SELECT reportid, reportheading FROM reportheaders ORDER BY reportid";
 	$result = DB_query($sql,$db);
 
-	echo '<CENTER><table border=1>';
+	echo '<table border=1>';
 	echo '<tr><th>' . _('Report No') . '</th>
 		<th>' . _('Report Title') . '</th>';
 
@@ -296,10 +296,10 @@ while ($myrow = DB_fetch_array($result)) {
 
 	printf("<td>%s</td>
 		<td>%s</td>
-		<td><a href=\"%s&SelectedReport=%s\">" . _('Design') . "</A></td>
-		<td><a href=\"%s/SalesAnalReptCols.php?" . SID . "&ReportID=%s\">" . _('Define Columns') . "</A></td>
-		<td><a href=\"%s/SalesAnalysis_UserDefined.php?" . SID . "&ReportID=%s&ProducePDF=True\">" . _('Make PDF Report') . "</A></td>
-		<td><a href=\"%s/SalesAnalysis_UserDefined.php?" . SID . "&ReportID=%s&ProduceCVSFile=True\">" . _('Make CSV File') . "</A></td>
+		<td><a href=\"%s&SelectedReport=%s\">" . _('Design') . "</a></td>
+		<td><a href=\"%s/SalesAnalReptCols.php?" . SID . "&ReportID=%s\">" . _('Define Columns') . "</a></td>
+		<td><a href=\"%s/SalesAnalysis_UserDefined.php?" . SID . "&ReportID=%s&ProducePDF=True\">" . _('Make PDF Report') . "</a></td>
+		<td><a href=\"%s/SalesAnalysis_UserDefined.php?" . SID . "&ReportID=%s&ProduceCVSFile=True\">" . _('Make CSV File') . "</a></td>
 		<td><a href=\"%s&SelectedReport=%s&delete=1\" onclick=\"return confirm('" . _('Are you sure you wish to remove this report design?') . "');\">" . _('Delete') . "</td>
 		</tr>",
 		$myrow[0],
@@ -317,7 +317,7 @@ while ($myrow = DB_fetch_array($result)) {
 
 	}
 	//END WHILE LIST LOOP
-	echo '</CENTER></table><p>';
+	echo '</table><p>';
 }
 
 //end of ifs and buts!
@@ -325,15 +325,15 @@ while ($myrow = DB_fetch_array($result)) {
 
 
 if (isset($SelectedReport)) {
-	echo "<Center><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Show All Defined Reports') . '</a></Center>';
+	echo "<a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Show All Defined Reports') . '</a>';
 }
 
-echo '<P>';
+echo '<p>';
 
 
 if (!isset($_GET['delete'])) {
-	echo "<HR></CENTER>";
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo "<hr>";
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 
 	if (isset($SelectedReport)) {
 		//editing an existing Report
@@ -381,33 +381,33 @@ if (!isset($_GET['delete'])) {
         	$_POST['Upper4'] = $myrow['upper4'];
         	$_POST['Lower4'] = $myrow['lower4'];
 
-		echo "<INPUT TYPE=HIDDEN NAME='SelectedReport' VALUE=$SelectedReport>";
-		echo "<INPUT TYPE=HIDDEN NAME='ReportID' VALUE=$ReportID>";
-		echo '<FONT SIZE=3 COLOR=BLUE><B>' . _('Edit The Selected Report') . '</B></FONT>';
+		echo "<input type=hidden name='SelectedReport' VALUE=$SelectedReport>";
+		echo "<input type=hidden name='ReportID' VALUE=$ReportID>";
+		echo '<font size=3 color=BLUE><b>' . _('Edit The Selected Report') . '</b></font>';
 	} else {
-		echo '<FONT SIZE=3 COLOR=BLUE><B>' . _('Define A New Report') . '</B></FONT>';
+		echo '<font size=3 color=BLUE><b>' . _('Define A New Report') . '</b></font>';
 	}
 	
 	if (!isset($_POST['ReportHeading'])) {
 		$_POST['ReportHeading']='';
 	}
-	echo '<CENTER><TABLE WIDTH=100% COLSPAN=4><TR><TD ALIGN=RIGHT>' . _('Report Heading') . ":</TD><TD COLSPAN=2 ALIGN=CENTER><INPUT TYPE='TEXT' size=80 maxlength=80 name=ReportHeading value='" . $_POST['ReportHeading'] . "'></TD></TR>";
+	echo '<table WIDTH=100% colspan=4><tr><td align=right>' . _('Report Heading') . ":</td><td colspan=2><input type='TEXT' size=80 maxlength=80 name=ReportHeading value='" . $_POST['ReportHeading'] . "'></td></tr>";
 
-	echo '<TR><TD>' . _('Group By 1') . ': <SELECT name=GroupByData1>';
+	echo '<tr><td>' . _('Group By 1') . ': <select name=GroupByData1>';
 
 	GrpByDataOptions($_POST['GroupByData1']);
 
-	echo '</SELECT></TD><TD>' . _('Page Break After') . ': <SELECT name=NewPageAfter1>';
+	echo '</select></td><td>' . _('Page Break After') . ': <select name=NewPageAfter1>';
 
 	if ($_POST['NewPageAfter1']==0){
-	  echo "<OPTION SELECTED value=0>" . _('No');
-	  echo "<OPTION value=1>" . _('Yes');
+	  echo "<option selected value=0>" . _('No');
+	  echo "<option value=1>" . _('Yes');
 	} Else {
-	  echo '<OPTION value=0>' . _('No');
-	  echo '<OPTION SELECTED value=1>' . _('Yes');
+	  echo '<option value=0>' . _('No');
+	  echo '<option selected value=1>' . _('Yes');
 	}
 
-	echo '</SELECT></TD>';
+	echo '</select></td>';
 	
 	if (!isset($_POST['Lower1'])) {
 		$_POST['Lower1'] = '';
@@ -416,21 +416,21 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['Upper1'])) {
 		$_POST['Upper1'] = '';
 	}
-	echo '<TD>' . _('From') . ": <INPUT TYPE='TEXT' NAME='Lower1' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower1'] . "'></TD>";
-	echo '<TD>' . _('To') . ": <INPUT TYPE='TEXT' NAME='Upper1' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper1'] . "'></TD></TR>";
+	echo '<td>' . _('From') . ": <input type='TEXT' name='Lower1' size=10 maxlength=10 VALUE='" . $_POST['Lower1'] . "'></td>";
+	echo '<td>' . _('To') . ": <input type='TEXT' name='Upper1' size=10 maxlength=10 VALUE='" . $_POST['Upper1'] . "'></td></tr>";
 
-	echo '<TR><TD>' . _('Group By 2') . ': <SELECT name=GroupByData2>';
+	echo '<tr><td>' . _('Group By 2') . ': <select name=GroupByData2>';
 
 	GrpByDataOptions($_POST['GroupByData2']);
 
-	echo '</SELECT></TD><TD>' . _('Page Break After') . ': <SELECT name=NewPageAfter2>';
+	echo '</select></td><td>' . _('Page Break After') . ': <select name=NewPageAfter2>';
 
 	if ($_POST['NewPageAfter2']==0){
-	  echo '<OPTION SELECTED value=0>' . _('No');
-	  echo '<OPTION value=1>' . _('Yes');
+	  echo '<option selected value=0>' . _('No');
+	  echo '<option value=1>' . _('Yes');
 	} Else {
-	  echo '<OPTION value=0>' . _('No');
-	  echo '<OPTION SELECTED value=1>' . _('Yes');
+	  echo '<option value=0>' . _('No');
+	  echo '<option selected value=1>' . _('Yes');
 	}
 	
 	if (!isset($_POST['Lower2'])) {
@@ -441,25 +441,25 @@ if (!isset($_GET['delete'])) {
 		$_POST['Upper2'] = '';
 	}
 
-	echo '</SELECT></TD>';
-	echo '<TD>' . _('From') . ": <INPUT TYPE='TEXT' NAME='Lower2' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower2'] . "'></TD>";
-	echo '<TD>' . _('To') . ": <INPUT TYPE='TEXT' NAME='Upper2' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper2'] . "'></TD></TR>";
+	echo '</select></td>';
+	echo '<td>' . _('From') . ": <input type='TEXT' name='Lower2' size=10 maxlength=10 VALUE='" . $_POST['Lower2'] . "'></td>";
+	echo '<td>' . _('To') . ": <input type='TEXT' name='Upper2' size=10 maxlength=10 VALUE='" . $_POST['Upper2'] . "'></td></tr>";
 
-	echo '<TR><TD>' . _('Group By 3') . ': <SELECT name=GroupByData3>';
+	echo '<tr><td>' . _('Group By 3') . ': <select name=GroupByData3>';
 
 	GrpByDataOptions($_POST['GroupByData3']);
 
-	echo '</SELECT></TD><TD>' . _('Page Break After') . ': <SELECT name=NewPageAfter3>';
+	echo '</select></td><td>' . _('Page Break After') . ': <select name=NewPageAfter3>';
 
 	if ($_POST['NewPageAfter3']==0){
-	 	echo '<OPTION SELECTED value=0>' . _('No');
-	 	echo '<OPTION value=1>' . _('Yes');
+	 	echo '<option selected value=0>' . _('No');
+	 	echo '<option value=1>' . _('Yes');
 	} else {
 	 	echo 'OPTION value=0>' . _('No');
-	 	echo '<OPTION SELECTED value=1>' . _('Yes');
+	 	echo '<option selected value=1>' . _('Yes');
 	}
 
-	echo '</SELECT></TD>';
+	echo '</select></td>';
 	
 	if (!isset($_POST['Lower3'])) {
 		$_POST['Lower3'] = '';
@@ -469,14 +469,14 @@ if (!isset($_GET['delete'])) {
 		$_POST['Upper3'] = '';
 	}
 
-	echo '<TD>' . _('From') . ": <INPUT TYPE='TEXT' NAME='Lower3' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower3'] . "'></TD>";
-	echo '<TD>' . _('To') . ": <INPUT TYPE='TEXT' NAME='Upper3' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper3'] . "'></TD></TR>";
+	echo '<td>' . _('From') . ": <input type='TEXT' name='Lower3' size=10 maxlength=10 VALUE='" . $_POST['Lower3'] . "'></td>";
+	echo '<td>' . _('To') . ": <input type='TEXT' name='Upper3' size=10 maxlength=10 VALUE='" . $_POST['Upper3'] . "'></td></tr>";
 
-	echo '<TR><TD>' . _('Group By 4') .": <SELECT name=GroupByData4>";
+	echo '<tr><td>' . _('Group By 4') .": <select name=GroupByData4>";
 
 	GrpByDataOptions($_POST['GroupByData4']);
 
-	echo "</SELECT></TD><TD></TD>";
+	echo "</select></td><td></td>";
 	
 	if (!isset($_POST['Lower4'])) {
 		$_POST['Lower4'] = '';
@@ -486,12 +486,12 @@ if (!isset($_GET['delete'])) {
 		$_POST['Upper4'] = '';
 	}
 
-	echo '<TD>' . _('From') .": <INPUT TYPE='TEXT' NAME='Lower4' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower4'] . "'></TD>";
-	echo '<TD>' . _('To') . ": <INPUT TYPE='TEXT' NAME='Upper4' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper4'] . "'></TD></TR>";
+	echo '<td>' . _('From') .": <input type='TEXT' name='Lower4' size=10 maxlength=10 VALUE='" . $_POST['Lower4'] . "'></td>";
+	echo '<td>' . _('To') . ": <input type='TEXT' name='Upper4' size=10 maxlength=10 VALUE='" . $_POST['Upper4'] . "'></td></tr>";
 
-	echo '</TABLE>';
+	echo '</table>';
 
-	echo "<CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'></CENTER></FORM>";
+	echo "<div class='centre'><input type='Submit' name='submit' value='" . _('Enter Information') . "'></div></form>";
 
 } //end if record deleted no point displaying form to add record
 

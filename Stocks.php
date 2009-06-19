@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.71 $ */
+/* $Revision: 1.72 $ */
 
 $PageSecurity = 11;
 
@@ -419,7 +419,7 @@ if (isset($_POST['submit'])) {
 					$InsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 					if (DB_error_no($db) ==0) {
-						prnMsg( _('New Item') .' ' . "<A
+						prnMsg( _('New Item') .' ' . "<a
 							href='SelectProduct.php?StockID=$StockID'>$StockID</a>" . ' '. _('has been added to the database'),'success');						unset($_POST['LongDescription']);
 						unset($_POST['Description']);
 						unset($_POST['EOQ']);
@@ -447,7 +447,7 @@ if (isset($_POST['submit'])) {
 		}
 
 	} else {
-		echo '<BR>'. "\n";
+		echo '<br>'. "\n";
 		prnMsg( _('Validation failed, no updates or deletes took place'), 'error');
 	}
 
@@ -464,7 +464,7 @@ if (isset($_POST['submit'])) {
 	if ($myrow[0]>0) {
 		$CancelDelete = 1;
 		prnMsg( _('Cannot delete this stock item because there are stock movements that refer to this item'),'warn');
-		echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock movements that refer to this item');
+		echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock movements that refer to this item');
 
 	} else {
 		$sql= "SELECT COUNT(*) FROM bom WHERE component='$StockID'";
@@ -481,7 +481,7 @@ if (isset($_POST['submit'])) {
 			if ($myrow[0]>0) {
 				$CancelDelete = 1;
 				prnMsg( _('Cannot delete this item record because there are existing sales orders for this part'),'warn');
-				echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales order items against this part');
+				echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales order items against this part');
 			} else {
 				$sql= "SELECT COUNT(*) FROM salesanalysis WHERE stockid='$StockID'";
 				$result = DB_query($sql,$db);
@@ -489,7 +489,7 @@ if (isset($_POST['submit'])) {
 				if ($myrow[0]>0) {
 					$CancelDelete = 1;
 					prnMsg(_('Cannot delete this item because sales analysis records exist for it'),'warn');
-					echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records against this part');
+					echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records against this part');
 				} else {
 					$sql= "SELECT COUNT(*) FROM purchorderdetails WHERE itemcode='$StockID'";
 					$result = DB_query($sql,$db);
@@ -497,7 +497,7 @@ if (isset($_POST['submit'])) {
 					if ($myrow[0]>0) {
 						$CancelDelete = 1;
 						prnMsg(_('Cannot delete this item because there are existing purchase order items for it'),'warn');
-						echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('purchase order item record relating to this part');
+						echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('purchase order item record relating to this part');
 					} else {
 						$sql = "SELECT SUM(quantity) AS qoh FROM locstock WHERE stockid='$StockID'";
 						$result = DB_query($sql,$db);
@@ -505,7 +505,7 @@ if (isset($_POST['submit'])) {
 						if ($myrow[0]!=0) {
 							$CancelDelete = 1;
 							prnMsg( _('Cannot delete this item because there is currently some stock on hand'),'warn');
-							echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('on hand for this part');
+							echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('on hand for this part');
 						}
 					}
 				}
@@ -558,14 +558,14 @@ if (isset($_POST['submit'])) {
 		unset($_POST['ItemPDF']);
 		unset($StockID);
 		unset($_SESSION['SelectedStockItem']);
-		//echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . '/SelectProduct.php?' . SID  ."'>";
+		//echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/SelectProduct.php?' . SID  ."'>";
 
 
 	} //end if Delete Part
 }
 
 
-echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '?' .SID .'"><center><table>
+echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '?' .SID .'"><table>
 	<tr><td><table>'. "\n"; // Nested table
 
 if (!isset($StockID) or $StockID=='') {
@@ -636,7 +636,7 @@ if (isset($_POST['Description'])) {
 } else {
 	$Description ='';
 }
-echo '<tr><td>' . _('Part Description') . ' (' . _('short') . '):</td><td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Description" SIZE=52 MAXLENGTH=50 value="' . htmlentities($Description,ENT_QUOTES,_('ISO-8859-1')) . '"></TD></TR>'."\n";
+echo '<tr><td>' . _('Part Description') . ' (' . _('short') . '):</td><td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Description" size=52 maxlength=50 value="' . htmlentities($Description,ENT_QUOTES,_('ISO-8859-1')) . '"></td></tr>'."\n";
 
 if (isset($_POST['LongDescription'])) {
 	$LongDescription = AddCarriageReturns($_POST['LongDescription']);
@@ -655,7 +655,7 @@ function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '
 	}
 	if ($handle = opendir($dir)) {
 		$mydir = "<select name=".$select_name.">\n";
-		$mydir .= '<OPTION VALUE=0>none';
+		$mydir .= '<option VALUE=0>none';
 		if (isset($_POST['ItemPDF'])) {
 			$curr_val = $_POST['ItemPDF'];
 		} else {
@@ -669,7 +669,7 @@ function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '
 		sort($files);
 		foreach ($files as $val) {
 			if (is_file($dir.$val)) {
-				$mydir .= '<OPTION VALUE='.$val;
+				$mydir .= '<option VALUE='.$val;
 				$mydir .= ($val == $curr_val) ? ' selected>' : '>';
 				$mydir .= $val."\n";
 				$teller++;
@@ -682,7 +682,7 @@ function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '
 if (!isset($_POST['ItemPDF'])) {
 	$_POST['ItemPDF'] = '';
 }
-echo '<TR><TD>' . _('PDF attachment (.pdf)') . ':' . "\n</TD><TD>" . select_files('companies/' . $_SESSION['DatabaseName'] .'/pdf_append//','' , 'ItemPDF', $_POST['ItemPDF'], '60') . '</td></tr>'. "\n";
+echo '<tr><td>' . _('PDF attachment (.pdf)') . ':' . "\n</td><td>" . select_files('companies/' . $_SESSION['DatabaseName'] .'/pdf_append//','' , 'ItemPDF', $_POST['ItemPDF'], '60') . '</td></tr>'. "\n";
 
 // Add image upload for New Item  - by Ori
 echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="ItemPicture" name="ItemPicture"></td></tr>';
@@ -697,9 +697,9 @@ $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
 	if (!isset($_POST['CategoryID']) or $myrow['categoryid']==$_POST['CategoryID']){
-		echo '<OPTION SELECTED VALUE="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'];
+		echo '<option selected VALUE="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'];
 	} else {
-		echo '<OPTION VALUE="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'];
+		echo '<option VALUE="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'];
 	}
 }
 
@@ -860,21 +860,21 @@ if (isset($_POST['Perishable']) and $_POST['Perishable']==1){
 }
 echo '</select></td></tr>';
 
-echo '<tr><td>' . _('Decimal Places for display Quantity') . ':</td><td><input type="text" name="DecimalPlaces" size=1 maxlength=1 value="' . $_POST['DecimalPlaces'] . '"><td></tr>';
+echo '<tr><td>' . _('Decimal Places for display Quantity') . ':</td><td><input type="text" class="number" name="DecimalPlaces" size=1 maxlength=1 value="' . $_POST['DecimalPlaces'] . '"><td></tr>';
 
 if (isset($_POST['BarCode'])) {
 	$BarCode = $_POST['BarCode'];
 } else {
 	$BarCode='';
 }
-echo '<tr><td>' . _('Bar Code') . ':</td><td><input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="Text" name="BarCode" SIZE=22 MAXLENGTH=20 value="' . $BarCode . '"></TD></TR>';
+echo '<tr><td>' . _('Bar Code') . ':</td><td><input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="Text" name="BarCode" size=22 maxlength=20 value="' . $BarCode . '"></td></tr>';
 
 if (isset($_POST['DiscountCategory'])) {
 	$DiscountCategory = $_POST['DiscountCategory'];
 } else {
 	$DiscountCategory='';
 }
-echo '<tr><td>' . _('Discount Category') . ':</td><td><input type="Text" name="DiscountCategory" SIZE=2 MAXLENGTH=2 value="' . $DiscountCategory . '"></TD></TR>';
+echo '<tr><td>' . _('Discount Category') . ':</td><td><input type="Text" name="DiscountCategory" size=2 maxlength=2 value="' . $DiscountCategory . '"></td></tr>';
 
 echo '<tr><td>' . _('Tax Category') . ':</td><td><select name="TaxCat">';
 $sql = 'SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname';
@@ -919,7 +919,7 @@ echo '<tr>
 	}
 }
 
-echo '</table></td><td><center>' . _('Image') . '<br>'.$StockImgLink . '</center></td></tr></table><center>';
+echo '</table></td><td>' . _('Image') . '<br>'.$StockImgLink . '</td></tr></table><div class="centre">';
 
 if (!isset($_POST['CategoryID'])) {
 	$_POST['CategoryID'] = '';
@@ -998,6 +998,6 @@ if (isset($New)) {
 	echo '<p><input type="Submit" name="delete" value="' . _('Delete This Item') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';
 }
 
-echo '</form></center>';
+echo '</form></div>';
 include('includes/footer.inc');
 ?>

@@ -1,14 +1,14 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
 $title = _('Search Recurring Sales Orders');
 include('includes/header.inc');
 
-echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] .'?' .SID . ' METHOD=POST>';
+echo '<form action=' . $_SERVER['PHP_SELF'] .'?' .SID . ' method=post>';
 
-echo _('Select recurring order templates for delivery from:') . ' ' . '<SELECT NAME="StockLocation">';
+echo _('Select recurring order templates for delivery from:') . ' ' . '<select name="StockLocation">';
 
 $sql = 'SELECT loccode, locationname FROM locations';
 		
@@ -17,22 +17,22 @@ $resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation'])){
 		if ($myrow['loccode'] == $_POST['StockLocation']){
-			echo "<OPTION SELECTED Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+			echo "<option selected Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		} else {
-			echo "<OPTION Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+			echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		}
 	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-			echo "<OPTION SELECTED Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+			echo "<option selected Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 	} else {
-			echo "<OPTION Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+			echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 	}
 }
 
-echo '</SELECT>&nbsp&nbsp';
+echo '</select>&nbsp&nbsp';
 	
-echo "<INPUT TYPE=SUBMIT NAME='SearchRecurringOrders' VALUE='" . _('Search Recurring Orders') . "'>";
+echo "<input type=submit name='SearchRecurringOrders' VALUE='" . _('Search Recurring Orders') . "'>";
 
-echo '<HR>';
+echo '<hr>';
 
 if (isset($_POST['SearchRecurringOrders'])){
 	
@@ -70,18 +70,18 @@ if (isset($_POST['SearchRecurringOrders'])){
 	
 	/*show a table of the orders returned by the SQL */
 	
-	echo '<TABLE CELLPADDING=2 COLSPAN=7 WIDTH=100%>';
+	echo '<table cellpadding=2 colspan=7 WIDTH=100%>';
 	
-	$tableheader = "<TR>
-			<TH>" . _('Modify') . "</TH>
-			<TH>" . _('Customer') . "</TH>
-			<TH>" . _('Branch') . "</TH>
-			<TH>" . _('Cust Order') . " #</TH>
-			<TH>" . _('Last Recurrence') . "</TH>
-			<TH>" . _('End Date') . "</TH>
-			<TH>" . _('Times p.a.') . "</TH>
-			<TH>" . _('Order Total') . "</TH>
-			</TR>";
+	$tableheader = "<tr>
+			<th>" . _('Modify') . "</th>
+			<th>" . _('Customer') . "</th>
+			<th>" . _('Branch') . "</th>
+			<th>" . _('Cust Order') . " #</th>
+			<th>" . _('Last Recurrence') . "</th>
+			<th>" . _('End Date') . "</th>
+			<th>" . _('Times p.a.') . "</th>
+			<th>" . _('Order Total') . "</th>
+			</tr>";
 		
 	echo $tableheader;
 	
@@ -103,14 +103,14 @@ if (isset($_POST['SearchRecurringOrders'])){
 		$FormatedStopDate = ConvertSQLDate($myrow['stopdate']);
 		$FormatedOrderValue = number_format($myrow['ordervalue'],2);
 	
-		printf("<td><A HREF='%s'>%s</A></td>
+		printf("<td><a href='%s'>%s</a></td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
-			<td ALIGN=RIGHT>%s</td>
+			<td align=right>%s</td>
 			</tr>",
 			$ModifyPage,
 			$myrow['recurrorderno'],
@@ -131,7 +131,7 @@ if (isset($_POST['SearchRecurringOrders'])){
 	}
 	//end of while loop
 	
-	echo '</TABLE></FORM>';
+	echo '</table></form>';
 }
 
 include('includes/footer.inc');

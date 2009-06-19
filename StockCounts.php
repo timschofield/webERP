@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 2;
 
@@ -9,9 +9,9 @@ $title = _('Stock Check Sheets Entry');
 
 include('includes/header.inc');
 
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
+echo "<form action='" . $_SERVER['PHP_SELF'] . "' method=post>";
 
-echo "<BR>";
+echo "<br>";
 
 if (!isset($_POST['Action']) and !isset($_GET['Action'])) {
 	$_GET['Action'] = 'Enter';
@@ -25,9 +25,9 @@ if ($_GET['Action']!='View' and $_GET['Action']!='Enter'){
 }
 
 if ($_GET['Action']=='View'){
-	echo '<a href="' . $rootpath . '/StockCounts.php?' . SID . '&Action=Enter">' . _('Resuming Entering Counts') . '</a> <b>|</b>' . _('Viewing Entered Counts') . '<BR><BR>';
+	echo '<a href="' . $rootpath . '/StockCounts.php?' . SID . '&Action=Enter">' . _('Resuming Entering Counts') . '</a> <b>|</b>' . _('Viewing Entered Counts') . '<br><br>';
 } else {
-	echo _('Entering Counts') .'<b>|</b> <a href="' . $rootpath . '/StockCounts.php?' . SID . '&Action=View">' . _('View Entered Counts') . '</a><BR><BR>';
+	echo _('Entering Counts') .'<b>|</b> <a href="' . $rootpath . '/StockCounts.php?' . SID . '&Action=View">' . _('View Entered Counts') . '</a><br><br>';
 }
 
 if ($_GET['Action'] == 'Enter'){
@@ -74,38 +74,38 @@ if ($_GET['Action'] == 'Enter'){
 		unset($_POST['EnterCounts']);
 	} // end of if enter counts button hit
 
-	echo _('Stock Check Counts at Location') . ":<SELECT NAME='Location'>";
+	echo _('Stock Check Counts at Location') . ":<select name='Location'>";
 	$sql = 'SELECT loccode, locationname FROM locations';
 	$result = DB_query($sql,$db);
 
 	while ($myrow=DB_fetch_array($result)){
 
 		if (isset($_POST['Location']) and $myrow['loccode']==$_POST['Location']){
-			echo "<OPTION SELECTED VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+			echo "<option selected VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		} else {
-			echo "<OPTION VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+			echo "<option VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		}
 	}
-	echo '</SELECT><BR><BR>';
+	echo '</select><br><br>';
 
-	echo '<TABLE CELLPADDING=2 BORDER=1>';
-	echo "<TR>
-		<TH>" . _('Stock Code') . "</TH>
-		<TH>" . _('Quantity') . "</TH>
-		<TH>" . _('Reference') . '</TH></TR>';
+	echo '<table cellpadding=2 BORDER=1>';
+	echo "<tr>
+		<th>" . _('Stock Code') . "</th>
+		<th>" . _('Quantity') . "</th>
+		<th>" . _('Reference') . '</th></tr>';
 
 	for ($i=1;$i<=10;$i++){
 
-		echo "<TR>
-			<TD><INPUT TYPE=TEXT NAME='StockID_" . $i . "' MAXLENGTH=20 SIZE=20></TD>
-			<TD><INPUT TYPE=TEXT NAME='Qty_" . $i . "' MAXLENGTH=10 SIZE=10></TD>
-			<TD><INPUT TYPE=TEXT NAME='Ref_" . $i . "' MAXLENGTH=20 SIZE=20></TD></TR>";
+		echo "<tr>
+			<td><input type=TEXT name='StockID_" . $i . "' maxlength=20 size=20></td>
+			<td><input type=TEXT name='Qty_" . $i . "' maxlength=10 size=10></td>
+			<td><input type=TEXT name='Ref_" . $i . "' maxlength=20 size=20></td></tr>";
 
 	}
 
-	echo "</TABLE><BR><INPUT TYPE=SUBMIT NAME='EnterCounts' VALUE='" . _('Enter Above Counts') . "'>";
+	echo "</table><br><input type=submit name='EnterCounts' VALUE='" . _('Enter Above Counts') . "'>";
 
-//END OF ACTION=ENTER
+//END OF action=ENTER
 } elseif ($_GET['Action']=='View'){
 
 	if (isset($_POST['DEL']) && is_array($_POST['DEL']) ){
@@ -119,32 +119,32 @@ if ($_GET['Action'] == 'Enter'){
 		}
 	}
 	
-	//START OF ACTION=VIEW
+	//START OF action=VIEW
 	$SQL = "select * from stockcounts";
 	$result = DB_query($SQL, $db);
-	echo '<INPUT TYPE=HIDDEN NAME=Action Value="View">';
-	echo '<TABLE CELLPADDING=2 BORDER=1>';
-	echo "<TR>
-		<TH>" . _('Stock Code') . "</TH>
-		<TH>" . _('Location') . "</TH>
-		<TH>" . _('Qty Counted') . "</TH>
-		<TH>" . _('Reference') . "</TH>
-		<TH>" . _('Delete?') . '</TH></TR>';
+	echo '<input type=hidden name=Action Value="View">';
+	echo '<table cellpadding=2 BORDER=1>';
+	echo "<tr>
+		<th>" . _('Stock Code') . "</th>
+		<th>" . _('Location') . "</th>
+		<th>" . _('Qty Counted') . "</th>
+		<th>" . _('Reference') . "</th>
+		<th>" . _('Delete?') . '</th></tr>';
 	while ($myrow=DB_fetch_array($result)){
-		echo "<TR>
-			<TD>".$myrow['stockid']."</TD>
-			<TD>".$myrow['loccode']."</TD>
-			<TD>".$myrow['qtycounted']."</TD>
-			<TD>".$myrow['reference']."</TD>
-			<TD><INPUT TYPE=CHECKBOX NAME='DEL[" .$myrow['id']."]' MAXLENGTH=20 SIZE=20></TD></TR>";
+		echo "<tr>
+			<td>".$myrow['stockid']."</td>
+			<td>".$myrow['loccode']."</td>
+			<td>".$myrow['qtycounted']."</td>
+			<td>".$myrow['reference']."</td>
+			<td><input type=CHECKBOX name='DEL[" .$myrow['id']."]' maxlength=20 size=20></td></tr>";
 
 	}
-	echo "</TABLE><BR><INPUT TYPE=SUBMIT NAME='SubmitChanges' VALUE='" . _('Save Changes') . "'>";
+	echo "</table><br><input type=submit name='SubmitChanges' VALUE='" . _('Save Changes') . "'>";
 
-//END OF ACTION=VIEW
+//END OF action=VIEW
 }
 
-echo '</FORM>';
+echo '</form>';
 include('includes/footer.inc');
 
 ?>
