@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.64 $ */
+/* $Revision: 1.65 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -1008,8 +1008,8 @@ echo '</table></center>';
 echo '<br><center><input type=submit name="BackToLineDetails" value="' . _('Modify Order Lines') . '">';
 
 if ($_SESSION['ExistingOrder']==0){
-	echo '<br><input type=submit name="ProcessOrder" value="' . _('Place Order') . '">';
-	echo '<br><br><br><input type=submit name="MakeRecurringOrder" VALUE="' . _('Create Reccurring Order') . '">';
+	echo '<br><br><input type=submit name="ProcessOrder" value="' . _('Place Order') . '">';
+	echo '<br><br><input type=submit name="MakeRecurringOrder" VALUE="' . _('Create Reccurring Order') . '">';
 } else {
 	echo '<BR><INPUT TYPE=SUBMIT NAME="ProcessOrder" VALUE="' . _('Commit Order Changes') . '">';
 }

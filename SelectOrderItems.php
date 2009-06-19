@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.94 $ */
+/* $Revision: 1.95 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -1233,7 +1233,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				echo '<br>'.$OrderLine->QtyInv.' of '.$OrderLine->Quantity.' invoiced';
 			}
 			echo '</td>
-					<td>' . $OrderLine->QOHatLoc . '</td>
+					<td class="number">' . $OrderLine->QOHatLoc . '</td>
 					<td>' . $OrderLine->Units . '</td>';
 
 			if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){

@@ -545,10 +545,10 @@ span.main_menu_nolink {
 }
 
 DIV.page_help_text {
-	background: lightgrey url(images/help.png) center left no-repeat;
+	background: lightgrey url(images/help.png) top left no-repeat;
 	padding-top:2px; 
 	BORDER: #a52a2a 1px solid;
-	PADDING-LEFT: 3px;
+	PADDING-LEFT: 5px;
 	Z-INDEX: 1;
 	width: 50%;
 	FLOAT: none;
