@@ -548,7 +548,7 @@ DIV.page_help_text {
 	background: lightgrey url(images/help.png) top left no-repeat;
 	padding-top:2px; 
 	BORDER: #a52a2a 1px solid;
-	PADDING-LEFT: 5px;
+	PADDING-LEFT: 10px;
 	Z-INDEX: 1;
 	width: 50%;
 	FLOAT: none;
@@ -556,7 +556,7 @@ DIV.page_help_text {
 	MARGIN: 0 auto;
 	POSITION: static;
 	font-family: Verdana, Arial, Helvetica;
-        padding-bottom: 1px;
+        padding-bottom: 2px;
         font-weight: normal;
         font-size: 10px;
         color: black;
