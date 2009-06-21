@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -211,6 +211,13 @@ if (isset($_POST['ProcessStockChange'])){
 	echo '<br>' . _('Changing the item properties table records') . ' - ' . _('parents');
 	$sql = "UPDATE stockitemproperties SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
 	$ErrMsg = _('The SQL to update the item properties records failed');
+	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+	echo ' ... ' . _('completed');
+
+	echo '<BR>' . _('Changing work order information');
+
+	$sql = "UPDATE woitems SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
+	$ErrMsg = _('The SQL to update the woitem records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
 
