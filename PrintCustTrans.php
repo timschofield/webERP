@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.45 $ */
+/* $Revision: 1.46 $ */
 
 $PageSecurity = 1;
 
@@ -227,7 +227,7 @@ If (isset($PrintPDF) or isset($_GET['PrintPDF'])
 
 		prnMsg( _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available'),'error');
 		if ($debug==1){
-		    prnMsg (_('The SQL used to get this information that failed was') . "<BR>" . $sql,'error');
+		    prnMsg (_('The SQL used to get this information that failed was') . "<br>" . $sql,'error');
 		}
 		include ('includes/footer.inc');
 		exit;
@@ -275,9 +275,9 @@ If (isset($PrintPDF) or isset($_GET['PrintPDF'])
 		if (DB_error_no($db)!=0) {
 			$title = _('Transaction Print Error Report');
 			include ('includes/header.inc');
-			echo '<BR>' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
+			echo '<br>' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
 			if ($debug==1){
-			    echo '<BR>' . _('The SQL used to get this information that failed was') . "<BR>$sql";
+			    echo '<br>' . _('The SQL used to get this information that failed was') . "<br>$sql";
 			}
 			include('includes/footer.inc');
 			exit;
@@ -531,7 +531,7 @@ while ($row=DB_fetch_array($result)){
 
 /*	if ($len <1020){
 		include('includes/header.inc');
-		echo '<P>' . _('There were no transactions to print in the range selected');
+		echo '<p>' . _('There were no transactions to print in the range selected');
 		include('includes/footer.inc');
 		exit;
 	}*/
@@ -558,7 +558,7 @@ while ($row=DB_fetch_array($result)){
 
 		$title = _('Emailing') . ' ' .$InvOrCredit . ' ' . _('Number') . ' ' . $FromTransNo;
 		include('includes/header.inc');
-		echo "<P>$InvOrCredit " . _('number') . ' ' . $_GET['FromTransNo'] . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
+		echo "<p>$InvOrCredit " . _('number') . ' ' . $_GET['FromTransNo'] . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
 		include('includes/footer.inc');
 		exit;
 
@@ -582,55 +582,55 @@ while ($row=DB_fetch_array($result)){
 
 
 	/*if FromTransNo is not set then show a form to allow input of either a single invoice number or a range of invoices to be printed. Also get the last invoice number created to show the user where the current range is up to */
-		echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD='POST'><CENTER><TABLE>";
-                echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . _('Print Invoices or Credit Notes (Landscape Mode)') . '';
-		echo '<TR><TD>' . _('Print Invoices or Credit Notes') . '</TD><TD><SELECT name=InvOrCredit>';
+		echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method='POST'><table>";
+                echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . _('Print Invoices or Credit Notes (Landscape Mode)') . '</div>';
+		echo '<tr><td>' . _('Print Invoices or Credit Notes') . '</td><td><select name=InvOrCredit>';
 		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)){
 
-		   echo "<OPTION SELECTED VALUE='Invoice'>" . _('Invoices');
-		   echo "<OPTION VALUE='Credit'>" . _('Credit Notes');
+		   echo "<option selected VALUE='Invoice'>" . _('Invoices');
+		   echo "<option VALUE='Credit'>" . _('Credit Notes');
 
 		} else {
 
-		   echo "<OPTION SELECTED VALUE='Credit'>" . _('Credit Notes');
-		   echo "<OPTION VALUE='Invoice'>" . _('Invoices');
+		   echo "<option selected VALUE='Credit'>" . _('Credit Notes');
+		   echo "<option VALUE='Invoice'>" . _('Invoices');
 
 		}
 
-		echo '</SELECT></TD></TR>';
+		echo '</select></td></tr>';
 
-		echo '<TR><TD>' . _('Print EDI Transactions') . '</TD><TD><SELECT name=PrintEDI>';
+		echo '<tr><td>' . _('Print EDI Transactions') . '</td><td><select name=PrintEDI>';
 		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)){
 
-		   echo "<OPTION SELECTED VALUE='No'>" . _('Do not Print PDF EDI Transactions');
-		   echo "<OPTION VALUE='Yes'>" . _('Print PDF EDI Transactions Too');
+		   echo "<option selected VALUE='No'>" . _('Do not Print PDF EDI Transactions');
+		   echo "<option VALUE='Yes'>" . _('Print PDF EDI Transactions Too');
 
 		} else {
 
-		   echo "<OPTION VALUE='No'>" . _('Do not Print PDF EDI Transactions');
-		   echo "<OPTION SELECTED VALUE='Yes'>" . _('Print PDF EDI Transactions Too');
+		   echo "<option VALUE='No'>" . _('Do not Print PDF EDI Transactions');
+		   echo "<option selected VALUE='Yes'>" . _('Print PDF EDI Transactions Too');
 
 		}
 
-		echo '</SELECT></TD></TR>';
-		echo '<TR><TD>' . _('Start invoice/credit note number to print') . '</TD><TD><input Type=text max=6 size=7 name=FromTransNo></TD></TR>';
-		echo '<TR><TD>' . _('End invoice/credit note number to print') . "</TD><TD><input Type=text max=6 size=7 name='ToTransNo'></TD></TR></TABLE></CENTER>";
-		echo "<CENTER><INPUT TYPE=Submit Name='Print' Value='" . _('Print') . "'><P>";
-		echo "<INPUT TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
+		echo '</select></td></tr>';
+		echo '<tr><td>' . _('Start invoice/credit note number to print') . '</td><td><input Type=text class=number max=6 size=7 name=FromTransNo></td></tr>';
+		echo '<tr><td>' . _('End invoice/credit note number to print') . "</td><td><input Type=text class=number max=6 size=7 name='ToTransNo'></td></tr></table>";
+		echo "<div class='centre'><input type=Submit Name='Print' Value='" . _('Print') . "'><p>";
+		echo "<input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
 
 		$sql = 'SELECT typeno FROM systypes WHERE typeid=10';
 
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 
-		echo '<DIV CLASS="page_help_text"><B>' . _('The last invoice created was number') . ' ' . $myrow[0] . '</B><BR>' . _('If only a single invoice is required') . ', ' . _('enter the invoice number to print in the Start transaction number to print field and leave the End transaction number to print field blank') . '. ' . _('Only use the end invoice to print field if you wish to print a sequential range of invoices') . '';
+		echo '<div class="page_help_text"><b>' . _('The last invoice created was number') . ' ' . $myrow[0] . '</b><br>' . _('If only a single invoice is required') . ', ' . _('enter the invoice number to print in the Start transaction number to print field and leave the End transaction number to print field blank') . '. ' . _('Only use the end invoice to print field if you wish to print a sequential range of invoices') . '';
 
                 $sql = 'SELECT typeno FROM systypes WHERE typeid=11';
 
                 $result = DB_query($sql,$db);
                 $myrow = DB_fetch_row($result);
 
-                echo '<BR><B>' . _('The last credit note created was number') . ' ' . $myrow[0] . '</B><BR>' . _('A sequential range can be printed using the same method as for invoices above') . '. ' . _('A single credit note can be printed by only entering a start transaction number') . '</DIV';
+                echo '<br><b>' . _('The last credit note created was number') . ' ' . $myrow[0] . '</b><br>' . _('A sequential range can be printed using the same method as for invoices above') . '. ' . _('A single credit note can be printed by only entering a start transaction number') . '</DIV';
 
 	} else {
 
@@ -734,9 +734,9 @@ while ($row=DB_fetch_array($result)){
 
 			$result=DB_query($sql,$db);
 			if (DB_num_rows($result)==0 OR DB_error_no($db)!=0) {
-				echo '<P>' . _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available');
+				echo '<p>' . _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available');
 				if ($debug==1){
-					echo _('The SQL used to get this information that failed was') . "<BR>$sql";
+					echo _('The SQL used to get this information that failed was') . "<br>$sql";
 				}
 				break;
 				include('includes/footer.inc');
@@ -746,80 +746,80 @@ while ($row=DB_fetch_array($result)){
 				$myrow = DB_fetch_array($result);
 	/* Then there's an invoice (or credit note) to print. So print out the invoice header and GST Number from the company record */
 				if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND in_array(1, $_SESSION['AllowedPageSecurityTokens']) AND $myrow['debtorno'] != $_SESSION['CustomerID']){
-					echo '<P><FONT COLOR=RED SIZE=4>' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company');
+					echo '<p><font color=RED size=4>' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company');
 					exit;
 				}
 
 				$ExchRate = $myrow['rate'];
 				$PageNumber = 1;
 
-				echo "<TABLE WIDTH=100%><TR><TD VALIGN=TOP WIDTH=10%><img src='" . $_SESSION['LogoFile'] . "'></TD><TD BGCOLOR='#BBBBBB'><B>";
+				echo "<table WIDTH=100%><tr><td VALIGN=TOP WIDTH=10%><img src='" . $_SESSION['LogoFile'] . "'></td><td bgcolor='#BBBBBB'><b>";
 
 				if ($InvOrCredit=='Invoice') {
-				   echo '<FONT SIZE=4>' . _('TAX INVOICE') . ' ';
+				   echo '<font size=4>' . _('TAX INVOICE') . ' ';
 				} else {
-				   echo '<FONT COLOR=RED SIZE=4>' . _('TAX CREDIT NOTE') . ' ';
+				   echo '<font color=RED size=4>' . _('TAX CREDIT NOTE') . ' ';
 				}
-				echo '</B>' . _('Number') . ' ' . $FromTransNo . '</FONT><BR><FONT SIZE=1>' . _('Tax Authority Ref') . '. ' . $_SESSION['CompanyRecord']['gstno'] . '</TD></TR></TABLE>';
+				echo '</b>' . _('Number') . ' ' . $FromTransNo . '</font><br><font size=1>' . _('Tax Authority Ref') . '. ' . $_SESSION['CompanyRecord']['gstno'] . '</td></tr></table>';
 
 	/*Now print out the logo and company name and address */
-				echo "<TABLE WIDTH=100%><TR><TD><FONT SIZE=4 COLOR='#333333'><B>" . $_SESSION['CompanyRecord']['coyname'] . "</B></FONT><BR>";
-				echo $_SESSION['CompanyRecord']['regoffice1'] . '<BR>';
-				echo $_SESSION['CompanyRecord']['regoffice2'] . '<BR>';
-				echo $_SESSION['CompanyRecord']['regoffice3'] . '<BR>';
-				echo $_SESSION['CompanyRecord']['regoffice4'] . '<BR>';
-				echo $_SESSION['CompanyRecord']['regoffice5'] . '<BR>';
-				echo $_SESSION['CompanyRecord']['regoffice6'] . '<BR>';
-				echo _('Telephone') . ': ' . $_SESSION['CompanyRecord']['telephone'] . '<BR>';
-				echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<BR>';
-				echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<BR>';
+				echo "<table WIDTH=100%><tr><td><font size=4 color='#333333'><b>" . $_SESSION['CompanyRecord']['coyname'] . "</b></font><br>";
+				echo $_SESSION['CompanyRecord']['regoffice1'] . '<br>';
+				echo $_SESSION['CompanyRecord']['regoffice2'] . '<br>';
+				echo $_SESSION['CompanyRecord']['regoffice3'] . '<br>';
+				echo $_SESSION['CompanyRecord']['regoffice4'] . '<br>';
+				echo $_SESSION['CompanyRecord']['regoffice5'] . '<br>';
+				echo $_SESSION['CompanyRecord']['regoffice6'] . '<br>';
+				echo _('Telephone') . ': ' . $_SESSION['CompanyRecord']['telephone'] . '<br>';
+				echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<br>';
+				echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<br>';
 
-				echo '</TD><TD WIDTH=50% ALIGN=RIGHT>';
+				echo '</td><td WIDTH=50% align=right>';
 
 	/*Now the customer charged to details in a sub table within a cell of the main table*/
 
-				echo "<TABLE WIDTH=100%><TR><TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Charge To') . ":</B></TD></TR><TR><TD BGCOLOR='#EEEEEE'>";
-				echo $myrow['name'] . '<BR>' . $myrow['address1'] . '<BR>' . $myrow['address2'] . '<BR>' . $myrow['address3'] . '<BR>' . $myrow['address4'] . '<BR>' . $myrow['address5'] . '<BR>' . $myrow['address6'];
-				echo '</TD></TR></TABLE>';
+				echo "<table WIDTH=100%><tr><td align=left bgcolor='#BBBBBB'><b>" . _('Charge To') . ":</b></td></tr><tr><td bgcolor='#EEEEEE'>";
+				echo $myrow['name'] . '<br>' . $myrow['address1'] . '<br>' . $myrow['address2'] . '<br>' . $myrow['address3'] . '<br>' . $myrow['address4'] . '<br>' . $myrow['address5'] . '<br>' . $myrow['address6'];
+				echo '</td></tr></table>';
 				/*end of the small table showing charge to account details */
 				echo _('Page') . ': ' . $PageNumber;
-				echo '</TD></TR></TABLE>';
+				echo '</td></tr></table>';
 				/*end of the main table showing the company name and charge to details */
 
 				if ($InvOrCredit=='Invoice') {
 
-				   echo "<TABLE WIDTH=100%>
-				   			<TR>
-				   				<TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Charge Branch') . ":</B></TD>
-								<TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Delivered To') . ":</B></TD>
-							</TR>";
-				   echo "<TR>
-				   		<TD BGCOLOR='#EEEEEE'>" .$myrow['brname'] . '<BR>' . $myrow['braddress1'] . '<BR>' . $myrow['braddress2'] . '<BR>' . $myrow['braddress3'] . '<BR>' . $myrow['braddress4'] . '<BR>' . $myrow['braddress5'] . '<BR>' . $myrow['braddress6'] . '</TD>';
+				   echo "<table WIDTH=100%>
+				   			<tr>
+				   				<td align=left bgcolor='#BBBBBB'><b>" . _('Charge Branch') . ":</b></td>
+								<td align=left bgcolor='#BBBBBB'><b>" . _('Delivered To') . ":</b></td>
+							</tr>";
+				   echo "<tr>
+				   		<td bgcolor='#EEEEEE'>" .$myrow['brname'] . '<br>' . $myrow['braddress1'] . '<br>' . $myrow['braddress2'] . '<br>' . $myrow['braddress3'] . '<br>' . $myrow['braddress4'] . '<br>' . $myrow['braddress5'] . '<br>' . $myrow['braddress6'] . '</td>';
 
-				   	echo "<TD BGCOLOR='#EEEEEE'>" . $myrow['deliverto'] . '<BR>' . $myrow['deladd1'] . '<BR>' . $myrow['deladd2'] . '<BR>' . $myrow['deladd3'] . '<BR>' . $myrow['deladd4'] . '<BR>' . $myrow['deladd5'] . '<BR>' . $myrow['deladd6'] . '</TD>';
-				   echo '</TR>
-				   </TABLE><HR>';
+				   	echo "<td bgcolor='#EEEEEE'>" . $myrow['deliverto'] . '<br>' . $myrow['deladd1'] . '<br>' . $myrow['deladd2'] . '<br>' . $myrow['deladd3'] . '<br>' . $myrow['deladd4'] . '<br>' . $myrow['deladd5'] . '<br>' . $myrow['deladd6'] . '</td>';
+				   echo '</tr>
+				   </table><hr>';
 
-				   echo "<TABLE WIDTH=100%>
-				   		<TR>
-							<TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Your Order Ref') . "</B></TD>
-							<TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Our Order No') . "</B></TD>
-							<TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Order Date') . "</B></TD>
-							<TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Invoice Date') . "</B></TD>
-							<TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Sales Person') . "</FONT></B></TD>
-							<TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Shipper') . "</B></TD>
-							<TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Consignment Ref') . "</B></TD>
-						</TR>";
-				   	echo "<TR>
-							<TD BGCOLOR='#EEEEEE'>" . $myrow['customerref'] . "</TD>
-							<TD BGCOLOR='#EEEEEE'>" .$myrow['orderno'] . "</TD>
-							<TD BGCOLOR='#EEEEEE'>" . ConvertSQLDate($myrow['orddate']) . "</TD>
-							<TD BGCOLOR='#EEEEEE'>" . ConvertSQLDate($myrow['trandate']) . "</TD>
-							<TD BGCOLOR='#EEEEEE'>" . $myrow['salesmanname'] . "</TD>
-							<TD BGCOLOR='#EEEEEE'>" . $myrow['shippername'] . "</TD>
-							<TD BGCOLOR='#EEEEEE'>" . $myrow['consignment'] . "</TD>
-						</TR>
-					</TABLE>";
+				   echo "<table WIDTH=100%>
+				   		<tr>
+							<td align=left bgcolor='#BBBBBB'><b>" . _('Your Order Ref') . "</b></td>
+							<td align=left bgcolor='#BBBBBB'><b>" . _('Our Order No') . "</b></td>
+							<td align=left bgcolor='#BBBBBB'><b>" . _('Order Date') . "</b></td>
+							<td align=left bgcolor='#BBBBBB'><b>" . _('Invoice Date') . "</b></td>
+							<td align=left bgcolor='#BBBBBB'><b>" . _('Sales Person') . "</font></b></td>
+							<td align=left bgcolor='#BBBBBB'><b>" . _('Shipper') . "</b></td>
+							<td align=left bgcolor='#BBBBBB'><b>" . _('Consignment Ref') . "</b></td>
+						</tr>";
+				   	echo "<tr>
+							<td bgcolor='#EEEEEE'>" . $myrow['customerref'] . "</td>
+							<td bgcolor='#EEEEEE'>" .$myrow['orderno'] . "</td>
+							<td bgcolor='#EEEEEE'>" . ConvertSQLDate($myrow['orddate']) . "</td>
+							<td bgcolor='#EEEEEE'>" . ConvertSQLDate($myrow['trandate']) . "</td>
+							<td bgcolor='#EEEEEE'>" . $myrow['salesmanname'] . "</td>
+							<td bgcolor='#EEEEEE'>" . $myrow['shippername'] . "</td>
+							<td bgcolor='#EEEEEE'>" . $myrow['consignment'] . "</td>
+						</tr>
+					</table>";
 
 				   $sql ="SELECT stockmoves.stockid,
 				   		stockmaster.description,
@@ -838,20 +838,20 @@ while ($row=DB_fetch_array($result)){
 
 				} else { /* then its a credit note */
 
-				   echo "<TABLE WIDTH=50%><TR>
-				   		<TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Branch') . ":</B></TD>
-						</TR>";
-				   echo "<TR>
-				   		<TD BGCOLOR='#EEEEEE'>" .$myrow['brname'] . '<BR>' . $myrow['braddress1'] . '<BR>' . $myrow['braddress2'] . '<BR>' . $myrow['braddress3'] . '<BR>' . $myrow['braddress4'] . '<BR>' . $myrow['braddress5'] . '<BR>' . $myrow['braddress6'] . '</TD>
-					</TR></TABLE>';
-				   echo "<HR><TABLE WIDTH=100%><TR>
-				   		<TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Date') . "</B></TD>
-						<TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Sales Person') . "</FONT></B></TD>
-					</TR>";
-				   echo "<TR>
-				   		<TD BGCOLOR='#EEEEEE'>" . ConvertSQLDate($myrow['trandate']) . "</TD>
-						<TD BGCOLOR='#EEEEEE'>" . $myrow['salesmanname'] . '</TD>
-					</TR></TABLE>';
+				   echo "<table WIDTH=50%><tr>
+				   		<td align=left bgcolor='#BBBBBB'><b>" . _('Branch') . ":</b></td>
+						</tr>";
+				   echo "<tr>
+				   		<td bgcolor='#EEEEEE'>" .$myrow['brname'] . '<br>' . $myrow['braddress1'] . '<br>' . $myrow['braddress2'] . '<br>' . $myrow['braddress3'] . '<br>' . $myrow['braddress4'] . '<br>' . $myrow['braddress5'] . '<br>' . $myrow['braddress6'] . '</td>
+					</tr></table>';
+				   echo "<hr><table WIDTH=100%><tr>
+				   		<td align=left bgcolor='#BBBBBB'><b>" . _('Date') . "</b></td>
+						<td align=left bgcolor='#BBBBBB'><b>" . _('Sales Person') . "</font></b></td>
+					</tr>";
+				   echo "<tr>
+				   		<td bgcolor='#EEEEEE'>" . ConvertSQLDate($myrow['trandate']) . "</td>
+						<td bgcolor='#EEEEEE'>" . $myrow['salesmanname'] . '</td>
+					</tr></table>';
 
 				   $sql ='SELECT stockmoves.stockid,
 				   		stockmaster.description,
@@ -867,27 +867,27 @@ while ($row=DB_fetch_array($result)){
 					AND stockmoves.show_on_inv_crds=1';
 				}
 
-				echo '<HR>';
-				echo '<CENTER><FONT SIZE=2>' . _('All amounts stated in') . ' ' . $myrow['currcode'] . '</FONT></CENTER>';
+				echo '<hr>';
+				echo '<div class="centre"><font size=2>' . _('All amounts stated in') . ' ' . $myrow['currcode'] . '</font></div>';
 
 				$result=DB_query($sql,$db);
 				if (DB_error_no($db)!=0) {
-					echo '<BR>' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
+					echo '<br>' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
 					if ($debug==1){
-						 echo '<BR>' . _('The SQL used to get this information that failed was') . "<BR>$sql";
+						 echo '<br>' . _('The SQL used to get this information that failed was') . "<br>$sql";
 					}
 					exit;
 				}
 
 				if (DB_num_rows($result)>0){
-					echo "<TABLE WIDTH=100% CELLPADDING=5>
-						<TR><TH>" . _('Item Code') . "</TH>
-						<TH>" . _('Item Description') . "</TH>
-						<TH>" . _('Quantity') . "</TH>
-						<TH>" . _('Unit') . "</TH>
-						<TH>" . _('Price') . "</TH>
-						<TH>" . _('Discount') . "</TH>
-						<TH>" . _('Net') . '</TH></TR>';
+					echo "<table WIDTH=100% cellpadding=5>
+						<tr><th>" . _('Item Code') . "</th>
+						<th>" . _('Item Description') . "</th>
+						<th>" . _('Quantity') . "</th>
+						<th>" . _('Unit') . "</th>
+						<th>" . _('Price') . "</th>
+						<th>" . _('Discount') . "</th>
+						<th>" . _('Net') . '</th></tr>';
 
 					$LineCounter =17;
 					$k=0;	//row colour counter
@@ -914,14 +914,14 @@ while ($row=DB_fetch_array($result)){
 						   $DisplayDiscount = number_format($myrow2['discountpercent']*100,2) . '%';
 					      }
 
-					      printf ('<TD>%s</TD>
-					      		<TD>%s</TD>
-							<TD ALIGN=RIGHT>%s</TD>
-							<TD ALIGN=RIGHT>%s</TD>
-							<TD ALIGN=RIGHT>%s</TD>
-							<TD ALIGN=RIGHT>%s</TD>
-							<TD ALIGN=RIGHT>%s</TD>
-							</TR>',
+					      printf ('<td>%s</td>
+					      		<td>%s</td>
+							<td align=right>%s</td>
+							<td align=right>%s</td>
+							<td align=right>%s</td>
+							<td align=right>%s</td>
+							<td align=right>%s</td>
+							</tr>',
 							$myrow2['stockid'],
 							$myrow2['description'],
 							$DisplayQty,
@@ -931,7 +931,7 @@ while ($row=DB_fetch_array($result)){
 							$DisplayNet);
 
 					      if (strlen($myrow2['narrative'])>1){
-					      		echo $RowStarter . '<TD></TD><TD COLSPAN=6>' . $myrow2['narrative'] . '</TD></TR>';
+					      		echo $RowStarter . '<td></td><td colspan=6>' . $myrow2['narrative'] . '</td></tr>';
 							$LineCounter++;
 					      }
 
@@ -942,42 +942,42 @@ while ($row=DB_fetch_array($result)){
 						/* head up a new invoice/credit note page */
 
 						   $PageNumber++;
-						   echo "</TABLE><TABLE WIDTH=100%><TR><TD VALIGN=TOP><img src='" . $_SESSION['LogoFile'] . "'></TD><TD BGCOLOR='#BBBBBB'><CENTER><B>";
+						   echo "</table><table WIDTH=100%><tr><td VALIGN=TOp><img src='" . $_SESSION['LogoFile'] . "'></td><td bgcolor='#BBBBBB'><b>";
 
 						   if ($InvOrCredit=='Invoice') {
-							    echo '<FONT SIZE=4>' . _('TAX INVOICE') . ' ';
+							    echo '<font size=4>' . _('TAX INVOICE') . ' ';
 						   } else {
-							    echo '<FONT COLOR=RED SIZE=4>' . _('TAX CREDIT NOTE') . ' ';
+							    echo '<font color=RED size=4>' . _('TAX CREDIT NOTE') . ' ';
 						   }
-						   echo '</B>' . _('Number') . ' ' . $FromTransNo . '</FONT><BR><FONT SIZE=1>' . _('GST Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</TD></TR><TABLE>';
+						   echo '</b>' . _('Number') . ' ' . $FromTransNo . '</font><br><font size=1>' . _('GST Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</td></tr><table>';
 
 	/*Now print out company name and address */
-						    echo "<TABLE WIDTH=100%><TR>
-						    	<TD><FONT SIZE=4 COLOR='#333333'><B>" . $_SESSION['CompanyRecord']['coyname'] . '</B></FONT><BR>';
-						    echo $_SESSION['CompanyRecord']['regoffice1'] . '<BR>';
-						    echo $_SESSION['CompanyRecord']['regoffice2'] . '<BR>';
-						    echo $_SESSION['CompanyRecord']['regoffice3'] . '<BR>';
-						    echo $_SESSION['CompanyRecord']['regoffice4'] . '<BR>';
-						    echo $_SESSION['CompanyRecord']['regoffice5'] . '<BR>';
-						    echo $_SESSION['CompanyRecord']['regoffice6'] . '<BR>';
-						    echo _('Telephone') . ': ' . $_SESSION['CompanyRecord']['telephone'] . '<BR>';
-						    echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<BR>';
-						    echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<BR>';
-						    echo '</TD><TD ALIGN=RIGHT>' . _('Page') . ": $PageNumber</TD></TR></TABLE>";
-						    echo "<TABLE WIDTH=100% CELLPADDING=5><TR>
-						    	<TH>" . _('Item Code') . "</TH>
-							<TH>" . _('Item Description') . "</TH>
-							<TH>" . _('Quantity') . "</TH>
-							<TH>" . _('Unit') . "</TH>
-							<TH>" . _('Price') . "</TH>
-							<TH>" . _('Discount') . "</TH>
-							<TH>" . _('Net') . "</TH></TR>";
+						    echo "<table WIDTH=100%><tr>
+						    	<td><font size=4 color='#333333'><b>" . $_SESSION['CompanyRecord']['coyname'] . '</b></font><br>';
+						    echo $_SESSION['CompanyRecord']['regoffice1'] . '<br>';
+						    echo $_SESSION['CompanyRecord']['regoffice2'] . '<br>';
+						    echo $_SESSION['CompanyRecord']['regoffice3'] . '<br>';
+						    echo $_SESSION['CompanyRecord']['regoffice4'] . '<br>';
+						    echo $_SESSION['CompanyRecord']['regoffice5'] . '<br>';
+						    echo $_SESSION['CompanyRecord']['regoffice6'] . '<br>';
+						    echo _('Telephone') . ': ' . $_SESSION['CompanyRecord']['telephone'] . '<br>';
+						    echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<br>';
+						    echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<br>';
+						    echo '</td><td align=right>' . _('Page') . ": $PageNumber</td></tr></table>";
+						    echo "<table WIDTH=100% cellpadding=5><tr>
+						    	<th>" . _('Item Code') . "</th>
+							<th>" . _('Item Description') . "</th>
+							<th>" . _('Quantity') . "</th>
+							<th>" . _('Unit') . "</th>
+							<th>" . _('Price') . "</th>
+							<th>" . _('Discount') . "</th>
+							<th>" . _('Net') . "</th></tr>";
 
 						    $LineCounter = 10;
 
 					      } //end if need a new page headed up
 					} //end while there are line items to print out
-					echo '</TABLE>';
+					echo '</table>';
 				} /*end if there are stock movements to show on the invoice or credit note*/
 
 				/* check to see enough space left to print the totals/footer */
@@ -988,46 +988,46 @@ while ($row=DB_fetch_array($result)){
 					/* head up a new invoice/credit note page */
 
 					$PageNumber++;
-					echo "<TABLE WIDTH=100%><TR><TD VALIGN=TOP><img src='" . $_SESSION['LogoFile'] . "'></TD><TD BGCOLOR='#BBBBBB'><CENTER><B>";
+					echo "<table WIDTH=100%><tr><td VALIGN=TOp><img src='" . $_SESSION['LogoFile'] . "'></td><td bgcolor='#BBBBBB'><b>";
 
 					if ($InvOrCredit=='Invoice') {
-					      echo '<FONT SIZE=4>' . _('TAX INVOICE') .' ';
+					      echo '<font size=4>' . _('TAX INVOICE') .' ';
 					} else {
-					      echo '<FONT COLOR=RED SIZE=4>' . _('TAX CREDIT NOTE') . ' ';
+					      echo '<font color=RED size=4>' . _('TAX CREDIT NOTE') . ' ';
 					}
-					echo '</B>' . _('Number') . ' ' . $FromTransNo . '</FONT><BR><FONT SIZE=1>' . _('GST Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</TD></TR><TABLE>';
+					echo '</b>' . _('Number') . ' ' . $FromTransNo . '</font><br><font size=1>' . _('GST Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</td></tr><table>';
 
 	/*Print out the logo and company name and address */
-					echo "<TABLE WIDTH=100%><TR><TD><FONT SIZE=4 COLOR='#333333'><B>" . $_SESSION['CompanyRecord']['coyname'] . "</B></FONT><BR>";
-					echo $_SESSION['CompanyRecord']['regoffice1'] . '<BR>';
-					echo $_SESSION['CompanyRecord']['regoffice2'] . '<BR>';
-					echo $_SESSION['CompanyRecord']['regoffice3'] . '<BR>';
-					echo $_SESSION['CompanyRecord']['regoffice4'] . '<BR>';
-					echo $_SESSION['CompanyRecord']['regoffice5'] . '<BR>';
-					echo $_SESSION['CompanyRecord']['regoffice6'] . '<BR>';
-					echo _('Telephone') . ': ' . $_SESSION['CompanyRecord']['telephone'] . '<BR>';
-					echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<BR>';
-					echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<BR>';
-					echo '</TD><TD ALIGN=RIGHT>' . _('Page') . ": $PageNumber</TD></TR></TABLE>";
-					echo "<TABLE WIDTH=100% CELLPADDING=5><TR>
-						<TH>" . _('Item Code') . "</TH>
-						<TH>" . _('Item Description') . "</TH>
-						<TH>" . _('Quantity') . "</TH>
-						<TH>" . _('Unit') . "</TH>
-						<TH>" . _('Price') . "</TH>
-						<TH>" . _('Discount') . "</TH>
-						<TH>" . _('Net') . '</TH></TR>';
+					echo "<table WIDTH=100%><tr><td><font size=4 color='#333333'><b>" . $_SESSION['CompanyRecord']['coyname'] . "</b></font><br>";
+					echo $_SESSION['CompanyRecord']['regoffice1'] . '<br>';
+					echo $_SESSION['CompanyRecord']['regoffice2'] . '<br>';
+					echo $_SESSION['CompanyRecord']['regoffice3'] . '<br>';
+					echo $_SESSION['CompanyRecord']['regoffice4'] . '<br>';
+					echo $_SESSION['CompanyRecord']['regoffice5'] . '<br>';
+					echo $_SESSION['CompanyRecord']['regoffice6'] . '<br>';
+					echo _('Telephone') . ': ' . $_SESSION['CompanyRecord']['telephone'] . '<br>';
+					echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<br>';
+					echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<br>';
+					echo '</td><td align=right>' . _('Page') . ": $PageNumber</td></tr></table>";
+					echo "<table WIDTH=100% cellpadding=5><tr>
+						<th>" . _('Item Code') . "</th>
+						<th>" . _('Item Description') . "</th>
+						<th>" . _('Quantity') . "</th>
+						<th>" . _('Unit') . "</th>
+						<th>" . _('Price') . "</th>
+						<th>" . _('Discount') . "</th>
+						<th>" . _('Net') . '</th></tr>';
 
 					$LineCounter = 10;
 				}
 
 	/*Space out the footer to the bottom of the page */
 
-				echo '<BR><BR>' . $myrow['invtext'];
+				echo '<br><br>' . $myrow['invtext'];
 
 				$LineCounter=$LineCounter+2+$LinesRequiredForText;
 				while ($LineCounter < ($_SESSION['PageLength'] -6)){
-					echo '<BR>';
+					echo '<br>';
 					$LineCounter++;
 				}
 
@@ -1046,21 +1046,21 @@ while ($row=DB_fetch_array($result)){
 				   $DisplayTotal = number_format(-$myrow['ovfreight']-$myrow['ovgst']-$myrow['ovamount'],2);
 				}
 	/*Print out the invoice text entered */
-				echo '<TABLE WIDTH=100%><TR>
-					<TD ALIGN=RIGHT>' . _('Sub Total') . "</TD>
-					<TD ALIGN=RIGHT BGCOLOR='#EEEEEE' WIDTH=15%>$DisplaySubTot</TD></TR>";
-				echo '<TR><TD ALIGN=RIGHT>' . _('Freight') . "</TD>
-					<TD ALIGN=RIGHT BGCOLOR='#EEEEEE'>$DisplayFreight</TD></TR>";
-				echo '<TR><TD ALIGN=RIGHT>' . _('Tax') . "</TD>
-					<TD ALIGN=RIGHT BGCOLOR='#EEEEEE'>$DisplayTax</TD></TR>";
+				echo '<table WIDTH=100%><tr>
+					<td align=right>' . _('Sub Total') . "</td>
+					<td align=right bgcolor='#EEEEEE' WIDTH=15%>$DisplaySubTot</td></tr>";
+				echo '<tr><td align=right>' . _('Freight') . "</td>
+					<td align=right bgcolor='#EEEEEE'>$DisplayFreight</td></tr>";
+				echo '<tr><td align=right>' . _('Tax') . "</td>
+					<td align=right bgcolor='#EEEEEE'>$DisplayTax</td></tr>";
 				if ($InvOrCredit=='Invoice'){
-				     echo '<TR><TD Align=RIGHT><B>' . _('TOTAL INVOICE') . "</B></TD>
-				     	<TD ALIGN=RIGHT BGCOLOR='#EEEEEE'><U><B>$DisplayTotal</B></U></TD></TR>";
+				     echo '<tr><td Align=RIGHT><b>' . _('TOTAL INVOICE') . "</b></td>
+				     	<td align=right bgcolor='#EEEEEE'><U><b>$DisplayTotal</b></U></td></tr>";
 				} else {
-				     echo '<TR><TD Align=RIGHT><FONT COLOR=RED><B>' . _('TOTAL CREDIT') . "</B></FONT></TD>
-				     		<TD ALIGN=RIGHT BGCOLOR='#EEEEEE'><FONT COLOR=RED><U><B>$DisplayTotal</B></U></FONT></TD></TR>";
+				     echo '<tr><td Align=RIGHT><font color=RED><b>' . _('TOTAL CREDIT') . "</b></font></td>
+				     		<td align=right bgcolor='#EEEEEE'><font color=RED><U><b>$DisplayTotal</b></U></font></td></tr>";
 				}
-				echo '</TABLE>';
+				echo '</table>';
 			} /* end of check to see that there was an invoice record to print */
 			$FromTransNo++;
 		} /* end loop to print invoices */
@@ -1098,7 +1098,7 @@ function PrintLinesToBottom () {
 
 	$pdf->line($Left_Margin+640, $TopOfColHeadings+12,$Left_Margin+640,$Bottom_Margin);
 
-	$pdf->newPage();
+//	$pdf->newPage();
 	$PageNumber++;
 
 }
