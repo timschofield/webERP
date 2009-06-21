@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity = 11;
 
 include('includes/session.inc');
@@ -16,9 +16,9 @@ if (isset($_GET['Item'])){
 
 if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']==""){
 
-	echo '<BR><HR>';
+	echo '<br><hr>';
 	prnMsg( _('A customer must be selected from the customer selection screen') . ', ' . _('then an item must be selected before this page is called') . '. ' . _('The product selection page should call this page with a valid product code'),'info');
-	echo '<HR>';
+	echo '<hr>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -31,14 +31,14 @@ $result = DB_query("SELECT debtorsmaster.name,
 		 WHERE
 			 debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
 $myrow = DB_fetch_row($result);
-echo '<FONT COLOR=BLUE><B>' . $myrow[0] . ' ' . _('in') . ' ' . $myrow[1] . '<BR>' . ' ' . _('for') . ' ';
+echo '<font color=BLUE><b>' . $myrow[0] . ' ' . _('in') . ' ' . $myrow[1] . '<br>' . ' ' . _('for') . ' ';
 
 $CurrCode = $myrow[1];
 $SalesType = $myrow[2];
 
 $result = DB_query("SELECT stockmaster.description FROM stockmaster WHERE stockmaster.stockid='$Item'",$db);
 $myrow = DB_fetch_row($result);
-echo $Item . ' - ' . $myrow[0] . '</B></FONT><HR>';
+echo $Item . ' - ' . $myrow[0] . '</b></font><hr>';
 
 if (isset($_POST['submit'])) {
 
@@ -146,19 +146,19 @@ $ErrMsg = _('Could not retrieve the normal prices set up because');
 $DbgMsg = _('The SQL used to retreive these records was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-echo '<CENTER><table border=1><TR><TD valign=top>';
+echo '<table border=1><tr><td valign=top>';
 echo '<table>';
 
 if (DB_num_rows($result) == 0) {
-	echo '<TR><TD>' . _('There are no default prices set up for this part') . '</TD></TR>';
+	echo '<tr><td>' . _('There are no default prices set up for this part') . '</td></tr>';
 } else {
 	echo '<tr><th>' . _('Normal Price') . '</th></tr>';
 	while ($myrow = DB_fetch_array($result)) {
-		printf('<tr class="EvenTableRows"><td ALIGN=RIGHT>%0.2f</td></tr>', $myrow['price']);
+		printf('<tr class="EvenTableRows"><td align=right>%0.2f</td></tr>', $myrow['price']);
 	}
 }
 
-echo '</table></TD><TD VALIGN=TOP>';
+echo '</table></td><td VALIGN=TOp>';
 
 //now get the prices for the customer selected
 
@@ -177,14 +177,14 @@ $ErrMsg = _('Could not retrieve the special prices set up because');
 $DbgMsg = _('The SQL used to retreive these records was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-echo '<TABLE>';
+echo '<table>';
 
 if (DB_num_rows($result) == 0) {
-	echo '<TR><TD>' . _('There are no special prices set up for this part') . '</TD></TR>';
+	echo '<tr><td>' . _('There are no special prices set up for this part') . '</td></tr>';
 } else {
 /*THERE IS ALREADY A spl price setup */
-	echo '<TR><TH>' . _('Special Price') .
-	     '</TH><TH>' . _('Branch') . '</TH></TR>';
+	echo '<tr><th>' . _('Special Price') .
+	     '</th><th>' . _('Branch') . '</th></tr>';
 
 	while ($myrow = DB_fetch_array($result)) {
 
@@ -195,7 +195,7 @@ if (DB_num_rows($result) == 0) {
 	}
 
 	printf("<tr bgcolor='#CCCCCC'>
-		<td ALIGN=RIGHT>%0.2f</td>
+		<td align=right>%0.2f</td>
 		<td>%s</td>
  		<td><a href='%s?Item=%s&Price=%s&Branch=%s&Edit=1'>" . _('Edit') . "</td>
 		<td><a href='%s?Item=%s&Branch=%s&delete=yes'>" . _('Delete') . "</td></tr>",
@@ -214,16 +214,16 @@ if (DB_num_rows($result) == 0) {
 
 ?>
 
-</table></tr></table></center>
+</table></tr></table>
 
 <p>
 
 <?php
-	echo '<FORM METHOD="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	echo '<INPUT TYPE=HIDDEN NAME="Item" VALUE="' . $Item . '">';
+	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type=hidden name="Item" VALUE="' . $Item . '">';
 
 	if (isset($_GET['Edit']) and $_GET['Edit']==1){
-		echo '<INPUT TYPE=HIDDEN NAME="Editing" VALUE="Yes">';
+		echo '<input type=hidden name="Editing" VALUE="Yes">';
 		$_POST['Price']=$_GET['Price'];
 		$_POST['Branch']=$_GET['Branch'];
 	}
@@ -234,14 +234,14 @@ if (DB_num_rows($result) == 0) {
 	if (!isset($_POST['Price'])) {
 		$_POST['Price']=0;
 	}
-	echo '<CENTER><TABLE><TR><TD>' . _('Branch') . ':</TD>
-	                         <TD><INPUT TYPE="Text" NAME="Branch" SIZE=11 MAXLENGTH=10 value=' . $_POST['Branch'] . '></TD>
-											 </TR>';
-	echo '<TR><TD>' . _('Price') . ':</TD>
-	          <TD><INPUT TYPE="Text" NAME="Price" SIZE=11 MAXLENGTH=10 value=' . $_POST['Price'] . '></TD>
-				</TR></TABLE></CENTER>';
-	echo '<CENTER><INPUT TYPE="Submit" NAME="submit" VALUE="' . _('Enter Information') . '">';
+	echo '<table><tr><td>' . _('Branch') . ':</td>
+	                         <td><input type="Text" name="Branch" size=11 maxlength=10 value=' . $_POST['Branch'] . '></td>
+											 </tr>';
+	echo '<tr><td>' . _('Price') . ':</td>
+	          <td><input type="Text" class=number name="Price" size=11 maxlength=10 value=' . $_POST['Price'] . '></td>
+				</tr></table>';
+	echo '<div class="centre"><input type="Submit" name="submit" VALUE="' . _('Enter Information') . '"></div>';
 
-	echo '</FORM>';
+	echo '</form>';
 	include('includes/footer.inc');
 ?>

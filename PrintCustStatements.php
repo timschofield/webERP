@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 2;
 
@@ -84,10 +84,10 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 	if (DB_Num_Rows($StatementResults) == 0){
 		$title = _('Print Statments') . ' - ' . _('No Customers Found');
 	        require('includes/header.inc');
-		echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . _('Print Customer Account Statements') . '';
+		echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . _('Print Customer Account Statements') . '';
 		prnMsg( _('There were no Customers matching your selection of '). $_POST['FromCust']. ' - '.
 			$_POST['ToCust'].'.' , 'error');
-		echo '</div>';
+//		echo '</div>';
 		include('includes/footer.inc');
 		exit();
 	}
@@ -411,8 +411,8 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 	} else {
 		$title = _('Print Statments') . ' - ' . _('No Statements Found');
 		include('includes/header.inc');
-		echo '<BR><BR><BR>' . prnMsg( _('There were no statments to print') );
-	        echo '<BR><BR><BR>';
+		echo '<br><br><br>' . prnMsg( _('There were no statments to print') );
+	        echo '<br><br><br>';
 	        include('includes/footer.inc');
 	}
 
@@ -420,23 +420,23 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 
 	$title = _('Select Statements to Print');
 	include('includes/header.inc');
-	echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . _('Print Customer Account Statements') . '';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . _('Print Customer Account Statements') . '';
 	if (!isset($_POST['FromCust']) || $_POST['FromCust']=='') {
 
 	/*if FromTransNo is not set then show a form to allow input of either a single statement number or a range of statements to be printed. Also get the last statement number created to show the user where the current range is up to */
 
-		echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '" METHOD="POST"><CENTER><TABLE>';
+		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="POST"><table>';
 
-		echo '<TR><TD>' . _('Starting Customer statement to print (Customer code)'). '
-			</TD><TD><input Type=text max=6 size=7 name=FromCust value="1"></TD></TR>
-			<TR><TD>'. _('Ending Customer statement to print (Customer code)').'</TD><TD>
-				<input Type=text max=6 size=7 name=ToCust value="zzzzzz"></TD></TR></TABLE>
-				<BR>
-				<INPUT TYPE=Submit Name="PrintPDF" Value="' .
+		echo '<tr><td>' . _('Starting Customer statement to print (Customer code)'). '
+			</td><td><input Type=text max=6 size=7 name=FromCust value="1"></td></tr>
+			<tr><td>'. _('Ending Customer statement to print (Customer code)').'</td><td>
+				<input Type=text max=6 size=7 name=ToCust value="zzzzzz"></td></tr></table>
+				<br><div class="centre">
+				<input type=Submit Name="PrintPDF" Value="' .
 				_('Print All Statements in the Range Selected').'">
-			</CENTER>';
+			</div>';
 	}
-	echo '<BR><BR><BR>';
+	echo '<br><br><br>';
 	include('includes/footer.inc');
 
 } /*end of else not PrintPDF */

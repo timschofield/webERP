@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 /*need to allow this script to run from Cron or windows scheduler */
 $AllowAnyone = true;
@@ -71,7 +71,7 @@ prnMsg(_('The number of recurring orders to process is') .' : ' . DB_num_rows($R
 while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 
 	$EmailText ='';
-	echo '<BR>' . _('Recurring order') . ' ' . $RecurrOrderRow['recurrorderno'] . ' ' . _('for') . ' ' . $RecurrOrderRow['debtorno'] . ' - ' . $RecurrOrderRow['branchcode'] . ' ' . _('is being processed');
+	echo '<br>' . _('Recurring order') . ' ' . $RecurrOrderRow['recurrorderno'] . ' ' . _('for') . ' ' . $RecurrOrderRow['debtorno'] . ' - ' . $RecurrOrderRow['branchcode'] . ' ' . _('is being processed');
 
 	$result = DB_Txn_Begin($db);
 
@@ -81,7 +81,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 
 	$DelDate = FormatDateforSQL(DateAdd(ConvertSQLDate($RecurrOrderRow['lastrecurrence']),'d',(365/$RecurrOrderRow['frequency'])));
 
-	echo '<BR>' . _('Date calculated for the next recurrence was') .': ' . $DelDate;
+	echo '<br>' . _('Date calculated for the next recurrence was') .': ' . $DelDate;
 	$OrderNo = GetNextTransNo(30, $db);
 	
 	$HeaderSQL = "INSERT INTO salesorders (
@@ -106,7 +106,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 							fromstkloc,
 							deliverydate )
 						VALUES (
-							' . $OrderNo . ',
+							" . $OrderNo . ",
 							'" . $RecurrOrderRow['debtorno'] . "',
 							'" . $RecurrOrderRow['branchcode'] . "',
 							'". $RecurrOrderRow['customerref'] ."',
@@ -492,7 +492,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 					)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales GL posting could not be inserted because');
-				$DbgMsg = '<BR>' ._('The following SQL to insert the GLTrans record was used');
+				$DbgMsg = '<br>' ._('The following SQL to insert the GLTrans record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 				/* Don't care about COGS because it can only be a dummy items being invoiced ... no cost of sales to mess with */

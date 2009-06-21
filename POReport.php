@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 // POReport.php
 // Inquiry on Purchase Orders
 // If Date Type is Order, the main file is purchorderdetails
@@ -531,7 +531,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 
 	echo "<form action=" . $_SERVER['PHP_SELF'] . "?" . SID ." method=post></br></br>";
 
-	echo '<center><table>';
+	echo '<table>';
 
     echo '<tr><td>' . _('Report Type') . ':</td>';
     echo "<td><select name='ReportType'>";
@@ -547,9 +547,9 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 
     echo '<tr>
         <td>' . _('Date Range') . ":</td>
-	    <td><input type='Text' name='FromDate' size=10 maxlength=10 value=" . $_POST['FromDate'] . '></td>
+	    <td><input type='Text' class=date alt='".$_SESSION['DefaultDateFormat']."' name='FromDate' size=10 maxlength=10 value=" . $_POST['FromDate'] . '></td>
         <td>' . _('To') . ":</td>
-	    <td><input type='Text' name='ToDate' size=10 maxlength=10 value=" . $_POST['ToDate'] . "></td>
+	    <td><input type='Text' class=date alt='".$_SESSION['DefaultDateFormat']."' name='ToDate' size=10 maxlength=10 value=" . $_POST['ToDate'] . "></td>
 	</tr>";
 
     echo '<tr><td>' . _('Part Number') . ':</td>';

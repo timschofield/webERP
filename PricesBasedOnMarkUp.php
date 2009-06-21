@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity=2;
 
 
@@ -8,21 +8,21 @@ $title=_('Update Pricing From Costs');
 include('includes/header.inc');
 
 
-echo '<BR>' . _('This page adds new prices or udates already existing prices for a specified sales type (price list) and currency for the stock category selected - based on a percentage mark up from cost prices or from preferred supplier cost data');
+echo '<br>' . _('This page adds new prices or udates already existing prices for a specified sales type (price list) and currency for the stock category selected - based on a percentage mark up from cost prices or from preferred supplier cost data');
 
-echo "<FORM METHOD='POST' ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+echo "<form method='POST' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 
 $SQL = 'SELECT sales_type, typeabbrev FROM salestypes';
 
 $PricesResult = DB_query($SQL,$db);
 
-echo '<P><CENTER><TABLE>
-                        <TR>
-                            <TD>' . _('Select the Price List to update') .':</TD>
-                            <TD><SELECT NAME="PriceList">';
+echo '<p><table>
+                        <tr>
+                            <td>' . _('Select the Price List to update') .':</td>
+                            <td><select name="PriceList">';
 
 if (!isset($_POST['PriceList']) OR $_POST['PriceList']=='0'){
-	echo '<OPTION SELECTED VALUE="0">' . _('No Price List Selected');
+	echo '<option selected VALUE="0">' . _('No Price List Selected');
 }
 
 while ($PriceLists=DB_fetch_array($PricesResult)){
@@ -33,15 +33,15 @@ while ($PriceLists=DB_fetch_array($PricesResult)){
 	}
 }
 
-echo '</SELECT></TD></TR>';
+echo '</select></td></tr>';
 
 $SQL = 'SELECT currency, currabrev FROM currencies';
 
 $result = DB_query($SQL,$db);
 
-echo '<TR>
-        <TD>' . _('Select the price list currency to update') . ':</TD>
-                            <TD><SELECT NAME="CurrCode">';
+echo '<tr>
+        <td>' . _('Select the price list currency to update') . ':</td>
+                            <td><select name="CurrCode">';
 
 if (!isset($_POST['CurrCode'])){
 	echo '<option selected value=0>' . _('No Price List Currency Selected');
@@ -87,7 +87,7 @@ if ($_POST['CostType']=='OtherPriceList'){
                             <td><select name="BasePriceList">';
 
 	if (!isset($_POST['BasePriceList']) OR $_POST['BasePriceList']=='0'){
-		echo '<OPTION SELECTED VALUE=0>' . _('No Price List Selected');
+		echo '<option selected VALUE=0>' . _('No Price List Selected');
 	}
 	while ($PriceLists=DB_fetch_array($PricesResult)){
 		if ($_POST['BasePriceList']==$PriceLists['typeabbrev']){
@@ -96,11 +96,11 @@ if ($_POST['CostType']=='OtherPriceList'){
 			echo "<option value='" . $PriceLists['typeabbrev'] . "'>" . $PriceLists['sales_type'] . '</option>';
 		}
 	}
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 }
 
-echo '<TR><TD>' . _('Stock Category From') . ':</TD>
-                <TD><SELECT name="StkCatFrom">';
+echo '<tr><td>' . _('Stock Category From') . ':</td>
+                <td><select name="StkCatFrom">';
 
 $sql = 'SELECT categoryid, categorydescription FROM stockcategory';
 
@@ -110,23 +110,23 @@ $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
 	if ($myrow['categoryid']==$_POST['StkCatFrom']){
-		echo "<OPTION SELECTED VALUE='". $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+		echo "<option selected VALUE='". $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 	} else {
-		echo "<OPTION VALUE='". $myrow['categoryid'] . "'>"  . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+		echo "<option VALUE='". $myrow['categoryid'] . "'>"  . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 	}
 }
-echo '</SELECT></TD></TR>';
+echo '</select></td></tr>';
 
 DB_data_seek($result,0);
 
-echo '<TR><TD>' . _('Stock Category To') . ':</TD>
-                <TD><SELECT name="StkCatTo">';
+echo '<tr><td>' . _('Stock Category To') . ':</td>
+                <td><select name="StkCatTo">';
 
 while ($myrow=DB_fetch_array($result)){
 	if ($myrow['categoryid']==$_POST['StkCatTo']){
-		echo "<OPTION SELECTED VALUE='". $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+		echo "<option selected VALUE='". $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 	} else {
-		echo "<OPTION VALUE='". $myrow['categoryid'] . "'>"  . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+		echo "<option VALUE='". $myrow['categoryid'] . "'>"  . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 	}
 }
 echo '</select></td></tr>';
@@ -136,19 +136,19 @@ if (!isset($_POST['RoundingFactor'])){
 }
 
 echo '<tr><td>' . _('Rounding Factor') . ':</td>
-                <td><input type=text name="RoundingFactor" size="6" maxlength="6" value=' . $_POST['RoundingFactor'] . '></td></tr>';
+                <td><input type=text class=number name="RoundingFactor" size="6" maxlength="6" value=' . $_POST['RoundingFactor'] . '></td></tr>';
 
 if (!isset($_POST['IncreasePercent'])){
 	$_POST['IncreasePercent']=0;
 }
 
-echo '<TR><TD>' . _('Percentage Increase (positive) or decrease (negative)') . "</TD>
-                <TD><INPUT name='IncreasePercent' SIZE=4 MAXLENGTH=4 VALUE=" . $_POST['IncreasePercent'] . "></TD></TR></TABLE>";
+echo '<tr><td>' . _('Percentage Increase (positive) or decrease (negative)') . "</td>
+                <td><input type=text name='IncreasePercent' class=number size=4 maxlength=4 VALUE=" . $_POST['IncreasePercent'] . "></td></tr></table>";
 
 
-echo "<P><INPUT TYPE=SUBMIT NAME='UpdatePrices' VALUE='" . _('Update Prices') . '\'  onclick="return confirm(\'' . _('Are you sure you wish to update all the prices according to the criteria selected?') . '\');"></CENTER>';
+echo "<p><div class='centre'><input type=submit name='UpdatePrices' VALUE='" . _('Update Prices') . '\'  onclick="return confirm(\'' . _('Are you sure you wish to update all the prices according to the criteria selected?') . '\');"></div>';
 
-echo '</FORM>';
+echo '</form>';
 
 $InputError =0; //assume the best
 if (isset($_POST['UpdatePrices']) AND $_POST['PriceList']=='0'){
@@ -165,7 +165,7 @@ if (isset($_POST['UpdatePrices']) AND $_POST['StkCatTo']<$_POST['StkCatFrom']){
 	$InputError =1;
 }
 if (isset($_POST['UpdatePrices']) AND $_POST['CostType']=='OtherPriceList' AND $_POST['BasePriceList']=='0'){
-	echo '<BR>Base price list selected: ' .$_POST['BasePriceList'];
+	echo '<br>Base price list selected: ' .$_POST['BasePriceList'];
 	prnMsg(_('When you are updating prices based on another price list - the other price list must also be selected. No updates will take place until the other price list is selected'),'error');
 	$InputError =1;
 }
@@ -190,7 +190,7 @@ if (isset($_POST['UpdatePrices']) AND $InputError==0) {
 	}
 
 	if ($_POST['PriceList']=='0'){
-		echo '<BR>' . _('The price list/sales type to be updated must be selected first');
+		echo '<br>' . _('The price list/sales type to be updated must be selected first');
 		include ('includes/footer.inc');
 		exit;
 	}

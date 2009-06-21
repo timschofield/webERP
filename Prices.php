@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 9;
 
@@ -28,7 +28,7 @@ if (!isset($_POST['CurrAbrev'])){
 	$_POST['CurrAbrev'] = $_SESSION['CompanyRecord']['currencydefault'];
 }
 
-echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><BR>';
+echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><br>';
 
 
 $result = DB_query("SELECT stockmaster.description, stockmaster.mbflag FROM stockmaster WHERE stockmaster.stockid='$Item'",$db);
@@ -41,17 +41,17 @@ if (DB_num_rows($result)==0){
 
 
 if (!isset($Item)){
-	echo '<P>';
+	echo '<p>';
 	prnMsg (_('An item must first be selected before this page is called') . '. ' . _('The product selection page should call this page with a valid product code'),'error');
 	include('includes/footer.inc');
 	exit;
 }
 
-echo '<BR><FONT COLOR=BLUE SIZE=3><B>' . $Item . ' - ' . $myrow[0] . '</B></FONT> ';
+echo '<br><font color=BLUE size=3><b>' . $Item . ' - ' . $myrow[0] . '</b></font> ';
 
-echo '<FORM METHOD="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-echo _('Pricing for part') . ':<INPUT TYPE=text NAME="Item" MAXSIZEe=22 VALUE="' . $Item . '" maxlength=20><INPUT TYPE=SUBMIT NAME=NewPart Value="' . _('Review Prices') . '">';
-echo '<HR>';
+echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+echo _('Pricing for part') . ':<input type=text name="Item" MAXSIZEe=22 VALUE="' . $Item . '" maxlength=20><input type=submit name=NewPart Value="' . _('Review Prices') . '">';
+echo '<hr>';
 
 if ($myrow[1]=="K"){
 	prnMsg(_('The part selected is a kit set item') .', ' . _('these items explode into their components when selected on an order') . ', ' . _('prices must be set up for the components and no price can be set for the whole kit'),'error');
@@ -110,7 +110,7 @@ if (isset($_POST['submit'])) {
 				$msg = _('The price could not be added because') . ' - ' . DB_error_msg($db);
 			}
 			if ($debug==1){
-				prnMsg(_('The SQL that caused the problem was') . ':<BR>' . $sql,'error');
+				prnMsg(_('The SQL that caused the problem was') . ':<br>' . $sql,'error');
 			}
 		} else {
 			unset($_POST['Price']);
@@ -152,7 +152,7 @@ if ($InputError ==0){
 
 	$result = DB_query($sql,$db);
 
-	echo '<CENTER><table>';
+	echo '<table>';
 	echo '<tr><th>' . _('Currency') .
 	     '</th><th>' . _('Sales Type') .
 			 '</th><th>' . _('Price') .
@@ -174,7 +174,7 @@ if ($InputError ==0){
 
 			printf("<td>%s</td>
 			        <td>%s</td>
-				<td ALIGN=RIGHT>%0.2f</td>
+				<td align=right>%0.2f</td>
 				<td><a href='%s?%s&Item=%s&TypeAbbrev=%s&CurrAbrev=%s&Price=%s&Edit=1'>" . _('Edit') . "</td>
 				<td><a href='%s?%s&Item=%s&TypeAbbrev=%s&CurrAbrev=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this price?') . "');\">" . _('Delete') . '</td></tr>',
 				$myrow['currency'],
@@ -194,7 +194,7 @@ if ($InputError ==0){
 		} else {
 			printf("<td>%s</td>
 			        <td>%s</td>
-				<td ALIGN=RIGHT>%0.2f</td></tr>",
+				<td align=right>%0.2f</td></tr>",
 				$myrow['currency'],
 				$myrow['sales_type'],
 				$myrow['price']);
@@ -202,15 +202,15 @@ if ($InputError ==0){
 
 	}
 	//END WHILE LIST LOOP
-	echo '</table></CENTER><p>';
+	echo '</table><p>';
 
 	if (DB_num_rows($result) == 0) {
 		prnMsg(_('There are no prices set up for this part'),'warn');
 	}
 
 	if (isset($_GET['Edit'])){
-		echo '<INPUT TYPE=HIDDEN NAME="OldTypeAbbrev" VALUE="' . $_GET['TypeAbbrev'] .'">';
-		echo '<INPUT TYPE=HIDDEN NAME="OldCurrAbrev" VALUE="' . $_GET['CurrAbrev'] . '">';
+		echo '<input type=hidden name="OldTypeAbbrev" VALUE="' . $_GET['TypeAbbrev'] .'">';
+		echo '<input type=hidden name="OldCurrAbrev" VALUE="' . $_GET['CurrAbrev'] . '">';
 		$_POST['CurrAbrev'] = $_GET['CurrAbrev'];
 		$_POST['TypeAbbrev'] = $_GET['TypeAbbrev'];
 		$_POST['Price'] = $_GET['Price'];
@@ -219,28 +219,28 @@ if ($InputError ==0){
 	$SQL = "SELECT currabrev, currency FROM currencies";
 	$result = DB_query($SQL,$db);
 
-	echo '<CENTER><TABLE><TR><TD>' . _('Currency') . ':</TD><TD><SELECT name="CurrAbrev">';
+	echo '<table><tr><td>' . _('Currency') . ':</td><td><select name="CurrAbrev">';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['currabrev']==$_POST['CurrAbrev']) {
-			echo '<OPTION SELECTED VALUE="';
+			echo '<option selected VALUE="';
 		} else {
-			echo '<OPTION VALUE="';
+			echo '<option VALUE="';
 		}
 		echo $myrow['currabrev'] . '">' . $myrow['currency'];
 	} //end while loop
 
 	DB_free_result($result);
 
-	echo '</SELECT>	</TD></TR><TR><TD>' . _('Sales Type Price List') . ':</TD><TD><SELECT name="TypeAbbrev">';
+	echo '</select>	</td></tr><tr><td>' . _('Sales Type Price List') . ':</td><td><select name="TypeAbbrev">';
 
 	$SQL = "SELECT typeabbrev, sales_type FROM salestypes";
 	$result = DB_query($SQL,$db);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['typeabbrev']==$_POST['TypeAbbrev']) {
-			echo '<OPTION SELECTED VALUE="';
+			echo '<option selected VALUE="';
 		} else {
-			echo '<OPTION VALUE="';
+			echo '<option VALUE="';
 		}
 		echo $myrow['typeabbrev'] . '">' . $myrow['sales_type'];
 
@@ -249,24 +249,24 @@ if ($InputError ==0){
 	DB_free_result($result);
 	?>
 
-	</SELECT>
-	</TD></TR>
+	</select>
+	</td></tr>
 
-	<TR><TD><?php echo _('Price'); ?>:</TD>
-	<TD>
-	<input type="Text" name="Price" SIZE=12 MAXLENGTH=11 value=
+	<tr><td><?php echo _('Price'); ?>:</td>
+	<td>
+	<input type="Text" class=number name="Price" size=12 maxlength=11 value=
 	<?php if(isset($_POST['Price'])) {echo $_POST['Price'];}?>>
 
-	</TD></TR>
+	</td></tr>
 
-	</TABLE>
-
+	</table>
+	<div class="centre">
 	<input type="Submit" name="submit" value="<?php echo _('Enter') . '/' . _('Amend Price'); ?>">
-	</CENTER>
+	</div>
 
 <?php
  }
 
-echo '</FORM>';
+echo '</form>';
 include('includes/footer.inc');
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 // ReorderLevel.php - Report of parts with quantity below reorder level
 // Shows if there are other locations that have quantities for the parts that are short
 $PageSecurity = 2;
@@ -158,10 +158,10 @@ If (isset($_POST['PrintPDF'])) {
 
 	$title=_('Reorder Level Reporting');
 	include('includes/header.inc');
-echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" TITLE="' . _('Inventory') . '" ALT="">' . ' ' . _('Inventory Reorder Level Report') . '';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="">' . ' ' . _('Inventory Reorder Level Report') . '';
 echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div><br>';
 
-	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><center><table>";
+	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
 	$sql = "SELECT loccode,
 			locationname
 		FROM locations";
@@ -177,9 +177,9 @@ echo '<div class="page_help_text">' . _('Use this report to display the reorder 
 	}
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if ($myrow['loccode'] == $_POST['StockLocation']){
-			 echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		} else {
-			 echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		}
 	} 
 	echo '</select></td></tr>';
@@ -213,7 +213,7 @@ echo '<div class="page_help_text">' . _('Use this report to display the reorder 
 		}
 	}
 	echo '</select></td></tr>';
-	echo "</table></br><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></center>";
+	echo "</table></br><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
 

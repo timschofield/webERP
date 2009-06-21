@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 11;
 
@@ -19,8 +19,8 @@ if ($_SESSION['SupplierID']!="" AND isset($_SESSION['SupplierID']) AND !isset($_
 	$_POST['SupplierID']=$_SESSION['SupplierID'];
 }
 if (!isset($_POST['SupplierID']) OR $_POST['SupplierID']==""){
-	echo '<BR>' . _('This page is expected to be called after a supplier has been selected');
-	echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . '/SelectSupplier.php?' . SID . "'>";
+	echo '<br>' . _('This page is expected to be called after a supplier has been selected');
+	echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/SelectSupplier.php?' . SID . "'>";
 	exit;
 } elseif (!isset($_POST['SuppName']) or $_POST['SuppName']=="") {
 	$sql = "SELECT suppname FROM suppliers WHERE supplierid='" . $_SESSION['SupplierID'] . "'";
@@ -29,7 +29,7 @@ if (!isset($_POST['SupplierID']) OR $_POST['SupplierID']==""){
 	$_POST['SuppName'] = $SuppRow[0];
 }
 
-echo '<CENTER><FONT SIZE=4><B><U>' . _('Reverse Goods Received from') . ' ' . $_POST['SuppName'] . ' </U></B></FONT></CENTER><BR>';
+echo '<div class="centre"><font size=4><b><U>' . _('Reverse Goods Received from') . ' ' . $_POST['SuppName'] . ' </U></b></font></div><br>';
 
 if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 /* SQL to process the postings for the GRN reversal.. */
@@ -60,7 +60,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 	$QtyToReverse = $GRN['qtyrecd'] - $GRN['quantityinv'];
 
 	if ($QtyToReverse ==0){
-		echo '<BR><BR>' . _('The GRN') . ' ' . $_GET['GRNNo'] . ' ' . _('has already been reversed or fully invoiced by the supplier - it cannot be reversed - stock quantities must be corrected by stock adjustments - the stock is paid for');
+		echo '<br><br>' . _('The GRN') . ' ' . $_GET['GRNNo'] . ' ' . _('has already been reversed or fully invoiced by the supplier - it cannot be reversed - stock quantities must be corrected by stock adjustments - the stock is paid for');
 		include ('includes/footer.inc');
 		exit;
 	}
@@ -72,7 +72,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 	$SQL = "SELECT stockmaster.controlled 
 			FROM stockmaster WHERE stockid ='" . $GRN['itemcode'] . "'";
-	$CheckControlledResult = DB_query($SQL,$db,'<BR>' . _('Could not determine if the item was controlled or not because') . ' ');
+	$CheckControlledResult = DB_query($SQL,$db,'<br>' . _('Could not determine if the item was controlled or not because') . ' ');
 	$ControlledRow = DB_fetch_row($CheckControlledResult);
 	if ($ControlledRow[0]==1) { /*Then its a controlled item */
 	 	$Controlled = true;
@@ -140,7 +140,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 	$SQL = "SELECT stockmaster.controlled
 		FROM stockmaster
 		WHERE stockmaster.stockid = '" . $GRN['itemcode'] . "'";
-	$Result = DB_query($SQL, $db, _('Could not determine if the item exists because'),'<BR>' . _('The SQL that failed was') . ' ',true);
+	$Result = DB_query($SQL, $db, _('Could not determine if the item exists because'),'<br>' . _('The SQL that failed was') . ' ',true);
 
 	if (DB_num_rows($Result)==1){ /* if the GRN is in fact a stock item being reversed */
 
@@ -283,22 +283,22 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 	$SQL="COMMIT";
 	$Result = DB_query($SQL,$db);
 
-	echo '<BR>' . _('GRN number') . ' ' . $_GET['GRNNo'] . ' ' . _('for') . ' ' . $QtyToReverse . ' x ' . $GRN['itemcode'] . ' - ' . $GRN['itemdescription'] . ' ' . _('has been reversed') . '<BR>';
+	echo '<br>' . _('GRN number') . ' ' . $_GET['GRNNo'] . ' ' . _('for') . ' ' . $QtyToReverse . ' x ' . $GRN['itemcode'] . ' - ' . $GRN['itemdescription'] . ' ' . _('has been reversed') . '<br>';
 	unset($_GET['GRNNo']);  // to ensure it cant be done again!!
-	echo '<A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Select another GRN to Reverse') . '</A>';
+	echo '<a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Select another GRN to Reverse') . '</a>';
 /*end of Process Goods Received Reversal entry */
 
 } else {
-	echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 
 	if (!isset($_POST['RecdAfterDate']) OR !Is_Date($_POST['RecdAfterDate'])) {
 		$_POST['RecdAfterDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date("m")-3,Date("d"),Date("Y")));
 	}
 
-	echo '<INPUT TYPE=HIDDEN NAME="SupplierID" VALUE="' . $_POST['SupplierID'] . '">';
-	echo '<INPUT TYPE=HIDDEN NAME="SuppName" VALUE="' . $_POST['SuppName'] . '">';
-	echo _('Show all goods received after') . ': <INPUT type=text name="RecdAfterDate" Value="' . $_POST['RecdAfterDate'] . '" MAXLENGTH =10 SIZE=10>
-	        <INPUT TYPE=SUBMIT NAME="ShowGRNS" VALUE=' . _('Show Outstanding Goods Received') . '>';
+	echo '<input type=hidden name="SupplierID" VALUE="' . $_POST['SupplierID'] . '">';
+	echo '<input type=hidden name="SuppName" VALUE="' . $_POST['SuppName'] . '">';
+	echo _('Show all goods received after') . ': <input type=text class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="RecdAfterDate" Value="' . $_POST['RecdAfterDate'] . '" MAXLENGTH =10 size=10>
+	        <input type=submit name="ShowGRNS" VALUE=' . _('Show Outstanding Goods Received') . '>';
 
 
 	if (isset($_POST['ShowGRNS'])){
@@ -319,19 +319,19 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 		if (DB_num_rows($result) ==0){
-			prnMsg(_('There are no outstanding goods received yet to be invoiced for') . ' ' . $_POST['SuppName'] . '.<BR>' . _('To reverse a GRN that has been invoiced first it must be credited'),'warn');
+			prnMsg(_('There are no outstanding goods received yet to be invoiced for') . ' ' . $_POST['SuppName'] . '.<br>' . _('To reverse a GRN that has been invoiced first it must be credited'),'warn');
 		} else { //there are GRNs to show
 
-			echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>';
-			$TableHeader = '<TR>
-					<TH>' . _('GRN') . ' #</TH>
-					<TH>' . _('Item Code') . '</TH>
-					<TH>' . _('Description') . '</TH>
-					<TH>' . _('Date') . '<BR>' . _('Received') . '</TH>
-					<TH>' . _('Quantity') . '<BR>' . _('Received') . '</TH>
-					<TH>' . _('Quantity') . '<BR>' . _('Invoiced') . '</TH>
-					<TH>' . _('Quantity To') . '<BR>' . _('Reverse') . '</TH>
-					</TR>';
+			echo '<table cellpadding=2 colspan=7 border=0>';
+			$TableHeader = '<tr>
+					<th>' . _('GRN') . ' #</th>
+					<th>' . _('Item Code') . '</th>
+					<th>' . _('Description') . '</th>
+					<th>' . _('Date') . '<br>' . _('Received') . '</th>
+					<th>' . _('Quantity') . '<br>' . _('Received') . '</th>
+					<th>' . _('Quantity') . '<br>' . _('Invoiced') . '</th>
+					<th>' . _('Quantity To') . '<br>' . _('Reverse') . '</th>
+					</tr>';
 
 			echo $TableHeader;
 
@@ -351,17 +351,17 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 				$DisplayQtyInv = number_format($myrow['quantityinv'],2);
 				$DisplayQtyRev = number_format($myrow['qtytoreverse'],2);
 				$DisplayDateDel = ConvertSQLDate($myrow['deliverydate']);
-				$LinkToRevGRN = '<A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&GRNNo=' . $myrow['grnno'] . '">' . _('Reverse') . '</A>';
+				$LinkToRevGRN = '<a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&GRNNo=' . $myrow['grnno'] . '">' . _('Reverse') . '</a>';
 					
-				printf("<TD>%s</TD>
-					<TD>%s</TD>
-					<TD>%s</TD>
-					<TD>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD>%s</TD>
-					</TR>",
+				printf("<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td align=right>%s</td>
+					<td align=right>%s</td>
+					<td align=right>%s</td>
+					<td>%s</td>
+					</tr>",
 					$myrow['grnno'],
 					$myrow['itemcode'],
 					$myrow['itemdescription'],
@@ -378,7 +378,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 				}
 			}
 
-			echo '</TABLE>';
+			echo '</table>';
 		}
 	}
 }
