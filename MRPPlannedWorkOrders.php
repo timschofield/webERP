@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 // MRPPlannedWorkOrders.php - Report of manufactured parts that MRP has determined should have
 // work orders created for them
 $PageSecurity = 2;
@@ -20,7 +20,7 @@ If (isset($_POST['PrintPDF'])) {
 	if (is_Date($_POST['cutoffdate'])) {
                $formatdate = FormatDateForSQL($_POST['cutoffdate']);
                $wheredate = ' AND duedate <= "' . $formatdate . '" ';
-               $reportdate = _(' Through  ') . $_POST['cutoffdate'];
+               $reportdate = _(' Through  ') . Format_Date($_POST['cutoffdate']);
 	}
 	
 	if ($_POST['Consolidation'] == 'None') {
@@ -41,7 +41,7 @@ If (isset($_POST['PrintPDF'])) {
 	                   MIN(mrpplannedorders.duedate) as duedate,
 	                   MIN(mrpplannedorders.mrpdate) as mrpdate,
 	                   COUNT(*) AS consolidatedcount,
-	                   	stockmaster.stockid,
+	                   stockmaster.stockid,
 					   stockmaster.description,
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
@@ -49,7 +49,13 @@ If (isset($_POST['PrintPDF'])) {
 				FROM mrpplannedorders, stockmaster
 				WHERE mrpplannedorders.part = stockmaster.stockid '  . "$wheredate" .
 				  ' AND stockmaster.mbflag = "M" 
-				GROUP BY mrpplannedorders.part,weekindex
+				GROUP BY mrpplannedorders.part,
+				         weekindex,
+				         stockmaster.stockid,
+					     stockmaster.description,
+					     stockmaster.mbflag,
+					     stockmaster.decimalplaces,
+					     stockmaster.actualcost
 				ORDER BY mrpplannedorders.part,weekindex
 	    ';
 	} else {
@@ -67,7 +73,13 @@ If (isset($_POST['PrintPDF'])) {
 				FROM mrpplannedorders, stockmaster
 				WHERE mrpplannedorders.part = stockmaster.stockid '  . "$wheredate" .
 				  ' AND stockmaster.mbflag = "M" 
-				GROUP BY mrpplannedorders.part,yearmonth
+				GROUP BY mrpplannedorders.part,
+				         yearmonth,
+	                   	 stockmaster.stockid,
+					     stockmaster.description,
+					     stockmaster.mbflag,
+					     stockmaster.decimalplaces,
+					     stockmaster.actualcost				         
 				ORDER BY mrpplannedorders.part,yearmonth ';
 	};
 	$result = DB_query($sql,$db,'','',false,true);
