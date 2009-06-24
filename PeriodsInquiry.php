@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 
@@ -21,11 +21,11 @@ $PeriodsResult = DB_query($SQL,$db,$ErrMsg);
 
 /*show a table of the orders returned by the SQL */
 
-echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=2>';
+echo '<table cellpadding=2 colspan=2>';
 
-$TableHeader = '<TR><TH>' . _('Period Number') . '</TH>
-			<TH>' . _('Date of Last Day') . '</TH>
-		</TR>';
+$TableHeader = '<tr><th>' . _('Period Number') . '</th>
+			<th>' . _('Date of Last Day') . '</th>
+		</tr>';
 
 echo $TableHeader;
 
@@ -41,7 +41,7 @@ while ($myrow=DB_fetch_array($PeriodsResult)) {
        }
 
        $FormatedLastDate = ConvertSQLDate($myrow['lastdate_in_period']);
-       printf("<td><FONT SIZE=2>%s</td>
+       printf("<td><font size=2>%s</td>
 		<td>%s</td>
 		</tr>",
 		$myrow['periodno'],
@@ -50,7 +50,7 @@ while ($myrow=DB_fetch_array($PeriodsResult)) {
 }
 //end of while loop
 
-echo '</TABLE></CENTER>';
+echo '</table>';
 
 include('includes/footer.inc');
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -58,9 +58,9 @@ if (isset($_POST['PrintPDF'])) {
 
 	  include('includes/header.inc');
 	   prnMsg(_('The low GP items could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+	   echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<BR>$SQL";
+	      echo "<br>$SQL";
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -107,7 +107,7 @@ if (isset($_POST['PrintPDF'])) {
 		$title = _('Print Low GP Items Error');
 		include('includes/header.inc');
 		prnMsg (_('There were no items below  print out for the location specified'),'error');
-		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
       } else {
@@ -128,22 +128,24 @@ if (isset($_POST['PrintPDF'])) {
 	if (strlen($_POST['FromDate'])<1 OR strlen($_POST['ToDate'])<1) {
 
 	/*if $FromDate is not set then show a form to allow input */
+		$_POST['FromDate']=Date($_SESSION['DefaultDateFormat']);
+		$_POST['ToDate']=Date($_SESSION['DefaultDateFormat']);
+		$_POST['GPMin']=0;
+		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table>";
 
-		echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
+		echo '<tr><td>' . _('Sales Made From') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . "):</td>
+                                <td><input type=TEXT class='date' alt='".$_SESSION['DefaultDateFormat']."' name='FromDate' size=10 maxlength=10 VALUE='" . $_POST['FromDate'] . "'></td>
+                        </tr>";
 
-		echo '<TR><TD>' . _('Sales Made From') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . "):</TD>
-                                <TD><INPUT TYPE=TEXT NAME='FromDate' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['FromDate'] . "'></TD>
-                        </TR>";
+		echo '<tr><td>' . _('Sales Made To') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . "):</td>
+                                <td><input type=TEXT class='date' alt='".$_SESSION['DefaultDateFormat']."' name='ToDate' size=10 maxlength=10 VALUE='" . $_POST['ToDate'] . "'></td>
+                        </tr>";
 
-		echo '<TR><TD>' . _('Sales Made To') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . "):</TD>
-                                <TD><INPUT TYPE=TEXT NAME='ToDate' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['ToDate'] . "'></TD>
-                        </TR>";
+		echo '<tr><td>' . _('Show sales with GP % below') . ":</td>
+                                <td><input type=text class='number' name='GPMin' maxlength=3 size=3 VALUE=" . $_POST['GPMin'] . "></td>
+                        </tr>";
 
-		echo '<TR><TD>' . _('Show sales with GP % below') . ":</TD>
-                                <TD><INPUT TYPE=text NAME='GPMin' MAXLENGTH=3 SIZE=3 VALUE=" . $_POST['GPMin'] . "></TD>
-                        </TR>";
-
-		echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
+		echo "</table><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
 	}
 	include('includes/footer.inc');
 

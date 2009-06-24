@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity =1;
 include('includes/session.inc');
@@ -10,7 +10,7 @@ $title = _('Stock Location Transfer Docket Error');
 if (!isset($_GET['TransferNo'])){
 
 	include ('includes/header.inc');
-	echo '<P>';
+	echo '<p>';
 	prnMsg( _('This page must be called with a location transfer reference number'),'error' );
 	include ('includes/footer.inc');
 	exit;
@@ -20,7 +20,7 @@ $FontSize=10;
 $pdf->addinfo('Title', _('Inventory Location Transfer BOL') );
 $pdf->addinfo('Subject', _('Inventory Location Transfer BOL') . ' # ' . $_GET['TransferNo']);
 
-$ErrMsg = _('An error occurred retrieving the items on the transfer'). '.' . '<P>'. _('This page must be called with a location transfer reference number').'.';
+$ErrMsg = _('An error occurred retrieving the items on the transfer'). '.' . '<p>'. _('This page must be called with a location transfer reference number').'.';
 $DbgMsg = _('The SQL that failed while retrieving the items on the transfer was');
 $sql = "SELECT loctransfers.reference,
 			   loctransfers.stockid,
@@ -79,7 +79,7 @@ if ($len<=20){
 	include('includes/header.inc');
 	echo '<p>';
 	prnMsg( _('There was no stock location transfer to print out'), 'warn');
-	echo '<BR><A HREF="' . $rootpath. '/index.php?' . SID . '">'. _('Back to the menu'). '</A>';
+	echo '<br><a href="' . $rootpath. '/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
 	include('includes/footer.inc');
 	exit;
 } else {

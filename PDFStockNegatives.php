@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity =1;
 include('includes/session.inc');
@@ -64,7 +64,7 @@ if ($len<=10){
 	include('includes/header.inc');
 	echo '<p>';
 	prnMsg( _('There was no negative stocks to print out'), 'warn');
-	echo '<BR><A HREF="' . $rootpath. '/index.php?' . SID . '">'. _('Back to the menu'). '</A>';
+	echo '<br><a href="' . $rootpath. '/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
 	include('includes/footer.inc');
 	exit;
 } else {

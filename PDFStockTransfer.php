@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -63,7 +63,7 @@ if ($len<=20){
 	$title = _('Print Price List Error');
 	include('includes/header.inc');
 	prnMsg(_('There were no stock transfer details to print'),'warn');
-	echo '<BR><A HREF="'.$rootpath.'/index.php?' . SID . '">'. _('Back to the menu').'</A>';
+	echo '<br><a href="'.$rootpath.'/index.php?' . SID . '">'. _('Back to the menu').'</a>';
 	include('includes/footer.inc');
 	exit;
 } else {

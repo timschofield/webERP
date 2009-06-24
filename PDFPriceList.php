@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -25,7 +25,7 @@ If (isset($_POST['PrintPDF'])
 		if ($_SESSION['CustomerID']==''){
 			$title = _('Special price List - No Customer Selected');
 			include('includes/header.inc');
-			echo '<BR>';
+			echo '<br>';
 			prnMsg( _('The customer must first be selected from the select customer link') . '. ' . _('Re-run the price list once the customer has been selected') );
 			include('includes/footer.inc');
 			exit;
@@ -101,9 +101,9 @@ If (isset($_POST['PrintPDF'])
 		$title = _('Price List') . ' - ' . _('Problem Report....');
 		include('includes/header.inc');
 		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
-		echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</A>';
+		echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</a>';
 		if ($debug==1){
-			echo '<BR>'. $SQL;
+			echo '<br>'. $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -180,7 +180,7 @@ If (isset($_POST['PrintPDF'])
 		$title = _('Print Price List Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no price details to print out for the customer or category specified'),'warn');
-		echo '<BR><A HREF="'.$rootpath.'/index.php?' . SID . '">'. _('Back to the menu').'</A>';
+		echo '<br><a href="'.$rootpath.'/index.php?' . SID . '">'. _('Back to the menu').'</a>';
 		include('includes/footer.inc');
 		exit;
       } else {
@@ -202,47 +202,47 @@ If (isset($_POST['PrintPDF'])
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . ' METHOD="POST"><CENTER><TABLE>';
+		echo '<form action=' . $_SERVER['PHP_SELF'] . ' method="POST"><table>';
 
-		echo '<TR><TD>'. _('From Inventory Category Code') .':</FONT></TD><TD><SELECT name=FromCriteria>';
+		echo '<tr><td>'. _('From Inventory Category Code') .':</font></td><td><select name=FromCriteria>';
 
 		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
 		$CatResult= DB_query($sql,$db);
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo "<OPTION VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+			echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 		}
-		echo '</SELECT></TD></TR>';
+		echo '</select></td></tr>';
 
-		echo '<TR><TD>' . _('To Inventory Category Code'). ':</TD><TD><SELECT name=ToCriteria>';
+		echo '<tr><td>' . _('To Inventory Category Code'). ':</td><td><select name=ToCriteria>';
 
 		/*Set the index for the categories result set back to 0 */
 		DB_data_seek($CatResult,0);
 
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo '<OPTION VALUE="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+			echo '<option VALUE="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 		}
-		echo '</SELECT></TD></TR>';
+		echo '</select></td></tr>';
 
-		echo '<TR><TD>' . _('For Sales Type/Price List').':</TD><TD><SELECT name="SalesType">';
+		echo '<tr><td>' . _('For Sales Type/Price List').':</td><td><select name="SalesType">';
 		$sql = 'SELECT sales_type, typeabbrev FROM salestypes';
 		$SalesTypesResult=DB_query($sql,$db);
 
 		while ($myrow=DB_fetch_array($SalesTypesResult)){
-		          echo '<OPTION Value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'];
+		          echo '<option Value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'];
 		}
-		echo '</SELECT></TD></TR>';
+		echo '</select></td></tr>';
 
-		echo '<TR><TD>' . _('Show Gross Profit %') . ':</TD><TD><SELECT name="ShowGPPercentages">';
-		echo '<OPTION SELECTED Value="No">'. _('Prices Only');
-		echo '<OPTION Value="Yes">'. _('Show GP % too');
-		echo '</SELECT></TD></TR>';
+		echo '<tr><td>' . _('Show Gross Profit %') . ':</td><td><select name="ShowGPPercentages">';
+		echo '<option selected Value="No">'. _('Prices Only');
+		echo '<option Value="Yes">'. _('Show GP % too');
+		echo '</select></td></tr>';
 
-		echo '<TR><TD>' . _('Price Listing Type'). ':</TD><TD><SELECT name="CustomerSpecials">';
-		echo '<OPTION  Value="Customer Special Prices Only">'. _('Customer Special Prices Only');
-		echo '<OPTION SELECTED Value="Sales Type Prices">'. _('Default Sales Type Prices');
-		echo '</SELECT></TD></TR>';
+		echo '<tr><td>' . _('Price Listing Type'). ':</td><td><select name="CustomerSpecials">';
+		echo '<option  Value="Customer Special Prices Only">'. _('Customer Special Prices Only');
+		echo '<option selected Value="Sales Type Prices">'. _('Default Sales Type Prices');
+		echo '</select></td></tr>';
 
-		echo '</TABLE><INPUT TYPE=Submit Name="PrintPDF" Value="'. _('Print PDF'). '"></CENTER>';
+		echo '</table><div class="centre"><input type=Submit Name="PrintPDF" Value="'. _('Print PDF'). '"></div>';
 	}
 	include('includes/footer.inc');
 

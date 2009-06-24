@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -24,11 +24,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		if (DB_error_no($db) !=0) {
 			$title = _('Stock Freeze') . ' - ' . _('Problem Report') . '....';
 			include('includes/header.inc');
-			echo '<BR>';
+			echo '<br>';
 			prnMsg( _('The inventory check file could not be retreived because'). ' - ' . DB_error_msg($db),'error');
-			echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu').'</A>';
+			echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu').'</a>';
 			if ($debug==1){
-	      			echo '<BR>' . $sql;
+	      			echo '<br>' . $sql;
 			}
 			include('includes/footer.inc');
 			exit;
@@ -50,11 +50,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 			if (DB_error_no($db) !=0) {
 				$title = _('Stock Count Comparison') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
-				echo '<BR>';
+				echo '<br>';
 				prnMsg( _('The inventory counts file could not be retreived because'). ' - ' . DB_error_msg($db). 'error');
-				echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu').'</A>';
+				echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu').'</a>';
 				if ($debug==1){
-					echo '<BR>'. $sql;
+					echo '<br>'. $sql;
 				}
 				include('includes/footer.inc');
 				exit;
@@ -197,7 +197,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg(_('There is no inventory check data to report on'), 'warn');
-		echo '<p>'. _('To start an inventory check first run the'). ' <a href="' . $rootpath . '/StockCheck.php?' . SID . '">'. _('inventory check sheets') . '</A> - '. _('and select the option to create new Inventory Comparison data file');
+		echo '<p>'. _('To start an inventory check first run the'). ' <a href="' . $rootpath . '/StockCheck.php?' . SID . '">'. _('inventory check sheets') . '</a> - '. _('and select the option to create new Inventory Comparison data file');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -257,11 +257,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		if (DB_error_no($db) !=0) {
 	 		$title = _('Inventory Comparison') . ' - ' . _('Problem Report') . '.... ';
 	  		include('includes/header.inc');
-	   		echo '<BR>';
+	   		echo '<br>';
 			prnMsg( _('The inventory counts could not be retrieved by the SQL because').' - ' . DB_error_msg($db), 'error');
-	   		echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</A>';
+	   		echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
 	   		if ($debug==1){
-	      			echo '<BR>'. $SQL;
+	      			echo '<br>'. $SQL;
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -311,7 +311,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg( _('There were no Inventory Comparison sheets to print out'), 'error');
-		echo '<BR><A HREF="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</A>';
+		echo '<br><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
       } else {
@@ -342,32 +342,32 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	$title= _('Inventory Comparison Comparison Report');
 	include('includes/header.inc');
 
-	echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '" METHOD="POST"><CENTER><TABLE>';
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="POST"><table>';
 
-	echo '<TR><TD>' . _('Choose Option'). ':</FONT></TD><TD><SELECT name="ReportOrClose">';
+	echo '<tr><td>' . _('Choose Option'). ':</font></td><td><select name="ReportOrClose">';
 
 	if ($_POST['ReportOrClose']=='ReportAndClose'){
-		echo '<OPTION SELECTED VALUE="ReportAndClose">'. _('Report and Close the Inventory Comparison Processing Adjustments As Necessary');
-		echo '<OPTION VALUE="ReportOnly">'. _('Report The Inventory Comparison Differences Only - No Adjustments');
+		echo '<option selected VALUE="ReportAndClose">'. _('Report and Close the Inventory Comparison Processing Adjustments As Necessary');
+		echo '<option VALUE="ReportOnly">'. _('Report The Inventory Comparison Differences Only - No Adjustments');
 	} else {
-		echo '<OPTION SELECTED VALUE="ReportOnly">' . _('Report The Inventory Comparison Differences Only - No Adjustments');
-		echo '<OPTION VALUE="ReportAndClose">' . _('Report and Close the Inventory Comparison Processing Adjustments As Necessary');
+		echo '<option selected VALUE="ReportOnly">' . _('Report The Inventory Comparison Differences Only - No Adjustments');
+		echo '<option VALUE="ReportAndClose">' . _('Report and Close the Inventory Comparison Processing Adjustments As Necessary');
 	}
 
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 
 
-	echo '<TR><TD>'. _('Action for Zero Counts') . ':</TD><TD><SELECT name="ZeroCounts">';
+	echo '<tr><td>'. _('Action for Zero Counts') . ':</td><td><select name="ZeroCounts">';
 
 	if ($_POST['ZeroCounts'] =='Adjust'){
-		echo '<OPTION SELECTED VALUE="Adjust">'. _('Adjust System stock to Nil');
-		echo '<OPTION VALUE="Leave">' . _("Don't Adjust System stock to Nil");
+		echo '<option selected VALUE="Adjust">'. _('Adjust System stock to Nil');
+		echo '<option VALUE="Leave">' . _("Don't Adjust System stock to Nil");
 	} else {
-		echo '<OPTION VALUE="Adjust">'. _('Adjust System stock to Nil');
-		echo '<OPTION SELECTED VALUE="Leave">' . _("Don't Adjust System stock to Nil");
+		echo '<option VALUE="Adjust">'. _('Adjust System stock to Nil');
+		echo '<option selected VALUE="Leave">' . _("Don't Adjust System stock to Nil");
 	}
 
-	echo '</TABLE><INPUT TYPE=Submit Name="PrintPDF" Value="' . _('Print PDF'). '"></CENTER>';
+	echo '</table><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print PDF'). '"></div>';
 
 	include('includes/footer.inc');
 
