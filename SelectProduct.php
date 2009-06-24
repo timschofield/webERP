@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.45 $ */
+/* $Revision: 1.46 $ */
 
 $PageSecurity = 2;
 $PricesSecurity = 9;
@@ -460,7 +460,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
             <th align=right>' . _('EOQ') . ':</th><td align=right>' . number_format($myrow['eoq'],$myrow['decimalplaces']) . '</td></tr>';
 
 	if (in_array($PricesSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)){
-    	echo '<tr><th>' . _('Sell Price') . ':</th><td>';
+    	echo '<tr><th colspan=2>' . _('Sell Price') . ':</th><td>';
 
     	$PriceResult = DB_query("SELECT typeabbrev, price FROM prices
                                 WHERE currabrev ='" . $_SESSION['CompanyRecord']['currencydefault'] . "'
@@ -528,7 +528,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		} else {
 			$Cost = $myrow['cost'];
 		}
-		echo '<th align=right>' . _('Cost') . '</th><td align=right colspan=2>' . number_format($Cost,3) . '</td>';
+		echo '<th align=right>' . _('Cost') . '</th><td align=right>' . number_format($Cost,3) . '</td>';
 	} //end of if PricesSecuirty allows viewing of prices
     echo '</table>'; //end of first nested table
    // Item Category Property mod: display the item properties
