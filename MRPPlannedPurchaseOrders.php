@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 // MRPPlannedPurchaseOrders.php - Report of purchase parts that MRP has determined should have
 // purchase orders created for them
 $PageSecurity = 2;
@@ -20,7 +20,7 @@ If (isset($_POST['PrintPDF'])) {
 	if (is_Date($_POST['cutoffdate'])) {
                $formatdate = FormatDateForSQL($_POST['cutoffdate']);
                $wheredate = ' AND duedate <= "' . $formatdate . '" ';
-               $reportdate = _(' Through  ') . $_POST['cutoffdate'];
+               $reportdate = _(' Through  ') . Format_Date($_POST['cutoffdate']);
 	}
 	if ($_POST['Consolidation'] == 'None') {
 		$sql = 'SELECT mrpplannedorders.*,
@@ -40,15 +40,21 @@ If (isset($_POST['PrintPDF'])) {
 	                   MIN(mrpplannedorders.duedate) as duedate,
 	                   MIN(mrpplannedorders.mrpdate) as mrpdate,
 	                   COUNT(*) AS consolidatedcount,
-	                   	stockmaster.stockid,
+	                   stockmaster.stockid,
 					   stockmaster.description,
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
 					   stockmaster.actualcost
 				FROM mrpplannedorders, stockmaster
-				WHERE mrpplannedorders.part = stockmaster.stockid '  . "'$wheredate" .
+				WHERE mrpplannedorders.part = stockmaster.stockid '  . "$wheredate" .
 				  ' AND stockmaster.mbflag IN ("B","P") 
-				GROUP BY mrpplannedorders.part,weekindex
+				GROUP BY mrpplannedorders.part,
+				         weekindex,
+				         stockmaster.stockid,
+					     stockmaster.description,
+					     stockmaster.mbflag,
+					     stockmaster.decimalplaces,
+					     stockmaster.actualcost
 				ORDER BY mrpplannedorders.part,weekindex';
 	} else {  // This else consolidates by month
 	    $sql = 'SELECT mrpplannedorders.part,
@@ -57,7 +63,7 @@ If (isset($_POST['PrintPDF'])) {
 	                   MIN(mrpplannedorders.duedate) as duedate,
 	                   MIN(mrpplannedorders.mrpdate) as mrpdate,
 	                   COUNT(*) AS consolidatedcount,
-	                   	stockmaster.stockid,
+	                   stockmaster.stockid,
 					   stockmaster.description,
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
@@ -65,7 +71,13 @@ If (isset($_POST['PrintPDF'])) {
 				FROM mrpplannedorders, stockmaster
 				WHERE mrpplannedorders.part = stockmaster.stockid  '  . "$wheredate" .
 				  ' AND stockmaster.mbflag IN ("B","P") 
-				GROUP BY mrpplannedorders.part,yearmonth
+				GROUP BY mrpplannedorders.part,
+				         yearmonth,
+	                     stockmaster.stockid,
+					     stockmaster.description,
+					     stockmaster.mbflag,
+					     stockmaster.decimalplaces,
+					     stockmaster.actualcost				         
 				ORDER BY mrpplannedorders.part,yearmonth ';
 	};
 	$result = DB_query($sql,$db,'','',false,true);
@@ -307,12 +319,13 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 function GetPartInfo(&$db,$part) {
 	// Get last purchase order date and supplier for part, and also preferred supplier
 	// Printed when there is a part break
-	$sql = 'SELECT MAX(orddate) as maxdate,
-				   purchorders.orderno
+	$sql = 'SELECT orddate as maxdate,
+                   purchorders.orderno
 			FROM purchorders,
 				 purchorderdetails
 			WHERE purchorders.orderno = purchorderdetails.orderno 
-			  AND purchorderdetails.itemcode = ' . "'$part' ";
+			  AND purchorderdetails.itemcode = ' . "'$part' " .
+			  'order by orddate desc limit 1';
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_array($result,$db);
 	$partinfo[] = ConvertSQLDate($myrow['maxdate']);
