@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 $PageSecurity = 1;
 
@@ -350,7 +350,7 @@ If (isset($PrintPDF)
 			   		} //end if need a new page headed up
 			   		/*increment a line down for the next line item */
 			   		if (strlen($lines[$i])>1){
-						$lines[$i] = $pdf->addTextWrap($Left_Margin+85,$YPos,181,$FontSize,$lines[$i]);
+						$lines[$i] = $pdf->addTextWrap($Left_Margin+85,$YPos,181,$FontSize,stripslashes($lines[$i]));
 					}
 					$YPos -= ($line_height);
 				}
