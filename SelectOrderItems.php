@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.96 $ */
+/* $Revision: 1.97 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -576,7 +576,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	<td><input tabindex=3 type="Text" name="CustPhone" size=15	maxlength=18></td>
 	</tr>
 	</table>
-	<br><div style="text-align:center;"><input tabindex=4 type=submit name="SearchCust" value="<?php echo _('Search Now'); ?>">
+	<br><div class="centre"><input tabindex=4 type=submit name="SearchCust" value="<?php echo _('Search Now'); ?>">
 	<input tabindex=5 type=submit action=reset value="<?php echo _('Reset'); ?>"></div>
 	<?php
 
@@ -1265,7 +1265,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
 				echo $RowStarter;
-				echo '<td colspan=7><textarea  name="Narrative_' . $OrderLine->LineNumber . '" cols=100% rows=1>' . AddCarriageReturns($OrderLine->Narrative) . '</textarea><br><hr></td></tr>';
+				echo '<td colspan=7><textarea  name="Narrative_' . $OrderLine->LineNumber . '" cols=100% rows=1>' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br><hr></td></tr>';
 			} else {
 				echo '<input type=hidden name="Narrative" value="">';
 			}
@@ -1294,7 +1294,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
                        </tr></table>';
 
 
-		echo '<br><div style="text-align:center"><input type=submit name="Recalculate" Value="' . _('Re-Calculate') . '">
+		echo '<br><div class="centre"><input type=submit name="Recalculate" Value="' . _('Re-Calculate') . '">
                 <input type=submit name="DeliveryDetails" value="' . _('Enter Delivery Details and Confirm Order') . '"></div><hr>';
 
 	} # end of if lines
@@ -1343,7 +1343,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		<td><input tabindex=3 type="Text" name="StockCode" size=15 maxlength=18 value="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></td>
 		</tr>
 		</table><br>
-		<div  style="text-align:center;"><input tabindex=4 type=submit name="Search" value="<?php echo _('Search Now'); ?>">
+		<div class="centre"><input tabindex=4 type=submit name="Search" value="<?php echo _('Search Now'); ?>">
 		<input tabindex=5 type=submit name="QuickEntry" value="<?php echo _('Use Quick Entry'); ?>">
 
 		<?php
@@ -1471,7 +1471,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<td style="text-align:center">%s</td>
 					<td style="text-align:center">%s</td>
 					<td style="text-align:center">%s</td>
-					<td><font size=1><input class="number" onKeyPress="return restrictToNumbers(this, event)"  tabindex='.number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
+					<td><font size=1><input class="number"  tabindex='.number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
 					</td>
 					</tr>',
 					$myrow['stockid'],
@@ -1531,7 +1531,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	  	}
 		if ($_SESSION['Items']->ItemsOrdered >=1){
-      		echo '<br><div style="text-align:center"><input type=submit name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');"></div>';
+      		echo '<br><div class="centre"><input type=submit name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');"></div>';
 		}
 	}#end of else not selecting a customer
 
