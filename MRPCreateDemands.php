@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 // MRPCreateDemands.php - Create mrpdemands based on sales order history
 
 $PageSecurity=9;
@@ -50,10 +50,7 @@ if ($_POST['Location']!='All') {
     $wherelocation = " AND salesorders.fromstkloc ='" . $_POST['Location'] . "' ";
 }
  
-$sql= "SELECT salesorders.orderno,
-				  salesorders.orddate,
-				  salesorders.fromstkloc,
-				  salesorderdetails.stkcode,
+$sql= "SELECT salesorderdetails.stkcode,
 				  SUM(salesorderdetails.quantity) AS totqty,
 				  SUM(salesorderdetails.qtyinvoiced) AS totqtyinvoiced,
 				  SUM(salesorderdetails.quantity * salesorderdetails.unitprice ) AS totextqty

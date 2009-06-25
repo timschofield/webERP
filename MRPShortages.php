@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 // MRPShortages.php - Report of parts with demand greater than supply as determined by MRP
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -36,10 +36,6 @@ If (isset($_POST['PrintPDF'])) {
       ORDER BY " . $_POST['Sort'];
 */
 
-    $sortorder = " ";
-    if ($_POST['Sort'] == 'extcost') {
-        $sortorder = ' desc';
-    }
 	// Only include directdemand mrprequirements so don't have demand for top level parts and also
 	// show demand for the lower level parts that the upper level part generates. See MRP.php for
 	// more notes - Decided not to exclude derived demand so using $sql, not $sqlexclude
@@ -49,42 +45,67 @@ If (isset($_POST['PrintPDF'])) {
 	                   stockmaster.actualcost,
 	                   stockmaster.decimalplaces,
 	(SELECT IF(supplyquantity IS NULL,0,SUM(supplyquantity)) 
-	 FROM mrpsupplies 
+	 FROM mrpsupplies
+	 GROUP BY mrpsupplies.part
 	 WHERE stockid = mrpsupplies.part) AS supply,
     (SELECT SUM(quantity) 
       FROM mrprequirements
+      GROUP BY mrprequirements.part
       WHERE stockid = mrprequirements.part AND mrprequirements.directdemand='1') AS demand,
       (((SELECT SUM(quantity) 
       FROM mrprequirements
+      GROUP BY mrprequirements.part
       WHERE stockid = mrprequirements.part AND mrprequirements.directdemand='1') -
       (SELECT IF(supplyquantity IS NULL,0,SUM(supplyquantity)) 
-	 FROM mrpsupplies 
-	 WHERE stockid = mrpsupplies.part)) * actualcost) as extcost
+	      FROM mrpsupplies 
+	      WHERE stockid = mrpsupplies.part)) * actualcost) as extcost
       FROM stockmaster
-      GROUP BY stockid
+      GROUP BY stockmaster.stockid,
+			   stockmaster.description,
+			   stockmaster.mbflag,
+			   stockmaster.actualcost,
+			   stockmaster.decimalplaces,
+			   supply,
+			   demand,
+			   extcost
       HAVING demand > supply
-      ORDER BY " . $_POST['Sort'] . $sortorder;
+      ORDER BY " . $_POST['Sort'];
    	$sql = "SELECT stockmaster.stockid,
-	                   stockmaster.description,
-	                   stockmaster.mbflag,
-	                   stockmaster.actualcost,
-	                   stockmaster.decimalplaces,
-	(SELECT IF(supplyquantity IS NULL,0,SUM(supplyquantity)) 
-	 FROM mrpsupplies 
-	 WHERE stockid = mrpsupplies.part) AS supply,
-    (SELECT SUM(quantity) 
-      FROM mrprequirements
-      WHERE stockid = mrprequirements.part) AS demand,
-      (((SELECT SUM(quantity) 
-      FROM mrprequirements
-      WHERE stockid = mrprequirements.part) -
-      (SELECT IF(supplyquantity IS NULL,0,SUM(supplyquantity)) 
-	 FROM mrpsupplies 
-	 WHERE stockid = mrpsupplies.part)) * actualcost) as extcost
-      FROM stockmaster
-      GROUP BY stockid
-      HAVING demand > supply
-      ORDER BY " . $_POST['Sort'] . $sortorder;
+        stockmaster.description,
+        stockmaster.mbflag,
+        stockmaster.actualcost,
+        stockmaster.decimalplaces,
+     (SELECT SUM(IF(supplyquantity IS NULL,0,supplyquantity)) 
+      FROM mrpsupplies
+      WHERE stockid = mrpsupplies.part GROUP BY stockid) AS supply,
+         (SELECT SUM(quantity) 
+           FROM mrprequirements
+           WHERE stockid = mrprequirements.part GROUP BY stockid)
+           AS demand,
+           (
+           ((SELECT SUM(IF(supplyquantity IS NULL,0,supplyquantity)) 
+      FROM mrpsupplies
+      WHERE stockid = mrpsupplies.part GROUP BY stockid) -
+      (SELECT SUM(quantity) 
+           FROM mrprequirements
+           WHERE stockid = mrprequirements.part GROUP BY stockid))
+           * stockmaster.actualcost
+           ) as extcost
+           FROM stockmaster
+           GROUP BY stockmaster.stockid,
+			   stockmaster.description,
+			   stockmaster.mbflag,
+			   stockmaster.actualcost,
+			   stockmaster.decimalplaces,
+			   supply,
+			   demand
+			    HAVING (SELECT SUM(quantity) 
+           FROM mrprequirements
+           WHERE stockid = mrprequirements.part GROUP BY stockid) > 
+           (SELECT SUM(IF(supplyquantity IS NULL,0,supplyquantity)) 
+      FROM mrpsupplies
+      WHERE stockid = mrpsupplies.part GROUP BY stockid)
+			  ORDER BY " . $_POST['Sort'] . $sortorder;
 	$result = DB_query($sql,$db,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
@@ -120,7 +141,8 @@ If (isset($_POST['PrintPDF'])) {
 			// 1) X position 2) Y position 3) Width
 			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
 			// and False to set to transparent
-			$shortage = ($myrow['supply'] - $myrow['demand']) * -1;
+			$shortage = ($myrow['demand'] - $myrow['supply']) * -1;
+			$extcost = $shortage * $myrow['actualcost'];
 			$pdf->addTextWrap($Left_Margin,$YPos,90,$FontSize,$myrow['stockid'],'',0,$fill);				
 			$pdf->addTextWrap(130,$YPos,150,$FontSize,$myrow['description'],'',0,$fill);
 			$pdf->addTextWrap(280,$YPos,25,$FontSize,$myrow['mbflag'],'right',0,$fill);
