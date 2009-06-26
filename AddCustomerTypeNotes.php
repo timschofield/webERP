@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $PageSecurity = 3;
 include('includes/session.inc');
 $title = _('Customer Type (Group) Notes');
@@ -16,7 +16,7 @@ if (isset($_POST['DebtorType'])){
 } elseif (isset($_GET['DebtorType'])){
 	$DebtorType = $_GET['DebtorType'];
 }
-echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID .'&DebtorType='.$DebtorType."'>" . _('Back to Select Customer') . '</A><BR>';
+echo "<a href='" . $rootpath . '/SelectCustomer.php?' . SID .'&DebtorType='.$DebtorType."'>" . _('Back to Select Customer') . '</a><br>';
 if ( isset($_POST['submit']) ) {
 
 	//initialise no input errors assumed initially before we test
@@ -63,7 +63,7 @@ if ( isset($_POST['submit']) ) {
 		$result = DB_query($sql,$db);
 				//echo '<br>'.$sql;
 
-		echo '<BR>';
+		echo '<br>';
 		prnMsg($msg, 'success');
 		unset($Id);
 		unset($_POST['note']);
@@ -79,7 +79,7 @@ if ( isset($_POST['submit']) ) {
 				$result = DB_query($sql,$db);
 						//echo '<br>'.$sql;
 
-				echo '<BR>';
+				echo '<br>';
 				prnMsg( _('The contact group note record has been deleted'), 'success');
 				unset($Id);
 				unset($_GET['delete']);
@@ -90,14 +90,14 @@ if (!isset($Id)) {
 	$SQLname='SELECT * from debtortype where typeid="'.$DebtorType.'"';
 	$Result = DB_query($SQLname,$db);
 	$row = DB_fetch_array($Result);
-	echo '<center>' . _('Notes for Customer Type: <b>') .$row['typename'].'</b>';
+	echo '<div class="centre">' . _('Notes for Customer Type: <b>') .$row['typename'].'</b></div>';
 	
 	
 	$sql = "SELECT * FROM debtortypenotes where typeid='".$DebtorType."' ORDER BY date DESC";
 	$result = DB_query($sql,$db);
 			//echo '<br>'.$sql;
 
-	echo '<CENTER><table border=1>';
+	echo '<table border=1>';
 	echo '<tr>
 			<th>' . _('Date') . '</th>
 			<th>' . _('Note') . '</th>
@@ -133,12 +133,12 @@ if (!isset($Id)) {
 			
 	}
 	//END WHILE LIST LOOP
-	echo '</CENTER></table>';
+	echo '</table>';
 }
 if (isset($Id)) {  ?>
-	<Center><a href="<?php echo $_SERVER['PHP_SELF'] . '?' . SID .'&DebtorType='.$DebtorType;?>"><?=_('Review all notes for this Customer Type')?></a></Center>
+	<div class="cantre"><a href="<?php echo $_SERVER['PHP_SELF'] . '?' . SID .'&DebtorType='.$DebtorType;?>"><?=_('Review all notes for this Customer Type')?></a></div>
 <?php } ?>
-<P>
+<p>
 
 <?php
 if (!isset($_GET['delete'])) {
@@ -165,25 +165,26 @@ if (!isset($_GET['delete'])) {
 		echo '<input type=hidden name="Id" value='. $Id .'>';
 		echo '<input type=hidden name="Con_ID" value=' . $_POST['noteid'] . '>';
 		echo '<input type=hidden name="DebtorType" value=' . $_POST['typeid'] . '>';
-		echo '<center><table><tr><td>'. _('Note ID').':</td><td>' . $_POST['noteid'] . '</td></tr>';
+		echo '<table><tr><td>'. _('Note ID').':</td><td>' . $_POST['noteid'] . '</td></tr>';
 	} else {
-		echo '<center><table>';
+		echo '<table>';
 	}
-	?>
-	<tr><td><?php echo _('Contact Group Note');?>:</TD>
-	<td><textarea name="note"><?php echo $_POST['note']; ?></textarea></td></tr>
-	<tr><td><?php echo _('href');?>:</td>
-	<td><input type="Text" name="href" value="<?php echo $_POST['href']; ?>" size=35 maxlength=100></td></tr>
-        <tr><td><?php echo _('Date');?>:</td>	
-	<td><input type="Text" name="date" value="<?php echo $_POST['date']; ?>" size=10 maxlength=10></td></tr>
-	<tr><td><?php echo _('Priority');?>:</TD>
-	<td><input type="Text" name="priority" value="<?php echo $_POST['priority']; ?>" size=1 maxlength=3></td></td>
-	</table></center>
-	<center><input type="Submit" name="submit" value="<?php echo _('Enter Information');?>"></center>
 
-	</form>
+	echo '<tr><td>'._('Contact Group Note').':</td>';
+	echo '<td><textarea name="note">'. $_POST['note'].'</textarea></td></tr>';
+	echo '<tr><td>'. _('href').':</td>';
+	echo '<td><input type="text" name="href" value="'. $_POST['href'].'" size=35 maxlength=100></td></tr>
+		<tr><td>'. _('Date').':</td>';	
+	echo '<td><input type="text" name="date" class=date alt="'.$_SESSION['DefaultDateFormat'].'" value="'. $_POST['date'].
+		'" size=10 maxlength=10></td></tr>';
+	echo '<tr><td>'. _('Priority').':</td>';
+	echo '<td><input type="Text" name="priority" value="'. $_POST['priority'].'" size=1 maxlength=3></td></td>
+	</table>';
+	echo '<div class="centre"><input type="Submit" name="submit" value="'. _('Enter Information').'"></div>';
+
+	echo '</form>';
 	
-	<?php } //end if record deleted no point displaying form to add record 
+} //end if record deleted no point displaying form to add record 
 
 include('includes/footer.inc');
 ?>
