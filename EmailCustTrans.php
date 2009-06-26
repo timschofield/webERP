@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 2;
 
@@ -17,11 +17,11 @@ $title=_('Email') . ' ' . $TransactionType . ' ' . _('Number') . ' ' . $_GET['Fr
 if (isset($_POST['DoIt']) AND strlen($_POST['EmailAddr'])>3){
 
 	if ($_SESSION['InvoicePortraitFormat']==0){	
-		echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . '/PrintCustTrans.php?' . SID . '&FromTransNo=' . $_POST['TransNo'] . '&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . "'>";
+		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/PrintCustTrans.php?' . SID . '&FromTransNo=' . $_POST['TransNo'] . '&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . "'>";
 
 		prnMsg(_('The transaction should have been emailed off') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ')' . "<a href='" . $rootpath . '/PrintCustTrans.php?' . SID . '&FromTransNo=' . $_POST['FromTransNo'] . '&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . "'>" . _('click here') . '</a> ' . _('to email the customer tranaction'),'success');
 	} else {
-		echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . '/PrintCustTransPortrait.php?' . SID . '&FromTransNo=' . $_POST['TransNo'] . '&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . "'>";
+		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/PrintCustTransPortrait.php?' . SID . '&FromTransNo=' . $_POST['TransNo'] . '&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . "'>";
 
 		prnMsg(_('The transaction should have been emailed off') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ')' . "<a href='" . $rootpath . '/PrintCustTransPortrait.php?' . SID . '&FromTransNo=' . $_POST['FromTransNo'] . '&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . "'>" . _('click here') . '</a> ' . _('to email the customer tranaction'),'success');
 	}
@@ -37,12 +37,12 @@ include ('includes/header.inc');
 
 
 
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD=POST>";
+echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method=post>";
 
-echo "<INPUT TYPE=HIDDEN NAME='TransNo' VALUE=" . $_GET['FromTransNo'] . ">";
-echo "<INPUT TYPE=HIDDEN NAME='InvOrCredit' VALUE=" . $_GET['InvOrCredit'] . '>';
+echo "<input type=hidden name='TransNo' VALUE=" . $_GET['FromTransNo'] . ">";
+echo "<input type=hidden name='InvOrCredit' VALUE=" . $_GET['InvOrCredit'] . '>';
 
-echo '<CENTER><P><TABLE>';
+echo '<p><table>';
 
 
 $SQL = "SELECT email
@@ -62,11 +62,11 @@ if (DB_num_rows($ContactResult)>0){
 	$EmailAddress ='';
 }
 
-echo '<TR><TD>' . _('Email') . ' ' . $_GET['InvOrCredit'] . ' ' . _('number') . ' ' . $_GET['FromTransNo'] . ' ' . _('to') . ":</TD>
-	<TD><INPUT TYPE=TEXT NAME='EmailAddr' MAXLENGTH=60 SIZE=60 VALUE='" . $EmailAddress . "'</TD>
-	</TABLE>";
+echo '<tr><td>' . _('Email') . ' ' . $_GET['InvOrCredit'] . ' ' . _('number') . ' ' . $_GET['FromTransNo'] . ' ' . _('to') . ":</td>
+	<td><input type=TEXT name='EmailAddr' maxlength=60 size=60 VALUE='" . $EmailAddress . "'</td>
+	</table>";
 
-echo "<BR><INPUT TYPE=SUBMIT NAME='DoIt' VALUE='" . _('OK') . "'>";
-echo '</CENTER></FORM>';
+echo "<br><div class='centre'><input type=submit name='DoIt' VALUE='" . _('OK') . "'>";
+echo '</div></form>';
 include ('includes/footer.inc');
 ?>

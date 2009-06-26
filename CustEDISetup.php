@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 11;
 
@@ -7,7 +7,7 @@ include('includes/session.inc');
 $title = _('Customer EDI Set Up');
 include('includes/header.inc');
 
-echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</A><BR>';
+echo "<a href='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</a><br>';
 
 if (isset($Errors)) {
 	unset($Errors);
@@ -73,8 +73,8 @@ if (isset($_POST['submit'])) {
     }
 }
 
-echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID ."'>";
-echo '<CENTER><TABLE>';
+echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID ."'>";
+echo '<table>';
 
 $sql = "SELECT debtorno,
 		name,
@@ -93,68 +93,68 @@ $result = DB_query($sql, $db,$ErrMsg);
 
 $myrow = DB_fetch_array($result);
 
-echo '<TR><TD>'._('Customer Code').':</TD>
-	<TD>' . $_SESSION['CustomerID'] . '</TD></TR>';
-echo '<TR><TD>'._('Customer Name').':</TD>
-	<TD>' . $myrow['name'] . '</TD></TR>';
-echo '<TR><TD>'._('Enable Sending of EDI Invoices').':</TD>
-	<TD><SELECT TABINDEX=1 name="EDIInvoices">';
+echo '<tr><td>'._('Customer Code').':</td>
+	<td>' . $_SESSION['CustomerID'] . '</td></tr>';
+echo '<tr><td>'._('Customer Name').':</td>
+	<td>' . $myrow['name'] . '</td></tr>';
+echo '<tr><td>'._('Enable Sending of EDI Invoices').':</td>
+	<td><select TABINDEX=1 name="EDIInvoices">';
 
 if ($myrow['ediinvoices']==0){
 
-    echo '<OPTION SELECTED VALUE=0>'._('Disabled');
-    echo '<OPTION VALUE=1>'._('Enabled');
+    echo '<option selected VALUE=0>'._('Disabled');
+    echo '<option VALUE=1>'._('Enabled');
 } else {
-    echo '<OPTION VALUE=0>'._('Disabled');
-    echo '<OPTION SELECTED VALUE=1>'._('Enabled');
+    echo '<option VALUE=0>'._('Disabled');
+    echo '<option selected VALUE=1>'._('Enabled');
 }
 
-echo "</SELECT><A HREF='$rootpath/EDIMessageFormat.php?" . SID . "&MessageType=INVOIC&PartnerCode=" . $_SESSION['CustomerID'] . "'>"._('Create') . '/' . _('Edit Invoice Message Format').'</A></TD></TR>';
+echo "</select><a href='$rootpath/EDIMessageFormat.php?" . SID . "&MessageType=INVOIC&PartnerCode=" . $_SESSION['CustomerID'] . "'>"._('Create') . '/' . _('Edit Invoice Message Format').'</a></td></tr>';
 
-echo '<TR><TD>'._('Enable Receiving of EDI Orders').":</TD>
-	<TD><SELECT TABINDEX=2 name='EDIOrders'>";
+echo '<tr><td>'._('Enable Receiving of EDI Orders').":</td>
+	<td><select TABINDEX=2 name='EDIOrders'>";
 
 if ($myrow['ediorders']==0){
 
-    echo '<OPTION SELECTED VALUE=0>'._('Disabled');
-    echo '<OPTION VALUE=1>'._('Enabled');
+    echo '<option selected VALUE=0>'._('Disabled');
+    echo '<option VALUE=1>'._('Enabled');
 } else {
-    echo '<OPTION VALUE=0>'._('Disabled');
-    echo '<OPTION SELECTED VALUE=1>'._('Enabled');
+    echo '<option VALUE=0>'._('Disabled');
+    echo '<option selected VALUE=1>'._('Enabled');
 }
 
-echo '</SELECT></TD></TR>';
+echo '</select></td></tr>';
 
-echo '<TR><TD>'._('Customer EDI Reference').":</TD>
-	<TD><input " . (in_array('EDIReference',$Errors) ?  'class="inputerror"' : '' ) .
-		" TABINDEX=3 type='Text' name='EDIReference' SIZE=20 MAXLENGTH=20 value='" . $myrow['edireference'] . "'></TD></TR>";
+echo '<tr><td>'._('Customer EDI Reference').":</td>
+	<td><input " . (in_array('EDIReference',$Errors) ?  'class="inputerror"' : '' ) .
+		" TABINDEX=3 type='Text' name='EDIReference' size=20 maxlength=20 value='" . $myrow['edireference'] . "'></td></tr>";
 
-echo '<TR><TD>'._('EDI Communication Method').":</TD>
-	<TD><SELECT TABINDEX=4 name='EDITransport'>";
+echo '<tr><td>'._('EDI Communication Method').":</td>
+	<td><select TABINDEX=4 name='EDITransport'>";
 
 if ($myrow['editransport']=='email'){
-    echo "<OPTION SELECTED VALUE='email'>"._('Email Attachments');
-    echo "<OPTION VALUE='ftp'>"._('File Transfer Protocol (FTP)');
+    echo "<option selected VALUE='email'>"._('Email Attachments');
+    echo "<option VALUE='ftp'>"._('File Transfer Protocol (FTP)');
 } else {
-    echo "<OPTION VALUE='email'>"._('Email Attachments');
-    echo "<OPTION SELECTED VALUE='ftp'>"._('File Transfer Protocol (FTP)');
+    echo "<option VALUE='email'>"._('Email Attachments');
+    echo "<option selected VALUE='ftp'>"._('File Transfer Protocol (FTP)');
 }
 
-echo '</SELECT></TD></TR>';
+echo '</select></td></tr>';
 
-echo '<TR><TD>'._('FTP Server or Email Address').":</TD>
-	<TD><input " . (in_array('EDIAddress',$Errors) ?  'class="inputerror"' : '' ) .
-		" TABINDEX=5 type='Text' name='EDIAddress' SIZE=42 MAXLENGTH=40 value='" . $myrow['ediaddress'] . "'></TD></TR>";
+echo '<tr><td>'._('FTP Server or Email Address').":</td>
+	<td><input " . (in_array('EDIAddress',$Errors) ?  'class="inputerror"' : '' ) .
+		" TABINDEX=5 type='Text' name='EDIAddress' size=42 maxlength=40 value='" . $myrow['ediaddress'] . "'></td></tr>";
 
 if ($myrow['editransport']=='ftp'){
 
-    echo '<TR><TD>'._('FTP Server User Name').":</TD>
-    		<TD><input TABINDEX=6 type='Text' name='EDIServerUser' SIZE=20 MAXLENGTH=20 value=" . $myrow['ediserveruser'] . "></TD></TR>";
-    echo '<TR><TD>'._('FTP Server Password').":</TD>
-    		<TD><input TABINDEX=7 type='Text' name='EDIServerPwd' SIZE=20 MAXLENGTH=20 value='" . $myrow['ediserverpwd'] . "'></TD></TR>";
+    echo '<tr><td>'._('FTP Server User Name').":</td>
+    		<td><input TABINDEX=6 type='Text' name='EDIServerUser' size=20 maxlength=20 value=" . $myrow['ediserveruser'] . "></td></tr>";
+    echo '<tr><td>'._('FTP Server Password').":</td>
+    		<td><input TABINDEX=7 type='Text' name='EDIServerPwd' size=20 maxlength=20 value='" . $myrow['ediserverpwd'] . "'></td></tr>";
 }
 
-echo "</TABLE><CENTER><input TABINDEX=8 type='Submit' name='submit' value='"._('Update EDI Configuration')."'></FORM>";
+echo "</table><div class='centre'><input TABINDEX=8 type='Submit' name='submit' value='"._('Update EDI Configuration')."'></div></form>";
 
 include('includes/footer.inc');
 ?>

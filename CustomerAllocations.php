@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 /*
 Call this page with:
@@ -75,7 +75,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 	if ($TotalAllocated + $_SESSION['Alloc']->TransAmt > 0.008)
 	{
 	   prnMsg(_('Allocation could not be processed because the amount allocated is more than the').' ' .
-	    $_SESSION['Alloc']->TransTypeName  . ' '._('being allocated') . '<BR>' . _('Total allocated').' = ' .
+	    $_SESSION['Alloc']->TransTypeName  . ' '._('being allocated') . '<br>' . _('Total allocated').' = ' .
 	    $TotalAllocated . ' '._('and the total amount of the') .' ' . $_SESSION['Alloc']->TransTypeName  . ' '.
 	    _('was').' ' . -$_SESSION['Alloc']->TransAmt,'error');
 	   $InputError=1;
@@ -337,7 +337,7 @@ if (isset($_GET['AllocTrans'])) {
 }
 
 
-	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Allocate Receipt') . '" ALT="">' . ' ' . _('Allocate Receipts') . '</P><CENTER>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Allocate Receipt') . '" alt="">' . ' ' . _('Allocate Receipts') . '</p>';
 
 	$TableHeader = "<tr>
 		     		<th>" . _('Trans Type') . "</th>
@@ -356,13 +356,13 @@ if (isset($_GET['AllocTrans'])) {
 		echo "<input type=hidden name='AllocTrans' value=" . $_POST['AllocTrans'] . '>';
 
 		// Show trans already allocated and potential new allocations
-		echo '<font color=blue><b>' . $_SESSION['Alloc']->DebtorNo . ' - ' . $_SESSION['Alloc']->CustomerName . '</b>';
+		echo '<div class="centre"><font color=blue><b>' . $_SESSION['Alloc']->DebtorNo . ' - ' . $_SESSION['Alloc']->CustomerName . '</b></div>';
 
 		if ($_SESSION['Alloc']->TransExRate != 1)
 		{
-				echo '<br>'._('Amount in customer currency').' <B>' .
+				echo '<br>'._('Amount in customer currency').' <b>' .
 				number_format(-$_SESSION['Alloc']->TransAmt,2) .
-				'</B><i> ('._('converted into local currency at an exchange rate of'). ' '
+				'</b><i> ('._('converted into local currency at an exchange rate of'). ' '
 				. $_SESSION['Alloc']->TransExRate . ')</i>';
 		}
 
@@ -401,18 +401,18 @@ if (isset($_GET['AllocTrans'])) {
 
 			echo "<td>" . $AllocnItem->TransType . "</td>
 				<td>" . $AllocnItem->TypeNo . "</td>
-				<td align=right>" . $AllocnItem->TransDate . "</td>
-				<td align=right>" . number_format($AllocnItem->TransAmount,2) . "</td>
-				<td align=right>" . number_format($YetToAlloc,2) . "</td>";
+				<td class=number>" . $AllocnItem->TransDate . "</td>
+				<td class=number>" . number_format($AllocnItem->TransAmount,2) . "</td>
+				<td class=number>" . number_format($YetToAlloc,2) . "</td>";
 			$j++;
 
 			if ($AllocnItem->TransAmount < 0)
 			{
 					$balance+=$YetToAlloc;
-					echo "<td align=center>" . $curTrans ."</td><td align=right>" . number_format($balance,2) . "</td></tr>";
+					echo "<td>" . $curTrans ."</td><td class=number>" . number_format($balance,2) . "</td></tr>";
 			} else {
 					echo "<input type=hidden name='YetToAlloc" . $Counter . "' value=" . round($YetToAlloc,2) . '></td>';
-					echo "<td align=right><input tabindex=".$j." type='checkbox' name='All" .  $Counter . "'";
+					echo "<td class=number><input tabindex=".$j." type='checkbox' name='All" .  $Counter . "'";
 
 					if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01)
 					{
@@ -422,29 +422,29 @@ if (isset($_GET['AllocTrans'])) {
 					}
 					$balance += $YetToAlloc-$AllocnItem->AllocAmt;
 					$j++;
-					echo "<input tabindex=".$j." type=text name='Amt" . $Counter ."' maxlength=12 size=13 value=" . round($AllocnItem->AllocAmt,2) . ">
+					echo "<input tabindex=".$j." type=text class=number name='Amt" . $Counter ."' maxlength=12 size=13 value=" . round($AllocnItem->AllocAmt,2) . ">
 						<input type=hidden name='AllocID" . $Counter . "' value=" . $AllocnItem->ID . '></td>
-						<td align=right>' . number_format($balance,2) . '</td></tr>';
+						<td class=number>' . number_format($balance,2) . '</td></tr>';
 			}
 			$TotalAllocated = $TotalAllocated + round($AllocnItem->AllocAmt,2);
 			$Counter++;
 		}
 
 		echo "<tr>
-				<td colspan=5 align=right><b>"._('Total Allocated').':</b></td>
-				<td align=right><b><u>' . number_format($TotalAllocated,2) . '</u></b></td>';
+				<td colspan=5 class=number><b>"._('Total Allocated').':</b></td>
+				<td class=number><b><u>' . number_format($TotalAllocated,2) . '</u></b></td>';
 		$j++;
 		echo '<td rowspan=2>
 				<input tabindex='.$j.' type=submit name=RefreshAllocTotal value=' . _('Recalculate Total To Allocate') . '></td>';
 
 		echo '<tr>
-				<td colspan=5 align=right><b>'._('Left to allocate').'</b></td>
-				<td align=right><b>' . number_format($remaining-$TotalAllocated,2).'</b></td>
+				<td colspan=5 class=number><b>'._('Left to allocate').'</b></td>
+				<td class=number><b>' . number_format($remaining-$TotalAllocated,2).'</b></td>
 			</tr>';
 		echo '</table><p>';
 		echo "<input type=hidden name=TotalNumberOfAllocs value=" . $Counter . ">";
-		echo "<input tabindex=".$j." type=submit name=UpdateDatabase value=" . _('Process Allocations') . ">";
-		echo "<input tabindex=".$j." type=submit name=Cancel value=" . _('Cancel') . ">";
+		echo "<div class='centre'><input tabindex=".$j." type=submit name=UpdateDatabase value=" . _('Process Allocations') . ">";
+		echo "<input tabindex=".$j." type=submit name=Cancel value=" . _('Cancel') . "></div>";
 
 	}
 	elseif (isset($_GET['DebtorNo'])) // Page called with customer code
@@ -490,8 +490,8 @@ if (isset($_GET['AllocTrans'])) {
 					<td>" . $myrow['debtorno'] . "</td>
 					<td>" . $myrow['transno'] . "</td>
 					<td>" . ConvertSQLDate($myrow['trandate']) . "</td>
-					<td align=right>" . number_format($myrow['total'],2) . "</td>
-					<td align=right>" . number_format($myrow['total']-$myrow['alloc'],2) . "</td>";
+					<td class=number>" . number_format($myrow['total'],2) . "</td>
+					<td class=number>" . number_format($myrow['total']-$myrow['alloc'],2) . "</td>";
 			echo '<td><a href=' . $_SERVER['PHP_SELF']. '?' . SID . '&AllocTrans=' . $myrow['id'] . '>' . _('Allocate') . '</a></td></tr>';
 		}
 		DB_free_result($result);
@@ -537,7 +537,7 @@ if (isset($_GET['AllocTrans'])) {
 			{
 				if ( $curTrans > 1 )
 				{
-					echo "<tr class='OddTableRows'><td colspan=7 align=right>" . number_format($balance,2) . "</td><td><b>Balance</b></td></tr>";
+					echo "<tr class='OddTableRows'><td colspan=7 class=number>" . number_format($balance,2) . "</td><td><b>Balance</b></td></tr>";
 				}
 
 				$balance = 0;
@@ -570,8 +570,8 @@ if (isset($_GET['AllocTrans'])) {
 					<td>" . $myrow['debtorno'] . "</td>
 					<td>" . $myrow['transno'] . "</td>
 					<td>" . ConvertSQLDate($myrow['trandate']) . "</td>
-					<td align=right>" . number_format($myrow['total'],2) . "</td>
-					<td align=right>" . number_format($myrow['total']-$myrow['alloc'],2) . "</td>";
+					<td class=number>" . number_format($myrow['total'],2) . "</td>
+					<td class=number>" . number_format($myrow['total']-$myrow['alloc'],2) . "</td>";
 			echo '<td>' . $allocate . '</td></tr>';
 
 			if ( $curTrans > $trans )
@@ -579,7 +579,7 @@ if (isset($_GET['AllocTrans'])) {
 				if (!isset($balance)) {
 					$balance=0;
 				}
-				echo "<tr class='OddTableRows'><td colspan=7 align=right>" . number_format($balance,2) . "</td><td><b>Balance</b></td></tr>";
+				echo "<tr class='OddTableRows'><td colspan=7 class=number>" . number_format($balance,2) . "</td><td><b>Balance</b></td></tr>";
 			}
 		}
 		DB_free_result($result);
@@ -591,7 +591,7 @@ if (isset($_GET['AllocTrans'])) {
 		}
 	}
 
-echo '</center></td></tr></table>'; // end Page Border
+echo '</td></tr></table>'; // end Page Border
 include('includes/footer.inc');
 
 ?>

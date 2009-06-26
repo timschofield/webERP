@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.37 $ */
+/* $Revision: 1.38 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -460,11 +460,11 @@ if (isset($_POST['CommitBatch'])){
    $DbgMsg = _('The SQL that failed was');
    $result = DB_Txn_Commit($db);
 
-   echo '<P>';
+   echo '<p>';
 
    prnMsg( _('Receipt batch') . ' ' . $_SESSION['ReceiptBatch']->BatchNo . ' ' . _('has been successfully entered into the database'),'success');
 
-   echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . '<A HREF="' . $rootpath . '/PDFBankingSummary.php?BatchNo=' . $_SESSION['ReceiptBatch']->BatchNo . '">' . _('Print PDF Batch Summary') . '</A></P>';
+   echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . '<a href="' . $rootpath . '/PDFBankingSummary.php?BatchNo=' . $_SESSION['ReceiptBatch']->BatchNo . '">' . _('Print PDF Batch Summary') . '</a></p>';
    unset($_SESSION['ReceiptBatch']);
    include('includes/footer.inc');
    exit;
@@ -517,7 +517,7 @@ if (isset($_POST['Search'])){
 		if (DB_error_no($db) !=0) {
 			prnMsg(_('The searched customer records requested cannot be retrieved because') . ' - ' . DB_error_msg($db),'error');
 			if ($debug==1){
-				prnMsg(_('SQL used to retrieve the customer details was') . '<BR>' . $sql,'error');
+				prnMsg(_('SQL used to retrieve the customer details was') . '<br>' . $sql,'error');
 			}
 		} elseif (DB_num_rows($CustomerSearchResult)==1){
 			$myrow=DB_fetch_array($CustomerSearchResult);
@@ -662,14 +662,14 @@ $ErrMsg = _('The bank accounts could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve the bank acconts was');
 $AccountsResults = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
-echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Enter Receipt') . '" ALT="">' . ' ' . _('Enter Customer Receipt') . '</P>';
-echo '<DIV CLASS="page_help_text">' . _('To enter a payment TO a customer (ie. to pay out a credit note), enter a negative payment amount.') . '</DIV>';
-echo '<CENTER><BR><table><tr><td>' . _('Bank Account') . ':</td>
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Enter Receipt') . '" alt="">' . ' ' . _('Enter Customer Receipt') . '</p>';
+echo '<div class="page_help_text">' . _('To enter a payment TO a customer (ie. to pay out a credit note), enter a negative payment amount.') . '</div>';
+echo '<br><table><tr><td>' . _('Bank Account') . ':</td>
 				 <td><select tabindex=1 name="BankAccount">';
 
 if (DB_num_rows($AccountsResults)==0){
 	echo '</select></td></tr></table><p>';
-	prnMsg(_('Bank Accounts have not yet been defined') . '. ' . _('You must first') . ' ' . '<A HREF="' . $rootpath . '/BankAccounts.php">' . _('define the bank accounts') . '</A>' . _('and general ledger accounts to be affected'),'info');
+	prnMsg(_('Bank Accounts have not yet been defined') . '. ' . _('You must first') . ' ' . '<a href="' . $rootpath . '/BankAccounts.php">' . _('define the bank accounts') . '</a>' . _('and general ledger accounts to be affected'),'info');
 	include('includes/footer.inc');
 	 exit;
 } else {
@@ -704,7 +704,7 @@ if (!isset($_SESSION['ReceiptBatch']->Currency)){
 $SQL = 'SELECT currency, currabrev, rate FROM currencies';
 $result=DB_query($SQL,$db);
 if (DB_num_rows($result)==0){
-   echo '</SELECT></td></TR>';
+   echo '</select></td></tr>';
    prnMsg(_('No currencies are defined yet') . '. ' . _('Receipts cannot be entered until a currency is defined'),'warn');
 
 } else {
@@ -754,16 +754,16 @@ if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['CompanyRecord']['curr
 			<td>' . ' ' . $SuggestedFunctionalExRateText . ' <i>' . _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account') .  '. 1 ' . $_SESSION['CompanyRecord']['currencydefault'] . ' = ? ' . $_SESSION['ReceiptBatch']->AccountCurrency . '</i></td></tr>';
 }
 
-echo '<tr><td>' . _('Receipt Type') . ":</td><TD><SELECT tabindex=6 name=ReceiptType>";
+echo '<tr><td>' . _('Receipt Type') . ":</td><td><select tabindex=6 name=ReceiptType>";
 
 include('includes/GetPaymentMethods.php');
 /* The array ReceiptTypes is defined from the setup tab of the main menu under payment methods - the array is populated from the include file GetPaymentMethods.php */
 
 foreach ($ReceiptTypes as $RcptType) {
      if (isset($_POST['ReceiptType']) and $_POST['ReceiptType']==$RcptType){
-	   echo "<OPTION SELECTED Value='$RcptType'>$RcptType";
+	   echo "<option selected Value='$RcptType'>$RcptType";
      } else {
-	   echo "<OPTION Value='$RcptType'>$RcptType";
+	   echo "<option Value='$RcptType'>$RcptType";
      }
 }
 echo '</select></td></tr>';
@@ -771,14 +771,14 @@ if (!isset($_SESSION['ReceiptBatch']->Narrative)) {
 	$_SESSION['ReceiptBatch']->Narrative='';
 }
 echo '<tr><td>' . _('Narrative') . ':</td><td><input tabindex=7 type="text" name="BatchNarrative" maxlength=50 size=52 value="' . $_SESSION['ReceiptBatch']->Narrative . '"></td></tr>';
-echo '<tr><td colspan=3><center><input tabindex=8 type=submit name="BatchInput" Value="' . _('Accept') . '"></center></td></tr>';
+echo '<tr><td colspan=3><div class="centre"><input tabindex=8 type=submit name="BatchInput" Value="' . _('Accept') . '"></div></td></tr>';
 echo '</table>
 		<hr>';
 
 if (isset($_SESSION['ReceiptBatch'])){
 	/* Now show the entries made so far */
 
-	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Banked') . '" ALT="">' . ' ' . $_SESSION['ReceiptBatch']->ReceiptType . ' - ' . _('Banked into the') . " " . $_SESSION['ReceiptBatch']->BankAccountName . ' ' . _('on') . ' ' . $_SESSION['ReceiptBatch']->DateBanked . '</P>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Banked') . '" alt="">' . ' ' . $_SESSION['ReceiptBatch']->ReceiptType . ' - ' . _('Banked into the') . " " . $_SESSION['ReceiptBatch']->BankAccountName . ' ' . _('on') . ' ' . $_SESSION['ReceiptBatch']->DateBanked . '</p>';
 
 	echo '<table width=100% border=1><tr>
    			<th>' . _('Amount') .'<br/>' . _('Received') . '</th>
@@ -792,8 +792,8 @@ if (isset($_SESSION['ReceiptBatch'])){
    	foreach ($_SESSION['ReceiptBatch']->Items as $ReceiptItem) {
 
 	    echo '<tr>
-	    		<td align=right>' . number_format($ReceiptItem->Amount,2) . '</td>
-				<td align=right>' . number_format($ReceiptItem->Discount,2) . '</td>
+	    		<td class=number>' . number_format($ReceiptItem->Amount,2) . '</td>
+				<td class=number>' . number_format($ReceiptItem->Discount,2) . '</td>
 				<td>' . stripslashes($ReceiptItem->CustomerName) . '</td>
 				<td>' . $ReceiptItem->GLCode . "</td>
 				<td><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $ReceiptItem->ID . "'>" . _('Delete') . '</a></td>
@@ -803,7 +803,7 @@ if (isset($_SESSION['ReceiptBatch'])){
 
    	}
 
-   	echo '<TR><TD ALIGN=RIGHT><B>' . number_format($BatchTotal,2) . '</B></td></TR></TABLE>';
+   	echo '<tr><td class=number><b>' . number_format($BatchTotal,2) . '</b></td></tr></table>';
 }
 
 /*this next block of ifs deals with what information to display for input into the form
@@ -830,7 +830,7 @@ if (isset($_SESSION['CustomerRecord'])
 		AND isset($_SESSION['ReceiptBatch'])){
 /*a customer is selected  */
 
-	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" TITLE="' . _('Customer') . '" ALT="">' . ' ' . $_SESSION['CustomerRecord']['name'] . ' - (' . _('All amounts stated in') . ' ' . $_SESSION['CustomerRecord']['currency'] . ')' . _('Terms') . ': ' . $_SESSION['CustomerRecord']['terms'] . '<br/>' . _('Credit Limit') . ': ' . number_format($_SESSION['CustomerRecord']['creditlimit'],0) . '  ' . _('Credit Status') . ': ' . $_SESSION['CustomerRecord']['reasondescription'];
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . $_SESSION['CustomerRecord']['name'] . ' - (' . _('All amounts stated in') . ' ' . $_SESSION['CustomerRecord']['currency'] . ')' . _('Terms') . ': ' . $_SESSION['CustomerRecord']['terms'] . '<br/>' . _('Credit Limit') . ': ' . number_format($_SESSION['CustomerRecord']['creditlimit'],0) . '  ' . _('Credit Status') . ': ' . $_SESSION['CustomerRecord']['reasondescription'];
 
 	if ($_SESSION['CustomerRecord']['dissallowinvoices']!=0){
 	   echo '<br><font color=red size=4><b>' . _('ACCOUNT ON HOLD') . '</font></b><br/>';
@@ -846,15 +846,15 @@ if (isset($_SESSION['CustomerRecord'])
 			</tr>';
 
 	echo '<tr>
-		<td align=right>' . number_format($_SESSION['CustomerRecord']['balance'],2) . '</td>
-		<td align=right>' . number_format(($_SESSION['CustomerRecord']['balance'] - $_SESSION['CustomerRecord']['due']),2) . '</td>
-		<td align=right>' . number_format(($_SESSION['CustomerRecord']['due']-$_SESSION['CustomerRecord']['overdue1']),2) . '</td>
-		<td align=right>' . number_format(($_SESSION['CustomerRecord']['overdue1']-$_SESSION['CustomerRecord']['overdue2']) ,2) . '</td>
-		<td align=right>' . number_format($_SESSION['CustomerRecord']['overdue2'],2) . '</td>
+		<td class=number>' . number_format($_SESSION['CustomerRecord']['balance'],2) . '</td>
+		<td class=number>' . number_format(($_SESSION['CustomerRecord']['balance'] - $_SESSION['CustomerRecord']['due']),2) . '</td>
+		<td class=number>' . number_format(($_SESSION['CustomerRecord']['due']-$_SESSION['CustomerRecord']['overdue1']),2) . '</td>
+		<td class=number>' . number_format(($_SESSION['CustomerRecord']['overdue1']-$_SESSION['CustomerRecord']['overdue2']) ,2) . '</td>
+		<td class=number>' . number_format($_SESSION['CustomerRecord']['overdue2'],2) . '</td>
 		</tr>
 		</table><br>';
 
-	echo '<center><table>';
+	echo '<table>';
 
     $DisplayDiscountPercent = number_format($_SESSION['CustomerRecord']['pymtdiscount']*100,2) . "%";
 
@@ -866,7 +866,7 @@ if (isset($_SESSION['CustomerRecord'])
 if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 /* Set up a heading for the transaction entry for a GL Receipt */
 
-	echo '<br/><center><font size=4>' . _('General Ledger Receipt Entry') . '</font><table>';
+	echo '<br/><font size=4>' . _('General Ledger Receipt Entry') . '</font><table>';
 
 	//Select the tag
 	echo '<tr><td>' . _('Select Tag') . ':</td><td><select name="tag">';
@@ -877,19 +877,19 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 		ORDER BY tagref';
 
 	$result=DB_query($SQL,$db);
-	echo '<OPTION value=0>0 - None';
+	echo '<option value=0>0 - None';
 	while ($myrow=DB_fetch_array($result)){
     	if (isset($_POST['tag']) and $_POST['tag']==$myrow["tagref"]){
-		echo '<OPTION selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+		echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
     	} else {
-			echo '<OPTION value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+			echo '<option value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
     	}
 	}
 	echo '</select></td></tr>';
 // End select tag
 
 	/*now set up a GLCode field to select from avaialble GL accounts */
-	echo '<tr><td>' . _('GL Account') . ':</td><TD><SELECT tabindex=8 name="GLCode">';
+	echo '<tr><td>' . _('GL Account') . ':</td><td><select tabindex=8 name="GLCode">';
 	$SQL = 'SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode';
 	$result=DB_query($SQL,$db);
 	if (DB_num_rows($result)==0){
@@ -929,12 +929,12 @@ if (((isset($_SESSION['CustomerRecord'])
 		$_POST['Narrative']='';
 	}
 	echo '<tr><td>' . _('Amount of Receipt') . ':</td>
-		<td><input tabindex=9 type="text" name="Amount" maxlength=12 size=13 onKeyPress="return restrictToNumbers(this, event)"  onChange="numberFormat(this,2)" onFocus="return setTextAlign(this, '."'".'right'."'".')" value="' . $_POST['Amount'] . '"></td>
+		<td><input tabindex=9 type="text" name="Amount" maxlength=12 size=13 class=number value="' . $_POST['Amount'] . '"></td>
 	</tr>';
 
 	if (!isset($_POST['GLEntry'])){
 		echo '<tr><td>' . _('Amount of Discount') . ':</td>
-			<td><input tabindex=10 type="text" name="Discount" maxlength=12 size=13 onKeyPress="return restrictToNumbers(this, event)"  onChange="numberFormat(this,2)" onFocus="return setTextAlign(this, '."'".'right'."'".')" value="' . $_POST['Discount'] . '"> ' . _('agreed prompt payment discount is') . ' ' . $DisplayDiscountPercent . '</td></TR>';
+			<td><input tabindex=10 type="text" name="Discount" maxlength=12 size=13 class=number value="' . $_POST['Discount'] . '"> ' . _('agreed prompt payment discount is') . ' ' . $DisplayDiscountPercent . '</td></tr>';
 	} else {
 		echo '<input tabindex=11 type="hidden" name="Discount" Value=0>';
 	}
@@ -944,16 +944,16 @@ if (((isset($_SESSION['CustomerRecord'])
 	echo '<tr><td>' . _('Narrative') . ':</td>
 		<td><input tabindex=13 type="text" name="Narrative" maxlength=30 size=32 value="' . $_POST['Narrative'] . '"></td></tr>';
 	echo '</table>';
-	echo '<input tabindex=14 type="submit" name="Process" value="' . _('Accept') . '">';
-	echo '<input tabindex=14 type="submit" name="Cancel" value="' . _('Cancel') . '">';
+	echo '<div class="centre"><input tabindex=14 type="submit" name="Process" value="' . _('Accept') . '">';
+	echo '<input tabindex=14 type="submit" name="Cancel" value="' . _('Cancel') . '"></div>';
 
 } elseif (isset($_SESSION['ReceiptBatch']) && !isset($_POST['GLEntry'])){
 
       /*Show the form to select a customer */
-        echo '<B>';
+        echo '<b>';
 
 	echo $msg;
-	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" TITLE="' . _('Customer') . '" ALT="">' . ' ' . _('Select a Customer') . '</b>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Select a Customer') . '</b>';
 	echo '<table cellpadding=3 colspan=4>';
 	echo '<tr><td>' . _('Text in the Customer') . ' ' . '<b>' . _('name') . '</b>:</td>';
 	echo '<td><input tabindex=9 type="text" name="Keywords" size=15 maxlength=25></td>';
@@ -964,19 +964,19 @@ if (((isset($_SESSION['CustomerRecord'])
 	echo '<td>' . _('Customer invoice number') . ':</td>';
 	echo '<td><input tabindex=11 type="text" name="CustInvNo" size=8 maxlength=8></td>';
 	echo '</tr></table>';
-	echo '<center>';
+	echo '<div class="centre">';
 	echo '<input tabindex=11 type=submit name="Search" value="' . _('Search Now') . '">';
 	echo '<br/><br/><input tabindex=12 type=submit name="GLEntry" value="' . _('Enter A GL Receipt') . '">';
 
 	if (count($_SESSION['ReceiptBatch']->Items) > 0){
-		echo '<br/><br/><input tabindex=13 type=submit name="CommitBatch" VALUE="' . _('Accept and Process Batch') . '"></center>';
+		echo '<br/><br/><input tabindex=13 type=submit name="CommitBatch" VALUE="' . _('Accept and Process Batch') . '"></div>';
 	}
 
 	If (isset($CustomerSearchResult)) {
 
-		echo '<center><table cellpadding=2 colspan=7 border=2>';
+		echo '<table cellpadding=2 colspan=7 border=2>';
 		$TableHeader = '<tr><th>' . _('Code') . '</th>
-							<th>' . _('Customer Name') . '</th></TR>';
+							<th>' . _('Customer Name') . '</th></tr>';
 		echo $TableHeader;
 		$j = 1;
 		$k = 0; //row counter to determine background colour
@@ -1006,7 +1006,7 @@ if (((isset($_SESSION['CustomerRecord'])
 		}
 	//end of while loop
 
-		echo '</table></center>';
+		echo '</table>';
 
 	}
 	//end if results to show

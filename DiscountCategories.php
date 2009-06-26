@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 11;
 
@@ -181,7 +181,7 @@ if (isset($_POST['selectchoice'])) {
 		echo '<br><table border=1>';
 		echo "<tr>
 			<th>". _('Discount Category') ."</th>
-			<th>". _('Item') .'</th></TR>';
+			<th>". _('Item') .'</th></tr>';
 
 		$k=0; //row colour counter
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 11;
 include('includes/session.inc');
@@ -30,31 +30,31 @@ if (isset($_GET['SelectedFreightCost'])){
 
 if (!isset($LocationFrom) OR !isset($ShipperID)) {
 
-	echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+	echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 	$sql = 'SELECT shippername, shipper_id FROM shippers';
 	$ShipperResults = DB_query($sql,$db);
 
-	echo '<CENTER><TABLE BORDER=1>
-		<TR>
-			<TD>' . _('Select A Freight Company to set up costs for') . "</TD>
-			<TD><SELECT name='ShipperID'>";
+	echo '<table border=1>
+		<tr>
+			<td>' . _('Select A Freight Company to set up costs for') . "</td>
+			<td><select name='ShipperID'>";
 
 	while ($myrow = DB_fetch_array($ShipperResults)){
-		echo '<OPTION VALUE=' . $myrow['shipper_id'] . '>' . $myrow['shippername'];
+		echo '<option VALUE=' . $myrow['shipper_id'] . '>' . $myrow['shippername'];
 	}
-	echo '</SELECT></TD></TR>
-			<TR>
-				<TD>' . _('Select the warehouse') . ' (' . _('ship from location') . ")</TD>
-				<TD><SELECT name='LocationFrom'>";
+	echo '</select></td></tr>
+			<tr>
+				<td>' . _('Select the warehouse') . ' (' . _('ship from location') . ")</td>
+				<td><select name='LocationFrom'>";
 
 	$sql = 'SELECT loccode, locationname FROM locations';
 	$LocationResults = DB_query($sql,$db);
 
 	while ($myrow = DB_fetch_array($LocationResults)){
-		echo '<OPTION VALUE=' . $myrow['loccode'] . '>' . $myrow['locationname'];
+		echo '<option VALUE=' . $myrow['loccode'] . '>' . $myrow['locationname'];
 	}
 
-	echo "</SELECT></TD></TR></TABLE><INPUT TYPE=SUBMIT VALUE='" . _('Accept') . "' NAME='Accept'></FORM>";
+	echo "</select></td></tr></table><div class='centre'><input type=submit VALUE='" . _('Accept') . "' name='Accept'></div></form>";
 
 } else {
 
@@ -66,7 +66,7 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 	$LocationResults = DB_query($sql,$db);
 	$myrow = DB_fetch_row($LocationResults);
 	$LocationName = $myrow[0];
-	echo '<FONT SIZE=4 COLOR=BLUE>' . _('For Deliveries From') . ' ' . $LocationName . ' ' . _('using') . ' ' . $ShipperName . '</FONT><BR>';
+	echo '<font size=4 color=BLUE>' . _('For Deliveries From') . ' ' . $LocationName . ' ' . _('using') . ' ' . $ShipperName . '</font><br>';
 
 }
 
@@ -231,12 +231,12 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 
 		
 		printf("<td>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>
+			<td class=number>%s</td>
+			<td class=number>%s</td>
+			<td class=number>%s</td>
+			<td class=number>%s</td>
+			<td class=number>%s</td>
+			<td class=number>%s</td>
 			<td><a href=\"%s&SelectedFreightCost=%s&LocationFrom=%s&ShipperID=%s\">" . _('Edit') . "</td>
 			<td><a href=\"%s&SelectedFreightCost=%s&LocationFrom=%s&ShipperID=%s&delete=yes\">" . _('Delete') . "</td></tr>",
 			$myrow[1],
@@ -264,12 +264,12 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 //end of ifs and buts!
 
 if (isset($SelectedFreightCost)) {
-	echo "<Center><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . '&LocationFrom=' . $LocationFrom . '&ShipperID=' . $ShipperID . "'>" . _('Show all freight costs for') . ' ' . $ShipperName  . ' ' . _('from') . ' ' . $LocationName . '</a></Center>';
+	echo "<div class='centre'><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . '&LocationFrom=' . $LocationFrom . '&ShipperID=' . $ShipperID . "'>" . _('Show all freight costs for') . ' ' . $ShipperName  . ' ' . _('from') . ' ' . $LocationName . '</a></div>';
 }
 
 if (isset($LocationFrom) AND isset($ShipperID)) {
 
-	echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+	echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 
 	if (isset($SelectedFreightCost)) {
 		//editing an existing freight cost item
@@ -299,15 +299,15 @@ if (isset($LocationFrom) AND isset($ShipperID)) {
 		$_POST['FixedPrice'] = $myrow['fixedprice'];
 		$_POST['MinimumChg'] = $myrow['minimumchg'];
 		
-		echo "<INPUT TYPE=HIDDEN NAME='SelectedFreightCost' VALUE=$SelectedFreightCost>";
+		echo "<input type=hidden name='SelectedFreightCost' VALUE=$SelectedFreightCost>";
 
 	} else {
 		$_POST['FixedPrice'] = 0;
 		$_POST['MinimumChg'] = 0;
 
 	}
-	echo "<input type=HIDDEN name='LocationFrom' value='$LocationFrom'>";
-	echo "<input type=HIDDEN name='ShipperID' value=$ShipperID>";
+	echo "<input type=hidden name='LocationFrom' value='$LocationFrom'>";
+	echo "<input type=hidden name='ShipperID' value=$ShipperID>";
 
 	if (!isset($_POST['Destination'])) {$_POST['Destination']='';}
 	if (!isset($_POST['CubRate'])) {$_POST['CubRate']='';}
@@ -315,27 +315,27 @@ if (isset($LocationFrom) AND isset($ShipperID)) {
 	if (!isset($_POST['MAXKGs'])) {$_POST['MAXKGs']='';}
 	if (!isset($_POST['MAXCub'])) {$_POST['MAXCub']='';}
 	
-	echo '<TABLE>
-		<TR><TD>' . _('Destination') . ":</TD>
-		<TD><input type='text' maxlength=20 size=20 name='Destination' VALUE='" . $_POST['Destination'] . "'></TD></TR>";
-	echo '<TR><TD>' . _('Rate per Cubic Metre') . ":</TD>
-		<TD><input type='Text' name='CubRate' SIZE=6 MAXLENGTH=5 value=" . $_POST['CubRate'] . "></TD></TR>";
-	echo '<TR><TD>' . _('Rate Per KG') . ":</TD>
-		<TD><input type='Text' name='KGRate' SIZE=6 MAXLENGTH=5 value=" . $_POST['KGRate'] . "></TD></TR>";
-	echo '<TR><TD>' . _('Maximum Weight Per Package (KGs)') . ":</a></TD>
-		<TD><input type='Text' name='MAXKGs' SIZE=8 MAXLENGTH=7 value=" . $_POST['MAXKGs'] . "></TD></TR>";
-	echo '<TR><TD>' . _('Maximum Volume Per Package (cubic metres)') . ":</a></TD>
-		<TD><input type='Text' name='MAXCub' SIZE=8 MAXLENGTH=7 value=" . $_POST['MAXCub'] . "></TD></TR>";
-	echo '<TR><TD>' . _('Fixed Price (zero if rate per KG or Cubic)') . ":</a></TD>
-		<TD><input type='Text' name='FixedPrice' SIZE=6 MAXLENGTH=5 value=" . $_POST['FixedPrice'] . "></TD></TR>";
-	echo '<TR><TD>' . _('Minimum Charge (0 is N/A)') . ":</a></TD>
-		<TD><input type='Text' name='MinimumChg' SIZE=6 MAXLENGTH=5 value=" . $_POST['MinimumChg'] . "></TD></TR>";
+	echo '<table>
+		<tr><td>' . _('Destination') . ":</td>
+		<td><input type='text' maxlength=20 size=20 name='Destination' VALUE='" . $_POST['Destination'] . "'></td></tr>";
+	echo '<tr><td>' . _('Rate per Cubic Metre') . ":</td>
+		<td><input type='Text' name='CubRate' class=number size=6 maxlength=5 value=" . $_POST['CubRate'] . "></td></tr>";
+	echo '<tr><td>' . _('Rate Per KG') . ":</td>
+		<td><input type='Text' name='KGRate' class=number size=6 maxlength=5 value=" . $_POST['KGRate'] . "></td></tr>";
+	echo '<tr><td>' . _('Maximum Weight Per Package (KGs)') . ":</a></td>
+		<td><input type='Text' name='MAXKGs' class=number size=8 maxlength=7 value=" . $_POST['MAXKGs'] . "></td></tr>";
+	echo '<tr><td>' . _('Maximum Volume Per Package (cubic metres)') . ":</a></td>
+		<td><input type='Text' name='MAXCub' class=number size=8 maxlength=7 value=" . $_POST['MAXCub'] . "></td></tr>";
+	echo '<tr><td>' . _('Fixed Price (zero if rate per KG or Cubic)') . ":</a></td>
+		<td><input type='Text' name='FixedPrice' class=number size=6 maxlength=5 value=" . $_POST['FixedPrice'] . "></td></tr>";
+	echo '<tr><td>' . _('Minimum Charge (0 is N/A)') . ":</a></td>
+		<td><input type='Text' name='MinimumChg' class=number size=6 maxlength=5 value=" . $_POST['MinimumChg'] . "></td></tr>";
 
-	echo '</TABLE>';
+	echo '</table>';
 
-	echo "<CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'>";
+	echo "<div class='centre'><input type='Submit' name='submit' value='" . _('Enter Information') . "'></div>";
 
-	echo '</FORM>';
+	echo '</form>';
 
 } //end if record deleted no point displaying form to add record
 

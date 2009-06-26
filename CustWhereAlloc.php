@@ -1,39 +1,39 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
 $title = _('Customer How Paid Inquiry');
 include('includes/header.inc');
 
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
+echo "<form action='" . $_SERVER['PHP_SELF'] . "' method=post>";
 
-echo '<CENTER><TABLE CELLPADDING=2><TR>';
+echo '<table cellpadding=2><tr>';
 
-echo '<TD>' . _('Type') . ":</TD><TD><SELECT tabindex=1 name='TransType'> ";
+echo '<td>' . _('Type') . ":</td><td><select tabindex=1 name='TransType'> ";
 
 $sql = 'SELECT typeid, typename FROM systypes WHERE typeid = 10 OR typeid=12';
 $resultTypes = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultTypes)){
     if (isset($_POST['TransType'])){
         if ($myrow['typeid'] == $_POST['TransType']){
-             echo "<OPTION SELECTED Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
+             echo "<option selected Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
         } else {
-             echo "<OPTION Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
+             echo "<option Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
         }
     } else {
-             echo "<OPTION Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
+             echo "<option Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
     }
 }
-echo '</SELECT></TD>';
+echo '</select></td>';
 
 if (!isset($_POST['TransNo'])) {$_POST['TransNo']='';}
-echo '<TD>'._('Transaction Number').":</TD>
-	<TD><INPUT tabindex=2 TYPE=TEXT NAME='TransNo' MAXLENGTH=10 SIZE=10 VALUE=". $_POST['TransNo'] . '></TD>';
+echo '<td>'._('Transaction Number').":</td>
+	<td><input tabindex=2 type=TEXT name='TransNo' maxlength=10 size=10 VALUE=". $_POST['TransNo'] . '></td>';
 
-echo "</TR></TABLE>
-	<INPUT tabindex=3 TYPE=SUBMIT NAME='ShowResults' VALUE="._('Show How Allocated').'>';
-echo '<HR>';
+echo "</tr></table>
+	<div class='centre'><input tabindex=3 type=submit name='ShowResults' VALUE="._('Show How Allocated').'></div>';
+echo '<hr>';
 
 if (isset($_POST['ShowResults']) AND  $_POST['TransNo']==''){
 	prnMsg(_('The transaction number to be queried must be entered first'),'warn');
@@ -54,7 +54,7 @@ if (isset($_POST['ShowResults']) AND  $_POST['TransNo']!=''){
         $myrow = DB_fetch_array($result);
         $AllocToID = $myrow['id'];
 
-        echo '<CENTER><FONT SIZE=3><B><BR>'._('Allocations made against invoice number') . ' ' . $_POST['TransNo'] . ' '._('Transaction Total').': '. number_format($myrow['totamt'],2) . '</FONT></B>';
+        echo '<div class="centre"><font size=3><b><br>'._('Allocations made against invoice number') . ' ' . $_POST['TransNo'] . ' '._('Transaction Total').': '. number_format($myrow['totamt'],2) . '</font></b></div>';
 
         $sql = "SELECT type,
 			transno,
@@ -75,15 +75,15 @@ if (isset($_POST['ShowResults']) AND  $_POST['TransNo']!=''){
 	if (DB_num_rows($TransResult)==0){
 		prnMsg(_('There are no allocations made against this transaction'),'info');
 	} else {
-		echo '<TABLE CELLPADDING=2 BORDER=2>';
+		echo '<table cellpadding=2 BORDER=2>';
 	
-		$tableheader = "<TR><TH>"._('Type')."</TH>
-					<TH>"._('Number')."</TH>
-					<TH>"._('Reference')."</TH>
-					<TH>"._('Ex Rate')."</TH>
-					<TH>"._('Amount')."</TH>
-					<TH>"._('Alloc').'</TH>
-				</TR>';
+		$tableheader = "<tr><th>"._('Type')."</th>
+					<th>"._('Number')."</th>
+					<th>"._('Reference')."</th>
+					<th>"._('Ex Rate')."</th>
+					<th>"._('Amount')."</th>
+					<th>"._('Alloc').'</th>
+				</tr>';
 		echo $tableheader;
 	
 		$RowCounter = 1;
@@ -109,8 +109,8 @@ if (isset($_POST['ShowResults']) AND  $_POST['TransNo']!=''){
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td ALIGN=RIGHT>%s</td>
-				<td ALIGN=RIGHT>%s</td>
+				<td class=number>%s</td>
+				<td class=number>%s</td>
 				</tr>",
 				$TransType,
 				$myrow['transno'],
@@ -128,13 +128,13 @@ if (isset($_POST['ShowResults']) AND  $_POST['TransNo']!=''){
 		$AllocsTotal +=$myrow['amt'];
 		}
 		//end of while loop
-		echo '<TR><TD COLSPAN = 6 ALIGN=RIGHT>' . number_format($AllocsTotal,2) . '</TD></TR>';
-		echo '</TABLE>';
+		echo '<tr><td colspan = 6 class=number>' . number_format($AllocsTotal,2) . '</td></tr>';
+		echo '</table>';
 	}
     }
 }
 
-echo '</FORM></CENTER>';
+echo '</form>';
 include('includes/footer.inc');
 
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -138,7 +138,7 @@ if (isset($_POST['submit'])) {
     if ($myrow[0] > 0)
     {
         prnMsg(_('Cannot delete this currency because customer accounts have been created referring to this currency') .
-         	'<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer accounts that refer to this currency'),'warn');
+         	'<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer accounts that refer to this currency'),'warn');
     } else {
         $sql= "SELECT COUNT(*) FROM suppliers WHERE suppliers.currcode = '$SelectedCurrency'";
         $result = DB_query($sql,$db);
@@ -146,14 +146,14 @@ if (isset($_POST['submit'])) {
         if ($myrow[0] > 0)
         {
             prnMsg(_('Cannot delete this currency because supplier accounts have been created referring to this currency')
-             . '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('supplier accounts that refer to this currency'),'warn');
+             . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('supplier accounts that refer to this currency'),'warn');
         } else {
             $sql= "SELECT COUNT(*) FROM banktrans WHERE banktrans.currcode = '" . $SelectedCurrency . "'";
             $result = DB_query($sql,$db);
             $myrow = DB_fetch_row($result);
             if ($myrow[0] > 0){
                 prnMsg(_('Cannot delete this currency because there are bank transactions that use this currency') .
-                '<BR>' . ' ' . _('There are') . ' ' . $myrow[0] . ' ' . _('bank transactions that refer to this currency'),'warn');
+                '<br>' . ' ' . _('There are') . ' ' . $myrow[0] . ' ' . _('bank transactions that refer to this currency'),'warn');
             } elseif ($FunctionalCurrency==$SelectedCurrency){
                 prnMsg(_('Cannot delete this currency because it is the functional currency of the company'),'warn');
             } else {
@@ -177,7 +177,7 @@ or deletion of the records*/
     $sql = 'SELECT currency, currabrev, country, hundredsname, rate FROM currencies';
     $result = DB_query($sql, $db);
 
-    echo '<CENTER><table border=1>';
+    echo '<table border=1>';
     echo '<tr><td></td>
     		<th>' . _('ISO4217 Code') . '</th>
     		<th>' . _('Currency Name') . '</th>
@@ -214,8 +214,8 @@ or deletion of the records*/
 	    			<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td align=right>%s</td>
-					<td align=right>%s</td>
+					<td class=number>%s</td>
+					<td class=number>%s</td>
 					<td><a href=\"%s&SelectedCurrency=%s\">%s</a></td>
 					<td><a href=\"%s&SelectedCurrency=%s&delete=1\">%s</a></td>
 					<td><a href=\"%s/ExchangeRateTrend.php?%s\">" . _('Graph') . "</a></td>
@@ -241,8 +241,8 @@ or deletion of the records*/
 	    			<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td align=right>%s</td>
-					<td colspan=4 align=\"center\">%s</td>
+					<td class=number>%s</td>
+					<td colspan=4>%s</td>
 					</tr>",
 					$ImageFile,
 					$myrow[1],
@@ -254,19 +254,19 @@ or deletion of the records*/
         }
 
     } //END WHILE LIST LOOP
-    echo '</table></CENTER><BR>';
+    echo '</table><br>';
 } //end of ifs and buts!
 
 
 if (isset($SelectedCurrency)) {
-    echo '<Center><a href=' .$_SERVER['PHP_SELF']  . '?' . SID. '>'._('Show all currency definitions').'</a></Center>';
+    echo '<div class="centre"><a href=' .$_SERVER['PHP_SELF']  . '?' . SID. '>'._('Show all currency definitions').'</a></div>';
 }
 
-echo '<BR>';
+echo '<br>';
 
 if (!isset($_GET['delete'])) {
 
-    echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+    echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
     if (isset($SelectedCurrency) AND $SelectedCurrency!='') {
         //editing an existing payment terms
@@ -294,43 +294,43 @@ if (!isset($_GET['delete'])) {
 
         echo '<input type="hidden" name="SelectedCurrency" VALUE="' . $SelectedCurrency . '">';
         echo '<input type="hidden" name="Abbreviation" VALUE="' . $_POST['Abbreviation'] . '">';
-        echo '<center><table><tr>
+        echo '<table><tr>
 			<td>' . _('ISO 4217 Currency Code').':</td>
 			<td>';
         echo $_POST['Abbreviation'] . '</td></tr>';
 
     } else { //end of if $SelectedCurrency only do the else when a new record is being entered
 		if (!isset($_POST['Abbreviation'])) {$_POST['Abbreviation']='';}
-        echo '<center><table><tr>
+        echo '<table><tr>
 			<td>' ._('Currency Abbreviation') . ':</td>
 			<td><input ' . (in_array('Abbreviation',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Abbreviation" value="' . $_POST['Abbreviation'] . '" size=4 maxlength=3></td></tr>';
     }
 
-    echo '<TR><TD>'._('Currency Name').':</TD>';
-    echo '<TD>';
+    echo '<tr><td>'._('Currency Name').':</td>';
+    echo '<td>';
 	if (!isset($_POST['CurrencyName'])) {$_POST['CurrencyName']='';}
-    echo '<INPUT ' . (in_array('CurrencyName',$Errors) ?  'class="inputerror"' : '' ) .' TYPE="text" name="CurrencyName" SIZE=20 MAXLENGTH=20 VALUE="' . $_POST['CurrencyName'] . '">';
-    echo '</TD></TR>';
-    echo '<TR><TD>'._('Country').':</TD>';
-    echo '<TD>';
+    echo '<input ' . (in_array('CurrencyName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="CurrencyName" size=20 maxlength=20 VALUE="' . $_POST['CurrencyName'] . '">';
+    echo '</td></tr>';
+    echo '<tr><td>'._('Country').':</td>';
+    echo '<td>';
 	if (!isset($_POST['Country'])) {$_POST['Country']='';}
-    echo '<INPUT ' . (in_array('Country',$Errors) ?  'class="inputerror"' : '' ) .' TYPE="text" name="Country" SIZE=30 MAXLENGTH=50 VALUE="' . $_POST['Country'] . '">';
-    echo '</TD></TR>';
-    echo '<TR><TD>'._('Hundredths Name').':</TD>';
-    echo '<TD>';
+    echo '<input ' . (in_array('Country',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Country" size=30 maxlength=50 VALUE="' . $_POST['Country'] . '">';
+    echo '</td></tr>';
+    echo '<tr><td>'._('Hundredths Name').':</td>';
+    echo '<td>';
 	if (!isset($_POST['HundredsName'])) {$_POST['HundredsName']='';}
-    echo '<INPUT ' . (in_array('HundredsName',$Errors) ?  'class="inputerror"' : '' ) .' TYPE="text" name="HundredsName" SIZE=10 MAXLENGTH=15 VALUE="'. $_POST['HundredsName'].'">';
-    echo '</TD></TR>';
-    echo '<TR><TD>'._('Exchange Rate').':</TD>';
-    echo '<TD>';
+    echo '<input ' . (in_array('HundredsName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="HundredsName" size=10 maxlength=15 VALUE="'. $_POST['HundredsName'].'">';
+    echo '</td></tr>';
+    echo '<tr><td>'._('Exchange Rate').':</td>';
+    echo '<td>';
 	if (!isset($_POST['ExchangeRate'])) {$_POST['ExchangeRate']='';}
-    echo '<INPUT ' . (in_array('ExchangeRate',$Errors) ?  'class="inputerror"' : '' ) .' TYPE="text" name="ExchangeRate" SIZE=10 MAXLENGTH=9 VALUE='. $_POST['ExchangeRate'].'>';
-    echo '</TD></TR>';
-    echo '</TABLE>';
+    echo '<input ' . (in_array('ExchangeRate',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class=number name="ExchangeRate" size=10 maxlength=9 VALUE='. $_POST['ExchangeRate'].'>';
+    echo '</td></tr>';
+    echo '</table>';
 
-    echo '<CENTER><input type="Submit" name="submit" value='._('Enter Information').'>';
+    echo '<div class="centre"><input type="Submit" name="submit" value='._('Enter Information').'></div>';
 
-    echo '</FORM>';
+    echo '</form>';
 
 } //end if record deleted no point displaying form to add record
 

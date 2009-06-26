@@ -1,7 +1,7 @@
 <?php
 $PageSecurity = 2;
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 include('includes/session.inc');
 
 If (isset($_POST['PrintPDF'])
@@ -59,9 +59,9 @@ If (isset($_POST['PrintPDF'])
 		$title = _('Customer Balances') . ' - ' . _('Problem Report');
 		include('includes/header.inc');
 		prnMsg(_('The customer details could not be retrieved by the SQL because') . DB_error_msg($db),'error');
-		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		if ($debug==1){
-			echo "<BR>$SQL";
+			echo "<br>$SQL";
 		}
 		include('includes/footer.inc');
 		exit;
@@ -127,27 +127,27 @@ If (isset($_POST['PrintPDF'])
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
+		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table>";
 
-		echo '<TR><TD>' . _('From Customer Code') .":</FONT></TD><TD><input tabindex=1 Type=text maxlength=6 size=7 name=FromCriteria value='1'></TD></TR>";
-		echo '<TR><TD>' . _('To Customer Code') . ":</TD><TD><input tabindex=2 Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></TD></TR>";
+		echo '<tr><td>' . _('From Customer Code') .":</font></td><td><input tabindex=1 Type=text maxlength=6 size=7 name=FromCriteria value='1'></td></tr>";
+		echo '<tr><td>' . _('To Customer Code') . ":</td><td><input tabindex=2 Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></td></tr>";
 
-		echo '<TR><TD>' . _('Balances As At') . ":</TD><TD><SELECT tabindex=3 Name='PeriodEnd'>";
+		echo '<tr><td>' . _('Balances As At') . ":</td><td><select tabindex=3 Name='PeriodEnd'>";
 
 		$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
 		$Periods = DB_query($sql,$db,_('Could not retrieve period data because'),_('The SQL that failed to get the period data was'));
 
 		while ($myrow = DB_fetch_array($Periods,$db)){
 
-			echo '<OPTION VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
+			echo '<option VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 
 		}
 	}
 
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 
 
-	echo "</TABLE><INPUT tabindex=5 TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
+	echo "</table><div class='centre'><input tabindex=5 type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
 } /*end of else not PrintPDF */

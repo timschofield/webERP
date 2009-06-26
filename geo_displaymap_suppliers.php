@@ -82,11 +82,11 @@ var iconRed = new GIcon();
 
   <body onload="load()" onunload="GUnload()">
 <p>
-<? echo '<center><div align="center" id="map" style="width: ' . $map_width . 'px; height: ' . $map_height . 'px"></div></center>'; ?>
+<? echo '<div class="centre" id="map" style="width: ' . $map_width . 'px; height: ' . $map_height . 'px"></div>'; ?>
 </p>
   </body>
 <?
-echo '<center><a href="' . $rootpath . '/GeocodeSetup.php">' . _('Go to Geocode Setup') . '</a></Center></p>';
+echo '<div class="centre"><a href="' . $rootpath . '/GeocodeSetup.php">' . _('Go to Geocode Setup') . '</a></div></p>';
 include ('includes/footer.inc');
 ?>
 </html>

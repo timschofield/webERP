@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 15;
 
@@ -19,8 +19,8 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<P class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" TITLE="' . _('Customer Types') . '" ALT="">' . _('Customer Type Setup') . '</P>';
-echo '<DIV class="page_help_text">' . _('Add/edit/delete Customer Types') . '</DIV><BR>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Customer Types') . '" alt="">' . _('Customer Type Setup') . '</p>';
+echo '<div class="page_help_text">' . _('Add/edit/delete Customer Types') . '</div><br>';
 
 if (isset($_POST['submit'])) {
 
@@ -163,19 +163,19 @@ or deletion of the records*/
 	$sql = 'SELECT typeid, typename FROM debtortype';
 	$result = DB_query($sql,$db);
 
-	echo '<CENTER><TABLE BORDER=1>';
+	echo '<table border=1>';
 	echo "<tr>
-		<TH>" . _('Type Name') . "</TH>
-	</TR>";
+		<th>" . _('Type Name') . "</th>
+	</tr>";
 
 $k=0; //row colour counter
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($k==1){
-		echo '<TR class="EvenTableRows">';
+		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo '<TR class="OddTableRows">';
+		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
 
@@ -189,19 +189,19 @@ while ($myrow = DB_fetch_row($result)) {
 		$_SERVER['PHP_SELF'] . '?' . SID, $myrow[0]);
 	}
 	//END WHILE LIST LOOP
-	echo '</table></CENTER>';
+	echo '</table>';
 }
 
 //end of ifs and buts!
 if (isset($SelectedType)) {
 
-	echo '<CENTER><P><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Show All Types Defined') . '</A></CENTER><p>';
+	echo '<div class="centre"><p><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Show All Types Defined') . '</a></div><p>';
 }
 if (! isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	echo '<P><CENTER><TABLE BORDER=1>'; //Main table
-	echo '<TD><TABLE>'; // First column
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<p><table border=1>'; //Main table
+	echo '<td><table>'; // First column
 
 
 	// The user wish to EDIT an existing type
@@ -219,33 +219,33 @@ if (! isset($_GET['delete'])) {
 		$_POST['typeid'] = $myrow['typeid'];
 		$_POST['typename']  = $myrow['typename'];
 
-		echo "<INPUT TYPE=HIDDEN NAME='SelectedType' VALUE=" . $SelectedType . ">";
-		echo "<INPUT TYPE=HIDDEN NAME='typeid' VALUE=" . $_POST['typeid'] . ">";
-		echo "<CENTER><TABLE> <TR><TD>";
+		echo "<input type=hidden name='SelectedType' VALUE=" . $SelectedType . ">";
+		echo "<input type=hidden name='typeid' VALUE=" . $_POST['typeid'] . ">";
+		echo "<table> <tr><td>";
 
 		// We dont allow the user to change an existing type code
 
-		echo 'Type ID: ' . $_POST['typeid'] . '</TD></TR>';
+		echo 'Type ID: ' . $_POST['typeid'] . '</td></tr>';
 
 	} else 	{
 
 		// This is a new type so the user may volunteer a type code
 
-		echo "<CENTER><TABLE>";
+		echo "<table>";
 
 	}
 
 	if (!isset($_POST['typename'])) {
 		$_POST['typename']='';
 	}
-	echo "<TR><TD>" . _('Type Name') . ":</TD><TD><input type='Text' name='typename' value='" . $_POST['typename'] . "'></TD></TR>";
+	echo "<tr><td>" . _('Type Name') . ":</td><td><input type='Text' name='typename' value='" . $_POST['typename'] . "'></td></tr>";
 
-   	echo '</TABLE>'; // close table in first column
-   	echo '</TD></TR></TABLE>'; // close main table
+   	echo '</table>'; // close table in first column
+   	echo '</td></tr></table>'; // close main table
 
-	echo '<P><INPUT TYPE=submit NAME=submit VALUE="' . _('Accept') . '"><INPUT TYPE=submit NAME=Cancel VALUE="' . _('Cancel') . '"></CENTER>';
+	echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
 
-	echo '</FORM>';
+	echo '</form>';
 
 } // end if user wish to delete
 

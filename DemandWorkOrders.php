@@ -24,7 +24,7 @@ $SQL = "SELECT stockmaster.stockid,
 	stockmaster.units
 	ORDER BY stockmaster.stockid";
 $StockItemsResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
-echo '<CENTER><TABLE>';
+echo '<table>';
 echo '<tr><td class="label">Stock ID</td>';
 echo '<td class="label">Work Order</td>';
 echo '<td class="label">Description</td>';
@@ -88,7 +88,7 @@ while ($myrow=DB_fetch_array($StockItemsResult)) {
    		}
    	}
     	$WO = GetNextTransNo(30,$db);
-    	// echo $WO. "= WO<BR>";
+    	// echo $WO. "= WO<br>";
     	$InsWOResult = DB_query("INSERT INTO workorders (wo,
                                                      loccode,
                                                      requiredby,
@@ -126,9 +126,9 @@ while ($myrow=DB_fetch_array($StockItemsResult)) {
                          AND loccode ='" . $_POST['StockLocation'] . "'";
 
 		$result = DB_query($sql2,$db,$ErrMsg);
-   	echo '<tr><TD>' . $StockId  . '</TD>';
+   	echo '<tr><td>' . $StockId  . '</td>';
    	echo '<td>' . $WO . '</td>';
-   	echo '<TD>' .$StockDescription . '</td>';
+   	echo '<td>' .$StockDescription . '</td>';
 		echo '<td class="label">' . $DemandQuantity .'</td>';
 		$PictureToDisplay = '/srv/www/htdocs/batavg/webERP2/companies/' . $_SESSION['DatabaseName'] . '/part_pics/' . $StockId . '.jpg' ;
 		If(file_exists ( $PictureToDisplay))
@@ -169,7 +169,7 @@ while ($myrow=DB_fetch_array($StockItemsResult)) {
    }
 }
 echo '</table>';
-echo '<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>';
+echo '<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>';
 include('includes/footer.inc');
 
 ?>

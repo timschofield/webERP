@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 2;
 
@@ -8,31 +8,31 @@ include('includes/session.inc');
 $title = _('Customer Transactions Inquiry');
 include('includes/header.inc');
 
-echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Transaction Inquiry') . '" ALT="">' . ' ' . _('Transaction Inquiry') . '</P>';
-echo '<DIV CLASS="page_help_text">' . _('Choose which type of transaction to report on.') . '</DIV><BR>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Transaction Inquiry') . '" alt="">' . ' ' . _('Transaction Inquiry') . '</p>';
+echo '<div class="page_help_text">' . _('Choose which type of transaction to report on.') . '</div><br>';
 
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
+echo "<form action='" . $_SERVER['PHP_SELF'] . "' method=post>";
 
-echo '<CENTER><TABLE CELLPADDING=2><TR>';
+echo '<table cellpadding=2><tr>';
 
-echo '<TD>' . _('Type') . ":</TD><TD><SELECT tabindex=1 name='TransType'> ";
+echo '<td>' . _('Type') . ":</td><td><select tabindex=1 name='TransType'> ";
 
 $sql = 'SELECT typeid, typename FROM systypes WHERE typeid >= 10 AND typeid <= 14';
 $resultTypes = DB_query($sql,$db);
 
-echo "<OPTION Value='All'> All";
+echo "<option Value='All'> All";
 while ($myrow=DB_fetch_array($resultTypes)){
 	if (isset($_POST['TransType'])){
 		if ($myrow['typeid'] == $_POST['TransType']){
-		     echo "<OPTION SELECTED Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
+		     echo "<option selected Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
 		} else {
-		     echo "<OPTION Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
+		     echo "<option Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
 		}
 	} else {
-		     echo "<OPTION Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
+		     echo "<option Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
 	}
 }
-echo '</SELECT></TD>';
+echo '</select></td>';
 
 if (!isset($_POST['FromDate'])){
 	$_POST['FromDate']=Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
@@ -40,13 +40,13 @@ if (!isset($_POST['FromDate'])){
 if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
-echo '<TD>' . _('From') . ':</TD><TD><INPUT tabindex="2" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" TYPE="TEXT" NAME="FromDate" MAXLENGTH="10" SIZE="11" VALUE="' . $_POST['FromDate'] . '"></TD>';
-echo '<TD>' . _('To') . ':</TD><TD><INPUT tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" TYPE="TEXT" NAME="ToDate" MAXLENGTH="10" SIZE="11" VALUE="' . $_POST['ToDate'] . '"></TD>';
+echo '<td>' . _('From') . ':</td><td><input tabindex="2" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="TEXT" name="FromDate" maxlength="10" size="11" VALUE="' . $_POST['FromDate'] . '"></td>';
+echo '<td>' . _('To') . ':</td><td><input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="TEXT" name="ToDate" maxlength="10" size="11" VALUE="' . $_POST['ToDate'] . '"></td>';
 
-echo "</TR></TABLE><INPUT tabindex=4 TYPE=SUBMIT NAME='ShowResults' VALUE='" . _('Show Transactions') . "'>";
-echo '<HR>';
+echo "</tr></table><div class='centre'><input tabindex=4 type=submit name='ShowResults' VALUE='" . _('Show Transactions') . "'>";
+echo '<hr>';
 
-echo '</FORM></CENTER>';
+echo '</form></div>';
 
 if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
    $SQL_FromDate = FormatDateForSQL($_POST['FromDate']);
@@ -77,20 +77,20 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
    $DbgMsg =  _('The SQL that failed was');
    $TransResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
 
-   echo '<CENTER><TABLE CELLPADDING=2 BORDER=2>';
+   echo '<table cellpadding=2 border=2>';
 
-   $tableheader = "<TR>
-			<TH>" . _('Type') . "</TH>
-			<TH>" . _('Number') . "</TH>
-			<TH>" . _('Date') . "</TH>
-			<TH>" . _('Customer') . "</TH>
-			<TH>" . _('Branch') . "</TH>
-			<TH>" . _('Reference') . "</TH>
-			<TH>" . _('Comments') . "</TH>
-			<TH>" . _('Order') . "</TH>
-			<TH>" . _('Ex Rate') . "</TH>
-			<TH>" . _('Amount') . "</TH>
-			<TH>" . _('Currency') . '</TH></TR>';
+   $tableheader = "<tr>
+			<th>" . _('Type') . "</th>
+			<th>" . _('Number') . "</th>
+			<th>" . _('Date') . "</th>
+			<th>" . _('Customer') . "</th>
+			<th>" . _('Branch') . "</th>
+			<th>" . _('Reference') . "</th>
+			<th>" . _('Comments') . "</th>
+			<th>" . _('Order') . "</th>
+			<th>" . _('Ex Rate') . "</th>
+			<th>" . _('Amount') . "</th>
+			<th>" . _('Currency') . '</th></tr>';
 	echo $tableheader;
 
 	$RowCounter = 1;
@@ -114,14 +114,14 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 				<td>%s</td>
 				<td width='200'>%s</td>
 				<td>%s</td>
-				<td ALIGN=RIGHT>%s</td>
-				<td ALIGN=RIGHT>%s</td>
+				<td class=number>%s</td>
+				<td class=number>%s</td>
 				<td>%s</td>";
 
 		if ($_POST['TransType']==10){ /* invoices */
 
 			printf("$format_base
-				<td><a target='_blank' href='%s/PrintCustTrans.php?%&FromTransNo=%s&InvOrCredit=Invoice'><IMG SRC='%s' TITLE='" . _('Click to preview the invoice') . "'></a></td>
+				<td><a target='_blank' href='%s/PrintCustTrans.php?%&FromTransNo=%s&InvOrCredit=Invoice'><IMG SRC='%s' title='" . _('Click to preview the invoice') . "'></a></td>
 				</tr>",
 				$myrow['typename'],
 				$myrow['transno'],
@@ -140,7 +140,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 				$rootpath.'/css/'.$theme.'/images/preview.gif');
 		} elseif ($_POST['TransType']==11){ /* credit notes */
 			printf("$format_base
-				<td><a target='_blank' href='%s/PrintCustTrans.php?%s&FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s' TITLE='" . _('Click to preview the credit') . "'></a></td>
+				<td><a target='_blank' href='%s/PrintCustTrans.php?%s&FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s' title='" . _('Click to preview the credit') . "'></a></td>
 				</tr>",
 				$myrow['typename'],
 				$myrow['transno'],
@@ -175,7 +175,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 	}
 	//end of while loop
 
- echo '</TABLE>';
+ echo '</table>';
 }
 
 include('includes/footer.inc');

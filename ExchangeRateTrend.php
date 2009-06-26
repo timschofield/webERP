@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 2;
 
@@ -22,34 +22,34 @@ if ( isset($_GET['CurrencyToShow']) ){
 // SHOW OUR MAIN INPUT FORM
 // ************************
 
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	echo '<P><CENTER><FONT SIZE=4 COLOR=BLUE><B><U>' . _('View Currency Trend') . '</B></U></FONT>';
-	echo '<TABLE>'; // First column
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<p><div class="centre"><font size=4 color=BLUE><b><U>' . _('View Currency Trend') . '</b></U></font></div>';
+	echo '<table>'; // First column
 
 	$SQL = 'SELECT * FROM currencies';
 	$result=DB_query($SQL,$db);
 
 
 	// CurrencyToShow Currency Picker
-	echo '<TR><TD><SELECT name="CurrencyToShow">';
+	echo '<tr><td><select name="CurrencyToShow">';
 
 		DB_data_seek($result,0);
 		while ($myrow=DB_fetch_array($result)) {
 			if ($myrow['currabrev']!=$_SESSION['CompanyRecord']['currencydefault']){
 				if ( $CurrencyToShow==$myrow['currabrev'] )	{
-					echo '<OPTION SELECTED value=' . $myrow['currabrev'] . '>' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')';
+					echo '<option selected value=' . $myrow['currabrev'] . '>' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')';
 				} else {
-					echo '<OPTION value=' . $myrow['currabrev'] . '>' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')';
+					echo '<option value=' . $myrow['currabrev'] . '>' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')';
 				}
 			}
 		}
-		echo '</SELECT></TD></TR>';
+		echo '</select></td></tr>';
 
-   	echo '</TABLE>'; /*close off the table in the third column */
+   	echo '</table>'; /*close off the table in the third column */
 
 
-	echo '<P><INPUT TYPE=submit NAME=submit VALUE="' . _('Accept') . '"></CENTER>';
-   	echo '</FORM>';
+	echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"></div>';
+   	echo '</form>';
 
 
 
@@ -61,10 +61,10 @@ if ( isset($_GET['CurrencyToShow']) ){
 	$graph = $CurrencyToShow. '/' . $FunctionalCurrency . $graph;
 	$image = 'http://www.x-rates.com/d/' . $graph;
 
-	echo '<P><CENTER><FONT SIZE=4 COLOR=BLUE><B><U>' . $FunctionalCurrency . ' / ' . $CurrencyToShow . '</B></U></FONT>';
-	echo '<P><TABLE BORDER=1>';
-	echo '<TR><td align=center><img src=' . $image . ' alt="Trend Currently Unavailable"></td></TR>';
-	echo '</TABLE></CENTER>';
+	echo '<p><div class="centre"><font size=4 color=BLUE><b><U>' . $FunctionalCurrency . ' / ' . $CurrencyToShow . '</b></U></font>';
+	echo '<p></div><table border=1>';
+	echo '<tr><td><img src=' . $image . ' alt="Trend Currently Unavailable"></td></tr>';
+	echo '</table>';
 
 
 include('includes/footer.inc');

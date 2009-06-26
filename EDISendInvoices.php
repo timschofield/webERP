@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity =15;
 
@@ -217,10 +217,10 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 				$MessageSent = $mail->send(array($CustDetails['ediaddress']));
 
 				if ($MessageSent==True){
-					echo '<BR><BR>';
+					echo '<br><br>';
 					prnMsg(_('EDI Message') . ' ' . $EDITransNo . ' ' . _('was sucessfully emailed'),'success');
 				} else {
-					echo '<BR><BR>';
+					echo '<br><br>';
 					prnMsg(_('EDI Message') . ' ' . $EDITransNo . _('could not be emailed to') . ' ' . $CustDetails['ediaddress'],'error');
 				}
 			} else { /*it must be ftp transport */
@@ -229,16 +229,16 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
               			$conn_id = ftp_connect($CustDetails['ediaddress']); // login with username and password
               			$login_result = ftp_login($conn_id, $CustDetails['ediserveruser'], $CustDetails['ediserverpwd']); // check connection
               			if ((!$conn_id) || (!$login_result)) {
-                  			prnMsg( _('Ftp connection has failed'). '<BR>' . _('Attempted to connect to') . ' ' . $CustDetails['ediaddress'] . ' ' ._('for user') . ' ' . $CustDetails['ediserveruser'],'error');
+                  			prnMsg( _('Ftp connection has failed'). '<br>' . _('Attempted to connect to') . ' ' . $CustDetails['ediaddress'] . ' ' ._('for user') . ' ' . $CustDetails['ediserveruser'],'error');
                   			include('includes/footer.inc');
 					exit;
               			}
               			$MessageSent = ftp_put($conn_id, $_SESSION['EDI_MsgPending'] . '/EDI_INV_' . $EDITransNo, 'EDI_INV_' . $EDITransNo, FTP_ASCII); // check upload status
               			if (!$MessageSent) {
-                   			echo '<BR><BR>';
+                   			echo '<br><br>';
 					prnMsg(_('EDI Message') . ' ' . $EDITransNo . ' ' . _('could not be sent via ftp to') .' ' . $CustDetails['ediaddress'],'error');
                    		} else {
-                   			echo '<BR><BR>';
+                   			echo '<br><br>';
 					prnMsg( _('Successfully uploaded EDI_INV_') . $EDITransNo . ' ' . _('via ftp to') . ' ' . $CustDetails['ediaddress'],'success');
               			} // close the FTP stream
               			ftp_quit($conn_id);

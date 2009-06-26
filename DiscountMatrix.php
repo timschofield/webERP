@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 11;
 include('includes/session.inc');
@@ -151,7 +151,7 @@ echo '<table>';
 echo "<tr><th>" . _('Sales Type') . "</th>
 	<th>" . _('Discount Category') . "</th>
 	<th>" . _('Quantity Break') . "</th>
-	<th>" . _('Discount Rate') . ' %' . "</th></TR>";
+	<th>" . _('Discount Rate') . ' %' . "</th></tr>";
 
 $k=0; //row colour counter
 
