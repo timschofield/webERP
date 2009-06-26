@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 3;
 include('includes/session.inc');
 $title = _('Customer Notes');
@@ -63,7 +63,7 @@ if ( isset($_POST['submit']) ) {
 		$result = DB_query($sql,$db);
 				//echo '<br>'.$sql;
 
-		echo '<BR>';
+		echo '<br>';
 		prnMsg($msg, 'success');
 		unset($Id);
 		unset($_POST['note']);
@@ -82,7 +82,7 @@ if ( isset($_POST['submit']) ) {
 				$result = DB_query($sql,$db);
 						//echo '<br>'.$sql;
 
-				echo '<BR>';
+				echo '<br>';
 				prnMsg( _('The contact note record has been deleted'), 'success');
 				unset($Id);
 				unset($_GET['delete']);
@@ -141,7 +141,7 @@ if (!isset($Id)) {
 if (isset($Id)) {  
 	echo '<div class="centre"><a href="'.$_SERVER['PHP_SELF'] . '?' . SID .'&DebtorNo='.$DebtorNo.'"><?='._('Review all notes for this Customer').'</a></div>';
 } 
-echo '<P>';
+echo '<p>';
 
 if (!isset($_GET['delete'])) {
 
@@ -190,7 +190,7 @@ if (!isset($_GET['delete'])) {
     } else {
         echo '<td><input type="Text" name="date" size=10 maxlength=10></td></tr>';
     }
-	echo '<tr><td>'. _('Priority'). '</TD>';
+	echo '<tr><td>'. _('Priority'). '</td>';
     if (isset($_POST['priority'])) {
         echo '<td><input type="Text" name="priority" value="' .$_POST['priority']. '" size=1 maxlength=3></td></td>';
     } else {
