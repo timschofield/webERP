@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -104,9 +104,9 @@ If (isset($_POST['PrintPDF'])
 	  $title = _('Aged Supplier Account Analysis') . ' - ' . _('Problem Report') ;
 	  include("includes/header.inc");
 	  prnMsg(_('The Supplier details could not be retrieved by the SQL because') .  ' ' . DB_error_msg($db),'error');
-	   echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+	   echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-		echo "<BR>$SQL";
+		echo "<br>$SQL";
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -183,10 +183,10 @@ If (isset($_POST['PrintPDF'])
 		    if (DB_error_no($db) !=0) {
 			$title = _('Aged Supplier Account Analysis - Problem Report');
 			include('includes/header.inc');
-			echo '<BR>' . _('The details of outstanding transactions for Supplier') . ' - ' . $AgedAnalysis['supplierid'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db);
-			echo "<BR><A HREF='$rootpath/index.php'>" . _('Back to the menu') . '</A>';
+			echo '<br>' . _('The details of outstanding transactions for Supplier') . ' - ' . $AgedAnalysis['supplierid'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db);
+			echo "<br><a href='$rootpath/index.php'>" . _('Back to the menu') . '</a>';
 			if ($debug==1){
-			   echo '<BR>' . _('The SQL that failed was') . '<BR>' . $sql;
+			   echo '<br>' . _('The SQL that failed was') . '<br>' . $sql;
 			}
 			include('includes/footer.inc');
 			exit;

@@ -2,7 +2,7 @@
 
 $PageSecurity = 2;
 include('includes/session.inc');
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 
 If (isset($_POST['PrintPDF'])
@@ -265,10 +265,10 @@ If (isset($_POST['PrintPDF'])
 	if (DB_error_no($db) !=0) {
 		$title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '.... ';
 		include('includes/header.inc');
-		echo '<P>' . _('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db);
-		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+		echo '<p>' . _('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db);
+		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		if ($debug==1){
-			echo "<BR>$SQL";
+			echo "<br>$SQL";
 		}
 		include('includes/footer.inc');
 		exit;
@@ -361,10 +361,10 @@ If (isset($_POST['PrintPDF'])
 		    if (DB_error_no($db) !=0) {
 			$title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
 			include('includes/header.inc');
-			echo '<BR><BR>' . _('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db);
-			echo "<BR><A HREF='$rootpath/index.php'>" . _('Back to the menu') . '</A>';
+			echo '<br><br>' . _('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db);
+			echo "<br><a href='$rootpath/index.php'>" . _('Back to the menu') . '</a>';
 			if ($debug==1){
-				echo '<BR>' . _('The SQL that failed was') . '<P>' . $sql;
+				echo '<br>' . _('The SQL that failed was') . '<p>' . $sql;
 			}
 			include('includes/footer.inc');
 			exit;
