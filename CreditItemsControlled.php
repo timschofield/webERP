@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 $PageSecurity = 3;
@@ -28,9 +28,9 @@ if (isset($_GET['LineNo'])){
 } elseif (isset($_POST['LineNo'])){
         $LineNo = $_POST['LineNo'];
 } else { 
-	echo '<CENTER><A HREF="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Select Credit Items'). '</A><BR><BR>';
+	echo '<div class="centre"><a href="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Select Credit Items'). '</a><br><br>';
 	prnMsg( _('This page can only be opened if a Line Item on a credit note has been selected.') . ' ' . _('Please do that first'), 'error');
-	echo '</CENTER>';
+	echo '</div>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -39,9 +39,9 @@ if (isset($_GET['LineNo'])){
 
 if (!isset($_SESSION['CreditItems'])) {
 	/* This page can only be called with a credit note entry part entered */
-	echo '<CENTER><A HREF="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Select Credit Items'). '</A><BR><BR>';
+	echo '<div class="centre"><a href="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Select Credit Items'). '</a><br><br>';
 	prnMsg( _('This page can only be opened if a controlled credit note line item has been selected.') . ' ' . _('Please do that first'),'error');
-	echo '</CENTER>';
+	echo '</div>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -52,8 +52,8 @@ $LineItem = &$_SESSION['CreditItems']->LineItems[$LineNo];
 
 //Make sure this item is really controlled
 if ( $LineItem->Controlled != 1 ){
-	echo '<CENTER><A HREF="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Back to Credit Note Entry').'</A></CENTER>';
-	echo '<BR>';
+	echo '<div class="centre"><a href="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Back to Credit Note Entry').'</a></div>';
+	echo '<br>';
 	prnMsg( _('Notice') . ' - ' . _('The line item must be defined as controlled to require input of the batch numbers or serial numbers being credited'),'warn');
 	include('includes/footer.inc');
 	exit;
@@ -66,15 +66,15 @@ if (isset($_GET['Delete'])){
 	unset($LineItem->SerialItems[$_GET['Delete']]);
 }
 
-echo '<CENTER>';
+echo '<div class="centre">';
 
 if ($CreditLink == 'Credit_Invoice.php'){
-	echo '<INPUT TYPE=HIDDEN NAME="CreditInvoice" VALUE="Yes">';
+	echo '<input type=hidden name="CreditInvoice" VALUE="Yes">';
 }
 
-echo '<BR><A HREF="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Back to Credit Note Entry'). '</A>';
+echo '<br><a href="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Back to Credit Note Entry'). '</a>';
 
-echo '<BR><FONT SIZE=2><B>'. _('Credit of Controlled Item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' '. _('from') .' '. $_SESSION['CreditItems']->CustomerName . '</B></FONT>';
+echo '<br><font size=2><b>'. _('Credit of Controlled Item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' '. _('from') .' '. $_SESSION['CreditItems']->CustomerName . '</b></font></div>';
 
 /** vars needed by InputSerialItem : **/
 $LocationOut = $_SESSION['CreditItems']->Location;
@@ -87,7 +87,7 @@ $ShowExisting = false;
 $IsCredit = true;
 include ('includes/InputSerialItems.php');
 
-echo '</TR></TABLE>';
+ echo '</tr></table>';
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for dispatch */

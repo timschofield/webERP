@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 3;
 include('includes/session.inc');
@@ -144,7 +144,7 @@ or deletion of the records*/
 	$sql = 'SELECT reasoncode, reasondescription, dissallowinvoices FROM holdreasons';
 	$result = DB_query($sql, $db);
 
-	echo '<CENTER><table border=1>';
+	echo '<table border=1>';
 	echo "<tr>
 		<th>". _('Status Code') ."</th>
 		<th>". _('Description') ."</th>
@@ -156,7 +156,7 @@ or deletion of the records*/
 		if ($myrow[2]==0) {
 			$DissallowText = _('Invoice OK');
 		} else {
-			$DissallowText = '<B>'. _('NO INVOICING') .'</B>';
+			$DissallowText = '<b>'. _('NO INVOICING') .'</b>';
 		}
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
@@ -181,17 +181,17 @@ or deletion of the records*/
 		$myrow[0]);
 
 	} //END WHILE LIST LOOP
-	echo '</table></CENTER>';
+	echo '</table>';
 
 } //end of ifs and buts!
 
 if (isset($SelectedReason)) {
-	echo '<Center><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show Defined Credit Status Codes') . '</a></Center>';
+	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show Defined Credit Status Codes') . '</a></div>';
 }
 
 if (!isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '>';
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
 
 	if (isset($SelectedReason) and ($InputError!=1)) {
 		//editing an existing status code
@@ -209,38 +209,38 @@ if (!isset($_GET['delete'])) {
 		$_POST['ReasonDescription']  = $myrow['reasondescription'];
 		$_POST['DisallowInvoices']  = $myrow['dissallowinvoices'];
 
-		echo "<INPUT TYPE=HIDDEN NAME='SelectedReason' VALUE='" . $SelectedReason . "'>";
-		echo "<INPUT TYPE=HIDDEN NAME='ReasonCode' VALUE='" . $_POST['ReasonCode'] . "'>";
-		echo "<CENTER><TABLE><TR><TD>". _('Status Code') .':</TD><TD>';
-		echo $_POST['ReasonCode'] . '</TD></TR>';
+		echo "<input type=hidden name='SelectedReason' VALUE='" . $SelectedReason . "'>";
+		echo "<input type=hidden name='ReasonCode' VALUE='" . $_POST['ReasonCode'] . "'>";
+		echo "<table><tr><td>". _('Status Code') .':</td><td>';
+		echo $_POST['ReasonCode'] . '</td></tr>';
 
 	} else { //end of if $SelectedReason only do the else when a new record is being entered
 		if (!isset($_POST['ReasonCode'])) {
 			$_POST['ReasonCode'] = '';
 		}
-		echo '<CENTER><TABLE>
-			<TR>
-				<TD>'. _('Status Code') .":</TD>
-				<TD><input " . (in_array('ReasonCode',$Errors) ? 'class="inputerror"' : '' ) .
-					" tabindex=1 type='Text' name='ReasonCode' VALUE='". $_POST['ReasonCode'] ."' SIZE=3 MAXLENGTH=2></TD>
-			</TR>";
+		echo '<table>
+			<tr>
+				<td>'. _('Status Code') .":</td>
+				<td><input " . (in_array('ReasonCode',$Errors) ? 'class="inputerror"' : '' ) .
+					" tabindex=1 type='Text' name='ReasonCode' VALUE='". $_POST['ReasonCode'] ."' size=3 maxlength=2></td>
+			</tr>";
 	}
 
 	if (!isset($_POST['ReasonDescription'])) {
 		$_POST['ReasonDescription'] = '';
 	}
-	echo '<TR>
-		<TD>'. _('Description') .":</TD>
-		<TD><INPUT " . (in_array('ReasonDescription',$Errors) ? 'class="inputerror"' : '' ) .
-		 " tabindex=2 TYPE='text' name='ReasonDescription' VALUE='". $_POST['ReasonDescription'] ."' SIZE=28 MAXLENGTH=30>
-	</TD></TR>
-	<TR><TD>". _('Disallow Invoices') . "</TD>";
+	echo '<tr>
+		<td>'. _('Description') .":</td>
+		<td><input " . (in_array('ReasonDescription',$Errors) ? 'class="inputerror"' : '' ) .
+		 " tabindex=2 type='text' name='ReasonDescription' VALUE='". $_POST['ReasonDescription'] ."' size=28 maxlength=30>
+	</td></tr>
+	<tr><td>". _('Disallow Invoices') . "</td>";
 	if (isset($_POST['DisallowInvoices']) and $_POST['DisallowInvoices']==1) {
-		echo "<TD><INPUT tabindex=3 TYPE='checkbox' checked name='DisallowInvoices'></TD></TR>";
+		echo "<td><input tabindex=3 type='checkbox' checked name='DisallowInvoices'></td></tr>";
 	} else {
-		echo "<TD><INPUT tabindex=3 TYPE='checkbox' name='DisallowInvoices'></TD></TR>";		
+		echo "<td><input tabindex=3 type='checkbox' name='DisallowInvoices'></td></tr>";		
 	}
-	echo "</TABLE><CENTER><input tabindex=4 type='Submit' name='submit' value='" . _('Enter Information') . "'></FORM>";
+	echo "</table><div class='centre'><input tabindex=4 type='Submit' name='submit' value='" . _('Enter Information') . "'></div></form>";
 } //end if record deleted no point displaying form to add record
 include('includes/footer.inc');
 ?>
