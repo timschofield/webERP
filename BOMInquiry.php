@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -13,16 +13,16 @@ if (isset($_GET['StockID'])){
 }
 
 if (!isset($_POST['StockID'])) {
-	echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . "?" . SID ." METHOD=POST><B><BR></B>".
-	'<DIV CLASS="page_help_text">'. _('Select a manufactured part') . " (" . _('or Assembly or Kit part') . ") " .
-	 _('to view the costed bill of materials') . "." . "<BR><FONT SIZE=1>" .
+	echo "<form action=" . $_SERVER['PHP_SELF'] . "?" . SID ." method=post><b><br></b>".
+	'<div class="page_help_text">'. _('Select a manufactured part') . " (" . _('or Assembly or Kit part') . ") " .
+	 _('to view the costed bill of materials') . "." . "<br><font size=1>" .
 	 _('Parts must be defined in the stock item entry') . "/" . _('modification screen as manufactured') . 
      ", " . _('kits or assemblies to be available for construction of a bill of material').'</div>'
-	."</FONT><br><TABLE align='center' CELLPADDING=3 COLSPAN=4><TR><TD><FONT SIZE=1>" . _('Enter text extracts in the') . 
-	 " <B>" . _('description') . "</B>:</FONT></TD><TD><INPUT tabindex='1' TYPE='Text' NAME='Keywords' SIZE=20 MAXLENGTH=25></TD>
-	 <TD><FONT SIZE=3><B>" . _('OR') . "</B></FONT></TD><TD><FONT SIZE=1>" . _('Enter extract of the') . 
-     " <B>" . _('Stock Code') . "</B>:</FONT></TD><TD><INPUT tabindex='2' TYPE='Text' NAME='StockCode' SIZE=15 MAXLENGTH=20></TD>
-	 </TR></TABLE><br><CENTER><INPUT tabindex='3' TYPE=SUBMIT NAME='Search' VALUE=" . _('Search Now') . "></CENTER><br>";
+	."</font><br><table align='center' cellpadding=3 colspan=4><tr><td><font size=1>" . _('Enter text extracts in the') . 
+	 " <b>" . _('description') . "</b>:</font></td><td><input tabindex='1' type='Text' name='Keywords' size=20 maxlength=25></td>
+	 <td><font size=3><b>" . _('OR') . "</b></font></td><td><font size=1>" . _('Enter extract of the') . 
+     " <b>" . _('Stock Code') . "</b>:</font></td><td><input tabindex='2' type='Text' name='StockCode' size=15 maxlength=20></td>
+	 </tr></table><br><div class='centre'><input tabindex='3' type=submit name='Search' VALUE=" . _('Search Now') . "></div><br>";
 }
 
 if (isset($_POST['Search'])){
@@ -95,12 +95,12 @@ if (isset($_POST['Search'])){
 
 if (isset($result) AND !isset($SelectedParent)) {
 
-	echo '<br><hr><br><table align="center" CELLPADDING=2 COLSPAN=7 BORDER=1>';
-	$TableHeader = '<TR><TH>' . _('Code') . '</TH>
-				<TH>' . _('Description') . '</TH>
-				<TH>' . _('On Hand') . '</TH>
-				<TH>' . _('Units') . '</TH>
-			</TR>';
+	echo '<br><hr><br><table align="center" cellpadding=2 colspan=7 BORDER=1>';
+	$TableHeader = '<tr><th>' . _('Code') . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('On Hand') . '</th>
+				<th>' . _('Units') . '</th>
+			</tr>';
 
 	echo $TableHeader;
 
@@ -120,9 +120,9 @@ if (isset($result) AND !isset($SelectedParent)) {
 			$StockOnHand = number_format($myrow['totalonhand'],2);
 		}
 		$tabindex=$j+4;
-		printf("<td><INPUT tabindex='".$tabindex."' TYPE=SUBMIT NAME='StockID' VALUE='%s'</td>
+		printf("<td><input tabindex='".$tabindex."' type=submit name='StockID' VALUE='%s'</td>
 		        <td>%s</td>
-			<td ALIGN=RIGHT>%s</td>
+			<td align=right>%s</td>
 			<td>%s</td></tr>",
 			$myrow['stockid'],
 			$myrow['description'],
@@ -134,7 +134,7 @@ if (isset($result) AND !isset($SelectedParent)) {
 	}
 //end of while loop
 
-	echo '</TABLE><br>';
+	echo '</table><br>';
 
 }
 
@@ -142,7 +142,7 @@ if (isset($StockID) and $StockID!=""){
 	$result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='" . $StockID  . "'",$db);
 	$myrow = DB_fetch_row($result);
 
-	echo "<CENTER><BR><FONT SIZE=4><B>" . $myrow[0] . ' : ' . _('per') . ' ' . $myrow[1] . "</B></FONT>";
+	echo "<div class='centre'><br><font size=4><b>" . $myrow[0] . ' : ' . _('per') . ' ' . $myrow[1] . "</b></font></div>";
 
 	$sql = "SELECT bom.parent,
 			bom.component,
@@ -163,14 +163,14 @@ if (isset($StockID) and $StockID!=""){
 		prnMsg(_('The bill of material for this part is not set up') . ' - ' . _('there are no components defined for it'),'warn');
 	} else {
 
-		echo "<TABLE CELLPADDING=2 BORDER=2>";
-		$TableHeader = '<TR>
-				<TH>' . _('Component') . '</TH>
-				<TH>' . _('Description') . '</TH>
-				<TH>' . _('Quantity') . '</TH>
-				<TH>' . _('Unit Cost') . '</TH>
-				<TH>' . _('Total Cost') . '</TH>
-				</TR>';
+		echo "<table cellpadding=2 BORDER=2>";
+		$TableHeader = '<tr>
+				<th>' . _('Component') . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('Quantity') . '</th>
+				<th>' . _('Unit Cost') . '</th>
+				<th>' . _('Total Cost') . '</th>
+				</tr>';
 
 		echo $TableHeader;
 
@@ -189,14 +189,14 @@ if (isset($StockID) and $StockID!=""){
 				$k++;
 			}
 
-			$ComponentLink = "<A HREF='$rootpath/SelectProduct.php?" . SID . "&StockID=" . $myrow['component'] . "'>" . $myrow['component'] . "</A>";
+			$ComponentLink = "<a href='$rootpath/SelectProduct.php?" . SID . "&StockID=" . $myrow['component'] . "'>" . $myrow['component'] . "</a>";
 
 			/* Component Code  Description                 Quantity            Std Cost*                Total Cost */
 			printf("<td>%s</td>
 				<td>%s</td>
-				<td ALIGN=RIGHT>%s</td>
-				<td ALIGN=RIGHT>%.2f</td>
-				<td ALIGN=RIGHT>%.2f</td>
+				<td class=number>%s</td>
+				<td class=number>%.2f</td>
+				<td class=number>%.2f</td>
 				</tr>",
 				$ComponentLink,
 				$myrow['description'],
@@ -210,12 +210,12 @@ if (isset($StockID) and $StockID!=""){
 			$j++;
 		}
 
-		echo '<TR>
-			<TD COLSPAN=4 ALIGN=RIGHT><B>' . _('Total Cost') . '</B></TD>
-			<TD ALIGN=RIGHT><B>' . number_format($TotalCost,2) . '</B></TD>
-		</TR>';
+		echo '<tr>
+			<td colspan=4 class=number><b>' . _('Total Cost') . '</b></td>
+			<td class=number><b>' . number_format($TotalCost,2) . '</b></td>
+		</tr>';
 
-		echo '</TABLE></CENTER>';
+		echo '</table>';
 	}
 } else { //no stock item entered
 	prnMsg(_('Enter a stock item code above') . ', ' . _('to view the costed bill of material for'),'info');

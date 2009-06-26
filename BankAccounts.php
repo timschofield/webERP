@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 10;
 
@@ -172,10 +172,10 @@ If (!isset($SelectedBankAccount)) {
 		WHERE bankaccounts.accountcode = chartmaster.accountcode";
 	
 	$ErrMsg = _('The bank accounts set up could not be retreived because');
-	$DbgMsg = _('The SQL used to retrieve the bank account details was') . '<BR>' . $sql;
+	$DbgMsg = _('The SQL used to retrieve the bank account details was') . '<br>' . $sql;
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	
-	echo '<CENTER><table>';
+	echo '<table>';
 	
 	echo "<tr><th>" . _('GL Account') . "</th>
 		<th>" . _('Account Name') . "</th>
@@ -187,14 +187,14 @@ If (!isset($SelectedBankAccount)) {
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
 	if ($k==1){
-		echo '<tr CLASS="EvenTableRows">';
+		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo '<tr CLASS="OddTableRows">';
+		echo '<tr class="OddTableRows">';
 		$k++;
 	}
 	
-	printf("<td>%s<BR><FONT SIZE=2>%s</FONT></td>
+	printf("<td>%s<br><font size=2>%s</font></td>
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
@@ -217,16 +217,16 @@ If (!isset($SelectedBankAccount)) {
 	//END WHILE LIST LOOP
 	
 	
-	echo '</CENTER></table><p>';
+	echo '</table><p>';
 }
 
 if (isset($SelectedBankAccount)) {
-	echo '<P>';
-	echo '<CENTER><P><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Show All Bank Accounts Defined') . '</A></CENTER>';
-	echo '<P>';
+	echo '<p>';
+	echo '<div class="centre"><p><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Show All Bank Accounts Defined') . '</a></div>';
+	echo '<p>';
 }
 
-echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . ">";
+echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . ">";
 
 if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	//editing an existing bank account  - not deleting
@@ -248,13 +248,13 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	$_POST['BankAddress'] = $myrow['bankaddress'];
 	$_POST['CurrCode'] = $myrow['currcode'];
 
-	echo '<INPUT TYPE=HIDDEN NAME=SelectedBankAccount VALUE=' . $SelectedBankAccount . '>';
-	echo '<INPUT TYPE=HIDDEN NAME=AccountCode VALUE=' . $_POST['AccountCode'] . '>';
-	echo '<CENTER><TABLE> <TR><TD>' . _('Bank Account GL Code') . ':</TD><TD>';
-	echo $_POST['AccountCode'] . '</TD></TR>';
+	echo '<input type=hidden name=SelectedBankAccount VALUE=' . $SelectedBankAccount . '>';
+	echo '<input type=hidden name=AccountCode VALUE=' . $_POST['AccountCode'] . '>';
+	echo '<table> <tr><td>' . _('Bank Account GL Code') . ':</td><td>';
+	echo $_POST['AccountCode'] . '</td></tr>';
 } else { //end of if $Selectedbank account only do the else when a new record is being entered
-	echo '<CENTER><TABLE><TR><TD>' . _('Bank Account GL Code') . 
-		":</TD><TD><Select tabindex='1' " . (in_array('AccountCode',$Errors) ?  'class="selecterror"' : '' ) ." name='AccountCode'>";
+	echo '<table><tr><td>' . _('Bank Account GL Code') . 
+		":</td><td><Select tabindex='1' " . (in_array('AccountCode',$Errors) ?  'class="selecterror"' : '' ) ." name='AccountCode'>";
 
 	$sql = "SELECT accountcode,
 			accountname
@@ -267,15 +267,15 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	$result = DB_query($sql,$db);
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['AccountCode']) and $myrow['accountcode']==$_POST['AccountCode']) {
-			echo '<OPTION SELECTED VALUE=';
+			echo '<option selected VALUE=';
 		} else {
-			echo '<OPTION VALUE=';
+			echo '<option VALUE=';
 		}
 		echo $myrow['accountcode'] . '>' . $myrow['accountname'];
 
 	} //end while loop
 
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 }
 
 // Check if details exist, if not set some defaults
@@ -289,13 +289,13 @@ if (!isset($_POST['BankAddress'])) {
 	$_POST['BankAddress']='';
 }
 
-echo '<TR><TD>' . _('Bank Account Name') . ': </TD>
-			<TD><input tabindex="2" ' . (in_array('AccountName',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
-		<TR><TD>' . _('Bank Account Number') . ': </TD>
-			<TD><input tabindex="3" ' . (in_array('AccountNumber',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAccountNumber" value="' . $_POST['BankAccountNumber'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
-		<TR><TD>' . _('Bank Address') . ': </TD>
-			<TD><input tabindex="4" ' . (in_array('BankAddress',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAddress" value="' . $_POST['BankAddress'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
-		<TR><TD>' . _('Currency Of Account') . ': </TD><TD><select tabindex="5" name="CurrCode">';
+echo '<tr><td>' . _('Bank Account Name') . ': </td>
+			<td><input tabindex="2" ' . (in_array('AccountName',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" size=40 maxlength=50></td></tr>
+		<tr><td>' . _('Bank Account Number') . ': </td>
+			<td><input tabindex="3" ' . (in_array('AccountNumber',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAccountNumber" value="' . $_POST['BankAccountNumber'] . '" size=40 maxlength=50></td></tr>
+		<tr><td>' . _('Bank Address') . ': </td>
+			<td><input tabindex="4" ' . (in_array('BankAddress',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAddress" value="' . $_POST['BankAddress'] . '" size=40 maxlength=50></td></tr>
+		<tr><td>' . _('Currency Of Account') . ': </td><td><select tabindex="5" name="CurrCode">';
 
 if (!isset($_POST['CurrCode']) OR $_POST['CurrCode']==''){
 	$_POST['CurrCode'] = $_SESSION['CompanyRecord']['currencydefault'];
@@ -303,18 +303,18 @@ if (!isset($_POST['CurrCode']) OR $_POST['CurrCode']==''){
 $result = DB_query('SELECT currabrev, currency FROM currencies',$db);
 while ($myrow = DB_fetch_array($result)) {
 	if ($myrow['currabrev']==$_POST['CurrCode']) {
-		echo '<OPTION SELECTED VALUE=';
+		echo '<option selected VALUE=';
 	} else {
-		echo '<OPTION VALUE=';
+		echo '<option VALUE=';
 	}
 	echo $myrow['currabrev'] . '>' . $myrow['currabrev'];
 } //end while loop
 
-echo '</SELECT></TD></TR>';
+echo '</select></td></tr>';
 
-echo '</TABLE>
-		<CENTER><input tabindex="6" type="Submit" name="submit" value="'. _('Enter Information') .'"></CENTER>';
+echo '</table>
+		<div class="centre"><input tabindex="6" type="Submit" name="submit" value="'. _('Enter Information') .'"></div>';
 
-echo '</FORM>';
+echo '</form>';
 include('includes/footer.inc');
 ?>

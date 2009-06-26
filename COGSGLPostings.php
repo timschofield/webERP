@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 10;
 
@@ -83,20 +83,20 @@ if (!isset($SelectedCOGSPostingID)) {
 	if (DB_num_rows($result)>0){
 		$ShowLivePostingRecords = false;
 		prnMsg (_('The following cost of sales posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
-		echo '<CENTER><TABLE BORDER=1>';
-		echo "<TR><TH>" . _('Area') . "</TH>
-				<TH>" . _('Stock Category') . "</TH>
-				<TH>" . _('Sales Type') . "</TH>
-				<TH>" . _('COGS Account') . "</TH>
-			</TR>";
+		echo '<table border=1>';
+		echo "<tr><th>" . _('Area') . "</th>
+				<th>" . _('Stock Category') . "</th>
+				<th>" . _('Sales Type') . "</th>
+				<th>" . _('COGS Account') . "</th>
+			</tr>";
 		$k=0; //row colour counter
 	
 		while ($myrow = DB_fetch_row($result)) {
 			if ($k==1){
-				echo '<TR class="EvenTableRows">';
+				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
-				echo '<TR class="OddTableRows">';
+				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
 	
@@ -115,7 +115,7 @@ if (!isset($SelectedCOGSPostingID)) {
 				$_SERVER['PHP_SELF']. '?' . SID . '&',
 				$myrow[0]);
 		}//end while 
-		echo '</table></CENTER>';
+		echo '</table>';
 	}
 
 	$sql = 'SELECT cogsglpostings.id,
@@ -187,7 +187,7 @@ if (!isset($SelectedCOGSPostingID)) {
 	
 		$result = DB_query($sql,$db);
 	
-		echo '<CENTER><table border=1>';
+		echo '<table border=1>';
 		echo '<tr><th>' . _('Area') .
 			'</th><th>' . _('Stock Category') .
 			'</th><th>' . _('Sales Type') .
@@ -222,20 +222,20 @@ if (!isset($SelectedCOGSPostingID)) {
 			$myrow[0]);
 	
 		}//END WHILE LIST LOOP
-		echo '</table></CENTER>';
+		echo '</table>';
 	}
 }
 //end of ifs and buts!
 
 if (isset($SelectedCOGSPostingID)) {  
-	echo "<Center><a href=" . $_SERVER['PHP_SELF'] .">" . _('Show all cost of sales posting records') . "</a></Center>";
+	echo "<div class='centre'><a href=" . $_SERVER['PHP_SELF'] .">" . _('Show all cost of sales posting records') . "</a></div>";
 }
 
-echo "<P>";
+echo "<p>";
 
 if (!isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . ">";
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . ">";
 
 	if (isset($SelectedCOGSPostingID)) {
 		//editing an existing cost of sales posting record
@@ -255,7 +255,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['StkCat']  = $myrow['stkcat'];
 		$_POST['SalesType'] = $myrow['salestype'];
 
-		echo '<INPUT TYPE=HIDDEN NAME="SelectedCOGSPostingID" VALUE="' . $SelectedCOGSPostingID . '">';
+		echo '<input type=hidden name="SelectedCOGSPostingID" VALUE="' . $SelectedCOGSPostingID . '">';
 
 	}  //end of if $SelectedCOGSPostingID only do the else when a new record is being entered
 
@@ -265,13 +265,13 @@ if (!isset($_GET['delete'])) {
 		FROM areas";
 	$result = DB_query($sql,$db);
 
-	echo "<CENTER><TABLE><TR><TD>" . _('Area') . ":</TD><TD><SELECT tabindex=1 name='Area'><OPTION VALUE='AN'>" . _('Any Other');
+	echo "<table><tr><td>" . _('Area') . ":</td><td><select tabindex=1 name='Area'><option value='AN'>" . _('Any Other');
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['Area']) and $myrow['areacode']==$_POST['Area']) {
-			echo "<OPTION SELECTED VALUE='";
+			echo "<option selected VALUE='";
 		} else {
-			echo "<OPTION VALUE='";
+			echo "<option VALUE='";
 		}
 		echo $myrow['areacode'] . "'>" . $myrow['areadescription'];
 
@@ -281,14 +281,14 @@ if (!isset($_GET['delete'])) {
 	$sql = 'SELECT categoryid, categorydescription FROM stockcategory';
 	$result = DB_query($sql,$db);
 
-	echo "</SELECT></TD></TR><TR><TD>" . _('Stock Category') . ":</TD><TD><SELECT tabindex=2 name='StkCat'>
-			<OPTION VALUE='ANY'>" . _('Any Other');
+	echo "</select></td></tr><tr><td>" . _('Stock Category') . ":</td><td><select tabindex=2 name='StkCat'>
+			<option VALUE='ANY'>" . _('Any Other');
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['StkCat']) and $myrow["categoryid"]==$_POST['StkCat']) {
-			echo "<OPTION SELECTED VALUE='";
+			echo "<option selected VALUE='";
 		} else {
-			echo "<OPTION VALUE='";
+			echo "<option VALUE='";
 		}
 		echo $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
 
@@ -299,20 +299,20 @@ if (!isset($_GET['delete'])) {
 	$sql = 'SELECT typeabbrev, sales_type FROM salestypes';
 	$result = DB_query($sql,$db);
 
-	echo "</SELECT></TD></TR><TR><TD>" . _('Sales Type') . " / " . _('Price List') . ":</TD>
-		<TD><SELECT tabindex=3 name='SalesType'><OPTION VALUE='AN'>" . _('Any Other');
+	echo "</select></td></tr><tr><td>" . _('Sales Type') . " / " . _('Price List') . ":</td>
+		<td><select tabindex=3 name='SalesType'><option VALUE='AN'>" . _('Any Other');
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SalesType']) and $myrow['typeabbrev']==$_POST['SalesType']) {
-			echo "<OPTION SELECTED VALUE='";
+			echo "<option selected VALUE='";
 		} else {
-			echo "<OPTION VALUE='";
+			echo "<option VALUE='";
 		}
 		echo $myrow["typeabbrev"] . "'>" . $myrow['sales_type'];
 
 	} //end while loop
 
-	echo "</SELECT></TD></TR><TR><TD>" . _('Post to GL account') . ":</TD><TD><SELECT tabindex=4 name='GLCode'>";
+	echo "</select></td></tr><tr><td>" . _('Post to GL account') . ":</td><td><select tabindex=4 name='GLCode'>";
 
 	DB_free_result($result);
 	$sql = "SELECT chartmaster.accountcode,
@@ -328,9 +328,9 @@ if (!isset($_GET['delete'])) {
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['GLCode']) and $myrow['accountcode']==$_POST['GLCode']) {
-			echo "<OPTION SELECTED VALUE='";
+			echo "<option selected VALUE='";
 		} else {
-			echo "<OPTION VALUE='";
+			echo "<option VALUE='";
 		}
 		echo $myrow['accountcode'] . "'>" . $myrow['accountcode']  . ' - '  . $myrow['accountname'];
 
@@ -338,7 +338,7 @@ if (!isset($_GET['delete'])) {
 
 	DB_free_result($result);
 
-	echo "</SELECT></TD></TR></TABLE><input tabindex=5 type='Submit' name='submit' value=" . _('Enter Information') . "></FORM></CENTER>";
+	echo "</select></td></tr></table><div class='centre'><input tabindex=5 type='Submit' name='submit' value=" . _('Enter Information') . "></form></div>";
 
 } //end if record deleted no point displaying form to add record
 

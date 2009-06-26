@@ -1,11 +1,11 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 // BOMIndented.php - Reverse Indented Bill of Materials - From lowest level component to top level
 // assembly
 $PageSecurity = 2;
 include('includes/session.inc');
 
-If (isset($_POST['PrintPDF'])) {
+if (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
 
@@ -146,9 +146,9 @@ If (isset($_POST['PrintPDF'])) {
 	  $title = _('Indented BOM Listing') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The Indented BOM Listing could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo "<BR><A HREF='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</A>';
+	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<BR>$sql";
+	      echo "<br>$sql";
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -225,7 +225,7 @@ If (isset($_POST['PrintPDF'])) {
 			$title = _('Print Reverse Indented BOM Listing Error');
 			include('includes/header.inc');
 			prnMsg(_('There were no items for the selected component'),'error');
-			echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+			echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
 	} else {
@@ -244,14 +244,14 @@ If (isset($_POST['PrintPDF'])) {
 	$title=_('Reverse Indented BOM Listing');
 	include('includes/header.inc');
 
-	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><center><table>";
+	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
 	echo '<tr><td>' . _('Part') . ":</td>";
 	echo "<td><input type ='text' name='Part' size='20'>";
 	echo '<tr><td>' . _('Print Option') . ":</td><td><select name='Fill'>";
 	echo "<option selected value='yes'>" . _('Print With Alternating Highlighted Lines');
 	echo "<option value='no'>" . _('Plain Print');
 	echo '</select></td></tr>';
-	echo "</table></br></br><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></center>";
+	echo "</table></br></br><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
 

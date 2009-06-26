@@ -26,42 +26,42 @@ $tableresult = DB_show_tables($db);
 // Get list of users
 $userresult = DB_query('SELECT userid FROM www_users',$db);
 
-echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . ' METHOD=POST>';
-echo '<CENTER><TABLE>';
+echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post>';
+echo '<table>';
 
-echo '<TR><TD>'. _('From Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</TD>
-	<TD><INPUT tabindex="1" TYPE=text name="FromDate" size="11" maxlength="10" value=' .$_POST['FromDate'].'></TD></TR>';
-echo '<TR><TD>'. _('To Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</TD>
-	<TD><INPUT tabindex="2" TYPE=text name="ToDate" size="11" maxlength="10" value=' . $_POST['ToDate'] . '></TD></TR>';
+echo '<tr><td>'. _('From Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</td>
+	<td><input tabindex="1" type=text class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="11" maxlength="10" value=' .$_POST['FromDate'].'></td></tr>';
+echo '<tr><td>'. _('To Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</td>
+	<td><input tabindex="2" type=text class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" size="11" maxlength="10" value=' . $_POST['ToDate'] . '></td></tr>';
 
 // Show user selections
-echo '<TR><TD>'. _('User ID'). '</TD>
-		<TD><SELECT tabindex="3" name="SelectedUser">';
-echo '<OPTION value=ALL>ALL';
+echo '<tr><td>'. _('User ID'). '</td>
+		<td><select tabindex="3" name="SelectedUser">';
+echo '<option value=ALL>ALL';
 while ($users = DB_fetch_row($userresult)) {
 	if (isset($_POST['SelectedUser']) and $users[0]==$_POST['SelectedUser']) {
-		echo '<OPTION SELECTED value=' . $users[0] . '>' . $users[0];
+		echo '<option selected value=' . $users[0] . '>' . $users[0];
 	} else {
-		echo '<OPTION value=' . $users[0] . '>' . $users[0];
+		echo '<option value=' . $users[0] . '>' . $users[0];
 	}
 }
-echo '</SELECT></TD></TR>';
+echo '</select></td></tr>';
 
 // Show table selections
-echo '<TR><TD>'. _('Table '). '</TD><TD><SELECT tabindex="4" name="SelectedTable">';
-echo '<OPTION value=ALL>ALL';
+echo '<tr><td>'. _('Table '). '</td><td><select tabindex="4" name="SelectedTable">';
+echo '<option value=ALL>ALL';
 while ($tables = DB_fetch_row($tableresult)) {
 	if (isset($_POST['SelectedTable']) and $tables[0]==$_POST['SelectedTable']) {
-		echo '<OPTION SELECTED value=' . $tables[0] . '>' . $tables[0];
+		echo '<option selected value=' . $tables[0] . '>' . $tables[0];
 	} else {
-		echo '<OPTION value=' . $tables[0] . '>' . $tables[0];
+		echo '<option value=' . $tables[0] . '>' . $tables[0];
 	}
 }
-echo '</SELECT></TD></TR>';
+echo '</select></td></tr>';
 
-echo "<TR><TD></TD><TD><INPUT tabindex='5' TYPE=SUBMIT name=View value='" . _('View') . "'></TD></TR>";
-echo '</TABLE></BR>';
-echo '</CENTER></FORM>';
+echo "<tr><td></td><td><input tabindex='5' type=submit name=View value='" . _('View') . "'></td></tr>";
+echo '</table></BR>';
+echo '</form>';
 
 // View the audit trail
 if (isset($_POST['View'])) {
@@ -135,13 +135,13 @@ if (isset($_POST['View'])) {
 	}
 	$result = DB_query($sql,$db);
 
-	echo '<TABLE BORDER=0 width="100%">';
-	echo '<TR><TH>' . _('Date/Time') . '</TH>
-				<TH>' . _('User') . '</TH>
-				<TH>' . _('Type') . '</TH>
-				<TH>' . _('Table') . '</TH>
-				<TH>' . _('Field Name') . '</TH>
-				<TH>' . _('Value') . '</TH></TR>';
+	echo '<table BORDER=0 width="100%">';
+	echo '<tr><th>' . _('Date/Time') . '</th>
+				<th>' . _('User') . '</th>
+				<th>' . _('Type') . '</th>
+				<th>' . _('Table') . '</th>
+				<th>' . _('Field Name') . '</th>
+				<th>' . _('Value') . '</th></tr>';
 	while ($myrow = DB_fetch_row($result)) {
 		if (Query_Type($myrow[2]) == 'INSERT') {
 			InsertQueryInfo(str_replace("INSERT INTO",'',$myrow[2]));
@@ -161,32 +161,32 @@ if (isset($_POST['View'])) {
 		 	if (!isset($_SESSION['SQLString']['values'])) {
 		 		$_SESSION['SQLString']['values'][0]='';
 		 	}
-			echo '<TR style="background-color: '.$RowColour.'">
-				<TD>' . $myrow[0] . '</TD>
-				<TD>' . $myrow[1] . '</TD>
-				<TD>' . Query_Type($myrow[2]) . '</TD>
-				<TD>' . $_SESSION['SQLString']['table'] . '</TD>
-				<TD>' . $_SESSION['SQLString']['fields'][0] . '</TD>
-				<TD>' . htmlentities(trim(str_replace("'","",$_SESSION['SQLString']['values'][0]))) . '</TD></TR>';
+			echo '<tr style="background-color: '.$RowColour.'">
+				<td>' . $myrow[0] . '</td>
+				<td>' . $myrow[1] . '</td>
+				<td>' . Query_Type($myrow[2]) . '</td>
+				<td>' . $_SESSION['SQLString']['table'] . '</td>
+				<td>' . $_SESSION['SQLString']['fields'][0] . '</td>
+				<td>' . htmlentities(trim(str_replace("'","",$_SESSION['SQLString']['values'][0]))) . '</td></tr>';
 			for ($i=1; $i<sizeof($_SESSION['SQLString']['fields']); $i++) {
 				if (isset($_SESSION['SQLString']['values'][$i]) and (trim(str_replace("'","",$_SESSION['SQLString']['values'][$i])) != "") &
 		  	 (trim($_SESSION['SQLString']['fields'][$i]) != 'password') &
 		   		(trim($_SESSION['SQLString']['fields'][$i]) != "www_users.password")) {
-					echo '<TR bgcolor='.$RowColour.'>';
-					echo '<TD></TD>
-						<TD></TD>
-						<TD></TD>
-						<TD></TD>';
-					echo '<TD>'.$_SESSION['SQLString']['fields'][$i].'</TD>
-						<TD>'.htmlentities(trim(str_replace("'","",$_SESSION['SQLString']['values'][$i])), ENT_QUOTES, _('ISO-8859-1')).'</TD>';
-					echo '</TR>';
+					echo '<tr bgcolor='.$RowColour.'>';
+					echo '<td></td>
+						<td></td>
+						<td></td>
+						<td></td>';
+					echo '<td>'.$_SESSION['SQLString']['fields'][$i].'</td>
+						<td>'.htmlentities(trim(str_replace("'","",$_SESSION['SQLString']['values'][$i])), ENT_QUOTES, _('ISO-8859-1')).'</td>';
+					echo '</tr>';
 				}
 			}
-			echo '<TR bgcolor=black><TD></TD><TD></TD><TD></TD><TD></TD><TD></TD><TD></TD></TR>';
+			echo '<tr bgcolor=black><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
 		}
 		unset($_SESSION['SQLString']);
 	}
-	echo '</TABLE>';
+	echo '</table>';
 }
 include('includes/footer.inc');
 

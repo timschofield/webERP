@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -158,7 +158,7 @@ if (!isset($SelectedArea)) {
 
 		echo '<td>' . $myrow[0] . '</td>';
 		echo '<td>' . $myrow[1] . '</td>';
-		echo '<td><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedArea=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedArea=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
 		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedArea=' . $myrow[0] . '&delete=yes">' . _('Delete') . '</a></td>';
 
 	}
@@ -191,8 +191,8 @@ if (!isset($_GET['delete'])) {
 		$_POST['AreaCode'] = $myrow['areacode'];
 		$_POST['AreaDescription']  = $myrow['areadescription'];
 
-		echo '<INPUT TYPE=HIDDEN NAME=SelectedArea VALUE=' . $SelectedArea . '>';
-		echo '<INPUT TYPE=HIDDEN NAME=AreaCode VALUE=' .$_POST['AreaCode'] . '>';
+		echo '<input type=hidden name=SelectedArea VALUE=' . $SelectedArea . '>';
+		echo '<input type=hidden name=AreaCode VALUE=' .$_POST['AreaCode'] . '>';
 		echo '<table><tr><td>' . _('Area Code') . ':</td><td>' . $_POST['AreaCode'] . '</td></tr>';
 
 	} else {
@@ -202,11 +202,11 @@ if (!isset($_GET['delete'])) {
 		if (!isset($_POST['AreaDescription'])) {
 			$_POST['AreaDescription'] = '';
 		}
-		echo '<TABLE>
-			<TR>
-				<TD>' . _('Area Code') . ':</TD>
-				<TD><input tabindex="1" ' . (in_array('AreaCode',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="AreaCode" value="' . $_POST['AreaCode'] . '" SIZE=3 MAXLENGTH=3></TD>
-			</TR>';
+		echo '<table>
+			<tr>
+				<td>' . _('Area Code') . ':</td>
+				<td><input tabindex="1" ' . (in_array('AreaCode',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="AreaCode" value="' . $_POST['AreaCode'] . '" size=3 maxlength=3></td>
+			</tr>';
 	}
 
 	echo '<tr><td>' . _('Area Name') . ':</td>

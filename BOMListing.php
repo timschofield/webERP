@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -46,9 +46,9 @@ If (isset($_POST['PrintPDF'])
 	   $title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
 	   include('includes/header.inc');
 	   prnMsg(_('The Bill of Material listing could not be retrieved by the SQL because'),'error');
-	   echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+	   echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<BR>$SQL";
+	      echo "<br>$SQL";
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -121,20 +121,20 @@ If (isset($_POST['PrintPDF'])
 
 	$title=_('Bill Of Material Listing');
 	include('includes/header.inc');
-	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . $title;
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
 	if (!isset($_POST['FromCriteria']) || !isset($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
+		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table>";
 
-		echo '<TR><TD>' . _('From Inventory Part Code') . ':' . "</FONT></TD><TD><INPUT tabindex='1' TYPE=text name=FromCriteria SIZE=20 MAXLENGTH=20 VALUE='1'></TD></TR>";
+		echo '<tr><td>' . _('From Inventory Part Code') . ':' . "</font></td><td><input tabindex='1' type=text name=FromCriteria size=20 maxlength=20 VALUE='1'></td></tr>";
 
-		echo '<TR><TD>' . _('To Inventory Part Code') . ':' . "</TD><TD><INPUT tabindex='2' TYPE=text name=ToCriteria SIZE=20 MAXLENGTH=20 VALUE='zzzzzzz'></TD></TR>";
+		echo '<tr><td>' . _('To Inventory Part Code') . ':' . "</td><td><input tabindex='2' type=text name=ToCriteria size=20 maxlength=20 VALUE='zzzzzzz'></td></tr>";
 
 
-		echo "</TABLE><br><INPUT tabindex='3' TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
-	echo "<script>defaultControl(document.forms[0].FromCriteria);</script>";
+		echo "</table><br><div class='centre'><input tabindex='3' type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
+		echo "<script>defaultControl(document.forms[0].FromCriteria);</script>";
 	}
 	include('includes/footer.inc');;
 
