@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 
 $PageSecurity = 2;
@@ -11,8 +11,8 @@ if (isset($_GET['OrderNumber'])) {
 	$title = _('Reviewing Sales Order Number') . ' ' . $_GET['OrderNumber'];
 } else {
 	include('includes/header.inc');
-	echo '<BR><BR><BR>';
-	prnMsg(_('This page must be called with a sales order number to review') . '.<BR>' . _('i.e.') . ' http://????/OrderDetails.php?OrderNumber=<i>xyz</i><BR>' . _('Click on back') . '.','error');
+	echo '<br><br><br>';
+	prnMsg(_('This page must be called with a sales order number to review') . '.<br>' . _('i.e.') . ' http://????/OrderDetails.php?OrderNumber=<i>xyz</i><br>' . _('Click on back') . '.','error');
 	include('includes/footer.inc');
 	exit;
 }
@@ -55,59 +55,59 @@ $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db, $ErrMsg, $DbgMsg);
 if (DB_num_rows($GetOrdHdrResult)==1) {
 
 	$myrow = DB_fetch_array($GetOrdHdrResult);
-	echo '<BR><BR><CENTER><TABLE BGCOLOR="#CCCCCC">';
-	echo '<TR>
-		<TH>' . _('Customer Code') . ':</TH>
-		<TD class="EvenTableRows"><FONT COLOR=BLUE><B><A HREF="' . $rootpath . '/SelectCustomer.php?Select=' . $myrow['debtorno'] . '">' . $myrow['debtorno'] . '</A></B></TD>
-		<TH>' . _('Customer Name') . ':</TH><TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['name'] . '</B></TD>
-	</TR>';
-	echo '<TR>
-		<TH>' . _('Customer Reference') . ':</TH>
-		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['customerref'] . '</FONT></B></TD>
-		<TH>' . _('Deliver To') . ':</TH><TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['deliverto'] . '</B></TD>
-	</TR>';
-	echo '<TR>
-		<TH>' . _('Ordered On') . ':</TH>
-		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . ConvertSQLDate($myrow['orddate']) . '</FONT></B></TD>
-		<TH>' . _('Delivery Address 1') . ':</TH>
-		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['deladd1'] . '</FONT></B></TD>
-	</TR>';
-	echo '<TR>
-		<TH>' . _('Requested Delivery') . ':</TH>
-		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . ConvertSQLDate($myrow['deliverydate']) . '</FONT></B></TD>
-		<TH>' . _('Delivery Address 2') . ':</TH>
-		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['deladd2'] . '</FONT></B></TD>
-	</TR>';
-	echo '<TR>
-		<TH>' . _('Order Currency') . ':</TH>
-		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['currcode'] . '</FONT></B></TD>
-		<TH>' . _('Delivery Address 3') . ':</TH>
-		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['deladd3'] . '</FONT></B></TD>
-	</TR>';
-	echo '<TR>
-		<TH>' . _('Deliver From Location') . ':</TH>
-		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['fromstkloc'] . '</FONT></B></TD>
-		<TH>' . _('Delivery Address 4') . ':</TH>
-		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['deladd4'] . '</FONT></B></TD>
-	</TR>';
-	echo '<TR>
-		<TH>' . _('Telephone') . ':</TH>
-		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['contactphone'] . '</FONT></B></TD>
-		<TH>' . _('Delivery Address 5') . ':</TH>
-		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['deladd5'] . '</FONT></B></TD>
-	</TR>';
-	echo '<TR>
-		<TH>' . _('Email') . ':</TH>
-		<TD class="EvenTableRows"><FONT COLOR=BLUE><B><A HREF="mailto:' . $myrow['contactemail'] . '">' . $myrow['contactemail'] . '</A></FONT></B></TD>
-		<TH>' . _('Delivery Address 6') . ':</TH>
-		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['deladd6'] . '</FONT></B></TD>
-	</TR>';
-	echo '<TR>
-		<TH>' . _('Freight Cost') . ':</TH>
-		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['freightcost'] . '</FONT></B></TD>
-	</TR>';
-	echo '</TABLE>';
-	echo _('Comments'). ': ' . $myrow['comments'] . '<BR></CENTER>';
+	echo '<br><br><table bgcolor="#CCCCCC">';
+	echo '<tr>
+		<th>' . _('Customer Code') . ':</th>
+		<td class="EvenTableRows"><font color=BLUE><b><a href="' . $rootpath . '/SelectCustomer.php?Select=' . $myrow['debtorno'] . '">' . $myrow['debtorno'] . '</a></b></td>
+		<th>' . _('Customer Name') . ':</th><td bgcolor="#CCCCCC"><font color=BLUE><b>' . $myrow['name'] . '</b></td>
+	</tr>';
+	echo '<tr>
+		<th>' . _('Customer Reference') . ':</th>
+		<td class="EvenTableRows"><font color=BLUE><b>' . $myrow['customerref'] . '</font></b></td>
+		<th>' . _('Deliver To') . ':</th><td bgcolor="#CCCCCC"><font color=BLUE><b>' . $myrow['deliverto'] . '</b></td>
+	</tr>';
+	echo '<tr>
+		<th>' . _('Ordered On') . ':</th>
+		<td class="EvenTableRows"><font color=BLUE><b>' . ConvertSQLDate($myrow['orddate']) . '</font></b></td>
+		<th>' . _('Delivery Address 1') . ':</th>
+		<td class="EvenTableRows"><font color=BLUE><b>' . $myrow['deladd1'] . '</font></b></td>
+	</tr>';
+	echo '<tr>
+		<th>' . _('Requested Delivery') . ':</th>
+		<td class="EvenTableRows"><font color=BLUE><b>' . ConvertSQLDate($myrow['deliverydate']) . '</font></b></td>
+		<th>' . _('Delivery Address 2') . ':</th>
+		<td class="EvenTableRows"><font color=BLUE><b>' . $myrow['deladd2'] . '</font></b></td>
+	</tr>';
+	echo '<tr>
+		<th>' . _('Order Currency') . ':</th>
+		<td class="EvenTableRows"><font color=BLUE><b>' . $myrow['currcode'] . '</font></b></td>
+		<th>' . _('Delivery Address 3') . ':</th>
+		<td class="EvenTableRows"><font color=BLUE><b>' . $myrow['deladd3'] . '</font></b></td>
+	</tr>';
+	echo '<tr>
+		<th>' . _('Deliver From Location') . ':</th>
+		<td class="EvenTableRows"><font color=BLUE><b>' . $myrow['fromstkloc'] . '</font></b></td>
+		<th>' . _('Delivery Address 4') . ':</th>
+		<td class="EvenTableRows"><font color=BLUE><b>' . $myrow['deladd4'] . '</font></b></td>
+	</tr>';
+	echo '<tr>
+		<th>' . _('Telephone') . ':</th>
+		<td class="EvenTableRows"><font color=BLUE><b>' . $myrow['contactphone'] . '</font></b></td>
+		<th>' . _('Delivery Address 5') . ':</th>
+		<td class="EvenTableRows"><font color=BLUE><b>' . $myrow['deladd5'] . '</font></b></td>
+	</tr>';
+	echo '<tr>
+		<th>' . _('Email') . ':</th>
+		<td class="EvenTableRows"><font color=BLUE><b><a href="mailto:' . $myrow['contactemail'] . '">' . $myrow['contactemail'] . '</a></font></b></td>
+		<th>' . _('Delivery Address 6') . ':</th>
+		<td class="EvenTableRows"><font color=BLUE><b>' . $myrow['deladd6'] . '</font></b></td>
+	</tr>';
+	echo '<tr>
+		<th>' . _('Freight Cost') . ':</th>
+		<td class="EvenTableRows"><font color=BLUE><b>' . $myrow['freightcost'] . '</font></b></td>
+	</tr>';
+	echo '</table><div class="centre">';
+	echo _('Comments'). ': ' . $myrow['comments'] . '<br></div>';
 }
 
 /*Now get the line items */
@@ -141,19 +141,19 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		$OrderTotalVolume = 0;
 		$OrderTotalWeight = 0;
 
-		echo '</BR><CENTER><B>' . _('Line Details') . '</B>
-			<TABLE CELLPADDING=2 COLSPAN=9 BORDER=1>
-			<TR>
-			<TH>' . _('Item Code') . '</TH>
-			<TH>' . _('Item Description') . '</TH>
-			<TH>' . _('Quantity') . '</TH>
-			<TH>' . _('Unit') . '</TH>
-			<TH>' . _('Price') . '</TH>
-			<TH>' . _('Discount') . '</TH>
-			<TH>' . _('Total') . '</TH>
-			<TH>' . _('Qty Del') . '</TH>
-			<TH>' . _('Last Del') . '</TH>
-			</TR>';
+		echo '<br><div class="centre"><b>' . _('Line Details') . '</div></b>
+			<table cellpadding=2 colspan=9 border=1>
+			<tr>
+			<th>' . _('Item Code') . '</th>
+			<th>' . _('Item Description') . '</th>
+			<th>' . _('Quantity') . '</th>
+			<th>' . _('Unit') . '</th>
+			<th>' . _('Price') . '</th>
+			<th>' . _('Discount') . '</th>
+			<th>' . _('Total') . '</th>
+			<th>' . _('Qty Del') . '</th>
+			<th>' . _('Last Del') . '</th>
+			</tr>';
 		$k=0;
 		while ($myrow=db_fetch_array($LineItemsResult)) {
 
@@ -171,16 +171,16 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		  		$DisplayActualDeliveryDate = _('N/A');
 			}
 
-			echo 	'<TD>' . $myrow['stkcode'] . '</TD>
-				<TD>' . $myrow['description'] . '</TD>
-				<TD ALIGN=RIGHT>' . $myrow['quantity'] . '</TD>
-				<TD>' . $myrow['units'] . '</TD>
-				<TD ALIGN=RIGHT>' . number_format($myrow['unitprice'],2) . '</TD>
-				<TD ALIGN=RIGHT>' . number_format(($myrow['discountpercent'] * 100),2) . '%' . '</TD>
-				<TD ALIGN=RIGHT>' . number_format($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']),2) . '</TD>
-				<TD ALIGN=RIGHT>' . number_format($myrow['qtyinvoiced'],2) . '</TD>
-				<TD>' . $DisplayActualDeliveryDate . '</TD>
-			</TR>';
+			echo 	'<td>' . $myrow['stkcode'] . '</td>
+				<td>' . $myrow['description'] . '</td>
+				<td align=right>' . $myrow['quantity'] . '</td>
+				<td>' . $myrow['units'] . '</td>
+				<td align=right>' . number_format($myrow['unitprice'],2) . '</td>
+				<td align=right>' . number_format(($myrow['discountpercent'] * 100),2) . '%' . '</td>
+				<td align=right>' . number_format($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']),2) . '</td>
+				<td align=right>' . number_format($myrow['qtyinvoiced'],2) . '</td>
+				<td>' . $DisplayActualDeliveryDate . '</td>
+			</tr>';
 			
 			$OrderTotal = $OrderTotal + $myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']);
 			$OrderTotalVolume = $OrderTotalVolume + $myrow['quantity'] * $myrow['volume'];
@@ -191,20 +191,20 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		$DisplayVolume = number_format($OrderTotalVolume,2);
 		$DisplayWeight = number_format($OrderTotalWeight,2);
 		
-		echo '<TR>
-			<TD COLSPAN=5 ALIGN=RIGHT><B>' . _('TOTAL Excl Tax/Freight') . '</B></TD>
-			<TD COLSPAN=2 ALIGN=RIGHT>' . $DisplayTotal . '</TD>
-			</TR>
-		</TABLE>';
+		echo '<tr>
+			<td colspan=5 align=right><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
+			<td colspan=2 align=right>' . $DisplayTotal . '</td>
+			</tr>
+		</table>';
 		
-		echo '<TABLE BORDER=1>
-			<TR>
-				<TD>' . _('Total Weight') . ':</TD>
-				<TD>' . $DisplayWeight . '</TD>
-				<TD>' . _('Total Volume') . ':</TD>
-				<TD>' . $DisplayVolume . '</TD>
-			</TR>
-		</TABLE>';
+		echo '<table border=1>
+			<tr>
+				<td>' . _('Total Weight') . ':</td>
+				<td>' . $DisplayWeight . '</td>
+				<td>' . _('Total Volume') . ':</td>
+				<td>' . $DisplayVolume . '</td>
+			</tr>
+		</table>';
 	}
 	
 include('includes/footer.inc');

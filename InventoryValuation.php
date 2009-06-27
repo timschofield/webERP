@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -71,9 +71,9 @@ If (isset($_POST['PrintPDF'])
 	  $title = _('Inventory Valuation') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The inventory valuation could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo "<BR><A HREF='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</A>';
+	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<BR>$SQL";
+	      echo "<br>$SQL";
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -179,7 +179,7 @@ If (isset($_POST['PrintPDF'])
 		$title = _('Print Inventory Valuation Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no items with any value to print out for the location specified'),'error');
-		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
       } else {
@@ -203,44 +203,44 @@ If (isset($_POST['PrintPDF'])
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
+		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table>";
 
-		echo '<TR><TD>' . _('From Inventory Category Code') . ':</FONT></TD><TD><SELECT name=FromCriteria>';
+		echo '<tr><td>' . _('From Inventory Category Code') . ':</font></td><td><select name=FromCriteria>';
 
 		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
 		$CatResult= DB_query($sql,$db);
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo "<OPTION VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+			echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 		}
-		echo '</SELECT></TD></TR>';
+		echo '</select></td></tr>';
 
-		echo '<TR><TD>' . _('To Inventory Category Code') . ':</TD><TD><SELECT name=ToCriteria>';
+		echo '<tr><td>' . _('To Inventory Category Code') . ':</td><td><select name=ToCriteria>';
 
 		/*Set the index for the categories result set back to 0 */
 		DB_data_seek($CatResult,0);
 
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo "<OPTION VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+			echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 		}
-		echo '</SELECT></TD></TR>';
+		echo '</select></td></tr>';
 
-		echo '<TR><TD>' . _('For Inventory in Location') . ":</TD><TD><SELECT name='Location'>";
+		echo '<tr><td>' . _('For Inventory in Location') . ":</td><td><select name='Location'>";
 		$sql = 'SELECT loccode, locationname FROM locations';
 		$LocnResult=DB_query($sql,$db);
 
-		echo "<OPTION Value='All'>" . _('All Locations');
+		echo "<option Value='All'>" . _('All Locations');
 
 		while ($myrow=DB_fetch_array($LocnResult)){
-		          echo "<OPTION Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+		          echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		      		}
-		echo '</SELECT></TD></TR>';
+		echo '</select></td></tr>';
 
-		echo '<TR><TD>' . _('Summary or Detailed Report') . ":</TD><TD><SELECT name='DetailedReport'>";
-		echo "<OPTION SELECTED Value='No'>" . _('Summary Report');
-		echo "<OPTION Value='Yes'>" . _('Detailed Report');
-		echo '</SELECT></TD></TR>';
+		echo '<tr><td>' . _('Summary or Detailed Report') . ":</td><td><select name='DetailedReport'>";
+		echo "<option selected Value='No'>" . _('Summary Report');
+		echo "<option Value='Yes'>" . _('Detailed Report');
+		echo '</select></td></tr>';
 
-		echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
+		echo "</table><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
 	}
 	include('includes/footer.inc');
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 15;
 
@@ -138,7 +138,7 @@ if (isset($_POST['submit'])) {
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg( _('Cannot delete this payment method because bank transactions have been created using this payment method'),'warn');
-			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('bank transactions that refer to this payment method') . '</FONT>';
+			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('bank transactions that refer to this payment method') . '</font>';
 		} else {
 			$sql="DELETE FROM paymentmethods WHERE paymentname ".LIKE."'" . $OldMeasureName . "'";
 			$result = DB_query($sql,$db);
@@ -175,7 +175,7 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = _('Could not get payment methods because');
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	echo "<center><table>
+	echo "<table>
 		<tr>
 		<th>" . _('Payment Method') . "</th>
 		<th>" . _('For Payments') . "</th>
@@ -193,27 +193,27 @@ if (isset($_POST['submit'])) {
 			$k++;
 		}
 
-		echo '<TD>' . $myrow['paymentname'] . '</TD>';
-		echo '<TD>' . ($myrow['paymenttype'] ? _('Yes') : _('No')) . '</TD>';
-		echo '<TD>' . ($myrow['receipttype'] ? _('Yes') : _('No')) . '</TD>';
-		echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedPaymentID=' . $myrow['paymentid'] . '">' . _('Edit') . '</A></TD>';
-		echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedPaymentID=' . $myrow['paymentid'] . '&delete=1">' . _('Delete') .'</A></TD>';
-		echo '</TR>';
+		echo '<td>' . $myrow['paymentname'] . '</td>';
+		echo '<td>' . ($myrow['paymenttype'] ? _('Yes') : _('No')) . '</td>';
+		echo '<td>' . ($myrow['receipttype'] ? _('Yes') : _('No')) . '</td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedPaymentID=' . $myrow['paymentid'] . '">' . _('Edit') . '</a></td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedPaymentID=' . $myrow['paymentid'] . '&delete=1">' . _('Delete') .'</a></td>';
+		echo '</tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</TABLE></CENTER><p>';
+	echo '</table><p>';
 } //end of ifs and buts!
 
 
 if (isset($SelectedPaymentID)) {
-	echo '<CENTER><A HREF=' . $_SERVER['PHP_SELF'] . '?' . SID .'>' . _('Review Payment Methods') . '</A></CENTER>';
+	echo '<div class="centre"><a href=' . $_SERVER['PHP_SELF'] . '?' . SID .'>' . _('Review Payment Methods') . '</a></div>';
 }
 
-echo '<P>';
+echo '<p>';
 
 if (! isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 	if (isset($SelectedPaymentID)) {
 		//editing an existing section
@@ -237,38 +237,38 @@ if (! isset($_GET['delete'])) {
 			$_POST['ForPayment'] = $myrow['paymenttype'];
 			$_POST['ForReceipt'] = $myrow['receipttype'];
 
-			echo "<INPUT TYPE=HIDDEN NAME='SelectedPaymentID' VALUE='" . $_POST['MethodID'] . "'>";
-			echo "<CENTER><TABLE>";
+			echo "<input type=hidden name='SelectedPaymentID' VALUE='" . $_POST['MethodID'] . "'>";
+			echo "<table>";
 		}
 
 	}  else {
 		$_POST['MethodName']='';
 		$_POST['ForPayment'] = 1; // Default is use for payment
 		$_POST['ForReceipt'] = 1; // Default is use for receipts
-		echo "<CENTER><TABLE>";
+		echo "<table>";
 	}
-	echo "<TR>
-		<TD>" . _('Payment Method') . ':' . "</TD>
-		<TD><input type='Text' ". (in_array('MethodName',$Errors) ? 'class="inputerror"' : '' ) ." name='MethodName' SIZE=30 MAXLENGTH=30 value='" . $_POST['MethodName'] . "'></TD>
-		</TR>";
-	echo "<TR>
-		<TD>" . _('Use For Payments') . ':' . "</TD>
-		<TD><SELECT name='ForPayment'>";
-	echo "<OPTION".($_POST['ForPayment'] ? ' SELECTED' : '') ." VALUE='1'>" . _('Yes');
-	echo "<OPTION".($_POST['ForPayment'] ? '' : ' SELECTED') ." VALUE='0'>" . _('No');
-	echo "</SELECT></TD></TR>";
-	echo "<TR>
-		<TD>" . _('Use For Receipts') . ':' . "</TD>
-		<TD><SELECT name='ForReceipt'>";
-	echo "<OPTION".($_POST['ForReceipt'] ? ' SELECTED' : '') ." VALUE='1'>" . _('Yes');
-	echo "<OPTION".($_POST['ForReceipt'] ? '' : ' SELECTED') ." VALUE='0'>" . _('No');
-	echo "</SELECT></TD></TR>";
+	echo "<tr>
+		<td>" . _('Payment Method') . ':' . "</td>
+		<td><input type='Text' ". (in_array('MethodName',$Errors) ? 'class="inputerror"' : '' ) ." name='MethodName' size=30 maxlength=30 value='" . $_POST['MethodName'] . "'></td>
+		</tr>";
+	echo "<tr>
+		<td>" . _('Use For Payments') . ':' . "</td>
+		<td><select name='ForPayment'>";
+	echo "<option".($_POST['ForPayment'] ? ' selected' : '') ." VALUE='1'>" . _('Yes');
+	echo "<option".($_POST['ForPayment'] ? '' : ' selected') ." VALUE='0'>" . _('No');
+	echo "</select></td></tr>";
+	echo "<tr>
+		<td>" . _('Use For Receipts') . ':' . "</td>
+		<td><select name='ForReceipt'>";
+	echo "<option".($_POST['ForReceipt'] ? ' selected' : '') ." VALUE='1'>" . _('Yes');
+	echo "<option".($_POST['ForReceipt'] ? '' : ' selected') ." VALUE='0'>" . _('No');
+	echo "</select></td></tr>";
 
-	echo '</TABLE>';
+	echo '</table>';
 
-	echo '<CENTER><input type=Submit name=submit value=' . _('Enter Information') . '>';
+	echo '<div class="centre"><input type=Submit name=submit value=' . _('Enter Information') . '></div>';
 
-	echo '</FORM>';
+	echo '</form>';
 
 } //end if record deleted no point displaying form to add record
 

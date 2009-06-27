@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 // MRPReport.php - Shows supply and demand for a part as determined by MRP
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -31,7 +31,7 @@ If (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	    $title = _('Print MRP Report Error');
 		include('includes/header.inc');
 		prnMsg(_('The MRP calculation must be run before this report will have any output. MRP reguires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule etc'),'error');        
-		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -119,9 +119,9 @@ If (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	  $title = _('MRP Report') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The MRP Report could not be retrieved by the SQL because') . ' '  . DB_error_msg($holddb),'error');
-	   echo "<BR><A HREF='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</A>';
+	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<BR>$sql";
+	      echo "<br>$sql";
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -466,7 +466,7 @@ If (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			$title = _('Print MRP Report Error');
 			include('includes/header.inc');
 			prnMsg(_('The selected item did not have any MRP demand'),'error');
-			echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+			echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
 	} else {
@@ -489,10 +489,10 @@ If (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 		prnMsg(_('This report shows the MRP calculation for a specific item - a part code must be selected'),'warn');
 	}
 
-	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><center><table>";
+	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
 	echo '<tr><td>' . _('Part') . ":</td>";
 	echo "<td><input type ='text' name='Part' size='20'>";
-	echo "</table></br><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></center>";
+	echo "</table></br><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
 

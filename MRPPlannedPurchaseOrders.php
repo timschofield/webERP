@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 // MRPPlannedPurchaseOrders.php - Report of purchase parts that MRP has determined should have
 // purchase orders created for them
 $PageSecurity = 2;
@@ -86,9 +86,9 @@ If (isset($_POST['PrintPDF'])) {
 	  $title = _('MRP Planned Purchase Orders') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The MRP planned purchase orders could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo "<BR><A HREF='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</A>';
+	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<BR>$sql";
+	      echo "<br>$sql";
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -228,7 +228,7 @@ If (isset($_POST['PrintPDF'])) {
 			$title = _('Print MRP Planned Purchase Orders Error');
 			include('includes/header.inc');
 			prnMsg(_('There were no items with planned purchase orders'),'error');
-			echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+			echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
 	} else {
@@ -247,7 +247,7 @@ If (isset($_POST['PrintPDF'])) {
 	$title=_('MRP Planned Purchase Orders Reporting');
 	include('includes/header.inc');
 
-	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . ' method="post"><center><table>';
+	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . ' method="post"><table>';
 	echo '<tr><td>' . _('Consolidation') . ':</td><td><select name="Consolidation">';
 	echo '<option selected value="None">' . _('None') . '</option>';
 	echo '<option value="Weekly">' . _('Weekly') . '</option>';
@@ -257,8 +257,8 @@ If (isset($_POST['PrintPDF'])) {
 	echo '<option selected value="yes">' . _('Print With Alternating Highlighted Lines');
 	echo '<option value="no">' . _('Plain Print');
 	echo '</select></td></tr>';
-	echo '<tr><td>' . _('Cut Off Date') . ':</td><td><input type ="text" name="cutoffdate" size="10"></tr>';
-	echo '</table></br><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '"></center>';
+	echo '<tr><td>' . _('Cut Off Date') . ':</td><td><input type ="text" class=date alt="'.$_SESSION['DefaultDateFormat'] .'" name="cutoffdate" size="10"></tr>';
+	echo '</table></br><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '"></div>';
 
 	include('includes/footer.inc');
 

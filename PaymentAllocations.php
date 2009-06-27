@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*
 	This page is called from SupplierInquiry.php when the 'view payments' button is selected
 */
@@ -29,11 +29,11 @@ include('includes/SQL_CommonFunctions.inc');
 $SuppID = $_GET['SuppID'];
 $InvID = $_GET['InvID'];
 
-echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Payments') . '" ALT="">' . ' ' . _('Payment Allocation for Supplier') . ': ' . $SuppID . _(' and') . ' ' . _('Invoice') . ': ' . $InvID;
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Payments') . '" alt="">' . ' ' . _('Payment Allocation for Supplier') . ': ' . $SuppID . _(' and') . ' ' . _('Invoice') . ': ' . $InvID;
 
-echo '<DIV CLASS="page_help_text">' . _('This shows how the payment to the supplier was allocated') . '<a href="SupplierInquiry.php?&SupplierID=' . $SuppID . '"><BR> ' . _('Back to supplier inquiry') . '</a></DIV><BR>';
+echo '<div class="page_help_text">' . _('This shows how the payment to the supplier was allocated') . '<a href="SupplierInquiry.php?&SupplierID=' . $SuppID . '"><br> ' . _('Back to supplier inquiry') . '</a></div><br>';
 
-//echo "<BR><CENTER><FONT SIZE=4 COLOR=BLUE>Payment Allocation for Supplier: '$SuppID' and Invoice: '$InvID'</FONT>";
+//echo "<br><font size=4 color=BLUE>Payment Allocation for Supplier: '$SuppID' and Invoice: '$InvID'</font>";
 
 //	$_SESSION['SuppID'] = new SupplierID;
 //	$_SESSION['InvID'] = new InvoiceID;
@@ -64,17 +64,17 @@ $SQL= "SELECT supptrans.supplierno,
 $Result = DB_query($SQL, $db);
 if (DB_num_rows($Result) == 0){
 	prnMsg(_('There may be a problem retrieving the information. No data is returned'),'warn');
-	echo '<BR><A HREF ="javascript:history.back()">' . _('Go back') . '</A>';
+	echo '<br><a HREF ="javascript:history.back()">' . _('Go back') . '</a>';
 	include('includes/foooter.inc');
 	exit;
 }
 
-echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 WIDTH=100% BORDER=0>';
-$TableHeader = "<TR>
-<TH>" . _('Supplier Number') . '<BR>' . _('Reference') . "</TH>
-<TH>" . _('Payment') .'<BR>' . _('Reference') . "</TH>
-<TH>" . _('Payment') . '<BR>' . _('Date') . "</TH>
-<TH>" . _('Total Payment') . '<BR>' . _('Amount') .	'</TH></TR>';
+echo '<table cellpadding=2 colspan=7 width=100% border=0>';
+$TableHeader = "<tr>
+<th>" . _('Supplier Number') . '<br>' . _('Reference') . "</th>
+<th>" . _('Payment') .'<br>' . _('Reference') . "</th>
+<th>" . _('Payment') . '<br>' . _('Date') . "</th>
+<th>" . _('Total Payment') . '<br>' . _('Amount') .	'</th></tr>';
 
 echo $TableHeader;
 
@@ -82,18 +82,18 @@ $j=1;
 $k=0; //row colour counter
   while ($myrow = DB_fetch_array($Result)) {
 	if ($k == 1){
-		echo '<TR class="EvenTableRows">';
+		echo '<tr class="EvenTableRows">';
 		$k = 0;
 	} else {
-		echo '<TR class="OddTableRows">';
+		echo '<tr class="OddTableRows">';
 		$k++;
 	}
 
-	printf('<TD>%s</TD>
-		<TD>%s</TD>
-		<TD>%s</TD>
-		<TD>%s</TD>
-		</TR>',
+	printf('<td>%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		</tr>',
 		$myrow['supplierno'],
 		$myrow['suppreference'],
 		ConvertSQLDate($myrow['trandate']),
@@ -106,7 +106,7 @@ $k=0; //row colour counter
        }
 
 }
-  echo '</TABLE></CENTER>';
+  echo '</table>';
 
 include('includes/footer.inc');
 ?>

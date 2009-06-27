@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 // Add, Edit, Delete, and List MRP demand records. Table is mrpdemands.
 // Have separate functions for each routine. Use pass-by-reference - (&$db,&$StockID) -
 // to pass values of $db and $StockID to functions. - when just used $db as variable,
@@ -89,8 +89,8 @@ function search(&$db,&$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARC
 
 // If the SELECT found records, display them
 if (DB_num_rows($result) > 0) {
-echo "<form action=" . $_SERVER['PHP_SELF'] . "?" . SID ." METHOD=POST>";
-	echo '<table CELLPADDING=2 COLSPAN=7 BORDER=1>';
+echo "<form action=" . $_SERVER['PHP_SELF'] . "?" . SID ." method=post>";
+	echo '<table cellpadding=2 colspan=7 BORDER=1>';
 	$TableHeader = '<tr><th>' . _('Code') . '</th>
 				        <th>' . _('Description') . '</th>
 			       </tr>';
@@ -107,7 +107,7 @@ echo "<form action=" . $_SERVER['PHP_SELF'] . "?" . SID ." METHOD=POST>";
 			$k++;
 		}
 		$tabindex=$j+4;
-		printf("<td><input tabindex='".$tabindex."' type=SUBMIT name='StockID' value='%s'</td>
+		printf("<td><input tabindex='".$tabindex."' type=submit name='StockID' value='%s'</td>
 		        <td>%s</td>
 			</tr>",
 			$myrow['stockid'],
@@ -266,7 +266,7 @@ function listall(&$db,$part,$demandtype)  {//####LISTALL_LISTALL_LISTALL_LISTALL
 // Lists some in hit List Selection submit button, and uses part number if it is entered or
 // demandtype
 
-echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID .' METHOD=POST>';
+echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID .' method=post>';
     $where = " ";
     if ($demandtype) {
         $where = ' WHERE mrpdemandtype =' . "'"  .  $demandtype . "'";
@@ -288,7 +288,7 @@ echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID .' METHOD=POST>';
 	$ErrMsg = _('The SQL to find the parts selected failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 		
-	echo "<center><table border=1>
+	echo "<table border=1>
 		<tr BGCOLOR =#800000><th>" . _('Part Number') . "</th>
 				<th>" . _('Description') . "</th>
 				<th>" . _('Demand Type') . "</th>
@@ -320,7 +320,7 @@ echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID .' METHOD=POST>';
 
 	//END WHILE LIST LOOP
 	echo '<tr><td>' . _('Number of Records') . "</td><td>$ctr</td></tr>";
-	echo '</table></center>';
+	echo '</table>';
 echo '</form></br></br></br></br>';
 unset ($StockID);
 display($db,$StockID,$DemandID);
@@ -334,20 +334,20 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 // the page is called, and is also invoked at the end of all of the other functions.
 // echo "</br>DISPLAY - DemandID = $DemandID</br>";
 	echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method="post"><b><br></b>
-</font><table CELLPADDING=3 COLSPAN=4>
+</font><table cellpadding=3 colspan=4>
 <tr>
-		 <td><font size=1>' . _('Enter text extracts in the') . ' <B>' . _('description') . '</B>:</font></td>
+		 <td><font size=1>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</font></td>
 		 <td><input tabindex="1" type="Text" name="Keywords" size="20" maxlength="25"></td>
-		 <td><font size=3><B>' . _('OR') . '</B></font></td>
-		 <td><font size=1>' . _('Enter extract of the') . ' <B>' . _('Stock Code') . '</B>:</font></td>
+		 <td><font size=3><b>' . _('OR') . '</b></font></td>
+		 <td><font size=1>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</font></td>
 		 <td><input tabindex="2" type="Text" name="StockCode" size="15" maxlength="20"></td>
-		 <td><font size=3><B>' . _('OR') . '</B></font></td>
+		 <td><font size=3><b>' . _('OR') . '</b></font></td>
 		 <td><a href="'. $_SERVER['PHP_SELF'] . '?&listall=yes>"' . _('List All') .'</a></td>
 	 </tr>
 	 </table>
-	 <center>
+	 <div class="centre">
 	  <input tabindex="3" type="submit" name="Search" value="' . _('Search Now') . '">
-	 </center>';
+	 </div>';
 	 echo '</br></br><hr>';
 	 echo '</br></br></b1r></br></br>';
 	if (isset($DemandID)) {
@@ -373,13 +373,13 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 
     echo '<input type="hidden" name="DemandID" value=' . $_POST['DemandID'] . '>';
 	echo '<input type="hidden" name="StockID" value="' . $_POST['StockID'] . '">';
-	echo '<center><table><tr><td>' ._('Part Number') . ':</td><td>' . $_POST['StockID'] . '</td></tr>';
+	echo '<table><tr><td>' ._('Part Number') . ':</td><td>' . $_POST['StockID'] . '</td></tr>';
 
 } else { 
 	if (!isset($_POST['StockID'])) {
 		$_POST['StockID'] = '';
 	}
-	echo '<center><table><tr>
+	echo '<table><tr>
 			<td>' . _('Part Number') . ':</td>
 			<td><input type="Text" name="StockID" size=21 maxlength=20 value="' . $_POST['StockID'] . '"></td>
 			</tr>';

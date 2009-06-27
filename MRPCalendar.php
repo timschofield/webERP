@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 // MRPCalendar.php
 // Maintains the calendar of valid manufacturing dates for MRP
 
@@ -204,7 +204,7 @@ function listall(&$db)  //####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LI
 	$ErrMsg = _('The SQL to find the parts selected failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 		
-	echo "</br><center><table border=1>
+	echo "</br><table border=1>
 		<tr BGCOLOR =#800000>
 		    <th>" . _('Date') . "</th>
 			<th>" . _('Manufacturing Date') . "</th>
@@ -224,7 +224,7 @@ function listall(&$db)  //####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LI
 				$flag);
 	} //END WHILE LIST LOOP
 	
-	echo '</table></center>';
+	echo '</table>';
     echo '</br></br>';
     unset ($ChangeDate);
     display($db,$ChangeDate);
@@ -241,13 +241,13 @@ function display(&$db,&$ChangeDate)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 
 	echo "<form action=" . $_SERVER['PHP_SELF'] . "?" . SID ." method=post></br></br>";
 
-	echo '<center><table>';
+	echo '<table>';
 
     echo '<tr>
         <td>' . _('From Date') . ":</td>
-	    <td><input type='Text' name='FromDate' size=10 maxlength=10 value=" . $_POST['FromDate'] . '></td>
+	    <td><input type='Text' class=date alt='".$_SESSION['DefaultDateFormat'] ."' name='FromDate' size=10 maxlength=10 value=" . $_POST['FromDate'] . '></td>
         <td>' . _('To Date') . ":</td>
-	    <td><input type='Text' name='ToDate' size=10 maxlength=10 value=" . $_POST['ToDate'] . '></td>
+	    <td><input type='Text' class=date alt='".$_SESSION['DefaultDateFormat'] ."' name='ToDate' size=10 maxlength=10 value=" . $_POST['ToDate'] . '></td>
 	</tr>
 	<tr><td></td></tr>
 	<tr><td></td></tr>
@@ -297,12 +297,12 @@ function display(&$db,&$ChangeDate)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 	</br>";
 
 echo '</br></br><hr/>';
-echo '<center><table>';
+echo '<table>';
 echo '<tr>
         <td>' . _('Change Date Status') . ":</td>
 	    <td><input type='Text' name='ChangeDate' size=12 maxlength=12 value=" . $_POST['ChangeDate'] . '></td>
 	  </tr></table>';
-echo "</br></br><center><input type='submit' name='update' value='" . _('Update') . "'>";
+echo "</br></br><div class='centre'><input type='submit' name='update' value='" . _('Update') . "'></div>";
 echo '</form>';
 
 } // End of function display()

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 $PageSecurity = 11;
 
@@ -146,7 +146,7 @@ if (isset($_POST['submit'])) {
 		$DbgMsg =  _('The SQL used to insert the new stock location records was');
 		$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
 
-		echo '<BR>........ ' . _('and new stock locations inserted for all existing stock items for the new location');
+		echo '<br>........ ' . _('and new stock locations inserted for all existing stock items for the new location');
 		unset($_POST['LocCode']);
 		unset($_POST['LocationName']);
 		unset($_POST['DelAdd1']);
@@ -222,7 +222,7 @@ if (isset($_POST['submit'])) {
 		if ($myrow[0]>0) {
 			$CancelDelete = 1;
 			prnMsg( _('Cannot delete this location because stock movements have been created using this location'),'warn');
-			echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock movements with this Location code');
+			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock movements with this Location code');
 
 		} else {
 			$sql= "SELECT COUNT(*) FROM locstock WHERE locstock.loccode='$SelectedLocation' AND locstock.quantity !=0";
@@ -231,7 +231,7 @@ if (isset($_POST['submit'])) {
 			if ($myrow[0]>0) {
 				$CancelDelete = 1;
 				prnMsg(_('Cannot delete this location because location stock records exist that use this location and have a quantity on hand not equal to 0'),'warn');
-				echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock items with stock on hand at this location code');
+				echo '<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock items with stock on hand at this location code');
 			} else {
 				$sql= "SELECT COUNT(*) FROM www_users WHERE www_users.defaultlocation='$SelectedLocation'";
 				$result = DB_query($sql,$db);
@@ -239,7 +239,7 @@ if (isset($_POST['submit'])) {
 				if ($myrow[0]>0) {
 					$CancelDelete = 1;
 					prnMsg(_('Cannot delete this location because it is the default location for a user') . '. ' . _('The user record must be modified first'),'warn');
-					echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('users using this location as their default location');
+					echo '<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('users using this location as their default location');
 				} else {
 					$sql= "SELECT COUNT(*) FROM bom WHERE bom.loccode='$SelectedLocation'";
 					$result = DB_query($sql,$db);
@@ -247,7 +247,7 @@ if (isset($_POST['submit'])) {
 					if ($myrow[0]>0) {
 						$CancelDelete = 1;
 						prnMsg(_('Cannot delete this location because it is the default location for a bill of material') . '. ' . _('The bill of materials must be modified first'),'warn');
-						echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('bom components using this location');
+						echo '<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('bom components using this location');
 					} else {
 						$sql= "SELECT COUNT(*) FROM workcentres WHERE workcentres.location='$SelectedLocation'";
 						$result = DB_query($sql,$db);
@@ -255,7 +255,7 @@ if (isset($_POST['submit'])) {
 						if ($myrow[0]>0) {
 							$CancelDelete = 1;
 							prnMsg( _('Cannot delete this location because it is used by some work centre records'),'warn');
-							echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('works centres using this location');
+							echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('works centres using this location');
 						} else {
 							$sql= "SELECT COUNT(*) FROM workorders WHERE workorders.loccode='$SelectedLocation'";
 							$result = DB_query($sql,$db);
@@ -263,7 +263,7 @@ if (isset($_POST['submit'])) {
 							if ($myrow[0]>0) {
 								$CancelDelete = 1;
 								prnMsg( _('Cannot delete this location because it is used by some work order records'),'warn');
-								echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('work orders using this location');
+								echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('work orders using this location');
 							}else {
 								$sql= "SELECT COUNT(*) FROM custbranch WHERE custbranch.defaultlocation='$SelectedLocation'";
 								$result = DB_query($sql,$db);
@@ -271,7 +271,7 @@ if (isset($_POST['submit'])) {
 								if ($myrow[0]>0) {
 									$CancelDelete = 1;
 									prnMsg(_('Cannot delete this location because it is used by some branch records as the default location to deliver from'),'warn');
-									echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches set up to use this location by default');
+									echo '<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches set up to use this location by default');
 								}
 							}
 						}
@@ -320,20 +320,20 @@ or deletion of the records*/
 		prnMsg (_('There are no locations that match up with a tax province record to display. Check that tax provinces are set up for all dispatch locations'),'error');
 	}
 
-	echo '<CENTER><table border=1>';
-	echo '<TR><TH>' . _('Location Code') . '</TH>
-			<TH>' . _('Location Name') . '</TH>
-			<TH>' . _('Tax Province') . '</TH>
-			<TH>' . _('Managed') . '</TH>
-		</TR>';
+	echo '<table border=1>';
+	echo '<tr><th>' . _('Location Code') . '</th>
+			<th>' . _('Location Name') . '</th>
+			<th>' . _('Tax Province') . '</th>
+			<th>' . _('Managed') . '</th>
+		</tr>';
 
 $k=0; //row colour counter
 while ($myrow = DB_fetch_array($result)) {
 	if ($k==1){
-		echo '<TR class="EvenTableRows">';
+		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo '<TR class="OddTableRows">';
+		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
 
@@ -343,13 +343,13 @@ while ($myrow = DB_fetch_array($result)) {
 		$myrow['managed'] = _('No');
 	}
 
-	printf("<TD>%s</TD>
-		<TD>%s</TD>
-		<TD>%s</TD>
-		<TD>%s</TD>
-		<TD><a href='%sSelectedLocation=%s'>" . _('Edit') . "</TD>
-		<TD><a href='%sSelectedLocation=%s&delete=1'>" . _('Delete') . '</TD>
-		</TR>',
+	printf("<td>%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		<td><a href='%sSelectedLocation=%s'>" . _('Edit') . "</td>
+		<td><a href='%sSelectedLocation=%s&delete=1'>" . _('Delete') . '</td>
+		</tr>',
 		$myrow['loccode'],
 		$myrow['locationname'],
 		$myrow['description'],
@@ -361,7 +361,7 @@ while ($myrow = DB_fetch_array($result)) {
 
 	}
 	//END WHILE LIST LOOP
-	echo '</CENTER></table>';
+	echo '</table>';
 }
 
 //end of ifs and buts!
@@ -371,10 +371,10 @@ while ($myrow = DB_fetch_array($result)) {
 <p>
 <?php
 if (isset($SelectedLocation)) {  ?>
-	<Center><a href="<?php echo $_SERVER['PHP_SELF'];?>"><?php echo _('REVIEW RECORDS'); ?></a></Center>
+	<div class="centre"><a href="<?php echo $_SERVER['PHP_SELF'];?>"><?php echo _('REVIEW RECORDS'); ?></a></div>
 <?php } ?>
 
-<P>
+<p>
 
 
 <?php
@@ -383,7 +383,7 @@ if (isset($SelectedLocation)) {  ?>
 
 if (!isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+	echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 
 	if (isset($SelectedLocation)) {
 		//editing an existing Location
@@ -424,15 +424,15 @@ if (!isset($_GET['delete'])) {
 		$_POST['Managed'] = $myrow['managed'];
 
 
-		echo "<INPUT TYPE=HIDDEN NAME=SelectedLocation VALUE=" . $SelectedLocation . '>';
-		echo "<INPUT TYPE=HIDDEN NAME=LocCode VALUE=" . $_POST['LocCode'] . '>';
-		echo '<CENTER><TABLE> <TR><TD>' . _('Location Code') . ':</TD><TD>';
-		echo $_POST['LocCode'] . '</TD></TR>';
+		echo "<input type=hidden name=SelectedLocation VALUE=" . $SelectedLocation . '>';
+		echo "<input type=hidden name=LocCode VALUE=" . $_POST['LocCode'] . '>';
+		echo '<table> <tr><td>' . _('Location Code') . ':</td><td>';
+		echo $_POST['LocCode'] . '</td></tr>';
 	} else { //end of if $SelectedLocation only do the else when a new record is being entered
 		if (!isset($_POST['LocCode'])) {
 			$_POST['LocCode'] = '';
 		}
-		echo '<CENTER><TABLE><TR><TD>' . _('Location Code') . ':</TD><TD><input type="Text" name="LocCode" value="' . $_POST['LocCode'] . '" SIZE=5 MAXLENGTH=5></TD></TR>';
+		echo '<table><tr><td>' . _('Location Code') . ':</td><td><input type="Text" name="LocCode" value="' . $_POST['LocCode'] . '" size=5 maxlength=5></td></tr>';
 	}
 	if (!isset($_POST['LocationName'])) {
 		$_POST['LocationName'] = '';
@@ -472,50 +472,50 @@ if (!isset($_GET['delete'])) {
 	}
 	?>
 
-	<TR><TD><?php echo _('Location Name') . ':'; ?></TD>
-	<TD><input type="Text" name="LocationName" value="<?php echo $_POST['LocationName']; ?>" SIZE=51 MAXLENGTH=50></TD></TR>
-	<TR><TD><?php echo _('Contact for deliveries') . ':'; ?></TD>
-	<TD><input type="Text" name="Contact" value="<?php echo $_POST['Contact']; ?>" SIZE=31 MAXLENGTH=30></TD></TR>
-	<TR><TD><?php echo _('Delivery Address 1') . ':'; ?></TD>
-	<TD><input type="Text" name="DelAdd1" value="<?php echo $_POST['DelAdd1']; ?>" SIZE=41 MAXLENGTH=40></TD></TR>
-	<TR><TD><?php echo _('Delivery Address 2') . ':'; ?></TD>
-	<TD><input type="Text" name="DelAdd2" value="<?php echo $_POST['DelAdd2']; ?>" SIZE=41 MAXLENGTH=40></TD></TR>
-	<TR><TD><?php echo _('Delivery Address 3') . ':'; ?></TD>
-	<TD><input type="Text" name="DelAdd3" value="<?php echo $_POST['DelAdd3']; ?>" SIZE=41 MAXLENGTH=40></TD></TR>
-	<TR><TD><?php echo _('Delivery Address 4') . ':'; ?></TD>
-	<TD><input type="Text" name="DelAdd4" value="<?php echo $_POST['DelAdd4']; ?>" SIZE=41 MAXLENGTH=40></TD></TR>
-	<TR><TD><?php echo _('Delivery Address 5') . ':'; ?></TD>
-	<TD><input type="Text" name="DelAdd5" value="<?php echo $_POST['DelAdd5']; ?>" SIZE=21 MAXLENGTH=20></TD></TR>
-	<TR><TD><?php echo _('Delivery Address 6') . ':'; ?></TD>
-	<TD><input type="Text" name="DelAdd6" value="<?php echo $_POST['DelAdd6']; ?>" SIZE=16 MAXLENGTH=15></TD></TR>
-	<TR><TD><?php echo _('Telephone No') . ':'; ?></TD>
-	<TD><input type="Text" name="Tel" value="<?php echo $_POST['Tel']; ?>" SIZE=31 MAXLENGTH=30></TD></TR>
-	<TR><TD><?php echo _('Facsimile No') . ':'; ?></TD>
-	<TD><input type="Text" name="Fax" value="<?php echo $_POST['Fax']; ?>" SIZE=31 MAXLENGTH=30></TD></TR>
-	<TR><TD><?php echo _('Email') . ':'; ?></TD>
-	<TD><input type="Text" name="Email" value="<?php echo $_POST['Email']; ?>" SIZE=31 MAXLENGTH=55></TD></TR>
+	<tr><td><?php echo _('Location Name') . ':'; ?></td>
+	<td><input type="Text" name="LocationName" value="<?php echo $_POST['LocationName']; ?>" size=51 maxlength=50></td></tr>
+	<tr><td><?php echo _('Contact for deliveries') . ':'; ?></td>
+	<td><input type="Text" name="Contact" value="<?php echo $_POST['Contact']; ?>" size=31 maxlength=30></td></tr>
+	<tr><td><?php echo _('Delivery Address 1') . ':'; ?></td>
+	<td><input type="Text" name="DelAdd1" value="<?php echo $_POST['DelAdd1']; ?>" size=41 maxlength=40></td></tr>
+	<tr><td><?php echo _('Delivery Address 2') . ':'; ?></td>
+	<td><input type="Text" name="DelAdd2" value="<?php echo $_POST['DelAdd2']; ?>" size=41 maxlength=40></td></tr>
+	<tr><td><?php echo _('Delivery Address 3') . ':'; ?></td>
+	<td><input type="Text" name="DelAdd3" value="<?php echo $_POST['DelAdd3']; ?>" size=41 maxlength=40></td></tr>
+	<tr><td><?php echo _('Delivery Address 4') . ':'; ?></td>
+	<td><input type="Text" name="DelAdd4" value="<?php echo $_POST['DelAdd4']; ?>" size=41 maxlength=40></td></tr>
+	<tr><td><?php echo _('Delivery Address 5') . ':'; ?></td>
+	<td><input type="Text" name="DelAdd5" value="<?php echo $_POST['DelAdd5']; ?>" size=21 maxlength=20></td></tr>
+	<tr><td><?php echo _('Delivery Address 6') . ':'; ?></td>
+	<td><input type="Text" name="DelAdd6" value="<?php echo $_POST['DelAdd6']; ?>" size=16 maxlength=15></td></tr>
+	<tr><td><?php echo _('Telephone No') . ':'; ?></td>
+	<td><input type="Text" name="Tel" value="<?php echo $_POST['Tel']; ?>" size=31 maxlength=30></td></tr>
+	<tr><td><?php echo _('Facsimile No') . ':'; ?></td>
+	<td><input type="Text" name="Fax" value="<?php echo $_POST['Fax']; ?>" size=31 maxlength=30></td></tr>
+	<tr><td><?php echo _('Email') . ':'; ?></td>
+	<td><input type="Text" name="Email" value="<?php echo $_POST['Email']; ?>" size=31 maxlength=55></td></tr>
 
-	<TD><?php echo _('Tax Province') . ':'; ?></TD><TD><SELECT NAME='TaxProvince'>
+	<td><?php echo _('Tax Province') . ':'; ?></td><td><select name='TaxProvince'>
 
 	<?php
 	$TaxProvinceResult = DB_query('SELECT taxprovinceid, taxprovincename FROM taxprovinces',$db);
 	while ($myrow=DB_fetch_array($TaxProvinceResult)){
 		if ($_POST['TaxProvince']==$myrow['taxprovinceid']){
-			echo '<OPTION SELECTED VALUE=' . $myrow['taxprovinceid'] . '>' . $myrow['taxprovincename'];
+			echo '<option selected VALUE=' . $myrow['taxprovinceid'] . '>' . $myrow['taxprovincename'];
 		} else {
-			echo '<OPTION VALUE=' . $myrow['taxprovinceid'] . '>' . $myrow['taxprovincename'];
+			echo '<option VALUE=' . $myrow['taxprovinceid'] . '>' . $myrow['taxprovincename'];
 		}
 	}
 
 	?>
-	</SELECT></TD></TR>
-	<TR><TD><?php echo _('Enable Warehouse Management') . ':'; ?></TD>
-	<TD><INPUT TYPE='checkbox' name='Managed'<?php if($_POST['Managed'] == 1) echo ' checked';?>></TD></TR>
-	</TABLE>
+	</select></td></tr>
+	<tr><td><?php echo _('Enable Warehouse Management') . ':'; ?></td>
+	<td><input type='checkbox' name='Managed'<?php if($_POST['Managed'] == 1) echo ' checked';?>></td></tr>
+	</table>
 
-	<CENTER><input type="Submit" name="submit" value="<?php echo _('Enter Information'); ?>">
+	<div class="centre"><input type="Submit" name="submit" value="<?php echo _('Enter Information'); ?>"></div>
 
-	</FORM>
+	</form>
 
 <?php } //end if record deleted no point displaying form to add record
 

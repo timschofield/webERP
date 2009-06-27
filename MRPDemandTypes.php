@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity=9;
 
@@ -79,7 +79,7 @@ if (isset($_POST['submit'])) {
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
-		prnMsg(_('Cannot delete this demand type because MRP Demand records exist for this type') . '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' ._('MRP Demands referring to this type'),'warn');
+		prnMsg(_('Cannot delete this demand type because MRP Demand records exist for this type') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' ._('MRP Demands referring to this type'),'warn');
     } else {
 			$sql="DELETE FROM mrpdemandtypes WHERE mrpdemandtype='$SelectedDT'";
 			$result = DB_query($sql,$db);
@@ -102,10 +102,10 @@ if (!isset($SelectedDT)) {
 
 	$result = DB_query($sql,$db);
 
-	echo "<CENTER><table border=1>
+	echo "<table border=1>
 		<tr BGCOLOR =#800000><th>" . _('Demand Type') . "</th>
 				<th>" . _('Description') . "</th>
-		</tr></FONT>";
+		</tr></font>";
 
 	while ($myrow = DB_fetch_row($result)) {
 
@@ -122,16 +122,16 @@ if (!isset($SelectedDT)) {
 	}
 
 	//END WHILE LIST LOOP
-	echo '</TABLE></CENTER>';
+	echo '</table>';
 }
 
 //end of ifs and buts!
 
 if (isset($SelectedDT)) {
-	echo "<CENTER><A HREF='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Show all Demand Types') . '</A></CENTER>';
+	echo "<div class='centre'><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Show all Demand Types') . '</a></div>';
 }
 
-echo "<P><FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+echo "<p><form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 
 if (isset($SelectedDT)) {
 	//editing an existing demand type
@@ -147,31 +147,31 @@ if (isset($SelectedDT)) {
 	$_POST['mrpdemandtype'] = $myrow['mrpdemandtype'];
 	$_POST['Description'] = $myrow['description'];
 
-	echo '<INPUT TYPE=HIDDEN NAME=SelectedDT VALUE=' . $SelectedDT . '>';
-	echo "<INPUT TYPE=HIDDEN NAME=mrpdemandtype VALUE='" . $_POST['mrpdemandtype'] . "'>";
-	echo '<CENTER><TABLE><TR><TD>' ._('Demand Type') . ':</TD><TD>' . $_POST['mrpdemandtype'] . '</TD></TR>';
+	echo '<input type=hidden name=SelectedDT VALUE=' . $SelectedDT . '>';
+	echo "<input type=hidden name=mrpdemandtype VALUE='" . $_POST['mrpdemandtype'] . "'>";
+	echo '<table><tr><td>' ._('Demand Type') . ':</td><td>' . $_POST['mrpdemandtype'] . '</td></tr>';
 
 } else { //end of if $SelectedDT only do the else when a new record is being entered
 	if (!isset($_POST['mrpdemandtype'])) {
 		$_POST['mrpdemandtype'] = '';
 	}
-	echo '<CENTER><TABLE><TR>
-			<TD>' . _('Demand Type') . ":</TD>
-			<TD><input type='Text' name='mrpdemandtype' SIZE=6 MAXLENGTH=5 value='" . $_POST['mrpdemandtype'] . "'></TD>
-			</TR>" ;
+	echo '<table><tr>
+			<td>' . _('Demand Type') . ":</td>
+			<td><input type='Text' name='mrpdemandtype' size=6 maxlength=5 value='" . $_POST['mrpdemandtype'] . "'></td>
+			</tr>" ;
 }
 
 if (!isset($_POST['Description'])) {
 	$_POST['Description'] = '';
 }
 
-echo '<TR><TD>' . _('Demand Type Description') . ":</TD>
-	<TD><input type='Text' name='Description' SIZE=31 MAXLENGTH=30 value='" . $_POST['Description'] . "'></TD>
-	</TR>
-	</TABLE>";
+echo '<tr><td>' . _('Demand Type Description') . ":</td>
+	<td><input type='Text' name='Description' size=31 maxlength=30 value='" . $_POST['Description'] . "'></td>
+	</tr>
+	</table>";
 
-echo "<CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'>";
+echo "<div class='centre'><input type='Submit' name='submit' value='" . _('Enter Information') . "'></div>";
 
-echo '</FORM>';
+echo '</form>';
 include('includes/footer.inc');
 ?>

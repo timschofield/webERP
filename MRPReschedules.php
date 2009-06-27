@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 // MRPReschedules.php - Report of purchase orders and work orders that MRP determines should be
 // rescheduled.
 $PageSecurity = 2;
@@ -34,9 +34,9 @@ If (isset($_POST['PrintPDF'])) {
 	  $title = _('MRP Reschedules') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The MRP reschedules could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo "<BR><A HREF='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</A>';
+	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<BR>$sql";
+	      echo "<br>$sql";
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -102,7 +102,7 @@ If (isset($_POST['PrintPDF'])) {
 			$title = _('Print MRP Reschedules Error');
 			include('includes/header.inc');
 			prnMsg(_('There were no items with due dates different from MRP dates'),'error');
-			echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+			echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
 	} else {
@@ -121,7 +121,7 @@ If (isset($_POST['PrintPDF'])) {
 	$title=_('MRP Reschedule Reporting');
 	include('includes/header.inc');
 
-	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><center><table>";
+	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
 	echo '<tr><td>' . _('Print Option') . ":</td><td><select name='Fill'>";
 	echo "<option selected value='yes'>" . _('Print With Alternating Highlighted Lines');
 	echo "<option value='no'>" . _('Plain Print');
@@ -131,7 +131,7 @@ If (isset($_POST['PrintPDF'])) {
 	echo "<option value='WO'>" . _('Work Orders Only');
 	echo "<option value='PO'>" . _('Purchase Orders Only');
 	echo '</select></td></tr>';
-	echo "</table></br></br><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></center>";
+	echo "</table></br></br><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
 

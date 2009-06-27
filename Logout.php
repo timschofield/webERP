@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 $PageSecurity =1;
 
 include('includes/session.inc');
@@ -62,7 +62,7 @@ include('includes/session.inc');
 		            <td width="3" class="borderBox"></td>
 		        </tr>
 		        <tr>
-		            <td COLSPAN="3" class="borderBox"></td>
+		            <td colspan="3" class="borderBox"></td>
 		            </td>
 		        </tr>
 		    </table>

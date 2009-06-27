@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 // MRPCreateDemands.php - Create mrpdemands based on sales order history
 
 $PageSecurity=9;
@@ -180,7 +180,7 @@ prnMsg( $totalrecords . ' ' . _('records have been created'),'success');
 
 } // End of else to create form
     echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID .' method="post"><b><br></b>';
-    echo '<center><table>';
+    echo '<table>';
     echo '<tr><td>' . _('Demand Type') . ':</td><td><select name="MRPDemandtype">';
     $sql = 'SELECT mrpdemandtype,
                    description
@@ -231,7 +231,7 @@ prnMsg( $totalrecords . ' ' . _('records have been created'),'success');
 	echo '<tr><td>' . _('Multiplier') . 
 	     ":</td><td><input type ='text' name='Multiplier' size='2'><tr><td></td></tr>";
 	echo "<tr><td></td></tr><tr><td></td><td><input type=submit name='submit' value='" . _('Submit') . 
-	     "'></td></tr></table></center>";
+	     "'></td></tr></table>";
 
 include('includes/footer.inc');
 ?>

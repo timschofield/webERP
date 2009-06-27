@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -50,9 +50,9 @@ If (isset($_POST['PrintPDF'])
 	  $title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	  prnMsg(_('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+	   echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<BR>$SQL";
+	      echo "<br>$SQL";
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -137,7 +137,7 @@ If (isset($_POST['PrintPDF'])
 		$title = _('Outstanding GRNs Valuation Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no GRNs with any value to print out for the specified supplier range'),'info');
-		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
       } else {
@@ -155,14 +155,14 @@ If (isset($_POST['PrintPDF'])
 	$title=_('Outstanding GRNs Report');
 	include('includes/header.inc');
 
-	echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
+	echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table>";
 
-	echo '<TR><TD>' . _('From Supplier Code') . ":</TD>
-		<TD><INPUT TYPE=TEXT NAME='FromCriteria' VALUE='0'></TD></TR>";
-	echo '<TR><TD>' . _('To Supplier Code'). ":</TD>
-		<TD><INPUT TYPE=TEXT NAME='ToCriteria' VALUE='zzzzzzz'></TD></TR>";
+	echo '<tr><td>' . _('From Supplier Code') . ":</td>
+		<td><input type=TEXT name='FromCriteria' VALUE='0'></td></tr>";
+	echo '<tr><td>' . _('To Supplier Code'). ":</td>
+		<td><input type=TEXT name='ToCriteria' VALUE='zzzzzzz'></td></tr>";
 
-	echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
+	echo "</table><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
 

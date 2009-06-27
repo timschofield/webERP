@@ -195,7 +195,7 @@ if (isset($_POST['PrintPDF'])){
 	  $title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  include('includes/header.inc');
 	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</A>';
+	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 	      echo "<br>$SQL";
 	   }
@@ -262,9 +262,9 @@ if (isset($_POST['PrintPDF'])){
 	 		 $title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
 	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   		echo "<BR><A HREF='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</A>';
+	   		echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-	      			echo "<BR>$SQL";
+	      			echo "<br>$SQL";
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -295,9 +295,9 @@ if (isset($_POST['PrintPDF'])){
 	 		 $title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
 	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   		echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+	   		echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-	      			echo "<BR>$SQL";
+	      			echo "<br>$SQL";
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -338,9 +338,9 @@ if (isset($_POST['PrintPDF'])){
 	 		$title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
 	   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   		echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+	   		echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-	      			echo "<BR>$SQL";
+	      			echo "<br>$SQL";
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -372,9 +372,9 @@ if (isset($_POST['PrintPDF'])){
 	 		 $title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
 	   		prnMsg( _('The purchase order quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   		echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+	   		echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-	      			echo "<BR>$SQL";
+	      			echo "<br>$SQL";
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -431,7 +431,7 @@ if (isset($_POST['PrintPDF'])){
 		$title = _('Print Inventory Planning Report Empty');
 		include('includes/header.inc');
 		prnMsg( _('There were no items in the range and location specified'),'error');
-		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	} else {
@@ -453,7 +453,7 @@ if (isset($_POST['PrintPDF'])){
 	include('includes/header.inc');
 	
 
-	echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD='POST'><CENTER><TABLE>";
+	echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method='POST'><table>";
 
 	echo '<tr><td>' . _('For Inventory in Location') . ':</td><td><select name="Location">';
 	$sql = 'SELECT loccode, locationname FROM locations';
@@ -494,7 +494,7 @@ if (isset($_POST['PrintPDF'])){
 	}
 	echo '</select></td></tr>';
 
-	echo '</table><input type=submit Name="PrintPDF" Value="' . _('Print PDF') . '"></center>';
+	echo '</table><div class="centre"><input type=submit Name="PrintPDF" Value="' . _('Print PDF') . '"></div>';
 
 	include('includes/footer.inc');
 } /*end of else not PrintPDF */

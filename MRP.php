@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity=9;
 
@@ -528,7 +528,7 @@ if (isset($_POST['submit'])) {
 		echo '</table>';
 	}
     echo "<p><form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
-    echo '<center><table>';
+    echo '<table>';
 	// Generate selections for Location
 	echo '<tr>
 	 <td>' . _('Location') . '</td>
@@ -553,7 +553,7 @@ if (isset($_POST['submit'])) {
     echo '<td><input type="checkbox" name="pansizeflag" value="y" checked></td></tr>';
     echo '<tr><td>' ._('Use Shrinkage?') . ':</td>';
     echo '<td><input type="checkbox" name="shrinkageflag" value="y" checked></td></tr>';
-    echo '</table><center></br></br><input type="submit" name="submit" value="' . _('Run MRP') . '">';
+    echo '</table><div class="centre"></br></br><input type="submit" name="submit" value="' . _('Run MRP') . '"></div>';
     echo '</form>';
 }  // End of Main program logic -------------------------------------------------------
 

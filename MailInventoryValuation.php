@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity = 1;
 $AllowAnyone = true;
 
@@ -100,9 +100,9 @@ if (DB_error_no($db) !=0) {
 	$title = _('Inventory Valuation') . ' - ' . _('Problem Report');
 	include("includes/header.inc");
 	echo _('The inventory valuation could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
-	echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+	echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 	if ($debug==1){
-		echo "<BR>$SQL";
+		echo "<br>$SQL";
 	}
 
 include('includes/footer.inc');
@@ -199,7 +199,7 @@ if ($len<=20){
 	$title = _('Print Inventory Valuation Error');
 	include("includes/header.inc");
 	echo '<p>' . _('There were no items with any value to print out for the location specified');
-	echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+	echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 	include("includes/footer.inc");
 	exit;
 } else {
