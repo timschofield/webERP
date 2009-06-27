@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 3;
 include ('includes/session.inc');
@@ -22,38 +22,41 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
      $title = _('Delivery Differences Report');
      include ('includes/header.inc');
 
-     echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
-     echo '<CENTER><TABLE><TR><TD>' . _('Enter the date from which variances between orders and deliveries are to be listed') . ":</TD><TD><INPUT TYPE=text NAME='FromDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . "'></TD></TR>";
-     echo '<TR><TD>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ":</TD><TD><INPUT TYPE=text NAME='ToDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></TD></TR>";
-     echo '<TR><TD>' . _('Inventory Category') . '</TD><TD>';
+     echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+     echo '<table><tr><td>' . _('Enter the date from which variances between orders and deliveries are to be listed') . 
+     	":</td><td><input type=text class=date alt='".$_SESSION['DefaultDateFormat'].
+     	"' name='FromDate' maxlength=10 size=10 VALUE='" . 
+     	Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . "'></td></tr>";
+     echo '<tr><td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ":</td><td><input type=text class=date alt='".$_SESSION['DefaultDateFormat']."'  name='ToDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td></tr>";
+     echo '<tr><td>' . _('Inventory Category') . '</td><td>';
 
      $sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
      $result = DB_query($sql,$db);
 
 
-     echo "<SELECT NAME='CategoryID'>";
-     echo "<OPTION SELECTED VALUE='All'>" . _('Over All Categories');
+     echo "<select name='CategoryID'>";
+     echo "<option selected VALUE='All'>" . _('Over All Categories');
 
      while ($myrow=DB_fetch_array($result)){
-	echo "<OPTION VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
+	echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
      }
 
 
-     echo '</SELECT></TD></TR>';
+     echo '</select></td></tr>';
 
-     echo '<TR><TD>' . _('Inventory Location') . ":</TD><TD><SELECT NAME='Location'>";
-     echo "<OPTION SELECTED VALUE='All'>" . _('All Locations');
+     echo '<tr><td>' . _('Inventory Location') . ":</td><td><select name='Location'>";
+     echo "<option selected VALUE='All'>" . _('All Locations');
 
      $result= DB_query('SELECT loccode, locationname FROM locations',$db);
      while ($myrow=DB_fetch_array($result)){
-	echo "<OPTION VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+	echo "<option VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
      }
-     echo '</SELECT></TD></TR>';
+     echo '</select></td></tr>';
 
-     echo '<TR><TD>' . _('Email the report off') . ":</TD><TD><SELECT NAME='Email'>";
-     echo "<OPTION SELECTED VALUE='No'>" . _('No');
-     echo "<OPTION VALUE='Yes'>" . _('Yes');
-     echo "</SELECT></TD></TR></TABLE><INPUT TYPE=SUBMIT NAME='Go' VALUE='" . _('Create PDF') . "'></CENTER>";
+     echo '<tr><td>' . _('Email the report off') . ":</td><td><select name='Email'>";
+     echo "<option selected VALUE='No'>" . _('No');
+     echo "<option VALUE='Yes'>" . _('Yes');
+     echo "</select></td></tr></table><div class='centre'><input type=submit name='Go' VALUE='" . _('Create PDF') . "'></div>";
 
      if ($InputError==1){
      	prnMsg($msg,'error');
@@ -147,7 +150,7 @@ if (DB_error_no($db)!=0){
 	include('includes/header.inc');
 	prnMsg( _('An error occurred getting the variances between deliveries and orders'),'error');
 	if ($debug==1){
-		prnMsg( _('The SQL used to get the variances between deliveries and orders that failed was') . "<BR>$SQL",'error');
+		prnMsg( _('The SQL used to get the variances between deliveries and orders that failed was') . "<br>$SQL",'error');
 	}
 	include ('includes/footer.inc');
 	exit;
@@ -156,7 +159,7 @@ if (DB_error_no($db)!=0){
   	include('includes/header.inc');
 	prnMsg( _('There were no variances between deliveries and orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'),'info');
 	if ($debug==1) {
-		prnMsg( _('The SQL that returned no rows was') . '<BR>' . $sql,'error');
+		prnMsg( _('The SQL that returned no rows was') . '<br>' . $sql,'error');
 	}
 	include('includes/footer.inc');
 	exit;

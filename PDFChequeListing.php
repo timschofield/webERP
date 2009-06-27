@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 3;
 include('includes/SQL_CommonFunctions.inc');
@@ -28,34 +28,34 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	prnMsg($msg,'error');
      }
 
-     echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '>';
-     echo '<CENTER><TABLE>
-     			<TR>
-				<TD>' . _('Enter the date from which cheques are to be listed') . ":</TD>
-				<TD><INPUT TYPE=text NAME='FromDate' MAXLENGTH=10 SIZE=10 onChange='return isDate(this, this.value, ".'"'.$_SESSION['DefaultDateFormat'].'"'.")'  VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></TD>
-			</TR>";
-     echo '<TR><TD>' . _('Enter the date to which cheques are to be listed') . ":</TD>
-     		<TD><INPUT TYPE=text NAME='ToDate' MAXLENGTH=10 SIZE=10 onChange='return isDate(this, this.value, ".'"'.$_SESSION['DefaultDateFormat'].'"'.")'  VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></TD>
-	</TR>";
-     echo '<TR><TD>' . _('Bank Account') . '</TD><TD>';
+     echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
+     echo '<table>
+     			<tr>
+				<td>' . _('Enter the date from which cheques are to be listed') . ":</td>
+				<td><input type=text name='FromDate' maxlength=10 size=10 onChange='return isDate(this, this.value, ".'"'.$_SESSION['DefaultDateFormat'].'"'.")'  VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td>
+			</tr>";
+     echo '<tr><td>' . _('Enter the date to which cheques are to be listed') . ":</td>
+     		<td><input type=text name='ToDate' maxlength=10 size=10 onChange='return isDate(this, this.value, ".'"'.$_SESSION['DefaultDateFormat'].'"'.")'  VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td>
+	</tr>";
+     echo '<tr><td>' . _('Bank Account') . '</td><td>';
 
      $sql = 'SELECT bankaccountname, accountcode FROM bankaccounts';
      $result = DB_query($sql,$db);
 
 
-     echo "<SELECT NAME='BankAccount'>";
+     echo "<select name='BankAccount'>";
 
      while ($myrow=DB_fetch_array($result)){
-	echo '<OPTION VALUE=' . $myrow['accountcode'] . '>' . $myrow['bankaccountname'];
+	echo '<option VALUE=' . $myrow['accountcode'] . '>' . $myrow['bankaccountname'];
      }
 
 
-     echo '</SELECT></TD></TR>';
+     echo '</select></td></tr>';
 
-     echo '<TR><TD>' . _('Email the report off') . ":</TD><TD><SELECT NAME='Email'>";
-     echo "<OPTION SELECTED VALUE='No'>" . _('No');
-     echo "<OPTION VALUE='Yes'>" . _('Yes');
-     echo "</SELECT></TD></TR></TABLE><INPUT TYPE=SUBMIT NAME='Go' VALUE='" . _('Create PDF') . "'></CENTER>";
+     echo '<tr><td>' . _('Email the report off') . ":</td><td><select name='Email'>";
+     echo "<option selected VALUE='No'>" . _('No');
+     echo "<option VALUE='Yes'>" . _('Yes');
+     echo "</select></td></tr></table><div class='centre'><input type=submit name='Go' VALUE='" . _('Create PDF') . "'></div>";
 
 
      include('includes/footer.inc');
@@ -92,7 +92,7 @@ if (DB_error_no($db)!=0){
 	include('includes/header.inc');
 	prnMsg(_('An error occurred getting the payments'),'error');
 	if ($Debug==1){
-        	prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<BR>' . $SQL,'error');
+        	prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br>' . $SQL,'error');
 	}
 	include('includes/footer.inc');
   	exit;
@@ -138,7 +138,7 @@ while ($myrow=DB_fetch_array($Result)){
 		include('includes/header.inc');
    		prnMsg(_('An error occurred getting the GL transactions'),'error');
 		if ($debug==1){
-        		prnMsg( _('The SQL used to get the receipt header information that failed was') . ':<BR>' . $sql, 'error');
+        		prnMsg( _('The SQL used to get the receipt header information that failed was') . ':<br>' . $sql, 'error');
 		}
 		include('includes/footer.inc');
   		exit;

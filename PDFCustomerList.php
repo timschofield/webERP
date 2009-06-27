@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -12,7 +12,7 @@ if (isset($_POST['PrintPDF'])){
 		if (!is_numeric($_POST['ActivityAmount'])){
 			$title = _('Customer List') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
-	   		echo '<P>';
+	   		echo '<p>';
 			prnMsg( _('The acitivty amount is not numeric and you elected to print customer relative to a certain amount of activity') . ' - ' . _('this level of activity must be specified in the local currency') .'.', 'error');
 			include('includes/footer.inc');
 			exit;
@@ -233,9 +233,9 @@ if (isset($_POST['PrintPDF'])){
 	  $title = _('Customer List') . ' - ' . _('Problem Report') . '....';
 	  include('includes/header.inc');
 	   prnMsg( _('The customer List could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db) );
-	   echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</A>';
+	   echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
 	   if ($debug==1){
-	      echo '<BR>'. $SQL;
+	      echo '<br>'. $SQL;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -360,7 +360,7 @@ if (isset($_POST['PrintPDF'])){
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg( _('There were no customers to print out for the selections specified') );
-		echo '<BR><A HREF="'. $rootpath.' /index.php?' . SID . '">'. _('Back to the menu'). '</A>';
+		echo '<br><a href="'. $rootpath.' /index.php?' . SID . '">'. _('Back to the menu'). '</a>';
 		include('includes/footer.inc');
 		exit;
 	} else {
@@ -381,45 +381,45 @@ if (isset($_POST['PrintPDF'])){
 	$title = _('Customer Details Listing');
 	include('includes/header.inc');
 
-	echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . ' METHOD="POST"><CENTER><TABLE>';
-	echo '<TR><TD>' . _('For Sales Areas') . ':</TD><TD><SELECT name=Areas[] multiple>';
+	echo '<form action=' . $_SERVER['PHP_SELF'] . ' method="POST"><table>';
+	echo '<tr><td>' . _('For Sales Areas') . ':</td><td><select name=Areas[] multiple>';
 
 	$sql='SELECT areacode, areadescription FROM areas';
 	$AreasResult= DB_query($sql,$db);
 
-	echo '<OPTION SELECTED VALUE="All">' . _('All Areas');
+	echo '<option selected VALUE="All">' . _('All Areas');
 
 	While ($myrow = DB_fetch_array($AreasResult)){
-		echo '<OPTION VALUE="' . $myrow['areacode'] . '">' . $myrow['areadescription'];
+		echo '<option VALUE="' . $myrow['areacode'] . '">' . $myrow['areadescription'];
 	}
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 
-	echo '<TR><TD>' . _('For Sales folk'). ':</TD><TD><SELECT name=SalesPeople[] multiple>';
+	echo '<tr><td>' . _('For Sales folk'). ':</td><td><select name=SalesPeople[] multiple>';
 
-	echo '<OPTION SELECTED VALUE="All">'. _('All sales folk');
+	echo '<option selected VALUE="All">'. _('All sales folk');
 
 	$sql = 'SELECT salesmancode, salesmanname FROM salesman';
 	$SalesFolkResult = DB_query($sql,$db);
 
 	While ($myrow = DB_fetch_array($SalesFolkResult)){
-		echo '<OPTION VALUE="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'];
+		echo '<option VALUE="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'];
 	}
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 
-	echo '<TR><TD>' . _('Level Of Activity'). ':</TD><TD><SELECT name="Activity">';
+	echo '<tr><td>' . _('Level Of Activity'). ':</td><td><select name="Activity">';
 
-	echo '<OPTION SELECTED VALUE="All">'. _('All customers');
-	echo '<OPTION VALUE="GreaterThan">'. _('Sales Greater Than');
-	echo '<OPTION VALUE="LessThan">'. _('Sales Less Than');
-	echo '</SELECT></TD><TD>';
+	echo '<option selected VALUE="All">'. _('All customers');
+	echo '<option VALUE="GreaterThan">'. _('Sales Greater Than');
+	echo '<option VALUE="LessThan">'. _('Sales Less Than');
+	echo '</select></td><td>';
 
-	echo '<INPUT TYPE="text" NAME="ActivityAmount" SIZE=8 MAXLENGTH=8></TD></TR>';
+	echo '<input type="text" class=number name="ActivityAmount" size=8 maxlength=8></td></tr>';
 
 	$DefaultActivitySince = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-6,0,Date('y')));
-	echo '<TR><TD>' . _('Activity Since'). ':</TD><TD><INPUT TYPE="text" NAME="ActivitySince" SIZE=10 MAXLENGTH=10
-		VALUE="' . $DefaultActivitySince . '"></TD></TR>';
+	echo '<tr><td>' . _('Activity Since'). ':</td><td><input type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'"  name="ActivitySince" size=10 maxlength=10
+		VALUE="' . $DefaultActivitySince . '"></td></tr>';
 
-	echo '</TABLE><INPUT TYPE=Submit Name="PrintPDF" Value="'. _('Print PDF'). '"></CENTER>';
+	echo '</table><div class="centre"><input type=Submit Name="PrintPDF" Value="'. _('Print PDF'). '"></div>';
 
 	include('includes/footer.inc');
 

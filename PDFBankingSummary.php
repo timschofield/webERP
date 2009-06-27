@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 3;
 include ('includes/session.inc');
@@ -14,9 +14,10 @@ if (!isset($_POST['BatchNo'])){
  
      $title = _('Create PDF Print Out For A Batch Of Receipts');
      include ('includes/header.inc');
-     echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '>';
-     echo '<P>' . _('Enter the batch number of receipts to be printed') . ': <INPUT TYPE=text NAME=BatchNo MAXLENGTH=6 SIZE=6>';
-     echo "<CENTER><INPUT TYPE=SUBMIT NAME='EnterBatchNo' VALUE='" . _('Create PDF') . "'></CENTER>";
+     echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
+     echo '<p><div class="centre">' . _('Enter the batch number of receipts to be printed') . ': <input type=text class=number name=BatchNo maxlength=6 size=6>';
+     echo "<br><input type=submit name='EnterBatchNo' VALUE='" . _('Create PDF') . "'></div>";
+     include ('includes/footer.inc');
      exit;
 }
 
@@ -74,7 +75,7 @@ if (DB_error_no($db)!=0){
 	include ('includes/header.inc');
    	prnMsg(_('An error occurred getting the customer receipts for batch number') . ' ' . $_POST['BatchNo'],'error');
 	if ($debug==1){
-        	prnMsg(_('The SQL used to get the customer receipt information that failed was') . '<BR>' . $SQL,'error');
+        	prnMsg(_('The SQL used to get the customer receipt information that failed was') . '<br>' . $SQL,'error');
   	}
 	include('includes/footer.inc');
   	exit;
@@ -93,7 +94,7 @@ if (DB_error_no($db)!=0){
 	include ('includes/header.inc');
 	prnMsg(_('An error occurred getting the GL receipts for batch number') . ' ' . $_POST['BatchNo'],'error');
 	if ($debug==1){
-        	prnMsg(_('The SQL used to get the GL receipt information that failed was') . ':<BR>' . $SQL,'error');
+        	prnMsg(_('The SQL used to get the GL receipt information that failed was') . ':<br>' . $SQL,'error');
 	}
 	include('includes/footer.inc');
   	exit;

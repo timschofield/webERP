@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 10;
 
@@ -172,7 +172,7 @@ or deletion of the records*/
 	$sql = 'SELECT termsindicator, terms, daysbeforedue, dayinfollowingmonth FROM paymentterms';
 	$result = DB_query($sql, $db);
 
-	echo '<CENTER><table border=1>';
+	echo '<table border=1>';
 	echo '<tr><th>' . _('Term Code') . '</th>
 		<th>' . _('Description') . '</th>
 		<th>' . _('Following Month On') . '</th>
@@ -210,16 +210,16 @@ or deletion of the records*/
 		$myrow[0]);
 
 	} //END WHILE LIST LOOP
-	echo '</TABLE></CENTER><P>';
+	echo '</table><p>';
 } //end of ifs and buts!
 
 if (isset($SelectedTerms)) {
-	echo '<CENTER><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID  .'">' . _('Show all Payment Terms Definitions') . '</a></Center>';
+	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID  .'">' . _('Show all Payment Terms Definitions') . '</a></div>';
 }
 
 if (!isset($_GET['delete'])) {
 
-	echo '<FORM METHOD="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 	if (isset($SelectedTerms)) {
 		//editing an existing payment terms
@@ -239,10 +239,10 @@ if (!isset($_GET['delete'])) {
 		$DaysBeforeDue  = $myrow['daysbeforedue'];
 		$DayInFollowingMonth  = $myrow['dayinfollowingmonth'];
 
-		echo '<INPUT TYPE=HIDDEN NAME="SelectedTerms" VALUE="' . $SelectedTerms . '">';
-		echo '<INPUT TYPE=HIDDEN NAME="TermsIndicator" VALUE="' . $_POST['TermsIndicator'] . '">';
-		echo '<CENTER><TABLE><TR><TD>' . _('Term Code') . ':</TD><TD>';
-		echo $_POST['TermsIndicator'] . '</TD></TR>';
+		echo '<input type=hidden name="SelectedTerms" VALUE="' . $SelectedTerms . '">';
+		echo '<input type=hidden name="TermsIndicator" VALUE="' . $_POST['TermsIndicator'] . '">';
+		echo '<table><tr><td>' . _('Term Code') . ':</td><td>';
+		echo $_POST['TermsIndicator'] . '</td></tr>';
 
 	} else { //end of if $SelectedTerms only do the else when a new record is being entered
 
@@ -252,26 +252,26 @@ if (!isset($_GET['delete'])) {
 		unset($DayInFollowingMonth); // Rather unset for a new record
 		if (!isset($_POST['Terms'])) $_POST['Terms']='';
 
-		echo '<CENTER><TABLE><TR><TD>' . _('Term Code') . ':</TD><TD><input type="Text" name="TermsIndicator"
+		echo '<table><tr><td>' . _('Term Code') . ':</td><td><input type="Text" name="TermsIndicator"
 		 ' . (in_array('TermsIndicator',$Errors) ? 'class="inputerror"' : '' ) .' value="' . $_POST['TermsIndicator'] .
-			'" SIZE=3 MAXLENGTH=2></TD></TR>';
+			'" size=3 maxlength=2></td></tr>';
 	}
 
-	echo '<TR><TD>'. _('Terms Description'). ':</TD>
-	<TD>
-	<INPUT TYPE="text"' . (in_array('Terms',$Errors) ? 'class="inputerror"' : '' ) .' name="Terms" VALUE="'.$_POST['Terms']. '" SIZE=35 MAXLENGTH=40>
-	</TD></TR>
-	<TR><TD>'._('Due After A Given No. Of Days').':</TD>
-	<TD><INPUT TYPE="checkbox" name="DaysOrFoll"';
+	echo '<tr><td>'. _('Terms Description'). ':</td>
+	<td>
+	<input type="text"' . (in_array('Terms',$Errors) ? 'class="inputerror"' : '' ) .' name="Terms" VALUE="'.$_POST['Terms']. '" size=35 maxlength=40>
+	</td></tr>
+	<tr><td>'._('Due After A Given No. Of Days').':</td>
+	<td><input type="checkbox" name="DaysOrFoll"';
 	if ( isset($DayInFollowingMonth) && !$DayInFollowingMonth) { echo "checked"; }
-	echo ' ></TD></TR><TR><TD>'._('Days (Or Day In Following Month)').':</TD><TD>
-		<INPUT TYPE="Text"' . (in_array('DayNumber',$Errors) ? 'class="inputerror"' : '' ) .' name="DayNumber"  SIZE=4 MAXLENGTH=3 VALUE=';
+	echo ' ></td></tr><tr><td>'._('Days (Or Day In Following Month)').':</td><td>
+		<input type="Text"' . (in_array('DayNumber',$Errors) ? 'class="inputerror"' : '' ) .' name="DayNumber" class=number  size=4 maxlength=3 VALUE=';
 	if ($DaysBeforeDue !=0) {
 			echo $DaysBeforeDue;
 			} else {
 			if (isset($DayInFollowingMonth)) {echo $DayInFollowingMonth;}
 			}
-	echo '></TD></TR></TABLE><CENTER><input type="Submit" name="submit" value="'._('Enter Information').'"></FORM>';
+	echo '></td></tr></table><div class="centre"><input type="Submit" name="submit" value="'._('Enter Information').'"></form></div>';
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.inc');
