@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.36 $ */
+/* $Revision: 1.37 $ */
 
 $PageSecurity = 11;
 
@@ -12,13 +12,13 @@ include('includes/SQL_CommonFunctions.inc');
 $title = _('Receive Purchase Orders');
 include('includes/header.inc');
 
-echo '<A HREF="'. $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '">' . _('Back to Purchase Orders'). '</A><BR>';
+echo '<a href="'. $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '">' . _('Back to Purchase Orders'). '</a><br>';
 
 if (isset($_GET['PONumber']) and $_GET['PONumber']<=0 and !isset($_SESSION['PO'])) {
 	/* This page can only be called with a purchase order number for invoicing*/
-	echo '<CENTER><A HREF= "' . $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '">'.
-		_('Select a purchase order to receive').'</A></CENTER>';
-	echo '<BR>'. _('This page can only be opened if a purchase order has been selected') . '. ' . _('Please select a purchase order first');
+	echo '<div class="centre"><a href= "' . $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '">'.
+		_('Select a purchase order to receive').'</a></div>';
+	echo '<br>'. _('This page can only be opened if a purchase order has been selected') . '. ' . _('Please select a purchase order first');
 	include ('includes/footer.inc');
 	exit;
 } elseif (isset($_GET['PONumber']) AND !isset($_POST['Update'])) {
@@ -43,24 +43,24 @@ if (isset($_GET['PONumber']) and $_GET['PONumber']<=0 and !isset($_SESSION['PO']
 /* Always display quantities received and recalc balance for all items on the order */
 
 
-echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" TITLE="' . _('Receive') . '" ALT="">' . ' ' . _('Receive Purchase Order') . '';
+echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Receive') . '" alt="">' . ' ' . _('Receive Purchase Order') . '';
 
-echo ' : '. $_SESSION['PO']->OrderNo .' '. _('from'). ' ' . $_SESSION['PO']->SupplierName . ' </U></B></FONT></CENTER><BR>';
-echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
+echo ' : '. $_SESSION['PO']->OrderNo .' '. _('from'). ' ' . $_SESSION['PO']->SupplierName . ' </U></b></font></div><br>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 
-echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>
-<TR><TH>' . _('Item Code') . '</TH>
-	<TH>' . _('Description') . '</TH>
-	<TH>' . _('Quantity') . '<BR>' . _('Ordered') . '</TH>
-	<TH>' . _('Units') . '</TH>
-	<TH>' . _('Already Received') . '</TH>
-	<TH>' . _('This Delivery') . '<BR>' . _('Quantity') . '</TH>
-	<TH>' . _('Price') . '</TH>
-	<TH>' . _('Total Value') . '<BR>' . _('Received') . '</TH>';
+echo '<table cellpadding=2 colspan=7 border=0>
+<tr><th>' . _('Item Code') . '</th>
+	<th>' . _('Description') . '</th>
+	<th>' . _('Quantity') . '<br>' . _('Ordered') . '</th>
+	<th>' . _('Units') . '</th>
+	<th>' . _('Already Received') . '</th>
+	<th>' . _('This Delivery') . '<br>' . _('Quantity') . '</th>
+	<th>' . _('Price') . '</th>
+	<th>' . _('Total Value') . '<br>' . _('Received') . '</th>';
 
 
-echo '<TD>&nbsp;</TD>
-	</TR>';
+echo '<td>&nbsp;</td>
+	</tr>';
 /*show the line items on the order with the quantity being received for modification */
 
 $_SESSION['PO']->total = 0;
@@ -96,43 +96,43 @@ if (count($_SESSION['PO']->LineItems)>0){
 
 
 		//Now Display LineItem
-		echo '<TD><FONT size=2>' . $LnItm->StockID . '</FONT></TD>';
-		echo '<TD><FONT size=2>' . $LnItm->ItemDescription . '</TD>';
-		echo '<TD ALIGN=RIGHT><FONT size=2>' . $DisplayQtyOrd . '</TD>';
-		echo '<TD><FONT size=2>' . $LnItm->Units . '</TD>';
-		echo '<TD ALIGN=RIGHT><FONT size=2>' . $DisplayQtyRec . '</TD>';
-		echo '<TD ALIGN=RIGHT><FONT size=2>';
+		echo '<td><font size=2>' . $LnItm->StockID . '</font></td>';
+		echo '<td><font size=2>' . $LnItm->ItemDescription . '</td>';
+		echo '<td class=number><font size=2>' . $DisplayQtyOrd . '</td>';
+		echo '<td><font size=2>' . $LnItm->Units . '</td>';
+		echo '<td class=number><font size=2>' . $DisplayQtyRec . '</td>';
+		echo '<td class=number><font size=2>';
 
 		if ($LnItm->Controlled == 1) {
 
-			echo '<input type=hidden name="RecvQty_' . $LnItm->LineNo . '" value="' . $LnItm->ReceiveQty . '"><a href="GoodsReceivedControlled.php?' . SID . '&LineNo=' . $LnItm->LineNo . '">' . number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '</a></TD>';
+			echo '<input type=hidden name="RecvQty_' . $LnItm->LineNo . '" value="' . $LnItm->ReceiveQty . '"><a href="GoodsReceivedControlled.php?' . SID . '&LineNo=' . $LnItm->LineNo . '">' . number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '</a></td>';
 
 		} else {
-			echo '<input type=text name="RecvQty_' . $LnItm->LineNo . '" maxlength=10 SIZE=10 onKeyPress="return restrictToNumbers(this, event)" onFocus="return setTextAlign(this, '."'".'right'."'".')" value="' . $LnItm->ReceiveQty . '"></TD>';
+			echo '<input type=text class=number name="RecvQty_' . $LnItm->LineNo . '" maxlength=10 size=10 onKeyPress="return restrictToNumbers(this, event)" onFocus="return setTextAlign(this, '."'".'right'."'".')" value="' . $LnItm->ReceiveQty . '"></td>';
 		}
 
-		echo '<TD ALIGN=RIGHT><FONT size=2>' . $DisplayPrice . '</TD>';
-		echo '<TD ALIGN=RIGHT><FONT size=2>' . $DisplayLineTotal . '</FONT></TD>';
+		echo '<td class=number><font size=2>' . $DisplayPrice . '</td>';
+		echo '<td class=number><font size=2>' . $DisplayLineTotal . '</font></td>';
 
 
 		if ($LnItm->Controlled == 1) {
 			if ($LnItm->Serialised==1){
-				echo '<TD><a href="GoodsReceivedControlled.php?' . SID . '&LineNo=' . $LnItm->LineNo . '">'.
-					_('Enter Serial Nos'). '</a></TD>';
+				echo '<td><a href="GoodsReceivedControlled.php?' . SID . '&LineNo=' . $LnItm->LineNo . '">'.
+					_('Enter Serial Nos'). '</a></td>';
 			} else {
-				echo '<TD><a href="GoodsReceivedControlled.php?' . SID . '&LineNo=' . $LnItm->LineNo . '">'.
-					_('Enter Batches'). '</a></TD>';
+				echo '<td><a href="GoodsReceivedControlled.php?' . SID . '&LineNo=' . $LnItm->LineNo . '">'.
+					_('Enter Batches'). '</a></td>';
 			}
 		}
-		echo '</TR>';
+		echo '</tr>';
 	}//foreach(LineItem)
 	echo "<script>defaultControl(document.forms[0].RecvQty_$LnItm->LineNo);</script>";
 }//If count(LineItems) > 0
 
 $DisplayTotal = number_format($_SESSION['PO']->total,2);
-echo '<TR><TD COLSPAN=7 ALIGN=RIGHT><B>' . _('Total value of goods received'). '</B></TD>
-	<TD ALIGN=RIGHT><FONT SIZE=2><B>'. $DisplayTotal. '</B></FONT></TD>
-</TR></TABLE>';
+echo '<tr><td colspan=7 align=right><b>' . _('Total value of goods received'). '</b></td>
+	<td align=right><font size=2><b>'. $DisplayTotal. '</b></font></td>
+</tr></table>';
 
 $SomethingReceived = 0;
 if (count($_SESSION['PO']->LineItems)>0){
@@ -179,20 +179,20 @@ if (count($_SESSION['PO']->LineItems)>0){
 if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then dont bother proceeding cos nothing to do ! */
 
 	prnMsg(_('There is nothing to process') . '. ' . _('Please enter valid quantities greater than zero'),'warn');
-	echo '<CENTER><INPUT TYPE=SUBMIT NAME=Update Value=' . _('Update') . '>';
+	echo '<div class="centre"><input type=submit name=Update Value=' . _('Update') . '></div>';
 
 } elseif ($NegativesFound){
 
 	prnMsg(_('Negative stocks would result by processing a negative delivery - quantities must be changed or the stock quantity of the item going negative corrected before this delivery will be processed.'),'error');
 
-	echo '<CENTER><INPUT TYPE=SUBMIT NAME=Update Value=' . _('Update') . '>';
+	echo '<div class="centre"><input type=submit name=Update Value=' . _('Update') . '>';
 
 }elseif ($DeliveryQuantityTooLarge==1 AND isset($_POST['ProcessGoodsReceived'])){
 
 	prnMsg(_('Entered quantities cannot be greater than the quantity entered on the purchase invoice including the allowed over-receive percentage'). ' ' . '(' . $_SESSION['OverReceiveProportion'] .'%)','error');
-	echo '<BR>';
+	echo '<br>';
 	prnMsg(_('Modify the ordered items on the purchase invoice if you wish to increase the quantities'),'info');
-	echo '<CENTER><INPUT TYPE=SUBMIT NAME=Update Value=' . _('Update') . '>';
+	echo '<div class="centre"><input type=submit name=Update Value=' . _('Update') . '>';
 
 }  elseif (isset($_POST['ProcessGoodsReceived']) AND $SomethingReceived==1 AND $InputError == false){
 
@@ -242,35 +242,35 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 			prnMsg(_('This order has been changed or invoiced since this delivery was started to be actioned') . '. ' . _('Processing halted') . '. ' . _('To enter a delivery against this purchase order') . ', ' . _('it must be re-selected and re-read again to update the changes made by the other user'),'warn');
 
 			if ($debug==1){
-				echo '<TABLE BORDER=1>';
-				echo '<TR><TD>' . _('GL Code of the Line Item') . ':</TD>
-						<TD>' . $_SESSION['PO']->LineItems[$LineNo]->GLCode . '</TD>
-						<TD>' . $myrow['glcode'] . '</TD></TR>';
-				echo '<TR><TD>' . _('ShiptRef of the Line Item') . ':</TD>
-					<TD>' . $_SESSION['PO']->LineItems[$LineNo]->ShiptRef . '</TD>
-					<TD>' . $myrow['shiptref'] . '</TD></TR>';
-				echo '<TR><TD>' . _('Contract Reference of the Line Item') . ':</TD>
-					<TD>' . $_SESSION['PO']->LineItems[$LineNo]->JobRef . '</TD>
-					<TD>' . $myrow['jobref'] . '</TD>
-					</TR>';
-				echo '<TR><TD>' . _('Quantity Invoiced of the Line Item') . ':</TD>
-					<TD>' . $_SESSION['PO']->LineItems[$LineNo]->QtyInv . '</TD>
-					<TD>' . $myrow['qtyinvoiced'] . '</TD></TR>';
-				echo '<TR><TD>' . _('Stock Code of the Line Item') . ':</TD>
-					<TD>'. $_SESSION['PO']->LineItems[$LineNo]->StockID . '</TD>
-					<TD>' . $myrow['itemcode'] . '</TD></TR>';
-				echo '<TR><TD>' . _('Order Quantity of the Line Item') . ':</TD>
-					<TD>' . $_SESSION['PO']->LineItems[$LineNo]->Quantity . '</TD>
-					<TD>' . $myrow['quantityord'] . '</TD></TR>';
-				echo '<TR><TD>' . _('Quantity of the Line Item Already Received') . ':</TD>
-					<TD>' . $_SESSION['PO']->LineItems[$LineNo]->QtyReceived . '</TD>
-					<TD>' . $myrow['quantityrecd'] . '</TD></TR>';
-				echo '</TABLE>';
+				echo '<table BORDER=1>';
+				echo '<tr><td>' . _('GL Code of the Line Item') . ':</td>
+						<td>' . $_SESSION['PO']->LineItems[$LineNo]->GLCode . '</td>
+						<td>' . $myrow['glcode'] . '</td></tr>';
+				echo '<tr><td>' . _('ShiptRef of the Line Item') . ':</td>
+					<td>' . $_SESSION['PO']->LineItems[$LineNo]->ShiptRef . '</td>
+					<td>' . $myrow['shiptref'] . '</td></tr>';
+				echo '<tr><td>' . _('Contract Reference of the Line Item') . ':</td>
+					<td>' . $_SESSION['PO']->LineItems[$LineNo]->JobRef . '</td>
+					<td>' . $myrow['jobref'] . '</td>
+					</tr>';
+				echo '<tr><td>' . _('Quantity Invoiced of the Line Item') . ':</td>
+					<td>' . $_SESSION['PO']->LineItems[$LineNo]->QtyInv . '</td>
+					<td>' . $myrow['qtyinvoiced'] . '</td></tr>';
+				echo '<tr><td>' . _('Stock Code of the Line Item') . ':</td>
+					<td>'. $_SESSION['PO']->LineItems[$LineNo]->StockID . '</td>
+					<td>' . $myrow['itemcode'] . '</td></tr>';
+				echo '<tr><td>' . _('Order Quantity of the Line Item') . ':</td>
+					<td>' . $_SESSION['PO']->LineItems[$LineNo]->Quantity . '</td>
+					<td>' . $myrow['quantityord'] . '</td></tr>';
+				echo '<tr><td>' . _('Quantity of the Line Item Already Received') . ':</td>
+					<td>' . $_SESSION['PO']->LineItems[$LineNo]->QtyReceived . '</td>
+					<td>' . $myrow['quantityrecd'] . '</td></tr>';
+				echo '</table>';
 			}
-			echo "<CENTER><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . "'>".
-				_('Select a different purchase order for receiving goods against').'</A></CENTER>';
-			echo "<CENTER><A HREF='$rootpath/GoodsReceived.php?" . SID . '&PONumber=' .
-				$_SESSION['PO']->OrderNumber . '">'. _('Re-read the updated purchase order for receiving goods against'). '</A></CENTER>';
+			echo "<div class='centre'><a href='$rootpath/PO_SelectOSPurchOrder.php?" . SID . "'>".
+				_('Select a different purchase order for receiving goods against').'</a></div>';
+			echo "<div class='centre'>><a href='$rootpath/GoodsReceived.php?" . SID . '&PONumber=' .
+				$_SESSION['PO']->OrderNumber . '">'. _('Re-read the updated purchase order for receiving goods against'). '</a></div>';
 			unset($_SESSION['PO']->LineItems);
 			unset($_SESSION['PO']);
 			unset($_POST['ProcessGoodsReceived']);
@@ -556,27 +556,27 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 	unset($_SESSION['PO']);
 	unset($_POST['ProcessGoodsReceived']);
 
-	echo '<BR>'. _('GRN number'). ' '. $GRN .' '. _('has been processed').'<BR>';
-	echo '<BR><a href=PDFGrn.php?GRNNo='.$GRN .'&PONo='.$PONo.'>'. _('Print this Goods Received Note (GRN)').'</a><BR><BR>';
-	echo "<A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . "'>" . _('Select a different purchase order for receiving goods against'). '</A>';
+	echo '<br>'. _('GRN number'). ' '. $GRN .' '. _('has been processed').'<br>';
+	echo '<br><a href=PDFGrn.php?GRNNo='.$GRN .'&PONo='.$PONo.'>'. _('Print this Goods Received Note (GRN)').'</a><br><br>';
+	echo "<a href='$rootpath/PO_SelectOSPurchOrder.php?" . SID . "'>" . _('Select a different purchase order for receiving goods against'). '</a>';
 /*end of process goods received entry */
 	include('includes/footer.inc');
 	exit;
 
 } else { /*Process Goods received not set so show a link to allow mod of line items on order and allow input of date goods received*/
 
-	echo "<BR><CENTER><A HREF='$rootpath/PO_Items.php?=" . SID . "'>" . _('Modify Order Items'). '</A></CENTER>';
+	echo "<br><div class='centre'><a href='$rootpath/PO_Items.php?=" . SID . "'>" . _('Modify Order Items'). '</a></div>';
 
 	if (!isset($_POST['DefaultReceivedDate'])){
 	   $_POST['DefaultReceivedDate'] = Date($_SESSION['DefaultDateFormat']);
 	}
-	echo '<TABLE><TR><TD>'. _('Date Goods/Service Received'). ':</TD><TD><INPUT TYPE=text MAXLENGTH=10 SIZE=10 onChange="return isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" name=DefaultReceivedDate value="' . $_POST['DefaultReceivedDate'] . '"></TD></TR>';
+	echo '<table><tr><td>'. _('Date Goods/Service Received'). ':</td><td><input type=text class=date alt="'.$_SESSION['DefaultDateFormat'] .'" maxlength=10 size=10 onChange="return isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" name=DefaultReceivedDate value="' . $_POST['DefaultReceivedDate'] . '"></td></tr>';
 
-	echo '</TABLE><br><CENTER><INPUT TYPE=SUBMIT NAME=Update Value=' . _('Update') . '><P>';
-	echo '<INPUT TYPE=SUBMIT NAME="ProcessGoodsReceived" Value="' . _('Process Goods Received') . '"></CENTER>';
+	echo '</table><br><div class="centre"><input type=submit name=Update Value=' . _('Update') . '><p>';
+	echo '<input type=submit name="ProcessGoodsReceived" Value="' . _('Process Goods Received') . '"></div>';
 }
 
-echo '</FORM>';
+echo '</form>';
 
 include('includes/footer.inc');
 ?>

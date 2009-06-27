@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 8;
 
@@ -9,8 +9,8 @@ $title = _('General Ledger Transaction Inquiry');
 include('includes/header.inc');
 
 // Page Border
-echo '<table border=1 width=100%><tr><td bgcolor="#FFFFFF"><center>';
-$menuUrl = '<a href="'. $rootpath . '/index.php?&Application=GL'. SID .'">' . _('General Ledger Menu') . '</a>';
+echo '<table border=1 width=100%><tr><td bgcolor="#FFFFFF"><div class="centre">';
+$menuUrl = '<a href="'. $rootpath . '/index.php?&Application=GL'. SID .'">' . _('General Ledger Menu') . '</a></div>';
 
 if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 {
@@ -133,10 +133,10 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 								$j++;
 							}
 							echo	'<td>' . $TranDate . '</td>
-									<td align=right>' . $TransRow['periodno'] . '</td>
+									<td class=number>' . $TransRow['periodno'] . '</td>
 									<td><a href="' . $URL . '">' . $TransRow['accountname'] . '</a></td>
-									<td align=right>' . $DebitAmount . '</td>
-									<td align=right>' . $CreditAmount . '</td>
+									<td class=number>' . $DebitAmount . '</td>
+									<td class=number>' . $CreditAmount . '</td>
 									<td>' . $TransRow['narrative'] . '</td>
 									<td>' . $Posted . '</td>
 								</tr>';
@@ -160,10 +160,10 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 								$j++;
 							}
 							echo	'<td>' . $TranDate . '</td>
-									<td align=right>' . $TransRow['periodno'] . '</td>
+									<td class=number>' . $TransRow['periodno'] . '</td>
 									<td><a href="' . $URL . $DetailRow[0] . $date . '">' . $TransRow['accountname']  . ' - ' . $DetailRow[4] . '</a></td>
-									<td align=right>' . $Debit . '</td>
-									<td align=right>' . $Credit . '</td>
+									<td class=number>' . $Debit . '</td>
+									<td class=number>' . $Credit . '</td>
 									<td>' . $TransRow['narrative'] . '</td>
 									<td>' . $Posted . '</td>
 								</tr>';
@@ -174,9 +174,9 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 				DB_free_result($TransResult);
 
 				echo '<tr bgcolor="#FFFFFF">
-						<td align=right colspan=3><b>' . _('Total') . '</b></td>
-						<td align=right>' . number_format(($DebitTotal),2) . '</td>
-						<td align=right>' . number_format((-$CreditTotal),2) . '</td>
+						<td class=number colspan=3><b>' . _('Total') . '</b></td>
+						<td class=number>' . number_format(($DebitTotal),2) . '</td>
+						<td class=number>' . number_format((-$CreditTotal),2) . '</td>
 						<td colspan=2>&nbsp</td>
 					</tr>';
 				echo '</table><p>';
@@ -184,7 +184,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 
 }
 
-echo '</center></td></tr></table>'; // end Page Border
+echo '</td></tr></table>'; // end Page Border
 include('includes/footer.inc');
 
 ?>
