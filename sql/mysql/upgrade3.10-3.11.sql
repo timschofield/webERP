@@ -63,3 +63,22 @@ INSERT INTO config (`confname`,`confvalue`) VALUES ('DefineControlledOnWOEntry',
 ALTER TABLE `stockmaster` ADD `nextserialno` BIGINT NOT NULL DEFAULT '0';
 ALTER TABLE `salesorders` CHANGE `orderno` `orderno` INT( 11 ) NOT NULL;
 ALTER TABLE `stockserialitems` ADD `qualitytext` TEXT NOT NULL;
+
+CREATE TABLE `purchorderauth` (
+	`userid` varchar(20) NOT NULL DEFAULT '',
+	`currabrev` char(3) NOT NULL DEFAULT '',
+	`cancreate` smallint(2) NOT NULL DEFAULT 0,
+	`authlevel` int(11) NOT NULL DEFAULT 0,
+	PRIMARY KEY (`userid`,`currabrev`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `purchorders` ADD `version` decimal(3,2) NOT NULL default '1.00';
+ALTER TABLE `purchorders` ADD `revised` date NOT NULL default '0000-00-00';
+ALTER TABLE `purchorders` ADD `realorderno` varchar(16) NOT NULL default '';
+ALTER TABLE `purchorders` ADD `deliveryby` varchar(100) NOT NULL default '';
+ALTER TABLE `purchorders` ADD `deliverydate` date NOT NULL default '0000-00-00';
+ALTER TABLE `purchorders` ADD `status` varchar(12) NOT NULL default '';
+ALTER TABLE `purchorders` ADD `stat_comment` text NOT NULL;
+
+ALTER TABLE `suppliers` ADD `phn` varchar(50) NOT NULL default '';
+ALTER TABLE `suppliers` ADD `port` varchar(200) NOT NULL default '';
