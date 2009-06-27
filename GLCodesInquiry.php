@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 8;
 include ('includes/session.inc');
@@ -21,12 +21,12 @@ $AccountsResult = DB_query($SQL,$db,$ErrMsg);
 
 /*show a table of the orders returned by the SQL */
 
-echo "<CENTER><TABLE CELLPADDING=2 COLSPAN=2>
-		<TR>
-			<TH>"._('Group')."</FONT></TH>
-			<TH>"._('Code')."</FONT></TH>
-			<TH>"._('Account Name').'</FONT></TH>
-		</TR>';
+echo "<table cellpadding=2 colspan=2>
+		<tr>
+			<th>"._('Group')."</font></th>
+			<th>"._('Code')."</font></th>
+			<th>"._('Account Name').'</font></th>
+		</tr>';
 
 $j = 1;
 $k=0; //row colour counter
@@ -43,32 +43,25 @@ while ($myrow=DB_fetch_array($AccountsResult)) {
 
        if ($myrow['group_']== $ActGrp){
               printf("<td></td>
-	      		<td><FONT SIZE=2>%s</FONT></td>
-			<td><FONT SIZE=2>%s</FONT></td>
+	      		<td><font size=2>%s</font></td>
+			<td><font size=2>%s</font></td>
 			</tr>",
 			$myrow['accountcode'],
 			$myrow['accountname']);
        } else {
               $ActGrp = $myrow['group_'];
-              printf("<td><FONT SIZE=2>%s</FONT></td>
-	      		<td><FONT SIZE=2>%s</FONT></td>
-			<td><FONT SIZE=2>%s</FONT></td>
+              printf("<td><font size=2>%s</font></td>
+	      		<td><font size=2>%s</font></td>
+			<td><font size=2>%s</font></td>
 			</tr>",
 			$myrow['group_'],
 			$myrow['accountcode'],
 			$myrow['accountname']);
        }
-       $j++;
-       If ($j == 18){
-              $j=1;
-              echo "<TR><TH>"._('Group')."</FONT></TH>
-	      		<TH>"._('Code')."</FONT></TH>
-			<TH>"._('Account Name').'</FONT></TH></TR>';
-       }
 }
 //end of while loop
 
-echo '</TABLE></CENTER>';
+echo '</table>';
 
 include('includes/footer.inc');
 

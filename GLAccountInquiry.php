@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 
 $PageSecurity = 8;
@@ -21,30 +21,30 @@ if (isset($_POST['Period'])){
 	$SelectedPeriod = $_GET['Period'];
 }
 
-echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('General Ledger Account Inquiry') . '" ALT="">' . ' ' . _('General Ledger Account Inquiry') . '</P>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="">' . ' ' . _('General Ledger Account Inquiry') . '</p>';
 
-echo '<DIV CLASS="page_help_text">' . _('Use the keyboard Shift key to select multiple periods') . '</DIV><BR>';
+echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple periods') . '</div><br>';
 
-echo "<FORM METHOD='POST' ACTION=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 /*Dates in SQL format for the last day of last month*/
 $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 
 /*Show a form to allow input of criteria for TB to show */
-echo '<CENTER><TABLE>
-        <TR>
-         <TD>'._('Account').":</TD>
-         <TD><SELECT Name='Account'>";
+echo '<table>
+        <tr>
+         <td>'._('Account').":</td>
+         <td><select Name='Account'>";
          $sql = 'SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode';
          $Account = DB_query($sql,$db);
          while ($myrow=DB_fetch_array($Account,$db)){
             if($myrow['accountcode'] == $SelectedAccount){
-   	        echo '<OPTION SELECTED VALUE=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' ' . $myrow['accountname'];
+   	        echo '<option selected VALUE=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' ' . $myrow['accountname'];
 	    } else {
-		echo '<OPTION VALUE=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' ' . $myrow['accountname'];
+		echo '<option VALUE=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' ' . $myrow['accountname'];
 	    }
          }
-         echo '</SELECT></TD></TR>';
+         echo '</select></td></tr>';
 
 	//Select the tag
 	echo '<tr><td>' . _('Select Tag') . ':</td><td><select name="tag">';
@@ -55,36 +55,36 @@ echo '<CENTER><TABLE>
 		ORDER BY tagref';
 
 	$result=DB_query($SQL,$db);
-	echo '<OPTION value=0>0 - None';
+	echo '<option value=0>0 - None';
 	while ($myrow=DB_fetch_array($result)){
     	if (isset($_POST['tag']) and $_POST['tag']==$myrow["tagref"]){
-		echo '<OPTION selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+		echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
     	} else {
-			echo '<OPTION value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+			echo '<option value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
     	}
 	}
 	echo '</select></td></tr>';
 // End select tag
-         echo '<TR>
-         <TD>'._('For Period range').':</TD>
-         <TD><SELECT Name=Period[] multiple>';
+         echo '<tr>
+         <td>'._('For Period range').':</td>
+         <td><select Name=Period[] multiple>';
 	 $sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
 	 $Periods = DB_query($sql,$db);
          $id=0;
          while ($myrow=DB_fetch_array($Periods,$db)){
 
             if(isset($SelectedPeriod[$id]) and $myrow['periodno'] == $SelectedPeriod[$id]){
-              echo '<OPTION SELECTED VALUE=' . $myrow['periodno'] . '>' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period']));
+              echo '<option selected VALUE=' . $myrow['periodno'] . '>' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period']));
             $id++;
             } else {
-              echo '<OPTION VALUE=' . $myrow['periodno'] . '>' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period']));
+              echo '<option VALUE=' . $myrow['periodno'] . '>' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period']));
             }
 
          }
-         echo "</SELECT></TD>
-        </TR>
-</TABLE><P>
-<INPUT TYPE=SUBMIT NAME='Show' VALUE='"._('Show Account Transactions')."'></CENTER></FORM>";
+         echo "</select></td>
+        </tr>
+</table><p>
+<div class='centre'><input type=submit name='Show' VALUE='"._('Show Account Transactions')."'></div></form>";
 
 /* End of the Form  rest of script is what happens if the show button is hit*/
 
@@ -151,15 +151,15 @@ if (isset($_POST['Show'])){
 
 	echo '<table>';
 
-	$TableHeader = "<TR>
-			<TH>" . _('Type') . "</TH>
-			<TH>" . _('Number') . "</TH>
-			<TH>" . _('Date') . "</TH>
-			<TH>" . _('Debit') . "</TH>
-			<TH>" . _('Credit') . "</TH>
-			<TH>" . _('Narrative') . "</TH>
-			<TH>" . _('Tag') . '</TH>
-			</TR>';
+	$TableHeader = "<tr>
+			<th>" . _('Type') . "</th>
+			<th>" . _('Number') . "</th>
+			<th>" . _('Date') . "</th>
+			<th>" . _('Debit') . "</th>
+			<th>" . _('Credit') . "</th>
+			<th>" . _('Narrative') . "</th>
+			<th>" . _('Tag') . '</th>
+			</tr>';
 
 	echo $TableHeader;
 
@@ -181,18 +181,18 @@ if (isset($_POST['Show'])){
 
 		$RunningTotal =$ChartDetailRow['bfwd'];
 		if ($RunningTotal < 0 ){ //its a credit balance b/fwd
-			echo "<TR bgcolor='#FDFEEF'>
-				<TD COLSPAN=3><B>" . _('Brought Forward Balance') . '</B><TD>
-				</TD></TD>
-				<TD ALIGN=RIGHT><B>' . number_format(-$RunningTotal,2) . '</B></TD>
-				<TD></TD>
-				</TR>';
+			echo "<tr bgcolor='#FDFEEF'>
+				<td colspan=3><b>" . _('Brought Forward Balance') . '</b><td>
+				</td></td>
+				<td class=number><b>' . number_format(-$RunningTotal,2) . '</b></td>
+				<td></td>
+				</tr>';
 		} else { //its a debit balance b/fwd
-			echo "<TR bgcolor='#FDFEEF'>
-				<TD COLSPAN=3><B>" . _('Brought Forward Balance') . '</B></TD>
-				<TD ALIGN=RIGHT><B>' . number_format($RunningTotal,2) . '</B></TD>
-				<TD COLSPAN=2></TD>
-				</TR>';
+			echo "<tr bgcolor='#FDFEEF'>
+				<td colspan=3><b>" . _('Brought Forward Balance') . '</b></td>
+				<td class=number><b>' . number_format($RunningTotal,2) . '</b></td>
+				<td colspan=2></td>
+				</tr>';
 		}
 	}
 	$PeriodTotal = 0;
@@ -218,19 +218,19 @@ if (isset($_POST['Show'])){
 				$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
 				$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
-				echo "<TR bgcolor='#FDFEEF'>
-					<TD COLSPAN=3><B>" . _('Total for period') . ' ' . $PeriodNo . '</B></TD>';
+				echo "<tr bgcolor='#FDFEEF'>
+					<td colspan=3><b>" . _('Total for period') . ' ' . $PeriodNo . '</b></td>';
 				if ($PeriodTotal < 0 ){ //its a credit balance b/fwd
-					echo '<TD></TD>
-						<TD ALIGN=RIGHT><B>' . number_format(-$PeriodTotal,2) . '</B></TD>
-						<TD></TD>
-						</TR>';
+					echo '<td></td>
+						<td class=number><b>' . number_format(-$PeriodTotal,2) . '</b></td>
+						<td></td>
+						</tr>';
 				} else { //its a debit balance b/fwd
-					echo '<TD ALIGN=RIGHT><B>' . number_format($PeriodTotal,2) . '</B></TD>
-						<TD COLSPAN=2></TD>
-						</TR>';
+					echo '<td class=number><b>' . number_format($PeriodTotal,2) . '</b></td>
+						<td colspan=2></td>
+						</tr>';
 				}
-				$IntegrityReport .= '<BR>' . _('Period') . ': ' . $PeriodNo  . _('Account movement per transaction') . ': '  . number_format($PeriodTotal,2) . ' ' . _('Movement per ChartDetails record') . ': ' . number_format($ChartDetailRow['actual'],2) . ' ' . _('Period difference') . ': ' . number_format($PeriodTotal -$ChartDetailRow['actual'],3);
+				$IntegrityReport .= '<br>' . _('Period') . ': ' . $PeriodNo  . _('Account movement per transaction') . ': '  . number_format($PeriodTotal,2) . ' ' . _('Movement per ChartDetails record') . ': ' . number_format($ChartDetailRow['actual'],2) . ' ' . _('Period difference') . ': ' . number_format($PeriodTotal -$ChartDetailRow['actual'],3);
 
 				if (ABS($PeriodTotal -$ChartDetailRow['actual'])>0.01){
 					$ShowIntegrityReport = True;
@@ -262,11 +262,15 @@ if (isset($_POST['Show'])){
 		$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
 		$URL_to_TransDetail = $rootpath . '/GLTransInquiry.php?' . SID . '&TypeID=' . $myrow['type'] . '&TransNo=' . $myrow['typeno'];
 
+		$tagsql='SELECT tagdescription FROM tags WHERE tagref='.$myrow['tag'];
+		$tagresult=DB_query($tagsql,$db);
+		$tagrow = DB_fetch_array($tagresult);
+		
 		printf("<td>%s</td>
-			<td><A HREF='%s'>%s</A></td>
+			<td class=number><a href='%s'>%s</a></td>
 			<td>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<td ALIGN=RIGHT>%s</td>
+			<td class=number>%s</td>
+			<td class=number>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			</tr>",
@@ -277,22 +281,22 @@ if (isset($_POST['Show'])){
 			$DebitAmount,
 			$CreditAmount,
 			$myrow['narrative'],
-			$myrow['tag']);
+			$tagrow['tagdescription']);
 
 	}
 
-	echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=3><B>";
+	echo "<tr bgcolor='#FDFEEF'><td colspan=3><b>";
 	if ($PandLAccount==True){
 		echo _('Total Period Movement');
 	} else { /*its a balance sheet account*/
 		echo _('Balance C/Fwd');
 	}
-	echo '</B></TD>';
+	echo '</b></td>';
 
 	if ($RunningTotal >0){
-		echo '<TD ALIGN=RIGHT><B>' . number_format(($RunningTotal),2) . '</B></TD><TD COLSPAN=2></TD></TR>';
+		echo '<td align=right><b>' . number_format(($RunningTotal),2) . '</b></td><td colspan=2></td></tr>';
 	}else {
-		echo '<TD></TD><TD ALIGN=RIGHT><B>' . number_format((-$RunningTotal),2) . '</B></TD><TD COLSPAN=2></TD></TR>';
+		echo '<td></td><td align=right><b>' . number_format((-$RunningTotal),2) . '</b></td><td colspan=2></td></tr>';
 	}
 	echo '</table>';
 } /* end of if Show button hit */
@@ -302,7 +306,7 @@ if (isset($_POST['Show'])){
 if (isset($ShowIntegrityReport) and $ShowIntegrityReport==True){
 	if (!isset($IntegrityReport)) {$IntegrityReport='';}
 	prnMsg( _('There are differences between the sum of the transactions and the recorded movements in the ChartDetails table') . '. ' . _('A log of the account differences for the periods report shows below'),'warn');
-	echo '<P>'.$IntegrityReport;
+	echo '<p>'.$IntegrityReport;
 }
 include('includes/footer.inc');
 ?>

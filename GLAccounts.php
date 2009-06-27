@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 10;
 include('includes/session.inc');
@@ -101,7 +101,7 @@ if (isset($_POST['submit'])) {
 		if ($myrow[0]>0) {
 			$CancelDelete = 1;
 			prnMsg( _('Cannot delete this account because transactions have been created using this account'),'warn');
-			echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('transactions that require this account code');
+			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('transactions that require this account code');
 
 		} else {
 			//PREVENT DELETES IF Company default accounts set up to this account
@@ -213,7 +213,7 @@ if (isset($_POST['submit'])) {
 
 if (!isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' name='GLAccounts' action='" . $_SERVER['PHP_SELF'] .  '?' . SID . "'>";
+	echo "<form method='post' name='GLAccounts' action='" . $_SERVER['PHP_SELF'] .  '?' . SID . "'>";
 
 	if (isset($SelectedAccount)) {
 		//editing an existing account
@@ -227,27 +227,27 @@ if (!isset($_GET['delete'])) {
 		$_POST['AccountName']	= $myrow['accountname'];
 		$_POST['Group'] = $myrow['group_'];
 
-		echo "<INPUT TYPE=HIDDEN NAME='SelectedAccount' VALUE=$SelectedAccount>";
-		echo "<INPUT TYPE=HIDDEN NAME='AccountCode' VALUE=" . $_POST['AccountCode'] .">";
-		echo "<CENTER><TABLE><TR><TD>" . _('Account Code') . ":</TD><TD>" . $_POST['AccountCode'] . "</TD></TR>";
+		echo "<input type=hidden name='SelectedAccount' VALUE=$SelectedAccount>";
+		echo "<input type=hidden name='AccountCode' VALUE=" . $_POST['AccountCode'] .">";
+		echo "<table><tr><td>" . _('Account Code') . ":</td><td>" . $_POST['AccountCode'] . "</td></tr>";
 	} else {
-		echo "<CENTER><TABLE>";
-		echo "<TR><TD>" . _('Account Code') . ":</TD><TD><INPUT TYPE=TEXT NAME='AccountCode' SIZE=11 onKeyPress='return restrictToNumbers(this, event)'  MAXLENGTH=10></TD></TR>";
+		echo "<table>";
+		echo "<tr><td>" . _('Account Code') . ":</td><td><input type=TEXT name='AccountCode' size=11 class=number maxlength=10></td></tr>";
 	}
 
 	if (!isset($_POST['AccountName'])) {$_POST['AccountName']='';}
-	echo '<TR><TD>' . _('Account Name') . ":</TD><TD><input type='Text' SIZE=51 MAXLENGTH=50 name='AccountName' value='" . $_POST['AccountName'] . "'></TD></TR>";
+	echo '<tr><td>' . _('Account Name') . ":</td><td><input type='Text' size=51 maxlength=50 name='AccountName' value='" . $_POST['AccountName'] . "'></td></tr>";
 
 	$sql = 'SELECT groupname FROM accountgroups ORDER BY sequenceintb';
 	$result = DB_query($sql, $db);
 
-	echo '<TR><TD>' . _('Account Group') . ':</TD><TD><SELECT NAME=Group>';
+	echo '<tr><td>' . _('Account Group') . ':</td><td><select name=Group>';
 
 	while ($myrow = DB_fetch_array($result)){
 		if (isset($_POST['Group']) and $myrow[0]==$_POST['Group']){
-			echo "<OPTION SELECTED VALUE='";
+			echo "<option selected VALUE='";
 		} else {
-			echo "<OPTION VALUE='";
+			echo "<option VALUE='";
 		}
 		echo $myrow[0] . "'>" . $myrow[0];
 	}
@@ -260,13 +260,13 @@ if (!isset($_GET['delete'])) {
 	
 	?>
 
-	</SELECT></TD></TR>
+	</select></td></tr>
 
-	</TABLE></CENTER>
+	</table>
 
-	<CENTER><input type="Submit" name="submit" value="<?php echo _('Enter Information'); ?>"></CENTER>
+	<div class="centre"><input type="Submit" name="submit" value="<?php echo _('Enter Information'); ?>"></div>
 
-	</FORM>
+	</form>
 
 <?php } //end if record deleted no point displaying form to add record
 
@@ -290,7 +290,7 @@ or deletion of the records*/
 
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	echo '<CENTER><table border=1>';
+	echo '<table border=1>';
 	echo "<tr>
 		<th>" . _('Account Code') . "</th>
 		<th>" . _('Account Name') . "</th>
@@ -328,18 +328,18 @@ or deletion of the records*/
 
 	}
 	//END WHILE LIST LOOP
-	echo '</CENTER></TABLE>';
-} //END IF SELECTED ACCOUNT
+	echo '</table>';
+} //END IF selected ACCOUNT
 
 //end of ifs and buts!
 
-echo '<P>';
+echo '<p>';
 
 if (isset($SelectedAccount)) {
-	echo "<Center><a href='" . $_SERVER['PHP_SELF'] . '?' . SID ."'>" .  _('Show All Accounts') . '</a></CENTER>';
+	echo "<div class='centre'><a href='" . $_SERVER['PHP_SELF'] . '?' . SID ."'>" .  _('Show All Accounts') . '</a></div>';
 }
 
-echo '<P>';
+echo '<p>';
 
 include('includes/footer.inc');
 ?>

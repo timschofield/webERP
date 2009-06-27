@@ -149,7 +149,7 @@ if( !$automake && !isset($filename) ) {
 		$title = _('Stock Image Retrieval ....');
 		include('includes/header.inc');
 		prnMsg( _('The Image could not be retrieved because it does not exist'), 'error');
-		echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</A>';
+		echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</a>';
 		include('includes/footer.inc');
 		exit;
 }
@@ -158,9 +158,9 @@ if( !$automake && !isset($filename) ) {
 	$title = _('Stock Image Retrieval ....');
 	include('includes/header.inc');
 	echo 'The image ' . $filename . ' using functype ' . $functype
-	 	. '<BR> The tmpfilename = ' . $tmpfilename . '<BR> The temppath = ' . $filepath . '<BR>The stockid = ' . $stockid . '<BR> filepath . stockid .jpg = ' . $filepath . $stockid .'.jpg<BR> The result of file_exists($filepath . $stockid .jpg) =' . file_exists($filepath . $stockid .'.jpg')
-		. '<BR>filepath = ' . $filepath
-		. '<BR>rootpath = ' . $rootpath;
+	 	. '<br> The tmpfilename = ' . $tmpfilename . '<br> The temppath = ' . $filepath . '<br>The stockid = ' . $stockid . '<br> filepath . stockid .jpg = ' . $filepath . $stockid .'.jpg<br> The result of file_exists($filepath . $stockid .jpg) =' . file_exists($filepath . $stockid .'.jpg')
+		. '<br>filepath = ' . $filepath
+		. '<br>rootpath = ' . $rootpath;
 	include('includes/footer.inc');
 	exit;
 */
