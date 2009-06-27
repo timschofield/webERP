@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 8;
 
@@ -18,9 +18,9 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 	include('includes/header.inc');
 
-echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . _('Print Profit and Loss Report') . '';
+echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . _('Print Profit and Loss Report') . '</div>';
 
-	echo "<FORM METHOD='POST' ACTION=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	
 	if (Date('m') > $_SESSION['YearEnd']){
 		/*Dates in SQL format */
@@ -33,7 +33,7 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 	$period=GetPeriod($FromDate, $db);
 	
 	/*Show a form to allow input of criteria for profit and loss to show */
-	echo '<CENTER><TABLE><TR><TD>'._('Select Period From').":</TD><TD><SELECT Name='FromPeriod'>";
+	echo '<table><tr><td>'._('Select Period From').":</td><td><select Name='FromPeriod'>";
 
 	$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
 	$Periods = DB_query($sql,$db);
@@ -42,20 +42,20 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 	while ($myrow=DB_fetch_array($Periods,$db)){
 		if(isset($_POST['FromPeriod']) AND $_POST['FromPeriod']!=''){
 			if( $_POST['FromPeriod']== $myrow['periodno']){
-				echo '<OPTION SELECTED VALUE=' . $myrow['periodno'] . '>' .MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
+				echo '<option selected VALUE=' . $myrow['periodno'] . '>' .MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 			} else {
-				echo '<OPTION VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
+				echo '<option VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 			}
 		} else {
 			if($myrow['lastdate_in_period']==$DefaultFromDate){
-				echo '<OPTION SELECTED VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
+				echo '<option selected VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 			} else {
-				echo '<OPTION VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
+				echo '<option VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 			}
 		}
 	}
 
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']==''){
 		$lastDate = date("Y-m-d",mktime(0,0,0,Date('m')+1,0,Date('Y')));
 		$sql = "SELECT periodno FROM periods where lastdate_in_period = '$lastDate'";
@@ -67,29 +67,29 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 		$DefaultToPeriod = $_POST['ToPeriod'];
 	}
 	
-	echo '<TR><TD>' . _('Select Period To') . ":</TD><TD><SELECT Name='ToPeriod'>";
+	echo '<tr><td>' . _('Select Period To') . ":</td><td><select Name='ToPeriod'>";
 
 	$RetResult = DB_data_seek($Periods,0);
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
 
 		if($myrow['periodno']==$DefaultToPeriod){
-			echo '<OPTION SELECTED VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
+			echo '<option selected VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 		} else {
-			echo '<OPTION VALUE =' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
+			echo '<option VALUE =' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 		}
 	}
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 
-	echo '<TR><TD>'._('Detail Or Summary').":</TD><TD><SELECT Name='Detail'>";
-		echo "<OPTION SELECTED VALUE='Summary'>"._('Summary');
-		echo "<OPTION SELECTED VALUE='Detailed'>"._('All Accounts');
-	echo '</SELECT></TD></TR>';
+	echo '<tr><td>'._('Detail Or Summary').":</td><td><select Name='Detail'>";
+		echo "<option selected VALUE='Summary'>"._('Summary');
+		echo "<option selected VALUE='Detailed'>"._('All Accounts');
+	echo '</select></td></tr>';
 
-	echo '</TABLE>';
+	echo '</table>';
 
-	echo "<BR><INPUT TYPE=SUBMIT Name='ShowPL' Value='"._('Show on Screen (HTML)')."'></CENTER>";
-	echo "<BR><CENTER><INPUT TYPE=SUBMIT Name='PrintPDF' Value='"._('Produce PDF Report')."'></CENTER>";
+	echo "<br><div class='centre'><input type=submit Name='ShowPL' Value='"._('Show on Screen (HTML)')."'></div>";
+	echo "<br><div class='centre'><input type=submit Name='PrintPDF' Value='"._('Produce PDF Report')."'></div>";
 
 	/*Now do the posting while the user is thinking about the period to select */
 
@@ -108,7 +108,7 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 
 	if ($NumberOfMonths > 12){
 		include('includes/header.inc');
-		echo '<P>';
+		echo '<p>';
 		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range'),'error');
 		include('includes/footer.inc');
 		exit;
@@ -151,9 +151,9 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 		$title = _('Profit and Loss') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
-		echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</A>';
+		echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
 		if ($debug == 1){
-			echo '<BR>'. $SQL;
+			echo '<br>'. $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -479,7 +479,7 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg( _('There were no entries to print out for the selections specified') );
-		echo '<BR><A HREF="'. $rootpath.'/index.php?' . SID . '">'. _('Back to the menu'). '</A>';
+		echo '<br><a href="'. $rootpath.'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
 		include('includes/footer.inc');
 		exit;
 	} else {
@@ -496,13 +496,13 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 } else {
 
 	include('includes/header.inc');
-	echo "<FORM METHOD='POST' ACTION=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	echo "<INPUT TYPE=HIDDEN NAME='FromPeriod' VALUE=" . $_POST['FromPeriod'] . "><INPUT TYPE=HIDDEN NAME='ToPeriod' VALUE=" . $_POST['ToPeriod'] . '>';
+	echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo "<input type=hidden name='FromPeriod' VALUE=" . $_POST['FromPeriod'] . "><input type=hidden name='ToPeriod' VALUE=" . $_POST['ToPeriod'] . '>';
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
 	
 	if ($NumberOfMonths >12){
-		echo '<P>';
+		echo '<p>';
 		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range'),'error');
 		include('includes/footer.inc');
 		exit;
@@ -543,28 +543,28 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 
 	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'),_('The SQL that failed was'));
 
-	echo '<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('General Ledger Profit Loss Inquiry') . '" ALT="">' . ' ' . _('Statement of Profit and Loss for the') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' and including ' . $PeriodToDate . '</P>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger Profit Loss Inquiry') . '" alt="">' . ' ' . _('Statement of Profit and Loss for the') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' and including ' . $PeriodToDate . '</p>';
 
 	/*show a table of the accounts info returned by the SQL
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
 
-	echo '<TABLE CELLPADDING=2>';
+	echo '<table cellpadding=2>';
 
 	if ($_POST['Detail']=='Detailed'){
-		$TableHeader = "<TR>
-				<TH>"._('Account')."</TH>
-				<TH>"._('Account Name')."</TH>
-				<TH COLSPAN=2>"._('Period Actual')."</TH>
-				<TH COLSPAN=2>"._('Period Budget')."</TH>
-				<TH COLSPAN=2>"._('Last Year')."</TH>
-				</TR>";
+		$TableHeader = "<tr>
+				<th>"._('Account')."</th>
+				<th>"._('Account Name')."</th>
+				<th colspan=2>"._('Period Actual')."</th>
+				<th colspan=2>"._('Period Budget')."</th>
+				<th colspan=2>"._('Last Year')."</th>
+				</tr>";
 	} else { /*summary */
-		$TableHeader = "<TR>
-				<TH COLSPAN=2></TH>
-				<TH COLSPAN=2>"._('Period Actual')."</TH>
-				<TH COLSPAN=2>"._('Period Budget')."</TH>
-				<TH COLSPAN=2>"._('Last Year')."</TH>
-				</TR>";
+		$TableHeader = "<tr>
+				<th colspan=2></th>
+				<th colspan=2>"._('Period Actual')."</th>
+				<th colspan=2>"._('Period Budget')."</th>
+				<th colspan=2>"._('Last Year')."</th>
+				</tr>";
 	}
 
 
@@ -597,38 +597,38 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 			if ($myrow['parentgroupname']!=$ActGrp AND $ActGrp!=''){
 					while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
 					if ($_POST['Detail']=='Detailed'){
-						echo '<TR>
-							<TD COLSPAN=2></TD>
-							<TD COLSPAN=6><HR></TD>
-						</TR>';
+						echo '<tr>
+							<td colspan=2></td>
+							<td colspan=6><hr></td>
+						</tr>';
 						$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level] . ' ' . _('total');
 					} else {
 						$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level];
 					}
 				if ($Section ==1){ /*Income */
-						printf('<TR>
-							<TD COLSPAN=2><FONT SIZE=2><I>%s </I></FONT></td>
-							<TD></TD>
-							<TD ALIGN=RIGHT>%s</TD>
-							<TD></TD>
-							<TD ALIGN=RIGHT>%s</TD>
-							<TD></TD>
-							<TD ALIGN=RIGHT>%s</TD>
-							</TR>',
+						printf('<tr>
+							<td colspan=2><font size=2><I>%s </I></font></td>
+							<td></td>
+							<td class=number>%s</td>
+							<td></td>
+							<td class=number>%s</td>
+							<td></td>
+							<td class=number>%s</td>
+							</tr>',
 							$ActGrpLabel,
 							number_format(-$GrpPrdActual[$Level]),
 							number_format(-$GrpPrdBudget[$Level]),
 							number_format(-$GrpPrdLY[$Level]));
 					} else { /*Costs */
-						printf('<TR>
-							<TD COLSPAN=2><FONT SIZE=2><I>%s </I></FONT></td>
-							<TD ALIGN=RIGHT>%s</TD>
-							<TD></TD>
-							<TD ALIGN=RIGHT>%s</TD>
-							<TD></TD>
-							<TD ALIGN=RIGHT>%s</TD>
-							<TD></TD>
-							</TR>',
+						printf('<tr>
+							<td colspan=2><font size=2><I>%s </I></font></td>
+							<td class=number>%s</td>
+							<td></td>
+							<td class=number>%s</td>
+							<td></td>
+							<td class=number>%s</td>
+							<td></td>
+							</tr>',
 							$ActGrpLabel,
 							number_format($GrpPrdActual[$Level]),
 							number_format($GrpPrdBudget[$Level]),
@@ -642,39 +642,39 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 				}//end while
 				//still need to print out the old group totals
 				if ($_POST['Detail']=='Detailed'){
-						echo '<TR>
-							<TD COLSPAN=2></TD>
-							<TD COLSPAN=6><HR></TD>
-						</TR>';
+						echo '<tr>
+							<td colspan=2></td>
+							<td colspan=6><hr></td>
+						</tr>';
 						$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level] . ' ' . _('total');
 					} else {
 						$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level];
 					}
 
 				if ($Section ==1){ /*Income */
-					printf('<TR>
-						<TD COLSPAN=2><FONT SIZE=2><I>%s </I></FONT></td>
-						<TD></TD>
-						<TD ALIGN=RIGHT>%s</TD>
-						<TD></TD>
-						<TD ALIGN=RIGHT>%s</TD>
-						<TD></TD>
-						<TD ALIGN=RIGHT>%s</TD>
-						</TR>',
+					printf('<tr>
+						<td colspan=2><font size=2><I>%s </I></font></td>
+						<td></td>
+						<td class=number>%s</td>
+						<td></td>
+						<td class=number>%s</td>
+						<td></td>
+						<td class=number>%s</td>
+						</tr>',
 						$ActGrpLabel,
 						number_format(-$GrpPrdActual[$Level]),
 						number_format(-$GrpPrdBudget[$Level]),
 						number_format(-$GrpPrdLY[$Level]));
 				} else { /*Costs */
-					printf('<TR>
-						<TD COLSPAN=2><FONT SIZE=2><I>%s </I></FONT></td>
-						<TD ALIGN=RIGHT>%s</TD>
-						<TD></TD>
-						<TD ALIGN=RIGHT>%s</TD>
-						<TD></TD>
-						<TD ALIGN=RIGHT>%s</TD>
-						<TD></TD>
-						</TR>',
+					printf('<tr>
+						<td colspan=2><font size=2><I>%s </I></font></td>
+						<td class=number>%s</td>
+						<td></td>
+						<td class=number>%s</td>
+						<td></td>
+						<td class=number>%s</td>
+						<td></td>
+						</tr>',
 						$ActGrpLabel,
 						number_format($GrpPrdActual[$Level]),
 						number_format($GrpPrdBudget[$Level]),
@@ -693,24 +693,24 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 			if ($SectionPrdLY+$SectionPrdActual+$SectionPrdBudget !=0){
 				if ($Section==1) { /*Income*/
 
-					echo '<TR>
-						<TD COLSPAN=3></TD>
-      						<TD><HR></TD>
-						<TD></TD>
-						<TD><HR></TD>
-						<TD></TD>
-						<TD><HR></TD>
-					</TR>';
+					echo '<tr>
+						<td colspan=3></td>
+      						<td><hr></td>
+						<td></td>
+						<td><hr></td>
+						<td></td>
+						<td><hr></td>
+					</tr>';
 
-					printf('<TR>
-					<TD COLSPAN=2><FONT SIZE=4>%s</FONT></td>
-					<TD></TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD></TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD></TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					</TR>',
+					printf('<tr>
+					<td colspan=2><font size=4>%s</font></td>
+					<td></td>
+					<td class=number>%s</td>
+					<td></td>
+					<td class=number>%s</td>
+					<td></td>
+					<td class=number>%s</td>
+					</tr>',
 					$Sections[$Section],
 					number_format(-$SectionPrdActual),
 					number_format(-$SectionPrdBudget),
@@ -719,42 +719,42 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 					$TotalBudgetIncome = -$SectionPrdBudget;
 					$TotalLYIncome = -$SectionPrdLY;
 				} else {
-					echo '<TR>
-					<TD COLSPAN=2></TD>
-      					<TD><HR></TD>
-					<TD></TD>
-					<TD><HR></TD>
-					<TD></TD>
-					<TD><HR></TD>
-					</TR>';
-					printf('<TR>
-					<TD COLSPAN=2><FONT SIZE=4>%s</FONT></td>
-					<TD></TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD></TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD></TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					</TR>',
+					echo '<tr>
+					<td colspan=2></td>
+      					<td><hr></td>
+					<td></td>
+					<td><hr></td>
+					<td></td>
+					<td><hr></td>
+					</tr>';
+					printf('<tr>
+					<td colspan=2><font size=4>%s</font></td>
+					<td></td>
+					<td class=number>%s</td>
+					<td></td>
+					<td class=number>%s</td>
+					<td></td>
+					<td class=number>%s</td>
+					</tr>',
 					$Sections[$Section],
 					number_format($SectionPrdActual),
 					number_format($SectionPrdBudget),
 					number_format($SectionPrdLY));
 				}
 				if ($Section==2){ /*Cost of Sales - need sub total for Gross Profit*/
-					echo '<TR>
-						<TD COLSPAN=2></TD>
-						<TD COLSPAN=6><HR></TD>
-					</TR>';
-					printf('<TR>
-						<TD COLSPAN=2><FONT SIZE=4>'._('Gross Profit').'</FONT></td>
-						<TD></TD>
-						<TD ALIGN=RIGHT>%s</TD>
-						<TD></TD>
-						<TD ALIGN=RIGHT>%s</TD>
-						<TD></TD>
-						<TD ALIGN=RIGHT>%s</TD>
-						</TR>',
+					echo '<tr>
+						<td colspan=2></td>
+						<td colspan=6><hr></td>
+					</tr>';
+					printf('<tr>
+						<td colspan=2><font size=4>'._('Gross Profit').'</font></td>
+						<td></td>
+						<td class=number>%s</td>
+						<td></td>
+						<td class=number>%s</td>
+						<td></td>
+						<td class=number>%s</td>
+						</tr>',
 					number_format($TotalIncome - $SectionPrdActual),
 					number_format($TotalBudgetIncome - $SectionPrdBudget),
 					number_format($TotalLYIncome - $SectionPrdLY));
@@ -774,19 +774,19 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 					} else {
 						$LYGPPercent = 0;
 					}
-					echo '<TR>
-						<TD COLSPAN=2></TD>
-						<TD COLSPAN=6><HR></TD>
-					</TR>';
-					printf('<TR>
-						<TD COLSPAN=2><FONT SIZE=2><I>'._('Gross Profit Percent').'</I></FONT></td>
-						<TD></TD>
-						<TD ALIGN=RIGHT><I>%s</I></TD>
-						<TD></TD>
-						<TD ALIGN=RIGHT><I>%s</I></TD>
-						<TD></TD>
-						<TD ALIGN=RIGHT><I>%s</I></TD>
-						</TR><TR><TD COLSPAN=6> </TD></TR>',
+					echo '<tr>
+						<td colspan=2></td>
+						<td colspan=6><hr></td>
+					</tr>';
+					printf('<tr>
+						<td colspan=2><font size=2><I>'._('Gross Profit Percent').'</I></font></td>
+						<td></td>
+						<td class=number><I>%s</I></td>
+						<td></td>
+						<td class=number><I>%s</I></td>
+						<td></td>
+						<td class=number><I>%s</I></td>
+						</tr><tr><td colspan=6> </td></tr>',
 						number_format($PrdGPPercent,1) . '%',
 						number_format($BudgetGPPercent,1) . '%',
 						number_format($LYGPPercent,1). '%');
@@ -800,9 +800,9 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 			$Section = $myrow['sectioninaccounts'];
 
 			if ($_POST['Detail']=='Detailed'){
-				printf('<TR>
-					<td COLSPAN=6><FONT SIZE=4 COLOR=BLUE><B>%s</B></FONT></TD>
-					</TR>',
+				printf('<tr>
+					<td colspan=6><font size=4 color=BLUE><b>%s</b></font></td>
+					</tr>',
 					$Sections[$myrow['sectioninaccounts']]);
 			}
 			$j++;
@@ -820,9 +820,9 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 			$ParentGroups[$Level] = $myrow['groupname'];
 			$ActGrp = $myrow['groupname'];
 			if ($_POST['Detail']=='Detailed'){
-				printf('<TR>
-					<td COLSPAN=6><FONT SIZE=2 COLOR=BLUE><B>%s</B></FONT></TD>
-					</TR>',
+				printf('<tr>
+					<td colspan=6><font size=2 color=BLUE><b>%s</b></font></td>
+					</tr>',
 					$myrow['groupname']);
 					echo $TableHeader;
 			}
@@ -857,17 +857,17 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 				$k++;
 			}
 
-			$ActEnquiryURL = "<A HREF='$rootpath/GLAccountInquiry.php?" . SID . '&Period=' . $_POST['ToPeriod'] . '&Account=' . $myrow['accountcode'] . "&Show=Yes'>" . $myrow['accountcode'] . '<A>';
+			$ActEnquiryURL = "<a href='$rootpath/GLAccountInquiry.php?" . SID . '&Period=' . $_POST['ToPeriod'] . '&Account=' . $myrow['accountcode'] . "&Show=Yes'>" . $myrow['accountcode'] . '<a>';
 
 			if ($Section ==1){
 				 printf('<td>%s</td>
 					<td>%s</td>
-					<TD></TD>
-					<td ALIGN=RIGHT>%s</td>
-					<TD></TD>
-					<td ALIGN=RIGHT>%s</td>
-					<TD></TD>
-					<td ALIGN=RIGHT>%s</td>
+					<td></td>
+					<td class=number>%s</td>
+					<td></td>
+					<td class=number>%s</td>
+					<td></td>
+					<td class=number>%s</td>
 					</tr>',
 					$ActEnquiryURL,
 					$myrow['accountname'],
@@ -877,12 +877,12 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 			} else {
 				printf('<td>%s</td>
 					<td>%s</td>
-					<td ALIGN=RIGHT>%s</td>
-					<TD></TD>
-					<td ALIGN=RIGHT>%s</td>
-					<TD></TD>
-					<td ALIGN=RIGHT>%s</td>
-					<TD></TD>
+					<td class=number>%s</td>
+					<td></td>
+					<td class=number>%s</td>
+					<td></td>
+					<td class=number>%s</td>
+					<td></td>
 					</tr>',
 					$ActEnquiryURL,
 					$myrow['accountname'],
@@ -901,38 +901,38 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 		if ($myrow['parentgroupname']!=$ActGrp AND $ActGrp!=''){
 			while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
 				if ($_POST['Detail']=='Detailed'){
-					echo '<TR>
-						<TD COLSPAN=2></TD>
-						<TD COLSPAN=6><HR></TD>
-					</TR>';
+					echo '<tr>
+						<td colspan=2></td>
+						<td colspan=6><hr></td>
+					</tr>';
 					$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level] . ' ' . _('total');
 				} else {
 					$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level];
 				}
 				if ($Section ==1){ /*Income */
-					printf('<TR>
-						<TD COLSPAN=2><FONT SIZE=2><I>%s </I></FONT></td>
-						<TD></TD>
-						<TD ALIGN=RIGHT>%s</TD>
-						<TD></TD>
-						<TD ALIGN=RIGHT>%s</TD>
-						<TD></TD>
-						<TD ALIGN=RIGHT>%s</TD>
-						</TR>',
+					printf('<tr>
+						<td colspan=2><font size=2><I>%s </I></font></td>
+						<td></td>
+						<td class=number>%s</td>
+						<td></td>
+						<td class=number>%s</td>
+						<td></td>
+						<td class=number>%s</td>
+						</tr>',
 						$ActGrpLabel,
 						number_format(-$GrpPrdActual[$Level]),
 						number_format(-$GrpPrdBudget[$Level]),
 						number_format(-$GrpPrdLY[$Level]));
 				} else { /*Costs */
-					printf('<TR>
-						<TD COLSPAN=2><FONT SIZE=2><I>%s </I></FONT></td>
-						<TD ALIGN=RIGHT>%s</TD>
-						<TD></TD>
-						<TD ALIGN=RIGHT>%s</TD>
-						<TD></TD>
-						<TD ALIGN=RIGHT>%s</TD>
-						<TD></TD>
-						</TR>',
+					printf('<tr>
+						<td colspan=2><font size=2><I>%s </I></font></td>
+						<td class=number>%s</td>
+						<td></td>
+						<td class=number>%s</td>
+						<td></td>
+						<td class=number>%s</td>
+						<td></td>
+						</tr>',
 						$ActGrpLabel,
 						number_format($GrpPrdActual[$Level]),
 						number_format($GrpPrdBudget[$Level]),
@@ -946,39 +946,39 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 			}//end while
 			//still need to print out the old group totals
 			if ($_POST['Detail']=='Detailed'){
-					echo '<TR>
-						<TD COLSPAN=2></TD>
-						<TD COLSPAN=6><HR></TD>
-					</TR>';
+					echo '<tr>
+						<td colspan=2></td>
+						<td colspan=6><hr></td>
+					</tr>';
 					$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level] . ' ' . _('total');
 				} else {
 					$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level];
 				}
 
 			if ($Section ==1){ /*Income */
-				printf('<TR>
-					<TD COLSPAN=2><FONT SIZE=2><I>%s </I></FONT></td>
-					<TD></TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD></TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD></TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					</TR>',
+				printf('<tr>
+					<td colspan=2><font size=2><I>%s </I></font></td>
+					<td></td>
+					<td class=number>%s</td>
+					<td></td>
+					<td class=number>%s</td>
+					<td></td>
+					<td class=number>%s</td>
+					</tr>',
 					$ActGrpLabel,
 					number_format(-$GrpPrdActual[$Level]),
 					number_format(-$GrpPrdBudget[$Level]),
 					number_format(-$GrpPrdLY[$Level]));
 			} else { /*Costs */
-				printf('<TR>
-					<TD COLSPAN=2><FONT SIZE=2><I>%s </I></FONT></td>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD></TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD></TD>
-					<TD ALIGN=RIGHT>%s</TD>
-					<TD></TD>
-					</TR>',
+				printf('<tr>
+					<td colspan=2><font size=2><I>%s </I></font></td>
+					<td class=number>%s</td>
+					<td></td>
+					<td class=number>%s</td>
+					<td></td>
+					<td class=number>%s</td>
+					<td></td>
+					</tr>',
 					$ActGrpLabel,
 					number_format($GrpPrdActual[$Level]),
 					number_format($GrpPrdBudget[$Level]),
@@ -996,24 +996,24 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 
 		if ($Section==1) { /*Income*/
 
-			echo '<TR>
-				<TD COLSPAN=3></TD>
-				<TD><HR></TD>
-				<TD></TD>
-				<TD><HR></TD>
-				<TD></TD>
-				<TD><HR></TD>
-			</TR>';
+			echo '<tr>
+				<td colspan=3></td>
+				<td><hr></td>
+				<td></td>
+				<td><hr></td>
+				<td></td>
+				<td><hr></td>
+			</tr>';
 
-			printf('<TR>
-			<TD COLSPAN=2><FONT SIZE=4>%s</FONT></td>
-			<TD></TD>
-			<TD ALIGN=RIGHT>%s</TD>
-			<TD></TD>
-			<TD ALIGN=RIGHT>%s</TD>
-			<TD></TD>
-			<TD ALIGN=RIGHT>%s</TD>
-			</TR>',
+			printf('<tr>
+			<td colspan=2><font size=4>%s</font></td>
+			<td></td>
+			<td class=number>%s</td>
+			<td></td>
+			<td class=number>%s</td>
+			<td></td>
+			<td class=number>%s</td>
+			</tr>',
 			$Sections[$Section],
 			number_format(-$SectionPrdActual),
 			number_format(-$SectionPrdBudget),
@@ -1022,42 +1022,42 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 			$TotalBudgetIncome = -$SectionPrdBudget;
 			$TotalLYIncome = -$SectionPrdLY;
 		} else {
-			echo '<TR>
-			<TD COLSPAN=2></TD>
-			<TD><HR></TD>
-			<TD></TD>
-			<TD><HR></TD>
-			<TD></TD>
-			<TD><HR></TD>
-			</TR>';
-			printf('<TR>
-			<TD COLSPAN=2><FONT SIZE=4>%s</FONT></td>
-			<TD></TD>
-			<TD ALIGN=RIGHT>%s</TD>
-			<TD></TD>
-			<TD ALIGN=RIGHT>%s</TD>
-			<TD></TD>
-			<TD ALIGN=RIGHT>%s</TD>
-			</TR>',
+			echo '<tr>
+			<td colspan=2></td>
+			<td><hr></td>
+			<td></td>
+			<td><hr></td>
+			<td></td>
+			<td><hr></td>
+			</tr>';
+			printf('<tr>
+			<td colspan=2><font size=4>%s</font></td>
+			<td></td>
+			<td class=number>%s</td>
+			<td></td>
+			<td class=number>%s</td>
+			<td></td>
+			<td class=number>%s</td>
+			</tr>',
 			$Sections[$Section],
 			number_format($SectionPrdActual),
 			number_format($SectionPrdBudget),
 			number_format($SectionPrdLY));
 		}
 		if ($Section==2){ /*Cost of Sales - need sub total for Gross Profit*/
-			echo '<TR>
-				<TD COLSPAN=2></TD>
-				<TD COLSPAN=6><HR></TD>
-			</TR>';
-			printf('<TR>
-				<TD COLSPAN=2><FONT SIZE=4>'._('Gross Profit').'</FONT></td>
-				<TD></TD>
-				<TD ALIGN=RIGHT>%s</TD>
-				<TD></TD>
-				<TD ALIGN=RIGHT>%s</TD>
-				<TD></TD>
-				<TD ALIGN=RIGHT>%s</TD>
-				</TR>',
+			echo '<tr>
+				<td colspan=2></td>
+				<td colspan=6><hr></td>
+			</tr>';
+			printf('<tr>
+				<td colspan=2><font size=4>'._('Gross Profit').'</font></td>
+				<td></td>
+				<td class=number>%s</td>
+				<td></td>
+				<td class=number>%s</td>
+				<td></td>
+				<td class=number>%s</td>
+				</tr>',
 			number_format($TotalIncome - $SectionPrdActual),
 			number_format($TotalBudgetIncome - $SectionPrdBudget),
 			number_format($TotalLYIncome - $SectionPrdLY));
@@ -1077,19 +1077,19 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 			} else {
 				$LYGPPercent = 0;
 			}
-			echo '<TR>
-				<TD COLSPAN=2></TD>
-				<TD COLSPAN=6><HR></TD>
-			</TR>';
-			printf('<TR>
-				<TD COLSPAN=2><FONT SIZE=2><I>'._('Gross Profit Percent').'</I></FONT></td>
-				<TD></TD>
-				<TD ALIGN=RIGHT><I>%s</I></TD>
-				<TD></TD>
-				<TD ALIGN=RIGHT><I>%s</I></TD>
-				<TD></TD>
-				<TD ALIGN=RIGHT><I>%s</I></TD>
-				</TR><TR><TD COLSPAN=6> </TD></TR>',
+			echo '<tr>
+				<td colspan=2></td>
+				<td colspan=6><hr></td>
+			</tr>';
+			printf('<tr>
+				<td colspan=2><font size=2><I>'._('Gross Profit Percent').'</I></font></td>
+				<td></td>
+				<td class=number><I>%s</I></td>
+				<td></td>
+				<td class=number><I>%s</I></td>
+				<td></td>
+				<td class=number><I>%s</I></td>
+				</tr><tr><td colspan=6> </td></tr>',
 				number_format($PrdGPPercent,1) . '%',
 				number_format($BudgetGPPercent,1) . '%',
 				number_format($LYGPPercent,1). '%');
@@ -1103,43 +1103,43 @@ echo '<CENTER><P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/
 		$Section = $myrow['sectioninaccounts'];
 
 		if ($_POST['Detail']=='Detailed' and isset($Sections[$myrow['sectioninaccounts']])){
-			printf('<TR>
-				<td COLSPAN=6><FONT SIZE=4 COLOR=BLUE><B>%s</B></FONT></TD>
-				</TR>',
+			printf('<tr>
+				<td colspan=6><font size=4 color=BLUE><b>%s</b></font></td>
+				</tr>',
 				$Sections[$myrow['sectioninaccounts']]);
 		}
 		$j++;
 
 	}
 
-	echo '<TR>
-		<TD COLSPAN=2></TD>
-		<TD COLSPAN=6><HR></TD>
-		</TR>';
+	echo '<tr>
+		<td colspan=2></td>
+		<td colspan=6><hr></td>
+		</tr>';
 
 	printf("<tr bgcolor='#ffffff'>
-		<td COLSPAN=2><FONT SIZE=4 COLOR=BLUE><B>"._('Profit').' - '._('Loss')."</B></FONT></td>
-		<TD></TD>
-		<td ALIGN=RIGHT>%s</td>
-		<TD></TD>
-		<td ALIGN=RIGHT>%s</td>
-		<TD></TD>
-		<td ALIGN=RIGHT>%s</td>
+		<td colspan=2><font size=4 color=BLUE><b>"._('Profit').' - '._('Loss')."</b></font></td>
+		<td></td>
+		<td class=number>%s</td>
+		<td></td>
+		<td class=number>%s</td>
+		<td></td>
+		<td class=number>%s</td>
 		</tr>",
 		number_format(-$PeriodProfitLoss),
 		number_format(-$PeriodBudgetProfitLoss),
 		number_format(-$PeriodLYProfitLoss)
 		);
 
-	echo '<TR>
-		<TD COLSPAN=2></TD>
-		<TD COLSPAN=6><HR></TD>
-		</TR>';
+	echo '<tr>
+		<td colspan=2></td>
+		<td colspan=6><hr></td>
+		</tr>';
 
-	echo '</TABLE>';
-	echo "<INPUT TYPE=SUBMIT Name='SelectADifferentPeriod' Value='"._('Select A Different Period')."'></CENTER>";
+	echo '</table>';
+	echo "<div class='centre'><input type=submit Name='SelectADifferentPeriod' Value='"._('Select A Different Period')."'></div>";
 }
-echo '</FORM>';
+echo '</form>';
 include('includes/footer.inc');
 
 ?>

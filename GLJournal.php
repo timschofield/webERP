@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 include('includes/DefineJournalClass.php');
 
@@ -233,7 +233,7 @@ echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post name="fo
 
 
 echo '<p><table border=0 width=100%>
-	<P CLASS="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" TITLE="' . _('Search') . '" ALT="">' . ' ' . $title.'<tr><hr></tr>';
+	<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<tr><hr></tr>';
 
 // A new table in the first column of the main table
 
@@ -243,7 +243,7 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 }
 
 	echo '<tr>
-			<td colspan=5 align=center><table border=0 width=30%><tr><td>'._('Date to Process Journal').":</td>
+			<td colspan=5><table border=0 width=30%><tr><td>'._('Date to Process Journal').":</td>
 			<td><input type='text' class='date' alt='".$_SESSION['DefaultDateFormat']."' name='JournalProcessDate' maxlength=10 size=11 value='" .
 						 $_SESSION['JournalDetail']->JnlDate . "'></td>";
 	echo '<td>' . _('Type') . ':</td>

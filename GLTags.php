@@ -28,25 +28,25 @@ if (isset($_POST['update'])) {
 	$result= DB_query($sql,$db);
 }
 
-echo "<center><FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . ' name="form">';
-echo '<BR><table><tr>';
+echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . ' name="form">';
+echo '<br><table><tr>';
 
 
 echo '<td>'. _('Description') . '</td>
-		<td><input type="text" SIZE=30 MAXLENGTH=30 name="description" value="'.$description.'"></td><td>
+		<td><input type="text" size=30 maxlength=30 name="description" value="'.$description.'"></td><td>
 		<input type="hidden" name="reference" value="'.$_GET['SelectedTag'].'">';
 
 if (isset($_GET['Action']) and $_GET['Action']=='edit') {
-	echo '<CENTER><input type=Submit name=update value=' . _('Update') . '>';
+	echo '<input type=Submit name=update value=' . _('Update') . '>';
 } else {
-	echo '<CENTER><input type=Submit name=submit value=' . _('Insert') . '>';
+	echo '<input type=Submit name=submit value=' . _('Insert') . '>';
 }
 
 echo '</td></tr></table><p></p>';
 
-echo '</form></center>';
+echo '</form>';
 
-echo '<center><table>';
+echo '<table>';
 echo '<tr><th>'. _('Tag ID') .'</th>';
 echo '<th>'. _('Description'). '</th>';
 
@@ -54,11 +54,11 @@ $sql='SELECT tagref, tagdescription FROM tags order by tagref';
 $result= DB_query($sql,$db);
 
 while ($myrow = DB_fetch_array($result,$db)){
-	echo '<tr><td>'.$myrow[0].'</td><td>'.$myrow[1].'</td><td><A HREF="' .
-		$_SERVER['PHP_SELF'] . '?' . SID . '&SelectedTag=' . $myrow[0] . '&Action=edit">' . _('Edit') . '</A></td></tr>';
+	echo '<tr><td>'.$myrow[0].'</td><td>'.$myrow[1].'</td><td><a href="' .
+		$_SERVER['PHP_SELF'] . '?' . SID . '&SelectedTag=' . $myrow[0] . '&Action=edit">' . _('Edit') . '</a></td></tr>';
 }
 
-echo '</table><p></p></center>';
+echo '</table><p></p>';
 
 echo "<script>defaultControl(document.form.description);</script>";
 
