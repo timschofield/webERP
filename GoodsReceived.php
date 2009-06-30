@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.37 $ */
+/* $Revision: 1.38 $ */
 
 $PageSecurity = 11;
 
@@ -38,6 +38,18 @@ if (isset($_GET['PONumber']) and $_GET['PONumber']<=0 and !isset($_SESSION['PO']
 		}
 		$_SESSION['PO']->LineItems[$Line->LineNo]->ReceiveQty = $RecvQty;
 	}
+}
+
+$statussql='SELECT status FROM purchorders WHERE orderno='.$_SESSION['PO']->OrderNo;
+$statusresult=DB_query($statussql, $db);
+$mystatusrow=DB_fetch_array($statusresult);
+$Status=$mystatusrow['status'];
+
+if ($Status!=_('Printed')) {
+	prnMsg( _('Purchase orders must have a status of Printed before they can be received').'.<br>'.
+		_('Order number').' '.$_GET['PONumber'].' '._('has a status of').' '.$Status, 'warn');
+	include('includes/footer.inc');
+	exit;
 }
 
 /* Always display quantities received and recalc balance for all items on the order */
@@ -130,8 +142,8 @@ if (count($_SESSION['PO']->LineItems)>0){
 }//If count(LineItems) > 0
 
 $DisplayTotal = number_format($_SESSION['PO']->total,2);
-echo '<tr><td colspan=7 align=right><b>' . _('Total value of goods received'). '</b></td>
-	<td align=right><font size=2><b>'. $DisplayTotal. '</b></font></td>
+echo '<tr><td colspan=7 class=number><b>' . _('Total value of goods received'). '</b></td>
+	<td class=number><font size=2><b>'. $DisplayTotal. '</b></font></td>
 </tr></table>';
 
 $SomethingReceived = 0;
@@ -242,7 +254,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 			prnMsg(_('This order has been changed or invoiced since this delivery was started to be actioned') . '. ' . _('Processing halted') . '. ' . _('To enter a delivery against this purchase order') . ', ' . _('it must be re-selected and re-read again to update the changes made by the other user'),'warn');
 
 			if ($debug==1){
-				echo '<table BORDER=1>';
+				echo '<table border=1>';
 				echo '<tr><td>' . _('GL Code of the Line Item') . ':</td>
 						<td>' . $_SESSION['PO']->LineItems[$LineNo]->GLCode . '</td>
 						<td>' . $myrow['glcode'] . '</td></tr>';
@@ -269,7 +281,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 			}
 			echo "<div class='centre'><a href='$rootpath/PO_SelectOSPurchOrder.php?" . SID . "'>".
 				_('Select a different purchase order for receiving goods against').'</a></div>';
-			echo "<div class='centre'>><a href='$rootpath/GoodsReceived.php?" . SID . '&PONumber=' .
+			echo "<div class='centre'><a href='$rootpath/GoodsReceived.php?" . SID . '&PONumber=' .
 				$_SESSION['PO']->OrderNumber . '">'. _('Re-read the updated purchase order for receiving goods against'). '</a></div>';
 			unset($_SESSION['PO']->LineItems);
 			unset($_SESSION['PO']);
@@ -345,7 +357,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 							completed=0
 					WHERE podetailitem = " . $OrderLine->PODetailRec;
 			}
-
+			
 			$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The purchase order detail record could not be updated with the quantity received because');
 			$DbgMsg = _('The following SQL to update the purchase order detail record was used');
 			$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
@@ -549,7 +561,29 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 			 } /* end of if GL and stock integrated and standard cost !=0 */
 		} /*Quantity received is != 0 */
 	} /*end of OrderLine loop */
+	$completedsql='SELECT SUM(completed) as completedlines,
+						COUNT(podetailitem) as alllines
+					FROM purchorderdetails 
+					WHERE orderno='.$_SESSION['PO']->OrderNo;
+	$completedresult=DB_query($completedsql,$db);
+	$mycompletedrow=DB_fetch_array($completedresult);
+	$status=$mycompletedrow['alllines']-$mycompletedrow['completedlines'];
+	
+	if ($status==0) {
+		$sql='SELECT stat_comment FROM purchorders WHERE orderno='.$_SESSION['PO']->OrderNo;
+		$result=DB_query($sql,$db);
+		$myrow=DB_fetch_array($result);
+		$comment=$myrow['stat_comment'];
+		$date = date($_SESSION['DefaultDateFormat']);
+		$StatusComment=$date.' - Order Completed'.'<br>'.$comment;
+		$sql="UPDATE purchorders 
+				SET status='"._('Completed')."',
+				stat_comment='".$StatusComment."'
+				WHERE orderno=".$_SESSION['PO']->OrderNo;
+		$result=DB_query($sql,$db);
+	}
 
+	
 	$Result = DB_Txn_Commit($db);
 	$PONo = $_SESSION['PO']->OrderNo;
 	unset($_SESSION['PO']->LineItems);

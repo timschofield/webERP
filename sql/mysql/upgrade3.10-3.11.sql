@@ -80,5 +80,25 @@ ALTER TABLE `purchorders` ADD `deliverydate` date NOT NULL default '0000-00-00';
 ALTER TABLE `purchorders` ADD `status` varchar(12) NOT NULL default '';
 ALTER TABLE `purchorders` ADD `stat_comment` text NOT NULL;
 
+ALTER TABLE `purchorderdetails` ADD `itemno` varchar(50) NOT NULL default '';
+ALTER TABLE `purchorderdetails` ADD `uom` varchar(50) NOT NULL default '';
+ALTER TABLE `purchorderdetails` ADD `subtotal_amount` varchar(50) NOT NULL default '';
+ALTER TABLE `purchorderdetails` ADD `package` varchar(100) NOT NULL default '';
+ALTER TABLE `purchorderdetails` ADD `pcunit` varchar(50) NOT NULL default '';
+ALTER TABLE `purchorderdetails` ADD `nw` varchar(50) NOT NULL default '';
+ALTER TABLE `purchorderdetails` ADD `gw` varchar(50) NOT NULL default '';
+ALTER TABLE `purchorderdetails` ADD `cuft` varchar(50) NOT NULL default '';
+ALTER TABLE `purchorderdetails` ADD `total_quantity` varchar(50) NOT NULL default '';
+ALTER TABLE `purchorderdetails` ADD `total_amount` varchar(50) NOT NULL default '';
+
 ALTER TABLE `suppliers` ADD `phn` varchar(50) NOT NULL default '';
 ALTER TABLE `suppliers` ADD `port` varchar(200) NOT NULL default '';
+
+ALTER TABLE `stockmaster` ADD `netweight` decimal(20,4) NOT NULL default '0.0000';
+
+ALTER TABLE `purchdata` ADD `suppliers_partno` varchar(50) NOT NULL default '';
+
+UPDATE `purchorders` SET `status`='Authorised';
+UPDATE `purchorders` SET `status`='Printed' WHERE `allowprint`=0;
+UPDATE `purchorders` SET `status`='Completed' WHERE (SELECT SUM(`purchorderdetails`.`completed`)-COUNT(`purchorderdetails`.`podetailitem`) FROM `purchorderdetails` where `purchorderdetails`.`orderno`=`purchorders`.`orderno`)=0;
+UPDATE `purchorders` SET `deliverydate`=(SELECT MAX(`purchorderdetails`.`deliverydate`) FROM `purchorderdetails` WHERE `purchorderdetails`.`orderno`=`purchorders`.`orderno`);

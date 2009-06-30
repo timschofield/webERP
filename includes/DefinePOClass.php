@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 /* Definition of the PurchOrder class to hold all the information for a purchase order and delivery
 */
 
@@ -9,6 +9,7 @@ Class PurchOrder {
 	var $CurrCode;
 	var $ExRate;
 	var $Initiator;
+	var $deliverydate;
 	var $RequisitionNo;
 	var $DelAdd1;
 	var $DelAdd2;
@@ -28,7 +29,13 @@ Class PurchOrder {
 	var $DatePurchaseOrderPrinted;
 	var $total;
 	var $GLLink; /*Is the GL link to stock activated only checked when order initiated or reading in for modification */
-
+	var $version;
+	var $Stat;
+	var $StatComments;
+	var $AllowPrintPO;
+	var $revised;
+	var $deliveryby;
+	
 	function PurchOrder(){
 	/*Constructor function initialises a new purchase order object */
 		$this->LineItems = array();
@@ -36,7 +43,39 @@ Class PurchOrder {
 		$this->LinesOnOrder=0;
 	}
 
-	function add_to_order($LineNo,
+	function add_to_order(
+				$LineNo,
+				$StockID,
+				$Serialised,
+				$Controlled,
+				$Qty,
+				$ItemDescr,
+				$Price,
+				$UOM,
+				$GLCode,
+				$ReqDelDate,
+				$ShiptRef,
+				$completed,
+				$JobRef,
+				$QtyInv=0,
+				$QtyRecd=0,
+				$GLActName='',
+				$DecimalPlaces=2,
+				$itemno,
+				$uom,
+				$suppliers_partno,
+				$subtotal_amount,
+				$package,
+				$pcunit,
+				$nw,
+				$gw,
+				$cuft,
+				$total_quantity,
+				$total_amount){
+
+		if ($Qty!=0 && isset($Qty)){
+
+			$this->LineItems[$LineNo] = new LineDetails($LineNo,
 				$StockID,
 				$Serialised,
 				$Controlled,
@@ -48,29 +87,22 @@ Class PurchOrder {
 				$ReqDelDate,
 				$ShiptRef,
 				$JobRef,
-				$QtyInv=0,
-				$QtyRecd=0,
-				$GLActName='',
-				$DecimalPlaces=2){
-
-		if ($Qty!=0 && isset($Qty)){
-
-			$this->LineItems[$LineNo] = new LineDetails($LineNo,
-								$StockID,
-								$Serialised,
-								$Controlled,
-								$Qty,
-								$ItemDescr,
-								$Price,
-								$UOM,
-								$GLCode,
-								$ReqDelDate,
-								$ShiptRef,
-								$JobRef,
-								$QtyInv,
-								$QtyRecd,
-								$GLActName,
-								$DecimalPlaces);
+				0,
+				$QtyInv,
+				$QtyRecd,
+				$GLActName,
+				$DecimalPlaces,
+				$itemno,
+				$uom,
+				$suppliers_partno,
+				$subtotal_amount,
+				$package,
+				$pcunit,
+				$nw,
+				$gw,
+				$cuft,
+				$total_quantity,
+				$total_amount);
 			$this->LinesOnOrder++;
 			Return 1;
 		}
@@ -85,7 +117,18 @@ Class PurchOrder {
 				$GLAccountName,
 				$ReqDelDate,
 				$ShiptRef,
-				$JobRef ){
+				$JobRef ,
+				$itemno,
+				$uom,
+				$suppliers_partno,
+				$subtotal_amount,
+				$package,
+				$pcunit,
+				$nw,
+				$gw,
+				$cuft,
+				$total_quantity,
+				$total_amount){
 
 			$this->LineItems[$LineNo]->ItemDescription = $ItemDescription;
 			$this->LineItems[$LineNo]->Quantity = $Qty;
@@ -95,6 +138,17 @@ Class PurchOrder {
 			$this->LineItems[$LineNo]->ReqDelDate = $ReqDelDate;
 			$this->LineItems[$LineNo]->ShiptRef = $ShiptRef;
 			$this->LineItems[$LineNo]->JobRef = $JobRef;
+			$this->LineItems[$LineNo]->itemno = $itemno;			
+			$this->LineItems[$LineNo]->uom = $uom;
+			$this->LineItems[$LineNo]->suppliers_partno = $suppliers_partno;
+			$this->LineItems[$LineNo]->subtotal_amount = $subtotal_amount;
+			$this->LineItems[$LineNo]->package = $package;
+			$this->LineItems[$LineNo]->pcunit = $pcunit;
+			$this->LineItems[$LineNo]->nw = $nw;
+			$this->LineItems[$LineNo]->gw = $gw;
+			$this->LineItems[$LineNo]->cuft = $cuft;
+			$this->LineItems[$LineNo]->total_quantity = $total_quantity;
+			$this->LineItems[$LineNo]->total_amount = $total_amount;
 			$this->LineItems[$LineNo]->Price = $Price;
 	}
 
@@ -124,6 +178,14 @@ Class PurchOrder {
 		}
 		return 0;
 	}
+	
+	function Order_Value() {
+		$TotalValue=0;
+		foreach ($this->LineItems as $OrderedItems) {
+			$TotalValue += ($OrderedItems->Price)*($OrderedItems->Quantity);
+		}
+		return $TotalValue;
+	}
 } /* end of class defintion */
 
 Class LineDetails {
@@ -143,23 +205,62 @@ Class LineDetails {
 	Var $QtyReceived;
 	Var $StandardCost;
 	var $ShiptRef;
+	var $completed;
 	Var $JobRef;
+	Var $itemno;
+	Var $uom;
+	Var $suppliers_partno;
+	Var $subtotal_amount;
+	Var $leadtime;
+	Var $pcunit;
+	Var $nw;
+	Var $gw;
+	Var $cuft;
+	Var $total_quantity;
+	Var $total_amount;
 	Var $ReceiveQty;
 	Var $Deleted;
-
 	Var $Controlled;
 	Var $Serialised;
-
 	Var $SerialItems;  /*An array holding the batch/serial numbers and quantities in each batch*/
 
-	function LineDetails ($LineNo, $StockItem, $Controlled, $Serialised, $Qty, $ItemDescr,  $Prc, $UOM, $GLCode, $ReqDelDate, $ShiptRef =0, $JobRef, $QtyInv, $QtyRecd, $GLActName, $DecimalPlaces){
+	function LineDetails (
+				$LineNo, 
+				$StockItem, 
+				$Serialised, 
+				$Controlled, 
+				$Qty, 
+				$ItemDescr,  
+				$Prc, 
+				$UOM, 
+				$GLCode, 
+				$ReqDelDate, 
+				$ShiptRef =0, 
+				$Completed,
+				$JobRef, 
+				$QtyInv, 
+				$QtyRecd, 
+				$GLActName, 
+				$DecimalPlaces,
+				$itemno,
+				$uom,
+				$suppliers_partno,
+				$subtotal_amount,
+				$leadtime,
+				$pcunit,
+				$nw,
+				$gw,
+				$cuft,
+				$total_quantity,
+				$total_amount)
+	
+	{
 
 	/* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNo = $LineNo;
 		$this->StockID =$StockItem;
 		$this->Controlled = $Controlled;
 		$this->Serialised = $Serialised;
-//		$this->StkModClass = $StkModClass;
 		$this->DecimalPlaces=$DecimalPlaces;
 		$this->ItemDescription = $ItemDescr;
 		$this->Quantity = $Qty;
@@ -170,12 +271,23 @@ Class LineDetails {
 		$this->QtyInv = $QtyInv;
 		$this->GLCode = $GLCode;
 		$this->JobRef = $JobRef;
+		$this->itemno = $itemno;
+		$this->uom = $uom;		
+		$this->suppliers_partno = $suppliers_partno;
+		$this->subtotal_amount = $subtotal_amount;
+		$this->leadtime = $leadtime;
+		$this->pcunit = $pcunit;
+		$this->nw = $nw;
+		$this->gw = $gw;
+		$this->cuft = $cuft;
+		$this->total_quantity = $total_quantity;
+		$this->total_amount = $total_amount;
 		if (is_numeric($ShiptRef)){
 			$this->ShiptRef = $ShiptRef;
 		} else {
 			$this->ShiptRef = 0;
 		}
-//		$this->Completed = $Completed;
+		$this->Completed = $Completed;
 		$this->GLActName = $GLActName;
 		$this->ReceiveQty =0;	/*initialise these last two only */
 		$this->StandardCost =0;

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 2;
 
@@ -26,12 +26,12 @@ if (isset($_GET['FromGRNNo'])){
 
 	$orderRow = DB_fetch_row($orderResult);
 	$_GET['OrderNo'] = $orderRow[0];
-	echo '<BR><FONT SIZE=4 COLOR=BLUE>' . _('Order Number') . ' ' . $_GET['OrderNo'] . '</FONT>';
+	echo '<br><font size=4 color=BLUE>' . _('Order Number') . ' ' . $_GET['OrderNo'] . '</font>';
 }
 
 if (!isset($_GET['OrderNo'])) {
 
-	echo '<BR><BR>';
+	echo '<br><br>';
 	prnMsg( _('This page must be called with a purchase order number to review'), 'error');
 
 	echo '<table class="table_index">
@@ -55,7 +55,7 @@ $OrderHeaderSQL = "SELECT purchorders.*,
 $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db, $ErrMsg);
 
 if (DB_num_rows($GetOrdHdrResult)!=1) {
-	echo '<BR><BR>';
+	echo '<br><br>';
 	if (DB_num_rows($GetOrdHdrResult) == 0){
 		prnMsg ( _('Unable to locate this PO Number') . ' '. $_GET['OrderNo'] . '. ' . _('Please look up another one') . '. ' . _('The order requested could not be retrieved') . ' - ' . _('the SQL returned either 0 or several purchase orders'), 'error');
 	} else {
@@ -75,47 +75,47 @@ $myrow = DB_fetch_array($GetOrdHdrResult);
 
 /* SHOW ALL THE ORDER INFO IN ONE PLACE */
 
-echo '<BR><CENTER><TABLE BORDER=0 CELLPADDING=2>';
-echo '<TR><TH>' . _('Supplier Code'). '</TH><TD>' . $myrow['supplierid'] . '</TD>
-	<TH>' . _('Supplier Name'). '</TH><TD>' . $myrow['suppname'] . '</TD></TR>';
+echo '<br><table BORDER=0 cellpadding=2>';
+echo '<tr><td class="tableheader">' . _('Supplier Code'). '</td><td>' . $myrow['supplierid'] . '</td>
+	<td class="tableheader">' . _('Supplier Name'). '</td><td>' . $myrow['suppname'] . '</td></tr>';
 
-echo '<TR><TH>' . _('Ordered On'). '</TH><TD>' . ConvertSQLDate($myrow['orddate']) . '</TD>
-	<TH>' . _('Delivery Address 1'). '</TH><TD>' . $myrow['deladd1'] . '</TD></TR>';
+echo '<tr><td class="tableheader">' . _('Ordered On'). '</td><td>' . ConvertSQLDate($myrow['orddate']) . '</td>
+	<td class="tableheader">' . _('Delivery Address 1'). '</td><td>' . $myrow['deladd1'] . '</td></tr>';
 
-echo '<TR><TH>' . _('Order Currency'). '</TH><TD>' . $myrow['currcode'] . '</TD>
-	<TH>' . _('Delivery Address 2'). '</TH><TD>' . $myrow['deladd2'] . '</TD></TR>';
+echo '<tr><td class="tableheader">' . _('Order Currency'). '</td><td>' . $myrow['currcode'] . '</td>
+	<td class="tableheader">' . _('Delivery Address 2'). '</td><td>' . $myrow['deladd2'] . '</td></tr>';
 
-echo '<TR><TH>' . _('Exchange Rate'). '</TH><TD>' . $myrow['rate'] . '</TD>
-	<TH>' . _('Delivery Address 3'). '</TH><TD>' . $myrow['deladd3'] . '</TD></TR>';
+echo '<tr><td class="tableheader">' . _('Exchange Rate'). '</td><td>' . $myrow['rate'] . '</td>
+	<td class="tableheader">' . _('Delivery Address 3'). '</td><td>' . $myrow['deladd3'] . '</td></tr>';
 
-echo '<TR><TH>' . _('Deliver Into Location'). '</TH><TD>' . $myrow['intostocklocation'] . '</TD>
-	<TH>' . _('Delivery Address 4'). '</TH><TD>' . $myrow['deladd4'] . '</TD></TR>';
+echo '<tr><td class="tableheader">' . _('Deliver Into Location'). '</td><td>' . $myrow['intostocklocation'] . '</td>
+	<td class="tableheader">' . _('Delivery Address 4'). '</td><td>' . $myrow['deladd4'] . '</td></tr>';
 
-echo '<TR><TH>' . _('Initiator'). '</TH><TD>' . $myrow['initiator'] . '</TD>
-	<TH>' . _('Delivery Address 5'). '</TH><TD>' . $myrow['deladd5'] . '</TD></TR>';
+echo '<tr><td class="tableheader">' . _('Initiator'). '</td><td>' . $myrow['initiator'] . '</td>
+	<td class="tableheader">' . _('Delivery Address 5'). '</td><td>' . $myrow['deladd5'] . '</td></tr>';
 
-echo '<TR><TH>' . _('Requistion Ref'). '.</TH><TD>' . $myrow['requisitionno'] . '</TD>
-	<TH>' . _('Delivery Address 6'). '</TH><TD>' . $myrow['deladd6'] . '</TD></TR>';
+echo '<tr><td class="tableheader">' . _('Requistion Ref'). '.</td><td>' . $myrow['requisitionno'] . '</td>
+	<td class="tableheader">' . _('Delivery Address 6'). '</td><td>' . $myrow['deladd6'] . '</td></tr>';
 
 
-echo '<TR><TH>'. _('Printing') . '</TH><TD COLSPAN=3>';
+echo '<tr><td class="tableheader">'. _('Printing') . '</td><td colspan=3>';
 
 if ($myrow['dateprinted'] == ''){
 	echo '<i>'. _('Not yet printed') . '</i> &nbsp; &nbsp; ';
-	echo '[<a href="PO_PDFPurchOrder.php?OrderNo='. $_GET['OrderNo'] .'">'. _('Print') .'</A>]';
+	echo '[<a href="PO_PDFPurchOrder.php?OrderNo='. $_GET['OrderNo'] .'">'. _('Print') .'</a>]';
 } else {
 	echo _('Printed on').' '. ConvertSQLDate($myrow['dateprinted']). '&nbsp; &nbsp;';
-	echo '[<a href="PO_PDFPurchOrder.php?OrderNo='. $_GET['OrderNo'] .'">'. _('Print a Copy') .'</A>]';
+	echo '[<a href="PO_PDFPurchOrder.php?OrderNo='. $_GET['OrderNo'] .'">'. _('Print a Copy') .'</a>]';
 }
 
-echo  '</TD></TR>';
+echo  '</td></tr>';
 
-echo '<TR><TH>' . _('Comments'). '</TH><TD bgcolor=white COLSPAN=3>' . $myrow['comments'] . '</TD></TR>';
+echo '<tr><td class="tableheader">' . _('Comments'). '</td><td bgcolor=white colspan=3>' . $myrow['comments'] . '</td></tr>';
 
-echo '</TABLE>';
+echo '</table>';
 
 
-echo '<BR></CENTER>';
+echo '<br>';
 /*Now get the line items */
 $ErrMsg = _('The line items of the purchase order could not be retrieved');
 $LineItemsSQL = "SELECT purchorderdetails.* FROM purchorderdetails
@@ -123,19 +123,19 @@ $LineItemsSQL = "SELECT purchorderdetails.* FROM purchorderdetails
 
 $LineItemsResult = db_query($LineItemsSQL,$db, $ErrMsg);
 
-echo '<CENTER><FONT SIZE=4 COLOR=BLUE>'. _('Order Line Details'). '</FONT>';
+echo '<div class="centre"><font size=4 color=BLUE>'. _('Order Line Details'). '</font></div>';
 
-echo '<TABLE COLSPAN=8 BORDER=0 CELLPADDING=0>
-	<TR>
-		<TH>' . _('Item Code'). '</TH>
-		<TH>' . _('Item Description'). '</TH>
-		<TH>' . _('Ord Qty'). '</TH>
-		<TH>' . _('Qty Recd'). '</TH>
-		<TH>' . _('Qty Inv'). '</TH>
-		<TH>' . _('Ord Price'). '</TH>
-		<TH>' . _('Chg Price'). '</TH>
-		<TH>' . _('Reqd Date'). '</TH>
-	</TR>';
+echo '<table colspan=8 BORDER=0 cellpadding=0>
+	<tr>
+		<td class="tableheader">' . _('Item Code'). '</td>
+		<td class="tableheader">' . _('Item Description'). '</td>
+		<td class="tableheader">' . _('Ord Qty'). '</td>
+		<td class="tableheader">' . _('Qty Recd'). '</td>
+		<td class="tableheader">' . _('Qty Inv'). '</td>
+		<td class="tableheader">' . _('Ord Price'). '</td>
+		<td class="tableheader">' . _('Chg Price'). '</td>
+		<td class="tableheader">' . _('Reqd Date'). '</td>
+	</tr>';
 
 $k =0;  //row colour counter
 $OrderTotal=0;
@@ -154,23 +154,23 @@ while ($myrow=db_fetch_array($LineItemsResult)) {
     	 	echo '<tr class="OsRow">';
 	} else {
     		if ($k==1){
-    			echo '<TR class="OddTableRows">';
+    			echo '<tr bgcolor="#CCCCCC">';
     			$k=0;
     		} else {
-    			echo '<TR class="EvenTableRows">';
+    			echo '<tr bgcolor="#EEEEEE">';
     			$k=1;
 		}
 	}
 
-	printf ('<TD>%s</TD>
-		<TD>%s</TD>
-		<TD ALIGN=RIGHT>%01.2f</TD>
-		<TD ALIGN=RIGHT>%01.2f</TD>
-		<TD ALIGN=RIGHT>%01.2f</TD>
-		<TD ALIGN=RIGHT>%01.2f</TD>
-		<TD ALIGN=RIGHT>%01.2f</TD>
-		<TD>%s</TD>
-		</TR>' ,
+	printf ('<td>%s</td>
+		<td>%s</td>
+		<td align=right>%01.2f</td>
+		<td align=right>%01.2f</td>
+		<td align=right>%01.2f</td>
+		<td align=right>%01.2f</td>
+		<td align=right>%01.2f</td>
+		<td>%s</td>
+		</tr>' ,
 		$myrow['itemcode'],
 		$myrow['itemdescription'],
 		$myrow['quantityord'],
@@ -182,16 +182,16 @@ while ($myrow=db_fetch_array($LineItemsResult)) {
 
 }
 
-echo '<TR><TD><BR></TD>
-	</TR>
-	<TR><TD colspan=4 ALIGN=RIGHT>' . _('Total Order Value Excluding Tax') .'</TD>
-	<TD COLSPAN=2 ALIGN=RIGHT>' . number_format($OrderTotal,2) . '</TD></TR>';
-echo '<TR>
-	<TD colspan=4 ALIGN=RIGHT>' . _('Total Order Value Received Excluding Tax') . '</TD>
-	<TD COLSPAN=2 ALIGN=RIGHT>' . number_format($RecdTotal,2) . '</TD></TR>';
-echo '</TABLE>';
+echo '<tr><td><br></td>
+	</tr>
+	<tr><td colspan=4 align=right>' . _('Total Order Value Excluding Tax') .'</td>
+	<td colspan=2 align=right>' . number_format($OrderTotal,2) . '</td></tr>';
+echo '<tr>
+	<td colspan=4 align=right>' . _('Total Order Value Received Excluding Tax') . '</td>
+	<td colspan=2 align=right>' . number_format($RecdTotal,2) . '</td></tr>';
+echo '</table>';
 
-echo '<BR>';
+echo '<br>';
 
 include ('includes/footer.inc');
 ?>

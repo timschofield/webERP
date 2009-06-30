@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 /*PO_ReadInOrder.inc is used by the modify existing order code in PO_Header.php and also by GoodsReceived.php */
 
        if (isset($_SESSION['PO'])){
@@ -31,6 +31,10 @@
 				purchorders.requisitionno, 
 				purchorders.intostocklocation, 
 				purchorders.initiator, 
+				purchorders.version, 
+				purchorders.status, 
+				purchorders.stat_comment, 
+				purchorders.deliverydate,
 				suppliers.currcode,
 				locations.managed 
 			FROM purchorders 
@@ -65,7 +69,12 @@
               $_SESSION['PO']->DelAdd5 = $myrow['deladd5'];
               $_SESSION['PO']->DelAdd6 = $myrow['deladd6'];
               $_SESSION['PO']->Managed = $myrow['managed'];
-
+			$_SESSION['PO']->version = $myrow['version'];
+			$_SESSION['PO']->Stat = $myrow['status'];
+			$_SESSION['PO']->StatComments = $myrow['stat_comment'];
+			$_SESSION['PO']->deliverydate = $myrow['deliverydate'];
+			$_SESSION['ExistingOrder'] = $_SESSION['PO']->OrderNo;
+			
 /*now populate the line PO array with the purchase order details records */
 
               $LineItemsSQL = 'SELECT podetailitem, itemcode,
@@ -80,6 +89,7 @@
 				quantityord,
 				quantityrecd,
 				shiptref,
+				completed,
 				jobref,
 				stdcostunit,
 				stockmaster.controlled,
@@ -128,6 +138,7 @@
 							$GLCode,
 							ConvertSQLDate($myrow['deliverydate']),
 							$myrow['shiptref'],
+							$myrow['completed'],
 							$myrow['jobref'],
 							$myrow['qtyinvoiced'],
 							$myrow['quantityrecd'],
