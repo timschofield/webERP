@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.36 $ */
+/* $Revision: 1.37 $ */
 
 $PageSecurity = 4;
 
@@ -241,7 +241,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 			/*Now Update the purchase order detail records */
 			foreach ($_SESSION['PO']->LineItems as $POLine) {
-
+				$sql='UPDATE purchorders SET status="'._('Pending').'" WHERE orderno=' . $_SESSION['PO']->OrderNo;
+				$result=DB_query($sql,$db);
 				if ($POLine->Deleted==true) {
 					if ($POLine->PODetailRec!='') {
 						$sql="DELETE FROM purchorderdetails WHERE podetailitem='" . $POLine->PODetailRec . "'";
