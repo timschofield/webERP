@@ -86,6 +86,7 @@ ALTER TABLE `purchorderdetails` ADD `subtotal_amount` varchar(50) NOT NULL defau
 ALTER TABLE `purchorderdetails` ADD `package` varchar(100) NOT NULL default '';
 ALTER TABLE `purchorderdetails` ADD `pcunit` varchar(50) NOT NULL default '';
 ALTER TABLE `purchorderdetails` ADD `nw` varchar(50) NOT NULL default '';
+ALTER TABLE `purchorderdetails` ADD `suppliers_partno` varchar(50) NOT NULL default '';
 ALTER TABLE `purchorderdetails` ADD `gw` varchar(50) NOT NULL default '';
 ALTER TABLE `purchorderdetails` ADD `cuft` varchar(50) NOT NULL default '';
 ALTER TABLE `purchorderdetails` ADD `total_quantity` varchar(50) NOT NULL default '';
