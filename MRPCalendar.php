@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 // MRPCalendar.php
 // Maintains the calendar of valid manufacturing dates for MRP
 
@@ -141,7 +141,9 @@ function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPD
 
     $InputError = 0;
     $caldate = FormatDateForSQL($ChangeDate);
-	$sql="SELECT COUNT(*) FROM mrpcalendar WHERE calendardate='$caldate'";
+	$sql="SELECT COUNT(*) FROM mrpcalendar 
+	      WHERE calendardate='$caldate'
+	      GROUP BY calendardate";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0] < 1  ||  !is_date($ChangeDate))  {

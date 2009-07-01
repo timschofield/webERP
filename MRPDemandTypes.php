@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity=9;
 
@@ -75,7 +75,9 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'MRPDemands'
 
-	$sql= "SELECT COUNT(*) FROM mrpdemands WHERE mrpdemands.mrpdemandtype='$SelectedDT'";
+	$sql= "SELECT COUNT(*) FROM mrpdemands 
+	         WHERE mrpdemands.mrpdemandtype='$SelectedDT'
+	         GROUP BY mrpdemandtype";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
@@ -147,8 +149,8 @@ if (isset($SelectedDT)) {
 	$_POST['mrpdemandtype'] = $myrow['mrpdemandtype'];
 	$_POST['Description'] = $myrow['description'];
 
-	echo '<input type=hidden name=SelectedDT VALUE=' . $SelectedDT . '>';
-	echo "<input type=hidden name=mrpdemandtype VALUE='" . $_POST['mrpdemandtype'] . "'>";
+	echo '<input type=hidden name=SelectedDT value=' . $SelectedDT . '>';
+	echo "<input type=hidden name=mrpdemandtype value='" . $_POST['mrpdemandtype'] . "'>";
 	echo '<table><tr><td>' ._('Demand Type') . ':</td><td>' . $_POST['mrpdemandtype'] . '</td></tr>';
 
 } else { //end of if $SelectedDT only do the else when a new record is being entered
