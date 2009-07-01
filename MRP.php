@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity=9;
 
@@ -8,7 +8,7 @@ $title = _('MRP');
 include('includes/header.inc');
 
 if (isset($_POST['submit'])) {
-
+    
     if (!$_POST['Leeway'] || !is_numeric($_POST['Leeway'])) {
 	    $_POST['Leeway'] = 0;
 	}
@@ -94,7 +94,9 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db);
 		
 		
-		$sql = 'SELECT COUNT(*) FROM bom INNER JOIN passbom ON bom.parent = passbom.part';
+		$sql = 'SELECT COUNT(*) FROM bom 
+		          INNER JOIN passbom ON bom.parent = passbom.part
+		          GROUP BY bom.parent';
 		$result = DB_query($sql,$db);
 		
 		$myrow = DB_fetch_row($result);
@@ -154,7 +156,10 @@ if (isset($_POST['submit'])) {
 					   stockmaster.eoq
 				 FROM bomlevels
 				   	 INNER JOIN stockmaster ON bomlevels.part = stockmaster.stockid
-				 GROUP BY bomlevels.part';
+				 GROUP BY bomlevels.part,
+				          pansize,
+					      shrinkfactor,
+					      stockmaster.eoq';
 	$result = DB_query($sql,$db);
 	$sql = 'ALTER TABLE levels ADD INDEX part(part)';
 	$result = DB_query($sql,$db);
@@ -277,8 +282,6 @@ if (isset($_POST['submit'])) {
 					WHERE workorders.closed=0';
 	$result = DB_query($sql,$db);	
 	
-	prnMsg(_('Loading requirements from mrpdemands'),'info');
-	flush();
 	$sql = 'INSERT INTO mrprequirements 
 						(part,
 						 daterequired,
@@ -297,7 +300,7 @@ if (isset($_POST['submit'])) {
 				 FROM mrpdemands';
 	if ($_POST['usemrpdemands'] == 'y') {
 		$result = DB_query($sql,$db);
-		prnMsg(_('Loading requirements based on reorder level'),'info');
+		prnMsg(_('Loading requirements based on mrpdemands'),'info');
 		flush();
     }
 	$sql = 'INSERT INTO mrprequirements 
@@ -318,7 +321,8 @@ if (isset($_POST['submit'])) {
 				 FROM locstock
 				 WHERE reorderlevel > quantity';
 	$result = DB_query($sql,$db);
-	
+	prnMsg(_('Loading requirements based on reorder level'),'info');
+	flush();	
 	
 	$result = DB_query('ALTER TABLE mrprequirements ADD INDEX part(part)',$db);
 	
@@ -367,6 +371,22 @@ if (isset($_POST['submit'])) {
 	prnMsg(_('Loading supplies from inventory on hand'),'info');
 	flush();
 	// Set date for inventory already onhand to 0000-00-00 so it is first in sort
+	if ($_POST['location'][0] == 'All') {
+	    $whereloc = ' ';
+	} elseif (sizeof($_POST['location']) == 1) {
+	    $whereloc = " AND loccode ='" . $_POST['location'][0] . "' ";
+	} else {
+	    $whereloc = " AND loccode IN(";
+	    $commactr = 0;
+	    foreach ($_POST['location'] as $key => $value) {
+	        $whereloc .= "'" . $value . "'";
+	        $commactr++;
+	        if ($commactr < sizeof($_POST['location'])) {
+	            $whereloc .= ",";
+	        } // End of if
+	    } // End of foreach
+	    $whereloc .= ')';
+	}
 	$sql = 'INSERT INTO mrpsupplies
 						(id,
 						 part,
@@ -385,8 +405,8 @@ if (isset($_POST['submit'])) {
 					  "0000-00-00",
 					  0
 				  FROM locstock
-				  WHERE loccode = ' . "'" . $_POST['location'] . "'" .
-				    ' AND quantity > 0 ' .
+				  WHERE quantity > 0 ' . 
+				  $whereloc .
 			  'GROUP BY stockid';
 	$result = DB_query($sql,$db);
 	
@@ -466,13 +486,23 @@ if (isset($_POST['submit'])) {
 	$result = DB_query($sql,$db);
 	$sql = 'CREATE TABLE mrpparameters  (
 						runtime datetime,                                
-						location varchar(5),
+						location varchar(50),
 						pansizeflag varchar(5),
 						shrinkageflag varchar(5),
 						eoqflag varchar(5),
 						usemrpdemands varchar(5),
 						leeway smallint)';
 	$result = DB_query($sql,$db);
+	// Create entry for location field from $_POST['location'], which is an array
+	// since multiple locations can be selected
+	$commactr = 0;
+	foreach ($_POST['location'] as $key => $value) {
+		$locparm .=  $value ;
+		$commactr++;
+		if ($commactr < sizeof($_POST['location'])) {
+			$locparm .= " - ";
+		} // End of if
+	} // End of foreach
 	$sql = "INSERT INTO mrpparameters (runtime,
 										location,
 										pansizeflag,
@@ -481,7 +511,7 @@ if (isset($_POST['submit'])) {
 										usemrpdemands,
 										leeway)
 										VALUES (NOW(),
-									'" . $_POST['location'] . "',
+									'" . $locparm . "',
 									'" .  $_POST['pansizeflag']  . "',
 									'" .  $_POST['shrinkageflag']  . "',
 									'" .  $_POST['eoqflag']  . "',
@@ -532,7 +562,8 @@ if (isset($_POST['submit'])) {
 	// Generate selections for Location
 	echo '<tr>
 	 <td>' . _('Location') . '</td>
-	 <td><select name="location">';
+	 <td><select name="location[]" multiple>
+	 <option value="All" selected>All</option>';
 	 $sql = 'SELECT loccode
 	           FROM locations';
 	$result = DB_query($sql,$db);
@@ -544,6 +575,7 @@ if (isset($_POST['submit'])) {
 	if (!isset($leeway)){
 		$leeway =0;
 	}
+	
 	echo '<tr><td>' . _('Days Leeway') . ':</td><td><input type="text" name="Leeway" size="4" value=' . $leeway . '>';
     echo '<tr><td>' ._('Use MRP Demands?') . ':</td>';
     echo '<td><input type="checkbox" name="usemrpdemands" value="y" checked></td></tr>';
@@ -689,7 +721,7 @@ function LevelNetting(&$db,$part,$eoq,$pansize,$shrinkfactor) {
 								orderno,
 								mrpdate,
 								updateflag)
-							VALUES ('NULL',
+							VALUES (NULL,
 								'" . $requirement['part'] . "',
 								'" .  $requirement['daterequired']  . "',
 								'" .  $plannedqty  . "',
@@ -699,7 +731,9 @@ function LevelNetting(&$db,$part,$eoq,$pansize,$shrinkfactor) {
 								'0')";
 			$result = DB_query($sql,$db);
 			// If part has lower level components, create requirements for them
-			$sql = "SELECT COUNT(*) FROM bom WHERE parent ='" . $requirement['part'] . "'";
+			$sql = "SELECT COUNT(*) FROM bom 
+			          WHERE parent ='" . $requirement['part'] . "' 
+			          GROUP BY parent";
 	        $result = DB_query($sql,$db);
 	        $myrow = DB_fetch_row($result);
 	        if ($myrow[0] > 0) {
