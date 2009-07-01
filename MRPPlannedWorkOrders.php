@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 // MRPPlannedWorkOrders.php - Report of manufactured parts that MRP has determined should have
 // work orders created for them
 $PageSecurity = 2;
@@ -29,7 +29,9 @@ If (isset($_POST['PrintPDF'])) {
 					   stockmaster.description,
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
-					   stockmaster.actualcost
+					   stockmaster.actualcost,
+                      (stockmaster.materialcost + stockmaster.labourcost + 
+	                   stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
 				WHERE mrpplannedorders.part = stockmaster.stockid '  . "$wheredate" .
 				  ' AND stockmaster.mbflag = "M" 
@@ -45,7 +47,9 @@ If (isset($_POST['PrintPDF'])) {
 					   stockmaster.description,
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
-					   stockmaster.actualcost
+					   stockmaster.actualcost,
+                      (stockmaster.materialcost + stockmaster.labourcost + 
+	                   stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
 				WHERE mrpplannedorders.part = stockmaster.stockid '  . "$wheredate" .
 				  ' AND stockmaster.mbflag = "M" 
@@ -55,7 +59,11 @@ If (isset($_POST['PrintPDF'])) {
 					     stockmaster.description,
 					     stockmaster.mbflag,
 					     stockmaster.decimalplaces,
-					     stockmaster.actualcost
+					     stockmaster.actualcost,
+					     stockmaster.materialcost,
+					     stockmaster.labourcost,
+					     stockmaster.overheadcost,
+					     computedcost			
 				ORDER BY mrpplannedorders.part,weekindex
 	    ';
 	} else {
@@ -69,7 +77,9 @@ If (isset($_POST['PrintPDF'])) {
 					   stockmaster.description,
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
-					   stockmaster.actualcost
+					   stockmaster.actualcost,
+					  (stockmaster.materialcost + stockmaster.labourcost + 
+	                   stockmaster.overheadcost ) as computedcost,
 				FROM mrpplannedorders, stockmaster
 				WHERE mrpplannedorders.part = stockmaster.stockid '  . "$wheredate" .
 				  ' AND stockmaster.mbflag = "M" 
@@ -79,7 +89,11 @@ If (isset($_POST['PrintPDF'])) {
 					     stockmaster.description,
 					     stockmaster.mbflag,
 					     stockmaster.decimalplaces,
-					     stockmaster.actualcost				         
+					     stockmaster.actualcost,
+					     stockmaster.materialcost,
+					     stockmaster.labourcost,
+					     stockmaster.overheadcost,
+					     computedcost				         
 				ORDER BY mrpplannedorders.part,yearmonth ';
 	};
 	$result = DB_query($sql,$db,'','',false,true);
@@ -142,7 +156,7 @@ If (isset($_POST['PrintPDF'])) {
 			// and False to set to transparent
 			$FormatedSupDueDate = ConvertSQLDate($myrow['duedate']);
 			$FormatedSupMRPDate = ConvertSQLDate($myrow['mrpdate']);
-			$extcost = $myrow['supplyquantity'] * $myrow['actualcost'];
+			$extcost = $myrow['supplyquantity'] * $myrow['computedcost'];
 			$pdf->addTextWrap($Left_Margin,$YPos,110,$FontSize,$myrow['part'],'',0,$fill);
 			$pdf->addTextWrap(150,$YPos,50,$FontSize,$FormatedSupDueDate,'right',0,$fill);
 			$pdf->addTextWrap(200,$YPos,60,$FontSize,$FormatedSupMRPDate,'right',0,$fill);
@@ -158,7 +172,7 @@ If (isset($_POST['PrintPDF'])) {
 			$holddescription = $myrow['description'];
 			$holdpart = $myrow['part'];
 			$holdmbflag = $myrow['mbflag'];
-			$holdcost = $myrow['actualcost'];
+			$holdcost = $myrow['computedcost'];
 			$holddecimalplaces = $myrow['decimalplaces'];
 			$totalpartcost += $extcost;
 			$totalpartqty += $myrow['supplyquantity'];

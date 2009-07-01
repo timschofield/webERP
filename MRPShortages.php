@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 // MRPShortages.php - Report of parts with demand greater than supply as determined by MRP
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -44,6 +44,8 @@ If (isset($_POST['PrintPDF'])) {
 	                   stockmaster.mbflag,
 	                   stockmaster.actualcost,
 	                   stockmaster.decimalplaces,
+	                   (stockmaster.materialcost + stockmaster.labourcost + 
+	                    stockmaster.overheadcost ) as computedcost
 	(SELECT IF(supplyquantity IS NULL,0,SUM(supplyquantity)) 
 	 FROM mrpsupplies
 	 GROUP BY mrpsupplies.part
@@ -75,6 +77,8 @@ If (isset($_POST['PrintPDF'])) {
         stockmaster.mbflag,
         stockmaster.actualcost,
         stockmaster.decimalplaces,
+        (stockmaster.materialcost + stockmaster.labourcost + 
+	     stockmaster.overheadcost ) as computedcost,
      (SELECT SUM(IF(supplyquantity IS NULL,0,supplyquantity)) 
       FROM mrpsupplies
       WHERE stockid = mrpsupplies.part GROUP BY stockid) AS supply,
@@ -89,7 +93,8 @@ If (isset($_POST['PrintPDF'])) {
       (SELECT SUM(quantity) 
            FROM mrprequirements
            WHERE stockid = mrprequirements.part GROUP BY stockid))
-           * stockmaster.actualcost
+           * (stockmaster.materialcost + stockmaster.labourcost + 
+	     stockmaster.overheadcost )
            ) as extcost
            FROM stockmaster
            GROUP BY stockmaster.stockid,
@@ -97,6 +102,10 @@ If (isset($_POST['PrintPDF'])) {
 			   stockmaster.mbflag,
 			   stockmaster.actualcost,
 			   stockmaster.decimalplaces,
+			   stockmaster.materialcost,
+			   stockmaster.labourcost,
+			   stockmaster.overheadcost,
+			   computedcost,
 			   supply,
 			   demand
 			    HAVING (SELECT SUM(quantity) 
@@ -112,9 +121,9 @@ If (isset($_POST['PrintPDF'])) {
 	  $title = _('MRP Shortages') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The MRP shortages could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+	   echo "</br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<br>$sql";
+	      echo "</br>$sql";
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -142,11 +151,11 @@ If (isset($_POST['PrintPDF'])) {
 			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
 			// and False to set to transparent
 			$shortage = ($myrow['demand'] - $myrow['supply']) * -1;
-			$extcost = $shortage * $myrow['actualcost'];
+			$extcost = $shortage * $myrow['computedcost'];
 			$pdf->addTextWrap($Left_Margin,$YPos,90,$FontSize,$myrow['stockid'],'',0,$fill);				
 			$pdf->addTextWrap(130,$YPos,150,$FontSize,$myrow['description'],'',0,$fill);
 			$pdf->addTextWrap(280,$YPos,25,$FontSize,$myrow['mbflag'],'right',0,$fill);
-			$pdf->addTextWrap(305,$YPos,55,$FontSize,number_format($myrow['actualcost'],2),'right',0,$fill);
+			$pdf->addTextWrap(305,$YPos,55,$FontSize,number_format($myrow['computedcost'],2),'right',0,$fill);
 			$pdf->addTextWrap(360,$YPos,50,$FontSize,number_format($myrow['supply'],
 			                 $myrow['decimalplaces']),'right',0,$fill);
 			$pdf->addTextWrap(410,$YPos,50,$FontSize,number_format($myrow['demand'],
@@ -187,7 +196,7 @@ If (isset($_POST['PrintPDF'])) {
 			$title = _('Print MRP Shortages Error');
 			include('includes/header.inc');
 			prnMsg(_('There were no items with demand greater than supply'),'error');
-			echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+			echo "</br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
 	} else {
@@ -257,7 +266,7 @@ $Xpos = $Left_Margin+1;
 $pdf->addTextWrap($Xpos,$YPos,130,$FontSize,_('Part Number'), 'left');
 $pdf->addTextWrap(130,$YPos,150,$FontSize,_('Description'), 'left');
 $pdf->addTextWrap(285,$YPos,20,$FontSize,_('M/B'), 'right');
-$pdf->addTextWrap(305,$YPos,55,$FontSize,_('Actual Cost'), 'right');
+$pdf->addTextWrap(305,$YPos,55,$FontSize,_('Unit Cost'), 'right');
 $pdf->addTextWrap(360,$YPos,50,$FontSize,_('Supply'), 'right');
 $pdf->addTextWrap(410,$YPos,50,$FontSize,_('Demand'), 'right');
 $pdf->addTextWrap(460,$YPos,50,$FontSize,_('Shortage'), 'right');
