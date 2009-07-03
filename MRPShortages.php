@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 // MRPShortages.php - Report of parts with demand greater than supply as determined by MRP
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -14,27 +14,40 @@ If (isset($_POST['PrintPDF'])) {
 
 	$PageNumber=1;
 	$line_height=12;
-// Several problems with origsql. SUMs for supply and demand were incorrect - for instance, if
-// there were 2 supply records and 3 demand records, the sum for supply would be 3 times what
-// it should have been and the sum of the demand would be 2 times what it should have been.
-// Fixed that by using subqueries. Then had a problem because the demand and supply fields
-// were not being recognized when tried to define extcost, so had to use the subqueries again
-// in the calculation of extcost
-//    *** not using $origsql - just have it here for reference ***
-/*	$origsql = "SELECT stockmaster.stockid,
-	                   stockmaster.description,
-	                   stockmaster.mbflag,
-	                   stockmaster.actualcost,
-	                   stockmaster.decimalplaces,
-	IF(supplyquantity IS NULL,0,SUM(supplyquantity)) as supply,
-     SUM(quantity) as demand, ((SUM(quantity) - IF(supplyquantity IS NULL,0,SUM(supplyquantity))) * actualcost) as extcost
-      FROM stockmaster
-      LEFT JOIN mrpsupplies ON stockid = mrpsupplies.part 
-      LEFT JOIN mrprequirements ON stockid = mrprequirements.part
-      GROUP BY stockid
-      HAVING demand > supply
-      ORDER BY " . $_POST['Sort'];
-*/
+
+// Create temporary tables for supply and demand, with one record per part with the
+// total for either supply or demand. Did this to simplify main sql where used
+// several subqueries.
+
+	$sql = 'CREATE TEMPORARY TABLE demandtotal (
+				part char(20),                                
+				demand double,
+                KEY `PART` (`part`))';
+	$result = DB_query($sql,$db,_('Create of demandtotal failed because'));
+	
+	$sql = 'INSERT INTO demandtotal 
+						(part,
+						 demand)
+			   SELECT part,
+					  SUM(quantity) as demand
+			    FROM mrprequirements
+			    GROUP BY part';
+	$result = DB_query($sql,$db);
+
+	$sql = 'CREATE TEMPORARY TABLE supplytotal (
+				part char(20),                                
+				supply double,
+                KEY `PART` (`part`))';
+	$result = DB_query($sql,$db,_('Create of supplytotal failed because'));
+	
+	$sql = 'INSERT INTO supplytotal 
+						(part,
+						 supply)
+			   SELECT part,
+					  SUM(supplyquantity) as supply
+			    FROM mrpsupplies
+			    GROUP BY part';
+	$result = DB_query($sql,$db);
 
 	// Only include directdemand mrprequirements so don't have demand for top level parts and also
 	// show demand for the lower level parts that the upper level part generates. See MRP.php for
@@ -45,30 +58,22 @@ If (isset($_POST['PrintPDF'])) {
 	                   stockmaster.actualcost,
 	                   stockmaster.decimalplaces,
 	                   (stockmaster.materialcost + stockmaster.labourcost + 
-	                    stockmaster.overheadcost ) as computedcost
-	(SELECT IF(supplyquantity IS NULL,0,SUM(supplyquantity)) 
-	 FROM mrpsupplies
-	 GROUP BY mrpsupplies.part
-	 WHERE stockid = mrpsupplies.part) AS supply,
-    (SELECT SUM(quantity) 
-      FROM mrprequirements
-      GROUP BY mrprequirements.part
-      WHERE stockid = mrprequirements.part AND mrprequirements.directdemand='1') AS demand,
-      (((SELECT SUM(quantity) 
-      FROM mrprequirements
-      GROUP BY mrprequirements.part
-      WHERE stockid = mrprequirements.part AND mrprequirements.directdemand='1') -
-      (SELECT IF(supplyquantity IS NULL,0,SUM(supplyquantity)) 
-	      FROM mrpsupplies 
-	      WHERE stockid = mrpsupplies.part)) * actualcost) as extcost
+	                    stockmaster.overheadcost ) as computedcost,
+	                   demandtotal.demand,
+	                   supplytotal.supply,
+	                   (demandtotal.demand - supplytotal.supply) *
+	                   (stockmaster.materialcost + stockmaster.labourcost + 
+	                    stockmaster.overheadcost ) as extcost
       FROM stockmaster
+        LEFT JOIN demandtotal ON stockmaster.stockid = demandtotal.part
+        LEFT JOIN supplytotal ON stockmaster.stockid = supplytotal.part
       GROUP BY stockmaster.stockid,
 			   stockmaster.description,
 			   stockmaster.mbflag,
 			   stockmaster.actualcost,
 			   stockmaster.decimalplaces,
-			   supply,
-			   demand,
+			   supplytotal.supply,
+			   demandtotal.demand,
 			   extcost
       HAVING demand > supply
       ORDER BY " . $_POST['Sort'];
@@ -79,24 +84,14 @@ If (isset($_POST['PrintPDF'])) {
         stockmaster.decimalplaces,
         (stockmaster.materialcost + stockmaster.labourcost + 
 	     stockmaster.overheadcost ) as computedcost,
-     (SELECT SUM(IF(supplyquantity IS NULL,0,supplyquantity)) 
-      FROM mrpsupplies
-      WHERE stockid = mrpsupplies.part GROUP BY stockid) AS supply,
-         (SELECT SUM(quantity) 
-           FROM mrprequirements
-           WHERE stockid = mrprequirements.part GROUP BY stockid)
-           AS demand,
-           (
-           ((SELECT SUM(IF(supplyquantity IS NULL,0,supplyquantity)) 
-      FROM mrpsupplies
-      WHERE stockid = mrpsupplies.part GROUP BY stockid) -
-      (SELECT SUM(quantity) 
-           FROM mrprequirements
-           WHERE stockid = mrprequirements.part GROUP BY stockid))
-           * (stockmaster.materialcost + stockmaster.labourcost + 
-	     stockmaster.overheadcost )
-           ) as extcost
+	    demandtotal.demand,
+	    supplytotal.supply,
+	   (demandtotal.demand - supplytotal.supply) *
+	   (stockmaster.materialcost + stockmaster.labourcost + 
+		stockmaster.overheadcost ) as extcost
            FROM stockmaster
+             LEFT JOIN demandtotal ON stockmaster.stockid = demandtotal.part
+             LEFT JOIN supplytotal ON stockmaster.stockid = supplytotal.part
            GROUP BY stockmaster.stockid,
 			   stockmaster.description,
 			   stockmaster.mbflag,
@@ -106,15 +101,10 @@ If (isset($_POST['PrintPDF'])) {
 			   stockmaster.labourcost,
 			   stockmaster.overheadcost,
 			   computedcost,
-			   supply,
-			   demand
-			    HAVING (SELECT SUM(quantity) 
-           FROM mrprequirements
-           WHERE stockid = mrprequirements.part GROUP BY stockid) > 
-           (SELECT SUM(IF(supplyquantity IS NULL,0,supplyquantity)) 
-      FROM mrpsupplies
-      WHERE stockid = mrpsupplies.part GROUP BY stockid)
-			  ORDER BY " . $_POST['Sort'] . $sortorder;
+			   supplytotal.supply,
+			   demandtotal.demand
+			HAVING demandtotal.demand > supplytotal.supply 
+			ORDER BY " . $_POST['Sort'] . $sortorder;
 	$result = DB_query($sql,$db,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
