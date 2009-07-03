@@ -1,6 +1,6 @@
 WEB-ERP Installation
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 Upgrading
 
@@ -247,7 +247,7 @@ All the standing configuration data is defined from the system setup tab and eac
 
 Please try not to refer questions about PHP or database configuration 
 - check your PHP web server works by installing phpMyAdmin before referring any installation issues
-- check http://wikidocs.weberp.org for Installation FAQ
+- check http://www.weberp.org for Installation FAQ
 
 _____________________________________________________________________
 
