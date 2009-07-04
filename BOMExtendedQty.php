@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 // BOMExtendedQty.php - Quantiy Extended Bill of Materials
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -197,7 +197,10 @@ If (isset($_POST['PrintPDF'])) {
                       GROUP BY woitems.stockid) AS woqty                      
               FROM tempbom,stockmaster 
               WHERE tempbom.component = stockmaster.stockid
-              GROUP BY tempbom.component';
+              GROUP BY tempbom.component,
+                   stockmaster.description,
+                   stockmaster.decimalplaces,
+                   stockmaster.mbflag';
 	$result = DB_query($sql,$db);
 	While ($myrow = DB_fetch_array($result,$db)){
 
