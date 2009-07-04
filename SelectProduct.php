@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.46 $ */
+/* $Revision: 1.47 $ */
 
 $PageSecurity = 2;
 $PricesSecurity = 9;
@@ -143,7 +143,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
                 GROUP BY stockmaster.stockid,
                     stockmaster.description,
                     stockmaster.units,
-                    stockmaster.mbflag
+                    stockmaster.mbflag,
+                    stockmaster.decimalplaces
                 ORDER BY stockmaster.stockid";
         } else {
             $SQL = "SELECT stockmaster.stockid,
@@ -160,7 +161,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
                 GROUP BY stockmaster.stockid,
                     stockmaster.description,
                     stockmaster.units,
-                    stockmaster.mbflag
+                    stockmaster.mbflag,
+                    stockmaster.decimalplaces
                 ORDER BY stockmaster.stockid";
         }
     } elseif (isset($_POST['StockCode'])) {
@@ -180,7 +182,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
                 GROUP BY stockmaster.stockid,
                     stockmaster.description,
                     stockmaster.units,
-                    stockmaster.mbflag
+                    stockmaster.mbflag,
+                    stockmaster.decimalplaces
                 ORDER BY stockmaster.stockid";
 
         } else {
@@ -198,7 +201,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
                 GROUP BY stockmaster.stockid,
                     stockmaster.description,
                     stockmaster.units,
-                    stockmaster.mbflag
+                    stockmaster.mbflag,
+                    stockmaster.decimalplaces
                 ORDER BY stockmaster.stockid";
         }
 
@@ -216,7 +220,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
                 GROUP BY stockmaster.stockid,
                     stockmaster.description,
                     stockmaster.units,
-                    stockmaster.mbflag
+                    stockmaster.mbflag,
+                    stockmaster.decimalplaces
                 ORDER BY stockmaster.stockid";
         } else {
             $SQL = "SELECT stockmaster.stockid,
@@ -232,7 +237,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
                 GROUP BY stockmaster.stockid,
                     stockmaster.description,
                     stockmaster.units,
-                    stockmaster.mbflag
+                    stockmaster.mbflag,
+                    stockmaster.decimalplaces
                 ORDER BY stockmaster.stockid";
         }
     }
