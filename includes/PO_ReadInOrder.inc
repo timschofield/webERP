@@ -1,22 +1,22 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 /*PO_ReadInOrder.inc is used by the modify existing order code in PO_Header.php and also by GoodsReceived.php */
 
-       if (isset($_SESSION['PO'])){
-              unset ($_SESSION['PO']->LineItems);
-              unset ($_SESSION['PO']);
-       }
+	if (isset($_SESSION['PO'.$identifier])){
+		unset ($_SESSION['PO'.$identifier]->LineItems);
+		unset ($_SESSION['PO'.$identifier]);
+	}
 
-       $_SESSION['ExistingOrder']=$_GET['ModifyOrderNumber'];
-       $_SESSION['RequireSupplierSelection'] = 0;
-       $_SESSION['PO'] = new PurchOrder;
+	$_SESSION['ExistingOrder']=$_GET['ModifyOrderNumber'];
+	$_SESSION['RequireSupplierSelection'] = 0;
+	$_SESSION['PO'.$identifier] = new PurchOrder;
 
-       $_SESSION['PO']->GLLink = $_SESSION['CompanyRecord']['gllink_stock'];
+	$_SESSION['PO'.$identifier]->GLLink = $_SESSION['CompanyRecord']['gllink_stock'];
 
 /*read in all the guff from the selected order into the PO PurchOrder Class variable  */
 
-       $OrderHeaderSQL = 'SELECT purchorders.supplierno, 
-       				suppliers.suppname, 
+	$OrderHeaderSQL = 'SELECT purchorders.supplierno, 
+				suppliers.suppname, 
 				purchorders.comments, 
 				purchorders.orddate, 
 				purchorders.rate, 
@@ -50,30 +50,30 @@
 	if (DB_num_rows($GetOrdHdrResult)==1) {
 
               $myrow = DB_fetch_array($GetOrdHdrResult);
-              $_SESSION['PO']->OrderNo = $_GET['ModifyOrderNumber'];
-              $_SESSION['PO']->SupplierID = $myrow['supplierno'];
-              $_SESSION['PO']->SupplierName = $myrow['suppname'];
-              $_SESSION['PO']->CurrCode = $myrow['currcode'];
-              $_SESSION['PO']->Orig_OrderDate = $myrow['orddate'];
-              $_SESSION['PO']->AllowPrintPO = $myrow['allowprint'];
-              $_SESSION['PO']->DatePurchaseOrderPrinted = $myrow['dateprinted'];
-              $_SESSION['PO']->Comments = $myrow['comments'];
-              $_SESSION['PO']->ExRate = $myrow['rate'];
-              $_SESSION['PO']->Location = $myrow['intostocklocation'];
-              $_SESSION['PO']->Initiator = $myrow['initiator'];
-              $_SESSION['PO']->RequisitionNo = $myrow['requisitionno'];
-              $_SESSION['PO']->DelAdd1 = $myrow['deladd1'];
-              $_SESSION['PO']->DelAdd2 = $myrow['deladd2'];
-              $_SESSION['PO']->DelAdd3 = $myrow['deladd3'];
-              $_SESSION['PO']->DelAdd4 = $myrow['deladd4'];
-              $_SESSION['PO']->DelAdd5 = $myrow['deladd5'];
-              $_SESSION['PO']->DelAdd6 = $myrow['deladd6'];
-              $_SESSION['PO']->Managed = $myrow['managed'];
-			$_SESSION['PO']->version = $myrow['version'];
-			$_SESSION['PO']->Stat = $myrow['status'];
-			$_SESSION['PO']->StatComments = $myrow['stat_comment'];
-			$_SESSION['PO']->deliverydate = $myrow['deliverydate'];
-			$_SESSION['ExistingOrder'] = $_SESSION['PO']->OrderNo;
+              $_SESSION['PO'.$identifier]->OrderNo = $_GET['ModifyOrderNumber'];
+              $_SESSION['PO'.$identifier]->SupplierID = $myrow['supplierno'];
+              $_SESSION['PO'.$identifier]->SupplierName = $myrow['suppname'];
+              $_SESSION['PO'.$identifier]->CurrCode = $myrow['currcode'];
+              $_SESSION['PO'.$identifier]->Orig_OrderDate = $myrow['orddate'];
+              $_SESSION['PO'.$identifier]->AllowPrintPO = $myrow['allowprint'];
+              $_SESSION['PO'.$identifier]->DatePurchaseOrderPrinted = $myrow['dateprinted'];
+              $_SESSION['PO'.$identifier]->Comments = $myrow['comments'];
+              $_SESSION['PO'.$identifier]->ExRate = $myrow['rate'];
+              $_SESSION['PO'.$identifier]->Location = $myrow['intostocklocation'];
+              $_SESSION['PO'.$identifier]->Initiator = $myrow['initiator'];
+              $_SESSION['PO'.$identifier]->RequisitionNo = $myrow['requisitionno'];
+              $_SESSION['PO'.$identifier]->DelAdd1 = $myrow['deladd1'];
+              $_SESSION['PO'.$identifier]->DelAdd2 = $myrow['deladd2'];
+              $_SESSION['PO'.$identifier]->DelAdd3 = $myrow['deladd3'];
+              $_SESSION['PO'.$identifier]->DelAdd4 = $myrow['deladd4'];
+              $_SESSION['PO'.$identifier]->DelAdd5 = $myrow['deladd5'];
+              $_SESSION['PO'.$identifier]->DelAdd6 = $myrow['deladd6'];
+              $_SESSION['PO'.$identifier]->Managed = $myrow['managed'];
+			$_SESSION['PO'.$identifier]->version = $myrow['version'];
+			$_SESSION['PO'.$identifier]->Stat = $myrow['status'];
+			$_SESSION['PO'.$identifier]->StatComments = $myrow['stat_comment'];
+			$_SESSION['PO'.$identifier]->deliverydate = ConvertSQLDate($myrow['deliverydate']);
+			$_SESSION['ExistingOrder'] = $_SESSION['PO'.$identifier]->OrderNo;
 			
 /*now populate the line PO array with the purchase order details records */
 
@@ -127,7 +127,7 @@
 						$StockID = $myrow['itemcode'];
 					 }
 
-					$_SESSION['PO']->add_to_order($_SESSION['PO']->LinesOnOrder+1,
+					$_SESSION['PO'.$identifier]->add_to_order($_SESSION['PO'.$identifier]->LinesOnOrder+1,
 							$StockID,
 							$myrow['controlled'],
 							$myrow['serialised'],
@@ -145,8 +145,8 @@
 							$myrow['accountname'],
 							$myrow['decimalplaces']);
 
-				    $_SESSION['PO']->LineItems[$_SESSION['PO']->LinesOnOrder]->PODetailRec = $myrow['podetailitem'];
-	                $_SESSION['PO']->LineItems[$_SESSION['PO']->LinesOnOrder]->StandardCost = $myrow['stdcostunit'];  /*Needed for receiving goods and GL interface */
+				    $_SESSION['PO'.$identifier]->LineItems[$_SESSION['PO'.$identifier]->LinesOnOrder]->PODetailRec = $myrow['podetailitem'];
+	                $_SESSION['PO'.$identifier]->LineItems[$_SESSION['PO'.$identifier]->LinesOnOrder]->StandardCost = $myrow['stdcostunit'];  /*Needed for receiving goods and GL interface */
              } /* line PO from purchase order details */
       } //end is there were lines on the order
    } // end if there was a header for the order
