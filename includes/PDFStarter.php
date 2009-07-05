@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 /*this class is an extension to the fpdf class using a syntax that the original reports were written in
 (the R &OS pdf.php class) - due to limitation of this class for foreign character support this wrapper class
@@ -97,7 +97,7 @@ switch ($PaperSize) {
 }
 
 $PageSize = array(0,0,$Page_Width,$Page_Height);
-$pdf = & new Cpdf($PageSize);
+$pdf = new Cpdf($PageSize);
 
 $pdf->addinfo('Author','webERP ' . $Version);
 $pdf->addinfo('Creator','webERP http://www.weberp.org');
