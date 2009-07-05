@@ -24,6 +24,9 @@ if ($_SESSION['Language']=='zh_CN' OR $_SESSION['Language']=='zh_HK' OR $_SESSIO
 	include('FPDF_Korean.php');
 } else {
 	class PDF_Language extends FPDF {
+		function PDF_Language($orientation='P',$unit='mm',$format='A4') {
+			$this->FPDF($orientation,$unit,$format);
+		}
 	}
 }
 
