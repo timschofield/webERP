@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -287,25 +287,30 @@ else {
         	if ($i == 0){
         		echo $tableheader;
 		}
-        	echo "<tr>
-	    		<td><input type=checkbox name='GRNNo_" . $GRNTmp->GRNNo . "'></td>
-			<td>" . $GRNTmp->GRNNo . '</td>
-			<td>' . $GRNTmp->PONo . '</td>
-			<td>' . $GRNTmp->ItemCode . '</td>
-			<td>' . $GRNTmp->ItemDescription . '</td>
-			<td align=right>' . $GRNTmp->QtyRecd . '</td>
-			<td align=right>' . $GRNTmp->Prev_QuantityInv . '</td>
-			<td align=right>' . ($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv) . '</td>
-			<td align=right>' . $GRNTmp->OrderPrice . '</td>
-			<td align=right>' . number_format($GRNTmp->OrderPrice * ($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv),2) . '</td>
-			</tr>';
+		if (isset($_POST['SelectAll'])) {
+			echo "<tr><td><input type=checkbox checked name='GRNNo_" . $GRNTmp->GRNNo . "'></td>";
+		} else {
+			echo "<tr><td><input type=checkbox name='GRNNo_" . $GRNTmp->GRNNo . "'></td>";
+		}
+		echo "<td>" . $GRNTmp->GRNNo . '</td>
+		<td>' . $GRNTmp->PONo . '</td>
+		<td>' . $GRNTmp->ItemCode . '</td>
+		<td>' . $GRNTmp->ItemDescription . '</td>
+		<td class=number>' . $GRNTmp->QtyRecd . '</td>
+		<td class=number>' . $GRNTmp->Prev_QuantityInv . '</td>
+		<td class=number>' . ($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv) . '</td>
+		<td class=number>' . $GRNTmp->OrderPrice . '</td>
+		<td class=number>' . number_format($GRNTmp->OrderPrice * ($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv),2) . '</td>
+		</tr>';
 		$i++;
 		if ($i>15){
 			$i=0;
 		}
         }
         echo '</table>';
-        echo "<div class='centre'><p><input type=Submit Name='AddGRNToTrans' Value='" . _('Add to Invoice') . "'></div>";
+        echo "<div class='centre'><input type=Submit Name='SelectAll' Value='" . _('Select All') . "'>";
+        echo "<input type=Submit Name='DeSelectAll' Value='" . _('Deselect All') . "'>";
+        echo "<br><input type=Submit Name='AddGRNToTrans' Value='" . _('Add to Invoice') . "'></div>";
     }
 }
 
