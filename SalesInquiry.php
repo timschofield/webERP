@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 // SalesInquiry.php
 // Inquiry on Sales Orders - If Date Type is Order Date, salesorderdetails is the main table
 // If Date Type is Invoice, stockmoves is the main table
@@ -45,12 +45,6 @@ $DebtorNameOp = $_POST['DebtorNameOp'];
 // Save $_POST['SummaryType'] in $savesummarytype because change $_POST['SummaryType'] when
 // create $sql
 $savesummarytype = $_POST['SummaryType'];
-
-// Had to add debtorno to SummaryType when do summary by name because there could be several accounts
-// with the same name. Tried passing 'name,debtorno' in form, but it only read 'name'
-if ($_POST['SummaryType'] == 'name') {
-    $_POST['SummaryType'] = 'name,debtorno';
-}
 
 if (isset($_POST['submit'])) {
     submit($db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$DebtorNameOp,$savesummarytype);
@@ -176,7 +170,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
     if ($_POST['InvoiceType'] != 'All') {
         $wheretype = " AND tempstockmoves.type = '" . $_POST['InvoiceType'] . "'";
     }
-    if ($inputerror !=1) {
+    if ($inputError !=1) {
 		$fromdate = FormatDateForSQL($_POST['FromDate']);
 		$todate = FormatDateForSQL($_POST['ToDate']);
 		if ($_POST['ReportType'] == 'Detail') {
@@ -273,103 +267,465 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 		      $orderby = 'extprice DESC';
 		  }
 		  if ($_POST['DateType'] == 'Order') {
-				$sql = "SELECT salesorderdetails.orderno,
-							   salesorderdetails.stkcode,
-							   salesorderdetails.itemdue,
-							   salesorders.debtorno,
-							   salesorders.orddate,
-							   salesorders.branchcode,
-							   EXTRACT(YEAR_MONTH from salesorders.orddate) as month,
-							   CONCAT(MONTHNAME(salesorders.orddate),' ',YEAR(salesorders.orddate)) as monthname,
-							   SUM(salesorderdetails.quantity) as quantity,
-							   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-							   SUM(salesorderdetails.quantity * salesorderdetails.unitprice) as extprice,
-							   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost,
-							   IF(salesorderdetails.quantity = salesorderdetails.qtyinvoiced ||
-								  salesorderdetails.completed = 1,'Completed','Open') as linestatus,
-							   debtorsmaster.name,
-							   custbranch.brname,
-							   custbranch.salesman,
-							   custbranch.area,
-							   stockmaster.description,
-							   stockmaster.categoryid,
-							   stockmaster.decimalplaces,
-							   stockcategory.categorydescription,
-							   salesman.salesmanname,
-							   areas.areadescription
-							   FROM salesorderdetails 
-						LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
-						LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-						LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
-						LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
-						LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
-						LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
-						LEFT JOIN areas ON areas.areacode = custbranch.area
-						WHERE salesorders.orddate >='$fromdate'
-						 AND salesorders.orddate <='$todate'
-						 AND salesorders.quotation = '" . $_POST['OrderType'] . "' 
-						$wherepart
-						$whereorderno
-						$wheredebtorno
-						$wheredebtorname
-						$wherelinestatus
-						$wherearea
-						$wheresalesman
-						$wherecategory
-						GROUP BY " . $_POST['SummaryType'] .
-						' ORDER BY ' . $orderby;
+		      if ($_POST['SummaryType'] == 'extprice' || $_POST['SummaryType'] == 'stkcode') {
+					$sql = "SELECT salesorderdetails.stkcode,
+								   SUM(salesorderdetails.quantity) as quantity,
+								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice) as extprice,
+								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost,
+								   stockmaster.description,
+								   stockmaster.decimalplaces
+								   FROM salesorderdetails 
+							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
+							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
+							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
+							LEFT JOIN areas ON areas.areacode = custbranch.area
+							WHERE salesorders.orddate >='$fromdate'
+							 AND salesorders.orddate <='$todate'
+							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' 
+							$wherepart
+							$whereorderno
+							$wheredebtorno
+							$wheredebtorname
+							$wherelinestatus
+							$wherearea
+							$wheresalesman
+							$wherecategory
+							GROUP BY " . $_POST['SummaryType'] .
+							',salesorderdetails.stkcode,
+								   stockmaster.description,
+								   stockmaster.decimalplaces
+								   ORDER BY ' . $orderby;
+				} elseif ($_POST['SummaryType'] == 'orderno') {
+					$sql = "SELECT salesorderdetails.orderno,
+					               salesorders.debtorno,
+					               debtorsmaster.name,
+								   SUM(salesorderdetails.quantity) as quantity,
+								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice) as extprice,
+								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
+								   FROM salesorderdetails 
+							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
+							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
+							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
+							LEFT JOIN areas ON areas.areacode = custbranch.area
+							WHERE salesorders.orddate >='$fromdate'
+							 AND salesorders.orddate <='$todate'
+							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' 
+							$wherepart
+							$whereorderno
+							$wheredebtorno
+							$wheredebtorname
+							$wherelinestatus
+							$wherearea
+							$wheresalesman
+							$wherecategory
+							GROUP BY " . $_POST['SummaryType'] .
+							',salesorders.debtorno,
+								   debtorsmaster.name
+								   ORDER BY ' . $orderby;
+				} elseif ($_POST['SummaryType'] == 'debtorno' || $_POST['SummaryType'] == 'name') {
+				    if ($_POST['SummaryType'] == 'name') {
+				        $orderby = 'name';
+				    }
+					$sql = "SELECT debtorsmaster.debtorno,
+					               debtorsmaster.name,
+								   SUM(salesorderdetails.quantity) as quantity,
+								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice) as extprice,
+								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
+								   FROM salesorderdetails 
+							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
+							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
+							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
+							LEFT JOIN areas ON areas.areacode = custbranch.area
+							WHERE salesorders.orddate >='$fromdate'
+							 AND salesorders.orddate <='$todate'
+							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' 
+							$wherepart
+							$whereorderno
+							$wheredebtorno
+							$wheredebtorname
+							$wherelinestatus
+							$wherearea
+							$wheresalesman
+							$wherecategory
+						
+							GROUP BY debtorsmaster.debtorno" . ' ' .
+							',debtorsmaster.name
+								   ORDER BY ' . $orderby;
+				} elseif ($_POST['SummaryType'] == 'month') {
+					$sql = "SELECT EXTRACT(YEAR_MONTH from salesorders.orddate) as month,
+								   CONCAT(MONTHNAME(salesorders.orddate),' ',YEAR(salesorders.orddate)) as monthname,
+								   SUM(salesorderdetails.quantity) as quantity,
+								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice) as extprice,
+								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
+								   FROM salesorderdetails 
+							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
+							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
+							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
+							LEFT JOIN areas ON areas.areacode = custbranch.area
+							WHERE salesorders.orddate >='$fromdate'
+							 AND salesorders.orddate <='$todate'
+							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' 
+							$wherepart
+							$whereorderno
+							$wheredebtorno
+							$wheredebtorname
+							$wherelinestatus
+							$wherearea
+							$wheresalesman
+							$wherecategory
+							GROUP BY " . $_POST['SummaryType'] .
+							',monthname
+								   ORDER BY ' . $orderby;
+				} elseif ($_POST['SummaryType'] == 'categoryid') {
+					$sql = "SELECT stockmaster.categoryid,
+								   stockcategory.categorydescription,
+								   SUM(salesorderdetails.quantity) as quantity,
+								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice) as extprice,
+								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
+								   FROM salesorderdetails 
+							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
+							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
+							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
+							LEFT JOIN areas ON areas.areacode = custbranch.area
+							WHERE salesorders.orddate >='$fromdate'
+							 AND salesorders.orddate <='$todate'
+							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' 
+							$wherepart
+							$whereorderno
+							$wheredebtorno
+							$wheredebtorname
+							$wherelinestatus
+							$wherearea
+							$wheresalesman
+							$wherecategory
+							GROUP BY " . $_POST['SummaryType'] .
+							',categorydescription
+								   ORDER BY ' . $orderby;
+				} elseif ($_POST['SummaryType'] == 'salesman') {
+					$sql = "SELECT custbranch.salesman,
+								   salesman.salesmanname,
+								   SUM(salesorderdetails.quantity) as quantity,
+								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice) as extprice,
+								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
+								   FROM salesorderdetails 
+							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
+							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
+							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
+							LEFT JOIN areas ON areas.areacode = custbranch.area
+							WHERE salesorders.orddate >='$fromdate'
+							 AND salesorders.orddate <='$todate'
+							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' 
+							$wherepart
+							$whereorderno
+							$wheredebtorno
+							$wheredebtorname
+							$wherelinestatus
+							$wherearea
+							$wheresalesman
+							$wherecategory
+							GROUP BY " . $_POST['SummaryType'] .
+							',salesmanname
+								   ORDER BY ' . $orderby;
+				} elseif ($_POST['SummaryType'] == 'area') {
+					$sql = "SELECT custbranch.area,
+								   areas.areadescription,
+								   SUM(salesorderdetails.quantity) as quantity,
+								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice) as extprice,
+								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
+								   FROM salesorderdetails 
+							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
+							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
+							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
+							LEFT JOIN areas ON areas.areacode = custbranch.area
+							WHERE salesorders.orddate >='$fromdate'
+							 AND salesorders.orddate <='$todate'
+							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' 
+							$wherepart
+							$whereorderno
+							$wheredebtorno
+							$wheredebtorname
+							$wherelinestatus
+							$wherearea
+							$wheresalesman
+							$wherecategory
+							GROUP BY " . $_POST['SummaryType'] .
+							',areas.areadescription
+								   ORDER BY ' . $orderby;
+				} 
 		   } else {
 		        // Selects by tempstockmoves.trandate not order date
-				$sql = "SELECT salesorderdetails.orderno,
-							   salesorderdetails.stkcode,
-							   salesorderdetails.itemdue,
-							   salesorders.debtorno,
-							   salesorders.orddate,
-							   salesorders.branchcode,
-							   EXTRACT(YEAR_MONTH from tempstockmoves.trandate) as month,
-							   CONCAT(MONTHNAME(tempstockmoves.trandate),' ',YEAR(tempstockmoves.trandate)) as monthname,
-							   SUM(salesorderdetails.quantity) as quantity,
-							   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-							   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
-							   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
-							   IF(salesorderdetails.quantity = salesorderdetails.qtyinvoiced ||
-								  salesorderdetails.completed = 1,'Completed','Open') as linestatus,
-							   debtorsmaster.name,
-							   custbranch.brname,
-							   custbranch.salesman,
-							   custbranch.area,
-							   tempstockmoves.transno,
-							   stockmaster.description,
-							   stockmaster.categoryid,
-							   stockmaster.decimalplaces,
-							   stockcategory.categorydescription,
-							   salesman.salesmanname,
-							   areas.areadescription,
-							   SUM(tempstockmoves.qty * -1) as qty
-							   FROM tempstockmoves 
-						LEFT JOIN salesorderdetails ON tempstockmoves.reference=salesorderdetails.orderno
-						LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
-						LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-						LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
-						LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
-						LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
-						LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
-						LEFT JOIN areas ON areas.areacode = custbranch.area
-						WHERE tempstockmoves.trandate >='$fromdate'
-						 AND tempstockmoves.trandate <='$todate'
-						 AND tempstockmoves.hidemovt=0
-						 AND salesorders.quotation = '" . $_POST['OrderType'] . "' 
-						$wherepart
-						$wheretype
-						$whereorderno
-						$wheredebtorno
-						$wheredebtorname
-						$wherelinestatus
-						$wherearea
-						$wheresalesman
-						$wherecategory
-						GROUP BY " . $_POST['SummaryType'] .
-						' ORDER BY ' . $orderby;		   
+		      if ($_POST['SummaryType'] == 'extprice' || $_POST['SummaryType'] == 'stkcode') {
+					$sql = "SELECT salesorderdetails.stkcode,
+								   SUM(salesorderdetails.quantity) as quantity,
+								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
+								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
+								   stockmaster.description,
+								   SUM(tempstockmoves.qty * -1) as qty
+								   FROM tempstockmoves 
+							LEFT JOIN salesorderdetails ON tempstockmoves.reference=salesorderdetails.orderno
+							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
+							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
+							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
+							LEFT JOIN areas ON areas.areacode = custbranch.area
+							WHERE tempstockmoves.trandate >='$fromdate'
+							 AND tempstockmoves.trandate <='$todate'
+						     AND tempstockmoves.stockid=salesorderdetails.stkcode
+							 AND tempstockmoves.hidemovt=0
+							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' 
+							$wherepart
+							$wheretype
+							$whereorderno
+							$wheredebtorno
+							$wheredebtorname
+							$wherelinestatus
+							$wherearea
+							$wheresalesman
+							$wherecategory
+							GROUP BY " . $_POST['SummaryType'] .
+							',stockmaster.description
+								   ORDER BY ' . $orderby;
+				} elseif ($_POST['SummaryType'] == 'orderno') {
+					$sql = "SELECT salesorderdetails.orderno,
+					               salesorders.debtorno,
+					               debtorsmaster.name,
+								   SUM(salesorderdetails.quantity) as quantity,
+								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
+								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
+								   SUM(tempstockmoves.qty * -1) as qty
+								   FROM tempstockmoves 
+							LEFT JOIN salesorderdetails ON tempstockmoves.reference=salesorderdetails.orderno
+							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
+							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
+							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
+							LEFT JOIN areas ON areas.areacode = custbranch.area
+							WHERE tempstockmoves.trandate >='$fromdate'
+							 AND tempstockmoves.trandate <='$todate'
+						     AND tempstockmoves.stockid=salesorderdetails.stkcode
+							 AND tempstockmoves.hidemovt=0
+							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' 
+							$wherepart
+							$wheretype
+							$whereorderno
+							$wheredebtorno
+							$wheredebtorname
+							$wherelinestatus
+							$wherearea
+							$wheresalesman
+							$wherecategory
+							GROUP BY " . $_POST['SummaryType'] .
+							',salesorders.debtorno,
+								   debtorsmaster.name
+								   ORDER BY ' . $orderby;				
+				} elseif ($_POST['SummaryType'] == 'debtorno' || $_POST['SummaryType'] == 'name') {
+				    if ($_POST['SummaryType'] == 'name') {
+				        $orderby = 'name';
+				    }
+					$sql = "SELECT debtorsmaster.debtorno,
+					               debtorsmaster.name,
+								   SUM(salesorderdetails.quantity) as quantity,
+								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
+								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
+								   SUM(tempstockmoves.qty * -1) as qty
+								   FROM tempstockmoves 
+							LEFT JOIN salesorderdetails ON tempstockmoves.reference=salesorderdetails.orderno
+							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
+							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
+							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
+							LEFT JOIN areas ON areas.areacode = custbranch.area
+							WHERE tempstockmoves.trandate >='$fromdate'
+							 AND tempstockmoves.trandate <='$todate'
+						     AND tempstockmoves.stockid=salesorderdetails.stkcode
+							 AND tempstockmoves.hidemovt=0
+							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' 
+							$wherepart
+							$wheretype
+							$whereorderno
+							$wheredebtorno
+							$wheredebtorname
+							$wherelinestatus
+							$wherearea
+							$wheresalesman
+							$wherecategory
+							GROUP BY debtorsmaster.debtorno" . ' ' .
+							',debtorsmaster.name
+								   ORDER BY ' . $orderby;			
+				} elseif ($_POST['SummaryType'] == 'month') {
+					$sql = "SELECT EXTRACT(YEAR_MONTH from salesorders.orddate) as month,
+								   CONCAT(MONTHNAME(salesorders.orddate),' ',YEAR(salesorders.orddate)) as monthname,
+								   SUM(salesorderdetails.quantity) as quantity,
+								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
+								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
+								   SUM(tempstockmoves.qty * -1) as qty
+								   FROM tempstockmoves 
+							LEFT JOIN salesorderdetails ON tempstockmoves.reference=salesorderdetails.orderno
+							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
+							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
+							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
+							LEFT JOIN areas ON areas.areacode = custbranch.area
+							WHERE tempstockmoves.trandate >='$fromdate'
+							 AND tempstockmoves.trandate <='$todate'
+						     AND tempstockmoves.stockid=salesorderdetails.stkcode
+							 AND tempstockmoves.hidemovt=0
+							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' 
+							$wherepart
+							$wheretype
+							$whereorderno
+							$wheredebtorno
+							$wheredebtorname
+							$wherelinestatus
+							$wherearea
+							$wheresalesman
+							$wherecategory
+							GROUP BY " . $_POST['SummaryType'] .
+							',monthname
+						    ORDER BY ' . $orderby;					
+				} elseif ($_POST['SummaryType'] == 'categoryid') {
+					$sql = "SELECT stockmaster.categoryid,
+								   stockcategory.categorydescription,
+								   SUM(salesorderdetails.quantity) as quantity,
+								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
+								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
+								   SUM(tempstockmoves.qty * -1) as qty
+								   FROM tempstockmoves 
+							LEFT JOIN salesorderdetails ON tempstockmoves.reference=salesorderdetails.orderno
+							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
+							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
+							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
+							LEFT JOIN areas ON areas.areacode = custbranch.area
+							WHERE tempstockmoves.trandate >='$fromdate'
+							 AND tempstockmoves.trandate <='$todate'
+						     AND tempstockmoves.stockid=salesorderdetails.stkcode
+							 AND tempstockmoves.hidemovt=0
+							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' 
+							$wherepart
+							$wheretype
+							$whereorderno
+							$wheredebtorno
+							$wheredebtorname
+							$wherelinestatus
+							$wherearea
+							$wheresalesman
+							$wherecategory
+							GROUP BY " . $_POST['SummaryType'] .
+							',categorydescription
+						    ORDER BY ' . $orderby;							
+				} elseif ($_POST['SummaryType'] == 'salesman') {
+					$sql = "SELECT custbranch.salesman,
+								   salesman.salesmanname,
+								   SUM(salesorderdetails.quantity) as quantity,
+								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
+								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
+								   SUM(tempstockmoves.qty * -1) as qty
+								   FROM tempstockmoves 
+							LEFT JOIN salesorderdetails ON tempstockmoves.reference=salesorderdetails.orderno
+							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
+							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
+							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
+							LEFT JOIN areas ON areas.areacode = custbranch.area
+							WHERE tempstockmoves.trandate >='$fromdate'
+							 AND tempstockmoves.trandate <='$todate'
+						     AND tempstockmoves.stockid=salesorderdetails.stkcode
+							 AND tempstockmoves.hidemovt=0
+							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' 
+							$wherepart
+							$wheretype
+							$whereorderno
+							$wheredebtorno
+							$wheredebtorname
+							$wherelinestatus
+							$wherearea
+							$wheresalesman
+							$wherecategory
+							GROUP BY " . $_POST['SummaryType'] .
+							',salesmanname
+						    ORDER BY ' . $orderby;		
+				} elseif ($_POST['SummaryType'] == 'area') {
+					$sql = "SELECT custbranch.area,
+								   areas.areadescription,
+								   SUM(salesorderdetails.quantity) as quantity,
+								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
+								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
+								   SUM(tempstockmoves.qty * -1) as qty
+								   FROM tempstockmoves 
+							LEFT JOIN salesorderdetails ON tempstockmoves.reference=salesorderdetails.orderno
+							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
+							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
+							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
+							LEFT JOIN areas ON areas.areacode = custbranch.area
+							WHERE tempstockmoves.trandate >='$fromdate'
+							 AND tempstockmoves.trandate <='$todate'
+						     AND tempstockmoves.stockid=salesorderdetails.stkcode
+							 AND tempstockmoves.hidemovt=0
+							 AND salesorders.quotation = '" . $_POST['OrderType'] . "' 
+							$wherepart
+							$wheretype
+							$whereorderno
+							$wheredebtorno
+							$wheredebtorname
+							$wherelinestatus
+							$wherearea
+							$wheresalesman
+							$wherecategory
+							GROUP BY " . $_POST['SummaryType'] .
+							',areas.areadescription
+						    ORDER BY ' . $orderby;						
+				}
 		   }
 		} // End of if ($_POST['ReportType']
 		//echo "<br/>$sql<br/>";
@@ -474,7 +830,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					 _('Area'),
 					 _('Part Description'));
 			}
-				print '</br></br>';
+				print '<br/><br/>';
 				$linectr = 0;
 			while ($myrow = DB_fetch_array($result)) {
 			    $linectr++;
@@ -495,7 +851,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					$myrow['salesman'],
 					$myrow['area'],
 					$myrow['description']);
-					print '</br>';
+					print '<br/>';
 					$totalqty += $myrow['quantity'];
 				} else {
 				    // Detail for Invoiced Date
@@ -515,7 +871,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					$myrow['salesman'],
 					$myrow['area'],
 					$myrow['description']);
-					print '</br>';
+					print '<br/>';
 					$totalqty += $myrow['qty'];
 				}
 				$lastdecimalplaces = $myrow['decimalplaces'];
@@ -561,10 +917,8 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 		  // Print summary stuff
 			$summarytype = $_POST['SummaryType'];
 			$columnheader7 = ' ';
-			// For SummaryType 'name' had to add debtorno to it for the GROUP BY in the sql, but have to take
-			// it away for $myrow[$summarytype] to be valid
 			// Set up description based on the Summary Type
-			if ($summarytype == 'name,debtorno') {
+			if ($summarytype == 'name') {
 				$summarytype = 'name';
 				$description = 'debtorno';
 				$summaryheader = _('Customer Name');
@@ -620,7 +974,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 				 _('Extended Price'),
 				 _('Invoiced Qty'),
 				 _($columnheader7));
-				print '</br></br>';
+				print '<br/><br/>';
 
 				$column7 = ' ';
 				$linectr = 0;
@@ -642,14 +996,13 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 				printf("    %-30s | %-40s | %12s | %14s | %14s | %14s |  %-40s",
 				$myrow[$summarytype],
 				$myrow[$description],
-				number_format($displayqty,$myrow['decimalplaces']),
+				number_format($displayqty,2),
 				number_format($myrow['extcost'],2),
 				number_format($myrow['extprice'],2),
-				number_format($myrow['qtyinvoiced'],$myrow['decimalplaces']),
+				number_format($myrow['qtyinvoiced'],2),
 				$column7);
 
-				print '</br>';
-				$lastdecimalplaces = $myrow['decimalplaces'];
+				print '<br/>';
 				$totalqty += $displayqty;
 				$totalextcost += $myrow['extcost'];
 				$totalextprice += $myrow['extprice'];
@@ -676,7 +1029,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 // Display form fields. This function is called the first time
 // the page is called.
 
-	echo "<form action=" . $_SERVER['PHP_SELF'] . "?" . SID ." method=post></br></br>";
+	echo "<form action=" . $_SERVER['PHP_SELF'] . "?" . SID ." method=post><br/><br/>";
 
 	echo '<table>';
 
@@ -814,7 +1167,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	    <td><input type='submit' name='submit' value='" . _('Run Inquiry') . "'></td>
 	</tr>
 	</table>
-	</br>";
+	<br/>";
    echo '</form>';
 
 } // End of function display()
@@ -840,7 +1193,7 @@ function TempStockmoves(&$db)
 	          WHERE (stockmoves.type='10' OR stockmoves.type='11') 
 	          AND stockmoves.trandate >='" . $fromdate . 
 			  "' AND stockmoves.trandate <='" . $todate . "'";
-	$ErrMsg = _('The SQL to to create passbom failed with the message');
+	$ErrMsg = _('The SQL to to create twmpstockmoves failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
 	$sql = 'UPDATE tempstockmoves, stockmoves
@@ -849,7 +1202,7 @@ function TempStockmoves(&$db)
 	            AND SUBSTR(tempstockmoves.reference,10,10) = stockmoves.transno
                 AND tempstockmoves.stockid = stockmoves.stockid
                 AND stockmoves.type ="10"';
-	$ErrMsg = _('The SQL to to create passbom failed with the message');
+	$ErrMsg = _('The SQL to to update tempstockmoves failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
 
