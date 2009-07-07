@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 
@@ -104,6 +104,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		GROUP BY accountgroups.groupname,
 			chartdetails.accountcode,
 			chartmaster.accountname,
+			accountgroups.parentgroupname,
 			accountgroups.sequenceintb,
 			accountgroups.sectioninaccounts
 		ORDER BY accountgroups.sectioninaccounts,
@@ -337,6 +338,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		GROUP BY accountgroups.groupname,
 			chartdetails.accountcode,
 			chartmaster.accountname,
+			accountgroups.parentgroupname,
 			accountgroups.sequenceintb,
 			accountgroups.sectioninaccounts
 		ORDER BY accountgroups.sectioninaccounts,
