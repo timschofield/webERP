@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 // Include functions needed for ReportCreator.php
 function PrepStep($StepNum) {
@@ -218,7 +218,8 @@ function UpdateDBFields($ReportID) {
 	if ($_POST['Table4']) $strTable .= ' INNER JOIN '.DB_escape_string($_POST['Table4']).' ON '.DB_escape_string($_POST['Table4Criteria']);
 	if ($_POST['Table5']) $strTable .= ' INNER JOIN '.DB_escape_string($_POST['Table5']).' ON '.DB_escape_string($_POST['Table5Criteria']);
 	if ($_POST['Table6']) $strTable .= ' INNER JOIN '.DB_escape_string($_POST['Table6']).' ON '.DB_escape_string($_POST['Table6Criteria']);
-	$sql = "SELECT * FROM ".$strTable." LIMIT 1";
+//	$sql = "SELECT * FROM ".$strTable." LIMIT 1";
+	$sql = "SHOW TABLES WHERE Tables_in_".$_SESSION['DatabaseName']."='".$strTable."'";
 	$Result=DB_query($sql,$db,'','',false,false);
 	// if we have a row, sql was valid
 	if (DB_num_rows($Result)==0) return false;
