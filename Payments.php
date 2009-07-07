@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 $PageSecurity = 5;
 
@@ -864,7 +864,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
    	echo '<tr><td></td><td align=right><b>' . number_format($PaymentTotal,2) . '</b></td><td></td><td></td><td></td></tr></table>';
 
 
-	echo '<br>div class="centre">' . _('General Ledger Payment Analysis Entry') . '</div><table>';
+	echo '<br><font size=3 color=BLUE><div class="centre">' . _('General Ledger Payment Analysis Entry') . '</div></font><br><table>';
 
 	//Select the tag
 	echo '<tr><td>' . _('Select Tag') . ':</td><td><select name="tag">';
