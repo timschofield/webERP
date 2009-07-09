@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 /*
 *      PO_Header.php
@@ -813,7 +813,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 	}
 
 	if ($_SESSION['PO'.$identifier]->AllowPrintPO==0 AND $_POST['RePrint']!=1){
-		echo '<tr><td>' . _('Allow Reprint') . ":</td><td><select name='RePrint'><option selected value=0>" . 
+		echo '<tr><td>' . _('Allow Reprint') . ":</td><td><select name='RePrint' onChange='ReloadForm(form1.AllowRePrint)'><option selected value=0>" . 
 			_('No') . "<option value=1>" . _('Yes') . '</select></td>';
 		echo '<td><input type=submit name="AllowRePrint" value="Update"></td></tr>';
 	} elseif ($Printed) {
