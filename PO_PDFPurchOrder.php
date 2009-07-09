@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -39,7 +39,7 @@ $result=DB_query($sql, $db);
 $myrow=DB_fetch_array($result);
 $OrderStatus=$myrow['status'];
 
-if ($OrderStatus!=_('Authorised')) {
+if ($OrderStatus!=_('Authorised') and $OrderStatus!=_('Printed')) {
 	include('includes/header.inc');
 	prnMsg( _('Purchase orders can only be printed once they have been authorised').'. '.
 		_('This order is currently at a status of').' '.$OrderStatus,'warn');

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 /*
 *      PO_Header.php
@@ -806,13 +806,19 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 		$Printed = False;
 		echo _('Not yet printed');
 	}
+	
+	if (isset($_POST['AllowRePrint'])) {
+		$sql='UPDATE purchorders SET allowprint=1 WHERE orderno='.$_SESSION['PO'.$identifier]->OrderNo;
+		$result=DB_query($sql, $db);
+	}
 
 	if ($_SESSION['PO'.$identifier]->AllowPrintPO==0 AND $_POST['RePrint']!=1){
 		echo '<tr><td>' . _('Allow Reprint') . ":</td><td><select name='RePrint'><option selected value=0>" . 
-			_('No') . "<option value=1>" . _('Yes') . '</select></td></tr>';
+			_('No') . "<option value=1>" . _('Yes') . '</select></td>';
+		echo '<td><input type=submit name="AllowRePrint" value="Update"></td></tr>';
 	} elseif ($Printed) {
 		echo "<tr><td colspan=2><a target='_blank'  href='$rootpath/PO_PDFPurchOrder.php?" . 
-			SID . "OrderNo=" . $_SESSION['ExistingOrder'] . "?identifier=".$identifier. "'>" . _('Reprint Now') . '</a></td></tr>';
+			SID . "OrderNo=" . $_SESSION['ExistingOrder'] . "&identifier=".$identifier. "'>" . _('Reprint Now') . '</a></td></tr>';
 	}
 
 	echo '</table>';
