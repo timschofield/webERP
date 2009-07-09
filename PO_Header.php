@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 /*
 *      PO_Header.php
@@ -965,9 +965,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 				deladd5,
 				deladd6,				
 				tel,
-				deladd7,
-				contact,
-				deladd8
+				contact
 			FROM locations
 			WHERE loccode='" . $_POST['StkLocation'] . "'";
 
@@ -981,8 +979,6 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 			$_POST['DelAdd5'] = $LocnRow[4];
 			$_POST['DelAdd6'] = $LocnRow[5];
 			$_POST['tel'] = $LocnRow[6];
-			$_POST['DelAdd7'] = $LocnRow[7];
-			$_POST['DelAdd8'] = $LocnRow[9];
 			$_POST['Contact'] = $LocnRow[8];
 
 			$_SESSION['PO'.$identifier]->Location= $_POST['StkLocation'];
@@ -992,8 +988,6 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 			$_SESSION['PO'.$identifier]->DelAdd4 = $_POST['DelAdd4'];
 			$_SESSION['PO'.$identifier]->DelAdd5 = $_POST['DelAdd5'];
 			$_SESSION['PO'.$identifier]->DelAdd6 = $_POST['DelAdd6'];
-			$_SESSION['PO'.$identifier]->DelAdd7 = $_POST['DelAdd7'];
-			$_SESSION['PO'.$identifier]->DelAdd8 = $_POST['DelAdd8'];
 			$_SESSION['PO'.$identifier]->tel = $_POST['tel'];
 			$_SESSION['PO'.$identifier]->contact = $_POST['Contact']; 
 		}
