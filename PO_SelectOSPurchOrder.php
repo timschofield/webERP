@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 2;
 
@@ -240,10 +240,10 @@ if (isset($StockItemsResult)) {
 
 }
 //end if stock search results to show
-  else {
+else {
 
 	//figure out the SQL required from the inputs available
-//$completed = " AND purchorderdetails.completed=0";
+$completed = " AND purchorderdetails.completed=0";
 	if (isset($OrderNumber) && $OrderNumber !='') {
 		$SQL = 'SELECT purchorders.orderno,
 				suppliers.suppname,
@@ -264,6 +264,7 @@ if (isset($StockItemsResult)) {
 			GROUP BY purchorders.orderno ASC,
 				suppliers.suppname,
 				purchorders.orddate,
+				purchorders.status,
 				purchorders.initiator,
 				purchorders.requisitionno,
 				purchorders.allowprint,
@@ -299,8 +300,10 @@ if (isset($StockItemsResult)) {
 					AND purchorders.supplierno='" . $SelectedSupplier ."'
 					AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
 					GROUP BY purchorders.orderno ASC,
+						purchorders.realorderno,
 						suppliers.suppname,
 						purchorders.orddate,
+						purchorders.status,
 						purchorders.initiator,
 						purchorders.requisitionno,
 						purchorders.allowprint,
@@ -325,8 +328,10 @@ if (isset($StockItemsResult)) {
 					AND purchorders.supplierno='" . $SelectedSupplier ."'
 					AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
 					GROUP BY purchorders.orderno ASC,
+						purchorders.realorderno,
 						suppliers.suppname,
 						purchorders.orddate,
+						purchorders.status,
 						purchorders.initiator,
 						purchorders.requisitionno,
 						purchorders.allowprint,
@@ -354,8 +359,10 @@ if (isset($StockItemsResult)) {
 					AND purchorderdetails.itemcode='". $SelectedStockItem ."'
 					AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
 					GROUP BY purchorders.orderno ASC,
+						purchorders.realorderno,
 						suppliers.suppname,
 						purchorders.orddate,
+						purchorders.status,
 						purchorders.initiator,
 						purchorders.requisitionno,
 						purchorders.allowprint,
@@ -379,8 +386,10 @@ if (isset($StockItemsResult)) {
 					$completed
 					AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
 					GROUP BY purchorders.orderno ASC,
+						purchorders.realorderno,
 						suppliers.suppname,
 						purchorders.orddate,
+						purchorders.status,
 						purchorders.initiator,
 						purchorders.requisitionno,
 						purchorders.allowprint,
