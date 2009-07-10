@@ -1,5 +1,6 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 
+<p>10/07/09 Tim: DeliveryDetails.php - Allow more than one sales order to be open at any one time
 <p>09/07/09 Tim: PO_Header.php - Add javascript to automatically update reprint status
 <p>09/07/09 Tim: PO_Header.php - Correct bug when changing stock location for delivery
 <p>09/07/09 Tim: PO_PDFPurchOrder.php - Corrections in order reprint functionality
@@ -20,370 +21,189 @@
 <P>05/07/09 Terry Porter: PDFStarter.php - Assigning the return value of new by reference is deprecated.
 <p>04/07/09 Tim: BOMExtendedQty.php - Correct sql statement to work in strict mode
 <p>04/07/09 Tim: SelectProduct.php - Correct sql statement to work in strict mode
-
 <p>03/07/09 Tim: doc/INSTALL.txt - Change url to show path to wiki
-
 <p>03/07/09 Tim: includes/DefineCartClass.php - Correct sql statement to work in strict mode
-
 <p>30/06/09 Tim: PO_Items.php - Change status to pending when an order is modified
-
 <p>30/06/09 Tim: sql/mysql/upgrade3.10-3.11.sql - Include missing field
-
 <p>30/06/09 Tim: includes/PO_ReadInOrder.inc - New purchase order functionality
-
 <p>30/06/09 Tim: includes/DefinePOClass.php - New purchase order functionality
-
 <p>30/06/09 Tim: GoodsReceived.php - New purchase order functionality
-
 <p>30/06/09 Tim: PO_Chk_ShiptRef_JobRef.php - New purchase order functionality
-
 <p>30/06/09 Tim: PO_PDFPurchOrder.php - New purchase order functionality
-
 <p>30/06/09 Tim: PO_SelectPurchOrder.php - New purchase order functionality
-
 <p>30/06/09 Tim: PO_SelectOSPurchOrder.php - New purchase order functionality
-
 <p>30/06/09 Tim: PO_OrderDetails.php - New purchase order functionality
-
 <p>30/06/09 Tim: PO_Items.php - New purchase order functionality
-
 <p>30/06/09 Tim: PO_Header.php - New purchase order functionality
-
 <p>30/06/09 Tim: sql/mysql/upgrade3.10-3.11.sql - New purchase order functionality
-
 <p>27/06/09 Tim: sql/mysql/upgrade3.10-3.11.sql - Add in extra fields for purchase orders
-
 <p>27/06/09 Tim: PO_AuthorisationLevels.php - New script to assign authorisation levels for purchase orders
 <p>27/06/09 Tim: PDFDeliveryDifferences.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: PDFCustomerList.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: PDFChequeListing.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: PDFBankingSummary.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: PaymentTerms.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: PaymentMethods.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: PaymentAllocations.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: OutstandingGRNs.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: OrderDetails.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: MRPShortages.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: MRPReschedules.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: MRPReport.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: MRPPlannedWorkOrders.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: MRPPlannedPurchaseOrders.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: MRPDemandTypes.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: MRPDemands.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: MRPCreateDemands.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: MRPCalendar.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: MRP.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: MailInventoryValuation.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: Logout.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: Locations.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: InventoryValuation.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: InventoryQuantities.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: InventoryPlanningPrefSupplier.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: InventoryPlanning.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: index.php - New menu items
-
 <p>27/06/09 Tim: GoodsReceivedControlled.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: GoodsReceived.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: GLTrialBalance.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: GLTransInquiry.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: GLTags.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: GLTagProfit_Loss.php - Script for creating Profit and Loss accounts by Tag
-
 <p>27/06/09 Tim: GLProfit_Loss.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: GLJournal.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: GLCodesInquiry.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: GLBudgets.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: GLBalanceSheet.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: GLAccounts.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: GLAccountInquiry.php - Change to lower case html and remove <center> tags
-
 <p>27/06/09 Tim: GetStockImage.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: GeocodeSetup.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: geocode.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: geo_displaymap_suppliers.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: geo_displaymap_customers.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: FTP_RadioBeacon.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: FreightCosts.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: Factors.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: ExchangeRateTrend.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: EmailCustTrans.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: EmailConfirmation.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: EDISendInvoices.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: EDIProcessOrders.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: EDIMessageFormat.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: DiscountMatrix.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: DiscountCategories.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: DemandWorkOrders.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: DeliveryDetails.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: DebtorsAtPeriodEnd.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: CustWhereAlloc.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: CustomerTypes.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: CustomerTransInquiry.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: Customers.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: CustomerReceipt.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: CustomerInquiry.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: CustomerBranches.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: CustomerAllocations.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: CustEDISetup.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: Currencies.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: CreditStatus.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: CreditItemsControlled.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: Credit_Invoice.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: ConfirmDispatchControlled_Invoice.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: CompanyPreferences.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: COGSGLPostings.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: BOMs.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: BOMListing.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: BOMInquiry.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: BOMIndentedReverse.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: BOMIndented.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: BOMExtendedQty.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: BankReconciliation.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: BankMatching.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: BankAccounts.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: AuditTrail.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: Areas.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: AgedSuppliers.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: AgedDebtors.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: AddCustomerTypeNotes.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: AddCustomerNotes.php - Change to lower case html and remove <center> tags
-
 <p>26/06/09 Tim: AddCustomerContacts.php - Change to lower case html and remove <center> tags
-
 <p>24/06/09 turbopt: SelectProduct.php - Correct field line up in inventory item display
 <p>24/06/09 Tim: PeriodsInquiry.php - Change to lower case html and remove <center> tags
-
 <p>24/06/09 Tim: PDFStockTransfer.php - Change to lower case html and remove <center> tags
-
 <p>24/06/09 Tim: PDFStockNegatives.php - Change to lower case html and remove <center> tags
-
 <p>24/06/09 Tim: PDFStockLocTransfer.php - Change to lower case html and remove <center> tags
-
 <p>24/06/09 Tim: PDFStockCheckComparison.php - Change to lower case html and remove <center> tags
-
 <p>24/06/09 Tim: PDFQuotation.php - Change to lower case html and remove <center> tags
-
 <p>24/06/09 Tim: PDFPriceList.php - Change to lower case html and remove <center> tags
-
 <p>24/06/09 Tim: PDFOrderStatus.php - Change to lower case html and remove <center> tags
-
 <p>24/06/09 Tim: PDFOrdersInvoiced.php - Change to lower case html and remove <center> tags
-
 <p>24/06/09 Tim: PDFLowGP.php - Change to lower case html and remove <center> tags
-
 <p>24/06/09 Tim: PDFGrn.php - Change to lower case html and remove <center> tags
-
 <p>24/06/09 Tim: PDFDIFOT.php - Change to lower case html and remove <center> tags
-
 <p>24/06/09 Tim: ConfirmDispatch_Invoice.php - Remove backslashes from narrative
-
 <p>24/06/09 Tim: SelectOrderItems.php - Remove backslashes from narrative
-
 <p>24/06/09 Tim: PrintCustTransPortrait.php - Remove backslashes from narrative
-
 <p>24/06/09 Tim: PrintCustTrans.php - Remove backslashes from narrative
-
 <p>21/06/09 Tim: ReverseGRN.php - Change to lower case html and remove <center> tags
-
 <p>21/06/09 Tim: ReorderLevel.php - Change to lower case html and remove <center> tags
-
 <p>21/06/09 Tim: RecurringSalesOrdersProcess.php - Change to lower case html and remove <center> tags
-
 <p>21/06/09 Tim: RecurringSalesOrders.php - Change to lower case html and remove <center> tags
-
 <p>21/06/09 Tim: PurchData.php - Change to lower case html and remove <center> tags
-
 <p>21/06/09 Tim: PrintCustTransPortrait.php - Change to lower case html and remove <center> tags
-
 <p>21/06/09 Tim: PrintCustStatements.php - Change to lower case html and remove <center> tags
-
 <p>21/06/09 Tim: PrintCustOrder.php - Change to lower case html and remove <center> tags
-
 <p>21/06/09 Tim: PricesBasedOnMarkUp.php - Change to lower case html and remove <center> tags
-
 <p>21/06/09 Tim: Prices.php - Change to lower case html and remove <center> tags
-
 <p>21/06/09 Tim: Prices_Customer.php - Change to lower case html and remove <center> tags
-
 <p>21/06/09 Tim: POReport.php - Change to lower case html and remove <center> tags
-
 <p>21/06/09 Lindsay: PrintCustOrder_generic.php - Prevent blank line on second page
-
 <p>21/06/09 Lindsay: PrintCustTrans.php - Prevent blank page being printed every second page
-
 <p>21/06/09 Lindsay: Z_ChangeStockCode.php - Add in check for woitems table
-
 <p>19/06/09  Murray: some improvements the html and css styles
 <p>19/06/09 Tim: StockTransferControlled.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: StockStatus.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: StockSerialItems.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: StockSerialItemResearch.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: Stocks.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: StockReorderLevel.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: StockQuantityByDate.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: StockQties_csv.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: StockMovements.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: StockLocTransferReceive.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: StockLocTransfer.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: StockLocStatus.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: StockLocMovements.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: StockCounts.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: StockCostUpdate.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: StockCheck.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: StockCategories.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: StockAdjustmentsControlled.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: StockAdjustments.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SpecialOrder.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: Shipt_Select.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: Shippers.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: Shipments.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: ShipmentCosting.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SelectWorkOrder.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SelectSupplier.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SelectSalesOrder.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SelectRecurringSalesOrder.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SelectProduct.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SelectOrderItems.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SelectGLAccount.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SelectCustomer.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SelectCreditItems.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SalesTypes.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SalesPeople.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SalesInquiry.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SalesGraph.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SalesGLPostings.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SalesCategories.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SalesAnalysis_UserDefined.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SalesAnalRepts.php - Change to lower case html and remove <center> tags
-
 <p>19/06/09 Tim: SalesAnalReptCols.php - Change to lower case html and remove <center> tags
-
 <p>12/6/09  Mark: Added SalesInquiry.php - detailed or summarized inquiries on Sales Orders
 <p>17/06/09 Tim: Z_UploadForm.php - Change to lower case html and remove <center> tags
 <p>17/06/09 Tim: Z_Upgrade_3.09-3.10.php - Change to lower case html and remove <center> tags
