@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 /*
 *      PO_Header.php
@@ -826,7 +826,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 	echo '<td style="width:50%"><table>';
 	if($_SESSION['ExistingOrder']!=0 and $_SESSION['PO'.$identifier]->Stat==_('Printed')){
 		echo '<tr><td><a href="' .$rootpath . "/GoodsReceived.php?" . SID . "&PONumber=" . 
-			$_SESSION['PO'.$identifier]->OrderNo . "?identifier=".$identifier.'">'._('Receive this order').'</a></td></tr>';
+			$_SESSION['PO'.$identifier]->OrderNo . "&identifier=".$identifier.'">'._('Receive this order').'</a></td></tr>';
 	}
 	echo '<td>' . _('Status') . ' :  </td><td><select name=Stat>';
 	
