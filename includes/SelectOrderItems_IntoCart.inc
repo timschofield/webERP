@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 /*SelectOrderItems_IntoCart.inc
 
@@ -14,9 +14,9 @@ items into the cart as well as plain vanilla items outside of the kitset loop
 
 $AlreadyOnThisOrder =0;
 
-if (count($_SESSION['Items']->LineItems)>0 AND $_SESSION['SO_AllowSameItemMultipleTimes']==0){
+if (count($_SESSION['Items'.$identifier]->LineItems)>0 AND $_SESSION['SO_AllowSameItemMultipleTimes']==0){
 
-	foreach ($_SESSION['Items']->LineItems AS $OrderItem) {
+	foreach ($_SESSION['Items'.$identifier]->LineItems AS $OrderItem) {
 
 	/* do a loop round the items on the order to see that the item
 	is not already on this order */
@@ -46,7 +46,7 @@ if ($AlreadyOnThisOrder!=1){
 				stockmaster.nextserialno
 			FROM stockmaster INNER JOIN locstock
 			ON stockmaster.stockid=locstock.stockid
-			WHERE locstock.loccode='" . $_SESSION['Items']->Location . "'
+			WHERE locstock.loccode='" . $_SESSION['Items'.$identifier]->Location . "'
 			AND stockmaster.stockid = '". $NewItem . "'";
 
     $ErrMsg = _('The details for') . ' ' . $NewItem . ' ' . _('could not be retrieved because');
@@ -93,7 +93,7 @@ if ($AlreadyOnThisOrder!=1){
 				$QuantityOfDiscCat =0;
 				$result = DB_query("SELECT MAX(discountrate) AS discount
 										FROM discountmatrix
-										WHERE salestype='" .  $_SESSION['Items']->DefaultSalesType . "'
+										WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
 										AND discountcategory ='" . $myrow['discountcategory'] . "'
 										AND quantitybreak <" . $NewItemQty,$db);
 				$DiscCatRow = DB_fetch_row($result);
@@ -106,29 +106,29 @@ if ($AlreadyOnThisOrder!=1){
 				$Discount = 0;
 			}
 
-			$Price = GetPrice($NewItem, $_SESSION['Items']->DebtorNo,$_SESSION['Items']->Branch, $db);
+			$Price = GetPrice($NewItem, $_SESSION['Items'.$identifier]->DebtorNo,$_SESSION['Items'.$identifier]->Branch, $db);
 
 			$WithinCreditLimit = true;
 
-			if (!isset($_SESSION['WarnOnce']) and $_SESSION['Items']->SpecialInstructions) {
-			  	prnMsg($_SESSION['Items']->SpecialInstructions,'warn');
+			if (!isset($_SESSION['WarnOnce']) and $_SESSION['Items'.$identifier]->SpecialInstructions) {
+			  	prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
 		       	$WarnOnce=1;
             }
 			if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn
 											and 2 for prohibit sales */
-				$_SESSION['Items']->CreditAvailable -= round(($NewItemQty * $Price * (1- $Discount)),2);
+				$_SESSION['Items'.$identifier]->CreditAvailable -= round(($NewItemQty * $Price * (1- $Discount)),2);
 
-				if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items']->CreditAvailable <=0){
+				if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
 					if (isset($_SESSION['WarnOnce']) and $_SESSION['WarnOnce'] < 2) prnMsg(_('The customer account will breach their credit limit'),'warn');
 					$_SESSION['WarnOnce']=2;
-				} elseif ($_SESSION['CheckCreditLimits']==2 AND $_SESSION['Items']->CreditAvailable <=0){
+				} elseif ($_SESSION['CheckCreditLimits']==2 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
 					prnMsg(_('No more lines can be added to this order the customer account is currently at or over their credit limit'),'warn');
 					$WithinCreditLimit = false;
 				}
 			}
 
 			if ($WithinCreditLimit ==true){
-   				if ($_SESSION['Items']->add_to_cart ($NewItem,
+				if ($_SESSION['Items'.$identifier]->add_to_cart ($NewItem,
 							$NewItemQty,
 							$myItemRow['description'],
 							$Price,

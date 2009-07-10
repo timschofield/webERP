@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.38 $ */
+/* $Revision: 1.39 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -95,9 +95,8 @@ Class Cart {
 							$EOQ=1,
 							$NextSerialNo=0){
 
-
 		if (isset($StockID) AND $StockID!="" AND $Qty>0 AND isset($Qty)){
-
+			
 			if ($Price<0){ /*madness check - use a credit note to give money away!*/
 				$Price=0;
 			}
