@@ -472,7 +472,7 @@ CREATE TABLE `custnotes` (
   `noteid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `debtorno` varchar(10) NOT NULL DEFAULT '0',
   `href` varchar(100) NOT NULL,
-  `note` varchar(200) NOT NULL,
+  `note` text NOT NULL,
   `date` date NOT NULL DEFAULT '0000-00-00',
   `priority` varchar(20) NOT NULL,
   PRIMARY KEY (`noteid`)
@@ -1098,12 +1098,25 @@ CREATE TABLE `purchdata` (
   `leadtime` smallint(6) NOT NULL DEFAULT '1',
   `preferred` tinyint(4) NOT NULL DEFAULT '0',
   `effectivefrom` date NOT NULL,
+  `suppliers_partno` varchar(50) NOT NULL default '',
   PRIMARY KEY (`supplierno`,`stockid`,`effectivefrom`),
   KEY `StockID` (`stockid`),
   KEY `SupplierNo` (`supplierno`),
   KEY `Preferred` (`preferred`)
 ) TYPE=innodb;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `purchorderauth`
+--
+
+CREATE TABLE `purchorderauth` (
+	`userid` varchar(20) NOT NULL DEFAULT '',
+	`currabrev` char(3) NOT NULL DEFAULT '',
+	`cancreate` smallint(2) NOT NULL DEFAULT 0,
+	`authlevel` int(11) NOT NULL DEFAULT 0,
+	PRIMARY KEY (`userid`,`currabrev`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `purchorderdetails`
@@ -1127,6 +1140,17 @@ CREATE TABLE `purchorderdetails` (
   `shiptref` int(11) NOT NULL DEFAULT '0',
   `jobref` varchar(20) NOT NULL DEFAULT '',
   `completed` tinyint(4) NOT NULL DEFAULT '0',
+  `itemno` varchar(50) NOT NULL default '',
+  `uom` varchar(50) NOT NULL default '',
+  `subtotal_amount` varchar(50) NOT NULL default '',
+  `package` varchar(100) NOT NULL default '',
+  `pcunit` varchar(50) NOT NULL default '',
+  `nw` varchar(50) NOT NULL default '',
+  `suppliers_partno` varchar(50) NOT NULL default '',
+  `gw` varchar(50) NOT NULL default '',
+  `cuft` varchar(50) NOT NULL default '',
+  `total_quantity` varchar(50) NOT NULL default '',
+  `total_amount` varchar(50) NOT NULL default '',
   PRIMARY KEY (`podetailitem`),
   KEY `DeliveryDate` (`deliverydate`),
   KEY `GLCode` (`glcode`),
@@ -1162,6 +1186,13 @@ CREATE TABLE `purchorders` (
   `deladd5` varchar(20) NOT NULL DEFAULT '',
   `deladd6` varchar(15) NOT NULL DEFAULT '',
   `contact` varchar(30) NOT NULL DEFAULT '',
+  `version` decimal(3,2) NOT NULL default '1.00',
+  `revised` date NOT NULL default '0000-00-00',
+  `realorderno` varchar(16) NOT NULL default '',
+  `deliveryby` varchar(100) NOT NULL default '',
+  `deliverydate` date NOT NULL default '0000-00-00',
+  `status` varchar(12) NOT NULL default '',
+  `stat_comment` text NOT NULL,
   PRIMARY KEY (`orderno`),
   KEY `OrdDate` (`orddate`),
   KEY `SupplierNo` (`supplierno`),
@@ -1812,6 +1843,7 @@ CREATE TABLE `stockmaster` (
   `nextserialno` bigint(20) NOT NULL DEFAULT '0',
   `pansize` double NOT NULL DEFAULT '0',
   `shrinkfactor` double NOT NULL DEFAULT '0',
+  `netweight` decimal(20,4) NOT NULL default '0.0000',
   PRIMARY KEY (`stockid`),
   KEY `CategoryID` (`categoryid`),
   KEY `Description` (`description`),
@@ -1989,6 +2021,8 @@ CREATE TABLE `suppliers` (
   `taxgroupid` tinyint(4) NOT NULL DEFAULT '1',
   `factorcompanyid` int(11) NOT NULL DEFAULT '1',
   `taxref` varchar(20) NOT NULL DEFAULT '',
+  `phn` varchar(50) NOT NULL default '',
+  `port` varchar(200) NOT NULL default '',
   PRIMARY KEY (`supplierid`),
   KEY `CurrCode` (`currcode`),
   KEY `PaymentTerms` (`paymentterms`),
@@ -2538,9 +2572,7 @@ INSERT INTO `debtortype` VALUES (1,'Default');
 -- Dumping data for table `factorcompanies`
 --
 
-INSERT INTO `factorcompanies` VALUES (1,'None','','','','','','','','','','');
-INSERT INTO `factorcompanies` VALUES (2,'None','','','','','','','','','','');
-INSERT INTO `factorcompanies` VALUES (3,'None','','','','','','','','','','');
+INSERT INTO `factorcompanies` ( `id` , `coyname` ) VALUES (null, "None");
 
 --
 -- Dumping data for table `holdreasons`
@@ -2556,6 +2588,12 @@ INSERT INTO `holdreasons` VALUES (51,'In liquidation',1);
 
 INSERT INTO `locations` VALUES ('MEL','Melbourne','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','+61 3 56789013','jacko@webdemo.com','Jack Roberts',1,0);
 INSERT INTO `locations` VALUES ('TOR','Toronto','Level 100 ','CN Tower','Toronto','','','','','','','Clive Contrary',1,1);
+
+--
+-- Dumping data for table `mrpdemandtypes`
+--
+
+INSERT INTO `mrpdemandtypes` (`mrpdemandtype`,`description`) VALUES ('FOR','Forecast');
 
 --
 -- Dumping data for table `paymentterms`
