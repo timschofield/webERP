@@ -103,3 +103,5 @@ UPDATE `purchorders` SET `status`='Authorised';
 UPDATE `purchorders` SET `status`='Printed' WHERE `allowprint`=0;
 UPDATE `purchorders` SET `status`='Completed' WHERE (SELECT SUM(`purchorderdetails`.`completed`)-COUNT(`purchorderdetails`.`podetailitem`) FROM `purchorderdetails` where `purchorderdetails`.`orderno`=`purchorders`.`orderno`)=0;
 UPDATE `purchorders` SET `deliverydate`=(SELECT MAX(`purchorderdetails`.`deliverydate`) FROM `purchorderdetails` WHERE `purchorderdetails`.`orderno`=`purchorders`.`orderno`);
+
+ALTER TABLE custnotes CHANGE note note TEXT NOT NULL;
