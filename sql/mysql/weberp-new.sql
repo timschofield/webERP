@@ -472,7 +472,7 @@ CREATE TABLE `custnotes` (
   `noteid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `debtorno` varchar(10) NOT NULL DEFAULT '0',
   `href` varchar(100) NOT NULL,
-  `note` text NOT NULL,
+  `note` text,
   `date` date NOT NULL DEFAULT '0000-00-00',
   `priority` varchar(20) NOT NULL,
   PRIMARY KEY (`noteid`)
@@ -2700,7 +2700,6 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 --
 
 INSERT INTO `www_users` VALUES ('admin','weberp','Demonstration user','','','','MEL',8,'2009-05-17 14:03:53','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
-INSERT INTO `www_users` VALUES ('tims','0ddf97e70f0d8e93f5f2dbf28d61c72fd059f221','','','','','MEL',6,'2009-02-06 08:57:06','','A4','1,1,1,1,1,1,1,1,',0,50,'jelly','en_GB');
 
 --
 -- Dumping data for table `edi_orders_segs`
