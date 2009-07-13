@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.55 $ */
+/* $Revision: 1.56 $ */
 
 $PageSecurity = 2;
 
@@ -572,7 +572,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!="") {
 			echo '<table WIDTH=45% colspan=2 BORDER=2 cellpadding=4>';
 			echo "<tr><th WIDTH=33%>" . _('Customer Mapping') . "</th></tr>";
 			echo '</td><td VALIGN=TOp>'; /* Mapping */
-			echo '' . _('Mapping is enabled, Map will display below.') . '';
+			echo '<div class="centre"' . _('Mapping is enabled, Map will display below.') . '</div>';
 			echo '<div align="center" id="map" style="width: '. $map_width . 'px; height: ' .  $map_height  . 'px"></div><br>';
 			echo "</th></tr></table>";
 		}
@@ -678,7 +678,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!="") {
        	$sql = 'SELECT * FROM custnotes where debtorno="' . $_SESSION['CustomerID'] . '" ORDER BY date DESC';
        	$result = DB_query($sql,$db);
 		if (DB_num_rows($result)<>0){
-			echo '<br><img src="'.$rootpath.'/css/'.$theme.'/images/note_add.png" title="' . _('Customer Notes') . '" alt="">' . ' ' . _('Customer Notes') . '<br>';
+			echo '<br><div class="centre"><img src="'.$rootpath.'/css/'.$theme.'/images/note_add.png" title="' . _('Customer Notes') . '" alt="">' . ' ' . _('Customer Notes') . '<br></div>';
        		echo '<table border=1 width=45%>';
        		echo '<tr>
                       <th>' . _('date') . '</th>
@@ -725,7 +725,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!="") {
        	$sql = 'SELECT * FROM debtortypenotes where typeid="' . $CustomerType . '" ORDER BY date DESC';
        	$result = DB_query($sql,$db);
 		if (DB_num_rows($result)<>0){
-			echo '<div class="centre"><img src="'.$rootpath.'/css/'.$theme.'/images/folder_add.png" title="' . _('Customer Type (Group) Notes') . '" alt="">' . ' ' . _('Customer Type (Group) Notes for:' . '<b> ' . $CustomerTypeName . '</b>') . '<br></div>';
+			echo '<br><div class="centre"><img src="'.$rootpath.'/css/'.$theme.'/images/folder_add.png" title="' . _('Customer Type (Group) Notes') . '" alt="">' . ' ' . _('Customer Type (Group) Notes for:' . '<b> ' . $CustomerTypeName . '</b>') . '<br></div>';
        		echo '<table border=1 width=45%>';
        		echo '<tr>
                      	<th>' . _('date') . '</th>
