@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.53 $ */
+/* $Revision: 1.54 $ */
 
 $PageSecurity = 2;
 
@@ -566,7 +566,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!="") {
 	if ($_SESSION['geocode_integration']==1){
 		echo '<br>';
 		if ($lat ==0){
-			echo '' . _('Mapping is enabled, but no Mapping data to display for this Customer.') . '';
+			echo '<div class="centre">' . _('Mapping is enabled, but no Mapping data to display for this Customer.') . '</div>';
 		} else {
 			echo '<tr><td colspan=2>';
 			echo '<table WIDTH=45% colspan=2 BORDER=2 cellpadding=4>';
@@ -670,7 +670,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!="") {
 			echo '</table>';
 		} else {
 			if ($_SESSION['CustomerID']!=""){
-				echo '<br><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' . _('Customer Contacts') . '" alt=""><a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Contact') . '</a><br>';
+				echo '<br><div class="centre"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' . _('Customer Contacts') . '" alt=""><a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Contact') . '</a></div><br>';
 			}
 		}
 		// Customer Notes
