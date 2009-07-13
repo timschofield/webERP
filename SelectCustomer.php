@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.56 $ */
+/* $Revision: 1.57 $ */
 
 $PageSecurity = 2;
 
@@ -678,7 +678,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!="") {
        	$sql = 'SELECT * FROM custnotes where debtorno="' . $_SESSION['CustomerID'] . '" ORDER BY date DESC';
        	$result = DB_query($sql,$db);
 		if (DB_num_rows($result)<>0){
-			echo '<br><div class="centre"><img src="'.$rootpath.'/css/'.$theme.'/images/note_add.png" title="' . _('Customer Notes') . '" alt="">' . ' ' . _('Customer Notes') . '<br></div>';
+			echo '<br><div class="centre"><img src="'.$rootpath.'/css/'.$theme.'/images/note_add.png" title="' . _('Customer Notes') . '" alt="">' . ' ' . _('Customer Notes') . '</div><br>';
        		echo '<table border=1 width=45%>';
        		echo '<tr>
                       <th>' . _('date') . '</th>
@@ -725,7 +725,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!="") {
        	$sql = 'SELECT * FROM debtortypenotes where typeid="' . $CustomerType . '" ORDER BY date DESC';
        	$result = DB_query($sql,$db);
 		if (DB_num_rows($result)<>0){
-			echo '<br><div class="centre"><img src="'.$rootpath.'/css/'.$theme.'/images/folder_add.png" title="' . _('Customer Type (Group) Notes') . '" alt="">' . ' ' . _('Customer Type (Group) Notes for:' . '<b> ' . $CustomerTypeName . '</b>') . '<br></div>';
+			echo '<br><div class="centre"><img src="'.$rootpath.'/css/'.$theme.'/images/folder_add.png" title="' . _('Customer Type (Group) Notes') . '" alt="">' . ' ' . _('Customer Type (Group) Notes for:' . '<b> ' . $CustomerTypeName . '</b>') . '</div><br>';
        		echo '<table border=1 width=45%>';
        		echo '<tr>
                      	<th>' . _('date') . '</th>
