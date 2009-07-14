@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.38 $ */
+/* $Revision: 1.39 $ */
 
 $PageSecurity = 11;
 
@@ -481,10 +481,12 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 									$SQL = "INSERT INTO stockserialitems (stockid,
 												loccode,
 												serialno,
+												qualitytext,
 												quantity)
 											VALUES ('" . $OrderLine->StockID . "',
 												'" . $_SESSION['PO']->Location . "',
 												'" . $Item->BundleRef . "',
+												'""',
 												" . $Item->BundleQty . ")";
 								}
 
