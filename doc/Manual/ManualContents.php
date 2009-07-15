@@ -497,7 +497,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Differences on Exchange</LI>
                 <LI>Receipts Processing</LI>
                 <LI>Deposits Listing</LI>
-                <LI>Allocate Credits To A Customer's Account
+                <LI>Allocate Credits To A Customer's Account</LI>
               </UL>
               <BR>
             </LI>

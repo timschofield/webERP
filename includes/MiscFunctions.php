@@ -161,4 +161,15 @@ function AddCarriageReturns($str) {
 	return str_replace('\r\n',chr(10),$str); 
 }
 
+
+function wikiLink($type, $id) {
+	
+	if ($_SESSION['WikiApp']==_('WackoWiki')){
+	echo '<a target="_blank" href="../' . $_SESSION['WikiPath'] . '/' . $type .  $id . '">' . _('Wiki ' . $type . ' Knowlege Base') . '</A><BR>';
+	} elseif ($_SESSION['WikiApp']==_('MediaWiki')){
+		echo '<a target="_blank" href="../' . $_SESSION['WikiPath'] . '/index.php/' . $type . '/' .  $id . '">' . _('Wiki ' . $type . ' Knowlege Base') . '</A><BR>';
+	}
+
+}//wikiLink
+
 ?>

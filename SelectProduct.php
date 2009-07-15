@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.47 $ */
+/* $Revision: 1.48 $ */
 
 $PageSecurity = 2;
 $PricesSecurity = 9;
@@ -9,8 +9,6 @@ include('includes/session.inc');
 $title = _('Search Inventory Items');
 
 include('includes/header.inc');
-
-include('includes/Wiki.php');
 
 $msg = '';
 

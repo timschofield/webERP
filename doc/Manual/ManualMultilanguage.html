@@ -28,14 +28,14 @@ The gettext translation files are held in the locale directory, under this direc
 <br><br>New directories will need to be made up if a translator wishes to have a local version for their language. Under the locale directory the five character locale abbreviation code directory there is a further sub-directory called LC_MESSAGES - this is where the translation files exist. There are two files in each of these directories:
 <BR><BR>
 1. messages.po this file contains all the strings to be translated. This is the only file of concern for translators
-<BR>2. messages.mo this is a binary machine searchable tranlation file used by gettext. The .mo file is automatically produced by a gettext utility (msgfmt.exe or msgfmt in *nix) using the messages.po file (the syntax from a command window is msgfmt.exe messages.po). The main effort is required to get the .po file translated - the .mo file is easily and happily created by the webERP project admin if required.
+<BR>2. messages.mo this is a binary machine searchable translation file used by gettext. The .mo file is automatically produced by a gettext utility (msgfmt.exe or msgfmt in *nix) using the messages.po file (the syntax from a command window is msgfmt.exe messages.po). The main effort is required to get the .po file translated - the .mo file is easily and happily created by the webERP project admin if required.
 <BR><BR>
 Any text editor can be used to edit the .po file (GNU Emacs contains specific functionality for editing .po files there is a special PO-Mode) - there is also a utility called poedit which is often recommended by translators.
 <BR><BR>
 <B><FONT SIZE=+1>Understanding the messages.po File</FONT></B>
 <BR><BR>
 The translation is performed by tranlating the strings in the messages.po file into the other language. It is important to work on the most recent messages.po file from the locale/en_GB/LC_MESSAGES/ deirectory in the CVS.
-However, the most recent messages template file can be emailed on request to info@webrp.org or through a note to the translation list.
+This can be downloaded from http://web-erp.cvs.sourceforge.net/viewvc/*checkout*/web-erp/webERP/locale/en_GB/LC_MESSAGES/messages.po
 <BR><BR>
 The messages.po is made up of sections
 <BR><BR>

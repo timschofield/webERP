@@ -1,18 +1,16 @@
 <?php
-/* $Revision: 1.42 $ */
+/* $Revision: 1.43 $ */
 
 $PageSecurity = 2;
 
 include('includes/session.inc');
 $title = _('Search Suppliers');
 include('includes/header.inc');
-include('includes/Wiki.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if (!isset($_SESSION['SupplierID'])){
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Suppliers') . '';
 }
-
 
 // only get geocode information if integration is on, and supplier has been selected
 if ($_SESSION['geocode_integration']==1 AND isset($_SESSION['SupplierID'])){

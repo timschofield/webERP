@@ -1,9 +1,9 @@
 SET FOREIGN_KEY_CHECKS = 0;
--- MySQL dump 10.13  Distrib 5.1.31, for pc-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.1.35, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	5.1.31
+-- Server version	5.1.35
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -15,8 +15,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- Table structure for table `accountgroups`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `accountgroups` (
   `groupname` char(30) NOT NULL DEFAULT '',
   `sectioninaccounts` int(11) NOT NULL DEFAULT '0',
@@ -27,41 +25,32 @@ CREATE TABLE `accountgroups` (
   KEY `SequenceInTB` (`sequenceintb`),
   KEY `sectioninaccounts` (`sectioninaccounts`),
   KEY `parentgroupname` (`parentgroupname`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `accountsection`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `accountsection` (
   `sectionid` int(11) NOT NULL DEFAULT '0',
   `sectionname` text NOT NULL,
   PRIMARY KEY (`sectionid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `areas`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `areas` (
   `areacode` char(3) NOT NULL,
   `areadescription` varchar(25) NOT NULL DEFAULT '',
   PRIMARY KEY (`areacode`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `assetmanager`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `assetmanager` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `serialno` varchar(30) NOT NULL DEFAULT '',
@@ -73,29 +62,23 @@ CREATE TABLE `assetmanager` (
   `cost` double NOT NULL DEFAULT '0',
   `depn` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `audittrail`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `audittrail` (
   `transactiondate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `userid` varchar(20) NOT NULL DEFAULT '',
   `querystring` text,
   KEY `UserID` (`userid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `bankaccounts`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `bankaccounts` (
   `accountcode` int(11) NOT NULL DEFAULT '0',
   `currcode` char(3) NOT NULL,
@@ -106,15 +89,12 @@ CREATE TABLE `bankaccounts` (
   KEY `currcode` (`currcode`),
   KEY `BankAccountName` (`bankaccountname`),
   KEY `BankAccountNumber` (`bankaccountnumber`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `banktrans`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `banktrans` (
   `banktransid` bigint(20) NOT NULL AUTO_INCREMENT,
   `type` smallint(6) NOT NULL DEFAULT '0',
@@ -134,15 +114,12 @@ CREATE TABLE `banktrans` (
   KEY `TransType` (`banktranstype`),
   KEY `Type` (`type`,`transno`),
   KEY `CurrCode` (`currcode`)
-) TYPE=innodb AUTO_INCREMENT=5;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=5;
 
 --
 -- Table structure for table `bom`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `bom` (
   `parent` char(20) NOT NULL DEFAULT '',
   `component` char(20) NOT NULL DEFAULT '',
@@ -160,15 +137,12 @@ CREATE TABLE `bom` (
   KEY `Parent` (`parent`,`effectiveafter`,`effectiveto`,`loccode`),
   KEY `Parent_2` (`parent`),
   KEY `WorkCentreAdded` (`workcentreadded`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `buckets`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `buckets` (
   `workcentre` char(5) NOT NULL DEFAULT '',
   `availdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -176,15 +150,12 @@ CREATE TABLE `buckets` (
   PRIMARY KEY (`workcentre`,`availdate`),
   KEY `WorkCentre` (`workcentre`),
   KEY `AvailDate` (`availdate`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `chartdetails`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `chartdetails` (
   `accountcode` int(11) NOT NULL DEFAULT '0',
   `period` smallint(6) NOT NULL DEFAULT '0',
@@ -194,15 +165,12 @@ CREATE TABLE `chartdetails` (
   `bfwdbudget` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`accountcode`,`period`),
   KEY `Period` (`period`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `chartmaster`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `chartmaster` (
   `accountcode` int(11) NOT NULL DEFAULT '0',
   `accountname` char(50) NOT NULL DEFAULT '',
@@ -211,15 +179,12 @@ CREATE TABLE `chartmaster` (
   KEY `AccountCode` (`accountcode`),
   KEY `AccountName` (`accountname`),
   KEY `Group_` (`group_`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `cogsglpostings`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `cogsglpostings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `area` char(2) NOT NULL DEFAULT '',
@@ -232,15 +197,12 @@ CREATE TABLE `cogsglpostings` (
   KEY `StkCat` (`stkcat`),
   KEY `GLCode` (`glcode`),
   KEY `SalesType` (`salestype`)
-) TYPE=innodb AUTO_INCREMENT=4;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=4;
 
 --
 -- Table structure for table `companies`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `companies` (
   `coycode` int(11) NOT NULL DEFAULT '1',
   `coyname` varchar(50) NOT NULL DEFAULT '',
@@ -269,28 +231,22 @@ CREATE TABLE `companies` (
   `gllink_stock` tinyint(1) DEFAULT '1',
   `freightact` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`coycode`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `config`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `config` (
   `confname` varchar(35) NOT NULL DEFAULT '',
   `confvalue` text NOT NULL,
   PRIMARY KEY (`confname`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `contractbom`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `contractbom` (
   `contractref` char(20) NOT NULL DEFAULT '',
   `component` char(20) NOT NULL DEFAULT '',
@@ -303,15 +259,12 @@ CREATE TABLE `contractbom` (
   KEY `ContractRef` (`contractref`),
   KEY `WorkCentreAdded` (`workcentreadded`),
   KEY `WorkCentreAdded_2` (`workcentreadded`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `contractreqts`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `contractreqts` (
   `contractreqid` int(11) NOT NULL AUTO_INCREMENT,
   `contract` char(20) NOT NULL DEFAULT '',
@@ -320,15 +273,12 @@ CREATE TABLE `contractreqts` (
   `priceperunit` decimal(20,4) NOT NULL DEFAULT '0.0000',
   PRIMARY KEY (`contractreqid`),
   KEY `Contract` (`contract`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `contracts`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `contracts` (
   `contractref` varchar(20) NOT NULL DEFAULT '',
   `contractdescription` varchar(50) NOT NULL DEFAULT '',
@@ -356,15 +306,12 @@ CREATE TABLE `contracts` (
   KEY `TypeAbbrev` (`typeabbrev`),
   KEY `WORef` (`woref`),
   KEY `DebtorNo` (`debtorno`,`branchcode`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `currencies`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `currencies` (
   `currency` char(20) NOT NULL DEFAULT '',
   `currabrev` char(3) NOT NULL DEFAULT '',
@@ -373,15 +320,12 @@ CREATE TABLE `currencies` (
   `rate` double NOT NULL DEFAULT '1',
   PRIMARY KEY (`currabrev`),
   KEY `Country` (`country`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `custallocns`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `custallocns` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `amt` decimal(20,4) NOT NULL DEFAULT '0.0000',
@@ -392,15 +336,12 @@ CREATE TABLE `custallocns` (
   KEY `DateAlloc` (`datealloc`),
   KEY `TransID_AllocFrom` (`transid_allocfrom`),
   KEY `TransID_AllocTo` (`transid_allocto`)
-) TYPE=innodb AUTO_INCREMENT=3;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=3;
 
 --
 -- Table structure for table `custbranch`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `custbranch` (
   `branchcode` varchar(10) NOT NULL DEFAULT '',
   `debtorno` varchar(10) NOT NULL DEFAULT '',
@@ -442,15 +383,12 @@ CREATE TABLE `custbranch` (
   KEY `DefaultLocation` (`defaultlocation`),
   KEY `DefaultShipVia` (`defaultshipvia`),
   KEY `taxgroupid` (`taxgroupid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `custcontacts`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `custcontacts` (
   `contid` int(11) NOT NULL AUTO_INCREMENT,
   `debtorno` varchar(10) NOT NULL,
@@ -459,15 +397,12 @@ CREATE TABLE `custcontacts` (
   `phoneno` varchar(20) NOT NULL,
   `notes` varchar(255) NOT NULL,
   PRIMARY KEY (`contid`)
-) TYPE=innodb AUTO_INCREMENT=6;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=6;
 
 --
 -- Table structure for table `custnotes`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `custnotes` (
   `noteid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `debtorno` varchar(10) NOT NULL DEFAULT '0',
@@ -476,15 +411,12 @@ CREATE TABLE `custnotes` (
   `date` date NOT NULL DEFAULT '0000-00-00',
   `priority` varchar(20) NOT NULL,
   PRIMARY KEY (`noteid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `debtorsmaster`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `debtorsmaster` (
   `debtorno` varchar(10) NOT NULL DEFAULT '',
   `name` varchar(40) NOT NULL DEFAULT '',
@@ -525,15 +457,12 @@ CREATE TABLE `debtorsmaster` (
   KEY `EDIInvoices` (`ediinvoices`),
   KEY `EDIOrders` (`ediorders`),
   KEY `debtorsmaster_ibfk_5` (`typeid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `debtortrans`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `debtortrans` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `transno` int(11) NOT NULL DEFAULT '0',
@@ -568,43 +497,34 @@ CREATE TABLE `debtortrans` (
   KEY `TransNo` (`transno`),
   KEY `Type_2` (`type`,`transno`),
   KEY `EDISent` (`edisent`)
-) TYPE=innodb AUTO_INCREMENT=7;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=7;
 
 --
 -- Table structure for table `debtortranstaxes`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `debtortranstaxes` (
   `debtortransid` int(11) NOT NULL DEFAULT '0',
   `taxauthid` tinyint(4) NOT NULL DEFAULT '0',
   `taxamount` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`debtortransid`,`taxauthid`),
   KEY `taxauthid` (`taxauthid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `debtortype`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `debtortype` (
   `typeid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `typename` varchar(100) NOT NULL,
   PRIMARY KEY (`typeid`)
-) TYPE=innodb AUTO_INCREMENT=2;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=2;
 
 --
 -- Table structure for table `debtortypenotes`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `debtortypenotes` (
   `noteid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `typeid` tinyint(4) NOT NULL DEFAULT '0',
@@ -613,15 +533,12 @@ CREATE TABLE `debtortypenotes` (
   `date` date NOT NULL DEFAULT '0000-00-00',
   `priority` varchar(20) NOT NULL,
   PRIMARY KEY (`noteid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `deliverynotes`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `deliverynotes` (
   `deliverynotenumber` int(11) NOT NULL,
   `deliverynotelineno` tinyint(4) NOT NULL,
@@ -633,15 +550,12 @@ CREATE TABLE `deliverynotes` (
   `deliverydate` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`deliverynotenumber`,`deliverynotelineno`),
   KEY `deliverynotes_ibfk_2` (`salesorderno`,`salesorderlineno`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `discountmatrix`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `discountmatrix` (
   `salestype` char(2) NOT NULL DEFAULT '',
   `discountcategory` char(2) NOT NULL DEFAULT '',
@@ -651,29 +565,23 @@ CREATE TABLE `discountmatrix` (
   KEY `QuantityBreak` (`quantitybreak`),
   KEY `DiscountCategory` (`discountcategory`),
   KEY `SalesType` (`salestype`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `edi_orders_seg_groups`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `edi_orders_seg_groups` (
   `seggroupno` tinyint(4) NOT NULL DEFAULT '0',
   `maxoccur` int(4) NOT NULL DEFAULT '0',
   `parentseggroup` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`seggroupno`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `edi_orders_segs`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `edi_orders_segs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `segtag` char(3) NOT NULL DEFAULT '',
@@ -682,15 +590,12 @@ CREATE TABLE `edi_orders_segs` (
   PRIMARY KEY (`id`),
   KEY `SegTag` (`segtag`),
   KEY `SegNo` (`seggroup`)
-) TYPE=innodb AUTO_INCREMENT=96;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=96;
 
 --
 -- Table structure for table `ediitemmapping`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `ediitemmapping` (
   `supporcust` varchar(4) NOT NULL DEFAULT '',
   `partnercode` varchar(10) NOT NULL DEFAULT '',
@@ -701,15 +606,12 @@ CREATE TABLE `ediitemmapping` (
   KEY `StockID` (`stockid`),
   KEY `PartnerStockID` (`partnerstockid`),
   KEY `SuppOrCust` (`supporcust`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `edimessageformat`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `edimessageformat` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `partnercode` varchar(10) NOT NULL DEFAULT '',
@@ -720,15 +622,12 @@ CREATE TABLE `edimessageformat` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `PartnerCode` (`partnercode`,`messagetype`,`sequenceno`),
   KEY `Section` (`section`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `factorcompanies`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `factorcompanies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `coyname` varchar(50) NOT NULL DEFAULT '',
@@ -743,15 +642,12 @@ CREATE TABLE `factorcompanies` (
   `fax` varchar(25) NOT NULL DEFAULT '',
   `email` varchar(55) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) TYPE=innodb AUTO_INCREMENT=4;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=4;
 
 --
 -- Table structure for table `freightcosts`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `freightcosts` (
   `shipcostfromid` int(11) NOT NULL AUTO_INCREMENT,
   `locationfrom` varchar(5) NOT NULL DEFAULT '',
@@ -768,15 +664,12 @@ CREATE TABLE `freightcosts` (
   KEY `LocationFrom` (`locationfrom`),
   KEY `ShipperID` (`shipperid`),
   KEY `Destination_2` (`destination`,`locationfrom`,`shipperid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `geocode_param`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `geocode_param` (
   `geocodeid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `geocode_key` varchar(200) NOT NULL DEFAULT '',
@@ -786,15 +679,12 @@ CREATE TABLE `geocode_param` (
   `map_width` varchar(10) NOT NULL DEFAULT '',
   `map_host` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`geocodeid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `gltrans`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `gltrans` (
   `counterindex` int(11) NOT NULL AUTO_INCREMENT,
   `type` smallint(6) NOT NULL DEFAULT '0',
@@ -817,15 +707,12 @@ CREATE TABLE `gltrans` (
   KEY `TypeNo` (`typeno`),
   KEY `Type_and_Number` (`type`,`typeno`),
   KEY `JobRef` (`jobref`)
-) TYPE=innodb AUTO_INCREMENT=123;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=123;
 
 --
 -- Table structure for table `grns`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `grns` (
   `grnbatch` smallint(6) NOT NULL DEFAULT '0',
   `grnno` int(11) NOT NULL AUTO_INCREMENT,
@@ -842,15 +729,12 @@ CREATE TABLE `grns` (
   KEY `ItemCode` (`itemcode`),
   KEY `PODetailItem` (`podetailitem`),
   KEY `SupplierID` (`supplierid`)
-) TYPE=innodb AUTO_INCREMENT=15;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=15;
 
 --
 -- Table structure for table `holdreasons`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `holdreasons` (
   `reasoncode` smallint(6) NOT NULL DEFAULT '1',
   `reasondescription` char(30) NOT NULL DEFAULT '',
@@ -858,15 +742,12 @@ CREATE TABLE `holdreasons` (
   PRIMARY KEY (`reasoncode`),
   KEY `ReasonCode` (`reasoncode`),
   KEY `ReasonDescription` (`reasondescription`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `lastcostrollup`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `lastcostrollup` (
   `stockid` char(20) NOT NULL DEFAULT '',
   `totalonhand` double NOT NULL DEFAULT '0',
@@ -879,15 +760,12 @@ CREATE TABLE `lastcostrollup` (
   `newmatcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `newlabcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `newoheadcost` decimal(20,4) NOT NULL DEFAULT '0.0000'
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `locations`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `locations` (
   `loccode` varchar(5) NOT NULL DEFAULT '',
   `locationname` varchar(50) NOT NULL DEFAULT '',
@@ -905,15 +783,12 @@ CREATE TABLE `locations` (
   `managed` int(11) DEFAULT '0',
   PRIMARY KEY (`loccode`),
   KEY `taxprovinceid` (`taxprovinceid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `locstock`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `locstock` (
   `loccode` varchar(5) NOT NULL DEFAULT '',
   `stockid` varchar(20) NOT NULL DEFAULT '',
@@ -921,15 +796,12 @@ CREATE TABLE `locstock` (
   `reorderlevel` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`loccode`,`stockid`),
   KEY `StockID` (`stockid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `loctransfers`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `loctransfers` (
   `reference` int(11) NOT NULL DEFAULT '0',
   `stockid` varchar(20) NOT NULL DEFAULT '',
@@ -943,30 +815,24 @@ CREATE TABLE `loctransfers` (
   KEY `ShipLoc` (`shiploc`),
   KEY `RecLoc` (`recloc`),
   KEY `StockID` (`stockid`)
-) TYPE=innodb COMMENT='Stores Shipments To And From Locations';
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB COMMENT='Stores Shipments To And From Locations';
 
 --
 -- Table structure for table `mrpcalendar`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `mrpcalendar` (
   `calendardate` date NOT NULL,
   `daynumber` int(6) NOT NULL,
   `manufacturingflag` smallint(6) NOT NULL DEFAULT '1',
   PRIMARY KEY (`calendardate`),
   KEY `daynumber` (`daynumber`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `mrpdemands`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `mrpdemands` (
   `demandid` int(11) NOT NULL AUTO_INCREMENT,
   `stockid` varchar(20) NOT NULL DEFAULT '',
@@ -976,29 +842,23 @@ CREATE TABLE `mrpdemands` (
   PRIMARY KEY (`demandid`),
   KEY `StockID` (`stockid`),
   KEY `mrpdemands_ibfk_1` (`mrpdemandtype`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `mrpdemandtypes`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `mrpdemandtypes` (
   `mrpdemandtype` varchar(6) NOT NULL DEFAULT '',
   `description` char(30) NOT NULL DEFAULT '',
   PRIMARY KEY (`mrpdemandtype`),
   KEY `mrpdemandtype` (`mrpdemandtype`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `orderdeliverydifferenceslog`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `orderdeliverydifferenceslog` (
   `orderno` int(11) NOT NULL DEFAULT '0',
   `invoiceno` int(11) NOT NULL DEFAULT '0',
@@ -1012,30 +872,24 @@ CREATE TABLE `orderdeliverydifferenceslog` (
   KEY `DebtorNo` (`debtorno`,`branch`),
   KEY `Can_or_BO` (`can_or_bo`),
   KEY `OrderNo` (`orderno`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `paymentmethods`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `paymentmethods` (
   `paymentid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `paymentname` varchar(15) NOT NULL DEFAULT '',
   `paymenttype` int(11) NOT NULL DEFAULT '1',
   `receipttype` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`paymentid`)
-) TYPE=innodb AUTO_INCREMENT=4;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=4;
 
 --
 -- Table structure for table `paymentterms`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `paymentterms` (
   `termsindicator` char(2) NOT NULL DEFAULT '',
   `terms` char(40) NOT NULL DEFAULT '',
@@ -1044,29 +898,23 @@ CREATE TABLE `paymentterms` (
   PRIMARY KEY (`termsindicator`),
   KEY `DaysBeforeDue` (`daysbeforedue`),
   KEY `DayInFollowingMonth` (`dayinfollowingmonth`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `periods`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `periods` (
   `periodno` smallint(6) NOT NULL DEFAULT '0',
   `lastdate_in_period` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`periodno`),
   KEY `LastDate_in_Period` (`lastdate_in_period`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `prices`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `prices` (
   `stockid` varchar(20) NOT NULL DEFAULT '',
   `typeabbrev` char(2) NOT NULL DEFAULT '',
@@ -1079,15 +927,12 @@ CREATE TABLE `prices` (
   KEY `DebtorNo` (`debtorno`),
   KEY `StockID` (`stockid`),
   KEY `TypeAbbrev` (`typeabbrev`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `purchdata`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `purchdata` (
   `supplierno` char(10) NOT NULL DEFAULT '',
   `stockid` char(20) NOT NULL DEFAULT '',
@@ -1103,8 +948,7 @@ CREATE TABLE `purchdata` (
   KEY `StockID` (`stockid`),
   KEY `SupplierNo` (`supplierno`),
   KEY `Preferred` (`preferred`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `purchorderauth`
@@ -1122,8 +966,6 @@ CREATE TABLE `purchorderauth` (
 -- Table structure for table `purchorderdetails`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `purchorderdetails` (
   `podetailitem` int(11) NOT NULL AUTO_INCREMENT,
   `orderno` int(11) NOT NULL DEFAULT '0',
@@ -1159,15 +1001,12 @@ CREATE TABLE `purchorderdetails` (
   KEY `OrderNo` (`orderno`),
   KEY `ShiptRef` (`shiptref`),
   KEY `Completed` (`completed`)
-) TYPE=innodb AUTO_INCREMENT=4;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=4;
 
 --
 -- Table structure for table `purchorders`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `purchorders` (
   `orderno` int(11) NOT NULL AUTO_INCREMENT,
   `supplierno` varchar(10) NOT NULL DEFAULT '',
@@ -1198,15 +1037,12 @@ CREATE TABLE `purchorders` (
   KEY `SupplierNo` (`supplierno`),
   KEY `IntoStockLocation` (`intostocklocation`),
   KEY `AllowPrintPO` (`allowprint`)
-) TYPE=innodb AUTO_INCREMENT=3;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=3;
 
 --
 -- Table structure for table `recurringsalesorders`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `recurringsalesorders` (
   `recurrorderno` int(11) NOT NULL AUTO_INCREMENT,
   `debtorno` varchar(10) NOT NULL DEFAULT '',
@@ -1238,15 +1074,12 @@ CREATE TABLE `recurringsalesorders` (
   KEY `ordertype` (`ordertype`),
   KEY `locationindex` (`fromstkloc`),
   KEY `branchcode` (`branchcode`,`debtorno`)
-) TYPE=innodb AUTO_INCREMENT=8;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=8;
 
 --
 -- Table structure for table `recurrsalesorderdetails`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `recurrsalesorderdetails` (
   `recurrorderno` int(11) NOT NULL DEFAULT '0',
   `stkcode` varchar(20) NOT NULL DEFAULT '',
@@ -1256,15 +1089,12 @@ CREATE TABLE `recurrsalesorderdetails` (
   `narrative` text NOT NULL,
   KEY `orderno` (`recurrorderno`),
   KEY `stkcode` (`stkcode`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `reportcolumns`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `reportcolumns` (
   `reportid` smallint(6) NOT NULL DEFAULT '0',
   `colno` smallint(6) NOT NULL DEFAULT '0',
@@ -1281,15 +1111,12 @@ CREATE TABLE `reportcolumns` (
   `valformat` char(1) NOT NULL DEFAULT 'N',
   `constant` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`reportid`,`colno`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `reportfields`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `reportfields` (
   `id` int(8) NOT NULL AUTO_INCREMENT,
   `reportid` int(5) NOT NULL DEFAULT '0',
@@ -1302,15 +1129,12 @@ CREATE TABLE `reportfields` (
   `params` text,
   PRIMARY KEY (`id`),
   KEY `reportid` (`reportid`)
-) TYPE=innodb AUTO_INCREMENT=1805;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=1805;
 
 --
 -- Table structure for table `reportheaders`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `reportheaders` (
   `reportid` smallint(6) NOT NULL AUTO_INCREMENT,
   `reportheading` varchar(80) NOT NULL DEFAULT '',
@@ -1332,28 +1156,22 @@ CREATE TABLE `reportheaders` (
   `lower4` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`reportid`),
   KEY `ReportHeading` (`reportheading`)
-) TYPE=innodb AUTO_INCREMENT=2;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=2;
 
 --
 -- Table structure for table `reportlinks`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `reportlinks` (
   `table1` varchar(25) NOT NULL DEFAULT '',
   `table2` varchar(25) NOT NULL DEFAULT '',
   `equation` varchar(75) NOT NULL DEFAULT ''
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `reports`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `reports` (
   `id` int(5) NOT NULL AUTO_INCREMENT,
   `reportname` varchar(30) NOT NULL DEFAULT '',
@@ -1416,15 +1234,12 @@ CREATE TABLE `reports` (
   `table6criteria` varchar(75) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`reportname`,`groupname`)
-) TYPE=innodb AUTO_INCREMENT=136;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=136;
 
 --
 -- Table structure for table `salesanalysis`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `salesanalysis` (
   `typeabbrev` char(2) NOT NULL DEFAULT '',
   `periodno` smallint(6) NOT NULL DEFAULT '0',
@@ -1450,44 +1265,35 @@ CREATE TABLE `salesanalysis` (
   KEY `Area` (`area`),
   KEY `BudgetOrActual` (`budgetoractual`),
   KEY `Salesperson` (`salesperson`)
-) TYPE=innodb AUTO_INCREMENT=5;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=5;
 
 --
 -- Table structure for table `salescat`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `salescat` (
   `salescatid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `parentcatid` tinyint(4) DEFAULT NULL,
   `salescatname` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`salescatid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `salescatprod`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `salescatprod` (
   `salescatid` tinyint(4) NOT NULL DEFAULT '0',
   `stockid` varchar(20) NOT NULL DEFAULT '',
   PRIMARY KEY (`salescatid`,`stockid`),
   KEY `salescatid` (`salescatid`),
   KEY `stockid` (`stockid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `salesglpostings`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `salesglpostings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `area` varchar(3) NOT NULL,
@@ -1500,15 +1306,12 @@ CREATE TABLE `salesglpostings` (
   KEY `Area` (`area`),
   KEY `StkCat` (`stkcat`),
   KEY `SalesType` (`salestype`)
-) TYPE=innodb AUTO_INCREMENT=3;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=3;
 
 --
 -- Table structure for table `salesman`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `salesman` (
   `salesmancode` char(3) NOT NULL DEFAULT '',
   `salesmanname` char(30) NOT NULL DEFAULT '',
@@ -1518,15 +1321,12 @@ CREATE TABLE `salesman` (
   `breakpoint` decimal(10,0) NOT NULL DEFAULT '0',
   `commissionrate2` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`salesmancode`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `salesorderdetails`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `salesorderdetails` (
   `orderlineno` int(11) NOT NULL DEFAULT '0',
   `orderno` int(11) NOT NULL DEFAULT '0',
@@ -1545,15 +1345,12 @@ CREATE TABLE `salesorderdetails` (
   KEY `OrderNo` (`orderno`),
   KEY `StkCode` (`stkcode`),
   KEY `Completed` (`completed`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `salesorders`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `salesorders` (
   `orderno` int(11) NOT NULL,
   `debtorno` varchar(10) NOT NULL DEFAULT '',
@@ -1590,85 +1387,67 @@ CREATE TABLE `salesorders` (
   KEY `BranchCode` (`branchcode`,`debtorno`),
   KEY `ShipVia` (`shipvia`),
   KEY `quotation` (`quotation`)
-) TYPE=innodb AUTO_INCREMENT=7;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `salestypes`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `salestypes` (
   `typeabbrev` char(2) NOT NULL DEFAULT '',
   `sales_type` char(20) NOT NULL DEFAULT '',
   PRIMARY KEY (`typeabbrev`),
   KEY `Sales_Type` (`sales_type`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `scripts`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `scripts` (
   `pageid` smallint(4) NOT NULL AUTO_INCREMENT,
   `filename` varchar(50) NOT NULL DEFAULT '',
   `pagedescription` text NOT NULL,
   PRIMARY KEY (`pageid`),
   KEY `FileName` (`filename`)
-) TYPE=innodb AUTO_INCREMENT=167 COMMENT='Index of all scripts';
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=167 COMMENT='Index of all scripts';
 
 --
 -- Table structure for table `securitygroups`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `securitygroups` (
   `secroleid` int(11) NOT NULL DEFAULT '0',
   `tokenid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`secroleid`,`tokenid`),
   KEY `secroleid` (`secroleid`),
   KEY `tokenid` (`tokenid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `securityroles`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `securityroles` (
   `secroleid` int(11) NOT NULL AUTO_INCREMENT,
   `secrolename` text NOT NULL,
   PRIMARY KEY (`secroleid`)
-) TYPE=innodb AUTO_INCREMENT=9;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=9;
 
 --
 -- Table structure for table `securitytokens`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `securitytokens` (
   `tokenid` int(11) NOT NULL DEFAULT '0',
   `tokenname` text NOT NULL,
   PRIMARY KEY (`tokenid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `shipmentcharges`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `shipmentcharges` (
   `shiptchgid` int(11) NOT NULL AUTO_INCREMENT,
   `shiptref` int(11) NOT NULL DEFAULT '0',
@@ -1681,15 +1460,12 @@ CREATE TABLE `shipmentcharges` (
   KEY `ShiptRef` (`shiptref`),
   KEY `StockID` (`stockid`),
   KEY `TransType_2` (`transtype`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `shipments`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `shipments` (
   `shiptref` int(11) NOT NULL DEFAULT '0',
   `voyageref` varchar(20) NOT NULL DEFAULT '0',
@@ -1703,29 +1479,23 @@ CREATE TABLE `shipments` (
   KEY `SupplierID` (`supplierid`),
   KEY `ShipperRef` (`voyageref`),
   KEY `Vessel` (`vessel`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `shippers`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `shippers` (
   `shipper_id` int(11) NOT NULL AUTO_INCREMENT,
   `shippername` char(40) NOT NULL DEFAULT '',
   `mincharge` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`shipper_id`)
-) TYPE=innodb AUTO_INCREMENT=11;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=11;
 
 --
 -- Table structure for table `stockcategory`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `stockcategory` (
   `categoryid` char(6) NOT NULL DEFAULT '',
   `categorydescription` char(20) NOT NULL DEFAULT '',
@@ -1738,15 +1508,12 @@ CREATE TABLE `stockcategory` (
   PRIMARY KEY (`categoryid`),
   KEY `CategoryDescription` (`categorydescription`),
   KEY `StockType` (`stocktype`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `stockcatproperties`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `stockcatproperties` (
   `stkcatpropid` int(11) NOT NULL AUTO_INCREMENT,
   `categoryid` char(6) NOT NULL,
@@ -1756,30 +1523,24 @@ CREATE TABLE `stockcatproperties` (
   `reqatsalesorder` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`stkcatpropid`),
   KEY `categoryid` (`categoryid`)
-) TYPE=innodb AUTO_INCREMENT=4;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=4;
 
 --
 -- Table structure for table `stockcheckfreeze`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `stockcheckfreeze` (
   `stockid` varchar(20) NOT NULL DEFAULT '',
   `loccode` varchar(5) NOT NULL DEFAULT '',
   `qoh` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`stockid`,`loccode`),
   KEY `LocCode` (`loccode`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `stockcounts`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `stockcounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stockid` varchar(20) NOT NULL DEFAULT '',
@@ -1789,15 +1550,12 @@ CREATE TABLE `stockcounts` (
   PRIMARY KEY (`id`),
   KEY `StockID` (`stockid`),
   KEY `LocCode` (`loccode`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `stockitemproperties`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `stockitemproperties` (
   `stockid` varchar(20) NOT NULL,
   `stkcatpropid` int(11) NOT NULL,
@@ -1805,15 +1563,12 @@ CREATE TABLE `stockitemproperties` (
   PRIMARY KEY (`stockid`,`stkcatpropid`),
   KEY `stockid` (`stockid`),
   KEY `value` (`value`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `stockmaster`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `stockmaster` (
   `stockid` varchar(20) NOT NULL DEFAULT '',
   `categoryid` varchar(6) NOT NULL DEFAULT '',
@@ -1853,15 +1608,12 @@ CREATE TABLE `stockmaster` (
   KEY `Controlled` (`controlled`),
   KEY `DiscountCategory` (`discountcategory`),
   KEY `taxcatid` (`taxcatid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `stockmoves`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `stockmoves` (
   `stkmoveno` int(11) NOT NULL AUTO_INCREMENT,
   `stockid` varchar(20) NOT NULL DEFAULT '',
@@ -1892,15 +1644,12 @@ CREATE TABLE `stockmoves` (
   KEY `Show_On_Inv_Crds` (`show_on_inv_crds`),
   KEY `Hide` (`hidemovt`),
   KEY `reference` (`reference`)
-) TYPE=innodb AUTO_INCREMENT=42;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=42;
 
 --
 -- Table structure for table `stockmovestaxes`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `stockmovestaxes` (
   `stkmoveno` int(11) NOT NULL DEFAULT '0',
   `taxauthid` tinyint(4) NOT NULL DEFAULT '0',
@@ -1910,15 +1659,12 @@ CREATE TABLE `stockmovestaxes` (
   PRIMARY KEY (`stkmoveno`,`taxauthid`),
   KEY `taxauthid` (`taxauthid`),
   KEY `calculationorder` (`taxcalculationorder`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `stockserialitems`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `stockserialitems` (
   `stockid` varchar(20) NOT NULL DEFAULT '',
   `loccode` varchar(5) NOT NULL DEFAULT '',
@@ -1930,15 +1676,12 @@ CREATE TABLE `stockserialitems` (
   KEY `StockID` (`stockid`),
   KEY `LocCode` (`loccode`),
   KEY `serialno` (`serialno`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `stockserialmoves`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `stockserialmoves` (
   `stkitmmoveno` int(11) NOT NULL AUTO_INCREMENT,
   `stockmoveno` int(11) NOT NULL DEFAULT '0',
@@ -1949,15 +1692,12 @@ CREATE TABLE `stockserialmoves` (
   KEY `StockMoveNo` (`stockmoveno`),
   KEY `StockID_SN` (`stockid`,`serialno`),
   KEY `serialno` (`serialno`)
-) TYPE=innodb AUTO_INCREMENT=67;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=67;
 
 --
 -- Table structure for table `suppallocs`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `suppallocs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `amt` double NOT NULL DEFAULT '0',
@@ -1968,15 +1708,12 @@ CREATE TABLE `suppallocs` (
   KEY `TransID_AllocFrom` (`transid_allocfrom`),
   KEY `TransID_AllocTo` (`transid_allocto`),
   KEY `DateAlloc` (`datealloc`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `suppliercontacts`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `suppliercontacts` (
   `supplierid` varchar(10) NOT NULL DEFAULT '',
   `contact` varchar(30) NOT NULL DEFAULT '',
@@ -1989,15 +1726,12 @@ CREATE TABLE `suppliercontacts` (
   PRIMARY KEY (`supplierid`,`contact`),
   KEY `Contact` (`contact`),
   KEY `SupplierID` (`supplierid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `suppliers`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `suppliers` (
   `supplierid` varchar(10) NOT NULL DEFAULT '',
   `suppname` varchar(40) NOT NULL DEFAULT '',
@@ -2030,15 +1764,12 @@ CREATE TABLE `suppliers` (
   KEY `SuppName` (`suppname`),
   KEY `taxgroupid` (`taxgroupid`),
   KEY `suppliers_ibfk_4` (`factorcompanyid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `supptrans`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `supptrans` (
   `transno` int(11) NOT NULL DEFAULT '0',
   `type` smallint(6) NOT NULL DEFAULT '0',
@@ -2066,58 +1797,46 @@ CREATE TABLE `supptrans` (
   KEY `TranDate` (`trandate`),
   KEY `TransNo` (`transno`),
   KEY `Type` (`type`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `supptranstaxes`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `supptranstaxes` (
   `supptransid` int(11) NOT NULL DEFAULT '0',
   `taxauthid` tinyint(4) NOT NULL DEFAULT '0',
   `taxamount` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`supptransid`,`taxauthid`),
   KEY `taxauthid` (`taxauthid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `systypes`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `systypes` (
   `typeid` smallint(6) NOT NULL DEFAULT '0',
   `typename` char(50) NOT NULL DEFAULT '',
   `typeno` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`typeid`),
   KEY `TypeNo` (`typeno`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `tags`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `tags` (
   `tagref` tinyint(4) NOT NULL AUTO_INCREMENT,
   `tagdescription` varchar(50) NOT NULL,
   PRIMARY KEY (`tagref`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `taxauthorities`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `taxauthorities` (
   `taxid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `description` varchar(20) NOT NULL DEFAULT '',
@@ -2130,15 +1849,12 @@ CREATE TABLE `taxauthorities` (
   PRIMARY KEY (`taxid`),
   KEY `TaxGLCode` (`taxglcode`),
   KEY `PurchTaxGLAccount` (`purchtaxglaccount`)
-) TYPE=innodb AUTO_INCREMENT=14;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=14;
 
 --
 -- Table structure for table `taxauthrates`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `taxauthrates` (
   `taxauthority` tinyint(4) NOT NULL DEFAULT '1',
   `dispatchtaxprovince` tinyint(4) NOT NULL DEFAULT '1',
@@ -2148,41 +1864,32 @@ CREATE TABLE `taxauthrates` (
   KEY `TaxAuthority` (`taxauthority`),
   KEY `dispatchtaxprovince` (`dispatchtaxprovince`),
   KEY `taxcatid` (`taxcatid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `taxcategories`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `taxcategories` (
   `taxcatid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `taxcatname` varchar(30) NOT NULL DEFAULT '',
   PRIMARY KEY (`taxcatid`)
-) TYPE=innodb AUTO_INCREMENT=6;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=6;
 
 --
 -- Table structure for table `taxgroups`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `taxgroups` (
   `taxgroupid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `taxgroupdescription` varchar(30) NOT NULL DEFAULT '',
   PRIMARY KEY (`taxgroupid`)
-) TYPE=innodb AUTO_INCREMENT=4;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=4;
 
 --
 -- Table structure for table `taxgrouptaxes`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `taxgrouptaxes` (
   `taxgroupid` tinyint(4) NOT NULL DEFAULT '0',
   `taxauthid` tinyint(4) NOT NULL DEFAULT '0',
@@ -2191,41 +1898,32 @@ CREATE TABLE `taxgrouptaxes` (
   PRIMARY KEY (`taxgroupid`,`taxauthid`),
   KEY `taxgroupid` (`taxgroupid`),
   KEY `taxauthid` (`taxauthid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `taxprovinces`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `taxprovinces` (
   `taxprovinceid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `taxprovincename` varchar(30) NOT NULL DEFAULT '',
   PRIMARY KEY (`taxprovinceid`)
-) TYPE=innodb AUTO_INCREMENT=2;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=2;
 
 --
 -- Table structure for table `unitsofmeasure`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `unitsofmeasure` (
   `unitid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `unitname` varchar(15) NOT NULL DEFAULT '',
   PRIMARY KEY (`unitid`)
-) TYPE=innodb AUTO_INCREMENT=7;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB AUTO_INCREMENT=7;
 
 --
 -- Table structure for table `woitems`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `woitems` (
   `wo` int(11) NOT NULL,
   `stockid` char(20) NOT NULL DEFAULT '',
@@ -2235,15 +1933,12 @@ CREATE TABLE `woitems` (
   `nextlotsnref` varchar(20) DEFAULT '',
   PRIMARY KEY (`wo`,`stockid`),
   KEY `stockid` (`stockid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `worequirements`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `worequirements` (
   `wo` int(11) NOT NULL,
   `parentstockid` varchar(20) NOT NULL,
@@ -2254,15 +1949,12 @@ CREATE TABLE `worequirements` (
   PRIMARY KEY (`wo`,`parentstockid`,`stockid`),
   KEY `stockid` (`stockid`),
   KEY `worequirements_ibfk_3` (`parentstockid`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `workcentres`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `workcentres` (
   `code` char(5) NOT NULL DEFAULT '',
   `location` char(5) NOT NULL DEFAULT '',
@@ -2274,15 +1966,12 @@ CREATE TABLE `workcentres` (
   PRIMARY KEY (`code`),
   KEY `Description` (`description`),
   KEY `Location` (`location`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `workorders`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `workorders` (
   `wo` int(11) NOT NULL,
   `loccode` char(5) NOT NULL DEFAULT '',
@@ -2294,15 +1983,12 @@ CREATE TABLE `workorders` (
   KEY `LocCode` (`loccode`),
   KEY `StartDate` (`startdate`),
   KEY `RequiredBy` (`requiredby`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `woserialnos`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `woserialnos` (
   `wo` int(11) NOT NULL,
   `stockid` varchar(20) NOT NULL,
@@ -2310,15 +1996,12 @@ CREATE TABLE `woserialnos` (
   `quantity` double NOT NULL DEFAULT '1',
   `qualitytext` text NOT NULL,
   PRIMARY KEY (`wo`,`stockid`,`serialno`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `www_users`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `www_users` (
   `userid` varchar(20) NOT NULL DEFAULT '',
   `password` text NOT NULL,
@@ -2339,8 +2022,7 @@ CREATE TABLE `www_users` (
   PRIMARY KEY (`userid`),
   KEY `CustomerID` (`customerid`),
   KEY `DefaultLocation` (`defaultlocation`)
-) TYPE=innodb;
-SET character_set_client = @saved_cs_client;
+) TYPE=InnoDB;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -2348,12 +2030,12 @@ SET character_set_client = @saved_cs_client;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-05-17  4:31:59
--- MySQL dump 10.13  Distrib 5.1.31, for pc-linux-gnu (i686)
+-- Dump completed on 2009-06-24  7:49:44
+-- MySQL dump 10.13  Distrib 5.1.35, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	5.1.31
+-- Server version	5.1.35
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -2850,6 +2532,7 @@ INSERT INTO `edi_orders_seg_groups` VALUES (50,1,0);
 
 INSERT INTO `config` VALUES ('AllowOrderLineItemNarrative','0');
 INSERT INTO `config` VALUES ('AllowSalesOfZeroCostItems','0');
+INSERT INTO `config` VALUES ('AutoCreateWOs','1');
 INSERT INTO `config` VALUES ('AutoDebtorNo','0');
 INSERT INTO `config` VALUES ('AutoIssue','1');
 INSERT INTO `config` VALUES ('CheckCreditLimits','1');
@@ -2858,16 +2541,18 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','AUD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','30');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2009-04-25');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2009-06-07');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultCustomerType','1');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
 INSERT INTO `config` VALUES ('DefaultDisplayRecordsMax','50');
+INSERT INTO `config` VALUES ('DefaultFactoryLocation','MEL');
 INSERT INTO `config` VALUES ('DefaultPriceList','DE');
 INSERT INTO `config` VALUES ('DefaultTaxCategory','1');
 INSERT INTO `config` VALUES ('DefaultTheme','silverwolf');
 INSERT INTO `config` VALUES ('Default_Shipper','1');
+INSERT INTO `config` VALUES ('DefineControlledOnWOEntry','1');
 INSERT INTO `config` VALUES ('DispatchCutOffTime','14');
 INSERT INTO `config` VALUES ('DoFreightCalc','0');
 INSERT INTO `config` VALUES ('EDIHeaderMsgId','D:01B:UN:EAN010');
@@ -2877,6 +2562,7 @@ INSERT INTO `config` VALUES ('EDI_MsgPending','companies/weberp/EDI_MsgPending')
 INSERT INTO `config` VALUES ('EDI_MsgSent','companies/weberp/EDI_Sent');
 INSERT INTO `config` VALUES ('Extended_CustomerInfo','0');
 INSERT INTO `config` VALUES ('Extended_SupplierInfo','0');
+INSERT INTO `config` VALUES ('FactoryManagerEmail','phil@logicworks.co.nz');
 INSERT INTO `config` VALUES ('FreightChargeAppliesIfLessThan','1000');
 INSERT INTO `config` VALUES ('FreightTaxCategory','1');
 INSERT INTO `config` VALUES ('geocode_integration','0');
@@ -2914,10 +2600,6 @@ INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
 INSERT INTO `config` VALUES ('WikiApp','WackoWiki');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
 INSERT INTO `config` VALUES ('YearEnd','3');
-INSERT INTO `config` VALUES ('AutoCreateWOs','1');
-INSERT INTO `config` VALUES ('DefaultFactoryLocation','MEL');
-INSERT INTO `config` VALUES ('FactoryManagerEmail','phil@logicworks.co.nz');
-INSERT INTO `config` VALUES ('DefineControlledOnWOEntry','1');
 
 --
 -- Dumping data for table `unitsofmeasure`
@@ -3039,7 +2721,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-05-17  4:31:59
+-- Dump completed on 2009-06-24  7:49:45
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);

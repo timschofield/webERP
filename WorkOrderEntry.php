@@ -1,13 +1,11 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 $PageSecurity = 10;
 
 include('includes/session.inc');
-
 $title = _('Work Order Entry');
-
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
  echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
@@ -495,9 +493,12 @@ if (isset($NumberOfOutputs)){
 				} else {
 					$LotOrSN = _('Batches');
 				}
-				echo '<td><a href="' . $rootpath . '/WOSerialNos.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $_POST['OutputItem' .$i] . '&Description=' . $_POST['OutputItemDesc' .$i] . '&Serialised=' . $_POST['Serialised' .$i] . '&NextSerialNo=' . $_POST['NextLotSNRef' .$i] . '">' . $LotOrSN . '</a>';
+				echo '<td><a href="' . $rootpath . '/WOSerialNos.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $_POST['OutputItem' .$i] . '&Description=' . $_POST['OutputItemDesc' .$i] . '&Serialised=' . $_POST['Serialised' .$i] . '&NextSerialNo=' . $_POST['NextLotSNRef' .$i] . '">' . $LotOrSN . '</a></td>';
 			}
 		}
+		echo '<td>';
+		wikiLink('WorkOrder', $_POST['WO'] . $_POST['OutputItem' .$i]);
+		echo '</td>';
 		echo '</tr>';
 		echo '<input type="hidden" name="Controlled' . $i .'" value="' . $_POST['Controlled' . $i] . '">';
 		echo '<input type="hidden" name="Serialised' . $i .'" value="' . $_POST['Serialised' . $i] . '">';

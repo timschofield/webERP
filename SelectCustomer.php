@@ -1,12 +1,11 @@
 <?php
-/* $Revision: 1.57 $ */
+/* $Revision: 1.58 $ */
 
 $PageSecurity = 2;
 
 include('includes/session.inc');
 $title = _('Search Customers');
 include('includes/header.inc');
-include('includes/Wiki.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['Select'])) {
