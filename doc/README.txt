@@ -40,4 +40,4 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
 A copy of the GNU General Public License is included in the doc directory along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-Copyright Logic Works Ltd - 2007 - Contact: info@weberp.org
+Copyright weberp.org 2009 - Contact: info@weberp.org
