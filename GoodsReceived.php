@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.39 $ */
+/* $Revision: 1.40 $ */
 
 $PageSecurity = 11;
 
@@ -486,7 +486,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 											VALUES ('" . $OrderLine->StockID . "',
 												'" . $_SESSION['PO']->Location . "',
 												'" . $Item->BundleRef . "',
-												'""',
+												'',
 												" . $Item->BundleQty . ")";
 								}
 
