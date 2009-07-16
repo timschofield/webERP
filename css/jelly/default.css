@@ -148,10 +148,10 @@ div.error {
 }
 
 div.warn {
-	background:#fa0;
+	background: #fa0 url(images/error.png) top left no-repeat;
 	color: black;
 	border: 1px solid black;
-	PADDING-LEFT: 3px;
+	PADDING-LEFT: 10px;
         Z-INDEX: 1;
         width: 50%;
         FLOAT: none;
@@ -159,8 +159,8 @@ div.warn {
         MARGIN: 0 auto;
         POSITION: static;
         font-family: Verdana, Arial, Helvetica;
-        padding-top: 1px;
-        padding-bottom: 1px;
+        padding-top: 2px;
+        padding-bottom: 2px;
         font-weight: normal;
         font-size: 10px;
         TEXT-ALIGN:center;
@@ -546,8 +546,9 @@ span.main_menu_nolink {
 
 DIV.page_help_text {
 	background: lightgrey url(images/help.png) top left no-repeat;
-	padding-top:2px; 
 	BORDER: #a52a2a 1px solid;
+	padding-top:2px; 
+        padding-bottom: 2px;
 	PADDING-LEFT: 10px;
 	Z-INDEX: 1;
 	width: 50%;
@@ -556,7 +557,6 @@ DIV.page_help_text {
 	MARGIN: 0 auto;
 	POSITION: static;
 	font-family: Verdana, Arial, Helvetica;
-        padding-bottom: 2px;
         font-weight: normal;
         font-size: 10px;
         color: black;
