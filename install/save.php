@@ -85,6 +85,7 @@ function set_error($message) {
 function default_file_mode($temp_dir) {
 	$v = explode(".",PHP_VERSION);
 	$v = $v[0].$v[1];
+	
 	if($v > 41 && is_writable($temp_dir)) {
 		$filename = $temp_dir.'/test_permissions.txt';
 		$handle = fopen($filename, 'w');
@@ -244,42 +245,29 @@ else
 // End website company name
 
 // Check if the user has entered a correct path
-if (!file_exists($path_to_root.'/sql/mysql/weberp-demo.sql'))
-{
+if (!file_exists($path_to_root.'/sql/mysql/weberp-demo.sql')){
 	set_error('It appears the Absolute path that you entered is incorrect');
 }
 
 // Get admin email and validate it
-if (!isset($_POST['admin_email']) || $_POST['admin_email'] == '')
-{
+if (!isset($_POST['admin_email']) || $_POST['admin_email'] == ''){
 	set_error('Please enter an email for the Administrator account');
-}
-else
-{
-	if (eregi("^([0-9a-zA-Z]+[-._+&])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,6}$", $_POST['admin_email']))
-	{
+} else {
+	if (eregi("^([0-9a-zA-Z]+[-._+&])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,6}$", $_POST['admin_email'])) {
 		$admin_email = $_POST['admin_email'];
-	}
-	else
-	{
+	} else {
 		set_error('Please enter a valid email address for the Administrator account');
 	}
 }
 // Get the two admin passwords entered, and check that they match
-if (!isset($_POST['admin_password']) || $_POST['admin_password'] == '')
-{
+if (!isset($_POST['admin_password']) || $_POST['admin_password'] == '') {
 	set_error('Please enter a password for the Administrator account');
-}
-else
-{
+} else {
 	$admin_password = $_POST['admin_password'];
 }
-if (!isset($_POST['admin_repassword']) || $_POST['admin_repassword'] == '')
-{
+if (!isset($_POST['admin_repassword']) || $_POST['admin_repassword'] == '') {
 	set_error('Please make sure you re-enter the password for the Administrator account');
-}
-else
-{
+} else {
 	$admin_repassword = $_POST['admin_repassword'];
 }
 if ($admin_password != $admin_repassword)
@@ -288,21 +276,18 @@ if ($admin_password != $admin_repassword)
 }
 // End admin user details code
 
-//include_once($path_to_root . "/includes/ConnectDB_mysqli.inc");
-include_once("maintenance_db.inc");
-//include_once($path_to_root . "/config.php");
+include_once('maintenance_db.inc');
 
-
-$id = count($db_connections);
-if ($table_prefix != "" && $id > 0)
+if ($table_prefix != "" && $id > 0){
 	$table_prefix = $tb_pref_counter . "_";
-$db_connections[$id]['name'] = $company_name;
-$db_connections[$id]['host'] = $database_host;
-$db_connections[$id]['dbuser'] = $database_username;
-$db_connections[$id]['dbpassword'] = $database_password;
-$db_connections[$id]['dbname'] = $database_name;
-$db_connections[$id]['tbpref'] = $table_prefix;
-$db_connections[$id]['timezone'] = $timezone;
+}
+$db_connection['name'] = $company_name;
+$db_connection['host'] = $database_host;
+$db_connection['dbuser'] = $database_username;
+$db_connection['dbpassword'] = $database_password;
+$db_connection['dbname'] = $database_name;
+$db_connection['tbpref'] = $table_prefix;
+$db_connection['timezone'] = $timezone;
 
 $def_coy = $id;
 
@@ -314,39 +299,34 @@ $cmp_dir=$path_to_root.'/companies/'.$database_name;
 dircopy($change_dir, $cmp_dir, 0);
 //move($change_dir,$cmp_dir);  
 $err = write_config_db($table_prefix != "");
-if ($err == -1)
+if ($err == -1) {
 	set_error("Cannot open the configuration file ($config_filename)");
-else if ($err == -2)
+} elseif ($err == -2) {
 	set_error("Cannot write to the configuration file ($config_filename)");
-else if ($err == -3)
+} elseif ($err == -3) {
 	set_error("The configuration file $config_filename is not writable. Change its permissions so it is, then re-run step 4.");
-
+}
 // Try connecting to database
 
 $db = mysql_connect($database_host, $database_username, $database_password);
-if (!$db)
-{
+if (!$db){
 	set_error('Database host name, username and/or password incorrect. MySQL Error:<br />'.mysql_error());
 }
 
-if($install_tables == true)
-{
-		// Try to create the database
-		mysql_query('CREATE DATABASE IF NOT EXISTS `'.$database_name.'`');
-		mysql_select_db($database_name, $db);
+if($install_tables == true){
+	// Try to create the database
+	mysql_query('CREATE DATABASE IF NOT EXISTS `'.$database_name.'`');
+	mysql_select_db($database_name, $db);
 	//$import_filename = $path_to_root."/sql/mysql/weberp-demo.sql";
 	InstallLoadSql($path_to_root."/sql/mysql/weberp-new.sql");
-//	echo $import_filename;
+	//	echo $import_filename;
 	//$shell_command = C_MYSQL_PATH . " -h $host -u $user -p{$password} $dbname < $filename";
 	//shell_exec($shell_command);
 	//shell_exec("mysql -u ".$database_username." -p".$database_password." ".$database_name." < ".$import_filename);
-	if (!db_import($import_filename, $db_connections[$id]))
-	{
+	if (!db_import($import_filename, $db_connections[$id]))	{
 		set_error("Import error, try to import $import_filename manually via phpMyAdmin");
 	}
-}
-else
-{
+} else {
 	mysql_select_db($database_name, $db);
 }
 $sql = "UPDATE www_users SET password = '" . sha1($admin_password) . "', email = '".$admin_email."' WHERE user_id = 'admin'";
@@ -363,5 +343,4 @@ ini_set("max_execution_time", "60");
 echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $path_to_root ."/index.php?" . SID . "'>";
 
 exit();
-
 ?>

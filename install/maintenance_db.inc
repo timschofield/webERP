@@ -1,15 +1,9 @@
 <?php
-
-function write_config_db($new = false)
-{
-	global $path_to_root, $def_coy, $db_connections, $tb_pref_counter;
-	include_once($path_to_root . "/config.php");
-
-	if ($new)
-		$tb_pref_counter++;
-	$n = count($db_connections);
+function write_config_db() {
+	global $path_to_root, $def_coy, $db_connection;
+	
 	$msg = "<?php\n\n";
-	$msg .= "/* \$Revision: 1.2 $ */\n";
+	$msg .= "/* \$Revision: 1.3 $ */\n";
 	$msg .= "// User configurable variables\n";
 	$msg .= "//---------------------------------------------------\n\n";
 	$msg .= "//DefaultLanguage to use for the login screen and the setup of new users - the users language selection will override\n";
@@ -17,40 +11,37 @@ function write_config_db($new = false)
 	$msg .= "// Whether to display the demo login and password or not on the login screen\n";
 	$msg .= "\$allow_demo_mode = True;\n\n";
 	$msg .= "// webERP version\n\n";
-	$msg .= "\$Version = '3.10';\n\n";
+	$msg .= "\$Version = '3.11';\n\n";
 	
-	$msg .= "//$db_connections = array (\n";
+	$msg .= "//$db_connection = array (\n";
 	$msg .= "//0 => ";
-	for ($i = 0; $i < $n; $i++)
-	{
-		if ($i > 0)
+	for ($i = 0; $i < $n; $i++)	{
+		if ($i > 0) {
 			$msg .= "//tarray ";
-		else
+		} else {
 			$msg .= "//array ";
-		$msg .= "(//'name' => '" . $db_connections[$i]['name'] . "',\n";
-		$nm = $db_connections[$i]['dbname'];
-		
-	
+		}
+		$msg .= "(//'name' => '" . $db_connection['name'] . "',\n";
 		$msg .= "//  Connection information for the database\n";
 		$msg .= "// \$host is the computer ip address or name where the database is located\n";
 		$msg .= "// assuming that the web server is also the sql server\n";		
-		$msg .= "\$host = '" . $db_connections[$i]['host'] . "';\n\n";
+		$msg .= "\$host = '" . $db_connection['host'] . "';\n\n";
 		
 		$msg .= "// assuming that the web server is also the sql server\n";		
 		$msg .= "\$dbType = 'mysqli';\n";
 		
 		$msg .= "// assuming that the web server is also the sql server\n";		
-		$msg .= "\$dbuser = '" . $db_connections[$i]['dbuser'] . "';\n";
+		$msg .= "\$dbuser = '" . $db_connection['dbuser'] . "';\n";
 		$msg .= "// assuming that the web server is also the sql server\n";		
-		$msg .= "\$dbpassword = '" . $db_connections[$i]['dbpassword'] . "';\n";
+		$msg .= "\$dbpassword = '" . $db_connection['dbpassword'] . "';\n";
 		
-		$msg .= "//'tbpref' => '" . $db_connections[$i]['tbpref'] . "'";
+		$msg .= "//'tbpref' => '" . $db_connection['tbpref'] . "'";
 		
 		$msg .= "// The timezone of the business - this allows the possibility of having;\n";
 		
-		$msg .= "putenv('" . $db_connections[$i]['timezone'] . "');\n";
+		$msg .= "putenv('" . $db_connection['timezone'] . "');\n";
 		$msg .= "\$AllowCompanySelectionBox = true;\n";
-		$msg .= "\$DefaultCompany = '" . $nm. "';\n";
+		$msg .= "\$DefaultCompany = '" . $db_connection['name']. "';\n";
 		$msg .= "\$SessionLifeTime = 3600;\n";
 		$msg .= "\$MaximumExecutionTime =120;\n";
 		$msg .= "\$CryptFunction = 'sha1';\n";
@@ -72,135 +63,108 @@ function write_config_db($new = false)
 	$msg .= "?>";
 
 	$filename = $path_to_root . "/config.php";
-	// Check if the file exists and is writable first.
-	if (file_exists($filename) && is_writable($filename))
-	{
-		if (!$zp = fopen($filename, 'w'))
-		{
+	// Check if the file is writable first.
+	if(is_writable($filename)){
+		if (!$zp = fopen($filename, 'w')){
 			return -1;
-		}
-		else
-		{
-			if (!fwrite($zp, $msg))
-			{
+		} else {
+			if (!fwrite($zp, $msg)){
 				fclose($zp);
 				return -2;
 			}
-			// Close file
+			// close file
 			fclose($zp);
 		}
-	}
-	else
-	{
+	} else {
 		return -3;
 	}
 	return 0;
 }
 
-function db_create_db($connection)
-{
+function db_create_db($connection) {
 	$db = mysql_connect($connection["host"] ,
 		$connection["dbuser"], $connection["dbpassword"]);
-	if (!mysql_select_db($connection["dbname"], $db))
-	{
+	if (!mysql_select_db($connection["dbname"], $db)) {
 		$sql = "CREATE DATABASE " . $connection["dbname"] . "";
-		if (!mysql_query($sql))
+		if (!mysql_query($sql)){
 			return 0;
+		}
 		mysql_select_db($connection["dbname"], $db);
 	}
 	return $db;
 }
 
-function db_drop_db($connection)
-{
-	if ($connection["tbpref"] == "")
-	{
+function db_drop_db($connection) {
+	if ($connection["tbpref"] == "") {
 		$sql = "DROP DATABASE " . $connection["dbname"] . "";
 		return mysql_query($sql);
-	}
-	else
-	{
+	} else {
     	$res = db_query("show table status");
     	$all_tables = array();
-    	while($row = db_fetch($res))
+    	while($row = db_fetch($res)) {
     		$all_tables[] = $row;
+		}
         // get table structures
-		foreach ($all_tables as $table)
-		{
-			if (strpos($table['Name'], $connection["tbpref"]) === 0)
+		foreach ($all_tables as $table) {
+			if (strpos($table['Name'], $connection["tbpref"]) === 0) {
 				db_query("DROP TABLE `".$table['Name'] . "`");
+			}
 		}
 		//deleting the tables, how??
 		return true;
 	}
 }
 
-function db_import($filename, $connection)
-{
+function db_import($filename, $connection) {
 	$data_queries = array();
 	$drop_queries = array();
 	$table_queries = array();
 
 	// uncrompress gziped backup files
-	if (strpos($filename, ".gzip") || strpos($filename, ".GZIP"))
+	if (strpos($filename, ".gzip") || strpos($filename, ".GZIP")){
 		$lines = db_ungzip("lines", $filename);
-	elseif (strpos($filename, ".zip") || strpos($filename, ".ZIP"))
+	} elseif (strpos($filename, ".zip") || strpos($filename, ".ZIP")){
 		$lines = db_unzip("lines", $filename);
-	else
+	} else {
 		$lines = file("". $filename);
-
+	}
 	// divide insert and create sql queries
 	// $table is set to TRUE if the next line belongs to a create sql query
 	$table = false;
-	foreach($lines as $line)
-	{
+	foreach($lines as $line) {
 		$line = trim($line);
 
 		$line = str_replace("0_", $connection["tbpref"], $line);
 		// $line = str_replace("Y_", "0_", $line);
 		// the last line did not belong to a 'create' sql query
-		if (!$table)
-		{
-
+		if (!$table) {
 			// this line does not, too
-			if (strtolower(substr($line,0,6)) == "insert")
-			{
+			if (strtolower(substr($line,0,6)) == "insert") {
 				$data_queries[] = substr($line, 0, strlen($line) - 1);
 
 			// this line does not, too
-			}
-			elseif (strtolower(substr($line,0,6)) == "update")
-			{
+			} elseif (strtolower(substr($line,0,6)) == "update") {
 				$data_queries[] = substr($line, 0, strlen($line) - 1);
 
 			// this line does not, too
-			}
-			elseif (strtolower(substr($line, 0, 20)) == "drop table if exists")
-			{
+			} elseif (strtolower(substr($line, 0, 20)) == "drop table if exists"){
 				$drop_queries[] = substr($line, 0, strlen($line) - 1);
 
 			// this line does!
-			}
-			elseif (strtolower(substr($line, 0, 6)) == "create")
-			{
+			} elseif (strtolower(substr($line, 0, 6)) == "create") {
 				$table = true;
 				$table_queries[] = $line . "\n";
-			}
-			elseif (strtolower(substr($line, 0, 11)) == "alter table")
-			{
+			} elseif (strtolower(substr($line, 0, 11)) == "alter table") {
 				$data_queries[] = substr($line, 0, strlen($line) - 1);
 			}
 
 		// the current line belongs to a create sql query
-		}
-		else
-		{
-
+		} else {
 			// create sql query ending in this line
 			if (strtolower(substr($line, 0, 1)) == ")") {
 				$table = false;
 				$line = substr($line,0,strlen($line)-1);
-		  }
+  		    }
 			$table_queries[count($table_queries) - 1] .= $line . "\n";
 		}
 	}
@@ -208,13 +172,10 @@ function db_import($filename, $connection)
 	$sql_error = false;
 
 	// execute drop tables if exists queries
-	if (is_array($drop_queries))
-	{
-		foreach($drop_queries as $drop_query)
-		{
+	if (is_array($drop_queries)) {
+		foreach($drop_queries as $drop_query) {
 			$sql_error = false;
-			if (!db_query($drop_query))
-			{
+			if (!db_query($drop_query))	{
 				$sql_error = true;
 				//if ($CONF['import_error']) echo nl2br($drop_query)."\n<div class=\"bold_left\">".mysql_error()."</div><br>\n";
 			}
@@ -222,13 +183,10 @@ function db_import($filename, $connection)
 	}
 
 	// execute create tables queries
-	if (is_array($table_queries))
-	{
-		foreach($table_queries as $table_query)
-		{
+	if (is_array($table_queries)) {
+		foreach($table_queries as $table_query)	{
 			$sql_error = false;
-			if (!db_query($table_query))
-			{
+			if (!db_query($table_query)){
 				$sql_error = true;
 				//if ($CONF['import_error']) echo nl2br($table_query)."\n<div class=\"bold_left\">".mysql_error()."</div><br>\n";
 			}
@@ -236,13 +194,10 @@ function db_import($filename, $connection)
 	}
 
 	// execute insert data queries
-	if (is_array($data_queries))
-	{
-		foreach($data_queries as $data_query)
-		{
+	if (is_array($data_queries)) {
+		foreach($data_queries as $data_query) {
 			$sql_error = false;
-			if (!db_query($data_query))
-			{
+			if (!db_query($data_query))	{
 				//if ($CONF['import_error']) echo $data_query."\n<div class=\"bold_left\">".mysql_error()."</div><br>\n";
 				$sql_error = true;
 				return false;
@@ -251,14 +206,16 @@ function db_import($filename, $connection)
 	}
 
 	// show number successful executed querys or if an error did occur
-	if ($sql_error == 1)
+	if ($sql_error == 1){
 		return false;
+	
 		//echo "<div class=\"red\">".IM_ERROR.".</div>\n";
-	else
+	} else {
 		return true;
 		//echo "<div class=\"green\">".IM_SUCCESS." ".count($table_queries)." ".IM_TABLES." ".count($data_queries)." ".IM_ROWS." (".$import_file.")</div>\n";
 	//$shell_command = C_MYSQL_PATH . " -h $host -u $user -p{$password} $dbname < $filename";
 	//shell_exec($shell_command);
+	}
 }
 
 function InstallSplitSql($sql, $last_update) {
@@ -324,14 +281,13 @@ function InstallSplitSql($sql, $last_update) {
  return($ret);
 }
 
-function InstallLoadSQL($sqlfile, $last_update = null)
-{
+function InstallLoadSQL($sqlfile, $last_update = null) {
  global $dbErr, $dbMsg, $db;
 
  // Don't complain about missing files.
- if (! file_exists($sqlfile))
+ if (! file_exists($sqlfile)){
 	return;
-
+ }
  $mqr = @get_magic_quotes_runtime();
  @set_magic_quotes_runtime(0);
 
@@ -382,15 +338,12 @@ function db_unzip($mode, $path)
     $filename = substr($filename, 0, strlen($filename) - 4);
 
     // compare filname in zip and filename from $_GET
-    if (substr($all, 30, strlen($filename)) != $filename)
-    {
+    if (substr($all, 30, strlen($filename)) != $filename){
 		return '';
         // exit if names differ
         //echo F_WRONG_FILE.".";
         //exit;
-    }
-    else
-    {
+    } else {
     	// get the suffix of the filename in hex
         $crc_bugfix = substr(substr($filename, 0, strlen($filename) - 4), strlen($filename) - 12 - 4);
         $suffix = false;
@@ -409,16 +362,16 @@ function db_unzip($mode, $path)
     }
 
     // returns one string or an array of lines
-    if ($mode != "lines")
+    if ($mode != "lines") {
     	return $file_data;
-    else
+    } else {
     	return explode("\n", $file_data);
+	}
 }
 
 // generates a dump of $db database
 // $drop and $zip tell if to include the drop table statement or dry to pack
-function db_export($conn, $filename, $zip='no', $comment='')
-{
+function db_export($conn, $filename, $zip='no', $comment='') {
 
 	global $app_title, $version, $power_url, $path_to_root;
 
@@ -447,8 +400,7 @@ function db_export($conn, $filename, $zip='no', $comment='')
     $out.="# User: ".$_SESSION["wa_current_user"]->name."\n\n";
 
 	// write users comment
-	if ($comment)
-	{
+	if ($comment) {
 		$out .= "# Comment:\n";
 		$comment=preg_replace("'\n'","\n# ","# ".$comment);
 		//$comment=str_replace("\n", "\n# ", $comment);
@@ -462,16 +414,15 @@ function db_export($conn, $filename, $zip='no', $comment='')
     // get auto_increment values and names of all tables
     $res = db_query("show table status");
     $all_tables = array();
-    while($row = db_fetch($res))
-    {
+    while($row = db_fetch($res)){
 		//if ($conn["tbpref"] == "" || strpos($row['Name'], $conn["tbpref"]) !== false) replaced
 		if (($conn["tbpref"] == "" && !preg_match('/[0-9]+_/', $row['Name'])) ||
-			($conn["tbpref"] != "" && strpos($row['Name'], $conn["tbpref"]) !== false))
+			($conn["tbpref"] != "" && strpos($row['Name'], $conn["tbpref"]) !== false)){
     		$all_tables[] = $row;
+		}
     }
         // get table structures
-	foreach ($all_tables as $table)
-	{
+	foreach ($all_tables as $table) {
 		$res1 = db_query("SHOW CREATE TABLE `" . $table['Name'] . "`");
 		$tmp = db_fetch($res1);
 		$table_sql[$table['Name']] = $tmp["Create Table"];
@@ -479,14 +430,11 @@ function db_export($conn, $filename, $zip='no', $comment='')
 
 	// find foreign keys
 	$fks = array();
-	if (isset($table_sql))
-	{
-		foreach($table_sql as $tablenme=>$table)
-		{
+	if (isset($table_sql)){
+		foreach($table_sql as $tablenme=>$table) {
 			$tmp_table=$table;
 			// save all tables, needed for creating this table in $fks
-			while (($ref_pos = strpos($tmp_table, " REFERENCES ")) > 0)
-			{
+			while (($ref_pos = strpos($tmp_table, " REFERENCES ")) > 0) {
 				$tmp_table = substr($tmp_table, $ref_pos + 12);
 				$ref_pos = strpos($tmp_table, "(");
 				$fks[$tablenme][] = substr($tmp_table, 0, $ref_pos);
@@ -497,11 +445,9 @@ function db_export($conn, $filename, $zip='no', $comment='')
 	$all_tables = order_sql_tables($all_tables, $fks);
 
 	// as long as no error occurred
-	if (!$error)
-	{
+	if (!$error) {
 		//while($row=@mysql_fetch_array($res))
-		foreach ($all_tables as $row)
-		{
+		foreach ($all_tables as $row){
 			$tablename = $row['Name'];
 			$auto_incr[$tablename] = $row['Auto_increment'];
 
@@ -519,28 +465,24 @@ function db_export($conn, $filename, $zip='no', $comment='')
 			$out.="\n\n\n";
 
 			// export data
-			if (!$error)
-			{
+			if (!$error) {
 				$out.="### Data of table `".$tablename."` ###\n\n";
 
 				// check if field types are NULL or NOT NULL
 				$res3 = db_query("SHOW COLUMNS FROM `" . $tablename . "`");
 
 				$field_type = array();
-				for ($j = 0; $j < db_num_rows($res3); $j++)
-				{
+				for ($j = 0; $j < db_num_rows($res3); $j++) {
 					$row3 = db_fetch($res3);
 					$field_type[] = $row3[2];
 				}
 
 				$res2 = db_query("SELECT * FROM `" . $tablename . "`");
-				for ($j = 0; $j < db_num_rows($res2); $j++)
-				{
+				for ($j = 0; $j < db_num_rows($res2); $j++)	{
 					$out .= "INSERT INTO `" . $tablename . "` VALUES (";
 					$row2 = db_fetch_row($res2);
 					// run through each field
-					for ($k = 0; $k < $nf = db_num_fields($res2); $k++)
-					{
+					for ($k = 0; $k < $nf = db_num_fields($res2); $k++){
 						$out .= db_escape($row2[$k]);
 						if ($k < ($nf - 1))
 							$out .= ", ";
@@ -548,37 +490,33 @@ function db_export($conn, $filename, $zip='no', $comment='')
 					$out .= ");\n";
 
 					// if saving is successful, then empty $out, else set error flag
-					if (strlen($out) > $max_size && $zip != "zip")
-					{
-						if (save_to_file($backupfile, $zip, $out))
+					if (strlen($out) > $max_size && $zip != "zip"){
+						if (save_to_file($backupfile, $zip, $out)){
 							$out = "";
-						else
+						} else {
 							$error = true;
+						}
 					}
 				}
 
 			// an error occurred! Try to delete file and return error status
-			}
-			elseif ($error)
-			{
+			}elseif ($error) {
 				@unlink(BACKUP_PATH . $backupfile);
 				return false;
 			}
 
 			// if saving is successful, then empty $out, else set error flag
-			if (strlen($out) > $max_size && $zip != "zip")
-			{
-				if (save_to_file($backupfile, $zip, $out))
+			if (strlen($out) > $max_size && $zip != "zip") {
+				if (save_to_file($backupfile, $zip, $out)){
 					$out= "";
-				else
+				} else {
 					$error = true;
+				}
 			}
 		}
 
 	// an error occurred! Try to delete file and return error status
-	}
-	else
-	{
+	} else {
 		@unlink(BACKUP_PATH . $backupfile);
 		return false;
 	}
@@ -588,12 +526,9 @@ function db_export($conn, $filename, $zip='no', $comment='')
 
 	//if ($zip == "zip")
 	//	$zip = $time;
-	if (save_to_file($backupfile, $zip, $out))
-	{
+	if (save_to_file($backupfile, $zip, $out)) {
 		$out = "";
-	}
-	else
-	{
+	} else {
 		@unlink(BACKUP_PATH . $backupfile);
 		return false;
 	}
@@ -612,19 +547,16 @@ function order_sql_tables($tables, $fks)
 	$new_tables = array();
 	$existing = array();
 	$modified = true;
-	while (count($tables) && $modified == true)
-	{
+	while (count($tables) && $modified == true)	{
 	 	$modified = false;
-	    foreach ($tables as $key=>$row)
-	    {
+	    foreach ($tables as $key=>$row){
 	        // delete from $tables and add to $new_tables
-	        if (isset($fks[$row['Name']]))
-	        {
-	        	foreach($fks[$row['Name']] as $needed)
-	        	{
+	        if (isset($fks[$row['Name']])) {
+	        	foreach($fks[$row['Name']] as $needed) {
 	            	// go to next table if not all needed tables exist in $existing
-	                if (!in_array($needed,$existing))
+	                if (!in_array($needed,$existing)) {
 	                	continue 2;
+					}
 	            }
 	        }
             // delete from $tables and add to $new_tables
@@ -633,17 +565,16 @@ function order_sql_tables($tables, $fks)
             prev($tables);
             unset($tables[$key]);
             $modified = true;
-
 	    }
 	}
 
-	if (count($tables))
-	{
+	if (count($tables))	{
 	    // probably there are 'circles' in the constraints, bacause of that no proper backups can be created yet
 	    // TODO: this will be fixed sometime later through using 'alter table' commands to add the constraints after generating the tables
 	    // until now, just add the lasting tables to $new_tables, return them and print a warning
-	    foreach($tables as $row)
+	    foreach($tables as $row){
 	    	$new_tables[] = $row;
+		}
 	    echo "<div class=\"red_left\">THIS DATABASE SEEMS TO CONTAIN 'RING CONSTRAINTS'. WA DOES NOT SUPPORT THEM. PROBABLY THE FOLOWING BACKUP IS DEFECT!</div>";
 	}
 	return $new_tables;
@@ -651,27 +582,19 @@ function order_sql_tables($tables, $fks)
 
 // saves the string in $fileData to the file $backupfile as gz file or not ($zip)
 // returns backup file name if name has changed (zip), else TRUE. If saving failed, return value is FALSE
-function save_to_file($backupfile, $zip, $fileData)
-{
+function save_to_file($backupfile, $zip, $fileData) {
 	global $path_to_root;
 
-    if ($zip == "gzip")
-    {
-        if ($zp = @gzopen(BACKUP_PATH . $backupfile, "a9"))
-        {
+    if ($zip == "gzip"){
+        if ($zp = @gzopen(BACKUP_PATH . $backupfile, "a9")){
 			@gzwrite($zp, $fileData);
 			@gzclose($zp);
 			return true;
-        }
-        else
-        {
+        } else {
         	return false;
         }
-
     // $zip contains the timestamp
-    }
-    elseif ($zip == "zip")
-    {
+    } elseif ($zip == "zip") {
         // based on zip.lib.php 2.2 from phpMyBackupAdmin
         // offical zip format: http://www.pkware.com/appnote.txt
 
@@ -733,33 +656,23 @@ function save_to_file($backupfile, $zip, $fileData)
         // total # of entries "on this disk", total # of entries overall, size of central dir, offset to start of central dir, .zip file comment length
         $fileData .= pack('v', 1) . pack('v', 1) . pack('V', strlen($cdrec)) . pack('V', strlen($fr)) . "\x00\x00";
 
-        if ($zp = @fopen(BACKUP_PATH . $backupfile, "a"))
-        {
+        if ($zp = @fopen(BACKUP_PATH . $backupfile, "a")){
 			@fwrite($zp, $fileData);
 			@fclose($zp);
 			return true;
-        }
-        else
-        {
+        } else {
         	return false;
         }
 
 	// uncompressed
-    }
-    else
-    {
-        if ($zp = @fopen(BACKUP_PATH . $backupfile, "a"))
-        {
+    } else {
+        if ($zp = @fopen(BACKUP_PATH . $backupfile, "a")){
 			@fwrite($zp, $fileData);
 			@fclose($zp);
 			return true;
-        }
-        else
-        {
+        } else {
         	return false;
         }
     }
 }
-
-
 ?>

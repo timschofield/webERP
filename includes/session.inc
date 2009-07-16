@@ -1,10 +1,16 @@
 <?php
-/* $Revision: 1.65 $ */
+/* $Revision: 1.66 $ */
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
 }
-
+if (!file_exists($PathPrefix . 'config.php')){
+	$rootpath = dirname($_SERVER['PHP_SELF']);
+	if ($rootpath == '/' OR $rootpath == "\\") {
+		$rootpath = '';
+	}
+	header('Location:' . $rootpath . '/install/index.php');
+}
 include($PathPrefix . 'config.php');
 
 if (isset($SessionSavePath)){

@@ -132,11 +132,25 @@ function change_data(type) {
 		</tr>
 		<tr>
 			<td style="color: #666666;">config.php</td>
-			<td><?php if(is_writable($path_to_root.'/config.php')) { echo '<font class="good">Writeable</font>'; } elseif(!file_exists($path_to_root.'/config_db.php')) { echo '<font class="bad">File Not Found</font>'; } else { echo '<font class="bad">Unwriteable</font>'; } ?></td>
-			<td style="color: #666666;"><?php echo 'Company data dirs ('.  $comp_path. '/*)'; ?></td>
-			<td><?php if(is_writable($comp_path) && is_writable($comp_path.'/weberpdemo') && is_writable($comp_path.'/weberpdemo/part_pics'))
-			{ echo '<font class="good">Writeable</font>'; } elseif(!file_exists($comp_path)) {
-			 echo '<font class="bad">Directory Not Found</font>'; } else { echo '<font class="bad">Unwriteable</font>'; } ?></td>
+			<td><?php if(is_writable($path_to_root.'/config.php')) { 
+						echo '<font class="good">Writeable</font>'; 
+					  } elseif(!file_exists($path_to_root.'/config_db.php')) { 
+						echo '<font class="bad">File Not Found</font>'; 
+					  } else { 
+						echo '<font class="bad">Unwriteable</font>'; 
+					  } ?>
+			</td>
+			<td style="color: #666666;"><?php echo 'Company data dirs ('.  $comp_path. '/*)'; ?>
+			</td>
+			<td><?php if(is_writable($comp_path) && is_writable($comp_path.'/weberpdemo') && is_writable($comp_path.'/weberpdemo/part_pics')) { 
+						echo '<font class="good">Writeable</font>'; 
+					  } elseif(!file_exists($comp_path)) {
+			 			echo '<font class="bad">Directory Not Found</font>'; 
+					  } else { 
+						echo '<font class="bad">Unwriteable</font>'; 
+					  } 
+				 ?>
+		   </td>
 		</tr>
 		</table>
 		<table cellpadding="3" cellspacing="0" width="100%" align="center">
@@ -173,7 +187,13 @@ function change_data(type) {
 				<font style="cursor: pointer;" onclick="javascript: change_os('windows');">Windows</font>
 			</td>
 			<td>
-				<div name="file_perms_box" id="file_perms_box" style="margin: 0; padding: 0; display: <?php if(isset($_SESSION['operating_system']) AND $_SESSION['operating_system'] == 'windows') { echo 'none'; } else { echo 'block'; } ?>;">
+				<div name="file_perms_box" id="file_perms_box" style="margin: 0; padding: 0; display: <?php if(isset($_SESSION['operating_system']) AND $_SESSION['operating_system'] == 'windows') { 
+																												echo 'none'; 
+																											} else { 
+																												echo 'block'; 
+																											} 
+																										?>
+																										;">
 					<input type="checkbox" tabindex="6" name="world_writeable" id="world_writeable" value="true"<?php if(isset($_SESSION['world_writeable']) AND $_SESSION['world_writeable'] == true) { echo 'checked'; } ?> />
 					<label for="world_writeable">
 						World-writeable file permissions (777)
@@ -311,7 +331,7 @@ function change_data(type) {
 <tr>
 	<td align="center" style="font-size: 10px;">
 		<!-- Please note: the below reference to the GNU GPL should not be removed, as it provides a link for users to read about warranty, etc. -->
-		<a href="http://weberp.com/" style="color: #000000;" target="_blank">WebERP</a>
+		<a href="http://www.weberp.org/" style="color: #000000;" target="_blank">WebERP</a>
 		is	released under the
 		<a href="http://www.gnu.org/licenses/gpl.html" style="color: #000000;" target="_blank">GNU General Public License</a>
 		<!-- Please note: the above reference to the GNU GPL should not be removed, as it provides a link for users to read about warranty, etc. -->
