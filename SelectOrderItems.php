@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.99 $ */
+/* $Revision: 1.100 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -1497,9 +1497,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	#end of page full new headings if
 			}
 	#end of while loop
-			echo '<tr><td><input type="hidden" name="previous" value='.number_format($Offset-1).'><input tabindex='.number_format($j+7).' type="submit" name="Prev" value="Prev"></td>';
-			echo '<td style="text-align:center" colspan=6><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+8).' type="submit" value="Order"></td>';
-			echo '<td><input type="hidden" name="nextlist" value='.number_format($Offset+1).'><input tabindex='.number_format($j+9).' type="submit" name="Next" value="Next"></td></tr>';
+			echo '<tr><td><input type="hidden" name="previous" value='.number_format($Offset-1).'><input tabindex='.number_format($j+7).' type="submit" name="Prev" value="'._('Prev').'"></td>';
+			echo '<td style="text-align:center" colspan=6><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+8).' type="submit" value="'._('Order').'"></td>';
+			echo '<td><input type="hidden" name="nextlist" value='.number_format($Offset+1).'><input tabindex='.number_format($j+9).' type="submit" name="Next" value="'._('Next').'"></td></tr>';
 			echo '</table></form>';
 			echo $jsCall;
 
