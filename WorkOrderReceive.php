@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 11;
 
@@ -647,7 +647,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
         //update the wo with the new qtyrecd
         $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' ._('Could not update the work order item record with the total quantity received because');
-        $DbgMsg = _('The following SQL was used to update the work ordeer');
+        $DbgMsg = _('The following SQL was used to update the work order');
         $UpdateWOResult =DB_query("UPDATE woitems
                                     SET qtyrecd=qtyrecd+" . $QuantityReceived . ",
                                         nextlotsnref='" . $LastRef . "'

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 $PageSecurity = 5;
 
@@ -103,7 +103,7 @@ if (isset($_GET['SupplierID'])){
 if (isset($_POST['BankAccount']) and $_POST['BankAccount']!=''){
 	$_SESSION['PaymentDetail']->Account=$_POST['BankAccount'];
 	/*Get the bank account currency and set that too */
-	$ErrMsg = _('Could not get the currecny of the bank account');
+	$ErrMsg = _('Could not get the currency of the bank account');
 	$result = DB_query('SELECT currcode FROM bankaccounts WHERE accountcode =' . $_POST['BankAccount'],$db,$ErrMsg);
 	$myrow = DB_fetch_row($result);
 	$_SESSION['PaymentDetail']->AccountCurrency=$myrow[0];
@@ -127,7 +127,7 @@ if (isset($_POST['Paymenttype']) and $_POST['Paymenttype']!=''){
 
 if (isset($_POST['Currency']) and $_POST['Currency']!=''){
 	$_SESSION['PaymentDetail']->Currency=$_POST['Currency']; //payment currency
-	/*Get the exchange rate between the functional currecny and the payment currency*/
+	/*Get the exchange rate between the functional currency and the payment currency*/
 	$result = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail']->Currency . "'",$db);
 	$myrow = DB_fetch_row($result);
 	$tableExRate = $myrow[0]; //this is the rate of exchange between the functional currency and the payment currency
@@ -158,7 +158,7 @@ if (isset($_POST['Currency']) and $_POST['Currency']!=''){
 		$myrow = DB_fetch_row($result);
 		$SuggestedFunctionalExRate = $myrow[0];
 
-		/*Get the exchange rate between the functional currecny and the payment currency*/
+		/*Get the exchange rate between the functional currency and the payment currency*/
 		$result = DB_query("select rate FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail']->Currency . "'",$db);
 		$myrow = DB_fetch_row($result);
 		$tableExRate = $myrow[0]; //this is the rate of exchange between the functional currency and the payment currency

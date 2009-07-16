@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity=15;
 
@@ -72,7 +72,7 @@ if (isset($_POST['UpdateSalesAnalysis']) AND $_POST['PeriodNo']!=0){
 				WHERE stockid='" . $ItemsToUpdate['stockid'] . "'
 				AND periodno =" . $_POST['PeriodNo'];
 
-		$ErrMsg = _('Could not update the sales analysis records for') . ' ' . $ItemsToUpdate['stockid'] . ' ' . _('beacuse');
+		$ErrMsg = _('Could not update the sales analysis records for') . ' ' . $ItemsToUpdate['stockid'] . ' ' . _('because');
 		$UpdResult = DB_query($SQL,$db,$ErrMsg);
 
 

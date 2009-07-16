@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 11;
 
@@ -134,7 +134,7 @@ if (db_num_rows($LineItemsResult) > 0) {
 	$TableHeader = '<tr>	<th>'. _('Item'). '</th>
 				<th>'. _('Quantity'). '<br>'. _('Invoiced'). '</th>
 				<th>'. _('Quantity'). '<br>'. _('Received'). '</th>
-				<th>'. _('Inovoiced'). '<br>'. _('Charges'). '</th>
+				<th>'. _('Invoiced'). '<br>'. _('Charges'). '</th>
 				<th>'. _('Shipment'). '<br>'. _('Charges'). '</th>
 				<th>'. _('Shipment'). '<br>'. _('Cost'). '</th>
 				<th>'. _('Standard'). '<br>'. _('Cost'). '</th>

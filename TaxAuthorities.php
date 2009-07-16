@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 
 $PageSecurity=15;
@@ -191,7 +191,7 @@ if (!isset($SelectedTaxAuthID)) {
 
 
 if (isset($SelectedTaxAuthID)) {
-	echo "<div class='centre'><a href='" .  $_SERVER['PHP_SELF'] . '?' . SID ."'>" . _('Reveiw all defined tax authority records') . '</a></div>';
+	echo "<div class='centre'><a href='" .  $_SERVER['PHP_SELF'] . '?' . SID ."'>" . _('Review all defined tax authority records') . '</a></div>';
  }
 
 
