@@ -208,8 +208,8 @@ if (!isset($_POST['database_password'])) {
 if (!isset($_POST['company_name']) || $_POST['company_name'] == '') {
 	set_error('Please enter a company name');
 } else {
-	$database_name = $_SESSION['database_name'];
-	$_SESSION['DatabaseName'] = $_SESSION['database_name'];
+	$database_name = $_POST['company_name'];
+	$_SESSION['DatabaseName'] = $_POST['company_name'];
 }
 // Get table prefix
 $table_prefix = '';

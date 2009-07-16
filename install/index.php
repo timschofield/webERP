@@ -82,7 +82,7 @@ function change_data(type) {
 	<td class="content">
 			<h2>Welcome to the WebERP Installation Wizard.</h2>
 		<center>
-			<img src="<?php echo "../companies/weberp/logo.jpg"; ?>" width="250" height="50" alt="Logo" />
+			<img src="<?php echo "../companies/weberpdemo/logo.jpg"; ?>" width="250" height="50" alt="Logo" />
 		</center>
 
 
