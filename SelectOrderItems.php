@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.98 $ */
+/* $Revision: 1.99 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -435,7 +435,8 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 			include('includes/footer.inc');
 			exit;
 		}
-
+		// add echo
+		echo '<br>';
 		$myrow = DB_fetch_row($result);
 		$_SESSION['Items'.$identifier]->DeliverTo = $myrow[0];
 		$_SESSION['Items'.$identifier]->DelAdd1 = $myrow[1];
@@ -1165,7 +1166,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
 		echo '<br>
-			<table cellpadding=2 colspan=7 border=1>
+			<table width="90%" cellpadding="2" colspan="7" border="1">
 			<tr bgcolor=#800000>';
 		if($_SESSION['Items'.$identifier]->DefaultPOLine == 1){
 			echo '<th>' . _('PO Line') . '</th>';
@@ -1271,7 +1272,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
 				echo $RowStarter;
-				echo '<td colspan=7><textarea  name="Narrative_' . $OrderLine->LineNumber . '" cols=100% rows=1>' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br><hr></td></tr>';
+				echo '<td colspan=10>' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="200" rows="1">' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br></td></tr>';
 			} else {
 				echo '<input type=hidden name="Narrative" value="">';
 			}
