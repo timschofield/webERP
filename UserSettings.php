@@ -1,12 +1,15 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 $PageSecurity=1;
 
 include('includes/session.inc');
 $title = _('User Settings');
 include('includes/header.inc');
+
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/user.png" title="' . _('User Settings') . '" alt="">' . ' ' . _('User Settings');
+
 
 if (isset($_POST['Modify'])) {
 	// no input errors assumed initially before we test
@@ -174,7 +177,7 @@ if(!isset($_POST['email'])){
 
 echo "<td><input type=text name='email' size=40 value='" . $_POST['email'] . "'></td></tr>
 	</table>
-	<div class='centre'><input type='Submit' name='Modify' value=" . _('Modify') . '></div>
+	<br><div class='centre'><input type='Submit' name='Modify' value=" . _('Modify') . '></div>
 	</form>';
 
 include('includes/footer.inc');
