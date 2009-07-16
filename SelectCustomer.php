@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.58 $ */
+/* $Revision: 1.59 $ */
 
 $PageSecurity = 2;
 
@@ -425,7 +425,7 @@ if (isset($result)) {
 		echo "<input type=\"hidden\" name=\"PageOffset\" VALUE=\"". $_POST['PageOffset'] ."\"/>";
 
 		if ($ListPageMax >1) {
-			echo "<p>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+			echo "<p><div class=centre>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 
 			echo '<select name="PageOffset1">';
 
@@ -442,7 +442,7 @@ if (isset($result)) {
 				<input type=submit name="Go1" VALUE="' . _('Go') . '">
 				<input type=submit name="Previous" VALUE="' . _('Previous') . '">
 				<input type=submit name="Next" VALUE="' . _('Next') . '">';
- 			echo '<p>';
+ 			echo '</div>';
 		}
 
 		echo '<br><table cellpadding=2 colspan=7 BORDER=2>';
@@ -538,7 +538,7 @@ if (isset($result)) {
 //end if results to show
 if (!isset($_POST['CSV'])) {
 	if (isset($ListPageMax) and $ListPageMax>1) {
-		echo "<p>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+		echo "<p><div class=centre>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 
 		echo '<select name="PageOffset2">';
 
@@ -557,7 +557,7 @@ if (!isset($_POST['CSV'])) {
 			<input type=submit name="Next" VALUE="' . _('Next') . '">';
 	}
 	//end if results to show
-	echo '</form>';
+	echo '</div></form>';
 }
 
 // Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
@@ -669,7 +669,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!="") {
 			echo '</table>';
 		} else {
 			if ($_SESSION['CustomerID']!=""){
-				echo '<br><div class="centre"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' . _('Customer Contacts') . '" alt=""><a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Contact') . '</a></div><br>';
+				echo '<br><div class="centre"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' . _('Customer Contacts') . '" alt=""><a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Contact') . '</a></div>';
 			}
 		}
 		// Customer Notes
@@ -716,7 +716,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!="") {
       		echo '</table>';
 		} else {
 			if ($_SESSION['CustomerID']!=""){
-				echo '<br><div class="centre"><img src="'.$rootpath.'/css/'.$theme.'/images/note_add.png" title="' . _('Customer Notes') . '" alt=""><a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Note for this Customer') . '</a></div><br>';
+				echo '<br><div class="centre"><img src="'.$rootpath.'/css/'.$theme.'/images/note_add.png" title="' . _('Customer Notes') . '" alt=""><a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Note for this Customer') . '</a></div>';
 			}
 		}
 		// Custome Type Notes
