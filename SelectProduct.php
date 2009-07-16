@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.48 $ */
+/* $Revision: 1.49 $ */
 
 $PageSecurity = 2;
 $PricesSecurity = 9;
@@ -418,12 +418,12 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
     $Its_A_Kitset = false;
     $Its_A_Labour_Item = false;
 
-    echo '<table border=1><tr><th colspan=3><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt=""><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . '</th></tr></b>';
+    echo '<table width="90%" border="1"><tr><th colspan=3><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt=""><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . '</th></tr></b>';
 
     echo '<tr><td width="40%" valign="top">
             <table>'; //nested table
 
-    echo '<tr><th align=right>' . _('Item type:') . '</th><td colspan=2>';
+    echo '<tr><th align=right>' . _('Item Type:') . '</th><td colspan=2>';
 
     switch ($myrow['mbflag']) {
         case 'A':
@@ -744,10 +744,10 @@ $PropertyOptionValue . '</option>';
 
     echo '</tr></table><hr>'; // end first item details table
 
-    echo '<table width="100%" border=1><tr>
-        <th width=33%>' . _('Item Inquiries') . '</th>
-        <th width=33%>' . _('Item Transactions') . '</th>
-        <th width=33%>' . _('Item Maintenance') . '</th>
+    echo '<table width="90%" border="1"><tr>
+        <th width="33%">' . _('Item Inquiries') . '</th>
+        <th width="33%">' . _('Item Transactions') . '</th>
+        <th width="33%">' . _('Item Maintenance') . '</th>
     </tr>';
     echo '<tr><td valign="top">';
 
