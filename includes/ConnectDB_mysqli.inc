@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 /* PeterMoulding.com
 20071102 Change from mysql to mysqli;
@@ -193,11 +193,13 @@ function DB_Maintenance($Conn){
 }
 
 function DB_Txn_Begin($Conn){
+	mysqli_query($Conn,'SET autocommit=0');
 	mysqli_query($Conn,'START TRANSACTION');
 }
 
 function DB_Txn_Commit($Conn){
 	mysqli_query($Conn,'COMMIT');
+	mysqli_query($Conn,'SET autocommit=1');
 }
 
 function DB_Txn_Rollback($Conn){

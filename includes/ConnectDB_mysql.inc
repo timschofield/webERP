@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 define ('LIKE','LIKE');
 
@@ -171,11 +171,13 @@ function DB_Maintenance($Conn){
 
 
 function DB_Txn_Begin($Conn){
-    mysql_query('START TRANSACTION',$Conn);
+	mysql_query('SET autocommit=0;',$Conn);
+	mysql_query('START TRANSACTION',$Conn);
 }
 
 function DB_Txn_Commit($Conn){
-    mysql_query('COMMIT',$Conn );
+	mysql_query('COMMIT',$Conn );
+	mysql_query('SET autocommit=1;',$Conn);
 }
 
 function DB_Txn_Rollback($Conn){
