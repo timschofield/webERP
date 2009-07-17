@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.57 $ */
+/* $Revision: 1.58 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -931,7 +931,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						/*There must be some error this should never happen */
 						$QtyOnHandPrior = 0;
 	                  		}
-
+					if (empty($AssParts['standard'])) {
+						$AssParts['standard']=0;
+					}
 					$SQL = "INSERT INTO stockmoves (
 							stockid,
 							type,
@@ -984,6 +986,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			// Insert stock movements - with unit cost
 			$LocalCurrencyPrice= ($OrderLine->Price / $_SESSION['CurrencyRate']);
 
+			if (empty($OrderLine->StandardCost)) {
+				$OrderLine->StandardCost=0;
+			}
 			if ($MBFlag=='B' OR $MBFlag=='M'){
             			$SQL = "INSERT INTO stockmoves (
 						stockid,
@@ -1018,6 +1023,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						'" . DB_escape_string($OrderLine->Narrative) . "' )";
 			} else {
             // its an assembly or dummy and assemblies/dummies always have nil stock (by definition they are made up at the time of dispatch  so new qty on hand will be nil
+				if (empty($OrderLine->StandardCost)) {
+					$OrderLine->StandardCost=0;
+				}
 				$SQL = "INSERT INTO stockmoves (
 						stockid,
 						type,
