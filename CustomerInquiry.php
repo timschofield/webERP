@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -124,7 +124,7 @@ if ($CustomerRecord['dissallowinvoices']!=0){
 	echo '<br><font color=RED size=4><b>' . _('ACCOUNT ON HOLD') . '</font></b><br>';
 }
 
-echo "<table WIDTH=100% BORDER=1>
+echo "<table WIDTH=90% BORDER=1>
 	<tr>
 		<th>" . _('Total Balance') . "</th>
 		<th>" . _('Current') . "</th>

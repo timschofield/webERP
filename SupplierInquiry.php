@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -131,7 +131,7 @@ if (isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])){
 
 }
 
-echo "<table WIDTH=100% BORDER=1><tr><th>" . _('Total Balance') . 
+echo "<table WIDTH=90% BORDER=1><tr><th>" . _('Total Balance') . 
 	  "</th><th>" . _('Current') . 
 	  "</th><th>" . _('Now Due') . 
 	  "</th><th>" . $_SESSION['PastDueDays1'] . '-' . $_SESSION['PastDueDays2'] . 
@@ -185,7 +185,7 @@ if (DB_num_rows($TransResult) == 0){
 /*show a table of the transactions returned by the SQL */
 
 
-echo '<table cellpadding=2 colspan=7>';
+echo '<table width="90%" cellpadding="2" colspan="7">';
 $TableHeader = "<tr BGCOLOR =#800000><th>" . _('Trans') . ' #' . 
 		"</th><th>" . _('Type') . 
 		"</th><th>" . _('Supplier Ref') . 
