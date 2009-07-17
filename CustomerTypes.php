@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 15;
 
@@ -39,6 +39,25 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
+	if (strlen($_POST['typename'])==0) {
+		$InputError = 1;
+		echo prnMsg(_('The customer type name description must contain at least one character'),'error');
+		$Errors[$i] = 'CustomerType';
+		$i++;
+	}
+
+	$checksql = "SELECT count(*)
+		     FROM debtortype
+		     WHERE typename = '" . $_POST['typename'] . "'";
+	$checkresult=DB_query($checksql, $db);
+	$checkrow=DB_fetch_row($checkresult);
+	if ($checkrow[0]>0) {
+		$InputError = 1;
+		echo prnMsg(_('You already have a customer type called').' '.$_POST['typename'],'error');
+		$Errors[$i] = 'CustomerName';
+		$i++;
+	}	
+	
 	if (isset($SelectedType) AND $InputError !=1) {
 
 		$sql = "UPDATE debtortype
@@ -163,10 +182,11 @@ or deletion of the records*/
 	$sql = 'SELECT typeid, typename FROM debtortype';
 	$result = DB_query($sql,$db);
 
-	echo '<table border=1>';
+	echo '<br><table border=1>';
 	echo "<tr>
+		<th>" . _('Type ID') . "</th>
 		<th>" . _('Type Name') . "</th>
-	</tr>";
+		</tr>";
 
 $k=0; //row colour counter
 
@@ -181,9 +201,11 @@ while ($myrow = DB_fetch_row($result)) {
 
 	printf("
 		<td>%s</td>
+		<td>%s</td>
 		<td><a href='%sSelectedType=%s'>" . _('Edit') . "</td>
 		<td><a href='%sSelectedType=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this Customer Type?') . "');\">" . _('Delete') . "</td>
 		</tr>",
+		$myrow[0],
 		$myrow[1],
 		$_SERVER['PHP_SELF'] . '?' . SID, $myrow[0],
 		$_SERVER['PHP_SELF'] . '?' . SID, $myrow[0]);
@@ -243,7 +265,7 @@ if (! isset($_GET['delete'])) {
    	echo '</table>'; // close table in first column
    	echo '</td></tr></table>'; // close main table
 
-	echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
+	echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"></div>';
 
 	echo '</form>';
 
