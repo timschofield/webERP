@@ -1,6 +1,6 @@
 <?php
 error_reporting(E_ALL);
-ini_set("display_errors", "On");
+ini_set('display_errors', 'On');
 // Start a session
 if(!defined('SESSION_STARTED')) {
 	session_name('ba_session_id');
@@ -19,15 +19,15 @@ if(!isset($_GET['sessions_checked']) || $_GET['sessions_checked'] != 'true') {
 	// Check if session variable has been saved after reload
 	if(isset($_SESSION['session_support'])) {
 		$session_support = $_SESSION['session_support'];
-	}
-	else {
+	} else {
 		$session_support = '<font class="bad">Disabled</font>';
 	}
 }
 $path_to_root = '..';
-//include_once($path_to_root.'/config.php');
-$comp_path = $path_to_root."/companies";
+$comp_path = $path_to_root. '/companies';
+
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -131,11 +131,9 @@ function change_data(type) {
 			<td colspan="8"><h1>Step 2</h1>Please check the following files/folders are writeable before continuing...</td>
 		</tr>
 		<tr>
-			<td style="color: #666666;">config.php</td>
-			<td><?php if(is_writable($path_to_root.'/config.php')) { 
+			<td style="color: #666666;">Configuration file</td>
+			<td><?php if(is_writable($path_to_root)) { 
 						echo '<font class="good">Writeable</font>'; 
-					  } elseif(!file_exists($path_to_root.'/config_db.php')) { 
-						echo '<font class="bad">File Not Found</font>'; 
 					  } else { 
 						echo '<font class="bad">Unwriteable</font>'; 
 					  } ?>
@@ -211,12 +209,20 @@ function change_data(type) {
 		<tr>
 			<td width="120" style="color: #666666;">Host Name:</td>
 			<td width="230">
-				<input type="text" tabindex="7" name="database_host" style="width: 98%;" value="<?php if(isset($_SESSION['database_host'])) { echo $_SESSION['database_host']; } else { echo 'localhost'; } ?>" />
+				<input type="text" tabindex="7" name="database_host" style="width: 98%;" value="<?php if(isset($_SESSION['database_host'])) {
+																										 echo $_SESSION['database_host']; 
+																									  } else { 
+																										 echo 'localhost'; 
+																									  } ?>" />
 			</td>
 			<td width="7">&nbsp;</td>
 			<td width="70" style="color: #666666;">Username:</td>
 			<td>
-				<input type="text" tabindex="9" name="database_username" style="width: 98%;" value="<?php if(isset($_SESSION['database_username'])) { echo $_SESSION['database_username']; } else { echo 'root'; } ?>" />
+				<input type="text" tabindex="9" name="database_username" style="width: 98%;" value="<?php if(isset($_SESSION['database_username'])) { 
+																											echo $_SESSION['database_username']; 
+																										  } else { 
+																											 echo 'root'; 
+																										  } ?>" />
 			</td>
 		</tr>
 		<tr>
@@ -226,13 +232,19 @@ function change_data(type) {
 			<td>&nbsp;</td>
 			<td style="color: #666666;">Password:</td>
 			<td>
-				<input type="password" tabindex="10" name="database_password" style="width: 98%;"<?php if(isset($_SESSION['database_password'])) { echo ' value = "'.$_SESSION['database_password'].'"'; } ?> />
+				<input type="password" tabindex="10" name="database_password" style="width: 98%;"<?php if(isset($_SESSION['database_password'])) { 
+																											echo ' value = "'.$_SESSION['database_password'].'"'; 
+																										} ?> />
 			</td>
 		</tr>
 		<tr>
 			
 			<td colspan="2">
-				<input type="checkbox" tabindex="12" name="install_tables" id="install_tables" value="true"<?php if(!isset($_SESSION['install_tables'])) { echo ' checked'; } elseif($_SESSION['install_tables'] == 'true') { echo ' checked'; } ?> />
+				<input type="checkbox" tabindex="12" name="install_tables" id="install_tables" value="true"<?php if(!isset($_SESSION['install_tables'])) { 
+																													echo ' checked'; 
+																												 } elseif($_SESSION['install_tables'] == 'true') { 
+																													echo ' checked'; 
+																												 } ?> />
 				<label for="install_tables" style="color: #666666;">Install Tables</label>
 				<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<span style="font-size: 10px; color: #666666;">(Please note: May remove existing tables and data)</span></td>
