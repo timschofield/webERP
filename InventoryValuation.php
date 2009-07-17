@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -124,7 +124,8 @@ If (isset($_POST['PrintPDF'])
 			$YPos -=$line_height;
 			$FontSize=8;
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$InventoryValn['stockid']);				$LeftOvers = $pdf->addTextWrap(130,$YPos,260,$FontSize,$InventoryValn['description']);
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,100,$FontSize,$InventoryValn['stockid']);				
+			$LeftOvers = $pdf->addTextWrap(170,$YPos,220,$FontSize,$InventoryValn['description']);
 			$DisplayUnitCost = number_format($InventoryValn['unitcost'],2);
 			$DisplayQtyOnHand = number_format($InventoryValn['qtyonhand'],0);
 			$DisplayItemTotal = number_format($InventoryValn['itemtotal'],2);
@@ -199,7 +200,7 @@ If (isset($_POST['PrintPDF'])
 	include('includes/header.inc');
 
 
-	if (strlen($_POST['FromCriteria'])<1 || strlen($_POST['ToCriteria'])<1) {
+	if (empty($_POST['FromCriteria']) or empty($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
@@ -210,7 +211,7 @@ If (isset($_POST['PrintPDF'])
 		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
 		$CatResult= DB_query($sql,$db);
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+			echo "<option value='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 		}
 		echo '</select></td></tr>';
 
@@ -220,7 +221,7 @@ If (isset($_POST['PrintPDF'])
 		DB_data_seek($CatResult,0);
 
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+			echo "<option value='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 		}
 		echo '</select></td></tr>';
 
@@ -228,7 +229,7 @@ If (isset($_POST['PrintPDF'])
 		$sql = 'SELECT loccode, locationname FROM locations';
 		$LocnResult=DB_query($sql,$db);
 
-		echo "<option Value='All'>" . _('All Locations');
+		echo "<option value='All'>" . _('All Locations');
 
 		while ($myrow=DB_fetch_array($LocnResult)){
 		          echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
