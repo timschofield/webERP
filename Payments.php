@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 
 $PageSecurity = 5;
 
@@ -571,8 +571,8 @@ if ($Transtype==22) {
 	unset($_SESSION['PaymentDetail']);
 
   /*Set up a newy in case user wishes to enter another */
-	echo '<br><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Enter a General Ledger Payment') . '</a>';
-	echo '<br><a href="' . $rootpath . '/SelectSupplier.php?' . SID . '">' . _('Enter a Supplier Payment') . '</a>';
+	echo '<br><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Enter a General Ledger Payment') . '</a><br>';
+	echo '<br><a href="' . $rootpath . '/Payments.php?SupplierID=' . $lastSupplier . '">' . _('Enter another Payment for this Supplier') . '</a>';
   }
 
   include('includes/footer.inc');
