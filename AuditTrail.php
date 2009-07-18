@@ -16,7 +16,7 @@ if (!isset($_POST['ToDate'])){
 }
 
 if ((!(Is_Date($_POST['FromDate'])) OR (!Is_Date($_POST['ToDate']))) AND (isset($_POST['View']))) {
-	prnMsg( _('Incorrerct date format used, please re-enter'), error);
+	prnMsg( _('Incorrect date format used, please re-enter'), error);
 	unset($_POST['View']);
 }
 
@@ -135,7 +135,7 @@ if (isset($_POST['View'])) {
 	}
 	$result = DB_query($sql,$db);
 
-	echo '<table BORDER=0 width="100%">';
+	echo '<table border=0 width="100%">';
 	echo '<tr><th>' . _('Date/Time') . '</th>
 				<th>' . _('User') . '</th>
 				<th>' . _('Type') . '</th>
@@ -157,10 +157,10 @@ if (isset($_POST['View'])) {
 		}
 
 		if ((trim($_SESSION['SQLString']['table']) == $_POST['SelectedTable'])  ||
-		 ($_POST['SelectedTable'] == 'ALL')) {
-		 	if (!isset($_SESSION['SQLString']['values'])) {
-		 		$_SESSION['SQLString']['values'][0]='';
-		 	}
+			($_POST['SelectedTable'] == 'ALL')) {
+			if (!isset($_SESSION['SQLString']['values'])) {
+				$_SESSION['SQLString']['values'][0]='';
+			}
 			echo '<tr style="background-color: '.$RowColour.'">
 				<td>' . $myrow[0] . '</td>
 				<td>' . $myrow[1] . '</td>
@@ -170,8 +170,8 @@ if (isset($_POST['View'])) {
 				<td>' . htmlentities(trim(str_replace("'","",$_SESSION['SQLString']['values'][0]))) . '</td></tr>';
 			for ($i=1; $i<sizeof($_SESSION['SQLString']['fields']); $i++) {
 				if (isset($_SESSION['SQLString']['values'][$i]) and (trim(str_replace("'","",$_SESSION['SQLString']['values'][$i])) != "") &
-		  	 (trim($_SESSION['SQLString']['fields'][$i]) != 'password') &
-		   		(trim($_SESSION['SQLString']['fields'][$i]) != "www_users.password")) {
+				(trim($_SESSION['SQLString']['fields'][$i]) != 'password') &
+				(trim($_SESSION['SQLString']['fields'][$i]) != "www_users.password")) {
 					echo '<tr bgcolor='.$RowColour.'>';
 					echo '<td></td>
 						<td></td>

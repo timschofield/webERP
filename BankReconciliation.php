@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 7;
 
@@ -78,7 +78,7 @@ if (isset($_POST['PostExchangeDifference']) and is_numeric($_POST['DoExchangeDif
 
 		$result = DB_Txn_Commit($db);
 		prnMsg(_('Exchange difference of') . ' ' . number_format($ExchangeDifference,2) . ' ' . _('has been posted'),'success');
-	} //end if the bank statment balance was numeric
+	} //end if the bank statement balance was numeric
 }
 
 
@@ -88,13 +88,13 @@ echo '<table>';
 $SQL = 'SELECT bankaccountname, accountcode FROM bankaccounts';
 
 $ErrMsg = _('The bank accounts could not be retrieved by the SQL because');
-$DbgMsg = _('The SQL used to retrieve the bank acconts was');
+$DbgMsg = _('The SQL used to retrieve the bank accounts was');
 $AccountsResults = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 echo '<tr><td>' . _('Bank Account') . ':</td><td><select tabindex="1" name="BankAccount">';
 
 if (DB_num_rows($AccountsResults)==0){
-	 echo '</select></td></tr></table><p>' . _('Bank Accounts have not yet been defined') . '. ' . _('You must first') . "<a href='" . $rootpath . "/BankAccounts.php'>" . _('define the bank accounts') . '</a>' . ' ' . _('and general ledger accounts to be affected') . '.';
+	echo '</select></td></tr></table><p>' . _('Bank Accounts have not yet been defined') . '. ' . _('You must first') . "<a href='" . $rootpath . "/BankAccounts.php'>" . _('define the bank accounts') . '</a>' . ' ' . _('and general ledger accounts to be affected') . '.';
 	include('includes/footer.inc');
 	exit;
 } else {
@@ -201,8 +201,8 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 			$k++;
 		}
 
-  		printf('<td>%s</td>
-		        <td>%s</td>
+		printf('<td>%s</td>
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td align=right>%01.2f</td>
@@ -273,7 +273,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 			$k++;
 		}
 
-  		printf('<td>%s</td>
+		printf('<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -314,7 +314,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	if ($_SESSION['CompanyRecord']['currencydefault']!=$BankCurrCode AND !isset($_POST['DoExchangeDifference'])){
 
 		echo '<tr><td colspan=7><hr></td></tr>
-				<tr><td colspan=7>' . _('It is normal for foreign currency accounts to have exchange differences that need to be reflected as the exchange rate varies. This reconciliation is prepared using the exchange rate set up in the currencies table (see the set-up tab). This table must be maintained with the current exchange rate before running the reconciliation. If you wish to create a journal to reflect the exchange difference based on the current exchange rate to correct the reconciliation to the actual bank statment balance click below.') . '</td></tr>';
+				<tr><td colspan=7>' . _('It is normal for foreign currency accounts to have exchange differences that need to be reflected as the exchange rate varies. This reconciliation is prepared using the exchange rate set up in the currencies table (see the set-up tab). This table must be maintained with the current exchange rate before running the reconciliation. If you wish to create a journal to reflect the exchange difference based on the current exchange rate to correct the reconciliation to the actual bank statement balance click below.') . '</td></tr>';
 		echo '<tr><td colspan=7 align="center"><input type=submit name="DoExchangeDifference" value="' . _('Calculate and Post Exchange Difference') . '"></td></tr>';
 	}
 	echo '</table>';

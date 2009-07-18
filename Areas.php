@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -121,7 +121,7 @@ if (isset($_POST['submit'])) {
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			$CancelDelete = 1;
-			prnMsg( _('Cannot delete this area because sales analysis ecords exist that use this area'),'warn');
+			prnMsg( _('Cannot delete this area because sales analysis records exist that use this area'),'warn');
 			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records referring this area code');
 		}
 	}

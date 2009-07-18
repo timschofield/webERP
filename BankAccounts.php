@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 10;
 
@@ -19,7 +19,7 @@ if (isset($_GET['SelectedBankAccount'])) {
 if (isset($Errors)) {
 	unset($Errors);
 }
-	
+
 $Errors = array();	
 
 if (isset($_POST['submit'])) {
@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 	$i=1;
-	
+
 	$sql="SELECT count(accountcode) 
 			FROM bankaccounts WHERE accountcode='".$_POST['AccountCode']."'";
 	$result=DB_query($sql, $db);
@@ -171,19 +171,19 @@ If (!isset($SelectedBankAccount)) {
 			chartmaster
 		WHERE bankaccounts.accountcode = chartmaster.accountcode";
 	
-	$ErrMsg = _('The bank accounts set up could not be retreived because');
+	$ErrMsg = _('The bank accounts set up could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the bank account details was') . '<br>' . $sql;
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-	
+
 	echo '<table>';
-	
+
 	echo "<tr><th>" . _('GL Account') . "</th>
 		<th>" . _('Account Name') . "</th>
 		<th>" . _('Account Number') . "</th>
 		<th>" . _('Bank Address') . "</th>
 		<th>" . _('Currency') . "</th>
 	</tr>";
-	
+
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
 	if ($k==1){
@@ -193,7 +193,7 @@ If (!isset($SelectedBankAccount)) {
 		echo '<tr class="OddTableRows">';
 		$k++;
 	}
-	
+
 	printf("<td>%s<br><font size=2>%s</font></td>
 		<td>%s</td>
 		<td>%s</td>
@@ -212,11 +212,11 @@ If (!isset($SelectedBankAccount)) {
 		$myrow[0],
 		$_SERVER['PHP_SELF'],
 		$myrow[0]);
-	
+
 	}
 	//END WHILE LIST LOOP
-	
-	
+
+
 	echo '</table><p>';
 }
 

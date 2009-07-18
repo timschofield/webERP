@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 7;
 
@@ -36,7 +36,7 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 			/*Update the banktrans recoord to match it off */
 			$sql = "UPDATE banktrans SET amountcleared= ". $AmountCleared .
 					" WHERE banktransid=" . $_POST["BankTrans_" . $Counter];
-			$ErrMsg =  _('Could not match off this payment beacause');
+			$ErrMsg =  _('Could not match off this payment because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
 		} elseif (isset($_POST["AmtClear_" . $Counter]) and is_numeric((float) $_POST["AmtClear_" . $Counter]) AND 
@@ -56,8 +56,8 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 			$result = DB_query($sql,$db,$ErrMsg);
 		}
 	}
- 	/*Show the updated position with the same criteria as previously entered*/
- 	$_POST["ShowTransactions"] = True;
+	/*Show the updated position with the same criteria as previously entered*/
+	$_POST["ShowTransactions"] = True;
 }
 
 echo '<div class="page_help_text">' . _('Use this screen to match webERP Receipts and Payments to your Bank Statement.  Check your bank statement and click the check-box when you find the matching transaction.') . '</div><br>';
@@ -73,24 +73,24 @@ $sql = "SELECT accountcode, bankaccountname FROM bankaccounts";
 $resultBankActs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultBankActs)){
 	if (isset($_POST['BankAccount']) and $myrow["accountcode"]==$_POST['BankAccount']){
-	     echo "<option selected Value='" . $myrow['accountcode'] . "'>" . $myrow['bankaccountname'];
+		echo "<option selected Value='" . $myrow['accountcode'] . "'>" . $myrow['bankaccountname'];
 	} else {
-	     echo "<option Value='" . $myrow['accountcode'] . "'>" . $myrow['bankaccountname'];
+		echo "<option Value='" . $myrow['accountcode'] . "'>" . $myrow['bankaccountname'];
 	}
 }
 
 echo '</select></td></tr>';
 
 if (!isset($_POST['BeforeDate']) OR !Is_Date($_POST['BeforeDate'])){
-   $_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
-   $_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date("m")-3,Date("d"),Date("y")));
+	$_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date("m")-3,Date("d"),Date("y")));
 }
 
 // Change to allow input of FROM DATE and then TO DATE, instead of previous back-to-front method, add datepicker
 echo '<tr><td>' . _('Show') . ' ' . $TypeName . ' ' . _('from') . ':</td>
-        <td><input tabindex="3" type="text" name="AfterDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="12" maxlength="10" onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" Value="' . $_POST['AfterDate'] . '"></td></tr>';
+		<td><input tabindex="3" type="text" name="AfterDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="12" maxlength="10" onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" Value="' . $_POST['AfterDate'] . '"></td></tr>';
 
 echo '<td>' . _('to') . ':</td>
 	<td><input tabindex="2" type="text" name="BeforeDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="12" maxlength="10" onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" Value="' . $_POST['BeforeDate'] . '"></td>';
@@ -107,7 +107,7 @@ if ($_POST["Ostg_or_All"]=='All'){
 echo '</select></td></tr>';
 
 echo '<tr><td colspan=3>' . _('Choose to display only the first 20 matching') . ' ' . $TypeName . ' ' .
-  _('or all') . ' ' . $TypeName . ' ' . _('meeting the criteria') . ':</td><td><select tabindex="5" name="First20_or_All">';
+	_('or all') . ' ' . $TypeName . ' ' . _('meeting the criteria') . ':</td><td><select tabindex="5" name="First20_or_All">';
 if ($_POST["First20_or_All"]=='All'){
 	echo '<option selected Value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range');
 	echo '<option Value="First20">' . _('Show only the first 20') . ' ' . $TypeName;
@@ -126,14 +126,14 @@ $InputError=0;
 if (!Is_Date($_POST['BeforeDate'])){
 	$InputError =1;
 	prnMsg(_('The date entered for the field to show') . ' ' . $TypeName . ' ' . _('before') . ', ' .
-	 _('is not entered in a recognised date format') . '. ' . _('Entry is expected in the format') . ' ' .
-	  $_SESSION['DefaultDateFormat'],'error');
+		_('is not entered in a recognised date format') . '. ' . _('Entry is expected in the format') . ' ' .
+		$_SESSION['DefaultDateFormat'],'error');
 }
 if (!Is_Date($_POST['AfterDate'])){
 	$InputError =1;
 	prnMsg( _('The date entered for the field to show') . ' ' . $Type . ' ' . _('after') . ', ' . 
-	_('is not entered in a recognised date format') . '. ' . _('Entry is expected in the format') . ' ' .
-	 $_SESSION['DefaultDateFormat'],'error');
+		_('is not entered in a recognised date format') . '. ' . _('Entry is expected in the format') . ' ' .
+		$_SESSION['DefaultDateFormat'],'error');
 }
 
 if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!="" AND isset($_POST["ShowTransactions"])){
@@ -209,11 +209,11 @@ if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!=
 	$PaymentsResult = DB_query($sql, $db, $ErrMsg);
 
 	$TableHeader = '<tr><th>'. _('Ref'). '</th>
-			 <th>' . $TypeName . '</th>
-			 <th>' . _('Date') . '</th>
-			 <th>' . _('Amount') . '</th>
-			 <th>' . _('Outstanding') . '</th>
-			 <th colspan=3>' . _('Clear') . ' / ' . _('Unclear') . '</th>
+			<th>' . $TypeName . '</th>
+			<th>' . _('Date') . '</th>
+			<th>' . _('Amount') . '</th>
+			<th>' . _('Outstanding') . '</th>
+			<th colspan=3>' . _('Clear') . ' / ' . _('Unclear') . '</th>
 		</tr>';
 	echo '<table cellpadding=2 BORDER=2>' . $TableHeader;
 
@@ -229,7 +229,7 @@ if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!=
 		if (ABS($Outstanding)<0.009){ /*the payment is cleared dont show the check box*/
 
 			printf("<tr bgcolor='#CCCEEE'>
-			        <td>%s</td>
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td class=number>%s</td>
@@ -257,7 +257,7 @@ if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!=
 			}
 
 			printf("<td>%s</td>
-			        <td>%s</td>
+				<td>%s</td>
 				<td>%s</td>
 				<td class=number>%s</td>
 				<td class=number>%s</td>
