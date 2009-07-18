@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.40 $ */
+/* $Revision: 1.41 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -122,8 +122,8 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ //always proc
 	$_SESSION['ReceiptBatch']->Narrative = $_POST['BatchNarrative'];
 
 } elseif (isset($_GET['Delete'])) {
-  /* User hit delete the receipt entry from the batch */
-   $_SESSION['ReceiptBatch']->remove_receipt_item($_GET['Delete']);
+	/* User hit delete the receipt entry from the batch */
+	$_SESSION['ReceiptBatch']->remove_receipt_item($_GET['Delete']);
 } else { //it must be a new receipt batch
 	$_SESSION['ReceiptBatch'] = new Receipt_Batch;
 }
@@ -145,7 +145,7 @@ if (isset($_POST['Process'])){ //user hit submit a new entry to the receipt batc
 	}
 	
 	$_SESSION['ReceiptBatch']->add_to_batch($_POST['Amount'],
-   											$_POST['CustomerID'],
+											$_POST['CustomerID'],
 											$_POST['Discount'],
 											$_POST['Narrative'],
 											$_POST['GLCode'],
@@ -153,18 +153,18 @@ if (isset($_POST['Process'])){ //user hit submit a new entry to the receipt batc
 											$_POST['CustomerName'],
 											$_POST['tag']);
 
-   /*Make sure the same receipt is not double processed by a page refresh */
-   $Cancel = 1;
+	/*Make sure the same receipt is not double processed by a page refresh */
+	$Cancel = 1;
 }
 
 if (isset($Cancel)){
-   unset($_SESSION['CustomerRecord']);
-   unset($_POST['CustomerID']);
-   unset($_POST['CustomerName']);
-   unset($_POST['Amount']);
-   unset($_POST['Discount']);
-   unset($_POST['Narrative']);
-   unset($_POST['PayeeBankDetail']);
+	unset($_SESSION['CustomerRecord']);
+	unset($_POST['CustomerID']);
+	unset($_POST['CustomerName']);
+	unset($_POST['Amount']);
+	unset($_POST['Discount']);
+	unset($_POST['Narrative']);
+	unset($_POST['PayeeBankDetail']);
 }
 
 
@@ -177,42 +177,42 @@ if (isset($_POST['CommitBatch'])){
   each GL receipt entry and one for the debtors entry and one for the bank
   account debit
 
-  NB allocations against debtor receipts are a seperate exercice
+  NB allocations against debtor receipts are a separate exercice
 
   first off run through the array of receipt items $_SESSION['ReceiptBatch']->Items and
   if GL integrated then create GL Entries for the GL Receipt items
   and add up the non-GL ones for posting to debtors later,
   also add the total discount total receipts*/
 
-   $PeriodNo = GetPeriod($_SESSION['ReceiptBatch']->DateBanked,$db);
+	$PeriodNo = GetPeriod($_SESSION['ReceiptBatch']->DateBanked,$db);
 
-   if ($_SESSION['CompanyRecord']==0){
+	if ($_SESSION['CompanyRecord']==0){
 		prnMsg(_('The company has not yet been set up properly') . ' - ' . _('this information is needed to process the batch') . '. ' . _('Processing has been cancelled'),'error');
 		include('includes/footer.inc');
 		exit;
-   }
+	}
 
-   /*Make an array of the defined bank accounts */
-   $SQL = "SELECT accountcode FROM bankaccounts";
-   $result = DB_query($SQL,$db);
-   $BankAccounts = array();
-   $i=0;
-   while ($Act = DB_fetch_row($result)){
- 		$BankAccounts[$i]= $Act[0];
+	/*Make an array of the defined bank accounts */
+	$SQL = "SELECT accountcode FROM bankaccounts";
+	$result = DB_query($SQL,$db);
+	$BankAccounts = array();
+	$i=0;
+	while ($Act = DB_fetch_row($result)){
+		$BankAccounts[$i]= $Act[0];
 		$i++;
-   }
+	}
 
 	$_SESSION['ReceiptBatch']->BatchNo = GetNextTransNo(12,$db);
-   /*Start a transaction to do the whole lot inside */
-   $result = DB_Txn_Begin($db);
+	/*Start a transaction to do the whole lot inside */
+	$result = DB_Txn_Begin($db);
 
-   $BatchReceiptsTotal = 0; //in functional currency
-   $BatchDiscount = 0; //in functional currency
-   $BatchDebtorTotal = 0; //in functional currency
+	$BatchReceiptsTotal = 0; //in functional currency
+	$BatchDiscount = 0; //in functional currency
+	$BatchDebtorTotal = 0; //in functional currency
 
-   foreach ($_SESSION['ReceiptBatch']->Items as $ReceiptItem) {
+	foreach ($_SESSION['ReceiptBatch']->Items as $ReceiptItem) {
 
-	    if ($ReceiptItem->GLCode !=''){
+		if ($ReceiptItem->GLCode !=''){
 			if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter a GLTrans record */
 				 $SQL = 'INSERT INTO gltrans (type,
 			 			typeno,
@@ -222,17 +222,17 @@ if (isset($_POST['CommitBatch'])){
 						narrative,
 						amount,
 						tag)
-			 		  VALUES (12,
-			 			' . $_SESSION['ReceiptBatch']->BatchNo . ",
+					VALUES (12,
+						' . $_SESSION['ReceiptBatch']->BatchNo . ",
 						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
 						" . $PeriodNo . ',
 						' . $ReceiptItem->GLCode . ",
 						'" . $ReceiptItem->Narrative . "',
 						" . -($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate) . ",
 						'" . $ReceiptItem->tag . "'" . ')';
-			 	$ErrMsg = _('Cannot insert a GL entry for the receipt because');
-			 	$DbgMsg = _('The SQL that failed to insert the receipt GL entry was');
-			 	$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$ErrMsg = _('Cannot insert a GL entry for the receipt because');
+				$DbgMsg = _('The SQL that failed to insert the receipt GL entry was');
+				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			}
 
 			/*check to see if this is a GL posting to another bank account (or the same one)
@@ -313,13 +313,13 @@ if (isset($_POST['CommitBatch'])){
 				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			} //end if an item is a transfer between bank accounts
 
-	    } else { //its not a GL item - its a customer receipt then
- 		   /*Accumulate the total debtors credit including discount */
-		   $BatchDebtorTotal += (($ReceiptItem->Discount + $ReceiptItem->Amount)/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate);
-		   /*Create a DebtorTrans entry for each customer deposit */
+		} else { //its not a GL item - its a customer receipt then
+			/*Accumulate the total debtors credit including discount */
+			$BatchDebtorTotal += (($ReceiptItem->Discount + $ReceiptItem->Amount)/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate);
+			/*Create a DebtorTrans entry for each customer deposit */
 
-		   $SQL = 'INSERT INTO debtortrans (transno,
-		   					type,
+			$SQL = 'INSERT INTO debtortrans (transno,
+							type,
 							debtorno,
 							branchcode,
 							trandate,
@@ -330,8 +330,8 @@ if (isset($_POST['CommitBatch'])){
 							ovamount,
 							ovdiscount,
 							invtext)
-		   			VALUES (' . $_SESSION['ReceiptBatch']->BatchNo . ",
-		   				12,
+					VALUES (' . $_SESSION['ReceiptBatch']->BatchNo . ",
+						12,
 						'" . $ReceiptItem->Customer . "',
 						'',
 						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
@@ -355,64 +355,64 @@ if (isset($_POST['CommitBatch'])){
 			$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-	    } //end of if its a customer receipt
-	    $BatchDiscount += ($ReceiptItem->Discount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate);
-	    $BatchReceiptsTotal += ($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate);
+		} //end of if its a customer receipt
+		$BatchDiscount += ($ReceiptItem->Discount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate);
+		$BatchReceiptsTotal += ($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate);
 
-   } /*end foreach $ReceiptItem */
+	} /*end foreach $ReceiptItem */
 
-   if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter GLTrans records for discount, bank and debtors */
+	if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter GLTrans records for discount, bank and debtors */
 
-	if ($BatchReceiptsTotal!=0){
-		/* Bank account entry first */
-		$SQL="INSERT INTO gltrans (type,
+		if ($BatchReceiptsTotal!=0){
+			/* Bank account entry first */
+			$SQL="INSERT INTO gltrans (type,
 					typeno,
 					trandate,
 					periodno,
 					account,
 					narrative,
 					amount)
-			VALUES (12,
-				" . $_SESSION['ReceiptBatch']->BatchNo . ",
-				'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
-				" . $PeriodNo . ",
-				" . $_SESSION['ReceiptBatch']->Account . ",
-				'" . $_SESSION['ReceiptBatch']->Narrative . "',
-				" . $BatchReceiptsTotal . ')';
-		$DbgMsg = _('The SQL that failed to insert the GL transaction fro the bank account debit was');
-		$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				VALUES (12,
+					" . $_SESSION['ReceiptBatch']->BatchNo . ",
+					'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
+					" . $PeriodNo . ",
+					" . $_SESSION['ReceiptBatch']->Account . ",
+					'" . $_SESSION['ReceiptBatch']->Narrative . "',
+					" . $BatchReceiptsTotal . ')';
+			$DbgMsg = _('The SQL that failed to insert the GL transaction fro the bank account debit was');
+			$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
+			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-                /*now enter the BankTrans entry */
+			/*now enter the BankTrans entry */
 
-                $SQL='INSERT INTO banktrans (type,
-   						transno,
-						bankact,
-						ref,
-						exrate,
-						functionalexrate,
-						transdate,
-						banktranstype,
-						amount,
-						currcode)
-                		VALUES (12,
-                      ' . $_SESSION['ReceiptBatch']->BatchNo . ',
-                      		' . $_SESSION['ReceiptBatch']->Account . ",
-                      		'" . $_SESSION['ReceiptBatch']->Narrative . "',
-                      		" . $_SESSION['ReceiptBatch']->ExRate . ",
-                      		" . $_SESSION['ReceiptBatch']->FunctionalExRate . ",
-                      		'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
-                      		'" . $_SESSION['ReceiptBatch']->ReceiptType . "',
-                      		" . ($BatchReceiptsTotal * $_SESSION['ReceiptBatch']->FunctionalExRate * $_SESSION['ReceiptBatch']->ExRate) . ",
-                      		'" . $_SESSION['ReceiptBatch']->Currency . "'
-                        )";
-              $DbgMsg = _('The SQL that failed to insert the bank account transaction was');
-              $ErrMsg = _('Cannot insert a bank transaction');
-              $result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-      }
-      if ($BatchDebtorTotal!=0){
-		/* Now Credit Debtors account with receipts + discounts */
-		$SQL='INSERT INTO gltrans ( type,
+			$SQL='INSERT INTO banktrans (type,
+					transno,
+					bankact,
+					ref,
+					exrate,
+					functionalexrate,
+					transdate,
+					banktranstype,
+					amount,
+					currcode)
+				VALUES (12,
+					' . $_SESSION['ReceiptBatch']->BatchNo . ',
+					' . $_SESSION['ReceiptBatch']->Account . ",
+					'" . $_SESSION['ReceiptBatch']->Narrative . "',
+					" . $_SESSION['ReceiptBatch']->ExRate . ",
+					" . $_SESSION['ReceiptBatch']->FunctionalExRate . ",
+					'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
+					'" . $_SESSION['ReceiptBatch']->ReceiptType . "',
+					" . ($BatchReceiptsTotal * $_SESSION['ReceiptBatch']->FunctionalExRate * $_SESSION['ReceiptBatch']->ExRate) . ",
+					'" . $_SESSION['ReceiptBatch']->Currency . "'
+				)";
+			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
+			$ErrMsg = _('Cannot insert a bank transaction');
+			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		}
+		if ($BatchDebtorTotal!=0){
+			/* Now Credit Debtors account with receipts + discounts */
+			$SQL='INSERT INTO gltrans ( type,
 					typeno,
 					trandate,
 					periodno,
@@ -431,48 +431,46 @@ if (isset($_POST['CommitBatch'])){
 			$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-      } //end if there are some customer deposits in this batch
+		} //end if there are some customer deposits in this batch
 
-      if ($BatchDiscount!=0){
+		if ($BatchDiscount!=0){
 			/* Now Debit Discount account with discounts allowed*/
-		$SQL='INSERT INTO gltrans ( type,
+			$SQL='INSERT INTO gltrans ( type,
 					typeno,
 					trandate,
 					periodno,
 					account,
 					narrative,
 					amount)
-			VALUES (12,
-				' . $_SESSION['ReceiptBatch']->BatchNo . ",
-				'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
-				" . $PeriodNo . ',
-				' . $_SESSION['CompanyRecord']['pytdiscountact'] . ",
-				'" . $_SESSION['ReceiptBatch']->Narrative . "',
-				" . $BatchDiscount . ')';
-		$DbgMsg = _('The SQL that failed to insert the GL transaction for the payment discount debit was');
-		$ErrMsg = _('Cannot insert a GL transaction for the payment discount debit');
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-	  } //end if there is some discount
-   } //end if there is GL work to be done - ie config is to link to GL
+				VALUES (12,
+					' . $_SESSION['ReceiptBatch']->BatchNo . ",
+					'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
+					" . $PeriodNo . ',
+					' . $_SESSION['CompanyRecord']['pytdiscountact'] . ",
+					'" . $_SESSION['ReceiptBatch']->Narrative . "',
+					" . $BatchDiscount . ')';
+			$DbgMsg = _('The SQL that failed to insert the GL transaction for the payment discount debit was');
+			$ErrMsg = _('Cannot insert a GL transaction for the payment discount debit');
+			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		} //end if there is some discount
+	} //end if there is GL work to be done - ie config is to link to GL
 
 
-   $ErrMsg = _('Cannot commit the changes');
-   $DbgMsg = _('The SQL that failed was');
-   $result = DB_Txn_Commit($db);
+	$ErrMsg = _('Cannot commit the changes');
+	$DbgMsg = _('The SQL that failed was');
+	$result = DB_Txn_Commit($db);
 
-   echo '<p>';
+	echo '<p>';
 
-   prnMsg( _('Receipt batch') . ' ' . $_SESSION['ReceiptBatch']->BatchNo . ' ' . _('has been successfully entered into the database'),'success');
+	prnMsg( _('Receipt batch') . ' ' . $_SESSION['ReceiptBatch']->BatchNo . ' ' . _('has been successfully entered into the database'),'success');
 
-   echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . '<a href="' . $rootpath . '/PDFBankingSummary.php?BatchNo=' . $_SESSION['ReceiptBatch']->BatchNo . '">' . _('Print PDF Batch Summary') . '</a></p>';
-   echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/allocation.png" title="' . _('Allocate') . '" alt="">' . ' ' . '<a href="' . $rootpath . '/CustomerAllocations.php">' . _('Allocate Receipts') . '</a></p>';
-   unset($_SESSION['ReceiptBatch']);
-   include('includes/footer.inc');
-   exit;
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . '<a href="' . $rootpath . '/PDFBankingSummary.php?BatchNo=' . $_SESSION['ReceiptBatch']->BatchNo . '">' . _('Print PDF Batch Summary') . '</a></p>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/allocation.png" title="' . _('Allocate') . '" alt="">' . ' ' . '<a href="' . $rootpath . '/CustomerAllocations.php">' . _('Allocate Receipts') . '</a></p>';
+	unset($_SESSION['ReceiptBatch']);
+	include('includes/footer.inc');
+	exit;
 
 } /* End of commit batch */
-
-
 
 if (isset($_POST['Search'])){
 /*Will only be true if clicked to search for a customer code */
@@ -535,7 +533,7 @@ if (isset($_POST['Select'])){
 	$Select = $_POST['Select'];
 }
 
-If (isset($Select)) {
+if (isset($Select)) {
 /*will only be true if a customer has just been selected by clicking on the customer or only one
 customer record returned by the search - this record is then auto selected */
 
@@ -660,7 +658,7 @@ $SQL = 'SELECT bankaccountname,
 
 
 $ErrMsg = _('The bank accounts could not be retrieved because');
-$DbgMsg = _('The SQL used to retrieve the bank acconts was');
+$DbgMsg = _('The SQL used to retrieve the bank accounts was');
 $AccountsResults = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Enter Receipt') . '" alt="">' . ' ' . _('Enter Customer Receipt') . '</p>';
@@ -675,11 +673,11 @@ if (DB_num_rows($AccountsResults)==0){
 	 exit;
 } else {
 	while ($myrow=DB_fetch_array($AccountsResults)){
-      /*list the bank account names */
-      	if (!isset($_SESSION['ReceiptBatch']->Account) AND $myrow['currcode']==$_SESSION['CompanyRecord']['currencydefault']){
-      		//default to the first account in the functional currency of the business in the list of accounts returned
-      		$_SESSION['ReceiptBatch']->Account=$myrow['accountcode'];
-      	}
+		/*list the bank account names */
+		if (!isset($_SESSION['ReceiptBatch']->Account) AND $myrow['currcode']==$_SESSION['CompanyRecord']['currencydefault']){
+			//default to the first account in the functional currency of the business in the list of accounts returned
+			$_SESSION['ReceiptBatch']->Account=$myrow['accountcode'];
+		}
 		if ($_SESSION['ReceiptBatch']->Account==$myrow['accountcode']){
 			echo '<option selected value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . ' - ' . $myrow['currcode'] . '</option>';
 		} else {
@@ -705,16 +703,16 @@ if (!isset($_SESSION['ReceiptBatch']->Currency)){
 $SQL = 'SELECT currency, currabrev, rate FROM currencies';
 $result=DB_query($SQL,$db);
 if (DB_num_rows($result)==0){
-   echo '</select></td></tr>';
-   prnMsg(_('No currencies are defined yet') . '. ' . _('Receipts cannot be entered until a currency is defined'),'warn');
+	echo '</select></td></tr>';
+	prnMsg(_('No currencies are defined yet') . '. ' . _('Receipts cannot be entered until a currency is defined'),'warn');
 
 } else {
 	while ($myrow=DB_fetch_array($result)){
-	    if ($_SESSION['ReceiptBatch']->Currency==$myrow['currabrev']){
+		if ($_SESSION['ReceiptBatch']->Currency==$myrow['currabrev']){
 			echo '<option selected value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
-	    } else {
+		} else {
 			echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
-	    }
+		}
 	}
 	echo '</select></td></tr>';
 }
@@ -761,11 +759,11 @@ include('includes/GetPaymentMethods.php');
 /* The array ReceiptTypes is defined from the setup tab of the main menu under payment methods - the array is populated from the include file GetPaymentMethods.php */
 
 foreach ($ReceiptTypes as $RcptType) {
-     if (isset($_POST['ReceiptType']) and $_POST['ReceiptType']==$RcptType){
-	   echo "<option selected Value='$RcptType'>$RcptType";
-     } else {
-	   echo "<option Value='$RcptType'>$RcptType";
-     }
+	if (isset($_POST['ReceiptType']) and $_POST['ReceiptType']==$RcptType){
+		echo "<option selected Value='$RcptType'>$RcptType";
+	} else {
+		echo "<option Value='$RcptType'>$RcptType";
+	}
 }
 echo '</select></td></tr>';
 if (!isset($_SESSION['ReceiptBatch']->Narrative)) {
@@ -782,29 +780,29 @@ if (isset($_SESSION['ReceiptBatch'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Banked') . '" alt="">' . ' ' . $_SESSION['ReceiptBatch']->ReceiptType . ' - ' . _('Banked into the') . " " . $_SESSION['ReceiptBatch']->BankAccountName . ' ' . _('on') . ' ' . $_SESSION['ReceiptBatch']->DateBanked . '</p>';
 
 	echo '<table width=100% border=1><tr>
-   			<th>' . _('Amount') .'<br/>' . _('Received') . '</th>
+			<th>' . _('Amount') .'<br/>' . _('Received') . '</th>
 			<th>' . _('Discount') . '</th>
 			<th>' . _('Customer') . '</th>
 			<th>' . _('GL Code') . '</th>
 			</tr>';
 
-  	$BatchTotal = 0;
+	$BatchTotal = 0;
 
-   	foreach ($_SESSION['ReceiptBatch']->Items as $ReceiptItem) {
+	foreach ($_SESSION['ReceiptBatch']->Items as $ReceiptItem) {
 
-	    echo '<tr>
-	    		<td class=number>' . number_format($ReceiptItem->Amount,2) . '</td>
+		echo '<tr>
+				<td class=number>' . number_format($ReceiptItem->Amount,2) . '</td>
 				<td class=number>' . number_format($ReceiptItem->Discount,2) . '</td>
 				<td>' . stripslashes($ReceiptItem->CustomerName) . '</td>
 				<td>' . $ReceiptItem->GLCode . "</td>
 				<td><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $ReceiptItem->ID . "'>" . _('Delete') . '</a></td>
 			</tr>';
 
-	    $BatchTotal= $BatchTotal + $ReceiptItem->Amount;
+		$BatchTotal= $BatchTotal + $ReceiptItem->Amount;
 
-   	}
+	}
 
-   	echo '<tr><td class=number><b>' . number_format($BatchTotal,2) . '</b></td></tr></table>';
+	echo '<tr><td class=number><b>' . number_format($BatchTotal,2) . '</b></td></tr></table>';
 }
 
 /*this next block of ifs deals with what information to display for input into the form
@@ -857,7 +855,7 @@ if (isset($_SESSION['CustomerRecord'])
 
 	echo '<table>';
 
-    $DisplayDiscountPercent = number_format($_SESSION['CustomerRecord']['pymtdiscount']*100,2) . "%";
+	$DisplayDiscountPercent = number_format($_SESSION['CustomerRecord']['pymtdiscount']*100,2) . "%";
 
 	echo '<input type="hidden" name="CustomerID" value="' . $_POST['CustomerID'] . '">';
 	echo '<input type="hidden" name="CustomerName" value="' . $_SESSION['CustomerRecord']['name'] . '">';
@@ -880,11 +878,11 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 	$result=DB_query($SQL,$db);
 	echo '<option value=0>0 - None';
 	while ($myrow=DB_fetch_array($result)){
-    	if (isset($_POST['tag']) and $_POST['tag']==$myrow["tagref"]){
+		if (isset($_POST['tag']) and $_POST['tag']==$myrow["tagref"]){
 		echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
-    	} else {
+		} else {
 			echo '<option value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
-    	}
+		}
 	}
 	echo '</select></td></tr>';
 // End select tag
@@ -894,14 +892,14 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 	$SQL = 'SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode';
 	$result=DB_query($SQL,$db);
 	if (DB_num_rows($result)==0){
-	   echo '</select>' . _('No General ledger accounts have been set up yet') . ' - ' . _('receipts cannot be entered against GL accounts until the GL accounts are set up') . '</td></tr>';
+		echo '</select>' . _('No General ledger accounts have been set up yet') . ' - ' . _('receipts cannot be entered against GL accounts until the GL accounts are set up') . '</td></tr>';
 	} else {
 		while ($myrow=DB_fetch_array($result)){
-		    if ($_POST['GLCode']==$myrow['accountcode']){
+			if ($_POST['GLCode']==$myrow['accountcode']){
 				echo '<option selected value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
-		    } else {
+			} else {
 			echo '<option value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
-		    }
+			}
 		}
 		echo '</select></td></tr>';
 	}
@@ -950,8 +948,8 @@ if (((isset($_SESSION['CustomerRecord'])
 
 } elseif (isset($_SESSION['ReceiptBatch']) && !isset($_POST['GLEntry'])){
 
-      /*Show the form to select a customer */
-        echo '<b>';
+	/*Show the form to select a customer */
+	echo '<b>';
 
 	echo $msg;
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Select a Customer') . '</b>';
@@ -973,7 +971,7 @@ if (((isset($_SESSION['CustomerRecord'])
 		echo '<br/><br/><input tabindex=13 type=submit name="CommitBatch" VALUE="' . _('Accept and Process Batch') . '"></div>';
 	}
 
-	If (isset($CustomerSearchResult)) {
+	if (isset($CustomerSearchResult)) {
 
 		echo '<table cellpadding=2 colspan=7 border=2>';
 		$TableHeader = '<tr><th>' . _('Code') . '</th>
