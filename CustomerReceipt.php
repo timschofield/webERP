@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.39 $ */
+/* $Revision: 1.40 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -82,7 +82,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ //always proc
 
 	}
 
-	/*Get the exchange rate between the functional currecny and the receipt currency*/
+	/*Get the exchange rate between the functional currency and the receipt currency*/
 	$result = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['ReceiptBatch']->Currency . "'",$db);
 	$myrow = DB_fetch_row($result);
 	$tableExRate = $myrow[0]; //this is the rate of exchange between the functional currency and the receipt currency
@@ -111,7 +111,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ //always proc
 		$myrow = DB_fetch_row($result);
 		$SuggestedFunctionalExRate = $myrow[0];
 
-		/*Get the exchange rate between the functional currecny and the receipt currency*/
+		/*Get the exchange rate between the functional currency and the receipt currency*/
 		$result = DB_query("select rate FROM currencies WHERE currabrev='" . $_SESSION['ReceiptBatch']->Currency . "'",$db);
 		$myrow = DB_fetch_row($result);
 		$tableExRate = $myrow[0]; //this is the rate of exchange between the functional currency and the receipt currency
@@ -647,7 +647,7 @@ customer record returned by the search - this record is then auto selected */
 /*set up the form whatever */
 
 
-echo '<form action=' . $_SERVER['PHP_SELF'] . ' method=post>';
+echo '<form action=' . $_SERVER['PHP_SELF'] . ' method=post name=form1>';
 
 /*show the batch header details and the entries in the batch so far */
 
@@ -666,7 +666,7 @@ $AccountsResults = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Enter Receipt') . '" alt="">' . ' ' . _('Enter Customer Receipt') . '</p>';
 echo '<div class="page_help_text">' . _('To enter a payment TO a customer (ie. to pay out a credit note), enter a negative payment amount.') . '</div>';
 echo '<br><table><tr><td>' . _('Bank Account') . ':</td>
-				 <td><select tabindex=1 name="BankAccount">';
+				 <td><select tabindex=1 name="BankAccount" onChange="ReloadForm(form1.BatchInput)">';
 
 if (DB_num_rows($AccountsResults)==0){
 	echo '</select></td></tr></table><p>';
@@ -694,9 +694,9 @@ if (!Is_Date($_SESSION['ReceiptBatch']->DateBanked)){
 }
 
 echo '<tr><td>' . _('Date Banked') . ':</td>
-		<td><input tabindex=2 type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="DateBanked" maxlength=10 size=11 onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['ReceiptBatch']->DateBanked . '"></td></tr>';
+		<td><input tabindex=2 type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="DateBanked" maxlength=10 size=10 onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['ReceiptBatch']->DateBanked . '"></td></tr>';
 echo '<tr><td>' . _('Currency') . ':</td>
-		<td><select tabindex=3 name="Currency">';
+		<td><select tabindex=3 name="Currency" onChange="ReloadForm(form1.BatchInput)">';
 
 if (!isset($_SESSION['ReceiptBatch']->Currency)){
   $_SESSION['ReceiptBatch']->Currency=$_SESSION['CompanyRecord']['currencydefault'];
