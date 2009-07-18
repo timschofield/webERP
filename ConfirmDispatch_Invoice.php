@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.58 $ */
+/* $Revision: 1.59 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -299,9 +299,9 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 
 	echo '<td>'.$LnItm->StockID.'</td>
 		<td>'.$LnItm->ItemDescription.'</td>
-		<td align=right>' . number_format($LnItm->Quantity,$LnItm->DecimalPlaces) . '</td>
+		<td class=number>' . number_format($LnItm->Quantity,$LnItm->DecimalPlaces) . '</td>
 		<td>'.$LnItm->Units.'</td>
-		<td align=right>' . number_format($LnItm->QtyInv,$LnItm->DecimalPlaces) . '</td>';
+		<td class=number>' . number_format($LnItm->QtyInv,$LnItm->DecimalPlaces) . '</td>';
 
 	if ($LnItm->Controlled==1){
 
@@ -309,15 +309,15 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 
 	} else {
 
-		echo '<td align=right><input tabindex="'.$j.'" type=text name="' . $LnItm->LineNumber .'_QtyDispatched" maxlength=12 size=12 value="' . $LnItm->QtyDispatched . '"></td>';
+		echo '<td class=number><input tabindex="'.$j.'" type=text class=number name="' . $LnItm->LineNumber .'_QtyDispatched" maxlength=12 size=12 value="' . $LnItm->QtyDispatched . '"></td>';
 
 	}
 	$DisplayDiscountPercent = number_format($LnItm->DiscountPercent*100,2) . '%';
 	$DisplayLineNetTotal = number_format($LineTotal,2);
 	$DisplayPrice = number_format($LnItm->Price,2);
-	echo '<td align=right>'.$DisplayPrice.'</td>
-		<td align=right>'.$DisplayDiscountPercent.'</td>
-		<td align=right>'.$DisplayLineNetTotal.'</td>';
+	echo '<td class=number>'.$DisplayPrice.'</td>
+		<td class=number>'.$DisplayDiscountPercent.'</td>
+		<td class=number>'.$DisplayLineNetTotal.'</td>';
 
 	/*Need to list the taxes applicable to this line */
 	echo '<td>';
@@ -330,17 +330,19 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 		$i++;
 	}
 	echo '</td>';
-	echo '<td align=right>';
+	echo '<td class=number>';
 
 	$i=0; // initialise the number of taxes iterated through
 	$TaxLineTotal =0; //initialise tax total for the line
 
-
 	foreach ($LnItm->Taxes AS $Tax) {
+		if (empty($TaxTotals[$Tax->TaxAuthID])) {
+			$TaxTotals[$Tax->TaxAuthID]=0;
+		}
 		if ($i>0){
 			echo '<br>';
 		}
-		echo '<input type=text name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" maxlength=4 size=4 value="' . $Tax->TaxRate*100 . '">';
+		echo '<input type=text class=number name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" maxlength=4 size=4 value="' . $Tax->TaxRate*100 . '">';
 		$i++;
 		if ($Tax->TaxOnTax ==1){
 			$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
@@ -359,7 +361,7 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 
 	$DisplayGrossLineTotal = number_format($LineTotal+ $TaxLineTotal,2);
 
-	echo '<td align=right>'.$DisplayTaxAmount.'</td><td align=right>'.$DisplayGrossLineTotal.'</td>';
+	echo '<td class=number>'.$DisplayTaxAmount.'</td><td class=number>'.$DisplayGrossLineTotal.'</td>';
 
 	if ($LnItm->Controlled==1){
 
@@ -421,16 +423,16 @@ if(!isset($_SESSION['Items']->FreightCost)) {
 	}
 }
 
-if (!is_numeric($_POST['ChargeFreightCost'])){
+if (isset($_POST['ChargeFreightCost']) and !is_numeric($_POST['ChargeFreightCost'])){
 	$_POST['ChargeFreightCost'] =0;
 }
 
 echo '<tr>
-	<td colspan=2 align=right>' . _('Order Freight Cost'). '</td>
-	<td align=right>' . $_SESSION['Old_FreightCost'] . '</td>';
+	<td colspan=2 class=number>' . _('Order Freight Cost'). '</td>
+	<td class=number>' . $_SESSION['Old_FreightCost'] . '</td>';
 
 if ($_SESSION['DoFreightCalc']==True){
-	echo '<td colspan=2 align=right>' ._('Recalculated Freight Cost'). '</td>
+	echo '<td colspan=2 class=number>' ._('Recalculated Freight Cost'). '</td>
 		<td align=right>' . $FreightCost . '</td>';
 } else {
 	echo '<td colspan=3></td>';
@@ -439,11 +441,11 @@ $j++;
 
 if ($_SESSION['Items']->Any_Already_Delivered()==1 and (!isset($_SESSION['Items']->FreightCost) or $_POST['ChargeFreightCost']==0)) {
 	echo '<td colspan=2 align=right>'. _('Charge Freight Cost inc Tax').'</td>
-		<td><input tabindex='.$j.' type=TEXT size=10 maxlength=12 name=ChargeFreightCost VALUE=0></td>';
+		<td><input tabindex='.$j.' type=text class=number size=10 maxlength=12 name=ChargeFreightCost VALUE=0></td>';
 	$_SESSION['Items']->FreightCost=0;
 } else {
 	echo '<td colspan=2 align=right>'. _('Charge Freight Cost inc Tax').'</td>
-		<td><input tabindex='.$j.' type=TEXT size=10 maxlength=12 name=ChargeFreightCost VALUE=' . $_SESSION['Items']->FreightCost . '></td>';
+		<td><input tabindex='.$j.' class=number type=text size=10 maxlength=12 name=ChargeFreightCost VALUE=' . $_SESSION['Items']->FreightCost . '></td>';
 	$_POST['ChargeFreightCost'] = $_SESSION['Items']->FreightCost;
 }
 
@@ -468,7 +470,7 @@ foreach ($_SESSION['Items']->FreightTaxes as $FreightTaxLine) {
 		echo '<br>';
 	}
 
-	echo  '<input type=TEXT name=FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . ' maxlength=4 size=4 VALUE=' . $FreightTaxLine->TaxRate * 100 . '>';
+	echo  '<input type=text class=number name=FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . ' maxlength=4 size=4 VALUE=' . $FreightTaxLine->TaxRate * 100 . '>';
 
 	if ($FreightTaxLine->TaxOnTax ==1){
 		$TaxTotals[$FreightTaxLine->TaxAuthID] += ($FreightTaxLine->TaxRate * ($_SESSION['Items']->FreightCost + $FreightTaxTotal));
@@ -482,8 +484,8 @@ foreach ($_SESSION['Items']->FreightTaxes as $FreightTaxLine) {
 }
 echo '</td>';
 
-echo '<td align=right>' . number_format($FreightTaxTotal,2) . '</td>
-	<td align=right>' . number_format($FreightTaxTotal+ $_POST['ChargeFreightCost'],2) . '</td>
+echo '<td class=number>' . number_format($FreightTaxTotal,2) . '</td>
+	<td class=number>' . number_format($FreightTaxTotal+ $_POST['ChargeFreightCost'],2) . '</td>
 	</tr>';
 
 $TaxTotal += $FreightTaxTotal;
@@ -497,11 +499,11 @@ $_SESSION['Items']->total = round($_SESSION['Items']->total,2);
 $_POST['ChargeFreightCost'] = round($_POST['ChargeFreightCost'],2);
 
 echo '<tr>
-	<td colspan=8 align=right>' . _('Invoice Totals'). '</td>
-	<td  align=right><hr><b>'.$DisplaySubTotal.'</b><hr></td>
+	<td colspan=8 class=number>' . _('Invoice Totals'). '</td>
+	<td  class=number><hr><b>'.$DisplaySubTotal.'</b><hr></td>
 	<td colspan=2></td>
-	<td align=right><hr><b>' . number_format($TaxTotal,2) . '</b><hr></td>
-	<td align=right><hr><b>' . number_format($TaxTotal+($_SESSION['Items']->total + $_POST['ChargeFreightCost']),2) . '</b><hr></td>
+	<td class=number><hr><b>' . number_format($TaxTotal,2) . '</b><hr></td>
+	<td class=number><hr><b>' . number_format($TaxTotal+($_SESSION['Items']->total + $_POST['ChargeFreightCost']),2) . '</b><hr></td>
 </tr>';
 
 if (! isset($_POST['DispatchDate']) OR  ! Is_Date($_POST['DispatchDate'])){
@@ -1421,7 +1423,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	unset($_SESSION['Items']);
 	unset($_SESSION['ProcessingOrder']);
 
-	echo '<div class="centre">' . _('Invoice number'). ' '. $InvoiceNo .' '. _('processed'). '<br>';
+	echo prnMsg( _('Invoice number'). ' '. $InvoiceNo .' '. _('processed'), 'success');
+	
+	echo '<br><div class="centre">';
 
 	if ($_SESSION['InvoicePortraitFormat']==0){
 		echo '<img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . '<a target="_blank" href="'.$rootpath.'/PrintCustTrans.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). ' (' . _('Landscape') . ')</a><br>';
@@ -1445,7 +1449,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	$j++;
 	echo '<table><tr>
 		<td>' ._('Date Of Dispatch'). ':</td>
-		<td><input tabindex='.$j.' type=text maxlength=10 size=15 name=DispatchDate value="'.$DefaultDispatchDate.'"></td>
+		<td><input tabindex='.$j.' type=text maxlength=10 size=10 name=DispatchDate class="date" alt="'.$_SESSION['DefaultDateFormat'].'" value="'.$DefaultDispatchDate.'"></td>
 	</tr>';
 	$j++;
 	echo '<tr>
@@ -1460,7 +1464,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	$j++;
 	echo '<tr>
 		<td>' ._('Invoice Text'). ':</td>
-		<td><TEXTAREA tabindex='.$j.' name=InvoiceText COLS=31 ROWS=5>' . $_POST['InvoiceText'] . '</TEXTAREa></td>
+		<td><textarea tabindex='.$j.' name=InvoiceText COLS=31 ROWS=5>' . $_POST['InvoiceText'] . '</textarea></td>
 	</tr>';
 
 	$j++;
