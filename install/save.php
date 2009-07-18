@@ -9,29 +9,28 @@ if(!defined('SESSION_STARTED')){
 	session_start();
 	define('SESSION_STARTED', true);
 }
+//deal with check boxes
+if(!isset($_POST['install_tables'])) {
+	$_POST['install_tables'] = false;
+} else {
+	$_POST['install_tables'] = true;
+}
+if(!isset($_POST['DemoData'])) {
+	$_POST['DemoData'] = false;
+} else {
+	$_POST['DemoData'] = true;
+}
 
-function dircopy( $source, $target ) {
-    $permissions=fileperms($source);
-    if ( is_dir( $source ) ) {
-        @mkdir( $target );
-        $d = dir( $source );
-        while ( FALSE !== ( $entry = $d->read() ) ) {
-            if ( $entry == '.' || $entry == '..' )  {
-                continue;
-            }
-            $Entry = $source . '/' . $entry;
-            if ( is_dir( $Entry ) ) {
-                dircopy( $Entry, $target . '/' . $entry );
-                continue;
-            }
-            copy( $Entry, $target . '/' . $entry );
-            chmod($target . '/' . $entry, $permissions);
-        }
-        $d->close();
-    } else {
-        copy( $source, $target );
-    }
-    chmod($target, $permissions);
+function Replace_Dodgy_Characters ($DodgyString) {
+	$CleanString = str_replace("'",'',$DodgyString);
+	$CleanString = str_replace('"','',$CleanString);
+	$CleanString = str_replace(' ','_',$CleanString);
+	$CleanString = str_replace(',','_',$CleanString);
+	$CleanString = str_replace('-','_',$CleanString);
+	$CleanString = str_replace("\\",'_',$CleanString);
+	$CleanString = str_replace('/','_',$CleanString);
+	$CleanString = str_replace('?','_',$CleanString);
+	return $CleanString;
 }
 
 function set_error($message) {
@@ -51,16 +50,11 @@ function set_error($message) {
 				$_SESSION['world_writeable'] = true;
 			}
 			$_SESSION['database_host'] = $_POST['database_host'];
-			$_SESSION['database_username'] = $_POST['database_username'];
+			$_SESSION['database_username'] = Replace_Dodgy_Characters($_POST['database_username']);
 			$_SESSION['database_password'] = $_POST['database_password'];
-			$_SESSION['database_name'] = $_POST['company_name'];
+			$_SESSION['database_name'] = Replace_Dodgy_Characters($_POST['company_name']);
 			$_SESSION['timezone'] = $_POST['timezone'];
-			if(!isset($_POST['install_tables'])) {
-				$_SESSION['install_tables'] = false;
-			} else {
-				$_SESSION['install_tables'] = true;
-			}
-			$_SESSION['company_name'] = $_POST['company_name'];
+			$_SESSION['company_name'] = Replace_Dodgy_Characters($_POST['company_name']);
 			$_SESSION['admin_email'] = $_POST['admin_email'];
 			$_SESSION['admin_password'] = $_POST['admin_password'];
 
@@ -194,7 +188,7 @@ if (!isset($_POST['database_password'])) {
 if (!isset($_POST['company_name']) || $_POST['company_name'] == '') {
 	set_error('Please enter a company name');
 } else {
-	$_POST['company_name'] = add_slashes($_POST['company_name']);
+	$_POST['company_name'] = Replace_Dodgy_Characters($_POST['company_name']);
 }
  
 if (!isset($_POST['timezone']) || $_POST['timezone'] == ''){
@@ -221,56 +215,121 @@ if (!isset($_POST['admin_password']) || $_POST['admin_password'] == '') {
 if (!isset($_POST['admin_repassword']) || $_POST['admin_repassword'] == '') {
 	set_error('Please make sure you re-enter the password for the Administrator account');
 }
-if ($admin_password != $admin_repassword){
-	set_error('Sorry, the two Administrator account passwords you entered do not match');
+if ($_POST['admin_password'] != $_POST['admin_repassword']){
+	set_error('The two Administrator account passwords you entered do not match');
 }
 // End admin user details code
 
-if ($table_prefix != "" && $id > 0){
-	$table_prefix = $tb_pref_counter . "_";
-}
-
 $config_filename = $path_to_root . '/config.php';
-
-dircopy($path_to_root.'/companies/weberpdemo', $path_to_root.'/companies/'.$_POST['company_name'], 0);
-
-$err = write_config_db($table_prefix != "");
-
-if ($err == -1) {
-	set_error("Cannot open the configuration file ($config_filename)");
-} elseif ($err == -2) {
-	set_error("Cannot write to the configuration file ($config_filename)");
-} elseif ($err == -3) {
-	set_error("The configuration file $config_filename is not writable. Change its permissions so it is, then re-run step 4.");
+// only make a new company directory structure if we are kicking off a new company
+// no need to bother if just setting up the demo data
+if ($_POST['DemoData']==false){ 
+	$Result = mkdir($path_to_root . '/companies/' . $_POST['company_name']);
+	$Result = mkdir($path_to_root . '/companies/' . $_POST['company_name'] . '/part_pics');
+	$Result = mkdir($path_to_root . '/companies/' . $_POST['company_name'] . '/EDI_Incoming_Orders');
+	$Result = mkdir($path_to_root . '/companies/' . $_POST['company_name'] . '/reports');
+	$Result = mkdir($path_to_root . '/companies/' . $_POST['company_name'] . '/EDI_Sent');
+	$Result = mkdir($path_to_root . '/companies/' . $_POST['company_name'] . '/EDI_Pending');
+	$Result = mkdir($path_to_root . '/companies/' . $_POST['company_name'] . '/reportwriter');
+	$Result = mkdir($path_to_root . '/companies/' . $_POST['company_name'] . '/pdf_append');
 }
+
+//Need to get the new version number
+$ConfigDistributionFile = file($path_to_root . '/config.distrib.php');
+$ConfigDistributionFileLines = sizeof($ConfigDistributionFile);
+for ($i=0; $i<$ConfigDistributionFileLines; $i++) {
+	$ConfigDistributionFile[$i] = trim($ConfigDistributionFile[$i]);
+	if (substr($ConfigDistributionFile[$i], 0, 8) == '$Version'){
+		$VersionString = $ConfigDistributionFile[$i];
+	}
+} 
+//$msg holds the text of the new config.php file	
+$msg = "<?php\n\n";
+$msg .= "/* \$Revision: 1.6 $ */\n";
+$msg .= "// User configurable variables\n";
+$msg .= "//---------------------------------------------------\n\n";
+$msg .= "//DefaultLanguage to use for the login screen and the setup of new users - the users language selection will override\n";
+$msg .= "\$DefaultLanguage ='en_GB';\n\n";
+$msg .= "// Whether to display the demo login and password or not on the login screen\n";
+$msg .= "\$allow_demo_mode = True;\n\n";
+$msg .= "// webERP version\n\n";
+$msg .= $VersionString . "\n\n";
+$msg .= "//  Connection information for the database\n";
+$msg .= "// \$host is the computer ip address or name where the database is located\n";
+$msg .= "// assuming that the web server is also the sql server\n";		
+$msg .= "\$host = '" . $_POST['database_host'] . "';\n\n";
+
+$msg .= "// assuming that the web server is also the sql server\n";		
+$msg .= "\$dbType = 'mysqli';\n";
+
+$msg .= "// assuming that the web server is also the sql server\n";		
+$msg .= "\$dbuser = '" . $_POST['database_username'] . "';\n";
+$msg .= "// assuming that the web server is also the sql server\n";		
+$msg .= "\$dbpassword = '" . $_POST['database_password'] . "';\n";
+
+$msg .= "// The timezone of the business - this allows the possibility of having;\n";
+
+$msg .= "putenv('" . $_POST['timezone'] . "');\n";
+$msg .= "\$AllowCompanySelectionBox = true;\n";
+if ($_POST['DemoData'] ==false){
+	$msg .= "\$DefaultCompany = '" . $_POST['company_name']. "';\n";
+} else {
+	$msg .= "\$DefaultCompany = 'weberpdemo';\n";
+}
+$msg .= "\$SessionLifeTime = 3600;\n";
+$msg .= "\$MaximumExecutionTime =120;\n";
+$msg .= "\$CryptFunction = 'sha1';\n";
+$msg .= "\$DefaultClock = 12;\n";
+
+$msg .= "\$rootpath = dirname(\$_SERVER['PHP_SELF']);\n";		
+$msg .= "if (isset(\$DirectoryLevelsDeep)){\n";		
+$msg .= "   for (\$i=0;\$i<\$DirectoryLevelsDeep;\$i++){\n";		
+$msg .= "\$rootpath = substr(\$rootpath,0, strrpos(\$rootpath,'/'));\n";		
+$msg .= "} }\n";		
+
+$msg .= "if (\$rootpath == '/' OR \$rootpath == '\\\') {;\n";		
+$msg .= "\$rootpath = '';\n";		
+$msg .= "}\n";		
+$msg .= "error_reporting (E_ALL & ~E_NOTICE);\n";		
+$msg .= "?>";
+
+if (!$zp = fopen($path_to_root . '/config.php', 'w')){
+	set_error("Cannot open the configuration file ($config_filename)");
+} else {
+	if (!fwrite($zp, $msg)){
+		fclose($zp);
+		set_error("Cannot write to the configuration file ($config_filename)");
+	}
+	// close file
+	fclose($zp);
+}
+
 // Try connecting to database
 
-$db = mysql_connect($_POST['database_host'], $_POST['database_username'], $_POST['database_password']);
+$db = mysqli_connect($_POST['database_host'], $_POST['database_username'], $_POST['database_password']);
 if (!$db){
-	set_error('Database host name, username and/or password incorrect. MySQL Error:<br />'.mysql_error());
+	set_error('Database host name, username and/or password incorrect. MySQL Error:<br />'. mysqli_error());
 }
 
-if($install_tables == true){
-	// Try to create the database
-	mysql_query('CREATE DATABASE IF NOT EXISTS `'.$database_name.'`', $db);
-	mysql_select_db($database_name, $db);
+if($_POST['install_tables'] == true){
+	
 	/* Need to read in the sql script and process the queries to initate a new DB */
-	if ($_POST['db_file']==true){
-		$SQLScriptFile = file('../sql/mysql/weberp-demo.sql');
-	} else {
-		$SQLScriptFile = file('../sql/mysql/weberp-new.sql');
+	if ($_POST['DemoData'] == true){ //installing the demo data
+		$SQLScriptFile = file($path_to_root . '/sql/mysql/weberp-demo.sql');
+	} else { //creating a new database with no demo data
+		mysqli_query($db, 'CREATE DATABASE IF NOT EXISTS `' . mysqli_real_escape_string($db, $_POST['company_name']) . '`');
+		mysqli_select_db($db, $_POST['company_name']);
+		$SQLScriptFile = file($path_to_root . '/sql/mysql/weberp-new.sql');
 	}
 	$ScriptFileEntries = sizeof($SQLScriptFile);
-	$ErrMsg = _('The script to create the new company database failed because');
 	$SQL ='';
 	$InAFunction = false;
 	
-	for ($i=0; $i<=$ScriptFileEntries; $i++) {
+	for ($i=0; $i<$ScriptFileEntries; $i++) {
 		
 		$SQLScriptFile[$i] = trim($SQLScriptFile[$i]);
 		//ignore lines that start with -- or USE or /*			
 		if (substr($SQLScriptFile[$i], 0, 2) != '--' 
-			AND substr($SQLScriptFile[$i], 0, 3) != 'USE' 
 			AND strstr($SQLScriptFile[$i],'/*')==FALSE 
 			AND strlen($SQLScriptFile[$i])>1){
 				
@@ -286,24 +345,22 @@ if($install_tables == true){
 			}
 			if (strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
 				$SQL = substr($SQL,0,strlen($SQL)-1);
-				$result = mysql_query($SQL, $db);
+				$result = mysqli_query($db,$SQL);
 				$SQL='';
 			}
 			
 		} //end if its a valid sql line not a comment
 	} //end of for loop around the lines of the sql script
-} else {
-	mysql_select_db($_POST['company_name'], $db);
-}
+} 
 $sql = "UPDATE www_users 
 			SET password = '" . sha1($_POST['admin_password']) . "', 
-				email = '".mysql_real_escape_string($_POST['admin_email']) ."' 
+				email = '".mysqli_real_escape_string($db, $_POST['admin_email']) ."' 
 			WHERE user_id = 'admin'";
-mysql_query($sql, $db);
+mysqli_query($db,$sql);
 $sql = "UPDATE companies 
-			SET coyname = '". mysql_real_escape_string($_POST['company_name']) ." 
+			SET coyname = '". mysqli_real_escape_string($db, $_POST['company_name']) ." 
 			WHERE coycode = 1"; 
-mysql_query($sql, "could not update company name. Do it manually later in Setup");
+mysqli_query($db,$sql);
 
 session_unset();
 session_destroy();
@@ -311,68 +368,4 @@ session_destroy();
 header('Location: ' . $path_to_root . '/index.php');
 ini_set('max_execution_time', '60');
 echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $path_to_root . '/index.php?' . SID . "'>";
-//end of script
-exit();
-
-function write_config_db() {
-	global $path_to_root;
-	
-	$msg = "<?php\n\n";
-	$msg .= "/* \$Revision: 1.5 $ */\n";
-	$msg .= "// User configurable variables\n";
-	$msg .= "//---------------------------------------------------\n\n";
-	$msg .= "//DefaultLanguage to use for the login screen and the setup of new users - the users language selection will override\n";
-	$msg .= "\$DefaultLanguage ='en_GB';\n\n";
-	$msg .= "// Whether to display the demo login and password or not on the login screen\n";
-	$msg .= "\$allow_demo_mode = True;\n\n";
-	$msg .= "// webERP version\n\n";
-	$msg .= "\$Version = '3.11';\n\n";
-	$msg .= "//  Connection information for the database\n";
-	$msg .= "// \$host is the computer ip address or name where the database is located\n";
-	$msg .= "// assuming that the web server is also the sql server\n";		
-	$msg .= "\$host = '" . $_POST['database_host'] . "';\n\n";
-	
-	$msg .= "// assuming that the web server is also the sql server\n";		
-	$msg .= "\$dbType = 'mysqli';\n";
-	
-	$msg .= "// assuming that the web server is also the sql server\n";		
-	$msg .= "\$dbuser = '" . $_POST['database_user'] . "';\n";
-	$msg .= "// assuming that the web server is also the sql server\n";		
-	$msg .= "\$dbpassword = '" . $_POST['database_password'] . "';\n";
-	
-	$msg .= "// The timezone of the business - this allows the possibility of having;\n";
-	
-	$msg .= "putenv('" . $_POST['timezone'] . "');\n";
-	$msg .= "\$AllowCompanySelectionBox = true;\n";
-	$msg .= "\$DefaultCompany = '" . $_POST['company_name']. "';\n";
-	$msg .= "\$SessionLifeTime = 3600;\n";
-	$msg .= "\$MaximumExecutionTime =120;\n";
-	$msg .= "\$CryptFunction = 'sha1';\n";
-	$msg .= "\$DefaultClock = 12;\n";
-	
-	$msg .= "\$rootpath = dirname(\$_SERVER['PHP_SELF']);\n";		
-	$msg .= "if (isset(\$DirectoryLevelsDeep)){\n";		
-	$msg .= "for (\$i=0;\$i<\$DirectoryLevelsDeep;\$i++){\n";		
-	$msg .= "\$rootpath = substr(\$rootpath,0, strrpos(\$rootpath,'/'));\n";		
-	$msg .= "} }\n";		
-	
-	$msg .= "if (\$rootpath == '/' OR \$rootpath == '\\\') {;\n";		
-	$msg .= "\$rootpath = '';\n";		
-	$msg .= "}\n";		
-	$msg .= "error_reporting (E_ALL & ~E_NOTICE);\n";		
-	
-	$msg .= "?>";
-	
-	if (!$zp = fopen($path_to_root . '/config.php', 'w')){
-		return -1;
-	} else {
-		if (!fwrite($zp, $msg)){
-			fclose($zp);
-			return -2;
-		}
-		// close file
-		fclose($zp);
-	}
-	return 0;
-}
 ?>

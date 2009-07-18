@@ -265,7 +265,7 @@ function change_data(type) {
 			</td>
 		
 			<td width="180">
-				<input type="checkbox" tabindex="14" name="db_file" id="db_file_demo" value="demo"<?php if(!isset($_SESSION['db_file']) OR $_SESSION['db_file'] == 'demo') { echo ' checked'; } ?> />
+				<input type="checkbox" tabindex="14" name="DemoData" id="db_file_demo" value="demo"<?php if(!isset($_SESSION['db_file']) OR $_SESSION['db_file'] == 'demo') { echo ' checked'; } ?> />
 				<font style="cursor: pointer;" onclick="javascript: change_data('demo');">weberpdemo company</font>
 			</td>
 		</tr>
