@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.67 $ */
+/* $Revision: 1.68 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -258,7 +258,7 @@ if (isset($_POST['Update'])
 
 if(isset($_POST['MakeRecurringOrder']) AND ! $InputErrors){
 
-	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/RecurringSalesOrders.php?' . SID . '&NewRecurringOrder=Yes">';
+	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/RecurringSalesOrders.php?' . SID.'identifier='.$identifier   .  '&NewRecurringOrder=Yes">';
 	prnMsg(_('You should automatically be forwarded to the entry of recurring order details page') . '. ' . _('If this does not happen') . '(' . _('if the browser does not support META Refresh') . ') ' ."<a href='" . $rootpath . '/RecurringOrders.php?' . SID.'identifier='.$identifier  . "&NewRecurringOrder=Yes'>". _('click here') .'</a> '. _('to continue'),'info');
 	include('includes/footer.inc');
 	exit;
@@ -267,7 +267,7 @@ if(isset($_POST['MakeRecurringOrder']) AND ! $InputErrors){
 
 if (isset($_POST['BackToLineDetails']) and $_POST['BackToLineDetails']==_('Modify Order Lines')){
 
-	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/SelectOrderItems.php?' . SID . '">';
+	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/SelectOrderItems.php?' . SID.'identifier='.$identifier   . '">';
 	prnMsg(_('You should automatically be forwarded to the entry of the order line details page') . '. ' . _('If this does not happen') . '(' . _('if the browser does not support META Refresh') . ') ' ."<a href='" . $rootpath . '/SelectOrderItems.php?' . SID.'identifier='.$identifier  . "'>". _('click here') .'</a> '. _('to continue'),'info');
 	include('includes/footer.inc');
 	exit;
@@ -677,7 +677,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 }
 
 
-if (strlen($_SESSION['Items'.$identifier]->SpecialInstructions)>0) {
+if (isset($_SESSION['Items'.$identifier]->SpecialInstructions) and strlen($_SESSION['Items'.$identifier]->SpecialInstructions)>0) {
 	prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'info');
 }
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Delivery') . '" alt="">' . ' ' . _('Delivery Details');
