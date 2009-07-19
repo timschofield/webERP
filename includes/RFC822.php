@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /**
 * RFC 822 Email address list validation Utility
 *
@@ -19,7 +19,7 @@
 *
 * @author  Richard Heyes <richard@phpguru.org>
 * @author  Chuck Hagenbuch <chuck@horde.org>
-* @version $Revision: 1.3 $
+* @version $Revision: 1.4 $
 * @package Mail
 */
 
@@ -359,9 +359,9 @@ class Mail_RFC822
      * 
      * @access private
      * @param string $string The string to check.
-     * @param integer &$num    The number of occurences.
+     * @param integer &$num    The number of occurrences.
      * @param string $char   The character to count.
-     * @return integer The number of occurences of $char in $string, adjusted for backslashes.
+     * @return integer The number of occurrences of $char in $string, adjusted for backslashes.
      */
     function _hasUnclosedBracketsSub($string, &$num, $char)
     {

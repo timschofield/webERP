@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.39 $ */
+/* $Revision: 1.40 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -290,7 +290,7 @@ Class Cart {
 			WHERE stkmoveno = ' . $stkmoveno . '
 			ORDER BY taxcalculationorder';
 
-		$ErrMsg = _('The taxes and rates for this item could not be retreived because');
+		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
 		$GetTaxRatesResult = DB_query($sql,$db,$ErrMsg);
 
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
@@ -327,7 +327,7 @@ Class Cart {
 			AND taxauthrates.taxcatid = " . $this->LineItems[$LineNumber]->TaxCategory . "
 			ORDER BY taxgrouptaxes.calculationorder";
 
-		$ErrMsg = _('The taxes and rates for this item could not be retreived because');
+		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
 		$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);
 
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
@@ -373,7 +373,7 @@ Class Cart {
 				AND taxauthrates.taxcatid = ' . $TaxCatID . '
 				ORDER BY taxgrouptaxes.calculationorder';
 
-		$ErrMsg = _('The taxes and rates for this item could not be retreived because');
+		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
 		$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);
 
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){

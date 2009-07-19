@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 /* Definition of the Supplier Transactions class to hold all the information for an accounts payable invoice or credit note
 */
 
@@ -61,7 +61,7 @@ Class SuppTrans {
 			AND taxauthrates.taxcatid = " . $_SESSION['DefaultTaxCategory'] . "
 			ORDER BY taxgrouptaxes.calculationorder";
 
-		$ErrMsg = _('The taxes and rates for this item could not be retreived because');
+		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
 		$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);
 		
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){

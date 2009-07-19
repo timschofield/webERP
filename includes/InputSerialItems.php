@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -43,10 +43,10 @@ if (!isset($_POST['EntryType']) OR trim($_POST['EntryType']) == ''){
 $invalid_imports = 0;
 $valid = true;
 
-echo '<FORM METHOD="POST" ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" enctype="multipart/form-data" >';
-echo '<INPUT TYPE=HIDDEN NAME="LineNo" VALUE="' . $LineNo . '">';
-echo '<INPUT TYPE=HIDDEN NAME="StockID" VALUE="'. $StockID. '">';
-echo '<CENTER><TABLE BORDER=1><TR><TD>';
+echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" enctype="multipart/form-data" >';
+echo '<input type=hidden name="LineNo" value="' . $LineNo . '">';
+echo '<input type=hidden name="StockID" value="'. $StockID. '">';
+echo '<table border=1><tr><td>';
 echo '<input type=radio name=EntryType onClick="submit();" ';
 if ($_POST['EntryType']=='KEYED') {
 	echo ' checked ';
@@ -55,46 +55,46 @@ echo 'value="KEYED">'. _('Keyed Entry');
 echo '</TD>';
 
 if ($LineItem->Serialised==1){
-	echo '<TD>';
+	echo '<td>';
 	echo '<input type=radio name=EntryType onClick="submit();" ';
 	if ($_POST['EntryType']=='SEQUENCE') {
 		echo ' checked ';
 	}
 	echo ' value="SEQUENCE">'. _('Sequential');
-	echo '</TD>';
+	echo '</td>';
 }
 
-echo '<TD valign=bottom>';
+echo '<td valign=bottom>';
 echo '<input type=radio id="FileEntry" name=EntryType onClick="submit();" ';
 if ($_POST['EntryType']=='FILE') {
 	echo ' checked ';
 }
 echo ' value="FILE">'. _('File Upload');
 echo '&nbsp; <input type="file" name="ImportFile" onClick="document.getElementById(\'FileEntry\').checked=true;" >';
-echo '</TD></TR><TR><TD ALIGN=CENTER COLSPAN=3>';
-echo '<input type=submit value="'. _('Set Entry Type'). ':">';
-echo '</TD></TR></TABLE>';
-echo '</FORM></CENTER>';
+echo '</td></tr><tr><td colspan=3>';
+echo '<div class="centre"><input type=submit value="'. _('Set Entry Type'). ':"></div>';
+echo '</td></tr></table>';
+echo '</form>';
 
 global $tableheader;
 /* Link to clear the list and start from scratch */
-$EditLink =  '<br><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&EditControlled=true&StockID=' . $LineItem->StockID .
+$EditLink =  '<br><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&EditControlled=true&StockID=' . $LineItem->StockID .
 	'&LineNo=' . $LineNo .'">'. _('Edit'). '</a> | ';
-$RemoveLink = '<A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&DELETEALL=YES&StockID=' . $LineItem->StockID .
-	'&LineNo=' . $LineNo .'">'. _('Remove All'). '</a><br>';
+$RemoveLink = '<a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&DELETEALL=YES&StockID=' . $LineItem->StockID .
+	'&LineNo=' . $LineNo .'">'. _('Remove All'). '</a><br></div>';
 if ($LineItem->Serialised==1){
-	$tableheader .= '<TR>
-			<TD class=tableheader>'. _('Serial No').'</TD>
-			</TR>';
+	$tableheader .= '<tr>
+			<th>'. _('Serial No').'</th>
+			</Tr>';
 } else {
 	$tableheader = '<TR>
-			<TD class=tableheader>'. _('Batch/Roll/Bundle'). ' #</TD>
-			<TD class=tableheader>'. _('Quantity'). '</TD>
-			</TR>';
+			<th>'. _('Batch/Roll/Bundle'). ' #</th>
+			<th class=tableheader>'. _('Quantity'). '</th>
+			</tr>';
 }
 
 echo $EditLink . $RemoveLink;
-echo '<TABLE><TR><TD>';
+echo '<table><tr><td>';
 if ($_POST['EntryType'] == 'FILE'){
 	include('includes/InputSerialItemsFile.php');
 } elseif ($_POST['EntryType'] == 'SEQUENCE'){
@@ -102,5 +102,5 @@ if ($_POST['EntryType'] == 'FILE'){
 } else { /*KEYED or BARCODE */
 	include('includes/InputSerialItemsKeyed.php');
 }
-echo '</TD></TR></TABLE>';
+echo '</td></tr></table>';
 ?>

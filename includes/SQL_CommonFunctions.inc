@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 /* Common SQL Functions */
 
@@ -50,7 +50,7 @@ Function GetStockGLCode ($StockID, &$db){
 			WHERE stockmaster.categoryid=stockcategory.categoryid
 			AND stockmaster.stockid = '" . $StockID . "'";
 
-	$ErrMsg =  _('The stock GL codes could not be retreived because');
+	$ErrMsg =  _('The stock GL codes could not be retrieved because');
 	$GetStkGLResult = DB_query($QuerySQL, $db, $ErrMsg);
 
 	$myrow = DB_fetch_array($GetStkGLResult);
@@ -67,7 +67,7 @@ Function GetTaxRate ($TaxAuthority, $DispatchTaxProvince, $TaxCategory, &$db){
 			AND dispatchtaxprovince=" . $DispatchTaxProvince . "
 			AND taxcatid = " . $TaxCategory;
 
-	$ErrMsg = _('The tax rate for this item could not be retreived because');
+	$ErrMsg = _('The tax rate for this item could not be retrieved because');
 	$GetTaxRateResult = DB_query($QuerySQL,$db,$ErrMsg);
 
 	if (DB_num_rows($GetTaxRateResult)==1){
@@ -98,7 +98,7 @@ Function GetTaxes ($TaxGroup, $DispatchTaxProvince, $TaxCategory, &$db) {
 			ORDER BY taxgrouptaxes.calculationorder";
 
 
-	$ErrMsg = _('The taxes and rate for this tax group could not be retreived because');
+	$ErrMsg = _('The taxes and rate for this tax group could not be retrieved because');
 	$GetTaxesResult = DB_query($SQL,$db,$ErrMsg);
 
 	if (DB_num_rows($GetTaxesResult)>=1){
@@ -279,10 +279,10 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID="") 
 			)";
 	$result = DB_query($sql, $db);
 
-	// combine real immediate components of this item with other occurences in this work order
+	// combine real immediate components of this item with other occurrences in this work order
 	// otherwise, we could encounter a uniqueness violation:
 	//     - the same component could occur in multiple dissolved phantom assemblies
-	//     - need to sum quantities of multiple component occurences
+	//     - need to sum quantities of multiple component occurrences
 	if ($ParentID != $StockID) {
 		$sql = "UPDATE worequirements
 					INNER JOIN (
