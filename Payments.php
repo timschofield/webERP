@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.36 $ */
+/* $Revision: 1.37 $ */
 
 $PageSecurity = 5;
 
@@ -14,9 +14,9 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_POST['PaymentCancelled'])) {
-  prnMsg(_('Payment Cancelled since cheque was not printed'), 'warning');
-  include('includes/footer.inc');
-  exit();
+	prnMsg(_('Payment Cancelled since cheque was not printed'), 'warning');
+	include('includes/footer.inc');
+	exit();
 }
 
 if (isset($_GET['NewPayment']) and $_GET['NewPayment']=='Yes'){
@@ -176,8 +176,8 @@ if (isset($_POST['Amount']) and $_POST['Amount']!=""){
 	$_SESSION['PaymentDetail']->Amount=$_POST['Amount'];
 } else {
 	if (!isset($_SESSION['PaymentDetail']->Amount)) {
-	  $_SESSION['PaymentDetail']->Amount=0;
-  }
+		$_SESSION['PaymentDetail']->Amount=0;
+	}
 }
 if (isset($_POST['Discount']) and $_POST['Discount']!=''){
 	$_SESSION['PaymentDetail']->Discount=$_POST['Discount'];
@@ -198,27 +198,27 @@ if (isset($_POST['CommitBatch'])){
   A GL entry is created for each GL entry (only one for a supplier entry) and one for the bank
   account credit.
 
-  NB allocations against supplier payments are a seperate exercice
+  NB allocations against supplier payments are a separate exercice
 
   if GL integrated then
   first off run through the array of payment items $_SESSION['Payment']->GLItems and
   create GL Entries for the GL payment items
   */
 
-  /*First off  check we have an amount entered as paid ?? */
-  $TotalAmount =0;
-  foreach ($_SESSION['PaymentDetail']->GLItems AS $PaymentItem) {
-	  $TotalAmount += $PaymentItem->Amount;
-  }
+	/*First off  check we have an amount entered as paid ?? */
+	$TotalAmount =0;
+	foreach ($_SESSION['PaymentDetail']->GLItems AS $PaymentItem) {
+		$TotalAmount += $PaymentItem->Amount;
+	}
 
-  if ($TotalAmount==0 AND
-	  ($_SESSION['PaymentDetail']->Discount + $_SESSION['PaymentDetail']->Amount)/$_SESSION['PaymentDetail']->ExRate ==0){
-	  prnMsg( _('This payment has no amounts entered and will not be processed'),'warn');
-	  include('includes/footer.inc');
-	  exit;
-  }
+	if ($TotalAmount==0 AND
+		($_SESSION['PaymentDetail']->Discount + $_SESSION['PaymentDetail']->Amount)/$_SESSION['PaymentDetail']->ExRate ==0){
+		prnMsg( _('This payment has no amounts entered and will not be processed'),'warn');
+		include('includes/footer.inc');
+		exit;
+	}
 
-  /*Make an array of the defined bank accounts */
+	/*Make an array of the defined bank accounts */
 	$SQL = 'SELECT bankaccounts.accountcode
 			FROM bankaccounts,
 				chartmaster
@@ -230,46 +230,46 @@ if (isset($_POST['CommitBatch'])){
 	while ($Act = DB_fetch_row($result)){
 		$BankAccounts[$i]= $Act[0];
 		$i++;
-  	}
+	}
 
-  $PeriodNo = GetPeriod($_SESSION['PaymentDetail']->DatePaid,$db);
+	$PeriodNo = GetPeriod($_SESSION['PaymentDetail']->DatePaid,$db);
 
-  // first time through commit if supplier cheque then print it first
+	// first time through commit if supplier cheque then print it first
 	if ((!isset($_POST['ChequePrinted']))
-		  AND (!isset($_POST['PaymentCancelled']))
-		  AND ($_SESSION['PaymentDetail']->Paymenttype == 'Cheque')) {
-     // it is a supplier payment by cheque and haven't printed yet so print cheque
+		AND (!isset($_POST['PaymentCancelled']))
+		AND ($_SESSION['PaymentDetail']->Paymenttype == 'Cheque')) {
+	// it is a supplier payment by cheque and haven't printed yet so print cheque
 
-    echo '<br><a href="' . $rootpath . '/PrintCheque.php?' . SID . '&ChequeNum=' . $_POST['ChequeNum'] . '">' . _('Print Cheque using pre-printed stationery') . '</a><br><br>';
+		echo '<br><a href="' . $rootpath . '/PrintCheque.php?' . SID . '&ChequeNum=' . $_POST['ChequeNum'] . '">' . _('Print Cheque using pre-printed stationery') . '</a><br><br>';
 
-	  echo '<form method=post action="' . $_SERVER['PHP_SELF'] . '">';
-	  echo _('Has the cheque been printed') . '?<br><br>';
-	  echo '<input type="hidden" name="CommitBatch" VALUE="' . $_POST['CommitBatch'] . '">';
-	  echo '<input type="submit" name="ChequePrinted" VALUE="' . _('Yes / Continue') . '">&nbsp;&nbsp;';
-	  echo '<input type="submit" name="PaymentCancelled" VALUE="' . _('No / Cancel Payment') . '">';
-  } else {
+		echo '<form method=post action="' . $_SERVER['PHP_SELF'] . '">';
+		echo _('Has the cheque been printed') . '?<br><br>';
+		echo '<input type="hidden" name="CommitBatch" VALUE="' . $_POST['CommitBatch'] . '">';
+		echo '<input type="submit" name="ChequePrinted" VALUE="' . _('Yes / Continue') . '">&nbsp;&nbsp;';
+		echo '<input type="submit" name="PaymentCancelled" VALUE="' . _('No / Cancel Payment') . '">';
+	} else {
 
-  //Start a transaction to do the whole lot inside
-  $SQL = 'BEGIN';
-  $result = DB_query($SQL,$db);
+		//Start a transaction to do the whole lot inside
+		$SQL = 'BEGIN';
+		$result = DB_query($SQL,$db);
 
 
-  if ($_SESSION['PaymentDetail']->SupplierID=='') {
+		if ($_SESSION['PaymentDetail']->SupplierID=='') {
 
-	  //its a nominal bank transaction type 1
+		//its a nominal bank transaction type 1
 
-	  $TransNo = GetNextTransNo( 1, $db);
-	  $Transtype = 1;
+			$TransNo = GetNextTransNo( 1, $db);
+			$Transtype = 1;
 
-		if ($_SESSION['CompanyRecord']['gllink_creditors']==1){ /* then enter GLTrans */
-			$TotalAmount=0;
-			foreach ($_SESSION['PaymentDetail']->GLItems as $PaymentItem) {
+			if ($_SESSION['CompanyRecord']['gllink_creditors']==1){ /* then enter GLTrans */
+				$TotalAmount=0;
+				foreach ($_SESSION['PaymentDetail']->GLItems as $PaymentItem) {
 
-				 /*The functional currency amount will be the
-				 	payment currenct amount  / the bank account currency exchange rate  - to get to the bank account currency
-				 	then / the functional currency exchange rate to get to the functional currency */
-				if ($PaymentItem->cheque=='') $PaymentItem->cheque=0;
-				$SQL = 'INSERT INTO gltrans (type,
+					 /*The functional currency amount will be the
+					 payment currenct amount  / the bank account currency exchange rate  - to get to the bank account currency
+					 then / the functional currency exchange rate to get to the functional currency */
+					if ($PaymentItem->cheque=='') $PaymentItem->cheque=0;
+					$SQL = 'INSERT INTO gltrans (type,
 								typeno,
 								trandate,
 								periodno,
@@ -278,7 +278,7 @@ if (isset($_POST['CommitBatch'])){
 								amount,
 								chequeno,
 								tag) ';
-			 	$SQL= $SQL . "VALUES (1,
+				 	$SQL= $SQL . "VALUES (1,
 						" . $TransNo . ",
 						'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 						" . $PeriodNo . ",
@@ -288,39 +288,39 @@ if (isset($_POST['CommitBatch'])){
 						'". $PaymentItem->cheque ."',
 						'" . $PaymentItem->tag . "'
 						)";
-			 	$ErrMsg = _('Cannot insert a GL entry for the payment using the SQL');
-				$result = DB_query($SQL,$db,$ErrMsg,_('The SQL that failed was'),true);
+					$ErrMsg = _('Cannot insert a GL entry for the payment using the SQL');
+					$result = DB_query($SQL,$db,$ErrMsg,_('The SQL that failed was'),true);
 
-			 	$TotalAmount += $PaymentItem->Amount;
+					$TotalAmount += $PaymentItem->Amount;
+				}
+				$_SESSION['PaymentDetail']->Amount = $TotalAmount;
+				$_SESSION['PaymentDetail']->Discount=0;
 			}
-			$_SESSION['PaymentDetail']->Amount = $TotalAmount;
-			$_SESSION['PaymentDetail']->Discount=0;
-   	}
 
-		//Run through the GL postings to check to see if there is a posting to another bank account (or the same one) if there is then a receipt needs to be created for this account too
+			//Run through the GL postings to check to see if there is a posting to another bank account (or the same one) if there is then a receipt needs to be created for this account too
 
-		foreach ($_SESSION['PaymentDetail']->GLItems as $PaymentItem) {
+			foreach ($_SESSION['PaymentDetail']->GLItems as $PaymentItem) {
 
-			if (in_array($PaymentItem->GLCode, $BankAccounts)) {
+				if (in_array($PaymentItem->GLCode, $BankAccounts)) {
 
-				/*Need to deal with the case where the payment from one bank account could be to a bank account in another currency */
+					/*Need to deal with the case where the payment from one bank account could be to a bank account in another currency */
 
-				/*Get the currency and rate of the bank account transferring to*/
-				$SQL = 'SELECT currcode, rate
+					/*Get the currency and rate of the bank account transferring to*/
+					$SQL = 'SELECT currcode, rate
 							FROM bankaccounts INNER JOIN currencies
 							ON bankaccounts.currcode = currencies.currabrev
 							WHERE accountcode=' . $PaymentItem->GLCode;
-				$TrfToAccountResult = DB_query($SQL,$db);
-				$TrfToBankRow = DB_fetch_array($TrfToAccountResult) ;
-				$TrfToBankCurrCode = $TrfToBankRow['currcode'];
-				$TrfToBankExRate = $TrfToBankRow['rate'];
+					$TrfToAccountResult = DB_query($SQL,$db);
+					$TrfToBankRow = DB_fetch_array($TrfToAccountResult) ;
+					$TrfToBankCurrCode = $TrfToBankRow['currcode'];
+					$TrfToBankExRate = $TrfToBankRow['rate'];
 
-				if ($_SESSION['PaymentDetail']->AccountCurrency == $TrfToBankCurrCode){
+					if ($_SESSION['PaymentDetail']->AccountCurrency == $TrfToBankCurrCode){
 					/*Make sure to use the same rate if the transfer is between two bank accounts in the same currency */
-					$TrfToBankExRate = $_SESSION['PaymentDetail']->FunctionalExRate;
-				}
+						$TrfToBankExRate = $_SESSION['PaymentDetail']->FunctionalExRate;
+					}
 
-				/*Consider an example
+					/*Consider an example
 					 functional currency NZD
 					 bank account in AUD - 1 NZD = 0.90 AUD (FunctionalExRate)
 					 paying USD - 1 AUD = 0.85 USD  (ExRate)
@@ -347,8 +347,8 @@ if (isset($_POST['CommitBatch'])){
 
 				*/
 
-				$ReceiptTransNo = GetNextTransNo( 2, $db);
-				$SQL= 'INSERT INTO banktrans (transno,
+					$ReceiptTransNo = GetNextTransNo( 2, $db);
+					$SQL= 'INSERT INTO banktrans (transno,
 								type,
 								bankact,
 								ref,
@@ -369,21 +369,21 @@ if (isset($_POST['CommitBatch'])){
 							" . $PaymentItem->Amount . ",
 							'" . $_SESSION['PaymentDetail']->Currency . "'
 						)";
-   				$ErrMsg = _('Cannot insert a bank transaction because');
-				$DbgMsg =  _('Cannot insert a bank transaction with the SQL');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+					$ErrMsg = _('Cannot insert a bank transaction because');
+					$DbgMsg =  _('Cannot insert a bank transaction with the SQL');
+					$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
+				}
 			}
-   	}
-  } else {
+		} else {
 	  /*Its a supplier payment type 22 */
-   	$CreditorTotal = (($_SESSION['PaymentDetail']->Discount + $_SESSION['PaymentDetail']->Amount)/$_SESSION['PaymentDetail']->ExRate)/$_SESSION['PaymentDetail']->FunctionalExRate;
+			$CreditorTotal = (($_SESSION['PaymentDetail']->Discount + $_SESSION['PaymentDetail']->Amount)/$_SESSION['PaymentDetail']->ExRate)/$_SESSION['PaymentDetail']->FunctionalExRate;
 
-		$TransNo = GetNextTransNo(22, $db);
-		$Transtype = 22;
+			$TransNo = GetNextTransNo(22, $db);
+			$Transtype = 22;
 
-		/* Create a SuppTrans entry for the supplier payment */
-		$SQL = "INSERT INTO supptrans (transno,
+			/* Create a SuppTrans entry for the supplier payment */
+			$SQL = "INSERT INTO supptrans (transno,
 						type,
 						supplierno,
 						trandate,
@@ -391,7 +391,7 @@ if (isset($_POST['CommitBatch'])){
 						rate,
 						ovamount,
 						transtext) ";
-		$SQL = $SQL . 'VALUES (' . $TransNo . ",
+			$SQL = $SQL . 'VALUES (' . $TransNo . ",
 					22,
 					'" . $_SESSION['PaymentDetail']->SupplierID . "',
 					'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
@@ -401,35 +401,35 @@ if (isset($_POST['CommitBatch'])){
 					'" . $_SESSION['PaymentDetail']->Narrative . "'
 				)";
 
-		$ErrMsg =  _('Cannot insert a payment transaction against the supplier because');
-		$DbgMsg = _('Cannot insert a payment transaction against the supplier using the SQL');
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$ErrMsg =  _('Cannot insert a payment transaction against the supplier because');
+			$DbgMsg = _('Cannot insert a payment transaction against the supplier using the SQL');
+			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-		/*Update the supplier master with the date and amount of the last payment made */
-		$SQL = "UPDATE suppliers SET
-		    lastpaiddate = '" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
-		    lastpaid=" . $_SESSION['PaymentDetail']->Amount ."
-			  WHERE suppliers.supplierid='" . $_SESSION['PaymentDetail']->SupplierID . "'";
+			/*Update the supplier master with the date and amount of the last payment made */
+			$SQL = "UPDATE suppliers SET
+				lastpaiddate = '" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
+				lastpaid=" . $_SESSION['PaymentDetail']->Amount ."
+				WHERE suppliers.supplierid='" . $_SESSION['PaymentDetail']->SupplierID . "'";
 
 
 
-		$ErrMsg = _('Cannot update the supplier record for the date of the last payment made because');
-		$DbgMsg = _('Cannot update the supplier record for the date of the last payment made using the SQL');
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$ErrMsg = _('Cannot update the supplier record for the date of the last payment made because');
+			$DbgMsg = _('Cannot update the supplier record for the date of the last payment made using the SQL');
+			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-		$_SESSION['PaymentDetail']->Narrative = $_SESSION['PaymentDetail']->SupplierID . "-" . $_SESSION['PaymentDetail']->Narrative;
+			$_SESSION['PaymentDetail']->Narrative = $_SESSION['PaymentDetail']->SupplierID . "-" . $_SESSION['PaymentDetail']->Narrative;
 
-		if ($_SESSION['CompanyRecord']['gllink_creditors']==1){ /* then do the supplier control GLTrans */
-	      /* Now debit creditors account with payment + discount */
+			if ($_SESSION['CompanyRecord']['gllink_creditors']==1){ /* then do the supplier control GLTrans */
+			/* Now debit creditors account with payment + discount */
 
-			$SQL="INSERT INTO gltrans ( type,
+				$SQL="INSERT INTO gltrans ( type,
 							typeno,
 							trandate,
 							periodno,
 							account,
 							narrative,
 							amount) ";
-			$SQL=$SQL . "VALUES (
+				$SQL=$SQL . "VALUES (
 						22,
 						" . $TransNo . ",
 						'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
@@ -438,20 +438,20 @@ if (isset($_POST['CommitBatch'])){
 						'" . $_SESSION['PaymentDetail']->Narrative . "',
 						" . $CreditorTotal . "
 					)";
-			$ErrMsg = _('Cannot insert a GL transaction for the creditors account debit because');
-			$DbgMsg = _('Cannot insert a GL transaction for the creditors account debit using the SQL');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$ErrMsg = _('Cannot insert a GL transaction for the creditors account debit because');
+				$DbgMsg = _('Cannot insert a GL transaction for the creditors account debit using the SQL');
+				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-			if ($_SESSION['PaymentDetail']->Discount !=0){
-				/* Now credit Discount received account with discounts */
-				$SQL="INSERT INTO gltrans ( type,
+				if ($_SESSION['PaymentDetail']->Discount !=0){
+					/* Now credit Discount received account with discounts */
+					$SQL="INSERT INTO gltrans ( type,
 								typeno,
 								trandate,
 								periodno,
 								account,
 								narrative,
 								amount) ";
-				$SQL=$SQL . "VALUES (22,
+					$SQL=$SQL . "VALUES (22,
 						" . $TransNo . ",
 						'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 						" . $PeriodNo . ",
@@ -459,25 +459,25 @@ if (isset($_POST['CommitBatch'])){
 						'" . $_SESSION['PaymentDetail']->Narrative . "',
 						" . (-$_SESSION['PaymentDetail']->Discount/$_SESSION['PaymentDetail']->ExRate/$_SESSION['PaymentDetail']->FunctionalExRate) . "
 					  )";
-				$ErrMsg = _('Cannot insert a GL transaction for the payment discount credit because');
-				$DbgMsg = _('Cannot insert a GL transaction for the payment discount credit using the SQL');
-				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-			} // end if discount
-		} // end if gl creditors
-	} // end if supplier
+					$ErrMsg = _('Cannot insert a GL transaction for the payment discount credit because');
+					$DbgMsg = _('Cannot insert a GL transaction for the payment discount credit using the SQL');
+					$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				} // end if discount
+			} // end if gl creditors
+		} // end if supplier
 
-	if ($_SESSION['CompanyRecord']['gllink_creditors']==1){ /* then do the common GLTrans */
+		if ($_SESSION['CompanyRecord']['gllink_creditors']==1){ /* then do the common GLTrans */
 
-	  if ($_SESSION['PaymentDetail']->Amount !=0){
-		  /* Bank account entry first */
-		  $SQL = "INSERT INTO gltrans ( type,
+			if ($_SESSION['PaymentDetail']->Amount !=0){
+				/* Bank account entry first */
+				$SQL = "INSERT INTO gltrans ( type,
 							typeno,
 							trandate,
 							periodno,
 							account,
 							narrative,
 							amount) ";
-		  $SQL = $SQL . 'VALUES (' . $Transtype . ',
+				$SQL = $SQL . 'VALUES (' . $Transtype . ',
 						' . $TransNo . ",
 						'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 						" . $PeriodNo . ",
@@ -486,16 +486,16 @@ if (isset($_POST['CommitBatch'])){
 						" . (-$_SESSION['PaymentDetail']->Amount/$_SESSION['PaymentDetail']->ExRate/$_SESSION['PaymentDetail']->FunctionalExRate) . "
 					)";
 
-		  $ErrMsg =  _('Cannot insert a GL transaction for the bank account credit because');
-		  $DbgMsg =  _('Cannot insert a GL transaction for the bank account credit using the SQL');
-		  $result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$ErrMsg =  _('Cannot insert a GL transaction for the bank account credit because');
+				$DbgMsg =  _('Cannot insert a GL transaction for the bank account credit using the SQL');
+				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-	  }
-  }
+			}
+		}
 
-  /*now enter the BankTrans entry */
-if ($Transtype==22) {
-	$SQL="INSERT INTO banktrans (transno,
+		/*now enter the BankTrans entry */
+		if ($Transtype==22) {
+			$SQL="INSERT INTO banktrans (transno,
 					type,
 					bankact,
 					ref,
@@ -505,7 +505,7 @@ if ($Transtype==22) {
 					banktranstype,
 					amount,
 					currcode) ";
-	$SQL= $SQL . "VALUES (" . $TransNo . ",
+			$SQL= $SQL . "VALUES (" . $TransNo . ",
 				" . $Transtype . ",
 				" . $_SESSION['PaymentDetail']->Account . ",
 				'" . $_SESSION['PaymentDetail']->Narrative . "',
@@ -517,12 +517,12 @@ if ($Transtype==22) {
 				'" . $_SESSION['PaymentDetail']->Currency . "'
 			)";
 
-	$ErrMsg = _('Cannot insert a bank transaction because');
-	$DbgMsg = _('Cannot insert a bank transaction using the SQL');
-	$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);	
-} else {
-	foreach ($_SESSION['PaymentDetail']->GLItems as $PaymentItem) {
-		$SQL="INSERT INTO banktrans (transno,
+			$ErrMsg = _('Cannot insert a bank transaction because');
+			$DbgMsg = _('Cannot insert a bank transaction using the SQL');
+			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);	
+		} else {
+			foreach ($_SESSION['PaymentDetail']->GLItems as $PaymentItem) {
+				$SQL="INSERT INTO banktrans (transno,
 					type,
 					bankact,
 					ref,
@@ -532,51 +532,51 @@ if ($Transtype==22) {
 					banktranstype,
 					amount,
 					currcode) ";
-		$SQL= $SQL . "VALUES (" . $TransNo . ",
-				" . $Transtype . ",
-				" . $_SESSION['PaymentDetail']->Account . ",
-				'" . $_SESSION['PaymentDetail']->Narrative . "',
-				" . $_SESSION['PaymentDetail']->ExRate . " ,
-				" . $_SESSION['PaymentDetail']->FunctionalExRate . ",
-				'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
-				'" . $_SESSION['PaymentDetail']->Paymenttype . "',
-				" . -$PaymentItem->Amount . ",
-				'" . $_SESSION['PaymentDetail']->Currency . "'
-			)";
+				$SQL= $SQL . "VALUES (" . $TransNo . ",
+					" . $Transtype . ",
+					" . $_SESSION['PaymentDetail']->Account . ",
+					'" . $_SESSION['PaymentDetail']->Narrative . "',
+					" . $_SESSION['PaymentDetail']->ExRate . " ,
+					" . $_SESSION['PaymentDetail']->FunctionalExRate . ",
+					'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
+					'" . $_SESSION['PaymentDetail']->Paymenttype . "',
+					" . -$PaymentItem->Amount . ",
+					'" . $_SESSION['PaymentDetail']->Currency . "'
+				)";
 
-		$ErrMsg = _('Cannot insert a bank transaction because');
-		$DbgMsg = _('Cannot insert a bank transaction using the SQL');
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$ErrMsg = _('Cannot insert a bank transaction because');
+				$DbgMsg = _('Cannot insert a bank transaction using the SQL');
+				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			}
+		}
+
+		$SQL = "COMMIT";
+		$ErrMsg = _('Cannot commit the changes because');
+		$DbgMsg = _('The commit of the database transaction failed');
+		$result= DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+
+		prnMsg(_('Payment') . ' ' . $TransNo . ' ' . _('has been successfully entered'),'success');
+
+		$lastSupplier = ($_SESSION['PaymentDetail']->SupplierID);
+
+		unset($_POST['BankAccount']);
+		unset($_POST['DatePaid']);
+		unset($_POST['ExRate']);
+		unset($_POST['Paymenttype']);
+		unset($_POST['Currency']);
+		unset($_POST['Narrative']);
+		unset($_POST['Amount']);
+		unset($_POST['Discount']);
+		unset($_SESSION['PaymentDetail']->GLItems);
+		unset($_SESSION['PaymentDetail']);
+
+		/*Set up a newy in case user wishes to enter another */
+		echo '<br><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Enter a General Ledger Payment') . '</a><br>';
+		echo '<br><a href="' . $rootpath . '/Payments.php?SupplierID=' . $lastSupplier . '">' . _('Enter another Payment for this Supplier') . '</a>';
 	}
-}
 
-  $SQL = "COMMIT";
-  $ErrMsg = _('Cannot commit the changes because');
-	$DbgMsg = _('The commit of the database transaction failed');
-	$result= DB_query($SQL,$db,$ErrMsg,$DbgMsg);
-
-	prnMsg(_('Payment') . ' ' . $TransNo . ' ' . _('has been sucessfully entered'),'success');
-
-	$lastSupplier = ($_SESSION['PaymentDetail']->SupplierID);
-
-	unset($_POST['BankAccount']);
-	unset($_POST['DatePaid']);
-	unset($_POST['ExRate']);
-	unset($_POST['Paymenttype']);
-	unset($_POST['Currency']);
-	unset($_POST['Narrative']);
-	unset($_POST['Amount']);
-	unset($_POST['Discount']);
-	unset($_SESSION['PaymentDetail']->GLItems);
-	unset($_SESSION['PaymentDetail']);
-
-  /*Set up a newy in case user wishes to enter another */
-	echo '<br><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Enter a General Ledger Payment') . '</a><br>';
-	echo '<br><a href="' . $rootpath . '/Payments.php?SupplierID=' . $lastSupplier . '">' . _('Enter another Payment for this Supplier') . '</a>';
-  }
-
-  include('includes/footer.inc');
-  exit;
+	include('includes/footer.inc');
+	exit;
 
 } elseif (isset($_GET['Delete'])){
   /* User hit delete the receipt entry from the batch */
@@ -586,51 +586,51 @@ if ($Transtype==22) {
 	$ChequeNoSQL='select account from gltrans where chequeno="'.$_POST['cheque'].'"';
 	$ChequeNoResult=DB_query($ChequeNoSQL, $db);
 
-   if ($_POST['GLManualCode']!="" AND is_numeric($_POST['GLManualCode'])){
+	if ($_POST['GLManualCode']!="" AND is_numeric($_POST['GLManualCode'])){
 
-	$SQL = "select accountname
+		$SQL = "select accountname
 			FROM chartmaster
 			WHERE accountcode=" . $_POST['GLManualCode'];
 
-	$Result=DB_query($SQL,$db);
+		$Result=DB_query($SQL,$db);
 
-	if (DB_num_rows($Result)==0){
-		prnMsg( _('The manual GL code entered does not exist in the database') . ' - ' . _('so this GL analysis item could not be added'),'warn');
-		unset($_POST['GLManualCode']);
-	} else if (DB_num_rows($ChequeNoResult)!=0 and $_POST['cheque']!=''){
-		prnMsg( _('The Cheque/Voucher number has already been used') . ' - ' . _('This GL analysis item could not be added'),'error');
-	} else {
-		$myrow = DB_fetch_array($Result);
-		$_SESSION['PaymentDetail']->add_to_glanalysis($_POST['GLAmount'],
+		if (DB_num_rows($Result)==0){
+			prnMsg( _('The manual GL code entered does not exist in the database') . ' - ' . _('so this GL analysis item could not be added'),'warn');
+			unset($_POST['GLManualCode']);
+		} else if (DB_num_rows($ChequeNoResult)!=0 and $_POST['cheque']!=''){
+			prnMsg( _('The Cheque/Voucher number has already been used') . ' - ' . _('This GL analysis item could not be added'),'error');
+		} else {
+			$myrow = DB_fetch_array($Result);
+			$_SESSION['PaymentDetail']->add_to_glanalysis($_POST['GLAmount'],
 								$_POST['GLNarrative'],
 								$_POST['GLManualCode'],
 								$myrow['accountname'],
 								$_POST['tag'],
 								$_POST['cheque']);
-	}
-   } else if (DB_num_rows($ChequeNoResult)!=0 and $_POST['cheque']!=''){
+		}
+	} else if (DB_num_rows($ChequeNoResult)!=0 and $_POST['cheque']!=''){
 		prnMsg( _('The cheque number has already been used') . ' - ' . _('This GL analysis item could not be added'),'error');
-   } else {
-   	$SQL = "select accountname FROM chartmaster WHERE accountcode=" . $_POST['GLCode'];
-	$Result=DB_query($SQL,$db);
-	$myrow=DB_fetch_array($Result);
-   	$_SESSION['PaymentDetail']->add_to_glanalysis($_POST['GLAmount'],
+	} else {
+		$SQL = "select accountname FROM chartmaster WHERE accountcode=" . $_POST['GLCode'];
+		$Result=DB_query($SQL,$db);
+		$myrow=DB_fetch_array($Result);
+		$_SESSION['PaymentDetail']->add_to_glanalysis($_POST['GLAmount'],
 							$_POST['GLNarrative'],
 							$_POST['GLCode'],
 							$myrow['accountname'],
 							$_POST['tag'],
 							$_POST['cheque']);
-   }
+	}
 
-   /*Make sure the same receipt is not double processed by a page refresh */
-   $_POST['Cancel'] = 1;
+	/*Make sure the same receipt is not double processed by a page refresh */
+	$_POST['Cancel'] = 1;
 }
 
 if (isset($_POST['Cancel'])){
-   unset($_POST['GLAmount']);
-   unset($_POST['GLNarrative']);
-   unset($_POST['GLCode']);
-   unset($_POST['AccountName']);
+	unset($_POST['GLAmount']);
+	unset($_POST['GLNarrative']);
+	unset($_POST['GLCode']);
+	unset($_POST['AccountName']);
 }
 
 /*set up the form whatever */
@@ -639,8 +639,8 @@ if (!isset($_POST['DatePaid'])) {
 }
 
 if (isset($_POST['DatePaid']) and ($_POST['DatePaid']=="" OR !Is_Date($_SESSION['PaymentDetail']->DatePaid))){
-	 $_POST['DatePaid']= Date($_SESSION['DefaultDateFormat']);
-	 $_SESSION['PaymentDetail']->DatePaid = $_POST['DatePaid'];
+	$_POST['DatePaid']= Date($_SESSION['DefaultDateFormat']);
+	$_SESSION['PaymentDetail']->DatePaid = $_POST['DatePaid'];
 }
 
 if ($_SESSION['PaymentDetail']->Currency=='' AND $_SESSION['PaymentDetail']->SupplierID==''){
@@ -698,7 +698,7 @@ $SQL = 'SELECT bankaccountname,
 		WHERE bankaccounts.accountcode=chartmaster.accountcode';
 
 $ErrMsg = _('The bank accounts could not be retrieved because');
-$DbgMsg = _('The SQL used to retrieve the bank acconts was');
+$DbgMsg = _('The SQL used to retrieve the bank accounts was');
 $AccountsResults = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 echo '<tr><td>' . _('Bank Account') . ':</td><td><select name="BankAccount">';
@@ -841,27 +841,27 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 		</tr>';
 
 	$PaymentTotal = 0;
-   	foreach ($_SESSION['PaymentDetail']->GLItems as $PaymentItem) {
-   				$tagsql='SELECT tagdescription from tags where tagref='.$PaymentItem->tag;
-   				$tagresult=DB_query($tagsql, $db);
-   				$tagmyrow=DB_fetch_row($tagresult);
-   				if ($PaymentItem->tag==0) {
-   					$tagname='None';
-   				} else {
-   					$tagname=$tagmyrow[0];
-   				}
-	    	    echo '<tr>
-		    		<td align=left>' . $PaymentItem->cheque . '</td>
-		    		<td align=right>' . number_format($PaymentItem->Amount,2) . '</td>
-				<td>' . $PaymentItem->GLCode . ' - ' . $PaymentItem->GLActName . '</td>
-				<td>' . $PaymentItem->Narrative  . '</td>
-				<td>' . $PaymentItem->tag . ' - ' . $tagname . '</td>
-				<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $PaymentItem->ID . '">' . _('Delete') . '</a></td>
-				</tr>';
-	    $PaymentTotal += $PaymentItem->Amount;
+	foreach ($_SESSION['PaymentDetail']->GLItems as $PaymentItem) {
+		$tagsql='SELECT tagdescription from tags where tagref='.$PaymentItem->tag;
+		$tagresult=DB_query($tagsql, $db);
+		$tagmyrow=DB_fetch_row($tagresult);
+		if ($PaymentItem->tag==0) {
+			$tagname='None';
+		} else {
+			$tagname=$tagmyrow[0];
+		}
+		echo '<tr>
+			<td align=left>' . $PaymentItem->cheque . '</td>
+			<td align=right>' . number_format($PaymentItem->Amount,2) . '</td>
+			<td>' . $PaymentItem->GLCode . ' - ' . $PaymentItem->GLActName . '</td>
+			<td>' . $PaymentItem->Narrative  . '</td>
+			<td>' . $PaymentItem->tag . ' - ' . $tagname . '</td>
+			<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $PaymentItem->ID . '">' . _('Delete') . '</a></td>
+			</tr>';
+		$PaymentTotal += $PaymentItem->Amount;
 
-   	}
-   	echo '<tr><td></td><td align=right><b>' . number_format($PaymentTotal,2) . '</b></td><td></td><td></td><td></td></tr></table>';
+	}
+	echo '<tr><td></td><td align=right><b>' . number_format($PaymentTotal,2) . '</b></td><td></td><td></td><td></td></tr></table>';
 
 
 	echo '<br><font size=3 color=BLUE><div class="centre">' . _('General Ledger Payment Analysis Entry') . '</div></font><br><table>';
@@ -877,11 +877,11 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	$result=DB_query($SQL,$db);
 	echo '<option value=0>0 - None';
 	while ($myrow=DB_fetch_array($result)){
-    	if (isset($_POST['tag']) and $_POST['tag']==$myrow["tagref"]){
-		echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
-    	} else {
+		if (isset($_POST['tag']) and $_POST['tag']==$myrow["tagref"]){
+			echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+		} else {
 			echo '<option value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
-    	}
+		}
 	}
 	echo '</select></td></tr>';
 // End select tag
@@ -908,15 +908,15 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 
 	$result=DB_query($SQL,$db);
 	if (DB_num_rows($result)==0){
-	   echo '</select></td></tr>';
-	   prnMsg(_('No General ledger accounts have been set up yet') . ' - ' . _('payments cannot be analysed against GL accounts until the GL accounts are set up'),'error');
+		echo '</select></td></tr>';
+		prnMsg(_('No General ledger accounts have been set up yet') . ' - ' . _('payments cannot be analysed against GL accounts until the GL accounts are set up'),'error');
 	} else {
 		while ($myrow=DB_fetch_array($result)){
-		    if (isset($_POST['GLCode']) and $_POST['GLCode']==$myrow["accountcode"]){
-			echo '<option selectED value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
-		    } else {
-			echo '<option value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
-		    }
+			if (isset($_POST['GLCode']) and $_POST['GLCode']==$myrow["accountcode"]){
+				echo '<option selectED value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
+			} else {
+				echo '<option value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
+			}
 		}
 		echo '</select></td></tr>';
 	}
