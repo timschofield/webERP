@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -10,7 +10,7 @@ if(!isset($_GET['OrderNo']) && !isset($_POST['OrderNo'])){
         $title = _('Select a Purchase Order');
         include('includes/header.inc');
         echo '<div class="centre"><br><br><br>';
-        prnMsg( _('Select an Puchase Order Number to Print before calling this page') , 'error');
+        prnMsg( _('Select a Purchase Order Number to Print before calling this page') , 'error');
         echo '<br><br><br><table class="table_index">
 		<tr><td class="menu_group_item">
                 <li><a href="'. $rootpath . '/PO_SelectOSPurchOrder.php?'.SID .'">' . _('Outstanding Purchase Orders') . '</a></li>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 2;
 
@@ -175,7 +175,7 @@ $len = strlen($pdfcode);
 if ($len<=20){
         $title = _('Print Packing Slip Error');
         include('includes/header.inc');
-        echo '<p>'. _('There were no oustanding items on the order to deliver') . '. ' . _('A packing slip cannot be printed').
+        echo '<p>'. _('There were no outstanding items on the order to deliver') . '. ' . _('A packing slip cannot be printed').
                 '<br><a href="' . $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Print Another Packing Slip/Order').
                 '</a>' . '<br>'. '<a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
         include('includes/footer.inc');

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity = 10;
 
@@ -254,7 +254,7 @@ or deletion of the records*/
 		case 0:
 			$PandLText=_('No');
 			break;
-		} //end of switch statment
+		} //end of switch statement
 
 		echo '<td>' . $myrow[0] . '</td>
 			<td>' . $myrow[1] . '</td>

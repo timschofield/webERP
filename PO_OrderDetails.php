@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 2;
 
@@ -21,7 +21,7 @@ if (isset($_GET['FromGRNNo'])){
 		WHERE purchorderdetails.podetailitem=grns.podetailitem
 		AND grns.grnno=" . $_GET['FromGRNNo'];
 
-	$ErrMsg = _('The search of the GRNs was unsucessful') . ' - ' . _('the SQL statement returned the error');
+	$ErrMsg = _('The search of the GRNs was unsuccessful') . ' - ' . _('the SQL statement returned the error');
 	$orderResult = DB_query($SQL, $db, $ErrMsg);
 
 	$orderRow = DB_fetch_row($orderResult);
@@ -94,7 +94,7 @@ echo '<tr><td class="tableheader">' . _('Deliver Into Location'). '</td><td>' . 
 echo '<tr><td class="tableheader">' . _('Initiator'). '</td><td>' . $myrow['initiator'] . '</td>
 	<td class="tableheader">' . _('Delivery Address 5'). '</td><td>' . $myrow['deladd5'] . '</td></tr>';
 
-echo '<tr><td class="tableheader">' . _('Requistion Ref'). '.</td><td>' . $myrow['requisitionno'] . '</td>
+echo '<tr><td class="tableheader">' . _('Requisition Ref'). '.</td><td>' . $myrow['requisitionno'] . '</td>
 	<td class="tableheader">' . _('Delivery Address 6'). '</td><td>' . $myrow['deladd6'] . '</td></tr>';
 
 

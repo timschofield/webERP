@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 $PageSecurity = 11;
 
 include('includes/session.inc');
@@ -143,7 +143,7 @@ $sql = "SELECT prices.price,
 	ORDER BY typeabbrev";
 
 $ErrMsg = _('Could not retrieve the normal prices set up because');
-$DbgMsg = _('The SQL used to retreive these records was');
+$DbgMsg = _('The SQL used to retrieve these records was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 echo '<table border=1><tr><td valign=top>';
@@ -174,7 +174,7 @@ $sql = "SELECT prices.price,
 				custbranch.debtorno IS NULL)";
 
 $ErrMsg = _('Could not retrieve the special prices set up because');
-$DbgMsg = _('The SQL used to retreive these records was');
+$DbgMsg = _('The SQL used to retrieve these records was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 echo '<table>';

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 2;
 
@@ -82,7 +82,7 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 	$StatementResults=DB_query($sql,$db, $ErrMsg);
 
 	if (DB_Num_Rows($StatementResults) == 0){
-		$title = _('Print Statments') . ' - ' . _('No Customers Found');
+		$title = _('Print Statements') . ' - ' . _('No Customers Found');
 	        require('includes/header.inc');
 		echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . _('Print Customer Account Statements') . '';
 		prnMsg( _('There were no Customers matching your selection of '). $_POST['FromCust']. ' - '.
@@ -409,9 +409,9 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 	$pdf->Stream();
 
 	} else {
-		$title = _('Print Statments') . ' - ' . _('No Statements Found');
+		$title = _('Print Statements') . ' - ' . _('No Statements Found');
 		include('includes/header.inc');
-		echo '<br><br><br>' . prnMsg( _('There were no statments to print') );
+		echo '<br><br><br>' . prnMsg( _('There were no statements to print') );
 	        echo '<br><br><br>';
 	        include('includes/footer.inc');
 	}
