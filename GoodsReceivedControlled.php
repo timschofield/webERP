@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 
@@ -39,7 +39,7 @@ if ($LineItem->Controlled !=1 ){ /*This page only relavent for controlled items 
 
 	echo '<div class="centre"><a href="' . $rootpath . '/GoodsReceived.php?' . SID . '">'.
 		_('Back to the Purchase Order'). '</a></div>';
-	prnMsg( _('The line being recevied must be controlled as defined in the item defintion'), 'error');
+	prnMsg( _('The line being received must be controlled as defined in the item definition'), 'error');
 	include('includes/footer.inc');
 	exit;
 }

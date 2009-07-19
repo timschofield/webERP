@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.40 $ */
+/* $Revision: 1.41 $ */
 
 $PageSecurity = 11;
 
@@ -22,10 +22,10 @@ if (isset($_GET['PONumber']) and $_GET['PONumber']<=0 and !isset($_SESSION['PO']
 	include ('includes/footer.inc');
 	exit;
 } elseif (isset($_GET['PONumber']) AND !isset($_POST['Update'])) {
-  /*Update only occurs if the user hits the button to refresh the data and recalc the value of goods recd*/
+/*Update only occurs if the user hits the button to refresh the data and recalc the value of goods recd*/
 
-	  $_GET['ModifyOrderNumber'] = $_GET['PONumber'];
-	  include('includes/PO_ReadInOrder.inc');
+	$_GET['ModifyOrderNumber'] = $_GET['PONumber'];
+	include('includes/PO_ReadInOrder.inc');
 } elseif (isset($_POST['Update']) OR isset($_POST['ProcessGoodsReceived'])) {
 
 /* if update quantities button is hit page has been called and ${$Line->LineNo} would have be
@@ -89,12 +89,12 @@ if (count($_SESSION['PO']->LineItems)>0){
 			$k=1;
 		}
 
-	/*  if ($LnItm->ReceiveQty==0){   /*If no quantites yet input default the balance to be received
+	/*  if ($LnItm->ReceiveQty==0){   /*If no quantities yet input default the balance to be received
 			$LnItm->ReceiveQty = $LnItm->QuantityOrd - $LnItm->QtyReceived;
 		}
 	*/
 
-	/*Perhaps better to default quantities to 0 BUT.....if you wish to have the receive quantites
+	/*Perhaps better to default quantities to 0 BUT.....if you wish to have the receive quantities
 	default to the balance on order then just remove the comments around the 3 lines above */
 
 	//Setup & Format values for LineItem display
@@ -148,11 +148,11 @@ echo '<tr><td colspan=7 class=number><b>' . _('Total value of goods received'). 
 
 $SomethingReceived = 0;
 if (count($_SESSION['PO']->LineItems)>0){
-   foreach ($_SESSION['PO']->LineItems as $OrderLine) {
-	  if ($OrderLine->ReceiveQty>0){
-		$SomethingReceived =1;
-	  }
-   }
+	foreach ($_SESSION['PO']->LineItems as $OrderLine) {
+		if ($OrderLine->ReceiveQty>0){
+			$SomethingReceived =1;
+		}
+	}
 }
 
 /************************* LINE ITEM VALIDATION ************************/
@@ -166,16 +166,16 @@ $InputError = false;
 
 if (count($_SESSION['PO']->LineItems)>0){
 
-   foreach ($_SESSION['PO']->LineItems as $OrderLine) {
+	foreach ($_SESSION['PO']->LineItems as $OrderLine) {
 
-	  if ($OrderLine->ReceiveQty+$OrderLine->QtyReceived > $OrderLine->Quantity * (1+ ($_SESSION['OverReceiveProportion'] / 100))){
-		$DeliveryQuantityTooLarge =1;
-		$InputError = true;
-	  }
-	  if ($OrderLine->ReceiveQty < 0 AND $_SESSION['ProhibitNegativeStock']==1){
+		if ($OrderLine->ReceiveQty+$OrderLine->QtyReceived > $OrderLine->Quantity * (1+ ($_SESSION['OverReceiveProportion'] / 100))){
+			$DeliveryQuantityTooLarge =1;
+			$InputError = true;
+		}
+		if ($OrderLine->ReceiveQty < 0 AND $_SESSION['ProhibitNegativeStock']==1){
 
-		  	$SQL = "SELECT locstock.quantity FROM
-		  			locstock WHERE locstock.stockid='" . $OrderLine->StockID . "'
+			$SQL = "SELECT locstock.quantity FROM
+					locstock WHERE locstock.stockid='" . $OrderLine->StockID . "'
 					AND loccode= '" . $_SESSION['PO']->Location . "'";
 			$CheckNegResult = DB_query($SQL,$db);
 			$CheckNegRow = DB_fetch_row($CheckNegResult);
@@ -183,9 +183,9 @@ if (count($_SESSION['PO']->LineItems)>0){
 				$NegativesFound=true;
 				prnMsg(_('Receiving a negative quantity that results in negative stock is prohibited by the parameter settings. This delivery of stock cannot be processed until the stock of the item is corrected.'),'error',$OrderLine->StockID . ' Cannot Go Negative');
 			}
-	  }
+		}
 
-   }
+	}
 }
 
 if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then dont bother proceeding cos nothing to do ! */
@@ -214,7 +214,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 
 	if ($_SESSION['CompanyRecord']==0){
 		/*The company data and preferences could not be retrieved for some reason */
-		prnMsg(_('The company infomation and preferences could not be retrieved') . ' - ' . _('see your system administrator') , 'error');
+		prnMsg(_('The company information and preferences could not be retrieved') . ' - ' . _('see your system administrator') , 'error');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -328,8 +328,8 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 				$CurrentStandardCost = $myrow[0];
 
 				/*Set the purchase order line stdcostunit = weighted average standard cost used for all receipts of this line
-                                This assures that the quantity received against the purchase order line multiplied by the weighted average of standard
-                                costs received = the total of standard cost posted to GRN suspense*/
+				 This assures that the quantity received against the purchase order line multiplied by the weighted average of standard
+				 costs received = the total of standard cost posted to GRN suspense*/
 				$_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost = (($CurrentStandardCost * $OrderLine->ReceiveQty) + ($_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost *$OrderLine->QtyReceived)) / ($OrderLine->ReceiveQty + $OrderLine->QtyReceived);
 
 			} elseif ($OrderLine->QtyReceived==0 AND $OrderLine->StockID=="") {
@@ -365,7 +365,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 
 			if ($OrderLine->StockID !=''){ /*Its a stock item so use the standard cost for the journals */
 				$UnitCost = $CurrentStandardCost;
-			} else {  /*otherwise its a nominal PO item so use the purchase cost converted to local currecny */
+			} else {  /*otherwise its a nominal PO item so use the purchase cost converted to local currency */
 				$UnitCost = $OrderLine->Price / $_SESSION['PO']->ExRate;
 			}
 
@@ -453,12 +453,12 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 				$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
 				/* Do the Controlled Item INSERTS HERE */
 
-          			if ($OrderLine->Controlled ==1){
+				if ($OrderLine->Controlled ==1){
 					foreach($OrderLine->SerialItems as $Item){
-                                        	/* we know that StockItems return an array of SerialItem (s)
-						We need to add the StockSerialItem record and
-						The StockSerialMoves as well */
-						 //need to test if the controlled item exists first already
+						/* we know that StockItems return an array of SerialItem (s)
+						 We need to add the StockSerialItem record and
+						 The StockSerialMoves as well */
+						//need to test if the controlled item exists first already
 							$SQL = "SELECT COUNT(*) FROM stockserialitems
 									WHERE stockid='" . $OrderLine->StockID . "'
 									AND loccode = '" . $_SESSION['PO']->Location . "'
@@ -494,10 +494,10 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 							$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
 							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
-						/** end of handle stockserialitems records */
+							/** end of handle stockserialitems records */
 
-						/** now insert the serial stock movement **/
-						$SQL = "INSERT INTO stockserialmoves (stockmoveno,
+							/** now insert the serial stock movement **/
+							$SQL = "INSERT INTO stockserialmoves (stockmoveno,
 											stockid,
 											serialno,
 											moveqty)
@@ -505,10 +505,10 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 										'" . $OrderLine->StockID . "',
 										'" . $Item->BundleRef . "',
 										" . $Item->BundleQty . ")";
-						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
-						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
-						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
-					 }//non blank BundleRef
+							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
+							$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
+							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+						}//non blank BundleRef
 					} //end foreach
 				}
 			} /*end of its a stock item - updates to locations and insert movements*/
@@ -556,11 +556,11 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 							_('PO') . ': ' . $_SESSION['PO']->OrderNo . ' ' . $_SESSION['PO']->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . $OrderLine->ItemDescription . ' x ' . $OrderLine->ReceiveQty . ' @ ' . number_format($UnitCost,2) . "',
 							" . -$UnitCost * $OrderLine->ReceiveQty . ")";
 
-				$ErrMsg =   _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GRN suspense side of the GL posting could not be inserted because');
-				$DbgMsg =  _('The following SQL to insert the GRN Suspense GLTrans record was used');
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GRN suspense side of the GL posting could not be inserted because');
+				$DbgMsg = _('The following SQL to insert the GRN Suspense GLTrans record was used');
 				$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg,true);
 
-			 } /* end of if GL and stock integrated and standard cost !=0 */
+			} /* end of if GL and stock integrated and standard cost !=0 */
 		} /*Quantity received is != 0 */
 	} /*end of OrderLine loop */
 	$completedsql='SELECT SUM(completed) as completedlines,
@@ -604,7 +604,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 	echo "<br><div class='centre'><a href='$rootpath/PO_Items.php?=" . SID . "'>" . _('Modify Order Items'). '</a></div>';
 
 	if (!isset($_POST['DefaultReceivedDate'])){
-	   $_POST['DefaultReceivedDate'] = Date($_SESSION['DefaultDateFormat']);
+		$_POST['DefaultReceivedDate'] = Date($_SESSION['DefaultDateFormat']);
 	}
 	echo '<table><tr><td>'. _('Date Goods/Service Received'). ':</td><td><input type=text class=date alt="'.$_SESSION['DefaultDateFormat'] .'" maxlength=10 size=10 onChange="return isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" name=DefaultReceivedDate value="' . $_POST['DefaultReceivedDate'] . '"></td></tr>';
 
