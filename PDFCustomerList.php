@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -11,9 +11,9 @@ if (isset($_POST['PrintPDF'])){
 	if ($_POST['Activity']!='All'){
 		if (!is_numeric($_POST['ActivityAmount'])){
 			$title = _('Customer List') . ' - ' . _('Problem Report') . '....';
-	  		include('includes/header.inc');
-	   		echo '<p>';
-			prnMsg( _('The acitivty amount is not numeric and you elected to print customer relative to a certain amount of activity') . ' - ' . _('this level of activity must be specified in the local currency') .'.', 'error');
+			include('includes/header.inc');
+			echo '<p>';
+			prnMsg( _('The activity amount is not numeric and you elected to print customer relative to a certain amount of activity') . ' - ' . _('this level of activity must be specified in the local currency') .'.', 'error');
 			include('includes/footer.inc');
 			exit;
 		}

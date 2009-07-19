@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -25,7 +25,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 			$title = _('Stock Freeze') . ' - ' . _('Problem Report') . '....';
 			include('includes/header.inc');
 			echo '<br>';
-			prnMsg( _('The inventory check file could not be retreived because'). ' - ' . DB_error_msg($db),'error');
+			prnMsg( _('The inventory check file could not be retrieved because'). ' - ' . DB_error_msg($db),'error');
 			echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu').'</a>';
 			if ($debug==1){
 	      			echo '<br>' . $sql;
@@ -51,7 +51,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 				$title = _('Stock Count Comparison') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
 				echo '<br>';
-				prnMsg( _('The inventory counts file could not be retreived because'). ' - ' . DB_error_msg($db). 'error');
+				prnMsg( _('The inventory counts file could not be retrieved because'). ' - ' . DB_error_msg($db). 'error');
 				echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu').'</a>';
 				if ($debug==1){
 					echo '<br>'. $sql;
@@ -203,7 +203,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	}
 
 	$pdf->addinfo('Title', _('Check Comparison Report') );
-	$pdf->addinfo('Subject', _('Inventory Check Comparision'). ' ' . Date($_SESSION['DefaultDateFormat']));
+	$pdf->addinfo('Subject', _('Inventory Check Comparison'). ' ' . Date($_SESSION['DefaultDateFormat']));
 
 
 	$PageNumber=1;
