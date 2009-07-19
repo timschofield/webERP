@@ -411,7 +411,7 @@ if (isset($_SESSION['Transfer'])){
 	echo '<a href="'.$_SERVER['PHP_SELF']. '?' . SID . '&NewTransfer=true">'. _('Select A Different Transfer').'</a>';
 	echo '<div class="centre"><H2>' . _('Location Transfer Reference'). ' #' . $_SESSION['Transfer']->TrfID . ' '. _('from').' ' . $_SESSION['Transfer']->StockLocationFromName . ' '. _('to'). ' ' . $_SESSION['Transfer']->StockLocationToName . '</H2></div>';
 
-	prnMsg(_('Please Verify Shipment Quantities Receivied'),'info');
+	prnMsg(_('Please Verify Shipment Quantities Received'),'info');
 
 	$i = 0; //Line Item Array pointer
 

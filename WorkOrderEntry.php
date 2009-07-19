@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 $PageSecurity = 10;
 
@@ -170,7 +170,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 				$EOQ = $CheckItemRow['eoq'];
 			}
 	  		if ($CheckItemRow['mbflag']!='M'){
-	  			prnMsg(_('The item selected cannot be addded to a work order because it is not a manufactured item'),'warn');
+	  			prnMsg(_('The item selected cannot be added to a work order because it is not a manufactured item'),'warn');
 	  			$InputError=true;
 	  		}
 	  } else {

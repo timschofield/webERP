@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.100 $ */
+/* $Revision: 1.101 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -1042,7 +1042,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$KitResult = DB_query($sql, $db,$ErrMsg);
 
 		$NewItemQty = 1; /*By Default */
-		$Discount = 0; /*By default - can change later or discount category overide */
+		$Discount = 0; /*By default - can change later or discount category override */
 
 		if ($myrow=DB_fetch_array($KitResult)){
 		   	if ($myrow['mbflag']=='K'){	/*It is a kit set item */
@@ -1090,7 +1090,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					$KitResult = DB_query($sql, $db,$ErrMsg);
 
 					//$NewItemQty = 1; /*By Default */
-					$Discount = 0; /*By default - can change later or discount category overide */
+					$Discount = 0; /*By default - can change later or discount category override */
 
 					if ($myrow=DB_fetch_array($KitResult)){
 						if ($myrow['mbflag']=='K'){	/*It is a kit set item */

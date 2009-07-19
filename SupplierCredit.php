@@ -1,10 +1,10 @@
 <?php
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 /*This page is very largely the same as the SupplierInvoice.php script
 the same result could have been acheived by using if statements in that script and just having the one
 SupplierTransaction.php script. However, to aid readability - variable names have been changed  -
-and reduce clutter (in the form of a heap of if statements) two seperate scripts have been used, 
+and reduce clutter (in the form of a heap of if statements) two separate scripts have been used, 
 both with very similar code.
 
 This does mean that if the logic is to be changed for supplier transactions then it needs to be changed
@@ -91,7 +91,7 @@ if (isset($_GET['SupplierID'])){
 						WHERE loccode = '" . $_SESSION['UserStockLocation'] . "'", $db);
 
 	if(DB_num_rows($LocalTaxProvinceResult)==0){
-		prnMsg(_('The tax province associated with your user account has not been set up in this database. Tax calculations are based on the tax group of the supplier and the tax province of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax provincce'),'error');
+		prnMsg(_('The tax province associated with your user account has not been set up in this database. Tax calculations are based on the tax group of the supplier and the tax province of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax province'),'error');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -443,7 +443,7 @@ then do the updates and inserts to process the credit note entered */
 		$InputError = True;
 		prnMsg(_('The credit note as entered cannot be processed because the exchange rate for the credit note has been entered as a negative or zero number') . '. ' . _('The exchange rate is expected to show how many of the suppliers currency there are in 1 of the local currency'),'warn');
 	}elseif ($_SESSION['SuppTrans']->OvAmount < round($TotalShiptValue + $TotalGLValue + $TotalGRNValue,2)){
-		prnMsg(_('The credit note total as entered is less than the sum of the shipment charges') . ', ' . _('the general ledger entires (if any) and the charges for goods received') . '. ' . _('There must be a mistake somewhere') . ', ' . _('the credit note as entered will not be processed'),'error');
+		prnMsg(_('The credit note total as entered is less than the sum of the shipment charges') . ', ' . _('the general ledger entries (if any) and the charges for goods received') . '. ' . _('There must be a mistake somewhere') . ', ' . _('the credit note as entered will not be processed'),'error');
 		$InputError = True;
 	} else {
 
@@ -560,7 +560,7 @@ then do the updates and inserts to process the credit note entered */
 
 					$PurchPriceVar = round($EnteredGRN->This_QuantityInv * ($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate),2);
 
-					/*Yes but where to post this difference to - if its a stock item the variance account must be retreived from the stock category record
+					/*Yes but where to post this difference to - if its a stock item the variance account must be retrieved from the stock category record
 					if its a nominal purchase order item with no stock item then  post it to the account specified in the purchase order detail record */
 
 					if ($PurchPriceVar !=0){ /* don't bother with this lot if there is no value to post ! */

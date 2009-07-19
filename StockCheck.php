@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -98,7 +98,7 @@ if (DB_error_no($db) !=0) {
 			$title = _('Stock Check Freeze Update');
 			include('includes/header.inc');
 			echo '<p><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Print Check Sheets') . '</a>';
-			prnMsg( _('Added to the stock check file sucessfully'),'success');
+			prnMsg( _('Added to the stock check file successfully'),'success');
 			include('includes/footer.inc');
 			exit;
 		}

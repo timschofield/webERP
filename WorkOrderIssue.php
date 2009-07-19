@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 $PageSecurity = 11;
 
@@ -733,7 +733,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 
     echo '<table>';
 
-    //Now Setup the form for entering quantites of the item to be issued to the WO
+    //Now Setup the form for entering quantities of the item to be issued to the WO
     if ($IssueItemRow['controlled']==1){ //controlled
 
         if ($IssueItemRow['serialised']==1){ //serialised
@@ -777,7 +777,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
               <td><input type="textbox" name="Qty"></tr>';
         echo '<tr><td align="center"><input type=submit name="Process" value="' . _('Process Items Issued') . '"></td></tr>';
     }
-} //end if selecting new item to issue or entering the issued item quantites
+} //end if selecting new item to issue or entering the issued item quantities
 echo '</table>';
 echo '</form>';
 

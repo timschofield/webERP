@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 5;
 
@@ -11,9 +11,9 @@ function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(",", "", $str);
 }
 
-echo '<p>' . _('Making a comma seperated values file of the current stock quantities');
+echo '<p>' . _('Making a comma separated values file of the current stock quantities');
 
-$ErrMsg = _('The SQL to get the stock quantites failed with the message');
+$ErrMsg = _('The SQL to get the stock quantities failed with the message');
 
 $sql = 'SELECT stockid, SUM(quantity) FROM locstock GROUP BY stockid HAVING SUM(quantity)<>0';
 $result = DB_query($sql, $db, $ErrMsg);

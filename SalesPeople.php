@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 3;
 
@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
 		$i++;		
 	} elseif (strlen($_POST['SalesmanName']) > 30) {
 		$InputError = 1;
-		prnMsg(_('The salesperson name must be thity characters or less long'),'error');
+		prnMsg(_('The salesperson name must be thirty characters or less long'),'error');
 		$Errors[$i] = 'SalesmanName';
 		$i++;		
 	} elseif (strlen($_POST['SManTel']) > 20) {

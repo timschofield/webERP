@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.51 $ */
+/* $Revision: 1.52 $ */
 
 $PageSecurity =15;
 
@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('Default Credit Limit must be a number'),'error');
 	} elseif (strstr($_POST['X_RomalpaClause'], "'") || strlen($_POST['X_RomalpaClause']) > 5000) {
 		$InputError = 1;
-		prnMsg(_('The Romalpa Clause may not contain single qoutes and may not be longer than 5000 chars'),'error');
+		prnMsg(_('The Romalpa Clause may not contain single quotes and may not be longer than 5000 chars'),'error');
 	} elseif (strlen($_POST['X_QuickEntries']) > 2 || !is_numeric($_POST['X_QuickEntries']) ||
 		$_POST['X_QuickEntries'] < 1 || $_POST['X_QuickEntries'] > 99 ) {
 		$InputError = 1;
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 	} elseif (strlen($_POST['X_NumberOfPeriodsOfStockUsage']) > 2 || !is_numeric($_POST['X_NumberOfPeriodsOfStockUsage']) ||
 		$_POST['X_NumberOfPeriodsOfStockUsage'] < 1 || $_POST['X_NumberOfPeriodsOfStockUsage'] > 12 ) {
 		$InputError = 1;
-		prnMsg(_('Finantial period per year must be a number between 1 and 12'),'error');
+		prnMsg(_('Financial period per year must be a number between 1 and 12'),'error');
 	} elseif (strlen($_POST['X_TaxAuthorityReferenceName']) >25) {
 		$InputError = 1;
 		prnMsg(_('The Tax Authority Reference Name must be 25 characters or less long'),'error');
@@ -536,7 +536,7 @@ echo '<tr><td>' . _('Check Quantity Charged vs Deliver Qty') . ':</td>
 	<option '.($_SESSION['Check_Qty_Charged_vs_Del_Qty']?'selected ':'').'value="1">'._('Yes').'
 	<option '.(!$_SESSION['Check_Qty_Charged_vs_Del_Qty']?'selected ':'').'value="0">'._('No').'
 	</select></td>
-	<td>' . _('In entry of AP invoices this determines whether or not to check the quantites received into stock tie up with the quantities invoiced') .'</td></tr>';
+	<td>' . _('In entry of AP invoices this determines whether or not to check the quantities received into stock tie up with the quantities invoiced') .'</td></tr>';
 
 // Check_Price_Charged_vs_Order_Price
 echo '<tr><td>' . _('Check Price Charged vs Order Price') . ':</td>
@@ -719,7 +719,7 @@ for ($i=0; $i < sizeof($WikiApplications); $i++ ) {
 	echo '<option '.($_SESSION['WikiApp'] == $WikiApplications[$i] ? 'selected ' : '').'value="'.$WikiApplications[$i].'">'.$WikiApplications[$i]  . '</option>';
 }
 echo '</select></td>
-	<td>' . _('This feature makes webERP show links to a free form company knowlege base using a wiki. This allows sharing of important company information - about customers, suppliers and products and the set up of work flow menus and/or company procedures documentation') .'</td></tr>';
+	<td>' . _('This feature makes webERP show links to a free form company knowledge base using a wiki. This allows sharing of important company information - about customers, suppliers and products and the set up of work flow menus and/or company procedures documentation') .'</td></tr>';
 
 echo '<tr><td>' . _('Wiki Path') . ':</td>
 	<td><input type="text" name="X_WikiPath" size=40 maxlength=40 value="' . $_SESSION['WikiPath'] . '"></td>
@@ -735,7 +735,7 @@ if ($_SESSION['geocode_integration']==1){
         echo  '<option value="1">' . _('Geocode Integration Enabled') . '</option>';
 }
 echo '</select></td>
-        <td>' . _('This feature will give Latitude and Longtiude coordinates to customers and suppliers.  Requires access to a mapping providor.  You must setup this facility under Main Menu - Setup - Geocode Setup.  This feature is experimental.') .'</td></tr>';
+        <td>' . _('This feature will give Latitude and Longitude coordinates to customers and suppliers.  Requires access to a mapping provider.  You must setup this facility under Main Menu - Setup - Geocode Setup.  This feature is experimental.') .'</td></tr>';
 
 echo '<tr><td>' . _('Extended Customer Information') . ':</td>
         <td><select name="X_Extended_CustomerInfo">';

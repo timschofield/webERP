@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.59 $ */
+/* $Revision: 1.60 $ */
 
 $PageSecurity = 2;
 
@@ -464,7 +464,7 @@ if (isset($result)) {
 	if (DB_num_rows($result)<>0){
 
 		if (isset($_POST['CSV'])) {
-			echo '<br><p class="page_title_text">' . _('Comma Seperated Values (CSV) Search Result') . '</p>';
+			echo '<br><p class="page_title_text">' . _('Comma Separated Values (CSV) Search Result') . '</p>';
 			echo '<div class="page_help_text">' . _('CSV data can be copied and used to import data into software such as a spreadsheet.') . '</div><br>';
 			printf("<div class=csv>Code, Customer Name, Address1, Address2, Address3, Address4, Contact, Type, Phone, Fax");
 			while ($myrow2=DB_fetch_array($result)) {
@@ -729,7 +729,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID']!="") {
        		echo '<tr>
                      	<th>' . _('date') . '</th>
                       	<th>' . _('note') . '</th>
-                       	<th>' . _('file link / refernce / URL') . '</th>
+                       	<th>' . _('file link / reference / URL') . '</th>
                        	<th>' . _('priority') . '</th>
                        	<th>' . _('Edit') . '</th>
                        	<th>' . _('Delete') . '</th>

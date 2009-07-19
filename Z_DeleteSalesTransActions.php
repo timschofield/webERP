@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -131,7 +131,7 @@ if (isset($_POST['ProcessDeletions'])){
 	}
 	
 
-	prnMsg(_('It is necessary to re-post the remaining general ledger transactions for the general ledger to get back in sync with the transatiions that remain. This is an option from the Z_index.php page'),'warn');
+	prnMsg(_('It is necessary to re-post the remaining general ledger transactions for the general ledger to get back in sync with the transactions that remain. This is an option from the Z_index.php page'),'warn');
 }
 
 echo "<form action='" . $_SERVER['PHP_SELF'] . '?=' . $SID . "' method=post>";

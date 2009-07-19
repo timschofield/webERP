@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 15;
 
@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	} elseif ($_POST['TypeAbbrev']=='AN'){
 		$InputError = 1;
-		prnMsg (_('The sales type code cannot be AN since this is a system defined abbrevation for any sales type in general ledger interface lookups'),'error');
+		prnMsg (_('The sales type code cannot be AN since this is a system defined abbreviation for any sales type in general ledger interface lookups'),'error');
 		$Errors[$i] = 'SalesType';
 		$i++;
 	}

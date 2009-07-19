@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity=15;
 include ('includes/session.inc');
@@ -63,7 +63,7 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 
 		$sql='SELECT accountcode, period, budget, actual, bfwd, bfwdbudget FROM chartdetails WHERE period ='. $i;
 
-		$ErrMsg = _('Could not retrieve the ChartDetail records becaue');
+		$ErrMsg = _('Could not retrieve the ChartDetail records because');
 		$result = DB_query($sql,$db,$ErrMsg);
 
 		while ($myrow=DB_fetch_array($result)){

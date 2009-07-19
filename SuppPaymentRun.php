@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 5;
 
@@ -302,7 +302,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	if (DB_error_no($db) !=0) {
 		 echo '<br>' . _('The bank accounts could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
 		 if ($debug==1){
-			echo '<br>' . _('The SQL used to retrieve the bank acconts was') . ':<br>' . $SQL;
+			echo '<br>' . _('The SQL used to retrieve the bank accounts was') . ':<br>' . $SQL;
 		 }
 		 exit;
 	}

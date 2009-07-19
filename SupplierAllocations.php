@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 /*
 	This page can be called with...
@@ -329,7 +329,7 @@ If (isset($_GET['AllocTrans'])){
 	if (DB_num_rows($Result) != 1){
 	echo _('There was a problem retrieving the information relating the transaction selected') . '. ' . _('Allocations are unable to proceed');
 	if ($debug == 1){
-		echo '<br>' . _('The SQL that was used to retreive the transaction information was') . " :<br>$SQL";
+		echo '<br>' . _('The SQL that was used to retrieve the transaction information was') . " :<br>$SQL";
 	}
 	exit;
 	}
@@ -368,7 +368,7 @@ If (isset($_GET['AllocTrans'])){
 
 	$ErrMsg = _('There was a problem retrieving the transactions available to allocate to');
 
-	$DbgMsg = _('The SQL that was used to retreive the transaction information was');
+	$DbgMsg = _('The SQL that was used to retrieve the transaction information was');
 
 	$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 
@@ -412,7 +412,7 @@ If (isset($_GET['AllocTrans'])){
 
 	$ErrMsg = _('There was a problem retrieving the previously allocated transactions for modification');
 
-	$DbgMsg = _('The SQL that was used to retreive the previously allocated transaction information was');
+	$DbgMsg = _('The SQL that was used to retrieve the previously allocated transaction information was');
 
 	$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 

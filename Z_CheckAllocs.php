@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /*This page adds the total of allocation records and compares this to the recorded allocation total in DebtorTrans table */
 
 $PageSecurity = 2;
@@ -34,7 +34,7 @@ while ($myrow = DB_fetch_array($result)){
 	$AllocToID = $myrow['id'];
 
 	echo '<br>' . _('Allocations made against') . ' ' . $myrow['debtorno'] . ' ' . _('Invoice Number') . ': ' . $myrow['transno'];
-	echo '<br>' . _('Orginal Invoice Total') . ': '. $myrow['totamt'];
+	echo '<br>' . _('Original Invoice Total') . ': '. $myrow['totamt'];
 	echo '<br>' . _('Total amount recorded as allocated against it') . ': ' . $myrow['alloc'];
 	echo '<br>' . _('Total of allocation records') . ': ' . $myrow['totalalloc'];
 

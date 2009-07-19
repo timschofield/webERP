@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 11;
 
@@ -400,7 +400,7 @@ If (isset($_POST['Close'])) {
 							'" . $_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of usage variance') . "',
 							" . (-$TotalUsageVar*$ShareProportion) . ")";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the material useage variance could not be inserted because');
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the material usage variance could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 

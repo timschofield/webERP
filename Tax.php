@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -60,7 +60,7 @@ If (isset($_POST['TaxAuthority']) AND
 	if (DB_error_no($db) !=0) {
 		$title = _('Taxation Reporting Error');
 		include('includes/header.inc');
-		echo _('The accounts receiveable transation details could not be retrieved because') . ' ' . DB_error_msg($db);
+		echo _('The accounts receivable transaction details could not be retrieved because') . ' ' . DB_error_msg($db);
 		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo "<br>$SQL";
@@ -155,7 +155,7 @@ If (isset($_POST['TaxAuthority']) AND
 	if (DB_error_no($db) !=0) {
 		$title = _('Taxation Reporting Error');
 		include('includes/header.inc');
-		echo _('The accounts payable transation details could not be retrieved because') . ' ' . DB_error_msg($db);
+		echo _('The accounts payable transaction details could not be retrieved because') . ' ' . DB_error_msg($db);
 		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo "<br>$SQL";

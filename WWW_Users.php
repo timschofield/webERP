@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 $PageSecurity=15;
 
@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
 		}
 	}
 
-	/* Make a comma seperated list of modules allowed ready to update the database*/
+	/* Make a comma separated list of modules allowed ready to update the database*/
 	$i=0;
 	$ModulesAllowed = '';
 	while ($i < count($ModuleList)){
@@ -528,7 +528,7 @@ while (false != ($LanguageEntry = $LangDirHandle->read())){
 echo '</select></td></tr>';
 
 
-/*Make an array out of the comma seperated list of modules allowed*/
+/*Make an array out of the comma separated list of modules allowed*/
 $ModulesAllowed = explode(',',$_POST['ModulesAllowed']);
 
 $i=0;

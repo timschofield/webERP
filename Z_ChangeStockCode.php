@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -246,7 +246,7 @@ if (isset($_POST['ProcessStockChange'])){
 	echo ' ... ' . _('completed');
 
 
-	echo '<p>' . _('Stock Code') . ': ' . $_POST['OldStockID'] . ' ' . _('was sucessfully changed to') . ' : ' . $_POST['NewStockID'];
+	echo '<p>' . _('Stock Code') . ': ' . $_POST['OldStockID'] . ' ' . _('was successfully changed to') . ' : ' . $_POST['NewStockID'];
 
 }
 

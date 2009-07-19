@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 11;
 
@@ -121,7 +121,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
                     $AlreadyExistsRow = DB_fetch_row($Result);
 
                     if ($AlreadyExistsRow[0]>0){
-                        prnMsg(_('The serial number entered already exists. Dupliate serial numbers are prohibited. The duplicate item is:') . ' ' . $_POST['SerialNo'.$i] ,'error');
+                        prnMsg(_('The serial number entered already exists. Duplicate serial numbers are prohibited. The duplicate item is:') . ' ' . $_POST['SerialNo'.$i] ,'error');
                         $InputError = true;
                     }
             }
@@ -638,7 +638,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
                                 '" . $_POST['WO'] . " " . $_POST['StockID'] . " - " . $WORow['description'] . ' x ' . $QuantityReceived . " @ " . number_format($WORow['stdcost'],2) . "',
                                 " . -($WORow['stdcost'] * $QuantityReceived) . ")";
 
-            $ErrMsg =   _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The WIP credit on receipt of finsihed items from a work order GL posting could not be inserted because');
+            $ErrMsg =   _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The WIP credit on receipt of finished items from a work order GL posting could not be inserted because');
             $DbgMsg =  _('The following SQL to insert the WIP GLTrans record was used');
             $Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg,true);
 
@@ -755,7 +755,7 @@ while ($LocRow = DB_fetch_array($LocResult)){
 echo '</select></td></tr>
     </table>';
 
-//Now Setup the form for entering quantites received
+//Now Setup the form for entering quantities received
 echo '<table>';
 
 if($WORow['controlled']==1){ //controlled

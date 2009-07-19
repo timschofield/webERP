@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.72 $ */
+/* $Revision: 1.73 $ */
 
 $PageSecurity = 11;
 
@@ -282,7 +282,7 @@ if (isset($_POST['submit'])) {
 					$ChkBOM = DB_fetch_row($result);
 					if ($ChkBOM[0]!=0){
 						$InputError = 1;
-						prnMsg( _('The make or buy flag cannot be changed from manufactured, purchased or dummy to a kitset or assembly where the item is a component in a bill of material') . '. ' . _('Assembly and kitset items are not appropriate as componennts in a bill of materials'), 'error');
+						prnMsg( _('The make or buy flag cannot be changed from manufactured, purchased or dummy to a kitset or assembly where the item is a component in a bill of material') . '. ' . _('Assembly and kitset items are not appropriate as components in a bill of materials'), 'error');
 					}
 				}
 			}
@@ -295,7 +295,7 @@ if (isset($_POST['submit'])) {
 			}
 			if ($OldSerialised != $_POST['Serialised'] AND $stkqtychk[0]!=0){
 				$InputError=1;
-				prnMsg( _('You can not change a Serialised Item to Non-Serialised (or visa-versa) when there is a quantity on hand for the item') , 'error');
+				prnMsg( _('You can not change a Serialised Item to Non-Serialised (or vice-versa) when there is a quantity on hand for the item') , 'error');
 			}
 
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.41 $ */
+/* $Revision: 1.42 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing 
@@ -98,7 +98,7 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 						WHERE loccode = '" . $_SESSION['UserStockLocation'] . "'", $db);
 						
 	if(DB_num_rows($LocalTaxProvinceResult)==0){
-		prnMsg(_('The tax province associated with your user account has not been set up in this database. Tax calculations are based on the tax group of the supplier and the tax province of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax provincce'),'error');
+		prnMsg(_('The tax province associated with your user account has not been set up in this database. Tax calculations are based on the tax group of the supplier and the tax province of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax province'),'error');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -484,7 +484,7 @@ then do the updates and inserts to process the invoice entered */
 		prnMsg( _('The invoice as entered cannot be processed because the exchange rate for the invoice has been entered as a negative or zero number') . '. ' . _('The exchange rate is expected to show how many of the suppliers currency there are in 1 of the local currency'),'error');
 
 	}elseif ( $_SESSION['SuppTrans']->OvAmount < round($TotalShiptValue + $TotalGLValue + $TotalGRNValue,2)){
-		prnMsg( _('The invoice total as entered is less than the sum of the shipment charges, the general ledger entires (if any) and the charges for goods received') . '. ' . _('There must be a mistake somewhere, the invoice as entered will not be processed'),'error');
+		prnMsg( _('The invoice total as entered is less than the sum of the shipment charges, the general ledger entries (if any) and the charges for goods received') . '. ' . _('There must be a mistake somewhere, the invoice as entered will not be processed'),'error');
 		$InputError = True;
 
 	} else {
@@ -648,7 +648,7 @@ then do the updates and inserts to process the invoice entered */
 					$PurchPriceVar = round($EnteredGRN->This_QuantityInv * (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit),2);
 					
 					
-					/*Yes.... but where to post this difference to - if its a stock item the variance account must be retreived from the stock category record
+					/*Yes.... but where to post this difference to - if its a stock item the variance account must be retrieved from the stock category record
 					if its a nominal purchase order item with no stock item then there will be no standard cost and it will all be variance so post it to the
 					account specified in the purchase order detail record */
 
