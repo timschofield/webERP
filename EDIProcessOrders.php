@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity =11;
 
@@ -92,13 +92,13 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 
 /* Go through segments in the order message array in sequence looking for matching SegTags
 
-   */
+*/
 		while ($SegTag != $Seg[$SegID]['SegTag'] AND $SegID < $TotalNoOfSegments) {
 
 			$SegID++; /*Move to the next Seg in the order message */
 			$LastSeg = $SegID; /*Remember the last segid moved to */
 
-			echo "\n" . _('Segment Group') . ' = ' . $Seg[$SegID]['SegGroup'] . ' ' . _('Max Occurences of Segment') . ' = ' . $Seg[$SegID]['MaxOccur'] . ' ' . _('No occurrences so far') . ' = ' . $SegCounter;
+			echo "\n" . _('Segment Group') . ' = ' . $Seg[$SegID]['SegGroup'] . ' ' . _('Max Occurrences of Segment') . ' = ' . $Seg[$SegID]['MaxOccur'] . ' ' . _('No occurrences so far') . ' = ' . $SegCounter;
 
 			if ($Seg[$SegID]['SegGroup'] != $SegGroup AND $Seg[$SegID]['MaxOccur'] > $SegCounter){ /*moved to a new seg group  but could be more segment groups*/
 				$SegID = $FirstSegInGroup; /*Try going back to first seg in the group */
@@ -113,7 +113,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 
 		if ($SegTag != $Seg[$SegID]['SegTag']){
 
-			$EmailText .= "\n" . _('ERROR') . ': ' . _('Unable to identify segment tag') . ' ' . $SegTag . ' ' . _('from the message line') . '<br>' . $LineText . '<br><font color=RED><b>' . _('This message processing has been aborted and seperate advice will be required from the customer to obtain details of the order') . '<b></font>';
+			$EmailText .= "\n" . _('ERROR') . ': ' . _('Unable to identify segment tag') . ' ' . $SegTag . ' ' . _('from the message line') . '<br>' . $LineText . '<br><font color=RED><b>' . _('This message processing has been aborted and separate advice will be required from the customer to obtain details of the order') . '<b></font>';
 
 			$TryNextFile = True;
 		}
@@ -151,7 +151,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 						break;
 					case '227':
 						$EmailText .= "\n" . _('Consignment order');
-						$Order->Comments .= "\n" . _('Consigment order');
+						$Order->Comments .= "\n" . _('Consignment order');
 						break;
 					case '22E':
 						$EmailText .= "\n" . _('Manufacturer raised order');
@@ -224,16 +224,16 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 						echo '<br>' . _('Response Code') . ': ' . $ResponseCode;
 						switch ($ResponseCode) {
 							case 'AC':
-								$EmailText .= "\n" . _('Please acknowlege to customer with detail and changes made to the order');
+								$EmailText .= "\n" . _('Please acknowledge to customer with detail and changes made to the order');
 								break;
 							case 'AB':
-								$EmailText .= "\n" . _('Please acknowlege to customer the receipt of message');
+								$EmailText .= "\n" . _('Please acknowledge to customer the receipt of message');
 								break;
 							case 'AI':
-								$EmailText .= "\n" . _('Please acknowlege to customer any changes to the order');
+								$EmailText .= "\n" . _('Please acknowledge to customer any changes to the order');
 								break;
 							case 'NA':
-								$EmailText .= "\n" . _('No acknowlegement to customer is required');
+								$EmailText .= "\n" . _('No acknowledgement to customer is required');
 								break;
 						}
 					}
@@ -312,7 +312,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 				} elseif ($PAI_C534[2]=='40'){
 					$EmailText .= "\n" . _('Payment will be effected by a bill drawn by the creditor on the debtor');
 				} elseif ($PAI_C534[2]=='10E'){
-					$EmailText .= "\n" . _('Payment terms are defined in the Commerical Account Summary Section');
+					$EmailText .= "\n" . _('Payment terms are defined in the Commercial Account Summary Section');
 				}
 				if (isset($PAI_C534[5])){
 					if ($PAI_C534[5]=='2')
