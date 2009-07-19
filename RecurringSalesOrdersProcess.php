@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 /*need to allow this script to run from Cron or windows scheduler */
 $AllowAnyone = true;
@@ -215,7 +215,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$CurrencyRate = $myrow[0];
 
 		$SQL = "SELECT taxprovinceid FROM locations WHERE loccode='" . $RecurrOrderRow['fromstkloc'] ."'";
-		$ErrMsg = _('Could not retreive the tax province of the location from where the order was fulfilled because:');
+		$ErrMsg = _('Could not retrieve the tax province of the location from where the order was fulfilled because:');
 		$Result = DB_query($SQL,$db,$ErrMsg);
 		$myrow=DB_fetch_row($Result);
 		$DispTaxProvinceID = $myrow[0];
@@ -256,7 +256,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 			AND taxauthrates.taxcatid = " . $RecurrOrderLineRow['taxcatid'] . "
 			ORDER BY taxgrouptaxes.calculationorder";
 
-			$ErrMsg = _('The taxes and rates for this item could not be retreived because');
+			$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
 			$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);
 
 			$LineTaxAmount = 0;

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
 include('includes/DefineCartClass.php');
@@ -177,7 +177,7 @@ If (isset($_POST['Process'])) {
 	$InputErrors =0;
 	If (!Is_Date($_POST['StartDate'])){
 		$InputErrors =1;
-		prnMsg(_('The last recurrance or start date of this recurring order must be a valid date in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
+		prnMsg(_('The last recurrence or start date of this recurring order must be a valid date in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 	}
 	If (!Is_Date($_POST['StopDate'])){
 		$InputErrors =1;
@@ -480,12 +480,12 @@ echo '</table>';
 echo '<br><div class="centre">';
 if ($NewRecurringOrder=='Yes'){
 	echo '<input type=hidden name="NewRecurringOrder" VALUE="Yes">';
-	echo "<input type=submit name='Process' VALUE='" . _('Create Reccurring Order') . "'>";
+	echo "<input type=submit name='Process' VALUE='" . _('Create Recurring Order') . "'>";
 } else {
 	echo '<input type=hidden name="NewRecurringOrder" VALUE="No">';
 	echo '<input type=hidden name="ExistingRecurrOrderNo" VALUE=' . $_POST['ExistingRecurrOrderNo'] . '>';
 	
-	echo "<input type=submit name='Process' VALUE='" . _('Update Reccurring Order Details') . "'>";
+	echo "<input type=submit name='Process' VALUE='" . _('Update Recurring Order Details') . "'>";
 	echo '<hr>';
 	echo '<br><br><input type=submit name="DeleteRecurringOrder" VALUE="' . _('Delete Recurring Order') . ' ' . $_POST['ExistingRecurrOrderNo'] . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this recurring order template?') . '\');">';
 }

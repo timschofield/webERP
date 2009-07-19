@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 4;
 
@@ -145,7 +145,7 @@ if (isset($_GET['Delete'])){
    $ErrMsg =  _('The supplier purchasing details could not be deleted because');
    $DelResult=DB_query($sql,$db,$ErrMsg);
 
-   prnMsg( _('This purchasing data record has been sucessfully deleted'),'success');
+   prnMsg( _('This purchasing data record has been successfully deleted'),'success');
    unset ($SupplierID);
 }
 
@@ -430,7 +430,7 @@ if (isset($_POST['SearchSupplier'])){
 		}
 
 		$ErrMsg = _('The suppliers matching the criteria entered could not be retrieved because');
-		$DbgMsg =  _('The SQL to retireve supplier details that failed was');
+		$DbgMsg =  _('The SQL to retrieve supplier details that failed was');
 		$SuppliersResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 	} //one of keywords or SupplierCode was more than a zero length string

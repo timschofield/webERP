@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 $PageSecurity = 1;
 
@@ -441,7 +441,7 @@ If (isset($PrintPDF)
 		/*rule off for total */
 		$pdf->line($Page_Width-$Right_Margin-222, $YPos-(2*$line_height),$Page_Width-$Right_Margin,$YPos-(2*$line_height));
 
-		/*vertical to seperate totals from comments and ROMALPA */
+		/*vertical to separate totals from comments and ROMALPA */
 		$pdf->line($Page_Width-$Right_Margin-222, $YPos+$line_height,$Page_Width-$Right_Margin-222,$Bottom_Margin);
 
 		$YPos+=10;

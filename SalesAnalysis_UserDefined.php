@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 /*
@@ -63,7 +63,7 @@ if ($_GET['ProduceCVSFile']==True){
 
 	include('includes/CSVSalesAnalysis.inc');
 
-	$title = _('Sales Analysis Comma Seperated File (CSV) Generation');
+	$title = _('Sales Analysis Comma Separated File (CSV) Generation');
 	include('includes/header.inc');
 
 	 echo 'http://' . getenv(SERVER_NAME) . $rootpath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv';
