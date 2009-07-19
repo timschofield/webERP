@@ -26,8 +26,8 @@ if (isset($_POST['update'])) {
 }
 
 //If an account hasn't been selected then select one here.
- echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
- echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post name="selectaccount">';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
+echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post name="selectaccount">';
 echo '<table>';
 
 echo '</br><tr><td>'.  _('Select GL Account').  ":</td><td><select name='SelectedAccount' 
@@ -143,11 +143,11 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 	echo '<th colspan=3>'. _('Next Financial Year') .'</th></tr>';
 
 	echo '<tr><th colspan=3>'. _('Year ended').' - '.
-	 	Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'], -1)) .'</th>';
+		Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'], -1)) .'</th>';
 	echo '<th colspan=3>'. _('Year ended').' - '.
-	 	Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'],0)) .'</th>';
+		Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'],0)) .'</th>';
 	echo '<th colspan=3>'. _('Year ended').' - '.
-	 	Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'],1)) .'</th></tr>';
+		Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'],1)) .'</th></tr>';
 
 	echo '<tr>';
 	for ($i=0; $i<3; $i++) {
@@ -223,7 +223,7 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 						FROM chartdetails
 						WHERE period ='. $i . ' AND  accountcode = ' . $SelectedAccount;
 
-		$ErrMsg = _('Could not retrieve the ChartDetail records becaue');
+		$ErrMsg = _('Could not retrieve the ChartDetail records because');
 		$result = DB_query($sql,$db,$ErrMsg);
 
 		while ($myrow=DB_fetch_array($result)){

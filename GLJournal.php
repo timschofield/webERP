@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 include('includes/DefineJournalClass.php');
 
@@ -110,7 +110,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 	$ErrMsg = _('Cannot commit the changes');
 	$result= DB_Txn_Begin($db);
 
-	prnMsg(_('Journal').' ' . $TransNo . ' '._('has been sucessfully entered'),'success');
+	prnMsg(_('Journal').' ' . $TransNo . ' '._('has been successfully entered'),'success');
 
 	unset($_POST['JournalProcessDate']);
 	unset($_POST['JournalType']);
@@ -125,8 +125,8 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 
 } elseif (isset($_GET['Delete'])){
 
-  /* User hit delete the line from the journal */
-   $_SESSION['JournalDetail']->Remove_GLEntry($_GET['Delete']);
+	/* User hit delete the line from the journal */
+	$_SESSION['JournalDetail']->Remove_GLEntry($_GET['Delete']);
 
 } elseif (isset($_POST['Process']) and $_POST['Process']==_('Accept')){ //user hit submit a new GL Analysis line into the journal
 	if($_POST['GLCode']!='')
@@ -142,7 +142,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 	{
 		$_POST['GLAmount'] = '-' . $_POST['Credit'];
 	}
-   if ($_POST['GLManualCode'] != '' AND is_numeric($_POST['GLManualCode'])){
+	if ($_POST['GLManualCode'] != '' AND is_numeric($_POST['GLManualCode'])){
 				// If a manual code was entered need to check it exists and isnt a bank account
 	$AllowThisPosting = true; //by default
 		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1){
@@ -174,7 +174,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 				$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'], $_POST['GLNarrative'], $_POST['GLManualCode'], $myrow['accountname'], $_POST['tag']);
 			}
 		}
-   } else {
+	} else {
 		$AllowThisPosting =true; //by default
 		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1){
 			if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' AND $_POST['GLCode'] == $_SESSION['CompanyRecord']['debtorsact']){
@@ -199,26 +199,26 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 			$SQL = 'SELECT accountname FROM chartmaster WHERE accountcode=' . $_POST['GLCode'];
 			$Result=DB_query($SQL,$db);
 			$myrow=DB_fetch_array($Result);
-	   		$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'], $_POST['GLNarrative'], $_POST['GLCode'], $myrow['accountname'], $_POST['tag']);
+			$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'], $_POST['GLNarrative'], $_POST['GLCode'], $myrow['accountname'], $_POST['tag']);
 		}
-   }
+	}
 
-   /*Make sure the same receipt is not double processed by a page refresh */
-   $Cancel = 1;
-   unset($_POST['Credit']);
-   unset($_POST['Debit']);
-   unset($_POST['tag']);
-   unset($_POST['GLManualCode']);
-   unset($_POST['GLNarrative']);
+	/*Make sure the same receipt is not double processed by a page refresh */
+	$Cancel = 1;
+	unset($_POST['Credit']);
+	unset($_POST['Debit']);
+	unset($_POST['tag']);
+	unset($_POST['GLManualCode']);
+	unset($_POST['GLNarrative']);
 }
 
 if (isset($Cancel)){
-   unset($_POST['Credit']);
-   unset($_POST['Debit']);
-   unset($_POST['GLAmount']);
-   unset($_POST['GLCode']);
-   unset($_POST['tag']);
-   unset($_POST['GLManualCode']);
+	unset($_POST['Credit']);
+	unset($_POST['Debit']);
+	unset($_POST['GLAmount']);
+	unset($_POST['GLCode']);
+	unset($_POST['tag']);
+	unset($_POST['GLManualCode']);
 }
 
 // set up the form whatever
@@ -286,11 +286,11 @@ echo '<div class="centre"><font size=3 color=blue>' . _('Journal Line Entry') . 
 	$result=DB_query($SQL,$db);
 	echo '<option value=0>0 - None';
 	while ($myrow=DB_fetch_array($result)){
-    	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
+		if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
 			echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
-    	} else {
+		} else {
 			echo '<option value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
-    	}
+		}
 	}
 	echo '</select></td>';
 // End select tag
@@ -310,11 +310,11 @@ echo '<div class="centre"><font size=3 color=blue>' . _('Journal Line Entry') . 
 	$result=DB_query($sql, $db);
 	echo '<td><select name="GLCode" onChange="return assignComboToInput(this,'.'GLManualCode'.')">';
 	while ($myrow=DB_fetch_array($result)){
-    	if (isset($_POST['tag']) and $_POST['tag']==$myrow['accountcode']){
+		if (isset($_POST['tag']) and $_POST['tag']==$myrow['accountcode']){
 			echo '<option selected value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'].' - ' .$myrow['accountname'];
-    	} else {
+		} else {
 			echo '<option value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'].' - ' .$myrow['accountname'];
-    	}
+		}
 	}
 	echo '</select></td>';
 
