@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.68 $ */
+/* $Revision: 1.69 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -140,8 +140,8 @@ if (isset($_POST['Update'])
 				custbranch.defaultlocation,
 				custbranch.defaultshipvia,
 				custbranch.deliverblind,
-                custbranch.specialinstructions,
-                custbranch.estdeliverydays
+				custbranch.specialinstructions,
+				custbranch.estdeliverydays
 			FROM custbranch
 			WHERE custbranch.branchcode='."'" . $_SESSION['Items'.$identifier]->Branch . "'".
 			' AND custbranch.debtorno = '."'" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
@@ -205,7 +205,7 @@ if (isset($_POST['Update'])
 			$_SESSION['Items'.$identifier]->DeliveryDays = $_POST['DeliveryDays'];
 			$_SESSION['Items'.$identifier]->DeliveryDate = $_POST['DeliveryDate'];
 			$_SESSION['Items'.$identifier]->QuoteDate = $_POST['QuoteDate'];
-                        $_SESSION['Items'.$identifier]->ConfirmedDate = $_POST['ConfirmedDate'];
+			$_SESSION['Items'.$identifier]->ConfirmedDate = $_POST['ConfirmedDate'];
 			$_SESSION['Items'.$identifier]->CustRef = $_POST['CustRef'];
 			$_SESSION['Items'.$identifier]->Comments = $_POST['Comments'];
 			$_SESSION['Items'.$identifier]->FreightCost = round($_POST['FreightCost'],2);
@@ -235,7 +235,7 @@ if (isset($_POST['Update'])
 
 			} else {
 
-				$sql =  'SELECT shipper_id
+				$sql = 'SELECT shipper_id
 							FROM shippers';
 				$TestShipperExists = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
@@ -550,14 +550,14 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 						$ErrMsg = _('Could not update the new next serial number for the item');
 						$UpdateNextSerialNoResult = DB_query('UPDATE stockmaster SET nextserialno=' . $NewNextSerialNo . " WHERE stockid='" . $StockItem->StockID . "'",$db,$ErrMsg,$DbgMsg,true);
 				} // end if the item is serialised and nextserialno is set
-	
+
 				$EmailSubject = _('New Work Order Number') . ' ' . $WONo . ' ' . _('for') . ' ' . $StockItem->StockID . ' x ' . $WOQuantity;
 				//Send email to the Factory Manager
 				mail($_SESSION['FactoryManagerEmail'],$EmailSubject,$FactoryManagerEmail);									
 			} //end if with this sales order there is a shortfall of stock - need to create the WO
 		}//end if auto create WOs in on
 	} /* end inserted line items into sales order details */
-	
+
 	$result = DB_Txn_Commit($db);	
 
 	if ($_SESSION['Items'.$identifier]->Quotation==1){
@@ -731,8 +731,8 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 			$k=1;
 		}
 
-		 echo '<td>'.$StockItem->StockID.'</td>
-		 	<td>'.$StockItem->ItemDescription.'</td>
+		echo '<td>'.$StockItem->StockID.'</td>
+			<td>'.$StockItem->ItemDescription.'</td>
 			<td class=number>'.$DisplayQuantity.'</td>
 			<td>'.$StockItem->Units.'</td>
 			<td class=number>'.$DisplayPrice.'</td>
@@ -932,39 +932,39 @@ echo '<tr>
 </tr>';
 
 	/* This field will control whether or not to display the company logo and
-    address on the packlist */
+	address on the packlist */
 
 	echo '<tr><td>' . _('Packlist Type') . ':</td><td><select name="DeliverBlind">';
-        for ($p = 1; $p <= 2; $p++) {
-            echo '<option value=' . $p;
-            if ($p == $_SESSION['Items'.$identifier]->DeliverBlind) {
-                echo ' selected>';
-            } else {
-                echo '>';
-            }
-            switch ($p) {
-                case 2:
-                    echo _('Hide Company Details/Logo');
-		    break;
-                default:
-                    echo _('Show Company Details/Logo');
-		    break;
-            }
-        }
-    echo '</select></td></tr>';
+		for ($p = 1; $p <= 2; $p++) {
+			echo '<option value=' . $p;
+			if ($p == $_SESSION['Items'.$identifier]->DeliverBlind) {
+				echo ' selected>';
+			} else {
+				echo '>';
+			}
+			switch ($p) {
+				case 2:
+					echo _('Hide Company Details/Logo');
+			break;
+				default:
+					echo _('Show Company Details/Logo');
+			break;
+			}
+		}
+	echo '</select></td></tr>';
 
 if (isset($_SESSION['PrintedPackingSlip']) and $_SESSION['PrintedPackingSlip']==1){
 
-    echo '<tr>
-    	<td>'. _('Reprint packing slip') .':</td>
+	echo '<tr>
+		<td>'. _('Reprint packing slip') .':</td>
 	<td><select name="ReprintPackingSlip">';
-    echo '<option value=0>' . _('Yes');
-    echo '<option selected value=1>' . _('No');
-    echo '</select>	'. _('Last printed') .': ' . ConvertSQLDate($_SESSION['DatePackingSlipPrinted']) . '</td></tr>';
+	echo '<option value=0>' . _('Yes');
+	echo '<option selected value=1>' . _('No');
+	echo '</select>	'. _('Last printed') .': ' . ConvertSQLDate($_SESSION['DatePackingSlipPrinted']) . '</td></tr>';
 
 } else {
 
-    echo '<input type=hidden name="ReprintPackingSlip" value=0>';
+	echo '<input type=hidden name="ReprintPackingSlip" value=0>';
 
 }
 
@@ -1013,7 +1013,7 @@ echo '<br><div class="centre"><input type=submit name="BackToLineDetails" value=
 
 if ($_SESSION['ExistingOrder']==0){
 	echo '<br><br><input type=submit name="ProcessOrder" value="' . _('Place Order') . '">';
-	echo '<br><br><input type=submit name="MakeRecurringOrder" VALUE="' . _('Create Reccurring Order') . '">';
+	echo '<br><br><input type=submit name="MakeRecurringOrder" VALUE="' . _('Create Recurring Order') . '">';
 } else {
 	echo '<br><input type=submit name="ProcessOrder" VALUE="' . _('Commit Order Changes') . '">';
 }
