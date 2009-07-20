@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 $PageSecurity = 1;
 
@@ -76,6 +76,8 @@ If (isset($PrintPDF)
 
 		if ($InvOrCredit=='Invoice') {
 			$sql = 'SELECT debtortrans.trandate,
+				bankaccounts.bankaccountnumber,
+				bankaccounts.bankaccountcode,
 				debtortrans.ovamount,
 				debtortrans.ovdiscount,
 				debtortrans.ovfreight,
@@ -129,7 +131,8 @@ If (isset($PrintPDF)
 				shippers,
 				salesman,
 				locations,
-				paymentterms
+				paymentterms,
+				bankaccounts
 			WHERE debtortrans.order_ = salesorders.orderno
 			AND debtortrans.type=10
 			AND debtortrans.transno=' . $FromTransNo . '
@@ -139,7 +142,8 @@ If (isset($PrintPDF)
 			AND debtortrans.debtorno=custbranch.debtorno
 			AND debtortrans.branchcode=custbranch.branchcode
 			AND custbranch.salesman=salesman.salesmancode
-			AND salesorders.fromstkloc=locations.loccode';
+			AND salesorders.fromstkloc=locations.loccode
+			AND bankaccounts.invoice = "yes"';
 
 		if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No'){
 			$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
@@ -457,7 +461,7 @@ If (isset($PrintPDF)
 			if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg')) {
             	$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -60,$YPos-15,0,20);
 			}
-//            $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:**** Bank Account:*****'));
+            $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:' . $myrow['bankaccountcode'] . ' Bank Account:' . $myrow['bankaccountnumber']));
 			$FontSize=10;
 		} else {
 			$pdf->addText($Page_Width-$Right_Margin-220, $YPos-($line_height*3)-6,$FontSize, _('TOTAL CREDIT'));

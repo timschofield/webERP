@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 10;
 
@@ -9,6 +9,8 @@ $title = _('Bank Accounts Maintenance');
 
 include('includes/header.inc');
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Bank') . '" alt="">' . ' ' . $title . '</p>';
+        echo '<div class="page_help_text">' . _('Update Bank Account details.  Account Code is for SWIFT or BSB type Bank Codes.') . '.</div><br>';
 
 if (isset($_GET['SelectedBankAccount'])) {
 	$SelectedBankAccount=$_GET['SelectedBankAccount'];
@@ -84,6 +86,7 @@ if (isset($_POST['submit'])) {
 		if (DB_num_rows($BankTransResult)>0) {
 			$sql = "UPDATE bankaccounts
 				SET bankaccountname='" . $_POST['BankAccountName'] . "',
+				SET bankaccountcode='" . $_POST['BankAccountCode'] . "',
 				bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
 				bankaddress='" . $_POST['BankAddress'] . "'
 			WHERE accountcode = '" . $SelectedBankAccount . "'";
@@ -91,6 +94,7 @@ if (isset($_POST['submit'])) {
 		} else {
 			$sql = "UPDATE bankaccounts
 				SET bankaccountname='" . $_POST['BankAccountName'] . "',
+				SET bankaccountcode='" . $_POST['BankAccountCode'] . "',
 				bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
 				bankaddress='" . $_POST['BankAddress'] . "',
 				currcode ='" . $_POST['CurrCode'] . "'
@@ -105,11 +109,13 @@ if (isset($_POST['submit'])) {
 		$sql = "INSERT INTO bankaccounts (
 						accountcode,
 						bankaccountname,
+						bankaccountcode,
 						bankaccountnumber,
 						bankaddress,
 						currcode)
 				VALUES ('" . $_POST['AccountCode'] . "',
 					'" . $_POST['BankAccountName'] . "',
+					'" . $_POST['BankAccountCode'] . "',
 					'" . $_POST['BankAccountNumber'] . "',
 					'" . $_POST['BankAddress'] . "', 
 					'" . $_POST['CurrCode'] . "'
@@ -162,6 +168,7 @@ if (isset($_POST['submit'])) {
 /* Always show the list of accounts */
 If (!isset($SelectedBankAccount)) {
 	$sql = "SELECT bankaccounts.accountcode,
+			bankaccounts.bankaccountcode,
 			chartmaster.accountname,
 			bankaccountname,
 			bankaccountnumber,
@@ -177,8 +184,9 @@ If (!isset($SelectedBankAccount)) {
 
 	echo '<table>';
 
-	echo "<tr><th>" . _('GL Account') . "</th>
+	echo "<tr><th>" . _('GL Account Code') . "</th>
 		<th>" . _('Account Name') . "</th>
+		<th>" . _('Account Code') . "</th>
 		<th>" . _('Account Number') . "</th>
 		<th>" . _('Bank Address') . "</th>
 		<th>" . _('Currency') . "</th>
@@ -199,15 +207,17 @@ If (!isset($SelectedBankAccount)) {
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
+		<td>%s</td>
 		<td><a href=\"%s?SelectedBankAccount=%s\">" . _('Edit') . "</td>
 		<td><a href=\"%s?SelectedBankAccount=%s&delete=1\">" . _('Delete') . "</td>
 		</tr>",
 		$myrow[0],
-		$myrow[1],
 		$myrow[2],
 		$myrow[3],
+		$myrow[1],
 		$myrow[4],
 		$myrow[5],
+		$myrow[6],
 		$_SERVER['PHP_SELF'],
 		$myrow[0],
 		$_SERVER['PHP_SELF'],
@@ -233,6 +243,7 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 
 	$sql = "SELECT accountcode,
 			bankaccountname,
+			bankaccountcode,
 			bankaccountnumber,
 			bankaddress,
 			currcode
@@ -244,6 +255,7 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 
 	$_POST['AccountCode'] = $myrow['accountcode'];
 	$_POST['BankAccountName']  = $myrow['bankaccountname'];
+	$_POST['BankAccountCode']  = $myrow['bankaccountcode'];
 	$_POST['BankAccountNumber'] = $myrow['bankaccountnumber'];
 	$_POST['BankAddress'] = $myrow['bankaddress'];
 	$_POST['CurrCode'] = $myrow['currcode'];
@@ -285,12 +297,17 @@ if (!isset($_POST['BankAccountName'])) {
 if (!isset($_POST['BankAccountNumber'])) {
 	$_POST['BankAccountNumber']='';
 }
+if (!isset($_POST['BankAccountCode'])) {
+        $_POST['BankAccountCode']='';
+}
 if (!isset($_POST['BankAddress'])) {
 	$_POST['BankAddress']='';
 }
 
 echo '<tr><td>' . _('Bank Account Name') . ': </td>
 			<td><input tabindex="2" ' . (in_array('AccountName',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" size=40 maxlength=50></td></tr>
+		<tr><td>' . _('Bank Account Code') . ': </td>
+                        <td><input tabindex="3" ' . (in_array('AccountCode',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAccountCode" value="' . $_POST['BankAccountCode'] . '" size=40 maxlength=50></td></tr>
 		<tr><td>' . _('Bank Account Number') . ': </td>
 			<td><input tabindex="3" ' . (in_array('AccountNumber',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAccountNumber" value="' . $_POST['BankAccountNumber'] . '" size=40 maxlength=50></td></tr>
 		<tr><td>' . _('Bank Address') . ': </td>
