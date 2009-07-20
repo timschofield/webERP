@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -236,7 +236,7 @@ $preview_invoice_str = "<td><a href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrC
 			printf($base_formatstr .
 				$credit_invoice_str .
 				$preview_invoice_str .
-				"<td><a href='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Entries ') . "<IMG SRC='" .$rootpath."/css/".$theme."/images/gl.png' title='" . _('View the GL Entries') . "'></a></td>
+				"<td><a href='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Entries') . " <IMG SRC='" .$rootpath."/css/".$theme."/images/gl.png' title='" . _('View the GL Entries') . "'></a></td>
 				</tr>",
 				$myrow['typename'],
 				$myrow['transno'],
@@ -319,7 +319,7 @@ $preview_invoice_str = "<td><a href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrC
 			printf($base_formatstr .
 				$preview_credit_str .
 				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'>" . _('Allocation') . "<IMG SRC='" .$rootpath."/css/".$theme."/images/allocation.png' title='" . _('Click to allocate funds') . "'></a></td>
-				<td><a href='%s/GLTransInquiry.php?%sTypeID=%s&TransNo=%s'>" . _('View GL Entries') . '<a><IMG SRC="' .$rootpath.'/css/'.$theme.'/images/gl.png" title="' . _('View the GL Entries') . '"></a></td></tr>',
+				<td><a href='%s/GLTransInquiry.php?%sTypeID=%s&TransNo=%s'>" . _('View GL Entries') . ' <a><IMG SRC="' .$rootpath.'/css/'.$theme.'/images/gl.png" title="' . _('View the GL Entries') . '"></a></td></tr>',
 				$myrow['typename'],
 				$myrow['transno'],
 				ConvertSQLDate($myrow['trandate']),
@@ -375,7 +375,7 @@ $preview_invoice_str = "<td><a href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrC
 		if ($_SESSION['CompanyRecord']['gllink_debtors']== 1 AND in_array(8,$_SESSION['AllowedPageSecurityTokens'])){
 			printf($base_formatstr .
 				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'>" . _('Allocation') . "<IMG SRC='" .$rootpath."/css/".$theme."/images/allocation.png' title='" . _('Click to allocate funds') . "'></a></td>
-				<td><a href='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Entries') . "<IMG SRC='" .$rootpath."/css/".$theme."/images/gl.png' title='" . _('View the GL Entries') . "'></a></td>
+				<td><a href='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Entries') . " <IMG SRC='" .$rootpath."/css/".$theme."/images/gl.png' title='" . _('View the GL Entries') . "'></a></td>
 				</tr>",
 				$myrow['typename'],
 				$myrow['transno'],
@@ -413,7 +413,7 @@ $preview_invoice_str = "<td><a href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrC
 	} elseif ($myrow['type']==12 AND $myrow['totalamount']>0) { /*its a negative receipt */
 		if ($_SESSION['CompanyRecord']['gllink_debtors']== 1 AND in_array(8,$_SESSION['AllowedPageSecurityTokens'])){
 			printf($base_formatstr .
-				"<td><a href='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Entries') . '<a></td></tr>',
+				"<td><a href='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Entries') . ' <a></td></tr>',
 				$myrow['typename'],
 				$myrow['transno'],
 				ConvertSQLDate($myrow['trandate']),
@@ -444,7 +444,7 @@ $preview_invoice_str = "<td><a href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrC
 	} else {
 		if ($_SESSION['CompanyRecord']['gllink_debtors']== 1 AND in_array(8,$_SESSION['AllowedPageSecurityTokens'])){
 			printf($base_formatstr .
-				"<td><a href='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Entries') . '<a></td></tr>',
+				"<td><a href='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Entries') . ' <a></td></tr>',
 				$myrow['typename'],
 				$myrow['transno'],
 				ConvertSQLDate($myrow['trandate']),
