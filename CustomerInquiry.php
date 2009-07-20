@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -124,7 +124,7 @@ if ($CustomerRecord['dissallowinvoices']!=0){
 	echo '<br><font color=RED size=4><b>' . _('ACCOUNT ON HOLD') . '</font></b><br>';
 }
 
-echo "<table WIDTH=90% BORDER=1>
+echo "<table class=table2 BORDER=1>
 	<tr>
 		<th>" . _('Total Balance') . "</th>
 		<th>" . _('Current') . "</th>
@@ -176,7 +176,7 @@ if (DB_num_rows($TransResult)==0){
 }
 /*show a table of the invoices returned by the SQL */
 
-echo '<table cellpadding=2 colspan=7>';
+echo '<table class="table2" cellpadding="2" colspan="7">';
 
 $tableheader = "<tr BGCOLOR =#800000>
 		<th>" . _('Type') . "</th>

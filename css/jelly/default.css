@@ -81,7 +81,24 @@ textarea:hover{
 	color:#000;
 	border: 1px 1px 1px 1px #000 solid;
 }
+/* Table type is used for default tables*/
 table {
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  background: #eee;
+  margin: 0 auto;
+}
+/* Table type is used for UI tables type 1 */
+.table1 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  background: #eee;
+  margin: 0 auto;
+}
+/* Table type is used for UI tables type 2 */
+.table2 {
+  width:90%;
   background: #eee;
   border: 0px 0px 2px 2px #222 solid;
   background: #eee;
@@ -315,6 +332,7 @@ select {background:#eee;
 
 /* Main page heading with quick menu within */
 .quick_menu {
+	width: 100%;
 	background: #ccc;
 	border: none;
 	margin: 0px;
@@ -347,6 +365,7 @@ select {background:#eee;
 
 /*the Select Customer / Item / Supplier Menu tabs */
 .quick_menu_tabs{
+	width: 100%;
 	background:none;
 	border-collapse:collapse;
 	height:28px;
@@ -551,7 +570,7 @@ DIV.page_help_text {
         padding-bottom: 2px;
 	PADDING-LEFT: 10px;
 	Z-INDEX: 1;
-	width: 50%;
+	width: 80%;
 	FLOAT: none;
 	VISIBILITY: visible;
 	MARGIN: 0 auto;
