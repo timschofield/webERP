@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.41 $ */
+/* $Revision: 1.42 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -779,7 +779,7 @@ if (isset($_SESSION['ReceiptBatch'])){
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Banked') . '" alt="">' . ' ' . $_SESSION['ReceiptBatch']->ReceiptType . ' - ' . _('Banked into the') . " " . $_SESSION['ReceiptBatch']->BankAccountName . ' ' . _('on') . ' ' . $_SESSION['ReceiptBatch']->DateBanked . '</p>';
 
-	echo '<table width=100% border=1><tr>
+	echo '<table width="90%" border="1"><tr>
 			<th>' . _('Amount') .'<br/>' . _('Received') . '</th>
 			<th>' . _('Discount') . '</th>
 			<th>' . _('Customer') . '</th>
@@ -835,7 +835,7 @@ if (isset($_SESSION['CustomerRecord'])
 	   echo '<br><font color=red size=4><b>' . _('ACCOUNT ON HOLD') . '</font></b><br/>';
 	}
 
-	echo '<table width=100% border=1>
+	echo '<table width="90%" border="1">
 			<tr>
 				<th>' . _('Total Balance') . '</th>
 				<th>' . _('Current') . '</th>
