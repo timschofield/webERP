@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 15;
 
@@ -67,7 +67,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 			if ($_POST['CreateDB']==TRUE){
 				/* Need to read in the sql script and process the queries to initate a new DB */
 			
-				$result = DB_query('CREATE DATABASE "' . $_POST['NewCompany'].'"',$db);
+				$result = DB_query('CREATE DATABASE ' . $_POST['NewCompany'],$db);
 			
 				if ($dbType=='postgres'){
 					
