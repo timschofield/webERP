@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -19,7 +19,7 @@ If (isset($_POST['PrintPDF'])
 	$PageNumber=1;
 	$line_height=12;
 
-      /*Now figure out the inventory data to report for the category range under review */
+	/*Now figure out the inventory data to report for the category range under review */
 	if ($_POST['CustomerSpecials']==_('Customer Special Prices Only')){
 
 		if ($_SESSION['CustomerID']==''){
@@ -190,8 +190,8 @@ If (isset($_POST['PrintPDF'])
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
-
-		$pdf->Stream();
+		$FileName=$_SESSION['DatabaseName'].'_'.date('Y-m-d').'.pdf';
+		$pdf->Output($FileName,'I');
 	}
 } else { /*The option to print PDF was not hit */
 
