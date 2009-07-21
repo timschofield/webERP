@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.40 $ */
+/* $Revision: 1.41 $ */
 
 $PageSecurity = 3;
 
@@ -198,6 +198,7 @@ if (isset($_POST['submit'])) {
 			$ErrMsg = _('The customer could not be updated because');
 			$result = DB_query($sql,$db,$ErrMsg);
 			prnMsg( _('Customer updated'),'success');
+			echo '<br>';
 
 		} else { //it is a new customer
 			/* set the DebtorNo if $AutoDebtorNo in config.php has been set to

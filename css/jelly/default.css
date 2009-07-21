@@ -184,10 +184,12 @@ div.warn {
 }
 
 div.success {
-	background:#b9ecb4;
+	background: #b9ecb4 url(images/accept.png) top left no-repeat;
 	color: #008000;
 	border: 1px solid #008000;
         PADDING-LEFT: 3px;
+        padding-top: 3px;
+        padding-bottom: 3px;
         Z-INDEX: 1;
         width: 50%;
         FLOAT: none;
@@ -195,15 +197,13 @@ div.success {
         MARGIN: 0 auto;
         POSITION: static;
         font-family: Verdana, Arial, Helvetica;
-        padding-top: 1px;
-        padding-bottom: 1px;
         font-weight: normal;
         font-size: 10px;
         TEXT-ALIGN:center;
 }
 
 div.info {
-	background:#5d70f8;
+	background: #fa0 url(images/help.png) top left no-repeat;
 	color: white;
 	border: 1px solid black;
 	PADDING-LEFT: 3px;
