@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -170,7 +170,7 @@ $ErrMsg = _('No transactions were returned by the SQL because');
 $TransResult = DB_query($SQL,$db,$ErrMsg);
 
 if (DB_num_rows($TransResult)==0){
-	echo _('There are no transactions to display since') . ' ' . $_POST['TransAfterDate'];
+	echo '<div class="centre">' . _('There are no transactions to display since') . ' ' . $_POST['TransAfterDate'] . '</div>';
 	include('includes/footer.inc');
 	exit;
 }
