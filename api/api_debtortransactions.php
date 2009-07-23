@@ -227,8 +227,7 @@ function ConvertToSQLDate($DateEntry) {
 /* Retrieves the default sales GL code for a given part code and sales area */
 	function GetSalesGLCode($salesarea, $partnumber, $db) {
 		$sql='select salesglcode from salesglpostings
-			where stkcat=(select categoryid from stockmaster where stockid="'
-			.$partnumber.'")';
+			where stkcat="any"';
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		return $myrow[0];
@@ -338,12 +337,12 @@ function ConvertToSQLDate($DateEntry) {
 			$result = DB_Query($sql, $db);
 			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode, $db);
 			$DebtorsGLCode=GetDebtorsGLCode($db);
-			$sql='insert into gltrans Values("null", 10,'.GetNextTransactionNo(10, $db).
+			$sql='insert into gltrans Values(null, 10,'.GetNextTransactionNo(10, $db).
 				',0,"'.$InvoiceDetails['trandate'].'",'.$InvoiceDetails['prd'].', '.$DebtorsGLCode.
 				',"'.'Invoice for -'.$InvoiceDetails['debtorno'].' Total - '.$InvoiceDetails['ovamount'].
 				'", '.$InvoiceDetails['ovamount'].', 0,"'.$InvoiceDetails['jobref'].'",1)';
 			$result = DB_Query($sql, $db);
-			$sql='insert into gltrans Values("null", 10,'.GetNextTransactionNo(10, $db).
+			$sql='insert into gltrans Values(null, 10,'.GetNextTransactionNo(10, $db).
 				',0,"'.$InvoiceDetails['trandate'].'",'.$InvoiceDetails['prd'].', '.$SalesGLCode.
 				',"'.'Invoice for -'.$InvoiceDetails['debtorno'].' Total - '.$InvoiceDetails['ovamount'].
 				'", '.-intval($InvoiceDetails['ovamount']).', 0,"'.$InvoiceDetails['jobref'].'",1)';
