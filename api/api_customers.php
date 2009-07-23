@@ -61,9 +61,9 @@
 
 /* Check that the sales type is set up in the weberp database */
 	function VerifySalesType($SalesType, $i, $Errors, $db) {
-		$Searchsql = 'SELECT COUNT(typeabbrev)
+		$Searchsql = "SELECT COUNT(typeabbrev)
 					 FROM salestypes
-					  WHERE typeabbrev="'.$SalesType.'"';
+					  WHERE typeabbrev='".$SalesType."'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
@@ -75,7 +75,7 @@
 /* Check that the clientsince date is a valid date */
 	function VerifyClientSince($ClientSince, $i, $Errors) {
 		if (!Is_Date($ClientSince)) {
-			$Errors[$i] = InvalidClientSinceDate;
+//			$Errors[$i] = InvalidClientSinceDate;
 		}
 		return $Errors;
 	}
