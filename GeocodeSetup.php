@@ -133,7 +133,7 @@ or deletion of the records*/
 		'<a href="http://code.google.com/apis/maps/signup.html" target="_blank"> http://code.google.com/apis/maps/signup.html</a></b>';
 	echo '<div class="centre"><p>'. _('Find the lat/long for your map center point at ') .
 			'<a href="http://www.batchgeocode.com/lookup/" target="_blank">http://www.batchgeocode.com/lookup/</a></b>';
-	echo '<p>'. _('Set the maps centre point using the Center Longitude and Center Latitude.  Set the maps screen size using the height and width in pixels (px)').'</div><br>';
+	echo '<p>'. _('Set the maps centre point using the Center Longitude and Center Latitude. Set the maps screen size using the height and width in pixels (px)').'</div><br>';
 	echo '<table border=1>';
 	echo "<tr>
 		<th>". _('Geocode ID') ."</th>
