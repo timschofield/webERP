@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 /*
 *      PO_Header.php
@@ -507,9 +507,8 @@ if (isset($_POST['Select'])) {
 	$myrow = DB_fetch_row($result);
 	$SupplierName = $myrow[0];
 		// added for suppliers lookup fields
-		echo $authmyrow[0];
+
 	if ($authmyrow=DB_fetch_array($authresult) and $authmyrow[0]==0) {
-		
 		$_POST['SupplierName'] = $myrow[0];
 		$_POST['CurrCode'] = 	$myrow[1];
 		$_POST['ExRate'] = 	$myrow[2];
@@ -521,7 +520,7 @@ if (isset($_POST['Select'])) {
 		$_POST['suppDelAdd5'] = $myrow[8];
 		$_POST['suppDelAdd6'] = $myrow[9];
 		$_POST['supptel'] = $myrow[10];
-		$_POST['port'] = $myrow[12];
+		$_POST['port'] = $myrow[11];
 
 		$_SESSION['PO'.$identifier]->SupplierID = $_POST['Select'];
 		$_SESSION['RequireSupplierSelection'] = 0;
@@ -550,7 +549,6 @@ if (isset($_POST['Select'])) {
 	$_POST['Select'] = $_SESSION['PO'.$identifier]->SupplierID;
 	$sql = "SELECT suppliers.suppname,
 			suppliers.currcode,
-			currencies.rate,
 			suppliers.paymentterms,
 			suppliers.address1, 
 			suppliers.address2, 
@@ -577,7 +575,7 @@ if (isset($_POST['Select'])) {
 
 	$_POST['SupplierName'] = $myrow[0];
 	$_POST['CurrCode'] = 	$myrow[1];
-	$_POST['ExRate'] = 	$myrow[2];
+//	$_POST['ExRate'] = 	$myrow[2];
 	$_POST['paymentterms']=	$myrow[3];
 	$_POST['suppDelAdd1'] = $myrow[4];
 	$_POST['suppDelAdd2'] = $myrow[5];
@@ -790,12 +788,12 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 	echo '<tr><td>' . _('Initiated By') . ":</td>
 			<td><input type='hidden' name='Initiator' size=11 maxlength=10 value=" . 
 			$_POST['Initiator'] . ">".$_POST['Initiator']."</td></tr>";
-	echo '<tr><td>' . _('Requistion Ref') . ":</td><td><input type='text' name='Requisition' size=16 
+	echo '<tr><td>' . _('Requisition Ref') . ":</td><td><input type='text' name='Requisition' size=16 
 		maxlength=15 value=" . $_POST['Requisition'] . '></td></tr>';
 
 //	echo '<tr><td>' . _('Exchange Rate') . ":</td>
 //			<td><input type=TEXT name='ExRate' size=16 maxlength=15 VALUE=" . $_POST['ExRate'] . '></td>
-	echo "<input type='hidden' name='ExRate' size=16 maxlength=15 value=" . $_POST['ExRate'] . "></td>";
+//	echo "<input type='hidden' name='ExRate' size=16 maxlength=15 value=" . $_POST['ExRate'] . "></td>";
 //		</tr>';
 	echo '<tr><td>' . _('Date Printed') . ':</td><td>';
 
@@ -934,9 +932,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 			$_POST['DelAdd5'] = $LocnRow[4];
 			$_POST['DelAdd6'] = $LocnRow[5];
 			$_POST['tel'] = $LocnRow[6];
-			$_POST['DelAdd7'] = $LocnRow[7];
-			$_POST['Contact'] = $LocnRow[8];
-			$_POST['DelAdd8'] = $LocnRow[9];
+			$_POST['Contact'] = $LocnRow[7];
 
 			$_SESSION['PO'.$identifier]->Location= $_POST['StkLocation'];
 			$_SESSION['PO'.$identifier]->SupplierContact= $_POST['SupplierContact'];
@@ -1115,6 +1111,13 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 	echo '<tr><td>' . _('Delivery To') . ":
 		</td><td><input type='text' name=port size=31 value='" . $_POST['port'] . "'></td>
 		</tr>";
+
+	if ($_SESSION['PO'.$identifier]->CurrCode != $_SESSION['CompanyRecord']['currencydefault']) {
+		echo '<tr><td>'. _('Exchange Rate').':'.'</td><td><input type=text name="ExRate"
+		value='.$_POST['ExRate'].' class=number size=11></td></tr>';
+	} else {
+		'<input type=hidden name="ExRate" value=1>';
+	}
 	echo '</td></tr></table>'; /*end of sub table */
 
 	echo '</td></tr><tr><th colspan=4>' . _('Comments');
