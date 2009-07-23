@@ -117,7 +117,7 @@
 
 /* Check that the forward date is a valid date */
 	function VerifyFwdDate($FwdDate, $i, $Errors) {
-		if (!Is_Date($FwdDate)) {
+		if (!is_numeric($FwdDate)) {
 			$Errors[$i] = InvalidFwdDate;
 		}
 		return $Errors;
@@ -330,10 +330,14 @@
 		}
 		if (isset($BranchDetails['specialinstructions'])){
 			$Errors=VerifySpecialInstructions($BranchDetails['specialinstructions'], sizeof($Errors), $Errors);
+		} else {
+			$BranchDetails['specialinstructions']='';
 		}
 		if (isset($BranchDetails['custbranchcode'])){
 			$Errors=VerifyCustBranchCode($BranchDetails['custbranchcode'], sizeof($Errors), $Errors);
 		}
+		$BranchDetails['lat']=0;
+		$BranchDetails['lng']=0;
 		$FieldNames='';
 		$FieldValues='';
 		foreach ($BranchDetails as $key => $value) {
