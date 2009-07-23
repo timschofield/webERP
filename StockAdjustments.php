@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
@@ -199,10 +199,12 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 					$SQL = "INSERT INTO stockserialitems (stockid,
 									loccode,
 									serialno,
+									qualitytext,
 									quantity)
 						VALUES ('" . $_SESSION['Adjustment']->StockID . "',
 						'" . $_SESSION['Adjustment']->StockLocation . "',
 						'" . $Item->BundleRef . "',
+						'',
 						" . $Item->BundleQty . ")";
 
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
@@ -216,10 +218,12 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 				$SQL = "INSERT INTO stockserialmoves (stockmoveno,
 									stockid,
 									serialno,
+									qualitytext,
 									moveqty)
 						VALUES (" . $StkMoveNo . ",
 							'" . $_SESSION['Adjustment']->StockID . "',
 							'" . $Item->BundleRef . "',
+						'',
 							" . $Item->BundleQty . ")";
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 				$DbgMsg =  _('The following SQL to insert the serial stock movement records was used');
