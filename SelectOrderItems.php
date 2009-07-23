@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.101 $ */
+/* $Revision: 1.102 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -567,7 +567,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . 
 	' ' . _('Enter an Order or Quotation') . ' : ' . _('Search for the Customer Branch.') . '</p>';
-	echo '<div class="page_help_text">' . _('Orders/Quotations are placed against the Customer Branch.  A Customer may have several Branches.') . '</div>';
+	echo '<div class="page_help_text">' . _('Orders/Quotations are placed against the Customer Branch. A Customer may have several Branches.') . '</div>';
 	?>
 	<form action="<?php echo $_SERVER['PHP_SELF'] . '?' .SID .'identifier='.$identifier;?>" name="SelectCustomer" method=post>
 	<b><?php echo '<p>' . $msg; ?></p>

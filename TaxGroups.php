@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -62,7 +62,7 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 						0)";
 					
 			$ErrMsg = _('The addition of the tax failed because');
-			$SuccessMsg = _('The tax  was added.');
+			$SuccessMsg = _('The tax was added.');
 		} elseif ( isset($_GET['remove']) ) { // remove a taxauthority from a tax group
 			$sql = "DELETE FROM taxgrouptaxes 
 					WHERE taxgroupid = ".$SelectedGroup."

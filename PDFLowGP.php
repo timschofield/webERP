@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -106,7 +106,7 @@ if (isset($_POST['PrintPDF'])) {
       if ($len<=20){
 		$title = _('Print Low GP Items Error');
 		include('includes/header.inc');
-		prnMsg (_('There were no items below  print out for the location specified'),'error');
+		prnMsg (_('There were no items below print out for the location specified'),'error');
 		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;

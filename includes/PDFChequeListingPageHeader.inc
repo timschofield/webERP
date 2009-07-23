@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 if ($PageNumber>1){
 	$pdf->newPage();
 }
@@ -35,7 +35,7 @@ $YPos -= $line_height;
 $FontSize=8;
 
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Amount'), 'centre');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+62,$YPos,180,$FontSize,_('Reference  /  General Ledger Posting Details'), 'centre');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+62,$YPos,180,$FontSize,_('Reference / General Ledger Posting Details'), 'centre');
 $YPos-=$line_height;
 
 /*draw a line */

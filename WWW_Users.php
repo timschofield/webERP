@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 $PageSecurity=15;
 
@@ -86,7 +86,7 @@ if (isset($_POST['submit'])) {
 				WHERE custbranch.debtorno='" . $_POST['Cust'] . "'
 				AND custbranch.branchcode='" . $_POST['BranchCode'] . "'";
 
-		$ErrMsg = _('The check on validity of the customer code and branch failed  because');
+		$ErrMsg = _('The check on validity of the customer code and branch failed because');
 		$DbgMsg = _('The SQL that was used to check the customer code and branch was');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 

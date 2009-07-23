@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.52 $ */
+/* $Revision: 1.53 $ */
 
 $PageSecurity =15;
 
@@ -735,7 +735,7 @@ if ($_SESSION['geocode_integration']==1){
         echo  '<option value="1">' . _('Geocode Integration Enabled') . '</option>';
 }
 echo '</select></td>
-        <td>' . _('This feature will give Latitude and Longitude coordinates to customers and suppliers.  Requires access to a mapping provider.  You must setup this facility under Main Menu - Setup - Geocode Setup.  This feature is experimental.') .'</td></tr>';
+        <td>' . _('This feature will give Latitude and Longitude coordinates to customers and suppliers. Requires access to a mapping provider. You must setup this facility under Main Menu - Setup - Geocode Setup. This feature is experimental.') .'</td></tr>';
 
 echo '<tr><td>' . _('Extended Customer Information') . ':</td>
         <td><select name="X_Extended_CustomerInfo">';
