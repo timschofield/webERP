@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.53 $ */
+/* $Revision: 1.54 $ */
 
 $PageSecurity =15;
 
@@ -290,9 +290,10 @@ echo $TableHeader;
 // DefaultDateFormat
 echo '<tr><td>' . _('DefaultDateFormat') . ' (' . _('for input and to appear on reports') . '):</td>
 	<td><select Name="X_DefaultDateFormat">
-	<option '.(($_SESSION['DefaultDateFormat']=='d/m/Y')?'selected ':'').'Value="d/m/Y">d/m/Y
-	<option '.(($_SESSION['DefaultDateFormat']=='m/d/Y')?'selected ':'').'Value="m/d/Y">m/d/Y
-	<option '.(($_SESSION['DefaultDateFormat']=='Y/m/d')?'selected ':'').'Value="Y/m/d">Y/m/d
+	<option '.(($_SESSION['DefaultDateFormat']=='d/m/Y')?'selected ':'').'Value="d/m/Y">d/m/Y</option>
+	<option '.(($_SESSION['DefaultDateFormat']=='d.m.Y')?'selected ':'').'Value="d.m.Y">d.m.Y</option>
+	<option '.(($_SESSION['DefaultDateFormat']=='m/d/Y')?'selected ':'').'Value="m/d/Y">m/d/Y</option>
+	<option '.(($_SESSION['DefaultDateFormat']=='Y/m/d')?'selected ':'').'Value="Y/m/d">Y/m/d</option>
 	</select></td>
 	<td>' . _('The default date format for entry of dates and display use d/m/Y for England/Australia/NZ or m/d/Y for US and Canada') . '</td></tr>';
 
