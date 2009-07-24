@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 /*
 date validation and parsing functions
@@ -11,6 +11,8 @@ this can be a string either 'd/m/Y' for UK/Australia/New Zealand dates or
 'm/d/Y' for US/Canada format dates
 
 or Y/m/d  for Sweden ;) Anders Eriksson anders@weberp.se.
+
+or d.m.Y  for Germany ;) Juergen Ruemmler heinrich@ruemmler.net
 
 */
 
@@ -24,6 +26,8 @@ function Is_Date($DateEntry) {
 		$Date_Array = explode('/',$DateEntry);
 	} elseif (strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
+  } elseif (strpos ($DateEntry,'.')) {
+    $Date_Array = explode('.',$DateEntry);
 	} elseif (strlen($DateEntry)==6) {
 		$Date_Array[0]= substr($DateEntry,0,2);
 		$Date_Array[1]= substr($DateEntry,2,2);
@@ -45,7 +49,7 @@ function Is_Date($DateEntry) {
 
 
 	if (is_long((int)$Date_Array[0]) AND is_long((int)$Date_Array[1]) AND is_long((int)$Date_Array[2])) {
-		if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+		if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 
 			if (checkdate((int)$Date_Array[1],(int)$Date_Array[0],(int)$Date_Array[2])){
 				Return 1;
@@ -86,6 +90,8 @@ function MonthAndYearFromSQLDate($DateEntry) {
 		$Date_Array = explode('/',$DateEntry);
 	} elseif (strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
+	} elseif (strpos ($DateEntry,'.')) {
+		$Date_Array = explode('.',$DateEntry);
 	}
 
 	if (strlen($Date_Array[2])>4) {
@@ -103,6 +109,8 @@ function DayOfWeekFromSQLDate($DateEntry) {
 		$Date_Array = explode('/',$DateEntry);
 	} elseif (strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
+	} elseif (strpos ($DateEntry,'.')) {
+		$Date_Array = explode('.',$DateEntry);
 	}
 
 	if (strlen($Date_Array[2])>4) {
@@ -136,14 +144,15 @@ function ConvertSQLDate($DateEntry) {
 		$Date_Array = explode('/',$DateEntry);
 	} elseif (strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
+	} elseif (strpos ($DateEntry,'.')) {
+		$Date_Array = explode('.',$DateEntry);
 	}
 
 	if (strlen($Date_Array[2])>4) {  /*chop off the time stuff */
 		$Date_Array[2]= substr($Date_Array[2],0,2);
 	}
 
-
-	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+	if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 		Return $Date_Array[2].'/'.$Date_Array[1].'/'.$Date_Array[0];
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y'){
 		Return $Date_Array[1].'/'.$Date_Array[2].'/'.$Date_Array[0];
@@ -162,6 +171,8 @@ function SQLDateToEDI($DateEntry) {
 		$Date_Array = explode('/',$DateEntry);
 	} elseif (strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
+	} elseif (strpos ($DateEntry,'.')) {
+		$Date_Array = explode('.',$DateEntry);
 	}
 
 	if (strlen($Date_Array[2])>4) {  /*chop off the time stuff */
@@ -184,6 +195,8 @@ and converts to a yyyymmdd - EANCOM format 102*/
 		$Date_Array = explode('/',$DateEntry);
 	} elseif (strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
+	} elseif (strpos ($DateEntry,'.')) {
+		$Date_Array = explode('.',$DateEntry);
 	} elseif (strlen($DateEntry)==6) {
 		$Date_Array[0]= substr($DateEntry,0,2);
 		$Date_Array[1]= substr($DateEntry,2,2);
@@ -205,7 +218,7 @@ and converts to a yyyymmdd - EANCOM format 102*/
 		Return 0;
 	}
 
-	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+	if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 		Return $Date_Array[2].$Date_Array[1].$Date_Array[0];
 
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y') {
@@ -230,7 +243,7 @@ function ConvertEDIDate($DateEntry, $EDIFormatCode) {
 
 	switch ($EDIFormatCode) {
 	case 102:
-		if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+		if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 			Return substr($DateEntry,6,2).'/'.substr($DateEntry,4,2).'/'.substr($DateEntry,0,4);
 
 		} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y') {
@@ -242,7 +255,7 @@ function ConvertEDIDate($DateEntry, $EDIFormatCode) {
 		}
 		break;
 	case 203:
-		if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+		if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 			Return substr($DateEntry,6,2).'/'.substr($DateEntry,4,2).'/'.substr($DateEntry,0,4).' ' . substr($DateEntry,6,2).':' . substr($DateEntry,8,2);
 
 		} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y') {
@@ -258,7 +271,7 @@ function ConvertEDIDate($DateEntry, $EDIFormatCode) {
 		Return date($_SESSION['DefaultDateFormat'], mktime(0,0,0, 1,1+(7*(int)substr($DateEntry,4,2)),substr($DateEntry,0,4)));
 		break;
 	case 718:
-		if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+		if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 			Return substr($DateEntry,6,2).'/'.substr($DateEntry,4,2).'/'.substr($DateEntry,0,4) . ' - '. substr($DateEntry,15,2).'/'.substr($DateEntry,13,2).'/'.substr($DateEntry,9,4);
 
 		} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y') {
@@ -284,6 +297,8 @@ function Format_Date($DateEntry) {
 		$Date_Array = explode('/',$DateEntry);
 	} elseif (strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
+	} elseif (strpos ($DateEntry,'.')) {
+		$Date_Array = explode('.',$DateEntry);
 	} elseif (strlen($DateEntry)==6) {
 		$Date_Array[0]= substr($DateEntry,0,2);
 		$Date_Array[1]= substr($DateEntry,2,2);
@@ -305,7 +320,7 @@ function Format_Date($DateEntry) {
 	}
 
 	If (is_long((int)$Date_Array[0]) AND is_long((int)$Date_Array[1]) AND is_long((int)$Date_Array[2])) {
-		if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+		if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 			if (checkdate((int)$Date_Array[1],(int)$Date_Array[0],(int)$Date_Array[2])){
 				Return $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2];
 			}
@@ -339,6 +354,8 @@ and converts to a yyyy/mm/dd format */
 		$Date_Array = explode('/',$DateEntry);
 	} elseif (strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
+	} elseif (strpos ($DateEntry,'.')) {
+		$Date_Array = explode('.',$DateEntry);
 	} elseif (strlen($DateEntry)==6) {
 		$Date_Array[0]= substr($DateEntry,0,2);
 		$Date_Array[1]= substr($DateEntry,2,2);
@@ -366,7 +383,7 @@ and converts to a yyyy/mm/dd format */
 		Return 0;
 	}
 
-	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+	if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 		/* echo '<BR>The date returned is ' . $Date_Array[2].'/'.$Date_Array[1].'/'.$Date_Array[0]; */
 		Return $Date_Array[2].'/'.$Date_Array[1].'/'.$Date_Array[0];
 
@@ -405,7 +422,7 @@ function Date1GreaterThanDate2 ($Date1, $Date2) {
 
 	/*The 0 and 1 elements of the array are switched depending on the format used */
 
-		if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+		if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 			If ( ($Date1_array[1] -  $Date2_array[1]) >0){
 				Return 1;
 			} elseif (($Date1_array[1] - $Date2_array[1])==0){
@@ -440,9 +457,15 @@ function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
 
 	$TranDate = trim($TranDate);
 
-	$Date_array = explode('/', $TranDate);
+	if (strpos($TranDate,'/')) {
+		$Date_Array = explode('/',$TranDate);
+	} elseif (strpos ($TranDate,'-')) {
+		$Date_Array = explode('-',$TranDate);
+	} elseif (strpos ($TranDate,'.')) {
+		$Date_Array = explode('.',$TranDate);
+  }
 
-	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+	if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 		if ($DayInFollowingMonth==0){ /*then it must be set up for DaysBeforeDue type */
 
 			$DayDue = $Date_array[0]+$DaysBeforeDue;
@@ -499,8 +522,17 @@ function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
 
 function DateAdd ($DateToAddTo,$PeriodString,$NumberPeriods){
 
-	$Date_array = explode('/', trim($DateToAddTo));
-	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+  $DateToAddTo = trim($DateToAddTo);
+
+	if (strpos($DateToAddTo,'/')) {
+		$Date_Array = explode('/',$DateToAddTo);
+	} elseif (strpos ($DateToAddTo,'-')) {
+		$Date_Array = explode('-',$DateToAddTo);
+	} elseif (strpos ($TranDate,'.')) {
+		$Date_Array = explode('.',$DateToAddTo);
+  }
+
+	if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 
 		switch ($PeriodString) {
 		case 'd': //Days
@@ -565,10 +597,23 @@ provided that both dates are after 1970. Also only works for dates up to the yea
 
 	$Date1 = trim($Date1);
 	$Date2 = trim($Date2);
-	$Date1_array = explode('/', $Date1);
-	$Date2_array = explode('/', $Date2);
 
-	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+	if (strpos($Date1,'/')) {
+		$Date1_array = explode('/',$Date1);
+	} elseif (strpos ($Date1,'-')) {
+		$Date1_array = explode('-',$Date1);
+	} elseif (strpos ($Date1,'.')) {
+		$Date1_array = explode('.',$Date1);
+  }
+	if (strpos($Date2,'/')) {
+		$Date2_array = explode('/',$Date2);
+	} elseif (strpos ($Date1,'-')) {
+		$Date2_array = explode('-',$Date2);
+	} elseif (strpos ($Date1,'.')) {
+		$Date2_array = explode('.',$Date2);
+  }
+
+	if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 		$Date1_Stamp = mktime(0,0,0, (int)$Date1_array[1],(int)$Date1_array[0],(int)$Date1_array[2]);
 		$Date2_Stamp = mktime(0,0,0, (int)$Date2_array[1],(int)$Date2_array[0],(int)$Date2_array[2]);
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y'){
@@ -669,8 +714,16 @@ function PeriodExists($TransDate, &$db) {
 function GetPeriod ($TransDate, &$db) {
 
 	/* Convert the transaction date into a unix time stamp.*/
-	$Date_array = explode('/', $TransDate);
-	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+
+	if (strpos($TransDate,'/')) {
+		$Date_Array = explode('/',$TransDate);
+	} elseif (strpos ($TransDate,'-')) {
+		$Date_Array = explode('-',$TransDate);
+	} elseif (strpos ($TransDate,'.')) {
+		$Date_Array = explode('.',$TransDate);
+  }
+
+	if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 		$TransDate = mktime(0,0,0,$Date_array[1],$Date_array[0],$Date_array[2]);
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y'){
 		$TransDate = mktime(0,0,0,$Date_array[0],$Date_array[1],$Date_array[2]);
