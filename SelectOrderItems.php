@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.102 $ */
+/* $Revision: 1.103 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -1259,7 +1259,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			} else {
 				$RemTxt = _('Delete');
 			}
-			echo '</td><td align=right>' . $DisplayLineTotal . '</td>';
+			echo '</td><td class=number>' . $DisplayLineTotal . '</td>';
 			$LineDueDate = $OrderLine->ItemDue;
 			if (!Is_Date($OrderLine->ItemDue)){
 				$LineDueDate = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
@@ -1290,7 +1290,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$ColSpanNumber = 5;
 		}
 		echo '<tr><td></td><td><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
-							<td colspan="' . $ColSpanNumber . '" align="right">' . $DisplayTotal . '</td></tr></table>';
+							<td colspan="' . $ColSpanNumber . '" class=number>' . $DisplayTotal . '</td></tr></table>';
 
 		$DisplayVolume = number_format($_SESSION['Items'.$identifier]->totalVolume,2);
 		$DisplayWeight = number_format($_SESSION['Items'.$identifier]->totalWeight,2);
@@ -1359,12 +1359,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 			echo '<input tabindex=6 type=submit name="ChangeCustomer" value="' . _('Change Customer') . '"></div>';
-			echo '<br></b>';
+			echo '</b>';
 // Add some useful help as the order progresses
 			if (isset($SearchResult)) {
-			echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
+				echo '<br>';
+				echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
+				echo '<br>';
 			}
-			echo '<br>';
 // Remove add stock item link, as this should be done through inventory
 //			echo '<div class="centre"><br><br><a tabindex=7 target="_blank" href="' . $rootpath . '/Stocks.php?' . SID . '"><b>' . _('Add a New Stock Item') . '</b></a></div>';
 		}
@@ -1372,6 +1373,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if (isset($SearchResult)) {
 
 			echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'identifier='.$identifier . ' method=post name="orderform"><table cellpadding=2 colspan=7 >';
+			echo '<tr><td><input type="hidden" name="previous" value='.number_format($Offset-1).'><input tabindex='.number_format($j+7).' type="submit" name="Prev" value="'._('Prev').'"></td>';
+			echo '<td style="text-align:center" colspan=6><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+8).' type="submit" value="'._('Order').'"></td>';
+			echo '<td><input type="hidden" name="nextlist" value='.number_format($Offset+1).'><input tabindex='.number_format($j+9).' type="submit" name="Next" value="'._('Next').'"></td></tr>';
 			$TableHeader = '<tr><th>' . _('Code') . '</th>
                           			<th>' . _('Description') . '</th>
                           			<th>' . _('Units') . '</th>
