@@ -1,13 +1,12 @@
-
-CREATE TABLE `mrpdemandtypes` (
+CREATE TABLE IF NOT EXISTS `mrpdemandtypes` (
   `mrpdemandtype` varchar(6) NOT NULL default '',
   `description` char(30) NOT NULL default '',
   PRIMARY KEY  (`mrpdemandtype`),
   KEY `mrpdemandtype` (`mrpdemandtype`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `mrpdemands` (
-  `demandid` int(11) NOT NULL auto_increment,
+CREATE TABLE IF NOT EXISTS `mrpdemands` (
+  `demandid` int(11) NOT NULL AUTO_INCREMENT,
   `stockid` varchar(20) NOT NULL default '',
   `mrpdemandtype` varchar(6) NOT NULL default '',
   `quantity` double NOT NULL default '0',
@@ -21,7 +20,7 @@ CREATE TABLE `mrpdemands` (
 ALTER TABLE `stockmaster` ADD `pansize` double NOT NULL default '0',
   						  ADD `shrinkfactor` double NOT NULL default '0';
   
-CREATE TABLE mrpcalendar (
+CREATE TABLE IF NOT EXISTS mrpcalendar (
 	calendardate date NOT NULL,
 	daynumber int(6) NOT NULL,
 	manufacturingflag smallint(6) NOT NULL default "1",
@@ -46,7 +45,7 @@ ALTER TABLE `purchdata` ADD PRIMARY KEY (`supplierno`,`stockid`, `effectivefrom`
 ALTER TABLE `salesorders` ADD `quotedate` date NOT NULL default '0000-00-00';
 ALTER TABLE `salesorders` ADD `confirmeddate` date NOT NULL default '0000-00-00';
 
-CREATE TABLE `woserialnos` (
+CREATE TABLE IF NOT EXISTS `woserialnos` (
 	`wo` INT NOT NULL ,
 	`stockid` VARCHAR( 20 ) NOT NULL ,
 	`serialno` VARCHAR( 30 ) NOT NULL ,
@@ -64,7 +63,7 @@ ALTER TABLE `stockmaster` ADD `nextserialno` BIGINT NOT NULL DEFAULT '0';
 ALTER TABLE `salesorders` CHANGE `orderno` `orderno` INT( 11 ) NOT NULL;
 ALTER TABLE `stockserialitems` ADD `qualitytext` TEXT NOT NULL;
 
-CREATE TABLE `purchorderauth` (
+CREATE TABLE IF NOT EXISTS `purchorderauth` (
 	`userid` varchar(20) NOT NULL DEFAULT '',
 	`currabrev` char(3) NOT NULL DEFAULT '',
 	`cancreate` smallint(2) NOT NULL DEFAULT 0,
@@ -105,3 +104,5 @@ UPDATE `purchorders` SET `status`='Completed' WHERE (SELECT SUM(`purchorderdetai
 UPDATE `purchorders` SET `deliverydate`=(SELECT MAX(`purchorderdetails`.`deliverydate`) FROM `purchorderdetails` WHERE `purchorderdetails`.`orderno`=`purchorders`.`orderno`);
 
 ALTER TABLE custnotes CHANGE note note TEXT NOT NULL;
+
+ALTER TABLE `bankaccounts` ADD `bankaccountcode` varchar(50) NOT NULL default '' AFTER `currcode`;
