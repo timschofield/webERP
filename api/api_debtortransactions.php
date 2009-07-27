@@ -122,7 +122,7 @@ function ConvertToSQLDate($DateEntry) {
 
 /* Check that the tpe field is 2 characters or less long */
 	function VerifyTpe($tpe, $i, $Errors) {
-		if (strlen($tpe)>20) {
+		if (strlen($tpe)>2) {
 			$Errors[$i] = IncorrectTpe;
 		}
 		return $Errors;
