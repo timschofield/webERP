@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.37 $ */
+/* $Revision: 1.38 $ */
 
 $PageSecurity = 5;
 
@@ -826,13 +826,13 @@ echo '<tr><td>' . _('Reference / Narrative') . ':</td>
 echo '<tr><td colspan=3><div class="centre"><input type="submit" name="UpdateHeader" value="' . _('Update'). '"></td></tr>';
 
 
-echo '</table>';
+echo '</table><br>';
 
 
 if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDetail']->SupplierID==''){
 /* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
-	echo '<table width=100% border=1><tr>
+	echo '<table class="table1" border="1"><tr>
 			<th>' . _('Cheque No').'</th>
 			<th>' . _('Amount') . ' (' . $_SESSION['PaymentDetail']->Currency . ')</th>
 			<th>' . _('GL Account') . '</th>
