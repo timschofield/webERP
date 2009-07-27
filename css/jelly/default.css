@@ -170,7 +170,7 @@ div.warn {
 	border: 1px solid black;
 	PADDING-LEFT: 10px;
         Z-INDEX: 1;
-        width: 50%;
+        width: 80%;
         FLOAT: none;
         VISIBILITY: visible;
         MARGIN: 0 auto;
@@ -185,13 +185,13 @@ div.warn {
 
 div.success {
 	background: #b9ecb4 url(images/accept.png) top left no-repeat;
-	color: #008000;
+	color: black;
 	border: 1px solid #008000;
-        PADDING-LEFT: 3px;
-        padding-top: 3px;
-        padding-bottom: 3px;
+        PADDING-LEFT: 10px;
+        padding-top: 2px;
+        padding-bottom: 2px;
         Z-INDEX: 1;
-        width: 50%;
+        width: 80%;
         FLOAT: none;
         VISIBILITY: visible;
         MARGIN: 0 auto;
@@ -206,7 +206,7 @@ div.info {
 	background: #fa0 url(images/help.png) top left no-repeat;
 	color: white;
 	border: 1px solid black;
-	PADDING-LEFT: 3px;
+	PADDING-LEFT: 10px;
         Z-INDEX: 1;
         width: 50%;
         FLOAT: none;
@@ -214,8 +214,8 @@ div.info {
         MARGIN: 0 auto;
         POSITION: static;
         font-family: Verdana, Arial, Helvetica;
-        padding-top: 1px;
-        padding-bottom: 1px;
+        padding-top: 2px;
+        padding-bottom: 2px;
         font-weight: normal;
         font-size: 10px;
         TEXT-ALIGN:center;

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 10;
 
@@ -10,7 +10,7 @@ $title = _('Bank Accounts Maintenance');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Bank') . '" alt="">' . ' ' . $title . '</p>';
-        echo '<div class="page_help_text">' . _('Update Bank Account details.  Account Code is for SWIFT or BSB type Bank Codes.  Set Default for Invoices to "Yes" to print Account details on Invoices.') . '.</div><br>';
+        echo '<div class="page_help_text">' . _('Update Bank Account details.  Account Code is for SWIFT or BSB type Bank Codes.  Set Default for Invoices to "yes" to print Account details on Invoices (only one account can be set to "yes").') . '.</div><br>';
 
 if (isset($_GET['SelectedBankAccount'])) {
 	$SelectedBankAccount=$_GET['SelectedBankAccount'];
@@ -86,12 +86,13 @@ if (isset($_POST['submit'])) {
 		if (DB_num_rows($BankTransResult)>0) {
 			$sql = "UPDATE bankaccounts
 				SET bankaccountname='" . $_POST['BankAccountName'] . "',
-				SET bankaccountcode='" . $_POST['BankAccountCode'] . "',
+				bankaccountcode='" . $_POST['BankAccountCode'] . "',
 				bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
-				bankaddress='" . $_POST['BankAddress'] . "'
+				bankaddress='" . $_POST['BankAddress'] . "',
 				invoice ='" . $_POST['DefAccount'] . "'
 			WHERE accountcode = '" . $SelectedBankAccount . "'";
 			prnMsg(_('Note that it is not possible to change the currency of the account once there are transactions against it'),'warn');
+	echo '<br>';
 		} else {
 			$sql = "UPDATE bankaccounts
 				SET bankaccountname='" . $_POST['BankAccountName'] . "',
@@ -134,6 +135,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	
 		prnMsg($msg,'success');
+		echo '<br>';
 		unset($_POST['AccountCode']);
 		unset($_POST['BankAccountName']);
 		unset($_POST['BankAccountNumber']);
@@ -345,14 +347,14 @@ echo		'<tr><td>' . _('Default for Invoices') . ': </td><td><select tabindex="6" 
 if (!isset($_POST['DefAccount']) OR $_POST['DefAccount']==''){
         $_POST['DefAccount'] = $_SESSION['CompanyRecord']['currencydefault'];
 }
-$result = DB_query('SELECT invoice FROM bankaccounts',$db);
+$result = DB_query('SELECT invoice FROM bankaccounts where accountcode =' . $SelectedBankAccount .'',$db);
 while ($myrow = DB_fetch_array($result)) {
-        if ($myrow['invoice']==$_POST['DefAccount']) {
-                echo '<option selected VALUE=';
+        if ($myrow['invoice']== 'yes') {
+                echo '<option selected VALUE=yes>Yes<option value=no>No';
         } else {
-                echo '<option VALUE=';
+                echo '<option selected VALUE=no>No<option value=yes>Yes';
         }
-        echo $myrow['invoice'] . '>' . $myrow['invoice'];
+//        echo $myrow['invoice'] . '><option value=no>' . $myrow['invoice'];
 } //end while loop
 
 echo '</select></td>';
