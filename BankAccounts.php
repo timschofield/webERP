@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 10;
 
@@ -10,7 +10,7 @@ $title = _('Bank Accounts Maintenance');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Bank') . '" alt="">' . ' ' . $title . '</p>';
-        echo '<div class="page_help_text">' . _('Update Bank Account details.  Account Code is for SWIFT or BSB type Bank Codes.') . '.</div><br>';
+        echo '<div class="page_help_text">' . _('Update Bank Account details.  Account Code is for SWIFT or BSB type Bank Codes.  Set Default for Invoices to "Yes" to print Account details on Invoices.') . '.</div><br>';
 
 if (isset($_GET['SelectedBankAccount'])) {
 	$SelectedBankAccount=$_GET['SelectedBankAccount'];
@@ -89,6 +89,7 @@ if (isset($_POST['submit'])) {
 				SET bankaccountcode='" . $_POST['BankAccountCode'] . "',
 				bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
 				bankaddress='" . $_POST['BankAddress'] . "'
+				invoice ='" . $_POST['DefAccount'] . "'
 			WHERE accountcode = '" . $SelectedBankAccount . "'";
 			prnMsg(_('Note that it is not possible to change the currency of the account once there are transactions against it'),'warn');
 		} else {
@@ -97,7 +98,8 @@ if (isset($_POST['submit'])) {
 				SET bankaccountcode='" . $_POST['BankAccountCode'] . "',
 				bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
 				bankaddress='" . $_POST['BankAddress'] . "',
-				currcode ='" . $_POST['CurrCode'] . "'
+				currcode ='" . $_POST['CurrCode'] . "',
+				invoice ='" . $_POST['DefAccount'] . "'
 				WHERE accountcode = '" . $SelectedBankAccount . "'";
 		}
 
@@ -112,13 +114,15 @@ if (isset($_POST['submit'])) {
 						bankaccountcode,
 						bankaccountnumber,
 						bankaddress,
-						currcode)
+						currcode,
+						invoice)
 				VALUES ('" . $_POST['AccountCode'] . "',
 					'" . $_POST['BankAccountName'] . "',
 					'" . $_POST['BankAccountCode'] . "',
 					'" . $_POST['BankAccountNumber'] . "',
 					'" . $_POST['BankAddress'] . "', 
 					'" . $_POST['CurrCode'] . "'
+					'" . $_POST['DefAccount'] . "'
 					)";
 		$msg = _('The new bank account has been entered');
 	}
@@ -135,6 +139,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['BankAccountNumber']);
 		unset($_POST['BankAddress']);
 		unset($_POST['CurrCode']);
+		unset($_POST['DefAccount']);
 		unset($SelectedBankAccount);
 	}
 	
@@ -173,7 +178,8 @@ If (!isset($SelectedBankAccount)) {
 			bankaccountname,
 			bankaccountnumber,
 			bankaddress,
-			currcode
+			currcode,
+			invoice
 		FROM bankaccounts,
 			chartmaster
 		WHERE bankaccounts.accountcode = chartmaster.accountcode";
@@ -182,7 +188,7 @@ If (!isset($SelectedBankAccount)) {
 	$DbgMsg = _('The SQL used to retrieve the bank account details was') . '<br>' . $sql;
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-	echo '<table>';
+	echo '<table class="table1">';
 
 	echo "<tr><th>" . _('GL Account Code') . "</th>
 		<th>" . _('Account Name') . "</th>
@@ -190,6 +196,7 @@ If (!isset($SelectedBankAccount)) {
 		<th>" . _('Account Number') . "</th>
 		<th>" . _('Bank Address') . "</th>
 		<th>" . _('Currency') . "</th>
+		<th>" . _('Default for Invoices') . "</th>
 	</tr>";
 
 	$k=0; //row colour counter
@@ -208,6 +215,7 @@ If (!isset($SelectedBankAccount)) {
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
+		<td>%s</td>
 		<td><a href=\"%s?SelectedBankAccount=%s\">" . _('Edit') . "</td>
 		<td><a href=\"%s?SelectedBankAccount=%s&delete=1\">" . _('Delete') . "</td>
 		</tr>",
@@ -218,6 +226,7 @@ If (!isset($SelectedBankAccount)) {
 		$myrow[4],
 		$myrow[5],
 		$myrow[6],
+		$myrow[7],
 		$_SERVER['PHP_SELF'],
 		$myrow[0],
 		$_SERVER['PHP_SELF'],
@@ -246,7 +255,8 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 			bankaccountcode,
 			bankaccountnumber,
 			bankaddress,
-			currcode
+			currcode,
+			invoice
 		FROM bankaccounts
 		WHERE bankaccounts.accountcode='$SelectedBankAccount'";
 
@@ -259,6 +269,7 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	$_POST['BankAccountNumber'] = $myrow['bankaccountnumber'];
 	$_POST['BankAddress'] = $myrow['bankaddress'];
 	$_POST['CurrCode'] = $myrow['currcode'];
+	$_POST['DefAccount'] = $myrow['invoice'];
 
 	echo '<input type=hidden name=SelectedBankAccount VALUE=' . $SelectedBankAccount . '>';
 	echo '<input type=hidden name=AccountCode VALUE=' . $_POST['AccountCode'] . '>';
@@ -327,10 +338,27 @@ while ($myrow = DB_fetch_array($result)) {
 	echo $myrow['currabrev'] . '>' . $myrow['currabrev'];
 } //end while loop
 
-echo '</select></td></tr>';
+echo '</select></td>';
 
-echo '</table>
-		<div class="centre"><input tabindex="6" type="Submit" name="submit" value="'. _('Enter Information') .'"></div>';
+echo		'<tr><td>' . _('Default for Invoices') . ': </td><td><select tabindex="6" name="DefAccount">';
+
+if (!isset($_POST['DefAccount']) OR $_POST['DefAccount']==''){
+        $_POST['DefAccount'] = $_SESSION['CompanyRecord']['currencydefault'];
+}
+$result = DB_query('SELECT invoice FROM bankaccounts',$db);
+while ($myrow = DB_fetch_array($result)) {
+        if ($myrow['invoice']==$_POST['DefAccount']) {
+                echo '<option selected VALUE=';
+        } else {
+                echo '<option VALUE=';
+        }
+        echo $myrow['invoice'] . '>' . $myrow['invoice'];
+} //end while loop
+
+echo '</select></td>';
+
+echo '</tr></table>
+		<div class="centre"><input tabindex="7" type="Submit" name="submit" value="'. _('Enter Information') .'"></div>';
 
 echo '</form>';
 include('includes/footer.inc');
