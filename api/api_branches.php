@@ -202,9 +202,9 @@
 		return $Errors;
 	}
 
-/* Verify that the Deliver Blind flag is a 1 or 0 */
+/* Verify that the Deliver Blind flag is a 1 or 2 */
 	function VerifyDeliverBlind($DeliverBlind, $i, $Errors) {
-		if ($DeliverBlind!=0 and $DeliverBlind!=1) {
+		if ($DeliverBlind!=1 and $DeliverBlind!=2) {
 			$Errors[$i] = InvalidDeliverBlind;
 		}
 		return $Errors;
