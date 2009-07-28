@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.42 $ */
+/* $Revision: 1.43 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -865,7 +865,7 @@ if (isset($_SESSION['CustomerRecord'])
 if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 /* Set up a heading for the transaction entry for a GL Receipt */
 
-	echo '<br/><font size=4>' . _('General Ledger Receipt Entry') . '</font><table>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Banked') . '" alt=""> ' . _('General Ledger Receipt Entry') . '</font><table>';
 
 	//Select the tag
 	echo '<tr><td>' . _('Select Tag') . ':</td><td><select name="tag">';
