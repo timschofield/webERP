@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.43 $ */
+/* $Revision: 1.44 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -735,7 +735,7 @@ if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['ReceiptBatch']->Curre
 		$_SESSION['ReceiptBatch']->ExRate = $SuggestedExRate;
 	}
 	echo '<tr><td>' . _('Receipt Exchange Rate') . ':</td>
-			<td><input tabindex=4 type="text" name="ExRate" maxlength=10 size=12  onKeyPress="return restrictToNumbers(this, event)" onChange="numberFormat(this,2)" onFocus="return setTextAlign(this, '."'".'right'."'".')" value="' . $_SESSION['ReceiptBatch']->ExRate . '"></td>
+			<td><input tabindex=4 type="text" name="ExRate" maxlength=10 size=12 class=number value="' . $_SESSION['ReceiptBatch']->ExRate . '"></td>
 			<td>' . $SuggestedExRateText . ' <i>' . _('The exchange rate between the currency of the bank account currency and the currency of the receipt') . '. 1 ' . $_SESSION['ReceiptBatch']->AccountCurrency . ' = ? ' . $_SESSION['ReceiptBatch']->Currency . '</i></td></tr>';
 }
 
@@ -749,7 +749,7 @@ if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['CompanyRecord']['curr
 	if ($_SESSION['ReceiptBatch']->FunctionalExRate==1 AND isset($SuggestedFunctionalExRate)){
 		$_SESSION['ReceiptBatch']->FunctionalExRate = $SuggestedFunctionalExRate;
 	}
-	echo '<tr><td>' . _('Functional Exchange Rate') . ':</td><td><input tabindex=5 type="text" name="FunctionalExRate" maxlength=10 size=12 value="' . $_SESSION['ReceiptBatch']->FunctionalExRate . '"></td>
+	echo '<tr><td>' . _('Functional Exchange Rate') . ':</td><td><input tabindex=5 type="text" name="FunctionalExRate" class=number maxlength=10 size=12 value="' . $_SESSION['ReceiptBatch']->FunctionalExRate . '"></td>
 			<td>' . ' ' . $SuggestedFunctionalExRateText . ' <i>' . _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account') .  '. 1 ' . $_SESSION['CompanyRecord']['currencydefault'] . ' = ? ' . $_SESSION['ReceiptBatch']->AccountCurrency . '</i></td></tr>';
 }
 
