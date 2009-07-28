@@ -106,3 +106,4 @@ UPDATE `purchorders` SET `deliverydate`=(SELECT MAX(`purchorderdetails`.`deliver
 ALTER TABLE custnotes CHANGE note note TEXT NOT NULL;
 
 ALTER TABLE `bankaccounts` ADD `bankaccountcode` varchar(50) NOT NULL default '' AFTER `currcode`;
+ALTER TABLE `bankaccounts` ADD `invoice` smallint(2) NOT NULL default 0 AFTER `currcode`;
