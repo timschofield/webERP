@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 /*
 *      PO_Header.php
@@ -538,7 +538,8 @@ if (isset($_POST['Select'])) {
 		$_SESSION['PO'.$identifier]->port = $_POST['port'];
 	} else {
 		prnMsg( _('You do not have the authority to raise Purchase Orders for ').
-			'<br>'.$SupplierName.'. '._('Please Consult your system administrator for more information'), 'warn');
+			'<br>'.$SupplierName.'. '._('Please Consult your system administrator for more information').'. '
+			._('You can setup authorisations ').'<a href=PO_AuthorisationLevels.php>here: </a>', 'warn');
 		include('includes/footer.inc');
 		exit;
 	}
