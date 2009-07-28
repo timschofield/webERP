@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 10;
 
@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
 		} else {
 			$sql = "UPDATE bankaccounts
 				SET bankaccountname='" . $_POST['BankAccountName'] . "',
-				SET bankaccountcode='" . $_POST['BankAccountCode'] . "',
+				bankaccountcode='" . $_POST['BankAccountCode'] . "',
 				bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
 				bankaddress='" . $_POST['BankAddress'] . "',
 				currcode ='" . $_POST['CurrCode'] . "',
@@ -210,7 +210,11 @@ If (!isset($SelectedBankAccount)) {
 		echo '<tr class="OddTableRows">';
 		$k++;
 	}
-
+	if ($myrow[7]==0) {
+		$defacc=_('Yes');
+	} else {
+		$defacc=_('No');
+	}
 	printf("<td>%s<br><font size=2>%s</font></td>
 		<td>%s</td>
 		<td>%s</td>
@@ -228,7 +232,7 @@ If (!isset($SelectedBankAccount)) {
 		$myrow[4],
 		$myrow[5],
 		$myrow[6],
-		$myrow[7],
+		$defacc,
 		$_SERVER['PHP_SELF'],
 		$myrow[0],
 		$_SERVER['PHP_SELF'],
@@ -347,15 +351,19 @@ echo		'<tr><td>' . _('Default for Invoices') . ': </td><td><select tabindex="6" 
 if (!isset($_POST['DefAccount']) OR $_POST['DefAccount']==''){
         $_POST['DefAccount'] = $_SESSION['CompanyRecord']['currencydefault'];
 }
-$result = DB_query('SELECT invoice FROM bankaccounts where accountcode =' . $SelectedBankAccount .'',$db);
-while ($myrow = DB_fetch_array($result)) {
-        if ($myrow['invoice']== 'yes') {
-                echo '<option selected VALUE=yes>Yes<option value=no>No';
-        } else {
-                echo '<option selected VALUE=no>No<option value=yes>Yes';
-        }
-//        echo $myrow['invoice'] . '><option value=no>' . $myrow['invoice'];
-} //end while loop
+
+if (isset($SelectedBankAccount)) {
+	$result = DB_query('SELECT invoice FROM bankaccounts where accountcode =' . $SelectedBankAccount ,$db);
+	while ($myrow = DB_fetch_array($result)) {
+		if ($myrow['invoice']== 0) {
+			echo '<option selected VALUE=0>'._('Yes').'</option><option value=1>'._('No').'</option>';
+		} else {
+			echo '<option selected VALUE=1>'._('No').'</option><option value=0>'._('Yes').'</option>';
+		}
+	}//end while loop
+} else {
+	echo '<option VALUE=0>'._('Yes').'</option><option value=1>'._('No').'</option>';
+}
 
 echo '</select></td>';
 
