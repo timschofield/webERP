@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.42 $ */
+/* $Revision: 1.43 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing 
@@ -727,7 +727,7 @@ then do the updates and inserts to process the invoice entered */
 									'" . $SQLInvoiceDate . "', 
 									" . $PeriodNo . ', 
 									' . $StockGLCode['stockact'] . ", 
-									'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . ('Average Cost Adj') .
+									'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Average Cost Adj') .
 									 ' - ' . $EnteredGRN->ItemCode . ' x ' . $TotalQuantityOnHand  . ' x ' .
 									 number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .
 									 "', " . ($PurchPriceVar - $WriteOffToVariances) . ')';

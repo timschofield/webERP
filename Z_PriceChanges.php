@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity=15;
 
 
@@ -83,7 +83,7 @@ if (isset($_POST['UpdatePrices']) AND isset($_POST['StkCat'])){
 
 	if (ABS($_POST['IncreasePercent']) < 0.5 OR ABS($_POST['IncreasePercent'])>40 OR !is_numeric($_POST['IncreasePercent'])){
 
-		echo '<br>' . _('The increase or decrease to be applied is expected to be an integer between 1 and 40 it is not necessary to enter the').' '. '%'.' '. ('sign') . ' - ' . _('the amount is assumed to be a percentage');
+		echo '<br>' . _('The increase or decrease to be applied is expected to be an integer between 1 and 40 it is not necessary to enter the').' '. '%'.' '. _('sign') . ' - ' . _('the amount is assumed to be a percentage');
 		include ('includes/footer.inc');
 		exit;
 	}
