@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 10;
 
@@ -193,9 +193,9 @@ If (!isset($SelectedBankAccount)) {
 	echo '<table class="table1">';
 
 	echo "<tr><th>" . _('GL Account Code') . "</th>
-		<th>" . _('Account Name') . "</th>
-		<th>" . _('Account Code') . "</th>
-		<th>" . _('Account Number') . "</th>
+		<th>" . _('Bank Account Name') . "</th>
+		<th>" . _('Bank Account Code') . "</th>
+		<th>" . _('Bank Account Number') . "</th>
 		<th>" . _('Bank Address') . "</th>
 		<th>" . _('Currency') . "</th>
 		<th>" . _('Default for Invoices') . "</th>
