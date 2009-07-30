@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 // User configurable variables
 //---------------------------------------------------
 
@@ -12,7 +12,7 @@ $allow_demo_mode = True;
 
 // webERP version
 
-$Version = '3.10';
+$Version = '3.11-rc2';
 
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
@@ -92,7 +92,7 @@ if ($rootpath == "/" OR $rootpath == "\\") {
 This is the default value set in php.ini for most installations but just to be sure it is forced here
 turning on NOTICES destroys things */
 
-error_reporting (E_ALL & ~E_NOTICE);
+error_reporting (E_ALL && ~E_NOTICE);
 
 /*Make sure there is nothing - not even spaces after this last ?> */
 ?>
