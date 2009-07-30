@@ -89,9 +89,9 @@ echo '<th>'._('Authority Level').'</th></tr>';
 
 while ($myrow=DB_fetch_array($Result)) {
 	if ($myrow['cancreate']==0) {
-		$cancreate='Yes';
+		$cancreate=_('Yes');
 	} else {
-		$cancreate='No';
+		$cancreate=_('No');
 	}
 	echo '<tr><td>'.$myrow['userid'].'</td>';
 	echo '<td>'.$myrow['realname'].'</td>';
