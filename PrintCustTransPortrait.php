@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 
 $PageSecurity = 1;
 
@@ -143,7 +143,7 @@ If (isset($PrintPDF)
 			AND debtortrans.branchcode=custbranch.branchcode
 			AND custbranch.salesman=salesman.salesmancode
 			AND salesorders.fromstkloc=locations.loccode
-			AND bankaccounts.invoice = "yes"';
+			AND bankaccounts.invoice = 0';
 
 		if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No'){
 			$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
