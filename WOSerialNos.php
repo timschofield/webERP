@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*This page shows the serial numbers created for a works order 
  * - creating automatically from the last serial number counter in the stockmaster or by manual entry 
  * - If the item is lot controlled then the lot reference and the quantity in the lot can be entered 
@@ -52,9 +52,10 @@ if (isset($_POST['AddControlledItems'])){
 			/*Process the additional controlled items into woserialnos and update the quantity on the work order order in woitems*/
 			$sql = "INSERT INTO woserialnos (stockid,
 												wo,
+												qualitytext,
 												serialno) 
 										VALUES ";
-			$ValueLine = " ('" . $StockID . "', " . $WO . ",'";
+			$ValueLine = " ('" . $StockID . "', " . $WO . ",'' ,";
 			for ($i=0;$i<$_POST['NumberToAdd'];$i++){
 				$NextItemNumber = $NextSerialNo + $i;
 				$result = DB_query("SELECT serialno FROM woserialnos
@@ -126,10 +127,12 @@ if (isset($_POST['AddControlledItems'])){
 									AND wo=" . $WO,$db,$ErrMsg,$DbgMsg,true);
 				$sql = "INSERT INTO woserialnos (stockid,
 												 wo,
+												 qualitytext,
 												 quantity,
 												 serialno)
 									 VALUES ('" . $StockID . "', 
 											  " . $WO . ",
+											  '',
 											 " . $_POST['Quantity'] .  ",
 											 '" . $_POST['Reference'] . "')";
 											 
