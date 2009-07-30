@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of Shipts objects - containing details of all shipment charges for invoicing
@@ -59,9 +59,9 @@ if (isset($_GET['Delete'])){
 
 /*Show all the selected ShiptRefs so far from the SESSION['SuppInv']->Shipts array */
 if ($_SESSION['SuppTrans']->InvoiceOrCredit=='Invoice'){
-	echo '<div class="centre><font size=4 color=BLUE>' . _('Shipment charges on Invoice') . ' ';
+	echo '<div class="centre"><font size=4 color=BLUE>' . _('Shipment charges on Invoice') . ' ';
 } else {
-	echo '<div class="centre><font size=4 color=BLUE>' . _('Shipment credits on Credit Note') . ' ';
+	echo '<div class="centre"><font size=4 color=BLUE>' . _('Shipment credits on Credit Note') . ' ';
 }
 echo '</div>';
 echo $_SESSION['SuppTrans']->SuppReference . ' ' ._('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
