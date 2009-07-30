@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 $PageSecurity = 1;
 
@@ -461,7 +461,7 @@ If (isset($PrintPDF)
 			if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg')) {
             	$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -60,$YPos-15,0,20);
 			}
-            $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:' . $myrow['bankaccountcode'] . ' Bank Account:' . $myrow['bankaccountnumber']));
+            $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:') . $myrow['bankaccountcode'] . _(' Bank Account:') . $myrow['bankaccountnumber']);
 			$FontSize=10;
 		} else {
 			$pdf->addText($Page_Width-$Right_Margin-220, $YPos-($line_height*3)-6,$FontSize, _('TOTAL CREDIT'));
