@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.69 $ */
+/* $Revision: 1.70 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -559,7 +559,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 	} /* end inserted line items into sales order details */
 
 	$result = DB_Txn_Commit($db);	
-
+	echo '<br>';
 	if ($_SESSION['Items'.$identifier]->Quotation==1){
 		prnMsg(_('Quotation Number') . ' ' . $OrderNo . ' ' . _('has been entered'),'success');
 	} else {

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.60 $ */
+/* $Revision: 1.61 $ */
 
 $PageSecurity = 2;
 
@@ -219,6 +219,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 		unset($result);
 	} elseif (DB_num_rows($result)==0){
 		prnMsg(_('No customer records contain the selected text') . ' - ' . _('please alter your search criteria and try again'),'info');
+	echo '<br>';
 	}
 } //end of if search
 

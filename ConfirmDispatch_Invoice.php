@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.61 $ */
+/* $Revision: 1.62 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -429,14 +429,14 @@ if (!is_numeric($_POST['ChargeFreightCost'])){
 }
 
 echo '<tr>
-	<td colspan="2" class="number">' . _('Order Freight Cost'). '</td>
+	<td colspan="5" class="number">' . _('Order Freight Cost'). '</td>
 	<td class="number">' . $_SESSION['Old_FreightCost'] . '</td>';
 
 if ($_SESSION['DoFreightCalc']==True){
 	echo '<td colspan="2" class="number">' ._('Recalculated Freight Cost'). '</td>
 		<td class="number">' . $FreightCost . '</td>';
 } else {
-	echo '<td colspan="3"></td>';
+//	echo '<td colspan="1"></td>';
 }
 $j++;
 
@@ -500,7 +500,7 @@ $_SESSION['Items']->total = round($_SESSION['Items']->total,2);
 $_POST['ChargeFreightCost'] = round($_POST['ChargeFreightCost'],2);
 
 echo '<tr>
-	<td colspan="8" class="number">' . _('Invoice Totals'). '</td>
+	<td colspan="10" class="number">' . _('Invoice Totals'). '</td>
 	<td class="number:><hr><b>'.$DisplaySubTotal.'</b><hr></td>
 	<td colspan="2"></td>
 	<td class="number"><hr><b>' . number_format($TaxTotal,2) . '</b><hr></td>
@@ -513,7 +513,7 @@ if (! isset($_POST['DispatchDate']) OR  ! Is_Date($_POST['DispatchDate'])){
 	$DefaultDispatchDate = $_POST['DispatchDate'];
 }
 
-echo '</table>';
+echo '</table><br>';
 
 
 
@@ -1431,7 +1431,7 @@ DB_Txn_Begin($db);
 	} else {
 		echo '<img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . '<a target="_blank" href="'.$rootpath.'/PrintCustTransPortrait.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). ' (' . _('Portrait') . ')</a><br><br>';
 	}
-	echo '<a href="'.$rootpath.'/SelectSalesOrder.php?' . SID . '">'. _('Select another order for invoicing'). '</a><br>';
+	echo '<br><a href="'.$rootpath.'/SelectSalesOrder.php?' . SID . '">'. _('Select another order for invoicing'). '</a><br>';
 	echo '<a href="'.$rootpath.'/SelectOrderItems.php?' . SID . 'NewOrder=Yes">'._('Sales Order Entry').'</a></div><br>';
 /*end of process invoice */
 
@@ -1472,7 +1472,7 @@ DB_Txn_Begin($db);
 	<input type=submit tabindex='.$j.' name=Update Value=' . _('Update'). '><br>';
 
 	$j++;
-	echo '<input type=submit tabindex='.$j.' name="ProcessInvoice" Value="'._('Process Invoice').'"</div>';
+	echo '<br><input type=submit tabindex='.$j.' name="ProcessInvoice" Value="'._('Process Invoice').'"</div>';
 
 	echo '<input type=hidden name="ShipVia" VALUE="' . $_SESSION['Items']->ShipVia . '">';
 }

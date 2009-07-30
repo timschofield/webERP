@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.50 $ */
+/* $Revision: 1.51 $ */
 
 $PageSecurity = 3;
 
@@ -238,7 +238,7 @@ if (isset($_POST['submit'])) {
 					" . $_POST['DeliverBlind'] . "
 					)";
 	}
-
+	echo '<br>';
 	$msg = _('Customer branch<b>').' ' . $_POST['BranchCode'] . ': ' . $_POST['BrName'] . ' '._('</b>has been added, add another branch, or return to <a href=index.php>Main Menu</a>');
 
 	//run the SQL from either of the above possibilites
