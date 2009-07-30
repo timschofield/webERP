@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 /*
 *      PO_Header.php
@@ -1117,7 +1117,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 		echo '<tr><td>'. _('Exchange Rate').':'.'</td><td><input type=text name="ExRate"
 		value='.$_POST['ExRate'].' class=number size=11></td></tr>';
 	} else {
-		'<input type=hidden name="ExRate" value=1>';
+		echo '<input type=hidden name="ExRate" value="1">';
 	}
 	echo '</td></tr></table>'; /*end of sub table */
 
