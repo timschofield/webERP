@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 10;
 
@@ -211,9 +211,9 @@ If (!isset($SelectedBankAccount)) {
 		$k++;
 	}
 	if ($myrow[7]==0) {
-		$defacc=_('Yes');
-	} else {
 		$defacc=_('No');
+	} else {
+		$defacc=_('Yes');
 	}
 	printf("<td>%s<br><font size=2>%s</font></td>
 		<td>%s</td>
@@ -355,10 +355,10 @@ if (!isset($_POST['DefAccount']) OR $_POST['DefAccount']==''){
 if (isset($SelectedBankAccount)) {
 	$result = DB_query('SELECT invoice FROM bankaccounts where accountcode =' . $SelectedBankAccount ,$db);
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['invoice']== 0) {
-			echo '<option selected VALUE=0>'._('Yes').'</option><option value=1>'._('No').'</option>';
+		if ($myrow['invoice']== 1) {
+			echo '<option selected VALUE=1>'._('Yes').'</option><option value=0>'._('No').'</option>';
 		} else {
-			echo '<option selected VALUE=1>'._('No').'</option><option value=0>'._('Yes').'</option>';
+			echo '<option selected VALUE=0>'._('No').'</option><option value=1>'._('Yes').'</option>';
 		}
 	}//end while loop
 } else {
