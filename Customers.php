@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.41 $ */
+/* $Revision: 1.42 $ */
 
 $PageSecurity = 3;
 
@@ -262,9 +262,9 @@ if (isset($_POST['submit'])) {
 
 			echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath ."/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo'] . "'>";
 
-			echo '<p>' . _('You should automatically be forwarded to the entry of a new Customer Branch page') .
+			echo '<div class="centre">' . _('You should automatically be forwarded to the entry of a new Customer Branch page') .
 			'. ' . _('If this does not happen') .' (' . _('if the browser does not support META Refresh') . ') ' .
-			"<a href='" . $rootpath . "/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo']  . '.<br>';
+			"<a href='" . $rootpath . "/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo']  . '.</div>';
 
 			include('includes/footer.inc');
 			exit;

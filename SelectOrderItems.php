@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.103 $ */
+/* $Revision: 1.104 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -828,9 +828,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if (DB_num_rows($SearchResult)==0 ){
 			prnMsg (_('There are no products available meeting the criteria specified'),'info');
 
-			if ($debug==1){
-				prnMsg(_('The SQL statement used was') . ':<br>' . $SQL,'info');
-			}
+//			if ($debug==1){
+//				prnMsg(_('The SQL statement used was') . ':<br>' . $SQL,'info');
+//			}
 		}
 		if (DB_num_rows($SearchResult)==1){
 			$myrow=DB_fetch_array($SearchResult);
@@ -1025,7 +1025,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	if (isset($_POST['DeliveryDetails'])){
 		echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/DeliveryDetails.php?' . SID .'identifier='.$identifier . '">';
 		prnMsg(_('You should automatically be forwarded to the entry of the delivery details page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
-           '<a href="' . $rootpath . '/DeliveryDetails.php?' . SID .'identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue') . 'info');
+           '<a href="' . $rootpath . '/DeliveryDetails.php?' . SID .'identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'), 'info');
 	   	exit;
 	}
 
@@ -1372,7 +1372,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		if (isset($SearchResult)) {
 
-			echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'identifier='.$identifier . ' method=post name="orderform"><table cellpadding=2 colspan=7 >';
+			echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'identifier='.$identifier . ' method=post name="orderform"><table class="table1">';
 			echo '<tr><td><input type="hidden" name="previous" value='.number_format($Offset-1).'><input tabindex='.number_format($j+7).' type="submit" name="Prev" value="'._('Prev').'"></td>';
 			echo '<td style="text-align:center" colspan=6><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+8).' type="submit" value="'._('Order').'"></td>';
 			echo '<td><input type="hidden" name="nextlist" value='.number_format($Offset+1).'><input tabindex='.number_format($j+9).' type="submit" name="Next" value="'._('Next').'"></td></tr>';
