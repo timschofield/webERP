@@ -102,23 +102,12 @@ function default_dir_mode($temp_dir) {
 	return $default_dir_mode;
 }
 
-function add_slashes($input) {
-	if (get_magic_quotes_gpc() || (!is_string($input))) {
-		return $input;
-	}
-	$output = addslashes($input);
-	return $output;
-}
 
-function check_db_error($err_msg, $sql) {
-	return true;
-}
-
-if (isset($_POST['path_to_root']))
+if (isset($_POST['path_to_root'])) {
 	$path_to_root = $_POST['path_to_root'];
-else
+} else {
 	$path_to_root = '..';
-
+}
 // Begin check to see if form was even submitted
 // Set error if no post vars found
 
@@ -245,7 +234,7 @@ for ($i=0; $i<$ConfigDistributionFileLines; $i++) {
 } 
 //$msg holds the text of the new config.php file	
 $msg = "<?php\n\n";
-$msg .= "/* \$Revision: 1.6 $ */\n";
+$msg .= "/* \$Revision: 1.7 $ */\n";
 $msg .= "// User configurable variables\n";
 $msg .= "//---------------------------------------------------\n\n";
 $msg .= "//DefaultLanguage to use for the login screen and the setup of new users - the users language selection will override\n";
@@ -316,6 +305,8 @@ if($_POST['install_tables'] == true){
 	/* Need to read in the sql script and process the queries to initate a new DB */
 	if ($_POST['DemoData'] == true){ //installing the demo data
 		$SQLScriptFile = file($path_to_root . '/sql/mysql/weberp-demo.sql');
+		//need to drop any pre-existing weberpdemo database
+		mysqli_query($db, "DROP DATABASE 'weberpdemo'");
 	} else { //creating a new database with no demo data
 		mysqli_query($db, 'CREATE DATABASE IF NOT EXISTS `' . mysqli_real_escape_string($db, $_POST['company_name']) . '`');
 		mysqli_select_db($db, $_POST['company_name']);
@@ -358,7 +349,7 @@ $sql = "UPDATE www_users
 			WHERE user_id = 'admin'";
 mysqli_query($db,$sql);
 $sql = "UPDATE companies 
-			SET coyname = '". mysqli_real_escape_string($db, $_POST['company_name']) ." 
+			SET coyname = '". mysqli_real_escape_string($db, $_POST['company_name']) . "' 
 			WHERE coycode = 1"; 
 mysqli_query($db,$sql);
 

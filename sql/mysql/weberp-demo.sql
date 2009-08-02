@@ -6014,7 +6014,7 @@ INSERT INTO `config` VALUES ('EDI_MsgPending','companies/weberp/EDI_MsgPending')
 INSERT INTO `config` VALUES ('EDI_MsgSent','companies/weberp/EDI_Sent');
 INSERT INTO `config` VALUES ('Extended_CustomerInfo','0');
 INSERT INTO `config` VALUES ('Extended_SupplierInfo','0');
-INSERT INTO `config` VALUES ('FactoryManagerEmail','phil@logicworks.co.nz');
+INSERT INTO `config` VALUES ('FactoryManagerEmail','');
 INSERT INTO `config` VALUES ('FreightChargeAppliesIfLessThan','1000');
 INSERT INTO `config` VALUES ('FreightTaxCategory','1');
 INSERT INTO `config` VALUES ('geocode_integration','0');
