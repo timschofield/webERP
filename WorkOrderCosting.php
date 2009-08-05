@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 11;
 
@@ -126,7 +126,7 @@ $RequirementsResult = DB_query("SELECT t.stockid, t.description, t.decimalplaces
                                              stockmaster.decimalplaces,
                                              (stockmaster.materialcost) as stdcost,
                                              SUM(worequirements.qtypu*woitems.qtyreqd) AS requiredqty,
-                                             SUM(worequirements.stdcost*woitems.qtyreqd) AS expectedcost,
+                                             SUM(worequirements.stdcost*worequirements.qtypu*woitems.qtyreqd) AS expectedcost,
                                              AVG(worequirements.qtypu) as qtypu
                                              FROM worequirements INNER JOIN stockmaster
                                              ON worequirements.stockid=stockmaster.stockid
@@ -138,6 +138,8 @@ $RequirementsResult = DB_query("SELECT t.stockid, t.description, t.decimalplaces
 $k=0;
 $TotalUsageVar =0;
 $TotalCostVar =0;
+$TotalIssuedCost=0;
+$TotalReqdCost=0;
 $RequiredItems =array();
 
 while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
@@ -204,6 +206,8 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 				<td align="right">' . number_format($IssueCost,2) . '</td>
 				<td align="right">' . number_format($UsageVar,2) . '</td>
 				<td align="right">' . number_format($CostVar,2) . '</td></tr>';
+	$TotalReqdCost += $RequirementsRow['expectedcost'];
+	$TotalIssuedCost += $IssueCost;
 	$TotalCostVar += $CostVar;
 	$TotalUsageVar += $UsageVar;
 	if ($k==1){
@@ -257,12 +261,17 @@ if (DB_num_rows($WOIssuesResult)>0){
 		$TotalUsageVar += ($WOIssuesRow['qty']*$WOIssuesRow['standardcost']);
 	}
 }
-echo '<tr><td colspan="7"></td><td colspan="2"><hr></td></tr>';
+# <!--	<td colspan="5"></td> -->
+echo '<tr><td colspan="3"></td><td><hr/></td><td colspan="2"></td><td colspan="3"><hr></td></tr>';
 echo '<tr><td colspan="2" align="right">' . _('Totals') . '</td>
-	<td colspan="5"></td>
+	<td></td>
+	<td>' . number_format($TotalReqdCost,2) .'</td>
+	<td></td><td></td>
+	<td>' . number_format($TotalIssuedCost,2) .'</td>
 	<td align="right">' . number_format($TotalUsageVar,2) . '</td>
 	<td align="right">' . number_format($TotalCostVar,2) . '</td></tr>';
-echo '<tr><td colspan="7"></td><td colspan="2"><hr></td></tr>';
+echo '<tr><td colspan="3"></td><td><hr/></td><td colspan="2"></td><td colspan="3"><hr></td></tr>';
+#echo '<tr><td colspan="7"></td><td colspan="2"><hr></td></tr>';
 
 
 If (isset($_POST['Close'])) {
