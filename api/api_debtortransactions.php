@@ -23,6 +23,8 @@ function ConvertToSQLDate($DateEntry) {
 		$Date_Array = explode('/',$DateEntry);
 	} elseif (strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
+	} elseif (strpos ($DateEntry,'.')) {
+		$Date_Array = explode('.',$DateEntry);
 	}
 
 	if (strlen($Date_Array[2])>4) {  /*chop off the time stuff */
@@ -36,6 +38,8 @@ function ConvertToSQLDate($DateEntry) {
 		return $Date_Array[1].'/'.$Date_Array[2].'/'.$Date_Array[0];
 	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d'){
 		return $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2];
+	} elseif ($_SESSION['DefaultDateFormat']=='d.m.Y'){
+		return $Date_Array[2].'/'.$Date_Array[1].'/'.$Date_Array[0];
 	}
 
 } // end function ConvertSQLDate
@@ -48,21 +52,27 @@ function ConvertToSQLDate($DateEntry) {
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
-		$DateArray=explode('/',$TranDate);
+		if (strstr('/',$PeriodEnd)) {
+			$Date_Array = explode('/',$PeriodEnd);
+		} elseif (strstr('.',$PeriodEnd)) {
+			$Date_Array = explode('.',$PeriodEnd);
+		}
 		if ($DateFormat=='d/m/Y') {
 			$Day=$DateArray[0];
 			$Month=$DateArray[1];
 			$Year=$DateArray[2];
-		}
-		if ($DateFormat=='m/d/Y') {
+		} elseif ($DateFormat=='m/d/Y') {
 			$Day=$DateArray[1];
 			$Month=$DateArray[0];
 			$Year=$DateArray[2];
-		}
-		if ($DateFormat=='Y/m/d') {
+		} elseif ($DateFormat=='Y/m/d') {
 			$Day=$DateArray[2];
 			$Month=$DateArray[1];
 			$Year=$DateArray[0];
+		} elseif ($DateFormat=='d.m.Y') {
+			$Day=$DateArray[0];
+			$Month=$DateArray[1];
+			$Year=$DateArray[2];
 		}
 		if (!checkdate(intval($Month), intval($Day), intval($Year))) {
 			$Errors[$i] = InvalidCurCostDate;
@@ -76,21 +86,27 @@ function ConvertToSQLDate($DateEntry) {
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
-		$DateArray=explode('/',$TranDate);
+		if (strstr('/',$PeriodEnd)) {
+			$Date_Array = explode('/',$PeriodEnd);
+		} elseif (strstr('.',$PeriodEnd)) {
+			$Date_Array = explode('.',$PeriodEnd);
+		}
 		if ($DateFormat=='d/m/Y') {
 			$Day=$DateArray[0];
 			$Month=$DateArray[1];
 			$Year=$DateArray[2];
-		}
-		if ($DateFormat=='m/d/Y') {
+		} elseif ($DateFormat=='m/d/Y') {
 			$Day=$DateArray[1];
 			$Month=$DateArray[0];
 			$Year=$DateArray[2];
-		}
-		if ($DateFormat=='Y/m/d') {
+		} elseif ($DateFormat=='Y/m/d') {
 			$Day=$DateArray[2];
 			$Month=$DateArray[1];
 			$Year=$DateArray[0];
+		} elseif ($DateFormat=='d.m.Y') {
+			$Day=$DateArray[0];
+			$Month=$DateArray[1];
+			$Year=$DateArray[2];
 		}
 		$DateArray=explode('-',$TranDate);
 		$Day=$DateArray[2];
