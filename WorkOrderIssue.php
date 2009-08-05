@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 $PageSecurity = 11;
 
@@ -248,10 +248,12 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
                             $SQL = "INSERT INTO stockserialitems (stockid,
                                                 loccode,
                                                 serialno,
+                                                qualitytext,
                                                 quantity)
-                                        VALUES ('" . $_POST['IssueItem'] . "',
+                                                VALUES ('" . $_POST['IssueItem'] . "',
                                                 '" . $_POST['FromLocation'] . "',
                                                 '" . $_POST['BatchRef' . $i] . "',
+                                                '',
                                                 " . -($_POST['Qty'.$i]) . ")";
                         }
 
