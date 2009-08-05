@@ -122,7 +122,7 @@ document.getElementById(dateDivID).innerHTML=html;
 }
 function getButtonCode(mD,dV,a,lb,dF){
 nM=(dV.getMonth()+a)%12;
-nY=dV.getFullYear()+parseInt((dV.getMonth()+a)/12);
+nY=dV.getFullYear()+parseInt((dV.getMonth()+a)/12,10);
 if (nM<0){
 nM+=12;
 nY+=-1;
@@ -149,19 +149,19 @@ var d,m,y;
 dA=dS.split("/");
 switch (dF){
 case "d/m/Y":
-d=parseInt(dA[0]);
-m=parseInt(dA[1])-1;
-y=parseInt(dA[2]);
+d=parseInt(dA[0],10);
+m=parseInt(dA[1],10)-1;
+y=parseInt(dA[2],10);
 break;
 case "Y/m/d":
-d=parseInt(dA[2]);
-m=parseInt(dA[1])-1;
-y=parseInt(dA[0]);
+d=parseInt(dA[2],10);
+m=parseInt(dA[1],10)-1;
+y=parseInt(dA[0],10);
 break;
 default :
-d=parseInt(dA[1]);
-m=parseInt(dA[0])-1;
-y=parseInt(dA[2]);
+d=parseInt(dA[1],10);
+m=parseInt(dA[0],10)-1;
+y=parseInt(dA[2],10);
 break;
 }
 return new Date(y,m,d);
