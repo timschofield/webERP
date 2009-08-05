@@ -36,21 +36,27 @@
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
-		$DateArray=explode('/',$orddate);
+		if (strstr('/',$PeriodEnd)) {
+			$Date_Array = explode('/',$PeriodEnd);
+		} elseif (strstr('.',$PeriodEnd)) {
+			$Date_Array = explode('.',$PeriodEnd);
+		}
 		if ($DateFormat=='d/m/Y') {
 			$Day=$DateArray[0];
 			$Month=$DateArray[1];
 			$Year=$DateArray[2];
-		}
-		if ($DateFormat=='m/d/Y') {
+		} elseif ($DateFormat=='m/d/Y') {
 			$Day=$DateArray[1];
 			$Month=$DateArray[0];
 			$Year=$DateArray[2];
-		}
-		if ($DateFormat=='Y/m/d') {
+		} elseif ($DateFormat=='Y/m/d') {
 			$Day=$DateArray[2];
 			$Month=$DateArray[1];
 			$Year=$DateArray[0];
+		} elseif ($DateFormat=='d.m.Y') {
+			$Day=$DateArray[0];
+			$Month=$DateArray[1];
+			$Year=$DateArray[2];
 		}
 		if (!checkdate(intval($Month), intval($Day), intval($Year))) {
 			$Errors[$i] = InvalidOrderDate;
@@ -108,21 +114,27 @@
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
-		$DateArray=explode('/',$deliverydate);
+		if (strstr('/',$PeriodEnd)) {
+			$Date_Array = explode('/',$PeriodEnd);
+		} elseif (strstr('.',$PeriodEnd)) {
+			$Date_Array = explode('.',$PeriodEnd);
+		}
 		if ($DateFormat=='d/m/Y') {
 			$Day=$DateArray[0];
 			$Month=$DateArray[1];
 			$Year=$DateArray[2];
-		}
-		if ($DateFormat=='m/d/Y') {
+		} elseif ($DateFormat=='m/d/Y') {
 			$Day=$DateArray[1];
 			$Month=$DateArray[0];
 			$Year=$DateArray[2];
-		}
-		if ($DateFormat=='Y/m/d') {
+		} elseif ($DateFormat=='Y/m/d') {
 			$Day=$DateArray[2];
 			$Month=$DateArray[1];
 			$Year=$DateArray[0];
+		} elseif ($DateFormat=='d.m.Y') {
+			$Day=$DateArray[0];
+			$Month=$DateArray[1];
+			$Year=$DateArray[2];
 		}
 		if (!checkdate(intval($Month), intval($Day), intval($Year))) {
 			$Errors[$i] = InvalidDeliveryDate;
@@ -212,21 +224,27 @@
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
-		$DateArray=explode('/',$itemdue);
+		if (strstr('/',$PeriodEnd)) {
+			$Date_Array = explode('/',$PeriodEnd);
+		} elseif (strstr('.',$PeriodEnd)) {
+			$Date_Array = explode('.',$PeriodEnd);
+		}
 		if ($DateFormat=='d/m/Y') {
 			$Day=$DateArray[0];
 			$Month=$DateArray[1];
 			$Year=$DateArray[2];
-		}
-		if ($DateFormat=='m/d/Y') {
+		} elseif ($DateFormat=='m/d/Y') {
 			$Day=$DateArray[1];
 			$Month=$DateArray[0];
 			$Year=$DateArray[2];
-		}
-		if ($DateFormat=='Y/m/d') {
+		} elseif ($DateFormat=='Y/m/d') {
 			$Day=$DateArray[2];
 			$Month=$DateArray[1];
 			$Year=$DateArray[0];
+		} elseif ($DateFormat=='d.m.Y') {
+			$Day=$DateArray[0];
+			$Month=$DateArray[1];
+			$Year=$DateArray[2];
 		}
 		if (!checkdate(intval($Month), intval($Day), intval($Year))) {
 			$Errors[$i] = InvalidItemDueDate;
