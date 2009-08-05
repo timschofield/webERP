@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.70 $ */
+/* $Revision: 1.71 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -862,13 +862,15 @@ if (!isset($_SESSION['Items'.$identifier]->ConfirmedDate)) {
 	$_SESSION['Items'.$identifier]->ConfirmedDate = Date($_SESSION['DefaultDateFormat'],$EarliestDispatch);
 }
 
+/* No idea what this code does, but as it needs updating for other date formats
+ * anyway I am commenting it out - Tim
 
 if($_SESSION['DefaultDateFormat']=='d/m/Y'){
 	$jdf=0;
 } else {
 	$jdf=1;
 }
-
+*/
 // The estimated Dispatch date or Delivery date for this order
 echo '<tr>
 	<td>'. _('Estimated Delivery Date') .':</td>
