@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -124,12 +124,20 @@ If (isset($_POST['TaxAuthority']) AND
 
 	/*Now do the inputs from SuppTrans */
 	/*Only have dates in SuppTrans no periods so need to get the starting date */
-
-	$Date_Array = explode('/',$PeriodEnd);
+	if (strstr('/',$PeriodEnd)) {
+		$Date_Array = explode('/',$PeriodEnd);
+	} elseif (strstr('.',$PeriodEnd)) {
+		$Date_Array = explode('.',$PeriodEnd);
+	}
+	
 	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
 		$StartDateSQL = Date('Y-m-d', mktime(0,0,0, (int)$Date_Array[1]-$_POST['NoOfPeriods']+1,1,(int)$Date_Array[2]));
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y') {
 		$StartDateSQL = Date('Y-m-d', mktime(0,0,0, (int)$Date_Array[0]-$_POST['NoOfPeriods']+1,1,(int)$Date_Array[2]));
+	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d') {
+		$StartDateSQL = Date('Y-m-d', mktime(0,0,0, (int)$Date_Array[2]-$_POST['NoOfPeriods']+1,1,(int)$Date_Array[1]));
+	} elseif ($_SESSION['DefaultDateFormat']=='d.m.Y') {
+		$StartDateSQL = Date('Y-m-d', mktime(0,0,0, (int)$Date_Array[1]-$_POST['NoOfPeriods']+1,1,(int)$Date_Array[2]));
 	}
 
 
