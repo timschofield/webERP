@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.104 $ */
+/* $Revision: 1.105 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -856,7 +856,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	     $Discount = 0;
 
 	     $i=1;
-	      while ($i<$_SESSION['QuickEntries'] and isset($_POST['part_' . $i]) and $_POST['part_' . $i]!='') {
+	      while ($i<=$_SESSION['QuickEntries'] and isset($_POST['part_' . $i]) and $_POST['part_' . $i]!='') {
 			$QuickEntryCode = 'part_' . $i;
 			$QuickEntryQty = 'qty_' . $i;
 			$QuickEntryPOLine = 'poline_' . $i;
@@ -1533,8 +1533,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				}
 				echo '<td><input type="text" name="part_' . $i . '" size=21 maxlength=20></td>
 						<td><input type="text" name="qty_' . $i . '" size=6 maxlength=6></td>
-						<td><input type="text" name="itemdue_' . $i . '" size=25 maxlength=25
-						value="' . $DefaultDeliveryDate . '"></td></tr>';
+						<td><input type="text" class="date" name="itemdue_' . $i . '" size=25 maxlength=25
+						alt="'.$_SESSION['DefaultDateFormat'].'" value="' . $DefaultDeliveryDate . '"></td></tr>';
 	   		}
 
 	     	echo '</table><br><div class="centre"><input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '">
