@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 // MRPCreateDemands.php - Create mrpdemands based on sales order history
 
 $PageSecurity=9;
@@ -88,8 +88,10 @@ if ($_POST['Excludeamt'] < 1) {
 $FormatedDistdate = FormatDateForSQL($_POST['DistDate']);
 if (strpos($FormatedDistdate,"/")) {
     list($yyyy,$mm,$dd) = explode("/",$FormatedDistdate);
-} else {
+} else if (strpos($FormatedDistdate,"-")) {
     list($yyyy,$mm,$dd) = explode("-",$FormatedDistdate);
+} else else if (strpos($FormatedDistdate,".")) {
+    list($yyyy,$mm,$dd) = explode(".",$FormatedDistdate);
 }
 $datearray[0] = $FormatedDistdate;
 // Set first date to valid manufacturing date
