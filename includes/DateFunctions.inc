@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 /*
 date validation and parsing functions
@@ -721,21 +721,20 @@ function GetPeriod ($TransDate, &$db) {
 		$Date_Array = explode('-',$TransDate);
 	} elseif (strpos ($TransDate,'.')) {
 		$Date_Array = explode('.',$TransDate);
-  }
-
-	if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
-		$TransDate = mktime(0,0,0,$Date_array[1],$Date_array[0],$Date_array[2]);
-	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y'){
-		$TransDate = mktime(0,0,0,$Date_array[0],$Date_array[1],$Date_array[2]);
-	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d'){
-		$TransDate = mktime(0,0,0,$Date_array[1],$Date_array[2],$Date_array[0]);
 	}
-	
+	if (($_SESSION['DefaultDateFormat']=='d/m/Y') or ($_SESSION['DefaultDateFormat']=='d.m.Y')){
+		$TransDate = mktime(0,0,0,$Date_Array[1],$Date_Array[0],$Date_Array[2]);
+	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y'){
+		$TransDate = mktime(0,0,0,$Date_Array[0],$Date_Array[1],$Date_Array[2]);
+	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d'){
+		$TransDate = mktime(0,0,0,$Date_Array[1],$Date_Array[2],$Date_Array[0]);
+	}
+
 	if (strlen($_SESSION['ProhibitPostingsBefore'])>=8){ //then the ProhibitPostingsBefore configuration is set
 		$Date_array = explode('-', $_SESSION['ProhibitPostingsBefore']);
 	
 		$ProhibitPostingsBefore = mktime(0,0,0,$Date_array[1],$Date_array[2],$Date_array[0]);
-
+		
 		/* If transaction date is in a closed period use the month end of that period */
 		if ($TransDate < $ProhibitPostingsBefore) {
 			$TransDate = $ProhibitPostingsBefore;
