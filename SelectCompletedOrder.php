@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 1;
 
@@ -418,7 +418,7 @@ if (!isset($OrderNumber) or $OrderNumber==''){
 			": </td><td><input type='text' name='OrdersAfterDate' maxlength =10 size=11 value=" . $_POST['OrdersAfterDate'] . "></td><td>" .
 			"<input type='submit' name='SearchOrders' value='" . _('Search Orders') . "'></td></tr>";
 	echo '<tr><td>' . _('Customer Ref') . ':</td><td>' . "<input type='text' name='CustomerRef' maxlength =8 size=9></td>
-			<td></td><td colspan=2><input type='checkbox' ".$ShowChecked." name='completed' />".('Show Completed orders only') . "</td></tr>";
+			<td></td><td colspan=2><input type='checkbox' ".$ShowChecked." name='completed' />"._('Show Completed orders only') . "</td></tr>";
 }
 echo '</table>';
 
