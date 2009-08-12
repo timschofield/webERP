@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 /* Steve Kitchen */
 
@@ -15,7 +15,7 @@ include('includes/header.inc');
 	otherwise you'll be wasting your time */
 	
 $PathToDefault		= './locale/en_GB/LC_MESSAGES/messages.po';
-$FilesToInclude	= '*php includes/*.php includes/*.inc';
+$FilesToInclude = '*.php includes/*.inc includes/*.php api/*.php reportwriter/languages/en_US/reports.php';
 $xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 
 echo "<br>&nbsp;<a href='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
