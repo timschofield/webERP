@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.105 $ */
+/* $Revision: 1.106 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -225,7 +225,7 @@ if (isset($_GET['ModifyOrderNumber'])
 						//								ConvertSQLDate($myrow['itemdue']),
 														0,
 														'',
-														FormatDateForSQL($myrow['itemdue']),
+														ConvertSQLDate($myrow['itemdue']),
 														$myrow['poline'],
 														$myrow['standardcost'],
 														$myrow['eoq'],
@@ -276,16 +276,16 @@ $msg='';
 
 if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
-	If (($_POST['CustKeywords']!='') AND (($_POST['CustCode']!='') OR ($_POST['CustPhone']!=''))) {
+	if (($_POST['CustKeywords']!='') AND (($_POST['CustCode']!='') OR ($_POST['CustPhone']!=''))) {
 		prnMsg( _('Customer Branch Name keywords have been used in preference to the Customer Branch Code or Branch Phone Number entered'), 'warn');
 	}
-	If (($_POST['CustCode']!='') AND ($_POST['CustPhone']!='')) {
+	if (($_POST['CustCode']!='') AND ($_POST['CustPhone']!='')) {
 		prnMsg(_('Customer Branch Code has been used in preference to the Customer Branch Phone Number entered'), 'warn');
 	}
-	If (($_POST['CustKeywords']=='') AND ($_POST['CustCode']=='')  AND ($_POST['CustPhone']=='')) {
+	if (($_POST['CustKeywords']=='') AND ($_POST['CustCode']=='')  AND ($_POST['CustPhone']=='')) {
 		prnMsg(_('At least one Customer Branch Name keyword OR an extract of a Customer Branch Code or Branch Phone Number must be entered for the search'), 'warn');
 	} else {
-		If (strlen($_POST['CustKeywords'])>0) {
+		if (strlen($_POST['CustKeywords'])>0) {
 		//insert wildcard characters in spaces
 			$_POST['CustKeywords'] = strtoupper(trim($_POST['CustKeywords']));
 			$i=0;
@@ -587,7 +587,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	<input tabindex=5 type=submit action=reset value="<?php echo _('Reset'); ?>"></div>
 	<?php
 
-	If (isset($result_CustSelect)) {
+	if (isset($result_CustSelect)) {
 
 		echo '<table cellpadding=2 colspan=7 border=2>';
 
@@ -707,16 +707,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '</b></div>';
 	}
 
-	If (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
+	if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 
-		If ($_POST['Keywords']!=='' AND $_POST['StockCode']=='') {
+		if ($_POST['Keywords']!=='' AND $_POST['StockCode']=='') {
 			$msg='</b><div class="page_help_text">' . _('Order Item description has been used in search') . '.</div>';
 		} elseif ($_POST['StockCode']!=='' AND $_POST['Keywords']=='') {
 			$msg='</b><div class="page_help_text">' . _('Stock Code has been used in search') . '.</div>';
 		} elseif ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
 			$msg='</b><div class="page_help_text">' . _('Stock Category has been used in search') . '.</div>';
 		}
-		If (isset($_POST['Keywords']) AND strlen($_POST['Keywords'])>0) {
+		if (isset($_POST['Keywords']) AND strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 			$_POST['Keywords'] = strtoupper($_POST['Keywords']);
 
@@ -849,7 +849,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	/*Process Quick Entry */
 
-	 If (isset($_POST['order_items']) or isset($_POST['QuickEntry']) or isset($_POST['Recalculate'])){ // if enter is pressed on the quick entry screen, the default button may be Recalculate
+	 if (isset($_POST['order_items']) or isset($_POST['QuickEntry']) or isset($_POST['Recalculate'])){ // if enter is pressed on the quick entry screen, the default button may be Recalculate
 	     /* get the item details from the database and hold them in the cart object */
 
 	     /*Discount can only be set later on  -- after quick entry -- so default discount to 0 in the first place */
@@ -887,7 +887,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 
 			if(!Is_Date($NewItemDue)) {
-					prnMsg(_('An invalid date entry was made for ') . ' ' . $NewItem . ' ' . _('The date entry') . ' ' . $NewItemDue . ' ' . ('must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
+					prnMsg(_('An invalid date entry was made for ') . ' ' . $NewItem . ' ' . _('The date entry') . ' ' . $NewItemDue . ' ' . _('must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
 				//Attempt to default the due date to something sensible?
 				$NewItemDue = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
 			}
@@ -939,9 +939,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	 /*Now do non-quick entry delete/edits/adds */
 
-	If ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)){
+	if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)){
 
-		If(isset($_GET['Delete'])){
+		if(isset($_GET['Delete'])){
 			//page called attempting to delete a line - GET['Delete'] = the line number to delete
 			if($_SESSION['Items'.$identifier]->Some_Already_Delivered($_GET['Delete'])==0){
 				$_SESSION['Items'.$identifier]->remove_from_cart($_GET['Delete'], 'Yes');  /*Do update DB */
@@ -992,11 +992,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				}
 
 				if(!Is_Date($ItemDue)) {
-					prnMsg(_('An invalid date entry was made for ') . ' ' . $NewItem . ' ' . _('The date entry') . ' ' . $ItemDue . ' ' . ('must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
+					prnMsg(_('An invalid date entry was made for ') . ' ' . $NewItem . ' ' . _('The date entry') . ' ' . $ItemDue . ' ' . _('must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
 					//Attempt to default the due date to something sensible?
 					$ItemDue = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
 				}
-				If ($Quantity<0 OR $Price <0 OR $DiscountPercentage >100 OR $DiscountPercentage <0){
+				if ($Quantity<0 OR $Price <0 OR $DiscountPercentage >100 OR $DiscountPercentage <0){
 					prnMsg(_('The item could not be updated because you are attempting to set the quantity ordered to less than 0 or the price less than 0 or the discount more than 100% or less than 0%'),'warn');
 
 				} elseif($_SESSION['Items'.$identifier]->Some_Already_Delivered($OrderLine->LineNumber)!=0 AND $_SESSION['Items'.$identifier]->LineItems[$OrderLine->LineNumber]->Price != $Price) {
@@ -1024,13 +1024,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	}
 	if (isset($_POST['DeliveryDetails'])){
 		echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/DeliveryDetails.php?' . SID .'identifier='.$identifier . '">';
-		prnMsg(_('You should automatically be forwarded to the entry of the delivery details page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
+		prnMsg(_('You should automatically be forwarded to the entry of the delivery details page') . '. ' . _('if this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
            '<a href="' . $rootpath . '/DeliveryDetails.php?' . SID .'identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'), 'info');
 	   	exit;
 	}
 
 
-	If (isset($NewItem)){
+	if (isset($NewItem)){
 /* get the item details from the database and hold them in the cart object make the quantity 1 by default then add it to the cart */
 /*Now figure out if the item is a kit set - the field MBFlag='K'*/
 		$sql = "SELECT stockmaster.mbflag
@@ -1076,7 +1076,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	} /*end of if its a new item */
 
-	If (isset($NewItem_array) && isset($_POST['order_items'])){
+	if (isset($NewItem_array) && isset($_POST['order_items'])){
 /* get the item details from the database and hold them in the cart object make the quantity 1 by default then add it to the cart */
 /*Now figure out if the item is a kit set - the field MBFlag='K'*/
 		foreach($NewItem_array as $NewItem => $NewItemQty) {
