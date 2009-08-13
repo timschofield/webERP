@@ -2156,6 +2156,38 @@
 				$xmlrpcmsg->getParam(1)->scalarval())));
 	}
 
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('Returns the webERP currency code');
+	$Parameter[0]['name'] = _('User name');
+	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[1]['name'] = _('User password');
+	$Parameter[1]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns a string containg the default currency code. ').
+		_('Otherwise an array of error codes is returned. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+
+	$GetStockCatProperty_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetStockCatProperty_doc = $doc;
+
+	function xmlrpc_GetStockCatProperty($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetStockCatProperty($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval(),
+				 			$xmlrpcmsg->getParam(3)->scalarval())));
+	}
+	
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -2461,7 +2493,11 @@
 			"function" => "xmlrpc_GetDefaultLocation",
 			"signature" => $GetDefaultLocation_sig,
 			"docstring" => $GetDefaultLocation_doc),
-		)
+		"weberp.xmlrpc_GetStockCatProperty" => array(
+			"function" => "xmlrpc_GetStockCatProperty",
+			"signature" => $GetStockCatProperty_sig,
+			"docstring" => $GetStockCatProperty_doc),
+	)
 	);
 
 ?>

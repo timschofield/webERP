@@ -190,5 +190,21 @@
 		}
 		return $ItemList;
 	}				
-
+	
+	function GetStockCatProperty($Property, $StockID, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$sql='SELECT value FROM stockitemproperties WHERE
+			stockid="'.$StockID.'" AND stkcatpropid='.$Property;
+		$result = DB_Query($sql, $db);
+		$myrow=DB_fetch_array($result);
+		$Errors[0]=0;
+		$Errors[1]=$myrow[0];
+		return $Errors;
+	}				
+	
 ?>
