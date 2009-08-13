@@ -23,7 +23,7 @@ alert(m);
 return false;
 }
 function isDate(dS,dF){
-var mA=dS.match(/^(\d{1,2})(\/|-)(\d{1,2})(\/|-)(\d{4})$/);
+var mA=dS.match(/^(\d{1,2})(\/|-|.)(\d{1,2})(\/|-|.)(\d{4})$/);
 if (mA==null){
 alert("Please enter the date in the format "+dF);
 return false;
@@ -138,6 +138,8 @@ y=dV.getFullYear();
 switch (dF) {
 case "d/m/Y":
 return d+"/"+m+"/"+y;
+case "d.m.Y":
+return d+"."+m+"."+y;
 case "Y/m/d":
 return y+"/"+m+"/"+d;
 default :
@@ -146,9 +148,12 @@ return m+"/"+d+"/"+y;
 }
 function convertDate(dS,dF){
 var d,m,y;
+if (dF="d.m.Y")
+dA=dS.split(".")
+else
 dA=dS.split("/");
 switch (dF){
-case "d/m/Y":
+case "d/m/Y","d.m.Y":
 d=parseInt(dA[0],10);
 m=parseInt(dA[1],10)-1;
 y=parseInt(dA[2],10);
