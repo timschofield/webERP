@@ -1,49 +1,43 @@
+CREATE DATABASE weberpdemo;
+USE weberpdemo;
 SET FOREIGN_KEY_CHECKS = 0;
--- MySQL dump 10.13  Distrib 5.1.35, for pc-linux-gnu (i686)
+-- MySQL dump 10.11
 --
--- Host: localhost    Database: weberpdemo
+-- Host: localhost    Database: weberp
 -- ------------------------------------------------------
--- Server version	5.1.35
+-- Server version	5.0.45
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO,MYSQL40' */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Current Database: `weberpdemo`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `weberpdemo` /*!40100 DEFAULT CHARACTER SET latin1 */;
-
-USE `weberpdemo`;
 
 --
 -- Table structure for table `accountgroups`
 --
 
 CREATE TABLE `accountgroups` (
-  `groupname` char(30) NOT NULL DEFAULT '',
-  `sectioninaccounts` int(11) NOT NULL DEFAULT '0',
-  `pandl` tinyint(4) NOT NULL DEFAULT '1',
-  `sequenceintb` smallint(6) NOT NULL DEFAULT '0',
+  `groupname` char(30) NOT NULL default '',
+  `sectioninaccounts` int(11) NOT NULL default '0',
+  `pandl` tinyint(4) NOT NULL default '1',
+  `sequenceintb` smallint(6) NOT NULL default '0',
   `parentgroupname` varchar(30) NOT NULL,
-  PRIMARY KEY (`groupname`),
+  PRIMARY KEY  (`groupname`),
   KEY `SequenceInTB` (`sequenceintb`),
   KEY `sectioninaccounts` (`sectioninaccounts`),
   KEY `parentgroupname` (`parentgroupname`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `accountsection`
 --
 
 CREATE TABLE `accountsection` (
-  `sectionid` int(11) NOT NULL DEFAULT '0',
+  `sectionid` int(11) NOT NULL default '0',
   `sectionname` text NOT NULL,
-  PRIMARY KEY (`sectionid`)
-) TYPE=InnoDB;
+  PRIMARY KEY  (`sectionid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `areas`
@@ -51,95 +45,95 @@ CREATE TABLE `accountsection` (
 
 CREATE TABLE `areas` (
   `areacode` char(3) NOT NULL,
-  `areadescription` varchar(25) NOT NULL DEFAULT '',
-  PRIMARY KEY (`areacode`)
-) TYPE=InnoDB;
+  `areadescription` varchar(25) NOT NULL default '',
+  PRIMARY KEY  (`areacode`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `assetmanager`
 --
 
 CREATE TABLE `assetmanager` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `serialno` varchar(30) NOT NULL DEFAULT '',
-  `assetglcode` int(11) NOT NULL DEFAULT '0',
-  `depnglcode` int(11) NOT NULL DEFAULT '0',
-  `description` varchar(30) NOT NULL DEFAULT '',
-  `lifetime` int(11) NOT NULL DEFAULT '0',
-  `location` varchar(15) NOT NULL DEFAULT '',
-  `cost` double NOT NULL DEFAULT '0',
-  `depn` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) TYPE=InnoDB;
+  `id` int(11) NOT NULL auto_increment,
+  `serialno` varchar(30) NOT NULL default '',
+  `assetglcode` int(11) NOT NULL default '0',
+  `depnglcode` int(11) NOT NULL default '0',
+  `description` varchar(30) NOT NULL default '',
+  `lifetime` int(11) NOT NULL default '0',
+  `location` varchar(15) NOT NULL default '',
+  `cost` double NOT NULL default '0',
+  `depn` double NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `audittrail`
 --
 
 CREATE TABLE `audittrail` (
-  `transactiondate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `userid` varchar(20) NOT NULL DEFAULT '',
+  `transactiondate` datetime NOT NULL default '0000-00-00 00:00:00',
+  `userid` varchar(20) NOT NULL default '',
   `querystring` text,
   KEY `UserID` (`userid`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `bankaccounts`
 --
 
 CREATE TABLE `bankaccounts` (
-  `accountcode` int(11) NOT NULL DEFAULT '0',
+  `accountcode` int(11) NOT NULL default '0',
   `currcode` char(3) NOT NULL,
-  `invoice` smallint(2) NOT NULL DEFAULT '0',
-  `bankaccountcode` varchar(50) NOT NULL default '';
-  `bankaccountname` char(50) NOT NULL DEFAULT '',
-  `bankaccountnumber` char(50) NOT NULL DEFAULT '',
-  `bankaddress` char(50) DEFAULT NULL,
-  PRIMARY KEY (`accountcode`),
+  `invoice` smallint(2) NOT NULL default '0',
+  `bankaccountcode` varchar(50) NOT NULL default '',
+  `bankaccountname` char(50) NOT NULL default '',
+  `bankaccountnumber` char(50) NOT NULL default '',
+  `bankaddress` char(50) default NULL,
+  PRIMARY KEY  (`accountcode`),
   KEY `currcode` (`currcode`),
   KEY `BankAccountName` (`bankaccountname`),
   KEY `BankAccountNumber` (`bankaccountnumber`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `banktrans`
 --
 
 CREATE TABLE `banktrans` (
-  `banktransid` bigint(20) NOT NULL AUTO_INCREMENT,
-  `type` smallint(6) NOT NULL DEFAULT '0',
-  `transno` bigint(20) NOT NULL DEFAULT '0',
-  `bankact` int(11) NOT NULL DEFAULT '0',
-  `ref` varchar(50) NOT NULL DEFAULT '',
-  `amountcleared` double NOT NULL DEFAULT '0',
-  `exrate` double NOT NULL DEFAULT '1' COMMENT 'From bank account currency to payment currency',
-  `functionalexrate` double NOT NULL DEFAULT '1' COMMENT 'Account currency to functional currency',
-  `transdate` date NOT NULL DEFAULT '0000-00-00',
-  `banktranstype` varchar(30) NOT NULL DEFAULT '',
-  `amount` double NOT NULL DEFAULT '0',
-  `currcode` char(3) NOT NULL DEFAULT '',
-  PRIMARY KEY (`banktransid`),
+  `banktransid` bigint(20) NOT NULL auto_increment,
+  `type` smallint(6) NOT NULL default '0',
+  `transno` bigint(20) NOT NULL default '0',
+  `bankact` int(11) NOT NULL default '0',
+  `ref` varchar(50) NOT NULL default '',
+  `amountcleared` double NOT NULL default '0',
+  `exrate` double NOT NULL default '1' COMMENT 'From bank account currency to payment currency',
+  `functionalexrate` double NOT NULL default '1' COMMENT 'Account currency to functional currency',
+  `transdate` date NOT NULL default '0000-00-00',
+  `banktranstype` varchar(30) NOT NULL default '',
+  `amount` double NOT NULL default '0',
+  `currcode` char(3) NOT NULL default '',
+  PRIMARY KEY  (`banktransid`),
   KEY `BankAct` (`bankact`,`ref`),
   KEY `TransDate` (`transdate`),
   KEY `TransType` (`banktranstype`),
   KEY `Type` (`type`,`transno`),
   KEY `CurrCode` (`currcode`)
-) TYPE=InnoDB AUTO_INCREMENT=5;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `bom`
 --
 
 CREATE TABLE `bom` (
-  `parent` char(20) NOT NULL DEFAULT '',
-  `component` char(20) NOT NULL DEFAULT '',
-  `workcentreadded` char(5) NOT NULL DEFAULT '',
-  `loccode` char(5) NOT NULL DEFAULT '',
-  `effectiveafter` date NOT NULL DEFAULT '0000-00-00',
-  `effectiveto` date NOT NULL DEFAULT '9999-12-31',
-  `quantity` double NOT NULL DEFAULT '1',
-  `autoissue` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`parent`,`component`,`workcentreadded`,`loccode`),
+  `parent` char(20) NOT NULL default '',
+  `component` char(20) NOT NULL default '',
+  `workcentreadded` char(5) NOT NULL default '',
+  `loccode` char(5) NOT NULL default '',
+  `effectiveafter` date NOT NULL default '0000-00-00',
+  `effectiveto` date NOT NULL default '9999-12-31',
+  `quantity` double NOT NULL default '1',
+  `autoissue` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`parent`,`component`,`workcentreadded`,`loccode`),
   KEY `Component` (`component`),
   KEY `EffectiveAfter` (`effectiveafter`),
   KEY `EffectiveTo` (`effectiveto`),
@@ -147,245 +141,245 @@ CREATE TABLE `bom` (
   KEY `Parent` (`parent`,`effectiveafter`,`effectiveto`,`loccode`),
   KEY `Parent_2` (`parent`),
   KEY `WorkCentreAdded` (`workcentreadded`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `buckets`
 --
 
 CREATE TABLE `buckets` (
-  `workcentre` char(5) NOT NULL DEFAULT '',
-  `availdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `capacity` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`workcentre`,`availdate`),
+  `workcentre` char(5) NOT NULL default '',
+  `availdate` datetime NOT NULL default '0000-00-00 00:00:00',
+  `capacity` double NOT NULL default '0',
+  PRIMARY KEY  (`workcentre`,`availdate`),
   KEY `WorkCentre` (`workcentre`),
   KEY `AvailDate` (`availdate`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `chartdetails`
 --
 
 CREATE TABLE `chartdetails` (
-  `accountcode` int(11) NOT NULL DEFAULT '0',
-  `period` smallint(6) NOT NULL DEFAULT '0',
-  `budget` double NOT NULL DEFAULT '0',
-  `actual` double NOT NULL DEFAULT '0',
-  `bfwd` double NOT NULL DEFAULT '0',
-  `bfwdbudget` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`accountcode`,`period`),
+  `accountcode` int(11) NOT NULL default '0',
+  `period` smallint(6) NOT NULL default '0',
+  `budget` double NOT NULL default '0',
+  `actual` double NOT NULL default '0',
+  `bfwd` double NOT NULL default '0',
+  `bfwdbudget` double NOT NULL default '0',
+  PRIMARY KEY  (`accountcode`,`period`),
   KEY `Period` (`period`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `chartmaster`
 --
 
 CREATE TABLE `chartmaster` (
-  `accountcode` int(11) NOT NULL DEFAULT '0',
-  `accountname` char(50) NOT NULL DEFAULT '',
-  `group_` char(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`accountcode`),
+  `accountcode` int(11) NOT NULL default '0',
+  `accountname` char(50) NOT NULL default '',
+  `group_` char(30) NOT NULL default '',
+  PRIMARY KEY  (`accountcode`),
   KEY `AccountCode` (`accountcode`),
   KEY `AccountName` (`accountname`),
   KEY `Group_` (`group_`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `cogsglpostings`
 --
 
 CREATE TABLE `cogsglpostings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `area` char(2) NOT NULL DEFAULT '',
-  `stkcat` varchar(6) NOT NULL DEFAULT '',
-  `glcode` int(11) NOT NULL DEFAULT '0',
-  `salestype` char(2) NOT NULL DEFAULT 'AN',
-  PRIMARY KEY (`id`),
+  `id` int(11) NOT NULL auto_increment,
+  `area` char(2) NOT NULL default '',
+  `stkcat` varchar(6) NOT NULL default '',
+  `glcode` int(11) NOT NULL default '0',
+  `salestype` char(2) NOT NULL default 'AN',
+  PRIMARY KEY  (`id`),
   UNIQUE KEY `Area_StkCat` (`area`,`stkcat`,`salestype`),
   KEY `Area` (`area`),
   KEY `StkCat` (`stkcat`),
   KEY `GLCode` (`glcode`),
   KEY `SalesType` (`salestype`)
-) TYPE=InnoDB AUTO_INCREMENT=4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `companies`
 --
 
 CREATE TABLE `companies` (
-  `coycode` int(11) NOT NULL DEFAULT '1',
-  `coyname` varchar(50) NOT NULL DEFAULT '',
-  `gstno` varchar(20) NOT NULL DEFAULT '',
-  `companynumber` varchar(20) NOT NULL DEFAULT '0',
-  `regoffice1` varchar(40) NOT NULL DEFAULT '',
-  `regoffice2` varchar(40) NOT NULL DEFAULT '',
-  `regoffice3` varchar(40) NOT NULL DEFAULT '',
-  `regoffice4` varchar(40) NOT NULL DEFAULT '',
-  `regoffice5` varchar(20) NOT NULL DEFAULT '',
-  `regoffice6` varchar(15) NOT NULL DEFAULT '',
-  `telephone` varchar(25) NOT NULL DEFAULT '',
-  `fax` varchar(25) NOT NULL DEFAULT '',
-  `email` varchar(55) NOT NULL DEFAULT '',
-  `currencydefault` varchar(4) NOT NULL DEFAULT '',
-  `debtorsact` int(11) NOT NULL DEFAULT '70000',
-  `pytdiscountact` int(11) NOT NULL DEFAULT '55000',
-  `creditorsact` int(11) NOT NULL DEFAULT '80000',
-  `payrollact` int(11) NOT NULL DEFAULT '84000',
-  `grnact` int(11) NOT NULL DEFAULT '72000',
-  `exchangediffact` int(11) NOT NULL DEFAULT '65000',
-  `purchasesexchangediffact` int(11) NOT NULL DEFAULT '0',
-  `retainedearnings` int(11) NOT NULL DEFAULT '90000',
-  `gllink_debtors` tinyint(1) DEFAULT '1',
-  `gllink_creditors` tinyint(1) DEFAULT '1',
-  `gllink_stock` tinyint(1) DEFAULT '1',
-  `freightact` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`coycode`)
-) TYPE=InnoDB;
+  `coycode` int(11) NOT NULL default '1',
+  `coyname` varchar(50) NOT NULL default '',
+  `gstno` varchar(20) NOT NULL default '',
+  `companynumber` varchar(20) NOT NULL default '0',
+  `regoffice1` varchar(40) NOT NULL default '',
+  `regoffice2` varchar(40) NOT NULL default '',
+  `regoffice3` varchar(40) NOT NULL default '',
+  `regoffice4` varchar(40) NOT NULL default '',
+  `regoffice5` varchar(20) NOT NULL default '',
+  `regoffice6` varchar(15) NOT NULL default '',
+  `telephone` varchar(25) NOT NULL default '',
+  `fax` varchar(25) NOT NULL default '',
+  `email` varchar(55) NOT NULL default '',
+  `currencydefault` varchar(4) NOT NULL default '',
+  `debtorsact` int(11) NOT NULL default '70000',
+  `pytdiscountact` int(11) NOT NULL default '55000',
+  `creditorsact` int(11) NOT NULL default '80000',
+  `payrollact` int(11) NOT NULL default '84000',
+  `grnact` int(11) NOT NULL default '72000',
+  `exchangediffact` int(11) NOT NULL default '65000',
+  `purchasesexchangediffact` int(11) NOT NULL default '0',
+  `retainedearnings` int(11) NOT NULL default '90000',
+  `gllink_debtors` tinyint(1) default '1',
+  `gllink_creditors` tinyint(1) default '1',
+  `gllink_stock` tinyint(1) default '1',
+  `freightact` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`coycode`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `config`
 --
 
 CREATE TABLE `config` (
-  `confname` varchar(35) NOT NULL DEFAULT '',
+  `confname` varchar(35) NOT NULL default '',
   `confvalue` text NOT NULL,
-  PRIMARY KEY (`confname`)
-) TYPE=InnoDB;
+  PRIMARY KEY  (`confname`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `contractbom`
 --
 
 CREATE TABLE `contractbom` (
-  `contractref` char(20) NOT NULL DEFAULT '',
-  `component` char(20) NOT NULL DEFAULT '',
-  `workcentreadded` char(5) NOT NULL DEFAULT '',
-  `loccode` char(5) NOT NULL DEFAULT '',
-  `quantity` double NOT NULL DEFAULT '1',
-  PRIMARY KEY (`contractref`,`component`,`workcentreadded`,`loccode`),
+  `contractref` char(20) NOT NULL default '',
+  `component` char(20) NOT NULL default '',
+  `workcentreadded` char(5) NOT NULL default '',
+  `loccode` char(5) NOT NULL default '',
+  `quantity` double NOT NULL default '1',
+  PRIMARY KEY  (`contractref`,`component`,`workcentreadded`,`loccode`),
   KEY `Component` (`component`),
   KEY `LocCode` (`loccode`),
   KEY `ContractRef` (`contractref`),
   KEY `WorkCentreAdded` (`workcentreadded`),
   KEY `WorkCentreAdded_2` (`workcentreadded`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `contractreqts`
 --
 
 CREATE TABLE `contractreqts` (
-  `contractreqid` int(11) NOT NULL AUTO_INCREMENT,
-  `contract` char(20) NOT NULL DEFAULT '',
-  `component` char(40) NOT NULL DEFAULT '',
-  `quantity` double NOT NULL DEFAULT '1',
-  `priceperunit` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  PRIMARY KEY (`contractreqid`),
+  `contractreqid` int(11) NOT NULL auto_increment,
+  `contract` char(20) NOT NULL default '',
+  `component` char(40) NOT NULL default '',
+  `quantity` double NOT NULL default '1',
+  `priceperunit` decimal(20,4) NOT NULL default '0.0000',
+  PRIMARY KEY  (`contractreqid`),
   KEY `Contract` (`contract`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `contracts`
 --
 
 CREATE TABLE `contracts` (
-  `contractref` varchar(20) NOT NULL DEFAULT '',
-  `contractdescription` varchar(50) NOT NULL DEFAULT '',
-  `debtorno` varchar(10) NOT NULL DEFAULT '',
-  `branchcode` varchar(10) NOT NULL DEFAULT '',
-  `status` varchar(10) NOT NULL DEFAULT 'Quotation',
-  `categoryid` varchar(6) NOT NULL DEFAULT '',
-  `typeabbrev` char(2) NOT NULL DEFAULT '',
-  `orderno` int(11) NOT NULL DEFAULT '0',
-  `quotedpricefx` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `margin` double NOT NULL DEFAULT '1',
-  `woref` varchar(20) NOT NULL DEFAULT '',
-  `requireddate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `canceldate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `quantityreqd` double NOT NULL DEFAULT '1',
+  `contractref` varchar(20) NOT NULL default '',
+  `contractdescription` varchar(50) NOT NULL default '',
+  `debtorno` varchar(10) NOT NULL default '',
+  `branchcode` varchar(10) NOT NULL default '',
+  `status` varchar(10) NOT NULL default 'Quotation',
+  `categoryid` varchar(6) NOT NULL default '',
+  `typeabbrev` char(2) NOT NULL default '',
+  `orderno` int(11) NOT NULL default '0',
+  `quotedpricefx` decimal(20,4) NOT NULL default '0.0000',
+  `margin` double NOT NULL default '1',
+  `woref` varchar(20) NOT NULL default '',
+  `requireddate` datetime NOT NULL default '0000-00-00 00:00:00',
+  `canceldate` datetime NOT NULL default '0000-00-00 00:00:00',
+  `quantityreqd` double NOT NULL default '1',
   `specifications` longblob NOT NULL,
-  `datequoted` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `units` varchar(15) NOT NULL DEFAULT 'Each',
+  `datequoted` datetime NOT NULL default '0000-00-00 00:00:00',
+  `units` varchar(15) NOT NULL default 'Each',
   `drawing` longblob NOT NULL,
-  `rate` double NOT NULL DEFAULT '1',
-  PRIMARY KEY (`contractref`),
+  `rate` double NOT NULL default '1',
+  PRIMARY KEY  (`contractref`),
   KEY `OrderNo` (`orderno`),
   KEY `CategoryID` (`categoryid`),
   KEY `Status` (`status`),
   KEY `TypeAbbrev` (`typeabbrev`),
   KEY `WORef` (`woref`),
   KEY `DebtorNo` (`debtorno`,`branchcode`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `currencies`
 --
 
 CREATE TABLE `currencies` (
-  `currency` char(20) NOT NULL DEFAULT '',
-  `currabrev` char(3) NOT NULL DEFAULT '',
-  `country` char(50) NOT NULL DEFAULT '',
-  `hundredsname` char(15) NOT NULL DEFAULT 'Cents',
-  `rate` double NOT NULL DEFAULT '1',
-  PRIMARY KEY (`currabrev`),
+  `currency` char(20) NOT NULL default '',
+  `currabrev` char(3) NOT NULL default '',
+  `country` char(50) NOT NULL default '',
+  `hundredsname` char(15) NOT NULL default 'Cents',
+  `rate` double NOT NULL default '1',
+  PRIMARY KEY  (`currabrev`),
   KEY `Country` (`country`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `custallocns`
 --
 
 CREATE TABLE `custallocns` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `amt` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `datealloc` date NOT NULL DEFAULT '0000-00-00',
-  `transid_allocfrom` int(11) NOT NULL DEFAULT '0',
-  `transid_allocto` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
+  `id` int(11) NOT NULL auto_increment,
+  `amt` decimal(20,4) NOT NULL default '0.0000',
+  `datealloc` date NOT NULL default '0000-00-00',
+  `transid_allocfrom` int(11) NOT NULL default '0',
+  `transid_allocto` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`id`),
   KEY `DateAlloc` (`datealloc`),
   KEY `TransID_AllocFrom` (`transid_allocfrom`),
   KEY `TransID_AllocTo` (`transid_allocto`)
-) TYPE=InnoDB AUTO_INCREMENT=3;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `custbranch`
 --
 
 CREATE TABLE `custbranch` (
-  `branchcode` varchar(10) NOT NULL DEFAULT '',
-  `debtorno` varchar(10) NOT NULL DEFAULT '',
-  `brname` varchar(40) NOT NULL DEFAULT '',
-  `braddress1` varchar(40) NOT NULL DEFAULT '',
-  `braddress2` varchar(40) NOT NULL DEFAULT '',
-  `braddress3` varchar(40) NOT NULL DEFAULT '',
-  `braddress4` varchar(50) NOT NULL DEFAULT '',
-  `braddress5` varchar(20) NOT NULL DEFAULT '',
-  `braddress6` varchar(15) NOT NULL DEFAULT '',
-  `lat` float(10,6) NOT NULL DEFAULT '0.000000',
-  `lng` float(10,6) NOT NULL DEFAULT '0.000000',
-  `estdeliverydays` smallint(6) NOT NULL DEFAULT '1',
+  `branchcode` varchar(10) NOT NULL default '',
+  `debtorno` varchar(10) NOT NULL default '',
+  `brname` varchar(40) NOT NULL default '',
+  `braddress1` varchar(40) NOT NULL default '',
+  `braddress2` varchar(40) NOT NULL default '',
+  `braddress3` varchar(40) NOT NULL default '',
+  `braddress4` varchar(50) NOT NULL default '',
+  `braddress5` varchar(20) NOT NULL default '',
+  `braddress6` varchar(15) NOT NULL default '',
+  `lat` float(10,6) NOT NULL default '0.000000',
+  `lng` float(10,6) NOT NULL default '0.000000',
+  `estdeliverydays` smallint(6) NOT NULL default '1',
   `area` char(3) NOT NULL,
-  `salesman` varchar(4) NOT NULL DEFAULT '',
-  `fwddate` smallint(6) NOT NULL DEFAULT '0',
-  `phoneno` varchar(20) NOT NULL DEFAULT '',
-  `faxno` varchar(20) NOT NULL DEFAULT '',
-  `contactname` varchar(30) NOT NULL DEFAULT '',
-  `email` varchar(55) NOT NULL DEFAULT '',
-  `defaultlocation` varchar(5) NOT NULL DEFAULT '',
-  `taxgroupid` tinyint(4) NOT NULL DEFAULT '1',
-  `defaultshipvia` int(11) NOT NULL DEFAULT '1',
-  `deliverblind` tinyint(1) DEFAULT '1',
-  `disabletrans` tinyint(4) NOT NULL DEFAULT '0',
-  `brpostaddr1` varchar(40) NOT NULL DEFAULT '',
-  `brpostaddr2` varchar(40) NOT NULL DEFAULT '',
-  `brpostaddr3` varchar(30) NOT NULL DEFAULT '',
-  `brpostaddr4` varchar(20) NOT NULL DEFAULT '',
-  `brpostaddr5` varchar(20) NOT NULL DEFAULT '',
-  `brpostaddr6` varchar(15) NOT NULL DEFAULT '',
+  `salesman` varchar(4) NOT NULL default '',
+  `fwddate` smallint(6) NOT NULL default '0',
+  `phoneno` varchar(20) NOT NULL default '',
+  `faxno` varchar(20) NOT NULL default '',
+  `contactname` varchar(30) NOT NULL default '',
+  `email` varchar(55) NOT NULL default '',
+  `defaultlocation` varchar(5) NOT NULL default '',
+  `taxgroupid` tinyint(4) NOT NULL default '1',
+  `defaultshipvia` int(11) NOT NULL default '1',
+  `deliverblind` tinyint(1) default '1',
+  `disabletrans` tinyint(4) NOT NULL default '0',
+  `brpostaddr1` varchar(40) NOT NULL default '',
+  `brpostaddr2` varchar(40) NOT NULL default '',
+  `brpostaddr3` varchar(30) NOT NULL default '',
+  `brpostaddr4` varchar(20) NOT NULL default '',
+  `brpostaddr5` varchar(20) NOT NULL default '',
+  `brpostaddr6` varchar(15) NOT NULL default '',
   `specialinstructions` text NOT NULL,
-  `custbranchcode` varchar(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`branchcode`,`debtorno`),
+  `custbranchcode` varchar(30) NOT NULL default '',
+  PRIMARY KEY  (`branchcode`,`debtorno`),
   KEY `BrName` (`brname`),
   KEY `DebtorNo` (`debtorno`),
   KEY `Salesman` (`salesman`),
@@ -393,72 +387,72 @@ CREATE TABLE `custbranch` (
   KEY `DefaultLocation` (`defaultlocation`),
   KEY `DefaultShipVia` (`defaultshipvia`),
   KEY `taxgroupid` (`taxgroupid`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `custcontacts`
 --
 
 CREATE TABLE `custcontacts` (
-  `contid` int(11) NOT NULL AUTO_INCREMENT,
+  `contid` int(11) NOT NULL auto_increment,
   `debtorno` varchar(10) NOT NULL,
   `contactname` varchar(40) NOT NULL,
   `role` varchar(40) NOT NULL,
   `phoneno` varchar(20) NOT NULL,
   `notes` varchar(255) NOT NULL,
-  PRIMARY KEY (`contid`)
-) TYPE=InnoDB AUTO_INCREMENT=6;
+  PRIMARY KEY  (`contid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `custnotes`
 --
 
 CREATE TABLE `custnotes` (
-  `noteid` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `debtorno` varchar(10) NOT NULL DEFAULT '0',
+  `noteid` tinyint(4) NOT NULL auto_increment,
+  `debtorno` varchar(10) NOT NULL default '0',
   `href` varchar(100) NOT NULL,
-  `note` text,
-  `date` date NOT NULL DEFAULT '0000-00-00',
+  `note` text NOT NULL,
+  `date` date NOT NULL default '0000-00-00',
   `priority` varchar(20) NOT NULL,
-  PRIMARY KEY (`noteid`)
-) TYPE=InnoDB;
+  PRIMARY KEY  (`noteid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `debtorsmaster`
 --
 
 CREATE TABLE `debtorsmaster` (
-  `debtorno` varchar(10) NOT NULL DEFAULT '',
-  `name` varchar(40) NOT NULL DEFAULT '',
-  `address1` varchar(40) NOT NULL DEFAULT '',
-  `address2` varchar(40) NOT NULL DEFAULT '',
-  `address3` varchar(40) NOT NULL DEFAULT '',
-  `address4` varchar(50) NOT NULL DEFAULT '',
-  `address5` varchar(20) NOT NULL DEFAULT '',
-  `address6` varchar(15) NOT NULL DEFAULT '',
-  `currcode` char(3) NOT NULL DEFAULT '',
-  `salestype` char(2) NOT NULL DEFAULT '',
-  `clientsince` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `holdreason` smallint(6) NOT NULL DEFAULT '0',
-  `paymentterms` char(2) NOT NULL DEFAULT 'f',
-  `discount` double NOT NULL DEFAULT '0',
-  `pymtdiscount` double NOT NULL DEFAULT '0',
-  `lastpaid` double NOT NULL DEFAULT '0',
-  `lastpaiddate` datetime DEFAULT NULL,
-  `creditlimit` double NOT NULL DEFAULT '1000',
-  `invaddrbranch` tinyint(4) NOT NULL DEFAULT '0',
-  `discountcode` char(2) NOT NULL DEFAULT '',
-  `ediinvoices` tinyint(4) NOT NULL DEFAULT '0',
-  `ediorders` tinyint(4) NOT NULL DEFAULT '0',
-  `edireference` varchar(20) NOT NULL DEFAULT '',
-  `editransport` varchar(5) NOT NULL DEFAULT 'email',
-  `ediaddress` varchar(50) NOT NULL DEFAULT '',
-  `ediserveruser` varchar(20) NOT NULL DEFAULT '',
-  `ediserverpwd` varchar(20) NOT NULL DEFAULT '',
-  `taxref` varchar(20) NOT NULL DEFAULT '',
-  `customerpoline` tinyint(1) NOT NULL DEFAULT '0',
-  `typeid` tinyint(4) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`debtorno`),
+  `debtorno` varchar(10) NOT NULL default '',
+  `name` varchar(40) NOT NULL default '',
+  `address1` varchar(40) NOT NULL default '',
+  `address2` varchar(40) NOT NULL default '',
+  `address3` varchar(40) NOT NULL default '',
+  `address4` varchar(50) NOT NULL default '',
+  `address5` varchar(20) NOT NULL default '',
+  `address6` varchar(15) NOT NULL default '',
+  `currcode` char(3) NOT NULL default '',
+  `salestype` char(2) NOT NULL default '',
+  `clientsince` datetime NOT NULL default '0000-00-00 00:00:00',
+  `holdreason` smallint(6) NOT NULL default '0',
+  `paymentterms` char(2) NOT NULL default 'f',
+  `discount` double NOT NULL default '0',
+  `pymtdiscount` double NOT NULL default '0',
+  `lastpaid` double NOT NULL default '0',
+  `lastpaiddate` datetime default NULL,
+  `creditlimit` double NOT NULL default '1000',
+  `invaddrbranch` tinyint(4) NOT NULL default '0',
+  `discountcode` char(2) NOT NULL default '',
+  `ediinvoices` tinyint(4) NOT NULL default '0',
+  `ediorders` tinyint(4) NOT NULL default '0',
+  `edireference` varchar(20) NOT NULL default '',
+  `editransport` varchar(5) NOT NULL default 'email',
+  `ediaddress` varchar(50) NOT NULL default '',
+  `ediserveruser` varchar(20) NOT NULL default '',
+  `ediserverpwd` varchar(20) NOT NULL default '',
+  `taxref` varchar(20) NOT NULL default '',
+  `customerpoline` tinyint(1) NOT NULL default '0',
+  `typeid` tinyint(4) NOT NULL default '1',
+  PRIMARY KEY  (`debtorno`),
   KEY `Currency` (`currcode`),
   KEY `HoldReason` (`holdreason`),
   KEY `Name` (`name`),
@@ -467,36 +461,36 @@ CREATE TABLE `debtorsmaster` (
   KEY `EDIInvoices` (`ediinvoices`),
   KEY `EDIOrders` (`ediorders`),
   KEY `debtorsmaster_ibfk_5` (`typeid`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `debtortrans`
 --
 
 CREATE TABLE `debtortrans` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `transno` int(11) NOT NULL DEFAULT '0',
-  `type` smallint(6) NOT NULL DEFAULT '0',
-  `debtorno` varchar(10) NOT NULL DEFAULT '',
-  `branchcode` varchar(10) NOT NULL DEFAULT '',
-  `trandate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `prd` smallint(6) NOT NULL DEFAULT '0',
-  `settled` tinyint(4) NOT NULL DEFAULT '0',
-  `reference` varchar(20) NOT NULL DEFAULT '',
-  `tpe` char(2) NOT NULL DEFAULT '',
-  `order_` int(11) NOT NULL DEFAULT '0',
-  `rate` double NOT NULL DEFAULT '0',
-  `ovamount` double NOT NULL DEFAULT '0',
-  `ovgst` double NOT NULL DEFAULT '0',
-  `ovfreight` double NOT NULL DEFAULT '0',
-  `ovdiscount` double NOT NULL DEFAULT '0',
-  `diffonexch` double NOT NULL DEFAULT '0',
-  `alloc` double NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL auto_increment,
+  `transno` int(11) NOT NULL default '0',
+  `type` smallint(6) NOT NULL default '0',
+  `debtorno` varchar(10) NOT NULL default '',
+  `branchcode` varchar(10) NOT NULL default '',
+  `trandate` datetime NOT NULL default '0000-00-00 00:00:00',
+  `prd` smallint(6) NOT NULL default '0',
+  `settled` tinyint(4) NOT NULL default '0',
+  `reference` varchar(20) NOT NULL default '',
+  `tpe` char(2) NOT NULL default '',
+  `order_` int(11) NOT NULL default '0',
+  `rate` double NOT NULL default '0',
+  `ovamount` double NOT NULL default '0',
+  `ovgst` double NOT NULL default '0',
+  `ovfreight` double NOT NULL default '0',
+  `ovdiscount` double NOT NULL default '0',
+  `diffonexch` double NOT NULL default '0',
+  `alloc` double NOT NULL default '0',
   `invtext` text,
-  `shipvia` varchar(10) NOT NULL DEFAULT '',
-  `edisent` tinyint(4) NOT NULL DEFAULT '0',
-  `consignment` varchar(15) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
+  `shipvia` varchar(10) NOT NULL default '',
+  `edisent` tinyint(4) NOT NULL default '0',
+  `consignment` varchar(15) NOT NULL default '',
+  PRIMARY KEY  (`id`),
   KEY `DebtorNo` (`debtorno`,`branchcode`),
   KEY `Order_` (`order_`),
   KEY `Prd` (`prd`),
@@ -507,43 +501,43 @@ CREATE TABLE `debtortrans` (
   KEY `TransNo` (`transno`),
   KEY `Type_2` (`type`,`transno`),
   KEY `EDISent` (`edisent`)
-) TYPE=InnoDB AUTO_INCREMENT=7;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `debtortranstaxes`
 --
 
 CREATE TABLE `debtortranstaxes` (
-  `debtortransid` int(11) NOT NULL DEFAULT '0',
-  `taxauthid` tinyint(4) NOT NULL DEFAULT '0',
-  `taxamount` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`debtortransid`,`taxauthid`),
+  `debtortransid` int(11) NOT NULL default '0',
+  `taxauthid` tinyint(4) NOT NULL default '0',
+  `taxamount` double NOT NULL default '0',
+  PRIMARY KEY  (`debtortransid`,`taxauthid`),
   KEY `taxauthid` (`taxauthid`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `debtortype`
 --
 
 CREATE TABLE `debtortype` (
-  `typeid` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `typeid` tinyint(4) NOT NULL auto_increment,
   `typename` varchar(100) NOT NULL,
-  PRIMARY KEY (`typeid`)
-) TYPE=InnoDB AUTO_INCREMENT=2;
+  PRIMARY KEY  (`typeid`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `debtortypenotes`
 --
 
 CREATE TABLE `debtortypenotes` (
-  `noteid` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `typeid` tinyint(4) NOT NULL DEFAULT '0',
+  `noteid` tinyint(4) NOT NULL auto_increment,
+  `typeid` tinyint(4) NOT NULL default '0',
   `href` varchar(100) NOT NULL,
   `note` varchar(200) NOT NULL,
-  `date` date NOT NULL DEFAULT '0000-00-00',
+  `date` date NOT NULL default '0000-00-00',
   `priority` varchar(20) NOT NULL,
-  PRIMARY KEY (`noteid`)
-) TYPE=InnoDB;
+  PRIMARY KEY  (`noteid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `deliverynotes`
@@ -554,161 +548,161 @@ CREATE TABLE `deliverynotes` (
   `deliverynotelineno` tinyint(4) NOT NULL,
   `salesorderno` int(11) NOT NULL,
   `salesorderlineno` int(11) NOT NULL,
-  `qtydelivered` double NOT NULL DEFAULT '0',
-  `printed` tinyint(4) NOT NULL DEFAULT '0',
-  `invoiced` tinyint(4) NOT NULL DEFAULT '0',
-  `deliverydate` date NOT NULL DEFAULT '0000-00-00',
-  PRIMARY KEY (`deliverynotenumber`,`deliverynotelineno`),
+  `qtydelivered` double NOT NULL default '0',
+  `printed` tinyint(4) NOT NULL default '0',
+  `invoiced` tinyint(4) NOT NULL default '0',
+  `deliverydate` date NOT NULL default '0000-00-00',
+  PRIMARY KEY  (`deliverynotenumber`,`deliverynotelineno`),
   KEY `deliverynotes_ibfk_2` (`salesorderno`,`salesorderlineno`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `discountmatrix`
 --
 
 CREATE TABLE `discountmatrix` (
-  `salestype` char(2) NOT NULL DEFAULT '',
-  `discountcategory` char(2) NOT NULL DEFAULT '',
-  `quantitybreak` int(11) NOT NULL DEFAULT '1',
-  `discountrate` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`salestype`,`discountcategory`,`quantitybreak`),
+  `salestype` char(2) NOT NULL default '',
+  `discountcategory` char(2) NOT NULL default '',
+  `quantitybreak` int(11) NOT NULL default '1',
+  `discountrate` double NOT NULL default '0',
+  PRIMARY KEY  (`salestype`,`discountcategory`,`quantitybreak`),
   KEY `QuantityBreak` (`quantitybreak`),
   KEY `DiscountCategory` (`discountcategory`),
   KEY `SalesType` (`salestype`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `edi_orders_seg_groups`
 --
 
 CREATE TABLE `edi_orders_seg_groups` (
-  `seggroupno` tinyint(4) NOT NULL DEFAULT '0',
-  `maxoccur` int(4) NOT NULL DEFAULT '0',
-  `parentseggroup` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`seggroupno`)
-) TYPE=InnoDB;
+  `seggroupno` tinyint(4) NOT NULL default '0',
+  `maxoccur` int(4) NOT NULL default '0',
+  `parentseggroup` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`seggroupno`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `edi_orders_segs`
 --
 
 CREATE TABLE `edi_orders_segs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `segtag` char(3) NOT NULL DEFAULT '',
-  `seggroup` tinyint(4) NOT NULL DEFAULT '0',
-  `maxoccur` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
+  `id` int(11) NOT NULL auto_increment,
+  `segtag` char(3) NOT NULL default '',
+  `seggroup` tinyint(4) NOT NULL default '0',
+  `maxoccur` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`id`),
   KEY `SegTag` (`segtag`),
   KEY `SegNo` (`seggroup`)
-) TYPE=InnoDB AUTO_INCREMENT=96;
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `ediitemmapping`
 --
 
 CREATE TABLE `ediitemmapping` (
-  `supporcust` varchar(4) NOT NULL DEFAULT '',
-  `partnercode` varchar(10) NOT NULL DEFAULT '',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
-  `partnerstockid` varchar(50) NOT NULL DEFAULT '',
-  PRIMARY KEY (`supporcust`,`partnercode`,`stockid`),
+  `supporcust` varchar(4) NOT NULL default '',
+  `partnercode` varchar(10) NOT NULL default '',
+  `stockid` varchar(20) NOT NULL default '',
+  `partnerstockid` varchar(50) NOT NULL default '',
+  PRIMARY KEY  (`supporcust`,`partnercode`,`stockid`),
   KEY `PartnerCode` (`partnercode`),
   KEY `StockID` (`stockid`),
   KEY `PartnerStockID` (`partnerstockid`),
   KEY `SuppOrCust` (`supporcust`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `edimessageformat`
 --
 
 CREATE TABLE `edimessageformat` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `partnercode` varchar(10) NOT NULL DEFAULT '',
-  `messagetype` varchar(6) NOT NULL DEFAULT '',
-  `section` varchar(7) NOT NULL DEFAULT '',
-  `sequenceno` int(11) NOT NULL DEFAULT '0',
-  `linetext` varchar(70) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
+  `id` int(11) NOT NULL auto_increment,
+  `partnercode` varchar(10) NOT NULL default '',
+  `messagetype` varchar(6) NOT NULL default '',
+  `section` varchar(7) NOT NULL default '',
+  `sequenceno` int(11) NOT NULL default '0',
+  `linetext` varchar(70) NOT NULL default '',
+  PRIMARY KEY  (`id`),
   UNIQUE KEY `PartnerCode` (`partnercode`,`messagetype`,`sequenceno`),
   KEY `Section` (`section`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `factorcompanies`
 --
 
 CREATE TABLE `factorcompanies` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `coyname` varchar(50) NOT NULL DEFAULT '',
-  `address1` varchar(40) NOT NULL DEFAULT '',
-  `address2` varchar(40) NOT NULL DEFAULT '',
-  `address3` varchar(40) NOT NULL DEFAULT '',
-  `address4` varchar(40) NOT NULL DEFAULT '',
-  `address5` varchar(20) NOT NULL DEFAULT '',
-  `address6` varchar(15) NOT NULL DEFAULT '',
-  `contact` varchar(25) NOT NULL DEFAULT '',
-  `telephone` varchar(25) NOT NULL DEFAULT '',
-  `fax` varchar(25) NOT NULL DEFAULT '',
-  `email` varchar(55) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) TYPE=InnoDB AUTO_INCREMENT=4;
+  `id` int(11) NOT NULL auto_increment,
+  `coyname` varchar(50) NOT NULL default '',
+  `address1` varchar(40) NOT NULL default '',
+  `address2` varchar(40) NOT NULL default '',
+  `address3` varchar(40) NOT NULL default '',
+  `address4` varchar(40) NOT NULL default '',
+  `address5` varchar(20) NOT NULL default '',
+  `address6` varchar(15) NOT NULL default '',
+  `contact` varchar(25) NOT NULL default '',
+  `telephone` varchar(25) NOT NULL default '',
+  `fax` varchar(25) NOT NULL default '',
+  `email` varchar(55) NOT NULL default '',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `freightcosts`
 --
 
 CREATE TABLE `freightcosts` (
-  `shipcostfromid` int(11) NOT NULL AUTO_INCREMENT,
-  `locationfrom` varchar(5) NOT NULL DEFAULT '',
-  `destination` varchar(40) NOT NULL DEFAULT '',
-  `shipperid` int(11) NOT NULL DEFAULT '0',
-  `cubrate` double NOT NULL DEFAULT '0',
-  `kgrate` double NOT NULL DEFAULT '0',
-  `maxkgs` double NOT NULL DEFAULT '999999',
-  `maxcub` double NOT NULL DEFAULT '999999',
-  `fixedprice` double NOT NULL DEFAULT '0',
-  `minimumchg` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`shipcostfromid`),
+  `shipcostfromid` int(11) NOT NULL auto_increment,
+  `locationfrom` varchar(5) NOT NULL default '',
+  `destination` varchar(40) NOT NULL default '',
+  `shipperid` int(11) NOT NULL default '0',
+  `cubrate` double NOT NULL default '0',
+  `kgrate` double NOT NULL default '0',
+  `maxkgs` double NOT NULL default '999999',
+  `maxcub` double NOT NULL default '999999',
+  `fixedprice` double NOT NULL default '0',
+  `minimumchg` double NOT NULL default '0',
+  PRIMARY KEY  (`shipcostfromid`),
   KEY `Destination` (`destination`),
   KEY `LocationFrom` (`locationfrom`),
   KEY `ShipperID` (`shipperid`),
   KEY `Destination_2` (`destination`,`locationfrom`,`shipperid`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `geocode_param`
 --
 
 CREATE TABLE `geocode_param` (
-  `geocodeid` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `geocode_key` varchar(200) NOT NULL DEFAULT '',
-  `center_long` varchar(20) NOT NULL DEFAULT '',
-  `center_lat` varchar(20) NOT NULL DEFAULT '',
-  `map_height` varchar(10) NOT NULL DEFAULT '',
-  `map_width` varchar(10) NOT NULL DEFAULT '',
-  `map_host` varchar(50) NOT NULL DEFAULT '',
-  PRIMARY KEY (`geocodeid`)
-) TYPE=InnoDB;
+  `geocodeid` tinyint(4) NOT NULL auto_increment,
+  `geocode_key` varchar(200) NOT NULL default '',
+  `center_long` varchar(20) NOT NULL default '',
+  `center_lat` varchar(20) NOT NULL default '',
+  `map_height` varchar(10) NOT NULL default '',
+  `map_width` varchar(10) NOT NULL default '',
+  `map_host` varchar(50) NOT NULL default '',
+  PRIMARY KEY  (`geocodeid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `gltrans`
 --
 
 CREATE TABLE `gltrans` (
-  `counterindex` int(11) NOT NULL AUTO_INCREMENT,
-  `type` smallint(6) NOT NULL DEFAULT '0',
-  `typeno` bigint(16) NOT NULL DEFAULT '1',
-  `chequeno` int(11) NOT NULL DEFAULT '0',
-  `trandate` date NOT NULL DEFAULT '0000-00-00',
-  `periodno` smallint(6) NOT NULL DEFAULT '0',
-  `account` int(11) NOT NULL DEFAULT '0',
-  `narrative` varchar(200) NOT NULL DEFAULT '',
-  `amount` double NOT NULL DEFAULT '0',
-  `posted` tinyint(4) NOT NULL DEFAULT '0',
-  `jobref` varchar(20) NOT NULL DEFAULT '',
-  `tag` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`counterindex`),
+  `counterindex` int(11) NOT NULL auto_increment,
+  `type` smallint(6) NOT NULL default '0',
+  `typeno` bigint(16) NOT NULL default '1',
+  `chequeno` int(11) NOT NULL default '0',
+  `trandate` date NOT NULL default '0000-00-00',
+  `periodno` smallint(6) NOT NULL default '0',
+  `account` int(11) NOT NULL default '0',
+  `narrative` varchar(200) NOT NULL default '',
+  `amount` double NOT NULL default '0',
+  `posted` tinyint(4) NOT NULL default '0',
+  `jobref` varchar(20) NOT NULL default '',
+  `tag` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`counterindex`),
   KEY `Account` (`account`),
   KEY `ChequeNo` (`chequeno`),
   KEY `PeriodNo` (`periodno`),
@@ -717,115 +711,115 @@ CREATE TABLE `gltrans` (
   KEY `TypeNo` (`typeno`),
   KEY `Type_and_Number` (`type`,`typeno`),
   KEY `JobRef` (`jobref`)
-) TYPE=InnoDB AUTO_INCREMENT=123;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `grns`
 --
 
 CREATE TABLE `grns` (
-  `grnbatch` smallint(6) NOT NULL DEFAULT '0',
-  `grnno` int(11) NOT NULL AUTO_INCREMENT,
-  `podetailitem` int(11) NOT NULL DEFAULT '0',
-  `itemcode` varchar(20) NOT NULL DEFAULT '',
-  `deliverydate` date NOT NULL DEFAULT '0000-00-00',
-  `itemdescription` varchar(100) NOT NULL DEFAULT '',
-  `qtyrecd` double NOT NULL DEFAULT '0',
-  `quantityinv` double NOT NULL DEFAULT '0',
-  `supplierid` varchar(10) NOT NULL DEFAULT '',
-  `stdcostunit` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`grnno`),
+  `grnbatch` smallint(6) NOT NULL default '0',
+  `grnno` int(11) NOT NULL auto_increment,
+  `podetailitem` int(11) NOT NULL default '0',
+  `itemcode` varchar(20) NOT NULL default '',
+  `deliverydate` date NOT NULL default '0000-00-00',
+  `itemdescription` varchar(100) NOT NULL default '',
+  `qtyrecd` double NOT NULL default '0',
+  `quantityinv` double NOT NULL default '0',
+  `supplierid` varchar(10) NOT NULL default '',
+  `stdcostunit` double NOT NULL default '0',
+  PRIMARY KEY  (`grnno`),
   KEY `DeliveryDate` (`deliverydate`),
   KEY `ItemCode` (`itemcode`),
   KEY `PODetailItem` (`podetailitem`),
   KEY `SupplierID` (`supplierid`)
-) TYPE=InnoDB AUTO_INCREMENT=15;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `holdreasons`
 --
 
 CREATE TABLE `holdreasons` (
-  `reasoncode` smallint(6) NOT NULL DEFAULT '1',
-  `reasondescription` char(30) NOT NULL DEFAULT '',
-  `dissallowinvoices` tinyint(4) NOT NULL DEFAULT '-1',
-  PRIMARY KEY (`reasoncode`),
+  `reasoncode` smallint(6) NOT NULL default '1',
+  `reasondescription` char(30) NOT NULL default '',
+  `dissallowinvoices` tinyint(4) NOT NULL default '-1',
+  PRIMARY KEY  (`reasoncode`),
   KEY `ReasonCode` (`reasoncode`),
   KEY `ReasonDescription` (`reasondescription`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `lastcostrollup`
 --
 
 CREATE TABLE `lastcostrollup` (
-  `stockid` char(20) NOT NULL DEFAULT '',
-  `totalonhand` double NOT NULL DEFAULT '0',
-  `matcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `labcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `oheadcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `categoryid` char(6) NOT NULL DEFAULT '',
-  `stockact` int(11) NOT NULL DEFAULT '0',
-  `adjglact` int(11) NOT NULL DEFAULT '0',
-  `newmatcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `newlabcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `newoheadcost` decimal(20,4) NOT NULL DEFAULT '0.0000'
-) TYPE=InnoDB;
+  `stockid` char(20) NOT NULL default '',
+  `totalonhand` double NOT NULL default '0',
+  `matcost` decimal(20,4) NOT NULL default '0.0000',
+  `labcost` decimal(20,4) NOT NULL default '0.0000',
+  `oheadcost` decimal(20,4) NOT NULL default '0.0000',
+  `categoryid` char(6) NOT NULL default '',
+  `stockact` int(11) NOT NULL default '0',
+  `adjglact` int(11) NOT NULL default '0',
+  `newmatcost` decimal(20,4) NOT NULL default '0.0000',
+  `newlabcost` decimal(20,4) NOT NULL default '0.0000',
+  `newoheadcost` decimal(20,4) NOT NULL default '0.0000'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `locations`
 --
 
 CREATE TABLE `locations` (
-  `loccode` varchar(5) NOT NULL DEFAULT '',
-  `locationname` varchar(50) NOT NULL DEFAULT '',
-  `deladd1` varchar(40) NOT NULL DEFAULT '',
-  `deladd2` varchar(40) NOT NULL DEFAULT '',
-  `deladd3` varchar(40) NOT NULL DEFAULT '',
-  `deladd4` varchar(40) NOT NULL DEFAULT '',
-  `deladd5` varchar(20) NOT NULL DEFAULT '',
-  `deladd6` varchar(15) NOT NULL DEFAULT '',
-  `tel` varchar(30) NOT NULL DEFAULT '',
-  `fax` varchar(30) NOT NULL DEFAULT '',
-  `email` varchar(55) NOT NULL DEFAULT '',
-  `contact` varchar(30) NOT NULL DEFAULT '',
-  `taxprovinceid` tinyint(4) NOT NULL DEFAULT '1',
-  `managed` int(11) DEFAULT '0',
-  PRIMARY KEY (`loccode`),
+  `loccode` varchar(5) NOT NULL default '',
+  `locationname` varchar(50) NOT NULL default '',
+  `deladd1` varchar(40) NOT NULL default '',
+  `deladd2` varchar(40) NOT NULL default '',
+  `deladd3` varchar(40) NOT NULL default '',
+  `deladd4` varchar(40) NOT NULL default '',
+  `deladd5` varchar(20) NOT NULL default '',
+  `deladd6` varchar(15) NOT NULL default '',
+  `tel` varchar(30) NOT NULL default '',
+  `fax` varchar(30) NOT NULL default '',
+  `email` varchar(55) NOT NULL default '',
+  `contact` varchar(30) NOT NULL default '',
+  `taxprovinceid` tinyint(4) NOT NULL default '1',
+  `managed` int(11) default '0',
+  PRIMARY KEY  (`loccode`),
   KEY `taxprovinceid` (`taxprovinceid`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `locstock`
 --
 
 CREATE TABLE `locstock` (
-  `loccode` varchar(5) NOT NULL DEFAULT '',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
-  `quantity` double NOT NULL DEFAULT '0',
-  `reorderlevel` bigint(20) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`loccode`,`stockid`),
+  `loccode` varchar(5) NOT NULL default '',
+  `stockid` varchar(20) NOT NULL default '',
+  `quantity` double NOT NULL default '0',
+  `reorderlevel` bigint(20) NOT NULL default '0',
+  PRIMARY KEY  (`loccode`,`stockid`),
   KEY `StockID` (`stockid`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `loctransfers`
 --
 
 CREATE TABLE `loctransfers` (
-  `reference` int(11) NOT NULL DEFAULT '0',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
-  `shipqty` int(11) NOT NULL DEFAULT '0',
-  `recqty` int(11) NOT NULL DEFAULT '0',
-  `shipdate` date NOT NULL DEFAULT '0000-00-00',
-  `recdate` date NOT NULL DEFAULT '0000-00-00',
-  `shiploc` varchar(7) NOT NULL DEFAULT '',
-  `recloc` varchar(7) NOT NULL DEFAULT '',
+  `reference` int(11) NOT NULL default '0',
+  `stockid` varchar(20) NOT NULL default '',
+  `shipqty` int(11) NOT NULL default '0',
+  `recqty` int(11) NOT NULL default '0',
+  `shipdate` date NOT NULL default '0000-00-00',
+  `recdate` date NOT NULL default '0000-00-00',
+  `shiploc` varchar(7) NOT NULL default '',
+  `recloc` varchar(7) NOT NULL default '',
   KEY `Reference` (`reference`,`stockid`),
   KEY `ShipLoc` (`shiploc`),
   KEY `RecLoc` (`recloc`),
   KEY `StockID` (`stockid`)
-) TYPE=InnoDB COMMENT='Stores Shipments To And From Locations';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Stores Shipments To And From Locations';
 
 --
 -- Table structure for table `mrpcalendar`
@@ -834,142 +828,142 @@ CREATE TABLE `loctransfers` (
 CREATE TABLE `mrpcalendar` (
   `calendardate` date NOT NULL,
   `daynumber` int(6) NOT NULL,
-  `manufacturingflag` smallint(6) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`calendardate`),
+  `manufacturingflag` smallint(6) NOT NULL default '1',
+  PRIMARY KEY  (`calendardate`),
   KEY `daynumber` (`daynumber`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `mrpdemands`
 --
 
 CREATE TABLE `mrpdemands` (
-  `demandid` int(11) NOT NULL AUTO_INCREMENT,
-  `stockid` varchar(20) NOT NULL DEFAULT '',
-  `mrpdemandtype` varchar(6) NOT NULL DEFAULT '',
-  `quantity` double NOT NULL DEFAULT '0',
-  `duedate` date NOT NULL DEFAULT '0000-00-00',
-  PRIMARY KEY (`demandid`),
+  `demandid` int(11) NOT NULL auto_increment,
+  `stockid` varchar(20) NOT NULL default '',
+  `mrpdemandtype` varchar(6) NOT NULL default '',
+  `quantity` double NOT NULL default '0',
+  `duedate` date NOT NULL default '0000-00-00',
+  PRIMARY KEY  (`demandid`),
   KEY `StockID` (`stockid`),
   KEY `mrpdemands_ibfk_1` (`mrpdemandtype`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `mrpdemandtypes`
 --
 
 CREATE TABLE `mrpdemandtypes` (
-  `mrpdemandtype` varchar(6) NOT NULL DEFAULT '',
-  `description` char(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`mrpdemandtype`),
+  `mrpdemandtype` varchar(6) NOT NULL default '',
+  `description` char(30) NOT NULL default '',
+  PRIMARY KEY  (`mrpdemandtype`),
   KEY `mrpdemandtype` (`mrpdemandtype`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `orderdeliverydifferenceslog`
 --
 
 CREATE TABLE `orderdeliverydifferenceslog` (
-  `orderno` int(11) NOT NULL DEFAULT '0',
-  `invoiceno` int(11) NOT NULL DEFAULT '0',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
-  `quantitydiff` double NOT NULL DEFAULT '0',
-  `debtorno` varchar(10) NOT NULL DEFAULT '',
-  `branch` varchar(10) NOT NULL DEFAULT '',
-  `can_or_bo` char(3) NOT NULL DEFAULT 'CAN',
-  PRIMARY KEY (`orderno`,`invoiceno`,`stockid`),
+  `orderno` int(11) NOT NULL default '0',
+  `invoiceno` int(11) NOT NULL default '0',
+  `stockid` varchar(20) NOT NULL default '',
+  `quantitydiff` double NOT NULL default '0',
+  `debtorno` varchar(10) NOT NULL default '',
+  `branch` varchar(10) NOT NULL default '',
+  `can_or_bo` char(3) NOT NULL default 'CAN',
+  PRIMARY KEY  (`orderno`,`invoiceno`,`stockid`),
   KEY `StockID` (`stockid`),
   KEY `DebtorNo` (`debtorno`,`branch`),
   KEY `Can_or_BO` (`can_or_bo`),
   KEY `OrderNo` (`orderno`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `paymentmethods`
 --
 
 CREATE TABLE `paymentmethods` (
-  `paymentid` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `paymentname` varchar(15) NOT NULL DEFAULT '',
-  `paymenttype` int(11) NOT NULL DEFAULT '1',
-  `receipttype` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`paymentid`)
-) TYPE=InnoDB AUTO_INCREMENT=4;
+  `paymentid` tinyint(4) NOT NULL auto_increment,
+  `paymentname` varchar(15) NOT NULL default '',
+  `paymenttype` int(11) NOT NULL default '1',
+  `receipttype` int(11) NOT NULL default '1',
+  PRIMARY KEY  (`paymentid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `paymentterms`
 --
 
 CREATE TABLE `paymentterms` (
-  `termsindicator` char(2) NOT NULL DEFAULT '',
-  `terms` char(40) NOT NULL DEFAULT '',
-  `daysbeforedue` smallint(6) NOT NULL DEFAULT '0',
-  `dayinfollowingmonth` smallint(6) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`termsindicator`),
+  `termsindicator` char(2) NOT NULL default '',
+  `terms` char(40) NOT NULL default '',
+  `daysbeforedue` smallint(6) NOT NULL default '0',
+  `dayinfollowingmonth` smallint(6) NOT NULL default '0',
+  PRIMARY KEY  (`termsindicator`),
   KEY `DaysBeforeDue` (`daysbeforedue`),
   KEY `DayInFollowingMonth` (`dayinfollowingmonth`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `periods`
 --
 
 CREATE TABLE `periods` (
-  `periodno` smallint(6) NOT NULL DEFAULT '0',
-  `lastdate_in_period` date NOT NULL DEFAULT '0000-00-00',
-  PRIMARY KEY (`periodno`),
+  `periodno` smallint(6) NOT NULL default '0',
+  `lastdate_in_period` date NOT NULL default '0000-00-00',
+  PRIMARY KEY  (`periodno`),
   KEY `LastDate_in_Period` (`lastdate_in_period`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `prices`
 --
 
 CREATE TABLE `prices` (
-  `stockid` varchar(20) NOT NULL DEFAULT '',
-  `typeabbrev` char(2) NOT NULL DEFAULT '',
-  `currabrev` char(3) NOT NULL DEFAULT '',
-  `debtorno` varchar(10) NOT NULL DEFAULT '',
-  `price` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `branchcode` varchar(10) NOT NULL DEFAULT '',
-  PRIMARY KEY (`stockid`,`typeabbrev`,`currabrev`,`debtorno`),
+  `stockid` varchar(20) NOT NULL default '',
+  `typeabbrev` char(2) NOT NULL default '',
+  `currabrev` char(3) NOT NULL default '',
+  `debtorno` varchar(10) NOT NULL default '',
+  `price` decimal(20,4) NOT NULL default '0.0000',
+  `branchcode` varchar(10) NOT NULL default '',
+  PRIMARY KEY  (`stockid`,`typeabbrev`,`currabrev`,`debtorno`),
   KEY `CurrAbrev` (`currabrev`),
   KEY `DebtorNo` (`debtorno`),
   KEY `StockID` (`stockid`),
   KEY `TypeAbbrev` (`typeabbrev`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `purchdata`
 --
 
 CREATE TABLE `purchdata` (
-  `supplierno` char(10) NOT NULL DEFAULT '',
-  `stockid` char(20) NOT NULL DEFAULT '',
-  `price` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `suppliersuom` char(50) NOT NULL DEFAULT '',
-  `conversionfactor` double NOT NULL DEFAULT '1',
-  `supplierdescription` char(50) NOT NULL DEFAULT '',
-  `leadtime` smallint(6) NOT NULL DEFAULT '1',
-  `preferred` tinyint(4) NOT NULL DEFAULT '0',
+  `supplierno` char(10) NOT NULL default '',
+  `stockid` char(20) NOT NULL default '',
+  `price` decimal(20,4) NOT NULL default '0.0000',
+  `suppliersuom` char(50) NOT NULL default '',
+  `conversionfactor` double NOT NULL default '1',
+  `supplierdescription` char(50) NOT NULL default '',
+  `leadtime` smallint(6) NOT NULL default '1',
+  `preferred` tinyint(4) NOT NULL default '0',
   `effectivefrom` date NOT NULL,
   `suppliers_partno` varchar(50) NOT NULL default '',
-  PRIMARY KEY (`supplierno`,`stockid`,`effectivefrom`),
+  PRIMARY KEY  (`supplierno`,`stockid`,`effectivefrom`),
   KEY `StockID` (`stockid`),
   KEY `SupplierNo` (`supplierno`),
   KEY `Preferred` (`preferred`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `purchorderauth`
 --
 
 CREATE TABLE `purchorderauth` (
-	`userid` varchar(20) NOT NULL DEFAULT '',
-	`currabrev` char(3) NOT NULL DEFAULT '',
-	`cancreate` smallint(2) NOT NULL DEFAULT 0,
-	`authlevel` int(11) NOT NULL DEFAULT 0,
-	PRIMARY KEY (`userid`,`currabrev`)
+  `userid` varchar(20) NOT NULL default '',
+  `currabrev` char(3) NOT NULL default '',
+  `cancreate` smallint(2) NOT NULL default '0',
+  `authlevel` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`userid`,`currabrev`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -977,21 +971,21 @@ CREATE TABLE `purchorderauth` (
 --
 
 CREATE TABLE `purchorderdetails` (
-  `podetailitem` int(11) NOT NULL AUTO_INCREMENT,
-  `orderno` int(11) NOT NULL DEFAULT '0',
-  `itemcode` varchar(20) NOT NULL DEFAULT '',
-  `deliverydate` date NOT NULL DEFAULT '0000-00-00',
-  `itemdescription` varchar(100) NOT NULL DEFAULT '',
-  `glcode` int(11) NOT NULL DEFAULT '0',
-  `qtyinvoiced` double NOT NULL DEFAULT '0',
-  `unitprice` double NOT NULL DEFAULT '0',
-  `actprice` double NOT NULL DEFAULT '0',
-  `stdcostunit` double NOT NULL DEFAULT '0',
-  `quantityord` double NOT NULL DEFAULT '0',
-  `quantityrecd` double NOT NULL DEFAULT '0',
-  `shiptref` int(11) NOT NULL DEFAULT '0',
-  `jobref` varchar(20) NOT NULL DEFAULT '',
-  `completed` tinyint(4) NOT NULL DEFAULT '0',
+  `podetailitem` int(11) NOT NULL auto_increment,
+  `orderno` int(11) NOT NULL default '0',
+  `itemcode` varchar(20) NOT NULL default '',
+  `deliverydate` date NOT NULL default '0000-00-00',
+  `itemdescription` varchar(100) NOT NULL default '',
+  `glcode` int(11) NOT NULL default '0',
+  `qtyinvoiced` double NOT NULL default '0',
+  `unitprice` double NOT NULL default '0',
+  `actprice` double NOT NULL default '0',
+  `stdcostunit` double NOT NULL default '0',
+  `quantityord` double NOT NULL default '0',
+  `quantityrecd` double NOT NULL default '0',
+  `shiptref` int(11) NOT NULL default '0',
+  `jobref` varchar(20) NOT NULL default '',
+  `completed` tinyint(4) NOT NULL default '0',
   `itemno` varchar(50) NOT NULL default '',
   `uom` varchar(50) NOT NULL default '',
   `subtotal_amount` varchar(50) NOT NULL default '',
@@ -1003,7 +997,7 @@ CREATE TABLE `purchorderdetails` (
   `cuft` varchar(50) NOT NULL default '',
   `total_quantity` varchar(50) NOT NULL default '',
   `total_amount` varchar(50) NOT NULL default '',
-  PRIMARY KEY (`podetailitem`),
+  PRIMARY KEY  (`podetailitem`),
   KEY `DeliveryDate` (`deliverydate`),
   KEY `GLCode` (`glcode`),
   KEY `ItemCode` (`itemcode`),
@@ -1011,30 +1005,30 @@ CREATE TABLE `purchorderdetails` (
   KEY `OrderNo` (`orderno`),
   KEY `ShiptRef` (`shiptref`),
   KEY `Completed` (`completed`)
-) TYPE=InnoDB AUTO_INCREMENT=4;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `purchorders`
 --
 
 CREATE TABLE `purchorders` (
-  `orderno` int(11) NOT NULL AUTO_INCREMENT,
-  `supplierno` varchar(10) NOT NULL DEFAULT '',
+  `orderno` int(11) NOT NULL auto_increment,
+  `supplierno` varchar(10) NOT NULL default '',
   `comments` longblob,
-  `orddate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `rate` double NOT NULL DEFAULT '1',
-  `dateprinted` datetime DEFAULT NULL,
-  `allowprint` tinyint(4) NOT NULL DEFAULT '1',
-  `initiator` varchar(10) DEFAULT NULL,
-  `requisitionno` varchar(15) DEFAULT NULL,
-  `intostocklocation` varchar(5) NOT NULL DEFAULT '',
-  `deladd1` varchar(40) NOT NULL DEFAULT '',
-  `deladd2` varchar(40) NOT NULL DEFAULT '',
-  `deladd3` varchar(40) NOT NULL DEFAULT '',
-  `deladd4` varchar(40) NOT NULL DEFAULT '',
-  `deladd5` varchar(20) NOT NULL DEFAULT '',
-  `deladd6` varchar(15) NOT NULL DEFAULT '',
-  `contact` varchar(30) NOT NULL DEFAULT '',
+  `orddate` datetime NOT NULL default '0000-00-00 00:00:00',
+  `rate` double NOT NULL default '1',
+  `dateprinted` datetime default NULL,
+  `allowprint` tinyint(4) NOT NULL default '1',
+  `initiator` varchar(10) default NULL,
+  `requisitionno` varchar(15) default NULL,
+  `intostocklocation` varchar(5) NOT NULL default '',
+  `deladd1` varchar(40) NOT NULL default '',
+  `deladd2` varchar(40) NOT NULL default '',
+  `deladd3` varchar(40) NOT NULL default '',
+  `deladd4` varchar(40) NOT NULL default '',
+  `deladd5` varchar(20) NOT NULL default '',
+  `deladd6` varchar(15) NOT NULL default '',
+  `contact` varchar(30) NOT NULL default '',
   `version` decimal(3,2) NOT NULL default '1.00',
   `revised` date NOT NULL default '0000-00-00',
   `realorderno` varchar(16) NOT NULL default '',
@@ -1042,230 +1036,230 @@ CREATE TABLE `purchorders` (
   `deliverydate` date NOT NULL default '0000-00-00',
   `status` varchar(12) NOT NULL default '',
   `stat_comment` text NOT NULL,
-  PRIMARY KEY (`orderno`),
+  PRIMARY KEY  (`orderno`),
   KEY `OrdDate` (`orddate`),
   KEY `SupplierNo` (`supplierno`),
   KEY `IntoStockLocation` (`intostocklocation`),
   KEY `AllowPrintPO` (`allowprint`)
-) TYPE=InnoDB AUTO_INCREMENT=3;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `recurringsalesorders`
 --
 
 CREATE TABLE `recurringsalesorders` (
-  `recurrorderno` int(11) NOT NULL AUTO_INCREMENT,
-  `debtorno` varchar(10) NOT NULL DEFAULT '',
-  `branchcode` varchar(10) NOT NULL DEFAULT '',
-  `customerref` varchar(50) NOT NULL DEFAULT '',
-  `buyername` varchar(50) DEFAULT NULL,
+  `recurrorderno` int(11) NOT NULL auto_increment,
+  `debtorno` varchar(10) NOT NULL default '',
+  `branchcode` varchar(10) NOT NULL default '',
+  `customerref` varchar(50) NOT NULL default '',
+  `buyername` varchar(50) default NULL,
   `comments` longblob,
-  `orddate` date NOT NULL DEFAULT '0000-00-00',
-  `ordertype` char(2) NOT NULL DEFAULT '',
-  `shipvia` int(11) NOT NULL DEFAULT '0',
-  `deladd1` varchar(40) NOT NULL DEFAULT '',
-  `deladd2` varchar(40) NOT NULL DEFAULT '',
-  `deladd3` varchar(40) NOT NULL DEFAULT '',
-  `deladd4` varchar(40) DEFAULT NULL,
-  `deladd5` varchar(20) NOT NULL DEFAULT '',
-  `deladd6` varchar(15) NOT NULL DEFAULT '',
-  `contactphone` varchar(25) DEFAULT NULL,
-  `contactemail` varchar(25) DEFAULT NULL,
-  `deliverto` varchar(40) NOT NULL DEFAULT '',
-  `freightcost` double NOT NULL DEFAULT '0',
-  `fromstkloc` varchar(5) NOT NULL DEFAULT '',
-  `lastrecurrence` date NOT NULL DEFAULT '0000-00-00',
-  `stopdate` date NOT NULL DEFAULT '0000-00-00',
-  `frequency` tinyint(4) NOT NULL DEFAULT '1',
-  `autoinvoice` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`recurrorderno`),
+  `orddate` date NOT NULL default '0000-00-00',
+  `ordertype` char(2) NOT NULL default '',
+  `shipvia` int(11) NOT NULL default '0',
+  `deladd1` varchar(40) NOT NULL default '',
+  `deladd2` varchar(40) NOT NULL default '',
+  `deladd3` varchar(40) NOT NULL default '',
+  `deladd4` varchar(40) default NULL,
+  `deladd5` varchar(20) NOT NULL default '',
+  `deladd6` varchar(15) NOT NULL default '',
+  `contactphone` varchar(25) default NULL,
+  `contactemail` varchar(25) default NULL,
+  `deliverto` varchar(40) NOT NULL default '',
+  `freightcost` double NOT NULL default '0',
+  `fromstkloc` varchar(5) NOT NULL default '',
+  `lastrecurrence` date NOT NULL default '0000-00-00',
+  `stopdate` date NOT NULL default '0000-00-00',
+  `frequency` tinyint(4) NOT NULL default '1',
+  `autoinvoice` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`recurrorderno`),
   KEY `debtorno` (`debtorno`),
   KEY `orddate` (`orddate`),
   KEY `ordertype` (`ordertype`),
   KEY `locationindex` (`fromstkloc`),
   KEY `branchcode` (`branchcode`,`debtorno`)
-) TYPE=InnoDB AUTO_INCREMENT=8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `recurrsalesorderdetails`
 --
 
 CREATE TABLE `recurrsalesorderdetails` (
-  `recurrorderno` int(11) NOT NULL DEFAULT '0',
-  `stkcode` varchar(20) NOT NULL DEFAULT '',
-  `unitprice` double NOT NULL DEFAULT '0',
-  `quantity` double NOT NULL DEFAULT '0',
-  `discountpercent` double NOT NULL DEFAULT '0',
+  `recurrorderno` int(11) NOT NULL default '0',
+  `stkcode` varchar(20) NOT NULL default '',
+  `unitprice` double NOT NULL default '0',
+  `quantity` double NOT NULL default '0',
+  `discountpercent` double NOT NULL default '0',
   `narrative` text NOT NULL,
   KEY `orderno` (`recurrorderno`),
   KEY `stkcode` (`stkcode`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `reportcolumns`
 --
 
 CREATE TABLE `reportcolumns` (
-  `reportid` smallint(6) NOT NULL DEFAULT '0',
-  `colno` smallint(6) NOT NULL DEFAULT '0',
-  `heading1` varchar(15) NOT NULL DEFAULT '',
-  `heading2` varchar(15) DEFAULT NULL,
-  `calculation` tinyint(1) NOT NULL DEFAULT '0',
-  `periodfrom` smallint(6) DEFAULT NULL,
-  `periodto` smallint(6) DEFAULT NULL,
-  `datatype` varchar(15) DEFAULT NULL,
-  `colnumerator` tinyint(4) DEFAULT NULL,
-  `coldenominator` tinyint(4) DEFAULT NULL,
-  `calcoperator` char(1) DEFAULT NULL,
-  `budgetoractual` tinyint(1) NOT NULL DEFAULT '0',
-  `valformat` char(1) NOT NULL DEFAULT 'N',
-  `constant` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`reportid`,`colno`)
-) TYPE=InnoDB;
+  `reportid` smallint(6) NOT NULL default '0',
+  `colno` smallint(6) NOT NULL default '0',
+  `heading1` varchar(15) NOT NULL default '',
+  `heading2` varchar(15) default NULL,
+  `calculation` tinyint(1) NOT NULL default '0',
+  `periodfrom` smallint(6) default NULL,
+  `periodto` smallint(6) default NULL,
+  `datatype` varchar(15) default NULL,
+  `colnumerator` tinyint(4) default NULL,
+  `coldenominator` tinyint(4) default NULL,
+  `calcoperator` char(1) default NULL,
+  `budgetoractual` tinyint(1) NOT NULL default '0',
+  `valformat` char(1) NOT NULL default 'N',
+  `constant` double NOT NULL default '0',
+  PRIMARY KEY  (`reportid`,`colno`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `reportfields`
 --
 
 CREATE TABLE `reportfields` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,
-  `reportid` int(5) NOT NULL DEFAULT '0',
-  `entrytype` varchar(15) NOT NULL DEFAULT '',
-  `seqnum` int(3) NOT NULL DEFAULT '0',
-  `fieldname` varchar(35) NOT NULL DEFAULT '',
-  `displaydesc` varchar(25) NOT NULL DEFAULT '',
-  `visible` enum('1','0') NOT NULL DEFAULT '1',
-  `columnbreak` enum('1','0') NOT NULL DEFAULT '1',
+  `id` int(8) NOT NULL auto_increment,
+  `reportid` int(5) NOT NULL default '0',
+  `entrytype` varchar(15) NOT NULL default '',
+  `seqnum` int(3) NOT NULL default '0',
+  `fieldname` varchar(35) NOT NULL default '',
+  `displaydesc` varchar(25) NOT NULL default '',
+  `visible` enum('1','0') NOT NULL default '1',
+  `columnbreak` enum('1','0') NOT NULL default '1',
   `params` text,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY  (`id`),
   KEY `reportid` (`reportid`)
-) TYPE=InnoDB AUTO_INCREMENT=1805;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `reportheaders`
 --
 
 CREATE TABLE `reportheaders` (
-  `reportid` smallint(6) NOT NULL AUTO_INCREMENT,
-  `reportheading` varchar(80) NOT NULL DEFAULT '',
-  `groupbydata1` varchar(15) NOT NULL DEFAULT '',
-  `newpageafter1` tinyint(1) NOT NULL DEFAULT '0',
-  `lower1` varchar(10) NOT NULL DEFAULT '',
-  `upper1` varchar(10) NOT NULL DEFAULT '',
-  `groupbydata2` varchar(15) DEFAULT NULL,
-  `newpageafter2` tinyint(1) NOT NULL DEFAULT '0',
-  `lower2` varchar(10) DEFAULT NULL,
-  `upper2` varchar(10) DEFAULT NULL,
-  `groupbydata3` varchar(15) DEFAULT NULL,
-  `newpageafter3` tinyint(1) NOT NULL DEFAULT '0',
-  `lower3` varchar(10) DEFAULT NULL,
-  `upper3` varchar(10) DEFAULT NULL,
-  `groupbydata4` varchar(15) NOT NULL DEFAULT '',
-  `newpageafter4` tinyint(1) NOT NULL DEFAULT '0',
-  `upper4` varchar(10) NOT NULL DEFAULT '',
-  `lower4` varchar(10) NOT NULL DEFAULT '',
-  PRIMARY KEY (`reportid`),
+  `reportid` smallint(6) NOT NULL auto_increment,
+  `reportheading` varchar(80) NOT NULL default '',
+  `groupbydata1` varchar(15) NOT NULL default '',
+  `newpageafter1` tinyint(1) NOT NULL default '0',
+  `lower1` varchar(10) NOT NULL default '',
+  `upper1` varchar(10) NOT NULL default '',
+  `groupbydata2` varchar(15) default NULL,
+  `newpageafter2` tinyint(1) NOT NULL default '0',
+  `lower2` varchar(10) default NULL,
+  `upper2` varchar(10) default NULL,
+  `groupbydata3` varchar(15) default NULL,
+  `newpageafter3` tinyint(1) NOT NULL default '0',
+  `lower3` varchar(10) default NULL,
+  `upper3` varchar(10) default NULL,
+  `groupbydata4` varchar(15) NOT NULL default '',
+  `newpageafter4` tinyint(1) NOT NULL default '0',
+  `upper4` varchar(10) NOT NULL default '',
+  `lower4` varchar(10) NOT NULL default '',
+  PRIMARY KEY  (`reportid`),
   KEY `ReportHeading` (`reportheading`)
-) TYPE=InnoDB AUTO_INCREMENT=2;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `reportlinks`
 --
 
 CREATE TABLE `reportlinks` (
-  `table1` varchar(25) NOT NULL DEFAULT '',
-  `table2` varchar(25) NOT NULL DEFAULT '',
-  `equation` varchar(75) NOT NULL DEFAULT ''
-) TYPE=InnoDB;
+  `table1` varchar(25) NOT NULL default '',
+  `table2` varchar(25) NOT NULL default '',
+  `equation` varchar(75) NOT NULL default ''
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `reports`
 --
 
 CREATE TABLE `reports` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
-  `reportname` varchar(30) NOT NULL DEFAULT '',
-  `reporttype` char(3) NOT NULL DEFAULT 'rpt',
-  `groupname` varchar(9) NOT NULL DEFAULT 'misc',
-  `defaultreport` enum('1','0') NOT NULL DEFAULT '0',
-  `papersize` varchar(15) NOT NULL DEFAULT 'A4,210,297',
-  `paperorientation` enum('P','L') NOT NULL DEFAULT 'P',
-  `margintop` int(3) NOT NULL DEFAULT '10',
-  `marginbottom` int(3) NOT NULL DEFAULT '10',
-  `marginleft` int(3) NOT NULL DEFAULT '10',
-  `marginright` int(3) NOT NULL DEFAULT '10',
-  `coynamefont` varchar(20) NOT NULL DEFAULT 'Helvetica',
-  `coynamefontsize` int(3) NOT NULL DEFAULT '12',
-  `coynamefontcolor` varchar(11) NOT NULL DEFAULT '0,0,0',
-  `coynamealign` enum('L','C','R') NOT NULL DEFAULT 'C',
-  `coynameshow` enum('1','0') NOT NULL DEFAULT '1',
-  `title1desc` varchar(50) NOT NULL DEFAULT '%reportname%',
-  `title1font` varchar(20) NOT NULL DEFAULT 'Helvetica',
-  `title1fontsize` int(3) NOT NULL DEFAULT '10',
-  `title1fontcolor` varchar(11) NOT NULL DEFAULT '0,0,0',
-  `title1fontalign` enum('L','C','R') NOT NULL DEFAULT 'C',
-  `title1show` enum('1','0') NOT NULL DEFAULT '1',
-  `title2desc` varchar(50) NOT NULL DEFAULT 'Report Generated %date%',
-  `title2font` varchar(20) NOT NULL DEFAULT 'Helvetica',
-  `title2fontsize` int(3) NOT NULL DEFAULT '10',
-  `title2fontcolor` varchar(11) NOT NULL DEFAULT '0,0,0',
-  `title2fontalign` enum('L','C','R') NOT NULL DEFAULT 'C',
-  `title2show` enum('1','0') NOT NULL DEFAULT '1',
-  `filterfont` varchar(10) NOT NULL DEFAULT 'Helvetica',
-  `filterfontsize` int(3) NOT NULL DEFAULT '8',
-  `filterfontcolor` varchar(11) NOT NULL DEFAULT '0,0,0',
-  `filterfontalign` enum('L','C','R') NOT NULL DEFAULT 'L',
-  `datafont` varchar(10) NOT NULL DEFAULT 'Helvetica',
-  `datafontsize` int(3) NOT NULL DEFAULT '10',
-  `datafontcolor` varchar(10) NOT NULL DEFAULT 'black',
-  `datafontalign` enum('L','C','R') NOT NULL DEFAULT 'L',
-  `totalsfont` varchar(10) NOT NULL DEFAULT 'Helvetica',
-  `totalsfontsize` int(3) NOT NULL DEFAULT '10',
-  `totalsfontcolor` varchar(11) NOT NULL DEFAULT '0,0,0',
-  `totalsfontalign` enum('L','C','R') NOT NULL DEFAULT 'L',
-  `col1width` int(3) NOT NULL DEFAULT '25',
-  `col2width` int(3) NOT NULL DEFAULT '25',
-  `col3width` int(3) NOT NULL DEFAULT '25',
-  `col4width` int(3) NOT NULL DEFAULT '25',
-  `col5width` int(3) NOT NULL DEFAULT '25',
-  `col6width` int(3) NOT NULL DEFAULT '25',
-  `col7width` int(3) NOT NULL DEFAULT '25',
-  `col8width` int(3) NOT NULL DEFAULT '25',
-  `table1` varchar(25) NOT NULL DEFAULT '',
-  `table2` varchar(25) DEFAULT NULL,
-  `table2criteria` varchar(75) DEFAULT NULL,
-  `table3` varchar(25) DEFAULT NULL,
-  `table3criteria` varchar(75) DEFAULT NULL,
-  `table4` varchar(25) DEFAULT NULL,
-  `table4criteria` varchar(75) DEFAULT NULL,
-  `table5` varchar(25) DEFAULT NULL,
-  `table5criteria` varchar(75) DEFAULT NULL,
-  `table6` varchar(25) DEFAULT NULL,
-  `table6criteria` varchar(75) DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  `id` int(5) NOT NULL auto_increment,
+  `reportname` varchar(30) NOT NULL default '',
+  `reporttype` char(3) NOT NULL default 'rpt',
+  `groupname` varchar(9) NOT NULL default 'misc',
+  `defaultreport` enum('1','0') NOT NULL default '0',
+  `papersize` varchar(15) NOT NULL default 'A4,210,297',
+  `paperorientation` enum('P','L') NOT NULL default 'P',
+  `margintop` int(3) NOT NULL default '10',
+  `marginbottom` int(3) NOT NULL default '10',
+  `marginleft` int(3) NOT NULL default '10',
+  `marginright` int(3) NOT NULL default '10',
+  `coynamefont` varchar(20) NOT NULL default 'Helvetica',
+  `coynamefontsize` int(3) NOT NULL default '12',
+  `coynamefontcolor` varchar(11) NOT NULL default '0,0,0',
+  `coynamealign` enum('L','C','R') NOT NULL default 'C',
+  `coynameshow` enum('1','0') NOT NULL default '1',
+  `title1desc` varchar(50) NOT NULL default '%reportname%',
+  `title1font` varchar(20) NOT NULL default 'Helvetica',
+  `title1fontsize` int(3) NOT NULL default '10',
+  `title1fontcolor` varchar(11) NOT NULL default '0,0,0',
+  `title1fontalign` enum('L','C','R') NOT NULL default 'C',
+  `title1show` enum('1','0') NOT NULL default '1',
+  `title2desc` varchar(50) NOT NULL default 'Report Generated %date%',
+  `title2font` varchar(20) NOT NULL default 'Helvetica',
+  `title2fontsize` int(3) NOT NULL default '10',
+  `title2fontcolor` varchar(11) NOT NULL default '0,0,0',
+  `title2fontalign` enum('L','C','R') NOT NULL default 'C',
+  `title2show` enum('1','0') NOT NULL default '1',
+  `filterfont` varchar(10) NOT NULL default 'Helvetica',
+  `filterfontsize` int(3) NOT NULL default '8',
+  `filterfontcolor` varchar(11) NOT NULL default '0,0,0',
+  `filterfontalign` enum('L','C','R') NOT NULL default 'L',
+  `datafont` varchar(10) NOT NULL default 'Helvetica',
+  `datafontsize` int(3) NOT NULL default '10',
+  `datafontcolor` varchar(10) NOT NULL default 'black',
+  `datafontalign` enum('L','C','R') NOT NULL default 'L',
+  `totalsfont` varchar(10) NOT NULL default 'Helvetica',
+  `totalsfontsize` int(3) NOT NULL default '10',
+  `totalsfontcolor` varchar(11) NOT NULL default '0,0,0',
+  `totalsfontalign` enum('L','C','R') NOT NULL default 'L',
+  `col1width` int(3) NOT NULL default '25',
+  `col2width` int(3) NOT NULL default '25',
+  `col3width` int(3) NOT NULL default '25',
+  `col4width` int(3) NOT NULL default '25',
+  `col5width` int(3) NOT NULL default '25',
+  `col6width` int(3) NOT NULL default '25',
+  `col7width` int(3) NOT NULL default '25',
+  `col8width` int(3) NOT NULL default '25',
+  `table1` varchar(25) NOT NULL default '',
+  `table2` varchar(25) default NULL,
+  `table2criteria` varchar(75) default NULL,
+  `table3` varchar(25) default NULL,
+  `table3criteria` varchar(75) default NULL,
+  `table4` varchar(25) default NULL,
+  `table4criteria` varchar(75) default NULL,
+  `table5` varchar(25) default NULL,
+  `table5criteria` varchar(75) default NULL,
+  `table6` varchar(25) default NULL,
+  `table6criteria` varchar(75) default NULL,
+  PRIMARY KEY  (`id`),
   KEY `name` (`reportname`,`groupname`)
-) TYPE=InnoDB AUTO_INCREMENT=136;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `salesanalysis`
 --
 
 CREATE TABLE `salesanalysis` (
-  `typeabbrev` char(2) NOT NULL DEFAULT '',
-  `periodno` smallint(6) NOT NULL DEFAULT '0',
-  `amt` double NOT NULL DEFAULT '0',
-  `cost` double NOT NULL DEFAULT '0',
-  `cust` varchar(10) NOT NULL DEFAULT '',
-  `custbranch` varchar(10) NOT NULL DEFAULT '',
-  `qty` double NOT NULL DEFAULT '0',
-  `disc` double NOT NULL DEFAULT '0',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `typeabbrev` char(2) NOT NULL default '',
+  `periodno` smallint(6) NOT NULL default '0',
+  `amt` double NOT NULL default '0',
+  `cost` double NOT NULL default '0',
+  `cust` varchar(10) NOT NULL default '',
+  `custbranch` varchar(10) NOT NULL default '',
+  `qty` double NOT NULL default '0',
+  `disc` double NOT NULL default '0',
+  `stockid` varchar(20) NOT NULL default '',
   `area` varchar(3) NOT NULL,
-  `budgetoractual` tinyint(1) NOT NULL DEFAULT '0',
-  `salesperson` char(3) NOT NULL DEFAULT '',
-  `stkcategory` varchar(6) NOT NULL DEFAULT '',
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`),
+  `budgetoractual` tinyint(1) NOT NULL default '0',
+  `salesperson` char(3) NOT NULL default '',
+  `stkcategory` varchar(6) NOT NULL default '',
+  `id` int(11) NOT NULL auto_increment,
+  PRIMARY KEY  (`id`),
   KEY `CustBranch` (`custbranch`),
   KEY `Cust` (`cust`),
   KEY `PeriodNo` (`periodno`),
@@ -1275,87 +1269,87 @@ CREATE TABLE `salesanalysis` (
   KEY `Area` (`area`),
   KEY `BudgetOrActual` (`budgetoractual`),
   KEY `Salesperson` (`salesperson`)
-) TYPE=InnoDB AUTO_INCREMENT=5;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `salescat`
 --
 
 CREATE TABLE `salescat` (
-  `salescatid` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `parentcatid` tinyint(4) DEFAULT NULL,
-  `salescatname` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`salescatid`)
-) TYPE=InnoDB;
+  `salescatid` tinyint(4) NOT NULL auto_increment,
+  `parentcatid` tinyint(4) default NULL,
+  `salescatname` varchar(30) default NULL,
+  PRIMARY KEY  (`salescatid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `salescatprod`
 --
 
 CREATE TABLE `salescatprod` (
-  `salescatid` tinyint(4) NOT NULL DEFAULT '0',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
-  PRIMARY KEY (`salescatid`,`stockid`),
+  `salescatid` tinyint(4) NOT NULL default '0',
+  `stockid` varchar(20) NOT NULL default '',
+  PRIMARY KEY  (`salescatid`,`stockid`),
   KEY `salescatid` (`salescatid`),
   KEY `stockid` (`stockid`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `salesglpostings`
 --
 
 CREATE TABLE `salesglpostings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL auto_increment,
   `area` varchar(3) NOT NULL,
-  `stkcat` varchar(6) NOT NULL DEFAULT '',
-  `discountglcode` int(11) NOT NULL DEFAULT '0',
-  `salesglcode` int(11) NOT NULL DEFAULT '0',
-  `salestype` char(2) NOT NULL DEFAULT 'AN',
-  PRIMARY KEY (`id`),
+  `stkcat` varchar(6) NOT NULL default '',
+  `discountglcode` int(11) NOT NULL default '0',
+  `salesglcode` int(11) NOT NULL default '0',
+  `salestype` char(2) NOT NULL default 'AN',
+  PRIMARY KEY  (`id`),
   UNIQUE KEY `Area_StkCat` (`area`,`stkcat`,`salestype`),
   KEY `Area` (`area`),
   KEY `StkCat` (`stkcat`),
   KEY `SalesType` (`salestype`)
-) TYPE=InnoDB AUTO_INCREMENT=3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `salesman`
 --
 
 CREATE TABLE `salesman` (
-  `salesmancode` char(3) NOT NULL DEFAULT '',
-  `salesmanname` char(30) NOT NULL DEFAULT '',
-  `smantel` char(20) NOT NULL DEFAULT '',
-  `smanfax` char(20) NOT NULL DEFAULT '',
-  `commissionrate1` double NOT NULL DEFAULT '0',
-  `breakpoint` decimal(10,0) NOT NULL DEFAULT '0',
-  `commissionrate2` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`salesmancode`)
-) TYPE=InnoDB;
+  `salesmancode` char(3) NOT NULL default '',
+  `salesmanname` char(30) NOT NULL default '',
+  `smantel` char(20) NOT NULL default '',
+  `smanfax` char(20) NOT NULL default '',
+  `commissionrate1` double NOT NULL default '0',
+  `breakpoint` decimal(10,0) NOT NULL default '0',
+  `commissionrate2` double NOT NULL default '0',
+  PRIMARY KEY  (`salesmancode`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `salesorderdetails`
 --
 
 CREATE TABLE `salesorderdetails` (
-  `orderlineno` int(11) NOT NULL DEFAULT '0',
-  `orderno` int(11) NOT NULL DEFAULT '0',
-  `stkcode` varchar(20) NOT NULL DEFAULT '',
-  `qtyinvoiced` double NOT NULL DEFAULT '0',
-  `unitprice` double NOT NULL DEFAULT '0',
-  `quantity` double NOT NULL DEFAULT '0',
-  `estimate` tinyint(4) NOT NULL DEFAULT '0',
-  `discountpercent` double NOT NULL DEFAULT '0',
-  `actualdispatchdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `completed` tinyint(1) NOT NULL DEFAULT '0',
+  `orderlineno` int(11) NOT NULL default '0',
+  `orderno` int(11) NOT NULL default '0',
+  `stkcode` varchar(20) NOT NULL default '',
+  `qtyinvoiced` double NOT NULL default '0',
+  `unitprice` double NOT NULL default '0',
+  `quantity` double NOT NULL default '0',
+  `estimate` tinyint(4) NOT NULL default '0',
+  `discountpercent` double NOT NULL default '0',
+  `actualdispatchdate` datetime NOT NULL default '0000-00-00 00:00:00',
+  `completed` tinyint(1) NOT NULL default '0',
   `narrative` text,
-  `itemdue` date DEFAULT NULL COMMENT 'Due date for line item.  Some customers require \r\nacknowledgements with due dates by line item',
-  `poline` varchar(10) DEFAULT NULL COMMENT 'Some Customers require acknowledgements with a PO line number for each sales line',
-  PRIMARY KEY (`orderlineno`,`orderno`),
+  `itemdue` date default NULL COMMENT 'Due date for line item.  Some customers require \r\nacknowledgements with due dates by line item',
+  `poline` varchar(10) default NULL COMMENT 'Some Customers require acknowledgements with a PO line number for each sales line',
+  PRIMARY KEY  (`orderlineno`,`orderno`),
   KEY `OrderNo` (`orderno`),
   KEY `StkCode` (`stkcode`),
   KEY `Completed` (`completed`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `salesorders`
@@ -1363,33 +1357,33 @@ CREATE TABLE `salesorderdetails` (
 
 CREATE TABLE `salesorders` (
   `orderno` int(11) NOT NULL,
-  `debtorno` varchar(10) NOT NULL DEFAULT '',
-  `branchcode` varchar(10) NOT NULL DEFAULT '',
-  `customerref` varchar(50) NOT NULL DEFAULT '',
-  `buyername` varchar(50) DEFAULT NULL,
+  `debtorno` varchar(10) NOT NULL default '',
+  `branchcode` varchar(10) NOT NULL default '',
+  `customerref` varchar(50) NOT NULL default '',
+  `buyername` varchar(50) default NULL,
   `comments` longblob,
-  `orddate` date NOT NULL DEFAULT '0000-00-00',
-  `ordertype` char(2) NOT NULL DEFAULT '',
-  `shipvia` int(11) NOT NULL DEFAULT '0',
-  `deladd1` varchar(40) NOT NULL DEFAULT '',
-  `deladd2` varchar(40) NOT NULL DEFAULT '',
-  `deladd3` varchar(40) NOT NULL DEFAULT '',
-  `deladd4` varchar(40) DEFAULT NULL,
-  `deladd5` varchar(20) NOT NULL DEFAULT '',
-  `deladd6` varchar(15) NOT NULL DEFAULT '',
-  `contactphone` varchar(25) DEFAULT NULL,
-  `contactemail` varchar(40) DEFAULT NULL,
-  `deliverto` varchar(40) NOT NULL DEFAULT '',
-  `deliverblind` tinyint(1) DEFAULT '1',
-  `freightcost` double NOT NULL DEFAULT '0',
-  `fromstkloc` varchar(5) NOT NULL DEFAULT '',
-  `deliverydate` date NOT NULL DEFAULT '0000-00-00',
-  `quotedate` date NOT NULL DEFAULT '0000-00-00',
-  `confirmeddate` date NOT NULL DEFAULT '0000-00-00',
-  `printedpackingslip` tinyint(4) NOT NULL DEFAULT '0',
-  `datepackingslipprinted` date NOT NULL DEFAULT '0000-00-00',
-  `quotation` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`orderno`),
+  `orddate` date NOT NULL default '0000-00-00',
+  `ordertype` char(2) NOT NULL default '',
+  `shipvia` int(11) NOT NULL default '0',
+  `deladd1` varchar(40) NOT NULL default '',
+  `deladd2` varchar(40) NOT NULL default '',
+  `deladd3` varchar(40) NOT NULL default '',
+  `deladd4` varchar(40) default NULL,
+  `deladd5` varchar(20) NOT NULL default '',
+  `deladd6` varchar(15) NOT NULL default '',
+  `contactphone` varchar(25) default NULL,
+  `contactemail` varchar(40) default NULL,
+  `deliverto` varchar(40) NOT NULL default '',
+  `deliverblind` tinyint(1) default '1',
+  `freightcost` double NOT NULL default '0',
+  `fromstkloc` varchar(5) NOT NULL default '',
+  `deliverydate` date NOT NULL default '0000-00-00',
+  `quotedate` date NOT NULL default '0000-00-00',
+  `confirmeddate` date NOT NULL default '0000-00-00',
+  `printedpackingslip` tinyint(4) NOT NULL default '0',
+  `datepackingslipprinted` date NOT NULL default '0000-00-00',
+  `quotation` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`orderno`),
   KEY `DebtorNo` (`debtorno`),
   KEY `OrdDate` (`orddate`),
   KEY `OrderType` (`ordertype`),
@@ -1397,170 +1391,170 @@ CREATE TABLE `salesorders` (
   KEY `BranchCode` (`branchcode`,`debtorno`),
   KEY `ShipVia` (`shipvia`),
   KEY `quotation` (`quotation`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `salestypes`
 --
 
 CREATE TABLE `salestypes` (
-  `typeabbrev` char(2) NOT NULL DEFAULT '',
-  `sales_type` char(20) NOT NULL DEFAULT '',
-  PRIMARY KEY (`typeabbrev`),
+  `typeabbrev` char(2) NOT NULL default '',
+  `sales_type` char(20) NOT NULL default '',
+  PRIMARY KEY  (`typeabbrev`),
   KEY `Sales_Type` (`sales_type`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `scripts`
 --
 
 CREATE TABLE `scripts` (
-  `pageid` smallint(4) NOT NULL AUTO_INCREMENT,
-  `filename` varchar(50) NOT NULL DEFAULT '',
+  `pageid` smallint(4) NOT NULL auto_increment,
+  `filename` varchar(50) NOT NULL default '',
   `pagedescription` text NOT NULL,
-  PRIMARY KEY (`pageid`),
+  PRIMARY KEY  (`pageid`),
   KEY `FileName` (`filename`)
-) TYPE=InnoDB AUTO_INCREMENT=167 COMMENT='Index of all scripts';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Index of all scripts';
 
 --
 -- Table structure for table `securitygroups`
 --
 
 CREATE TABLE `securitygroups` (
-  `secroleid` int(11) NOT NULL DEFAULT '0',
-  `tokenid` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`secroleid`,`tokenid`),
+  `secroleid` int(11) NOT NULL default '0',
+  `tokenid` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`secroleid`,`tokenid`),
   KEY `secroleid` (`secroleid`),
   KEY `tokenid` (`tokenid`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `securityroles`
 --
 
 CREATE TABLE `securityroles` (
-  `secroleid` int(11) NOT NULL AUTO_INCREMENT,
+  `secroleid` int(11) NOT NULL auto_increment,
   `secrolename` text NOT NULL,
-  PRIMARY KEY (`secroleid`)
-) TYPE=InnoDB AUTO_INCREMENT=9;
+  PRIMARY KEY  (`secroleid`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `securitytokens`
 --
 
 CREATE TABLE `securitytokens` (
-  `tokenid` int(11) NOT NULL DEFAULT '0',
+  `tokenid` int(11) NOT NULL default '0',
   `tokenname` text NOT NULL,
-  PRIMARY KEY (`tokenid`)
-) TYPE=InnoDB;
+  PRIMARY KEY  (`tokenid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `shipmentcharges`
 --
 
 CREATE TABLE `shipmentcharges` (
-  `shiptchgid` int(11) NOT NULL AUTO_INCREMENT,
-  `shiptref` int(11) NOT NULL DEFAULT '0',
-  `transtype` smallint(6) NOT NULL DEFAULT '0',
-  `transno` int(11) NOT NULL DEFAULT '0',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
-  `value` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`shiptchgid`),
+  `shiptchgid` int(11) NOT NULL auto_increment,
+  `shiptref` int(11) NOT NULL default '0',
+  `transtype` smallint(6) NOT NULL default '0',
+  `transno` int(11) NOT NULL default '0',
+  `stockid` varchar(20) NOT NULL default '',
+  `value` double NOT NULL default '0',
+  PRIMARY KEY  (`shiptchgid`),
   KEY `TransType` (`transtype`,`transno`),
   KEY `ShiptRef` (`shiptref`),
   KEY `StockID` (`stockid`),
   KEY `TransType_2` (`transtype`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `shipments`
 --
 
 CREATE TABLE `shipments` (
-  `shiptref` int(11) NOT NULL DEFAULT '0',
-  `voyageref` varchar(20) NOT NULL DEFAULT '0',
-  `vessel` varchar(50) NOT NULL DEFAULT '',
-  `eta` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `accumvalue` double NOT NULL DEFAULT '0',
-  `supplierid` varchar(10) NOT NULL DEFAULT '',
-  `closed` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`shiptref`),
+  `shiptref` int(11) NOT NULL default '0',
+  `voyageref` varchar(20) NOT NULL default '0',
+  `vessel` varchar(50) NOT NULL default '',
+  `eta` datetime NOT NULL default '0000-00-00 00:00:00',
+  `accumvalue` double NOT NULL default '0',
+  `supplierid` varchar(10) NOT NULL default '',
+  `closed` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`shiptref`),
   KEY `ETA` (`eta`),
   KEY `SupplierID` (`supplierid`),
   KEY `ShipperRef` (`voyageref`),
   KEY `Vessel` (`vessel`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `shippers`
 --
 
 CREATE TABLE `shippers` (
-  `shipper_id` int(11) NOT NULL AUTO_INCREMENT,
-  `shippername` char(40) NOT NULL DEFAULT '',
-  `mincharge` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`shipper_id`)
-) TYPE=InnoDB AUTO_INCREMENT=11;
+  `shipper_id` int(11) NOT NULL auto_increment,
+  `shippername` char(40) NOT NULL default '',
+  `mincharge` double NOT NULL default '0',
+  PRIMARY KEY  (`shipper_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `stockcategory`
 --
 
 CREATE TABLE `stockcategory` (
-  `categoryid` char(6) NOT NULL DEFAULT '',
-  `categorydescription` char(20) NOT NULL DEFAULT '',
-  `stocktype` char(1) NOT NULL DEFAULT 'F',
-  `stockact` int(11) NOT NULL DEFAULT '0',
-  `adjglact` int(11) NOT NULL DEFAULT '0',
-  `purchpricevaract` int(11) NOT NULL DEFAULT '80000',
-  `materialuseagevarac` int(11) NOT NULL DEFAULT '80000',
-  `wipact` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`categoryid`),
+  `categoryid` char(6) NOT NULL default '',
+  `categorydescription` char(20) NOT NULL default '',
+  `stocktype` char(1) NOT NULL default 'F',
+  `stockact` int(11) NOT NULL default '0',
+  `adjglact` int(11) NOT NULL default '0',
+  `purchpricevaract` int(11) NOT NULL default '80000',
+  `materialuseagevarac` int(11) NOT NULL default '80000',
+  `wipact` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`categoryid`),
   KEY `CategoryDescription` (`categorydescription`),
   KEY `StockType` (`stocktype`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `stockcatproperties`
 --
 
 CREATE TABLE `stockcatproperties` (
-  `stkcatpropid` int(11) NOT NULL AUTO_INCREMENT,
+  `stkcatpropid` int(11) NOT NULL auto_increment,
   `categoryid` char(6) NOT NULL,
   `label` text NOT NULL,
-  `controltype` tinyint(4) NOT NULL DEFAULT '0',
-  `defaultvalue` varchar(100) NOT NULL DEFAULT '''''',
-  `reqatsalesorder` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`stkcatpropid`),
+  `controltype` tinyint(4) NOT NULL default '0',
+  `defaultvalue` varchar(100) NOT NULL default '''''',
+  `reqatsalesorder` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`stkcatpropid`),
   KEY `categoryid` (`categoryid`)
-) TYPE=InnoDB AUTO_INCREMENT=4;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `stockcheckfreeze`
 --
 
 CREATE TABLE `stockcheckfreeze` (
-  `stockid` varchar(20) NOT NULL DEFAULT '',
-  `loccode` varchar(5) NOT NULL DEFAULT '',
-  `qoh` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`stockid`,`loccode`),
+  `stockid` varchar(20) NOT NULL default '',
+  `loccode` varchar(5) NOT NULL default '',
+  `qoh` double NOT NULL default '0',
+  PRIMARY KEY  (`stockid`,`loccode`),
   KEY `LocCode` (`loccode`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `stockcounts`
 --
 
 CREATE TABLE `stockcounts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `stockid` varchar(20) NOT NULL DEFAULT '',
-  `loccode` varchar(5) NOT NULL DEFAULT '',
-  `qtycounted` double NOT NULL DEFAULT '0',
-  `reference` varchar(20) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
+  `id` int(11) NOT NULL auto_increment,
+  `stockid` varchar(20) NOT NULL default '',
+  `loccode` varchar(5) NOT NULL default '',
+  `qtycounted` double NOT NULL default '0',
+  `reference` varchar(20) NOT NULL default '',
+  PRIMARY KEY  (`id`),
   KEY `StockID` (`stockid`),
   KEY `LocCode` (`loccode`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `stockitemproperties`
@@ -1570,46 +1564,46 @@ CREATE TABLE `stockitemproperties` (
   `stockid` varchar(20) NOT NULL,
   `stkcatpropid` int(11) NOT NULL,
   `value` varchar(50) NOT NULL,
-  PRIMARY KEY (`stockid`,`stkcatpropid`),
+  PRIMARY KEY  (`stockid`,`stkcatpropid`),
   KEY `stockid` (`stockid`),
   KEY `value` (`value`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `stockmaster`
 --
 
 CREATE TABLE `stockmaster` (
-  `stockid` varchar(20) NOT NULL DEFAULT '',
-  `categoryid` varchar(6) NOT NULL DEFAULT '',
-  `description` varchar(50) NOT NULL DEFAULT '',
+  `stockid` varchar(20) NOT NULL default '',
+  `categoryid` varchar(6) NOT NULL default '',
+  `description` varchar(50) NOT NULL default '',
   `longdescription` text NOT NULL,
-  `units` varchar(20) NOT NULL DEFAULT 'each',
-  `mbflag` char(1) NOT NULL DEFAULT 'B',
-  `lastcurcostdate` date NOT NULL DEFAULT '1800-01-01',
-  `actualcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `lastcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `materialcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `labourcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `overheadcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `lowestlevel` smallint(6) NOT NULL DEFAULT '0',
-  `discontinued` tinyint(4) NOT NULL DEFAULT '0',
-  `controlled` tinyint(4) NOT NULL DEFAULT '0',
-  `eoq` double NOT NULL DEFAULT '0',
-  `volume` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `kgs` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `barcode` varchar(50) NOT NULL DEFAULT '',
-  `discountcategory` char(2) NOT NULL DEFAULT '',
-  `taxcatid` tinyint(4) NOT NULL DEFAULT '1',
-  `serialised` tinyint(4) NOT NULL DEFAULT '0',
-  `appendfile` varchar(40) NOT NULL DEFAULT 'none',
-  `perishable` tinyint(1) NOT NULL DEFAULT '0',
-  `decimalplaces` tinyint(4) NOT NULL DEFAULT '0',
-  `nextserialno` bigint(20) NOT NULL DEFAULT '0',
-  `pansize` double NOT NULL DEFAULT '0',
-  `shrinkfactor` double NOT NULL DEFAULT '0',
+  `units` varchar(20) NOT NULL default 'each',
+  `mbflag` char(1) NOT NULL default 'B',
+  `lastcurcostdate` date NOT NULL default '1800-01-01',
+  `actualcost` decimal(20,4) NOT NULL default '0.0000',
+  `lastcost` decimal(20,4) NOT NULL default '0.0000',
+  `materialcost` decimal(20,4) NOT NULL default '0.0000',
+  `labourcost` decimal(20,4) NOT NULL default '0.0000',
+  `overheadcost` decimal(20,4) NOT NULL default '0.0000',
+  `lowestlevel` smallint(6) NOT NULL default '0',
+  `discontinued` tinyint(4) NOT NULL default '0',
+  `controlled` tinyint(4) NOT NULL default '0',
+  `eoq` double NOT NULL default '0',
+  `volume` decimal(20,4) NOT NULL default '0.0000',
+  `kgs` decimal(20,4) NOT NULL default '0.0000',
+  `barcode` varchar(50) NOT NULL default '',
+  `discountcategory` char(2) NOT NULL default '',
+  `taxcatid` tinyint(4) NOT NULL default '1',
+  `serialised` tinyint(4) NOT NULL default '0',
+  `appendfile` varchar(40) NOT NULL default 'none',
+  `perishable` tinyint(1) NOT NULL default '0',
+  `decimalplaces` tinyint(4) NOT NULL default '0',
+  `nextserialno` bigint(20) NOT NULL default '0',
+  `pansize` double NOT NULL default '0',
+  `shrinkfactor` double NOT NULL default '0',
   `netweight` decimal(20,4) NOT NULL default '0.0000',
-  PRIMARY KEY (`stockid`),
+  PRIMARY KEY  (`stockid`),
   KEY `CategoryID` (`categoryid`),
   KEY `Description` (`description`),
   KEY `LastCurCostDate` (`lastcurcostdate`),
@@ -1618,32 +1612,32 @@ CREATE TABLE `stockmaster` (
   KEY `Controlled` (`controlled`),
   KEY `DiscountCategory` (`discountcategory`),
   KEY `taxcatid` (`taxcatid`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `stockmoves`
 --
 
 CREATE TABLE `stockmoves` (
-  `stkmoveno` int(11) NOT NULL AUTO_INCREMENT,
-  `stockid` varchar(20) NOT NULL DEFAULT '',
-  `type` smallint(6) NOT NULL DEFAULT '0',
-  `transno` int(11) NOT NULL DEFAULT '0',
-  `loccode` varchar(5) NOT NULL DEFAULT '',
-  `trandate` date NOT NULL DEFAULT '0000-00-00',
-  `debtorno` varchar(10) NOT NULL DEFAULT '',
-  `branchcode` varchar(10) NOT NULL DEFAULT '',
-  `price` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `prd` smallint(6) NOT NULL DEFAULT '0',
-  `reference` varchar(40) NOT NULL DEFAULT '',
-  `qty` double NOT NULL DEFAULT '1',
-  `discountpercent` double NOT NULL DEFAULT '0',
-  `standardcost` double NOT NULL DEFAULT '0',
-  `show_on_inv_crds` tinyint(4) NOT NULL DEFAULT '1',
-  `newqoh` double NOT NULL DEFAULT '0',
-  `hidemovt` tinyint(4) NOT NULL DEFAULT '0',
+  `stkmoveno` int(11) NOT NULL auto_increment,
+  `stockid` varchar(20) NOT NULL default '',
+  `type` smallint(6) NOT NULL default '0',
+  `transno` int(11) NOT NULL default '0',
+  `loccode` varchar(5) NOT NULL default '',
+  `trandate` date NOT NULL default '0000-00-00',
+  `debtorno` varchar(10) NOT NULL default '',
+  `branchcode` varchar(10) NOT NULL default '',
+  `price` decimal(20,4) NOT NULL default '0.0000',
+  `prd` smallint(6) NOT NULL default '0',
+  `reference` varchar(40) NOT NULL default '',
+  `qty` double NOT NULL default '1',
+  `discountpercent` double NOT NULL default '0',
+  `standardcost` double NOT NULL default '0',
+  `show_on_inv_crds` tinyint(4) NOT NULL default '1',
+  `newqoh` double NOT NULL default '0',
+  `hidemovt` tinyint(4) NOT NULL default '0',
   `narrative` text,
-  PRIMARY KEY (`stkmoveno`),
+  PRIMARY KEY  (`stkmoveno`),
   KEY `DebtorNo` (`debtorno`),
   KEY `LocCode` (`loccode`),
   KEY `Prd` (`prd`),
@@ -1654,149 +1648,149 @@ CREATE TABLE `stockmoves` (
   KEY `Show_On_Inv_Crds` (`show_on_inv_crds`),
   KEY `Hide` (`hidemovt`),
   KEY `reference` (`reference`)
-) TYPE=InnoDB AUTO_INCREMENT=42;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `stockmovestaxes`
 --
 
 CREATE TABLE `stockmovestaxes` (
-  `stkmoveno` int(11) NOT NULL DEFAULT '0',
-  `taxauthid` tinyint(4) NOT NULL DEFAULT '0',
-  `taxrate` double NOT NULL DEFAULT '0',
-  `taxontax` tinyint(4) NOT NULL DEFAULT '0',
-  `taxcalculationorder` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`stkmoveno`,`taxauthid`),
+  `stkmoveno` int(11) NOT NULL default '0',
+  `taxauthid` tinyint(4) NOT NULL default '0',
+  `taxrate` double NOT NULL default '0',
+  `taxontax` tinyint(4) NOT NULL default '0',
+  `taxcalculationorder` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`stkmoveno`,`taxauthid`),
   KEY `taxauthid` (`taxauthid`),
   KEY `calculationorder` (`taxcalculationorder`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `stockserialitems`
 --
 
 CREATE TABLE `stockserialitems` (
-  `stockid` varchar(20) NOT NULL DEFAULT '',
-  `loccode` varchar(5) NOT NULL DEFAULT '',
-  `serialno` varchar(30) NOT NULL DEFAULT '',
-  `expirationdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `quantity` double NOT NULL DEFAULT '0',
+  `stockid` varchar(20) NOT NULL default '',
+  `loccode` varchar(5) NOT NULL default '',
+  `serialno` varchar(30) NOT NULL default '',
+  `expirationdate` datetime NOT NULL default '0000-00-00 00:00:00',
+  `quantity` double NOT NULL default '0',
   `qualitytext` text NOT NULL,
-  PRIMARY KEY (`stockid`,`serialno`,`loccode`),
+  PRIMARY KEY  (`stockid`,`serialno`,`loccode`),
   KEY `StockID` (`stockid`),
   KEY `LocCode` (`loccode`),
   KEY `serialno` (`serialno`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `stockserialmoves`
 --
 
 CREATE TABLE `stockserialmoves` (
-  `stkitmmoveno` int(11) NOT NULL AUTO_INCREMENT,
-  `stockmoveno` int(11) NOT NULL DEFAULT '0',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
-  `serialno` varchar(30) NOT NULL DEFAULT '',
-  `moveqty` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`stkitmmoveno`),
+  `stkitmmoveno` int(11) NOT NULL auto_increment,
+  `stockmoveno` int(11) NOT NULL default '0',
+  `stockid` varchar(20) NOT NULL default '',
+  `serialno` varchar(30) NOT NULL default '',
+  `moveqty` double NOT NULL default '0',
+  PRIMARY KEY  (`stkitmmoveno`),
   KEY `StockMoveNo` (`stockmoveno`),
   KEY `StockID_SN` (`stockid`,`serialno`),
   KEY `serialno` (`serialno`)
-) TYPE=InnoDB AUTO_INCREMENT=67;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `suppallocs`
 --
 
 CREATE TABLE `suppallocs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `amt` double NOT NULL DEFAULT '0',
-  `datealloc` date NOT NULL DEFAULT '0000-00-00',
-  `transid_allocfrom` int(11) NOT NULL DEFAULT '0',
-  `transid_allocto` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
+  `id` int(11) NOT NULL auto_increment,
+  `amt` double NOT NULL default '0',
+  `datealloc` date NOT NULL default '0000-00-00',
+  `transid_allocfrom` int(11) NOT NULL default '0',
+  `transid_allocto` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`id`),
   KEY `TransID_AllocFrom` (`transid_allocfrom`),
   KEY `TransID_AllocTo` (`transid_allocto`),
   KEY `DateAlloc` (`datealloc`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `suppliercontacts`
 --
 
 CREATE TABLE `suppliercontacts` (
-  `supplierid` varchar(10) NOT NULL DEFAULT '',
-  `contact` varchar(30) NOT NULL DEFAULT '',
-  `position` varchar(30) NOT NULL DEFAULT '',
-  `tel` varchar(30) NOT NULL DEFAULT '',
-  `fax` varchar(30) NOT NULL DEFAULT '',
-  `mobile` varchar(30) NOT NULL DEFAULT '',
-  `email` varchar(55) NOT NULL DEFAULT '',
-  `ordercontact` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`supplierid`,`contact`),
+  `supplierid` varchar(10) NOT NULL default '',
+  `contact` varchar(30) NOT NULL default '',
+  `position` varchar(30) NOT NULL default '',
+  `tel` varchar(30) NOT NULL default '',
+  `fax` varchar(30) NOT NULL default '',
+  `mobile` varchar(30) NOT NULL default '',
+  `email` varchar(55) NOT NULL default '',
+  `ordercontact` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`supplierid`,`contact`),
   KEY `Contact` (`contact`),
   KEY `SupplierID` (`supplierid`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `suppliers`
 --
 
 CREATE TABLE `suppliers` (
-  `supplierid` varchar(10) NOT NULL DEFAULT '',
-  `suppname` varchar(40) NOT NULL DEFAULT '',
-  `address1` varchar(40) NOT NULL DEFAULT '',
-  `address2` varchar(40) NOT NULL DEFAULT '',
-  `address3` varchar(40) NOT NULL DEFAULT '',
-  `address4` varchar(50) NOT NULL DEFAULT '',
-  `address5` varchar(20) NOT NULL DEFAULT '',
-  `address6` varchar(15) NOT NULL DEFAULT '',
-  `lat` float(10,6) NOT NULL DEFAULT '0.000000',
-  `lng` float(10,6) NOT NULL DEFAULT '0.000000',
-  `currcode` char(3) NOT NULL DEFAULT '',
-  `suppliersince` date NOT NULL DEFAULT '0000-00-00',
-  `paymentterms` char(2) NOT NULL DEFAULT '',
-  `lastpaid` double NOT NULL DEFAULT '0',
-  `lastpaiddate` datetime DEFAULT NULL,
-  `bankact` varchar(30) NOT NULL DEFAULT '',
-  `bankref` varchar(12) NOT NULL DEFAULT '',
-  `bankpartics` varchar(12) NOT NULL DEFAULT '',
-  `remittance` tinyint(4) NOT NULL DEFAULT '1',
-  `taxgroupid` tinyint(4) NOT NULL DEFAULT '1',
-  `factorcompanyid` int(11) NOT NULL DEFAULT '1',
-  `taxref` varchar(20) NOT NULL DEFAULT '',
+  `supplierid` varchar(10) NOT NULL default '',
+  `suppname` varchar(40) NOT NULL default '',
+  `address1` varchar(40) NOT NULL default '',
+  `address2` varchar(40) NOT NULL default '',
+  `address3` varchar(40) NOT NULL default '',
+  `address4` varchar(50) NOT NULL default '',
+  `address5` varchar(20) NOT NULL default '',
+  `address6` varchar(15) NOT NULL default '',
+  `lat` float(10,6) NOT NULL default '0.000000',
+  `lng` float(10,6) NOT NULL default '0.000000',
+  `currcode` char(3) NOT NULL default '',
+  `suppliersince` date NOT NULL default '0000-00-00',
+  `paymentterms` char(2) NOT NULL default '',
+  `lastpaid` double NOT NULL default '0',
+  `lastpaiddate` datetime default NULL,
+  `bankact` varchar(30) NOT NULL default '',
+  `bankref` varchar(12) NOT NULL default '',
+  `bankpartics` varchar(12) NOT NULL default '',
+  `remittance` tinyint(4) NOT NULL default '1',
+  `taxgroupid` tinyint(4) NOT NULL default '1',
+  `factorcompanyid` int(11) NOT NULL default '1',
+  `taxref` varchar(20) NOT NULL default '',
   `phn` varchar(50) NOT NULL default '',
   `port` varchar(200) NOT NULL default '',
-  PRIMARY KEY (`supplierid`),
+  PRIMARY KEY  (`supplierid`),
   KEY `CurrCode` (`currcode`),
   KEY `PaymentTerms` (`paymentterms`),
   KEY `SupplierID` (`supplierid`),
   KEY `SuppName` (`suppname`),
   KEY `taxgroupid` (`taxgroupid`),
   KEY `suppliers_ibfk_4` (`factorcompanyid`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `supptrans`
 --
 
 CREATE TABLE `supptrans` (
-  `transno` int(11) NOT NULL DEFAULT '0',
-  `type` smallint(6) NOT NULL DEFAULT '0',
-  `supplierno` varchar(10) NOT NULL DEFAULT '',
-  `suppreference` varchar(20) NOT NULL DEFAULT '',
-  `trandate` date NOT NULL DEFAULT '0000-00-00',
-  `duedate` date NOT NULL DEFAULT '0000-00-00',
-  `settled` tinyint(4) NOT NULL DEFAULT '0',
-  `rate` double NOT NULL DEFAULT '1',
-  `ovamount` double NOT NULL DEFAULT '0',
-  `ovgst` double NOT NULL DEFAULT '0',
-  `diffonexch` double NOT NULL DEFAULT '0',
-  `alloc` double NOT NULL DEFAULT '0',
+  `transno` int(11) NOT NULL default '0',
+  `type` smallint(6) NOT NULL default '0',
+  `supplierno` varchar(10) NOT NULL default '',
+  `suppreference` varchar(20) NOT NULL default '',
+  `trandate` date NOT NULL default '0000-00-00',
+  `duedate` date NOT NULL default '0000-00-00',
+  `settled` tinyint(4) NOT NULL default '0',
+  `rate` double NOT NULL default '1',
+  `ovamount` double NOT NULL default '0',
+  `ovgst` double NOT NULL default '0',
+  `diffonexch` double NOT NULL default '0',
+  `alloc` double NOT NULL default '0',
   `transtext` text,
-  `hold` tinyint(4) NOT NULL DEFAULT '0',
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`),
+  `hold` tinyint(4) NOT NULL default '0',
+  `id` int(11) NOT NULL auto_increment,
+  PRIMARY KEY  (`id`),
   UNIQUE KEY `TypeTransNo` (`transno`,`type`),
   KEY `DueDate` (`duedate`),
   KEY `Hold` (`hold`),
@@ -1807,128 +1801,128 @@ CREATE TABLE `supptrans` (
   KEY `TranDate` (`trandate`),
   KEY `TransNo` (`transno`),
   KEY `Type` (`type`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `supptranstaxes`
 --
 
 CREATE TABLE `supptranstaxes` (
-  `supptransid` int(11) NOT NULL DEFAULT '0',
-  `taxauthid` tinyint(4) NOT NULL DEFAULT '0',
-  `taxamount` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`supptransid`,`taxauthid`),
+  `supptransid` int(11) NOT NULL default '0',
+  `taxauthid` tinyint(4) NOT NULL default '0',
+  `taxamount` double NOT NULL default '0',
+  PRIMARY KEY  (`supptransid`,`taxauthid`),
   KEY `taxauthid` (`taxauthid`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `systypes`
 --
 
 CREATE TABLE `systypes` (
-  `typeid` smallint(6) NOT NULL DEFAULT '0',
-  `typename` char(50) NOT NULL DEFAULT '',
-  `typeno` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`typeid`),
+  `typeid` smallint(6) NOT NULL default '0',
+  `typename` char(50) NOT NULL default '',
+  `typeno` int(11) NOT NULL default '1',
+  PRIMARY KEY  (`typeid`),
   KEY `TypeNo` (`typeno`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `tags`
 --
 
 CREATE TABLE `tags` (
-  `tagref` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `tagref` tinyint(4) NOT NULL auto_increment,
   `tagdescription` varchar(50) NOT NULL,
-  PRIMARY KEY (`tagref`)
-) TYPE=InnoDB;
+  PRIMARY KEY  (`tagref`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `taxauthorities`
 --
 
 CREATE TABLE `taxauthorities` (
-  `taxid` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `description` varchar(20) NOT NULL DEFAULT '',
-  `taxglcode` int(11) NOT NULL DEFAULT '0',
-  `purchtaxglaccount` int(11) NOT NULL DEFAULT '0',
-  `bank` varchar(50) NOT NULL DEFAULT '',
-  `bankacctype` varchar(20) NOT NULL DEFAULT '',
-  `bankacc` varchar(50) NOT NULL DEFAULT '',
-  `bankswift` varchar(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`taxid`),
+  `taxid` tinyint(4) NOT NULL auto_increment,
+  `description` varchar(20) NOT NULL default '',
+  `taxglcode` int(11) NOT NULL default '0',
+  `purchtaxglaccount` int(11) NOT NULL default '0',
+  `bank` varchar(50) NOT NULL default '',
+  `bankacctype` varchar(20) NOT NULL default '',
+  `bankacc` varchar(50) NOT NULL default '',
+  `bankswift` varchar(30) NOT NULL default '',
+  PRIMARY KEY  (`taxid`),
   KEY `TaxGLCode` (`taxglcode`),
   KEY `PurchTaxGLAccount` (`purchtaxglaccount`)
-) TYPE=InnoDB AUTO_INCREMENT=14;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `taxauthrates`
 --
 
 CREATE TABLE `taxauthrates` (
-  `taxauthority` tinyint(4) NOT NULL DEFAULT '1',
-  `dispatchtaxprovince` tinyint(4) NOT NULL DEFAULT '1',
-  `taxcatid` tinyint(4) NOT NULL DEFAULT '0',
-  `taxrate` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`taxauthority`,`dispatchtaxprovince`,`taxcatid`),
+  `taxauthority` tinyint(4) NOT NULL default '1',
+  `dispatchtaxprovince` tinyint(4) NOT NULL default '1',
+  `taxcatid` tinyint(4) NOT NULL default '0',
+  `taxrate` double NOT NULL default '0',
+  PRIMARY KEY  (`taxauthority`,`dispatchtaxprovince`,`taxcatid`),
   KEY `TaxAuthority` (`taxauthority`),
   KEY `dispatchtaxprovince` (`dispatchtaxprovince`),
   KEY `taxcatid` (`taxcatid`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `taxcategories`
 --
 
 CREATE TABLE `taxcategories` (
-  `taxcatid` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `taxcatname` varchar(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`taxcatid`)
-) TYPE=InnoDB AUTO_INCREMENT=6;
+  `taxcatid` tinyint(4) NOT NULL auto_increment,
+  `taxcatname` varchar(30) NOT NULL default '',
+  PRIMARY KEY  (`taxcatid`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `taxgroups`
 --
 
 CREATE TABLE `taxgroups` (
-  `taxgroupid` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `taxgroupdescription` varchar(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`taxgroupid`)
-) TYPE=InnoDB AUTO_INCREMENT=4;
+  `taxgroupid` tinyint(4) NOT NULL auto_increment,
+  `taxgroupdescription` varchar(30) NOT NULL default '',
+  PRIMARY KEY  (`taxgroupid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `taxgrouptaxes`
 --
 
 CREATE TABLE `taxgrouptaxes` (
-  `taxgroupid` tinyint(4) NOT NULL DEFAULT '0',
-  `taxauthid` tinyint(4) NOT NULL DEFAULT '0',
-  `calculationorder` tinyint(4) NOT NULL DEFAULT '0',
-  `taxontax` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`taxgroupid`,`taxauthid`),
+  `taxgroupid` tinyint(4) NOT NULL default '0',
+  `taxauthid` tinyint(4) NOT NULL default '0',
+  `calculationorder` tinyint(4) NOT NULL default '0',
+  `taxontax` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`taxgroupid`,`taxauthid`),
   KEY `taxgroupid` (`taxgroupid`),
   KEY `taxauthid` (`taxauthid`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `taxprovinces`
 --
 
 CREATE TABLE `taxprovinces` (
-  `taxprovinceid` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `taxprovincename` varchar(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`taxprovinceid`)
-) TYPE=InnoDB AUTO_INCREMENT=2;
+  `taxprovinceid` tinyint(4) NOT NULL auto_increment,
+  `taxprovincename` varchar(30) NOT NULL default '',
+  PRIMARY KEY  (`taxprovinceid`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `unitsofmeasure`
 --
 
 CREATE TABLE `unitsofmeasure` (
-  `unitid` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `unitname` varchar(15) NOT NULL DEFAULT '',
-  PRIMARY KEY (`unitid`)
-) TYPE=InnoDB AUTO_INCREMENT=7;
+  `unitid` tinyint(4) NOT NULL auto_increment,
+  `unitname` varchar(15) NOT NULL default '',
+  PRIMARY KEY  (`unitid`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `woitems`
@@ -1936,14 +1930,14 @@ CREATE TABLE `unitsofmeasure` (
 
 CREATE TABLE `woitems` (
   `wo` int(11) NOT NULL,
-  `stockid` char(20) NOT NULL DEFAULT '',
-  `qtyreqd` double NOT NULL DEFAULT '1',
-  `qtyrecd` double NOT NULL DEFAULT '0',
+  `stockid` char(20) NOT NULL default '',
+  `qtyreqd` double NOT NULL default '1',
+  `qtyrecd` double NOT NULL default '0',
   `stdcost` double NOT NULL,
-  `nextlotsnref` varchar(20) DEFAULT '',
-  PRIMARY KEY (`wo`,`stockid`),
+  `nextlotsnref` varchar(20) default '',
+  PRIMARY KEY  (`wo`,`stockid`),
   KEY `stockid` (`stockid`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `worequirements`
@@ -1953,30 +1947,30 @@ CREATE TABLE `worequirements` (
   `wo` int(11) NOT NULL,
   `parentstockid` varchar(20) NOT NULL,
   `stockid` varchar(20) NOT NULL,
-  `qtypu` double NOT NULL DEFAULT '1',
-  `stdcost` double NOT NULL DEFAULT '0',
-  `autoissue` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`wo`,`parentstockid`,`stockid`),
+  `qtypu` double NOT NULL default '1',
+  `stdcost` double NOT NULL default '0',
+  `autoissue` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`wo`,`parentstockid`,`stockid`),
   KEY `stockid` (`stockid`),
   KEY `worequirements_ibfk_3` (`parentstockid`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `workcentres`
 --
 
 CREATE TABLE `workcentres` (
-  `code` char(5) NOT NULL DEFAULT '',
-  `location` char(5) NOT NULL DEFAULT '',
-  `description` char(20) NOT NULL DEFAULT '',
-  `capacity` double NOT NULL DEFAULT '1',
-  `overheadperhour` decimal(10,0) NOT NULL DEFAULT '0',
-  `overheadrecoveryact` int(11) NOT NULL DEFAULT '0',
-  `setuphrs` decimal(10,0) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`code`),
+  `code` char(5) NOT NULL default '',
+  `location` char(5) NOT NULL default '',
+  `description` char(20) NOT NULL default '',
+  `capacity` double NOT NULL default '1',
+  `overheadperhour` decimal(10,0) NOT NULL default '0',
+  `overheadrecoveryact` int(11) NOT NULL default '0',
+  `setuphrs` decimal(10,0) NOT NULL default '0',
+  PRIMARY KEY  (`code`),
   KEY `Description` (`description`),
   KEY `Location` (`location`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `workorders`
@@ -1984,16 +1978,16 @@ CREATE TABLE `workcentres` (
 
 CREATE TABLE `workorders` (
   `wo` int(11) NOT NULL,
-  `loccode` char(5) NOT NULL DEFAULT '',
-  `requiredby` date NOT NULL DEFAULT '0000-00-00',
-  `startdate` date NOT NULL DEFAULT '0000-00-00',
-  `costissued` double NOT NULL DEFAULT '0',
-  `closed` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`wo`),
+  `loccode` char(5) NOT NULL default '',
+  `requiredby` date NOT NULL default '0000-00-00',
+  `startdate` date NOT NULL default '0000-00-00',
+  `costissued` double NOT NULL default '0',
+  `closed` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`wo`),
   KEY `LocCode` (`loccode`),
   KEY `StartDate` (`startdate`),
   KEY `RequiredBy` (`requiredby`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `woserialnos`
@@ -2003,36 +1997,36 @@ CREATE TABLE `woserialnos` (
   `wo` int(11) NOT NULL,
   `stockid` varchar(20) NOT NULL,
   `serialno` varchar(30) NOT NULL,
-  `quantity` double NOT NULL DEFAULT '1',
+  `quantity` double NOT NULL default '1',
   `qualitytext` text NOT NULL,
-  PRIMARY KEY (`wo`,`stockid`,`serialno`)
-) TYPE=InnoDB;
+  PRIMARY KEY  (`wo`,`stockid`,`serialno`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `www_users`
 --
 
 CREATE TABLE `www_users` (
-  `userid` varchar(20) NOT NULL DEFAULT '',
+  `userid` varchar(20) NOT NULL default '',
   `password` text NOT NULL,
-  `realname` varchar(35) NOT NULL DEFAULT '',
-  `customerid` varchar(10) NOT NULL DEFAULT '',
-  `phone` varchar(30) NOT NULL DEFAULT '',
-  `email` varchar(55) DEFAULT NULL,
-  `defaultlocation` varchar(5) NOT NULL DEFAULT '',
-  `fullaccess` int(11) NOT NULL DEFAULT '1',
-  `lastvisitdate` datetime DEFAULT NULL,
-  `branchcode` varchar(10) NOT NULL DEFAULT '',
-  `pagesize` varchar(20) NOT NULL DEFAULT 'A4',
-  `modulesallowed` varchar(20) NOT NULL DEFAULT '',
-  `blocked` tinyint(4) NOT NULL DEFAULT '0',
-  `displayrecordsmax` int(11) NOT NULL DEFAULT '0',
-  `theme` varchar(30) NOT NULL DEFAULT 'fresh',
-  `language` varchar(5) NOT NULL DEFAULT 'en_GB',
-  PRIMARY KEY (`userid`),
+  `realname` varchar(35) NOT NULL default '',
+  `customerid` varchar(10) NOT NULL default '',
+  `phone` varchar(30) NOT NULL default '',
+  `email` varchar(55) default NULL,
+  `defaultlocation` varchar(5) NOT NULL default '',
+  `fullaccess` int(11) NOT NULL default '1',
+  `lastvisitdate` datetime default NULL,
+  `branchcode` varchar(10) NOT NULL default '',
+  `pagesize` varchar(20) NOT NULL default 'A4',
+  `modulesallowed` varchar(20) NOT NULL default '',
+  `blocked` tinyint(4) NOT NULL default '0',
+  `displayrecordsmax` int(11) NOT NULL default '0',
+  `theme` varchar(30) NOT NULL default 'fresh',
+  `language` varchar(5) NOT NULL default 'en_GB',
+  PRIMARY KEY  (`userid`),
   KEY `CustomerID` (`customerid`),
   KEY `DefaultLocation` (`defaultlocation`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -2040,17 +2034,17 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-06-24  7:49:44
--- MySQL dump 10.13  Distrib 5.1.35, for pc-linux-gnu (i686)
+-- Dump completed on 2009-08-13  8:56:09
+-- MySQL dump 10.11
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	5.1.35
+-- Server version	5.0.45
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO,MYSQL40' */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
@@ -2098,11 +2092,17 @@ INSERT INTO `areas` VALUES ('TR','Toronto');
 --
 
 
+--
+-- Dumping data for table `audittrail`
+--
+
+
+--
 -- Dumping data for table `bankaccounts`
 --
 
-INSERT INTO `bankaccounts` VALUES (1030,'AUD','Cheque Account','','');
-INSERT INTO `bankaccounts` VALUES (1040,'AUD','Savings Account','','');
+INSERT INTO `bankaccounts` VALUES (1030,'AUD',0,'','Cheque Account','','');
+INSERT INTO `bankaccounts` VALUES (1040,'AUD',0,'','Savings Account','','');
 
 --
 -- Dumping data for table `banktrans`
@@ -5993,7 +5993,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','AUD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','30');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2009-06-07');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2009-04-25');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultCustomerType','1');
@@ -6014,7 +6014,7 @@ INSERT INTO `config` VALUES ('EDI_MsgPending','companies/weberp/EDI_MsgPending')
 INSERT INTO `config` VALUES ('EDI_MsgSent','companies/weberp/EDI_Sent');
 INSERT INTO `config` VALUES ('Extended_CustomerInfo','0');
 INSERT INTO `config` VALUES ('Extended_SupplierInfo','0');
-INSERT INTO `config` VALUES ('FactoryManagerEmail','');
+INSERT INTO `config` VALUES ('FactoryManagerEmail','phil@logicworks.co.nz');
 INSERT INTO `config` VALUES ('FreightChargeAppliesIfLessThan','1000');
 INSERT INTO `config` VALUES ('FreightTaxCategory','1');
 INSERT INTO `config` VALUES ('geocode_integration','0');
@@ -6320,7 +6320,8 @@ INSERT INTO `edi_orders_segs` VALUES (95,'UNT',50,1);
 -- Dumping data for table `factorcompanies`
 --
 
-INSERT INTO `factorcompanies` ( `id` , `coyname` ) VALUES (null, "None");
+INSERT INTO `factorcompanies` VALUES (4,'None','','','','','','','','','','');
+INSERT INTO `factorcompanies` VALUES (5,'None','','','','','','','','','','');
 
 --
 -- Dumping data for table `freightcosts`
@@ -6629,6 +6630,11 @@ INSERT INTO `purchdata` VALUES ('BINGO','HIT3043-5','1235.0000','',1,'',5,1,'000
 INSERT INTO `purchdata` VALUES ('CRUISE','DVD-UNSG2','200.0000','10 Pack',10,'',5,1,'0000-00-00','');
 
 --
+-- Dumping data for table `purchorderauth`
+--
+
+
+--
 -- Dumping data for table `purchorderdetails`
 --
 
@@ -6640,8 +6646,8 @@ INSERT INTO `purchorderdetails` VALUES (3,2,'SALT','2009-02-05','Salt',1460,0,10
 -- Dumping data for table `purchorders`
 --
 
-INSERT INTO `purchorders` VALUES (1,'CAMPBELL','','2007-06-25 00:00:00',1,'2007-06-25 00:00:00',0,'','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','',1.00,'2007-06-25 00:00:00','','','2007-06-25 00:00:00','','');
-INSERT INTO `purchorders` VALUES (2,'GOTSTUFF','','2009-02-05 00:00:00',1,NULL,1,'','0','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','',1.00,'2007-06-25 00:00:00','','','2007-06-25 00:00:00','','');
+INSERT INTO `purchorders` VALUES (1,'CAMPBELL','','2007-06-25 00:00:00',1,'2007-06-25 00:00:00',0,'','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','','1.00','2007-06-25','','','2007-06-25','Printed','');
+INSERT INTO `purchorders` VALUES (2,'GOTSTUFF','','2009-02-05 00:00:00',1,NULL,1,'','0','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','','1.00','2007-06-25','','','2009-02-05','Authorised','');
 
 --
 -- Dumping data for table `recurringsalesorders`
@@ -7282,7 +7288,7 @@ INSERT INTO `scripts` VALUES (56,'PDFChequeListing.php','Creates a pdf showing a
 INSERT INTO `scripts` VALUES (57,'PDFDeliveryDifferences.php','Creates a pdf report listing the delivery differences from what the customer requested as recorded in the order entry. The report calculates a percentage of order fill based on the number of orders filled in full on time');
 INSERT INTO `scripts` VALUES (58,'PDFLowGP.php','Creates a pdf report showing the low gross profit sales made in the selected date range. The percentage of gp deemed acceptable can also be entered');
 INSERT INTO `scripts` VALUES (59,'PDFPriceList.php','Creates a pdf of the price list applicable to a given sales type and customer. Also allows the listing of prices specific to a customer');
-INSERT INTO `scripts` VALUES (60,'PDFStockCheckComparison.php','Creates a pdf comparing the quantities entered as counted at a given range of locations against the quantity stored as on hand as at the time a stock check was initiated.');
+INSERT INTO `scripts` VALUES (60,'PDFStockCheckComparison.php','Creates a pdf comparing the quantites entered as counted at a given range of locations against the quantity stored as on hand as at the time a stock check was initiated.');
 INSERT INTO `scripts` VALUES (61,'PDFStockLocTransfer.php','Creates a stock location transfer docket for the selected location transfer reference number');
 INSERT INTO `scripts` VALUES (62,'PO_Chk_ShiptRef_JobRef.php','Checks the Shipment of JobReference number is correct during AP invoice entry');
 INSERT INTO `scripts` VALUES (63,'PO_Header.php','Entry of a purchase order header record - date, references buyer etc');
@@ -7297,7 +7303,7 @@ INSERT INTO `scripts` VALUES (71,'PeriodsInquiry.php','Shows a list of all the s
 INSERT INTO `scripts` VALUES (72,'Prices.php','Entry of prices for a selected item also allows selection of sales type and currency for the price');
 INSERT INTO `scripts` VALUES (73,'Prices_Customer.php','Entry of prices for a selected item and selected customer/branch. The currency and sales type is defaulted from the customer\'s record');
 INSERT INTO `scripts` VALUES (74,'PrintCustOrder.php','Creates a pdf of the dispatch note - by default this is expected to be on two part pre-printed stationery to allow pickers to note discrepancies for the confirmer to update the dispatch at the time of invoicing');
-INSERT INTO `scripts` VALUES (75,'PrintCustOrder_generic.php','Creates two copies of a laser printed dispatch note - both copies need to be written on by the pickers with any discrepancies to advise customer of any shortfall and on the office copy to ensure the correct quantities are invoiced');
+INSERT INTO `scripts` VALUES (75,'PrintCustOrder_generic.php','Creates two copies of a laser printed dispatch note - both copies need to be written on by the pickers with any discrepancies to advise customer of any shortfall and on the office copy to ensure the correct quantites are invoiced');
 INSERT INTO `scripts` VALUES (76,'PrintCustStatements.php','Creates a pdf for the customer statements in the selected range');
 INSERT INTO `scripts` VALUES (77,'PrintCustTrans.php','Creates either a html invoice or credit note or a pdf. A range of invoices or credit notes can be selected also.');
 INSERT INTO `scripts` VALUES (78,'PurchData.php','Entry of supplier purchasing data, the suppliers part reference and the suppliers currency cost of the item');
@@ -7325,7 +7331,7 @@ INSERT INTO `scripts` VALUES (99,'SpecialOrder.php','Allows for a sales order to
 INSERT INTO `scripts` VALUES (100,'StockAdjustments.php','Entry of quantity corrections to stocks in a selected location.');
 INSERT INTO `scripts` VALUES (101,'StockAdjustmentsControlled.php','Entry of batch references or serial numbers on controlled stock items being adjusted');
 INSERT INTO `scripts` VALUES (102,'StockCategories.php','Defines the stock categories. All items must refer to one of these categories. The category record also allows the specification of the general ledger codes where stock items are to be posted - the balance sheet account and the profit and loss effect of any adjustments and the profit and loss effect of any price variances');
-INSERT INTO `scripts` VALUES (103,'StockCheck.php','Allows creation of a stock check file - copying the current quantities in stock for later comparison to the entered counts. Also produces a pdf for the count sheets.');
+INSERT INTO `scripts` VALUES (103,'StockCheck.php','Allows creation of a stock check file - copying the current quantites in stock for later comparison to the entered counts. Also produces a pdf for the count sheets.');
 INSERT INTO `scripts` VALUES (104,'StockCostUpdate.php','Allows update of the standard cost of items producing general ledger journals if the company preferences stock GL interface is active');
 INSERT INTO `scripts` VALUES (105,'StockCounts.php','Allows entry of stock counts');
 INSERT INTO `scripts` VALUES (106,'StockLocMovements.php','Inquiry shows the Movements of all stock items for a specified location');
@@ -7386,7 +7392,7 @@ INSERT INTO `scripts` VALUES (160,'index.php','The main menu from where all func
 INSERT INTO `scripts` VALUES (161,'phpinfo.php','Details about PHP installation on the server');
 INSERT INTO `scripts` VALUES (162,'UserSettings.php','Allows the user to change system wide defaults for the theme - appearance, the number of records to show in searches and the language to display messages in');
 INSERT INTO `scripts` VALUES (163,'StockQuantityByDate.php','Shows the stock on hand for each item at a selected location and stock category as at a specified date');
-INSERT INTO `scripts` VALUES (164,'PDFOrderStatus.php','Reports on sales order status by date range, by stock location and stock category - producing a pdf showing each line items and any quantities delivered');
+INSERT INTO `scripts` VALUES (164,'PDFOrderStatus.php','Reports on sales order status by date range, by stock location and stock category - producing a pdf showing each line items and any quantites delivered');
 INSERT INTO `scripts` VALUES (165,'Tax.php','Creates a report of the ad-valoerm tax - GST/VAT - for the period selected from accounts payable and accounts receivable data');
 INSERT INTO `scripts` VALUES (166,'PDFCustomerList.php','Creates a report of the customer and branch information held. This report has options to print only customer branches in a specified sales area and sales person. Additional option allows to list only those customers with activity either under or over a specified amount, since a specified date.');
 
@@ -7527,23 +7533,23 @@ INSERT INTO `stockcatproperties` VALUES (3,'AIRCON','inverter',2,'',0);
 -- Dumping data for table `stockmaster`
 --
 
-INSERT INTO `stockmaster` VALUES ('BREAD','FOOD','Bread','Bread','each','M','1800-01-01','0.0000','8.8785','6.0085','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,0.0000);
-INSERT INTO `stockmaster` VALUES ('DVD-CASE','DVD','webERP Demo DVD Case','webERP Demo DVD Case','each','M','1800-01-01','0.0000','0.0000','0.3000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,1,'0',0,0,25440,0,0,0.0000);
-INSERT INTO `stockmaster` VALUES ('DVD-DHWV','DVD','Die Hard With A Vengeance Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 122 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','5.5000','2.3200','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,0,0,0,0.0000);
-INSERT INTO `stockmaster` VALUES ('DVD-LTWP','AIRCON','Lethal Weapon Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r\n<br />\r\nLanguages: English, Deutsch.\r\n<br />\r\nSubtitles: English, Deutsch, Spanish.\r\n<br />\r\nAudio: Dolby Surround 5.1.\r\n<br />\r\nPicture Format: 16:9 Wide-Screen.\r\n<br />\r\nLength: (approx) 100 minutes.\r\n<br />\r\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','2.6600','2.7000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,0,0,0,0.0000);
-INSERT INTO `stockmaster` VALUES ('DVD-TOPGUN','DVD','Top Gun DVD','Top Gun DVD','each','B','1800-01-01','0.0000','0.0000','6.5000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,0.0000);
-INSERT INTO `stockmaster` VALUES ('DVD-UNSG','DVD','Under Siege Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 98 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,0,0,0,0.0000);
-INSERT INTO `stockmaster` VALUES ('DVD-UNSG2','DVD','Under Siege 2 - Dark Territory','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r<br />\nLanguages: English, Deutsch.\r<br />\nSubtitles: English, Deutsch, Spanish.\r<br />\nAudio: Dolby Surround 5.1.\r<br />\nPicture Format: 16:9 Wide-Screen.\r<br />\nLength: (approx) 98 minutes.\r<br />\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,0,0,0,0.0000);
-INSERT INTO `stockmaster` VALUES ('DVD_ACTION','DVD','Action Series Bundle','Under Seige I and Under Seige II\r\n','each','M','1800-01-01','0.0000','0.0000','16.2200','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,0.0000);
-INSERT INTO `stockmaster` VALUES ('FLOUR','AIRCON','High Grade Flour','High Grade Flour','kgs','B','1800-01-01','0.0000','0.0000','3.8900','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,1,0,0,0,0.0000);
-INSERT INTO `stockmaster` VALUES ('FUJI990101','AIRCON','Fujitsu 990101 Split type Indoor Unit 3.5kw','Fujitsu 990101 Split type Indoor Unit 3.5kw Heat Pump with mounting screws and isolating switch','each','B','1800-01-01','0.0000','995.7138','1015.6105','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,4,0,0,0,0.0000);
-INSERT INTO `stockmaster` VALUES ('FUJI990102','AIRCON','Fujitsu 990102 split type A/C Outdoor unit 3.5kw','Fujitsu 990102 split type A/C Outdoor unit 3.5kw with 5m piping & insulation','each','B','1800-01-01','0.0000','0.0000','633.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,0.0000);
-INSERT INTO `stockmaster` VALUES ('FUJI9901ASS','AIRCON','Fujitsu 990101 Split type A/C 3.5kw complete','Fujitsu 990101 Split type A/C 3.5kw complete with indoor and outdoor units 5m pipe and insulation isolating switch. 5 year warranty','each','A','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,0.0000);
-INSERT INTO `stockmaster` VALUES ('HIT3042-4','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor Unit - wall hung complete with brackets and screws. 220V-240V AC\r\n5 year guaranttee','each','M','1800-01-01','0.0000','0.0000','853.0000','0.0000','0.0000',0,0,1,5,'0.4000','7.8000','','',1,1,'none',0,0,0,0,0,0.0000);
-INSERT INTO `stockmaster` VALUES ('HIT3043-5','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor unit - including 5m piping for fitting to HIT3042-4 indoor unit\r\n5 year guaranttee','each','B','1800-01-01','0.0000','0.0000','1235.0000','0.0000','0.0000',0,0,1,5,'0.8500','16.0000','','',1,1,'none',0,0,0,0,0,0.0000);
-INSERT INTO `stockmaster` VALUES ('SALT','BAKE','Salt','Salt','kgs','B','1800-01-01','0.0000','1.2000','2.5000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,3,0,0,0,0.0000);
-INSERT INTO `stockmaster` VALUES ('SLICE','FOOD','Slice Of Bread','Slice Of Bread','each','M','1800-01-01','0.0000','0.6009','0.6009','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,0.0000);
-INSERT INTO `stockmaster` VALUES ('YEAST','BAKE','Yeast','Yeast','kgs','B','1800-01-01','0.0000','3.8500','5.0000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,3,0,0,0,0.0000);
+INSERT INTO `stockmaster` VALUES ('BREAD','FOOD','Bread','Bread','each','M','1800-01-01','0.0000','8.8785','6.0085','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('DVD-CASE','DVD','webERP Demo DVD Case','webERP Demo DVD Case','each','M','1800-01-01','0.0000','0.0000','0.3000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,1,'0',0,0,25440,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('DVD-DHWV','DVD','Die Hard With A Vengeance Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 122 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','5.5000','2.3200','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,0,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('DVD-LTWP','AIRCON','Lethal Weapon Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r\n<br />\r\nLanguages: English, Deutsch.\r\n<br />\r\nSubtitles: English, Deutsch, Spanish.\r\n<br />\r\nAudio: Dolby Surround 5.1.\r\n<br />\r\nPicture Format: 16:9 Wide-Screen.\r\n<br />\r\nLength: (approx) 100 minutes.\r\n<br />\r\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','2.6600','2.7000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,0,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('DVD-TOPGUN','DVD','Top Gun DVD','Top Gun DVD','each','B','1800-01-01','0.0000','0.0000','6.5000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('DVD-UNSG','DVD','Under Siege Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 98 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,0,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('DVD-UNSG2','DVD','Under Siege 2 - Dark Territory','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r<br />\nLanguages: English, Deutsch.\r<br />\nSubtitles: English, Deutsch, Spanish.\r<br />\nAudio: Dolby Surround 5.1.\r<br />\nPicture Format: 16:9 Wide-Screen.\r<br />\nLength: (approx) 98 minutes.\r<br />\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,0,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('DVD_ACTION','DVD','Action Series Bundle','Under Seige I and Under Seige II\r\n','each','M','1800-01-01','0.0000','0.0000','16.2200','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('FLOUR','AIRCON','High Grade Flour','High Grade Flour','kgs','B','1800-01-01','0.0000','0.0000','3.8900','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,1,0,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('FUJI990101','AIRCON','Fujitsu 990101 Split type Indoor Unit 3.5kw','Fujitsu 990101 Split type Indoor Unit 3.5kw Heat Pump with mounting screws and isolating switch','each','B','1800-01-01','0.0000','995.7138','1015.6105','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,4,0,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('FUJI990102','AIRCON','Fujitsu 990102 split type A/C Outdoor unit 3.5kw','Fujitsu 990102 split type A/C Outdoor unit 3.5kw with 5m piping & insulation','each','B','1800-01-01','0.0000','0.0000','633.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('FUJI9901ASS','AIRCON','Fujitsu 990101 Split type A/C 3.5kw complete','Fujitsu 990101 Split type A/C 3.5kw complete with indoor and outdoor units 5m pipe and insulation isolating switch. 5 year warranty','each','A','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('HIT3042-4','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor Unit - wall hung complete with brackets and screws. 220V-240V AC\r\n5 year guaranttee','each','M','1800-01-01','0.0000','0.0000','853.0000','0.0000','0.0000',0,0,1,5,'0.4000','7.8000','','',1,1,'none',0,0,0,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('HIT3043-5','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor unit - including 5m piping for fitting to HIT3042-4 indoor unit\r\n5 year guaranttee','each','B','1800-01-01','0.0000','0.0000','1235.0000','0.0000','0.0000',0,0,1,5,'0.8500','16.0000','','',1,1,'none',0,0,0,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('SALT','BAKE','Salt','Salt','kgs','B','1800-01-01','0.0000','1.2000','2.5000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,3,0,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('SLICE','FOOD','Slice Of Bread','Slice Of Bread','each','M','1800-01-01','0.0000','0.6009','0.6009','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,1,'0',0,0,1000,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('YEAST','BAKE','Yeast','Yeast','kgs','B','1800-01-01','0.0000','3.8500','5.0000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,3,0,0,0,'0.0000');
 
 --
 -- Dumping data for table `stockmoves`
@@ -8187,7 +8193,6 @@ INSERT INTO `woserialnos` VALUES (10,'SLICE','1299',1,'');
 --
 
 INSERT INTO `www_users` VALUES ('admin','weberp','Demonstration user','','','','MEL',8,'2009-05-17 14:03:53','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
-
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -8195,5 +8200,5 @@ INSERT INTO `www_users` VALUES ('admin','weberp','Demonstration user','','','','
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-06-24  7:49:45
+-- Dump completed on 2009-08-13  8:56:11
 SET FOREIGN_KEY_CHECKS = 1;
