@@ -772,8 +772,8 @@
 		}
 		$newqoh = $Quantity + $balance;
 		$itemdetails = GetStockItem($StockID, $user, $password);
-		$adjglact=GetCategoryGLCode($itemdetails['categoryid'], 'adjglact', $db);
-		$stockact=GetCategoryGLCode($itemdetails['categoryid'], 'stockact', $db);
+		$adjglact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'adjglact', $db);
+		$stockact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'stockact', $db);
 
 		$stockmovesql='INSERT INTO stockmoves (stockid, type, transno, loccode, trandate, prd, reference, qty, newqoh)
 				VALUES ("'.$StockID.'", 17,'.GetNextTransactionNo(17, $db).',"'.$Location.'","'.$TranDate.
