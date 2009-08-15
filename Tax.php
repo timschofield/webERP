@@ -1,11 +1,11 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
 
-If (isset($_POST['TaxAuthority']) AND 
+if (isset($_POST['TaxAuthority']) AND 
 	isset($_POST['PrintPDF']) AND 
 	isset($_POST['NoOfPeriods']) AND 
 	isset($_POST['ToPeriod'])){
@@ -19,7 +19,7 @@ If (isset($_POST['TaxAuthority']) AND
 	$PeriodEndResult = DB_query($sql,$db,$ErrMsg);
 	$PeriodEndRow = DB_fetch_row($PeriodEndResult);
 	$PeriodEnd = ConvertSQLDate($PeriodEndRow[0]);
-	
+
 	$result = DB_query('SELECT description FROM taxauthorities WHERE taxid=' . $_POST['TaxAuthority'],$db);
 	$TaxAuthDescription = DB_fetch_row($result);
 	$TaxAuthorityName =  $TaxAuthDescription[0];
@@ -124,12 +124,11 @@ If (isset($_POST['TaxAuthority']) AND
 
 	/*Now do the inputs from SuppTrans */
 	/*Only have dates in SuppTrans no periods so need to get the starting date */
-	if (strstr('/',$PeriodEnd)) {
+	if (strpos($PeriodEnd,'/')) {
 		$Date_Array = explode('/',$PeriodEnd);
-	} elseif (strstr('.',$PeriodEnd)) {
+	} elseif (strpos($PeriodEnd,'.')) {
 		$Date_Array = explode('.',$PeriodEnd);
 	}
-	
 	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
 		$StartDateSQL = Date('Y-m-d', mktime(0,0,0, (int)$Date_Array[1]-$_POST['NoOfPeriods']+1,1,(int)$Date_Array[2]));
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y') {
@@ -139,7 +138,6 @@ If (isset($_POST['TaxAuthority']) AND
 	} elseif ($_SESSION['DefaultDateFormat']=='d.m.Y') {
 		$StartDateSQL = Date('Y-m-d', mktime(0,0,0, (int)$Date_Array[1]-$_POST['NoOfPeriods']+1,1,(int)$Date_Array[2]));
 	}
-
 
 	$SQL = "SELECT supptrans.type,
 			supptrans.suppreference,
