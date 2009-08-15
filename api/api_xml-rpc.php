@@ -1787,7 +1787,7 @@
 	}
 	$doc .= '</table>';
 
-	$StockAdjustment_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString,$xmlrpcString, $xmlrpcString,  $xmlrpcString, $xmlrpcString));
+	$StockAdjustment_sig = array(array($xmlrpcStruct, $xmlrpcString,$xmlrpcString, $xmlrpcInt, $xmlrpcString,  $xmlrpcString, $xmlrpcString));
 	$StockAdjustment_doc = $doc;
 
 	function xmlrpc_StockAdjustment($xmlrpcmsg) {
