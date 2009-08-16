@@ -1,10 +1,10 @@
 <?php
 
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 define ('LIKE','LIKE');
 
-$db = mysql_connect($host , $dbuser, $dbpassword);
+$db = mysql_connect($host.':'.$mysqlport , $dbuser, $dbpassword);
 
 if ( !$db ) {
 	echo '<BR>' . _('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');

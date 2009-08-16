@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 // User configurable variables
 //---------------------------------------------------
 
@@ -26,7 +26,7 @@ $Version = '3.11-rc2';
 // $host is the computer ip address or name where the database is located
 // assuming that the web server is also the sql server
 $host = 'localhost';
-
+$mysqlport=3306;
 //The type of db server being used - currently only postgres or mysql
 $dbType = 'mysqli';
 //$dbType = 'postgres' - DEPRECIATED;
