@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity=9;
 
@@ -468,7 +468,7 @@ if (isset($_POST['submit'])) {
 	// at a time, compare the requirements and supplies to see if have to re-schedule or create
 	// planned orders to satisfy requirements. If there is a net requirement from a higher level 
 	// part, that serves as a gross requirement for a lower level part, so will read down through 
-	// the Bill of Materials to generate those requirements in function BomExplosion().
+	// the Bill of Materials to generate those requirements in function LevelNetting().
 	for ($level = $maxlevel; $level >= $minlevel; $level--) {
 		$sql = 'SELECT * FROM levels WHERE level = ' . "$level " . ' LIMIT 50000'; //should cover most eventualities!!
 		
@@ -563,7 +563,7 @@ if (isset($_POST['submit'])) {
 	echo '<tr>
 	 <td>' . _('Location') . '</td>
 	 <td><select name="location[]" multiple>
-	 <option value="All" selected>All</option>';
+	 <option value="All" selected>' . _('All') . '</option>';
 	 $sql = 'SELECT loccode
 	           FROM locations';
 	$result = DB_query($sql,$db);
@@ -806,9 +806,11 @@ function CreateLowerLevelRequirement(&$db,
 
         	$component = $myrow['component'];
         $extendedquantity = $myrow['quantity'] * $topquantity;
-        if ($myrow['eoq'] > $extendedquantity) {
-            $extendedquantity = $myrow['eoq'];
-        }
+// Commented out the following lines 8/15/09 because the eoq should be considered in the 
+// LevelNetting() function where $excessqty is calculated
+//         if ($myrow['eoq'] > $extendedquantity) {
+//             $extendedquantity = $myrow['eoq'];
+//         }
 		$sql = "INSERT INTO mrprequirements 
 						(part,
 						 daterequired,
