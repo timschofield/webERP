@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 // Add, Edit, Delete, and List MRP demand records. Table is mrpdemands.
 // Have separate functions for each routine. Use pass-by-reference - (&$db,&$StockID) -
 // to pass values of $db and $StockID to functions. - when just used $db as variable,
@@ -134,7 +134,7 @@ function submit(&$db,&$StockID,&$DemandID)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SU
 // In this section if hit submit button. Do edit checks. If all checks pass, see if record already
 // exists for StockID/Duedate/MRPDemandtype combo; that means do an Update, otherwise, do INSERT.
 //initialise no input errors assumed initially before we test
-	// echo "</br>Submit - DemandID = $DemandID</br>";
+	// echo "<br/>Submit - DemandID = $DemandID<br/>";
 	$FormatedDuedate = FormatDateForSQL($_POST['Duedate']);
 	$InputError = 0;
 
@@ -189,8 +189,9 @@ function submit(&$db,&$StockID,&$DemandID)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SU
 	}
 	
     if ($InputError !=1){	
-		$sql = "SELECT count(*) FROM mrpdemands
-			       WHERE demandid='$DemandID'";
+		$sql = "SELECT COUNT(*) FROM mrpdemands
+			       WHERE demandid='$DemandID' 
+			       GROUP BY demandid";
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_row($result);
 		
@@ -284,7 +285,7 @@ echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID .' method=post>';
 		FROM mrpdemands
 		LEFT JOIN stockmaster on mrpdemands.stockid = stockmaster.stockid' .
 		 $where	. ' ORDER BY mrpdemands.stockid, mrpdemands.duedate';
-    //echo "</br>sql is $sql</br>";
+    //echo "<br/>sql is $sql<br/>";
 	$ErrMsg = _('The SQL to find the parts selected failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 		
@@ -321,7 +322,7 @@ echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID .' method=post>';
 	//END WHILE LIST LOOP
 	echo '<tr><td>' . _('Number of Records') . "</td><td>$ctr</td></tr>";
 	echo '</table>';
-echo '</form></br></br></br></br>';
+echo '</form><br/><br/><br/><br/>';
 unset ($StockID);
 display($db,$StockID,$DemandID);
 
@@ -332,7 +333,7 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 
 // Display Seach fields at top and Entry form below that. This function is called the first time
 // the page is called, and is also invoked at the end of all of the other functions.
-// echo "</br>DISPLAY - DemandID = $DemandID</br>";
+// echo "<br/>DISPLAY - DemandID = $DemandID<br/>";
 	echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method="post"><b><br></b>
 </font><table cellpadding=3 colspan=4>
 <tr>
@@ -348,8 +349,8 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 	 <div class="centre">
 	  <input tabindex="3" type="submit" name="Search" value="' . _('Search Now') . '">
 	 </div>';
-	 echo '</br></br><hr>';
-	 echo '</br></br></b1r></br></br>';
+	 echo '<br/><br/><hr>';
+	 echo '<br/><br/></b1r><br/><br/>';
 	if (isset($DemandID)) {
 	//editing an existing MRP demand
 
@@ -423,10 +424,10 @@ echo '</select></td></tr><tr><td>&nbsp</td>&nbsp<td></td></tr><tr><td>&nbsp</td>
 echo '<tr><td><input type="submit" name="submit" value="' . _('Enter Information') . '"></td>';
 echo '<td><input type="submit" name="listsome" value="' . _('List Selection') . '">';
 echo '<td><input type="Submit" name="deletesome" value="' . _('Delete Demand Type') . '"></tr>';
-echo '</table></br></br></br></br>';
+echo '</table><br/><br/><br/><br/>';
 // If mrpdemand record exists, display option to delete it
 if ((isset($DemandID)) AND (DB_num_rows($result) > 0)) {
-	echo '</br></br><a href=" ' . $_SERVER['PHP_SELF'] . '?&delete=yes&DemandID=' . $DemandID . '">' . _('Or Delete Record') ;
+	echo '<br/><br/><a href=" ' . $_SERVER['PHP_SELF'] . '?&delete=yes&DemandID=' . $DemandID . '">' . _('Or Delete Record') ;
 }
 
 echo '</form>';
