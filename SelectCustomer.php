@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.61 $ */
+/* $Revision: 1.62 $ */
 
 $PageSecurity = 2;
 
@@ -278,8 +278,8 @@ if ($_POST['Select']!="" or
 	echo '<a href="' . $rootpath . '/CustomerBranches.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add/Modify/Delete Customer Branches') . '</a><br>';
 
 	echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Special Customer Prices') . '</a><br>';
-	echo '<a href="' . $rootpath . '/CustEDISetup.php">' . _('Customer EDI Configuration') . '</a>';
-
+	echo '<a href="' . $rootpath . '/CustEDISetup.php">' . _('Customer EDI Configuration') . '</a><br>';
+	echo '<a href="' . $rootpath . '/CustLoginSetup.php">' . _('Customer Login Configuration') . '</a>';
 
 	echo '</td></tr></table><br>';
 } else {
