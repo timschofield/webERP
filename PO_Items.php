@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.38 $ */
+/* $Revision: 1.39 $ */
 
 $PageSecurity = 4;
 
@@ -894,11 +894,27 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
-//			echo "<td>$POLine->StockID</td><td>$POLine->ItemDescription</td>td> align=right>$DisplayQuantity</td><td>$POLine->Units</td><td>$POLine->ReqDelDate</td>td> align=right>$DisplayPrice</td>td> align=right>$DisplayLineTotal</font></td><td><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "&Edit=" . $POLine->LineNo . "'>" . _('Select') . "</a></td></tr>";
+			$uomsql='SELECT conversionfactor, suppliersuom
+					FROM purchdata
+					WHERE supplierno="'.$_SESSION['PO'.$identifier]->SupplierID.'"
+					AND stockid="'.$POLine->StockID.'"';
+
+			$uomresult=DB_query($uomsql, $db);
+			if (DB_num_rows($uomresult)>0) {
+				$uomrow=DB_fetch_array($uomresult);
+				if (strlen($uomrow['suppliersuom'])>0) {
+					$uom=$uomrow['suppliersuom'];
+				} else {
+					$uom=$POLine->Units;
+				}
+			} else {
+				$uom=$POLine->Units;
+			}
+			//			echo "<td>$POLine->StockID</td><td>$POLine->ItemDescription</td>td> align=right>$DisplayQuantity</td><td>$POLine->Units</td><td>$POLine->ReqDelDate</td>td> align=right>$DisplayPrice</td>td> align=right>$DisplayLineTotal</font></td><td><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "&Edit=" . $POLine->LineNo . "'>" . _('Select') . "</a></td></tr>";
 			echo "<td>$POLine->StockID</td>
 				<td>".$POLine->ItemDescription."</td>
 				<td><input type=text class=number name=Qty$POLine->LineNo size=11 value=".$DisplayQuantity."></td>
-				<td>$POLine->Units</td>
+				<td>$uom</td>
 				<td><input type=text class=number name=nw$POLine->LineNo size=11 value=".$POLine->nw."></td>
 				<td><input type=text class=number name=Price$POLine->LineNo size=11 value=".$DisplayPrice."></td>
 				<td class=number>$DisplayLineTotal</td>
@@ -983,6 +999,8 @@ if (!isset($_GET['Edit'])) {
 		$_POST['StockCode']='';
 	}
 
+	unset($_POST['Keywords']);
+	unset($_POST['StockCode']);
 	echo '</select></td>
 		<td><font size=2>' . _('Enter text extracts in the description') . ":</font></td>
 		<td><input type='text' name='Keywords' size=20 maxlength=25 value='" . $_POST['Keywords'] . "'></td></tr>
@@ -1038,7 +1056,23 @@ if (isset($SearchResult)) {
 			$ImageSource = '<i>'._('No Image').'</i>';
 		}
 
-		printf("<td>%s</td>
+			$uomsql='SELECT conversionfactor, suppliersuom
+					FROM purchdata
+					WHERE supplierno="'.$_SESSION['PO'.$identifier]->SupplierID.'"
+					AND stockid="'.$myrow['stockid'].'"';
+
+			$uomresult=DB_query($uomsql, $db);
+			if (DB_num_rows($uomresult)>0) {
+				$uomrow=DB_fetch_array($uomresult);
+				if (strlen($uomrow['suppliersuom'])>0) {
+					$uom=$uomrow['suppliersuom'];
+				} else {
+					$uom=$myrow['units'];
+				}
+			} else {
+				$uom=$myrow['units'];
+			}
+			printf("<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
@@ -1046,7 +1080,7 @@ if (isset($SearchResult)) {
 			</tr>",
 			$myrow['stockid'],
 			$myrow['description'],
-			$myrow['units'],
+			$uom,
 			$ImageSource,
 			$myrow['stockid']);
 

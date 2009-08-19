@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.41 $ */
+/* $Revision: 1.42 $ */
 
 $PageSecurity = 11;
 
@@ -106,12 +106,28 @@ if (count($_SESSION['PO']->LineItems)>0){
 		$DisplayLineTotal = number_format($LineTotal,2);
 		$DisplayPrice = number_format($LnItm->Price,2);
 
+		$uomsql='SELECT conversionfactor, suppliersuom
+				FROM purchdata
+				WHERE supplierno="'.$_SESSION['PO']->SupplierID.'"
+				AND stockid="'.$LnItm->StockID.'"';
 
+		$uomresult=DB_query($uomsql, $db);
+		if (DB_num_rows($uomresult)>0) {
+			$uomrow=DB_fetch_array($uomresult);
+			if (strlen($uomrow['suppliersuom'])>0) {
+				$uom=$uomrow['suppliersuom'];
+			} else {
+				$uom=$LnItm->Units;
+			}
+		} else {
+			$uom=$LnItm->Units;
+		}
+		
 		//Now Display LineItem
 		echo '<td><font size=2>' . $LnItm->StockID . '</font></td>';
 		echo '<td><font size=2>' . $LnItm->ItemDescription . '</td>';
 		echo '<td class=number><font size=2>' . $DisplayQtyOrd . '</td>';
-		echo '<td><font size=2>' . $LnItm->Units . '</td>';
+		echo '<td><font size=2>' . $uom . '</td>';
 		echo '<td class=number><font size=2>' . $DisplayQtyRec . '</td>';
 		echo '<td class=number><font size=2>';
 
@@ -411,6 +427,19 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 					$QtyOnHandPrior = 0;
 				}
 
+				$sql='SELECT conversionfactor
+					FROM purchdata
+					WHERE supplierno="'.$_SESSION['PO']->SupplierID.'"
+					AND stockid="'.$OrderLine->StockID.'"';
+				$result=DB_query($sql, $db);
+				if (DB_num_rows($result)>0) {
+					$myrow=DB_fetch_array($result);
+					$conversionfactor=$myrow['conversionfactor'];
+				} else {
+					$conversionfactor=1;
+				}
+				$OrderLine->ReceiveQty=$OrderLine->ReceiveQty*$conversionfactor;
+
 				$SQL = "UPDATE locstock
 					SET quantity = locstock.quantity + " . $OrderLine->ReceiveQty . "
 					WHERE locstock.stockid = '" . $OrderLine->StockID . "'
@@ -490,10 +519,10 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 												" . $Item->BundleQty . ")";
 								}
 
-							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
-							$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
-							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
-
+								$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
+								$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
+								$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+//assetmanager								
 							/** end of handle stockserialitems records */
 
 							/** now insert the serial stock movement **/
