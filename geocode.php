@@ -47,7 +47,8 @@ while ($row = @mysql_fetch_assoc($result)) {
     $id = $row["branchcode"];
     $debtorno =$row["debtorno"];
     $request_url = $base_url . "&q=" . urlencode($address);
-    $xml = simplexml_load_file($request_url) or die("url not loading");
+    $xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die("url not loading");
+//    $xml = simplexml_load_file($request_url) or die("url not loading");
 
     $status = $xml->Response->Status->code;
     if (strcmp($status, "200") == 0) {
@@ -92,7 +93,8 @@ while ($row2 = @mysql_fetch_assoc($result2)) {
     $address = $row2["address1"] . ", " . $row2["address2"] . ", " . $row2["address3"] . ", " . $row2["address4"];
     $id = $row2["supplierid"];
     $request_url = $base_url . "&q=" . urlencode($address);
-    $xml = simplexml_load_file($request_url) or die("url not loading");
+    $xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die("url not loading");
+//    $xml = simplexml_load_file($request_url) or die("url not loading");
 
     $status = $xml->Response->Status->code;
     if (strcmp($status, "200") == 0) {
