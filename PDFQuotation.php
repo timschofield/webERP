@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 2;
 
@@ -191,7 +191,7 @@ if (DB_num_rows($result)>0){
 
 	} //end if need a new page headed up
 
-	$LeftOvers = $pdf->addTextWrap($XPos,$YPos-80,200,10,"Notes:");
+	$LeftOvers = $pdf->addTextWrap($XPos,$YPos-80,200,10,_('Notes:'));
 	$LeftOvers = $pdf->addText($XPos,$YPos-95,10,$myrow['comments']);
 
 	if (strlen($LeftOvers)>1){
