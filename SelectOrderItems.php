@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.106 $ */
+/* $Revision: 1.107 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -109,7 +109,8 @@ if (isset($_GET['ModifyOrderNumber'])
 								salesorders.deliverblind,
 								debtorsmaster.customerpoline,
 								locations.locationname,
-								custbranch.estdeliverydays
+								custbranch.estdeliverydays,
+								custbranch.salesman
 							FROM salesorders,
 								debtorsmaster,
 								salestypes,
@@ -131,6 +132,11 @@ if (isset($_GET['ModifyOrderNumber'])
 	if (DB_num_rows($GetOrdHdrResult)==1) {
 
 		$myrow = DB_fetch_array($GetOrdHdrResult);
+		if ($_SESSION['SalesmanLogin']!='' AND $_SESSION['SalesmanLogin']!=$myrow['salesman']){
+			prnMsg(_('Your account is set up to see only a specific salespersons orders. You are not authorised to modify this order'),'error');
+			include('includes/footer.inc');
+			exit;
+		}
 		$_SESSION['Items'.$identifier]->OrderNo = $_GET['ModifyOrderNumber'];
 		$_SESSION['Items'.$identifier]->DebtorNo = $myrow['debtorno'];
 /*CustomerID defined in header.inc */
@@ -304,9 +310,13 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 					custbranch.branchcode,
 					custbranch.debtorno
 				FROM custbranch
-				WHERE custbranch.brname " . LIKE . " '$SearchString'
-				AND custbranch.disabletrans=0
-				ORDER BY custbranch.debtorno, custbranch.branchcode";
+				WHERE custbranch.brname " . LIKE . " '$SearchString'";
+				
+			if ($_SESSION['SalesmanLogin']!=''){
+				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+			}	
+			$SQL .=	' AND custbranch.disabletrans=0
+						ORDER BY custbranch.debtorno, custbranch.branchcode';
 
 		} elseif (strlen($_POST['CustCode'])>0){
 
@@ -319,9 +329,13 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 					custbranch.branchcode,
 					custbranch.debtorno
 				FROM custbranch
-				WHERE custbranch.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%' OR custbranch.branchcode " . LIKE . " '%" . $_POST['CustCode'] . "%'
-				AND custbranch.disabletrans=0
-				ORDER BY custbranch.debtorno";
+				WHERE custbranch.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%' OR custbranch.branchcode " . LIKE . " '%" . $_POST['CustCode'] . "%'";
+		    
+			if ($_SESSION['SalesmanLogin']!=''){
+				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+			}
+			$SQL .=	' AND custbranch.disabletrans=0
+						ORDER BY custbranch.debtorno';
 		} elseif (strlen($_POST['CustPhone'])>0){
 			$SQL = "SELECT custbranch.brname,
 					custbranch.contactname,
@@ -330,9 +344,14 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 					custbranch.branchcode,
 					custbranch.debtorno
 				FROM custbranch
-				WHERE custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'
-				AND custbranch.disabletrans=0
-				ORDER BY custbranch.debtorno";
+				WHERE custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'";
+				
+			if ($_SESSION['SalesmanLogin']!=''){
+				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+			}
+			
+			$SQL .=	' AND custbranch.disabletrans=0
+						ORDER BY custbranch.debtorno';
 		}
 
 		$ErrMsg = _('The searched customer records requested cannot be retrieved because');
@@ -414,7 +433,8 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 				custbranch.deliverblind,
                 custbranch.specialinstructions,
                 custbranch.estdeliverydays,
-                locations.locationname
+                locations.locationname,
+				custbranch.salesman
 			FROM custbranch
 			INNER JOIN locations
 			ON custbranch.defaultlocation=locations.loccode
@@ -438,6 +458,12 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 		// add echo
 		echo '<br>';
 		$myrow = DB_fetch_row($result);
+		if ($_SESSION['SalesmanLogin']!='' AND $_SESSION['SalesmanLogin']!=$myrow[15]){
+			prnMsg(_('Your login is only set up for a particular salesperson. This customer has a different salesperson.'),'error');
+			include('includes/footer.inc');
+			exit;
+		}
+				
 		$_SESSION['Items'.$identifier]->DeliverTo = $myrow[0];
 		$_SESSION['Items'.$identifier]->DelAdd1 = $myrow[1];
 		$_SESSION['Items'.$identifier]->DelAdd2 = $myrow[2];

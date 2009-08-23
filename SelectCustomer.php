@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.62 $ */
+/* $Revision: 1.63 $ */
 
 $PageSecurity = 2;
 
@@ -173,9 +173,10 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 			FROM debtorsmaster LEFT JOIN custbranch
 				ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
 			WHERE debtorsmaster.debtorno " . LIKE  . " '%" . $_POST['CustCode'] . "%'
-			AND debtorsmaster.typeid = debtortype.typeid
-			ORDER BY debtorsmaster.name";
+			AND debtorsmaster.typeid = debtortype.typeid";
+			
 		} elseif (strlen($_POST['CustPhone'])>0){
+			
 			$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
 				debtorsmaster.address1,
@@ -190,9 +191,10 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 			FROM debtorsmaster LEFT JOIN custbranch
 				ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
 			WHERE custbranch.phoneno " . LIKE  . " '%" . $_POST['CustPhone'] . "%'
-			AND debtorsmaster.typeid = debtortype.typeid
-			ORDER BY debtorsmaster.name";
+			AND debtorsmaster.typeid = debtortype.typeid";
+			
 		} elseif (strlen($_POST['CustType'])>0){
+			
                         $SQL = "SELECT debtorsmaster.debtorno,
                                 debtorsmaster.name,
                                 debtorsmaster.address1,
@@ -207,10 +209,13 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
                         FROM debtorsmaster LEFT JOIN custbranch
                                 ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
                         WHERE debtorsmaster.typeid LIKE debtortype.typeid
-                        AND debtortype.typename = '" . $_POST['CustType'] . "'
-                        ORDER BY debtorsmaster.name";
+                        AND debtortype.typename = '" . $_POST['CustType'] . "'";
 		}
 	} //one of keywords or custcode or custphone was more than a zero length string
+	if ($_SESSION['SalesmanLogin']!=''){
+		$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+	}
+	$SQL .= ' ORDER BY debtorsmaster.name';
 	$ErrMsg = _('The searched customer records requested cannot be retrieved because');
 	$result = DB_query($SQL,$db,$ErrMsg);
 	if (DB_num_rows($result)==1){

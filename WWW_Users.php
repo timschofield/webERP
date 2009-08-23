@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 $PageSecurity=15;
 
@@ -124,8 +124,9 @@ if (isset($_POST['submit'])) {
 						customerid='" . $_POST['Cust'] ."',
 						phone='" . $_POST['Phone'] ."',
 						email='" . $_POST['Email'] ."',
-						".$UpdatePassword."
+						" . $UpdatePassword . "
 						branchcode='" . $_POST['BranchCode'] . "',
+						salesman='" . $_POST['Salesman'] . "',
 						pagesize='" . $_POST['PageSize'] . "',
 						fullaccess=" . $_POST['Access'] . ",
 						theme='" . $_POST['Theme'] . "',
@@ -142,6 +143,7 @@ if (isset($_POST['submit'])) {
 						realname,
 						customerid,
 						branchcode,
+						salesman,
 						password,
 						phone,
 						email,
@@ -156,6 +158,7 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['RealName'] ."',
 						'" . $_POST['Cust'] ."',
 						'" . $_POST['BranchCode'] ."',
+						'" . $_POST['Salesman'] . "',
 						'" . CryptPass($_POST['Password']) ."',
 						'" . $_POST['Phone'] . "',
 						'" . $_POST['Email'] ."',
@@ -179,6 +182,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['RealName']);
 		unset($_POST['Cust']);
 		unset($_POST['BranchCode']);
+		unset($_POST['Salesman']);
 		unset($_POST['Phone']);
 		unset($_POST['Email']);
 		unset($_POST['Password']);
@@ -221,18 +225,20 @@ if (!isset($SelectedUser)) {
 
 /* If its the first time the page has been displayed with no parameters then none of the above are true and the list of Users will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
-	$sql = "SELECT userid,
+	$sql = 'SELECT 
+			userid,
 			realname,
 			phone,
 			email,
 			customerid,
 			branchcode,
+			salesman,
 			lastvisitdate,
 			fullaccess,
 			pagesize,
 			theme,
 			language
-		FROM www_users";
+		FROM www_users';
 	$result = DB_query($sql,$db);
 
 	echo '<table border=1>';
@@ -242,6 +248,7 @@ if (!isset($SelectedUser)) {
 		<th>" . _('Email') . "</th>
 		<th>" . _('Customer Code') . "</th>
 		<th>" . _('Branch Code') . "</th>
+		<th>" . _('Salesperson') . "</th>
 		<th>" . _('Last Visit') . "</th>
 		<th>" . _('Security Role') ."</th>
 		<th>" . _('Report Size') ."</th>
@@ -265,34 +272,36 @@ if (!isset($SelectedUser)) {
 		/*The SecurityHeadings array is defined in config.php */
 
 		printf("<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td><a href=\"%s&SelectedUser=%s\">" . _('Edit') . "</a></td>
-			<td><a href=\"%s&SelectedUser=%s&delete=1\">" . _('Delete') . "</a></td>
-			</tr>",
-			$myrow[0],
-			$myrow[1],
-			$myrow[2],
-			$myrow[3],
-			$myrow[4],
-			$myrow[5],
-			$LastVisitDate,
-			$SecurityRoles[($myrow[7])],
-			$myrow[8],
-			$myrow[9],
-			$myrow[10],
-			$_SERVER['PHP_SELF']  . "?" . SID,
-			$myrow[0],
-			$_SERVER['PHP_SELF'] . "?" . SID,
-			$myrow[0]);
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td><a href=\"%s&SelectedUser=%s\">" . _('Edit') . "</a></td>
+					<td><a href=\"%s&SelectedUser=%s&delete=1\">" . _('Delete') . "</a></td>
+					</tr>",
+					$myrow[0],
+					$myrow[1],
+					$myrow[2],
+					$myrow[3],
+					$myrow[4],
+					$myrow[5],
+					$myrow[6],
+					$LastVisitDate,
+					$SecurityRoles[($myrow[8])],
+					$myrow[9],
+					$myrow[10],
+					$myrow[11],
+					$_SERVER['PHP_SELF']  . "?" . SID,
+					$myrow[0],
+					$_SERVER['PHP_SELF'] . "?" . SID,
+					$myrow[0]);
 
 	} //END WHILE LIST LOOP
 	echo '</table><br>';
@@ -315,6 +324,7 @@ if (isset($SelectedUser)) {
 			customerid,
 			password,
 			branchcode,
+			salesman,
 			pagesize,
 			fullaccess,
 			defaultlocation,
@@ -334,6 +344,7 @@ if (isset($SelectedUser)) {
 	$_POST['Email'] = $myrow['email'];
 	$_POST['Cust']	= $myrow['customerid'];
 	$_POST['BranchCode']  = $myrow['branchcode'];
+	$_POST['Salesman'] = $myrow['salesman'];
 	$_POST['PageSize'] = $myrow['pagesize'];
 	$_POST['Access'] = $myrow['fullaccess'];
 	$_POST['DefaultLocation'] = $myrow['defaultlocation'];
@@ -400,10 +411,10 @@ foreach ($SecurityRoles as $SecKey => $SecVal) {
 echo '</select></td></tr>';
 echo '<input type="hidden" name="ID" value="'.$_SESSION['UserID'].'">';
 
-echo '<tr><td>' . _('Default Location') . ":</td>
-	<td><select name='DefaultLocation'>";
+echo '<tr><td>' . _('Default Location') . ':</td>
+	<td><select name="DefaultLocation">';
 
-$sql = "SELECT loccode, locationname FROM locations";
+$sql = 'SELECT loccode, locationname FROM locations';
 $result = DB_query($sql,$db);
 
 while ($myrow=DB_fetch_array($result)){
@@ -426,12 +437,33 @@ if (!isset($_POST['Cust'])) {
 if (!isset($_POST['BranchCode'])) {
 	$_POST['BranchCode']='';
 }
-echo '<tr><td>' . _('Customer Code') . ":</td>
-	<td><input type='text' name='Cust' size=10 maxlength=8 value='" . $_POST['Cust'] . "'></td></tr>";
+echo '<tr><td>' . _('Customer Code') . ':</td>
+	<td><input type="text" name="Cust" size=10 maxlength=8 value="' . $_POST['Cust'] . '"></td></tr>';
 
-echo '<tr><td>' . _('Branch Code') . ":</td>
-	<td><input type='text' name='BranchCode' size=10 maxlength=8 VALUE='" . $_POST['BranchCode'] ."'></td></tr>";
+echo '<tr><td>' . _('Branch Code') . ':</td>
+	<td><input type="text" name="BranchCode" size=10 maxlength=8 VALUE="' . $_POST['BranchCode'] .'"></td></tr>';
 
+echo '<tr><td>' . _('Restrict to Sales Person') . ':</td>
+	<td><select name="Salesman">';
+
+$sql = 'SELECT salesmancode, salesmanname FROM salesman';
+$result = DB_query($sql,$db);
+if ((isset($_POST['Salesman']) and $_POST['Salesman']=='') OR !isset($_POST['Salesman'])){
+	echo '<option selected value="">' .  _('Not a salesperson only login') . '</option>';
+} else {
+	echo '<option value="">' . _('Not a salesperson only login') . '</option>';
+}
+while ($myrow=DB_fetch_array($result)){
+	
+	if (isset($_POST['Salesman']) and $myrow['salesmancode'] == $_POST['Salesman']){
+		echo '<option selected value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
+	} else {
+		echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
+	}
+
+}
+
+echo '</select></td></tr>';
 
 
 echo '<tr><td>' . _('Reports Page Size') .":</td>
@@ -556,16 +588,14 @@ if ($_POST['Blocked']==0){
 }
 echo '</select></td></tr>';
 
-
-echo "</table><br>
-	<div class='centre'><input type='submit' name='submit' value='" . _('Enter Information') . "'></div></form>";
+echo '</table><br>
+	<div class="centre"><input type="submit" name="submit" value="' . _('Enter Information') . '"></div>
+	</form>';
 
 if (isset($_GET['SelectedUser'])) {
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].Password);</script>';
 } else {
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].UserID);</script>';
 }
-
 include('includes/footer.inc');
-
 ?>
