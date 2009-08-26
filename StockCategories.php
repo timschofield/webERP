@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 11;
 
@@ -181,7 +181,7 @@ then none of the above are true and the list of stock categorys will be displaye
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT * FROM stockcategory";
+	$sql = "SELECT * FROM stockcategory WHERE stocktype<>'".'A'."'";
 	$result = DB_query($sql,$db);
 
 	echo "<br><table border=1>\n";
@@ -470,12 +470,12 @@ if (! isset($_GET['delete'])) {
 			if ($myrow['controltype']==0){
 				echo '<option selected value=0>' . _('Text Box') . '</option>';
 			} else {
-				echo '<option value=0>' . _('Text Box') . '</option';
+				echo '<option value=0>' . _('Text Box') . '</option>';
 			}
 			if ($myrow['controltype']==1){
 				echo '<option selected value=1>' . _('Select Box') . '</option>';
 			} else {
-				echo '<option value=1>' . _('Select Box') . '</option';
+				echo '<option value=1>' . _('Select Box') . '</option>';
 			}
 			if ($myrow['controltype']==2){
 				echo '<option selected value=2>' . _('Check Box') . '</option>';
