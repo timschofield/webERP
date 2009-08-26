@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 // BOMExtendedQty.php - Quantiy Extended Bill of Materials
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -140,7 +140,8 @@ If (isset($_POST['PrintPDF'])) {
 		$result = DB_query($sql,$db);
 		
 		
-		$sql = 'SELECT COUNT(*) FROM bom,passbom WHERE bom.parent = passbom.part';
+		$sql = 'SELECT COUNT(*) FROM bom,passbom WHERE bom.parent = passbom.part
+		          GROUP BY passbom.part';
 		$result = DB_query($sql,$db);
 		
 		$myrow = DB_fetch_row($result);
@@ -198,9 +199,9 @@ If (isset($_POST['PrintPDF'])) {
               FROM tempbom,stockmaster 
               WHERE tempbom.component = stockmaster.stockid
               GROUP BY tempbom.component,
-                   stockmaster.description,
-                   stockmaster.decimalplaces,
-                   stockmaster.mbflag';
+                       stockmaster.description,
+                       stockmaster.decimalplaces,
+                       stockmaster.mbflag';
 	$result = DB_query($sql,$db);
 	While ($myrow = DB_fetch_array($result,$db)){
 
