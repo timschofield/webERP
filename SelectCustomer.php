@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.63 $ */
+/* $Revision: 1.64 $ */
 
 $PageSecurity = 2;
 
@@ -119,8 +119,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 				custbranch.faxno
 			FROM debtorsmaster LEFT JOIN custbranch
 				ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
-			WHERE debtorsmaster.typeid = debtortype.typeid
-			ORDER BY debtorsmaster.name";
+			WHERE debtorsmaster.typeid = debtortype.typeid";
 
 	} else {
 		if (strlen($_POST['Keywords'])>0) {
@@ -153,8 +152,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 			FROM debtorsmaster LEFT JOIN custbranch
 				ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
 			WHERE debtorsmaster.name " . LIKE . " '$SearchString'
-			AND debtorsmaster.typeid = debtortype.typeid
-			ORDER BY debtorsmaster.name";
+			AND debtorsmaster.typeid = debtortype.typeid";
 
 		} elseif (strlen($_POST['CustCode'])>0){
 
