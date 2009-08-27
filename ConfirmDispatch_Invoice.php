@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.64 $ */
+/* $Revision: 1.65 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -1448,7 +1448,9 @@ DB_Txn_Begin($db);
 	$j++;
 	echo '<table><tr>
 		<td>' ._('Date On Invoice'). ':</td>
-		<td><input tabindex='.$j.' type="text" maxlength="10" size="15" name="DispatchDate" value="'.$DefaultDispatchDate.'"></td>
+	<td><input tabindex='.$j.' type="text" maxlength="10" size="15"
+	name="DispatchDate" value="'.$DefaultDispatchDate.'" id="datepicker"
+	alt="'.$_SESSION['DefaultDateFormat'].'" class="date"></td>
 	</tr>';
 	$j++;
 	echo '<tr>
