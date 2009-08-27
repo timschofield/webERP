@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity = 15;
 
@@ -8,6 +8,15 @@ $title = _('Customer Login Configuration');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
+$ModuleList = array(_('Orders'), 
+					_('Receivables'), 
+					_('Payables'), 
+					_('Purchasing'), 
+					_('Inventory'), 
+					_('Manufacturing'), 
+					_('General Ledger'), 
+					_('Setup'));
+					
 echo "<a href='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</a><br>';
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' ' . $phone . _(' has been selected') . '<br>';//'</p>';
