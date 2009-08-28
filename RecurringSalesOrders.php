@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
 include('includes/DefineCartClass.php');
@@ -11,6 +11,11 @@ include('includes/session.inc');
 $title = _('Recurring Orders');
 include('includes/header.inc');
 
+if (empty($_GET['identifier'])) {
+	$identifier=date('U');
+} else {
+	$identifier=$_GET['identifier'];
+}
 
 if ($_GET['NewRecurringOrder']=='Yes'){
 	$NewRecurringOrder ='Yes';
@@ -24,7 +29,7 @@ if ($_GET['NewRecurringOrder']=='Yes'){
 		
 		/*Need to read in the existing recurring order template */
 	
-		$_SESSION['Items'] = new cart;
+		$_SESSION['Items'.$identifier] = new cart;
 
 		/*read in all the guff from the selected order into the Items cart  */
 
@@ -67,32 +72,32 @@ if ($_GET['NewRecurringOrder']=='Yes'){
 	
 			$myrow = DB_fetch_array($GetOrdHdrResult);
 	
-			$_SESSION['Items']->DebtorNo = $myrow['debtorno'];
+			$_SESSION['Items'.$identifier]->DebtorNo = $myrow['debtorno'];
 	/*CustomerID defined in header.inc */
-			$_SESSION['Items']->Branch = $myrow['branchcode'];
-			$_SESSION['Items']->CustomerName = $myrow['name'];
-			$_SESSION['Items']->CustRef = $myrow['customerref'];
-			$_SESSION['Items']->Comments = $myrow['comments'];
+			$_SESSION['Items'.$identifier]->Branch = $myrow['branchcode'];
+			$_SESSION['Items'.$identifier]->CustomerName = $myrow['name'];
+			$_SESSION['Items'.$identifier]->CustRef = $myrow['customerref'];
+			$_SESSION['Items'.$identifier]->Comments = $myrow['comments'];
 	
-			$_SESSION['Items']->DefaultSalesType =$myrow['ordertype'];
-			$_SESSION['Items']->SalesTypeName =$myrow['sales_type'];
-			$_SESSION['Items']->DefaultCurrency = $myrow['currcode'];
-			$_SESSION['Items']->ShipVia = $myrow['shipvia'];
+			$_SESSION['Items'.$identifier]->DefaultSalesType =$myrow['ordertype'];
+			$_SESSION['Items'.$identifier]->SalesTypeName =$myrow['sales_type'];
+			$_SESSION['Items'.$identifier]->DefaultCurrency = $myrow['currcode'];
+			$_SESSION['Items'.$identifier]->ShipVia = $myrow['shipvia'];
 			$BestShipper = $myrow['shipvia'];
-			$_SESSION['Items']->DeliverTo = $myrow['deliverto'];
-			$_SESSION['Items']->DeliveryDate = ConvertSQLDate($myrow['deliverydate']);
-			$_SESSION['Items']->BrAdd1 = $myrow['deladd1'];
-			$_SESSION['Items']->BrAdd2 = $myrow['deladd2'];
-			$_SESSION['Items']->BrAdd3 = $myrow['deladd3'];
-			$_SESSION['Items']->BrAdd4 = $myrow['deladd4'];
-			$_SESSION['Items']->BrAdd5 = $myrow['deladd5'];
-			$_SESSION['Items']->BrAdd6 = $myrow['deladd6'];
-			$_SESSION['Items']->PhoneNo = $myrow['contactphone'];
-			$_SESSION['Items']->Email = $myrow['contactemail'];
-			$_SESSION['Items']->Location = $myrow['fromstkloc'];
-			$_SESSION['Items']->Quotation = 0;
+			$_SESSION['Items'.$identifier]->DeliverTo = $myrow['deliverto'];
+			$_SESSION['Items'.$identifier]->DeliveryDate = ConvertSQLDate($myrow['deliverydate']);
+			$_SESSION['Items'.$identifier]->BrAdd1 = $myrow['deladd1'];
+			$_SESSION['Items'.$identifier]->BrAdd2 = $myrow['deladd2'];
+			$_SESSION['Items'.$identifier]->BrAdd3 = $myrow['deladd3'];
+			$_SESSION['Items'.$identifier]->BrAdd4 = $myrow['deladd4'];
+			$_SESSION['Items'.$identifier]->BrAdd5 = $myrow['deladd5'];
+			$_SESSION['Items'.$identifier]->BrAdd6 = $myrow['deladd6'];
+			$_SESSION['Items'.$identifier]->PhoneNo = $myrow['contactphone'];
+			$_SESSION['Items'.$identifier]->Email = $myrow['contactemail'];
+			$_SESSION['Items'.$identifier]->Location = $myrow['fromstkloc'];
+			$_SESSION['Items'.$identifier]->Quotation = 0;
 			$FreightCost = $myrow['freightcost'];
-			$_SESSION['Items']->Orig_OrderDate = $myrow['orddate'];
+			$_SESSION['Items'.$identifier]->Orig_OrderDate = $myrow['orddate'];
 			$_POST['StopDate'] = ConvertSQLDate($myrow['stopdate']);
 			$_POST['StartDate'] = ConvertSQLDate($myrow['lastrecurrence']);
 			$_POST['Frequency'] = $myrow['frequency'];
@@ -123,7 +128,7 @@ if ($_GET['NewRecurringOrder']=='Yes'){
 			if (db_num_rows($LineItemsResult)>0) {
 	
 				while ($myrow=db_fetch_array($LineItemsResult)) {
-					$_SESSION['Items']->add_to_cart($myrow['stkcode'],
+					$_SESSION['Items'.$identifier]->add_to_cart($myrow['stkcode'],
 								$myrow['quantity'],
 								$myrow['description'],
 								$myrow['unitprice'],
@@ -148,7 +153,7 @@ if ($_GET['NewRecurringOrder']=='Yes'){
 	}
 }
 
-if ((!isset($_SESSION['Items']) OR $_SESSION['Items']->ItemsOrdered == 0) AND $NewRecurringOrder=='Yes'){
+if ((!isset($_SESSION['Items'.$identifier]) OR $_SESSION['Items'.$identifier]->ItemsOrdered == 0) AND $NewRecurringOrder=='Yes'){
 	prnMsg(_('A new recurring order can only be created if an order template has already been created from the normal order entry screen') . '. ' . _('To enter an order template select sales order entry from the orders tab of the main menu'),'error');
 	include('includes/footer.inc');
 	exit;
@@ -168,8 +173,8 @@ if (isset($_POST['DeleteRecurringOrder'])){
 	
 	echo "<p><a href='$rootpath/SelectRecurringSalesOrder.php?" . SID . "'>". _('Select A Recurring Sales Order Template') .'</a>';
 	
-	unset($_SESSION['Items']->LineItems);
-	unset($_SESSION['Items']);
+	unset($_SESSION['Items'.$identifier]->LineItems);
+	unset($_SESSION['Items'.$identifier]);
 	include('includes/footer.inc');
 	exit;
 }
@@ -198,7 +203,7 @@ If (isset($_POST['Process'])) {
 
 			/* finally write the recurring order header to the database and then the line details*/
 	
-			$DelDate = FormatDateforSQL($_SESSION['Items']->DeliveryDate);
+			$DelDate = FormatDateforSQL($_SESSION['Items'.$identifier]->DeliveryDate);
 	
 			$HeaderSQL = "INSERT INTO recurringsalesorders (
 										debtorno,
@@ -224,24 +229,24 @@ If (isset($_POST['Process'])) {
 										frequency,
 										autoinvoice)
 									VALUES (
-										'" . $_SESSION['Items']->DebtorNo . "',
-										'" . $_SESSION['Items']->Branch . "',
-										'". $_SESSION['Items']->CustRef ."',
-										'". $_SESSION['Items']->Comments ."',
+										'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
+										'" . $_SESSION['Items'.$identifier]->Branch . "',
+										'". $_SESSION['Items'.$identifier]->CustRef ."',
+										'". $_SESSION['Items'.$identifier]->Comments ."',
 										'" . Date("Y-m-d H:i") . "',
-										'" . $_SESSION['Items']->DefaultSalesType . "',
-										'" . $_SESSION['Items']->DeliverTo . "',
-										'" . $_SESSION['Items']->BrAdd1 . "',
-										'" . $_SESSION['Items']->BrAdd2 . "',
-										'" . $_SESSION['Items']->BrAdd3 . "',
-										'" . $_SESSION['Items']->BrAdd4 . "',
-										'" . $_SESSION['Items']->BrAdd5 . "',
-										'" . $_SESSION['Items']->BrAdd6 . "',
-										'" . $_SESSION['Items']->PhoneNo . "',
-										'" . $_SESSION['Items']->Email . "',
-										" . $_SESSION['Items']->FreightCost .",
-										'" . $_SESSION['Items']->Location ."',
-										'" . $_SESSION['Items']->ShipVia ."',
+										'" . $_SESSION['Items'.$identifier]->DefaultSalesType . "',
+										'" . $_SESSION['Items'.$identifier]->DeliverTo . "',
+										'" . $_SESSION['Items'.$identifier]->BrAdd1 . "',
+										'" . $_SESSION['Items'.$identifier]->BrAdd2 . "',
+										'" . $_SESSION['Items'.$identifier]->BrAdd3 . "',
+										'" . $_SESSION['Items'.$identifier]->BrAdd4 . "',
+										'" . $_SESSION['Items'.$identifier]->BrAdd5 . "',
+										'" . $_SESSION['Items'.$identifier]->BrAdd6 . "',
+										'" . $_SESSION['Items'.$identifier]->PhoneNo . "',
+										'" . $_SESSION['Items'.$identifier]->Email . "',
+										" . $_SESSION['Items'.$identifier]->FreightCost .",
+										'" . $_SESSION['Items'.$identifier]->Location ."',
+										'" . $_SESSION['Items'.$identifier]->ShipVia ."',
 										'" . FormatDateforSQL($_POST['StartDate']) . "',
 										'" . FormatDateforSQL($_POST['StopDate']) . "',
 										" . $_POST['Frequency'] .',
@@ -260,7 +265,7 @@ If (isset($_POST['Process'])) {
 						narrative)
 					VALUES (";
 
-			foreach ($_SESSION['Items']->LineItems as $StockItem) {
+			foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
 				$LineItemsSQL = $StartOf_LineItemsSQL .
 					$RecurrOrderNo . ",
@@ -291,15 +296,15 @@ If (isset($_POST['Process'])) {
 
 	echo "<p><a href='$rootpath/SelectRecurringSalesOrder.php?" . SID . "'>". _('Select A Recurring Sales Order Template') .'</a>';
 		
-	unset($_SESSION['Items']->LineItems);
-	unset($_SESSION['Items']);
+	unset($_SESSION['Items'.$identifier]->LineItems);
+	unset($_SESSION['Items'.$identifier]);
 	include('includes/footer.inc');
 	exit;
 
 	}
 }
 
-echo '<div class="centre"><font size=4><b>'. _('Recurring Order for Customer') .' : ' . $_SESSION['Items']->CustomerName . '</b></font></div>';
+echo '<div class="centre"><font size=4><b>'. _('Recurring Order for Customer') .' : ' . $_SESSION['Items'.$identifier]->CustomerName . '</b></font></div>';
 echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . $SID . "' method=post>";
 
 
@@ -314,12 +319,12 @@ echo "<table cellpadding=2 colspan=7 BORDER=1>
 	<th>". _('Total') ."</th>
 </tr>";
 
-$_SESSION['Items']->total = 0;
-$_SESSION['Items']->totalVolume = 0;
-$_SESSION['Items']->totalWeight = 0;
+$_SESSION['Items'.$identifier]->total = 0;
+$_SESSION['Items'.$identifier]->totalVolume = 0;
+$_SESSION['Items'.$identifier]->totalWeight = 0;
 $k = 0; //row colour counter
 
-foreach ($_SESSION['Items']->LineItems as $StockItem) {
+foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
 	$LineTotal = $StockItem->Quantity * $StockItem->Price * (1 - $StockItem->DiscountPercent);
 	$DisplayLineTotal = number_format($LineTotal,2);
@@ -345,12 +350,12 @@ foreach ($_SESSION['Items']->LineItems as $StockItem) {
 			<td class=number>$DisplayLineTotal</td>
 			</tr>";
 
-	$_SESSION['Items']->total = $_SESSION['Items']->total + $LineTotal;
-	$_SESSION['Items']->totalVolume = $_SESSION['Items']->totalVolume + ($StockItem->Quantity * $StockItem->Volume);
-	$_SESSION['Items']->totalWeight = $_SESSION['Items']->totalWeight + ($StockItem->Quantity * $StockItem->Weight);
+	$_SESSION['Items'.$identifier]->total = $_SESSION['Items'.$identifier]->total + $LineTotal;
+	$_SESSION['Items'.$identifier]->totalVolume = $_SESSION['Items'.$identifier]->totalVolume + ($StockItem->Quantity * $StockItem->Volume);
+	$_SESSION['Items'.$identifier]->totalWeight = $_SESSION['Items'.$identifier]->totalWeight + ($StockItem->Quantity * $StockItem->Weight);
 }
 
-$DisplayTotal = number_format($_SESSION['Items']->total,2);
+$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,2);
 echo "<tr>
 	<td colspan=6 class=number><b>". _('TOTAL Excl Tax/Freight') ."</b></td>
 	<td class=number>$DisplayTotal</td>
@@ -358,41 +363,41 @@ echo "<tr>
 
 echo '<table><tr>
 	<td>'. _('Deliver To') .":</td>
-	<td>" . $_SESSION['Items']->DeliverTo . "</td></tr>";
+	<td>" . $_SESSION['Items'.$identifier]->DeliverTo . "</td></tr>";
 
 echo '<tr>
 	<td>'. _('Deliver from the warehouse at') .":</td>
-	<td>" . $_SESSION['Items']->Location . '</td></tr>';
+	<td>" . $_SESSION['Items'.$identifier]->Location . '</td></tr>';
 
 echo '<tr>
 	<td>'. _('Street') .":</td>
-	<td>" . $_SESSION['Items']->BrAdd1 . "</td></tr>";
+	<td>" . $_SESSION['Items'.$identifier]->BrAdd1 . "</td></tr>";
 
 echo "<tr>
 	<td>". _('Suburb') .":</td>
-	<td>" . $_SESSION['Items']->BrAdd2 . "</td></tr>";
+	<td>" . $_SESSION['Items'.$identifier]->BrAdd2 . "</td></tr>";
 
 echo '<tr>
 	<td>'. _('City') . '/' . _('Region') .':</td>
-	<td>' . $_SESSION['Items']->BrAdd3 . '</td></tr>';
+	<td>' . $_SESSION['Items'.$identifier]->BrAdd3 . '</td></tr>';
 
 echo '<tr>
 	<td>'. _('Post Code') .':</td>
-	<td>' . $_SESSION['Items']->BrAdd4 . '</td></tr>';
+	<td>' . $_SESSION['Items'.$identifier]->BrAdd4 . '</td></tr>';
 
 echo '<tr>
 	<td>'. _('Contact Phone Number') .':</td>
-	<td>' . $_SESSION['Items']->PhoneNo . '</td></tr>';
+	<td>' . $_SESSION['Items'.$identifier]->PhoneNo . '</td></tr>';
 
 echo '<tr><td>' . _('Contact Email') .':</td>
-	<td>' . $_SESSION['Items']->Email . '</td></tr>';
+	<td>' . $_SESSION['Items'.$identifier]->Email . '</td></tr>';
 
 echo '<tr><td>'. _('Customer Reference') .':</td>
-	<td>' . $_SESSION['Items']->CustRef . '</td></tr>';
+	<td>' . $_SESSION['Items'.$identifier]->CustRef . '</td></tr>';
 
 echo '<tr>
 	<td>'. _('Comments') .':</td>
-	<td>' . $_SESSION['Items']->Comments .'</td></tr>';
+	<td>' . $_SESSION['Items'.$identifier]->Comments .'</td></tr>';
 
 if (!isset($_POST['StartDate'])){
 	$_POST['StartDate'] = date($_SESSION['DefaultDateFormat']);
@@ -459,7 +464,7 @@ if ($_POST['Frequency']==1){
 echo '</select></td></tr>';
 
 
-if ($_SESSION['Items']->AllDummyLineItems()==true){
+if ($_SESSION['Items'.$identifier]->AllDummyLineItems()==true){
 
 	echo '<tr><td>' . _('Invoice Automatically') . ':</td>
 		<td><select name="AutoInvoice">';
