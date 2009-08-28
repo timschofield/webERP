@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
 include('includes/DefineCartClass.php');
@@ -305,7 +305,7 @@ If (isset($_POST['Process'])) {
 }
 
 echo '<div class="centre"><font size=4><b>'. _('Recurring Order for Customer') .' : ' . $_SESSION['Items'.$identifier]->CustomerName . '</b></font></div>';
-echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . $SID . "' method=post>";
+echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . $SID .'identifier='.$identifier. "' method=post>";
 
 
 echo "<table cellpadding=2 colspan=7 BORDER=1>
