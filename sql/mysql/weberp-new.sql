@@ -485,7 +485,7 @@ CREATE TABLE `debtortrans` (
   `diffonexch` double NOT NULL default '0',
   `alloc` double NOT NULL default '0',
   `invtext` text,
-  `shipvia` varchar(10) NOT NULL default '',
+  `shipvia` int(11) NOT NULL default '0',
   `edisent` tinyint(4) NOT NULL default '0',
   `consignment` varchar(15) NOT NULL default '',
   PRIMARY KEY  (`id`),
@@ -643,8 +643,9 @@ CREATE TABLE `factorcompanies` (
   `telephone` varchar(25) NOT NULL default '',
   `fax` varchar(25) NOT NULL default '',
   `email` varchar(55) NOT NULL default '',
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `factor_name` (`coyname`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `freightcosts`
@@ -2009,6 +2010,7 @@ CREATE TABLE `www_users` (
   `password` text NOT NULL,
   `realname` varchar(35) NOT NULL default '',
   `customerid` varchar(10) NOT NULL default '',
+  `salesman` char(3) NOT NULL,
   `phone` varchar(30) NOT NULL default '',
   `email` varchar(55) default NULL,
   `defaultlocation` varchar(5) NOT NULL default '',
@@ -2032,7 +2034,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-08-13  8:56:09
+-- Dump completed on 2009-08-31  8:54:17
 -- MySQL dump 10.11
 --
 -- Host: localhost    Database: weberpdemo
@@ -2365,7 +2367,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','weberp','Demonstration user','','','','MEL',8,'2009-05-17 14:03:53','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
+INSERT INTO `www_users` VALUES ('admin','weberp','Demonstration user','','','','','MEL',8,'2009-05-17 14:03:53','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -2705,7 +2707,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-08-13  8:56:09
+-- Dump completed on 2009-08-31  8:54:18
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);
