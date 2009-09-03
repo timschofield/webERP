@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 /* pdf-php by R&OS code to set up a new sales order page */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -15,15 +15,17 @@ $FontSize=18;
 
 if ($Copy=='Customer'){
 	$pdf->addText($XPos-20, 500,$FontSize, _('Sales Order') . ' - ' . _('Customer Copy') );
+	$pdf->addText($XPos-20, 490,10, _('This is not an invoice') );
 } else {
 	$pdf->addText($XPos-20, 500,$FontSize, _('Sales Order') . ' - ' . _('Office Copy') );
+	$pdf->addText($XPos-20, 490,10, _('This is not an invoice') );
 }
 
 /* if the deliver blind flag is set on the order, we do not want to output
 the company contact info */
 if ($DeliverBlind < 2) {
     $FontSize=14;
-    $YPos = 480;
+    $YPos = 470;
     $pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
     $FontSize =8;
     $pdf->addText($XPos, $YPos-12,$FontSize, $_SESSION['CompanyRecord']['regoffice1']);

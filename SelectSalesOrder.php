@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 2;
 
@@ -417,7 +417,8 @@ If (isset($StockItemsResult)) {
 		$tableheader = "<tr>
 				<th>" . _('Modify') . "</th>
 				<th>" . _('Invoice') . "</th>
-				<th>" . _('Disp. Note') . "</th>
+				<th>" . _('Dispatch Note') . "</th>
+				<th>" . _('Sales Order') . "</th>
 				<th>" . _('Customer') . "</th>
 				<th>" . _('Branch') . "</th>
 				<th>" . _('Cust Order') . " #</th>
@@ -461,6 +462,7 @@ If (isset($StockItemsResult)) {
 		} else { /*pre-printed stationery default */
 			$PrintDispatchNote = $rootpath . '/PrintCustOrder.php?' . SID . '&TransNo=' . $myrow['orderno'];
 		}
+		$PrintSalesOrder = $rootpath . '/PrintSalesOrder_generic.php?' . SID . '&TransNo=' . $myrow['orderno'];
 		$PrintQuotation = $rootpath . '/PDFQuotation.php?' . SID . '&QuotationNo=' . $myrow['orderno'];
 		$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
 		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
@@ -475,7 +477,8 @@ If (isset($StockItemsResult)) {
 		if ($_POST['Quotations']=='Orders_Only'){
 			printf("<td><a href='%s'>%s</a></td>
 				<td><a href='%s'>" . _('Invoice') . "</a></td>
-				<td><a target='_blank' href='%s'>" . $PrintText . "</a></td>
+				<td><a target='_blank' href='%s'>" . $PrintText . " <IMG SRC='" .$rootpath."/css/".$theme."/images/pdf.png' title='" . _('Click for PDF') . "'></a></td>
+				<td><a target='_blank' href='%s'>" . $PrintText . " <IMG SRC='" .$rootpath."/css/".$theme."/images/pdf.png' title='" . _('Click for PDF') . "'></a></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -488,6 +491,7 @@ If (isset($StockItemsResult)) {
 				$myrow['orderno'],
 				$Confirm_Invoice,
 				$PrintDispatchNote,
+				$PrintSalesOrder,
 				$myrow['name'],
 				$myrow['brname'],
 				$myrow['customerref'],

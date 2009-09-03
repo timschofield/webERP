@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 10;
 
@@ -8,6 +8,9 @@ include('includes/session.inc');
 $title = _('Payment Terms Maintenance');
 
 include('includes/header.inc');
+
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Terms') . '" alt="">' . ' ' . $title . '</p>';
+echo '<div class="page_help_text">' . _('Payment Terms') . '.</div><br>';
 
 
 if (isset($_GET['SelectedTerms'])){
