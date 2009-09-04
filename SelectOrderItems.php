@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.109 $ */
+/* $Revision: 1.110 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -1344,11 +1344,136 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			WHERE stocktype='F' OR stocktype='D'
 			ORDER BY categorydescription";
 		$result1 = DB_query($SQL,$db);
+// Select the most recently ordered items for quick select
+                 $SQL="SELECT stockmaster.units, stockmaster.description, stockmaster.stockid, salesorderdetails.stkcode, SUM(qtyinvoiced) Sales FROM `salesorderdetails`, `stockmaster`
+                         WHERE ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL 180 DAY)
+                         AND salesorderdetails.stkcode = stockmaster.stockid
+                         GROUP BY stkcode
+                         ORDER BY sales DESC
+                         LIMIT 5;";
+                $result2 = DB_query($SQL,$db);
+                echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ';
+                echo _('Frequently Ordered Items') . '<br>';
+                echo '<div class="page_help_text">' . _('Frequently Ordered Items') . _(', shows Top 5 most ordered items in the last 6 months.  You can choose from this list, or search further for other items') . '.</div><br>';
+                echo '<table class="table1">';
+                $TableHeader = '<tr><th>' . _('Code') . '</th>
+                                                <th>' . _('Description') . '</th>
+                                                <th>' . _('Units') . '</th>
+                                                <th>' . _('On Hand') . '</th>
+                                                <th>' . _('On Demand') . '</th>
+                                                <th>' . _('On Order') . '</th>
+                                                <th>' . _('Available') . '</th>
+                                                <th>' . _('Quantity') . '</th></tr>';
+                        echo $TableHeader;
+                        $j = 1;
+                        $k=0; //row colour counter
 
-		echo '<div class="centre"><b><p>' . $msg . '</b></p>';
-		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ';
-		echo _('Search for Order Items') . '</p></div><br>';
-		echo '<table><tr><td><b>' . _('Select a Stock Category') . ':</b></td><td><select tabindex=1 name="StockCat">';
+                        while ($myrow=DB_fetch_array($result2)) {
+// This code needs sorting out, but until then :
+                                $ImageSource = _('No Image');
+ // Find the quantity in stock at location
+                                $qohsql = "SELECT sum(quantity)
+                                                   FROM locstock
+						   WHERE stockid='" .$myrow['stockid'] . "' AND
+                                                   loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
+                                $qohresult =  DB_query($qohsql,$db);
+                                $qohrow = DB_fetch_row($qohresult);
+                                $qoh = $qohrow[0];
+
+                                // Find the quantity on outstanding sales orders
+                                $sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
+                                     FROM salesorderdetails,
+                                        salesorders
+                                         WHERE salesorders.orderno = salesorderdetails.orderno AND
+                                     salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "' AND
+                                        salesorderdetails.completed=0 AND
+                                                        salesorders.quotation=0 AND
+                                        salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
+
+                                $ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' .
+                                     _('cannot be retrieved because');
+                                $DemandResult = DB_query($sql,$db,$ErrMsg);
+
+                                $DemandRow = DB_fetch_row($DemandResult);
+                                if ($DemandRow[0] != null){
+                                  $DemandQty =  $DemandRow[0];
+                                } else {
+                                  $DemandQty = 0;
+                                }
+                                // Find the quantity on purchase orders
+                                $sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS dem
+                                     FROM purchorderdetails
+                                         WHERE purchorderdetails.completed=0 AND
+                                        purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
+
+                                $ErrMsg = _('The order details for this product cannot be retrieved because');
+                                $PurchResult = db_query($sql,$db,$ErrMsg);
+
+                                $PurchRow = db_fetch_row($PurchResult);
+                                if ($PurchRow[0]!=null){
+                                  $PurchQty =  $PurchRow[0];
+                                } else {
+                                  $PurchQty = 0;
+                                }
+
+                                // Find the quantity on works orders
+                                $sql = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) AS dedm
+                                       FROM woitems
+                                       WHERE stockid='" . $myrow['stockid'] ."'";
+                                $ErrMsg = _('The order details for this product cannot be retrieved because');
+                                $WoResult = db_query($sql,$db,$ErrMsg);
+$WoRow = db_fetch_row($WoResult);
+                                if ($WoRow[0]!=null){
+                                  $WoQty =  $WoRow[0];
+                                } else {
+                                  $WoQty = 0;
+                                }
+
+                                if ($k==1){
+                                        echo '<tr class="EvenTableRows">';
+                                        $k=0;
+                                } else {
+                                        echo '<tr class="OddTableRows">';
+                                        $k=1;
+                                }
+                                $OnOrder = $PurchQty + $WoQty;
+
+                                $Available = $qoh - $DemandQty + $OnOrder;
+
+                                printf('<td>%s</font></td>
+                                        <td>%s</td>
+                                        <td>%s</td>
+                                        <td style="text-align:center">%s</td>
+                                        <td style="text-align:center">%s</td>
+                                        <td style="text-align:center">%s</td>
+                                        <td style="text-align:center">%s</td>
+                                        <td><font size=1><input class="number"  tabindex='.number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
+                                        </td>
+                                        </tr>',
+                                        $myrow['stockid'],
+                                        $myrow['description'],
+                                        $myrow['units'],
+                                        $qoh,
+                                        $DemandQty,
+                                        $OnOrder,
+                                        $Available,
+                                        $ImageSource,
+                                        $rootpath,
+                                        SID,
+                                        $myrow['stockid']);
+                                if ($j==1) $jsCall = '<script  type="text/javascript">defaultControl(document.SelectParts.itm'.$myrow['stockid'].');</script>';
+                                $j++;
+        #end of page full new headings if
+                        }
+       #end of while loop for Frequently Ordered Items
+			echo '<td style="text-align:center" colspan=8><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+8).' type="submit" value="'._('Add to Sales Order').'"></td>';
+                echo '</table>';
+
+		echo '<p><div class="centre"><b><p>' . $msg . '</b></p>';
+                echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ';
+                echo _('Search for Order Items') . '</p>';
+                echo '<div class="page_help_text">' . _('Search for Order Items') . _(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div><br>';
+                echo '<table class="table2"><tr><td><b>' . _('Select a Stock Category') . ': </b><select tabindex=1 name="StockCat">';
 
 		if (!isset($_POST['StockCat'])){
 			echo "<option selected value='All'>" . _('All');
@@ -1369,22 +1494,23 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		?>
 
 		</select></td>
-		<td><b><?php echo _('Enter partial'); ?> <?php echo _('Description'); ?>:</b></td>
-		<td><input tabindex=2 type="Text" name="Keywords" size=20 maxlength=25 value="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>"></td></tr>
-		<tr><td></td>
-		<td align="right"><b><?php echo _('OR'); ?> </b></td><td><b><?php echo _('Enter partial'); ?> <?php echo _('Stock Code'); ?>:</b></td>
-		<td><input tabindex=3 type="Text" name="StockCode" size=15 maxlength=18 value="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></td>
-		</tr>
-		</table><br>
-		<div class="centre"><input tabindex=4 type=submit name="Search" value="<?php echo _('Search Now'); ?>">
-		<input tabindex=5 type=submit name="QuickEntry" value="<?php echo _('Use Quick Entry'); ?>">
+		<td><b><?php echo _('Enter partial'); ?> <?php echo _('Description'); ?>:</b>
+		<input tabindex=2 type="Text" name="Keywords" size=20 maxlength=25 value="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>"></td>
+		
+		<td align="right"><b><?php echo _('OR'); ?> </b><b><?php echo _('Enter partial'); ?> <?php echo _('Stock Code'); ?>:</b>
+		<input tabindex=3 type="Text" name="StockCode" size=15 maxlength=18 value="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></td>
+		
+		</tr><tr>	
+		<td style="text-align:center" colspan=1><input tabindex=4 type=submit name="Search" value="<?php echo _('Search Now'); ?>"></td>
+		<td style="text-align:center" colspan=1><input tabindex=5 type=submit name="QuickEntry" value="<?php echo _('Use Quick Entry'); ?>"></td>
 
 		<?php
 		if (!isset($_POST['PartSearch'])) {
 			echo '<script  type="text/javascript">defaultControl(document.SelectParts.Keywords);</script>';
 		}
 		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
-			echo '<input tabindex=6 type=submit name="ChangeCustomer" value="' . _('Change Customer') . '"></div>';
+			echo '<td style="text-align:center" colspan=1><input tabindex=6 type=submit name="ChangeCustomer" value="' . _('Change Customer') . '"></td>';
+		echo '</tr></table><br>';
 			echo '</b>';
 // Add some useful help as the order progresses
 			if (isset($SearchResult)) {
@@ -1398,10 +1524,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		if (isset($SearchResult)) {
 
-			echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'identifier='.$identifier . ' method=post name="orderform"><table class="table1">';
-			echo '<tr><td><input type="hidden" name="previous" value='.number_format($Offset-1).'><input tabindex='.number_format($j+7).' type="submit" name="Prev" value="'._('Prev').'"></td>';
-			echo '<td style="text-align:center" colspan=6><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+8).' type="submit" value="'._('Order').'"></td>';
-			echo '<td><input type="hidden" name="nextlist" value='.number_format($Offset+1).'><input tabindex='.number_format($j+9).' type="submit" name="Next" value="'._('Next').'"></td></tr>';
+			echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'identifier='.$identifier . ' method=post name="orderform">';
+			echo '<table class="table1">';
+			echo '<tr><td colspan=><input type="hidden" name="previous" value='.number_format($Offset-1).'><input tabindex='.number_format($j+7).' type="submit" name="Prev" value="'._('Prev').'"></td>';
+			echo '<td style="text-align:center" colspan=6><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+8).' type="submit" value="'._('Add to Sales Order').'"></td>';
+			echo '<td colspan=><input type="hidden" name="nextlist" value='.number_format($Offset+1).'><input tabindex='.number_format($j+9).' type="submit" name="Next" value="'._('Next').'"></td></tr>';
 			$TableHeader = '<tr><th>' . _('Code') . '</th>
                           			<th>' . _('Description') . '</th>
                           			<th>' . _('Units') . '</th>
@@ -1528,7 +1655,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 	#end of while loop
 			echo '<tr><td><input type="hidden" name="previous" value='.number_format($Offset-1).'><input tabindex='.number_format($j+7).' type="submit" name="Prev" value="'._('Prev').'"></td>';
-			echo '<td style="text-align:center" colspan=6><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+8).' type="submit" value="'._('Order').'"></td>';
+			echo '<td style="text-align:center" colspan=6><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+8).' type="submit" value="'._('Add to Sales Order').'"></td>';
 			echo '<td><input type="hidden" name="nextlist" value='.number_format($Offset+1).'><input tabindex='.number_format($j+9).' type="submit" name="Next" value="'._('Next').'"></td></tr>';
 			echo '</table></form>';
 			echo $jsCall;
