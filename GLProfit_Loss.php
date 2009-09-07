@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 8;
 
@@ -19,7 +19,10 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	include('includes/header.inc');
 
 echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . _('Print Profit and Loss Report') . '</div>';
-
+echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also called an Income Statment, or Statement of Operations, this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").') . '<br>' 
+. _('The purpose of the income statement is to show whether the company made or lost money during the period being reported.') . '<br>'
+. _('The P&L represents a period of time. This contrasts with the Balance Sheet, which represents a single moment in time.') . '<br>'
+. _('webERP is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.') . '</div>';
 	echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	
 	if (Date('m') > $_SESSION['YearEnd']){
@@ -33,7 +36,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css
 	$period=GetPeriod($FromDate, $db);
 	
 	/*Show a form to allow input of criteria for profit and loss to show */
-	echo '<table><tr><td>'._('Select Period From').":</td><td><select Name='FromPeriod'>";
+	echo '<p><table class="table"><tr><td>'._('Select Period From').":</td><td><select Name='FromPeriod'>";
 
 	$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
 	$Periods = DB_query($sql,$db);

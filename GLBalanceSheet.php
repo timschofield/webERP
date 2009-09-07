@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 
@@ -15,8 +15,14 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	/*Show a form to allow input of criteria for TB to show */
 	include('includes/header.inc');
+echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . _('Balance Sheet') . '</div>';
+echo '<div class="page_help_text">'
+. _('Balance Sheet (or statement of financial position) is a summary  of balances. Assets, liabilities and ownership equity are listed as of a specific date, such as the end of its financial year. Of the four basic financial statements, the balance sheet is the only statement which applies to a single point in time.') . '<br>'
+. _('The balance sheet has three parts: assets, liabilities and ownership equity. The main categories of assets are listed first and are followed by the liabilities. The difference between the assets and the liabilities is known as equity or the net assets or the net worth or capital of the company and according to the accounting equation, net worth must equal assets minus liabilities.') . '<br>'
+. _('webERP is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.') . '</div>';
+
 	echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	echo '<table><tr><td>'._('Select the balance date').":</td><td><select Name='BalancePeriodEnd'>";
+	echo '<p><table class="table"><tr><td>'._('Select the balance date').":</td><td><select Name='BalancePeriodEnd'>";
 
 	$periodno=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 	$sql = 'SELECT lastdate_in_period FROM periods WHERE periodno='.$periodno;
@@ -44,8 +50,8 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	echo '</table>';
 
-	echo "<div class='centre'><input type=submit Name='ShowBalanceSheet' Value='"._('Show Balance Sheet')."'>";
-	echo "<input type=submit Name='PrintPDF' Value='"._('Print PDF')."'></div>";
+	echo "<br><div class='centre'><input type=submit Name='ShowBalanceSheet' Value='"._('Show on Screen (HTML)')."'</div>";
+	echo "<br><div class='centre'><input type=submit Name='PrintPDF' Value='"._('Produce PDF Report')."'></div>";
 
 	/*Now do the posting while the user is thinking about the period to select */
 	include ('includes/GLPostings.inc');
@@ -348,7 +354,8 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'));
 
-	echo '<div class="centre"><font size=4 color=BLUE><b>'._('Balance Sheet as at')." $BalanceDate</b></font></div><br>";
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/preview.gif" title="' . _('Search') . '" alt=""> ' . _('HTML View') . '<a href="GLBalanceSheet.php"> ' . _('Return') . '</a></p>';
+        echo '<div class=invoice><table class="table1"><div class="centre"><font size=4 color=BLUE><b>' ._('Balance Sheet as at') . ' ' . $BalanceDate .'</b></font></div><br>';
 
 	echo '<table cellpadding=2>';
 
