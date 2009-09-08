@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.72 $ */
+/* $Revision: 1.73 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -574,9 +574,9 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 			echo '<div style="text-align:center"><p><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . '<a target="_blank" href="' . $rootpath . '/PrintCustOrder.php?' . SID .'identifier='.$identifier . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' .'</a>';
 			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . '<a  target="_blank" href="' . $rootpath . '/PrintCustOrder_generic.php?' . SID .'identifier='.$identifier . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Laser') . ')' .'</a>';
 
-			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Invoice') . '" alt="">' . ' ' . '<a href="' . $rootpath . '/ConfirmDispatch_Invoice.php?' . SID .'identifier='.$identifier . '&OrderNumber=' . $OrderNo .'">'. _('Confirm Dispatch and Produce Invoice') .'</a></div>';
+			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Invoice') . '" alt="">' . ' ' . '<a href="' . $rootpath . '/ConfirmDispatch_Invoice.php?' . SID .'identifier='.$identifier . '&OrderNumber=' . $OrderNo .'">'. _('Confirm Dispatch and Produce Invoice') .'</a>';
 			//Add option to Print Sales Orders or Proforma invoice
-			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Sales Order') . '" alt="">' . ' ' . '<a href="' . $rootpath . '//PrintSalesOrder_generic.php?' . SID .'identifier='.$identifier . '&OrderNumber=' . $OrderNo .'">'. _('Print Sales Order / Pro-forma Invoice') .'</a></div>';
+			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/pdf.png" title="' . _('Sales Order') . '" alt="">' . ' ' . '<a href="' . $rootpath . '//PrintSalesOrder_generic.php?' . SID .'identifier='.$identifier . '&TransNo=' . $OrderNo .'">'. _('Print Sales Order / Pro-forma Invoice') .'</a></div>';
 
 		} else {
 			/*link to print the quotation */
