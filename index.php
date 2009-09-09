@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.83 $ */
+/* $Revision: 1.84 $ */
 
 
 $PageSecurity = 1;
@@ -562,6 +562,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
                                                         <td class="menu_group_item">
                                                                 <?php echo "<a href='" . $rootpath . '/ReorderLevel.php?' . SID . "'><LI>" . _('Reorder Level') . '</LI></a>'; ?>
+                                                        </td>
+                                                        </tr>
+							<tr>
+                                                        <td class="menu_group_item">
+                                                                <?php echo "<a href='" . $rootpath . '/StockDispatch.php?' . SID . "'><LI>" . _('Stock Dispatch') . '</LI></a>'; ?>
                                                         </td>
                                                         </tr>
 							<tr>
