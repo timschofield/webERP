@@ -2515,7 +2515,7 @@ INSERT INTO `edi_orders_seg_groups` VALUES (50,1,0);
 --
 -- Dumping data for table `config`
 --
-
+INSERT INTO `config` VALUES ('SalesOrder_FOI','0');
 INSERT INTO `config` VALUES ('AllowOrderLineItemNarrative','0');
 INSERT INTO `config` VALUES ('AllowSalesOfZeroCostItems','0');
 INSERT INTO `config` VALUES ('AutoCreateWOs','1');

@@ -5983,7 +5983,7 @@ INSERT INTO `companies` VALUES (1,'webERP\'s Demo Company Inc','not entered yet'
 --
 -- Dumping data for table `config`
 --
-
+INSERT INTO `config` VALUES ('SalesOrder_FOI','0');
 INSERT INTO `config` VALUES ('AllowOrderLineItemNarrative','0');
 INSERT INTO `config` VALUES ('AllowSalesOfZeroCostItems','0');
 INSERT INTO `config` VALUES ('AutoCreateWOs','1');

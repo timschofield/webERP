@@ -1274,7 +1274,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				echo '<td><input class="number" onKeyPress="return restrictToNumbers(this, event)"  type=text name="Price_' . $OrderLine->LineNumber . '" size=16 maxlength=16 value=' . $OrderLine->Price . '></td>
 					<td><input class="number" onKeyPress="return restrictToNumbers(this, event)"  type=text name="Discount_' . $OrderLine->LineNumber . '" size=5 maxlength=4 value=' . ($OrderLine->DiscountPercent * 100) . '>%</td>
-					<td><input class="number" onKeyPress="return restrictToNumbers(this, event)"  type=text name="GPPercent_' . $OrderLine->LineNumber . '" size=5 maxlength=4 value=' . $GPPercent . '>%</td>';	
+ 					<td><input class="number" onKeyPress="return restrictToNumbers(this, event)"  type=text name="GPPercent_' . $OrderLine->LineNumber . '" size=5 maxlength=16 value=' . $GPPercent . '>%</td>';
+// Ricard bug fix to fix very large number recalculation bug
+// 					<td><input class="number" onKeyPress="return restrictToNumbers(this, event)"  type=text name="GPPercent_' . $OrderLine->LineNumber . '" size=5 maxlength=4 value=' . $GPPercent . '>%</td>';	
 
 			} else {
 				echo '<td align=right>' . $OrderLine->Price . '</td><td></td>';

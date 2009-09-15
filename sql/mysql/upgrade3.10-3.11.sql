@@ -170,3 +170,5 @@ ALTER TABLE `www_users` ADD `salesman` CHAR( 3 ) NOT NULL AFTER `customerid`;
 
 --Alter definition of column `shipvia` in `debtortrans` table
 ALTER TABLE debtortrans CHANGE shipvia shipvia int(11) NOT NULL DEFAULT 0;
+
+INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('SalesOrder_FOI', '0');
