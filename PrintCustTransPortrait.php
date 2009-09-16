@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 $PageSecurity = 1;
 
@@ -142,8 +142,7 @@ If (isset($PrintPDF)
 			AND debtortrans.debtorno=custbranch.debtorno
 			AND debtortrans.branchcode=custbranch.branchcode
 			AND custbranch.salesman=salesman.salesmancode
-			AND salesorders.fromstkloc=locations.loccode
-			AND bankaccounts.invoice = 1';
+			AND salesorders.fromstkloc=locations.loccode';
 
 		if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No'){
 			$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
@@ -201,6 +200,7 @@ If (isset($PrintPDF)
 			$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
 		}
 	   }
+
 	   $result=DB_query($sql,$db,'','',false,false);
 
 	   if (DB_error_no($db)!=0) {
@@ -472,7 +472,7 @@ If (isset($PrintPDF)
 	    $FromTransNo++;
 	} /* end loop to print invoices */
 
-//	$pdfcode = $pdf->output();
+//	$pdfcode = $pdf->stream();
 	$pdfcode = $pdf->output($_SESSION['reports_dir'] . '/Invoice.pdf', "F");
 	$len = strlen($pdfcode);
 // Start FPDI concatination to append PDF files conditionally to the invoice
