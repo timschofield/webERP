@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 
 /*
 date validation and parsing functions
@@ -387,19 +387,20 @@ and converts to a yyyy/mm/dd format */
 	}
 
 //to modify assumption in 2030
-
-	if ((int)$Date_Array[2] <60) {
-		$Date_Array[2] = '20'.$Date_Array[2];
-	} elseif ((int)$Date_Array[2] >59 AND (int)$Date_Array[2] <100) {
-		$Date_Array[0] = '19'.$Date_Array[2];
-	} elseif ((int)$Date_Array[2] >9999) {
-		return 0;
+	if (strlen($Date_Array[0])==2) {
+		if ((int)$Date_Array[2] <60) {
+			$Date_Array[2] = '20'.$Date_Array[2];
+		} elseif ((int)$Date_Array[2] >59 AND (int)$Date_Array[2] <100) {
+			$Date_Array[0] = '19'.$Date_Array[2];
+		} elseif ((int)$Date_Array[2] >9999) {
+			return 0;
+		}
 	}
-
-	if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
+	if (($_SESSION['DefaultDateFormat']=='d/m/Y')){
 		/* echo '<BR>The date returned is ' . $Date_Array[2].'/'.$Date_Array[1].'/'.$Date_Array[0]; */
 		return $Date_Array[2].'/'.$Date_Array[1].'/'.$Date_Array[0];
-
+	} elseif ($_SESSION['DefaultDateFormat']=='d.m.Y') {
+		return $Date_Array[2].'.'.$Date_Array[1].'.'.$Date_Array[0];
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y') {
 		return $Date_Array[2].'/'.$Date_Array[0].'/'.$Date_Array[1];
 	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d') {
@@ -620,13 +621,13 @@ provided that both dates are after 1970. Also only works for dates up to the yea
   }
 	if (strpos($Date2,'/')) {
 		$Date2_array = explode('/',$Date2);
-	} elseif (strpos ($Date1,'-')) {
+	} elseif (strpos ($Date2,'-')) {
 		$Date2_array = explode('-',$Date2);
-	} elseif (strpos ($Date1,'.')) {
+	} elseif (strpos ($Date2,'.')) {
 		$Date2_array = explode('.',$Date2);
   }
 
-	if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
+	if (($_SESSION['DefaultDateFormat']=='d/m/Y') or ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 		$Date1_Stamp = mktime(0,0,0, (int)$Date1_array[1],(int)$Date1_array[0],(int)$Date1_array[2]);
 		$Date2_Stamp = mktime(0,0,0, (int)$Date2_array[1],(int)$Date2_array[0],(int)$Date2_array[2]);
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y'){
@@ -724,7 +725,7 @@ function PeriodExists($TransDate, &$db) {
 
 }
 
-function GetPeriod ($TransDate, &$db) {
+function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 
 	/* Convert the transaction date into a unix time stamp.*/
 
@@ -743,7 +744,7 @@ function GetPeriod ($TransDate, &$db) {
 		$TransDate = mktime(0,0,0,$Date_Array[1],$Date_Array[2],$Date_Array[0]);
 	}
 
-	if (strlen($_SESSION['ProhibitPostingsBefore'])>=8){ //then the ProhibitPostingsBefore configuration is set
+	if (strlen($_SESSION['ProhibitPostingsBefore'])>=8 and $UseProhibit){ //then the ProhibitPostingsBefore configuration is set
 		$Date_array = explode('-', $_SESSION['ProhibitPostingsBefore']);
 	
 		$ProhibitPostingsBefore = mktime(0,0,0,$Date_array[1],$Date_array[2],$Date_array[0]);
