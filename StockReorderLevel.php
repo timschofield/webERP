@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 
 $PageSecurity = 4;
@@ -74,10 +74,10 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 	}
 
 	printf("<td>%s</td>
-		<td align=right>%s</td>
+		<td class=number>%s</td>
 		<td><input type=TEXT class='number' name=%s maxlength=10 size=10 VALUE=%s></td>",
 		$myrow['locationname'],
-		number_format($myrow['quantity']),
+		number_format($myrow['quantity'],StockDecimalPlaces($StockID, $db)),
 		$myrow['loccode'],
 		$myrow['reorderlevel']);
 	$j++;
