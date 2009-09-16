@@ -165,11 +165,25 @@ function AddCarriageReturns($str) {
 function wikiLink($type, $id) {
 	
 	if ($_SESSION['WikiApp']==_('WackoWiki')){
-	echo '<a target="_blank" href="../' . $_SESSION['WikiPath'] . '/' . $type .  $id . '">' . _('Wiki ' . $type . ' Knowlege Base') . '</A><BR>';
+		echo '<a target="_blank" href="../' . $_SESSION['WikiPath'] . '/' . $type .  $id . '">' . _('Wiki ' . $type . ' Knowlege Base') . '</A><BR>';
 	} elseif ($_SESSION['WikiApp']==_('MediaWiki')){
 		echo '<a target="_blank" href="../' . $_SESSION['WikiPath'] . '/index.php/' . $type . '/' .  $id . '">' . _('Wiki ' . $type . ' Knowlege Base') . '</A><BR>';
 	}
 
 }//wikiLink
+
+function DecimalPlaces($currcode, $db) {
+	$sql='SELECT decimalplaces FROM currencies WHERE currabrev="'.$currcode.'"';
+	$result=DB_query($sql, $db);
+	$myrow=DB_fetch_array($result);
+	return $myrow['decimalplaces'];
+}
+
+function StockDecimalPlaces($StockID, $db) {
+	$sql='SELECT decimalplaces FROM stockmaster WHERE stockid="'.$StockID.'"';
+	$result=DB_query($sql, $db);
+	$myrow=DB_fetch_array($result);
+	return $myrow['decimalplaces'];
+}
 
 ?>
