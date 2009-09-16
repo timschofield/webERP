@@ -101,7 +101,7 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 */
 	for ($i=1; $i <=36; $i++) {
 		$MonthEnd=mktime(0,0,0,$_SESSION['YearEnd']+1+$i,0,$YearEndYear-2);
-		$period=GetPeriod(Date($_SESSION['DefaultDateFormat'],$MonthEnd),$db);
+		$period=GetPeriod(Date($_SESSION['DefaultDateFormat'],$MonthEnd),$db, false);
 		$PeriodEnd[$period]=Date('M Y',$MonthEnd);
 	}
 // End of create periods
