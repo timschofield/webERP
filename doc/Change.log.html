@@ -1,6 +1,17 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 
-<p>15/09/09 Tim: Fixes bug that so that $curDebtor is a string not integer so comparison occurs correctly
+<p>15/09/09 Tim: PrintCustTransPortrait.php - Correct sql to show invoices
+<p>15/09/09 Tim: StockReOrderLevel.php - Show the correct number of decimal places for stock levels
+<p>15/09/09 Tim: SelectSalesOrder.php - Bug fixes and layout changes
+<p>15/09/09 Tim: PurchData.php - Show supplier unit of measure as a drop down list and various other layout changes
+<p>15/09/09 Tim: PricesBasedOnMarkup.php - Show text at top of page using help text style
+<p>15/09/09 Tim: PO_Header.php - Bug fixes and layout changes
+<p>15/09/09 Tim: upgrade3.11-3.12.sql - Add tables for asset manager and create extra field for currency decimal places to show
+<p>15/09/09 Tim: MiscFunctions.inc - Add functions to retrieve decimal places for stock items and cuurency codes
+<p>15/09/09 Tim: DateFunctions.inc - Various bug fixes and change to GetPeriod() function to allow periods to be created before the Prohibit date
+<p>15/09/09 Tim: GLBudgets.php - Create periods even when they are before `Prohibit Postings Before Date`
+<p>15/09/09 Tim: Customers.php - Use javascript functions, and and correctly display numbers
+<p>15/09/09 Tim: CustomerAllocations.php - Fixes bug that so that $curDebtor is a string not integer so comparison occurs correctly
 <p>07/09/09 Murray: Added help text to Balance Sheet and P&L, to assist operators, improved layout of HTML view.
 <p>04/09/09 Murray: Added Frequently Ordered Items to Sales Orders, allows quick selection of top-5 most ordered items which saves operator keystrokes/time.  Changed selection of items text from "Order", to "Add to Sales Order" as this is a more accurate label for this button (reduces operator errors).
 <p>03/09/09 Murray: Adding PDF printing of Sales Orders / Proforma Invoices, these are pre-invoice documents required by some companies
