@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 /*
 Call this page with:
@@ -501,7 +501,7 @@ if (isset($_GET['AllocTrans'])) {
 	{
 		unset($_SESSION['Alloc']->Allocs);
 		unset($_SESSION['Alloc']);
-		$curDebtor = 0;
+		$curDebtor = '';
 
 		$SQL = "SELECT debtortrans.id,
 				debtortrans.transno,
