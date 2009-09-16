@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 2;
 
@@ -46,8 +46,11 @@ $ErrMsg = _('The order requested could not be retrieved') . ' - ' . _('the SQL r
 $OrderHeaderSQL = "SELECT purchorders.*,
 			suppliers.supplierid,
 			suppliers.suppname,
-			suppliers.currcode
-		FROM purchorders,
+			suppliers.currcode,
+			www_users.realname
+		FROM purchorders
+		LEFT JOIN www_users
+		ON purchorders.initiator=www_users.userid,
 			suppliers
 		WHERE purchorders.supplierno = suppliers.supplierid
 		AND purchorders.orderno = " . $_GET['OrderNo'];
@@ -76,29 +79,29 @@ $myrow = DB_fetch_array($GetOrdHdrResult);
 /* SHOW ALL THE ORDER INFO IN ONE PLACE */
 
 echo '<br><table BORDER=0 cellpadding=2>';
-echo '<tr><td class="tableheader">' . _('Supplier Code'). '</td><td>' . $myrow['supplierid'] . '</td>
-	<td class="tableheader">' . _('Supplier Name'). '</td><td>' . $myrow['suppname'] . '</td></tr>';
+echo '<tr><th style="text-align:left">' . _('Supplier Code'). '</td><td>' . $myrow['supplierid'] . '</td>
+	<th style="text-align:left">' . _('Supplier Name'). '</td><td>' . $myrow['suppname'] . '</td></tr>';
 
-echo '<tr><td class="tableheader">' . _('Ordered On'). '</td><td>' . ConvertSQLDate($myrow['orddate']) . '</td>
-	<td class="tableheader">' . _('Delivery Address 1'). '</td><td>' . $myrow['deladd1'] . '</td></tr>';
+echo '<tr><th style="text-align:left">' . _('Ordered On'). '</td><td>' . ConvertSQLDate($myrow['orddate']) . '</td>
+	<th style="text-align:left">' . _('Delivery Address 1'). '</td><td>' . $myrow['deladd1'] . '</td></tr>';
 
-echo '<tr><td class="tableheader">' . _('Order Currency'). '</td><td>' . $myrow['currcode'] . '</td>
-	<td class="tableheader">' . _('Delivery Address 2'). '</td><td>' . $myrow['deladd2'] . '</td></tr>';
+echo '<tr><th style="text-align:left">' . _('Order Currency'). '</td><td>' . $myrow['currcode'] . '</td>
+	<th style="text-align:left">' . _('Delivery Address 2'). '</td><td>' . $myrow['deladd2'] . '</td></tr>';
 
-echo '<tr><td class="tableheader">' . _('Exchange Rate'). '</td><td>' . $myrow['rate'] . '</td>
-	<td class="tableheader">' . _('Delivery Address 3'). '</td><td>' . $myrow['deladd3'] . '</td></tr>';
+echo '<tr><th style="text-align:left">' . _('Exchange Rate'). '</td><td>' . $myrow['rate'] . '</td>
+	<th style="text-align:left">' . _('Delivery Address 3'). '</td><td>' . $myrow['deladd3'] . '</td></tr>';
 
-echo '<tr><td class="tableheader">' . _('Deliver Into Location'). '</td><td>' . $myrow['intostocklocation'] . '</td>
-	<td class="tableheader">' . _('Delivery Address 4'). '</td><td>' . $myrow['deladd4'] . '</td></tr>';
+echo '<tr><th style="text-align:left">' . _('Deliver Into Location'). '</td><td>' . $myrow['intostocklocation'] . '</td>
+	<th style="text-align:left">' . _('Delivery Address 4'). '</td><td>' . $myrow['deladd4'] . '</td></tr>';
 
-echo '<tr><td class="tableheader">' . _('Initiator'). '</td><td>' . $myrow['initiator'] . '</td>
-	<td class="tableheader">' . _('Delivery Address 5'). '</td><td>' . $myrow['deladd5'] . '</td></tr>';
+echo '<tr><th style="text-align:left">' . _('Initiator'). '</td><td>' . $myrow['realname'] . '</td>
+	<th style="text-align:left">' . _('Delivery Address 5'). '</td><td>' . $myrow['deladd5'] . '</td></tr>';
 
-echo '<tr><td class="tableheader">' . _('Requisition Ref'). '.</td><td>' . $myrow['requisitionno'] . '</td>
-	<td class="tableheader">' . _('Delivery Address 6'). '</td><td>' . $myrow['deladd6'] . '</td></tr>';
+echo '<tr><th style="text-align:left">' . _('Requisition Ref'). '.</td><td>' . $myrow['requisitionno'] . '</td>
+	<th style="text-align:left">' . _('Delivery Address 6'). '</td><td>' . $myrow['deladd6'] . '</td></tr>';
 
 
-echo '<tr><td class="tableheader">'. _('Printing') . '</td><td colspan=3>';
+echo '<tr><th style="text-align:left">'. _('Printing') . '</td><td colspan=3>';
 
 if ($myrow['dateprinted'] == ''){
 	echo '<i>'. _('Not yet printed') . '</i> &nbsp; &nbsp; ';
@@ -109,8 +112,9 @@ if ($myrow['dateprinted'] == ''){
 }
 
 echo  '</td></tr>';
+echo '<tr><th style="text-align:left">'. _('Status') . '</td><td>'. $myrow['status'] . '</td></tr>';
 
-echo '<tr><td class="tableheader">' . _('Comments'). '</td><td bgcolor=white colspan=3>' . $myrow['comments'] . '</td></tr>';
+echo '<tr><th style="text-align:left">' . _('Comments'). '</td><td bgcolor=white colspan=3>' . $myrow['comments'] . '</td></tr>';
 
 echo '</table>';
 
@@ -127,14 +131,14 @@ echo '<div class="centre"><font size=4 color=BLUE>'. _('Order Line Details'). '<
 
 echo '<table colspan=8 BORDER=0 cellpadding=0>
 	<tr>
-		<td class="tableheader">' . _('Item Code'). '</td>
-		<td class="tableheader">' . _('Item Description'). '</td>
-		<td class="tableheader">' . _('Ord Qty'). '</td>
-		<td class="tableheader">' . _('Qty Recd'). '</td>
-		<td class="tableheader">' . _('Qty Inv'). '</td>
-		<td class="tableheader">' . _('Ord Price'). '</td>
-		<td class="tableheader">' . _('Chg Price'). '</td>
-		<td class="tableheader">' . _('Reqd Date'). '</td>
+		<th>' . _('Item Code'). '</td>
+		<th>' . _('Item Description'). '</td>
+		<th>' . _('Ord Qty'). '</td>
+		<th>' . _('Qty Recd'). '</td>
+		<th>' . _('Qty Inv'). '</td>
+		<th>' . _('Ord Price'). '</td>
+		<th>' . _('Chg Price'). '</td>
+		<th>' . _('Reqd Date'). '</td>
 	</tr>';
 
 $k =0;  //row colour counter
@@ -164,11 +168,11 @@ while ($myrow=db_fetch_array($LineItemsResult)) {
 
 	printf ('<td>%s</td>
 		<td>%s</td>
-		<td align=right>%01.2f</td>
-		<td align=right>%01.2f</td>
-		<td align=right>%01.2f</td>
-		<td align=right>%01.2f</td>
-		<td align=right>%01.2f</td>
+		<td class=number>%01.2f</td>
+		<td class=number>%01.2f</td>
+		<td class=number>%01.2f</td>
+		<td class=number>%01.2f</td>
+		<td class=number>%01.2f</td>
 		<td>%s</td>
 		</tr>' ,
 		$myrow['itemcode'],
@@ -184,11 +188,11 @@ while ($myrow=db_fetch_array($LineItemsResult)) {
 
 echo '<tr><td><br></td>
 	</tr>
-	<tr><td colspan=4 align=right>' . _('Total Order Value Excluding Tax') .'</td>
-	<td colspan=2 align=right>' . number_format($OrderTotal,2) . '</td></tr>';
+	<tr><td colspan=4 class=number>' . _('Total Order Value Excluding Tax') .'</td>
+	<td colspan=2 class=number>' . number_format($OrderTotal,2) . '</td></tr>';
 echo '<tr>
-	<td colspan=4 align=right>' . _('Total Order Value Received Excluding Tax') . '</td>
-	<td colspan=2 align=right>' . number_format($RecdTotal,2) . '</td></tr>';
+	<td colspan=4 class=number>' . _('Total Order Value Received Excluding Tax') . '</td>
+	<td colspan=2 class=number>' . number_format($RecdTotal,2) . '</td></tr>';
 echo '</table>';
 
 echo '<br>';
