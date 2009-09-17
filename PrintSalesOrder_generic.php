@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.1 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 2;
 
@@ -147,8 +147,13 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 			$DisplayPrevDel = number_format($myrow2['qtyinvoiced'],2);
 			$DisplayQtySupplied = number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],2);
 			$itemdesc = $myrow2['description'] . ' - ' . $myrow2['narrative'];
+			$itemlistdesc= str_split($itemdesc, 46);
 			$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$myrow2['stkcode']);
-			$LeftOvers = $pdf->addTextWrap(147,$YPos,355,$FontSize,$itemdesc);
+			$LeftOvers = $pdf->addTextWrap(140,$YPos,355,$FontSize,$itemlistdesc[0]);
+			$LeftOvers = $pdf->addTextWrap(140,$YPos-12,355,$FontSize,$itemlistdesc[1]);
+			$LeftOvers = $pdf->addTextWrap(140,$YPos-24,355,$FontSize,$itemlistdesc[2]);
+			$LeftOvers = $pdf->addTextWrap(140,$YPos-36,355,$FontSize,$itemlistdesc[3]);
+			$LeftOvers = $pdf->addTextWrap(140,$YPos-48,355,$FontSize,$itemlistdesc[4]);
 			$LeftOvers = $pdf->addTextWrap(400,$YPos,85,$FontSize,$DisplayQty,'right');
 			$LeftOvers = $pdf->addTextWrap(503,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
 			$LeftOvers = $pdf->addTextWrap(602,$YPos,85,$FontSize,$DisplayPrevDel,'right');
