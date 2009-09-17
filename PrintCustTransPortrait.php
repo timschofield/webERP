@@ -74,10 +74,20 @@ If (isset($PrintPDF)
 	notice that salesorder record must be present to print the invoice purging of sales orders will
 	nobble the invoice reprints */
 
+// check if the user has set a default bank account for invoices, if not leave it blank
+		$sql = 'SELECT bankaccounts.invoice, bankaccounts.bankaccountnumber, bankaccounts.bankaccountcode
+				from bankaccounts
+				WHERE bankaccounts.invoice = 1';
+		$result=DB_query($sql,$db,'','',false,false);
+	        	if (DB_error_no($db)!=1) {
+		if (DB_num_rows($result)==1){
+                $myrow = DB_fetch_array($result);
+                $DefaultBankAccountNumber = _('Account:') .' ' .$myrow['bankaccountnumber'];
+                $DefaultBankAccountCode =  _('Bank Code:') .' ' .$myrow['bankaccountcode'];
+		}}
+// gather the invoice data
 		if ($InvOrCredit=='Invoice') {
 			$sql = 'SELECT debtortrans.trandate,
-				bankaccounts.bankaccountnumber,
-				bankaccounts.bankaccountcode,
 				debtortrans.ovamount,
 				debtortrans.ovdiscount,
 				debtortrans.ovfreight,
@@ -131,8 +141,7 @@ If (isset($PrintPDF)
 				shippers,
 				salesman,
 				locations,
-				paymentterms,
-				bankaccounts
+				paymentterms
 			WHERE debtortrans.order_ = salesorders.orderno
 			AND debtortrans.type=10
 			AND debtortrans.transno=' . $FromTransNo . '
@@ -142,8 +151,7 @@ If (isset($PrintPDF)
 			AND debtortrans.debtorno=custbranch.debtorno
 			AND debtortrans.branchcode=custbranch.branchcode
 			AND custbranch.salesman=salesman.salesmancode
-			AND salesorders.fromstkloc=locations.loccode
-			AND bankaccounts.invoice = 1';
+			AND salesorders.fromstkloc=locations.loccode';
 
 		if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No'){
 			$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
@@ -462,7 +470,8 @@ If (isset($PrintPDF)
 			if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg')) {
             	$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -60,$YPos-15,0,20);
 			}
-            $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:') . $myrow['bankaccountcode'] . _(' Bank Account:') . $myrow['bankaccountnumber']);
+// Print Bank acount details if available and default for invoices is selected
+            $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, $DefaultBankAccountCode . $DefaultBankAccountNumber);
 			$FontSize=10;
 		} else {
 			$pdf->addText($Page_Width-$Right_Margin-220, $YPos-($line_height*3)-6,$FontSize, _('TOTAL CREDIT'));
