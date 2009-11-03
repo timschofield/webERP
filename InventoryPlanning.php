@@ -1,5 +1,7 @@
 <?php
 
+/* $Revision: 1.19 $ */
+
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -101,6 +103,7 @@ If (isset($_POST['PrintPDF'])
 	$Period_2_Name = strftime('%b',mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
 	$Period_3_Name = strftime('%b',mktime(0,0,0,Date('m')-3,Date('d'),Date('Y')));
 	$Period_4_Name = strftime('%b',mktime(0,0,0,Date('m')-4,Date('d'),Date('Y')));
+	$Period_5_Name = strftime('%b',mktime(0,0,0,Date('m')-5,Date('d'),Date('Y')));
 
 	include ('includes/PDFInventoryPlanPageHeader.inc');
 
@@ -111,6 +114,7 @@ If (isset($_POST['PrintPDF'])
 	$Period_2 = $CurrentPeriod -2;
 	$Period_3 = $CurrentPeriod -3;
 	$Period_4 = $CurrentPeriod -4;
+	$Period_5 = $CurrentPeriod -5;
 
 	While ($InventoryPlan = DB_fetch_array($InventoryResult,$db)){
 
@@ -122,6 +126,7 @@ If (isset($_POST['PrintPDF'])
 		   		$pdf->line($Left_Margin, $YPos,$Page_Width-$Right_Margin, $YPos);
 				$YPos -=(2*$line_height);
 			}
+
 			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 260-$Left_Margin,$FontSize,$InventoryPlan['categoryid'] . ' - ' . $InventoryPlan['categorydescription'],'left');
 			$Category = $InventoryPlan['categoryid'];
 			$FontSize=8;
@@ -135,7 +140,8 @@ If (isset($_POST['PrintPDF'])
 		   		SUM(CASE WHEN prd=" . $Period_1 . " THEN -qty ELSE 0 END) AS prd1,
 				SUM(CASE WHEN prd=" . $Period_2 . " THEN -qty ELSE 0 END) AS prd2,
 				SUM(CASE WHEN prd=" . $Period_3 . " THEN -qty ELSE 0 END) AS prd3,
-				SUM(CASE WHEN prd=" . $Period_4 . " THEN -qty ELSE 0 END) AS prd4
+				SUM(CASE WHEN prd=" . $Period_4 . " THEN -qty ELSE 0 END) AS prd4,
+				SUM(CASE WHEN prd=" . $Period_5 . " THEN -qty ELSE 0 END) AS prd5
 			FROM stockmoves
 			WHERE stockid='" . $InventoryPlan['stockid'] . "'
 			AND (type=10 OR type=11)
@@ -145,7 +151,8 @@ If (isset($_POST['PrintPDF'])
 		   		SUM(CASE WHEN prd=" . $Period_1 . " THEN -qty ELSE 0 END) AS prd1,
 				SUM(CASE WHEN prd=" . $Period_2 . " THEN -qty ELSE 0 END) AS prd2,
 				SUM(CASE WHEN prd=" . $Period_3 . " THEN -qty ELSE 0 END) AS prd3,
-				SUM(CASE WHEN prd=" . $Period_4 . " THEN -qty ELSE 0 END) AS prd4
+				SUM(CASE WHEN prd=" . $Period_4 . " THEN -qty ELSE 0 END) AS prd4,
+				SUM(CASE WHEN prd=" . $Period_5 . " THEN -qty ELSE 0 END) AS prd5
 			FROM stockmoves
 			WHERE stockid='" . $InventoryPlan['stockid'] . "'
 			AND stockmoves.loccode ='" . $_POST['Location'] . "'
@@ -161,8 +168,9 @@ If (isset($_POST['PrintPDF'])
 	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
 	   		echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-	      			echo "<br>$SQL";
+	      		echo "<br>$SQL";
 	   		}
+			
 	   		include('includes/footer.inc');
 	   		exit;
 		}
@@ -189,7 +197,7 @@ If (isset($_POST['PrintPDF'])
 		$DemandResult = DB_query($SQL,$db,'','',FALSE,FALSE);
 
 		if (DB_error_no($db) !=0) {
-	 		 $title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
+	 		$title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
 	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
 	   		echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
@@ -279,17 +287,28 @@ If (isset($_POST['PrintPDF'])
 
 		$OnOrdRow = DB_fetch_array($OnOrdResult);
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 60, $FontSize, $InventoryPlan['stockid'], 'left');
-		$LeftOvers = $pdf->addTextWrap(100, $YPos, 150,6,$InventoryPlan['description'],'left');
-		$LeftOvers = $pdf->addTextWrap(251, $YPos, 40,$FontSize,number_format($SalesRow['prd4'],0),'right');
-		$LeftOvers = $pdf->addTextWrap(292, $YPos, 40,$FontSize,number_format($SalesRow['prd3'],0),'right');
-		$LeftOvers = $pdf->addTextWrap(333, $YPos, 40,$FontSize,number_format($SalesRow['prd2'],0),'right');
-		$LeftOvers = $pdf->addTextWrap(374, $YPos, 40,$FontSize,number_format($SalesRow['prd1'],0),'right');
-		$LeftOvers = $pdf->addTextWrap(415, $YPos, 40,$FontSize,number_format($SalesRow['prd0'],0),'right');
-
-		$MaxMthSales = Max($SalesRow['prd1'], $SalesRow['prd2'], $SalesRow['prd3'], $SalesRow['prd4']);
-		$IdealStockHolding = $MaxMthSales * $_POST['NumberMonthsHolding'];
-		$LeftOvers = $pdf->addTextWrap(456, $YPos, 40,$FontSize,number_format($IdealStockHolding,0),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 110, $FontSize, $InventoryPlan['stockid'], 'left');
+		$LeftOvers = $pdf->addTextWrap(130, $YPos, 120,6,$InventoryPlan['description'],'left');
+		$LeftOvers = $pdf->addTextWrap(251, $YPos, 40,$FontSize,number_format($SalesRow['prd5'],0),'right');
+		$LeftOvers = $pdf->addTextWrap(292, $YPos, 40,$FontSize,number_format($SalesRow['prd4'],0),'right');
+		$LeftOvers = $pdf->addTextWrap(333, $YPos, 40,$FontSize,number_format($SalesRow['prd3'],0),'right');
+		$LeftOvers = $pdf->addTextWrap(374, $YPos, 40,$FontSize,number_format($SalesRow['prd2'],0),'right');
+		$LeftOvers = $pdf->addTextWrap(415, $YPos, 40,$FontSize,number_format($SalesRow['prd1'],0),'right');
+		$LeftOvers = $pdf->addTextWrap(456, $YPos, 40,$FontSize,number_format($SalesRow['prd0'],0),'right');
+		
+		if ($_POST['NumberMonthsHolding']>10){
+			$NumberMonths=$_POST['NumberMonthsHolding']-10;
+			$MaxMthSales = ($SalesRow['prd1']+$SalesRow['prd2']+$SalesRow['prd3']+$SalesRow['prd4']+$SalesRow['prd5'])/5;
+		}
+		else{		
+			$NumberMonths=$_POST['NumberMonthsHolding'];	
+			$MaxMthSales = max($SalesRow['prd1'], $SalesRow['prd2'], $SalesRow['prd3'], $SalesRow['prd4'], $SalesRow['prd5']);
+		}
+		
+						
+			
+		$IdealStockHolding = ceil($MaxMthSales * $NumberMonths);
+		$LeftOvers = $pdf->addTextWrap(497, $YPos, 40,$FontSize,number_format($IdealStockHolding,0),'right');
 		$LeftOvers = $pdf->addTextWrap(597, $YPos, 40,$FontSize,number_format($InventoryPlan['qoh'],0),'right');
 		$LeftOvers = $pdf->addTextWrap(638, $YPos, 40,$FontSize,number_format($TotalDemand,0),'right');
 
@@ -297,10 +316,10 @@ If (isset($_POST['PrintPDF'])
 
 		$SuggestedTopUpOrder = $IdealStockHolding - $InventoryPlan['qoh'] + $TotalDemand - $OnOrdRow['qtyonorder'];
 		if ($SuggestedTopUpOrder <=0){
-			$LeftOvers = $pdf->addTextWrap(720, $YPos, 40,$FontSize,_('Nil'),'right');
+			$LeftOvers = $pdf->addTextWrap(720, $YPos, 40,$FontSize,_('   '),'right');
 
 		} else {
-
+			
 			$LeftOvers = $pdf->addTextWrap(720, $YPos, 40,$FontSize,number_format($SuggestedTopUpOrder,0),'right');
 		}
 
@@ -335,7 +354,7 @@ If (isset($_POST['PrintPDF'])
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
 
-		$pdf->Stream();
+		$pdf->Output('InventoryPlanning', 'I');
 
 	}
 
@@ -351,43 +370,64 @@ If (isset($_POST['PrintPDF'])
 
 		echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method='POST'><table>";
 
-		echo '<tr><td>' . _('From Inventory Category Code') . ':</font></td><td><select name=FromCriteria>';
+		echo '<tr>
+					<td>' . _('From Inventory Category Code') . ':</font></td>
+					<td><select name=FromCriteria>';
 
-		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
-		$CatResult= DB_query($sql,$db);
-		While ($myrow = DB_fetch_array($CatResult)){
-			echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . " - " . $myrow['categorydescription'];
-		}
-		echo "</select></td></tr>";
+					$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
+					$CatResult= DB_query($sql,$db);
+					While ($myrow = DB_fetch_array($CatResult)){
+					echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . " - " . $myrow['categorydescription'];
+					}
+					echo "</select>
+					</td>
+			 </tr>";
 
-		echo '<tr><td>' . _('To Inventory Category Code') . ':</td><td><select name=ToCriteria>';
+		echo '<tr>
+					<td>' . _('To Inventory Category Code') . ':</td>
+					<td><select name=ToCriteria>';
 
-		/*Set the index for the categories result set back to 0 */
-		DB_data_seek($CatResult,0);
+					/*Set the index for the categories result set back to 0 */
+					DB_data_seek($CatResult,0);
 
-		While ($myrow = DB_fetch_array($CatResult)){
-			echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . " - " . $myrow['categorydescription'];
-		}
-		echo '</select></td></tr>';
+					While ($myrow = DB_fetch_array($CatResult)){
+					echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . " - " . $myrow['categorydescription'];
+					}
+					echo '</select></td>
+			 </tr>';
 
-		echo '<tr><td>' . _('For Inventory in Location') . ":</td><td><select name='Location'>";
-		$sql = 'SELECT loccode, locationname FROM locations';
-		$LocnResult=DB_query($sql,$db);
+		echo '<tr>
+					<td>' . _('For Inventory in Location') . ":</td><td><select name='Location'>";
+					$sql = 'SELECT loccode, locationname FROM locations';
+					$LocnResult=DB_query($sql,$db);
 
-		echo "<option Value='All'>" . _('All Locations');
+					echo "<option Value='All'>" . _('All Locations');
 
-		while ($myrow=DB_fetch_array($LocnResult)){
-		          echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+					while ($myrow=DB_fetch_array($LocnResult)){
+					echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		      		}
-		echo '</select></td></tr>';
+					echo '</select>
+					</td>
+			  </tr>';
 
-		echo '<tr><td>' . _('Maximum No Months Holding') . ":</td><td><select name='NumberMonthsHolding'>";
-		echo '<option selected Value=1>' . _('One Month');
-		echo '<option Value=1.5>' . _('One Month and a half');
-		echo '<option Value=2>' . _('Two Months');
-		echo '<option Value=3>' . _('Three Months');
-		echo '<option Value=4>' . _('Four Months');
-		echo '</select></td></tr>';
+		echo '<tr>
+					<td>' . _('Stock Planning') . ":</td>
+					<td><select name='NumberMonthsHolding'>";
+					echo '<option selected Value=1>' . _('One Month MAX');
+					echo '<option Value=1.5>' . _('One Month and a half MAX');
+					echo '<option Value=2>' . _('Two Months MAX');
+					echo '<option Value=2.5>' . _('Two Month and a half MAX');
+					echo '<option Value=3>' . _('Three Months MAX');
+					echo '<option Value=4>' . _('Four Months MAX');
+					echo '<option Value=11>' . _('One Month AVG');
+					echo '<option Value=11.5>' . _('One Month and a half AVG');
+					echo '<option Value=12>' . _('Two Months AVG');
+					echo '<option Value=12.5>' . _('Two Month and a half AVG');
+					echo '<option Value=13>' . _('Three Months AVG');
+					echo '<option Value=14>' . _('Four Months AVG');
+					echo '</select>
+					</td>
+			 </tr>';
 
 		echo "</table><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
 	}
