@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 2;
 
@@ -10,25 +10,23 @@ include('includes/SQL_CommonFunctions.inc');
 // If this file is called from another script, we set the required POST variables from the GET
 // We call this file from SelectCustomer.php when a customer is selected and we want a statement printed
 if (isset($_GET['PrintPDF'])) {
-$FromCust = $_GET['FromCust'];
-$ToCust = $_GET['ToCust'];
-$PrintPDF = $_GET['PrintPDF']; 
-$_POST['FromCust'] = $FromCust;
-$_POST['ToCust'] = $ToCust;
-$_POST['PrintPDF'] = $PrintPDF;
+	$FromCust = $_GET['FromCust'];
+	$ToCust = $_GET['ToCust'];
+	$PrintPDF = $_GET['PrintPDF']; 
+	$_POST['FromCust'] = $FromCust;
+	$_POST['ToCust'] = $ToCust;
+	$_POST['PrintPDF'] = $PrintPDF;
 }  
 
-if (!isset($_GET['PrintPDF'])) {
-}
 
 
 if (isset($_GET['FromCust'])) {
-$getFrom = $_GET['FromCust'];
-$_POST['FromCust'] = $getFrom;
+	$getFrom = $_GET['FromCust'];
+	$_POST['FromCust'] = $getFrom;
 }
 if (isset($_GET['ToCust'])) {
-$getTo = $_GET['ToCust'];
-$_POST['ToCust'] = $getTo;
+	$getTo = $_GET['ToCust'];
+	$_POST['ToCust'] = $getTo;
 }
 
 
@@ -128,13 +126,14 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 					ON (debtortrans.id=custallocns.transid_allocfrom
 						OR debtortrans.id=custallocns.transid_allocto)
 				WHERE custallocns.datealloc >='" .
-					FormatDateForSQL(Mktime(0,0,0,Date('m')-1,Date('d'),Date('y'))) . "'
+					Date('Y-m-d',Mktime(0,0,0,Date('m')-1,Date('d'),Date('y'))) . "'
 				AND debtortrans.debtorno='" . $StmtHeader['debtorno'] . "' 
 				AND debtortrans.settled=1
 				ORDER BY debtortrans.id";
 
 			$SetldTrans=DB_query($sql,$db, $ErrMsg);
 			$NumberOfRecordsReturned += DB_num_rows($SetldTrans);
+			
 	   	}
 
 	  	if ( $NumberOfRecordsReturned >=1){
@@ -406,7 +405,7 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 
-	$pdf->Stream();
+	$pdf->Output('CustStatements.pdf', 'I');
 
 	} else {
 		$title = _('Print Statements') . ' - ' . _('No Statements Found');
