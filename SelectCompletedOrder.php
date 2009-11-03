@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 1;
 
@@ -415,7 +415,7 @@ if (!isset($_POST['OrdersAfterDate']) OR $_POST['OrdersAfterDate'] == '' OR ! Is
 echo "<table>";
 if (!isset($OrderNumber) or $OrderNumber==''){
 	echo '<tr><td>' . _('Order Number') . ':</td><td>' . "<input type='text' name='OrderNumber' maxlength =8 size=9></td><td>" . _('for all orders placed after') .
-			": </td><td><input type='text' name='OrdersAfterDate' maxlength =10 size=11 value=" . $_POST['OrdersAfterDate'] . "></td><td>" .
+			": </td><td><input type='text' class='date' alt='".$_SESSION['DefaultDateFormat']."'  name='OrdersAfterDate' maxlength =10 size=11 value=" . $_POST['OrdersAfterDate'] . "></td><td>" .
 			"<input type='submit' name='SearchOrders' value='" . _('Search Orders') . "'></td></tr>";
 	echo '<tr><td>' . _('Customer Ref') . ':</td><td>' . "<input type='text' name='CustomerRef' maxlength =8 size=9></td>
 			<td></td><td colspan=2><input type='checkbox' ".$ShowChecked." name='completed' />"._('Show Completed orders only') . "</td></tr>";
