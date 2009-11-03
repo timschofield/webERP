@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity=9;
 
@@ -15,7 +15,7 @@ if (isset($_POST['submit'])) {
 	
 	// MRP - Create levels table based on bom
 	echo '</br>'  ._('Start time') . ': ' . date('h:i:s') . '</br>';
-	echo '</br>' . _('Initializing tables .....') . '</br>';
+	echo '</br>' . _('Initialising tables .....') . '</br>';
 	flush();
 	$result = DB_query('DROP TABLE IF EXISTS tempbom',$db);
 	$result = DB_query('DROP TABLE IF EXISTS passbom',$db);
@@ -357,15 +357,18 @@ if (isset($_POST['submit'])) {
 						 mrpdate,
 						 updateflag)
 			   SELECT Null,
-					  itemcode,
-					  deliverydate,
+					  purchorderdetails.itemcode,
+					  purchorderdetails.deliverydate,
 					  (quantityord - quantityrecd) AS netqty,
 					  "PO",
-					  orderno,
-					  deliverydate,
+					  purchorderdetails.orderno,
+					  purchorderdetails.deliverydate,
 					  0
-				  FROM purchorderdetails
-			  WHERE (quantityord - quantityrecd) > 0';
+				  FROM purchorderdetails,
+				       purchorders
+			  WHERE purchorderdetails.orderno = purchorders.orderno
+			    AND purchorders.status != "Cancelled"
+			    AND(quantityord - quantityrecd) > 0';
 	$result = DB_query($sql,$db);
 	
 	prnMsg(_('Loading supplies from inventory on hand'),'info');
