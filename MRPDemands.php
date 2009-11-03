@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.5 $ */
 // Add, Edit, Delete, and List MRP demand records. Table is mrpdemands.
 // Have separate functions for each routine. Use pass-by-reference - (&$db,&$StockID) -
 // to pass values of $db and $StockID to functions. - when just used $db as variable,
@@ -185,7 +185,7 @@ function submit(&$db,&$StockID,&$DemandID)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SU
 
     if (DB_num_rows($result) > 0){
 		$InputError = 1;
-		prnMsg(_('Record alread exists for part number/demand type/date'),'error');
+		prnMsg(_('Record already exists for part number/demand type/date'),'error');
 	}
 	
     if ($InputError !=1){	
@@ -397,11 +397,11 @@ if (!isset($_POST['Duedate'])) {
 
 echo '<tr>  
 <td>' . _('Quantity') . ":</td>
-	    <td><input type='Text' name='Quantity' size=6 maxlength=6 value=" . $_POST['Quantity'] . '></td>
+	    <td><input type='Text' name='Quantity' class=number size=6 maxlength=6 value=" . $_POST['Quantity'] . '></td>
 	</tr>	
 <tr>
 <td>' . _('Due Date') . ":</td>
-	    <td><input type='Text' name='Duedate' size=12 maxlength=12 value=" . $_POST['Duedate'] . '></td>
+	    <td><input type='Text' class=date alt='".$_SESSION['DefaultDateFormat']."' name='Duedate' size=12 maxlength=12 value=" . $_POST['Duedate'] . '></td>
 	</tr>';
 // Generate selections for Demand Type
 echo '<tr>
