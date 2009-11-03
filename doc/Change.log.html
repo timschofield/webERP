@@ -1,11 +1,161 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
-
+<p>
+<p>03/11/09 Bogdan Stanciu: EDIProcessOrders.php - Fix string concatenation errors
+<p>02/11/09 Tim: SuppPriceList.php - Allow price list to be printed from the SelectSupplier screen
+<p>02/11/09 Tim: SelectSupplier.php - Add option to print a supplier price list
+<p>02/11/09 Tim: index.php - Add in new facility to maintain Reorder levels
+<p>02/11/09 Pak Ricard: ReorderLevelLocation.php - A new script ReorderLevelLocation, allowing to setup reorder levels selecting a location and a category.
+<p>02/11/09 Pak Ricard: SuppPriceList.php - A script that produces a PDF with a supplier price list. User can select supplier, category (all is available), and current prices or all prices (to compare old prices with new ones).
+<p>01/11/09 Pak Ricard: StockLocTransferReceive.php - Fix to allow the balance of a transfer to be cancelled.
+<p>30/10/09 Lindsay Harris: api_php.php - Corrections to database authentication
+<p>30/10/09 Tim: GoodsReceived.php - Correction to SQL
+<p>30/10/09 Tim: FixedAssetRegister.php - Changes in layout to the register
+<p>30/10/09 Tim: FixedAssetJournal.php - Correctly calculate depreciation
+<p>30/10/09 Tim: FixedAssetItems.php - Various bug fixes
+<p>30/10/09 Tim: FixedAssetLocations.php - Allow for parent locations
+<p>30/10/09 Tim: Z_ImportStocks.php - Change file type to text/csv
+<p>30/10/09 Tim: MRPCreateDemands.php - Minor formatting changes
+<p>30/10/09 Tim: SelectCompletedOrder.php - Use javascript date picker if javascript is enabled
+<p>30/10/09 Tim: StockMovements.php - Layout improvements.
+<p>30/10/09 Tim: WorkOrderReceive.php - Layout improvements.
+<p>30/10/09 Tim: upgrade3.11-3.11.1 - Remove change to www_users as not a bug in 3.11
+<p>30/10/09 Tim: Update images to ensure that all themes have the same images
+<p>30/10/09 Tim: StockDispatch - New version for StockDispatch with some printing improvements and also with an option to choose a “simple” or “standard” form, depending on the company needs.
+<p>30/10/09 Pak Ricard: StockDispatch - New version for StockDispatch with some printing improvements and also with an option to choose a “simple” or “standard” form, depending on the company needs.
+<p>30/10/09 Pak Ricard: PrintCustTransPortrait.php - Allows PrintCustTransPortrait to use prices from salesordersdetails, instead of stockmoves, to solve the multicurrency issue with large exchage rates.
+<p>30/10/09 Pak Ricard: PrintCustTrans.php - Allows PrintCustTrans to use prices from salesordersdetails, instead of stockmoves, to solve the multicurrency issue with large exchage rates.
+<p>30/10/09 Tim: upgrade3.11-3.12.sql - Remove duplicated indexes
+<p>30/10/09 Tim: PDFBalanceSheetPageHeader.inc - Fix to make similar phrases read the same to ease translation. Notified by Javier
+<p>30/10/09 Tim: PDFOrderStatusPageHeader.inc - Fix to make similar phrases read the same to ease translation. Notified by Javier
+<p>30/10/09 Tim: index.php - Fix to make similar phrases read the same to ease translation. Notified by Javier
+<p>30/10/09 Tim: PO_SelectPurchOrder.php - Fix to make similar phrases read the same to ease translation. Notified by Javier
+<p>30/10/09 Tim: PO_SelectOSPurchOrder.php - Fix to make similar phrases read the same to ease translation. Notified by Javier
+<p>30/10/09 Tim: index.php - Fix to make similar phrases read the same to ease translation. Notified by Javier
+<p>30/10/09 Tim: SpecialOrder.php - Fix to make similar phrases read the same to ease translation. Notified by Javier
+<p>30/10/09 Tim: PO_PDFPurchOrder.php - Fix to make similar phrases read the same to ease translation. Notified by Javier
+<p>30/10/09 Tim: PO_Items.php - Fix to make similar phrases read the same to ease translation. Notified by Javier
+<p>30/10/09 Tim: BOMExtendedQty.php - Fix to make similar phrases read the same to ease translation. Notified by Javier
+<p>29/10/09 Tim: SuppInvGRNs.php - Fix to make similar phrases read the same to ease translation. Notified by Javier
+<p>29/10/09 Tim: AccountGroups.php - Fix to make similar phrases read the same to ease translation. Notified by Javier
+<p>29/10/09 Tim: DeliveryDetails.php - Fix to make similar phrases read the same to ease translation. Notified by Javier
+<p>29/10/09 Tim: MRPPlannedWorkOrders.php - Fix typos
+<p>29/10/09 Tim: PDFStockCheckComparison.php - Fix typo
+<p>29/10/09 Tim: api_xmlrpc.php - Fix typos
+<p>29/10/09 Tim: api_errorcodes.php - Fix typos
+<p>29/10/09 Tim: PDFSalesAnalysis.inc - Fix typo
+<p>29/10/09 Tim: ConstructSQLForUserDefinedSalesReport.inc - Fix typo
+<p>29/10/09 Tim: Z_MakeNewCompany.php - Fix typo
+<p>29/10/09 Tim: ShipmentCosting.php - Fix typo
+<p>29/10/09 Tim: SalesInquiry.php - Fix typo
+<p>29/10/09 Tim: PO_PDFPurchOrder.php - Fix typo
+<p>29/10/09 Tim: PO_Items.php - Fix typo
+<p>29/10/09 Tim: MRPReport.php - Fix typo
+<p>29/10/09 Tim: MRP.php - Fix typo
+<p>29/10/09 Tim: MRPDemands.php - Fix typo
+<p>29/10/09 Tim: InventoryPlanningPrefSupplier.php - Fix typo
+<p>29/10/09 Tim: ConfirmDispatch_Invoice.php - Fix typo
+<p>29/10/09 Tim: BOMIndentedReverse.php - Fix typo
+<p>29/10/09 Tim: BOMIndented.php - Fix typo
+<p>29/10/09 Tim: BOMExtendedQty.php - Fix typo
+<p>29/10/09 Tim: Aged Debtors.php - Fix typo
+<p>29/10/09 Tim: ConfirmDispatch_Invoice.php - Fix to ensure correct qoh is calculated even with simultaneous invoices
+<p>29/10/09 Pak Ricard: PO_PDFPurchOrder.php - Improvements in Purchase order print to include supplier part code
+<p>29/10/09 Pak Ricard: InventoryPlanning.php - Improvements to Inventory Planning reports
+<p>29/10/09 Pak Ricard: PDFInventoryPlanPageHeader.inc - Improvements to Inventory Planning reports
+<p>29/10/09 Pak Ricard: upgrade3.11-3.12.sql - Add in parameter for new config value, and additional asset manager fields
+<p>29/10/09 Pak Ricard: System Parameters.php - Add config parameter for default number of months to show in Cstomer Inquiry
+<p>29/10/09 Pak Ricard: CustomerInquiry.php - Add config parameter for default number of months to show
+<p>29/10/09 Tim: PrintCustTransPortrait.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: PDFStockLocTransfer.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: MRPPlannedPurchaseOrders.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: MRPShortages.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: PDFSockTransfer.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: InventoryQuantities.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: PrintSalesOrder_generic.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: PDFCustomerList.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: GLProfit_Loss.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: MRPReschedules.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: PrintCustOrder_generic.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: SalesAnalysis_UserDefined.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: BOMIndentedReverse.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: PDFLowGP.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: PDFGrn.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: PrintCustOrder.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: PrintCustTrans.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: InventoryPlanningPrefSupplier.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: BOMExtendedQty.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: GLTagProfit_Loss.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: PrintCustStatements.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: PDFQuotation.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: InventoryPlanning.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>29/10/09 Tim: InventoryValuation.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>28/10/09 Tim: OutstandingGRNs.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>28/10/09 Tim: PDFTopItems.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>28/10/09 Tim: StockCheck.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>28/10/09 Tim: GLBalanceSheet.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>28/10/09 Tim: PDFStockCheckComparison.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>28/10/09 Tim: StockDispatch.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>28/10/09 Tim: ReorderLevel.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>28/10/09 Tim: MRPPlannedWorkOrders.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>28/10/09 Tim: BOMIndented.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>28/10/09 Tim: GLTrialBalance.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>28/10/09 Tim: PrintCheque.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>28/10/09 Tim: PDFStockNegatives.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>28/10/09 Tim: MRPReports.php - Change to make the file name have a default extension of pdf as per suggestion from Javier
+<p>28/10/09 Harald Ringehahn - FixedAssetCategories.php - Correction to strings.
+<p>28/10/09 Uldis Nelsons - SelectOrderItems.php - Changes to Gettext functions removing concatenated strings
+<p>28/10/09 Gilles Deacur - SystemParameters.php - Correct Typo.
+<p>28/10/09 Pak Ricard: PDFTopItems.php Print out Top Sales Item to pdf.
+<p>28/10/09 Pak Ricard: PDFTopItemsHeader.php Print out Top Sales Item to pdf.
+<p>28/10/09 Pak Ricard: TopItems.php Improvements to conform with webERP coding standards
+<p>24/10/09 Phil: CustomerAllocations.php - the date of the allocation was converted to SQL format using the FormatDateForSQL function but the date was hard coded as d/m/Y - so the function failed - hard coded for SQL inserts Y-m-d
+<p>23/10/09 Phil: fix bug reported by Manny Neri - customer statements where the option to show settled transaction in the last month was activiated were actually showing all settled transactions - which was not ideal!!</p>
+<p>10/10/09 Tim: SuppInvGRNs.php - Properly align numbers in table
+<p>10/10/09 Tim: SupplierInquiry.php - Properly align numbers in table
+<p>10/10/09 Tim: PO_SelectPurchOrder.php - Properly align numbers in table
+<p>10/10/09 Tim: PO_Header.php - Javascript function to repost form when the status is changed
+<p>10/10/09 Tim: PDFBankingSummary.php - Select batch from drop down list
+<p>10/10/09 Tim: MRPDemands.php - Enable option to use Date picker to choose dates.
+<p>10/10/09 Tim: MRPCreateDemands.php - Enable option to use Date picker to choose dates.
+<p>10/10/09 Tim: GLAccountInquiry.php - Allow option to show all transactions
+<p>10/10/09 Tim: api_debtortransactions.php - Fix errors in checking for valid transaction date
+<p>08/10/09 Tim: RCFunctions.inc - Fix problem with database criteria statement
+<p>08/10/09 Tim: WorkOrderIssue.php - Allow for the selection of a date for the manual issue to work orders
+<p>08/10/09 Pak Ricard: Top sales items report
+<p>07/10/09 Phil: Fix PO_Items.php to enable changes to prices and weights 
+<p>03/10/09 Tim: upgrade3.11-3.11.1 - Enlarge language field in www_users for utf8 codeset
+<p>03/10/09 Tim: upgrade3.11-3.12.sql - Enlarge language field in www_users for utf8 codeset
+<p>03/10/09 Tim: weberp-new.sql - Enlarge language field in www_users for utf8 codeset
+<p>03/10/09 Tim: weberp-demo.sql - Enlarge language field in www_users for utf8 codeset
+<p>26/09/09 Pak Ricard: Fix to www_users.php branchcode and debtorno could only be 8 characters long should allow 10
+<p>25/09/09 Pak Ricard: Fix to Z_ChangeStockCode.php to change the stock code in more recent tables including MRP tables and locationtransfers tables
+<p>25/09/09 asv: Fix to Z_ImportStocks.php to error trap mbflag
+<p>21/09/09 Murray: PrintCustTransPotrait is fixed to print default bank account details on invoice, only if config parameter is set.  Tested to work printing single or multilple invoices, and credit notes confirmed as printing OK (no bank account details required).  No DB changes required.
+<p>20/09/09 Mark: StockDispatch.php - Changed to create loctransfers records
+<p>20/09/09 Phil: Fix SelectOrderItems.php - option to show frequently ordered items, fixed SQL to be generic using existing date functions in /includes/DateFunctions.inc and also the new parameter to allow up to 99 frequently ordered items to display, GP Percentage rounding problem resolved. Corrected indentation and brackets in line with style guide
+<p>20/09/09 Phil: SystemParameters.php - option to show up to 99 frequently ordered items
+<p>20/09/09 Phil: upgrade3.11-3.12.sql new config parameter for FrequentlyOrderedItems
+<p>18/09/09 Tim: weberp-new.sql - Reinstate missing foreign keys
+<p>18/09/09 Tim: weberp-demo.sql - Reinstate missing foreign keys
+<p>16/09/09 Tim: Stocks.php - Updates for Asset manager module
+<p>16/09/09 Tim: WWW_Users.php - Allow the showing of the asset manager module in user setup
+<p>16/09/09 Tim: index.php - Show new functionality on menu pages
+<p>16/09/09 Tim: PO_AuthoriseMyOrders.php - New script to show those orders a user can authorise
+<p>16/09/09 Tim: upgrade3.11-3.12.sql - Changes to www_users to show asset manager module
+<p>16/09/09 Tim: DefineJournalClass.php - Changes required for depreciation journals
+<p>16/09/09 Tim: GoodsReceived.php - Alterations for purchase of new assets, and some bug fixes
+<p>16/09/09 Tim: FixedAssetRegister.php - New script to list a fixed asset register
+<p>16/09/09 Tim: FixedAssetTransfer.php - New script to transfer assets between locations
+<p>16/09/09 Tim: FixedAssetLocations.php - New script to define fixed asset locations
+<p>16/09/09 Tim: FixedAssetJournal.php - New script to produce a depreciation journal
+<p>16/09/09 Tim: FixedAssetItems.php - New script to define individual Fixed Asset items
+<p>16/09/09 Tim: FixedAssetCategories.php - New script to define categories of Fixed Assets
 <p>15/09/09 Tim: PrintCustTransPortrait.php - Correct sql to show invoices
 <p>15/09/09 Tim: StockReOrderLevel.php - Show the correct number of decimal places for stock levels
 <p>15/09/09 Tim: SelectSalesOrder.php - Bug fixes and layout changes
 <p>15/09/09 Tim: PurchData.php - Show supplier unit of measure as a drop down list and various other layout changes
 <p>15/09/09 Tim: PricesBasedOnMarkup.php - Show text at top of page using help text style
-<p>15/09/09 Tim: PO_Header.php - Bug fixes and layout changes
+<p>15/09/09 Tim: PO_OrderDetails.php - Bug fixes and layout changes
 <p>15/09/09 Tim: upgrade3.11-3.12.sql - Add tables for asset manager and create extra field for currency decimal places to show
 <p>15/09/09 Tim: MiscFunctions.inc - Add functions to retrieve decimal places for stock items and cuurency codes
 <p>15/09/09 Tim: DateFunctions.inc - Various bug fixes and change to GetPeriod() function to allow periods to be created before the Prohibit date
