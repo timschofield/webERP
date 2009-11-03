@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.21 $ */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 
@@ -302,7 +302,7 @@ echo '<div class="page_help_text">'
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
-		$pdf->Stream();
+		$pdf->Output('GLBalanceSheet.pdf', 'I');
 	}
 	exit;
 } else {
