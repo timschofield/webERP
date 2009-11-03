@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity =11;
 
@@ -63,7 +63,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 	$FirstSegInGrp =0;
 	$SegGroup =0;
 
-	$fp = fopen($_SERVER['DOCUMENT_ROOT'] . "/$rootpath/$_SESSION['EDI_Incoming_Orders']/$OrderFile",'r');
+	$fp = fopen($_SERVER['DOCUMENT_ROOT'] .'/$rootpath/'.$_SESSION['EDI_Incoming_Orders'].'/'.$OrderFile,'r');
 
 	$SegID = 0;
 	$SegCounter =0;
@@ -78,7 +78,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 	while ($LineText = fgets($fp) AND $TryNextFile != True){ /* get each line of the order file */
 
 		$LineText = StripTrailingComma($LineText);
-		echo "<br>$LineText";
+		echo "<br>".$LineText;
 
 		if ($SegTag != substr($LineText,0,3)){
 			$SegCounter=1;
