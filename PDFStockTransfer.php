@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -74,7 +74,7 @@ if ($len<=20){
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 
-	$pdf->Stream();
+	$pdf->Output('StockTransfer.pdf', 'I');
 }
 
 
