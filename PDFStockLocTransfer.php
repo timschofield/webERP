@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity =1;
 include('includes/session.inc');
@@ -90,6 +90,6 @@ if ($len<=20){
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 
-	$pdf->Stream();
+	$pdf->Output('PDFStockLocTransfer.pdf', 'I');
 }
 ?>
