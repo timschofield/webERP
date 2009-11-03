@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -352,7 +352,7 @@ if (isset($_POST['PrintPDF'])){
 	} /*end while loop */
 
 
-	$pdfcode = $pdf->output();
+	$pdfcode = $pdf->output('PDFCustomerList.pdf', 'I');
 	$len = strlen($pdfcode);
 
       if ($len<=20){
@@ -371,7 +371,7 @@ if (isset($_POST['PrintPDF'])){
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
 
-		$pdf->Stream();
+		$pdf->Output('PDFCustomerList.pdf', 'I');
 
 	}
 	exit;
