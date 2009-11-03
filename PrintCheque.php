@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 5;
 
@@ -99,6 +99,6 @@ if ($len<=1){
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
-	$pdf->Stream();
+	$pdf->Output('PrintCheque.pdf', 'I');
 }
 ?>
