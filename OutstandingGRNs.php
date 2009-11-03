@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -148,7 +148,7 @@ If (isset($_POST['PrintPDF'])
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
 
-		$pdf->Stream();
+		$pdf->Output('OutstandingGRNs.pdf','I');
 	}
 } else { /*The option to print PDF was not hit */
 
