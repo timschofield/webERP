@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 11;
 
@@ -361,7 +361,7 @@ if (db_num_rows($LineItemsResult) > 0) {
 					'" . Date('Y-m-d') . "',
 					" . $PeriodNo . ",
 					" . $_SESSION['CompanyRecord']['grnact'] . ",
-					'" . $myrow['itemcode'] . ' ' ._('shipt cost') . ' ' .  number_format($ItemShipmentCost,2) . ' x ' . _('Qty invoiced') . ' ' . $myrow['totqtyinvoiced'] . "',
+					'" . $myrow['itemcode'] . ' ' ._('shipment cost') . ' ' .  number_format($ItemShipmentCost,2) . ' x ' . _('Qty invoiced') . ' ' . $myrow['totqtyinvoiced'] . "',
                                         " . ($Variance * $myrow['totqtyinvoiced']) . ")";
 
 			      $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The credit GL entry for the shipment variance posting for') . ' ' . $myrow['itemcode'] . ' ' . _('could not be inserted because');
