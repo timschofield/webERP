@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.42 $ */
+/* $Revision: 1.44 $ */
 
 $PageSecurity = 11;
 
@@ -522,8 +522,29 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 								$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
 								$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
 								$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
-//assetmanager								
-							/** end of handle stockserialitems records */
+								
+								/*Update fixed asset details */
+								$sql='select stocktype from stockcategory
+									 left join stockmaster on 
+									 stockcategory.categoryid=stockmaster.categoryid 
+									 where stockmaster.stockid="'.$OrderLine->StockID.'"';
+								$result=DB_query($sql, $db);
+								$myrow=DB_fetch_array($result);
+								if ($myrow['stocktype']=='A') {
+									$SQL = "INSERT INTO assetmanager 
+											VALUES (NULL,
+												'" . $OrderLine->StockID . "',
+												'" . $Item->BundleRef . "',
+												'',
+												".$Item->BundleQty*$OrderLine->Price.",
+												0,'".
+												$_POST['DefaultReceivedDate']."',0)";
+									$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
+									$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
+									$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+								}
+
+															/** end of handle stockserialitems records */
 
 							/** now insert the serial stock movement **/
 							$SQL = "INSERT INTO stockserialmoves (stockmoveno,
