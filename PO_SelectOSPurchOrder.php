@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 2;
 
@@ -81,7 +81,7 @@ if (isset($_POST['SearchParts'])) {
 				INNER JOIN purchorderdetails 
 					ON stockmaster.stockid=purchorderdetails.itemcode 
 			WHERE $completed
-			stockmaster.description " . LIKE . " '$SearchString' 
+			AND stockmaster.description " . LIKE . " '$SearchString' 
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "' 
 			GROUP BY stockmaster.stockid, 
 				stockmaster.description, 
@@ -138,7 +138,7 @@ if (isset($_POST['SearchParts'])) {
 if (!isset($OrderNumber) or $OrderNumber=='' ){
     echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
 	echo '<br><br>&nbsp;&nbsp;<a href="' . $rootpath . '/PO_Header.php?' .SID . '&NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
-    echo '<div class="centre">'._('order number') . ': <input type=text name="OrderNumber" MAXLENGTH =8 size=9>  ' . _('Into Stock Location') . ':<select name="StockLocation"> ';
+    echo '<div class="centre">'._('Order Number') . ': <input type=text name="OrderNumber" MAXLENGTH =8 size=9>  ' . _('Into Stock Location') . ':<select name="StockLocation"> ';
    	$sql = 'SELECT loccode, locationname FROM locations';
 	$resultStkLocs = DB_query($sql,$db);
 	while ($myrow=DB_fetch_array($resultStkLocs)){
