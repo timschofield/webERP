@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.38 $ */
+/* $Revision: 1.39 $ */
 
 $PageSecurity = 5;
 
@@ -233,7 +233,8 @@ if (isset($_POST['CommitBatch'])){
 	}
 
 	$PeriodNo = GetPeriod($_SESSION['PaymentDetail']->DatePaid,$db);
-
+    
+	
 	// first time through commit if supplier cheque then print it first
 	if ((!isset($_POST['ChequePrinted']))
 		AND (!isset($_POST['PaymentCancelled']))
