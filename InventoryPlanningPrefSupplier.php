@@ -130,7 +130,7 @@ if (isset($_POST['PrintPDF'])){
 
 	$line_height=12;
 
-	$pdf->addinfo('Subject',_('Inventory Planning Based On Lead Time Of Perferred Supplier'));
+	$pdf->addinfo('Subject',_('Inventory Planning Based On Lead Time Of Preferred Supplier'));
 
 	$PageNumber=1;
 	$line_height=12;
@@ -442,7 +442,7 @@ if (isset($_POST['PrintPDF'])){
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
 
-		$pdf->Stream();
+		$pdf->Output('InventoryPlanningPrefSupplier.pdf', 'I');
 
 	}
 	exit;
