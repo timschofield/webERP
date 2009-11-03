@@ -1,27 +1,45 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 3;
 include ('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
- 
+
 if (isset($_GET['BatchNo'])){
 	$_POST['BatchNo'] = $_GET['BatchNo'];
 }
 
 if (!isset($_POST['BatchNo'])){
- 
-     $title = _('Create PDF Print Out For A Batch Of Receipts');
-     include ('includes/header.inc');
-     echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
-     echo '<p><div class="centre">' . _('Enter the batch number of receipts to be printed') . ': <input type=text class=number name=BatchNo maxlength=6 size=6>';
-     echo "<br><input type=submit name='EnterBatchNo' VALUE='" . _('Create PDF') . "'></div>";
-     include ('includes/footer.inc');
-     exit;
+	$title = _('Create PDF Print Out For A Batch Of Receipts');
+	include ('includes/header.inc');
+
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' .
+		 $title . '" alt="">' . ' ' . $title . '';
+
+	$sql='SELECT DISTINCT 
+			transno, 
+			transdate 
+		FROM banktrans 
+		WHERE type=12
+		ORDER BY transno DESC';
+	$result=DB_query($sql, $db);
+
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '><br><table>';
+	echo '<tr><td>' . _('Select the batch number of receipts to be printed') . ':</td>';
+	echo '<td><select name=BatchNo>';
+	while ($myrow=DB_fetch_array($result)) {
+		echo '<option value="'.$myrow['transno'].'">'._('Batch') .' '. $myrow['transno'].' - '.ConvertSqlDate($myrow['transdate']).'</option>';
+	}
+	echo '</select></td></tr></table>';
+	echo "<br><div class='centre'><input type=submit name='EnterBatchNo' VALUE='" . _('Create PDF') . "'></div></form>";
+
+	include ('includes/footer.inc');
+	exit;
 }
 
-$SQL= 'SELECT bankaccountname,
+if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
+	$SQL= 'SELECT bankaccountname,
 		bankaccountnumber,
 		ref,
 		transdate,
@@ -36,14 +54,14 @@ $SQL= 'SELECT bankaccountname,
 	AND banktrans.transno=' . $_POST['BatchNo'] . '
 	AND banktrans.type=12';
 
-$ErrMsg = _('An error occurred getting the header information about the receipt batch number') . ' ' . $_POST['BatchNo'];
-$DbgMsg = _('The SQL used to get the receipt header information that failed was');
-$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+	$ErrMsg = _('An error occurred getting the header information about the receipt batch number') . ' ' . $_POST['BatchNo'];
+	$DbgMsg = _('The SQL used to get the receipt header information that failed was');
+	$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
-if (DB_num_rows($Result)==0){
-	$title = _('Create PDF Print-out For A Batch Of Receipts');
-	include ('includes/header.inc');
-	prnMsg(_('The receipt batch number') . ' ' . $_POST['BatchNo'] . ' ' . _('was not found in the database') . '. ' . _('Please try again selecting a different batch number'),'error');
+	if (DB_num_rows($Result)==0){
+		$title = _('Create PDF Print-out For A Batch Of Receipts');
+		include ('includes/header.inc');
+		prnMsg(_('The receipt batch number') . ' ' . $_POST['BatchNo'] . ' ' . _('was not found in the database') . '. ' . _('Please try again selecting a different batch number'),'error');
 	include('includes/footer.inc');
 	exit;
 }
@@ -94,10 +112,10 @@ if (DB_error_no($db)!=0){
 	include ('includes/header.inc');
 	prnMsg(_('An error occurred getting the GL receipts for batch number') . ' ' . $_POST['BatchNo'],'error');
 	if ($debug==1){
-        	prnMsg(_('The SQL used to get the GL receipt information that failed was') . ':<br>' . $SQL,'error');
+		prnMsg(_('The SQL used to get the GL receipt information that failed was') . ':<br>' . $SQL,'error');
 	}
 	include('includes/footer.inc');
-  	exit;
+	exit;
 }
 
 include('includes/PDFStarter.php');
@@ -117,18 +135,18 @@ include ('includes/PDFBankingSummaryPageHeader.inc');
 
 while ($myrow=DB_fetch_array($CustRecs)){
 
-      	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format(-$myrow['ovamount'],2), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format(-$myrow['ovamount'],2), 'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,150,$FontSize,$myrow['name'], 'left');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+215,$YPos,100,$FontSize,$myrow['invtext'], 'left');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+315,$YPos,100,$FontSize,$myrow['reference'], 'left');
 
-      $YPos -= ($line_height);
-      $TotalBanked = $TotalBanked - $myrow['ovamount'];
+	$YPos -= ($line_height);
+	$TotalBanked = $TotalBanked - $myrow['ovamount'];
 
-      if ($YPos - (2 *$line_height) < $Bottom_Margin){
-          /*Then set up a new page */
-              include ('includes/PDFBankingSummaryPageHeader.inc');
-      } /*end of new page header  */
+	if ($YPos - (2 *$line_height) < $Bottom_Margin){
+		/*Then set up a new page */
+		include ('includes/PDFBankingSummaryPageHeader.inc');
+	} /*end of new page header  */
 } /* end of while there are customer receipts in the batch to print */
 
 /* Right now print out the GL receipt entries in the batch */
@@ -136,19 +154,18 @@ while ($myrow=DB_fetch_array($GLRecs)){
 
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format((-$myrow['amount']*$ExRate*$FunctionalExRate),2), 'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,$myrow['narrative'], 'left');
-        $YPos -= ($line_height);
-        $TotalBanked = $TotalBanked + (-$myrow['amount']*$ExRate);
+	$YPos -= ($line_height);
+	$TotalBanked = $TotalBanked + (-$myrow['amount']*$ExRate);
 
-      if ($YPos - (2 *$line_height) < $Bottom_Margin){
-          /*Then set up a new page */
-              include ('includes/PDFBankingSummaryPageHeader.inc');
-      } /*end of new page header  */
+	if ($YPos - (2 *$line_height) < $Bottom_Margin){
+		/*Then set up a new page */
+		include ('includes/PDFBankingSummaryPageHeader.inc');
+	} /*end of new page header  */
 } /* end of while there are GL receipts in the batch to print */
 
 $YPos-=$line_height;
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format($TotalBanked,2), 'right');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,_('TOTAL') . ' ' . $Currency . ' ' . _('BANKED'), 'left');
-
 
 $buf = $pdf->output();
 $len = strlen($buf);
@@ -159,6 +176,14 @@ header('Expires: 0');
 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 header('Pragma: public');
 
-$pdf->stream()
+$pdf->stream();
+} else {
+	$title = _('Create PDF Print Out For A Batch Of Receipts');
+	include ('includes/header.inc');
+	echo '<br>';
+	prnMsg(_('You must first enter a batch number that you want to print'),'warning');
+	echo '<br><div class="centre"><a href="'.$_SERVER['PHP_SELF'].'">'._('Return to Entry screen').'</a>';
+	include ('includes/footer.inc');
+}
 
 ?>
