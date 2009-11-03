@@ -7,10 +7,8 @@ $PageSecurity = 4;
 include('includes/session.inc');
 
 $title = _('Supplier Purchasing Data');
+
 include('includes/header.inc');
-echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Purchasing Data') . '" alt="">' . ' ' . _('Purchasing Data') . '</div>';
-echo '<div class="page_help_text">'
-. _('Maintain Purchasing Data for Inventory Items.') . '</div>';
 
 if (isset($_GET['SupplierID'])){
 	$SupplierID = trim(strtoupper($_GET['SupplierID']));
@@ -24,7 +22,7 @@ if (isset($_GET['StockID'])){
 	$StockID = trim(strtoupper($_POST['StockID']));
 }
 
-echo "<div class='centre'><a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><br>';
+echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><br>';
 
 if( isset($_POST['SupplierDescription']) ) {
 	$_POST['SupplierDescription'] = trim($_POST['SupplierDescription']);
