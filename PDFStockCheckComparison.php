@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.17 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -194,6 +194,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	$CheckedItems = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 
 	if (DB_num_rows($CheckedItems)==0){
+		$title= _('Inventory Comparison Comparison Report');
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg(_('There is no inventory check data to report on'), 'warn');
@@ -322,7 +323,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
 
-		$pdf->Stream();
+		$pdf->Output('StockCheckComparison.pdf', 'I');
 
 	}
 
@@ -339,7 +340,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 } else { /*The option to print PDF was not hit */
 
-	$title= _('Inventory Comparison Comparison Report');
+	$title= _('Inventory Comparison Report');
 	include('includes/header.inc');
 
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="POST"><table>';
