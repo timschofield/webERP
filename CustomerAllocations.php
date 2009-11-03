@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.28 $ */
+/* $Revision: 1.30 $ */
 
 /*
 Call this page with:
@@ -113,7 +113,7 @@ if (isset($_POST['UpdateDatabase'])) {
 							amt,
 							transid_allocfrom,
 							transid_allocto
-							) VALUES ('" . FormatDateForSQL(date('d/m/Y')) . "',
+							) VALUES ('" . date('Y-m-d') . "',
 							" . $AllocnItem->AllocAmt . ',
 							' . $_SESSION['Alloc']->AllocTrans . ',
 							' . $AllocnItem->ID . ')';
