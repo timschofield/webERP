@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.43 $ */
+/* $Revision: 1.44 $ */
 
 $PageSecurity = 2;
 
@@ -9,7 +9,7 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 if (!isset($_SESSION['SupplierID'])){
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Suppliers') . '';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Suppliers') . '';
 }
 
 // only get geocode information if integration is on, and supplier has been selected
@@ -191,6 +191,7 @@ if (isset($_SESSION['SupplierID'])){
 	wikiLink('Supplier', $_SESSION['SupplierID']);	
 	echo '<br>';
 	echo "<br><a href='$rootpath/Shipt_Select.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Search / Modify / Close Shipments') . '</a>';
+	echo "<br><a href='$rootpath/SuppPriceList.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Supplier Price List') . '</a>';
 	echo '</td><td VALIGN=TOP class="menu_group_items">'; /* Supplier Transactions */
 	echo "<a href=\"$rootpath/SupplierInvoice.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Suppliers Invoice') . '</a><br>';
 	echo "<a href=\"$rootpath/SupplierCredit.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Suppliers Credit Note') . '</a><br>';
