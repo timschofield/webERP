@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -24,9 +24,13 @@ if(!isset($_GET['CustomerID']) AND !isset($_SESSION['CustomerID'])){
 	$CustomerID = $_SESSION['CustomerID'];
 }
 
-
 if (!isset($_POST['TransAfterDate'])) {
-	$_POST['TransAfterDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m')-6,Date('d'),Date('Y')));
+	$sql = 'SELECT confvalue 
+			FROM `config` 
+			WHERE confname ="numberOfMonthMustBeShown"';
+	$result = DB_query($sql,$db,$ErrMsg);
+	$row = DB_fetch_array($result);
+	$_POST['TransAfterDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m')-$row['confvalue'],Date('d'),Date('Y')));
 }
 
 $SQL = 'SELECT debtorsmaster.name,
