@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 // SalesInquiry.php
 // Inquiry on Sales Orders - If Date Type is Order Date, salesorderdetails is the main table
 // If Date Type is Invoice, stockmoves is the main table
@@ -1193,7 +1193,7 @@ function TempStockmoves(&$db)
 	          WHERE (stockmoves.type='10' OR stockmoves.type='11') 
 	          AND stockmoves.trandate >='" . $fromdate . 
 			  "' AND stockmoves.trandate <='" . $todate . "'";
-	$ErrMsg = _('The SQL to to create twmpstockmoves failed with the message');
+	$ErrMsg = _('The SQL to create temporary stockmoves failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
 	$sql = 'UPDATE tempstockmoves, stockmoves
