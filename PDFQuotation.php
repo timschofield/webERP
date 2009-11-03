@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 2;
 
@@ -223,7 +223,7 @@ if (DB_num_rows($result)>0){
 } /*end if there are line details to show on the quotation*/
 
 
-$pdfcode = $pdf->output();
+$pdfcode = $pdf->output('PDFQuotation.pdf', 'I');
 $len = strlen($pdfcode);
 if ($len<=20){
         $title = _('Print Quotation Error');
@@ -241,6 +241,6 @@ if ($len<=20){
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 //echo 'here';
-	$pdf->Stream();
+	$pdf->Output('PDFQuotation.pdf', 'I');
 }
 ?>
