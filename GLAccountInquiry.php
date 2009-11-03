@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 
 $PageSecurity = 8;
@@ -55,7 +55,7 @@ echo '<table>
 		ORDER BY tagref';
 
 	$result=DB_query($SQL,$db);
-	echo '<option value=0>0 - None';
+	echo '<option value=0>0 - '._('All tags');
 	while ($myrow=DB_fetch_array($result)){
     	if (isset($_POST['tag']) and $_POST['tag']==$myrow["tagref"]){
 		echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
@@ -110,7 +110,7 @@ if (isset($_POST['Show'])){
 	$FirstPeriodSelected = min($SelectedPeriod);
 	$LastPeriodSelected = max($SelectedPeriod);
 
-	if ($_POST['tag']=='all') {
+	if ($_POST['tag']==0) {
  		$sql= "SELECT type,
 			typename,
 			gltrans.typeno,
