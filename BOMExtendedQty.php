@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.7 $ */
 // BOMExtendedQty.php - Quantiy Extended Bill of Materials
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -9,8 +9,8 @@ If (isset($_POST['PrintPDF'])) {
 	include('includes/PDFStarter.php');
 
 	$FontSize=9;
-	$pdf->addinfo('Title',_('Quantiy Extended BOM Listing'));
-	$pdf->addinfo('Subject',_('Quantiy Extended BOM Listing'));
+	$pdf->addinfo('Title',_('Quantity Extended BOM Listing'));
+	$pdf->addinfo('Subject',_('Quantity Extended BOM Listing'));
 
 	$PageNumber=1;
 	$line_height=12;
@@ -150,7 +150,7 @@ If (isset($_POST['PrintPDF'])) {
 	} // End of while $componentctr > 0
 
 	if (DB_error_no($db) !=0) {
-	  $title = _('Quantiy Extended BOM Listing') . ' - ' . _('Problem Report');
+	  $title = _('Quantity Extended BOM Listing') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The Quantiy Extended BOM Listing could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
 	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
@@ -266,12 +266,12 @@ If (isset($_POST['PrintPDF'])) {
 			header('Cache-Control: private, post-check=0, pre-check=0');
 			header('Pragma: public');
 	
-			$pdf->Stream();
+			$pdf->Output('BOMExtendedQty', 'I');
 	}
 	
 } else { /*The option to print PDF was not hit so display form */
 
-	$title=_('Extended Quantity BOM Listing');
+	$title=_('Quantity Extended BOM Listing');
 	include('includes/header.inc');
 
 	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
