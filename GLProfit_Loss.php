@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 8;
 
@@ -492,7 +492,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
-		$pdf->Stream();
+		$pdf->Output('GLProfit_Loss.pdf', 'I');
 	}
 	exit;
 	
