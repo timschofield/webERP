@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.34 $ */
+/* $Revision: 1.39 $ */
 
 $PageSecurity = 1;
 
@@ -74,91 +74,93 @@ If (isset($PrintPDF)
 	notice that salesorder record must be present to print the invoice purging of sales orders will
 	nobble the invoice reprints */
 
-// check if the user has set a default bank account for invoices, if not leave it blank
+	// check if the user has set a default bank account for invoices, if not leave it blank
 		$sql = 'SELECT bankaccounts.invoice, bankaccounts.bankaccountnumber, bankaccounts.bankaccountcode
 				from bankaccounts
 				WHERE bankaccounts.invoice = 1';
 		$result=DB_query($sql,$db,'','',false,false);
-	        	if (DB_error_no($db)!=1) {
-		if (DB_num_rows($result)==1){
-                $myrow = DB_fetch_array($result);
-                $DefaultBankAccountNumber = _('Account:') .' ' .$myrow['bankaccountnumber'];
-                $DefaultBankAccountCode =  _('Bank Code:') .' ' .$myrow['bankaccountcode'];
-		}}
+		if (DB_error_no($db)!=1) {
+			if (DB_num_rows($result)==1){
+				$myrow = DB_fetch_array($result);
+				$DefaultBankAccountNumber = _('Account:') .' ' .$myrow['bankaccountnumber'];
+				$DefaultBankAccountCode =  _('Bank Code:') .' ' .$myrow['bankaccountcode'];
+			}
+		}
 // gather the invoice data
+
 		if ($InvOrCredit=='Invoice') {
-			$sql = 'SELECT debtortrans.trandate,
-				debtortrans.ovamount,
-				debtortrans.ovdiscount,
-				debtortrans.ovfreight,
-				debtortrans.ovgst,
-				debtortrans.rate,
-				debtortrans.invtext,
-				debtortrans.consignment,
-				debtorsmaster.name,
-				debtorsmaster.address1,
-				debtorsmaster.address2,
-				debtorsmaster.address3,
-				debtorsmaster.address4,
-				debtorsmaster.address5,
-				debtorsmaster.address6,
-				debtorsmaster.currcode,
-				debtorsmaster.invaddrbranch,
-				debtorsmaster.taxref,
-				paymentterms.terms,
-				salesorders.deliverto,
-				salesorders.deladd1,
-				salesorders.deladd2,
-				salesorders.deladd3,
-				salesorders.deladd4,
-				salesorders.deladd5,
-				salesorders.deladd6,
-				salesorders.customerref,
-				salesorders.orderno,
-				salesorders.orddate,
-				locations.locationname,
-				shippers.shippername,
-				custbranch.brname,
-				custbranch.braddress1,
-				custbranch.braddress2,
-				custbranch.braddress3,
-				custbranch.braddress4,
-				custbranch.braddress5,
-				custbranch.braddress6,
-				custbranch.brpostaddr1,
-				custbranch.brpostaddr2,
-				custbranch.brpostaddr3,
-				custbranch.brpostaddr4,
-				custbranch.brpostaddr5,
-				custbranch.brpostaddr6,
-				salesman.salesmanname,
-				debtortrans.debtorno,
-				debtortrans.branchcode
-			FROM debtortrans,
-				debtorsmaster,
-				custbranch,
-				salesorders,
-				shippers,
-				salesman,
-				locations,
-				paymentterms
-			WHERE debtortrans.order_ = salesorders.orderno
-			AND debtortrans.type=10
-			AND debtortrans.transno=' . $FromTransNo . '
-			AND debtortrans.shipvia=shippers.shipper_id
-			AND debtortrans.debtorno=debtorsmaster.debtorno
-			AND debtorsmaster.paymentterms=paymentterms.termsindicator
-			AND debtortrans.debtorno=custbranch.debtorno
-			AND debtortrans.branchcode=custbranch.branchcode
-			AND custbranch.salesman=salesman.salesmancode
-			AND salesorders.fromstkloc=locations.loccode';
+		$sql = 'SELECT debtortrans.trandate,
+					debtortrans.ovamount,
+					debtortrans.ovdiscount,
+					debtortrans.ovfreight,
+					debtortrans.ovgst,
+					debtortrans.rate,
+					debtortrans.invtext,
+					debtortrans.consignment,
+					debtorsmaster.name,
+					debtorsmaster.address1,
+					debtorsmaster.address2,
+					debtorsmaster.address3,
+					debtorsmaster.address4,
+					debtorsmaster.address5,
+					debtorsmaster.address6,
+					debtorsmaster.currcode,
+					debtorsmaster.invaddrbranch,
+					debtorsmaster.taxref,
+					paymentterms.terms,
+					salesorders.deliverto,
+					salesorders.deladd1,
+					salesorders.deladd2,
+					salesorders.deladd3,
+					salesorders.deladd4,
+					salesorders.deladd5,
+					salesorders.deladd6,
+					salesorders.customerref,
+					salesorders.orderno,
+					salesorders.orddate,
+					locations.locationname,
+					shippers.shippername,
+					custbranch.brname,
+					custbranch.braddress1,
+					custbranch.braddress2,
+					custbranch.braddress3,
+					custbranch.braddress4,
+					custbranch.braddress5,
+					custbranch.braddress6,
+					custbranch.brpostaddr1,
+					custbranch.brpostaddr2,
+					custbranch.brpostaddr3,
+					custbranch.brpostaddr4,
+					custbranch.brpostaddr5,
+					custbranch.brpostaddr6,
+					salesman.salesmanname,
+					debtortrans.debtorno,
+					debtortrans.branchcode
+				FROM debtortrans,
+					debtorsmaster,
+					custbranch,
+					salesorders,
+					shippers,
+					salesman,
+					locations,
+					paymentterms
+				WHERE debtortrans.order_ = salesorders.orderno
+				AND debtortrans.type=10
+				AND debtortrans.transno=' . $FromTransNo . '
+				AND debtortrans.shipvia=shippers.shipper_id
+				AND debtortrans.debtorno=debtorsmaster.debtorno
+				AND debtorsmaster.paymentterms=paymentterms.termsindicator
+				AND debtortrans.debtorno=custbranch.debtorno
+				AND debtortrans.branchcode=custbranch.branchcode
+				AND custbranch.salesman=salesman.salesmancode
+				AND salesorders.fromstkloc=locations.loccode';
 
 		if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No'){
 			$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
 		}
 	} else {
 
-		$sql = 'SELECT debtortrans.trandate,
+	$sql = 'SELECT debtortrans.trandate,
 				debtortrans.ovamount,
 				debtortrans.ovdiscount,
 				debtortrans.ovfreight,
@@ -208,7 +210,7 @@ If (isset($PrintPDF)
 		if ($_POST['PrintEDI']=='No'){
 			$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
 		}
-	   }
+	}
 
 	   $result=DB_query($sql,$db,'','',false,false);
 
@@ -235,21 +237,18 @@ If (isset($PrintPDF)
 				stockmaster.description,
 				stockmaster.serialised,
 				stockmaster.controlled,
-				-stockmoves.qty as quantity,
+				-stockmoves.qty as Quantity,
 				stockmoves.narrative,
 				stockmaster.units,
 				stockmaster.decimalplaces,
-			 	stockmoves.discountpercent,
-				((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . '* -stockmoves.qty) AS fxnet,
-				(stockmoves.price * ' . $ExchRate . ') AS fxprice,
-				stockmoves.narrative,
-				stockmaster.units
-				FROM stockmoves,
+			 	stockmoves.discountpercent,	
+				stockmoves.narrative
+			FROM stockmoves,
 					stockmaster
-				WHERE stockmoves.stockid = stockmaster.stockid
-				AND stockmoves.type=10
-				AND stockmoves.transno=' . $FromTransNo . '
-				AND stockmoves.show_on_inv_crds=1';
+			WHERE stockmoves.stockid = stockmaster.stockid
+			AND stockmoves.type=10
+			AND stockmoves.transno = '.$FromTransNo.'
+			AND stockmoves.show_on_inv_crds=1';
 		} else {
 		/* only credit notes to be retrieved */
 			 $sql = 'SELECT  stockmoves.stkmoveno,
@@ -257,15 +256,12 @@ If (isset($PrintPDF)
 						stockmaster.description,
 						stockmaster.serialised,
 						stockmaster.controlled,
-						stockmoves.qty as quantity,
+						stockmoves.qty as Quantity,
 						stockmoves.narrative,
 						stockmaster.units,
 						stockmaster.decimalplaces,
-			 			stockmoves.discountpercent,
-						((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . ' * stockmoves.qty) AS fxnet,
-						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
+			 			stockmoves.discountpercent,						
 						stockmoves.narrative,
-						stockmaster.units
 					FROM stockmoves,
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
@@ -286,6 +282,7 @@ If (isset($PrintPDF)
 			exit;
 		}
 
+		
 		if (DB_num_rows($result)>0){
 
 			$FontSize = 10;
@@ -294,26 +291,41 @@ If (isset($PrintPDF)
 			include('includes/PDFTransPageHeaderPortrait.inc');
 			$FirstPage = False;
 
-		        while ($myrow2=DB_fetch_array($result)){
-
-				$DisplayPrice = number_format($myrow2['fxprice'],2);
-				$DisplayQty = number_format($myrow2['quantity'],2);
-				$DisplayNet = number_format($myrow2['fxnet'],2);
-
+		    while ($myrow2=DB_fetch_array($result)){
+				
+				/*search the unit price*/
+				$sql='SELECT 	salesorderdetails.unitprice
+					  FROM   	salesorderdetails, 
+								debtortrans 
+					  WHERE 	debtortrans.transno = ' . $FromTransNo . '
+					  AND 		debtortrans.order_ = salesorderdetails.orderno
+					  AND 		salesorderdetails.stkcode = "'.$myrow2['stockid'].'"';
+					  
+				$resultp=DB_query($sql,$db);
+				$myrow3=DB_fetch_array($resultp);
+				
+				/*check the price after discount*/
 				if ($myrow2['discountpercent']==0){
 					$DisplayDiscount ='';
+					$DisplayNet=number_format(($myrow3['unitprice'] * $myrow2['Quantity']),2);
 				} else {
-					$DisplayDiscount = number_format($myrow2['discountpercent']*100,2) . '%';
+					$DisplayDiscount =number_format($myrow2['discountpercent']*100,2);
+					$DiscountPrice=$myrow2['discountpercent'] * $myrow3['unitprice'];
+					$DisplayNet=number_format((($myrow3['unitprice'] - $DiscountPrice) * $myrow2['Quantity']),2);
 				}
+					
+								
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos,71,$FontSize,$myrow2['stockid']);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+80,$YPos,186,$FontSize,$myrow2['description']);
 				$lines=1;
+				
 				while ($LeftOvers!='') {
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+80,$YPos-(10*$lines),186,$FontSize,$LeftOvers);
 					$lines++;
 				}
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+270,$YPos,76,$FontSize,$DisplayPrice,'right');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,36,$FontSize,$DisplayQty,'right');
+				
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+270,$YPos,76,$FontSize,number_format($myrow3['unitprice'],2),'right');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,36,$FontSize,number_format($myrow2['Quantity'],2),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+390,$YPos,26,$FontSize,$myrow2['units'],'center');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+420,$YPos,26,$FontSize,$DisplayDiscount,'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+450,$YPos,72,$FontSize,$DisplayNet,'right');
@@ -321,8 +333,8 @@ If (isset($PrintPDF)
 				if ($myrow2['controlled']==1){
 
 					$GetControlMovts = DB_query('SELECT moveqty, serialno
-									FROM stockserialmoves
-									WHERE stockmoveno=' . $myrow2['stkmoveno'],$db);
+												 FROM   stockserialmoves
+												 WHERE  stockmoveno=' . $myrow2['stkmoveno'],$db);
 
 					if ($myrow2['serialised']==1){
 						while ($ControlledMovtRow = DB_fetch_array($GetControlMovts)){
@@ -375,7 +387,8 @@ If (isset($PrintPDF)
 					PrintLinesToBottom ();
 					include ('includes/PDFTransPageHeaderPortrait.inc');
 				} //end if need a new page headed up
-			} //end while there are line items to print out
+			} /*end while there are line items to print out*/			
+			
 		} /*end if there are stock movements to show on the invoice or credit note*/
 
 		$YPos -= $line_height;
@@ -598,7 +611,7 @@ while ($row=DB_fetch_array($result)){
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
 
-		$pdf->Stream();
+		$pdf->Output('PrintCustTransPortrait.pdf', 'I');
 	}
 
 } else { /*The option to print PDF was not hit */
@@ -852,13 +865,13 @@ while ($row=DB_fetch_array($result)){
 
 				   $sql ='SELECT stockmoves.stockid,
 				   		stockmaster.description,
-						-stockmoves.qty as quantity,
+						-stockmoves.qty as Quantity,
 						stockmoves.discountpercent,
 						((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . '* -stockmoves.qty) AS fxnet,
 						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
 						stockmoves.narrative,
 						stockmaster.units,
-						stockmaster.decimalplaces
+						stockmaster.decimalplaces,
 					FROM stockmoves,
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
@@ -882,13 +895,14 @@ while ($row=DB_fetch_array($result)){
 				   		<td bgcolor='#EEEEEE'>" . ConvertSQLDate($myrow['trandate']) . "</td>
 						<td bgcolor='#EEEEEE'>" . $myrow['salesmanname'] . '</td>
 					</tr></table>';
-
+				   
+				   
 				   $sql ='SELECT stockmoves.stockid,
 				   		stockmaster.description,
-						stockmoves.qty as quantity,
+						stockmoves.qty as Quantity,
 						stockmoves.discountpercent, ((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . ' * stockmoves.qty) AS fxnet,
 						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
-						stockmaster.units
+						stockmaster.units,
 					FROM stockmoves,
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
@@ -934,8 +948,8 @@ while ($row=DB_fetch_array($result)){
 
 					      echo $RowStarter;
 
-					      $DisplayPrice = number_format($myrow2['fxprice'],2);
-					      $DisplayQty = number_format($myrow2['quantity'],2);
+					      $DisplayPrice =number_format($myrow2['fxprice'],2);
+					      $DisplayQty = number_format($myrow2['Quantity'],2);
 					      $DisplayNet = number_format($myrow2['fxnet'],2);
 
 					      if ($myrow2['discountpercent']==0){
