@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.84 $ */
+/* $Revision: 1.89 $ */
 
 
 $PageSecurity = 1;
@@ -9,9 +9,9 @@ include('includes/session.inc');
 $title=_('Main Menu');
 
 /*The module link codes are hard coded in a switch statement below to determine the options to show for each tab */
-$ModuleLink = array('orders', 'AR', 'AP', 'PO', 'stock', 'manuf', 'GL', 'system');
+$ModuleLink = array('orders', 'AR', 'AP', 'PO', 'stock', 'manuf', 'GL', 'FA', 'system');
 /*The headings showing on the tabs accross the main index used also in WWW_Users for defining what should be visible to the user */
-$ModuleList = array(_('Sales'), _('Receivables'), _('Payables'), _('Purchases'), _('Inventory'), _('Manufacturing'), _('General Ledger'), _('Setup'));
+$ModuleList = array(_('Sales'), _('Receivables'), _('Payables'), _('Purchases'), _('Inventory'), _('Manufacturing'), _('General Ledger'), _('Asset Manager'), _('Setup'));
 
 if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when the user clicks on a tab */
 	$_SESSION['Module'] = $_GET['Application'];
@@ -149,7 +149,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PDFOrderStatus.php?' . SID . "'><LI>" . _('Order Status Reports (Print)') . '</LI></a>'; ?>
+								<?php echo "<a href='" . $rootpath . '/PDFOrderStatus.php?' . SID . "'><LI>" . _('Order Status Report') . '</LI></a>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -171,6 +171,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . '/SalesInquiry.php?' . SID . "'><LI>" . _('Sales Order Detail Or Summary Inquiries') . '</LI></a>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/TopItems.php?' . SID . "'><LI>" . _('Top Sales Items Report') . '</LI></a>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -428,7 +433,12 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PO_Header.php?&NewOrder=Yes' . SID . "'><LI>" . _('Add A Purchase Order') . '</LI></a>'; ?>
+								<?php echo "<a href='" . $rootpath . '/PO_Header.php?&NewOrder=Yes' . SID . "'><LI>" . _('Add Purchase Order') . '</LI></a>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/PO_AuthoriseMyOrders.php?' . SID . "'><LI>" . _('Orders to Authorise') . "</LI></a>"; ?>
 							</td>
 							</tr>
 							<tr>
@@ -555,20 +565,20 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</td>
 							</tr>
 							<tr>
-                                                        <td class="menu_group_item">
-                                                                <?php echo "<a href='" . $rootpath . '/InventoryQuantities.php?' . SID . "'><LI>" . _('Inventory Quantities') . '</LI></a>'; ?>
-                                                        </td>
-                                                        </tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/InventoryQuantities.php?' . SID . "'><LI>" . _('Inventory Quantities') . '</LI></a>'; ?>
+							</td>
+							</tr>
 							<tr>
-                                                        <td class="menu_group_item">
-                                                                <?php echo "<a href='" . $rootpath . '/ReorderLevel.php?' . SID . "'><LI>" . _('Reorder Level') . '</LI></a>'; ?>
-                                                        </td>
-                                                        </tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/ReorderLevel.php?' . SID . "'><LI>" . _('Reorder Level') . '</LI></a>'; ?>
+							</td>
+							</tr>
 							<tr>
-                                                        <td class="menu_group_item">
-                                                                <?php echo "<a href='" . $rootpath . '/StockDispatch.php?' . SID . "'><LI>" . _('Stock Dispatch') . '</LI></a>'; ?>
-                                                        </td>
-                                                        </tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/StockDispatch.php?' . SID . "'><LI>" . _('Stock Dispatch') . '</LI></a>'; ?>
+							</td>
+							</tr>
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . '/InventoryValuation.php?' . SID . "'><LI>" . _('Inventory Valuation Report') . '</LI></a>'; ?>
@@ -646,6 +656,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . '/PricesBasedOnMarkUp.php?' . SID . "'><LI>" . _('Add or Update Prices Based On Costs') . '</LI></a>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/ReorderLevelLocation.php?' . SID . "'><LI>" . _('Reorder Level By Category/Location') . '</LI></a>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -993,7 +1008,6 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 								<?php echo "<a href='" . $rootpath . '/StockCategories.php?' . SID . "'><LI>" . _('Inventory Categories Maintenance') . '</LI></a>'; ?>
 							</td>
 							</tr>
-							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . '/Locations.php?' . SID . "'><LI>" . _('Inventory Locations Maintenance') . '</LI></a>'; ?>
 							</td>
@@ -1154,7 +1168,69 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 			</tr>
 		</table>
 	<?php
-		break;
+	break;
+	Case 'FA': //General Ledger
+
+	?>
+		<table width="100%">
+			<tr>
+			<td valign="top" class="menu_group_area">
+				<table width="100%">		<!-- Fixed Asset Option Headings-->
+					<?php OptionHeadings(); ?>
+					<tr>
+					<td class="menu_group_items"> <!-- General transactions options -->
+						<table width="100%" class="table_index">
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/FixedAssetTransfer.php?' . SID . "'><LI>" . _('Change Asset Location') . '</LI></a>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/FixedAssetJournal.php?NewJournal=Yes' . SID . "'><LI>" . _('Depreciation Journal') . '</LI></a>'; ?>
+							</td>
+							</tr>
+						</table>
+					</td>
+					<td class="menu_group_items"> <!-- General transactions options -->
+						<table width="100%" class="table_index">
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/FixedAssetRegister.php?' . SID . "'><LI>" . _('Asset Register') . '</LI></a>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo GetRptLinks('fa'); ?>
+							</td>
+							</tr>
+						</table>
+					</td>
+					<td class="menu_group_items"> <!-- General transactions options -->
+						<table width="100%" class="table_index">
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/FixedAssetCategories.php?' . SID . "'><LI>" . _('Asset Categories Maintenance') . '</LI></a>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/FixedAssetItems.php?' . SID . "'><LI>" . _('Add a new Asset Type') . '</LI></a>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/FixedAssetLocations.php?' . SID . "'><LI>" . _('Add or Maintain Asset Locations') . '</LI></a>'; ?>
+							</td>
+							</tr>
+						</table>
+					</td>
+				</table>
+			</td>
+			</tr>
+		</table>
+<?php 
+	break;
 	} //end of module switch
 } /* end of if security allows to see the full menu */
 
