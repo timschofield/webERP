@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -118,7 +118,7 @@ if (isset($_POST['PrintPDF'])) {
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
 
-		$pdf->Stream();
+		$pdf->Output('PDFLowGP.pdf', 'I');
 
 	}
 } else { /*The option to print PDF was not hit */
