@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.17 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -37,6 +37,10 @@ If (isset($_POST['PrintPDF'])
 			GROUP BY stockmaster.categoryid,
 				stockcategory.categorydescription,
 				unitcost,
+				stockmaster.units,
+				stockmaster.materialcost,
+				stockmaster.labourcost,
+				stockmaster.overheadcost,
 				stockmaster.stockid,
 				stockmaster.description
 			HAVING SUM(locstock.quantity)!=0
@@ -191,7 +195,7 @@ If (isset($_POST['PrintPDF'])
 		header('Cache-Control: private, post-check=0, pre-check=0');
 		header('Pragma: public');
 
-		$pdf->Stream();
+		$pdf->Output('InventoryValuation.pdf', 'I');
 
 	}
 } else { /*The option to print PDF was not hit */
