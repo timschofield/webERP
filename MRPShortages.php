@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 // MRPShortages.php - Report of parts with demand greater than supply as determined by MRP
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -197,7 +197,7 @@ If (isset($_POST['PrintPDF'])) {
 			header('Cache-Control: private, post-check=0, pre-check=0');
 			header('Pragma: public');
 	
-			$pdf->Stream();
+			$pdf->Output('MRPShortages.pdf', 'I');
 	}
 	
 } else { /*The option to print PDF was not hit so display form */
