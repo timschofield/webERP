@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 // MRPReschedules.php - Report of purchase orders and work orders that MRP determines should be
 // rescheduled.
 $PageSecurity = 2;
@@ -113,7 +113,7 @@ If (isset($_POST['PrintPDF'])) {
 			header('Cache-Control: private, post-check=0, pre-check=0');
 			header('Pragma: public');
 	
-			$pdf->Stream();
+			$pdf->Output('MRPRescedules.pdf', 'I');
 	}
 	
 } else { /*The option to print PDF was not hit so display form */
