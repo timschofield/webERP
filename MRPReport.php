@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.4 $ */
 // MRPReport.php - Shows supply and demand for a part as determined by MRP
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -30,7 +30,7 @@ If (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	    $holddb = $db;
 	    $title = _('Print MRP Report Error');
 		include('includes/header.inc');
-		prnMsg(_('The MRP calculation must be run before this report will have any output. MRP reguires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule etc'),'error');        
+		prnMsg(_('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule etc'),'error');        
 		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
@@ -477,7 +477,7 @@ If (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			header('Cache-Control: private, post-check=0, pre-check=0');
 			header('Pragma: public');
 	
-			$pdf->Stream();
+			$pdf->Output('MRPReport.pdf', 'I');
 	}
 	
 } else { /*The option to print PDF was not hit so display form */
