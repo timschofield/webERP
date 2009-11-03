@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.6 $ */
 // MRPPlannedWorkOrders.php - Report of manufactured parts that MRP has determined should have
 // work orders created for them
 $PageSecurity = 2;
@@ -9,7 +9,7 @@ If (isset($_POST['PrintPDF'])) {
 	include('includes/PDFStarter.php');
 
 	$FontSize=9;
-	$pdf->addinfo('Title',_('MRP Panned Work Orders Report'));
+	$pdf->addinfo('Title',_('MRP Planned Work Orders Report'));
 	$pdf->addinfo('Subject',_('MRP Planned Work Orders'));
 
 	$PageNumber=1;
@@ -229,12 +229,12 @@ If (isset($_POST['PrintPDF'])) {
 			header('Cache-Control: private, post-check=0, pre-check=0');
 			header('Pragma: public');
 	
-			$pdf->Stream();
+			$pdf->Output('MRPPlannedWorkOrders.pdf', 'I');
 	}
 	
 } else { /*The option to print PDF was not hit so display form */
 
-	$title=_('MRP Planned Word Orders Reporting');
+	$title=_('MRP Planned Work Orders Reporting');
 	include('includes/header.inc');
 
 	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
