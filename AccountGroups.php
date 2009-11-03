@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 10;
 
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 	$sql="SELECT count(groupname) 
 			FROM accountgroups WHERE groupname='".$_POST['GroupName']."'";
 
-    $DbgMsg = _('The sql that was used to retrieve the information was');
+    $DbgMsg = _('The SQL that was used to retrieve the information was');
 	$ErrMsg = _('Could not check whether the group exists because');
 
     $result=DB_query($sql, $db,$ErrMsg,$DbgMsg);
@@ -90,7 +90,7 @@ if (isset($_POST['submit'])) {
 			FROM accountgroups 
 			WHERE groupname='" . $_POST['ParentGroupName'] . "'";
 			
-            $DbgMsg = _('The sql that was used to retrieve the information was');
+            $DbgMsg = _('The SQL that was used to retrieve the information was');
             $ErrMsg = _('Could not check whether the group is recursive because');
 
             $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
