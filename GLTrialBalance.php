@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
@@ -345,7 +345,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
 
-		$pdf->Stream();
+		$pdf->Output('GLTrialBalance.pdf','I');
 
 	}
 	exit;
