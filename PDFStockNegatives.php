@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity =1;
 include('includes/session.inc');
@@ -75,6 +75,6 @@ if ($len<=10){
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 
-	$pdf->Stream();
+	$pdf->Output('PDFStockNegatives.pdf', 'I');
 }
 ?>
