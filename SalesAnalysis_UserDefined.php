@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 /*
@@ -44,7 +44,7 @@ if (isset($_GET['ProducePDF'])){
 			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 			header('Pragma: public');
 
-			$pdf->Stream();
+			$pdf->Output('SalesAnalysis.pdf', 'I');
 		}
 	} else {
 		$title = _('User Defined Sales Analysis Problem');
