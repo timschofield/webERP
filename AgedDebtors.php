@@ -2,7 +2,7 @@
 
 $PageSecurity = 2;
 include('includes/session.inc');
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 
 If (isset($_POST['PrintPDF'])
@@ -429,7 +429,7 @@ If (isset($_POST['PrintPDF'])
 	if ($len < 1000) {
 		$title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
-		prnMsg(_('There are no customers meeting the critiera specified to list'),'info');
+		prnMsg(_('There are no customers meeting the criteria specified to list'),'info');
 		if ($debug==1){
 			prnMsg($SQL,'info');
 		}
