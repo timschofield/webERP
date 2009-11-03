@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 // MRPPlannedPurchaseOrders.php - Report of purchase parts that MRP has determined should have
 // purchase orders created for them
 $PageSecurity = 2;
@@ -253,7 +253,7 @@ If (isset($_POST['PrintPDF'])) {
 			header('Cache-Control: private, post-check=0, pre-check=0');
 			header('Pragma: public');
 	
-			$pdf->Stream();
+			$pdf->Output('MRPPlannedPurchaseOrders.pdf', 'I');
 	}
 	
 } else { /*The option to print PDF was not hit so display form */
