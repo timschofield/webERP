@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 2;
 
@@ -187,7 +187,7 @@ if ($len<=20){
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 
-	$pdf->Stream();
+	$pdf->Output('PrintCustOrder.pdf', 'I');
 
 	$sql = "UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted='" . Date('Y-m-d') . "' WHERE salesorders.orderno=" .$_GET['TransNo'];
 	$result = DB_query($sql,$db);
