@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 // ReorderLevel.php - Report of parts with quantity below reorder level
 // Shows if there are other locations that have quantities for the parts that are short
 $PageSecurity = 2;
@@ -151,7 +151,7 @@ If (isset($_POST['PrintPDF'])) {
 			header('Cache-Control: private, post-check=0, pre-check=0');
 			header('Pragma: public');
 	
-			$pdf->Stream();
+			$pdf->Output('ReOrderLevel.pdf', 'I');
 	}
 	
 } else { /*The option to print PDF was not hit so display form */
