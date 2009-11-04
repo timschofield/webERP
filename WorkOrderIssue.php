@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 $PageSecurity = 11;
 
@@ -172,7 +172,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
                             28,
                             " . $WOIssueNo . ",
                             '" . $_POST['FromLocation'] . "',
-                            '" . Date('Y-m-d') . "',
+                            '" . FormatDateForSQL($_POST['issuedate']) . "',
                             " . $IssueItemRow['cost'] . ",
                             " . $PeriodNo . ",
                             '" . $_POST['WO'] . "',
@@ -297,7 +297,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
                             amount)
                     VALUES (28,
                         " . $WOIssueNo . ",
-                        '" . Date('Y-m-d') . "',
+                        '" . FormatDateForSQL($_POST['issuedate']) . "',
                         " . $PeriodNo . ",
                         " . $WORow['wipact'] . ",
                         '" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . number_format($IssueItemRow['cost'],2) . "',
@@ -317,7 +317,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
                             amount)
                     VALUES (28,
                         " . $WOIssueNo . ",
-                        '" . Date('Y-m-d') . "',
+                        '" . FormatDateForSQL($_POST['issuedate']) . "',
                         " . $PeriodNo . ",
                         " . $StockGLCode['stockact'] . ",
                         '" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . number_format($IssueItemRow['cost'],2) . "',
@@ -530,7 +530,8 @@ echo '<table cellpadding=2 border=0>
      <tr><td class="label">' . _('Quantity Ordered') . ':</td><td align=right>' . number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td><td colspan=2>' . $WORow['units'] . '</td></tr>
      <tr><td class="label">' . _('Already Received') . ':</td><td align=right>' . number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td><td colspan=2>' . $WORow['units'] . '</td></tr>
     <tr><td colspan=4><hr></td></tr>
-     <tr><td class="label">' . _('Date Material Issued') . ':</td><td>' . Date($_SESSION['DefaultDateFormat']) . '</td>
+     <tr><td class="label">' . _('Date Material Issued') . ':</td><td><input type=text name=issuedate value=' 
+		. Date($_SESSION['DefaultDateFormat']) . ' class=date size=10 alt="'.$_SESSION['DefaultDateFormat'].'" ></td>
     <td class="label">' . _('Issued From') . ':</td><td>';
 
 if (!isset($_POST['IssueItem'])){
@@ -596,8 +597,8 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
                         $db);
         $IssuedAlreadyRow = DB_fetch_row($IssuedAlreadyResult);
 
-        echo '<td align="right">' . number_format($WORow['qtyreqd']*$RequirementsRow['qtypu'],$RequirementsRow['decimalplaces']) . '</td>
-            <td align="right">' . number_format($IssuedAlreadyRow[0],$RequirementsRow['decimalplaces']) . '</td></tr>';
+        echo '<td class=number>' . number_format($WORow['qtyreqd']*$RequirementsRow['qtypu'],$RequirementsRow['decimalplaces']) . '</td>
+            <td class=number>' . number_format($IssuedAlreadyRow[0],$RequirementsRow['decimalplaces']) . '</td></tr>';
     }
 
     echo '</table>';
@@ -776,7 +777,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
     } else { //not controlled - an easy one!
         echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '">';
         echo '<tr><td>' . _('Quantity Issued') . ':</td>
-              <td><input type="textbox" name="Qty"></tr>';
+              <td><input class=number type="textbox" name="Qty"></tr>';
         echo '<tr><td align="center"><input type=submit name="Process" value="' . _('Process Items Issued') . '"></td></tr>';
     }
 } //end if selecting new item to issue or entering the issued item quantities
