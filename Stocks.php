@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.73 $ */
+/* $Revision: 1.74 $ */
 
 $PageSecurity = 11;
 
@@ -690,7 +690,7 @@ echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="Item
 
  echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID" onChange="ReloadForm(ItemForm.UpdateCategories)">';
 
-$sql = 'SELECT categoryid, categorydescription FROM stockcategory';
+$sql = 'SELECT categoryid, categorydescription FROM stockcategory WHERE stocktype!="A"';
 $ErrMsg = _('The stock categories could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve stock categories and failed was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
