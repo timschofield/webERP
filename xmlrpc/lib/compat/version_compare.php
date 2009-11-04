@@ -16,7 +16,7 @@
 // |          Aidan Lister <aidan@php.net>                                |
 // +----------------------------------------------------------------------+
 //
-// $Id: version_compare.php,v 1.1 2008-03-30 14:47:34 tim_schofield Exp $
+// $Id: version_compare.php,v 1.1 2008/03/30 14:47:34 tim_schofield Exp $
 
 
 /**

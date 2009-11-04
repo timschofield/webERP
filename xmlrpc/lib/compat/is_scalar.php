@@ -13,7 +13,7 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 //
-// $Id: is_scalar.php,v 1.1 2008-03-30 14:47:01 tim_schofield Exp $
+// $Id: is_scalar.php,v 1.1 2008/03/30 14:47:01 tim_schofield Exp $
 
 
 /**

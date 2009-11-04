@@ -1,5 +1,5 @@
 <?php
-// $Id: index.php,v 1.1 2008-03-30 14:48:49 tim_schofield Exp $
+// $Id: index.php,v 1.1 2008/03/30 14:48:49 tim_schofield Exp $
   $query = '';
   if (isset($_GET['run']))
   {

@@ -6,7 +6,7 @@
  * @package     PHP_Compat
  * @link        http://php.net/function.is_callable
  * @author      Gaetano Giunta <giunta.gaetano@sea-aeroportimilano.it>
- * @version     $Id: is_callable.php,v 1.1 2008-03-30 14:46:44 tim_schofield Exp $
+ * @version     $Id: is_callable.php,v 1.1 2008/03/30 14:46:44 tim_schofield Exp $
  * @since       PHP 4.0.6
  * @require     PHP 4.0.0 (true, false, etc...)
  * @todo        add the 3rd parameter syntax...

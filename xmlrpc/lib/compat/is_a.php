@@ -15,7 +15,7 @@
 // | Authors: Aidan Lister <aidan@php.net>                                |
 // +----------------------------------------------------------------------+
 //
-// $Id: is_a.php,v 1.1 2008-03-30 14:46:28 tim_schofield Exp $
+// $Id: is_a.php,v 1.1 2008/03/30 14:46:28 tim_schofield Exp $
 
 
 /**

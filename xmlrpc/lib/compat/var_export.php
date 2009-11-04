@@ -15,7 +15,7 @@
 // | Authors: Aidan Lister <aidan@php.net>                                |
 // +----------------------------------------------------------------------+
 //
-// $Id: var_export.php,v 1.1 2008-03-30 14:47:18 tim_schofield Exp $
+// $Id: var_export.php,v 1.1 2008/03/30 14:47:18 tim_schofield Exp $
 
 
 /**

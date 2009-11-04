@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: action.php,v 1.1 2008-03-30 14:47:59 tim_schofield Exp $
+ * @version $Id: action.php,v 1.1 2008/03/30 14:47:59 tim_schofield Exp $
  * @author Gaetano Giunta
  * @copyright (C) 2005-2008 G. Giunta
  * @license code licensed under the BSD License: http://phpxmlrpc.sourceforge.net/license.txt
