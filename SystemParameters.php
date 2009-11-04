@@ -1,16 +1,14 @@
 <?php
 
-/* $Revision: 1.54 $ */
+/* $Revision: 1.58 $ */
 
 $PageSecurity =15;
 
 include('includes/session.inc');
 
 $title = _('System Configuration');
-include('includes/header.inc');
 
-echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/company.png" title="' . _('System Paramters') . '" alt="">' . ' ' . _('System Parameters') . '</div>';
-echo '<div class="page_help_text">' . _('Configure webERP with various default settings.') . '</div>';
+include('includes/header.inc');
 
 if (isset($_POST['submit'])) {
 
@@ -79,12 +77,13 @@ if (isset($_POST['submit'])) {
 		$_POST['X_MaxImageSize'] < 1 ) {
 		$InputError = 1;
 		prnMsg(_('The maximum size of item image files must be between 50 and 500 (NB this figure refers to KB)'),'error');
-}
-// Commented out, as the email address should be OK to be blank
-//	}elseif (!IsEmailAddress($_POST['X_FactoryManagerEmail'])){
-//		$InputError = 1;
-//		prnMsg(_('The Factory Manager Email address does not appear to be valid'),'error');
-//	}
+	}elseif (!IsEmailAddress($_POST['X_FactoryManagerEmail'])){
+		$InputError = 1;
+		prnMsg(_('The Factory Manager Email address does not appear to be valid'),'error');
+	}elseif (strlen($_POST['X_FrequentlyOrderedItems']) > 2 || !is_numeric($_POST['X_FrequentlyOrderedItems'])) {
+		$InputError = 1;
+		prnMsg(_('The number of frequently ordered items to display must be numeric'),'error');
+	}
 
 	if ($InputError !=1){
 
@@ -177,6 +176,10 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['MaxImageSize'] != $_POST['X_MaxImageSize'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_MaxImageSize']."' WHERE confname = 'MaxImageSize'";
 		}
+//new number must be shown
+		if ($_SESSION['NumberOfMonthMustBeShown'] != $_POST['X_NumberOfMonthMustBeShown'] ) {
+			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_NumberOfMonthMustBeShown']."' WHERE confname = 'NumberOfMonthMustBeShown'";
+		}
 		if ($_SESSION['part_pics_dir'] != $_POST['X_part_pics_dir'] ) {
 			$sql[] = "UPDATE config SET confvalue = 'companies/" . $_SESSION['DatabaseName'] . '/' . $_POST['X_part_pics_dir']."' WHERE confname = 'part_pics_dir'";
 		}
@@ -224,9 +227,6 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['Extended_CustomerInfo'] != $_POST['X_Extended_CustomerInfo'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_Extended_CustomerInfo']."' WHERE confname = 'Extended_CustomerInfo'";
-		} 
-		if ($_SESSION['SalesOrder_FOI'] != $_POST['X_SalesOrder_FOI'] ) {
-                        $sql[] = "UPDATE config SET confvalue = '". $_POST['X_SalesOrder_FOI']."' WHERE confname = 'SalesOrder_FOI'";
 		}
 		if ($_SESSION['ProhibitPostingsBefore'] != $_POST['X_ProhibitPostingsBefore'] ) {
 			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_ProhibitPostingsBefore']."' WHERE confname = 'ProhibitPostingsBefore'";
@@ -262,6 +262,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['DefineControlledOnWOEntry'] != $_POST['X_DefineControlledOnWOEntry']){
 			$sql[] = "UPDATE config SET confvalue='" . $_POST['X_DefineControlledOnWOEntry'] . "' WHERE confname='DefineControlledOnWOEntry'";
 		}
+		if ($_SESSION['FrequentlyOrderedItems'] != $_POST['X_FrequentlyOrderedItems']){
+			$sql[] = "UPDATE config SET confvalue='" . $_POST['X_FrequentlyOrderedItems'] . "' WHERE confname='FrequentlyOrderedItems'";
+		}
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 1 ) {
 			$result = DB_Txn_Begin($db);
@@ -285,7 +288,7 @@ if (isset($_POST['submit'])) {
 } /* end of if submit */
 
 echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '>';
-echo '<table class=table1 BORDER=1>';
+echo '<table BORDER=1>';
 
 $TableHeader = '<tr><th>' . _('System Variable Name') . '</th>
 	<th>' . _('Value') . '</th>
@@ -363,6 +366,11 @@ echo '<tr><td>' . _('Romalpa Clause') . ':</td>
 echo '<tr><td>' . _('Quick Entries') . ':</td>
 	<td><input type="Text" class="number" Name="X_QuickEntries" value="' . $_SESSION['QuickEntries'] . '" size=3 maxlength=2></td>
 	<td>' . _('This parameter defines the layout of the sales order entry screen. The number of fields available for quick entries. Any number from 1 to 99 can be entered.') . '</td></tr>';
+
+// Frequently Ordered Items
+echo '<tr><td>' . _('Frequently Ordered Items') . ':</td>
+	<td><input type="Text" class="number" Name="X_FrequentlyOrderedItems" value="' . $_SESSION['FrequentlyOrderedItems'] . '" size=3 maxlength=2></td>
+	<td>' . _('To show the most frequently ordered items enter the number of frequently ordered items you wish to display from 1 to 99. If you do not wish to display the frequently ordered item list enter 0.') . '</td></tr>';
 
 //'AllowOrderLineItemNarrative'
 echo '<tr><td>' . _('Order Entry allows Line Item Narrative') . ':</td>
@@ -617,10 +625,25 @@ echo '<tr><td>' . _('Maximum Size in KB of uploaded images') . ':</td>
 	<td><input type="text" class="number" name="X_MaxImageSize" size=4 maxlength=3 value="' . $_SESSION['MaxImageSize'] . '"></td>
 	<td>' . _('Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.') .'</td>
 </tr>';
+//NumberOfMonthMustBeShown
+$sql = 'SELECT confvalue 
+		FROM `config` 
+		WHERE confname ="numberOfMonthMustBeShown"';
+
+$ErrMsg = _('Could not load the Number Of Month Must be Shown');
+$result = DB_query($sql,$db,$ErrMsg);
+$row = DB_fetch_array($result);
+$_SESSION['NumberOfMonthMustBeShown'] == $row['confvalue'];
+
+echo '<tr><td>' . _('Number Of Month Must Be Shown') . ':</td>
+		  <td><input type="text" class="number" name="X_NumberOfMonthMustBeShown" size=4 maxlength=3 value="' . $_SESSION['NumberOfMonthMustBeShown'] . '"></td>	
+		  <td>' . _('Number of month must be shown on report can be changed with this parameters ex: in CustomerInquiry.php ') .'</td>
+      </tr>';
 
 //$part_pics_dir
 echo '<tr><td>' . _('The directory where images are stored') . ':</td>
-	<td><select name="X_part_pics_dir">';
+	 <td><select name="X_part_pics_dir">';
+
 
 $CompanyDirectory = 'companies/' . $_SESSION['DatabaseName'] . '/';
 $DirHandle = dir($CompanyDirectory);
@@ -768,19 +791,6 @@ if ($_SESSION['Extended_SupplierInfo']==1){
 }
 echo '</select></td>
         <td>' . _('This feature will give extended information in the Select Supplier screen.') .'</td></tr>';
-// Start Frequently Ordered Items option
-echo '<tr><td>' . _('Frequently Ordered Items for Sales Orders') . ':</td>
-        <td><select name="X_SalesOrder_FOI">';
-if ($_SESSION['SalesOrder_FOI']==1){
-        echo  '<option selected value="1">' . _('FOI Sales Orders Enabled') . '</option>';
-        echo  '<option value="0">' . _('FOI Sales Orders Disabled') . '</option>';
-} else {
-        echo  '<option selected value="0">' . _('FOI Sales Orders Disabled') . '</option>';
-        echo  '<option value="1">' . _('FOI Sales Orders Enabled') . '</option>';
-}
-echo '</select></td>
-        <td>' . _('This feature will give users the ability to select frequently ordered items during sales order entry.') .'</td></tr>';
-
 
 echo '<tr><td>' . _('Prohibit GL Journals to Control Accounts') . ':</td>
 	<td><select name="X_ProhibitJournalsToControlAccounts">';
@@ -852,7 +862,7 @@ echo '<tr><td>' . _('Months of Audit Trail to Retain') . ':</td>
 </tr>';
 
 //DefineControlledOnWOEntry
-echo '<tr><td>' . _('Controlled Items Defined At Work Order Entrry') . ':</td>
+echo '<tr><td>' . _('Controlled Items Defined At Work Order Entry') . ':</td>
 	<td><select Name="X_DefineControlledOnWOEntry">
 	<option '.($_SESSION['DefineControlledOnWOEntry']?'selected ':'').'value="1">'._('Yes').'
 	<option '.(!$_SESSION['DefineControlledOnWOEntry']?'selected ':'').'value="0">'._('No').'
