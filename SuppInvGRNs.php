@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.21 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -121,9 +121,9 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 	echo '<tr><td>' . $EnteredGRN->GRNNo . '</td>
 		<td>' . $EnteredGRN->ItemCode . '</td>
 		<td>' . $EnteredGRN->ItemDescription . '</td>
-		<td align=right>' . number_format($EnteredGRN->This_QuantityInv,2) . '</td>
-		<td align=right>' . number_format($EnteredGRN->ChgPrice,2) . '</td>
-		<td align=right>' . number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,2) . "</td>
+		<td class=number>' . number_format($EnteredGRN->This_QuantityInv,2) . '</td>
+		<td class=number>' . number_format($EnteredGRN->ChgPrice,2) . '</td>
+		<td class=number>' . number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,2) . "</td>
 		<td><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . '&Modify=' . $EnteredGRN->GRNNo . "'>". _('Modify') . "</a></td>
 		<td><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $EnteredGRN->GRNNo . "'>" . _('Delete') . "</a></td>
 	</tr>";
@@ -139,7 +139,7 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
 echo '<tr>
 	<td colspan=5 align=right><font size=4 color=BLUE>' . _('Total Value of Goods Charged') . ':</font></td>
-	<td align=right><font size=4 color=BLUE><U>' . number_format($TotalValueCharged,2) . '</U></font></td>
+	<td class=number><font size=4 color=BLUE><U>' . number_format($TotalValueCharged,2) . '</U></font></td>
 </tr>';
 echo "</table>";
 echo "<div class='centre'><br><a href='$rootpath/SupplierInvoice.php?" . SID ."'>" . _('Back to Invoice Entry') . '</a><hr></div>';
@@ -170,7 +170,7 @@ $GRNResults = DB_query($SQL,$db);
 
 if (DB_num_rows($GRNResults)==0){
 	prnMsg(_('There are no outstanding goods received from') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . _('that have not been invoiced by them') . '<br>' . _('The goods must first be received using the link below to select purchase orders to receive'),'warn');
-	echo "<div class='centre'><p><a href='$rootpath/PO_SelectOSPurchOrder.php?" . SID . 'SupplierID=' . $_SESSION['SuppTrans']->SupplierID ."'>" . _('Select Purchase Orders to receive') .'</a></div>';
+	echo "<div class='centre'><p><a href='$rootpath/PO_SelectOSPurchOrder.php?" . SID . 'SupplierID=' . $_SESSION['SuppTrans']->SupplierID ."'>" . _('Select Purchase Orders to Receive') .'</a></div>';
 	include('includes/footer.inc');
 	exit;
 }
