@@ -3,7 +3,7 @@
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
-* Last Modified..: $Date: 2007-11-02 21:39:47 $
+* Last Modified..: $Date: 2007/11/02 21:39:47 $
 * CVS Revision...: $Revision: 1.6 $
 * Copyright......: 2001, 2002 Richard Heyes
 */
