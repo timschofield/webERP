@@ -51,8 +51,8 @@ if(isset($_POST['ProcessTransfer'])){
 		$TotalQuantity += $TrfLine->Quantity;
 		$i++;
 	} /*end loop to validate and update the SESSION['Transfer'] data */
-	if ($TotalQuantity <= 0){
-		prnMsg( _('All quantities entered are less than or equal to zero') . '. ' . _('Please correct that and try again'), 'error' );
+	if ($TotalQuantity < 0){
+		prnMsg( _('All quantities entered are less than zero') . '. ' . _('Please correct that and try again'), 'error' );
 		$InputError = True;
 	}
 //exit;
@@ -60,7 +60,7 @@ if(isset($_POST['ProcessTransfer'])){
 	/*All inputs must be sensible so make the stock movement records and update the locations stocks */
 
 		foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
-			if ($TrfLine->Quantity >0){
+			if ($TrfLine->Quantity >=0){
 				$Result = DB_Txn_Begin($db);
 
 				/* Need to get the current location quantity will need it later for the stock movement */
@@ -227,7 +227,7 @@ if(isset($_POST['ProcessTransfer'])){
 					/*We need to add or update the StockSerialItem record and
 					The StockSerialMoves as well */
 
-						/*First need to check if the serial items already exists or not in the location from */
+						/*First need to check if the serial items already exists or not in the location to */
 						$SQL = "SELECT COUNT(*)
 							FROM stockserialitems
 							WHERE
@@ -451,11 +451,9 @@ if (isset($_SESSION['Transfer'])){
 		}
 
 		echo '<td>' . $TrfLine->PartUnit . '</td>';
-                if (isset($TrfLine->CancelBalance) and $TrfLine->CancelBalance==1){
-                   echo '<td><input type="checkbox" checked name="CancelBalance' . $i . '" value=1></td>';
-                } else {
-                   echo '<td><input type="checkbox" name="CancelBalance' . $i . '" value=0></td>';
-                }
+		
+        echo '<td><input type="checkbox" name="CancelBalance' . $i . '" value=1></td>';
+                
 
 		if ($TrfLine->Controlled==1){
 			if ($TrfLine->Serialised==1){
