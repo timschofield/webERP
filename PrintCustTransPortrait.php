@@ -261,7 +261,7 @@ If (isset($PrintPDF)
 						stockmaster.units,
 						stockmaster.decimalplaces,
 			 			stockmoves.discountpercent,						
-						stockmoves.narrative,
+						stockmoves.narrative
 					FROM stockmoves,
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
@@ -871,7 +871,7 @@ while ($row=DB_fetch_array($result)){
 						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
 						stockmoves.narrative,
 						stockmaster.units,
-						stockmaster.decimalplaces,
+						stockmaster.decimalplaces
 					FROM stockmoves,
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
@@ -902,7 +902,7 @@ while ($row=DB_fetch_array($result)){
 						stockmoves.qty as Quantity,
 						stockmoves.discountpercent, ((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . ' * stockmoves.qty) AS fxnet,
 						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
-						stockmaster.units,
+						stockmaster.units
 					FROM stockmoves,
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
