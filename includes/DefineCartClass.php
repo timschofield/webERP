@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.40 $ */
+/* $Revision: 1.41 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -93,7 +93,8 @@ Class Cart {
 							$POLine='',
 							$StandardCost=0,
 							$EOQ=1,
-							$NextSerialNo=0){
+							$NextSerialNo=0,
+							$ExRate=1){
 
 		if (isset($StockID) AND $StockID!="" AND $Qty>0 AND isset($Qty)){
 			
@@ -106,29 +107,30 @@ Class Cart {
 			}
 
 			$this->LineItems[$LineNumber] = new LineDetails($LineNumber,
-									$StockID,
-									$Descr,
-									$Qty,
-									$Price,
-									$Disc,
-									$UOM,
-									$Volume,
-									$Weight,
-									$QOHatLoc,
-									$MBflag,
-									$ActDispatchDate,
-									$QtyInvoiced,
-									$DiscCat,
-									$Controlled,
-									$Serialised,
-									$DecimalPlaces,
-									$Narrative,
-									$TaxCategory,
-									$ItemDue,
-									$POLine,
-									$StandardCost,
-									$EOQ,
-									$NextSerialNo);
+															$StockID,
+															$Descr,
+															$Qty,
+															$Price,
+															$Disc,
+															$UOM,
+															$Volume,
+															$Weight,
+															$QOHatLoc,
+															$MBflag,
+															$ActDispatchDate,
+															$QtyInvoiced,
+															$DiscCat,
+															$Controlled,
+															$Serialised,
+															$DecimalPlaces,
+															$Narrative,
+															$TaxCategory,
+															$ItemDue,
+															$POLine,
+															$StandardCost,
+															$EOQ,
+															$NextSerialNo,
+															$ExRate);
 			$this->ItemsOrdered++;
 
 			if ($UpdateDB=='Yes'){
@@ -168,7 +170,15 @@ Class Cart {
 		Return 0;
 	}
 
-	function update_cart_item( $UpdateLineNumber, $Qty, $Price, $Disc, $Narrative, $UpdateDB='No', $ItemDue, $POLine){
+	function update_cart_item( $UpdateLineNumber, 
+								$Qty, 
+								$Price, 
+								$Disc, 
+								$Narrative, 
+								$UpdateDB='No', 
+								$ItemDue, 
+								$POLine,
+								$GPPercent){
 
 		if ($Qty>0){
 			$this->LineItems[$UpdateLineNumber]->Quantity = $Qty;
@@ -178,7 +188,7 @@ Class Cart {
 		$this->LineItems[$UpdateLineNumber]->Narrative = $Narrative;
 		$this->LineItems[$UpdateLineNumber]->ItemDue = $ItemDue;
 		$this->LineItems[$UpdateLineNumber]->POLine = $POLine;
-
+		$this->LineItems[$UpdateLineNumber]->GPPercent = $GPPercent;
 		if ($UpdateDB=='Yes'){
 			global $db;
 			$result = DB_query("UPDATE salesorderdetails
@@ -418,6 +428,7 @@ Class LineDetails {
 	Var $POLine;
 	Var $EOQ;
 	Var $NextSerialNo;
+	Var $GPPercent;
 
 	function LineDetails ($LineNumber,
 							$StockItem,
@@ -442,7 +453,8 @@ Class LineDetails {
 							$POLine,
 							$StandardCost,
 							$EOQ,
-							$NextSerialNo){
+							$NextSerialNo,
+							$ExRate ){
 
 /* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNumber = $LineNumber;
@@ -477,6 +489,12 @@ Class LineDetails {
 		$this->StandardCost = $StandardCost;
 		$this->EOQ = $EOQ;
 		$this->NextSerialNo = $NextSerialNo;
+		
+		if ($Prc > 0){
+			$this->GPPercent = ((($Prc * (1 - $DiscPercent)) - ($StandardCost * $ExRate))*100)/$Prc;
+		} else {
+			$this->GPPercent = 0;
+		}
 	} //end constructor function for LineDetails
 
 }
