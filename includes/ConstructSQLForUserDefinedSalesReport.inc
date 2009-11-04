@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 Function GetDataSQL($SQLData){
 
 /*This function determines the SQL to use to get the value for the columns defined */
@@ -328,7 +328,7 @@ exit;
 */
 
 /*Now let her go .... */
-$ErrMsg = _('There was a problem running the SQL to retreive the sales analysis information');
+$ErrMsg = _('There was a problem running the SQL to retrieve the sales analysis information');
 $DbgMsg = _('The SQL that was used to retrieve the user defined sales analysis info was');
 $result=DB_query($SQLTheLot, $db,$ErrMsg,$DbgMsg);
 
