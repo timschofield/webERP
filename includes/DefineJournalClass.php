@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /* definition of the Journal class */
 
 Class Journal {
@@ -22,12 +22,13 @@ Class Journal {
 		$this->BankAccounts = array();
 	}
 
-	function Add_To_GLAnalysis($Amount, $Narrative, $GLCode, $GLActName, $tag){
+	function Add_To_GLAnalysis($Amount, $Narrative, $GLCode, $GLActName, $tag, $assetid=1){
 		if (isset($GLCode) AND $Amount!=0){
-			$this->GLEntries[$this->GLItemID] = new JournalGLAnalysis($Amount, $Narrative, $this->GLItemID, $GLCode, $GLActName, $tag);
+			$this->GLEntries[$this->GLItemID] = new JournalGLAnalysis($Amount, $Narrative, $this->GLItemID, $GLCode, $GLActName, $tag, $assetid);
 			$this->GLItemCounter++;
 			$this->GLItemID++;
 			$this->JournalTotal += $Amount;
+			
 			Return 1;
 		}
 		Return 0;
@@ -49,8 +50,9 @@ Class JournalGLAnalysis {
 	var $GLActName;
 	Var $ID;
 	var $tag;
-
-	function JournalGLAnalysis ($Amt, $Narr, $id, $GLCode, $GLActName, $tag){
+	var $assetid;
+	
+	function JournalGLAnalysis ($Amt, $Narr, $id, $GLCode, $GLActName, $tag, $assetid){
 
 /* Constructor function to add a new JournalGLAnalysis object with passed params */
 		$this->Amount =$Amt;
@@ -59,6 +61,7 @@ Class JournalGLAnalysis {
 		$this->GLActName = $GLActName;
 		$this->ID = $id;
 		$this->tag = $tag;
+		$this->assetid = $assetid;
 	}
 }
 
