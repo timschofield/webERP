@@ -1,7 +1,5 @@
 <?php
 
-	include 'api_errorcodes.php';
-
 /* Include session.inc, to allow database connection, and access to
    miscfunctions, and datefunctions.*/
     $DatabaseName='weberpdemo';
@@ -10,12 +8,13 @@
 	include($PathPrefix.'includes/session.inc');
 	$_SESSION['db']=$db;
 
+	include 'api_errorcodes.php';
+
 /* Get weberp authentication, and return a valid database
    connection */
 	function db($user, $password) {
 		$_SESSION['UserID'] = $user;
-		$sql = "SELECT userid,
-						accesslevel
+		$sql = "SELECT fullaccess
 				FROM www_users
 				WHERE userid='" . DB_escape_string($user) . "'
 				AND (password='" . CryptPass(DB_escape_string($password)) . "'
@@ -23,9 +22,10 @@
 		$Auth_Result = DB_query($sql, $_SESSION['db']);
 		$myrow=DB_fetch_row($Auth_Result);
 		if (DB_num_rows($Auth_Result) > 0) {
+			$_SESSION['AccessLevel'] = $myrow[0];
 			$sql = 'SELECT tokenid FROM securitygroups
 					WHERE secroleid =  ' . $_SESSION['AccessLevel'];
-			$Sec_Result = DB_query($sql, $db);
+			$Sec_Result = DB_query($sql, $_SESSION['db']);
 
 			$_SESSION['AllowedPageSecurityTokens'] = array();
 			if (DB_num_rows($Sec_Result)==0){
