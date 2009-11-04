@@ -17,7 +17,7 @@
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
-	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of integers. ').
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no insertion takes place. ');
@@ -53,7 +53,7 @@
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
-	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of integers. ').
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no insertion takes place. ');
@@ -90,7 +90,7 @@
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
-	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of integers. ').
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no insertion takes place. ');
@@ -128,7 +128,7 @@
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
-	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of integers. ').
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no insertion takes place. ');
@@ -164,7 +164,7 @@
 	$Parameter[2]['name'] = _('User name');
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
-	$Parameter[3]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this branch. ').
 		_('The key will be identical with field name from the custbranch table. All fields will be in the set regardless of whether the value was set.').'<p>'.
 		_('Otherwise an array of error codes is returned. ');
@@ -199,7 +199,7 @@
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
-	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this customer. ').
 		_('The key will be identical with field name from the debtorsmaster table. All fields will be in the set regardless of whether the value was set.').'<p>'.
 		_('Otherwise an array of error codes is returned. ');
@@ -227,7 +227,7 @@
 	$Parameter[2]['name'] = _('User name');
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
-	$Parameter[3]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('If successful this function returns an array of supplier ids. ').
 		_('Otherwise an array of error codes is returned. ');
 
@@ -596,7 +596,7 @@
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
-	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of stock quantities by location for this stock item. ').
 	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
 			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
@@ -628,7 +628,7 @@
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
-	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of stock reorder levels by location for this stock item.').
 	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
 			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
@@ -660,11 +660,11 @@
 	$Parameter[1]['name'] = _('Location Code');
 	$Parameter[1]['description'] = _('A string field containing a valid location code that must already be setup in the locations table. The api will check this before making the enquiry.');
 	$Parameter[2]['name'] = _('Reorder level');
-	$Parameter[2]['description'] = _('A mumeric field containing the reorder level for this stockid/location combination.');
+	$Parameter[2]['description'] = _('A numeric field containing the reorder level for this stockid/location combination.');
 	$Parameter[3]['name'] = _('User name');
 	$Parameter[3]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[4]['name'] = _('User password');
-	$Parameter[4]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[4]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns zero if the transaction was successful or an array of error codes if not. ').
 	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
 			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
@@ -1588,7 +1588,7 @@
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
-	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of integers. ').
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no insertion takes place. ');
@@ -1625,7 +1625,7 @@
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
-	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of integers. ').
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no modification takes place. ');
@@ -1659,7 +1659,7 @@
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
-	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this supplier. ').
 		_('The key will be identical with field name from the suppliers table. All fields will be in the set regardless of whether the value was set.').'<p>'.
 		_('Otherwise an array of error codes is returned. ');
@@ -1695,7 +1695,7 @@
 	$Parameter[2]['name'] = _('User name');
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
-	$Parameter[3]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('If successful this function returns an array of supplier ids. ').
 		_('Otherwise an array of error codes is returned. ');
 
@@ -1731,7 +1731,7 @@
 	$Parameter[2]['name'] = _('User name');
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
-	$Parameter[3]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('Returns a two dimensional array of stock batch details. ').
 		_('The fields returned are stockid, loccode, batchno, quantity, itemcost. ');
 
@@ -1759,7 +1759,7 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	$Description = _('Adjust the stock balance for the given stock code at the given location by the maount given.');
+	$Description = _('Adjust the stock balance for the given stock code at the given location by the amount given.');
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
 	$Parameter[1]['name'] = _('Location');
@@ -1771,7 +1771,7 @@
 	$Parameter[4]['name'] = _('User name');
 	$Parameter[4]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[5]['name'] = _('User password');
-	$Parameter[5]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[5]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('If successful this function returns 0. ').
 		_('Otherwise an array of error codes is returned. ');
 
@@ -1817,7 +1817,7 @@
 	$Parameter[5]['name'] = _('User name');
 	$Parameter[5]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[6]['name'] = _('User password');
-	$Parameter[6]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[6]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('If successful this function returns 0. ').
 		_('Otherwise an array of error codes is returned. ');
 
@@ -1857,7 +1857,7 @@
 	$Parameter[2]['name'] = _('User name');
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
-	$Parameter[3]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('If successful this function returns an array of work order numbers. ').
 		_('Otherwise an array of error codes is returned. ');
 
@@ -1894,7 +1894,7 @@
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
-	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of integers. ').
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no insertion takes place. ');
@@ -1930,7 +1930,7 @@
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
-	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of integers. ').
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no insertion takes place. ');
@@ -1966,7 +1966,7 @@
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
-	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of integers. ').
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no insertion takes place. ');
@@ -2007,7 +2007,7 @@
 	$Parameter[5]['name'] = _('User name');
 	$Parameter[5]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[6]['name'] = _('User password');
-	$Parameter[6]['description'] = _('The weberp password associoated with this user name. ');
+	$Parameter[6]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('If successful this function returns 0. ').
 		_('Otherwise an array of error codes is returned. ');
 
@@ -2042,8 +2042,8 @@
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
-	$Parameter[1]['description'] = _('The weberp password associoated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a string containg the default date format. ').
+	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns a string contain the default date format. ').
 		_('Otherwise an array of error codes is returned. ');
 
 	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
@@ -2072,8 +2072,8 @@
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
-	$Parameter[1]['description'] = _('The weberp password associoated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a string containg the default location. ').
+	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns a string contain the default location. ').
 		_('Otherwise an array of error codes is returned. ');
 
 	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
@@ -2102,8 +2102,8 @@
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
-	$Parameter[1]['description'] = _('The weberp password associoated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a string containg the default price list code. ').
+	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns a string contain the default price list code. ').
 		_('Otherwise an array of error codes is returned. ');
 
 	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
@@ -2132,8 +2132,8 @@
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
-	$Parameter[1]['description'] = _('The weberp password associoated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a string containg the default currency code. ').
+	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns a string contain the default currency code. ').
 		_('Otherwise an array of error codes is returned. ');
 
 	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
@@ -2162,8 +2162,8 @@
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
-	$Parameter[1]['description'] = _('The weberp password associoated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a string containg the default currency code. ').
+	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns a string contain the default currency code. ').
 		_('Otherwise an array of error codes is returned. ');
 
 	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
