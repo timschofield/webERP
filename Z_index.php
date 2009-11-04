@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 	$PageSecurity = 15;
 
 	include('includes/session.inc');
@@ -23,6 +23,7 @@
 	echo "<p><a href='$rootpath/Z_DataExport.php?" . SID . "'>" . _('Data Export Options') . '</a>';
 	echo "<p><a href='$rootpath/Z_GetStockImage.php?" . SID . "'>" . _('Image Manipulation Utility') . '</a>';
 	echo "<p><a href='$rootpath/Z_ImportStocks.php?" . SID . "'>" . _('Import Stock Items from .csv') . '</a>';
+	echo "<p><a href='$rootpath/Z_CreateCompanyTemplateFile.php?" . SID . "'>" . _('Create new company template SQL file and submit to webERP') . '</a>';
 
 	echo '<br><br><hr><br>' . _('The stuff below is really quite dangerous!');
 
