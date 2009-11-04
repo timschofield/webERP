@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 // Include functions needed for ReportCreator.php
 function PrepStep($StepNum) {
@@ -219,10 +219,15 @@ function UpdateDBFields($ReportID) {
 	if ($_POST['Table5']) $strTable .= ' INNER JOIN '.DB_escape_string($_POST['Table5']).' ON '.DB_escape_string($_POST['Table5Criteria']);
 	if ($_POST['Table6']) $strTable .= ' INNER JOIN '.DB_escape_string($_POST['Table6']).' ON '.DB_escape_string($_POST['Table6Criteria']);
 //	$sql = "SELECT * FROM ".$strTable." LIMIT 1";
-	$sql = "SHOW TABLES WHERE Tables_in_".$_SESSION['DatabaseName']."='".$strTable."'";
-	$Result=DB_query($sql,$db,'','',false,false);
-	// if we have a row, sql was valid
-	if (DB_num_rows($Result)==0) return false;
+
+	for ($i=0;$i<6;$i++) {
+		if ($_POST['Table'.$i]) {
+			$sql = "SHOW TABLES WHERE Tables_in_".$_SESSION['DatabaseName']."='".$_POST['Table'.$i]."'";
+			$Result=DB_query($sql,$db,'','',false,false);
+			if (DB_num_rows($Result)==0) return false;
+		}
+		// if we have a row, sql was valid
+	}
 	$sql = "UPDATE ".DBReports." SET 
 			table1 = '".DB_escape_string($_POST['Table1'])."',
 			table2 = '".DB_escape_string($_POST['Table2'])."',
