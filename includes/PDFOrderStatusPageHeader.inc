@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 if ($PageNumber>1){
 	$pdf->newPage();
 }
@@ -12,7 +12,7 @@ $FontSize=15;
 
 $XPos = $Left_Margin;
 $YPos -= 40;
-$pdf->addText($XPos, $YPos,$FontSize, _('Order Status Listing'));
+$pdf->addText($XPos, $YPos,$FontSize, _('Order Status Report'));
 $FontSize=12;
 
 if ($_POST['CategoryID']!='All') {
