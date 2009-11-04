@@ -52,10 +52,10 @@ function ConvertToSQLDate($DateEntry) {
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
-		if (strstr('/',$PeriodEnd)) {
-			$Date_Array = explode('/',$PeriodEnd);
-		} elseif (strstr('.',$PeriodEnd)) {
-			$Date_Array = explode('.',$PeriodEnd);
+		if (strpos($TranDate,'/')>0) {
+			$DateArray = explode('/',$TranDate);
+		} elseif (strpos($TranDate,'.')>0) {
+			$DateArray = explode('.',$TranDate);
 		}
 		if ($DateFormat=='d/m/Y') {
 			$Day=$DateArray[0];
