@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 15;
 
@@ -147,7 +147,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 		} else {
 			prnMsg(_('This company cannot be added because either it already exists or no logo is being uploaded!'),'error');
 			if (isset($_FILES['LogoFile'])){
-				prnMsg(_('Files LogoFile is set ok'),'info');
+				prnMsg('_Files[LogoFile] '._('is set ok'),'info');
 			} else  {
 				prnMsg('_FILES[LogoFile] ' ._('is not set'),'info');
 			}
