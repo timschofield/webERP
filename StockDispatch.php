@@ -1,9 +1,15 @@
 <?php
-/* $Revision: 1.1 $ */
-// StockDispatch.php - Report of parts with quantity below reorder level
-// Shows other locations with overstock for those parts that can be transferred
+/* $Revision: 1.4 $ */
+// StockDispatch.php - Report of parts with overstock at one location that can be transferred
+// to another location to cover shortage based on reorder level. Creates loctransfer records 
+// that can be processed using Bulk Inventory Transfer - Receive.
+
+// rev 1.4 : Allows to choose 2 printing layouts, and some general printing improvements 
+
+
 $PageSecurity = 2;
 include('includes/session.inc');
+include('includes/SQL_CommonFunctions.inc');
 If (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
@@ -12,29 +18,60 @@ If (isset($_POST['PrintPDF'])) {
     }
 	$FontSize=9;
 	$pdf->addinfo('Title',_('Stock Dispatch Report'));
-	$pdf->addinfo('Subject',_('Parts to dispatch to other locations to cover reorder level'));
+	$pdf->addinfo('Subject',_('Parts to dispatch to another location to cover reorder level'));
 
 	$PageNumber=1;
 	$line_height=12;
 	$Xpos = $Left_Margin+1;
+	
+	//tempate
+	if($_POST['template']=="simple"){
+	$template="simple";
+	}else{
+	$template="standard";
+	}
+	// Create Transfer Number
+	if(!isset($Trf_ID) && $_POST['ReportType'] == 'Batch'){
+		$Trf_ID = GetNextTransNo(16,$db);
+	}
+	
+	
+	// from location
+	$sqlfrom="SELECT locationname FROM `locations` where loccode='" . $_POST['FromLocation'] . "'";
+	$result = db_query($sqlfrom,$db,$ErrMsg);
+	$Row = db_fetch_row($result);
+	$FromLocation=$Row['0'];
+	
+	// to location
+	$sqlto="SELECT locationname FROM `locations` where loccode='" . $_POST['ToLocation'] .  "'";
+	$resultto = db_query($sqlto,$db,$ErrMsg);
+	$RowTo = db_fetch_row($resultto);
+	$ToLocation=$RowTo['0'];
+	
+	// Creates WHERE clause for stock categories. StockCat is defined as an array so can choose
+	// more than one category
 	$wherecategory = " ";
-	$catdescription = " ";
 	if ($_POST['StockCat'] != 'All') {
-	    $wherecategory = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "' ";
-		$sql= "SELECT categoryid, categorydescription FROM stockcategory WHERE categoryid='" . $_POST['StockCat'] . "' ";
-		$result = DB_query($sql,$db);
-		$myrow = DB_fetch_row($result);
-		$catdescription = $myrow[1];
+        $wherecategory = " AND stockmaster.categoryid ='" . $_POST['StockCat'] . "' ";	
 	}
-	$wherelocation = " ";
-	if ($_POST['StockLocation'] != 'All') {
-	    $wherelocation = " AND locstock.loccode='" . $_POST['StockLocation'] . "' ";
-	}
+
+// The following is if define StockCat as array allowing multiple selects
+// 	if ($_POST['StockCat'][0] != 'All') {
+// 	    $i = 0;
+// 	    $wherecategory = ' AND (';
+// 	    foreach ($_POST['StockCat'] as $Cat) {
+// 	        if ($i > 0) {
+// 	            $wherecategory .= ' OR ';
+// 	        }
+// 	        $i++;
+// 			$wherecategory .= " stockmaster.categoryid='" . $Cat . "' ";
+//         }
+//         $wherecategory .= ') ';
+// 	}
 	
 	$sql = 'SELECT locstock.stockid,
 				stockmaster.description,
 				locstock.loccode,
-				locations.locationname,
 				locstock.quantity,
 				locstock.reorderlevel,
 				stockmaster.decimalplaces,
@@ -42,18 +79,24 @@ If (isset($_POST['PrintPDF'])) {
 				stockmaster.controlled,
 				ROUND((locstock.reorderlevel - locstock.quantity) *
             	   (1 + (' . $_POST['Percent'] . '/100)))
-            	as neededqty
-			FROM locstock, 
-				stockmaster, 
-				locations
-			WHERE locstock.stockid=stockmaster.stockid ' .
-			$wherelocation . 
-			"AND locstock.loccode=locations.loccode
+            	as neededqty,
+               (fromlocstock.quantity - fromlocstock.reorderlevel)  as available,
+               fromlocstock.reorderlevel as fromreorderlevel,
+               fromlocstock.quantity as fromquantity
+			FROM stockmaster, 
+				locstock
+			LEFT JOIN locstock AS fromlocstock ON 
+			  locstock.stockid = fromlocstock.stockid
+			  AND fromlocstock.loccode = "' . $_POST['FromLocation'] . '"
+			WHERE locstock.stockid=stockmaster.stockid 
+			AND locstock.loccode ="' . $_POST['ToLocation'] . '" 
 			AND locstock.reorderlevel > locstock.quantity
-			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
+			AND (fromlocstock.quantity - fromlocstock.reorderlevel) > 0
+			AND (stockmaster.mbflag="B" OR stockmaster.mbflag="M") ' .
 			$wherecategory . ' ORDER BY locstock.loccode,locstock.stockid';
 			
 	$result = DB_query($sql,$db,'','',false,true);
+	
 
 	if (DB_error_no($db) !=0) {
 	  $title = _('Stock Dispatch') . ' - ' . _('Problem Report');
@@ -68,98 +111,107 @@ If (isset($_POST['PrintPDF'])) {
 	}
 
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-	            $Page_Width,$Right_Margin,$catdescription);
+	            $Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template);
 
     $FontSize=8;
-
-    $holdpart = "XXXXXXXX";
+	
 	While ($myrow = DB_fetch_array($result,$db)){
 			$YPos -=(2 * $line_height);
 			// Parameters for addTextWrap are defined in /includes/class.pdf.php
 			// 1) X position 2) Y position 3) Width
 			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
 			// and False to set to transparent
+				if($template=="simple"){
+				//for simple template
+				$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
+				$pdf->addTextWrap(135,$YPos,250,$FontSize,$myrow['description'],'',0,$fill);
+				$pdf->addTextWrap(380,$YPos,45,$FontSize,number_format($myrow['fromquantity'],
+				                                    $myrow['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(425,$YPos,40,$FontSize,number_format($myrow['quantity'],
+				                                    $myrow['decimalplaces']),'right',0,$fill);
+				$shipqty = $myrow['available'];
+				if ($myrow['neededqty'] < $myrow['available']) {
+					    $shipqty = $myrow['neededqty'];
+					}
+                $pdf->addTextWrap(465,$YPos,40,11,number_format($shipqty,
+				                                    $myrow['decimalplaces']),'right',0,$fill);
+			    $pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$fill);
+				}else{
+				//for standard template
+				$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
+				$pdf->addTextWrap(135,$YPos,200,$FontSize,$myrow['description'],'',0,$fill);
+				$pdf->addTextWrap(305,$YPos,40,$FontSize,number_format($myrow['fromquantity'],
+				                                    $myrow['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(345,$YPos,40,$FontSize,number_format($myrow['fromreorderlevel'],
+				                                    $myrow['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(380,$YPos,40,$FontSize,number_format($myrow['quantity'],
+				                                    $myrow['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(420,$YPos,40,$FontSize,number_format($myrow['reorderlevel'],
+				                                    $myrow['decimalplaces']),'right',0,$fill);
+				$shipqty = $myrow['available'];
+				if ($myrow['neededqty'] < $myrow['available']) {
+					    $shipqty = $myrow['neededqty'];
+					}
+                $pdf->addTextWrap(460,$YPos,40,11,number_format($shipqty,
+				                                    $myrow['decimalplaces']),'right',0,$fill);
+			    $pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$fill);
+				}
 
-				$pdf->addTextWrap(50,$YPos,100,$FontSize,$myrow['stockid'],'',0,$fill);
-				$pdf->addTextWrap(150,$YPos,150,$FontSize,$myrow['description'],'',0,$fill);
-				$pdf->addTextWrap(310,$YPos,60,$FontSize,$myrow['loccode'],'left',0,$fill);
-				$pdf->addTextWrap(350,$YPos,40,$FontSize,number_format($myrow['quantity'],
-				                                    $myrow['decimalplaces']),'right',0,$fill);
-				$pdf->addTextWrap(400,$YPos,40,$FontSize,number_format($myrow['reorderlevel'],
-				                                    $myrow['decimalplaces']),'right',0,$fill);
-				$shortage = $myrow['reorderlevel'] - $myrow['quantity'];                                    			                                    
-                $pdf->addTextWrap(450,$YPos,50,$FontSize,number_format($myrow['neededqty']),
-				                                    'right',0,$fill);		
-			if ($YPos < $Bottom_Margin + $line_height){
+				
+			if ($YPos < $Bottom_Margin + $line_height + 200){
+				
+			
 			   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-			               $Right_Margin,$catdescription);
+			               $Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template);
 			}
 
-            	// Print if stock for part in other locations
-            	// The available qty is set up as quantity - reorderlevel; if reorderlevel means
-            	// the quantity at which you have to reorder, that means you have to keep at least
-            	// one on hand higher than what the reorderlevel is, so would define available like:
-//             	    IF(locstock.reorderlevel > 0,
-//             	                  (locstock.quantity - locstock.reorderlevel) - 1,
-//             	                  (locstock.quantity - locstock.reorderlevel))
-//             	                  as available
-            	
-            	$sql2 = "SELECT locstock.quantity,
-            	                locstock.loccode,
-            	                locstock.stockid,
-            	                locstock.reorderlevel,
-            	                (locstock.quantity - locstock.reorderlevel)
-            	                  as available,
-            	                stockmaster.decimalplaces
-            	         FROM locstock, stockmaster
-            	         WHERE locstock.quantity > 0
-            	         AND locstock.quantity > reorderlevel
-            	         AND locstock.stockid = stockmaster.stockid 
-            	         AND locstock.stockid ='" . $myrow['stockid'] .
-            	         "' AND locstock.loccode !='" . $myrow['loccode'] . "'
-            	         ORDER BY available DESC";
-            	$otherresult = DB_query($sql2,$db,'','',false,true);
-            	While ($myrow2 = DB_fetch_array($otherresult,$db)){
-            	    if ($holdpart != $myrow2['stockid']) {
-            	        $holdneeded = $myrow['neededqty'];
-            	        $holdpart = $myrow2['stockid'];
-            	    }
-            	    // If have displayed enought records to satisfy the needed quantity,
-            	    // don't display any more by using "continue" to break out of the
-            	    // while loop for $sql2
-            	    if ($holdneeded < 1) {
-            	        continue;
-            	    }
-					$YPos -=$line_height;
-					$displayqty = $myrow2['available'];
-					if ($myrow['neededqty'] < $myrow2['available']) {
-					    $displayqty = $myrow['neededqty'];
-					}
-					$holdneeded -= $displayqty;
-					// Parameters for addTextWrap are defined in /includes/class.pdf.php
-					// 1) X position 2) Y position 3) Width
-					// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
-					// and False to set to transparent
-		
-						$pdf->addTextWrap(310,$YPos,60,$FontSize,$myrow2['loccode'],'left',0,$fill);
-						$pdf->addTextWrap(350,$YPos,40,$FontSize,number_format($myrow2['quantity'],
-															$myrow2['decimalplaces']),'right',0,$fill);
-						$pdf->addTextWrap(400,$YPos,40,$FontSize,number_format($myrow2['reorderlevel'],
-				                                    $myrow2['decimalplaces']),'right',0,$fill);		
-                        $pdf->addTextWrap(500,$YPos,50,$FontSize,number_format($displayqty),
-				                                    'right',0,$fill);
-					if ($YPos < $Bottom_Margin + $line_height){
-					   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-								   $Right_Margin,$catdescription);
-					}
-
-				} /*end while loop for reading of inventory in other location*/
+			// Create loctransfers records for each record
+			$sql2 = "INSERT INTO loctransfers (reference,
+								stockid,
+								shipqty,
+								shipdate,
+								shiploc,
+								recloc)
+						VALUES ('" . $Trf_ID . "',
+							'" . $myrow['stockid'] . "',
+							'" . $shipqty . "',
+							'" . Date('Y-m-d') . "',
+							'" . $_POST['FromLocation']  ."',
+							'" . $_POST['ToLocation'] . "')";
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$_POST['StockID' . $i];
+			if ($_POST['ReportType'] == 'Batch') {    
+			    $resultLocShip = DB_query($sql2,$db, $ErrMsg);
+			}
 
 	} /*end while loop  */
-
+	//add prepared by
+    $pdf->addTextWrap(50,$YPos-50,100,9,_('Prepared By :'), 'left');
+	$pdf->addTextWrap(50,$YPos-70,100,$FontSize,_('Name'), 'left');
+	$pdf->addTextWrap(90,$YPos-70,200,$FontSize,':__________________','left',0,$fill);
+	$pdf->addTextWrap(50,$YPos-90,100,$FontSize,_('Date'), 'left');
+	$pdf->addTextWrap(90,$YPos-90,200,$FontSize,':__________________','left',0,$fill);
+	$pdf->addTextWrap(50,$YPos-110,100,$FontSize,_('Hour'), 'left');
+	$pdf->addTextWrap(90,$YPos-110,200,$FontSize,':__________________','left',0,$fill);
+	$pdf->addTextWrap(50,$YPos-150,100,$FontSize,_('Signature'), 'left');
+	$pdf->addTextWrap(90,$YPos-150,200,$FontSize,':__________________','left',0,$fill);
+	
+	
+	//add received by
+    $pdf->addTextWrap(390,$YPos-50,100,9,_('Received By :'), 'left');
+	$pdf->addTextWrap(390,$YPos-70,100,$FontSize,_('Name'), 'left');
+	$pdf->addTextWrap(430,$YPos-70,200,$FontSize,':__________________','left',0,$fill);
+	$pdf->addTextWrap(390,$YPos-90,100,$FontSize,_('Date'), 'left');
+	$pdf->addTextWrap(430,$YPos-90,200,$FontSize,':__________________','left',0,$fill);
+	$pdf->addTextWrap(390,$YPos-110,100,$FontSize,_('Hour'), 'left');
+	$pdf->addTextWrap(430,$YPos-110,200,$FontSize,':__________________','left',0,$fill);
+	$pdf->addTextWrap(390,$YPos-150,100,$FontSize,_('Signature'), 'left');
+	$pdf->addTextWrap(430,$YPos-150,200,$FontSize,':__________________','left',0,$fill);
+	
+	
+	
 	if ($YPos < $Bottom_Margin + $line_height){
 	       PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-	                   $Right_Margin,$catdescription);
+	                   $Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template);
 	}
 /*Print out the grand totals */
 
@@ -181,15 +233,20 @@ If (isset($_POST['PrintPDF'])) {
 			header('Cache-Control: private, post-check=0, pre-check=0');
 			header('Pragma: public');
 	
-			$pdf->Stream();
+			$pdf->Output('StockDispatch.pdf', 'I');
 	}
+	
+
 	
 } else { /*The option to print PDF was not hit so display form */
 
 	$title=_('Stock Dispatch Report');
 	include('includes/header.inc');
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="">' . ' ' . _('Inventory Stock Dispatch Report') . '';
-echo '<div class="page_help_text">' . _('Report of locations with overstock that can transfer to other locations below reorder level.') . '</div><br>';
+echo '<div class="page_help_text">' . _('Create batch of overstock from one location to transfer to another location that is below reorder level.<br/>
+                                         Quantity to ship is based on reorder level minus the quantity on hand at the To Location; if there is a<br/>
+                                         dispatch percentage entered, that needed quantity is inflated by the percentage entered.<br/>
+                                         Use Bulk Inventory Transfer - Receive to process the batch') . '</div><br>';
 
 	echo '<br/><br/><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
 	$sql = "SELECT loccode,
@@ -197,17 +254,19 @@ echo '<div class="page_help_text">' . _('Report of locations with overstock that
 		FROM locations";
 	$resultStkLocs = DB_query($sql,$db);
 	echo '<table><tr><td>' . _('Dispatch Percent') . ":</td><td><input type ='text' name='Percent' size='8'>";
-	echo '<tr><td>' . _('From Stock Location') . ':</td><td><select name="StockLocation"> ';
-	if (!isset($_POST['StockLocation'])){
-		$_POST['StockLocation']='All';
-	}
-	if ($_POST['StockLocation']=='All'){
-		echo '<option selected value="All">' . _('All');
-	} else {
-		echo '<option value="All">' . _('All');
-	}
+	echo '<tr><td>' . _('From Stock Location') . ':</td><td><select name="FromLocation"> ';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
-		if ($myrow['loccode'] == $_POST['StockLocation']){
+		if ($myrow['loccode'] == $_POST['FromLocation']){
+			 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		} else {
+			 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		}
+	} 
+	echo '</select></td></tr>';
+	DB_data_seek($resultStkLocs,0);
+	echo '<tr><td>' . _('To Stock Location') . ':</td><td><select name="ToLocation"> ';
+	while ($myrow=DB_fetch_array($resultStkLocs)){
+		if ($myrow['loccode'] == $_POST['ToLocation']){
 			 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		} else {
 			 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
@@ -227,6 +286,9 @@ echo '<div class="page_help_text">' . _('Report of locations with overstock that
 		exit;
 	}
 	
+	// Define StockCat with 'name="StockCat[ ]" multiple' so can select more than one
+	// Also have to change way define $wherecategory for WHERE clause
+	
 	echo '<tr><td>' . _('In Stock Category') . ':</td><td><select name="StockCat">';
 	if (!isset($_POST['StockCat'])){
 		$_POST['StockCat']='All';
@@ -244,14 +306,31 @@ echo '<div class="page_help_text">' . _('Report of locations with overstock that
 		}
 	}
 	echo '</select></td></tr>';
+	
+	echo '<tr></tr><tr></tr><tr><td>' . _('Report Type') . ':</td>';
+    echo "<td><select name='ReportType'>";
+	echo "<option selected value='Batch'>" . _('Create Batch');
+	echo "<option value='Report'>" . _('Report Only');
+	echo '</select></td><td>&nbsp</td></tr>';
+	
+	
+	echo '<tr><td>' . _('Template') . ':</td>';
+    echo "<td><select name='template'>";
+	echo "<option selected value='standard'>" . _('Standard');
+	echo "<option value='simple'>" . _('Simple');
+	echo '</select></td><td>&nbsp</td></tr>';
+	
 	echo "</table><br/><br/><br/><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
 
 } /*end of else not PrintPDF */
 
+
+
 function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-                     $Page_Width,$Right_Margin,$catdescription) {
+                     $Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template) {
+
 
 	/*PDF page header for Stock Dispatch report */
 	if ($PageNumber>1){
@@ -259,42 +338,63 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	}
 	$line_height=12;
 	$FontSize=9;
-	$YPos= $Page_Height-$Top_Margin-5;
+	$YPos= $Page_Height-$Top_Margin;
+	$YPos -=(3*$line_height);
 	
 	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
-	
 	$YPos -=$line_height;
 	
-	$pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize,_('Stock Dispatch Report'));	
+	$pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize,_('Stock Dispatch ') . $_POST['ReportType']);
+	$pdf->addTextWrap(200,$YPos,50,$FontSize,_('From :'));
+	$pdf->addTextWrap(250,$YPos,200,$FontSize,$FromLocation);
+	
 	$pdf->addTextWrap($Page_Width-$Right_Margin-150,$YPos,160,$FontSize,_('Printed') . ': ' . 
 		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
 	$YPos -= $line_height;
+	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Transfer No.'));
+	$pdf->addTextWrap(95,$YPos,50,$FontSize,$Trf_ID);
+	$pdf->addTextWrap(200,$YPos,20,$FontSize,_('To :'));	
+	$pdf->addTextWrap(250,$YPos,200,$FontSize,$ToLocation);
+	$YPos -= $line_height;
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Category'));
+// The following is used if define StockCat as array that allows multiple selects
+//     $catpos = 95; // Position to print category
+//     foreach ($_POST['StockCat'] as $Cat) {
+//         $pdf->addTextWrap($catpos,$YPos,50,$FontSize,$Cat);
+//         $catpos += 50;
+//     }
 	$pdf->addTextWrap(95,$YPos,50,$FontSize,$_POST['StockCat']);
 	$pdf->addTextWrap(160,$YPos,150,$FontSize,$catdescription,'left');
-	$YPos -= $line_height;
-	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Location'));
-	$pdf->addTextWrap(95,$YPos,50,$FontSize,$_POST['StockLocation']);
 	$YPos -= $line_height;
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Percent'));
 	$pdf->addTextWrap(95,$YPos,50,$FontSize,$_POST['Percent']);
 	$YPos -=(2*$line_height);	
 	/*set up the headings */
 	$Xpos = $Left_Margin+1;
-				
+	
+	if($template=="simple"){
 	$pdf->addTextWrap(50,$YPos,100,$FontSize,_('Part Number'), 'left');
-	$pdf->addTextWrap(150,$YPos,150,$FontSize,_('Description'), 'left');
-	$pdf->addTextWrap(310,$YPos,40,$FontSize,_('Location'), 'left');
-	$pdf->addTextWrap(350,$YPos,40,$FontSize,_('On Hand'), 'right');
-	$pdf->addTextWrap(400,$YPos,40,$FontSize,_('Reorder'), 'right');
-	$pdf->addTextWrap(450,$YPos,50,$FontSize,_('Needed'), 'right');
-	$pdf->addTextWrap(500,$YPos,50,$FontSize,_('Dispatch'), 'right');
+	$pdf->addTextWrap(135,$YPos,220,$FontSize,_('Description'), 'left');
+	$pdf->addTextWrap(380,$YPos,45,$FontSize,_('QOH-From'), 'right');
+	$pdf->addTextWrap(425,$YPos,40,$FontSize,_('QOH-To'), 'right');
+	$pdf->addTextWrap(465,$YPos,40,$FontSize,_('Shipped'), 'right');
+	$pdf->addTextWrap(510,$YPos,40,$FontSize,_('Received'), 'right');
+	}else{
+	$pdf->addTextWrap(50,$YPos,100,$FontSize,_('Part Number'), 'left');
+	$pdf->addTextWrap(135,$YPos,170,$FontSize,_('Description'), 'left');
+	$pdf->addTextWrap(325,$YPos,40,$FontSize,_('From'), 'right');
+	$pdf->addTextWrap(390,$YPos,40,$FontSize,_('To'), 'right');
+	$pdf->addTextWrap(460,$YPos,40,$FontSize,_('Shipped'), 'right');
+	$pdf->addTextWrap(510,$YPos,40,$FontSize,_('Received'), 'right');
 	$YPos -= $line_height;
-	$pdf->addTextWrap(390,$YPos,40,$FontSize,_('Level'), 'right');
-    $pdf->addTextWrap(500,$YPos,50,$FontSize,_('Quantity'), 'right');
-
+    $pdf->addTextWrap(305,$YPos,40,$FontSize,_('QOH'), 'right');
+    $pdf->addTextWrap(345,$YPos,40,$FontSize,_('Reord'), 'right');
+    $pdf->addTextWrap(380,$YPos,40,$FontSize,_('QOH'), 'right');
+    $pdf->addTextWrap(420,$YPos,40,$FontSize,_('Reord'), 'right');
+	
+	}
+	
 	$FontSize=8;
-//	$YPos =$YPos - (2*$line_height);
 	$PageNumber++;
 } // End of PrintHeader() function
 ?>
