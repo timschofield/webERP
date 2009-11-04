@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity = 11;
 
@@ -811,7 +811,8 @@ if($WORow['controlled']==1){ //controlled
 		}
 		echo '</tr>';
 		echo '<input type="hidden" name="CountOfInputs" value=' . $i . '>';
-		echo '<tr><td align="center" colspan=5><input type=submit name="Process" value="' . _('Process Manufactured Items Received') . '"></td></tr>';
+		echo '<tr><td colspan=5></td></tr>';
+		echo '<input type=submit name="Process" value="' . _('Process Manufactured Items Received') . '">';
     } else { //controlled but not serialised - just lot/batch control
         echo '<tr><th colspan="2">' . _('Batch/Lots Received') . '</th></tr>';
 		if ($_SESSION['DefineControlledOnWOEntry']==1){ //then potentially batches/lots already set up
@@ -847,13 +848,13 @@ if($WORow['controlled']==1){ //controlled
 			}
 		}
 		echo '<input type="hidden" name="CountOfInputs" value=' . $i . '>';
-        echo '<tr><td align="center" colspan=2><input type=submit name="Process" value="' . _('Process Manufactured Items Received') . '"></td></tr>';
+        echo '<tr><td colspan=2><input type=submit name="Process" value="' . _('Process Manufactured Items Received') . '"></td></tr>';
     } //end of lot/batch control
 } else { //not controlled - an easy one!
 
     echo '<tr><td>' . _('Quantity Received') . ':</td>
               <td><input type="text" class="number" name="Qty" onKeyPress="return restrictToNumbers(this, event)"></tr>';
-    echo '<tr><td align="center"><input type=submit name="Process" value="' . _('Process Manufactured Items Received') . '"></td></tr>';
+    echo '<tr><td ><input type=submit name="Process" value="' . _('Process Manufactured Items Received') . '"></td></tr>';
 }
 
 echo '</table>';
