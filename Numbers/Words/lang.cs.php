@@ -17,7 +17,7 @@
 // | Authors: Petr 'PePa' Pavel <petr.pavel@pepa.info>                    |
 // +----------------------------------------------------------------------+
 //
-// $Id: lang.cs.php,v 1.1 2006-11-17 05:59:52 daintree Exp $
+// $Id: lang.cs.php,v 1.1 2006/11/17 05:59:52 daintree Exp $
 //
 // Numbers_Words class extension to spell numbers in Czech language.
 //

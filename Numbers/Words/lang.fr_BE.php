@@ -17,7 +17,7 @@
 // |          Philippe Bajoit <phil@lebutch.org>                          |
 // +----------------------------------------------------------------------+
 //
-// $Id: lang.fr_BE.php,v 1.1 2006-11-17 05:59:52 daintree Exp $
+// $Id: lang.fr_BE.php,v 1.1 2006/11/17 05:59:52 daintree Exp $
 
 /**
  * Include needed files

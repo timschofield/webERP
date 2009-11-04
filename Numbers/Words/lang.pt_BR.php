@@ -17,7 +17,7 @@
 // | Authors: Marcelo Subtil Marcal <jason@conectiva.com.br>, Mario H.C.T. <mariolinux@mitus.com.br>
 // +----------------------------------------------------------------------+
 //
-// $Id: lang.pt_BR.php,v 1.1 2006-11-17 05:59:53 daintree Exp $
+// $Id: lang.pt_BR.php,v 1.1 2006/11/17 05:59:53 daintree Exp $
 //
 // Numbers_Words class extension to spell numbers in Brazilian Portuguese language.
 //

@@ -18,7 +18,7 @@
 // |          Andrey Demenev <demenev@gmail.com>                          |
 // +----------------------------------------------------------------------+
 //
-// $Id: lang.ru.php,v 1.1 2006-11-17 05:59:53 daintree Exp $
+// $Id: lang.ru.php,v 1.1 2006/11/17 05:59:53 daintree Exp $
 //
 // Numbers_Words class extension to spell numbers in Russian language.
 //

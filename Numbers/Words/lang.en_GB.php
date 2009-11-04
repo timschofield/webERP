@@ -17,7 +17,7 @@
 // | Authors: Piotr Klaban <makler@man.torun.pl>                          |
 // +----------------------------------------------------------------------+
 //
-// $Id: lang.en_GB.php,v 1.1 2006-11-17 05:59:52 daintree Exp $
+// $Id: lang.en_GB.php,v 1.1 2006/11/17 05:59:52 daintree Exp $
 //
 // Numbers_Words class extension to spell numbers in British English language.
 //

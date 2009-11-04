@@ -17,7 +17,7 @@
 // |          Nils Homp (Hungarian version)                               |
 // +----------------------------------------------------------------------+
 //
-// $Id: lang.hu_HU.php,v 1.1 2006-11-17 05:59:53 daintree Exp $
+// $Id: lang.hu_HU.php,v 1.1 2006/11/17 05:59:53 daintree Exp $
 //
 // Numbers_Words class extension to spell numbers in Hungarian language.
 // NOTE: toCurrency() was not localized and is from the en_US class.

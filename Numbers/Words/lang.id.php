@@ -17,7 +17,7 @@
 // | Authors: Ernas M. Jamil <ernasm@samba.co.id>, Arif Rifai Dwiyanto    |
 // +----------------------------------------------------------------------+
 //
-// $Id: lang.id.php,v 1.1 2006-11-17 05:59:53 daintree Exp $
+// $Id: lang.id.php,v 1.1 2006/11/17 05:59:53 daintree Exp $
 //
 // Numbers_Words class extension to spell numbers in Indonesian language.
 //

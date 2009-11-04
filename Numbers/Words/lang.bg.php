@@ -16,7 +16,7 @@
 // | Authors: Kouber Saparev <kouber@php.net>                             |
 // +----------------------------------------------------------------------+
 //
-// $Id: lang.bg.php,v 1.1 2006-11-17 05:59:52 daintree Exp $
+// $Id: lang.bg.php,v 1.1 2006/11/17 05:59:52 daintree Exp $
 
 /**
  * Include needed files

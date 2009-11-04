@@ -17,7 +17,7 @@
 // | Authors: Laurynas Butkus                                             |
 // +----------------------------------------------------------------------+
 //
-// $Id: lang.lt.php,v 1.1 2006-11-17 05:59:53 daintree Exp $
+// $Id: lang.lt.php,v 1.1 2006/11/17 05:59:53 daintree Exp $
 //
 // Numbers_Words class extension to spell numbers in Lithuanian language.
 //
