@@ -17,7 +17,7 @@
 // | Authors: Piotr Klaban <makler@man.torun.pl>                          |
 // +----------------------------------------------------------------------+
 //
-// $Id: Words.php,v 1.3 2009-03-08 10:51:53 tim_schofield Exp $
+// $Id: Words.php,v 1.3 2009/03/08 10:51:53 tim_schofield Exp $
 //
 
 /**
