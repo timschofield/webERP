@@ -16,7 +16,7 @@
 
 	$YPos -= $line_height;
 	$FontSize =10;
-	$Heading = _('Balance Sheet as at ') . $BalanceDate;
+	$Heading = _('Balance Sheet as at').' ' . $BalanceDate;
 	$pdf->addText($Left_Margin, $YPos, $FontSize, $Heading);
 
 	$FontSize = 8;
