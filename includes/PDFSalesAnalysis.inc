@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 include ('includes/class.pdf.php');
 
@@ -548,7 +548,7 @@ if ($_GET['ProduceCVSFile']==True){
 			fputs($fp, $line."\n");
 	      }
 	 }
-	 $title = _('Sales Analysis Comma Seperated File (CSV) Generation');
+	 $title = _('Sales Analysis Comma Separated File (CSV) Generation');
 	include('includes/header.inc');
 
 	 echo 'http://' . getenv(SERVER_NAME) . $rootpath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv';
