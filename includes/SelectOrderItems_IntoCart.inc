@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 /*SelectOrderItems_IntoCart.inc
 
@@ -128,34 +128,34 @@ if ($AlreadyOnThisOrder!=1){
 			}
 
 			if ($WithinCreditLimit ==true){
-				if ($_SESSION['Items'.$identifier]->add_to_cart ($NewItem,
-							$NewItemQty,
-							$myItemRow['description'],
-							$Price,
-							$Discount,
-							$myItemRow['units'],
-							$myItemRow['volume'],
-							$myItemRow['kgs'],
-							$myItemRow['quantity'],
-							$myItemRow['mbflag'],
-							NULL, /*Actual Dispatch Date */
-							0, /*Qty Invoiced */
-							$myItemRow['discountcategory'],
-							0, /*Controlled - dont care */
-							$myItemRow['serialised'], /* need to know for autocreation wos */
-							$myItemRow['decimalplaces'],
-							'', /*Narrative - none yet */
-							$UpdateDB,
-							$NewLineNo,
-							'',
-							'',
-							$NewItemDue,
-							$NewPOLine,
-							$myItemRow['standardcost'],
-							$myItemRow['eoq'],
-							$myItemRow['nextserialno']
-														)==1){
-				}
+				$_SESSION['Items'.$identifier]->add_to_cart ($NewItem,
+															$NewItemQty,
+															$myItemRow['description'],
+															$Price,
+															$Discount,
+															$myItemRow['units'],
+															$myItemRow['volume'],
+															$myItemRow['kgs'],
+															$myItemRow['quantity'],
+															$myItemRow['mbflag'],
+															NULL, /*Actual Dispatch Date */
+															0, /*Qty Invoiced */
+															$myItemRow['discountcategory'],
+															0, /*Controlled - dont care */
+															$myItemRow['serialised'], /* need to know for autocreation wos */
+															$myItemRow['decimalplaces'],
+															'', /*Narrative - none yet */
+															$UpdateDB,
+															$NewLineNo,
+															'',
+															'',
+															$NewItemDue,
+															$NewPOLine,
+															$myItemRow['standardcost'],
+															$myItemRow['eoq'],
+															$myItemRow['nextserialno'],
+															$ExRate);															
+				
 			}
          } else {
 			prnMsg(_('The item code') . ' ' . $NewItem . ' ' . _('does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered'),'warn');
