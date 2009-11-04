@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -262,7 +262,7 @@ if (DB_error_no($db) !=0) {
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
 
-		$pdf->Stream();
+		$pdf->Output('StockCheck.pdf', 'I');
 
 	}
 
