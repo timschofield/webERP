@@ -38,17 +38,17 @@ if (get_magic_quotes_gpc()){
 			echo '<select name="CompanyNameField">';
 			$DirHandle = dir('companies/');
 			while (false != ($CompanyEntry = $DirHandle->read())){
-				if (is_dir('companies/' . $CompanyEntry) AND $CompanyEntry != '..' AND $CompanyEntry != 'CVS' AND $CompanyEntry!='.'){
+				if (is_dir('companies/' . $CompanyEntry) AND $CompanyEntry != '..' AND $CompanyEntry != 'CVS' AND $CompanyEntry!='.svn' AND $CompanyEntry!='.'){
 					if ($CompanyEntry==$DefaultCompany) {
-						echo "<option selected  value='$CompanyEntry'>$CompanyEntry";
+						echo "<option selected value='$CompanyEntry'>$CompanyEntry</option>";
 					} else {
-						echo "<option  value='$CompanyEntry'>$CompanyEntry";
+						echo "<option  value='$CompanyEntry'>$CompanyEntry</option>";
 					}
 				}
 			}
 			echo '</select>';
 		} else {
-			echo '<input type="text" name="CompanyNameField"  value="' . $DefaultCompany . '">';
+			echo '<input type="text" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
 		}
 	?>
 	<br />
