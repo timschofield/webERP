@@ -1,6 +1,7 @@
+﻿@charset "utf-8";
 body {
-	padding: 0px;
-	margin: 0px;
+	padding: 0;
+	margin: 0;
 	text-align: center;
 	font: 14px "Lucida Grande", "Arial", "Helvetica", "Verdana", "sans-serif";
 	background: #fff url(images/stripe.png) repeat;
@@ -9,10 +10,9 @@ body {
 
 #container {
 	text-align: left;
-	margin-top: 0px;
-	margin-left: auto;
-	margin-right: auto;
-	position: relative;
+	margin: 70px auto 0 auto;
+	padding: 40px 0 36px 0;
+     /*	position: relative; only makes sense to absolute position a child */
 	z-index: 1000;
 	width: 300px;
 	background: #fff;
@@ -20,51 +20,57 @@ body {
 
 #login_logo {
 	width: 200px;
-	height: 75px;
-	margin-left: 50px;
-	margin-top: 70px;
-	padding-top: 10px;
-	margin-bottom: 20px;
-	background: #fff url(../webERP.gif) repeat-x left bottom;
+	height: 51px;
+	margin: 0 0 20px 50px; /* top margin in FF3 is from body but in IE8 is from container */
+	background: #fff url(../webERP.gif); /* -repeat-x left bottom- not needed cause now img equals div */
 }
 
-input{
+form {
+	margin: 0; /* IE8 gives default margin to forms, but FF3 doesn't */
+}
+
+select {
+	width: 200px;
+	margin: 4px 0 11px 50px;
+}
+
+input {
 	width: 200px;
 	border: solid #e3e3e3 1px;
-	height:25px;
-	background:url(images/input_bg.png) repeat-x left top;
-	padding:4px 0;
-	vertical-align:middle;
-	margin-left:50px;
-	margin-bottom:10px;
+	height: 25px;
+	background: url(images/input_bg.png) repeat-x left top;
+	padding: 4px 0 4px 0;
+	vertical-align: middle;
+	margin: 3px 0 10px 50px;
 }
 
 input:hover {
 	border: solid #aad4e3 1px;
-	background-position:left bottom;
+	background-position: left bottom;
 }
 
 input.button {
 	font-weight: bold;
 	color: #fff;
-	background:url(images/menu_bg.png) 0px -8px repeat-x;
+	background: url(images/menu_bg.png) 0px -8px repeat-x;
 	border: solid #e3e3e3 1px;
-	padding: 0px;
-	margin-top: 10px;
-	margin-bottom: 30px;
+	padding: 0;
+	margin: 10px 0 0 50px;
+
 }
 
 input.button:hover {
-	background:url(images/menu_bg_dblue.png) 0px -8px repeat-x;
+	background: url(images/menu_bg_dblue.png) 0px -8px repeat-x; /* works in FF3 but not in IE8 */
 }
 
-label{
-	width:200px;
-	padding-top:7px;
-	padding-left:50px;
+label {
+     /*	width: 200px;       not needed, works for IE8 but not for FF3 */
+     /*	padding-top: 7px;   not needed, works for IE8 but not for FF3 */
+     /*	padding-left: 50px; now using margin instead */
+	margin: 0 0 0 50px;
 }
 
-#demo_text{
-	margin-left:50px;
-	width:200px;
+#demo_text {
+	margin: 0 0 0 50px;
+	width: 200px;
 }
