@@ -1,3 +1,4 @@
+﻿@charset "utf-8";
 /*--------------------------------------------------\
 |    'gel' Stylesheet                               |
 |       v1.1                                        |
@@ -92,23 +93,22 @@ table {
 .table1 {
   width:90%;
   background: #eee;
-  BORDER: black 1px solid;
+  border: 0px 0px 2px 2px #222 solid;
   background: #eee;
   margin: 0 auto;
 }
 /* Table type is used for UI tables type 2 */
 .table2 {
-  width:80%;
+  width:90%;
   background: #eee;
-  border: black 1px solid;
+  border: 0px 0px 2px 2px #222 solid;
   background: #eee;
-  margin: 1 auto;
+  margin: 0 auto;
 }
 .dpTbl {
 	border: solid navy 1px;
 }
 div.centre {
-  display:block;
   margin: 0 auto;
   text-align:center;
 }
@@ -167,7 +167,6 @@ div.error {
 
 div.warn {
 	background: #fa0 url(images/error.png) top left no-repeat;
-	display:block;
 	color: black;
 	border: 1px solid black;
 	PADDING-LEFT: 10px;
@@ -187,7 +186,6 @@ div.warn {
 
 div.success {
 	background: #b9ecb4 url(images/accept.png) top left no-repeat;
-	display:block;
 	color: black;
 	border: 1px solid #008000;
         PADDING-LEFT: 10px;
@@ -207,12 +205,11 @@ div.success {
 
 div.info {
 	background: #fa0 url(images/help.png) top left no-repeat;
-	display:block;
 	color: white;
 	border: 1px solid black;
 	PADDING-LEFT: 10px;
         Z-INDEX: 1;
-        width: 80%;
+        width: 50%;
         FLOAT: none;
         VISIBILITY: visible;
         MARGIN: 0 auto;
@@ -231,7 +228,7 @@ div.csv {
         border: 1px solid black;
         PADDING-LEFT: 3px;
         Z-INDEX: 1;
-        width: 80%;
+        width: 50%;
         FLOAT: none;
         VISIBILITY: visible;
         MARGIN: 0 auto;
@@ -584,25 +581,6 @@ DIV.page_help_text {
         font-size: 10px;
         color: black;
 	TEXT-ALIGN:center;
-}
-/* Used to layout invoices and credit notes in HTML mode */
-DIV.invoice {
-        background: lightgrey;
-        BORDER: #a52a2a 1px solid;
-        padding-top:2px;
-        padding-bottom: 2px;
-        PADDING-LEFT: 2px;
-        Z-INDEX: 1;
-        width: 80%;
-        FLOAT: none;
-        VISIBILITY: visible;
-        MARGIN: 0 auto;
-        POSITION: static;
-        font-family: Verdana, Arial, Helvetica;
-        font-weight: normal;
-        font-size: 10px;
-        color: black;
-        TEXT-ALIGN:center;
 }
 
 DIV.system_check {
