@@ -1,3 +1,4 @@
+﻿@charset "utf-8";
 /*--------------------------------------------------\
 |               |               | default.css       |
 |---------------------------------------------------|
@@ -25,7 +26,10 @@ body {
 	margin-right: 0px;
 	padding: 0px;
 }
-img {border:none;}
+
+img {
+	border:none;
+}
 
 /*links before selection */
 a {
@@ -33,25 +37,27 @@ a {
 	font-size: 12px;
 	font-weight: normal;
 	text-decoration: none;
-	color: #0000FF;
+	color: #00f;
 }
 
 /*links on any screen when mouse is hovering over them */
 a:hover {
-	color: #0000AA;
+	color: #00a;
 	text-decoration: underline;
 }
 
 table {
-  background-color: #fff;
-  margin: 0 auto;
+	background-color: #fff;
+	margin: 0 auto;
 }
+
 .dpTbl {
 	border: solid navy 1px;
 }
+
 div.centre {
-  margin: 0 auto;
-  text-align:center;
+	margin: 0 auto;
+	text-align:center;
 }
 
 /*table detail items default format */
@@ -60,13 +66,15 @@ td {
 	font-size: 12px;
 	text-align: left;
 }
+
 .dpTD {
 	border: 0;
 	width:20px;
-	background-color: #EEEEEE;	
+	background-color: #eee;	
 	text-align:right;
 	cursor:pointer;	
 }
+
 .dpDayHighlight {
 	border: 0;
 	width:20px;
@@ -74,16 +82,19 @@ td {
 	text-align:right;
 	cursor:pointer;	
 }
+
 .dpTDHover {
 	border: 0;
 	width:20px;
-	background-color: #CCCCCC;
+	background-color: #ccc;
 	text-align:right;
 	cursor:pointer;	
 }
+
 td.number {
 	text-align: right;
 }
+
 div.error {
 	background-color:#fddbdb;
 	color: red;
@@ -109,18 +120,18 @@ div.info {
 }
 
 .EvenTableRows {
-	background-color: #CCCCCC;
+	background-color: #ccc;
 }
 
 .OddTableRows {
-	background-color: #EEEEEE;
+	background-color: #eee;
 }
 
 th {
 	font-weight: normal;
 	background-color: #cccce5;
 	font-size: 12px;
-	color: #330000;
+	color: #300;
 	text-align: center;
 }
 
@@ -128,14 +139,15 @@ input {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 }
-input.number{
+
+input.number {
 	text-align: right;
 }
+
 select {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 }
-
 
 #topMenu {
 	width: 100%;
@@ -217,11 +229,12 @@ select {
 	top: 3px; */
 }
 
-#quick_menu{
+#quick_menu {
 	width: 100%;
 	background: #ccc url(images/menu_bg_grey.png) 0px 0px repeat-x;
 	border-bottom: solid 1px #aaa;
 }
+
 /*The main page heading left part before quick menu */
 .quick_menu_left {
 	background: none;
@@ -236,19 +249,19 @@ select {
 }
 
 /*the Select Customer / Item / Supplier Menu tabs */
-.quick_menu_tabs{
+.quick_menu_tabs {
 	background:none;
 	border-collapse:collapse;
-	height:28pt;
+     /*	height:28pt; does nothing since dependends on next class */
 	white-space: nowrap;
 	border: 0px;
 	padding: 0px;
 	text-align: right;
 }
 
-.quick_menu_tab{
-	background: #ccc url(images/button_bg.png) 0px -1px repeat-x;
-	height:28pt;
+.quick_menu_tab {
+	background: #ccc url(images/button_bg.png) repeat-x; /* 0px -1px changed to 0  */
+	height:42px; /* 28 pt */
 	white-space: nowrap;
 	border-left: solid 1px #aaa;
 	border-right: solid 1px #aaa;
@@ -256,7 +269,6 @@ select {
 	padding-right: 10px;
 	text-align: right;
 }
-
 
 /*the Select Customer / Item / Supplier Menu tabs */
 .system_menu_tabs {
@@ -273,7 +285,7 @@ select {
 
 .system_menu_tabs a {
 	font-size: 12px;
-   color: black;
+	color: black;
 }
 
 .system_menu_tabs a:hover {
@@ -301,21 +313,21 @@ select {
 .main_menu_unselected {
 	background: #aaa url(images/menu_bg.png) 0px -10px repeat-x;
 	border: 1px solid #777;
-/*	position: relative; */
+/*	position: relative; it's not a div but a table */
 	text-align: center;
 	white-space: nowrap;
 	height: 16pt;
 }
 
-.main_menu_unselected:hover{
+.main_menu_unselected:hover {
 	background: #aaa url(images/menu_bg_dblue.png) 0px -10px repeat-x;
 }
 
-.main_menu_unselected a{
+.main_menu_unselected a {
 	color: #fff;
 }
 
-.main_menu_unselected a:hover{
+.main_menu_unselected a:hover {
 	color: #0df;
 	text-decoration: none;
 }
@@ -323,16 +335,16 @@ select {
 .main_menu_selected {
 	background: #aaa url(images/menu_bg_blue.png) 0px -10px repeat-x;
 	border: 1px solid #888;
-/*	position: relative; */ 
+/*	position: relative; it's not a div but a table */ 
 	text-align: center;
 	white-space: nowrap;
 }
 
-.main_menu_selected a{
+.main_menu_selected a {
 	color: #fff;
 }
 
-.main_menu_selected a:hover{
+.main_menu_selected a:hover {
 	color: #0df;
 	text-decoration: none;
 }
@@ -341,26 +353,26 @@ span.main_menu_nolink {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 	font-weight: bold;
-	color: #777777;
+	color: #777;
 	text-decoration: none;
 	white-space: nowrap;
 }
 
 .menu_group_img {
-	background-color: #CCCCCC;
+	background-color: #ccc;
 	text-align: center;
 	width: 90px;
 	position: relative;
 	left: 3px;
 }
 
-.menu_group_img img{
+.menu_group_img img {
 	position: relative;
 	top: 10px;
 }
 
 .menu_group_area {
-  border: none
+	border: none
 }
 
 .blank_area table {
@@ -369,12 +381,12 @@ span.main_menu_nolink {
 }
 
 .menu_group_headers {
-  background: #aaa url(images/menu_bg_white.png) 0px -3px repeat-x;
-  width: 25%;
+	background: #aaa url(images/menu_bg_white.png) 0px -3px repeat-x;
+	width: 25%;
 }
 
-.menu_group_headers table{
-  background: #aaa url(images/menu_bg_white.png) 0px -3px repeat-x;
+.menu_group_headers table {
+	background: #aaa url(images/menu_bg_white.png) 0px -3px repeat-x;
 }
 
 .menu_group_headers_text {
@@ -400,7 +412,7 @@ span.menu_group_nolink {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 	font-weight: normal;
-	color: #777777;
+	color: #777;
 	text-decoration: none;
 }
 
@@ -408,7 +420,7 @@ span.menu_group_nolink {
 }
 
 .menu_group_items a:hover {
-	color: #0000aa;
+	color: #00a;
 	text-decoration: underline;
 }
 
@@ -434,31 +446,30 @@ span.menu_group_nolink {
 }
 
 .box1 {
-	border-color: #CCCCCC #333333 #333333 #CCCCCC;
+	border-color: #ccc #333 #333 #ccc;
 	border-width: medium;
 	border-style: ridge;
 }
 
 .promo {
 	font-family: "Times New Roman", Times, serif;
-	color: #000033;
+	color: #003;
 }
 
 .titlebar {
 	font-family: "Times New Roman", Times, serif;
 	font-size: 9px;
 	color: white;
-  	background-color: #336699;
+  	background-color: #369;
 }
 
 .dingbat {
 	font-family: Arial, Helvetica, sans-serif;
-	background-color: #99CC99;
-  color: #006666;
+	background-color: #9c9;
+	color: #066;
 	font-weight: bolder;
 	font-size: medium;
 }
-
 
 input.big {
 	width: 100px;
@@ -483,20 +494,21 @@ select.selecterror {
 .tableheader {
 	font-weight: normal;
 	background-color: #cccce5;
-	color: #330000;
+	color: #300;
 }
 
 .notavailable {
 	font-weight:light;
 	font-style:italic;
-	color:#555555;
+	color:#555;
 }
+
 .label {
 	font-weight:bold;
 	font-style:normal;
 	font-size:12px;
 	color:black;
-	background-color:#cccccc;
+	background-color:#ccc;
 }
 
 .OsRow {
@@ -511,18 +523,18 @@ select.selecterror {
         font-weight: bold;
         font-size: 12px;
         color: black;
-        TEXT-ALIGN:center;
+        text-align:center;
 }
 
-DIV.page_help_text {
-        BORDER: #a52a2a 1px solid;
-        PADDING-LEFT: 3px;
-        Z-INDEX: 1;
+div.page_help_text {
+        border: #a52a2a 1px solid;
+        padding-left: 3px;
+        z-index: 1;
         width: 50%;
-        FLOAT: none;
-        VISIBILITY: visible;
-        MARGIN: 0 auto;
-        POSITION: static;
+        float: none;
+        visibility: visible;
+        margin: 0 auto;
+        position: static;
         background-color: lightgray;
         font-family: Verdana, Arial, Helvetica;
         padding-top: 1px;
@@ -530,5 +542,5 @@ DIV.page_help_text {
         font-weight: normal;
         font-size: 10px;
         color: black;
-        TEXT-ALIGN:center;
+        text-align:center;
 }
