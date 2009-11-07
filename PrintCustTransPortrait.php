@@ -496,7 +496,7 @@ If (isset($PrintPDF)
 	} /* end loop to print invoices */
 
 //	$pdfcode = $pdf->stream();
-	$pdfcode = $pdf->output($_SESSION['reports_dir'] . '/Invoice.pdf', "F");
+	$pdfcode = $pdf->Output('Invoice.pdf', "I");
 	$len = strlen($pdfcode);
 // Start FPDI concatination to append PDF files conditionally to the invoice
 // This part taken from FPDI example page
