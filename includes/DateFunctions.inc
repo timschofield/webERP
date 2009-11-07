@@ -104,7 +104,6 @@ function MonthAndYearFromSQLDate($DateEntry) {
 
 function DayOfWeekFromSQLDate($DateEntry) {
 
-
 	if (strpos($DateEntry,'/')) {
 		$Date_Array = explode('/',$DateEntry);
 	} elseif (strpos ($DateEntry,'-')) {
@@ -118,6 +117,24 @@ function DayOfWeekFromSQLDate($DateEntry) {
 	}
 
 	return date( 'w', mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0]));
+
+}
+
+function DayOfMonthFromSQLDate($DateEntry) {
+
+	if (strpos($DateEntry,'/')) {
+		$Date_Array = explode('/',$DateEntry);
+	} elseif (strpos ($DateEntry,'-')) {
+		$Date_Array = explode('-',$DateEntry);
+	} elseif (strpos ($DateEntry,'.')) {
+		$Date_Array = explode('.',$DateEntry);
+	}
+
+	if (strlen($Date_Array[2])>4) {
+		$Date_Array[2]= substr($Date_Array[2],0,2);
+	}
+
+	return date( 'j', mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0]));
 
 }
 
