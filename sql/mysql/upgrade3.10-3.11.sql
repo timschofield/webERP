@@ -96,4 +96,3 @@ ALTER TABLE `bankaccounts` ADD `bankaccountcode` varchar(50) NOT NULL default ''
 ALTER TABLE `bankaccounts` ADD `invoice` smallint(2) NOT NULL default 0 AFTER `currcode`;
 ALTER TABLE `www_users` ADD `salesman` CHAR( 3 ) NOT NULL AFTER `customerid`;
 ALTER TABLE debtortrans CHANGE shipvia shipvia int(11) NOT NULL DEFAULT 0;
-INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('SalesOrder_FOI', '0');
