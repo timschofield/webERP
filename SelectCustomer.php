@@ -15,8 +15,8 @@ if (!isset($_SESSION['CustomerID'])){ //initialise if not already done
 	$_SESSION['CustomerID']="";
 }
 
-if ($_SESSION['CustomerID'] ==""){
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Customers') . '';
+if ($_SESSION['CustomerID'] ==""  or ($_SESSION['CustomerID'] !="" and  isset($_POST['Search']))){
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Customers') . '';
 }
 
 if (!isset($_SESSION['CustomerType'])){ //initialise if not already done
@@ -101,7 +101,10 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 	if (($_POST['CustPhone']) AND ($_POST['CustType'])) {
 		$msg=_('Search Result: Customer Phone has been used in search') . '<br>';
 	}
-	if ($_POST['CustType'] AND $_POST['CustPhone']=="" AND $_POST['CustCode']=="" AND $_POST['Keywords']==""){
+	if (($_POST['CustAdd']) AND ($_POST['CustType'])) {
+		$msg=_('Search Result: Customer Address has been used in search') . '<br>';
+	}
+	if ($_POST['CustType'] AND $_POST['CustPhone']=="" AND $_POST['CustCode']=="" AND $_POST['Keywords']=="" AND $_POST['CustAdd']==""){
 		$msg=_('Search Result: Customer Type has been used in search') . '<br>';
 	}
 	if (($_POST['Keywords']=="") AND ($_POST['CustCode']=="") AND ($_POST['CustPhone']=="") AND ($_POST['CustType']=="")) {
@@ -190,7 +193,27 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 				ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
 			WHERE custbranch.phoneno " . LIKE  . " '%" . $_POST['CustPhone'] . "%'
 			AND debtorsmaster.typeid = debtortype.typeid";
+
+// Added an option to search by address. I tried having it search address1, address2, address3, and address4, but my knowledge of MYSQL is limited.  This will work okay if you select the CSV Format then you can search though the address1 field. I would like to extend this to all 4 address fields. Gilles Deacur 
+		} elseif (strlen($_POST['CustAdd'])>0){
 			
+			$SQL = "SELECT debtorsmaster.debtorno,
+				debtorsmaster.name,
+				debtorsmaster.address1,
+                                debtorsmaster.address2,
+                                debtorsmaster.address3,
+                                debtorsmaster.address4,
+				custbranch.brname,
+				custbranch.contactname,
+				debtortype.typename,
+				custbranch.phoneno,
+				custbranch.faxno
+			FROM debtorsmaster LEFT JOIN custbranch
+				ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
+			WHERE debtorsmaster.address1 " . LIKE  . " '%" . $_POST['CustAdd'] . "%'
+			AND debtorsmaster.typeid = debtortype.typeid";
+
+// End added search feature. Gilles Deacur			
 		} elseif (strlen($_POST['CustType'])>0){
 			
                         $SQL = "SELECT debtorsmaster.debtorno,
@@ -256,7 +279,8 @@ if ($_POST['Select']!="" or
 		$phone = $myrow[1];
 	}
 	unset($result);
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' ' . $phone . _(' has been selected') . '</p>';
+	// Adding customer encoding. Not needed for general use. This is not a recommended upgrade submission. Gilles Deacur
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName .' - '. $phone . _(' has been selected') . '</p>';
 	echo '<div class="page_help_text">' . _('Select a menu option to operate using this customer') . '.</div><br>';
 
 	$_POST['Select'] = NULL;
@@ -307,7 +331,7 @@ if ($_POST['Select']!="" or
 ?>
 <table cellpadding=3 colspan=4>
 <tr>
-<td><?php echo _('Enter a partial Name'); ?>:</td>
+<td colspan=2><?php echo _('Enter a partial Name'); ?>:</td>
 <td>
 <?php
 if (isset($_POST['Keywords'])) {
@@ -335,7 +359,7 @@ if (isset($_POST['CustCode'])) {
 	<?php
 }
 ?>
-</td>
+</td></tr><tr>
 <td><font size=3><b><?php echo _('OR'); ?></b></font></td>
 <td><?php echo _('Enter a partial Phone Number'); ?>:</td>
 <td>
@@ -351,6 +375,26 @@ if (isset($_POST['CustPhone'])) {
 }
 ?>
 </td>
+
+<!-- Added an option to search by address. This will work okay if you select the CSV Format then you can search though the address1 field. I would like to extend this to all 4 address fields.  This needs implementation into the warnings and other scripts in this page for full effect. I don't plan on doing this but hope somebody else can take over from here. Gilles Deacur -->
+
+<td><font size=3><b><?php echo _('OR'); ?></b></font></td>
+<td><?php echo _('Enter part of the Address'); ?>:</td>
+<td>
+<?php
+if (isset($_POST['CustAdd'])) {
+	?>
+	<input type="Text" name="CustAdd" value="<?php echo $_POST['CustAdd'] ?>" size=20 maxlength=25>
+	<?php
+} else {
+	?>
+	<input type="Text" name="CustAdd" size=20 maxlength=25>
+	<?php
+}
+?>
+</td>
+
+<!-- End addded search feature. Gilles Deacur -->
 
 <td><font size=3><b><?php echo _('OR'); ?></b></font></td>
 <td><?php echo _('Choose a Type'); ?>:</td>
@@ -399,7 +443,7 @@ if (isset($_POST['CustType'])) {
 </td>
 </tr>
 </table>
-<div class='centre'>
+<br /><div class='centre'>
 <input type=submit name="Search" VALUE="<?php echo _('Search Now'); ?>">
 <input type=submit name="CSV" VALUE="<?php echo _('CSV Format'); ?>">
 </div>
