@@ -1,6 +1,7 @@
 <?php
 
-/* $Revision: 1.44 $ */
+/* $Id$ */
+/* $Revision: 1.46 $ */
 
 include('includes/DefineReceiptClass.php');
 
