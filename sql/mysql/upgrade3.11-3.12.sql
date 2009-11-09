@@ -18,7 +18,7 @@ CREATE TABLE `assetmanager` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 UPDATE `www_users` SET `modulesallowed`=(SELECT insert(`modulesallowed`, 15,0,"1,"));
-INSERT INTO config (`confname`, `confvalue`) VALUES ('FrequentlyOrderedItems',0);
+INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FrequentlyOrderedItems',0);
 ALTER TABLE `www_users` CHANGE COLUMN `language` `language` varchar(10) NOT NULL DEFAULT 'en_GB';
 ALTER TABLE `assetmanager` ADD COLUMN `disposalvalue` int(11) NOT NULL DEFAULT 0;
 ALTER TABLE `currencies` ADD COLUMN `decimalplaces` tinyint(3) NOT NULL DEFAULT 2 AFTER `hundredsname`;
