@@ -1,6 +1,7 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Id$ */
+/* $Revision: 1.21 $ */
 
 /* PeterMoulding.com
 20071102 Change from mysql to mysqli;
@@ -159,7 +160,7 @@ function DB_Last_Insert_ID(&$Conn,$table, $fieldname){
 
 function DB_escape_string($String){
 	global $db;
-	return mysqli_real_escape_string($db, htmlspecialchars($String, ENT_COMPAT, _('iso-8859-1')));
+	return mysqli_real_escape_string($db, $String);
 }
 
 function DB_show_tables(&$Conn){
