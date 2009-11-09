@@ -1,7 +1,7 @@
 <?php
 
 /* $Id$ */
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 /*
 *      PO_Header.php
@@ -540,7 +540,7 @@ if (isset($_POST['Select'])) {
 	} else {
 		prnMsg( _('You do not have the authority to raise Purchase Orders for ').
 			$SupplierName.'. '._('Please Consult your system administrator for more information').'. '
-			._('You can setup authorisations ').'<a href=PO_AuthorisationLevels.php>'._('here:').' </a>', 'warn');
+			._('You can setup authorisations ').'<a href=PO_AuthorisationLevels.php>'._('here.').'</a>', 'warn');
 		include('includes/footer.inc');
 		exit;
 	}
