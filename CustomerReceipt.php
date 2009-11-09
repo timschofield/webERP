@@ -780,7 +780,7 @@ if (isset($_SESSION['ReceiptBatch'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Banked') . '" alt="">' . ' ' . $_SESSION['ReceiptBatch']->ReceiptType . ' - ' . _('Banked into the') . " " . $_SESSION['ReceiptBatch']->BankAccountName . ' ' . _('on') . ' ' . $_SESSION['ReceiptBatch']->DateBanked . '</p>';
 
 	echo '<table width="90%" border="1"><tr>
-			<th>' . _('Amount') .'<br/>' . _('Received') . '</th>
+			<th>' . _('Amount') . ' ' . _('Received') . '</th>
 			<th>' . _('Discount') . '</th>
 			<th>' . _('Customer') . '</th>
 			<th>' . _('GL Code') . '</th>
