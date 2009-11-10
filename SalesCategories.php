@@ -1,6 +1,7 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Id$ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 11;
 
@@ -168,7 +169,7 @@ if (isset($_POST['submit'])  && $EditName == 1 ) { // Creating or updating a cat
 // Calculate Path for navigation 
 
 $CategoryPath = '<a href="'.$_SERVER['PHP_SELF'] . '?' . SID . 
-			'&ParentCategory=0">' . htmlentities(_('Main'), ENT_QUOTES, _('ISO-8859-1')) . '</a>' . "&nbsp;\\&nbsp;";
+			'&ParentCategory=0">' . _('Main') . '</a>' . "&nbsp;\\&nbsp;";
 $TempPath = '';
 if (isset($ParentCategory)) {
 	$TmpParentID = $ParentCategory;
@@ -183,7 +184,7 @@ for($Buzy = (isset($TmpParentID) && ($TmpParentID <> ''));
 	if( $result ) {
 		if (DB_num_rows($result) > 0) {
 			$row = DB_fetch_array($result);
-			$LastParentName =  htmlentities($row['salescatname'], ENT_QUOTES, _('ISO-8859-1'));
+			$LastParentName =  $row['salescatname'];
 			$TempPath = '<a href="'.$_SERVER['PHP_SELF'] . '?' . SID . 
 				'&ParentCategory='.$TmpParentID.'">'.$LastParentName . 
 				'</a>'."&nbsp;\\&nbsp;".$TempPath;
@@ -385,9 +386,8 @@ if($result && DB_num_rows($result)) {
 		if ( !array_keys( $stockids, $myrow['stockid']  ) ) {
 			// Only if the StockID is not already selected
 			echo '<option value="'.$myrow['stockid'].'">'.
-				htmlentities($myrow['stockid'], ENT_QUOTES, _('ISO-8859-1')) .
-				'&nbsp;-&nbsp;&quot;'.
-				htmlentities($myrow['description'], ENT_QUOTES, _('ISO-8859-1')) . '&quot;';
+				$myrow['stockid'] . '&nbsp;-&nbsp;&quot;'.
+				$myrow['description'] . '&quot;';
 		}
 	}
 	echo '</select>';
@@ -434,8 +434,8 @@ if($result ) {
 				$k=1;
 			}
 			
-			echo '<td>' . htmlentities($myrow['stockid'], ENT_QUOTES, _('ISO-8859-1')) . '</td>';
-			echo '<td>' . htmlentities($myrow['description'], ENT_QUOTES, _('ISO-8859-1')) . '</td>';
+			echo '<td>' . $myrow['stockid'] . '</td>';
+			echo '<td>' . $myrow['description'] . '</td>';
 			echo '<td><a href="'.$_SERVER['PHP_SELF'] . '?' . SID . 
 					'&ParentCategory='.$ParentCategory.'&DelStockID='.$myrow['stockid'].'">'. 
 					_('Remove').
