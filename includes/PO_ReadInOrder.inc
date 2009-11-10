@@ -77,9 +77,10 @@
 			
 /*now populate the line PO array with the purchase order details records */
 
-              $LineItemsSQL = 'SELECT podetailitem, itemcode,
+              $LineItemsSQL = 'SELECT podetailitem, 
+				itemcode,
 				stockmaster.description,
-				deliverydate,
+				purchorderdetails.deliverydate,
 				itemdescription,
 				glcode,
 				accountname,
@@ -92,13 +93,29 @@
 				completed,
 				jobref,
 				stdcostunit,
+				itemno,
 				stockmaster.controlled,
 				stockmaster.serialised,
-				stockmaster.decimalplaces
-				FROM purchorderdetails LEFT JOIN stockmaster
+				stockmaster.decimalplaces,
+				purchdata.suppliersuom,
+				purchdata.suppliers_partno,
+				subtotal_amount,
+				package,
+				pcunit,
+				nw,
+				gw,
+				cuft,
+				total_quantity,
+				total_amount
+				FROM purchorderdetails 
+					LEFT JOIN stockmaster
 					ON purchorderdetails.itemcode=stockmaster.stockid
+					LEFT JOIN purchorders
+					ON purchorders.orderno=purchorderdetails.orderno
 					LEFT JOIN chartmaster
 					ON purchorderdetails.glcode=chartmaster.accountcode
+					LEFT JOIN purchdata 
+					ON purchdata.stockid=purchorderdetails.itemcode AND purchdata.supplierno=purchorders.supplierno 
 				WHERE purchorderdetails.completed=0
 					AND purchorderdetails.orderno =' . $_GET['ModifyOrderNumber'] . "
 				ORDER BY podetailitem";
@@ -143,7 +160,18 @@
 							$myrow['qtyinvoiced'],
 							$myrow['quantityrecd'],
 							$myrow['accountname'],
-							$myrow['decimalplaces']);
+							$myrow['decimalplaces'],
+							$myrow['itemno'],
+							$myrow['suppliersuom'],
+							$myrow['suppliers_partno'],
+							$myrow['subtotal_amount'],
+							$myrow['package'],
+							$myrow['pcunit'],
+							$myrow['nw'],
+							$myrow['gw'],
+							$myrow['cuft'],
+							$myrow['total_quantity'],
+							$myrow['total_amount']);
 
 				    $_SESSION['PO'.$identifier]->LineItems[$_SESSION['PO'.$identifier]->LinesOnOrder]->PODetailRec = $myrow['podetailitem'];
 	                $_SESSION['PO'.$identifier]->LineItems[$_SESSION['PO'.$identifier]->LinesOnOrder]->StandardCost = $myrow['stdcostunit'];  /*Needed for receiving goods and GL interface */
