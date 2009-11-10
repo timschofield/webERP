@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.3 $ */
+
+/* $Id$ */
+/* $Revision: 1.4 $ */
 
 /* Steve Kitchen */
 
@@ -43,7 +45,7 @@ echo '<br>&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 
 		for ($i=17; $i<=$LangFileEntries; $i++) {
 			if (isset($_POST['msgstr_'.$i])) {
-				$LangFile[$i] = 'msgstr "' . htmlentities($_POST['moduletext_'.$i]) . '"' . "\n";
+				$LangFile[$i] = 'msgstr "' . $_POST['moduletext_'.$i] . '"' . "\n";
 			}
 		}
 		$fpOut = fopen($PathToNewLanguage, 'w');
