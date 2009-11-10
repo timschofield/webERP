@@ -1,5 +1,7 @@
 <?php
 
+/* $Id$ */
+
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -167,7 +169,7 @@ if (isset($_POST['View'])) {
 				<td>' . Query_Type($myrow[2]) . '</td>
 				<td>' . $_SESSION['SQLString']['table'] . '</td>
 				<td>' . $_SESSION['SQLString']['fields'][0] . '</td>
-				<td>' . htmlentities(trim(str_replace("'","",$_SESSION['SQLString']['values'][0]))) . '</td></tr>';
+				<td>' . trim(str_replace("'","",$_SESSION['SQLString']['values'][0])) . '</td></tr>';
 			for ($i=1; $i<sizeof($_SESSION['SQLString']['fields']); $i++) {
 				if (isset($_SESSION['SQLString']['values'][$i]) and (trim(str_replace("'","",$_SESSION['SQLString']['values'][$i])) != "") &
 				(trim($_SESSION['SQLString']['fields'][$i]) != 'password') &
@@ -178,7 +180,7 @@ if (isset($_POST['View'])) {
 						<td></td>
 						<td></td>';
 					echo '<td>'.$_SESSION['SQLString']['fields'][$i].'</td>
-						<td>'.htmlentities(trim(str_replace("'","",$_SESSION['SQLString']['values'][$i])), ENT_QUOTES, _('ISO-8859-1')).'</td>';
+						<td>'. trim(str_replace("'","",$_SESSION['SQLString']['values'][$i])) .'</td>';
 					echo '</tr>';
 				}
 			}
