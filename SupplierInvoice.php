@@ -1,6 +1,7 @@
 <?php
 
-/* $Revision: 1.44 $ */
+/* $Id$ */
+/* $Revision: 1.45 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing 
@@ -471,7 +472,7 @@ then do the updates and inserts to process the invoice entered */
 		$InputError = True;
 		prnMsg(_('The invoice as entered cannot be processed because the there is no suppliers invoice number or reference entered') . '. ' . _('The supplier invoice number must be entered'),'error');
 
-	} elseif (!is_date( $_SESSION['SuppTrans']->TranDate)){
+	} elseif (!Is_Date( $_SESSION['SuppTrans']->TranDate)){
 		$InputError = True;
 		prnMsg( _('The invoice as entered cannot be processed because the invoice date entered is not in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 
