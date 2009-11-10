@@ -1,6 +1,7 @@
 <?php
 
-/* $Revision: 1.43 $ */
+/* $Id$ */
+/* $Revision: 1.44 $ */
 
 $PageSecurity = 3;
 
@@ -97,7 +98,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('The payment discount must be numeric'),'error');
 		$Errors[$i] = 'PymtDiscount';
 		$i++;
-	} elseif (!is_date($_POST['ClientSince'])) {
+	} elseif (!Is_Date($_POST['ClientSince'])) {
 		$InputError = 1;
 		prnMsg( _('The customer since field must be a date in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 		$Errors[$i] = 'ClientSince';
