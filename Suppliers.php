@@ -1,6 +1,7 @@
 <?php
 
-/* $Revision: 1.43 $ */
+/* $Id$ */
+/* $Revision: 1.44 $ */
 
 $PageSecurity = 5;
 
@@ -352,7 +353,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i]='BankRef';
 		$i++;
 	}
-	if (!is_date($_POST['SupplierSince'])) {
+	if (!Is_Date($_POST['SupplierSince'])) {
 		$InputError = 1;
 		prnMsg(_('The supplier since field must be a date in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 		$Errors[$i]='SupplierSince';
