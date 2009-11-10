@@ -1,4 +1,6 @@
 <?php
+
+/* $Id$ */
 /*
 	This class is an extension to the fpdf class using a syntax that the original reports were written in
 	(the R &OS pdf.php class) - due to limitation of this class for foreign character support this wrapper class
@@ -89,7 +91,7 @@ class Cpdf extends PDF_Language {
 	
 	function addText($xb,$yb,$size,$text)//,$angle=0,$wordSpaceAdjust=0) 
 															{
-		$text = html_entity_decode($text);
+		/* $text = html_entity_decode($text); */
 		$this->SetFontSize($size);
 		$this->Text($xb, $this->h-$yb, $text);
 	}
@@ -209,7 +211,7 @@ class Cpdf extends PDF_Language {
 	}
 	
 	function addTextWrap($xb, $yb, $w, $h, $txt, $align='J', $border=0, $fill=0) {
-		$txt = html_entity_decode($txt);
+		/* $txt = html_entity_decode($txt); */
 		$this->x = $xb;
 		$this->y = $this->h - $yb - $h;
 		
