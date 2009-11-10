@@ -1,6 +1,7 @@
 <?php
 
-/* $Revision: 1.42 $ */
+/* $Id$ */
+/* $Revision: 1.43 $ */
 
 $PageSecurity = 4;
 
@@ -604,7 +605,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 		$AllowUpdate = false;
 		prnMsg( _('Cannot Enter this order line') . '<br>' . _('The price entered must be numeric'),'error');
 	}
-	if (!is_date($_POST['ReqDelDate'])){
+	if (!Is_Date($_POST['ReqDelDate'])){
 // mark on 081013
 		$AllowUpdate = False;
 		prnMsg( _('Cannot Enter this order line') . '</b><br>' . _('The date entered must be in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
