@@ -578,15 +578,15 @@ if (isset($_POST['Select'])) {
 	$_POST['SupplierName'] = $myrow[0];
 	$_POST['CurrCode'] = 	$myrow[1];
 //	$_POST['ExRate'] = 	$myrow[2];
-	$_POST['paymentterms']=	$myrow[3];
-	$_POST['suppDelAdd1'] = $myrow[4];
-	$_POST['suppDelAdd2'] = $myrow[5];
-	$_POST['suppDelAdd3'] = $myrow[6];
-	$_POST['suppDelAdd4'] = $myrow[7];
-	$_POST['suppDelAdd5'] = $myrow[8];
-	$_POST['suppDelAdd6'] = $myrow[9];
-	$_POST['supptel'] = $myrow[10];
-	$_POST['port'] = $myrow[12];
+	$_POST['paymentterms']=	$myrow[2];
+	$_POST['suppDelAdd1'] = $myrow[3];
+	$_POST['suppDelAdd2'] = $myrow[4];
+	$_POST['suppDelAdd3'] = $myrow[5];
+	$_POST['suppDelAdd4'] = $myrow[6];
+	$_POST['suppDelAdd5'] = $myrow[7];
+	$_POST['suppDelAdd6'] = $myrow[8];
+	$_POST['supptel'] = $myrow[9];
+	$_POST['port'] = $myrow[10];
 
 	$_SESSION['PO'.$identifier]->SupplierID = $_POST['Select'];
 	$_SESSION['RequireSupplierSelection'] = 0;
@@ -977,7 +977,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 			$_POST['DelAdd5'] = $LocnRow[4];
 			$_POST['DelAdd6'] = $LocnRow[5];
 			$_POST['tel'] = $LocnRow[6];
-			$_POST['Contact'] = $LocnRow[8];
+			$_POST['Contact'] = $LocnRow[7];
 
 			$_SESSION['PO'.$identifier]->Location= $_POST['StkLocation'];
 			$_SESSION['PO'.$identifier]->DelAdd1 = $_POST['DelAdd1'];
