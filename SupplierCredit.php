@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.22 $ */
+
+/* $Id$ */
+/* $Revision: 1.23 $ */
 
 /*This page is very largely the same as the SupplierInvoice.php script
 the same result could have been acheived by using if statements in that script and just having the one
@@ -433,7 +435,7 @@ then do the updates and inserts to process the credit note entered */
 	} elseif (strlen($_SESSION['SuppTrans']->SuppReference) < 1){
 		$InputError = True;
 		prnMsg(_('The credit note as entered cannot be processed because the there is no suppliers credit note number or reference entered') . '. ' . _('The supplier credit note number must be entered'),'error');
-	} elseif (!is_date($_SESSION['SuppTrans']->TranDate)){
+	} elseif (!Is_Date($_SESSION['SuppTrans']->TranDate)){
 		$InputError = True;
 		prnMsg(_('The credit note as entered cannot be processed because the date entered is not in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 	} elseif (DateDiff(Date($_SESSION['DefaultDateFormat']), $_SESSION['SuppTrans']->TranDate, "d") < 0){
