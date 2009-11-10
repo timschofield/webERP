@@ -1,7 +1,7 @@
 <?php
 
 /* $Id$ */
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 /*
 *      PO_Header.php
@@ -540,7 +540,7 @@ if (isset($_POST['Select'])) {
 	} else {
 		prnMsg( _('You do not have the authority to raise Purchase Orders for ').
 			$SupplierName.'. '._('Please Consult your system administrator for more information').'. '
-			._('You can setup authorisations ').'<a href=PO_AuthorisationLevels.php>'._('here.').'</a>', 'warn');
+			._('You can setup authorisations ').'<a href=PO_AuthorisationLevels.php>'._('here').'.</a>', 'warn');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -867,7 +867,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 	echo '</select></td></tr>';
 	
 	echo '<tr><td>' . ('Status Comment');
-	echo ":</td><td><input type=text name='StatComments' size=50></td></tr><tr><td colspan=2><b>" . html_entity_decode($_SESSION['PO'.$identifier]->StatComments) .'</b></td></tr>';
+	echo ":</td><td><input type=text name='StatComments' size=50></td></tr><tr><td colspan=2><b>" . $_SESSION['PO'.$identifier]->StatComments .'</b></td></tr>';
 	echo "<input type=hidden name='statcommentscomplete' value='".$_SESSION['PO'.$identifier]->StatComments."'>";
 	echo '<tr><td><input type="submit" name=UpdateStat value="' . _("Status Update") .'"></td>';
 
