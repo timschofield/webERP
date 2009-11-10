@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.3 $ */
+
+/* $Id$ */
+/* $Revision: 1.4 $ */
 // POReport.php
 // Inquiry on Purchase Orders
 // If Date Type is Order, the main file is purchorderdetails
@@ -72,11 +74,11 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 
 	//first off validate inputs sensible
 
-	if (!is_date($_POST['FromDate'])) {
+	if (!Is_Date($_POST['FromDate'])) {
 		$InputError = 1;
 		prnMsg(_('Invalid From Date'),'error');
 	} 
-	if (!is_date($_POST['ToDate'])) {
+	if (!Is_Date($_POST['ToDate'])) {
 		$InputError = 1;
 		prnMsg(_('Invalid To Date'),'error');
 	}
