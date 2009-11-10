@@ -1,6 +1,7 @@
 <?php
 
-/* $Revision: 1.75 $ */
+/* $Id$ */
+/* $Revision: 1.76 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -828,7 +829,7 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 echo '<br><table><tr>
 	<td>'. _('Deliver To') .':</td>
-	<td><input type=text size=42 maxlength=40 name="DeliverTo" value="' . html_entity_decode($_SESSION['Items'.$identifier]->DeliverTo) . '"></td>
+	<td><input type=text size=42 maxlength=40 name="DeliverTo" value="' . $_SESSION['Items'.$identifier]->DeliverTo . '"></td>
 </tr>';
 
 echo '<tr>
