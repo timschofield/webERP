@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.5 $ */
+
+/* $Id$ */
+/* $Revision: 1.6 $ */
 // MRPCalendar.php
 // Maintains the calendar of valid manufacturing dates for MRP
 
@@ -38,12 +40,12 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 
 	//first off validate inputs sensible
 
-	if (!is_date($_POST['FromDate'])) {
+	if (!Is_Date($_POST['FromDate'])) {
 		$InputError = 1;
 		prnMsg(_('Invalid From Date'),'error');
 	} 
 
-	if (!is_date($_POST['ToDate'])) {
+	if (!Is_Date($_POST['ToDate'])) {
 		$InputError = 1;
 		prnMsg(_('Invalid To Date'),'error');
 
@@ -146,7 +148,7 @@ function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPD
 	      GROUP BY calendardate";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
-	if ($myrow[0] < 1  ||  !is_date($ChangeDate))  {
+	if ($myrow[0] < 1  ||  !Is_Date($ChangeDate))  {
 	    $InputError = 1;
 		prnMsg(_('Invalid Change Date'),'error');
 	}
