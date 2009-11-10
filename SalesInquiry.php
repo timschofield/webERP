@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.4 $ */
+
+/* $Id */
+/* $Revision: 1.5 $ */
 // SalesInquiry.php
 // Inquiry on Sales Orders - If Date Type is Order Date, salesorderdetails is the main table
 // If Date Type is Invoice, stockmoves is the main table
@@ -65,11 +67,11 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 
 	//first off validate inputs sensible
 
-	if (!is_date($_POST['FromDate'])) {
+	if (!Is_Date($_POST['FromDate'])) {
 		$InputError = 1;
 		prnMsg(_('Invalid From Date'),'error');
 	} 
-	if (!is_date($_POST['ToDate'])) {
+	if (!Is_Date($_POST['ToDate'])) {
 		$InputError = 1;
 		prnMsg(_('Invalid To Date'),'error');
 	}
