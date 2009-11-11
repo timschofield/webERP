@@ -556,11 +556,11 @@ function DateAdd ($DateToAddTo,$PeriodString,$NumberPeriods){
   $DateToAddTo = trim($DateToAddTo);
 
 	if (strpos($DateToAddTo,'/')) {
-		$Date_Array = explode('/',$DateToAddTo);
+		$Date_array = explode('/',$DateToAddTo);
 	} elseif (strpos ($DateToAddTo,'-')) {
-		$Date_Array = explode('-',$DateToAddTo);
+		$Date_array = explode('-',$DateToAddTo);
 	} elseif (strpos ($TranDate,'.')) {
-		$Date_Array = explode('.',$DateToAddTo);
+		$Date_array = explode('.',$DateToAddTo);
   }
 
 	if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
