@@ -125,13 +125,24 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 					deladd4,
 					deladd5,
 					deladd6,
+					tel,
+					suppdeladdress1,
+					suppdeladdress2,
+					suppdeladdress3,
+					suppdeladdress4,
+					suppdeladdress5,
+					suppdeladdress6,
+					suppliercontact,
+					supptel,
+					contact,
 					version,
 					realorderno,
 					revised,
 					deliveryby,
 					status,
 					stat_comment,
-					deliverydate)
+					deliverydate,
+					paymentterms)
 				VALUES(" . $_SESSION['PO'.$identifier]->OrderNo . ",
 						'" . $_SESSION['PO'.$identifier]->SupplierID . "',
 						'" . $_SESSION['PO'.$identifier]->Comments . "',
@@ -146,13 +157,23 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						'" . $_SESSION['PO'.$identifier]->DelAdd4 . "',
 						'" . $_SESSION['PO'.$identifier]->DelAdd5 . "',
 						'" . $_SESSION['PO'.$identifier]->DelAdd6 . "',
+						'" . $_SESSION['PO'.$identifier]->tel . "',
+						'" . $_SESSION['PO'.$identifier]->suppDelAdd1 . "',
+						'" . $_SESSION['PO'.$identifier]->suppDelAdd2 . "',
+						'" . $_SESSION['PO'.$identifier]->suppDelAdd3 . "',
+						'" . $_SESSION['PO'.$identifier]->suppDelAdd4 . "',
+						'" . $_SESSION['PO'.$identifier]->suppDelAdd5 . "',
+						'" . $_SESSION['PO'.$identifier]->suppDelAdd6 . "',
+						'" . $_SESSION['PO'.$identifier]->SupplierContact . "',
+						'" . $_SESSION['PO'.$identifier]->supptel. "',
+						'" . $_SESSION['PO'.$identifier]->contact . "',
 						'" . $_SESSION['PO'.$identifier]->version . "',			
-						'" . $_SESSION['PO'.$identifier]->OrderNo2 . "',
 						'" . FormatDateForSQL($date) . "',
 						'" . $_SESSION['PO'.$identifier]->deliveryby . "',				
 						'" . 'Pending' . "',
 						'" . $StatusComment . "',
-						'" . FormatDateForSQL($_SESSION['PO'.$identifier]->deliverydate) . "'
+						'" . FormatDateForSQL($_SESSION['PO'.$identifier]->deliverydate) . "',
+						'" . $_SESSION['PO'.$identifier]->paymentterms. "'
 					)";
 
 			$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
@@ -237,6 +258,17 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						deladd4='" . $_SESSION['PO'.$identifier]->DelAdd4 . "',
 						deladd5='" . $_SESSION['PO'.$identifier]->DelAdd5 . "',
 						deladd6='" . $_SESSION['PO'.$identifier]->DelAdd6 . "',
+						deladd6='" . $_SESSION['PO'.$identifier]->tel . "',
+						suppdeladdress1='" . $_SESSION['PO'.$identifier]->suppDelAdd1 . "',
+						suppdeladdress2='" . $_SESSION['PO'.$identifier]->suppDelAdd2 . "',
+						suppdeladdress3='" . $_SESSION['PO'.$identifier]->suppDelAdd3 . "',
+						suppdeladdress4='" . $_SESSION['PO'.$identifier]->suppDelAdd4 . "',
+						suppdeladdress5='" . $_SESSION['PO'.$identifier]->suppDelAdd5 . "',
+						suppdeladdress6='" . $_SESSION['PO'.$identifier]->suppDelAdd6 . "',
+						suppliercontact='" . $_SESSION['PO'.$identifier]->SupplierContact . "',
+						supptel='" . $_SESSION['PO'.$identifier]->supptel . "',
+						contact='" . $_SESSION['PO'.$identifier]->contact . "',
+						paymentterms='" . $_SESSION['PO'.$identifier]->paymentterms . "',
 						allowprint=" . $_SESSION['PO'.$identifier]->AllowPrintPO . "
 						WHERE orderno = '" . $_SESSION['PO'.$identifier]->OrderNo ."'";
 
@@ -494,7 +526,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 /* Always do the stuff below if not looking for a supplierid */
 
 if(isset($_GET['Delete'])){
-	if($_SESSION['PO'.$identifier]->Some_Already_Received($_POST['LineNo'])==0){
+	if($_SESSION['PO'.$identifier]->Some_Already_Received($_GET['Delete'])==0){
 		$_SESSION['PO'.$identifier]->LineItems[$_GET['Delete']]->Deleted=True;
 		include ('includes/PO_UnsetFormVbls.php');
 	} else {
@@ -764,7 +796,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 				$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 				if ($myrow = DB_fetch_array($result1)){
-					if (is_numeric($myrow['price'])){
+					if (isset($myrow['price']) and is_numeric($myrow['price'])){
 
 						$_SESSION['PO'.$identifier]->add_to_order ($_SESSION['PO'.$identifier]->LinesOnOrder+1,
 							$ItemCode,
@@ -993,6 +1025,9 @@ if (!isset($_GET['Edit'])) {
 		}
 	}
 
+	unset($_POST['Keywords']);
+	unset($_POST['StockCode']);
+
 	if (!isset($_POST['Keywords'])) {
 		$_POST['Keywords']='';
 	}
@@ -1001,8 +1036,6 @@ if (!isset($_GET['Edit'])) {
 		$_POST['StockCode']='';
 	}
 
-	unset($_POST['Keywords']);
-	unset($_POST['StockCode']);
 	echo '</select></td>
 		<td><font size=2>' . _('Enter text extracts in the description') . ":</font></td>
 		<td><input type='text' name='Keywords' size=20 maxlength=25 value='" . $_POST['Keywords'] . "'></td></tr>

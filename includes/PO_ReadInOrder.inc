@@ -1,4 +1,5 @@
 <?php
+/* $Id$ */
 /* $Revision: 1.16 $ */
 /*PO_ReadInOrder.inc is used by the modify existing order code in PO_Header.php and also by GoodsReceived.php */
 
@@ -27,6 +28,16 @@
 				purchorders.deladd4, 
 				purchorders.deladd5, 
 				purchorders.deladd6, 
+				purchorders.tel, 
+				purchorders.suppdeladdress1, 
+				purchorders.suppdeladdress2, 
+				purchorders.suppdeladdress3, 
+				purchorders.suppdeladdress4, 
+				purchorders.suppdeladdress5, 
+				purchorders.suppdeladdress6, 
+				purchorders.suppliercontact,
+				purchorders.supptel,
+				purchorders.contact,
 				purchorders.allowprint, 
 				purchorders.requisitionno, 
 				purchorders.intostocklocation, 
@@ -35,8 +46,10 @@
 				purchorders.status, 
 				purchorders.stat_comment, 
 				purchorders.deliverydate,
+				purchorders.port,
 				suppliers.currcode,
-				locations.managed 
+				locations.managed ,
+				purchorders.paymentterms
 			FROM purchorders 
 				LEFT JOIN locations ON purchorders.intostocklocation=locations.loccode,
 				suppliers 
@@ -47,34 +60,70 @@
        $DbgMsg =  _('The SQL statement that was used and failed was');
        $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg,$DbgMsg);
 
-	if (DB_num_rows($GetOrdHdrResult)==1) {
+	if (DB_num_rows($GetOrdHdrResult)==1 and !isset($_SESSION['PO'.$identifier]->OrderNo )) {
 
-              $myrow = DB_fetch_array($GetOrdHdrResult);
-              $_SESSION['PO'.$identifier]->OrderNo = $_GET['ModifyOrderNumber'];
-              $_SESSION['PO'.$identifier]->SupplierID = $myrow['supplierno'];
-              $_SESSION['PO'.$identifier]->SupplierName = $myrow['suppname'];
-              $_SESSION['PO'.$identifier]->CurrCode = $myrow['currcode'];
-              $_SESSION['PO'.$identifier]->Orig_OrderDate = $myrow['orddate'];
-              $_SESSION['PO'.$identifier]->AllowPrintPO = $myrow['allowprint'];
-              $_SESSION['PO'.$identifier]->DatePurchaseOrderPrinted = $myrow['dateprinted'];
-              $_SESSION['PO'.$identifier]->Comments = $myrow['comments'];
-              $_SESSION['PO'.$identifier]->ExRate = $myrow['rate'];
-              $_SESSION['PO'.$identifier]->Location = $myrow['intostocklocation'];
-              $_SESSION['PO'.$identifier]->Initiator = $myrow['initiator'];
-              $_SESSION['PO'.$identifier]->RequisitionNo = $myrow['requisitionno'];
-              $_SESSION['PO'.$identifier]->DelAdd1 = $myrow['deladd1'];
-              $_SESSION['PO'.$identifier]->DelAdd2 = $myrow['deladd2'];
-              $_SESSION['PO'.$identifier]->DelAdd3 = $myrow['deladd3'];
-              $_SESSION['PO'.$identifier]->DelAdd4 = $myrow['deladd4'];
-              $_SESSION['PO'.$identifier]->DelAdd5 = $myrow['deladd5'];
-              $_SESSION['PO'.$identifier]->DelAdd6 = $myrow['deladd6'];
-              $_SESSION['PO'.$identifier]->Managed = $myrow['managed'];
+            $myrow = DB_fetch_array($GetOrdHdrResult);
+            $_SESSION['PO'.$identifier]->OrderNo = $_GET['ModifyOrderNumber'];
+            $_SESSION['PO'.$identifier]->SupplierID = $myrow['supplierno'];
+            $_SESSION['PO'.$identifier]->SupplierName = $myrow['suppname'];
+            $_SESSION['PO'.$identifier]->CurrCode = $myrow['currcode'];
+            $_SESSION['PO'.$identifier]->Orig_OrderDate = $myrow['orddate'];
+            $_SESSION['PO'.$identifier]->AllowPrintPO = $myrow['allowprint'];
+            $_SESSION['PO'.$identifier]->DatePurchaseOrderPrinted = $myrow['dateprinted'];
+            $_SESSION['PO'.$identifier]->Comments = $myrow['comments'];
+            $_SESSION['PO'.$identifier]->ExRate = $myrow['rate'];
+            $_SESSION['PO'.$identifier]->Location = $myrow['intostocklocation'];
+            $_SESSION['PO'.$identifier]->Initiator = $myrow['initiator'];
+            $_SESSION['PO'.$identifier]->RequisitionNo = $myrow['requisitionno'];
+            $_SESSION['PO'.$identifier]->DelAdd1 = $myrow['deladd1'];
+            $_SESSION['PO'.$identifier]->DelAdd2 = $myrow['deladd2'];
+            $_SESSION['PO'.$identifier]->DelAdd3 = $myrow['deladd3'];
+            $_SESSION['PO'.$identifier]->DelAdd4 = $myrow['deladd4'];
+            $_SESSION['PO'.$identifier]->DelAdd5 = $myrow['deladd5'];
+            $_SESSION['PO'.$identifier]->DelAdd6 = $myrow['deladd6'];
+			$_SESSION['PO'.$identifier]->tel = $myrow['tel'];
+            $_SESSION['PO'.$identifier]->suppDelAdd1 = $myrow['suppdeladdress1'];
+            $_SESSION['PO'.$identifier]->suppDelAdd2 = $myrow['suppdeladdress2'];
+            $_SESSION['PO'.$identifier]->suppDelAdd3 = $myrow['suppdeladdress3'];
+            $_SESSION['PO'.$identifier]->suppDelAdd4 = $myrow['suppdeladdress4'];
+            $_SESSION['PO'.$identifier]->suppDelAdd5 = $myrow['suppdeladdress5'];
+            $_SESSION['PO'.$identifier]->suppDelAdd6 = $myrow['suppdeladdress6'];
+            $_SESSION['PO'.$identifier]->SupplierContact = $myrow['suppliercontact'];
+            $_SESSION['PO'.$identifier]->supptel= $myrow['supptel'];
+            $_SESSION['PO'.$identifier]->contact = $myrow['contact'];
+            $_SESSION['PO'.$identifier]->Managed = $myrow['managed'];
 			$_SESSION['PO'.$identifier]->version = $myrow['version'];
+			$_SESSION['PO'.$identifier]->port = $myrow['port'];
 			$_SESSION['PO'.$identifier]->Stat = $myrow['status'];
 			$_SESSION['PO'.$identifier]->StatComments = $myrow['stat_comment'];
 			$_SESSION['PO'.$identifier]->deliverydate = ConvertSQLDate($myrow['deliverydate']);
 			$_SESSION['ExistingOrder'] = $_SESSION['PO'.$identifier]->OrderNo;
-			
+			$_SESSION['PO'.$identifier]->paymentterms= $myrow['paymentterms'];
+
+			$supplierSQL = "SELECT suppliers.supplierid, 
+					suppliers.suppname,
+					suppliers.address1, 
+					suppliers.address2, 
+					suppliers.address3, 
+					suppliers.address4,
+					suppliers.address5, 
+					suppliers.address6, 
+					suppliers.currcode		 
+				FROM suppliers 
+				WHERE suppliers.supplierid='" . $_SESSION['PO'.$identifier]->SupplierID."'
+				ORDER BY suppliers.supplierid";
+		
+			$ErrMsg = _('The searched supplier records requested cannot be retrieved because');
+			$result_SuppSelect = DB_query($supplierSQL,$db,$ErrMsg);
+
+			if (DB_num_rows($result_SuppSelect)==1){
+				$myrow=DB_fetch_array($result_SuppSelect);
+//				$_POST['Select'] = $myrow['supplierid'];
+			} elseif (DB_num_rows($result_SuppSelect)==0){
+				prnMsg( _('No supplier records contain the selected text') . ' - ' . 
+					_('please alter your search criteria and try again'),'info');
+			}
+
 /*now populate the line PO array with the purchase order details records */
 
               $LineItemsSQL = 'SELECT podetailitem, 

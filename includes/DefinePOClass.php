@@ -1,4 +1,5 @@
 <?php
+/* $Id$ */
 /* $Revision: 1.15 $ */
 /* Definition of the PurchOrder class to hold all the information for a purchase order and delivery
 */
@@ -17,6 +18,15 @@ Class PurchOrder {
 	var $DelAdd4;
 	var $DelAdd5;
 	var $DelAdd6;
+	var $tel;
+	var $suppDelAdd1;
+	var $suppDelAdd2;
+	var $suppDelAdd3;
+	var $suppDelAdd4;
+	var $suppDelAdd5;
+	var $suppDelAdd6;
+	var $SupplierContact;
+	var $supptel;
 	var $Comments;
 	var $Location;
 	Var $Managed;
@@ -35,6 +45,9 @@ Class PurchOrder {
 	var $AllowPrintPO;
 	var $revised;
 	var $deliveryby;
+	var $paymentterms;
+	var $contact;
+	var $port;
 	
 	function PurchOrder(){
 	/*Constructor function initialises a new purchase order object */
@@ -171,8 +184,8 @@ Class PurchOrder {
 
 	function Some_Already_Received($LineNo){
 		/* Checks if there have been deliveries or amounts invoiced against a specific line item */
-		if (count($this->LineItems)>0){
-		   if ($this->LineItems[$LineNo]->QtyReceived !=0 || $this->LineItems[$LineNo]->QtyInvoiced !=0){
+		if (count($this->LineItems)>0 and isset($this->LineItems[$LineNo])){
+		   if ($this->LineItems[$LineNo]->QtyReceived !=0 or $this->LineItems[$LineNo]->QtyInv !=0){
 			return 1;
 		   }
 		}

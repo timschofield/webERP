@@ -242,6 +242,12 @@ if (isset($_POST['EnterLines'])){
 	$_SESSION['PO'.$identifier]->DelAdd4 = $_POST['DelAdd4'];
 	$_SESSION['PO'.$identifier]->DelAdd5 = $_POST['DelAdd5'];
 	$_SESSION['PO'.$identifier]->DelAdd6 = $_POST['DelAdd6'];
+	$_SESSION['PO'.$identifier]->suppDelAdd1 = $_POST['suppDelAdd1'];
+	$_SESSION['PO'.$identifier]->suppDelAdd2 = $_POST['suppDelAdd2'];
+	$_SESSION['PO'.$identifier]->suppDelAdd3 = $_POST['suppDelAdd3'];
+	$_SESSION['PO'.$identifier]->suppDelAdd4 = $_POST['suppDelAdd4'];
+	$_SESSION['PO'.$identifier]->suppDelAdd5 = $_POST['suppDelAdd5'];
+	$_SESSION['PO'.$identifier]->supptel= $_POST['supptel'];
 	$_SESSION['PO'.$identifier]->Initiator = $_POST['Initiator'];
 	$_SESSION['PO'.$identifier]->RequisitionNo = $_POST['Requisition'];
 	$_SESSION['PO'.$identifier]->version = $_POST['version'];
@@ -251,6 +257,10 @@ if (isset($_POST['EnterLines'])){
 	$_SESSION['PO'.$identifier]->Comments = $_POST['Comments'];
 	$_SESSION['PO'.$identifier]->deliveryby = $_POST['deliveryby'];
 	$_SESSION['PO'.$identifier]->StatusMessage = $_POST['StatComments'];
+	$_SESSION['PO'.$identifier]->paymentterms = $_POST['paymentterms'];
+	$_SESSION['PO'.$identifier]->contact = $_POST['Contact'];
+	$_SESSION['PO'.$identifier]->tel = $_POST['tel'];
+	$_SESSION['PO'.$identifier]->port = $_POST['port'];
 	
 	if (isset($_POST['RePrint']) and $_POST['RePrint']==1){
 
@@ -269,7 +279,9 @@ if (isset($_POST['EnterLines'])){
 	echo '<p>';
 	prnMsg(_('You should automatically be forwarded to the entry of the purchase order line items page') . '. ' . 
 		_('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . 
-		"<a href='$rootpath/PO_Items.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue'),'info');
+		"<a href='$rootpath/PO_Items.php?" . SID. 'identifier='.$identifier . "'>" . _('click here') . '</a> ' . _('to continue'),'info');
+		include('includes/footer.inc');
+		exit;
 } /* end of if isset _POST'EnterLines' */
 
 echo '<a href="'. $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . "identifier=".$identifier.'">'. _('Back to Purchase Orders'). '</a><br>';
@@ -465,6 +477,12 @@ if((!isset($_POST['SearchSuppliers']) or $_POST['SearchSuppliers']=='' ) AND
 	$_POST['DelAdd4']=$_SESSION['PO'.$identifier]->DelAdd4;
 	$_POST['DelAdd5']=$_SESSION['PO'.$identifier]->DelAdd5;
 	$_POST['DelAdd6']=$_SESSION['PO'.$identifier]->DelAdd6;
+	$_POST['suppDelAdd1']=$_SESSION['PO'.$identifier]->suppDelAdd1;
+	$_POST['suppDelAdd2']=$_SESSION['PO'.$identifier]->suppDelAdd2;
+	$_POST['suppDelAdd3']=$_SESSION['PO'.$identifier]->suppDelAdd3;
+	$_POST['suppDelAdd4']=$_SESSION['PO'.$identifier]->suppDelAdd4;
+	$_POST['suppDelAdd5']=$_SESSION['PO'.$identifier]->suppDelAdd5;
+	$_POST['suppDelAdd6']=$_SESSION['PO'.$identifier]->suppDelAdd6;
 
 }
 
@@ -509,7 +527,7 @@ if (isset($_POST['Select'])) {
 	$SupplierName = $myrow[0];
 		// added for suppliers lookup fields
 
-	if ($authmyrow=DB_fetch_array($authresult) and $authmyrow[0]==0) {
+	if (($authmyrow=DB_fetch_array($authresult) and $authmyrow[0]==0 ) ) {
 		$_POST['SupplierName'] = $myrow[0];
 		$_POST['CurrCode'] = 	$myrow[1];
 		$_POST['ExRate'] = 	$myrow[2];
@@ -574,35 +592,35 @@ if (isset($_POST['Select'])) {
 	
 
 	// added for suppliers lookup fields
+	if (!isset($_SESSION['PO'.$identifier])) {
+		$_POST['SupplierName'] = $myrow[0];
+		$_POST['CurrCode'] = 	$myrow[1];
+		$_POST['paymentterms']=	$myrow[2];
+		$_POST['suppDelAdd1'] = $myrow[3];
+		$_POST['suppDelAdd2'] = $myrow[4];
+		$_POST['suppDelAdd3'] = $myrow[5];
+		$_POST['suppDelAdd4'] = $myrow[6];
+		$_POST['suppDelAdd5'] = $myrow[7];
+		$_POST['suppDelAdd6'] = $myrow[8];
+		$_POST['supptel'] = $myrow[9];
+		$_POST['port'] = $myrow[10];
 
-	$_POST['SupplierName'] = $myrow[0];
-	$_POST['CurrCode'] = 	$myrow[1];
-//	$_POST['ExRate'] = 	$myrow[2];
-	$_POST['paymentterms']=	$myrow[2];
-	$_POST['suppDelAdd1'] = $myrow[3];
-	$_POST['suppDelAdd2'] = $myrow[4];
-	$_POST['suppDelAdd3'] = $myrow[5];
-	$_POST['suppDelAdd4'] = $myrow[6];
-	$_POST['suppDelAdd5'] = $myrow[7];
-	$_POST['suppDelAdd6'] = $myrow[8];
-	$_POST['supptel'] = $myrow[9];
-	$_POST['port'] = $myrow[10];
-
-	$_SESSION['PO'.$identifier]->SupplierID = $_POST['Select'];
-	$_SESSION['RequireSupplierSelection'] = 0;
-	$_SESSION['PO'.$identifier]->SupplierName = $_POST['SupplierName'];
-	$_SESSION['PO'.$identifier]->CurrCode = $_POST['CurrCode'];
-	$_SESSION['PO'.$identifier]->ExRate = $_POST['ExRate'];
-	$_SESSION['PO'.$identifier]->paymentterms = $_POST['paymentterms'];
-	$_SESSION['PO'.$identifier]->suppDelAdd1 = $_POST['suppDelAdd1'];
-	$_SESSION['PO'.$identifier]->suppDelAdd2 = $_POST['suppDelAdd2'];
-	$_SESSION['PO'.$identifier]->suppDelAdd3 = $_POST['suppDelAdd3'];
-	$_SESSION['PO'.$identifier]->suppDelAdd4 = $_POST['suppDelAdd4'];
-	$_SESSION['PO'.$identifier]->suppDelAdd5 = $_POST['suppDelAdd5'];
-	$_SESSION['PO'.$identifier]->suppDelAdd6 = $_POST['suppDelAdd6'];
-	$_SESSION['PO'.$identifier]->supptel = $_POST['supptel'];
-	$_SESSION['PO'.$identifier]->port = $_POST['port'];
+		$_SESSION['PO'.$identifier]->SupplierID = $_POST['Select'];
+		$_SESSION['RequireSupplierSelection'] = 0;
+		$_SESSION['PO'.$identifier]->SupplierName = $_POST['SupplierName'];
+		$_SESSION['PO'.$identifier]->CurrCode = $_POST['CurrCode'];
+		$_SESSION['PO'.$identifier]->ExRate = $_POST['ExRate'];
+		$_SESSION['PO'.$identifier]->paymentterms = $_POST['paymentterms'];
+		$_SESSION['PO'.$identifier]->suppDelAdd1 = $_POST['suppDelAdd1'];
+		$_SESSION['PO'.$identifier]->suppDelAdd2 = $_POST['suppDelAdd2'];
+		$_SESSION['PO'.$identifier]->suppDelAdd3 = $_POST['suppDelAdd3'];
+		$_SESSION['PO'.$identifier]->suppDelAdd4 = $_POST['suppDelAdd4'];
+		$_SESSION['PO'.$identifier]->suppDelAdd5 = $_POST['suppDelAdd5'];
+		$_SESSION['PO'.$identifier]->suppDelAdd6 = $_POST['suppDelAdd6'];
+		$_SESSION['PO'.$identifier]->supptel = $_POST['supptel'];
+		$_SESSION['PO'.$identifier]->port = $_POST['port'];
 	// end of added for suppliers lookup fields
+	}
 }
 
 // MADE THE SUPPILERS BECOME SELECT MENU NOT BY SEARCHING By Hudson @2008/6/30
@@ -739,6 +757,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 	    $_POST['ExRate']=$_SESSION['PO'.$identifier]->ExRate;
 	    $_POST['Comments']=$_SESSION['PO'.$identifier]->Comments;
 	    $_POST['deliveryby']=$_SESSION['PO'.$identifier]->deliveryby;
+	    $_POST['paymentterms']=$_SESSION['PO'.$identifier]->paymentterms;
 	}
 
 // move apart by Hudson
@@ -937,7 +956,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 			$_POST['Contact'] = $LocnRow[7];
 
 			$_SESSION['PO'.$identifier]->Location= $_POST['StkLocation'];
-			$_SESSION['PO'.$identifier]->SupplierContact= $_POST['SupplierContact'];
+//			$_SESSION['PO'.$identifier]->SupplierContact= $_POST['SupplierContact'];
 			$_SESSION['PO'.$identifier]->DelAdd1 = $_POST['DelAdd1'];
 			$_SESSION['PO'.$identifier]->DelAdd2 = $_POST['DelAdd2'];
 			$_SESSION['PO'.$identifier]->DelAdd3 = $_POST['DelAdd3'];
@@ -1062,7 +1081,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 
 	while ( $SuppCoRow=DB_fetch_array($SuppCoResult)){
 		if ($_POST['SupplierContact'] == $SuppCoRow['contact'] OR ($_POST['SupplierContact']=='' 
-			AND $SuppCoRow['contact']==$_SESSION['SupplierContact'])){
+			AND $SuppCoRow['contact']==$_SESSION['PO'.$identifier]->SupplierContact)){
 			//if (1) {
 			echo "<option selected value='" . $SuppCoRow['contact'] . "'>" . $SuppCoRow['contact'];
 		} else {
@@ -1089,12 +1108,12 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 		</td><td><input type='text' name=suppDelAdd4 size=41 maxlength=40 value='" . $_POST['suppDelAdd4'] . "'></td>
 		</tr>";
 	echo '<tr><td>' . _('Phone') . ":
-		</td><td><input type='text' name=supptel size=31 maxlength=30 value='" . $_POST['supptel'] . "'></td>
+		</td><td><input type='text' name=supptel size=31 maxlength=30 value='" . $_SESSION['PO'.$identifier]->supptel  . "'></td>
 		</tr>";
 
 	$result=DB_query('SELECT terms, termsindicator FROM paymentterms', $db);
 
-	echo '<tr><td>' . _('Payment Terms') . ":</td><td><select name='PaymentTerms'>";
+	echo '<tr><td>' . _('Payment Terms') . ":</td><td><select name='paymentterms'>";
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['termsindicator']==$_SESSION['PO'.$identifier]->paymentterms) {
@@ -1106,7 +1125,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 	DB_data_seek($result, 0);
 	echo '</select></td></tr>';
 	
-	$result=DB_query("SELECT loccode, locationname FROM locations WHERE loccode='" . $_POST['port'] ."'", $db);
+	$result=DB_query("SELECT loccode, locationname FROM locations WHERE loccode='" . $_SESSION['PO'.$identifier]->port."'", $db);
 	$myrow = DB_fetch_array($result);
 	$_POST['port'] = $myrow['locationname'];
 
