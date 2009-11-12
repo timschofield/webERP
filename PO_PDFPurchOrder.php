@@ -218,7 +218,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$SuppResult = DB_query($sqlsupp,$db);
 			$SuppDescRow = DB_fetch_row($SuppResult);	
 			if($SuppDescRow[0]==""){
-				$Desc=$POLine[itemdescription];
+				$Desc=$POLine['itemdescription'];
 			}else{
 				$Desc="".$SuppDescRow['0']." - ".$POLine['itemdescription']."";
 			}
