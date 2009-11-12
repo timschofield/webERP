@@ -9,6 +9,8 @@
 	$_SESSION['db']=$db;
 
 	include 'api_errorcodes.php';
+	/* Include SQL_CommonFunctions.inc, to use GetNextTransNo().*/
+	include($PathPrefix.'includes/SQL_CommonFunctions.inc');
 
 /* Get weberp authentication, and return a valid database
    connection */

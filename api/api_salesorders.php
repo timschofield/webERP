@@ -329,7 +329,7 @@
 		}
 		$FieldNames='';
 		$FieldValues='';
-		$OrderHeader['orderno'] = GetNextTransNo(30);
+		$OrderHeader['orderno'] = GetNextTransNo(30,$db);
 		foreach ($OrderHeader as $key => $value) {
 			$FieldNames.=$key.', ';
 			$FieldValues.='"'.$value.'", ';
