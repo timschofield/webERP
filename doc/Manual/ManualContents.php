@@ -793,7 +793,7 @@ if (!isset($_POST['Submit'])) {
 <?php
   if (!isset($_POST['Submit'])) {
 ?>
-              <input type="checkbox" name="SelectNewScripts">
+              <input type="checkbox" name="SelectAPI">
               <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=API'; ?>">Development - API</A>
 <?php
   } else {
@@ -982,7 +982,7 @@ if ($_GET['ViewTopic'] == 'NewScripts' OR isset($_POST['SelectNewScripts'])) {
   include('ManualNewScripts.html');
 }
 
-if ($_GET['ViewTopic'] == 'API' OR isset($_POST['API'])) {
+if ($_GET['ViewTopic'] == 'API' OR isset($_POST['SelectAPI'])) {
   include('ManualAPIFunctions.php');
 }
 
