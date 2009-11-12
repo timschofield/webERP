@@ -322,7 +322,7 @@
 			$Errors=VerifyFromStockLocation($OrderHeader['fromstkloc'], sizeof($Errors), $Errors, $db);
 		}
 		if (isset($OrderHeader['deliverydate'])){
-			$Errors=VerifyDeliveryDate($OrderHeader['deliverydate'], sizeof($Errors), $Errors);
+			$Errors=VerifyDeliveryDate($OrderHeader['deliverydate'], sizeof($Errors), $Errors, $db);
 		}
 		if (isset($OrderHeader['quotation'])){
 			$Errors=VerifyQuotation($OrderHeader['quotation'], sizeof($Errors), $Errors);
@@ -418,7 +418,7 @@
 			$Errors=VerifyFromStockLocation($OrderHeader['fromstkloc'], sizeof($Errors), $Errors, $db);
 		}
 		if (isset($OrderHeader['deliverydate'])){
-			$Errors=VerifyDeliveryDate($OrderHeader['deliverydate'], sizeof($Errors), $Errors);
+			$Errors=VerifyDeliveryDate($OrderHeader['deliverydate'], sizeof($Errors), $Errors, $db);
 		}
 		if (isset($OrderHeader['quotation'])){
 			$Errors=VerifyQuotation($OrderHeader['quotation'], sizeof($Errors), $Errors);
