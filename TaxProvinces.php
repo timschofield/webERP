@@ -117,7 +117,7 @@ if (isset($_POST['submit'])) {
 	} else {
 		$myrow = DB_fetch_row($result);
 		$OldTaxProvinceName = $myrow[0];
-		$sql= "SELECT COUNT(*) FROM locations WHERE taxprovinceid " . LIKE . " '" . $OldTaxProvinceName . "'";
+		$sql= "SELECT COUNT(*) FROM locations WHERE taxprovinceid =   " . $SelectedTaxProvince;
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
