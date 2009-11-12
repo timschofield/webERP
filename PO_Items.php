@@ -136,7 +136,6 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 					supptel,
 					contact,
 					version,
-					realorderno,
 					revised,
 					deliveryby,
 					status,
