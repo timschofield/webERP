@@ -362,7 +362,7 @@ if (isset($SelectedBankAccount)) {
 		}
 	}//end while loop
 } else {
-	echo '<option VALUE=0>'._('Yes').'</option><option value=1>'._('No').'</option>';
+	echo '<option VALUE=1>'._('Yes').'</option><option value=0>'._('No').'</option>';
 }
 
 echo '</select></td>';
