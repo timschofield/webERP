@@ -471,7 +471,6 @@
 				 branchcode="'.$BranchDetails['branchcode'].'"';
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
-			echo DB_error_no($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
