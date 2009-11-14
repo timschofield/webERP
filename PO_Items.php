@@ -883,7 +883,7 @@ echo "<form name=form1 action='" . $_SERVER['PHP_SELF'] . "?" . SID . "identifie
 
 if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . 
-		_('Purchase Order') . '" alt="">';
+		_('Purchase Order') . '" alt="">  '.$_SESSION['PO'.$identifier]->SupplierName;
 		
 	if (isset($_SESSION['PO'.$identifier]->OrderNo)) {
 		echo  ' ' . _('Purchase Order') .' '. $_SESSION['PO'.$identifier]->OrderNo ;

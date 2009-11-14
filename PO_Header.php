@@ -728,10 +728,76 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 		echo '<br><table class="table_index"><tr><td class="menu_group_item">';
 
 		/* the link */
-		echo '<li><a href="'.$rootpath.'/PO_Items.php?' . SID . 'NewItem=' . $purch_item . "?identifier=".$identifier. '">' . 
+		echo '<li><a href="'.$rootpath.'/PO_Items.php?' . SID . 'NewItem=' . $purch_item . "&identifier=".$identifier. '">' . 
 			_('Enter Line Item to this purchase order') . '</a></li>';
 		/**/
 		echo "</td></tr></table></div><br>";
+		
+		if (isset($_GET['Quantity'])) {
+			$Qty=$_GET['Quantity'];
+		} else {
+			$Qty=1;
+		}
+
+		$sql='SELECT 
+					controlled,
+					serialised,
+					description,
+					units ,
+					decimalplaces
+				FROM stockmaster
+				WHERE stockid="'.$purch_item.'" ';
+		$result=DB_query($sql, $db);
+		$stockmasterrow=DB_fetch_array($result);
+
+		$sql='SELECT 
+					price,
+					suppliersuom,
+					suppliers_partno
+				FROM purchdata
+				WHERE supplierno="'.$_GET['SelectedSupplier'] .'"
+				AND stockid="'.$purch_item.'" ';
+		$result=DB_query($sql, $db);
+		$purchdatarow=DB_fetch_array($result);
+
+		$sql='SELECT 
+					stockact
+				FROM stockcategory
+				LEFT JOIN stockmaster ON stockmaster.categoryid=stockcategory.categoryid
+				WHERE stockid="'.$purch_item.'" ';
+		$result=DB_query($sql, $db);
+		$categoryrow=DB_fetch_array($result);
+
+		$_SESSION['PO'.$identifier]->add_to_order(
+				1,
+				$purch_item,
+				$stockmasterrow['serialised'],
+				$stockmasterrow['controlled'],
+				$Qty,
+				$stockmasterrow['description'],
+				$purchdatarow['price'],
+				$stockmasterrow['units'],
+				$categoryrow['stockact'],
+				date($_SESSION['DefaultDateFormat']),
+				0,
+				0,
+				'',
+				0,
+				0,
+				'',
+				$stockmasterrow['decimalplaces'],
+				$purch_item,
+				$purchdatarow['suppliersuom'],
+				$purchdatarow['suppliers_partno'],
+				$Qty*$purchdatarow['price'],
+				'',
+				0,
+				0,
+				0,
+				0,
+				$Qty,
+				$Qty*$purchdatarow['price']);
+		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/PO_Items.php?' . SID . 'identifier='.$identifier. "'>";
 	}
 	
 	/*Set up form for entry of order header stuff */

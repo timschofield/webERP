@@ -800,7 +800,12 @@ $PropertyOptionValue . '</option>';
             while ($SuppRow = DB_fetch_array($SuppResult)) {
                 /**/
                 //
-                echo '<a href="' . $rootpath . '/PO_Header.php?' . SID . '&NewOrder=Yes' . '&SelectedSupplier=' . $SuppRow['supplierid'] . '&StockID=' . $StockID . '">' . _('Purchase this Item from') . ' ' . $SuppRow['suppname'] . ' (default)</a><br>';
+				if ($myrow['eoq']==0) {
+					$EOQ=1;
+				} else {
+					$EOQ=$myrow['eoq'];
+				}
+                echo '<a href="' . $rootpath . '/PO_Header.php?' . SID . '&NewOrder=Yes' . '&SelectedSupplier=' . $SuppRow['supplierid'] . '&StockID=' . $StockID . '&Quantity='.$EOQ.'">' . _('Purchase this Item from') . ' ' . $SuppRow['suppname'] . ' (default)</a><br>';
                 /**/
             } /* end of while */
         } /* end of $myrow['mbflag'] == 'B' */
