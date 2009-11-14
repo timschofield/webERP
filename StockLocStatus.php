@@ -244,7 +244,7 @@ if (isset($_POST['ShowStatus'])){
 		if (($_POST['BelowReorderQuantity']=='Below' AND ($myrow['quantity']-$myrow['reorderlevel']-$DemandQty)<0) 
 				OR $_POST['BelowReorderQuantity']=='All' ){
 			
-			printf("<td><a target='_blank' href='StockStatus.php?StockID=%s'>%s</td>
+			printf("<td><a target='_blank' href='StockStatus.php?StockID=%s'>%s</a></td>
 					<td>%s</td>
 					<td align=right>%s</td>
 					<td align=right>%s</td>
