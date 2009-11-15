@@ -75,9 +75,9 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 				$_SESSION['Module']=$ModuleLink[$i];
 			}
 			if ($ModuleLink[$i] == $_SESSION['Module']){
-				echo "<td class='main_menu_selected'><a href='". $_SERVER['PHP_SELF'] .'?'. SID . '&Application='. $ModuleLink[$i] . "'>" . $ModuleList[$i] . '</a></td>';
+				echo '<td class="main_menu_selected"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Application='. $ModuleLink[$i] . '">' . $ModuleList[$i] . '</a></td>';
 			} else {
-				echo "<td class='main_menu_unselected'><a href='". $_SERVER['PHP_SELF'] .'?'. SID . '&Application='. $ModuleLink[$i] . "'>" . $ModuleList[$i] . '</a></td>';
+				echo '<td class="main_menu_unselected"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Application='. $ModuleLink[$i] . '">' . $ModuleList[$i] . '</a></td>';
 			}
 		}
 		$i++;
