@@ -72,12 +72,13 @@ if (strlen($Date_Array[2])>4) {
 $StartDateSQL =  date('Y-m-d', mktime(0,0,0, (int)$Date_Array[1],1,(int)$Date_Array[0]));
 
 $sql = "SELECT 	trandate,
-				SUM((price*(1-discountpercent) * -qty)) as salesvalue,
+				SUM(price*(1-discountpercent)* (-qty)) as salesvalue,
 				SUM((standardcost * -qty)) as cost
 			FROM stockmoves
 				INNER JOIN custbranch ON stockmoves.debtorno=custbranch.debtorno 
 					AND stockmoves.branchcode=custbranch.branchcode
 			WHERE (stockmoves.type=10 or stockmoves.type=11)
+			AND show_on_inv_crds =1
 			AND trandate>='" . $StartDateSQL . "'
 			AND trandate<='" . $EndDateSQL . "'";
 
@@ -151,14 +152,14 @@ if ($ColumnCounter!=0) {
 }
 
 if ($CumulativeTotalSales !=0){
-	$AverageGPPercent = ($CumulativeTotalSales - $CumulativeTotalCost)/$CumulativeTotalSales;
+	$AverageGPPercent = ($CumulativeTotalSales - $CumulativeTotalCost)*100/$CumulativeTotalSales;
 	$AverageDailySales = $CumulativeTotalSales/$BilledDays;
 } else {
 	$AverageGPPercent = 0;
 	$AverageDailySales = 0;
 }
 
-echo '<td colspan=7>' . _('Total Sales for month') . ': ' . number_format($CumulativeTotalSales,0) . ' ' . _('GP%') . ': ' . number_format($AverageGPPercent,1) . ' ' . _('Avg Daily Sales') . ': ' . number_format($AverageDailySales,0) . '</td></tr>';
+echo '<td colspan=7>' . _('Total Sales for month') . ': ' . number_format($CumulativeTotalSales,0) . ' ' . _('GP%') . ': ' . number_format($AverageGPPercent,1) . '% ' . _('Avg Daily Sales') . ': ' . number_format($AverageDailySales,0) . '</td></tr>';
 
 echo '</table>';
 

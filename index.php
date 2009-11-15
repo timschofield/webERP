@@ -2,7 +2,6 @@
 
 /* $Revision: 1.89 $ */
 
-
 $PageSecurity = 1;
 
 include('includes/session.inc');
@@ -157,7 +156,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 								<?php echo "<a href='" . $rootpath . '/PDFOrdersInvoiced.php?' . SID . "'><LI>" . _('Orders Invoiced Reports') . '</LI></a>'; ?>
 							</td>
 							</tr>
-
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/DailySalesInquiry.php?' . SID . "'><LI>" . _('Daily Sales Inquiry') . '</LI></a>'; ?>
+							</td>
+							</tr>
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . '/PDFDeliveryDifferences.php?' . SID . "'><LI>" . _('Order Delivery Differences Report') . '</LI></a>'; ?>

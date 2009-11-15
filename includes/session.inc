@@ -155,8 +155,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 					$i++;
 				}
 			}
-
-
+			
 			echo '<meta http-equiv="refresh" content="0" url="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 			exit;
 		} else {     // Incorrect password
