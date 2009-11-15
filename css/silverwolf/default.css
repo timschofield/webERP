@@ -94,6 +94,22 @@ td.number {
 	text-align: right;
 }
 
+.EvenTableRows {
+	background-color: #ccc;
+}
+
+.OddTableRows {
+	background-color: #eee;
+}
+
+th {
+	font-weight: normal;
+	background-color: #cccce5;
+	font-size: 12px;
+	color: #300;
+	text-align: center;
+}
+
 div.error {
 	background-color:#fddbdb;
 	color: red;
@@ -118,22 +134,6 @@ div.info {
 	border: 1px solid navy;
 }
 
-.EvenTableRows {
-	background-color: #ccc;
-}
-
-.OddTableRows {
-	background-color: #eee;
-}
-
-th {
-	font-weight: normal;
-	background-color: #cccce5;
-	font-size: 12px;
-	color: #300;
-	text-align: center;
-}
-
 input {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
@@ -143,9 +143,25 @@ input.number {
 	text-align: right;
 }
 
+input:hover{
+}
+
 select {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
+}
+
+font.good {
+    font-weight: bold;
+    color: green;
+}
+
+font.bad {
+    font-weight: bold;
+    color:red;
+}
+
+font.header_title {
 }
 
 #topMenu {
@@ -195,6 +211,52 @@ select {
 .login {
 	background-color: white;
 	border: none;
+}
+
+textarea{
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 12px;
+}
+
+textarea:hover{
+}
+/* Table type is used for UI tables type 1 */
+.table1 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  background: #eee;
+  margin: 0 auto;
+}
+/* Table type is used for UI tables type 2 */
+.table2 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  background: #eee;
+  margin: 0 auto;
+}
+input.address3 {
+	text-transform: uppercase;
+}
+
+div.csv {
+        background:lightgray;
+        color: black;
+        border: 1px solid black;
+        PADDING-LEFT: 3px;
+        Z-INDEX: 1;
+        width: 50%;
+        FLOAT: none;
+        VISIBILITY: visible;
+        MARGIN: 0 auto;
+        POSITION: static;
+        font-family: Verdana, Arial, Helvetica;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-weight: normal;
+        font-size: 10px;
+        TEXT-ALIGN:center;
 }
 
 .callout_main {
@@ -269,6 +331,30 @@ select {
 	text-align: right;
 }
 
+.quick_menu_tab a{
+	color:#000;
+	font-weight:bold;
+}
+
+.quick_menu_left a{
+	color:#fff;
+}
+
+.quick_menu_tab a:hover{
+	color:#ffc;
+	text-decoration:none;
+	font-weight:bold;
+}
+
+.quick_menu_left a:hover{
+	color:#ffc;
+	text-decoration:none;
+}
+
+.quick_menu_tab:hover{
+	color:#ffd;
+}
+
 /*the Select Customer / Item / Supplier Menu tabs */
 .system_menu_tabs {
 	background-color: white;
@@ -318,6 +404,17 @@ select {
 	height: 16pt;
 }
 
+.main_menu_unselected:hover{
+}
+.main_menu_selected:hover{
+}
+
+.main_menu_unselected a{
+}
+
+.main_menu_unselected a:hover{
+}
+
 .main_menu_unselected:hover {
 	background: #aaa url(images/menu_bg_dblue.png) 0px -10px repeat-x;
 }
@@ -355,6 +452,12 @@ span.main_menu_nolink {
 	color: #777;
 	text-decoration: none;
 	white-space: nowrap;
+}
+
+.main_menu a {
+}
+
+.main_menu a:hover {
 }
 
 .menu_group_img {
@@ -402,9 +505,56 @@ span.main_menu_nolink {
 }
 
 .menu_group_item {
-	
 	padding-top: 2px;
 	padding-bottom: 2px;
+}
+
+.page_title_text {
+	font-family: Verdana, Arial, Helvetica;
+        padding-top: 2px;
+        padding-bottom: 2px;
+	font-weight: bold;
+	font-size: 12px;
+	color: black;
+	TEXT-ALIGN:center;
+}
+
+DIV.page_help_text {
+	background: lightgrey url(images/help.png) top left no-repeat;
+	BORDER: #a52a2a 1px solid;
+	padding-top:2px; 
+        padding-bottom: 2px;
+	PADDING-LEFT: 10px;
+	Z-INDEX: 1;
+	width: 80%;
+	FLOAT: none;
+	VISIBILITY: visible;
+	MARGIN: 0 auto;
+	POSITION: static;
+	font-family: Verdana, Arial, Helvetica;
+        font-weight: normal;
+        font-size: 10px;
+        color: black;
+	TEXT-ALIGN:center;
+}
+
+DIV.system_check {
+        BORDER: #a52a2a 1px solid;
+        PADDING-LEFT: 3px;
+        Z-INDEX: 1;
+        width: 40%;
+        FLOAT: none;
+        VISIBILITY: visible;
+        MARGIN: 0 auto;
+        POSITION: static;
+        background: lightgray;
+        font-family: Verdana, Arial, Helvetica;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-weight: normal;
+        font-size: 10px;
+        color: black;
+        TEXT-ALIGN:left;
 }
 
 span.menu_group_nolink {
@@ -431,6 +581,13 @@ span.menu_group_nolink {
 	bottom: -3px;
 }
 
+a.footer {
+	font-family: Verdana, Arial, Helvetica;
+	color: black;
+	font-weight: normal;
+	font-size: 8px;
+}
+
 .footer {
 	font-family: Verdana, Arial, Helvetica;
 	color: black;
@@ -438,6 +595,7 @@ span.menu_group_nolink {
 	font-size: 8px;
 	text-align: center;
 }
+
 .legal {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 9px;
@@ -515,31 +673,10 @@ select.selecterror {
 	color: white;
 }
 
-.page_title_text {
-        font-family: Verdana, Arial, Helvetica;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        font-weight: bold;
-        font-size: 12px;
-        color: black;
-        text-align:center;
+.table_index {
+	background-color: #F1FFDD;
 }
 
-div.page_help_text {
-        border: #a52a2a 1px solid;
-        padding-left: 3px;
-        z-index: 1;
-        width: 50%;
-        float: none;
-        visibility: visible;
-        margin: 0 auto;
-        position: static;
-        background-color: lightgray;
-        font-family: Verdana, Arial, Helvetica;
-        padding-top: 1px;
-        padding-bottom: 1px;
-        font-weight: normal;
-        font-size: 10px;
-        color: black;
-        text-align:center;
+li {
+	list-style-image: url(bullet.gif);
 }

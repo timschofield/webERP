@@ -25,7 +25,10 @@ body {
 	margin-right: 0px;
 	padding: 0px;
 }
-img {border:none;}
+
+img {
+	border:none;
+}
 
 /*links before selection */
 a {
@@ -47,9 +50,11 @@ table {
   background-color: #587BA6;
   margin: 0 auto;
 }
+
 .dpTbl {
 	border: solid navy 1px;
 }
+
 div.centre {
   margin: 0 auto;
   text-align:center;
@@ -61,6 +66,7 @@ td {
 	font-size: 12px;
 	text-align: left;
 }
+
 .dpTD {
 	border: 0;
 	width:20px;
@@ -68,6 +74,7 @@ td {
 	text-align:right;
 	cursor:pointer;	
 }
+
 .dpDayHighlight {
 	border: 0;
 	width:20px;
@@ -75,6 +82,7 @@ td {
 	text-align:right;
 	cursor:pointer;	
 }
+
 .dpTDHover {
 	border: 0;
 	width:20px;
@@ -82,9 +90,11 @@ td {
 	text-align:right;
 	cursor:pointer;	
 }
+
 td.number {
 	text-align: right;
 }
+
 .EvenTableRows {
 	background-color: #CCCCCC;
 }
@@ -123,33 +133,34 @@ div.info {
 	border: 1px solid navy;
 }
 
-
-.EvenTableRows {
-	background-color: #CCCCCC;
-}
-
-.OddTableRows {
-	background-color: #EEEEEE;
-}
-
-th {
-	font-weight: normal;
-	background-color: #cccce5;
-	font-size: 12px;
-	color: #330000;
-	text-align: center;
-}
-
 input {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 }
+
 input.number{
 	text-align: right;
 }
+
+input:hover{
+}
+
 select {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
+}
+
+font.good {
+    font-weight: bold;
+    color: green;
+}
+
+font.bad {
+    font-weight: bold;
+    color:red;
+}
+
+font.header_title {
 }
 
 #topMenu {
@@ -202,6 +213,53 @@ select {
 	border: none;
 }
 
+textarea{
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 12px;
+}
+
+textarea:hover{
+}
+/* Table type is used for UI tables type 1 */
+.table1 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  background: #eee;
+  margin: 0 auto;
+}
+/* Table type is used for UI tables type 2 */
+.table2 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  background: #eee;
+  margin: 0 auto;
+}
+
+input.address3 {
+	text-transform: uppercase;
+}
+
+div.csv {
+        background:lightgray;
+        color: black;
+        border: 1px solid black;
+        PADDING-LEFT: 3px;
+        Z-INDEX: 1;
+        width: 50%;
+        FLOAT: none;
+        VISIBILITY: visible;
+        MARGIN: 0 auto;
+        POSITION: static;
+        font-family: Verdana, Arial, Helvetica;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-weight: normal;
+        font-size: 10px;
+        TEXT-ALIGN:center;
+}
+
 .callout_main {
 	font-family: Verdana, Arial, Helvetica;
 	background-color: white;
@@ -235,6 +293,9 @@ select {
 	text-align: right;
 	/* position: relative;
 	top: 3px; */
+}
+
+#quick_menu{
 }
 
 /*The main page heading left part before quick menu */
@@ -271,6 +332,29 @@ select {
 	text-align: right;
 }
 
+.quick_menu_tab a{
+	color:#fff;
+	font-weight:bold;
+}
+
+.quick_menu_left a{
+	color:#fff;
+}
+
+.quick_menu_tab a:hover{
+	color:#ffc;
+	text-decoration:none;
+	font-weight:bold;
+}
+
+.quick_menu_left a:hover{
+	color:#ffc;
+	text-decoration:none;
+}
+
+.quick_menu_tab:hover{
+	color:#ffd;
+}
 /*the Select Customer / Item / Supplier Menu tabs */
 .system_menu_tabs {
 	background-color: white;
@@ -329,6 +413,17 @@ select {
 
 }
 
+.main_menu_unselected:hover{
+}
+.main_menu_selected:hover{
+}
+
+.main_menu_unselected a{
+}
+
+.main_menu_unselected a:hover{
+}
+
 .main_menu_selected {
 	background-color: white;
 	border-top: 1px #AAAAAA solid;
@@ -340,6 +435,16 @@ select {
 	top: 3px;
 	text-align: center;
 	white-space: nowrap;
+}
+
+.main_menu_selected a{
+	color: #eee;
+    font-weight:bold;
+}
+
+.main_menu_selected a:hover{
+	color: #fff;
+	text-decoration: none;
 }
 
 span.main_menu_nolink {
@@ -395,6 +500,9 @@ span.main_menu_nolink {
   width: 25%;
 }
 
+.menu_group_headers table{
+ }
+
 .menu_group_headers_text {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
@@ -418,6 +526,54 @@ span.main_menu_nolink {
 	padding-bottom: 2px;
 }
 
+.page_title_text {
+	font-family: Verdana, Arial, Helvetica;
+        padding-top: 2px;
+        padding-bottom: 2px;
+	font-weight: bold;
+	font-size: 12px;
+	color: black;
+	TEXT-ALIGN:center;
+}
+
+DIV.page_help_text {
+	background: lightgrey url(images/help.png) top left no-repeat;
+	BORDER: #a52a2a 1px solid;
+	padding-top:2px; 
+        padding-bottom: 2px;
+	PADDING-LEFT: 10px;
+	Z-INDEX: 1;
+	width: 80%;
+	FLOAT: none;
+	VISIBILITY: visible;
+	MARGIN: 0 auto;
+	POSITION: static;
+	font-family: Verdana, Arial, Helvetica;
+        font-weight: normal;
+        font-size: 10px;
+        color: black;
+	TEXT-ALIGN:center;
+}
+
+DIV.system_check {
+        BORDER: #a52a2a 1px solid;
+        PADDING-LEFT: 3px;
+        Z-INDEX: 1;
+        width: 40%;
+        FLOAT: none;
+        VISIBILITY: visible;
+        MARGIN: 0 auto;
+        POSITION: static;
+        background: lightgray;
+        font-family: Verdana, Arial, Helvetica;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-weight: normal;
+        font-size: 10px;
+        color: black;
+        TEXT-ALIGN:left;
+}
+
 span.menu_group_nolink {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
@@ -439,13 +595,20 @@ span.menu_group_nolink {
 	bottom: -3px;
 }
 
+a.footer {
+	font-family: Verdana, Arial, Helvetica;
+	color: black;
+	font-weight: normal;
+	font-size: 8px;
+}
+
 .footer {
 	font-family: Verdana, Arial, Helvetica;
 	color: #CCCCCC;
 	font-weight: normal;
 	font-size: 9px;
-	text-align: center;
-}
+	t
+	
 .legal {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 9px;
@@ -509,6 +672,7 @@ select.selecterror {
 	font-style:italic;
 	color:#555555;
 }
+
 .label {
 	font-weight:bold;
 	font-style:normal;
@@ -522,31 +686,10 @@ select.selecterror {
 	color: white;
 }
 
-.page_title_text {
-        font-family: Verdana, Arial, Helvetica;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        font-weight: bold;
-        font-size: 12px;
-        color: black;
-        TEXT-ALIGN:center;
+.table_index {
+	background-color: #F1FFDD;
 }
 
-DIV.page_help_text {
-        BORDER: #a52a2a 1px solid;
-        PADDING-LEFT: 3px;
-        Z-INDEX: 1;
-        width: 50%;
-        FLOAT: none;
-        VISIBILITY: visible;
-        MARGIN: 0 auto;
-        POSITION: static;
-        background-color: lightgray;
-        font-family: Verdana, Arial, Helvetica;
-        padding-top: 1px;
-        padding-bottom: 1px;
-        font-weight: normal;
-        font-size: 10px;
-        color: black;
-        TEXT-ALIGN:center;
+li {
+	list-style-image: url(bullet.gif);
 }

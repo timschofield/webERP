@@ -26,7 +26,10 @@ body {
 	margin-right: 0px;
 	padding: 0px;
 }
-img {border:none;}
+
+img {
+	border:none;
+}
 
 /*links before selection */
 a {
@@ -42,17 +45,6 @@ a:hover {
 	color: #0000AA;
 	text-decoration: none;
 	
-}
-
-input{
-  	background: url(images/input.png) #eee;
-	color:#000;
-	border: 0px 0px 1px 1px #000 dashed;
-	font-family: Verdana, Arial, Helvetica;
-	font-size: 12px;
-}
-input.number{
-	text-align: right;
 }
 input:hover{
 	background: url(images/inputh.png) #eee;
@@ -71,15 +63,18 @@ textarea:hover{
 	color:#000;
 	border: 1px 1px 1px 1px #000 solid;
 }
+
 table {
   background-color: #eee;
   border: 0px 0px 2px 2px #222 solid;
   background: #eee;
   margin: 0 auto;
 }
+
 .dpTbl {
 	border: solid navy 1px;
 }
+
 div.centre {
   margin: 0 auto;
   text-align:center;
@@ -91,6 +86,7 @@ td {
 	font-size: 12px;
 	text-align: left;
 }
+
 .dpTD {
 	border: 0;
 	width:20px;
@@ -98,6 +94,7 @@ td {
 	text-align:right;
 	cursor:pointer;	
 }
+
 .dpDayHighlight {
 	border: 0;
 	width:20px;
@@ -105,6 +102,7 @@ td {
 	text-align:right;
 	cursor:pointer;	
 }
+
 .dpTDHover {
 	border: 0;
 	width:20px;
@@ -112,8 +110,25 @@ td {
 	text-align:right;
 	cursor:pointer;	
 }
+
 td.number {
 	text-align: right;
+}
+
+.EvenTableRows {
+	background-color: #CCCCCC;
+}
+
+.OddTableRows {
+	background-color: #EEEEEE;
+}
+
+th {
+	font-weight: normal;
+	background-color: #ccc;
+	font-size: 12px;
+	color: #330000;
+	text-align: center;
 }
 
 div.error {
@@ -141,20 +156,19 @@ div.info {
 	border: 1px solid white;
 }
 
-.EvenTableRows {
-	background-color: #CCCCCC;
-}
-
-.OddTableRows {
-	background-color: #EEEEEE;
-}
-
-th {
-	font-weight: normal;
-	background-color: #ccc;
+input{
+  	background: url(images/input.png) #eee;
+	color:#000;
+	border: 0px 0px 1px 1px #000 dashed;
+	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
-	color: #330000;
-	text-align: center;
+}
+
+input.number{
+	text-align: right;
+}
+
+input:hover{
 }
 
 select {background:#eee;
@@ -163,6 +177,18 @@ select {background:#eee;
 	font-size: 12px;
 }
 
+font.good {
+    font-weight: bold;
+    color: green;
+}
+
+font.bad {
+    font-weight: bold;
+    color:red;
+}
+
+font.header_title {
+}
 
 #topMenu {
 	width: 100%;
@@ -211,6 +237,55 @@ select {background:#eee;
 .login {
 	background-color: white;
 	border: none;
+}
+
+textarea{
+  	background: url(images/input.png) #eee;
+	color:#000;
+	border: 0px 0px 1px 1px #000 dashed;
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 12px;
+}
+
+textarea:hover{
+}
+/* Table type is used for UI tables type 1 */
+.table1 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  background: #eee;
+  margin: 0 auto;
+}
+/* Table type is used for UI tables type 2 */
+.table2 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  background: #eee;
+  margin: 0 auto;
+}
+input.address3 {
+	text-transform: uppercase;
+}
+
+div.csv {
+        background:lightgray;
+        color: black;
+        border: 1px solid black;
+        PADDING-LEFT: 3px;
+        Z-INDEX: 1;
+        width: 50%;
+        FLOAT: none;
+        VISIBILITY: visible;
+        MARGIN: 0 auto;
+        POSITION: static;
+        font-family: Verdana, Arial, Helvetica;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-weight: normal;
+        font-size: 10px;
+        TEXT-ALIGN:center;
 }
 
 .callout_main {
@@ -286,26 +361,28 @@ select {background:#eee;
 }
 
 .quick_menu_tab a{
-color:#fff;
-font-weight:bold;
-}
-.quick_menu_left a{
-color:#fff;
+	color:#fff;
+	font-weight:bold;
 }
 
+.quick_menu_left a{
+	color:#fff;
+}
 
 .quick_menu_tab a:hover{
-color:#ffc;
-text-decoration:none;
-font-weight:bold;
+	color:#ffc;
+	text-decoration:none;
+	font-weight:bold;
 }
+
 .quick_menu_left a:hover{
-color:#ffc;
-text-decoration:none;
+	color:#ffc;
+	text-decoration:none;
 }
+
 .quick_menu_tab:hover{
-color:#ffd;
-background: url(images/gelblueh.png) 0px -2px repeat-x;
+	color:#ffd;
+	background: url(images/gelblueh.png) 0px -2px repeat-x;
 }
 /*the Select Customer / Item / Supplier Menu tabs */
 .system_menu_tabs {
@@ -401,6 +478,12 @@ span.main_menu_nolink {
 	white-space: nowrap;
 }
 
+.main_menu a {
+}
+
+.main_menu a:hover {
+}
+
 .menu_group_img {
 	background-color: #CCCCCC;
 	text-align: center;
@@ -416,7 +499,6 @@ span.main_menu_nolink {
 
 .menu_group_area {
   border: none;
-  
 }
 
 .blank_area table {
@@ -447,9 +529,56 @@ span.main_menu_nolink {
 }
 
 .menu_group_item {
-	
 	padding-top: 2px;
 	padding-bottom: 2px;
+}
+
+.page_title_text {
+	font-family: Verdana, Arial, Helvetica;
+        padding-top: 2px;
+        padding-bottom: 2px;
+	font-weight: bold;
+	font-size: 12px;
+	color: black;
+	TEXT-ALIGN:center;
+}
+
+DIV.page_help_text {
+	background: lightgrey url(images/help.png) top left no-repeat;
+	BORDER: #a52a2a 1px solid;
+	padding-top:2px; 
+        padding-bottom: 2px;
+	PADDING-LEFT: 10px;
+	Z-INDEX: 1;
+	width: 80%;
+	FLOAT: none;
+	VISIBILITY: visible;
+	MARGIN: 0 auto;
+	POSITION: static;
+	font-family: Verdana, Arial, Helvetica;
+        font-weight: normal;
+        font-size: 10px;
+        color: black;
+	TEXT-ALIGN:center;
+}
+
+DIV.system_check {
+        BORDER: #a52a2a 1px solid;
+        PADDING-LEFT: 3px;
+        Z-INDEX: 1;
+        width: 40%;
+        FLOAT: none;
+        VISIBILITY: visible;
+        MARGIN: 0 auto;
+        POSITION: static;
+        background: lightgray;
+        font-family: Verdana, Arial, Helvetica;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-weight: normal;
+        font-size: 10px;
+        color: black;
+        TEXT-ALIGN:left;
 }
 
 span.menu_group_nolink {
@@ -475,6 +604,13 @@ span.menu_group_nolink {
 
 }
 
+a.footer {
+	font-family: Verdana, Arial, Helvetica;
+	color: black;
+	font-weight: normal;
+	font-size: 8px;
+}
+
 .footer {
 	font-family: Verdana, Arial, Helvetica;
 	color: black;
@@ -482,6 +618,7 @@ span.menu_group_nolink {
 	font-size: 8px;
 	text-align: center;
 }
+
 .legal {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 9px;
@@ -557,4 +694,12 @@ select.selecterror {
 .OsRow {
 	background-color: #234567;
 	color: white;
+}
+
+.table_index {
+	background-color: #F1FFDD;
+}
+
+li {
+	list-style-image: url(bullet.gif);
 }
