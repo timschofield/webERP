@@ -246,17 +246,18 @@ if (isset($_POST['ShowStatus'])){
 			
 			printf("<td><a target='_blank' href='StockStatus.php?StockID=%s'>%s</a></td>
 					<td>%s</td>
-					<td align=right>%s</td>
-					<td align=right>%s</td>
-					<td align=right>%s</td>
-					<td align=right>%s</td>
-					<td align=right>%s</td>",
+					<td class=number>%s</td>
+					<td class=number>%s</td>
+					<td class=number>%s</td>
+					<td class=number><a target='_blank' href='SelectProduct.php?StockID=%s'>%s</a></td>
+					<td class=number>%s</td>",
 					strtoupper($myrow['stockid']),
 					strtoupper($myrow['stockid']),
 					$myrow['description'],
 					number_format($myrow['quantity'],$myrow['decimalplaces']),
 					number_format($myrow['reorderlevel'],$myrow['decimalplaces']),
 					number_format($DemandQty,$myrow['decimalplaces']),
+                    strtoupper($myrow['stockid']),
 					number_format($myrow['quantity'] - $DemandQty,$myrow['decimalplaces']),
 					number_format($QOO,$myrow['decimalplaces']));
 		
