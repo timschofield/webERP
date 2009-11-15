@@ -577,6 +577,12 @@ span.main_menu_nolink {
 	padding-bottom: 2px;
 }
 
+.menu_group_item p {
+	color: #00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	text-indent: -12px; /* this makes the bullet to appear as the li tag previously used */
+	margin: 0 0 0 12px; /* One thing that I didn´t like of the li was that it had no left margin applied */
+}
+
 .page_title_text {
 	font-family: Verdana, Arial, Helvetica;
         padding-top: 2px;
