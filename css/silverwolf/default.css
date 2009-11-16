@@ -1,3 +1,4 @@
+﻿@charset "utf-8";
 /*--------------------------------------------------\
 |               |               | default.css       |
 |---------------------------------------------------|
@@ -12,8 +13,9 @@
 | Note:                                             |
 | Changes can be made to this CSS that will be      |
 | reflected throughout Web-ERP.                     |
-|
 \--------------------------------------------------*/
+
+/* $Id$ */
 
 body {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -30,6 +32,9 @@ img {
 	border:none;
 }
 
+/* From merge
+li { list-style-image: url(bullet.gif); ¡ bullet.gif only exist in fresh theme and off images directory !  } */
+
 /*links before selection */
 a {
 	font-family: Verdana, Arial, Helvetica;
@@ -39,7 +44,7 @@ a {
 	color: #00f;
 }
 
-/*links on any screen when mouse is hovering over them */
+/*links on any screen except quick menu which is overridden when mouse is hovering over them */
 a:hover {
 	color: #00a;
 	text-decoration: underline;
@@ -50,13 +55,18 @@ table {
 	margin: 0 auto;
 }
 
-.dpTbl {
-	border: solid navy 1px;
+th {
+	font-weight: normal;
+	background-color: #cccce5;
+	font-size: 12px;
+	color: #300;
+	text-align: center;
 }
 
-div.centre {
-	margin: 0 auto;
-	text-align:center;
+.tableheader {
+	font-weight: normal;
+	background-color: #cccce5;
+	color: #300;
 }
 
 /*table detail items default format */
@@ -64,6 +74,27 @@ td {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 	text-align: left;
+}
+
+td.number {
+	text-align: right;
+}
+
+div.centre {
+	margin: 0 auto;
+	text-align:center;
+}
+
+.EvenTableRows {
+	background-color: #ccc;
+}
+
+.OddTableRows {
+	background-color: #eee;
+}
+
+.dpTbl {
+	border: solid navy 1px;
 }
 
 .dpTD {
@@ -90,46 +121,26 @@ td {
 	cursor:pointer;	
 }
 
-td.number {
-	text-align: right;
-}
-
-.EvenTableRows {
-	background-color: #ccc;
-}
-
-.OddTableRows {
-	background-color: #eee;
-}
-
-th {
-	font-weight: normal;
-	background-color: #cccce5;
-	font-size: 12px;
-	color: #300;
-	text-align: center;
-}
-
 div.error {
-	background-color:#fddbdb;
+	background-color: #fddbdb;
 	color: red;
 	border: 1px solid red;
 }
 
 div.warn {
-	background-color:#f5dbfd;
+	background-color: #f5dbfd;
 	color: maroon;
 	border: 1px solid maroon;
 }
 
 div.success {
-	background-color:#b9ecb4;
-	color: darkgreen;
-	border: 1px solid darkgreen;
+	background-color: #b9ecb4;
+	color: #006400;			/* darkgreen is not a w3c css valid color */
+	border: 1px solid #006400;	/* darkgreen is not a w3c css valid color */
 }
 
 div.info {
-	background-color:#c7ccf6;
+	background-color: #c7ccf6;
 	color: navy;
 	border: 1px solid navy;
 }
@@ -143,8 +154,9 @@ input.number {
 	text-align: right;
 }
 
-input:hover{
-}
+/* From merge, uncomment to apply style
+input:hover { }
+*/
 
 select {
 	font-family: Verdana, Arial, Helvetica;
@@ -161,8 +173,9 @@ font.bad {
     color:red;
 }
 
-font.header_title {
-}
+/* From merge, uncomment to apply style
+font.header_title { }
+End merge */ 
 
 #topMenu {
 	width: 100%;
@@ -172,7 +185,7 @@ font.header_title {
 }
 
 #trim {
-	background: "white";
+	background: white;
 }
 
 #page {
@@ -213,14 +226,19 @@ font.header_title {
 	border: none;
 }
 
-textarea{
+textarea.texterror {
+	background-color: #fddbdb;
+}
+
+/* From merge, uncomment to apply styles
+textarea {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 }
 
-textarea:hover{
-}
-/* Table type is used for UI tables type 1 */
+textarea:hover { }
+
+// Table type is used for UI tables type 1
 .table1 {
   width:90%;
   background: #eee;
@@ -228,7 +246,7 @@ textarea:hover{
   background: #eee;
   margin: 0 auto;
 }
-/* Table type is used for UI tables type 2 */
+// Table type is used for UI tables type 2
 .table2 {
   width:90%;
   background: #eee;
@@ -236,6 +254,7 @@ textarea:hover{
   background: #eee;
   margin: 0 auto;
 }
+
 input.address3 {
 	text-transform: uppercase;
 }
@@ -257,7 +276,8 @@ div.csv {
         font-weight: normal;
         font-size: 10px;
         TEXT-ALIGN:center;
-}
+} 
+End Merge */
 
 .callout_main {
 	font-family: Verdana, Arial, Helvetica;
@@ -322,7 +342,7 @@ div.csv {
 
 .quick_menu_tab {
 	background: #ccc url(images/button_bg.png) repeat-x; /* 0px -1px changed to 0  */
-	height:42px; /* 28 pt */
+	height: 42px; /* 28 pt */
 	white-space: nowrap;
 	border-left: solid 1px #aaa;
 	border-right: solid 1px #aaa;
@@ -331,6 +351,7 @@ div.csv {
 	text-align: right;
 }
 
+/* From merge
 .quick_menu_tab a{
 	color:#000;
 	font-weight:bold;
@@ -340,7 +361,7 @@ div.csv {
 	color:#fff;
 }
 
-.quick_menu_tab a:hover{
+.quick_menu_tab a:hover {
 	color:#ffc;
 	text-decoration:none;
 	font-weight:bold;
@@ -354,6 +375,7 @@ div.csv {
 .quick_menu_tab:hover{
 	color:#ffd;
 }
+*/
 
 /*the Select Customer / Item / Supplier Menu tabs */
 .system_menu_tabs {
@@ -388,6 +410,11 @@ div.csv {
 	border: 0px;
 }
 
+/* From merge, uncomment to apply style
+.main_menu a { }
+
+.main_menu a:hover { } */
+
 .main_menu table {
 	margin-top:5px;
 	border: 0px;
@@ -402,17 +429,6 @@ div.csv {
 	text-align: center;
 	white-space: nowrap;
 	height: 16pt;
-}
-
-.main_menu_unselected:hover{
-}
-.main_menu_selected:hover{
-}
-
-.main_menu_unselected a{
-}
-
-.main_menu_unselected a:hover{
 }
 
 .main_menu_unselected:hover {
@@ -436,6 +452,9 @@ div.csv {
 	white-space: nowrap;
 }
 
+/* From merge, uncomment to apply style
+.main_menu_selected:hover { } */
+
 .main_menu_selected a {
 	color: #fff;
 }
@@ -452,12 +471,6 @@ span.main_menu_nolink {
 	color: #777;
 	text-decoration: none;
 	white-space: nowrap;
-}
-
-.main_menu a {
-}
-
-.main_menu a:hover {
 }
 
 .menu_group_img {
@@ -511,37 +524,43 @@ span.main_menu_nolink {
 
 .menu_group_item p {
 	color: #00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
-	text-indent: -12px; /* this makes the bullet to appear as the li tag previously used */
+	text-indent: -11px; /* this makes the bullet to appear as the li tag previously used */
 	margin: 0 0 0 12px; /* One thing that I didn´t like of the li was that it had no left margin applied */
 }
 
 .page_title_text {
-	font-family: Verdana, Arial, Helvetica;
+        font-family: Verdana, Arial, Helvetica;
         padding-top: 2px;
         padding-bottom: 2px;
-	font-weight: bold;
-	font-size: 12px;
-	color: black;
-	TEXT-ALIGN:center;
+        font-weight: bold;
+        font-size: 12px;
+        color: black;
+        text-align:center;
 }
 
-DIV.page_help_text {
-	background: lightgrey url(images/help.png) top left no-repeat;
-	BORDER: #a52a2a 1px solid;
-	padding-top:2px; 
-        padding-bottom: 2px;
-	PADDING-LEFT: 10px;
-	Z-INDEX: 1;
-	width: 80%;
-	FLOAT: none;
-	VISIBILITY: visible;
-	MARGIN: 0 auto;
-	POSITION: static;
-	font-family: Verdana, Arial, Helvetica;
+div.page_help_text {
+        background-color: #ccc;		/* lightgray is not a w3c css valid color #ccc */
+        border: #a52a2a 1px solid;
+        padding-top: 1px;    /* 2px in merge */
+        padding-bottom: 1px; /* 2px in merge */
+        padding-left: 3px;   /* 10px in merge */
+        z-index: 1;
+        width: 50%; /* 80% in merge */
+        float: none;
+        visibility: visible;
+        margin: 0 auto;
+        position: static;
+        font-family: Verdana, Arial, Helvetica;
         font-weight: normal;
         font-size: 10px;
         color: black;
-	TEXT-ALIGN:center;
+        text-align:center;
+}
+
+/* From merge
+DIV.page_help_text {
+	background: lightgrey url(images/help.png) top left no-repeat;
+lightgray is not a w3c css valid color and ¡ help.png doesn't exist !
 }
 
 DIV.system_check {
@@ -562,6 +581,8 @@ DIV.system_check {
         color: black;
         TEXT-ALIGN:left;
 }
+
+End merge */
 
 span.menu_group_nolink {
 	font-family: Verdana, Arial, Helvetica;
@@ -587,12 +608,14 @@ span.menu_group_nolink {
 	bottom: -3px;
 }
 
+/* From merge
 a.footer {
 	font-family: Verdana, Arial, Helvetica;
 	color: black;
 	font-weight: normal;
 	font-size: 8px;
 }
+End merge */
 
 .footer {
 	font-family: Verdana, Arial, Helvetica;
@@ -646,22 +669,12 @@ input.inputerror {
 	background-color: #fddbdb;
 }
 
-textarea.texterror {
-	background-color: #fddbdb;
-}
-
 select.selecterror {
 	background-color: #fddbdb;
 }
 
-.tableheader {
-	font-weight: normal;
-	background-color: #cccce5;
-	color: #300;
-}
-
 .notavailable {
-	font-weight:light;
+	font-weight: lighter;	/* light is not a w3c css valid font weight */
 	font-style:italic;
 	color:#555;
 }
@@ -678,11 +691,8 @@ select.selecterror {
 	background-color: #234567;
 	color: white;
 }
-
+/* From merge, uncomment to apply style
 .table_index {
 	background-color: #F1FFDD;
 }
-
-li {
-	list-style-image: url(bullet.gif);
-}
+End merge */
