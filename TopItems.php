@@ -43,7 +43,7 @@ if(!($_POST['Location'] and $_POST['NumberOfDays'] and $_POST['Customers'] and $
 		$result= DB_query($sql,$db);
 
 		echo"<option value='All'>" ._('All');
-		While ($myrow = DB_fetch_array($esult)){
+		While ($myrow = DB_fetch_array($result)){
 			echo "<option VALUE='" . $myrow['typeid'] . "'>" . $myrow['typename'] ;
 		}
 			echo "</select></td>
