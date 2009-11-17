@@ -150,9 +150,9 @@ if (!isset($FactorID) or ($FactorID==1 and isset($_POST['amend']))) {
 	echo "<input type='hidden' name='New' VALUE='No'>";
 
 	$result=DB_query('SELECT id, coyname FROM factorcompanies', $db);
-	$myrow = DB_fetch_array($result);
-	echo '<table><tr<td>';
-	echo "<select TABINDEX=1 name='FactorID'>";
+//	$myrow = DB_fetch_array($result);
+	echo '<table><tr><td>';
+	echo "<select tabindex=1 name='FactorID'>";
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option selected VALUE=' . $myrow['id'] . '>' . $myrow['coyname'];
 	}
