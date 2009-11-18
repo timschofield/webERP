@@ -50,8 +50,8 @@ a:hover {
 table {
   background: #eee;
   border: 0px 0px 2px 2px #222 solid;
-  background: #eee;
   margin: 0 auto;
+  background: #eee;
 }
 
 .dpTbl {
@@ -295,17 +295,17 @@ textarea:hover{
   width:90%;
   background: #eee;
   border: 0px 0px 2px 2px #222 solid;
-  background: #eee;
   margin: 0 auto;
 }
+
 /* Table type is used for UI tables type 2 */
 .table2 {
   width:90%;
   background: #eee;
   border: 0px 0px 2px 2px #222 solid;
-  background: #eee;
   margin: 0 auto;
 }
+
 input.address3 {
 	text-transform: uppercase;
 }
@@ -458,7 +458,7 @@ div.csv {
 }
 
 .main_menu {
-background:none;
+	background:none; 
 	border: 0px;
 	height:28px;
 }
@@ -569,18 +569,19 @@ span.main_menu_nolink {
 .menu_group_items {
 	vertical-align: top;
 	border: none;
-	padding: 10px;
+	padding: 10px
 }
 
 .menu_group_item {
 	padding-top: 2px;
-	padding-bottom: 2px;
+	background: #eee;
+	padding-bottom: 2px
 }
 
 .menu_group_item p {
 	color: #00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
 	text-indent: -12px; /* this makes the bullet to appear as the li tag previously used */
-	margin: 0 0 0 12px; /* One thing that I didn´t like of the li was that it had no left margin applied */
+	margin: 0 0 0 12px;/* One thing that I didn´t like of the li was that it had no left margin applied */
 }
 
 .page_title_text {
