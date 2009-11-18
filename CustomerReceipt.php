@@ -210,9 +210,38 @@ if (isset($_POST['CommitBatch'])){
 	$BatchReceiptsTotal = 0; //in functional currency
 	$BatchDiscount = 0; //in functional currency
 	$BatchDebtorTotal = 0; //in functional currency
+	$k=0; //Table row counter for row styles
+	$CustomerReceiptCounter=1; //Count lines of customer receipts in this batch
+
+	echo '<br /><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Allocate') . '" alt="">' . ' ' . _('Summary of Receipt Batch').'</p><br />';
+	
+	echo '<table><tr><th>'._('Batch Number').'</th>
+				<th>'._('Date Banked').'</th>
+				<th>'._('Customer Name').'</th
+				<th>'._('GL Code').'</th
+				<th>'._('Amount of Receipt').'</th></tr>';
 
 	foreach ($_SESSION['ReceiptBatch']->Items as $ReceiptItem) {
+		
+		if ($k==1){
+			echo '<tr class="OddTableRows">';
+			$k=0;
+		} else {
+			echo '<tr class="EvenTableRows">';
+			$k=1;
+		}
 
+		echo '<td>'.$_SESSION['ReceiptBatch']->BatchNo.'</td>
+				<td>'.$_SESSION['ReceiptBatch']->DateBanked.'</td>
+				<td>'.$ReceiptItem->CustomerName.'</td>
+				<td>'.$ReceiptItem->GLCode.'</td>
+				<td class=number>'.number_format($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate,2) .'</td>';
+
+		if ($ReceiptItem->GLCode ==''){
+			echo '<td><a target="_blank"  href="' . $rootpath . '/PDFReceipt.php?BatchNumber=' . $_SESSION['ReceiptBatch']->BatchNo. '&ReceiptNumber='.$CustomerReceiptCounter.'">'._('Print a Customer Receipt').'</a></td></tr>';
+			$CustomerReceiptCounter += 1;
+		}
+		
 		if ($ReceiptItem->GLCode !=''){
 			if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter a GLTrans record */
 				 $SQL = 'INSERT INTO gltrans (type,
@@ -337,12 +366,12 @@ if (isset($_POST['CommitBatch'])){
 						'',
 						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
 						" . $PeriodNo . ",
-						'" . $_SESSION['ReceiptBatch']->ReceiptType  . ' ' . $ReceiptItem->Narrative . "',
+						'" . $_SESSION['ReceiptBatch']->ReceiptType  . ' ' . $ReceiptItem->PayeeBankDetail . "',
 						'',
 						" . ($_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate) . ",
 						" . -$ReceiptItem->Amount . ",
 						" . -$ReceiptItem->Discount . ",
-						'" . $ReceiptItem->PayeeBankDetail . "'
+						'" . $ReceiptItem->Narrative. "'
 					)";
 			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
 			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
@@ -361,6 +390,7 @@ if (isset($_POST['CommitBatch'])){
 		$BatchReceiptsTotal += ($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate);
 
 	} /*end foreach $ReceiptItem */
+	echo '</table>';
 
 	if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter GLTrans records for discount, bank and debtors */
 
@@ -496,7 +526,7 @@ if (isset($_POST['Search'])){
 			$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name
 				FROM debtorsmaster
-				WHERE debtorsmaster.name " . LIKE . " '$SearchString'
+				WHERE debtorsmaster.name  LIKE  '". $SearchString."'
 				AND debtorsmaster.currcode= '" . $_SESSION['ReceiptBatch']->Currency . "'";
 
 		} elseif (strlen($_POST['CustCode'])>0){
@@ -513,6 +543,7 @@ if (isset($_POST['Search'])){
 				WHERE debtortrans.transno " . LIKE . " '%" . $_POST['CustInvNo'] . "%'
 				AND debtorsmaster.currcode= '" . $_SESSION['ReceiptBatch']->Currency . "'";
 		}
+
 		$CustomerSearchResult = DB_query($SQL,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			prnMsg(_('The searched customer records requested cannot be retrieved because') . ' - ' . DB_error_msg($db),'error');
@@ -941,8 +972,10 @@ if (((isset($_SESSION['CustomerRecord'])
 
 	echo '<tr><td>' . _('Payee Bank Details') . ':</td>
 		<td><input tabindex=12 type="text" name="PayeeBankDetail" maxlength=22 size=20 value="' . $_POST['PayeeBankDetail'] . '"></td></tr>';
-	echo '<tr><td>' . _('Narrative') . ':</td>
-		<td><input tabindex=13 type="text" name="Narrative" maxlength=30 size=32 value="' . $_POST['Narrative'] . '"></td></tr>';
+//	echo '<tr><td>' . _('Narrative') . ':</td>
+//		<td><input tabindex=13 type="text" name="Narrative" maxlength=30 size=32 value="' . $_POST['Narrative'] . '"></td></tr>';
+	echo '<td>' . _('Narrative') . ':</td>';
+	echo '<td><textarea name="Narrative"  cols=40 rows=1></textarea></td>';
 	echo '</table>';
 	echo '<div class="centre"><input tabindex=14 type="submit" name="Process" value="' . _('Accept') . '">';
 	echo '<input tabindex=14 type="submit" name="Cancel" value="' . _('Cancel') . '"></div>';
