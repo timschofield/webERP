@@ -394,6 +394,34 @@ if (!isset($DebtorNo)) {
 
 /*If the page was called without $_POST['DebtorNo'] passed to page then assume a new customer is to be entered show a form with a Debtor Code field other wise the form showing the fields with the existing entries against the customer will show for editing with only a hidden DebtorNo field*/
 
+/* First check that all the necessary items have been setup */
+
+	$SetupErrors=0; //Count errors
+	$sql='SELECT COUNT(typeabbrev)
+				FROM salestypes';
+	$result=DB_query($sql, $db);
+	$myrow=DB_fetch_row($result);
+	if ($myrow[0]==0) {
+		prnMsg( _('In order to create a new customer you must first set up at least one sales type/price list').'<br />'.
+			_('Click').' '.'<a target="_blank" href="' . $rootpath . '/SalesTypes.php">' . _('here').' ' . '</a>'._('to set up your price lists'),'warning').'<br />';	
+		$SetupErrors += 1;
+	}
+	$sql='SELECT COUNT(typeid)
+				FROM debtortype';
+	$result=DB_query($sql, $db);
+	$myrow=DB_fetch_row($result);
+	if ($myrow[0]==0) {
+		prnMsg( _('In order to create a new customer you must first set up at least one customer type').'<br />'.
+			_('Click').' '.'<a target="_blank" href="' . $rootpath . '/CustomerTypes.php">' . _('here').' ' . '</a>'._('to set up your customer types'),'warning');
+		$SetupErrors += 1;
+	}
+	
+	if ($SetupErrors>0) {
+		echo '<br /><div class=centre><a href="'.$_SERVER['PHP_SELF'] .'" >'._('Click here to continue').'</a></div>';
+		include('includes/footer.inc');
+		exit;
+	}
+	
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
 
 	echo "<input type='Hidden' name='New' value='Yes'>";
