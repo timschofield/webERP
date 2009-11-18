@@ -43,6 +43,10 @@ if (isset($_GET['ModifyOrderNumber'])) {
 	$title = _('Purchase Order Entry');
 }
 
+if (isset($_GET['SupplierID'])) {
+	$_POST['Select']=$_GET['SupplierID'];
+}
+
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
