@@ -86,6 +86,7 @@ if (isset($OrderNo) && $OrderNo != "" && $OrderNo > 0){
 			purchorders.allowprint,
 			purchorders.requisitionno,
 			purchorders.initiator,
+			purchorders.paymentterms,
 			suppliers.currcode
 		FROM purchorders INNER JOIN suppliers
 			ON purchorders.supplierno = suppliers.supplierid

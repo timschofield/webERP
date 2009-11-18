@@ -56,7 +56,6 @@ $pdf->addText($XPos+2,$YPos-(2*$line_height), $FontSize, $POHeader['deladd2']);
 $pdf->addText($XPos+2,$YPos-(3*$line_height), $FontSize, $POHeader['deladd3'] . ' ' . $POHeader['deladd4'] . ' ' . $POHeader['deladd5']);
 $pdf->addText($XPos+2,$YPos-(4*$line_height), $FontSize, $POHeader['deladd6']);
 
-
 /*draw a nice curved corner box around the delivery to address */
 /*from the top right */
 $pdf->partEllipse($XPos+250-10,$YPos+10,0,90,10,10);
@@ -123,6 +122,11 @@ $LeftOvers = $pdf->addTextWrap($XPos, $YPos,250,$FontSize,$POHeader['comments'],
 if (strlen($LeftOvers)>0){
 	$LeftOvers = $pdf->addTextWrap($XPos, $YPos-$line_height,250,$FontSize,$LeftOvers, 'left');
 }
+
+$sql='SELECT terms FROM paymentterms where termsindicator="'.$POHeader['paymentterms'].'"';
+$result=DB_query($sql, $db);
+$myrow=DB_fetch_array($result);
+$pdf->addText($XPos+2,$YPos-($line_height), $FontSize, _('Payment Terms').' :  '.$myrow['terms']);
 
 $XPos = $Left_Margin;
 $YPos -= ($line_height*2);
