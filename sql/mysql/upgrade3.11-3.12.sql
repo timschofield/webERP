@@ -39,3 +39,7 @@ ALTER TABLE `purchorders` ADD COLUMN `suppliercontact` varchar(30) NOT NULL DEFA
 ALTER TABLE `purchorders` ADD COLUMN `supptel` varchar(30) NOT NULL DEFAULT '' AFTER suppliercontact;
 ALTER TABLE `purchorders` ADD COLUMN `tel` varchar(15) NOT NULL DEFAULT '' AFTER deladd6;
 ALTER TABLE `purchorders` ADD COLUMN `port` varchar(40) NOT NULL DEFAULT '' ;
+
+ALTER TABLE `suppliers` DROP FOREIGN KEY `suppliers_ibfk_4`;
+UPDATE `suppliers` SET `factorcompanyid`=0 WHERE `factorcompanyid`=1;
+DELETE FROM `factorcompanies` WHERE `coyname`='None';
