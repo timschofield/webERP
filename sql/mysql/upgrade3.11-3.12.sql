@@ -43,3 +43,6 @@ ALTER TABLE `purchorders` ADD COLUMN `port` varchar(40) NOT NULL DEFAULT '' ;
 ALTER TABLE `suppliers` DROP FOREIGN KEY `suppliers_ibfk_4`;
 UPDATE `suppliers` SET `factorcompanyid`=0 WHERE `factorcompanyid`=1;
 DELETE FROM `factorcompanies` WHERE `coyname`='None';
+
+INSERT INTO  `config` (`confname`, `confvalue`) VALUES ('LogPath', '');
+INSERT INTO  `config` (`confname`, `confvalue`) VALUES ('LogSeverity', '0');

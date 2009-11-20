@@ -243,6 +243,12 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['MonthsAuditTrail'] != $_POST['X_MonthsAuditTrail']){
 			$sql[] = 'UPDATE config SET confvalue=' . $_POST['X_MonthsAuditTrail'] . " WHERE confname='MonthsAuditTrail'";
 		}
+		if ($_SESSION['LogSeverity'] != $_POST['X_LogSeverity']){
+			$sql[] = 'UPDATE config SET confvalue=' . $_POST['X_LogSeverity'] . " WHERE confname='LogSeverity'";
+		}
+		if ($_SESSION['LogPath'] != $_POST['X_LogPath']){
+			$sql[] = "UPDATE config SET confvalue='" . $_POST['X_LogPath'] . "' WHERE confname='LogPath'";
+		}
 		if ($_SESSION['UpdateCurrencyRatesDaily'] != $_POST['X_UpdateCurrencyRatesDaily']){
 			if ($_POST['X_UpdateCurrencyRatesDaily']=='Auto'){
 				$sql[] = "UPDATE config SET confvalue='" . Date('Y-m-d',mktime(0,0,0,Date('m'),Date('d')-1,Date('Y'))) . "' WHERE confname='UpdateCurrencyRatesDaily'";
@@ -250,7 +256,7 @@ if (isset($_POST['submit'])) {
 				$sql[] = "UPDATE config SET confvalue='0' WHERE confname='UpdateCurrencyRatesDaily'";
 			}
 		}
-		if ($_SESSION['FactoryManagerEmail'] != $_POST['X_FactoryMangerEmail']){
+		if ($_SESSION['FactoryManagerEmail'] != $_POST['X_FactoryManagerEmail']){
 			$sql[] = "UPDATE config SET confvalue='" . $_POST['X_FactoryManagerEmail'] . "' WHERE confname='FactoryManagerEmail'";
 		}
 		if ($_SESSION['AutoCreateWOs'] != $_POST['X_AutoCreateWOs']){
@@ -633,7 +639,7 @@ $sql = 'SELECT confvalue
 $ErrMsg = _('Could not load the Number Of Month Must be Shown');
 $result = DB_query($sql,$db,$ErrMsg);
 $row = DB_fetch_array($result);
-$_SESSION['NumberOfMonthMustBeShown'] == $row['confvalue'];
+$_SESSION['NumberOfMonthMustBeShown'] = $row['confvalue'];
 
 echo '<tr><td>' . _('Number Of Month Must Be Shown') . ':</td>
 		  <td><input type="text" class="number" name="X_NumberOfMonthMustBeShown" size=4 maxlength=3 value="' . $_SESSION['NumberOfMonthMustBeShown'] . '"></td>	
@@ -859,6 +865,47 @@ echo '</select></td><td>' . _('Setting this parameter to Yes prevents invoicing 
 //Months of Audit Trail to Keep
 echo '<tr><td>' . _('Months of Audit Trail to Retain') . ':</td>
 	<td><input type="text" class="number" name="X_MonthsAuditTrail" size=3 maxlength=2 value="' . $_SESSION['MonthsAuditTrail'] . '"></td><td>' . _('If this parameter is set to 0 (zero) then no audit trail is retained. An audit trail is a log of which users performed which additions updates and deletes of database records. The full SQL is retained') . '</td>
+</tr>';
+
+//Which messages to log
+echo '<tr><td>' . _('Log Severity Level') . ':</td><td><select name="X_LogSeverity" >';
+if ($_SESSION['LogSeverity']==0) {
+	echo '<option selected value=0>' ._('None'). '</option>';
+	echo '<option value=1>' ._('Errors Only'). '</option>';
+	echo '<option value=2>' ._('Errors and Warnings'). '</option>';
+	echo '<option value=3>' ._('Errors, Warnings and Info'). '</option>';
+	echo '<option value=4>' ._('All'). '</option>';
+} else if ($_SESSION['LogSeverity']==1) {
+	echo '<option value=0>' ._('None'). '</option>';
+	echo '<option selected value=1>' ._('Errors Only'). '</option>';
+	echo '<option value=2>' ._('Errors and Warnings'). '</option>';
+	echo '<option value=3>' ._('Errors, Warnings and Info'). '</option>';
+	echo '<option value=4>' ._('All'). '</option>';
+} else if ($_SESSION['LogSeverity']==2) {
+	echo '<option value=0>' ._('None'). '</option>';
+	echo '<option value=1>' ._('Errors Only'). '</option>';
+	echo '<option selected value=2>' ._('Errors and Warnings'). '</option>';
+	echo '<option value=3>' ._('Errors, Warnings and Info'). '</option>';
+	echo '<option value=4>' ._('All'). '</option>';
+} else if ($_SESSION['LogSeverity']==3) {
+	echo '<option value=0>' ._('None'). '</option>';
+	echo '<option value=1>' ._('Errors Only'). '</option>';
+	echo '<option value=2>' ._('Errors and Warnings'). '</option>';
+	echo '<option selected value=3>' ._('Errors, Warnings and Info'). '</option>';
+	echo '<option value=4>' ._('All'). '</option>';
+} else if ($_SESSION['LogSeverity']==4) {
+	echo '<option value=0>' ._('None'). '</option>';
+	echo '<option value=1>' ._('Errors Only'). '</option>';
+	echo '<option value=2>' ._('Errors andWarnings'). '</option>';
+	echo '<option value=3>' ._('Errors, Warnings and Info'). '</option>';
+	echo '<option selected value=4>' ._('All'). '</option>';
+}
+echo '</select></td>';
+echo '<td>' . _('Choose which Status messages to keep in your log file.') . '</td></tr>';
+
+//Path to keep log files in
+echo '<tr><td>' . _('Path to log files') . ':</td>
+	<td><input type="text" name="X_LogPath" size=40 maxlength=79 value="' . $_SESSION['LogPath'] . '"></td><td>' . _('The path to the directory where the log files will be stored. Note the apache user must have write permissions on this directory.') . '</td>
 </tr>';
 
 //DefineControlledOnWOEntry

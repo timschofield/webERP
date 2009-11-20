@@ -13,23 +13,36 @@ function prnMsg($Msg,$Type='info', $Prefix=''){
 
 function getMsg($Msg,$Type='info',$Prefix=''){
 	$Colour='';
+	$LogFile=fopen($_SESSION['LogPath'].'/webERP-test.log', 'a');
 	switch($Type){
 		case 'error':
 			$Class = 'error';
 			$Prefix = $Prefix ? $Prefix : _('ERROR') . ' ' ._('Message Report');
+			if ($_SESSION['LogSeverity']>0) {
+				fwrite($LogFile, date('Y-m-d h-m-s').','.$Type.','.$_SESSION['UserID'].','.trim($Msg,',')."\n");
+			}
 			break;
 		case 'warn':
 			$Class = 'warn';
 			$Prefix = $Prefix ? $Prefix : _('WARNING') . ' ' . _('Message Report');
+			if ($_SESSION['LogSeverity']>1) {
+				fwrite($LogFile, date('Y-m-d h-m-s').','.$Type.','.$_SESSION['UserID'].','.trim($Msg,',')."\n");
+			}
 			break;
 		case 'success':
 			$Class = 'success';
 			$Prefix = $Prefix ? $Prefix : _('SUCCESS') . ' ' . _('Report');
+			if ($_SESSION['LogSeverity']>3) {
+				fwrite($LogFile, date('Y-m-d h-m-s').','.$Type.','.$_SESSION['UserID'].','.trim($Msg,',')."\n");
+			}
 			break;
 		case 'info':
 		default:
 			$Prefix = $Prefix ? $Prefix : _('INFORMATION') . ' ' ._('Message');
 			$Class = 'info';
+			if ($_SESSION['LogSeverity']>2) {
+				fwrite($LogFile, date('Y-m-d h-m-s').','.$Type.','.$_SESSION['UserID'].','.trim($Msg,',')."\n");
+			}
 	}
 	return '<DIV class="'.$Class.'"><B>' . $Prefix . '</B> : ' .$Msg . '</DIV>';
 }//getMsg
