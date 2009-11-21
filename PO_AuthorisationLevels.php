@@ -109,29 +109,42 @@ echo '</table><br><br>';
 echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method=post name='form1'>";
 echo '<table>';
 
-echo '<tr><td>'._('User ID').'</td><td><select name=userid>';
-$usersql='SELECT userid FROM www_users';
-$userresult=DB_query($usersql,$db);
-while ($myrow=DB_fetch_array($userresult)) {
-	if ($myrow['userid']==$UserID) {
-		echo '<option selected value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
-	} else {
-		echo '<option value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
+if (isset($_GET['Edit'])) {
+	echo '<tr><td>'._('User ID').'</td><td>'.$UserID.'</td></tr>';
+	echo '<input type=hidden name=userid value="'.$UserID.'"';
+} else {
+	echo '<tr><td>'._('User ID').'</td><td><select name=userid>';
+	$usersql='SELECT userid FROM www_users';
+	$userresult=DB_query($usersql,$db);
+	while ($myrow=DB_fetch_array($userresult)) {
+		if ($myrow['userid']==$UserID) {
+			echo '<option selected value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
+		} else {
+			echo '<option value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
+		}
 	}
+	echo '</select></td></tr>';
 }
-echo '</select></td></tr>';
 
-echo '<tr><td>'._('Currency').'</td><td><select name=currabrev>';
-$currencysql='SELECT currabrev,currency FROM currencies';
-$currencyresult=DB_query($currencysql,$db);
-while ($myrow=DB_fetch_array($currencyresult)) {
-	if ($myrow['currabrev']==$Currency) {
-		echo '<option selected value="'.$myrow['currabrev'].'">'.$myrow['currency'].'</option>';
-	} else {
-		echo '<option value="'.$myrow['currabrev'].'">'.$myrow['currency'].'</option>';
+if (isset($_GET['Edit'])) {
+	$currencysql='SELECT currency FROM currencies WHERE currabrev="'.$Currency.'"';
+	$currencyresult=DB_query($currencysql,$db);
+	$myrow=DB_fetch_array($currencyresult);
+	echo '<tr><td>'._('Currency').'</td><td>'.$myrow['currency'].'</td></tr>';
+	echo '<input type=hidden name=currabrev value="'.$Currency.'"';
+} else {
+	echo '<tr><td>'._('Currency').'</td><td><select name=currabrev>';
+	$currencysql='SELECT currabrev,currency FROM currencies';
+	$currencyresult=DB_query($currencysql,$db);
+	while ($myrow=DB_fetch_array($currencyresult)) {
+		if ($myrow['currabrev']==$Currency) {
+			echo '<option selected value="'.$myrow['currabrev'].'">'.$myrow['currency'].'</option>';
+		} else {
+			echo '<option value="'.$myrow['currabrev'].'">'.$myrow['currency'].'</option>';
+		}
 	}
+	echo '</select></td></tr>';
 }
-echo '</select></td></tr>';
 
 echo '<tr><td>'._('User can create orders').'</td>';
 if ($CanCreate==1) {
