@@ -20,7 +20,6 @@ include('includes/session.inc');
 	<form action=" <?php echo $rootpath;?>/index.php" name="loginform" method="post">
 		<label><?php echo _('Thank you for using webERP'); ?></label>
 	<br />
-	<div id="demo_text"><?php echo $demo_text;?></div>
 	<input class="button" type="submit" value="<?php echo _('Login'); ?>" name="SubmitUser" />
 	</form>
 	</div>
@@ -31,7 +30,6 @@ include('includes/session.inc');
 
 <?php
 	// Cleanup
-	session_start();
 	session_unset();
 	session_destroy();
 ?>
