@@ -60,8 +60,9 @@ if (isset($_SESSION['DatabaseName'])){
 
 if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
 
-	if (!isset($_SESSION['AccessLevel']) OR $_SESSION['AccessLevel'] == '' OR
-		(isset($_POST['UserNameEntryField']) AND $_POST['UserNameEntryField'] != '')) {
+	if (!isset($_SESSION['AccessLevel']) OR $_SESSION['AccessLevel'] == ''){
+		
+//		(isset($_POST['UserNameEntryField']) AND $_POST['UserNameEntryField'] != '')) {
 
 	/* if not logged in */
 
@@ -155,9 +156,10 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 					$i++;
 				}
 			}
-			
+
 			//echo '<meta http-equiv="refresh" content="0" url="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 			//exit;
+
 		} else {     // Incorrect password
 			// 5 login attempts, show failed login screen
 			if (!isset($_SESSION['AttemptsCounter'])) {

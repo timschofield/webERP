@@ -153,7 +153,9 @@ as required.
 
 3. Editing config.php
 
-The webERP archive no longer comes with a config.php file - it must be created by copying over config.distrib.php to config.php and then editing the new config.php file with the parameters required for your installation.
+The webERP archive no longer comes with a config.php file. There is now a GUI installer that is activated when there is no config.php file. Simply browse to your webERP installation with the URL http://yourdomain/webERP/ in your browser and complete the installation form. You will need to ensure that the directory where you have installed is writable by the system user that the web-server runs as - otherwise the installer will not be able to write the new config.php 
+
+Alternatively, config.php must be created by copying over config.distrib.php to config.php and then editing the new config.php file with the parameters required for your installation.
 
 config.php contains a series of user defined variables that determine how the system behaves. Critically it contains the user and password of the database connection and the type of database server being used. There is no going forward without the system being provided with this data. It is important to ensure there are no trailing characters at the end of this file - this is a common installation pitfall since some editors add a character at the end of the file.
 
