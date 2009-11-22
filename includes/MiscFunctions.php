@@ -13,7 +13,9 @@ function prnMsg($Msg,$Type='info', $Prefix=''){
 
 function getMsg($Msg,$Type='info',$Prefix=''){
 	$Colour='';
-	$LogFile=fopen($_SESSION['LogPath'].'/webERP-test.log', 'a');
+	if ($_SESSION['LogSeverity']>0) {
+		$LogFile=fopen($_SESSION['LogPath'].'/webERP-test.log', 'a');
+	}
 	switch($Type){
 		case 'error':
 			$Class = 'error';
