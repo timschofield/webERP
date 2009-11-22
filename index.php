@@ -481,11 +481,6 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 					</td>
 					<td class="menu_group_items">   <!-- PO Maintenance -->
 						<table width="100%" class="table_index">
-							<tr>
-							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/PurchData.php?' . SID . '">' . _('Maintain Purchasing Data') . '</a></p>'; ?>
-							</td>
-							</tr>
 						</table>
 					</td>
 					</tr>
