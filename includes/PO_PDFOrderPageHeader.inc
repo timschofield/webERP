@@ -124,8 +124,8 @@ if (strlen($LeftOvers)>0){
 }
 
 $sql='SELECT terms FROM paymentterms where termsindicator="'.$POHeader['paymentterms'].'"';
-$result=DB_query($sql, $db);
-$myrow=DB_fetch_array($result);
+$termsresult=DB_query($sql, $db);
+$myrow=DB_fetch_array($termsresult);
 $pdf->addText($XPos+2,$YPos-($line_height), $FontSize, _('Payment Terms').' :  '.$myrow['terms']);
 
 $XPos = $Left_Margin;

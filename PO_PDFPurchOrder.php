@@ -90,7 +90,7 @@ if (isset($OrderNo) && $OrderNo != "" && $OrderNo > 0){
 			suppliers.currcode
 		FROM purchorders INNER JOIN suppliers
 			ON purchorders.supplierno = suppliers.supplierid
-		WHERE purchorders.orderno = " . $OrderNo;
+		WHERE purchorders.orderno=" . $OrderNo;
 	$result=DB_query($sql,$db, $ErrMsg);
 
 	if (DB_num_rows($result)==0){ /*There is ony one order header returned */
