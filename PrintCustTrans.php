@@ -293,11 +293,15 @@ If (isset($PrintPDF) or isset($_GET['PrintPDF'])
 
 				if ($myrow2['discountpercent']==0){
 					$DisplayDiscount ='';
-					$DisplayNet=number_format(($myrow3['unitprice'] * $myrow2['Quantity']),2);
+					$DisplayNet=number_format(($myrow3['unitprice'] * $myrow2['quantity']),2);
+					$DisplayPrice=$myrow3['unitprice'];
+					$DisplayQty=$myrow2['quantity'];
 				} else {
 					$DisplayDiscount = number_format($myrow2['discountpercent']*100,2) . '%';
 					$DiscountPrice=$myrow2['discountpercent'] * $myrow3['unitprice'];
-					$DisplayNet=number_format((($myrow3['unitprice'] - $DiscountPrice) * $myrow2['Quantity']),2);
+					$DisplayPrice=$myrow3['unitprice'];
+					$DisplayQty=$myrow2['quantity'];
+					$DisplayNet=number_format((($myrow3['unitprice'] - $DiscountPrice) * $myrow2['quantity']),2);
 				}
 
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+3,$YPos,95,$FontSize,$myrow2['stockid']);
@@ -311,7 +315,7 @@ If (isset($PrintPDF) or isset($_GET['PrintPDF'])
 				$YPos -= ($line_height);
 
 
-				$lines=explode('\r\n',$Narrative);
+				$lines=explode('\r\n',$myrow2['narrative']);
 				for ($i=0;$i<sizeOf($lines);$i++) {
 				while (strlen($lines[$i])>1){
 					if ($YPos-$line_height <= $Bottom_Margin){
@@ -445,7 +449,7 @@ If (isset($PrintPDF) or isset($_GET['PrintPDF'])
 	    $FromTransNo++;
 	} /* end loop to print invoices */
 
-	$pdfcode = $pdf->output($_SESSION['reports_dir'] . '/Invoice.pdf', "F");
+	$pdfcode = $pdf->Output('SalesInvoice'.($FromTransNo-1).'.pdf', "I");
 	$len = strlen($pdfcode);
 
 

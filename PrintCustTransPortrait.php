@@ -84,6 +84,9 @@ If (isset($PrintPDF)
 				$myrow = DB_fetch_array($result);
 				$DefaultBankAccountNumber = _('Account:') .' ' .$myrow['bankaccountnumber'];
 				$DefaultBankAccountCode =  _('Bank Code:') .' ' .$myrow['bankaccountcode'];
+			} else {
+				$DefaultBankAccountNumber = '';
+				$DefaultBankAccountCode =  '';
 			}
 		}
 // gather the invoice data
@@ -496,7 +499,7 @@ If (isset($PrintPDF)
 	} /* end loop to print invoices */
 
 //	$pdfcode = $pdf->stream();
-	$pdfcode = $pdf->Output('Invoice.pdf', "I");
+	$pdfcode = $pdf->Output('SalesInvoice'.($FromTransNo-1).'.pdf', "I");
 	$len = strlen($pdfcode);
 // Start FPDI concatination to append PDF files conditionally to the invoice
 // This part taken from FPDI example page
