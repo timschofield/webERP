@@ -318,7 +318,7 @@ echo '<tr><td>' . _('New Users Default Theme') . ':</td>
 	 <td><select Name="X_DefaultTheme">';
 $ThemeDirectory = dir('css/');
 while (false != ($ThemeName = $ThemeDirectory->read())){
-	if (is_dir("css/$ThemeName") AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != 'CVS'){
+	if (is_dir("css/$ThemeName") AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
 		if ($_SESSION['DefaultTheme'] == $ThemeName)
 			echo "<option selected value='$ThemeName'>$ThemeName";
 		else
@@ -343,7 +343,7 @@ echo '<tr><td>' . _('Second Overdue Deadline in (days)') . ':</td>
 
 // DefaultCreditLimit
 echo '<tr><td>' . _('Default Credit Limit') . ':</td>
-	<td><input type="Text" class="number" Name="X_DefaultCreditLimit" value="' . $_SESSION['DefaultCreditLimit'] . '" size=6 maxlength=12></td>
+	<td><input type="Text" class="number" Name="X_DefaultCreditLimit" value="' . $_SESSION['DefaultCreditLimit'] . '" size=12 maxlength=12></td>
 	<td>' . _('The default used in new customer set up') . '</td></tr>';
 
 // Check Credit Limits
@@ -489,7 +489,7 @@ echo '<tr><td>' . _('Do Freight Calculation') . ':</td>
 
 //FreightChargeAppliesIfLessThan
 echo '<tr><td>' . _('Apply freight charges if an order is less than') . ':</td>
-	<td><input type="Text" class="number" Name="X_FreightChargeAppliesIfLessThan" size=6 maxlength=12 value="' . $_SESSION['FreightChargeAppliesIfLessThan'] . '"></td>
+	<td><input type="Text" class="number" Name="X_FreightChargeAppliesIfLessThan" size=12 maxlength=12 value="' . $_SESSION['FreightChargeAppliesIfLessThan'] . '"></td>
 	<td>' . _('This parameter is only effective if Do Freight Calculation is set to Yes. If it is set to 0 then freight is always charged. The total order value is compared to this value in deciding whether or not to charge freight') .'</td></tr>';
 
 
@@ -762,7 +762,7 @@ echo '<tr><td>' . _('Wiki Path') . ':</td>
 	<td><input type="text" name="X_WikiPath" size=40 maxlength=40 value="' . $_SESSION['WikiPath'] . '"></td>
 	<td>' . _('The path to the wiki installation to form the basis of wiki URLs - this should be the directory on the web-server where the wiki is installed. The wiki must be installed on the same web-server as webERP') .'</td></tr>';
 
-echo '<tr><td>' . _('Geocode Customers and Suppliers:') . ':</td>
+echo '<tr><td>' . _('Geocode Customers and Suppliers') . ':</td>
         <td><select name="X_geocode_integration">';
 if ($_SESSION['geocode_integration']==1){
         echo  '<option selected value="1">' . _('Geocode Integration Enabled') . '</option>';
