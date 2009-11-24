@@ -267,8 +267,12 @@ if (!isset($SelectedUser)) {
 			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
-
+	
+	if ($myrow[6]=='') {
+		$LastVisitDate = Date('Y-m-d');
+	} else {
 		$LastVisitDate = ConvertSQLDate($myrow[6]);
+	}
 
 		/*The SecurityHeadings array is defined in config.php */
 
