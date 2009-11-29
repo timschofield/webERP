@@ -383,6 +383,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PDFRemittanceAdvice.php?' . SID . '">' . _('Remittance Advices') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/OutstandingGRNs.php?' . SID . '">' . _('Outstanding GRNs Report') . '</a></p>'; ?>
 							</td>
 							</tr>
