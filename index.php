@@ -2,9 +2,6 @@
 
 /* $Id$ */
 
-/* $Revision: 1.91 $ */
-
-
 $PageSecurity = 1;
 
 include('includes/session.inc');
