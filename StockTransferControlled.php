@@ -57,9 +57,9 @@ if (isset($TransferItem)){
 
 	echo _('Transfer Items is set equal to') . ' ' . $TransferItem;
 	
-	echo '<br><a href="'.$rootpath.'/StockLocTransferReceive.php?'  . SID . '">'._('Back To Transfer Screen').'</a>';
+	echo '<br><a href="'.$rootpath.'/StockLocTransferReceive.php?'  . SID . '&StockID='.$LineItem->StockID.'">'._('Back To Transfer Screen').'</a>';
 } else {
-	echo '<br><a href="'.$rootpath.'/StockTransfers.php?'  . SID . '">'._('Back To Transfer Screen').'</a>';
+	echo '<br><a href="'.$rootpath.'/StockTransfers.php?'  . SID. '&StockID='.$LineItem->StockID. '">'._('Back To Transfer Screen').'</a>';
 }
 
 echo '<br><font size=2><b>'. _('Transfer of controlled item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . '</b></font></div>';
