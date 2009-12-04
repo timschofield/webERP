@@ -424,8 +424,9 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 		$BranchDetails=DB_fetch_array($result);
-
-		$HeaderSQL = "INSERT INTO salesorders (debtorno,
+		$OrderNo=GetNextTransNo (30, $db);
+		$HeaderSQL = "INSERT INTO salesorders (orderno,
+							debtorno,
 							branchcode,
 							customerref,
 							orddate,
@@ -442,7 +443,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							contactemail,
 							fromstkloc,
 							deliverydate)
-					VALUES ('" . $_SESSION['SPL']->CustomerID . "',
+					VALUES (".$OrderNo.",'" . $_SESSION['SPL']->CustomerID . "',
 						'" . $_SESSION['SPL']->BranchCode . "',
 						'". $_SESSION['SPL']->CustRef ."',
 						'" . Date("Y-m-d") . "',
@@ -461,17 +462,17 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						'" . $OrderDate . "')";
 
 		$ErrMsg = _('The sales order cannot be added because');
-		$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
+		$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg, $DbMsg);
 
 //		$SalesOrderNo = DB_Last_Insert_ID($db,'salesorders','orderno');
-		$SalesOrderNo = GetNextTransNo(30, $db);
+//		$SalesOrderNo = GetNextTransNo(30, $db);
 		
 		$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (orderno,
 									stkcode,
 									unitprice,
 									quantity,
 									orderlineno)
-						VALUES (" .  $SalesOrderNo;
+						VALUES (" .  $OrderNo;
 
 		$ErrMsg = _('There was a problem inserting a line into the sales order because');
 
