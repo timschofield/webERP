@@ -600,7 +600,7 @@ function BuildPDF($ReportID, $Prefs) {
 	// Add additional headers needed for MSIE and send page
 	header('Pragma: cache');
 	header('Cache-Control: public, must-revalidate, max-age=0');
-	$pdf->Output($Prefs['reportname'].'.pdf','D');
+	$pdf->Output($Prefs['reportname'].'.pdf','I');
 	exit(); // needs to be here to properly render the pdf file.
 }
 

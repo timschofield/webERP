@@ -270,7 +270,7 @@ function TruncData($strData, $ColWidth) {
 }
 
 function Stream($FileName) {
-  $this->Output($FileName,'D');
+  $this->Output($FileName,'I');
 }
 
 } // end class
