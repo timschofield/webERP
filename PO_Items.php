@@ -927,8 +927,13 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
-			$uomsql='SELECT conversionfactor, suppliersuom
+			$uomsql='SELECT conversionfactor, 
+							suppliersuom, 
+							unitsofmeasure.
+							unitname
 					FROM purchdata
+					LEFT JOIN unitsofmeasure
+					ON purchdata.suppliersuom=unitsofmeasure.unitid
 					WHERE supplierno="'.$_SESSION['PO'.$identifier]->SupplierID.'"
 					AND stockid="'.$POLine->StockID.'"';
 
@@ -936,7 +941,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 			if (DB_num_rows($uomresult)>0) {
 				$uomrow=DB_fetch_array($uomresult);
 				if (strlen($uomrow['suppliersuom'])>0) {
-					$uom=$uomrow['suppliersuom'];
+					$uom=$uomrow['unitname'];
 				} else {
 					$uom=$POLine->Units;
 				}
@@ -992,7 +997,7 @@ if (isset($_POST['NonStockOrder'])) {
 	echo '<td><input type=text class=date alt="'.$_SESSION['DefaultDateFormat'].'" name=ReqDelDate size=11
 			value="'.$_SESSION['PO'.$identifier]->deliverydate .'"></td></tr>';
 	echo '</table>';
-	echo '<input type=submit name="EnterLine" value="Enter Item">';
+	echo '<div class=centre><input type=submit name="EnterLine" value="Enter Item"></div>';
 }
 
 echo '<hr>';
