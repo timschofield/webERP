@@ -101,7 +101,7 @@ foreach ( $_SESSION['SuppTrans']->GLCodes as $EnteredGLCode){
 	echo '<tr>
 		<td>' . $EnteredGLCode->GLCode . '</td>
 		<td>' . $EnteredGLCode->GLActName . '</td>
-		<td align=right>' . number_format($EnteredGLCode->Amount,2) . '</td>
+		<td class=number>' . number_format($EnteredGLCode->Amount,2) . '</td>
 		<td>' .$EnteredGLCode->JobRef . '</td>
 		<td>' . $EnteredGLCode->Narrative . "</td>
 		<td><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $EnteredGLCode->Counter . "'>" . _('Delete') . '</a></td>
@@ -117,8 +117,8 @@ foreach ( $_SESSION['SuppTrans']->GLCodes as $EnteredGLCode){
 }
 
 echo '<tr>
-	<td colspan=2 align=right><font size=4 color=BLUE>' . _('Total') . ':</font></td>
-	<td align=right><font size=4 color=BLUE><U>' . number_format($TotalGLValue,2) . '</U></font></td>
+	<td colspan=2 class=number><font size=4 color=BLUE>' . _('Total') . ':</font></td>
+	<td class=number><font size=4 color=BLUE><U>' . number_format($TotalGLValue,2) . '</U></font></td>
 	</tr>
 	</table>';
 

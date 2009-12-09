@@ -393,9 +393,9 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 }
 
 echo '<tr class="EvenTableRows"><td></td>
-					<td align=right><b> Total </b></td>
-					<td align=right class="number"><b>' . number_format($debittotal,2) . '</b></td>
-					<td align=right class="number"><b>' . number_format($credittotal,2) . '</b></td>';
+					<td class=number><b> Total </b></td>
+					<td class=number class="number"><b>' . number_format($debittotal,2) . '</b></td>
+					<td class=number class="number"><b>' . number_format($credittotal,2) . '</b></td>';
 if ($debittotal!=$credittotal) {
 	echo '<td align=center style="background-color: #fddbdb"><b>Required to balance - ' .
 					number_format(abs($debittotal-$credittotal),2);

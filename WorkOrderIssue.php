@@ -527,8 +527,8 @@ if (!isset($_POST['IssuedDate'])){
 echo '<table cellpadding=2 border=0>
     <tr><td class="label">' . _('Issue to work order') . ':</td><td>' . $_POST['WO'] .'</td><td class="label">' . _('Item') . ':</td><td>' . $_POST['StockID'] . ' - ' . $WORow['description'] . '</td></tr>
      <tr><td class="label">' . _('Manufactured at') . ':</td><td>' . $WORow['locationname'] . '</td><td class="label">' . _('Required By') . ':</td><td>' . ConvertSQLDate($WORow['requiredby']) . '</td></tr>
-     <tr><td class="label">' . _('Quantity Ordered') . ':</td><td align=right>' . number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td><td colspan=2>' . $WORow['units'] . '</td></tr>
-     <tr><td class="label">' . _('Already Received') . ':</td><td align=right>' . number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td><td colspan=2>' . $WORow['units'] . '</td></tr>
+     <tr><td class="label">' . _('Quantity Ordered') . ':</td><td class=number>' . number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td><td colspan=2>' . $WORow['units'] . '</td></tr>
+     <tr><td class="label">' . _('Already Received') . ':</td><td class=number>' . number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td><td colspan=2>' . $WORow['units'] . '</td></tr>
     <tr><td colspan=4><hr></td></tr>
      <tr><td class="label">' . _('Date Material Issued') . ':</td><td><input type=text name=issuedate value=' 
 		. Date($_SESSION['DefaultDateFormat']) . ' class=date size=10 alt="'.$_SESSION['DefaultDateFormat'].'" ></td>

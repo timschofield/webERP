@@ -80,16 +80,16 @@ if ($SN!='') {
 		while ($myrow=DB_fetch_row($result)) {
 			printf("<tr>
 				<td>%s<br>%s</td>
-				<td align=right>%s</td>
-				<td align=right>%s</td>
+				<td class=number>%s</td>
+				<td class=number>%s</td>
 				<td>%s (%s)</td>
-				<td align=right>%s</td>
+				<td class=number>%s</td>
 				<td>%s - %s</td>
 				<td>%s &nbsp;</td>
 				<td>%s &nbsp;</td>
 				<td>%s &nbsp;</td>
 				<td>%s &nbsp;</td>
-				<td align=right>%s</td>
+				<td class=number>%s</td>
 				</tr>",
 				$myrow[1],
 				$myrow[0],

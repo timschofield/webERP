@@ -174,7 +174,7 @@ if ($InputError ==0){
 
 			printf("<td>%s</td>
 			        <td>%s</td>
-				<td align=right>%0.2f</td>
+				<td class=number>%0.2f</td>
 				<td><a href='%s?%s&Item=%s&TypeAbbrev=%s&CurrAbrev=%s&Price=%s&Edit=1'>" . _('Edit') . "</td>
 				<td><a href='%s?%s&Item=%s&TypeAbbrev=%s&CurrAbrev=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this price?') . "');\">" . _('Delete') . '</td></tr>',
 				$myrow['currency'],
@@ -194,7 +194,7 @@ if ($InputError ==0){
 		} else {
 			printf("<td>%s</td>
 			        <td>%s</td>
-				<td align=right>%0.2f</td></tr>",
+				<td class=number>%0.2f</td></tr>",
 				$myrow['currency'],
 				$myrow['sales_type'],
 				$myrow['price']);

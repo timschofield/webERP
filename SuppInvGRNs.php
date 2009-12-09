@@ -138,7 +138,7 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 }
 
 echo '<tr>
-	<td colspan=5 align=right><font size=4 color=BLUE>' . _('Total Value of Goods Charged') . ':</font></td>
+	<td colspan=5 class=number><font size=4 color=BLUE>' . _('Total Value of Goods Charged') . ':</font></td>
 	<td class=number><font size=4 color=BLUE><U>' . number_format($TotalValueCharged,2) . '</U></font></td>
 </tr>';
 echo "</table>";
@@ -229,9 +229,9 @@ if (isset($_GET['Modify'])){
 	echo '<tr>
 		<td>' . $GRNTmp->GRNNo . '</td>
 		<td>' . $GRNTmp->ItemCode . ' ' . $GRNTmp->ItemDescription . '</td>
-		<td align=right>' . number_format($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv,2) . "</td>
+		<td class=number>' . number_format($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv,2) . "</td>
 		<td><input type=Text class='number' Name='This_QuantityInv' Value=" . $GRNTmp->This_QuantityInv . ' size=11 maxlength=10></td>
-		<td align=right>' . $GRNTmp->OrderPrice . '</td>
+		<td class=number>' . $GRNTmp->OrderPrice . '</td>
 		<td><input type=Text class="number" Name="ChgPrice" Value=' . $GRNTmp->ChgPrice . ' size=11 maxlength=10></td>
 	</tr>';
 	echo '</table>';

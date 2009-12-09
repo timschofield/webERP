@@ -853,7 +853,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 		}
 		echo '<tr>
 			<td align=left>' . $PaymentItem->cheque . '</td>
-			<td align=right>' . number_format($PaymentItem->Amount,2) . '</td>
+			<td class=number>' . number_format($PaymentItem->Amount,2) . '</td>
 			<td>' . $PaymentItem->GLCode . ' - ' . $PaymentItem->GLActName . '</td>
 			<td>' . $PaymentItem->Narrative  . '</td>
 			<td>' . $PaymentItem->tag . ' - ' . $tagname . '</td>
@@ -862,7 +862,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 		$PaymentTotal += $PaymentItem->Amount;
 
 	}
-	echo '<tr><td></td><td align=right><b>' . number_format($PaymentTotal,2) . '</b></td><td></td><td></td><td></td></tr></table>';
+	echo '<tr><td></td><td class=number><b>' . number_format($PaymentTotal,2) . '</b></td><td></td><td></td><td></td></tr></table>';
 
 
 	echo '<br><font size=3 color=BLUE><div class="centre">' . _('General Ledger Payment Analysis Entry') . '</div></font><br><table>';

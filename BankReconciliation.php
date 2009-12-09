@@ -154,7 +154,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 		echo  ' (' . $BankCurrCode . ' @ ' . $ExRate .')';
 	}
 	echo '</b></td>
-			<td valign=bottom align=right><b>' . number_format($Balance/$ExRate,2) . '</b></td></tr>';
+			<td valign=bottom class=number><b>' . number_format($Balance/$ExRate,2) . '</b></td></tr>';
 
 	$SQL = 'SELECT amount/exrate AS amt,
 					amountcleared,
@@ -205,8 +205,8 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td align=right>%01.2f</td>
-				<td align=right>%01.2f</td>
+				<td class=number>%01.2f</td>
+				<td class=number>%01.2f</td>
 				</tr>',
 				ConvertSQLDate($myrow['transdate']),
 				$myrow['typename'],
@@ -225,7 +225,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	}
 	//end of while loop
 	echo '<tr></tr>
-			<tr><td colspan=6>' . _('Total of all unpresented cheques') . '</td><td align=right>' . number_format($TotalUnpresentedCheques,2) . '</td></tr>';
+			<tr><td colspan=6>' . _('Total of all unpresented cheques') . '</td><td class=number>' . number_format($TotalUnpresentedCheques,2) . '</td></tr>';
 
 	$SQL = 'SELECT amount/exrate AS amt,
 				amountcleared,
@@ -277,8 +277,8 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td align=right>%01.2f</td>
-				<td align=right>%01.2f</td>
+				<td class=number>%01.2f</td>
+				<td class=number>%01.2f</td>
 				</tr>',
 				ConvertSQLDate($myrow['transdate']),
 				$myrow['typename'],
@@ -297,14 +297,14 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 		}
 	}
 	//end of while loop
-	echo '<tr></tr><tr><td colspan=6>' . _('Total of all uncleared deposits') . '</td><td align=right>' . number_format($TotalUnclearedDeposits,2) . '</td></tr>';
+	echo '<tr></tr><tr><td colspan=6>' . _('Total of all uncleared deposits') . '</td><td class=number>' . number_format($TotalUnclearedDeposits,2) . '</td></tr>';
 	$FXStatementBalance = ($Balance/$ExRate) - $TotalUnpresentedCheques -$TotalUnclearedDeposits;
-	echo '<tr></tr><tr><td colspan=6><b>' . _('Bank statement balance should be') . ' (' . $BankCurrCode . ')</b></td><td align=right>' . number_format($FXStatementBalance,2) . '</td></tr>';
+	echo '<tr></tr><tr><td colspan=6><b>' . _('Bank statement balance should be') . ' (' . $BankCurrCode . ')</b></td><td class=number>' . number_format($FXStatementBalance,2) . '</td></tr>';
 
 	if (isset($_POST['DoExchangeDifference'])){
 		echo '<input type="hidden" name="DoExchangeDifference" value=' . $FXStatementBalance . '>';
 		echo '<tr><td colspan=6>' . _('Enter the actual bank statement balance') . ' (' . $BankCurrCode . ')</b></td>
-				<td align=right><input type="text" name="BankStatmentBalance" maxlength=15 size=15 value=' . $_POST['BankStatmentBalance'] . '><td></tr>';
+				<td class=number><input type="text" name="BankStatmentBalance" maxlength=15 size=15 value=' . $_POST['BankStatmentBalance'] . '><td></tr>';
 		echo '<tr><td colspan=7 align="center"><input type="submit" name="PostExchangeDifference" value="' . _('Calculate and Post Exchange Difference') . '" onclick="return confirm(\'' . _('This will create a general ledger journal to write off the exchange difference in the current balance of the account. It is important that the exchange rate above reflects the current value of the bank account currency') . ' - ' . _('Are You Sure?') . '\');"></td></tr>';
 
 	}

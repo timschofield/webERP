@@ -730,10 +730,10 @@ echo '<table cellpadding=2 border=0>
 			<td>' . _('Required By') . ':</td>
 			<td>' . ConvertSQLDate($WORow['requiredby']) . '</td></tr>
          <tr><td>' . _('Quantity Ordered') . ':</td>
-		 	<td align=right>' . number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
+		 	<td class=number>' . number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
 			<td colspan=2>' . $WORow['units'] . '</td></tr>
          <tr><td>' . _('Already Received') . ':</td>
-		 	<td align=right>' . number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
+		 	<td class=number>' . number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
 			<td colspan=2>' . $WORow['units'] . '</td></tr>
          <tr><td>' . _('Date Received') . ':</td>
 		 	<td>' . Date($_SESSION['DefaultDateFormat']) . '</td>

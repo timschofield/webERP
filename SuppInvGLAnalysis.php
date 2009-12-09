@@ -58,7 +58,7 @@ foreach ($_SESSION['SuppInv']->GLCodes as $EnteredGLCode){
 
 	echo '<tr><td>' . $EnteredGLCode->GLCode . '</td>
             <td>' . $EnteredGLCode->GLActName . '</td>
-            <td align=right>' . number_format($EnteredGLCode->Amount,2) . '</td>
+            <td class=number>' . number_format($EnteredGLCode->Amount,2) . '</td>
             <td>' . $EnteredGLCode->ShiptRef . '</td>
             <td>' .$EnteredGLCode->JobRef . '</td>
             <td>' . $EnteredGLCode->Narrative . '</td>
@@ -78,8 +78,8 @@ foreach ($_SESSION['SuppInv']->GLCodes as $EnteredGLCode){
 	}
 }
 
-echo '<tr><td colspan=2 align=right><font size=4 color=BLUE>' . _('Total') . ':</font></td>
-          <td align=right><font size=4 color=BLUE><U>' . number_format($TotalGLValue,2) . '</U></font></td></tr>';
+echo '<tr><td colspan=2 class=number><font size=4 color=BLUE>' . _('Total') . ':</font></td>
+          <td class=number><font size=4 color=BLUE><U>' . number_format($TotalGLValue,2) . '</U></font></td></tr>';
 echo '</table><br><a href="' . $rootpath . '/SupplierInvoice.php?' . SID . '">' . _('Back to Invoice Entry') . '</a><hr>';
 
 /*Set up a form to allow input of new GL entries */

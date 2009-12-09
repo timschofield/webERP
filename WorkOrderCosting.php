@@ -90,12 +90,12 @@ while ($WORow = DB_fetch_array($WOItemsResult)){
 
 	 echo '<tr><td>' . $WORow['stockid'] . '</td>
 	 			<td>' . $WORow['description'] . '</td>
-	 			<td align=right>' . number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
+	 			<td class=number>' . number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
 	 			<td>' . $WORow['units'] . '</td>
-	 			<td align=right>' . number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
-	 			<td align=right><a href="'. $rootpath . '/WorkOrderStatus.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Status') . '</a></td>
-                <td align=right><a href="'. $rootpath . '/WorkOrderReceive.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Receive') . '</a></td>
-                <td align=right><a href="'. $rootpath . '/WorkOrderIssue.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Issue') . '</a></td>
+	 			<td class=number>' . number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
+	 			<td class=number><a href="'. $rootpath . '/WorkOrderStatus.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Status') . '</a></td>
+                <td class=number><a href="'. $rootpath . '/WorkOrderReceive.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Receive') . '</a></td>
+                <td class=number><a href="'. $rootpath . '/WorkOrderIssue.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Issue') . '</a></td>
  			</tr>';
 
 	$TotalStdValueRecd +=($WORow['stdcost']*$WORow['qtyrecd']);

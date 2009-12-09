@@ -108,7 +108,7 @@ include('includes/header.inc');
 				$j++;
 			}
 			echo "<td>" . $curPeriod . "</td>
-					<td align=right>" . number_format($dtRow['bfwd'],2) . "</td>";
+					<td class=number>" . number_format($dtRow['bfwd'],2) . "</td>";
 
 			$SQL = "SELECT SUM((ovamount+ovgst)/rate) AS totinvnetcrds
 					FROM debtortrans
@@ -120,7 +120,7 @@ include('includes/header.inc');
 
 			$invTotal += $invRow['totinvnetcrds'];
 
-			echo '<td align=right>' . number_format($invRow['totinvnetcrds'],2) . '</td>';
+			echo '<td class=number>' . number_format($invRow['totinvnetcrds'],2) . '</td>';
 
 			$SQL = "SELECT SUM((ovamount+ovgst)/rate) AS totreceipts
 					FROM debtortrans
@@ -133,7 +133,7 @@ include('includes/header.inc');
 			$recTotal += $recRow['totreceipts'];
 			$calcMovement = $dtRow['bfwd'] + $invRow['totinvnetcrds'] + $recRow['totreceipts'];
 
-			echo '<td align=right>' . number_format($recRow['totreceipts'],2) . '</td>';
+			echo '<td class=number>' . number_format($recRow['totreceipts'],2) . '</td>';
 
 			$glClosing += $glMovement;
 			$calcTotal += $calcMovement;
@@ -142,9 +142,9 @@ include('includes/header.inc');
 			$diff = ( $dtRow['bfwd'] == 0 ) ? 0 : round($glMovement,2) - round($calcMovement,2);
 			$color = ( $diff == 0 OR $dtRow['bfwd'] == 0 ) ? 'green' : 'red';
 
-			echo '<td align=right>' . number_format($glMovement,2) . '</td>
-					<td align=right>' . number_format(($calcMovement),2) . '</td>
-					<td align=right bgcolor=white><font color="' . $color . '">' . number_format($diff,2) . '</font></td>
+			echo '<td class=number>' . number_format($glMovement,2) . '</td>
+					<td class=number>' . number_format(($calcMovement),2) . '</td>
+					<td class=number bgcolor=white><font color="' . $color . '">' . number_format($diff,2) . '</font></td>
 			</tr>';
 			$curPeriod++;
 		}
@@ -153,12 +153,12 @@ include('includes/header.inc');
 
 		echo '<tr bgcolor=white>
 				<td>' . _('Total') . '</td>
-				<td align=right>' . number_format($glOpening,2) . '</td>
-				<td align=right>' . number_format($invTotal,2) . '</td>
-				<td align=right>' . number_format($recTotal,2) . '</td>
-				<td align=right>' . number_format($glClosing,2) . '</td>
-				<td align=right>' . number_format($calcTotal,2) . '</td>
-				<td align=right><font color="' . $difColor . '">' . number_format($difTotal,2) . '</font></td>
+				<td class=number>' . number_format($glOpening,2) . '</td>
+				<td class=number>' . number_format($invTotal,2) . '</td>
+				<td class=number>' . number_format($recTotal,2) . '</td>
+				<td class=number>' . number_format($glClosing,2) . '</td>
+				<td class=number>' . number_format($calcTotal,2) . '</td>
+				<td class=number><font color="' . $difColor . '">' . number_format($difTotal,2) . '</font></td>
 			</tr>';
 		echo '</table></form>';
 	}

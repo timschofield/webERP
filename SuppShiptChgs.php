@@ -76,7 +76,7 @@ $TotalShiptValue = 0;
 foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef){
 
 	echo '<tr><td>' . $EnteredShiptRef->ShiptRef . '</td>
-		<td align=right>' . number_format($EnteredShiptRef->Amount,2) . "</td>
+		<td class=number>' . number_format($EnteredShiptRef->Amount,2) . "</td>
 		<td><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "&Delete=" . $EnteredShiptRef->Counter . "'>" . _('Delete') . '</a></td></tr>';
 
 	$TotalShiptValue = $TotalShiptValue + $EnteredShiptRef->Amount;
@@ -84,8 +84,8 @@ foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef){
 }
 
 echo '<tr>
-	<td colspan=2 align=right><font size=4 color=BLUE>' . _('Total') . ':</font></td>
-	<td align=right><font size=4 color=BLUE><U>' . number_format($TotalShiptValue,2) . '</U></font></td>
+	<td colspan=2 class=number><font size=4 color=BLUE>' . _('Total') . ':</font></td>
+	<td class=number><font size=4 color=BLUE><U>' . number_format($TotalShiptValue,2) . '</U></font></td>
 </tr>
 </table>';
 

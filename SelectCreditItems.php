@@ -708,7 +708,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			   if ($LineItem->Controlled==0){
 			   	echo '<td><input type=TEXT class="number" name="Quantity_' . $LineItem->LineNumber . '" maxlength=6 size=6 VALUE=' . $LineItem->Quantity . '></td>';
 			   } else {
-				echo '<td align=right><a href="' . $rootpath . '/CreditItemsControlled.php?' . SID . '&LineNo=' . $LineItem->LineNumber . '">' . $LineItem->Quantity . '</a>
+				echo '<td class=number><a href="' . $rootpath . '/CreditItemsControlled.php?' . SID . '&LineNo=' . $LineItem->LineNumber . '">' . $LineItem->Quantity . '</a>
               <input type=hidden name="Quantity_' . $LineItem->LineNumber . '" VALUE=' . $LineItem->Quantity . '></td>';
 			   }
 
@@ -780,7 +780,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			<td colspan=5></td>';
 
 
-		echo '<td colspan=2 align=right>'. _('Credit Freight').'</td>
+		echo '<td colspan=2 class=number>'. _('Credit Freight').'</td>
 			<td><input type=TEXT class="number" size=6 maxlength=6 name=ChargeFreightCost VALUE=' . $_SESSION['CreditItems']->FreightCost . '></td>';
 
 		$FreightTaxTotal =0; //initialise tax total
@@ -827,7 +827,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 
 		echo '<tr>
-			<td colspan=7 align=right>' . _('Credit Totals') . "</td>
+			<td colspan=7 class=number>' . _('Credit Totals') . "</td>
 			<td class=number><hr><b>$DisplayTotal</b><hr></td>
 			<td colspan=2></td>
 			<td class=number><hr><b>" . number_format($TaxTotal,2) . "<hr></td>

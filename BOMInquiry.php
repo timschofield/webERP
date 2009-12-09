@@ -122,7 +122,7 @@ if (isset($result) AND !isset($SelectedParent)) {
 		$tabindex=$j+4;
 		printf("<td><input tabindex='".$tabindex."' type=submit name='StockID' VALUE='%s'</td>
 		        <td>%s</td>
-			<td align=right>%s</td>
+			<td class=number>%s</td>
 			<td>%s</td></tr>",
 			$myrow['stockid'],
 			$myrow['description'],

@@ -218,8 +218,8 @@ if (isset($StockItemsResult)) {
 
 		printf("<td><input type=submit name='SelectedStockItem' VALUE='%s'</td>
 		        <td>%s</td>
-			<td align=right>%s</td>
-			<td align=right>%s</td>
+			<td class=number>%s</td>
+			<td class=number>%s</td>
 			<td>%s</td></tr>",
 			$myrow['stockid'],
 			$myrow['description'],
@@ -460,7 +460,7 @@ $completed = " AND purchorderdetails.completed=0";
 
 // the tailed two column
 //			<td>%s</font></td>
-//			<td align=right>%s</font></td>
+//			<td class=number>%s</font></td>
 //			$myrow['requisitionno'],	
 //			$myrow['initiator']);
 //			'</td><td class="tableheader">' . _('Requisition') .

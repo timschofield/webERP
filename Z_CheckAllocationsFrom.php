@@ -36,9 +36,9 @@ if (DB_num_rows($result)>0){
 
 		printf ('<tr>
 			<td>%s</td>
-			<td>%s<td align=right>%f.2</td>
-			<td align=right>%f.2</td>
-			<td align=right>%f.2</td>
+			<td>%s<td class=number>%f.2</td>
+			<td class=number>%f.2</td>
+			<td class=number>%f.2</td>
 			</tr>',
 			$myrow['type'],
 			$myrow['transno'],

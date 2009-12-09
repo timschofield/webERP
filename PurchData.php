@@ -180,11 +180,11 @@ if (!isset($_GET['Edit'])) {
                 $DisplayPreferred = _('No');
             }
             printf("<td>%s</td>
-			<td align=right>%s</td>
+			<td class=number>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
-			<td align=right>%s " . _('days') . "</td>
+			<td class=number>%s " . _('days') . "</td>
 			<td>%s</td>
 			<td><a href='%s?%s&StockID=%s&SupplierID=%s&Edit=1&EffectiveFrom=%s'>" . _('Edit') . "</a></td>
 			<td><a href='%s?%s&StockID=%s&SupplierID=%s&Delete=1&EffectiveFrom=%s' onclick=\"return confirm('" . _('Are you sure you wish to delete this suppliers price?') . "');\">" . _('Delete') . "</a></td>

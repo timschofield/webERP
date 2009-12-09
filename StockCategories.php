@@ -207,11 +207,11 @@ or deletion of the records*/
 		printf("<td>%s</td>
             		<td>%s</td>
             		<td>%s</td>
-            		<td align=right>%s</td>
-            		<td align=right>%s</td>
-            		<td align=right>%s</td>
-            		<td align=right>%s</td>
-            		<td align=right>%s</td>
+            		<td class=number>%s</td>
+            		<td class=number>%s</td>
+            		<td class=number>%s</td>
+            		<td class=number>%s</td>
+            		<td class=number>%s</td>
             		<td><a href=\"%sSelectedCategory=%s\">" . _('Edit') . "</td>
             		<td><a href=\"%sSelectedCategory=%s&delete=yes\" onclick=\"return confirm('" . _('Are you sure you wish to delete this stock category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . "');\">" . _('Delete') . "</td>
             		</tr>",

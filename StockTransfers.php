@@ -478,7 +478,7 @@ if (!isset($_SESSION['Transfer']->TransferItem[0]->Quantity)) {
 }
 
 if ($_SESSION['Transfer']->TransferItem[0]->Controlled==1){
-	echo '<td align=right><input type=hidden name="Quantity" VALUE=' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '><a href="' . $rootpath .'/StockTransferControlled.php?' . SID . '">' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '</a></td></tr>';
+	echo '<td class=number><input type=hidden name="Quantity" VALUE=' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '><a href="' . $rootpath .'/StockTransferControlled.php?' . SID . '">' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '</a></td></tr>';
 } else {
 	echo '<td><input type=text class="number" name="Quantity" size=12 maxlength=12 Value=' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '></td></tr>';
 }

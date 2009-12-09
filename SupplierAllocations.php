@@ -502,11 +502,11 @@ if (isset($_POST['AllocTrans'])){
 	    		<td>$AllocnItem->TypeNo</td>
 			<td>$AllocnItem->TransDate</td>
 	    		<td>$AllocnItem->SuppRef</td>
-			<td align=right>" . number_format($AllocnItem->TransAmount,2) . '</td>
-	    		<td align=right>' . number_format($YetToAlloc,2) . "<input type=hidden name='YetToAlloc" .
+			<td class=number>" . number_format($AllocnItem->TransAmount,2) . '</td>
+	    		<td class=number>' . number_format($YetToAlloc,2) . "<input type=hidden name='YetToAlloc" .
 	    		 $Counter . "' VALUE=" . $YetToAlloc . '></td>';
 
-	    echo "<td align=right><input type='checkbox' name='All" .  $Counter . "'";
+	    echo "<td class=number><input type='checkbox' name='All" .  $Counter . "'";
 
 	    if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01){
 			echo ' VALUE=' . True . '>';
@@ -523,10 +523,10 @@ if (isset($_POST['AllocTrans'])){
 
    }
 
-   echo '<tr><td colspan=5 align=right><b><U>' . _('Total Allocated') . ':</U></b></td>
-   		<td align=right><b><U>' .  number_format($TotalAllocated,2) . '</U></b></td></tr>';
+   echo '<tr><td colspan=5 class=number><b><U>' . _('Total Allocated') . ':</U></b></td>
+   		<td class=number><b><U>' .  number_format($TotalAllocated,2) . '</U></b></td></tr>';
 
-   echo '<tr><td colspan=5 align=right><b>' . _('Left to allocate') . '</b></td><td align=right><b>' .
+   echo '<tr><td colspan=5 class=number><b>' . _('Left to allocate') . '</b></td><td class=number><b>' .
      		number_format(-$_SESSION['Alloc']->TransAmt - $TotalAllocated,2) . '</b></td></tr></table>';
 
    echo "<div class='centre'><input type=hidden name='TotalNumberOfAllocs' VALUE=$Counter>";
@@ -598,8 +598,8 @@ if (isset($_POST['AllocTrans'])){
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
-		<td align=right>%0.2f</td>
-		<td align=right>%0.2f</td>
+		<td class=number>%0.2f</td>
+		<td class=number>%0.2f</td>
 		<td><a href='%sAllocTrans=%s'>" . _('Allocate') .'</td>
 		</tr>',
 		$myrow['typename'],
@@ -669,8 +669,8 @@ if (isset($_POST['AllocTrans'])){
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
-		<td align=right>%0.2f</td>
-		<td align=right>%0.2f</td>
+		<td class=number>%0.2f</td>
+		<td class=number>%0.2f</td>
 		<td><a href='%sAllocTrans=%s'>" . _('Allocate') . '</td>
 		</tr>',
 		$myrow['typename'],

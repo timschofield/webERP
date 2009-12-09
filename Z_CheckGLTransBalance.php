@@ -44,7 +44,7 @@ while ($OutOfWackRow = DB_fetch_array($OutOfWackResult)){
 	} else {
 		$RowCounter++;
 	}
-	echo "<tr><td><a href='" . $rootpath . "/GLTransInquiry.php?" . SID . "&TypeID=" . $OutOfWackRow['type'] . "&TransNo=" . $OutOfWackRow['typeno'] . "'>" . $OutOfWackRow['typename'] . '</a></td><td align=right>' . $OutOfWackRow['typeno'] . '</td><td align=right>' . $OutOfWackRow['periodno'] . '</td><td align=right>' . number_format($OutOfWackRow['nettot'],3) . '</td></tr>';
+	echo "<tr><td><a href='" . $rootpath . "/GLTransInquiry.php?" . SID . "&TypeID=" . $OutOfWackRow['type'] . "&TransNo=" . $OutOfWackRow['typeno'] . "'>" . $OutOfWackRow['typename'] . '</a></td><td class=number>' . $OutOfWackRow['typeno'] . '</td><td class=number>' . $OutOfWackRow['periodno'] . '</td><td class=number>' . number_format($OutOfWackRow['nettot'],3) . '</td></tr>';
 
 }
 echo '</table>';

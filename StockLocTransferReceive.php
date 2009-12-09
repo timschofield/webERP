@@ -435,7 +435,7 @@ if (isset($_SESSION['Transfer'])){
 			<td>' . $TrfLine->StockID . '</td>
 			<td>' . $TrfLine->ItemDescription . '</td>';
 
-		echo '<td align=right>' . number_format($TrfLine->ShipQty, $TrfLine->DecimalPlaces) . '</td>';
+		echo '<td class=number>' . number_format($TrfLine->ShipQty, $TrfLine->DecimalPlaces) . '</td>';
 		if (isset($_POST['Qty' . $i]) and is_numeric($_POST['Qty' . $i])){
 			$_SESSION['Transfer']->TransferItem[$i]->Quantity= $_POST['Qty' . $i];
 			$Qty = $_POST['Qty' . $i];
@@ -513,7 +513,7 @@ if (isset($_SESSION['Transfer'])){
 
 		while ($myrow=DB_fetch_array($TrfResult)){
 
-			echo '<tr><td align=right>' . $myrow['reference'] . '</td>
+			echo '<tr><td class=number>' . $myrow['reference'] . '</td>
 				<td>' . $myrow['trffromloc'] . '</td>
 				<td>' . ConvertSQLDate($myrow['shipdate']) . '</td>
 				<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Trf_ID=' . $myrow['reference'] . '">'. _('Receive'). '</a></td></tr>';

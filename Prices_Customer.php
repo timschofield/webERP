@@ -154,7 +154,7 @@ if (DB_num_rows($result) == 0) {
 } else {
 	echo '<tr><th>' . _('Normal Price') . '</th></tr>';
 	while ($myrow = DB_fetch_array($result)) {
-		printf('<tr class="EvenTableRows"><td align=right>%0.2f</td></tr>', $myrow['price']);
+		printf('<tr class="EvenTableRows"><td class=number>%0.2f</td></tr>', $myrow['price']);
 	}
 }
 
@@ -195,7 +195,7 @@ if (DB_num_rows($result) == 0) {
 	}
 
 	printf("<tr bgcolor='#CCCCCC'>
-		<td align=right>%0.2f</td>
+		<td class=number>%0.2f</td>
 		<td>%s</td>
  		<td><a href='%s?Item=%s&Price=%s&Branch=%s&Edit=1'>" . _('Edit') . "</td>
 		<td><a href='%s?Item=%s&Branch=%s&delete=yes'>" . _('Delete') . "</td></tr>",

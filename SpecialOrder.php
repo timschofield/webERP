@@ -578,13 +578,13 @@ if (count($_SESSION['SPL']->LineItems)>0){
 		}
 		echo '<td>' . $SPLLine->ItemDescription . '</td>
 			<td>' . $SPLLine->ReqDelDate . "</td>
-			<td align=right>$DisplayQuantity</td>
-			<td align=right>$DisplayCost</td>
-			<td align=right>$DisplayPrice</td>
-			<td align=right>$DisplayLineCostTotal</td>
-			<td align=right>$DisplayLineTotal</td>
-			<td align=right>$DisplayLineCostTotalCurr</td>
-			<td align=right>$DisplayLineTotalCurr</td>
+			<td class=number>$DisplayQuantity</td>
+			<td class=number>$DisplayCost</td>
+			<td class=number>$DisplayPrice</td>
+			<td class=number>$DisplayLineCostTotal</td>
+			<td class=number>$DisplayLineTotal</td>
+			<td class=number>$DisplayLineCostTotalCurr</td>
+			<td class=number>$DisplayLineTotalCurr</td>
 			<td><a href='" . $_SERVER['PHP_SELF'] . "?" . SID .'&Delete=' . $SPLLine->LineNo . "'>" . _('Delete') . '</a></td></tr>';
 
 		$_SESSION['SPL']->total = $_SESSION['SPL']->total + $DisplayLineTotalCurr;
@@ -592,8 +592,8 @@ if (count($_SESSION['SPL']->LineItems)>0){
 
 	$DisplayTotal = number_format($_SESSION['SPL']->total,2);
 	echo '<tr>
-		<td colspan=8 align=right>' . _('TOTAL Excl Tax') . "</td>
-		<td align=right><b>$DisplayTotal</b></td>
+		<td colspan=8 class=number>' . _('TOTAL Excl Tax') . "</td>
+		<td class=number><b>$DisplayTotal</b></td>
 	</tr></table>";
 
 }

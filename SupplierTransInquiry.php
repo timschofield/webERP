@@ -113,8 +113,8 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
-			<td align=right>%s</td>
-			<td align=right>%s</td>
+			<td class=number>%s</td>
+			<td class=number>%s</td>
 			<td>%s</td></tr>",
 			$myrow['typename'],
 			$myrow['transno'],
@@ -148,7 +148,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 				printf('<tr>
 					<td>%s</td>
 					<td>%s</td>
-					<td align=right>%s</td>
+					<td class=number>%s</td>
 					<td>%s</td>
 					</tr>',
 					$GLTransRow['account'],

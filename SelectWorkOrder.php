@@ -212,7 +212,7 @@ If (isset($StockItemsResult)) {
 
 		printf("<td><input type=submit name='SelectedStockItem' VALUE='%s'</td>
 			<td>%s</td>
-			<td align=right>%s</td>
+			<td class=number>%s</td>
 			<td>%s</td>
 			</tr>",
 			$myrow['stockid'],
@@ -344,9 +344,9 @@ If (isset($StockItemsResult)) {
 				<td><a href='%s'>" . _('Issue To') . "</a></td>
 				<td><a href='%s'>" . _('Costing') . "</a></td>
 				<td>%s - %s</td>
-				<td align=right>%s</td>
-				<td align=right>%s</td>
-				<td align=right>%s</td>
+				<td class=number>%s</td>
+				<td class=number>%s</td>
+				<td class=number>%s</td>
 				<td>%s</td>
 				</tr>",
 				$ModifyPage,

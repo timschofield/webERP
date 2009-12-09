@@ -112,7 +112,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		);
 	} else {
 		printf("<td>%s</td>
-			<td align=right>%s</td>",
+			<td class=number>%s</td>",
 			$myrow['serialno'],
 			number_format($myrow['quantity'],$DecimalPlaces)
 			);

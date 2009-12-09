@@ -87,7 +87,7 @@ while ($myrow=DB_fetch_array($SalesOrdersResult)) {
 			<td><font size=2>%s</font></td>
 			<td><font size=2>%s</font></td>
 			<td><font size=2>%s</font></td>
-			<td align=right><font size=2>%s</font></td>
+			<td class=number><font size=2>%s</font></td>
 			<td><font size=2>%s</font></td></tr>",
 			$ModifyPage,
 			$myrow['orderno'],
@@ -108,7 +108,7 @@ while ($myrow=DB_fetch_array($SalesOrdersResult)) {
 			<td><font size=2>%s</font></td>
 			<td><font size=2>%s</font></td>
 			<td><font size=2>%s</font></td>
-			<td align=right><font size=2>%s</font></td>
+			<td class=number><font size=2>%s</font></td>
 			<td><font size=2>%s</font></td></tr>",
 			$ModifyPage,
 			$myrow['orderno'],

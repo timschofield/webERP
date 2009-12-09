@@ -774,7 +774,7 @@ while ($row=DB_fetch_array($result)){
 				echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<br>';
 				echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<br>';
 
-				echo '</td><td WIDTH=50% align=right>';
+				echo '</td><td WIDTH=50% class=number>';
 
 	/*Now the customer charged to details in a sub table within a cell of the main table*/
 
@@ -916,11 +916,11 @@ while ($row=DB_fetch_array($result)){
 
 					      printf ('<td>%s</td>
 					      		<td>%s</td>
-							<td align=right>%s</td>
-							<td align=right>%s</td>
-							<td align=right>%s</td>
-							<td align=right>%s</td>
-							<td align=right>%s</td>
+							<td class=number>%s</td>
+							<td class=number>%s</td>
+							<td class=number>%s</td>
+							<td class=number>%s</td>
+							<td class=number>%s</td>
 							</tr>',
 							$myrow2['stockid'],
 							$myrow2['description'],
@@ -963,7 +963,7 @@ while ($row=DB_fetch_array($result)){
 						    echo _('Telephone') . ': ' . $_SESSION['CompanyRecord']['telephone'] . '<br>';
 						    echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<br>';
 						    echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<br>';
-						    echo '</td><td align=right>' . _('Page') . ": $PageNumber</td></tr></table>";
+						    echo '</td><td class=number>' . _('Page') . ": $PageNumber</td></tr></table>";
 						    echo "<table class='table1'><tr>
 						    	<th>" . _('Item Code') . "</th>
 							<th>" . _('Item Description') . "</th>
@@ -1008,7 +1008,7 @@ while ($row=DB_fetch_array($result)){
 					echo _('Telephone') . ': ' . $_SESSION['CompanyRecord']['telephone'] . '<br>';
 					echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<br>';
 					echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<br>';
-					echo '</td><td align=right>' . _('Page') . ": $PageNumber</td></tr></table>";
+					echo '</td><td class=number>' . _('Page') . ": $PageNumber</td></tr></table>";
 					echo "<table class='table1'><tr>
 						<th>" . _('Item Code') . "</th>
 						<th>" . _('Item Description') . "</th>
@@ -1047,18 +1047,18 @@ while ($row=DB_fetch_array($result)){
 				}
 	/*Print out the invoice text entered */
 				echo '<table class=table1><tr>
-					<td align=right>' . _('Sub Total') . "</td>
-					<td align=right bgcolor='#EEEEEE' WIDTH=15%>$DisplaySubTot</td></tr>";
-				echo '<tr><td align=right>' . _('Freight') . "</td>
-					<td align=right bgcolor='#EEEEEE'>$DisplayFreight</td></tr>";
-				echo '<tr><td align=right>' . _('Tax') . "</td>
-					<td align=right bgcolor='#EEEEEE'>$DisplayTax</td></tr>";
+					<td class=number>' . _('Sub Total') . "</td>
+					<td class=number bgcolor='#EEEEEE' WIDTH=15%>$DisplaySubTot</td></tr>";
+				echo '<tr><td class=number>' . _('Freight') . "</td>
+					<td class=number bgcolor='#EEEEEE'>$DisplayFreight</td></tr>";
+				echo '<tr><td class=number>' . _('Tax') . "</td>
+					<td class=number bgcolor='#EEEEEE'>$DisplayTax</td></tr>";
 				if ($InvOrCredit=='Invoice'){
-				     echo '<tr><td Align=RIGHT><b>' . _('TOTAL INVOICE') . "</b></td>
-				     	<td align=right bgcolor='#EEEEEE'><U><b>$DisplayTotal</b></U></td></tr>";
+				     echo '<tr><td class=number><b>' . _('TOTAL INVOICE') . "</b></td>
+				     	<td class=number bgcolor='#EEEEEE'><U><b>$DisplayTotal</b></U></td></tr>";
 				} else {
-				     echo '<tr><td Align=RIGHT><font color=RED><b>' . _('TOTAL CREDIT') . "</b></font></td>
-				     		<td align=right bgcolor='#EEEEEE'><font color=RED><U><b>$DisplayTotal</b></U></font></td></tr>";
+				     echo '<tr><td class=number><font color=RED><b>' . _('TOTAL CREDIT') . "</b></font></td>
+				     		<td class=number bgcolor='#EEEEEE'><font color=RED><U><b>$DisplayTotal</b></U></font></td></tr>";
 				}
 				echo '</table>';
 			} /* end of check to see that there was an invoice record to print */

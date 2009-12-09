@@ -423,7 +423,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
     echo '<tr><td width="40%" valign="top">
             <table>'; //nested table
 
-    echo '<tr><th align=right>' . _('Item Type:') . '</th><td colspan=2>';
+    echo '<tr><th class=number>' . _('Item Type:') . '</th><td colspan=2>';
 
     switch ($myrow['mbflag']) {
         case 'A':
@@ -450,7 +450,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
             echo _('Manufactured Item');
             break;
     }
-    echo '</td><th align=right>' . _('Control Level:') .'</th><td>';
+    echo '</td><th class=number>' . _('Control Level:') .'</th><td>';
     if ($myrow['serialised'] == 1) {
         echo _('serialised');
     } elseif ($myrow['controlled'] == 1) {
@@ -458,10 +458,10 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
     } else {
         echo _('N/A');
     }
-    echo '</td><th align=right>' . _('Units') . ':</th><td>' . $myrow['units'] . '</td></tr>';
-    echo '<tr><th align=right>' . _('Volume') . ':</th><td align=right colspan=2>' . number_format($myrow['volume'], 3) . '</td>
-            <th align=right>' . _('Weight') . ':</th><td align=right>' . number_format($myrow['kgs'], 3) . '</td>
-            <th align=right>' . _('EOQ') . ':</th><td align=right>' . number_format($myrow['eoq'],$myrow['decimalplaces']) . '</td></tr>';
+    echo '</td><th class=number>' . _('Units') . ':</th><td>' . $myrow['units'] . '</td></tr>';
+    echo '<tr><th class=number>' . _('Volume') . ':</th><td class=number colspan=2>' . number_format($myrow['volume'], 3) . '</td>
+            <th class=number>' . _('Weight') . ':</th><td class=number>' . number_format($myrow['kgs'], 3) . '</td>
+            <th class=number>' . _('EOQ') . ':</th><td class=number>' . number_format($myrow['eoq'],$myrow['decimalplaces']) . '</td></tr>';
 
 	if (in_array($PricesSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)){
     	echo '<tr><th colspan=2>' . _('Sell Price') . ':</th><td>';
@@ -506,8 +506,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 				echo '</td></tr>';
 			while ($PriceRow = DB_fetch_row($PriceResult)) {
 				$Price = $PriceRow[1];
-				echo '<tr><td></td><th>' . $PriceRow[0] . '</th><td align=right>' . number_format($Price,2) . '</td>
-				<th align=right>' . _('Gross Profit') . '</th><td align=right>';
+				echo '<tr><td></td><th>' . $PriceRow[0] . '</th><td class=number>' . number_format($Price,2) . '</td>
+				<th class=number>' . _('Gross Profit') . '</th><td class=number>';
 				if ($Price > 0) {
 					$GP = number_format(($Price - $Cost) * 100 / $Price, 2);
 				} else {
@@ -532,7 +532,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		} else {
 			$Cost = $myrow['cost'];
 		}
-		echo '<th align=right>' . _('Cost') . '</th><td align=right>' . number_format($Cost,3) . '</td>';
+		echo '<th class=number>' . _('Cost') . '</th><td class=number>' . number_format($Cost,3) . '</td>';
 	} //end of if PricesSecuirty allows viewing of prices
     echo '</table>'; //end of first nested table
    // Item Category Property mod: display the item properties
@@ -570,7 +570,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 . ':</th>';
                switch ($PropertyRow['controltype']) {
                        case 0; //textbox
-                               echo '<td align=right width=60><input type="text" name="PropValue' . 
+                               echo '<td class=number width=60><input type="text" name="PropValue' . 
                                	$PropertyCounter . '" value="'. $PropertyValue.'">';
                                break;
                        case 1; //select box
@@ -693,9 +693,9 @@ $PropertyOptionValue . '</option>';
         $Demand += $DemandRow[0];
     }
 
-    echo '<tr><th align=right width="15%">' . _('Quantity On Hand') . ':</th><td width="17%" align=right>' . $QOH . '</td></tr>';
-    echo '<tr><th align=right width="15%">' . _('Quantity Demand') . ':</th><td width="17%" align=right>' . number_format($Demand,$myrow['decimalplaces']) . '</td></tr>';
-    echo '<tr><th align=right width="15%">' . _('Quantity On Order') . ':</th><td width="17%" align=right>' . $QOO . '</td></tr>
+    echo '<tr><th class=number width="15%">' . _('Quantity On Hand') . ':</th><td width="17%" class=number>' . $QOH . '</td></tr>';
+    echo '<tr><th class=number width="15%">' . _('Quantity Demand') . ':</th><td width="17%" class=number>' . number_format($Demand,$myrow['decimalplaces']) . '</td></tr>';
+    echo '<tr><th class=number width="15%">' . _('Quantity On Order') . ':</th><td width="17%" class=number>' . $QOO . '</td></tr>
                 </table>';//end of nested table
 
     echo '</td>'; //end cell of master table
@@ -722,7 +722,7 @@ $PropertyOptionValue . '</option>';
                     $db);
         while ($SuppRow = DB_fetch_array($SuppResult)) {
             echo '<tr><td>' . $SuppRow['suppname'] . '</td>
-                        <td align=right>' . number_format($SuppRow['price']/$SuppRow['conversionfactor'],2) . '</td>
+                        <td class=number>' . number_format($SuppRow['price']/$SuppRow['conversionfactor'],2) . '</td>
                         <td>' . $SuppRow['currcode'] . '</td>
                         <td>' . ConvertSQLDate($SuppRow['effectivefrom']) . '</td>
                         <td>' . $SuppRow['leadtime'] . '</td>';

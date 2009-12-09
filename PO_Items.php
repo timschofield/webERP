@@ -948,7 +948,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 			} else {
 				$uom=$POLine->Units;
 			}
-			//			echo "<td>$POLine->StockID</td><td>$POLine->ItemDescription</td>td> align=right>$DisplayQuantity</td><td>$POLine->Units</td><td>$POLine->ReqDelDate</td>td> align=right>$DisplayPrice</td>td> align=right>$DisplayLineTotal</font></td><td><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "&Edit=" . $POLine->LineNo . "'>" . _('Select') . "</a></td></tr>";
+			//			echo "<td>$POLine->StockID</td><td>$POLine->ItemDescription</td>td> class=number>$DisplayQuantity</td><td>$POLine->Units</td><td>$POLine->ReqDelDate</td>td> class=number>$DisplayPrice</td>td> class=number>$DisplayLineTotal</font></td><td><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "&Edit=" . $POLine->LineNo . "'>" . _('Select') . "</a></td></tr>";
 			echo "<td>$POLine->StockID</td>
 				<td>".$POLine->ItemDescription."</td>
 				<td><input type=text class=number name=Qty$POLine->LineNo size=11 value=".$DisplayQuantity."></td>
@@ -963,7 +963,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 	}
 
 	$DisplayTotal = number_format($_SESSION['PO'.$identifier]->total,2);
-	echo '<tr><td colspan=6 align=right>' . _('TOTAL') . _(' excluding Tax') . '</td><td class=number><b>' . $DisplayTotal . '</b></td></tr></table>';
+	echo '<tr><td colspan=6 class=number>' . _('TOTAL') . _(' excluding Tax') . '</td><td class=number><b>' . $DisplayTotal . '</b></td></tr></table>';
 	echo '<br><div class="centre"><input type="submit" name="UpdateLines" value="Update Order Lines">';
 	echo '<br><input type="submit" name="Commit" value="Process Order">';
 	if (!isset($_POST['NewItem']) and isset($_GET['Edit'])) {

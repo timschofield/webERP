@@ -751,7 +751,7 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 	$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,2);
 	echo '<tr>
-		<td colspan=6 align=right><b>'. _('TOTAL Excl Tax/Freight') .'</b></td>
+		<td colspan=6 class=number><b>'. _('TOTAL Excl Tax/Freight') .'</b></td>
 		<td class=number>'.$DisplayTotal.'</td>
 	</tr></table>';
 

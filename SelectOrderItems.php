@@ -1276,7 +1276,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<td><input class="number" onKeyPress="return restrictToNumbers(this, event)"  type=text name="Discount_' . $OrderLine->LineNumber . '" size=5 maxlength=4 value=' . ($OrderLine->DiscountPercent * 100) . '></td>
 					<td><input class="number" onKeyPress="return restrictToNumbers(this, event)"  type=text name="GPPercent_' . $OrderLine->LineNumber . '" size=3 maxlength=40 value=' . $OrderLine->GPPercent . '></td>';	
 			} else {
-				echo '<td align=right>' . $OrderLine->Price . '</td><td></td>';
+				echo '<td class=number>' . $OrderLine->Price . '</td><td></td>';
 				echo '<input type=hidden name="Price_' . $OrderLine->LineNumber . '" value=' . $OrderLine->Price . '>';
 			}
 			if ($_SESSION['Items'.$identifier]->Some_Already_Delivered($OrderLine->LineNumber)){

@@ -357,9 +357,9 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td align=right>%s</td>
-					<td align=right>%s</td>
-					<td align=right>%s</td>
+					<td class=number>%s</td>
+					<td class=number>%s</td>
+					<td class=number>%s</td>
 					<td>%s</td>
 					</tr>",
 					$myrow['grnno'],

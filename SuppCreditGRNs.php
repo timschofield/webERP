@@ -83,9 +83,9 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 	echo '<tr><td>' . $EnteredGRN->GRNNo . '</td>
             <td>' . $EnteredGRN->ItemCode . '</td>
             <td>' . $EnteredGRN->ItemDescription . '</td>
-            <td align=right>' . number_format($EnteredGRN->This_QuantityInv,2) . '</td>
-            <td align=right>' . number_format($EnteredGRN->ChgPrice,2) . '</td>
-            <td align=right>' . number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,2) . '</td>
+            <td class=number>' . number_format($EnteredGRN->This_QuantityInv,2) . '</td>
+            <td class=number>' . number_format($EnteredGRN->ChgPrice,2) . '</td>
+            <td class=number>' . number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,2) . '</td>
             <td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . 'Delete=' . $EnteredGRN->GRNNo . '">' . _('Delete') . '</a></td></tr>';
 
 	$TotalValueCharged = $TotalValueCharged + ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv);
@@ -97,8 +97,8 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 	}
 }
 
-echo '<tr><td colspan=5 align=right><font size=4 color=BLUE>' . _('Total Value Credited Against Goods') . ':</font></td>
-          <td align=right><font size=4 color=BLUE><U>' . number_format($TotalValueCharged,2) . '</U></font></td></tr>';
+echo '<tr><td colspan=5 class=number><font size=4 color=BLUE>' . _('Total Value Credited Against Goods') . ':</font></td>
+          <td class=number><font size=4 color=BLUE><U>' . number_format($TotalValueCharged,2) . '</U></font></td></tr>';
 echo '</table><br><a href="' . $rootpath . '/SupplierCredit.php?' . SID . '">' . _('Back to Credit Note Entry') . '</a><hr>';
 
 /* Now get all the GRNs for this supplier from the database
@@ -168,11 +168,11 @@ while ($myrow=DB_fetch_array($GRNResults)){
               		<td>' . $myrow['itemcode'] . '</td>
               		<td>' . $myrow['itemdescription'] . '</td>
               		<td>' . ConvertSQLDate($myrow['deliverydate']) . '</td>
-              		<td align=right>' . number_format($myrow['qtyrecd'],2) . '</td>
-              		<td align=right>' . number_format($myrow['quantityinv'],2) . '</td>
-              		<td align=right>' . number_format($myrow['qtyrecd'] - $myrow['quantityinv'],2) . '</td>
-              		<td align=right>' . number_format($myrow['unitprice'],2) . '</td>
-              		<td align=right>' . number_format($myrow['unitprice']*($myrow['qtyrecd'] - $myrow['quantityinv']),2) . '</td>
+              		<td class=number>' . number_format($myrow['qtyrecd'],2) . '</td>
+              		<td class=number>' . number_format($myrow['quantityinv'],2) . '</td>
+              		<td class=number>' . number_format($myrow['qtyrecd'] - $myrow['quantityinv'],2) . '</td>
+              		<td class=number>' . number_format($myrow['unitprice'],2) . '</td>
+              		<td class=number>' . number_format($myrow['unitprice']*($myrow['qtyrecd'] - $myrow['quantityinv']),2) . '</td>
               	</tr>';
 		$i++;
 		if ($i>15){
@@ -221,9 +221,9 @@ if (isset($_POST['GRNNo']) AND $_POST['GRNNo']!=''){
 
 	echo '<tr><td>' . $_POST['GRNNo'] . '</td>
             <td>' . $myrow['itemcode'] . ' ' . $myrow['itemdescription'] . '</td>
-            <td align=right>' . number_format($myrow['qtyostdg'],2) . '</td>
+            <td class=number>' . number_format($myrow['qtyostdg'],2) . '</td>
             <td><input type=Text Name="This_QuantityCredited" Value=' . $myrow['qtyostdg'] . ' size=11 maxlength=10></td>
-            <td align=right>' . $myrow['unitprice'] . '</td>
+            <td class=number>' . $myrow['unitprice'] . '</td>
             <td><input type=Text Name="ChgPrice" Value=' . $myrow['unitprice'] . ' size=11 maxlength=10></td>
             </tr>';
 	echo '</table>';

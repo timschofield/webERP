@@ -87,8 +87,8 @@ while ($myrow = DB_fetch_array($result)){
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
-			<td align=right>%s</td>
-			<td align=right>%s</td>
+			<td class=number>%s</td>
+			<td class=number>%s</td>
 			</tr>",
 			$TransType,
 			$myrow1['transno'],
@@ -106,7 +106,7 @@ while ($myrow = DB_fetch_array($result)){
 		$AllocsTotal +=$myrow1['amt'];
 	}
 	//end of while loop
-	echo "<tr><td colspan = 6 align=right>" . number_format($AllocsTotal,2) . '</td></tr>';
+	echo "<tr><td colspan = 6 class=number>" . number_format($AllocsTotal,2) . '</td></tr>';
 	echo '</table><hr>';
 }
 

@@ -24,14 +24,14 @@ while ($myrow=DB_fetch_array($result)){
 
 	echo '<tr><td><font size=4>' . _('Total Supplier Balances in') . ' </font></td>
 		<td><font size=4>' . $myrow['currcode'] . '</font></td>
-		<td align=right><font size=4>' . number_format($myrow['currencybalance'],2) . '</font></td>
+		<td class=number><font size=4>' . number_format($myrow['currencybalance'],2) . '</font></td>
 		<td><font size=4> ' . _('in') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</font></td>
-		<td align=right><font size=4>' . number_format($myrow['localbalance'],2) . '</font></td></tr>';
+		<td class=number><font size=4>' . number_format($myrow['localbalance'],2) . '</font></td></tr>';
 	$LocalTotal += $myrow['localbalance'];
 }
 
 echo '<tr><td colspan=4><font size=4>' . _('Total Balances in local currency') . ':</font></td>
-	<td align=right><font size=4>' . number_format($LocalTotal,2) . '</font></td></tr>';
+	<td class=number><font size=4>' . number_format($LocalTotal,2) . '</font></td></tr>';
 
 echo '</table>';
 

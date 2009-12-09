@@ -413,12 +413,12 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 	
 	
 		echo '<td>'.$LnItm->OrderNo.'</td>
-			<td>'. $LnItm->StockID .' - '. $LnItm->ItemDescription. '</td><td align=right>' . number_format($LnItm->QuantityOrd,2) . '</td>
+			<td>'. $LnItm->StockID .' - '. $LnItm->ItemDescription. '</td><td class=number>' . number_format($LnItm->QuantityOrd,2) . '</td>
 			<td>'. $LnItm->UOM .'</td>
-			<td align=right>' . number_format($LnItm->QuantityRecd,2) . '</td>
-			<td align=right>' . number_format($LnItm->QtyInvoiced,2) . '</td>
-			<td align=right>' . number_format($LnItm->UnitPrice,2) . '</td>
-			<td align=right>' . number_format($LnItm->StdCostUnit,2) . '</td>
+			<td class=number>' . number_format($LnItm->QuantityRecd,2) . '</td>
+			<td class=number>' . number_format($LnItm->QtyInvoiced,2) . '</td>
+			<td class=number>' . number_format($LnItm->UnitPrice,2) . '</td>
+			<td class=number>' . number_format($LnItm->StdCostUnit,2) . '</td>
 			<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . 'Delete=' . $LnItm->PODetailItem . '">'. _('Delete'). '</a></td>
 			</tr>';
 	}//for each line on the shipment
@@ -488,10 +488,10 @@ if (DB_num_rows($result)>0){
 
 		echo '<td>' . $myrow['orderno'] . '</td>
 			<td>' . $myrow['itemcode'] . ' - ' . $myrow['itemdescription'] . '</td>
-			<td align=right>' . number_format($myrow['quantityord'],2) . '</td>
+			<td class=number>' . number_format($myrow['quantityord'],2) . '</td>
 			<td>' . $myrow['units'] . '</td>
-			<td align=right>' . number_format($myrow['quantityrecd'],2) . '</td>
-			<td align=right>' . ConvertSQLDate($myrow['deliverydate']) . '</td>
+			<td class=number>' . number_format($myrow['quantityrecd'],2) . '</td>
+			<td class=number>' . ConvertSQLDate($myrow['deliverydate']) . '</td>
 			<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Add=' . $myrow['podetailitem'] . '">'. _('Add').'</a></td>
 			</tr>';
 

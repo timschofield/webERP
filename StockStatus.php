@@ -202,11 +202,11 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 		echo '<td>' . $myrow['locationname'] . '</td>';
 
-		printf("<td align=right>%s</td>
-			<td align=right>%s</td>
-			<td align=right>%s</td>
-			<td align=right>%s</td>
-			<td align=right>%s</td>",
+		printf("<td class=number>%s</td>
+			<td class=number>%s</td>
+			<td class=number>%s</td>
+			<td class=number>%s</td>
+			<td class=number>%s</td>",
 			number_format($myrow['quantity'], $DecimalPlaces),
 			number_format($myrow['reorderlevel'], $DecimalPlaces),
 			number_format($DemandQty, $DecimalPlaces),
@@ -225,7 +225,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 	/* It must be a dummy, assembly or kitset part */
 
 		printf("<td>%s</td>
-			<td align=right>%s</td>
+			<td class=number>%s</td>
 			</tr>",
 			$myrow['locationname'],
 			number_format($DemandQty, $DecimalPlaces)
@@ -322,9 +322,9 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 		}
 
 			printf("<td>%s</td>
-			<td align=right>%s</td>
-			<td align=right>%s</td>
-			<td align=right>%s%%</td>
+			<td class=number>%s</td>
+			<td class=number>%s</td>
+			<td class=number>%s%%</td>
 			</tr>",
 			$ph[0],
 			number_format($ph[1],$DecimalPlaces),

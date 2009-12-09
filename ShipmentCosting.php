@@ -438,22 +438,22 @@ if (db_num_rows($LineItemsResult) > 0) {
 /*  Item / Qty Inv/  FX price/ Local Val/ Portion of chgs/ Shipt Cost/ Std Cost/ Variance/ Var % */
 
 	echo '<td>' . $myrow['itemcode'] . ' - ' . $myrow['itemdescription'] . '</td>
-		<td align=right>' . number_format($myrow['totqtyinvoiced']) . '</td>
-                <td align=right>' . number_format($myrow['totqtyrecd']) . '</td>
-		<td align=right>' . number_format($ItemCharges) . '</td>
-		<td align=right>' . number_format($PortionOfCharges) . '</td>
-		<td align=right>' . number_format($ItemShipmentCost,2) . '</td>
-		<td align=right>' . number_format($StdCostUnit,2) . '</td>
-		<td align=right>' . number_format($Variance,2) . '</td>
-		<td align=right>' . $VariancePercentage . '%</td></tr>';
+		<td class=number>' . number_format($myrow['totqtyinvoiced']) . '</td>
+                <td class=number>' . number_format($myrow['totqtyrecd']) . '</td>
+		<td class=number>' . number_format($ItemCharges) . '</td>
+		<td class=number>' . number_format($PortionOfCharges) . '</td>
+		<td class=number>' . number_format($ItemShipmentCost,2) . '</td>
+		<td class=number>' . number_format($StdCostUnit,2) . '</td>
+		<td class=number>' . number_format($Variance,2) . '</td>
+		<td class=number>' . $VariancePercentage . '%</td></tr>';
     }
 }
-echo '<tr><td colspan=3 align=right><font color=BLUE><b>'. _('Total Shipment Charges'). '</b></font></td>
-	<td align=right>' . number_format($TotalInvoiceValueOfShipment) . '</td>
-	<td align=right>' . number_format($TotalCostsToApportion) .'</td></tr>';
+echo '<tr><td colspan=3 class=number><font color=BLUE><b>'. _('Total Shipment Charges'). '</b></font></td>
+	<td class=number>' . number_format($TotalInvoiceValueOfShipment) . '</td>
+	<td class=number>' . number_format($TotalCostsToApportion) .'</td></tr>';
 
-echo '<tr><td colspan=6 align=right>' . _('Total Value of all variances on this shipment') . '</td>
-              <td align=right>' . number_format($TotalShiptVariance,2) . '</td></tr>';
+echo '<tr><td colspan=6 class=number>' . _('Total Value of all variances on this shipment') . '</td>
+              <td class=number>' . number_format($TotalShiptVariance,2) . '</td></tr>';
 
 echo '</table><hr>';
 
@@ -519,13 +519,13 @@ while ($myrow=db_fetch_array($ChargesResult)) {
 		<td>' . $myrow['suppreference'] . '</td>
 		<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
 		<td>' . $myrow['stockid'] . '</td>
-		<td align=right>' . number_format($myrow['value']) . '</td></tr>';
+		<td class=number>' . number_format($myrow['value']) . '</td></tr>';
 
 	$TotalItemShipmentChgs += $myrow['value'];
 }
 
-echo '<tr><td colspan=5 align=right><font color=BLUE><b>'. _('Total Charges Against Shipment Items'). ':</b></font></td>
-	<td align=right>' . number_format($TotalItemShipmentChgs) . '</td></tr>';
+echo '<tr><td colspan=5 class=number><font color=BLUE><b>'. _('Total Charges Against Shipment Items'). ':</b></font></td>
+	<td class=number>' . number_format($TotalItemShipmentChgs) . '</td></tr>';
 
 echo '</table>';
 
@@ -587,15 +587,15 @@ while ($myrow=db_fetch_array($ChargesResult)) {
 		<td>' .$myrow['typename'] . '</td>
 		<td>' . $myrow['suppreference'] . '</td>
 		<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
-		<td align=right>' . number_format($myrow['value']) . '</td></tr>';
+		<td class=number>' . number_format($myrow['value']) . '</td></tr>';
 
 	$TotalGeneralShipmentChgs += $myrow['value'];
 
 }
 
 echo '<tr>
-	<td align=right colspan=4><font color=BLUE><b>'. _('Total General Shipment Charges'). ':</b></font></td>
-	<td align=right>' . number_format($TotalGeneralShipmentChgs) . '</td></tr>';
+	<td class=number colspan=4><font color=BLUE><b>'. _('Total General Shipment Charges'). ':</b></font></td>
+	<td class=number>' . number_format($TotalGeneralShipmentChgs) . '</td></tr>';
 
 echo '</table>';
 

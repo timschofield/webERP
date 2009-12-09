@@ -173,12 +173,12 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 
 			echo 	'<td>' . $myrow['stkcode'] . '</td>
 				<td>' . $myrow['description'] . '</td>
-				<td align=right>' . $myrow['quantity'] . '</td>
+				<td class=number>' . $myrow['quantity'] . '</td>
 				<td>' . $myrow['units'] . '</td>
-				<td align=right>' . number_format($myrow['unitprice'],2) . '</td>
-				<td align=right>' . number_format(($myrow['discountpercent'] * 100),2) . '%' . '</td>
-				<td align=right>' . number_format($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']),2) . '</td>
-				<td align=right>' . number_format($myrow['qtyinvoiced'],2) . '</td>
+				<td class=number>' . number_format($myrow['unitprice'],2) . '</td>
+				<td class=number>' . number_format(($myrow['discountpercent'] * 100),2) . '%' . '</td>
+				<td class=number>' . number_format($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']),2) . '</td>
+				<td class=number>' . number_format($myrow['qtyinvoiced'],2) . '</td>
 				<td>' . $DisplayActualDeliveryDate . '</td>
 			</tr>';
 			
@@ -192,8 +192,8 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		$DisplayWeight = number_format($OrderTotalWeight,2);
 		
 		echo '<tr>
-			<td colspan=5 align=right><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
-			<td colspan=2 align=right>' . $DisplayTotal . '</td>
+			<td colspan=5 class=number><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
+			<td colspan=2 class=number>' . $DisplayTotal . '</td>
 			</tr>
 		</table>';
 		

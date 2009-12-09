@@ -294,9 +294,9 @@ if (isset($_POST['Show'])){
 	echo '</b></td>';
 
 	if ($RunningTotal >0){
-		echo '<td align=right><b>' . number_format(($RunningTotal),2) . '</b></td><td colspan=2></td></tr>';
+		echo '<td class=number><b>' . number_format(($RunningTotal),2) . '</b></td><td colspan=2></td></tr>';
 	}else {
-		echo '<td></td><td align=right><b>' . number_format((-$RunningTotal),2) . '</b></td><td colspan=2></td></tr>';
+		echo '<td></td><td class=number><b>' . number_format((-$RunningTotal),2) . '</b></td><td colspan=2></td></tr>';
 	}
 	echo '</table>';
 } /* end of if Show button hit */
