@@ -46,3 +46,5 @@ DELETE FROM `factorcompanies` WHERE `coyname`='None';
 
 INSERT INTO  `config` (`confname`, `confvalue`) VALUES ('LogPath', '');
 INSERT INTO  `config` (`confname`, `confvalue`) VALUES ('LogSeverity', '0');
+
+ALTER TABLE `cogsglpostings` CHANGE `area` `area` CHAR( 3 ) NOT NULL;
