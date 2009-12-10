@@ -268,7 +268,7 @@ Class Cart {
 		/* Checks if there have been deliveries of a specific line item */
 
 		if ($this->LineItems[$LineNumber]->QtyInv !=0){
-			return 1;
+			return $this->LineItems[$LineNumber]->QtyInv;
 		}
 		return 0;
 	}

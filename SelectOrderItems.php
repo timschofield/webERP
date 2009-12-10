@@ -998,10 +998,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		if(isset($_GET['Delete'])){
 			//page called attempting to delete a line - GET['Delete'] = the line number to delete
-			if($_SESSION['Items'.$identifier]->Some_Already_Delivered($_GET['Delete'])==0){
+			$QuantityAlreadyDelivered = $_SESSION['Items'.$identifier]->Some_Already_Delivered($_GET['Delete']);
+			if($QuantityAlreadyDelivered == 0){
 				$_SESSION['Items'.$identifier]->remove_from_cart($_GET['Delete'], 'Yes');  /*Do update DB */
 			} else {
-				prnMsg( _('This item cannot be deleted because some of it has already been invoiced'),'warn');
+				$_SESSION['Items'.$identifier]->LineItems[$_GET['Delete']]->Quantity = $QuantityAlreadyDelivered;
 			}
 		}
 
