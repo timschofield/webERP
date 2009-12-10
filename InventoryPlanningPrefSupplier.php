@@ -232,23 +232,23 @@ if (isset($_POST['PrintPDF'])){
 
 
 		if ($_POST['Location']=='All'){
-   		   $SQL = "SELECT SUM(CASE WHEN (prd>=' . $Period_1 . ' OR 
+   		   $SQL = 'SELECT SUM(CASE WHEN (prd>=' . $Period_1 . ' OR 
 									prd<=' . $Period_4 . ') THEN -qty ELSE 0 END) AS 4mthtotal,
-						SUM(CASE WHEN prd=" . $Period_1 . " THEN -qty ELSE 0 END) AS prd1,
-						SUM(CASE WHEN prd=" . $Period_2 . " THEN -qty ELSE 0 END) AS prd2,
-						SUM(CASE WHEN prd=" . $Period_3 . " THEN -qty ELSE 0 END) AS prd3,
-						SUM(CASE WHEN prd=" . $Period_4 . " THEN -qty ELSE 0 END) AS prd4	
+						SUM(CASE WHEN prd=' . $Period_1 . ' THEN -qty ELSE 0 END) AS prd1,
+						SUM(CASE WHEN prd=' . $Period_2 . ' THEN -qty ELSE 0 END) AS prd2,
+						SUM(CASE WHEN prd=' . $Period_3 . ' THEN -qty ELSE 0 END) AS prd3,
+						SUM(CASE WHEN prd=' . $Period_4 . " THEN -qty ELSE 0 END) AS prd4	
 						FROM stockmoves
 						WHERE stockid='" . $InventoryPlan['stockid'] . "'
 						AND (type=10 OR type=11)
 						AND stockmoves.hidemovt=0";
 		} else {
-  		   $SQL = "SELECT SUM(CASE WHEN (prd>=' . $Period_1 . ' OR 
+  		   $SQL = 'SELECT SUM(CASE WHEN (prd>=' . $Period_1 . ' OR 
 									prd<=' . $Period_4 . ') THEN -qty ELSE 0 END) AS 4mthtotal,
-						SUM(CASE WHEN prd=" . $Period_1 . " THEN -qty ELSE 0 END) AS prd1,
-						SUM(CASE WHEN prd=" . $Period_2 . " THEN -qty ELSE 0 END) AS prd2,
-						SUM(CASE WHEN prd=" . $Period_3 . " THEN -qty ELSE 0 END) AS prd3,
-						SUM(CASE WHEN prd=" . $Period_4 . " THEN -qty ELSE 0 END) AS prd4
+						SUM(CASE WHEN prd=' . $Period_1 . ' THEN -qty ELSE 0 END) AS prd1,
+						SUM(CASE WHEN prd=' . $Period_2 . ' THEN -qty ELSE 0 END) AS prd2,
+						SUM(CASE WHEN prd=' . $Period_3 . ' THEN -qty ELSE 0 END) AS prd3,
+						SUM(CASE WHEN prd=' . $Period_4 . " THEN -qty ELSE 0 END) AS prd4
 						FROM stockmoves
 						WHERE stockid='" . $InventoryPlan['stockid'] . "'
 						AND stockmoves.loccode ='" . $_POST['Location'] . "'
