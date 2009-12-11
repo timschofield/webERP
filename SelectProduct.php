@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.49 $ */
+/* $Revision: 1.50 $ */
 
 $PageSecurity = 2;
 $PricesSecurity = 9;
@@ -718,7 +718,8 @@ $PropertyOptionValue . '</option>';
                         purchdata.preferred
                     FROM purchdata INNER JOIN suppliers
                     ON purchdata.supplierno=suppliers.supplierid
-                    WHERE purchdata.stockid = '" . $StockID . "'",
+                    WHERE purchdata.stockid = '" . $StockID . "'
+		    ORDER BY purchdata.preferred DESC, purchdata.effectivefrom DESC",
                     $db);
         while ($SuppRow = DB_fetch_array($SuppResult)) {
             echo '<tr><td>' . $SuppRow['suppname'] . '</td>
@@ -735,6 +736,7 @@ $PropertyOptionValue . '</option>';
                 echo '<td>' . _('No') . '</td>';
                 break;
             }
+			echo '<td><a href="' . $rootpath . '/PO_Header.php?' . SID . '&NewOrder=Yes' . '&SelectedSupplier=' . $SuppRow['supplierid'] . '&StockID=' . $StockID . '&Quantity=1">' . _('Order') . ' </a></td>';
             echo '</tr>';
         }
         echo '</tr></table></td>';
