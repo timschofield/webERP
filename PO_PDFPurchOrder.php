@@ -157,11 +157,13 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	   			deliverydate,
 				itemdescription,
 				unitprice,
-				units,
+				unitname as units,
 				quantityord,
 				decimalplaces
 			FROM purchorderdetails LEFT JOIN stockmaster
 				ON purchorderdetails.itemcode=stockmaster.stockid
+			LEFT JOIN unitsofmeasure
+				ON purchorderdetails.uom=unitsofmeasure.unitid
 			WHERE orderno =" . $OrderNo;
 	   $result=DB_query($sql,$db);
 
