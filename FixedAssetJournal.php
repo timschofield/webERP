@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.2 $ */
+/* $Revision: 1.1 $ */
 
 include('includes/DefineJournalClass.php');
 
@@ -69,11 +69,11 @@ if (!isset($_SESSION['JournalDetail']) or isset($_POST['update'])){
 		$raterow=DB_fetch_array($rateresult);
 		$assetarray[$i]['DepreciationRate']=$raterow['value'];
 
+
 		$bsnamesql='SELECT accountname FROM chartmaster WHERE accountcode='.$assetarray[$i]['bsdepn'];
 		$bsnameresult=DB_query($bsnamesql, $db);
 		$bsnamerow=DB_fetch_array($bsnameresult);
 		$assetarray[$i]['bsdepnaccount']=$bsnamerow['accountname'];
-
 		$plnamesql='SELECT accountname FROM chartmaster WHERE accountcode='.$assetarray[$i]['pldepn'];
 		$plnameresult=DB_query($plnamesql, $db);
 		$plnamerow=DB_fetch_array($plnameresult);
@@ -393,9 +393,9 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 }
 
 echo '<tr class="EvenTableRows"><td></td>
-					<td class=number><b> Total </b></td>
-					<td class=number class="number"><b>' . number_format($debittotal,2) . '</b></td>
-					<td class=number class="number"><b>' . number_format($credittotal,2) . '</b></td>';
+					<td align=right><b> Total </b></td>
+					<td align=right class="number"><b>' . number_format($debittotal,2) . '</b></td>
+					<td align=right class="number"><b>' . number_format($credittotal,2) . '</b></td>';
 if ($debittotal!=$credittotal) {
 	echo '<td align=center style="background-color: #fddbdb"><b>Required to balance - ' .
 					number_format(abs($debittotal-$credittotal),2);
