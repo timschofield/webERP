@@ -1,4 +1,7 @@
 <?php
+
+/* $Id: LanguageSetup.php 3152 2009-12-11 14:28:49Z tim_schofield $ */
+
 /* This file is included in session.inc or PDFStarter.php or a report script that does not use PDFStarter.php
 to check for the existance of gettext function and setup the necessary enviroment to allow for automatic translation
 
@@ -21,12 +24,12 @@ If (isset($_POST['Language'])) {
 
 if (function_exists('gettext')){
   
-  //This maybe reqiured in some stubborn installations
+  //This maybe required in some stubborn installations
 	$Locale = setlocale (LC_ALL, $_SESSION['Language']);
 		
 	//$Locale = setlocale (LC_CTYPE, $_SESSION['Language']);
 	//$Locale = setlocale (LC_MESSAGES, $_SESSION['Language']);
-	$Locale = setlocale (LC_NUMERIC, 'en_GB'); //currently need all decimal points etc to be as expected on webserver
+	$Locale = setlocale (LC_NUMERIC, 'en_US'); //currently need all decimal points etc to be as expected on webserver
 
 	// possibly even if locale fails the language will still switch by using Language instead of locale variable
 	putenv('LANG=' . $_SESSION['Language']);
@@ -34,7 +37,7 @@ if (function_exists('gettext')){
   //putenv('LANG=$Language_Country');
 	bindtextdomain ('messages', $PathPrefix . 'locale');
 	textdomain ('messages');
-
+    bind_textdomain_codeset('messages', _('ISO-8859-1')); 
 	$locale_info = localeconv();
 	
 } else {

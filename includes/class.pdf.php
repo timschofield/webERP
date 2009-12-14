@@ -1,119 +1,106 @@
 <?php
 
 /* $Id$ */
-/*
-	This class is an extension to the fpdf class using a syntax that the original reports were written in
-	(the R &OS pdf.php class) - due to limitation of this class for foreign character support this wrapper class
-	was written to allow the same code base to use the more functional fpdf.class by Olivier Plathey
-	
-*	Wrapper for use R&OSpdf API with fpdf.org class
-*	Janusz Dobrowolski <janusz@iron.from.pl>
-*	David Luo <davidluo188@yahoo.com.cn>
-	extended for Chinese/Japanese/Korean support by Phil Daintree
-	
-	Chinese GB&BIG5 support by Edward Yang <edward.yangcn@gmail.com>
-	
-*/
 
-define('FPDF_FONTPATH','./fonts/');
-include ('includes/fpdf.php');
+     /* -----------------------------------------------------------------------------------------------
+	This class was an extension to the FPDF class to use the syntax of the R&OS pdf.php class,
+	the syntax that WebERP original reports were written in.
+	Due to limitation of R&OS class for foreign character support, this wrapper class was
+	written to allow the same code base to use the more functional fpdf.class by Olivier Plathey.
 
-if ($_SESSION['Language']=='zh_CN' OR $_SESSION['Language']=='zh_HK' OR $_SESSION['Language']=='zh_TW'){
-	include('FPDF_Chinese.php');
-} elseif ($_SESSION['Language']=='ja_JP'){
-	include('FPDF_Japanese.php');
-}elseif ($_SESSION['Language']=='ko_KR'){
-	include('FPDF_Korean.php');
-} else {
-	class PDF_Language extends FPDF {
-		function PDF_Language($orientation='P',$unit='mm',$format='A4') {
-			$this->FPDF($orientation,$unit,$format);
-		}
+	However, due to limitations of FPDF class for UTF-8 support, now this class inherits from 
+	the TCPDF class by Nicola Asuni.
+
+	Work to move from FPDF to TCPDF by:
+		Javier de Lorenzo-Cáceres <info@civicom.eu>
+	----------------------------------------------------------------------------------------------- */
+
+require_once(dirname(__FILE__).'/tcpdf/config/lang/eng.php');
+require_once(dirname(__FILE__).'/tcpdf/tcpdf.php');
+
+if (!class_exists('Cpdf', false)) {
+
+class Cpdf extends TCPDF {
+
+	public function __construct($DocOrientation='P', $DocUnits='mm', $DocPaper='A4') {
+
+		parent::__construct($DocOrientation, $DocUnits, $DocPaper, true, _('ISO-8859-1'), false);
+
+		$this->setuserpdffont();
 	}
-}
 
-class Cpdf extends PDF_Language {
-	
-	function Cpdf($pageSize=array(0,0,612,792)) {
-	
-		$this->PDF_Language( 'P', 'pt',array($pageSize[2]-$pageSize[0],$pageSize[3]-$pageSize[1]));
-		$this->setAutoPageBreak(0);
-		$this->AddPage();
-		$this->SetLineWidth(1);
-		$this->cMargin = 0;
-		
-		// Next three lines should be here for any fonts genarted with 'makefont' utility
-		if ($_SESSION['Language']=='zh_TW' or $_SESSION['Language']=='zh_HK'){
-			$this->AddBig5Font();
-		} elseif ($_SESSION['Language']=='zh_CN'){
-			$this->AddGBFont();
-		}elseif ($_SESSION['Language']=='ja_JP'){
-			$this->AddSJISFont();
-		}elseif ($_SESSION['Language']=='ko_KR'){
-			$this->AddUHCFont();
+	protected function setuserpdffont() {
+
+		session_start();
+
+		if (isset($_SESSION['PDFLanguage'])) {
+
+			$userpdflang = $_SESSION['PDFLanguage'];
+
+			switch ($userpdflang) {
+				case 0: $userpdffont = 'times';     break;
+				case 1: $userpdffont = 'javierjp';  break;
+				case 2: $userpdffont = 'javiergb';  break;
+				case 3: $userpdffont = 'javierjp';  break;
+				case 4: $userpdffont = 'javierjp';  break;
+				case 5: $userpdffont = 'javierjp';  break;
+				case 6: $userpdffont = 'javierjp';  break;
+				case 7: $userpdffont = 'javierjp';  break;
+			}
+
 		} else {
-		//	$this->AddFont('helvetica');
-		//	$this->AddFont('helvetica','I');
-		//	$this->AddFont('helvetica','B');
+			$userpdffont = 'helvetica';
 		}
+
+		$this->SetFont($userpdffont, '', 11);
+		//     SetFont($family, $style='', $size=0, $fontfile='')	
 	}
-	
-	function selectFont($FontName) {
-		
-		$type = '';
-		if(strpos($FontName, 'Oblique')) {
-			$type = 'I';
-		}
-		if(strpos($FontName, 'Bold')) {
-			$type = 'B';
-		}
-		if ($_SESSION['Language']=='zh_TW' or $_SESSION['Language']=='zh_HK'){
-			$FontName = 'Big5';
-		} elseif ($_SESSION['Language']=='zh_CN'){
-			$FontName = 'GB';
-		} elseif ($_SESSION['Language']=='ja_JP'){
-			$FontName = 'SJIS';
-		} elseif ($_SESSION['Language']=='ko_KR'){
-			$FontName = 'UHC';
-		} else {
-			$FontName ='helvetica';
-		}
-		$this->SetFont($FontName, $type);
-	}
-	
+
+
 	function newPage() {
+/* Javier: 	$this->setPrintHeader(false);  This is not a removed call but added in. */
 		$this->AddPage();
 	}
 	
 	function line($x1,$y1,$x2,$y2) {
-		FPDF::line($x1, $this->h-$y1, $x2, $this->h-$y2);
+// Javier	FPDF::line($x1, $this->h-$y1, $x2, $this->h-$y2);
+// Javier: width, color and style might be edited
+		TCPDF::Line ($x1,$this->h-$y1,$x2,$this->h-$y2);
 	}
 	
 	function addText($xb,$yb,$size,$text)//,$angle=0,$wordSpaceAdjust=0) 
 															{
-		/* $text = html_entity_decode($text); */
+// Javier	$text = html_entity_decode($text);
 		$this->SetFontSize($size);
 		$this->Text($xb, $this->h-$yb, $text);
 	}
 	
-	function addInfo($label,$value){
-		if($label=='Title') {
-			$this->SetTitle($value);
+	function addInfo($label, $value) {
+		if ($label == 'Creator') {
+
+/* Javier: Some scripts set the creator to be WebERP like this		
+			$pdf->addInfo('Creator', 'WebERP http://www.weberp.org');
+	But the Creator is TCPDF by Nicola Asuni, PDF_CREATOR is defined as 'TCPDF' in tcpdf/config/tcpdfconfig.php
+*/ 			$this->SetCreator(PDF_CREATOR);
+		}
+		if ($label == 'Author') {
+/* Javier: Many scripts set the author to be WebERP like this	
+			$pdf->addInfo('Author', 'WebERP ' . $Version);
+	But the Author might be set to be the user or make it constant here.
+*/			$this->SetAuthor( $value );
+		}
+		if ($label == 'Title') {
+			$this->SetTitle( $value );
 		} 
-		if ($label=='Subject') {
-			$this->SetSubject($value);
+		if ($label == 'Subject') {
+			$this->SetSubject( $value );
 		}
-		if($label=='Creator') {
-			// The Creator info in source is not exactly it should be ;) 
-			$value = str_replace( "ros.co.nz", "fpdf.org", $value );
-			$value = str_replace( "R&OS", "", $value );
-			$this->SetCreator( $value );
-		}
-		if($label=='Author') {
-			$this->SetAuthor($value);
+		if ($label == 'Keywords') {
+			$this->SetKeywords( $value );
 		}
 	}
-	
+
+
 	function addJpegFromFile($img,$x,$y,$w=0,$h=0){
 		$this->Image($img, $x, $this->h-$y-$h, $w, $h);
 	}
@@ -142,13 +129,13 @@ class Cpdf extends PDF_Language {
 	function ellipse($x0,$y0,$r1,$r2=0,$angle=0,$nSeg=8,$astart=0,$afinish=360,$close=1,$fill=0) {
 		
 		if ($r1==0){
-		return;
+			return;
 		}
 		if ($r2==0){
-		$r2=$r1;
+			$r2=$r1;
 		}
 		if ($nSeg<2){
-		$nSeg=2;
+			$nSeg=2;
 		}
 		
 		$astart = deg2rad((float)$astart);
@@ -159,12 +146,12 @@ class Cpdf extends PDF_Language {
 		$dtm = $dt/3;
 		
 		if ($angle != 0){
-		$a = -1*deg2rad((float)$angle);
-		$tmp = "\n q ";
-		$tmp .= sprintf('%.3f',cos($a)).' '.sprintf('%.3f',(-1.0*sin($a))).' '.sprintf('%.3f',sin($a)).' '.sprintf('%.3f',cos($a)).' ';
-		$tmp .= sprintf('%.3f',$x0).' '.sprintf('%.3f',$y0).' cm';
-		$x0=0;
-		$y0=0;
+			$a = -1*deg2rad((float)$angle);
+			$tmp = "\n q ";
+			$tmp .= sprintf('%.3f',cos($a)).' '.sprintf('%.3f',(-1.0*sin($a))).' '.sprintf('%.3f',sin($a)).' '.sprintf('%.3f',cos($a)).' ';
+			$tmp .= sprintf('%.3f',$x0).' '.sprintf('%.3f',$y0).' cm';
+			$x0=0;
+			$y0=0;
 		} else {
 			$tmp='';
 		}
@@ -177,41 +164,59 @@ class Cpdf extends PDF_Language {
 		
 		$tmp.="\n".sprintf('%.3f',$a0).' '.sprintf('%.3f',$b0).' m ';
 		for ($i=1;$i<=$nSeg;$i++){
-		// draw this bit of the total curve
-		$t1 = $i*$dt+$astart;
-		$a1 = $x0+$r1*cos($t1);
-		$b1 = $y0+$r2*sin($t1);
-		$c1 = -$r1*sin($t1);
-		$d1 = $r2*cos($t1);
-		$tmp.="\n".sprintf('%.3f',($a0+$c0*$dtm)).' '.sprintf('%.3f',($b0+$d0*$dtm));
-		$tmp.= ' '.sprintf('%.3f',($a1-$c1*$dtm)).' '.sprintf('%.3f',($b1-$d1*$dtm)).' '.sprintf('%.3f',$a1).' '.sprintf('%.3f',$b1).' c';
-		$a0=$a1;
-		$b0=$b1;
-		$c0=$c1;
-		$d0=$d1;    
+			// draw this bit of the total curve
+			$t1 = $i*$dt+$astart;
+			$a1 = $x0+$r1*cos($t1);
+			$b1 = $y0+$r2*sin($t1);
+			$c1 = -$r1*sin($t1);
+			$d1 = $r2*cos($t1);
+			$tmp.="\n".sprintf('%.3f',($a0+$c0*$dtm)).' '.sprintf('%.3f',($b0+$d0*$dtm));
+			$tmp.= ' '.sprintf('%.3f',($a1-$c1*$dtm)).' '.sprintf('%.3f',($b1-$d1*$dtm)).' '.sprintf('%.3f',$a1).' '.sprintf('%.3f',$b1).' c';
+			$a0=$a1;
+			$b0=$b1;
+			$c0=$c1;
+			$d0=$d1;    
 		}
 		if ($fill){
-		//$this->objects[$this->currentContents]['c']
-		$tmp.=' f';
+			//$this->objects[$this->currentContents]['c']
+			$tmp.=' f';
 		} else {
 		if ($close){
-		$tmp.=' s'; // small 's' signifies closing the path as well
+			$tmp.=' s'; // small 's' signifies closing the path as well
 		} else {
-		$tmp.=' S';
+			$tmp.=' S';
 		}
 		}
-		if ($angle !=0){
-		$tmp .=' Q';
+		if ($angle !=0) {
+			$tmp .=' Q';
 		}
 		$this->_out($tmp);
 	}
-	
-	function Stream() {
-	$this->Output('','I');
+
+/* Javier:
+	A file's name is needed if we don't want file extension to be .php
+	TCPDF has a different behaviour than FPDF, the recursive scripts needs D.
+	The admin/user may change I to D to force all pdf to be downloaded or open in a desktop app instead the browser plugin, but not vice-versa.
+	The admin/user may change I and D to F to save all pdf in the server for Document Management.
+*/
+
+	function OutputI($DocumentFilename = 'Document.pdf') {
+		if (($DocumentFilename == null) or ($DocumentFilename == '')) { 
+			$DocumentFilename = _('Document.pdf');
+		}
+		$this->Output($DocumentFilename,'I');
 	}
-	
+
+	function OutputD($DocumentFilename = 'Document.pdf') {
+		if (($DocumentFilename == null) or ($DocumentFilename == '')) {
+			$DocumentFilename = _('Document.pdf');
+		}
+		$this->Output($DocumentFilename,'D');
+	}
+
+
 	function addTextWrap($xb, $yb, $w, $h, $txt, $align='J', $border=0, $fill=0) {
-		/* $txt = html_entity_decode($txt); */
+//		$txt = html_entity_decode($txt);
 		$this->x = $xb;
 		$this->y = $this->h - $yb - $h;
 		

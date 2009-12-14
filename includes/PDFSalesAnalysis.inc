@@ -2,6 +2,8 @@
 
 /* $Revision: 1.12 $ */
 
+/* $Id$ */
+
 include ('includes/class.pdf.php');
 
 /* A4_Landscape */
@@ -13,20 +15,22 @@ $Bottom_Margin=20;
 $Left_Margin=25;
 $Right_Margin=22;
 
-$PageSize = array(0,0,$Page_Width,$Page_Height);
-$pdf = & new Cpdf($PageSize);
+// Javier: now I use the native constructor
+//	$PageSize = array(0,0,$Page_Width,$Page_Height);
 
-$PageNumber = 0;
+// Javier: better to not use references
+//	$pdf = & new Cpdf($PageSize);
+	$pdf = new Cpdf('L', 'pt', 'A4');
 
-$pdf->selectFont('./fonts/Helvetica.afm');
 
 /* Standard PDF file creation header stuff */
 
-$pdf->addinfo('Author','webERP ' . $Version);
-$pdf->addinfo('Creator','webERP http://www.weberp.org');
-$pdf->addinfo('Title',$ReportSpec['reportheading']);
-$pdf->addinfo('Subject',_('Sales Analysis Report') . ' ' . $ReportSpec['reportheading']);
+$pdf->addInfo('Author','webERP ' . $Version);
+$pdf->addInfo('Creator','webERP http://www.weberp.org');
+$pdf->addInfo('Title',$ReportSpec['reportheading']);
+$pdf->addInfo('Subject',_('Sales Analysis Report') . ' ' . $ReportSpec['reportheading']);
 
+$PageNumber = 0;
 $line_height=12;
 
 include ('includes/PDFSalesAnalPageHeader.inc');
@@ -68,7 +72,6 @@ while ($Cols = DB_fetch_array($ColsResult)){
 }
 if ($ThisLineHasOutput==True){
 
-
 	if ($myrow['col5']!=$GrpData3 && $myrow['col5']!='0' && $myrow['col7']!='0'){
 		/*Totals only relevant to GrpByLevel 3 if GrpByLevel 4 also used */
 		if ($Counter > 0){ /*Dont want to print totals if this is the first record */
@@ -83,23 +86,23 @@ if ($ThisLineHasOutput==True){
 				} else { /* its a calculation need to re-perform on the totals*/
 
 					switch ($Cols['calcoperator']) {
-					Case '/':
+					case '/':
 						if ($AccumLvl3[$Cols['coldenominator']]==0){
 							$TotalCalculation = 0;
 						} else {
 							$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] / $AccumLvl3[$Cols['coldenominator']];
 						}
 						break;
-					Case '+':
+					case '+':
 						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] + $AccumLvl3[$Cols['coldenominator']];
 						break;
-					Case '-':
+					case '-':
 						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] + $AccumLvl3[$Cols['coldenominator']];
 						break;
-					Case '*':
+					case '*':
 						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] * $Cols['constant'];
 						break;
-					Case 'C':
+					case 'C':
 						if ($Cols['constant']==0){
 							$TotalCalculation = 0;
 						} else {
@@ -137,23 +140,23 @@ if ($ThisLineHasOutput==True){
 				} else { /* its a calculation need to re-perform on the totals*/
 
 					switch ($Cols['calcoperator']) {
-					Case '/':
+					case '/':
 						if ($AccumLvl2[$Cols['coldenominator']]==0){
 							$TotalCalculation = 0;
 						} else {
 							$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] / $AccumLvl2[$Cols['coldenominator']];
 						}
 						break;
-					Case '+':
+					case '+':
 						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] + $AccumLvl2[$Cols['coldenominator']];
 						break;
-					Case '-':
+					case '-':
 						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] + $AccumLvl2[$Cols['coldenominator']];
 						break;
-					Case '*':
+					case '*':
 						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] * $Cols['constant'];
 						break;
-					Case 'C':
+					case 'C':
 						if ($Cols['constant']==0){
 							$TotalCalculation = 0;
 						} else {
@@ -552,9 +555,9 @@ if ($_GET['ProduceCVSFile']==True){
 	include('includes/header.inc');
 
 	 echo 'http://' . getenv(SERVER_NAME) . $rootpath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv';
-	 echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=http://" . getenv(SERVER_NAME) . $rootpath . '/' . $_SESSION['reports_dir'] .  "/SalesAnalysis.csv'>";
+	 echo "<meta http-equiv='Refresh' content='0; url=http://" . getenv(SERVER_NAME) . $rootpath . '/' . $_SESSION['reports_dir'] .  "/SalesAnalysis.csv'>";
 
-	 echo '<P>' . _('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . _('If this does not happen') . ' <a href="' . $rootpath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv">' . _('click here') . '</a> ' . _('to continue') .'<br>';
+	 echo '<p>' . _('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . _('If this does not happen') . ' <a href="' . $rootpath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv">' . _('click here') . '</a> ' . _('to continue') .'<br />';
 	 include('includes/footer.inc');
 }
 

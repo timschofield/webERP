@@ -1,5 +1,5 @@
 <?php
-/* $Id $ */
+/* $Id$ */
 /*PDF page header for aged analysis reports */
 if ($PageNumber >1){
 	$pdf->newPage();
@@ -40,7 +40,5 @@ $LeftOvers = $pdf->addTextWrap($Xpos,$YPos,220-$Left_Margin,$FontSize,_('Supplie
 $LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,$_POST['Currency'] . ' ' . _('Due'), 'centre');
 $LeftOvers = $pdf->addTextWrap(415,$YPos,60,$FontSize,_('Ex Diff') . ' ' . $_SESSION['CompanyRecord']['currencydefault'], 'centre');
 
-
 $YPos =$YPos - (2*$line_height);
-
 ?>

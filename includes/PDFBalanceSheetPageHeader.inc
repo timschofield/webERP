@@ -1,4 +1,5 @@
 <?php
+	/* $Id $ */
 	/* 
 	 * PDF page header for the balance sheet report.
 	 * Suren Naidu 10/08/2005

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Id $ */
 /*PDF page header for aged analysis reports */
 $PageNumber++;
 if ($PageNumber>1){
@@ -60,11 +60,11 @@ if (in_array('All', $_POST['SalesPeople'])){
 	}
 }
 
-$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+$pdf->setFont('','B');
 
 $pdf->addText($Left_Margin, $YPos, $FontSize, $Heading);
 
-$pdf->selectFont('./fonts/Helvetica.afm');
+$pdf->setFont('','');
 
 $FontSize = 8;
 $pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed'). ': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);

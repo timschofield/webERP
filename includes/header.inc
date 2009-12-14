@@ -1,13 +1,14 @@
 <?php
 
-/* $Revision: 1.43 $ */
+/* $Id: header.inc 3152 2009-12-11 14:28:49Z tim_schofield $ */
+
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
 	//  $title - should be defined in the page this file is included with
 
 	if (!headers_sent()){
-		header('Content-type: text/html; charset=' . _('iso-8859-1'));
+		header('Content-type: text/html; charset=' . _('ISO-8859-1'));
 	}
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
