@@ -1,5 +1,6 @@
 <?php
 
+/*$Id$*/
 
 /* $Revision: 1.10 $ */
 
@@ -66,6 +67,11 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 } else {
 	include('includes/ConnectDB.inc');
 	include('includes/PDFStarter.php');
+    $pdf->addInfo('Title',_('Order Status Report'));
+    $pdf->addInfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
+    $line_height=12;
+    $PageNumber = 1;
+    $TotalDiffs = 0;
 }
 
 
@@ -202,17 +208,6 @@ if (DB_error_no($db)!=0){
 	exit;
 }
 
-
-/*PDFStarter.php has all the variables for page size and width set up depending on the users default preferences for paper size */
-
-$pdf->addinfo('Title',_('Order Status Report'));
-$pdf->addinfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
-
-$line_height=12;
-$PageNumber = 1;
-
-$TotalDiffs = 0;
-
 include ('includes/PDFOrderStatusPageHeader.inc');
 
 $OrderNo =0; /*initialise */
@@ -280,7 +275,7 @@ while ($myrow=DB_fetch_array($Result)){
 		$OrderNo=0;
       } /*end of new page header  */
 } /* end of while there are delivery differences to print */
-
+/* UldisN
 $pdfcode = $pdf->output();
 $len = strlen($pdfcode);
 header('Content-type: application/pdf');
@@ -291,5 +286,7 @@ header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 header('Pragma: public');
 
 $pdf->stream();
-
+*/
+$pdf->OutputD($_SESSION['DatabaseName'] . '_OrderStatus_' . date('Y-m-d') . '.pdf');//UldisN
+$pdf->__destruct(); //UldisN
 ?>
