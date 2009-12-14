@@ -1,7 +1,9 @@
 <?php
 $PageSecurity = 2;
 
-/* $Revision: 1.15 $ */
+/*$Id$*/
+
+/* $Revision: 1.16 $ */
 include('includes/session.inc');
 
 If (isset($_POST['PrintPDF'])
@@ -11,12 +13,9 @@ If (isset($_POST['PrintPDF'])
 	AND strlen($_POST['ToCriteria'])>=1){
 
 	include('includes/PDFStarter.php');
-
-
-	$FontSize=12;
-	$pdf->addinfo('Title',_('Customer Balance Listing'));
-	$pdf->addinfo('Subject',_('Customer Balances'));
-
+	$pdf->addInfo('Title',_('Customer Balance Listing'));
+	$pdf->addInfo('Subject',_('Customer Balances'));
+    $FontSize=12;
 	$PageNumber=0;
 	$line_height=12;
 
@@ -67,6 +66,15 @@ If (isset($_POST['PrintPDF'])
 		exit;
 	}
 
+	if (DB_num_rows($CustomerResult) == 0) {
+		$title = _('Customer Balances') . ' - ' . _('Problem Report');
+		include('includes/header.inc');
+		prnMsg(_('The customer details listing has no clients to report on'),'warn');
+		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		include('includes/footer.inc');
+		exit;
+	}
+
 	include ('includes/PDFDebtorBalsPageHeader.inc');
 
 	$TotBal=0;
@@ -105,7 +113,7 @@ If (isset($_POST['PrintPDF'])
 	$DisplayTotBalance = number_format($TotBal,2);
 
 	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
-
+    /* UldisN
 	$buf = $pdf->output();
 	$len = strlen($buf);
 
@@ -117,6 +125,9 @@ If (isset($_POST['PrintPDF'])
 	header('Pragma: public');
 
 	$pdf->stream();
+    */
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_DebtorBals_' . date('Y-m-d').'.pdf');//UldisN
+    $pdf->__destruct(); //UldisN
 
 } else { /*The option to print PDF was not hit */
 
