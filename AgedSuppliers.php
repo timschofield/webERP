@@ -1,4 +1,7 @@
 <?php
+
+/* $Id$ */
+
 /* $Revision: 1.13 $ */
 
 $PageSecurity = 2;
@@ -12,11 +15,9 @@ If (isset($_POST['PrintPDF'])
 
 
 	include('includes/PDFStarter.php');
-
+	$pdf->addInfo('Title',_('Aged Supplier Listing'));
+	$pdf->addInfo('Subject',_('Aged Suppliers'));
 	$FontSize=12;
-	$pdf->addinfo('Title',_('Aged Supplier Listing'));
-	$pdf->addinfo('Subject',_('Aged Suppliers'));
-
 	$PageNumber=0;
 	$line_height=12;
 
@@ -118,6 +119,8 @@ If (isset($_POST['PrintPDF'])
 	$TotCurr = 0;
 	$TotOD1 = 0;
 	$TotOD2 = 0;
+
+    $ListCount = DB_num_rows($SupplierResult); // UldisN
 
 	While ($AgedAnalysis = DB_fetch_array($SupplierResult,$db)){
 
@@ -247,7 +250,7 @@ If (isset($_POST['PrintPDF'])
 
 	$YPos -=$line_height;
 	$pdf->line($Page_Width-$Right_Margin, $YPos ,220, $YPos);
-
+/*  UldisN  : this doesn't work for TCPDF
 	$buf = $pdf->output();
 	$len = strlen($buf);
 	header('Content-type: application/pdf');
@@ -258,7 +261,13 @@ If (isset($_POST['PrintPDF'])
 	header('Pragma: public');
 
 	$pdf->stream();
-
+*/
+    if ($ListCount == 0) {
+        prnMsg('there are no results so the PDF is empty');
+    } else {
+        $pdf->OutputD($_SESSION['DatabaseName'] . '_AggedSupliers_' . date('Y-m-d').'.pdf');//UldisN
+    }
+    $pdf->__destruct();
 } else { /*The option to print PDF was not hit */
 
 	$title = _('Aged Supplier Analysis');
