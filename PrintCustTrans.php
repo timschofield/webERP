@@ -2,52 +2,58 @@
 
 /* $Revision: 1.52 $ */
 
+/* $Id: PrintCustTrans.php 3152 2009-12-11 14:28:49Z tim_schofield $ */
+
+/* $Revision: 1.53 $ */
+
+/* Javier: This file has 5 PDF Outputs, one FPDI class, one function, 
+	El único q cambió alguien está en L570, 3 son de fpdi y el 5º está en L457  */
+
 $PageSecurity = 1;
 
 error_reporting (E_ALL);
 
 include('includes/session.inc');
 
-if (isset($_GET['FromTransNo'])){
+if (isset($_GET['FromTransNo'])) {
 	$FromTransNo = trim($_GET['FromTransNo']);
-} elseif (isset($_POST['FromTransNo'])){
+} elseif (isset($_POST['FromTransNo'])) {
 	$FromTransNo = trim($_POST['FromTransNo']);
 }
 
-
-if (isset($_GET['InvOrCredit'])){
+if (isset($_GET['InvOrCredit'])) {
 	$InvOrCredit = $_GET['InvOrCredit'];
-} elseif (isset($_POST['InvOrCredit'])){
+} elseif (isset($_POST['InvOrCredit'])) {
 	$InvOrCredit = $_POST['InvOrCredit'];
 }
-if (isset($_GET['PrintPDF'])){
+
+if (isset($_GET['PrintPDF'])) {
 	$PrintPDF = $_GET['PrintPDF'];
-} elseif (isset($_POST['PrintPDF'])){
+} elseif (isset($_POST['PrintPDF'])) {
 	$PrintPDF = $_POST['PrintPDF'];
 }
 
-
-If (!isset($_POST['ToTransNo'])
-	OR trim($_POST['ToTransNo'])==''
-	OR $_POST['ToTransNo'] < $FromTransNo){
+if (!isset($_POST['ToTransNo'])
+	or trim($_POST['ToTransNo'])==''
+	or $_POST['ToTransNo'] < $FromTransNo) {
 
 	$_POST['ToTransNo'] = $FromTransNo;
 }
 
-$FirstTrans = $FromTransNo; /*Need to start a new page only on subsequent transactions */
+$FirstTrans = $FromTransNo; /* Need to start a new page only on subsequent transactions */
 
-If (isset($PrintPDF) or isset($_GET['PrintPDF'])
-	AND $PrintPDF!=''
-	AND isset($FromTransNo)
-	AND isset($InvOrCredit)
-	AND $FromTransNo!=''){
+if (isset($PrintPDF) or isset($_GET['PrintPDF'])
+	and $PrintPDF!=''
+	and isset($FromTransNo)
+	and isset($InvOrCredit)
+	and $FromTransNo!=''){
 
 	include ('includes/class.pdf.php');
 //	define('FPDF_FONTPATH','font/');
 	require('fpdi/fpdi.php');
 
+	/* This invoice is hard coded for A4 Landscape invoices or credit notes so can't use PDFStarter.inc */
 
-	/*This invoice is hard coded for A4 Landscape invoices or credit notes  so can't use PDFStarter.inc*/
 	$Page_Width=842;
 	$Page_Height=595;
 	$Top_Margin=30;
@@ -55,477 +61,473 @@ If (isset($PrintPDF) or isset($_GET['PrintPDF'])
 	$Left_Margin=40;
 	$Right_Margin=30;
 
-	$PageSize = array(0,0,$Page_Width,$Page_Height);
-
-	$pdf = & new Cpdf($PageSize);
-	$pdf->selectFont('helvetica');
-	$pdf->addinfo('Author','webERP ' . $Version);
-	$pdf->addinfo('Creator','webERP http://www.weberp.org');
-
-	$FirstPage = true;
-
-	if ($InvOrCredit=='Invoice'){
-		$pdf->addinfo('Title',_('Sales Invoice') . ' ' . $FromTransNo . ' to ' . $_POST['ToTransNo']);
-		$pdf->addinfo('Subject',_('Invoices from') . ' ' . $FromTransNo . ' ' . _('to') . ' ' . $_POST['ToTransNo']);
+// Javier: now I use the native constructor, better to not use references
+//	$PageSize = array(0,0,$Page_Width,$Page_Height);
+//	$pdf = & new Cpdf($PageSize);
+	$pdf = new Cpdf('L', 'pt', 'A4');
+	$pdf->addInfo('Creator', 'webERP http://www.weberp.org');
+	$pdf->addInfo('Author', 'webERP ' . $Version);
+	
+	if ($InvOrCredit=='Invoice') {
+		$pdf->addInfo('Title',_('Sales Invoice') . ' ' . $FromTransNo . ' to ' . $_POST['ToTransNo']);
+		$pdf->addInfo('Subject',_('Invoices from') . ' ' . $FromTransNo . ' ' . _('to') . ' ' . $_POST['ToTransNo']);
 	} else {
-		$pdf->addinfo('Title',_('Sales Credit Note') );
-		$pdf->addinfo('Subject',_('Credit Notes from') . ' ' . $FromTransNo . ' ' . _('to') . ' ' . $_POST['ToTransNo']);
+		$pdf->addInfo('Title',_('Sales Credit Note') );
+		$pdf->addInfo('Subject',_('Credit Notes from') . ' ' . $FromTransNo . ' ' . _('to') . ' ' . $_POST['ToTransNo']);
 	}
 
+/* Javier: I have brought this piece from the pdf class constructor to get it closer to the admin/user,
+	I corrected it to match TCPDF, but it still needs some check, after which,
+	I think it should be moved to each report to provide flexible Document Header and Margins in a per-report basis. */
+	$pdf->setAutoPageBreak(0);	// Javier: needs check.
+	$pdf->setPrintHeader(false);	// Javier: I added this must be called before Add Page
+	$pdf->AddPage();
+//	$this->SetLineWidth(1); 	   Javier: It was ok for FPDF but now is too gross with TCPDF. TCPDF defaults to 0'57 pt (0'2 mm) which is ok.
+	$pdf->cMargin = 0;		// Javier: needs check.
+/* END Brought from class.pdf.php constructor */
+
+//	$pdf->selectFont('helvetica');
+	$FirstPage = true;
 	$line_height=16;
 
 	while ($FromTransNo <= $_POST['ToTransNo']){
 
-	/*retrieve the invoice details from the database to print
+	/* retrieve the invoice details from the database to print
 	notice that salesorder record must be present to print the invoice purging of sales orders will
 	nobble the invoice reprints */
 
 		if ($InvOrCredit=='Invoice') {
 			$sql = 'SELECT debtortrans.trandate,
-				debtortrans.ovamount,
-				debtortrans.ovdiscount,
-				debtortrans.ovfreight,
-				debtortrans.ovgst,
-				debtortrans.rate,
-				debtortrans.invtext,
-				debtortrans.consignment,
-				debtorsmaster.name,
-				debtorsmaster.address1,
-				debtorsmaster.address2,
-				debtorsmaster.address3,
-				debtorsmaster.address4,
-				debtorsmaster.address5,
-				debtorsmaster.address6,
-				debtorsmaster.currcode,
-				debtorsmaster.invaddrbranch,
-				debtorsmaster.taxref,
-				paymentterms.terms,
-				salesorders.deliverto,
-				salesorders.deladd1,
-				salesorders.deladd2,
-				salesorders.deladd3,
-				salesorders.deladd4,
-				salesorders.deladd5,
-				salesorders.deladd6,
-				salesorders.customerref,
-				salesorders.orderno,
-				salesorders.orddate,
-				locations.locationname,
-				shippers.shippername,
-				custbranch.brname,
-				custbranch.braddress1,
-				custbranch.braddress2,
-				custbranch.braddress3,
-				custbranch.braddress4,
-				custbranch.braddress5,
-				custbranch.braddress6,
-				custbranch.brpostaddr1,
-				custbranch.brpostaddr2,
-				custbranch.brpostaddr3,
-				custbranch.brpostaddr4,
-				custbranch.brpostaddr5,
-				custbranch.brpostaddr6,
-				salesman.salesmanname,
-				debtortrans.debtorno,
-				debtortrans.branchcode
-			FROM debtortrans,
-				debtorsmaster,
-				custbranch,
-				salesorders,
-				shippers,
-				salesman,
-				locations,
-				paymentterms
-			WHERE debtortrans.order_ = salesorders.orderno
-			AND debtortrans.type=10
-			AND debtortrans.transno=' . $FromTransNo . '
-			AND debtortrans.shipvia=shippers.shipper_id
-			AND debtortrans.debtorno=debtorsmaster.debtorno
-			AND debtorsmaster.paymentterms=paymentterms.termsindicator
-			AND debtortrans.debtorno=custbranch.debtorno
-			AND debtortrans.branchcode=custbranch.branchcode
-			AND custbranch.salesman=salesman.salesmancode
-			AND salesorders.fromstkloc=locations.loccode';
+					debtortrans.ovamount,
+					debtortrans.ovdiscount,
+					debtortrans.ovfreight,
+					debtortrans.ovgst,
+					debtortrans.rate,
+					debtortrans.invtext,
+					debtortrans.consignment,
+					debtorsmaster.name,
+					debtorsmaster.address1,
+					debtorsmaster.address2,
+					debtorsmaster.address3,
+					debtorsmaster.address4,
+					debtorsmaster.address5,
+					debtorsmaster.address6,
+					debtorsmaster.currcode,
+					debtorsmaster.invaddrbranch,
+					debtorsmaster.taxref,
+					paymentterms.terms,
+					salesorders.deliverto,
+					salesorders.deladd1,
+					salesorders.deladd2,
+					salesorders.deladd3,
+					salesorders.deladd4,
+					salesorders.deladd5,
+					salesorders.deladd6,
+					salesorders.customerref,
+					salesorders.orderno,
+					salesorders.orddate,
+					locations.locationname,
+					shippers.shippername,
+					custbranch.brname,
+					custbranch.braddress1,
+					custbranch.braddress2,
+					custbranch.braddress3,
+					custbranch.braddress4,
+					custbranch.braddress5,
+					custbranch.braddress6,
+					custbranch.brpostaddr1,
+					custbranch.brpostaddr2,
+					custbranch.brpostaddr3,
+					custbranch.brpostaddr4,
+					custbranch.brpostaddr5,
+					custbranch.brpostaddr6,
+					salesman.salesmanname,
+					debtortrans.debtorno,
+					debtortrans.branchcode
+				FROM debtortrans,
+					debtorsmaster,
+					custbranch,
+					salesorders,
+					shippers,
+					salesman,
+					locations,
+					paymentterms
+				WHERE debtortrans.order_ = salesorders.orderno
+				AND debtortrans.type=10
+				AND debtortrans.transno=' . $FromTransNo . '
+				AND debtortrans.shipvia=shippers.shipper_id
+				AND debtortrans.debtorno=debtorsmaster.debtorno
+				AND debtorsmaster.paymentterms=paymentterms.termsindicator
+				AND debtortrans.debtorno=custbranch.debtorno
+				AND debtortrans.branchcode=custbranch.branchcode
+				AND custbranch.salesman=salesman.salesmancode
+				AND salesorders.fromstkloc=locations.loccode';
 
-		if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No'){
-			$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
-		}
-	} else {
-
-		$sql = 'SELECT debtortrans.trandate,
-				debtortrans.ovamount,
-				debtortrans.ovdiscount,
-				debtortrans.ovfreight,
-				debtortrans.ovgst,
-				debtortrans.rate,
-				debtortrans.invtext,
-				debtorsmaster.invaddrbranch,
-				debtorsmaster.name,
-				debtorsmaster.address1,
-				debtorsmaster.address2,
-				debtorsmaster.address3,
-				debtorsmaster.address4,
-				debtorsmaster.address5,
-				debtorsmaster.address6,
-				debtorsmaster.currcode,
-				debtorsmaster.taxref,
-				custbranch.brname,
-				custbranch.braddress1,
-				custbranch.braddress2,
-				custbranch.braddress3,
-				custbranch.braddress4,
-				custbranch.braddress5,
-				custbranch.braddress6,
-				custbranch.brpostaddr1,
-				custbranch.brpostaddr2,
-				custbranch.brpostaddr3,
-				custbranch.brpostaddr4,
-				custbranch.brpostaddr5,
-				custbranch.brpostaddr6,
-				salesman.salesmanname,
-				debtortrans.debtorno,
-				debtortrans.branchcode,
-				paymentterms.terms
-			FROM debtortrans,
-				debtorsmaster,
-				custbranch,
-				salesman,
-				paymentterms
-			WHERE debtortrans.type=11
-			AND debtorsmaster.paymentterms = paymentterms.termsindicator
-			AND debtortrans.transno=' . $FromTransNo .'
-			AND debtortrans.debtorno=debtorsmaster.debtorno
-			AND debtortrans.debtorno=custbranch.debtorno
-			AND debtortrans.branchcode=custbranch.branchcode
-			AND custbranch.salesman=salesman.salesmancode';
-
-		if ($_POST['PrintEDI']=='No'){
-			$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
-		}
-	   }
-	   $result=DB_query($sql,$db,'','',false,false);
-
-	   if (DB_error_no($db)!=0) {
-
-		$title = _('Transaction Print Error Report');
-		include ('includes/header.inc');
-
-		prnMsg( _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available'),'error');
-		if ($debug==1){
-		    prnMsg (_('The SQL used to get this information that failed was') . "<br>" . $sql,'error');
-		}
-		include ('includes/footer.inc');
-		exit;
-	   }
-	   if (DB_num_rows($result)==1){
-		$myrow = DB_fetch_array($result);
-
-		$ExchRate = $myrow['rate'];
-
-		if ($InvOrCredit=='Invoice'){
-
-			 $sql = 'SELECT stockmoves.stockid,
-					stockmaster.description,
-					-stockmoves.qty as quantity,
-					stockmoves.discountpercent,
-					((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . '* -stockmoves.qty) AS fxnet,
-					(stockmoves.price * ' . $ExchRate . ') AS fxprice,
-					stockmoves.narrative,
-					stockmaster.units
-				FROM stockmoves,
-					stockmaster
-				WHERE stockmoves.stockid = stockmaster.stockid
-				AND stockmoves.type=10
-				AND stockmoves.transno=' . $FromTransNo . '
-				AND stockmoves.show_on_inv_crds=1';
+			if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No') {
+				$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
+			}
 		} else {
-		/* only credit notes to be retrieved */
-			 $sql = 'SELECT stockmoves.stockid,
-			 		stockmaster.description,
-					stockmoves.qty as quantity,
-					stockmoves.discountpercent,
-					((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . ' * stockmoves.qty) AS fxnet,
-					(stockmoves.price * ' . $ExchRate . ') AS fxprice,
-					stockmoves.narrative,
-					stockmaster.units
-				FROM stockmoves,
-					stockmaster
-				WHERE stockmoves.stockid = stockmaster.stockid
-				AND stockmoves.type=11
-				AND stockmoves.transno=' . $FromTransNo . '
-				AND stockmoves.show_on_inv_crds=1';
-		}
+			$sql = 'SELECT debtortrans.trandate,
+					debtortrans.ovamount,
+					debtortrans.ovdiscount,
+					debtortrans.ovfreight,
+					debtortrans.ovgst,
+					debtortrans.rate,
+					debtortrans.invtext,
+					debtorsmaster.invaddrbranch,
+					debtorsmaster.name,
+					debtorsmaster.address1,
+					debtorsmaster.address2,
+					debtorsmaster.address3,
+					debtorsmaster.address4,
+					debtorsmaster.address5,
+					debtorsmaster.address6,
+					debtorsmaster.currcode,
+					debtorsmaster.taxref,
+					custbranch.brname,
+					custbranch.braddress1,
+					custbranch.braddress2,
+					custbranch.braddress3,
+					custbranch.braddress4,
+					custbranch.braddress5,
+					custbranch.braddress6,
+					custbranch.brpostaddr1,
+					custbranch.brpostaddr2,
+					custbranch.brpostaddr3,
+					custbranch.brpostaddr4,
+					custbranch.brpostaddr5,
+					custbranch.brpostaddr6,
+					salesman.salesmanname,
+					debtortrans.debtorno,
+					debtortrans.branchcode,
+					paymentterms.terms
+				FROM debtortrans,
+					debtorsmaster,
+					custbranch,
+					salesman,
+					paymentterms
+				WHERE debtortrans.type=11
+				AND debtorsmaster.paymentterms = paymentterms.termsindicator
+				AND debtortrans.transno=' . $FromTransNo .'
+				AND debtortrans.debtorno=debtorsmaster.debtorno
+				AND debtortrans.debtorno=custbranch.debtorno
+				AND debtortrans.branchcode=custbranch.branchcode
+				AND custbranch.salesman=salesman.salesmancode';
 
-		$result=DB_query($sql,$db);
+			if ($_POST['PrintEDI']=='No')	{
+				$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
+			}
+		} // end else
+
+		$result=DB_query($sql, $db, '',  '',false, false);
+
 		if (DB_error_no($db)!=0) {
 			$title = _('Transaction Print Error Report');
 			include ('includes/header.inc');
-			echo '<br>' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
-			if ($debug==1){
-			    echo '<br>' . _('The SQL used to get this information that failed was') . "<br>$sql";
+			prnMsg( _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available'),'error');
+			if ($debug==1) {
+				prnMsg (_('The SQL used to get this information that failed was') . "<br />" . $sql,'error');
 			}
-			include('includes/footer.inc');
+			include ('includes/footer.inc');
 			exit;
 		}
+		if (DB_num_rows($result)==1) {
+			$myrow = DB_fetch_array($result);
+			$ExchRate = $myrow['rate'];
+			if ($InvOrCredit=='Invoice') {
 
-		if (DB_num_rows($result)>0){
+				$sql = 'SELECT stockmoves.stockid,
+						stockmaster.description,
+						-stockmoves.qty as quantity,
+						stockmoves.discountpercent,
+						((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . '* -stockmoves.qty) AS fxnet,
+						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
+						stockmoves.narrative,
+						stockmaster.units
+					FROM stockmoves,
+						stockmaster
+					WHERE stockmoves.stockid = stockmaster.stockid
+					AND stockmoves.type=10
+					AND stockmoves.transno=' . $FromTransNo . '
+					AND stockmoves.show_on_inv_crds=1';
+			} else {
+		/* only credit notes to be retrieved */
+				$sql = 'SELECT stockmoves.stockid,
+						stockmaster.description,
+						stockmoves.qty as quantity,
+						stockmoves.discountpercent,
+						((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . ' * stockmoves.qty) AS fxnet,
+						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
+						stockmoves.narrative,
+						stockmaster.units
+					FROM stockmoves,
+						stockmaster
+					WHERE stockmoves.stockid = stockmaster.stockid
+					AND stockmoves.type=11
+					AND stockmoves.transno=' . $FromTransNo . '
+					AND stockmoves.show_on_inv_crds=1';
+			} // end else
 
-			$FontSize = 10;
-			$PageNumber = 1;
-
-			include('includes/PDFTransPageHeader.inc');
-			$FirstPage = False;
-
-		        while ($myrow2=DB_fetch_array($result)){
-
-				/*search the unit price*/
-				$sql='SELECT 	salesorderdetails.unitprice
-					  FROM   	salesorderdetails, 
-								debtortrans 
-					  WHERE 	debtortrans.transno = ' . $FromTransNo . '
-					  AND 		debtortrans.order_ = salesorderdetails.orderno
-					  AND 		salesorderdetails.stkcode = "'.$myrow2['stockid'].'"';
-					  
-				$resultp=DB_query($sql,$db);
-				$myrow3=DB_fetch_array($resultp);
-				
-				/*check the price after discount*/
-
-				if ($myrow2['discountpercent']==0){
-					$DisplayDiscount ='';
-					$DisplayNet=number_format(($myrow3['unitprice'] * $myrow2['quantity']),2);
-					$DisplayPrice=$myrow3['unitprice'];
-					$DisplayQty=$myrow2['quantity'];
-				} else {
-					$DisplayDiscount = number_format($myrow2['discountpercent']*100,2) . '%';
-					$DiscountPrice=$myrow2['discountpercent'] * $myrow3['unitprice'];
-					$DisplayPrice=$myrow3['unitprice'];
-					$DisplayQty=$myrow2['quantity'];
-					$DisplayNet=number_format((($myrow3['unitprice'] - $DiscountPrice) * $myrow2['quantity']),2);
+			$result=DB_query($sql,$db);
+			if (DB_error_no($db)!=0) {
+				$title = _('Transaction Print Error Report');
+				include ('includes/header.inc');
+				echo '<br>' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
+				if ($debug==1) {
+					echo '<br>' . _('The SQL used to get this information that failed was') . "<br>$sql";
 				}
+				include('includes/footer.inc');
+				exit;
+			}
 
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+3,$YPos,95,$FontSize,$myrow2['stockid']);
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,245,$FontSize,$myrow2['description']);
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+353,$YPos,96,$FontSize,$DisplayPrice,'right');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+453,$YPos,96,$FontSize,$DisplayQty,'right');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+553,$YPos,35,$FontSize,$myrow2['units'],'centre');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+590,$YPos,50,$FontSize,$DisplayDiscount,'right');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+642,$YPos,120,$FontSize,$DisplayNet,'right');
+			if (DB_num_rows($result)>0) {
 
-				$YPos -= ($line_height);
+				$FontSize = 10;
+				$PageNumber = 1;
 
+				include('includes/PDFTransPageHeader.inc');
+				$FirstPage = False;
+				while ($myrow2=DB_fetch_array($result)) {
 
-				$lines=explode('\r\n',$myrow2['narrative']);
-				for ($i=0;$i<sizeOf($lines);$i++) {
-				while (strlen($lines[$i])>1){
-					if ($YPos-$line_height <= $Bottom_Margin){
+					/*search the unit price*/
+
+					$sql = 'SELECT	salesorderdetails.unitprice
+						FROM	salesorderdetails, debtortrans
+						WHERE	debtortrans.transno = ' . $FromTransNo . '
+						AND	debtortrans.order_ = salesorderdetails.orderno
+						AND	salesorderdetails.stkcode = "'.$myrow2['stockid'].'"';
+					  
+					$resultp=DB_query($sql,$db);
+					$myrow3=DB_fetch_array($resultp);
+				
+					/*check the price after discount*/
+
+					if ($myrow2['discountpercent']==0) {
+						$DisplayDiscount ='';
+						$DisplayNet=number_format(($myrow3['unitprice'] * $myrow2['quantity']),2);
+						$DisplayPrice=$myrow3['unitprice'];
+						$DisplayQty=$myrow2['quantity'];
+					} else {
+						$DisplayDiscount = number_format($myrow2['discountpercent']*100,2) . '%';
+						$DiscountPrice=$myrow2['discountpercent'] * $myrow3['unitprice'];
+						$DisplayPrice=$myrow3['unitprice'];
+						$DisplayQty=$myrow2['quantity'];
+						$DisplayNet=number_format((($myrow3['unitprice'] - $DiscountPrice) * $myrow2['quantity']),2);
+					}
+
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+3,$YPos,95,$FontSize,$myrow2['stockid']);
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,245,$FontSize,$myrow2['description']);
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+353,$YPos,96,$FontSize,$DisplayPrice,'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+453,$YPos,96,$FontSize,$DisplayQty,'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+553,$YPos,35,$FontSize,$myrow2['units'],'centre');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+590,$YPos,50,$FontSize,$DisplayDiscount,'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+642,$YPos,120,$FontSize,$DisplayNet,'right');
+
+					$YPos -= ($line_height);
+
+					$lines=explode('\r\n',$myrow2['narrative']);
+					for ($i=0;$i<sizeOf($lines);$i++) {
+						while (strlen($lines[$i])>1) {
+							if ($YPos-$line_height <= $Bottom_Margin) {
+								/* head up a new invoice/credit note page */
+								/* draw the vertical column lines right to the bottom */
+								PrintLinesToBottom ();
+	   		        				include ('includes/PDFTransPageHeaderPortrait.inc');
+			   				} //end if need a new page headed up
+
+			   				/* increment a line down for the next line item */
+			   				if (strlen($lines[$i])>1){
+							$lines[$i] = $pdf->addTextWrap($Left_Margin+100,$YPos,245,$FontSize,stripslashes($lines[$i]));
+							}
+							$YPos -= ($line_height);
+						}
+					}
+					if ($YPos <= $Bottom_Margin) {
+
 						/* head up a new invoice/credit note page */
 						/*draw the vertical column lines right to the bottom */
 						PrintLinesToBottom ();
-	   		        	include ('includes/PDFTransPageHeaderPortrait.inc');
-			   		} //end if need a new page headed up
-			   		/*increment a line down for the next line item */
-			   		if (strlen($lines[$i])>1){
-						$lines[$i] = $pdf->addTextWrap($Left_Margin+100,$YPos,245,$FontSize,stripslashes($lines[$i]));
-					}
-					$YPos -= ($line_height);
+						include ('includes/PDFTransPageHeader.inc');
+					} //end if need a new page headed up
+
+				} //end while there are line items to print out
+			} /*end if there are stock movements to show on the invoice or credit note*/
+
+			$YPos -= $line_height;
+
+			/* check to see enough space left to print the 4 lines for the totals/footer */
+			if (($YPos-$Bottom_Margin)<(2*$line_height)) {
+
+				PrintLinesToBottom ();
+				include ('includes/PDFTransPageHeader.inc');
+
+			}
+			/* Print a column vertical line  with enough space for the footer */
+			/* draw the vertical column lines to 4 lines shy of the bottom to leave space for invoice footer info ie totals etc */
+			$pdf->line($Left_Margin+97, $TopOfColHeadings+12,$Left_Margin+97,$Bottom_Margin+(4*$line_height));
+
+			/* Print a column vertical line */
+			$pdf->line($Left_Margin+350, $TopOfColHeadings+12,$Left_Margin+350,$Bottom_Margin+(4*$line_height));
+
+			/* Print a column vertical line */
+			$pdf->line($Left_Margin+450, $TopOfColHeadings+12,$Left_Margin+450,$Bottom_Margin+(4*$line_height));
+
+			/* Print a column vertical line */
+			$pdf->line($Left_Margin+550, $TopOfColHeadings+12,$Left_Margin+550,$Bottom_Margin+(4*$line_height));
+
+			/* Print a column vertical line */
+			$pdf->line($Left_Margin+587, $TopOfColHeadings+12,$Left_Margin+587,$Bottom_Margin+(4*$line_height));
+
+			$pdf->line($Left_Margin+640, $TopOfColHeadings+12,$Left_Margin+640,$Bottom_Margin+(4*$line_height));
+
+			/* Rule off at bottom of the vertical lines */
+			$pdf->line($Left_Margin, $Bottom_Margin+(4*$line_height),$Page_Width-$Right_Margin,$Bottom_Margin+(4*$line_height));
+
+			/* Now print out the footer and totals */
+
+			if ($InvOrCredit=='Invoice') {
+
+				$DisplaySubTot = number_format($myrow['ovamount'],2);
+				$DisplayFreight = number_format($myrow['ovfreight'],2);
+				$DisplayTax = number_format($myrow['ovgst'],2);
+				$DisplayTotal = number_format($myrow['ovfreight']+$myrow['ovgst']+$myrow['ovamount'],2);
+
+			} else {
+
+				$DisplaySubTot = number_format(-$myrow['ovamount'],2);
+				$DisplayFreight = number_format(-$myrow['ovfreight'],2);
+				$DisplayTax = number_format(-$myrow['ovgst'],2);
+				$DisplayTotal = number_format(-$myrow['ovfreight']-$myrow['ovgst']-$myrow['ovamount'],2);
+			}
+			/* Print out the invoice text entered */
+			$YPos = $Bottom_Margin+(3*$line_height);
+
+			/* Print out the payment terms */
+			$pdf->addTextWrap($Left_Margin+5,$YPos+3,280,$FontSize,_('Payment Terms') . ': ' . $myrow['terms']);
+		//      $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:***** Bank Account:*****'));
+		//	$FontSize=10;
+
+			$FontSize =8;
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-12,280,$FontSize,$myrow['invtext']);
+			if (strlen($LeftOvers)>0) {
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-24,280,$FontSize,$LeftOvers);
+				if (strlen($LeftOvers)>0) {
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-36,280,$FontSize,$LeftOvers);
+					/*If there is some of the InvText leftover after 3 lines 200 wide then it is not printed :( */
 				}
+			}
+			$FontSize = 10;
+
+			$pdf->addText($Page_Width-$Right_Margin-220, $YPos+5,$FontSize, _('Sub Total'));
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+642,$YPos+5,120,$FontSize,$DisplaySubTot, 'right');
+
+			$pdf->addText($Page_Width-$Right_Margin-220, $YPos-$line_height+5,$FontSize, _('Freight'));
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+642,$YPos-$line_height+5,120,$FontSize,$DisplayFreight, 'right');
+
+			$pdf->addText($Page_Width-$Right_Margin-220, $YPos-(2*$line_height)+5,$FontSize, _('Tax'));
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+642,$YPos-(2*$line_height)+5,120, $FontSize,$DisplayTax, 'right');
+
+			/*rule off for total */
+			$pdf->line($Page_Width-$Right_Margin-222, $YPos-(2*$line_height),$Page_Width-$Right_Margin,$YPos-(2*$line_height));
+
+			/*vertical to separate totals from comments and ROMALPA */
+			$pdf->line($Page_Width-$Right_Margin-222, $YPos+$line_height,$Page_Width-$Right_Margin-222,$Bottom_Margin);
+
+			$YPos+=10;
+			if ($InvOrCredit=='Invoice') {
+				$pdf->addText($Page_Width-$Right_Margin-220, $YPos - ($line_height*3)-6,$FontSize, _('TOTAL INVOICE'));
+				$FontSize=9;
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos-4,245,$FontSize,$_SESSION['RomalpaClause']);
+				while (strlen($LeftOvers)>0 AND $YPos > $Bottom_Margin) {
+					$YPos-=14;
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,245,$FontSize,$LeftOvers);
 				}
-				if ($YPos <= $Bottom_Margin){
+				/* Add Images for Visa / Mastercard / Paypal */
+				if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg')) {
+					$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -280,$YPos-20,0,40);
+				}
+				$pdf->addText($Page_Width-$Right_Margin-472, $YPos - ($line_height*3)+32,$FontSize, '');
+				$FontSize=10;
+			} else {
+				$pdf->addText($Page_Width-$Right_Margin-220, $YPos-($line_height*3),$FontSize, _('TOTAL CREDIT'));
+ 			}
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+642,35,120, $FontSize,$DisplayTotal, 'right');
+		} /* end of check to see that there was an invoice record to print */
 
-					/* head up a new invoice/credit note page */
-					/*draw the vertical column lines right to the bottom */
-					PrintLinesToBottom ();
-					include ('includes/PDFTransPageHeader.inc');
-				} //end if need a new page headed up
-
-
-			} //end while there are line items to print out
-		} /*end if there are stock movements to show on the invoice or credit note*/
-
-		$YPos -= $line_height;
-
-		/* check to see enough space left to print the 4 lines for the totals/footer */
-		if (($YPos-$Bottom_Margin)<(2*$line_height)){
-
-			PrintLinesToBottom ();
-
-			include ('includes/PDFTransPageHeader.inc');
-
-		}
-		/*Print a column vertical line  with enough space for the footer*/
-		/*draw the vertical column lines to 4 lines shy of the bottom
-		to leave space for invoice footer info ie totals etc*/
-		$pdf->line($Left_Margin+97, $TopOfColHeadings+12,$Left_Margin+97,$Bottom_Margin+(4*$line_height));
-
-		/*Print a column vertical line */
-		$pdf->line($Left_Margin+350, $TopOfColHeadings+12,$Left_Margin+350,$Bottom_Margin+(4*$line_height));
-
-		/*Print a column vertical line */
-		$pdf->line($Left_Margin+450, $TopOfColHeadings+12,$Left_Margin+450,$Bottom_Margin+(4*$line_height));
-
-		/*Print a column vertical line */
-		$pdf->line($Left_Margin+550, $TopOfColHeadings+12,$Left_Margin+550,$Bottom_Margin+(4*$line_height));
-
-		/*Print a column vertical line */
-		$pdf->line($Left_Margin+587, $TopOfColHeadings+12,$Left_Margin+587,$Bottom_Margin+(4*$line_height));
-
-		$pdf->line($Left_Margin+640, $TopOfColHeadings+12,$Left_Margin+640,$Bottom_Margin+(4*$line_height));
-
-		/*Rule off at bottom of the vertical lines */
-		$pdf->line($Left_Margin, $Bottom_Margin+(4*$line_height),$Page_Width-$Right_Margin,$Bottom_Margin+(4*$line_height));
-
-		/*Now print out the footer and totals */
-
-		if ($InvOrCredit=='Invoice') {
-
-		     $DisplaySubTot = number_format($myrow['ovamount'],2);
-		     $DisplayFreight = number_format($myrow['ovfreight'],2);
-		     $DisplayTax = number_format($myrow['ovgst'],2);
-		     $DisplayTotal = number_format($myrow['ovfreight']+$myrow['ovgst']+$myrow['ovamount'],2);
-
-		} else {
-
-		     $DisplaySubTot = number_format(-$myrow['ovamount'],2);
-		     $DisplayFreight = number_format(-$myrow['ovfreight'],2);
-		     $DisplayTax = number_format(-$myrow['ovgst'],2);
-		     $DisplayTotal = number_format(-$myrow['ovfreight']-$myrow['ovgst']-$myrow['ovamount'],2);
-		}
-	/*Print out the invoice text entered */
-		$YPos = $Bottom_Margin+(3*$line_height);
-	/* Print out the payment terms */
-
-  		$pdf->addTextWrap($Left_Margin+5,$YPos+3,280,$FontSize,_('Payment Terms') . ': ' . $myrow['terms']);
-//      $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:***** Bank Account:*****'));
-                        $FontSize=10;
-
-		$FontSize =8;
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-12,280,$FontSize,$myrow['invtext']);
-		if (strlen($LeftOvers)>0){
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-24,280,$FontSize,$LeftOvers);
-			if (strlen($LeftOvers)>0){
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-36,280,$FontSize,$LeftOvers);
-				/*If there is some of the InvText leftover after 3 lines 200 wide then it is not printed :( */
-			}
-		}
-		$FontSize = 10;
-
-		$pdf->addText($Page_Width-$Right_Margin-220, $YPos+5,$FontSize, _('Sub Total'));
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+642,$YPos+5,120,$FontSize,$DisplaySubTot, 'right');
-
-		$pdf->addText($Page_Width-$Right_Margin-220, $YPos-$line_height+5,$FontSize, _('Freight'));
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+642,$YPos-$line_height+5,120,$FontSize,$DisplayFreight, 'right');
-
-		$pdf->addText($Page_Width-$Right_Margin-220, $YPos-(2*$line_height)+5,$FontSize, _('Tax'));
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+642,$YPos-(2*$line_height)+5,120, $FontSize,$DisplayTax, 'right');
-
-		/*rule off for total */
-		$pdf->line($Page_Width-$Right_Margin-222, $YPos-(2*$line_height),$Page_Width-$Right_Margin,$YPos-(2*$line_height));
-
-		/*vertical to separate totals from comments and ROMALPA */
-		$pdf->line($Page_Width-$Right_Margin-222, $YPos+$line_height,$Page_Width-$Right_Margin-222,$Bottom_Margin);
-
-		$YPos+=10;
-		if ($InvOrCredit=='Invoice'){
-			$pdf->addText($Page_Width-$Right_Margin-220, $YPos - ($line_height*3)-6,$FontSize, _('TOTAL INVOICE'));
-			$FontSize=9;
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos-4,245,$FontSize,$_SESSION['RomalpaClause']);
-			while (strlen($LeftOvers)>0 AND $YPos > $Bottom_Margin){
-				$YPos-=14;
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,245,$FontSize,$LeftOvers);
-			}
-			/* Add Images for Visa / Mastercard / Paypal */
-			if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg')) {
-				$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -280,$YPos-20,0,40);
-			}
-			$pdf->addText($Page_Width-$Right_Margin-472, $YPos - ($line_height*3)+32,$FontSize, '');
-			$FontSize=10;
-		} else {
-			$pdf->addText($Page_Width-$Right_Margin-220, $YPos-($line_height*3),$FontSize, _('TOTAL CREDIT'));
- 		}
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+642,35,120, $FontSize,$DisplayTotal, 'right');
-	    } /* end of check to see that there was an invoice record to print */
-
-	    $FromTransNo++;
+		$FromTransNo++;
 	} /* end loop to print invoices */
 
-	$pdfcode = $pdf->Output('SalesInvoice'.($FromTransNo-1).'.pdf', "I");
-	$len = strlen($pdfcode);
-
+/* Javier: This actually would produce the output, and maybe it should do
+	$pdfcode = $pdf->output($_SESSION['reports_dir'] . '/Invoice.pdf', "F");
+	$len = strlen($pdfcode); Este fichero es especial pq $len anulado en L529
+*/
 
 // Start FPDI concatination to append PDF files conditionally to the invoice
 // This part taken from FPDI example page
 class concat_pdf extends FPDI {
 
-	    var $files = array();
+	var $files = array();
 
-	    function setFiles($files) {
-	        $this->files = $files;
-	    }
-
-	    function concat() {
-	        foreach($this->files AS $file) {
-	        	if ($file != 'pdf_append/none') {
-	            	$pagecount = $this->setSourceFile($file);
-	            	for ($i = 1; $i <= $pagecount; $i++) {
-	                 	$tplidx = $this->ImportPage($i);
-	                 	$s = $this->getTemplatesize($tplidx);
-	                 	$this->AddPage($s['h'] > $s['w'] ? 'P' : 'L');
-	                 	$this->useTemplate($tplidx);
-	            	}
-	        	}
-	        }
-	    }
-
+	function setFiles($files) {
+		$this->files = $files;
 	}
 
-	$pdf =& new concat_pdf();
+	function concat() {
+		foreach($this->files as $file) {
+			if ($file != 'pdf_append/none') {
+				$pagecount = $this->setSourceFile($file);
+				for ($i = 1; $i <= $pagecount; $i++) {
+					$tplidx = $this->ImportPage($i);
+					$s = $this->getTemplatesize($tplidx);
+					$this->AddPage($s['h'] > $s['w'] ? 'P' : 'L');
+					$this->useTemplate($tplidx);
+				}
+			}
+		}
+	}
+}
+
+$pdf =& new concat_pdf();
+
 // Have to get the TransNo again, not sure what happens if we have a series of trans nos
-if (isset($_GET['FromTransNo'])){
+if (isset($_GET['FromTransNo'])) {
 	$FromTransNo = trim($_GET['FromTransNo']);
-} elseif (isset($_POST['FromTransNo'])){
+} elseif (isset($_POST['FromTransNo'])) {
 	$FromTransNo = trim($_POST['FromTransNo']);
 }
-// Check its an Invoice type again, then select appendfile filename
-//if ($InvOrCredit=='Invoice'){
-			 //$sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
-				//	FROM stockmoves,
-					//stockmaster
-				//WHERE stockmoves.stockid = stockmaster.stockid
-				//AND stockmoves.type=10
-				//AND stockmoves.transno=' . $FromTransNo . '
-				//AND stockmoves.show_on_inv_crds=1';
-		//};
 
-			 $sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
-					FROM stockmoves,
-					stockmaster
-				WHERE stockmoves.stockid = stockmaster.stockid
-				AND stockmoves.type=10
-				AND stockmoves.transno=' . $FromTransNo . '
-				AND stockmoves.show_on_inv_crds=1';
+// Check its an Invoice type again, then select appendfile filename
+// if ($InvOrCredit=='Invoice') {
+	$sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
+		FROM stockmoves, stockmaster
+		WHERE stockmoves.stockid = stockmaster.stockid
+		AND stockmoves.type=10
+		AND stockmoves.transno=' . $FromTransNo . '
+		AND stockmoves.show_on_inv_crds=1';
+// };
 
 $result=DB_query($sql,$db);
  // Loop the result set and add appendfile if the field is not 0 or none
-while ($row=DB_fetch_array($result)){
-    if ($row['appendfile'] !='0' AND $row['appendfile'] !=='none') {
+while ($row=DB_fetch_array($result)) {
+	if ($row['appendfile'] !='0' AND $row['appendfile'] !=='none') {
 		$pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf','companies/' . $_SESSION['DatabaseName'] . '/pdf_append/' . $row['appendfile'])); 
-        $pdf->concat();
+		$pdf->concat();
 		$pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','I');
-        exit;
-	 // If EMAIL is selected, send the invoice via email, this is not appending pages yet though        
-    } else if (isset($_GET['Email'])) {
-
-        $pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf'));
-        $pdf->concat();
-		$pdfcode = $pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf');    
-    } else {
-	 // If the appendfile field is empty and EMAIL is not selected, just print the invoice without any appended pages       
+		exit;
+		// If EMAIL is selected, send the invoice via email, this is not appending pages yet though        
+	} else if (isset($_GET['Email'])) {
 		$pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf'));
-        $pdf->concat();
+		$pdf->concat();
+		$pdfcode = $pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf');    
+	} else {
+
+// Javier: esto tiene que estar mal, si imprime la factura sin adjuntar nada pq llama a concat?
+		// If the appendfile field is empty and EMAIL is not selected, just print the invoice without any appended pages       
+		$pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf'));
+		$pdf->concat();
 		$pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','D');
-        exit;
-    }
+		exit;
+	}
 }
 //End FPDI Concat
 
@@ -563,14 +565,18 @@ while ($row=DB_fetch_array($result)){
 		exit;
 
 	} else {
+
+/* Javier: este es el más importante según cierta persona ya q es el único q cambió, pero nadie parece saber nada
+// Javier: TCPDF sends its own http header, it's an error to send it twice. 
 		header('Content-type: application/pdf');
 		header('Content-Length: ' . $len);
 		header('Content-Disposition: inline; filename=Customer_trans.pdf');
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
-
-		$pdf->Output('PrintCustTrans.pdf', 'I');
+*/
+		$pdf->OutputD('PrintCustTrans.pdf');
+		$pdf-> __destruct();
 	}
 
 } else { /*The option to print PDF was not hit */
@@ -580,36 +586,33 @@ while ($row=DB_fetch_array($result)){
 
 	if (!isset($FromTransNo) OR $FromTransNo=='') {
 
-
-	/*if FromTransNo is not set then show a form to allow input of either a single invoice number or a range of invoices to be printed. Also get the last invoice number created to show the user where the current range is up to */
+		/* if FromTransNo is not set then show a form to allow input of either a single invoice number or a range of invoices to be printed. Also get the last invoice number created to show the user where the current range is up to */
 		echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method='POST'><table class='table1'>";
-                echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . _('Print Invoices or Credit Notes (Landscape Mode)') . '</div>';
+		echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . _('Print Invoices or Credit Notes (Landscape Mode)') . '</div>';
 		echo '<tr><td>' . _('Print Invoices or Credit Notes') . '</td><td><select name=InvOrCredit>';
-		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)){
+		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)) {
 
-		   echo "<option selected VALUE='Invoice'>" . _('Invoices');
-		   echo "<option VALUE='Credit'>" . _('Credit Notes');
+			echo "<option selected VALUE='Invoice'>" . _('Invoices');
+			echo "<option VALUE='Credit'>" . _('Credit Notes');
 
 		} else {
 
-		   echo "<option selected VALUE='Credit'>" . _('Credit Notes');
-		   echo "<option VALUE='Invoice'>" . _('Invoices');
-
+			echo "<option selected VALUE='Credit'>" . _('Credit Notes');
+			echo "<option VALUE='Invoice'>" . _('Invoices');
 		}
 
 		echo '</select></td></tr>';
-
 		echo '<tr><td>' . _('Print EDI Transactions') . '</td><td><select name=PrintEDI>';
-		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)){
 
-		   echo "<option selected VALUE='No'>" . _('Do not Print PDF EDI Transactions');
-		   echo "<option VALUE='Yes'>" . _('Print PDF EDI Transactions Too');
+		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)) {
+
+			echo "<option selected VALUE='No'>" . _('Do not Print PDF EDI Transactions');
+			echo "<option VALUE='Yes'>" . _('Print PDF EDI Transactions Too');
 
 		} else {
 
-		   echo "<option VALUE='No'>" . _('Do not Print PDF EDI Transactions');
-		   echo "<option selected VALUE='Yes'>" . _('Print PDF EDI Transactions Too');
-
+			echo "<option VALUE='No'>" . _('Do not Print PDF EDI Transactions');
+			echo "<option selected VALUE='Yes'>" . _('Print PDF EDI Transactions Too');
 		}
 
 		echo '</select></td></tr>';
@@ -625,126 +628,125 @@ while ($row=DB_fetch_array($result)){
 
 		echo '<div class="page_help_text"><b>' . _('The last invoice created was number') . ' ' . $myrow[0] . '</b><br>' . _('If only a single invoice is required') . ', ' . _('enter the invoice number to print in the Start transaction number to print field and leave the End transaction number to print field blank') . '. ' . _('Only use the end invoice to print field if you wish to print a sequential range of invoices') . '';
 
-                $sql = 'SELECT typeno FROM systypes WHERE typeid=11';
+		$sql = 'SELECT typeno FROM systypes WHERE typeid=11';
 
-                $result = DB_query($sql,$db);
-                $myrow = DB_fetch_row($result);
+		$result = DB_query($sql,$db);
+		$myrow = DB_fetch_row($result);
 
-                echo '<br><b>' . _('The last credit note created was number') . ' ' . $myrow[0] . '</b><br>' . _('A sequential range can be printed using the same method as for invoices above') . '. ' . _('A single credit note can be printed by only entering a start transaction number') . '</DIV';
+		echo '<br /><b>' . _('The last credit note created was number') . ' ' . $myrow[0] . '</b><br />' . _('A sequential range can be printed using the same method as for invoices above') . '. ' . _('A single credit note can be printed by only entering a start transaction number') . '</DIV';
 
 	} else {
 
-		while ($FromTransNo <= $_POST['ToTransNo']){
+		while ($FromTransNo <= $_POST['ToTransNo']) {
 
-	/*retrieve the invoice details from the database to print
-	notice that salesorder record must be present to print the invoice purging of sales orders will
-	nobble the invoice reprints */
+			/*retrieve the invoice details from the database to print
+			notice that salesorder record must be present to print the invoice purging of sales orders will
+			nobble the invoice reprints */
 
 			if ($InvOrCredit=='Invoice') {
 
-			   $sql = "SELECT
-			   		debtortrans.trandate,
-					debtortrans.ovamount,
-					debtortrans.ovdiscount,
-					debtortrans.ovfreight,
-					debtortrans.ovgst,
-					debtortrans.rate,
-					debtortrans.invtext,
-					debtortrans.consignment,
-					debtorsmaster.name,
-					debtorsmaster.address1,
-					debtorsmaster.address2,
-					debtorsmaster.address3,
-					debtorsmaster.address4,
-					debtorsmaster.address5,
-					debtorsmaster.address6,
-					debtorsmaster.currcode,
-					salesorders.deliverto,
-					salesorders.deladd1,
-					salesorders.deladd2,
-					salesorders.deladd3,
-					salesorders.deladd4,
-					salesorders.deladd5,
-					salesorders.deladd6,
-					salesorders.customerref,
-					salesorders.orderno,
-					salesorders.orddate,
-					shippers.shippername,
-					custbranch.brname,
-					custbranch.braddress1,
-					custbranch.braddress2,
-					custbranch.braddress3,
-					custbranch.braddress4,
-					custbranch.braddress5,
-					custbranch.braddress6,
-					salesman.salesmanname,
-					debtortrans.debtorno
-				FROM debtortrans,
-					debtorsmaster,
-					custbranch,
-					salesorders,
-					shippers,
-					salesman
-				WHERE debtortrans.order_ = salesorders.orderno
-				AND debtortrans.type=10
-				AND debtortrans.transno=" . $FromTransNo . "
-				AND debtortrans.shipvia=shippers.shipper_id
-				AND debtortrans.debtorno=debtorsmaster.debtorno
-				AND debtortrans.debtorno=custbranch.debtorno
-				AND debtortrans.branchcode=custbranch.branchcode
-				AND custbranch.salesman=salesman.salesmancode";
+				$sql = "SELECT
+						debtortrans.trandate,
+						debtortrans.ovamount,
+						debtortrans.ovdiscount,
+						debtortrans.ovfreight,
+						debtortrans.ovgst,
+						debtortrans.rate,
+						debtortrans.invtext,
+						debtortrans.consignment,
+						debtorsmaster.name,
+						debtorsmaster.address1,
+						debtorsmaster.address2,
+						debtorsmaster.address3,
+						debtorsmaster.address4,
+						debtorsmaster.address5,
+						debtorsmaster.address6,
+						debtorsmaster.currcode,
+						salesorders.deliverto,
+						salesorders.deladd1,
+						salesorders.deladd2,
+						salesorders.deladd3,
+						salesorders.deladd4,
+						salesorders.deladd5,
+						salesorders.deladd6,
+						salesorders.customerref,
+						salesorders.orderno,
+						salesorders.orddate,
+						shippers.shippername,
+						custbranch.brname,
+						custbranch.braddress1,
+						custbranch.braddress2,
+						custbranch.braddress3,
+						custbranch.braddress4,
+						custbranch.braddress5,
+						custbranch.braddress6,
+						salesman.salesmanname,
+						debtortrans.debtorno
+					FROM debtortrans,
+						debtorsmaster,
+						custbranch,
+						salesorders,
+						shippers,
+						salesman
+					WHERE debtortrans.order_ = salesorders.orderno
+					AND debtortrans.type=10
+					AND debtortrans.transno=" . $FromTransNo . "
+					AND debtortrans.shipvia=shippers.shipper_id
+					AND debtortrans.debtorno=debtorsmaster.debtorno
+					AND debtortrans.debtorno=custbranch.debtorno
+					AND debtortrans.branchcode=custbranch.branchcode
+					AND custbranch.salesman=salesman.salesmancode";
 			} else {
 
-			   $sql = 'SELECT debtortrans.trandate,
-			   		debtortrans.ovamount,
-					debtortrans.ovdiscount,
-					debtortrans.ovfreight,
-					debtortrans.ovgst,
-					debtortrans.rate,
-					debtortrans.invtext,
-					debtorsmaster.name,
-					debtorsmaster.address1,
-					debtorsmaster.address2,
-					debtorsmaster.address3,
-					debtorsmaster.address4,
-					debtorsmaster.address5,
-					debtorsmaster.address6,
-					debtorsmaster.currcode,
-					custbranch.brname,
-					custbranch.braddress1,
-					custbranch.braddress2,
-					custbranch.braddress3,
-					custbranch.braddress4,
-					custbranch.braddress5,
-					custbranch.braddress6,
-					salesman.salesmanname,
-					debtortrans.debtorno
-				FROM debtortrans,
-					debtorsmaster,
-					custbranch,
-					salesman
-				WHERE debtortrans.type=11
-				AND debtortrans.transno=' . $FromTransNo . '
-				AND debtortrans.debtorno=debtorsmaster.debtorno
-				AND debtortrans.debtorno=custbranch.debtorno
-				AND debtortrans.branchcode=custbranch.branchcode
-				AND custbranch.salesman=salesman.salesmancode';
-
+				$sql = 'SELECT debtortrans.trandate,
+						debtortrans.ovamount,
+						debtortrans.ovdiscount,
+						debtortrans.ovfreight,
+						debtortrans.ovgst,
+						debtortrans.rate,
+						debtortrans.invtext,
+						debtorsmaster.name,
+						debtorsmaster.address1,
+						debtorsmaster.address2,
+						debtorsmaster.address3,
+						debtorsmaster.address4,
+						debtorsmaster.address5,
+						debtorsmaster.address6,
+						debtorsmaster.currcode,
+						custbranch.brname,
+						custbranch.braddress1,
+						custbranch.braddress2,
+						custbranch.braddress3,
+						custbranch.braddress4,
+						custbranch.braddress5,
+						custbranch.braddress6,
+						salesman.salesmanname,
+						debtortrans.debtorno
+					FROM debtortrans,
+						debtorsmaster,
+						custbranch,
+						salesman
+					WHERE debtortrans.type=11
+					AND debtortrans.transno=' . $FromTransNo . '
+					AND debtortrans.debtorno=debtorsmaster.debtorno
+					AND debtortrans.debtorno=custbranch.debtorno
+					AND debtortrans.branchcode=custbranch.branchcode
+					AND custbranch.salesman=salesman.salesmancode';
 			}
 
 			$result=DB_query($sql,$db);
 			if (DB_num_rows($result)==0 OR DB_error_no($db)!=0) {
 				echo '<p>' . _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available');
-				if ($debug==1){
+				if ($debug==1) {
 					echo _('The SQL used to get this information that failed was') . "<br>$sql";
 				}
 				break;
 				include('includes/footer.inc');
 				exit;
-			} elseif (DB_num_rows($result)==1){
+			} elseif (DB_num_rows($result)==1) {
 
 				$myrow = DB_fetch_array($result);
-	/* Then there's an invoice (or credit note) to print. So print out the invoice header and GST Number from the company record */
+				/* Then there's an invoice (or credit note) to print. So print out the invoice header and GST Number from the company record */
 				if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND in_array(1, $_SESSION['AllowedPageSecurityTokens']) AND $myrow['debtorno'] != $_SESSION['CustomerID']){
 					echo '<p><font color=RED size=4>' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company');
 					exit;
@@ -762,7 +764,7 @@ while ($row=DB_fetch_array($result)){
 				}
 				echo '</b>' . _('Number') . ' ' . $FromTransNo . '</font><br><font size=1>' . _('Tax Authority Ref') . '. ' . $_SESSION['CompanyRecord']['gstno'] . '</td></tr></table>';
 
-	/*Now print out the logo and company name and address */
+				/* Now print out the logo and company name and address */
 				echo "<table class='table1'><tr><td><font size=4 color='#333333'><b>" . $_SESSION['CompanyRecord']['coyname'] . "</b></font><br>";
 				echo $_SESSION['CompanyRecord']['regoffice1'] . '<br>';
 				echo $_SESSION['CompanyRecord']['regoffice2'] . '<br>';
@@ -776,7 +778,7 @@ while ($row=DB_fetch_array($result)){
 
 				echo '</td><td WIDTH=50% class=number>';
 
-	/*Now the customer charged to details in a sub table within a cell of the main table*/
+				/* Now the customer charged to details in a sub table within a cell of the main table*/
 
 				echo "<table class='table1'><tr><td align=left bgcolor='#BBBBBB'><b>" . _('Charge To') . ":</b></td></tr><tr><td bgcolor='#EEEEEE'>";
 				echo $myrow['name'] . '<br>' . $myrow['address1'] . '<br>' . $myrow['address2'] . '<br>' . $myrow['address3'] . '<br>' . $myrow['address4'] . '<br>' . $myrow['address5'] . '<br>' . $myrow['address6'];
@@ -949,9 +951,9 @@ while ($row=DB_fetch_array($result)){
 						   } else {
 							    echo '<font color=RED size=4>' . _('TAX CREDIT NOTE') . ' ';
 						   }
-						   echo '</b>' . _('Number') . ' ' . $FromTransNo . '</font><br><font size=1>' . _('GST Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</td></tr><class=table1';
+						   echo '</b>' . _('Number') . ' ' . $FromTransNo . '</font><br /><font size=1>' . _('GST Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</td></tr></table>';
 
-	/*Now print out company name and address */
+						/*Now print out company name and address */
 						    echo "<table class='table1'><tr>
 						    	<td><font size=4 color='#333333'><b>" . $_SESSION['CompanyRecord']['coyname'] . '</b></font><br>';
 						    echo $_SESSION['CompanyRecord']['regoffice1'] . '<br>';
@@ -986,7 +988,6 @@ while ($row=DB_fetch_array($result)){
 				if ($LineCounter >= ($_SESSION['PageLength'] - 8 - $LinesRequiredForText)){
 
 					/* head up a new invoice/credit note page */
-
 					$PageNumber++;
 					echo "<table class='table1'><tr><td VALIGN=TOp><img src='" . $_SESSION['LogoFile'] . "'></td><td bgcolor='#BBBBBB'><b>";
 
@@ -997,7 +998,7 @@ while ($row=DB_fetch_array($result)){
 					}
 					echo '</b>' . _('Number') . ' ' . $FromTransNo . '</font><br><font size=1>' . _('GST Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</td></tr><table>';
 
-	/*Print out the logo and company name and address */
+					/* Print out the logo and company name and address */
 					echo "<table class='table1'><tr><td><font size=4 color='#333333'><b>" . $_SESSION['CompanyRecord']['coyname'] . "</b></font><br>";
 					echo $_SESSION['CompanyRecord']['regoffice1'] . '<br>';
 					echo $_SESSION['CompanyRecord']['regoffice2'] . '<br>';
@@ -1021,7 +1022,7 @@ while ($row=DB_fetch_array($result)){
 					$LineCounter = 10;
 				}
 
-	/*Space out the footer to the bottom of the page */
+				/* Space out the footer to the bottom of the page */
 
 				echo '<br><br>' . $myrow['invtext'];
 
@@ -1031,7 +1032,7 @@ while ($row=DB_fetch_array($result)){
 					$LineCounter++;
 				}
 
-	/*Now print out the footer and totals */
+				/* Now print out the footer and totals */
 
 				if ($InvOrCredit=='Invoice') {
 
@@ -1045,7 +1046,8 @@ while ($row=DB_fetch_array($result)){
 				   $DisplayTax = number_format(-$myrow['ovgst'],2);
 				   $DisplayTotal = number_format(-$myrow['ovfreight']-$myrow['ovgst']-$myrow['ovamount'],2);
 				}
-	/*Print out the invoice text entered */
+
+				/*Print out the invoice text entered */
 				echo '<table class=table1><tr>
 					<td class=number>' . _('Sub Total') . "</td>
 					<td class=number bgcolor='#EEEEEE' WIDTH=15%>$DisplaySubTot</td></tr>";
@@ -1066,9 +1068,7 @@ while ($row=DB_fetch_array($result)){
 		} /* end loop to print invoices */
 	} /*end of if FromTransNo exists */
 	include('includes/footer.inc');
-
 } /*end of else not PrintPDF */
-
 
 
 function PrintLinesToBottom () {
@@ -1080,20 +1080,19 @@ function PrintLinesToBottom () {
 	global $Bottom_Margin;
 	global $line_height;
 
-
-/*draw the vertical column lines right to the bottom */
+	/* draw the vertical column lines right to the bottom */
 	$pdf->line($Left_Margin+97, $TopOfColHeadings+12,$Left_Margin+97,$Bottom_Margin);
 
-	/*Print a column vertical line */
+	/* Print a column vertical line */
 	$pdf->line($Left_Margin+350, $TopOfColHeadings+12,$Left_Margin+350,$Bottom_Margin);
 
-	/*Print a column vertical line */
+	/* Print a column vertical line */
 	$pdf->line($Left_Margin+450, $TopOfColHeadings+12,$Left_Margin+450,$Bottom_Margin);
 
-	/*Print a column vertical line */
+	/* Print a column vertical line */
 	$pdf->line($Left_Margin+550, $TopOfColHeadings+12,$Left_Margin+550,$Bottom_Margin);
 
-	/*Print a column vertical line */
+	/* Print a column vertical line */
 	$pdf->line($Left_Margin+587, $TopOfColHeadings+12,$Left_Margin+587,$Bottom_Margin);
 
 	$pdf->line($Left_Margin+640, $TopOfColHeadings+12,$Left_Margin+640,$Bottom_Margin);
