@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Id$ */
 
 $PageSecurity = 8;
 
@@ -101,10 +101,11 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 } else if (isset($_POST['PrintPDF'])) {
 	
 	include('includes/PDFStarter.php');
+	$pdf->addInfo('Title', _('Profit and Loss'));
+	$pdf->addInfo('Subject', _('Profit and Loss'));
+	
 	$PageNumber = 0;
 	$FontSize = 10;
-	$pdf->addinfo('Title', _('Profit and Loss') );
-	$pdf->addinfo('Subject', _('Profit and Loss') );
 	$line_height = 12;
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
@@ -150,6 +151,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 			chartdetails.accountcode';
 
 	$AccountsResult = DB_query($SQL,$db);
+	
 	if (DB_error_no($db) != 0) {
 		$title = _('Profit and Loss') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
@@ -158,6 +160,15 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 		if ($debug == 1){
 			echo '<br>'. $SQL;
 		}
+		include('includes/footer.inc');
+		exit;
+	}
+	if (DB_num_rows($AccountsResult)==0){
+		$title = _('Print Profit and Loss Error');
+		include('includes/header.inc');
+		echo '<p>';
+		prnMsg( _('There were no entries to print out for the selections specified'),'warn' );
+		echo '<br><a href="'. $rootpath.'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -248,8 +259,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 		}
 
 		if ($myrow['sectioninaccounts'] != $Section){
-
-			$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+			$pdf->setFont('','B');
 			$FontSize =10;
 			if ($Section != ''){
 				$pdf->line($Left_Margin+310, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
@@ -314,7 +324,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 				$YPos -= (2 * $line_height);
 			}
 			$FontSize =8;
-			$pdf->selectFont('./fonts/Helvetica.afm');
+			$pdf->setFont('',''); //sets to normal type in the default font
 		}
 
 		if ($myrow['groupname'] != $ActGrp){
@@ -325,11 +335,11 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 			$ParentGroups[$Level]=$ActGrp;
 			if ($_POST['Detail'] == 'Detailed'){
 				$FontSize =10;
-				$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+				$pdf->setFont('','B');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$myrow['groupname']);
 				$YPos -= (2 * $line_height);
 				$FontSize =8;
-				$pdf->selectFont('./fonts/Helvetica.afm');
+				$pdf->setFont('','');
 			}
 		}
 
@@ -431,7 +441,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	}
 	if ($Section != ''){
 
-		$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+		$pdf->setFont($header[0],'B');
 		$pdf->line($Left_Margin+310, $YPos+10,$Left_Margin+500, $YPos+10);
 		$pdf->line($Left_Margin+310, $YPos,$Left_Margin+500, $YPos);
 		
@@ -474,26 +484,8 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	$pdf->line($Left_Margin+310, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
 	$pdf->line($Left_Margin+310, $YPos,$Left_Margin+500, $YPos);	
 	
-	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
-	
-	if ($len <= 20){
-		$title = _('Print Profit and Loss Error');
-		include('includes/header.inc');
-		echo '<p>';
-		prnMsg( _('There were no entries to print out for the selections specified') );
-		echo '<br><a href="'. $rootpath.'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
-		include('includes/footer.inc');
-		exit;
-	} else {
-		header('Content-type: application/pdf');
-		header('Content-Length: ' . $len);
-		header('Content-Disposition: inline; filename=Profit_Loss.pdf');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Pragma: public');
-		$pdf->Output('GLProfit_Loss.pdf', 'I');
-	}
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_' .'Income_Statement_' . date('Y-m-d').'.pdf');
+	$pdf->__destruct();
 	exit;
 	
 } else {
