@@ -578,7 +578,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Invoice') . '" alt="">' . ' ' . '<a href="' . $rootpath . '/ConfirmDispatch_Invoice.php?' . SID .'identifier='.$identifier . '&OrderNumber=' . $OrderNo .'">'. _('Confirm Dispatch and Produce Invoice') .'</a>';
 			//Add option to Print Sales Orders or Proforma invoice
-			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/pdf.png" title="' . _('Sales Order') . '" alt="">' . ' ' . '<a href="' . $rootpath . '//PrintSalesOrder_generic.php?' . SID .'identifier='.$identifier . '&TransNo=' . $OrderNo .'">'. _('Print Sales Order / Pro-forma Invoice') .'</a></div>';
+			echo '<p><img src="'.$rootpath.'/css/'.$theme.'/images/pdf.png" title="' . _('Sales Order') . '" alt="">' . ' ' . '<a href="' . $rootpath . '/PrintSalesOrder_generic.php?' . SID .'identifier='.$identifier . '&TransNo=' . $OrderNo .'">'. _('Print Sales Order / Pro-forma Invoice') .'</a></div>';
 
 		} else {
 			/*link to print the quotation */
