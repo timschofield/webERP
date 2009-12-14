@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.2 $ */
+/* $Id$ */
 
 $PageSecurity = 8;
 
@@ -83,8 +83,8 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 	$SQL = 'SELECT tagref,
 				tagdescription
-		FROM tags
-		ORDER BY tagref';
+				FROM tags
+				ORDER BY tagref';
 
 	$result=DB_query($SQL,$db);
 	echo '<option value=0>0 - None';
@@ -115,10 +115,10 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 } else if (isset($_POST['PrintPDF'])) {
 	
 	include('includes/PDFStarter.php');
+	$pdf->addInfo('Title', _('Income and Expenditure') );
+	$pdf->addInfo('Subject', _('Income and Expenditure') );
 	$PageNumber = 0;
 	$FontSize = 10;
-	$pdf->addinfo('Title', _('Income and Expenditure') );
-	$pdf->addinfo('Subject', _('Income and Expenditure') );
 	$line_height = 12;
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
@@ -173,6 +173,15 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 		}
 		include('includes/footer.inc');
 		exit;
+	}
+	if (DB_num_rows($AccountsResult)==0){
+		$title = _('Print Income and Expenditure Error');
+		include('includes/header.inc');
+		echo '<p>';
+		prnMsg( _('There were no entries to print out for the selections specified'),'info');
+		echo '<br><a href="'. $rootpath.'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
+		include('includes/footer.inc');
+		exit;	
 	}
 	
 	include('includes/PDFProfitAndLossPageHeader.inc');
@@ -248,7 +257,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 		if ($myrow['sectioninaccounts'] != $Section){
 
-			$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+			$pdf->setFont('','B');
 			$FontSize =10;
 			if ($Section != ''){
 				$pdf->line($Left_Margin+310, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
@@ -293,7 +302,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 				$YPos -= (2 * $line_height);
 			}
 			$FontSize =8;
-			$pdf->selectFont('./fonts/Helvetica.afm');
+			$pdf->setFont('','');
 		}
 
 		if ($myrow['groupname'] != $ActGrp){
@@ -304,11 +313,11 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 			$ParentGroups[$Level]=$ActGrp;
 			if ($_POST['Detail'] == 'Detailed'){
 				$FontSize =10;
-				$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+				$pdf->setFont('','B');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$myrow['groupname']);
 				$YPos -= (2 * $line_height);
 				$FontSize =8;
-				$pdf->selectFont('./fonts/Helvetica.afm');
+				$pdf->setFont('','');
 			}
 		}
 
@@ -386,7 +395,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	}
 	if ($Section != ''){
 
-		$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+		$pdf->setFont('','B');
 		$pdf->line($Left_Margin+310, $YPos+10,$Left_Margin+500, $YPos+10);
 		$pdf->line($Left_Margin+310, $YPos,$Left_Margin+500, $YPos);
 		
@@ -418,27 +427,9 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	
 	$pdf->line($Left_Margin+310, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
 	$pdf->line($Left_Margin+310, $YPos,$Left_Margin+500, $YPos);	
-	
-	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
-	
-	if ($len <= 20){
-		$title = _('Print Income and Expenditure Error');
-		include('includes/header.inc');
-		echo '<p>';
-		prnMsg( _('There were no entries to print out for the selections specified') );
-		echo '<br><a href="'. $rootpath.'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
-		include('includes/footer.inc');
-		exit;
-	} else {
-		header('Content-type: application/pdf');
-		header('Content-Length: ' . $len);
-		header('Content-Disposition: inline; filename=Profit_Loss.pdf');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Pragma: public');
-		$pdf->Output('GLTagProfit_Loss.pdf', 'I');
-	}
+		
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_' .'Tag_Income_Statement_' . date('Y-m-d').'.pdf');
+	$pdf->__destruct();
 	exit;
 	
 } else {
