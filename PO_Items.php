@@ -233,7 +233,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			echo '<p>';
 			prnMsg(_('Purchase Order') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . _('on') . ' ' . 
 		     	$_SESSION['PO'.$identifier]->SupplierName . ' ' . _('has been created'),'success');
-			echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . 
+			echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' .
 				_('Print') . '" alt="">' . ' ' . _('Print Purchase Order') . '';
 		} else { /*its an existing order need to update the old order info */
 	//	 		$_SESSION['PO'.$identifier]->version += 0.01;
@@ -277,7 +277,9 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 			/*Now Update the purchase order detail records */
 			foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
-				$sql='UPDATE purchorders SET status="'._('Pending').'" WHERE orderno=' . $_SESSION['PO'.$identifier]->OrderNo;
+				$sql="UPDATE purchorders
+                      SET status = '" . PurchOrder::STATUS_PENDING . "'
+                      WHERE orderno = " . $_SESSION['PO'.$identifier]->OrderNo;
 				$result=DB_query($sql,$db);
 				if ($POLine->Deleted==true) {
 					if ($POLine->PODetailRec!='') {

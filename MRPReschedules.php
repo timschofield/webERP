@@ -1,5 +1,8 @@
 <?php
-/* $Revision: 1.3 $ */
+
+/*$Id$*/
+
+/* $Revision: 1.4 $ */
 // MRPReschedules.php - Report of purchase orders and work orders that MRP determines should be
 // rescheduled.
 $PageSecurity = 2;
@@ -8,11 +11,9 @@ include('includes/session.inc');
 If (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
-
+	$pdf->addInfo('Title',_('MRP Reschedule Report'));
+	$pdf->addInfo('Subject',_('MRP Reschedules'));
 	$FontSize=9;
-	$pdf->addinfo('Title',_('MRP Reschedule Report'));
-	$pdf->addinfo('Subject',_('MRP Reschedules'));
-
 	$PageNumber=1;
 	$line_height=12;
 
@@ -34,6 +35,18 @@ If (isset($_POST['PrintPDF'])) {
 	  $title = _('MRP Reschedules') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The MRP reschedules could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
+	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+	   if ($debug==1){
+	      echo "<br>$sql";
+	   }
+	   include('includes/footer.inc');
+	   exit;
+	}
+
+	if (DB_num_rows($result) == 0) {
+	  $title = _('MRP Reschedules') . ' - ' . _('Problem Report');
+	  include('includes/header.inc');
+	   prnMsg( _('No MRP reschedule retrieved'), 'warn');
 	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 	      echo "<br>$sql";
@@ -94,7 +107,7 @@ If (isset($_POST['PrintPDF'])) {
 	//$pdf->addTextWrap(80,$YPos,260-$Left_Margin,$FontSize,_('Grand Total Value'), 'right');
 	//$DisplayTotalVal = number_format($Tot_Val,2);
     //$pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
-
+/* UldisN
 	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);
 
@@ -115,6 +128,9 @@ If (isset($_POST['PrintPDF'])) {
 	
 			$pdf->Output('MRPRescedules.pdf', 'I');
 	}
+*/
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_MRPReschedules_' . date('Y-m-d').'.pdf');//UldisN
+    $pdf->__destruct(); //UldisN
 	
 } else { /*The option to print PDF was not hit so display form */
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Id$ */
 
 $PageSecurity = 5;
 
@@ -28,8 +28,8 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	$RefCounter = 0;
 	include('includes/PDFStarter.php');
-	$pdf->addinfo('Title',_('Payment Run Report'));
-	$pdf->addinfo('Subject',_('Payment Run') . ' - ' . _('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . _('and Due By') . ' ' .  $_POST['AmountsDueBy']);
+	$pdf->addInfo('Title',_('Payment Run Report'));
+	$pdf->addInfo('Subject',_('Payment Run') . ' - ' . _('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . _('and Due By') . ' ' .  $_POST['AmountsDueBy']);
 
 	$PageNumber=1;
 	$line_height=12;
@@ -103,14 +103,21 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 		$TransResult = DB_query($sql,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-			$title = _('Payment Run') . ' - ' . _('Problem Report') . '.... ';
+			$title = _('Payment Run - Problem Report');
 			include('includes/header.inc');
-			echo '<br>' . _('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg($db);
+			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
 			echo '<br><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
-
 			if ($debug==1){
 				echo '<br>' . _('The SQL that failed was') . ' ' . $sql;
 			}
+			include('includes/footer.inc');
+			exit;
+		}
+		if (DB_num_rows($TranResult)==0) {
+			$title = _('Payment Run -Problem Report');
+			include('includes/header.inc');
+			prnMsg(_('There are no outstanding supplier invoices to pay'),'info');
+			echo '<br><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
 		}
@@ -173,13 +180,12 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				if (DB_error_no($db) !=0) {
 					$title = _('Payment Processing - Problem Report') . '.... ';
 					include('includes/header.inc');
-					echo '<br>' . _('None of the payments will be processed since updates to the transaction records for') . ' ' .$SupplierName . ' ' . _('could not be processed because') . ' - ' . DB_error_msg($db);
+					prnMsg(_('None of the payments will be processed since updates to the transaction records for') . ' ' .$SupplierName . ' ' . _('could not be processed because') . ' - ' . DB_error_msg($db),'error');
 					echo '<br><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 					if ($debug==1){
 						echo '<br>' . _('The SQL that failed was') . $SQL;
 					}
 					$ProcessResult = DB_Txn_Rollback($db);
-
 					include('includes/footer.inc');
 					exit;
 				}
@@ -204,10 +210,10 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		if (DB_error_no($db) !=0) {
 			$title = _('Payment Processing - Problem Report') . '.... ';
 			include('includes/header.inc');
-			echo '<br>' . _('None of the payments will be processed') . '. ' . _('Unfortunately there was a problem committing the changes to the database because') . ' - ' . DB_error_msg($db);
+			prnMsg(_('None of the payments will be processed. Unfortunately, there was a problem committing the changes to the database because') . ' - ' . DB_error_msg($db),'error');
 			echo '<br><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
-				echo '<br>' . _('The SQL that failed was') . $SQL;
+				prnMsg(_('The SQL that failed was') . '<br>' . $SQL,'error');
 			}
 			$ProcessResult = DB_Txn_Rollback($db);
 			include('includes/footer.inc');
@@ -220,21 +226,8 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	}
 
-	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
-	header('Content-type: application/pdf');
-	header('Content-Length: ' . $len);
-	header('Content-Disposition: inline; filename=PaymentRun.pdf');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
-
-	$pdf->stream();
-
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
-
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_Payment_Run_' . Date('Y-m-d') . '.pdf');
+	$pdf->__destruct();
 
 } else { /*The option to print PDF was not hit */
 

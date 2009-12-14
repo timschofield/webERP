@@ -1,5 +1,9 @@
 <?php
-/* $Revision: 1.5 $ */
+
+/*$Id$*/
+
+/* $Revision: 1.6 $ */
+
 // ReorderLevel.php - Report of parts with quantity below reorder level
 // Shows if there are other locations that have quantities for the parts that are short
 $PageSecurity = 2;
@@ -7,13 +11,12 @@ include('includes/session.inc');
 If (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
-
-	$FontSize=9;
-	$pdf->addinfo('Title',_('Reorder Level Report'));
-	$pdf->addinfo('Subject',_('Parts below reorder level'));
-
+	$pdf->addInfo('Title',_('Reorder Level Report'));
+	$pdf->addInfo('Subject',_('Parts below reorder level'));
+    $FontSize=9;
 	$PageNumber=1;
 	$line_height=12;
+
 	$Xpos = $Left_Margin+1;
 	$wherecategory = " ";
 	$catdescription = " ";
@@ -67,10 +70,13 @@ If (isset($_POST['PrintPDF'])) {
 
     $FontSize=8;
 
-    
+    $ListCount = 0; // UldisN
+
 	While ($myrow = DB_fetch_array($result,$db)){
 			$YPos -=(2 * $line_height);
-			
+
+            $ListCount ++;
+
 			// Parameters for addTextWrap are defined in /includes/class.pdf.php
 			// 1) X position 2) Y position 3) Width
 			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
@@ -133,10 +139,10 @@ If (isset($_POST['PrintPDF'])) {
 	}
 /*Print out the grand totals */
 
-	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
+	//$pdfcode = $pdf->output();
+	//$len = strlen($pdfcode);
 
-	if ($len<=20){
+	if ($ListCount == 0){
 			$title = _('Print Reorder Level Report');
 			include('includes/header.inc');
 			prnMsg(_('There were no items with demand greater than supply'),'error');
@@ -144,14 +150,18 @@ If (isset($_POST['PrintPDF'])) {
 			include('includes/footer.inc');
 			exit;
 	} else {
+/*
 			header('Content-type: application/pdf');
 			header("Content-Length: " . $len);
 			header('Content-Disposition: inline; filename=ReorderLevel.pdf');
 			header('Expires: 0');
 			header('Cache-Control: private, post-check=0, pre-check=0');
 			header('Pragma: public');
-	
-			$pdf->Output('ReOrderLevel.pdf', 'I');
+
+    		$pdf->Output('ReOrderLevel.pdf', 'I');
+*/
+            $pdf->OutputI($_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf');//UldisN
+            $pdf->__destruct(); //UldisN
 	}
 	
 } else { /*The option to print PDF was not hit so display form */

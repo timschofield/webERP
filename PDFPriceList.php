@@ -1,21 +1,21 @@
 <?php
-/* $Revision: 1.14 $ */
+
+/* $Id$ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
 
-If (isset($_POST['PrintPDF'])
-	AND isset($_POST['FromCriteria'])
-	AND strlen($_POST['FromCriteria'])>=1
-	AND isset($_POST['ToCriteria'])
-		 AND strlen($_POST['ToCriteria'])>=1){
+if (isset($_POST['PrintPDF'])
+	and isset($_POST['FromCriteria'])
+	and strlen($_POST['FromCriteria'])>=1
+	and isset($_POST['ToCriteria'])
+		 and strlen($_POST['ToCriteria'])>=1){
 
 	include('includes/PDFStarter.php');
-
+	$pdf->addInfo('Title', _('Price Listing Report') );
+	$pdf->addInfo('Subject', _('Price List') );
 	$FontSize=10;
-	$pdf->addinfo('Title', _('Price Listing Report') );
-	$pdf->addinfo('Subject', _('Price List') );
-
 	$PageNumber=1;
 	$line_height=12;
 
@@ -97,6 +97,8 @@ If (isset($_POST['PrintPDF'])
 	}
 	$PricesResult = DB_query($SQL,$db,'','',false,false);
 
+	$ListSize = count ($PricesResult); //Javier
+
 	if (DB_error_no($db) !=0) {
 		$title = _('Price List') . ' - ' . _('Problem Report....');
 		include('includes/header.inc');
@@ -113,7 +115,7 @@ If (isset($_POST['PrintPDF'])
 	$CurrCode ='';
 	$Category = '';
 	$CatTot_Val=0;
-	While ($PriceList = DB_fetch_array($PricesResult,$db)){
+	while ($PriceList = DB_fetch_array($PricesResult,$db)){
 
 		if ($CurrCode != $PriceList['currabrev']){
 			$FontSize=10;
@@ -124,7 +126,7 @@ If (isset($_POST['PrintPDF'])
 			$YPos -= $line_height;
 		}
 
-		if ($Category!=$PriceList['categoryid']){
+		if ($Category!= $PriceList['categoryid']){
 			$FontSize=10;
 			$YPos -=(2*$line_height);
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300-$Left_Margin,$FontSize,$PriceList['categoryid'] . ' - ' . $PriceList['categorydescription']);
@@ -137,7 +139,8 @@ If (isset($_POST['PrintPDF'])
 		$YPos -=$line_height;
 
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$PriceList['stockid']);					$LeftOvers = $pdf->addTextWrap(120,$YPos,260,$FontSize,$PriceList['description']);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$PriceList['stockid']);
+		$LeftOvers = $pdf->addTextWrap(120,$YPos,260,$FontSize,$PriceList['description']);
 
 		if ($_POST['CustomerSpecials']=='Customer Special Prices Only'){
 			/*Need to show to which branch the price relates */
@@ -170,28 +173,37 @@ If (isset($_POST['PrintPDF'])
 
 	} /*end inventory valn while loop */
 
-	$FontSize =10;
 /*Print out the category totals */
 
-	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
-
-      if ($len<=20){
+// Javier: this was actually the Price List that was PDF-Created but it seems it was intended to be only the check that I named ListSize.
+/*	$FontSize =10;
+	$FileName= $_SESSION['DatabaseName'] . '_' .'PriceList_' . date('Y-m-d').'.pdf';
+//	$pdfcode = $pdf->output();
+	$pdfcode = $pdf->OutputD($Filename);
+	$len = strlen($pdfcode); */
+//	if ($len<=20){
+	if ($ListSize == 0) {
 		$title = _('Print Price List Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no price details to print out for the customer or category specified'),'warn');
 		echo '<br><a href="'.$rootpath.'/index.php?' . SID . '">'. _('Back to the menu').'</a>';
 		include('includes/footer.inc');
 		exit;
-      } else {
-		header('Content-type: application/pdf');
+	} else {
+
+// Javier: TCPDF sends its own http header, it's an error to send it twice.
+	/*	header('Content-type: application/pdf');
 		header('Content-Length: ' . $len);
 		header('Content-Disposition: inline; filename=PriceList.pdf');
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Pragma: public');
-		$FileName=$_SESSION['DatabaseName'].'_'.date('Y-m-d').'.pdf';
-		$pdf->Output($FileName,'I');
+		header('Pragma: public'); */
+//		$FontSize =10;
+		$FileName= $_SESSION['DatabaseName'] . '_' .'PriceList_' . date('Y-m-d').'.pdf';
+//		$pdf->Output($FileName,'I');
+// Javier: This is a recursive script, so it needs to be downloaded.
+		$pdf->OutputD($FileName);
+		$pdf-> __destruct();
 	}
 } else { /*The option to print PDF was not hit */
 
@@ -208,7 +220,7 @@ If (isset($_POST['PrintPDF'])
 
 		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
 		$CatResult= DB_query($sql,$db);
-		While ($myrow = DB_fetch_array($CatResult)){
+		while ($myrow = DB_fetch_array($CatResult)){
 			echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 		}
 		echo '</select></td></tr>';
@@ -218,7 +230,7 @@ If (isset($_POST['PrintPDF'])
 		/*Set the index for the categories result set back to 0 */
 		DB_data_seek($CatResult,0);
 
-		While ($myrow = DB_fetch_array($CatResult)){
+		while ($myrow = DB_fetch_array($CatResult)){
 			echo '<option VALUE="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 		}
 		echo '</select></td></tr>';
@@ -242,7 +254,8 @@ If (isset($_POST['PrintPDF'])
 		echo '<option selected Value="Sales Type Prices">'. _('Default Sales Type Prices');
 		echo '</select></td></tr>';
 
-		echo '</table><div class="centre"><input type=Submit Name="PrintPDF" Value="'. _('Print PDF'). '"></div>';
+		/*echo '</table><div class="centre"><input type=Submit Name="PrintPDF" Value="'. _('Print PDF'). '"></div>';*/
+		 echo '</table><div class="centre"><input type=Submit Name="PrintPDF" Value="'. _('Print PDF'). '"></div></form>';
 	}
 	include('includes/footer.inc');
 

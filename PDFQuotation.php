@@ -81,17 +81,14 @@ if (DB_num_rows($result)==0){
 LETS GO */
 $PaperSize = 'A4_Landscape';
 include('includes/PDFStarter.php');
-
+$pdf->addInfo('Title', _('Customer Quotation') );
+$pdf->addInfo('Subject', _('Quotation') . ' ' . $_GET['QuotationNo']);
 $FontSize=12;
-$pdf->selectFont('./fonts/Helvetica.afm');
-$pdf->addinfo('Title', _('Customer Quotation') );
-$pdf->addinfo('Subject', _('Quotation') . ' ' . $_GET['QuotationNo']);
-
+$PageNumber = 1;
 $line_height=24;
+$pdf->selectFont('./fonts/Helvetica.afm');
 
 /* Now ... Has the order got any line items still outstanding to be invoiced */
-
-$PageNumber = 1;
 
 $ErrMsg = _('There was a problem retrieving the quotation line details for quotation Number') . ' ' .
 	$_GET['QuotationNo'] . ' ' . _('from the database');
@@ -110,13 +107,17 @@ $sql = "SELECT salesorderdetails.stkcode,
 
 $result=DB_query($sql,$db, $ErrMsg);
 
+$ListCount = 0; // UldisN
+
 if (DB_num_rows($result)>0){
 	/*Yes there are line items to start the ball rolling with a page header */
 	include('includes/PDFQuotationPageHeader.inc');
-	
+
 	$QuotationTotal =0;
-	
+
 	while ($myrow2=DB_fetch_array($result)){
+
+        $ListCount ++;
 
 		if ((strlen($myrow2['narrative']) >200 AND $YPos-$line_height <= 75) 
 			OR (strlen($myrow2['narrative']) >1 AND $YPos-$line_height <= 62) 
@@ -223,9 +224,9 @@ if (DB_num_rows($result)>0){
 } /*end if there are line details to show on the quotation*/
 
 
-$pdfcode = $pdf->output('PDFQuotation.pdf', 'I');
-$len = strlen($pdfcode);
-if ($len<=20){
+//$pdfcode = $pdf->output('PDFQuotation.pdf', 'I');
+//$len = strlen($pdfcode);
+if ($ListCount == 0){
         $title = _('Print Quotation Error');
         include('includes/header.inc');
         echo '<p>'. _('There were no items on the quotation') . '. ' . _('The quotation cannot be printed').
@@ -234,6 +235,7 @@ if ($len<=20){
         include('includes/footer.inc');
 	exit;
 } else {
+/*
 	header('Content-type: application/pdf');
 	header('Content-Length: ' . $len);
 	header('Content-Disposition: inline; filename=Quotation.pdf');
@@ -242,5 +244,8 @@ if ($len<=20){
 	header('Pragma: public');
 //echo 'here';
 	$pdf->Output('PDFQuotation.pdf', 'I');
+*/
+    $pdf->OutputI($_SESSION['DatabaseName'] . '_Quotation_' . date('Y-m-d') . '.pdf');//UldisN
+    $pdf->__destruct(); //UldisN
 }
 ?>

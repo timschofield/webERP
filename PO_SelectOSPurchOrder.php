@@ -1,5 +1,7 @@
 <?php
 
+/*$Id$*/
+
 /* $Revision: 1.21 $ */
 
 $PageSecurity = 2;
@@ -9,7 +11,7 @@ include('includes/session.inc');
 $title = _('Search Outstanding Purchase Orders');
 
 include('includes/header.inc');
-
+include('includes/DefinePOClass.php');
 
 if (isset($_GET['SelectedStockItem'])){
 	$SelectedStockItem=trim($_GET['SelectedStockItem']);
@@ -406,7 +408,7 @@ $completed = " AND purchorderdetails.completed=0";
 
 	echo '<table cellpadding=2 colspan=7 WIDTH=100%>';
 
-//	               '</td><td class="tableheader">' . _('Receive') .	
+//	               '</td><td class="tableheader">' . _('Receive') .
 	$TableHeader = '<tr><th>' . _('Order #') .
 			'</th><th>' . _('Order Date') .
 			'</th><th>' . _('Initiated by') .
@@ -434,25 +436,31 @@ $completed = " AND purchorderdetails.completed=0";
 		}
 
 		$ModifyPage = $rootpath . "/PO_Header.php?" . SID . "&ModifyOrderNumber=" . $myrow["orderno"];
-		if ($myrow['status']==_('Printed')) {
+		if ($myrow['status'] == PurchOrder::STATUS_PRINTED) {
 			$ReceiveOrder = "<a href='".$rootpath . "/GoodsReceived.php?" . SID . "&PONumber=" . $myrow["orderno"]."'>".
 				_('Receive').'</a>';
 		} else {
-			$ReceiveOrder = "Receive";
+			$ReceiveOrder = _('Receive');
 		}
-		if ($myrow["allowprint"]==1){
+		if ($myrow["allowprint"] == 1){
 			$PrintPurchOrder = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '">' . _('Print Now') . '</a>';
 		} else {
 // not open yet
 //			$PrintPurchOrder = '<font color=GREY>' . _('Printed') . '</font>';
 
 		}
-		if ($myrow['status']==_('Authorised')) {
-			$PrintPurchOrder = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=2">' . _('Print') . '</a>';
+		if ($myrow['status'] == PurchOrder::STATUS_AUTHORISED) {
+			$PrintPurchOrder = '
+                <a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=2">
+                ' . _(PurchOrder::STATUS_PRINTED) . '
+                </a>';
 		} else {
-			$PrintPurchOrder = 'Print';
+			$PrintPurchOrder = _(PurchOrder::STATUS_PRINTED);
 		}
-		$PrintPurchOrder2 = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=1">' . _('Show') . '</a>';
+		$PrintPurchOrder2 = '
+            <a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=1">
+                ' . _('Show') . '
+            </a>';
 		$s2 = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=1">' . $myrow['realorderno']. '</a>';
 
 		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
@@ -465,7 +473,7 @@ $completed = " AND purchorderdetails.completed=0";
 //			$myrow['initiator']);
 //			'</td><td class="tableheader">' . _('Requisition') .
 //			'</td><td class="tableheader">' . _('Initiator') .	               		
-//		        <td><a href='%s'>" . _('Receive') . "</a></td>			
+//		        <td><a href='%s'>" . _('Receive') . "</a></td>
 		printf("<td>%s</font></td>
 			<td>%s</td>
 			<td>%s</td>
@@ -483,7 +491,7 @@ $completed = " AND purchorderdetails.completed=0";
 			$myrow['suppname'],
 			$myrow['currcode'],
 			$FormatedOrderValue,			
-			$myrow['status'],
+			_($myrow['status']),
 			$ModifyPage,
 			$PrintPurchOrder,
 			$ReceiveOrder

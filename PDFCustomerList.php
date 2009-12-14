@@ -1,12 +1,19 @@
 <?php
 /* $Revision: 1.13 $ */
 
+/* $Id$ */
+
 $PageSecurity = 2;
 include('includes/session.inc');
 
 if (isset($_POST['PrintPDF'])){
 
 	include('includes/PDFStarter.php');
+	$pdf->addInfo('Title', _('Customer Listing') );
+	$pdf->addInfo('Subject', _('Customer Listing') );
+	$line_height=12;
+	$PageNumber = 0;
+	$FontSize=10;
 
 	if ($_POST['Activity']!='All'){
 		if (!is_numeric($_POST['ActivityAmount'])){
@@ -18,14 +25,6 @@ if (isset($_POST['PrintPDF'])){
 			exit;
 		}
 	}
-
-	$PageNumber = 0;
-
-	$FontSize=10;
-	$pdf->addinfo('Title', _('Customer Listing') );
-	$pdf->addinfo('Subject', _('Customer Listing') );
-
-	$line_height=12;
 
 	/* Now figure out the customer data to report for the selections made */
 
@@ -241,6 +240,16 @@ if (isset($_POST['PrintPDF'])){
 	   exit;
 	}
 
+	if (DB_num_rows($CustomersResult) == 0) {
+	  $title = _('Customer List') . ' - ' . _('Problem Report') . '....';
+	  include('includes/header.inc');
+	  prnMsg( _('This report has no output because there were no customers retrieved'), 'error' );
+	  echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
+	  include('includes/footer.inc');
+	  exit;
+	}
+
+
 	include('includes/PDFCustomerListPageHeader.inc');
 
 	$Area ='';
@@ -288,10 +297,10 @@ if (isset($_POST['PrintPDF'])){
 				if ($YPos < ($Bottom_Margin + 80)){
 					include('includes/PDFCustomerListPageHeader.inc');
 				}
-				$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+				$pdf->setFont('','B');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Customers in') . ' ' . $Customers['areadescription']);
 				$Area = $Customers['area'];
-				$pdf->selectFont('./fonts/Helvetica.afm');
+				$pdf->setFont('','');
 				$FontSize=8;
 				$YPos -=$line_height;
 			}
@@ -302,16 +311,15 @@ if (isset($_POST['PrintPDF'])){
 				if ($YPos < ($Bottom_Margin + 80)){
 					include('includes/PDFCustomerListPageHeader.inc');
 				}
-				$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+				$pdf->setFont('','B');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300-$Left_Margin,$FontSize,$Customers['salesmanname']);
-				$pdf->selectFont('./fonts/Helvetica.afm');
+				$pdf->setFont('','');
 				$SalesPerson = $Customers['salesman'];
 				$FontSize=8;
 				$YPos -=$line_height;
 			}
 
 			$YPos -=$line_height;
-
 
 			$LeftOvers = $pdf->addTextWrap(20,$YPos,60,$FontSize,$Customers['debtorno']);
 			$LeftOvers = $pdf->addTextWrap(80,$YPos,150,$FontSize,$Customers['name']);
@@ -351,29 +359,8 @@ if (isset($_POST['PrintPDF'])){
 		} /*end if $PrintThisCustomer == true */
 	} /*end while loop */
 
-
-	$pdfcode = $pdf->output('PDFCustomerList.pdf', 'I');
-	$len = strlen($pdfcode);
-
-      if ($len<=20){
-		$title = _('Print Customer List Error');
-		include('includes/header.inc');
-		echo '<p>';
-		prnMsg( _('There were no customers to print out for the selections specified') );
-		echo '<br><a href="'. $rootpath.' /index.php?' . SID . '">'. _('Back to the menu'). '</a>';
-		include('includes/footer.inc');
-		exit;
-	} else {
-		header('Content-type: application/pdf');
-		header('Content-Length: ' . $len);
-		header('Content-Disposition: inline; filename=CustomerList.pdf');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Pragma: public');
-
-		$pdf->Output('PDFCustomerList.pdf', 'I');
-
-	}
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_CustomerList_' . date('Y-m-d').'.pdf');//UldisN
+    $pdf->__destruct(); //UldisN
 	exit;
 
 } else {

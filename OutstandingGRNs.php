@@ -1,5 +1,9 @@
 <?php
+
+/*$Id$*/
+
 /* $Revision: 1.11 $ */
+
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -10,12 +14,9 @@ If (isset($_POST['PrintPDF'])
 	AND strlen($_POST['ToCriteria'])>=1){
 
 	include('includes/PDFStarter.php');
-
-
-	$FontSize=10;
-	$pdf->addinfo('Title',_('Outstanding GRNs Report'));
-	$pdf->addinfo('Subject',_('Outstanding GRNs Valuation'));
-
+	$pdf->addInfo('Title',_('Outstanding GRNs Report'));
+	$pdf->addInfo('Subject',_('Outstanding GRNs Valuation'));
+    $FontSize=10;
 	$PageNumber=1;
 	$line_height=12;
 	$Left_Margin=30;
@@ -50,6 +51,18 @@ If (isset($_POST['PrintPDF'])
 	  $title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	  prnMsg(_('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
+	   echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+	   if ($debug==1){
+	      echo "<br>$SQL";
+	   }
+	   include('includes/footer.inc');
+	   exit;
+	}
+
+	if (DB_num_rows($GRNsResult) == 0) {
+	  $title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
+	  include('includes/header.inc');
+	  prnMsg(_('No outstanding GRNs valuation details retrieved'), 'warn');
 	   echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 	      echo "<br>$SQL";
@@ -129,7 +142,7 @@ If (isset($_POST['PrintPDF'])
 	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 	$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
 	$YPos -=(2*$line_height);
-
+/* UldisN
 	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);
 
@@ -149,7 +162,10 @@ If (isset($_POST['PrintPDF'])
 		header('Pragma: public');
 
 		$pdf->Output('OutstandingGRNs.pdf','I');
-	}
+    }
+*/
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_OSGRNsValuation_' . date('Y-m-d').'.pdf');//UldisN
+    $pdf->__destruct(); //UldisN
 } else { /*The option to print PDF was not hit */
 
 	$title=_('Outstanding GRNs Report');

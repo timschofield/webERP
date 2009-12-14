@@ -1,6 +1,7 @@
 <?php
 
 /* $Revision: 1.21 $ */
+/* $Id$ */
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
@@ -94,10 +95,11 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 } else if (isset($_POST['PrintPDF'])) {
 	
 	include('includes/PDFStarter.php');
+	
+	$pdf->addInfo('Title', _('Trial Balance') );
+	$pdf->addInfo('Subject', _('Trial Balance') );
 	$PageNumber = 0;
 	$FontSize = 10;
-	$pdf->addinfo('Title', _('Trial Balance') );
-	$pdf->addinfo('Subject', _('Trial Balance') );
 	$line_height = 12;
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
@@ -145,6 +147,15 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		include('includes/footer.inc');
 		exit;
 	}
+	if (DB_num_rows($AccountsResult)==0){
+		$title = _('Print Trial Balance Error');
+		include('includes/header.inc');
+		echo '<p>';
+		prnMsg( _('There were no entries to print out for the selections specified') );
+		echo '<br><a href="'. $rootpath.'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
+		include('includes/footer.inc');
+		exit;
+	}
 	
 	include('includes/PDFTrialBalancePageHeader.inc');
 	
@@ -174,7 +185,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 				}elseif ($myrow['parentgroupname']==$ParentGroups[$Level]){
 					$YPos -= (.5 * $line_height);
 					$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
-					$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+					$pdf->setFont('','B');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],2),'right');
@@ -183,7 +194,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],2),'right');
 					$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
 					$YPos -= (2 * $line_height);
-					$pdf->selectFont('./fonts/Helvetica.afm');
+					$pdf->setFont('','');
 					$ParentGroups[$Level]=$myrow['groupname'];
 					$GrpActual[$Level] =0;
 					$GrpBudget[$Level] =0;
@@ -191,10 +202,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 					$GrpPrdBduget[$Level] =0;
 					
 				} else {
-					do{
+					do {
 						$YPos -= $line_height;
 						$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
-						$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+						$pdf->setFont('','B');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],2),'right');
@@ -203,19 +214,19 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],2),'right');
 						$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
 						$YPos -= (2 * $line_height);
-						$pdf->selectFont('./fonts/Helvetica.afm');
+						$pdf->setFont('','');
 						$ParentGroups[$Level]='';
 						$GrpActual[$Level] =0;
 						$GrpBudget[$Level] =0;
 						$GrpPrdActual[$Level] =0;
 						$GrpPrdBduget[$Level] =0;
 						$Level--;
-					}while ($myrow['parentgroupname']!=$ParentGroups[$Level] AND $Level>0);
+					} while ($myrow['parentgroupname']!=$ParentGroups[$Level] AND $Level>0);
 
 					if ($Level>0){
 						$YPos -= $line_height;
 						$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
-						$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+						$pdf->setFont('','B');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+60, $YPos, 190, $FontSize, $ParentGroups[$Level]);
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],2),'right');
@@ -224,7 +235,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],2),'right');
 						$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
 						$YPos -= (2 * $line_height);
-						$pdf->selectFont('./fonts/Helvetica.afm');
+						$pdf->setFont('','');
 						$GrpActual[$Level] =0;
 						$GrpBudget[$Level] =0;
 						$GrpPrdActual[$Level] =0;
@@ -236,13 +247,13 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 			}
 			$YPos -= (2 * $line_height);
 				// Print account group name
-			$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+			$pdf->setFont('','B');
 			$ActGrp = $myrow['groupname'];
 			$ParentGroups[$Level]=$myrow['groupname'];
 			$FontSize = 10;
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$myrow['groupname']);
 			$FontSize = 8;
-			$pdf->selectFont('./fonts/Helvetica.afm');
+			$pdf->setFont('','');
 			$YPos -= (2 * $line_height);
 		}
 
@@ -299,7 +310,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						
 		$YPos -= (.5 * $line_height);
 		$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
-		$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+		$pdf->setFont('','B');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],2),'right');
@@ -325,29 +336,17 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($CheckPeriodActual,2),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($CheckPeriodBudget,2),'right');
 	$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  
-	
-	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
-	
-	if ($len<=20){
-		$title = _('Print Trial Balance Error');
-		include('includes/header.inc');
-		echo '<p>';
-		prnMsg( _('There were no entries to print out for the selections specified') );
-		echo '<br><a href="'. $rootpath.'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
-		include('includes/footer.inc');
-		exit;
-	} else {
+			
+	/*
 		header('Content-type: application/pdf');
 		header('Content-Length: ' . $len);
 		header('Content-Disposition: inline; filename=CustomerList.pdf');
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
-
-		$pdf->Output('GLTrialBalance.pdf','I');
-
-	}
+*/
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_GL_Trial_Balance_' . Date('Y-m-d') . '.pdf');
+	$pdf->__destruct();
 	exit;
 } else {
 

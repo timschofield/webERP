@@ -1,6 +1,8 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Id: PrintCustOrder.php 3152 2009-12-11 14:28:49Z tim_schofield $ */
+
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 2;
 
@@ -60,6 +62,9 @@ $result=DB_query($sql,$db, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
+
+/* Javier */	$ListCount = 0;
+
 	$title = _('Print Packing Slip Error');
         include('includes/header.inc');
         echo '<div class=centre><br><br><br>';
@@ -71,6 +76,8 @@ if (DB_num_rows($result)==0){
         include('includes/footer.inc');
         exit();
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
+
+/* Javier */	$ListCount = 1;
 
 	$myrow = DB_fetch_array($result);
 	if ($myrow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
@@ -120,23 +127,37 @@ if (DB_num_rows($result)>0){
 	packing slip 2 part stationery is recommended so storeman can note differences on and
 	a copy retained */
 
-	$Page_Width=807;
+//Javier
+//	$Page_Width=807;
+	$Page_Width=792;
 	$Page_Height=612;
 	$Top_Margin=34;
 	$Bottom_Margin=20;
 	$Left_Margin=15;
 	$Right_Margin=10;
 
+// Javier: now I use the native constructor
+// Javier: better to not use references
+//	$PageSize = array(0,0,$Page_Width,$Page_Height);
+//	$pdf = & new Cpdf($PageSize);
+	$pdf = new Cpdf('L', 'pt', 'LETTER');
 
-	$PageSize = array(0,0,$Page_Width,$Page_Height);
-	$pdf = & new Cpdf($PageSize);
+	$pdf->addInfo('Creator', 'webERP http://www.weberp.org');
+	$pdf->addInfo('Author', 'webERP ' . $Version);
+	$pdf->addInfo('Title', _('Customer Packing Slip') );
+	$pdf->addInfo('Subject', _('Packing slip for order') . ' ' . $_GET['TransNo']);
+
+/* Javier: I have brought this piece from the pdf class constructor to get it closer to the admin/user,
+	I corrected it to match TCPDF, but it still needs check, after which,
+	I think it should be moved to each report to provide flexible Document Header and Margins in a per-report basis. */
+	$pdf->setAutoPageBreak(0);	// Javier: needs check.
+	$pdf->setPrintHeader(false);	// Javier: I added this must be called before Add Page
+	$pdf->AddPage();
+//	$this->SetLineWidth(1); 	   Javier: It was ok for FPDF but now is too gross with TCPDF. TCPDF defaults to 0'57 pt (0'2 mm) which is ok.
+	$pdf->cMargin = 0;		// Javier: needs check.
+/* END Brought from class.pdf.php constructor */
+
 	$FontSize=12;
-	$pdf->selectFont('./fonts/Helvetica.afm');
-	$pdf->addinfo('Author','webERP ' . $Version);
-	$pdf->addinfo('Creator','webERP http://www.weberp.org - R&OS PHP-PDF http://www.ros.co.nz');
-	$pdf->addinfo('Title', _('Customer Packing Slip') );
-	$pdf->addinfo('Subject', _('Packing slip for order') . ' ' . $_GET['TransNo']);
-
 	$line_height=16;
 
 	include('includes/PDFOrderPageHeader.inc');
@@ -166,12 +187,12 @@ if (DB_num_rows($result)>0){
 
       } //end while there are line items to print out
 
-} /*end if there are order details to show on the order*/
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_Customer_Order_' . $_GET['TransNo'] . '_' . Date('Y-m-d') .'.pdf');
+	$pdf-> __destruct();
 
-$pdfcode = $pdf->output();
-$len = strlen($pdfcode);
-
-if ($len<=20){
+	$sql = "UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted='" . Date('Y-m-d') . "' WHERE salesorders.orderno=" .$_GET['TransNo'];
+	$result = DB_query($sql,$db);
+} else {
 	$title = _('Print Packing Slip Error');
 	include('includes/header.inc');
 	echo '<p>'. _('There were no outstanding items on the order to deliver. A dispatch note cannot be printed').
@@ -179,18 +200,5 @@ if ($len<=20){
 		'</a>' . '<br>'. '<a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
 	include('includes/footer.inc');
 	exit;
-} else {
-	header('Content-type: application/pdf');
-	header('Content-Length: ' . $len);
-	header('Content-Disposition: inline; filename=PackingSlip.pdf');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
-
-	$pdf->Output('PrintCustOrder.pdf', 'I');
-
-	$sql = "UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted='" . Date('Y-m-d') . "' WHERE salesorders.orderno=" .$_GET['TransNo'];
-	$result = DB_query($sql,$db);
-}
-
+} /*end if there are order details to show on the order*/
 ?>

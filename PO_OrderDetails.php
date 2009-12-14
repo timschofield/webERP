@@ -112,7 +112,7 @@ if ($myrow['dateprinted'] == ''){
 }
 
 echo  '</td></tr>';
-echo '<tr><th style="text-align:left">'. _('Status') . '</td><td>'. $myrow['status'] . '</td></tr>';
+echo '<tr><th style="text-align:left">'. _('Status') . '</td><td>'. _($myrow['status']) . '</td></tr>';
 
 echo '<tr><th style="text-align:left">' . _('Comments'). '</td><td bgcolor=white colspan=3>' . $myrow['comments'] . '</td></tr>';
 

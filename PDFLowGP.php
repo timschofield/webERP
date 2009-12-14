@@ -1,6 +1,8 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/*$Id$*/
+
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -12,7 +14,11 @@ if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=='') {
 if (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
-
+	$pdf->addInfo('Title', _('Low Gross Profit Sales'));
+	$pdf->addInfo('Subject', _('Low Gross Profit Sales'));
+	$FontSize=10;
+	$PageNumber=1;
+	$line_height=12;
 
 	$title = _('Low GP sales') . ' - ' . _('Problem Report');
 
@@ -23,12 +29,7 @@ if (isset($_POST['PrintPDF'])) {
 		exit;
 	}
 
-	$FontSize=10;
-	$pdf->addinfo('Title',_('Low Gross Profit Sales'));
-	$pdf->addinfo('Subject',_('Low Gross Profit Sales'));
 
-	$PageNumber=1;
-	$line_height=12;
 
       /*Now figure out the data to report for the category range under review */
 	$SQL = "SELECT stockmaster.categoryid,
@@ -59,6 +60,18 @@ if (isset($_POST['PrintPDF'])) {
 	  include('includes/header.inc');
 	   prnMsg(_('The low GP items could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
 	   echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+	   if ($debug==1){
+	      echo "<br>$SQL";
+	   }
+	   include('includes/footer.inc');
+	   exit;
+	}
+
+	if (DB_num_rows($LowGPSalesResult) == 0) {
+
+	   include('includes/header.inc');
+	   prnMsg(_('No low GP items retrieved'), 'warn');
+	   echo "<br><a href='"  . $rootpath . "/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 	      echo "<br>$SQL";
 	   }
@@ -99,7 +112,7 @@ if (isset($_POST['PrintPDF'])) {
 	$FontSize =10;
 
 	$YPos -= (2*$line_height);
-
+/*&nbsp;UldisN
 	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);
 
@@ -119,8 +132,11 @@ if (isset($_POST['PrintPDF'])) {
 		header('Pragma: public');
 
 		$pdf->Output('PDFLowGP.pdf', 'I');
-
 	}
+*/
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_LowGPSales_' . date('Y-m-d') . '.pdf');//UldisN
+    $pdf->__destruct(); //UldisN
+
 } else { /*The option to print PDF was not hit */
 
 	include('includes/header.inc');

@@ -1,5 +1,9 @@
 <?php
-/* $Revision: 1.4 $ */
+
+/* $Id: */
+
+/* $Revision: 1.5 $ */
+
 // BOMIndented.php - Indented Bill of Materials
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -7,11 +11,9 @@ include('includes/session.inc');
 If (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
-
-	$FontSize=9;
-	$pdf->addinfo('Title',_('Indented BOM Listing'));
-	$pdf->addinfo('Subject',_('Indented BOM Listing'));
-
+	$pdf->addInfo('Title',_('Indented BOM Listing'));
+	$pdf->addInfo('Subject',_('Indented BOM Listing'));
+    	$FontSize=9;
 	$PageNumber=1;
 	$line_height=12;
 
@@ -22,13 +24,13 @@ If (isset($_POST['PrintPDF'])) {
 	$sql = 'DROP TABLE IF EXISTS passbom2';
 	$result = DB_query($sql,$db);
 	$sql = 'CREATE TEMPORARY TABLE passbom (
-				part char(20),                                
+				part char(20),
 				sortpart text)';
 	$ErrMsg = _('The SQL to create passbom failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
 	$sql = 'CREATE TEMPORARY TABLE tempbom (
-				parent char(20),                                
+				parent char(20),
 				component char(20),
 				sortpart text,
 				level int,
@@ -176,11 +178,13 @@ If (isset($_POST['PrintPDF'])) {
               WHERE tempbom.component = stockmaster.stockid
               ORDER BY sortpart';
 	$result = DB_query($sql,$db);
-	
+
 	// $fill is used to alternate between lines with transparent and painted background
 	$fill = false;
     $pdf->SetFillColor(224,235,255);
-    
+
+    $ListCount = DB_num_rows($result); // UldisN
+
 	While ($myrow = DB_fetch_array($result,$db)){
 
 		$YPos -=$line_height;
@@ -221,11 +225,13 @@ If (isset($_POST['PrintPDF'])) {
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 	                   $Right_Margin,$assemblydesc);
 	}
-
+    /* UldisN
 	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);
 
 	if ($len<=20){
+    */
+    if ($ListCount == 0) {
 			$title = _('Print Indented BOM Listing Error');
 			include('includes/header.inc');
 			prnMsg(_('There were no items for the selected assembly'),'error');
@@ -233,16 +239,21 @@ If (isset($_POST['PrintPDF'])) {
 			include('includes/footer.inc');
 			exit;
 	} else {
+	        /* UldisN
 			header('Content-type: application/pdf');
 			header("Content-Length: " . $len);
 			header('Content-Disposition: inline; filename=Customer_trans.pdf');
 			header('Expires: 0');
 			header('Cache-Control: private, post-check=0, pre-check=0');
 			header('Pragma: public');
-	
+
 			$pdf->Output('BOMIndented.pdf', 'I');
+            */
+            $pdf->OutputD($_SESSION['DatabaseName'] . '_Customer_trans_' . date('Y-m-d').'.pdf');//UldisN
+          	$pdf-> __destruct();
+
 	}
-	
+
 } else { /*The option to print PDF was not hit so display form */
 
 	$title=_('Indented BOM Listing');

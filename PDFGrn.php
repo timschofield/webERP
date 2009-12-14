@@ -1,4 +1,7 @@
 <?php
+
+/*$Id$*/
+
 /* $Revision: 1.5 $ */
 
 $PageSecurity = 2;
@@ -6,10 +9,8 @@ include('includes/session.inc');
 
 
 include('includes/PDFStarter.php');
-
+$pdf->addInfo('Title', _('Goods Received Note') );
 $FontSize=10;
-$pdf->addinfo('Title', _('Goods Received Note') );
-
 $PageNumber=1;
 $line_height=12;
 
@@ -22,6 +23,9 @@ $FontSize =10;
 $sql='SELECT itemcode, grnno, deliverydate, itemdescription, qtyrecd, supplierid from grns where grnbatch='.
 	$_GET['GRNNo'];
 $result=DB_query($sql, $db);
+
+$ListCount = DB_num_rows($result); // UldisN
+
 $counter=1;
 while ($myrow=DB_fetch_array($result)) {
 	$StockID=$myrow[0];
@@ -48,10 +52,11 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-(10*$counter+80),300-$Left_Mar
 
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-(10*$counter+130),300-$Left_Margin,$FontSize, _('Signed for ').'______________________');
 
-$pdfcode = $pdf->output();
-$len = strlen($pdfcode);
+//$pdfcode = $pdf->output();
+//$len = strlen($pdfcode);
 
-if ($len<=20){
+//if ($len<=20){
+if ($ListCount == 0) {   //UldisN
 	$title = _('Print Price List Error');
 	include('includes/header.inc');
 	prnMsg(_('There were no stock transfer details to print'),'warn');
@@ -59,6 +64,7 @@ if ($len<=20){
 	include('includes/footer.inc');
 	exit;
 } else {
+/* UldisN
 	header('Content-type: application/pdf');
 	header('Content-Length: ' . $len);
 	header('Content-Disposition: inline; filename=GRN.pdf');
@@ -67,6 +73,9 @@ if ($len<=20){
 	header('Pragma: public');
 
 	$pdf->Output('GRN.pdf', 'I');
+*/
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_GRN_' . date('Y-m-d').'.pdf');//UldisN
+    $pdf->__destruct(); //UldisN
 }
 
 

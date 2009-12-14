@@ -1,5 +1,6 @@
 <?php
 /* $Revision: 1.6 $ */
+/* $Id$ */
 // MRPPlannedWorkOrders.php - Report of manufactured parts that MRP has determined should have
 // work orders created for them
 $PageSecurity = 2;
@@ -8,10 +9,10 @@ If (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
 
+	$pdf->addInfo('Title',_('MRP Planned Work Orders Report'));
+	$pdf->addInfo('Subject',_('MRP Planned Work Orders'));
+	
 	$FontSize=9;
-	$pdf->addinfo('Title',_('MRP Planned Work Orders Report'));
-	$pdf->addinfo('Subject',_('MRP Planned Work Orders'));
-
 	$PageNumber=1;
 	$line_height=12;
 	$Xpos = $Left_Margin+1;
@@ -109,8 +110,15 @@ If (isset($_POST['PrintPDF'])) {
 	   include('includes/footer.inc');
 	   exit;
 	}
+	if (DB_num_rows($result)==0){ //then there's nothing to print
+		$title = _('Print MRP Planned Work Orders');
+		include('includes/header.inc');
+		prnMsg(_('There were no items with demand greater than supply'),'info');
+		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		include('includes/footer.inc');
+		exit;
+	}
 
-	//include ('includes/MRPPlannedWorkOrdersPageHeader.inc');
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 	            $Page_Width,$Right_Margin,$_POST['Consolidation'],$reportdate);
 
@@ -211,26 +219,8 @@ If (isset($_POST['PrintPDF'])) {
 	$DisplayTotalVal = number_format($Total_Extcost,2);
     $pdf->addTextWrap(310,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 
-	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
-
-	if ($len<=20){
-			$title = _('Print MRP Planned Work Orders');
-			include('includes/header.inc');
-			prnMsg(_('There were no items with demand greater than supply'),'error');
-			echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
-			include('includes/footer.inc');
-			exit;
-	} else {
-			header('Content-type: application/pdf');
-			header("Content-Length: " . $len);
-			header('Content-Disposition: inline; filename=MRPPlannedWorkOrders.pdf');
-			header('Expires: 0');
-			header('Cache-Control: private, post-check=0, pre-check=0');
-			header('Pragma: public');
-	
-			$pdf->Output('MRPPlannedWorkOrders.pdf', 'I');
-	}
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_MRP_Planned_Work_Orders_' . Date('Y-m-d') . '.pdf');
+	$pdf->__destruct();
 	
 } else { /*The option to print PDF was not hit so display form */
 

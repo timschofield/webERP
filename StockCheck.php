@@ -1,8 +1,8 @@
 <?php
 /* $Revision: 1.13 $ */
+/* $Id$ */
 $PageSecurity = 2;
 include('includes/session.inc');
-
 
 If (isset($_POST['PrintPDF'])
 		AND isset($_POST['FromCriteria'])
@@ -11,7 +11,11 @@ If (isset($_POST['PrintPDF'])
 		AND strlen($_POST['ToCriteria'])>=1){
 
 	include('includes/PDFStarter.php');
-
+	$pdf->addInfo('Title',_('Stock Count Sheets'));
+	$pdf->addInfo('Subject',_('Stock Count Sheets'));
+	$FontSize=10;
+	$PageNumber=1;
+	$line_height=30;
 
 /*First off do the stock check file stuff */
 	if ($_POST['MakeStkChkData']=='New'){
@@ -35,7 +39,7 @@ If (isset($_POST['PrintPDF'])
 
 		$result = DB_query($sql, $db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-			$title = _('Stock Freeze') . ' - ' . _('Problem Report') . '.... ';
+			$title = _('Stock Count Sheets - Problem Report');
 			include('includes/header.inc');
 			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg($db),'error');
 			echo '<br><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
@@ -55,7 +59,7 @@ If (isset($_POST['PrintPDF'])
                                     stockcheckfreeze.loccode='" . $_POST['Location'] . "'";
 
 		$result = DB_query($sql,$db,'','',false,false);
-if (DB_error_no($db) !=0) {
+		if (DB_error_no($db) !=0) {
 			$title = _('Stock Freeze') . ' - ' . _('Problem Report') . '.... ';
 			include('includes/header.inc');
 			prnMsg(_('The old quantities could not be deleted from the freeze file because') . ' ' . DB_error_msg($db),'error');
@@ -85,7 +89,7 @@ if (DB_error_no($db) !=0) {
 
 		$result = DB_query($sql, $db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-			$title = _('Stock Freeze') . ' - ' . _('Problem Report') . '.... ';
+			$title = _('Stock Freeze - Problem Report');
 			include('includes/header.inc');
 			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg($db),'error');
 			echo '<br><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
@@ -104,13 +108,6 @@ if (DB_error_no($db) !=0) {
 		}
 	}
 
-
-	$FontSize=10;
-	$pdf->addinfo('Title',_('Stock Check Sheets Report'));
-	$pdf->addinfo('Subject',_('Stock Sheets'));
-
-	$PageNumber=1;
-	$line_height=30;
 
       $SQL = "SELECT stockmaster.categoryid,
                      stockcheckfreeze.stockid,
@@ -143,6 +140,14 @@ if (DB_error_no($db) !=0) {
 	      	echo '<br>' . $SQL;
 		}
 		include ('includes/footer.inc');
+		exit;
+	}
+	if (DB_num_rows($InventoryResult) ==0) {
+		$title = _('Stock Count Sheets - Problem Report');
+		include('includes/header.inc');
+		prnMsg(_('Before stock count sheets can be printed, a copy of the stock quantities needs to be taken - the stock check freeze. Make a stock check data file first'),'error');
+		echo '<br><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
+		include('includes/footer.inc');
 		exit;
 	}
 
@@ -179,7 +184,7 @@ if (DB_error_no($db) !=0) {
 			$DemandResult = DB_query($SQL,$db,'','',false, false);
 
 			if (DB_error_no($db) !=0) {
-	 			 $title = _('Stock Check Sheets') . ' - ' . _('Problem Report') . '.... ';
+	 			$title = _('Stock Check Sheets - Problem Report');
 		  		include('includes/header.inc');
 		   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg($db), 'error');
 	   			echo '<br><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
@@ -242,29 +247,7 @@ if (DB_error_no($db) !=0) {
 
 	} /*end STOCK SHEETS while loop */
 
-	$YPos -= (2*$line_height);
-
- 	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
-
-      if ($len<=20){
-		$title = _('Print Price List Error');
-		include('includes/header.inc');
-		echo '<p>' . _('There were no stock check sheets to print out for the categories specified');
-		echo '<br><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
-		exit;
-      } else {
-		header('Content-type: application/pdf');
-		header('Content-Length: ' . $len);
-		header('Content-Disposition: inline; filename=StockCheckSheets.pdf');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Pragma: public');
-
-		$pdf->Output('StockCheck.pdf', 'I');
-
-	}
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_Stock_Count_Sheets_' . Date('Y-m-d') .'.pdf');
 
 } else { /*The option to print PDF was not hit */
 
@@ -275,7 +258,7 @@ if (DB_error_no($db) !=0) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action=' . $_SERVER['PHP_SELF'] . ' method="POST"><table>';
+		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="POST"><table>';
 
 		echo '<tr><td>' . _('From Inventory Category Code') . ':</font></td><td><select name="FromCriteria">';
 
@@ -330,17 +313,17 @@ if (DB_error_no($db) !=0) {
 		echo '<tr><td>' . _('Show system quantity on sheets') . ':</td><td>';
 		
 		if ($_POST['ShowInfo'] == false){
-		        echo "<input type=CHECKBOX name='ShowInfo' VALUE=FALSE>";
+		        echo '<input type=CHECKBOX name="ShowInfo" VALUE=FALSE>';
 		} else {
-	        	echo "<input type=CHECKBOX name='ShowInfo' VALUE=TRUE>";
+	        	echo '<input type=CHECKBOX name="ShowInfo" VALUE=TRUE>';
 		}
-		echo "</td></tr>";
+		echo '</td></tr>';
 																		
 		echo '<tr><td>' . _('Only print items with non zero quantities') . ':</td><td>';
 		if ($_POST['NonZerosOnly'] == false){
-		        echo "<input type=CHECKBOX name='NonZerosOnly' VALUE=FALSE>";
+		        echo '<input type=CHECKBOX name="NonZerosOnly" VALUE=FALSE>';
 		} else {
-		        echo "<input type=CHECKBOX name='NonZerosOnly' VALUE=TRUE>";
+		        echo '<input type=CHECKBOX name="NonZerosOnly" VALUE=TRUE>';
 		}
               
 	       	echo '</td></tr></table><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print and Process') . '"></div></form>';

@@ -1,25 +1,24 @@
 <?php
 
+ /* $Id: AgedDebtors.php 3152 2009-12-11 14:28:49Z tim_schofield $ */
+
+/* $Revision: 1.20 $ */
+
 $PageSecurity = 2;
 include('includes/session.inc');
-/* $Revision: 1.19 $ */
 
-
-If (isset($_POST['PrintPDF'])
-	AND isset($_POST['FromCriteria'])
-	AND strlen($_POST['FromCriteria'])>=1
-	AND isset($_POST['ToCriteria'])
-	AND strlen($_POST['ToCriteria'])>=1){
-
+if (isset($_POST['PrintPDF'])
+	and isset($_POST['FromCriteria'])
+	and strlen($_POST['FromCriteria'])>=1
+	and isset($_POST['ToCriteria'])
+	and strlen($_POST['ToCriteria'])>=1) {
 
 	include('includes/PDFStarter.php');
-
-	$FontSize=12;
-	$pdf->addinfo('Title',_('Aged Customer Balance Listing'));
-	$pdf->addinfo('Subject',_('Aged Customer Balances'));
-
-	$PageNumber=0;
-	$line_height=12;
+	$pdf->addInfo('Title',_('Aged Customer Balance Listing'));
+	$pdf->addInfo('Subject',_('Aged Customer Balances'));
+	$FontSize = 12;
+	$PageNumber = 0;
+	$line_height = 12;
 
       /*Now figure out the aged analysis for the customer range under review */
 	if (trim($_POST['Salesman'])!=''){
@@ -262,6 +261,8 @@ If (isset($_POST['PrintPDF'])
 	}
 	$CustomerResult = DB_query($SQL,$db,'','',False,False); /*dont trap errors handled below*/
 
+	//$ListCount = count ($CustomerResult); // Javier
+
 	if (DB_error_no($db) !=0) {
 		$title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '.... ';
 		include('includes/header.inc');
@@ -282,7 +283,9 @@ If (isset($_POST['PrintPDF'])
 	$TotOD1=0;
 	$TotOD2=0;
 
-	While ($AgedAnalysis = DB_fetch_array($CustomerResult,$db)){
+ 	$ListCount = DB_num_rows($CustomerResult); //UldisN
+
+	while ($AgedAnalysis = DB_fetch_array($CustomerResult,$db)){
 
 		$DisplayDue = number_format($AgedAnalysis['due']-$AgedAnalysis['overdue1'],2);
 		$DisplayCurrent = number_format($AgedAnalysis['balance']-$AgedAnalysis['due'],2);
@@ -423,10 +426,13 @@ If (isset($_POST['PrintPDF'])
 	$LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,$DisplayTotOverdue1,'right');
 	$LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,$DisplayTotOverdue2,'right');
 
+/* Javier: This actually would produce the output
 	$buf = $pdf->output();
-	$len = strlen($buf);
+	$len = strlen($buf); 
+*/
 
-	if ($len < 1000) {
+//	if ($len < 1000) {
+	if ($ListCount == 0) {
 		$title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg(_('There are no customers meeting the criteria specified to list'),'info');
@@ -438,14 +444,20 @@ If (isset($_POST['PrintPDF'])
 		exit;
 	}
 
+/* Javier: TCPDF sends its own http header, would be an error to send it twice.
 	header('Content-type: application/pdf');
 	header("Content-Length: $len");
 	header('Content-Disposition: inline; filename=AgedDebtors.pdf');
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
+	$pdf->stream(); */
 
-	$pdf->stream();
+// This else was missed
+    else {
+	    $pdf->OutputD($_SESSION['DatabaseName'] . '_' . 'AgedDebtors_' . date('Y-m-d') . '.pdf');
+	    $pdf-> __destruct();
+	}
 
 } else { /*The option to print PDF was not hit */
 

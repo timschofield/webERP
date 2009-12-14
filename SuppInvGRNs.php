@@ -138,7 +138,7 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 }
 
 echo '<tr>
-	<td colspan=5 class=number><font size=4 color=BLUE>' . _('Total Value of Goods Charged') . ':</font></td>
+	<td colspan=5 align=right><font size=4 color=BLUE>' . _('Total Value of Goods Charged') . ':</font></td>
 	<td class=number><font size=4 color=BLUE><U>' . number_format($TotalValueCharged,2) . '</U></font></td>
 </tr>';
 echo "</table>";

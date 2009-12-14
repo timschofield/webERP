@@ -1,5 +1,6 @@
 <?php
 /* $Revision: 1.5 $ */
+/* $Id$ */
 // MRPPlannedPurchaseOrders.php - Report of purchase parts that MRP has determined should have
 // purchase orders created for them
 $PageSecurity = 2;
@@ -7,13 +8,12 @@ include('includes/session.inc');
 If (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
-
+	$pdf->addInfo('Title',_('MRP Planned Purchase Orders Report'));
+	$pdf->addInfo('Subject',_('MRP Planned Purchase Orders'));
 	$FontSize=9;
-	$pdf->addinfo('Title',_('MRP Planned Purchase Orders Report'));
-	$pdf->addinfo('Subject',_('MRP Planned Purchase Orders'));
-
 	$PageNumber=1;
 	$line_height=12;
+
 	$Xpos = $Left_Margin+1;
 	$wheredate = " ";
 	$reportdate = " ";
@@ -107,8 +107,15 @@ If (isset($_POST['PrintPDF'])) {
 	   include('includes/footer.inc');
 	   exit;
 	}
-
-	//include ('includes/MRPPlannedPurchaseOrdersPageHeader.inc');
+	if (DB_num_rows($result)==0){ //then there is nothing to print
+		$title = _('Print MRP Planned Purchase Orders Error');
+		include('includes/header.inc');
+		prnMsg(_('There were no items with planned purchase orders'),'info');
+		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		include('includes/footer.inc');
+		exit;
+	}
+	
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 	            $Page_Width,$Right_Margin,$_POST['Consolidation'],$reportdate);
 
@@ -194,7 +201,6 @@ If (isset($_POST['PrintPDF'])) {
 			if ($YPos < $Bottom_Margin + $line_height){
 			   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 			               $Right_Margin,$_POST['Consolidation'],$reportdate);
-			  // include('includes/MRPPlannedPurchaseOrdersPageHeader.inc');
 			}
 
 	} /*end while loop */
@@ -235,26 +241,8 @@ If (isset($_POST['PrintPDF'])) {
 	$DisplayTotalVal = number_format($Total_Extcost,2);
     $pdf->addTextWrap(310,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 
-	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
-
-	if ($len<=20){
-			$title = _('Print MRP Planned Purchase Orders Error');
-			include('includes/header.inc');
-			prnMsg(_('There were no items with planned purchase orders'),'error');
-			echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
-			include('includes/footer.inc');
-			exit;
-	} else {
-			header('Content-type: application/pdf');
-			header("Content-Length: " . $len);
-			header('Content-Disposition: inline; filename=MRPPlannedOrders.pdf');
-			header('Expires: 0');
-			header('Cache-Control: private, post-check=0, pre-check=0');
-			header('Pragma: public');
-	
-			$pdf->Output('MRPPlannedPurchaseOrders.pdf', 'I');
-	}
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_MRP_Planned_Purchase_Orders_' . Date('Y-m-d') . '.pdf');
+	$pdf->__destruct();
 	
 } else { /*The option to print PDF was not hit so display form */
 

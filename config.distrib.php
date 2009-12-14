@@ -1,6 +1,7 @@
 <?php
 
-/* $Revision: 1.4 $ */
+/* $Id: config.distrib.php 3152 2009-12-11 14:28:49Z tim_schofield $ */
+
 // User configurable variables
 //---------------------------------------------------
 
@@ -12,7 +13,7 @@ $allow_demo_mode = True;
 
 // webERP version
 
-$Version = '3.11-rc2';
+$Version = '3.13-rc0 UTF-8 capable';
 
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
