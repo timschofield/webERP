@@ -1,5 +1,8 @@
 <?php
 /* $Revision: 1.17 $ */
+
+/* $Id$  */
+
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -9,13 +12,11 @@ If (isset($_POST['PrintPDF'])
 	AND isset($_POST['ToCriteria'])
 	AND strlen($_POST['ToCriteria'])>=1){
 
-
 	include('includes/PDFStarter.php');
 
+	$pdf->addInfo('Title',_('Inventory Valuation Report'));
+	$pdf->addInfo('Subject',_('Inventory Valuation'));
 	$FontSize=9;
-	$pdf->addinfo('Title',_('Inventory Valuation Report'));
-	$pdf->addinfo('Subject',_('Inventory Valuation'));
-
 	$PageNumber=1;
 	$line_height=12;
 
@@ -82,13 +83,21 @@ If (isset($_POST['PrintPDF'])
 	   include('includes/footer.inc');
 	   exit;
 	}
+	if (DB_num_rows($InventoryResult)==0){
+		$title = _('Print Inventory Valuation Error');
+		include('includes/header.inc');
+		prnMsg(_('There were no items with any value to print out for the location specified'),'info');
+		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		include('includes/footer.inc');
+		exit;	
+	}	
 
 	include ('includes/PDFInventoryValnPageHeader.inc');
 
-        $Tot_Val=0;
+    $Tot_Val=0;
 	$Category = '';
 	$CatTot_Val=0;
-        $CatTot_Qty=0;
+    $CatTot_Qty=0;
 
 	While ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
 
@@ -142,7 +151,7 @@ If (isset($_POST['PrintPDF'])
 		}
 		$Tot_Val += $InventoryValn['itemtotal'];
 		$CatTot_Val += $InventoryValn['itemtotal'];
-                $CatTot_Qty += $InventoryValn['qtyonhand'];
+        $CatTot_Qty += $InventoryValn['qtyonhand'];
 
 		if ($YPos < $Bottom_Margin + $line_height){
 		   include('includes/PDFInventoryValnPageHeader.inc');
@@ -175,29 +184,11 @@ If (isset($_POST['PrintPDF'])
 /*Print out the grand totals */
 	$LeftOvers = $pdf->addTextWrap(80,$YPos,260-$Left_Margin,$FontSize,_('Grand Total Value'), 'right');
 	$DisplayTotalVal = number_format($Tot_Val,2);
-        $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
+    $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 
-	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_Inventory_Valuation_' . Date('Y-m-d') . '.pdf');
+	$pdf->__destruct();
 
-      if ($len<=20){
-		$title = _('Print Inventory Valuation Error');
-		include('includes/header.inc');
-		prnMsg(_('There were no items with any value to print out for the location specified'),'error');
-		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
-		exit;
-      } else {
-      		header('Content-type: application/pdf');
-		header("Content-Length: " . $len);
-		header('Content-Disposition: inline; filename=Customer_trans.pdf');
-		header('Expires: 0');
-		header('Cache-Control: private, post-check=0, pre-check=0');
-		header('Pragma: public');
-
-		$pdf->Output('InventoryValuation.pdf', 'I');
-
-	}
 } else { /*The option to print PDF was not hit */
 
 	$title=_('Inventory Valuation Reporting');
