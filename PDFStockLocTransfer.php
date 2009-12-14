@@ -1,9 +1,18 @@
 <?php
-/* $Revision: 1.11 $ */
+
+/*$Id$*/
+
+/* $Revision: 1.12 $ */
 
 $PageSecurity =1;
 include('includes/session.inc');
+
 include('includes/PDFStarter.php');
+$pdf->addInfo('Title', _('Inventory Location Transfer BOL') );
+$pdf->addInfo('Subject', _('Inventory Location Transfer BOL') . ' # ' . $_GET['TransferNo']);
+$FontSize=10;
+$PageNumber=1;
+$line_height=30;
 
 $title = _('Stock Location Transfer Docket Error');
 
@@ -15,10 +24,6 @@ if (!isset($_GET['TransferNo'])){
 	include ('includes/footer.inc');
 	exit;
 }
-
-$FontSize=10;
-$pdf->addinfo('Title', _('Inventory Location Transfer BOL') );
-$pdf->addinfo('Subject', _('Inventory Location Transfer BOL') . ' # ' . $_GET['TransferNo']);
 
 $ErrMsg = _('An error occurred retrieving the items on the transfer'). '.' . '<p>'. _('This page must be called with a location transfer reference number').'.';
 $DbgMsg = _('The SQL that failed while retrieving the items on the transfer was');
@@ -49,7 +54,6 @@ If (DB_num_rows($result)==0){
 
 $TransferRow = DB_fetch_array($result);
 
-$PageNumber=1;
 include ('includes/PDFStockLocTransferHeader.inc');
 $line_height=30;
 $FontSize=10;
@@ -70,7 +74,7 @@ do {
 	}
 
 } while ($TransferRow = DB_fetch_array($result));
-
+/*
 $pdfcode = $pdf->output();
 $len = strlen($pdfcode);
 
@@ -92,4 +96,7 @@ if ($len<=20){
 
 	$pdf->Output('PDFStockLocTransfer.pdf', 'I');
 }
+*/
+$pdf->OutputD($_SESSION['DatabaseName'] . '_StockLocTrfShipment_' . date('Y-m-d') . '.pdf');//UldisN
+$pdf->__destruct(); //UldisN
 ?>
