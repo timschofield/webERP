@@ -1,4 +1,7 @@
 <?php
+
+/*$Id$*/
+
 /* $Revision: 1.44 $ */
 
 $PageSecurity = 11;
@@ -45,9 +48,9 @@ $statusresult=DB_query($statussql, $db);
 $mystatusrow=DB_fetch_array($statusresult);
 $Status=$mystatusrow['status'];
 
-if ($Status!=_('Printed')) {
+if ($Status != PurchOrder::STATUS_PRINTED) {
 	prnMsg( _('Purchase orders must have a status of Printed before they can be received').'.<br>'.
-		_('Order number').' '.$_GET['PONumber'].' '._('has a status of').' '.$Status, 'warn');
+		_('Order number') . ' ' . $_GET['PONumber'] . ' ' . _('has a status of') . ' ' . _($Status), 'warn');
 	include('includes/footer.inc');
 	exit;
 }
@@ -629,7 +632,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 		$date = date($_SESSION['DefaultDateFormat']);
 		$StatusComment=$date.' - Order Completed'.'<br>'.$comment;
 		$sql="UPDATE purchorders 
-				SET status='"._('Completed')."',
+				SET status='" . PurchOrder::STATUS_COMPLITED . "',
 				stat_comment='".$StatusComment."'
 				WHERE orderno=".$_SESSION['PO']->OrderNo;
 		$result=DB_query($sql,$db);
