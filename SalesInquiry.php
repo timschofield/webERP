@@ -92,7 +92,8 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 // TempStockmoves function creates a temporary table of stockmoves that is used when the DateType
 // is Invoice Date
 	if ($_POST['DateType'] == 'Invoice') {
-	    TempStockmoves(&$db);
+// Javier	TempStockmoves(&$db);
+		TempStockmoves($db);
 	}
 
 
