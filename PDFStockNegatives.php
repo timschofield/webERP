@@ -1,15 +1,21 @@
 <?php
 /* $Revision: 1.7 $ */
 
+/*$Id$*/
+
+/* $Revision: 1.8 $ */
+
 $PageSecurity =1;
 include('includes/session.inc');
+
 include('includes/PDFStarter.php');
-$title = _('Negative Stock Listing Error');
-
+$pdf->addInfo('Title', _('Inventory Negatives Listing') );
+$pdf->addInfo('Subject', _('Inventory Negatives Listing'));
 $FontSize=10;
-$pdf->addinfo('Title', _('Inventory Negatives Listing') );
-$pdf->addinfo('Subject', _('Inventory Negatives Listing'));
+$PageNumber=1;
+$line_height=15;
 
+$title = _('Negative Stock Listing Error');
 $ErrMsg = _('An error occurred retrieving the negative quantities.');
 
 $sql = "SELECT stockmaster.stockid,
@@ -34,7 +40,6 @@ If (DB_num_rows($result)==0){
 
 $NegativesRow = DB_fetch_array($result);
 
-$PageNumber=1;
 include ('includes/PDFStockNegativesHeader.inc');
 $line_height=15;
 $FontSize=10;
@@ -55,7 +60,7 @@ do {
 	}
 
 } while ($NegativesRow = DB_fetch_array($result));
-
+/*
 $pdfcode = $pdf->output();
 $len = strlen($pdfcode);
 
@@ -77,4 +82,7 @@ if ($len<=10){
 
 	$pdf->Output('PDFStockNegatives.pdf', 'I');
 }
+*/
+$pdf->OutputD($_SESSION['DatabaseName'] . '_NegativeStocks_' . date('Y-m-d') . '.pdf');//UldisN
+$pdf->__destruct(); //UldisN
 ?>
