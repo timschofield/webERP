@@ -1,5 +1,9 @@
 <?php
-/* $Revision: 1.4 $ */
+
+/*$Id$*/
+
+/* $Revision: 1.5 $ */
+
 // MRPReport.php - Shows supply and demand for a part as determined by MRP
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -7,11 +11,9 @@ include('includes/session.inc');
 If (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 
 	include('includes/PDFStarter.php');
-
-	$FontSize=9;
-	$pdf->addinfo('Title',_('MRP Report'));
-	$pdf->addinfo('Subject',_('MRP Report'));
-
+	$pdf->addInfo('Title',_('MRP Report'));
+	$pdf->addInfo('Subject',_('MRP Report'));
+    $FontSize=9;
 	$PageNumber=1;
 	$line_height=10   ;
 
@@ -20,27 +22,39 @@ If (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
     $sql = "SELECT mrprequirements.*,
                    TRUNCATE(((TO_DAYS(daterequired) - TO_DAYS(CURRENT_DATE)) / 7),0) AS weekindex,
                    TO_DAYS(daterequired) - TO_DAYS(CURRENT_DATE) AS datediff
-            FROM mrprequirements 
-              WHERE part = '" . $_POST['Part'] . 
+            FROM mrprequirements
+              WHERE part = '" . $_POST['Part'] .
              "' ORDER BY daterequired,whererequired";
-    
+
 	$result = DB_query($sql,$db,'','',False,False);
 	if (DB_error_no($db) !=0) {
 	    $errors = 1;
 	    $holddb = $db;
 	    $title = _('Print MRP Report Error');
 		include('includes/header.inc');
-		prnMsg(_('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule etc'),'error');        
+		prnMsg(_('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule etc'),'error');
 		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
+
+	if (DB_num_rows($result) == 0) {
+	    $errors = 1;
+	    $holddb = $db;
+	    $title = _('Print MRP Report Warning');
+		include('includes/header.inc');
+		prnMsg(_('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule, etc'), 'warn');
+		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		include('includes/footer.inc');
+		exit;
+	}
+
 	$requirements = array();
 	$weeklyreq = array();
 	$pastduereq = 0;
 	$futurereq = 0;
 	$grossreq = 0;
-	
+
 	while ($myrow=DB_fetch_array($result)) {
 			array_push($requirements,$myrow);
 			$grossreq += $myrow['quantity'];
@@ -458,7 +472,7 @@ If (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 	                   $Right_Margin);
 	}
-
+/*  UldisN
 	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);
 
@@ -476,10 +490,13 @@ If (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			header('Expires: 0');
 			header('Cache-Control: private, post-check=0, pre-check=0');
 			header('Pragma: public');
-	
+
 			$pdf->Output('MRPReport.pdf', 'I');
 	}
-	
+*/
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_MRPReport_' . date('Y-m-d').'.pdf');//UldisN
+    $pdf->__destruct(); //UldisN
+
 } else { /*The option to print PDF was not hit so display form */
 
 	$title=_('MRP Report');
