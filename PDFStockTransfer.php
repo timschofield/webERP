@@ -1,22 +1,21 @@
 <?php
-/* $Revision: 1.3 $ */
+
+/*$Id$*/
+
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
 
-
 include('includes/PDFStarter.php');
-
+$pdf->addInfo('Title', _('Stock Transfer Form') );
 $FontSize=10;
-$pdf->addinfo('Title', _('Stock Transfer Form') );
-
 $PageNumber=1;
 $line_height=12;
 
-
 include('includes/PDFStockTransferHeader.inc');
-
 $FontSize =10;
+
 /*Print out the category totals */
 
 $sql='SELECT stockid, transno, loccode, trandate, qty from stockmoves where transno='.$_GET['TransferNo'].' and type=16';
@@ -32,16 +31,40 @@ $Quantity=$myrow[4];
 
 $sql='select description from stockmaster where stockid="'.$StockID.'"';
 $result=DB_query($sql, $db);
+
+If (DB_num_rows($result) == 0){
+	include ('includes/header.inc');
+	prnMsg(_('There are no decription for '.$StockID), 'warn');
+	include ('includes/footer.inc');
+	exit;
+}
+
 $myrow=DB_fetch_array($result);
 $Description=$myrow[0];
 
 $sql='select locationname from locations where loccode="'.$FromCode.'"';
 $result=DB_query($sql, $db);
+
+If (DB_num_rows($result) == 0){
+	include ('includes/header.inc');
+	prnMsg(_('There are no location From for '.$StockID), 'warn');
+	include ('includes/footer.inc');
+	exit;
+}
+
 $myrow=DB_fetch_array($result);
 $From=$myrow[0];
 
 $sql='select locationname from locations where loccode="'.$ToCode.'"';
 $result=DB_query($sql, $db);
+
+If (DB_num_rows($result) == 0){
+	include ('includes/header.inc');
+	prnMsg(_('There are no location To for '.$StockID), 'warn');
+	include ('includes/footer.inc');
+	exit;
+}
+
 $myrow=DB_fetch_array($result);
 $To=$myrow[0];
 
@@ -55,7 +78,7 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-70,300-$Left_Margin,$FontSize,
 
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-120,300-$Left_Margin,$FontSize, _('Signed for ').$From.'______________________');
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-160,300-$Left_Margin,$FontSize, _('Signed for ').$To.'______________________');
-
+/*
 $pdfcode = $pdf->output();
 $len = strlen($pdfcode);
 
@@ -76,7 +99,9 @@ if ($len<=20){
 
 	$pdf->Output('StockTransfer.pdf', 'I');
 }
-
+*/
+$pdf->OutputD($_SESSION['DatabaseName'] . '_StockTransfer_' . date('Y-m-d') . '.pdf');//UldisN
+$pdf->__destruct(); //UldisN
 
  /*end of else not PrintPDF */
 ?>
