@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.7 $ */
+
+/* $Id: MailInventoryValuation.php 3152 2009-12-11 14:28:49Z tim_schofield $ */
+
 $PageSecurity = 1;
 $AllowAnyone = true;
 
@@ -13,7 +15,7 @@ $Recipients = array('"Postmaster" <postmaster@localhost>','"someone" <someone@lo
 $_POST['DetailedReport'] = $DetailedReport; /* so PDFInventoryValnPageHeader.inc works too */
 $_POST['FromCriteria']=$FromCriteria; /* so PDFInventoryValnPageHeader.inc works too */
 $_POST['ToCriteria']=$ToCriteria; /* so PDFInventoryValnPageHeader.inc works too */
-$_POST["Location"] = $Location; /* so PDFInventoryValnPageHeader.inc works too */
+$_POST['Location'] = $Location; /* so PDFInventoryValnPageHeader.inc works too */
 
 include('includes/session.inc');
 include ('includes/class.pdf.php');
@@ -27,24 +29,36 @@ $Bottom_Margin=30;
 $Left_Margin=40;
 $Right_Margin=30;
 
-$PageSize = array(0,0,$Page_Width,$Page_Height);
-$pdf = & new Cpdf($PageSize);
+// Javier: now I use the native constructor
+// Javier: better to not use references
+// $PageSize = array(0,0,$Page_Width,$Page_Height);
+// $pdf = & new Cpdf($PageSize);
+$pdf = new Cpdf('P', 'pt', 'A4');
 
-$PageNumber = 0;
-
-$pdf->selectFont('./fonts/Helvetica.afm');
+// $PageNumber = 0;
 
 /* Standard PDF file creation header stuff */
 
-$pdf->addinfo('Author',"webERP " . $Version);
-$pdf->addinfo('Creator',"webERP http://www.weberp.org - R&OS PHP-PDF http://www.ros.co.nz");
+$pdf->addInfo('Creator','WebERP http://www.weberp.org');
+$pdf->addInfo('Author','WebERP ' . $Version);
 
-$FontSize=10;
-$pdf->addinfo('Title',_('Inventory Valuation Report'));
-$pdf->addinfo('Subject',_('Inventory Valuation'));
 
-$PageNumber=1;
-$line_height=12;
+// $FontSize=10;
+$pdf->addInfo('Title', _('Inventory Valuation Report'));
+$pdf->addInfo('Subject', _('Inventory Valuation'));
+
+/* Javier: I have brought this piece from the pdf class constructor to get it closer to the admin/user,
+	I corrected it to match TCPDF, but it still needs check, after which,
+	I think it should be moved to each report to provide flexible Document Header and Margins in a per-report basis. */
+	$pdf->setAutoPageBreak(0);	// Javier: needs check.
+	$pdf->setPrintHeader(false);	// Javier: I added this must be called before Add Page
+	$pdf->AddPage();
+//	$this->SetLineWidth(1); 	   Javier: It was ok for FPDF but now is too gross with TCPDF. TCPDF defaults to 0'57 pt (0'2 mm) which is ok.
+	$pdf->cMargin = 0;		// Javier: needs check.
+/* END Brought from class.pdf.php constructor */
+
+$PageNumber = 1;
+$line_height = 12;
 
 /*Now figure out the inventory data to report for the category range under review */
 if ($Location=='All'){
@@ -95,14 +109,15 @@ if ($Location=='All'){
 
 }
 $InventoryResult = DB_query($SQL,$db,'','',false,true);
+$ListCount = DB_num_rows($InventoryResult);
 
 if (DB_error_no($db) !=0) {
 	$title = _('Inventory Valuation') . ' - ' . _('Problem Report');
-	include("includes/header.inc");
+	include('includes/header.inc');
 	echo _('The inventory valuation could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
-	echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+	echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
 	if ($debug==1){
-		echo "<br>$SQL";
+		echo '<br>' . $SQL;
 	}
 
 include('includes/footer.inc');
@@ -118,10 +133,10 @@ While ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
 
 	if ($Category!=$InventoryValn['categoryid']){
 		$FontSize=10;
-		if ($Category!=""){ /*Then it's NOT the first time round */
+		if ($Category!=''){ /*Then it's NOT the first time round */
 
 		/* need to print the total of previous category */
-			if ($_POST["DetailedReport"]=="Yes"){
+			if ($_POST['DetailedReport']=='Yes'){
 				$YPos -= (2*$line_height);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Category . " - " . $CategoryName);
 			}
@@ -130,7 +145,7 @@ While ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
 			$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, "right");
 			$YPos -=$line_height;
 
-			If ($_POST["DetailedReport"]=="Yes"){
+			If ($_POST['DetailedReport']=='Yes'){
 			/*draw a line under the CATEGORY TOTAL*/
 				$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
 				$YPos -=(2*$line_height);
@@ -142,7 +157,7 @@ While ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
 		$CategoryName = $InventoryValn['categorydescription'];
 	}
 
-	if ($_POST["DetailedReport"]=="Yes"){
+	if ($_POST['DetailedReport']=='Yes'){
 		$YPos -=$line_height;
 		$FontSize=8;
 
@@ -151,9 +166,9 @@ While ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
 		$DisplayQtyOnHand = number_format($InventoryValn['qtyonhand'],0);
 		$DisplayItemTotal = number_format($InventoryValn['itemtotal'],2);
 
-		$LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,$DisplayQtyOnHand,"right");
-		$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize,$DisplayUnitCost, "right");
-		$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayItemTotal, "right");
+		$LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,$DisplayQtyOnHand,'right');
+		$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize,$DisplayUnitCost, 'right');
+		$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayItemTotal, 'right');
 
 	}
 	$Tot_Val += $InventoryValn['itemtotal'];
@@ -167,15 +182,15 @@ While ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
 
 $FontSize =10;
 /*Print out the category totals */
-if ($_POST["DetailedReport"]=="Yes"){
+if ($_POST['DetailedReport']=='Yes'){
 	$YPos -=$line_height;
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize, _('Total for') . ' ' . $Category . " - " . $CategoryName, "left");
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize, _('Total for') . ' ' . $Category . ' - ' . $CategoryName, 'left');
 }
 
 $DisplayCatTotVal = number_format($CatTot_Val,2);
 $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, "right");
 
-If ($_POST["DetailedReport"]=="Yes"){
+If ($_POST['DetailedReport']=='Yes'){
 	/*draw a line under the CATEGORY TOTAL*/
 	$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
 	$YPos -=(2*$line_height);
@@ -184,7 +199,7 @@ If ($_POST["DetailedReport"]=="Yes"){
 $YPos -= (2*$line_height);
 
 /*Print out the grand totals */
-$LeftOvers = $pdf->addTextWrap(80,$YPos,260-$Left_Margin,$FontSize,_('Grand Total Value'), 'right');
+$LeftOvers = $pdf->addTextWrap(80, $YPos,260-$Left_Margin,$FontSize, _('Grand Total Value'), 'right');
 $DisplayTotalVal = number_format($Tot_Val,2);
 $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 If ($_POST['DetailedReport']=='Yes'){
@@ -192,22 +207,18 @@ If ($_POST['DetailedReport']=='Yes'){
 	$YPos -=(2*$line_height);
 }
 
-$pdfcode = $pdf->output();
-$len = strlen($pdfcode);
-
-if ($len<=20){
+if ($ListCount == 0) {
 	$title = _('Print Inventory Valuation Error');
-	include("includes/header.inc");
+	include('includes/header.inc');
 	echo '<p>' . _('There were no items with any value to print out for the location specified');
-	echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
-	include("includes/footer.inc");
-	exit;
+	echo '<br><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
+	include('includes/footer.inc');
+	exit; // Javier: needs check
 } else {
 	include('includes/htmlMimeMail.php');
 
-	$fp = fopen( $_SESSION['reports_dir'] . "/InventoryReport.pdf","wb");
-	fwrite ($fp, $pdfcode);
-	fclose ($fp);
+	$pdf->Output($_SESSION['reports_dir'] . '/InventoryReport.pdf', 'F');
+	$pdf-> __destruct();
 
 	$mail = new htmlMimeMail();
 	$attachment = $mail->getFile( $_SESSION['reports_dir'] . '/InventoryReport.pdf');
