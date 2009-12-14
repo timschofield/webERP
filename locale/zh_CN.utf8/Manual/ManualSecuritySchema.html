@@ -1,0 +1,331 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head><body><br><br>
+<a name="SecuritySchema"><font size="+3"><b>安全模式</b></font></a><br>
+<br>
+webERP 的安全模式由以下几个部分构成：
+<ol><li>
+用户：<br>
+为每个用户建立单独帐户。<br>
+用户帐户可以由管理员通过：<br>
+Main Menu > Setup > User Accounts (WWW_Users.php) 来添加或删除。<br>
++++<br>
+通过选择下拉菜单中的'Security Role'，可以为每个用户可以分配'Security Role' (安全角色)。
+<br>
+更多详情查看下面的默认安全角色列表。<br>
++++<br>
+</li><li>
+安全角色：<br>
+安全角色可以由管理员通过：<br>
+Main Menu > Setup > Role Permissions (WWW_Access.php)添加。<br>
++++<br>
+每一个安全角色都和一或多个安全选项相关连。<br>
+安全选项可以通过 Main Menu > Setup > Role Permissions (WWW_Access.php) 进行设置。<br> 
++++<br>  
+看下面的安全角色列表及添加于每个列表上的安全选项。 <br>
+<br>  
+</li><li>
+安全选项：<br>
+15个安全选项默认开启。<br>
+查看详情列表：<br>
+每一个安全选项和查看一个或多个页面相关连。<br>    
++++<br>
+webERP并没有添加，删除或者编辑'安全角色'的功能。<br>
+管理员可以通过编辑后台表格(securitytokens)来实现。<br>
+<br>  
+</li><li>
+PageSecurity 值：<br>
+每一个 webERP 页面包括从1到15的页面安全值。<br>
+安全值被编码到每一个页面中；比如：$PageSecurity = 1；<br>
+每一个用户页面和相应的安全选项值相关连。<br>
++++<br>
+没有可以编辑webERP 页面安全值的工具。<br>
+然而管理员可以通过直接编辑页面来更改这一值。<br>
+<br></ol>
+以下部分组合在一起共同发挥作用。通过输入用户名和密码登录之后，系统可以识别用户的安全角色。用户的安全角色决定了相应的页面安全值。用户可以登录任何和他的安全角色值相对应的页面。
+<br>
+<br>
+<br>
+<u>关于安全模式更具体的解释：</u><br>
+<br>
+每一个webERP页面都和一个页面安全值相对应。页面安全值被编码在每一个页面的执行代码中。目前针对的值是1到15 。如果需要的话可以由管理员或者程序员来扩展这一值。各页面的默认安全值参见下面的列表。<br>
+<br>
+接受用户访问的页面安全选项值储存在SESSION AllowedPageSecurityTokens 数组中。用户访问安全选项值是在帐户设定页面(WWW_users.php)中设置的整数。
+<br>
+<br>
+用户对页面的访问权限在每一个代码执行页面中通过session.inc 被逐一检查
+(PDF_Starter.inc对PDF页面来说)。当用户登录时，session.inc文件通过对数据库的访问得到$_SESSION['AccessLevel']变量 。这一变量指用户的安全角色。
+基于用户的访问级别，SESSION['AllowedPageSecurityTokens']从数据库中得到数组对应的值。数组中的安全选项值和数组中预定义的值一一对应。 <br>
+<br>
+你需要打开角色定义页面(WWW.Access.php)如果希望添加更多的安全角色。
+同时必须为新增加的安全角色指明安全选项。把用户分配到新增加的安全角色中意味着他可以访问和安全选项值对应的页面。这一方面使得管理员可以控制用户的适当访问权限。
+<br>
+<br>
+通过给用户分配适当的安全角色以及调整和安全角色相对应的安全选项值，可以给任何用户设定相应的访问权限。
+请参考以下表格中的默认参数以作出相应的调整。同时，你也应该了解页面安全访问值。同样，默认的值也可以被修改。<br>
+<br>
+<u>安全模式表：</u><br>
+<br>
+<table border="2">
+<tbody>
+<tr>
+<th>Table.Field 表域</th>
+<th>Example Data 示范数据</th>
+<th>Comment 备注</th>
+</tr>
+<tr>
+<td>www_user.userid<br>www_user.fullaccess</td>
+<td>demo<br>8</td>
+<td>通过<br>WWW_Users.php页面更新</td>
+</tr>
+<tr>
+<td>securityroles.secroleid<br>securityroles.secrolename</td>
+<td>8<br>System Administrator</td>
+<td>通过执行WWW_Access.php，<br>
+    域值在安全角色被创建或者删除时发生变化<br>
+    </td>
+</tr>
+<tr>
+<td>securitygroups.secroleid<br>securitygroups.tokenid</td>
+<td>8<br>1</td>
+<td>通过执行WWW_Access.php，<br>
+    域值在给安全角色赋予安全选项值时发生变化<br>
+    </td>
+</tr>
+<tr>
+<td>securitytokens.tokenid<br>securitytokens.tokenname</td>
+<td>1<br>Menu and Order Entry Only</td>
+<td>15 个事先定义的安全选项<br>
+    没有webERP工具可以更改这一数据<br>
+    </td>
+</tr>
+<tr>
+<td>webERP page</td>
+<td>CustomerInquiry.php<br>$PageSecurity = 1;</td>
+<td>事先定义的各个页面的页面安全值<br>
+    没有webERP工具可以更改这一数据<br>
+    </td>
+</tr>
+</tbody></table></body></html>
+
+<br>
+<br>
+<b>安全角色： webERP 版本 3.0.5</b><br>
+<br>
+1 - Inquiries/Order Entry<br>
+2 - Manufac/Stock Admin<br>
+3 - Purchasing officer<br>
+4 - AP Clerk<br>
+5 - AR Clerk<br>
+6 - Accountant<br>
+7 - Customer logon only<br>
+8 - System Administrator<br>
+<br>
+<b>安全选项： webERP 版本 3.0.5</b><br>
+<br>
+1 - Inquiries/Order Entry tokens = 1, 2<br>
+2 - Manufac/Stock Admin tokens = 1, 2, 11<br>
+3 - Purchasing officer tokens = 1, 2, 3, 4, 5, 11<br>
+4 - AP Clerk tokens = 1, 2, 5<br>
+5 - AR Clerk tokens = 1, 2, 5, 11<br>
+6 - Accountant tokens = 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11<br>
+7 - Customer logon only token = 1<br>
+8 - System Administrator = All the currently defined security tokens<br>
+<br>
+<b>安全选项： webERP 版本 3.0.5</b><br>
+<br>
+1 - Menu and order entry only<br>
+2 - Inventory, AR & AP inquiries & reports<br>
+3 - AR setup customers, areas, receipts, allocations, credit notes, salesfolk, credit status<br>
+4 - PO Entry, Purchasing data & reorder levels<br>
+5 - AP Invoice, Credit, Payment entry. Supplier maintenance<br>
+6 - Not used<br>
+7 - Bank reconciliations<br>
+8 - GL Journals, COA, sales/COGS GL postings, terms, cost update, company prefs<br>
+9 - Ledger Maintenance and Manufacturing<br>
+10 - GL Journals, COA, sales/COGS GL postings, terms, cost update, company prefs<br>
+11 - Pricing & Inventory locations, categories, receiving & adjustments<br>
+12 - No Used<br>
+13 - Not Used<br>
+14 - Not Used<br>
+15 - User management, System Admin setup & utilities<br>
+<br>
+<b>页面安全值： webERP 版本 3.0.5</b><br>
+<br>
+<table border="2">
+<tbody><tr><th>页面（代码文件）名
+</th><th>页面安全值
+</th></tr>
+<tr>
+
+<td>CustomerInquiry.php</td></td><td>1</td></tr>
+<td>GetStockImage.php</td></td><td>1</td></tr>
+<td>index.php</td></td><td>1</td></tr>
+<td>Logout.php</td></td><td>1</td></tr>
+<td>MailInventoryValuation.php</td></td><td>1</td></tr>
+<td>PDFStockLocTransfer.php</td></td><td>1</td></tr>
+<td>PDFStockNegatives.php</td></td><td>1</td></tr>
+<td>PrintCustTrans.php</td></td><td>1</td></tr>
+<td>PrintCustTransPortrait.php</td></td><td>1</td></tr>
+<td>reportwriter/FormMaker.php</td></td><td>1</td></tr>
+<td>reportwriter/ReportMaker.php</td></td><td>1</td></tr>
+<td>SelectCompletedOrder.php</td></td><td>1</td></tr>
+<td>SelectOrderItems.php</td></td><td>1</td></tr>
+<td>AgedDebtors.php</td></td><td>2</td></tr>
+<td>AgedSuppliers.php</td></td><td>2</td></tr>
+<td>BOMInquiry.php</td></td><td>2</td></tr>
+<td>BOMListing.php</td></td><td>2</td></tr>
+<td>ConfirmDispatch_Invoice.php</td></td><td>2</td></tr>
+<td>CustomerTransInquiry.php</td></td><td>2</td></tr>
+<td>CustWhereAlloc.php</td></td><td>2</td></tr>
+<td>DebtorsAtPeriodEnd.php</td></td><td>2</td></tr>
+<td>EmailCustTrans.php</td></td><td>2</td></tr>
+<td>FTP_RadioBeacon.php</td></td><td>2</td></tr>
+<td>InventoryPlanning.php</td></td><td>2</td></tr>
+<td>InventoryValuation.php</td></td><td>2</td></tr>
+<td>OrderDetails.php</td></td><td>2</td></tr>
+<td>OutstandingGRNs.php</td></td><td>2</td></tr>
+<td>PDFCustomerList.php</td></td><td>2</td></tr>
+<td>PDFLowGP.php</td></td><td>2</td></tr>
+<td>PDFPriceList.php</td></td><td>2</td></tr>
+<td>PDFQuotation.php</td></td><td>2</td></tr>
+<td>PDFStockCheckComparison.php</td></td><td>2</td></tr>
+<td>PeriodsInquiry.php</td></td><td>2</td></tr>
+<td>PO_OrderDetails.php</td></td><td>2</td></tr>
+<td>PO_PDFPurchOrder.php</td></td><td>2</td></tr>
+<td>PO_SelectOSPurchOrder.php</td></td><td>2</td></tr>
+<td>PO_SelectPurchOrder.php</td></td><td>2</td></tr>
+<td>Prices.php</td></td><td>2</td></tr>
+<td>PrintCustOrder_generic.php</td></td><td>2</td></tr>
+<td>PrintCustOrder.php</td></td><td>2</td></tr>
+<td>PrintCustStatements.php</td></td><td>2</td></tr>
+<td>reportwriter/admin/ReportCreator.php</td></td><td>2</td></tr>
+<td>SalesAnalReptCols.php</td></td><td>2</td></tr>
+<td>SalesAnalRepts.php</td></td><td>2</td></tr>
+<td>SalesAnalysis_UserDefined.php</td></td><td>2</td></tr>
+<td>SelectCustomer.php</td></td><td>2</td></tr>
+<td>SelectProduct.php</td></td><td>2</td></tr>
+<td>SelectRecurringSalesOrder.php</td></td><td>2</td></tr>
+<td>SelectSalesOrder.php</td></td><td>2</td></tr>
+<td>SelectSupplier.php</td></td><td>2</td></tr>
+<td>ShiptsList.php</td></td><td>2</td></tr>
+<td>StockCheck.php</td></td><td>2</td></tr>
+<td>StockCostUpdate.php</td></td><td>2</td></tr>
+<td>StockCounts.php</td></td><td>2</td></tr>
+<td>StockLocMovements.php</td></td><td>2</td></tr>
+<td>StockLocStatus.php</td></td><td>2</td></tr>
+<td>StockMovements.php</td></td><td>2</td></tr>
+<td>StockQuantityByDate.php</td></td><td>2</td></tr>
+<td>StockSerialItems.php</td></td><td>2</td></tr>
+<td>StockStatus.php</td></td><td>2</td></tr>
+<td>StockUsage.php</td></td><td>2</td></tr>
+<td>StockUsageGraph.php</td></td><td>2</td></tr>
+<td>SupplierBalsAtPeriodEnd.php</td></td><td>2</td></tr>
+<td>SupplierTransInquiry.php</td></td><td>2</td></tr>
+<td>Tax.php</td></td><td>2</td></tr>
+<td>WhereUsedInquiry.php</td></td><td>2</td></tr>
+<td>Z_CheckAllocs.php</td></td><td>2</td></tr>
+<td>Areas.php</td></td><td>3</td></tr>
+<td>Credit_Invoice.php</td></td><td>3</td></tr>
+<td>CreditItemsControlled.php</td></td><td>3</td></tr>
+<td>CreditStatus.php</td></td><td>3</td></tr>
+<td>CustomerAllocations.php</td></td><td>3</td></tr>
+<td>CustomerBranches.php</td></td><td>3</td></tr>
+<td>CustomerReceipt.php</td></td><td>3</td></tr>
+<td>Customers.php</td></td><td>3</td></tr>
+<td>PDFBankingSummary.php</td></td><td>3</td></tr>
+<td>PDFChequeListing.php</td></td><td>3</td></tr>
+<td>PDFDeliveryDifferences.php</td></td><td>3</td></tr>
+<td>PDFDIFOT.php</td></td><td>3</td></tr>
+<td>PDFOrdersInvoiced.php</td></td><td>3</td></tr>
+<td>PDFOrderStatus.php</td></td><td>3</td></tr>
+<td>SalesPeople.php</td></td><td>3</td></tr>
+<td>SelectCreditItems.php</td></td><td>3</td></tr>
+<td>StockSerialItemResearch.php</td></td><td>3</td></tr>
+<td>PO_Header.php</td></td><td>4</td></tr>
+<td>PO_Items.php</td></td><td>4</td></tr>
+<td>PurchData.php</td></td><td>4</td></tr>
+<td>SpecialOrder.php</td></td><td>4</td></tr>
+<td>StockReorderLevel.php</td></td><td>4</td></tr>
+<td>Payments.php</td></td><td>5</td></tr>
+<td>PrintCheque.php</td></td><td>5</td></tr>
+<td>StockQties_csv.php</td></td><td>5</td></tr>
+<td>SuppCreditGRNs.php</td></td><td>5</td></tr>
+<td>SuppInvGRNs.php</td></td><td>5</td></tr>
+<td>SupplierAllocations.php</td></td><td>5</td></tr>
+<td>SupplierCredit.php</td></td><td>5</td></tr>
+<td>SupplierInvoice.php</td></td><td>5</td></tr>
+<td>Suppliers.php</td></td><td>5</td></tr>
+<td>SuppPaymentRun.php</td></td><td>5</td></tr>
+<td>SuppShiptChgs.php</td></td><td>5</td></tr>
+<td>SuppTransGLAnalysis.php</td></td><td>5</td></tr>
+<td>SalesGraph.php</td></td><td>6</td></tr>
+<td>BankMatching.php</td></td><td>7</td></tr>
+<td>BankReconciliation.php</td></td><td>7</td></tr>
+<td>GLAccountInquiry.php</td></td><td>8</td></tr>
+<td>GLBalanceSheet.php</td></td><td>8</td></tr>
+<td>GLCodesInquiry.php</td></td><td>8</td></tr>
+<td>GLProfit_Loss.php</td></td><td>8</td></tr>
+<td>GLTransInquiry.php</td></td><td>8</td></tr>
+<td>GLTrialBalance.php</td></td><td>8</td></tr>
+<td>SelectGLAccount.php</td></td><td>8</td></tr>
+<td>BOMs.php</td></td><td>9</td></tr>
+<td>Currencies.php</td></td><td>9</td></tr>
+<td>Z_CreateChartDetails.php</td></td><td>9</td></tr>
+<td>AccountGroups.php</td></td><td>10</td></tr>
+<td>AccountSections.php</td></td><td>10</td></tr>
+<td>BankAccounts.php</td></td><td>10</td></tr>
+<td>COGSGLPostings.php</td></td><td>10</td></tr>
+<td>CompanyPreferences.php</td></td><td>10</td></tr>
+<td>EDIMessageFormat.php</td></td><td>10</td></tr>
+<td>GLAccounts.php</td></td><td>10</td></tr>
+<td>GLJournal.php</td></td><td>10</td></tr>
+<td>PaymentTerms.php</td></td><td>10</td></tr>
+<td>SalesGLPostings.php</td></td><td>10</td></tr>
+<td>WorkOrderEntry.php</td></td><td>10</td></tr>
+<td>WorkOrderIssue.php</td></td><td>10</td></tr>
+<td>ConfirmDispatchControlled_Invoice.php</td></td><td>11</td></tr>
+<td>CustEDISetup.php</td></td><td>11</td></tr>
+<td>DiscountCategories.php</td></td><td>11</td></tr>
+<td>DiscountMatrix.php</td></td><td>11</td></tr>
+<td>EDIProcessOrders.php</td></td><td>11</td></tr>
+<td>FreightCosts.php</td></td><td>11</td></tr>
+<td>GoodsReceived.php</td></td><td>11</td></tr>
+<td>GoodsReceivedControlled.php</td></td><td>11</td></tr>
+<td>Locations.php</td></td><td>11</td></tr>
+<td>Prices_Customer.php</td></td><td>11</td></tr>
+<td>ReverseGRN.php</td></td><td>11</td></tr>
+<td>SalesCategories.php</td></td><td>11</td></tr>
+<td>ShipmentCosting.php</td></td><td>11</td></tr>
+<td>Shipments.php</td></td><td>11</td></tr>
+<td>Shipt_Select.php</td></td><td>11</td></tr>
+<td>StockAdjustments.php</td></td><td>11</td></tr>
+<td>StockAdjustmentsControlled.php</td></td><td>11</td></tr>
+<td>StockCategories.php</td></td><td>11</td></tr>
+<td>StockLocTransfer.php</td></td><td>11</td></tr>
+<td>StockLocTransferReceive.php</td></td><td>11</td></tr>
+<td>Stocks.php</td></td><td>11</td></tr>
+<td>StockTransferControlled.php</td></td><td>11</td></tr>
+<td>StockTransfers.php</td></td><td>11</td></tr>
+<td>TaxAuthorityRates.php</td></td><td>11</td></tr>
+<td>EDISendInvoices.php</td></td><td>15</td></tr>
+<td>PaymentMethods.php</td></td><td>15</td></tr>
+<td>SalesTypes.php</td></td><td>15</td></tr>
+<td>Shippers.php</td></td><td>15</td></tr>
+<td>SystemParameters.php</td></td><td>15</td></tr>
+<td>TaxCategories.php</td></td><td>15</td></tr>
+<td>TaxProvinces.php</td></td><td>15</td></tr>
+<td>UnitsOfMeasure.php</td></td><td>15</td></tr>
+<td>Z_CheckAllocationsFrom.php</td></td><td>15</td></tr>
+<td>Z_index.php</td></td><td>15</td></tr>
+<td>Z_MakeNewCompany.php</td></td><td>15</td></tr>
+<td>Z_poAddLanguage.php</td></td><td>15</td></tr>
+<td>Z_poAdmin.php</td></td><td>15</td></tr>
+<td>Z_poEditLangHeader.php</td></td><td>15</td></tr>
+<td>Z_poEditLangModule.php</td></td><td>15</td></tr>
+<td>Z_poRebuildDefault.php</td></td><td>15</td></tr>
+<td>Z_Upgrade_3.01-3.02.php</td></td><td>15</td></tr>
+<td>Z_Upgrade_3.04-3.05.php</td></td><td>15</td></tr>
+
+</tbody></table></body></html>
