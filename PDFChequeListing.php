@@ -1,6 +1,8 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/*$Id$*/
+
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 3;
 include('includes/SQL_CommonFunctions.inc');
@@ -96,7 +98,7 @@ if (DB_error_no($db)!=0){
 	}
 	include('includes/footer.inc');
   	exit;
-} elseif (DB_num_rows($Result)==0){
+} elseif (DB_num_rows($Result) == 0){
 	$title = _('Payment Listing');
 	include('includes/header.inc');
   	prnMsg (_('There were no bank transactions found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' ._('Please try again selecting a different date range or account'), 'error');
@@ -108,12 +110,10 @@ include('includes/PDFStarter.php');
 
 /*PDFStarter.php has all the variables for page size and width set up depending on the users default preferences for paper size */
 
-$pdf->addinfo('Title',_('Cheque Listing'));
-$pdf->addinfo('Subject',_('Cheque listing from') . '  ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
-
+$pdf->addInfo('Title',_('Cheque Listing'));
+$pdf->addInfo('Subject',_('Cheque listing from') . '  ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
 $line_height=12;
 $PageNumber = 1;
-
 $TotalCheques = 0;
 
 include ('includes/PDFChequeListingPageHeader.inc');
@@ -171,7 +171,7 @@ $YPos-=$line_height;
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format($TotalCheques,2), 'right');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,_('TOTAL') . ' ' . $Currency . ' ' . _('CHEQUES'), 'left');
 
-
+/* UldisN
 $pdfcode = $pdf->output();
 $len = strlen($pdfcode);
 header('Content-type: application/pdf');
@@ -182,19 +182,22 @@ header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 header('Pragma: public');
 
 $pdf->stream();
-
+*/
+$ReportFileName = $_SESSION['DatabaseName'] . '_ChequeListing_' . date('Y-m-d').'.pdf';
+$pdf->OutputD($ReportFileName);//UldisN
+$pdf->__destruct(); //UldisN
 if ($_POST['Email']=='Yes'){
-	if (file_exists($_SESSION['reports_dir'] . '/PaymentListing.pdf')){
-		unlink($_SESSION['reports_dir'] . '/PaymentListing.pdf');
+	if (file_exists($_SESSION['reports_dir'] . '/'.$ReportFileName)){
+		unlink($_SESSION['reports_dir'] . '/'.$ReportFileName);
 	}
-    	$fp = fopen( $_SESSION['reports_dir'] . '/PaymentListing.pdf','wb');
+    	$fp = fopen( $_SESSION['reports_dir'] . '/'.$ReportFileName,'wb');
 	fwrite ($fp, $pdfcode);
 	fclose ($fp);
 
 	include('includes/htmlMimeMail.php');
 
 	$mail = new htmlMimeMail();
-	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/PaymentListing.pdf');
+	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/'.$ReportFileName);
 	$mail->setText(_('Please find herewith payments listing from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
 	$mail->addAttachment($attachment, 'PaymentListing.pdf', 'application/pdf');
 	$mail->setFrom(array('"' . $_SESSION['CompanyRecord']['coyname'] . '" <' . $_SESSION['CompanyRecord']['email'] . '>'));
