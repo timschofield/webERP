@@ -1,6 +1,8 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/*$Id$*/
+
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 2;
 
@@ -39,12 +41,9 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 		$_POST['ToCust'] = strtoupper($_POST['ToCust']);
 	}
 	include('includes/PDFStarter.php');
-
-	$pdf->addinfo('Title', _('Customer Statements') );
-	$pdf->addinfo('Subject', _('Statements from') . ' ' . $_POST['FromCust'] . ' ' . _('to').' ' . $_POST['ToCust']);
+	$pdf->addInfo('Title', _('Customer Statements') );
+	$pdf->addInfo('Subject', _('Statements from') . ' ' . $_POST['FromCust'] . ' ' . _('to') . ' ' . $_POST['ToCust']);
 	$PageNumber = 1;
-
-
 	$line_height=16;
 
 	$FirstStatement = True;
@@ -396,6 +395,7 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 	if (isset($pdf)){
 
 // Here we output the actual PDF file, we have given the file a name (this could perhaps be a variable based on the Customer name), and outputted via the "I" Inline method
+/*
 	$pdfcode = $pdf->output("Customer_Statement.pdf", "I");
 	$len = strlen($pdfcode);
 	header('Content-type: application/pdf');
@@ -404,8 +404,11 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
+    $pdf->Output('CustStatements.pdf', 'I');
+*/
 
-	$pdf->Output('CustStatements.pdf', 'I');
+        $pdf->OutputI($_SESSION['DatabaseName'] . '_CustStatements_' . date('Y-m-d') . '.pdf');//UldisN
+        $pdf->__destruct(); //UldisN
 
 	} else {
 		$title = _('Print Statements') . ' - ' . _('No Statements Found');
