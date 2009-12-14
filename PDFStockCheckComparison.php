@@ -1,11 +1,21 @@
 <?php
-/* $Revision: 1.17 $ */
+
+/*$Id$*/
+
+/* $Revision: 1.18 $ */
+
 $PageSecurity = 2;
 include('includes/session.inc');
 
 If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 	include('includes/PDFStarter.php');
+	$pdf->addInfo('Title', _('Check Comparison Report') );
+	$pdf->addInfo('Subject', _('Inventory Check Comparison'). ' ' . Date($_SESSION['DefaultDateFormat']));
+	$PageNumber=1;
+	$line_height=15;
+
+
 	include('includes/SQL_CommonFunctions.inc');
 
 
@@ -203,13 +213,6 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		exit;
 	}
 
-	$pdf->addinfo('Title', _('Check Comparison Report') );
-	$pdf->addinfo('Subject', _('Inventory Check Comparison'). ' ' . Date($_SESSION['DefaultDateFormat']));
-
-
-	$PageNumber=1;
-	$line_height=15;
-
 	include ('includes/PDFStockComparisonPageHeader.inc');
 
 	$Location = '';
@@ -303,7 +306,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	} /*end STOCK comparison while loop */
 
 	$YPos -= (2*$line_height);
-
+/*
  	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);
 
@@ -326,6 +329,9 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		$pdf->Output('StockCheckComparison.pdf', 'I');
 
 	}
+*/
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_StockComparison_' . date('Y-m-d') . '.pdf');//UldisN
+    $pdf->__destruct(); //UldisN
 
 	if ($_POST['ReportOrClose']=='ReportAndClose'){
 		//need to print the report first before this but don't risk re-adjusting all the stock!!
@@ -335,8 +341,6 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		$sql = 'TRUNCATE TABLE stockcounts';
 		$result = DB_query($sql,$db);
 	}
-
-
 
 } else { /*The option to print PDF was not hit */
 
