@@ -498,6 +498,8 @@ span.main_menu_nolink {
 .menu_group_headers {
 	background: #aaa url(images/menu_bg_white.png) 0px -3px repeat-x;
 	width: 25%;
+	vertical-align: top;
+	padding: 0 0 2px 0;
 }
 
 .menu_group_headers table {
