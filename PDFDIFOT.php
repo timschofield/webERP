@@ -1,6 +1,8 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/*$Id$*/
+
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 3;
 include ('includes/session.inc');
@@ -160,10 +162,10 @@ if (DB_error_no($db)!=0){
 	}
 	include ('includes/footer.inc');
 	exit;
-} elseif (DB_num_rows($Result)==0){
+} elseif (DB_num_rows($Result) == 0){
 	$title = _('DIFOT Report Error');
   	include('includes/header.inc');
-	prnMsg( _('There were no variances between deliveries and orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'),'info');
+	prnMsg( _('There were no variances between deliveries and orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'), 'info');
 	if ($debug==1) {
 		prnMsg( _('The SQL that returned no rows was') . '<br>' . $sql,'error');
 	}
@@ -175,12 +177,10 @@ include('includes/PDFStarter.php');
 
 /*PDFStarter.php has all the variables for page size and width set up depending on the users default preferences for paper size */
 
-$pdf->addinfo('Title',_('Dispatches After') . $_POST['DaysAcceptable'] . ' ' . _('Day(s) from Requested Delivery Date'));
-$pdf->addinfo('Subject',_('Delivery Dates from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
-
+$pdf->addInfo('Title',_('Dispatches After') . $_POST['DaysAcceptable'] . ' ' . _('Day(s) from Requested Delivery Date'));
+$pdf->addInfo('Subject',_('Delivery Dates from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
 $line_height=12;
 $PageNumber = 1;
-
 $TotalDiffs = 0;
 
 include ('includes/PDFDIFOTPageHeader.inc');
@@ -265,7 +265,7 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Total number 
 $YPos-=$line_height;
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('DIFOT') . ' ' . number_format((1-($TotalDiffs/$myrow[0])) * 100,2) . '%', 'left');
 
-
+/* UldisN
 $pdfcode = $pdf->output();
 $len = strlen($pdfcode);
 header('Content-type: application/pdf');
@@ -276,19 +276,23 @@ header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 header('Pragma: public');
 
 $pdf->stream();
+*/
+$ReportFileName = $_SESSION['DatabaseName'] . '_DIFOT_' . date('Y-m-d').'.pdf';
+$pdf->OutputD($ReportFileName);//UldisN
+$pdf->__destruct(); //UldisN
 
 if ($_POST['Email']=='Yes'){
-	if (file_exists($_SESSION['reports_dir'] . '/DIFOT.pdf')){
-		unlink($_SESSION['reports_dir'] . '/DIFOT.pdf');
+	if (file_exists($_SESSION['reports_dir'] . '/'.$ReportFileName)){
+		unlink($_SESSION['reports_dir'] . '/'.$ReportFileName);
 	}
-    	$fp = fopen( $_SESSION['reports_dir'] . '/DIFOT.pdf','wb');
+    	$fp = fopen( $_SESSION['reports_dir'] . '/'.$ReportFileName,'wb');
 	fwrite ($fp, $pdfcode);
 	fclose ($fp);
 
 	include('includes/htmlMimeMail.php');
 
 	$mail = new htmlMimeMail();
-	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/DIFOT.pdf');
+	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/'.$ReportFileName);
 	$mail->setText(_('Please find herewith DIFOT report from') . ' ' . $_POST['FromDate'] .  ' '. _('to') . ' ' . $_POST['ToDate']);
 	$mail->addAttachment($attachment, 'DIFOT.pdf', 'application/pdf');
 	$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] .'>');
