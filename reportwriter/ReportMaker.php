@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.7 $ */
+
+/* $Id: ReportMaker.php 3152 2009-12-11 14:28:49Z tim_schofield $ */
+
 $DirectoryLevelsDeep =1;
 $PathPrefix = '../';
 $PageSecurity = 1; // set security level for webERP
@@ -9,7 +11,8 @@ $ReportLanguage = 'en_US';					// default language file
 
 define('DBReports','reports');			// name of the databse holding the main report information (ReportID)
 define('DBRptFields','reportfields');	// name of the database holding the report fields
-define('FPDF_FONTPATH','../fonts/'); // FPDF path to fonts directory
+// Javier
+// define('FPDF_FONTPATH','../fonts/'); // FPDF path to fonts directory
 
 // Fetch necessary include files - Host application specific (webERP)
 require($PathPrefix . 'includes/session.inc');
@@ -131,7 +134,9 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 		case RPT_BTN_EXPPDF:
 			$Prefs = ReadPostData($ReportID, $Prefs);
 			// include the necessary files to build report
-			require($PathPrefix . 'includes/fpdf.php'); // FPDF class to generate reports
+// Javier
+//			require($PathPrefix . 'includes/fpdf.php'); // FPDF class to generate reports
+			require($PathPrefix . 'includes/class.pdf.php'); // Cpdf TCPDF class to generate reports
 			require('WriteReport.inc');
 			$ReportData = '';
 			$success = BuildSQL($Prefs);
@@ -252,10 +257,7 @@ function RetrieveFields($ReportID, $EntryType) {
 	return $FieldListings;
 }
 
-function ChangeSequence($ReportID, 
-						$SeqNum, 
-						$EntryType, 
-						$UpDown) {
+function ChangeSequence($ReportID, $SeqNum, $EntryType, $UpDown) {
 	global $db;
 	// find the id of the row to move
 	$sql = "SELECT id FROM ".DBRptFields." 

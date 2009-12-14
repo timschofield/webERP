@@ -1,16 +1,8 @@
 <?php
-// for compatability with extended char sets
-if ($_SESSION['Language']=='zh_CN'){
-	include($PathPrefix . 'includes/FPDF_Chinese.php');
-} elseif ($_SESSION['Language']=='ja_JP'){
-	include($PathPrefix . 'includes/FPDF_Japanese.php');
-} elseif ($_SESSION['Language']=='ko_KR'){
-	include($PathPrefix . 'includes/FPDF_Korean.php');
-} else {
-	class PDF_Language extends FPDF { }
-}
 
-class PDF extends PDF_Language {
+/* $Id: WriteForm.inc 3152 2009-12-11 14:28:49Z tim_schofield $ */
+
+class PDF extends Cpdf {
 	var $y0; // current y position
 	var $x0; // current x position
 	var $pageY; // y value of bottom of page less bottom margin
@@ -20,7 +12,10 @@ class PDF extends PDF_Language {
 		global $Prefs;
 		define('RowSpace',2); // define separation between the heading rows
 		$PaperSize = explode(':',$Prefs['papersize']);
-		$this->PDF_Language($Prefs['paperorientation'], 'mm', $PaperSize[0]);
+//		$this->PDF_Language($Prefs['paperorientation'], 'mm', $PaperSize[0]); 		This was the calling used
+//			__construct($DocOrientation='P', $DocUnits='mm', $DocPaper='A4');	This is the actual contructor
+		parent::__construct($Prefs['paperorientation'], 'mm', $PaperSize[0]);		
+
 		if ($Prefs['paperorientation']=='P') { // Portrait - calculate max page height
 			$this->pageY = $PaperSize[2]-$Prefs['marginbottom'];
 		} else { // Landscape
@@ -28,18 +23,11 @@ class PDF extends PDF_Language {
 		}
 		$this->SetMargins($Prefs['marginleft'], $Prefs['margintop'], $Prefs['marginright']);
 		$this->SetAutoPageBreak(0, $Prefs['marginbottom']);
-		$this->SetFont('Helvetica');
 		$this->SetDrawColor(128,0,0);
 		$this->SetLineWidth(.35); // 1 point
-	
-		if ($_SESSION['Language']=='zh_CN'){
-			$this->AddBig5Font();
-		} elseif ($_SESSION['Language']=='ja_JP'){
-			$this->AddSJISFont();
-		} elseif ($_SESSION['Language']=='ko_KR'){
-			$this->AddUHCFont();
-		}
+// Javier	$this->SetFont('Helvetica');
 	}
+
 
 	function Header() { // prints all static information on the page
 		global $FieldListings, $FieldValues;
@@ -91,7 +79,10 @@ class PDF extends PDF_Language {
 				$Params['BoxHeight'] = '20';
 			}
 			$this->SetXY($Params['LineXStrt'],$Params['LineYStrt']);
-			$this->SetFont('Helvetica','','10');
+
+// Javier		$this->SetFont('Helvetica', '', '10');
+			$this->SetFont('', '', '10');
+
 			$this->SetTextColor(255,0,0);
 			$this->SetDrawColor(255,0,0);
 			$this->SetLineWidth(0.35);
@@ -149,7 +140,11 @@ class PDF extends PDF_Language {
 	function FormText($Params) {
 		if (!isset($Params['LineXStrt'])) return;	// don't do anything if data array has not been set
 		$this->SetXY($Params['LineXStrt'],$Params['LineYStrt']);
-		$this->SetFont($Params['Font'],'',$Params['FontSize']);
+
+// Javier: CJK don't have the choice to select a font
+//			$this->SetFont($Params['Font'],'',$Params['FontSize']);
+		$this->SetFont('', '', $Params['FontSize']);
+
 		if ($Params['Color']=='2') $RGB=$Params['FontRed'].':'.$Params['FontGreen'].':'.$Params['FontBlue'];
 			else $RGB=$Params['FontColor'];
 		$FC = explode(':',$RGB);
@@ -226,7 +221,11 @@ class PDF extends PDF_Language {
 			if ($Params['Seq'][$Col]['TblShow']) {
 				$this->SetLeftMargin($NextXPos);
 				$this->SetXY($NextXPos, $this->y0);
-				$this->SetFont($Params['Seq'][$Col]['Font'],'',$Params['Seq'][$Col]['FontSize']);
+
+// Javier: CJK don't have the choice to select a font
+//				$this->SetFont($Params['Seq'][$Col]['Font'], '', $Params['Seq'][$Col]['FontSize']);
+				$this->SetFont('', '', $Params['Seq'][$Col]['FontSize']);
+
 				$TC = explode(':',$Params['Seq'][$Col]['FontColor']);
 				$this->SetTextColor($TC[0],$TC[1],$TC[2]);
 				$CellHeight = ($Params['Seq'][$Col]['FontSize']+RowSpace)*0.35;
@@ -598,9 +597,11 @@ function BuildPDF($ReportID, $Prefs) {
 		}
 	}
 	// Add additional headers needed for MSIE and send page
-	header('Pragma: cache');
+
+// Javier: TCPDF sends its own http header
+/*	header('Pragma: cache');
 	header('Cache-Control: public, must-revalidate, max-age=0');
-	$pdf->Output($Prefs['reportname'].'.pdf','I');
+*/	$pdf->Output($Prefs['reportname'].'.pdf','D');
 	exit(); // needs to be here to properly render the pdf file.
 }
 

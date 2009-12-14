@@ -18,7 +18,9 @@ Import: Handled in action=step8, calls an import function to read the setup info
 */
 
 $DirectoryLevelsDeep = 2;
-$PathPrefix = '../../';
+// Javier $PathPrefix = '../../'; se va un directorio mas arriba, si no funciona el cambio hay que hacerlo constante.
+$PathPrefix = '../';
+
 $PageSecurity = 2; // set security level for webERP
 // Fetch necessary include files for webERP
 require ($PathPrefix . 'includes/session.inc');
