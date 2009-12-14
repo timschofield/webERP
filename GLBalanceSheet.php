@@ -2,6 +2,8 @@
 
 /* $Revision: 1.21 $ */
 
+/* $Id $ */
+
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 
 $PageSecurity = 8;
@@ -59,11 +61,11 @@ echo '<div class="page_help_text">'
 } elseif (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
+	$pdf->addInfo('Title', _('Balance Sheet') );
+	$pdf->addInfo('Subject', _('Balance Sheet') );
+	$line_height = 12;
 	$PageNumber = 0;
 	$FontSize = 10;
-	$pdf->addinfo('Title', _('Balance Sheet') );
-	$pdf->addinfo('Subject', _('Balance Sheet') );
-	$line_height = 12;
 
 	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
 
@@ -132,6 +134,8 @@ echo '<div class="page_help_text">'
 		exit;
 	}
 
+    $ListCount = DB_num_rows($AccountsResult); // UldisN
+
 	include('includes/PDFBalanceSheetPageHeader.inc');
 
 	$k=0; //row colour counter
@@ -159,8 +163,8 @@ echo '<div class="page_help_text">'
 		}
 		if ($ActGrp !=''){
         		if ($myrow['groupname']!=$ActGrp){
-				$FontSize = 8;
-				$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+					$FontSize = 8;
+					$pdf->setFont('','B');
         			while ($myrow['groupname']!= $ParentGroups[$Level] AND $Level>0) {
         				$YPos -= $line_height;
         				$LeftOvers = $pdf->addTextWrap($Left_Margin+(10 * ($Level+1)),$YPos,200,$FontSize,_('Total') . ' ' . $ParentGroups[$Level]);
@@ -180,13 +184,13 @@ echo '<div class="page_help_text">'
         			$LYGroupTotal[$Level]=0;
         			$YPos -= $line_height;
         		}
-                }
+        }
 
 		if ($myrow['sectioninaccounts']!= $Section){
 
 			if ($Section !=''){
 				$FontSize = 8;
-				$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+				$pdf->setFont('','B');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$Section]);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($SectionBalance),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($SectionBalanceLY),'right');
@@ -205,8 +209,8 @@ echo '<div class="page_help_text">'
 		}
 
 		if ($myrow['groupname']!= $ActGrp){
-                        $FontSize =8;
-                        $pdf->selectFont('./fonts/Helvetica-Bold.afm');
+            $FontSize =8;
+            $pdf->setFont('','B');
 			if ($myrow['parentgroupname']==$ActGrp AND $ActGrp!=''){
 				$Level++;
 			}
@@ -233,7 +237,7 @@ echo '<div class="page_help_text">'
 
 		if ($_POST['Detail']=='Detailed'){
 		        $FontSize =8;
-			$pdf->selectFont('./fonts/Helvetica.afm');
+			$pdf->setFont('','');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,$myrow['accountcode']);
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+55,$YPos,200,$FontSize,$myrow['accountname']);
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($AccountBalance),'right');
@@ -245,8 +249,8 @@ echo '<div class="page_help_text">'
 		}
 	}//end of loop
 
-        $FontSize = 8;
-	$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+    $FontSize = 8;
+	$pdf->setFont('','B');
 	while ($Level>0) {
         	$YPos -= $line_height;
         	$LeftOvers = $pdf->addTextWrap($Left_Margin+(10 * ($Level+1)),$YPos,200,$FontSize,_('Total') . ' ' . $ParentGroups[$Level]);
@@ -268,7 +272,7 @@ echo '<div class="page_help_text">'
 
         if ($SectionBalanceLY+$SectionBalance !=0){
 	        $FontSize =8;
-		$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+		$pdf->setFont('','B');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$Section]);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($SectionBalance),'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($SectionBalanceLY),'right');
@@ -281,28 +285,16 @@ echo '<div class="page_help_text">'
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($CheckTotal),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($LYCheckTotal),'right');
 
-	
-
-
-	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
-
-	if ($len<=20){
+	if ($ListCount == 0) {   //UldisN
 		$title = _('Print Balance Sheet Error');
 		include('includes/header.inc');
-		echo '<p>';
 		prnMsg( _('There were no entries to print out for the selections specified') );
 		echo '<br><a href="'. $rootpath.'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
 		include('includes/footer.inc');
 		exit;
 	} else {
-	        header('Content-type: application/pdf');
-		header('Content-Length: ' . $len);
-		header('Content-Disposition: inline; filename="BalanceSheet.pdf"');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Pragma: public');
-		$pdf->Output('GLBalanceSheet.pdf', 'I');
+	    $pdf->OutputD($_SESSION['DatabaseName'] . '_GL_Balance_Sheet_' . date('Y-m-d') . '.pdf');//UldisN
+        $pdf->__destruct(); //UldisN
 	}
 	exit;
 } else {
