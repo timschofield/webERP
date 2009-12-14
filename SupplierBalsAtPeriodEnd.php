@@ -1,10 +1,9 @@
 <?php
 
+/* $Id$ */
+
 $PageSecurity = 2;
 include('includes/session.inc');
-
-
-/* $Revision: 1.14 $ */
 
 If (isset($_POST['PrintPDF']) 
 	AND isset($_POST['FromCriteria']) 
@@ -14,13 +13,12 @@ If (isset($_POST['PrintPDF'])
 
 	include('includes/PDFStarter.php');
 
+	$pdf->addInfo('Title',_('Supplier Balance Listing'));
+	$pdf->addInfo('Subject',_('Supplier Balances'));
+	
 	$FontSize=12;
-	$pdf->addinfo('Title',_('Supplier Balance Listing'));
-	$pdf->addinfo('Subject',_('Supplier Balances'));
-
 	$PageNumber=0;
 	$line_height=12;
-
 
       /*Now figure out the aged analysis for the Supplier range under review */
 
@@ -53,13 +51,21 @@ If (isset($_POST['PrintPDF'])
 	$SupplierResult = DB_query($SQL,$db);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Supplier Balances') . ' - ' . _('Problem Report');
+		$title = _('Supplier Balances - Problem Report');
 		include('includes/header.inc');
 		prnMsg(_('The Supplier details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db),'error');
 		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo "<br>$SQL";
 		}
+		include('includes/footer.inc');
+		exit;
+	}
+	if (DB_num_rows($SupplierResult) ==0) {
+		$title = _('Supplier Balances - Problem Report');
+		include('includes/header.inc');
+		prnMsg(_('There are no supplier balances to list'),'error');
+		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -85,7 +91,6 @@ If (isset($_POST['PrintPDF'])
 			$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayFXBalance,'right');
 			$LeftOvers = $pdf->addTextWrap(350,$YPos,100,$FontSize,$SupplierBalances['currency'],'left');
 
-
 			$YPos -=$line_height;
 			if ($YPos < $Bottom_Margin + $line_height){
 			include('includes/PDFSupplierBalsPageHeader.inc');
@@ -102,19 +107,10 @@ If (isset($_POST['PrintPDF'])
 	$DisplayTotBalance = number_format($TotBal,2);
 
 	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
-
-	$buf = $pdf->output();
-	$len = strlen($buf);
-
-	header('Content-type: application/pdf');
-	header('Content-Length: ' . $len);
-	header('Content-Disposition: inline; filename=SupplierBals.pdf');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
-
-	$pdf->stream();
-
+	
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_Supplier_Balances_at_Period_End_' . Date('Y-m-d') . '.pdf');
+	$pdf->__destruct();
+	
 } else { /*The option to print PDF was not hit */
 
 	$title=_('Supplier Balances At A Period End');
