@@ -122,7 +122,11 @@ echo '<tr>
 
 	while (false != ($LanguageEntry = $LangDirHandle->read())){
 	
-		if (is_dir('locale/' . $LanguageEntry) AND $LanguageEntry != '..' AND $LanguageEntry != 'CVS' AND $LanguageEntry!='.'){
+		if (is_dir('locale/' . $LanguageEntry) 
+				AND $LanguageEntry != '..' 
+				AND $LanguageEntry != 'CVS'
+				AND $LanguageEntry != '.svn' 
+				AND $LanguageEntry!='.'){
 	
 			if ($_SESSION['Language'] == $LanguageEntry){
 				echo "<option selected VALUE='$LanguageEntry'>$LanguageEntry";
