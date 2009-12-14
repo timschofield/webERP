@@ -1,7 +1,8 @@
 <?php
 
+/*$Id$*/
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 3;
 include ('includes/session.inc');
@@ -65,6 +66,11 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
      exit;
 } else {
 	include('includes/PDFStarter.php');
+    $pdf->addInfo('Title',_('Orders Invoiced Report'));
+    $pdf->addInfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
+    $line_height=12;
+    $PageNumber = 1;
+    $TotalDiffs = 0;
 }
 
 if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
@@ -218,7 +224,7 @@ if (DB_error_no($db)!=0){
 	exit;
 } elseif (DB_num_rows($Result)==0){
   	include('includes/header.inc');
-	prnMsg(_('There were no orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' '. $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'),'warn');
+	prnMsg(_('There were no orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' '. $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'), 'warn');
 	if ($debug==1) {
 		prnMsg(_('The SQL that returned no rows was') . '<br>' . $sql,'',_('Database Error'));
 	}
@@ -226,18 +232,7 @@ if (DB_error_no($db)!=0){
 	exit;
 }
 
-/*PDFStarter.php has all the variables for page size and width set up depending on the users default preferences for paper size */
-
-$pdf->addinfo('Title',_('Orders Invoiced Report'));
-$pdf->addinfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
-
-$line_height=12;
-$PageNumber = 1;
-
-$TotalDiffs = 0;
-
 include ('includes/PDFOrdersInvoicedPageHeader.inc');
-
 
 $OrderNo =0; /*initialise */
 $AccumTotalInv =0;
@@ -363,7 +358,7 @@ $YPos -= ($line_height);
 $LeftOvers = $pdf->addTextWrap($Left_Margin+260,$YPos,100,$FontSize,_('GRAND TOTAL INVOICED'), 'right');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+360,$YPos,80,$FontSize,number_format($AccumTotalInv,2), 'right');
 $YPos -= ($line_height);
-
+/* UldisN
 $pdfcode = $pdf->output();
 $len = strlen($pdfcode);
 header('Content-type: application/pdf');
@@ -374,4 +369,7 @@ header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 header('Pragma: public');
 
 $pdf->stream();
+*/
+$pdf->OutputD($_SESSION['DatabaseName'] . '_OrdersInvoiced_' . date('Y-m-d') . '.pdf');//UldisN
+$pdf->__destruct(); //UldisN
 ?>
