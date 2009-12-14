@@ -1,5 +1,9 @@
 <?php
+
 /* $Revision: 1.4 $ */
+
+/* $Id$  */
+
 // InventoryQuantities.php - Report of parts with quantity. Sorts by part and shows
 // all locations where there are quantities of the part
 $PageSecurity = 2;
@@ -7,13 +11,12 @@ include('includes/session.inc');
 If (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
-
+	$pdf->addInfo('Title',_('Inventory Quantities Report'));
+	$pdf->addInfo('Subject',_('Parts With Quantities'));
 	$FontSize=9;
-	$pdf->addinfo('Title',_('Inventory Quantities Report'));
-	$pdf->addinfo('Subject',_('Parts With Quantities'));
-
 	$PageNumber=1;
 	$line_height=12;
+
 	$Xpos = $Left_Margin+1;
 	$wherecategory = " ";
 	$catdescription = " ";
@@ -85,6 +88,14 @@ If (isset($_POST['PrintPDF'])) {
 	   include('includes/footer.inc');
 	   exit;
 	}
+	if (DB_num_rows($result)==0){
+			$title = _('Print Inventory Quantities Report');
+			include('includes/header.inc');
+			prnMsg(_('There were no items with inventory quantities'),'error');
+			echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+			include('includes/footer.inc');
+			exit;
+	}
 
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 	            $Page_Width,$Right_Margin,$catdescription);
@@ -125,28 +136,9 @@ If (isset($_POST['PrintPDF'])) {
 	                   $Right_Margin,$catdescription);
 	}
 /*Print out the grand totals */
-
-	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
-
-	if ($len<=20){
-			$title = _('Print Inventory Quantities Report');
-			include('includes/header.inc');
-			prnMsg(_('There were no items with inventory quantities'),'error');
-			echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
-			include('includes/footer.inc');
-			exit;
-	} else {
-			header('Content-type: application/pdf');
-			header("Content-Length: " . $len);
-			header('Content-Disposition: inline; filename=InventoryQuantities.pdf');
-			header('Expires: 0');
-			header('Cache-Control: private, post-check=0, pre-check=0');
-			header('Pragma: public');
 	
-			$pdf->Output('InventoryQuantities.pdf', 'I');
-	}
-	
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_Inventory_Quantities_' . Date('Y-m-d') . '.pdf');
+	$pdf->__destruct();
 } else { /*The option to print PDF was not hit so display form */
 
 	$title=_('Inventory Quantities Reporting');
