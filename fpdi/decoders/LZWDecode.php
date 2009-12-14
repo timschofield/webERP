@@ -1,8 +1,8 @@
 <?php
 //
-//  FPDI - Version 1.2
+//  FPDI - Version 1.3
 //
-//    Copyright 2004-2007 Setasign - Jan Slabon
+//    Copyright 2004-2009 Setasign - Jan Slabon
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ class LZWDecode {
 
     var $sTable = array();
     var $data = null;
+    var $dataLength = 0;
     var $tIdx;
     var $bitsToGet = 9;
     var $bytePointer;
@@ -38,15 +39,16 @@ class LZWDecode {
      *
      * @param string data    The compressed data.
      */
-    function decode(&$data) {
+    function decode($data) {
 
         if($data[0] == 0x00 && $data[1] == 0x01) {
-            $this->fpdi->error("LZW flavour not supported.");
+            $this->fpdi->error('LZW flavour not supported.');
         }
 
         $this->initsTable();
 
-        $this->data =& $data;
+        $this->data = $data;
+        $this->dataLength = strlen($data);
 
         // Initialize pointers
         $this->bytePointer = 0;
@@ -57,8 +59,8 @@ class LZWDecode {
 
         $oldCode = 0;
 
-        $string = "";
-        $uncompData = "";
+        $string = '';
+        $uncompData = '';
 
         while (($code = $this->getNextCode()) != 257) {
             if ($code == 256) {
@@ -111,7 +113,7 @@ class LZWDecode {
     /**
      * Add a new string to the string table.
      */
-    function addStringToTable ($oldString, $newString="") {
+    function addStringToTable ($oldString, $newString='') {
         $string = $oldString.$newString;
 
         // Add this new String to the table
@@ -128,8 +130,9 @@ class LZWDecode {
 
     // Returns the next 9, 10, 11 or 12 bits
     function getNextCode() {
-        if ($this->bytePointer == strlen($this->data))
+        if ($this->bytePointer == $this->dataLength) {
             return 257;
+        }
 
         $this->nextData = ($this->nextData << 8) | (ord($this->data[$this->bytePointer++]) & 0xff);
         $this->nextBits += 8;
@@ -145,7 +148,3 @@ class LZWDecode {
         return $code;
     }
 }
-
-
-
-?>

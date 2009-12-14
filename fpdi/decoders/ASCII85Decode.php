@@ -1,8 +1,8 @@
 <?php
 //
-//  FPDI - Version 1.2
+//  FPDI - Version 1.3
 //
-//    Copyright 2004-2007 Setasign - Jan Slabon
+//    Copyright 2004-2009 Setasign - Jan Slabon
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,14 +17,14 @@
 //  limitations under the License.
 //
 
-if (!defined("ORD_z"))
-	define("ORD_z",ord('z'));
-if (!defined("ORD_exclmark"))
-	define("ORD_exclmark", ord('!'));
-if (!defined("ORD_u"))	
-	define("ORD_u", ord("u"));
-if (!defined("ORD_tilde"))
-	define("ORD_tilde", ord('~'));
+if (!defined('ORD_z'))
+	define('ORD_z',ord('z'));
+if (!defined('ORD_exclmark'))
+	define('ORD_exclmark', ord('!'));
+if (!defined('ORD_u'))	
+	define('ORD_u', ord('u'));
+if (!defined('ORD_tilde'))
+	define('ORD_tilde', ord('~'));
 
 class ASCII85Decode {
 
@@ -34,7 +34,7 @@ class ASCII85Decode {
 
 
     function decode($in) {
-        $out = "";
+        $out = '';
         $state = 0;
         $chn = null;
         
@@ -46,7 +46,7 @@ class ASCII85Decode {
             if ($ch == ORD_tilde) {
                 break;
             }
-            if (preg_match("/^\s$/",chr($ch))) {
+            if (preg_match('/^\s$/',chr($ch))) {
                 continue;
             }
             if ($ch == ORD_z && $state == 0) {
@@ -54,7 +54,7 @@ class ASCII85Decode {
                 continue;
             }
             if ($ch < ORD_exclmark || $ch > ORD_u) {
-                $this->fpdi->error("Illegal character in ASCII85Decode.");
+                $this->fpdi->error('Illegal character in ASCII85Decode.');
             }
             
             $chn[$state++] = $ch - ORD_exclmark;
@@ -73,7 +73,7 @@ class ASCII85Decode {
         $r = 0;
         
         if ($state == 1)
-            $this->fpdi->error("Illegal length in ASCII85Decode.");
+            $this->fpdi->error('Illegal length in ASCII85Decode.');
         if ($state == 2) {
             $r = $chn[0] * 85 * 85 * 85 * 85 + ($chn[1]+1) * 85 * 85 * 85;
             $out .= chr($r >> 24);
@@ -93,5 +93,3 @@ class ASCII85Decode {
         return $out;
     }
 }
-
-?>
