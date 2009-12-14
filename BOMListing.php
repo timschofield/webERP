@@ -1,5 +1,9 @@
 <?php
-/* $Revision: 1.13 $ */
+
+/*$Id$*/
+
+/* $Revision: 1.14 $ */
+
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -11,11 +15,9 @@ If (isset($_POST['PrintPDF'])
 	AND strlen($_POST['ToCriteria'])>=1){
 
 	include('includes/PDFStarter.php');
-
+	$pdf->addInfo('Title',_('Bill Of Material Listing'));
+	$pdf->addInfo('Subject',_('Bill Of Material Listing'));
 	$FontSize=12;
-	$pdf->addinfo('Title',_('Bill Of Material Listing'));
-	$pdf->addinfo('Subject',_('Bill Of Material Listing'));
-
 	$PageNumber=0;
 	$line_height=12;
 
@@ -103,7 +105,7 @@ If (isset($_POST['PrintPDF'])
 
 	$YPos -=$line_height;
 	$pdf->line($Page_Width-$Right_Margin, $YPos,$Left_Margin, $YPos);
-
+    /*
 	$buf = $pdf->output();
 	$len = strlen($buf);
 
@@ -115,7 +117,9 @@ If (isset($_POST['PrintPDF'])
 	header('Pragma: public');
 
 	$pdf->stream();
-
+    */
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_BOMListing_' . date('Y-m-d').'.pdf');//UldisN
+    $pdf->__destruct(); //UldisN
 
 } else { /*The option to print PDF was not hit */
 
