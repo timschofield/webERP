@@ -1,5 +1,8 @@
 <?php
-/* $Revision: 1.6 $ */
+
+/*$Id$*/
+
+/* $Revision: 1.7 $ */
 // MRPShortages.php - Report of parts with demand greater than supply as determined by MRP
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -7,11 +10,9 @@ include('includes/session.inc');
 If (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
-
-	$FontSize=9;
-	$pdf->addinfo('Title',_('MRP Shortages Report'));
-	$pdf->addinfo('Subject',_('MRP Shortages'));
-
+	$pdf->addInfo('Title',_('MRP Shortages Report'));
+	$pdf->addInfo('Subject',_('MRP Shortages'));
+    $FontSize=9;
 	$PageNumber=1;
 	$line_height=12;
 
@@ -119,6 +120,18 @@ If (isset($_POST['PrintPDF'])) {
 	   exit;
 	}
 
+	if (DB_num_rows($result) == 0) {
+	  $title = _('MRP Shortages') . ' - ' . _('Problem Report');
+	  include('includes/header.inc');
+	   prnMsg( _('No MRP shortages retrieved'), 'warn');
+	   echo "</br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+	   if ($debug==1){
+	      echo "</br>$sql";
+	   }
+	   include('includes/footer.inc');
+	   exit;
+	}
+
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 	                   $Right_Margin);
 
@@ -178,7 +191,7 @@ If (isset($_POST['PrintPDF'])) {
 	$pdf->addTextWrap(300,$YPos,180,$FontSize,_('Total Extended Shortage:'), 'right');
 	$DisplayTotalVal = number_format($Total_Shortage,2);
     $pdf->addTextWrap(510,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
-
+/* UldisN
 	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);
 
@@ -199,7 +212,9 @@ If (isset($_POST['PrintPDF'])) {
 	
 			$pdf->Output('MRPShortages.pdf', 'I');
 	}
-	
+*/
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_MRPShortages_' . date('Y-m-d').'.pdf');//UldisN
+    $pdf->__destruct(); //UldisN
 } else { /*The option to print PDF was not hit so display form */
 
 	$title=_('MRP Shortages Reporting');
