@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Id$ */
 
 $PageSecurity = 2;
 
@@ -10,40 +10,40 @@ $title = _('Sales Analysis Reports Maintenance');
 
 include('includes/header.inc');
 
-Function GrpByDataOptions ($GroupByDataX){
+function GrpByDataOptions($GroupByDataX) {
 
 /*Sales analysis headers group by data options */
- if ($GroupByDataX == 'Sales Area'){
+ if ($GroupByDataX == 'Sales Area') {
      echo '<option selected Value="Sales Area">' . _('Sales Area');
  } else {
     echo '<option Value="Sales Area">' . _('Sales Area');
  }
- if ($GroupByDataX == 'Product Code'){
+ if ($GroupByDataX == 'Product Code') {
      echo '<option selected Value="Product Code">' . _('Product Code');
  } else {
     echo '<option Value="Product Code">' . _('Product Code');
  }
- if ($GroupByDataX == 'Customer Code'){
+ if ($GroupByDataX == 'Customer Code') {
      echo '<option selected Value="Customer Code">' . _('Customer Code');
  } else {
     echo '<option Value="Customer Code">' . _('Customer Code');
  }
- if ($GroupByDataX == 'Sales Type'){
+ if ($GroupByDataX == 'Sales Type') {
      echo '<option selected Value="Sales Type">' . _('Sales Type');
  } else {
     echo '<option Value="Sales Type">' . _('Sales Type');
  }
- if ($GroupByDataX == 'Product Type'){
+ if ($GroupByDataX == 'Product Type') {
      echo '<option selected Value="Product Type">' . _('Product Type');
  } else {
     echo '<option Value="Product Type">' . _('Product Type');
  }
- if ($GroupByDataX == 'Customer Branch'){
+ if ($GroupByDataX == 'Customer Branch') {
      echo '<option selected Value="Customer Branch">' . _('Customer Branch');
  } else {
     echo '<option Value="Customer Branch">' . _('Customer Branch');
  }
- if ($GroupByDataX == 'Sales Person'){
+ if ($GroupByDataX == 'Sales Person') {
      echo '<option selected Value="Sales Person">' . _('Sales Person');
  } else {
     echo '<option Value="Sales Person">' . _('Sales Person');
@@ -59,9 +59,9 @@ Function GrpByDataOptions ($GroupByDataX){
 
 echo '<p>';
 
-if (isset($_GET['SelectedReport'])){
+if (isset($_GET['SelectedReport'])) {
 	$SelectedReport = $_GET['SelectedReport'];
-} elseif (isset($_POST['SelectedReport'])){
+} elseif (isset($_POST['SelectedReport'])) {
 	$SelectedReport = $_POST['SelectedReport'];
 }
 
@@ -80,51 +80,51 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The report heading must be more than two characters long') . '. ' . _('No report heading was entered'),'error',_('Heading too long'));
 	}
-	if ($_POST['GroupByData1']=='' OR !isset($_POST['GroupByData1']) OR $_POST['GroupByData1']=='Not Used'){
+	if ($_POST['GroupByData1']=='' OR !isset($_POST['GroupByData1']) OR $_POST['GroupByData1']=='Not Used') {
 	      $InputError = 1;
 	      prnMsg (_('A group by item must be specified for the report to have any output'),'error',_('No Group By selected'));
 	}
-	if ($_POST['GroupByData3']=='Not Used' AND $_POST['GroupByData4']!='Not Used'){
+	if ($_POST['GroupByData3']=='Not Used' AND $_POST['GroupByData4']!='Not Used') {
 		// If GroupByData3 is blank but GroupByData4 is used then move GroupByData3 to GroupByData2
 		$_POST['GroupByData3'] = $_POST['GroupByData4'];
 		$_POST['Lower3'] = $_POST['Lower4'];
 		$_POST['Upper3'] = $_POST['Upper4'];
 	}
-	if ($_POST['GroupByData2']=='Not Used' AND $_POST['GroupByData3']!='Not Used'){
+	if ($_POST['GroupByData2']=='Not Used' AND $_POST['GroupByData3']!='Not Used') {
 	     /*If GroupByData2 is blank but GroupByData3 is used then move GroupByData3 to GroupByData2 */
 	     $_POST['GroupByData2'] = $_POST['GroupByData3'];
 	     $_POST['Lower2'] = $_POST['Lower3'];
 	     $_POST['Upper2'] = $_POST['Upper3'];
 	}
-	if (($_POST['Lower1']=='' OR $_POST['Upper1']=='')){
+	if (($_POST['Lower1']=='' OR $_POST['Upper1']=='')) {
 	     $InputError = 1;
 	     prnMsg (_('Group by Level 1 is set but the upper and lower limits are not set') . ' - ' . _('these must be specified for the report to have any output'),'error',_('Upper/Lower limits not set'));
 	}
-	if (($_POST['GroupByData2']!='Not Used') AND ($_POST['Lower2']=='' || $_POST['Upper2']=='')){
+	if (($_POST['GroupByData2']!='Not Used') AND ($_POST['Lower2']=='' || $_POST['Upper2']=='')) {
 	     $InputError = 1;
 	     prnMsg( _('Group by Level 2 is set but the upper and lower limits are not set') . ' - ' . _('these must be specified for the report to have any output'),'error',_('Upper/Lower Limits not set'));
 	}
-	if (($_POST['GroupByData3']!='Not Used') AND ($_POST['Lower3']=='' || $_POST['Upper3']=='')){
+	if (($_POST['GroupByData3']!='Not Used') AND ($_POST['Lower3']=='' || $_POST['Upper3']=='')) {
 	     $InputError = 1;
 	     prnMsg( _('Group by Level 3 is set but the upper and lower limits are not set') . ' - ' . _('these must be specified for the report to have any output'),'error',_('Upper/Lower Limits not set'));
 	}
-	if (($_POST['GroupByData4']!='Not Used') AND ($_POST['Lower4']=='' || $_POST['Upper4']=='')){
+	if (($_POST['GroupByData4']!='Not Used') AND ($_POST['Lower4']=='' || $_POST['Upper4']=='')) {
 		$InputError = 1;
 		prnMsg( _('Group by Level 4 is set but the upper and lower limits are not set') . ' - ' . _('these must be specified for the report to have any output'),'error',_('Upper/Lower Limits not set'));
 	}
-	if ($_POST['GroupByData1']!='Not Used' AND $_POST['Lower1'] > $_POST['Upper1']){
+	if ($_POST['GroupByData1']!='Not Used' AND $_POST['Lower1'] > $_POST['Upper1']) {
 	     $InputError = 1;
 	     prnMsg(_('Group by Level 1 is set but the lower limit is greater than the upper limit') . ' - ' . _('the report will have no output'),'error',_('Lower Limit > Upper Limit'));
 	}
-	if ($_POST['GroupByData2']!='Not Used' AND $_POST['Lower2'] > $_POST['Upper2']){
+	if ($_POST['GroupByData2']!='Not Used' AND $_POST['Lower2'] > $_POST['Upper2']) {
 	     $InputError = 1;
 	     prnMsg(_('Group by Level 2 is set but the lower limit is greater than the upper limit') . ' - ' . _('the report will have no output'),'error',_('Lower Limit > Upper Limit'));
 	}
-	if ($_POST['GroupByData3']!='Not Used' AND $_POST['Lower3'] > $_POST['Upper3']){
+	if ($_POST['GroupByData3']!='Not Used' AND $_POST['Lower3'] > $_POST['Upper3']) {
 	     $InputError = 1;
 	     prnMsg(_('Group by Level 3 is set but the lower limit is greater than the upper limit') . ' - ' . _('the report will have no output'),'error',_('Lower Limit > Upper Limit'));
 	}
-	if ($_POST['GroupByData4']!='Not Used' AND $_POST['Lower4'] > $_POST['Upper4']){
+	if ($_POST['GroupByData4']!='Not Used' AND $_POST['Lower4'] > $_POST['Upper4']) {
 		$InputError = 1;
 		prnMsg(_('Group by Level 4 is set but the lower limit is greater than the upper limit') . ' - ' . _('the report will have no output'),'error',_('Lower Limit > Upper Limit'));
 	}
@@ -325,15 +325,15 @@ while ($myrow = DB_fetch_array($result)) {
 
 
 if (isset($SelectedReport)) {
-	echo "<a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Show All Defined Reports') . '</a>';
+	echo '<a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Show All Defined Reports') . '</a>';
 }
 
 echo '<p>';
 
 
 if (!isset($_GET['delete'])) {
-	echo "<hr>";
-	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo '<hr />';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 
 	if (isset($SelectedReport)) {
 		//editing an existing Report
