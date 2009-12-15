@@ -1,6 +1,7 @@
 <?php
 
 /* $Revision: 1.21 $ */
+/* $Id$*/
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -116,6 +117,7 @@ echo $tableheader;
 
 $TotalValueCharged=0;
 
+$i=0;
 foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
 	echo '<tr><td>' . $EnteredGRN->GRNNo . '</td>
