@@ -32,7 +32,7 @@ if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 }
 
 echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Supplier Invoice') . '" alt="">' . ' '
-        . _('Enter Supplier Invoice:') . ' ' . $_SESSION['SuppTrans']->SupplierName;
+        . _('Enter Supplier Invoice:') . ' ' . $SupplierName;
 echo '</div>';
 if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 
@@ -415,8 +415,8 @@ if (!isset($_POST['PostInvoice'])){
 	
 	echo '<tr><td>' . _('Invoice Total') . ':</td><td colspan=2 class=number><b>' . $DisplayTotal . '</b></td></tr></table>';
 	
-	echo '<table><tr><td>' . _('Comments') . '</td><td><TEXTAREA name=Comments COLS=40 ROWS=2>' .
-		$_SESSION['SuppTrans']->Comments . '</TEXTAREa></td></tr></table>';
+	echo '<table><tr><td>' . _('Comments') . '</td><td><textarea name=Comments COLS=40 ROWS=2>' .
+		$_SESSION['SuppTrans']->Comments . '</textarea></td></tr></table>';
 	
 	echo "<p><div class='centre'><input type=submit name='PostInvoice' VALUE='" . _('Enter Invoice') . "'></div>";
 	
