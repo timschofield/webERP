@@ -1,4 +1,5 @@
 <?php
+/* $Id$*/
 
 /* Include session.inc, to allow database connection, and access to
    miscfunctions, and datefunctions.*/

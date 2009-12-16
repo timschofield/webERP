@@ -1,4 +1,5 @@
 <?php
+/* $Id$*/
 
 /* Check that the account group doesn't already exist'*/
 	function VerifyAccountGroup($AccountGroup, $i, $Errors, $db) {

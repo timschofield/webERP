@@ -1,4 +1,5 @@
 <?php
+/* $Id$*/
 
 /* Check that the transaction number is unique
  * for this type of transaction*/

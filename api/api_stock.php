@@ -1,4 +1,5 @@
 <?php
+/* $Id$*/
 
 /* Check that the stock code*/
 	function VerifyStockCode($StockCode, $i, $Errors, $db) {

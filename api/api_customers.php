@@ -1,4 +1,5 @@
 <?php
+/* $Id$*/
 
 /* Verify that the debtor number is valid, and doesn't already
    exist.*/

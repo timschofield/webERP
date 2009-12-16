@@ -1,4 +1,5 @@
 <?php
+/* $Id$*/
 
 /* This function returns a list of the currency abbreviations
  * currently setup on webERP 

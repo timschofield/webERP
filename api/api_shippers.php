@@ -1,4 +1,5 @@
 <?php
+/* $Id$*/
 
 /* This function returns a list of the stock shipper id's
  * currently setup on webERP

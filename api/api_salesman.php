@@ -1,4 +1,5 @@
 <?php
+/* $Id$*/
 
 /* This function returns a list of the stock salesman codes
  * currently setup on webERP
