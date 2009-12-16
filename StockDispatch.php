@@ -1,5 +1,5 @@
 <?php
-/* $Id$ */
+/* $Id$*/
 // StockDispatch.php - Report of parts with overstock at one location that can be transferred
 // to another location to cover shortage based on reorder level. Creates loctransfer records 
 // that can be processed using Bulk Inventory Transfer - Receive.

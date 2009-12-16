@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.26 $ */
+/* $Id$*/
 
 $PageSecurity = 11;
 

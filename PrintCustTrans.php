@@ -1,10 +1,6 @@
 <?php
 
-/* $Revision: 1.52 $ */
-
-/* $Id: PrintCustTrans.php 3152 2009-12-11 14:28:49Z tim_schofield $ */
-
-/* $Revision: 1.53 $ */
+/* $Id$ */
 
 /* Javier: This file has 5 PDF Outputs, one FPDI class, one function, 
 	El único q cambió alguien está en L570, 3 son de fpdi y el 5º está en L457  */

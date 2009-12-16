@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Id$*/
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');

@@ -1,7 +1,6 @@
 <?php
 
-/* $Id */
-/* $Revision: 1.5 $ */
+/* $Id$*/
 // SalesInquiry.php
 // Inquiry on Sales Orders - If Date Type is Order Date, salesorderdetails is the main table
 // If Date Type is Invoice, stockmoves is the main table

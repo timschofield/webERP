@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Id$*/
 
 $PageSecurity = 11; // only allow accountant access
 

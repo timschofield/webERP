@@ -1,7 +1,6 @@
 <?php
 
-
-/* $Revision: 1.15 $ */
+/* $Id$*/
 
 /*
 	This page can be called with...

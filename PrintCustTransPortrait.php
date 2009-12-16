@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PrintCustTransPortrait.php 3152 2009-12-11 14:28:49Z tim_schofield $ */
+/* $Id$ */
 
 /* Javier: This file has 5 PDF Outputs, one FPDI class, and one function, 
 	The Outputs are L520 and L570, 3 are about FPDI y el 5th is in L457  */

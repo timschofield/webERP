@@ -1,7 +1,6 @@
 <?php
 
 /* $Id$ */
-/* $Revision: 1.4 $ */
 
 // POReport.php
 // Inquiry on Purchase Orders

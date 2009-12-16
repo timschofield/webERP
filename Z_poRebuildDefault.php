@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Id$*/
 
 /* Steve Kitchen */
 

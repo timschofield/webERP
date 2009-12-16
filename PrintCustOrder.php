@@ -1,8 +1,6 @@
 <?php
 
-/* $Id: PrintCustOrder.php 3152 2009-12-11 14:28:49Z tim_schofield $ */
-
-/* $Revision: 1.16 $ */
+/* $Id$ */
 
 $PageSecurity = 2;
 

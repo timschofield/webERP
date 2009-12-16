@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Id$*/
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockAdjustment.php');
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Id$*/
 /* Steve Kitchen */
 /* Up front menu for language file maintenance */
 

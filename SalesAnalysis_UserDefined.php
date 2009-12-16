@@ -1,22 +1,9 @@
 <?php
 
-/* $Id: SalesAnalysis_UserDefined.php 3152 2009-12-11 14:28:49Z tim_schofield $ */
+/* $Id$ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
-
-/*
-include('config.php');
-include('includes/ConnectDB.inc');
-*/
-
-/*
- if (isset($SessionSavePath)){
-	session_save_path($SessionSavePath);
-}
-
-session_start();
-*/
 
 if (!in_array($PageSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 	echo '<html><body><br /><br /><br /><br /><br /><br /><br /><div class="centre"><font color="red" size=4><b>' . _('The security settings on your account do not permit you to access this function') . '</b></font></div></body></html>';

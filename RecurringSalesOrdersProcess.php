@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Id$*/
 
 /*need to allow this script to run from Cron or windows scheduler */
 $AllowAnyone = true;

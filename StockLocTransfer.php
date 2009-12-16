@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Id$*/
 /* contributed by Chris Bice */
 
 $PageSecurity = 11;

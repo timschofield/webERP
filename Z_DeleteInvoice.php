@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Id$*/
 
 /* Script to delete an invoice expects and invoice number to delete
 not included on any menu for obvious reasons

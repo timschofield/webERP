@@ -1,7 +1,7 @@
 <?php
 /* $Revision: 1.7 $ */
 
-/*$Id$*/
+/* $Id$*/
 
 /* $Revision: 1.8 $ */
 

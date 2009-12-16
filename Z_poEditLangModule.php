@@ -1,7 +1,6 @@
 <?php
 
 /* $Id$ */
-/* $Revision: 1.11 $ */
 
 /* Steve Kitchen */
 

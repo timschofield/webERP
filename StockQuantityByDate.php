@@ -1,7 +1,6 @@
 <?php
 
 /* $Id$ */
-/* $Revision: 1.10 $ */
 /* Contributed by Chris Bice - gettext by Kitch*/
 
 

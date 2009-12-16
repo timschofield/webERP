@@ -1,7 +1,6 @@
 <?php
 
-
-/* $Revision: 1.10 $ */
+/* $Id$*/
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of Shipts objects - containing details of all shipment charges for invoicing

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Id$*/
 
 /* Script to delete all supplier payments entered or created from a payment run on a specified day
  */

@@ -2,7 +2,7 @@
 
 /* $Revision: 1.2 $ */
 
-/* $Id$ */
+/* $Id$*/
 
 $PageSecurity = 2;
 

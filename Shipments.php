@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Id$*/
 
 $PageSecurity = 11;
 include('includes/DefineShiptClass.php');

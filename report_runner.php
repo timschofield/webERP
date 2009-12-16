@@ -18,6 +18,7 @@
 //you must tell the script where you main installation is located
 //Rememeber this is different for each location
 //$weberp_home=/srv/www/htdocs/weberp
+/* $Id$*/
 
 $usage="USAGE\n".$argv[0].":\n".
        "     -r reportnumber (the number of the weberp report)\n".

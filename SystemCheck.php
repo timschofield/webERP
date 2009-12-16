@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Id$*/
 $PageSecurity =10;
 include('includes/session.inc');
 $title = _('System Check');

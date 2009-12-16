@@ -4,6 +4,7 @@
  *
  * Script to duplicate BoMs.
  */
+/* $Id$*/
 
 $PageSecurity=9;
 include('includes/session.inc');

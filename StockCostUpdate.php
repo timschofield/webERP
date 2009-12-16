@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Id$*/
 
 $PageSecurity = 9; /*viewing possible with inquiries but not mods */
 

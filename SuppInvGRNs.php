@@ -1,6 +1,5 @@
 <?php
 
-/* $Revision: 1.21 $ */
 /* $Id$*/
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice

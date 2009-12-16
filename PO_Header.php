@@ -1,7 +1,6 @@
 <?php
 
 /* $Id$ */
-/* $Revision: 1.35 $ */
 
 /*
 *      PO_Header.php

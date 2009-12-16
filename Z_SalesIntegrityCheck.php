@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Id$*/
 
 // Script to do some Sales Integrity checks
 // No SQL updates or Inserts - so safe to run
