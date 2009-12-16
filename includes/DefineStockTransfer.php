@@ -1,4 +1,5 @@
 <?php
+/* $Id$*/
 
 class StockTransfer {
 
@@ -21,3 +22,4 @@ class StockTransfer {
         }
 }
 
+?>

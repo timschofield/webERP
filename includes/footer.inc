@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.39 $ */
+/* $Id$*/
 
 	echo '</td>';
 	echo '</tr>';

@@ -1,5 +1,5 @@
 <?php
-/* $Id$ */
+/* $Id$*/
 /*Code to print footer details for each supplier being paid and process payment total for each supplier
 as necessary an include file used since the same code is used twice */
 $YPos -= (0.5*$line_height);

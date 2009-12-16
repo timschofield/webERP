@@ -1,5 +1,5 @@
 <?php
-/* $Id $ */
+/* $Id$*/
 
 if ($PageNumber>1){
 	$pdf->newPage();

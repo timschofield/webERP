@@ -1,8 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
-
-/* $Id$ */
+/* $Id$*/
 
 include ('includes/class.pdf.php');
 

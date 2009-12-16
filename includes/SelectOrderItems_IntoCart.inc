@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.31 $ */
+/* $Id$*/
 
 /*SelectOrderItems_IntoCart.inc
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Id$*/
 /*Code to replace [Variables] in Message LineText with the value of the variable itself */
 
 	$PositionPointer = 0;

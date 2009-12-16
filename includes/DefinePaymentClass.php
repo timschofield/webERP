@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Id$*/
 /* definition of the Payment class */
 
 Class Payment {

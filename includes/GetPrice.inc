@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Id$*/
 function GetPrice ($StockID, $DebtorNo, $BranchCode, $db){
 
 	$Price = 0;

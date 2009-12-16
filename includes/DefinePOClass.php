@@ -1,6 +1,5 @@
 <?php
 /* $Id$ */
-/* $Revision: 1.15 $ */
 /* Definition of the PurchOrder class to hold all the information for a purchase order and delivery
 */
 

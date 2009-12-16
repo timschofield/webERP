@@ -8,6 +8,7 @@
 *                                                                              *
 * You may use, modify and redistribute this software as you wish.              *
 *******************************************************************************/
+/* $Id$*/
 
 if(!class_exists('FPDF'))
 {

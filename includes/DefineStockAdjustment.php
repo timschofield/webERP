@@ -1,4 +1,5 @@
 <?php
+/* $Id$*/
 class StockAdjustment {
 
         var $StockID;
@@ -26,4 +27,4 @@ class StockAdjustment {
             $Quantity =0;
         }
 }
-
+?>

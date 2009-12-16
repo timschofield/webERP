@@ -1,7 +1,6 @@
 <?php
 
 /* $Id$ */
-/* $Revision: 1.15 $ */
 
 define ('LIKE','ILIKE');
 /* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$_SESSION['DatabaseName']; */

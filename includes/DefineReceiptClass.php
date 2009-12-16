@@ -1,5 +1,6 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Id$*/
+
 /* definition of the ReceiptBatch class */
 
 Class Receipt_Batch {

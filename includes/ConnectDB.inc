@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.24 $ */
+/* $Id$*/
 
 require_once ($PathPrefix .'includes/MiscFunctions.php');
 if (!isset($_SESSION['DatabaseName'])){

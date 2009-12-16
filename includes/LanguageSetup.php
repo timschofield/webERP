@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: LanguageSetup.php 3152 2009-12-11 14:28:49Z tim_schofield $ */
+/* $Id$ */
 
 /* This file is included in session.inc or PDFStarter.php or a report script that does not use PDFStarter.php
 to check for the existance of gettext function and setup the necessary enviroment to allow for automatic translation

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Id$*/
 /**
 * Filename.......: class.smtp.inc
 * Project........: SMTP Class

@@ -14,7 +14,6 @@
 	Work to move from FPDF to TCPDF by:
 		Javier de Lorenzo-Cáceres <info@civicom.eu>
 	----------------------------------------------------------------------------------------------- */
-
 require_once(dirname(__FILE__).'/tcpdf/config/lang/eng.php');
 require_once(dirname(__FILE__).'/tcpdf/tcpdf.php');
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Id$*/
 /*
 	R & OS PHP-PDF class code to set up a new page
 	a new page is implicit on the establishment of a new pdf object so

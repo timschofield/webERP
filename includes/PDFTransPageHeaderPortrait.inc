@@ -1,7 +1,6 @@
 <?php
 
 /* $Id$ */
-/* $Revision: 1.9 $ */
 /* R&OS PHP-pdf class code to head up a new page */
 
 if (!$FirstPage){ /* only initiate a new page if its not the first */

@@ -1,5 +1,6 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Id$*/
+
 /*PDF page header for aged analysis reports */
 $PageNumber++;
 if ($PageNumber>1){

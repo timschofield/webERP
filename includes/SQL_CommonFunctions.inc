@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Id$*/
 
 /* Common SQL Functions */
 

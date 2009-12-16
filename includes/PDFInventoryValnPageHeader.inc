@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Id$*/
 /*PDF page header for inventory valuation report */
 if ($PageNumber>1){
 	$pdf->newPage();

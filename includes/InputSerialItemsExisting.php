@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.4 $ */
+/* $Id$*/
 
 /**
 If the User has selected Keyed Entry, show them this special select list...

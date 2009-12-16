@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Id$*/
 /*PDF page header for price list report */
 if ($PageNumber>1){
 	$pdf->newPage();

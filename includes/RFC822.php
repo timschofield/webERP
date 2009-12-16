@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Id$*/
 /**
 * RFC 822 Email address list validation Utility
 *

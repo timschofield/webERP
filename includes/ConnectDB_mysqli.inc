@@ -1,7 +1,6 @@
 <?php
 
 /* $Id$ */
-/* $Revision: 1.21 $ */
 
 /* PeterMoulding.com
 20071102 Change from mysql to mysqli;

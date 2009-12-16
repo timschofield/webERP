@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Id$*/
 
 /* definition of the Supplier Payment/Credit Note allocation class */
 

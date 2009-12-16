@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Id$*/
 function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(",","",$str);
 }

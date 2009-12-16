@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Id$*/
 
 /* This file contains the code to post GL transactions.
 

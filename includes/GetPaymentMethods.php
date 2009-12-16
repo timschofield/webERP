@@ -1,4 +1,5 @@
 <?php
+/* $Id$*/
 // I Figure This is the fastest and safest way to load the Sections
 $PaytTypes    = array();
 $ReceiptTypes = array();

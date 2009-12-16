@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Id$*/
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
