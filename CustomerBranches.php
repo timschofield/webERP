@@ -1,6 +1,7 @@
 <?php
 
 /* $Revision: 1.53 $ */
+/* $Id$*/
 
 $PageSecurity = 3;
 

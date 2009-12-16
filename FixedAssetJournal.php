@@ -1,6 +1,7 @@
 <?php
 
 /* $Revision: 1.1 $ */
+/* $Id$*/
 
 include('includes/DefineJournalClass.php');
 

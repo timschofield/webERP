@@ -1,6 +1,7 @@
 <?php
 
 /* $Revision: 1.30 $ */
+/* $Id$*/
 
 include('includes/SQL_CommonFunctions.inc');
 

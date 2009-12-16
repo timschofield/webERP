@@ -1,6 +1,6 @@
 <?php
 
-/* $Id$ */
+/* $Id$*/
 
 $PageSecurity = 8;
 

@@ -1,6 +1,7 @@
 <?php
 
 /* $Revision: 1.67 $ */
+/* $Id$*/
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');

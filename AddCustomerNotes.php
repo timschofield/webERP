@@ -1,5 +1,6 @@
 <?php
 /* $Revision: 1.4 $ */
+/* $Id$*/
 $PageSecurity = 3;
 include('includes/session.inc');
 $title = _('Customer Notes');

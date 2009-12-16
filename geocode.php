@@ -1,4 +1,6 @@
 <?php
+
+/* $Id$*/
 $PageSecurity = 3;
 $title = _('Geocode Generate');
 

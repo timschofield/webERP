@@ -1,5 +1,6 @@
 <?php
 
+/* $Id$*/
 /* $Revision: 1.6 $ */
 /*
 	This page is called from SupplierInquiry.php when the 'view payments' button is selected

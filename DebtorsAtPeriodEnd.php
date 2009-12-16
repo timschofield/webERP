@@ -1,7 +1,7 @@
 <?php
 $PageSecurity = 2;
 
-/*$Id$*/
+/* $Id$*/
 
 /* $Revision: 1.16 $ */
 include('includes/session.inc');

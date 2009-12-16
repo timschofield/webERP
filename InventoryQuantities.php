@@ -2,7 +2,7 @@
 
 /* $Revision: 1.4 $ */
 
-/* $Id$  */
+/* $Id$ */
 
 // InventoryQuantities.php - Report of parts with quantity. Sorts by part and shows
 // all locations where there are quantities of the part

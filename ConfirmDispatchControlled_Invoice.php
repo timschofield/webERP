@@ -1,5 +1,7 @@
 <?php
 /* $Revision: 1.13 $ */
+/* $Id$*/
+
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 $PageSecurity = 11;

@@ -297,5 +297,5 @@ class Cpdf extends TCPDF {
 	}
 		
 } // end of class
-
+}
 ?>

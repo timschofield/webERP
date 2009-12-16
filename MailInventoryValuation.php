@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: MailInventoryValuation.php 3152 2009-12-11 14:28:49Z tim_schofield $ */
+/* $Id$ */
 
 $PageSecurity = 1;
 $AllowAnyone = true;

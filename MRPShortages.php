@@ -1,6 +1,6 @@
 <?php
 
-/*$Id$*/
+/*$Id$ */
 
 /* $Revision: 1.7 $ */
 // MRPShortages.php - Report of parts with demand greater than supply as determined by MRP

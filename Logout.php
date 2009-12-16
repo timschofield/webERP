@@ -1,5 +1,6 @@
 <?php
 /* $Revision: 1.17 $ */
+/* $Id$*/
 $PageSecurity =1;
 
 include('includes/session.inc');
@@ -35,5 +36,3 @@ include('includes/session.inc');
 ?>
 </body>
 </html>
-
-

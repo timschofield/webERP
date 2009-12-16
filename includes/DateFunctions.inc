@@ -495,52 +495,52 @@ function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
 	if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 		if ($DayInFollowingMonth==0){ /*then it must be set up for DaysBeforeDue type */
 
-			$DayDue = $Date_array[0]+$DaysBeforeDue;
-			$MonthDue = $Date_array[1];
-			$YearDue = $Date_array[2];
+			$DayDue = $Date_Array[0]+$DaysBeforeDue;
+			$MonthDue = $Date_Array[1];
+			$YearDue = $Date_Array[2];
 
 		} elseif($DayInFollowingMonth>=29) { //take the last day of month
 
 			$DayDue = 0;
-			$MonthDue = $Date_array[1]+2;
-			$YearDue = $Date_array[2];
+			$MonthDue = $Date_Array[1]+2;
+			$YearDue = $Date_Array[2];
 		} else {
 			$DayDue = $DayInFollowingMonth;
-			$MonthDue = $Date_array[1]+1;
-			$YearDue = $Date_array[2];
+			$MonthDue = $Date_Array[1]+1;
+			$YearDue = $Date_Array[2];
 
 		}
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y'){
 		if ($DayInFollowingMonth==0){ /*then it must be set up for DaysBeforeDue type */
-			$DayDue = $Date_array[1]+$DaysBeforeDue;
-			$MonthDue = $Date_array[0];
-			$YearDue = $Date_array[2];
+			$DayDue = $Date_Array[1]+$DaysBeforeDue;
+			$MonthDue = $Date_Array[0];
+			$YearDue = $Date_Array[2];
 
 		} elseif($DayInFollowingMonth>=29) { //take the last day of month
 
 			$DayDue = 0;
-			$MonthDue = $Date_array[0]+2;
-			$YearDue = $Date_array[2];
+			$MonthDue = $Date_Array[0]+2;
+			$YearDue = $Date_Array[2];
 		} else {
 			$DayDue = $DayInFollowingMonth;
-			$MonthDue = $Date_array[0]+1;
-			$YearDue = $Date_array[2];
+			$MonthDue = $Date_Array[0]+1;
+			$YearDue = $Date_Array[2];
 		}
 	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d'){
 		if ($DayInFollowingMonth==0){ /*then it must be set up for DaysBeforeDue type */
-			$DayDue = $Date_array[2]+$DaysBeforeDue;
-			$MonthDue = $Date_array[1];
-			$YearDue = $Date_array[0];
+			$DayDue = $Date_Array[2]+$DaysBeforeDue;
+			$MonthDue = $Date_Array[1];
+			$YearDue = $Date_Array[0];
 
 		} elseif($DayInFollowingMonth>=29) { //take the last day of month
 
 			$DayDue = 0;
-			$MonthDue = $Date_array[1]+2;
-			$YearDue = $Date_array[0];
+			$MonthDue = $Date_Array[1]+2;
+			$YearDue = $Date_Array[0];
 		} else {
 			$DayDue = $DayInFollowingMonth;
-			$MonthDue = $Date_array[1]+1;
-			$YearDue = $Date_array[0];
+			$MonthDue = $Date_Array[1]+1;
+			$YearDue = $Date_Array[0];
 		}
 	}
 	return Date($_SESSION['DefaultDateFormat'], mktime(0,0,0, $MonthDue, $DayDue,$YearDue));
@@ -552,27 +552,27 @@ function DateAdd ($DateToAddTo,$PeriodString,$NumberPeriods){
   $DateToAddTo = trim($DateToAddTo);
 
 	if (strpos($DateToAddTo,'/')) {
-		$Date_array = explode('/',$DateToAddTo);
+		$Date_Array = explode('/',$DateToAddTo);
 	} elseif (strpos ($DateToAddTo,'-')) {
-		$Date_array = explode('-',$DateToAddTo);
+		$Date_Array = explode('-',$DateToAddTo);
 	} elseif (strpos ($TranDate,'.')) {
-		$Date_array = explode('.',$DateToAddTo);
+		$Date_Array = explode('.',$DateToAddTo);
   }
 
 	if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 
 		switch ($PeriodString) {
 		case 'd': //Days
-			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_array[1],(int)$Date_array[0]+$NumberPeriods ,(int)$Date_array[2]));
+			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[0]+$NumberPeriods ,(int)$Date_Array[2]));
 			break;
 		case 'w': //weeks
-			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_array[1],(int)$Date_array[0]+($NumberPeriods*7),(int)$Date_array[2]));
+			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[0]+($NumberPeriods*7),(int)$Date_Array[2]));
 			break;
 		case 'm': //months
-			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_array[1]+$NumberPeriods,(int)$Date_array[0],(int)$Date_array[2]));
+			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[1]+$NumberPeriods,(int)$Date_Array[0],(int)$Date_Array[2]));
 			break;
 		case 'y': //years
-			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_array[1],(int)$Date_array[0],(int)$Date_array[2]+$NumberPeriods));
+			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[0],(int)$Date_Array[2]+$NumberPeriods));
 			break;
 		default:
 			return 0;
@@ -581,16 +581,16 @@ function DateAdd ($DateToAddTo,$PeriodString,$NumberPeriods){
 
 		switch ($PeriodString) {
 		case 'd':
-			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_array[0],(int)$Date_array[1]+$NumberPeriods,(int)$Date_array[2]));
+			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[0],(int)$Date_Array[1]+$NumberPeriods,(int)$Date_Array[2]));
 			break;
 		case 'w':
-			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_array[0],(int)$Date_array[1]+($NumberPeriods*7),(int)$Date_array[2]));
+			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[0],(int)$Date_Array[1]+($NumberPeriods*7),(int)$Date_Array[2]));
 			break;
 		case 'm':
-			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_array[0]+$NumberPeriods,(int)$Date_array[1],(int)$Date_array[2]));
+			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[0]+$NumberPeriods,(int)$Date_Array[1],(int)$Date_Array[2]));
 			break;
 		case 'y':
-			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_array[0],(int)$Date_array[1],(int)$Date_array[2]+$NumberPeriods));
+			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[0],(int)$Date_Array[1],(int)$Date_Array[2]+$NumberPeriods));
 			break;
 		default:
 			return 0;
@@ -599,16 +599,16 @@ function DateAdd ($DateToAddTo,$PeriodString,$NumberPeriods){
 
 		switch ($PeriodString) {
 		case 'd':
-			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_array[2],(int)$Date_array[1]+$NumberPeriods,(int)$Date_array[0]));
+			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[2],(int)$Date_Array[1]+$NumberPeriods,(int)$Date_Array[0]));
 			break;
 		case 'w':
-			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_array[2],(int)$Date_array[1]+($NumberPeriods*7),(int)$Date_array[0]));
+			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[2],(int)$Date_Array[1]+($NumberPeriods*7),(int)$Date_Array[0]));
 			break;
 		case 'm':
-			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_array[2]+$NumberPeriods,(int)$Date_array[1],(int)$Date_array[0]));
+			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[2]+$NumberPeriods,(int)$Date_Array[1],(int)$Date_Array[0]));
 			break;
 		case 'y':
-			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_array[2],(int)$Date_array[1],(int)$Date_array[0]+$NumberPeriods));
+			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[2],(int)$Date_Array[1],(int)$Date_Array[0]+$NumberPeriods));
 			break;
 		default:
 			return 0;
@@ -758,9 +758,9 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 	}
 
 	if (strlen($_SESSION['ProhibitPostingsBefore'])>=8 and $UseProhibit){ //then the ProhibitPostingsBefore configuration is set
-		$Date_array = explode('-', $_SESSION['ProhibitPostingsBefore']);
+		$Date_Array = explode('-', $_SESSION['ProhibitPostingsBefore']);
 	
-		$ProhibitPostingsBefore = mktime(0,0,0,$Date_array[1],$Date_array[2],$Date_array[0]);
+		$ProhibitPostingsBefore = mktime(0,0,0,$Date_Array[1],$Date_Array[2],$Date_Array[0]);
 		
 		/* If transaction date is in a closed period use the month end of that period */
 		if ($TransDate < $ProhibitPostingsBefore) {
@@ -777,16 +777,16 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 		$LastPeriod=1;
 		$LastPeriodEnd = mktime(0,0,0,Date('m')+2,0,Date('Y'));
 	} else {
-		$Date_array = explode('-', $myrow[0]);
-		$LastPeriodEnd = mktime(0,0,0,$Date_array[1]+2,0,(int)$Date_array[0]);
+		$Date_Array = explode('-', $myrow[0]);
+		$LastPeriodEnd = mktime(0,0,0,$Date_Array[1]+2,0,(int)$Date_Array[0]);
 		$LastPeriod = $myrow[1];
 	}
 	/* Find the unix timestamp of the first period end date in periods table */
 	$sql = 'SELECT MIN(lastdate_in_period), MIN(periodno) from periods';
 	$result = DB_query($sql, $db);
 	$myrow=DB_fetch_row($result);
-	$Date_array = explode('-', $myrow[0]);
-	$FirstPeriodEnd = mktime(0,0,0,$Date_array[1],0,(int)$Date_array[0]);
+	$Date_Array = explode('-', $myrow[0]);
+	$FirstPeriodEnd = mktime(0,0,0,$Date_Array[1],0,(int)$Date_Array[0]);
 	$FirstPeriod = $myrow[1];
 	
 	/* If the period number doesn't exist */
@@ -826,8 +826,8 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 		$sql = 'SELECT MAX(lastdate_in_period), MAX(periodno) from periods';
 		$result = DB_query($sql, $db);
 		$myrow=DB_fetch_row($result);
-		$Date_array = explode('-', $myrow[0]);
-		$LastPeriodEnd = mktime(0,0,0,$Date_array[1]+2,0,(int)$Date_array[0]);
+		$Date_Array = explode('-', $myrow[0]);
+		$LastPeriodEnd = mktime(0,0,0,$Date_Array[1]+2,0,(int)$Date_Array[0]);
 		$LastPeriod = $myrow[1];
 		CreatePeriod($LastPeriod+1, $LastPeriodEnd, $db);
 	}

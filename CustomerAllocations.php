@@ -1,5 +1,6 @@
 <?php
 /* $Revision: 1.30 $ */
+/* $Id$*/
 
 /*
 Call this page with:
