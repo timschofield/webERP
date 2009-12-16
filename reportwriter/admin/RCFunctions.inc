@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Id$*/
 
 // Include functions needed for ReportCreator.php
 function PrepStep($StepNum) {

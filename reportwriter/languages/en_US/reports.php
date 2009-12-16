@@ -1,5 +1,5 @@
 <?php /* Version 1.0 */
-
+/* $Id$*/
 /**************************************************************************************
 Locale language file for reports. This file can be broken out for apps that use
 DEFINE statements. The report scripts and forms obtain their text definitions here.

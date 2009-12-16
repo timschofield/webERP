@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: WriteForm.inc 3152 2009-12-11 14:28:49Z tim_schofield $ */
+/* $Id$ */
 
 class PDF extends Cpdf {
 	var $y0; // current y position
