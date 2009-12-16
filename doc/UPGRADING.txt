@@ -1,5 +1,7 @@
 UPGRADING FROM PREVIOUS VERSIONS OF WEBERP
 
+/* $Id$*/
+
 From version 3.05 an upgrade script will be provided that applies the database modifications automatically and does any data conversions required for the new scripts to work.
 
 The upgrade script to convert a 3.05 database to work with 3.06 scripts is:

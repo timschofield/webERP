@@ -1,6 +1,6 @@
 WEB-ERP Installation
 
-/* $Revision: 1.24 $ */
+/* $Id$*/
 
 Upgrading
 

@@ -1,5 +1,7 @@
 webERP README
 
+/* $Id$*/
+
 Thankyou for using webERP.
 
 Installation instructions are in the file INSTALL.txt in the doc directory. It is important to read the INSTALL.txt file in its entirety before proceeding. In fact a printout is not a bad idea.
