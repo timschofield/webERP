@@ -1,4 +1,5 @@
 <?php
+/* $Id$*/
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 // Start a session

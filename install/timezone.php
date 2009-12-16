@@ -1,4 +1,5 @@
 <?php
+/* $Id$*/
 
 function stripcomma($str) { //because we're using comma as a delimiter
     $str = trim($str);
