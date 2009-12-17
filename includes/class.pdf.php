@@ -30,7 +30,9 @@ class Cpdf extends TCPDF {
 
 	protected function setuserpdffont() {
 
-		session_start();
+		if (session_id()=='') {
+			session_start();
+		}
 
 		if (isset($_SESSION['PDFLanguage'])) {
 
@@ -268,7 +270,7 @@ class Cpdf extends TCPDF {
 				$ls=$l;
 				$ns++;
 			}
-			$l+=$cw[$c];
+			$l+=$cw[$i];
 			if($l>$wmax)
 			break;
 			else 
@@ -277,7 +279,7 @@ class Cpdf extends TCPDF {
 		if($sep==-1) {
 			if($i==0) $i++;
 			
-			if($this->ws>0) {
+			if(isset($this->ws) and $this->ws>0) {
 				$this->ws=0;
 				$this->_out('0 Tw');
 			}
