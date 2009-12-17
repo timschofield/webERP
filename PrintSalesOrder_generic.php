@@ -113,6 +113,7 @@ $pdf->addInfo('Subject', _('Laser Packing slip for order') . ' ' . $_GET['TransN
 $FontSize=12;
 
 $ListCount = 0; // UldisN
+$Copy='';
 
 for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for office */
 	if ($i==2){
