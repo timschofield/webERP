@@ -6,7 +6,7 @@
 //---------------------------------------------------
 
 //DefaultLanguage to use for the login screen and the setup of new users - the users language selection will override
-$DefaultLanguage ='en_GB';
+$DefaultLanguage ='en_GB.utf8';
 
 // Whether to display the demo login and password or not on the login screen
 $allow_demo_mode = True;

@@ -13,7 +13,7 @@ if ($allow_demo_mode == True and !isset($demo_text)) {
 <html>
 <head>
     <title>webERP Login screen</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo _('ISO-8859-1'); ?>" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/<?php echo $theme;?>/login.css" type="text/css" />
 </head>

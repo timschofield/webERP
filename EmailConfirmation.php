@@ -21,7 +21,7 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
 
 $MailTo 		= $_GET['EMail'];
 $headers 	= 'From: Bethany Manufacturing <sales@bethanymfg.com>' . '\n';
-$headers   .=  'MIME-Version: 1.0\n' . 'Content-Type: text/html; charset="' . _('ISO-8859-1') . '"\n';
+$headers   .=  'MIME-Version: 1.0\n' . 'Content-Type: text/html; charset="utf-8"\n';
 
 /*retrieve the order details from the database to print */
 $ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');

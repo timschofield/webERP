@@ -9,7 +9,7 @@ include('includes/session.inc');
 <html>
 <head>
 	<title><?php echo $_SESSION['CompanyRecord']['coyname'];?> - <?php echo _('Log Off'); ?></title>
-	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo _('ISO-8859-1'); ?>" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" href="css/<?php echo $theme;?>/login.css" type="text/css" />
 </head>
 
