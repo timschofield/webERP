@@ -10,6 +10,15 @@ include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/user.png" title="' . _('User Settings') . '" alt="">' . ' ' . _('User Settings');
 
+$PDFLanguages = array(_('Latin Western Languages'),
+						_('Eastern European Russian Japanese'),
+						_('Chinese'),
+						_('Korean'),
+						_('Vietnamese'),
+						_('Hebrew'),
+						_('Arabic'),
+						_('Thai'));
+
 
 if (isset($_POST['Modify'])) {
 	// no input errors assumed initially before we test
@@ -56,7 +65,8 @@ if (isset($_POST['Modify'])) {
 				SET displayrecordsmax=" . $_POST['DisplayRecordsMax'] . ",
 					theme='" . $_POST['Theme'] . "',
 					language='" . $_POST['Language'] . "',
-					email='". $_POST['email'] ."'
+					email='". $_POST['email'] ."',
+					pdflanguage=" . $_POST['PDFLanguage'] . "
 				WHERE userid = '" . $_SESSION['UserID'] . "'";
 
 			$ErrMsg =  _('The user alterations could not be processed because');
@@ -71,6 +81,7 @@ if (isset($_POST['Modify'])) {
 					theme='" . $_POST['Theme'] . "',
 					language='" . $_POST['Language'] . "',
 					email='". $_POST['email'] ."',
+					pdflanguage=" . $_POST['PDFLanguage'] . "
 					password='" . CryptPass($_POST['pass']) . "'
 				WHERE userid = '" . $_SESSION['UserID'] . "'";
 
@@ -179,8 +190,21 @@ if(!isset($_POST['email'])){
 	$_POST['email'] = $myrow['email'];
 }
 
-echo "<td><input type=text name='email' size=40 value='" . $_POST['email'] . "'></td></tr>
-	</table>
+echo "<td><input type=text name='email' size=40 value='" . $_POST['email'] . "'></td></tr>";
+
+if (!isset($_POST['PDFLanguage'])){
+	$_POST['PDFLanguage']=0;
+}
+	
+echo '<tr><td>' . _('PDF Language Support') . ': </td><td><select name="PDFLanguage">';
+for($i=0;$i<=7;$i++){
+	if ($_POST['PDFLanguage']==$i){
+		echo '<option selected value=' . $i .'>' . $PDFLanguages[$i] . '</option>';
+	} else {
+		echo '<option value=' . $i .'>' . $PDFLanguages[$i]. '</option>';
+	}
+}
+echo "</select></td></tr></table>
 	<br><div class='centre'><input type='Submit' name='Modify' value=" . _('Modify') . '></div>
 	</form>';
 
