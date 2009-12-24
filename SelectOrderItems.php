@@ -1526,7 +1526,7 @@ $WoRow = db_fetch_row($WoResult);
 		}
 
 		if (isset($SearchResult)) {
-
+			$j = 1;
 			echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'identifier='.$identifier . ' method=post name="orderform">';
 			echo '<table class="table1">';
 			echo '<tr><td colspan=><input type="hidden" name="previous" value='.number_format($Offset-1).'><input tabindex='.number_format($j+7).' type="submit" name="Prev" value="'._('Prev').'"></td>';
@@ -1541,7 +1541,7 @@ $WoRow = db_fetch_row($WoResult);
                        			<th>' . _('Available') . '</th>
                        			<th>' . _('Quantity') . '</th></tr>';
 			echo $TableHeader;
-			$j = 1;
+
 			$k=0; //row colour counter
 
 			while ($myrow=DB_fetch_array($SearchResult)) {

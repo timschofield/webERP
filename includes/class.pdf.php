@@ -215,6 +215,31 @@ class Cpdf extends TCPDF {
 		$this->Output($DocumentFilename,'D');
 	}
 
+	function RoundRectangle($XPos, $YPos, $Width, $Height, $Radius) {
+		/*from the top right */
+		$this->partEllipse($XPos+$Width,$YPos,0,90,$Radius,$Radius);
+		/*line to the top left */
+		$this->line($XPos+$Width, $YPos+$Radius,$XPos+$Radius, $YPos+$Radius);
+		/*Do top left corner */
+		$this->partEllipse($XPos+$Radius, $YPos,90,180,$Radius,$Radius);
+		/*Do a line to the bottom left corner */
+		$this->line($XPos+$Radius, $YPos-$Height-$Radius,$XPos+$Width, $YPos-$Height-$Radius);
+		/*Now do the bottom left corner 180 - 270 coming back west*/
+		$this->partEllipse($XPos+$Radius, $YPos-$Height,180,270,$Radius,$Radius);
+		/*Now a line to the bottom right */
+		$this->line($XPos, $YPos-$Height,$XPos, $YPos);
+		/*Now do the bottom right corner */
+		$this->partEllipse($XPos+$Width, $YPos-$Height,270,360,$Radius,$Radius);
+		/*Finally join up to the top right corner where started */
+		$this->line($XPos+$Width+$Radius, $YPos-$Height,$XPos+$Width+$Radius, $YPos);
+	}
+
+	function Rectangle($XPos, $YPos, $Width, $Height) {
+		$this->line($XPos, $YPos, $XPos+$Width, $YPos);
+		$this->line($XPos+$Width, $YPos, $XPos+$Width, $YPos-$Height);
+		$this->line($XPos+$Width, $YPos-$Height, $XPos, $YPos-$Height);
+		$this->line($XPos, $YPos-$Height, $XPos, $YPos);
+	}
 
 	function addTextWrap($xb, $yb, $w, $h, $txt, $align='J', $border=0, $fill=0) {
 //		$txt = html_entity_decode($txt);

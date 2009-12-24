@@ -10,150 +10,87 @@ if ($PageNumber>1){
 	$pdf->newPage();
 }
 
-$YPos = $Page_Height - $Top_Margin - ($line_height*2);
+$pdf->addJpegFromFile($_SESSION['LogoFile'],$Left_Margin+$FormDesign->logo->x,$Page_Height- $FormDesign->logo->y,$FormDesign->logo->width,$FormDesign->logo->height);
 
-
-$pdf->addJpegFromFile($_SESSION['LogoFile'],$Left_Margin,$YPos,0,60);
-
-$FontSize=15;
-
-$XPos = $Page_Width/2 - 30;
-
-$pdf->addText($XPos,$YPos+$line_height,$FontSize, _('Purchase Order Number'). ' ' . $OrderNo);
+$pdf->addText($FormDesign->OrderNumber->x,$Page_Height- $FormDesign->OrderNumber->y,$FormDesign->OrderNumber->FontSize, _('Purchase Order Number'). ' ' . $OrderNo);
 
 if ($ViewingOnly!=0) {
-	$FontSize=16;
-	$pdf->addText($XPos,$YPos,$FontSize, _('FOR VIEWING ONLY') . ', ' . _('DO NOT SEND TO SUPPLIER') );
-	$pdf->addText($XPos,$YPos-$line_height,$FontSize, _('SUPPLIERS') . ' - ' . _('THIS IS NOT AN ORDER') );
+	$pdf->addText($FormDesign->ViewingOnly->x,$Page_Height - $FormDesign->ViewingOnly->y,$FormDesign->ViewingOnly->FontSize, _('FOR VIEWING ONLY') . ', ' . _('DO NOT SEND TO SUPPLIER') );
+	$pdf->addText($FormDesign->ViewingOnly->x,$Page_Height - $FormDesign->ViewingOnly->y-$line_height,$FormDesign->ViewingOnly->FontSize, _('SUPPLIERS') . ' - ' . _('THIS IS NOT AN ORDER') );
 }
 
-$YPos -= ($line_height*3);
-$FontSize=10;
-$XPos = $Page_Width-$Right_Margin-50;
-$pdf->addText($XPos,$YPos +40, $FontSize, _('Page') . ': ' .$PageNumber);
+$pdf->addText($FormDesign->PageNumber->x,$Page_Height - $FormDesign->PageNumber->y, $FormDesign->PageNumber->FontSize, _('Page') . ': ' .$PageNumber);
 
+/*Now print out the company Tax authority reference */
+$pdf->addText($FormDesign->TaxAuthority->x,$Page_Height - $FormDesign->TaxAuthority->y, $FormDesign->TaxAuthority->FontSize, $_SESSION['TaxAuthorityReferenceName'] . ' ' . $_SESSION['CompanyRecord']['gstno']);
 
 /*Now print out the company name and address */
-$XPos = $Left_Margin;
-$YPos -= 1*$line_height;
-$pdf->addText($Left_Margin,$YPos, $FontSize, $_SESSION['TaxAuthorityReferenceName'] . ' ' . $_SESSION['CompanyRecord']['gstno']);
-$pdf->addText($Left_Margin,$YPos-(0.8*$line_height), $FontSize, $_SESSION['CompanyRecord']['coyname']);
-$pdf->addText($Left_Margin,$YPos-(1.6*$line_height), $FontSize, $_SESSION['CompanyRecord']['regoffice1']);
-$pdf->addText($Left_Margin,$YPos-(2.4*$line_height), $FontSize, $_SESSION['CompanyRecord']['regoffice2']);
-$pdf->addText($Left_Margin,$YPos-(3.2*$line_height), $FontSize, $_SESSION['CompanyRecord']['regoffice3'] . ' ' . $_SESSION['CompanyRecord']['regoffice4'] . ' ' . $_SESSION['CompanyRecord']['regoffice5']);
-$pdf->addText($Left_Margin,$YPos-(4*$line_height), $FontSize, _('Ph'). ': ' . $_SESSION['CompanyRecord']['telephone'] . ' ' ._('Fax').': ' . $_SESSION['CompanyRecord']['fax'] );
-$pdf->addText($Left_Margin,$YPos-(4.8*$line_height), $FontSize, _('Email'). ': ' . $_SESSION['CompanyRecord']['email']);
-
-$YPos -=2*$line_height;
+$pdf->addText($FormDesign->CompanyName->x,$Page_Height - $FormDesign->CompanyName->y, $FormDesign->CompanyName->FontSize, $_SESSION['CompanyRecord']['coyname']);
+$pdf->addText($FormDesign->CompanyAddress->Line1->x,$Page_Height - $FormDesign->CompanyAddress->Line1->y, $FormDesign->CompanyAddress->Line1->FontSize,  $_SESSION['CompanyRecord']['regoffice1']);
+$pdf->addText($FormDesign->CompanyAddress->Line2->x,$Page_Height - $FormDesign->CompanyAddress->Line2->y, $FormDesign->CompanyAddress->Line2->FontSize,  $_SESSION['CompanyRecord']['regoffice2']);
+$pdf->addText($FormDesign->CompanyAddress->Line3->x,$Page_Height - $FormDesign->CompanyAddress->Line3->y, $FormDesign->CompanyAddress->Line3->FontSize,  $_SESSION['CompanyRecord']['regoffice3']);
+$pdf->addText($FormDesign->CompanyAddress->Line4->x,$Page_Height - $FormDesign->CompanyAddress->Line4->y, $FormDesign->CompanyAddress->Line4->FontSize,  $_SESSION['CompanyRecord']['regoffice4']);
+$pdf->addText($FormDesign->CompanyAddress->Line5->x,$Page_Height - $FormDesign->CompanyAddress->Line5->y, $FormDesign->CompanyAddress->Line5->FontSize,  $_SESSION['CompanyRecord']['regoffice5']);
+$pdf->addText($FormDesign->CompanyPhone->x,$Page_Height - $FormDesign->CompanyPhone->y, $FormDesign->CompanyPhone->FontSize, _('Tel'). ': ' . $_SESSION['CompanyRecord']['telephone']);
+$pdf->addText($FormDesign->CompanyFax->x,$Page_Height - $FormDesign->CompanyFax->y, $FormDesign->CompanyFax->FontSize, _('Fax').': ' . $_SESSION['CompanyRecord']['fax']);
+$pdf->addText($FormDesign->CompanyEmail->x,$Page_Height - $FormDesign->CompanyEmail->y, $FormDesign->CompanyEmail->FontSize, _('Email'). ': ' .$_SESSION['CompanyRecord']['email']);
 
 /*Now the delivery details */
-$YPos -= 8;
-$XPos = $Page_Width/2 + 25;
-$FontSize=12;
-$pdf->addText($XPos+2,$YPos, $FontSize, _('Deliver To') . ':' );
-$pdf->addText($XPos+2,$YPos-$line_height, $FontSize, $POHeader['deladd1']);
-$pdf->addText($XPos+2,$YPos-(2*$line_height), $FontSize, $POHeader['deladd2']);
-$pdf->addText($XPos+2,$YPos-(3*$line_height), $FontSize, $POHeader['deladd3'] . ' ' . $POHeader['deladd4'] . ' ' . $POHeader['deladd5']);
-$pdf->addText($XPos+2,$YPos-(4*$line_height), $FontSize, $POHeader['deladd6']);
+$pdf->addText($FormDesign->DeliveryAddress->Caption->x,$Page_Height - $FormDesign->DeliveryAddress->Caption->y, $FormDesign->DeliveryAddress->Caption->FontSize, _('Deliver To') . ':' );
+$pdf->addText($FormDesign->DeliveryAddress->Line1->x,$Page_Height - $FormDesign->DeliveryAddress->Line1->y, $FormDesign->DeliveryAddress->Line1->FontSize, $POHeader['deladd1']);
+$pdf->addText($FormDesign->DeliveryAddress->Line2->x,$Page_Height - $FormDesign->DeliveryAddress->Line2->y, $FormDesign->DeliveryAddress->Line2->FontSize, $POHeader['deladd2']);
+$pdf->addText($FormDesign->DeliveryAddress->Line3->x,$Page_Height - $FormDesign->DeliveryAddress->Line3->y, $FormDesign->DeliveryAddress->Line3->FontSize, $POHeader['deladd3']);
+$pdf->addText($FormDesign->DeliveryAddress->Line4->x,$Page_Height - $FormDesign->DeliveryAddress->Line4->y, $FormDesign->DeliveryAddress->Line4->FontSize, $POHeader['deladd4']);
+$pdf->addText($FormDesign->DeliveryAddress->Line5->x,$Page_Height - $FormDesign->DeliveryAddress->Line5->y, $FormDesign->DeliveryAddress->Line5->FontSize, $POHeader['deladd5']);
+$pdf->addText($FormDesign->DeliveryAddress->Line6->x,$Page_Height - $FormDesign->DeliveryAddress->Line6->y, $FormDesign->DeliveryAddress->Line6->FontSize, $POHeader['deladd6']);
 
 /*draw a nice curved corner box around the delivery to address */
-/*from the top right */
-$pdf->partEllipse($XPos+250-10,$YPos+10,0,90,10,10);
-/*line to the top left */
-$pdf->line($XPos+250-10, $YPos+20,$XPos+10, $YPos+20);
-/*Do top left corner */
-$pdf->partEllipse($XPos+10, $YPos+10,90,180,10,10);
-/*Do a line to the bottom left corner */
-$pdf->line($XPos+10, $YPos-70-10,$XPos+250-10, $YPos-70-10);
-/*Now do the bottom left corner 180 - 270 coming back west*/
-$pdf->partEllipse($XPos+10, $YPos-70,180,270,10,10);
-/*Now a line to the bottom right */
-$pdf->line($XPos, $YPos-70,$XPos, $YPos+10);
-/*Now do the bottom right corner */
-$pdf->partEllipse($XPos+250-10, $YPos-70,270,360,10,10);
-/*Finally join up to the top right corner where started */
-$pdf->line($XPos+250, $YPos-70,$XPos+250, $YPos+10);
+$pdf->RoundRectangle($FormDesign->DeliveryAddressBox->x, $Page_Height - $FormDesign->DeliveryAddressBox->y,$FormDesign->DeliveryAddressBox->width, $FormDesign->DeliveryAddressBox->height, $FormDesign->DeliveryAddressBox->radius);
 
+/*Now the Supplier details */
+$pdf->addText($FormDesign->SupplierName->x,$Page_Height - $FormDesign->SupplierName->y, $FormDesign->SupplierName->FontSize, _('To').': ');
+$pdf->addText($FormDesign->SupplierName->x+30,$Page_Height - $FormDesign->SupplierName->y, $FormDesign->SupplierName->FontSize, $POHeader['suppname']);
+$pdf->addText($FormDesign->SupplierAddress->Line1->x,$Page_Height - $FormDesign->SupplierAddress->Line1->y, $FormDesign->SupplierAddress->Line1->FontSize, $POHeader['address1']);
+$pdf->addText($FormDesign->SupplierAddress->Line2->x,$Page_Height - $FormDesign->SupplierAddress->Line2->y, $FormDesign->SupplierAddress->Line2->FontSize, $POHeader['address2']);
+$pdf->addText($FormDesign->SupplierAddress->Line3->x,$Page_Height - $FormDesign->SupplierAddress->Line3->y, $FormDesign->SupplierAddress->Line3->FontSize, $POHeader['address3']);
+$pdf->addText($FormDesign->SupplierAddress->Line4->x,$Page_Height - $FormDesign->SupplierAddress->Line4->y, $FormDesign->SupplierAddress->Line4->FontSize, $POHeader['address4']);
 
+/*Now the Order date */
+$pdf->addText($FormDesign->OrderDate->x,$Page_Height - $FormDesign->OrderDate->y, $FormDesign->OrderDate->FontSize, _('Order Date') . ':' );
+$pdf->addText($FormDesign->OrderDate->x+70,$Page_Height - $FormDesign->OrderDate->y, $FormDesign->OrderDate->FontSize, ConvertSQLDate($POHeader['orddate']));
 
-/*end of the small table showing the coy name and delivery address details */
+/*Now the Initiator */
+$pdf->addText($FormDesign->Initiator->x,$Page_Height - $FormDesign->Initiator->y, $FormDesign->Initiator->FontSize, _('Initiator').': ');
+$pdf->addText($FormDesign->Initiator->x+70,$Page_Height - $FormDesign->Initiator->y, $FormDesign->Initiator->FontSize, $POHeader['initiator']);
 
-$XPos = $Left_Margin;
-$YPos -= ($line_height*4.5);         /* 4 lines down */
-
-/*
-PDF_moveto($p, $XPos+230, $YPos-100);
-PDF_arc($p, $XPos+220, $YPos, 10, 0, 90);
-PDF_arc($p, $XPos+5, $YPos, 10, 90, 180);
-PDF_arc($p, $XPos+5, $YPos-100, 10, 180, 270);
-PDF_arc($p, $XPos+220, $YPos-100, 10, 270, 360);
-PDF_stroke($p);
-
-
-
-$font=PDF_findfont($p,"Helvetica-Bold","host",0);
-PDF_setfont($p, $font, 12.0);
-
-*/
-$YPos -= 20;
-$pdf->addText($XPos+1,$YPos, $FontSize, _('To').': ');
-
-$YPos-=$line_height;
-$pdf->addText($XPos+1,$YPos, $FontSize, $POHeader['suppname']);
-$pdf->addText($XPos+1,$YPos-$line_height, $FontSize, $POHeader['address1']);
-$pdf->addText($XPos+1,$YPos-(2*$line_height), $FontSize, $POHeader['address2']);
-$pdf->addText($XPos+1,$YPos-(3*$line_height), $FontSize, $POHeader['address3']);
-$pdf->addText($XPos+1,$YPos-(4*$line_height), $FontSize, $POHeader['address4']);
-
-
-$XPos = $Page_Width/2 + 25;
-$pdf->addText($XPos,$YPos, $FontSize, _('Order Date') . ':' );
-$pdf->addText($XPos+70,$YPos, $FontSize, ConvertSQLDate($POHeader['orddate']));
-
-
-$YPos -= $line_height;
-$pdf->addText($XPos,$YPos, $FontSize, _('Initiator').': ');
-$pdf->addText($XPos+70,$YPos, $FontSize, $POHeader['initiator']);
-
-$YPos -= $line_height;
-$pdf->addText($XPos,$YPos, $FontSize, _('Comments') . ':' );
-$YPos -= $line_height;
-$LeftOvers = $pdf->addTextWrap($XPos, $YPos,250,$FontSize,$POHeader['comments'], 'left');
-if (strlen($LeftOvers)>0){
-	$LeftOvers = $pdf->addTextWrap($XPos, $YPos-$line_height,250,$FontSize,$LeftOvers, 'left');
-}
-
+/*Find the description of the payment terms and display */
 $sql='SELECT terms FROM paymentterms where termsindicator="'.$POHeader['paymentterms'].'"';
 $termsresult=DB_query($sql, $db);
 $myrow=DB_fetch_array($termsresult);
-$pdf->addText($XPos+2,$YPos-($line_height), $FontSize, _('Payment Terms').' :  '.$myrow['terms']);
+$pdf->addText($FormDesign->PaymentTerms->x,$Page_Height - $FormDesign->PaymentTerms->y, $FormDesign->PaymentTerms->FontSize, _('Payment Terms').' :  '.$myrow['terms']);
 
-$XPos = $Left_Margin;
-$YPos -= ($line_height*2);
-$pdf->addText($Left_Margin,$YPos, $FontSize, _('All amounts stated in').' - ' . $POHeader['currcode']);
+/*Now the Comments split over two lines if necessary */
+$LeftOvers = $pdf->addTextWrap($FormDesign->Comments->x, $Page_Height - $FormDesign->Comments->y,$FormDesign->Comments->Length,$FormDesign->Comments->FontSize,_('Comments') . ':' .$POHeader['comments'], 'left');
+if (strlen($LeftOvers)>0){
+	$LeftOvers = $pdf->addTextWrap($FormDesign->Comments->x, $Page_Height - $FormDesign->Comments->y-$line_height,$FormDesign->Comments->Length,$FormDesign->Comments->FontSize,$LeftOvers, 'left');
+}
 
+/*Now the currency the order is in */
+$pdf->addText($FormDesign->Currency->x,$Page_Height - $FormDesign->Currency->y,$FormDesign->Currency->FontSize, _('All amounts stated in').' - ' . $POHeader['currcode']);
 
-$YPos -= ($line_height*.5);
-/*draw a square grid for entering line items */
-$pdf->line($Left_Margin, $YPos, $Page_Width-$Right_Margin, $YPos);
-$pdf->line($Page_Width-$Right_Margin, $YPos, $Page_Width-$Right_Margin, $Bottom_Margin);
-$pdf->line($Page_Width-$Right_Margin, $Bottom_Margin, $Left_Margin, $Bottom_Margin);
-$pdf->line($Left_Margin, $Bottom_Margin, $Left_Margin, $YPos);
+/*draw a square grid for entering line headings */
+$pdf->Rectangle($FormDesign->HeaderRectangle->x, $Page_Height - $FormDesign->HeaderRectangle->y, $FormDesign->HeaderRectangle->width,$FormDesign->HeaderRectangle->height);
 
-$YPos -= $line_height;
 /*Set up headings */
-$FontSize=10;
-$pdf->addText($Left_Margin+1,$YPos, $FontSize, _('Code') );
-$pdf->addText($Left_Margin+95,$YPos, $FontSize, _('Item Description') );
-$pdf->addText($Left_Margin+400,$YPos, $FontSize, _('Quantity') );
-$pdf->addText($Left_Margin+450,$YPos, $FontSize, _('Unit') );
-$pdf->addText($Left_Margin+485,$YPos, $FontSize, _('Date Reqd'));
-$pdf->addText($Left_Margin+600,$YPos, $FontSize, _('Price') );
-$pdf->addText($Left_Margin+680,$YPos, $FontSize, _('Total') );
+$pdf->addText($FormDesign->Headings->Column1->x,$Page_Height - $FormDesign->Headings->Column1->y, $FormDesign->Headings->Column1->FontSize, _('Code') );
+$pdf->addText($FormDesign->Headings->Column2->x,$Page_Height - $FormDesign->Headings->Column2->y, $FormDesign->Headings->Column2->FontSize, _('Item Description') );
+$pdf->addText($FormDesign->Headings->Column3->x,$Page_Height - $FormDesign->Headings->Column3->y, $FormDesign->Headings->Column3->FontSize, _('Quantity') );
+$pdf->addText($FormDesign->Headings->Column4->x,$Page_Height - $FormDesign->Headings->Column4->y, $FormDesign->Headings->Column4->FontSize, _('Unit') );
+$pdf->addText($FormDesign->Headings->Column5->x,$Page_Height - $FormDesign->Headings->Column5->y, $FormDesign->Headings->Column5->FontSize, _('Date Reqd'));
+$pdf->addText($FormDesign->Headings->Column6->x,$Page_Height - $FormDesign->Headings->Column6->y, $FormDesign->Headings->Column6->FontSize, _('Price') );
+$pdf->addText($FormDesign->Headings->Column7->x,$Page_Height - $FormDesign->Headings->Column7->y, $FormDesign->Headings->Column7->FontSize, _('Total') );
 
-$YPos-=$line_height;
-
-/*draw a line */
-$pdf->line($Left_Margin, $YPos, $Page_Width-$Right_Margin, $YPos);
+/*draw a rectangle to hold the data lines */
+$pdf->Rectangle($FormDesign->DataRectangle->x, $Page_Height - $FormDesign->DataRectangle->y, $FormDesign->DataRectangle->width,$FormDesign->DataRectangle->height);
 
 ?>

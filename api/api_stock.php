@@ -782,16 +782,16 @@
 				',"api adjustment",'.$Quantity.','.$newqoh.')';
 		$locstocksql='UPDATE locstock SET quantity = quantity + '.$Quantity.' WHERE loccode="'.
 			$Location.'" AND stockid="'.$StockID.'"';
-		$glupdatesql1='INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
-						VALUES (17,'.GetNextTransactionNo(17, $db).',"'.$TranDate.
-						'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
-						','.$adjglact.','.$itemdetails['materialcost']*-$Quantity.
-						',"'.$StockID.' x '.$Quantity.' @ '.$itemdetails['materialcost'].'")';
-		$glupdatesql2='INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
-						VALUES (17,'.GetNextTransactionNo(17, $db).',"'.$TranDate.
-						'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
-						','.$stockact.','.$itemdetails['materialcost']*$Quantity.
-						',"'.$StockID.' x '.$Quantity.' @ '.$itemdetails['materialcost'].'")';
+		$glupdatesql1="INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
+						VALUES (17,".GetNextTransactionNo(17, $db).",'".$TranDate.
+						"','"GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
+						",".$adjglact.",".$itemdetails['materialcost']*-$Quantity.
+						",'".$StockID." x ".$Quantity." @ ".$itemdetails['materialcost']."')";
+		$glupdatesql2="INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
+						VALUES (17,".GetNextTransactionNo(17, $db).",'".$TranDate.
+						"',".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
+						",".$stockact.",".$itemdetails['materialcost']*$Quantity.
+						",'".$StockID." x ".$Quantity." @ ".$itemdetails['materialcost']."')";
 		$systypessql = 'UPDATE systypes set typeno='.GetNextTransactionNo(17, $db).' where typeid=17';
 
 		DB_Txn_Begin($db);

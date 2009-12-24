@@ -142,17 +142,18 @@ if (isset($OrderNo) && $OrderNo != "" && $OrderNo > 0){
 }//if there is a valid order number
 
 if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
+	$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/PurchaseOrder.xml'); 
 
-   	   $PaperSize = 'A4_Landscape';
+	$PaperSize = $FormDesign->PaperSize;
 
-       include('includes/PDFStarter.php');
-       $pdf->addInfo('Title', _('Purchase Order') );
-       $pdf->addInfo('Subject', _('Purchase Order Number' ) . ' ' . $OrderNo);
-       $line_height = 16;
-       $PageNumber = 1;
+	include('includes/PDFStarter.php');
+	$pdf->addInfo('Title', _('Purchase Order') );
+	$pdf->addInfo('Subject', _('Purchase Order Number' ) . ' ' . $OrderNo);
+	$line_height = $FormDesign->LineHeight;
+	$PageNumber = 1;
 
-	   /* Then there's an order to print and its not been printed already (or its been flagged for reprinting)
-	   Now ... Has it got any line items */
+	/* Then there's an order to print and its not been printed already (or its been flagged for reprinting)
+	Now ... Has it got any line items */
 
 	   $ErrMsg = _('There was a problem retrieving the line details for order number') . ' ' . $OrderNo . ' ' .
 			_('from the database');
@@ -175,31 +176,11 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 
 		include('includes/PO_PDFOrderPageHeader.inc');
 
-		$YPos-=$line_height;
+		$YPos=$Page_Height - $FormDesign->Data->y;
 
 		$OrderTotal = 0;
 
 		while ($POLine=DB_fetch_array($result)){
-
-			/*$sql = "SELECT supplierdescription 
-				FROM purchdata 
-				WHERE stockid='" . $POLine['itemcode'] . "' 
-				AND supplierno ='" . $POHeader['supplierno'] . "'";
-			$SuppDescRslt = DB_query($sql,$db);
-	
-			$ItemDescription='';
-
-			if (DB_error_no($db)==0){
-				if (DB_num_rows($SuppDescRslt)==1){
-					$SuppDescRow = DB_fetch_row($SuppDescRslt);
-					if (strlen($SuppDescRow[0])>2){
-						$ItemDescription = $SuppDescRow[0];
-					}
-				}
-			}
-			if (strlen($ItemDescription)<2){
-				$ItemDescription = $POLine['itemdescription'];
-			}*/
 
 			$DisplayQty = number_format($POLine['quantityord'],$POLine['decimalplaces']);
 			if ($_POST['ShowAmounts']=='Yes'){
@@ -230,13 +211,13 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			}
 			$OrderTotal += ($POLine['unitprice']*$POLine['quantityord']);
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos,94,$FontSize,$POLine['itemcode'], 'left');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+94,$YPos,270,$FontSize,$Desc, 'left');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+94+260,$YPos,85,$FontSize,$DisplayQty, 'right');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+94+270+85+3,$YPos,37,$FontSize,$POLine['units'], 'left');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+94+270+85+3+37,$YPos,60,$FontSize,$DisplayDelDate, 'left');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+94+270+85+40+60,$YPos,85,$FontSize,$DisplayPrice, 'right');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+94+270+85+40+60+85,$YPos,85,$FontSize,$DisplayLineTotal, 'right');
+			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x,$YPos,$FormDesign->Data->Column1->length,$FormDesign->Data->Column1->FontSize,$POLine['itemcode'], 'left');
+			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$YPos,$FormDesign->Data->Column2->length,$FormDesign->Data->Column2->FontSize,$Desc, 'left');
+			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column3->x,$YPos,$FormDesign->Data->Column3->length,$FormDesign->Data->Column3->FontSize,$DisplayQty, 'left');
+			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column4->x,$YPos,$FormDesign->Data->Column4->length,$FormDesign->Data->Column4->FontSize,$POLine['units'], 'left');
+			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x,$YPos,$FormDesign->Data->Column5->length,$FormDesign->Data->Column5->FontSize,$DisplayDelDate, 'left');
+			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column6->x,$YPos,$FormDesign->Data->Column6->length,$FormDesign->Data->Column6->FontSize,$DisplayPrice, 'right');
+			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column7->x,$YPos,$FormDesign->Data->Column7->length,$FormDesign->Data->Column7->FontSize,$DisplayLineTotal, 'right');
 			
 			if (strlen($LeftOvers)>1){
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+1+94,$YPos-$line_height,270,$FontSize,$LeftOvers, 'left');
@@ -266,8 +247,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$DisplayOrderTotal = "----";
 		}
 		$YPos = $Bottom_Margin + $line_height;
-		$pdf->addText(450,$YPos, 14, _('Order Total - excl tax'). ' ' . $POHeader['currcode']);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+1+94+270+85+40+60+75,$YPos,95,14,$DisplayOrderTotal, 'right');
+		$pdf->addText($FormDesign->OrderTotalCaption->x,$Page_Height - $FormDesign->OrderTotalCaption->y, $FormDesign->OrderTotalCaption->FontSize, _('Order Total - excl tax'). ' ' . $POHeader['currcode']);
+		$LeftOvers = $pdf->addTextWrap($FormDesign->OrderTotal->x,$Page_Height - $FormDesign->OrderTotal->y,$Page_Height - $FormDesign->OrderTotal->length,$FormDesign->OrderTotal->FontSize,$DisplayOrderTotal, 'right');
 
 	} /*end if there are order details to show on the order*/
     //} /* end of check to see that there was an order selected to print */
@@ -275,18 +256,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
     //failed var to allow us to print if the email fails.
     $failed = false;
     if ($MakePDFThenDisplayIt){
-        /* UldisN
-    	$buf = $pdf->output();
-    	$len = strlen($buf);
-    	header('Content-type: application/pdf');
-    	header('Content-Length: ' . $len);
-    	header('Content-Disposition: inline; filename=PurchaseOrder.pdf');
-    	header('Expires: 0');
-    	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-    	header('Pragma: public');
-
-    	$pdf->Output('PurchOrder.pdf','I');
-        */
+ 
         $pdf->OutputD($_SESSION['DatabaseName'] . '_PurchaseOrder_' . date('Y-m-d') . '.pdf');//UldisN
         $pdf->__destruct(); //UldisN
 
