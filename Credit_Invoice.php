@@ -183,15 +183,15 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 
 		} else { /* there are no stock movement records created for that invoice */
 
-			echo "<div class='centre'><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a></div>';
+			echo '<div class="centre"><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a></div>';
 			prnMsg( _('There are no line items that were retrieved for this invoice') . '. ' . _('The automatic credit program can not create a credit note from this invoice'),'warn');
-			include("includes/footer.inc");
+			include('includes/footer.inc');
 			exit;
 		} //end of checks on returned data set
 		DB_free_result($LineItemsResult);
 	} else {
 		prnMsg( _('This invoice can not be credited using the automatic facility') . '<br>' . _('CRITICAL ERROR') . ': ' . _('Please report that a duplicate DebtorTrans header record was found for invoice') . ' ' . $SESSION['ProcessingCredit'],'warn');
-		include("includes/footer.inc");
+		include('includes/footer.inc');
 		exit;
 	} //valid invoice record returned from the entered invoice number
 
@@ -477,7 +477,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	
 /*Start an SQL transaction */
 
-	$SQL = "BEGIN";
+	$SQL = 'BEGIN';
 	$Result = DB_query($SQL,$db);
 
 	$DefaultDispatchDate= FormatDateForSQL($DefaultDispatchDate);
@@ -626,16 +626,18 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 				if (DB_num_rows($Result)==1){
 					$LocQtyRow = DB_fetch_row($Result);
 					$QtyOnHandPrior = $LocQtyRow[0];
-					} else {
+				} else {
 					/*There must actually be some error this should never happen */
 					$QtyOnHandPrior = 0;
-					}
+				}
 			} else {
 				$QtyOnHandPrior =0; //because its a dummy/assembly/kitset part
 			}
 
 			if ($_POST['CreditType']=='Return'){
 
+				/* some want this some do not */
+				
 				$SQL = "UPDATE salesorderdetails
 							SET qtyinvoiced = qtyinvoiced - " . $OrderLine->QtyDispatched . ",
 								completed=0
@@ -646,9 +648,12 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order detail record could not be updated for the reduced quantity invoiced because');
 				$DbgMsg = _('The following SQL to update the sales order detail record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				
+				
+				
 				/* Update location stock records if not a dummy stock item */
 
-				if ($MBFlag=="B" OR $MBFlag=="M") {
+				if ($MBFlag=='B' OR $MBFlag=='M') {
 
 					$SQL = "UPDATE locstock
 						SET locstock.quantity = locstock.quantity + " . $OrderLine->QtyDispatched . "
@@ -712,7 +717,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 							$QtyOnHandPrior =0; //because its a dummy/assembly/kitset part
 						}
 
-						if ($Component_MBFlag=="M" OR $Component_MBFlag=="B"){
+						if ($Component_MBFlag=='M' OR $Component_MBFlag=='B'){
 
 							$SQL = "INSERT INTO stockmoves (
 									stockid,
@@ -874,19 +879,25 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 					foreach($OrderLine->SerialItems as $Item){
 						/*We need to add the StockSerialItem record and The StockSerialMoves as well */
 						$SQL = "SELECT quantity from stockserialitems
-							WHERE stockid='" . $OrderLine->StockID . "'
-							AND loccode='" . $_SESSION['CreditItems']->Location . "'
-							AND serialno='" . $Item->BundleRef . "'";
-
+								WHERE stockid='" . $OrderLine->StockID . "'
+								AND loccode='" . $_SESSION['CreditItems']->Location . "'
+								AND serialno='" . $Item->BundleRef . "'";
+	
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be selected because');
 						$DbgMsg = _('The following SQL to select the serial stock item record was used');
 						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
 						if (DB_num_rows($Result)==0){
-							$SQL = "INSERT INTO stockserialitems (stockid, loccode, serialno, quantity)
-								VALUES
-								('" . $OrderLine->StockID . "', '" . $_SESSION['CreditItems']->Location . "', '" . $Item->BundleRef . "',  ". $Item->BundleQty .")";
-
+							$SQL = "INSERT INTO stockserialitems (stockid, 
+																	loccode, 
+																	serialno, 
+																	quantity)
+											VALUES
+														('" . $OrderLine->StockID . "', 
+														 '" . $_SESSION['CreditItems']->Location . "', 
+														 '" . $Item->BundleRef . "',  
+														 ". $Item->BundleQty .")";
+			
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
 							$DbgMsg = _('The following SQL to update the serial stock item record was used');
 							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -904,7 +915,14 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 						/* now insert the serial stock movement */
 
-						$SQL = "INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (" . $StkMoveNo . ", '" . $OrderLine->StockID . "', '" . $Item->BundleRef . "', " . $Item->BundleQty . ")";
+						$SQL = "INSERT INTO stockserialmoves (stockmoveno, 
+																stockid, 
+																serialno, 
+																moveqty) 
+													VALUES (" . $StkMoveNo . ", 
+															'" . $OrderLine->StockID . "', 
+															'" . $Item->BundleRef . "', 
+															" . $Item->BundleQty . ")";
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
