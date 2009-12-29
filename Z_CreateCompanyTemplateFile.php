@@ -36,14 +36,14 @@ if (isset($_POST['CreateTemplate'])){
                             DELETE FROM currencies WHERE currabrev='" . $CurrRow['currabrev'] ."';\n";
           $SQLScript .= "INSERT INTO currencies (currabrev, currency, country, rate)
                                 VALUES ('" . $CurrRow['currabrev'] . "', '" . $CurrRow['currency'] ."', '" . $CurrRow['country'] . "', 1);\n";
-          $SQLScript .= "UPDATE companies SET defaultcurrency='" . $CurrRow['currabrev'] ."',
-                                              address4='" . $CurrRow['country'] . "',
+          $SQLScript .= "UPDATE companies SET currencydefault='" . $CurrRow['currabrev'] ."',
+                                              regoffice6='" . $CurrRow['country'] . "',
                                               debtorsact=" . $CurrRow['debtorsact'] . ",
                                               creditorsact=" . $CurrRow['creditorsact'] . ",
                                               payrollact=" . $CurrRow['payrollact'] . ",
                                               grnact=" . $CurrRow['grnact'] . ",
                                               exchangediffact=" . $CurrRow['exchangediffact'] . ",
-                                              purhcasesexchagediffact=" . $CurrRow['purchasesexchangediffact'] . ",
+                                              purchasesexchangediffact=" . $CurrRow['purchasesexchangediffact'] . ",
                                               retainedearnings=" . $CurrRow['retainedearnings'] . ",
                                               freightact=" . $CurrRow['freightact'] . "
                           WHERE coycode=1;\n";
@@ -65,7 +65,7 @@ if (isset($_POST['CreateTemplate'])){
           $SQLScript .= "TRUNCATE TABLE taxgroups;\n";
           $SQLScript .= "TRUNCATE TABLE taxgrouptaxes;\n";
           $SQLScript .= "TRUNCATE TABLE taxcategories;\n";
-          $SQLScript .= "TRUNCATE TABLE taxgprovinces;\n";
+          $SQLScript .= "TRUNCATE TABLE taxprovinces;\n";
 		  
 		  $GroupsResult = DB_query('SELECT groupname,
                                            sectioninaccounts,
@@ -76,7 +76,7 @@ if (isset($_POST['CreateTemplate'])){
 
           while ($GroupRow = DB_fetch_array($GroupsResult)){
               $SQLScript .= "INSERT INTO accountgroups (groupname,sectioninaccounts,pandl, sequenceintb, parentgroupname)
-                                   VALUES (" . $GroupRow['groupname'] . ",
+                                   VALUES ('" . $GroupRow['groupname'] . "',
                                           '" . $GroupRow['sectioninaccounts'] . "',
                                           " . $GroupRow['pandl'] . ",
                                           " . $GroupRow['sequenceintb'] . ",
@@ -190,8 +190,8 @@ if (isset($_POST['CreateTemplate'])){
                                                         calculationorder,
                                                         taxontax)
                                    VALUES (" . $TaxGroupTaxesRow['taxgroupid'] . ",
-                                           " . $TaxGroupTaxesRow['taxauthid'] . "
-                                           " . $TaxGroupTaxesRow['calculationorder'] . "
+                                           " . $TaxGroupTaxesRow['taxauthid'] . ",
+                                           " . $TaxGroupTaxesRow['calculationorder'] . ",
                                            " . $TaxGroupTaxesRow['taxontax'] . ");\n";
           }
 		  $SQLScript .= 'SET FOREIGN_KEY_CHECKS=1;';
