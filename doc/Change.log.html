@@ -1,5 +1,6 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p>
+<p>02/01/10 Tim: Allow pdf output of the asset register.
 <p>24/12/09 Tim: Move the purchase ordering printing parameters to a separate file for the form designer.
 <p>23/12/09 Tim: Rename rtl theme to remove the space.
 <p>19/12/09 Pak Ricard: TopItems.php - Improvements to the top sales items report.
@@ -43,8 +44,8 @@
 <p>17/11/09 Pak Ricard: TopItems.php - Correct typo preventing the correct loading of type of customers.
 <p>15/11/09 Javier: button_bg.png - quick menu silverwolf button background to follow style of theme
 <p>15/11/09 Javier: default.css - removed duplicated and restored overwritten classes after the synchronization
-<p>15/11/09 Javier: Change.log.html - This file, partially corrected xhtml code and convert tag being text to entities 
-<p>15/11/09 Javier: default.css - Added in menu_group_item &lt;p&gt; css style to restore and even enhance previous &lt;li&gt; appearance 
+<p>15/11/09 Javier: Change.log.html - This file, partially corrected xhtml code and convert tag being text to entities
+<p>15/11/09 Javier: default.css - Added in menu_group_item &lt;p&gt; css style to restore and even enhance previous &lt;li&gt; appearance
 <p>15/11/09 Javier: index.php - Complete correction of PhP and xhtml code to follow Zend and W3C standard rules
 <p>15/11/09 Beth Lesko: DateFunctions.inc - Correction for North American style dates
 <p>15/11/09 csrbusiness: api_salesorders.php - Correct date checking functions
@@ -99,7 +100,7 @@
 <p>09/11/09 Javier: CustomerReceipt.php - v1.45 Removed br at Line 783 from html table first column title.
 <p>09/11/09 Javier: upgrade3.11-3.12.sql - corrected syntax for consistency.
 <p>08/11/09 Gilles Deacur: SelectCustomer.php - Add in facility to search by customer address
-<p>08/11/09 Phil: New DailySalesInquiry.php - show sales for a selected month - day by day with average sales per billing day and GP% - work sponsored by Manny Neri 
+<p>08/11/09 Phil: New DailySalesInquiry.php - show sales for a selected month - day by day with average sales per billing day and GP% - work sponsored by Manny Neri
 <p>07/11/09 Tim: update3.10-3.11.sql - Remove FOI config value as feature not in 3.11
 <p>07/11/09 Tim: PrintCstTransPortrait.php - Correct $pdf->Output() call to show invoice without saving first
 <p>07/11/09 Tim: upgrade3.11-3.12.sql - Remove duplicated line and corrected syntax for consistency
@@ -234,7 +235,7 @@
 <p>08/10/09 Tim: RCFunctions.inc - Fix problem with database criteria statement
 <p>08/10/09 Tim: WorkOrderIssue.php - Allow for the selection of a date for the manual issue to work orders
 <p>08/10/09 Pak Ricard: Top sales items report
-<p>07/10/09 Phil: Fix PO_Items.php to enable changes to prices and weights 
+<p>07/10/09 Phil: Fix PO_Items.php to enable changes to prices and weights
 <p>03/10/09 Tim: upgrade3.11-3.11.1 - Enlarge language field in www_users for utf8 codeset
 <p>03/10/09 Tim: upgrade3.11-3.12.sql - Enlarge language field in www_users for utf8 codeset
 <p>03/10/09 Tim: weberp-new.sql - Enlarge language field in www_users for utf8 codeset
@@ -271,7 +272,7 @@
 <p>08/10/09 Tim: RCFunctions.inc - Fix problem with database criteria statement
 <p>08/10/09 Tim: WorkOrderIssue.php - Allow for the selection of a date for the manual issue to work orders
 <p>08/10/09 Pak Ricard: Top sales items report
-<p>07/10/09 Phil: Fix PO_Items.php to enable changes to prices and weights 
+<p>07/10/09 Phil: Fix PO_Items.php to enable changes to prices and weights
 <p>03/10/09 Tim: upgrade3.11-3.11.1 - Enlarge language field in www_users for utf8 codeset
 <p>03/10/09 Tim: upgrade3.11-3.12.sql - Enlarge language field in www_users for utf8 codeset
 <p>03/10/09 Tim: weberp-new.sql - Enlarge language field in www_users for utf8 codeset
@@ -325,7 +326,7 @@
 <p>28/08/09 David: BankAccounts.php - Correct sql syntax for insert statement
 <p>28/08/09 Tim: upgrade3.10-3.11.sql - Add comments for use with the upgrade script
 <p>28/08/09 Tim: Z_Upgrade_3.10-3.11.php - Change upgrade script to handle the case where some upgrades have already been done.
-<p>26/08/09 Phil: Fix Shoops CustLoginSetup.php by populating the $ModuleList 
+<p>26/08/09 Phil: Fix Shoops CustLoginSetup.php by populating the $ModuleList
 <p>26/08/09 Phil: SelectCustomer.php ORDER BY clause doubled up (now fixed) following salesman login changes
 <p>26/08/09 Paul: StockCategories.php - Fixed missing closing > in html
 <p>24/08/09 Phil: Saleman login - modifications to session.inc SelectOrderItems.php SelectCustomer.php WWW_Users.php - added a new field to www_users for salesman login - when entering orders users with this restricted login will only be able to enter orders against the selected salesman (in WWW_Users.php). The user will also only be able to select customers for the selected salesman too. Note that if this user has access to salesanalysis then they will be analyse the sales of all customers
@@ -338,7 +339,7 @@
 <p>16/08/09 Tim: config.distrib.php - Add mysql port configuration
 <p>15/08/09 Tim: api_xml-rpc.php - Updates to stock adjustment function
 <p>15/08/09 Tim: api_stock.php - Updates to stock adjustment function
-<p>15/08/09 Tim: Tax.php - Fix problem with conversion of PeriodEndDate 
+<p>15/08/09 Tim: Tax.php - Fix problem with conversion of PeriodEndDate
 <p>13/08/09 Tim: Add GetStockCategory() function to api
 <p>13/08/09 Harald Ringehahn: DateFunctions.inc - Update for all supported date formats
 <p>13/08/09 Harald Ringehahn: MiscFunctions.js - Update for all supported date formats
@@ -413,7 +414,7 @@
 <p>13/07/09 Murray: fixed some div centering for SelectCustomer.php
 <p>10/07/09 Tim: PO_SelectOSPurchOrder.php - Correct sql for mysql strict mode
 <p>10/07/09 Tim: PO_Header.php - Correction to goods received link
-<p>10/07/09 Tim: weberp-new.sql - Remove unecessary data 
+<p>10/07/09 Tim: weberp-new.sql - Remove unecessary data
 <p>10/07/09 Tim: weberp-demo.sql - Remove unecessary data (audittrail), and add in 3.11 database changes
 <p>10/07/09 Tim: sql/mysql/upgrade3.10-3.11.sql - Make alteration to type for notes field in custnotes table
 <p>10/07/09 Tim: weberp-new.sql - Add in new database changes
@@ -719,7 +720,7 @@
 <p>03/05/09 Tim: PrintCustTransPortrait.php - Show line description even when on more than one line
 <p>3/5/09 Phil: Mess with the API to add $_SESSION['AllowedSecurityTokens'] array to provide role based authentication infrastructure to the api_php.php script - now just to add the checking $PageSecurity variable in_array for exposed functions - Tim to check!!
 <p>2/5/09 Phil: Added new configuration parameters to SystemParameters for DefaultFactoryLocation, AutoCreateWOs and FactoryManagerEmail as preparation for the automatic creation of works orders at the default factory advising the factory manager of the work orders created.
-<p>/30/4/09 Phil: DeliveryDetails.php and RecurringSalesOrdersProcess.php made it so sales order headers use the order number from GetNextTransNo (30) as well as the sales order details - and avoiding the inconsistency issues where the auto-increment was out of sync with the systypes typeid=30 typeno 
+<p>/30/4/09 Phil: DeliveryDetails.php and RecurringSalesOrdersProcess.php made it so sales order headers use the order number from GetNextTransNo (30) as well as the sales order details - and avoiding the inconsistency issues where the auto-increment was out of sync with the systypes typeid=30 typeno
 <p>02/05/09 Tim: StockCategories.php - Correct form refresh to show changes in stock types when a category is being edited
 <p>30/4/09 Phil: Add field to Stocks.php for NextSerialNo - where > 0 and Serialised then automatically allocates serial numbers for quantities on new work orders - and work orders will not allow quantities to change once created
 <p>29/04/09 Tim: StockCategories.php - Change default behaviour to show Stock GL Code
@@ -807,7 +808,7 @@
 <p>23/03/09 Tim: SuppInvGRNs.php - Add in closing &lt;font&gt; tag and show the suppliers name correctly
 <p>23/03/09 Tim: StockCategories.php - Correctly check for uninitialised POST variables
 <p>23/03/09 Tim: SelectOrderItems.php - Correct html for xhtml compatability
-<p>23/03/09 Tim: SalesGLPostings.php - Initial assignment of 
+<p>23/03/09 Tim: SalesGLPostings.php - Initial assignment of
 <p>23/03/09 Tim: PO_PDFPurchOrder.php - Show purchase order number correctly
 <p>23/03/09 Tim: PO_Items.php - Only show Purchase order text once
 <p>23/03/09 Tim: PO_Header.php - Show location address when the lookup address button is pushed
@@ -876,7 +877,7 @@
 <p>17/2/09 Tim: WorkOrderCosting.php - Correctly calculate cost variances
 <p>17/2/09 Tim: PrintCustTrans. - Update to correctly email invoice to customer
 <p>12/2/09 Matt Taylor: BOMInquiry.php BOMs.php Stocks.php WorkOrderReceive.php WorOrderEntry.php includes/SQL_CommonFunctions.inc Z_Im/ortStocks.php - modifications to allow Phantom Items - a new class of item type G - ghost (since P for Phantom could mean purchased). These allow sub-components to be included in the top level of a bill of material as a single line making BOMs simpler to follow and create - the components of ghosts/phantoms are exploded automatically on work order entry so the full requirements show against the work order.
-<p>11/2/09 Moxx consulting: first commit of web based install UI 
+<p>11/2/09 Moxx consulting: first commit of web based install UI
 <p>10/2/09 Tim: weberp-new.sql - Update data for factor companies and debtortype.
 <p>10/2/09 Tim: WorkOrderCosting.php - Correct sql to correctly calculate costings.
 <p>09/2/09 Tim: CustomerAllocations.php - Remove commented code that was preventing gettext from working
