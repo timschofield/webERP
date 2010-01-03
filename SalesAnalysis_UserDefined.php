@@ -17,17 +17,8 @@ if (isset($_GET['ProducePDF'])){
 	include ('includes/PDFSalesAnalysis.inc');
 
 	if ($Counter >0) {
-// Javier: 
-/*		if ($ListCount == 0) {
-			$title = _('Printing Sales Analysis Error');
-			include('includes/header.inc');
-			echo '<br /><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
-			include('includes/footer.inc');
-			exit;
-        	} else {
-*/			$pdf->OutputD('SalesAnalysis_' . date('Y-m-d') . '.pdf');
-			$pdf-> __destruct();
-		}
+		$pdf->OutputD('SalesAnalysis_' . date('Y-m-d') . '.pdf');
+		$pdf-> __destruct();
 	} else {
 		$pdf-> __destruct();
 		$title = _('User Defined Sales Analysis Problem');

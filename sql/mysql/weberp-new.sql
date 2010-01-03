@@ -2153,7 +2153,7 @@ CREATE TABLE `www_users` (
   `password` text NOT NULL,
   `realname` varchar(35) NOT NULL DEFAULT '',
   `customerid` varchar(10) NOT NULL DEFAULT '',
-  `salesman` char(3) NOT NULL,
+  `salesman` char(3) NOT NULL DEFAULT '',
   `phone` varchar(30) NOT NULL DEFAULT '',
   `email` varchar(55) DEFAULT NULL,
   `defaultlocation` varchar(5) NOT NULL DEFAULT '',

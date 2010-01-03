@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS `fixedassetlocations` (
   `locationid` char(6) NOT NULL default '',
   `locationdescription` char(20) NOT NULL default '',
   PRIMARY KEY  (`locationid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE `assetmanager`;
 
@@ -15,7 +15,7 @@ CREATE TABLE `assetmanager` (
   `depn` double NOT NULL default '0',
   `datepurchased` date NOT NULL default '0000-00-00',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 UPDATE `www_users` SET `modulesallowed`=(SELECT insert(`modulesallowed`, 15,0,"1,"));
 INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FrequentlyOrderedItems',0);
