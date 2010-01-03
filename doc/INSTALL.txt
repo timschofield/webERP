@@ -84,8 +84,43 @@ Normally the Apache document root directory is called "htdocs". However other we
 
 Extract the webERP archive under the web server root directory. This will create the webERP directory under the web server root directory and put all the scripts in that directory.
 
-Copy the file config.distrib.php to config.php
+At this point you may wish to add an extra layer of security by restricting
+access to the webERP system.  This is in addition to webERP's own security
+system, so you may wish to skip it, but I advise you add it. In your
+.../htdocs/webERP directory (or wherever your webERP's root directory is)
+amend the file .htaccess thus:
+	php_flag magic_quotes_gpc off
+	php_flag register_globals off
 
+	DirectoryIndex index.htm index.html index.php index.html.en
+
+	IndexIgnore .htaccess */.??* *~ *# */HEADER* */README* */_vti
+
+	# Amend this directory to be where you've installed webERP
+	AuthUserFile /var/www/mycompany/webERP/.htpasswd
+	AuthGroupFile /dev/null
+	AuthName webERPPassword
+	AuthType Basic
+
+	<Limit GET POST>
+	require valid-user
+	</Limit>
+
+	# Disallow access to this file
+	<Files .htaccess>
+	order allow,deny
+	deny from all
+	</Files>
+
+Now create a file called .../htdocs/webERP/.htpasswd:
+	# htpasswd -n john.smith
+
+Use command "htpasswd -n" to create sample lines which will be of the format
+	john.smith:0123456789012345
+
+Where '0..5' is an encrypted password. Create one line for each webERP user.
+Note that you will need to enter the (unencrypted) password whenever you access
+the webpages in .../webERP.
 
 2. Creating the Database
 
@@ -130,32 +165,75 @@ Also from the MySQL manual (edited):
         	   IDENTIFIED BY 'some_pass' WITH GRANT OPTION;
 
 Where 'some_pass' is a password of your choice for the new user 'weberp_db_user'. Note that this user weberp_db_user can only connect from the local machine so if the web server is on a different machine to the MySQL server then you need to give privileges to connect from other computers. See the MySQL manual.
+Note also that the "'" quote symbol must be typed.
 
 If you have an account set up already in MySQL and innodb tables enabled, then all you need to do is to run one of the sql scripts - under the sql directory as unpacked from the archive.
 
 Note: The scripts provided are created using mysqldump and contain comments. Unfortunately, phpMyAdmin doesn't like these comments so it is recommended to follow the instructions below.
 
-Two scripts are provided:
+WebERP expects each company that it manages to have a separate database. For
+example, if you have a company called MyCompany, then it will expect a database
+called mycompany (note that it must all be lower case).  Before you start,
+ensure that you have no such database on your system, if you do then you will
+either have to remove it, rename it, or choose a different name for your
+company for the purposes of WebERP. The simplest tool is webmin, or you could
+use phpMyAdmin.
+
+Once you have confirmed that you are ready to create a database you are
+now ready to go ahead, two scripts are provided to ease the database creation.
 
 1. weberp-demo.sql  This has a minimal amount of demonstration data in a bogus company set up so that transactions can be tried to see how the system works.
-2. weberp-new.sql This script has only the basic data necessary to start a new company system off. If you wish to set up your company on webERP then this is the script to use. Using weberp-new.sql you will need to create a database first (using phpMyAdmin for example) or add the following sql commands to this script CREATE database yourdbname; USE yourdbname;
+2. weberp-new.sql This script has only the basic data necessary to start a new company system off. If you wish to set up your company on webERP then this is the script to use. weberp-new.sql you will need to create a database first (using phpMyAdmin for example) or add the following sql commands to this script
+	CREATE DATABASE mycompanyname DEFAULT CHARACTER SET utf8 DEFAULT 
+		COLLATE utf8_unicode_ci;
+	USE mycompanyname
+
+Instead of mycompanyname use the name of your company. Note that the name of
+the database must all be in lower case.
 
 This creates a weberp database and populates it with only the very basic data to start off.
 The files weberp-demo.sql and weberp-new.sql should be in webERP/sql/mysql directory.
 
-shell > mysql --user=weberp_db_user --password='some_pass' < /path_to_the_sql_script/weberp-demo.sql
+shell > mysql --user=weberp_db_user -p mysql < /path_to_the_sql_script/weberp-demo.sql
 
 or
 
-shell > mysql --user=weberp_db_user --password='some_pass' < /path_to_the_sql_script/weberp-new.sql
+shell > mysql --user=weberp_db_user --p mysql < /path_to_the_sql_script/weberp-new.sql
 
-as required.
+as required. You will be prompted for the mysql password that you created
+earlier.
+
+Use webmin (or your favourite MySQL administration program) to confirm that
+the mycompanyname database now exists.
+
+In the directory .../webERP/companies you will find a directory called
+weberpdemo. You will now need to make a copy of all the files in that directory
+to .../webERP/mycompanyname (note that this is case sensitive).
 
 3. Editing config.php
 
-The webERP archive no longer comes with a config.php file. There is now a GUI installer that is activated when there is no config.php file. Simply browse to your webERP installation with the URL http://yourdomain/webERP/ in your browser and complete the installation form. You will need to ensure that the directory where you have installed is writable by the system user that the web-server runs as - otherwise the installer will not be able to write the new config.php 
+The webERP archive no longer comes with a config.php file. There is now a
+web-based installer that is activated when there is no config.php file. Simply browse to your webERP installation with the URL http://yourdomain/webERP/ in your browser,
+enter the web access password if you amended the .htaccess file as discussed
+above, accept all cookies, and complete the installation form.
 
-Alternatively, config.php must be created by copying over config.distrib.php to config.php and then editing the new config.php file with the parameters required for your installation.
+You will need to ensure that the directory where you have installed is writable by the system user that the web-server runs as - otherwise the installer will not be able to write the new config.php.
+
+In step 4 uncheck "Install Tables", because that was done above, and
+enter the MySQL password to access the system that you used above.
+
+In step 5 enter mycompanyname and enter the timezone of your company, which
+may not be the same as the server's timezone.
+
+In step 6, you are creating new passwords, so you do not need to use the same
+passwords as above.
+
+Click 'Install WebERP'
+
+You may wish to examine .../webERP/config.php to verify all is correct.
+
+Alternatively, config.php may be created by copying config.distrib.php to config.php and then editing the new config.php file with the parameters required for your installation. If you have created the config.php using the web interface
+then you may now skip to step 4.
 
 config.php contains a series of user defined variables that determine how the system behaves. Critically it contains the user and password of the database connection and the type of database server being used. There is no going forward without the system being provided with this data. It is important to ensure there are no trailing characters at the end of this file - this is a common installation pitfall since some editors add a character at the end of the file.
 
@@ -166,7 +244,7 @@ The file appears as follows for reference purposes. The actual file config.php u
 //---------------------------------------------------
 
 //DefaultLanguage
-$DefaultLanguage ='en_GB';
+$DefaultLanguage ='en_GB.utf8';
 
 // Whether to display the admin login and password or not 
 $allow_demo_mode = True;
@@ -217,23 +295,34 @@ $CryptFunction = "sha1"; // SHA1 Hash
 
 
 
+
 4. Logging In For the First Time
 
 Open a browser and enter the URL for the web server directory where webERP is installed if the broswer is on the same machine as the server perhaps
 
-http://localhost/webERP/index.php
+http://localhost/webERP/
 
+Select mycompanyname from the drop downlist.
 enter the user name of 'admin'
 password 'weberp'
 
 (the quotation marks are not required).
 
+You should now see WebERP.  Don't worry what it says "webERP's Demo Company Inc.
+in the top left hand corner, you're not really in weberpdemo, you ARE in your
+company's database.
 
-A pdf reader - Foxit or Acrobat Reader should be installed on the client machines that will access the system. It is recommended that the preferences of the pdf v be changed so as to open a seperate window for acrobat documents rather than display them in the browser.
+
+A pdf reader - Foxit or Acrobat Reader should be installed on the client machines that will access the system. It is recommended that the preferences of the pdf v be changed so as to open a seperate window for acrobat documents rather than display them in the browser. Note that if you are using webERP with languages that require extended fonts to display then you must use the adobe acrobat v 9.1 or above - since these fonts use adobe CID fonts that come bundled with adobe reader but not other pdf readers.
 
 5. Setting Up System Parameters and Company Specific Data
 
-To initiate a new company go into the script Z_MakeNewCompany.php this creates a new company database with a name of your choice and uploads the logo to the required place - the logo must be a .jpg 
+To initiate a new company go into the script Z_MakeNewCompany.php this creates a new company directory in .../webERP/companies with a name of your choice and
+uploads the logo to the required place - the logo must be a .jpg - the logo file is used for invoices and statements and should be smaller than 50KB
+
+To this go to:
+http://youdomain/webERP/Z_MakeNewCompany.php
+Ensure that "Create Database?" is not ticked. Click on "Proceed".
 
 It is imperative to go through each of the screens from the setup tab and enter the appropriate information. Particularly the company information and the configuration settings. Each of these settings together with the narrative explaining what each of the settings does should be reviewed in detail before starting off with the system.
 
