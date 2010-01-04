@@ -282,7 +282,7 @@
 			return $Errors;
 		}
 		$PageSecurity =11; //The authorisation required to go to the stock modification script
-		if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']))) { 
+		if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']))) {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
@@ -784,7 +784,7 @@
 			$Location.'" AND stockid="'.$StockID.'"';
 		$glupdatesql1="INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
 						VALUES (17,".GetNextTransactionNo(17, $db).",'".$TranDate.
-						"','"GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
+						"','".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
 						",".$adjglact.",".$itemdetails['materialcost']*-$Quantity.
 						",'".$StockID." x ".$Quantity." @ ".$itemdetails['materialcost']."')";
 		$glupdatesql2="INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
