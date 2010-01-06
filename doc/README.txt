@@ -27,7 +27,7 @@ Translations that have been contributed are distributed as separate language arc
 
 http://sourceforge.net/project/showfiles.php?group_id=70949
 
-Translators should read the document http://www.weberp.org/wikidocs/HowToTranslate which describes how to translate webERP.
+Translators should read the document http://www.weberp.org/HowToTranslate which describes how to translate webERP.
 
 Translations must be installed under the webERP/locale directory and the locale must be available on the web-server.
 
@@ -42,4 +42,4 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
 A copy of the GNU General Public License is included in the doc directory along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-Copyright weberp.org 2009 - Contact: info@weberp.org
+Copyright weberp.org 2010 - Contact: info@weberp.org
