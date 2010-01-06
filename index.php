@@ -778,7 +778,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/BOMs.php?' . SID . '">' . _('Bills Of Material') . '</a></p>'; ?>
 							</td>
 							</tr>
-							
+
 							<tr>
 							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/MRPDemands.php?' . SID . '">' . _('Master Schedule') . '</a></p>'; ?>
@@ -794,7 +794,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/MRP.php?' . SID . '">' . _('MRP Calculation') . '</a></p>'; ?>
 							</td>
 							</tr>
-							
+
 						</table>
 					</td>
 					</tr>
@@ -933,6 +933,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/GeocodeSetup.php">' . _('Geocode Setup') . '</a></p>'; ?>
 							</td>
 							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/FormDesigner.php">' . _('Form Layout Editor') . '</a></p>'; ?>
+							</td>
+							</tr>
 						</table>
 					</td>
 
@@ -1029,7 +1034,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</td>
 							</tr>
 							<tr></tr>
-							
+
 							<tr>
 							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/MRPCalendar.php?' . SID . '">' . _('MRP Available Production Days') . '</a></p>'; ?>
@@ -1235,7 +1240,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 			</td>
 			</tr>
 		</table>
-<?php 
+<?php
 	break;
 	} //end of module switch
 } /* end of if security allows to see the full menu */
