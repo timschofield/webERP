@@ -52,7 +52,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 } else {  /* Security settings DO allow seeing the main menu */
 
 ?>
-		<table width="100%"><td><table class="main_menu" width="100%" cellspacing="0" cellpadding="0" border="0">
+		<table width="100%"><td width="10%" valign="top"><table class="main_menu" width="100%" cellspacing="0" cellpadding="0" border="0">
 
 	<?php
 
