@@ -7,8 +7,6 @@
 
 $PageSecurity = 1;
 
-error_reporting (E_ALL);
-
 include('includes/session.inc');
 
 if (isset($_GET['FromTransNo'])) {
@@ -45,7 +43,6 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF'])
 	and $FromTransNo!=''){
 
 	include ('includes/class.pdf.php');
-//	define('FPDF_FONTPATH','font/');
 	require('fpdi/fpdi.php');
 
 	/* This invoice is hard coded for A4 Landscape invoices or credit notes so can't use PDFStarter.inc */
@@ -511,17 +508,11 @@ while ($row=DB_fetch_array($result)) {
 		$pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','I');
 		exit;
 		// If EMAIL is selected, send the invoice via email, this is not appending pages yet though        
-	} else if (isset($_GET['Email'])) {
-		$pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf'));
-		$pdf->concat();
-		$pdfcode = $pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf');    
+	} elseif (isset($_GET['Email'])) {
+		$pdfcode = $pdf->Output($_SESSION['reports_dir'] . '/Invoice.pdf','D');    
 	} else {
-
-// Javier: esto tiene que estar mal, si imprime la factura sin adjuntar nada pq llama a concat?
 		// If the appendfile field is empty and EMAIL is not selected, just print the invoice without any appended pages       
-		$pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf'));
-		$pdf->concat();
-		$pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','D');
+		$pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','I');
 		exit;
 	}
 }

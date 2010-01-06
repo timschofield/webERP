@@ -5,7 +5,7 @@
 /*
 date validation and parsing functions
 
-These functions refer to the config variable defining the date format
+These functions refer to the session variable defining the date format
 The date format is defined in SystemParameters called DefaultDateFormat
 this can be a string either 'd/m/Y' for UK/Australia/New Zealand dates or
 'm/d/Y' for US/Canada format dates
@@ -49,7 +49,7 @@ function Is_Date($DateEntry) {
 
 
 	if (is_long((int)$Date_Array[0]) AND is_long((int)$Date_Array[1]) AND is_long((int)$Date_Array[2])) {
-		if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
+		if (($_SESSION['DefaultDateFormat']=='d/m/Y') OR ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 
 			if (checkdate((int)$Date_Array[1],(int)$Date_Array[0],(int)$Date_Array[2])){
 				return 1;
@@ -140,7 +140,7 @@ function DayOfMonthFromSQLDate($DateEntry) {
 
 
 // Returns the timestamp for the financial year end. To find other year ends,
-// use $YearIncrement to move back and fgorward. in -1 gives last year end, 1
+// use $YearIncrement to move back and forward. in -1 gives last year end, 1
 // gives next year end.
 
 function YearEndDate($MonthNo, $YearIncrement) {
@@ -416,7 +416,7 @@ and converts to a yyyy/mm/dd format */
 	} elseif ($_SESSION['DefaultDateFormat']=='d.m.Y') {
 		return $Date_Array[2].'.'.$Date_Array[1].'.'.$Date_Array[0];
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y') {
-		return $Date_Array[1].'/'.$Date_Array[2].'/'.$Date_Array[0];
+		return $Date_Array[2].'/'.$Date_Array[0].'/'.$Date_Array[1];
 	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d') {
 		return $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2];
 	}
@@ -449,7 +449,7 @@ function Date1GreaterThanDate2 ($Date1, $Date2) {
 
 	/*The 0 and 1 elements of the array are switched depending on the format used */
 
-		if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
+		if (($_SESSION['DefaultDateFormat']=='d/m/Y') OR ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 			if ( ($Date1_array[1] -  $Date2_array[1]) >0){
 				return 1;
 			} elseif (($Date1_array[1] - $Date2_array[1])==0){
@@ -492,7 +492,7 @@ function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
 		$Date_Array = explode('.',$TranDate);
   }
 
-	if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
+	if (($_SESSION['DefaultDateFormat']=='d/m/Y') OR ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 		if ($DayInFollowingMonth==0){ /*then it must be set up for DaysBeforeDue type */
 
 			$DayDue = $Date_Array[0]+$DaysBeforeDue;
@@ -559,7 +559,7 @@ function DateAdd ($DateToAddTo,$PeriodString,$NumberPeriods){
 		$Date_Array = explode('.',$DateToAddTo);
   }
 
-	if (($_SESSION['DefaultDateFormat']=='d/m/Y') || ($_SESSION['DefaultDateFormat']=='d.m.Y')){
+	if (($_SESSION['DefaultDateFormat']=='d/m/Y') OR ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 
 		switch ($PeriodString) {
 		case 'd': //Days
