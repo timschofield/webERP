@@ -52,11 +52,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 } else {  /* Security settings DO allow seeing the main menu */
 
 ?>
-		<table class="main_menu" width="100%" cellspacing="0" cellpadding="0" border="0">
-			<tr>
-			<td class="main_menu">
-				<table class="main_menu">
-					<tr>
+		<table width="100%"><td><table class="main_menu" width="100%" cellspacing="0" cellpadding="0" border="0">
 
 	<?php
 
@@ -75,20 +71,16 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 				$_SESSION['Module']=$ModuleLink[$i];
 			}
 			if ($ModuleLink[$i] == $_SESSION['Module']){
-				echo '<td class="main_menu_selected"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Application='. $ModuleLink[$i] . '">' . $ModuleList[$i] . '</a></td>';
+				echo '<tr><td class="main_menu_selected"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Application='. $ModuleLink[$i] . '">' . $ModuleList[$i] . '</a></td></tr>';
 			} else {
-				echo '<td class="main_menu_unselected"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Application='. $ModuleLink[$i] . '">' . $ModuleList[$i] . '</a></td>';
+				echo '<tr><td class="main_menu_unselected"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Application='. $ModuleLink[$i] . '">' . $ModuleList[$i] . '</a></td></tr>';
 			}
 		}
 		$i++;
 	}
 
 	?>
-					</tr>
-				</table>
-			</td>
-			</tr>
-		</table>
+		</table></td><td>
 	<?php
 
 
