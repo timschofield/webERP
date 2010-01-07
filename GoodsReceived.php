@@ -11,7 +11,7 @@ include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
-if (empty($identifier) {
+if (empty($identifier)) {
 	$identifier='';
 }
 $title = _('Receive Purchase Orders');
