@@ -125,24 +125,36 @@ div.error {
 	background-color: #fddbdb;
 	color: red;
 	border: 1px solid red;
+	width: 80%;
+	text-align: center;
+    margin: 0 auto;
 }
 
 div.warn {
 	background-color: #f5dbfd;
 	color: maroon;
 	border: 1px solid maroon;
-}
+	width: 80%;
+	text-align: center;
+    margin: 0 auto;
+ }
 
 div.success {
 	background-color: #b9ecb4;
 	color: #006400;			/* darkgreen is not a w3c css valid color */
 	border: 1px solid #006400;	/* darkgreen is not a w3c css valid color */
+	width: 80%;
+	text-align: center;
+    margin: 0 auto;
 }
 
 div.info {
 	background-color: #c7ccf6;
 	color: navy;
 	border: 1px solid navy;
+	width: 80%;
+	text-align: center;
+    margin: 0 auto;
 }
 
 input {
@@ -450,6 +462,7 @@ End Merge */
 /*	position: relative; it's not a div but a table */ 
 	text-align: center;
 	white-space: nowrap;
+	height: 16pt;
 }
 
 /* From merge, uncomment to apply style
