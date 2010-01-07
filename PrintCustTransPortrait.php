@@ -2,7 +2,7 @@
 
 /* $Id$ */
 
-/* Javier: This file has 5 PDF Outputs, one FPDI class, and one function, 
+/* Javier: This file has 5 PDF Outputs, one FPDI class, and one function,
 	The Outputs are L520 and L570, 3 are about FPDI y el 5th is in L457  */
 
 $PageSecurity = 1;
@@ -99,7 +99,13 @@ If (isset($PrintPDF)
 				$myrow = DB_fetch_array($result);
 				$DefaultBankAccountNumber = _('Account:') .' ' .$myrow['bankaccountnumber'];
 				$DefaultBankAccountCode =  _('Bank Code:') .' ' .$myrow['bankaccountcode'];
+			} else {
+				$DefaultBankAccountNumber = '';
+				$DefaultBankAccountCode =  '';
 			}
+		} else {
+			$DefaultBankAccountNumber = '';
+			$DefaultBankAccountCode =  '';
 		}
 // gather the invoice data
 
@@ -256,7 +262,7 @@ If (isset($PrintPDF)
 				stockmoves.narrative,
 				stockmaster.units,
 				stockmaster.decimalplaces,
-			 	stockmoves.discountpercent,	
+			 	stockmoves.discountpercent,
 				stockmoves.narrative
 			FROM stockmoves,
 					stockmaster
@@ -275,7 +281,7 @@ If (isset($PrintPDF)
 						stockmoves.narrative,
 						stockmaster.units,
 						stockmaster.decimalplaces,
-			 			stockmoves.discountpercent,						
+			 			stockmoves.discountpercent,
 						stockmoves.narrative
 					FROM stockmoves,
 						stockmaster
@@ -297,7 +303,7 @@ If (isset($PrintPDF)
 			exit;
 		}
 
-		
+
 		if (DB_num_rows($result)>0){
 
 			$FontSize = 10;
@@ -307,44 +313,44 @@ If (isset($PrintPDF)
 			$FirstPage = False;
 
 		    while ($myrow2=DB_fetch_array($result)){
-				
+
 				/*search the unit price*/
 				$sql='SELECT 	salesorderdetails.unitprice
-					  FROM   	salesorderdetails, 
-								debtortrans 
+					  FROM   	salesorderdetails,
+								debtortrans
 					  WHERE 	debtortrans.transno = ' . $FromTransNo . '
 					  AND 		debtortrans.order_ = salesorderdetails.orderno
 					  AND 		salesorderdetails.stkcode = "'.$myrow2['stockid'].'"';
-					  
+
 				$resultp=DB_query($sql,$db);
 				$myrow3=DB_fetch_array($resultp);
-				
+
 				/*check the price after discount*/
 				if ($myrow2['discountpercent']==0){
 					$DisplayDiscount ='';
-					$DisplayNet=number_format(($myrow3['unitprice'] * $myrow2['quantity']),2);
+					$DisplayNet=number_format(($myrow3['unitprice'] * $myrow2['Quantity']),2);
 					$DisplayPrice=$myrow3['unitprice'];
-					$DisplayQty=$myrow2['quantity'];
+					$DisplayQty=$myrow2['Quantity'];
 				} else {
 					$DisplayDiscount =number_format($myrow2['discountpercent']*100,2);
 					$DiscountPrice=$myrow2['discountpercent'] * $myrow3['unitprice'];
 					$DisplayPrice=$myrow3['unitprice'];
-					$DisplayQty=$myrow2['quantity'];
-					$DisplayNet=number_format((($myrow3['unitprice'] - $DiscountPrice) * $myrow2['quantity']),2);
+					$DisplayQty=$myrow2['Quantity'];
+					$DisplayNet=number_format((($myrow3['unitprice'] - $DiscountPrice) * $myrow2['Quantity']),2);
 				}
-					
-								
+
+
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos,71,$FontSize,$myrow2['stockid']);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+80,$YPos,186,$FontSize,$myrow2['description']);
 				$lines=1;
-				
+
 				while ($LeftOvers!='') {
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+80,$YPos-(10*$lines),186,$FontSize,$LeftOvers);
 					$lines++;
 				}
-				
+
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+270,$YPos,76,$FontSize,number_format($myrow3['unitprice'],2),'right');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,36,$FontSize,number_format($myrow2['quantity'],2),'right');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,36,$FontSize,number_format($myrow2['Quantity'],2),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+390,$YPos,26,$FontSize,$myrow2['units'],'center');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+420,$YPos,26,$FontSize,$DisplayDiscount,'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+450,$YPos,72,$FontSize,$DisplayNet,'right');
@@ -405,8 +411,8 @@ If (isset($PrintPDF)
 					PrintLinesToBottom ();
 					include ('includes/PDFTransPageHeaderPortrait.inc');
 				} //end if need a new page headed up
-			} /*end while there are line items to print out*/			
-			
+			} /*end while there are line items to print out*/
+
 		} /*end if there are stock movements to show on the invoice or credit note*/
 
 		$YPos -= $line_height;
@@ -542,7 +548,8 @@ class concat_pdf extends FPDI {
             }
         }
 
-        $pdf =& new concat_pdf();
+//        $pdf =& new concat_pdf();
+
 // Have to get the TransNo again, not sure what happens if we have a series of trans nos
 if (isset($_GET['FromTransNo'])){
         $FromTransNo = trim($_GET['FromTransNo']);
@@ -571,6 +578,7 @@ if (isset($_GET['FromTransNo'])){
 
 $result=DB_query($sql,$db);
 // Loop the result set and add appendfile if the field is not 0 or none
+
 while ($row=DB_fetch_array($result)){
     if ($row['appendfile'] !='0' AND $row['appendfile'] !=='none') {
         $pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf','companies/' . $_SESSION['DatabaseName'] . '/pdf_append/' . $row['appendfile']));
@@ -909,8 +917,8 @@ while ($row=DB_fetch_array($result)){
 				   		<td bgcolor='#EEEEEE'>" . ConvertSQLDate($myrow['trandate']) . "</td>
 						<td bgcolor='#EEEEEE'>" . $myrow['salesmanname'] . '</td>
 					</tr></table>';
-				   
-				   
+
+
 				   $sql ='SELECT stockmoves.stockid,
 				   		stockmaster.description,
 						stockmoves.qty as Quantity,
