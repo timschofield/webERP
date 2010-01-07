@@ -48,3 +48,5 @@ INSERT INTO  `config` (`confname`, `confvalue`) VALUES ('LogPath', '');
 INSERT INTO  `config` (`confname`, `confvalue`) VALUES ('LogSeverity', '0');
 
 ALTER TABLE `www_users` ADD COLUMN `pdflanguage` tinyint(1) NOT NULL DEFAULT '0';
+
+ALTER TABLE `purchorderauth` ADD COLUMN `offhold` tinyint(1) NOT NULL DEFAULT 0;
