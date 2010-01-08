@@ -23,36 +23,36 @@ if (!isset($_SESSION['SuppTrans'])){
 	/*It all stops here if there aint no supplier selected and invoice initiated ie $_SESSION['SuppTrans'] started off*/
 }
 
-/*If the user hit the Add to Invoice button then process this first before showing  all GRNs on the invoice 
+/*If the user hit the Add to Invoice button then process this first before showing  all GRNs on the invoice
 otherwise it wouldnt show the latest additions*/
 if (isset($_POST['AddPOToTrans']) AND $_POST['AddPOToTrans']!=''){
-    foreach($_SESSION['SuppTransTmp']->GRNs as $GRNTmp) {
-        if ($_POST['AddPOToTrans']==$GRNTmp->PONo) {
-		    $_SESSION['SuppTrans']->Copy_GRN_To_Trans($GRNTmp);
-		    $_SESSION['SuppTransTmp']->Remove_GRN_From_Trans($GRNTmp->GRNNo);
-        }
-    }
+	foreach($_SESSION['SuppTransTmp']->GRNs as $GRNTmp) {
+		if ($_POST['AddPOToTrans']==$GRNTmp->PONo) {
+			$_SESSION['SuppTrans']->Copy_GRN_To_Trans($GRNTmp);
+			$_SESSION['SuppTransTmp']->Remove_GRN_From_Trans($GRNTmp->GRNNo);
+		}
+	}
 }
 
 if (isset($_POST['AddGRNToTrans'])){ /*adding a GRN to the invoice */
-    foreach($_SESSION['SuppTransTmp']->GRNs as $GRNTmp) {
-    	if (isset($_POST['GRNNo_' . $GRNTmp->GRNNo])) {
-    		$_POST['GRNNo_' . $GRNTmp->GRNNo] = true;
-    	} else {
-    		$_POST['GRNNo_' . $GRNTmp->GRNNo] = false;
-    	}
-        $Selected = $_POST['GRNNo_' . $GRNTmp->GRNNo];
-        if ($Selected==True) {
-		    $_SESSION['SuppTrans']->Copy_GRN_To_Trans($GRNTmp);
-		    $_SESSION['SuppTransTmp']->Remove_GRN_From_Trans($GRNTmp->GRNNo);
-        }
-    }
+	foreach($_SESSION['SuppTransTmp']->GRNs as $GRNTmp) {
+		if (isset($_POST['GRNNo_' . $GRNTmp->GRNNo])) {
+			$_POST['GRNNo_' . $GRNTmp->GRNNo] = true;
+		} else {
+			$_POST['GRNNo_' . $GRNTmp->GRNNo] = false;
+		}
+		$Selected = $_POST['GRNNo_' . $GRNTmp->GRNNo];
+		if ($Selected==True) {
+			$_SESSION['SuppTrans']->Copy_GRN_To_Trans($GRNTmp);
+			$_SESSION['SuppTransTmp']->Remove_GRN_From_Trans($GRNTmp->GRNNo);
+		}
+	}
 }
 
 if (isset($_POST['ModifyGRN'])){
 
 	$InputError=False;
-
+	$Hold=False;
 	if ($_POST['This_QuantityInv'] >= ($_POST['QtyRecd'] - $_POST['Prev_QuantityInv'])){
 		$Complete = True;
 	} else {
@@ -60,8 +60,9 @@ if (isset($_POST['ModifyGRN'])){
 	}
 	if ($_SESSION['Check_Qty_Charged_vs_Del_Qty']==True) {
 		if (($_POST['This_QuantityInv']+ $_POST['Prev_QuantityInv'])/($_POST['QtyRecd'] ) > (1+ ($_SESSION['OverChargeProportion'] / 100))){
-			prnMsg(_('The quantity being invoiced is more than the outstanding quantity by more than') . ' ' . $_SESSION['OverChargeProportion'] . ' ' . _('percent. The system is set up to prohibit this. See the system administrator to modify the set up parameters if necessary'),'error');
-			$InputError = True;
+			prnMsg(_('The quantity being invoiced is more than the outstanding quantity by more than') . ' ' . $_SESSION['OverChargeProportion'] . ' ' .
+			 _('percent. The system is set up to prohibit this so will put this invoice on hold until it is authorised'),'warn');
+			$Hold = True;
 		}
 	}
 	if (!is_numeric($_POST['ChgPrice']) AND $_POST['ChgPrice']<0){
@@ -69,14 +70,15 @@ if (isset($_POST['ModifyGRN'])){
 		prnMsg(_('The price charged in the suppliers currency is either not numeric or negative') . '. ' . _('The goods received cannot be invoiced at this price'),'error');
 	} elseif ($_SESSION['Check_Price_Charged_vs_Order_Price'] == True) {
 		if ($_POST['ChgPrice']/$_POST['OrderPrice'] > (1+ ($_SESSION['OverChargeProportion'] / 100))){
-			prnMsg(_('The price being invoiced is more than the purchase order price by more than') . ' ' . $_SESSION['OverChargeProportion'] . '%. ' . _('The system is set up to prohibit this') . '. ' . _('See the system administrator to modify the set up parameters if necessary'),'error');
-			$InputError = True;
+			prnMsg(_('The price being invoiced is more than the purchase order price by more than') . ' ' . $_SESSION['OverChargeProportion'] . '%. ' .
+			_('The system is set up to prohibit this so will put this invoice on hold until it is authorised'),'warn');
+			$Hold=True;
 		}
 	}
 
 	if ($InputError==False){
-//        $_SESSION['SuppTrans']->Remove_GRN_From_Trans($_POST['GRNNumber']);
-        $_SESSION['SuppTrans']->Modify_GRN_To_Trans($_POST['GRNNumber'],
+//		$_SESSION['SuppTrans']->Remove_GRN_From_Trans($_POST['GRNNumber']);
+		$_SESSION['SuppTrans']->Modify_GRN_To_Trans($_POST['GRNNumber'],
 							$_POST['PODetailItem'],
 							$_POST['ItemCode'],
 							$_POST['ItemDescription'],
@@ -89,7 +91,8 @@ if (isset($_POST['ModifyGRN'])){
 							$_POST['StdCostUnit'],
 							$_POST['ShiptRef'],
 							$_POST['JobRef'],
-							$_POST['GLCode']);
+							$_POST['GLCode'],
+							$Hold);
 	}
 }
 
@@ -180,19 +183,19 @@ if (DB_num_rows($GRNResults)==0){
 echo "<form action='" . $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
 
 if (!isset( $_SESSION['SuppTransTmp'])){
-    $_SESSION['SuppTransTmp'] = new SuppTrans;
-    while ($myrow=DB_fetch_array($GRNResults)){
+	$_SESSION['SuppTransTmp'] = new SuppTrans;
+	while ($myrow=DB_fetch_array($GRNResults)){
 
-	    $GRNAlreadyOnInvoice = False;
+		$GRNAlreadyOnInvoice = False;
 
-	    foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
-		    if ($EnteredGRN->GRNNo == $myrow['grnbatch']) {
-			    $GRNAlreadyOnInvoice = True;
-		    }
-	    }
-	    if ($GRNAlreadyOnInvoice == False){
-		    $_SESSION['SuppTransTmp']->Add_GRN_To_Trans($myrow['grnno'],
-		    						$myrow['podetailitem'],
+		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
+			if ($EnteredGRN->GRNNo == $myrow['grnbatch']) {
+				$GRNAlreadyOnInvoice = True;
+			}
+		}
+		if ($GRNAlreadyOnInvoice == False){
+			$_SESSION['SuppTransTmp']->Add_GRN_To_Trans($myrow['grnno'],
+									$myrow['podetailitem'],
 								$myrow['itemcode'],
 								$myrow['itemdescription'],
 								$myrow['qtyrecd'],
@@ -206,15 +209,15 @@ if (!isset( $_SESSION['SuppTransTmp'])){
 								$myrow['jobref'],
 								$myrow['glcode'],
 								$myrow['orderno']);
-	    }
-    }
+		}
+	}
 }
 
 
 //if (isset($_POST['GRNNo']) AND $_POST['GRNNo']!=''){
 if (isset($_GET['Modify'])){
-    $GRNNo = $_GET['Modify'];
-    $GRNTmp = $_SESSION['SuppTrans']->GRNs[$GRNNo];
+	$GRNNo = $_GET['Modify'];
+	$GRNTmp = $_SESSION['SuppTrans']->GRNs[$GRNNo];
 
 	echo '<p><div class="centre"><font size=4 color=BLUE><b>' . _('GRN Selected For Adding To A Purchase Invoice') . '</font></b></div>';
 	echo "<table>
@@ -240,7 +243,7 @@ if (isset($_GET['Modify'])){
 /*	if ($myrow['closed']==1){ //Shipment is closed so pre-empt problems later by warning the user - need to modify the order first
 		echo "<input type=hidden name='ShiptRef' Value=''>";
 		echo "<p>Unfortunately, the shipment that this purchase order line item was allocated to has been closed - if you add this item to the transaction then no shipments will not be updated. If you wish to allocate the order line item to a different shipment the order must be modified first.";
-	} else {    */
+	} else {	*/
 		echo "<input type=hidden name='ShiptRef' Value='" . $GRNTmp->ShiptRef . "'>";
 //	}
 
@@ -259,11 +262,11 @@ if (isset($_GET['Modify'])){
 	echo "<input type=hidden name='PODetailItem' Value='" . $GRNTmp->PODetailItem . "'>";
 }
 else {
-    if (count( $_SESSION['SuppTransTmp']->GRNs)>0){   /*if there are any outstanding GRNs then */
-        echo '<div class="centre"><font size=4 color=BLUE>' . _('Goods Received Yet to be Invoiced From') . ' ' . $_SESSION['SuppTrans']->SupplierName.'</div>';
-        echo "<table cellpadding=1 colspan=7>";
+	if (count( $_SESSION['SuppTransTmp']->GRNs)>0){   /*if there are any outstanding GRNs then */
+		echo '<div class="centre"><font size=4 color=BLUE>' . _('Goods Received Yet to be Invoiced From') . ' ' . $_SESSION['SuppTrans']->SupplierName.'</div>';
+		echo "<table cellpadding=1 colspan=7>";
 
-        $tableheader = "<tr bgcolor=#800000><th>" . _('Select') . "</th>
+		$tableheader = "<tr bgcolor=#800000><th>" . _('Select') . "</th>
 				<th>" . _('Sequence') . " #</th>
 				<th>" . _('Order') . "</th>
 				<th>" . _('Item Code') . "</th>
@@ -274,19 +277,19 @@ else {
 				<th>" . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</th>
 				<th>" . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th></tr>';
 
-        $i = 0;
-        $POs = array();
-        foreach ($_SESSION['SuppTransTmp']->GRNs as $GRNTmp){
+		$i = 0;
+		$POs = array();
+		foreach ($_SESSION['SuppTransTmp']->GRNs as $GRNTmp){
 
-		$_SESSION['SuppTransTmp']->GRNs[$GRNTmp->GRNNo]->This_QuantityInv = $GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv;	
+		$_SESSION['SuppTransTmp']->GRNs[$GRNTmp->GRNNo]->This_QuantityInv = $GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv;
 
 		if (isset($POs[$GRNTmp->PONo]) and $POs[$GRNTmp->PONo] != $GRNTmp->PONo) {
-                	$POs[$GRNTmp->PONo] = $GRNTmp->PONo;
-                	echo "<tr><td><input type=Submit Name='AddPOToTrans' Value='" . $GRNTmp->PONo . "'></td><td colspan=3>" . _('Add Whole PO to Invoice') . '</td></tr>';
-                	$i = 0;
-        	}
-        	if ($i == 0){
-        		echo $tableheader;
+					$POs[$GRNTmp->PONo] = $GRNTmp->PONo;
+					echo "<tr><td><input type=Submit Name='AddPOToTrans' Value='" . $GRNTmp->PONo . "'></td><td colspan=3>" . _('Add Whole PO to Invoice') . '</td></tr>';
+					$i = 0;
+			}
+			if ($i == 0){
+				echo $tableheader;
 		}
 		if (isset($_POST['SelectAll'])) {
 			echo "<tr><td><input type=checkbox checked name='GRNNo_" . $GRNTmp->GRNNo . "'></td>";
@@ -307,12 +310,12 @@ else {
 		if ($i>15){
 			$i=0;
 		}
-        }
-        echo '</table>';
-        echo "<div class='centre'><input type=Submit Name='SelectAll' Value='" . _('Select All') . "'>";
-        echo "<input type=Submit Name='DeSelectAll' Value='" . _('Deselect All') . "'>";
-        echo "<br><input type=Submit Name='AddGRNToTrans' Value='" . _('Add to Invoice') . "'></div>";
-    }
+		}
+		echo '</table>';
+		echo "<div class='centre'><input type=Submit Name='SelectAll' Value='" . _('Select All') . "'>";
+		echo "<input type=Submit Name='DeSelectAll' Value='" . _('Deselect All') . "'>";
+		echo "<br><input type=Submit Name='AddGRNToTrans' Value='" . _('Add to Invoice') . "'></div>";
+	}
 }
 
 echo '</form>';
