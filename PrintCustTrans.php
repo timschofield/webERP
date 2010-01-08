@@ -2,7 +2,7 @@
 
 /* $Id$ */
 
-/* Javier: This file has 5 PDF Outputs, one FPDI class, one function, 
+/* Javier: This file has 5 PDF Outputs, one FPDI class, one function,
 	El único q cambió alguien está en L570, 3 son de fpdi y el 5º está en L457  */
 
 $PageSecurity = 1;
@@ -60,7 +60,7 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF'])
 	$pdf = new Cpdf('L', 'pt', 'A4');
 	$pdf->addInfo('Creator', 'webERP http://www.weberp.org');
 	$pdf->addInfo('Author', 'webERP ' . $Version);
-	
+
 	if ($InvOrCredit=='Invoice') {
 		$pdf->addInfo('Title',_('Sales Invoice') . ' ' . $FromTransNo . ' to ' . $_POST['ToTransNo']);
 		$pdf->addInfo('Subject',_('Invoices from') . ' ' . $FromTransNo . ' ' . _('to') . ' ' . $_POST['ToTransNo']);
@@ -289,10 +289,10 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF'])
 						WHERE	debtortrans.transno = ' . $FromTransNo . '
 						AND	debtortrans.order_ = salesorderdetails.orderno
 						AND	salesorderdetails.stkcode = "'.$myrow2['stockid'].'"';
-					  
+
 					$resultp=DB_query($sql,$db);
 					$myrow3=DB_fetch_array($resultp);
-				
+
 					/*check the price after discount*/
 
 					if ($myrow2['discountpercent']==0) {
@@ -480,7 +480,7 @@ class concat_pdf extends FPDI {
 	}
 }
 
-$pdf =& new concat_pdf();
+// $pdf =& new concat_pdf();
 
 // Have to get the TransNo again, not sure what happens if we have a series of trans nos
 if (isset($_GET['FromTransNo'])) {
@@ -503,15 +503,15 @@ $result=DB_query($sql,$db);
  // Loop the result set and add appendfile if the field is not 0 or none
 while ($row=DB_fetch_array($result)) {
 	if ($row['appendfile'] !='0' AND $row['appendfile'] !=='none') {
-		$pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf','companies/' . $_SESSION['DatabaseName'] . '/pdf_append/' . $row['appendfile'])); 
+		$pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf','companies/' . $_SESSION['DatabaseName'] . '/pdf_append/' . $row['appendfile']));
 		$pdf->concat();
 		$pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','I');
 		exit;
-		// If EMAIL is selected, send the invoice via email, this is not appending pages yet though        
+		// If EMAIL is selected, send the invoice via email, this is not appending pages yet though
 	} elseif (isset($_GET['Email'])) {
-		$pdfcode = $pdf->Output($_SESSION['reports_dir'] . '/Invoice.pdf','D');    
+		$pdfcode = $pdf->Output($_SESSION['reports_dir'] . '/Invoice.pdf','D');
 	} else {
-		// If the appendfile field is empty and EMAIL is not selected, just print the invoice without any appended pages       
+		// If the appendfile field is empty and EMAIL is not selected, just print the invoice without any appended pages
 		$pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','I');
 		exit;
 	}
@@ -554,7 +554,7 @@ while ($row=DB_fetch_array($result)) {
 	} else {
 
 /* Javier: este es el más importante según cierta persona ya q es el único q cambió, pero nadie parece saber nada
-// Javier: TCPDF sends its own http header, it's an error to send it twice. 
+// Javier: TCPDF sends its own http header, it's an error to send it twice.
 		header('Content-type: application/pdf');
 		header('Content-Length: ' . $len);
 		header('Content-Disposition: inline; filename=Customer_trans.pdf');
