@@ -1,6 +1,5 @@
 <?php
-
-/* $Id$ */
+/* $Revision: 1.67 $ */
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -61,132 +60,46 @@ if (isset($_SESSION['DatabaseName'])){
 
 if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
 
-	if (!isset($_SESSION['AccessLevel']) OR $_SESSION['AccessLevel'] == ''){
-		
-//		(isset($_POST['UserNameEntryField']) AND $_POST['UserNameEntryField'] != '')) {
+	include $PathPrefix . 'includes/UserLogin.php';	/* Login checking and setup */
 
-	/* if not logged in */
-
-		$_SESSION['AccessLevel'] = '';
-		$_SESSION['CustomerID'] = '';
-		$_SESSION['UserBranch'] = '';
-		$_SESSION['SalesmanLogin'] = '';
-		$_SESSION['Module'] = '';
-		$_SESSION['PageSize'] = '';
-		$_SESSION['UserStockLocation'] = '';
-		$_SESSION['PDFLanguage']= '';
-		$_SESSION['AttemptsCounter']++;
-
-
-		$theme = 'silverwolf';
-
-		// Show login screen
-		if (!isset($_POST['UserNameEntryField']) or $_POST['UserNameEntryField'] == '') {
-			include($PathPrefix . 'includes/Login.php');
-			exit;
-		}
-
-
-		$sql = "SELECT www_users.fullaccess,
-				www_users.customerid,
-				www_users.lastvisitdate,
-				www_users.pagesize,
-				www_users.defaultlocation,
-				www_users.branchcode,
-				www_users.modulesallowed,
-				www_users.blocked,
-				www_users.realname,
-				www_users.theme,
-				www_users.displayrecordsmax,
-				www_users.userid,
-				www_users.language,
-				www_users.salesman,
-				www_users.pdflanguage
-			FROM www_users
-			WHERE www_users.userid='" . DB_escape_string($_POST['UserNameEntryField']) . "'
-			AND (www_users.password='" . CryptPass(DB_escape_string($_POST['Password'])) . "'
-			OR  www_users.password='" . DB_escape_string($_POST['Password']) . "')";
-		$Auth_Result = DB_query($sql, $db);
-
-		// Populate session variables with data base results
-		if (DB_num_rows($Auth_Result) > 0) {
-
-			$myrow = DB_fetch_row($Auth_Result);
-			if ($myrow[7]==1){
-			//the account is blocked
-				die(include($PathPrefix . 'includes/FailedLogin.php'));
-			}
-			/*reset the attempts counter on successful login */
-			$_SESSION['AttemptsCounter'] = 0;
-			$_SESSION['AccessLevel'] = $myrow[0];
-			$_SESSION['CustomerID'] = $myrow[1];
-			$_SESSION['UserBranch'] = $myrow[5];
-			$_SESSION['DefaultPageSize'] = $myrow[3];
-			$_SESSION['UserStockLocation'] = $myrow[4];
-			$_SESSION['ModulesEnabled'] = explode(",", $myrow[6]);
-			$_SESSION['UsersRealName'] = $myrow[8];
-			$_SESSION['Theme'] = $myrow[9];
-			$_SESSION['UserID'] = $myrow[11];
-			$_SESSION['Language'] = $myrow[12];
-			$_SESSION['SalesmanLogin'] = $myrow[13];
-			$_SESSION['PDFLanguage']= $myrow[14];
-			if ($myrow[10] > 0) {
-				$_SESSION['DisplayRecordsMax'] = $myrow[10];
-			} else {
-				$_SESSION['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax'];  // default comes from config.php
-			}
-
-			$sql = "UPDATE www_users SET lastvisitdate='". date("Y-m-d H:i:s") ."'
-					WHERE www_users.userid='" . DB_escape_string($_POST['UserNameEntryField']) . "'";
-			$Auth_Result = DB_query($sql, $db);
-
-			/*get the security tokens that the user has access to */
-			$sql = 'SELECT tokenid FROM securitygroups
-					WHERE secroleid =  ' . $_SESSION['AccessLevel'];
-			$Sec_Result = DB_query($sql, $db);
-
-			$_SESSION['AllowedPageSecurityTokens'] = array();
-			if (DB_num_rows($Sec_Result)==0){
-				$title = _('Account Error Report');
-				include($PathPrefix . 'includes/header.inc');
-				echo '<br /><br /><br />';
-				prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'),'error');
-				include($PathPrefix . 'includes/footer.inc');
-				exit;
-			} else {
-				$i=0;
-				while ($myrow = DB_fetch_row($Sec_Result)){
-					$_SESSION['AllowedPageSecurityTokens'][$i] = $myrow[0];
-					$i++;
-				}
-			}
-			
-			//echo '<meta http-equiv="refresh" content="0" url="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
-			//exit;
-		} else {     // Incorrect password
-			// 5 login attempts, show failed login screen
-			if (!isset($_SESSION['AttemptsCounter'])) {
-				$_SESSION['AttemptsCounter'] = 0;
-			} elseif ($_SESSION['AttemptsCounter'] >= 5 AND isset($_POST['UserNameEntryField'])) {
-				/*User blocked from future accesses until sysadmin releases */
-				$sql = "UPDATE www_users
-						SET blocked=1
-					WHERE www_users.userid='" . $_POST['UserNameEntryField'] . "'";
-				$Auth_Result = DB_query($sql, $db);
-				die(include($PathPrefix . 'includes/FailedLogin.php'));
-			}
-			$demo_text = '<font size="3" color="red"><b>' .  _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
-			die(include($PathPrefix . 'includes/Login.php'));
-		}
-	}		// End of userid/password check
-	// Run with debugging messages for the system administrator(s) but not anyone else
-
-	if (in_array(15, $_SESSION['AllowedPageSecurityTokens'])) {
-		$debug = 1;
+	if (isset($_POST['UserNameEntryField']) and isset($_POST['Password'])) {
+		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $db);
+	} else if (empty($_SESSION['DatabaseName'])) {
+		$rc = UL_SHOWLOGIN;
 	} else {
-		$debug = 0;
+		$rc = UL_OK;
 	}
 
+	/*  Need to set the theme to make login screen nice */
+	$theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'silverwolf';
+	switch ($rc) {
+	case  UL_OK;
+		break;
+
+	case UL_SHOWLOGIN:
+		include($PathPrefix . 'includes/Login.php');
+		exit;
+
+	case UL_BLOCKED:
+		die(include($PathPrefix . 'includes/FailedLogin.php'));
+
+	case  UL_CONFIGERR:
+		$title = _('Account Error Report');
+		include($PathPrefix . 'includes/header.inc');
+		echo '<br /><br /><br />';
+		prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'),'error');
+		include($PathPrefix . 'includes/footer.inc');
+		    exit;
+
+	case  UL_NOTVALID:
+		$demo_text = '<font size="3" color="red"><b>' .  _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
+		die(include($PathPrefix . 'includes/Login.php'));
+
+	case  UL_MAINTENANCE:
+		$demo_text = '<font size="3" color="red"><b>' .  _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
+		die(include($PathPrefix . 'includes/Login.php'));
+
+	}
 } /* only do security checks if AllowAnyone is not true */
 
 /*User is logged in so get configuration parameters  - save in session*/
@@ -265,7 +178,7 @@ if (empty($_SESSION['LogoFile'])) {
 			if ($DirEntry != '.' AND $DirEntry !='..'){
 				$InCompanyDir[] = $DirEntry; //make an array of all files under company directory
 			}
-		} //loop through list of files in the company directory 
+		} //loop through list of files in the company directory
 		if ($InCompanyDir !== FALSE) {
 			foreach($InCompanyDir as $logofilename)
 				if (strncasecmp($logofilename,'logo.jpg',8) === 0 AND

@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /* Check that the stock code*/
 	function VerifyStockCode($StockCode, $i, $Errors, $db) {
@@ -282,7 +281,7 @@
 			return $Errors;
 		}
 		$PageSecurity =11; //The authorisation required to go to the stock modification script
-		if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']))) {
+		if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']))) { 
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
@@ -550,7 +549,7 @@
 		}
 	}
 
-	function GetStockbalance($StockID, $user, $password) {
+	function GetStockBalance($StockID, $user = '', $password = '') {
 		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
@@ -782,16 +781,16 @@
 				',"api adjustment",'.$Quantity.','.$newqoh.')';
 		$locstocksql='UPDATE locstock SET quantity = quantity + '.$Quantity.' WHERE loccode="'.
 			$Location.'" AND stockid="'.$StockID.'"';
-		$glupdatesql1="INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
-						VALUES (17,".GetNextTransactionNo(17, $db).",'".$TranDate.
-						"',".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
-						",".$adjglact.",".$itemdetails['materialcost']*-$Quantity.
-						",'".$StockID." x ".$Quantity." @ ".$itemdetails['materialcost']."')";
-		$glupdatesql2="INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
-						VALUES (17,".GetNextTransactionNo(17, $db).",'".$TranDate.
-						"',".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
-						",".$stockact.",".$itemdetails['materialcost']*$Quantity.
-						",'".$StockID." x ".$Quantity." @ ".$itemdetails['materialcost']."')";
+		$glupdatesql1='INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
+						VALUES (17,'.GetNextTransactionNo(17, $db).',"'.$TranDate.
+						'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
+						','.$adjglact.','.$itemdetails['materialcost']*-$Quantity.
+						',"'.$StockID.' x '.$Quantity.' @ '.$itemdetails['materialcost'].'")';
+		$glupdatesql2='INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
+						VALUES (17,'.GetNextTransactionNo(17, $db).',"'.$TranDate.
+						'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
+						','.$stockact.','.$itemdetails['materialcost']*$Quantity.
+						',"'.$StockID.' x '.$Quantity.' @ '.$itemdetails['materialcost'].'")';
 		$systypessql = 'UPDATE systypes set typeno='.GetNextTransactionNo(17, $db).' where typeid=17';
 
 		DB_Txn_Begin($db);

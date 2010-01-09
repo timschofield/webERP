@@ -1,10 +1,44 @@
 <?php
-/* $Id$*/
 
 	include 'api_php.php';
 
 	include '../xmlrpc/lib/xmlrpc.inc';
+
 	include '../xmlrpc/lib/xmlrpcs.inc';
+
+
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('This function is used to login into the API methods for the specified the database.');
+	$Parameter[0]['name'] = _('Database Name');
+	$Parameter[0]['description'] = _('The name of the database to use for the transactions to come. ');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an integer. ').
+		_('Zero means the function was successful. ').
+		_('Otherwise an error code is returned. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+	$Login_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$Login_doc = $doc;
+
+	function xmlrpc_Login($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(LoginAPI($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
 
 	unset($Parameter);
 	unset($ReturnValue);
@@ -553,13 +587,12 @@
 		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
 	}
 	$doc .= '</table>';
-	$GetStockItem_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetStockItem_sig = array(array($xmlrpcStruct, $xmlrpcString));
 	$GetStockItem_doc = $doc;
 
 	function xmlrpc_GetStockItem($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetStockItem($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+				 '', '')));
 	}
 
 	unset($Parameter);
@@ -598,7 +631,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of stock quantities by location for this stock item. ').
+	$ReturnValue[0] = _('This function returns an array of stock quantities by location for this stock item. ');
 	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
 			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
 	for ($i=0; $i<sizeof($Parameter); $i++) {
@@ -610,13 +643,18 @@
 		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
 	}
 	$doc .= '</table>';
-	$GetStockBalance_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetStockBalance_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString),array($xmlrpcStruct, $xmlrpcString));
 	$GetStockBalance_doc = $doc;
 
 	function xmlrpc_GetStockBalance($xmlrpcmsg) {
-		return new xmlrpcresp(php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam(0)->scalarval(),
+		if ($xmlrpcmsg->getNumParams() == 3)
+		{
+		    return new xmlrpcresp(php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		} else {
+		    return new xmlrpcresp(php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam(0)->scalarval())));
+		}
 	}
 
 	unset($Parameter);
@@ -666,7 +704,7 @@
 	$Parameter[3]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[4]['name'] = _('User password');
 	$Parameter[4]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns zero if the transaction was successful or an array of error codes if not. ').
+	$ReturnValue[0] = _('This function returns zero if the transaction was successful or an array of error codes if not. ');
 	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
 			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
 	for ($i=0; $i<sizeof($Parameter); $i++) {
@@ -842,6 +880,18 @@
 	unset($ReturnValue);
 	unset($doc);
 	unset($Description);
+	$Description = 'This function is used to start a new sales order.';
+	$Parameter[0]['name'] = _('Insert Sales Order Header');
+	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+			._('The field names can be found ').'<a href="../../Z_DescribeTable.php?table=salesorders">'._('here ').'</a>'
+			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
+			._('The orderno key is generated by this call, and if a value is supplied, it will be ignored. ')
+			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns a two element array; the first element is 0 for success or an error code, while the second element is the order number.');
 	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
 			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
 	for ($i=0; $i<sizeof($Parameter); $i++) {
@@ -866,6 +916,17 @@
 	unset($ReturnValue);
 	unset($doc);
 	unset($Description);
+ 	$Description = 'This function is used to modify the header details of a sales order';
+ 	$Parameter[0]['name'] = _('Modify Sales Order Header Details');
+ 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+ 			._('The field names can be found ').'<a href="../../Z_DescribeTable.php?table=salesorders">'._('here ').'</a>'
+ 			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
+ 			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+ 	$Parameter[1]['name'] = _('User name');
+ 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+ 	$Parameter[2]['name'] = _('User password');
+ 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+ 	$ReturnValue[0] = _('If successful this function returns a single element array with the value 0; otherwise, it contains all error codes encountered during the update.');
 	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
 			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
 	for ($i=0; $i<sizeof($Parameter); $i++) {
@@ -890,6 +951,18 @@
 	unset($ReturnValue);
 	unset($doc);
 	unset($Description);
+	$Description = 'This function is used to add line items to a sales order.';
+	$Parameter[0]['name'] = _('Insert Sales Order Line');
+	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+			._('The field names can be found ').'<a href="../../Z_DescribeTable.php?table=salesorderdetails">'._('here ').'</a>'
+			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
+			._('The orderno key must be one of these values. ')
+			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array; the first element is 0 for success; otherwise the array contains a list of all errors encountered.');
 	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
 			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
 	for ($i=0; $i<sizeof($Parameter); $i++) {
@@ -914,6 +987,18 @@
 	unset($ReturnValue);
 	unset($doc);
 	unset($Description);
+	$Description = 'This function is used to modify line items on a sales order.';
+	$Parameter[0]['name'] = _('Modify Sales Order Line');
+	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+			._('The field names can be found ').'<a href="../../Z_DescribeTable.php?table=salesorderdetails">'._('here ').'</a>'
+			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
+			._('The orderno and stkcode keys must be one of these values. ')
+			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array; the first element is 0 for success; otherwise the array contains a list of all errors encountered.');
 	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
 			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
 	for ($i=0; $i<sizeof($Parameter); $i++) {
@@ -1602,7 +1687,7 @@
 	}
 	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
 	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<tr><td></td><td valign="top">'.$ReturnValue[$i].'</td></tr>';
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
 	}
 	$doc .= '</table>';
 	$InsertSupplier_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
@@ -2190,6 +2275,10 @@
 	}
 	
 	$s = new xmlrpc_server( array(
+		"weberp.xmlrpc_Login" => array(
+			"function" => "xmlrpc_Login",
+			"signature" => $Login_sig,
+			"docstring" => $Login_doc),
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
 			"signature" => $InsertCustomer_sig,
@@ -2418,7 +2507,7 @@
 			"function" => "xmlrpc_StockCatPropertyList",
 			"signature" => $StockCatPropertyList_sig,
 			"docstring" => $StockCatPropertyList_doc),
-	"weberp.xmlrpc_GetGLAccountList" => array(
+		"weberp.xmlrpc_GetGLAccountList" => array(
 			"function" => "xmlrpc_GetGLAccountList",
 			"signature" => $GetGLAccountList_sig,
 			"docstring" => $GetGLAccountList_doc),
