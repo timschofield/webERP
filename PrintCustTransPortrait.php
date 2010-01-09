@@ -2,9 +2,6 @@
 
 /* $Id$ */
 
-/* Javier: This file has 5 PDF Outputs, one FPDI class, and one function,
-	The Outputs are L520 and L570, 3 are about FPDI y el 5th is in L457  */
-
 $PageSecurity = 1;
 
 include('includes/session.inc');
@@ -43,10 +40,7 @@ If (isset($PrintPDF)
 	and $FromTransNo!=''){
 
         include ('includes/class.pdf.php');
-//      define('FPDF_FONTPATH','font/');
         require('fpdi/fpdi.php');
-
-
 
         $Page_Width=595;
         $Page_Height=842;
@@ -55,9 +49,6 @@ If (isset($PrintPDF)
         $Left_Margin=40;
         $Right_Margin=30;
 
-// Javier: now I use the native constructor, better to not use references
-//	$PageSize = array(0,0,$Page_Width,$Page_Height);
-//	$pdf = & new Cpdf($PageSize);
 	$pdf = new Cpdf('P', 'pt', 'A4');
 	$pdf->addInfo('Author','webERP ' . $Version);
 	$pdf->addInfo('Creator','webERP http://www.weberp.org');
@@ -76,9 +67,7 @@ If (isset($PrintPDF)
 	$pdf->setAutoPageBreak(0);	// Javier: needs check.
 	$pdf->setPrintHeader(false);	// Javier: I added this must be called before Add Page
 	$pdf->AddPage();
-//	$this->SetLineWidth(1); 	   Javier: It was ok for FPDF but now is too gross with TCPDF. TCPDF defaults to 0'57 pt (0'2 mm) which is ok.
 	$pdf->cMargin = 0;		// Javier: needs check.
-/* END Brought from class.pdf.php constructor */
 
 	$FirstPage = true;
 	$line_height=16;
@@ -314,31 +303,15 @@ If (isset($PrintPDF)
 
 		    while ($myrow2=DB_fetch_array($result)){
 
-				/*search the unit price*/
-				$sql='SELECT 	salesorderdetails.unitprice
-					  FROM   	salesorderdetails,
-								debtortrans
-					  WHERE 	debtortrans.transno = ' . $FromTransNo . '
-					  AND 		debtortrans.order_ = salesorderdetails.orderno
-					  AND 		salesorderdetails.stkcode = "'.$myrow2['stockid'].'"';
-
-				$resultp=DB_query($sql,$db);
-				$myrow3=DB_fetch_array($resultp);
-
-				/*check the price after discount*/
-				if ($myrow2['discountpercent']==0){
+				if ($myrow2['discountpercent']==0) {
 					$DisplayDiscount ='';
-					$DisplayNet=number_format(($myrow3['unitprice'] * $myrow2['Quantity']),2);
-					$DisplayPrice=$myrow3['unitprice'];
-					$DisplayQty=$myrow2['Quantity'];
 				} else {
-					$DisplayDiscount =number_format($myrow2['discountpercent']*100,2);
-					$DiscountPrice=$myrow2['discountpercent'] * $myrow3['unitprice'];
-					$DisplayPrice=$myrow3['unitprice'];
-					$DisplayQty=$myrow2['Quantity'];
-					$DisplayNet=number_format((($myrow3['unitprice'] - $DiscountPrice) * $myrow2['Quantity']),2);
+					$DisplayDiscount = number_format($myrow2['discountpercent']*100,2) . '%';
+					$DiscountPrice=$myrow2['fxprice']*(1-$myrow2['discountpercent']);
 				}
-
+				$DisplayPrice=$myrow2['fxprice'];
+				$DisplayQty=$myrow2['quantity'];
+				$DisplayNet=number_format($myrow2['fxnet'],2);
 
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos,71,$FontSize,$myrow2['stockid']);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+80,$YPos,186,$FontSize,$myrow2['description']);

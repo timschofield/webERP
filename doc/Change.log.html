@@ -1,5 +1,6 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
-<p>
+<p>  
+<p>09/01/10 Phil: Fix price for same item on an order priced at different prices - unfortunately, this means that there may be rounding errors on very large currencies as I reverted to the old logic using the stockmoves which use local currency and then converting back to the currency of the invoice - fixed both portrait and landscape
 <p>09/01/10 Lindsay: Changes to api session handling.
 <p>08/01/10 Tim: PrintCustTrans.php - Correct errors preventing invoice from printing
 <p>08/01/10 Tim: Put a supplier invoice on hold when outside the bounds set up in the config

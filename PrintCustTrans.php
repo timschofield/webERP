@@ -2,9 +2,6 @@
 
 /* $Id$ */
 
-/* Javier: This file has 5 PDF Outputs, one FPDI class, one function,
-	El único q cambió alguien está en L570, 3 son de fpdi y el 5º está en L457  */
-
 $PageSecurity = 1;
 
 include('includes/session.inc');
@@ -55,8 +52,6 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF'])
 	$Right_Margin=30;
 
 // Javier: now I use the native constructor, better to not use references
-//	$PageSize = array(0,0,$Page_Width,$Page_Height);
-//	$pdf = & new Cpdf($PageSize);
 	$pdf = new Cpdf('L', 'pt', 'A4');
 	$pdf->addInfo('Creator', 'webERP http://www.weberp.org');
 	$pdf->addInfo('Author', 'webERP ' . $Version);
@@ -75,7 +70,6 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF'])
 	$pdf->setAutoPageBreak(0);	// Javier: needs check.
 	$pdf->setPrintHeader(false);	// Javier: I added this must be called before Add Page
 	$pdf->AddPage();
-//	$this->SetLineWidth(1); 	   Javier: It was ok for FPDF but now is too gross with TCPDF. TCPDF defaults to 0'57 pt (0'2 mm) which is ok.
 	$pdf->cMargin = 0;		// Javier: needs check.
 /* END Brought from class.pdf.php constructor */
 
@@ -282,31 +276,15 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF'])
 				$FirstPage = False;
 				while ($myrow2=DB_fetch_array($result)) {
 
-					/*search the unit price*/
-
-					$sql = 'SELECT	salesorderdetails.unitprice
-						FROM	salesorderdetails, debtortrans
-						WHERE	debtortrans.transno = ' . $FromTransNo . '
-						AND	debtortrans.order_ = salesorderdetails.orderno
-						AND	salesorderdetails.stkcode = "'.$myrow2['stockid'].'"';
-
-					$resultp=DB_query($sql,$db);
-					$myrow3=DB_fetch_array($resultp);
-
-					/*check the price after discount*/
-
 					if ($myrow2['discountpercent']==0) {
 						$DisplayDiscount ='';
-						$DisplayNet=number_format(($myrow3['unitprice'] * $myrow2['quantity']),2);
-						$DisplayPrice=$myrow3['unitprice'];
-						$DisplayQty=$myrow2['quantity'];
 					} else {
 						$DisplayDiscount = number_format($myrow2['discountpercent']*100,2) . '%';
-						$DiscountPrice=$myrow2['discountpercent'] * $myrow3['unitprice'];
-						$DisplayPrice=$myrow3['unitprice'];
-						$DisplayQty=$myrow2['quantity'];
-						$DisplayNet=number_format((($myrow3['unitprice'] - $DiscountPrice) * $myrow2['quantity']),2);
+						$DiscountPrice=$myrow2['fxprice']*(1-$myrow2['discountpercent']);
 					}
+					$DisplayNet=number_format($myrow2['fxnet'],2);
+					$DisplayPrice=$myrow2['fxprice'];
+					$DisplayQty=$myrow2['quantity'];
 
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+3,$YPos,95,$FontSize,$myrow2['stockid']);
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,245,$FontSize,$myrow2['description']);
@@ -450,45 +428,40 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF'])
 		$FromTransNo++;
 	} /* end loop to print invoices */
 
-/* Javier: This actually would produce the output, and maybe it should do
-	$pdfcode = $pdf->output($_SESSION['reports_dir'] . '/Invoice.pdf', "F");
-	$len = strlen($pdfcode); Este fichero es especial pq $len anulado en L529
-*/
-
-// Start FPDI concatination to append PDF files conditionally to the invoice
-// This part taken from FPDI example page
-class concat_pdf extends FPDI {
-
-	var $files = array();
-
-	function setFiles($files) {
-		$this->files = $files;
-	}
-
-	function concat() {
-		foreach($this->files as $file) {
-			if ($file != 'pdf_append/none') {
-				$pagecount = $this->setSourceFile($file);
-				for ($i = 1; $i <= $pagecount; $i++) {
-					$tplidx = $this->ImportPage($i);
-					$s = $this->getTemplatesize($tplidx);
-					$this->AddPage($s['h'] > $s['w'] ? 'P' : 'L');
-					$this->useTemplate($tplidx);
+	// Start FPDI concatination to append PDF files conditionally to the invoice
+	// This part taken from FPDI example page
+	class concat_pdf extends FPDI {
+	
+		var $files = array();
+	
+		function setFiles($files) {
+			$this->files = $files;
+		}
+	
+		function concat() {
+			foreach($this->files as $file) {
+				if ($file != 'pdf_append/none') {
+					$pagecount = $this->setSourceFile($file);
+					for ($i = 1; $i <= $pagecount; $i++) {
+						$tplidx = $this->ImportPage($i);
+						$s = $this->getTemplatesize($tplidx);
+						$this->AddPage($s['h'] > $s['w'] ? 'P' : 'L');
+						$this->useTemplate($tplidx);
+					}
 				}
 			}
 		}
 	}
-}
-
-// $pdf =& new concat_pdf();
-
-// Have to get the TransNo again, not sure what happens if we have a series of trans nos
-if (isset($_GET['FromTransNo'])) {
-	$FromTransNo = trim($_GET['FromTransNo']);
-} elseif (isset($_POST['FromTransNo'])) {
-	$FromTransNo = trim($_POST['FromTransNo']);
-}
-
+	
+	// $pdf =& new concat_pdf();
+	
+	// Have to get the TransNo again, not sure what happens if we have a series of trans nos
+	if (isset($_GET['FromTransNo'])) {
+		$FromTransNo = trim($_GET['FromTransNo']);
+	} elseif (isset($_POST['FromTransNo'])) {
+		$FromTransNo = trim($_POST['FromTransNo']);
+	}
+	
 // Check its an Invoice type again, then select appendfile filename
 // if ($InvOrCredit=='Invoice') {
 	$sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
@@ -499,69 +472,54 @@ if (isset($_GET['FromTransNo'])) {
 		AND stockmoves.show_on_inv_crds=1';
 // };
 
-$result=DB_query($sql,$db);
- // Loop the result set and add appendfile if the field is not 0 or none
-while ($row=DB_fetch_array($result)) {
-	if ($row['appendfile'] !='0' AND $row['appendfile'] !=='none') {
-		$pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf','companies/' . $_SESSION['DatabaseName'] . '/pdf_append/' . $row['appendfile']));
-		$pdf->concat();
-		$pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','I');
-		exit;
-		// If EMAIL is selected, send the invoice via email, this is not appending pages yet though
-	} elseif (isset($_GET['Email'])) {
-		$pdfcode = $pdf->Output($_SESSION['reports_dir'] . '/Invoice.pdf','D');
-	} else {
-		// If the appendfile field is empty and EMAIL is not selected, just print the invoice without any appended pages
-		$pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','I');
-		exit;
+	$result=DB_query($sql,$db);
+	 // Loop the result set and add appendfile if the field is not 0 or none
+	while ($row=DB_fetch_array($result)) {
+		if ($row['appendfile'] !='0' AND $row['appendfile'] !=='none') {
+			$pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf','companies/' . $_SESSION['DatabaseName'] . '/pdf_append/' . $row['appendfile']));
+			$pdf->concat();
+			$pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','I');
+			exit;
+			// If EMAIL is selected, send the invoice via email, this is not appending pages yet though
+		} elseif (isset($_GET['Email'])) {
+			$pdf->Output($_SESSION['reports_dir'] . '/Invoice.pdf','F');
+		} else {
+			// If the appendfile field is empty and EMAIL is not selected, just print the invoice without any appended pages
+			$pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','I');
+			exit;
+		}
 	}
-}
-//End FPDI Concat
-
-/*	if ($len <1020){
-		include('includes/header.inc');
-		echo '<p>' . _('There were no transactions to print in the range selected');
-		include('includes/footer.inc');
-		exit;
-	}*/
-
+	//End FPDI Concat
+	
+	
 	if (isset($_GET['Email'])){ //email the invoice to address supplied
 		include('includes/header.inc');
-
+	
 		include ('includes/htmlMimeMail.php');
-
+	
 		$mail = new htmlMimeMail();
 		$filename = $_SESSION['reports_dir'] . '/Invoice.pdf';
-    	$fp = fopen( $_SESSION['reports_dir'] . '/Invoice.pdf','wb');
+		$fp = fopen( $_SESSION['reports_dir'] . '/Invoice.pdf','wb');
 		fwrite ($fp, $pdfcode);
 		fclose ($fp);
-
+	
 		$attachment = $mail->getFile($filename);
 		$mail->setText(_('Please find attached') . ' ' . $InvOrCredit . ' ' . $_GET['FromTransNo'] );
 		$mail->SetSubject($InvOrCredit . ' ' . $_GET['FromTransNo']);
 		$mail->addAttachment($attachment, $filename, 'application/pdf');
 		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
 		$result = $mail->send(array($_GET['Email']));
-
+	
 		unlink($filename); //delete the temporary file
-
+	
 		$title = _('Emailing') . ' ' .$InvOrCredit . ' ' . _('Number') . ' ' . $FromTransNo;
 		include('includes/header.inc');
 		echo "<p>$InvOrCredit " . _('number') . ' ' . $_GET['FromTransNo'] . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
 		include('includes/footer.inc');
 		exit;
-
+	
 	} else {
-
-/* Javier: este es el más importante según cierta persona ya q es el único q cambió, pero nadie parece saber nada
-// Javier: TCPDF sends its own http header, it's an error to send it twice.
-		header('Content-type: application/pdf');
-		header('Content-Length: ' . $len);
-		header('Content-Disposition: inline; filename=Customer_trans.pdf');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Pragma: public');
-*/
+	
 		$pdf->OutputD('PrintCustTrans.pdf');
 		$pdf-> __destruct();
 	}
