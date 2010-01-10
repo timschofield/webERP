@@ -483,17 +483,20 @@ if ($_SESSION['Transfer']->TransferItem[0]->Controlled==1){
 	echo '<td><input type=text class="number" name="Quantity" size=12 maxlength=12 Value=' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '></td></tr>';
 }
 
-
-
 echo "</table><div class='centre'><br><input type=submit name='EnterTransfer' VALUE='" . _('Enter Stock Transfer') . "'>";
 echo '<hr>';
 
+if (empty($_SESSION['Transfer']->TransferItem[0]->StockID)) {
+	$StockID=$_POST['StockID'];
+} else {
+	$StockID=$_SESSION['Transfer']->TransferItem[0]->StockID;
+}
 
-echo '<a href="'.$rootpath.'/StockStatus.php?' . SID . '&StockID=' . $_SESSION['Transfer']->TransferItem[0]->StockID . '">'._('Show Stock Status').'</a>';
-echo '<br><a href="'.$rootpath.'/StockMovements.php?' . SID . '&StockID=' . $_SESSION['Transfer']->TransferItem[0]->StockID . '">'._('Show Movements').'</a>';
-echo '<br><a href="'.$rootpath.'/StockUsage.php?' . SID . '&StockID=' . $_SESSION['Transfer']->TransferItem[0]->StockID . '&StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Show Stock Usage') . '</a>';
-echo '<br><a href="'.$rootpath.'/SelectSalesOrder.php?' . SID . '&SelectedStockItem=' . $_SESSION['Transfer']->TransferItem[0]->StockID . '&StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Search Outstanding Sales Orders') . '</a>';
-echo '<br><a href="'.$rootpath.'/SelectCompletedOrder.php?' . SID . '&SelectedStockItem=' . $_SESSION['Transfer']->TransferItem[0]->StockID . '">'._('Search Completed Sales Orders').'</a>';
+echo '<a href="'.$rootpath.'/StockStatus.php?' . SID . '&StockID=' . $StockID . '">'._('Show Stock Status').'</a>';
+echo '<br><a href="'.$rootpath.'/StockMovements.php?' . SID . '&StockID=' . $StockID . '">'._('Show Movements').'</a>';
+echo '<br><a href="'.$rootpath.'/StockUsage.php?' . SID . '&StockID=' . $StockID . '&StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Show Stock Usage') . '</a>';
+echo '<br><a href="'.$rootpath.'/SelectSalesOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '&StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Search Outstanding Sales Orders') . '</a>';
+echo '<br><a href="'.$rootpath.'/SelectCompletedOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">'._('Search Completed Sales Orders').'</a>';
 
 echo '</div></form>';
 include('includes/footer.inc');
