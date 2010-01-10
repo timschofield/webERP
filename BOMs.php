@@ -17,7 +17,7 @@ function display_children($parent, $level, &$BOMTree) {
 
 	global $db;
 	global $i;
-	
+
 	// retrive all children of parent
 	$c_result = DB_query("SELECT parent,
 					component
@@ -25,8 +25,8 @@ function display_children($parent, $level, &$BOMTree) {
 				 ,$db);
 	if (DB_num_rows($c_result) > 0) {
 		//echo ("<UL>\n");
-		
-		
+
+
 		while ($row = DB_fetch_array($c_result)) {
 			//echo '<br>Parent: ' . $parent . ' Level: ' . $level . ' row[component]: ' . $row['component'] .'<br>';
 			if ($parent != $row['component']) {
@@ -131,7 +131,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 			} else {
 				$AutoIssue = _('N/A');
 			}
-			
+
 			if ($myrow[7]=='D' OR $myrow[7]=='K' OR $myrow[7]=='A' OR $myrow[7]=='G'){
 				$QuantityOnHand = _('N/A');
 			} else {
@@ -204,53 +204,53 @@ $msg='';
 if (isset($Errors)) {
 	unset($Errors);
 }
-	
-$Errors = array();	
+
+$Errors = array();
 $InputError = 0;
 
 if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Component
 	$SelectedParent = $Select;
 	unset($Select);// = NULL;
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
-	
+
 	If (isset($SelectedParent) AND isset($_POST['Submit'])) {
 
 		//editing a component need to do some validation of inputs
-		
+
 		$i = 1;
 
 		if (!Is_Date($_POST['EffectiveAfter'])) {
 			$InputError = 1;
 			prnMsg(_('The effective after date field must be a date in the format dd/mm/yy or dd/mm/yyyy or ddmmyy or ddmmyyyy or dd-mm-yy or dd-mm-yyyy'),'error');
 			$Errors[$i] = 'EffectiveAfter';
-			$i++;		
-		} 
+			$i++;
+		}
 		if (!Is_Date($_POST['EffectiveTo'])) {
 			$InputError = 1;
 			prnMsg(_('The effective to date field must be a date in the format dd/mm/yy or dd/mm/yyyy or ddmmyy or ddmmyyyy or dd-mm-yy or dd-mm-yyyy'),'error');
 			$Errors[$i] = 'EffectiveTo';
-			$i++;		
-		} 
+			$i++;
+		}
 		if (!is_numeric($_POST['Quantity'])) {
 			$InputError = 1;
 			prnMsg(_('The quantity entered must be numeric'),'error');
 			$Errors[$i] = 'Quantity';
-			$i++;		
-		} 
+			$i++;
+		}
 		if ($_POST['Quantity']==0) {
 			$InputError = 1;
 			prnMsg(_('The quantity entered cannot be zero'),'error');
 			$Errors[$i] = 'Quantity';
-			$i++;		
-		} 
+			$i++;
+		}
 		if(!Date1GreaterThanDate2($_POST['EffectiveTo'], $_POST['EffectiveAfter'])){
 			$InputError = 1;
 			prnMsg(_('The effective to date must be a date after the effective after date') . '<br>' . _('The effective to date is') . ' ' . DateDiff($_POST['EffectiveTo'], $_POST['EffectiveAfter'], 'd') . ' ' . _('days before the effective after date') . '! ' . _('No updates have been performed') . '.<br>' . _('Effective after was') . ': ' . $_POST['EffectiveAfter'] . ' ' . _('and effective to was') . ': ' . $_POST['EffectiveTo'],'error');
 			$Errors[$i] = 'EffectiveAfter';
 			$i++;
 			$Errors[$i] = 'EffectiveTo';
-			$i++;		
-		} 
+			$i++;
+		}
 		if($_POST['AutoIssue']==1 and isset($_POST['Component'])){
 			$sql = "SELECT controlled FROM stockmaster WHERE stockid='" . $_POST['Component'] . "'";
 			$CheckControlledResult = DB_query($sql,$db);
@@ -360,7 +360,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		$ErrMsg = _('Could not delete this BOM components because');
 		$DbgMsg = _('The SQL used to delete the BOM was');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-		
+
 		$ComponentSQL = 'SELECT component from bom where parent="' . $SelectedParent .'"';
 		$ComponentResult = DB_query($ComponentSQL,$db);
 		$ComponentArray = DB_fetch_row($ComponentResult);
@@ -369,8 +369,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		prnMsg(_('The component part') . ' - ' . $SelectedComponent . ' - ' . _('has been deleted from this BOM'),'success');
 		// Now reselect
 
-	} elseif (isset($SelectedParent) 
-		AND !isset($SelectedComponent) 
+	} elseif (isset($SelectedParent)
+		AND !isset($SelectedComponent)
 		AND ! isset($_POST['submit'])) {
 
 	/* It could still be the second time the page has been run and a record has been selected	for modification - SelectedParent will exist because it was sent with the new call. If		its the first time the page has been displayed with no parameters then none of the above		are true and the list of components will be displayed with links to delete or edit each.		These will call the same page again and allow update/input or deletion of the records*/
@@ -424,8 +424,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	}
 
 	// Display Manufatured Parent Items
-	$sql = "SELECT bom.parent, 
-			stockmaster.description, 
+	$sql = "SELECT bom.parent,
+			stockmaster.description,
 			stockmaster.mbflag
 		FROM bom, stockmaster
 		WHERE bom.component='".$SelectedParent."'
@@ -599,7 +599,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 						stockmaster.description
 					FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid = stockcategory.categoryid
-					WHERE ((stockcategory.stocktype='L' AND stockmaster.mbflag ='D') 
+					WHERE ((stockcategory.stocktype='L' AND stockmaster.mbflag ='D')
 					OR stockmaster.mbflag !='D')
 					AND stockmaster.mbflag !='K'
 					AND stockmaster.mbflag !='A'
@@ -612,7 +612,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 						stockmaster.description
 					FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid = stockcategory.categoryid
-					WHERE ((stockcategory.stocktype='L' AND stockmaster.mbflag ='D') 
+					WHERE ((stockcategory.stocktype='L' AND stockmaster.mbflag ='D')
 					OR stockmaster.mbflag !='D')
 					AND stockmaster.mbflag !='K'
 					AND stockmaster.mbflag !='A'
@@ -659,7 +659,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		if (DB_num_rows($result)==0){
 			prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres'),'warn');
 			echo "<br><a href='$rootpath/WorkCentres.php?" . SID . "'>" . _('Work Centre Maintenance') . '</a>';
-			includes('includes/footer.inc');
+			include('includes/footer.inc');
 			exit;
 		}
 
@@ -698,7 +698,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		  </td></tr><tr><td>" . _('Effective To') . " (" . $_SESSION['DefaultDateFormat'] . "):</td><td>
 		  <input  " . (in_array('EffectiveTo',$Errors) ?  'class="inputerror"' : '' ) .
 			" tabindex='6' type='Text' name='EffectiveTo' class=date alt='".$_SESSION['DefaultDateFormat']."' size=11 maxlength=10 VALUE=" . $_POST['EffectiveTo'] ."></td></tr>";
-		
+
 		if ($ParentMBflag=='M' OR $ParentMBflag=='G'){
 			echo '<tr><td>' . _('Auto Issue this Component to Work Orders') . ':</td>
 				<td>
@@ -802,11 +802,11 @@ if (!isset($SelectedParent)) {
 	echo "<form action=" . $_SERVER['PHP_SELF'] . "?" . SID ." method=post><b><br>" . $msg ."</b>" .
 	'<div class="page_help_text">'. _('Select a manufactured part') . " (" . _('or Assembly or Kit part') . ") " .
 		 _('to maintain the bill of material for using the options below') . "." . "<br><font size=1>" .
-	 _('Parts must be defined in the stock item entry') . "/" . _('modification screen as manufactured') . 
+	 _('Parts must be defined in the stock item entry') . "/" . _('modification screen as manufactured') .
      ", " . _('kits or assemblies to be available for construction of a bill of material') .'</div>'.
-     "</font><br><table cellpadding=3 colspan=4><tr><td><font size=1>" . _('Enter text extracts in the') . 
+     "</font><br><table cellpadding=3 colspan=4><tr><td><font size=1>" . _('Enter text extracts in the') .
 	 " <b>" . _('description') . "</b>:</font></td><td><input tabindex='1' type='Text' name='Keywords' size=20 maxlength=25></td>
-	 <td><font size=3><b>" . _('OR') . "</b></font></td><td><font size=1>" . _('Enter extract of the') . 
+	 <td><font size=3><b>" . _('OR') . "</b></font></td><td><font size=1>" . _('Enter extract of the') .
      " <b>" . _('Stock Code') . "</b>:</font></td><td><input tabindex='2' type='Text' name='StockCode' size=15 maxlength=18></td>
 	 </tr></table><br><div class='centre'><input tabindex='3' type=submit name='Search' VALUE=" . _('Search Now') . "></div>";
 
