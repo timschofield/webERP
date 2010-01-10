@@ -429,7 +429,7 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF'])
 	} /* end loop to print invoices */
 
 	// Start FPDI concatination to append PDF files conditionally to the invoice
-	// This part taken from FPDI example page
+	// This part taken from FPDI example page -not used yet since change to TCPDF Dec 2009
 	class concat_pdf extends FPDI {
 	
 		var $files = array();
@@ -455,21 +455,20 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF'])
 	
 	// $pdf =& new concat_pdf();
 	
-	// Have to get the TransNo again, not sure what happens if we have a series of trans nos
+	// Have to get the TransNo again, GET[FromTransNo] is updated on each pass of loop
 	if (isset($_GET['FromTransNo'])) {
 		$FromTransNo = trim($_GET['FromTransNo']);
 	} elseif (isset($_POST['FromTransNo'])) {
 		$FromTransNo = trim($_POST['FromTransNo']);
 	}
 	
-// Check its an Invoice type again, then select appendfile filename
-// if ($InvOrCredit=='Invoice') {
-	$sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
-		FROM stockmoves, stockmaster
-		WHERE stockmoves.stockid = stockmaster.stockid
-		AND stockmoves.type=10
-		AND stockmoves.transno=' . $FromTransNo . '
-		AND stockmoves.show_on_inv_crds=1';
+	if ($InvOrCredit=='Invoice') {
+		$sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
+			FROM stockmoves, stockmaster
+			WHERE stockmoves.stockid = stockmaster.stockid
+			AND stockmoves.type=10
+			AND stockmoves.transno=' . $FromTransNo . '
+			AND stockmoves.show_on_inv_crds=1';
 // };
 
 	$result=DB_query($sql,$db);

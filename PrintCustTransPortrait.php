@@ -42,12 +42,12 @@ If (isset($PrintPDF)
         include ('includes/class.pdf.php');
         require('fpdi/fpdi.php');
 
-        $Page_Width=595;
-        $Page_Height=842;
-        $Top_Margin=30;
-        $Bottom_Margin=30;
-        $Left_Margin=40;
-        $Right_Margin=30;
+    $Page_Width=595;
+    $Page_Height=842;
+    $Top_Margin=30;
+    $Bottom_Margin=30;
+    $Left_Margin=40;
+    $Right_Margin=30;
 
 	$pdf = new Cpdf('P', 'pt', 'A4');
 	$pdf->addInfo('Author','webERP ' . $Version);
@@ -99,7 +99,7 @@ If (isset($PrintPDF)
 // gather the invoice data
 
 		if ($InvOrCredit=='Invoice') {
-		$sql = 'SELECT debtortrans.trandate,
+			$sql = 'SELECT debtortrans.trandate,
 					debtortrans.ovamount,
 					debtortrans.ovdiscount,
 					debtortrans.ovfreight,
@@ -165,100 +165,100 @@ If (isset($PrintPDF)
 				AND custbranch.salesman=salesman.salesmancode
 				AND salesorders.fromstkloc=locations.loccode';
 
-		if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No'){
-			$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
-		}
-	} else {
+			if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No'){
+				$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
+			}
+		} else {
 
-	$sql = 'SELECT debtortrans.trandate,
-				debtortrans.ovamount,
-				debtortrans.ovdiscount,
-				debtortrans.ovfreight,
-				debtortrans.ovgst,
-				debtortrans.rate,
-				debtortrans.invtext,
-				debtorsmaster.invaddrbranch,
-				debtorsmaster.name,
-				debtorsmaster.address1,
-				debtorsmaster.address2,
-				debtorsmaster.address3,
-				debtorsmaster.address4,
-				debtorsmaster.address5,
-				debtorsmaster.address6,
-				debtorsmaster.currcode,
-				debtorsmaster.taxref,
-				custbranch.brname,
-				custbranch.braddress1,
-				custbranch.braddress2,
-				custbranch.braddress3,
-				custbranch.braddress4,
-				custbranch.braddress5,
-				custbranch.braddress6,
-				custbranch.brpostaddr1,
-				custbranch.brpostaddr2,
-				custbranch.brpostaddr3,
-				custbranch.brpostaddr4,
-				custbranch.brpostaddr5,
-				custbranch.brpostaddr6,
-				salesman.salesmanname,
-				debtortrans.debtorno,
-				debtortrans.branchcode,
-				paymentterms.terms
-			FROM debtortrans,
-				debtorsmaster,
-				custbranch,
-				salesman,
-				paymentterms
-			WHERE debtortrans.type=11
-			AND debtorsmaster.paymentterms = paymentterms.termsindicator
-			AND debtortrans.transno=' . $FromTransNo .'
-			AND debtortrans.debtorno=debtorsmaster.debtorno
-			AND debtortrans.debtorno=custbranch.debtorno
-			AND debtortrans.branchcode=custbranch.branchcode
-			AND custbranch.salesman=salesman.salesmancode';
+			$sql = 'SELECT debtortrans.trandate,
+					debtortrans.ovamount,
+					debtortrans.ovdiscount,
+					debtortrans.ovfreight,
+					debtortrans.ovgst,
+					debtortrans.rate,
+					debtortrans.invtext,
+					debtorsmaster.invaddrbranch,
+					debtorsmaster.name,
+					debtorsmaster.address1,
+					debtorsmaster.address2,
+					debtorsmaster.address3,
+					debtorsmaster.address4,
+					debtorsmaster.address5,
+					debtorsmaster.address6,
+					debtorsmaster.currcode,
+					debtorsmaster.taxref,
+					custbranch.brname,
+					custbranch.braddress1,
+					custbranch.braddress2,
+					custbranch.braddress3,
+					custbranch.braddress4,
+					custbranch.braddress5,
+					custbranch.braddress6,
+					custbranch.brpostaddr1,
+					custbranch.brpostaddr2,
+					custbranch.brpostaddr3,
+					custbranch.brpostaddr4,
+					custbranch.brpostaddr5,
+					custbranch.brpostaddr6,
+					salesman.salesmanname,
+					debtortrans.debtorno,
+					debtortrans.branchcode,
+					paymentterms.terms
+				FROM debtortrans,
+					debtorsmaster,
+					custbranch,
+					salesman,
+					paymentterms
+				WHERE debtortrans.type=11
+				AND debtorsmaster.paymentterms = paymentterms.termsindicator
+				AND debtortrans.transno=' . $FromTransNo .'
+				AND debtortrans.debtorno=debtorsmaster.debtorno
+				AND debtortrans.debtorno=custbranch.debtorno
+				AND debtortrans.branchcode=custbranch.branchcode
+				AND custbranch.salesman=salesman.salesmancode';
 
-		if ($_POST['PrintEDI']=='No'){
-			$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
+			if ($_POST['PrintEDI']=='No'){
+				$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
+			}
 		}
-	}
 
 	   $result=DB_query($sql,$db,'','',false,false);
 
 	   if (DB_error_no($db)!=0) {
 
-		$title = _('Transaction Print Error Report');
-		include ('includes/header.inc');
+			$title = _('Transaction Print Error Report');
+			include ('includes/header.inc');
+	
+			prnMsg( _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available'),'error');
+			if ($debug==1){
+			    prnMsg (_('The SQL used to get this information that failed was') . "<br>" . $sql,'error');
+			}
+			include ('includes/footer.inc');
+			exit;
+	    }
+	    if (DB_num_rows($result)==1){
+			$myrow = DB_fetch_array($result);
 
-		prnMsg( _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available'),'error');
-		if ($debug==1){
-		    prnMsg (_('The SQL used to get this information that failed was') . "<br>" . $sql,'error');
-		}
-		include ('includes/footer.inc');
-		exit;
-	   }
-	   if (DB_num_rows($result)==1){
-		$myrow = DB_fetch_array($result);
+			$ExchRate = $myrow['rate'];
 
-		$ExchRate = $myrow['rate'];
-
-		if ($InvOrCredit=='Invoice'){
-	$sql = 'SELECT stockmoves.stkmoveno,
-				stockmoves.stockid,
-				stockmaster.description,
-				stockmaster.serialised,
-				stockmaster.controlled,
-				-stockmoves.qty as Quantity,
-				stockmoves.narrative,
-				stockmaster.units,
-				stockmaster.decimalplaces,
-			 	stockmoves.discountpercent,
-				stockmoves.narrative
-			FROM stockmoves,
-					stockmaster
-			WHERE stockmoves.stockid = stockmaster.stockid
-			AND stockmoves.type=10
-			AND stockmoves.transno = '.$FromTransNo.'
-			AND stockmoves.show_on_inv_crds=1';
+			if ($InvOrCredit=='Invoice'){
+				$sql = 'SELECT stockmoves.stkmoveno,
+								stockmoves.stockid,
+								stockmaster.description,
+								stockmaster.serialised,
+								stockmaster.controlled,
+								-stockmoves.qty as Quantity,
+								stockmoves.narrative,
+								stockmaster.units,
+								stockmaster.decimalplaces,
+							 	stockmoves.discountpercent,
+								stockmoves.narrative
+							FROM stockmoves,
+									stockmaster
+							WHERE stockmoves.stockid = stockmaster.stockid
+							AND stockmoves.type=10
+							AND stockmoves.transno = '.$FromTransNo.'
+							AND stockmoves.show_on_inv_crds=1';
 		} else {
 		/* only credit notes to be retrieved */
 			 $sql = 'SELECT  stockmoves.stkmoveno,
@@ -499,7 +499,7 @@ If (isset($PrintPDF)
 */
 
 // Start FPDI concatination to append PDF files conditionally to the invoice
-// This part taken from FPDI example page
+// This part taken from FPDI example page - but not actually used .... yet Muz??
 class concat_pdf extends FPDI {
 
             var $files = array();
@@ -523,63 +523,44 @@ class concat_pdf extends FPDI {
 
 //        $pdf =& new concat_pdf();
 
-// Have to get the TransNo again, not sure what happens if we have a series of trans nos
-if (isset($_GET['FromTransNo'])){
-        $FromTransNo = trim($_GET['FromTransNo']);
-} elseif (isset($_POST['FromTransNo'])){
-        $FromTransNo = trim($_POST['FromTransNo']);
-}
-// Check its an Invoice type again, then select appendfile filename
-//if ($InvOrCredit=='Invoice'){
-                         //$sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
-                                //      FROM stockmoves,
-                                        //stockmaster
-                                //WHERE stockmoves.stockid = stockmaster.stockid
-                                //AND stockmoves.type=10
-                                //AND stockmoves.transno=' . $FromTransNo . '
-                                //AND stockmoves.show_on_inv_crds=1';
-                //};
-
-
-                         $sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
-                                        FROM stockmoves,
-                                        stockmaster
-                                WHERE stockmoves.stockid = stockmaster.stockid
-                                AND stockmoves.type=10
-                                AND stockmoves.transno=' . $FromTransNo . '
-                                AND stockmoves.show_on_inv_crds=1';
-
-$result=DB_query($sql,$db);
-// Loop the result set and add appendfile if the field is not 0 or none
-
-while ($row=DB_fetch_array($result)){
-    if ($row['appendfile'] !='0' AND $row['appendfile'] !=='none') {
-        $pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf','companies/' . $_SESSION['DatabaseName'] . '/pdf_append/' . $row['appendfile']));
-        $pdf->concat();
-        $pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','I');
-        exit;
-        // If EMAIL is selected, send the invoice via email, this is not appending pages yet though
-    } else if (isset($_GET['Email'])) {
-        $pdfcode = $pdf->Output($_SESSION['reports_dir'] . '/Invoice.pdf','D');
-    } else {
-        // If the appendfile field is empty and EMAIL is not selected, just print the invoice without any appended pages
-        $pdf->Output($_SESSION['CompanyRecord']['coyname'] . '_Invoice.pdf','I');
-        exit;
-    }
-}//End FPDI Concat
-
-/*	if ($len <1020){
-		include('includes/header.inc');
-		echo '<p>' . _('There were no transactions to print in the range selected');
-		include('includes/footer.inc');
-		exit;
-	}*/
+// Have to get the TransNo again, $_GET{FromTransNo] is updated with each pass
+	if (isset($_GET['FromTransNo'])){
+	        $FromTransNo = trim($_GET['FromTransNo']);
+	} elseif (isset($_POST['FromTransNo'])){
+	        $FromTransNo = trim($_POST['FromTransNo']);
+	}
+	// Check its an Invoice type again, then select appendfile filename
+	if ($InvOrCredit=='Invoice'){
+		$sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
+					FROM stockmoves INNER JOIN stockmaster
+		            ON stockmoves.stockid = stockmaster.stockid
+		            WHERE stockmoves.type=10
+		            AND stockmoves.transno=' . $FromTransNo . '
+					AND stockmoves.show_on_inv_crds=1';
+	} else {
+		 $sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
+					FROM stockmoves INNER JOIN stockmaster
+		            ON stockmoves.stockid = stockmaster.stockid
+		            AND stockmoves.type=11
+					AND stockmoves.transno=' . $FromTransNo . '
+					AND stockmoves.show_on_inv_crds=1';
+	}
+	$result=DB_query($sql,$db);
+	// Loop the result set and add appendfile if the field is not 0 or none
+	
+	while ($row=DB_fetch_array($result)){
+	    if ($row['appendfile'] !='0' AND $row['appendfile'] !=='none') {
+	        $pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf','companies/' . $_SESSION['DatabaseName'] . '/pdf_append/' . $row['appendfile']));
+	        $pdf->concat();
+	     } 
+	}//End FPDI Concat
 
 	if (isset($_GET['Email'])){ //email the invoice to address supplied
 		include('includes/header.inc');
 
 		include ('includes/htmlMimeMail.php');
-
+		$pdf->Output($_SESSION['reports_dir'] . '/Invoice.pdf','F');
+		$pdf-> __destruct();
 		$mail = new htmlMimeMail();
 		$filename = $_SESSION['reports_dir'] . '/Invoice.pdf';
     	$fp = fopen( $_SESSION['reports_dir'] . '/Invoice.pdf','wb');
@@ -601,10 +582,7 @@ while ($row=DB_fetch_array($result)){
 		include('includes/footer.inc');
 		exit;
 
-	} else {
-
-// Javier: este es el más importante según alguien pq es el único q cambió, despues cambió tb L520 pero no en la factura apaisada
-
+	} else { //its not an email just print the invoice to PDF
 		$pdf->OutputD($_SESSION['DatabaseName'] . '_Invoice' . date('Y-m-d') . '.pdf');
 		$pdf-> __destruct();
 	}
