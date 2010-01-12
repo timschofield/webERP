@@ -123,27 +123,32 @@ if (isset($_POST['ProcessStockChange'])){
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
 
-	echo '<BR>' . _('Changing MRP planned orders information');
+	$sql="select count(table_name) from information_schema.tables where table_schema='".$_SESSION['DatabaseName']."' and table_name='mrpplannedorders'";
+	$result = DB_query($sql,$db);
+	$row=DB_fetch_row($result);
+	if ($row[0]>0) {
+		echo '<BR>' . _('Changing MRP planned orders information');
 
-	$sql = "UPDATE mrpplannedorders SET part='" . $_POST['NewStockID'] . "' WHERE part='" . $_POST['OldStockID'] . "'";
-	$ErrMsg = _('The SQL to update the mrpplannedorders records failed');
-	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
-	echo ' ... ' . _('completed');
-	
+		$sql = "UPDATE mrpplannedorders SET part='" . $_POST['NewStockID'] . "' WHERE part='" . $_POST['OldStockID'] . "'";
+		$ErrMsg = _('The SQL to update the mrpplannedorders records failed');
+		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+		echo ' ... ' . _('completed');
+	}
+
 	echo '<BR>' . _('Changing MRP requirements information');
 
 	$sql = "UPDATE mrprequirements SET part='" . $_POST['NewStockID'] . "' WHERE part='" . $_POST['OldStockID'] . "'";
 	$ErrMsg = _('The SQL to update the mrprequirements records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
-	
+
 	echo '<BR>' . _('Changing MRP supplies information');
 
 	$sql = "UPDATE mrpsupplies SET part='" . $_POST['NewStockID'] . "' WHERE part='" . $_POST['OldStockID'] . "'";
 	$ErrMsg = _('The SQL to update the mrpsupplies records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
-	
+
 
 
 	echo '<br>' . _('Changing sales analysis records');
@@ -235,14 +240,14 @@ if (isset($_POST['ProcessStockChange'])){
 
 	echo '<br>' . _('Changing any image files');
 	if (file_exists($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.jpg')) {
-		if (rename($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.jpg', 
+		if (rename($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.jpg',
 			$_SESSION['part_pics_dir'] . '/' .$_POST['NewStockID'].'.jpg')) {
 				echo ' ... ' . _('completed');
 			} else {
 				echo ' ... ' . _('failed');
 			}
 	} else {
-		echo ' ... ' . _('completed');		
+		echo ' ... ' . _('completed');
 	}
 
 	echo '<br>' . _('Changing the item properties table records') . ' - ' . _('parents');
@@ -265,7 +270,7 @@ if (isset($_POST['ProcessStockChange'])){
 	$ErrMsg = _('The SQL to update the parent stockid worequirements records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
-	
+
 	echo '<BR>' . _('Changing work order information');
 
 	$sql = "UPDATE woitems SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
@@ -310,7 +315,7 @@ echo '<p><table>
 echo '<tr><td>' . _('New Inventory Code') . ":</td><td><input type=Text name='NewStockID' size=20 maxlength=20></td></tr>";
 echo '</table>';
 
-echo "<input type=submit name='ProcessStockChange' VALUE='" . _('Process') . "'>";
+echo "<div class=centre><input type=submit name='ProcessStockChange' VALUE='" . _('Process') . "'></div>";
 
 echo '</form>';
 
