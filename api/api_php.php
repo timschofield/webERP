@@ -2,11 +2,9 @@
 
 /* Include session.inc, to allow database connection, and access to
    miscfunctions, and datefunctions.*/
-//    $DatabaseName='harlotte';
 	$AllowAnyone = true;
 	$PathPrefix=dirname(__FILE__).'/../';
 	include('api_session.inc');
-//	$_SESSION['db']=$db;
 
 	include 'api_errorcodes.php';
 	/* Include SQL_CommonFunctions.inc, to use GetNextTransNo().*/

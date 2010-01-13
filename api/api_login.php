@@ -44,4 +44,30 @@ function  LoginAPI($databasename, $user, $password) {
 	return  $RetCode;
 }
 //  ALSO NEED A userLogout FUNCTION
+
+/*
+ *  Function to return an error message (hopefully in the user's language)
+ *  from the supplied error codes.  This is not really related to login/out,
+ *  but since it does NOT require being logged in, this seems like a
+ *  reasonable place to put it.
+ */
+
+function GetAPIErrorMessages( $errcodes )
+{
+    global  $ErrorDescription;
+    $retmsg = array();
+
+    foreach ($errcodes as $errnum) {
+	$rm = array ($errnum );
+	if (isset ($ErrorDescription[$errnum]) ) {
+	    $rm[] = $ErrorDescription[$errnum];
+	} else {
+	    $rm[] = _('** Error Code Not Defined **');
+	}
+	// Add this array to returned array.
+	$retmsg[] = $rm;
+    }
+
+    return  $retmsg;
+}
 ?>

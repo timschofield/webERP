@@ -101,16 +101,21 @@ if ($_SESSION['HTTPS_Only']==1){
 
 
 if (!is_array($_SESSION['AllowedPageSecurityTokens']) AND !isset($AllowAnyone)) {
+/*  NO HTML output - but may need an XMLRPC style error message here.
+	Lindsay: 12Jan10
 	$title = _('Account Error Report');
 	include($PathPrefix . 'includes/header.inc');
 	echo '<br /><br /><br />';
 	prnMsg(_('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'),'error');
 	include($PathPrefix . 'includes/footer.inc');
+ */
 	exit;
 }
 
 if (!isset($AllowAnyone)){
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
+/* NO HTML output - but need to return an appropriate error message
+	Lindsay: 12Jan10
 		$title = _('Security Permissions Problem');
 		include($PathPrefix . 'includes/header.inc');
 		echo '<tr>
@@ -125,6 +130,7 @@ if (!isset($AllowAnyone)){
 		</td>';
 
 		include($PathPrefix . 'includes/footer.inc');
+ */
 		exit;
 	}
  }

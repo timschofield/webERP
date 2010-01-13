@@ -13,26 +13,15 @@
 	$Parameter[0]['name'] = _('Database Name');
 	$Parameter[0]['description'] = _('The name of the database to use for the transactions to come. ');
 	$Parameter[1]['name'] = _('User name');
-	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an integer. ').
 		_('Zero means the function was successful. ').
 		_('Otherwise an error code is returned. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$Login_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$Login_doc = $doc;
+	$Login_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_Login($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(LoginAPI($xmlrpcmsg->getParam(0)->scalarval(),
@@ -57,19 +46,8 @@
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertCustomer_doc = $doc;
+	$InsertCustomer_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertCustomer($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -93,19 +71,8 @@
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertBranch_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertBranch_doc = $doc;
+	$InsertBranch_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertBranch($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertBranch(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -130,20 +97,9 @@
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 
 	$ModifyCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifyCustomer_doc = $doc;
+	$ModifyCustomer_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_ModifyCustomer($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(ModifyCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -168,20 +124,8 @@
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
-
 	$ModifyBranch_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifyBranch_doc = $doc;
+	$ModifyBranch_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_ModifyBranch($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(ModifyBranch(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -204,20 +148,9 @@
 		_('The key will be identical with field name from the custbranch table. All fields will be in the set regardless of whether the value was set.').'<p>'.
 		_('Otherwise an array of error codes is returned. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 
 	$GetCustomerBranch_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetCustomerBranch_doc = $doc;
+	$GetCustomerBranch_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetCustomerBranch($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetCustomerBranch($xmlrpcmsg->getParam(0)->scalarval(),
@@ -239,46 +172,8 @@
 		_('The key will be identical with field name from the debtorsmaster table. All fields will be in the set regardless of whether the value was set.').'<p>'.
 		_('Otherwise an array of error codes is returned. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
-
-
-	unset($Parameter);
-	unset($ReturnValue);
-	$Description = _('This function is used to retrieve the details of a customer from the webERP database.');
-	$Parameter[0]['name'] = _('Field name');
-	$Parameter[0]['description'] = _('This is a string value. It must be a valid field in the debtorsmaster table. This is case sensitive');
-	$Parameter[1]['name'] = _('Criteria');
-	$Parameter[1]['description'] = _('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
-	$Parameter[2]['name'] = _('User name');
-	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-	$Parameter[3]['name'] = _('User password');
-	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns an array of supplier ids. ').
-		_('Otherwise an array of error codes is returned. ');
-
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetCustomer_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetCustomer_doc = $doc;
+	$GetCustomer_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetCustomer($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetCustomer($xmlrpcmsg->getParam(0)->scalarval(),
@@ -288,22 +183,23 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
-	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
+	$Description = _('This function is used to retrieve the details of a customer from the webERP database.');
+	$Parameter[0]['name'] = _('Field Name');
+	$Parameter[0]['description'] = _('The name of a database field to search on. ')
+			._('The field names can be found ').'<a href="../../Z_DescribeTable.php?table=debtorsmaster">'._('here ').'</a>'
+			._('and are case sensitive. ');
+	$Parameter[1]['name'] = _('Search Criteria');
+	$Parameter[1]['description'] = _('A (partial) string to match in the above Field Name.');
+	$Parameter[2]['name'] = _('User name');
+	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[3]['name'] = _('User password');
+	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of customer IDs, which may be integers or strings. ').
+		_('If the first element is zero then the function was successful. ').
+		_('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 	$SearchCustomers_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$SearchCustomers_doc = $doc;
+	$SearchCustomers_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_SearchCustomers($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(SearchCustomers($xmlrpcmsg->getParam(0)->scalarval(),
@@ -314,21 +210,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetCurrencyList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetCurrencyList_doc = $doc;
+	$GetCurrencyList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetCurrencyList($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetCurrencyList($xmlrpcmsg->getParam(0)->scalarval(),
@@ -337,21 +221,10 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
+
 	$GetCurrencyDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetCurrencyDetails_doc = $doc;
+	$GetCurrencyDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetCurrencyDetails($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetCurrencyDetails($xmlrpcmsg->getParam(0)->scalarval(),
@@ -361,21 +234,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetSalesTypeList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetSalesTypeList_doc = $doc;
+	$GetSalesTypeList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSalesTypeList($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesTypeList($xmlrpcmsg->getParam(0)->scalarval(),
@@ -384,21 +245,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetSalesTypeDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetSalesTypeDetails_doc = $doc;
+	$GetSalesTypeDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSalesTypeDetails($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesTypeDetails($xmlrpcmsg->getParam(0)->scalarval(),
@@ -408,21 +257,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertSalesType_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertSalesType_doc = $doc;
+	$InsertSalesType_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertSalesType($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesType(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -432,21 +269,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetHoldReasonList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetHoldReasonList_doc = $doc;
+	$GetHoldReasonList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetHoldReasonList($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetHoldReasonList($xmlrpcmsg->getParam(0)->scalarval(),
@@ -455,21 +280,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetHoldReasonDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetHoldReasonDetails_doc = $doc;
+	$GetHoldReasonDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetHoldReasonDetails($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetHoldReasonDetails($xmlrpcmsg->getParam(0)->scalarval(),
@@ -479,21 +292,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetPaymentTermsList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetPaymentTermsList_doc = $doc;
+	$GetPaymentTermsList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetPaymentTermsList($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetPaymentTermsList($xmlrpcmsg->getParam(0)->scalarval(),
@@ -502,21 +303,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetPaymentTermsDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetPaymentTermsDetails_doc = $doc;
+	$GetPaymentTermsDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetPaymentTermsDetails($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetPaymentTermsDetails($xmlrpcmsg->getParam(0)->scalarval(),
@@ -526,21 +315,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertStockItem_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertStockItem_doc = $doc;
+	$InsertStockItem_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertStockItem($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertStockItem(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -550,21 +327,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$ModifyStockItem_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifyStockItem_doc = $doc;
+	$ModifyStockItem_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_ModifyStockItem($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(ModifyStockItem(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -574,21 +339,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetStockItem_sig = array(array($xmlrpcStruct, $xmlrpcString));
-	$GetStockItem_doc = $doc;
+	$GetStockItem_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetStockItem($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetStockItem($xmlrpcmsg->getParam(0)->scalarval(),
@@ -597,21 +350,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$SearchStockItems_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$SearchStockItems_doc = $doc;
+	$SearchStockItems_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_SearchStockItems($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(SearchStockItems($xmlrpcmsg->getParam(0)->scalarval(),
@@ -622,7 +363,6 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
 	$Description='This function returns the stock balance for the given stockidn.';
 	$Parameter[0]['name'] = _('Stock ID');
@@ -632,19 +372,8 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of stock quantities by location for this stock item. ');
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetStockBalance_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString),array($xmlrpcStruct, $xmlrpcString));
-	$GetStockBalance_doc = $doc;
+	$GetStockBalance_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetStockBalance($xmlrpcmsg) {
 		if ($xmlrpcmsg->getNumParams() == 3)
@@ -659,7 +388,6 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
 	$Description='This function returns the reorder levels by location.';
 	$Parameter[0]['name'] = _('Stock ID');
@@ -669,19 +397,8 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of stock reorder levels by location for this stock item.').
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetStockReorderLevel_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetStockReorderLevel = $doc;
+	$GetStockReorderLevel = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetStockReorderLevel($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetStockReorderLevel($xmlrpcmsg->getParam(0)->scalarval(),
@@ -691,7 +408,6 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
 	$Description='This function sets the reorder level for the given stockid in the given location.';
 	$Parameter[0]['name'] = _('Stock ID');
@@ -705,19 +421,8 @@
 	$Parameter[4]['name'] = _('User password');
 	$Parameter[4]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns zero if the transaction was successful or an array of error codes if not. ');
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$SetStockReorderLevel_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$SetStockReorderLevel = $doc;
+	$SetStockReorderLevel = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_SetStockReorderLevel($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(SetStockReorderLevel($xmlrpcmsg->getParam(0)->scalarval(),
@@ -729,21 +434,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetAllocatedStock_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetAllocatedStock_doc = $doc;
+	$GetAllocatedStock_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetAllocatedStock($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetAllocatedStock($xmlrpcmsg->getParam(0)->scalarval(),
@@ -753,22 +446,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetOrderedStock_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetOrderedStock_doc = $doc;
-
+	$GetOrderedStock_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 	function xmlrpc_GetOrderedStock($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetOrderedStock($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
@@ -777,21 +457,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$SetStockPrice_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$SetStockPrice_doc = $doc;
+	$SetStockPrice_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_SetStockPrice($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(SetStockPrice($xmlrpcmsg->getParam(0)->scalarval(),
@@ -804,21 +472,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetStockPrice_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetStockPrice_doc = $doc;
+	$GetStockPrice_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetStockPrice($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetStockPrice($xmlrpcmsg->getParam(0)->scalarval(),
@@ -830,21 +486,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertSalesInvoice_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertSalesInvoice_doc = $doc;
+	$InsertSalesInvoice_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertSalesInvoice($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesInvoice(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -854,21 +498,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertSalesCredit_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertSalesCredit_doc = $doc;
+	$InsertSalesCredit_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertSalesCredit($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesCedit(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -878,7 +510,6 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
 	$Description = 'This function is used to start a new sales order.';
 	$Parameter[0]['name'] = _('Insert Sales Order Header');
@@ -892,19 +523,8 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('If successful this function returns a two element array; the first element is 0 for success or an error code, while the second element is the order number.');
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertSalesOrderHeader_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertSalesOrderHeader_doc = $doc;
+	$InsertSalesOrderHeader_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertSalesOrderHeader($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesOrderHeader(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -914,7 +534,6 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
  	$Description = 'This function is used to modify the header details of a sales order';
  	$Parameter[0]['name'] = _('Modify Sales Order Header Details');
@@ -927,19 +546,8 @@
  	$Parameter[2]['name'] = _('User password');
  	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
  	$ReturnValue[0] = _('If successful this function returns a single element array with the value 0; otherwise, it contains all error codes encountered during the update.');
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$ModifySalesOrderHeader_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifySalesOrderHeader_doc = $doc;
+	$ModifySalesOrderHeader_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_ModifySalesOrderHeader($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(ModifySalesOrderHeader(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -949,7 +557,6 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
 	$Description = 'This function is used to add line items to a sales order.';
 	$Parameter[0]['name'] = _('Insert Sales Order Line');
@@ -963,19 +570,8 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array; the first element is 0 for success; otherwise the array contains a list of all errors encountered.');
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertSalesOrderLine_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertSalesOrderLine_doc = $doc;
+	$InsertSalesOrderLine_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertSalesOrderLine($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesOrderLine(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -985,7 +581,6 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
 	$Description = 'This function is used to modify line items on a sales order.';
 	$Parameter[0]['name'] = _('Modify Sales Order Line');
@@ -999,19 +594,8 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array; the first element is 0 for success; otherwise the array contains a list of all errors encountered.');
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$ModifySalesOrderLine_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifySalesOrderLine_doc = $doc;
+	$ModifySalesOrderLine_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_ModifySalesOrderLine($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(ModifySalesOrderLine(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -1021,21 +605,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertGLAccount_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertGLAccount_doc = $doc;
+	$InsertGLAccount_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertGLAccount($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertGLAccount(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -1045,21 +617,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertGLAccountSection_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertGLAccountSection_doc = $doc;
+	$InsertGLAccountSection_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertGLAccountSection($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertGLAccountSection(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -1069,21 +629,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertGLAccountGroup_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertGLAccountGroup_doc = $doc;
+	$InsertGLAccountGroup_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertGLAccountGroup($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertGLAccountGroup(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -1093,21 +641,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetLocationList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetLocationList_doc = $doc;
+	$GetLocationList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetLocationList($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetLocationList($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1116,21 +652,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetLocationDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetLocationDetails_doc = $doc;
+	$GetLocationDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetLocationDetails($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetLocationDetails($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1140,21 +664,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetShipperList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetShipperList_doc = $doc;
+	$GetShipperList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetShipperList($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetShipperList($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1163,21 +675,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetShipperDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetShipperDetails_doc = $doc;
+	$GetShipperDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetShipperDetails($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetShipperDetails($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1187,21 +687,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetSalesAreasList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetSalesAreasList_doc = $doc;
+	$GetSalesAreasList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSalesAreasList($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesAreasList($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1210,21 +698,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetSalesAreaDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetSalesAreaDetails_doc = $doc;
+	$GetSalesAreaDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSalesAreaDetails($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesAreaDetails($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1234,21 +710,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetSalesAreaDetailsFromName_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetSalesAreaDetailsFromName_doc = $doc;
+	$GetSalesAreaDetailsFromName_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSalesAreaDetailsFromName($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesAreaDetailsFromName($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1258,21 +722,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertSalesArea_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertSalesArea_doc = $doc;
+	$InsertSalesArea_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertSalesArea($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesArea(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -1282,21 +734,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetSalesmanList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetSalesmanList_doc = $doc;
+	$GetSalesmanList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSalesmanList($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesmanList($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1305,21 +745,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetSalesmanDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetSalesmanDetails_doc = $doc;
+	$GetSalesmanDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSalesmanDetails($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesmanDetails($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1329,21 +757,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetSalesmanDetailsFromName_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetSalesmanDetailsFromName_doc = $doc;
+	$GetSalesmanDetailsFromName_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSalesmanDetailsFromName($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesmanDetailsFromName($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1353,21 +769,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertSalesman_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertSalesman_doc = $doc;
+	$InsertSalesman_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertSalesman($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesman(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -1377,21 +781,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetTaxgroupList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetTaxgroupList_doc = $doc;
+	$GetTaxgroupList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetTaxgroupList($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetTaxgroupList($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1400,21 +792,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetTaxgroupDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetTaxgroupDetails_doc = $doc;
+	$GetTaxgroupDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetTaxgroupDetails($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetTaxgroupDetails($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1424,21 +804,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetCustomerTypeList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetCustomerTypeList_doc = $doc;
+	$GetCustomerTypeList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetCustomerTypeList($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetCustomerTypeList($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1447,21 +815,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetCustomerTypeDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetCustomerTypeDetails_doc = $doc;
+	$GetCustomerTypeDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetCustomerTypeDetails($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetCustomerTypeDetails($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1471,21 +827,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertStockCategory_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertStockCategory_doc = $doc;
+	$InsertStockCategory_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertStockCategory($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertStockCategory(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -1495,21 +839,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$ModifyStockCategory_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifyStockCategory_doc = $doc;
+	$ModifyStockCategory_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_ModifyStockCategory($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(ModifyStockCategory(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -1519,21 +851,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetStockCategory_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetStockCategory_doc = $doc;
+	$GetStockCategory_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetStockCategory($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetStockCategory($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1543,21 +863,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$SearchStockCategories_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$SearchStockCategories_doc = $doc;
+	$SearchStockCategories_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_SearchStockCategories($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(SearchStockCategories($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1568,21 +876,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$StockCatPropertyList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$StockCatPropertyList_doc = $doc;
+	$StockCatPropertyList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_StockCatPropertyList($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(StockCatPropertyList($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1593,21 +889,9 @@
 	
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetGLAccountList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetGLAccountList_doc = $doc;
+	$GetGLAccountList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetGLAccountList($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetGLAccountList($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1616,21 +900,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetGLAccountDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetGLAccountDetails_doc = $doc;
+	$GetGLAccountDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetGLAccountDetails($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetGLAccountDetails($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1640,21 +912,9 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	unset($doc);
 	unset($Description);
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$GetStockTaxRate_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetStockTaxRate_doc = $doc;
+	$GetStockTaxRate_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetStockTaxRate($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetStockTaxRate($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1679,19 +939,8 @@
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertSupplier_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertSupplier_doc = $doc;
+	$InsertSupplier_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertSupplier($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertSupplier(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -1716,20 +965,9 @@
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no modification takes place. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 
 	$ModifySupplier_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifySupplier_doc = $doc;
+	$ModifySupplier_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_ModifySupplier($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(ModifySupplier(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -1750,20 +988,9 @@
 		_('The key will be identical with field name from the suppliers table. All fields will be in the set regardless of whether the value was set.').'<p>'.
 		_('Otherwise an array of error codes is returned. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 
 	$GetSupplier_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetSupplier_doc = $doc;
+	$GetSupplier_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSupplier($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetSupplier($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1785,20 +1012,9 @@
 	$ReturnValue[0] = _('If successful this function returns an array of supplier ids. ').
 		_('Otherwise an array of error codes is returned. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 
 	$SearchSuppliers_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$SearchSuppliers_doc = $doc;
+	$SearchSuppliers_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_SearchSuppliers($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(SearchSuppliers($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1821,20 +1037,9 @@
 	$ReturnValue[0] = _('Returns a two dimensional array of stock batch details. ').
 		_('The fields returned are stockid, loccode, batchno, quantity, itemcost. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 
 	$GetBatches_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetBatches_doc = $doc;
+	$GetBatches_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetBatches($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetBatches($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1861,20 +1066,9 @@
 	$ReturnValue[0] = _('If successful this function returns 0. ').
 		_('Otherwise an array of error codes is returned. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 
 	$StockAdjustment_sig = array(array($xmlrpcStruct, $xmlrpcString,$xmlrpcString, $xmlrpcDouble, $xmlrpcString,  $xmlrpcString, $xmlrpcString));
-	$StockAdjustment_doc = $doc;
+	$StockAdjustment_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_StockAdjustment($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(StockAdjustment($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1907,20 +1101,9 @@
 	$ReturnValue[0] = _('If successful this function returns 0. ').
 		_('Otherwise an array of error codes is returned. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 
 	$WorkOrderIssue_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString,  $xmlrpcString, $xmlrpcString));
-	$WorkOrderIssue_doc = $doc;
+	$WorkOrderIssue_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_WorkOrderIssue($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(WorkOrderIssue($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1947,20 +1130,9 @@
 	$ReturnValue[0] = _('If successful this function returns an array of work order numbers. ').
 		_('Otherwise an array of error codes is returned. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 
 	$SearchWorkOrders_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$SearchWorkOrders_doc = $doc;
+	$SearchWorkOrders_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_SearchWorkOrders($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(SearchWorkOrders($xmlrpcmsg->getParam(0)->scalarval(),
@@ -1985,19 +1157,8 @@
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertPurchData_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertPurchData_doc = $doc;
+	$InsertPurchData_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertPurchData($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertPurchData(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -2021,19 +1182,8 @@
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertPurchData_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertPurchData_doc = $doc;
+	$InsertPurchData_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_ModifyPurchData($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(ModifyPurchData(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -2057,19 +1207,8 @@
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 	$InsertWorkOrder_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertWorkOrder_doc = $doc;
+	$InsertWorkOrder_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertWorkOrder($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertWorkOrder(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -2097,20 +1236,9 @@
 	$ReturnValue[0] = _('If successful this function returns 0. ').
 		_('Otherwise an array of error codes is returned. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 
 	$WorkOrderReceive_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString,$xmlrpcString, $xmlrpcString,  $xmlrpcString, $xmlrpcString));
-	$WorkOrderReceive_doc = $doc;
+	$WorkOrderReceive_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_WorkOrderReceive($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(WorkOrderReceive($xmlrpcmsg->getParam(0)->scalarval(),
@@ -2132,20 +1260,9 @@
 	$ReturnValue[0] = _('If successful this function returns a string contain the default date format. ').
 		_('Otherwise an array of error codes is returned. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
 
 	$GetDefaultDateFormat_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetDefaultDateFormat_doc = $doc;
+	$GetDefaultDateFormat_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetDefaultDateFormat($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetDefaultDateFormat($xmlrpcmsg->getParam(0)->scalarval(),
@@ -2162,20 +1279,8 @@
 	$ReturnValue[0] = _('If successful this function returns a string contain the default location. ').
 		_('Otherwise an array of error codes is returned. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
-
 	$GetDefaultCurrency_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetDefaultCurrency_doc = $doc;
+	$GetDefaultCurrency_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetDefaultCurrency($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetDefaultCurrency($xmlrpcmsg->getParam(0)->scalarval(),
@@ -2192,20 +1297,8 @@
 	$ReturnValue[0] = _('If successful this function returns a string contain the default price list code. ').
 		_('Otherwise an array of error codes is returned. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
-
 	$GetDefaultPriceList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetDefaultPriceList_doc = $doc;
+	$GetDefaultPriceList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetDefaultPriceList($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetDefaultPriceList($xmlrpcmsg->getParam(0)->scalarval(),
@@ -2222,20 +1315,8 @@
 	$ReturnValue[0] = _('If successful this function returns a string contain the default currency code. ').
 		_('Otherwise an array of error codes is returned. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
-
 	$GetDefaultLocation_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetDefaultLocation_doc = $doc;
+	$GetDefaultLocation_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetDefaultLocation($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetDefaultLocation($xmlrpcmsg->getParam(0)->scalarval(),
@@ -2244,28 +1325,20 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	$Description = _('Returns the webERP currency code');
-	$Parameter[0]['name'] = _('User name');
-	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-	$Parameter[1]['name'] = _('User password');
-	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a string contain the default currency code. ').
+	$Description = _('Returns the value of the specified stock category property for the specified stock item category');
+	$Parameter[0]['name'] = _('Property');
+	$Parameter[0]['description'] = _('The name of the specific property to be returned.');
+	$Parameter[1]['name'] = _('Stock ID');
+	$Parameter[1]['description'] = _('The ID of the stock item for which the value of the above property is required. ');
+	$Parameter[2]['name'] = _('User name');
+	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[3]['name'] = _('User password');
+	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns zero, and the value of the requested property. ').
 		_('Otherwise an array of error codes is returned. ');
 
-	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
-			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-	for ($i=0; $i<sizeof($Parameter); $i++) {
-		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
-			$Parameter[$i]['description'].'</td></tr>';
-	}
-	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-	for ($i=0; $i<sizeof($ReturnValue); $i++) {
-		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
-	}
-	$doc .= '</table>';
-
 	$GetStockCatProperty_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetStockCatProperty_doc = $doc;
+	$GetStockCatProperty_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetStockCatProperty($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetStockCatProperty($xmlrpcmsg->getParam(0)->scalarval(),
@@ -2273,6 +1346,23 @@
 				 		$xmlrpcmsg->getParam(2)->scalarval(),
 				 			$xmlrpcmsg->getParam(3)->scalarval())));
 	}
+
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('Returns (possibly translated) error text from error codes');
+	$Parameter[0]['name'] = _('Error codes');
+	$Parameter[0]['description'] = _('An array of error codes to change into text messages. ');
+	$ReturnValue[0] = _('An array of two element arrays, one per error code. The second array has the error code in element 0 and the error string in element 1. ');
+
+	$GetErrorMessages_sig = array(array($xmlrpcStruct, $xmlrpcArray));
+	$GetErrorMessages_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+
+	function xmlrpc_GetErrorMessages($xmlrpcmsg) {
+	    return new xmlrpcresp(php_xmlrpc_encode(
+			    GetAPIErrorMessages(
+				php_xmlrpc_decode($xmlrpcmsg->getParam(0)))));
+	}
+      
 	
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_Login" => array(
@@ -2587,7 +1677,29 @@
 			"function" => "xmlrpc_GetStockCatProperty",
 			"signature" => $GetStockCatProperty_sig,
 			"docstring" => $GetStockCatProperty_doc),
+		"weberp.xmlrpc_GetErrorMessages" => array(
+			"function" => "xmlrpc_GetErrorMessages",
+			"signature" => $GetErrorMessages_sig,
+			"docstring" => $GetErrorMessages_doc),
 	)
 	);
 
+//  Generate the HTMLised description string for each API.
+
+function apiBuildDocHTML( $description, $parameter, $return )
+{
+    $doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$description.'</td></tr>
+		    <tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+    for ($ii=0; $ii<sizeof($parameter); $ii++) {
+	    $doc .= '<tr><td valign="top">'.$parameter[$ii]['name'].'</td><td>'.
+		    $parameter[$ii]['description'].'</td></tr>';
+    }
+    $doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+    for ($ii=0; $ii<sizeof($return); $ii++) {
+	    $doc .= '<td valign="top">'.$return[$ii].'</td></tr>';
+    }
+    $doc .= '</table>';
+
+    return  $doc;
+}
 ?>
