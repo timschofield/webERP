@@ -1,4 +1,11 @@
 <?php
+	function ob_file_callback($buffer)	{
+		/* Empty handler function for unwanted output.
+		 * Must be a better way of doing this, but at
+		 * least it works */
+	}
+
+	ob_start('ob_file_callback');
 
 	include 'api_php.php';
 
@@ -24,6 +31,7 @@
 	$Login_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_Login($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(LoginAPI($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -40,6 +48,7 @@
 	$Logout_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_Logout($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(LogoutAPI()));
 	}
 
@@ -64,6 +73,7 @@
 	$InsertCustomer_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertCustomer($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(InsertCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -89,6 +99,7 @@
 	$InsertBranch_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertBranch($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(InsertBranch(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -116,6 +127,7 @@
 	$ModifyCustomer_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_ModifyCustomer($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(ModifyCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -142,6 +154,7 @@
 	$ModifyBranch_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_ModifyBranch($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(ModifyBranch(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -167,6 +180,7 @@
 	$GetCustomerBranch_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetCustomerBranch($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetCustomerBranch($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 	$xmlrpcmsg->getParam(2)->scalarval(),
@@ -190,6 +204,7 @@
 	$GetCustomer_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetCustomer($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetCustomer($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -216,6 +231,7 @@
 	$SearchCustomers_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_SearchCustomers($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(SearchCustomers($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval(),
@@ -229,6 +245,7 @@
 	$GetCurrencyList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetCurrencyList($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetCurrencyList($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval())));
 	}
@@ -241,6 +258,7 @@
 	$GetCurrencyDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetCurrencyDetails($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetCurrencyDetails($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
@@ -253,6 +271,7 @@
 	$GetSalesTypeList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSalesTypeList($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesTypeList($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval())));
 	}
@@ -264,6 +283,7 @@
 	$GetSalesTypeDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSalesTypeDetails($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesTypeDetails($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
@@ -276,6 +296,7 @@
 	$InsertSalesType_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertSalesType($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesType(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -288,6 +309,7 @@
 	$GetHoldReasonList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetHoldReasonList($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetHoldReasonList($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval())));
 	}
@@ -299,6 +321,7 @@
 	$GetHoldReasonDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetHoldReasonDetails($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetHoldReasonDetails($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
@@ -311,6 +334,7 @@
 	$GetPaymentTermsList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetPaymentTermsList($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetPaymentTermsList($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval())));
 	}
@@ -322,6 +346,7 @@
 	$GetPaymentTermsDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetPaymentTermsDetails($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetPaymentTermsDetails($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
@@ -334,6 +359,7 @@
 	$InsertStockItem_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertStockItem($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(InsertStockItem(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -346,6 +372,7 @@
 	$ModifyStockItem_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_ModifyStockItem($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(ModifyStockItem(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -358,6 +385,7 @@
 	$GetStockItem_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetStockItem($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetStockItem($xmlrpcmsg->getParam(0)->scalarval(),
 				 '', '')));
 	}
@@ -369,6 +397,7 @@
 	$SearchStockItems_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_SearchStockItems($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(SearchStockItems($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval(),
@@ -390,6 +419,7 @@
 	$GetStockBalance_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetStockBalance($xmlrpcmsg) {
+		ob_end_flush();
 		if ($xmlrpcmsg->getNumParams() == 3)
 		{
 		    return new xmlrpcresp(php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam(0)->scalarval(),
@@ -415,6 +445,7 @@
 	$GetStockReorderLevel = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetStockReorderLevel($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetStockReorderLevel($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -439,6 +470,7 @@
 	$SetStockReorderLevel = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_SetStockReorderLevel($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(SetStockReorderLevel($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval(),
@@ -453,6 +485,7 @@
 	$GetAllocatedStock_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetAllocatedStock($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetAllocatedStock($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 			$xmlrpcmsg->getParam(2)->scalarval())));
@@ -464,6 +497,7 @@
 	$GetOrderedStock_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
 	$GetOrderedStock_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 	function xmlrpc_GetOrderedStock($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetOrderedStock($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 			$xmlrpcmsg->getParam(2)->scalarval())));
@@ -476,6 +510,7 @@
 	$SetStockPrice_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_SetStockPrice($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(SetStockPrice($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval(),
@@ -491,6 +526,7 @@
 	$GetStockPrice_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetStockPrice($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetStockPrice($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval(),
@@ -505,6 +541,7 @@
 	$InsertSalesInvoice_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertSalesInvoice($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesInvoice(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -517,6 +554,7 @@
 	$InsertSalesCredit_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertSalesCredit($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesCedit(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -541,6 +579,7 @@
 	$InsertSalesOrderHeader_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertSalesOrderHeader($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesOrderHeader(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -564,6 +603,7 @@
 	$ModifySalesOrderHeader_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_ModifySalesOrderHeader($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(ModifySalesOrderHeader(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -588,6 +628,7 @@
 	$InsertSalesOrderLine_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertSalesOrderLine($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesOrderLine(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -612,6 +653,7 @@
 	$ModifySalesOrderLine_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_ModifySalesOrderLine($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(ModifySalesOrderLine(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -624,6 +666,7 @@
 	$InsertGLAccount_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertGLAccount($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(InsertGLAccount(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -636,6 +679,7 @@
 	$InsertGLAccountSection_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertGLAccountSection($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(InsertGLAccountSection(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -648,6 +692,7 @@
 	$InsertGLAccountGroup_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertGLAccountGroup($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(InsertGLAccountGroup(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -660,6 +705,7 @@
 	$GetLocationList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetLocationList($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetLocationList($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval())));
 	}
@@ -671,6 +717,7 @@
 	$GetLocationDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetLocationDetails($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetLocationDetails($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
@@ -683,6 +730,7 @@
 	$GetShipperList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetShipperList($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetShipperList($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval())));
 	}
@@ -694,6 +742,7 @@
 	$GetShipperDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetShipperDetails($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetShipperDetails($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
@@ -706,6 +755,7 @@
 	$GetSalesAreasList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSalesAreasList($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesAreasList($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval())));
 	}
@@ -717,6 +767,7 @@
 	$GetSalesAreaDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSalesAreaDetails($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesAreaDetails($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
@@ -729,6 +780,7 @@
 	$GetSalesAreaDetailsFromName_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSalesAreaDetailsFromName($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesAreaDetailsFromName($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
@@ -741,6 +793,7 @@
 	$InsertSalesArea_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertSalesArea($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesArea(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -753,6 +806,7 @@
 	$GetSalesmanList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSalesmanList($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesmanList($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval())));
 	}
@@ -764,6 +818,7 @@
 	$GetSalesmanDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSalesmanDetails($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesmanDetails($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
@@ -776,6 +831,7 @@
 	$GetSalesmanDetailsFromName_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSalesmanDetailsFromName($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesmanDetailsFromName($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
@@ -788,6 +844,7 @@
 	$InsertSalesman_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertSalesman($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesman(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -800,6 +857,7 @@
 	$GetTaxgroupList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetTaxgroupList($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetTaxgroupList($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval())));
 	}
@@ -811,6 +869,7 @@
 	$GetTaxgroupDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetTaxgroupDetails($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetTaxgroupDetails($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
@@ -823,6 +882,7 @@
 	$GetCustomerTypeList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetCustomerTypeList($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetCustomerTypeList($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval())));
 	}
@@ -834,6 +894,7 @@
 	$GetCustomerTypeDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetCustomerTypeDetails($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetCustomerTypeDetails($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
@@ -846,6 +907,7 @@
 	$InsertStockCategory_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertStockCategory($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(InsertStockCategory(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -858,6 +920,7 @@
 	$ModifyStockCategory_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_ModifyStockCategory($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(ModifyStockCategory(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -870,6 +933,7 @@
 	$GetStockCategory_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetStockCategory($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetStockCategory($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -882,6 +946,7 @@
 	$SearchStockCategories_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_SearchStockCategories($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(SearchStockCategories($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval(),
@@ -895,12 +960,13 @@
 	$StockCatPropertyList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_StockCatPropertyList($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(StockCatPropertyList($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval(),
 				 			$xmlrpcmsg->getParam(3)->scalarval())));
 	}
-	
+
 	unset($Parameter);
 	unset($ReturnValue);
 	unset($Description);
@@ -908,6 +974,7 @@
 	$GetGLAccountList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetGLAccountList($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetGLAccountList($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval())));
 	}
@@ -919,6 +986,7 @@
 	$GetGLAccountDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetGLAccountDetails($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetGLAccountDetails($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
@@ -931,6 +999,7 @@
 	$GetStockTaxRate_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetStockTaxRate($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetStockTaxRate($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval(),
@@ -957,6 +1026,7 @@
 	$InsertSupplier_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertSupplier($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(InsertSupplier(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -984,6 +1054,7 @@
 	$ModifySupplier_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_ModifySupplier($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(ModifySupplier(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -1007,6 +1078,7 @@
 	$GetSupplier_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetSupplier($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetSupplier($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 	$xmlrpcmsg->getParam(2)->scalarval())));
@@ -1031,6 +1103,7 @@
 	$SearchSuppliers_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_SearchSuppliers($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(SearchSuppliers($xmlrpcmsg->getParam(0)->scalarval(),
 				$xmlrpcmsg->getParam(1)->scalarval(),
 						$xmlrpcmsg->getParam(2)->scalarval(),
@@ -1056,6 +1129,7 @@
 	$GetBatches_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetBatches($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetBatches($xmlrpcmsg->getParam(0)->scalarval(),
 				$xmlrpcmsg->getParam(1)->scalarval(),
 						$xmlrpcmsg->getParam(2)->scalarval(),
@@ -1085,6 +1159,7 @@
 	$StockAdjustment_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_StockAdjustment($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(StockAdjustment($xmlrpcmsg->getParam(0)->scalarval(),
 				$xmlrpcmsg->getParam(1)->scalarval(),
 					$xmlrpcmsg->getParam(2)->scalarval(),
@@ -1120,6 +1195,7 @@
 	$WorkOrderIssue_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_WorkOrderIssue($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(WorkOrderIssue($xmlrpcmsg->getParam(0)->scalarval(),
 				$xmlrpcmsg->getParam(1)->scalarval(),
 					$xmlrpcmsg->getParam(2)->scalarval(),
@@ -1149,6 +1225,7 @@
 	$SearchWorkOrders_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_SearchWorkOrders($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(SearchWorkOrders($xmlrpcmsg->getParam(0)->scalarval(),
 				$xmlrpcmsg->getParam(1)->scalarval(),
 						$xmlrpcmsg->getParam(2)->scalarval(),
@@ -1175,6 +1252,7 @@
 	$InsertPurchData_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertPurchData($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(InsertPurchData(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				$xmlrpcmsg->getParam(1)->scalarval(),
 						$xmlrpcmsg->getParam(2)->scalarval())));
@@ -1200,6 +1278,7 @@
 	$InsertPurchData_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_ModifyPurchData($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(ModifyPurchData(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -1225,6 +1304,7 @@
 	$InsertWorkOrder_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertWorkOrder($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(InsertWorkOrder(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
@@ -1255,6 +1335,7 @@
 	$WorkOrderReceive_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_WorkOrderReceive($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(WorkOrderReceive($xmlrpcmsg->getParam(0)->scalarval(),
 				$xmlrpcmsg->getParam(1)->scalarval(),
 					$xmlrpcmsg->getParam(2)->scalarval(),
@@ -1279,6 +1360,7 @@
 	$GetDefaultDateFormat_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetDefaultDateFormat($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetDefaultDateFormat($xmlrpcmsg->getParam(0)->scalarval(),
 				$xmlrpcmsg->getParam(1)->scalarval())));
 	}
@@ -1297,6 +1379,7 @@
 	$GetDefaultCurrency_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetDefaultCurrency($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetDefaultCurrency($xmlrpcmsg->getParam(0)->scalarval(),
 				$xmlrpcmsg->getParam(1)->scalarval())));
 	}
@@ -1315,6 +1398,7 @@
 	$GetDefaultPriceList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetDefaultPriceList($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetDefaultPriceList($xmlrpcmsg->getParam(0)->scalarval(),
 				$xmlrpcmsg->getParam(1)->scalarval())));
 	}
@@ -1333,6 +1417,7 @@
 	$GetDefaultLocation_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetDefaultLocation($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetDefaultLocation($xmlrpcmsg->getParam(0)->scalarval(),
 				$xmlrpcmsg->getParam(1)->scalarval())));
 	}
@@ -1355,6 +1440,7 @@
 	$GetStockCatProperty_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetStockCatProperty($xmlrpcmsg) {
+		ob_end_flush();
 		return new xmlrpcresp(php_xmlrpc_encode(GetStockCatProperty($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval(),
@@ -1372,12 +1458,13 @@
 	$GetErrorMessages_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetErrorMessages($xmlrpcmsg) {
-	    return new xmlrpcresp(php_xmlrpc_encode(
-			    GetAPIErrorMessages(
+		ob_end_flush();
+		return new xmlrpcresp(php_xmlrpc_encode(
+				GetAPIErrorMessages(
 				php_xmlrpc_decode($xmlrpcmsg->getParam(0)))));
 	}
-      
-	
+
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_Login" => array(
 			"function" => "xmlrpc_Login",
