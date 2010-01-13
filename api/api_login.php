@@ -19,9 +19,9 @@ function  LoginAPI($databasename, $user, $password) {
 		include('../includes/ConnectDB.inc');
 		//  Need to ensure we have a connection.
 		if (!isset($db)) {
-		$RetCode[0] = NoAuthorisation;
-		$RetCode[1] = UL_CONFIGERR;
-		return  $RetCode;
+		    $RetCode[0] = NoAuthorisation;
+		    $RetCode[1] = UL_CONFIGERR;
+		    return  $RetCode;
 		}
 		$_SESSION['db'] = $db;		// Set in above include
 	}
@@ -43,7 +43,24 @@ function  LoginAPI($databasename, $user, $password) {
 	}
 	return  $RetCode;
 }
-//  ALSO NEED A userLogout FUNCTION
+
+
+//  Logout function destroys the session data, and that's about it.
+
+function  LogoutAPI() {
+
+    //  Is this user logged in?
+    if (isset ($_SESSION['db']) ) {
+	// Cleanup is about all there is to do.
+	session_unset();
+	session_destroy();
+	$RetCode = 0;
+    } else {
+	$RetCode = NoAuthorisation;
+    }
+
+    return $RetCode;
+}
 
 /*
  *  Function to return an error message (hopefully in the user's language)

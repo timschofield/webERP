@@ -31,6 +31,20 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
+	$Description = _('This function is used to logout from the API methods.');
+	$ReturnValue[0] = _('This function returns an integer. ').
+		_('Zero means the function was successful. ').
+		_('Otherwise an error code is returned. ');
+
+	$Logout_sig = array(array($xmlrpcStruct));
+	$Logout_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+
+	function xmlrpc_Logout($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(LogoutAPI()));
+	}
+
+	unset($Parameter);
+	unset($ReturnValue);
 	$Description = _('This function is used to insert a new customer into the webERP database.');
 	$Parameter[0]['name'] = _('Customer Details');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
@@ -1369,6 +1383,10 @@
 			"function" => "xmlrpc_Login",
 			"signature" => $Login_sig,
 			"docstring" => $Login_doc),
+		"weberp.xmlrpc_Logout" => array(
+			"function" => "xmlrpc_Logout",
+			"signature" => $Logout_sig,
+			"docstring" => $Logout_doc),
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
 			"signature" => $InsertCustomer_sig,
