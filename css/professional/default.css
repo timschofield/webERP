@@ -286,7 +286,7 @@ div.csv {
 	border: none;
 	margin: 0px;
 	padding: 0px;
- 	color: black;
+ 	color: #eee;
 	border-top: 2px #AAAAAA solid;
 	border-left: 2px #AAAAAA solid;
 	border-right: 2px white solid;
@@ -332,13 +332,13 @@ div.csv {
 	text-align: right;
 }
 
-.quick_menu_tab a{
-	color:#fff;
+.quick_menu_tab a{ /*The quick menu links */
+	color:blue;
 	font-weight:bold;
 }
 
-.quick_menu_left a{
-	color:#fff;
+.quick_menu_left a{ /*The links to the user settings */
+	color:black;
 }
 
 .quick_menu_tab a:hover{
@@ -348,7 +348,7 @@ div.csv {
 }
 
 .quick_menu_left a:hover{
-	color:#ffc;
+	color:blue;
 	text-decoration:none;
 }
 

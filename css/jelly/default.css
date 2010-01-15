@@ -499,9 +499,8 @@ div.csv {
 .main_menu_selected {
 	background: #00f url(images/gelblue.png) 0px -1px repeat-x;
 	/*border: 0px solid #888;*/
-/*	position: relative; */ 
 	text-align: center;
-	white-space: nowrap;
+	white-space: nowrap; 
 }
 
 .main_menu_selected a{
@@ -587,8 +586,8 @@ span.main_menu_nolink {
 
 .page_title_text {
 	font-family: Verdana, Arial, Helvetica;
-        padding-top: 2px;
-        padding-bottom: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
 	font-weight: bold;
 	font-size: 12px;
 	color: black;
@@ -599,7 +598,7 @@ DIV.page_help_text {
 	background: lightgrey url(images/help.png) top left no-repeat;
 	BORDER: #a52a2a 1px solid;
 	padding-top:2px; 
-        padding-bottom: 2px;
+    padding-bottom: 2px;
 	PADDING-LEFT: 10px;
 	Z-INDEX: 1;
 	width: 80%;
@@ -608,9 +607,9 @@ DIV.page_help_text {
 	MARGIN: 0 auto;
 	POSITION: static;
 	font-family: Verdana, Arial, Helvetica;
-        font-weight: normal;
-        font-size: 10px;
-        color: black;
+    font-weight: normal;
+    font-size: 10px;
+    color: black;
 	TEXT-ALIGN:center;
 }
 

@@ -33,7 +33,7 @@
 	echo '<tr>';
 	echo '<td>';
 
-	if ($title AND substr($title,0,4) != 'Help') {
+	if (isset($title)) {
 		echo '<table cellpadding="0" cellspacing="0" border="0" id="quick_menu" class="quick_menu">';
 		echo '<tr>';
 		echo '<td align="left" style="width:100%;" class="quick_menu_left">';

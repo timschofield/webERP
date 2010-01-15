@@ -163,6 +163,8 @@ font.bad {
 }
 
 font.header_title {
+	font-weight: bold;
+    color:black;
 }
 
 #topMenu {
@@ -332,12 +334,12 @@ div.csv {
 }
 
 .quick_menu_tab a{
-	color:#fff;
-	font-weight:bold;
+	color:white;
 }
 
 .quick_menu_left a{
-	color:#fff;
+	color:black;
+	font-weight:normal;
 }
 
 .quick_menu_tab a:hover{
@@ -347,7 +349,7 @@ div.csv {
 }
 
 .quick_menu_left a:hover{
-	color:#ffc;
+	color:blue;
 	text-decoration:none;
 }
 
@@ -561,6 +563,7 @@ span.menu_group_nolink {
 }
 
 .menu_group_item a {
+	font-weight: normal;
 }
 
 .menu_group_items a:hover {

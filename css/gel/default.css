@@ -189,6 +189,8 @@ font.bad {
 }
 
 font.header_title {
+	font-weight: bold;
+    color:white;
 }
 
 #topMenu {
@@ -415,7 +417,7 @@ div.csv {
 }
 
 .main_menu {
-background:none;
+	background:none;
 	border: 0px;
 	height:28px;
 }
@@ -439,6 +441,7 @@ background:none;
 }
 .main_menu_selected:hover{
 	background: #00f url(images/gelblueh.png) 0px -1px repeat-x;
+	border: 3px solid #888;
 }
 
 .main_menu_unselected a{
@@ -458,6 +461,7 @@ background:none;
 /*	position: relative; */ 
 	text-align: center;
 	white-space: nowrap;
+	border: 3px solid #dee;
 }
 
 .main_menu_selected a{
@@ -542,8 +546,8 @@ span.main_menu_nolink {
 
 .page_title_text {
 	font-family: Verdana, Arial, Helvetica;
-        padding-top: 2px;
-        padding-bottom: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
 	font-weight: bold;
 	font-size: 12px;
 	color: black;
@@ -563,9 +567,9 @@ DIV.page_help_text {
 	MARGIN: 0 auto;
 	POSITION: static;
 	font-family: Verdana, Arial, Helvetica;
-        font-weight: normal;
-        font-size: 10px;
-        color: black;
+    font-weight: normal;
+    font-size: 10px;
+    color: black;
 	TEXT-ALIGN:center;
 }
 
@@ -704,7 +708,7 @@ select.selecterror {
 }
 
 .table_index {
-	background-color: #F1FFDD;
+	background-color: #eee;
 }
 
 li {
