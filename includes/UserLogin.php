@@ -55,29 +55,30 @@ function userLogin($Name, $Password, $db) {
 		$Auth_Result = DB_query($sql, $db);
 		// Populate session variables with data base results
 		if (DB_num_rows($Auth_Result) > 0) {
-			$myrow = DB_fetch_row($Auth_Result);
+			$myrow = DB_fetch_array($Auth_Result);
 			if ($myrow[7]==1){
 			//the account is blocked
 				return  UL_BLOCKED;
 			}
 			/*reset the attempts counter on successful login */
 			$_SESSION['AttemptsCounter'] = 0;
-			$_SESSION['AccessLevel'] = $myrow[0];
-			$_SESSION['CustomerID'] = $myrow[1];
-			$_SESSION['UserBranch'] = $myrow[5];
-			$_SESSION['DefaultPageSize'] = $myrow[3];
-			$_SESSION['UserStockLocation'] = $myrow[4];
-			$_SESSION['ModulesEnabled'] = explode(",", $myrow[6]);
-			$_SESSION['UsersRealName'] = $myrow[8];
-			$_SESSION['Theme'] = $myrow[9];
+			$_SESSION['AccessLevel'] = $myrow['fullaccess'];
+			$_SESSION['CustomerID'] = $myrow['customerid'];
+			$_SESSION['UserBranch'] = $myrow['branchcode'];
+			$_SESSION['DefaultPageSize'] = $myrow['pagesize'];
+			$_SESSION['UserStockLocation'] = $myrow['defaultlocation'];
+			$_SESSION['ModulesEnabled'] = explode(",", $myrow['modulesallowed']);
+			$_SESSION['UsersRealName'] = $myrow['realname'];
+			$_SESSION['Theme'] = $myrow['theme'];
 //			$_SESSION['UserID'] = $myrow[11];
-			$_SESSION['Language'] = $myrow[12];
-			$_SESSION['SalesmanLogin'] = $myrow[13];
+			$_SESSION['Language'] = $myrow['language'];
+			$_SESSION['SalesmanLogin'] = $myrow['salesman'];
 			if ($myrow[10] > 0) {
-				$_SESSION['DisplayRecordsMax'] = $myrow[10];
+				$_SESSION['DisplayRecordsMax'] = $myrow['displayrecordsmax'];
 			} else {
 				$_SESSION['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax'];  // default comes from config.php
 			}
+			$_SESSION['UserID'] = $myrow['userid'];
 			$sql = "UPDATE www_users SET lastvisitdate='". date("Y-m-d H:i:s") ."'
 					WHERE www_users.userid='" . $Name . "'";
 			$Auth_Result = DB_query($sql, $db);
@@ -96,7 +97,6 @@ function userLogin($Name, $Password, $db) {
 				}
 			}
 			//  Temporary shift - disable log messages.
-			$_SESSION['UserID'] = $myrow[11];
 		} else {     // Incorrect password
 			// 5 login attempts, show failed login screen
 			if (!isset($_SESSION['AttemptsCounter'])) {

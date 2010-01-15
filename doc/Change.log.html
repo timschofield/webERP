@@ -1,5 +1,6 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p></p>
+<p>15/01/10 Tim: UserLogin.php: The userid session variable was not being correctly set.</p>
 <p>13/01/10 Tim: api_xml-rpc.php: Use output buffering to hide html error messages so that the api can handle errors in a graceful way</p>
 <p>13/01/10 Tim: PO_Header.php: Show the mailto links correctly by decoding the hml entities</p>
 <p>13/01/10 Lindsay: api_login.php, api_xml-rpc.php: Added logout method to API.</p>
@@ -9,7 +10,7 @@
 <p>12/01/10 Tim: Z_ChangeStockCode.php - Check thast mrpplannedorders table exists before trying to alter it</p>
 <p>10/01/10 Tim: StockTransfers.php - Correctly show stockid in links to ther functions.</p>
 <p>10/01/10 Bryan Nielsen: BOMs.php - syntax error includes() was used not include()</p>
-<p>09/01/10 Phil: Fix price for same item on an order priced at different prices - unfortunately, this means that there may be rounding errors on very large currencies as I reverted to the old logic using the stockmoves which use local currency and then converting back to the currency of the invoice - fixed both portrait and landscape
+<p>09/01/10 Phil: Fix price for same item on an order priced at different prices - unfortunately, this means that there may be rounding errors on very large currencies as I reverted to the old logic using the stockmoves which use local currency and then converting back to the currency of the invoice - fixed both portrait and landscape</p>
 <p>09/01/10 Lindsay: Changes to api session handling.
 <p>08/01/10 Tim: PrintCustTrans.php - Correct errors preventing invoice from printing
 <p>08/01/10 Tim: Put a supplier invoice on hold when outside the bounds set up in the config
