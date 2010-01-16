@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form name="Goods Received Note">
+	<PaperSize name="Paper size">A4</PaperSize>
+	<LineHeight name="Line height">12</LineHeight>
+	<logo type="image" name="Logo" id="Logo">
+		<x>20</x>
+		<y>80</y>
+		<width>0</width>
+		<height>60</height>
+	</logo>
+	<CompanyName type="SimpleText" name="Company name" id="CompanyName">
+		<FontSize>10</FontSize>
+		<x>425</x>
+		<y>30</y>
+	</CompanyName>
+	<GRNNumber type="SimpleText" name="GRN Number" id="GRNNumber">
+		<FontSize>10</FontSize>
+		<x>425</x>
+		<y>48</y>
+	</GRNNumber>
+	<OrderNumber type="SimpleText" name="Order Number" id="OrderNumber">
+		<FontSize>10</FontSize>
+		<x>425</x>
+		<y>66</y>
+	</OrderNumber>
+	<PrintDate type="SimpleText" name="Date Printed" id="PrintDate">
+		<FontSize>10</FontSize>
+		<x>425</x>
+		<y>84</y>
+	</PrintDate>
+	<HeaderRectangle type="Rectangle" name="Header rectangle" id="HeaderRectangle">
+		<x>40</x>
+		<y>114</y>
+		<width>525</width>
+		<height>24</height>
+	</HeaderRectangle>
+	<Headings type="ElementArray" name="Column headings">
+		<Column1 type="SimpleText" name="Heading 1" id="Heading1">
+			<FontSize>10</FontSize>
+			<x>41</x>
+			<y>126</y>
+		</Column1>
+		<Column2 type="SimpleText" name="Heading 2" id="Heading2">
+			<FontSize>10</FontSize>
+			<x>116</x>
+			<y>126</y>
+		</Column2>
+		<Column3 type="SimpleText" name="Heading 3" id="Heading3">
+			<FontSize>10</FontSize>
+			<x>291</x>
+			<y>126</y>
+		</Column3>
+		<Column4 type="SimpleText" name="Heading 4" id="Heading4">
+			<FontSize>10</FontSize>
+			<x>391</x>
+			<y>126</y>
+		</Column4>
+		<Column5 type="SimpleText" name="Heading 5" id="Heading5">
+			<FontSize>10</FontSize>
+			<x>491</x>
+			<y>126</y>
+		</Column5>
+	</Headings>
+	<DataRectangle type="Rectangle" name="Data rectangle" id="DataRectangle">
+		<x>40</x>
+		<y>138</y>
+		<width>525</width>
+		<height>674</height>
+	</DataRectangle>
+	<Data type="ElementArray" name="Column Data">
+		<y type="StartLine" name="Y co-ordinate of first data line" id="DataStartLine">156</y>
+		<Column1 type="DataText" name="Column 1" id="Data1">
+			<FontSize>10</FontSize>
+			<x>41</x>
+			<Length>94</Length>
+		</Column1>
+		<Column2 type="DataText" name="Column 2" id="Data2">
+			<FontSize>10</FontSize>
+			<x>116</x>
+			<Length>270</Length>
+		</Column2>
+		<Column3 type="DataText" name="Column 3" id="Data3">
+			<FontSize>10</FontSize>
+			<x>291</x>
+			<Length>85</Length>
+		</Column3>
+		<Column4 type="DataText" name="Column 4" id="Data4">
+			<FontSize>10</FontSize>
+			<x>356</x>
+			<Length>150</Length>
+		</Column4>
+		<Column5 type="DataText" name="Column 5" id="Data5">
+			<FontSize>10</FontSize>
+			<x>506</x>
+			<Length>60</Length>
+		</Column5>
+	</Data>
+	<ReceiptDate type="SimpleText" name="Date Received" id="ReceiptDate">
+		<FontSize>10</FontSize>
+		<x>40</x>
+		<y>722</y>
+	</ReceiptDate>
+	<SignedFor type="SimpleText" name="Signed Fror" id="SignedFor">
+		<FontSize>10</FontSize>
+		<x>40</x>
+		<y>760</y>
+	</SignedFor>
+</form>

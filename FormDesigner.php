@@ -78,6 +78,9 @@ if (isset($_POST['preview']) or isset($_POST['save'])) {
 	/*First create a simple xml object from the main file */
 	$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$_POST['FormName']);
 	$FormDesign['name']=$_POST['formname'];
+	if (substr($_POST['PaperSize'],-8)=='Portrait') {
+		$_POST['PaperSize']=substr($_POST['PaperSize'],0,strlen($_POST['PaperSize'])-9);
+	}
 	$FormDesign->PaperSize=$_POST['PaperSize'];
 	$FormDesign->LineHeight=$_POST['LineHeight'];
 	/*Iterate through the object filling in the values from
@@ -98,7 +101,14 @@ if (isset($_POST['preview']) or isset($_POST['save'])) {
 	 * PDF creating script */
 	if (isset($_POST['preview'])) {
 		$FormDesign->asXML(sys_get_temp_dir().'/'.$_POST['FormName']);
-		echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/PO_PDFPurchOrder.php?' . SID .'OrderNo=Preview">';
+		switch ($_POST['FormName']) {
+			case 'PurchaseOrder.xml':
+				echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/PO_PDFPurchOrder.php?' . SID .'OrderNo=Preview">';
+				break;
+			case 'GoodsReceived.xml':
+				echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/PDFGrn.php?' . SID .'GRNNo=Preview&PONo=1">';
+				break;
+		}
 	} else {
 	/* otherwise check that the web server has write premissions on the companies
 	 * directory and save the xml file to the correct directory */
@@ -141,7 +151,7 @@ if (empty($_POST['preview'])) {
 }
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Form Design') . '" alt="">' . ' ' . _('Form Design').'<br />'. $FormDesign['name'] . '';
 echo '<div class="page_help_text">' . _('Enter the changes that you want in the form layout below.') .'<br /> '. _('All measurements are in millimetres') . '.</div><br>';
-$Papers=array('A4_Landscape', 'A4_Portrait', 'A3_Lanscape', 'A3_Portrait'); // Possible paper sizes/orientations
+$Papers=array('A4_Landscape', 'A4_Portrait', 'A3_Landscape', 'A3_Portrait'); // Possible paper sizes/orientations
 echo '<form method="post" id="Form" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 echo '<input name=FormName type=hidden value="'.$_POST['FormName'].'">';
 echo '<table width=85% border=1>'; //Start of outer table

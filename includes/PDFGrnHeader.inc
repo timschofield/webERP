@@ -5,44 +5,25 @@ if ($PageNumber>1){
 	$pdf->newPage();
 }
 
-$FontSize=10;
-$YPos= $Page_Height-$Top_Margin;
-$XPos=0;
-$pdf->addJpegFromFile($_SESSION['LogoFile'] ,$XPos+20,$YPos-50,0,60);
+$pdf->addJpegFromFile($_SESSION['LogoFile'] ,$FormDesign->logo->x,$Page_Height-$FormDesign->logo->y,$FormDesign->logo->width,$FormDesign->logo->height);
 
-
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($line_height*1.5),550,$FontSize, _('GRN number ').' ' . $_GET['GRNNo'] );
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($line_height*3),550,$FontSize, _('PO number ').' ' . $_GET['PONo'] );
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($line_height*4.5),140,$FontSize, _('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);
-
-$YPos -= 60;
-
-$YPos -=$line_height;
-//Note, this is ok for multilang as this is the value of a Select, text in option is different
-
-$YPos -=(2*$line_height);
+$LeftOvers = $pdf->addText($FormDesign->CompanyName->x,$Page_Height-$FormDesign->CompanyName->y,$FormDesign->CompanyName->FontSize,$_SESSION['CompanyRecord']['coyname']);
+$LeftOvers = $pdf->addText($FormDesign->GRNNumber->x,$Page_Height-$FormDesign->GRNNumber->y,$FormDesign->GRNNumber->FontSize, _('GRN number ').' ' . $GRNNo );
+$LeftOvers = $pdf->addText($FormDesign->OrderNumber->x,$Page_Height-$FormDesign->OrderNumber->y,$FormDesign->OrderNumber->FontSize, _('PO number ').' ' . $_GET['PONo'] );
+$LeftOvers = $pdf->addText($FormDesign->PrintDate->x,$Page_Height-$FormDesign->PrintDate->y,$FormDesign->PrintDate->FontSize, _('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);
 
 /*Draw a rectangle to put the headings in     */
-
-$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
-$pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos- $line_height);
-$pdf->line($Left_Margin, $YPos- $line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
-$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
+$pdf->Rectangle($FormDesign->HeaderRectangle->x, $Page_Height - $FormDesign->HeaderRectangle->y, $FormDesign->HeaderRectangle->width,$FormDesign->HeaderRectangle->height);
 
 /*set up the headings */
-$Xpos = $Left_Margin+1;
+$LeftOvers = $pdf->addText($FormDesign->Headings->Column1->x,$Page_Height - $FormDesign->Headings->Column1->y, $FormDesign->Headings->Column1->FontSize,  _('Item Number'));
+$LeftOvers = $pdf->addText($FormDesign->Headings->Column2->x,$Page_Height - $FormDesign->Headings->Column2->y, $FormDesign->Headings->Column2->FontSize,  _('Description'));
+$LeftOvers = $pdf->addText($FormDesign->Headings->Column3->x,$Page_Height - $FormDesign->Headings->Column3->y, $FormDesign->Headings->Column3->FontSize,  _('Date Recd'));
+$LeftOvers = $pdf->addText($FormDesign->Headings->Column4->x,$Page_Height - $FormDesign->Headings->Column4->y, $FormDesign->Headings->Column4->FontSize,  _('Supplier'));
+$LeftOvers = $pdf->addText($FormDesign->Headings->Column5->x,$Page_Height - $FormDesign->Headings->Column5->y, $FormDesign->Headings->Column5->FontSize,  _('Quantity'));
 
-$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,300-$Left_Margin,$FontSize,  _('Item Number'), 'centre');
-$LeftOvers = $pdf->addTextWrap($Xpos+75,$YPos,300-$Left_Margin,$FontSize,  _('Description'), 'centre');
-$LeftOvers = $pdf->addTextWrap($Xpos+250,$YPos,300-$Left_Margin,$FontSize,  _('Date Recd'), 'centre');
-$LeftOvers = $pdf->addTextWrap($Xpos+350,$YPos,300-$Left_Margin,$FontSize,  _('Supplier'), 'centre');
-$LeftOvers = $pdf->addTextWrap($Xpos+450,$YPos,300-$Left_Margin,$FontSize,  _('Quantity'), 'centre');
-
-
-$FontSize=8;
-$YPos -= (1.5 * $line_height);
+/*Draw a rectangle to put the data in     */
+$pdf->Rectangle($FormDesign->DataRectangle->x, $Page_Height - $FormDesign->DataRectangle->y, $FormDesign->DataRectangle->width,$FormDesign->DataRectangle->height);
 
 $PageNumber++;
-
 ?>
