@@ -7,16 +7,6 @@
 $PageSecurity = 2;
 include('includes/session.inc');
 
-$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/GoodsReceived.xml');
-
-// Set the paper size/orintation
-$PaperSize = $FormDesign->PaperSize;
-$PageNumber=1;
-$line_height=$FormDesign->LineHeight;
-
-include('includes/PDFStarter.php');
-$pdf->addInfo('Title', _('Goods Received Note') );
-
 if (isset($_POST['GRNNo'])) {
 	$GRNNo=$_POST['GRNNo'];
 } else if (isset($_GET['GRNNo'])) {
@@ -24,6 +14,19 @@ if (isset($_POST['GRNNo'])) {
 } else {
 	$GRNNo='';
 }
+
+if ($GRNNo=='Preview') {
+	$FormDesign = simplexml_load_file(sys_get_temp_dir().'/GoodsReceived.xml');
+} else {
+	$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/GoodsReceived.xml');
+}
+
+// Set the paper size/orintation
+$PaperSize = $FormDesign->PaperSize;
+$PageNumber=1;
+$line_height=$FormDesign->LineHeight;
+include('includes/PDFStarter.php');
+$pdf->addInfo('Title', _('Goods Received Note') );
 
 include('includes/PDFGrnHeader.inc');
 
