@@ -748,6 +748,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/MRPPlannedWorkOrders.php?' . SID . '">' . _('MRP Suggested Work Orders') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/MRPReschedules.php?' . SID . '">' . _('MRP Reschedules Required') . '</a></p>'; ?>
 							</td>
 							</tr>
