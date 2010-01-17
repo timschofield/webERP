@@ -130,3 +130,25 @@ From this selection screen it is also possible to select the template for modifi
 The sales orders are created from the recurring sales order templates by the script RecurringSalesOrderProcess.php. This script loops through all the recurring order templates and creates the orders as necessary based on the current date and the last time an order was created for the template and the frequency it is to recurr. The date of the last recurrence is updated in the template as the date of the last recurrence + the number of days between recurrences. An email is also produced for the email contact stored in the location record from where the delivery is to be effected from. The email advises that an order was created, the order number and if it was auto-invoiced. Ideally this script should be run from a scheduler/cron daily. It can be run as many times as you like and only create the orders required - without duplicating incorrectly.
 <br><br>
 <!-- Help End: RecurringSalesOrder -->
+<!-- Help Begin: Setting Up Discounts -->
+<font size="+1"><b>Discount Matrix</b></font>
+<br><br>
+webERP has a system called a discount matrix which allows any group of products to be defined and discounts applicable to all items of the group to be set up just once for the whole group of items. Different discounts can be applied to the "discount group" for each sales type (price list). When an item is entered into a sales order the system retrieves the correct price based on the customer's sales type (price list) and then retrieves the appropriate discount based on the quantity of the item and the other items already entered on the order. The discounts retrieved can be over-ridden.
+<br><br>
+To define the grouping of products:
+<br><br>
+Select an item that you wish to have a discount structure applied to it - using the "Select Item" link. Under the "Item Maintenance" section click on "Maintain Discount Category".
+<br><br>
+If there are no currently available discount categories then enter a discount category code - otherwise select the discount category that you wish to allocate the item to.
+<br><br>
+<p align="center"><img src="images/NewDiscountCategory.jpg"></p>
+<br><br>
+You can now search for additional items and add as many items to the discount group as you wish from this screen.
+<br><br>
+Having created the discount group you can now administer the discount rates applicable to this group of items.
+<br><br>
+From the main menu go to -> Setup -> Receivables/Payables section -> Discount Matrix
+<p align="center"><img src="images/MaintainDiscountMatrix.jpg"></p>
+<br><br>
+This form allows you to select any of the discount groups defined above and any sales type (price list)and then enter any quantity break and discount applicable given the quantity break - if the discount is applicable for all sales then enter a quantity break of 1
+<!-- Help End: Setting Up Discounts -->
