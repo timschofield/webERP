@@ -69,14 +69,18 @@
 		_('If the first element is zero then the function was successful. ').
 		_('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$InsertCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$InsertCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString), array($xmlrpcStruct, $xmlrpcStruct));
 	$InsertCustomer_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_InsertCustomer($xmlrpcmsg) {
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(InsertCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		if ($xmlrpcmsg->getNumParams() == 3) {
+			return new xmlrpcresp(php_xmlrpc_encode(InsertCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				$xmlrpcmsg->getParam(1)->scalarval(),
+						$xmlrpcmsg->getParam(2)->scalarval())));
+		} else {
+			return new xmlrpcresp(php_xmlrpc_encode(InsertCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam(0)))));
+		}
 	}
 
 	unset($Parameter);
@@ -422,11 +426,11 @@
 		ob_end_flush();
 		if ($xmlrpcmsg->getNumParams() == 3)
 		{
-		    return new xmlrpcresp(php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam(0)->scalarval(),
+			return new xmlrpcresp(php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 		} else {
-		    return new xmlrpcresp(php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam(0)->scalarval())));
+			return new xmlrpcresp(php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam(0)->scalarval())));
 		}
 	}
 
@@ -1793,18 +1797,18 @@
 
 function apiBuildDocHTML( $description, $parameter, $return )
 {
-    $doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$description.'</td></tr>
-		    <tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
-    for ($ii=0; $ii<sizeof($parameter); $ii++) {
-	    $doc .= '<tr><td valign="top">'.$parameter[$ii]['name'].'</td><td>'.
-		    $parameter[$ii]['description'].'</td></tr>';
-    }
-    $doc .= '<tr><td valign="top"><b><u>'._('Return Value');
-    for ($ii=0; $ii<sizeof($return); $ii++) {
-	    $doc .= '<td valign="top">'.$return[$ii].'</td></tr>';
-    }
-    $doc .= '</table>';
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($ii=0; $ii<sizeof($parameter); $ii++) {
+		$doc .= '<tr><td valign="top">'.$parameter[$ii]['name'].'</td><td>'.
+			$parameter[$ii]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($ii=0; $ii<sizeof($return); $ii++) {
+		$doc .= '<td valign="top">'.$return[$ii].'</td></tr>';
+	}
+	$doc .= '</table>';
 
-    return  $doc;
+	return  $doc;
 }
 ?>
