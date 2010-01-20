@@ -17,7 +17,7 @@ include('includes/header.inc');
 	if( $myrow[0] == 0 ) {
 		$sql = "INSERT INTO accountsection (
 					sectionid,
-					sectionname 
+					sectionname
 				) VALUES (
 					1,
 					'Income'
@@ -31,21 +31,21 @@ include('includes/header.inc');
 	if( $myrow[0] == 0 ) {
 		$sql = "INSERT INTO accountsection (
 					sectionid,
-					sectionname 
+					sectionname
 				) VALUES (
 					2,
 					'Cost Of Sales'
 				)";
 		$result = DB_query($sql,$db);
 	}
-// DONE WITH MINIMUM TESTS	
+// DONE WITH MINIMUM TESTS
 
 
 if (isset($Errors)) {
 	unset($Errors);
 }
-	
-$Errors = array();	
+
+$Errors = array();
 
 if (isset($_POST['submit'])) {
 
@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 	if (isset($_POST['SectionID'])) {
-		$sql="SELECT count(sectionid) 
+		$sql="SELECT count(sectionid)
 			FROM accountsection WHERE sectionid='".$_POST['SectionID']."'";
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_row($result);
@@ -67,32 +67,32 @@ if (isset($_POST['submit'])) {
 			$InputError = 1;
 			prnMsg( _('The account section already exists in the database'),'error');
 			$Errors[$i] = 'SectionID';
-			$i++;		
+			$i++;
 		}
 	}
 	if (strpos($_POST['SectionName'],'&')>0 OR strpos($_POST['SectionName'],"'")>0) {
 		$InputError = 1;
 		prnMsg( _('The account section name cannot contain the character') . " '&' " . _('or the character') ." '",'error');
 		$Errors[$i] = 'SectionName';
-		$i++;		
-	} 
+		$i++;
+	}
 	if (strlen($_POST['SectionName'])==0) {
 		$InputError = 1;
 		prnMsg( _('The account section name must contain at least one character') ,'error');
 		$Errors[$i] = 'SectionName';
-		$i++;		
+		$i++;
 	}
 	if (isset($_POST['SectionID']) and (!is_numeric($_POST['SectionID']))) {
 		$InputError = 1;
 		prnMsg( _('The section number must be an integer'),'error');
 		$Errors[$i] = 'SectionID';
-		$i++;		
+		$i++;
 	}
 	if (isset($_POST['SectionID']) and strpos($_POST['SectionID'],".")>0) {
 		$InputError = 1;
 		prnMsg( _('The section number must be an integer'),'error');
 		$Errors[$i] = 'SectionID';
-		$i++;		
+		$i++;
 	}
 
 	if (isset($_POST['SelectedSectionID']) and $_POST['SelectedSectionID']!='' AND $InputError !=1) {
@@ -144,7 +144,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		$SectionName = $myrow[0];
-		
+
 		$sql="DELETE FROM accountsection WHERE sectionid='" . $_GET['SelectedSectionID'] . "'";
 		$result = DB_query($sql,$db);
 		prnMsg( $SectionName . ' ' . _('section has been deleted') . '!','success');
@@ -159,7 +159,7 @@ if (isset($_POST['submit'])) {
 
  if (!isset($_GET['SelectedSectionID']) OR !isset($_POST['SelectedSectionID'])) {
 
-/* An account section could be posted when one has been edited and is being updated 
+/* An account section could be posted when one has been edited and is being updated
   or GOT when selected for modification
   SelectedSectionID will exist because it was sent with the page in a GET .
   If its the first time the page has been displayed with no parameters
@@ -254,7 +254,7 @@ if (! isset($_GET['delete'])) {
 		echo "<table>
 			<tr>
 			<td>" . _('Section Number') . ':' . '</td>
-			<td><input tabindex="1" ' . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) ." type='text' name='SectionID' onKeyPress='return restrictToNumbers(this, event)'  size=4 maxlength=4 value='" . $_POST['SectionID'] . "'></td></tr>";
+			<td><input tabindex="1" ' . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) ." type='text' name='SectionID' class=number size=4 maxlength=4 value='" . $_POST['SectionID'] . "'></td></tr>";
 	}
 	echo "<tr><td>" . _('Section Description') . ':' . '</td>
 		<td><input tabindex="2" ' . (in_array('SectionName',$Errors) ?  'class="inputerror"' : '' ) ." type='text' name='SectionName' size=30 maxlength=30 value='" . $_POST['SectionName'] . "'></td>

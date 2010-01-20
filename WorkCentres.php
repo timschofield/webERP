@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
 	if (strlen($_POST['Code']) < 2) {
 		$InputError = 1;
 		prnMsg(_('The Work Centre code must be at least 2 characters long'),'error');
-	} 
+	}
 	if (strlen($_POST['Description'])<3) {
 		$InputError = 1;
 		prnMsg(_('The Work Centre description must be at least 3 characters long'),'error');
@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 		/*SelectedWC could also exist if submit had not been clicked this code
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
-		
+
 		$sql = "UPDATE workcentres SET location = '" . $_POST['Location'] . "',
 						description = '" . $_POST['Description'] . "',
 						overheadrecoveryact =" . $_POST['OverheadRecoveryAct'] . ",
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 		$msg = _('The new work centre has been added to the database');
 	}
 	//run the SQL from either of the above possibilites
-	
+
 	if ($InputError !=1){
 		$result = DB_query($sql,$db,_('The update/addition of the work centre failed because'));
 		prnMsg($msg,'success');
@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'BOM'
-	
+
 	$sql= "SELECT COUNT(*) FROM bom WHERE bom.workcentreadded='$SelectedWC'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
@@ -109,7 +109,7 @@ then none of the above are true and the list of work centres will be displayed w
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
-	
+
 	$sql = 'SELECT workcentres.code,
 			workcentres.description,
 			locations.locationname,
@@ -197,7 +197,7 @@ if (isset($SelectedWC)) {
 
 $SQL = 'SELECT locationname,
 		loccode
-		FROM locations';	
+		FROM locations';
 $result = DB_query($SQL,$db);
 
 if (!isset($_POST['Description'])) {
@@ -254,7 +254,7 @@ if (!isset($_POST['OverheadPerHour'])) {
 
 echo '</td></tr>';
 echo '<tr><td>' . _('Overhead Per Hour') . ':</td>
-	<td><input type="Text" class="number" name="OverheadPerHour" size=6 maxlength=6 onKeyPress="return restrictToNumbers(this, event)" value=' . $_POST['OverheadPerHour'] . '></td></tr>
+	<td><input type="Text" class="number" name="OverheadPerHour" size=6 maxlength=6></td></tr>
 	</table>';
 
 echo '<br><div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';

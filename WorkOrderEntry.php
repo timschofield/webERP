@@ -205,9 +205,9 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 		if (!isset($EOQ)){
 			$EOQ=1;
 		}
-		
+
         $Result = DB_Txn_Begin($db);
-		
+
 		// insert parent item info
 		$sql = "INSERT INTO woitems (wo,
 	                             stockid,
@@ -225,7 +225,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 		WoRealRequirements($db, $_POST['WO'], $_POST['StockLocation'], $NewItem);
 
         $result = DB_Txn_Commit($db);
-		
+
 		unset($NewItem);
 	} //end if there were no input errors
 } //adding a new item to the work order
@@ -354,7 +354,7 @@ if (isset($_POST['submit'])) { //The update button has been clicked
     	$ErrMsg=_('The work order could not be deleted');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
-		DB_Txn_Commit($db);	
+		DB_Txn_Commit($db);
         prnMsg(_('The work order has been deleted'),'success');
 
 
@@ -480,8 +480,8 @@ if (isset($NumberOfOutputs)){
 		if ($_POST['Controlled'.$i]==1 AND $_SESSION['DefineControlledOnWOEntry']==1){
 			echo '<td style="text-align: right">' . $_POST['OutputQty' . $i] . '</td>';
 			echo '<input type="hidden" name="OutputQty' . $i .'" value=' . $_POST['OutputQty' . $i] . '>';
-		} else {		
-		  	echo'<td><input type="text" style="text-align: right" name="OutputQty' . $i . '" value=' . $_POST['OutputQty' . $i] . ' size=10 onKeyPress="return restrictToNumbers(this, event)" maxlength=10></td>';
+		} else {
+		  	echo'<td><input type="text" class="number" name="OutputQty' . $i . '" value=' . $_POST['OutputQty' . $i] . ' size=10 maxlength=10></td>';
 		}
 		 echo '<td><input type="hidden" name="RecdQty' . $i . '" value=' . $_POST['RecdQty' .$i] . '>' . $_POST['RecdQty' .$i] .'</td>
 		  		<td align="right">' . ($_POST['OutputQty' . $i] - $_POST['RecdQty' .$i]) . '</td>';

@@ -62,7 +62,7 @@ if (isset($_GET['NewOrder'])){
 
 }
 
-// removed to improve UI layout 
+// removed to improve UI layout
 //echo '<a href="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Back to Sales Orders'). '</a><br>';
 
 if (isset($_GET['ModifyOrderNumber'])
@@ -250,7 +250,7 @@ if (isset($_GET['ModifyOrderNumber'])
 														$myrow['eoq'],
 														$myrow['nextserialno'],
 														$ExRate );
-								
+
 				/*Just populating with existing order - no DBUpdates */
 					}
 					$LastLineNo = $myrow['orderlineno'];
@@ -324,10 +324,10 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 					custbranch.debtorno
 				FROM custbranch
 				WHERE custbranch.brname " . LIKE . " '$SearchString'";
-				
+
 			if ($_SESSION['SalesmanLogin']!=''){
 				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
-			}	
+			}
 			$SQL .=	' AND custbranch.disabletrans=0
 						ORDER BY custbranch.debtorno, custbranch.branchcode';
 
@@ -343,7 +343,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 					custbranch.debtorno
 				FROM custbranch
 				WHERE custbranch.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%' OR custbranch.branchcode " . LIKE . " '%" . $_POST['CustCode'] . "%'";
-		    
+
 			if ($_SESSION['SalesmanLogin']!=''){
 				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 			}
@@ -358,11 +358,11 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 					custbranch.debtorno
 				FROM custbranch
 				WHERE custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'";
-				
+
 			if ($_SESSION['SalesmanLogin']!=''){
 				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 			}
-			
+
 			$SQL .=	' AND custbranch.disabletrans=0
 						ORDER BY custbranch.debtorno';
 		}
@@ -476,7 +476,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 			include('includes/footer.inc');
 			exit;
 		}
-				
+
 		$_SESSION['Items'.$identifier]->DeliverTo = $myrow[0];
 		$_SESSION['Items'.$identifier]->DelAdd1 = $myrow[1];
 		$_SESSION['Items'.$identifier]->DelAdd2 = $myrow[2];
@@ -602,7 +602,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 if ($_SESSION['RequireCustomerSelection'] ==1
 	OR !isset($_SESSION['Items'.$identifier]->DebtorNo)
 	OR $_SESSION['Items'.$identifier]->DebtorNo=='') {
-	
+
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' .
 	' ' . _('Enter an Order or Quotation') . ' : ' . _('Search for the Customer Branch.') . '</p>';
@@ -901,10 +901,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	/*Process Quick Entry */
 	/* If enter is pressed on the quick entry screen, the default button may be Recalculate */
-	 if (isset($_POST['order_items']) 
-			OR isset($_POST['QuickEntry']) 
-			OR isset($_POST['Recalculate'])){ 
-		
+	 if (isset($_POST['order_items'])
+			OR isset($_POST['QuickEntry'])
+			OR isset($_POST['Recalculate'])){
+
 	     /* get the item details from the database and hold them in the cart object */
 
 	     /*Discount can only be set later on  -- after quick entry -- so default discount to 0 in the first place */
@@ -991,7 +991,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	     unset($NewItem);
 	 } /* end of if quick entry */
 
-	
+
 	 /*Now do non-quick entry delete/edits/adds */
 
 	if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)){
@@ -1011,7 +1011,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if (isset($_POST['Quantity_' . $OrderLine->LineNumber])){
 
 				$Quantity = $_POST['Quantity_' . $OrderLine->LineNumber];
-				
+
 				if (ABS($OrderLine->Price - $_POST['Price_' . $OrderLine->LineNumber])>0.01){
 					$Price = $_POST['Price_' . $OrderLine->LineNumber];
 					$_POST['GPPercent_' . $OrderLine->LineNumber] = (($Price*(1-($_POST['Discount_' . $OrderLine->LineNumber]/100))) - $OrderLine->StandardCost*$ExRate)/($Price *(1-$_POST['Discount_' . $OrderLine->LineNumber])/100);
@@ -1020,14 +1020,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					$Price = ($OrderLine->StandardCost*$ExRate)/(1 -(($_POST['GPPercent_' . $OrderLine->LineNumber] + $_POST['Discount_' . $OrderLine->LineNumber])/100));
 				} else {
 					$Price = $_POST['Price_' . $OrderLine->LineNumber];
-				}	
+				}
 				$DiscountPercentage = $_POST['Discount_' . $OrderLine->LineNumber];
 				if ($_SESSION['AllowOrderLineItemNarrative'] == 1) {
 					$Narrative = $_POST['Narrative_' . $OrderLine->LineNumber];
 				} else {
 					$Narrative = '';
 				}
-								
+
 				if (!isset($OrderLine->DiscountPercent)) {
 					$OrderLine->DiscountPercent = 0;
 				}
@@ -1047,13 +1047,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				} elseif ($_SESSION['Items'.$identifier]->LineItems[$OrderLine->LineNumber]->QtyInv > $Quantity){
 					prnMsg( _('You are attempting to make the quantity ordered a quantity less than has already been invoiced') . '. ' . _('The quantity delivered and invoiced cannot be modified retrospectively'),'warn');
-				} elseif ($OrderLine->Quantity !=$Quantity 
-							OR $OrderLine->Price != $Price 
-							OR ABS($OrderLine->DiscountPercent -$DiscountPercentage/100) >0.001 
-							OR $OrderLine->Narrative != $Narrative 
-							OR $OrderLine->ItemDue != $_POST['ItemDue_' . $OrderLine->LineNumber] 
+				} elseif ($OrderLine->Quantity !=$Quantity
+							OR $OrderLine->Price != $Price
+							OR ABS($OrderLine->DiscountPercent -$DiscountPercentage/100) >0.001
+							OR $OrderLine->Narrative != $Narrative
+							OR $OrderLine->ItemDue != $_POST['ItemDue_' . $OrderLine->LineNumber]
 							OR $OrderLine->POLine != $_POST['POLine_' . $OrderLine->LineNumber]) {
-					
+
 					$_SESSION['Items'.$identifier]->update_cart_item($OrderLine->LineNumber,
 										$Quantity,
 										$Price,
@@ -1113,7 +1113,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			} else { /*Its not a kit set item*/
 				$NewItemDue = date($_SESSION['DefaultDateFormat']);
 				$NewPOLine = 0;
-				
+
 			    include('includes/SelectOrderItems_IntoCart.inc');
 			}
 
@@ -1223,7 +1223,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<th>' . _('Unit') . '</th>
 				<th>' . _('Price') . '</th>';
 
-		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){	
+		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 			echo '<th>' . _('Discount') . '</th>
 				  <th>' . _('GP %') . '</th>';
 		}
@@ -1263,7 +1263,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?' . SID .'identifier='.$identifier . '&StockID=' . $OrderLine->StockID . '&DebtorNo=' . $_SESSION['Items'.$identifier]->DebtorNo . '">' . $OrderLine->StockID . '</a></td>
 				<td>' . $OrderLine->ItemDescription . '</td>';
 
-			echo '<td><input class="number" onKeyPress="return restrictToNumbers(this, event)" tabindex=2 type=tect name="Quantity_' . $OrderLine->LineNumber . '" size=6 maxlength=6 value=' . $OrderLine->Quantity . '>';
+			echo '<td><input class="number" tabindex=2 type=tect name="Quantity_' . $OrderLine->LineNumber . '" size=6 maxlength=6 value=' . $OrderLine->Quantity . '>';
 			if ($QtyRemain != $QtyOrdered){
 				echo '<br>'.$OrderLine->QtyInv.' of '.$OrderLine->Quantity.' invoiced';
 			}
@@ -1273,9 +1273,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 				/*OK to display with discount if it is an internal user with appropriate permissions */
-				echo '<td><input class="number" onKeyPress="return restrictToNumbers(this, event)"  type=text name="Price_' . $OrderLine->LineNumber . '" size=16 maxlength=16 value=' . $OrderLine->Price . '></td>
-					<td><input class="number" onKeyPress="return restrictToNumbers(this, event)"  type=text name="Discount_' . $OrderLine->LineNumber . '" size=5 maxlength=4 value=' . ($OrderLine->DiscountPercent * 100) . '></td>
-					<td><input class="number" onKeyPress="return restrictToNumbers(this, event)"  type=text name="GPPercent_' . $OrderLine->LineNumber . '" size=3 maxlength=40 value=' . $OrderLine->GPPercent . '></td>';	
+				echo '<td><input class="number" type=text name="Price_' . $OrderLine->LineNumber . '" size=16 maxlength=16 value=' . $OrderLine->Price . '></td>
+					<td><input class="number" type=text name="Discount_' . $OrderLine->LineNumber . '" size=5 maxlength=4 value=' . ($OrderLine->DiscountPercent * 100) . '></td>
+					<td><input class="number" type=text name="GPPercent_' . $OrderLine->LineNumber . '" size=3 maxlength=40 value=' . $OrderLine->GPPercent . '></td>';
 			} else {
 				echo '<td class=number>' . $OrderLine->Price . '</td><td></td>';
 				echo '<input type=hidden name="Price_' . $OrderLine->LineNumber . '" value=' . $OrderLine->Price . '>';
@@ -1338,10 +1338,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '<input type="hidden" name="PartSearch" value="' .  _('Yes Please') . '">';
 
 		if ($_SESSION['FrequentlyOrderedItems']>0){ //show the Frequently Order Items selection where configured to do so
-		
+
 // Select the most recently ordered items for quick select
 			$SixMonthsAgo = DateAdd (Date($_SESSION['DefaultDateFormat']),'m',-6);
-			
+
 			$SQL="SELECT stockmaster.units, stockmaster.description, stockmaster.stockid, salesorderdetails.stkcode, SUM(qtyinvoiced) Sales FROM `salesorderdetails`, `stockmaster`
 				  WHERE ActualDispatchDate >= '" . FormatDateForSQL($SixMonthsAgo) . "'
                   AND salesorderdetails.stkcode = stockmaster.stockid
@@ -1400,7 +1400,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				// Find the quantity on purchase orders
 				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS dem
 						FROM purchorderdetails
-						WHERE purchorderdetails.completed=0 
+						WHERE purchorderdetails.completed=0
 						AND purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
 
 				$ErrMsg = _('The order details for this product cannot be retrieved because');
@@ -1502,8 +1502,8 @@ $WoRow = db_fetch_row($WoResult);
 
 		<td align="right"><b><?php echo _('OR'); ?> </b><b><?php echo _('Enter extract of the Stock Code'); ?>:</b>
 		<input tabindex=3 type="Text" name="StockCode" size=15 maxlength=18 value="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></td>
-		
-		</tr><tr>	
+
+		</tr><tr>
 		<td style="text-align:center" colspan=1><input tabindex=4 type=submit name="Search" value="<?php echo _('Search Now'); ?>"></td>
 		<td style="text-align:center" colspan=1><input tabindex=5 type=submit name="QuickEntry" value="<?php echo _('Use Quick Entry'); ?>"></td>
 
@@ -1705,10 +1705,10 @@ $WoRow = db_fetch_row($WoResult);
 	}#end of else not selecting a customer
 
 echo '</form>';
-echo '<script  type="text/javascript">defaultControl(document.SelectParts.part_1);</script>';	
+echo '<script  type="text/javascript">defaultControl(document.SelectParts.part_1);</script>';
 
 if (isset($_GET['NewOrder']) and $_GET['NewOrder']!='') {
-	echo '<script  type="text/javascript">defaultControl(document.SelectCustomer.CustKeywords);</script>';	
+	echo '<script  type="text/javascript">defaultControl(document.SelectCustomer.CustKeywords);</script>';
 }
 include('includes/footer.inc');
 ?>

@@ -31,7 +31,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post name="selectaccount">';
 echo '<table>';
 
-echo '</br><tr><td>'.  _('Select GL Account').  ":</td><td><select name='SelectedAccount' 
+echo '</br><tr><td>'.  _('Select GL Account').  ":</td><td><select name='SelectedAccount'
 		onChange='ReloadForm(selectaccount.Select)'>";
 
 $SQL = 'SELECT accountcode,
@@ -121,9 +121,9 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 
 	if (isset($_POST['apportion'])) {
 		for ($i=1; $i<=12; $i++) {
-			if ($_POST['AnnualAmount'] != '0') 
+			if ($_POST['AnnualAmount'] != '0')
 				$budget[$CurrentYearEndPeriod+($i)]	= $_POST['AnnualAmount']/12;
-			if ($_POST['AnnualAmountTY'] != '0') 
+			if ($_POST['AnnualAmountTY'] != '0')
 				$budget[$CurrentYearEndPeriod+($i)-12]	= $_POST['AnnualAmountTY']/12;
 		}
 	}
@@ -168,10 +168,10 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 		echo '<td bgcolor="d2e5e8" class="number">'.number_format($budget[$CurrentYearEndPeriod-(24-$i)],2,'.','').'</td>';
 		echo '<th>'. $PeriodEnd[$CurrentYearEndPeriod-(12-$i)] .'</th>';
 		echo '<td bgcolor="d2e5e8" class="number">'.number_format($actual[$CurrentYearEndPeriod-(12-$i)],2,'.','').'</td>';
-		echo '<td><input type="text" onKeyPress="return restrictToNumbers(this, event)" class="number" size=14 name='.$i.'this'.' value="'.number_format($budget[$CurrentYearEndPeriod-(12-$i)],2,'.','').'"></td>';
+		echo '<td><input type="text" class="number" size=14 name='.$i.'this'.' value="'.number_format($budget[$CurrentYearEndPeriod-(12-$i)],2,'.','').'"></td>';
 		echo '<th>'. $PeriodEnd[$CurrentYearEndPeriod+($i)] .'</th>';
 		echo '<td bgcolor="d2e5e8" class="number">'.number_format($actual[$CurrentYearEndPeriod+($i)],2,'.','').'</td>';
-		echo '<td><input type="text" onKeyPress="return restrictToNumbers(this, event)" class="number" size=14 name='.$i.'next'.' value='.number_format($budget[$CurrentYearEndPeriod+($i)],2,'.','').'></td>';
+		echo '<td><input type="text" class="number" size=14 name='.$i.'next'.' value='.number_format($budget[$CurrentYearEndPeriod+($i)],2,'.','').'></td>';
 		echo '</tr>';
 		$LastYearActual=$LastYearActual+$actual[$CurrentYearEndPeriod-(24-$i)];
 		$LastYearBudget=$LastYearBudget+$budget[$CurrentYearEndPeriod-(24-$i)];
@@ -193,9 +193,9 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 	echo '<th align="right">'.number_format($NextYearActual,2,'.',''). '</th>';
 	echo '<th align="right">'.number_format($NextYearBudget,2,'.',''). '</th></tr>';
 	echo '<tr><td></td><td></td><td></td><td colspan=2>'._('Annual Budget').'</td>';
-	echo '<td><input onKeyPress="return restrictToNumbers(this, event)" type="text" size=14 name="AnnualAmountTY" style="text-align: right" value=0.00></td>';
+	echo '<td><input class=number type="text" size=14 name="AnnualAmountTY" value=0.00></td>';
 	echo '</td><td></td><td>';
-	echo '<td><input onChange="numberFormat(this,2)" onKeyPress="return restrictToNumbers(this, event)" type="text" size=14 name="AnnualAmount" style="text-align: right" value=0.00></td>';
+	echo '<td><input onChange="numberFormat(this,2)" class=number type="text" size=14 name="AnnualAmount" value=0.00></td>';
 	echo '<td><input type="submit" name="apportion" value="Apportion budget"></td>';
 	echo '</tr>';
 	echo '</table>';

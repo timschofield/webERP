@@ -234,8 +234,8 @@ if (isset($_POST['CommitBatch'])){
 	}
 
 	$PeriodNo = GetPeriod($_SESSION['PaymentDetail']->DatePaid,$db);
-    
-	
+
+
 	// first time through commit if supplier cheque then print it first
 	if ((!isset($_POST['ChequePrinted']))
 		AND (!isset($_POST['PaymentCancelled']))
@@ -521,7 +521,7 @@ if (isset($_POST['CommitBatch'])){
 
 			$ErrMsg = _('Cannot insert a bank transaction because');
 			$DbgMsg = _('Cannot insert a bank transaction using the SQL');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);	
+			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		} else {
 			foreach ($_SESSION['PaymentDetail']->GLItems as $PaymentItem) {
 				$SQL="INSERT INTO banktrans (transno,
@@ -891,14 +891,13 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	/*now set up a GLCode field to select from avaialble GL accounts */
 	if (isset($_POST['GLManualCode'])) {
 		echo '<tr><td>' . _('Enter GL Account Manually') . ':</td>
-			<td><input type=Text Name="GLManualCode" Maxlength=12 size=12onChange="return inArray(this, this.value, GLCode.options,'.
+			<td><input type=Text class="number" Name="GLManualCode" Maxlength=12 size=12 onChange="return inArray(this, this.value, GLCode.options,'.
 		"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' .
-			' onKeyPress="return restrictToNumbers(this, event)" VALUE='. $_POST['GLManualCode'] .'  ></td></tr>';
+			' VALUE='. $_POST['GLManualCode'] .'  ></td></tr>';
 	} else {
 		echo '<tr><td>' . _('Enter GL Account Manually') . ':</td>
-			<td><input type=Text Name="GLManualCode" Maxlength=12 size=12 onChange="return inArray(this, this.value, GLCode.options,'.
-		"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' .
-			' onKeyPress="return restrictToNumbers(this, event)"></td></tr>';		
+			<td><input type=Text class="number" Name="GLManualCode" Maxlength=12 size=12 onChange="return inArray(this, this.value, GLCode.options,'.
+		"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"></td></tr>';
 	}
 	echo '<tr><td>' . _('Select GL Account') . ':</td>
 		<td><select name="GLCode" onChange="return assignComboToInput(this,'.'GLManualCode'.')">';
@@ -928,14 +927,14 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	if (isset($_POST['GLNarrative'])) {
 		echo '<tr><td>' . _('GL Narrative') . ':</td><td><input type="text" name="GLNarrative" maxlength=50 size=52 value="' . $_POST['GLNarrative'] . '"></td></tr>';
 	} else {
-		echo '<tr><td>' . _('GL Narrative') . ':</td><td><input type="text" name="GLNarrative" maxlength=50 size=52></td></tr>';		
+		echo '<tr><td>' . _('GL Narrative') . ':</td><td><input type="text" name="GLNarrative" maxlength=50 size=52></td></tr>';
 	}
-	
+
 	if (isset($_POST['GLAmount'])) {
-		echo '<tr><td>' . _('Amount') . ' (' . $_SESSION['PaymentDetail']->Currency . '):</td><td><input type=Text Name="GLAmount" Maxlength=12 size=12 onKeyPress="return restrictToNumbers(this, event)"  onChange="numberFormat(this,2)" onFocus="return setTextAlign(this, '."'".'right'."'".')" VALUE=' . $_POST['GLAmount'] . '></td></tr>';		
+		echo '<tr><td>' . _('Amount') . ' (' . $_SESSION['PaymentDetail']->Currency . '):</td><td><input type=Text Name="GLAmount" Maxlength=12 size=12 class=number VALUE=' . $_POST['GLAmount'] . '></td></tr>';
 	} else {
-		echo '<tr><td>' . _('Amount') . ' (' . $_SESSION['PaymentDetail']->Currency . '):</td><td><input type=Text Name="GLAmount" Maxlength=12 size=12 onKeyPress="return restrictToNumbers(this, event)"  onChange="numberFormat(this,2)" onFocus="return setTextAlign(this, '."'".'right'."'".')"></td></tr>';
-	}	
+		echo '<tr><td>' . _('Amount') . ' (' . $_SESSION['PaymentDetail']->Currency . '):</td><td><input type=Text Name="GLAmount" Maxlength=12 size=12 class=number></td></tr>';
+	}
 
 	echo '</table>';
 	echo '<div class="centre"><input type=submit name="Process" value="' . _('Accept') . '"><input type=submit name="Cancel" value="' . _('Cancel') . '"></div>';

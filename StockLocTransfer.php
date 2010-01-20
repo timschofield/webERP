@@ -118,7 +118,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 	If (isset($InputError) and $InputError==true){
 		echo '<br>';
-		
+
 		prnMsg($ErrorMessage, 'error');
 		echo '<br>';
 
@@ -180,8 +180,8 @@ if(isset($_POST['Submit']) AND $InputError==False){
 				$k=0;
 			}
 			echo '<tr>
-				<td><input type=text name="StockID' . $i .'" size=21  maxlength=20 Value="' . $_POST['StockID' . $i] . '"></td>
-				<td><input type=text name="StockQTY' . $i .'" size=5 maxlength=4 onkeypress="return restrictToNumbers(this, event)" onFocus="return setTextAlign(this, '."'".'right'."'".')"  Value="' . $_POST['StockQTY' . $i] . '"></td>
+				<td><input type=text name="StockID' . $i .'" size=21  maxlength=20 value="' . $_POST['StockID' . $i] . '"></td>
+				<td><input type=text name="StockQTY' . $i .'" size=5 maxlength=4 class="number" value="' . $_POST['StockQTY' . $i] . '"></td>
 			</tr>';
 		}
 	}else {
@@ -198,14 +198,14 @@ if(isset($_POST['Submit']) AND $InputError==False){
 			$_POST['StockQTY' . $i]=0;
 		}
 		echo '<tr>
-			<td><input type=text name="StockID' . $i .'" size=21  maxlength=20 Value="' . $_POST['StockID' . $i] . '"></td>
-			<td><input type=text name="StockQTY' . $i .'" size=5 maxlength=4 onkeypress="return restrictToNumbers(this, event)"  onFocus="return setTextAlign(this, '."'".'right'."'".')"  Value="' . $_POST['StockQTY' . $i] . '"></td>
+			<td><input type=text name="StockID' . $i .'" size=21  maxlength=20 value="' . $_POST['StockID' . $i] . '"></td>
+			<td><input type=text name="StockQTY' . $i .'" size=5 maxlength=4 class="number" value="' . $_POST['StockQTY' . $i] . '"></td>
 		</tr>';
 		$i++;
 	}
 
 	echo '</table><br><div class="centre">
-		<input type=hidden name="LinesCounter" value='. $i .'><input type=submit name="EnterMoreItems" VALUE="'. _('Add More Items'). '"><input type=submit name="Submit" VALUE="'. _('Create Transfer Shipment'). '"><br><hr>';
+		<input type=hidden name="LinesCounter" value='. $i .'><input type=submit name="EnterMoreItems" value="'. _('Add More Items'). '"><input type=submit name="Submit" value="'. _('Create Transfer Shipment'). '"><br><hr>';
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].StockID0);</script>';
 	echo '</form></div>';
 	include('includes/footer.inc');

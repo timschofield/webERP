@@ -49,8 +49,8 @@ If (isset($_POST['Select'])) {
 			$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname,
 					chartmaster.group_,
-					CASE WHEN accountgroups.pandl!=0 
-						THEN '" . _('Profit and Loss') . "' 
+					CASE WHEN accountgroups.pandl!=0
+						THEN '" . _('Profit and Loss') . "'
 						ELSE '" . _('Balance Sheet') . "' END AS pl
 				FROM chartmaster,
 					accountgroups
@@ -84,7 +84,7 @@ If (isset($_POST['Select'])) {
 if (!isset($AccountID)) {
 
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Search for General Ledger Accounts'); 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Search for General Ledger Accounts');
 echo "<br><form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method=post>";
 
 if(strlen($msg)>1){
@@ -97,7 +97,7 @@ echo '<table cellpadding=3 colspan=4>
 	<td><input type='Text' name='Keywords' size=20 maxlength=25></td>
 	<td><font size=3><b>" .  _('OR') . "</b></font></td>
 	<td><font size=1>" . _('Enter Account No. to search from') . ":</font></td>
-	<td><input type='Text' name='GLCode' size=15 maxlength=18 onKeyPress='return restrictToNumbers(this, event)' ></td>
+	<td><input type='Text' name='GLCode' size=15 maxlength=18 class=number ></td>
 	</tr>
 	</table><br>";
 

@@ -18,10 +18,10 @@ ie the parent group results in a recursive group structure otherwise false ie 0 
 
 	$ErrMsg = _('An error occurred in retrieving the account groups of the parent account group during the check for recursion');
 	$DbgMsg = _('The SQL that was used to retrieve the account groups of the parent account group and that failed in the process was');
-	
+
 	do {
 		$sql = "SELECT parentgroupname FROM accountgroups WHERE groupname='" . $GroupName ."'";
-		
+
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 		$myrow = DB_fetch_row($result);
 		if ($ParentGroupName == $myrow[0]){
@@ -36,8 +36,8 @@ ie the parent group results in a recursive group structure otherwise false ie 0 
 if (isset($Errors)) {
 	unset($Errors);
 }
-	
-$Errors = array();	
+
+$Errors = array();
 
 if (isset($_POST['submit'])) {
 
@@ -50,8 +50,8 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 	$i=1;
-	
-	$sql="SELECT count(groupname) 
+
+	$sql="SELECT count(groupname)
 			FROM accountgroups WHERE groupname='".$_POST['GroupName']."'";
 
     $DbgMsg = _('The SQL that was used to retrieve the information was');
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg( _('The account group name already exists in the database'),'error');
 		$Errors[$i] = 'GroupName';
-		$i++;		
+		$i++;
 	}
 	if (ContainsIllegalCharacters($_POST['GroupName'])) {
 		$InputError = 1;
@@ -85,12 +85,12 @@ if (isset($_POST['submit'])) {
 			$Errors[$i] = 'ParentGroupName';
 			$i++;
 		} else {
-			$sql = "SELECT pandl, 
-				sequenceintb, 
-				sectioninaccounts 
-			FROM accountgroups 
+			$sql = "SELECT pandl,
+				sequenceintb,
+				sectioninaccounts
+			FROM accountgroups
 			WHERE groupname='" . $_POST['ParentGroupName'] . "'";
-			
+
             $DbgMsg = _('The SQL that was used to retrieve the information was');
             $ErrMsg = _('Could not check whether the group is recursive because');
 
@@ -119,7 +119,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('The sequence in the TB must be numeric and less than') . ' 10,000','error');
 		$Errors[$i] = 'SequenceInTB';
 		$i++;
-	} 
+	}
 
 
 	if ($_POST['SelectedAccountGroup']!='' AND $InputError !=1) {
@@ -216,7 +216,7 @@ or deletion of the records*/
 			sequenceintb,
 			pandl,
 			parentgroupname
-		FROM accountgroups 
+		FROM accountgroups
 		LEFT JOIN accountsection ON sectionid = sectioninaccounts
 		ORDER BY sequenceintb";
 
@@ -224,7 +224,7 @@ or deletion of the records*/
 	$ErrMsg = _('Could not get account groups because');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
-	
+
 	echo '<table>
 		<tr>
 		<th>' . _('Group Name') . "</th>
@@ -369,7 +369,7 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '</select>';
 	echo '</td></tr>';
-	
+
 	echo '<tr><td>' . _('Profit and Loss') . ':' . '</td>
 	<td><select tabindex="4" name="PandL">';
 
@@ -388,7 +388,7 @@ if (! isset($_GET['delete'])) {
 
 	echo '<tr><td>' . _('Sequence In TB') . ':' . '</td>';
 	echo '<td><input tabindex="5" ' . (in_array('SequenceInTB',$Errors) ? 'class="inputerror"' : '' ) .
-		' type="text" maxlength="4" name="SequenceInTB" onkeypress="return restrictToNumbers(this, event)" 
+		' type="text" maxlength="4" name="SequenceInTB" class=number
 		 value="' . $_POST['SequenceInTB'] . '" /></td></tr>';
 
 	echo '</table>';
@@ -396,7 +396,7 @@ if (! isset($_GET['delete'])) {
 	echo '<div class="centre"><input tabindex="6" type="submit" name="submit" value="' . _('Enter Information') . '" /></div>';
 
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].GroupName);</script>';
-	
+
 	echo '</form>';
 
 } //end if record deleted no point displaying form to add record

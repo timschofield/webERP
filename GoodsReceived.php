@@ -127,7 +127,7 @@ if (count($_SESSION['PO']->LineItems)>0){
 		} else {
 			$uom=$LnItm->Units;
 		}
-		
+
 		//Now Display LineItem
 		echo '<td><font size=2>' . $LnItm->StockID . '</font></td>';
 		echo '<td><font size=2>' . $LnItm->ItemDescription . '</td>';
@@ -141,7 +141,7 @@ if (count($_SESSION['PO']->LineItems)>0){
 			echo '<input type=hidden name="RecvQty_' . $LnItm->LineNo . '" value="' . $LnItm->ReceiveQty . '"><a href="GoodsReceivedControlled.php?' . SID . '&LineNo=' . $LnItm->LineNo . '">' . number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '</a></td>';
 
 		} else {
-			echo '<input type=text class=number name="RecvQty_' . $LnItm->LineNo . '" maxlength=10 size=10 onKeyPress="return restrictToNumbers(this, event)" onFocus="return setTextAlign(this, '."'".'right'."'".')" value="' . $LnItm->ReceiveQty . '"></td>';
+			echo '<input type=text class=number name="RecvQty_' . $LnItm->LineNo . '" maxlength=10 size=10 value="' . $LnItm->ReceiveQty . '"></td>';
 		}
 
 		echo '<td class=number><font size=2>' . $DisplayPrice . '</td>';
@@ -378,7 +378,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 							completed=0
 					WHERE podetailitem = " . $OrderLine->PODetailRec;
 			}
-			
+
 			$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The purchase order detail record could not be updated with the quantity received because');
 			$DbgMsg = _('The following SQL to update the purchase order detail record was used');
 			$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
@@ -527,16 +527,16 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 								$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
 								$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
 								$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
-								
+
 								/*Update fixed asset details */
 								$sql='select stocktype from stockcategory
-									 left join stockmaster on 
-									 stockcategory.categoryid=stockmaster.categoryid 
+									 left join stockmaster on
+									 stockcategory.categoryid=stockmaster.categoryid
 									 where stockmaster.stockid="'.$OrderLine->StockID.'"';
 								$result=DB_query($sql, $db);
 								$myrow=DB_fetch_array($result);
 								if ($myrow['stocktype']=='A') {
-									$SQL = "INSERT INTO assetmanager 
+									$SQL = "INSERT INTO assetmanager
 											VALUES (NULL,
 												'" . $OrderLine->StockID . "',
 												'" . $Item->BundleRef . "',
@@ -620,12 +620,12 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 	} /*end of OrderLine loop */
 	$completedsql='SELECT SUM(completed) as completedlines,
 						COUNT(podetailitem) as alllines
-					FROM purchorderdetails 
+					FROM purchorderdetails
 					WHERE orderno='.$_SESSION['PO']->OrderNo;
 	$completedresult=DB_query($completedsql,$db);
 	$mycompletedrow=DB_fetch_array($completedresult);
 	$status=$mycompletedrow['alllines']-$mycompletedrow['completedlines'];
-	
+
 	if ($status==0) {
 		$sql='SELECT stat_comment FROM purchorders WHERE orderno='.$_SESSION['PO']->OrderNo;
 		$result=DB_query($sql,$db);
@@ -633,14 +633,14 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 		$comment=$myrow['stat_comment'];
 		$date = date($_SESSION['DefaultDateFormat']);
 		$StatusComment=$date.' - Order Completed'.'<br>'.$comment;
-		$sql="UPDATE purchorders 
+		$sql="UPDATE purchorders
 				SET status='" . PurchOrder::STATUS_COMPLITED . "',
 				stat_comment='".$StatusComment."'
 				WHERE orderno=".$_SESSION['PO']->OrderNo;
 		$result=DB_query($sql,$db);
 	}
 
-	
+
 	$Result = DB_Txn_Commit($db);
 	$PONo = $_SESSION['PO']->OrderNo;
 	unset($_SESSION['PO']->LineItems);

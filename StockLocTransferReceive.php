@@ -448,13 +448,13 @@ if (isset($_SESSION['Transfer'])){
 		if ($TrfLine->Controlled==1){
 			echo '<td><input type=hidden name="Qty' . $i . '" VALUE="' . $Qty . '"><a href="' . $rootpath .'/StockTransferControlled.php?' . SID . '&TransferItem=' . $i . '">' . $Qty . '</a></td>';
 		} else {
-			echo '<td><input type=TEXT class="number" name="Qty' . $i . '" maxlength=10 onKeyPress="return restrictToNumbers(this, event)" onFocus="return setTextAlign(this, '."'".'right'."'".')" size=10 VALUE="' . $Qty . '"></td>';
+			echo '<td><input type=TEXT class="number" name="Qty' . $i . '" maxlength=10 class="number" size=10 VALUE="' . $Qty . '"></td>';
 		}
 
 		echo '<td>' . $TrfLine->PartUnit . '</td>';
-		
+
         echo '<td><input type="checkbox" name="CancelBalance' . $i . '" value=1></td>';
-                
+
 
 		if ($TrfLine->Controlled==1){
 			if ($TrfLine->Serialised==1){

@@ -104,7 +104,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
     if ($WORow['serialised']==1){
         /* serialised items form has a possible $_POST['CountOfInputs'] fields for entry of serial numbers - 12 rows x 5 per row
-		 * if serial numbers are defined at the time of work order entry $_SESSION['DefineControlledOnWOEntry']==1 then possibly more 
+		 * if serial numbers are defined at the time of work order entry $_SESSION['DefineControlledOnWOEntry']==1 then possibly more
 		 * need to inspect $_POST['CountOfInputs']
 		 */
         for($i=0;$i<$_POST['CountOfInputs'];$i++){
@@ -457,9 +457,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
                 /*  We need to add the StockSerialItem record and
                     The StockSerialMoves as well */
 					if (trim($_POST['SerialNo' .$i]) != ""){
-						if ($_SESSION['DefineControlledOnWOEntry']==0 OR 
+						if ($_SESSION['DefineControlledOnWOEntry']==0 OR
 							($_SESSION['DefineControlledOnWOEntry']==1 AND $_POST['CheckItem'.$i]==true)){
-			
+
 							$LastRef = trim($_POST['SerialNo' .$i]);
 							//already checked to ensure there are no duplicate serial numbers entered
 							if (isset($_POST['QualityText'.$i])){
@@ -467,7 +467,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 							} else {
 								$QualityText ='';
 							}
-							
+
 							$SQL = "INSERT INTO stockserialitems (stockid,
 																	loccode,
 																	serialno,
@@ -496,16 +496,16 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 							$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
-							
+
 							if ($_SESSION['DefineControlledOnWOEntry']==1){
 								//need to delete the item from woserialnos
-								$SQL = "DELETE FROM	woserialnos 
+								$SQL = "DELETE FROM	woserialnos
 											WHERE wo=" . $_POST['WO'] . "
-											AND stockid='" . $_POST['StockID'] ."' 
+											AND stockid='" . $_POST['StockID'] ."'
 											AND serialno='" . DB_escape_string($_POST['SerialNo'.$i]) . "'";
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The predefined serial number record could not be deleted because');
 								$DbgMsg = _('The following SQL to delete the predefined work order serial number record was used');
-								$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);			
+								$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 							}
 						}//end prefined controlled items or not
 					} //non blank SerialNo
@@ -530,7 +530,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 							$QualityText = $_POST['QualityText'.$i];
 						} else {
 							$QualityText ='';
-						}	
+						}
                         if ($AlreadyExistsRow[0]>0){
                             $SQL = 'UPDATE stockserialitems SET quantity = quantity + ' . $_POST['Qty' . $i] . ",
 																qualitytext = '" . DB_escape_string($QualityText) . "'
@@ -567,26 +567,26 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
                         $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
                         $DbgMsg = _('The following SQL to insert the serial stock movement records was used');
                         $Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
-						
+
 						if ($_SESSION['DefineControlledOnWOEntry']==1){
 							//check how many of the batch/bundle/lot has been received
-							$SQL = "SELECT sum(moveqty) FROM stockserialmoves 
+							$SQL = "SELECT sum(moveqty) FROM stockserialmoves
 										INNER JOIN stockmoves ON stockserialmoves.stockmoveno=stockmoves.stkmoveno
 										WHERE stockmoves.type=26
-										AND stockserialmoves.stockid='" . $_POST['StockID'] . "' 
+										AND stockserialmoves.stockid='" . $_POST['StockID'] . "'
 										AND stockserialmoves.serialno='" . 	DB_escape_string($_POST['BatchRef'.$i]) . "'";
-							
+
 							$BatchTotQtyResult = DB_query($SQL,$db);
 							$BatchTotQtyRow = DB_fetch_row($BatchTotQtyResult);
 							if ($BatchTotQtyRow[0] >= $_POST['QtyReqd'.$i]){
 								//need to delete the item from woserialnos
-								$SQL = "DELETE FROM	woserialnos 
+								$SQL = "DELETE FROM	woserialnos
 										WHERE wo=" . $_POST['WO'] . "
-										AND stockid='" . $_POST['StockID'] ."' 
+										AND stockid='" . $_POST['StockID'] ."'
 										AND serialno='" . DB_escape_string($_POST['BatchRef'.$i]) . "'";
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The predefined batch/lot/bundle record could not be deleted because');
 								$DbgMsg = _('The following SQL to delete the predefined work order batch/bundle/lot record was used');
-								$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);			
+								$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 							}
 						}
                     }//non blank BundleRef
@@ -772,16 +772,16 @@ if($WORow['controlled']==1){ //controlled
         	$StringBitOfLotSNRef = substr($WORow['nextlotsnref'],0,$LotSNRefLength-$EndOfTextPartPointer);
     	}
 	}
-	
-	
+
+
     if ($WORow['serialised']==1){ //serialised
         echo '<tr><th colspan="5">' . _('Serial Numbers Received') . '</th></tr>';
         echo '<tr>';
-		
+
 		if ($_SESSION['DefineControlledOnWOEntry']==1){ //then potentially serial numbers already set up
 			//retrieve the woserialnos
-			$WOSNResult = DB_query("SELECT serialno, qualitytext 
-									FROM woserialnos 
+			$WOSNResult = DB_query("SELECT serialno, qualitytext
+									FROM woserialnos
 									WHERE wo=" . $_POST['WO'] . "
 									AND stockid='" . $_POST['StockID'] . "'",$db);
 			if (DB_num_rows($WOSNResult)==0){
@@ -791,7 +791,7 @@ if($WORow['controlled']==1){ //controlled
 				while ($WOSNRow = DB_fetch_row($WOSNResult)){
 					if (($i/5 -intval($i/5))==0){
 						echo '</tr><tr>';
-					}				
+					}
 					echo '<td><input type="checkbox" name="CheckItem' . $i . '">'. $WOSNRow[0] .'<input type="hidden" name="SerialNo' . $i . '" value="' . $WOSNRow[0] . '"><input type="hidden" name="QualityText' . $i . '" value="' . $WOSNRow[1] . '"></td>';
 					$i++;
 				}
@@ -806,7 +806,7 @@ if($WORow['controlled']==1){ //controlled
 					echo 'value="' . $StringBitOfLotSNRef . ($LotSNRefNumeric + 1) . '"';
 				}
 				echo '"></td>';
-				
+
 			}
 		}
 		echo '</tr>';
@@ -817,8 +817,8 @@ if($WORow['controlled']==1){ //controlled
         echo '<tr><th colspan="2">' . _('Batch/Lots Received') . '</th></tr>';
 		if ($_SESSION['DefineControlledOnWOEntry']==1){ //then potentially batches/lots already set up
 			//retrieve them from woserialnos
-			$WOSNResult = DB_query("SELECT serialno, quantity, qualitytext 
-									FROM woserialnos 
+			$WOSNResult = DB_query("SELECT serialno, quantity, qualitytext
+									FROM woserialnos
 									WHERE wo=" . $_POST['WO'] . "
 									AND stockid='" . $_POST['StockID'] . "'",$db);
 			if (DB_num_rows($WOSNResult)==0){
@@ -828,9 +828,9 @@ if($WORow['controlled']==1){ //controlled
 				while ($WOSNRow = DB_fetch_row($WOSNResult)){
 					if (($i/5 -intval($i/5))==0){
 						echo '</tr><tr>';
-					}				
+					}
 					echo '<td><input type="textbox" name="BatchRef' . $i . '" value="' . $WOSNRow[0] . '"></td>
-						  <td><input type="textbox" class="number" name="Qty' . $i . '" onKeyPress="return restrictToNumbers(this, event)">
+						  <td><input type="textbox" class="number" name="Qty' . $i . '" >
 						  		<input type="hidden" name="QualityText' . $i . '" value="' . $WOSNRow[2] . '">
 						  		<input type="hidden" name="QtyReqd' . $i . '" value="' . $WOSNRow[1] . '"></td></tr>';
 					$i++;
@@ -853,7 +853,7 @@ if($WORow['controlled']==1){ //controlled
 } else { //not controlled - an easy one!
 
     echo '<tr><td>' . _('Quantity Received') . ':</td>
-              <td><input type="text" class="number" name="Qty" onKeyPress="return restrictToNumbers(this, event)"></tr>';
+              <td><input type="text" class="number" name="Qty"></tr>';
     echo '<tr><td ><input type=submit name="Process" value="' . _('Process Manufactured Items Received') . '"></td></tr>';
 }
 
