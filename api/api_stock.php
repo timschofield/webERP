@@ -549,7 +549,7 @@
 		}
 	}
 
-	function GetStockBalance($StockID, $user = '', $password = '') {
+	function GetStockBalance($StockID, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {

@@ -2,6 +2,10 @@
 
 /* Include session.inc, to allow database connection, and access to
    miscfunctions, and datefunctions.*/
+	// FOLLOWING ONLY REQUIRED TO SUPPORT PER FUNCTION AUTHENTICATION
+	$DatabaseName='weberpdemo';
+	// END OF OLD STYLE AUTHENTICATION
+
 	$AllowAnyone = true;
 	$PathPrefix=dirname(__FILE__).'/../';
 	include('api_session.inc');
@@ -15,6 +19,14 @@
 	function db($user, $password) {
 		if (!isset($_SESSION['AccessLevel']) OR
 		           $_SESSION['AccessLevel'] == '') {
+			//  Login to default database = old clients.
+			if ($user != '' && $password != '') {
+			    global  $DatabaseName;
+			    $rc = LoginAPI ($DatabaseName, $user, $password);
+			    if ($rc[0] == UL_OK ) {
+				return $_SESSION['db'];
+			    }
+			}
 			return NoAuthorisation;
 		} else {
 			return $_SESSION['db'];

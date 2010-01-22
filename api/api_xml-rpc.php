@@ -411,7 +411,7 @@
 	unset($Parameter);
 	unset($ReturnValue);
 	unset($Description);
-	$Description='This function returns the stock balance for the given stockidn.';
+	$Description='This function returns the stock balance for the given stockid.';
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
 	$Parameter[1]['name'] = _('User name');
@@ -430,7 +430,7 @@
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 		} else {
-			return new xmlrpcresp(php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam(0)->scalarval())));
+			return new xmlrpcresp(php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam(0)->scalarval()), '', ''));
 		}
 	}
 
