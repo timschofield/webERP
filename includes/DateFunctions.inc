@@ -399,7 +399,7 @@ and converts to a yyyy/mm/dd format */
 	if ($_SESSION['DefaultDateFormat']=='Y/m/d') {
 		return $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2];
 	}
-	
+
 //to modify assumption in 2030
 	if (strlen($Date_Array[0])==2) {
 		if ((int)$Date_Array[2] <60) {
@@ -555,7 +555,7 @@ function DateAdd ($DateToAddTo,$PeriodString,$NumberPeriods){
 		$Date_Array = explode('/',$DateToAddTo);
 	} elseif (strpos ($DateToAddTo,'-')) {
 		$Date_Array = explode('-',$DateToAddTo);
-	} elseif (strpos ($TranDate,'.')) {
+	} elseif (strpos ($DateToAddTo,'.')) {
 		$Date_Array = explode('.',$DateToAddTo);
   }
 
@@ -759,9 +759,9 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 
 	if (strlen($_SESSION['ProhibitPostingsBefore'])>=8 and $UseProhibit){ //then the ProhibitPostingsBefore configuration is set
 		$Date_Array = explode('-', $_SESSION['ProhibitPostingsBefore']);
-	
+
 		$ProhibitPostingsBefore = mktime(0,0,0,$Date_Array[1],$Date_Array[2],$Date_Array[0]);
-		
+
 		/* If transaction date is in a closed period use the month end of that period */
 		if ($TransDate < $ProhibitPostingsBefore) {
 			$TransDate = $ProhibitPostingsBefore;
@@ -788,7 +788,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 	$Date_Array = explode('-', $myrow[0]);
 	$FirstPeriodEnd = mktime(0,0,0,$Date_Array[1],0,(int)$Date_Array[0]);
 	$FirstPeriod = $myrow[1];
-	
+
 	/* If the period number doesn't exist */
 	if (!PeriodExists($TransDate, $db)) {
 		/* if the transaction is after the last period */
