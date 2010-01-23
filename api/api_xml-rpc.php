@@ -444,9 +444,9 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of stock reorder levels by location for this stock item.').
+	$ReturnValue[0] = _('This function returns an array of stock reorder levels by location for this stock item.');
 	$GetStockReorderLevel_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetStockReorderLevel = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+	$GetStockReorderLevel_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_GetStockReorderLevel($xmlrpcmsg) {
 		ob_end_flush();
