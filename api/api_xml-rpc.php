@@ -945,7 +945,7 @@
 	unset($Description);
 	$Description = _('This function takes a stock shipper id and returns details of that shipper.');
 	$Parameter[0]['name'] = _('Stock Shipper ID');
-	$Parameter[0]['description'] = _('A stock location code as returned by the GetShippersList function.');
+	$Parameter[0]['description'] = _('A stock shipper ID as returned by the GetShippersList function.');
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
