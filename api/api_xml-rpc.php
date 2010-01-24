@@ -377,7 +377,7 @@
 	unset($Parameter);
 	unset($ReturnValue);
 	unset($Description);
-	$Description = _('This function takes a hold reason code and returns details of that sales type.');
+	$Description = _('This function takes a hold reason code and returns details of that hold reason.');
 	$Parameter[0]['name'] = _('Hold reason code');
 	$Parameter[0]['description'] = _('A hold reason abbreviation as returned by the GetHoldReasonList function.');
 	$Parameter[1]['name'] = _('User name');
