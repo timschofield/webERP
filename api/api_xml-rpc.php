@@ -311,7 +311,7 @@
 	unset($Description);
 	$Description = _('This function takes a sales type abbreviation and returns details of that sales type.');
 	$Parameter[0]['name'] = _('Sales type abbreviation');
-	$Parameter[0]['description'] = _('A currency abbreviation as returned by the GetSalesTypeList function.');
+	$Parameter[0]['description'] = _('A sales type abbreviation as returned by the GetSalesTypeList function.');
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
