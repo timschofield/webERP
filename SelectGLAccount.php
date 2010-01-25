@@ -36,16 +36,8 @@ If (isset($_POST['Select'])) {
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
-
-			$i=0;
-			$SearchString = '%';
-			while (strpos($_POST['Keywords'], ' ', $i)) {
-				$wrdlen=strpos($_POST['Keywords'],' ',$i) - $i;
-				$SearchString=$SearchString . substr($_POST['Keywords'],$i,$wrdlen) . '%';
-				$i=strpos($_POST['Keywords'],' ',$i) +1;
-			}
-			$SearchString = $SearchString. substr($_POST['Keywords'],$i) . '%';
-
+			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
+			
 			$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname,
 					chartmaster.group_,

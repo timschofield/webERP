@@ -58,16 +58,8 @@ function search(&$db,&$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARC
 	} else {
 		if (strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
-
-			$i=0;
-			$SearchString = '%';
-			while (strpos($_POST['Keywords'], ' ', $i)) {
-				$wrdlen=strpos($_POST['Keywords'],' ',$i) - $i;
-				$SearchString=$SearchString . substr($_POST['Keywords'],$i,$wrdlen) . '%';
-				$i=strpos($_POST['Keywords'],' ',$i) +1;
-			}
-			$SearchString = $SearchString. substr($_POST['Keywords'],$i).'%';
-
+			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
+			
 			$sql = "SELECT stockmaster.stockid,
 					stockmaster.description
 				FROM stockmaster

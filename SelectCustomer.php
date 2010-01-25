@@ -130,17 +130,8 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 			$_POST['Keywords'] = strtoupper(trim($_POST['Keywords']));
 
 			//insert wildcard characters in spaces
-
-			$i=0;
-			$SearchString = "%";
-
-			while (strpos($_POST['Keywords'], " ", $i)) {
-				$wrdlen=strpos($_POST['Keywords']," ",$i) - $i;
-				$SearchString=$SearchString . substr($_POST['Keywords'],$i,$wrdlen) . "%";
-				$i=strpos($_POST['Keywords']," ",$i) +1;
-			}
-			$SearchString = $SearchString . substr($_POST['Keywords'],$i)."%";
-
+			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
+			
 				$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
 				debtorsmaster.address1,

@@ -307,14 +307,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 		if (strlen($_POST['CustKeywords'])>0) {
 		//insert wildcard characters in spaces
 			$_POST['CustKeywords'] = strtoupper(trim($_POST['CustKeywords']));
-			$i=0;
-			$SearchString = '%';
-			while (strpos($_POST['CustKeywords'], ' ', $i)) {
-				$wrdlen=strpos($_POST['CustKeywords'],' ',$i) - $i;
-				$SearchString=$SearchString . substr($_POST['CustKeywords'],$i,$wrdlen) . '%';
-				$i=strpos($_POST['CustKeywords'],' ',$i) +1;
-			}
-			$SearchString = $SearchString. substr($_POST['CustKeywords'],$i).'%';
+			$SearchString = '%' . str_replace(' ', '%', $_POST['CustKeywords']) . '%';
 
 			$SQL = "SELECT custbranch.brname,
 					custbranch.contactname,
@@ -758,16 +751,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if (isset($_POST['Keywords']) AND strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 			$_POST['Keywords'] = strtoupper($_POST['Keywords']);
-
-			$i=0;
-			$SearchString = '%';
-			while (strpos($_POST['Keywords'], ' ', $i)) {
-				$wrdlen=strpos($_POST['Keywords'],' ',$i) - $i;
-				$SearchString=$SearchString . substr($_POST['Keywords'],$i,$wrdlen) . '%';
-				$i=strpos($_POST['Keywords'],' ',$i) +1;
-			}
-			$SearchString = $SearchString. substr($_POST['Keywords'],$i).'%';
-
+			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
+			
 			if ($_POST['StockCat']=='All'){
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
