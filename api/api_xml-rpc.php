@@ -31,29 +31,37 @@
 	$Login_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
 	function xmlrpc_Login($xmlrpcmsg) {
-		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(LoginAPI($xmlrpcmsg->getParam(0)->scalarval(),
+		ob_start('ob_file_callback');
+		$rtn = new xmlrpcresp(php_xmlrpc_encode(LoginAPI($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
-	}
-
-	unset($Parameter);
-	unset($ReturnValue);
-	$Description = _('This function is used to logout from the API methods.');
-	$ReturnValue[0] = _('This function returns an integer. ').
-		_('Zero means the function was successful. ').
-		_('Otherwise an error code is returned. ');
-
-	$Logout_sig = array(array($xmlrpcStruct));
-	$Logout_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-
-	function xmlrpc_Logout($xmlrpcmsg) {
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(LogoutAPI()));
+		return  $rtn;
 	}
 
+
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
+	$Description = _('This function is used to logout from the API methods.');
+	$ReturnValue[0] = _('This function returns an integer. ')
+			._('Zero means the function was successful. ')
+			._('Otherwise an error code is returned. ');
+	$Logout_sig = array(array($xmlrpcStruct));
+	$Logout_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_Logout($xmlrpcmsg){
+		ob_start('ob_file_callback');
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(LogoutAPI()) ); 
+		ob_end_flush();
+		return $rtn;
+	}
+
+	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function is used to insert a new customer into the webERP database.');
 	$Parameter[0]['name'] = _('Customer Details');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
@@ -65,26 +73,32 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ').
-		_('If the first element is zero then the function was successful. ').
-		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ')
+			._('If the first element is zero then the function was successful. ')
+			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$InsertCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString), array($xmlrpcStruct, $xmlrpcStruct));
-	$InsertCustomer_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$InsertCustomer_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InsertCustomer_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_InsertCustomer($xmlrpcmsg) {
+	function  xmlrpc_InsertCustomer($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		if ($xmlrpcmsg->getNumParams() == 3) {
-			return new xmlrpcresp(php_xmlrpc_encode(InsertCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				$xmlrpcmsg->getParam(1)->scalarval(),
-						$xmlrpcmsg->getParam(2)->scalarval())));
-		} else {
-			return new xmlrpcresp(php_xmlrpc_encode(InsertCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam(0)))));
-		}
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('This function is used to insert a new customer branch into the webERP database.');
 	$Parameter[0]['name'] = _('Branch Details');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
@@ -95,22 +109,32 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ').
-		_('If the first element is zero then the function was successful. ').
-		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ')
+			._('If the first element is zero then the function was successful. ')
+			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$InsertBranch_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertBranch_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$InsertBranch_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InsertBranch_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_InsertBranch($xmlrpcmsg) {
+	function  xmlrpc_InsertBranch($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertBranch(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertBranch(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(InsertBranch(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('This function is used to modify a customer which is already setup in the webERP database.');
 	$Parameter[0]['name'] = _('Customer Details');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
@@ -122,23 +146,32 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ').
-		_('If the first element is zero then the function was successful. ').
-		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ')
+			._('If the first element is zero then the function was successful. ')
+			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
+/*E*/	$ModifyCustomer_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$ModifyCustomer_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	$ModifyCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifyCustomer_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-
-	function xmlrpc_ModifyCustomer($xmlrpcmsg) {
+	function  xmlrpc_ModifyCustomer($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(ModifyCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('This function is used to modify a customer branch which is already setup in the webERP database.');
 	$Parameter[0]['name'] = _('Branch Details');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
@@ -150,22 +183,32 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ').
-		_('If the first element is zero then the function was successful. ').
-		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ')
+			._('If the first element is zero then the function was successful. ')
+			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$ModifyBranch_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifyBranch_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$ModifyBranch_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$ModifyBranch_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_ModifyBranch($xmlrpcmsg) {
+	function  xmlrpc_ModifyBranch($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyBranch(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyBranch(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(ModifyBranch(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('This function is used to retrieve the details of a customer branch from the webERP database.');
 	$Parameter[0]['name'] = _('Debtor number');
 	$Parameter[0]['description'] = _('This is a string value. It must be a valid debtor number that is already in the webERP database.');
@@ -175,24 +218,34 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this branch. ').
-		_('The key will be identical with field name from the custbranch table. All fields will be in the set regardless of whether the value was set.').'<p>'.
-		_('Otherwise an array of error codes is returned. ');
+	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this branch. ')
+			._('The key will be identical with field name from the custbranch table. All fields will be in the set regardless of whether the value was set.').'<p>'
+			._('Otherwise an array of error codes is returned. ');
 
+/*E*/	$GetCustomerBranch_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetCustomerBranch_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	$GetCustomerBranch_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetCustomerBranch_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-
-	function xmlrpc_GetCustomerBranch($xmlrpcmsg) {
+	function  xmlrpc_GetCustomerBranch($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerBranch($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
+/*x*/	    } else {
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerBranch($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetCustomerBranch($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 	$xmlrpcmsg->getParam(2)->scalarval(),
-				 		$xmlrpcmsg->getParam(3)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('This function is used to retrieve the details of a customer from the webERP database.');
 	$Parameter[0]['name'] = _('Debtor number');
 	$Parameter[0]['description'] = _('This is a string value. It must be a valid debtor number that is already in the webERP database.');
@@ -200,22 +253,32 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this customer. ').
-		_('The key will be identical with field name from the debtorsmaster table. All fields will be in the set regardless of whether the value was set.').'<p>'.
-		_('Otherwise an array of error codes is returned. ');
+	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this customer. ')
+			._('The key will be identical with field name from the debtorsmaster table. All fields will be in the set regardless of whether the value was set.').'<p>'
+			._('Otherwise an array of error codes is returned. ');
 
-	$GetCustomer_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetCustomer_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetCustomer_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetCustomer_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetCustomer($xmlrpcmsg) {
+	function  xmlrpc_GetCustomer($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomer($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomer($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetCustomer($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('This function is used to retrieve the details of a customer from the webERP database.');
 	$Parameter[0]['name'] = _('Field Name');
 	$Parameter[0]['description'] = _('The name of a database field to search on. ')
@@ -227,45 +290,64 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of customer IDs, which may be integers or strings. ').
-		_('If the first element is zero then the function was successful. ').
-		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+	$ReturnValue[0] = _('This function returns an array of customer IDs, which may be integers or strings. ')
+			._('If the first element is zero then the function was successful. ')
+			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$SearchCustomers_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$SearchCustomers_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$SearchCustomers_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$SearchCustomers_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_SearchCustomers($xmlrpcmsg) {
+	function  xmlrpc_SearchCustomers($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchCustomers($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
+/*x*/	    } else {
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchCustomers($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(SearchCustomers($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval(),
-				 			$xmlrpcmsg->getParam(3)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function returns a list of currency abbreviations.');
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of currency abbreviations. ').
-		_('If the first element is zero then the function was successful. ').
-		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+	$ReturnValue[0] = _('This function returns an array of currency abbreviations. ')
+			._('If the first element is zero then the function was successful. ')
+			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$GetCurrencyList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetCurrencyList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetCurrencyList_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetCurrencyList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetCurrencyList($xmlrpcmsg) {
+	function  xmlrpc_GetCurrencyList($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCurrencyList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCurrencyList( '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetCurrencyList($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function takes a currency abbreviation and returns details of that currency.');
 	$Parameter[0]['name'] = _('Currency abbreviation');
 	$Parameter[0]['description'] = _('A currency abbreviation as returned by the GetCurrencyList function.');
@@ -275,40 +357,58 @@
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of currency details.');
 
-	$GetCurrencyDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetCurrencyDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetCurrencyDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetCurrencyDetails_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetCurrencyDetails($xmlrpcmsg) {
+	function  xmlrpc_GetCurrencyDetails($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCurrencyDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCurrencyDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetCurrencyDetails($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval(),
-				$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function returns a list of sales type abbreviations.');
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of sales type abbreviations. ').
-		_('If the first element is zero then the function was successful. ').
-		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+	$ReturnValue[0] = _('This function returns an array of sales type abbreviations. ')
+			._('If the first element is zero then the function was successful. ')
+			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$GetSalesTypeList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetSalesTypeList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetSalesTypeList_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetSalesTypeList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetSalesTypeList($xmlrpcmsg) {
+	function  xmlrpc_GetSalesTypeList($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesTypeList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesTypeList( '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetSalesTypeList($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function takes a sales type abbreviation and returns details of that sales type.');
 	$Parameter[0]['name'] = _('Sales type abbreviation');
 	$Parameter[0]['description'] = _('A sales type abbreviation as returned by the GetSalesTypeList function.');
@@ -318,19 +418,28 @@
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of sales type details.');
 
-	$GetSalesTypeDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetSalesTypeDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetSalesTypeDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetSalesTypeDetails_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetSalesTypeDetails($xmlrpcmsg) {
+	function  xmlrpc_GetSalesTypeDetails($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesTypeDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesTypeDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetSalesTypeDetails($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval(),
-				$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function is used to insert sales type details into the webERP database.');
 	$Parameter[0]['name'] = _('Sales Type Details');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
@@ -341,23 +450,32 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ').
-		_('If the first element is zero then the function was successful. ').
-		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ')
+			._('If the first element is zero then the function was successful. ')
+			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$InsertSalesType_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertSalesType_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$InsertSalesType_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InsertSalesType_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_InsertSalesType($xmlrpcmsg) {
+	function  xmlrpc_InsertSalesType($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesType(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesType(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesType(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function returns a list of hold reason codes.');
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
@@ -365,18 +483,27 @@
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of hold reason codes.');
 
-	$GetHoldReasonList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetHoldReasonList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetHoldReasonList_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetHoldReasonList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetHoldReasonList($xmlrpcmsg) {
+	function  xmlrpc_GetHoldReasonList($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetHoldReasonList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetHoldReasonList( '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetHoldReasonList($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function takes a hold reason code and returns details of that hold reason.');
 	$Parameter[0]['name'] = _('Hold reason code');
 	$Parameter[0]['description'] = _('A hold reason abbreviation as returned by the GetHoldReasonList function.');
@@ -386,19 +513,28 @@
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of hold reason details.');
 
-	$GetHoldReasonDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetHoldReasonDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetHoldReasonDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetHoldReasonDetails_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetHoldReasonDetails($xmlrpcmsg) {
+	function  xmlrpc_GetHoldReasonDetails($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetHoldReasonDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetHoldReasonDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetHoldReasonDetails($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval(),
-				$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function returns a list of payment terms abbreviations.');
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
@@ -406,18 +542,27 @@
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of payment terms abbreviations.');
 
-	$GetPaymentTermsList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetPaymentTermsList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetPaymentTermsList_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetPaymentTermsList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetPaymentTermsList($xmlrpcmsg) {
+	function  xmlrpc_GetPaymentTermsList($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetPaymentTermsList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetPaymentTermsList( '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetPaymentTermsList($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function takes a payment terms abbreviation and returns details of that payment terms type.');
 	$Parameter[0]['name'] = _('Hold reason code');
 	$Parameter[0]['description'] = _('A payment terms abbreviation as returned by the GetPaymentTermsList function.');
@@ -427,75 +572,115 @@
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of payment terms details.');
 
-	$GetPaymentTermsDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetPaymentTermsDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetPaymentTermsDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetPaymentTermsDetails_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetPaymentTermsDetails($xmlrpcmsg) {
+	function  xmlrpc_GetPaymentTermsDetails($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetPaymentTermsDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetPaymentTermsDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetPaymentTermsDetails($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval(),
-				$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Stock Item Details');
 	$Parameter[0]['description'] = _('Key/value pairs of data to insert.');
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$InsertStockItem_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertStockItem_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
-	function xmlrpc_InsertStockItem($xmlrpcmsg) {
+/*E*/	$InsertStockItem_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InsertStockItem_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_InsertStockItem($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertStockItem(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertStockItem(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(InsertStockItem(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Stock Item Details');
 	$Parameter[0]['description'] = _('Key/value pairs of data to modify.');
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ModifyStockItem_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifyStockItem_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
-	function xmlrpc_ModifyStockItem($xmlrpcmsg) {
+/*E*/	$ModifyStockItem_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$ModifyStockItem_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_ModifyStockItem($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyStockItem(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyStockItem(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(ModifyStockItem(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('The StockID code to identify the item in the database.');
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$GetStockItem_sig = array(array($xmlrpcStruct, $xmlrpcString));
-	$GetStockItem_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
-	function xmlrpc_GetStockItem($xmlrpcmsg) {
+/*E*/	$GetStockItem_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetStockItem_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetStockItem($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockItem($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockItem($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetStockItem($xmlrpcmsg->getParam(0)->scalarval(),
-				 '', '')));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Field Name');
 	$Parameter[0]['description'] = _('The field name to search on.');
 	$Parameter[1]['name'] = _('Match Criteria');
@@ -504,21 +689,32 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$SearchStockItems_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$SearchStockItems_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
-	function xmlrpc_SearchStockItems($xmlrpcmsg) {
+/*E*/	$SearchStockItems_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$SearchStockItems_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_SearchStockItems($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchStockItems($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
+/*x*/	    } else {
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchStockItems($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(SearchStockItems($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval(),
-				 			$xmlrpcmsg->getParam(3)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
-	$Description='This function returns the stock balance for the given stockid.';
+	unset($Parameter);
+ 	unset($ReturnValue);
+
+	$Description = 'This function returns the stock balance for the given stockid.';
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
 	$Parameter[1]['name'] = _('User name');
@@ -526,25 +722,30 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of stock quantities by location for this stock item. ');
-	$GetStockBalance_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString),array($xmlrpcStruct, $xmlrpcString));
-	$GetStockBalance_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
-	function xmlrpc_GetStockBalance($xmlrpcmsg) {
+/*E*/	$GetStockBalance_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetStockBalance_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetStockBalance($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		if ($xmlrpcmsg->getNumParams() == 3)
-		{
-			return new xmlrpcresp(php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
-		} else {
-			return new xmlrpcresp(php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam(0)->scalarval()), '', ''));
-		}
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
-	$Description='This function returns the reorder levels by location.';
+	unset($Parameter);
+ 	unset($ReturnValue);
+
+	$Description = 'This function returns the reorder levels by location.';
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
 	$Parameter[1]['name'] = _('User name');
@@ -552,20 +753,30 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of stock reorder levels by location for this stock item.');
-	$GetStockReorderLevel_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetStockReorderLevel_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
-	function xmlrpc_GetStockReorderLevel($xmlrpcmsg) {
+/*E*/	$GetStockReorderLevel_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetStockReorderLevel_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetStockReorderLevel($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockReorderLevel($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockReorderLevel($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetStockReorderLevel($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
-	$Description='This function sets the reorder level for the given stockid in the given location.';
+	unset($Parameter);
+ 	unset($ReturnValue);
+
+	$Description = 'This function sets the reorder level for the given stockid in the given location.';
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
 	$Parameter[1]['name'] = _('Location Code');
@@ -577,58 +788,91 @@
 	$Parameter[4]['name'] = _('User password');
 	$Parameter[4]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns zero if the transaction was successful or an array of error codes if not. ');
-	$SetStockReorderLevel_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$SetStockReorderLevel_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
-	function xmlrpc_SetStockReorderLevel($xmlrpcmsg) {
+/*E*/	$SetStockReorderLevel_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$SetStockReorderLevel_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_SetStockReorderLevel($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 5)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SetStockReorderLevel($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ),
+/*x*/						$xmlrpcmsg->getParam( 4 )->scalarval(  ))) ); 
+/*x*/	    } else {
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SetStockReorderLevel($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*e*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(SetStockReorderLevel($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval(),
-				 			$xmlrpcmsg->getParam(3)->scalarval(),
-				 				$xmlrpcmsg->getParam(4)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('The StockID code to identify items ordered but not yet shipped.');
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$GetAllocatedStock_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetAllocatedStock_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
-	function xmlrpc_GetAllocatedStock($xmlrpcmsg) {
+/*E*/	$GetAllocatedStock_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetAllocatedStock_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetAllocatedStock($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetAllocatedStock($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetAllocatedStock($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetAllocatedStock($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 			$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('The StockID code to identify items in the database on order, but not yet received.');
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$GetOrderedStock_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetOrderedStock_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-	function xmlrpc_GetOrderedStock($xmlrpcmsg) {
+
+/*E*/	$GetOrderedStock_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetOrderedStock_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetOrderedStock($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetOrderedStock($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetOrderedStock($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetOrderedStock($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 			$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('The StockID code to identify the item in the database.');
 	$Parameter[1]['name'] = _('Currency Code');
@@ -642,22 +886,34 @@
 	$Parameter[5]['name'] = _('User password');
 	$Parameter[5]['description'] = _('The weberp password associated with this user name. ');
 
-	$SetStockPrice_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$SetStockPrice_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$SetStockPrice_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$SetStockPrice_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_SetStockPrice($xmlrpcmsg) {
+	function  xmlrpc_SetStockPrice($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 6)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SetStockPrice($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ),
+/*x*/						$xmlrpcmsg->getParam( 4 )->scalarval(  ),
+/*x*/							$xmlrpcmsg->getParam( 5 )->scalarval(  ))) ); 
+/*x*/	    } else {
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SetStockPrice($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*e*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(SetStockPrice($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval(),
-				 			$xmlrpcmsg->getParam(3)->scalarval(),
-				 				$xmlrpcmsg->getParam(4)->scalarval(),
-				 					$xmlrpcmsg->getParam(5)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('The StockID code to identify the item in the database.');
 	$Parameter[1]['name'] = _('Currency Code');
@@ -669,21 +925,32 @@
 	$Parameter[4]['name'] = _('User password');
 	$Parameter[4]['description'] = _('The weberp password associated with this user name. ');
 
-	$GetStockPrice_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetStockPrice_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetStockPrice_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetStockPrice_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetStockPrice($xmlrpcmsg) {
+	function  xmlrpc_GetStockPrice($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 5)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockPrice($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ),
+/*x*/						$xmlrpcmsg->getParam( 4 )->scalarval(  ))) ); 
+/*x*/	    } else {
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockPrice($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*e*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetStockPrice($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval(),
-				 			$xmlrpcmsg->getParam(3)->scalarval(),
-			 					$xmlrpcmsg->getParam(4)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Invoice Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the invoice.');
 	$Parameter[1]['name'] = _('User name');
@@ -691,19 +958,28 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 
-	$InsertSalesInvoice_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertSalesInvoice_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$InsertSalesInvoice_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InsertSalesInvoice_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_InsertSalesInvoice($xmlrpcmsg) {
+	function  xmlrpc_InsertSalesInvoice($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesInvoice(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesInvoice(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesInvoice(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Credit Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the credit.  All values must be negative.');
 	$Parameter[1]['name'] = _('User name');
@@ -711,19 +987,28 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 
-	$InsertSalesCredit_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertSalesCredit_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$InsertSalesCredit_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InsertSalesCredit_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_InsertSalesCredit($xmlrpcmsg) {
+	function  xmlrpc_InsertSalesCredit($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesCedit(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesCedit(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesCedit(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = 'This function is used to start a new sales order.';
 	$Parameter[0]['name'] = _('Insert Sales Order Header');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
@@ -736,43 +1021,63 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('If successful this function returns a two element array; the first element is 0 for success or an error code, while the second element is the order number.');
-	$InsertSalesOrderHeader_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertSalesOrderHeader_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
-	function xmlrpc_InsertSalesOrderHeader($xmlrpcmsg) {
+/*E*/	$InsertSalesOrderHeader_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InsertSalesOrderHeader_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_InsertSalesOrderHeader($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesOrderHeader(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesOrderHeader(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesOrderHeader(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
- 	$Description = 'This function is used to modify the header details of a sales order';
- 	$Parameter[0]['name'] = _('Modify Sales Order Header Details');
- 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
- 			._('The field names can be found ').'<a href="../../Z_DescribeTable.php?table=salesorders">'._('here ').'</a>'
- 			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
- 			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
- 	$Parameter[1]['name'] = _('User name');
- 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
- 	$Parameter[2]['name'] = _('User password');
- 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
- 	$ReturnValue[0] = _('If successful this function returns a single element array with the value 0; otherwise, it contains all error codes encountered during the update.');
-	$ModifySalesOrderHeader_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifySalesOrderHeader_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+	unset($Parameter);
+ 	unset($ReturnValue);
 
-	function xmlrpc_ModifySalesOrderHeader($xmlrpcmsg) {
+	$Description = 'This function is used to modify the header details of a sales order';
+	$Parameter[0]['name'] = _('Modify Sales Order Header Details');
+	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+			._('The field names can be found ').'<a href="../../Z_DescribeTable.php?table=salesorders">'._('here ').'</a>'
+			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
+			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns a single element array with the value 0; otherwise, it contains all error codes encountered during the update.');
+
+/*E*/	$ModifySalesOrderHeader_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$ModifySalesOrderHeader_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_ModifySalesOrderHeader($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifySalesOrderHeader(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifySalesOrderHeader(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(ModifySalesOrderHeader(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = 'This function is used to add line items to a sales order.';
 	$Parameter[0]['name'] = _('Insert Sales Order Line');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
@@ -785,19 +1090,29 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array; the first element is 0 for success; otherwise the array contains a list of all errors encountered.');
-	$InsertSalesOrderLine_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertSalesOrderLine_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
-	function xmlrpc_InsertSalesOrderLine($xmlrpcmsg) {
+/*E*/	$InsertSalesOrderLine_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InsertSalesOrderLine_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_InsertSalesOrderLine($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesOrderLine(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesOrderLine(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesOrderLine(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = 'This function is used to modify line items on a sales order.';
 	$Parameter[0]['name'] = _('Modify Sales Order Line');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
@@ -810,19 +1125,29 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array; the first element is 0 for success; otherwise the array contains a list of all errors encountered.');
-	$ModifySalesOrderLine_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifySalesOrderLine_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
 
-	function xmlrpc_ModifySalesOrderLine($xmlrpcmsg) {
+/*E*/	$ModifySalesOrderLine_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$ModifySalesOrderLine_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_ModifySalesOrderLine($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifySalesOrderLine(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifySalesOrderLine(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(ModifySalesOrderLine(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Account Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the GL Account and fields to set.');
 	$Parameter[1]['name'] = _('User name');
@@ -830,19 +1155,28 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 
-	$InsertGLAccount_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertGLAccount_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$InsertGLAccount_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InsertGLAccount_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_InsertGLAccount($xmlrpcmsg) {
+	function  xmlrpc_InsertGLAccount($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertGLAccount(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertGLAccount(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(InsertGLAccount(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Account Section Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the account section to insert.');
 	$Parameter[1]['name'] = _('User name');
@@ -850,19 +1184,28 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 
-	$InsertGLAccountSection_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertGLAccountSection_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$InsertGLAccountSection_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InsertGLAccountSection_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_InsertGLAccountSection($xmlrpcmsg) {
+	function  xmlrpc_InsertGLAccountSection($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertGLAccountSection(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertGLAccountSection(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(InsertGLAccountSection(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Account Group Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the account group to insert.');
 	$Parameter[1]['name'] = _('User name');
@@ -870,19 +1213,28 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 
-	$InsertGLAccountGroup_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertGLAccountGroup_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$InsertGLAccountGroup_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InsertGLAccountGroup_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_InsertGLAccountGroup($xmlrpcmsg) {
+	function  xmlrpc_InsertGLAccountGroup($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertGLAccountGroup(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertGLAccountGroup(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(InsertGLAccountGroup(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function returns a list of stock location ids.');
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
@@ -890,18 +1242,27 @@
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of stock location ids.');
 
-	$GetLocationList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetLocationList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetLocationList_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetLocationList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetLocationList($xmlrpcmsg) {
+	function  xmlrpc_GetLocationList($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetLocationList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetLocationList( '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetLocationList($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function takes a stock location id and returns details of that stock location.');
 	$Parameter[0]['name'] = _('Stock Location Code');
 	$Parameter[0]['description'] = _('A stock location code as returned by the GetLocationList function.');
@@ -911,19 +1272,28 @@
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of stock location details.');
 
-	$GetLocationDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetLocationDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetLocationDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetLocationDetails_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetLocationDetails($xmlrpcmsg) {
+	function  xmlrpc_GetLocationDetails($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetLocationDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetLocationDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetLocationDetails($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval(),
-				$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function returns a list of stock shipper ids.');
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
@@ -931,18 +1301,27 @@
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of stock shipper ids.');
 
-	$GetShipperList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetShipperList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetShipperList_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetShipperList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetShipperList($xmlrpcmsg) {
+	function  xmlrpc_GetShipperList($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetShipperList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetShipperList( '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetShipperList($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function takes a stock shipper id and returns details of that shipper.');
 	$Parameter[0]['name'] = _('Stock Shipper ID');
 	$Parameter[0]['description'] = _('A stock shipper ID as returned by the GetShippersList function.');
@@ -952,19 +1331,28 @@
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of stock shipper details.');
 
-	$GetShipperDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetShipperDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetShipperDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetShipperDetails_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetShipperDetails($xmlrpcmsg) {
+	function  xmlrpc_GetShipperDetails($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetShipperDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetShipperDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetShipperDetails($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval(),
-				$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function returns a list of sales area codes.');
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
@@ -972,18 +1360,27 @@
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of sales area codes.');
 
-	$GetSalesAreasList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetSalesAreasList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetSalesAreasList_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetSalesAreasList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetSalesAreasList($xmlrpcmsg) {
+	function  xmlrpc_GetSalesAreasList($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesAreasList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesAreasList( '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetSalesAreasList($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function takes a sales area code and returns details of that sales area.');
 	$Parameter[0]['name'] = _('Sales Area Code');
 	$Parameter[0]['description'] = _('A sales area code as returned by the GetSalesAreasList function.');
@@ -993,19 +1390,28 @@
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of sales area details.');
 
-	$GetSalesAreaDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetSalesAreaDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetSalesAreaDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetSalesAreaDetails_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetSalesAreaDetails($xmlrpcmsg) {
+	function  xmlrpc_GetSalesAreaDetails($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesAreaDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesAreaDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetSalesAreaDetails($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval(),
-				$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function takes a sales area description and returns details of that sales area.');
 	$Parameter[0]['name'] = _('Sales Area Description');
 	$Parameter[0]['description'] = _('A sales area description of the sales area of interest.');
@@ -1015,19 +1421,28 @@
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of sales area details.');
 
-	$GetSalesAreaDetailsFromName_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetSalesAreaDetailsFromName_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetSalesAreaDetailsFromName_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetSalesAreaDetailsFromName_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetSalesAreaDetailsFromName($xmlrpcmsg) {
+	function  xmlrpc_GetSalesAreaDetailsFromName($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesAreaDetailsFromName($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesAreaDetailsFromName($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetSalesAreaDetailsFromName($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval(),
-				$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Sales Area Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the sales area to insert.');
 	$Parameter[1]['name'] = _('User name');
@@ -1035,19 +1450,28 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 
-	$InsertSalesArea_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertSalesArea_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$InsertSalesArea_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InsertSalesArea_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_InsertSalesArea($xmlrpcmsg) {
+	function  xmlrpc_InsertSalesArea($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesArea(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesArea(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesArea(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function returns a list of salesman codes.');
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
@@ -1055,18 +1479,27 @@
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of salesman codes.');
 
-	$GetSalesmanList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetSalesmanList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetSalesmanList_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetSalesmanList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetSalesmanList($xmlrpcmsg) {
+	function  xmlrpc_GetSalesmanList($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesmanList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesmanList( '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetSalesmanList($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function takes a salesman code and returns details of that salesman.');
 	$Parameter[0]['name'] = _('Sales Area Code');
 	$Parameter[0]['description'] = _('A salesman code as returned by the GetSalesmanList function.');
@@ -1076,19 +1509,28 @@
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of salesman details.');
 
-	$GetSalesmanDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetSalesmanDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetSalesmanDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetSalesmanDetails_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetSalesmanDetails($xmlrpcmsg) {
+	function  xmlrpc_GetSalesmanDetails($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesmanDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesmanDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetSalesmanDetails($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval(),
-				$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function takes a salesman\'s name and returns details of that salesman.');
 	$Parameter[0]['name'] = _('Salesman Name');
 	$Parameter[0]['description'] = _('The name of the salesman of interest.');
@@ -1098,19 +1540,28 @@
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of salesman details.');
 
-	$GetSalesmanDetailsFromName_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetSalesmanDetailsFromName_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetSalesmanDetailsFromName_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetSalesmanDetailsFromName_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetSalesmanDetailsFromName($xmlrpcmsg) {
+	function  xmlrpc_GetSalesmanDetailsFromName($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesmanDetailsFromName($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesmanDetailsFromName($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetSalesmanDetailsFromName($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval(),
-				$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Salesman Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the salesman to insert.');
 	$Parameter[1]['name'] = _('User name');
@@ -1118,101 +1569,146 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 
-	$InsertSalesman_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertSalesman_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$InsertSalesman_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InsertSalesman_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_InsertSalesman($xmlrpcmsg) {
+	function  xmlrpc_InsertSalesman($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesman(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesman(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		    return new xmlrpcresp(php_xmlrpc_encode(InsertSalesman(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				     $xmlrpcmsg->getParam(1)->scalarval(),
-						    $xmlrpcmsg->getParam(2)->scalarval())));
-	    }
+		return $rtn;
+	}
 
-	    unset($Parameter);
-	    unset($ReturnValue);
-	    unset($Description);
-	    $Description = _('This function returns a list of tax group IDs.');
-	    $Parameter[0]['name'] = _('User name');
-	    $Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-	    $Parameter[1]['name'] = _('User password');
-	    $Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	    $ReturnValue[0] = _('This function returns an array of tax group IDs.');
-
-	    $GetTaxgroupList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	    $GetTaxgroupList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-
-	    function xmlrpc_GetTaxgroupList($xmlrpcmsg) {
-		    ob_end_flush();
-		    return new xmlrpcresp(php_xmlrpc_encode(GetTaxgroupList($xmlrpcmsg->getParam(0)->scalarval(),
-			    $xmlrpcmsg->getParam(1)->scalarval())));
-	    }
-
-	    unset($Parameter);
-	    unset($ReturnValue);
-	    unset($Description);
-	    $Description = _('This function takes a tax group ID and returns details of that tax group.');
-	    $Parameter[0]['name'] = _('Tax Group ID');
-	    $Parameter[0]['description'] = _('A tax group ID as returned by the GetTaxgroupList function.');
-	    $Parameter[1]['name'] = _('User name');
-	    $Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-	    $Parameter[2]['name'] = _('User password');
-	    $Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	    $ReturnValue[0] = _('This function returns an array of tax group details.');
-
-	    $GetTaxgroupDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	    $GetTaxgroupDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-
-	    function xmlrpc_GetTaxgroupDetails($xmlrpcmsg) {
-		    ob_end_flush();
-		    return new xmlrpcresp(php_xmlrpc_encode(GetTaxgroupDetails($xmlrpcmsg->getParam(0)->scalarval(),
-			    $xmlrpcmsg->getParam(1)->scalarval(),
-				    $xmlrpcmsg->getParam(2)->scalarval())));
-	    }
-
-	    unset($Parameter);
-	    unset($ReturnValue);
-	    unset($Description);
-	    $Description = _('This function returns a list of customer types.');
-	    $Parameter[0]['name'] = _('User name');
-	    $Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-	    $Parameter[1]['name'] = _('User password');
-	    $Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	    $ReturnValue[0] = _('This function returns an array of customer types.');
-
-	    $GetCustomerTypeList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	    $GetCustomerTypeList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-
-	    function xmlrpc_GetCustomerTypeList($xmlrpcmsg) {
-		    ob_end_flush();
-		    return new xmlrpcresp(php_xmlrpc_encode(GetCustomerTypeList($xmlrpcmsg->getParam(0)->scalarval(),
-			    $xmlrpcmsg->getParam(1)->scalarval())));
-	    }
-
-	    unset($Parameter);
-	    unset($ReturnValue);
-	    unset($Description);
-	    $Description = _('This function takes a customer type ID and returns details of that customer type.');
-	    $Parameter[0]['name'] = _('Customer Type ID');
-	    $Parameter[0]['description'] = _('A customer type ID as returned by the GetCustomerTypeList function.');
-	    $Parameter[1]['name'] = _('User name');
-	    $Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-	    $Parameter[2]['name'] = _('User password');
-	    $Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	    $ReturnValue[0] = _('This function returns an array of customer type details.');
-
-	    $GetCustomerTypeDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	    $GetCustomerTypeDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-
-	    function xmlrpc_GetCustomerTypeDetails($xmlrpcmsg) {
-		    ob_end_flush();
-		    return new xmlrpcresp(php_xmlrpc_encode(GetCustomerTypeDetails($xmlrpcmsg->getParam(0)->scalarval(),
-			    $xmlrpcmsg->getParam(1)->scalarval(),
-				    $xmlrpcmsg->getParam(2)->scalarval())));
-	    }
-
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
+	$Description = _('This function returns a list of tax group IDs.');
+	$Parameter[0]['name'] = _('User name');
+	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[1]['name'] = _('User password');
+	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of tax group IDs.');
+
+/*E*/	$GetTaxgroupList_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetTaxgroupList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetTaxgroupList($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupList( '', '')));
+/*x*/	    }
+		ob_end_flush();
+		return $rtn;
+	}
+
+	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
+	$Description = _('This function takes a tax group ID and returns details of that tax group.');
+	$Parameter[0]['name'] = _('Tax Group ID');
+	$Parameter[0]['description'] = _('A tax group ID as returned by the GetTaxgroupList function.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of tax group details.');
+
+/*E*/	$GetTaxgroupDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetTaxgroupDetails_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetTaxgroupDetails($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
+		ob_end_flush();
+		return $rtn;
+	}
+
+	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
+	$Description = _('This function returns a list of customer types.');
+	$Parameter[0]['name'] = _('User name');
+	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[1]['name'] = _('User password');
+	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of customer types.');
+
+/*E*/	$GetCustomerTypeList_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetCustomerTypeList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetCustomerTypeList($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerTypeList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerTypeList( '', '')));
+/*x*/	    }
+		ob_end_flush();
+		return $rtn;
+	}
+
+	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
+	$Description = _('This function takes a customer type ID and returns details of that customer type.');
+	$Parameter[0]['name'] = _('Customer Type ID');
+	$Parameter[0]['description'] = _('A customer type ID as returned by the GetCustomerTypeList function.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of customer type details.');
+
+/*E*/	$GetCustomerTypeDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetCustomerTypeDetails_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetCustomerTypeDetails($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerTypeDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerTypeDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
+		ob_end_flush();
+		return $rtn;
+	}
+
+	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Category Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the stock category to insert.');
 	$Parameter[1]['name'] = _('User name');
@@ -1220,19 +1716,28 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 
-	$InsertStockCategory_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertStockCategory_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$InsertStockCategory_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InsertStockCategory_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_InsertStockCategory($xmlrpcmsg) {
+	function  xmlrpc_InsertStockCategory($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertStockCategory(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertStockCategory(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(InsertStockCategory(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Category Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the stock category to modify.');
 	$Parameter[1]['name'] = _('User name');
@@ -1240,19 +1745,28 @@
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 
-	$ModifyStockCategory_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifyStockCategory_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$ModifyStockCategory_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$ModifyStockCategory_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_ModifyStockCategory($xmlrpcmsg) {
+	function  xmlrpc_ModifyStockCategory($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyStockCategory(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyStockCategory(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(ModifyStockCategory(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Description = _('This function takes a stock category ID and returns details of that stock category type.');
 	$Parameter[0]['name'] = _('Stock Category ID');
 	$Parameter[0]['description'] = _('A Stock Category ID as returned by the *WHAT* function.');
@@ -1262,19 +1776,28 @@
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of stock category details.');
 
-	$GetStockCategory_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetStockCategory_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetStockCategory_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetStockCategory_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetStockCategory($xmlrpcmsg) {
+	function  xmlrpc_GetStockCategory($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockCategory($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockCategory($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetStockCategory($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Field Name');
 	$Parameter[0]['description'] = _('The field name to search on.');
 	$Parameter[1]['name'] = _('Match Criteria');
@@ -1284,20 +1807,30 @@
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
 
-	$SearchStockCategories_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$SearchStockCategories_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$SearchStockCategories_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$SearchStockCategories_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_SearchStockCategories($xmlrpcmsg) {
+	function  xmlrpc_SearchStockCategories($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchStockCategories($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
+/*x*/	    } else {
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchStockCategories($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(SearchStockCategories($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval(),
-				 			$xmlrpcmsg->getParam(3)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
+	unset($Parameter);
+ 	unset($ReturnValue);
+
 	$Parameter[0]['name'] = _('Label Name');
 	$Parameter[0]['description'] = _('The category label to search on.');
 	$Parameter[1]['name'] = _('Match Criteria');
@@ -1307,85 +1840,124 @@
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
 
-	$StockCatPropertyList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$StockCatPropertyList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$StockCatPropertyList_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$StockCatPropertyList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_StockCatPropertyList($xmlrpcmsg) {
+	function  xmlrpc_StockCatPropertyList($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(StockCatPropertyList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
+/*x*/	    } else {
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(StockCatPropertyList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(StockCatPropertyList($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval(),
-				 			$xmlrpcmsg->getParam(3)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
-	    $Description = _('This function returns a list of general ledger account codes.');
-	    $Parameter[0]['name'] = _('User name');
-	    $Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-	    $Parameter[1]['name'] = _('User password');
-	    $Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	    $ReturnValue[0] = _('This function returns an array of general ledger account codes.');
+	unset($Parameter);
+ 	unset($ReturnValue);
 
-	$GetGLAccountList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetGLAccountList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+	$Description = _('This function returns a list of general ledger account codes.');
+	$Parameter[0]['name'] = _('User name');
+	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[1]['name'] = _('User password');
+	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of general ledger account codes.');
 
-	function xmlrpc_GetGLAccountList($xmlrpcmsg) {
+/*E*/	$GetGLAccountList_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetGLAccountList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetGLAccountList($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetGLAccountList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetGLAccountList( '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetGLAccountList($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
-	    $Description = _('This function takes a general ledger account code and returns details of that account.');
-	    $Parameter[0]['name'] = _('General Ledger Account Code');
-	    $Parameter[0]['description'] = _('A general ledger account code as returned by the GetGLAccountList function.');
-	    $Parameter[1]['name'] = _('User name');
-	    $Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-	    $Parameter[2]['name'] = _('User password');
-	    $Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	    $ReturnValue[0] = _('This function returns an array of general ledger account details.');
+	unset($Parameter);
+ 	unset($ReturnValue);
 
-	$GetGLAccountDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetGLAccountDetails_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+	$Description = _('This function takes a general ledger account code and returns details of that account.');
+	$Parameter[0]['name'] = _('General Ledger Account Code');
+	$Parameter[0]['description'] = _('A general ledger account code as returned by the GetGLAccountList function.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of general ledger account details.');
 
-	function xmlrpc_GetGLAccountDetails($xmlrpcmsg) {
+/*E*/	$GetGLAccountDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetGLAccountDetails_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetGLAccountDetails($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetGLAccountDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetGLAccountDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetGLAccountDetails($xmlrpcmsg->getParam(0)->scalarval(),
-			$xmlrpcmsg->getParam(1)->scalarval(),
-				$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
-	unset($Parameter);
-	unset($ReturnValue);
 	unset($Description);
-	    $Description = _('This function takes a stock code ID and a tax authority code and returns the relevant tax rate.');
-	    $Parameter[0]['name'] = _('StockID');
-	    $Parameter[0]['description'] = _('The stock ID of the item whose tax rate is desired.');
-	    $Parameter[1]['name'] = _('Tax Authority Code');
-	    $Parameter[1]['description'] = _('The code identifying the tax authority of interest.' );
-	    $Parameter[2]['name'] = _('User name');
-	    $Parameter[2]['description'] = _('A valid weberp username. This user should have security access to this data.');
-	    $Parameter[3]['name'] = _('User password');
-	    $Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	    $ReturnValue[0] = _('This function returns an array of general ledger account details.');
+	unset($Parameter);
+ 	unset($ReturnValue);
 
-	$GetStockTaxRate_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetStockTaxRate_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+	$Description = _('This function takes a stock code ID and a tax authority code and returns the relevant tax rate.');
+	$Parameter[0]['name'] = _('StockID');
+	$Parameter[0]['description'] = _('The stock ID of the item whose tax rate is desired.');
+	$Parameter[1]['name'] = _('Tax Authority Code');
+	$Parameter[1]['description'] = _('The code identifying the tax authority of interest.');
+	$Parameter[2]['name'] = _('User name');
+	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access to this data.');
+	$Parameter[3]['name'] = _('User password');
+	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of general ledger account details.');
 
-	function xmlrpc_GetStockTaxRate($xmlrpcmsg) {
+/*E*/	$GetStockTaxRate_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetStockTaxRate_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetStockTaxRate($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockTaxRate($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
+/*x*/	    } else {
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockTaxRate($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetStockTaxRate($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval(),
-				 			$xmlrpcmsg->getParam(3)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('This function is used to insert a new supplier into the webERP database.');
 	$Parameter[0]['name'] = _('Supplier Details');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
@@ -1396,22 +1968,32 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ').
-		_('If the first element is zero then the function was successful. ').
-		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ')
+			._('If the first element is zero then the function was successful. ')
+			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$InsertSupplier_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertSupplier_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$InsertSupplier_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InsertSupplier_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_InsertSupplier($xmlrpcmsg) {
+	function  xmlrpc_InsertSupplier($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSupplier(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSupplier(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(InsertSupplier(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('This function is used to modify a supplier which is already setup in the webERP database.');
 	$Parameter[0]['name'] = _('Supplier Details');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
@@ -1423,23 +2005,32 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ').
-		_('If the first element is zero then the function was successful. ').
-		_('Otherwise an array of error codes is returned and no modification takes place. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ')
+			._('If the first element is zero then the function was successful. ')
+			._('Otherwise an array of error codes is returned and no modification takes place. ');
 
+/*E*/	$ModifySupplier_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$ModifySupplier_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	$ModifySupplier_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifySupplier_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-
-	function xmlrpc_ModifySupplier($xmlrpcmsg) {
+	function  xmlrpc_ModifySupplier($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifySupplier(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifySupplier(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(ModifySupplier(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('This function is used to retrieve the details of a supplier from the webERP database.');
 	$Parameter[0]['name'] = _('Supplier ID');
 	$Parameter[0]['description'] = _('This is a string value. It must be a valid supplier id that is already in the webERP database.');
@@ -1447,23 +2038,32 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this supplier. ').
-		_('The key will be identical with field name from the suppliers table. All fields will be in the set regardless of whether the value was set.').'<p>'.
-		_('Otherwise an array of error codes is returned. ');
+	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this supplier. ')
+			._('The key will be identical with field name from the suppliers table. All fields will be in the set regardless of whether the value was set.').'<p>'
+			._('Otherwise an array of error codes is returned. ');
 
+/*E*/	$GetSupplier_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetSupplier_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	$GetSupplier_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetSupplier_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-
-	function xmlrpc_GetSupplier($xmlrpcmsg) {
+	function  xmlrpc_GetSupplier($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSupplier($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSupplier($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetSupplier($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 	$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('This function is used to retrieve the details of a supplier from the webERP database.');
 	$Parameter[0]['name'] = _('Field name');
 	$Parameter[0]['description'] = _('This is a string value. It must be a valid field in the suppliers table. This is case sensitive');
@@ -1473,23 +2073,33 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns an array of supplier ids. ').
-		_('Otherwise an array of error codes is returned. ');
+	$ReturnValue[0] = _('If successful this function returns an array of supplier ids. ')
+			._('Otherwise an array of error codes is returned. ');
 
+/*E*/	$SearchSuppliers_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$SearchSuppliers_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	$SearchSuppliers_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$SearchSuppliers_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-
-	function xmlrpc_SearchSuppliers($xmlrpcmsg) {
+	function  xmlrpc_SearchSuppliers($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchSuppliers($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
+/*x*/	    } else {
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchSuppliers($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(SearchSuppliers($xmlrpcmsg->getParam(0)->scalarval(),
-				$xmlrpcmsg->getParam(1)->scalarval(),
-						$xmlrpcmsg->getParam(2)->scalarval(),
-							$xmlrpcmsg->getParam(3)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('This function is used to retrieve the details of stock batches.');
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
@@ -1499,23 +2109,33 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('Returns a two dimensional array of stock batch details. ').
-		_('The fields returned are stockid, loccode, batchno, quantity, itemcost. ');
+	$ReturnValue[0] = _('Returns a two dimensional array of stock batch details. ')
+			._('The fields returned are stockid, loccode, batchno, quantity, itemcost. ');
 
+/*E*/	$GetBatches_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetBatches_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	$GetBatches_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetBatches_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-
-	function xmlrpc_GetBatches($xmlrpcmsg) {
+	function  xmlrpc_GetBatches($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetBatches($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
+/*x*/	    } else {
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetBatches($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetBatches($xmlrpcmsg->getParam(0)->scalarval(),
-				$xmlrpcmsg->getParam(1)->scalarval(),
-						$xmlrpcmsg->getParam(2)->scalarval(),
-							$xmlrpcmsg->getParam(3)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('Adjust the stock balance for the given stock code at the given location by the amount given.');
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
@@ -1529,25 +2149,37 @@
 	$Parameter[4]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[5]['name'] = _('User password');
 	$Parameter[5]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns 0. ').
-		_('Otherwise an array of error codes is returned. ');
+	$ReturnValue[0] = _('If successful this function returns 0. ')
+			._('Otherwise an array of error codes is returned. ');
 
+/*E*/	$StockAdjustment_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcDouble,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcDouble,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$StockAdjustment_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	$StockAdjustment_sig = array(array($xmlrpcStruct, $xmlrpcString,$xmlrpcString, $xmlrpcDouble, $xmlrpcString,  $xmlrpcString, $xmlrpcString));
-	$StockAdjustment_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-
-	function xmlrpc_StockAdjustment($xmlrpcmsg) {
+	function  xmlrpc_StockAdjustment($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 6)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(StockAdjustment($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ),
+/*x*/						$xmlrpcmsg->getParam( 4 )->scalarval(  ),
+/*x*/							$xmlrpcmsg->getParam( 5 )->scalarval(  ))) ); 
+/*x*/	    } else {
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(StockAdjustment($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*e*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(StockAdjustment($xmlrpcmsg->getParam(0)->scalarval(),
-				$xmlrpcmsg->getParam(1)->scalarval(),
-					$xmlrpcmsg->getParam(2)->scalarval(),
-						$xmlrpcmsg->getParam(3)->scalarval(),
-							$xmlrpcmsg->getParam(4)->scalarval(),
-								$xmlrpcmsg->getParam(5)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('Issues stock to a given work order from the given location');
 	$Parameter[0]['name'] = _('Work Order Number');
 	$Parameter[0]['description'] = _('A string field containing a valid work order number that has already been created. The api will check this before making the enquiry.');
@@ -1565,27 +2197,41 @@
 	$Parameter[5]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[6]['name'] = _('User password');
 	$Parameter[6]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns 0. ').
-		_('Otherwise an array of error codes is returned. ');
+	$ReturnValue[0] = _('If successful this function returns 0. ')
+			._('Otherwise an array of error codes is returned. ');
 
+/*E*/	$WorkOrderIssue_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$WorkOrderIssue_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	$WorkOrderIssue_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString,  $xmlrpcString, $xmlrpcString));
-	$WorkOrderIssue_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-
-	function xmlrpc_WorkOrderIssue($xmlrpcmsg) {
+	function  xmlrpc_WorkOrderIssue($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 8)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(WorkOrderIssue($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ),
+/*x*/						$xmlrpcmsg->getParam( 4 )->scalarval(  ),
+/*x*/							$xmlrpcmsg->getParam( 5 )->scalarval(  ),
+/*x*/								$xmlrpcmsg->getParam( 6 )->scalarval(  ),
+/*x*/									$xmlrpcmsg->getParam( 7 )->scalarval(  ))) ); 
+/*x*/	    } else {
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(WorkOrderIssue($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+					$xmlrpcmsg->getParam( 3 )->scalarval(  ),
+						$xmlrpcmsg->getParam( 4 )->scalarval(  ),
+/*e*/							$xmlrpcmsg->getParam( 5 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(WorkOrderIssue($xmlrpcmsg->getParam(0)->scalarval(),
-				$xmlrpcmsg->getParam(1)->scalarval(),
-					$xmlrpcmsg->getParam(2)->scalarval(),
-						$xmlrpcmsg->getParam(3)->scalarval(),
-							$xmlrpcmsg->getParam(4)->scalarval(),
-								$xmlrpcmsg->getParam(5)->scalarval(),
-									$xmlrpcmsg->getParam(6)->scalarval(),
-										$xmlrpcmsg->getParam(7)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('This function is used to retrieve the details of a work order from the webERP database.');
 	$Parameter[0]['name'] = _('Field name');
 	$Parameter[0]['description'] = _('This is a string value. It must be a valid field in the workorders table. This is case sensitive');
@@ -1595,23 +2241,33 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns an array of work order numbers. ').
-		_('Otherwise an array of error codes is returned. ');
+	$ReturnValue[0] = _('If successful this function returns an array of work order numbers. ')
+			._('Otherwise an array of error codes is returned. ');
 
+/*E*/	$SearchWorkOrders_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$SearchWorkOrders_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	$SearchWorkOrders_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$SearchWorkOrders_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-
-	function xmlrpc_SearchWorkOrders($xmlrpcmsg) {
+	function  xmlrpc_SearchWorkOrders($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchWorkOrders($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
+/*x*/	    } else {
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchWorkOrders($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(SearchWorkOrders($xmlrpcmsg->getParam(0)->scalarval(),
-				$xmlrpcmsg->getParam(1)->scalarval(),
-						$xmlrpcmsg->getParam(2)->scalarval(),
-							$xmlrpcmsg->getParam(3)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('This function is used to insert new purchasing data into the webERP database.');
 	$Parameter[0]['name'] = _('Purchasing data');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
@@ -1622,22 +2278,32 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ').
-		_('If the first element is zero then the function was successful. ').
-		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ')
+			._('If the first element is zero then the function was successful. ')
+			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$InsertPurchData_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertPurchData_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$InsertPurchData_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InsertPurchData_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_InsertPurchData($xmlrpcmsg) {
+	function  xmlrpc_InsertPurchData($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertPurchData(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertPurchData(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(InsertPurchData(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				$xmlrpcmsg->getParam(1)->scalarval(),
-						$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('This function is used to modify purchasing data into the webERP database.');
 	$Parameter[0]['name'] = _('Purchasing data');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
@@ -1648,22 +2314,32 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ').
-		_('If the first element is zero then the function was successful. ').
-		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ')
+			._('If the first element is zero then the function was successful. ')
+			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$ModifyPurchData_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifyPurchData_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$ModifyPurchData_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$ModifyPurchData_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_ModifyPurchData($xmlrpcmsg) {
+	function  xmlrpc_ModifyPurchData($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyPurchData(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyPurchData(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(ModifyPurchData(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('This function is used to insert a new work order into the webERP database. Currently this works only for single line orders.');
 	$Parameter[0]['name'] = _('Work order details');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
@@ -1674,22 +2350,32 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ').
-		_('If the first element is zero then the function was successful. ').
-		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ')
+			._('If the first element is zero then the function was successful. ')
+			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-	$InsertWorkOrder_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertWorkOrder_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$InsertWorkOrder_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InsertWorkOrder_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_InsertWorkOrder($xmlrpcmsg) {
+	function  xmlrpc_InsertWorkOrder($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertWorkOrder(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertWorkOrder(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(InsertWorkOrder(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('Receives stock from a given work order from the given location');
 	$Parameter[0]['name'] = _('Work Order Number');
 	$Parameter[0]['description'] = _('A string field containing a valid work order number that has already been created. The api will check this before making the enquiry.');
@@ -1705,103 +2391,155 @@
 	$Parameter[5]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[6]['name'] = _('User password');
 	$Parameter[6]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns 0. ').
-		_('Otherwise an array of error codes is returned. ');
+	$ReturnValue[0] = _('If successful this function returns 0. ')
+			._('Otherwise an array of error codes is returned. ');
 
+/*E*/	$WorkOrderReceive_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$WorkOrderReceive_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	$WorkOrderReceive_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString,$xmlrpcString, $xmlrpcString,  $xmlrpcString, $xmlrpcString));
-	$WorkOrderReceive_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-
-	function xmlrpc_WorkOrderReceive($xmlrpcmsg) {
+	function  xmlrpc_WorkOrderReceive($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 7)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(WorkOrderReceive($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ),
+/*x*/						$xmlrpcmsg->getParam( 4 )->scalarval(  ),
+/*x*/							$xmlrpcmsg->getParam( 5 )->scalarval(  ),
+/*x*/								$xmlrpcmsg->getParam( 6 )->scalarval(  ))) ); 
+/*x*/	    } else {
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(WorkOrderReceive($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+					$xmlrpcmsg->getParam( 3 )->scalarval(  ),
+/*e*/						$xmlrpcmsg->getParam( 4 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(WorkOrderReceive($xmlrpcmsg->getParam(0)->scalarval(),
-				$xmlrpcmsg->getParam(1)->scalarval(),
-					$xmlrpcmsg->getParam(2)->scalarval(),
-						$xmlrpcmsg->getParam(3)->scalarval(),
-							$xmlrpcmsg->getParam(4)->scalarval(),
-								$xmlrpcmsg->getParam(5)->scalarval(),
-									$xmlrpcmsg->getParam(6)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('Returns the webERP default date format');
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a string contain the default date format. ').
-		_('Otherwise an array of error codes is returned. ');
+	$ReturnValue[0] = _('If successful this function returns a string contain the default date format. ')
+			._('Otherwise an array of error codes is returned. ');
 
+/*E*/	$GetDefaultDateFormat_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetDefaultDateFormat_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	$GetDefaultDateFormat_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetDefaultDateFormat_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-
-	function xmlrpc_GetDefaultDateFormat($xmlrpcmsg) {
+	function  xmlrpc_GetDefaultDateFormat($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultDateFormat($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultDateFormat( '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetDefaultDateFormat($xmlrpcmsg->getParam(0)->scalarval(),
-				$xmlrpcmsg->getParam(1)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('Returns the webERP default location');
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a string contain the default location. ').
-		_('Otherwise an array of error codes is returned. ');
+	$ReturnValue[0] = _('If successful this function returns a string contain the default location. ')
+			._('Otherwise an array of error codes is returned. ');
 
-	$GetDefaultCurrency_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetDefaultCurrency_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetDefaultCurrency_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetDefaultCurrency_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetDefaultCurrency($xmlrpcmsg) {
+	function  xmlrpc_GetDefaultCurrency($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultCurrency($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultCurrency( '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetDefaultCurrency($xmlrpcmsg->getParam(0)->scalarval(),
-				$xmlrpcmsg->getParam(1)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('Returns the webERP default price list');
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a string contain the default price list code. ').
-		_('Otherwise an array of error codes is returned. ');
+	$ReturnValue[0] = _('If successful this function returns a string contain the default price list code. ')
+			._('Otherwise an array of error codes is returned. ');
 
-	$GetDefaultPriceList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetDefaultPriceList_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetDefaultPriceList_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetDefaultPriceList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetDefaultPriceList($xmlrpcmsg) {
+	function  xmlrpc_GetDefaultPriceList($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultPriceList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultPriceList( '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetDefaultPriceList($xmlrpcmsg->getParam(0)->scalarval(),
-				$xmlrpcmsg->getParam(1)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('Returns the webERP currency code');
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a string contain the default currency code. ').
-		_('Otherwise an array of error codes is returned. ');
+	$ReturnValue[0] = _('If successful this function returns a string contain the default currency code. ')
+			._('Otherwise an array of error codes is returned. ');
 
-	$GetDefaultLocation_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetDefaultLocation_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetDefaultLocation_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetDefaultLocation_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetDefaultLocation($xmlrpcmsg) {
+	function  xmlrpc_GetDefaultLocation($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultLocation($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
+/*x*/	    } else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultLocation( '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetDefaultLocation($xmlrpcmsg->getParam(0)->scalarval(),
-				$xmlrpcmsg->getParam(1)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('Returns the value of the specified stock category property for the specified stock item category');
 	$Parameter[0]['name'] = _('Property');
 	$Parameter[0]['description'] = _('The name of the specific property to be returned.');
@@ -1811,35 +2549,45 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns zero, and the value of the requested property. ').
-		_('Otherwise an array of error codes is returned. ');
+	$ReturnValue[0] = _('If successful this function returns zero, and the value of the requested property. ')
+			._('Otherwise an array of error codes is returned. ');
 
-	$GetStockCatProperty_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetStockCatProperty_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
+/*E*/	$GetStockCatProperty_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetStockCatProperty_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function xmlrpc_GetStockCatProperty($xmlrpcmsg) {
+	function  xmlrpc_GetStockCatProperty($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/	    {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockCatProperty($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
+/*x*/	    } else {
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockCatProperty($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
+/*x*/	    }
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(GetStockCatProperty($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval(),
-				 			$xmlrpcmsg->getParam(3)->scalarval())));
+		return $rtn;
 	}
 
+	unset($Description);
 	unset($Parameter);
-	unset($ReturnValue);
+ 	unset($ReturnValue);
+
 	$Description = _('Returns (possibly translated) error text from error codes');
 	$Parameter[0]['name'] = _('Error codes');
 	$Parameter[0]['description'] = _('An array of error codes to change into text messages. ');
 	$ReturnValue[0] = _('An array of two element arrays, one per error code. The second array has the error code in element 0 and the error string in element 1. ');
+	$GetErrorMessages_sig = array(array($xmlrpcStruct,$xmlrpcArray));
+	$GetErrorMessages_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	$GetErrorMessages_sig = array(array($xmlrpcStruct, $xmlrpcArray));
-	$GetErrorMessages_doc = apiBuildDocHTML( $Description, $Parameter, $ReturnValue );
-
-	function xmlrpc_GetErrorMessages($xmlrpcmsg) {
+	function  xmlrpc_GetErrorMessages($xmlrpcmsg){
+		ob_start('ob_file_callback');
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetAPIErrorMessages(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )))) ); 
 		ob_end_flush();
-		return new xmlrpcresp(php_xmlrpc_encode(
-				GetAPIErrorMessages(
-				php_xmlrpc_decode($xmlrpcmsg->getParam(0)))));
+		return $rtn;
 	}
 
 
