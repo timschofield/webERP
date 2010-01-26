@@ -16,7 +16,8 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
-	$Description = _('This function is used to login into the API methods for the specified the database.');
+	$Description = _('This function is used to login into the API methods for the specified the database.')
+		.'<p><b>' . _('NOTE: using this function means that the User Name and Password fields in the following functions are no longer required.  When calling those functions, leave the last two parameters off.') . '</b>';
 	$Parameter[0]['name'] = _('Database Name');
 	$Parameter[0]['description'] = _('The name of the database to use for the transactions to come. ');
 	$Parameter[1]['name'] = _('User name');
@@ -44,7 +45,8 @@
 	unset($Parameter);
  	unset($ReturnValue);
 
-	$Description = _('This function is used to logout from the API methods.');
+	$Description = _('This function is used to logout from the API methods. ')
+		    . _('It terminates the user\'s session thus freeing the server resources.' );
 	$ReturnValue[0] = _('This function returns an integer. ')
 			._('Zero means the function was successful. ')
 			._('Otherwise an error code is returned. ');
