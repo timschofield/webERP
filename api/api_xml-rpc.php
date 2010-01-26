@@ -5,17 +5,12 @@
 		 * least it works */
 	}
 
-//	ob_start('ob_file_callback');
-
 	include 'api_php.php';
 
 	include '../xmlrpc/lib/xmlrpc.inc';
 
 	include '../xmlrpc/lib/xmlrpcs.inc';
 
-
-	unset($Parameter);
-	unset($ReturnValue);
 	$Description = _('This function is used to login into the API methods for the specified the database.')
 		.'<p><b>' . _('NOTE: using this function means that the User Name and Password fields in the following functions are no longer required.  When calling those functions, leave the last two parameters off.') . '</b>';
 	$Parameter[0]['name'] = _('Database Name');
@@ -42,11 +37,10 @@
 
 
 	unset($Description);
-	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to logout from the API methods. ')
-		    . _('It terminates the user\'s session thus freeing the server resources.' );
+			. _('It terminates the user\'s session thus freeing the server resources.' );
 	$ReturnValue[0] = _('This function returns an integer. ')
 			._('Zero means the function was successful. ')
 			._('Otherwise an error code is returned. ');
@@ -55,14 +49,14 @@
 
 	function  xmlrpc_Logout($xmlrpcmsg){
 		ob_start('ob_file_callback');
-		 $rtn = new xmlrpcresp( php_xmlrpc_encode(LogoutAPI()) ); 
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(LogoutAPI()) );
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to insert a new customer into the webERP database.');
 	$Parameter[0]['name'] = _('Customer Details');
@@ -85,21 +79,21 @@
 
 	function  xmlrpc_InsertCustomer($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to insert a new customer branch into the webERP database.');
 	$Parameter[0]['name'] = _('Branch Details');
@@ -121,21 +115,21 @@
 
 	function  xmlrpc_InsertBranch($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertBranch(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertBranch(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to modify a customer which is already setup in the webERP database.');
 	$Parameter[0]['name'] = _('Customer Details');
@@ -150,7 +144,7 @@
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of integers. ')
 			._('If the first element is zero then the function was successful. ')
-			._('Otherwise an array of error codes is returned and no insertion takes place. ');
+			._('Otherwise an array of error codes is returned and no modification takes place. ');
 
 /*E*/	$ModifyCustomer_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -158,21 +152,21 @@
 
 	function  xmlrpc_ModifyCustomer($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to modify a customer branch which is already setup in the webERP database.');
 	$Parameter[0]['name'] = _('Branch Details');
@@ -195,21 +189,21 @@
 
 	function  xmlrpc_ModifyBranch($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyBranch(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyBranch(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to retrieve the details of a customer branch from the webERP database.');
 	$Parameter[0]['name'] = _('Debtor number');
@@ -230,23 +224,23 @@
 
 	function  xmlrpc_GetCustomerBranch($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerBranch($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
-/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) );
+/*x*/		} else {
 		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerBranch($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to retrieve the details of a customer from the webERP database.');
 	$Parameter[0]['name'] = _('Debtor number');
@@ -265,21 +259,21 @@
 
 	function  xmlrpc_GetCustomer($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomer($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomer($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to retrieve the details of a customer from the webERP database.');
 	$Parameter[0]['name'] = _('Field Name');
@@ -302,23 +296,23 @@
 
 	function  xmlrpc_SearchCustomers($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchCustomers($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
-/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) );
+/*x*/		} else {
 		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchCustomers($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function returns a list of currency abbreviations.');
 	$Parameter[0]['name'] = _('User name');
@@ -335,20 +329,20 @@
 
 	function  xmlrpc_GetCurrencyList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCurrencyList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCurrencyList( '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function takes a currency abbreviation and returns details of that currency.');
 	$Parameter[0]['name'] = _('Currency abbreviation');
@@ -365,21 +359,21 @@
 
 	function  xmlrpc_GetCurrencyDetails($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCurrencyDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCurrencyDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function returns a list of sales type abbreviations.');
 	$Parameter[0]['name'] = _('User name');
@@ -396,20 +390,20 @@
 
 	function  xmlrpc_GetSalesTypeList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesTypeList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesTypeList( '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function takes a sales type abbreviation and returns details of that sales type.');
 	$Parameter[0]['name'] = _('Sales type abbreviation');
@@ -426,21 +420,21 @@
 
 	function  xmlrpc_GetSalesTypeDetails($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesTypeDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesTypeDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to insert sales type details into the webERP database.');
 	$Parameter[0]['name'] = _('Sales Type Details');
@@ -462,21 +456,21 @@
 
 	function  xmlrpc_InsertSalesType($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesType(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesType(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function returns a list of hold reason codes.');
 	$Parameter[0]['name'] = _('User name');
@@ -491,20 +485,20 @@
 
 	function  xmlrpc_GetHoldReasonList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetHoldReasonList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetHoldReasonList( '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function takes a hold reason code and returns details of that hold reason.');
 	$Parameter[0]['name'] = _('Hold reason code');
@@ -521,21 +515,21 @@
 
 	function  xmlrpc_GetHoldReasonDetails($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetHoldReasonDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetHoldReasonDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function returns a list of payment terms abbreviations.');
 	$Parameter[0]['name'] = _('User name');
@@ -550,20 +544,20 @@
 
 	function  xmlrpc_GetPaymentTermsList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetPaymentTermsList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetPaymentTermsList( '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function takes a payment terms abbreviation and returns details of that payment terms type.');
 	$Parameter[0]['name'] = _('Hold reason code');
@@ -580,28 +574,32 @@
 
 	function  xmlrpc_GetPaymentTermsDetails($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetPaymentTermsDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetPaymentTermsDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
+	$Description = _('This function inserts a new stock item into webERP, including updating the locstock table.');
 	$Parameter[0]['name'] = _('Stock Item Details');
-	$Parameter[0]['description'] = _('Key/value pairs of data to insert.');
+	$Parameter[0]['description'] = _('Key/value pairs of data to insert. The key must be identical with the database field name.');
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ')
+			._('If the first element is zero then the function was successful. ')
+			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 /*E*/	$InsertStockItem_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -609,28 +607,32 @@
 
 	function  xmlrpc_InsertStockItem($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertStockItem(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertStockItem(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
+	$Description = _('This function modifies a stock item that already exists in webERP.');
 	$Parameter[0]['name'] = _('Stock Item Details');
 	$Parameter[0]['description'] = _('Key/value pairs of data to modify.');
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ')
+			._('If the first element is zero then the function was successful. ')
+			._('Otherwise an array of error codes is returned and no modification takes place. ');
 
 /*E*/	$ModifyStockItem_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -638,28 +640,33 @@
 
 	function  xmlrpc_ModifyStockItem($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyStockItem(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyStockItem(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
+	$Description = _('This function takes a stock item code and returns an array of key/value pairs.').
+				_('The keys represent the database field names, and the values are the value of that field.');
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('The StockID code to identify the item in the database.');
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this stock item. ')
+			._('The key will be identical with field name from the stockmaster table. All fields will be in the set regardless of whether the value was set.').'<p>'
+			._('Otherwise an array of error codes is returned. ');
 
 /*E*/	$GetStockItem_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -667,22 +674,23 @@
 
 	function  xmlrpc_GetStockItem($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockItem($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockItem($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
+	$Description = _('This function searches the stockmaster table and returns an array of stock items matching that criteria.');
 	$Parameter[0]['name'] = _('Field Name');
 	$Parameter[0]['description'] = _('The field name to search on.');
 	$Parameter[1]['name'] = _('Match Criteria');
@@ -691,6 +699,7 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0]=_('Returns an array of stock codes matching the criteria send, or an array of error codes');
 
 /*E*/	$SearchStockItems_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -698,23 +707,23 @@
 
 	function  xmlrpc_SearchStockItems($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchStockItems($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
-/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) );
+/*x*/		} else {
 		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchStockItems($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = 'This function returns the stock balance for the given stockid.';
 	$Parameter[0]['name'] = _('Stock ID');
@@ -731,21 +740,21 @@
 
 	function  xmlrpc_GetStockBalance($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = 'This function returns the reorder levels by location.';
 	$Parameter[0]['name'] = _('Stock ID');
@@ -762,21 +771,21 @@
 
 	function  xmlrpc_GetStockReorderLevel($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockReorderLevel($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockReorderLevel($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = 'This function sets the reorder level for the given stockid in the given location.';
 	$Parameter[0]['name'] = _('Stock ID');
@@ -797,32 +806,34 @@
 
 	function  xmlrpc_SetStockReorderLevel($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 5)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 5)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SetStockReorderLevel($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
 /*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ),
-/*x*/						$xmlrpcmsg->getParam( 4 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/						$xmlrpcmsg->getParam( 4 )->scalarval(  ))) );
+/*x*/		} else {
 		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SetStockReorderLevel($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*e*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
+	$Description = _('This function returns the quantity allocated of the stock item id sent as a parameter.');
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('The StockID code to identify items ordered but not yet shipped.');
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an integer value of the quantity allocated or an array of error codes if not. ');
 
 /*E*/	$GetAllocatedStock_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -830,28 +841,30 @@
 
 	function  xmlrpc_GetAllocatedStock($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetAllocatedStock($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetAllocatedStock($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
+	$Description = _('This function takes a stock ID and returns the quantity of this stock that is currently on outstanding purchase orders.');
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('The StockID code to identify items in the database on order, but not yet received.');
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an integer value of the quantity on order or an array of error codes if not.');
 
 /*E*/	$GetOrderedStock_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -859,34 +872,36 @@
 
 	function  xmlrpc_GetOrderedStock($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetOrderedStock($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetOrderedStock($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
+	$Description = _('This function sets the sales price for a stock ID in the sales type and currency passed to the function');
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('The StockID code to identify the item in the database.');
 	$Parameter[1]['name'] = _('Currency Code');
 	$Parameter[1]['description'] = _('The currency involved.');
 	$Parameter[2]['name'] = _('Sales Type');
-	$Parameter[2]['description'] = _('The StockID code to identify the item in the database.');
+	$Parameter[2]['description'] = _('The sales type to identify the item in the database.');
 	$Parameter[3]['name'] = _('Price');
 	$Parameter[3]['description'] = _('The price to apply to this item.');
 	$Parameter[4]['name'] = _('User name');
 	$Parameter[4]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[5]['name'] = _('User password');
 	$Parameter[5]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue = _('Returns a zero if successful or else an array of error codes');
 
 /*E*/	$SetStockPrice_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -894,38 +909,40 @@
 
 	function  xmlrpc_SetStockPrice($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 6)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 6)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SetStockPrice($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
 /*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ),
 /*x*/						$xmlrpcmsg->getParam( 4 )->scalarval(  ),
-/*x*/							$xmlrpcmsg->getParam( 5 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/							$xmlrpcmsg->getParam( 5 )->scalarval(  ))) );
+/*x*/		} else {
 		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SetStockPrice($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
 /*e*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
+	$Description = _('This function gets the sales price for a stock ID in the sales type and currency passed to the function');
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('The StockID code to identify the item in the database.');
 	$Parameter[1]['name'] = _('Currency Code');
 	$Parameter[1]['description'] = _('The currency involved.');
 	$Parameter[2]['name'] = _('Sales Type');
-	$Parameter[2]['description'] = _('The StockID code to identify the item in the database.');
+	$Parameter[2]['description'] = _('The sales type of the item in the database.');
 	$Parameter[3]['name'] = _('User name');
 	$Parameter[3]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[4]['name'] = _('User password');
 	$Parameter[4]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue = _('Returns the sales price for he stock item whose ID is passed in the function');
 
 /*E*/	$GetStockPrice_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -933,26 +950,27 @@
 
 	function  xmlrpc_GetStockPrice($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 5)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 5)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockPrice($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
 /*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ),
-/*x*/						$xmlrpcmsg->getParam( 4 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/						$xmlrpcmsg->getParam( 4 )->scalarval(  ))) );
+/*x*/		} else {
 		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockPrice($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*e*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
+	$Description = _('');
 	$Parameter[0]['name'] = _('Invoice Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the invoice.');
 	$Parameter[1]['name'] = _('User name');
@@ -966,21 +984,21 @@
 
 	function  xmlrpc_InsertSalesInvoice($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesInvoice(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesInvoice(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Parameter[0]['name'] = _('Credit Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the credit.  All values must be negative.');
@@ -995,21 +1013,21 @@
 
 	function  xmlrpc_InsertSalesCredit($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesCedit(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesCedit(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = 'This function is used to start a new sales order.';
 	$Parameter[0]['name'] = _('Insert Sales Order Header');
@@ -1030,21 +1048,21 @@
 
 	function  xmlrpc_InsertSalesOrderHeader($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesOrderHeader(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesOrderHeader(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = 'This function is used to modify the header details of a sales order';
 	$Parameter[0]['name'] = _('Modify Sales Order Header Details');
@@ -1064,21 +1082,21 @@
 
 	function  xmlrpc_ModifySalesOrderHeader($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifySalesOrderHeader(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifySalesOrderHeader(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = 'This function is used to add line items to a sales order.';
 	$Parameter[0]['name'] = _('Insert Sales Order Line');
@@ -1099,21 +1117,21 @@
 
 	function  xmlrpc_InsertSalesOrderLine($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesOrderLine(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesOrderLine(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = 'This function is used to modify line items on a sales order.';
 	$Parameter[0]['name'] = _('Modify Sales Order Line');
@@ -1134,21 +1152,21 @@
 
 	function  xmlrpc_ModifySalesOrderLine($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifySalesOrderLine(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifySalesOrderLine(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Parameter[0]['name'] = _('Account Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the GL Account and fields to set.');
@@ -1163,21 +1181,21 @@
 
 	function  xmlrpc_InsertGLAccount($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertGLAccount(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertGLAccount(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Parameter[0]['name'] = _('Account Section Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the account section to insert.');
@@ -1192,21 +1210,21 @@
 
 	function  xmlrpc_InsertGLAccountSection($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertGLAccountSection(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertGLAccountSection(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Parameter[0]['name'] = _('Account Group Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the account group to insert.');
@@ -1221,21 +1239,21 @@
 
 	function  xmlrpc_InsertGLAccountGroup($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertGLAccountGroup(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertGLAccountGroup(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function returns a list of stock location ids.');
 	$Parameter[0]['name'] = _('User name');
@@ -1250,20 +1268,20 @@
 
 	function  xmlrpc_GetLocationList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetLocationList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetLocationList( '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function takes a stock location id and returns details of that stock location.');
 	$Parameter[0]['name'] = _('Stock Location Code');
@@ -1280,21 +1298,21 @@
 
 	function  xmlrpc_GetLocationDetails($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetLocationDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetLocationDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function returns a list of stock shipper ids.');
 	$Parameter[0]['name'] = _('User name');
@@ -1309,20 +1327,20 @@
 
 	function  xmlrpc_GetShipperList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetShipperList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetShipperList( '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function takes a stock shipper id and returns details of that shipper.');
 	$Parameter[0]['name'] = _('Stock Shipper ID');
@@ -1339,21 +1357,21 @@
 
 	function  xmlrpc_GetShipperDetails($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetShipperDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetShipperDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function returns a list of sales area codes.');
 	$Parameter[0]['name'] = _('User name');
@@ -1368,20 +1386,20 @@
 
 	function  xmlrpc_GetSalesAreasList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesAreasList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesAreasList( '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function takes a sales area code and returns details of that sales area.');
 	$Parameter[0]['name'] = _('Sales Area Code');
@@ -1398,21 +1416,21 @@
 
 	function  xmlrpc_GetSalesAreaDetails($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesAreaDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesAreaDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function takes a sales area description and returns details of that sales area.');
 	$Parameter[0]['name'] = _('Sales Area Description');
@@ -1429,21 +1447,21 @@
 
 	function  xmlrpc_GetSalesAreaDetailsFromName($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesAreaDetailsFromName($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesAreaDetailsFromName($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Parameter[0]['name'] = _('Sales Area Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the sales area to insert.');
@@ -1458,21 +1476,21 @@
 
 	function  xmlrpc_InsertSalesArea($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesArea(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesArea(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function returns a list of salesman codes.');
 	$Parameter[0]['name'] = _('User name');
@@ -1487,20 +1505,20 @@
 
 	function  xmlrpc_GetSalesmanList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesmanList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesmanList( '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function takes a salesman code and returns details of that salesman.');
 	$Parameter[0]['name'] = _('Sales Area Code');
@@ -1517,21 +1535,21 @@
 
 	function  xmlrpc_GetSalesmanDetails($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesmanDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesmanDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function takes a salesman\'s name and returns details of that salesman.');
 	$Parameter[0]['name'] = _('Salesman Name');
@@ -1548,21 +1566,21 @@
 
 	function  xmlrpc_GetSalesmanDetailsFromName($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesmanDetailsFromName($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSalesmanDetailsFromName($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Parameter[0]['name'] = _('Salesman Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the salesman to insert.');
@@ -1577,21 +1595,21 @@
 
 	function  xmlrpc_InsertSalesman($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesman(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesman(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function returns a list of tax group IDs.');
 	$Parameter[0]['name'] = _('User name');
@@ -1606,20 +1624,20 @@
 
 	function  xmlrpc_GetTaxgroupList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupList( '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function takes a tax group ID and returns details of that tax group.');
 	$Parameter[0]['name'] = _('Tax Group ID');
@@ -1636,21 +1654,21 @@
 
 	function  xmlrpc_GetTaxgroupDetails($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function returns a list of customer types.');
 	$Parameter[0]['name'] = _('User name');
@@ -1665,20 +1683,20 @@
 
 	function  xmlrpc_GetCustomerTypeList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerTypeList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerTypeList( '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function takes a customer type ID and returns details of that customer type.');
 	$Parameter[0]['name'] = _('Customer Type ID');
@@ -1695,21 +1713,21 @@
 
 	function  xmlrpc_GetCustomerTypeDetails($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerTypeDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerTypeDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Parameter[0]['name'] = _('Category Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the stock category to insert.');
@@ -1724,21 +1742,21 @@
 
 	function  xmlrpc_InsertStockCategory($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertStockCategory(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertStockCategory(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Parameter[0]['name'] = _('Category Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the stock category to modify.');
@@ -1753,21 +1771,21 @@
 
 	function  xmlrpc_ModifyStockCategory($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyStockCategory(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyStockCategory(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function takes a stock category ID and returns details of that stock category type.');
 	$Parameter[0]['name'] = _('Stock Category ID');
@@ -1784,21 +1802,21 @@
 
 	function  xmlrpc_GetStockCategory($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockCategory($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockCategory($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Parameter[0]['name'] = _('Field Name');
 	$Parameter[0]['description'] = _('The field name to search on.');
@@ -1815,23 +1833,23 @@
 
 	function  xmlrpc_SearchStockCategories($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchStockCategories($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
-/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) );
+/*x*/		} else {
 		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchStockCategories($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Parameter[0]['name'] = _('Label Name');
 	$Parameter[0]['description'] = _('The category label to search on.');
@@ -1848,23 +1866,23 @@
 
 	function  xmlrpc_StockCatPropertyList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(StockCatPropertyList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
-/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) );
+/*x*/		} else {
 		 $rtn = new xmlrpcresp( php_xmlrpc_encode(StockCatPropertyList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function returns a list of general ledger account codes.');
 	$Parameter[0]['name'] = _('User name');
@@ -1879,20 +1897,20 @@
 
 	function  xmlrpc_GetGLAccountList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetGLAccountList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetGLAccountList( '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function takes a general ledger account code and returns details of that account.');
 	$Parameter[0]['name'] = _('General Ledger Account Code');
@@ -1909,21 +1927,21 @@
 
 	function  xmlrpc_GetGLAccountDetails($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetGLAccountDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetGLAccountDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function takes a stock code ID and a tax authority code and returns the relevant tax rate.');
 	$Parameter[0]['name'] = _('StockID');
@@ -1942,23 +1960,23 @@
 
 	function  xmlrpc_GetStockTaxRate($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockTaxRate($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
-/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) );
+/*x*/		} else {
 		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockTaxRate($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to insert a new supplier into the webERP database.');
 	$Parameter[0]['name'] = _('Supplier Details');
@@ -1980,21 +1998,21 @@
 
 	function  xmlrpc_InsertSupplier($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSupplier(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSupplier(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to modify a supplier which is already setup in the webERP database.');
 	$Parameter[0]['name'] = _('Supplier Details');
@@ -2017,21 +2035,21 @@
 
 	function  xmlrpc_ModifySupplier($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifySupplier(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifySupplier(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to retrieve the details of a supplier from the webERP database.');
 	$Parameter[0]['name'] = _('Supplier ID');
@@ -2050,21 +2068,21 @@
 
 	function  xmlrpc_GetSupplier($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSupplier($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetSupplier($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to retrieve the details of a supplier from the webERP database.');
 	$Parameter[0]['name'] = _('Field name');
@@ -2084,23 +2102,23 @@
 
 	function  xmlrpc_SearchSuppliers($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchSuppliers($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
-/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) );
+/*x*/		} else {
 		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchSuppliers($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to retrieve the details of stock batches.');
 	$Parameter[0]['name'] = _('Stock ID');
@@ -2120,23 +2138,23 @@
 
 	function  xmlrpc_GetBatches($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetBatches($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
-/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) );
+/*x*/		} else {
 		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetBatches($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('Adjust the stock balance for the given stock code at the given location by the amount given.');
 	$Parameter[0]['name'] = _('Stock ID');
@@ -2160,27 +2178,27 @@
 
 	function  xmlrpc_StockAdjustment($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 6)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 6)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(StockAdjustment($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
 /*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ),
 /*x*/						$xmlrpcmsg->getParam( 4 )->scalarval(  ),
-/*x*/							$xmlrpcmsg->getParam( 5 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/							$xmlrpcmsg->getParam( 5 )->scalarval(  ))) );
+/*x*/		} else {
 		 $rtn = new xmlrpcresp( php_xmlrpc_encode(StockAdjustment($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
 /*e*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('Issues stock to a given work order from the given location');
 	$Parameter[0]['name'] = _('Work Order Number');
@@ -2208,8 +2226,8 @@
 
 	function  xmlrpc_WorkOrderIssue($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 8)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 8)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(WorkOrderIssue($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
@@ -2217,22 +2235,22 @@
 /*x*/						$xmlrpcmsg->getParam( 4 )->scalarval(  ),
 /*x*/							$xmlrpcmsg->getParam( 5 )->scalarval(  ),
 /*x*/								$xmlrpcmsg->getParam( 6 )->scalarval(  ),
-/*x*/									$xmlrpcmsg->getParam( 7 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/									$xmlrpcmsg->getParam( 7 )->scalarval(  ))) );
+/*x*/		} else {
 		 $rtn = new xmlrpcresp( php_xmlrpc_encode(WorkOrderIssue($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
 					$xmlrpcmsg->getParam( 3 )->scalarval(  ),
 						$xmlrpcmsg->getParam( 4 )->scalarval(  ),
 /*e*/							$xmlrpcmsg->getParam( 5 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to retrieve the details of a work order from the webERP database.');
 	$Parameter[0]['name'] = _('Field name');
@@ -2252,23 +2270,23 @@
 
 	function  xmlrpc_SearchWorkOrders($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchWorkOrders($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
-/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) );
+/*x*/		} else {
 		 $rtn = new xmlrpcresp( php_xmlrpc_encode(SearchWorkOrders($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to insert new purchasing data into the webERP database.');
 	$Parameter[0]['name'] = _('Purchasing data');
@@ -2290,21 +2308,21 @@
 
 	function  xmlrpc_InsertPurchData($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertPurchData(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertPurchData(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to modify purchasing data into the webERP database.');
 	$Parameter[0]['name'] = _('Purchasing data');
@@ -2326,21 +2344,21 @@
 
 	function  xmlrpc_ModifyPurchData($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyPurchData(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyPurchData(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('This function is used to insert a new work order into the webERP database. Currently this works only for single line orders.');
 	$Parameter[0]['name'] = _('Work order details');
@@ -2362,21 +2380,21 @@
 
 	function  xmlrpc_InsertWorkOrder($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertWorkOrder(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertWorkOrder(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('Receives stock from a given work order from the given location');
 	$Parameter[0]['name'] = _('Work Order Number');
@@ -2402,29 +2420,29 @@
 
 	function  xmlrpc_WorkOrderReceive($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 7)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 7)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(WorkOrderReceive($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
 /*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ),
 /*x*/						$xmlrpcmsg->getParam( 4 )->scalarval(  ),
 /*x*/							$xmlrpcmsg->getParam( 5 )->scalarval(  ),
-/*x*/								$xmlrpcmsg->getParam( 6 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/								$xmlrpcmsg->getParam( 6 )->scalarval(  ))) );
+/*x*/		} else {
 		 $rtn = new xmlrpcresp( php_xmlrpc_encode(WorkOrderReceive($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
 					$xmlrpcmsg->getParam( 3 )->scalarval(  ),
 /*e*/						$xmlrpcmsg->getParam( 4 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('Returns the webERP default date format');
 	$Parameter[0]['name'] = _('User name');
@@ -2440,20 +2458,20 @@
 
 	function  xmlrpc_GetDefaultDateFormat($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultDateFormat($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultDateFormat( '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('Returns the webERP default location');
 	$Parameter[0]['name'] = _('User name');
@@ -2469,20 +2487,20 @@
 
 	function  xmlrpc_GetDefaultCurrency($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultCurrency($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultCurrency( '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('Returns the webERP default price list');
 	$Parameter[0]['name'] = _('User name');
@@ -2498,20 +2516,20 @@
 
 	function  xmlrpc_GetDefaultPriceList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultPriceList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultPriceList( '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('Returns the webERP currency code');
 	$Parameter[0]['name'] = _('User name');
@@ -2527,20 +2545,20 @@
 
 	function  xmlrpc_GetDefaultLocation($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultLocation($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
 /*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultLocation( '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('Returns the value of the specified stock category property for the specified stock item category');
 	$Parameter[0]['name'] = _('Property');
@@ -2560,23 +2578,23 @@
 
 	function  xmlrpc_GetStockCatProperty($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/	    if ($xmlrpcmsg->getNumParams() == 4)
-/*x*/	    {
+/*x*/		if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockCatProperty($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
-/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) ); 
-/*x*/	    } else {
+/*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ))) );
+/*x*/		} else {
 		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockCatProperty($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*e*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ), '', '')));
-/*x*/	    }
+/*x*/		}
 		ob_end_flush();
 		return $rtn;
 	}
 
 	unset($Description);
 	unset($Parameter);
- 	unset($ReturnValue);
+	unset($ReturnValue);
 
 	$Description = _('Returns (possibly translated) error text from error codes');
 	$Parameter[0]['name'] = _('Error codes');
@@ -2587,7 +2605,7 @@
 
 	function  xmlrpc_GetErrorMessages($xmlrpcmsg){
 		ob_start('ob_file_callback');
-		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetAPIErrorMessages(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )))) ); 
+		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetAPIErrorMessages(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )))) );
 		ob_end_flush();
 		return $rtn;
 	}
