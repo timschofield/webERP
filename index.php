@@ -659,6 +659,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PricesByCost.php?' . SID . '">' . _('View or Update Prices Based On Costs') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/ReorderLevelLocation.php?' . SID . '">' . _('Reorder Level By Category/Location') . '</a></p>'; ?>
 							</td>
 							</tr>
