@@ -17,11 +17,11 @@ if (!isset($_POST['StockID'])) {
 	echo "<form action=" . $_SERVER['PHP_SELF'] . "?" . SID ." method=post><b><br></b>".
 	'<div class="page_help_text">'. _('Select a manufactured part') . " (" . _('or Assembly or Kit part') . ") " .
 	 _('to view the costed bill of materials') . "." . "<br><font size=1>" .
-	 _('Parts must be defined in the stock item entry') . "/" . _('modification screen as manufactured') . 
+	 _('Parts must be defined in the stock item entry') . "/" . _('modification screen as manufactured') .
      ", " . _('kits or assemblies to be available for construction of a bill of material').'</div>'
-	."</font><br><table align='center' cellpadding=3 colspan=4><tr><td><font size=1>" . _('Enter text extracts in the') . 
+	."</font><br><table align='center' cellpadding=3 colspan=4><tr><td><font size=1>" . _('Enter text extracts in the') .
 	 " <b>" . _('description') . "</b>:</font></td><td><input tabindex='1' type='Text' name='Keywords' size=20 maxlength=25></td>
-	 <td><font size=3><b>" . _('OR') . "</b></font></td><td><font size=1>" . _('Enter extract of the') . 
+	 <td><font size=3><b>" . _('OR') . "</b></font></td><td><font size=1>" . _('Enter extract of the') .
      " <b>" . _('Stock Code') . "</b>:</font></td><td><input tabindex='2' type='Text' name='StockCode' size=15 maxlength=20></td>
 	 </tr></table><br><div class='centre'><input tabindex='3' type=submit name='Search' VALUE=" . _('Search Now') . "></div><br>";
 }
@@ -131,8 +131,15 @@ if (isset($result) AND !isset($SelectedParent)) {
 }
 
 if (isset($StockID) and $StockID!=""){
-	$result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='" . $StockID  . "'",$db);
-	$myrow = DB_fetch_row($result);
+	/*CCF modification */
+//	$result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='" . $StockID  . "'",$db);
+	$result = DB_query("SELECT description, units, labourcost, overheadcost FROM stockmaster WHERE stockid='" . $StockID  . "'",$db);
+	/*CCF end modification */
+	$myrow = DB_fetch_array($result);
+	/*CCF modification */
+	$ParentLabourCost = $myrow['labourcost'];
+	$ParentOverheadCost = $myrow['overheadcost'];
+	/*CCF end modification */
 
 	echo "<div class='centre'><br><font size=4><b>" . $myrow[0] . ' : ' . _('per') . ' ' . $myrow[1] . "</b></font></div>";
 
@@ -155,7 +162,7 @@ if (isset($StockID) and $StockID!=""){
 		prnMsg(_('The bill of material for this part is not set up') . ' - ' . _('there are no components defined for it'),'warn');
 	} else {
 
-		echo "<table cellpadding=2 BORDER=2>";
+		echo "<table cellpadding=2 border=2>";
 		$TableHeader = '<tr>
 				<th>' . _('Component') . '</th>
 				<th>' . _('Description') . '</th>
@@ -201,6 +208,15 @@ if (isset($StockID) and $StockID!=""){
 
 			$j++;
 		}
+		/*CCF modification */
+		$TotalCost += $ParentLabourCost;
+		echo '<tr>
+			<td colspan=4 class=number><b>' . _('Labour Cost') . '</b></td>
+			<td class=number><b>' . number_format($ParentLabourCost,2) . '</b></td> </tr>';
+		$TotalCost += $ParentOverheadCost;
+		echo '<tr><td colspan=4 class=number><b>' . _('Overhead Cost') . '</b></td>
+			<td class=number><b>' . number_format($ParentOverheadCost,2) . '</b></td></tr>';
+		/*CCF end modification */
 
 		echo '<tr>
 			<td colspan=4 class=number><b>' . _('Total Cost') . '</b></td>
