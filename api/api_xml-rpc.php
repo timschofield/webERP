@@ -970,7 +970,7 @@
 	unset($Parameter);
 	unset($ReturnValue);
 
-	$Description = _('');
+	$Description = _('Inserts a sales invoice into the debtortrans table and does the relevant GL entries');
 	$Parameter[0]['name'] = _('Invoice Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the invoice.');
 	$Parameter[1]['name'] = _('User name');
@@ -1000,6 +1000,7 @@
 	unset($Parameter);
 	unset($ReturnValue);
 
+	$Description = _('This function is used to insert a new Sales Credit to the webERP database.');
 	$Parameter[0]['name'] = _('Credit Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the credit.  All values must be negative.');
 	$Parameter[1]['name'] = _('User name');
