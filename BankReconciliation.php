@@ -32,7 +32,7 @@ if (isset($_POST['PostExchangeDifference']) and is_numeric($_POST['DoExchangeDif
 		$BankAccountName = $CurrencyRow[1];
 		$CalculatedBalance = $_POST['DoExchangeDifference'];
 
-		$ExchangeDifference = ($CalculatedBalance - $_POST['BankStatmentBalance'])*$ExRate;
+		$ExchangeDifference = ($CalculatedBalance - $_POST['BankStatmentBalance'])/$ExRate;
 
 		include ('includes/SQL_CommonFunctions.inc');
 		$ExDiffTransNo = GetNextTransNo(36,$db);
@@ -155,7 +155,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 		echo  ' (' . $BankCurrCode . ' @ ' . $ExRate .')';
 	}
 	echo '</b></td>
-			<td valign=bottom class=number><b>' . number_format($Balance/$ExRate,2) . '</b></td></tr>';
+			<td valign=bottom class=number><b>' . number_format($Balance*$ExRate,2) . '</b></td></tr>';
 
 	$SQL = 'SELECT amount/exrate AS amt,
 					amountcleared,
@@ -299,7 +299,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	}
 	//end of while loop
 	echo '<tr></tr><tr><td colspan=6>' . _('Total of all uncleared deposits') . '</td><td class=number>' . number_format($TotalUnclearedDeposits,2) . '</td></tr>';
-	$FXStatementBalance = ($Balance/$ExRate) - $TotalUnpresentedCheques -$TotalUnclearedDeposits;
+	$FXStatementBalance = ($Balance*$ExRate) - $TotalUnpresentedCheques -$TotalUnclearedDeposits;
 	echo '<tr></tr><tr><td colspan=6><b>' . _('Bank statement balance should be') . ' (' . $BankCurrCode . ')</b></td><td class=number>' . number_format($FXStatementBalance,2) . '</td></tr>';
 
 	if (isset($_POST['DoExchangeDifference'])){
