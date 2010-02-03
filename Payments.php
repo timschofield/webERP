@@ -856,7 +856,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 			<td align=left>' . $PaymentItem->cheque . '</td>
 			<td class=number>' . number_format($PaymentItem->Amount,2) . '</td>
 			<td>' . $PaymentItem->GLCode . ' - ' . $PaymentItem->GLActName . '</td>
-			<td>' . $PaymentItem->Narrative  . '</td>
+			<td>' . stripslashes($PaymentItem->Narrative)  . '</td>
 			<td>' . $PaymentItem->tag . ' - ' . $tagname . '</td>
 			<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $PaymentItem->ID . '">' . _('Delete') . '</a></td>
 			</tr>';
