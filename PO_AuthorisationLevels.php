@@ -26,6 +26,9 @@ if (isset($_POST['Submit'])) {
 	} else {
 		$offhold=1;
 	}
+	if ($_POST['authlevel']=='') {
+		$_POST['authlevel']=0;
+	}
 	$sql='SELECT COUNT(*)
 			FROM purchorderauth
 			WHERE userid="'.$_POST['userid'].'"
