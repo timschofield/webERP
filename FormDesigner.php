@@ -5,7 +5,7 @@ include('includes/session.inc');
 $title = _('Form Designer');
 include('includes/header.inc');
 function FontSizes() {
-	return array(6, 8, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 24); //Possible font sizes
+	return array(6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 24); //Possible font sizes
 }
 function SimpleTextLine($key) {
 	/* Displays a table row containing the attributes for a
@@ -108,6 +108,9 @@ if (isset($_POST['preview']) or isset($_POST['save'])) {
 			case 'GoodsReceived.xml':
 				echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/PDFGrn.php?' . SID .'GRNNo=Preview&PONo=1">';
 				break;
+			case 'SalesInvoice.xml':
+				echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/PrintCustTrans.php?' . SID .'FromTransNo=Preview&InvOrCredit=Invoice&PrintPDF=True">';
+				break;
 		}
 	} else {
 	/* otherwise check that the web server has write premissions on the companies
@@ -154,7 +157,7 @@ echo '<div class="page_help_text">' . _('Enter the changes that you want in the 
 $Papers=array('A4_Landscape', 'A4_Portrait', 'A3_Landscape', 'A3_Portrait', 'letter_Portrait', 'letter_Landscape', 'legal_Portrait', 'legal_Landscape'); // Possible paper sizes/orientations
 echo '<form method="post" id="Form" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 echo '<input name=FormName type=hidden value="'.$_POST['FormName'].'">';
-echo '<table width=85% border=1>'; //Start of outer table
+echo '<table width=95% border=1>'; //Start of outer table
 echo '<tr><th width=33%>'._('Form Name').'<input type="text" name="formname" value="'.$FormDesign['name'].'"></th>';
 /* Select the paper size/orientation */
 echo '<th width=33%>'._('Paper Size').'<select name="PaperSize">';
@@ -186,19 +189,19 @@ foreach ($FormDesign as $key) {
 			$counter=$counter+1;
 			break;
 		case 'SimpleText':
-			echo '<td colspan=1 valign=top><table width=100% border=1><tr><th colspan=6>'.$key['name'].'</th></tr>';
+			echo '<td colspan=1 valign=top><table width=100% border=1><tr><th colspan=6>'.$key['name'].'</th></tr>'."\n";
 			SimpleTextLine($key);
 			echo '</table></td>';
 			$counter=$counter+1;
 			break;
 		case 'MultiLineText':
-			echo '<td colspan=1 valign=top><table width=100% border=1><tr><th colspan=4>'.$key['name'].'</th></tr>';
+			echo '<td colspan=1 valign=top><table width=100% border=1><tr><th colspan=4>'.$key['name'].'</th></tr>'."\n";
 			MultiTextLine($key);
 			echo '</table></td>';
 			$counter=$counter+1;
 			break;
 		case 'ElementArray':
-			echo '<td colspan=1 valign=top><table width=100% border=1><tr><th colspan=7>'.$key['name'].'</th></tr>';
+			echo '<td colspan=1 valign=top><table width=100% border=1><tr><th colspan=7>'.$key['name'].'</th></tr>'."\n";
 			foreach ($key as $subkey) {
 				if ($subkey['type']=='SimpleText') {
 					echo '<tr>';
@@ -235,6 +238,15 @@ foreach ($FormDesign as $key) {
 			echo '<td class=number>'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size=4 maxlength=4 value="'.$key->y.'"></td></tr><tr>';
 			echo '<td class=number>'._('Width').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'width" size=4 maxlength=4 value="'.$key->width.'"></td>';
 			echo '<td class=number>'._('Height').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'height" size=4 maxlength=4 value="'.$key->height.'"></td>';
+			echo '</table></td>';
+			$counter=$counter+1;
+			break;
+		case 'Line':
+			echo '<td colspan=1 valign=top><table width=100% border=1><tr><th colspan=6>'.$key['name'].'</th></tr>';
+			echo '<td class=number>'._('Start x co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'startx" size=4 maxlength=4 value="'.$key->startx.'"></td>';
+			echo '<td class=number>'._('Start y co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'starty" size=4 maxlength=4 value="'.$key->starty.'"></td></tr><tr>';
+			echo '<td class=number>'._('End x co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'endx" size=4 maxlength=4 value="'.$key->endx.'"></td>';
+			echo '<td class=number>'._('End y co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'endy" size=4 maxlength=4 value="'.$key->endy.'"></td>';
 			echo '</table></td>';
 			$counter=$counter+1;
 			break;
