@@ -18,7 +18,7 @@
 /* $Id$*/
 
 body {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 10px;
 	background: #fff;
 	margin-left: 0px;
@@ -33,7 +33,7 @@ img {
 }
 /*links before selection */
 a {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 12px;
 	font-weight: normal;
 	text-decoration: none;
@@ -44,7 +44,7 @@ a {
 a:hover {
 	color: #0000AA;
 	text-decoration: none;
-	
+
 }
 
 /* Table type is used for default tables*/
@@ -66,7 +66,7 @@ div.centre {
 
 /*table detail items default format */
 td {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 12px;
 	text-align:left;
 }
@@ -74,9 +74,9 @@ td {
 .dpTD {
 	border: 0;
 	width:20px;
-	background: #EEEEEE;	
+	background: #EEEEEE;
 	text-align:right;
-	cursor:pointer;	
+	cursor:pointer;
 }
 
 .dpDayHighlight {
@@ -84,7 +84,7 @@ td {
 	width:20px;
 	background: yellow;
 	text-align:right;
-	cursor:pointer;	
+	cursor:pointer;
 }
 
 .dpTDHover {
@@ -92,7 +92,7 @@ td {
 	width:20px;
 	background: #CCCCCC;
 	text-align:right;
-	cursor:pointer;	
+	cursor:pointer;
 }
 
 td.number {
@@ -118,7 +118,7 @@ th {
 div.error {
 	background:red;
 	color: white;
-	font-style: italic; 
+	font-style: italic;
 	font-weight:bold;
 	border: 3px solid red;
 	PADDING-LEFT: 3px;
@@ -146,7 +146,7 @@ div.warn {
         VISIBILITY: visible;
         MARGIN: 0 auto;
         POSITION: static;
-        font-family: Verdana, Arial, Helvetica;
+        font-family: Arial, Verdana, Helvetica, sans-serif;
         padding-top: 2px;
         padding-bottom: 2px;
         font-weight: normal;
@@ -167,7 +167,7 @@ div.success {
         VISIBILITY: visible;
         MARGIN: 0 auto;
         POSITION: static;
-        font-family: Verdana, Arial, Helvetica;
+        font-family: Arial, Verdana, Helvetica, sans-serif;
         font-weight: normal;
         font-size: 10px;
         TEXT-ALIGN:center;
@@ -184,7 +184,7 @@ div.info {
         VISIBILITY: visible;
         MARGIN: 0 auto;
         POSITION: static;
-        font-family: Verdana, Arial, Helvetica;
+        font-family: Arial, Verdana, Helvetica, sans-serif;
         padding-top: 2px;
         padding-bottom: 2px;
         font-weight: normal;
@@ -196,7 +196,7 @@ input{
   	background: url(images/input.png) #eee;
 	color:#000;
 	border: 0px 0px 1px 1px #000 dashed;
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 12px;
 }
 
@@ -212,7 +212,7 @@ input:hover{
 
 select {background:#eee;
 	color:#111;
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 12px;
 }
 
@@ -283,7 +283,7 @@ textarea{
 	background: url(images/inputtxt.png) #eee;
 	color:#000;
 	border: 0px 0px 1px 1px #000 dashed;
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 12px;
 	}
 textarea:hover{
@@ -322,7 +322,7 @@ div.csv {
         VISIBILITY: visible;
         MARGIN: 0 auto;
         POSITION: static;
-        font-family: Verdana, Arial, Helvetica;
+        font-family: Arial, Verdana, Helvetica, sans-serif;
         padding-top: 1px;
         padding-bottom: 1px;
         font-weight: normal;
@@ -332,7 +332,7 @@ div.csv {
 
 
 .callout_main {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	background: white;
 	border: none;
 	width: 100%;
@@ -372,7 +372,7 @@ div.csv {
 /*The main page heading left part before quick menu */
 .quick_menu_left {
 	background: none;
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 12px;
 	font-weight: bold;
 	border: none;
@@ -459,7 +459,7 @@ div.csv {
 }
 
 .main_menu {
-	background:none; 
+	background:none;
 	border: 0px;
 	height:28px;
 }
@@ -500,7 +500,7 @@ div.csv {
 	background: #00f url(images/gelblue.png) 0px -1px repeat-x;
 	/*border: 0px solid #888;*/
 	text-align: center;
-	white-space: nowrap; 
+	white-space: nowrap;
 }
 
 .main_menu_selected a{
@@ -514,7 +514,7 @@ div.csv {
 }
 
 span.main_menu_nolink {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 12px;
 	font-weight: bold;
 	color: #fff;
@@ -560,7 +560,7 @@ span.main_menu_nolink {
 }
 
 .menu_group_headers_text {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 12px;
 	font-weight: bold;
 	color: black;
@@ -585,7 +585,7 @@ span.main_menu_nolink {
 }
 
 .page_title_text {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
     padding-top: 2px;
     padding-bottom: 2px;
 	font-weight: bold;
@@ -597,7 +597,7 @@ span.main_menu_nolink {
 DIV.page_help_text {
 	background: lightgrey url(images/help.png) top left no-repeat;
 	BORDER: #a52a2a 1px solid;
-	padding-top:2px; 
+	padding-top:2px;
     padding-bottom: 2px;
 	PADDING-LEFT: 10px;
 	Z-INDEX: 1;
@@ -606,7 +606,7 @@ DIV.page_help_text {
 	VISIBILITY: visible;
 	MARGIN: 0 auto;
 	POSITION: static;
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
     font-weight: normal;
     font-size: 10px;
     color: black;
@@ -623,7 +623,7 @@ DIV.system_check {
         MARGIN: 0 auto;
         POSITION: static;
         background: lightgray;
-        font-family: Verdana, Arial, Helvetica;
+        font-family: Arial, Verdana, Helvetica, sans-serif;
         padding-top: 1px;
         padding-bottom: 1px;
         font-weight: normal;
@@ -633,7 +633,7 @@ DIV.system_check {
 }
 
 span.menu_group_nolink {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 12px;
 	font-weight: normal;
 	color: #777777;
@@ -655,14 +655,14 @@ span.menu_group_nolink {
 }
 
 a.footer {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	color: black;
 	font-weight: normal;
 	font-size: 8px;
 }
 
 .footer {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	color: black;
 	font-weight: normal;
 	font-size: 8px;

@@ -17,9 +17,9 @@
 /* $Id$*/
 
 body {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;;
 	font-size: 12px;
-	background-color: #F1FFDD; 
+	background-color: #F1FFDD;
 	margin-left: 10px;
 	margin-top: 5px;
 	margin-bottom: 0px;
@@ -33,7 +33,7 @@ img {
 
 /*links before selection */
 a {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;;
 	font-size: 12px;
 	font-weight: bold;
 	text-decoration: none;
@@ -62,7 +62,7 @@ div.centre {
 
 /*table detail items default format */
 td {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;;
 	font-size: 12px;
 	text-align: left;
 }
@@ -70,9 +70,9 @@ td {
 .dpTD {
 	border: 0;
 	width:20px;
-	background-color: #EEEEEE;	
+	background-color: #EEEEEE;
 	text-align:right;
-	cursor:pointer;	
+	cursor:pointer;
 }
 
 .dpDayHighlight {
@@ -80,7 +80,7 @@ td {
 	width:20px;
 	background-color: yellow;
 	text-align:right;
-	cursor:pointer;	
+	cursor:pointer;
 }
 
 .dpTDHover {
@@ -88,7 +88,7 @@ td {
 	width:20px;
 	background-color: #CCCCCC;
 	text-align:right;
-	cursor:pointer;	
+	cursor:pointer;
 }
 
 td.number {
@@ -136,7 +136,7 @@ div.info {
 }
 
 input {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;;
 	font-size: 12px;
 }
 
@@ -148,7 +148,7 @@ input:hover{
 }
 
 select {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;;
 	font-size: 12px;
 }
 
@@ -218,7 +218,7 @@ font.header_title {
 }
 
 textarea{
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 12px;
 }
 
@@ -255,7 +255,7 @@ div.csv {
         VISIBILITY: visible;
         MARGIN: 0 auto;
         POSITION: static;
-        font-family: Verdana, Arial, Helvetica;
+        font-family: Arial, Verdana, Helvetica, sans-serif;
         padding-top: 1px;
         padding-bottom: 1px;
         font-weight: normal;
@@ -264,7 +264,7 @@ div.csv {
 }
 
 .callout_main {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	background-color: #ffffff;
 	border: none;
 	width: 100%;
@@ -303,7 +303,7 @@ div.csv {
 
 /*The main page heading left part before quick menu */
 .quick_menu_left {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 11px;
 	border: 0px;
 	white-space: nowrap;
@@ -432,7 +432,7 @@ div.csv {
 }
 
 span.main_menu_nolink {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 12px;
 	font-weight: bold;
 	color: #777777;
@@ -481,7 +481,7 @@ span.main_menu_nolink {
 }
 
 .menu_group_headers_text {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 12px;
 	font-weight: bold;
 	color: black;
@@ -507,7 +507,7 @@ span.main_menu_nolink {
 }
 
 .page_title_text {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
         padding-top: 2px;
         padding-bottom: 2px;
 	font-weight: bold;
@@ -519,7 +519,7 @@ span.main_menu_nolink {
 DIV.page_help_text {
 	background: lightgrey url(images/help.png) top left no-repeat;
 	BORDER: #a52a2a 1px solid;
-	padding-top:2px; 
+	padding-top:2px;
         padding-bottom: 2px;
 	PADDING-LEFT: 10px;
 	Z-INDEX: 1;
@@ -528,7 +528,7 @@ DIV.page_help_text {
 	VISIBILITY: visible;
 	MARGIN: 0 auto;
 	POSITION: static;
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
         font-weight: normal;
         font-size: 10px;
         color: black;
@@ -545,7 +545,7 @@ DIV.system_check {
         MARGIN: 0 auto;
         POSITION: static;
         background: lightgray;
-        font-family: Verdana, Arial, Helvetica;
+        font-family: Arial, Verdana, Helvetica, sans-serif;
         padding-top: 1px;
         padding-bottom: 1px;
         font-weight: normal;
@@ -555,7 +555,7 @@ DIV.system_check {
 }
 
 span.menu_group_nolink {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 12px;
 	font-weight: normal;
 	color: #777777;
@@ -577,14 +577,14 @@ span.menu_group_nolink {
 }
 
 a.footer {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	color: black;
 	font-weight: normal;
 	font-size: 8px;
 }
 
 .footer {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	color: black;
 	font-weight: normal;
 	font-size: 8px;
