@@ -12,7 +12,7 @@ SUPPORT
 
 The primary means of support queries is through the user mailing list. 
 Please join the list at: http://lists.sourceforge.net/lists/listinfo/web-erp-users
-if you have queries. The archives of the mailing lists on sourceforge and the FAQ (see http://www.weberp.org/wikidocs/FrequentlyAskedQuestionsInstallation?v=efe) contain the most common issues with respect to installation.
+if you have queries. The archives of the mailing lists on sourceforge and the FAQ (see http://www.weberp.org/wikidocs/FrequentlyAskedQuestionsInstallation) contain the most common issues with respect to installation.
 
 Feedback, wants and gripes are encouraged in the interests of improving this applicaton.
 

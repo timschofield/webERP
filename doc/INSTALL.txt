@@ -39,11 +39,13 @@ Installing these components are well covered elsewhere - but if you need to inst
 
 PHP must have the register globals configuration parameter set to off.  This is the default (now).  This flag can be set in the php.ini on the server.  If it can't be changed on the server's php.ini, it is possibe for apache web servers to alter the configuration using a file called .htaccess. A .htaccess file is included in the webERP directory that ensures the register_globals flag is set to off for those web-servers that support .htaccess files.
 
-In addition the magic_quotes_gpc setting must also be set to off. This is a configuration parameter in the php.ini file on the web-server. If you don't have access to the web-server's php.ini, then the webERP distribution has an .htaccess file to ensure that this is set to off for apache servers and thos other servers that look at the parameters in the .htaccess file. If magic_quotes_gpc is not set to off then this can leave annoying "\" characters in some fields otherwise webERP works as normal.
+In addition the magic_quotes_gpc setting must also be set to off. This is a configuration parameter in the php.ini file on the web-server. If you don't have access to the web-server's php.ini, then the webERP distribution has an .htaccess file to ensure that this is set to off for apache servers and those other servers that look at the parameters in the .htaccess file. If magic_quotes_gpc is not set to off then this can leave annoying "\" characters in some fields otherwise webERP works as normal.
 
 One more issue with php setup - by default the setting session.use_cookies is set to 1, if it is set to 0 this can also cause problems.
 
-There are a number of traps with PHP installation depending on the web-server - see http://www.weberp.org/wikidocs/FrequentlyAskedQuestionsInstallation
+There are a number of traps with PHP installation depending on the web-server - see:
+
+ http://www.weberp.org/wikidocs/FrequentlyAskedQuestionsInstallation
 
 The system is developed using MySQL. webERP was also tested up to version 3.05 with the Postgres database server. Postgres is no longer supported due to lack of a developer using and testing with postgres and writing upgrade scripts. Instructions here are for mysql.
 
@@ -86,9 +88,10 @@ Extract the webERP archive under the web server root directory. This will create
 
 At this point you may wish to add an extra layer of security by restricting
 access to the webERP system.  This is in addition to webERP's own security
-system, so you may wish to skip it, but I advise you add it. In your
+system, so you may wish to skip it, but it is recommended to add this extra layer. In your
 .../htdocs/webERP directory (or wherever your webERP's root directory is)
 amend the file .htaccess thus:
+
 	php_flag magic_quotes_gpc off
 	php_flag register_globals off
 
@@ -118,7 +121,7 @@ Now create a file called .../htdocs/webERP/.htpasswd:
 Use command "htpasswd -n" to create sample lines which will be of the format
 	john.smith:0123456789012345
 
-Where '0..5' is an encrypted password. Create one line for each webERP user.
+Where '0123456789012345' is the encrypted password for john.smith. Create one line for each webERP user.
 Note that you will need to enter the (unencrypted) password whenever you access
 the webpages in .../webERP.
 
@@ -217,7 +220,7 @@ web-based installer that is activated when there is no config.php file. Simply b
 enter the web access password if you amended the .htaccess file as discussed
 above, accept all cookies, and complete the installation form.
 
-You will need to ensure that the directory where you have installed is writable by the system user that the web-server runs as - otherwise the installer will not be able to write the new config.php.
+You will need to ensure that the directory where you have installed is writable by the system user that the web-server runs as - otherwise the installer will not be able to write the new config.php file.
 
 In step 4 uncheck "Install Tables", because that was done above, and
 enter the MySQL password to access the system that you used above.
@@ -230,14 +233,14 @@ passwords as above.
 
 Click 'Install WebERP'
 
-You may wish to examine .../webERP/config.php to verify all is correct.
+After you have run the install script you may wish to examine .../webERP/config.php to verify all is correct or change it if you are having any issues.
 
 Alternatively, config.php may be created by copying config.distrib.php to config.php and then editing the new config.php file with the parameters required for your installation. If you have created the config.php using the web interface
 then you may now skip to step 4.
 
 config.php contains a series of user defined variables that determine how the system behaves. Critically it contains the user and password of the database connection and the type of database server being used. There is no going forward without the system being provided with this data. It is important to ensure there are no trailing characters at the end of this file - this is a common installation pitfall since some editors add a character at the end of the file.
 
-The file appears as follows for reference purposes. The actual file config.php under the webERP directory with all the other scripts must be edited and saved. As you can see the file is well commented, the critical items are the computer $host, the $dbType, the $dbuser and the $dbpassword - other variables can in most cases be left at their defaults. Note that the sha1 encryption requires the PHP version 4.3 or greater - if you are using a prior version of php - not recommended - you could try md5 encryption. Lines commencing with // are comments and not interpreted by PHP. (Note: In prior versions a variable $DatabaseName used to be required in config.php this is no longer required as the webERP database names available are derived from the directory names under webERP/companies/ - when you create a new database using weberp-new.sql you must also copy the directory structure for the company weberp to another directory under webERP/companies with the same name as the database created. If you are using the demo data and the webERP/sql/mysql/weberp-demo.sql script then the database is created as weberp and the company directory weberp already exists under webERP/companies)
+The contents of the config.php file appears as follows for reference purposes. The actual file config.php under the webERP directory with all the other scripts must be edited and saved. As you can see the file is well commented, the critical items are the computer $host, the $dbType, the $dbuser and the $dbpassword - other variables can in most cases be left at their defaults. Note that the sha1 encryption requires the PHP version 4.3 or greater - if you are using a prior version of php - not recommended - you could try md5 encryption. Lines commencing with // are comments and not interpreted by PHP. (Note: In prior versions a variable $DatabaseName used to be required in config.php this is no longer required as the webERP database names available are derived from the directory names under webERP/companies/ - when you create a new database using weberp-new.sql you must also copy the directory structure for the company weberp to another directory under webERP/companies with the same name as the database created. If you are using the demo data and the webERP/sql/mysql/weberp-demo.sql script then the database is created as weberp and the company directory weberp already exists under webERP/companies)
 
 
 // User configurable variables
@@ -328,7 +331,7 @@ It is imperative to go through each of the screens from the setup tab and enter 
 
 Now the accounting starts....
 
-All the standing configuration data is defined from the system setup tab and each link should be reviewed to enter appropriate data for the business.
+All the standing configuration data is defined from the system setup tab and each link should be reviewed to enter appropriate data for the business. The manual has a section on Getting Started which is essential reading before going live.
 
 
 Please try not to refer questions about PHP or database configuration 
@@ -348,4 +351,4 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
 A copy of the GNU General Public License is included in the doc directory along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-Copyright weberp.org 2009 - Contact: info@weberp.org
+Copyright weberp.org 2010 - Contact: info@weberp.org

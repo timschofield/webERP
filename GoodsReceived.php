@@ -348,7 +348,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 				}
 				$CurrentStandardCost = $myrow[0];
 
-				/*Set the purchase order line stdcostunit = weighted average standard cost used for all receipts of this line
+				/*Set the purchase order line stdcostunit = weighted average / standard cost used for all receipts of this line
 				 This assures that the quantity received against the purchase order line multiplied by the weighted average of standard
 				 costs received = the total of standard cost posted to GRN suspense*/
 				$_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost = (($CurrentStandardCost * $OrderLine->ReceiveQty) + ($_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost *$OrderLine->QtyReceived)) / ($OrderLine->ReceiveQty + $OrderLine->QtyReceived);
