@@ -535,11 +535,9 @@
 			FROM debtorsmaster
 			WHERE '.$Field.' LIKE "%'.$Criteria.'%"';
 		$result = DB_Query($sql, $db);
-		$i=0;
-		$DebtorList = array();
+		$DebtorList = array(0);	    // First element: no errors
 		while ($myrow=DB_fetch_array($result)) {
-			$DebtorList[$i]=$myrow[0];
-			$i++;
+			$DebtorList[]=$myrow[0];
 		}
 		return $DebtorList;
 	}
