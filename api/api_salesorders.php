@@ -34,7 +34,7 @@
  * target webERP company */
 	function VerifyOrderDate($orddate, $i, $Errors, $db) {
 		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
-		$result=DB_query($sql, $db);
+		$result=api_DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
 		if (strstr($orddate,"/")) {
@@ -70,7 +70,7 @@
 		$Searchsql = 'SELECT COUNT(typeabbrev)
 					 FROM salestypes
 					  WHERE typeabbrev="'.$ordertype.'"';
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = SalesTypeNotSetup;
@@ -99,7 +99,7 @@
 		$Searchsql = 'SELECT COUNT(loccode)
 					 FROM locations
 					  WHERE loccode="'.$fromstkloc.'"';
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = LocationCodeNotSetup;
@@ -112,7 +112,7 @@
  * target webERP company */
 	function VerifyDeliveryDate($deliverydate, $i, $Errors, $db) {
 		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
-		$result=DB_query($sql, $db);
+		$result=api_DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
 		if (strstr($deliverydate,'/')) {
@@ -156,7 +156,7 @@
 		$linesql = 'SELECT MAX(orderlineno)
 					FROM salesorderdetails
 					 WHERE orderno='.$orderno;
-		$lineresult = DB_query($linesql, $db);
+		$lineresult = api_DB_query($linesql, $db);
 		if ($myrow=DB_fetch_row($lineresult)) {
 			return $myrow[0] + 1;
 		} else {
@@ -169,7 +169,7 @@
 		$Searchsql = 'SELECT COUNT(orderno)
 					 FROM salesorders
 					  WHERE orderno="'.$orderno.'"';
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = OrderHeaderNotSetup;
@@ -222,7 +222,7 @@
  * target webERP company */
 	function VerifyItemDueDate($itemdue, $i, $Errors, $db) {
 		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
-		$result=DB_query($sql, $db);
+		$result=api_DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
 		if (strstr($itemdue,'/')) {
@@ -338,7 +338,7 @@
 		$sql = 'INSERT INTO salesorders ('.substr($FieldNames,0,-2).') '.
 		  'VALUES ('.substr($FieldValues,0,-2).') ';
 		if (sizeof($Errors)==0) {
-			$result = DB_Query($sql, $db);
+			$result = api_DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -430,7 +430,7 @@
 		}
 		$sql = substr($sql,0,-2).' WHERE orderno="'.$OrderHeader['orderno'].'"';
 		if (sizeof($Errors)==0) {
-			$result = DB_Query($sql, $db);
+			$result = api_DB_Query($sql, $db);
 			echo DB_error_no($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -486,7 +486,7 @@
 		$sql = 'INSERT INTO salesorderdetails ('.substr($FieldNames,0,-2).') '.
 		  'VALUES ('.substr($FieldValues,0,-2).') ';
 		if (sizeof($Errors)==0) {
-			$result = DB_Query($sql, $db);
+			$result = api_DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -541,7 +541,7 @@
 				//echo $sql;
 				//exit;
 		if (sizeof($Errors)==0) {
-			$result = DB_Query($sql, $db);
+			$result = api_DB_Query($sql, $db);
 			echo DB_error_no($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -568,7 +568,7 @@
 			return $Errors;
 		}
 		$sql='SELECT * FROM salesorders WHERE orderno="'.$OrderNo.'"';
-		$result = DB_Query($sql, $db);
+		$result = api_DB_Query($sql, $db);
 		if (sizeof($Errors)==0) {
 			return DB_fetch_array($result);
 		} else {
@@ -592,7 +592,7 @@
 			return $Errors;
 		}
 		$sql='SELECT * FROM salesorderdetails WHERE orderno="'.$OrderNo.'"';
-		$result = DB_Query($sql, $db);
+		$result = api_DB_Query($sql, $db);
 		if (sizeof($Errors)==0) {
 			return DB_fetch_array($result);
 		} else {

@@ -205,6 +205,39 @@
 	unset($Parameter);
 	unset($ReturnValue);
 
+	$Description = _('This function is used to retrieve a list of the branch codes for the Debtor Number supplied.');
+	$Parameter[0]['name'] = _('Debtor number');
+	$Parameter[0]['description'] = _('This is a string value. It must be a valid debtor number that is already in the webERP database.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns an array of branch codes, which may be strings or integers. ')
+			._('If the first element is zero then the function was successful.').'<p>'
+			._('Otherwise an array of error codes is returned. ');
+
+/*E*/	$GetCustomerBranchCodes_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetCustomerBranchCodes_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetCustomerBranchCodes($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/		if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/		{
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerBranchCodes($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ) )));
+/*x*/		} else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerBranchCodes($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/		}
+		ob_end_flush();
+		return $rtn;
+	}
+
+	unset($Description);
+	unset($Parameter);
+	unset($ReturnValue);
+
 	$Description = _('This function is used to retrieve the details of a customer branch from the webERP database.');
 	$Parameter[0]['name'] = _('Debtor number');
 	$Parameter[0]['description'] = _('This is a string value. It must be a valid debtor number that is already in the webERP database.');
@@ -2733,6 +2766,10 @@
 			"function" => "xmlrpc_ModifyBranch",
 			"signature" => $ModifyBranch_sig,
 			"docstring" => $ModifyBranch_doc),
+		"weberp.xmlrpc_GetCustomerBranchCodes" => array(
+			"function" => "xmlrpc_GetCustomerBranchCodes",
+			"signature" => $GetCustomerBranchCodes_sig,
+			"docstring" => $GetCustomerBranchCodes_doc),
 		"weberp.xmlrpc_GetCustomerBranch" => array(
 			"function" => "xmlrpc_GetCustomerBranch",
 			"signature" => $GetCustomerBranch_sig,

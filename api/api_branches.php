@@ -6,7 +6,7 @@
 		$Searchsql = "SELECT count(debtorno)
 				FROM debtorsmaster
 				WHERE debtorno='".$DebtorNumber."'";
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]==0) {
 			$Errors[$i] = DebtorDoesntExist;
@@ -24,7 +24,7 @@
 				FROM custbranch
 				WHERE debtorno="'.$DebtorNumber.'" AND
 				branchcode="'.$BranchNumber.'"';
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] != 0) {
 			$Errors[$i] = BranchNoAlreadyExists;
@@ -41,7 +41,7 @@
 				FROM custbranch
 				WHERE debtorno="'.$DebtorNumber.'" AND
 				branchcode="'.$BranchNumber.'"';
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = BranchNoDoesntExist;
@@ -95,7 +95,7 @@
 		$Searchsql = 'SELECT COUNT(areacode)
 					 FROM areas
 					  WHERE areacode="'.$AreaCode.'"';
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = AreaCodeNotSetup;
@@ -108,7 +108,7 @@
 		$Searchsql = 'SELECT COUNT(salesmancode)
 					 FROM salesman
 					  WHERE salesmancode="'.$SalesmanCode.'"';
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = SalesmanCodeNotSetup;
@@ -169,7 +169,7 @@
 		$Searchsql = 'SELECT COUNT(loccode)
 					 FROM locations
 					  WHERE loccode="'.$DefaultLocation.'"';
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = LocationCodeNotSetup;
@@ -182,7 +182,7 @@
 		$Searchsql = 'SELECT COUNT(taxgroupid)
 					 FROM taxgroups
 					  WHERE taxgroupid="'.$TaxGroupId.'"';
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = TaxGroupIdNotSetup;
@@ -195,7 +195,7 @@
 		$Searchsql = 'SELECT COUNT(shipper_id)
 					 FROM shippers
 					  WHERE shipper_id="'.$DefaultShipVia.'"';
-		$SearchResult=DB_query($Searchsql, $db);
+		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
 			$Errors[$i] = ShipperNotSetup;
@@ -481,6 +481,36 @@
 		return $Errors;
 	}
 
+/* This function returns a list of branch codes from the given debtorno.
+ * The returned data is an array with first value 0 and then as many branch
+ * codes are there are branches.  Otherwise, the first value is non-zero,
+ * and it (and any following) are error codes encountered.
+ */
+
+	function GetCustomerBranchCodes($DebtorNumber, $user, $password)
+ {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$sql = 'SELECT branchcode FROM custbranch WHERE debtorno = "' .
+				$DebtorNumber . '";';
+		$result = api_DB_query($sql, $db);
+		if (DB_error_no($db) != 0)
+			    $Errors[0] = DatabaseUpdateFailed;
+		else
+		{
+		    $Errors[0] = 0;	    // Signal data may follow.
+		    while ($myrow = DB_fetch_row($result))
+		    {
+			$Errors[] = $myrow[0];
+		    }
+		}
+
+		return  $Errors;
+ }
 /* This function takes a debtorno and branch code and returns an associative array containing
    the database record for that branch. If the debtor/branch code doesn't exist
    then it returns an $Errors array.
