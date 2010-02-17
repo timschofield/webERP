@@ -19,6 +19,7 @@ $ModuleList = array(_('Orders'),
 					_('Manufacturing'), 
 					_('General Ledger'), 
 					_('Asset Manager'), 
+					_('Petty Cash'), 
 					_('Setup'));
 					
 $PDFLanguages = array(_('Latin Western Languages'),

@@ -11,9 +11,9 @@ include('includes/session.inc');
 $title=_('Main Menu');
 
 /*The module link codes are hard coded in a switch statement below to determine the options to show for each tab */
-$ModuleLink = array('orders', 'AR', 'AP', 'PO', 'stock', 'manuf', 'GL', 'FA', 'system');
+$ModuleLink = array('orders', 'AR', 'AP', 'PO', 'stock', 'manuf', 'GL', 'FA', 'PC', 'system');
 /*The headings showing on the tabs accross the main index used also in WWW_Users for defining what should be visible to the user */
-$ModuleList = array(_('Sales'), _('Receivables'), _('Payables'), _('Purchases'), _('Inventory'), _('Manufacturing'), _('General Ledger'), _('Asset Manager'), _('Setup'));
+$ModuleList = array(_('Sales'), _('Receivables'), _('Payables'), _('Purchases'), _('Inventory'), _('Manufacturing'), _('General Ledger'), _('Asset Manager'), _('Petty Cash'), _('Setup'));
 
 if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when the user clicks on a tab */
 	$_SESSION['Module'] = $_GET['Application'];
@@ -808,6 +808,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 		break;
 
 
+
 	Case 'system': //System setup
 
 	?>
@@ -1244,6 +1245,83 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 		</table>
 <?php
 	break;
+
+	Case 'PC': /* Petty Cash Module */
+
+	?>
+		<table width="100%">
+			<tr>
+			<td valign="top" class="menu_group_area">
+				<table width="100%">
+
+					<?php OptionHeadings(); ?>
+
+					<tr>
+					<td class="menu_group_items">  <!-- PC Transactions -->
+						<table width="100%" class="table_index">
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PcAssignCashToTab.php?' . SID . '">' . _('Assign Cash to PC Tab') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PcClaimExpensesFromTab.php' . SID . '">' . _('Claim Expenses From PC Tab') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PcAuthorizeExpenses.php?' . SID . '">' . _('Expenses Authoritation') . '</a></p>'; ?>
+							</td>
+							</tr>
+						</table>
+					</td>
+					<td class="menu_group_items">  <!-- Pc Inquiries -->
+						<table width="100%" class="table_index">
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PcReportTab.php?' . SID . '">' . _('PC Tab General Report') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo GetRptLinks('prch'); ?>
+							</td>
+							</tr>
+					</table>
+					</td>
+					<td class="menu_group_items">   <!-- PC Maintenance -->
+						<table width="100%" class="table_index">
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PcTypeTabs.php?' . SID . '">' . _('Types of PC Tabs') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PcTabs.php?' . SID . '">' . _('PC Tabs') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PcExpenses.php?' . SID . '">' . _('PC Expenses') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PcExpensesTypeTab.php?' . SID . '">' . _('Expenses for Type of PC Tab') . '</a></p>'; ?>
+							</td>
+							</tr>
+						</table>
+					</td>
+					</tr>
+				</table>
+			</td>
+			</tr>
+		</table>
+	<?php
+		break;
+
 	} //end of module switch
 } /* end of if security allows to see the full menu */
 
