@@ -42,7 +42,7 @@ if (!isset($_SESSION['AttemptsCounter'])){
 
 /*User is logged in so get configuration parameters  - save in session*/
 if (isset($_SESSION['db']) AND $_SESSION['db'] != '' ) {
-	//include($PathPrefix . 'includes/GetConfig.php');
+	include($PathPrefix . 'includes/GetConfig.php');
 }
 
 if(isset($_SESSION['DB_Maintenance'])){

@@ -423,6 +423,14 @@ and converts to a yyyy/mm/dd format */
 
 }// end of function
 
+function FormatDateWithTimeForSQL ($datetime) {
+    //  Split the time off, fix date and add the time to returned value.
+    $dt = explode(' ', $datetime);
+    
+    return FormatDateForSQL( $dt[0] ) . ' ' . $dt[1];
+}
+
+
 function Date1GreaterThanDate2 ($Date1, $Date2) {
 
 /* returns 1 true if Date1 is greater than Date 2 */

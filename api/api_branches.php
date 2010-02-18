@@ -527,12 +527,17 @@
 			return $Errors;
 		}
 		$sql='SELECT * FROM custbranch WHERE debtorno="'.$DebtorNumber.'" and branchcode="'.$BranchCode.'"';
-		$result = DB_Query($sql, $db);
-		if (sizeof($Errors)==0) {
-			return DB_fetch_array($result);
-		} else {
-			return $Errors;
+		$result = api_DB_Query($sql, $db);
+		if (DB_error_no($result) != 0 )
+			$Errors[0] = DatabaseUpdateFailed;
+		else
+		{
+			$Errors[0] = 0;
+			if (DB_num_rows($result) > 0)
+			    $Errors += DB_fetch_array($result);
 		}
+
+		return  $Errors;
 	}
 
 

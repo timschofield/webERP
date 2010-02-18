@@ -248,7 +248,9 @@
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this branch. ')
-			._('The key will be identical with field name from the custbranch table. All fields will be in the set regardless of whether the value was set.').'<p>'
+			._('The key will be identical with field name from the ')
+			.'<a href="../../Z_DescribeTable.php?table=custbranch">'._('custbranch table. ').'</a>'
+			._('All fields will be in the set regardless of whether the value was set.').'<p>'
 			._('Otherwise an array of error codes is returned. ');
 
 /*E*/	$GetCustomerBranch_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),

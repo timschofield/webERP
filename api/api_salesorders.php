@@ -5,6 +5,13 @@
 //revision 1.14
 */
 
+// InsertSalesOrderHeader and ModifySalesOrderHeader have date fields
+// which need to be converted to the appropriate format.  This is
+// a list of such fields used to detect date values and format appropriately.
+$SOH_DateFields = array ('orddate', 'deliverydate',
+				    'datepackingslipprinted',
+				    'quotedate', 'confirmeddate' );
+
 /* Check that the custmerref field is 50 characters or less long */
 	function VerifyCustomerRef($customerref, $i, $Errors) {
 		if (strlen($customerref)>50) {
@@ -330,9 +337,12 @@
 		}
 		$FieldNames='';
 		$FieldValues='';
+		global  $SOH_DateFields;
 		$OrderHeader['orderno'] = GetNextTransNo(30,$db);
 		foreach ($OrderHeader as $key => $value) {
 			$FieldNames.=$key.', ';
+			if (in_array($key, $SOH_DateFields) )
+			    $value = FormatDateforSQL($value);	// Fix dates
 			$FieldValues.='"'.$value.'", ';
 		}
 		$sql = 'INSERT INTO salesorders ('.substr($FieldNames,0,-2).') '.
@@ -424,8 +434,11 @@
 		if (isset($OrderHeader['quotation'])){
 			$Errors=VerifyQuotation($OrderHeader['quotation'], sizeof($Errors), $Errors);
 		}
+		global  $SOH_DateFields;
 		$sql='UPDATE salesorders SET ';
 		foreach ($OrderHeader as $key => $value) {
+			if (in_array($key, $SOH_DateFields) )
+			    $value = FormatDateforSQL($value);	// Fix dates
 			$sql .= $key.'="'.$value.'", ';
 		}
 		$sql = substr($sql,0,-2).' WHERE orderno="'.$OrderHeader['orderno'].'"';
@@ -481,6 +494,10 @@
 		$FieldValues='';
 		foreach ($OrderLine as $key => $value) {
 			$FieldNames.=$key.', ';
+			if ($key == 'actualdispatchdate') {
+			    $value = FormatDateWithTimeForSQL($value);
+			} elseif ($key == 'itemdue')
+			    $value = FormatDateForSQL($value);
 			$FieldValues.='"'.$value.'", ';
 		}
 		$sql = 'INSERT INTO salesorderdetails ('.substr($FieldNames,0,-2).') '.
@@ -533,6 +550,11 @@
 		}
 		$sql='UPDATE salesorderdetails SET ';
 		foreach ($OrderLine as $key => $value) {
+			if ($key == 'actualdispatchdate') {
+			    $value = FormatDateWithTimeForSQL($value);
+			}
+			elseif ($key == 'itemdue')
+			    $value = FormatDateForSQL($value);
 			$sql .= $key.'="'.$value.'", ';
 		}
 		//$sql = substr($sql,0,-2).' WHERE orderno="'.$OrderLine['orderno'].'" and
