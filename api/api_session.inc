@@ -40,54 +40,6 @@ if (!isset($_SESSION['AttemptsCounter'])){
 	$_SESSION['AttemptsCounter'] = 0;
 }
 
-/*User is logged in so get configuration parameters  - save in session*/
-if (isset($_SESSION['db']) AND $_SESSION['db'] != '' ) {
-	include($PathPrefix . 'includes/GetConfig.php');
-}
-
-if(isset($_SESSION['DB_Maintenance'])){
-	if ($_SESSION['DB_Maintenance']!=0)  {
-		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-				ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])
-				,'d')	> 	$_SESSION['DB_Maintenance']){
-
-			/*Do the DB maintenance routing for the DB_type selected */
-			DB_Maintenance($db);
-			//purge the audit trail if necessary
-			if (isset($_SESSION['MonthsAuditTrail'])){
-				 $sql = "DELETE FROM audittrail
-						WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
-				$ErrMsg = _('There was a problem deleting expired audit-trail history');
-				$result = DB_query($sql,$db);
-			}
-			$_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
-		}
-	}
-}
-
-/*Check to see if currency rates need to be updated */
-if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
-	if ($_SESSION['UpdateCurrencyRatesDaily']!=0)  {
-		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-				ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily'])
-				,'d')> 0){
-
-			$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
-			/*Loop around the defined currencies and get the rate from ECB */
-			$CurrenciesResult = DB_query('SELECT currabrev FROM currencies',$db);
-			while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
-				if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-					$UpdateCurrRateResult = DB_query('UPDATE currencies SET
-											rate=' . GetCurrencyRate ($CurrencyRow[0],$CurrencyRates) . "
-											WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
-				}
-			}
-			$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
-			$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'",$db);
-		}
-	}
-}
-// include('../includes/GetConfig.php');
 if ($_SESSION['HTTPS_Only']==1){
 	if ($_SERVER['HTTPS']!='on'){
 		prnMsg(_('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....','error');

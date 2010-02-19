@@ -18,6 +18,7 @@ if ( isset( $dbuser ) && ($dbuser != "") ) {
     }
 }
 
+global  $db;		// Make sure it IS global, regardless of our context
 $db = pg_connect( $PgConnStr );
 
 if ( !$db ) {

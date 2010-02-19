@@ -4,6 +4,7 @@
 /* $Id$*/
 
 if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
+	global  $db;		// It is global, we may not be.
 	$sql = 'SELECT confname, confvalue FROM config'; // dont care about the order by
 	$ConfigResult = DB_query($sql,$db);
 	while( $myrow = DB_fetch_row($ConfigResult) ) {

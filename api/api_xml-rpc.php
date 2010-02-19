@@ -222,7 +222,7 @@
 
 	function  xmlrpc_GetCustomerBranchCodes($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/		if ($xmlrpcmsg->getNumParams() == 4)
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
 /*x*/		{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerBranchCodes($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),

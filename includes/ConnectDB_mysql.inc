@@ -4,6 +4,7 @@
 
 define ('LIKE','LIKE');
 
+global  $db;		// Make sure it IS global, regardless of our context
 $db = mysql_connect($host.':'.$mysqlport , $dbuser, $dbpassword);
 
 if ( !$db ) {

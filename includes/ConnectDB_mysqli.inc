@@ -9,6 +9,7 @@
 
 define ('LIKE','LIKE');
 
+global $db;	// Make sure it IS global, regardless of our context
 $db = mysqli_connect($host , $dbuser, $dbpassword,$_SESSION['DatabaseName'], $mysqlport);
 
 /* check connection */
