@@ -369,7 +369,10 @@ function ConvertToSQLDate($DateEntry) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
+				//  Return invoice number too
+				$Errors[] = $InvoiceDetails['transno'];
 			}
+			return  $Errors;
 		} else {
 			return $Errors;
 		}
@@ -478,6 +481,7 @@ function ConvertToSQLDate($DateEntry) {
 			} else {
 				$Errors[0]=0;
 			}
+			return  $Errors;
 		} else {
 			return $Errors;
 		}
