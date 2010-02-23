@@ -1,0 +1,153 @@
+<!-- Help Begin: Petty Cash -->
+
+<br><br>
+<a name="Petty Cash"><font size="+3"><b>Petty Cash</b></font></a>
+<br><br>
+<font size="+1"><b>Overview</b></font>
+<br><br>
+This for employees to submit expense claims directly in the system - that are then authorised by their immediate supervisor.
+<br><br>
+Allows control petty cash expenses in a friendly way, so every employee (without any accounting knowlegde) can enter their expenses, get paid for them, etc
+<br><br>
+It consists on a temporary GL table (pcashdetails), containing all info about payments and expenses done as petty cash. Once authorized by a supervisor (both cash assignments or expenses) are posted in gltrans table and flagged.
+<br><br>
+Once any transacion in the petty cash system has been posted can not be modified, edited or deleted in any way. Once posted, that's it.
+<br><br>
+<font size="+1"><b>Set up general parameters</b></font>
+<br><br><b>Set up expenses</b>
+<br><br>Definition of expenses allowed to be used in the Petty Cash system. This table is used to isolate non-accountant users (most of workers/users of webERP) from the technical details and names used in accounting.
+E.g.: Code Expense: FUEL-COMMERCIAL
+<br>Description: Fuel for cars used on commercial trips to customers
+<br>Account: 12345678 - Commercial car expenses
+<br>So when the system posts a petty cash expense against gltrans table, it will be posted against the GL account code selected.
+<br><br>
+PcExpenses.php is used to maintain this table (pcexpenses).
+<br><br>
+<b>Set up types of tabs</b>
+<br><br>Different kinds of users have different privileges. CEO can spend petty cash money on a different way than a truck driver does (no disrespect, for any of them ;-). The system maintain these different categories of tabs of table pctypetabs.
+<br><br>
+PcTypeTabs.php is used to define this kind of different tabs.
+E.g.: Director, Office staff, Truck Driver, etc.
+<br><br>
+Set up expenses allowed for type of tab
+The link between types of tabs and expenses.
+<br><br>
+Here we need to define which expenses are allowed to a certain type of tab. This table is used to prevent users assigning expenses for expenses not allowed. as example, a user with role "member of parlament" could have a tab of a type "all allowed, including night drinks in a pub", while a user with role "hard worker" could have a tab of a type "transport to workplace" only, so the system can achieve a better control of each one's expenses.
+<br><br>
+Each company must define here the policy of petty cash pahyments.
+<br><br>
+PcExpensesTypeTab.php is the script managing this.
+<br><br>
+<b>Set up tabs</b>
+<br><br>PcTabs.php is the script used to set up petty cash tabs.
+<br><br>
+A petty cash tab contains:
+<br><br>
+<ul>
+<li>Tab Code</li>
+<li>User: User of the tab. Who is spending/receiving moeny for petty cash expenses. Must be a webERP user.</li>
+<li>Type of tab: As previously defined</li>
+<li>Currency: A tab will handle money in one currency only. So users allowed to spend in 2 or more currencies (e.g. international commercial team) will have 1 tab for each currency</li>
+<li>Limit: Maximum amount the user can spend, to have a better control. Nowadays it only issues a warning of the supervisor, but can be coded to work differently (better)</li>
+<li>Authorizer: User supervisor of the petty cash user. User authorizing (or not) expenses done, checking money is spent wisely and asigning cash to users</li>
+<li>GL Account For Cash Assignment: GL account where the cash assigment comes from. It must be a bank account, so when assigning cash to a tab, the system will deduct the amount from the bank account and increase the petty cash account</li>
+<li>GL Account Petty Cash Tab. In GL we should have an account (one per currency) to reflect "amount of money distributed among employees" or "Petty Cash Account". This is the account where the money goes after a cash assigment is done or where the money comes where an expense is posted</li>
+</ul>
+<br><br>
+At this point we have the system ready to work.
+<br><br>
+<font size="+1"><b>Workflow</b></font>
+<br><br>
+<b>Assignment of cash</b>
+<br><br>The supervisor (authorizer) gives money cash to an employee to be used as petty cash. In script PcAssignCashToTab.php we record this fact.
+<br><br>
+Supervisor can select only the tabs he/she is supervisor.
+Must specify amount, date.
+There are 2 additional fields:
+<ul>
+<li>Notes: For any further detail needed to remember</li>
+<li>Receipt: In case the company has a physical receipt, or any proof, the code, number, etc of this receipt, to help solving disputes later on</li>
+</ul>
+<br><br>
+At this stage no tranasction is posted in gltrans table, only at pcashdetails we write down: "Supervisor gives to user X (tab really), Y dollars on date D".
+<br><br>
+Cash Assignments can be edited and deleted before are authorized. Once authorized and posted can not be modified in any way.
+<br><br>
+<b>Expense claims</b>
+<br><br>
+Employee will go out and spend money. Then will report to webERP these expenses in script PcClaimExpensesFromTab.php
+<br><br>
+Employee will select a tab (from his/her own tabs). And then records details of all expenses incurred:
+<ul>
+<li>Date</li>
+<li>Code of expense (from the list his/her tab is allowed depending on the type of tab involved)</li>
+<li>Amount</li>
+<li>Notes: For any further detail needed to remember</li>
+<li>Receipt: In case the company has a physical receipt, or any proof, the code, number, etc of this receipt, to help solving disputes later on.</li>
+</ul>
+<br><br>
+At this stage no tranasction is posted in gltrans table, only at pcashdetails we write down: "User U reports spending X amount in concept C on date D".
+<br><br>
+Expenses reported can be edited and deleted before are authorized. Once authorized and posted can not be modified in any way.
+<br><br>
+<b>Expense authoritation</b>
+<br><br>
+Supervisor will need to authorize expenses and cash assignemnts reported.
+<br><br>
+In script PcAuthorizeExpenses.php the supervisor must select a tab he/she is supervising
+<br><br>
+If there is any assignment or expense not authorized yet, it can be checked and if correct just tick it. If incorrect or in doubt (an employee claiming 10.000.000 USD for fuel car) he can call/email/report him and sort it out. Because it's not authorized yet it can be modified (to 100 USD...)
+<br><br>
+Once the update button is pressed and there are some entried ticked, then GL posting occurs.
+<br><br>
+<b>Posting workflow</b>
+<br><br>
+If a cash assigment need to be posted then:
+In gltrans
+
+    * Amount of assigment is deducted from "GL Account For Cash Assignment" as specified in tab definition.
+    * Amount of assigment is increased in "GL Account Petty Cash Tab" as specified in tab definition.
+
+In banktrans
+
+    * The bank transaction is recorded conveninetly to report the moeny going out from the "GL Account For Cash Assignment"
+
+
+If an expense need to be posted then:
+In gltrans
+
+    * Amount of expense is deducted from "GL Account Petty Cash Tab" as specified in tab definition.
+    * Amount of expense is increased in "GL Expense Account" as specified in expenses definition.
+
+
+
+Notes
+
+Users
+All users must be webERP users.
+Security setting 6 has been created to allow users use this module.
+So employees can login into webERP only to claim / report their expenses, if allowed.
+
+
+About advance payments
+About advance payments or refunds, we always run "open tabs", so employees asks for money first, and later on they spend it (we hope in an appropriate manner) and then report expenses incurred. Any difference will be settled "next report" or "next cash assignment". That's the idea keeping expense report and cash assignment separate, as it's flexible and fits all situations:
+
+Example Advance of 500 USD and submit claims of 480 USD:
+1) cash assignment of 500 USD
+2) claims of 480 USD
+3) approval of 480 USD (status: employee owes 20 USD to company)
+4) there's 2 options depending on company's culture:
+
+   1. return of 20 USD (cash assignment negative, so 500-480-20 = 0 balanced)
+   2. employee keeps 20 USD for his next report. The system will keep track of previous expenses/ cash assigments done, to keep the balance up to date)
+
+
+Example Advance of 500 USD and submit claims of 530 USD:
+1) cash assignment of 500 USD
+2) claims of 530 USD
+3) approval of 530 USD (status: company owes 30 USD to employee)
+4) there's 2 options depending on company's culture:
+
+   1. extra cash assignment of 30 USD (cash assignment positive, so 500-530+30 = 0 balanced)
+   2. next cash assignment of 500 USD will show he has only 470 available, as 30 were owed. 
+<!-- Help End: Petty Cash -->

@@ -716,6 +716,26 @@ if (!isset($_POST['Submit'])) {
             </LI>
             <LI>
 <?php
+if (!isset($_POST['Submit'])) {
+?>
+              <input type="checkbox" name="PettyCash">
+              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=PettyCash'; ?>">Petty Cash Management System</A>
+<?php
+  } else {
+?>
+              <A HREF="#PettyCash">Petty Cash Management System</A>
+<?php
+  }
+?>
+              <UL>
+                <LI>Overview</LI>
+                <LI>Setup General Parameters</LI>
+                
+              </UL>
+              <BR>
+            </LI>
+            <LI>            
+<?php
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectMultilanguage">
@@ -969,7 +989,9 @@ if ($_GET['ViewTopic'] == 'MRP' OR isset($_POST['SelectMRP'])) {
 if ($_GET['ViewTopic'] == 'ReportBuilder' OR isset($_POST['SelectReportBuilder'])) {
   include('ManualReportBuilder.html');
 }
-
+if ($_GET['ViewTopic'] == 'PettyCash' OR isset($_POST['PettyCash'])) {
+  include('ManualPettyCash.html');
+}
 if ($_GET['ViewTopic'] == 'Multilanguage' OR isset($_POST['SelectMultilanguage'])) {
   include('ManualMultilanguage.html');
 }
