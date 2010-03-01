@@ -1,4 +1,3 @@
-
 <?php
 /* $Revision: 1.0 $ */
 
@@ -33,14 +32,16 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Petty Cash') . '" alt="">' . ' <a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Authorization Of Petty Cash Expenses ') . ''.$SelectedTabs.'<a/>';
-	
+if (isset($SelectedTabs)) {
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Petty Cash') . '" alt="">' . ' <a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Authorization Of Petty Cash Expenses ') . ''.$SelectedTabs.'<a/>';
+} else {
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Petty Cash') . '" alt="">' . ' <a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Authorization Of Petty Cash Expenses ') . '<a/>';
+}
 if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR isset ($_POST['GO'])) {
-	
+
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo "<div class='centre'><p>" . _('Detail Of Movement For Last ') .': ';
- 
+
 	if(!isset ($Days)){
 		$Days=30;
 	}
@@ -48,7 +49,7 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 	echo "<input type=text class=number name='Days' VALUE=" . $Days . " MAXLENGTH =3 size=4> Days ";
 	echo '<input type=submit name="Go" value="' . _('Go') . '">';
 	echo '<p></div></form>';
-	
+
 	$sql = "SELECT pcashdetails.counterindex,
 				pcashdetails.tabcode,
 				pcashdetails.date,
@@ -69,9 +70,9 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 				AND pcashdetails.tabcode = '$SelectedTabs'
 				AND pcashdetails.date >= DATE_SUB(CURDATE(), INTERVAL ".$Days." DAY)
 			ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";
-	
+
 	$result = DB_query($sql,$db);
-	
+
 	echo '<br><table BORDER=1>';
 	echo "<tr>
 		<th>" . _('Date') . "</th>
@@ -85,11 +86,11 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 
 	$k=0; //row colour counter
 	echo'<form action="PcAuthorizeExpenses.php" method="POST" name="'._('update').'">';
-	
+
 	while ($myrow=DB_fetch_array($result))	{
-	
-		//update database if update pressed 
-		if (($_POST['submit']=='Update') AND isset($_POST[$myrow['counterindex']])){		
+
+		//update database if update pressed
+		if (($_POST['submit']=='Update') AND isset($_POST[$myrow['counterindex']])){
 
 			$PeriodNo = GetPeriod(ConvertSQLDate($myrow['date']), $db);
 
@@ -100,11 +101,11 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 			}
 
 			if ($myrow['codeexpense'] == 'ASSIGNCASH'){
-				$type = 2; 
+				$type = 2;
 				$AccountFrom = $myrow['glaccountassignment'];
 				$AccountTo = $myrow['glaccountpcash'];
 			}else{
-				$type = 1; 
+				$type = 1;
 				$Amount = -$Amount;
 				$AccountFrom = $myrow['glaccountpcash'];
 				$SQLAccExp = "SELECT glaccount
@@ -114,7 +115,7 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 				$myrowAccExp = DB_fetch_array($ResultAccExp);
 				$AccountTo = $myrowAccExp['glaccount'];
 			}
-			
+
 			//get typeno
 			$typeno = GetNextTransNo($type,$db);
 
@@ -122,19 +123,19 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 			$narrative= "PettyCash - ".$myrow['tabcode']." - ".$myrow['codeexpense']." - ".$myrow['notes']." - ".$myrow['receipt']."";
 			//insert to gltrans
 
-			$sqlFrom="INSERT INTO `gltrans` 
-					(`counterindex`, 
-					`type`, 
-					`typeno`, 
-					`chequeno`, 
-					`trandate`, 
-					`periodno`, 
-					`account`, 
-					`narrative`, 
-					`amount`, 
-					`posted`, 
-					`jobref`, 
-					`tag`) 
+			$sqlFrom="INSERT INTO `gltrans`
+					(`counterindex`,
+					`type`,
+					`typeno`,
+					`chequeno`,
+					`trandate`,
+					`periodno`,
+					`account`,
+					`narrative`,
+					`amount`,
+					`posted`,
+					`jobref`,
+					`tag`)
 			VALUES (NULL,
 					'".$type."',
 					'".$typeno."',
@@ -147,22 +148,22 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 					0,
 					'',
 					0)";
-					
+
 			$ResultFrom = DB_Query($sqlFrom, $db);
 
-			$sqlTo="INSERT INTO `gltrans` 
-					(`counterindex`, 
-					`type`, 
-					`typeno`, 
-					`chequeno`, 
-					`trandate`, 
-					`periodno`, 
-					`account`, 
-					`narrative`, 
-					`amount`, 
-					`posted`, 
-					`jobref`, 
-					`tag`) 
+			$sqlTo="INSERT INTO `gltrans`
+					(`counterindex`,
+					`type`,
+					`typeno`,
+					`chequeno`,
+					`trandate`,
+					`periodno`,
+					`account`,
+					`narrative`,
+					`amount`,
+					`posted`,
+					`jobref`,
+					`tag`)
 			VALUES (NULL,
 					'".$type."',
 					'".$typeno."',
@@ -175,9 +176,9 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 					0,
 					'',
 					0)";
-					
+
 			$ResultTo = DB_Query($sqlTo, $db);
-			
+
 			if ($myrow['codeexpense'] == 'ASSIGNCASH'){
 			// if it's a cash assignation we need to updated banktrans table as well.
 				$ReceiptTransNo = GetNextTransNo( 2, $db);
@@ -214,7 +215,7 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 					WHERE counterindex = '".$myrow['counterindex']."'";
 			$resultupdate = DB_query($sql,$db);
 		}
-		
+
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
 			$k=0;
@@ -229,7 +230,7 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 			<td>'.$myrow['posted'].'</td>
 			<td>'.$myrow['notes'].'</td>
 			<td>'.$myrow['receipt'].'</td>';
-			
+
 		if (isset($_POST[$myrow['counterindex']])){
 			echo'<td>'.ConvertSQLDate(Date('Y-m-d')).'</td>';
 		}else{
@@ -245,13 +246,13 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 		echo "<input type=hidden name='SelectedTabs' VALUE=" . $SelectedTabs . ">";
 		echo "<input type=hidden name='Days' VALUE=" .$Days. ">";
 		echo'		</tr> ';
-	
-	
+
+
 	} //end of looping
-	
-	// Do the postings 
-	include ('includes/GLPostings.inc');	
-	
+
+	// Do the postings
+	include ('includes/GLPostings.inc');
+
 	echo'<tr><td style="text-align:right" colspan=4><input type=submit name=submit value=' . _("Update") . '></td></tr></form>';
 
 } else { /*The option to submit was not hit so display form */
@@ -277,17 +278,17 @@ echo '<tr><td>' . _('Authorize expenses to Petty Cash Tab') . ":</td><td><select
 			echo "<option VALUE='";
 		}
 		echo $myrow['tabcode'] . "'>" . $myrow['tabcode'];
-	
+
 	} //end while loop get type of tab
 
 	echo '</select></td></tr>';
-	
+
 	   	echo '</table>'; // close table in first column
    	echo '</td></tr></table>'; // close main table
 
 	echo '<p><div class="centre"><input type=submit name=process VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
-		
-	echo '</form>';	
+
+	echo '</form>';
 } /*end of else not submit */
 include('includes/footer.inc');
 ?>
