@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
 				VALUES ('" . $_POST['SelectedTabs'] . "',
 						'" . $_POST['SelectedExpense'] . "')";
 
-			$msg = _('Expense code:') . ' ' . $_POST["SelectedExpense"].' '._('for Type of Tab:') . $_POST["SelectedTabs"] .  ' ' . _('has been created');
+			$msg = _('Expense code:') . ' ' . $_POST["SelectedExpense"].' '._('for Type of Tab:') .' '. $_POST["SelectedTabs"] .  ' ' . _('has been created');
 			$checkSql = "SELECT count(typetabcode)
 			     FROM pctypetabs";
 			$result = DB_query($checkSql, $db);
