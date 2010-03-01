@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
 
 		$checkresult = DB_query($checkSql,$db);
 		$checkrow = DB_fetch_row($checkresult);
-		
+
 		if ( $checkrow[0] >0) {
 			$InputError = 1;
 			prnMsg( _('The Expense ') . $_POST['codeexpense'] . _(' already exist in this Type of Tab.'),'error');
@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
 				VALUES ('" . $_POST['SelectedTabs'] . "',
 						'" . $_POST['SelectedExpense'] . "')";
 
-			$msg = _('Expense code:') . ' ' . $_POST["SelectedExpense"].' for Type of Tab:' . $_POST["SelectedTabs"] .  ' ' . _('has been created');
+			$msg = _('Expense code:') . ' ' . $_POST["SelectedExpense"].' '._('for Type of Tab:') . $_POST["SelectedTabs"] .  ' ' . _('has been created');
 			$checkSql = "SELECT count(typetabcode)
 			     FROM pctypetabs";
 			$result = DB_query($checkSql, $db);
@@ -65,14 +65,14 @@ if (isset($_POST['submit'])) {
 	//run the SQL from either of the above possibilites
 		$result = DB_query($sql,$db);
 		prnMsg($msg,'success');
-		
+
 		unset($_POST['SelectedExpense']);
 	}
 
 } elseif ( isset($_GET['delete']) ) {
 
 
-			$sql="DELETE FROM pctabexpenses 
+			$sql="DELETE FROM pctabexpenses
 				WHERE typetabcode='$SelectedTabs'
 				AND codeexpense='$SelectedType'";
 			$ErrMsg = _('The Tab Type record could not be deleted because');
@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
 			unset ($SelectedType);
 			unset($_GET['delete']);
 
-		 
+
 }
 
 if (!isset($SelectedTabs)){
@@ -109,31 +109,31 @@ echo '<tr><td>' . _('Select Type of Tab') . ":</td><td><select name='SelectedTab
 			echo "<option VALUE='";
 		}
 		echo $myrow['typetabcode'] . "'>" . $myrow['typetabcode'] . ' - ' . $myrow['typetabdescription'];
-	
-	} //end while loop	
-	
+
+	} //end while loop
+
 	echo '</select></td></tr>';
-	
+
 	   	echo '</table>'; // close table in first column
    	echo '</td></tr></table>'; // close main table
 
 	echo '<p><div class="centre"><input type=submit name=process VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
-		
+
 	echo '</form>';
 
 }
 
 //end of ifs and buts!
 if (isset($_POST['process'])OR isset($SelectedTabs)) {
-	
+
 	echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Expense Codes for Type of Tab ') . '' .$SelectedTabs. '<a/></div><p>';
-	
+
 	$sql = "SELECT pctabexpenses.codeexpense, pcexpenses.description
 			FROM pctabexpenses,pcexpenses
 			WHERE pctabexpenses.codeexpense=pcexpenses.codeexpense
 				AND pctabexpenses.typetabcode='$SelectedTabs'
 			ORDER BY pctabexpenses.codeexpense ASC";
-	
+
 	$result = DB_query($sql,$db);
 
 	echo '<br><table BORDER=1>';
@@ -164,10 +164,10 @@ while ($myrow = DB_fetch_row($result)) {
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
-	
-	
-		
-	
+
+
+
+
 	if (! isset($_GET['delete'])) {
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
@@ -191,14 +191,14 @@ while ($myrow = DB_fetch_row($result)) {
 			echo "<option VALUE='";
 		}
 		echo $myrow['codeexpense'] . "'>" . $myrow['codeexpense'] . ' - ' . $myrow['description'];
-	
-	} //end while loop	
-	
+
+	} //end while loop
+
 	echo '</select></td></tr>';
-	
-		
+
+
 	echo "<input type=hidden name='SelectedTabs' VALUE=" . $SelectedTabs . ">";
-	
+
    	echo '</table>'; // close table in first column
    	echo '</td></tr></table>'; // close main table
 
@@ -207,8 +207,8 @@ while ($myrow = DB_fetch_row($result)) {
 	echo '</form>';
 
 } // end if user wish to delete
-	
-	
+
+
 }
 
 
