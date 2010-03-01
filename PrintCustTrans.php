@@ -362,20 +362,22 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF != '' and isset($
 } /* end loop to print invoices */
 // Start FPDI concatination to append PDF files conditionally to the invoice
 // This part taken from FPDI example page -not used yet since change to TCPDF Dec 2009
-class concat_pdf extends FPDI {
-	var $files = array();
-	function setFiles($files) {
-		$this->files = $files;
-	}
-	function concat() {
-		foreach($this->files as $file) {
-			if ($file != 'pdf_append/none') {
-				$pagecount = $this->setSourceFile($file);
-				for ($i = 1;$i <= $pagecount;$i++) {
-					$tplidx = $this->ImportPage($i);
-					$s = $this->getTemplatesize($tplidx);
-					$this->AddPage($s['h'] > $s['w'] ? 'P' : 'L');
-					$this->useTemplate($tplidx);
+if ($PrintPDF) {
+	class concat_pdf extends FPDI {
+		var $files = array();
+		function setFiles($files) {
+			$this->files = $files;
+		}
+		function concat() {
+			foreach($this->files as $file) {
+				if ($file != 'pdf_append/none') {
+					$pagecount = $this->setSourceFile($file);
+					for ($i = 1;$i <= $pagecount;$i++) {
+						$tplidx = $this->ImportPage($i);
+						$s = $this->getTemplatesize($tplidx);
+						$this->AddPage($s['h'] > $s['w'] ? 'P' : 'L');
+						$this->useTemplate($tplidx);
+					}
 				}
 			}
 		}
@@ -388,7 +390,7 @@ if (isset($_GET['FromTransNo'])) {
 } elseif (isset($_POST['FromTransNo'])) {
 	$FromTransNo = trim($_POST['FromTransNo']);
 }
-if ($InvOrCredit == 'Invoice') {
+if (($InvOrCredit == 'Invoice' or $InvOrCredit == 'Credit') and $PrintPDF=='True') {
 	$sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
 			FROM stockmoves, stockmaster
 			WHERE stockmoves.stockid = stockmaster.stockid
