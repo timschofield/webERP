@@ -126,7 +126,7 @@ echo '<tr><td>' . _('Select Type of Tab') . ":</td><td><select name='SelectedTab
 //end of ifs and buts!
 if (isset($_POST['process'])OR isset($SelectedTabs)) {
 
-	echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Expense Codes for Type of Tab ') . '' .$SelectedTabs. '<a/></div><p>';
+	echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Expense Codes for Type of Tab ') . ' ' .$SelectedTabs. '</a></div><p>';
 
 	$sql = "SELECT pctabexpenses.codeexpense, pcexpenses.description
 			FROM pctabexpenses,pcexpenses
