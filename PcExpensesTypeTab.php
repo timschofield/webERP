@@ -77,7 +77,7 @@ if (isset($_POST['submit'])) {
 				AND codeexpense='$SelectedType'";
 			$ErrMsg = _('The Tab Type record could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
-			prnMsg(_('Expense code').' '. $SelectedTabs . _('for type of tab').' '. $SelectedType .' '. _('has been deleted') ,'success');
+			prnMsg(_('Expense code').' '. $SelectedType .' '. _('for type of tab').' '. $SelectedTabs .' '. _('has been deleted') ,'success');
 			unset ($SelectedType);
 			unset($_GET['delete']);
 
