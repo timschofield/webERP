@@ -203,7 +203,6 @@ $result = DB_query($SQL,$db);
 if (!isset($_POST['Description'])) {
 	$_POST['Description'] = '';
 }
-
 echo '<tr><td>' . _('Work Centre Description') . ":</td>
 	<td><input type='Text' name='Description' size=21 maxlength=20 value='" . $_POST['Description'] . "'></td>
 	</tr>
@@ -254,8 +253,9 @@ if (!isset($_POST['OverheadPerHour'])) {
 
 echo '</td></tr>';
 echo '<tr><td>' . _('Overhead Per Hour') . ':</td>
-	<td><input type="Text" class="number" name="OverheadPerHour" size=6 maxlength=6></td></tr>
-	</table>';
+	<td><input type="Text" class="number" name="OverheadPerHour" size=6 maxlength=6 value='.$_POST['OverheadPerHour'].'>';
+
+echo '</td></tr></table>';
 
 echo '<br><div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';
 
