@@ -53,8 +53,8 @@ $sql = "SELECT salesorders.customerref,
 		locations
 	WHERE salesorders.debtorno=debtorsmaster.debtorno
 	AND salesorders.shipvia=shippers.shipper_id
-	AND salesorders.fromstkloc=locations.loccode 
-	AND salesorders.quotation=1 
+	AND salesorders.fromstkloc=locations.loccode
+	AND salesorders.quotation=1
 	AND salesorders.orderno=" . $_GET['QuotationNo'];
 
 $result=DB_query($sql,$db, $ErrMsg);
@@ -87,17 +87,17 @@ $pdf->addInfo('Subject', _('Quotation') . ' ' . $_GET['QuotationNo']);
 $FontSize=12;
 $PageNumber = 1;
 $line_height=24;
-$pdf->selectFont('./fonts/Helvetica.afm');
+// $pdf->selectFont('./fonts/Helvetica.afm');
 
 /* Now ... Has the order got any line items still outstanding to be invoiced */
 
 $ErrMsg = _('There was a problem retrieving the quotation line details for quotation Number') . ' ' .
 	$_GET['QuotationNo'] . ' ' . _('from the database');
 
-$sql = "SELECT salesorderdetails.stkcode, 
-		stockmaster.description, 
-		salesorderdetails.quantity, 
-		salesorderdetails.qtyinvoiced, 
+$sql = "SELECT salesorderdetails.stkcode,
+		stockmaster.description,
+		salesorderdetails.quantity,
+		salesorderdetails.qtyinvoiced,
 		salesorderdetails.unitprice,
 		salesorderdetails.discountpercent,
 		stockmaster.taxcatid,
@@ -115,20 +115,22 @@ if (DB_num_rows($result)>0){
 	include('includes/PDFQuotationPageHeader.inc');
 
 	$QuotationTotal =0;
+	$QuotationTotalEx=0;
+	$TaxTotal=0;
 
 	while ($myrow2=DB_fetch_array($result)){
 
         $ListCount ++;
 
-		if ((strlen($myrow2['narrative']) >200 AND $YPos-$line_height <= 75) 
-			OR (strlen($myrow2['narrative']) >1 AND $YPos-$line_height <= 62) 
+		if ((strlen($myrow2['narrative']) >200 AND $YPos-$line_height <= 75)
+			OR (strlen($myrow2['narrative']) >1 AND $YPos-$line_height <= 62)
 			OR $YPos-$line_height <= 50){
 		/* We reached the end of the page so finsih off the page and start a newy */
 			$PageNumber++;
 			include ('includes/PDFQuotationPageHeader.inc');
 
 		} //end if need a new page headed up
-		
+
 		$DisplayQty = number_format($myrow2['quantity'],2);
 		$DisplayPrevDel = number_format($myrow2['qtyinvoiced'],2);
 		$DisplayPrice = number_format($myrow2['unitprice'],2);
@@ -140,16 +142,16 @@ if (DB_num_rows($result)>0){
 		$sql3 = " select taxgrouptaxes.taxauthid from taxgrouptaxes INNER JOIN custbranch ON taxgrouptaxes.taxgroupid=custbranch.taxgroupid WHERE custbranch.branchcode='" .$Branch ."'";
 		$result3=DB_query($sql3,$db, $ErrMsg);
 		while ($myrow3=DB_fetch_array($result3)){
-			$TaxAuth = $myrow3['taxauthid'];	
+			$TaxAuth = $myrow3['taxauthid'];
 		}
- 		
+
 		$sql4 = "SELECT * FROM taxauthrates WHERE dispatchtaxprovince=" .$TaxProv ." AND taxcatid=" .$TaxCat ." AND taxauthority=" .$TaxAuth;
 		$result4=DB_query($sql4,$db, $ErrMsg);
 		while ($myrow4=DB_fetch_array($result4)){
-			$TaxClass = 100 * $myrow4['taxrate'];	
+			$TaxClass = 100 * $myrow4['taxrate'];
 		}
 
-		$DisplayTaxClass = $TaxClass . "%"; 
+		$DisplayTaxClass = $TaxClass . "%";
 		$TaxAmount =  (($SubTot/100)*(100+$TaxClass))-$SubTot;
 		$DisplayTaxAmount = number_format($TaxAmount,2);
 
@@ -162,7 +164,7 @@ if (DB_num_rows($result)>0){
 		$LeftOvers = $pdf->addTextWrap(145,$YPos,295,$FontSize,$myrow2['description']);
 		$LeftOvers = $pdf->addTextWrap(420,$YPos,85,$FontSize,$DisplayQty,'right');
 		$LeftOvers = $pdf->addTextWrap(485,$YPos,85,$FontSize,$DisplayPrice,'right');
-		if ($DisplayDiscount > 0){		
+		if ($DisplayDiscount > 0){
 		$LeftOvers = $pdf->addTextWrap(535,$YPos,85,$FontSize,$DisplayDiscount,'right');
 		}
 		$LeftOvers = $pdf->addTextWrap(585,$YPos,85,$FontSize,$DisplayTaxClass,'right');
@@ -179,13 +181,13 @@ if (DB_num_rows($result)>0){
 		$QuotationTotal +=$LineTotal;
 		$QuotationTotalEx +=$SubTot;
 		$TaxTotal +=$TaxAmount;
-		
+
 		/*increment a line down for the next line item */
 		$YPos -= ($line_height);
 
 	} //end while there are line items to print out
-	if ((strlen($myrow['comments']) >200 AND $YPos-$line_height <= 75) 
-			OR (strlen($myrow['comments']) >1 AND $YPos-$line_height <= 62) 
+	if ((strlen($myrow['comments']) >200 AND $YPos-$line_height <= 75)
+			OR (strlen($myrow['comments']) >1 AND $YPos-$line_height <= 62)
 			OR $YPos-$line_height <= 50){
 		/* We reached the end of the page so finsih off the page and start a newy */
 			$PageNumber++;
@@ -221,7 +223,7 @@ if (DB_num_rows($result)>0){
 	$YPos -= 12;
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Quotation Including Tax'),'right');
 	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,number_format($QuotationTotal,2),'right');
-	
+
 } /*end if there are line details to show on the quotation*/
 
 
