@@ -34,7 +34,7 @@ function NULLToPrice( &$Field ) {
 
 // EXPORT FOR PRICE LIST
 if ( isset($_POST['pricelist']) ) {
-	
+
 		$SQL = "SELECT sales_type FROM salestypes WHERE typeabbrev='" . $_POST['SalesType'] . "'";
 		$SalesTypeResult = DB_query($SQL,$db);
 		$SalesTypeRow = DB_fetch_row($SalesTypeResult);
@@ -45,7 +45,7 @@ if ( isset($_POST['pricelist']) ) {
 				stockmaster.description,
 				prices.currabrev,
 				prices.price,
-				stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost 
+				stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost
 					as standardcost,
 				stockmaster.categoryid,
 				stockcategory.categorydescription,
@@ -77,23 +77,23 @@ if ( isset($_POST['pricelist']) ) {
 		include('includes/footer.inc');
 		exit;
 	}
-	
-	$CSVContent = stripcomma('stockid') . ',' . 
+
+	$CSVContent = stripcomma('stockid') . ',' .
 			stripcomma('description') . ',' .
 			stripcomma('barcode') . ',' .
 			stripcomma('units') . ',' .
 			stripcomma('mbflag') . ',' .
 			stripcomma('taxcatid') . ',' .
 			stripcomma('discontinued') . ',' .
-			stripcomma('price') . ',' . 
-			stripcomma('qty') . ',' . 
-			stripcomma('categoryid') . ',' . 
+			stripcomma('price') . ',' .
+			stripcomma('qty') . ',' .
+			stripcomma('categoryid') . ',' .
 			stripcomma('categorydescription') . "\n";
-			
+
 	While ($PriceList = DB_fetch_array($PricesResult,$db)){
 		$Qty = 0;
 		$sqlQty = "SELECT newqoh
-			FROM stockmoves 
+			FROM stockmoves
 			WHERE stockid = '".$PriceList['stockid']."'
 			AND loccode = '".$_POST['Location']."'
 			ORDER BY stkmoveno DESC LIMIT 1";
@@ -105,17 +105,17 @@ if ( isset($_POST['pricelist']) ) {
 			}
 			DB_free_result($resultQty);
 		}
-		
+
 		$DisplayUnitPrice = $PriceList['price'];
-				
-		$CSVContent .= (stripcomma($PriceList['stockid']) . ',' . 
-			stripcomma($PriceList['description']) . ',' . 
+
+		$CSVContent .= (stripcomma($PriceList['stockid']) . ',' .
+			stripcomma($PriceList['description']) . ',' .
 			stripcomma($PriceList['barcode']) . ',' .
 			stripcomma($PriceList['units']) . ',' .
 			stripcomma($PriceList['mbflag']) . ',' .
 			stripcomma($PriceList['taxcatid']) . ',' .
 			stripcomma($PriceList['discontinued']) . ',' .
-			stripcomma($DisplayUnitPrice) . ',' . 
+			stripcomma($DisplayUnitPrice) . ',' .
 			stripcomma($Qty) . ',' .
 			stripcomma($PriceList['categoryid']) . ',' .
 			stripcomma($PriceList['categorydescription']) . "\n"
@@ -131,7 +131,7 @@ if ( isset($_POST['pricelist']) ) {
 	exit;
 
 } elseif ( isset($_POST['custlist']) ) {
-	$SQL = "SELECT debtorsmaster.debtorno, 
+	$SQL = "SELECT debtorsmaster.debtorno,
 			custbranch.branchcode,
 			debtorsmaster.name,
 			custbranch.contactname,
@@ -174,7 +174,7 @@ if ( isset($_POST['pricelist']) ) {
 		exit;
 	}
 
-	$CSVContent = stripcomma('debtorno') . ',' . 
+	$CSVContent = stripcomma('debtorno') . ',' .
 			stripcomma('branchcode') . ',' .
 			stripcomma('name') . ',' .
 			stripcomma('contactname') . ',' .
@@ -188,14 +188,14 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma('faxno') . ',' .
 			stripcomma('email') . ',' .
 			stripcomma('currcode') . ',' .
-			stripcomma('clientsince') . ',' . 
-			stripcomma('creditlimit') . ',' . 
-			stripcomma('taxref') . ',' . 
+			stripcomma('clientsince') . ',' .
+			stripcomma('creditlimit') . ',' .
+			stripcomma('taxref') . ',' .
 			stripcomma('disabletrans') . "\n";
-	
-	
+
+
 	While ($CustList = DB_fetch_array($CustResult,$db)){
-		
+
 		$CreditLimit = $CustList['creditlimit'];
 		if ( strlen($CustList['braddress1']) <= 3 ) {
 			$Address1 = $CustList['address1'];
@@ -213,8 +213,8 @@ if ( isset($_POST['pricelist']) ) {
 			$Address6 = $CustList['braddress6'];
 		}
 
-		$CSVContent .= (stripcomma($CustList['debtorno']) . ',' . 
-			stripcomma($CustList['branchcode']) . ',' . 
+		$CSVContent .= (stripcomma($CustList['debtorno']) . ',' .
+			stripcomma($CustList['branchcode']) . ',' .
 			stripcomma($CustList['name']) . ',' .
 			stripcomma($CustList['contactname']) . ',' .
 			stripcomma($Address1) . ',' .
@@ -242,7 +242,7 @@ if ( isset($_POST['pricelist']) ) {
 	exit;
 
 } elseif ( isset($_POST['salesmanlist']) ) {
-	$SQL = "SELECT salesmancode, 
+	$SQL = "SELECT salesmancode,
 			salesmanname,
 			smantel,
 			smanfax,
@@ -264,24 +264,24 @@ if ( isset($_POST['pricelist']) ) {
 		include('includes/footer.inc');
 		exit;
 	}
-	
-	$CSVContent = stripcomma('salesmancode') . ',' . 
+
+	$CSVContent = stripcomma('salesmancode') . ',' .
 			stripcomma('salesmanname') . ',' .
 			stripcomma('smantel') . ',' .
 			stripcomma('smanfax') . ',' .
 			stripcomma('commissionrate1') . ',' .
 			stripcomma('breakpoint') . ',' .
 			stripcomma('commissionrate2') . "\n";
-	
-	
+
+
 	While ($SalesManList = DB_fetch_array($SalesManResult,$db)){
-		
+
 		$CommissionRate1 = $SalesManList['commissionrate1'];
 		$BreakPoint 	 = $SalesManList['breakpoint'];
 		$CommissionRate2 = $SalesManList['commissionrate2'];
 
-		$CSVContent .= (stripcomma($SalesManList['salesmancode']) . ',' . 
-			stripcomma($SalesManList['salesmanname']) . ',' . 
+		$CSVContent .= (stripcomma($SalesManList['salesmancode']) . ',' .
+			stripcomma($SalesManList['salesmanname']) . ',' .
 			stripcomma($SalesManList['smantel']) . ',' .
 			stripcomma($SalesManList['smanfax']) . ',' .
 			stripcomma($CommissionRate1) . ',' .
@@ -301,7 +301,7 @@ if ( isset($_POST['pricelist']) ) {
 		FROM stockmaster
 		ORDER BY stockid";
 	$ImageResult = DB_query($SQL,$db,'','',false,false);
-	
+
 	if (DB_error_no($db) !=0) {
 		$title = _('Security Token List Export Problem ....');
 		include('includes/header.inc');
@@ -314,18 +314,18 @@ if ( isset($_POST['pricelist']) ) {
 		exit;
 	}
 
-	$CSVContent = stripcomma('stockid') . ','. 
-				  stripcomma('filename') . ','. 
+	$CSVContent = stripcomma('stockid') . ','.
+				  stripcomma('filename') . ','.
 				  stripcomma('url') . "\n";
 	$baseurl = 'http://'. $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/' . 'getstockimg.php?automake=1&stockid=%s.png';
 	While ($ImageList = DB_fetch_array($ImageResult,$db)){
 		$url = sprintf($baseurl, urlencode($ImageList['stockid']));
 		$CSVContent .= (
-			stripcomma($ImageList['stockid']) . ',' . 
-			stripcomma($ImageList['stockid'] . '.png') . ',' . 
+			stripcomma($ImageList['stockid']) . ',' .
+			stripcomma($ImageList['stockid'] . '.png') . ',' .
 			stripcomma($url) . "\n");
 	}
-	
+
 	header('Content-type: application/csv');
 	header('Content-Length: ' . strlen($CSVContent));
 	header('Content-Disposition: inline; filename=ImageList.csv');
@@ -333,9 +333,9 @@ if ( isset($_POST['pricelist']) ) {
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	echo $CSVContent;
-	exit;	
+	exit;
 } elseif ( isset($_POST['sectokenlist']) ) {
-	$SQL = "SELECT tokenid, 
+	$SQL = "SELECT tokenid,
 			tokenname
 		FROM securitytokens";
 
@@ -352,14 +352,14 @@ if ( isset($_POST['pricelist']) ) {
 		include('includes/footer.inc');
 		exit;
 	}
-	
-	$CSVContent = stripcomma('tokenid') . ',' . 
+
+	$CSVContent = stripcomma('tokenid') . ',' .
 			stripcomma('tokenname') . "\n";
-	
-	
+
+
 	While ($SecTokenList = DB_fetch_array($SecTokenResult,$db)){
 
-		$CSVContent .= (stripcomma($SecTokenList['tokenid']) . ',' . 
+		$CSVContent .= (stripcomma($SecTokenList['tokenid']) . ',' .
 			stripcomma($SecTokenList['tokenname']) . "\n");
 	}
 	header('Content-type: application/csv');
@@ -371,7 +371,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo $CSVContent;
 	exit;
 } elseif ( isset($_POST['secrolelist']) ) {
-	$SQL = "SELECT secroleid, 
+	$SQL = "SELECT secroleid,
 			secrolename
 		FROM securityroles";
 
@@ -388,14 +388,14 @@ if ( isset($_POST['pricelist']) ) {
 		include('includes/footer.inc');
 		exit;
 	}
-	
-	$CSVContent = stripcomma('secroleid') . ',' . 
+
+	$CSVContent = stripcomma('secroleid') . ',' .
 			stripcomma('secrolename') . "\n";
-	
-	
+
+
 	While ($SecRoleList = DB_fetch_array($SecRoleResult,$db)){
 
-		$CSVContent .= (stripcomma($SecRoleList['secroleid']) . ',' . 
+		$CSVContent .= (stripcomma($SecRoleList['secroleid']) . ',' .
 			stripcomma($SecRoleList['secrolename']) . "\n");
 	}
 	header('Content-type: application/csv');
@@ -407,7 +407,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo $CSVContent;
 	exit;
 } elseif ( isset($_POST['secgrouplist']) ) {
-	$SQL = "SELECT secroleid, 
+	$SQL = "SELECT secroleid,
 			tokenid
 		FROM securitygroups";
 
@@ -424,14 +424,14 @@ if ( isset($_POST['pricelist']) ) {
 		include('includes/footer.inc');
 		exit;
 	}
-	
-	$CSVContent = stripcomma('secroleid') . ',' . 
+
+	$CSVContent = stripcomma('secroleid') . ',' .
 			stripcomma('tokenid') . "\n";
-	
-	
+
+
 	While ($SecGroupList = DB_fetch_array($SecGroupResult,$db)){
 
-		$CSVContent .= (stripcomma($SecGroupList['secroleid']) . ',' . 
+		$CSVContent .= (stripcomma($SecGroupList['secroleid']) . ',' .
 			stripcomma($SecGroupList['tokenid']) . "\n");
 	}
 	header('Content-type: application/csv');
@@ -443,7 +443,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo $CSVContent;
 	exit;
 } elseif ( isset($_POST['secuserlist']) ) {
-	$SQL = "SELECT userid, 
+	$SQL = "SELECT userid,
 			password,
 			realname,
 			customerid,
@@ -458,11 +458,9 @@ if ( isset($_POST['pricelist']) ) {
 			blocked,
 			displayrecordsmax,
 			theme,
-			language,
-			pinno,
-			swipecard
-		FROM www_users 
-		WHERE (customerid <> '') OR 
+			language
+		FROM www_users
+		WHERE (customerid <> '') OR
 			(NOT customerid IS NULL)";
 
 	$SecUserResult = DB_query($SQL,$db,'','',false,false);
@@ -478,8 +476,8 @@ if ( isset($_POST['pricelist']) ) {
 		include('includes/footer.inc');
 		exit;
 	}
-	
-	$CSVContent = stripcomma('userid') . ',' . 
+
+	$CSVContent = stripcomma('userid') . ',' .
 			stripcomma('password') . ','.
 			stripcomma('realname') . ','.
 			stripcomma('customerid') . ','.
@@ -497,11 +495,11 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma('language') . ','.
 			stripcomma('pinno') . ','.
 			stripcomma('swipecard') . "\n";
-	
-	
+
+
 	While ($SecUserList = DB_fetch_array($SecUserResult,$db)){
 
-		$CSVContent .= (stripcomma($SecUserList['userid']) . ',' . 
+		$CSVContent .= (stripcomma($SecUserList['userid']) . ',' .
 			stripcomma($SecUserList['password']) . ',' .
 			stripcomma($SecUserList['realname']) . ',' .
 			stripcomma($SecUserList['customerid']) . ',' .
@@ -531,9 +529,9 @@ if ( isset($_POST['pricelist']) ) {
 } else {
 	$title = _('Data Exports');
 	include('includes/header.inc');
-		
+
 	// SELECT EXPORT FOR PRICE LIST
-	
+
 	echo "<br>";
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 	echo '<table>';
@@ -546,7 +544,7 @@ if ( isset($_POST['pricelist']) ) {
 	          echo '<option Value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'];
 	}
 	echo '</select></td></tr>';
-	
+
 	$sql = 'SELECT loccode, locationname FROM locations';
 	$SalesTypesResult=DB_query($sql,$db);
 	echo '<tr><td>' . _('For Location') . ':</td>';
@@ -560,14 +558,14 @@ if ( isset($_POST['pricelist']) ) {
 	echo "</form><br>";
 
 	// SELECT EXPORT FOR CUSTOMER LIST
-	
-	
+
+
 	echo "<br>";
 	// Export Stock For Location
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 	echo '<table>';
 	echo '<tr><th colspan=2>' . _('Customer List Export') . '</th></tr>';
-	
+
 	$sql = 'SELECT loccode, locationname FROM locations';
 	$SalesTypesResult=DB_query($sql,$db);
 	echo '<tr><td>' . _('For Location') . ':</td>';
@@ -581,7 +579,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo "</form><br>";
 
 	// SELECT EXPORT FOR SALES MAN
-	
+
 	echo "<br>";
 	// Export Stock For Location
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
@@ -590,7 +588,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo "</table>";
 	echo "<div class='centre'><div class='centre'><input type='Submit' name='salesmanlist' value='" . _('Export') . "'></div>";
 	echo "</form><br>";
-	
+
 	// SELECT EXPORT FOR IMAGES
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 	echo '<table>';
@@ -606,7 +604,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo "</table>";
 	echo "<div class='centre'><input type='Submit' name='sectokenlist' value='" . _('Export') . "'></div>";
 	echo "</form><br>";
-	
+
 	// SELECT EXPORT SECURITY ROLES
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 	echo '<table>';
@@ -630,7 +628,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo "</table>";
 	echo "<div class='centre'><input type='Submit' name='secuserlist' value='" . _('Export') . "'></div>";
 	echo "</form><br>";
-	
+
 
 	include('includes/footer.inc');
 }
