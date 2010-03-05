@@ -528,7 +528,7 @@
 		}
 		$sql='SELECT * FROM custbranch WHERE debtorno="'.$DebtorNumber.'" and branchcode="'.$BranchCode.'"';
 		$result = api_DB_Query($sql, $db);
-		if (DB_error_no($result) != 0 )
+		if (DB_error_no($db) != 0 )
 			$Errors[0] = DatabaseUpdateFailed;
 		else
 		{

@@ -678,6 +678,10 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 	DB_free_result($Result);
 
+// *************************************************************************
+//   S T A R T   O F   I N V O I C E   S Q L   P R O C E S S I N G
+// *************************************************************************
+
 /*Now Get the next invoice number - function in SQL_CommonFunctions*/
 
 	$InvoiceNo = GetNextTransNo(10, $db);
@@ -1434,6 +1438,9 @@ DB_Txn_Begin($db);
 	} /*end of if Sales and GL integrated */
 
 	DB_Txn_Commit($db);
+// *************************************************************************
+//   E N D   O F   I N V O I C E   S Q L   P R O C E S S I N G
+// *************************************************************************
 
 	unset($_SESSION['Items']->LineItems);
 	unset($_SESSION['Items']);

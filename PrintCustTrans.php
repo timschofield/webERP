@@ -13,9 +13,9 @@ if (isset($_GET['InvOrCredit'])) {
 	$InvOrCredit = $_POST['InvOrCredit'];
 }
 if (isset($_GET['PrintPDF'])) {
-	$PrintPDF = $_GET['PrintPDF'];
+	$PrintPDF = TRUE;
 } elseif (isset($_POST['PrintPDF'])) {
-	$PrintPDF = $_POST['PrintPDF'];
+	$PrintPDF = TRUE;
 }
 if (!isset($_POST['ToTransNo']) or trim($_POST['ToTransNo']) == '' or $_POST['ToTransNo'] < $FromTransNo) {
 	$_POST['ToTransNo'] = $FromTransNo;
@@ -26,7 +26,7 @@ if ($FromTransNo=='Preview') {
 } else {
 	$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/SalesInvoice.xml');
 }
-if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF != '' and isset($FromTransNo) and isset($InvOrCredit) and $FromTransNo != '') {
+if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTransNo) and isset($InvOrCredit) and $FromTransNo != '') {
 	$PaperSize = $FormDesign->PaperSize;
 	include ('includes/PDFStarter.php');
 	require ('fpdi/fpdi.php');
@@ -390,7 +390,7 @@ if (isset($_GET['FromTransNo'])) {
 } elseif (isset($_POST['FromTransNo'])) {
 	$FromTransNo = trim($_POST['FromTransNo']);
 }
-if (($InvOrCredit == 'Invoice' or $InvOrCredit == 'Credit') and $PrintPDF=='True') {
+if (($InvOrCredit == 'Invoice' or $InvOrCredit == 'Credit') and $PrintPDF) {
 	$sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
 			FROM stockmoves, stockmaster
 			WHERE stockmoves.stockid = stockmaster.stockid

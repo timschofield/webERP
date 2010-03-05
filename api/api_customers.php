@@ -514,11 +514,10 @@
 		}
 		$sql='SELECT * FROM debtorsmaster WHERE debtorno="'.$DebtorNumber.'"';
 		$result = DB_Query($sql, $db);
-		if (sizeof($Errors)==0) {
-			return DB_fetch_array($result);
-		} else {
-			return $Errors;
-		}
+		$Errors[0] = 0;	    // None found.
+		$Errors[1] = DB_fetch_array($result);
+
+		return $Errors;
 	}
 
 /* This function takes a field name, and a string, and then returns an
