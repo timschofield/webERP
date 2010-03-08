@@ -254,7 +254,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 		AND trandate <= '" . FormatDateForSQL($_POST['ToDate']) . "'";
 
 }
-$Errmsg = _('Could not retrieve the count of sales order lines in the period under review');
+$ErrMsg = _('Could not retrieve the count of sales order lines in the period under review');
 $result = DB_query($sql,$db,$ErrMsg);
 
 
