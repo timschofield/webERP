@@ -33,9 +33,11 @@ if (isset($Errors)) {
 $Errors = array();
 
 if (isset($SelectedTabs)) {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Petty Cash') . '" alt="">' . ' <a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Authorization Of Petty Cash Expenses ') . ''.$SelectedTabs.'<a/>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Petty Cash') .
+		'" alt="">' . ' <a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Authorization Of Petty Cash Expenses ') . ''.$SelectedTabs.'<a/>';
 } else {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Petty Cash') . '" alt="">' . ' <a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Authorization Of Petty Cash Expenses ') . '<a/>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Petty Cash') .
+		'" alt="">' . ' <a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Authorization Of Petty Cash Expenses ') . '<a/>';
 }
 if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR isset ($_POST['GO'])) {
 
@@ -90,7 +92,7 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 	while ($myrow=DB_fetch_array($result))	{
 
 		//update database if update pressed
-		if (($_POST['submit']=='Update') AND isset($_POST[$myrow['counterindex']])){
+		if ((isset($_POST['submit']) and $_POST['submit']=='Update') AND isset($_POST[$myrow['counterindex']])){
 
 			$PeriodNo = GetPeriod(ConvertSQLDate($myrow['date']), $db);
 

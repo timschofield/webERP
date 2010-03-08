@@ -45,8 +45,8 @@ if (isset($_POST['submit'])) {
 		prnMsg('<br>' . _('The Amount must be inputed'),'error');
 		$Errors[$i] = 'TabCode';
 		$i++;
-	} 
-	
+	}
+
 	$sqlLimit = "SELECT tablimit
 		FROM pctabs
 		WHERE tabcode='$SelectedTabs'";
@@ -54,9 +54,9 @@ if (isset($_POST['submit'])) {
 	$ResultLimit = DB_query($sqlLimit,$db);
 	$Limit=DB_fetch_array($ResultLimit);
 
-	if (($_POST['CurrentAmount']+$_POST['amount'])>$Limit['tablimit']){
+	if (($_POST['CurrentAmount']+$_POST['Amount'])>$Limit['tablimit']){
 		prnMsg('<br>' . _('The balance after this assignation would be greater than the specified limit for this PC tab'),'warning');
-	} 
+	}
 
 	if ($InputError !=1 AND isset($SelectedIndex) ) {
 
@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
 			receipt = '" . $_POST['Receipt'] . "'
 			WHERE counterindex = '$SelectedIndex'";
 		$msg = _('Assignation of cash to PC Tab ') . ' ' . $SelectedTabs . ' ' .  _('has been updated');
-		
+
 	} elseif ($InputError !=1 ) {
 		// Add new record on submit
 		$sql = "INSERT INTO pcashdetails
@@ -119,7 +119,7 @@ if (!isset($SelectedTabs)){
 	then none of the above are true and the list of sales types will be displayed with
 	links to delete or edit each. These will call the same page again and allow update/input
 	or deletion of the records*/
-	
+
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo '<p><table border=1>'; //Main table
 	echo '<td><table>'; // First column
@@ -141,8 +141,8 @@ if (!isset($SelectedTabs)){
 			echo "<option VALUE='";
 		}
 		echo $myrow['tabcode'] . "'>" . $myrow['tabcode'];
-	} 
-	
+	}
+
 	echo '</select></td></tr>';
 	echo '</table>'; // close table in first column
    	echo '</td></tr></table>'; // close main table
@@ -152,11 +152,11 @@ if (!isset($SelectedTabs)){
 
 //end of ifs and buts!
 if (isset($_POST['process'])OR isset($SelectedTabs)) {
-	
+
 	echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Details Of Petty Cash Tab ') . '' .$SelectedTabs. '<a/></div><p>';
-	
+
 	if (! isset($_GET['edit']) OR isset ($_POST['GO'])){
-		
+
 		echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 		echo "<div class='centre'><p>" . _('Detail Of PC Tab Movements For Last ') .': ';
 		if(!isset ($Days)){
@@ -166,22 +166,22 @@ if (isset($_POST['process'])OR isset($SelectedTabs)) {
 		echo "<input type=text class=number name='Days' VALUE=" . $Days  . " MAXLENGTH =3 size=4> Days ";
 		echo '<input type=submit name="Go" value="' . _('Go') . '">';
 		echo '<p></div></form>';
-			
+
 		if (isset($_POST['Cancel'])) {
 			unset($_POST['Amount']);
 			unset($_POST['Date']);
 			unset($_POST['Notes']);
 			unset($_POST['Receipt']);
 		}
-	
-/*		$sql = "SELECT pcashdetails.date, 
-					pcashdetails.codeexpense, 
+
+/*		$sql = "SELECT pcashdetails.date,
+					pcashdetails.codeexpense,
 					pcexpenses.description
-					pcashdetails.amount, 
-					pcashdetails.authorized, 
-					pcashdetails.posted, 
-					pcashdetails.notes, 
-					pcashdetails.receipt 
+					pcashdetails.amount,
+					pcashdetails.authorized,
+					pcashdetails.posted,
+					pcashdetails.notes,
+					pcashdetails.receipt
 				FROM pcashdetails, pcexpenses
 				WHERE pcashdetails.tabcode='$SelectedTabs'
 					AND pcashdetails.codeexpense = pcexpenses.codeexpense
@@ -193,9 +193,9 @@ if (isset($_POST['process'])OR isset($SelectedTabs)) {
 				AND date >=DATE_SUB(CURDATE(), INTERVAL ".$Days." DAY)
 				ORDER BY date, counterindex ASC";
 
-				
+
 		$result = DB_query($sql,$db);
-		
+
 		echo '<br><table BORDER=1>';
 		echo "<tr>
 			<th>" . _('Date') . "</th>
@@ -217,19 +217,19 @@ if (isset($_POST['process'])OR isset($SelectedTabs)) {
 			$k=1;
 		}
 
-		$sqldes="SELECT description 
-					FROM pcexpenses 
+		$sqldes="SELECT description
+					FROM pcexpenses
 					WHERE codeexpense='". $myrow['3'] . "'";
-			   
+
 		$ResultDes = DB_query($sqldes,$db);
 		$Description=DB_fetch_array($ResultDes);
-		
+
 		if (!isset($Description['0'])){
 			$Description['0']='ASSIGNCASH';
 		}
 
 		if (($myrow['5'] == "0000-00-00") and ($Description['0'] == 'ASSIGNCASH')){
-			// only cash assignations NOT authorized can be modified or deleted 
+			// only cash assignations NOT authorized can be modified or deleted
 			printf("<td>%s</td>
 				<td>%s</td>
 				<td class=number>%s</td>
@@ -264,33 +264,33 @@ if (isset($_POST['process'])OR isset($SelectedTabs)) {
 		}
 	}
 		//END WHILE LIST LOOP
-		
-		$sqlamount="SELECT sum(amount) 
+
+		$sqlamount="SELECT sum(amount)
 					FROM pcashdetails
-					WHERE tabcode='$SelectedTabs'";		
-		
+					WHERE tabcode='$SelectedTabs'";
+
 		$ResultAmount = DB_query($sqlamount,$db);
 		$Amount=DB_fetch_array($ResultAmount);
-		
+
 		if (!isset($Amount['0'])) {
 			$Amount['0']=0;
 		}
-		
+
 		echo "<tr><td colspan=4 style=text-align:right >" . _('Current balance') . ":</td>
 			<td colspan=2>".number_format($Amount['0'],2)."</td></tr>";
 
 		echo '</table>';
-	
-	}	
-	
+
+	}
+
 	if (! isset($_GET['delete'])) {
 
 		echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 		echo '<p><table border=1>'; //Main table
 		echo '<td><table>'; // First column
-		
+
 		if ( isset($_GET['edit'])) {
-		
+
 		$sql = "SELECT * FROM pcashdetails
 					WHERE counterindex='$SelectedIndex'";
 
@@ -302,45 +302,45 @@ if (isset($_POST['process'])OR isset($SelectedTabs)) {
 			$_POST['Amount']  = $myrow['amount'];
 			$_POST['Notes']  = $myrow['notes'];
 			$_POST['Receipt']  = $myrow['receipt'];
-			
+
 			echo "<input type=hidden name='SelectedTabs' VALUE=" . $SelectedTabs . ">";
 			echo "<input type=hidden name='SelectedIndex' VALUE=" . $SelectedIndex. ">";
 			echo "<input type=hidden name='CurrentAmount' VALUE=" . $Amount['0']. ">";
 			echo "<input type=hidden name='Days' VALUE=" .$Days. ">";
 		}
 
-/* Ricard: needs revision of this date initialization */		
+/* Ricard: needs revision of this date initialization */
 		if (!isset($_POST['Date'])) {
 			$_POST['Date']=Date("d/m/Y");
 		}
-		
+
 		echo '<tr><td>' . _('Cash Assignation Date') . ":</td>";
-		
+
 		echo '<td><input type=text class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="Date" size=10 maxlength=10 value=' . $_POST['Date'] . '></td></tr>';
 
-		
+
 		if (!isset($_POST['Amount'])) {
 			$_POST['Amount']=0;
 		}
 
 		echo "<tr><td>" . _('Amount') . ":</td><td><input type='Text' class='number' name='Amount' size='12' maxlength='11' value='" . $_POST['Amount'] . "'></td></tr>";
-		
+
 		if (!isset($_POST['Notes'])) {
 			$_POST['Notes']='';
 		}
-		
+
 		echo "<tr><td>" . _('Notes') . ":</td><td><input type='Text' name='Notes' size=50 maxlength=49 value='" . $_POST['Notes'] . "'></td></tr>";
 
 		if (!isset($_POST['Receipt'])) {
 			$_POST['Receipt']='';
 		}
-		
+
 		echo "<tr><td>" . _('Receipt') . ":</td><td><input type='Text' name='Receipt' size=50 maxlength=49 value='" . $_POST['Receipt'] . "'></td></tr>";
 
 		echo "<input type=hidden name='CurrentAmount' VALUE=" . $Amount['0']. ">";
 		echo "<input type=hidden name='SelectedTabs' VALUE=" . $SelectedTabs . ">";
 		echo "<input type=hidden name='Days' VALUE=" .$Days. ">";
-		
+
 		echo '</table>'; // close table in first column
 		echo '</td></tr></table>'; // close main table
 
@@ -349,7 +349,7 @@ if (isset($_POST['process'])OR isset($SelectedTabs)) {
 		echo '</form>';
 
 	} // end if user wish to delete
-	
+
 }
 
 include('includes/footer.inc');

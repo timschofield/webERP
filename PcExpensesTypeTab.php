@@ -24,7 +24,7 @@ if (isset($Errors)) {
 }
 
 $Errors = array();
-
+$InputError=0;
 if (isset($_POST['submit'])) {
 
 	if ( $InputError !=1 ) {
