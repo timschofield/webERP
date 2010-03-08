@@ -362,7 +362,7 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 } /* end loop to print invoices */
 // Start FPDI concatination to append PDF files conditionally to the invoice
 // This part taken from FPDI example page -not used yet since change to TCPDF Dec 2009
-if ($PrintPDF) {
+if (isset($PrintPDF)) {
 	class concat_pdf extends FPDI {
 		var $files = array();
 		function setFiles($files) {

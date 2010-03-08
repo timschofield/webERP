@@ -217,7 +217,7 @@ If (isset($PrintPDF)
 				AND debtortrans.branchcode=custbranch.branchcode
 				AND custbranch.salesman=salesman.salesmancode';
 
-			if ($_POST['PrintEDI']=='No'){
+			if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No'){
 				$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
 			}
 		}
@@ -228,7 +228,7 @@ If (isset($PrintPDF)
 
 			$title = _('Transaction Print Error Report');
 			include ('includes/header.inc');
-	
+
 			prnMsg( _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available'),'error');
 			if ($debug==1){
 			    prnMsg (_('The SQL used to get this information that failed was') . "<br>" . $sql,'error');
@@ -241,44 +241,40 @@ If (isset($PrintPDF)
 
 			$ExchRate = $myrow['rate'];
 
-			if ($InvOrCredit=='Invoice'){
-				$sql = 'SELECT stockmoves.stkmoveno,
-								stockmoves.stockid,
-								stockmaster.description,
-								stockmaster.serialised,
-								stockmaster.controlled,
-								-stockmoves.qty as Quantity,
-								stockmoves.narrative,
-								stockmaster.units,
-								stockmaster.decimalplaces,
-							 	stockmoves.discountpercent,
-								stockmoves.narrative
-							FROM stockmoves,
-									stockmaster
-							WHERE stockmoves.stockid = stockmaster.stockid
-							AND stockmoves.type=10
-							AND stockmoves.transno = '.$FromTransNo.'
-							AND stockmoves.show_on_inv_crds=1';
-		} else {
-		/* only credit notes to be retrieved */
-			 $sql = 'SELECT  stockmoves.stkmoveno,
-						stockmoves.stockid,
+			if ($InvOrCredit == 'Invoice') {
+				$sql = 'SELECT stockmoves.stockid,
 						stockmaster.description,
-						stockmaster.serialised,
-						stockmaster.controlled,
-						stockmoves.qty as Quantity,
+						-stockmoves.qty as quantity,
+						stockmoves.discountpercent,
+						((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . '* -stockmoves.qty) AS fxnet,
+						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
 						stockmoves.narrative,
-						stockmaster.units,
-						stockmaster.decimalplaces,
-			 			stockmoves.discountpercent,
-						stockmoves.narrative
+						stockmaster.controlled,
+						stockmaster.units
+					FROM stockmoves,
+						stockmaster
+					WHERE stockmoves.stockid = stockmaster.stockid
+					AND stockmoves.type=10
+					AND stockmoves.transno=' . $FromTransNo . '
+					AND stockmoves.show_on_inv_crds=1';
+			} else {
+				/* only credit notes to be retrieved */
+				$sql = 'SELECT stockmoves.stockid,
+						stockmaster.description,
+						stockmoves.qty as quantity,
+						stockmoves.discountpercent,
+						((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . ' * stockmoves.qty) AS fxnet,
+						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
+						stockmoves.narrative,
+						stockmaster.controlled,
+						stockmaster.units
 					FROM stockmoves,
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
 					AND stockmoves.type=11
 					AND stockmoves.transno=' . $FromTransNo . '
 					AND stockmoves.show_on_inv_crds=1';
-		}
+			} // end else
 
 		$result=DB_query($sql,$db);
 		if (DB_error_no($db)!=0) {
@@ -302,16 +298,15 @@ If (isset($PrintPDF)
 			$FirstPage = False;
 
 		    while ($myrow2=DB_fetch_array($result)){
-
-				if ($myrow2['discountpercent']==0) {
-					$DisplayDiscount ='';
-				} else {
-					$DisplayDiscount = number_format($myrow2['discountpercent']*100,2) . '%';
-					$DiscountPrice=$myrow2['fxprice']*(1-$myrow2['discountpercent']);
-				}
-				$DisplayPrice=$myrow2['fxprice'];
-				$DisplayQty=$myrow2['quantity'];
-				$DisplayNet=number_format($myrow2['fxnet'],2);
+					if ($myrow2['discountpercent'] == 0) {
+						$DisplayDiscount = '';
+					} else {
+						$DisplayDiscount = number_format($myrow2['discountpercent'] * 100, 2) . '%';
+						$DiscountPrice = $myrow2['fxprice'] * (1 - $myrow2['discountpercent']);
+					}
+				$DisplayNet = $myrow2['fxnet'];
+				$DisplayPrice = $myrow2['fxprice'];
+				$DisplayQty = $myrow2['quantity'];
 
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos,71,$FontSize,$myrow2['stockid']);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+80,$YPos,186,$FontSize,$myrow2['description']);
@@ -322,11 +317,11 @@ If (isset($PrintPDF)
 					$lines++;
 				}
 
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+270,$YPos,76,$FontSize,number_format($myrow3['unitprice'],2),'right');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,36,$FontSize,number_format($myrow2['Quantity'],2),'right');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+270,$YPos,76,$FontSize,number_format($DisplayPrice,2),'right');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,36,$FontSize,number_format($DisplayQty,2),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+390,$YPos,26,$FontSize,$myrow2['units'],'center');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+420,$YPos,26,$FontSize,$DisplayDiscount,'right');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+450,$YPos,72,$FontSize,$DisplayNet,'right');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+450,$YPos,72,$FontSize,number_format($DisplayNet,2),'right');
 
 				if ($myrow2['controlled']==1){
 
@@ -547,12 +542,12 @@ class concat_pdf extends FPDI {
 	}
 	$result=DB_query($sql,$db);
 	// Loop the result set and add appendfile if the field is not 0 or none
-	
+
 	while ($row=DB_fetch_array($result)){
 	    if ($row['appendfile'] !='0' AND $row['appendfile'] !=='none') {
 	        $pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf','companies/' . $_SESSION['DatabaseName'] . '/pdf_append/' . $row['appendfile']));
 	        $pdf->concat();
-	     } 
+	     }
 	}//End FPDI Concat
 
 	if (isset($_GET['Email'])){ //email the invoice to address supplied
