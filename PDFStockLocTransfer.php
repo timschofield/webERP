@@ -5,25 +5,34 @@
 /* $Revision: 1.12 $ */
 
 $PageSecurity =1;
+
+$title = _('Stock Location Transfer Docket Error');
 include('includes/session.inc');
 
 include('includes/PDFStarter.php');
+
+if (isset($_POST['TransferNo'])) {
+	$_GET['TransferNo']=$_POST['TransferNo'];
+}
+
+if (!isset($_GET['TransferNo'])){
+
+	include ('includes/header.inc');
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
+		'" alt="">' . ' ' . _('Reprint transfer docket').'<br>';
+	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	echo '<table><tr><td>'._('Transfer docket to reprint').'</td>';
+	echo '<td><input type=text class=number size=10 name="TransferNo"></td></tr></table>';
+	echo '<div class="centre"><input type=submit Name="Print" Value="' . _('Print') .'">';
+	include ('includes/footer.inc');
+	exit;
+}
+
 $pdf->addInfo('Title', _('Inventory Location Transfer BOL') );
 $pdf->addInfo('Subject', _('Inventory Location Transfer BOL') . ' # ' . $_GET['TransferNo']);
 $FontSize=10;
 $PageNumber=1;
 $line_height=30;
-
-$title = _('Stock Location Transfer Docket Error');
-
-if (!isset($_GET['TransferNo'])){
-
-	include ('includes/header.inc');
-	echo '<p>';
-	prnMsg( _('This page must be called with a location transfer reference number'),'error' );
-	include ('includes/footer.inc');
-	exit;
-}
 
 $ErrMsg = _('An error occurred retrieving the items on the transfer'). '.' . '<p>'. _('This page must be called with a location transfer reference number').'.';
 $DbgMsg = _('The SQL that failed while retrieving the items on the transfer was');
