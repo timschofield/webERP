@@ -129,36 +129,36 @@ if (DB_error_no($db)!=0){
 
 	$YPos -= (2 * $line_height);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Tab Code :'));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+90,$YPos,20,$FontSize,_(': '));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,70,$FontSize,$SelectedTabs);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,_(': '));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$SelectedTabs);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+290,$YPos,70,$FontSize,_('From '));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,20,$FontSize,_(': '));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+340,$YPos,70,$FontSize,$_POST['FromDate']);
 
 	$YPos -= $line_height;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('User '));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+90,$YPos,20,$FontSize,_(': '));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,70,$FontSize,$Tabs['usercode']);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,_(': '));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$Tabs['usercode']);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+290,$YPos,70,$FontSize,_('To '));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,20,$FontSize,_(': '));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+340,$YPos,70,$FontSize,$_POST['ToDate']);
 
 	$YPos -= $line_height;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Authorizer '));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+90,$YPos,20,$FontSize,_(': '));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,70,$FontSize,$Tabs['authorizer']);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,_(': '));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$Tabs['authorizer']);
 
 	$YPos -= $line_height;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Currency '));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+90,$YPos,20,$FontSize,_(': '));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,70,$FontSize,$Tabs['currency']);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,_(': '));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$Tabs['currency']);
 
 	$YPos -= $line_height;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,_('Balance before '));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos,70,$FontSize,$_POST['FromDate']);
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+90,$YPos,20,$FontSize,_(': '));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,70,$FontSize,number_format($Balance['0'],2));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+140,$YPos,70,$FontSize,$Tabs['currency']);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+55,$YPos,70,$FontSize,$_POST['FromDate']);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,_(': '));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,number_format($Balance['0'],2));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+150,$YPos,70,$FontSize,$Tabs['currency']);
 
 	$YPos -= (2 * $line_height);
 	$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Left_Margin, $YPos+$line_height);
@@ -171,7 +171,6 @@ if (DB_error_no($db)!=0){
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,_('Note'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,_('Receipt'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+420,$YPos,100,$FontSize,_('Date Authorizer'));
-	$pdf->selectFont('./fonts/Helvetica.afm');
 	$YPos -= (2 * $line_height);
 
 	while ($myrow=DB_fetch_array($TabDetail)) {
@@ -184,7 +183,7 @@ if (DB_error_no($db)!=0){
 	$Description=DB_fetch_array($ResultDes);
 
 	if (!isset($Description[0])){
-	$Description[0]='ASSIGNCASH';
+		$Description[0]='ASSIGNCASH';
 	}
 
 		// Print total for each account
