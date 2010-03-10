@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
 	$fpOut = fopen($PathToNewLanguage, 'w');
 
 	for ($i=1; $i<=17; $i++) {
-		$Result = fputs($fpOut, stripslashes($_POST['Header_'.$i])."\n");
+		$Result = fputs($fpOut, stripslashes(html_entity_decode($_POST['Header_'.$i]))."\n");
 	}
 
 	prnMsg (_('Writing the rest of the language file') . '.....<br>', 'info', ' ');
@@ -96,7 +96,7 @@ else
 
 		echo '<tr>';
 		echo '<td>' . _('Header Line') . ' # ' . $i . '</td>';
-		echo '<td><input type="text" size="80" name="Header_' . $i . '" VALUE="' . $LanguageHeader[$i] . '"></td>';
+		echo '<td><input type="text" size="80" name="Header_' . $i . '" VALUE="' . htmlentities($LanguageHeader[$i]) . '"></td>';
 		echo '</tr>';
 	}
 

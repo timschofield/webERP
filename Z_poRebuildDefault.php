@@ -14,7 +14,7 @@ include('includes/header.inc');
 /* Your webserver user MUST have read/write access to here, 
 	otherwise you'll be wasting your time */
 	
-$PathToDefault		= './locale/en_GB/LC_MESSAGES/messages.po';
+$PathToDefault		= './locale/en_GB.utf8/LC_MESSAGES/messages.po';
 $FilesToInclude = '*.php includes/*.inc includes/*.php api/*.php reportwriter/languages/en_US/reports.php';
 $xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 

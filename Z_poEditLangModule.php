@@ -32,7 +32,7 @@ if (isset($_POST['ReMergePO'])){
 
 /*first rebuild the en_GB default with xgettext */
 
-	$PathToDefault = './locale/en_GB/LC_MESSAGES/messages.po';
+	$PathToDefault = './locale/en_GB.utf8/LC_MESSAGES/messages.po';
 	$FilesToInclude	= '*php includes/*.php includes/*.inc';
 	$xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 
