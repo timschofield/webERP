@@ -97,10 +97,20 @@ if (isset($_POST['RunReport'])){
 
 	}
 
+	if (!file_exists($_SESSION['reports_dir'])){
+		$Result = mkdir('./' . $_SESSION['reports_dir']);
+	}
 
-        $FilePointer = fopen('./companies/' . $_SESSION['DatabaseName'] . '/' . $_SESSION['ReportsDir'] . '/accounts.csv','w');
+	$FileName = $_SESSION['reports_dir'] . '/Accounts_Listing_' . Date('Y-m-d') .'.csv';
 
+	$fp = fopen($filename,"w");
 
+	if ($fp==FALSE){
+		prnMsg(_('Could not open or create the file under') . ' ' . $FileName,'error');
+		include('includes/footer.inc');
+		exit;
+	}
+    
 	foreach ($_POST['Account'] as $SelectedAccount){
 		/*Is the account a balance sheet or a profit and loss account */
 		$result = DB_query("SELECT chartmaster.accountname,
@@ -158,7 +168,7 @@ if (isset($_POST['RunReport'])){
 		$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
 		$TransResult = DB_query($sql,$db,$ErrMsg);
 
-		fwrite($FilePointer, $SelectedAccount . ' - ' . $AccountName . ' ' . _('for period'). ' ' . $FirstPeriodSelected . ' ' . _('to') . ' ' . $LastPeriodSelected);
+		fwrite($fp, $SelectedAccount . ' - ' . $AccountName . ' ' . _('for period'). ' ' . $FirstPeriodSelected . ' ' . _('to') . ' ' . $LastPeriodSelected);
 		if ($PandLAccount==True) {
 			$RunningTotal = 0;
 		} else {
@@ -176,9 +186,9 @@ if (isset($_POST['RunReport'])){
 			$RunningTotal =$ChartDetailRow['bfwd'];
 
 			if ($RunningTotal < 0 ){ //its a credit balance b/fwd
-                            fwrite($FilePointer, _('Brought Forward Balance') . ',,,' . number_format(-$RunningTotal,2));
-                        } else { //its a debit balance b/fwd
-                            fwrite($FilePointer,_('Brought Forward Balance') . ',,,,' . number_format($RunningTotal,2));
+                fwrite($fp, _('Brought Forward Balance') . ',,,,' . number_format(-$RunningTotal,2));
+            } else { //its a debit balance b/fwd
+                fwrite($fp,_('Brought Forward Balance') . ',,,' . number_format($RunningTotal,2));
 			}
 		}
 		$PeriodTotal = 0;
@@ -203,11 +213,11 @@ if (isset($_POST['RunReport'])){
 					$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
 					$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
-                  	                if ($PeriodTotal < 0 ){
-                                               fwrite($FilePointer, _('Period Total') . ',,,' . number_format(-$PeriodTotal,2));
-                                        } else { //its a debit balance b/fwd
-                                               fwrite($FilePointer,_('Period Total') . ',,,,' . number_format($PeriodTotal,2));
-                                        }
+					if ($PeriodTotal < 0 ){
+						   fwrite($fp, _('Period Total') . ',,,,' . number_format(-$PeriodTotal,2));
+					} else { //its a debit balance b/fwd
+						   fwrite($fp,_('Period Total') . ',,,' . number_format($PeriodTotal,2));
+					}
 				}
 				$PeriodNo = $myrow['periodno'];
 				$PeriodTotal = 0;
@@ -230,23 +240,7 @@ if (isset($_POST['RunReport'])){
 			$tagresult=DB_query($tagsql,$db);
 			$tagrow = DB_fetch_array($tagresult);
 
-			// to edit this block
-			$YPos -=$line_height;
-			$FontSize=8;
-
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,30,$FontSize,$myrow['typename']);
-			$LeftOvers = $pdf->addTextWrap(80,$YPos,30,$FontSize,$myrow['typeno'],'right');
-			$LeftOvers = $pdf->addTextWrap(110,$YPos,50,$FontSize,$FormatedTranDate);
-			$LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize,$DebitAmount,'right');
-			$LeftOvers = $pdf->addTextWrap(210,$YPos,50,$FontSize,$CreditAmount,'right');
-			$LeftOvers = $pdf->addTextWrap(320,$YPos,150,$FontSize,$myrow['narrative']);
-			$LeftOvers = $pdf->addTextWrap(470,$YPos,80,$FontSize,$tagrow['tagdescription']);
-
-			if ($YPos < $Bottom_Margin + $line_height){
-				NewPageHeader();
-				$YPos -=$line_height;
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize,$SelectedAccount . ' - ' . $AccountName);
-			}
+			fwrite($fp, $myrow['typename'] . ',' . $myrow['typeno'] . ',' . $FormatedTranDate . ',' . $DebitAmount . ',' . $CreditAmount . ',' .$myrow['narrative'] . ',' . $tagrow['tagdescription']);
 
 		}
 		$YPos -=$line_height;
