@@ -57,7 +57,7 @@ while ($row = @mysql_fetch_assoc($result)) {
       // Successful geocode
       $geocode_pending = false;
       $coordinates = $xml->Response->Placemark->Point->coordinates;
-      $coordinatesSplit = split(",", $coordinates);
+      $coordinatesSplit = explode(",", $coordinates);
       // Format: Longitude, Latitude, Altitude
       $lat = $coordinatesSplit[1];
       $lng = $coordinatesSplit[0];
@@ -103,7 +103,7 @@ while ($row2 = @mysql_fetch_assoc($result2)) {
       // Successful geocode
       $geocode_pending = false;
       $coordinates = $xml->Response->Placemark->Point->coordinates;
-      $coordinatesSplit = split(",", $coordinates);
+      $coordinatesSplit = explode(",", $coordinates);
       // Format: Longitude, Latitude, Altitude
       $lat = $coordinatesSplit[1];
       $lng = $coordinatesSplit[0];
