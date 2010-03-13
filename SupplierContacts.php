@@ -46,6 +46,7 @@ if (isset($_POST['submit'])) {
 	if (strlen($_POST['Contact']) == 0) {
 		$InputError = 1;
 		prnMsg(_('The contact name must be at least one character long'),'error');
+		echo '<br>';
 	}
 
 
@@ -53,11 +54,11 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedContact could also exist if submit had not been clicked this code would not run in this case 'cos submit is false of course see the delete code below*/
 
-		$sql = "UPDATE suppliercontacts SET position='" . $_POST['Position'] . "', 
-							tel='" . $_POST['Tel'] . "', 
-							fax='" . $_POST['Fax'] . "', 
-							email='" . $_POST['Email'] . "', 
-							mobile = '". $_POST['Mobile'] . "' 
+		$sql = "UPDATE suppliercontacts SET position='" . $_POST['Position'] . "',
+							tel='" . $_POST['Tel'] . "',
+							fax='" . $_POST['Fax'] . "',
+							email='" . $_POST['Email'] . "',
+							mobile = '". $_POST['Mobile'] . "'
 				WHERE contact='$SelectedContact' AND supplierid='$SupplierID'";
 
 		$msg = _('The supplier contact information has been updated');
@@ -66,44 +67,44 @@ if (isset($_POST['submit'])) {
 
 	/*Selected contact is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new supplier  contacts form */
 
-		$sql = "INSERT INTO suppliercontacts (supplierid, 
-							contact, 
-							position, 
-							tel, 
-							fax, 
-							email, 
-							mobile) 
-				VALUES ('" . $SupplierID . "', 
-					'" . $_POST['Contact'] . "', 
-					'" . $_POST['Position'] . "', 
-					'" . $_POST['Tel'] . "', 
-					'" . $_POST['Fax'] . "', 
-					'" . $_POST['Email'] . "', 
+		$sql = "INSERT INTO suppliercontacts (supplierid,
+							contact,
+							position,
+							tel,
+							fax,
+							email,
+							mobile)
+				VALUES ('" . $SupplierID . "',
+					'" . $_POST['Contact'] . "',
+					'" . $_POST['Position'] . "',
+					'" . $_POST['Tel'] . "',
+					'" . $_POST['Fax'] . "',
+					'" . $_POST['Email'] . "',
 					'" . $_POST['Mobile'] . "')";
 
 		$msg = _('The new supplier contact has been added to the database');
 	}
 	//run the SQL from either of the above possibilites
+	if ($InputError != 1) {
+		$ErrMsg = _('The supplier contact could not be inserted or updated because');
+		$DbgMsg = _('The SQL that was used but failed was');
 
-	$ErrMsg = _('The supplier contact could not be inserted or updated because');
-	$DbgMsg = _('The SQL that was used but failed was');
+		$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+		prnMsg($msg,'success');
 
-	prnMsg($msg,'success');
-
-	unset($SelectedContact);
-	unset($_POST['Contact']);
-	unset($_POST['Position']);
-	unset($_POST['Tel']);
-	unset($_POST['Fax']);
-	unset($_POST['Email']);
-	unset($_POST['Mobile']);
-
+		unset($SelectedContact);
+		unset($_POST['Contact']);
+		unset($_POST['Position']);
+		unset($_POST['Tel']);
+		unset($_POST['Fax']);
+		unset($_POST['Email']);
+		unset($_POST['Mobile']);
+	}
 } elseif (isset($_GET['delete'])) {
 
-	$sql = "DELETE FROM suppliercontacts 
-			WHERE contact='$SelectedContact' 
+	$sql = "DELETE FROM suppliercontacts
+			WHERE contact='$SelectedContact'
 			AND supplierid = '$SupplierID'";
 
 	$ErrMsg = _('The supplier contact could not be deleted because');
@@ -119,13 +120,13 @@ if (isset($_POST['submit'])) {
 if (!isset($SelectedContact)){
 
 
-	$sql = "SELECT suppliers.suppname, 
-			contact, 
-			position, 
-			tel, 
-			suppliercontacts.fax, 
+	$sql = "SELECT suppliers.suppname,
+			contact,
+			position,
+			tel,
+			suppliercontacts.fax,
 			suppliercontacts.email
-		FROM suppliercontacts, 
+		FROM suppliercontacts,
 			suppliers
 		WHERE suppliercontacts.supplierid=suppliers.supplierid
 		AND suppliercontacts.supplierid = '$SupplierID'";
@@ -144,15 +145,14 @@ if (!isset($SelectedContact)){
 			<th>" . _('Fax No') . "</th><th>" . _('Email') .
 			"</th></tr>\n";
 
-	do {
+	while ($myrow = DB_fetch_row($result)) {
 		printf("<tr><td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td><a href='mailto:%s'>%s</td>
 				<td><a href='%s&SupplierID=%s&SelectedContact=%s'>" . _('Edit') . "</td>
-				<td><a href='%s&SupplierID=%s&SelectedContact=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this contact?') . "');\">" .  _('Delete') . '</td>
-				</tr>',
+				<td><a href='%s&SupplierID=%s&SelectedContact=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this contact?') . "');\">" .  _('Delete') . '</td></tr>',
 				$myrow[1],
 				$myrow[2],
 				$myrow[3],
@@ -165,8 +165,7 @@ if (!isset($SelectedContact)){
 				$_SERVER['PHP_SELF']. '?' . SID,
 				$SupplierID,
 				$myrow[1]);
-
-	} while ($myrow = DB_fetch_row($result));
+	};
 
 	//END WHILE LIST LOOP
 }
@@ -187,11 +186,11 @@ if (! isset($_GET['delete'])) {
 	if (isset($SelectedContact)) {
 		//editing an existing branch
 
-		$sql = "SELECT contact, 
-				position, 
-				tel, 
-				fax, 
-				mobile, 
+		$sql = "SELECT contact,
+				position,
+				tel,
+				fax,
+				mobile,
 				email
 			FROM suppliercontacts
 			WHERE contact='$SelectedContact'
@@ -206,8 +205,8 @@ if (! isset($_GET['delete'])) {
 		$_POST['Fax']  = $myrow['fax'];
 		$_POST['Email']  = $myrow['email'];
 		$_POST['Mobile']  = $myrow['mobile'];
-		echo "<input type=hidden name='SelectedContact' VALUE='" . $_POST['Contact'] . "'>";
-		echo "<input type=hidden name='Contact' VALUE='" . $_POST['Contact'] . "'>";
+		echo "<input type=hidden name='SelectedContact' value='" . $_POST['Contact'] . "'>";
+		echo "<input type=hidden name='Contact' value='" . $_POST['Contact'] . "'>";
 		echo '<table><tr><td>' . _('Contact') . ':</td><td>' . $_POST['Contact'] . '</td></tr>';
 
 	} else { //end of if $SelectedContact only do the else when a new record is being entered
