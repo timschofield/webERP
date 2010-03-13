@@ -396,7 +396,7 @@ if (isset($_POST['submit'])) {
 //			$xml = simplexml_load_file($request_url) or die("url not loading");
 
 			$coordinates = $xml->Response->Placemark->Point->coordinates;
-			$coordinatesSplit = split(",", $coordinates);
+			$coordinatesSplit = explode(",", $coordinates);
 			// Format: Longitude, Latitude, Altitude
 			$latitude = $coordinatesSplit[1];
 			$longitude = $coordinatesSplit[0];
@@ -406,7 +406,7 @@ if (isset($_POST['submit'])) {
 			// Successful geocode
 				$geocode_pending = false;
 				$coordinates = $xml->Response->Placemark->Point->coordinates;
-				$coordinatesSplit = split(",", $coordinates);
+				$coordinatesSplit = explode(",", $coordinates);
 				// Format: Longitude, Latitude, Altitude
 				$latitude = $coordinatesSplit[1];
 				$longitude = $coordinatesSplit[0];
