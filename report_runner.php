@@ -2,17 +2,17 @@
 <?php
 //--------------------------------------------------------------------
 // report_runner.php
-// This program is designed to run reports in batch command mode for 
+// This program is designed to run reports in batch command mode for
 // weberp. Much thanks to Phil Daintree as the major author of WEBERP.
-// 
+//
 // --------------------------------------------------------------------
 // Written by Alan B Jones (mor3ton@yahoo.com)
 // based on code orgiginally from weberp
-// (c) alan jones 2006. 
+// (c) alan jones 2006.
 // (c) 2006 logic works Ltd and others
 // licenced under the terms of the GPL V(2)
 // if you want to know the details of the use of this software
-// and how you are licenced to use it under the terms of the 
+// and how you are licenced to use it under the terms of the
 // see here http://www.gnu.org/licenses/gpl.txt
 //--------------------------------------------------------------------
 //you must tell the script where you main installation is located
@@ -27,7 +27,7 @@ $usage="USAGE\n".$argv[0].":\n".
        "     -d database name (the mysql db to use for the data for the report)\n".
        "     [-t reporttext ]  (some words you want to send with the report-optional)\n".
        "     [ -H weberpHOME]  (the home directory for weberp - or edit the php file)\n";
-	
+
 if ($argc < 7 ) {
         echo $usage;
         exit;
@@ -78,7 +78,7 @@ if ($WEBERPHOME!="") {
 }
 
 if ($weberp_home=="") {
- 	echo "weberp home is not set in this file or -H isn't set";	
+ 	echo "weberp home is not set in this file or -H isn't set";
 }
 // change directory to the weberp home to get all the includes to work nicely
 chdir($weberp_home);
@@ -86,7 +86,7 @@ chdir($weberp_home);
 // get me the report name from the command line
 
 $_GET['ReportID'] = $reportnumber;
-$Recipients = split(";",$emailaddresses);
+$Recipients = explode(";",$emailaddresses);
 //wrap in angles so that mail can accept it
 for ($i=0;$i<count($Recipients); $i++) {
 	$Recipient[$i]="<".$Recipient[$i].">";
