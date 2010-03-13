@@ -51,7 +51,7 @@ ALTER TABLE `www_users` ADD COLUMN `pdflanguage` tinyint(1) NOT NULL DEFAULT '0'
 
 ALTER TABLE `purchorderauth` ADD COLUMN `offhold` tinyint(1) NOT NULL DEFAULT 0;
 
-UPDATE `www_users` SET `modulesallowed`=(SELECT insert(`modulesallowed`, 17,0,"1,"));
+UPDATE `www_users` SET `modulesallowed` = '1,1,1,1,1,1,1,1,1,1' 
 
 UPDATE securitytokens SET tokenname = 'Petty Cash' WHERE tokenid = 6;
 

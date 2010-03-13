@@ -79,11 +79,11 @@ echo '</select></td></tr>';
 // End select tag
 
 echo "</table><p>
-<div class='centre'><input type=submit name='RunReport' VALUE='"._('Run Report')."'></div></form>";
+<div class='centre'><input type=submit name='MakeCSV' VALUE='"._('Make CSV File')."'></div></form>";
 
 /* End of the Form  rest of script is what happens if the show button is hit*/
 
-if (isset($_POST['RunReport'])){
+if (isset($_POST['MakeCSV'])){
 
 	if (!isset($SelectedPeriod)){
 		prnMsg(_('A period or range of periods must be selected from the list box'),'info');
@@ -103,7 +103,7 @@ if (isset($_POST['RunReport'])){
 
 	$FileName = $_SESSION['reports_dir'] . '/Accounts_Listing_' . Date('Y-m-d') .'.csv';
 
-	$fp = fopen($filename,"w");
+	$fp = fopen($FileName,'w');
 
 	if ($fp==FALSE){
 		prnMsg(_('Could not open or create the file under') . ' ' . $FileName,'error');
@@ -168,7 +168,7 @@ if (isset($_POST['RunReport'])){
 		$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
 		$TransResult = DB_query($sql,$db,$ErrMsg);
 
-		fwrite($fp, $SelectedAccount . ' - ' . $AccountName . ' ' . _('for period'). ' ' . $FirstPeriodSelected . ' ' . _('to') . ' ' . $LastPeriodSelected);
+		fwrite($fp, $SelectedAccount . ' - ' . $AccountName . ' ' . _('for period'). ' ' . $FirstPeriodSelected . ' ' . _('to') . ' ' . $LastPeriodSelected . "\n");
 		if ($PandLAccount==True) {
 			$RunningTotal = 0;
 		} else {
@@ -185,11 +185,7 @@ if (isset($_POST['RunReport'])){
 
 			$RunningTotal =$ChartDetailRow['bfwd'];
 
-			if ($RunningTotal < 0 ){ //its a credit balance b/fwd
-                fwrite($fp, _('Brought Forward Balance') . ',,,,' . number_format(-$RunningTotal,2));
-            } else { //its a debit balance b/fwd
-                fwrite($fp,_('Brought Forward Balance') . ',,,' . number_format($RunningTotal,2));
-			}
+			fwrite($fp,$SelectedAccount . ', '  .$FirstPeriodSelected . ', ' . _('Brought Forward Balance') . ',,,' . number_format($RunningTotal,2) . "\n");
 		}
 		$PeriodTotal = 0;
 		$PeriodNo = -9999;
@@ -212,12 +208,7 @@ if (isset($_POST['RunReport'])){
 					$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
 					$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
 					$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
-
-					if ($PeriodTotal < 0 ){
-						   fwrite($fp, _('Period Total') . ',,,,' . number_format(-$PeriodTotal,2));
-					} else { //its a debit balance b/fwd
-						   fwrite($fp,_('Period Total') . ',,,' . number_format($PeriodTotal,2));
-					}
+					fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,' . number_format($PeriodTotal,2). "\n");
 				}
 				$PeriodNo = $myrow['periodno'];
 				$PeriodTotal = 0;
@@ -226,124 +217,29 @@ if (isset($_POST['RunReport'])){
 			$RunningTotal += $myrow['amount'];
 			$PeriodTotal += $myrow['amount'];
 
-			if($myrow['amount']>=0){
-				$DebitAmount = number_format($myrow['amount'],2);
-				$CreditAmount = '';
-			} else {
-				$CreditAmount = number_format(-$myrow['amount'],2);
-				$DebitAmount = '';
-			}
-
+			
 			$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
 
 			$tagsql='SELECT tagdescription FROM tags WHERE tagref='.$myrow['tag'];
 			$tagresult=DB_query($tagsql,$db);
 			$tagrow = DB_fetch_array($tagresult);
 
-			fwrite($fp, $myrow['typename'] . ',' . $myrow['typeno'] . ',' . $FormatedTranDate . ',' . $DebitAmount . ',' . $CreditAmount . ',' .$myrow['narrative'] . ',' . $tagrow['tagdescription']);
+			fwrite($fp, $SelectedAccount . ',' . $myrow['periodno'] . ', ' . $myrow['typename'] . ',' . $myrow['typeno'] . ',' . $FormatedTranDate . ',' . number_format($myrow['amount'],2) . ',' . $myrow['narrative'] . ',' . $tagrow['tagdescription']. "\n");
 
 		}
-		$YPos -=$line_height;
+		if ($PeriodTotal <>0){
+			fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,' . number_format($PeriodTotal,2). "\n");
+		}
 		if ($PandLAccount==True){
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize, _('Total Period Movement'));
+			fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Total Period Movement') . ',,,' . number_format($RunningTotal,2) . "\n");
 		} else { /*its a balance sheet account*/
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize, _('Balance C/Fwd'));
+			fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Balance C/Fwd') . ',,,' . number_format($RunningTotal,2) . "\n");
 		}
 
-		if ($RunningTotal >0){
-		   $LeftOvers = $pdf->addTextWrap(210,$YPos,50,$FontSize, number_format(-$RunningTotal,2) , 'right');
-		} else { //its a debit balance b/fwd
-                   $LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize, number_format($RunningTotal,2) , 'right');
-                }
-       		$YPos -=$line_height;
-       		//draw a line under each account printed
-                $pdf->line($Left_Margin, $YPos,$Page_Width-$Right_Margin, $YPos);
 	} /*end for each SelectedAccount */
-} /* end of if PrintReport button hit */
+	fclose($fp);
+	echo '<p><a href="' .  $FileName . '">' . _('click here') . '</a> ' . _('to view the file') . '<br>';
+} /* end of if CreateCSV button hit */
 
-
-/*Now check that there is some output and print the report out */
-if (count($_POST['Account'])==0) {
-   prnMsg(_('An account or range of accounts must be selected from the list box'),'info');
-   include('includes/footer.inc');
-   exit;
-
-} else { //print the report
-
-
-
-
-
-
-
-
-
-
-
-
-
-|
-
-function NewPageHeader () {
-	global $PageNumber,
-				$pdf,
-				$YPos,
-				$Page_Height,
-				$Page_Width,
-				$Top_Margin,
-				$FontSize,
-				$Left_Margin,
-				$Right_Margin,
-				$line_height;
-				$SelectedAccount;
-				$AccountName;
-
-	/*PDF page header for GL Account report */
-
-	if ($PageNumber > 1){
-		$pdf->newPage();
-	}
-
-	$FontSize=10;
-	$YPos= $Page_Height-$Top_Margin;
-
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
-
-	$YPos -=$line_height;
-
-	$FontSize=10;
-
-	$ReportTitle = _('GL Account Report');
-
-
-	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos,450,$FontSize, $ReportTitle . ' ' . _('for all stock locations'));
-
-	$FontSize=8;
-	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,_('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber);
-
-	$YPos -=(2*$line_height);
-
-	/*Draw a rectangle to put the headings in     */
-
-	$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
-	$pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos- $line_height);
-	$pdf->line($Left_Margin, $YPos- $line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
-	$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
-
-	/*set up the headings */
-	$XPos = $Left_Margin+1;
-
-	$LeftOvers = $pdf->addTextWrap($XPos,$YPos,30,$FontSize,_('Type'),'centre');
-	$LeftOvers = $pdf->addTextWrap(80,$YPos,30,$FontSize,_('Reference'),'centre');
-	$LeftOvers = $pdf->addTextWrap(110,$YPos,50,$FontSize,_('Date'),'centre');
-	$LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize,_('Debit'),'centre');
-	$LeftOvers = $pdf->addTextWrap(210,$YPos,50,$FontSize,_('Credit'),'centre');
-	$LeftOvers = $pdf->addTextWrap(320,$YPos,150,$FontSize,_('Narrative'),'centre');
-	$LeftOvers = $pdf->addTextWrap(470,$YPos,80,$FontSize,_('Tag'),'centre');
-
-
-	$YPos =$YPos - (2*$line_height);
-	$FontSize=8;
-}
-
+include('includes/footer.inc');
 ?>

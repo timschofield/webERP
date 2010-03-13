@@ -1112,6 +1112,16 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/GLAccountReport.php?' . SID . '">' . _('Account Listing') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/GLAccountCSV.php?' . SID . '">' . _('Account Listing to CSV File') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/BankReconciliation.php?' . SID . '">' . _('Bank Account Reconciliation Statement') . '</a></p>'; ?>
 							</td>
 							</tr>
