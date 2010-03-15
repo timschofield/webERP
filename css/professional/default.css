@@ -67,6 +67,16 @@ td {
 	text-align: left;
 }
 
+td.select {
+	background-color:#eee;
+}
+
+table.selection {
+	background-color:#eee;
+	outline-style:solid;
+	outline-width:1px;
+}
+
 .dpTD {
 	border: 0;
 	width:20px;

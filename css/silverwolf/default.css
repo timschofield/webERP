@@ -28,6 +28,9 @@ body {
 	padding: 0px;
 }
 
+form {
+}
+
 img {
 	border:none;
 }
@@ -61,6 +64,7 @@ th {
 	font-size: 12px;
 	color: #300;
 	text-align: center;
+	vertical-align: center;
 }
 
 .tableheader {
@@ -74,6 +78,16 @@ td {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 12px;
 	text-align: left;
+}
+
+td.select {
+	background-color:#eee;
+}
+
+table.selection {
+	background-color:#eee;
+	outline-style:solid;
+	outline-width:1px;
 }
 
 td.number {
@@ -435,7 +449,7 @@ End Merge */
 }
 
 .main_menu_unselected {
-	background: #aaa url(images/menu_bg.png) 0px -10px repeat-x;
+	background: #aaa;
 	border: 1px solid #777;
 /*	position: relative; it's not a div but a table */
 	text-align: center;
@@ -444,15 +458,15 @@ End Merge */
 }
 
 .main_menu_unselected:hover {
-	background: #aaa url(images/menu_bg_dblue.png) 0px -10px repeat-x;
+	background: #aaa;
 }
 
 .main_menu_unselected a {
-	color: #fff;
+	color: #333;
 }
 
 .main_menu_unselected a:hover {
-	color: #0df;
+	color: #000;
 	text-decoration: none;
 }
 
@@ -469,11 +483,11 @@ End Merge */
 .main_menu_selected:hover { } */
 
 .main_menu_selected a {
-	color: #fff;
+	color: #00F;
 }
 
 .main_menu_selected a:hover {
-	color: #0df;
+	color: #000;
 	text-decoration: none;
 }
 
@@ -543,14 +557,20 @@ span.main_menu_nolink {
 	margin: 0 0 0 12px; /* One thing that I didn´t like of the li was that it had no left margin applied */
 }
 
-.page_title_text {
+p.page_title_text {
         font-family: Arial, Verdana, Helvetica, sans-serif;
         padding-top: 2px;
         padding-bottom: 2px;
         font-weight: bold;
         font-size: 12px;
         color: black;
-        text-align:center;
+        background-color: #cccce5;
+        width: 33%;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #666;
+		margin: 10px auto;
+		text-align:center;
 }
 
 div.page_help_text {

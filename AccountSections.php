@@ -176,7 +176,7 @@ if (isset($_POST['submit'])) {
 	$result = DB_query($sql,$db,$ErrMsg);
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 
-	echo "<table>
+	echo "<table name='SectionList'>
 		<tr>
 		<th>" . _('Section Number') . "</th>
 		<th>" . _('Section Description') . "</th>
@@ -200,7 +200,7 @@ if (isset($_POST['submit'])) {
 		} else {
 			echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedSectionID=' . $myrow[0] . '&delete=1">' . _('Delete') .'</a></td>';
 		}
-
+		echo '</tr>';
 	} //END WHILE LIST LOOP
 	echo '</table><p>';
 } //end of ifs and buts!
