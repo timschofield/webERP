@@ -35,7 +35,7 @@ echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 
 
 if (isset($_POST['ResetPart'])){
-     unset($SelectedStockItem);
+	 unset($SelectedStockItem);
 }
 
 if (isset($OrderNumber) && $OrderNumber!='') {
@@ -130,10 +130,10 @@ if (isset($_POST['SearchParts'])) {
 */
 
 if (!isset($OrderNumber) or $OrderNumber=='' ){
-    echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
-	echo '<br><br>&nbsp;&nbsp;<a href="' . $rootpath . '/PO_Header.php?' .SID . '&NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
-    echo '<div class="centre">'._('Order Number') . ': <input type=text name="OrderNumber" MAXLENGTH =8 size=9>  ' . _('Into Stock Location') . ':<select name="StockLocation"> ';
-   	$sql = 'SELECT loccode, locationname FROM locations';
+	echo '<a href="' . $rootpath . '/PO_Header.php?' .SID . '&NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'</p>';
+	echo '<div class="centre">'._('Order Number') . ': <input type=text name="OrderNumber" MAXLENGTH =8 size=9>  ' . _('Into Stock Location') . ':<select name="StockLocation"> ';
+	$sql = 'SELECT loccode, locationname FROM locations';
 	$resultStkLocs = DB_query($sql,$db);
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['StockLocation'])){
@@ -211,7 +211,7 @@ if (isset($StockItemsResult)) {
 		}
 
 		printf("<td><input type=submit name='SelectedStockItem' VALUE='%s'</td>
-		        <td>%s</td>
+				<td>%s</td>
 			<td class=number>%s</td>
 			<td class=number>%s</td>
 			<td>%s</td></tr>",
@@ -265,7 +265,7 @@ $completed = " AND purchorderdetails.completed=0";
 				suppliers.currcode';
 	} else {
 
-	      /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
+		  /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
 
 		if (isset($SelectedSupplier)) {
 
@@ -400,7 +400,7 @@ $completed = " AND purchorderdetails.completed=0";
 
 	echo '<table cellpadding=2 colspan=7 WIDTH=100%>';
 
-//	               '</td><td class="tableheader">' . _('Receive') .
+//				   '</td><td class="tableheader">' . _('Receive') .
 	$TableHeader = '<tr><th>' . _('Order #') .
 			'</th><th>' . _('Order Date') .
 			'</th><th>' . _('Initiated by') .
@@ -443,16 +443,16 @@ $completed = " AND purchorderdetails.completed=0";
 		}
 		if ($myrow['status'] == PurchOrder::STATUS_AUTHORISED) {
 			$PrintPurchOrder = '
-                <a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=2">
-                ' . _('Print') . '
-                </a>';
+				<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=2">
+				' . _('Print') . '
+				</a>';
 		} else {
 			$PrintPurchOrder = _(PurchOrder::STATUS_PRINTED);
 		}
 		$PrintPurchOrder2 = '
-            <a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=1">
-                ' . _('Show') . '
-            </a>';
+			<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=1">
+				' . _('Show') . '
+			</a>';
 		$s2 = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=1">' . $myrow['realorderno']. '</a>';
 
 		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
@@ -465,7 +465,7 @@ $completed = " AND purchorderdetails.completed=0";
 //			$myrow['initiator']);
 //			'</td><td class="tableheader">' . _('Requisition') .
 //			'</td><td class="tableheader">' . _('Initiator') .
-//		        <td><a href='%s'>" . _('Receive') . "</a></td>
+//				<td><a href='%s'>" . _('Receive') . "</a></td>
 		printf("<td>%s</font></td>
 			<td>%s</td>
 			<td>%s</td>
