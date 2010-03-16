@@ -65,57 +65,57 @@ if (isset($_POST['SearchParts'])) {
 		//insert wildcard characters in spaces
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
-		$SQL = "SELECT stockmaster.stockid, 
-				stockmaster.description, 
-				SUM(locstock.quantity) AS qoh,  
-				stockmaster.units, 
-				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qord 
-			FROM stockmaster INNER JOIN locstock 
-				ON stockmaster.stockid = locstock.stockid 
-				INNER JOIN purchorderdetails 
-					ON stockmaster.stockid=purchorderdetails.itemcode 
+		$SQL = "SELECT stockmaster.stockid,
+				stockmaster.description,
+				SUM(locstock.quantity) AS qoh,
+				stockmaster.units,
+				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qord
+			FROM stockmaster INNER JOIN locstock
+				ON stockmaster.stockid = locstock.stockid
+				INNER JOIN purchorderdetails
+					ON stockmaster.stockid=purchorderdetails.itemcode
 			WHERE $completed
-			AND stockmaster.description " . LIKE . " '$SearchString' 
-			AND stockmaster.categoryid='" . $_POST['StockCat'] . "' 
-			GROUP BY stockmaster.stockid, 
-				stockmaster.description, 
-				stockmaster.units 
+			AND stockmaster.description " . LIKE . " '$SearchString'
+			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+			GROUP BY stockmaster.stockid,
+				stockmaster.description,
+				stockmaster.units
 			ORDER BY stockmaster.stockid";
-			
-			
+
+
 	 } elseif ($_POST['StockCode']){
-		$SQL = "SELECT stockmaster.stockid, 
-				stockmaster.description, 
-				SUM(locstock.quantity) AS qoh, 
-				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qord, 
-				stockmaster.units 
-			FROM stockmaster INNER JOIN locstock 
-				ON stockmaster.stockid = locstock.stockid 
-				INNER JOIN purchorderdetails 
-					ON stockmaster.stockid=purchorderdetails.itemcode 
+		$SQL = "SELECT stockmaster.stockid,
+				stockmaster.description,
+				SUM(locstock.quantity) AS qoh,
+				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qord,
+				stockmaster.units
+			FROM stockmaster INNER JOIN locstock
+				ON stockmaster.stockid = locstock.stockid
+				INNER JOIN purchorderdetails
+					ON stockmaster.stockid=purchorderdetails.itemcode
 			WHERE $completed
-			AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%' 
-			AND stockmaster.categoryid='" . $_POST['StockCat'] . "' 
-			GROUP BY stockmaster.stockid, 
-				stockmaster.description, 
-				stockmaster.units 
+			AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
+			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+			GROUP BY stockmaster.stockid,
+				stockmaster.description,
+				stockmaster.units
 			ORDER BY stockmaster.stockid";
-			
+
 	 } elseif (!$_POST['StockCode'] AND !$_POST['Keywords']) {
-		$SQL = "SELECT stockmaster.stockid, 
-				stockmaster.description, 
-				SUM(locstock.quantity) AS qoh, 
-				stockmaster.units, 
-				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qord 
-			FROM stockmaster INNER JOIN locstock 
-				ON stockmaster.stockid = locstock.stockid 
-				INNER JOIN purchorderdetails 
-					ON stockmaster.stockid=purchorderdetails.itemcode 
-			WHERE $completed 
-			AND stockmaster.categoryid='" . $_POST['StockCat'] . "' 
-			GROUP BY stockmaster.stockid, 
-				stockmaster.description, 
-				stockmaster.units 
+		$SQL = "SELECT stockmaster.stockid,
+				stockmaster.description,
+				SUM(locstock.quantity) AS qoh,
+				stockmaster.units,
+				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qord
+			FROM stockmaster INNER JOIN locstock
+				ON stockmaster.stockid = locstock.stockid
+				INNER JOIN purchorderdetails
+					ON stockmaster.stockid=purchorderdetails.itemcode
+			WHERE $completed
+			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+			GROUP BY stockmaster.stockid,
+				stockmaster.description,
+				stockmaster.units
 			ORDER BY stockmaster.stockid";
 	 }
 
@@ -268,11 +268,11 @@ $completed = " AND purchorderdetails.completed=0";
 	      /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
 
 		if (isset($SelectedSupplier)) {
-			
+
 			if (!isset($_POST['StockLocation'])) {
 				$_POST['StockLocation']='';
 			}
-			
+
 			if (isset($SelectedStockItem)) {
 				$SQL = "SELECT purchorders.realorderno,
 						purchorders.orderno,
@@ -405,7 +405,7 @@ $completed = " AND purchorderdetails.completed=0";
 			'</th><th>' . _('Order Date') .
 			'</th><th>' . _('Initiated by') .
 			'</th><th>' . _('Supplier') .
-			'</th><th>' . _('Currency') .			
+			'</th><th>' . _('Currency') .
 			'</th><th>' . _('Order Total') .
 			'</th><th>' . _('Status') .
 			'</th><th>' . _('Modify') .
@@ -444,7 +444,7 @@ $completed = " AND purchorderdetails.completed=0";
 		if ($myrow['status'] == PurchOrder::STATUS_AUTHORISED) {
 			$PrintPurchOrder = '
                 <a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=2">
-                ' . _(PurchOrder::STATUS_PRINTED) . '
+                ' . _('Print') . '
                 </a>';
 		} else {
 			$PrintPurchOrder = _(PurchOrder::STATUS_PRINTED);
@@ -461,10 +461,10 @@ $completed = " AND purchorderdetails.completed=0";
 // the tailed two column
 //			<td>%s</font></td>
 //			<td class=number>%s</font></td>
-//			$myrow['requisitionno'],	
+//			$myrow['requisitionno'],
 //			$myrow['initiator']);
 //			'</td><td class="tableheader">' . _('Requisition') .
-//			'</td><td class="tableheader">' . _('Initiator') .	               		
+//			'</td><td class="tableheader">' . _('Initiator') .
 //		        <td><a href='%s'>" . _('Receive') . "</a></td>
 		printf("<td>%s</font></td>
 			<td>%s</td>
@@ -477,12 +477,12 @@ $completed = " AND purchorderdetails.completed=0";
 			<td>%s</font></td>
 			<td>%s</font></td>
 			</tr>",
-			$myrow["orderno"],						
-			$FormatedOrderDate,			
+			$myrow["orderno"],
+			$FormatedOrderDate,
 			$myrow['initiator'],
 			$myrow['suppname'],
 			$myrow['currcode'],
-			$FormatedOrderValue,			
+			$FormatedOrderValue,
 			_($myrow['status']),
 			$ModifyPage,
 			$PrintPurchOrder,
