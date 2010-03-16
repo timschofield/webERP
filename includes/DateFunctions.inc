@@ -426,7 +426,7 @@ and converts to a yyyy/mm/dd format */
 function FormatDateWithTimeForSQL ($datetime) {
     //  Split the time off, fix date and add the time to returned value.
     $dt = explode(' ', $datetime);
-    
+
     return FormatDateForSQL( $dt[0] ) . ' ' . $dt[1];
 }
 
@@ -844,7 +844,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 
 	$MonthAfterTransDate = Mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate));
 	$GetPrdSQL = "SELECT periodno FROM periods WHERE lastdate_in_period < '" .
-	Date('Y/m/d', $MonthAfterTransDate) . "' AND lastdate_in_period >= '" . Date('Y/m/d', $TransDate) . "'";
+	Date('Y-m-d', $MonthAfterTransDate) . "' AND lastdate_in_period >= '" . Date('Y-m-d', $TransDate) . "'";
 
 	$ErrMsg = _('An error occurred in retrieving the period number');
 	$GetPrdResult = DB_query($GetPrdSQL,$db,$ErrMsg);
@@ -852,6 +852,5 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 
 	return $myrow[0];
 }
-
 
 ?>
