@@ -32,10 +32,10 @@ Note: It is worth printing this document off and checking off the steps as you g
 
 Pre-requisites:
 
-- A working PHP web server - v 5.0 or later is recommended but it also works with later 4.x releases - with support for mysql databases, gd, gettext and ftp
+- A working PHP web server - v 5.0 or later is required (it no longer works with versions prior) PHP must have support for mysql databases (either mysql or mysqli), gd, gettext and ftp
 - A working MySQL server (MySql version 4.1 or above - innodb tables MUST be enabled - check your my.cnf file to ensure innodb tables are enabled (normally under /etc/my.cnf or the mysql data directory - see the MySQL manual).
 
-Installing these components are well covered elsewhere - but if you need to install these components the recommended solution under windows would be to download and install apache2triad - http://apache2triad.net/ or under windows or *nix download and install XAMP - http://www.apachefriends.org/en/xampp.html
+Installing these components are well covered elsewhere - but if you need to install these components the recommended solution under windows would be to download and install apache2triad - http://apache2triad.net/ or under windows or *nix download and install XAMPP - http://www.apachefriends.org/en/xampp.html
 
 PHP must have the register globals configuration parameter set to off.  This is the default (now).  This flag can be set in the php.ini on the server.  If it can't be changed on the server's php.ini, it is possibe for apache web servers to alter the configuration using a file called .htaccess. A .htaccess file is included in the webERP directory that ensures the register_globals flag is set to off for those web-servers that support .htaccess files.
 

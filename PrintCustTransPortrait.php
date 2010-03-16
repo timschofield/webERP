@@ -466,11 +466,11 @@ If (isset($PrintPDF)
 		if ($InvOrCredit=='Invoice'){
 			$pdf->addText($Page_Width-$Right_Margin-220, $YPos - ($line_height*3)-6,$FontSize, _('TOTAL INVOICE'));
 			$FontSize=8;
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-48,280,$FontSize,$_SESSION['RomalpaClause']);
-//			while (strlen($LeftOvers)>0 AND $YPos > $Bottom_Margin){
-//				$YPos -=25;
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-58,280,$FontSize,$LeftOvers);
-//			}
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-18,280,$FontSize,$_SESSION['RomalpaClause']);
+			while (strlen($LeftOvers)>0 AND $YPos > $Bottom_Margin){
+				$YPos -=10;
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-18,280,$FontSize,$LeftOvers);
+			}
 /* Add Images for Visa / Mastercard / Paypal */
 			if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg')) {
             	$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -60,$YPos-15,0,20);

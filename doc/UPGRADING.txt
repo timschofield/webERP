@@ -70,3 +70,7 @@ NOTES ON UPGRADING FROM 3.04 to 3.05
 
 3.05 now has Dave Premo's report writer scripts included in the distribution - additional tables are required for this functionality. Also, 3.05 allows for weighted average stock valuation - using the existing data fields and retaining integrated general ledger stock values. This requires cost information to be copied over into the grns table.
 The upgrade script Z_Upgrade_3.04-3.05.php applies all the additional tables to the database and does the data conversions required wihtout any manual intervention.
+
+NOTES ON UPGRADING FROM 3.11 to 3.12
+
+PHP 5 is now required because of the simpleXML module of PHP only comes with PHP 5. This is used on the new XML definition of report formats.

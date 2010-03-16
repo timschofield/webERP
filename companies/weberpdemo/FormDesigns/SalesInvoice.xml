@@ -479,7 +479,7 @@
 	</TotalLine>
 	<RomalpaLine type="Line" name="Romalpa Line" id="RomalpaLine">
 		<startx>590</startx>
-		<starty>501</starty>
+		<starty>490</starty>
 		<endx>590</endx>
 		<endy>565</endy>
 	</RomalpaLine>
