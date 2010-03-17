@@ -14,7 +14,7 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 	//to view store location
 	echo '<tr><td width="150">' . _('Select Location') . '  </td><td>:</td><td><select name=Location>';
 	$sql = 'SELECT loccode,
-					locationname 
+					locationname
 				FROM `locations`';
 	$result = DB_query($sql, $db);
 	echo "<option value='All'>" . _('All');
@@ -25,7 +25,7 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 	//to view list of customer
 	echo '<tr><td width="150">' . _('Select Customer Type') . '   </td><td>:</td><td><select name=Customers>';
 	$sql = 'SELECT typename,
-					typeid 
+					typeid
 				FROM debtortype';
 	$result = DB_query($sql, $db);
 	echo "<option value='All'>" . _('All');
@@ -44,12 +44,12 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 				</tr>';
 	//View number of days
 	echo '<tr><td>' . _('Number Of Days') . ' </td><td>:</td>
-			<td><input class="number" tabindex="3" type="Text" name=NumberOfDays size="8"	maxlength="8"></td>
+			<td><input class="number" tabindex="3" type="Text" name=NumberOfDays size="8"	maxlength="8" value=0></td>
 		 </tr>';
 	//view number of NumberOfTopItems items
 	echo '<tr>
 			<td>' . _('Number Of Top Items') . ' </td><td>:</td>
-			<td><input class="number" tabindex="4" type="Text" name=NumberOfTopItems size="8"	maxlength="8"></td>
+			<td><input class="number" tabindex="4" type="Text" name=NumberOfTopItems size="8"	maxlength="8" value=1></td>
 		 </tr>
 		 <tr>
 			<td></td>
@@ -62,70 +62,70 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 	//the situation if the location and customer type selected "All"
 	if (($_POST['Location'] == "All") and ($_POST['Customers'] == "All")) {
 		$SQL = "
-				SELECT 	salesorderdetails.stkcode, 
-						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,						
+				SELECT 	salesorderdetails.stkcode,
+						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
 						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
 						stockmaster.description,
 						stockmaster.units
-				FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster  
+				FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster
 				WHERE 	salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
-						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_POST['NumberOfDays'] . " DAY)  
-				GROUP BY salesorderdetails.stkcode  
+						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_POST['NumberOfDays'] . " DAY)
+				GROUP BY salesorderdetails.stkcode
 				ORDER BY " . $_POST["order"] . " DESC
 				LIMIT 0," . $_POST['NumberOfTopItems'] . "";
 	} else { //the situation if only location type selected "All"
 		if ($_POST['Location'] == "All") {
 			$SQL = "
-				SELECT 	salesorderdetails.stkcode, 
-						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,						
+				SELECT 	salesorderdetails.stkcode,
+						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
 						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
 						stockmaster.description,
 						stockmaster.units
-				FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster  
+				FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster
 				WHERE 	salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
 						AND debtorsmaster.typeid = '" . $_POST["Customers"] . "'
-						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_POST['NumberOfDays'] . " DAY)  
-				GROUP BY salesorderdetails.stkcode  
+						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_POST['NumberOfDays'] . " DAY)
+				GROUP BY salesorderdetails.stkcode
 				ORDER BY " . $_POST["order"] . " DESC
 				LIMIT 0," . $_POST[NumberOfTopItems] . "";
 		} else {
 			//the situation if the customer type selected "All"
 			if ($_POST['Customers'] == "All") {
 				$SQL = "
-					SELECT 	salesorderdetails.stkcode, 
-						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,						
+					SELECT 	salesorderdetails.stkcode,
+						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
 						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
 						stockmaster.description,
 						stockmaster.units
-					FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster  
+					FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster
 					WHERE 	salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
 						AND salesorders.fromstkloc = '" . $_POST["Location"] . "'
-						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_POST['NumberOfDays'] . " DAY)  
-					GROUP BY salesorderdetails.stkcode  
+						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_POST['NumberOfDays'] . " DAY)
+					GROUP BY salesorderdetails.stkcode
 					ORDER BY " . $_POST["order"] . " DESC
 					LIMIT 0," . $_POST[NumberOfTopItems] . "";
 			} else {
 				//the situation if the location and customer type not selected "All"
 				$SQL = "
-					SELECT 	salesorderdetails.stkcode, 
-						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,						
+					SELECT 	salesorderdetails.stkcode,
+						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
 						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
 						stockmaster.description,
-						stockmaster.units					
-					FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster  
+						stockmaster.units
+					FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster
 					WHERE 	salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
 						AND salesorders.fromstkloc = '" . $_POST["Location"] . "'
 						AND debtorsmaster.typeid = '" . $_POST['Customers'] . "'
-						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_POST['NumberOfDays'] . " DAY)  
-					GROUP BY salesorderdetails.stkcode  
+						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_POST['NumberOfDays'] . " DAY)
+					GROUP BY salesorderdetails.stkcode
 					ORDER BY " . $_POST["order"] . " DESC
 					LIMIT 0," . $_POST[NumberOfTopItems] . "";
 			}
@@ -137,12 +137,12 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 	$TableHeader = '<tr><th><strong>' . _('#') . '</strong></th>
 								<th><strong>' . _('Code') . '</strong></th>
 								<th><strong>' . _('Description') . '</strong></th>
-								<th><strong>' . _('Total Invoiced') . '</strong></th>								
+								<th><strong>' . _('Total Invoiced') . '</strong></th>
 								<th><strong>' . _('Units') . '</strong></th>
 								<th><strong>' . _('Value Sales') . '</strong></th>
 								<th><strong>' . _('On Hand') . '</strong></th>';
 	echo $TableHeader;
-	echo '	
+	echo '
 			<input type="hidden" value=' . $_POST["Location"] . ' name=location />
 			<input type="hidden" value=' . $_POST["order"] . ' name=order />
 			<input type="hidden" value=' . $_POST["NumberOfDays"] . ' name=numberofdays />
@@ -153,10 +153,10 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 	$i = 1;
 	while ($myrow = DB_fetch_array($result)) {
 		//find the quantity onhand item
-		$sqloh = "SELECT   sum(quantity)as qty 
-						FROM     `locstock` 
+		$sqloh = "SELECT   sum(quantity)as qty
+						FROM     `locstock`
 						WHERE     stockid='" . $myrow['0'] . "'";
-		$oh = db_query($sqloh, $db, $ErrMsg);
+		$oh = db_query($sqloh, $db);
 		$ohRow = db_fetch_row($oh);
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
@@ -185,7 +185,7 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 	echo '<div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print To PDF') . '"></div>';
 	echo '</form>';
 	//end of the else statement
-	
+
 }
 include ('includes/footer.inc');
 ?>

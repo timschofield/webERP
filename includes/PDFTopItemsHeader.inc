@@ -10,11 +10,11 @@ $YPos= $Page_Height-$Top_Margin;
 $XPos=0;
 $pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg',$XPos+20,$YPos-50,0,60);
 
-if ($_GET["customers"]!=All){
-$SQL="SELECT typename 
-	  FROM `debtortype` 
+if ($_GET["customers"]!='All'){
+$SQL="SELECT typename
+	  FROM `debtortype`
 	  WHERE typeid=".$_GET["customers"]."";
-	  
+
 $result = DB_query($SQL,$db);
 $myrow=DB_fetch_array($result);
 $Customers=$myrow["0"];
@@ -46,11 +46,7 @@ $YPos -=$line_height;
 $YPos -=(2*$line_height);
 
 /*Draw a rectangle to put the headings in     */
-
-$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
-$pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos- $line_height);
-$pdf->line($Left_Margin, $YPos- $line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
-$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
+$pdf->Rectangle($Left_Margin, $YPos+$line_height,$Page_Width-$Left_Margin-$Right_Margin,$line_height*2);
 
 /*set up the headings */
 $Xpos = $Left_Margin+1;
@@ -64,6 +60,7 @@ $LeftOvers = $pdf->addTextWrap($Xpos+480,$YPos,300-$Left_Margin,$FontSize,  _('O
 
 
 $FontSize=8;
+$pdf->Rectangle($Left_Margin, $YPos-$line_height,$Page_Width-$Left_Margin-$Right_Margin,$YPos-$Bottom_Margin);
 $YPos -= (1.5 * $line_height);
 
 //$PageNumber++;
