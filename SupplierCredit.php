@@ -5,7 +5,7 @@
 /*This page is very largely the same as the SupplierInvoice.php script
 the same result could have been acheived by using if statements in that script and just having the one
 SupplierTransaction.php script. However, to aid readability - variable names have been changed  -
-and reduce clutter (in the form of a heap of if statements) two separate scripts have been used, 
+and reduce clutter (in the form of a heap of if statements) two separate scripts have been used,
 both with very similar code.
 
 This does mean that if the logic is to be changed for supplier transactions then it needs to be changed
@@ -108,9 +108,9 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 		 $_SESSION['SuppTrans']->Terms = '0' . $myrow['daysbeforedue'];
 	}
 	$_SESSION['SuppTrans']->SupplierID = $_GET['SupplierID'];
-	
-	$LocalTaxProvinceResult = DB_query("SELECT taxprovinceid 
-						FROM locations 
+
+	$LocalTaxProvinceResult = DB_query("SELECT taxprovinceid
+						FROM locations
 						WHERE loccode = '" . $_SESSION['UserStockLocation'] . "'", $db);
 
 	if(DB_num_rows($LocalTaxProvinceResult)==0){
@@ -118,24 +118,24 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 		include('includes/footer.inc');
 		exit;
 	}
-	
+
 	$LocalTaxProvinceRow = DB_fetch_row($LocalTaxProvinceResult);
 	$_SESSION['SuppTrans']->LocalTaxProvince = $LocalTaxProvinceRow[0];
-	
+
 	$_SESSION['SuppTrans']->GetTaxes();
-	
-	
+
+
 	$_SESSION['SuppTrans']->GLLink_Creditors = $_SESSION['CompanyRecord']['gllink_creditors'];
 	$_SESSION['SuppTrans']->GRNAct = $_SESSION['CompanyRecord']['grnact'];
 	$_SESSION['SuppTrans']->CreditorsAct = $_SESSION['CompanyRecord']['creditorsact'];
-	
+
 	$_SESSION['SuppTrans']->InvoiceOrCredit = 'Credit Note';
 
 } elseif (!isset($_SESSION['SuppTrans'])){
 
 	prnMsg(_('To enter a supplier credit note the supplier must first be selected from the supplier selection screen'),'warn');
 	echo "<br><a href='$rootpath/SelectSupplier.php?" . SID ."'>" . _('Select A Supplier to Enter an Credit Note For') . '</a>';
-	include('includes/footer.inc');	
+	include('includes/footer.inc');
 	exit;
 
 	/*It all stops here if there aint no supplier selected */
@@ -155,7 +155,7 @@ if (isset($_POST['ExRate'])){
 	}
 
 	$_SESSION['SuppTrans']->SuppReference = $_POST['SuppReference'];
-	
+
 	/*if (!isset($_POST['OvAmount'])) {
 		$_POST['OvAmount'] = 0;
 	}*/
@@ -307,9 +307,9 @@ if (count($_SESSION['SuppTrans']->Shipts)>0){   /*if there are any Shipment char
 		echo $TableHeader;
 
 	$TotalShiptValue=0;
-	
+
 	$i=0;
-	
+
 	foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef){
 
 		echo '<tr><td>' . $EnteredShiptRef->ShiptRef . '</td><td class=number>' .
@@ -359,7 +359,7 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 			<td class=number><font size=4 color=red><U>' . number_format($TotalGLValue,2) . '</U></font></td>
 			</tr></table>';
 	}
-	
+
 	if (!isset($TotalGRNValue)) {
 		$TotalGRNValue=0;
 	}
@@ -392,50 +392,50 @@ echo '</select></td></tr>';
 $TaxTotal =0; //initialise tax total
 
 foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
-	
+
 	echo '<tr><td>'  . $Tax->TaxAuthDescription . '</td><td>';
-	
+
 	/*Set the tax rate to what was entered */
 	if (isset($_POST['TaxRate'  . $Tax->TaxCalculationOrder])){
 		$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate = $_POST['TaxRate'  . $Tax->TaxCalculationOrder]/100;
 	}
-	
+
 	/*If a tax rate is entered that is not the same as it was previously then recalculate automatically the tax amounts */
-	
+
 	if (!isset($_POST['OverRideTax']) or $_POST['OverRideTax']=='Auto'){
-	
+
 		echo  ' <input type=TEXT class="number" name=TaxRate' . $Tax->TaxCalculationOrder . ' maxlength=4 size=4 VALUE=' . $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100 . '>%';
-		
+
 		/*Now recaluclate the tax depending on the method */
 		if ($Tax->TaxOnTax ==1){
-			
+
 			$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * ($_SESSION['SuppTrans']->OvAmount + $TaxTotal);
-		
+
 		} else { /*Calculate tax without the tax on tax */
-			
+
 			$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * $_SESSION['SuppTrans']->OvAmount;
-		
+
 		}
-		
-		
+
+
 		echo '<input type=hidden name="TaxAmount'  . $Tax->TaxCalculationOrder . '"  VALUE=' . round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2) . '>';
-		
+
 		echo '</td><td class=number>' . number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2);
-		
+
 	} else { /*Tax being entered manually accept the taxamount entered as is*/
 		$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_POST['TaxAmount'  . $Tax->TaxCalculationOrder];
-				
+
 		echo  ' <input type=hidden name=TaxRate' . $Tax->TaxCalculationOrder . ' VALUE=' . $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100 . '>';
-		
-				
+
+
 		echo '</td><td><input type=TEXT class="number" size=12 maxlength=12 name="TaxAmount'  . $Tax->TaxCalculationOrder . '"  VALUE=' . round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2) . '>';
-		
+
 	}
-	
+
 	$TaxTotal += $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount;
-	
-	
-	echo '</td></tr>';	
+
+
+	echo '</td></tr>';
     }
 
 $DisplayTotal = number_format($_SESSION['SuppTrans']->OvAmount + $TaxTotal,2);
@@ -484,13 +484,13 @@ then do the updates and inserts to process the credit note entered */
 		}
 
 	}
-	
+
 /*Need to recalc the taxtotal */
 
 	$TaxTotal=0;
 	foreach ($_SESSION['SuppTrans']->Taxes as $Tax){
 		$TaxTotal +=  $Tax->TaxOvAmount;
-	}	
+	}
 
 	$InputError = False;
 	if ( $TaxTotal + $_SESSION['SuppTrans']->OvAmount <= 0){
@@ -625,7 +625,7 @@ then do the updates and inserts to process the credit note entered */
 				if (strlen($EnteredGRN->ShiptRef)==0 OR $EnteredGRN->ShiptRef=="" OR $EnteredGRN->ShiptRef==0){ /*so its not a shipment item */
 				/*so its not a shipment item
 				  enter the GL entry to reverse the GRN suspense entry created on delivery at standard cost used on delivery */
-				  
+
 					if ($EnteredGRN->StdCostUnit * $EnteredGRN->This_QuantityInv != 0) {
 						$SQL = 'INSERT INTO gltrans (type,
 										typeno,
@@ -649,7 +649,7 @@ then do the updates and inserts to process the credit note entered */
 						$Result = DB_query($SQL, $db, $ErrMsg, $Dbg, True);
 
 					}
-				
+
 
                   $PurchPriceVar = round($EnteredGRN->This_QuantityInv * (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit),2);
 					/*Yes but where to post this difference to - if its a stock item the variance account must be retrieved from the stock category record
@@ -853,22 +853,22 @@ then do the updates and inserts to process the credit note entered */
 			foreach ($_SESSION['SuppTrans']->Taxes as $Tax){
 				/* Now the TAX account */
 
-				$SQL = 'INSERT INTO gltrans (type, 
-								typeno, 
-								trandate, 
-								periodno, 
-								account, 
-								narrative, 
-								amount) 
+				$SQL = 'INSERT INTO gltrans (type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount)
 						VALUES (21, ' .
-						 	$CreditNoteNo . ", 
-						 	'" . $SQLCreditNoteDate . "', 
-							" . $PeriodNo . ', 
-							' . $Tax->TaxGLCode . ", 
+						 	$CreditNoteNo . ",
+						 	'" . $SQLCreditNoteDate . "',
+							" . $PeriodNo . ',
+							' . $Tax->TaxGLCode . ",
 						 	'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Credit note') . ' ' .
 						 $_SESSION['SuppTrans']->SuppReference . ' ' . $_SESSION['SuppTrans']->CurrCode .
 						 $Tax->TaxOvAmount  . ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate .
-						 "', 
+						 "',
 						 	" . round(-$Tax->TaxOvAmount/ $_SESSION['SuppTrans']->ExRate,2) . ')';
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the tax could not be added because');
@@ -909,6 +909,7 @@ then do the updates and inserts to process the credit note entered */
 						suppreference,
 						trandate,
 						duedate,
+						inputdate,
 						ovamount,
 						ovgst,
 						rate,
@@ -919,6 +920,7 @@ then do the updates and inserts to process the credit note entered */
 				'" . $_SESSION['SuppTrans']->SuppReference . "',
 				'" . $SQLCreditNoteDate . "',
 				'" . FormatDateForSQL($_SESSION['SuppTrans']->DueDate) . "',
+				'" . Date('Y-m-d H-i-s') . "',
 				" . round(-$_SESSION['SuppTrans']->OvAmount,2) . ',
 				' .round(-$TaxTotal,2) . ',
 				' . $_SESSION['SuppTrans']->ExRate . ",
@@ -929,22 +931,22 @@ then do the updates and inserts to process the credit note entered */
 		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
 		$SuppTransID = DB_Last_Insert_ID($db,'supptrans','id');
-		
+
 		/* Insert the tax totals for each tax authority where tax was charged on the invoice */
 		foreach ($_SESSION['SuppTrans']->Taxes AS $TaxTotals) {
-	
+
 			$SQL = 'INSERT INTO supptranstaxes (supptransid,
 							taxauthid,
 							taxamount)
 				VALUES (' . $SuppTransID . ',
 					' . $TaxTotals->TaxAuthID . ',
 					' . -$TaxTotals->TaxOvAmount . ')';
-		
+
 			$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The supplier transaction taxes records could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the supplier transaction taxes record was used:');
  			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		}
-		
+
 		/* Now update the GRN and PurchOrderDetails records for amounts invoiced */
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
@@ -1014,9 +1016,9 @@ then do the updates and inserts to process the credit note entered */
 
 		$SQL='COMMIT';
 		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
-		
+
 		prnMsg(_('Supplier credit note number') . ' ' . $CreditNoteNo . ' ' . _('has been processed'),'success');
-		echo '<br><div class="centre"><a href="' . $rootpath . '/SupplierCredit.php?&SupplierID=' .$_SESSION['SuppTrans']->SupplierID . '">' . _('Enter another Credit Note for this Supplier') . '</a></div>';		
+		echo '<br><div class="centre"><a href="' . $rootpath . '/SupplierCredit.php?&SupplierID=' .$_SESSION['SuppTrans']->SupplierID . '">' . _('Enter another Credit Note for this Supplier') . '</a></div>';
 		unset($_SESSION['SuppTrans']->GRNs);
 		unset($_SESSION['SuppTrans']->Shipts);
 		unset($_SESSION['SuppTrans']->GLCodes);

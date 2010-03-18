@@ -51,7 +51,7 @@ ALTER TABLE `www_users` ADD COLUMN `pdflanguage` tinyint(1) NOT NULL DEFAULT '0'
 
 ALTER TABLE `purchorderauth` ADD COLUMN `offhold` tinyint(1) NOT NULL DEFAULT 0;
 
-UPDATE `www_users` SET `modulesallowed` = '1,1,1,1,1,1,1,1,1,1' 
+UPDATE `www_users` SET `modulesallowed` = '1,1,1,1,1,1,1,1,1,1'
 
 UPDATE securitytokens SET tokenname = 'Petty Cash' WHERE tokenid = 6;
 
@@ -121,3 +121,6 @@ ALTER TABLE `pctabs`
   ADD CONSTRAINT `pctabs_ibfk_3` FOREIGN KEY (`currency`) REFERENCES `currencies` (`currabrev`),
   ADD CONSTRAINT `pctabs_ibfk_4` FOREIGN KEY (`authorizer`) REFERENCES `www_users` (`userid`),
   ADD CONSTRAINT `pctabs_ibfk_5` FOREIGN KEY (`glaccountassignment`) REFERENCES `chartmaster` (`accountcode`);
+
+ALTER TABLE `supptrans`
+  ADD COLUMN `inputdate` datetime NOT NULL AFTER `duedate` ;
