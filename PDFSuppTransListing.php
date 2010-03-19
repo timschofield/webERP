@@ -79,7 +79,8 @@ if (DB_error_no($db)!=0){
 } elseif (DB_num_rows($result) == 0){
 	$title = _('Payment Listing');
 	include('includes/header.inc');
-  	prnMsg (_('There were no bank transactions found in the database within the period from') . ' ' . $_POST['Date'] ._('Please try again selecting a different date range or account'), 'error');
+	echo '<br>';
+  	prnMsg (_('There were no transactions found in the database for the date') . ' ' . $_POST['Date'] .'. '._('Please try again selecting a different date'), 'info');
 	include('includes/footer.inc');
   	exit;
 }
@@ -136,27 +137,8 @@ header('Pragma: public');
 
 $pdf->stream();
 */
-$ReportFileName = $_SESSION['DatabaseName'] . '_ChequeListing_' . date('Y-m-d').'.pdf';
+$ReportFileName = $_SESSION['DatabaseName'] . '_SuppTransListing_' . date('Y-m-d').'.pdf';
 $pdf->OutputD($ReportFileName);//UldisN
 $pdf->__destruct(); //UldisN
-if ($_POST['Email']=='Yes'){
-	if (file_exists($_SESSION['reports_dir'] . '/'.$ReportFileName)){
-		unlink($_SESSION['reports_dir'] . '/'.$ReportFileName);
-	}
-		$fp = fopen( $_SESSION['reports_dir'] . '/'.$ReportFileName,'wb');
-	fwrite ($fp, $pdfcode);
-	fclose ($fp);
-
-	include('includes/htmlMimeMail.php');
-
-	$mail = new htmlMimeMail();
-	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/'.$ReportFileName);
-	$mail->setText(_('Please find herewith payments listing from') . ' ' . $_POST['Date'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
-	$mail->addAttachment($attachment, 'PaymentListing.pdf', 'application/pdf');
-	$mail->setFrom(array('"' . $_SESSION['CompanyRecord']['coyname'] . '" <' . $_SESSION['CompanyRecord']['email'] . '>'));
-
-	/* $ChkListingRecipients defined in config.php */
-	$result = $mail->send($ChkListingRecipients);
-}
 
 ?>

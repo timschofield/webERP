@@ -70,16 +70,17 @@ $result=DB_query($sql,$db,'','',false,false);
 if (DB_error_no($db)!=0){
 	$title = _('Payment Listing');
 	include('includes/header.inc');
-	prnMsg(_('An error occurred getting the payments'),'error');
+	prnMsg(_('An error occurred getting the transactions'),'error');
 	if ($Debug==1){
-			prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br>' . $SQL,'error');
+			prnMsg(_('The SQL used to get the transaction information that failed was') . ':<br>' . $SQL,'error');
 	}
 	include('includes/footer.inc');
   	exit;
 } elseif (DB_num_rows($result) == 0){
 	$title = _('Payment Listing');
 	include('includes/header.inc');
-  	prnMsg (_('There were no bank transactions found in the database within the period from') . ' ' . $_POST['Date'] ._('Please try again selecting a different date range or account'), 'error');
+	echo '<br>';
+  	prnMsg (_('There were no transactions found in the database for the date') . ' ' . $_POST['Date'] .'. '._('Please try again selecting a different date'), 'info');
 	include('includes/footer.inc');
   	exit;
 }
