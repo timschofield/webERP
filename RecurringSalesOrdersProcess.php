@@ -83,7 +83,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 
 	echo '<br>' . _('Date calculated for the next recurrence was') .': ' . $DelDate;
 	$OrderNo = GetNextTransNo(30, $db);
-	
+
 	$HeaderSQL = "INSERT INTO salesorders (
 							orderno,
 							debtorno,
@@ -633,6 +633,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				debtorno,
 				branchcode,
 				trandate,
+				inputdate,
 				prd,
 				reference,
 				tpe,
@@ -650,6 +651,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				'" . $RecurrOrderRow['debtorno'] . "',
 				'" . $RecurrOrderRow['branchcode'] . "',
 				'" . $DelDate . "',
+				'" . date('Y-m-d H-i-s') . "',
 				" . $PeriodNo . ",
 				'" . $RecurrOrderRow['customerref'] . "',
 				'" . $RecurrOrderRow['sales_type'] . "',

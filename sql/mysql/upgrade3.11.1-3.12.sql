@@ -124,3 +124,6 @@ ALTER TABLE `pctabs`
 
 ALTER TABLE `supptrans`
   ADD COLUMN `inputdate` datetime NOT NULL AFTER `duedate` ;
+
+ALTER TABLE `debtortrans`
+  ADD COLUMN `inputdate` datetime NOT NULL AFTER `trandate` ;

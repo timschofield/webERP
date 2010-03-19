@@ -307,6 +307,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PDFCustTransListing.php?' . SID . '">' . _('List Daily Transactions') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
 								<?php echo GetRptLinks('ar'); ?>
 							</td>
 							</tr>

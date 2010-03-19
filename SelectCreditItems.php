@@ -281,7 +281,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		If ($_POST['Keywords']!="") {
 			//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
-			
+
 			if ($_POST['StockCat']=='All'){
 				$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
@@ -1066,6 +1066,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 			debtorno,
 			branchcode,
 			trandate,
+			inputdate,
 			prd,
 			tpe,
 			ovamount,
@@ -1077,7 +1078,9 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 		  	11,
 			'" . $_SESSION['CreditItems']->DebtorNo . "',
 			'" . $_SESSION['CreditItems']->Branch . "',
-			'" . $SQLCreditDate . "', " . $PeriodNo . ",
+			'" . $SQLCreditDate . "',
+			'" . date('Y-m-d H-i-s') . "',
+			" . $PeriodNo . ",
 			'" . $_SESSION['CreditItems']->DefaultSalesType . "',
 			" . -($_SESSION['CreditItems']->total) . ",
 			" . -$TaxTotal . ",

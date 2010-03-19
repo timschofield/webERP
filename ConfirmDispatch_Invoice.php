@@ -715,6 +715,7 @@ DB_Txn_Begin($db);
 			debtorno,
 			branchcode,
 			trandate,
+			inputdate,
 			prd,
 			reference,
 			tpe,
@@ -733,6 +734,7 @@ DB_Txn_Begin($db);
 			'" . $_SESSION['Items']->DebtorNo . "',
 			'" . $_SESSION['Items']->Branch . "',
 			'" . $DefaultDispatchDate . "',
+			'" . date('Y-m-d H-i-s') . "',
 			" . $PeriodNo . ",
 			'',
 			'" . $_SESSION['Items']->DefaultSalesType . "',
@@ -1447,7 +1449,7 @@ DB_Txn_Begin($db);
 	unset($_SESSION['ProcessingOrder']);
 
 	echo prnMsg( _('Invoice number'). ' '. $InvoiceNo .' '. _('processed'), 'success');
-	
+
 	echo '<br><div class="centre">';
 
 	if ($_SESSION['InvoicePortraitFormat']==0){
@@ -1461,7 +1463,7 @@ DB_Txn_Begin($db);
 
 
 } else { /*Process Invoice not set so allow input of invoice data */
-	
+
 	if (!isset($_POST['Consignment'])) {
 		$_POST['Consignment']='';
 	}

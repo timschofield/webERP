@@ -144,7 +144,7 @@ if (isset($_POST['Process'])){ //user hit submit a new entry to the receipt batc
 	if (!isset($_POST['CustomerName'])) {
 		$_POST['CustomerName']='';
 	}
-	
+
 	$_SESSION['ReceiptBatch']->add_to_batch($_POST['Amount'],
 											$_POST['CustomerID'],
 											$_POST['Discount'],
@@ -214,7 +214,7 @@ if (isset($_POST['CommitBatch'])){
 	$CustomerReceiptCounter=1; //Count lines of customer receipts in this batch
 
 	echo '<br /><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Allocate') . '" alt="">' . ' ' . _('Summary of Receipt Batch').'</p><br />';
-	
+
 	echo '<table><tr><th>'._('Batch Number').'</th>
 				<th>'._('Date Banked').'</th>
 				<th>'._('Customer Name').'</th
@@ -222,7 +222,7 @@ if (isset($_POST['CommitBatch'])){
 				<th>'._('Amount of Receipt').'</th></tr>';
 
 	foreach ($_SESSION['ReceiptBatch']->Items as $ReceiptItem) {
-		
+
 		if ($k==1){
 			echo '<tr class="OddTableRows">';
 			$k=0;
@@ -241,7 +241,7 @@ if (isset($_POST['CommitBatch'])){
 			echo '<td><a target="_blank"  href="' . $rootpath . '/PDFReceipt.php?BatchNumber=' . $_SESSION['ReceiptBatch']->BatchNo. '&ReceiptNumber='.$CustomerReceiptCounter.'">'._('Print a Customer Receipt').'</a></td></tr>';
 			$CustomerReceiptCounter += 1;
 		}
-		
+
 		if ($ReceiptItem->GLCode !=''){
 			if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter a GLTrans record */
 				 $SQL = 'INSERT INTO gltrans (type,
@@ -353,6 +353,7 @@ if (isset($_POST['CommitBatch'])){
 							debtorno,
 							branchcode,
 							trandate,
+							inputdate,
 							prd,
 							reference,
 							tpe,
@@ -365,6 +366,7 @@ if (isset($_POST['CommitBatch'])){
 						'" . $ReceiptItem->Customer . "',
 						'',
 						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
+						'" . date('Y-m-d H-i-s') . "',
 						" . $PeriodNo . ",
 						'" . $_SESSION['ReceiptBatch']->ReceiptType  . ' ' . $ReceiptItem->PayeeBankDetail . "',
 						'',
@@ -515,7 +517,7 @@ if (isset($_POST['Search'])){
 		if (strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
-			
+
 			$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name
 				FROM debtorsmaster
