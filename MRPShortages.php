@@ -21,12 +21,12 @@ If (isset($_POST['PrintPDF'])) {
 // several subqueries.
 
 	$sql = 'CREATE TEMPORARY TABLE demandtotal (
-				part char(20),                                
+				part char(20),
 				demand double,
                 KEY `PART` (`part`))';
 	$result = DB_query($sql,$db,_('Create of demandtotal failed because'));
-	
-	$sql = 'INSERT INTO demandtotal 
+
+	$sql = 'INSERT INTO demandtotal
 						(part,
 						 demand)
 			   SELECT part,
@@ -36,19 +36,32 @@ If (isset($_POST['PrintPDF'])) {
 	$result = DB_query($sql,$db);
 
 	$sql = 'CREATE TEMPORARY TABLE supplytotal (
-				part char(20),                                
+				part char(20),
 				supply double,
                 KEY `PART` (`part`))';
 	$result = DB_query($sql,$db,_('Create of supplytotal failed because'));
-	
-	$sql = 'INSERT INTO supplytotal 
+
+/* 21/03/2010: Ricard modification to allow items with total supply = 0 be included in the report */
+
+	$sql = 'INSERT INTO supplytotal
 						(part,
 						 supply)
-			   SELECT part,
-					  SUM(supplyquantity) as supply
-			    FROM mrpsupplies
-			    GROUP BY part';
+			SELECT stockid,
+				  0
+		    FROM stockmaster';
 	$result = DB_query($sql,$db);
+
+	$sql = 'UPDATE supplytotal
+			SET supply = (SELECT SUM(mrpsupplies.supplyquantity)
+					    	FROM mrpsupplies
+							WHERE supplytotal.part = mrpsupplies.part
+								AND mrpsupplies.supplyquantity > 0)';
+	$result = DB_query($sql,$db);
+
+	$sql = 'UPDATE supplytotal SET supply = 0 WHERE supply IS NULL	';
+	$result = DB_query($sql,$db);
+
+/* End Ricard modification */
 
 	// Only include directdemand mrprequirements so don't have demand for top level parts and also
 	// show demand for the lower level parts that the upper level part generates. See MRP.php for
@@ -58,12 +71,12 @@ If (isset($_POST['PrintPDF'])) {
 	                   stockmaster.mbflag,
 	                   stockmaster.actualcost,
 	                   stockmaster.decimalplaces,
-	                   (stockmaster.materialcost + stockmaster.labourcost + 
+	                   (stockmaster.materialcost + stockmaster.labourcost +
 	                    stockmaster.overheadcost ) as computedcost,
 	                   demandtotal.demand,
 	                   supplytotal.supply,
 	                   (demandtotal.demand - supplytotal.supply) *
-	                   (stockmaster.materialcost + stockmaster.labourcost + 
+	                   (stockmaster.materialcost + stockmaster.labourcost +
 	                    stockmaster.overheadcost ) as extcost
       FROM stockmaster
         LEFT JOIN demandtotal ON stockmaster.stockid = demandtotal.part
@@ -83,12 +96,12 @@ If (isset($_POST['PrintPDF'])) {
         stockmaster.mbflag,
         stockmaster.actualcost,
         stockmaster.decimalplaces,
-        (stockmaster.materialcost + stockmaster.labourcost + 
+        (stockmaster.materialcost + stockmaster.labourcost +
 	     stockmaster.overheadcost ) as computedcost,
 	    demandtotal.demand,
 	    supplytotal.supply,
 	   (demandtotal.demand - supplytotal.supply) *
-	   (stockmaster.materialcost + stockmaster.labourcost + 
+	   (stockmaster.materialcost + stockmaster.labourcost +
 		stockmaster.overheadcost ) as extcost
            FROM stockmaster
              LEFT JOIN demandtotal ON stockmaster.stockid = demandtotal.part
@@ -104,7 +117,7 @@ If (isset($_POST['PrintPDF'])) {
 			   computedcost,
 			   supplytotal.supply,
 			   demandtotal.demand
-			HAVING demandtotal.demand > supplytotal.supply 
+			HAVING demandtotal.demand > supplytotal.supply
 			ORDER BY " . $_POST['Sort'] . $sortorder;
 	$result = DB_query($sql,$db,'','',false,true);
 
@@ -143,19 +156,19 @@ If (isset($_POST['PrintPDF'])) {
         if ($myrow['demand'] > $myrow['supply']) {
 			$YPos -=$line_height;
 			$FontSize=8;
-			
+
 			// Use to alternate between lines with transparent and painted background
 			if ($_POST['Fill'] == 'yes'){
 				$fill=!$fill;
 			}
-	
+
 			// Parameters for addTextWrap are defined in /includes/class.pdf.php
 			// 1) X position 2) Y position 3) Width
 			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
 			// and False to set to transparent
 			$shortage = ($myrow['demand'] - $myrow['supply']) * -1;
 			$extcost = $shortage * $myrow['computedcost'];
-			$pdf->addTextWrap($Left_Margin,$YPos,90,$FontSize,$myrow['stockid'],'',0,$fill);				
+			$pdf->addTextWrap($Left_Margin,$YPos,90,$FontSize,$myrow['stockid'],'',0,$fill);
 			$pdf->addTextWrap(130,$YPos,150,$FontSize,$myrow['description'],'',0,$fill);
 			$pdf->addTextWrap(280,$YPos,25,$FontSize,$myrow['mbflag'],'right',0,$fill);
 			$pdf->addTextWrap(305,$YPos,55,$FontSize,number_format($myrow['computedcost'],2),'right',0,$fill);
@@ -166,10 +179,10 @@ If (isset($_POST['PrintPDF'])) {
 			$pdf->addTextWrap(460,$YPos,50,$FontSize,number_format($shortage,
 			                 $myrow['decimalplaces']),'right',0,$fill);
 			$pdf->addTextWrap(510,$YPos,60,$FontSize,number_format($myrow['extcost'],2),'right',0,$fill);
-	
+
 			$Total_Shortage += $myrow['extcost'];
 			$Partctr++;
-	
+
 			if ($YPos < $Bottom_Margin + $line_height){
 			   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 	                   $Right_Margin);
@@ -209,7 +222,7 @@ If (isset($_POST['PrintPDF'])) {
 			header('Expires: 0');
 			header('Cache-Control: private, post-check=0, pre-check=0');
 			header('Pragma: public');
-	
+
 			$pdf->Output('MRPShortages.pdf', 'I');
 	}
 */
@@ -253,7 +266,7 @@ $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['c
 $YPos -=$line_height;
 
 $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('MRP Shortages Report'));
-$pdf->addTextWrap($Page_Width-$Right_Margin-110,$YPos,160,$FontSize,_('Printed') . ': ' . 
+$pdf->addTextWrap($Page_Width-$Right_Margin-110,$YPos,160,$FontSize,_('Printed') . ': ' .
      Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
 
 $YPos -=(2*$line_height);
