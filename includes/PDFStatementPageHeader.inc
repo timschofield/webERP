@@ -6,7 +6,7 @@ $Perforation = $Page_Width - $Right_Margin - 160;
 
 $YPos = $Page_Height - $Top_Margin;
 
-$pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -70,$YPos-80,0,30);
+$pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -130,$YPos-80,0,60);
 
 // Title
 $FontSize =15;
@@ -165,19 +165,19 @@ $YPos -= $line_height;
 $FontSize =10;
 /*Set up headings */
 $pdf->addText($Left_Margin+1, $YPos,$FontSize, _('Trans Type') );
-$pdf->addText($Left_Margin+57, $YPos,$FontSize, _('Number') );
-$pdf->addText($Left_Margin+108, $YPos,$FontSize, _('Date') );
-$pdf->addText($Left_Margin+178, $YPos,$FontSize, _('Charges') );
-$pdf->addText($Left_Margin+239, $YPos,$FontSize, _('Credits') );
-$pdf->addText($Left_Margin+289, $YPos,$FontSize, _('Allocated') );
-$pdf->addText($Left_Margin+336, $YPos,$FontSize, _('Outstanding') );
+$pdf->addText($Left_Margin+100, $YPos,$FontSize, _('Number') );
+$pdf->addText($Left_Margin+210, $YPos,$FontSize, _('Date') );
+$pdf->addText($Left_Margin+300, $YPos,$FontSize, _('Charges') );
+$pdf->addText($Left_Margin+382, $YPos,$FontSize, _('Credits') );
+$pdf->addText($Left_Margin+459, $YPos,$FontSize, _('Allocated') );
+$pdf->addText($Left_Margin+536, $YPos,$FontSize, _('Outstanding') );
 
 
 /*Set up remittance section headings */
 $FontSize=8;
-$pdf->addText($Perforation+1, $YPos,$FontSize, _('Trans') );
-$pdf->addText($Perforation+35, $YPos,$FontSize, _('Number') );
-$pdf->addText($Perforation+80, $YPos,$FontSize, _('Outstanding') );
+$pdf->addText($Perforation+10, $YPos,$FontSize, _('Trans') );
+$pdf->addText($Perforation+55, $YPos,$FontSize, _('Number') );
+$pdf->addText($Perforation+100, $YPos,$FontSize, _('Outstanding') );
 
 
 $YPos -= $line_height;

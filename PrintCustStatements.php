@@ -14,11 +14,12 @@ include('includes/SQL_CommonFunctions.inc');
 if (isset($_GET['PrintPDF'])) {
 	$FromCust = $_GET['FromCust'];
 	$ToCust = $_GET['ToCust'];
-	$PrintPDF = $_GET['PrintPDF']; 
+	$PrintPDF = $_GET['PrintPDF'];
 	$_POST['FromCust'] = $FromCust;
 	$_POST['ToCust'] = $ToCust;
 	$_POST['PrintPDF'] = $PrintPDF;
-}  
+	$PaperSize='A4_Landscape';
+}
 
 
 
@@ -126,13 +127,13 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 						OR debtortrans.id=custallocns.transid_allocto)
 				WHERE custallocns.datealloc >='" .
 					Date('Y-m-d',Mktime(0,0,0,Date('m')-1,Date('d'),Date('y'))) . "'
-				AND debtortrans.debtorno='" . $StmtHeader['debtorno'] . "' 
+				AND debtortrans.debtorno='" . $StmtHeader['debtorno'] . "'
 				AND debtortrans.settled=1
 				ORDER BY debtortrans.id";
 
 			$SetldTrans=DB_query($sql,$db, $ErrMsg);
 			$NumberOfRecordsReturned += DB_num_rows($SetldTrans);
-			
+
 	   	}
 
 	  	if ( $NumberOfRecordsReturned >=1){
@@ -169,19 +170,19 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 						$FontSize=9;
 
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos,60,$FontSize,$myrow['typename'], 'left');
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+61,$YPos,50,$FontSize,$myrow['transno'], 'left');
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+111,$YPos,50,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,50,$FontSize,$myrow['transno'], 'left');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+211,$YPos,50,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');
 
 						$FontSize=10;
 						if ($myrow['total']>0){
 							$DisplayTotal = number_format($myrow['total'],2);
-							$LeftOvers = $pdf->addTextWrap($Left_Margin+150,$YPos,60,$FontSize,$DisplayTotal, 'right');
+							$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,60,$FontSize,$DisplayTotal, 'right');
 						} else {
 							$DisplayTotal = number_format(-$myrow['total'],2);
-							$LeftOvers = $pdf->addTextWrap($Left_Margin+210,$YPos,60,$FontSize,$DisplayTotal, 'right');
+							$LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,60,$FontSize,$DisplayTotal, 'right');
 						}
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+270,$YPos,60,$FontSize,$DisplayAlloc, 'right');
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+330,$YPos,60,$FontSize,$DisplayOutstanding, 'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+459,$YPos,60,$FontSize,$DisplayAlloc, 'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+536,$YPos,60,$FontSize,$DisplayOutstanding, 'right');
 
 						if ($YPos-$line_height <= $Bottom_Margin){
 		/* head up a new statement page */
@@ -219,26 +220,26 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 
 				$FontSize=9;
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos,60,$FontSize,$myrow['typename'], 'left');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+61,$YPos,50,$FontSize,$myrow['transno'], 'left');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+111,$YPos,50,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,50,$FontSize,$myrow['transno'], 'left');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+211,$YPos,50,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');
 
 				$FontSize=10;
 				if ($myrow['total']>0){
 					$DisplayTotal = number_format($myrow['total'],2);
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+161,$YPos,55,$FontSize,$DisplayTotal, 'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,55,$FontSize,$DisplayTotal, 'right');
 				} else {
 					$DisplayTotal = number_format(-$myrow['total'],2);
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+216,$YPos,55,$FontSize,$DisplayTotal, 'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,55,$FontSize,$DisplayTotal, 'right');
 				}
 
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+271,$YPos,59,$FontSize,$DisplayAlloc, 'right');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+330,$YPos,60,$FontSize,$DisplayOutstanding, 'right');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+459,$YPos,59,$FontSize,$DisplayAlloc, 'right');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+536,$YPos,60,$FontSize,$DisplayOutstanding, 'right');
 
 				/*Now show also in the remittance advice sectin */
 				$FontSize=8;
-				$LeftOvers = $pdf->addTextWrap($Perforation+1,$YPos,30,$FontSize,$myrow['typename'], 'left');
-				$LeftOvers = $pdf->addTextWrap($Perforation+35,$YPos,30,$FontSize,$myrow['transno'], 'left');
-				$LeftOvers = $pdf->addTextWrap($Perforation+65,$YPos,60,$FontSize,$DisplayOutstanding, 'right');
+				$LeftOvers = $pdf->addTextWrap($Perforation+10,$YPos,30,$FontSize,$myrow['typename'], 'left');
+				$LeftOvers = $pdf->addTextWrap($Perforation+75,$YPos,30,$FontSize,$myrow['transno'], 'left');
+				$LeftOvers = $pdf->addTextWrap($Perforation+90,$YPos,60,$FontSize,$DisplayOutstanding, 'right');
 
 				if ($YPos-$line_height <= $Bottom_Margin){
 		/* head up a new statement page */
@@ -281,7 +282,7 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 					THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
 					debtortrans.ovdiscount - debtortrans.alloc
 					ELSE 0 END
-				ELSE 
+				ELSE
 					CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ")) >= 0
 					THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
 					debtortrans.ovdiscount - debtortrans.alloc
@@ -307,8 +308,8 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 					THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
 					debtortrans.ovdiscount - debtortrans.alloc
 					ELSE 0 END
-				ELSE 
-					CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1','MONTH') . "), " . 
+				ELSE
+					CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1','MONTH') . "), " .
 					INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . "))
 					>= " . $_SESSION['PastDueDays2'] . ")
 					THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
@@ -356,19 +357,19 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 			$FontSize=10;
 
 
-			$pdf->addText($Left_Margin+37, $Bottom_Margin+(3*$line_height)+4, $FontSize, _('Current'). ' ');
-			$pdf->addText($Left_Margin+110, $Bottom_Margin+(3*$line_height)+4, $FontSize, _('Past Due').' ');
-			$pdf->addText($Left_Margin+182, $Bottom_Margin+(3*$line_height)+4, $FontSize, $_SESSION['PastDueDays1'] . '-' . $_SESSION['PastDueDays2'] . ' ' . _('days') );
-			$pdf->addText($Left_Margin+265, $Bottom_Margin+(3*$line_height)+4, $FontSize, _('Over').' ' . $_SESSION['PastDueDays2'] . ' '. _('days'));
-			$pdf->addText($Left_Margin+332, $Bottom_Margin+(3*$line_height)+4, $FontSize, _('Total Balance') );
+			$pdf->addText($Left_Margin+75, $Bottom_Margin+(3*$line_height)+4, $FontSize, _('Current'). ' ');
+			$pdf->addText($Left_Margin+158, $Bottom_Margin+(3*$line_height)+4, $FontSize, _('Past Due').' ');
+			$pdf->addText($Left_Margin+242, $Bottom_Margin+(3*$line_height)+4, $FontSize, $_SESSION['PastDueDays1'] . '-' . $_SESSION['PastDueDays2'] . ' ' . _('days') );
+			$pdf->addText($Left_Margin+315, $Bottom_Margin+(3*$line_height)+4, $FontSize, _('Over').' ' . $_SESSION['PastDueDays2'] . ' '. _('days'));
+			$pdf->addText($Left_Margin+442, $Bottom_Margin+(3*$line_height)+4, $FontSize, _('Total Balance') );
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1, $Bottom_Margin+(2*$line_height)+8,70,$FontSize,$DisplayCurrent, 'right');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+81, $Bottom_Margin+(2*$line_height)+8,70,$FontSize,$DisplayDue, 'right');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+161, $Bottom_Margin+(2*$line_height)+8,70,$FontSize,$DisplayOverdue1, 'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+37, $Bottom_Margin+(2*$line_height)+8,70,$FontSize,$DisplayCurrent, 'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+130, $Bottom_Margin+(2*$line_height)+8,70,$FontSize,$DisplayDue, 'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+222, $Bottom_Margin+(2*$line_height)+8,70,$FontSize,$DisplayOverdue1, 'right');
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+251, $Bottom_Margin+(2*$line_height)+8,70,$FontSize,$DisplayOverdue2, 'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+305, $Bottom_Margin+(2*$line_height)+8,70,$FontSize,$DisplayOverdue2, 'right');
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+324, $Bottom_Margin+(2*$line_height)+8,70,$FontSize,$DisplayBalance, 'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+432, $Bottom_Margin+(2*$line_height)+8,70,$FontSize,$DisplayBalance, 'right');
 
 
 			/*draw a line under the balance info */
@@ -377,7 +378,8 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 
 
 			if (strlen($StmtHeader['lastpaiddate'])>1 && $StmtHeader['lastpaid']!=0){
-				$pdf->addText($Left_Margin+5, $Bottom_Margin+13, $FontSize, _('Last payment received').' ' . ConvertSQLDate($StmtHeader['lastpaiddate']) . ' ' . _('Amount received was').' ' . number_format($StmtHeader['lastpaid'],2));
+				$pdf->addText($Left_Margin+5, $Bottom_Margin+13, $FontSize, _('Last payment received').' ' . ConvertSQLDate($StmtHeader['lastpaiddate']) .
+					'    ' . _('Amount received was').' ' . number_format($StmtHeader['lastpaid'],2));
 
 			}
 			/*also show the total due in the remittance section */
