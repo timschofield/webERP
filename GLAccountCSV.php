@@ -184,8 +184,11 @@ if (isset($_POST['MakeCSV'])){
 			$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
 			$RunningTotal =$ChartDetailRow['bfwd'];
-
-			fwrite($fp,$SelectedAccount . ', '  .$FirstPeriodSelected . ', ' . _('Brought Forward Balance') . ',,,' . number_format($RunningTotal,2) . "\n");
+			if ($RunningTotal < 0 ){
+				fwrite($fp,$SelectedAccount . ', '  .$FirstPeriodSelected . ', ' . _('Brought Forward Balance') . ',,,,' . -$RunningTotal . "\n");
+			} else {
+				fwrite($fp,$SelectedAccount . ', '  .$FirstPeriodSelected . ', ' . _('Brought Forward Balance') . ',,,' . $RunningTotal . "\n");
+			}
 		}
 		$PeriodTotal = 0;
 		$PeriodNo = -9999;
@@ -208,7 +211,11 @@ if (isset($_POST['MakeCSV'])){
 					$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
 					$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
 					$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
-					fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,' . number_format($PeriodTotal,2). "\n");
+					if ($PeriodTotal < 0) {
+						fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,,' . -$PeriodTotal. "\n");
+					} else {
+						fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,' . $PeriodTotal. "\n");
+					}
 				}
 				$PeriodNo = $myrow['periodno'];
 				$PeriodTotal = 0;
@@ -223,17 +230,31 @@ if (isset($_POST['MakeCSV'])){
 			$tagsql='SELECT tagdescription FROM tags WHERE tagref='.$myrow['tag'];
 			$tagresult=DB_query($tagsql,$db);
 			$tagrow = DB_fetch_array($tagresult);
-
-			fwrite($fp, $SelectedAccount . ',' . $myrow['periodno'] . ', ' . $myrow['typename'] . ',' . $myrow['typeno'] . ',' . $FormatedTranDate . ',' . number_format($myrow['amount'],2) . ',' . $myrow['narrative'] . ',' . $tagrow['tagdescription']. "\n");
-
-		}
+			if ($myrow['amount']<0){
+				fwrite($fp, $SelectedAccount . ',' . $myrow['periodno'] . ', ' . $myrow['typename'] . ',' . $myrow['typeno'] . ',' . $FormatedTranDate . ',,' . -$myrow['amount'] . ',' . $myrow['narrative'] . ',' . $tagrow['tagdescription']. "\n");
+			} else {
+				fwrite($fp, $SelectedAccount . ',' . $myrow['periodno'] . ', ' . $myrow['typename'] . ',' . $myrow['typeno'] . ',' . $FormatedTranDate . ',' . $myrow['amount'] . ',,' . $myrow['narrative'] . ',' . $tagrow['tagdescription']. "\n");
+			}
+		} //end loop around GLtrans
 		if ($PeriodTotal <>0){
-			fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,' . number_format($PeriodTotal,2). "\n");
+			if ($PeriodTotal < 0){
+				fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,,' . -$PeriodTotal. "\n");
+			} else {
+				fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,' . $PeriodTotal. "\n");
+			}
 		}
 		if ($PandLAccount==True){
-			fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Total Period Movement') . ',,,' . number_format($RunningTotal,2) . "\n");
+			if ($RunningTotal < 0){
+				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Total Period Movement') . ',,,,' . -$RunningTotal . "\n");
+			} else {	
+				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Total Period Movement') . ',,,' . $RunningTotal . "\n");
+			}
 		} else { /*its a balance sheet account*/
-			fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Balance C/Fwd') . ',,,' . number_format($RunningTotal,2) . "\n");
+			if ($RunningTotal < 0){
+				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Balance C/Fwd') . ',,,,' . -$RunningTotal . "\n");
+			} else {
+				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Balance C/Fwd') . ',,,' . $RunningTotal . "\n");
+			}
 		}
 
 	} /*end for each SelectedAccount */
