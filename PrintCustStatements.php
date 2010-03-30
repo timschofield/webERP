@@ -11,6 +11,10 @@ include('includes/SQL_CommonFunctions.inc');
 
 // If this file is called from another script, we set the required POST variables from the GET
 // We call this file from SelectCustomer.php when a customer is selected and we want a statement printed
+
+if (isset($_POST['PrintPDF'])) {
+	$PaperSize='A4_Landscape';
+}
 if (isset($_GET['PrintPDF'])) {
 	$FromCust = $_GET['FromCust'];
 	$ToCust = $_GET['ToCust'];
