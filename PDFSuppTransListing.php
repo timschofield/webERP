@@ -17,7 +17,7 @@ if (isset($_POST['Date']) AND !Is_Date($_POST['Date'])){
 
 if (!isset($_POST['Date'])){
 
-	 $title = _('Suppier Transaction Listing');
+	 $title = _('Supplier Transaction Listing');
 	 include ('includes/header.inc');
 
 	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="">' . ' '
