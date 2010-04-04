@@ -128,4 +128,4 @@ ALTER TABLE `supptrans`
 ALTER TABLE `debtortrans`
   ADD COLUMN `inputdate` datetime NOT NULL AFTER `trandate` ;
 
-AL>TER TABLE `reportfields` CHANGE COLUMN `fieldname` `fieldname` VARCHAR(60) NOT NULL DEFAULT '';
+ALTER TABLE `reportfields` CHANGE COLUMN `fieldname` `fieldname` VARCHAR(60) NOT NULL DEFAULT '';
