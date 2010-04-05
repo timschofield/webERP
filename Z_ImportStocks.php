@@ -77,7 +77,7 @@ if ($_FILES['userfile']['name']) { //start file processing
 	}
 
 	//start database transaction
-	DB_Txn_Begin();
+	DB_Txn_Begin($db);
 
 	//loop through file rows
 	$row = 1;
@@ -128,6 +128,10 @@ if ($_FILES['userfile']['name']) { //start file processing
 		if (strlen($myrow[13]) >20) {
 			$InputError = 1;
 			prnMsg(_('The barcode must be 20 characters or less long'),'error');
+		} 
+		if (!is_numeric($myrow[10]) OR $myrow[10]!=0 OR $myrow[10]!=1) {
+			$InputError = 1;
+			prnMsg (_('Values in the Perishable field must be either 0 (No) or 1 (Yes)') ,'error');
 		} 
 		if (!is_numeric($myrow[11])) {
 			$InputError = 1;
@@ -260,9 +264,9 @@ if ($_FILES['userfile']['name']) { //start file processing
 
 	if ($InputError == 1) { //exited loop with errors so rollback
 		prnMsg(_('Failed on row '. $row. '. Batch import has been rolled back.'),'error');
-		DB_Txn_Rollback();
+		DB_Txn_Rollback($db);
 	} else { //all good so commit data transaction
-		DB_Txn_Commit();
+		DB_Txn_Commit($db);
 		prnMsg( _('Batch Import of') .' ' . $fileName  . ' '. _('has been completed. All transactions committed to the database.'),'success');
 	}
 
