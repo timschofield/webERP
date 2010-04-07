@@ -386,7 +386,14 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 // record returned from a search so parse the $Select string into customer code and branch code */
 if (isset($_POST['Select']) AND $_POST['Select']!='') {
 
-	$_SESSION['Items'.$identifier]->Branch = substr($_POST['Select'],strpos($_POST['Select'],' - ')+3);
+	$branchsql='SELECT branchcode
+				FROM custbranch
+				WHERE brname="'.substr($_POST['Select'],strpos($_POST['Select'],' - ')+3).'"
+				AND debtorno="'.substr($_POST['Select'],0,strpos($_POST['Select'],' - ')).'"';
+
+	$branchresult=DB_query($branchsql, $db);
+	$branchrow=DB_fetch_row($branchresult);
+	$_SESSION['Items'.$identifier]->Branch = $branchrow[0];
 
 	$_POST['Select'] = substr($_POST['Select'],0,strpos($_POST['Select'],' - '));
 
@@ -453,7 +460,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 			FROM custbranch
 			INNER JOIN locations
 			ON custbranch.defaultlocation=locations.loccode
-			WHERE custbranch.brname='" . $_SESSION['Items'.$identifier]->Branch . "'
+			WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
 			AND custbranch.debtorno = '" . $_POST['Select'] . "'";
 
 		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');

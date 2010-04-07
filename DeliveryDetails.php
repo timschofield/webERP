@@ -127,7 +127,7 @@ if (isset($_POST['Update'])
 				$_POST['ShipVia'] = $BestShipper;
 			} else {
 				prnMsg(_($_POST['FreightCost']),'warn');
-			}		
+			}
 		}
 		$sql = 'SELECT custbranch.brname,
 				custbranch.braddress1,
@@ -324,9 +324,9 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 	$ConfDate = FormatDateforSQL($_SESSION['Items'.$identifier]->ConfirmedDate);
 
 	$Result = DB_Txn_Begin($db);
-	
+
 	$OrderNo = GetNextTransNo(30, $db);
-	
+
 	$HeaderSQL = 'INSERT INTO salesorders (
 								orderno,
 								debtorno,
@@ -382,7 +382,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 	$ErrMsg = _('The order cannot be added because');
 	$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
 
-	
+
 	$StartOf_LineItemsSQL = 'INSERT INTO salesorderdetails (
 											orderlineno,
 											orderno,
@@ -410,22 +410,22 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 				)';
 		$ErrMsg = _('Unable to add the sales order line');
 		$Ins_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg,true);
-		
-		/*Now check to see if the item is manufactured 
-		 * 			and AutoCreateWOs is on 
+
+		/*Now check to see if the item is manufactured
+		 * 			and AutoCreateWOs is on
 		 * 			and it is a real order (not just a quotation)*/
-				
-		if ($StockItem->MBflag=='M' 
-			AND $_SESSION['AutoCreateWOs']==1 
-			AND $_SESSION['Items'.$identifier]->Quotation!=1){ //oh yeah its all on!	
-		
+
+		if ($StockItem->MBflag=='M'
+			AND $_SESSION['AutoCreateWOs']==1
+			AND $_SESSION['Items'.$identifier]->Quotation!=1){ //oh yeah its all on!
+
 			echo '<br>';
-			
+
 			//now get the data required to test to see if we need to make a new WO
 			$QOHResult = DB_query("SELECT SUM(quantity) FROM locstock WHERE stockid='" . $StockItem->StockID . "'",$db);
 			$QOHRow = DB_fetch_row($QOHResult);
 			$QOH = $QOHRow[0];
-			
+
 			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
 					FROM salesorderdetails
 					WHERE salesorderdetails.stkcode = '" . $StockItem->StockID . "'
@@ -433,7 +433,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 			$DemandResult = DB_query($SQL,$db);
 			$DemandRow = DB_fetch_row($DemandResult);
 			$QuantityDemand = $DemandRow[0];
-	
+
 			$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
 					FROM salesorderdetails,
 						bom,
@@ -447,7 +447,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 			$AssemblyDemandResult = DB_query($SQL,$db);
 			$AssemblyDemandRow = DB_fetch_row($AssemblyDemandResult);
 			$QuantityAssemblyDemand = $AssemblyDemandRow[0];
-			
+
 			$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) as qtyonorder
 					FROM purchorderdetails,
 						purchorders
@@ -457,7 +457,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 			$PurchOrdersResult = DB_query($SQL,$db);
 			$PurchOrdersRow = DB_fetch_row($PurchOrdersResult);
 			$QuantityPurchOrders = $PurchOrdersRow[0];
-			
+
 			$SQL = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) as qtyonorder
 					FROM woitems INNER JOIN workorders
 					ON woitems.wo=workorders.wo
@@ -470,7 +470,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 			//Now we have the data - do we need to make any more?
 			$ShortfallQuantity = $QOH-$QuantityDemand-$QuantityAssemblyDemand+$QuantityPurchOrders+$QuantityWorkOrders;
-			
+
 			if ($ShortfallQuantity < 0) { //then we need to make a work order
 				//How many should the work order be for??
 				if ($ShortfallQuantity + $StockItem->EOQ < 0){
@@ -478,7 +478,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 				} else {
 					$WOQuantity = $StockItem->EOQ;
 				}
-					
+
 				$WONo = GetNextTransNo(40,$db);
 				$ErrMsg = _('Unable to insert a new work order for the sales order item');
 				$InsWOResult = DB_query("INSERT INTO workorders (wo,
@@ -504,7 +504,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 				} else {
 					$Cost = $CostRow[0];
 				}
-						
+
 				// insert parent item info
 				$sql = "INSERT INTO woitems (wo,
 											 stockid,
@@ -520,16 +520,16 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 				//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
 				WoRealRequirements($db, $WONo, $_SESSION['DefaultFactoryLocation'], $StockItem->StockID);
 
-				$FactoryManagerEmail = _('A new work order has been created for') . 
+				$FactoryManagerEmail = _('A new work order has been created for') .
 									":\n" . $StockItem->StockID . ' - ' . $StockItem->Descr . ' x ' . $WOQuantity . ' ' . $StockItem->UOM .
 									"\n" . _('These are for') . ' ' . $_SESSION['Items'.$identifier]->CustomerName . ' ' . _('there order ref') . ': '  . $_SESSION['Items'.$identifier]->CustRef . ' ' ._('our order number') . ': ' . $OrderNo;
-									
+
 				if ($StockItem->Serialised AND $StockItem->NextSerialNo>0){
 						//then we must create the serial numbers for the new WO also
 						$FactoryManagerEmail .= "\n" . _('The following serial numbers have been reserved for this work order') . ':';
-						
+
 						for ($i=0;$i<$WOQuantity;$i++){
-										
+
 							$result = DB_query("SELECT serialno FROM stockserialitems
 												WHERE serialno='" . ($StockItem->NextSerialNo + $i) . "'
 												AND stockid='" . $StockItem->StockID ."'",$db);
@@ -540,14 +540,14 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 								$sql = 'INSERT INTO woserialnos (wo,
 																stockid,
 																serialno)
-													VALUES (' . $WONo . ",	
+													VALUES (' . $WONo . ",
 															'" . $StockItem->StockID . "',
 															" . ($StockItem->NextSerialNo + $i)	 . ')';
 								$ErrMsg = _('The serial number for the work order item could not be added');
 								$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 								$FactoryManagerEmail .= "\n" . ($StockItem->NextSerialNo + $i);
 							}
-						} //end loop around creation of woserialnos	
+						} //end loop around creation of woserialnos
 						$NewNextSerialNo = ($StockItem->NextSerialNo + $WOQuantity +1);
 						$ErrMsg = _('Could not update the new next serial number for the item');
 						$UpdateNextSerialNoResult = DB_query('UPDATE stockmaster SET nextserialno=' . $NewNextSerialNo . " WHERE stockid='" . $StockItem->StockID . "'",$db,$ErrMsg,$DbgMsg,true);
@@ -555,12 +555,12 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 				$EmailSubject = _('New Work Order Number') . ' ' . $WONo . ' ' . _('for') . ' ' . $StockItem->StockID . ' x ' . $WOQuantity;
 				//Send email to the Factory Manager
-				mail($_SESSION['FactoryManagerEmail'],$EmailSubject,$FactoryManagerEmail);									
+				mail($_SESSION['FactoryManagerEmail'],$EmailSubject,$FactoryManagerEmail);
 			} //end if with this sales order there is a shortfall of stock - need to create the WO
 		}//end if auto create WOs in on
 	} /* end inserted line items into sales order details */
 
-	$result = DB_Txn_Commit($db);	
+	$result = DB_Txn_Commit($db);
 	echo '<br>';
 	if ($_SESSION['Items'.$identifier]->Quotation==1){
 		prnMsg(_('Quotation Number') . ' ' . $OrderNo . ' ' . _('has been entered'),'success');
@@ -702,7 +702,7 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 		echo _('Order Summary');
 	}
 	echo '</b></div>
-	<table cellpading=2 colspan=7 border=1>
+	<table cellpading=2 colspan=7>
 	<Tr>
 		<th>'. _('Item Code') .'</th>
 		<th>'. _('Item Description') .'</th>
@@ -750,14 +750,14 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 	}
 
 	$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,2);
-	echo '<tr>
+	echo '<tr class="EvenTableRows">
 		<td colspan=6 class=number><b>'. _('TOTAL Excl Tax/Freight') .'</b></td>
 		<td class=number>'.$DisplayTotal.'</td>
 	</tr></table>';
 
 	$DisplayVolume = number_format($_SESSION['Items'.$identifier]->totalVolume,2);
 	$DisplayWeight = number_format($_SESSION['Items'.$identifier]->totalWeight,2);
-	echo '<table border=1><tr>
+	echo '<br><table class=selection><tr>
 		<td>'. _('Total Weight') .':</td>
 		<td>'.$DisplayWeight.'</td>
 		<td>'. _('Total Volume') .':</td>
@@ -809,7 +809,7 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 	}
 
 	$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,2);
-	echo '<table><tr>
+	echo '<table class=selection><tr>
 		<td>'. _('Total Weight') .':</td>
 		<td>'.$DisplayWeight .'</td>
 		<td>'. _('Total Volume') .':</td>
@@ -818,7 +818,7 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 	$DisplayVolume = number_format($_SESSION['Items'.$identifier]->totalVolume,2);
 	$DisplayWeight = number_format($_SESSION['Items'.$identifier]->totalWeight,2);
-	echo '<table border=1><tr>
+	echo '<table class=selection><tr>
 		<td>'. _('Total Weight') .':</td>
 		<td>'. $DisplayWeight .'</td>
 		<td>'. _('Total Volume') .':</td>
@@ -827,7 +827,7 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 }
 
-echo '<br><table><tr>
+echo '<br><table  class=selection><tr>
 	<td>'. _('Deliver To') .':</td>
 	<td><input type=text size=42 maxlength=40 name="DeliverTo" value="' . $_SESSION['Items'.$identifier]->DeliverTo . '"></td>
 </tr>';
