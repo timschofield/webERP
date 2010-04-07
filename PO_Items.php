@@ -28,7 +28,9 @@ include('includes/header.inc');
 
 $Maximum_Number_Of_Parts_To_Show=50;
 
-echo '<a href="'.$rootpath.'/PO_Header.php?' . SID . "identifier=".$identifier. '">' ._('Back To Purchase Order Header') . '</a><br>';
+if (!isset($_POST['Commit'])) {
+	echo '<a href="'.$rootpath.'/PO_Header.php?' . SID . "identifier=".$identifier. '">' ._('Back To Purchase Order Header') . '</a><br>';
+}
 
 // add new request here 08-09-26
 if (isset($_POST['StockID2']) && $_GET['Edit']=='') {
