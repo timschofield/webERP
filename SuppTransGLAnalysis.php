@@ -47,7 +47,7 @@ if (isset($_POST['AddGLCodeToTrans']) and $_POST['AddGLCodeToTrans'] == _('Enter
 			prnMsg( _('The amount entered is not numeric') . '. ' . _('This line cannot be added to the transaction'),'error');
 			$InputError = True;
 		} elseif ($_POST['JobRef'] != ''){
-			$sql = "SELECT contractref FROM contracts WHERE contactref='" . $_POST['JobRef'] . "'";
+			$sql = "SELECT contractref FROM contracts WHERE contractref='" . $_POST['JobRef'] . "'";
 			$result = DB_query($sql, $db);
 			if (DB_num_rows($result) == 0){
 				prnMsg( _('The contract reference entered is not a valid contract, this line cannot be added to the transaction'),'error');
@@ -78,7 +78,7 @@ if (isset($_GET['Delete'])){
 
 /*Show all the selected GLCodes so far from the SESSION['SuppInv']->GLCodes array */
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
-	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger') . '" alt="">' . ' ' 
+	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger') . '" alt="">' . ' '
 	. _('General Ledger Analysis of Invoice From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 } else {
 	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger') . '" alt="">' . ' '
@@ -174,10 +174,10 @@ echo '<tr>
 echo '<tr>
 	<td>' . _('Contract Ref') . ":</td>
 	<td><input type='Text' name='JobRef' size=21 maxlength=20 VALUE=" . $_POST['JobRef'] . ">";
-	 
+
 	 /* Once the contract stuff is written then it would be appropriate to have:
 	  <a TARGET='_blank' href='$rootpath/ContractsList.php?" . SID . "'>" . _('View Open Contracts/Jobs') . '</a> */
-	  
+
 echo ' </td>
 	</tr>';
 	if (!isset($_POST['Narrative'])) {
