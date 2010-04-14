@@ -129,3 +129,5 @@ ALTER TABLE `debtortrans`
   ADD COLUMN `inputdate` datetime NOT NULL AFTER `trandate` ;
 
 ALTER TABLE `reportfields` CHANGE COLUMN `fieldname` `fieldname` VARCHAR(60) NOT NULL DEFAULT '';
+
+INSERT INTO `config` (`confname`, `confvalue`) VALUES ('RequirePickingNote',0);

@@ -219,6 +219,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['AllowOrderLineItemNarrative'] != $_POST['X_AllowOrderLineItemNarrative'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_AllowOrderLineItemNarrative']."' WHERE confname = 'AllowOrderLineItemNarrative'";
 		}
+		if ($_SESSION['RequirePickingNote'] != $_POST['X_RequirePickingNote'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_RequirePickingNote']."' WHERE confname = 'RequirePickingNote'";
+		}
 		if ($_SESSION['geocode_integration'] != $_POST['X_geocode_integration'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_geocode_integration']."' WHERE confname = 'geocode_integration'";
 		}
@@ -382,6 +385,16 @@ echo '<tr><td>' . _('Order Entry allows Line Item Narrative') . ':</td>
 	</select></td>
 	<td>' . _('Select whether or not to allow entry of narrative on order line items. This narrative will appear on invoices and packing slips. Useful mainly for service businesses.') . '</td>
 	</tr>';
+
+//'RequirePickingNote'
+echo '<tr><td>' . _('A picking note must be produced before an order can be delivered') . ':</td>
+	<td><select Name="X_RequirePickingNote">
+	<option '.($_SESSION['RequirePickingNote']=='1'?'selected ':'').'value="1">'._('Yes').'
+	<option '.($_SESSION['RequirePickingNote']=='0'?'selected ':'').'value="0">'._('No').'
+	</select></td>
+	<td>' . _('Select whether or not a picking note must be produced before an order can be delivered to a customer.') . '</td>
+	</tr>';
+
 //UpdateCurrencyRatesDaily
 echo '<tr><td>' . _('Auto Update Exchange Rates Daily') . ':</td>
 	<td><select Name="X_UpdateCurrencyRatesDaily">
