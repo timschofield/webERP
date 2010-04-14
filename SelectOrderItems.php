@@ -374,7 +374,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 
 		if (DB_num_rows($result_CustSelect)==1){
 			$myrow=DB_fetch_array($result_CustSelect);
-			$_POST['Select'] = $myrow['debtorno'] . ' - ' . $myrow['branchname'];
+			$_POST['Select'] = $myrow['debtorno'] . ' - ' . $myrow['branchcode'];
 		} elseif (DB_num_rows($result_CustSelect)==0){
 			prnMsg(_('No Customer Branch records contain the search criteria') . ' - ' . _('please try again') . ' - ' . _('Note a Customer Branch Name may be different to the Customer Name'),'info');
 		}
@@ -386,14 +386,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 // record returned from a search so parse the $Select string into customer code and branch code */
 if (isset($_POST['Select']) AND $_POST['Select']!='') {
 
-	$branchsql='SELECT branchcode
-				FROM custbranch
-				WHERE brname="'.substr($_POST['Select'],strpos($_POST['Select'],' - ')+3).'"
-				AND debtorno="'.substr($_POST['Select'],0,strpos($_POST['Select'],' - ')).'"';
-
-	$branchresult=DB_query($branchsql, $db);
-	$branchrow=DB_fetch_row($branchresult);
-	$_SESSION['Items'.$identifier]->Branch = $branchrow[0];
+	$_SESSION['Items'.$identifier]->Branch = substr($_POST['Select'],strpos($_POST['Select'],' - ')+3);
 
 	$_POST['Select'] = substr($_POST['Select'],0,strpos($_POST['Select'],' - '));
 
@@ -562,6 +555,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 	// the order process will ask for branch details later anyway
 
 		$sql = "SELECT custbranch.brname,
+						custbranch.branchcode,
 						custbranch.braddress1,
 						custbranch.braddress2,
 						custbranch.braddress3,
@@ -660,17 +654,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
+			echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'identifier='.$identifier . '"& name="SelectParts" method=post>';
 			if ($LastCustomer != $myrow['name']) {
 				echo '<td>'.$myrow['name'].'</td>';
 			} else {
 				echo '<td></td>';
 			}
-			echo '<td><input tabindex='.number_format($j+5).' type=submit name="Select" value="'.$myrow['debtorno'].' - '.$myrow['brname'].'"</td>
-					<td>'.$myrow['brname'].'</td>
+			echo '<td><input tabindex='.number_format($j+5).' type=submit name="Submit" value="'.$myrow['brname'].'"</td>
+					<input type=hidden name="Select" value="'.$myrow['debtorno'].' - '.$myrow['branchcode'].'">
 					<td>'.$myrow['contactname'].'</td>
 					<td>'.$myrow['phoneno'].'</td>
 					<td>.'.$myrow['faxno'].'</td>
-					</tr>';
+					</tr></form>';
 			$LastCustomer=$myrow['name'];
 			$j++;
 //end of page full new headings if
@@ -1319,7 +1314,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		$DisplayVolume = number_format($_SESSION['Items'.$identifier]->totalVolume,2);
 		$DisplayWeight = number_format($_SESSION['Items'.$identifier]->totalWeight,2);
-		echo '<table border=1><tr><td>' . _('Total Weight') . ':</td>
+		echo '<table><tr class="EvenTableRows"><td>' . _('Total Weight') . ':</td>
 						 <td>' . $DisplayWeight . '</td>
 						 <td>' . _('Total Volume') . ':</td>
 						 <td>' . $DisplayVolume . '</td>

@@ -41,7 +41,7 @@ li { list-style-image: url(bullet.gif); ¡ bullet.gif only exist in fresh theme 
 /*links before selection */
 a {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: normal;
 	text-decoration: none;
 	color: #00f;
@@ -61,7 +61,7 @@ table {
 th {
 	font-weight: normal;
 	background-color: #cccce5;
-	font-size: 12px;
+	font-size: 10px;
 	color: #300;
 	text-align: center;
 	vertical-align: center;
@@ -76,7 +76,7 @@ th {
 /*table detail items default format */
 td {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 	text-align: left;
 }
 
@@ -171,10 +171,40 @@ div.info {
     margin: 0 auto;
 }
 
+textarea {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 10px;
+	background-color: #e3e1e1;
+	border-width:1px;
+	border-bottom-color: gray;
+	border-bottom-style: solid;
+	border-top-color: gray;
+	border-top-style: solid;
+	border-left-color: gray;
+	border-left-style: solid;
+	border-right-color: gray;
+	border-right-style: solid;
+}
+
 input {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 	background-color: #e3e1e1;
+	border-width:1px;
+	border-bottom-color: gray;
+	border-bottom-style: solid;
+	border-top-color: gray;
+	border-top-style: solid;
+	border-left-color: gray;
+	border-left-style: solid;
+	border-right-color: gray;
+	border-right-style: solid;
+}
+
+input:hover {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 10px;
+	background-color: #e3e5f5;
 	border-width:1px;
 	border-bottom-color: gray;
 	border-bottom-style: solid;
@@ -196,7 +226,7 @@ input:hover { }
 
 select {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 }
 
 font.good {
@@ -330,7 +360,7 @@ End Merge */
 	width: 100%;
 	margin: 0px;
 	padding: 0px;
- 	font-size: 12px;
+ 	font-size: 10px;
 }
 
 /* Main page heading with quick menu within */
@@ -356,7 +386,7 @@ End Merge */
 .quick_menu_left {
 	background: none;
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: bold;
 	border: none;
 	white-space: nowrap;
@@ -427,12 +457,12 @@ End Merge */
 }
 
 .system_menu_tabs a {
-	font-size: 12px;
+	font-size: 10px;
 	color: black;
 }
 
 .system_menu_tabs a:hover {
-	font-size: 12px;
+	font-size: 10px;
 	color: black;
 }
 
@@ -503,7 +533,7 @@ End Merge */
 
 span.main_menu_nolink {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: bold;
 	color: #777;
 	text-decoration: none;
@@ -545,7 +575,7 @@ span.main_menu_nolink {
 
 .menu_group_headers_text {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: bold;
 	color: black;
 }
@@ -572,7 +602,7 @@ p.page_title_text {
         padding-top: 2px;
         padding-bottom: 2px;
         font-weight: bold;
-        font-size: 12px;
+        font-size: 10px;
         color: black;
         background-color: #cccce5;
         width: 33%;
@@ -631,7 +661,7 @@ End merge */
 
 span.menu_group_nolink {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: normal;
 	color: #777;
 	text-decoration: none;
@@ -727,7 +757,7 @@ select.selecterror {
 .label {
 	font-weight:bold;
 	font-style:normal;
-	font-size:12px;
+	font-size:10px;
 	color:black;
 	background-color:#ccc;
 }
