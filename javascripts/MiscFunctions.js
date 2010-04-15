@@ -28,12 +28,18 @@ if (mA==null){
 alert("Please enter the date in the format "+dF);
 return false;
 }
-if (dF=="d/m/Y"){
-d=mA[1];
-m=mA[3];
+if ((dF == "d/m/Y") || (dF == "d.m.Y")){
+d = mA[1];
+m = mA[3];
+y = mA[5];
+}else if (dF == "m/d/Y"){
+d = mA[3];
+m = mA[1];
+y = mA[5];
 }else{
-d=mA[3];
-m=mA[1];
+d = mA[5];
+m = mA[3];
+y = mA[1];
 }
 y=mA[5];
 if (m<1 || m>12){
