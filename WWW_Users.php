@@ -11,17 +11,17 @@ if (isset($_POST['UserID']) AND isset($_POST['ID'])){
 }
 include('includes/session.inc');
 
-$ModuleList = array(_('Orders'), 
-					_('Receivables'), 
-					_('Payables'), 
-					_('Purchasing'), 
-					_('Inventory'), 
-					_('Manufacturing'), 
-					_('General Ledger'), 
-					_('Asset Manager'), 
-					_('Petty Cash'), 
+$ModuleList = array(_('Orders'),
+					_('Receivables'),
+					_('Payables'),
+					_('Purchasing'),
+					_('Inventory'),
+					_('Manufacturing'),
+					_('General Ledger'),
+					_('Asset Manager'),
+					_('Petty Cash'),
 					_('Setup'));
-					
+
 $PDFLanguages = array(_('Latin Western Languages'),
 						_('Eastern European Russian Japanese'),
 						_('Chinese'),
@@ -38,8 +38,8 @@ include('includes/SQL_CommonFunctions.inc');
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 
 // Make an array of the security roles
-$sql = 'SELECT secroleid, 
-		secrolename 
+$sql = 'SELECT secroleid,
+		secrolename
 	FROM securityroles ORDER BY secroleid';
 $Sec_Result = DB_query($sql, $db);
 $SecurityRoles = array();
@@ -240,7 +240,7 @@ if (!isset($SelectedUser)) {
 
 /* If its the first time the page has been displayed with no parameters then none of the above are true and the list of Users will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
-	$sql = 'SELECT 
+	$sql = 'SELECT
 			userid,
 			realname,
 			phone,
@@ -281,11 +281,11 @@ if (!isset($SelectedUser)) {
 			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
-	
-	if ($myrow[6]=='') {
+
+	if ($myrow[7]=='') {
 		$LastVisitDate = Date('Y-m-d');
 	} else {
-		$LastVisitDate = ConvertSQLDate($myrow[6]);
+		$LastVisitDate = ConvertSQLDate($myrow[7]);
 	}
 
 		/*The SecurityHeadings array is defined in config.php */
@@ -351,7 +351,7 @@ if (isset($SelectedUser)) {
 			blocked,
 			theme,
 			language,
-			pdflanguage		
+			pdflanguage
 		FROM www_users
 		WHERE userid='" . $SelectedUser . "'";
 
@@ -373,7 +373,7 @@ if (isset($SelectedUser)) {
 	$_POST['UserLanguage'] = $myrow['language'];
 	$_POST['Blocked'] = $myrow['blocked'];
 	$_POST['PDFLanguage'] = $myrow['pdflanguage'];
-	
+
 	echo "<input type='hidden' name='SelectedUser' value='" . $SelectedUser . "'>";
 	echo "<input type='hidden' name='UserID' value='" . $_POST['UserID'] . "'>";
 	echo "<input type='hidden' name='ModulesAllowed' value='" . $_POST['ModulesAllowed'] . "'>";
@@ -475,7 +475,7 @@ if ((isset($_POST['Salesman']) and $_POST['Salesman']=='') OR !isset($_POST['Sal
 	echo '<option value="">' . _('Not a salesperson only login') . '</option>';
 }
 while ($myrow=DB_fetch_array($result)){
-	
+
 	if (isset($_POST['Salesman']) and $myrow['salesmancode'] == $_POST['Salesman']){
 		echo '<option selected value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
 	} else {
@@ -573,7 +573,7 @@ while (false != ($LanguageEntry = $LangDirHandle->read())){
 		} elseif (!isset($_POST['UserLanguage']) and $LanguageEntry == $DefaultLanguage) {
 			echo "<option selected value='$LanguageEntry'>$LanguageEntry";
 		} else {
-			echo "<option value='$LanguageEntry'>$LanguageEntry";			
+			echo "<option value='$LanguageEntry'>$LanguageEntry";
 		}
 	}
 }
@@ -601,7 +601,7 @@ foreach($ModuleList as $ModuleName){
 if (!isset($_POST['PDFLanguage'])){
 	$_POST['PDFLanguage']=0;
 }
-	
+
 echo '<tr><td>' . _('PDF Language Support') . ': </td><td><select name="PDFLanguage">';
 for($i=0;$i<=7;$i++){
 	if ($_POST['PDFLanguage']==$i){
