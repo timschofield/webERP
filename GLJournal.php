@@ -122,6 +122,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 	echo "<br><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "&NewJournal=Yes'>"._('Enter Another General Ledger Journal').'</a>';
 	/*And post the journal too */
 	include ('includes/GLPostings.inc');
+	include ('includes/footer.inc');
 	exit;
 
 } elseif (isset($_GET['Delete'])){
