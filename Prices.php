@@ -29,6 +29,10 @@ if (!isset($_POST['CurrAbrev'])){
 	$_POST['CurrAbrev'] = $_SESSION['CompanyRecord']['currencydefault'];
 }
 
+if (!isset($_POST['StartDate'])){
+	$_POST['StartDate'] = Date($_SESSION['DefaultDateFormat']);
+}
+
 echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><br>';
 
 
@@ -70,14 +74,23 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		$msg = _('The price entered must be numeric');
 	}
-
+	if (! Is_Date($_POST['StartDate'])){
+		$InpuitError =1;
+		$msg = _('The date this price is to take effect from must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+	}
+	if (! Is_Date($_POST['EndDate'])){
+		$InpuitError =1;
+		$msg = _('The date this price is be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+	}
 	if (isset($_POST['OldTypeAbbrev']) AND isset($_POST['OldCurrAbrev']) AND strlen($Item)>1 AND $InputError !=1) {
 
 		//editing an existing price
 		$sql = "UPDATE prices SET
 				typeabbrev='" . $_POST['TypeAbbrev'] . "',
 				currabrev='" . $_POST['CurrAbrev'] . "',
-				price=" . $_POST['Price'] . "
+				price=" . $_POST['Price'] . ",
+				startdate='" . FormatDateForSQL($_POST['StartDate']) . "',
+				enddate='" . FormatDateForSQL($_POST['EndDate']) . "'
 			WHERE prices.stockid='$Item'
 			AND prices.typeabbrev='" . $_POST['OldTypeAbbrev'] . "'
 			AND prices.currabrev='" . $_POST['OldCurrAbrev'] . "'
@@ -89,15 +102,19 @@ if (isset($_POST['submit'])) {
 	/*Selected price is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new price form */
 
 		$sql = "INSERT INTO prices (stockid,
-						typeabbrev,
-						currabrev,
-						debtorno,
-						price)
-				VALUES ('$Item',
-					'" . $_POST['TypeAbbrev'] . "',
-					'" . $_POST['CurrAbrev'] . "',
-					'',
-					" . $_POST['Price'] . ")";
+											typeabbrev,
+											currabrev,
+											debtorno,
+											startdate,
+											enddate,
+											price)
+									VALUES ('$Item',
+										'" . $_POST['TypeAbbrev'] . "',
+										'" . $_POST['CurrAbrev'] . "',
+										'',
+										'" . FormatDateForSQL($_POST['StartDate']) . "',
+										'" . FormatDateForSQL($_POST['EndDate']). "',
+										" . $_POST['Price'] . ")";
 
 		$msg =  _('The new price has been added') . '.';
 	}
@@ -140,7 +157,9 @@ if ($InputError ==0){
 			prices.price,
 			prices.stockid,
 			prices.typeabbrev,
-			prices.currabrev
+			prices.currabrev,
+			prices.startdate,
+			prices.enddate
 		FROM prices,
 			salestypes,
 			currencies
@@ -157,7 +176,8 @@ if ($InputError ==0){
 	echo '<tr><th>' . _('Currency') .
 	     '</th><th>' . _('Sales Type') .
 			 '</th><th>' . _('Price') .
-			 '</th></tr>';
+			 '</th><th>' . _('Start Date') . ' </th>
+			 <th>' . _('End Date') . '</th></tr>';
 
 	$k=0; //row colour counter
 
@@ -174,31 +194,40 @@ if ($InputError ==0){
 		if (in_array(5,$_SESSION['AllowedPageSecurityTokens'])) {
 
 			printf("<td>%s</td>
-			        <td>%s</td>
-				<td class=number>%0.2f</td>
-				<td><a href='%s?%s&Item=%s&TypeAbbrev=%s&CurrAbrev=%s&Price=%s&Edit=1'>" . _('Edit') . "</td>
-				<td><a href='%s?%s&Item=%s&TypeAbbrev=%s&CurrAbrev=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this price?') . "');\">" . _('Delete') . '</td></tr>',
-				$myrow['currency'],
-				$myrow['sales_type'],
-				$myrow['price'],
-				$_SERVER['PHP_SELF'],
-				SID,
-				$myrow['stockid'],
-				$myrow['typeabbrev'],
-				$myrow['currabrev'],
-				$myrow['price'],
-				$_SERVER['PHP_SELF'],
-				SID,
-				$myrow['stockid'],
-				$myrow['typeabbrev'],
-				$myrow['currabrev']);
+						<td>%s</td>
+						<td class=number>%0.2f</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td><a href='%s?%s&Item=%s&TypeAbbrev=%s&CurrAbrev=%s&Price=%s&Edit=1'>" . _('Edit') . "</td>
+						<td><a href='%s?%s&Item=%s&TypeAbbrev=%s&CurrAbrev=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this price?') . "');\">" . _('Delete') . '</td></tr>',
+						$myrow['currency'],
+						$myrow['sales_type'],
+						$myrow['price'],
+						ConvertSQLDate($myrow['startdate']),
+						ConvertSQLDate($myrow['enddate']),
+						$_SERVER['PHP_SELF'],
+						SID,
+						$myrow['stockid'],
+						$myrow['typeabbrev'],
+						$myrow['currabrev'],
+						$myrow['price'],
+						$_SERVER['PHP_SELF'],
+						SID,
+						$myrow['stockid'],
+						$myrow['typeabbrev'],
+						$myrow['currabrev']);
 		} else {
 			printf("<td>%s</td>
 			        <td>%s</td>
-				<td class=number>%0.2f</td></tr>",
+				<td class=number>%0.2f</td>
+				<td>%s</td>
+				<td>%s</td>
+				</tr>",
 				$myrow['currency'],
 				$myrow['sales_type'],
-				$myrow['price']);
+				$myrow['price'],
+				ConvertSQLDate($myrow['startdate']),
+				ConvertSQLDate($myrow['enddate']));
 		}
 
 	}
@@ -248,6 +277,12 @@ if ($InputError ==0){
 	} //end while loop
 
 	DB_free_result($result);
+	
+	echo '<tr><td>' . _('Price Effective From Date')  . ':</td>
+				<td><input type=text name="StartDate" value="' . Date($_SESSION['DefaultDateFormat']) . '"></td></tr>';
+	echo '<tr><td>' . _('Price Effective To Date')  . ':</td>
+				<td><input type=text name="EndDate" value="' . Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,12,31,(Date('y')+20))) . '">';
+				
 	?>
 
 	</select>

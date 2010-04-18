@@ -131,3 +131,7 @@ ALTER TABLE `debtortrans`
 ALTER TABLE `reportfields` CHANGE COLUMN `fieldname` `fieldname` VARCHAR(60) NOT NULL DEFAULT '';
 
 INSERT INTO `config` (`confname`, `confvalue`) VALUES ('RequirePickingNote',0);
+
+ALTER TABLE `prices` ADD `startdate` DATE NOT NULL , ADD `enddate` DATE NOT NULL DEFAULT '9999-12-31' 
+ALTER TABLE prices DROP PRIMARY KEY ,
+ADD PRIMARY KEY ( `stockid` , `typeabbrev` , `currabrev` , `debtorno` , `startdate` , `enddate` ) ;
