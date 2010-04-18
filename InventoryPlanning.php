@@ -61,6 +61,7 @@ if (isset($_POST['PrintPDF'])
 				stockmaster,
 				stockcategory
 			WHERE locstock.stockid=stockmaster.stockid
+			AND stockmaster.discontinued = 0
 			AND stockmaster.categoryid=stockcategory.categoryid
 			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
 			AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
@@ -82,6 +83,7 @@ if (isset($_POST['PrintPDF'])
 					stockmaster,
 					stockcategory
 				WHERE locstock.stockid=stockmaster.stockid
+				AND stockmaster.discontinued = 0
 				AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
 				AND stockmaster.categoryid=stockcategory.categoryid
 				AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
@@ -176,7 +178,7 @@ if (isset($_POST['PrintPDF'])
 	   		if ($debug==1){
 	      		echo "<br>$SQL";
 	   		}
-			
+
 	   		include('includes/footer.inc');
 	   		exit;
 		}
@@ -302,18 +304,18 @@ if (isset($_POST['PrintPDF'])
 		$LeftOvers = $pdf->addTextWrap(374, $YPos, 40,$FontSize,number_format($SalesRow['prd2'],0),'right');
 		$LeftOvers = $pdf->addTextWrap(415, $YPos, 40,$FontSize,number_format($SalesRow['prd1'],0),'right');
 		$LeftOvers = $pdf->addTextWrap(456, $YPos, 40,$FontSize,number_format($SalesRow['prd0'],0),'right');
-		
+
 		if ($_POST['NumberMonthsHolding']>10){
 			$NumberMonths=$_POST['NumberMonthsHolding']-10;
 			$MaxMthSales = ($SalesRow['prd1']+$SalesRow['prd2']+$SalesRow['prd3']+$SalesRow['prd4']+$SalesRow['prd5'])/5;
 		}
-		else{		
-			$NumberMonths=$_POST['NumberMonthsHolding'];	
+		else{
+			$NumberMonths=$_POST['NumberMonthsHolding'];
 			$MaxMthSales = max($SalesRow['prd1'], $SalesRow['prd2'], $SalesRow['prd3'], $SalesRow['prd4'], $SalesRow['prd5']);
 		}
-		
-						
-			
+
+
+
 		$IdealStockHolding = ceil($MaxMthSales * $NumberMonths);
 		$LeftOvers = $pdf->addTextWrap(497, $YPos, 40,$FontSize,number_format($IdealStockHolding,0),'right');
 		$LeftOvers = $pdf->addTextWrap(597, $YPos, 40,$FontSize,number_format($InventoryPlan['qoh'],0),'right');
@@ -326,7 +328,7 @@ if (isset($_POST['PrintPDF'])
 			$LeftOvers = $pdf->addTextWrap(720, $YPos, 40,$FontSize,_('   '),'right');
 
 		} else {
-			
+
 			$LeftOvers = $pdf->addTextWrap(720, $YPos, 40,$FontSize,number_format($SuggestedTopUpOrder,0),'right');
 		}
 
@@ -359,7 +361,7 @@ if (isset($_POST['PrintPDF'])
 
 	$title=_('Inventory Planning Reporting');
 	include('includes/header.inc');
-	
+
 
 	if (strlen($_POST['FromCriteria'])<1 || strlen($_POST['ToCriteria'])<1) {
 
