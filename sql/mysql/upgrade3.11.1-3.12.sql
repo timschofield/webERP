@@ -51,7 +51,7 @@ ALTER TABLE `www_users` ADD COLUMN `pdflanguage` tinyint(1) NOT NULL DEFAULT '0'
 
 ALTER TABLE `purchorderauth` ADD COLUMN `offhold` tinyint(1) NOT NULL DEFAULT 0;
 
-UPDATE `www_users` SET `modulesallowed` = '1,1,1,1,1,1,1,1,1,1'
+UPDATE `www_users` SET `modulesallowed` = '1,1,1,1,1,1,1,1,1,1';
 
 UPDATE securitytokens SET tokenname = 'Petty Cash' WHERE tokenid = 6;
 
@@ -74,15 +74,15 @@ CREATE TABLE IF NOT EXISTS `pcexpenses` (
   `description` varchar(50) NOT NULL COMMENT 'text description, e.g. meals, train tickets, fuel, etc',
   `glaccount` int(11) NOT NULL COMMENT 'GL related account',
   PRIMARY KEY (`codeexpense`),
-  KEY `pcexpenses_ibfk_1` (`glaccount`)
+  KEY (`glaccount`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE IF NOT EXISTS `pctabexpenses` (
   `typetabcode` varchar(20) NOT NULL,
   `codeexpense` varchar(20) NOT NULL,
-  KEY `pctabexpenses_ibfk_1` (`typetabcode`),
-  KEY `pctabexpenses_ibfk_2` (`codeexpense`)
+  KEY (`typetabcode`),
+  KEY (`codeexpense`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `pctabs` (
@@ -95,11 +95,11 @@ CREATE TABLE IF NOT EXISTS `pctabs` (
   `glaccountassignment` int(11) NOT NULL COMMENT 'gl account where the money comes from',
   `glaccountpcash` int(11) NOT NULL,
   PRIMARY KEY (`tabcode`),
-  KEY `pctabs_ibfk_1` (`usercode`),
-  KEY `pctabs_ibfk_2` (`typetabcode`),
-  KEY `pctabs_ibfk_3` (`currency`),
-  KEY `pctabs_ibfk_4` (`authorizer`),
-  KEY `pctabs_ibfk_5` (`glaccountassignment`)
+  KEY (`usercode`),
+  KEY (`typetabcode`),
+  KEY (`currency`),
+  KEY (`authorizer`),
+  KEY (`glaccountassignment`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `pctypetabs` (
