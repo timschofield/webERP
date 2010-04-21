@@ -129,7 +129,7 @@ if ($_FILES['userfile']['name']) { //start file processing
 			$InputError = 1;
 			prnMsg(_('The barcode must be 20 characters or less long'),'error');
 		} 
-		if (!is_numeric($myrow[10]) OR $myrow[10]!=0 OR $myrow[10]!=1) {
+		if ($myrow[10]!='0' AND $myrow[10]!='1') {
 			$InputError = 1;
 			prnMsg (_('Values in the Perishable field must be either 0 (No) or 1 (Yes)') ,'error');
 		} 
