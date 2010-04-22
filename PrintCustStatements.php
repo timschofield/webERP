@@ -46,8 +46,8 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 		$_POST['ToCust'] = strtoupper($_POST['ToCust']);
 	}
 	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title', _('Customer Statements') );
-	$pdf->addInfo('Subject', _('Statements from') . ' ' . $_POST['FromCust'] . ' ' . _('to') . ' ' . $_POST['ToCust']);
+	$pdf->addinfo('Title', _('Customer Statements') );
+	$pdf->addinfo('Subject', _('Statements from') . ' ' . $_POST['FromCust'] . ' ' . _('to') . ' ' . $_POST['ToCust']);
 	$PageNumber = 1;
 	$line_height=16;
 
@@ -287,7 +287,7 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 					debtortrans.ovdiscount - debtortrans.alloc
 					ELSE 0 END
 				ELSE
-					CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ")) >= 0
+					CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1', 'MONTH') . "), " . interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ")) >= 0
 					THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
 					debtortrans.ovdiscount - debtortrans.alloc
 					ELSE 0 END
@@ -300,7 +300,7 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 					debtortrans.ovdiscount - debtortrans.alloc
 					ELSE 0 END
 				ELSE
-					CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1','MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') .")) >= " . $_SESSION['PastDueDays1'] . ")
+					CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1','MONTH') . "), " . interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') .")) >= " . $_SESSION['PastDueDays1'] . ")
 					THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
 					debtortrans.ovdiscount - debtortrans.alloc
 					ELSE 0 END
@@ -313,8 +313,8 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 					debtortrans.ovdiscount - debtortrans.alloc
 					ELSE 0 END
 				ELSE
-					CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1','MONTH') . "), " .
-					INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . "))
+					CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1','MONTH') . "), " .
+					interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . "))
 					>= " . $_SESSION['PastDueDays2'] . ")
 					THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
 					debtortrans.ovdiscount - debtortrans.alloc

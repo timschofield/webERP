@@ -10,12 +10,12 @@ $title = _('Orders Invoiced Report');
 
 $InputError=0;
 
-if (isset($_POST['FromDate']) AND !Is_Date($_POST['FromDate'])){
+if (isset($_POST['FromDate']) AND !is_date($_POST['FromDate'])){
 	$msg = _('The date from must be specified in the format') . ' ' . $DefaultDateFormat;
 	$InputError=1;
 	unset($_POST['FromDate']);
 }
-if (isset($_POST['ToDate']) AND !Is_Date($_POST['ToDate'])){
+if (isset($_POST['ToDate']) AND !is_date($_POST['ToDate'])){
 	$msg = _('The date to must be specified in the format') . ' ' . $DefaultDateFormat;
 	$InputError=1;
 	unset($_POST['ToDate']);
@@ -33,7 +33,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 		prnMsg($msg,'error');
 	}
 
-     echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+     echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . sid . "'>";
      echo '<table><tr><td>' . _('Enter the date from which orders are to be listed') . ":</td><td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='FromDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . "'></td></tr>";
      echo '<tr><td>' . _('Enter the date to which orders are to be listed') . ":</td>
      		<td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='ToDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td></tr>";
@@ -66,8 +66,8 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
      exit;
 } else {
 	include('includes/PDFStarter.php');
-    $pdf->addInfo('Title',_('Orders Invoiced Report'));
-    $pdf->addInfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
+    $pdf->addinfo('Title',_('Orders Invoiced Report'));
+    $pdf->addinfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
     $line_height=12;
     $PageNumber = 1;
     $TotalDiffs = 0;

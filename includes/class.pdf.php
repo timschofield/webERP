@@ -76,7 +76,7 @@ class Cpdf extends TCPDF {
 		$this->Text($xb, $this->h-$yb, $text);
 	}
 	
-	function addInfo($label, $value) {
+	function addinfo($label, $value) {
 		if ($label == 'Creator') {
 
 /* Javier: Some scripts set the creator to be WebERP like this		

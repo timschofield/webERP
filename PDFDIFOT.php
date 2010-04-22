@@ -24,7 +24,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
      $title = _('Delivery In Full On Time (DIFOT) Report');
      include ('includes/header.inc');
 
-     echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+     echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . sid . "'>";
      echo '<table><tr><td>' . _('Enter the date from which variances between orders and deliveries are to be listed') . ":</td><td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='FromDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . "'></td></tr>";
      echo '<tr><td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ":</td><td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='ToDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td></tr>";
 
@@ -177,8 +177,8 @@ include('includes/PDFStarter.php');
 
 /*PDFStarter.php has all the variables for page size and width set up depending on the users default preferences for paper size */
 
-$pdf->addInfo('Title',_('Dispatches After') . $_POST['DaysAcceptable'] . ' ' . _('Day(s) from Requested Delivery Date'));
-$pdf->addInfo('Subject',_('Delivery Dates from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
+$pdf->addinfo('Title',_('Dispatches After') . $_POST['DaysAcceptable'] . ' ' . _('Day(s) from Requested Delivery Date'));
+$pdf->addinfo('Subject',_('Delivery Dates from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
 $line_height=12;
 $PageNumber = 1;
 $TotalDiffs = 0;

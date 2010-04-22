@@ -173,9 +173,9 @@ function DB_show_fields($TableName, &$Conn){
 	Return $Result;
 }
 
-function INTERVAL( $val, $Inter ){
+function interval( $val, $Inter ){
 		global $dbtype;
-		return "\n".'INTERVAL ' . $val . ' '. $Inter."\n";
+		return "\n".'interval ' . $val . ' '. $Inter."\n";
 }
 
 function DB_Maintenance($Conn){
