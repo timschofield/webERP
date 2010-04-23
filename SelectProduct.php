@@ -668,6 +668,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 					<th>' . _('Description') . '</th>
 					<th>' . _('Total Qty On Hand') . '</th>
 					<th>' . _('Units') . '</th>
+					<th>' . _('Stock Status') . '</th>
 				</tr>';
 		echo $tableheader;
 		$j = 1;
@@ -693,6 +694,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 				<td>".$myrow['description']."</td>
 				<td class='number'>".$qoh."</td>
 				<td>".$myrow['units']."</td>
+				<td><a target='_blank' href='" . $rootpath . "/StockStatus.php?" . SID .  "&StockID=".$myrow['stockid']."'>" . _('View') . "</a></td>
 				</tr>";
 			$j++;
 			if ($j == 20 AND ($RowIndex + 1 != $_SESSION['DisplayRecordsMax'])) {
