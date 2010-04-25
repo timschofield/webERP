@@ -239,8 +239,12 @@ function UpdateCost($db, $item) {
 		$MaterialCost = BomMaterialCost($NewParent, $db);
 		$SQL = 'UPDATE stockmaster SET materialcost=' . $MaterialCost . " WHERE stockid='" . $NewParent . "'";
 		$result1 = DB_query($SQL,$db);
+		if (DB_error_no($db)!=0) {
+			return 1;
+		}
 		UpdateCost($db, $NewParent);
 	}
+	return 0;
 }
 
 /* Accepts work order information and iterates through the bom, inserting real components (dissolving phantom assemblies) */
@@ -303,8 +307,8 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID="") 
 							WHERE wo = " . $WO . "
 							AND parentstockid = '". $ParentID . "'
 						)
-					) AS g ON g.wo=worequirements.wo 
-						AND g.parentstockid=worequirements.parentstockid 
+					) AS g ON g.wo=worequirements.wo
+						AND g.parentstockid=worequirements.parentstockid
 						AND g.stockid=worequirements.stockid
 					SET worequirements.qtypu=worequirements.qtypu+g.qtypu";
 		$result = DB_query($sql, $db);

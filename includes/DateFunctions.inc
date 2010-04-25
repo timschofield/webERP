@@ -16,7 +16,7 @@ or d.m.Y  for Germany ;) Juergen Ruemmler heinrich@ruemmler.net
 
 */
 
-function Is_Date($DateEntry) {
+function is_date($DateEntry) {
 
 	$DateEntry =Trim($DateEntry);
 
@@ -397,7 +397,7 @@ and converts to a yyyy/mm/dd format */
 	}
 
 	if ($_SESSION['DefaultDateFormat']=='Y/m/d') {
-		return $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2];
+		return $Date_Array[0].'-'.$Date_Array[1].'-'.$Date_Array[2];
 	}
 
 //to modify assumption in 2030
@@ -412,13 +412,13 @@ and converts to a yyyy/mm/dd format */
 	}
 	if (($_SESSION['DefaultDateFormat']=='d/m/Y')){
 		/* echo '<BR>The date returned is ' . $Date_Array[2].'/'.$Date_Array[1].'/'.$Date_Array[0]; */
-		return $Date_Array[2].'/'.$Date_Array[1].'/'.$Date_Array[0];
+		return $Date_Array[2].'-'.$Date_Array[1].'-'.$Date_Array[0];
 	} elseif ($_SESSION['DefaultDateFormat']=='d.m.Y') {
-		return $Date_Array[2].'.'.$Date_Array[1].'.'.$Date_Array[0];
+		return $Date_Array[2].'-'.$Date_Array[1].'-'.$Date_Array[0];
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y') {
-		return $Date_Array[2].'/'.$Date_Array[0].'/'.$Date_Array[1];
+		return $Date_Array[2].'-'.$Date_Array[0].'-'.$Date_Array[1];
 	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d') {
-		return $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2];
+		return $Date_Array[0].'-'.$Date_Array[1].'-'.$Date_Array[2];
 	}
 
 }// end of function
@@ -433,59 +433,66 @@ function FormatDateWithTimeForSQL ($datetime) {
 
 function Date1GreaterThanDate2 ($Date1, $Date2) {
 
-/* returns 1 true if Date1 is greater than Date 2 */
+/* returns true (1) if Date1 is greater than Date2 */
 
 	$Date1 = trim($Date1);
 	$Date2 = trim($Date2);
-	$Date1_array = explode('/', $Date1);
-	$Date2_array = explode('/', $Date2);
+
+	/* Get date elements */
+	if ($_SESSION['DefaultDateFormat']=='d.m.Y' or $_SESSION['DefaultDateFormat'] =='d/m/Y'){
+		list($Day1,$Month1,$Year1) = explode('.', $Date1);
+		list($Day2,$Month2,$Year2) = explode('.', $Date2);
+	} elseif ($_SESSION['DefaultDateFormat'] =='m/d/Y'){
+		list($Month1,$Day1,$Year1) = explode('/', $Date1);
+		list($Month2,$Day2,$Year2) = explode('/', $Date2);
+	} elseif ($_SESSION['DefaultDateFormat'] =='Y/m/d'){
+		list($Year1,$Month1,$Day1) = explode('/', $Date1);
+		list($Year2,$Month2,$Day2) = explode('/', $Date2);
+	}
 
 	/*Try to make the year of each date comparable - if one date is specified as just
-	2 characters and the other >2 then take the last 2 characters of the other date only */
-	if (strlen($Date1_array[2])>2 AND strlen($Date2_array[2])==2){
-		$Date1_array[2] = substr($Date1_array[2], strlen($Date1_array[2])-2);
+	 * 2 characters and the other >2 then then make them both 4 characters long. Assume
+	 *  a date >50 to be 1900's and less than to be 2000's
+	 */
+	if (strlen($Year1)>2 AND strlen($Year2)==2){
+		if ($Year2>50) {
+			$Year2=1900+$Year2;
+		} else {
+			$Year2=2000+$Year2;
+		}
 	}
-	if (strlen($Date2_array[2])>2 AND strlen($Date1_array[2])==2){
-		$Date2_array[2] = substr($Date2_array[2], strlen($Date2_array[2])-2);
-	}
-
-	/*The 2 element of the array will be the year in either d/m/Y or m/d/Y formats */
-
-	if (($Date1_array[2] - $Date2_array[2]) >0){
-		return 1;
-	} elseif (($Date1_array[2] - $Date2_array[2]) ==0){
-
-	/*The 0 and 1 elements of the array are switched depending on the format used */
-
-		if (($_SESSION['DefaultDateFormat']=='d/m/Y') OR ($_SESSION['DefaultDateFormat']=='d.m.Y')){
-			if ( ($Date1_array[1] -  $Date2_array[1]) >0){
-				return 1;
-			} elseif (($Date1_array[1] - $Date2_array[1])==0){
-				if (($Date1_array[0] -  $Date2_array[0])>0){
-					return 1;
-				}
-			}
-
-		} elseif ($_SESSION['DefaultDateFormat'] =='m/d/Y'){
-			If (($Date1_array[0] - $Date2_array[0])>0){
-				Return 1;
-			} elseif (($Date1_array[0] - $Date2_array[0])==0){
-				If (($Date1_array[1] - $Date2_array[1])>0){
-					Return 1;
-				}
-			}
-		} elseif ($_SESSION['DefaultDateFormat'] =='Y/m/d'){
-			if (($Date1_array[2] - $Date2_array[2])>0){
-				return 1;
-			} elseif (($Date1_array[2] - $Date2_array[2])==0){
-				if (($Date1_array[1] - $Date2_array[1])>0){
-					return 1;
-				}
-			}
+	if (strlen($Year2)>2 AND strlen($Year1)==2){
+		if ($Year1>50) {
+			$Year1=1900+$Year1;
+		} else {
+			$Year1=2000+$Year1;
 		}
 	}
 
-	return 0;
+	/* Compare years */
+	if ($Year1>$Year2){
+		return 1;
+	} elseif ($Year2>$Year1){
+		return 0;
+	}
+
+	/* Compare months. Years are equal*/
+	if ($Month1>$Month2){
+		return 1;
+	} elseif ($Month2>$Month1){
+		return 0;
+	}
+
+	/* Compare days. Years and months are equal */
+	if ($Day1>$Day2){
+		return 1;
+	} elseif ($Day2>$Day1){
+		return 0;
+	}
+
+	/* The dates are equal, so return an error state */
+	return 1;
+
 }
 
 function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){

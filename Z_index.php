@@ -14,6 +14,7 @@
 	echo "<p><a href='$rootpath/Z_ChangeBranchCode.php?" . SID . "'>" . _('Change A Customer Branch Code') . '</a>';
 	echo "<p><a href='$rootpath/Z_ChangeStockCode.php?" . SID . "'>" . _('Change An Inventory Item Code') . '</a>';
 	echo "<p><a href='$rootpath/Z_PriceChanges.php?" . SID . "'>" . _('Bulk Change Customer Pricing') . '</a>';
+	echo "<p><a href='$rootpath/Z_BottomUpCosts.php?" . SID . "'>" . _('Update costs for all BOM items, from the bottom up') . '</a>';
 
 	echo "<p><a href='$rootpath/Z_CurrencyDebtorsBalances.php?" . SID . "'>" . _('Show Local Currency Total Debtor Balances') . '</a>';
 	echo "<p><a href='$rootpath/Z_CurrencySuppliersBalances.php?" . SID . "'>" . _('Show Local Currency Total Suppliers Balances') . '</a>';

@@ -23,7 +23,12 @@ alert(m);
 return false;
 }
 function isDate(dS,dF){
-var mA=dS.match(/^(\d{1,2})(\/|-|.)(\d{1,2})(\/|-|.)(\d{4})$/);
+var mA;
+if (dF == "Y/m/d"){
+mA=dS.match(/^(\d{4})(\/|-|.)(\d{1,2})(\/|-|.)(\d{1,2})$/);
+}else{
+mA=dS.match(/^(\d{1,2})(\/|-|.)(\d{1,2})(\/|-|.)(\d{4})$/);
+}
 if (mA==null){
 alert("Please enter the date in the format "+dF);
 return false;
