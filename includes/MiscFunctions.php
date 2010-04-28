@@ -104,44 +104,45 @@ class XmlElement {
 function GetECBCurrencyRates () {
 /* See http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
 for detail of the European Central Bank rates - published daily */
-	  $xml = file_get_contents('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml');  
-	  $parser = xml_parser_create();
-	  xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
-	  xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
-	  xml_parse_into_struct($parser, $xml, $tags);
-	  xml_parser_free($parser);
+	if ($xml = file_get_contents('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml')) {
+		$parser = xml_parser_create();
+		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
+		xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
+		xml_parse_into_struct($parser, $xml, $tags);
+		xml_parser_free($parser);
 
-	  $elements = array();  // the currently filling [child] XmlElement array
-	  $stack = array();
-	  foreach ($tags as $tag) {
-		$index = count($elements);
-		if ($tag['type'] == "complete" || $tag['type'] == "open") {
-		  $elements[$index] = new XmlElement;
-		  $elements[$index]->name = $tag['tag'];
-		  $elements[$index]->attributes = $tag['attributes'];
-		  $elements[$index]->content = $tag['value'];
-		  if ($tag['type'] == "open") {  // push
-			$elements[$index]->children = array();
-			$stack[count($stack)] = &$elements;
-			$elements = &$elements[$index]->children;
-		  }
+		$elements = array();  // the currently filling [child] XmlElement array
+		$stack = array();
+		foreach ($tags as $tag) {
+			$index = count($elements);
+			if ($tag['type'] == "complete" || $tag['type'] == "open") {
+				$elements[$index] = new XmlElement;
+				$elements[$index]->name = $tag['tag'];
+				$elements[$index]->attributes = $tag['attributes'];
+				$elements[$index]->content = $tag['value'];
+				if ($tag['type'] == "open") {  // push
+					$elements[$index]->children = array();
+					$stack[count($stack)] = &$elements;
+					$elements = &$elements[$index]->children;
+				}
+			}
+			if ($tag['type'] == "close") {  // pop
+				$elements = &$stack[count($stack) - 1];
+				unset($stack[count($stack) - 1]);
+			}
 		}
-		if ($tag['type'] == "close") {  // pop
-		  $elements = &$stack[count($stack) - 1];
-		  unset($stack[count($stack) - 1]);
+
+
+		$Currencies = array();
+		foreach ($elements[0]->children[2]->children[0]->children as $CurrencyDetails){
+			$Currencies[$CurrencyDetails->attributes['currency']]= $CurrencyDetails->attributes['rate'] ;
 		}
-	  }
-	 
-	  
-	  $Currencies = array();
-	  foreach ($elements[0]->children[2]->children[0]->children as $CurrencyDetails){
-		$Currencies[$CurrencyDetails->attributes['currency']]= $CurrencyDetails->attributes['rate'] ;
-	  }
-	  $Currencies['EUR']=1; //ECB delivers no rate for Euro
-	  //return an array of the currencies and rates
-	  return $Currencies;
-}	
-	
+		$Currencies['EUR']=1; //ECB delivers no rate for Euro
+		//return an array of the currencies and rates
+		return $Currencies;
+	}
+}
+
 function GetCurrencyRate($CurrCode,$CurrenciesArray) {
   if ((!isset($CurrenciesArray[$CurrCode]) or !isset($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']]))){
   	return quote_oanda_currency($CurrCode);
@@ -174,12 +175,12 @@ function quote_oanda_currency($CurrCode) {
 
 
 function AddCarriageReturns($str) {
-	return str_replace('\r\n',chr(10),$str); 
+	return str_replace('\r\n',chr(10),$str);
 }
 
 
 function wikiLink($type, $id) {
-	
+
 	if ($_SESSION['WikiApp']==_('WackoWiki')){
 		echo '<a target="_blank" href="../' . $_SESSION['WikiPath'] . '/' . $type .  $id . '">' . _('Wiki ' . $type . ' Knowlege Base') . '</A><BR>';
 	} elseif ($_SESSION['WikiApp']==_('MediaWiki')){
