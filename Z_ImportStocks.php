@@ -92,7 +92,11 @@ if ($_FILES['userfile']['name']) { //start file processing
 			exit;
 		}
 
+		// cleanup the data (csv files often import with empty strings and such)
 		$StockID = strtoupper($myrow[0]);
+		foreach ($myrow as &$value) {
+			$value = trim($value);
+		}
 
 		//first off check if the item already exists
 		$sql = "SELECT COUNT(stockid) FROM stockmaster WHERE stockid='".$StockID."'";
@@ -129,7 +133,7 @@ if ($_FILES['userfile']['name']) { //start file processing
 			$InputError = 1;
 			prnMsg(_('The barcode must be 20 characters or less long'),'error');
 		} 
-		if ($myrow[10]!='0' AND $myrow[10]!='1') {
+		if ($myrow[10]!=0 AND $myrow[10]!=1) {
 			$InputError = 1;
 			prnMsg (_('Values in the Perishable field must be either 0 (No) or 1 (Yes)') ,'error');
 		} 
@@ -171,9 +175,13 @@ if ($_FILES['userfile']['name']) { //start file processing
 			$InputError = 1;
 			prnMsg(_('Assembly/Kitset/Phantom/Service items cannot also be controlled items') . '. ' . _('Assemblies, Dummies and Kitsets are not physical items and batch/serial control is therefore not appropriate'),'error');
 		} 
-		if (trim($myrow[3])==''){
+		if ($myrow[3]==''){
 			$InputError = 1;
 			prnMsg(_('There are no inventory categories defined. All inventory items must belong to a valid inventory category,'),'error');
+		}
+		if ($myrow[17]==''){
+			$InputError = 1;
+			prnMsg(_('ItemPDF must contain either a filename, or the keyword `none`'),'error');
 		}
 
 		if ($InputError !=1){
@@ -241,7 +249,7 @@ if ($_FILES['userfile']['name']) { //start file processing
 				$InsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 				if (DB_error_no($db) ==0) {
-					prnMsg( _('New Item') .' ' . $StockID  . ' '. _('has been added to the transaction'),'success');
+					prnMsg( _('New Item') .' ' . $StockID  . ' '. _('has been added to the transaction'),'info');
 				} else { //location insert failed so set some useful error info 
 					$InputError = 1;
 					prnMsg(_($InsResult),'error');
