@@ -644,7 +644,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		$j = 1;
 		$k = 0; //row counter to determine background colour
-
+		$LastCustomer='';
 		while ($myrow=DB_fetch_array($result_CustSelect)) {
 
 			if ($k==1){
@@ -664,7 +664,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<input type=hidden name="Select" value="'.$myrow['debtorno'].' - '.$myrow['branchcode'].'">
 					<td>'.$myrow['contactname'].'</td>
 					<td>'.$myrow['phoneno'].'</td>
-					<td>.'.$myrow['faxno'].'</td>
+					<td>'.$myrow['faxno'].'</td>
 					</tr></form>';
 			$LastCustomer=$myrow['name'];
 			$j++;
