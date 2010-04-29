@@ -977,7 +977,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					prnMsg(_('Phantom assemblies cannot be sold, these items exist only as bills of materials used in other manufactured items. The following item has not been added to the order:') . ' ' . $NewItem, 'warn');
 				} else { /*Its not a kit set item*/
 					$NewItemDue = date($_SESSION['DefaultDateFormat']);
-					$NewPOLine = 0;
 					include('includes/SelectOrderItems_IntoCart.inc');
 				}
 			}
