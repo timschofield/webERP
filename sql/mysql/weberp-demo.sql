@@ -1,6 +1,7 @@
 CREATE DATABASE IF NOT EXISTS weberpdemo DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
 USE weberpdemo;
 
+SET FOREIGN_KEY_CHECKS=0;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -968,6 +969,73 @@ CREATE TABLE `paymentterms` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+
+CREATE TABLE IF NOT EXISTS `pcashdetails` (
+  `counterindex` int(20) NOT NULL AUTO_INCREMENT,
+  `tabcode` varchar(20) NOT NULL,
+  `date` date NOT NULL,
+  `codeexpense` varchar(20) NOT NULL,
+  `amount` double NOT NULL,
+  `authorized` date NOT NULL COMMENT 'date cash assigment was revised and authorized by authorizer from tabs table',
+  `posted` tinyint(4) NOT NULL COMMENT 'has (or has not) been posted into gltrans',
+  `notes` text NOT NULL,
+  `receipt` text COMMENT 'filename or path to scanned receipt or code of receipt to find physical receipt if tax guys or auditors show up',
+  PRIMARY KEY (`counterindex`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `pcexpenses` (
+  `codeexpense` varchar(20) NOT NULL COMMENT 'code for the group',
+  `description` varchar(50) NOT NULL COMMENT 'text description, e.g. meals, train tickets, fuel, etc',
+  `glaccount` int(11) NOT NULL COMMENT 'GL related account',
+  PRIMARY KEY (`codeexpense`),
+  KEY (`glaccount`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `pctabexpenses` (
+  `typetabcode` varchar(20) NOT NULL,
+  `codeexpense` varchar(20) NOT NULL,
+  KEY (`typetabcode`),
+  KEY (`codeexpense`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `pctabs` (
+  `tabcode` varchar(20) NOT NULL,
+  `usercode` varchar(20) NOT NULL COMMENT 'code of user employee from www_users',
+  `typetabcode` varchar(20) NOT NULL,
+  `currency` char(3) NOT NULL,
+  `tablimit` double NOT NULL,
+  `authorizer` varchar(20) NOT NULL COMMENT 'code of user from www_users',
+  `glaccountassignment` int(11) NOT NULL COMMENT 'gl account where the money comes from',
+  `glaccountpcash` int(11) NOT NULL,
+  PRIMARY KEY (`tabcode`),
+  KEY (`usercode`),
+  KEY (`typetabcode`),
+  KEY (`currency`),
+  KEY (`authorizer`),
+  KEY (`glaccountassignment`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `pctypetabs` (
+  `typetabcode` varchar(20) NOT NULL COMMENT 'code for the type of petty cash tab',
+  `typetabdescription` varchar(50) NOT NULL COMMENT 'text description, e.g. tab for CEO',
+  PRIMARY KEY (`typetabcode`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `pcexpenses`
+  ADD CONSTRAINT `pcexpenses_ibfk_1` FOREIGN KEY (`glaccount`) REFERENCES `chartmaster` (`accountcode`);
+
+ALTER TABLE `pctabexpenses`
+  ADD CONSTRAINT `pctabexpenses_ibfk_1` FOREIGN KEY (`typetabcode`) REFERENCES `pctypetabs` (`typetabcode`),
+  ADD CONSTRAINT `pctabexpenses_ibfk_2` FOREIGN KEY (`codeexpense`) REFERENCES `pcexpenses` (`codeexpense`);
+
+ALTER TABLE `pctabs`
+  ADD CONSTRAINT `pctabs_ibfk_1` FOREIGN KEY (`usercode`) REFERENCES `www_users` (`userid`),
+  ADD CONSTRAINT `pctabs_ibfk_2` FOREIGN KEY (`typetabcode`) REFERENCES `pctypetabs` (`typetabcode`),
+  ADD CONSTRAINT `pctabs_ibfk_3` FOREIGN KEY (`currency`) REFERENCES `currencies` (`currabrev`),
+  ADD CONSTRAINT `pctabs_ibfk_4` FOREIGN KEY (`authorizer`) REFERENCES `www_users` (`userid`),
+  ADD CONSTRAINT `pctabs_ibfk_5` FOREIGN KEY (`glaccountassignment`) REFERENCES `chartmaster` (`accountcode`);
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -7075,3 +7143,4 @@ INSERT INTO `www_users` VALUES ('admin','weberp','Demonstration user','','','','
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+SET FOREIGN_KEY_CHECKS=1;

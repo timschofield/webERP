@@ -141,10 +141,8 @@ function change_data(type) {
 			</td>
 			<td style="color: #666666;"><?php echo 'Company data dirs ('.  $comp_path. '/*)'; ?>
 			</td>
-			<td><?php if(is_writable($comp_path) && is_writable($comp_path.'/weberpdemo') && is_writable($comp_path.'/weberpdemo/part_pics')) { 
+			<td><?php if(is_writable($comp_path)) { 
 						echo '<font class="good">Writeable</font>'; 
-					  } elseif(!file_exists($comp_path)) {
-			 			echo '<font class="bad">Directory Not Found</font>'; 
 					  } else { 
 						echo '<font class="bad">Unwriteable</font>'; 
 					  } 
@@ -257,7 +255,7 @@ function change_data(type) {
 		<tr>
 			<td style="color: #666666;" colspan="1">Company Name:</td>
 			<td colspan="4">
-				<input type="text" tabindex="13" name="company_name" style="width: 99%;" value="<?php if(isset($_SESSION['company_name'])) { echo $_SESSION['company_name']; } else { echo 'weberp'; } ?>" />
+				<input type="text" tabindex="13" name="company_name" style="width: 99%;" value="<?php if(isset($_SESSION['company_name'])) { echo $_SESSION['company_name']; } else { echo 'weberpdemo'; } ?>" />
 			</td>
 		</tr>
 		<tr>

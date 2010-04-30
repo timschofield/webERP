@@ -93,7 +93,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 					mysqli_select_db($db,$_POST['NewCompany']);
 					$SQLScriptFile = file('./sql/mysql/weberp-new.sql');
 				}
-					
+
 				$ScriptFileEntries = sizeof($SQLScriptFile);
 				$ErrMsg = _('The script to create the new company database failed because');
 				$SQL ='';

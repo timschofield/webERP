@@ -32,8 +32,6 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	echo '<table>';
 	echo '<tr><td>' . _('Code Of Petty Cash Tab') . ":</td><td><select name='SelectedTabs'>";
 
-	DB_free_result($result);
-
 	if ($_SESSION['AccessLevel'] >= 15){ // superuser can supervise the supervisors
 		$SQL = "SELECT tabcode
 			FROM pctabs
@@ -55,6 +53,8 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		echo $myrow['tabcode'] . "'>" . $myrow['tabcode'];
 
 	} //end while loop get type of tab
+
+	DB_free_result($result);
 
 
 	echo '</select></td></tr>';

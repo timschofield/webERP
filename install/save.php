@@ -104,7 +104,7 @@ function default_dir_mode($temp_dir) {
 }
 
 function is_valid_email($email) {
-	return preg_match("/[a-zA-Z0-9_-.+]+@[a-zA-Z0-9_-.]+.[a-zA-Z]+/", $email) > 0;
+	return preg_match("/[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.-]+.[a-zA-Z]+/", $email) > 0;
 }
 
 if (isset($_POST['path_to_root'])) {
@@ -312,14 +312,13 @@ if($_POST['install_tables'] == true){
 		//need to drop any pre-existing weberpdemo database
 		mysqli_query($db, "DROP DATABASE 'weberpdemo'");
 	} else { //creating a new database with no demo data
-		mysqli_query($db, 'CREATE DATABASE IF NOT EXISTS `' . mysqli_real_escape_string($db, $_POST['company_name']) . '`');
-		mysqli_select_db($db, $_POST['company_name']);
 		$SQLScriptFile = file($path_to_root . '/sql/mysql/weberp-new.sql');
 	}
+	mysqli_query($db, 'CREATE DATABASE IF NOT EXISTS `' . mysqli_real_escape_string($db, $_POST['company_name']) . '`');
+	    mysqli_select_db($db, $_POST['company_name']);
 	$ScriptFileEntries = sizeof($SQLScriptFile);
 	$SQL ='';
 	$InAFunction = false;
-
 	for ($i=0; $i<$ScriptFileEntries; $i++) {
 
 		$SQLScriptFile[$i] = trim($SQLScriptFile[$i]);
@@ -339,9 +338,13 @@ if($_POST['install_tables'] == true){
 				$InAFunction = false;
 			}
 			if (strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
-				$SQL = substr($SQL,0,strlen($SQL)-1);
-				$result = mysqli_query($db,$SQL);
-				$SQL='';
+				// Database created above with correct name.
+				if (strncasecmp($SQL, ' CREATE DATABASE ', 17)
+				    AND strncasecmp($SQL, ' USE ', 5)){
+					$SQL = substr($SQL,0,strlen($SQL)-1);
+					$result = mysqli_query($db,$SQL);
+				    }
+				    $SQL = '';
 			}
 
 		} //end if its a valid sql line not a comment
@@ -350,12 +353,12 @@ if($_POST['install_tables'] == true){
 $sql = "UPDATE www_users
 			SET password = '" . sha1($_POST['admin_password']) . "',
 				email = '".mysqli_real_escape_string($db, $_POST['admin_email']) ."'
-			WHERE user_id = 'admin'";
-mysqli_query($db,$sql);
+			WHERE userid = 'admin'";
+$result = mysqli_query($db,$sql);
 $sql = "UPDATE companies
 			SET coyname = '". mysqli_real_escape_string($db, $_POST['company_name']) . "'
 			WHERE coycode = 1";
-mysqli_query($db,$sql);
+$result = mysqli_query($db,$sql);
 
 session_unset();
 session_destroy();
