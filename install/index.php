@@ -72,7 +72,7 @@ function change_data(type) {
 </tr>
 </table>
 
-<form name="weberp_installation_wizard" action="save.php" method="post">
+<form name="weberp_installation_wizard" action="save.php" method="post" enctype="multipart/form-data">
 <input type="hidden" name="url" value="" />
 <input type="hidden" name="password_fieldname" value="admin_password" />
 <input type="hidden" name="remember" id="remember" value="true" />
@@ -164,7 +164,7 @@ function change_data(type) {
 				$guessed_url = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["SCRIPT_NAME"];
 				$guessed_url = rtrim(dirname($guessed_url), 'install');
 				?>
-				<input type="text" tabindex="1" name="ba_url" style="width: 99%;" value="<?php if(isset($_SESSION['ba_url'])) { echo $_SESSION['ba_url']; } else { echo $guessed_url; } ?>" />
+				<input type="text" tabindex="30" name="ba_url" style="width: 99%;" value="<?php if(isset($_SESSION['ba_url'])) { echo $_SESSION['ba_url']; } else { echo $guessed_url; } ?>" />
 			</td>
 		</tr>
 		</table>
@@ -177,10 +177,10 @@ function change_data(type) {
 				Server Operating System:
 			</td>
 			<td width="180">
-				<input type="radio" tabindex="4" name="operating_system" id="operating_system_linux" onclick="document.getElementById('file_perms_box').style.display = 'block';" value="linux"<?php if(!isset($_SESSION['operating_system']) OR $_SESSION['operating_system'] == 'linux') { echo ' checked'; } ?> />
+				<input type="radio" tabindex="40" name="operating_system" id="operating_system_linux" onclick="document.getElementById('file_perms_box').style.display = 'block';" value="linux"<?php if(!isset($_SESSION['operating_system']) OR $_SESSION['operating_system'] == 'linux') { echo ' checked'; } ?> />
 				<font style="cursor: pointer;" onclick="javascript: change_os('linux');">Linux/Unix based</font>
 				<br />
-				<input type="radio" tabindex="5" name="operating_system" id="operating_system_windows" onclick="document.getElementById('file_perms_box').style.display = 'none';" value="windows"<?php if(isset($_SESSION['operating_system']) AND $_SESSION['operating_system'] == 'windows') { echo ' checked'; } ?> />
+				<input type="radio" tabindex="41" name="operating_system" id="operating_system_windows" onclick="document.getElementById('file_perms_box').style.display = 'none';" value="windows"<?php if(isset($_SESSION['operating_system']) AND $_SESSION['operating_system'] == 'windows') { echo ' checked'; } ?> />
 				<font style="cursor: pointer;" onclick="javascript: change_os('windows');">Windows</font>
 			</td>
 			<td>
@@ -191,7 +191,7 @@ function change_data(type) {
 																											} 
 																										?>
 																										;">
-					<input type="checkbox" tabindex="6" name="world_writeable" id="world_writeable" value="true"<?php if(isset($_SESSION['world_writeable']) AND $_SESSION['world_writeable'] == true) { echo 'checked'; } ?> />
+					<input type="checkbox" tabindex="42" name="world_writeable" id="world_writeable" value="true"<?php if(isset($_SESSION['world_writeable']) AND $_SESSION['world_writeable'] == true) { echo 'checked'; } ?> />
 					<label for="world_writeable">
 						World-writeable file permissions (777)
 					</label>
@@ -208,7 +208,7 @@ function change_data(type) {
 		<tr>
 			<td width="120" style="color: #666666;">Host Name:</td>
 			<td width="230">
-				<input type="text" tabindex="7" name="database_host" style="width: 98%;" value="<?php if(isset($_SESSION['database_host'])) {
+				<input type="text" tabindex="43" name="database_host" style="width: 98%;" value="<?php if(isset($_SESSION['database_host'])) {
 																										 echo $_SESSION['database_host']; 
 																									  } else { 
 																										 echo 'localhost'; 
@@ -217,7 +217,7 @@ function change_data(type) {
 			<td width="7">&nbsp;</td>
 			<td width="70" style="color: #666666;">Username:</td>
 			<td>
-				<input type="text" tabindex="9" name="database_username" style="width: 98%;" value="<?php if(isset($_SESSION['database_username'])) { 
+				<input type="text" tabindex="44" name="database_username" style="width: 98%;" value="<?php if(isset($_SESSION['database_username'])) { 
 																											echo $_SESSION['database_username']; 
 																										  } else { 
 																											 echo 'root'; 
@@ -231,7 +231,7 @@ function change_data(type) {
 			<td>&nbsp;</td>
 			<td style="color: #666666;">Password:</td>
 			<td>
-				<input type="password" tabindex="10" name="database_password" style="width: 98%;"<?php if(isset($_SESSION['database_password'])) { 
+				<input type="password" tabindex="45" name="database_password" style="width: 98%;"<?php if(isset($_SESSION['database_password'])) { 
 																											echo ' value = "'.$_SESSION['database_password'].'"'; 
 																										} ?> />
 			</td>
@@ -239,7 +239,7 @@ function change_data(type) {
 		<tr>
 			
 			<td colspan="2">
-				<input type="checkbox" tabindex="12" name="install_tables" id="install_tables" value="true"<?php if(!isset($_SESSION['install_tables'])) { 
+				<input type="checkbox" tabindex="46" name="install_tables" id="install_tables" value="true"<?php if(!isset($_SESSION['install_tables'])) { 
 																													echo ' checked'; 
 																												 } elseif($_SESSION['install_tables'] == 'true') { 
 																													echo ' checked'; 
@@ -255,7 +255,7 @@ function change_data(type) {
 		<tr>
 			<td style="color: #666666;" colspan="1">Company Name:</td>
 			<td colspan="4">
-				<input type="text" tabindex="13" name="company_name" style="width: 99%;" value="<?php if(isset($_SESSION['company_name'])) { echo $_SESSION['company_name']; } else { echo 'weberpdemo'; } ?>" />
+				<input type="text" tabindex="50" name="company_name" style="width: 99%;" value="<?php if(isset($_SESSION['company_name'])) { echo $_SESSION['company_name']; } else { echo 'weberpdemo'; } ?>" />
 			</td>
 		</tr>
 		<tr>
@@ -264,7 +264,7 @@ function change_data(type) {
 			</td>
 		
 			<td width="180">
-				<input type="checkbox" tabindex="14" name="DemoData" id="db_file_demo" value="demo"<?php if(!isset($_SESSION['db_file']) OR $_SESSION['db_file'] == 'demo') { echo ' checked'; } ?> />
+				<input type="checkbox" tabindex="51" name="DemoData" id="db_file_demo" value="demo"<?php if(!isset($_SESSION['db_file']) OR $_SESSION['db_file'] == 'demo') { echo ' checked'; } ?> />
 				<font style="cursor: pointer;" onclick="javascript: change_data('demo');">weberpdemo company</font>
 			</td>
 		</tr>
@@ -274,12 +274,21 @@ function change_data(type) {
 			</td>
 		
 			<td width="180">
-				<SELECT name='timezone'>
+				<SELECT name='timezone' tabindex="52">
 				<?php
 					include('timezone.php');
 					 ?>
 					
 				</SELECT>
+			</td>
+		</tr>
+		<tr>
+			<td width="170">
+				Logo Image File (.jpg)
+			</td>
+		
+			<td width="180">
+			    <input type="FILE" size="50" ID="LogoFile" name="LogoFile" tabindex="53">
 			</td>
 		</tr>
 		<tr>
@@ -289,23 +298,23 @@ function change_data(type) {
 			<td style="color: #666666;">Username:</td>
 			<td>
 				admin
-				<!--<input type="text" tabindex="14" name="admin_username" style="width: 98%;" value="<?php if(isset($_SESSION['admin_username'])) { echo $_SESSION['admin_username']; } else { echo 'admin'; } ?>" />-->
+				<!--<input type="text" tabindex="60" name="admin_username" style="width: 98%;" value="<?php if(isset($_SESSION['admin_username'])) { echo $_SESSION['admin_username']; } else { echo 'admin'; } ?>" />-->
 			</td>
 			<td>&nbsp;</td>
 			<td style="color: #666666;">Password:</td>
 			<td>
-				<input type="password" tabindex="16" name="admin_password" style="width: 98%;"<?php if(isset($_SESSION['admin_password'])) { echo ' value = "'.$_SESSION['admin_password'].'"'; } ?> />
+				<input type="password" tabindex="62" name="admin_password" style="width: 98%;"<?php if(isset($_SESSION['admin_password'])) { echo ' value = "'.$_SESSION['admin_password'].'"'; } ?> />
 			</td>
 		</tr>
 		<tr>
 			<td style="color: #666666;">Email:</td>
 			<td>
-				<input type="text" tabindex="15" name="admin_email" style="width: 98%;"<?php if(isset($_SESSION['admin_email'])) { echo ' value = "'.$_SESSION['admin_email'].'"'; } ?> />
+				<input type="text" tabindex="61" name="admin_email" style="width: 98%;"<?php if(isset($_SESSION['admin_email'])) { echo ' value = "'.$_SESSION['admin_email'].'"'; } ?> />
 			</td>
 			<td>&nbsp;</td>
 			<td style="color: #666666;">Re-Password:</td>
 			<td>
-				<input type="password" tabindex="17" name="admin_repassword" style="width: 98%;"<?php if(isset($_SESSION['admin_password'])) { echo ' value = "'.$_SESSION['admin_password'].'"'; } ?> />
+				<input type="password" tabindex="63" name="admin_repassword" style="width: 98%;"<?php if(isset($_SESSION['admin_password'])) { echo ' value = "'.$_SESSION['admin_password'].'"'; } ?> />
 			</td>
 		</tr>
 
@@ -319,7 +328,7 @@ function change_data(type) {
 					<td>Please note: &nbsp;</td>
 					<td>
 						WebERP is released under the
-						<a href="http://www.gnu.org/licenses/gpl.html" target="_blank" tabindex="19">GNU General Public License</a>
+						<a href="http://www.gnu.org/licenses/gpl.html" target="_blank" tabindex="64">GNU General Public License</a>
 						<br />
 						By clicking install, you are accepting the license.
 					</td>

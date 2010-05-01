@@ -104,7 +104,61 @@ function default_dir_mode($temp_dir) {
 }
 
 function is_valid_email($email) {
-	return preg_match("/[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.-]+.[a-zA-Z]+/", $email) > 0;
+	$atIndex = strrpos ($email, "@");
+	if ($atIndex === false)
+	{
+	    return  false;	// No @ sign is not acceptable.
+	}
+
+	if (preg_match('/\\.\\./', $email))
+	    return  false;	// > 1 consecutive dot is not allowed.
+
+	//  Check component length limits
+	$domain = substr ($email, $atIndex+1);
+	$local = substr ($email, 0, $atIndex);
+	$localLen = strlen ($local);
+	$domainLen = strlen ($domain);
+	if ($localLen < 1 || $localLen > 64)
+	{
+	    // local part length exceeded
+	    return  false;
+	}
+	if ($domainLen < 1 || $domainLen > 255)
+	{
+	    // domain part length exceeded
+	    return  false;
+	}
+
+	if ($local[0] == '.' || $local[$localLen-1] == '.')
+	{
+	    // local part starts or ends with '.'
+	    return  false;
+	}
+	if (!preg_match ('/^[A-Za-z0-9\\-\\.]+$/', $domain ))
+	{
+	    // character not valid in domain part
+	    return  false;
+	}
+	if (!preg_match ('/^(\\\\.|[A-Za-z0-9!#%&`_=\\/$\'*+?^{}|~.-])+$/',
+		     str_replace ("\\\\", "" ,$local ) ))
+	{
+	    // character not valid in local part unless local part is quoted
+	    if (!preg_match ('/^"(\\\\"|[^"])+"$/',
+					str_replace("\\\\", "", $local) ))
+	    {
+		return  false;
+	    }
+	}
+
+	//  Check for a DNS 'MX' or 'A' record.
+	//  Windows supported from PHP 5.3.0 on - so check.
+	$ret = true;
+	if (version_compare(PHP_VERSION, '5.3.0') >= 0
+		    || strtoupper(substr(PHP_OS, 0, 3) !== 'WIN')) {
+	    $ret = checkdnsrr( $domain, "MX" ) || checkdnsrr( $domain, "A" );
+	}
+
+	return  $ret;
 }
 
 if (isset($_POST['path_to_root'])) {
@@ -188,6 +242,8 @@ if (!isset($_POST['timezone']) || $_POST['timezone'] == ''){
 	set_error('Please enter timezone');
 }
 
+// Use webERP logo if none supplied.
+
 // Check if the user has entered a correct path
 if (!file_exists($path_to_root.'/sql/mysql/weberp-demo.sql')){
 	set_error('It appears the Absolute path that you entered is incorrect');
@@ -216,15 +272,26 @@ if ($_POST['admin_password'] != $_POST['admin_repassword']){
 $config_filename = $path_to_root . '/config.php';
 // only make a new company directory structure if we are kicking off a new company
 // no need to bother if just setting up the demo data
+$CompanyDir = $path_to_root . '/companies/' . $_POST['company_name'];
 if ($_POST['DemoData']==false){
-	$Result = mkdir($path_to_root . '/companies/' . $_POST['company_name']);
-	$Result = mkdir($path_to_root . '/companies/' . $_POST['company_name'] . '/part_pics');
-	$Result = mkdir($path_to_root . '/companies/' . $_POST['company_name'] . '/EDI_Incoming_Orders');
-	$Result = mkdir($path_to_root . '/companies/' . $_POST['company_name'] . '/reports');
-	$Result = mkdir($path_to_root . '/companies/' . $_POST['company_name'] . '/EDI_Sent');
-	$Result = mkdir($path_to_root . '/companies/' . $_POST['company_name'] . '/EDI_Pending');
-	$Result = mkdir($path_to_root . '/companies/' . $_POST['company_name'] . '/reportwriter');
-	$Result = mkdir($path_to_root . '/companies/' . $_POST['company_name'] . '/pdf_append');
+	$Result = mkdir($CompanyDir );
+	$Result = mkdir($CompanyDir . '/part_pics');
+	$Result = mkdir($CompanyDir . '/EDI_Incoming_Orders');
+	$Result = mkdir($CompanyDir . '/reports');
+	$Result = mkdir($CompanyDir . '/EDI_Sent');
+	$Result = mkdir($CompanyDir . '/EDI_Pending');
+	$Result = mkdir($CompanyDir . '/reportwriter');
+	$Result = mkdir($CompanyDir . '/pdf_append');
+
+	// Now have a destination to place the logo image.
+	if (isset($_FILES['LogoFile']) &&
+	    $_FILES['LogoFile']['error'] == UPLOAD_ERR_OK) {
+		$result = move_uploaded_file($_FILES['LogoFile']['tmp_name'],
+						    $CompanyDir . '/logo.jpg');
+	} else {
+		//  No logo file, so use the default.
+		copy( $path_to_root . '/logo_server.jpg', $CompanyDir . '/logo.jpg');
+	}
 }
 
 //Need to get the new version number
