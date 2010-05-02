@@ -134,16 +134,18 @@ if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
 
 			$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
 			/*Loop around the defined currencies and get the rate from ECB */
-			$CurrenciesResult = DB_query('SELECT currabrev FROM currencies',$db);
-			while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
-				if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-					$UpdateCurrRateResult = DB_query('UPDATE currencies SET
+			if ($CurrencyRates!=false) {
+				$CurrenciesResult = DB_query('SELECT currabrev FROM currencies',$db);
+				while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
+					if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
+						$UpdateCurrRateResult = DB_query('UPDATE currencies SET
 											rate=' . GetCurrencyRate ($CurrencyRow[0],$CurrencyRates) . "
 											WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
+					}
 				}
+				$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
+				$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'",$db);
 			}
-			$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
-			$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'",$db);
 		}
 	}
 }

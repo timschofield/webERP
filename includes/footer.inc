@@ -25,10 +25,8 @@
 
 	echo '<tr><td class="footer">webERP ' . _('Copyright') . ' &copy; weberp.org - '.date('Y').'</td></tr>';
 
-	if(isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] == 'on'){
+	if(file_exists('http://sflogo.sourceforge.net/sflogo.php')) {
 		echo '<tr><td class="footer"><a href="https://sourceforge.net/projects/web-erp"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=70949&type=12" width="120" height="30" border="0" alt="Get webERP web-based ERP Accounting at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a></td></tr>';
-	} else {
-       	echo '<tr><td class="footer"><a href="http://sourceforge.net/projects/web-erp"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=70949&type=12" width="120" height="30" border="0" alt="Get webERP web-based ERP Accounting at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a></td></tr>';
 	}
 
 	echo '</table>';

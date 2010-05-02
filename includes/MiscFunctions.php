@@ -104,7 +104,8 @@ class XmlElement {
 function GetECBCurrencyRates () {
 /* See http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
 for detail of the European Central Bank rates - published daily */
-	if ($xml = file_get_contents('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml')) {
+	if (file_exists('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml')) {
+		$xml = file_get_contents('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml');
 		$parser = xml_parser_create();
 		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
 		xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
@@ -140,6 +141,8 @@ for detail of the European Central Bank rates - published daily */
 		$Currencies['EUR']=1; //ECB delivers no rate for Euro
 		//return an array of the currencies and rates
 		return $Currencies;
+	} else {
+		return false;
 	}
 }
 
@@ -162,14 +165,16 @@ function GetCurrencyRate($CurrCode,$CurrenciesArray) {
 }
 
 function quote_oanda_currency($CurrCode) {
-	$page = file('http://www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode .  '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault']);
-	$match = array();
-	preg_match('/(.+),(\w{3}),([0-9.]+),([0-9.]+)/i', implode('', $page), $match);
+	if (file_exists('http://www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode .  '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault'])) {
+		$page = file('http://www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode .  '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault']);
+		$match = array();
+		preg_match('/(.+),(\w{3}),([0-9.]+),([0-9.]+)/i', implode('', $page), $match);
 
-	if ( sizeof($match) > 0 ){
-      	  	return $match[3];
-	} else {
-      	   	return false;
+			if ( sizeof($match) > 0 ){
+				return $match[3];
+			} else {
+				return false;
+		}
 	}
 }
 
