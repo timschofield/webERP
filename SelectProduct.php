@@ -660,6 +660,10 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 				<input type=submit name="Go" value="' . _('Go') . '">
 				<input type=submit name="Previous" value="' . _('Previous') . '">
 				<input type=submit name="Next" value="' . _('Next') . '">';
+			echo '<input type=hidden name=Keywords value="'.$_POST['Keywords'].'">';
+			echo '<input type=hidden name=StockCat value="'.$_POST['StockCat'].'">';
+			echo '<input type=hidden name=StockCode value="'.$_POST['StockCode'].'">';
+			echo '<input type=hidden name=Search value="Search">';
 			echo '<p></div>';
 		}
 		echo '<table cellpadding=2 colspan=7>';
