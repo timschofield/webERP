@@ -132,6 +132,27 @@ ALTER TABLE `reportfields` CHANGE COLUMN `fieldname` `fieldname` VARCHAR(60) NOT
 
 INSERT INTO `config` (`confname`, `confvalue`) VALUES ('RequirePickingNote',0);
 
+CREATE TABLE IF NOT EXISTS `pickinglists` (
+  `pickinglistno` int(11) NOT NULL DEFAULT 0,
+  `orderno` int(11) NOT NULL DEFAULT 0,
+  `pickinglistdate` date NOT NULL default '0000-00-00',
+  `dateprinted` date NOT NULL default '0000-00-00',
+  `deliverynotedate` date NOT NULL default '0000-00-00',
+  CONSTRAINT `pickinglists_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `salesorders` (`orderno`),
+  PRIMARY KEY (`pickinglistno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `pickinglistdetails` (
+  `pickinglistno` int(11) NOT NULL DEFAULT 0,
+  `pickinglistlineno` int(11) NOT NULL DEFAULT 0,
+  `orderlineno` int(11) NOT NULL DEFAULT 0,
+  `qtyexpected` double NOT NULL default 0.00,
+  `qtypicked` double NOT NULL default 0.00,
+  CONSTRAINT `pickinglistdetails_ibfk_1` FOREIGN KEY (`pickinglistno`) REFERENCES `pickinglists` (`pickinglistno`),
+  PRIMARY KEY (`pickinglistno`, `pickinglistlineno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `systypes` VALUES(19, 'Picking List', 0);
 ALTER TABLE `prices` ADD `startdate` DATE NOT NULL , ADD `enddate` DATE NOT NULL DEFAULT '9999-12-31';
 ALTER TABLE prices DROP PRIMARY KEY ,
 ADD PRIMARY KEY ( `stockid` , `typeabbrev` , `currabrev` , `debtorno` , `startdate` , `enddate` ) ;

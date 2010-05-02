@@ -109,7 +109,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/PDFPickingList.php?' .sid . '&NewOrder=Yes">' . _('Print Picking Lists') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PDFPickingList.php?' .sid . '">' . _('Print Picking Lists') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>

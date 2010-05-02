@@ -111,6 +111,9 @@ if (isset($_POST['preview']) or isset($_POST['save'])) {
 			case 'SalesInvoice.xml':
 				echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/PrintCustTrans.php?' . SID .'FromTransNo=Preview&InvOrCredit=Invoice&PrintPDF=True">';
 				break;
+			case 'PickingList.xml':
+				echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/PDFPickingList.php?' . SID .'TransNo=Preview">';
+				break;
 		}
 	} else {
 	/* otherwise check that the web server has write premissions on the companies
@@ -207,6 +210,11 @@ foreach ($FormDesign as $key) {
 					echo '<tr>';
 					echo '<td>'.$subkey['name'].'</td>';
 					SimpleTextLine($subkey);
+					echo '</tr>';
+				} else if ($subkey['type']=='MultiLineText') {
+					echo '<tr>';
+					echo '<td>'.$subkey['name'].'</td>';
+					MultiTextLine($subkey);
 					echo '</tr>';
 				} else {
 					echo '<tr>';

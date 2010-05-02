@@ -87,6 +87,7 @@ td.select {
 table.selection {
 	background-color:#eee;
 	outline-style:solid;
+	outline-color: #8e8a8a;
 	outline-width:1px;
 }
 
