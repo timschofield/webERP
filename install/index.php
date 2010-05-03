@@ -9,6 +9,8 @@ if(!defined('SESSION_STARTED')) {
 	define('SESSION_STARTED', true);
 }
 
+$_SESSION['MaxLogoSize'] = 10 * 1024;	    // Limit logo file size.
+
 // Check if the page has been reloaded
 if(!isset($_GET['sessions_checked']) || $_GET['sessions_checked'] != 'true') {
 	// Set session variable
@@ -288,6 +290,7 @@ function change_data(type) {
 			</td>
 		
 			<td width="180">
+			    <input type="hidden" name="MAX_FILE_SIZE" <?php echo "value=\"" . $_SESSION['MaxLogoSize'] . "\"" ?> />
 			    <input type="FILE" size="50" ID="LogoFile" name="LogoFile" tabindex="53">
 			</td>
 		</tr>

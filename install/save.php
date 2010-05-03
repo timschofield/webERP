@@ -10,6 +10,9 @@ if(!defined('SESSION_STARTED')){
 	session_start();
 	define('SESSION_STARTED', true);
 }
+if(!isset($_SESSION['MaxLogoSize'])) {
+    $_SESSION['MaxLogoSize'] = 10 * 1024;       // Limit logo file size.
+}
 //deal with check boxes
 if(!isset($_POST['install_tables'])) {
 	$_POST['install_tables'] = false;
@@ -45,7 +48,7 @@ function set_error($message) {
 			} else {
 				$_SESSION['operating_system'] = $_POST['operating_system'];
 			}
-            if(!isset($_POST['world_writeable'])) {
+			if(!isset($_POST['world_writeable'])) {
 				$_SESSION['world_writeable'] = false;
 			} else {
 				$_SESSION['world_writeable'] = true;
@@ -53,7 +56,9 @@ function set_error($message) {
 			$_SESSION['database_host'] = $_POST['database_host'];
 			$_SESSION['database_username'] = Replace_Dodgy_Characters($_POST['database_username']);
 			$_SESSION['database_password'] = $_POST['database_password'];
+			$_SESSION['install_tables'] = $_POST['install_tables'];
 			$_SESSION['database_name'] = Replace_Dodgy_Characters($_POST['company_name']);
+			$_SESSION['db_file'] = $_POST['DemoData'] ? 'demo' : 'not';
 			$_SESSION['timezone'] = $_POST['timezone'];
 			$_SESSION['company_name'] = Replace_Dodgy_Characters($_POST['company_name']);
 			$_SESSION['admin_email'] = $_POST['admin_email'];
@@ -265,6 +270,9 @@ if (!isset($_POST['admin_repassword']) || $_POST['admin_repassword'] == '') {
 	set_error('Please make sure you re-enter the password for the Administrator account');
 }
 if ($_POST['admin_password'] != $_POST['admin_repassword']){
+	// Zero BOTH passwords before returning form to user.
+	$_POST['admin_password'] = '';
+	$_POST['admin_repassword'] = '';
 	set_error('The two Administrator account passwords you entered do not match');
 }
 // End admin user details code
@@ -274,7 +282,7 @@ $config_filename = $path_to_root . '/config.php';
 // no need to bother if just setting up the demo data
 $CompanyDir = $path_to_root . '/companies/' . $_POST['company_name'];
 if ($_POST['DemoData']==false){
-	$Result = mkdir($CompanyDir );
+	$Result = mkdir($CompanyDir);
 	$Result = mkdir($CompanyDir . '/part_pics');
 	$Result = mkdir($CompanyDir . '/EDI_Incoming_Orders');
 	$Result = mkdir($CompanyDir . '/reports');
@@ -284,10 +292,19 @@ if ($_POST['DemoData']==false){
 	$Result = mkdir($CompanyDir . '/pdf_append');
 
 	// Now have a destination to place the logo image.
-	if (isset($_FILES['LogoFile']) &&
-	    $_FILES['LogoFile']['error'] == UPLOAD_ERR_OK) {
+	if (isset($_FILES['LogoFile'])) {
+	    if ($_FILES['LogoFile']['error'] == UPLOAD_ERR_OK) {
 		$result = move_uploaded_file($_FILES['LogoFile']['tmp_name'],
 						    $CompanyDir . '/logo.jpg');
+	    } elseif ($_FILES['LogoFile']['error'] == UPLOAD_ERR_INI_SIZE ||
+		      $_FILES['LogoFile']['error'] == UPLOAD_ERR_FORM_SIZE) {
+			set_error( "Logo file is too big - Limit: " . $_SESSION['MaxLogoSize'] );
+	    } elseif ($_FILES['LogoFile']['error'] == UPLOAD_ERR_NO_FILE ) {
+		//  No logo file, so use the default.
+		copy( $path_to_root . '/logo_server.jpg', $CompanyDir . '/logo.jpg');
+	    } else {
+		set_error( "Error uploading logo file" );
+	    }
 	} else {
 		//  No logo file, so use the default.
 		copy( $path_to_root . '/logo_server.jpg', $CompanyDir . '/logo.jpg');
