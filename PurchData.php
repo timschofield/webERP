@@ -119,8 +119,8 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 }
 
 if (isset($_GET['Delete'])) {
-    $sql = "DELETE FROM purchdata 
-   				WHERE purchdata.supplierno='$SupplierID' 
+    $sql = "DELETE FROM purchdata
+   				WHERE purchdata.supplierno='$SupplierID'
    				AND purchdata.stockid='$StockID'
    				AND purchdata.effectivefrom='" . $_GET['EffectiveFrom'] . "'";
     $ErrMsg = _('The supplier purchasing details could not be deleted because');
@@ -143,7 +143,7 @@ if (!isset($_GET['Edit'])) {
 					purchdata.preferred
 			FROM purchdata INNER JOIN suppliers
 				ON purchdata.supplierno=suppliers.supplierid
-			WHERE purchdata.stockid = '" . $StockID . "' 
+			WHERE purchdata.stockid = '" . $StockID . "'
 			ORDER BY purchdata.effectivefrom DESC";
     $ErrMsg = _('The supplier purchasing details for the selected part could not be retrieved because');
     $PurchDataResult = DB_query($sql, $db, $ErrMsg);
@@ -267,10 +267,10 @@ if (isset($_POST['SearchSupplier'])) {
 
 if (isset($SuppliersResult)) {
 	if (isset($StockID)) {
-        $result = DB_query("SELECT stockmaster.description, 
-								stockmaster.units, 
-								stockmaster.mbflag 
-						FROM stockmaster 
+        $result = DB_query("SELECT stockmaster.description,
+								stockmaster.units,
+								stockmaster.mbflag
+						FROM stockmaster
 						WHERE stockmaster.stockid='$StockID'", $db);
         $myrow = DB_fetch_row($result);
         $stockuom = $myrow[1];
@@ -315,7 +315,7 @@ if (isset($SuppliersResult)) {
             echo $TableHeader;
         }
         //end of page full new headings if
-        
+
     }
     //end of while loop
     echo '</table><br/></form>';
@@ -401,7 +401,7 @@ if (!isset($SuppliersResult)) {
     echo '<tr><td>' . _('Currency') . ':</td>
 	<td><input type=hidden name="CurrCode" . VALUE="' . $CurrCode . '">' . $CurrCode . '</td></tr>';
     echo '<tr><td>' . _('Price') . ' (' . _('in Supplier Currency') . '):</td>
-	<td><input type=text class=number name="Price" maxlength=12 size=12 VALUE=' . number_format($_POST['Price'], DecimalPlaces($CurrCode, $db)) . '></td></tr>';
+	<td><input type=text class=number name="Price" maxlength=12 size=12 VALUE=' . number_format($_POST['Price'], DecimalPlaces($CurrCode, $db),'.','') . '></td></tr>';
     echo '<tr><td>' . _('Date Updated') . ':</td>
 	<td><input type=text class=date alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveFrom" maxlength=10 size=11 VALUE="' . $_POST['EffectiveFrom'] . '"></td></tr>';
     echo '<tr><td>' . _('Our Unit of Measure') . ':</td>';
