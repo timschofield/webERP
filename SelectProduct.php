@@ -12,7 +12,7 @@ if (isset($_GET['StockID'])) {
 	$_POST['Select'] = trim(strtoupper($_GET['StockID']));
 }
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Inventory Items') . '" alt="">' . ' ' . _('Inventory Items') . '';
-if (isset($_GET['NewSearch'])) {
+if (isset($_GET['NewSearch']) or isset($_POST['Next']) or isset($_POST['Previous']) or isset($_POST['Go'])) {
 	unset($StockID);
 	unset($_SESSION['SelectedStockItem']);
 	unset($_POST['Select']);
@@ -493,6 +493,9 @@ echo '<div class="centre"><input type=submit name="Search" value="' . _('Search 
 echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
 echo '</form>';
 // query for list of record(s)
+if(isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
+	$_POST['Search']='Search';
+}
 if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
 	if (!isset($_POST['Go']) AND !isset($_POST['Next']) AND !isset($_POST['Previous'])) {
 		// if Search then set to first page
@@ -663,7 +666,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			echo '<input type=hidden name=Keywords value="'.$_POST['Keywords'].'">';
 			echo '<input type=hidden name=StockCat value="'.$_POST['StockCat'].'">';
 			echo '<input type=hidden name=StockCode value="'.$_POST['StockCode'].'">';
-			echo '<input type=hidden name=Search value="Search">';
+//			echo '<input type=hidden name=Search value="Search">';
 			echo '<p></div>';
 		}
 		echo '<table cellpadding=2 colspan=7>';
@@ -694,7 +697,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			} else {
 				$qoh = number_format($myrow["qoh"], $myrow['decimalplaces']);
 			}
-			echo "<td><input type=submit name='Select' value='".$myrow['stockid']."'</td>
+			echo "<td><input type=submit name='Select' value='".$myrow['stockid']."'></td>
 				<td>".$myrow['description']."</td>
 				<td class='number'>".$qoh."</td>
 				<td>".$myrow['units']."</td>
