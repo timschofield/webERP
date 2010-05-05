@@ -214,7 +214,7 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 			/*Now the same again for outstanding transactions */
 
 			$FontSize=12;
-			$pdf->addText($Left_Margin+1,$YPos,$FontSize, _('Outstanding Transactions') );
+			$pdf->addText($Left_Margin+1,$YPos+20,$FontSize, _('Outstanding Transactions') );
 			$YPos -= $line_height;
 
 			while ($myrow=DB_fetch_array($OstdgTrans)){
@@ -361,11 +361,11 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 			$FontSize=10;
 
 
-			$pdf->addText($Left_Margin+75, $Bottom_Margin+(3*$line_height)+4, $FontSize, _('Current'). ' ');
-			$pdf->addText($Left_Margin+158, $Bottom_Margin+(3*$line_height)+4, $FontSize, _('Past Due').' ');
-			$pdf->addText($Left_Margin+242, $Bottom_Margin+(3*$line_height)+4, $FontSize, $_SESSION['PastDueDays1'] . '-' . $_SESSION['PastDueDays2'] . ' ' . _('days') );
-			$pdf->addText($Left_Margin+315, $Bottom_Margin+(3*$line_height)+4, $FontSize, _('Over').' ' . $_SESSION['PastDueDays2'] . ' '. _('days'));
-			$pdf->addText($Left_Margin+442, $Bottom_Margin+(3*$line_height)+4, $FontSize, _('Total Balance') );
+			$pdf->addText($Left_Margin+75, ($Bottom_Margin+10)+(3*$line_height)+4, $FontSize, _('Current'). ' ');
+			$pdf->addText($Left_Margin+158, ($Bottom_Margin+10)+(3*$line_height)+4, $FontSize, _('Past Due').' ');
+			$pdf->addText($Left_Margin+242, ($Bottom_Margin+10)+(3*$line_height)+4, $FontSize, $_SESSION['PastDueDays1'] . '-' . $_SESSION['PastDueDays2'] . ' ' . _('days') );
+			$pdf->addText($Left_Margin+315, ($Bottom_Margin+10)+(3*$line_height)+4, $FontSize, _('Over').' ' . $_SESSION['PastDueDays2'] . ' '. _('days'));
+			$pdf->addText($Left_Margin+442, ($Bottom_Margin+10)+(3*$line_height)+4, $FontSize, _('Total Balance') );
 
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+37, $Bottom_Margin+(2*$line_height)+8,70,$FontSize,$DisplayCurrent, 'right');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+130, $Bottom_Margin+(2*$line_height)+8,70,$FontSize,$DisplayDue, 'right');
