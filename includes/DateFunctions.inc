@@ -614,16 +614,17 @@ function DateAdd ($DateToAddTo,$PeriodString,$NumberPeriods){
 
 		switch ($PeriodString) {
 		case 'd':
-			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[2],(int)$Date_Array[1]+$NumberPeriods,(int)$Date_Array[0]));
+/* Fix up the Y/m/d calculation */
+			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2]+$NumberPeriods,(int)$Date_Array[0]));
 			break;
 		case 'w':
-			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[2],(int)$Date_Array[1]+($NumberPeriods*7),(int)$Date_Array[0]));
+			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2]+($NumberPeriods*7),(int)$Date_Array[0]));
 			break;
 		case 'm':
-			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[2]+$NumberPeriods,(int)$Date_Array[1],(int)$Date_Array[0]));
+			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[1]+$NumberPeriods,(int)$Date_Array[2],(int)$Date_Array[0]));
 			break;
 		case 'y':
-			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[2],(int)$Date_Array[1],(int)$Date_Array[0]+$NumberPeriods));
+			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0]+$NumberPeriods));
 			break;
 		default:
 			return 0;
