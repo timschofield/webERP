@@ -6,10 +6,10 @@ function ReloadForm(fB){
 fB.click();
 }
 function rTN(event){
-if (window.event) k=window.event.keyCode;
-else if (event) k=event.which;
+if (event) k=event.keyCode;
+else if (event) var k=event.which;
 else return true;
-kC=String.fromCharCode(k);
+var kC=String.fromCharCode(k);
 if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
 else if ((("0123456789,.-").indexOf(kC)>-1)) return true;
 else return false;
@@ -75,9 +75,9 @@ else if (o.value=='NaN') o.value='';
 /*Renier & Louis (info@tillcor.com) 25.02.2007
 Copyright 2004-2007 Tillcor International
 */
-days=new Array('Su','Mo','Tu','We','Th','Fr','Sa');
-months=new Array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
-dateDivID="calendar";
+var days=new Array('Su','Mo','Tu','We','Th','Fr','Sa');
+var months=new Array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
+var dateDivID="calendar";
 function Calendar(md,dF){
 iF=document.getElementsByName(md).item(0);
 pB=iF;
@@ -159,7 +159,7 @@ return m+"/"+d+"/"+y;
 }
 function convertDate(dS,dF){
 var d,m,y;
-if (dF="d.m.Y")
+if (dF=="d.m.Y")
 dA=dS.split(".")
 else
 dA=dS.split("/");
@@ -199,7 +199,7 @@ isDate(this.value,this.alt);
 function initial(){
 if (document.getElementsByTagName){
 var as=document.getElementsByTagName("a");
-for (i=0;i<as.length;i++){
+for (var i=0;i<as.length;i++){
 var a=as[i];
 if (a.getAttribute("href") &&
 a.getAttribute("rel")=="external")

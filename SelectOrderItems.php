@@ -1452,7 +1452,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						SID,
 						$myrow['stockid']);
 				if ($j==1) {
-					$jsCall = '<script  type="text/javascript">defaultControl(document.SelectParts.itm'.$myrow['stockid'].');</script>';
+					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';
 				}
 				$j++;
 #end of page full new headings if
@@ -1502,7 +1502,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		<?php
 		if (!isset($_POST['PartSearch'])) {
-			echo '<script  type="text/javascript">defaultControl(document.SelectParts.Keywords);</script>';
+			echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.Keywords);}</script>';
 		}
 		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 			echo '<td style="text-align:center" colspan=1><input tabindex=6 type=submit name="ChangeCustomer" value="' . _('Change Customer') . '"></td>';
@@ -1646,7 +1646,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					SID,
 					$myrow['stockid']);
 				if ($j==1) {
-					$jsCall = '<script  type="text/javascript">defaultControl(document.SelectParts.itm'.$myrow['stockid'].');</script>';
+					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';
 				}
 				$j++;
 	#end of page full new headings if
@@ -1687,6 +1687,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						<td><input type="text" class="date" name="itemdue_' . $i . '" size=25 maxlength=25
 						alt="'.$_SESSION['DefaultDateFormat'].'" value="' . $DefaultDeliveryDate . '"></td></tr>';
 	   		}
+			echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
 
 		 	echo '</table><br><div class="centre"><input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '">
 					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '"></div>';
@@ -1698,10 +1699,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	}#end of else not selecting a customer
 
 echo '</form>';
-echo '<script  type="text/javascript">defaultControl(document.SelectParts.part_1);</script>';
 
 if (isset($_GET['NewOrder']) and $_GET['NewOrder']!='') {
-	echo '<script  type="text/javascript">defaultControl(document.SelectCustomer.CustKeywords);</script>';
+	echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectCustomer.CustKeywords);}</script>';
 }
 include('includes/footer.inc');
 ?>
