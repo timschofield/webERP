@@ -125,60 +125,60 @@
 
 /*now populate the line PO array with the purchase order details records */
 
-			  $LineItemsSQL = 'SELECT podetailitem,
-				itemcode,
-				stockmaster.description,
-				purchorderdetails.deliverydate,
-				itemdescription,
-				glcode,
-				accountname,
-				qtyinvoiced,
-				unitprice,
-				units,
-				quantityord,
-				quantityrecd,
-				shiptref,
-				completed,
-				jobref,
-				stdcostunit,
-				itemno,
-				stockmaster.controlled,
-				stockmaster.serialised,
-				stockmaster.decimalplaces,
-				purchdata.suppliersuom,
-				purchdata.suppliers_partno,
-				subtotal_amount,
-				package,
-				pcunit,
-				nw,
-				gw,
-				cuft,
-				total_quantity,
-				total_amount
-				FROM purchorderdetails
-					LEFT JOIN stockmaster
-					ON purchorderdetails.itemcode=stockmaster.stockid
-					LEFT JOIN purchorders
-					ON purchorders.orderno=purchorderdetails.orderno
-					LEFT JOIN chartmaster
-					ON purchorderdetails.glcode=chartmaster.accountcode
-					LEFT JOIN (SELECT purchdata.supplierno,
-								purchdata.stockid,
-								purchdata.price,
-								purchdata.suppliersuom,
-								purchdata.conversionfactor,
-								purchdata.supplierdescription,
-								purchdata.leadtime,
-								purchdata.preferred,
-								MAX(purchdata.effectivefrom),
-								purchdata.suppliers_partno
-								FROM weberpdemo.purchdata purchdata
-								GROUP BY purchdata.supplierno, purchdata.stockid) purchdata
-					ON purchdata.stockid=purchorderdetails.itemcode AND purchdata.supplierno=purchorders.supplierno
-				WHERE purchorderdetails.completed=0
-					AND purchorderdetails.orderno =' . $_GET['ModifyOrderNumber'] . "
-				ORDER BY podetailitem";
-
+			  $LineItemsSQL = "SELECT podetailitem,
+										itemcode,
+										stockmaster.description,
+										purchorderdetails.deliverydate,
+										itemdescription,
+										glcode,
+										accountname,
+										qtyinvoiced,
+										unitprice,
+										units,
+										quantityord,
+										quantityrecd,
+										shiptref,
+										completed,
+										jobref,
+										stdcostunit,
+										itemno,
+										stockmaster.controlled,
+										stockmaster.serialised,
+										stockmaster.decimalplaces,
+										purchdata.suppliersuom,
+										purchdata.suppliers_partno,
+										subtotal_amount,
+										package,
+										pcunit,
+										nw,
+										gw,
+										cuft,
+										total_quantity,
+										total_amount
+										FROM purchorderdetails
+											LEFT JOIN stockmaster
+											ON purchorderdetails.itemcode=stockmaster.stockid
+											LEFT JOIN purchorders
+											ON purchorders.orderno=purchorderdetails.orderno
+											LEFT JOIN chartmaster
+											ON purchorderdetails.glcode=chartmaster.accountcode
+											LEFT JOIN (SELECT purchdata.supplierno,
+																purchdata.stockid,
+																purchdata.price,
+																purchdata.suppliersuom,
+																purchdata.conversionfactor,
+																purchdata.supplierdescription,
+																purchdata.leadtime,
+																purchdata.preferred,
+																purchdata.suppliers_partno
+																FROM purchdata
+																WHERE purchdata.effectivefrom < '" . Date('Y-m-d') . "'
+																AND purchdata.effectiveto > '" . Date('Y-m-d') . "') purchdata
+											ON purchdata.stockid=purchorderdetails.itemcode AND purchdata.supplierno=purchorders.supplierno
+										WHERE purchorderdetails.completed=0
+											AND purchorderdetails.orderno =' . $_GET['ModifyOrderNumber'] . '
+										ORDER BY podetailitem';
+					
 		  $ErrMsg =  _('The lines on the purchase order cannot be retrieved because');
 		  $DbgMsg =  _('The SQL statement that was used to retrieve the purchase order lines was');
 			  $LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg);
