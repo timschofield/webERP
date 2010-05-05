@@ -79,22 +79,22 @@ var days=new Array('Su','Mo','Tu','We','Th','Fr','Sa');
 var months=new Array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
 var dateDivID="calendar";
 function Calendar(md,dF){
-iF=document.getElementsByName(md).item(0);
-pB=iF;
-x=pB.offsetLeft;
-y=pB.offsetTop+pB.offsetHeight;
+var iF=document.getElementsByName(md).item(0);
+var pB=iF;
+var x=pB.offsetLeft;
+var y=pB.offsetTop+pB.offsetHeight;
 var p=pB;
 while (p.offsetParent){
 p=p.offsetParent;
 x+=p.offsetLeft;
 y+=p.offsetTop;
 }
-dt=convertDate(iF.value,dF);
-nN=document.createElement("div");
+var dt=convertDate(iF.value,dF);
+var nN=document.createElement("div");
 nN.setAttribute("id",dateDivID);
 nN.setAttribute("style","visibility:hidden;");
 document.body.appendChild(nN);
-cD=document.getElementById(dateDivID);
+var cD=document.getElementById(dateDivID);
 cD.style.position="absolute";
 cD.style.left=x+"px";
 cD.style.top=y+"px";
@@ -110,18 +110,18 @@ else{
 d=tD.getDate();
 tD.setDate(1);
 }
-TR="<tr>";
-xTR="</tr>";
-TD="<td class='dpTD' onMouseOut='this.className=\"dpTD\";' onMouseOver='this.className=\"dpTDHover\";'";
-xTD="</td>";
-html="<table class='dpTbl'>"+TR+"<th colspan=3>"+months[tD.getMonth()]+" "+tD.getFullYear()+"</th>"+"<td colspan=2>"+
+var TR="<tr>";
+var xTR="</tr>";
+var TD="<td class='dpTD' onMouseOut='this.className=\"dpTD\";' onMouseOver='this.className=\"dpTDHover\";'";
+var xTD="</td>";
+var html="<table class='dpTbl'>"+TR+"<th colspan=3>"+months[tD.getMonth()]+" "+tD.getFullYear()+"</th>"+"<td colspan=2>"+
 getButtonCode(md,tD,-1,"&lt;",dF)+xTD+"<td colspan=2>"+getButtonCode(md,tD,1,"&gt;",dF)+xTD+xTR+TR;
-for(i=0;i<days.length;i++) html+="<th>"+days[i]+"</th>";
+for(var i=0;i<days.length;i++) html+="<th>"+days[i]+"</th>";
 html+=xTR+TR;
 for (i=0;i<tD.getDay();i++) html+=TD+"&nbsp;"+xTD;
 do{
-dN=tD.getDate();
-TD_onclick=" onclick=\"postDate('"+md+"','"+formatDate(tD,dF)+"');\">";
+var dN=tD.getDate();
+var TD_onclick=" onclick=\"postDate('"+md+"','"+formatDate(tD,dF)+"');\">";
 if (dN==d) html+="<td"+TD_onclick+"<div class='dpDayHighlight'>"+dN+"</div>"+xTD;
 else html+=TD+TD_onclick+dN+xTD;
 if (tD.getDay()==6) html+=xTR+TR;
@@ -132,8 +132,8 @@ html+="</table>";
 document.getElementById(dateDivID).innerHTML=html;
 }
 function getButtonCode(mD,dV,a,lb,dF){
-nM=(dV.getMonth()+a)%12;
-nY=dV.getFullYear()+parseInt((dV.getMonth()+a)/12,10);
+var nM=(dV.getMonth()+a)%12;
+var nY=dV.getFullYear()+parseInt((dV.getMonth()+a)/12,10);
 if (nM<0){
 nM+=12;
 nY+=-1;
@@ -141,11 +141,11 @@ nY+=-1;
 return "<button onClick='drawCalendar(\""+mD+"\","+nY+","+nM+","+1+",\""+dF+"\");'>"+lb+"</button>";
 }
 function formatDate(dV,dF){
-ds=String(dV.getDate());
-ms=String(dV.getMonth()+1);
-d=("0"+dV.getDate()).substring(ds.length-1,ds.length+1);
-m=("0"+(dV.getMonth()+1)).substring(ms.length-1,ms.length+1);
-y=dV.getFullYear();
+var ds=String(dV.getDate());
+var ms=String(dV.getMonth()+1);
+var d=("0"+dV.getDate()).substring(ds.length-1,ds.length+1);
+var m=("0"+(dV.getMonth()+1)).substring(ms.length-1,ms.length+1);
+var y=dV.getFullYear();
 switch (dF) {
 case "d/m/Y":
 return d+"/"+m+"/"+y;
@@ -162,9 +162,14 @@ var d,m,y;
 if (dF=="d.m.Y")
 dA=dS.split(".")
 else
-dA=dS.split("/");
+var dA=dS.split("/");
 switch (dF){
-case "d/m/Y","d.m.Y":
+case "d/m/Y":
+d=parseInt(dA[0],10);
+m=parseInt(dA[1],10)-1;
+y=parseInt(dA[2],10);
+break;
+case "d.m.Y":
 d=parseInt(dA[0],10);
 m=parseInt(dA[1],10)-1;
 y=parseInt(dA[2],10);
