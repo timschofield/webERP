@@ -447,13 +447,13 @@ If (isset($PrintPDF)
 		}
 		$FontSize = 10;
 
-		$pdf->addText($Page_Width-$Right_Margin-220, $YPos+5,$FontSize, _('Sub Total'));
+		$pdf->addText($Page_Width-$Right_Margin-220, $YPos+12,$FontSize, _('Sub Total'));
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+450,$YPos+5,72,$FontSize,$DisplaySubTot, 'right');
 
-		$pdf->addText($Page_Width-$Right_Margin-220, $YPos-$line_height+5,$FontSize, _('Freight'));
+		$pdf->addText($Page_Width-$Right_Margin-220, ($YPos+12)-$line_height+5,$FontSize, _('Freight'));
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+450,$YPos-$line_height+5,72,$FontSize,$DisplayFreight, 'right');
 
-		$pdf->addText($Page_Width-$Right_Margin-220, $YPos-(2*$line_height)+5,$FontSize, _('Tax'));
+		$pdf->addText($Page_Width-$Right_Margin-220, ($YPos+12)-(2*$line_height)+5,$FontSize, _('Tax'));
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+450,$YPos-(2*$line_height)+5,72, $FontSize,$DisplayTax, 'right');
 
 		/*rule off for total */
@@ -464,7 +464,7 @@ If (isset($PrintPDF)
 
 		$YPos+=10;
 		if ($InvOrCredit=='Invoice'){
-			$pdf->addText($Page_Width-$Right_Margin-220, $YPos - ($line_height*3)-6,$FontSize, _('TOTAL INVOICE'));
+			$pdf->addText($Page_Width-$Right_Margin-220, ($YPos+12) - ($line_height*3)-6,$FontSize, _('TOTAL INVOICE'));
 			$FontSize=8;
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-18,280,$FontSize,$_SESSION['RomalpaClause']);
 			while (strlen($LeftOvers)>0 AND $YPos > $Bottom_Margin){
@@ -476,7 +476,7 @@ If (isset($PrintPDF)
             	$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -60,$YPos-15,0,20);
 			}
 // Print Bank acount details if available and default for invoices is selected
-            $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, $DefaultBankAccountCode . $DefaultBankAccountNumber);
+            $pdf->addText($Page_Width-$Right_Margin-450, $YPos - ($line_height*3)+22,$FontSize, $DefaultBankAccountCode . '  ' . $DefaultBankAccountNumber);
 			$FontSize=10;
 		} else {
 			$pdf->addText($Page_Width-$Right_Margin-220, $YPos-($line_height*3)-6,$FontSize, _('TOTAL CREDIT'));

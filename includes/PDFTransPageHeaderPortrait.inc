@@ -28,21 +28,21 @@ $XPos = $Page_Width - 265;
 $YPos -= 95;
 /*draw a nice curved corner box around the billing details */
 /*from the top right */
-$pdf->partEllipse($XPos+225,$YPos+77,0,90,10,10);
+$pdf->partEllipse($XPos+225,$YPos+67,0,90,10,10);
 /*line to the top left */
-$pdf->line($XPos+225, $YPos+87,$XPos, $YPos+87);
+$pdf->line($XPos+225, $YPos+77,$XPos, $YPos+77);
 /*Do top left corner */
-$pdf->partEllipse($XPos, $YPos+77,90,180,10,10);
+$pdf->partEllipse($XPos, $YPos+67,90,180,10,10);
 /*Do a line to the bottom left corner */
-$pdf->line($XPos-10, $YPos+77,$XPos-10, $YPos);
+$pdf->line($XPos-10, $YPos+67,$XPos-10, $YPos-10);
 /*Now do the bottom left corner 180 - 270 coming back west*/
-$pdf->partEllipse($XPos, $YPos,180,270,10,10);
+$pdf->partEllipse($XPos, $YPos-10,180,270,10,10);
 /*Now a line to the bottom right */
-$pdf->line($XPos, $YPos-10,$XPos+225, $YPos-10);
+$pdf->line($XPos, $YPos-20,$XPos+225, $YPos-20);
 /*Now do the bottom right corner */
-$pdf->partEllipse($XPos+225, $YPos,270,360,10,10);
+$pdf->partEllipse($XPos+225, $YPos-10,270,360,10,10);
 /*Finally join up to the top right corner where started */
-$pdf->line($XPos+235, $YPos,$XPos+235, $YPos+77);
+$pdf->line($XPos+235, $YPos-10,$XPos+235, $YPos+67);
 
 $YPos = $Page_Height - $Top_Margin - 10;
 
@@ -235,17 +235,17 @@ $FontSize=10;
 $LineHeight = 12;
 $LineCount = 0;
 
-$pdf->addText($Left_Margin+2, $YPos-$LineCount*$LineHeight, $FontSize, _('Cust. Tax Ref') . ':');
+$pdf->addText($Left_Margin+2, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, _('Cust. Tax Ref') . ':');
 /*Print a vertical line */
 $pdf->line($Left_Margin+178, $YPos+$LineHeight,$Left_Margin+178, $YPos-$LineHeight*2+4);
-$pdf->addText($Left_Margin+180, $YPos-$LineCount*$LineHeight, $FontSize, _('Cust. Reference No.') . ':');
+$pdf->addText($Left_Margin+180, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, _('Cust. Reference No.') . ':');
 /*Print a vertical line */
 $pdf->line($Left_Margin+358, $YPos+$LineHeight,$Left_Margin+358, $YPos-$LineHeight*2+4);
-$pdf->addText($Left_Margin+360, $YPos-$LineCount*$LineHeight, $FontSize, _('Sales Person') . ':');
+$pdf->addText($Left_Margin+360, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, _('Sales Person') . ':');
 $LineCount += 1;
-$pdf->addText($Left_Margin+12, $YPos-$LineCount*$LineHeight, $FontSize, $myrow['taxref']);
-$pdf->addText($Left_Margin+190, $YPos-$LineCount*$LineHeight, $FontSize, $myrow['customerref']);
-$pdf->addText($Left_Margin+370, $YPos-$LineCount*$LineHeight, $FontSize, $myrow['salesmanname']);
+$pdf->addText($Left_Margin+12, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, $myrow['taxref']);
+$pdf->addText($Left_Margin+190, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, $myrow['customerref']);
+$pdf->addText($Left_Margin+370, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, $myrow['salesmanname']);
 
 $YPos -= 20;
 
@@ -256,15 +256,15 @@ $YPos -= 12;
 
 $TopOfColHeadings = $YPos;
 
-$pdf->addText($Left_Margin+5, $YPos, $FontSize, _('Item Code'));
-$pdf->addText($Left_Margin+80, $YPos, $FontSize, _('Description'));
-$pdf->addText($Left_Margin+270, $YPos, $FontSize, _('Unit Price'));
-$pdf->addText($Left_Margin+350, $YPos, $FontSize, _('Qty'));
-$pdf->addText($Left_Margin+390, $YPos, $FontSize, _('UOM'));
-$pdf->addText($Left_Margin+420, $YPos, $FontSize, _('Disc.'));
-$pdf->addText($Left_Margin+450, $YPos, $FontSize, _('Price'));
+$pdf->addText($Left_Margin+5, $YPos+12, $FontSize, _('Item Code'));
+$pdf->addText($Left_Margin+80, $YPos+12, $FontSize, _('Description'));
+$pdf->addText($Left_Margin+270, $YPos+12, $FontSize, _('Unit Price'));
+$pdf->addText($Left_Margin+350, $YPos+12, $FontSize, _('Qty'));
+$pdf->addText($Left_Margin+390, $YPos+12, $FontSize, _('UOM'));
+$pdf->addText($Left_Margin+420, $YPos+12, $FontSize, _('Disc.'));
+$pdf->addText($Left_Margin+450, $YPos+12, $FontSize, _('Price'));
 
-$YPos-=8;
+$YPos-=0;
 
 /*draw a line */
 $pdf->line($XPos, $YPos,$Page_Width-$Right_Margin, $YPos);
