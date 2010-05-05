@@ -4,6 +4,12 @@
 /*need to allow this script to run from Cron or windows scheduler */
 $AllowAnyone = true;
 
+/* Get this puppy to run from cron (cd weberp && php -f RecurringSalesOrdersProcess.php "weberpdemo") or direct URL (RecurringSalesOrdersProcess.php?Database=weberpdemo) */
+if (isset($_GET['Database'])) { $_SESSION['DatabaseName'] = $_GET['Database']; $DatabaseName = $_GET['Database']; $_POST['CompanyNameField'] = $_GET['Database']; }
+
+if (isset($argc)) {
+	if (isset($argv[1])) { $_SESSION['DatabaseName'] = $argv[1]; $DatabaseName = $argv[1]; $_POST['CompanyNameField'] = $argv[1]; }
+}
 include('includes/session.inc');
 
 $title = _('Recurring Orders Process');

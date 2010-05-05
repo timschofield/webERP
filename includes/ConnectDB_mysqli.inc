@@ -23,11 +23,21 @@ if ( !$db ) {
 	exit;
 }
 
-if (!mysqli_select_db($db,$_SESSION['DatabaseName'])) {
-    echo '<BR>' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');	echo '<BR><A HREF="index.php">' . _('Back to login page') . '</A>';
-	echo '<BR><A HREF="index.php">' . _('Back to login page') . '</A>';
-	unset ($_SESSION['DatabaseName']);
-	exit;
+/* Update to allow RecurringSalesOrdersProcess.php to run via cron */
+if (isset($DatabaseName)) {
+        if (!mysqli_select_db($db,$DatabaseName)) {
+            echo '<BR>' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');  echo '<BR><A HREF="index.php">' . _('Back to login page') . '</A>';
+                echo '<BR><A HREF="index.php">' . _('Back to login page') . '</A>';
+                unset ($DatabaseName);
+                exit;
+        }
+} else {
+        if (!mysqli_select_db($db,$_SESSION['DatabaseName'])) {
+            echo '<BR>' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');  echo '<BR><A HREF="index.php">' . _('Back to login page') . '</A>';
+                echo '<BR><A HREF="index.php">' . _('Back to login page') . '</A>';
+                unset ($_SESSION['DatabaseName']);
+                exit;
+        }
 }
 
 require_once ($PathPrefix .'includes/MiscFunctions.php');
