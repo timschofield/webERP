@@ -19,12 +19,12 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	include('includes/header.inc');
 
 echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . _('Print Profit and Loss Report') . '</div>';
-echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also called an Income Statment, or Statement of Operations, this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").') . '<br>' 
+echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also called an Income Statment, or Statement of Operations, this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").') . '<br>'
 . _('The purpose of the income statement is to show whether the company made or lost money during the period being reported.') . '<br>'
 . _('The P&L represents a period of time. This contrasts with the Balance Sheet, which represents a single moment in time.') . '<br>'
 . _('webERP is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.') . '</div>';
 	echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	
+
 	if (Date('m') > $_SESSION['YearEnd']){
 		/*Dates in SQL format */
 		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')));
@@ -34,7 +34,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 	}
 	$period=GetPeriod($FromDate, $db);
-	
+
 	/*Show a form to allow input of criteria for profit and loss to show */
 	echo '<p><table class="table"><tr><td>'._('Select Period From').":</td><td><select Name='FromPeriod'>";
 
@@ -69,7 +69,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	} else {
 		$DefaultToPeriod = $_POST['ToPeriod'];
 	}
-	
+
 	echo '<tr><td>' . _('Select Period To') . ":</td><td><select Name='ToPeriod'>";
 
 	$RetResult = DB_data_seek($Periods,0);
@@ -99,11 +99,11 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	include ('includes/GLPostings.inc');
 
 } else if (isset($_POST['PrintPDF'])) {
-	
+
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title', _('Profit and Loss'));
 	$pdf->addInfo('Subject', _('Profit and Loss'));
-	
+
 	$PageNumber = 0;
 	$FontSize = 10;
 	$line_height = 12;
@@ -124,7 +124,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	$PeriodToDate = MonthAndYearFromSQLDate($myrow[0]);
 
 
-	$SQL = 'SELECT accountgroups.sectioninaccounts, 
+	$SQL = 'SELECT accountgroups.sectioninaccounts,
 			accountgroups.groupname,
 			accountgroups.parentgroupname,
 			chartdetails.accountcode ,
@@ -145,13 +145,13 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 			chartdetails.accountcode,
 			chartmaster.accountname,
 			accountgroups.sequenceintb
-		ORDER BY accountgroups.sectioninaccounts, 
+		ORDER BY accountgroups.sectioninaccounts,
 			accountgroups.sequenceintb,
 			accountgroups.groupname,
 			chartdetails.accountcode';
 
 	$AccountsResult = DB_query($SQL,$db);
-	
+
 	if (DB_error_no($db) != 0) {
 		$title = _('Profit and Loss') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
@@ -172,7 +172,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 		include('includes/footer.inc');
 		exit;
 	}
-	
+
 	include('includes/PDFProfitAndLossPageHeader.inc');
 
 	$Section = '';
@@ -187,6 +187,9 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	$GrpPrdActual = array(0);
 	$GrpPrdLY = array(0);
 	$GrpPrdBudget = array(0);
+	$TotalIncome=0;
+	$TotalBudgetIncome=0;
+	$TotalLYIncome=0;
 
 	while ($myrow = DB_fetch_array($AccountsResult)){
 
@@ -194,7 +197,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 		if ($YPos < ($Bottom_Margin)){
 			include('includes/PDFProfitAndLossPageHeader.inc');
 		}
-		
+
 		if ($myrow['groupname'] != $ActGrp){
 			if ($ActGrp != ''){
 				if ($myrow['parentgroupname']!=$ActGrp){
@@ -204,7 +207,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 						} else {
 							$ActGrpLabel = $ParentGroups[$Level];
 						}
-						if ($Section == 1){ /*Income */	
+						if ($Section == 1){ /*Income */
 							$LeftOvers = $pdf->addTextWrap($Left_Margin +($Level*10),$YPos,200 -($Level*10),$FontSize,$ActGrpLabel);
 							$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format(-$GrpPrdActual[$Level]),'right');
 							$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format(-$GrpPrdBudget[$Level]),'right');
@@ -226,14 +229,14 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 						if ($YPos < ($Bottom_Margin + (2*$line_height))){
 							include('includes/PDFProfitAndLossPageHeader.inc');
 						}
-					} //end of loop  
+					} //end of loop
 					//still need to print out the group total for the same level
 					if ($_POST['Detail'] == 'Detailed'){
 						$ActGrpLabel = $ParentGroups[$Level] . ' ' . _('total');
 					} else {
 						$ActGrpLabel = $ParentGroups[$Level];
 					}
-					if ($Section == 1){ /*Income */	
+					if ($Section == 1){ /*Income */
 						$LeftOvers = $pdf->addTextWrap($Left_Margin +($Level*10),$YPos,200 -($Level*10),$FontSize,$ActGrpLabel); $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format(-$GrpPrdActual[$Level]),'right');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format(-$GrpPrdBudget[$Level]),'right');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format(-$GrpPrdLY[$Level]),'right');
@@ -252,7 +255,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 				}
 			}
 		}
-		
+
 		// Print heading if at end of page
 		if ($YPos < ($Bottom_Margin +(2 * $line_height))){
 			include('includes/PDFProfitAndLossPageHeader.inc');
@@ -271,7 +274,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format(-$SectionPrdBudget),'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format(-$SectionPrdLY),'right');
 					$YPos -= (2 * $line_height);
-					
+
 					$TotalIncome = -$SectionPrdActual;
 					$TotalBudgetIncome = -$SectionPrdBudget;
 					$TotalLYIncome = -$SectionPrdLY;
@@ -355,7 +358,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 			$GrpPrdActual[$i] +=$AccountPeriodActual;
 			$GrpPrdBudget[$i] +=$AccountPeriodBudget;
 		}
-		
+
 
 		$SectionPrdLY +=$AccountPeriodLY;
 		$SectionPrdActual +=$AccountPeriodActual;
@@ -381,14 +384,14 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	if ($ActGrp != ''){
 
 		if ($myrow['parentgroupname']!=$ActGrp){
-		
+
 			while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
 				if ($_POST['Detail'] == 'Detailed'){
 					$ActGrpLabel = $ParentGroups[$Level] . ' ' . _('total');
 				} else {
 					$ActGrpLabel = $ParentGroups[$Level];
 				}
-				if ($Section == 1){ /*Income */	
+				if ($Section == 1){ /*Income */
 					$LeftOvers = $pdf->addTextWrap($Left_Margin +($Level*10),$YPos,200 -($Level*10),$FontSize,$ActGrpLabel);
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format(-$GrpPrdActual[$Level]),'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format(-$GrpPrdBudget[$Level]),'right');
@@ -410,14 +413,14 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 				if ($YPos < ($Bottom_Margin + (2*$line_height))){
 					include('includes/PDFProfitAndLossPageHeader.inc');
 				}
-			} 
+			}
 			//still need to print out the group total for the same level
 			if ($_POST['Detail'] == 'Detailed'){
 				$ActGrpLabel = $ParentGroups[$Level] . ' ' . _('total');
 			} else {
 				$ActGrpLabel = $ParentGroups[$Level];
 			}
-			if ($Section == 1){ /*Income */	
+			if ($Section == 1){ /*Income */
 				$LeftOvers = $pdf->addTextWrap($Left_Margin +($Level*10),$YPos,200 -($Level*10),$FontSize,$ActGrpLabel); $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format(-$GrpPrdActual[$Level]),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format(-$GrpPrdBudget[$Level]),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format(-$GrpPrdLY[$Level]),'right');
@@ -444,14 +447,14 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 		$pdf->setFont($header[0],'B');
 		$pdf->line($Left_Margin+310, $YPos+10,$Left_Margin+500, $YPos+10);
 		$pdf->line($Left_Margin+310, $YPos,$Left_Margin+500, $YPos);
-		
+
 		if ($Section == 1) { /*Income*/
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$Section]);
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format(-$SectionPrdActual),'right');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format(-$SectionPrdBudget),'right');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format(-$SectionPrdLY),'right');
 			$YPos -= (2 * $line_height);
-			
+
 			$TotalIncome = -$SectionPrdActual;
 			$TotalBudgetIncome = -$SectionPrdBudget;
 			$TotalLYIncome = -$SectionPrdLY;
@@ -468,7 +471,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($TotalBudgetIncome - $SectionPrdBudget),'right');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($TotalLYIncome - $SectionPrdLY),'right');
 			$YPos -= (2 * $line_height);
-			
+
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format(100*($TotalIncome - $SectionPrdActual)/$TotalIncome,1) . '%','right');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format(100*($TotalBudgetIncome - $SectionPrdBudget)/$TotalBudgetIncome,1) . '%','right');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format(100*($TotalLYIncome - $SectionPrdLY)/$TotalLYIncome,1). '%','right');
@@ -480,14 +483,36 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format(-$PeriodProfitLoss),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format(-$PeriodBudgetProfitLoss),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format(-$PeriodLYProfitLoss),'right');
-	
+	$YPos -= (2 * $line_height);
+
+	if ($TotalIncome != 0){
+			$PrdPLPercent = 100 *(-$PeriodProfitLoss) / $TotalIncome;
+		} else {
+			$PrdPLPercent = 0;
+		}
+		if ($TotalBudgetIncome != 0){
+			$BudgetPLPercent = 100 * (-$PeriodBudgetProfitLoss) / $TotalBudgetIncome;
+		} else {
+			$BudgetPLPercent = 0;
+		}
+		if ($TotalLYIncome != 0){
+			$LYPLPercent = 100 * (-$PeriodLYProfitLoss) / $TotalLYIncome;
+		} else {
+			$LYPLPercent = 0;
+		}
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Net Profit Percent'));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($PrdPLPercent,1) . '%','right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($BudgetPLPercent,1) . '%','right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($LYPLPercent,1). '%','right');
+	$YPos -= (2 * $line_height);
+
 	$pdf->line($Left_Margin+310, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
-	$pdf->line($Left_Margin+310, $YPos,$Left_Margin+500, $YPos);	
-	
+	$pdf->line($Left_Margin+310, $YPos,$Left_Margin+500, $YPos);
+
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_' .'Income_Statement_' . date('Y-m-d').'.pdf');
 	$pdf->__destruct();
 	exit;
-	
+
 } else {
 
 	include('includes/header.inc');
@@ -495,7 +520,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	echo "<input type=hidden name='FromPeriod' VALUE=" . $_POST['FromPeriod'] . "><input type=hidden name='ToPeriod' VALUE=" . $_POST['ToPeriod'] . '>';
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
-	
+
 	if ($NumberOfMonths >12){
 		echo '<p>';
 		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range'),'error');
@@ -569,12 +594,12 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	$SectionPrdActual= 0;
 	$SectionPrdLY 	 = 0;
 	$SectionPrdBudget= 0;
-	
+
 	$PeriodProfitLoss = 0;
 	$PeriodProfitLoss = 0;
 	$PeriodLYProfitLoss = 0;
 	$PeriodBudgetProfitLoss = 0;
-	
+
 
 	$ActGrp ='';
 	$ParentGroups = array();
@@ -583,7 +608,9 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	$GrpPrdActual = array(0);
 	$GrpPrdLY = array(0);
 	$GrpPrdBudget = array(0);
-
+	$TotalIncome=0;
+	$TotalBudgetIncome=0;
+	$TotalLYIncome=0;
 
 	while ($myrow=DB_fetch_array($AccountsResult)) {
 
@@ -811,7 +838,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 			if ($myrow['parentgroupname']==$ActGrp AND $ActGrp !=''){ //adding another level of nesting
 				$Level++;
 			}
-			
+
 			$ParentGroups[$Level] = $myrow['groupname'];
 			$ActGrp = $myrow['groupname'];
 			if ($_POST['Detail']=='Detailed'){
@@ -1090,7 +1117,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 				number_format($LYGPPercent,1). '%');
 			$j++;
 		}
-	
+
 		$SectionPrdLY =0;
 		$SectionPrdActual =0;
 		$SectionPrdBudget =0;
@@ -1125,6 +1152,39 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 		number_format(-$PeriodBudgetProfitLoss),
 		number_format(-$PeriodLYProfitLoss)
 		);
+
+		if ($TotalIncome !=0){
+			$PrdNPPercent = 100*(-$PeriodProfitLoss)/$TotalIncome;
+		} else {
+			$PrdNPPercent =0;
+		}
+		if ($TotalBudgetIncome !=0){
+			$BudgetNPPercent = 100*(-$PeriodBudgetProfitLoss)/$TotalBudgetIncome;
+		} else {
+			$BudgetNPPercent =0;
+		}
+		if ($TotalLYIncome !=0){
+			$LYNPPercent = 100*(-$PeriodLYProfitLoss)/$TotalLYIncome;
+		} else {
+			$LYNPPercent = 0;
+		}
+		echo '<tr>
+			<td colspan=2></td>
+			<td colspan=6><hr></td>
+		</tr>';
+
+		printf('<tr>
+			<td colspan=2><font size=2><I>'._('Net Profit Percent').'</I></font></td>
+			<td></td>
+			<td class=number><I>%s</I></td>
+			<td></td>
+			<td class=number><I>%s</I></td>
+			<td></td>
+			<td class=number><I>%s</I></td>
+			</tr><tr><td colspan=6> </td></tr>',
+			number_format($PrdNPPercent,1) . '%',
+			number_format($BudgetNPPercent,1) . '%',
+			number_format($LYNPPercent,1). '%');
 
 	echo '<tr>
 		<td colspan=2></td>
