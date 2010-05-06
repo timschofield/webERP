@@ -170,10 +170,17 @@
 																purchdata.supplierdescription,
 																purchdata.leadtime,
 																purchdata.preferred,
-																purchdata.suppliers_partno
+																purchdata.suppliers_partno,
+																MAX(purchdata.effectivefrom)
 																FROM purchdata
-																WHERE purchdata.effectivefrom < '" . Date('Y-m-d') . "'
-																AND purchdata.effectiveto > '" . Date('Y-m-d') . "') purchdata
+																GROUP BY purchdata.supplierno, 
+																		purchdata.stockid,
+																		purchdata.suppliersuom,
+																		purchdata.conversionfactor,
+																		purchdata.supplierdescription,
+																		purchdata.leadtime,
+																		purchdata.preferred,
+																		purchdata.suppliers_partno) purchdata
 											ON purchdata.stockid=purchorderdetails.itemcode AND purchdata.supplierno=purchorders.supplierno
 										WHERE purchorderdetails.completed=0
 											AND purchorderdetails.orderno =' . $_GET['ModifyOrderNumber'] . '

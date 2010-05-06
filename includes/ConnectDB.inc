@@ -16,7 +16,7 @@ if (!isset($_SESSION['DatabaseName'])){
 		$_SESSION['DatabaseName'] = $DatabaseName;
 		include_once ($PathPrefix . 'includes/ConnectDB_' . $dbType . '.inc');
 	} elseif ($AllowAnyone) {
-	        include_once($PathPrefix .'includes/ConnectDB_' . $dbType . '.inc'); /* Fix call to undefined function DB_query in GetConfig.php, line 9 when calling RecurringSalesOrdersProcess.php from Cron */
+	    include_once($PathPrefix .'includes/ConnectDB_' . $dbType . '.inc'); /* Fix call to undefined function DB_query in GetConfig.php, line 9 when calling RecurringSalesOrdersProcess.php from Cron */
 	}
 } else {
  	include_once($PathPrefix .'includes/ConnectDB_' . $dbType . '.inc');
