@@ -919,7 +919,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if (isset($_POST[$QuickEntryQty])) {
 				$NewItemQty = $_POST[$QuickEntryQty];
 			}
-			if (isset($_POST[$QuickEntryCode])) {
+			if (isset($_POST[$QuickEntryItemDue])) {
 				$NewItemDue = $_POST[$QuickEntryItemDue];
 			} else {
 				$NewItemDue = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
@@ -968,7 +968,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					while ($KitParts = DB_fetch_array($KitResult,$db)){
 						$NewItem = $KitParts['component'];
 						$NewItemQty = $KitParts['quantity'] * $ParentQty;
-						$NewItemDue = date($_SESSION['DefaultDateFormat']);
 						$NewPOLine = 0;
 						include('includes/SelectOrderItems_IntoCart.inc');
 					}
@@ -976,7 +975,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				} elseif ($myrow['mbflag']=='G'){
 					prnMsg(_('Phantom assemblies cannot be sold, these items exist only as bills of materials used in other manufactured items. The following item has not been added to the order:') . ' ' . $NewItem, 'warn');
 				} else { /*Its not a kit set item*/
-					$NewItemDue = date($_SESSION['DefaultDateFormat']);
 					include('includes/SelectOrderItems_IntoCart.inc');
 				}
 			}
