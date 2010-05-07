@@ -15,18 +15,18 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	} else {
 		$Comparator = ">=";
 	} /*end of else Comparator */
-	if ($_POST['StockCat'] == "all") {
-		$Category = "stockmaster.stockid = prices.stockid";
+	if ($_POST['StockCat'] == 'all') {
+		$Category = 'stockmaster.stockid = prices.stockid';
 	} else {
 		$Category = "stockmaster.stockid = prices.stockid AND stockmaster.categoryid = '" . $_POST['StockCat'] . "'";
 	} /*end of else StockCat */
-	$sql = "SELECT 	stockmaster.stockid,
+	$sql = 'SELECT 	stockmaster.stockid,
 				stockmaster.description,
 				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) as cost,
 				prices.price as price, prices.debtorno as customer, prices.branchcode as branch
 		FROM stockmaster, prices
-		WHERE " . $Category . "
-		AND   prices.price" . $Comparator . "(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * " . $_POST['Margin'] . "
+		WHERE ' . $Category . '
+		AND   prices.price' . $Comparator . '(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * ' . $_POST['Margin'] . "
 		AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
 		AND prices.currabrev ='" . $_POST['CurrCode'] . "'";
 	$result = DB_query($sql, $db);
@@ -44,11 +44,11 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	if (isset($Category[0])) {
 		$Cat = $Category[0];
 	} else {
-		$Cat = "All Category";
+		$Cat = 'All Category';
 	} /*end of else Category */
 	echo '<div class="page_help_text">' . _('Items in category ') . '' . $Cat . '' . _(' With Price ') . '' . $Comparator . '' . $_POST['Margin'] . '' . _('  times ') . '' . _('Cost in Price List ') . '' . $Type['0'] . '</div><br><br>';
 	if ($numrow != 0) {
-		echo "<table>";
+		echo '<table>';
 		echo '<tr><th>' . _('Code') . '</th>
 						<th>' . _('Description') . '</th>
 						<th>' . _('Customer') . '</th>

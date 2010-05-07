@@ -8,7 +8,7 @@ include('includes/session.inc');
 $title=_('Update Pricing From Costs');
 include('includes/header.inc');
 
-echo '<br><div class="page_help_text">' . _('This page adds new prices or updates already existing prices for a specified sales type (price list) and currency for the stock category selected - based on a percentage mark up from cost prices or from preferred supplier cost data') . '</div><br><div class="centre">';
+echo '<br><div class="page_help_text">' . _('This page adds new prices or updates already existing prices for a specified sales type (price list) and currency for the stock category selected - based on a percentage mark up from cost prices or from preferred supplier cost data. This script does not care about the dates when prices are effective from and to - it will update all prices for the selections made irrespective of effectivity dates.') . '</div><br><div class="centre">';
 
 echo "<form method='POST' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 

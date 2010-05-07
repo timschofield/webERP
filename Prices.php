@@ -75,13 +75,19 @@ if (isset($_POST['submit'])) {
 		$msg = _('The price entered must be numeric');
 	}
 	if (! Is_Date($_POST['StartDate'])){
-		$InpuitError =1;
+		$InputError =1;
 		$msg = _('The date this price is to take effect from must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	}
 	if (! Is_Date($_POST['EndDate'])){
-		$InpuitError =1;
+		$InputError =1;
 		$msg = _('The date this price is be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	}
+	if (Date1GreaterThanDate2($_POST['StartDate'],$_POST['EndDate'])){
+		$InputError =1;
+		$msg = _('The end date is expected to be after the start date, enter an end date after the start date for this price');
+	}
+
+	
 	if (isset($_POST['OldTypeAbbrev']) AND isset($_POST['OldCurrAbrev']) AND strlen($Item)>1 AND $InputError !=1) {
 
 		//editing an existing price
@@ -95,6 +101,20 @@ if (isset($_POST['submit'])) {
 			AND prices.typeabbrev='" . $_POST['OldTypeAbbrev'] . "'
 			AND prices.currabrev='" . $_POST['OldCurrAbrev'] . "'
 			AND prices.debtorno=''";
+
+		/* Need to see if there is also a price entered that has an end date after the start date of this price and if so we will need to update it so there is no ambiguity as to which price will be used*/
+		$SQLEndDate = 
+		
+		$UpdateEndDateOfExistingPricesSQL = "UPDATE prices SET enddate = '" . 
+													  WHERE enddate >= '" . FormatDateForSQL($_POST['StartDate']) . "'
+													  AND typeabbrev='" . $_POST['TypeAbbrev'] . "',
+													  AND currabrev='" . $_POST['CurrAbrev'] . "',
+			
+												FROM prices
+												WHERE 
+					
+		
+
 
 		$msg =  _('This price has been updated') . '.';
 	} elseif ($InputError !=1) {
