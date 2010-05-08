@@ -25,12 +25,12 @@ if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']=
 }
 
 $result = DB_query("SELECT debtorsmaster.name,
-                         debtorsmaster.currcode,
-						 debtorsmaster.salestype
-					 FROM
-						 debtorsmaster
-					 WHERE
-						 debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
+													debtorsmaster.currcode,
+													debtorsmaster.salestype
+												 FROM
+													debtorsmaster
+												 WHERE
+													debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
 $myrow = DB_fetch_row($result);
 echo '<font color=BLUE><b>' . $myrow[0] . ' ' . _('in') . ' ' . $myrow[1] . '<br>' . ' ' . _('for') . ' ';
 
@@ -38,8 +38,8 @@ $CurrCode = $myrow[1];
 $SalesType = $myrow[2];
 
 $result = DB_query("SELECT stockmaster.description 
-					FROM stockmaster 
-					WHERE stockmaster.stockid='" . $Item . "'",$db);
+										FROM stockmaster 
+										WHERE stockmaster.stockid='" . $Item . "'",$db);
 
 $myrow = DB_fetch_row($result);
 
@@ -62,9 +62,9 @@ if (isset($_POST['submit'])) {
 
 	if ($_POST['Branch'] !=''){
 		$sql = "SELECT custbranch.branchcode
-		        FROM custbranch
-				WHERE custbranch.debtorno='" . $_SESSION['CustomerID'] . "'
-				AND custbranch.branchcode='" . $_POST['Branch'] . "'";
+						FROM custbranch
+						WHERE custbranch.debtorno='" . $_SESSION['CustomerID'] . "'
+						AND custbranch.branchcode='" . $_POST['Branch'] . "'";
 
 		$result = DB_query($sql,$db);
 		if (DB_num_rows($result) ==0){
@@ -85,7 +85,11 @@ if (isset($_POST['submit'])) {
 		$InputError =1;
 		$msg = _('The end date is expected to be after the start date, enter an end date after the start date for this price');
 	}
-
+	if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['EndDate'])){
+		$InputError =1;
+		$msg = _('The end date is expected to be after today. There is no point entering a new price where the effective date is before today!');
+	}
+	
 	if ((isset($_POST['Editing']) and $_POST['Editing']=='Yes') AND strlen($Item)>1 AND $InputError !=1) {
 
 		//editing an existing price
@@ -99,8 +103,8 @@ if (isset($_POST['submit'])) {
 				WHERE prices.stockid='" . $Item . "'
 				AND prices.typeabbrev='" . $SalesType . "'
 				AND prices.currabrev='" . $CurrCode . "'
-				AND prices.startdate='" . FormatDateForSQL($_POST['StartDate']) . "'
-				AND prices.enddate='" . FormatDateForSQL($_POST['EndDate']) . "'
+				AND prices.startdate='" . $_POST['OldStartDate'] . "'
+				AND prices.enddate='" . $_POST['OldEndDate'] . "'
 				AND prices.debtorno='" . $_SESSION['CustomerID'] . "'";
 				
 		$msg = _('Price Updated');
@@ -136,6 +140,9 @@ if (isset($_POST['submit'])) {
 				$msg = _('The price could not be added because') . ' - ' . DB_error_msg($db);
 			}
 		}else {
+			ReSequenceEffectiveDates ($Item, $SalesType, $CurrCode, $_SESSION['CustomerID'], $db);
+			unset($_POST['EndDate']);
+			unset($_POST['StartDate']);
 			unset($_POST['Price']);
 		}
 	}
@@ -163,13 +170,18 @@ if (isset($_POST['submit'])) {
 //Show the normal prices in the currency of this customer
 
 $sql = "SELECT prices.price,
-               prices.typeabbrev
+				prices.currabrev,
+               prices.typeabbrev,
+               prices.startdate,
+               prices.enddate
 		FROM prices
-		WHERE prices.typeabbrev = '" . $SalesType . "'
-		AND prices.stockid='" . $Item . "'
+		WHERE  prices.stockid='" . $Item . "'
+		AND prices.typeabbrev='". $SalesType ."'
+		AND prices.currabrev ='". $CurrCode ."'
 		AND prices.debtorno=''
-		AND prices.currabrev='" . $CurrCode . "'
-		ORDER BY typeabbrev";
+		ORDER BY currabrev,
+						typeabbrev,
+						startdate";
 	
 $ErrMsg = _('Could not retrieve the normal prices set up because');
 $DbgMsg = _('The SQL used to retrieve these records was');
@@ -183,7 +195,13 @@ if (DB_num_rows($result) == 0) {
 } else {
 	echo '<tr><th>' . _('Normal Price') . '</th></tr>';
 	while ($myrow = DB_fetch_array($result)) {
-		printf('<tr class="EvenTableRows"><td class=number>%0.2f</td></tr>', $myrow['price']);
+		printf('<tr class="EvenTableRows">
+						<td class=number>%0.2f</td>
+						<td class=date>%s</td>
+						<td class=date>%s</td></tr>', 
+						$myrow['price'],
+						ConvertSQLDate($myrow['startdate']),
+						ConvertSQLDate($myrow['enddate']));
 	}
 }
 
@@ -202,7 +220,9 @@ $sql = "SELECT prices.price,
 		AND prices.debtorno='" . $_SESSION['CustomerID'] . "'
 		AND prices.currabrev='$CurrCode'
 		AND (custbranch.debtorno='" . $_SESSION['CustomerID'] . "' OR
-						custbranch.debtorno IS NULL)";
+						custbranch.debtorno IS NULL)
+		ORDER BY prices.branchcode,
+							prices.startdate";
 
 $ErrMsg = _('Could not retrieve the special prices set up because');
 $DbgMsg = _('The SQL used to retrieve these records was');
@@ -263,6 +283,8 @@ if (DB_num_rows($result) == 0) {
 
 	if (isset($_GET['Edit']) and $_GET['Edit']==1){
 		echo '<input type=hidden name="Editing" VALUE="Yes">';
+		echo '<input type=hidden name="OldStartDate" VALUE="' . $_GET['StartDate'] .'">';
+		echo '<input type=hidden name="OldEndDate" VALUE="' .  $_GET['EndDate'] . '">';
 		$_POST['Price']=$_GET['Price'];
 		$_POST['Branch']=$_GET['Branch'];
 		$_POST['StartDate'] = ConvertSQLDate($_GET['StartDate']);
@@ -301,4 +323,52 @@ if (DB_num_rows($result) == 0) {
 
 	echo '</form>';
 	include('includes/footer.inc');
+	
+	function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID, $db) {
+	
+		$SQL = "SELECT branchcode, 
+										startdate,
+										enddate 
+						FROM prices 
+						WHERE debtorno='" . $CustomerID . "' 
+						AND stockid='" . $Item . "'
+						AND currabrev='" . $CurrAbbrev . "'
+						AND typeabbrev='" . $PriceList . "'
+						ORDER BY branchcode, 
+										startdate, 
+										enddate";
+		$result = DB_query($SQL,$db);
+				
+		unset($BranchCode);
+		
+		while ($myrow = DB_fetch_array($result)){
+			if ($BranchCode != $myrow['branchcode']){
+				unset($NextStartDate);
+				unset($EndDate);
+				unset($StartDate);
+				$BranchCode = $myrow['branchcode'];
+			}
+			if (isset($NextStartDate)){
+				if (Date1GreaterThanDate2(ConvertSQLDate($myrow['startdate']),$NextStartDate)){
+					$NextStartDate = ConvertSQLDate($myrow['startdate']);
+					if (isset($EndDate)) {
+						/*Need to make the end date the new start date less 1 day */
+						$SQL = "UPDATE prices SET enddate = '" . FormatDateForSQL(DateAdd($NextStartDate,'d',-1))  . "'
+										WHERE stockid ='" .$Item . "'
+										AND currabrev='" . $CurrAbbrev . "'
+										AND typeabbrev='" . $PriceList . "'
+										AND startdate ='" . $StartDate . "'
+										AND enddate = '" . $EndDate . "'
+										AND debtorno ='" . $CustomerID . "'";
+						$UpdateResult = DB_query($SQL,$db);
+					}
+				} //end of if startdate  after NextStartDate - we have a new NextStartDate
+			} //end of if set NextStartDate
+				else {
+					$NextStartDate = ConvertSQLDate($myrow['startdate']);
+			}
+			$StartDate = $myrow['startdate'];
+			$EndDate = $myrow['enddate'];
+		}
+}
 ?>

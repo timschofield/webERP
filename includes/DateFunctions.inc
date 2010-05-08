@@ -439,9 +439,12 @@ function Date1GreaterThanDate2 ($Date1, $Date2) {
 	$Date2 = trim($Date2);
 
 	/* Get date elements */
-	if ($_SESSION['DefaultDateFormat']=='d.m.Y' or $_SESSION['DefaultDateFormat'] =='d/m/Y'){
+	if ($_SESSION['DefaultDateFormat']=='d.m.Y' )  {
 		list($Day1,$Month1,$Year1) = explode('.', $Date1);
 		list($Day2,$Month2,$Year2) = explode('.', $Date2);
+	} elseif ($_SESSION['DefaultDateFormat'] =='d/m/Y'){
+		list($Day1,$Month1,$Year1) = explode('/', $Date1);
+		list($Day2,$Month2,$Year2) = explode('/', $Date2);
 	} elseif ($_SESSION['DefaultDateFormat'] =='m/d/Y'){
 		list($Month1,$Day1,$Year1) = explode('/', $Date1);
 		list($Month2,$Day2,$Year2) = explode('/', $Date2);
@@ -454,6 +457,7 @@ function Date1GreaterThanDate2 ($Date1, $Date2) {
 	 * 2 characters and the other >2 then then make them both 4 characters long. Assume
 	 *  a date >50 to be 1900's and less than to be 2000's
 	 */
+	
 	if (strlen($Year1)>2 AND strlen($Year2)==2){
 		if ($Year2>50) {
 			$Year2=1900+$Year2;

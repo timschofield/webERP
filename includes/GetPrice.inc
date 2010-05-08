@@ -14,7 +14,9 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $db){
 		AND prices.stockid = '" . $StockID . "'
 		AND prices.currabrev = debtorsmaster.currcode
 		AND prices.debtorno=debtorsmaster.debtorno
-		AND prices.branchcode='" . $BranchCode . "'";
+		AND prices.branchcode='" . $BranchCode . "'
+		AND prices.startdate <='" . Date('Y-m-d') . "'
+		AND prices.enddate >='" . Date('Y-m-d') . "'";
 
 	$ErrMsg =  _('There is a problem in retrieving the pricing information for part') . ' ' . $StockID  . ' ' . _('and for Customer') . ' ' . $DebtorNo .  ' ' . _('the error message returned by the SQL server was');
 	$result = DB_query($sql, $db,$ErrMsg);
@@ -22,7 +24,7 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $db){
 
 	if (DB_num_rows($result)==0){
 
-		/* No result from go for customer and branch search try for just a customer match */
+		/* No result returned for customer and branch search try for just a customer match */
 		$sql = "SELECT prices.price,
 				prices.debtorno,
 				prices.branchcode
@@ -33,7 +35,9 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $db){
 			AND prices.stockid = '" . $StockID . "'
 			AND prices.currabrev = debtorsmaster.currcode
 			AND prices.debtorno=debtorsmaster.debtorno
-			AND prices.branchcode=''";
+			AND prices.branchcode=''
+			AND prices.startdate <='" . Date('Y-m-d') . "'
+			AND prices.enddate >='" . Date('Y-m-d') . "'";;
 
 
 		$result = DB_query($sql,$db,$ErrMsg);
@@ -50,7 +54,10 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $db){
 				AND debtorsmaster.debtorno='" . $DebtorNo . "'
 				AND prices.stockid = '" . $StockID . "'
 				AND prices.debtorno='' 
-				AND prices.currabrev = debtorsmaster.currcode";
+				AND prices.currabrev = debtorsmaster.currcode
+				AND prices.startdate <='" . Date('Y-m-d') . "'
+				AND prices.enddate >='" . Date('Y-m-d') . "'";
+			
 			$result = DB_query($sql,$db,$ErrMsg);
 			
 			if (DB_num_rows($result)==0){
@@ -63,7 +70,9 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $db){
 					AND prices.currabrev = debtorsmaster.currcode
 					AND debtorsmaster.debtorno='" . $DebtorNo . "'
 					AND prices.typeabbrev='" . $_SESSION['DefaultPriceList'] . "'
-					AND prices.debtorno=''";
+					AND prices.debtorno=''
+					AND prices.startdate <='" . Date('Y-m-d') . "'
+					AND prices.enddate >='" . Date('Y-m-d') . "'";;
 				
 				$result = DB_query($sql, $db,$ErrMsg);
 				
