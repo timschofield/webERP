@@ -1,5 +1,6 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p></p>
+<p>08/05/10 Lindsay: API was broken after adding a test for global variable $DatabaseName in ConnectDB_mysql* for this variable being set and using it as DB name if so.  The variable of that name in the api_php.php has been changed to $api_DatabaseName.</p>
 <p>08/05/10 Phil: GetPrices.inc now uses the new price startdate and enddate to return the price which falls within the date range base on the current date. Changes to Prices.php and Prices_Customer.php to allow entry of effective from and effective to dates and updating/deleting of prices with appropriate error trapping and rescheduling of enddates where start and end dates would otherwise overlap.</p>
 <p>08/05/10 Phil: Found a bug in Date1GreaterThanDate2 function (in includes/DateFunction.inc) with SESSION['DefaultDateFormat'] = 'd/m/Y' this function had been broken  </p>
 <p>06/05/10 Lindsay: Tracker 2929564: dates mangled via QuicK Entry format</p>

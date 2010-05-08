@@ -3,7 +3,7 @@
 /* Include session.inc, to allow database connection, and access to
    miscfunctions, and datefunctions.*/
 	// FOLLOWING ONLY REQUIRED TO SUPPORT PER FUNCTION AUTHENTICATION
-	$DatabaseName='weberpdemo';
+	$api_DatabaseName='weberpdemo';
 	// END OF OLD STYLE AUTHENTICATION
 
 	$AllowAnyone = true;
@@ -21,8 +21,8 @@
 		           $_SESSION['AccessLevel'] == '') {
 			//  Login to default database = old clients.
 			if ($user != '' && $password != '') {
-			    global  $DatabaseName;
-			    $rc = LoginAPI ($DatabaseName, $user, $password);
+			    global  $api_DatabaseName;
+			    $rc = LoginAPI ($api_DatabaseName, $user, $password);
 			    if ($rc[0] == UL_OK ) {
 				return $_SESSION['db'];
 			    }
