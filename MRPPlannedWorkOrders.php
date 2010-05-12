@@ -5,7 +5,18 @@
 // work orders created for them
 $PageSecurity = 2;
 include('includes/session.inc');
-If (isset($_POST['PrintPDF'])) {
+$sql='show tables where Tables_in_'.$_SESSION['DatabaseName'].'="mrprequirements"';
+$result=DB_query($sql,$db);
+if (DB_num_rows($result)==0) {
+	$title='MRP error';
+	include('includes/header.inc');
+	echo '<br>';
+	prnMsg( _('The MRP calculation must be run before you can run this report').'<br>'.
+			_('To run the MRP calculation click').' '.'<a href='.$rootpath .'/MRP.php?' . SID .'>'._('here').'</a>', 'error');
+	include('includes/footer.inc');
+	exit;
+}
+if (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
 

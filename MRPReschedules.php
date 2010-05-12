@@ -8,7 +8,18 @@
 $PageSecurity = 2;
 include('includes/session.inc');
 
-If (isset($_POST['PrintPDF'])) {
+$sql='show tables where Tables_in_'.$_SESSION['DatabaseName'].'="mrprequirements"';
+$result=DB_query($sql,$db);
+if (DB_num_rows($result)==0) {
+	$title='MRP error';
+	include('includes/header.inc');
+	echo '<br>';
+	prnMsg( _('The MRP calculation must be run before you can run this report').'<br>'.
+			_('To run the MRP calculation click').' '.'<a href='.$rootpath .'/MRP.php?' . SID .'>'._('here').'</a>', 'error');
+	include('includes/footer.inc');
+	exit;
+}
+if (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',_('MRP Reschedule Report'));
@@ -64,29 +75,29 @@ If (isset($_POST['PrintPDF'])) {
 
 		$YPos -=$line_height;
 		$FontSize=8;
-		
+
 		$FormatedDueDate = ConvertSQLDate($myrow['duedate']);
 		$FormatedMRPDate = ConvertSQLDate($myrow['mrpdate']);
 		if ($myrow['mrpdate'] == '2050-12-31') {
 			$FormatedMRPDate = 'Cancel';
 		}
-		
+
 		// Use to alternate between lines with transparent and painted background
 		if ($_POST['Fill'] == 'yes'){
 		    $fill=!$fill;
 		}
-		
+
 		// Parameters for addTextWrap are defined in /includes/class.pdf.php
 		// 1) X position 2) Y position 3) Width
 		// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
 		// and False to set to transparent
-		$pdf->addTextWrap($Left_Margin,$YPos,90,$FontSize,$myrow['part'],'',0,$fill);				
+		$pdf->addTextWrap($Left_Margin,$YPos,90,$FontSize,$myrow['part'],'',0,$fill);
 		$pdf->addTextWrap(130,$YPos,200,$FontSize,$myrow['description'],'',0,$fill);
 		$pdf->addTextWrap(330,$YPos,50,$FontSize,$myrow['orderno'],'right',0,$fill);
 		$pdf->addTextWrap(380,$YPos,30,$FontSize,$myrow['ordertype'],'right',0,$fill);
 		$pdf->addTextWrap(410,$YPos,50,$FontSize,number_format($myrow['supplyquantity'],
 		                                        $myrow['decimalplaces']),'right',0,$fill);
-		$pdf->addTextWrap(460,$YPos,55,$FontSize,$FormatedDueDate,'right',0,$fill);				
+		$pdf->addTextWrap(460,$YPos,55,$FontSize,$FormatedDueDate,'right',0,$fill);
 		$pdf->addTextWrap(515,$YPos,50,$FontSize,$FormatedMRPDate,'right',0,$fill);
 
 		if ($YPos < $Bottom_Margin + $line_height){
@@ -125,13 +136,13 @@ If (isset($_POST['PrintPDF'])) {
 			header('Expires: 0');
 			header('Cache-Control: private, post-check=0, pre-check=0');
 			header('Pragma: public');
-	
+
 			$pdf->Output('MRPRescedules.pdf', 'I');
 	}
 */
     $pdf->OutputD($_SESSION['DatabaseName'] . '_MRPReschedules_' . date('Y-m-d').'.pdf');//UldisN
     $pdf->__destruct(); //UldisN
-	
+
 } else { /*The option to print PDF was not hit so display form */
 
 	$title=_('MRP Reschedule Reporting');
@@ -171,7 +182,7 @@ $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['c
 $YPos -=$line_height;
 
 $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('MRP Reschedule Report'));
-$pdf->addTextWrap($Page_Width-$Right_Margin-115,$YPos,160,$FontSize,_('Printed') . ': ' . 
+$pdf->addTextWrap($Page_Width-$Right_Margin-115,$YPos,160,$FontSize,_('Printed') . ': ' .
      Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber);
 $YPos -=$line_height;
 $pdf->addTextWrap($Left_Margin,$YPos,70,$FontSize,_('Selection:'));
