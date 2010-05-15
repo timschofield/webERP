@@ -50,24 +50,65 @@ function getMsg($Msg,$Type='info',$Prefix=''){
 	return '<DIV class="'.$Class.'"><B>' . $Prefix . '</B> : ' .$Msg . '</DIV>';
 }//getMsg
 
-function IsEmailAddress($TestEmailAddress){
+function IsEmailAddress($email){
 
-/*thanks to Gavin Sharp for this regular expression to test validity of email addresses */
-
-	if (function_exists('preg_match')){
-		if(preg_match("/^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$/", $TestEmailAddress)){
-			return true;
-		} else {
-			return false;
-		}
-	} else {
-		if (strlen($TestEmailAddress)>5 AND strstr($TestEmailAddress,'@')>2 AND (strstr($TestEmailAddress,'.co')>3 OR strstr($TestEmailAddress,'.org')>3 OR strstr($TestEmailAddress,'.net')>3 OR strstr($TestEmailAddress,'.edu')>3 OR strstr($TestEmailAddress,'.biz')>3)){
-			return true;
-		} else {
-			return false;
-		}
+	$atIndex = strrpos ($email, "@");
+	if ($atIndex === false)
+	{
+	    return  false;	// No @ sign is not acceptable.
 	}
+
+	if (preg_match('/\\.\\./', $email))
+	    return  false;	// > 1 consecutive dot is not allowed.
+
+	//  Check component length limits
+	$domain = substr ($email, $atIndex+1);
+	$local = substr ($email, 0, $atIndex);
+	$localLen = strlen ($local);
+	$domainLen = strlen ($domain);
+	if ($localLen < 1 || $localLen > 64)
+	{
+	    // local part length exceeded
+	    return  false;
+	}
+	if ($domainLen < 1 || $domainLen > 255)
+	{
+	    // domain part length exceeded
+	    return  false;
+	}
+
+	if ($local[0] == '.' || $local[$localLen-1] == '.')
+	{
+	    // local part starts or ends with '.'
+	    return  false;
+	}
+	if (!preg_match ('/^[A-Za-z0-9\\-\\.]+$/', $domain ))
+	{
+	    // character not valid in domain part
+	    return  false;
+	}
+	if (!preg_match ('/^(\\\\.|[A-Za-z0-9!#%&`_=\\/$\'*+?^{}|~.-])+$/',
+		     str_replace ("\\\\", "" ,$local ) ))
+	{
+	    // character not valid in local part unless local part is quoted
+	    if (!preg_match ('/^"(\\\\"|[^"])+"$/',
+					str_replace("\\\\", "", $local) ))
+	    {
+		return  false;
+	    }
+	}
+
+	//  Check for a DNS 'MX' or 'A' record.
+	//  Windows supported from PHP 5.3.0 on - so check.
+	$ret = true;
+	if (version_compare(PHP_VERSION, '5.3.0') >= 0
+		    || strtoupper(substr(PHP_OS, 0, 3) !== 'WIN')) {
+	    $ret = checkdnsrr( $domain, "MX" ) || checkdnsrr( $domain, "A" );
+	}
+
+	return  $ret;
 }
+
 
 
 Function ContainsIllegalCharacters ($CheckVariable) {

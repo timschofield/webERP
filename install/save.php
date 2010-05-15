@@ -4,6 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', "On");
 ini_set('max_execution_time', "180");
 
+require_once('../includes/MiscFunctions.php');
 // Start a session
 if(!defined('SESSION_STARTED')){
 	session_name('ba_session_id');
@@ -108,63 +109,7 @@ function default_dir_mode($temp_dir) {
 	return $default_dir_mode;
 }
 
-function is_valid_email($email) {
-	$atIndex = strrpos ($email, "@");
-	if ($atIndex === false)
-	{
-	    return  false;	// No @ sign is not acceptable.
-	}
 
-	if (preg_match('/\\.\\./', $email))
-	    return  false;	// > 1 consecutive dot is not allowed.
-
-	//  Check component length limits
-	$domain = substr ($email, $atIndex+1);
-	$local = substr ($email, 0, $atIndex);
-	$localLen = strlen ($local);
-	$domainLen = strlen ($domain);
-	if ($localLen < 1 || $localLen > 64)
-	{
-	    // local part length exceeded
-	    return  false;
-	}
-	if ($domainLen < 1 || $domainLen > 255)
-	{
-	    // domain part length exceeded
-	    return  false;
-	}
-
-	if ($local[0] == '.' || $local[$localLen-1] == '.')
-	{
-	    // local part starts or ends with '.'
-	    return  false;
-	}
-	if (!preg_match ('/^[A-Za-z0-9\\-\\.]+$/', $domain ))
-	{
-	    // character not valid in domain part
-	    return  false;
-	}
-	if (!preg_match ('/^(\\\\.|[A-Za-z0-9!#%&`_=\\/$\'*+?^{}|~.-])+$/',
-		     str_replace ("\\\\", "" ,$local ) ))
-	{
-	    // character not valid in local part unless local part is quoted
-	    if (!preg_match ('/^"(\\\\"|[^"])+"$/',
-					str_replace("\\\\", "", $local) ))
-	    {
-		return  false;
-	    }
-	}
-
-	//  Check for a DNS 'MX' or 'A' record.
-	//  Windows supported from PHP 5.3.0 on - so check.
-	$ret = true;
-	if (version_compare(PHP_VERSION, '5.3.0') >= 0
-		    || strtoupper(substr(PHP_OS, 0, 3) !== 'WIN')) {
-	    $ret = checkdnsrr( $domain, "MX" ) || checkdnsrr( $domain, "A" );
-	}
-
-	return  $ret;
-}
 
 if (isset($_POST['path_to_root'])) {
 	$path_to_root = $_POST['path_to_root'];
@@ -258,7 +203,7 @@ if (!file_exists($path_to_root.'/sql/mysql/weberp-demo.sql')){
 if (!isset($_POST['admin_email']) || $_POST['admin_email'] == ''){
 	set_error('Please enter an email for the Administrator account');
 } else {
-	if (is_valid_email($_POST['admin_email'])==false) {
+	if (IsEmailAddress($_POST['admin_email'])==false) {
 		set_error('Please enter a valid email address for the Administrator account');
 	}
 }
