@@ -33,7 +33,10 @@ if (!isset($_POST['CurrAbrev'])){
 echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><br>';
 
 
-$result = DB_query("SELECT stockmaster.description, stockmaster.mbflag FROM stockmaster WHERE stockmaster.stockid='$Item'",$db);
+$result = DB_query("SELECT stockmaster.description, 
+							stockmaster.mbflag 
+					FROM stockmaster 
+					WHERE stockmaster.stockid='$Item'",$db);
 $myrow = DB_fetch_row($result);
 
 if (DB_num_rows($result)==0){
@@ -66,7 +69,8 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-
+	$ZeroDate = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,0,0,0));
+	
 	if (!is_double((double) trim($_POST['Price'])) OR $_POST['Price']=="") {
 		$InputError = 1;
 		prnMsg( _('The price entered must be numeric'),'error');
@@ -75,36 +79,44 @@ if (isset($_POST['submit'])) {
 		$InputError =1;
 		prnMsg (_('The date this price is to take effect from must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 	}
-	if (! Is_Date($_POST['EndDate'])){
+	if (! Is_Date($_POST['EndDate']) AND $_POST['EndDate']!=''){
 		$InputError =1;
 		prnMsg (_('The date this price is be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 	}
-	if (Date1GreaterThanDate2($_POST['StartDate'],$_POST['EndDate'])){
+	if (Date1GreaterThanDate2($_POST['StartDate'],$_POST['EndDate']) AND $_POST['EndDate']!='' AND $_POST['EndDate']!=$ZeroDate){
 		$InputError =1;
+		
+		echo 'Debug - start date ' . $_POST['StartDate'] . ' end date: ' . $_POST['EndDate'];
+		
 		prnMsg (_('The end date is expected to be after the start date, enter an end date after the start date for this price'),'error');
 	}
-	if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['EndDate'])){
+	if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['EndDate']) AND $_POST['EndDate']!='' AND $_POST['EndDate']!=$ZeroDate){
 		$InputError =1;
 		prnMsg(_('The end date is expected to be after today. There is no point entering a new price where the effective date is before today!'),'error');
 	}
-	
+	if (Is_Date($_POST['EndDate'])){
+		$SQLEndDate = FormatDateForSQL($_POST['EndDate']);
+	} else {
+		$SQLEndDate = '0000-00-00';
+	}
 	if (isset($_POST['OldTypeAbbrev']) AND isset($_POST['OldCurrAbrev']) AND strlen($Item)>1 AND $InputError !=1) {
 
 		/* Need to see if there is also a price entered that has an end date after the start date of this price and if so we will need to update it so there is no ambiguity as to which price will be used*/
 		
+		
 		//editing an existing price
 		$sql = "UPDATE prices SET
-									typeabbrev='" . $_POST['TypeAbbrev'] . "',
-									currabrev='" . $_POST['CurrAbrev'] . "',
-									price=" . $_POST['Price'] . ",
-									startdate='" . FormatDateForSQL($_POST['StartDate']) . "',
-									enddate='" . FormatDateForSQL($_POST['EndDate']) . "'
-								WHERE prices.stockid='$Item'
-								AND startdate='" .$_POST['OldStartDate'] . "'
-								AND enddate ='" . $_POST['OldEndDate'] . "'
-								AND prices.typeabbrev='" . $_POST['OldTypeAbbrev'] . "'
-								AND prices.currabrev='" . $_POST['OldCurrAbrev'] . "'
-								AND prices.debtorno=''";
+					typeabbrev='" . $_POST['TypeAbbrev'] . "',
+					currabrev='" . $_POST['CurrAbrev'] . "',
+					price=" . $_POST['Price'] . ",
+					startdate='" . FormatDateForSQL($_POST['StartDate']) . "',
+					enddate='" . $SQLEndDate . "'
+				WHERE prices.stockid='$Item'
+				AND startdate='" .$_POST['OldStartDate'] . "'
+				AND enddate ='" . $_POST['OldEndDate'] . "'
+				AND prices.typeabbrev='" . $_POST['OldTypeAbbrev'] . "'
+				AND prices.currabrev='" . $_POST['OldCurrAbrev'] . "'
+				AND prices.debtorno=''";
 
 		$ErrMsg = _('Could not be update the existing prices');
 		$result = DB_query($sql,$db,$ErrMsg);
@@ -118,22 +130,22 @@ if (isset($_POST['submit'])) {
 	/*Selected price is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new price form */
 
 		$sql = "INSERT INTO prices (stockid,
-											typeabbrev,
-											currabrev,
-											startdate,
-											enddate,
-											price)
-									VALUES ('$Item',
-										'" . $_POST['TypeAbbrev'] . "',
-										'" . $_POST['CurrAbrev'] . "',
-										'" . FormatDateForSQL($_POST['StartDate']) . "',
-										'" . FormatDateForSQL($_POST['EndDate']). "',
-										" . $_POST['Price'] . ")";
-			$ErrMsg = _('The new price could not be added');
-			$result = DB_query($sql,$db,$ErrMsg);
-			
-			ReSequenceEffectiveDates ($Item, $_POST['TypeAbbrev'], $_POST['CurrAbrev'], $db) ;
-			prnMsg(_('The new price has been inserted'),'success');
+									typeabbrev,
+									currabrev,
+									startdate,
+									enddate,
+									price)
+							VALUES ('$Item',
+								'" . $_POST['TypeAbbrev'] . "',
+								'" . $_POST['CurrAbrev'] . "',
+								'" . FormatDateForSQL($_POST['StartDate']) . "',
+								'" . $SQLEndDate. "',
+								" . $_POST['Price'] . ")";
+		$ErrMsg = _('The new price could not be added');
+		$result = DB_query($sql,$db,$ErrMsg);
+		
+		ReSequenceEffectiveDates ($Item, $_POST['TypeAbbrev'], $_POST['CurrAbrev'], $db) ;
+		prnMsg(_('The new price has been inserted'),'success');
 	}
 	unset($_POST['Price']);
 	unset($_POST['StartDate']);
@@ -195,7 +207,11 @@ if ($InputError ==0){
 			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
-
+		if ($myrow['enddate']=='0000-00-00'){
+			$EndDateDisplay = _('No End Date');
+		} else {
+			$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
+		}
 		/*Only allow access to modify prices if securiy token 5 is allowed */
 		if (in_array(5,$_SESSION['AllowedPageSecurityTokens'])) {
 
@@ -210,7 +226,7 @@ if ($InputError ==0){
 						$myrow['sales_type'],
 						$myrow['price'],
 						ConvertSQLDate($myrow['startdate']),
-						ConvertSQLDate($myrow['enddate']),
+						$EndDateDisplay,
 						$_SERVER['PHP_SELF'],
 						SID,
 						$myrow['stockid'],
@@ -237,7 +253,7 @@ if ($InputError ==0){
 				$myrow['sales_type'],
 				$myrow['price'],
 				ConvertSQLDate($myrow['startdate']),
-				ConvertSQLDate($myrow['enddate']));
+				$EndDateDisplay;
 		}
 
 	}
@@ -257,7 +273,11 @@ if ($InputError ==0){
 		$_POST['TypeAbbrev'] = $_GET['TypeAbbrev'];
 		$_POST['Price'] = $_GET['Price'];
 		$_POST['StartDate'] = ConvertSQLDate($_GET['StartDate']);
-		$_POST['EndDate'] = ConvertSQLDate($_GET['EndDate']);
+		if ($_GET['EndDate']==''){
+			$_POST['EndDate'] ='';
+		} else {
+			$_POST['EndDate'] = ConvertSQLDate($_GET['EndDate']);		
+		}
 	}
 
 	$SQL = "SELECT currabrev, currency FROM currencies";
@@ -297,7 +317,7 @@ if ($InputError ==0){
 	}
 	
 	if (!isset($_POST['EndDate'])){
-		$_POST['EndDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,12,31,(Date('y')+20)));
+		$_POST['EndDate'] = '';
 	}
 	echo '<tr><td>' . _('Price Effective From Date')  . ':</td>
 				<td><input type=text name="StartDate" value="' . $_POST['StartDate'] . '"></td></tr>';
@@ -330,25 +350,30 @@ include('includes/footer.inc');
 
 function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 	
+	/*This is quite complicated - the idea is that prices set up should be unique and there is no way two prices could be returned as valid - when getting a price in includes/GetPrice.inc the logic is to first look for a price of the salestype/currency within the effective start and end dates - then if not get the price with a start date prior but a blank end date (the default price). We would not want two prices where one price falls inside another effective date range except in the case of a blank end date - ie no end date - the default price for the currency/salestype. 
+	I first thought that we would need to update the previous default price (blank end date), when a new default price is entered, to have an end date of the startdate of this new default price less 1 day - but this is  converting a default price into a special price which could result in having two special prices over the same date range - best to leave it unchanged and use logic in the GetPrice.inc to ensure the correct default price is returned
+	*/			 
+	//this is just the case where debtorno='' - see the Prices_Customer.php script for customer special prices
 		$SQL = "SELECT price, 
-										startdate,
-										enddate 
+						startdate,
+						enddate 
 						FROM prices 
 						WHERE debtorno='' 
 						AND stockid='" . $Item . "'
 						AND currabrev='" . $CurrAbbrev . "'
 						AND typeabbrev='" . $PriceList . "'
+						AND enddate <>'0000-00-00'
 						ORDER BY startdate, enddate";
 		$result = DB_query($SQL,$db);
 		$NextStartDate = Date($_SESSION['DefaultDateFormat']);
 		unset($EndDate);
 		unset($NextStartDate);
-		while ($myrow = DB_fetch_array($result)){
-			
+		while ($myrow = DB_fetch_array($result)){		
 			if (isset($NextStartDate)){
 				if (Date1GreaterThanDate2(ConvertSQLDate($myrow['startdate']),$NextStartDate)){
 					$NextStartDate = ConvertSQLDate($myrow['startdate']);
-					if (isset($EndDate)) {
+					//Only if the previous enddate is after the new start date do we need to look at updates
+					if (Date1GreaterThanDate2(ConvertSQLDate($EndDate),ConvertSQLDate($myrow['startdate']))) {
 						/*Need to make the end date the new start date less 1 day */
 						$SQL = "UPDATE prices SET enddate = '" . FormatDateForSQL(DateAdd($NextStartDate,'d',-1))  . "'
 										WHERE stockid ='" .$Item . "'
@@ -367,7 +392,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 			$StartDate = $myrow['startdate'];
 			$EndDate = $myrow['enddate'];
 			$Price = $myrow['price'];
-		}
-}
+		} // end of loop around all prices
+} // end function ReSequenceEffectiveDates
 
 ?>

@@ -248,10 +248,13 @@ if (!isset($AllowAnyone)){
 		include($PathPrefix . 'includes/footer.inc');
 		exit;
 	}
-
-
  }
 
+if (in_array(15, $_SESSION['AllowedPageSecurityTokens'])) {
+	$debug = 1;
+} else {
+	$debug = 0;
+}
 function CryptPass( $Password ) {
     	global $CryptFunction;
     	if ( $CryptFunction == 'sha1' ) {

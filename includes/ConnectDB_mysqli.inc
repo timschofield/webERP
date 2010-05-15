@@ -45,11 +45,11 @@ require_once ($PathPrefix .'includes/MiscFunctions.php');
 //DB wrapper functions to change only once for whole application
 
 function DB_query ($SQL,
-		&$Conn,
-		$ErrorMessage='',
-		$DebugMessage= '',
-		$Transaction=false,
-		$TrapErrors=true){
+					&$Conn,
+					$ErrorMessage='',
+					$DebugMessage= '',
+					$Transaction=false,
+					$TrapErrors=true){
 
 	global $debug;
 	global $PathPrefix;

@@ -19,6 +19,7 @@ define('UL_MAINTENANCE', 5);	/* Maintenance mode - no user logins */
  */
 
 function userLogin($Name, $Password, $db) {
+	
 	if (!isset($_SESSION['AccessLevel']) OR $_SESSION['AccessLevel'] == '' OR
 		(isset($Name) AND $Name != '')) {
 	/* if not logged in */
@@ -113,11 +114,7 @@ function userLogin($Name, $Password, $db) {
 		}
 	}		// End of userid/password check
 	// Run with debugging messages for the system administrator(s) but not anyone else
-	if (in_array(15, $_SESSION['AllowedPageSecurityTokens'])) {
-		$debug = 1;
-	} else {
-		$debug = 0;
-	}
+	
 	return   UL_OK;		    /* All is well */
 }
 
