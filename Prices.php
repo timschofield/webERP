@@ -69,7 +69,7 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	$ZeroDate = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,0,0,0));
+	// This gives some date in 1999?? $ZeroDate = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,0,0,0));
 	
 	if (!is_double((double) trim($_POST['Price'])) OR $_POST['Price']=="") {
 		$InputError = 1;
@@ -83,14 +83,11 @@ if (isset($_POST['submit'])) {
 		$InputError =1;
 		prnMsg (_('The date this price is be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 	}
-	if (Date1GreaterThanDate2($_POST['StartDate'],$_POST['EndDate']) AND $_POST['EndDate']!='' AND $_POST['EndDate']!=$ZeroDate){
+	if (Date1GreaterThanDate2($_POST['StartDate'],$_POST['EndDate']) AND $_POST['EndDate']!=''){
 		$InputError =1;
-		
-		echo 'Debug - start date ' . $_POST['StartDate'] . ' end date: ' . $_POST['EndDate'];
-		
 		prnMsg (_('The end date is expected to be after the start date, enter an end date after the start date for this price'),'error');
 	}
-	if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['EndDate']) AND $_POST['EndDate']!='' AND $_POST['EndDate']!=$ZeroDate){
+	if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['EndDate']) AND $_POST['EndDate']!=''){
 		$InputError =1;
 		prnMsg(_('The end date is expected to be after today. There is no point entering a new price where the effective date is before today!'),'error');
 	}
@@ -253,7 +250,7 @@ if ($InputError ==0){
 				$myrow['sales_type'],
 				$myrow['price'],
 				ConvertSQLDate($myrow['startdate']),
-				$EndDateDisplay;
+				$EndDateDisplay);
 		}
 
 	}

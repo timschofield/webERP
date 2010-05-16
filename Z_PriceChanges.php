@@ -10,6 +10,8 @@ include('includes/header.inc');
 
 echo '<br>' . _('This page updates already existing prices for a specified sales type (price list)') . '. ' . _('Choose between updating only customer special prices where the customer is set up under the price list selected, or all prices under the sales type or just specific prices for a customer for the stock category selected');
 
+prnMsg (_('This script takes no account of start and end dates of prices and updates all historical prices as well as current prices - better to use new scripts under Inventory -> Maintenance'),'warn');
+
 echo "<form method='POST' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 
 $SQL = 'SELECT sales_type, typeabbrev FROM salestypes';
@@ -131,7 +133,7 @@ if (isset($_POST['UpdatePrices']) AND isset($_POST['StkCat'])){
 		}
 
 		$result = DB_query($sql,$db);
-                $ErrMsg =_('Error updating prices for') . ' ' . $myrow['stockid'] . ' ' . _('because');
+        $ErrMsg =_('Error updating prices for') . ' ' . $myrow['stockid'] . ' ' . _('because');
 		prnMsg(_('Updating prices for') . ' ' . $myrow['stockid'],'info');
 	}
 

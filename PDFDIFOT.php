@@ -265,18 +265,7 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Total number 
 $YPos-=$line_height;
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('DIFOT') . ' ' . number_format((1-($TotalDiffs/$myrow[0])) * 100,2) . '%', 'left');
 
-/* UldisN
-$pdfcode = $pdf->output();
-$len = strlen($pdfcode);
-header('Content-type: application/pdf');
-header('Content-Length: ' . $len);
-header('Content-Disposition: inline; filename=DIFOT.pdf');
-header('Expires: 0');
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
 
-$pdf->stream();
-*/
 $ReportFileName = $_SESSION['DatabaseName'] . '_DIFOT_' . date('Y-m-d').'.pdf';
 $pdf->OutputD($ReportFileName);//UldisN
 $pdf->__destruct(); //UldisN

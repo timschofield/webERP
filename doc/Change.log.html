@@ -1,5 +1,9 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p></p>
+<p>16/5/10 Phil: reworked PDFPriceList to use the new effective dates fields and print out effective prices as at a specified date - showing effective dates on the report - also ditched includes/PDFPriceListPageHeader.php in favour of a PageHeader() function inside PDFPriceList.php. Also made the script work with tcpdf - not sure how it was missed before?</p>
+<p>16/5/10 Phil: reworked PricesBasedOnMarkUp.php to insert new prices with effectivity dates and update the prices where effectivity dates specified.</p>
+<p>16/5/10 Phil: reworked PricesByCost.php this was bit of a dodgy script - well I found it hard to follow - in the words of Frank Sinatra - I did it my way! Also built in effectivity dates to display and ensure correct prices updated now the primary key of prices is changed.</p>
+<p>16/5/10 Phil: Wrote up the manual so that the logic of pricing with effective dates is explained</p>
 <p>15/5/10 Phil: Used Lindsay/Ngaraj's nice email address checking function to replace the existing function in MiscFunctions.php and includes MiscFunctions.php in install/save.php to avoid duplication of the function</p>
 <p>15/5/10 Phil: $debug variable in UserLogin.php was only set on first login - not subsequent page calls (its not a session variable) - moved it back into session.inc so that full info about bugs is available to sysadmins
 <p>15/5/10 Phil: GetPrices.inc Prices.php and Prices_Customer.php - modified to allow default prices - with no end dates - reducing requirement to administer - also updated Prices section of the manual

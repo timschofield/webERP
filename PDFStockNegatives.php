@@ -60,29 +60,7 @@ do {
 	}
 
 } while ($NegativesRow = DB_fetch_array($result));
-/*
-$pdfcode = $pdf->output();
-$len = strlen($pdfcode);
 
-
-if ($len<=10){
-	include('includes/header.inc');
-	echo '<p>';
-	prnMsg( _('There was no negative stocks to print out'), 'warn');
-	echo '<br><a href="' . $rootpath. '/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
-	include('includes/footer.inc');
-	exit;
-} else {
-	header('Content-type: application/pdf');
-	header('Content-Length: ' . $len);
-	header('Content-Disposition: inline; filename=NegativeStocks.pdf');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
-
-	$pdf->Output('PDFStockNegatives.pdf', 'I');
-}
-*/
 $pdf->OutputD($_SESSION['DatabaseName'] . '_NegativeStocks_' . date('Y-m-d') . '.pdf');//UldisN
 $pdf->__destruct(); //UldisN
 ?>
