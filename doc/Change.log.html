@@ -1,5 +1,6 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p></p>
+<P>16/5/10 Phil: reworked PDFRemittanceAdvices.php - somehow missed from tcpdf work to print utf-8 pdfs</p>
 <p>16/5/10 Phil: reworked PDFPriceList to use the new effective dates fields and print out effective prices as at a specified date - showing effective dates on the report - also ditched includes/PDFPriceListPageHeader.php in favour of a PageHeader() function inside PDFPriceList.php. Also made the script work with tcpdf - not sure how it was missed before?</p>
 <p>16/5/10 Phil: reworked PricesBasedOnMarkUp.php to insert new prices with effectivity dates and update the prices where effectivity dates specified.</p>
 <p>16/5/10 Phil: reworked PricesByCost.php this was bit of a dodgy script - well I found it hard to follow - in the words of Frank Sinatra - I did it my way! Also built in effectivity dates to display and ensure correct prices updated now the primary key of prices is changed.</p>

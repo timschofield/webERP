@@ -10,16 +10,7 @@ If ((isset($_POST['PrintPDF']))
 			AND strlen($_POST['FromCriteria'])>=1
 			AND isset($_POST['ToCriteria'])
 			AND strlen($_POST['ToCriteria'])>=1)	{
-		
-/*then print the report */
-
-	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title',_('Remmitance Advice'));
-	$pdf->addInfo('Subject',_('Remittance Advice') . ' - ' . _('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' ' . _('and Paid On') . ' ' .  $_POST['PaymentDate']);
-
-	$line_height=12;
-
-  /*Now figure out the invoice less credits due for the Supplier range under review */
+	/*Now figure out the invoice less credits due for the Supplier range under review */
 
 	$sql = "SELECT suppliers.supplierid,
 					suppliers.suppname,
@@ -41,7 +32,24 @@ If ((isset($_POST['PrintPDF']))
 			ORDER BY supplierno";
 
 	$SuppliersResult = DB_query($sql,$db);
+	if (DB_num_rows($SuppliersResult)==0){
+		//then there aint awt to print
+		$title = _('Print Remittance Advices Error');
+		include('includes/header.inc');
+		prnMsg(_('There were no remittance advices to print out for the supplier range and payment date specified'),'warn');
+		echo '<br><a href="'.$_SERVER['PHP_SELF'] .'?' . SID . '">'. _('Back').'</a>';
+		include('includes/footer.inc');
+		exit;		
+	}
+/*then print the report */
 
+	include('includes/PDFStarter.php');
+	$pdf->addInfo('Title',_('Remmitance Advice'));
+	$pdf->addInfo('Subject',_('Remittance Advice') . ' - ' . _('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' ' . _('and Paid On') . ' ' .  $_POST['PaymentDate']);
+
+	$line_height=12;
+
+  
 	$SupplierID ='';
 	$RemittanceAdviceCounter =0;
 	while ($SuppliersPaid = DB_fetch_array($SuppliersResult)){
@@ -102,20 +110,10 @@ If ((isset($_POST['PrintPDF']))
 		PaymentFooter();
 	} /* end while there are supplier payments to retrieve allocations for */
 
-	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
-	header('Content-type: application/pdf');
-	header('Content-Length: ' . $len);
-	header('Content-Disposition: inline; filename=RemittanceAdvice.pdf');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
-
-	$pdf->stream();
-
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
+	
+	$FileName=$_SESSION['DatabaseName']. '_' . _('Remittance_Advices') . '_' . date('Y-m-d').'.pdf';
+	$pdf->OutputD($FileName);
+	$pdf->__destruct();
 
 } else { /*The option to print PDF was not hit */
 
