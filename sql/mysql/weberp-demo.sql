@@ -1057,6 +1057,8 @@ CREATE TABLE `prices` (
   `debtorno` varchar(10) NOT NULL DEFAULT '',
   `price` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `branchcode` varchar(10) NOT NULL DEFAULT '',
+  `startdate` DATE NOT NULL DEFAULT '0000-00-00',
+  `enddate` DATE NOT NULL DEFAULT '9999-12-31',
   PRIMARY KEY (`stockid`,`typeabbrev`,`currabrev`,`debtorno`),
   KEY `CurrAbrev` (`currabrev`),
   KEY `DebtorNo` (`debtorno`),

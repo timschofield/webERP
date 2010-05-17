@@ -1,19 +1,24 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p></p>
-<P>16/5/10 Phil: javascripts/MiscFunctions.js - not my field ... but could not resist adding some indentation - I struggle at the best of times with javascript but this was a shocker to read!! Hope I didnt mess up anything</p>
-<P>16/5/10 Phil: reworked PDFRemittanceAdvices.php - somehow missed from tcpdf work to print utf-8 pdfs</p>
-<p>16/5/10 Phil: reworked PDFPriceList to use the new effective dates fields and print out effective prices as at a specified date - showing effective dates on the report - also ditched includes/PDFPriceListPageHeader.php in favour of a PageHeader() function inside PDFPriceList.php. Also made the script work with tcpdf - not sure how it was missed before?</p>
-<p>16/5/10 Phil: reworked PricesBasedOnMarkUp.php to insert new prices with effectivity dates and update the prices where effectivity dates specified.</p>
-<p>16/5/10 Phil: reworked PricesByCost.php this was bit of a dodgy script - well I found it hard to follow - in the words of Frank Sinatra - I did it my way! Also built in effectivity dates to display and ensure correct prices updated now the primary key of prices is changed.</p>
-<p>16/5/10 Phil: Wrote up the manual so that the logic of pricing with effective dates is explained</p>
-<p>15/5/10 Phil: Used Lindsay/Ngaraj's nice email address checking function to replace the existing function in MiscFunctions.php and includes MiscFunctions.php in install/save.php to avoid duplication of the function</p>
-<p>15/5/10 Phil: $debug variable in UserLogin.php was only set on first login - not subsequent page calls (its not a session variable) - moved it back into session.inc so that full info about bugs is available to sysadmins
-<p>15/5/10 Phil: GetPrices.inc Prices.php and Prices_Customer.php - modified to allow default prices - with no end dates - reducing requirement to administer - also updated Prices section of the manual
+<P>16/05/10 Phil: javascripts/MiscFunctions.js - not my field ... but could not resist adding some indentation - I struggle at the best of times with javascript but this was a shocker to read!! Hope I didnt mess up anything</p>
+<P>16/05/10 Phil: reworked PDFRemittanceAdvices.php - somehow missed from tcpdf work to print utf-8 pdfs</p>
+<p>16/05/10 Phil: reworked PDFPriceList to use the new effective dates fields and print out effective prices as at a specified date - showing effective dates on the report - also ditched includes/PDFPriceListPageHeader.php in favour of a PageHeader() function inside PDFPriceList.php. Also made the script work with tcpdf - not sure how it was missed before?</p>
+<p>16/05/10 Phil: reworked PricesBasedOnMarkUp.php to insert new prices with effectivity dates and update the prices where effectivity dates specified.</p>
+<p>16/05/10 Phil: reworked PricesByCost.php this was bit of a dodgy script - well I found it hard to follow - in the words of Frank Sinatra - I did it my way! Also built in effectivity dates to display and ensure correct prices updated now the primary key of prices is changed.</p>
+<p>16/05/10 Phil: Wrote up the manual so that the logic of pricing with effective dates is explained</p>
+<p>15/05/10 Phil: Used Lindsay/Ngaraj's nice email address checking function to replace the existing function in MiscFunctions.php and includes MiscFunctions.php in install/save.php to avoid duplication of the function</p>
+<p>15/05/10 Phil: $debug variable in UserLogin.php was only set on first login - not subsequent page calls (its not a session variable) - moved it back into session.inc so that full info about bugs is available to sysadmins
+<p>15/05/10 Phil: GetPrices.inc Prices.php and Prices_Customer.php - modified to allow default prices - with no end dates - reducing requirement to administer - also updated Prices section of the manual
 <p>11/05/10 Tim: Exit MRP scripts gracefully if no MRP calculation has been done.</p>
 <p>08/05/10 Lindsay: API was broken after adding a test for global variable $DatabaseName in ConnectDB_mysql* for this variable being set and using it as DB name if so.  The variable of that name in the api_php.php has been changed to $api_DatabaseName.</p>
 <p>08/05/10 Phil: GetPrices.inc now uses the new price startdate and enddate to return the price which falls within the date range base on the current date. Changes to Prices.php and Prices_Customer.php to allow entry of effective from and effective to dates and updating/deleting of prices with appropriate error trapping and rescheduling of enddates where start and end dates would otherwise overlap.</p>
 <p>08/05/10 Phil: Found a bug in Date1GreaterThanDate2 function (in includes/DateFunction.inc) with SESSION['DefaultDateFormat'] = 'd/m/Y' this function had been broken  </p>
 <p>06/05/10 Lindsay: Tracker 2929564: dates mangled via QuicK Entry format</p>
+<p>06/05/10 Matt Taylor: upgrade3.11.1-3.12.sql : Added default startdate to prices table.</p>
+<p>06/05/10 Matt Taylor: weberp-demo.sql : Added startdate and enddate columns to prices table.</p>
+<p>06/05/10 Matt Taylor: weberp-new.sql : Added startdate and enddate columns to prices table.</p>
+<p>06/05/10 Matt Taylor: WorkOrderEntry.php : Added feature to convert planned work orders.</p>
+<p>06/05/10 Matt Taylor: MRPPlannedWorkOrders.php : Added feature to convert planned work orders.</p>
 <p>05/05/10 Tim: Fix javascript errors in date picker</p>
 <p>05/05/10 SiteMe: Update to allow RecurringSalesOrdersProcess.php to run via cron</p>
 <p>05/05/10 SiteMe: Correct statements layout problems caused by the newer version of tcpdf</p>

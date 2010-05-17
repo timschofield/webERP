@@ -8,32 +8,51 @@ include('includes/session.inc');
 $title = _('Work Order Entry');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
- echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
+
+
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
+
+if (isset($_GET['ReqDate'])){
+	$ReqDate = $_GET['ReqDate'];
+}
+if (isset($_GET['loccode'])){
+	$LocCode = $_GET['loccode'];
+}
+
+// check for new or modify condition
 if (isset($_REQUEST['WO']) and $_REQUEST['WO']!=''){
+	// modify
 	$_POST['WO'] = $_REQUEST['WO'];
     $EditingExisting = true;
 } else {
+	// new
     $_POST['WO'] = GetNextTransNo(40,$db);
-    $InsWOResult = DB_query("INSERT INTO workorders (wo,
-                                                     loccode,
-                                                     requiredby,
-                                                     startdate)
-                                     VALUES (" . $_POST['WO'] . ",
-                                            '" . $_SESSION['UserStockLocation'] . "',
-                                            '" . Date('Y-m-d') . "',
-                                            '" . Date('Y-m-d'). "')",
-                              $db);
+    $sql = "INSERT INTO workorders (wo,
+							 loccode,
+							 requiredby,
+							 startdate)
+			 VALUES (" . $_POST['WO'] . ",
+					'" . (($LocCode) ? $LocCode : $_SESSION['UserStockLocation']) . "',
+					'" . (($ReqDate) ? $ReqDate : Date('Y-m-d')) . "',
+					'" . Date('Y-m-d'). "')";
+    $InsWOResult = DB_query($sql,$db);
 }
+
 
 if (isset($_GET['NewItem'])){
 	$NewItem = $_GET['NewItem'];
 }
-
+if (isset($_GET['ReqQty'])){
+	$ReqQty = $_GET['ReqQty'];
+}
 if (!isset($_POST['StockLocation'])){
-	if (isset($_SESSION['UserStockLocation'])){
+	if (isset($LocCode)){
+		$_POST['StockLocation']=$LocCode;
+	} elseif (isset($_SESSION['UserStockLocation'])){
 		$_POST['StockLocation']=$_SESSION['UserStockLocation'];
 	}
 }
+
 
 if (isset($_POST['Search'])){
 
@@ -159,7 +178,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 			if ($CheckItemRow['controlled']==1 AND $_SESSION['DefineControlledOnWOEntry']==1){ //need to add serial nos or batches to determine quantity
 				$EOQ = 0;
 			} else {
-				$EOQ = $CheckItemRow['eoq'];
+				$EOQ = ($ReqQty) ? $ReqQty : $CheckItemRow['eoq'];
 			}
 	  		if ($CheckItemRow['mbflag']!='M'){
 	  			prnMsg(_('The item selected cannot be added to a work order because it is not a manufactured item'),'warn');

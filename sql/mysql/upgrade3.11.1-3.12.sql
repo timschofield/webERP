@@ -153,7 +153,11 @@ CREATE TABLE IF NOT EXISTS `pickinglistdetails` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `systypes` VALUES(19, 'Picking List', 0);
-ALTER TABLE `prices` ADD `startdate` DATE NOT NULL , ADD `enddate` DATE NOT NULL;
+ALTER TABLE `prices` ADD `startdate` DATE NOT NULL DEFAULT '0000-00-00' , ADD `enddate` DATE NOT NULL DEFAULT '9999-12-31';
 ALTER TABLE prices DROP PRIMARY KEY ,
 ADD PRIMARY KEY ( `stockid` , `typeabbrev` , `currabrev` , `debtorno` , `startdate` , `enddate` ) ;
+
+UPDATE prices SET startdate='1999-01-01', enddate='9999-12-31';
+
+ALTER TABLE stockcheckfreeze ADD COLUMN stockcheckdate date NOT NULL;
 UPDATE prices SET startdate='1999-01-01';

@@ -16,23 +16,14 @@ if (DB_num_rows($result)==0) {
 	include('includes/footer.inc');
 	exit;
 }
-if (isset($_POST['PrintPDF'])) {
+if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 
-	include('includes/PDFStarter.php');
-
-	$pdf->addInfo('Title',_('MRP Planned Work Orders Report'));
-	$pdf->addInfo('Subject',_('MRP Planned Work Orders'));
-
-	$FontSize=9;
-	$PageNumber=1;
-	$line_height=12;
-	$Xpos = $Left_Margin+1;
 	$wheredate = " ";
 	$reportdate = " ";
 	if (is_Date($_POST['cutoffdate'])) {
                $formatdate = FormatDateForSQL($_POST['cutoffdate']);
                $wheredate = ' AND duedate <= "' . $formatdate . '" ';
-               $reportdate = _(' Through  ') . Format_Date($_POST['cutoffdate']);
+               $reportdate = _(' Through  ') . $_POST['cutoffdate'];
 	}
 
 	if ($_POST['Consolidation'] == 'None') {
@@ -122,7 +113,7 @@ if (isset($_POST['PrintPDF'])) {
 	   exit;
 	}
 	if (DB_num_rows($result)==0){ //then there's nothing to print
-		$title = _('Print MRP Planned Work Orders');
+		$title = _('MRP Planned Work Orders');
 		include('includes/header.inc');
 		prnMsg(_('There were no items with demand greater than supply'),'info');
 		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
@@ -130,108 +121,200 @@ if (isset($_POST['PrintPDF'])) {
 		exit;
 	}
 
-	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-	            $Page_Width,$Right_Margin,$_POST['Consolidation'],$reportdate);
 
-    $Total_EXTcost=0;
-    $Partctr = 0;
-    $fill = false;
-    $pdf->SetFillColor(224,235,255);  // Defines color to make alternating lines highlighted
-    $FontSize=8;
-    $holdpart = " ";
-    $holddescription = " ";
-    $holdmbflag = " ";
-    $holdcost = " ";
-    $holddecimalplaces = 0;
-    $totalpartqty = 0;
-    $totalpartcost = 0;
 
-	While ($myrow = DB_fetch_array($result,$db)){
-			$YPos -=$line_height;
+	If (isset($_POST['PrintPDF'])) { // Print planned work orders
 
-			// Use to alternate between lines with transparent and painted background
-			if ($_POST['Fill'] == 'yes'){
-				$fill=!$fill;
-			}
+		include('includes/PDFStarter.php');
 
-			// Print information on part break
-			if ($Partctr > 0 & $holdpart != $myrow['part']) {
-				$pdf->addTextWrap(50,$YPos,130,$FontSize,$holddescription,'',0,$fill);
-				$pdf->addTextWrap(180,$YPos,40,$FontSize,_('Unit Cost: '),'center',0,$fill);
-				$pdf->addTextWrap(220,$YPos,40,$FontSize,number_format($holdcost,2),'right',0,$fill);
-				$pdf->addTextWrap(260,$YPos,50,$FontSize,number_format($totalpartqty,
-				                                    $holddecimalplaces),'right',0,$fill);
-				$pdf->addTextWrap(310,$YPos,60,$FontSize,number_format($totalpartcost,2),'right',0,$fill);
-				$pdf->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$fill);
-				$pdf->addTextWrap(400,$YPos,15,$FontSize,$holdmbflag,'right',0,$fill);
-				$totalpartcost = 0;
-				$totalpartqty = 0;
-				$YPos -= (2*$line_height);
-			}
+		$pdf->addInfo('Title',_('MRP Planned Work Orders Report'));
+		$pdf->addInfo('Subject',_('MRP Planned Work Orders'));
 
-			// Parameters for addTextWrap are defined in /includes/class.pdf.php
-			// 1) X position 2) Y position 3) Width
-			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
-			// and False to set to transparent
-			$FormatedSupDueDate = ConvertSQLDate($myrow['duedate']);
-			$FormatedSupMRPDate = ConvertSQLDate($myrow['mrpdate']);
-			$extcost = $myrow['supplyquantity'] * $myrow['computedcost'];
-			$pdf->addTextWrap($Left_Margin,$YPos,110,$FontSize,$myrow['part'],'',0,$fill);
-			$pdf->addTextWrap(150,$YPos,50,$FontSize,$FormatedSupDueDate,'right',0,$fill);
-			$pdf->addTextWrap(200,$YPos,60,$FontSize,$FormatedSupMRPDate,'right',0,$fill);
-			$pdf->addTextWrap(260,$YPos,50,$FontSize,number_format($myrow['supplyquantity'],
-			                                          $myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(310,$YPos,60,$FontSize,number_format($extcost,2),'right',0,$fill);
-			if ($_POST['Consolidation'] == 'None'){
-				$pdf->addTextWrap(370,$YPos,80,$FontSize,$myrow['ordertype'],'right',0,$fill);
-				$pdf->addTextWrap(450,$YPos,80,$FontSize,$myrow['orderno'],'right',0,$fill);
-			} else {
-				$pdf->addTextWrap(370,$YPos,100,$FontSize,$myrow['consolidatedcount'],'right',0,$fill);
-			};
-			$holddescription = $myrow['description'];
-			$holdpart = $myrow['part'];
-			$holdmbflag = $myrow['mbflag'];
-			$holdcost = $myrow['computedcost'];
-			$holddecimalplaces = $myrow['decimalplaces'];
-			$totalpartcost += $extcost;
-			$totalpartqty += $myrow['supplyquantity'];
+		$FontSize=9;
+		$PageNumber=1;
+		$line_height=12;
+		$Xpos = $Left_Margin+1;
 
-			$Total_Extcost += $extcost;
-			$Partctr++;
+		PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
+					$Page_Width,$Right_Margin,$_POST['Consolidation'],$reportdate);
 
-			if ($YPos < $Bottom_Margin + $line_height){
+		$Total_EXTcost=0;
+		$Partctr = 0;
+		$fill = false;
+		$pdf->SetFillColor(224,235,255);  // Defines color to make alternating lines highlighted
+		$FontSize=8;
+		$holdpart = " ";
+		$holddescription = " ";
+		$holdmbflag = " ";
+		$holdcost = " ";
+		$holddecimalplaces = 0;
+		$totalpartqty = 0;
+		$totalpartcost = 0;
+
+		While ($myrow = DB_fetch_array($result,$db)){
+				$YPos -=$line_height;
+
+				// Use to alternate between lines with transparent and painted background
+				if ($_POST['Fill'] == 'yes'){
+					$fill=!$fill;
+				}
+
+				// Print information on part break
+				if ($Partctr > 0 & $holdpart != $myrow['part']) {
+					$pdf->addTextWrap(50,$YPos,130,$FontSize,$holddescription,'',0,$fill);
+					$pdf->addTextWrap(180,$YPos,40,$FontSize,_('Unit Cost: '),'center',0,$fill);
+					$pdf->addTextWrap(220,$YPos,40,$FontSize,number_format($holdcost,2),'right',0,$fill);
+					$pdf->addTextWrap(260,$YPos,50,$FontSize,number_format($totalpartqty,
+														$holddecimalplaces),'right',0,$fill);
+					$pdf->addTextWrap(310,$YPos,60,$FontSize,number_format($totalpartcost,2),'right',0,$fill);
+					$pdf->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$fill);
+					$pdf->addTextWrap(400,$YPos,15,$FontSize,$holdmbflag,'right',0,$fill);
+					$totalpartcost = 0;
+					$totalpartqty = 0;
+					$YPos -= (2*$line_height);
+				}
+
+				// Parameters for addTextWrap are defined in /includes/class.pdf.php
+				// 1) X position 2) Y position 3) Width
+				// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
+				// and False to set to transparent
+				$FormatedSupDueDate = ConvertSQLDate($myrow['duedate']);
+				$FormatedSupMRPDate = ConvertSQLDate($myrow['mrpdate']);
+				$extcost = $myrow['supplyquantity'] * $myrow['computedcost'];
+				$pdf->addTextWrap($Left_Margin,$YPos,110,$FontSize,$myrow['part'],'',0,$fill);
+				$pdf->addTextWrap(150,$YPos,50,$FontSize,$FormatedSupDueDate,'right',0,$fill);
+				$pdf->addTextWrap(200,$YPos,60,$FontSize,$FormatedSupMRPDate,'right',0,$fill);
+				$pdf->addTextWrap(260,$YPos,50,$FontSize,number_format($myrow['supplyquantity'],
+														  $myrow['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(310,$YPos,60,$FontSize,number_format($extcost,2),'right',0,$fill);
+				if ($_POST['Consolidation'] == 'None'){
+					$pdf->addTextWrap(370,$YPos,80,$FontSize,$myrow['ordertype'],'right',0,$fill);
+					$pdf->addTextWrap(450,$YPos,80,$FontSize,$myrow['orderno'],'right',0,$fill);
+				} else {
+					$pdf->addTextWrap(370,$YPos,100,$FontSize,$myrow['consolidatedcount'],'right',0,$fill);
+				};
+				$holddescription = $myrow['description'];
+				$holdpart = $myrow['part'];
+				$holdmbflag = $myrow['mbflag'];
+				$holdcost = $myrow['computedcost'];
+				$holddecimalplaces = $myrow['decimalplaces'];
+				$totalpartcost += $extcost;
+				$totalpartqty += $myrow['supplyquantity'];
+
+				$Total_Extcost += $extcost;
+				$Partctr++;
+
+				if ($YPos < $Bottom_Margin + $line_height){
+				   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
+							   $Right_Margin,$_POST['Consolidation'],$reportdate);
+				  // include('includes/MRPPlannedWorkOrdersPageHeader.inc');
+				}
+
+		} /*end while loop */
+		// Print summary information for last part
+		$YPos -=$line_height;
+		$pdf->addTextWrap(40,$YPos,130,$FontSize,$holddescription,'',0,$fill);
+		$pdf->addTextWrap(170,$YPos,50,$FontSize,_('Unit Cost: '),'center',0,$fill);
+		$pdf->addTextWrap(220,$YPos,40,$FontSize,number_format($holdcost,2),'right',0,$fill);
+		$pdf->addTextWrap(260,$YPos,50,$FontSize,number_format($totalpartqty,$holddecimalplaces),'right',0,$fill);
+		$pdf->addTextWrap(310,$YPos,60,$FontSize,number_format($totalpartcost,2),'right',0,$fill);
+		$pdf->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$fill);
+		$pdf->addTextWrap(400,$YPos,15,$FontSize,$holdmbflag,'right',0,$fill);
+		$FontSize =8;
+		$YPos -= (2*$line_height);
+
+		if ($YPos < $Bottom_Margin + $line_height){
 			   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-			               $Right_Margin,$_POST['Consolidation'],$reportdate);
+						   $Right_Margin,$_POST['Consolidation'],$reportdate);
 			  // include('includes/MRPPlannedWorkOrdersPageHeader.inc');
+		}
+		/*Print out the grand totals */
+		$pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,_('Number of Work Orders: '), 'left');
+		$pdf->addTextWrap(150,$YPos,30,$FontSize,$Partctr, 'left');
+		$pdf->addTextWrap(200,$YPos,100,$FontSize,_('Total Extended Cost:'), 'right');
+		$DisplayTotalVal = number_format($Total_Extcost,2);
+		$pdf->addTextWrap(310,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
+
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_MRP_Planned_Work_Orders_' . Date('Y-m-d') . '.pdf');
+		$pdf->__destruct();
+
+
+
+	} else { // Review planned work orders
+
+		$title = _('Review/Convert MRP Planned Work Orders');
+		include('includes/header.inc');
+
+		echo "
+			<br /><br /><form action='MRPConvertWorkOrders.php' method='post'>";
+		echo "<div class='centre'><h3>Conolidation: " . $_POST['Consolidation'] . "</h3></div>";
+		echo "<div class='centre'><h3>Cutoff Date: " . $_POST['cutoffdate'] . "</h3></div>";
+		echo "<table><tr>
+				<th></th>
+				<th>" . _('Code') . "</th>
+				<th>" . _('Description') . "</th>
+				<th>" . _('MRP Date') . "</th>
+				<th>" . _('Due Date') . "</th>
+				<th>" . _('Quantity') . "</th>
+				<th>" . _('Unit Cost') . "</th>
+				<th>" . _('Ext. Cost') . "</th>
+				<th>" . _('Consolidations') . "</th>
+			</tr>";
+
+		$totalpartqty = 0;
+		$totalpartcost = 0;
+		$j=1; //row ID
+		$k=0; //row colour counter
+		While ($myrow = DB_fetch_array($result,$db)){
+
+			// Alternate row color
+			if ($k==1){
+				echo '<tr class="EvenTableRows">';
+				$k=0;
+			} else {
+				echo '<tr class="OddTableRows">';
+				$k++;
 			}
 
-	} /*end while loop */
-	// Print summary information for last part
-	$YPos -=$line_height;
-    $pdf->addTextWrap(40,$YPos,130,$FontSize,$holddescription,'',0,$fill);
-	$pdf->addTextWrap(170,$YPos,50,$FontSize,_('Unit Cost: '),'center',0,$fill);
-	$pdf->addTextWrap(220,$YPos,40,$FontSize,number_format($holdcost,2),'right',0,$fill);
-	$pdf->addTextWrap(260,$YPos,50,$FontSize,number_format($totalpartqty,$holddecimalplaces),'right',0,$fill);
-	$pdf->addTextWrap(310,$YPos,60,$FontSize,number_format($totalpartcost,2),'right',0,$fill);
-	$pdf->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$fill);
-	$pdf->addTextWrap(400,$YPos,15,$FontSize,$holdmbflag,'right',0,$fill);
-	$FontSize =8;
-	$YPos -= (2*$line_height);
+			printf("\n <td><a href='%s/WorkOrderEntry.php?NewItem=%s&ReqQty=%s&ReqDate=%s'>%s</a></td>",
+				$rootpath,
+				$myrow['part'],
+				$myrow['supplyquantity'],
+				ConvertSQLDate($myrow['duedate']),
+				_('Convert')
+			);
+			printf("\n <td>%s <input type='hidden' name='%s_part' value='%s' /></td>", $myrow['part'], $j, $myrow['part']);
+			printf("\n <td>%s</td>", $myrow['description']);
+			printf("\n <td>%s</td>", ConvertSQLDate($myrow['mrpdate']));
+			printf("\n <td>%s</td>", ConvertSQLDate($myrow['duedate']));
+			printf("\n <td class=number>%s</td>", number_format($myrow['supplyquantity'],$myrow['decimalplaces']));
+			printf("\n <td class=number>%.2f</td>", number_format($myrow['computedcost'],2));
+			printf("\n <td class=number>%.2f</td>", number_format($myrow['supplyquantity'] * $myrow['computedcost'],2));
+			printf("\n <td class=number>%s</td>", $myrow['consolidatedcount']);
+			echo "</tr>";
 
-	if ($YPos < $Bottom_Margin + $line_height){
-	       PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-	                   $Right_Margin,$_POST['Consolidation'],$reportdate);
-		  // include('includes/MRPPlannedWorkOrdersPageHeader.inc');
+			$j++;
+			$Total_Extcost += ( $myrow['supplyquantity'] * $myrow['computedcost'] );
+
+		} // end while loop
+
+		// Print out the grand totals
+		printf("
+			<tr><td colspan='4' class='number'>%s %s</td>
+			<td colspan='4' class='number'>%s %s</td></tr></table>
+			",
+			_('Number of Work Orders: '),
+			$j-1,
+			_('Total Extended Cost: '),
+			number_format($Total_Extcost,2)
+		);
+
+		echo "<br /><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		include('includes/footer.inc');
+
 	}
-/*Print out the grand totals */
-    $pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,_('Number of Work Orders: '), 'left');
-    $pdf->addTextWrap(150,$YPos,30,$FontSize,$Partctr, 'left');
-	$pdf->addTextWrap(200,$YPos,100,$FontSize,_('Total Extended Cost:'), 'right');
-	$DisplayTotalVal = number_format($Total_Extcost,2);
-    $pdf->addTextWrap(310,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_MRP_Planned_Work_Orders_' . Date('Y-m-d') . '.pdf');
-	$pdf->__destruct();
+
 
 } else { /*The option to print PDF was not hit so display form */
 
@@ -249,7 +332,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo "<option value='no'>" . _('Plain Print');
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Cut Off Date') . ":</td><td><input type ='text' class=date alt='".$_SESSION['DefaultDateFormat'] ."' name='cutoffdate' size='10' value='".date($_SESSION['DefaultDateFormat'])."'></tr>";
-	echo "</table></br><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
+	echo "</table></br><div class='centre'><input type=submit name='Review' value='" . _('Review') . "'> <input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
 
