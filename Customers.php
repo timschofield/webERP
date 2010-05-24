@@ -88,7 +88,32 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('The Line 6 of the address must be fifteen characters or less long'),'error');
 		$Errors[$i] = 'Address6';
 		$i++;
-	} elseif (!is_numeric($_POST['CreditLimit'])) {
+	}
+	elseif (strlen($_POST['Phone']) >25) {
+		$InputError = 1;
+		prnMsg(_('The telephone number must be 25 characters or less long'),'error');
+		$Errors[$i] = 'Telephone';
+		$i++;
+	}
+	elseif (strlen($_POST['Fax']) >25) {
+		$InputError = 1;
+		prnMsg(_('The fax number must be 25 characters or less long'),'error');
+		$Errors[$i] = 'Fax';
+		$i++;
+	}
+	elseif (strlen($_POST['Email']) >55) {
+		$InputError = 1;
+		prnMsg(_('The email address must be 55 characters or less long'),'error');
+		$Errors[$i] = 'Email';
+		$i++;
+	}
+	elseif (strlen($_POST['Email'])>0 and !IsEmailAddress($_POST['Email'])) {
+		$InputError = 1;
+		prnMsg(_('The email address is not correctly formed'),'error');
+		$Errors[$i] = 'Email';
+		$i++;
+	}
+	elseif (!is_numeric($_POST['CreditLimit'])) {
 		$InputError = 1;
 		prnMsg( _('The credit limit must be numeric'),'error');
 		$Errors[$i] = 'CreditLimit';
@@ -146,6 +171,9 @@ if (isset($_POST['submit'])) {
 					address4='" . $_POST['Address4'] . "',
 					address5='" . $_POST['Address5'] . "',
 					address6='" . $_POST['Address6'] . "',
+					telephone='".$_POST['Phone']."',
+					fax = '".$_POST['Fax']."',
+					email = '".$_POST['Email']."',
 					currcode='" . $_POST['CurrCode'] . "',
 					clientsince='$SQL_ClientSince',
 					holdreason='" . $_POST['HoldReason'] . "',
@@ -177,6 +205,9 @@ if (isset($_POST['submit'])) {
 					address4='" . $_POST['Address4'] . "',
 					address5='" . $_POST['Address5'] . "',
 					address6='" . $_POST['Address6'] . "',
+					telephone='".$_POST['Phone']."',
+					fax = '".$_POST['Fax']."',
+					email = '".$_POST['Email']."',
 					clientsince='$SQL_ClientSince',
 					holdreason='" . $_POST['HoldReason'] . "',
 					paymentterms='" . $_POST['PaymentTerms'] . "',
@@ -220,6 +251,9 @@ if (isset($_POST['submit'])) {
 							address4,
 							address5,
 							address6,
+							telephone,
+							fax,
+							email,
 							currcode,
 							clientsince,
 							holdreason,
@@ -241,6 +275,9 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['Address4'] . "',
 					'" . $_POST['Address5'] . "',
 					'" . $_POST['Address6'] . "',
+					'".$_POST['Phone']."',
+					'".$_POST['Fax']."',
+					'".$_POST['Email']."',
 					'" . $_POST['CurrCode'] . "',
 					'" . $SQL_ClientSince . "',
 					" . $_POST['HoldReason'] . ",
@@ -338,6 +375,9 @@ if(isset($reset)){
 	unset($_POST['Address4']);
 	unset($_POST['Address5']);
 	unset($_POST['Address6']);
+	unset($_POST['Phone']);
+	unset($_POST['Fax']);
+	unset($_POST['Email']);
 	unset($_POST['HoldReason']);
 	unset($_POST['PaymentTerms']);
 	unset($_POST['Discount']);
@@ -403,7 +443,7 @@ if (!isset($DebtorNo)) {
 	$myrow=DB_fetch_row($result);
 	if ($myrow[0]==0) {
 		prnMsg( _('In order to create a new customer you must first set up at least one sales type/price list').'<br />'.
-			_('Click').' '.'<a target="_blank" href="' . $rootpath . '/SalesTypes.php">' . _('here').' ' . '</a>'._('to set up your price lists'),'warning').'<br />';	
+			_('Click').' '.'<a target="_blank" href="' . $rootpath . '/SalesTypes.php">' . _('here').' ' . '</a>'._('to set up your price lists'),'warning').'<br />';
 		$SetupErrors += 1;
 	}
 	$sql='SELECT COUNT(typeid)
@@ -415,13 +455,13 @@ if (!isset($DebtorNo)) {
 			_('Click').' '.'<a target="_blank" href="' . $rootpath . '/CustomerTypes.php">' . _('here').' ' . '</a>'._('to set up your customer types'),'warning');
 		$SetupErrors += 1;
 	}
-	
+
 	if ($SetupErrors>0) {
 		echo '<br /><div class=centre><a href="'.$_SERVER['PHP_SELF'] .'" >'._('Click here to continue').'</a></div>';
 		include('includes/footer.inc');
 		exit;
 	}
-	
+
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
 
 	echo "<input type='Hidden' name='New' value='Yes'>";
@@ -438,6 +478,12 @@ if (!isset($DebtorNo)) {
 
 	echo '<tr><td>' . _('Customer Name') . ':</td>
 		<td><input tabindex=2 type="Text" name="CustName" size=42 maxlength=40></td></tr>';
+	echo '<tr><td>' . _('Telephone') . ':</td>
+		<td><input tabindex=2 type="Text" name="Phone" size=30 maxlength=40></td></tr>';
+	echo '<tr><td>' . _('Facsimile') . ':</td>
+		<td><input tabindex=2 type="Text" name="Fax" size=30 maxlength=40></td></tr>';
+	echo '<tr><td>' . _('Email Address') . ':</td>
+		<td><input tabindex=2 type="Text" name="Email" size=30 maxlength=40></td></tr>';
 	echo '<tr><td>' . _('Address Line 1 (Street)') . ':</td>
 		<td><input tabindex=3 type="Text" name="Address1" size=42 maxlength=40></td></tr>';
 	echo '<tr><td>' . _('Address Line 2 (Suburb/City)') . ':</td>
@@ -465,7 +511,7 @@ if (!isset($DebtorNo)) {
 
                while ($myrow = DB_fetch_array($result)) {
                        echo '<option value="'. $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
-               } //end while loop
+               } //end while loopre
                DB_data_seek($result,0);
 			   echo '</select></td></tr>';
        }
@@ -590,6 +636,9 @@ if (!isset($DebtorNo)) {
 				address4,
 				address5,
 				address6,
+				telephone,
+				fax,
+				email,
 				currcode,
 				salestype,
 				clientsince,
@@ -609,14 +658,12 @@ if (!isset($DebtorNo)) {
 		$ErrMsg = _('The customer details could not be retrieved because');
 		$result = DB_query($sql,$db,$ErrMsg);
 
-
 		$myrow = DB_fetch_array($result);
-
 		/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
 		then display the DebtorNo */
 		if ($_SESSION['AutoDebtorNo']== 0 )  {
 			echo '<tr><td>' . _('Customer Code') . ":</td>
-				<td>" . $DebtorNo . "</td></tr>";
+				<td>" . $DebtorNo. "</td></tr>";
 		}
 		$_POST['CustName'] = $myrow['name'];
 		$_POST['Address1']  = $myrow['address1'];
@@ -625,6 +672,9 @@ if (!isset($DebtorNo)) {
 		$_POST['Address4']  = $myrow['address4'];
 		$_POST['Address5']  = $myrow['address5'];
 		$_POST['Address6']  = $myrow['address6'];
+		$_POST['Phone'] = $myrow['telephone'];
+		$_POST['Fax'] = $myrow['fax'];
+		$_POST['Email'] = $myrow['email'];
 		$_POST['SalesType'] = $myrow['salestype'];
 		$_POST['CurrCode']  = $myrow['currcode'];
 		$_POST['ClientSince'] = ConvertSQLDate($myrow['clientsince']);
@@ -654,6 +704,9 @@ if (!isset($DebtorNo)) {
 	}
 	if (isset($_GET['Modify'])) {
 		echo '<tr><td>' . _('Customer Name') . ':</td><td>' . $_POST['CustName'] . '</td></tr>';
+		echo '<tr><td>' . _('Telephone') . ':</td><td>' . $_POST['Phone'] . '</td></tr>';
+		echo '<tr><td>' . _('Facsimile') . ':</td><td>' . $_POST['Fax'] . '</td></tr>';
+		echo '<tr><td>' . _('Email Address') . ':</td><td>' . $_POST['Email'] . '</td></tr>';
 		echo '<tr><td>' . _('Address Line 1 (Street)') . ':</td><td>' . $_POST['Address1'] . '</td></tr>';
 		echo '<tr><td>' . _('Address Line 2 (Suburb/City)') . ':</td><td>' . $_POST['Address2'] . '</td></tr>';
 		echo '<tr><td>' . _('Address Line 3 (State/Province)') . ':</td><td>' . $_POST['Address3'] . '</td></tr>';
@@ -664,6 +717,12 @@ if (!isset($DebtorNo)) {
 	} else {
 		echo '<tr><td>' . _('Customer Name') . ':</td>
 			<td><input ' . (in_array('CustName',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="CustName" value="' . $_POST['CustName'] . '" size=42 maxlength=40></td></tr>';
+		echo '<tr><td>' . _('Telephone') . ':</td>
+			<td><input ' . (in_array('Phone',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Phone" value="' . $_POST['Phone'] . '" size=42 maxlength=40></td></tr>';
+		echo '<tr><td>' . _('Facsimile') . ':</td>
+			<td><input ' . (in_array('Fax',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Fax" value="' . $_POST['Fax'] . '" size=42 maxlength=40></td></tr>';
+			echo '<tr><td>' . _('Email Address') . ':</td>
+			<td><input ' . (in_array('Email',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Email" value="' . $_POST['Email'] . '" size=42 maxlength=40></td></tr>';
 		echo '<tr><td>' . _('Address Line 1 (Street)') . ':</td>
 			<td><input ' . (in_array('Address1',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Address1" size=42 maxlength=40 value="' . $_POST['Address1'] . '"></td></tr>';
 		echo '<tr><td>' . _('Address Line 2 (Suburb/City)') . ':</td>
@@ -739,7 +798,7 @@ if (!isset($DebtorNo)) {
 		echo '<tr><td>' . _('Tax Reference') . ':</td>
 			<td><input type="Text" name="TaxRef" size=22 maxlength=20  value="' . $_POST['TaxRef'] . '"></td></tr>';
 	}
-	
+
 	if (isset($_GET['Modify'])) {
         $result=DB_query('SELECT terms FROM paymentterms WHERE termsindicator='.$_POST['PaymentTerms'],$db);
 		$myrow=DB_fetch_array($result);
@@ -815,7 +874,7 @@ if (!isset($DebtorNo)) {
 		}
 		echo '</select></td></tr>';
 	}
-	
+
 	if (isset($_GET['Modify'])) {
 		if ($_POST['CustomerPOLine']==0){
 			echo '<tr><td>' . _('Invoice Addressing') . ":</td><td>"._('Address to HO')."</td></tr>";

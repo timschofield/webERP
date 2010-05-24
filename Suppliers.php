@@ -346,6 +346,30 @@ if (isset($_POST['submit'])) {
 		$Errors[$i]='ID';
 		$i++;
 	}
+	if (strlen($_POST['Phone']) >25) {
+		$InputError = 1;
+		prnMsg(_('The telephone number must be 25 characters or less long'),'error');
+		$Errors[$i] = 'Telephone';
+		$i++;
+	}
+	if (strlen($_POST['Fax']) >25) {
+		$InputError = 1;
+		prnMsg(_('The fax number must be 25 characters or less long'),'error');
+		$Errors[$i] = 'Fax';
+		$i++;
+	}
+	if (strlen($_POST['Email']) >55) {
+		$InputError = 1;
+		prnMsg(_('The email address must be 55 characters or less long'),'error');
+		$Errors[$i] = 'Email';
+		$i++;
+	}
+	if (strlen($_POST['Email'])>0 and !IsEmailAddress($_POST['Email'])) {
+		$InputError = 1;
+		prnMsg(_('The email address is not correctly formed'),'error');
+		$Errors[$i] = 'Email';
+		$i++;
+	}
 	if (strlen($_POST['BankRef']) > 12) {
 		$InputError = 1;
 		prnMsg(_('The bank reference text must be less than 12 characters long'),'error');
@@ -438,6 +462,9 @@ if (isset($_POST['submit'])) {
 							address2='" . $_POST['Address2'] . "',
 							address3='" . $_POST['Address3'] . "',
 							address4='" . $_POST['Address4'] . "',
+							telephone='".$_POST['Phone']."',
+							fax = '".$_POST['Fax']."',
+							email = '".$_POST['Email']."',
 							currcode='" . $_POST['CurrCode'] . "',
 							suppliersince='$SQL_SupplierSince',
 							paymentterms='" . $_POST['PaymentTerms'] . "',
@@ -460,6 +487,9 @@ if (isset($_POST['submit'])) {
 							address2='" . $_POST['Address2'] . "',
 							address3='" . $_POST['Address3'] . "',
 							address4='" . $_POST['Address4'] . "',
+							telephone='".$_POST['Phone']."',
+							fax = '".$_POST['Fax']."',
+							email = '".$_POST['Email']."',
 							suppliersince='$SQL_SupplierSince',
 							paymentterms='" . $_POST['PaymentTerms'] . "',
 							bankpartics='" . $_POST['BankPartics'] . "',
@@ -476,7 +506,7 @@ if (isset($_POST['submit'])) {
 
 			$ErrMsg = _('The supplier could not be updated because');
 			$DbgMsg = _('The SQL that was used to update the supplier but failed was');
-
+			// echo $sql;
 			$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 			prnMsg(_('The supplier master record for') . ' ' . $SupplierID . ' ' . _('has been updated'),'success');
@@ -489,6 +519,9 @@ if (isset($_POST['submit'])) {
 							address2,
 							address3,
 							address4,
+							telephone,
+							fax,
+							email,
 							currcode,
 							suppliersince,
 							paymentterms,
@@ -507,6 +540,9 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['Address2'] . "',
 						'" . $_POST['Address3'] . "',
 						'" . $_POST['Address4'] . "',
+						'".$_POST['Phone']."',
+						'".$_POST['Fax']."',
+						'".$_POST['Email']."',
 						'" . $_POST['CurrCode'] . "',
 						'" . $SQL_SupplierSince . "',
 						'" . $_POST['PaymentTerms'] . "',
@@ -533,6 +569,9 @@ if (isset($_POST['submit'])) {
 			unset($_POST['Address2']);
 			unset($_POST['Address3']);
 			unset($_POST['Address4']);
+			unset($_POST['Phone']);
+			unset($_POST['Fax']);
+			unset($_POST['Email']);
 			unset($_POST['CurrCode']);
 			unset($SQL_SupplierSince);
 			unset($_POST['PaymentTerms']);
@@ -610,6 +649,9 @@ if (!isset($SupplierID)) {
 	echo '<table>';
 	echo '<tr><td>' . _('Supplier Code') . ":</td><td><input type='text' name='SupplierID' size=11 maxlength=10></td></tr>";
 	echo '<tr><td>' . _('Supplier Name') . ":</td><td><input type='text' name='SuppName' size=42 maxlength=40></td></tr>";
+	echo '<tr><td>' . _('Telephone') . ":</td><td><input type='text' name='Phone' size=30 maxlength=40></td></tr>";
+	echo '<tr><td>' . _('Facsimile') . ":</td><td><input type='text' name='Fax' size=30 maxlength=40></td></tr>";
+	echo '<tr><td>' . _('Email Address') . ":</td><td><input type='text' name='Email' size=30 maxlength=40></td></tr>";
 	echo '<tr><td>' . _('Address Line 1 (Street)') . ":</td><td><input type='text' name='Address1' size=42 maxlength=40></td></tr>";
 	echo '<tr><td>' . _('Address Line 2 (Suburb/City)') . ":</td><td><input type='text' name='Address2' size=42 maxlength=40></td></tr>";
 	echo '<tr><td>' . _('Address Line 3 (State/Province)') . ":</td><td><input type='text' name='Address3' size=42 maxlength=40></td></tr>";
@@ -701,6 +743,9 @@ if (!isset($SupplierID)) {
 				address2,
 				address3,
 				address4,
+				telephone,
+				fax,
+				email,
 				currcode,
 				suppliersince,
 				paymentterms,
@@ -723,6 +768,9 @@ if (!isset($SupplierID)) {
 		$_POST['Address3']  = stripcslashes($myrow['address3']);
 		$_POST['Address4']  = stripcslashes($myrow['address4']);
 		$_POST['CurrCode']  = stripcslashes($myrow['currcode']);
+		$_POST['Phone'] = $myrow['telephone'];
+		$_POST['Fax'] = $myrow['fax'];
+		$_POST['Email'] = $myrow['email'];
 		$_POST['SupplierSince']  = ConvertSQLDate($myrow['suppliersince']);
 		$_POST['PaymentTerms']  = $myrow['paymentterms'];
 		$_POST['BankPartics']	= stripcslashes($myrow['bankpartics']);
@@ -742,6 +790,9 @@ if (!isset($SupplierID)) {
 	}
 
 	echo '<tr><td>' . _('Supplier Name') . ':</td><td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="SuppName" VALUE="' . $_POST['SuppName'] . '" size=42 maxlength=40></td></tr>';
+	echo '<tr><td>' . _('Telephone') . ':</td><td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="Phone" VALUE="' . $_POST['Phone'] . '" size=42 maxlength=40></td></tr>';
+	echo '<tr><td>' . _('Facsimile') . ':</td><td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="Fax" VALUE="' . $_POST['Fax'] . '" size=42 maxlength=40></td></tr>';
+	echo '<tr><td>' . _('Email Address') . ':</td><td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="Email" VALUE="' . $_POST['Email'] . '" size=42 maxlength=40></td></tr>';
 	echo '<tr><td>' . _('Address Line 1 (Street)') . ':</td><td><input type="text" name="Address1" VALUE="' . $_POST['Address1'] . '" size=42 maxlength=40></td></tr>';
 	echo '<tr><td>' . _('Address Line 2 (Suburb/City)') . ':</td><td><input type="text" name="Address2" VALUE="' . $_POST['Address2'] . '" size=42 maxlength=40></td></tr>';
 	echo '<tr><td>' . _('Address Line 3 (State/Province)') . ':</td><td><input type="text" name="Address3" VALUE="' . $_POST['Address3'] . '" size=42 maxlength=40></td></tr>';
@@ -837,3 +888,4 @@ if (!isset($SupplierID)) {
 
 include('includes/footer.inc');
 ?>
+

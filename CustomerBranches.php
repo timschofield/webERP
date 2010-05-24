@@ -348,7 +348,7 @@ if (!isset($SelectedBranch)){
 			contactname,
 			phoneno,
 			faxno,
-			email,
+			custbranch.email,
 			taxgroups.taxgroupdescription,
 			custbranch.branchcode,
 			custbranch.disabletrans
