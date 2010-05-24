@@ -139,7 +139,9 @@ if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
 				while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
 					if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
 						
-						$UpdateCurrRateResult = DB_query('UPDATE currencies SET rate=' . GetCurrencyRate ($CurrencyRow[0],$CurrencyRates) . " WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
+						$UpdateCurrRateResult = DB_query('UPDATE currencies SET 
+							rate=' . GetCurrencyRate ($CurrencyRow[0],$CurrencyRates) . " '
+							WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
 					}
 				}
 				$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
