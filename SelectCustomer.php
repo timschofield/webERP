@@ -23,6 +23,7 @@ if ($_SESSION['geocode_integration'] == 1 AND $_SESSION['CustomerID'] != "") {
 	$myrow = DB_fetch_array($result);
 	$sql = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
+					custbranch.branchcode,
 					custbranch.brname,
 					custbranch.lat,
 					custbranch.lng
@@ -102,6 +103,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 								debtorsmaster.address2,
 								debtorsmaster.address3,
 								debtorsmaster.address4,
+				custbranch.branchcode,
 				custbranch.brname,
 				custbranch.contactname,
 				debtortype.typename,
@@ -121,6 +123,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 								debtorsmaster.address2,
 								debtorsmaster.address3,
 								debtorsmaster.address4,
+				custbranch.branchcode,
 				custbranch.brname,
 				custbranch.contactname,
 				debtortype.typename,
@@ -138,6 +141,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 								debtorsmaster.address2,
 								debtorsmaster.address3,
 								debtorsmaster.address4,
+				custbranch.branchcode,
 				custbranch.brname,
 				custbranch.contactname,
 				debtortype.typename,
@@ -154,6 +158,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 								debtorsmaster.address2,
 								debtorsmaster.address3,
 								debtorsmaster.address4,
+				custbranch.branchcode,
 				custbranch.brname,
 				custbranch.contactname,
 				debtortype.typename,
@@ -172,6 +177,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 								debtorsmaster.address2,
 								debtorsmaster.address3,
 								debtorsmaster.address4,
+				custbranch.branchcode,
 				custbranch.brname,
 				custbranch.contactname,
 				debtortype.typename,
@@ -190,6 +196,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 								debtorsmaster.address2,
 								debtorsmaster.address3,
 								debtorsmaster.address4,
+								custbranch.branchcode,
 								custbranch.brname,
 								custbranch.contactname,
 								debtortype.typename,
@@ -219,10 +226,11 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 if (!isset($_POST['Select'])) {
 	$_POST['Select'] = "";
 }
+$Debtor=explode('-', $_POST['Select']);
 if ($_POST['Select'] != "" or ($_SESSION['CustomerID'] != "" and !isset($_POST['Keywords']) and !isset($_POST['CustCode']) and !isset($_POST['CustType']) and !isset($_POST['CustPhone']))) {
 	if ($_POST['Select'] != "") {
-		$SQL = "SELECT brname, phoneno FROM custbranch WHERE debtorno='" . $_POST['Select'] . "'";
-		$_SESSION['CustomerID'] = $_POST['Select'];
+		$SQL = "SELECT brname, phoneno FROM custbranch WHERE debtorno='" . $Debtor[0] . "'";
+		$_SESSION['CustomerID'] = $Debtor[0];
 	} else {
 		$SQL = "SELECT debtorsmaster.name, custbranch.phoneno FROM
 		debtorsmaster, custbranch WHERE
@@ -425,7 +433,7 @@ if (isset($result)) {
 				echo '<tr class="OddTableRows">';
 				$k = 1;
 			}
-			echo "<td><font size=1><input type=submit name='Select' value='" . $myrow['debtorno'] . "'</font></td>
+			echo "<td><font size=1><input type=submit name='Select' value='" . $myrow['debtorno'].'-'.$myrow['branchcode'] . "'></font></td>
 				<td><font size=1>" . $myrow['name'] . "</font></td>
 				<td><font size=1>" . $myrow['brname'] . "</font></td>
 				<td><font size=1>" . $myrow['contactname'] . "</font></td>

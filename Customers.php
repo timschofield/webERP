@@ -628,7 +628,7 @@ if (!isset($DebtorNo)) {
 	echo '<table border=2 cellspacing=4><tr><td><table>';
 
 	if (!isset($_POST['New'])) {
-		$sql = "SELECT debtorno,
+		$sql = "SELECT debtorsmaster.debtorno,
 				name,
 				address1,
 				address2,
@@ -636,9 +636,9 @@ if (!isset($DebtorNo)) {
 				address4,
 				address5,
 				address6,
-				telephone,
-				fax,
-				email,
+				custbranch.phoneno,
+				custbranch.faxno,
+				custbranch.email,
 				currcode,
 				salestype,
 				clientsince,
@@ -653,7 +653,9 @@ if (!isset($DebtorNo)) {
 				customerpoline,
 				typeid
 				FROM debtorsmaster
-			WHERE debtorno = '" . $DebtorNo . "'";
+				LEFT JOIN custbranch
+				ON debtorsmaster.debtorno=custbranch.debtorno
+			WHERE debtorsmaster.debtorno = '" . $DebtorNo . "'";
 
 		$ErrMsg = _('The customer details could not be retrieved because');
 		$result = DB_query($sql,$db,$ErrMsg);
