@@ -649,13 +649,13 @@ if (!isset($SupplierID)) {
 	echo '<table>';
 	echo '<tr><td>' . _('Supplier Code') . ":</td><td><input type='text' name='SupplierID' size=11 maxlength=10></td></tr>";
 	echo '<tr><td>' . _('Supplier Name') . ":</td><td><input type='text' name='SuppName' size=42 maxlength=40></td></tr>";
-	echo '<tr><td>' . _('Telephone') . ":</td><td><input type='text' name='Phone' size=30 maxlength=40></td></tr>";
-	echo '<tr><td>' . _('Facsimile') . ":</td><td><input type='text' name='Fax' size=30 maxlength=40></td></tr>";
-	echo '<tr><td>' . _('Email Address') . ":</td><td><input type='text' name='Email' size=30 maxlength=40></td></tr>";
 	echo '<tr><td>' . _('Address Line 1 (Street)') . ":</td><td><input type='text' name='Address1' size=42 maxlength=40></td></tr>";
 	echo '<tr><td>' . _('Address Line 2 (Suburb/City)') . ":</td><td><input type='text' name='Address2' size=42 maxlength=40></td></tr>";
 	echo '<tr><td>' . _('Address Line 3 (State/Province)') . ":</td><td><input type='text' name='Address3' size=42 maxlength=40></td></tr>";
 	echo '<tr><td>' . _('Address Line 4 (Postal Code)') . ":</td><td><input type='text' name='Address4' size=42 maxlength=40></td></tr>";
+	echo '<tr><td>' . _('Telephone') . ":</td><td><input type='text' name='Phone' size=30 maxlength=40></td></tr>";
+	echo '<tr><td>' . _('Facsimile') . ":</td><td><input type='text' name='Fax' size=30 maxlength=40></td></tr>";
+	echo '<tr><td>' . _('Email Address') . ":</td><td><input type='text' name='Email' size=30 maxlength=40></td></tr>";
 
 	$DateString = Date($_SESSION['DefaultDateFormat']);
 	echo '<tr><td>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] . "):</td><td><input type='text' class='date' alt='".$_SESSION['DefaultDateFormat']."' name='SupplierSince' VALUE=$DateString size=12 maxlength=10></td></tr>";
@@ -790,13 +790,13 @@ if (!isset($SupplierID)) {
 	}
 
 	echo '<tr><td>' . _('Supplier Name') . ':</td><td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="SuppName" VALUE="' . $_POST['SuppName'] . '" size=42 maxlength=40></td></tr>';
-	echo '<tr><td>' . _('Telephone') . ':</td><td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="Phone" VALUE="' . $_POST['Phone'] . '" size=42 maxlength=40></td></tr>';
-	echo '<tr><td>' . _('Facsimile') . ':</td><td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="Fax" VALUE="' . $_POST['Fax'] . '" size=42 maxlength=40></td></tr>';
-	echo '<tr><td>' . _('Email Address') . ':</td><td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="Email" VALUE="' . $_POST['Email'] . '" size=42 maxlength=40></td></tr>';
 	echo '<tr><td>' . _('Address Line 1 (Street)') . ':</td><td><input type="text" name="Address1" VALUE="' . $_POST['Address1'] . '" size=42 maxlength=40></td></tr>';
 	echo '<tr><td>' . _('Address Line 2 (Suburb/City)') . ':</td><td><input type="text" name="Address2" VALUE="' . $_POST['Address2'] . '" size=42 maxlength=40></td></tr>';
 	echo '<tr><td>' . _('Address Line 3 (State/Province)') . ':</td><td><input type="text" name="Address3" VALUE="' . $_POST['Address3'] . '" size=42 maxlength=40></td></tr>';
 	echo '<tr><td>' . _('Address Line 4 (Postal Code)') . ':</td><td><input type="text" name="Address4" VALUE="' . $_POST['Address4'] . '" size=42 maxlength=40></td></tr>';
+	echo '<tr><td>' . _('Telephone') . ':</td><td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="Phone" VALUE="' . $_POST['Phone'] . '" size=42 maxlength=40></td></tr>';
+	echo '<tr><td>' . _('Facsimile') . ':</td><td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="Fax" VALUE="' . $_POST['Fax'] . '" size=42 maxlength=40></td></tr>';
+	echo '<tr><td>' . _('Email Address') . ':</td><td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="Email" VALUE="' . $_POST['Email'] . '" size=42 maxlength=40></td></tr>';
 
 	echo '<tr><td>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] .'):</td><td><input '.(in_array('SupplierSince',$Errors) ? 'class="inputerror"' : '').'  size=12 maxlength=10 type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="SupplierSince" VALUE=' . $_POST['SupplierSince'] . '></td></tr>';
 	echo '<tr><td>' . _('Bank Particulars') . ":</td><td><input type='text' name='BankPartics' size=13 maxlength=12 VALUE='" . $_POST['BankPartics'] . "'></td></tr>";

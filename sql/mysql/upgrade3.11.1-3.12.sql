@@ -161,3 +161,5 @@ UPDATE prices SET startdate='1999-01-01', enddate='9999-12-31';
 
 ALTER TABLE stockcheckfreeze ADD COLUMN stockcheckdate date NOT NULL;
 UPDATE prices SET startdate='1999-01-01';
+
+ALTER TABLE suppliers add (email varchar(55),fax varchar(25), telephone varchar(25));
