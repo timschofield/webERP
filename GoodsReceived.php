@@ -111,16 +111,21 @@ if (count($_SESSION['PO']->LineItems)>0){
 		$DisplayLineTotal = number_format($LineTotal,2);
 		$DisplayPrice = number_format($LnItm->Price,2);
 
-		$uomsql='SELECT conversionfactor, suppliersuom
+		$uomsql='SELECT unitsofmeasure.unitname,
+					conversionfactor,
+					suppliersuom,
+					max(effectivefrom)
 				FROM purchdata
+				LEFT JOIN unitsofmeasure
+				ON purchdata.suppliersuom=unitsofmeasure.unitid
 				WHERE supplierno="'.$_SESSION['PO']->SupplierID.'"
 				AND stockid="'.$LnItm->StockID.'"';
 
 		$uomresult=DB_query($uomsql, $db);
 		if (DB_num_rows($uomresult)>0) {
 			$uomrow=DB_fetch_array($uomresult);
-			if (strlen($uomrow['suppliersuom'])>0) {
-				$uom=$uomrow['suppliersuom'];
+			if (strlen($uomrow['unitname'])>0) {
+				$uom=$uomrow['unitname'];
 			} else {
 				$uom=$LnItm->Units;
 			}
