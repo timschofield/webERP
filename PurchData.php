@@ -136,13 +136,15 @@ if (!isset($_GET['Edit'])) {
 					purchdata.price,
 					suppliers.currcode,
 					purchdata.effectivefrom,
-					purchdata.suppliersuom,
+					unitsofmeasure.unitname,
 					purchdata.supplierdescription,
 					purchdata.leadtime,
 					purchdata.suppliers_partno,
 					purchdata.preferred
 			FROM purchdata INNER JOIN suppliers
 				ON purchdata.supplierno=suppliers.supplierid
+			LEFT JOIN unitsofmeasure
+				ON purchdata.suppliersuom=unitsofmeasure.unitid
 			WHERE purchdata.stockid = '" . $StockID . "'
 			ORDER BY purchdata.effectivefrom DESC";
     $ErrMsg = _('The supplier purchasing details for the selected part could not be retrieved because');
@@ -188,7 +190,7 @@ if (!isset($_GET['Edit'])) {
 			<td>%s</td>
 			<td><a href='%s?%s&StockID=%s&SupplierID=%s&Edit=1&EffectiveFrom=%s'>" . _('Edit') . "</a></td>
 			<td><a href='%s?%s&StockID=%s&SupplierID=%s&Delete=1&EffectiveFrom=%s' onclick=\"return confirm('" . _('Are you sure you wish to delete this suppliers price?') . "');\">" . _('Delete') . "</a></td>
-			</tr>", $myrow['suppname'], number_format($myrow['price'], 3), $myrow['currcode'], ConvertSQLDate($myrow['effectivefrom']), $myrow['suppliersuom'], $myrow['leadtime'], $DisplayPreferred, $_SERVER['PHP_SELF'], SID, $StockID, $myrow['supplierno'], $myrow['effectivefrom'], $_SERVER['PHP_SELF'], SID, $StockID, $myrow['supplierno'], $myrow['effectivefrom']);
+			</tr>", $myrow['suppname'], number_format($myrow['price'], 3), $myrow['currcode'], ConvertSQLDate($myrow['effectivefrom']), $myrow['unitname'], $myrow['leadtime'], $DisplayPreferred, $_SERVER['PHP_SELF'], SID, $StockID, $myrow['supplierno'], $myrow['effectivefrom'], $_SERVER['PHP_SELF'], SID, $StockID, $myrow['supplierno'], $myrow['effectivefrom']);
         } //end of while loop
         echo '</table><br/>';
         if ($CountPreferreds > 1) {
