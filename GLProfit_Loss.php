@@ -364,7 +364,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 		$SectionPrdActual +=$AccountPeriodActual;
 		$SectionPrdBudget +=$AccountPeriodBudget;
 
-		if ($_POST['Detail'] == _('Detailed')) {
+		if ($_POST['Detail'] == 'Detailed') {
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$myrow['accountcode']);
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$myrow['accountname']);
 			if ($Section == 1) { /*Income*/
@@ -869,7 +869,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 		$SectionPrdActual +=$AccountPeriodActual;
 		$SectionPrdBudget +=$AccountPeriodBudget;
 
-		if ($_POST['Detail']==_('Detailed')){
+		if ($_POST['Detail']=='Detailed'){
 
 			if ($k==1){
 				echo '<tr class="EvenTableRows">';
