@@ -544,9 +544,9 @@ if (isset($_GET['AllocTrans'])) {
 				$balance = 0;
 				$curDebtor = $myrow['debtorno'];
 
-				$balSQL= "SELECT ovamount+ovgst+ovfreight+ovdiscount as total
+				$balSQL= "SELECT ovamount+ovgst+ovfreight+ovdiscount-alloc as total
 					FROM debtortrans
-					WHERE debtortrans.settled=0 AND
+					WHERE type=12 AND
 					debtorno='" . $myrow['debtorno'] . "'
 					ORDER BY ovamount";
 				$balResult = DB_query($balSQL,$db);
@@ -559,7 +559,7 @@ if (isset($_GET['AllocTrans'])) {
 			}
 			$curTrans ++;
 
-			if ( isset($balance) and $balance < -0.01 )
+			if ( isset($balance) and abs($balance) < -0.01 )
 			{
 				$allocate = '&nbsp;';
 			}
