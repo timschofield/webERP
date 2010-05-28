@@ -154,7 +154,8 @@
 										gw,
 										cuft,
 										total_quantity,
-										total_amount
+										total_amount,
+										MAX(purchdata.effectivefrom)
 										FROM purchorderdetails
 											LEFT JOIN stockmaster
 											ON purchorderdetails.itemcode=stockmaster.stockid
@@ -162,30 +163,12 @@
 											ON purchorders.orderno=purchorderdetails.orderno
 											LEFT JOIN chartmaster
 											ON purchorderdetails.glcode=chartmaster.accountcode
-											LEFT JOIN (SELECT purchdata.supplierno,
-																purchdata.stockid,
-																purchdata.price,
-																purchdata.suppliersuom,
-																purchdata.conversionfactor,
-																purchdata.supplierdescription,
-																purchdata.leadtime,
-																purchdata.preferred,
-																purchdata.suppliers_partno,
-																MAX(purchdata.effectivefrom)
-																FROM purchdata
-																GROUP BY purchdata.supplierno, 
-																		purchdata.stockid,
-																		purchdata.suppliersuom,
-																		purchdata.conversionfactor,
-																		purchdata.supplierdescription,
-																		purchdata.leadtime,
-																		purchdata.preferred,
-																		purchdata.suppliers_partno) purchdata
+											LEFT JOIN  purchdata
 											ON purchdata.stockid=purchorderdetails.itemcode AND purchdata.supplierno=purchorders.supplierno
 										WHERE purchorderdetails.completed=0
-											AND purchorderdetails.orderno =' . $_GET['ModifyOrderNumber'] . '
+											AND purchorderdetails.orderno =" . $_GET['ModifyOrderNumber'] . '
 										ORDER BY podetailitem';
-					
+
 		  $ErrMsg =  _('The lines on the purchase order cannot be retrieved because');
 		  $DbgMsg =  _('The SQL statement that was used to retrieve the purchase order lines was');
 			  $LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg);
