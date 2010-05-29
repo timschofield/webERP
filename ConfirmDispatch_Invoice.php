@@ -1241,9 +1241,7 @@ DB_Txn_Begin($db);
 							periodno,
 							account,
 							narrative,
-							amount,
-							posted
-							)
+							amount	)
 					VALUES (
 						10,
 						" . $InvoiceNo . ",
@@ -1251,9 +1249,7 @@ DB_Txn_Begin($db);
 						" . $PeriodNo . ",
 						" . GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items']->DefaultSalesType, $db) . ",
 						'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
-						" . $OrderLine->StandardCost * $OrderLine->QtyDispatched . ",
-						1
-					)";
+						" . $OrderLine->StandardCost * $OrderLine->QtyDispatched . " 	)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The cost of sales GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1269,9 +1265,7 @@ DB_Txn_Begin($db);
 							periodno,
 							account,
 							narrative,
-							amount,
-							posted
-							)
+							amount	)
 					VALUES (
 						10,
 						" . $InvoiceNo . ",
@@ -1279,9 +1273,7 @@ DB_Txn_Begin($db);
 						" . $PeriodNo . ",
 						" . $StockGLCode['stockact'] . ",
 						'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
-						" . (-$OrderLine->StandardCost * $OrderLine->QtyDispatched) . ",
-						1
-					)";
+						" . (-$OrderLine->StandardCost * $OrderLine->QtyDispatched) . "	)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock side of the cost of sales GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1300,9 +1292,7 @@ DB_Txn_Begin($db);
 							periodno,
 							account,
 							narrative,
-							amount,
-							posted
-						)
+							amount )
 					VALUES (
 						10,
 						" . $InvoiceNo . ",
@@ -1310,9 +1300,7 @@ DB_Txn_Begin($db);
 						" . $PeriodNo . ",
 						" . $SalesGLAccounts['salesglcode'] . ",
 						'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->Price . "',
-						" . (-$OrderLine->Price * $OrderLine->QtyDispatched/$_SESSION['CurrencyRate']) . ",
-						1
-					)";
+						" . (-$OrderLine->Price * $OrderLine->QtyDispatched/$_SESSION['CurrencyRate']) . " )";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales GL posting could not be inserted because');
 				$DbgMsg = '<br>' ._('The following SQL to insert the GLTrans record was used');
@@ -1327,9 +1315,7 @@ DB_Txn_Begin($db);
 							periodno,
 							account,
 							narrative,
-							amount,
-							posted
-						)
+							amount	)
 						VALUES (
 							10,
 							" . $InvoiceNo . ",
@@ -1337,9 +1323,7 @@ DB_Txn_Begin($db);
 							" . $PeriodNo . ",
 							" . $SalesGLAccounts['discountglcode'] . ",
 							'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " @ " . ($OrderLine->DiscountPercent * 100) . "%',
-							" . ($OrderLine->Price * $OrderLine->QtyDispatched * $OrderLine->DiscountPercent/$_SESSION['CurrencyRate']) . ",
-							1
-						)";
+							" . ($OrderLine->Price * $OrderLine->QtyDispatched * $OrderLine->DiscountPercent/$_SESSION['CurrencyRate']) . " 	)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales discount GL posting could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1362,9 +1346,7 @@ DB_Txn_Begin($db);
 						periodno,
 						account,
 						narrative,
-						amount,
-						posted
-						)
+						amount	)
 					VALUES (
 						10,
 						" . $InvoiceNo . ",
@@ -1372,9 +1354,7 @@ DB_Txn_Begin($db);
 						" . $PeriodNo . ",
 						" . $_SESSION['CompanyRecord']['debtorsact'] . ",
 						'" . $_SESSION['Items']->DebtorNo . "',
-						" . (($_SESSION['Items']->total + $_SESSION['Items']->FreightCost + $TaxTotal)/$_SESSION['CurrencyRate']) . ",
-						1
-					)";
+						" . (($_SESSION['Items']->total + $_SESSION['Items']->FreightCost + $TaxTotal)/$_SESSION['CurrencyRate']) . "	)";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The total debtor GL posting could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the total debtors control GLTrans record was used');
@@ -1391,9 +1371,7 @@ DB_Txn_Begin($db);
 						periodno,
 						account,
 						narrative,
-						amount,
-						posted
-					)
+						amount	)
 				VALUES (
 					10,
 					" . $InvoiceNo . ",
@@ -1401,9 +1379,7 @@ DB_Txn_Begin($db);
 					" . $PeriodNo . ",
 					" . $_SESSION['CompanyRecord']['freightact'] . ",
 					'" . $_SESSION['Items']->DebtorNo . "',
-					" . (-($_SESSION['Items']->FreightCost)/$_SESSION['CurrencyRate']) . ",
-					1
-				)";
+					" . (-($_SESSION['Items']->FreightCost)/$_SESSION['CurrencyRate']) . "	)";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The freight GL posting could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1418,9 +1394,7 @@ DB_Txn_Begin($db);
 						periodno,
 						account,
 						narrative,
-						amount,
-						posted
-						)
+						amount	)
 					VALUES (
 						10,
 						" . $InvoiceNo . ",
@@ -1428,9 +1402,7 @@ DB_Txn_Begin($db);
 						" . $PeriodNo . ",
 						" . $TaxGLCodes[$TaxAuthID] . ",
 						'" . $_SESSION['Items']->DebtorNo . "',
-						" . (-$TaxAmount/$_SESSION['CurrencyRate']) . ",
-						1
-					)";
+						" . (-$TaxAmount/$_SESSION['CurrencyRate']) . "	)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The tax GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
