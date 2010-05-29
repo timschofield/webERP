@@ -91,9 +91,9 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 						<th>' . _('Start Date') . '</th>
 						<th>' . _('End Date') . '</th>
 						<th>' . _('Cost') . '</th>
-						<th>' . _('Current Margin') . '</th>
+						<th>' . _('GP %') . '</th>
 						<th>' . _('Price Proposed') . '</th>
-						<th>' . _('Price in pricelist') . '</th>
+						<th>' . _('List Price') . '</th>
 					<tr>';
 		$k = 0; //row colour counter
 		echo '<form action="' .$_SERVER['PHP_SELF'] .'" method="POST" name="update">';
@@ -127,10 +127,10 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 					<input type="hidden" value=' . $myrow['startdate'] . ' name="StartDate_' . $PriceCounter .'">
 					<input type="hidden" value=' . $myrow['enddate'] . ' name="EndDate_' . $PriceCounter .'">';
 			//variable for current margin
-			if ($Cost != 0){
-				$CurrentMargin = $Price / $Cost;
+			if ($myrow['price'] != 0){
+				$CurrentGP = ($myrow['price']-$Cost)*100 / $myrow['price'];
 			} else {
-				$CurrentMargin = 0;
+				$CurrentGP = 0;
 			}
 			//variable for proposed
 			$Proposed = $Cost * $_POST['Margin'];
@@ -146,9 +146,9 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 						<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
 						<td>' . $EndDateDisplay . '</td>
 						<td class="number">' . number_format($Cost, 2) . '</td>
-						<td class="number">' . number_format($CurrentMargin, 2) . '</td>
+						<td class="number">' . number_format($CurrentGP, 1) . '%</td>
 						<td class="number">' . number_format($Proposed, 2) . '</td>
-						<td><input type="text" class="number" name="Price_' . $PriceCounter . '" MAXLENGTH =14 size=15 value="' . $myrow['price'] . '"></td>
+						<td><input type="text" class="number" name="Price_' . $PriceCounter . '" maxlength=14 size=10 value="' . $myrow['price'] . '"></td>
 					</tr> ';
 			$PriceCounter++;
 		} //end of looping

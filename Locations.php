@@ -30,6 +30,24 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg( _('The location code may not be empty'), 'error');
 	}
+	if ($_POST['CashSaleCustomer']!=''){
+		if (!strstr($_POST['CashSaleCustomer'],' - ')){
+			$InputError =1;
+			prnMsg(_('The cash sale customer account must be a valid customer account separated by " - " then the branch code of the customer entered'), 'error');
+		} else {
+			$Branch = substr($_POST['CashSaleCustomer'],strpos($_POST['CashSaleCustomer'],' - ')+3);
+			$DebtorNo = substr($_POST['CashSaleCustomer'],0,strpos($_POST['CashSaleCustomer'],' - '));
+			$sql = "SELECT * FROM custbranch WHERE debtorno='" . $DebtorNo . "' 
+											 AND branchcode='" . $Branch . "'"; 		
+			
+			$result = DB_query($sql,$db);
+			if (DB_num_rows($result)==0){
+				$InputError = 1;
+				prnMsg(_('The cash sale customer for this location must be a valid customer code separated by " - " then a valid branch code for this customer'),'error');
+			}
+		}
+	} //end of checking the customer - branch code entered
+	
 
 	if (isset($SelectedLocation) AND $InputError !=1) {
 
@@ -54,6 +72,7 @@ if (isset($_POST['submit'])) {
 				email='" . $_POST['Email'] . "',
 				contact='" . $_POST['Contact'] . "',
 				taxprovinceid = " . $_POST['TaxProvince'] . ",
+				cashsalecustomer ='" . $_POST['CashSaleCustomer'] . "',
 				managed = " . $_POST['Managed'] . "
 			WHERE loccode = '$SelectedLocation'";
 
@@ -76,6 +95,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Email']);
 		unset($_POST['TaxProvince']);
 		unset($_POST['Managed']);
+		unset($_POST['CashSaleCustomer']);
 		unset($SelectedLocation);
 		unset($_POST['Contact']);
 
@@ -105,6 +125,7 @@ if (isset($_POST['submit'])) {
 					email,
 					contact,
 					taxprovinceid,
+					cashsalecustomer,
 					managed
 					)
 			VALUES (
@@ -121,6 +142,7 @@ if (isset($_POST['submit'])) {
 				'" . $_POST['Email'] . "',
 				'" . $_POST['Contact'] . "',
 				" . $_POST['TaxProvince'] . ",
+				'" . $_POST['CashSaleCustomer'] . "',
 				" . $_POST['Managed'] . "
 			)";
 
@@ -160,6 +182,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Fax']);
 		unset($_POST['Email']);
 		unset($_POST['TaxProvince']);
+		unset($_POST['CashSaleCustomer']);
 		unset($_POST['Managed']);
 		unset($SelectedLocation);
 		unset($_POST['Contact']);
@@ -402,6 +425,7 @@ if (!isset($_GET['delete'])) {
 				tel,
 				email,
 				taxprovinceid,
+				cashsalecustomer,
 				managed
 			FROM locations
 			WHERE loccode='$SelectedLocation'";
@@ -422,6 +446,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['Fax'] = $myrow['fax'];
 		$_POST['Email'] = $myrow['email'];
 		$_POST['TaxProvince'] = $myrow['taxprovinceid'];
+		$_POST['CashSaleCustomer'] = $myrow['cashsalecustomer'];
 		$_POST['Managed'] = $myrow['managed'];
 
 
@@ -468,6 +493,9 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['Email'])) {
 		$_POST['Email'] = '';
 	}
+	if (!isset($_POST['CashSaleCustomer'])) {
+		$_POST['CashSaleCustomer'] = '';
+	}
 	if (!isset($_POST['Managed'])) {
 		$_POST['Managed'] = 0;
 	}
@@ -510,8 +538,15 @@ if (!isset($_GET['delete'])) {
 
 	?>
 	</select></td></tr>
+	<tr><td><?php echo _('Default Counter Sales Customer') . ':'; ?></td>
+	<td><input type="Text" name="CashSaleCustomer" value="<?php echo $_POST['CashSaleCustomer']; ?>" size=25 maxlength=23></td></tr>
+	<?php
+	/*
+	This functionality is not written yet ...
 	<tr><td><?php echo _('Enable Warehouse Management') . ':'; ?></td>
 	<td><input type='checkbox' name='Managed'<?php if($_POST['Managed'] == 1) echo ' checked';?>></td></tr>
+	*/
+	?>
 	</table>
 
 	<div class="centre"><input type="Submit" name="submit" value="<?php echo _('Enter Information'); ?>"></div>

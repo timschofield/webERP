@@ -157,9 +157,9 @@ ALTER TABLE `prices` ADD `startdate` DATE NOT NULL DEFAULT '0000-00-00' , ADD `e
 ALTER TABLE prices DROP PRIMARY KEY ,
 ADD PRIMARY KEY ( `stockid` , `typeabbrev` , `currabrev` , `debtorno` , `startdate` , `enddate` ) ;
 
-UPDATE prices SET startdate='1999-01-01', enddate='9999-12-31';
+UPDATE prices SET startdate='1999-01-01', enddate='';
 
 ALTER TABLE stockcheckfreeze ADD COLUMN stockcheckdate date NOT NULL;
-UPDATE prices SET startdate='1999-01-01';
 
 ALTER TABLE suppliers add (email varchar(55),fax varchar(25), telephone varchar(25));
+ALTER TABLE locations add cashsalecustomer VARCHAR(21) NOT NULL DEFAULT '';

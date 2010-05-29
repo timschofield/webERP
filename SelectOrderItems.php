@@ -62,9 +62,6 @@ if (isset($_GET['NewOrder'])){
 
 }
 
-// removed to improve UI layout
-//echo '<a href="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Back to Sales Orders'). '</a><br>';
-
 if (isset($_GET['ModifyOrderNumber'])
 	AND $_GET['ModifyOrderNumber']!=''){
 
