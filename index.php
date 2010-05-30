@@ -4,7 +4,6 @@
 
 /* $Revision: 1.91 $ */
 
-
 $PageSecurity = 1;
 
 include('includes/session.inc');
@@ -105,6 +104,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/SelectOrderItems.php?' .sid . '&NewOrder=Yes">' . _('Enter An Order or Quotation') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/CounterSales.php?' .sid . '">' . _('Enter Counter Sales') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>

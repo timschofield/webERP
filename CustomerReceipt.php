@@ -242,7 +242,7 @@ if (isset($_POST['CommitBatch'])){
 			$CustomerReceiptCounter += 1;
 		}
 
-		if ($ReceiptItem->GLCode !=''){
+		if ($ReceiptItem->GLCode !=''){ //so its a GL receipt
 			if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter a GLTrans record */
 				 $SQL = 'INSERT INTO gltrans (type,
 			 			typeno,

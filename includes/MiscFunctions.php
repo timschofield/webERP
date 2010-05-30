@@ -260,54 +260,52 @@ function LogBackTrace( $dest = 0 ) {
     {
 	$frame = $stack[$ii];
 	$msg = "FRAME " . $ii . ": ";
-	if( isset( $frame['file'] ) )
+	if( isset( $frame['file'] ) ) {
 	    $msg .= "; file=" . $frame['file'];
-	if( isset( $frame['line'] ) )
+	}
+	if( isset( $frame['line'] ) ) {
 	    $msg .= "; line=" . $frame['line'];
-	if( isset( $frame['function'] ) )
+	}
+	if( isset( $frame['function'] ) ) {
 	    $msg .= "; function=" . $frame['function'];
-	if( isset( $frame['args'] ) )
-	{
+	}
+	if( isset( $frame['args'] ) ) {
 	    // Either function args, or included file name(s)
 	    $msg .= ' (';
-	    foreach( $frame['args'] as $val )
-	    {
-		$typ = gettype( $val );
-		switch( $typ )
-		{
-		case 'array':
-		    $msg .= '[ ';
-		    foreach( $val as $v2 )
-		    {
-			if( gettype( $v2 ) == 'array' )
-			{
-			    $msg .= '[ ';
-			    foreach( $v2 as $v3 )
-				$msg .= $v3;
-			    $msg .= ' ]';
+	    foreach( $frame['args'] as $val ) {
+	    
+			$typ = gettype( $val );
+			switch( $typ ) {
+				case 'array':
+				    $msg .= '[ ';
+				    foreach( $val as $v2 ) {
+						if( gettype( $v2 ) == 'array' ) {
+						    $msg .= '[ ';
+						    foreach( $v2 as $v3 )
+							$msg .= $v3;
+						    $msg .= ' ]';
+						} else {
+						    $msg .= $v2 . ', ';
+					    }
+					    $msg .= ' ]';
+					    break;
+					}
+				case 'string':
+				    $msg .= $val . ', ';
+				    break;
+		
+				case 'integer':
+				    $msg .= sprintf( "%d, ", $val );
+				    break;
+		
+				default:
+				    $msg .= '<' . gettype( $val ) . '>, ';
+				    break;
+				
+		    	}
+		    $msg .= ' )';
 			}
-			else
-			    $msg .= $v2 . ', ';
-		    }
-
-		    $msg .= ' ]';
-		    break;
-
-		case 'string':
-		    $msg .= $val . ', ';
-		    break;
-
-		case 'integer':
-		    $msg .= sprintf( "%d, ", $val );
-		    break;
-
-		default:
-		    $msg .= '<' . gettype( $val ) . '>, ';
-		    break;
 		}
-	    }
-	    $msg .= ' )';
-	}
 	error_log( $msg, $dest );
     }
 

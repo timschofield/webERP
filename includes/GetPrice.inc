@@ -123,7 +123,7 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $db){
 							if (DB_num_rows($result)==0){	
 								
 								/* Now use the default salestype/price list cos all else has failed */
-								$sql="SELECT prices.price
+								$sql="SELECT prices.price,
 											 prices.startdate
 										FROM prices,
 											debtorsmaster

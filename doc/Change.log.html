@@ -1,6 +1,8 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p></p>
-<p>28/5/10 Phil: New field in locations table to allow a default cash sales account to be setup by location -modifications to Locations.php to allow it to be entered and error-trapping for debtor - branch format required for specification. This will be used in a new CounterSales.php script I am working on
+<p>31/5/10 Phil: BankMatching script took out double quotes reformated indenting - a hard one to read - my bad!</p>
+<p>31/5/10 Phil: New script CounterSales.php to allow entry of sale and payment over the counter as a half way step to POS - the customer account is defaulted based on the users default stock location. The locations table now has a default cash sales account - see below</p>
+<p>28/5/10 Phil: New field in locations table to allow a default cash sales account to be setup by location -modifications to Locations.php to allow it to be entered and error-trapping for debtor - branch format required for specification. This will be used in a new CounterSales.php script I am working on</p>
 <P>27/05/10 Tim: PurchData.php - Show the uom name, not the number</p>
 <P>27/05/10 Tim: CustomerAllocations.php - Show the right balance, and the allocate link where needed</p>
 <P>27/05/10 Tim: GoodsReceived.php - Correctly show the suppliers Units of measure</p>
@@ -47,7 +49,7 @@
 <p>30/04/10 Lindsay: Make installation operation functional again</p>
 <p>29/04/10 Tim Schofield: SelectOrderItems.php : Ensure PO line number is carried through from quck entry screen.</p>
 <p>29/04/10 Tim Schofield: SelectOrderItems.php : LastCustomer was not being initialised.</p>
-<p>28/04/10 Tim Schofield: MiscFunctions.php : Fix currency download for when there is no internat connection.</p>
+<p>28/04/10 Tim Schofield: MiscFunctions.php : Fix currency download for when there is no internet connection.</p>
 <p>28/04/10 Matt Taylor: Z_ImportStocks.php : Prevent importing empty string for pdfappend.</p>
 <p>23/04/10 Matt Taylor: MiscFunctions.js : Fix IsDate() function for Y/m/d format.</p>
 <p>23/04/10 Matt Taylor: DateFunctions.inc : Fix Date1GreaterThanDate2() function for Y/m/d format.</p>

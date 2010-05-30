@@ -43,7 +43,8 @@ if ($AlreadyOnThisOrder!=1){
 				stockmaster.discontinued,
 				stockmaster.serialised,
 				stockmaster.eoq,
-				stockmaster.nextserialno
+				stockmaster.nextserialno,
+				stockmaster.taxcatid
 			FROM stockmaster INNER JOIN locstock
 			ON stockmaster.stockid=locstock.stockid
 			WHERE locstock.loccode='" . $_SESSION['Items'.$identifier]->Location . "'
@@ -147,7 +148,7 @@ if ($AlreadyOnThisOrder!=1){
 															'', /*Narrative - none yet */
 															$UpdateDB,
 															$NewLineNo,
-															'',
+															$myItemRow['taxcatid'],
 															'',
 															$NewItemDue,
 															$NewPOLine,

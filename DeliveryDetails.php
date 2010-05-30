@@ -22,8 +22,6 @@ if (isset($_GET['identifier'])) {
 	$identifier=$_GET['identifier'];
 }
 
-// This is not required on this page
-//echo '<a href="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Back to Sales Orders'). '</a><br>';
 unset($_SESSION['WarnOnce']);
 if (!isset($_SESSION['Items'.$identifier]) OR !isset($_SESSION['Items'.$identifier]->DebtorNo)){
 	prnMsg(_('This page can only be read if an order has been entered') . '. ' . _('To enter an order select customer transactions then sales order entry'),'error');
@@ -866,15 +864,6 @@ if (!isset($_SESSION['Items'.$identifier]->ConfirmedDate)) {
 	$_SESSION['Items'.$identifier]->ConfirmedDate = Date($_SESSION['DefaultDateFormat'],$EarliestDispatch);
 }
 
-/* No idea what this code does, but as it needs updating for other date formats
- * anyway I am commenting it out - Tim
-
-if($_SESSION['DefaultDateFormat']=='d/m/Y'){
-	$jdf=0;
-} else {
-	$jdf=1;
-}
-*/
 // The estimated Dispatch date or Delivery date for this order
 echo '<tr>
 	<td>'. _('Estimated Delivery Date') .':</td>
