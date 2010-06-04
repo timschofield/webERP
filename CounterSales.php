@@ -65,21 +65,30 @@ if (!isset($_SESSION['Items'.$identifier])){
 	$_SESSION['Items'.$identifier] = new cart;
 	$_SESSION['PrintedPackingSlip'] = 0; /*Of course 'cos the order ain't even started !!*/
 	/*Get the default customer-branch combo from the user's default location record */
-	$result = DB_query("SELECT cashsalecustomer, 
+	$sql = "SELECT cashsalecustomer, 
 								locationname,
 								taxprovinceid
 						 FROM locations 
-						 WHERE loccode='" . $_SESSION['UserStockLocation'] . "'",$db);
+						 WHERE loccode='" . $_SESSION['UserStockLocation'] ."'";
+	$result = DB_query($sql,$db);
 	if (DB_num_rows($result)==0) {
 		prnMsg(_('Your user account does not have a valid default inventory location set up. Please see the system administrator to modify your user account.'),'error');
 		include('includes/footer.inc');
 		exit;
 	} else {
 		$myrow = DB_fetch_array($result); //get the only row returned 
-		$_SESSION['Items'.$identifier]->Branch = substr($myrow['cashsalecustomer'],strpos($myrow['cashsalecustomer'],' - ')+3);
-	
-		$_SESSION['Items'.$identifier]->DebtorNo = substr($myrow['cashsalecustomer'],0,strpos($myrow['cashsalecustomer'],' - '));
-		$_SESSION['Items'.$identifier]->LocationName = $myrow['locationname'];
+		
+		if ($myrow['cashsalecustomer']==''){
+			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location. The default cash sale customer is defined under set up ->Inventory Locations Maintenance. The customer should be entered using the customer code a hypen then the branch code of the customer to use.'),'error');
+			include('includes/footer.inc');
+			exit;
+		} 
+		
+		$CashSaleCustomer = explode('-',$myrow['cashsalecustomer']);
+		
+		$_SESSION['Items'.$identifier]->Branch  = $CashSaleCustomer[0];
+		$_SESSION['Items'.$identifier]->DebtorNo = $CashSaleCustomer[1];
+				$_SESSION['Items'.$identifier]->LocationName = $myrow['locationname'];
 		$_SESSION['Items'.$identifier]->Location = $_SESSION['UserStockLocation'];
 		$_SESSION['Items'.$identifier]->DispatchTaxProvince = $myrow['taxprovinceid'];
 		
@@ -102,6 +111,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 	
 		$ErrMsg = _('The details of the customer selected') . ': ' .  $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('The SQL used to retrieve the customer details and failed was') . ':';
+		// echo $sql;
 		$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	
 		$myrow = DB_fetch_row($result);
@@ -2251,8 +2261,8 @@ if (!isset($_POST['ProcessSale'])){
 		 		/* Do not display colum unless customer requires po line number by sales order line*/
 		 		echo '<td><input type="text" name="part_' . $i . '" size=21 maxlength=20></td>
 						<td><input type="text" name="qty_' . $i . '" size=6 maxlength=6></td>
-						<td><input type="hidden" class="date" name="itemdue_' . $i . '" 
-						value="' . $DefaultDeliveryDate . '"></td></tr>';
+						<input type="hidden" class="date" name="itemdue_' . $i . '" 
+						value="' . $DefaultDeliveryDate . '"></tr>';
 	   		}
 			echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
 	

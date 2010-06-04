@@ -31,15 +31,20 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('The location code may not be empty'), 'error');
 	}
 	if ($_POST['CashSaleCustomer']!=''){
-		if (!strstr($_POST['CashSaleCustomer'],' - ')){
+		if (!strstr($_POST['CashSaleCustomer'],'-')){
 			$InputError =1;
-			prnMsg(_('The cash sale customer account must be a valid customer account separated by " - " then the branch code of the customer entered'), 'error');
+			prnMsg(_('The cash sale customers '.$_POST['CashSaleCustomer'].' account must be a valid customer account separated by " - " then the branch code of the customer entered'), 'error');
 		} else {
-			$Branch = substr($_POST['CashSaleCustomer'],strpos($_POST['CashSaleCustomer'],' - ')+3);
-			$DebtorNo = substr($_POST['CashSaleCustomer'],0,strpos($_POST['CashSaleCustomer'],' - '));
-			$sql = "SELECT * FROM custbranch WHERE debtorno='" . $DebtorNo . "' 
-											 AND branchcode='" . $Branch . "'"; 		
+			// $Branch = substr($_POST['CashSaleCustomer'],strpos($_POST['CashSaleCustomer'],' - ')+3);
+			// $DebtorNo = substr($_POST['CashSaleCustomer'],0,strpos($_POST['CashSaleCustomer'],' - '));
+			$arr = explode('-',$_POST['CashSaleCustomer']);
+			$DebtorNo = $arr[0];
+			$Branch = $arr[1];
 			
+			$sql = "SELECT * FROM custbranch WHERE debtorno='" . $DebtorNo . "' 
+											 AND branchcode='" . $Branch . "'";
+											  		
+			// echo $sql;
 			$result = DB_query($sql,$db);
 			if (DB_num_rows($result)==0){
 				$InputError = 1;

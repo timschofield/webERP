@@ -1,5 +1,8 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p></p>
+<p>03/06/10 Phil: Added a bit of error trapping to ensure customer/branch set up when going into CounterSales.php
+<p>03/06/10 Otandeka: Locations.php used explode function rather than substr function to split the cashsalecustomer to get Branch and Debtorno codes - also changed format to just a hypen between debtorno and branchcode</p>
+<p>03/06/10 Otandeka: CounterSales php changed to use explode to get branch and debtorno from cashsalecustomer - and changed format to debtorno-branchcode and rather than debtorno - branchcode (spaces removed)</p>      
 <p>31/5/10 Phil: BankMatching script took out double quotes reformated indenting - a hard one to read - my bad!</p>
 <p>31/5/10 Phil: New script CounterSales.php to allow entry of sale and payment over the counter as a half way step to POS - the customer account is defaulted based on the users default stock location. The locations table now has a default cash sales account - see below</p>
 <p>28/5/10 Phil: New field in locations table to allow a default cash sales account to be setup by location -modifications to Locations.php to allow it to be entered and error-trapping for debtor - branch format required for specification. This will be used in a new CounterSales.php script I am working on</p>
