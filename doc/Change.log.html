@@ -1,10 +1,11 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p></p>
-<p>03/06/10 Phil: Added a bit of error trapping to ensure customer/branch set up when going into CounterSales.php
+<p>03/06/10 Phil: Added a bit of error trapping to ensure customer/branch set up when going into CounterSales.php</p>
 <p>03/06/10 Otandeka: Locations.php used explode function rather than substr function to split the cashsalecustomer to get Branch and Debtorno codes - also changed format to just a hypen between debtorno and branchcode</p>
-<p>03/06/10 Otandeka: CounterSales php changed to use explode to get branch and debtorno from cashsalecustomer - and changed format to debtorno-branchcode and rather than debtorno - branchcode (spaces removed)</p>      
+<p>03/06/10 Otandeka: CounterSales php changed to use explode to get branch and debtorno from cashsalecustomer - and changed format to debtorno-branchcode and rather than debtorno - branchcode (spaces removed)</p>
 <p>31/5/10 Phil: BankMatching script took out double quotes reformated indenting - a hard one to read - my bad!</p>
 <p>31/5/10 Phil: New script CounterSales.php to allow entry of sale and payment over the counter as a half way step to POS - the customer account is defaulted based on the users default stock location. The locations table now has a default cash sales account - see below</p>
+<P>29/05/10 ChenJohn: SalesTypes.php - upgrade3.11.1-3.12.sql - to allow sales type description up to 40 char length</p>
 <p>28/5/10 Phil: New field in locations table to allow a default cash sales account to be setup by location -modifications to Locations.php to allow it to be entered and error-trapping for debtor - branch format required for specification. This will be used in a new CounterSales.php script I am working on</p>
 <P>27/05/10 Tim: PurchData.php - Show the uom name, not the number</p>
 <P>27/05/10 Tim: CustomerAllocations.php - Show the right balance, and the allocate link where needed</p>
@@ -21,8 +22,8 @@
 <p>16/05/10 Phil: reworked PricesByCost.php this was bit of a dodgy script - well I found it hard to follow - in the words of Frank Sinatra - I did it my way! Also built in effectivity dates to display and ensure correct prices updated now the primary key of prices is changed.</p>
 <p>16/05/10 Phil: Wrote up the manual so that the logic of pricing with effective dates is explained</p>
 <p>15/05/10 Phil: Used Lindsay/Ngaraj's nice email address checking function to replace the existing function in MiscFunctions.php and includes MiscFunctions.php in install/save.php to avoid duplication of the function</p>
-<p>15/05/10 Phil: $debug variable in UserLogin.php was only set on first login - not subsequent page calls (its not a session variable) - moved it back into session.inc so that full info about bugs is available to sysadmins
-<p>15/05/10 Phil: GetPrices.inc Prices.php and Prices_Customer.php - modified to allow default prices - with no end dates - reducing requirement to administer - also updated Prices section of the manual
+<p>15/05/10 Phil: $debug variable in UserLogin.php was only set on first login - not subsequent page calls (its not a session variable) - moved it back into session.inc so that full info about bugs is available to sysadmins</p>
+<p>15/05/10 Phil: GetPrices.inc Prices.php and Prices_Customer.php - modified to allow default prices - with no end dates - reducing requirement to administer - also updated Prices section of the manual</p>
 <p>11/05/10 Tim: Exit MRP scripts gracefully if no MRP calculation has been done.</p>
 <p>08/05/10 Lindsay: API was broken after adding a test for global variable $DatabaseName in ConnectDB_mysql* for this variable being set and using it as DB name if so.  The variable of that name in the api_php.php has been changed to $api_DatabaseName.</p>
 <p>08/05/10 Phil: GetPrices.inc now uses the new price startdate and enddate to return the price which falls within the date range base on the current date. Changes to Prices.php and Prices_Customer.php to allow entry of effective from and effective to dates and updating/deleting of prices with appropriate error trapping and rescheduling of enddates where start and end dates would otherwise overlap.</p>

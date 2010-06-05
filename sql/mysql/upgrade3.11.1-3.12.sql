@@ -162,4 +162,10 @@ UPDATE prices SET startdate='1999-01-01', enddate='';
 ALTER TABLE stockcheckfreeze ADD COLUMN stockcheckdate date NOT NULL;
 
 ALTER TABLE suppliers add (email varchar(55),fax varchar(25), telephone varchar(25));
+
+ALTER TABLE `www_users` add `supplierid` varchar(10) NOT NULL DEFAULT '' AFTER `customerid`;
+INSERT INTO `securityroles` VALUES (9,'Supplier Log On Only');
+
 ALTER TABLE locations add cashsalecustomer VARCHAR(21) NOT NULL DEFAULT '';
+
+ALTER TABLE `salestypes` CHANGE COLUMN `sales_type` `sales_type` VARCHAR(40) NOT NULL DEFAULT '';

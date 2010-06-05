@@ -40,9 +40,9 @@ if (isset($_POST['submit'])) {
 		prnMsg('<br>' . _('The sales type (price list) code cannot be an empty string or spaces'),'error');
 		$Errors[$i] = 'SalesType';
 		$i++;
-	} elseif (strlen($_POST['Sales_Type']) >20) {
+	} elseif (strlen($_POST['Sales_Type']) >40) {
 		$InputError = 1;
-		echo prnMsg(_('The sales type (price list) description must be twenty characters or less long'),'error');
+		echo prnMsg(_('The sales type (price list) description must be forty characters or less long'),'error');
 		$Errors[$i] = 'SalesType';
 		$i++;
 	} elseif ($_POST['TypeAbbrev']=='AN'){
