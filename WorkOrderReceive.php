@@ -191,7 +191,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
             //Need to check this against the current standard cost and do a cost update if necessary
             $sql = "SELECT materialcost+labourcost+overheadcost AS cost,
-                          sum(quantity) AS totalqoh
+                          sum(quantity) AS totalqoh,
+						  labourcost,
+                          overheadcost					  
                     FROM stockmaster INNER JOIN locstock
                         ON stockmaster.stockid=locstock.stockid
                     WHERE stockmaster.stockid='" . $_POST['StockID'] . "'
@@ -202,14 +204,14 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
             $ItemResult = DB_query($sql,$db);
             $ItemCostRow = DB_fetch_array($ItemResult);
 
-            if ($Cost != $ItemCostRow['cost']){ //the cost roll-up cost <> standard cost
+            if (($Cost + $ItemCostRow['labourcost'] + $ItemCostRow['overheadcost']) != $ItemCostRow['cost']){ //the cost roll-up cost <> standard cost
 
                 if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $ItemCostRow['totalqoh']!=0){
 
                     $CostUpdateNo = GetNextTransNo(35, $db);
                     $PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
-                    $ValueOfChange = $ItemCostRow['totalqoh'] * ($Cost - $ItemCostRow['cost']);
+                    $ValueOfChange = $ItemCostRow['totalqoh'] * (($Cost + $ItemCostRow['labourcost'] + $ItemCostRow['overheadcost']) - $ItemCostRow['cost']);
 
                     $SQL = "INSERT INTO gltrans (type,
                                 typeno,
@@ -252,8 +254,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
                 $SQL = "UPDATE stockmaster SET
                             materialcost=" . $Cost . ",
-                            labourcost=0,
-                            overheadcost=0,
+                            labourcost=" . $ItemCostRow['labourcost'] . ",
+                            overheadcost=" . $ItemCostRow['overheadcost'] . ",
                             lastcost=" . $ItemCostRow['cost'] . "
                         WHERE stockid='" . $_POST['StockID'] . "'";
 
