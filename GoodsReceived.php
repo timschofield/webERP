@@ -129,15 +129,17 @@ if (count($_SESSION['PO']->LineItems)>0){
 			} else {
 				$uom=$LnItm->Units;
 			}
+			$conversionfactor=$uomrow['conversionfactor'];
 		} else {
 			$uom=$LnItm->Units;
+			$conversionfactor=1;
 		}
 
 		//Now Display LineItem
 		echo '<td><font size=2>' . $LnItm->StockID . '</font></td>';
 		echo '<td><font size=2>' . $LnItm->ItemDescription . '</td>';
 		echo '<td class=number><font size=2>' . $DisplayQtyOrd . '</td>';
-		echo '<td><font size=2>' . $uom . '</td>';
+		echo '<td><font size=2>' . $LnItm->uom . '</td>';
 		echo '<td class=number><font size=2>' . $DisplayQtyRec . '</td>';
 		echo '<td class=number><font size=2>';
 
@@ -412,7 +414,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 					'" . $_POST['DefaultReceivedDate'] . "',
 					" . $OrderLine->ReceiveQty . ",
 					'" . $_SESSION['PO']->SupplierID . "',
-					" . $CurrentStandardCost . ')';
+					" . $CurrentStandardCost *$conversionfactor. ')';
 
 			$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('A GRN record could not be inserted') . '. ' . _('This receipt of goods has not been processed because');
 			$DbgMsg =  _('The following SQL to insert the GRN record was used');
@@ -477,7 +479,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 						25,
 						" . $GRN . ", '" . $_SESSION['PO']->Location . "',
 						'" . $_POST['DefaultReceivedDate'] . "',
-						" . $LocalCurrencyPrice . ",
+						" . $LocalCurrencyPrice / $conversionfactor . ",
 						" . $PeriodNo . ",
 						'" . $_SESSION['PO']->SupplierID . " (" . $_SESSION['PO']->SupplierName . ") - " .$_SESSION['PO']->OrderNo . "',
 						" . $OrderLine->ReceiveQty . ",

@@ -68,7 +68,7 @@ Class PurchOrder {
 	var $paymentterms;
 	var $contact;
 	var $port;
-	
+
 	function PurchOrder(){
 	/*Constructor function initialises a new purchase order object */
 		$this->LineItems = array();
@@ -96,6 +96,7 @@ Class PurchOrder {
 				$DecimalPlaces=2,
 				$itemno,
 				$uom,
+				$leadtime,
 				$suppliers_partno,
 				$subtotal_amount,
 				$package,
@@ -119,14 +120,15 @@ Class PurchOrder {
 				$GLCode,
 				$ReqDelDate,
 				$ShiptRef,
-				$JobRef,
 				0,
+				$JobRef,
 				$QtyInv,
 				$QtyRecd,
 				$GLActName,
 				$DecimalPlaces,
 				$itemno,
 				$uom,
+				$leadtime,
 				$suppliers_partno,
 				$subtotal_amount,
 				$package,
@@ -171,7 +173,7 @@ Class PurchOrder {
 			$this->LineItems[$LineNo]->ReqDelDate = $ReqDelDate;
 			$this->LineItems[$LineNo]->ShiptRef = $ShiptRef;
 			$this->LineItems[$LineNo]->JobRef = $JobRef;
-			$this->LineItems[$LineNo]->itemno = $itemno;			
+			$this->LineItems[$LineNo]->itemno = $itemno;
 			$this->LineItems[$LineNo]->uom = $uom;
 			$this->LineItems[$LineNo]->suppliers_partno = $suppliers_partno;
 			$this->LineItems[$LineNo]->subtotal_amount = $subtotal_amount;
@@ -211,7 +213,7 @@ Class PurchOrder {
 		}
 		return 0;
 	}
-	
+
 	function Order_Value() {
 		$TotalValue=0;
 		foreach ($this->LineItems as $OrderedItems) {
@@ -245,6 +247,7 @@ Class LineDetails {
 	Var $suppliers_partno;
 	Var $subtotal_amount;
 	Var $leadtime;
+	Var $package;
 	Var $pcunit;
 	Var $nw;
 	Var $gw;
@@ -258,35 +261,35 @@ Class LineDetails {
 	Var $SerialItems;  /*An array holding the batch/serial numbers and quantities in each batch*/
 
 	function LineDetails (
-				$LineNo, 
-				$StockItem, 
-				$Serialised, 
-				$Controlled, 
-				$Qty, 
-				$ItemDescr,  
-				$Prc, 
-				$UOM, 
-				$GLCode, 
-				$ReqDelDate, 
-				$ShiptRef =0, 
+				$LineNo,
+				$StockItem,
+				$Serialised,
+				$Controlled,
+				$Qty,
+				$ItemDescr,
+				$Prc,
+				$UOM,
+				$GLCode,
+				$ReqDelDate,
+				$ShiptRef =0,
 				$Completed,
-				$JobRef, 
-				$QtyInv, 
-				$QtyRecd, 
-				$GLActName, 
+				$JobRef,
+				$QtyInv,
+				$QtyRecd,
+				$GLActName,
 				$DecimalPlaces,
 				$itemno,
 				$uom,
 				$suppliers_partno,
 				$subtotal_amount,
 				$leadtime,
+				$package,
 				$pcunit,
 				$nw,
 				$gw,
 				$cuft,
 				$total_quantity,
 				$total_amount)
-	
 	{
 
 	/* Constructor function to add a new LineDetail object with passed params */
@@ -305,7 +308,7 @@ Class LineDetails {
 		$this->GLCode = $GLCode;
 		$this->JobRef = $JobRef;
 		$this->itemno = $itemno;
-		$this->uom = $uom;		
+		$this->uom = $uom;
 		$this->suppliers_partno = $suppliers_partno;
 		$this->subtotal_amount = $subtotal_amount;
 		$this->leadtime = $leadtime;

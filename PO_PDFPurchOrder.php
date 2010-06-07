@@ -255,6 +255,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			if ($YPos-$line_height <= $Bottom_Margin){
 				/* We reached the end of the page so finsih off the page and start a newy */
 				$PageNumber++;
+				$YPos=$Page_Height - $FormDesign->Data->y;
 				include ('includes/PO_PDFOrderPageHeader.inc');
 			} //end if need a new page headed up
 			/*increment a line down for the next line item */
@@ -268,7 +269,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		} //end while there are line items to print out
 		if ($YPos-$line_height <= $Bottom_Margin){ // need to ensure space for totals
 				$PageNumber++;
-			include ('includes/PO_PDFOrderPageHeader.inc');
+				include ('includes/PO_PDFOrderPageHeader.inc');
 		} //end if need a new page headed up
 		if ($_POST['ShowAmounts']=='Yes'){
 			$DisplayOrderTotal = number_format($OrderTotal,2);

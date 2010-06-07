@@ -753,12 +753,15 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 						purchdata.conversionfactor,
 						purchdata.supplierdescription,
 						purchdata.suppliersuom,
+						unitsofmeasure.unitname,
 						purchdata.suppliers_partno,
 						purchdata.leadtime
 					FROM stockcategory,
 						chartmaster,
 						stockmaster LEFT JOIN purchdata
 					ON stockmaster.stockid = purchdata.stockid
+					LEFT JOIN unitsofmeasure
+					ON purchdata.suppliersuom=unitsofmeasure.unitid
 					AND purchdata.supplierno = '" . $_SESSION['PO'.$identifier]->SupplierID . "'
 					WHERE chartmaster.accountcode = stockcategory.stockact
 						AND stockcategory.categoryid = stockmaster.categoryid
@@ -810,11 +813,12 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 							$myrow['accountname'],
 							$myrow['decimalplaces'],
 							$ItemCode,
-							$myrow['suppliersuom'],
+							$myrow['unitname'],
 							$myrow['suppliers_partno'],
 							$Quantity*$myrow['price'],
 							$myrow['leadtime'],
 							'',
+							0,
 							$myrow['netweight'],
 							$myrow['kgs'],
 							'',
@@ -841,11 +845,12 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 							$myrow['accountname'],
 							0,
 							$ItemCode,
-							'',
+							$myrow['units'],
 							'',
 							0,
 							0,
 							'',
+							0,
 							0,
 							0,
 							0,
@@ -995,8 +1000,6 @@ if (isset($_POST['NonStockOrder'])) {
 	echo '<div class=centre><input type=submit name="EnterLine" value="Enter Item"></div>';
 }
 
-echo '<hr>';
-
 /* Now show the stock item selection search stuff below */
 
 if (!isset($_GET['Edit'])) {
@@ -1010,7 +1013,7 @@ if (!isset($_GET['Edit'])) {
 	$DbgMsg = _('The SQL used to retrieve the category details but failed was');
 	$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-	echo '<table><tr><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' .
+	echo '<table class=selection><tr><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' .
 		_('Print') . '" alt="">' . ' ' . _('Search For Stock Items') . '';
 
 	echo ":</font></tr><tr><td><select name='StockCat'>";
@@ -1057,7 +1060,7 @@ if (!isset($_GET['Edit'])) {
 
 if (isset($SearchResult)) {
 
-	echo "<table cellpadding=1 colspan=7 border=1>";
+	echo "<table cellpadding=1 colspan=7>";
 
 	$tableheader = "<tr>
 			<th>" . _('Code')  . "</th>
@@ -1090,8 +1093,12 @@ if (isset($SearchResult)) {
 			$ImageSource = '<i>'._('No Image').'</i>';
 		}
 
-			$uomsql='SELECT conversionfactor, suppliersuom
+			$uomsql='SELECT conversionfactor,
+						suppliersuom,
+						unitsofmeasure.unitname
 					FROM purchdata
+					LEFT JOIN unitsofmeasure
+					ON purchdata.suppliersuom=unitsofmeasure.unitid
 					WHERE supplierno="'.$_SESSION['PO'.$identifier]->SupplierID.'"
 					AND stockid="'.$myrow['stockid'].'"';
 
@@ -1099,24 +1106,20 @@ if (isset($SearchResult)) {
 			if (DB_num_rows($uomresult)>0) {
 				$uomrow=DB_fetch_array($uomresult);
 				if (strlen($uomrow['suppliersuom'])>0) {
-					$uom=$uomrow['suppliersuom'];
+					$uom=$uomrow['unitname'];
 				} else {
 					$uom=$myrow['units'];
 				}
 			} else {
 				$uom=$myrow['units'];
 			}
-			printf("<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td><input class='number' type='text' size=6 value=0 name='qty%s'></td>
-			</tr>",
-			$myrow['stockid'],
-			$myrow['description'],
-			$uom,
-			$ImageSource,
-			$myrow['stockid']);
+			echo "<td>".$myrow['stockid']."</td>
+			<td>".$myrow['description']."</td>
+			<td>".$uom."</td>
+			<td>".$ImageSource."</td>
+			<td><input class='number' type='text' size=6 value=0 name='qty".$myrow['stockid']."'></td>
+			<td><input type='hidden' size=6 value=".$uom." name=uom></td>
+			</tr>";
 
 		$PartsDisplayed++;
 		if ($PartsDisplayed == $Maximum_Number_Of_Parts_To_Show){

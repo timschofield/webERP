@@ -21,7 +21,7 @@
 	<PageNumber type="SimpleText" name="Page number" id="PageNumber">
 		<FontSize>10</FontSize>
 		<x>762</x>
-		<y>70</y>
+		<y>30</y>
 	</PageNumber>
 	<TaxAuthority type="SimpleText" name="Tax Authority" id="TaxAuthority">
 		<FontSize>10</FontSize>
@@ -79,37 +79,37 @@
 		<Caption type="SimpleText" name="Caption" id="DeliveryAddressCaption">
 			<FontSize>12</FontSize>
 			<x>448</x>
-			<y>154</y>
+			<y>142</y>
 		</Caption>
 		<Line1 type="SimpleText" name="Line 1" id="DeliveryAddress1">
 			<FontSize>12</FontSize>
 			<x>448</x>
-			<y>166</y>
+			<y>154</y>
 		</Line1>
 		<Line2 type="SimpleText" name="Line 2" id="DeliveryAddress2">
 			<FontSize>12</FontSize>
 			<x>448</x>
-			<y>178</y>
+			<y>166</y>
 		</Line2>
 		<Line3 type="SimpleText" name="Line 3" id="DeliveryAddress3">
 			<FontSize>12</FontSize>
 			<x>448</x>
-			<y>190</y>
+			<y>178</y>
 		</Line3>
 		<Line4 type="SimpleText" name="Line 4" id="DeliveryAddress4">
 			<FontSize>12</FontSize>
 			<x>448</x>
-			<y>202</y>
+			<y>190</y>
 		</Line4>
 		<Line5 type="SimpleText" name="Line 5" id="DeliveryAddress5">
 			<FontSize>12</FontSize>
 			<x>448</x>
-			<y>214</y>
+			<y>202</y>
 		</Line5>
 		<Line6 type="SimpleText" name="Line 6" id="DeliveryAddress6">
 			<FontSize>12</FontSize>
 			<x>448</x>
-			<y>226</y>
+			<y>214</y>
 		</Line6>
 	</DeliveryAddress>
 	<DeliveryAddressBox type="CurvedRectangle" name="Delivery address box" id="DeliveryAddressBox">
@@ -122,44 +122,44 @@
 	<SupplierName type="SimpleText" name="Supplier name" id="SupplierName">
 		<FontSize>12</FontSize>
 		<x>41</x>
-		<y>246</y>
+		<y>226</y>
 	</SupplierName>
 	<SupplierAddress type="ElementArray" name="Supplier address">
 		<Line1 type="SimpleText" name="Line 1" id="SupplierAddress1">
 			<FontSize>12</FontSize>
 			<x>71</x>
-			<y>262</y>
+			<y>238</y>
 		</Line1>
 		<Line2 type="SimpleText" name="Line 2" id="SupplierAddress2">
 			<FontSize>12</FontSize>
 			<x>71</x>
-			<y>274</y>
+			<y>250</y>
 		</Line2>
 		<Line3 type="SimpleText" name="Line 3" id="SupplierAddress3">
 			<FontSize>12</FontSize>
 			<x>71</x>
-			<y>286</y>
+			<y>262</y>
 		</Line3>
 		<Line4 type="SimpleText" name="Line 4" id="SupplierAddress4">
 			<FontSize>12</FontSize>
 			<x>71</x>
-			<y>298</y>
+			<y>274</y>
 		</Line4>
 	</SupplierAddress>
 	<OrderDate type="SimpleText" name="Order date" id="OrderDate">
 		<FontSize>12</FontSize>
 		<x>446</x>
-		<y>262</y>
+		<y>250</y>
 	</OrderDate>
 	<Initiator type="SimpleText" name="Order initiator" id="Initiator">
 		<FontSize>12</FontSize>
 		<x>446</x>
-		<y>278</y>
+		<y>264</y>
 	</Initiator>
 	<PaymentTerms type="SimpleText" name="Payment terms" id="PaymentTerms">
 		<FontSize>12</FontSize>
 		<x>446</x>
-		<y>290</y>
+		<y>278</y>
 	</PaymentTerms>
 	<Comments type="MultiLineText" name="Comments" id="Comments">
 		<FontSize>12</FontSize>
@@ -170,7 +170,7 @@
 	<Currency type="SimpleText" name="Currency text" id="Currency">
 		<FontSize>12</FontSize>
 		<x>40</x>
-		<y>312</y>
+		<y>300</y>
 	</Currency>
 	<HeaderRectangle type="Rectangle" name="Header rectangle" id="HeaderRectangle">
 		<x>40</x>

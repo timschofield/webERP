@@ -145,8 +145,6 @@
 										stockmaster.controlled,
 										stockmaster.serialised,
 										stockmaster.decimalplaces,
-										purchdata.suppliersuom,
-										purchdata.suppliers_partno,
 										subtotal_amount,
 										package,
 										pcunit,
@@ -154,8 +152,7 @@
 										gw,
 										cuft,
 										total_quantity,
-										total_amount,
-										MAX(purchdata.effectivefrom)
+										total_amount
 										FROM purchorderdetails
 											LEFT JOIN stockmaster
 											ON purchorderdetails.itemcode=stockmaster.stockid
@@ -163,8 +160,6 @@
 											ON purchorders.orderno=purchorderdetails.orderno
 											LEFT JOIN chartmaster
 											ON purchorderdetails.glcode=chartmaster.accountcode
-											LEFT JOIN  purchdata
-											ON purchdata.stockid=purchorderdetails.itemcode AND purchdata.supplierno=purchorders.supplierno
 										WHERE purchorderdetails.completed=0
 											AND purchorderdetails.orderno =" . $_GET['ModifyOrderNumber'] . '
 										ORDER BY podetailitem';
@@ -182,16 +177,39 @@
 					 } else {
 						$GLCode = $myrow['glcode'];
 					 }
-					 if (is_null($myrow['units'])){
+					if (is_null($myrow['units'])){
 						$Units = _('each');
-					 } else {
+					} else {
 						$Units = $myrow['units'];
-					 }
-					 if (is_null($myrow['itemcode'])){
+					}
+					if (is_null($myrow['itemcode'])){
 						$StockID = '';
-					 } else {
+					} else {
 						$StockID = $myrow['itemcode'];
-					 }
+					}
+					$datesql='SELECT max(effectivefrom)
+							FROM purchdata
+							WHERE supplierno="'.$_SESSION['PO'.$identifier]->SupplierID.'"
+								AND stockid="'.$StockID.'"
+								AND effectivefrom<="'.$_SESSION['PO'.$identifier]->Orig_OrderDate.'"';
+					$dateresult=DB_query($datesql, $db);
+					$date=DB_fetch_row($dateresult);
+					if ($date[0]!='') {
+						$sql='SELECT unitsofmeasure.unitname,
+									suppliers_partno
+								FROM purchdata
+								LEFT JOIN unitsofmeasure
+								ON purchdata.suppliersuom=unitsofmeasure.unitid
+								WHERE supplierno="'.$_SESSION['PO'.$identifier]->SupplierID.'"
+								AND stockid="'.$StockID.'"
+								AND effectivefrom="'.$date[0].'"';
+						$purchdataresult=DB_query($sql, $db);
+						$myrow2=DB_fetch_array($purchdataresult);
+					} else {
+						$sql='SELECT units as unitname, stockid as suppliers_partno FROM stockmaster WHERE stockid="'.$StockID.'"';
+						$purchdataresult=DB_query($sql, $db);
+						$myrow2=DB_fetch_array($purchdataresult);
+					}
 
 					$_SESSION['PO'.$identifier]->add_to_order($_SESSION['PO'.$identifier]->LinesOnOrder+1,
 							$StockID,
@@ -211,9 +229,10 @@
 							$myrow['accountname'],
 							$myrow['decimalplaces'],
 							$myrow['itemno'],
-							$myrow['suppliersuom'],
-							$myrow['suppliers_partno'],
+							$myrow2['unitname'],
+							$myrow2['suppliers_partno'],
 							$myrow['subtotal_amount'],
+							0,
 							$myrow['package'],
 							$myrow['pcunit'],
 							$myrow['nw'],
