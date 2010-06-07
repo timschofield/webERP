@@ -6168,9 +6168,6 @@ INSERT INTO `periods` VALUES (21,'2009-02-28');
 INSERT INTO `periods` VALUES (22,'2009-03-31');
 
 
-INSERT INTO `prices` VALUES ('HIT3043-5','DE','USD','','2300.0000','');
-
-
 INSERT INTO `purchdata` VALUES ('BINGO','HIT3043-5','1235.0000','',1,'',5,1,'2009-09-18','');
 INSERT INTO `purchdata` VALUES ('CRUISE','DVD-UNSG2','200.0000','10 Pack',10,'',5,1,'2009-09-18','');
 

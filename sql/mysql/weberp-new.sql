@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS MyCompanyName DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_unicode_ci;
+cCREATE DATABASE IF NOT EXISTS MyCompanyName DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_unicode_ci;
 USE MyCompanyName;
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -259,20 +259,16 @@ CREATE TABLE `config` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `contractbom` (
-  `contractref` char(20) NOT NULL DEFAULT '',
-  `component` char(20) NOT NULL DEFAULT '',
+   contractno int(11) NOT NULL DEFAULT '0',
+   `stockid` char(20) NOT NULL DEFAULT '',
   `workcentreadded` char(5) NOT NULL DEFAULT '',
-  `loccode` char(5) NOT NULL DEFAULT '',
   `quantity` double NOT NULL DEFAULT '1',
-  PRIMARY KEY (`contractref`,`component`,`workcentreadded`,`loccode`),
-  KEY `Component` (`component`),
-  KEY `LocCode` (`loccode`),
-  KEY `ContractRef` (`contractref`),
+  PRIMARY KEY (`contractno`,`stockid`,`workcentreadded`),
+  KEY `Stockid` (`stockid`),
+  KEY `ContractNo` (`contractno`),
   KEY `WorkCentreAdded` (`workcentreadded`),
-  KEY `WorkCentreAdded_2` (`workcentreadded`),
   CONSTRAINT `contractbom_ibfk_1` FOREIGN KEY (`workcentreadded`) REFERENCES `workcentres` (`code`),
-  CONSTRAINT `contractbom_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
-  CONSTRAINT `contractbom_ibfk_3` FOREIGN KEY (`component`) REFERENCES `stockmaster` (`stockid`)
+  CONSTRAINT `contractbom_ibfk_3` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -281,13 +277,13 @@ CREATE TABLE `contractbom` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `contractreqts` (
   `contractreqid` int(11) NOT NULL AUTO_INCREMENT,
-  `contract` char(20) NOT NULL DEFAULT '',
-  `component` char(40) NOT NULL DEFAULT '',
+  `contractno` int(11) NOT NULL DEFAULT '0',
+  `requirement` varchar(40) NOT NULL DEFAULT '',
   `quantity` double NOT NULL DEFAULT '1',
-  `priceperunit` decimal(20,4) NOT NULL DEFAULT '0.0000',
+  `costperunit` double NOT NULL DEFAULT '0.0000',
   PRIMARY KEY (`contractreqid`),
-  KEY `Contract` (`contract`),
-  CONSTRAINT `contractreqts_ibfk_1` FOREIGN KEY (`contract`) REFERENCES `contracts` (`contractref`)
+  KEY `Contract` (`contractno`),
+  CONSTRAINT `contractreqts_ibfk_1` FOREIGN KEY (`contractno`) REFERENCES `contracts` (`contractno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -295,35 +291,30 @@ CREATE TABLE `contractreqts` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `contracts` (
+  `contractno` int(11) NOT NULL DEFAULT '0',
   `contractref` varchar(20) NOT NULL DEFAULT '',
-  `contractdescription` varchar(50) NOT NULL DEFAULT '',
+  `contractdescription` text NOT NULL DEFAULT '',
   `debtorno` varchar(10) NOT NULL DEFAULT '',
   `branchcode` varchar(10) NOT NULL DEFAULT '',
-  `status` varchar(10) NOT NULL DEFAULT 'Quotation',
+  `status` tinyint NOT NULL DEFAULT 0,
   `categoryid` varchar(6) NOT NULL DEFAULT '',
-  `typeabbrev` char(2) NOT NULL DEFAULT '',
   `orderno` int(11) NOT NULL DEFAULT '0',
-  `quotedpricefx` decimal(20,4) NOT NULL DEFAULT '0.0000',
-  `margin` double NOT NULL DEFAULT '1',
-  `woref` varchar(20) NOT NULL DEFAULT '',
-  `requireddate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `canceldate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+   `margin` double NOT NULL DEFAULT '1',
+  `wo` int(11) NOT NULL DEFAULT '0',
+  `requireddate` date NOT NULL DEFAULT '0000-00-00',
   `quantityreqd` double NOT NULL DEFAULT '1',
-  `specifications` longblob NOT NULL,
-  `datequoted` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `units` varchar(15) NOT NULL DEFAULT 'Each',
-  `drawing` longblob NOT NULL,
+  `drawing` varchar(50) NOT NULL DEFAULT '',
   `rate` double NOT NULL DEFAULT '1',
-  PRIMARY KEY (`contractref`),
+  PRIMARY KEY (`contractno`),
+  KEY `ContractRef` (`contractref`),
   KEY `OrderNo` (`orderno`),
   KEY `CategoryID` (`categoryid`),
   KEY `Status` (`status`),
-  KEY `TypeAbbrev` (`typeabbrev`),
-  KEY `WORef` (`woref`),
+    KEY `WO` (`wo`),
   KEY `DebtorNo` (`debtorno`,`branchcode`),
   CONSTRAINT `contracts_ibfk_1` FOREIGN KEY (`debtorno`, `branchcode`) REFERENCES `custbranch` (`debtorno`, `branchcode`),
-  CONSTRAINT `contracts_ibfk_2` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`),
-  CONSTRAINT `contracts_ibfk_3` FOREIGN KEY (`typeabbrev`) REFERENCES `salestypes` (`typeabbrev`)
+  CONSTRAINT `contracts_ibfk_2` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

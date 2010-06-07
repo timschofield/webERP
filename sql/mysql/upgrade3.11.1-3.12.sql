@@ -168,4 +168,62 @@ INSERT INTO `securityroles` VALUES (9,'Supplier Log On Only');
 
 ALTER TABLE locations add cashsalecustomer VARCHAR(21) NOT NULL DEFAULT '';
 
-ALTER TABLE `salestypes` CHANGE COLUMN `sales_type` `sales_type` VARCHAR(40) NOT NULL DEFAULT '';
+SET FOREIGN_KEY_CHECKS=0;
+DROP TABLE contracts;
+DROP TABLE contractreqts;
+DROP TABLE contractbom;
+CREATE TABLE `contractbom` (
+   contractno int(11) NOT NULL DEFAULT '0',
+   `stockid` char(20) NOT NULL DEFAULT '',
+  `workcentreadded` char(5) NOT NULL DEFAULT '',
+  `quantity` double NOT NULL DEFAULT '1',
+  PRIMARY KEY (`contractno`,`stockid`,`workcentreadded`),
+  KEY `Stockid` (`stockid`),
+  KEY `ContractNo` (`contractno`),
+  KEY `WorkCentreAdded` (`workcentreadded`),
+  CONSTRAINT `contractbom_ibfk_1` FOREIGN KEY (`workcentreadded`) REFERENCES `workcentres` (`code`),
+  CONSTRAINT `contractbom_ibfk_3` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `contractreqts` (
+  `contractreqid` int(11) NOT NULL AUTO_INCREMENT,
+  `contractno` int(11) NOT NULL DEFAULT '0',
+  `requirement` varchar(40) NOT NULL DEFAULT '',
+  `quantity` double NOT NULL DEFAULT '1',
+  `costperunit` double NOT NULL DEFAULT '0.0000',
+  PRIMARY KEY (`contractreqid`),
+  KEY `Contract` (`contractno`),
+  CONSTRAINT `contractreqts_ibfk_1` FOREIGN KEY (`contractno`) REFERENCES `contracts` (`contractno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `contracts` (
+  `contractno` int(11) NOT NULL DEFAULT '0',
+  `contractref` varchar(20) NOT NULL DEFAULT '',
+  `contractdescription` text NOT NULL DEFAULT '',
+  `debtorno` varchar(10) NOT NULL DEFAULT '',
+  `branchcode` varchar(10) NOT NULL DEFAULT '',
+  `status` tinyint NOT NULL DEFAULT 0,
+  `categoryid` varchar(6) NOT NULL DEFAULT '',
+  `orderno` int(11) NOT NULL DEFAULT '0',
+   `margin` double NOT NULL DEFAULT '1',
+  `wo` int(11) NOT NULL DEFAULT '0',
+  `requireddate` date NOT NULL DEFAULT '0000-00-00',
+  `quantityreqd` double NOT NULL DEFAULT '1',
+  `units` varchar(15) NOT NULL DEFAULT 'Each',
+  `drawing` varchar(50) NOT NULL DEFAULT '',
+  `rate` double NOT NULL DEFAULT '1',
+  PRIMARY KEY (`contractno`),
+  KEY `ContractRef` (`contractref`),
+  KEY `OrderNo` (`orderno`),
+  KEY `CategoryID` (`categoryid`),
+  KEY `Status` (`status`),
+    KEY `WO` (`wo`),
+  KEY `DebtorNo` (`debtorno`,`branchcode`),
+  CONSTRAINT `contracts_ibfk_1` FOREIGN KEY (`debtorno`, `branchcode`) REFERENCES `custbranch` (`debtorno`, `branchcode`),
+  CONSTRAINT `contracts_ibfk_2` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `salestypes` CHANGE COLUMN `sales_type` `sales_type` VARCHAR(40) NOT NULL DEFAULT '';>>>>>>> .r3482
