@@ -198,6 +198,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['DefaultBlindPackNote'] != $_POST['X_DefaultBlindPackNote'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_DefaultBlindPackNote'])."' WHERE confname = 'DefaultBlindPackNote'";
 		}
+		if ($_SESSION['ShowValueOnGRN'] != $_POST['X_ShowValueOnGRN'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_ShowValueOnGRN'])."' WHERE confname = 'ShowValueOnGRN'";
+		}
 		if ($_SESSION['PackNoteFormat'] != $_POST['X_PackNoteFormat'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_PackNoteFormat'])."' WHERE confname = 'PackNoteFormat'";
 		}
@@ -429,6 +432,15 @@ echo '<tr><td>' . _('Show company details on packing slips') . ':</td>
 	<option '.($_SESSION['DefaultBlindPackNote']=="2"?'selected ':'').'value="2">'._('Hide Company Details').'
 	</select></td>
 	<td>' . _('Customer branches can be set by default not to print packing slips with the company logo and address. This is useful for companies that ship to customers customers and to show the source of the shipment would be inappropriate. There is an option on the setup of customer branches to ship blind, this setting is the default applied to all new customer branches') . '</td>
+	</tr>';
+
+//Show values on GRN
+echo '<tr><td>' . _('Show order values on GRN') . ':</td>
+	<td><select Name="X_ShowValueOnGRN">
+	<option '.($_SESSION['ShowValueOnGRN']?'selected ':'').'value="1">'._('Yes').'
+	<option '.(!$_SESSION['ShowValueOnGRN']?'selected ':'').'value="0">'._('No').'
+	</select></td>
+	<td>' . _('Should the value of the purchased stock be shown on the GRN screen') . '</td>
 	</tr>';
 
 

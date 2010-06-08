@@ -71,10 +71,11 @@ echo '<table cellpadding=2 colspan=7 border=0>
 	<th>' . _('Quantity') . '<br>' . _('Ordered') . '</th>
 	<th>' . _('Units') . '</th>
 	<th>' . _('Already Received') . '</th>
-	<th>' . _('This Delivery') . '<br>' . _('Quantity') . '</th>
-	<th>' . _('Price') . '</th>
-	<th>' . _('Total Value') . '<br>' . _('Received') . '</th>';
+	<th>' . _('This Delivery') . '<br>' . _('Quantity') . '</th>';
 
+if ($_SESSION['ShowValueOnGRN']==1) {
+	echo '<th>' . _('Price') . '</th><th>' . _('Total Value') . '<br>' . _('Received') . '</th>';
+}
 
 echo '<td>&nbsp;</td>
 	</tr>';
@@ -151,8 +152,10 @@ if (count($_SESSION['PO']->LineItems)>0){
 			echo '<input type=text class=number name="RecvQty_' . $LnItm->LineNo . '" maxlength=10 size=10 value="' . $LnItm->ReceiveQty . '"></td>';
 		}
 
-		echo '<td class=number><font size=2>' . $DisplayPrice . '</td>';
-		echo '<td class=number><font size=2>' . $DisplayLineTotal . '</font></td>';
+		if ($_SESSION['ShowValueOnGRN']==1) {
+			echo '<td class=number><font size=2>' . $DisplayPrice . '</td>';
+			echo '<td class=number><font size=2>' . $DisplayLineTotal . '</font></td>';
+		}
 
 
 		if ($LnItm->Controlled == 1) {
@@ -170,9 +173,13 @@ if (count($_SESSION['PO']->LineItems)>0){
 }//If count(LineItems) > 0
 
 $DisplayTotal = number_format($_SESSION['PO']->total,2);
-echo '<tr><td colspan=7 class=number><b>' . _('Total value of goods received'). '</b></td>
-	<td class=number><font size=2><b>'. $DisplayTotal. '</b></font></td>
-</tr></table>';
+if ($_SESSION['ShowValueOnGRN']==1) {
+	echo '<tr><td colspan=7 class=number><b>' . _('Total value of goods received'). '</b></td>
+		<td class=number><font size=2><b>'. $DisplayTotal. '</b></font></td>
+		</tr></table>';
+} else {
+	echo '</table>';
+}
 
 $SomethingReceived = 0;
 if (count($_SESSION['PO']->LineItems)>0){

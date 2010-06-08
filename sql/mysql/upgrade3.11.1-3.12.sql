@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `fixedassetlocations` (
   PRIMARY KEY  (`locationid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE `assetmanager`;
+DROP TABLE IF EXISTS `assetmanager`;
 
 CREATE TABLE `assetmanager` (
   `id` int(11) NOT NULL auto_increment,
@@ -227,3 +227,4 @@ CREATE TABLE `contracts` (
 
 
 ALTER TABLE `salestypes` CHANGE COLUMN `sales_type` `sales_type` VARCHAR(40) NOT NULL DEFAULT '';>>>>>>> .r3482
+INSERT INTO `config` VALUES ('ShowValueOnGRN', 1);
