@@ -81,7 +81,7 @@ if (isset($_POST['Modify'])) {
 					theme='" . $_POST['Theme'] . "',
 					language='" . $_POST['Language'] . "',
 					email='". $_POST['email'] ."',
-					pdflanguage=" . $_POST['PDFLanguage'] . "
+					pdflanguage=" . $_POST['PDFLanguage'] . ",
 					password='" . CryptPass($_POST['pass']) . "'
 				WHERE userid = '" . $_SESSION['UserID'] . "'";
 
@@ -97,7 +97,7 @@ if (isset($_POST['Modify'])) {
 		$_SESSION['Theme'] = trim($_POST['Theme']); /*already set by session.inc but for completeness */
 		$theme = $_SESSION['Theme'];
 		$_SESSION['Language'] = trim($_POST['Language']);
-		
+
 		include ('includes/LanguageSetup.php');
 
 	}
@@ -122,8 +122,8 @@ echo '<tr>
 	<td>' . _('Maximum Number of Records to Display') . ":</td>
 	<td><input type='Text' class='number' name='DisplayRecordsMax' size=3 maxlength=3 VALUE=" . $_POST['DisplayRecordsMax'] . " ></td>
 	</tr>";
-	
-	
+
+
 echo '<tr>
 	<td>' . _('Language') . ":</td>
 	<td><select name='Language'>";
@@ -132,13 +132,13 @@ echo '<tr>
 
 
 	while (false != ($LanguageEntry = $LangDirHandle->read())){
-	
-		if (is_dir('locale/' . $LanguageEntry) 
-				AND $LanguageEntry != '..' 
+
+		if (is_dir('locale/' . $LanguageEntry)
+				AND $LanguageEntry != '..'
 				AND $LanguageEntry != 'CVS'
-				AND $LanguageEntry != '.svn' 
+				AND $LanguageEntry != '.svn'
 				AND $LanguageEntry!='.'){
-	
+
 			if ($_SESSION['Language'] == $LanguageEntry){
 				echo "<option selected VALUE='$LanguageEntry'>$LanguageEntry";
 			} else {
@@ -146,10 +146,10 @@ echo '<tr>
 			}
 		}
 	}
-	
+
 	echo '</select></td></tr>';
 
-	
+
 echo '<tr>
 	<td>' . _('Theme') . ":</td>
 	<td><select name='Theme'>";
@@ -195,7 +195,7 @@ echo "<td><input type=text name='email' size=40 value='" . $_POST['email'] . "'>
 if (!isset($_POST['PDFLanguage'])){
 	$_POST['PDFLanguage']=0;
 }
-	
+
 echo '<tr><td>' . _('PDF Language Support') . ': </td><td><select name="PDFLanguage">';
 for($i=0;$i<=7;$i++){
 	if ($_POST['PDFLanguage']==$i){
