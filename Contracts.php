@@ -135,7 +135,7 @@ if (isset($_ContractST['EnterLines'])){
 	echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/Contract_Items.php?' . SID . 'identifier='.$identifier. "'>";
 	echo '<p>';
 	prnMsg(_('You should automatically be forwarded to the entry of the Contract line items page') . '. ' .
-		_('If this does not happen') . ' (' . _('if the browser does not supContractrt META Refresh') . ') ' .
+		_('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
 		"<a href='$rootpath/Contract_Items.php?" . SID. 'identifier='.$identifier . "'>" . _('click here') . '</a> ' . _('to continue'),'info');
 		include('includes/footer.inc');
 		exit;
@@ -267,7 +267,7 @@ if (isset($_ContractST['SearchSuppliers'])){
 		if (strlen($_ContractST['Keywords'])>0) {
 		//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_ContractST['Keywords']) . '%';
-			
+
 			$SQL = "SELECT suppliers.CustomerID,
 					suppliers.suppname,
 					suppliers.address1,
