@@ -7,9 +7,9 @@
 $PageSecurity = 11;
 
 /* Session started in header.inc for password checking and authorisation level check */
-include('includes/session.inc');
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
+include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 if (empty($identifier)) {
 	$identifier='';
