@@ -22,7 +22,7 @@ if (isset($_POST['RevPayts']) AND Is_Date($_POST['PaytDate'])==1){
 			suppreference,
 			rate
 		FROM supptrans
-		WHERE type = 22
+		WHERE supptrans.type = 22
 		AND trandate = '" . $SQLTranDate . "'";
 
 	$Result = DB_query($SQL,$db);
@@ -53,7 +53,7 @@ if (isset($_POST['RevPayts']) AND Is_Date($_POST['PaytDate'])==1){
 			$SQL= 'UPDATE supptrans SET settled=0,
 							alloc=alloc-' . $Alloc['amt'] . ',
 							diffonexch = diffonexch - ((' . $Alloc['Amt'] . '/rate ) - ' . $Alloc['amt']/$Payment['rate'] . ')
-				WHERE type=' . $Alloc['typeno'] . '
+				WHERE supptrans.type=' . $Alloc['type'] . '
 				AND transno=' . $Alloc['transno'];
 
 			$ErrMsg =_('The update to the suppliers charges that were settled by the payment failed because');

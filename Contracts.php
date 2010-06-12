@@ -13,7 +13,7 @@ if (isset($_GET['ModifyContractNo'])) {
 }
 
 if (isset($_GET['CustomerID'])) {
-	$_ContractST['Select']=$_GET['CustomerID'];
+	$_POST['Select']=$_GET['CustomerID'];
 }
 
 include('includes/header.inc');
@@ -42,17 +42,17 @@ if (isset($_GET['NewContract']) and isset($_SESSION['Contract'.$identifier])){
 	$_SESSION['ExistingContract']=0;
 }
 
-if (isset($_ContractST['Select']) and empty($_ContractST['SupplierContact'])) {
+if (isset($_POST['Select']) and empty($_POST['SupplierContact'])) {
 	$sql = "SELECT contact
 			FROM suppliercontacts
-			WHERE CustomerID='". $_ContractST['Select'] ."'";
+			WHERE CustomerID='". $_POST['Select'] ."'";
 
 	$SuppCoResult = DB_query($sql,$db);
 	if (DB_num_rows($SuppCoResult)>0) {
 		$myrow = DB_fetch_row($SuppCoResult);
-		$_ContractST['SupplierContact'] = $myrow[0];
+		$_POST['SupplierContact'] = $myrow[0];
 	} else {
-		$_ContractST['SupplierContact']='';
+		$_POST['SupplierContact']='';
 	}
 }
 
@@ -76,7 +76,7 @@ if (isset($_GET['NewContract']) AND isset($_GET['SelectedCustomer'])) {
 		/**/
 		$_SESSION['RequireSupplierSelection'] = 0;
 		/**/
-		$_ContractST['Select'] = $_GET['SelectedCustomer'];
+		$_POST['Select'] = $_GET['SelectedCustomer'];
 
 		/**
 		* the item (its item code) that should be purchased
@@ -85,39 +85,39 @@ if (isset($_GET['NewContract']) AND isset($_GET['SelectedCustomer'])) {
 
 }
 
-if (isset($_ContractST['EnterLines'])){
+if (isset($_POST['EnterLines'])){
 /*User hit the button to enter line items -
  *  ensure session variables updated then meta refresh to Contract_Items.php*/
 
-	$_SESSION['Contract'.$identifier]->Location=$_ContractST['StkLocation'];
-	$_SESSION['Contract'.$identifier]->SupplierContact=$_ContractST['SupplierContact'];
-	$_SESSION['Contract'.$identifier]->DelAdd1 = $_ContractST['DelAdd1'];
-	$_SESSION['Contract'.$identifier]->DelAdd2 = $_ContractST['DelAdd2'];
-	$_SESSION['Contract'.$identifier]->DelAdd3 = $_ContractST['DelAdd3'];
-	$_SESSION['Contract'.$identifier]->DelAdd4 = $_ContractST['DelAdd4'];
-	$_SESSION['Contract'.$identifier]->DelAdd5 = $_ContractST['DelAdd5'];
-	$_SESSION['Contract'.$identifier]->DelAdd6 = $_ContractST['DelAdd6'];
-	$_SESSION['Contract'.$identifier]->suppDelAdd1 = $_ContractST['suppDelAdd1'];
-	$_SESSION['Contract'.$identifier]->suppDelAdd2 = $_ContractST['suppDelAdd2'];
-	$_SESSION['Contract'.$identifier]->suppDelAdd3 = $_ContractST['suppDelAdd3'];
-	$_SESSION['Contract'.$identifier]->suppDelAdd4 = $_ContractST['suppDelAdd4'];
-	$_SESSION['Contract'.$identifier]->suppDelAdd5 = $_ContractST['suppDelAdd5'];
-	$_SESSION['Contract'.$identifier]->supptel= $_ContractST['supptel'];
-	$_SESSION['Contract'.$identifier]->Initiator = $_ContractST['Initiator'];
-	$_SESSION['Contract'.$identifier]->RequisitionNo = $_ContractST['Requisition'];
-	$_SESSION['Contract'.$identifier]->version = $_ContractST['version'];
-	$_SESSION['Contract'.$identifier]->deliverydate = $_ContractST['deliverydate'];
-	$_SESSION['Contract'.$identifier]->revised = $_ContractST['revised'];
-	$_SESSION['Contract'.$identifier]->ExRate = $_ContractST['ExRate'];
-	$_SESSION['Contract'.$identifier]->Comments = $_ContractST['Comments'];
-	$_SESSION['Contract'.$identifier]->deliveryby = $_ContractST['deliveryby'];
-	$_SESSION['Contract'.$identifier]->StatusMessage = $_ContractST['StatComments'];
-	$_SESSION['Contract'.$identifier]->paymentterms = $_ContractST['paymentterms'];
-	$_SESSION['Contract'.$identifier]->contact = $_ContractST['Contact'];
-	$_SESSION['Contract'.$identifier]->tel = $_ContractST['tel'];
-	$_SESSION['Contract'.$identifier]->Contractrt = $_ContractST['Contractrt'];
+	$_SESSION['Contract'.$identifier]->Location=$_POST['StkLocation'];
+	$_SESSION['Contract'.$identifier]->SupplierContact=$_POST['SupplierContact'];
+	$_SESSION['Contract'.$identifier]->DelAdd1 = $_POST['DelAdd1'];
+	$_SESSION['Contract'.$identifier]->DelAdd2 = $_POST['DelAdd2'];
+	$_SESSION['Contract'.$identifier]->DelAdd3 = $_POST['DelAdd3'];
+	$_SESSION['Contract'.$identifier]->DelAdd4 = $_POST['DelAdd4'];
+	$_SESSION['Contract'.$identifier]->DelAdd5 = $_POST['DelAdd5'];
+	$_SESSION['Contract'.$identifier]->DelAdd6 = $_POST['DelAdd6'];
+	$_SESSION['Contract'.$identifier]->suppDelAdd1 = $_POST['suppDelAdd1'];
+	$_SESSION['Contract'.$identifier]->suppDelAdd2 = $_POST['suppDelAdd2'];
+	$_SESSION['Contract'.$identifier]->suppDelAdd3 = $_POST['suppDelAdd3'];
+	$_SESSION['Contract'.$identifier]->suppDelAdd4 = $_POST['suppDelAdd4'];
+	$_SESSION['Contract'.$identifier]->suppDelAdd5 = $_POST['suppDelAdd5'];
+	$_SESSION['Contract'.$identifier]->supptel= $_POST['supptel'];
+	$_SESSION['Contract'.$identifier]->Initiator = $_POST['Initiator'];
+	$_SESSION['Contract'.$identifier]->RequisitionNo = $_POST['Requisition'];
+	$_SESSION['Contract'.$identifier]->version = $_POST['version'];
+	$_SESSION['Contract'.$identifier]->deliverydate = $_POST['deliverydate'];
+	$_SESSION['Contract'.$identifier]->revised = $_POST['revised'];
+	$_SESSION['Contract'.$identifier]->ExRate = $_POST['ExRate'];
+	$_SESSION['Contract'.$identifier]->Comments = $_POST['Comments'];
+	$_SESSION['Contract'.$identifier]->deliveryby = $_POST['deliveryby'];
+	$_SESSION['Contract'.$identifier]->StatusMessage = $_POST['StatComments'];
+	$_SESSION['Contract'.$identifier]->paymentterms = $_POST['paymentterms'];
+	$_SESSION['Contract'.$identifier]->contact = $_POST['Contact'];
+	$_SESSION['Contract'.$identifier]->tel = $_POST['tel'];
+	$_SESSION['Contract'.$identifier]->Contractrt = $_POST['Contractrt'];
 
-	if (isset($_ContractST['RePrint']) and $_ContractST['RePrint']==1){
+	if (isset($_POST['RePrint']) and $_POST['RePrint']==1){
 
 		$_SESSION['Contract'.$identifier]->AllowPrintContract=1;
 
@@ -129,7 +129,7 @@ if (isset($_ContractST['EnterLines'])){
 		$updateResult = DB_query($sql,$db,$ErrMsg);
 
 	} else {
-		$_ContractST['RePrint'] = 0;
+		$_POST['RePrint'] = 0;
 	}
 
 	echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/Contract_Items.php?' . SID . 'identifier='.$identifier. "'>";
@@ -151,7 +151,7 @@ if (isset($_GET['ModifyContractNo'])){
 	include ('includes/Contract_ReadInOrder.inc');
 }
 
-if (isset($_ContractST['CancelOrder']) AND $_ContractST['CancelOrder']!='') {
+if (isset($_POST['CancelOrder']) AND $_POST['CancelOrder']!='') {
 /*The cancel button on the header screen - to delete order */
 	$OK_to_delete = 1;	 //assume this in the first instance
 
@@ -174,7 +174,7 @@ if (isset($_ContractST['CancelOrder']) AND $_ContractST['CancelOrder']!='') {
 		$emailresult=DB_query($emailsql, $db);
 		$emailrow=DB_fetch_array($emailresult);
 		$StatusComment=date($_SESSION['DefaultDateFormat']).
-			' - Order Cancelled by <a href="mailto:'.$emailrow['email'].'">'.$_SESSION['UserID'].'</a><br>'.$_ContractST['statcommentscomplete'];
+			' - Order Cancelled by <a href="mailto:'.$emailrow['email'].'">'.$_SESSION['UserID'].'</a><br>'.$_POST['statcommentscomplete'];
 		unset($_SESSION['Contract'.$identifier]->LineItems);
 		unset($_SESSION['Contract'.$identifier]);
 		$_SESSION['Contract'.$identifier] = new PurchOrder;
@@ -232,7 +232,7 @@ if (!isset($_SESSION['Contract'.$identifier])){
 
 }
 
-if (isset($_ContractST['ChangeSupplier'])) {
+if (isset($_POST['ChangeSupplier'])) {
 
 /* change supplier only allowed with appropriate permissions -
  * button only displayed to modify is AccessLevel >10
@@ -246,7 +246,7 @@ if (isset($_ContractST['ChangeSupplier'])) {
 			$_SESSION['RequireSupplierSelection']=1;
 			$_SESSION['Contract'.$identifier]->Stat = PurchOrder::STATUS_PENDING;
 			$StatusComment=$date.' - Supplier changed by <a href="mailto:'.$emailrow['email'].'">'.$_SESSION['UserID'].
-				'</a> - '.$_ContractST['StatComments'].'<br>'.$_ContractST['statcommentscomplete'];
+				'</a> - '.$_POST['StatComments'].'<br>'.$_POST['statcommentscomplete'];
 			$_SESSION['Contract'.$identifier]->StatComments=$StatusComment;
 		} else {
 			echo '<br><br>';
@@ -256,17 +256,17 @@ if (isset($_ContractST['ChangeSupplier'])) {
 }
 
 $msg='';
-if (isset($_ContractST['SearchSuppliers'])){
+if (isset($_POST['SearchSuppliers'])){
 
-	if (strlen($_ContractST['Keywords'])>0 AND strlen($_SESSION['Contract'.$identifier]->CustomerID)>0) {
+	if (strlen($_POST['Keywords'])>0 AND strlen($_SESSION['Contract'.$identifier]->CustomerID)>0) {
 		$msg=_('Supplier name keywords have been used in preference to the supplier code extract entered');
 	}
-	if ($_ContractST['Keywords']=='' AND $_ContractST['SuppCode']=='') {
+	if ($_POST['Keywords']=='' AND $_POST['SuppCode']=='') {
 		$msg=_('At least one Supplier Name keyword OR an extract of a Supplier Code must be entered for the search');
 	} else {
-		if (strlen($_ContractST['Keywords'])>0) {
+		if (strlen($_POST['Keywords'])>0) {
 		//insert wildcard characters in spaces
-			$SearchString = '%' . str_replace(' ', '%', $_ContractST['Keywords']) . '%';
+			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
 			$SQL = "SELECT suppliers.CustomerID,
 					suppliers.suppname,
@@ -281,7 +281,7 @@ if (isset($_ContractST['SearchSuppliers'])){
 				WHERE suppliers.suppname " . LIKE . " '$SearchString'
 				ORDER BY suppliers.suppname";
 
-		} elseif (strlen($_ContractST['SuppCode'])>0){
+		} elseif (strlen($_POST['SuppCode'])>0){
 			$SQL = "SELECT suppliers.CustomerID,
 					suppliers.suppname,
 					suppliers.address1,
@@ -292,7 +292,7 @@ if (isset($_ContractST['SearchSuppliers'])){
 					suppliers.address6,
 					suppliers.currcode
 				FROM suppliers
-				WHERE suppliers.CustomerID " . LIKE . " '%" . $_ContractST['SuppCode'] . "%'
+				WHERE suppliers.CustomerID " . LIKE . " '%" . $_POST['SuppCode'] . "%'
 				ORDER BY suppliers.CustomerID";
 		}
 
@@ -301,7 +301,7 @@ if (isset($_ContractST['SearchSuppliers'])){
 
 		if (DB_num_rows($result_SuppSelect)==1){
 			$myrow=DB_fetch_array($result_SuppSelect);
-			$_ContractST['Select'] = $myrow['CustomerID'];
+			$_POST['Select'] = $myrow['CustomerID'];
 		} elseif (DB_num_rows($result_SuppSelect)==0){
 			prnMsg( _('No supplier records contain the selected text') . ' - ' .
 				_('please alter your search criteria and try again'),'info');
@@ -311,37 +311,37 @@ if (isset($_ContractST['SearchSuppliers'])){
 
 
 // added by Hudson
-if((!isset($_ContractST['SearchSuppliers']) or $_ContractST['SearchSuppliers']=='' ) AND
+if((!isset($_POST['SearchSuppliers']) or $_POST['SearchSuppliers']=='' ) AND
 	(isset($_SESSION['Contract'.$identifier]->CustomerID) AND $_SESSION['Contract'.$identifier]->CustomerID!='')){
 
 	/*The session variables are set but the form variables have been lost
 	 * need to restore the form variables from the session */
-	$_ContractST['CustomerID']=$_SESSION['Contract'.$identifier]->CustomerID;
-	$_ContractST['SupplierName']=$_SESSION['Contract'.$identifier]->SupplierName;
-	$_ContractST['CurrCode'] = $_SESSION['Contract'.$identifier]->CurrCode;
-	$_ContractST['ExRate'] = $_SESSION['Contract'.$identifier]->ExRate;
-	$_ContractST['paymentterms'] = $_SESSION['Contract'.$identifier]->paymentterms;
-	$_ContractST['DelAdd1']=$_SESSION['Contract'.$identifier]->DelAdd1;
-	$_ContractST['DelAdd2']=$_SESSION['Contract'.$identifier]->DelAdd2;
-	$_ContractST['DelAdd3']=$_SESSION['Contract'.$identifier]->DelAdd3;
-	$_ContractST['DelAdd4']=$_SESSION['Contract'.$identifier]->DelAdd4;
-	$_ContractST['DelAdd5']=$_SESSION['Contract'.$identifier]->DelAdd5;
-	$_ContractST['DelAdd6']=$_SESSION['Contract'.$identifier]->DelAdd6;
-	$_ContractST['suppDelAdd1']=$_SESSION['Contract'.$identifier]->suppDelAdd1;
-	$_ContractST['suppDelAdd2']=$_SESSION['Contract'.$identifier]->suppDelAdd2;
-	$_ContractST['suppDelAdd3']=$_SESSION['Contract'.$identifier]->suppDelAdd3;
-	$_ContractST['suppDelAdd4']=$_SESSION['Contract'.$identifier]->suppDelAdd4;
-	$_ContractST['suppDelAdd5']=$_SESSION['Contract'.$identifier]->suppDelAdd5;
-	$_ContractST['suppDelAdd6']=$_SESSION['Contract'.$identifier]->suppDelAdd6;
+	$_POST['CustomerID']=$_SESSION['Contract'.$identifier]->CustomerID;
+	$_POST['SupplierName']=$_SESSION['Contract'.$identifier]->SupplierName;
+	$_POST['CurrCode'] = $_SESSION['Contract'.$identifier]->CurrCode;
+	$_POST['ExRate'] = $_SESSION['Contract'.$identifier]->ExRate;
+	$_POST['paymentterms'] = $_SESSION['Contract'.$identifier]->paymentterms;
+	$_POST['DelAdd1']=$_SESSION['Contract'.$identifier]->DelAdd1;
+	$_POST['DelAdd2']=$_SESSION['Contract'.$identifier]->DelAdd2;
+	$_POST['DelAdd3']=$_SESSION['Contract'.$identifier]->DelAdd3;
+	$_POST['DelAdd4']=$_SESSION['Contract'.$identifier]->DelAdd4;
+	$_POST['DelAdd5']=$_SESSION['Contract'.$identifier]->DelAdd5;
+	$_POST['DelAdd6']=$_SESSION['Contract'.$identifier]->DelAdd6;
+	$_POST['suppDelAdd1']=$_SESSION['Contract'.$identifier]->suppDelAdd1;
+	$_POST['suppDelAdd2']=$_SESSION['Contract'.$identifier]->suppDelAdd2;
+	$_POST['suppDelAdd3']=$_SESSION['Contract'.$identifier]->suppDelAdd3;
+	$_POST['suppDelAdd4']=$_SESSION['Contract'.$identifier]->suppDelAdd4;
+	$_POST['suppDelAdd5']=$_SESSION['Contract'.$identifier]->suppDelAdd5;
+	$_POST['suppDelAdd6']=$_SESSION['Contract'.$identifier]->suppDelAdd6;
 
 }
 
-if (isset($_ContractST['Select'])) {
+if (isset($_POST['Select'])) {
 
 /* will only be true if page called from supplier selection form
  * or set because only one supplier record returned from a search
  * so parse the $Select string into supplier code and branch code */
-	$sql='SELECT currcode FROM suppliers where CustomerID="'.$_ContractST['Select'].'"';
+	$sql='SELECT currcode FROM suppliers where CustomerID="'.$_POST['Select'].'"';
 	$result=DB_query($sql,$db);
 	$myrow=DB_fetch_array($result);
 	$SupplierCurrCode=$myrow['currcode'];
@@ -367,9 +367,9 @@ if (isset($_ContractST['Select'])) {
                         suppliers.Contractrt
 		FROM suppliers INNER JOIN currencies
 		ON suppliers.currcode=currencies.currabrev
-		WHERE CustomerID='" . $_ContractST['Select'] . "'";
+		WHERE CustomerID='" . $_POST['Select'] . "'";
 
-	$ErrMsg = _('The supplier record of the supplier selected') . ': ' . $_ContractST['Select'] . ' ' .
+	$ErrMsg = _('The supplier record of the supplier selected') . ': ' . $_POST['Select'] . ' ' .
 		_('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the supplier details and failed was');
 	$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -378,33 +378,33 @@ if (isset($_ContractST['Select'])) {
 		// added for suppliers lookup fields
 
 	if (($authmyrow=DB_fetch_array($authresult) and $authmyrow[0]==0 ) ) {
-		$_ContractST['SupplierName'] = $myrow[0];
-		$_ContractST['CurrCode'] = 	$myrow[1];
-		$_ContractST['ExRate'] = 	$myrow[2];
-		$_ContractST['paymentterms']=	$myrow[3];
-		$_ContractST['suppDelAdd1'] = $myrow[4];
-		$_ContractST['suppDelAdd2'] = $myrow[5];
-		$_ContractST['suppDelAdd3'] = $myrow[6];
-		$_ContractST['suppDelAdd4'] = $myrow[7];
-		$_ContractST['suppDelAdd5'] = $myrow[8];
-		$_ContractST['suppDelAdd6'] = $myrow[9];
-		$_ContractST['supptel'] = $myrow[10];
-		$_ContractST['Contractrt'] = $myrow[11];
+		$_POST['SupplierName'] = $myrow[0];
+		$_POST['CurrCode'] = 	$myrow[1];
+		$_POST['ExRate'] = 	$myrow[2];
+		$_POST['paymentterms']=	$myrow[3];
+		$_POST['suppDelAdd1'] = $myrow[4];
+		$_POST['suppDelAdd2'] = $myrow[5];
+		$_POST['suppDelAdd3'] = $myrow[6];
+		$_POST['suppDelAdd4'] = $myrow[7];
+		$_POST['suppDelAdd5'] = $myrow[8];
+		$_POST['suppDelAdd6'] = $myrow[9];
+		$_POST['supptel'] = $myrow[10];
+		$_POST['Contractrt'] = $myrow[11];
 
-		$_SESSION['Contract'.$identifier]->CustomerID = $_ContractST['Select'];
+		$_SESSION['Contract'.$identifier]->CustomerID = $_POST['Select'];
 		$_SESSION['RequireSupplierSelection'] = 0;
-		$_SESSION['Contract'.$identifier]->SupplierName = $_ContractST['SupplierName'];
-		$_SESSION['Contract'.$identifier]->CurrCode = $_ContractST['CurrCode'];
-		$_SESSION['Contract'.$identifier]->ExRate = $_ContractST['ExRate'];
-		$_SESSION['Contract'.$identifier]->paymentterms = $_ContractST['paymentterms'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd1 = $_ContractST['suppDelAdd1'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd2 = $_ContractST['suppDelAdd2'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd3 = $_ContractST['suppDelAdd3'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd4 = $_ContractST['suppDelAdd4'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd5 = $_ContractST['suppDelAdd5'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd6 = $_ContractST['suppDelAdd6'];
-		$_SESSION['Contract'.$identifier]->supptel = $_ContractST['supptel'];
-		$_SESSION['Contract'.$identifier]->Contractrt = $_ContractST['Contractrt'];
+		$_SESSION['Contract'.$identifier]->SupplierName = $_POST['SupplierName'];
+		$_SESSION['Contract'.$identifier]->CurrCode = $_POST['CurrCode'];
+		$_SESSION['Contract'.$identifier]->ExRate = $_POST['ExRate'];
+		$_SESSION['Contract'.$identifier]->paymentterms = $_POST['paymentterms'];
+		$_SESSION['Contract'.$identifier]->suppDelAdd1 = $_POST['suppDelAdd1'];
+		$_SESSION['Contract'.$identifier]->suppDelAdd2 = $_POST['suppDelAdd2'];
+		$_SESSION['Contract'.$identifier]->suppDelAdd3 = $_POST['suppDelAdd3'];
+		$_SESSION['Contract'.$identifier]->suppDelAdd4 = $_POST['suppDelAdd4'];
+		$_SESSION['Contract'.$identifier]->suppDelAdd5 = $_POST['suppDelAdd5'];
+		$_SESSION['Contract'.$identifier]->suppDelAdd6 = $_POST['suppDelAdd6'];
+		$_SESSION['Contract'.$identifier]->supptel = $_POST['supptel'];
+		$_SESSION['Contract'.$identifier]->Contractrt = $_POST['Contractrt'];
 	} else {
 		prnMsg( _('You do not have the authority to raise Contracts for ').
 			$SupplierName.'. '._('Please Consult your system administrator for more information').'. '
@@ -416,7 +416,7 @@ if (isset($_ContractST['Select'])) {
 	// end of added for suppliers lookup fields
 
 } else {
-	$_ContractST['Select'] = $_SESSION['Contract'.$identifier]->CustomerID;
+	$_POST['Select'] = $_SESSION['Contract'.$identifier]->CustomerID;
 	$sql = "SELECT suppliers.suppname,
 			suppliers.currcode,
 			suppliers.paymentterms,
@@ -430,9 +430,9 @@ if (isset($_ContractST['Select'])) {
 			suppliers.Contractrt
 		FROM suppliers INNER JOIN currencies
 		ON suppliers.currcode=currencies.currabrev
-		WHERE CustomerID='" . $_ContractST['Select'] . "'";
+		WHERE CustomerID='" . $_POST['Select'] . "'";
 
-	$ErrMsg = _('The supplier record of the supplier selected') . ': ' . $_ContractST['Select'] . ' ' .
+	$ErrMsg = _('The supplier record of the supplier selected') . ': ' . $_POST['Select'] . ' ' .
 		_('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the supplier details and failed was');
 	$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -443,32 +443,32 @@ if (isset($_ContractST['Select'])) {
 
 	// added for suppliers lookup fields
 	if (!isset($_SESSION['Contract'.$identifier])) {
-		$_ContractST['SupplierName'] = $myrow[0];
-		$_ContractST['CurrCode'] = 	$myrow[1];
-		$_ContractST['paymentterms']=	$myrow[2];
-		$_ContractST['suppDelAdd1'] = $myrow[3];
-		$_ContractST['suppDelAdd2'] = $myrow[4];
-		$_ContractST['suppDelAdd3'] = $myrow[5];
-		$_ContractST['suppDelAdd4'] = $myrow[6];
-		$_ContractST['suppDelAdd5'] = $myrow[7];
-		$_ContractST['suppDelAdd6'] = $myrow[8];
-		$_ContractST['supptel'] = $myrow[9];
-		$_ContractST['Contractrt'] = $myrow[10];
+		$_POST['SupplierName'] = $myrow[0];
+		$_POST['CurrCode'] = 	$myrow[1];
+		$_POST['paymentterms']=	$myrow[2];
+		$_POST['suppDelAdd1'] = $myrow[3];
+		$_POST['suppDelAdd2'] = $myrow[4];
+		$_POST['suppDelAdd3'] = $myrow[5];
+		$_POST['suppDelAdd4'] = $myrow[6];
+		$_POST['suppDelAdd5'] = $myrow[7];
+		$_POST['suppDelAdd6'] = $myrow[8];
+		$_POST['supptel'] = $myrow[9];
+		$_POST['Contractrt'] = $myrow[10];
 
-		$_SESSION['Contract'.$identifier]->CustomerID = $_ContractST['Select'];
+		$_SESSION['Contract'.$identifier]->CustomerID = $_POST['Select'];
 		$_SESSION['RequireSupplierSelection'] = 0;
-		$_SESSION['Contract'.$identifier]->SupplierName = $_ContractST['SupplierName'];
-		$_SESSION['Contract'.$identifier]->CurrCode = $_ContractST['CurrCode'];
-		$_SESSION['Contract'.$identifier]->ExRate = $_ContractST['ExRate'];
-		$_SESSION['Contract'.$identifier]->paymentterms = $_ContractST['paymentterms'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd1 = $_ContractST['suppDelAdd1'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd2 = $_ContractST['suppDelAdd2'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd3 = $_ContractST['suppDelAdd3'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd4 = $_ContractST['suppDelAdd4'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd5 = $_ContractST['suppDelAdd5'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd6 = $_ContractST['suppDelAdd6'];
-		$_SESSION['Contract'.$identifier]->supptel = $_ContractST['supptel'];
-		$_SESSION['Contract'.$identifier]->Contractrt = $_ContractST['Contractrt'];
+		$_SESSION['Contract'.$identifier]->SupplierName = $_POST['SupplierName'];
+		$_SESSION['Contract'.$identifier]->CurrCode = $_POST['CurrCode'];
+		$_SESSION['Contract'.$identifier]->ExRate = $_POST['ExRate'];
+		$_SESSION['Contract'.$identifier]->paymentterms = $_POST['paymentterms'];
+		$_SESSION['Contract'.$identifier]->suppDelAdd1 = $_POST['suppDelAdd1'];
+		$_SESSION['Contract'.$identifier]->suppDelAdd2 = $_POST['suppDelAdd2'];
+		$_SESSION['Contract'.$identifier]->suppDelAdd3 = $_POST['suppDelAdd3'];
+		$_SESSION['Contract'.$identifier]->suppDelAdd4 = $_POST['suppDelAdd4'];
+		$_SESSION['Contract'.$identifier]->suppDelAdd5 = $_POST['suppDelAdd5'];
+		$_SESSION['Contract'.$identifier]->suppDelAdd6 = $_POST['suppDelAdd6'];
+		$_SESSION['Contract'.$identifier]->supptel = $_POST['supptel'];
+		$_SESSION['Contract'.$identifier]->Contractrt = $_POST['Contractrt'];
 	// end of added for suppliers lookup fields
 	}
 }
@@ -655,28 +655,28 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['Contract'.$id
 
 	/*Set up form for entry of order header stuff */
 
-	if (!isset($_ContractST['LookupDeliveryAddress']) and (!isset($_ContractST['StkLocation']) or $_ContractST['StkLocation'])
+	if (!isset($_POST['LookupDeliveryAddress']) and (!isset($_POST['StkLocation']) or $_POST['StkLocation'])
 		AND (isset($_SESSION['Contract'.$identifier]->Location) AND $_SESSION['Contract'.$identifier]->Location != '')) {
 		/* The session variables are set but the form variables have
 	     * been lost --
 	     * need to restore the form variables from the session */
-	    $_ContractST['StkLocation']=$_SESSION['Contract'.$identifier]->Location;
-		$_ContractST['SupplierContact']=$_SESSION['Contract'.$identifier]->SupplierContact;
-	    $_ContractST['DelAdd1']=$_SESSION['Contract'.$identifier]->DelAdd1;
-	    $_ContractST['DelAdd2']=$_SESSION['Contract'.$identifier]->DelAdd2;
-	    $_ContractST['DelAdd3']=$_SESSION['Contract'.$identifier]->DelAdd3;
-	    $_ContractST['DelAdd4']=$_SESSION['Contract'.$identifier]->DelAdd4;
-	    $_ContractST['DelAdd5']=$_SESSION['Contract'.$identifier]->DelAdd5;
-	    $_ContractST['DelAdd6']=$_SESSION['Contract'.$identifier]->DelAdd6;
-	    $_ContractST['Initiator']=$_SESSION['Contract'.$identifier]->Initiator;
-	    $_ContractST['Requisition']=$_SESSION['Contract'.$identifier]->RequisitionNo;
-	    $_ContractST['version']=$_SESSION['Contract'.$identifier]->version;
-	    $_ContractST['deliverydate']=$_SESSION['Contract'.$identifier]->deliverydate;
-	    $_ContractST['revised']=$_SESSION['Contract'.$identifier]->revised;
-	    $_ContractST['ExRate']=$_SESSION['Contract'.$identifier]->ExRate;
-	    $_ContractST['Comments']=$_SESSION['Contract'.$identifier]->Comments;
-	    $_ContractST['deliveryby']=$_SESSION['Contract'.$identifier]->deliveryby;
-	    $_ContractST['paymentterms']=$_SESSION['Contract'.$identifier]->paymentterms;
+	    $_POST['StkLocation']=$_SESSION['Contract'.$identifier]->Location;
+		$_POST['SupplierContact']=$_SESSION['Contract'.$identifier]->SupplierContact;
+	    $_POST['DelAdd1']=$_SESSION['Contract'.$identifier]->DelAdd1;
+	    $_POST['DelAdd2']=$_SESSION['Contract'.$identifier]->DelAdd2;
+	    $_POST['DelAdd3']=$_SESSION['Contract'.$identifier]->DelAdd3;
+	    $_POST['DelAdd4']=$_SESSION['Contract'.$identifier]->DelAdd4;
+	    $_POST['DelAdd5']=$_SESSION['Contract'.$identifier]->DelAdd5;
+	    $_POST['DelAdd6']=$_SESSION['Contract'.$identifier]->DelAdd6;
+	    $_POST['Initiator']=$_SESSION['Contract'.$identifier]->Initiator;
+	    $_POST['Requisition']=$_SESSION['Contract'.$identifier]->RequisitionNo;
+	    $_POST['version']=$_SESSION['Contract'.$identifier]->version;
+	    $_POST['deliverydate']=$_SESSION['Contract'.$identifier]->deliverydate;
+	    $_POST['revised']=$_SESSION['Contract'.$identifier]->revised;
+	    $_POST['ExRate']=$_SESSION['Contract'.$identifier]->ExRate;
+	    $_POST['Comments']=$_SESSION['Contract'.$identifier]->Comments;
+	    $_POST['deliveryby']=$_SESSION['Contract'.$identifier]->deliveryby;
+	    $_POST['paymentterms']=$_SESSION['Contract'.$identifier]->paymentterms;
 	}
 
 // move apart by Hudson
@@ -701,39 +701,39 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['Contract'.$id
 
 	if (isset($_GET['ModifyContractNo']) && $_GET['ModifyContractNo'] != '') {
 		$_SESSION['Contract'.$identifier]->version += 1;
-		$_ContractST['version'] =  $_SESSION['Contract'.$identifier]->version;
+		$_POST['version'] =  $_SESSION['Contract'.$identifier]->version;
 	} elseif (isset($_SESSION['Contract'.$identifier]->version) and $_SESSION['Contract'.$identifier]->version != '') {
-		$_ContractST['version'] =  $_SESSION['Contract'.$identifier]->version;
+		$_POST['version'] =  $_SESSION['Contract'.$identifier]->version;
 	} else {
-		$_ContractST['version']='1';
+		$_POST['version']='1';
 	}
 
-	if (!isset($_ContractST['deliverydate'])) {
-		$_ContractST['deliverydate']= date($_SESSION['DefaultDateFormat']);
+	if (!isset($_POST['deliverydate'])) {
+		$_POST['deliverydate']= date($_SESSION['DefaultDateFormat']);
 	}
 
 	echo '<tr><td>' . _('Version'). ' #' . ":</td><td><input type='hidden' name='version' size=16 maxlength=15
-		value='" . $_ContractST['version'] . "'>".$_ContractST['version']."</td></tr>";
+		value='" . $_POST['version'] . "'>".$_POST['version']."</td></tr>";
 	echo '<tr><td>' . _('Revised') . ":</td><td><input type='hidden' name='revised' size=11 maxlength=15 value=" .
 		$date . '>'.$date.'</td></tr>';
 
 	echo '<tr><td>' . _('Delivery Date') . ":</td><td><input type='text' class=date alt='".$_SESSION['DefaultDateFormat'].
-		"' name='deliverydate' size=11 value=" . $_ContractST['deliverydate'] . '>'."</td></tr>";
+		"' name='deliverydate' size=11 value=" . $_POST['deliverydate'] . '>'."</td></tr>";
 
-	if (!isset($_ContractST['Initiator'])) {
-		$_ContractST['Initiator'] = $_SESSION['UserID'];
-		$_ContractST['Requisition'] = '';
+	if (!isset($_POST['Initiator'])) {
+		$_POST['Initiator'] = $_SESSION['UserID'];
+		$_POST['Requisition'] = '';
 	}
 
 	echo '<tr><td>' . _('Initiated By') . ":</td>
 			<td><input type='hidden' name='Initiator' size=11 maxlength=10 value=" .
-			$_ContractST['Initiator'] . ">".$_ContractST['Initiator']."</td></tr>";
+			$_POST['Initiator'] . ">".$_POST['Initiator']."</td></tr>";
 	echo '<tr><td>' . _('Requisition Ref') . ":</td><td><input type='text' name='Requisition' size=16
-		maxlength=15 value=" . $_ContractST['Requisition'] . '></td></tr>';
+		maxlength=15 value=" . $_POST['Requisition'] . '></td></tr>';
 
 //	echo '<tr><td>' . _('Exchange Rate') . ":</td>
-//			<td><input type=TEXT name='ExRate' size=16 maxlength=15 VALUE=" . $_ContractST['ExRate'] . '></td>
-//	echo "<input type='hidden' name='ExRate' size=16 maxlength=15 value=" . $_ContractST['ExRate'] . "></td>";
+//			<td><input type=TEXT name='ExRate' size=16 maxlength=15 VALUE=" . $_POST['ExRate'] . '></td>
+//	echo "<input type='hidden' name='ExRate' size=16 maxlength=15 value=" . $_POST['ExRate'] . "></td>";
 //		</tr>';
 	echo '<tr><td>' . _('Date Printed') . ':</td><td>';
 
@@ -745,12 +745,12 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['Contract'.$id
 		echo _('Not yet printed');
 	}
 
-	if (isset($_ContractST['AllowRePrint'])) {
+	if (isset($_POST['AllowRePrint'])) {
 		$sql='UPDATE purchorders SET allowprint=1 WHERE orderno='.$_SESSION['Contract'.$identifier]->OrderNo;
 		$result=DB_query($sql, $db);
 	}
 
-	if ($_SESSION['Contract'.$identifier]->AllowPrintContract==0 AND empty($_ContractST['RePrint'])){
+	if ($_SESSION['Contract'.$identifier]->AllowPrintContract==0 AND empty($_POST['RePrint'])){
 		echo '<tr><td>' . _('Allow Reprint') . ":</td><td><select name='RePrint' onChange='ReloadForm(form1.AllowRePrint)'><option selected value=0>" .
 			_('No') . "<option value=1>" . _('Yes') . '</select></td>';
 		echo '<td><input type=submit name="AllowRePrint" value="Update"></td></tr>';
@@ -838,8 +838,8 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['Contract'.$id
 	$LocnResult = DB_query($sql,$db);
 
 	while ($LocnRow=DB_fetch_array($LocnResult)){
-		if (isset($_ContractST['StkLocation']) and ($_ContractST['StkLocation'] == $LocnRow['loccode'] OR
-				($_ContractST['StkLocation']=='' AND $LocnRow['loccode']==$_SESSION['UserStockLocation']))){
+		if (isset($_POST['StkLocation']) and ($_POST['StkLocation'] == $LocnRow['loccode'] OR
+				($_POST['StkLocation']=='' AND $LocnRow['loccode']==$_SESSION['UserStockLocation']))){
 			echo "<option selected value='" . $LocnRow['loccode'] . "'>" . $LocnRow['locationname'];
 		} else {
 			echo "<option value='" . $LocnRow['loccode'] . "'>" . $LocnRow['locationname'];
@@ -853,9 +853,9 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['Contract'.$id
 /* If this is the first time
  * the form loaded set up defaults */
 
-	if (!isset($_ContractST['StkLocation']) OR $_ContractST['StkLocation']==''){
+	if (!isset($_POST['StkLocation']) OR $_POST['StkLocation']==''){
 
-		$_ContractST['StkLocation'] = $_SESSION['UserStockLocation'];
+		$_POST['StkLocation'] = $_SESSION['UserStockLocation'];
 
 		$sql = "SELECT deladd1,
 	 			deladd2,
@@ -866,30 +866,30 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['Contract'.$id
 				tel,
 				contact
 			FROM locations
-			WHERE loccode='" . $_ContractST['StkLocation'] . "'";
+			WHERE loccode='" . $_POST['StkLocation'] . "'";
 
 		$LocnAddrResult = DB_query($sql,$db);
 		if (DB_num_rows($LocnAddrResult)==1){
 			$LocnRow = DB_fetch_row($LocnAddrResult);
-			$_ContractST['DelAdd1'] = $LocnRow[0];
-			$_ContractST['DelAdd2'] = $LocnRow[1];
-			$_ContractST['DelAdd3'] = $LocnRow[2];
-			$_ContractST['DelAdd4'] = $LocnRow[3];
-			$_ContractST['DelAdd5'] = $LocnRow[4];
-			$_ContractST['DelAdd6'] = $LocnRow[5];
-			$_ContractST['tel'] = $LocnRow[6];
-			$_ContractST['Contact'] = $LocnRow[7];
+			$_POST['DelAdd1'] = $LocnRow[0];
+			$_POST['DelAdd2'] = $LocnRow[1];
+			$_POST['DelAdd3'] = $LocnRow[2];
+			$_POST['DelAdd4'] = $LocnRow[3];
+			$_POST['DelAdd5'] = $LocnRow[4];
+			$_POST['DelAdd6'] = $LocnRow[5];
+			$_POST['tel'] = $LocnRow[6];
+			$_POST['Contact'] = $LocnRow[7];
 
-			$_SESSION['Contract'.$identifier]->Location= $_ContractST['StkLocation'];
-//			$_SESSION['Contract'.$identifier]->SupplierContact= $_ContractST['SupplierContact'];
-			$_SESSION['Contract'.$identifier]->DelAdd1 = $_ContractST['DelAdd1'];
-			$_SESSION['Contract'.$identifier]->DelAdd2 = $_ContractST['DelAdd2'];
-			$_SESSION['Contract'.$identifier]->DelAdd3 = $_ContractST['DelAdd3'];
-			$_SESSION['Contract'.$identifier]->DelAdd4 = $_ContractST['DelAdd4'];
-			$_SESSION['Contract'.$identifier]->DelAdd5 = $_ContractST['DelAdd5'];
-			$_SESSION['Contract'.$identifier]->DelAdd6 = $_ContractST['DelAdd6'];
-			$_SESSION['Contract'.$identifier]->tel = $_ContractST['tel'];
-			$_SESSION['Contract'.$identifier]->contact = $_ContractST['Contact'];
+			$_SESSION['Contract'.$identifier]->Location= $_POST['StkLocation'];
+//			$_SESSION['Contract'.$identifier]->SupplierContact= $_POST['SupplierContact'];
+			$_SESSION['Contract'.$identifier]->DelAdd1 = $_POST['DelAdd1'];
+			$_SESSION['Contract'.$identifier]->DelAdd2 = $_POST['DelAdd2'];
+			$_SESSION['Contract'.$identifier]->DelAdd3 = $_POST['DelAdd3'];
+			$_SESSION['Contract'.$identifier]->DelAdd4 = $_POST['DelAdd4'];
+			$_SESSION['Contract'.$identifier]->DelAdd5 = $_POST['DelAdd5'];
+			$_SESSION['Contract'.$identifier]->DelAdd6 = $_POST['DelAdd6'];
+			$_SESSION['Contract'.$identifier]->tel = $_POST['tel'];
+			$_SESSION['Contract'.$identifier]->contact = $_POST['Contact'];
 
 		} else {
 			 /*The default location of the user is crook */
@@ -898,7 +898,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['Contract'.$id
 		}
 
 
-	} elseif (isset($_ContractST['LookupDeliveryAddress'])){
+	} elseif (isset($_POST['LookupDeliveryAddress'])){
 
 		$sql = "SELECT deladd1,
 				deladd2,
@@ -909,29 +909,29 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['Contract'.$id
 				tel,
 				contact
 			FROM locations
-			WHERE loccode='" . $_ContractST['StkLocation'] . "'";
+			WHERE loccode='" . $_POST['StkLocation'] . "'";
 
 		$LocnAddrResult = DB_query($sql,$db);
 		if (DB_num_rows($LocnAddrResult)==1){
 			$LocnRow = DB_fetch_row($LocnAddrResult);
-			$_ContractST['DelAdd1'] = $LocnRow[0];
-			$_ContractST['DelAdd2'] = $LocnRow[1];
-			$_ContractST['DelAdd3'] = $LocnRow[2];
-			$_ContractST['DelAdd4'] = $LocnRow[3];
-			$_ContractST['DelAdd5'] = $LocnRow[4];
-			$_ContractST['DelAdd6'] = $LocnRow[5];
-			$_ContractST['tel'] = $LocnRow[6];
-			$_ContractST['Contact'] = $LocnRow[7];
+			$_POST['DelAdd1'] = $LocnRow[0];
+			$_POST['DelAdd2'] = $LocnRow[1];
+			$_POST['DelAdd3'] = $LocnRow[2];
+			$_POST['DelAdd4'] = $LocnRow[3];
+			$_POST['DelAdd5'] = $LocnRow[4];
+			$_POST['DelAdd6'] = $LocnRow[5];
+			$_POST['tel'] = $LocnRow[6];
+			$_POST['Contact'] = $LocnRow[7];
 
-			$_SESSION['Contract'.$identifier]->Location= $_ContractST['StkLocation'];
-			$_SESSION['Contract'.$identifier]->DelAdd1 = $_ContractST['DelAdd1'];
-			$_SESSION['Contract'.$identifier]->DelAdd2 = $_ContractST['DelAdd2'];
-			$_SESSION['Contract'.$identifier]->DelAdd3 = $_ContractST['DelAdd3'];
-			$_SESSION['Contract'.$identifier]->DelAdd4 = $_ContractST['DelAdd4'];
-			$_SESSION['Contract'.$identifier]->DelAdd5 = $_ContractST['DelAdd5'];
-			$_SESSION['Contract'.$identifier]->DelAdd6 = $_ContractST['DelAdd6'];
-			$_SESSION['Contract'.$identifier]->tel = $_ContractST['tel'];
-			$_SESSION['Contract'.$identifier]->contact = $_ContractST['Contact'];
+			$_SESSION['Contract'.$identifier]->Location= $_POST['StkLocation'];
+			$_SESSION['Contract'.$identifier]->DelAdd1 = $_POST['DelAdd1'];
+			$_SESSION['Contract'.$identifier]->DelAdd2 = $_POST['DelAdd2'];
+			$_SESSION['Contract'.$identifier]->DelAdd3 = $_POST['DelAdd3'];
+			$_SESSION['Contract'.$identifier]->DelAdd4 = $_POST['DelAdd4'];
+			$_SESSION['Contract'.$identifier]->DelAdd5 = $_POST['DelAdd5'];
+			$_SESSION['Contract'.$identifier]->DelAdd6 = $_POST['DelAdd6'];
+			$_SESSION['Contract'.$identifier]->tel = $_POST['tel'];
+			$_SESSION['Contract'.$identifier]->contact = $_POST['Contact'];
 		}
 	}
 
@@ -940,22 +940,22 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['Contract'.$id
 		<td><input type='text' name=Contact size=41  value='" . $_SESSION['Contract'.$identifier]->contact . "'></td>
 		</tr>";
 	echo '<tr><td>' . _('Address') . " 1 :</td>
-		<td><input type='text' name=DelAdd1 size=41 maxlength=40 value='" . $_ContractST['DelAdd1'] . "'></td>
+		<td><input type='text' name=DelAdd1 size=41 maxlength=40 value='" . $_POST['DelAdd1'] . "'></td>
 		</tr>";
 	echo '<tr><td>' . _('Address') . " 2 :</td>
-		<td><input type='text' name=DelAdd2 size=41 maxlength=40 value='" . $_ContractST['DelAdd2'] . "'></td>
+		<td><input type='text' name=DelAdd2 size=41 maxlength=40 value='" . $_POST['DelAdd2'] . "'></td>
 		</tr>";
 	echo '<tr><td>' . _('Address') . " 3 :</td>
-		<td><input type='text' name=DelAdd3 size=41 maxlength=40 value='" . $_ContractST['DelAdd3'] . "'></td>
+		<td><input type='text' name=DelAdd3 size=41 maxlength=40 value='" . $_POST['DelAdd3'] . "'></td>
 		</tr>";
 	echo '<tr><td>' . _('Address') . " 4 :</td>
-		<td><input type='text' name=DelAdd4 size=21 maxlength=20 value='" . $_ContractST['DelAdd4'] . "'></td>
+		<td><input type='text' name=DelAdd4 size=21 maxlength=20 value='" . $_POST['DelAdd4'] . "'></td>
 		</tr>";
 	echo '<tr><td>' . _('Address') . " 5 :</td>
-		<td><input type='text' name=DelAdd5 size=16 maxlength=15 value='" . $_ContractST['DelAdd5'] . "'></td>
+		<td><input type='text' name=DelAdd5 size=16 maxlength=15 value='" . $_POST['DelAdd5'] . "'></td>
 		</tr>";
 	echo '<tr><td>' . _('Address') . " 6 :</td>
-		<td><input type='text' name=DelAdd6 size=16 maxlength=15 value='" . $_ContractST['DelAdd6'] . "'></td>
+		<td><input type='text' name=DelAdd6 size=16 maxlength=15 value='" . $_POST['DelAdd6'] . "'></td>
 		</tr>";
 	echo '<tr><td>' . _('Phone') . ":</td>
 		<td><input type='text' name=tel size=31 maxlength=30 value='" . $_SESSION['Contract'.$identifier]->tel . "'></td>
@@ -967,7 +967,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['Contract'.$id
 	$shipperResult = DB_query($sql,$db);
 
 	while ($shipperRow=DB_fetch_array($shipperResult)){
-		if (isset($_ContractST['deliveryby']) and ($_ContractST['deliveryby'] == $shipperRow['shipper_id'])) {
+		if (isset($_POST['deliveryby']) and ($_POST['deliveryby'] == $shipperRow['shipper_id'])) {
 			echo "<option selected value='" . $shipperRow['shipper_id'] . "'>" . $shipperRow['shippername'];
 		} else {
 			echo "<option value='" . $shipperRow['shipper_id'] . "'>" . $shipperRow['shippername'];
@@ -1000,12 +1000,12 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['Contract'.$id
 	echo '</td></tr><tr><td>' . _('Supplier Contact') . ':</td><td>
 		<select name=SupplierContact>';
 
-	$sql = "SELECT contact FROM suppliercontacts WHERE CustomerID='". $_ContractST['Select'] ."'";
+	$sql = "SELECT contact FROM suppliercontacts WHERE CustomerID='". $_POST['Select'] ."'";
 
 	$SuppCoResult = DB_query($sql,$db);
 
 	while ( $SuppCoRow=DB_fetch_array($SuppCoResult)){
-		if ($_ContractST['SupplierContact'] == $SuppCoRow['contact'] OR ($_ContractST['SupplierContact']==''
+		if ($_POST['SupplierContact'] == $SuppCoRow['contact'] OR ($_POST['SupplierContact']==''
 			AND $SuppCoRow['contact']==$_SESSION['Contract'.$identifier]->SupplierContact)){
 			//if (1) {
 			echo "<option selected value='" . $SuppCoRow['contact'] . "'>" . $SuppCoRow['contact'];
@@ -1018,19 +1018,19 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['Contract'.$id
 	echo '</td></tr>';
 
 	echo '<tr><td>' . _('Address') . " 1 :</td>
-		</td><td><input type='text' name=suppDelAdd1 size=41 maxlength=40 value='" . $_ContractST['suppDelAdd1'] . "'></td>
+		</td><td><input type='text' name=suppDelAdd1 size=41 maxlength=40 value='" . $_POST['suppDelAdd1'] . "'></td>
 		</tr>";
 	echo '<tr><td>' . _('Address') . " 2 :</td>
-		</td><td><input type='text' name=suppDelAdd2 size=41 maxlength=40 value='" . $_ContractST['suppDelAdd2'] . "'></td>
+		</td><td><input type='text' name=suppDelAdd2 size=41 maxlength=40 value='" . $_POST['suppDelAdd2'] . "'></td>
 		</tr>";
 	echo '<tr><td>' . _('Address') . " 3 :</td>
-		</td><td><input type='text' name=suppDelAdd3 size=41 maxlength=40 value='" . $_ContractST['suppDelAdd3'] . "'></td>
+		</td><td><input type='text' name=suppDelAdd3 size=41 maxlength=40 value='" . $_POST['suppDelAdd3'] . "'></td>
 		</tr>";
 	echo '<tr><td>' . _('Address') . " 4 :</td>
-		</td><td><input type='text' name=suppDelAdd5 size=21 maxlength=20 value='" . $_ContractST['suppDelAdd5'] . "'></td>
+		</td><td><input type='text' name=suppDelAdd5 size=21 maxlength=20 value='" . $_POST['suppDelAdd5'] . "'></td>
 		</tr>";
 	echo '<tr><td>' . _('Address') . " 5 :</td>
-		</td><td><input type='text' name=suppDelAdd4 size=41 maxlength=40 value='" . $_ContractST['suppDelAdd4'] . "'></td>
+		</td><td><input type='text' name=suppDelAdd4 size=41 maxlength=40 value='" . $_POST['suppDelAdd4'] . "'></td>
 		</tr>";
 	echo '<tr><td>' . _('Phone') . ":
 		</td><td><input type='text' name=supptel size=31 maxlength=30 value='" . $_SESSION['Contract'.$identifier]->supptel  . "'></td>
@@ -1052,15 +1052,15 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['Contract'.$id
 
 	$result=DB_query("SELECT loccode, locationname FROM locations WHERE loccode='" . $_SESSION['Contract'.$identifier]->Contractrt."'", $db);
 	$myrow = DB_fetch_array($result);
-	$_ContractST['Contractrt'] = $myrow['locationname'];
+	$_POST['Contractrt'] = $myrow['locationname'];
 
 	echo '<tr><td>' . _('Delivery To') . ":
-		</td><td><input type='text' name=Contractrt size=31 value='" . $_ContractST['Contractrt'] . "'></td>
+		</td><td><input type='text' name=Contractrt size=31 value='" . $_POST['Contractrt'] . "'></td>
 		</tr>";
 
 	if ($_SESSION['Contract'.$identifier]->CurrCode != $_SESSION['CompanyRecord']['currencydefault']) {
 		echo '<tr><td>'. _('Exchange Rate').':'.'</td><td><input type=text name="ExRate"
-		value='.$_ContractST['ExRate'].' class=number size=11></td></tr>';
+		value='.$_POST['ExRate'].' class=number size=11></td></tr>';
 	} else {
 		echo '<input type=hidden name="ExRate" value="1">';
 	}
@@ -1070,11 +1070,11 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['Contract'.$id
 
 	$Default_Comments = '';
 
-	if (!isset($_ContractST['Comments'])) {
-		$_ContractST['Comments']=$Default_Comments;
+	if (!isset($_POST['Comments'])) {
+		$_POST['Comments']=$Default_Comments;
 	}
 
-	echo ":</th></tr><tr><td colspan=4><textarea name='Comments' style='width:100%' rows=5>" . $_ContractST['Comments'] . '</textarea>';
+	echo ":</th></tr><tr><td colspan=4><textarea name='Comments' style='width:100%' rows=5>" . $_POST['Comments'] . '</textarea>';
 
 	echo '</table>';
 

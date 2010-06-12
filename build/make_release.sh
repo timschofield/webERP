@@ -28,7 +28,7 @@ msgmerge -U --backup=off locale/cs_CZ.utf8/LC_MESSAGES/messages.po locale/en_GB.
 msgmerge -U --backup=off locale/el_GR.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 msgmerge -U --backup=off locale/fa_IR.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 msgmerge -U --backup=off locale/hu_HU.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-
+msgmerge -U --backup=off locale/lv_LV.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 
 msgfmt -o locale/fr_FR.utf8/LC_MESSAGES/messages.mo  locale/fr_FR.utf8/LC_MESSAGES/messages.po 
 msgfmt -o locale/ja_JP.utf8/LC_MESSAGES/messages.mo locale/ja_JP.utf8/LC_MESSAGES/messages.po
@@ -49,6 +49,7 @@ msgfmt -o locale/cs_CZ.utf8/LC_MESSAGES/messages.mo locale/cs_CZ.utf8/LC_MESSAGE
 msgfmt -o locale/el_GR.utf8/LC_MESSAGES/messages.mo locale/el_GR.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/fa_IR.utf8/LC_MESSAGES/messages.mo locale/fa_IR.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/hu_HU.utf8/LC_MESSAGES/messages.mo locale/hu_HU.utf8/LC_MESSAGES/messages.po
+msgfmt -o locale/lv_LV.utf8/LC_MESSAGES/messages.mo locale/hu_HU.utf8/LC_MESSAGES/messages.po
 
 echo "SET FOREIGN_KEY_CHECKS = 0;" > $BASE_DIR/sql/mysql/weberp-new.sql
 
@@ -96,7 +97,7 @@ cat $BASE_DIR/sql/mysql/weberp-demo_data.sql >> $BASE_DIR/sql/mysql/weberp-demo.
 rm  $BASE_DIR/sql/mysql/weberp-demo_data.sql
 rm  $BASE_DIR/sql/mysql/weberp-base.sql
 
-# echo "CREATE SCHEMA IF NOT EXISTS weberp DEFAULT CHARACTER SET latin1 DEFAULT COLLATE latin1_swedish_ci;" >> /home/tim/workspace/webERP/sql/mysql/weberp-new.sql
+# echo "CREATE SCHEMA IF NOT EXISTS weberp DEFAULT CHARACTER SET  DEFAULT COLLATE latin1_swedish_ci;" >> /home/tim/workspace/webERP/sql/mysql/weberp-new.sql
 echo "SET FOREIGN_KEY_CHECKS = 1;" >> $BASE_DIR/sql/mysql/weberp-new.sql
 echo "UPDATE systypes SET typeno=0;" >> $BASE_DIR/sql/mysql/weberp-new.sql
 echo "INSERT INTO shippers VALUES (1,'Default Shipper',0);" >> $BASE_DIR/sql/mysql/weberp-new.sql
