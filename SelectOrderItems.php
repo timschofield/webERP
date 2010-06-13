@@ -427,8 +427,6 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 		$_SESSION['Items'.$identifier]->DefaultPOLine = $myrow[5];
 		$_SESSION['Items'.$identifier]->PaymentTerms = $myrow[6];
 
-
-
 # the branch was also selected from the customer selection so default the delivery details from the customer branches table CustBranch. The order process will ask for branch details later anyway
 
 		$sql = "SELECT custbranch.brname,

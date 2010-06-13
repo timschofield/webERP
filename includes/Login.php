@@ -17,7 +17,6 @@ if ($allow_demo_mode == True and !isset($demo_text)) {
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/<?php echo $theme;?>/login.css" type="text/css" />
 </head>
-
 <body>
 
 <?php

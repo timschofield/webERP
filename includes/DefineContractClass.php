@@ -4,23 +4,27 @@
 
 Class Contract {
 
-	var contractno; /*auto generated contract no - but there for existing contracts */
-    var contractref; /*the contract short description used for stockid when contract submitted for quotation */
-    var contractdescription; /*the description of the contract */
-    var debtorno; /*the customer that the contract is for */
-    var branchcode;
-    var status; /* 0 = initiated - 1=quoted - 2=completed */
-    var categoryid;   /* the category where the contract will be when converted to an item  for quotation*/
-    var orderno; /* the order number created when the contract is quoted */
-    var margin; /*the margin used in quoting for the contract */
-    var wo; /*the wo created when the quotation is converted to an order */
-    var requireddate;
-    var quantityreqd;
-	var units; /*the unit of measure of the contract item*/
-	var drawing; /*a link to the contract drawing*/
-    var rate; /*the rate of exchange between customer currency and company functional currency used when quoting */
-    var BOMComponentCounter;
-    var RequirementsCounter;
+	var $ContractNo; /*auto generated contract no - but there for existing contracts */
+    var $ContractRef; /*the contract short description used for stockid when contract submitted for quotation */
+    var $ContractDescription; /*the description of the contract */
+    var $DebtorNo; /*the customer that the contract is for */
+    var $CustomerName;
+    var $BranchCode;
+    var $BranchName;
+    var $Status; /* 0 = initiated - 1=quoted - 2=completed */
+    var $CategoryID;   /* the category where the contract will be when converted to an item  for quotation*/
+    var $OrderNo; /* the order number created when the contract is quoted */
+    var $CustomerRef;
+    var $Margin; /*the margin used in quoting for the contract */
+    var $WO; /*the wo created when the quotation is converted to an order */
+    var $RequiredDate;
+    var $QuantityReqd;
+	var $Units; /*the unit of measure of the contract item*/
+	var $Drawing; /*a link to the contract drawing*/
+    var $CurrCode; /*the currency of the customer to quote in */
+    var $ExRate; /*the rate of exchange between customer currency and company functional currency used when quoting */
+    var $BOMComponentCounter;
+    var $RequirementsCounter;
 
 	var $ContractBOM; /*array of stockid components  required for the contract */
 	var $ContractReqts; /*array of other items required for the contract */
@@ -31,11 +35,18 @@ Class Contract {
 		$this->ContractReqts = array();
 		$this->BOMComponentCounter=0;
 		$this->RequirementsCounter=0;
+		$this->QuantityReqd=1;
+		$this->Status =0;
 	}
 
-	function Add_To_ContractBOM($StockID, $WorkCentre, $Quantity, $ItemCost, $UOM){
+	function Add_To_ContractBOM($StockID, $ItemDescription, $WorkCentre, $Quantity, $ItemCost, $UOM){
 		if (isset($StockID) AND $Quantity!=0){
-			$this->ContractBOM[$this->BOMComponentCounter] = new ContractComponent($StockID, $WorkCentre, $Quantity,$ItemCost, $UOM);
+			$this->ContractBOM[$this->BOMComponentCounter] = new ContractComponent($StockID, 
+																					$ItemDescription, 
+																					$WorkCentre, 
+																					$Quantity,
+																					$ItemCost, 
+																					$UOM);
 			$this->BOMComponentCounter++;
 			Return 1;
 		}
@@ -49,7 +60,7 @@ Class Contract {
 	
 /*Requirments Methods */
 
-function Add_To_ContractRequirements($Requirment, $Quantity, $CostPerUnit,$ContractReqID){){
+function Add_To_ContractRequirements($Requirment, $Quantity, $CostPerUnit,$ContractReqID){
 		if (isset($Requirment) AND $Quantity!=0 AND $CostPerUnit!=0){
 			$this->ContractReqts[$this->RequirementsCounter] = new ContractRequirement($Requirment, $Quantity, $CostPerUnit,$ContractReqID);
 			$this->RequirementsCounter++;
@@ -67,15 +78,17 @@ function Add_To_ContractRequirements($Requirment, $Quantity, $CostPerUnit,$Contr
 Class ContractComponent {
 
 	var $StockID;
+	var $ItemDescription;
 	var $WorkCentre;
 	var $Quantity;
 	var $ItemCost;
 	var $UOM;
 	
-	function ContractComponent ($StockID, $WorkCentre, $Quantity, $ItemCost, $UOM){
+	function ContractComponent ($StockID, $ItemDescription, $WorkCentre, $Quantity, $ItemCost, $UOM){
 
 /* Constructor function to add a new Contract Component object with passed params */
-		$this->StockID =$StockID;
+		$this->StockID = $StockID;
+		$this->ItemDescription = $ItemDescription;
 		$this->WorkCentre = $WorkCentre;
 		$this->Quantity = $Quantity;
 		$this->ItemCost= $ItemCost;

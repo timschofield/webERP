@@ -13,7 +13,7 @@ if (isset($_GET['ModifyContractNo'])) {
 }
 
 if (isset($_GET['CustomerID'])) {
-	$_POST['Select']=$_GET['CustomerID'];
+	$_POST['SelectedCustomer']=$_GET['CustomerID'];
 }
 
 include('includes/header.inc');
@@ -39,1053 +39,841 @@ if (empty($_GET['identifier'])) {
 
 if (isset($_GET['NewContract']) and isset($_SESSION['Contract'.$identifier])){
 	unset($_SESSION['Contract'.$identifier]);
-	$_SESSION['ExistingContract']=0;
+	$_SESSION['ExistingContract'] = 0;
 }
-
-if (isset($_POST['Select']) and empty($_POST['SupplierContact'])) {
-	$sql = "SELECT contact
-			FROM suppliercontacts
-			WHERE CustomerID='". $_POST['Select'] ."'";
-
-	$SuppCoResult = DB_query($sql,$db);
-	if (DB_num_rows($SuppCoResult)>0) {
-		$myrow = DB_fetch_row($SuppCoResult);
-		$_POST['SupplierContact'] = $myrow[0];
-	} else {
-		$_POST['SupplierContact']='';
-	}
-}
-
 
 if (isset($_GET['NewContract']) AND isset($_GET['SelectedCustomer'])) {
 		/*
 		* initialize a new contract
 		*/
 		$_SESSION['ExistingContract']=0;
+		unset($_SESSION['Contract'.$identifier]->ContractBOM);
+		unset($_SESSION['Contract'.$identifier]->ContractReqts);
 		unset($_SESSION['Contract'.$identifier]);
 		/* initialize new class object */
 		$_SESSION['Contract'.$identifier] = new Contract;
-		/**
-		* and fill it with essential data
-		*/
-		$_SESSION['Contract'.$identifier]->AllowPrintContract = 1; /* Of course cos the
-		* order aint even started !!*/
-		$_SESSION['Contract'.$identifier]->GLLink = $_SESSION['CompanyRecord']['gllink_stock'];
-		/* set the CustomerID we got */
-		$_SESSION['Contract'.$identifier]->CustomerID = $_GET['SelectedCustomer'];
-		/**/
-		$_SESSION['RequireSupplierSelection'] = 0;
-		/**/
-		$_POST['Select'] = $_GET['SelectedCustomer'];
-
-		/**
-		* the item (its item code) that should be purchased
-		*/
-		$purch_item = $_GET['StockID'];
-
+		
+		$_SESSION['RequireCustomerSelection'] = 0;
+		$_POST['SelectedCustomer'] = $_GET['SelectedCustomer'];
+		/*The customer is checked for credit and the Contract Object populated
+		 * using the usual logic of when a customer is selected 
+		 * */
 }
 
-if (isset($_POST['EnterLines'])){
+if (isset($_POST['EnterContractBOM']) OR isset($_POST['EnterContractRequirements'])){
 /*User hit the button to enter line items -
  *  ensure session variables updated then meta refresh to Contract_Items.php*/
 
-	$_SESSION['Contract'.$identifier]->Location=$_POST['StkLocation'];
-	$_SESSION['Contract'.$identifier]->SupplierContact=$_POST['SupplierContact'];
-	$_SESSION['Contract'.$identifier]->DelAdd1 = $_POST['DelAdd1'];
-	$_SESSION['Contract'.$identifier]->DelAdd2 = $_POST['DelAdd2'];
-	$_SESSION['Contract'.$identifier]->DelAdd3 = $_POST['DelAdd3'];
-	$_SESSION['Contract'.$identifier]->DelAdd4 = $_POST['DelAdd4'];
-	$_SESSION['Contract'.$identifier]->DelAdd5 = $_POST['DelAdd5'];
-	$_SESSION['Contract'.$identifier]->DelAdd6 = $_POST['DelAdd6'];
-	$_SESSION['Contract'.$identifier]->suppDelAdd1 = $_POST['suppDelAdd1'];
-	$_SESSION['Contract'.$identifier]->suppDelAdd2 = $_POST['suppDelAdd2'];
-	$_SESSION['Contract'.$identifier]->suppDelAdd3 = $_POST['suppDelAdd3'];
-	$_SESSION['Contract'.$identifier]->suppDelAdd4 = $_POST['suppDelAdd4'];
-	$_SESSION['Contract'.$identifier]->suppDelAdd5 = $_POST['suppDelAdd5'];
-	$_SESSION['Contract'.$identifier]->supptel= $_POST['supptel'];
-	$_SESSION['Contract'.$identifier]->Initiator = $_POST['Initiator'];
-	$_SESSION['Contract'.$identifier]->RequisitionNo = $_POST['Requisition'];
-	$_SESSION['Contract'.$identifier]->version = $_POST['version'];
-	$_SESSION['Contract'.$identifier]->deliverydate = $_POST['deliverydate'];
-	$_SESSION['Contract'.$identifier]->revised = $_POST['revised'];
+	$_SESSION['Contract'.$identifier]->ContractRef=$_POST['ContractRef'];
+	$_SESSION['Contract'.$identifier]->ContractDescription=$_POST['ContractDescription'];
+	$_SESSION['Contract'.$identifier]->DebtorNo = $_POST['DebtorNo'];
+	$_SESSION['Contract'.$identifier]->BranchCode = $_POST['BranchCode'];
+	$_SESSION['Contract'.$identifier]->CategoryID = $_POST['CategoryID'];
+	$_SESSION['Contract'.$identifier]->RequiredDate = $_POST['RequiredDate'];
+	$_SESSION['Contract'.$identifier]->Margin = $_POST['Margin'];
+	$_SESSION['Contract'.$identifier]->CustomerRef = $_POST['CustomerRef'];
+	$_SESSION['Contract'.$identifier]->QuantityReqd = $_POST['QuantityReqd'];
+	$_SESSION['Contract'.$identifier]->Units = $_POST['Units'];
 	$_SESSION['Contract'.$identifier]->ExRate = $_POST['ExRate'];
-	$_SESSION['Contract'.$identifier]->Comments = $_POST['Comments'];
-	$_SESSION['Contract'.$identifier]->deliveryby = $_POST['deliveryby'];
-	$_SESSION['Contract'.$identifier]->StatusMessage = $_POST['StatComments'];
-	$_SESSION['Contract'.$identifier]->paymentterms = $_POST['paymentterms'];
-	$_SESSION['Contract'.$identifier]->contact = $_POST['Contact'];
-	$_SESSION['Contract'.$identifier]->tel = $_POST['tel'];
-	$_SESSION['Contract'.$identifier]->Contractrt = $_POST['Contractrt'];
-
-	if (isset($_POST['RePrint']) and $_POST['RePrint']==1){
-
-		$_SESSION['Contract'.$identifier]->AllowPrintContract=1;
-
-		$sql = 'UPDATE purchorders
-			SET purchorders.allowprint=1
-			WHERE purchorders.orderno=' . $_SESSION['Contract'.$identifier]->OrderNo;
-
-		$ErrMsg = _('An error occurred updating the Contract to allow reprints') . '. ' . _('The error says');
-		$updateResult = DB_query($sql,$db,$ErrMsg);
-
-	} else {
-		$_POST['RePrint'] = 0;
-	}
-
-	echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/Contract_Items.php?' . SID . 'identifier='.$identifier. "'>";
-	echo '<p>';
-	prnMsg(_('You should automatically be forwarded to the entry of the Contract line items page') . '. ' .
+	if (isset($_POST['EnterContractBOM'])){
+		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/Contract_Items.php?' . SID . 'identifier='.$identifier. "'>";
+		echo '<p>';
+		prnMsg(_('You should automatically be forwarded to the entry of the Contract line items page') . '. ' .
 		_('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
-		"<a href='$rootpath/Contract_Items.php?" . SID. 'identifier='.$identifier . "'>" . _('click here') . '</a> ' . _('to continue'),'info');
+		"<a href='$rootpath/ContractBOM.php?" . SID. 'identifier='.$identifier . "'>" . _('click here') . '</a> ' . _('to continue'),'info');
 		include('includes/footer.inc');
 		exit;
-} /* end of if isset _ContractST'EnterLines' */
+	}
+	if (isset($_POST['EnterContractRequirements'])){
+		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/ContractRequirements.php?' . SID . 'identifier='.$identifier. "'>";
+		echo '<p>';
+		prnMsg(_('You should automatically be forwarded to the entry of the Contract requirements page') . '. ' .
+		_('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
+		"<a href='$rootpath/ContractRequirements.php?" . SID. 'identifier='.$identifier . "'>" . _('click here') . '</a> ' . _('to continue'),'info');
+		include('includes/footer.inc');
+		exit;
+	}
+} /* end of if going to contract BOM or contract requriements */
 
-echo '<a href="'. $rootpath . '/Contract_SelectOSPurchOrder.php?' . SID . "identifier=".$identifier.'">'. _('Back to Contracts'). '</a><br>';
+echo '<a href="'. $rootpath . '/ContractSelect.php?' . SID . "identifier=".$identifier.'">'. _('Back to Contracts'). '</a><br>';
 
-/*The page can be called with ModifyContractNo=x where x is a purchase
- * order number. The page then looks up the details of order x and allows
- * these details to be modified */
+//attempting to upload the drawing image file
+if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION['Contract'.$identifier]->ContractRef!='') {
 
-if (isset($_GET['ModifyContractNo'])){
-	include ('includes/Contract_ReadInOrder.inc');
-}
+	$result = $_FILES['Drawing']['error'];
+ 	$UploadTheFile = 'Yes'; //Assume all is well to start off with
+	$filename = $_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.jpg';
 
-if (isset($_POST['CancelOrder']) AND $_POST['CancelOrder']!='') {
-/*The cancel button on the header screen - to delete order */
-	$OK_to_delete = 1;	 //assume this in the first instance
-
-	if(!isset($_SESSION['ExistingContract']) OR $_SESSION['ExistingContract']!=0) {
-		/* need to check that not already dispatched or invoiced
-		 * by the supplier */
-
-		if($_SESSION['Contract'.$identifier]->Any_Already_Received()==1){
-			$OK_to_delete =0;
-			prnMsg( _('This order cannot be cancelled because some of it has already been received') . '. ' .
-				_('The line item quantities may be modified to quantities more than already received') . '. ' .
-				_('Prices cannot be altered for lines that have already been received') .' '.
-				_('and quantities cannot be reduced below the quantity already received'),'warn');
+	 //But check for the worst
+	if (strtoupper(substr(trim($_FILES['Drawing']['name']),strlen($_FILES['Drawing']['name'])-3))!='JPG'){
+		prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
+		$UploadTheFile ='No';
+	} elseif ( $_FILES['Drawing']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
+		prnMsg(_('The file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'],'warn');
+		$UploadTheFile ='No';
+	} elseif ( $_FILES['Drawing']['type'] == 'text/plain' ) {  //File Type Check
+		prnMsg( _('Only graphics files can be uploaded'),'warn');
+         	$UploadTheFile ='No';
+	} elseif (file_exists($filename)){
+		prnMsg(_('Attempting to overwrite an existing item image'),'warn');
+		$result = unlink($filename);
+		if (!$result){
+			prnMsg(_('The existing image could not be removed'),'error');
+			$UploadTheFile ='No';
 		}
-
 	}
 
-	if ($OK_to_delete==1){
-		$emailsql='SELECT email FROM www_users WHERE userid="'.$_SESSION['Contract'.$identifier]->Initiator.'"';
-		$emailresult=DB_query($emailsql, $db);
-		$emailrow=DB_fetch_array($emailresult);
-		$StatusComment=date($_SESSION['DefaultDateFormat']).
-			' - Order Cancelled by <a href="mailto:'.$emailrow['email'].'">'.$_SESSION['UserID'].'</a><br>'.$_POST['statcommentscomplete'];
-		unset($_SESSION['Contract'.$identifier]->LineItems);
-		unset($_SESSION['Contract'.$identifier]);
-		$_SESSION['Contract'.$identifier] = new PurchOrder;
-		$_SESSION['RequireSupplierSelection'] = 1;
+	if ($UploadTheFile=='Yes'){
+		$result  =  move_uploaded_file($_FILES['Drawing']['tmp_name'], $filename);
+		$message = ($result)?_('File url') ."<a href='". $filename ."'>" .  $filename . '</a>' : _('Something is wrong with uploading the file');
+	}
+ /* EOR Add Image upload for New Item  - by Ori */
+}
 
+
+/*The page can be called with ModifyContractRef=x where x is a contract 
+ * reference. The page then looks up the details of contract x and allows
+ * these details to be modified */
+
+if (isset($_GET['ModifyContractRef'])){
+
+	if (isset($_SESSION['Contract'.$identifier])){
+			unset ($_SESSION['Contract'.$identifier]->ContractBOM);
+			unset ($_SESSION['Contract'.$identifier]->ContractReqts);
+			unset ($_SESSION['Contract'.$identifier]);
+	}
+	
+	$_SESSION['ExistingContract']=$_GET['ModifyContractRef'];
+	$_SESSION['RequireCustomerSelection'] = 0;
+	$_SESSION['Contract'.$identifier] = new Contract;
+
+	/*read in all the guff from the selected contract into the contract Class variable  */
+
+	$ContractHeaderSQL = "SELECT contractdescription,
+					  				debtorno,
+					  				branchcode,
+					  				status,
+					  				categoryid,
+					  				orderno,
+					  				margin,
+					  				wo,
+					  				requireddate,
+					  				quantityreqd,
+					  				units,
+					  				drawing,
+					  				exrate
+					  		FROM contracts
+					  		WHERE contractref= '" . $_GET['ModifyContractRef'] . "'";
+
+	$ErrMsg =  _('The contract cannot be retrieved because');
+	$DbgMsg =  _('The SQL statement that was used and failed was');
+	$ContractHdrResult = DB_query($ContractHeaderSQL,$db,$ErrMsg,$DbgMsg);
+
+	if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifier]->ContractRef )) {
+
+		$myrow = DB_fetch_array($ContractHdrResult);
+		$_SESSION['Contract'.$identifier]->ContractRef = $_GET['ModifyOrderRef'];
+		$_SESSION['Contract'.$identifier]->ContractDescription = $myrow['contractdescription'];
+		$_SESSION['Contract'.$identifier]->DebtorNo = $myrow['debtorno'];
+		$_SESSION['Contract'.$identifier]->BranchCode = $myrow['branchcode'];
+		$_SESSION['Contract'.$identifier]->Status = $myrow['status'];
+		$_SESSION['Contract'.$identifier]->CategoryID = $myrow['categoryid'];
+		$_SESSION['Contract'.$identifier]->OrderNo = $myrow['orderno'];
+		$_SESSION['Contract'.$identifier]->Margin = $myrow['Margin'];
+		$_SESSION['Contract'.$identifier]->WO = $myrow['wo'];
+		$_SESSION['Contract'.$identifier]->RequiredDate = $myrow['RequiredDate'];
+		$_SESSION['Contract'.$identifier]->QuantityRequired = $myrow['QuantityRequired'];
+		$_SESSION['Contract'.$identifier]->Units = $myrow['units'];
+		$_SESSION['Contract'.$identifier]->Drawing = $myrow['drawing'];
+		$_SESSION['Contract'.$identifier]->ExRate = $myrow['exrate'];
+		
+/*now populate the contract BOM array with the items required for the contract */
+
+		$ContractBOMsql = "SELECT contractbom.stockid,
+									contractbom.workcentreadded,
+									contractbom.quantity,
+									stockmaster.units,
+									stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS cost
+							FROM contractbom INNER JOIN stockmaster
+							ON contractbom.stockid=stockmaster.stockid
+							WHERE contractref ='" . $_GET['ModifyContractRef'] . "'";
+
+	  	$ErrMsg =  _('The bill of material cannot be retrieved because');
+		$DbgMsg =  _('The SQL statement that was used to retrieve the contract bill of material was');
+		$ContractBOMResult = db_query($ContractBOMSQL,$db,$ErrMsg,$DbgMsg);
+
+		if (db_num_rows($ContractBOMResult) > 0) {
+			while ($myrow=db_fetch_array($ContractBOMResult)) {
+				$_SESSION['Contract'.$identifier]->Add_To_ContractBOM($myrow['stockid'], 
+																		$myrow['workcentreadded'],
+																		$myrow['quantity'],
+																		$myrow['cost'],
+																		$myrow['units']);
+			} /* add contract bill of materials BOM lines*/
+		} //end is there was a contract BOM to add
+		//Now add the contract requirments
+		$ContractReqtsSQL = "SELECT component,
+									quantity,
+									costperunit,
+									contractreqid
+							FROM contractreqts 
+							WHERE contractref ='" . $_GET['ModifyContractRef'] . "' 
+							ORDER BY contractreqid";
+
+	  	$ErrMsg =  _('The other contract requirementscannot be retrieved because');
+		$DbgMsg =  _('The SQL statement that was used to retrieve the other contract requirments was');
+		$ContractReqtsResult = db_query($ContractReqtsSQL,$db,$ErrMsg,$DbgMsg);
+
+		if (db_num_rows($ContractReqtsResult) > 0) {
+			while ($myrow=db_fetch_array($ContractReqtsResult)) {
+				$_SESSION['Contract'.$identifier]->Add_To_ContractRequirements($myrow['component'],
+																			   $myrow['quantity'],
+																			   $myrow['costperunit'],
+																			   $myrow['contractreqid']);
+			} /* add other contract requirments lines*/
+		} //end is there are contract other contract requirments to add
+   } // end if there was a header for the contract
+
+}// its an existing contract to readin
+
+if (isset($_POST['CancelContract'])) {
+/*The cancel button on the header screen - to delete the contract */
+	$OK_to_delete = 1;	 //assume this in the first instance
+	if(!isset($_SESSION['ExistingContract']) OR $_SESSION['ExistingContract']!=0) {
+		/* need to check that not already ordered by the customer - status = 0  */
+		if($_SESSION['Contract'.$identifier]->Status==1){
+			$result = DB_query('SELECT orderno FROM salesorders WHERE orderno=' . $_SESSION['Contract'.$identifier]->OrderNo,$db);
+			if (DB_num_rows($result)==1){
+				$OK_to_delete =0;
+				prnMsg( _('The contract has already been ordered by the customer the order must also be deleted first before the contract can be deleted'),'warn');
+			}
+		}
+	}
+	if ($OK_to_delete==1){
 		if($_SESSION['ExistingContract']!=0){
 
-			$sql = 'UPDATE purchorderdetails
-				SET completed=1
-				WHERE purchorderdetails.orderno =' . $_SESSION['ExistingContract'];
-			$ErrMsg = _('The order detail lines could not be deleted because');
+			$sql = "DELETE FROM contractbom WHERE contractref='" . $_SESSION['Contract'.$identifier]->ContractRef . "'";
+			$ErrMsg = _('The contract bill of materials could not be deleted because');
 			$DelResult=DB_query($sql,$db,$ErrMsg);
-
-			$sql="UPDATE purchorders
-				SET status='".PurchOrder::STATUS_CANCELLED."',
-				stat_comment='".$StatusComment."'
-				WHERE orderno=".$_SESSION['ExistingContract'];
-
-			$ErrMsg = _('The order header could not be deleted because');
+			$sql = "DELETE FROM contractreqts WHERE contractref='" . $_SESSION['Contract'.$identifier]->ContractRef . "'";
+			$ErrMsg = _('The contract requirments could not be deleted because');
 			$DelResult=DB_query($sql,$db,$ErrMsg);
-			prnMsg( _('Order number').' '.$_SESSION['ExistingContract'].' '._('has been cancelled'), 'success');
+			$sql= "DELETE FROM contracts WHERE contractref='" . $_SESSION['Contract'.$identifier]->ContractRef . "'";
+			$ErrMsg = _('The contract could not be deleted because');
+			$DelResult=DB_query($sql,$db,$ErrMsg);
+			
+			prnMsg( _('Contract').' '.$_SESSION['Contract'.$identifier]->ContractRef.' '._('has been cancelled'), 'success');
 			unset($_SESSION['Contract'.$identifier]);
 			unset($_SESSION['ExistingContract']);
-		} else {
-		// Re-Direct to right place
-			unset($_SESSION['Contract'.$identifier]);
-			prnMsg( _('The creation of the new order has been cancelled'), 'success');
 		}
+		unset($_SESSION['Contract'.$identifier]->ContractBOM);
+		unset($_SESSION['Contract'.$identifier]->ContractReqts);
+		unset($_SESSION['Contract'.$identifier]);
+		$_SESSION['Contract'.$identifier] = new Contract;
+		$_SESSION['RequireCustomerSelection'] = 1;
 	}
 }
 
 if (!isset($_SESSION['Contract'.$identifier])){
-	/* It must be a new order being created
+	/* It must be a new contract being created
 	 * $_SESSION['Contract'.$identifier] would be set up from the order modification
-	 * code above if a modification to an existing order. Also
-	 * $ExistingContract would be set to 1. The delivery check screen
-	 * is where the details of the order are either updated or
-	 * inserted depending on the value of ExistingContract */
+	 * code above if a modification to an existing contract. Also
+	 * $ExistingContract would be set to the ContractRef
+	 * */
 
-		$_SESSION['ExistingContract']=0;
-		$_SESSION['Contract'.$identifier] = new PurchOrder;
-		$_SESSION['Contract'.$identifier]->AllowPrintContract = 1; /*Of course cos the order aint even started !!*/
-		$_SESSION['Contract'.$identifier]->GLLink = $_SESSION['CompanyRecord']['gllink_stock'];
-
-		if ($_SESSION['Contract'.$identifier]->CustomerID=='' OR !isset($_SESSION['Contract'.$identifier]->CustomerID)){
+		$_SESSION['ExistingContract']= 0;
+		$_SESSION['Contract'.$identifier] = new Contract;
+		
+		if ($_SESSION['Contract'.$identifier]->DebtorNo=='' OR !isset($_SESSION['Contract'.$identifier]->DebtorNo)){
 
 /* a session variable will have to maintain if a supplier
  * has been selected for the order or not the session
  * variable CustomerID holds the supplier code already
  * as determined from user id /password entry  */
-			$_SESSION['RequireSupplierSelection'] = 1;
+			$_SESSION['RequireCustomerSelection'] = 1;
 		} else {
-			$_SESSION['RequireSupplierSelection'] = 0;
+			$_SESSION['RequireCustomerSelection'] = 0;
 		}
-
 }
 
-if (isset($_POST['ChangeSupplier'])) {
-
-/* change supplier only allowed with appropriate permissions -
- * button only displayed to modify is AccessLevel >10
- * (see below)*/
-	if ($_SESSION['Contract'.$identifier]->Stat == PurchOrder::STATUS_PENDING and $_SESSION['UserID']==$_SESSION['Contract'.$identifier]->Initiator) {
-		if ($_SESSION['Contract'.$identifier]->Any_Already_Received()==0){
-			$emailsql='SELECT email FROM www_users WHERE userid="'.$_SESSION['Contract'.$identifier]->Initiator.'"';
-			$emailresult=DB_query($emailsql, $db);
-			$emailrow=DB_fetch_array($emailresult);
-			$date = date($_SESSION['DefaultDateFormat']);
-			$_SESSION['RequireSupplierSelection']=1;
-			$_SESSION['Contract'.$identifier]->Stat = PurchOrder::STATUS_PENDING;
-			$StatusComment=$date.' - Supplier changed by <a href="mailto:'.$emailrow['email'].'">'.$_SESSION['UserID'].
-				'</a> - '.$_POST['StatComments'].'<br>'.$_POST['statcommentscomplete'];
-			$_SESSION['Contract'.$identifier]->StatComments=$StatusComment;
-		} else {
-			echo '<br><br>';
-			prnMsg(_('Cannot modify the supplier of the order once some of the order has been received'),'warn');
+if (isset($_POST['CommitContract'])){ 
+	/*This is the bit where the contract object is commited to the database after a bit of error checking */
+	
+	//First update the session['Contract'.$identifier] variable with all inputs from the form
+	
+	$InputError = False; //assume no errors on input then test for errors
+	if (strlen($_POST['ContractRef'])<2){
+		prnMsg(_('The contract reference is expected to be more than 2 characters long. Please alter the contract reference before proceeding.'),'error');
+		$InputError = true;
+	}
+	//The contractRef cannot be the same as an existing stockid or contractref
+	$result = DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['ContractRef'] . "'",$db); 
+	if (DB_num_rows($result)==1){
+		prnMsg(_('The contract reference cannot be the same as a previously created stock item. Please modify the contract reference before continuing'),'error');
+		$InputError=true;
+	}
+	if (strlen($_POST['ContractDescription'])<10){
+		prnMsg(_('The contract description is expected to be more than 10 characters long. Please alter the contract description in full before proceeding.'),'error');
+		$InputError = true;
+	}
+	if (! Is_Date($_POST['RequiredDate'])){
+		prnMsg (_('The date the contract is required to be completed by must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
+		$InputError =true;
+	}
+	if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['RequiredDate']) AND $_POST['RequiredDate']!=''){
+		prnMsg(_('The date that the contract is to be completed by is expected to be a date in the future. Make the required date a date after today before proceeding.'),'error');
+		$InputError =true;
+	}
+	if (!is_numeric($_POST['QuantityReqd'])){
+		prnMsg(_('The quantity required is expected to be numeric. Please enter a number in the quantity required field before proceeding.'),'error');
+		$InputError=true;
+	}
+	if ($_POST['QuantityReqd']<=0){
+		prnMsg(_('The quantity required is expected to be a positive number. Please enter a postive number in the quantity required field before proceeding.'),'error');
+		$InputError=true;
+	}
+	if (!$InputError) { 
+		$_SESSION['Contract'.$identifier]->ContractRef=$_POST['ContractRef'];
+		$_SESSION['Contract'.$identifier]->ContractDescription=$_POST['ContractDescription'];
+		$_SESSION['Contract'.$identifier]->CategoryID = $_POST['CategoryID'];
+		$_SESSION['Contract'.$identifier]->RequiredDate = $_POST['RequiredDate'];
+		$_SESSION['Contract'.$identifier]->Margin = $_POST['Margin'];
+		$_SESSION['Contract'.$identifier]->Status = $_POST['Status'];
+		$_SESSION['Contract'.$identifier]->CustomerRef = $_POST['CustomerRef'];
+		$_SESSION['Contract'.$identifier]->QuantityReqd = $_POST['QuantityReqd'];
+		$_SESSION['Contract'.$identifier]->Units = $_POST['Units'];
+		$_SESSION['Contract'.$identifier]->ExRate = $_POST['ExRate'];
+	}
+		
+	$sql = "SELECT contractref,
+					debtorno,
+					branchcode,
+					categoryid,
+					requireddate,
+					margin,
+					customerref,
+					quantityreqd,
+					units,
+					exrate,
+					status 
+			FROM contracts 
+			WHERE contractref='" . $_POST['ContractRef'] . "'"; 
+			
+	$result = DB_query($sql,$db); 
+	if (DB_num_rows($result)==1){ // then we have an existing contract with this contractref
+		$ExistingContract = DB_fetch_array($result);
+		if ($ExistingContract['debtorno'] != $_SESSION['Contract'.$identifier]->DebtorNo){
+			prnMsg(_('The contract reference cannot be the same as a previously created contract for another customer. Please modify the contract reference before continuing'),'error');
+			$InputError=true;
 		}
-	}
-}
+		if ($ExistingContract['status'] == 0 AND $_POST['Status']==2){ 
+			prnMsg(_('The contract must first be made into a customer quotation - only then can it be completed.'),'error');
+			$InputError=true;	
+		}
+		if ($ExistingContract['status'] == 1 AND $_POST['Status']==0){
+			prnMsg(_('Having made the contract into a quotation it cannot now be changed back into just a costing.'),'error');
+			$InputError=true;	
+		}
+		if ($ExistingContract['status'] == 1 AND $_POST['Status']==2){
+			/* then we are completing this contract - need to :
+			 * close the work order
+			 * do the variances postings 
+			 */
+			 
+			 
+			 
+			 
+			 
+			 	
+		} 
+		if($ExistingContract['status']<=1 AND ! $InputError){
+			//then we can accept any changes at all do an update on the whole lot
+			$sql = "UPDATE contracts SET categoryid = '" . $_POST['CategoryID'] ."',
+										requireddate = '" . FormatDateForSQL($_POST['RequiredDate']) . "', 
+										margin = " . $_POST['Margin'] . ", 
+										customerref = '" . $_POST['CustomerRef'] . "', 
+										quantityreqd = " . $_POST['QuantityReqd'] . ", 
+										units = '" . $_POST['Units'] . "', 
+										exrate = " . $_POST['ExRate'] . ",
+										status = " . $_POST['Status'] . " 
+							WHERE contractref ='" . $_POST['ContractRef'] . "'";
+			$ErrMsg = _('Cannot update the contract because');
+			$result = DB_query($sql,$db,$ErrMsg);
+			/* also need to update the items on the contract BOM  - delete the existing contract BOM then add these items*/
+			$result = DB_query("DELETE FROM contractbom WHERE contractref='" .$_POST['ContractRef'] . "'",$db);
+			$ErrMsg = _('Could not add a component to the contract bill of material');
+			foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component){
+				$sql = "INSERT INTO contractbom (contractref,
+												stockid,
+												workcentreadded,
+												quantity)
+								VALUES ( '" . $_POST['ContractRef'] . "',
+										'" . $Component->StockID . "',
+										'" . $Component->WorkCentre . "',
+										" . $Component->Quantity . ")";
+				$result = DB_query($sql,$db,$ErrMsg);
+			}												
+			
+			/*also need to update the items on the contract requirements  - delete the existing database entries then add these */
+			$result = DB_query("DELETE FROM contractreqts WHERE contractref='" .$_POST['ContractRef'] . "'",$db);
+			$ErrMsg = _('Could not add a requirement to the contract requirements');
+			foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $Requirement){
+				$sql = "INSERT INTO contractreqts (contractref,
+												requirement,
+												costperunit,
+												quantity)
+								VALUES ( '" . $_POST['ContractRef'] . "',
+										'" . $Requirement->Requirement . "',
+										'" . $Requirement->CostPerUnit . "',
+										" . $Requirement->Quantity . ")";
+				$result = DB_query($sql,$db,$ErrMsg);
+			}
+			
+							
+			prnMsg(_('The changes to the contract have been committed to the database'),'success');
+		} 
+		if ($ExistingContract['status']==1 AND ! $InputError){
+			//then the quotation will need to be updated with the revised contract cost if necessary
+			
+			
+			
+		}
+		if ($ExistingContract['status'] == 0 AND $_POST['Status']==1){ 
+			/*we are updating the status on the contract to a quotation so we need to 
+			 * add a new item for the contract into the stockmaster
+			 * add a salesorder header and detail as a quotation for the item
+			 */
+			
+			
+		} 
+	} else { /*Its a new contract - so insert */
+		
+		if ($_POST['Status'] !=0){
+			//a new contract being created with a status of not a quotation - create it anyway but with status=0
+			prnMsg(_('A contract can only be created with a status of costing initially'),'warn');
+		}
+		$sql = "INSERT INTO contracts ( contractref,
+										debtorno,
+										branchcode,
+										categoryid,
+										requireddate,
+										margin,
+										customerref,
+										quantityreqd,
+										units,
+										exrate)
+							VALUES ('" . $_POST['ContractRef'] . "',
+									'" . $_SESSION['Contract'.$identifier]->DebtorNo  . "',
+									'" . $_SESSION['Contract'.$identifier]->BranchCode . "',
+									'" . $_POST['CategoryID'] . "',
+									'" . FormatDateForSQL($_POST['RequiredDate']) . "', 
+									" . $_POST['Margin'] . ",
+									'" . $_POST['CustomerRef'] . "',
+									" . $_POST['QuantityReqd'] . ",
+									'" . $_POST['Units'] . "',
+									". $_POST['ExRate'] .")";
+				
+		$ErrMsg = _('The new contract could not be added because');
+		$result = DB_query($sql,$db,$ErrMsg);
+		
+		/*Also need to add the reqts and contracbom*/
+		$ErrMsg = _('Could not add a component to the contract bill of material');
+		foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component){
+			$sql = "INSERT INTO contractbom (contractref,
+											stockid,
+											workcentreadded,
+											quantity)
+							VALUES ( '" . $_POST['ContractRef'] . "',
+									'" . $Component->StockID . "',
+									'" . $Component->WorkCentre . "',
+									" . $Component->Quantity . ")";
+			$result = DB_query($sql,$db,$ErrMsg);
+		}												
+		
+		$ErrMsg = _('Could not add a requirement to the contract requirements');
+		foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $Requirement){
+			$sql = "INSERT INTO contractreqts (contractref,
+											requirement,
+											costperunit,
+											quantity)
+							VALUES ( '" . $_POST['ContractRef'] . "',
+									'" . $Requirement->Requirement . "',
+									'" . $Requirement->CostPerUnit . "',
+									" . $Requirement->Quantity . ")";
+			$result = DB_query($sql,$db,$ErrMsg);
+		}
+		prnMsg(_('The new contract has been added to the database'),'success');
+	} //end of adding a new contract
+}//end of commital to database
 
-$msg='';
-if (isset($_POST['SearchSuppliers'])){
+if (isset($_POST['SearchCustomers'])){
 
-	if (strlen($_POST['Keywords'])>0 AND strlen($_SESSION['Contract'.$identifier]->CustomerID)>0) {
-		$msg=_('Supplier name keywords have been used in preference to the supplier code extract entered');
+	if (($_POST['CustKeywords']!='') AND (($_POST['CustCode']!='') OR ($_POST['CustPhone']!=''))) {
+		prnMsg( _('Customer Branch Name keywords have been used in preference to the Customer Branch Code or Branch Phone Number entered'), 'warn');
 	}
-	if ($_POST['Keywords']=='' AND $_POST['SuppCode']=='') {
-		$msg=_('At least one Supplier Name keyword OR an extract of a Supplier Code must be entered for the search');
+	if (($_POST['CustCode']!='') AND ($_POST['CustPhone']!='')) {
+		prnMsg(_('Customer Branch Code has been used in preference to the Customer Branch Phone Number entered'), 'warn');
+	}
+	if (($_POST['CustKeywords']=='') AND ($_POST['CustCode']=='')  AND ($_POST['CustPhone']=='')) {
+		prnMsg(_('At least one Customer Branch Name keyword OR an extract of a Customer Branch Code or Branch Phone Number must be entered for the search'), 'warn');
 	} else {
-		if (strlen($_POST['Keywords'])>0) {
+		if (strlen($_POST['CustKeywords'])>0) {
 		//insert wildcard characters in spaces
-			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
+			$_POST['CustKeywords'] = strtoupper(trim($_POST['CustKeywords']));
+			$SearchString = '%' . str_replace(' ', '%', $_POST['CustKeywords']) . '%';
 
-			$SQL = "SELECT suppliers.CustomerID,
-					suppliers.suppname,
-					suppliers.address1,
-					suppliers.address2,
-					suppliers.address3,
-					suppliers.address4,
-					suppliers.address5,
-					suppliers.address6,
-					suppliers.currcode
-				FROM suppliers
-				WHERE suppliers.suppname " . LIKE . " '$SearchString'
-				ORDER BY suppliers.suppname";
+			$SQL = "SELECT custbranch.brname,
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno,
+					custbranch.branchcode,
+					custbranch.debtorno,
+					debtorsmaster.name
+				FROM custbranch
+				LEFT JOIN debtorsmaster
+				ON custbranch.debtorno=debtorsmaster.debtorno
+				WHERE custbranch.brname " . LIKE . " '$SearchString'
+				AND custbranch.disabletrans=0
+				ORDER BY custbranch.debtorno, custbranch.branchcode";
+	
+		} elseif (strlen($_POST['CustCode'])>0){
 
-		} elseif (strlen($_POST['SuppCode'])>0){
-			$SQL = "SELECT suppliers.CustomerID,
-					suppliers.suppname,
-					suppliers.address1,
-					suppliers.address2,
-					suppliers.address3,
-					suppliers.address4,
-					suppliers.address5,
-					suppliers.address6,
-					suppliers.currcode
-				FROM suppliers
-				WHERE suppliers.CustomerID " . LIKE . " '%" . $_POST['SuppCode'] . "%'
-				ORDER BY suppliers.CustomerID";
+			$_POST['CustCode'] = strtoupper(trim($_POST['CustCode']));
+
+			$SQL = "SELECT custbranch.brname,
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno,
+					custbranch.branchcode,
+					custbranch.debtorno,
+					debtorsmaster.name
+				FROM custbranch
+				LEFT JOIN debtorsmaster
+				ON custbranch.debtorno=debtorsmaster.debtorno
+				WHERE custbranch.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%' OR custbranch.branchcode " . LIKE . " '%" . $_POST['CustCode'] . "%' 
+				AND custbranch.disabletrans=0
+				ORDER BY custbranch.debtorno";
+			
+		} elseif (strlen($_POST['CustPhone'])>0){
+			$SQL = "SELECT custbranch.brname,
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno,
+					custbranch.branchcode,
+					custbranch.debtorno,
+					debtorsmaster.name
+				FROM custbranch
+				LEFT JOIN debtorsmaster
+				ON custbranch.debtorno=debtorsmaster.debtorno
+				WHERE custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'
+				AND custbranch.disabletrans=0
+				ORDER BY custbranch.debtorno";
 		}
 
-		$ErrMsg = _('The searched supplier records requested cannot be retrieved because');
-		$result_SuppSelect = DB_query($SQL,$db,$ErrMsg);
+		$ErrMsg = _('The searched customer records requested cannot be retrieved because');
+		$result_CustSelect = DB_query($SQL,$db,$ErrMsg);
 
-		if (DB_num_rows($result_SuppSelect)==1){
-			$myrow=DB_fetch_array($result_SuppSelect);
-			$_POST['Select'] = $myrow['CustomerID'];
-		} elseif (DB_num_rows($result_SuppSelect)==0){
-			prnMsg( _('No supplier records contain the selected text') . ' - ' .
-				_('please alter your search criteria and try again'),'info');
+		if (DB_num_rows($result_CustSelect)==1){
+			$myrow=DB_fetch_array($result_CustSelect);
+			$_POST['SelectedCustomer'] = $myrow['debtorno'] . '-' . $myrow['branchcode'];
+		} elseif (DB_num_rows($result_CustSelect)==0){
+			prnMsg(_('No Customer Branch records contain the search criteria') . ' - ' . _('please try again') . ' - ' . _('Note a Customer Branch Name may be different to the Customer Name'),'info');
 		}
-	} /*one of keywords or SuppCode was more than a zero length string */
-} /*end of if search for supplier codes/names */
+	} /*one of keywords or custcode was more than a zero length string */
+} /*end of if search for customer codes/names */
 
 
-// added by Hudson
-if((!isset($_POST['SearchSuppliers']) or $_POST['SearchSuppliers']=='' ) AND
-	(isset($_SESSION['Contract'.$identifier]->CustomerID) AND $_SESSION['Contract'.$identifier]->CustomerID!='')){
+if (isset($_POST['SelectedCustomer'])) {
 
-	/*The session variables are set but the form variables have been lost
-	 * need to restore the form variables from the session */
-	$_POST['CustomerID']=$_SESSION['Contract'.$identifier]->CustomerID;
-	$_POST['SupplierName']=$_SESSION['Contract'.$identifier]->SupplierName;
-	$_POST['CurrCode'] = $_SESSION['Contract'.$identifier]->CurrCode;
-	$_POST['ExRate'] = $_SESSION['Contract'.$identifier]->ExRate;
-	$_POST['paymentterms'] = $_SESSION['Contract'.$identifier]->paymentterms;
-	$_POST['DelAdd1']=$_SESSION['Contract'.$identifier]->DelAdd1;
-	$_POST['DelAdd2']=$_SESSION['Contract'.$identifier]->DelAdd2;
-	$_POST['DelAdd3']=$_SESSION['Contract'.$identifier]->DelAdd3;
-	$_POST['DelAdd4']=$_SESSION['Contract'.$identifier]->DelAdd4;
-	$_POST['DelAdd5']=$_SESSION['Contract'.$identifier]->DelAdd5;
-	$_POST['DelAdd6']=$_SESSION['Contract'.$identifier]->DelAdd6;
-	$_POST['suppDelAdd1']=$_SESSION['Contract'.$identifier]->suppDelAdd1;
-	$_POST['suppDelAdd2']=$_SESSION['Contract'.$identifier]->suppDelAdd2;
-	$_POST['suppDelAdd3']=$_SESSION['Contract'.$identifier]->suppDelAdd3;
-	$_POST['suppDelAdd4']=$_SESSION['Contract'.$identifier]->suppDelAdd4;
-	$_POST['suppDelAdd5']=$_SESSION['Contract'.$identifier]->suppDelAdd5;
-	$_POST['suppDelAdd6']=$_SESSION['Contract'.$identifier]->suppDelAdd6;
+/* will only be true if page called from customer selection form
+ * or set because only one customer record returned from a search
+ * so parse the $Select string into debtorno and branch code */
+	$CustomerBranchArray = explode('-',$_POST['SelectedCustomer']);
+	$_SESSION['Contract'.$identifier]->DebtorNo  = trim($CustomerBranchArray[0]);
+	$_SESSION['Contract'.$identifier]->BranchCode = trim($CustomerBranchArray[1]);
+	
+	$sql = "SELECT debtorsmaster.name,
+					custbranch.brname,
+					debtorsmaster.currcode,
+					debtorsmaster.holdreason,
+					holdreasons.dissallowinvoices,
+					currencies.rate
+			FROM debtorsmaster INNER JOIN currencies
+			ON debtorsmaster.currcode=currencies.currabrev
+			INNER JOIN custbranch 
+			ON debtorsmaster.debtorno=custbranch.debtorno
+			INNER JOIN holdreasons
+			ON debtorsmaster.holdreason=holdreasons.reasoncode
+			WHERE debtorsmaster.debtorno='" . $_SESSION['Contract'.$identifier]->DebtorNo  . "' 
+			AND custbranch.branchcode='" . $_SESSION['Contract'.$identifier]->BranchCode . "'" ;
 
-}
-
-if (isset($_POST['Select'])) {
-
-/* will only be true if page called from supplier selection form
- * or set because only one supplier record returned from a search
- * so parse the $Select string into supplier code and branch code */
-	$sql='SELECT currcode FROM suppliers where CustomerID="'.$_POST['Select'].'"';
-	$result=DB_query($sql,$db);
-	$myrow=DB_fetch_array($result);
-	$SupplierCurrCode=$myrow['currcode'];
-
-	$authsql='SELECT cancreate
-			FROM purchorderauth
-			WHERE userid="'.$_SESSION['UserID'].'"
-			AND currabrev="'.$SupplierCurrCode.'"';
-
-	$authresult=DB_query($authsql,$db);
-
-	$sql = "SELECT suppliers.suppname,
-		suppliers.currcode,
-		currencies.rate,
-		suppliers.paymentterms,
-                        suppliers.address1,
-                        suppliers.address2,
-                        suppliers.address3,
-                        suppliers.address4,
-                        suppliers.address5,
-                        suppliers.address6,
-                        suppliers.phn,
-                        suppliers.Contractrt
-		FROM suppliers INNER JOIN currencies
-		ON suppliers.currcode=currencies.currabrev
-		WHERE CustomerID='" . $_POST['Select'] . "'";
-
-	$ErrMsg = _('The supplier record of the supplier selected') . ': ' . $_POST['Select'] . ' ' .
+	$ErrMsg = _('The customer record selected') . ': ' . $_POST['SelectedCustomer'] . ' ' .
 		_('cannot be retrieved because');
-	$DbgMsg = _('The SQL used to retrieve the supplier details and failed was');
-	$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
-	$myrow = DB_fetch_row($result);
-	$SupplierName = $myrow[0];
-		// added for suppliers lookup fields
-
-	if (($authmyrow=DB_fetch_array($authresult) and $authmyrow[0]==0 ) ) {
-		$_POST['SupplierName'] = $myrow[0];
-		$_POST['CurrCode'] = 	$myrow[1];
-		$_POST['ExRate'] = 	$myrow[2];
-		$_POST['paymentterms']=	$myrow[3];
-		$_POST['suppDelAdd1'] = $myrow[4];
-		$_POST['suppDelAdd2'] = $myrow[5];
-		$_POST['suppDelAdd3'] = $myrow[6];
-		$_POST['suppDelAdd4'] = $myrow[7];
-		$_POST['suppDelAdd5'] = $myrow[8];
-		$_POST['suppDelAdd6'] = $myrow[9];
-		$_POST['supptel'] = $myrow[10];
-		$_POST['Contractrt'] = $myrow[11];
-
-		$_SESSION['Contract'.$identifier]->CustomerID = $_POST['Select'];
-		$_SESSION['RequireSupplierSelection'] = 0;
-		$_SESSION['Contract'.$identifier]->SupplierName = $_POST['SupplierName'];
-		$_SESSION['Contract'.$identifier]->CurrCode = $_POST['CurrCode'];
-		$_SESSION['Contract'.$identifier]->ExRate = $_POST['ExRate'];
-		$_SESSION['Contract'.$identifier]->paymentterms = $_POST['paymentterms'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd1 = $_POST['suppDelAdd1'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd2 = $_POST['suppDelAdd2'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd3 = $_POST['suppDelAdd3'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd4 = $_POST['suppDelAdd4'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd5 = $_POST['suppDelAdd5'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd6 = $_POST['suppDelAdd6'];
-		$_SESSION['Contract'.$identifier]->supptel = $_POST['supptel'];
-		$_SESSION['Contract'.$identifier]->Contractrt = $_POST['Contractrt'];
+	$DbgMsg = _('The SQL used to retrieve the customer details and failed was');
+	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$myrow = DB_fetch_array($result);
+	if (DB_num_rows($result)==0){
+		prnMsg(_('The customer details were unable to be retrieved'),'error');
+		if ($debug==1){
+			prnMsg(_('The SQL used that failed to get the customer details was:') . '<p>' . $sql,'error');
+		}
 	} else {
-		prnMsg( _('You do not have the authority to raise Contracts for ').
-			$SupplierName.'. '._('Please Consult your system administrator for more information').'. '
-			._('You can setup authorisations ').'<a href=Contract_AuthorisationLevels.php>'._('here').'.</a>', 'warn');
-		include('includes/footer.inc');
-		exit;
-	}
-
-	// end of added for suppliers lookup fields
-
-} else {
-	$_POST['Select'] = $_SESSION['Contract'.$identifier]->CustomerID;
-	$sql = "SELECT suppliers.suppname,
-			suppliers.currcode,
-			suppliers.paymentterms,
-			suppliers.address1,
-			suppliers.address2,
-			suppliers.address3,
-			suppliers.address4,
-			suppliers.address5,
-			suppliers.address6,
-			suppliers.phn,
-			suppliers.Contractrt
-		FROM suppliers INNER JOIN currencies
-		ON suppliers.currcode=currencies.currabrev
-		WHERE CustomerID='" . $_POST['Select'] . "'";
-
-	$ErrMsg = _('The supplier record of the supplier selected') . ': ' . $_POST['Select'] . ' ' .
-		_('cannot be retrieved because');
-	$DbgMsg = _('The SQL used to retrieve the supplier details and failed was');
-	$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		$_SESSION['Contract'.$identifier]->BranchName = $myrow['brname'];
+		$_SESSION['RequireCustomerSelection'] = 0;
+		$_SESSION['Contract'.$identifier]->CustomerName = $myrow['name'];
+		$_SESSION['Contract'.$identifier]->CurrCode = $myrow['currcode'];
+		$_SESSION['Contract'.$identifier]->ExRate = $myrow['rate'];
+	
+		if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn and 2 for prohibit contracts */
+			$CreditAvailable = GetCreditAvailable($_SESSION['Contract'.$identifier]->DebtorNo,$db);
+			if ($_SESSION['CheckCreditLimits']==1 AND $CreditAvailable <=0){
+				prnMsg(_('The') . ' ' . $_SESSION['Contract'.$identifier]->CustomerName . ' ' . _('account is currently at or over their credit limit'),'warn');
+			} elseif ($_SESSION['CheckCreditLimits']==2 AND $CreditAvailable <=0){
+				prnMsg(_('No more orders can be placed by') . ' ' . $myrow[0] . ' ' . _(' their account is currently at or over their credit limit'),'warn');
+				include('includes/footer.inc');
+				exit;
+			}
+		}	
+	} //a customer was retrieved ok
+} //end if a customer has just been selected
 
 
-	$myrow = DB_fetch_row($result);
+if ($_SESSION['RequireCustomerSelection'] == 1 
+		OR !isset($_SESSION['Contract'.$identifier]->DebtorNo) 
+		OR $_SESSION['Contract'.$identifier]->DebtorNo=='' ) {
 
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' .
+		_('Contract') . '" alt="">' . ' ' . _('Contract: Select Customer') . '';
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '?' .SID .'&identifier=' . $identifier .'" name="CustomerSelection" method=post>';
+	
+	echo '<table cellpadding=3 colspan=4 class=selection>
+			<tr>
+			<td><h5>' . _('Part of the Customer Branch Name') . ':</h5></td>
+			<td><input tabindex=1 type="Text" name="CustKeywords" size=20	maxlength=25></td>
+			<td><h2><b>' . _('OR') . '</b></h2></td>
+			<td><h5>' .  _('Part of the Customer Branch Code'). ':</h5></td>
+			<td><input tabindex=2 type="Text" name="CustCode" size=15	maxlength=18></td>
+			<td><h2><b>' . _('OR') . '</b></h2></td>
+			<td><h5>' . _('Part of the Branch Phone Number') . ':</h5></td>
+			<td><input tabindex=3 type="Text" name="CustPhone" size=15	maxlength=18></td>
+		</tr>
+		</table>
+		<br><div class="centre"><input tabindex=4 type=submit name="SearchCustomers" value="' . _('Search Now') . '">
+		<input tabindex=5 type=submit action=reset value="' . _('Reset') .'"></div>';
+	
+	if (isset($result_CustSelect)) {
 
-	// added for suppliers lookup fields
-	if (!isset($_SESSION['Contract'.$identifier])) {
-		$_POST['SupplierName'] = $myrow[0];
-		$_POST['CurrCode'] = 	$myrow[1];
-		$_POST['paymentterms']=	$myrow[2];
-		$_POST['suppDelAdd1'] = $myrow[3];
-		$_POST['suppDelAdd2'] = $myrow[4];
-		$_POST['suppDelAdd3'] = $myrow[5];
-		$_POST['suppDelAdd4'] = $myrow[6];
-		$_POST['suppDelAdd5'] = $myrow[7];
-		$_POST['suppDelAdd6'] = $myrow[8];
-		$_POST['supptel'] = $myrow[9];
-		$_POST['Contractrt'] = $myrow[10];
+		echo '<table cellpadding=2 colspan=7>';
 
-		$_SESSION['Contract'.$identifier]->CustomerID = $_POST['Select'];
-		$_SESSION['RequireSupplierSelection'] = 0;
-		$_SESSION['Contract'.$identifier]->SupplierName = $_POST['SupplierName'];
-		$_SESSION['Contract'.$identifier]->CurrCode = $_POST['CurrCode'];
-		$_SESSION['Contract'.$identifier]->ExRate = $_POST['ExRate'];
-		$_SESSION['Contract'.$identifier]->paymentterms = $_POST['paymentterms'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd1 = $_POST['suppDelAdd1'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd2 = $_POST['suppDelAdd2'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd3 = $_POST['suppDelAdd3'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd4 = $_POST['suppDelAdd4'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd5 = $_POST['suppDelAdd5'];
-		$_SESSION['Contract'.$identifier]->suppDelAdd6 = $_POST['suppDelAdd6'];
-		$_SESSION['Contract'.$identifier]->supptel = $_POST['supptel'];
-		$_SESSION['Contract'.$identifier]->Contractrt = $_POST['Contractrt'];
-	// end of added for suppliers lookup fields
-	}
-}
-
-// MADE THE SUPPILERS BECOME SELECT MENU NOT BY SEARCHING By Hudson @2008/6/30
-
-// part of step 1
-if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['Contract'.$identifier]->CustomerID) OR
-		$_SESSION['Contract'.$identifier]->CustomerID=='' ) {
-//if (true) {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-		_('Contract') . '" alt="">' . ' ' . _('Contract: Select Supplier') . '';
-	echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "identifier=".$identifier."' method=Contractst name='choosesupplier'>";
-	if (strlen($msg)>1){
-		prnMsg($msg,'warn');
-	}
-
-	echo '<table cellpadding=3 colspan=4>
-	<tr>
-	<td><font size=1>' . _('Enter text in the supplier name') . ":</font></td>
-	<td><input type='Text' name='Keywords' size=20	maxlength=25></td>
-	<td><font size=3><b>" . _('OR') . '</b></font></td>
-	<td><font size=1>' . _('Enter text extract in the supplier code') . ":</font></td>
-	<td><input type='text' name='SuppCode' size=15	maxlength=18></td>
-	</tr>
-	</table><br><div class='centre'>
-	<input type=submit name='SearchSuppliers' value=" . _('Search Now') . ">
-	<input type=submit action=reset value='" . _('Reset') . "'></div>";
-
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].Keywords);</script>';
-
-// UPDATED BY HUDSON 30/6/2008
-
-	if (isset($result_SuppSelect)) {
-
-		echo '<br><table cellpadding=3 colspan=7 border=1>';
-
-		$tableheader = "<tr>
-				<th>" . _('Code') . "</th>
-				<th>" . _('Supplier Name') . "</th>
-				<th>" . _('Address') . "</th>
-				<th>" . _('Currency') . '</th>
+		$TableHeader = '<br><tr>
+				<th>' . _('Customer') . '</th>
+				<th>' . _('Branch') . '</th>
+				<th>' . _('Contact') . '</th>
+				<th>' . _('Phone') . '</th>
+				<th>' . _('Fax') . '</th>
 				</tr>';
-
-		echo $tableheader;
+		echo $TableHeader;
 
 		$j = 1;
-		$k = 0; /*row counter to determine background colour */
-
-		while ($myrow=DB_fetch_array($result_SuppSelect)) {
+		$k = 0; //row counter to determine background colour
+		$LastCustomer='';
+		while ($myrow=DB_fetch_array($result_CustSelect)) {
 
 			if ($k==1){
 				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
 				echo '<tr class="OddTableRows">';
-				$k++;
+				$k=1;
 			}
-
-			echo "<td><input type='submit' style='width:100%' name='Select' value='".$myrow['CustomerID']."' ></td>
-				<td>".$myrow['suppname']."</td><td>";
-
-			for ($i=1; $i<=6; $i++) {
-				if ($myrow['address'.$i] != '') {
-					echo $myrow['address'.$i].'<br>';
-				}
+			if ($LastCustomer != $myrow['name']) {
+				echo '<td>'.$myrow['name'].'</td>';
+			} else {
+				echo '<td></td>';
 			}
-			echo "</td><td>".$myrow['currcode']."</td></tr>";
-
-			//end of page full new headings if
+			echo '<td><input tabindex='.number_format($j+5).' type=submit name="Submit" value="'.$myrow['brname'].'"</td>
+					<input type=hidden name="SelectedCustomer" value="'.$myrow['debtorno'].' - '.$myrow['branchcode'].'">
+					<td>'.$myrow['contactname'].'</td>
+					<td>'.$myrow['phoneno'].'</td>
+					<td>'.$myrow['faxno'].'</td>
+					</tr></form>';
+			$LastCustomer=$myrow['name'];
+			$j++;
+//end of page full new headings if
 		}
 //end of while loop
 
 		echo '</table>';
 
-	}
-//end if results to show
+	}//end if results to show
 
-//end if RequireSupplierSelection
-} else {
-/* everything below here only do if a supplier is selected */
+//end if RequireCustomerSelection
+} else { /*A customer is already selected so get into the contract setup proper */
 
-	echo "<form name='form1' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "identifier=".$identifier. "' method=Contractst>";
+	echo '<form name="ContractEntry" enctype="multipart/form-data" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '&identifier=' . $identifier . '" method="post">';
 
-// Be careful not made confused by orderno and realorderno
-//	$orderno = previous_id("purchorders","orderno");
-//    	$_SESSION['Contract'.$identifier]->OrderNo2 = $orderno;
 	echo '<p class="page_title_text">
-            <img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Contract') . '" alt="">
-	        ' . $_SESSION['Contract'.$identifier]->SupplierName . ' - ' . _('All amounts stated in') . '
-            ' . $_SESSION['Contract'.$identifier]->CurrCode . '<br />';
+            <img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Contract') . '" alt="">
+	        ' . $_SESSION['Contract'.$identifier]->CustomerName;
+	
+	if ($_SESSION['CompanyRecord']['currencydefault'] != $_SESSION['Contract'.$identifier]->CurrCode){
+		echo ' - ' . _('All amounts stated in') . ' ' . $_SESSION['Contract'.$identifier]->CurrCode . '<br />';
+	}
 	if ($_SESSION['ExistingContract']) {
-		echo  _(' Modify Contract Number') . ' ' . $_SESSION['Contract'.$identifier]->OrderNo;
-
-    echo '</p>';
-
+		echo  _('Modify Contract') . ': ' . $_SESSION['Contract'.$identifier]->ContractRef;
 	}
+	echo '</p>';
+	
+	//echo '<meta http-equiv="refresh" content="0; url=' . $rootpath . '/Contract_Items.php?' . SID . '&identifier='.$identifier. '">';
+	
 
-/* 2008-08-19 ToPu -- debugging purContractse */
-	if (isset($purch_item)) {
-		prnMsg(_('Purchase Item(s) with this code') . ': ' .  $purch_item,'info');
-
-		/**
-		 * 2008-08-21 ToPu
-		 * Now go ahead to Contract_Items.php
-		 * with NewItem=$purch_item
-		 */
-		/* a somewhat nice outfit for that link */
-		echo "<div class='centre'>";
-		echo '<br><table class="table_index"><tr><td class="menu_group_item">';
-
-		/* the link */
-		echo '<li><a href="'.$rootpath.'/Contract_Items.php?' . SID . 'NewItem=' . $purch_item . "&identifier=".$identifier. '">' .
-			_('Enter Line Item to this Contract') . '</a></li>';
-		/**/
-		echo "</td></tr></table></div><br>";
-
-		if (isset($_GET['Quantity'])) {
-			$Qty=$_GET['Quantity'];
-		} else {
-			$Qty=1;
-		}
-
-		$sql='SELECT
-					controlled,
-					serialised,
-					description,
-					units ,
-					decimalplaces
-				FROM stockmaster
-				WHERE stockid="'.$purch_item.'" ';
-		$result=DB_query($sql, $db);
-		$stockmasterrow=DB_fetch_array($result);
-
-		$sql='SELECT
-					price,
-					suppliersuom,
-					suppliers_partno
-				FROM purchdata
-				WHERE supplierno="'.$_GET['SelectedCustomer'] .'"
-				AND stockid="'.$purch_item.'" ';
-		$result=DB_query($sql, $db);
-		$purchdatarow=DB_fetch_array($result);
-
-		$sql='SELECT
-					stockact
-				FROM stockcategory
-				LEFT JOIN stockmaster ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockid="'.$purch_item.'" ';
-		$result=DB_query($sql, $db);
-		$categoryrow=DB_fetch_array($result);
-
-		$_SESSION['Contract'.$identifier]->add_to_order(
-				1,
-				$purch_item,
-				$stockmasterrow['serialised'],
-				$stockmasterrow['controlled'],
-				$Qty,
-				$stockmasterrow['description'],
-				$purchdatarow['price'],
-				$stockmasterrow['units'],
-				$categoryrow['stockact'],
-				date($_SESSION['DefaultDateFormat']),
-				0,
-				0,
-				'',
-				0,
-				0,
-				'',
-				$stockmasterrow['decimalplaces'],
-				$purch_item,
-				$purchdatarow['suppliersuom'],
-				$purchdatarow['suppliers_partno'],
-				$Qty*$purchdatarow['price'],
-				'',
-				0,
-				0,
-				0,
-				0,
-				$Qty,
-				$Qty*$purchdatarow['price']);
-		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/Contract_Items.php?' . SID . 'identifier='.$identifier. "'>";
-	}
-
-	/*Set up form for entry of order header stuff */
-
-	if (!isset($_POST['LookupDeliveryAddress']) and (!isset($_POST['StkLocation']) or $_POST['StkLocation'])
-		AND (isset($_SESSION['Contract'.$identifier]->Location) AND $_SESSION['Contract'.$identifier]->Location != '')) {
-		/* The session variables are set but the form variables have
-	     * been lost --
-	     * need to restore the form variables from the session */
-	    $_POST['StkLocation']=$_SESSION['Contract'.$identifier]->Location;
-		$_POST['SupplierContact']=$_SESSION['Contract'.$identifier]->SupplierContact;
-	    $_POST['DelAdd1']=$_SESSION['Contract'.$identifier]->DelAdd1;
-	    $_POST['DelAdd2']=$_SESSION['Contract'.$identifier]->DelAdd2;
-	    $_POST['DelAdd3']=$_SESSION['Contract'.$identifier]->DelAdd3;
-	    $_POST['DelAdd4']=$_SESSION['Contract'.$identifier]->DelAdd4;
-	    $_POST['DelAdd5']=$_SESSION['Contract'.$identifier]->DelAdd5;
-	    $_POST['DelAdd6']=$_SESSION['Contract'.$identifier]->DelAdd6;
-	    $_POST['Initiator']=$_SESSION['Contract'.$identifier]->Initiator;
-	    $_POST['Requisition']=$_SESSION['Contract'.$identifier]->RequisitionNo;
-	    $_POST['version']=$_SESSION['Contract'.$identifier]->version;
-	    $_POST['deliverydate']=$_SESSION['Contract'.$identifier]->deliverydate;
-	    $_POST['revised']=$_SESSION['Contract'.$identifier]->revised;
-	    $_POST['ExRate']=$_SESSION['Contract'.$identifier]->ExRate;
-	    $_POST['Comments']=$_SESSION['Contract'.$identifier]->Comments;
-	    $_POST['deliveryby']=$_SESSION['Contract'.$identifier]->deliveryby;
-	    $_POST['paymentterms']=$_SESSION['Contract'.$identifier]->paymentterms;
-	}
-
-// move apart by Hudson
-	echo '<br><table border=1 colspan=1 width=80%>
-		<tr>
-			<td><font color=blue size=4><b>' . _('Order Initiation Details') . '</b></font></td>
-
-			<td><font color=blue size=4><b>' . _('Order Status') . '</b></font></td>
-		</tr>		<tr><td style="width:50%">';
+	/*Set up form for entry of contract header stuff */
 
 	echo '<table>';
-	echo '<tr><td>' . _('Contract Date') . ':</td><td>';
-	if ($_SESSION['ExistingContract']!=0){
-		echo ConvertSQLDate($_SESSION['Contract'.$identifier]->Orig_OrderDate);
+	echo '<tr><td>' . _('Contract Reference') . ':</td><td>';
+	if ($_SESSION['Contract'.$identifier]->Status==0) { 
+		/*Then the contract has not become an order yet and we can allow changes to the ContractRef */
+		echo '<input type="text" name="ContractRef" size=21	maxlength=20 value="' . $_SESSION['Contract'.$identifier]->ContractRef . '">';
 	} else {
-		/* DefaultDateFormat defined in config.php */
-		echo Date($_SESSION['DefaultDateFormat']);
+		/*Just show the contract Ref - dont allow modification */
+		echo '<input type="hidden" name="ContractRef" value="' . $_SESSION['Contract'.$identifier]->ContractRef . '">' . $_SESSION['Contract'.$identifier]->ContractRef;
 	}
 	echo '</td></tr>';
+	echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID" onChange="ReloadForm(ItemForm.UpdateCategories)">';
 
-	$date = date($_SESSION['DefaultDateFormat']);
+	$sql = 'SELECT categoryid, categorydescription FROM stockcategory WHERE stocktype!="A"';
+	$ErrMsg = _('The stock categories could not be retrieved because');
+	$DbgMsg = _('The SQL used to retrieve stock categories and failed was');
+	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-	if (isset($_GET['ModifyContractNo']) && $_GET['ModifyContractNo'] != '') {
-		$_SESSION['Contract'.$identifier]->version += 1;
-		$_POST['version'] =  $_SESSION['Contract'.$identifier]->version;
-	} elseif (isset($_SESSION['Contract'.$identifier]->version) and $_SESSION['Contract'.$identifier]->version != '') {
-		$_POST['version'] =  $_SESSION['Contract'.$identifier]->version;
-	} else {
-		$_POST['version']='1';
-	}
-
-	if (!isset($_POST['deliverydate'])) {
-		$_POST['deliverydate']= date($_SESSION['DefaultDateFormat']);
-	}
-
-	echo '<tr><td>' . _('Version'). ' #' . ":</td><td><input type='hidden' name='version' size=16 maxlength=15
-		value='" . $_POST['version'] . "'>".$_POST['version']."</td></tr>";
-	echo '<tr><td>' . _('Revised') . ":</td><td><input type='hidden' name='revised' size=11 maxlength=15 value=" .
-		$date . '>'.$date.'</td></tr>';
-
-	echo '<tr><td>' . _('Delivery Date') . ":</td><td><input type='text' class=date alt='".$_SESSION['DefaultDateFormat'].
-		"' name='deliverydate' size=11 value=" . $_POST['deliverydate'] . '>'."</td></tr>";
-
-	if (!isset($_POST['Initiator'])) {
-		$_POST['Initiator'] = $_SESSION['UserID'];
-		$_POST['Requisition'] = '';
-	}
-
-	echo '<tr><td>' . _('Initiated By') . ":</td>
-			<td><input type='hidden' name='Initiator' size=11 maxlength=10 value=" .
-			$_POST['Initiator'] . ">".$_POST['Initiator']."</td></tr>";
-	echo '<tr><td>' . _('Requisition Ref') . ":</td><td><input type='text' name='Requisition' size=16
-		maxlength=15 value=" . $_POST['Requisition'] . '></td></tr>';
-
-//	echo '<tr><td>' . _('Exchange Rate') . ":</td>
-//			<td><input type=TEXT name='ExRate' size=16 maxlength=15 VALUE=" . $_POST['ExRate'] . '></td>
-//	echo "<input type='hidden' name='ExRate' size=16 maxlength=15 value=" . $_POST['ExRate'] . "></td>";
-//		</tr>';
-	echo '<tr><td>' . _('Date Printed') . ':</td><td>';
-
-	if (isset($_SESSION['Contract'.$identifier]->DatePurchaseOrderPrinted) AND strlen($_SESSION['Contract'.$identifier]->DatePurchaseOrderPrinted)>6){
-		echo ConvertSQLDate($_SESSION['Contract'.$identifier]->DatePurchaseOrderPrinted);
-		$Printed = True;
-	} else {
-		$Printed = False;
-		echo _('Not yet printed');
-	}
-
-	if (isset($_POST['AllowRePrint'])) {
-		$sql='UPDATE purchorders SET allowprint=1 WHERE orderno='.$_SESSION['Contract'.$identifier]->OrderNo;
-		$result=DB_query($sql, $db);
-	}
-
-	if ($_SESSION['Contract'.$identifier]->AllowPrintContract==0 AND empty($_POST['RePrint'])){
-		echo '<tr><td>' . _('Allow Reprint') . ":</td><td><select name='RePrint' onChange='ReloadForm(form1.AllowRePrint)'><option selected value=0>" .
-			_('No') . "<option value=1>" . _('Yes') . '</select></td>';
-		echo '<td><input type=submit name="AllowRePrint" value="Update"></td></tr>';
-	} elseif ($Printed) {
-		echo "<tr><td colspan=2><a target='_blank'  href='$rootpath/Contract_PDFPurchOrder.php?" .
-			SID . "OrderNo=" . $_SESSION['ExistingContract'] . "&identifier=".$identifier. "'>" . _('Reprint Now') . '</a></td></tr>';
-	}
-
-	echo '</table>';
-
-	echo '<td style="width:50%"><table>';
-	if($_SESSION['ExistingContract'] != 0 and $_SESSION['Contract'.$identifier]->Stat == PurchOrder::STATUS_PRINTED){
-		echo '<tr><td><a href="' .$rootpath . "/GoodsReceived.php?" . SID . "&ContractNumber=" .
-			$_SESSION['Contract'.$identifier]->OrderNo . "&identifier=".$identifier.'">'._('Receive this order').'</a></td></tr>';
-	}
-	echo '<td>' . _('Status') . ' :  </td><td><select name=Stat onChange="ReloadForm(form1.UpdateStat)">';
-
-	switch ($_SESSION['Contract'.$identifier]->Stat) {
-		case '':
-			$StatusList = array(PurchOrder::STATUS_NEW_ORDER);
-			break;
-		case PurchOrder::STATUS_PENDING:
-			$StatusList = array(PurchOrder::STATUS_PENDING, PurchOrder::STATUS_AUTHORISED,
-                                PurchOrder::STATUS_REJECTED, PurchOrder::STATUS_CANCELLED);
-			break;
-		case PurchOrder::STATUS_AUTHORISED:
-			$StatusList = array(PurchOrder::STATUS_PENDING, PurchOrder::STATUS_AUTHORISED,
-                                PurchOrder::STATUS_CANCELLED);
-			break;
-		case PurchOrder::STATUS_REJECTED:
-			$StatusList = array(PurchOrder::STATUS_PENDING, PurchOrder::STATUS_AUTHORISED,
-                                PurchOrder::STATUS_REJECTED, PurchOrder::STATUS_CANCELLED);
-			break;
-		case PurchOrder::STATUS_CANCELLED:
-			$StatusList = array(PurchOrder::STATUS_PENDING, PurchOrder::STATUS_CANCELLED);
-			break;
-		case PurchOrder::STATUS_PRINTED:
-			$StatusList = array(PurchOrder::STATUS_PENDING, PurchOrder::STATUS_PRINTED,
-                                PurchOrder::STATUS_CANCELLED);
-			break;
-		case PurchOrder::STATUS_COMPLITED:
-			$StatusList = array(PurchOrder::STATUS_COMPLITED);
-			break;
-		default:
-			$StatusList = array(PurchOrder::STATUS_NEW_ORDER, PurchOrder::STATUS_PENDING,
-                                PurchOrder::STATUS_AUTHORISED, PurchOrder::STATUS_REJECTED,
-                                PurchOrder::STATUS_CANCELLED);
-			break;
-	}
-
-	foreach ($StatusList as $Status) {
-		if ($_SESSION['Contract'.$identifier]->Stat == $Status){
-			echo '<option selected value="' . $Status . '">' . _($Status) . '</option>';
+	while ($myrow=DB_fetch_array($result)){
+		if (!isset($_SESSION['Contract'.$identifier]->CategoryID) or $myrow['categoryid']==$_SESSION['Contract'.$identifier]->CategoryID){
+			echo '<option selected VALUE="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'];
 		} else {
-			echo '<option value="'.$Status.'">' . _($Status) . '</option>';
+			echo '<option VALUE="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'];
 		}
+	}
+
+	echo '</select><a target="_blank" href="'. $rootpath . '/StockCategories.php?' . SID . '">' . _('Add or Modify Contract Categories') . '</a></td></tr>';
+
+
+	echo '<tr><td>' . _('Units of Measure') . ':</td><td><select name="Units">';
+	$sql = 'SELECT unitname FROM unitsofmeasure ORDER by unitname';
+	$UOMResult = DB_query($sql,$db);
+	
+	while( $UOMrow = DB_fetch_array($UOMResult) ) {
+	     if (isset($_SESSION['Contract'.$identifier]->Units) AND $_SESSION['Contract'.$identifier]->Units==$UOMrow['unitname']){
+		    echo '<option selected value="' . $UOMrow['unitname'] . '">' . $UOMrow['unitname'] . '</option>';
+	     } else {
+		    echo '<option value="' . $UOMrow['unitname'] . '">' . $UOMrow['unitname']  . '</option>';
+	     }
 	}
 	echo '</select></td></tr>';
 
-	echo '<tr><td>' . _('Status Comment');
-	echo ":</td><td><input type=text name='StatComments' size=50></td></tr><tr><td colspan=2><b>" . html_entity_decode($_SESSION['Contract'.$identifier]->StatComments) .'</b></td></tr>';
-	echo "<input type=hidden name='statcommentscomplete' value='".$_SESSION['Contract'.$identifier]->StatComments."'>";
-	echo '<tr><td><input type="submit" name=UpdateStat value="' . _("Status Update") .'"></td>';
+	echo '<tr><td>' . _('Contract Description');
+	echo ':</td><td><textarea name="ContractDescription" style="width:100%" rows=5>' . $_SESSION['Contract'.$identifier]->ContractDescription . '</textarea></td></tr>';
 
-	echo "<td><input type='submit' name='CancelOrder' value='" . _("Cancel and Delete Order") . "'></td></tr>";
-	echo '</table></td>';
-
-// end of move by Hudson
-
-	echo '<table border=1 width=80%>
-		<tr>
-		<td><font color=blue size=4><b>' . _('Warehouse Info') . '</b></font></td>
-		<!--	<td><font color=blue size=4><b>' . _('Delivery To') . '</b></font></td> -->
-			<td><font color=blue size=4><b>' . _('Supplier Info') . '</b></font></td>
-		</tr>
-		<tr><td valign=top>';
-	/*nested table level1 */
-
-	echo '<table><tr><td>' . _('Warehouse') . ':</td>
-			<td><select name=StkLocation onChange="ReloadForm(form1.LookupDeliveryAddress)">';
-
-	$sql = 'SELECT loccode,
-				locationname
-		FROM locations';
-	$LocnResult = DB_query($sql,$db);
-
-	while ($LocnRow=DB_fetch_array($LocnResult)){
-		if (isset($_POST['StkLocation']) and ($_POST['StkLocation'] == $LocnRow['loccode'] OR
-				($_POST['StkLocation']=='' AND $LocnRow['loccode']==$_SESSION['UserStockLocation']))){
-			echo "<option selected value='" . $LocnRow['loccode'] . "'>" . $LocnRow['locationname'];
-		} else {
-			echo "<option value='" . $LocnRow['loccode'] . "'>" . $LocnRow['locationname'];
-		}
+	echo '<tr><td>'. _('Drawing File') . ' .jpg' . ' ' . _('format only') .':</td><td><input type="file" id="Drawing" name="Drawing"></td></tr>';
+	
+	if (!isset($_SESSION['Contract'.$identifier]->RequiredDate)) {
+		$_SESSION['Contract'.$identifier]->RequiredDate = DateAdd(date($_SESSION['DefaultDateFormat']),'m',1);
 	}
-
-	echo '</select>
-		<input type="submit" name="LookupDeliveryAddress" value="' ._('Select') . '"></td>
-		</tr>';
-
-/* If this is the first time
- * the form loaded set up defaults */
-
-	if (!isset($_POST['StkLocation']) OR $_POST['StkLocation']==''){
-
-		$_POST['StkLocation'] = $_SESSION['UserStockLocation'];
-
-		$sql = "SELECT deladd1,
-	 			deladd2,
-				deladd3,
-				deladd4,
-				deladd5,
-				deladd6,
-				tel,
-				contact
-			FROM locations
-			WHERE loccode='" . $_POST['StkLocation'] . "'";
-
-		$LocnAddrResult = DB_query($sql,$db);
-		if (DB_num_rows($LocnAddrResult)==1){
-			$LocnRow = DB_fetch_row($LocnAddrResult);
-			$_POST['DelAdd1'] = $LocnRow[0];
-			$_POST['DelAdd2'] = $LocnRow[1];
-			$_POST['DelAdd3'] = $LocnRow[2];
-			$_POST['DelAdd4'] = $LocnRow[3];
-			$_POST['DelAdd5'] = $LocnRow[4];
-			$_POST['DelAdd6'] = $LocnRow[5];
-			$_POST['tel'] = $LocnRow[6];
-			$_POST['Contact'] = $LocnRow[7];
-
-			$_SESSION['Contract'.$identifier]->Location= $_POST['StkLocation'];
-//			$_SESSION['Contract'.$identifier]->SupplierContact= $_POST['SupplierContact'];
-			$_SESSION['Contract'.$identifier]->DelAdd1 = $_POST['DelAdd1'];
-			$_SESSION['Contract'.$identifier]->DelAdd2 = $_POST['DelAdd2'];
-			$_SESSION['Contract'.$identifier]->DelAdd3 = $_POST['DelAdd3'];
-			$_SESSION['Contract'.$identifier]->DelAdd4 = $_POST['DelAdd4'];
-			$_SESSION['Contract'.$identifier]->DelAdd5 = $_POST['DelAdd5'];
-			$_SESSION['Contract'.$identifier]->DelAdd6 = $_POST['DelAdd6'];
-			$_SESSION['Contract'.$identifier]->tel = $_POST['tel'];
-			$_SESSION['Contract'.$identifier]->contact = $_POST['Contact'];
-
-		} else {
-			 /*The default location of the user is crook */
-			prnMsg(_('The default stock location set up for this user is not a currently defined stock location') .
-				'. ' . _('Your system administrator needs to amend your user record'),'error');
-		}
-
-
-	} elseif (isset($_POST['LookupDeliveryAddress'])){
-
-		$sql = "SELECT deladd1,
-				deladd2,
-				deladd3,
-				deladd4,
-				deladd5,
-				deladd6,
-				tel,
-				contact
-			FROM locations
-			WHERE loccode='" . $_POST['StkLocation'] . "'";
-
-		$LocnAddrResult = DB_query($sql,$db);
-		if (DB_num_rows($LocnAddrResult)==1){
-			$LocnRow = DB_fetch_row($LocnAddrResult);
-			$_POST['DelAdd1'] = $LocnRow[0];
-			$_POST['DelAdd2'] = $LocnRow[1];
-			$_POST['DelAdd3'] = $LocnRow[2];
-			$_POST['DelAdd4'] = $LocnRow[3];
-			$_POST['DelAdd5'] = $LocnRow[4];
-			$_POST['DelAdd6'] = $LocnRow[5];
-			$_POST['tel'] = $LocnRow[6];
-			$_POST['Contact'] = $LocnRow[7];
-
-			$_SESSION['Contract'.$identifier]->Location= $_POST['StkLocation'];
-			$_SESSION['Contract'.$identifier]->DelAdd1 = $_POST['DelAdd1'];
-			$_SESSION['Contract'.$identifier]->DelAdd2 = $_POST['DelAdd2'];
-			$_SESSION['Contract'.$identifier]->DelAdd3 = $_POST['DelAdd3'];
-			$_SESSION['Contract'.$identifier]->DelAdd4 = $_POST['DelAdd4'];
-			$_SESSION['Contract'.$identifier]->DelAdd5 = $_POST['DelAdd5'];
-			$_SESSION['Contract'.$identifier]->DelAdd6 = $_POST['DelAdd6'];
-			$_SESSION['Contract'.$identifier]->tel = $_POST['tel'];
-			$_SESSION['Contract'.$identifier]->contact = $_POST['Contact'];
-		}
+	
+	echo '<tr><td>' . _('Required Date') . ':</td><td><input type="text" class=date alt="' .$_SESSION['DefaultDateFormat'] . '" name="RequiredDate" size=11 value="' . $_SESSION['Contract'.$identifier]->RequiredDate . '"></td></tr>';
+	
+	echo '<tr><td>' . _('Quantity Required') . ':</td><td><input type="text" name="QuantityReqd" size=10	maxlength=10 value="' . $_SESSION['Contract'.$identifier]->QuantityReqd . '"></td></tr>';
+	
+	echo '<tr><td>' . _('Customer Reference') . ':</td><td><input type="text" name="CustomerRef" size=21	maxlength=20 value="' . $_SESSION['Contract'.$identifier]->CustomerRef . '"></td></tr>';
+	if (!isset($_SESSION['Contract'.$identifier]->Margin)){
+		$_SESSION['Contract'.$identifier]->Margin =50;
 	}
-
-
-	echo '<tr><td>' . _('Delivery Contact') . ":</td>
-		<td><input type='text' name=Contact size=41  value='" . $_SESSION['Contract'.$identifier]->contact . "'></td>
-		</tr>";
-	echo '<tr><td>' . _('Address') . " 1 :</td>
-		<td><input type='text' name=DelAdd1 size=41 maxlength=40 value='" . $_POST['DelAdd1'] . "'></td>
-		</tr>";
-	echo '<tr><td>' . _('Address') . " 2 :</td>
-		<td><input type='text' name=DelAdd2 size=41 maxlength=40 value='" . $_POST['DelAdd2'] . "'></td>
-		</tr>";
-	echo '<tr><td>' . _('Address') . " 3 :</td>
-		<td><input type='text' name=DelAdd3 size=41 maxlength=40 value='" . $_POST['DelAdd3'] . "'></td>
-		</tr>";
-	echo '<tr><td>' . _('Address') . " 4 :</td>
-		<td><input type='text' name=DelAdd4 size=21 maxlength=20 value='" . $_POST['DelAdd4'] . "'></td>
-		</tr>";
-	echo '<tr><td>' . _('Address') . " 5 :</td>
-		<td><input type='text' name=DelAdd5 size=16 maxlength=15 value='" . $_POST['DelAdd5'] . "'></td>
-		</tr>";
-	echo '<tr><td>' . _('Address') . " 6 :</td>
-		<td><input type='text' name=DelAdd6 size=16 maxlength=15 value='" . $_POST['DelAdd6'] . "'></td>
-		</tr>";
-	echo '<tr><td>' . _('Phone') . ":</td>
-		<td><input type='text' name=tel size=31 maxlength=30 value='" . $_SESSION['Contract'.$identifier]->tel . "'></td>
-		</tr>";
-
-	echo '<tr><td>' . _('Delivery By') . ':</td><td><select name=deliveryby>';
-
-	$sql = 'SELECT shipper_id, shippername FROM shippers';
-	$shipperResult = DB_query($sql,$db);
-
-	while ($shipperRow=DB_fetch_array($shipperResult)){
-		if (isset($_POST['deliveryby']) and ($_POST['deliveryby'] == $shipperRow['shipper_id'])) {
-			echo "<option selected value='" . $shipperRow['shipper_id'] . "'>" . $shipperRow['shippername'];
-		} else {
-			echo "<option value='" . $shipperRow['shipper_id'] . "'>" . $shipperRow['shippername'];
-		}
-	}
-
-	echo '</select></tr></table>';
-	  /* end of sub table */
-
-	echo '</td><td>'; /*sub table nested */
-	echo '<table><tr><td>' . _('Supplier Selection') . ':</td><td>
-		<select name=Keywords onChange="ReloadForm(form1.SearchSuppliers)">';
-
-	$sql = "SELECT CustomerID,suppname FROM suppliers ORDER BY suppname";
-	$SuppCoResult = DB_query($sql,$db);
-
-	while ( $SuppCoRow=DB_fetch_array($SuppCoResult)){
-		if ($SuppCoRow['suppname'] == $_SESSION['Contract'.$identifier]->SupplierName) {
-			echo "<option selected value='" . $SuppCoRow['suppname'] . "'>" . $SuppCoRow['suppname'];
-		} else {
-			echo "<option value='" . $SuppCoRow['suppname'] . "'>" . $SuppCoRow['suppname'];
-		}
-	}
-
-	echo '</select> ';
-	echo '<input type="submit" name="SearchSuppliers" value=' . _('Select Now') . '"></td></tr>';
-
-// END of added <input type=submit action=RESET VALUE="' . _('Reset')
-
-	echo '</td></tr><tr><td>' . _('Supplier Contact') . ':</td><td>
-		<select name=SupplierContact>';
-
-	$sql = "SELECT contact FROM suppliercontacts WHERE CustomerID='". $_POST['Select'] ."'";
-
-	$SuppCoResult = DB_query($sql,$db);
-
-	while ( $SuppCoRow=DB_fetch_array($SuppCoResult)){
-		if ($_POST['SupplierContact'] == $SuppCoRow['contact'] OR ($_POST['SupplierContact']==''
-			AND $SuppCoRow['contact']==$_SESSION['Contract'.$identifier]->SupplierContact)){
-			//if (1) {
-			echo "<option selected value='" . $SuppCoRow['contact'] . "'>" . $SuppCoRow['contact'];
-		} else {
-			echo "<option value='" . $SuppCoRow['contact'] . "'>" . $SuppCoRow['contact'];
-		}
-	}
-
-	echo '</select> ';
-	echo '</td></tr>';
-
-	echo '<tr><td>' . _('Address') . " 1 :</td>
-		</td><td><input type='text' name=suppDelAdd1 size=41 maxlength=40 value='" . $_POST['suppDelAdd1'] . "'></td>
-		</tr>";
-	echo '<tr><td>' . _('Address') . " 2 :</td>
-		</td><td><input type='text' name=suppDelAdd2 size=41 maxlength=40 value='" . $_POST['suppDelAdd2'] . "'></td>
-		</tr>";
-	echo '<tr><td>' . _('Address') . " 3 :</td>
-		</td><td><input type='text' name=suppDelAdd3 size=41 maxlength=40 value='" . $_POST['suppDelAdd3'] . "'></td>
-		</tr>";
-	echo '<tr><td>' . _('Address') . " 4 :</td>
-		</td><td><input type='text' name=suppDelAdd5 size=21 maxlength=20 value='" . $_POST['suppDelAdd5'] . "'></td>
-		</tr>";
-	echo '<tr><td>' . _('Address') . " 5 :</td>
-		</td><td><input type='text' name=suppDelAdd4 size=41 maxlength=40 value='" . $_POST['suppDelAdd4'] . "'></td>
-		</tr>";
-	echo '<tr><td>' . _('Phone') . ":
-		</td><td><input type='text' name=supptel size=31 maxlength=30 value='" . $_SESSION['Contract'.$identifier]->supptel  . "'></td>
-		</tr>";
-
-	$result=DB_query('SELECT terms, termsindicator FROM paymentterms', $db);
-
-	echo '<tr><td>' . _('Payment Terms') . ":</td><td><select name='paymentterms'>";
-
-	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['termsindicator']==$_SESSION['Contract'.$identifier]->paymentterms) {
-			echo "<option selected value='". $myrow['termsindicator'] . "'>" . $myrow['terms'];
-		} else {
-			echo "<option value='". $myrow['termsindicator'] . "'>" . $myrow['terms'];
-		} //end while loop
-	}
-	DB_data_seek($result, 0);
-	echo '</select></td></tr>';
-
-	$result=DB_query("SELECT loccode, locationname FROM locations WHERE loccode='" . $_SESSION['Contract'.$identifier]->Contractrt."'", $db);
-	$myrow = DB_fetch_array($result);
-	$_POST['Contractrt'] = $myrow['locationname'];
-
-	echo '<tr><td>' . _('Delivery To') . ":
-		</td><td><input type='text' name=Contractrt size=31 value='" . $_POST['Contractrt'] . "'></td>
-		</tr>";
-
-	if ($_SESSION['Contract'.$identifier]->CurrCode != $_SESSION['CompanyRecord']['currencydefault']) {
-		echo '<tr><td>'. _('Exchange Rate').':'.'</td><td><input type=text name="ExRate"
-		value='.$_POST['ExRate'].' class=number size=11></td></tr>';
+	echo '<tr><td>' . _('Gross Profit') . ' %:</td><td><input type="text" name="Margin" size=4 maxlength=4 value="' . $_SESSION['Contract'.$identifier]->Margin . '"></td></tr>';
+		
+	if ($_SESSION['CompanyRecord']['currencydefault'] != $_SESSION['Contract'.$identifier]->CurrCode){
+		echo '<tr><td>' . $_SESSION['Contract'.$identifier]->CurrCode . ' ' . _('Exchange Rate') . ':</td>
+				<td><input type="text" name="ExRate" size=10 maxlength=10 value=' . $_SESSION['Contract'.$identifier]->ExRate . '></td></tr>';
 	} else {
-		echo '<input type=hidden name="ExRate" value="1">';
+		echo '<input type="hidden" name="ExRate" value=' . $_SESSION['Contract'.$identifier]->ExRate . '>';
 	}
-	echo '</td></tr></table>'; /*end of sub table */
-
-	echo '</td></tr><tr><th colspan=4>' . _('Comments');
-
-	$Default_Comments = '';
-
-	if (!isset($_POST['Comments'])) {
-		$_POST['Comments']=$Default_Comments;
+	
+	echo '<tr><td>' . _('Contract Status') . ':</td><td><select name="Status">';
+	
+	$StatusText = array();
+	$StatusText[0] = _('Costing');
+	$StatusText[1] = _('Quote');
+	$StatusText[2] = _('Completed');
+	for ($Status=0;$Status<3;$Status++) {
+		if ($_SESSION['Contract'.$identifier]->Status == $Status){
+			echo '<option selected value="' . $Status . '">' . $StatusText[$Status] . '</option>';
+		} else {
+			echo '<option value="'.$Status.'">' . $StatusText[$Status] . '</option>';
+		}
 	}
-
-	echo ":</th></tr><tr><td colspan=4><textarea name='Comments' style='width:100%' rows=5>" . $_POST['Comments'] . '</textarea>';
-
+	echo '</select></td></tr>';
+	
+	if ($_SESSION['Contract'.$identifier]->Status!=0) {
+		echo '<tr><td>' . _('Contract Work Order Ref') . ':</td><td>' . $_SESSION['Contract'.$identifier]->WorkOrder . '</td></tr>';
+	}
 	echo '</table>';
 
-	echo '</td></tr></table><br>'; /* end of main table */
-	// discard change supplier submit buttom
-	// kept enter line item but remove Delete button by Hudson 11/16,and added status field
-	echo "<div class='centre'>
-  		<input type=submit name='EnterLines' value='" . _('Enter Line Items') . "'></div>";
-	// Delete Contract when necessrary
-
-} /*end of if supplier selected */
+	echo '<table><tr><td>
+				<table><tr><th colspan=6>' . _('Stock Items Required') . '</th></tr>';
+	$ContractBOMCost = 0;					
+	if (count($_SESSION['Contract'.$identifier]->ContractBOM)!=0){
+		echo '<tr><th>' . _('Item Code') . '</th>
+					<th>' . _('Item Description') . '</th>
+					<th>' . _('Quantity') . '</th>
+					<th>' . _('Unit') . '</th>
+					<th>' . _('Unit Cost') . '</th>
+					<th>' . _('Total Cost') . '</th></tr>';
+		foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component) {
+			echo '<tr><td>' . $Component->StockID . '</td>
+					<td>' . $Component->ItemDescription . '</td>
+					<td class="number">' . $Component->Quantity . '</td>
+					<td>' . $Component->UOM . '</td>
+					<td class="number">' . number_format($Component->ItemCost,2) . '</td>
+					<td class="number">' . number_format(($Component->ItemCost * $Component->Quantity),2) . '</td>
+				</tr>';
+			$ContractBOMCost += ($Component->ItemCost *  $Component->Quantity);
+		}
+		echo '<tr><td colspan="5">' . _('Total stock cost') . '</td><td class="number">' . number_format($ContractBOMCost,2) . '</td></tr>';
+	} else { //there are no items set up against this contract
+		echo '<tr><td colspan="6"><i>' . _('None Entered') . '</i></td></tr>';
+	}  
+	echo '</table></td>'; //end of contract BOM table
+	echo '<td>
+			<table><tr><th colspan=4>' . _('Other Requirements') . '</th></tr>';
+	$ContractReqtsCost = 0;	
+	if (count($_SESSION['Contract'.$identifier]->ContractReqts)!=0){
+		echo '<tr><th>' . _('Requirement') . '</th>
+					<th>' . _('Quantity') . '</th>
+					<th>' . _('Unit Cost') . '</th>
+					<th>' . _('Total Cost') . '</th></tr>';
+		foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $Requirement) {
+			echo '<tr><td>' . $Requirement->Requirement . '</td>
+					<td class="number">' . $Requirement->Quantity . '</td>
+					<td class="number">' . $Requirement->CostPerUnit . '</td>
+					<td class="number">' . number_format(($Requirement->CostPerUnit * $Requirement->Quantity),2) . '</td>
+				</tr>';
+			$ContractReqtsCost += ($Requirement->CostPerUnit * $Requirement->Quantity);
+		}
+		echo '<tr><td colspan="3">' . _('Total other costs') . '</td><td class="number">' . number_format($ContractReqtsCost,2) . '</td></tr>';
+	} else { //there are no items set up against this contract
+		echo '<tr><td colspan="4"><i>' . _('None Entered') . '</i></td></tr>';
+	}
+	echo '</table></td></tr></table>';		
+	
+	echo'<table><tr><th>' . _('Total Contract Cost') . '</th><th class="number">' . number_format(($ContractBOMCost+$ContractReqtsCost),2) . '</th><th>' . _('Contract Price') . '</th><th class="number">' . number_format(($ContractBOMCost+$ContractReqtsCost)/((100-$_SESSION['Contract'.$identifier]->Margin)/100),2) . '</th></tr></table>';
+	
+	echo'<p></p>';
+			
+	echo '<div class="centre"><input type="submit" name="EnterContractBOM" value="' . _('Enter Items Required') . '">
+		<input type=submit name="EnterContractReqts" value="' . _('Enter Other Requirements') .'">
+		<input type=submit name="CommitContract" value="' . _('Commit Changes') .'"></div>';
+	if ($_SESSION['Contract'.$identifier]->Status!=2) {
+		echo '<p><div class="centre"><input type="submit" name="CancelContract" value="' . _('Cancel and Delete Contract') . '"></div></p>';
+	}	
+} /*end of if customer selected  and entering contract header*/
 
 echo '</form>';
 include('includes/footer.inc');

@@ -10,9 +10,19 @@ include('includes/session.inc');
 $title=_('Main Menu');
 
 /*The module link codes are hard coded in a switch statement below to determine the options to show for each tab */
-$ModuleLink = array('orders', 'AR', 'AP', 'PO', 'stock', 'manuf', 'GL', 'FA', 'PC', 'system');
+$ModuleLink = array('orders', 'AR', 'AP', 'PO', 'stock', 'manuf', 'Contracts', 'GL', 'FA', 'PC', 'system');
 /*The headings showing on the tabs accross the main index used also in WWW_Users for defining what should be visible to the user */
-$ModuleList = array(_('Sales'), _('Receivables'), _('Payables'), _('Purchases'), _('Inventory'), _('Manufacturing'), _('General Ledger'), _('Asset Manager'), _('Petty Cash'), _('Setup'));
+$ModuleList = array(_('Sales'), 
+					_('Receivables'), 
+					_('Payables'), 
+					_('Purchases'), 
+					_('Inventory'), 
+					_('Manufacturing'),
+					_('Contracts'), 
+					_('General Ledger'), 
+					_('Asset Manager'), 
+					_('Petty Cash'), 
+					_('Setup'));
 
 if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when the user clicks on a tab */
 	$_SESSION['Module'] = $_GET['Application'];
@@ -1212,7 +1222,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 		</table>
 	<?php
 	break;
-	Case 'FA': //General Ledger
+	Case 'FA': //Fixed Assets
 
 	?>
 		<table width="100%">
@@ -1221,7 +1231,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 				<table width="100%">		<!-- Fixed Asset Option Headings-->
 					<?php OptionHeadings(); ?>
 					<tr>
-					<td class="menu_group_items"> <!-- General transactions options -->
+					<td class="menu_group_items"> <!--  Fixed Asset transactions options -->
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
@@ -1235,7 +1245,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 						</table>
 					</td>
-					<td class="menu_group_items"> <!-- General transactions options -->
+					<td class="menu_group_items"> <!-- Fixed Asset transactions options -->
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
@@ -1266,6 +1276,46 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/FixedAssetLocations.php?' . sid . '">' . _('Add or Maintain Asset Locations') . '</a></p>'; ?>
 							</td>
 							</tr>
+						</table>
+					</td>
+				</table>
+			</td>
+			</tr>
+		</table>
+		<?php
+	break;
+	Case 'Contracts': //Contract Costing
+
+	?>
+		<table width="100%">
+			<tr>
+			<td valign="top" class="menu_group_area">
+				<table width="100%">		<!-- Contract Costing Option Headings-->
+					<?php OptionHeadings(); ?>
+					<tr>
+					<td class="menu_group_items"> <!-- Contract Costing transactions options -->
+						<table width="100%" class="table_index">
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/Contracts.php?' . sid . '">' . _('Create Contract') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>					
+						</table>
+					</td>
+					<td class="menu_group_items"> <!-- Contract Costing Inquiries/Reports options -->
+						<table width="100%" class="table_index">
+							
+							<tr>
+							<td class="menu_group_item">
+								<?php echo GetRptLinks('fa'); ?>
+							</td>
+							</tr>
+						</table>
+					</td>
+					<td class="menu_group_items"> <!-- Contract Costing Maintenance options -->
+						<table width="100%" class="table_index">
+							
 						</table>
 					</td>
 				</table>
