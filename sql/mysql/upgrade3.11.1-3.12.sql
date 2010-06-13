@@ -225,5 +225,7 @@ CREATE TABLE `contracts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-ALTER TABLE `salestypes` CHANGE COLUMN `sales_type` `sales_type` VARCHAR(40) NOT NULL DEFAULT '';>>>>>>> .r3482
+ALTER TABLE `salestypes` CHANGE COLUMN `sales_type` `sales_type` VARCHAR(40) NOT NULL DEFAULT '';
 INSERT INTO `config` VALUES ('ShowValueOnGRN', 1);
+
+ALTER TABLE `www_users` CHANGE COLUMN `modulesallowed` `modulesallowed` varchar(40) NOT NULL DEFAULT '1,1,1,1,1,1,1,1,1,1,1,';
