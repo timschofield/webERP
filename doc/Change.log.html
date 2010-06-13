@@ -1,5 +1,6 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p></p>
+<p>13/06/10 Simon Peter Otandeka: GoodsReceived.php - Correct sql syntax to work for mysql versions before 5.1</p>
 <p>13/06/10 Tim: Supplier login scripts needed for tendering system</p>
 <p>13/06/10 Tim: upgrade3.11.1-3.12.sql - Extend modules al.lowed field to allow for new modules</p>
 <p>13/06/10 Phil: Contracts.php new work changes to index.php to allow for new contract costing module</p>
@@ -12,10 +13,10 @@
 <p>03/06/10 Phil: Added a bit of error trapping to ensure customer/branch set up when going into CounterSales.php</p>
 <p>03/06/10 Otandeka: Locations.php used explode function rather than substr function to split the cashsalecustomer to get Branch and Debtorno codes - also changed format to just a hypen between debtorno and branchcode</p>
 <p>03/06/10 Otandeka: CounterSales php changed to use explode to get branch and debtorno from cashsalecustomer - and changed format to debtorno-branchcode and rather than debtorno - branchcode (spaces removed)</p>
-<p>31/5/10 Phil: BankMatching script took out double quotes reformated indenting - a hard one to read - my bad!</p>
-<p>31/5/10 Phil: New script CounterSales.php to allow entry of sale and payment over the counter as a half way step to POS - the customer account is defaulted based on the users default stock location. The locations table now has a default cash sales account - see below</p>
+<p>31/05/10 Phil: BankMatching script took out double quotes reformated indenting - a hard one to read - my bad!</p>
+<p>31/05/10 Phil: New script CounterSales.php to allow entry of sale and payment over the counter as a half way step to POS - the customer account is defaulted based on the users default stock location. The locations table now has a default cash sales account - see below</p>
 <P>29/05/10 ChenJohn: SalesTypes.php - upgrade3.11.1-3.12.sql - to allow sales type description up to 40 char length</p>
-<p>28/5/10 Phil: New field in locations table to allow a default cash sales account to be setup by location -modifications to Locations.php to allow it to be entered and error-trapping for debtor - branch format required for specification. This will be used in a new CounterSales.php script I am working on</p>
+<p>28/05/10 Phil: New field in locations table to allow a default cash sales account to be setup by location -modifications to Locations.php to allow it to be entered and error-trapping for debtor - branch format required for specification. This will be used in a new CounterSales.php script I am working on</p>
 <P>27/05/10 Tim: PurchData.php - Show the uom name, not the number</p>
 <P>27/05/10 Tim: CustomerAllocations.php - Show the right balance, and the allocate link where needed</p>
 <P>27/05/10 Tim: GoodsReceived.php - Correctly show the suppliers Units of measure</p>

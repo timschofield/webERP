@@ -120,7 +120,8 @@ if (count($_SESSION['PO']->LineItems)>0){
 				LEFT JOIN unitsofmeasure
 				ON purchdata.suppliersuom=unitsofmeasure.unitid
 				WHERE supplierno="'.$_SESSION['PO']->SupplierID.'"
-				AND stockid="'.$LnItm->StockID.'"';
+				AND stockid="'.$LnItm->StockID.'"
+				GROUP BY unitsofmeasure.unitname';
 
 		$uomresult=DB_query($uomsql, $db);
 		if (DB_num_rows($uomresult)>0) {
