@@ -70,7 +70,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	$Its_A_Labour_Item = false;
 	echo '<table width="90%"><tr><th colspan=3><img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Inventory') . '" alt=""><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . '</th></tr></b>';
 	echo '<tr><td width="40%" valign="top">
-			<table>'; //nested table
+			<table align=left>'; //nested table
 	echo '<tr><th class=number>' . _('Item Type:') . '</th><td colspan=2 class=select>';
 	switch ($myrow['mbflag']) {
 		case 'A':
@@ -177,7 +177,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	} //end of if PricesSecuirty allows viewing of prices
 	echo '</table>'; //end of first nested table
 	// Item Category Property mod: display the item properties
-	echo '<table>';
+	echo '<table align=left>';
 	$CatValResult = DB_query("SELECT categoryid
 					FROM stockmaster
 				WHERE stockid='" . $StockID . "'", $db);
@@ -230,7 +230,7 @@ echo '</td></tr>';
 $PropertyCounter++;
 } //end loop round properties for the item category
 echo '</table>'; //end of Item Category Property mod
-echo '<td width="15%">
+echo '<td style="width: 15%; vertical-align: top">
 			<table>'; //nested table to show QOH/orders
 $QOH = 0;
 switch ($myrow['mbflag']) {
