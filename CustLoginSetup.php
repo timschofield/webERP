@@ -9,15 +9,15 @@ $title = _('Customer Login Configuration');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-$ModuleList = array(_('Orders'), 
-					_('Receivables'), 
-					_('Payables'), 
-					_('Purchasing'), 
-					_('Inventory'), 
-					_('Manufacturing'), 
-					_('General Ledger'), 
+$ModuleList = array(_('Orders'),
+					_('Receivables'),
+					_('Payables'),
+					_('Purchasing'),
+					_('Inventory'),
+					_('Manufacturing'),
+					_('General Ledger'),
 					_('Setup'));
-					
+
 echo "<a href='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</a><br>';
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' ' . $phone . _(' has been selected') . '<br>';//'</p>';
@@ -42,7 +42,7 @@ while ($myroles = DB_fetch_array($result_roles)){
 	$result = DB_query($sqltoken,$db);
 	$Number_roles = DB_num_rows($result);
 	$myrow=DB_fetch_array($result);
-	
+
 	if ($Number_roles == 1 && $myrow['tokenid']==1 ) {
 
 		$sql = "SELECT secroleid, secrolename FROM securityroles WHERE secroleid = '" . $myroles['secroleid'] ."'";
@@ -51,7 +51,7 @@ while ($myroles = DB_fetch_array($result_roles)){
 		while( $Sec_row = DB_fetch_row($Sec_Result) ) {
 		$SecurityRoles[$Sec_row[0]] = $Sec_row[1];
 		}
-		DB_free_result($Sec_Result);	
+		DB_free_result($Sec_Result);
 
 	}
 
@@ -254,7 +254,7 @@ if (!isset($SelectedUser)) {
 		FROM www_users WHERE customerid = '" . $_SESSION['CustomerID'] . "'";
 	$result = DB_query($sql,$db);
 
-	echo '<table border=1>';
+	echo '<table>';
 	echo "<tr><th>" . _('User Login') . "</th>
 		<th>" . _('Full Name') . "</th>
 		<th>" . _('Telephone') . "</th>
@@ -340,7 +340,7 @@ if (isset($SelectedUser)) {
 			modulesallowed,
 			blocked,
 			theme,
-			language		
+			language
 		FROM www_users
 		WHERE userid='" . $SelectedUser . "'";
 
@@ -360,17 +360,17 @@ if (isset($SelectedUser)) {
 	$_POST['Theme'] = $myrow['theme'];
 	$_POST['UserLanguage'] = $myrow['language'];
 	$_POST['Blocked'] = $myrow['blocked'];
-	
+
 	echo "<input type='hidden' name='SelectedUser' value='" . $SelectedUser . "'>";
 	echo "<input type='hidden' name='UserID' value='" . $_POST['UserID'] . "'>";
 	echo "<input type='hidden' name='ModulesAllowed' value='" . $_POST['ModulesAllowed'] . "'>";
 
-	echo '<table> <tr><td>' . _('User code') . ':</td><td>';
+	echo '<table class=selection> <tr><td>' . _('User code') . ':</td><td>';
 	echo $_POST['UserID'] . '</td></tr>';
 
 } else { //end of if $SelectedUser only do the else when a new record is being entered
 
-	echo '<table><tr><td>' . _('User Login') . ":</td><td><input type='text' name='UserID' size=22 maxlength=20 ></td></tr>";
+	echo '<table class=selection><tr><td>' . _('User Login') . ":</td><td><input type='text' name='UserID' size=22 maxlength=20 ></td></tr>";
 
 	/*set the default modules to show to all
 	this had trapped a few people previously*/
@@ -451,7 +451,7 @@ $sql = "SELECT branchcode FROM custbranch WHERE debtorno = '" . $_POST['Cust'] .
 $result = DB_query($sql,$db);
 
 while ($myrow=DB_fetch_array($result)){
-	
+
 	//Set the first available branch as default value when nothing is selected
 	if (!isset($_POST['BranchCode'])) {
 		$_POST['BranchCode']= $myrow['branchcode'];
@@ -465,7 +465,7 @@ while ($myrow=DB_fetch_array($result)){
 		echo "<option Value='" . $myrow['branchcode'] . "'>" . $myrow['branchcode'];
 
 	}
-	
+
 }
 
 echo '<tr><td>' . _('Reports Page Size') .":</td>
@@ -554,7 +554,7 @@ while (false != ($LanguageEntry = $LangDirHandle->read())){
 		} elseif (!isset($_POST['UserLanguage']) and $LanguageEntry == $DefaultLanguage) {
 			echo "<option selected value='$LanguageEntry'>$LanguageEntry";
 		} else {
-			echo "<option value='$LanguageEntry'>$LanguageEntry";			
+			echo "<option value='$LanguageEntry'>$LanguageEntry";
 		}
 	}
 }
