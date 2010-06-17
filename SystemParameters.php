@@ -80,6 +80,9 @@ if (isset($_POST['submit'])) {
 	}elseif (!IsEmailAddress($_POST['X_FactoryManagerEmail'])){
 		$InputError = 1;
 		prnMsg(_('The Factory Manager Email address does not appear to be valid'),'error');
+	}elseif (!IsEmailAddress($_POST['X_PurchasingManagerEmail'])){
+		$InputError = 1;
+		prnMsg(_('The Purchasing Manager Email address does not appear to be valid'),'error');
 	}elseif (strlen($_POST['X_FrequentlyOrderedItems']) > 2 || !is_numeric($_POST['X_FrequentlyOrderedItems'])) {
 		$InputError = 1;
 		prnMsg(_('The number of frequently ordered items to display must be numeric'),'error');
@@ -260,6 +263,9 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['FactoryManagerEmail'] != $_POST['X_FactoryManagerEmail']){
 			$sql[] = "UPDATE config SET confvalue='" . $_POST['X_FactoryManagerEmail'] . "' WHERE confname='FactoryManagerEmail'";
+		}
+		if ($_SESSION['PurchasingManagerEmail'] != $_POST['X_PurchasingManagerEmail']){
+			$sql[] = "UPDATE config SET confvalue='" . $_POST['X_PurchasingManagerEmail'] . "' WHERE confname='PurchasingManagerEmail'";
 		}
 		if ($_SESSION['AutoCreateWOs'] != $_POST['X_AutoCreateWOs']){
 			$sql[] = 'UPDATE config SET confvalue=' . $_POST['X_AutoCreateWOs'] . " WHERE confname='AutoCreateWOs'";
@@ -969,6 +975,10 @@ echo '</select></td><td>' . _('This location is the location where work orders w
 echo '<tr><td>' . _('Factory Manager Email Address') . ':</td>
 	<td><input type="text" name="X_FactoryManagerEmail" size=50 maxlength=50 value="' . $_SESSION['FactoryManagerEmail'] . '"></td>
 	<td>' . _('Work orders automatically created when sales orders are entered will be emailed to this address') .'</td></tr>';
+
+echo '<tr><td>' . _('Purchasing Manager Email Address') . ':</td>
+	<td><input type="text" name="X_PurchasingManagerEmail" size=50 maxlength=50 value="' . $_SESSION['PurchasingManagerEmail'] . '"></td>
+	<td>' . _('The email address for the purchasing manager, used to receive notifications by the tendering system') .'</td></tr>';
 
 
 echo '</table><div class="centre"><input type="Submit" Name="submit" value="' . _('Update') . '"></div></form>';

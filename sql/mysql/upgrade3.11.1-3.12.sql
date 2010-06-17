@@ -166,13 +166,16 @@ ALTER TABLE suppliers add (email varchar(55),fax varchar(25), telephone varchar(
 
 ALTER TABLE `www_users` add `supplierid` varchar(10) NOT NULL DEFAULT '' AFTER `customerid`;
 INSERT INTO `securityroles` VALUES (9,'Supplier Log On Only');
+UPDATE `securitytokens` SET `tokenname`='Supplier centre - Supplier access only' WHERE tokenid=9;
+INSERT INTO `securitygroups` VALUES(9,9);
 
 ALTER TABLE locations add cashsalecustomer VARCHAR(21) NOT NULL DEFAULT '';
 
 DROP TABLE contracts;
 DROP TABLE contractreqts;
 DROP TABLE contractbom;
-CREATE TABLE `contractbom` (
+
+CREATE TABLE IF NOT EXISTS `contractbom` (
    contractref varchar(20) NOT NULL DEFAULT '0',
    `stockid` varchar(20) NOT NULL DEFAULT '',
   `workcentreadded` char(5) NOT NULL DEFAULT '',
@@ -186,7 +189,7 @@ CREATE TABLE `contractbom` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE `contractreqts` (
+CREATE TABLE IF NOT EXISTS `contractreqts` (
   `contractreqid` int(11) NOT NULL AUTO_INCREMENT,
   `contractref` varchar(20) NOT NULL DEFAULT '0',
   `requirement` varchar(40) NOT NULL DEFAULT '',
@@ -198,7 +201,7 @@ CREATE TABLE `contractreqts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE `contracts` (
+CREATE TABLE IF NOT EXISTS `contracts` (
   `contractref` varchar(20) NOT NULL DEFAULT '',
   `contractdescription` text NOT NULL DEFAULT '',
   `debtorno` varchar(10) NOT NULL DEFAULT '',
@@ -229,3 +232,20 @@ ALTER TABLE `salestypes` CHANGE COLUMN `sales_type` `sales_type` VARCHAR(40) NOT
 INSERT INTO `config` VALUES ('ShowValueOnGRN', 1);
 
 ALTER TABLE `www_users` CHANGE COLUMN `modulesallowed` `modulesallowed` varchar(40) NOT NULL DEFAULT '1,1,1,1,1,1,1,1,1,1,1,';
+
+CREATE TABLE IF NOT EXISTS `offers` (
+  offerid int(11) NOT NULL AUTO_INCREMENT,
+  tenderid int(11) NOT NULL DEFAULT 0,
+  supplierid varchar(10) NOT NULL DEFAULT '',
+  stockid varchar(20) NOT NULL DEFAULT '',
+  quantity double NOT NULL DEFAULT 0.0,
+  uom varchar(15) NOT NULL DEFAULT '',
+  price double NOT NULL DEFAULT 0.0,
+  expirydate date NOT NULL DEFAULT '0000-00-00',
+  currcode char(3) NOT NULL DEFAULT '',
+  PRIMARY KEY (`offerid`),
+  CONSTRAINT `offers_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`supplierid`),
+  CONSTRAINT `offers_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `config` VALUES('PurchasingManagerEmail', '');

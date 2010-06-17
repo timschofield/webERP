@@ -12,16 +12,16 @@ $title=_('Main Menu');
 /*The module link codes are hard coded in a switch statement below to determine the options to show for each tab */
 $ModuleLink = array('orders', 'AR', 'AP', 'PO', 'stock', 'manuf', 'Contracts', 'GL', 'FA', 'PC', 'system');
 /*The headings showing on the tabs accross the main index used also in WWW_Users for defining what should be visible to the user */
-$ModuleList = array(_('Sales'), 
-					_('Receivables'), 
-					_('Payables'), 
-					_('Purchases'), 
-					_('Inventory'), 
+$ModuleList = array(_('Sales'),
+					_('Receivables'),
+					_('Payables'),
+					_('Purchases'),
+					_('Inventory'),
 					_('Manufacturing'),
-					_('Contracts'), 
-					_('General Ledger'), 
-					_('Asset Manager'), 
-					_('Petty Cash'), 
+					_('Contracts'),
+					_('General Ledger'),
+					_('Asset Manager'),
+					_('Petty Cash'),
 					_('Setup'));
 
 if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when the user clicks on a tab */
@@ -30,9 +30,11 @@ if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when t
 
 include('includes/header.inc');
 
-if (count($_SESSION['AllowedPageSecurityTokens'])==1){
+if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 
-/* if there is only one security access and its 1 (it has to be 1 for this page came up at all)- it must be a customer log on need to limit the menu to show only the customer accessible stuff this is what the page looks like for customers logging in */
+/* if there is only one security access and its 1 (it has to be 1 for this page came up at all)- it must be a customer log on
+ * need to limit the menu to show only the customer accessible stuff this is what the page looks like for customers logging in
+ */
 ?>
 
 		<tr>
@@ -58,6 +60,20 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 <?php
 	include('includes/footer.inc');
 	exit;
+} else if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==1){
+?>
+
+		<tr>
+		<td class="menu_group_items">  <!-- Orders transaction options -->
+		<table class="table_index">
+			<tr>
+			<td class="menu_group_item">
+				<?php echo '<p>&bull; <a href="' . $rootpath . '/SupplierTenders.php?' . sid . '">' . _('Supplier Tenders') . '</a></p>'; ?>
+			</td>
+			</tr>
+		</table>
+	</td>
+<?php
 } else {  /* Security settings DO allow seeing the main menu */
 
 ?>
@@ -1300,12 +1316,12 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/Contracts.php?' . sid . '">' . _('Create Contract') . '</a></p>'; ?>
 							</td>
 							</tr>
-							<tr>					
+							<tr>
 						</table>
 					</td>
 					<td class="menu_group_items"> <!-- Contract Costing Inquiries/Reports options -->
 						<table width="100%" class="table_index">
-							
+
 							<tr>
 							<td class="menu_group_item">
 								<?php echo GetRptLinks('fa'); ?>
@@ -1315,7 +1331,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 					</td>
 					<td class="menu_group_items"> <!-- Contract Costing Maintenance options -->
 						<table width="100%" class="table_index">
-							
+
 						</table>
 					</td>
 				</table>

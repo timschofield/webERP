@@ -138,16 +138,16 @@ if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
 				$CurrenciesResult = DB_query('SELECT currabrev FROM currencies',$db);
 				while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
 					if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-						
-						$UpdateCurrRateResult = DB_query('UPDATE currencies SET 
+
+						$UpdateCurrRateResult = DB_query('UPDATE currencies SET
 							rate=' . GetCurrencyRate ($CurrencyRow[0],$CurrencyRates) . " '
 							WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
 					}
 				}
 				$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
-				
-				
-				
+
+
+
 				$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'",$db);
 			}
 		}
@@ -232,6 +232,14 @@ if (!is_array($_SESSION['AllowedPageSecurityTokens']) AND !isset($AllowAnyone)) 
 	exit;
 }
 
+/* Nasty kludge to allow Supplier only logins as well as Customer logins */
+if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $_SESSION['AllowedPageSecurityTokens'][0]==9 and $PageSecurity==1){
+	$_SESSION['AllowedPageSecurityTokens'][0]=1;
+	$SupplierLogin=1;
+} else {
+	$SupplierLogin=0;
+}
+
 if (!isset($AllowAnyone)){
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
 		$title = _('Security Permissions Problem');
@@ -251,6 +259,11 @@ if (!isset($AllowAnyone)){
 		exit;
 	}
  }
+
+/* Nasty kludge to allow Supplier only logins as well as Customer logins */
+if ($SupplierLogin==1) {
+	$_SESSION['AllowedPageSecurityTokens'][0]=9;
+}
 
 if (in_array(15, $_SESSION['AllowedPageSecurityTokens'])) {
 	$debug = 1;
