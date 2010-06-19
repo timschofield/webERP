@@ -96,7 +96,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 	if ($_POST['CustType'] AND $_POST['CustPhone'] == "" AND $_POST['CustCode'] == "" AND $_POST['Keywords'] == "" AND $_POST['CustAdd'] == "") {
 		$msg = _('Search Result: Customer Type has been used in search') . '<br>';
 	}
-	if (($_POST['Keywords'] == "") AND ($_POST['CustCode'] == "") AND ($_POST['CustPhone'] == "") AND ($_POST['CustType'] == "")) {
+	if (($_POST['Keywords'] == "") AND ($_POST['CustCode'] == "") AND ($_POST['CustPhone'] == "") AND ($_POST['CustType'] == "") AND ($_POST['Area'] == "")) {
 		$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
 				debtorsmaster.address1,
@@ -206,6 +206,23 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 								ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
 						WHERE debtorsmaster.typeid LIKE debtortype.typeid
 						AND debtortype.typename = '" . $_POST['CustType'] . "'";
+		} elseif (strlen($_POST['Area']) > 0) {
+			$SQL = "SELECT debtorsmaster.debtorno,
+								debtorsmaster.name,
+								debtorsmaster.address1,
+								debtorsmaster.address2,
+								debtorsmaster.address3,
+								debtorsmaster.address4,
+								custbranch.branchcode,
+								custbranch.brname,
+								custbranch.contactname,
+								debtortype.typename,
+								custbranch.phoneno,
+								custbranch.faxno
+						FROM debtorsmaster LEFT JOIN custbranch
+								ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
+						WHERE debtorsmaster.typeid LIKE debtortype.typeid
+						AND custbranch.area = '" . $_POST['Area'] . "'";
 		}
 	} //one of keywords or custcode or custphone was more than a zero length string
 	if ($_SESSION['SalesmanLogin'] != '') {
@@ -316,9 +333,9 @@ if (isset($_POST['CustAdd'])) {
 } else {
 	echo '<input type="Text" name="CustAdd" size=20 maxlength=25>';
 }
-echo '</td>';
+echo '</td></tr>';
 /* End addded search feature. Gilles Deacur */
-echo '<td><font size=3><b>' . _('OR') . '</b></font></td><td>' . _('Choose a Type') . ':</td><td>';
+echo '<tr><td><font size=3><b>' . _('OR') . '</b></font></td><td>' . _('Choose a Type') . ':</td><td>';
 if (isset($_POST['CustType'])) {
 	// Show Customer Type drop down list
 	$result2 = DB_query('SELECT typeid, typename FROM debtortype ', $db);
@@ -330,6 +347,7 @@ if (isset($_POST['CustType'])) {
 	} else {
 		// If OK show select box with option selected
 		echo '<select name="CustType">';
+		echo "<option value=''>" . _('Any');
 		while ($myrow = DB_fetch_array($result2)) {
 			if ($_POST['CustType'] == $myrow['typename']) {
 				echo "<option selected value='" . $myrow['typename'] . "'>" . $myrow['typename'];
@@ -338,7 +356,7 @@ if (isset($_POST['CustType'])) {
 			}
 		} //end while loop
 		DB_data_seek($result2, 0);
-		echo '</select></td></tr>';
+		echo '</select></td>';
 	}
 } else {
 	// No option selected yet, so show Customer Type drop down list
@@ -351,13 +369,38 @@ if (isset($_POST['CustType'])) {
 	} else {
 		// if OK show select box with available options to choose
 		echo '<select name="CustType">';
+		echo "<option value=''>" . _('Any');
 		while ($myrow = DB_fetch_array($result2)) {
 			echo "<option value='" . $myrow['typename'] . "'>" . $myrow['typename'];
 		} //end while loop
 		DB_data_seek($result2, 0);
-		echo '</select></td></tr>';
+		echo '</select></td>';
 	}
 }
+
+/* Option to select a sales area */
+echo '<td><font size=3><b>' . _('OR') . '</b></font></td><td>' . _('Choose an Area') . ':</td><td>';
+$result2 = DB_query('SELECT areacode, areadescription FROM areas ', $db);
+// Error if no sales areas setup
+if (DB_num_rows($result2) == 0) {
+	$DataError = 1;
+	echo '<a href="Areas.php?" target="_parent">Setup Types</a>';
+	echo '<tr><td colspan=2>' . prnMsg(_('No Sales Areas defined'), 'error') . '</td></tr>';
+} else {
+	// if OK show select box with available options to choose
+	echo '<select name="Area">';
+	echo "<option value=''>" . _('Any');
+	while ($myrow = DB_fetch_array($result2)) {
+		if ($_POST['Area']==$myrow['areacode']) {
+			echo "<option selected value='" . $myrow['areacode'] . "'>" . $myrow['areadescription'];
+		} else {
+			echo "<option value='" . $myrow['areacode'] . "'>" . $myrow['areadescription'];
+		}
+	} //end while loop
+	DB_data_seek($result2, 0);
+	echo '</select></td></tr>';
+}
+
 echo "</td></tr></table><br />";
 echo '<div class="centre"><input type=submit name="Search" value="' . _('Search Now') . '"><input type=submit name="CSV" value="' . _('CSV Format') . '"></div>';
 if (isset($_SESSION['SalesmanLogin']) and $_SESSION['SalesmanLogin'] != '') {
