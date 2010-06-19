@@ -15,7 +15,7 @@
 | reflected throughout Web-ERP.                     |
 \--------------------------------------------------*/
 
-/* $Id$*/
+/* $Id: default.css 3446 2010-05-05 10:11:54Z tim_schofield $*/
 
 body {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
@@ -41,7 +41,7 @@ li { list-style-image: url(bullet.gif); ¡ bullet.gif only exist in fresh theme 
 /*links before selection */
 a {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 100%;
 	font-weight: normal;
 	text-decoration: none;
 	color: #00f;
@@ -61,7 +61,7 @@ table {
 th {
 	font-weight: normal;
 	background-color: #cccce5;
-	font-size: 10px;
+	font-size: 100%;
 	color: #300;
 	text-align: center;
 	vertical-align: middle;
@@ -76,7 +76,7 @@ th {
 /*table detail items default format */
 td {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 100%;
 	text-align: left;
 }
 
@@ -174,7 +174,7 @@ div.info {
 
 textarea {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 100%;
 	background-color: #e3e1e1;
 	border-width:1px;
 	border-bottom-color: gray;
@@ -189,7 +189,7 @@ textarea {
 
 input {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 100%;
 	background-color: #e3e1e1;
 	border-width:1px;
 	border-bottom-color: gray;
@@ -204,7 +204,7 @@ input {
 
 input:hover {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 100%;
 	background-color: #e3e5f5;
 	border-width:1px;
 	border-bottom-color: gray;
@@ -227,7 +227,7 @@ input:hover { }
 
 select {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 100%;
 }
 
 font.good {
@@ -258,7 +258,7 @@ End merge */
 #page {
 	width: 100%;
 	color: black;
-	font-size: 10px;
+	font-size: 100%;
 	white-space: nowrap;
 	border: none;
 }
@@ -341,7 +341,7 @@ div.csv {
         padding-top: 1px;
         padding-bottom: 1px;
         font-weight: normal;
-        font-size: 10px;
+        font-size: 100%;
         TEXT-ALIGN:center;
 }
 End Merge */
@@ -361,7 +361,7 @@ End Merge */
 	width: 100%;
 	margin: 0px;
 	padding: 0px;
- 	font-size: 10px;
+ 	font-size: 100%;
 }
 
 /* Main page heading with quick menu within */
@@ -387,7 +387,7 @@ End Merge */
 .quick_menu_left {
 	background: none;
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 100%;
 	font-weight: bold;
 	border: none;
 	white-space: nowrap;
@@ -458,12 +458,12 @@ End Merge */
 }
 
 .system_menu_tabs a {
-	font-size: 10px;
+	font-size: 100%;
 	color: black;
 }
 
 .system_menu_tabs a:hover {
-	font-size: 10px;
+	font-size: 100%;
 	color: black;
 }
 
@@ -534,7 +534,7 @@ End Merge */
 
 span.main_menu_nolink {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 100%;
 	font-weight: bold;
 	color: #777;
 	text-decoration: none;
@@ -576,7 +576,7 @@ span.main_menu_nolink {
 
 .menu_group_headers_text {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 100%;
 	font-weight: bold;
 	color: black;
 }
@@ -603,7 +603,7 @@ p.page_title_text {
         padding-top: 2px;
         padding-bottom: 2px;
         font-weight: bold;
-        font-size: 10px;
+        font-size: 100%;
         color: black;
         background-color: #cccce5;
         width: 33%;
@@ -628,7 +628,7 @@ div.page_help_text {
         position: static;
         font-family: Verdana, Arial, Helvetica;
         font-weight: normal;
-        font-size: 10px;
+        font-size: 100%;
         color: black;
         text-align:center;
 }
@@ -653,7 +653,7 @@ DIV.system_check {
         padding-top: 1px;
         padding-bottom: 1px;
         font-weight: normal;
-        font-size: 10px;
+        font-size: 100%;
         color: black;
         TEXT-ALIGN:left;
 }
@@ -662,7 +662,7 @@ End merge */
 
 span.menu_group_nolink {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 100%;
 	font-weight: normal;
 	color: #777;
 	text-decoration: none;
