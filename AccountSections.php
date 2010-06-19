@@ -176,7 +176,7 @@ if (isset($_POST['submit'])) {
 	$result = DB_query($sql,$db,$ErrMsg);
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 
-	echo "<table name='SectionList'>
+	echo "<table name='SectionList' class=selection>
 		<tr>
 		<th>" . _('Section Number') . "</th>
 		<th>" . _('Section Description') . "</th>
@@ -235,7 +235,7 @@ if (! isset($_GET['delete'])) {
 			$_POST['SectionName']  = $myrow['sectionname'];
 
 			echo "<input type=hidden name='SelectedSectionID' value='" . $_POST['SectionID'] . "'>";
-			echo "<table>
+			echo "<table class=selection>
 			<td>" . _('Section Number') . ':' . "</td>
 			<td>" . $_POST['SectionID'] . "</td>";
 		}
@@ -251,7 +251,7 @@ if (! isset($_GET['delete'])) {
 		if (!isset($_POST['SectionName'])) {
 			$_POST['SectionName']='';
 		}
-		echo "<table>
+		echo "<table class=selection>
 			<tr>
 			<td>" . _('Section Number') . ':' . '</td>
 			<td><input tabindex="1" ' . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) ." type='text' name='SectionID' class=number size=4 maxlength=4 value='" . $_POST['SectionID'] . "'></td></tr>";
@@ -260,7 +260,7 @@ if (! isset($_GET['delete'])) {
 		<td><input tabindex="2" ' . (in_array('SectionName',$Errors) ?  'class="inputerror"' : '' ) ." type='text' name='SectionName' size=30 maxlength=30 value='" . $_POST['SectionName'] . "'></td>
 		</tr>";
 
-	echo '<tr><td></td><td colspan=2><input tabindex="3" type=Submit name=submit value=' . _('Enter Information') . '></td></tr>';
+	echo '<tr><td colspan=2><div class=centre><input tabindex="3" type=Submit name=submit value=' . _('Enter Information') . '></div></td></tr>';
 	echo '</table>';
 
 	if (!isset($_GET['SelectedSectionID']) or $_GET['SelectedSectionID']=='') {
