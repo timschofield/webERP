@@ -400,7 +400,7 @@ if (DB_num_rows($result2) == 0) {
 	echo '<select name="Area">';
 	echo "<option value=''>" . _('Any');
 	while ($myrow = DB_fetch_array($result2)) {
-		if ($_POST['Area']==$myrow['areacode']) {
+		if (isset($_POST['Area']) and $_POST['Area']==$myrow['areacode']) {
 			echo "<option selected value='" . $myrow['areacode'] . "'>" . $myrow['areadescription'];
 		} else {
 			echo "<option value='" . $myrow['areacode'] . "'>" . $myrow['areadescription'];
