@@ -225,7 +225,7 @@ or deletion of the records*/
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 
-	echo '<table>
+	echo '<table class=selection>
 		<tr>
 		<th>' . _('Group Name') . "</th>
 		<th>" . _('Section') . "</th>
@@ -271,12 +271,12 @@ or deletion of the records*/
 
 
 if (isset($_POST['SelectedAccountGroup']) OR isset($_GET['SelectedAccountGroup'])) {
-	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID .'">' . _('Review Account Groups') . '</a></div>';
+	echo '<br><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID .'">' . _('Review Account Groups') . '</a></div>';
 }
 
 if (! isset($_GET['delete'])) {
 
-	echo '<form method="post" id="AccountGroups" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	echo '<br><form method="post" id="AccountGroups" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 
 	if (isset($_GET['SelectedAccountGroup'])) {
 		//editing an existing account group
@@ -300,7 +300,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['PandL']  = $myrow['pandl'];
 		$_POST['ParentGroupName'] = $myrow['parentgroupname'];
 
-		echo '<table><tr><td>';
+		echo '<table class=selection><tr><td>';
 		echo '<input type="hidden" name="SelectedAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" />';
 		echo '<input type="hidden" name="GroupName" value="' . $_POST['GroupName'] . '" />';
 
@@ -326,7 +326,7 @@ if (! isset($_GET['delete'])) {
 			$_POST['PandL']='';
 		}
 
-		echo '<table style="margin: 10px auto;"><tr><td>';
+		echo '<br><table class=selection><tr><td>';
 		echo '<input  type="hidden" name="SelectedAccountGroup" value="' . $_POST['SelectedAccountGroup'] . '" />';
 		echo _('Account Group Name') . ':' . '</td><td>
 		<input tabindex="1" ' . (in_array('GroupName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="GroupName" size="50" maxlength="50" value="' . $_POST['GroupName'] . '" /></td></tr>';
@@ -391,9 +391,9 @@ if (! isset($_GET['delete'])) {
 		' type="text" maxlength="4" name="SequenceInTB" class=number
 		 value="' . $_POST['SequenceInTB'] . '" /></td></tr>';
 
-	echo '</table>';
+	echo '<tr><td colspan=2><div class="centre"><input tabindex="6" type="submit" name="submit" value="' . _('Enter Information') . '" /></div></td></tr>';
 
-	echo '<div class="centre"><input tabindex="6" type="submit" name="submit" value="' . _('Enter Information') . '" /></div>';
+	echo '</table>';
 
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].GroupName);</script>';
 
