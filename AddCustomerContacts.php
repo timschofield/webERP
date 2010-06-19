@@ -18,7 +18,16 @@ if (isset($_POST['DebtorNo'])){
 	$DebtorNo = $_GET['DebtorNo'];
 }
 echo "<a href='" . $rootpath . '/Customers.php?' . SID .'&DebtorNo='.$DebtorNo."'>" . _('Back to Customers') . '</a><br>';
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
+$SQLname='SELECT * from debtorsmaster where debtorno="'.$DebtorNo.'"';
+$Result = DB_query($SQLname,$db);
+$row = DB_fetch_array($Result);
+if (!isset($_GET['Id'])) {
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
+		'" alt="">' . ' ' . _('Contacts for Customer: <b>') .$row['name'].'<br>';
+} else {
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
+		'" alt="">' . ' ' . _('Edit contact for <b>') .$row['name'].'<br>';
+}
 if ( isset($_POST['submit']) ) {
 
 	//initialise no input errors assumed initially before we test
@@ -67,6 +76,7 @@ if ( isset($_POST['submit']) ) {
 
 		echo '<br>';
 		prnMsg($msg, 'success');
+		echo '<br>';
 		unset($Id);
 		unset($_POST['conName']);
 		unset($_POST['conRole']);
@@ -92,17 +102,12 @@ if ( isset($_POST['submit']) ) {
 	}
 
 if (!isset($Id)) {
-	$SQLname='SELECT * from debtorsmaster where debtorno="'.$DebtorNo.'"';
-	$Result = DB_query($SQLname,$db);
-	$row = DB_fetch_array($Result);
-	echo '<div class="centre">' . _('Contacts for Customer: <b>') .$row['name'].'</b></div><br>';
-
 
 	$sql = "SELECT * FROM custcontacts where debtorno='".$DebtorNo."' ORDER BY contid";
 	$result = DB_query($sql,$db);
 			//echo '<br>'.$sql;
 
-	echo '<table border=1>';
+	echo '<table class=selection>';
 	echo '<tr>
 			<th>' . _('Name') . '</th>
 			<th>' . _('Role') . '</th>
@@ -170,9 +175,9 @@ if (!isset($_GET['delete'])) {
 		echo '<input type=hidden name="Id" value='. $Id .'>';
 		echo '<input type=hidden name="Con_ID" value=' . $_POST['Con_ID'] . '>';
 		echo '<input type=hidden name="DebtorNo" value=' . $_POST['debtorno'] . '>';
-		echo '<table><tr><td>'. _('Contact Code').':</td><td>' . $_POST['Con_ID'] . '</td></tr>';
+		echo '<table class=selection><tr><td>'. _('Contact Code').':</td><td>' . $_POST['Con_ID'] . '</td></tr>';
 	} else {
-		echo '<table>';
+		echo '<table class=selection>';
 	}
 
 	echo '<tr><td>'. _('Contact Name') . '</td>';
@@ -195,12 +200,12 @@ if (!isset($_GET['delete'])) {
     }
 	echo '<tr><td>' . _('Notes') . '</td>';
     if (isset($_POST['conNotes'])) {
-        echo '<td><textarea name="conNotes">'. $_POST['conNotes'] . '</textarea></table>';
+        echo '<td><textarea name="conNotes">'. $_POST['conNotes'] . '</textarea>';
     } else {
-       echo '<td><textarea name="conNotes"></textarea></table>';
+       echo '<td><textarea name="conNotes"></textarea>';
     }
-	echo '<br><div class="centre"><input type="Submit" name="submit" value="'. _('Enter Information') . '"></div>';
-
+	echo '<tr><td colspan=2><div class="centre"><input type="Submit" name="submit" value="'. _('Enter Information') . '"></div></td></tr>';
+	echo '</table>';
 	echo '</form>';
 
 } //end if record deleted no point displaying form to add record
