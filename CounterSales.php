@@ -132,6 +132,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 			/* now get the branch defaults from the customer branches table CustBranch. */
 	
 			$sql = "SELECT custbranch.brname,
+							custbranch.braddress1,
 							custbranch.defaultshipvia,
 							custbranch.deliverblind,
 							custbranch.specialinstructions,
