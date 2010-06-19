@@ -11,6 +11,15 @@ if (isset($_GET['Select'])) {
 if (!isset($_SESSION['CustomerID'])) { //initialise if not already done
 	$_SESSION['CustomerID'] = "";
 }
+if (isset($_GET['Area'])) {
+	$_POST['Area']=$_GET['Area'];
+	$_POST['Search']='Search';
+	$_POST['Keywords']='';
+	$_POST['CustCode']='';
+	$_POST['CustPhone']='';
+	$_POST['CustAdd']='';
+	$_POST['CustType']='';
+}
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Customers') . '';
 if (!isset($_SESSION['CustomerType'])) { //initialise if not already done
 	$_SESSION['CustomerType'] = "";

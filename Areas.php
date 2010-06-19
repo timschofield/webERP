@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	} elseif ($myrow[0]>0 and !isset($SelectedArea)){
 		$InputError = 1;
-		prnMsg(_('The area code entered already exists'),'error');		
+		prnMsg(_('The area code entered already exists'),'error');
 		$Errors[$i] = 'AreaCode';
 		$i++;
 	} elseif (strlen($_POST['AreaDescription']) >25) {
@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'AreaDescription';
 		$i++;
 	}
-	
+
 	if (isset($SelectedArea) AND $InputError !=1) {
 
 		/*SelectedArea could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
@@ -100,7 +100,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['AreaDescription']);
 		prnMsg($msg,'success');
 	}
-	
+
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
@@ -134,14 +134,16 @@ if (isset($_POST['submit'])) {
 	} //end if Delete area
 	unset($SelectedArea);
 	unset($_GET['delete']);
-} 
+}
 
 if (!isset($SelectedArea)) {
 
 	$sql = 'SELECT * FROM areas';
 	$result = DB_query($sql,$db);
 
-	echo '<table border=1>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
+
+	echo '<table>';
 	echo "<tr>
 		<th>" . _('Area Code') . "</th>
 		<th>" . _('Area Name') . '</th>';
@@ -161,6 +163,7 @@ if (!isset($SelectedArea)) {
 		echo '<td>' . $myrow[1] . '</td>';
 		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedArea=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
 		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedArea=' . $myrow[0] . '&delete=yes">' . _('Delete') . '</a></td>';
+		echo '<td><a href="SelectCustomer.php'. '?' . SID . '&Area=' . $myrow[0] . '">' . _('View Customers from this Area') . '</a></td>';
 
 	}
 	//END WHILE LIST LOOP
@@ -176,7 +179,7 @@ if (isset($SelectedArea)) {
 
 if (!isset($_GET['delete'])) {
 
-	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '><br>';
 
 	if (isset($SelectedArea)) {
 		//editing an existing area
@@ -194,7 +197,7 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type=hidden name=SelectedArea VALUE=' . $SelectedArea . '>';
 		echo '<input type=hidden name=AreaCode VALUE=' .$_POST['AreaCode'] . '>';
-		echo '<table><tr><td>' . _('Area Code') . ':</td><td>' . $_POST['AreaCode'] . '</td></tr>';
+		echo '<table class=selection><tr><td>' . _('Area Code') . ':</td><td>' . $_POST['AreaCode'] . '</td></tr>';
 
 	} else {
 		if (!isset($_POST['AreaCode'])) {
@@ -203,7 +206,7 @@ if (!isset($_GET['delete'])) {
 		if (!isset($_POST['AreaDescription'])) {
 			$_POST['AreaDescription'] = '';
 		}
-		echo '<table>
+		echo '<table class=selection>
 			<tr>
 				<td>' . _('Area Code') . ':</td>
 				<td><input tabindex="1" ' . (in_array('AreaCode',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="AreaCode" value="' . $_POST['AreaCode'] . '" size=3 maxlength=3></td>
@@ -212,10 +215,10 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr><td>' . _('Area Name') . ':</td>
 		<td><input tabindex="2" ' . (in_array('AreaDescription',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="AreaDescription" value="' . $_POST['AreaDescription'] .'" size=26 maxlength=25></td>
-		</tr>
-	</table>';
+		</tr>';
 
-	echo '<br><div class="centre"><input tabindex="3" type="Submit" name="submit" value=' . _('Enter Information') .'></div></form>';
+	echo '<tr><td colspan=2><div class="centre"><input tabindex="3" type="Submit" name="submit" value=' . _('Enter Information') .'></div></td></tr>';
+	echo '</table></form>';
 
  } //end if record deleted no point displaying form to add record
 
