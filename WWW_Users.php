@@ -138,6 +138,7 @@ if (isset($_POST['submit'])) {
 						email='" . $_POST['Email'] ."',
 						" . $UpdatePassword . "
 						branchcode='" . $_POST['BranchCode'] . "',
+						supplierid='" . $_POST['SupplierID'] . "',
 						salesman='" . $_POST['Salesman'] . "',
 						pagesize='" . $_POST['PageSize'] . "',
 						fullaccess=" . $_POST['Access'] . ",
@@ -156,6 +157,7 @@ if (isset($_POST['submit'])) {
 						realname,
 						customerid,
 						branchcode,
+						supplierid,
 						salesman,
 						password,
 						phone,
@@ -172,6 +174,7 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['RealName'] ."',
 						'" . $_POST['Cust'] ."',
 						'" . $_POST['BranchCode'] ."',
+						'" . $_POST['SupplierID'] ."',
 						'" . $_POST['Salesman'] . "',
 						'" . CryptPass($_POST['Password']) ."',
 						'" . $_POST['Phone'] . "',
@@ -197,6 +200,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['RealName']);
 		unset($_POST['Cust']);
 		unset($_POST['BranchCode']);
+		unset($_POST['SupplierID']);
 		unset($_POST['Salesman']);
 		unset($_POST['Phone']);
 		unset($_POST['Email']);
@@ -248,6 +252,7 @@ if (!isset($SelectedUser)) {
 			email,
 			customerid,
 			branchcode,
+			supplierid,
 			salesman,
 			lastvisitdate,
 			fullaccess,
@@ -264,6 +269,7 @@ if (!isset($SelectedUser)) {
 		<th>" . _('Email') . "</th>
 		<th>" . _('Customer Code') . "</th>
 		<th>" . _('Branch Code') . "</th>
+		<th>" . _('Supplier Code') . "</th>
 		<th>" . _('Salesperson') . "</th>
 		<th>" . _('Last Visit') . "</th>
 		<th>" . _('Security Role') ."</th>
@@ -303,6 +309,7 @@ if (!isset($SelectedUser)) {
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td><a href=\"%s&SelectedUser=%s\">" . _('Edit') . "</a></td>
 					<td><a href=\"%s&SelectedUser=%s&delete=1\">" . _('Delete') . "</a></td>
 					</tr>",
@@ -313,11 +320,12 @@ if (!isset($SelectedUser)) {
 					$myrow[4],
 					$myrow[5],
 					$myrow[6],
+					$myrow[7],
 					$LastVisitDate,
-					$SecurityRoles[($myrow[8])],
-					$myrow[9],
+					$SecurityRoles[($myrow[9])],
 					$myrow[10],
 					$myrow[11],
+					$myrow[12],
 					$_SERVER['PHP_SELF']  . "?" . SID,
 					$myrow[0],
 					$_SERVER['PHP_SELF'] . "?" . SID,
@@ -344,6 +352,7 @@ if (isset($SelectedUser)) {
 			customerid,
 			password,
 			branchcode,
+			supplierid,
 			salesman,
 			pagesize,
 			fullaccess,
@@ -365,6 +374,7 @@ if (isset($SelectedUser)) {
 	$_POST['Email'] = $myrow['email'];
 	$_POST['Cust']	= $myrow['customerid'];
 	$_POST['BranchCode']  = $myrow['branchcode'];
+	$_POST['SupplierID'] = $myrow['supplierid'];
 	$_POST['Salesman'] = $myrow['salesman'];
 	$_POST['PageSize'] = $myrow['pagesize'];
 	$_POST['Access'] = $myrow['fullaccess'];
@@ -459,11 +469,17 @@ if (!isset($_POST['Cust'])) {
 if (!isset($_POST['BranchCode'])) {
 	$_POST['BranchCode']='';
 }
+if (!isset($_POST['SupplierID'])) {
+	$_POST['SupplierID']='';
+}
 echo '<tr><td>' . _('Customer Code') . ':</td>
 	<td><input type="text" name="Cust" size=10 maxlength=10 value="' . $_POST['Cust'] . '"></td></tr>';
 
 echo '<tr><td>' . _('Branch Code') . ':</td>
 	<td><input type="text" name="BranchCode" size=10 maxlength=10 VALUE="' . $_POST['BranchCode'] .'"></td></tr>';
+
+echo '<tr><td>' . _('Supplier Code') . ':</td>
+	<td><input type="text" name="SupplierID" size=10 maxlength=10 VALUE="' . $_POST['SupplierID'] .'"></td></tr>';
 
 echo '<tr><td>' . _('Restrict to Sales Person') . ':</td>
 	<td><select name="Salesman">';
