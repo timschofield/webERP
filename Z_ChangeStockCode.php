@@ -1,5 +1,5 @@
 <?php
-/* $Id$*/
+/* $Id: Z_ChangeStockCode.php 3293 2010-01-12 11:02:25Z tim_schofield $*/
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -219,7 +219,7 @@ if (isset($_POST['ProcessStockChange'])){
 
 
 	echo '<br>' . _('Changing the contract BOM table records');
-	$sql = "UPDATE contractbom SET component='" . $_POST['NewStockID'] . "' WHERE component='" . $_POST['OldStockID'] . "'";
+	$sql = "UPDATE contractbom SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
 	$ErrMsg = _('The SQL to contract BOM records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
