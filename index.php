@@ -487,6 +487,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/OffersReceived.php?' . sid . '">' . _('Process Tenders and Offers') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/PO_AuthoriseMyOrders.php?' . sid . '">' . _('Orders to Authorise') . '</a></p>'; ?>
 							</td>
 							</tr>
