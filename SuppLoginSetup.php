@@ -45,7 +45,7 @@ while ($myroles = DB_fetch_array($result_roles)){
 	$Number_roles = DB_num_rows($result);
 	$myrow=DB_fetch_array($result);
 
-	if ($Number_roles == 1 && $myrow['tokenid']==4 ) {
+	if ($Number_roles == 1 && $myrow['tokenid']==9 ) {
 
 		$sql = "SELECT secroleid, secrolename FROM securityroles WHERE secroleid = '" . $myroles['secroleid'] ."'";
 		$Sec_Result = DB_query($sql, $db);
