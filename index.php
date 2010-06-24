@@ -991,6 +991,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/FormDesigner.php">' . _('Form Layout Editor') . '</a></p>'; ?>
 							</td>
 							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/SMTPServer.php">' . _('SMTP Server Details') . '</a></p>'; ?>
+							</td>
+							</tr>
 						</table>
 					</td>
 

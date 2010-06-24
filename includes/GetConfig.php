@@ -62,6 +62,26 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	}
 } //end if force reload or not set already
 
+$sql='SELECT id,
+				host,
+				port,
+				heloaddress,
+				username,
+				password,
+				timeout,
+				auth
+			FROM emailsettings';
+$result=DB_query($sql, $db);
+$myrow=DB_fetch_array($result);
+
+$_SESSION['SMTPSettings']['host']=$myrow['host'];
+$_SESSION['SMTPSettings']['port']=$myrow['port'];
+$_SESSION['SMTPSettings']['heloaddress']=$myrow['heloaddress'];
+$_SESSION['SMTPSettings']['username']=$myrow['username'];
+$_SESSION['SMTPSettings']['password']=$myrow['password'];
+$_SESSION['SMTPSettings']['timeout']=$myrow['timeout'];
+$_SESSION['SMTPSettings']['auth']=$myrow['auth'];
+
 	/*
 
 

@@ -137,12 +137,12 @@ class htmlMimeMail
 			$helo = 'localhost';
 		}
 
-		$this->smtp_params['host'] = 'localhost';
-		$this->smtp_params['port'] = 25;
-		$this->smtp_params['helo'] = $helo;
-		$this->smtp_params['auth'] = false;
-		$this->smtp_params['user'] = '';
-		$this->smtp_params['pass'] = '';
+		$this->smtp_params['host'] = $_SESSION['SMTPSettings']['host'];
+		$this->smtp_params['port'] = $_SESSION['SMTPSettings']['port'];
+		$this->smtp_params['helo'] = $_SESSION['SMTPSettings']['heloaddress'];
+		$this->smtp_params['auth'] = $_SESSION['SMTPSettings']['auth'];
+		$this->smtp_params['user'] = html_entity_decode($_SESSION['SMTPSettings']['username']);
+		$this->smtp_params['pass'] = html_entity_decode($_SESSION['SMTPSettings']['password']);
 
 		/**
         * Make sure the MIME version header is first.
@@ -609,8 +609,8 @@ class htmlMimeMail
 
 			// Add message ID header
 			srand((double)microtime()*10000000);
-			$message_id = sprintf('<%s.%s@%s>', base_convert(time(), 10, 36), base_convert(rand(), 10, 36), !empty($GLOBALS['HTTP_SERVER_VARS']['HTTP_HOST']) ? $GLOBALS['HTTP_SERVER_VARS']['HTTP_HOST'] : $GLOBALS['HTTP_SERVER_VARS']['SERVER_NAME']);
-			$this->headers['Message-ID'] = $message_id;
+//			$message_id = sprintf('<%s.%s@%s>', base_convert(time(), 10, 36), base_convert(rand(), 10, 36), !empty($GLOBALS['HTTP_SERVER_VARS']['HTTP_HOST']) ? $GLOBALS['HTTP_SERVER_VARS']['HTTP_HOST'] : $GLOBALS['HTTP_SERVER_VARS']['SERVER_NAME']);
+//			$this->headers['Message-ID'] = $message_id;
 
 			$this->is_built = true;
 			return true;

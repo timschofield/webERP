@@ -49,15 +49,15 @@
 			if(!defined('CRLF'))
 				define('CRLF', "\r\n", TRUE);
 
-			$this->authenticated	= FALSE;			
-			$this->timeout			= 5;
+			$this->authenticated	= FALSE;
+			$this->timeout			= $_SESSION['SMTPSettings']['timeout'];
 			$this->status			= SMTP_STATUS_NOT_CONNECTED;
-			$this->host				= 'localhost';
-			$this->port				= 25;
-			$this->helo				= 'localhost';
-			$this->auth				= FALSE;
-			$this->user				= '';
-			$this->pass				= '';
+			$this->host				= $_SESSION['SMTPSettings']['host'];
+			$this->port				= $_SESSION['SMTPSettings']['port'];
+			$this->helo				= $_SESSION['SMTPSettings']['heloaddress'];
+			$this->auth				= $_SESSION['SMTPSettings']['auth'];
+			$this->user				= html_entity_decode($_SESSION['SMTPSettings']['username']);
+			$this->pass				= html_entity_decode($_SESSION['SMTPSettings']['password']);
 			$this->errors   		= array();
 
 			foreach($params as $key => $value){
@@ -67,7 +67,7 @@
 
 		/**
         * Connect function. This will, when called
-		* statically, create a new smtp object, 
+		* statically, create a new smtp object,
 		* call the connect function (ie this function)
 		* and return it. When not called statically,
 		* it will connect to the server and send
@@ -92,7 +92,8 @@
 
 				$greeting = $this->get_data();
 				if(is_resource($this->connection)){
-					return $this->auth ? $this->ehlo() : $this->helo();
+					$return=$this->auth ? $this->ehlo() : $this->helo();
+					return $return;
 				}else{
 					$this->errors[] = 'Failed to connect to server: '.$errstr;
 					return FALSE;
@@ -156,7 +157,7 @@
 				return FALSE;
 			}
 		}
-		
+
 		/**
         * Function to implement HELO cmd
         */
@@ -173,7 +174,7 @@
 				return FALSE;
 			}
 		}
-		
+
 		/**
         * Function to implement EHLO cmd
         */
@@ -190,7 +191,7 @@
 				return FALSE;
 			}
 		}
-		
+
 		/**
         * Function to implement RSET cmd
         */
@@ -207,7 +208,7 @@
 				return FALSE;
 			}
 		}
-		
+
 		/**
         * Function to implement QUIT cmd
         */
@@ -226,7 +227,7 @@
 				return FALSE;
 			}
 		}
-		
+
 		/**
         * Function to implement AUTH cmd
         */
@@ -252,7 +253,7 @@
 		/**
         * Function that handles the MAIL FROM: cmd
         */
-		
+
 		function mail($from){
 
 			if($this->is_connected()
@@ -268,7 +269,7 @@
 		/**
         * Function that handles the RCPT TO: cmd
         */
-		
+
 		function rcpt($to){
 
 			if($this->is_connected()
@@ -292,7 +293,7 @@
 			if($this->is_connected()
 				AND $this->send_data('DATA')
 				AND substr(trim($error = $this->get_data()), 0, 3) === '354' ){
- 
+
 				return TRUE;
 
 			}else{
@@ -319,7 +320,7 @@
 
 			if(is_resource($this->connection)){
 				return fwrite($this->connection, $data.CRLF, strlen($data)+2);
-				
+
 			}else
 				return FALSE;
 		}
@@ -349,7 +350,7 @@
 		/**
         * Sets a variable
         */
-		
+
 		function set($var, $value){
 
 			$this->$var = $value;
