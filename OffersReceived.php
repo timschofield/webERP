@@ -32,21 +32,26 @@ if (!isset($_POST['supplierid'])) {
 		LEFT JOIN suppliers
 			ON suppliers.supplierid=offers.supplierid
 		WHERE purchorderauth.userid="'.$_SESSION['UserID'].'"
-			AND offers.expirydate>"'.date('Y-m-d').'"';
+			AND offers.expirydate>"'.date('Y-m-d').'"
+			AND purchorderauth.cancreate=0';
 	$result=DB_query($sql, $db);
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-		_('Select Supplier') . '" alt="">' . ' ' . _('Select Supplier') . '</p>';
-	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	echo '<table class=selection>';
-	echo '<tr><td>'._('Select Supplier').'</td>';
-	echo '<td><select name=supplierid>';
-	while ($myrow=DB_fetch_array($result)) {
-		echo '<option value="'.$myrow['supplierid'].'">'.$myrow['suppname'].'</option>';
+	if (DB_num_rows($result)==0) {
+		prnMsg(_('There are no offers outstanding that you are authorised to deal with'), 'information');
+	} else {
+		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
+			_('Select Supplier') . '" alt="">' . ' ' . _('Select Supplier') . '</p>';
+		echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+		echo '<table class=selection>';
+		echo '<tr><td>'._('Select Supplier').'</td>';
+		echo '<td><select name=supplierid>';
+		while ($myrow=DB_fetch_array($result)) {
+			echo '<option value="'.$myrow['supplierid'].'">'.$myrow['suppname'].'</option>';
+		}
+		echo '</select></td></tr>';
+		echo '<tr><td colspan=12><div class="centre"><input type=submit name=select value=' . _('Enter Information') . '></div></td></tr>';
+		echo '</table>';
+		echo '</form>';
 	}
-	echo '</select></td></tr>';
-	echo '<tr><td colspan=12><div class="centre"><input type=submit name=select value=' . _('Enter Information') . '></div></td></tr>';
-	echo '</table>';
-	echo '</form>';
 }
 
 if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
