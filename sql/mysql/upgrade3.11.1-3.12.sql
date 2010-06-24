@@ -264,3 +264,6 @@ CREATE TABLE `emailsettings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO emailsettings VALUES(Null, 'localhost', 25, 'helo', '', '', 5, '', 0);
+
+ALTER TABLE `salesorderdetails` ADD COLUMN `commissionrate` double NOT NULL DEFAULT 0.0;
+ALTER TABLE `salesorderdetails` ADD COLUMN `commissionearned` double NOT NULL DEFAULT 0.0;
