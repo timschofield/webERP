@@ -12,11 +12,11 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 echo '<form action=' . $_SERVER['PHP_SELF'] .'?' .SID . ' method=post>';
 
 
-If (isset($_POST['ResetPart'])){
-     unset($_REQUEST['SelectedStockItem']);
+if (isset($_POST['ResetPart'])){
+	 unset($_REQUEST['SelectedStockItem']);
 }
 
-If (isset($_REQUEST['WO']) AND $_REQUEST['WO']!='') {
+if (isset($_REQUEST['WO']) AND $_REQUEST['WO']!='') {
 	$_REQUEST['WO'] = trim($_REQUEST['WO']);
 	if (!is_numeric($_REQUEST['WO'])){
 		  prnMsg(_('The work order number entered MUST be numeric'),'warn');
@@ -34,10 +34,10 @@ If (isset($_REQUEST['WO']) AND $_REQUEST['WO']!='') {
 
 if (isset($_POST['SearchParts'])){
 
-	If ($_POST['Keywords'] AND $_POST['StockCode']) {
+	if ($_POST['Keywords'] AND $_POST['StockCode']) {
 		echo _('Stock description keywords have been used in preference to the Stock code extract entered');
 	}
-	If ($_POST['Keywords']) {
+	if ($_POST['Keywords']) {
 		//insert wildcard characters in spaces
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
@@ -101,13 +101,13 @@ if (isset($_POST['StockID'])){
 
 if (!isset($StockID)) {
 
-     /* Not appropriate really to restrict search by date since may miss older
-     ouststanding orders
+	 /* Not appropriate really to restrict search by date since may miss older
+	 ouststanding orders
 	$OrdersAfterDate = Date('d/m/Y',Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
-     */
+	 */
 
 	if (!isset($_REQUEST['WO']) or ($_REQUEST['WO']=='')){
-
+		echo '<table class=selection><tr><td>';
 		echo _('Work Order number') . ": <input type=text name='WO' MAXLENGTH =8 size=9>&nbsp " . _('Processing at') . ":<select name='StockLocation'> ";
 
 		$sql = 'SELECT loccode, locationname FROM locations';
@@ -117,9 +117,9 @@ if (!isset($StockID)) {
 		while ($myrow=DB_fetch_array($resultStkLocs)){
 			if (isset($_POST['StockLocation'])){
 				if ($myrow['loccode'] == $_POST['StockLocation']){
-				     echo "<option selected Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+					 echo "<option selected Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 				} else {
-				     echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+					 echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 				}
 			} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
 				 echo "<option selected Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
@@ -145,7 +145,7 @@ if (!isset($StockID)) {
 
 		echo '</select> &nbsp&nbsp';
 		echo "<input type=submit name='SearchOrders' VALUE='" . _('Search') . "'>";
-    	echo '&nbsp;&nbsp;<a href="' . $rootpath . '/WorkOrderEntry.php?' . SID . '">' . _('New Work Order') . '</a>';
+		echo '&nbsp;&nbsp;<a href="' . $rootpath . '/WorkOrderEntry.php?' . SID . '">' . _('New Work Order') . '</a></td></tr></table>';
 	}
 
 	$SQL='SELECT categoryid,
@@ -156,30 +156,30 @@ if (!isset($StockID)) {
 	$result1 = DB_query($SQL,$db);
 
 	echo '<hr>
-		<font size=1>' . _('To search for work orders for a specific item use the item selection facilities below') . "</font>
+		<table class=selection><tr><td><font size=1>' . _('To search for work orders for a specific item use the item selection facilities below') . "</font>
 		<input type=submit name='SearchParts' VALUE='" . _('Search Items Now') . "'>
-		<input type=submit name='ResetPart' VALUE='" . _('Show All') . "'>
-      <table>
-      	<tr>
-      		<td><font size=1>" . _('Select a stock category') . ":</font>
-      			<select name='StockCat'>";
+		<input type=submit name='ResetPart' VALUE='" . _('Show All') . "'> </td></tr></table><br>
+		<table class=selection>
+	  	<tr>
+	  		<td><font size=1>" . _('Select a stock category') . ":</font>
+	  			<select name='StockCat'>";
 
 	while ($myrow1 = DB_fetch_array($result1)) {
 		echo "<option VALUE='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
 	}
 
-      echo '</select>
-      		<td><font size=1>' . _('Enter text extract(s) in the description') . ":</font></td>
-      		<td><input type='Text' name='Keywords' size=20 maxlength=25></td>
+	  echo '</select>
+	  		<td><font size=1>' . _('Enter text extract(s) in the description') . ":</font></td>
+	  		<td><input type='Text' name='Keywords' size=20 maxlength=25></td>
 	</tr>
-      	<tr><td></td>
-      		<td><font SIZE 3><b>" . _('OR') . ' </b></font><font size=1>' . _('Enter extract of the Stock Code') . "</b>:</font></td>
-      		<td><input type='Text' name='StockCode' size=15 maxlength=18></td>
-      	</tr>
-      </table>
-      <hr>";
+	  	<tr><td></td>
+	  		<td><font SIZE 3><b>" . _('OR') . ' </b></font><font size=1>' . _('Enter extract of the Stock Code') . "</b>:</font></td>
+	  		<td><input type='Text' name='StockCode' size=15 maxlength=18></td>
+	  	</tr>
+	  </table>
+	  <hr>";
 
-If (isset($StockItemsResult)) {
+if (isset($StockItemsResult)) {
 
 	echo '<table cellpadding=2 colspan=7 BORDER=2>';
 	$TableHeader = "<tr>
@@ -214,7 +214,7 @@ If (isset($StockItemsResult)) {
 			$myrow['units']);
 
 		$j++;
-		If ($j == 12){
+		if ($j == 12){
 			$j=1;
 			echo $TableHeader;
 		}
@@ -227,7 +227,7 @@ If (isset($StockItemsResult)) {
 }
 //end if stock search results to show
   else {
-  	
+
   	if (!isset($_POST['StockLocation'])) {
   		$_POST['StockLocation'] = '';
   	}
@@ -253,7 +253,7 @@ If (isset($StockItemsResult)) {
 					ORDER BY workorders.wo,
 							 woitems.stockid";
 	} else {
-	      /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
+		  /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
 
 			if (isset($_REQUEST['SelectedStockItem'])) {
 				$SQL = "SELECT workorders.wo,
@@ -356,7 +356,7 @@ If (isset($StockItemsResult)) {
 				$FormatedRequiredByDate);
 
 		$j++;
-		If ($j == 12){
+		if ($j == 12){
 			$j=1;
 			echo $tableheader;
 		}
