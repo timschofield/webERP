@@ -260,7 +260,7 @@ CREATE TABLE `emailsettings` (
   `timeout` int(11) DEFAULT '5',
   `companyname` varchar(50) DEFAULT NULL,
   `auth` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`id`)
+?  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO emailsettings VALUES(Null, 'localhost', 25, 'helo', '', '', 5, '', 0);

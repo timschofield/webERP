@@ -57,11 +57,25 @@ class Numbers_Words
      * @since  PHP 4.2.3
      */
     function toWords($num, $locale) {
+		global $rootpath;
 		if ($locale=='') {
 			$locale='en_US';
 		}
-        include_once("Numbers/Words/lang.$locale.php");
-
+//Phil mods to ensure correct translation used.		
+		if (!file_exists('Numbers/Words/lang.' . $locale . '.php')){
+        	//try to drop off the .utf8 suffix then recheck
+        	if (strpos($locale,'.utf8')){
+				$locale = substr($locale, 0,strpos($locale,'.utf8'));
+			}
+			if (!file_exists('Numbers/Words/lang.' . $locale . '.php')){
+				$locale = substr($locale,0,2);
+			}
+			if (!file_exists('Numbers/Words/lang.' . $locale . '.php')){
+				$locale = 'en_US';
+			}
+        }
+       
+		include_once("Numbers/Words/lang.$locale.php");
         $classname = "Numbers_Words_$locale";
 
         if (!class_exists($classname)) {

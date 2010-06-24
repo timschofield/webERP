@@ -117,23 +117,21 @@ echo '<tr><th>' . _('Item') . '</th>
 			<th>' . _('Cost Variance') . '</th>
 			</tr>';
 
-$RequirementsResult = DB_query("SELECT t.stockid, t.description, t.decimalplaces,
-                                    (t.requiredqty) as requiredqty,
-                                    (t.expectedcost) as expectedcost,
-                                    (t.stdcost) AS costperqty
-                                FROM (SELECT worequirements.stockid,
-                                             stockmaster.description,
-                                             stockmaster.decimalplaces,
-                                             (stockmaster.materialcost) as stdcost,
-                                             SUM(worequirements.qtypu*woitems.qtyreqd) AS requiredqty,
-                                             SUM(worequirements.stdcost*worequirements.qtypu*woitems.qtyreqd) AS expectedcost,
-                                             AVG(worequirements.qtypu) as qtypu
-                                             FROM worequirements INNER JOIN stockmaster
-                                             ON worequirements.stockid=stockmaster.stockid
-                                             INNER JOIN woitems ON woitems.stockid=worequirements.parentstockid
-                                             WHERE worequirements.wo=" . $_POST['WO'] . " and woitems.wo=worequirements.wo
-                                             GROUP BY worequirements.stockid) AS t
-                                GROUP BY t.stockid", $db);
+$RequirementsResult = DB_query('SELECT worequirements.stockid,
+                                       stockmaster.description,
+ 									   stockmaster.decimalplaces,
+ 									   worequirements.stdcost,
+									   SUM(worequirements.qtypu*woitems.qtyrecd) AS requiredqty,
+									   SUM(worequirements.stdcost*worequirements.qtypu*woitems.qtyrecd) AS expectedcost,
+									   AVG(worequirements.qtypu) as qtypu
+								FROM worequirements INNER JOIN stockmaster
+								 ON worequirements.stockid=stockmaster.stockid
+								 INNER JOIN woitems ON woitems.stockid=worequirements.parentstockid AND woitems.wo=worequirements.wo
+								WHERE worequirements.wo=' . $_POST['WO'] . ' 
+								GROUP BY worequirements.stockid,
+										stockmaster.description,
+										stockmaster.decimalplaces,
+										worequirements.stdcost', $db);
 
 $k=0;
 $TotalUsageVar =0;
@@ -193,11 +191,12 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 	}
 
 	if ($IssueQty != 0){
-	  $CostVar = $IssueQty *(($RequirementsRow['costperqty']) -($IssueCost/$IssueQty));
+	  $CostVar = $IssueQty *(($RequirementsRow['stdcost']) -($IssueCost/$IssueQty));
 	} else {
 		$CostVar = 0;
 	}
-	$UsageVar =($RequirementsRow['requiredqty']-$IssueQty)*($RequirementsRow['costperqty']);
+	/*Required quantity is the quantity required of the component based on the quantity of the finished item received */
+	$UsageVar =($RequirementsRow['requiredqty']-$IssueQty)*($RequirementsRow['stdcost']);
 
 	echo '<td colspan="2"></td><td align="right">'  . number_format($RequirementsRow['requiredqty'],$RequirementsRow['decimalplaces']) . '</td>
 				<td align="right">' . number_format($RequirementsRow['expectedcost'],2) . '</td>
@@ -299,9 +298,9 @@ If (isset($_POST['Close'])) {
 			*/
 
 			$TotOnHandResult =DB_query("SELECT SUM(quantity)
-							FROM locstock
-							WHERE stockid='" . $WORow['stockid'] . "'",
-						$db);
+										FROM locstock
+										WHERE stockid='" . $WORow['stockid'] . "'",
+										$db);
 			$TotOnHandRow = DB_fetch_row($TotOnHandResult);
 			$TotalOnHand = $TotOnHandRow[0];
 
@@ -313,25 +312,24 @@ If (isset($_POST['Close'])) {
 
 			if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $TotalVariance!=0){
 
-
 				//need to get the current cost of the item
 				if ($ProportionOnHand < 1){
 
 					$SQL = "INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount)
-						VALUES (29,
-							" . $WOCloseNo . ",
-							'" . Date('Y-m-d') . "',
-							" . $PeriodNo . ",
-							" . $WORow['materialuseagevarac'] . ",
-							'" . $_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of variance') . "',
-							" . (-$TotalVariance*$ShareProportion*(1-$ProportionOnHand)) . ")";
-
+										typeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount)
+									VALUES (29,
+										" . $WOCloseNo . ",
+										'" . Date('Y-m-d') . "',
+										" . $PeriodNo . ",
+										" . $WORow['materialuseagevarac'] . ",
+										'" . $_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of variance') . "',
+										" . (-$TotalVariance*$ShareProportion*(1-$ProportionOnHand)) . ")";
+			
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the work order variance could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
