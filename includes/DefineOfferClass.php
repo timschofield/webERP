@@ -63,7 +63,8 @@ Class Offer {
 				$ItemDescr,
 				$Price,
 				$UOM,
-				$DecimalPlaces){
+				$DecimalPlaces,
+				$ExpiryDate){
 
 		if (isset($Qty) and $Qty!=0){
 
@@ -73,7 +74,8 @@ Class Offer {
 				$ItemDescr,
 				$Price,
 				$UOM,
-				$DecimalPlaces);
+				$DecimalPlaces,
+				$ExpiryDate);
 			$this->LinesOnOffer++;
 			Return 1;
 		}
@@ -82,10 +84,12 @@ Class Offer {
 
 	function update_offer_item($LineNo,
 				$Qty,
-				$Price){
+				$Price,
+				$ExpiryDate){
 
 			$this->LineItems[$LineNo]->Quantity = $Qty;
 			$this->LineItems[$LineNo]->Price = $Price;
+			$this->LineItems[$LineNo]->ExpiryDate = $ExpiryDate;
 	}
 
 	function remove_from_offer(&$LineNo){
@@ -112,6 +116,7 @@ Class LineDetails {
 	var $Units;
 	var $DecimalPlaces;
 	var $Deleted;
+	var $ExpiryDate;
 
 	function LineDetails (
 				$LineNo,
@@ -120,7 +125,8 @@ Class LineDetails {
 				$ItemDescr,
 				$Prc,
 				$UOM,
-				$DecimalPlaces)
+				$DecimalPlaces,
+				$ExpiryDate)
 	{
 
 	/* Constructor function to add a new LineDetail object with passed params */
@@ -131,6 +137,7 @@ Class LineDetails {
 		$this->Price = $Prc;
 		$this->Units = $UOM;
 		$this->DecimalPlaces = $DecimalPlaces;
+		$this->ExpiryDate = $ExpiryDate;
 		$this->Deleted = False;
 	}
 }

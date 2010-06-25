@@ -57,7 +57,7 @@ if (isset($_POST['SupplierID']) and empty($_POST['TenderType']) and empty($_POST
 	echo '</table></form>';
 }
 
-if (isset($_POST['NewItem']) and !isset($_POST['Update'])) {
+if (isset($_POST['NewItem']) and !isset($_POST['Refresh'])) {
 	foreach ($_POST as $key => $value) {
 		if (substr($key,0,3)=='qty') {
 			$StockID=substr($key,3);
@@ -80,13 +80,14 @@ if (isset($_POST['NewItem']) and !isset($_POST['Update'])) {
 				$myrow['description'],
 				$Price,
 				$UOM,
-				$myrow['decimalplaces']);
+				$myrow['decimalplaces'],
+				DateAdd(date($_SESSION['DefaultDateFormat']),'m',3));
 			unset($UOM);
 		}
 	}
 }
 
-if (isset($_POST['Update']) and !isset($_POST['NewItem'])) {
+if (isset($_POST['Refresh']) and !isset($_POST['NewItem'])) {
 	foreach ($_POST as $key => $value) {
 		if (substr($key,0,3)=='qty') {
 			$LineNo=substr($key,3);
@@ -95,18 +96,87 @@ if (isset($_POST['Update']) and !isset($_POST['NewItem'])) {
 		if (substr($key,0,5)=='price') {
 			$Price=$value;
 		}
-		if (isset($Price)) {
+		if (substr($key,0,10)=='expirydate') {
+			$ExpiryDate=$value;
+		}
+		if (isset($ExpiryDate)) {
 			$_SESSION['offer']->update_offer_item(
 				$LineNo,
 				$Quantity,
-				$Price);
-			unset($Price);
+				$Price,
+				$ExpiryDate);
+			unset($ExpiryDate);
 		}
 	}
 }
 
+if (isset($_POST['Update'])) {
+	$MailText='';
+	foreach ($_POST as $key => $value) {
+		if (substr($key,0,3)=='qty') {
+			$LineNo=substr($key,3);
+			$Quantity=$value;
+		}
+		if (substr($key,0,5)=='price') {
+			$Price=$value;
+		}
+		if (substr($key,0,10)=='expirydate') {
+			$ExpiryDate=$value;
+		}
+		if (isset($ExpiryDate)) {
+			$_SESSION['offer']->update_offer_item(
+				$LineNo,
+				$Quantity,
+				$Price,
+				$ExpiryDate);
+			unset($ExpiryDate);
+		}
+	}
+	foreach ($_SESSION['offer']->LineItems as $LineItems) {
+		$sql='UPDATE offers SET
+				quantity='.$LineItems->Quantity.',
+				price='.$LineItems->Price.',
+				expirydate="'.FormatDateForSQL($LineItems->ExpiryDate).'"
+			WHERE offerid='.$LineItems->LineNo;
+		$ErrMsg =  _('The suppliers offer could not be updated on the database because');
+		$DbgMsg = _('The SQL statement used to update the suppliers offer record and failed was');
+		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+		if (DB_error_no($db)==0) {
+			prnMsg( _('The offer for').' '.$LineItems->StockID.' '._('has been updated in the database'), 'success');
+			$MailText .= $LineItems->Quantity.$LineItems->Units.' '._('of').' '.$LineItems->StockID.' '._('at a price of').
+				' '.$Currency.$LineItems->Price."\n";
+		} else {
+			prnMsg( _('The offer for').' '.$LineItems->StockID.' '._('could not be updated in the database'), 'error');
+			include('includes/footer.inc');
+			exit;
+		}
+	}
+	include('includes/footer.inc');
+	exit;
+}
+
 if (isset($_POST['Save'])) {
 	$MailText='';
+	foreach ($_POST as $key => $value) {
+		if (substr($key,0,3)=='qty') {
+			$LineNo=substr($key,3);
+			$Quantity=$value;
+		}
+		if (substr($key,0,5)=='price') {
+			$Price=$value;
+		}
+		if (substr($key,0,10)=='expirydate') {
+			$ExpiryDate=$value;
+		}
+		if (isset($ExpiryDate)) {
+			$_SESSION['offer']->update_offer_item(
+				$LineNo,
+				$Quantity,
+				$Price,
+				$ExpiryDate);
+			unset($ExpiryDate);
+		}
+	}
 	foreach ($_SESSION['offer']->LineItems as $LineItems) {
 		if ($LineItems->Deleted==False) {
 			$sql='INSERT INTO offers (
@@ -123,7 +193,7 @@ if (isset($_POST['Save'])) {
 					'.$LineItems->Quantity.',
 					"'.$LineItems->Units.'",
 					'.$LineItems->Price.',
-					"'.FormatDateForSQL(DateAdd(date($_SESSION['DefaultDateFormat']),'m',3)).'",
+					"'.FormatDateForSQL($LineItems->ExpiryDate).'",
 					"'.$Currency.'"
 				)';
 			$ErrMsg =  _('The suppliers offer could not be inserted into the database because');
@@ -147,14 +217,13 @@ if (isset($_POST['Save'])) {
 			_('You have received the following offer from').' '.$Supplier."\n\n".$MailText);
 	$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
 	$result = $mail->send(array($_SESSION['PurchasingManagerEmail']), 'smtp');
-	echo 'x'.$result.'x';
 	include('includes/footer.inc');
 	exit;
 }
 
 /*The supplier has chosen option 1
  */
-if (isset($_POST['TenderType']) and $_POST['TenderType']==1) {
+if (isset($_POST['TenderType']) and $_POST['TenderType']==1 and !isset($_POST['Refresh'])) {
 	$sql='SELECT offers.offerid,
 				offers.stockid,
 				stockmaster.description,
@@ -179,7 +248,8 @@ if (isset($_POST['TenderType']) and $_POST['TenderType']==1) {
 				$myrow['description'],
 				$myrow['price'],
 				$myrow['uom'],
-				$myrow['decimalplaces']);
+				$myrow['decimalplaces'],
+				ConvertSQLDate($myrow['expirydate']));
 	}
 }
 
@@ -195,6 +265,7 @@ if (isset($_SESSION['offer']) and $_SESSION['offer']->LinesOnOffer>0 or isset($_
 	echo '<th>'._('UOM').'</th>';
 	echo '<th>'._('Price').' ('.$Currency.')</th>';
 	echo '<th>'._('Line Total').' ('.$Currency.')</th>';
+	echo '<th>'._('Expiry Date').' ('.$Currency.')</th>';
 	echo '</tr>';
 	$k=0;
 	foreach ($_SESSION['offer']->LineItems as $LineItems) {
@@ -212,14 +283,20 @@ if (isset($_SESSION['offer']) and $_SESSION['offer']->LinesOnOffer>0 or isset($_
 			echo '<td>'.$LineItems->Units.'</td>';
 			echo '<td><input type=text class=number name="price'.$LineItems->LineNo.'" value='.number_format($LineItems->Price,2,'.','').'></td>';
 			echo '<td class=number>'.number_format($LineItems->Price*$LineItems->Quantity,2).'</td>';
+			echo '<td><input type=text size=11 class=date alt='.$_SESSION['DefaultDateFormat'].' name="expirydate'.$LineItems->LineNo.'" value='.$LineItems->ExpiryDate.'></td>';
 			echo "<td><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $LineItems->LineNo . "&Type=" . $_POST['TenderType'] . "'>" . _('Remove') . "</a></td></tr>";
 			echo '</tr>';
 		}
 	}
 	echo '</table>';
 	echo '<input type=hidden name=TenderType value="'.$_POST['TenderType'].'">';
-	echo '<br><div class="centre"><input type="submit" name="Update" value="Update offer">';
-	echo '<input type="submit" name="Save" value="Save offer"></div>';
+	if ($_POST['TenderType']==1) {
+		echo '<br><div class="centre"><input type="submit" name="Update" value="Update offer">';
+		echo '<input type="submit" name="Refresh" value="Refresh screen"></div>';
+	} else if ($_POST['TenderType']==2) {
+		echo '<br><div class="centre"><input type="submit" name="Save" value="Save offer">';
+		echo '<input type="submit" name="Refresh" value="Refresh screen"></div>';
+	}
 	echo '</form>';
 }
 
@@ -477,7 +554,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 			prnMsg( _('Only the first') . ' ' . $Maximum_Number_Of_Parts_To_Show . ' ' . _('can be displayed') . '. ' .
 				_('Please restrict your search to only the parts required'),'info');
 		}
-		echo '<a name="end"></a><br><div class="centre"><input type="submit" name="NewItem" value="Update offer"></div>';
+		echo '<a name="end"></a><br><div class="centre"><input type="submit" name="NewItem" value="Add to Offer"></div>';
 	}#end if SearchResults to show
 	echo '<input type="hidden" name="TenderType" value='.$_POST['TenderType'].'>';
 	echo '<input type="hidden" name="SupplierID" value='.$_POST['SupplierID'].'>';
