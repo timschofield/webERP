@@ -48,7 +48,7 @@ if (isset($_POST['SupplierID']) and empty($_POST['TenderType']) and empty($_POST
 	echo '<table class=selection>';
 	echo'<tr><td>'._('Select option for tendering').'</td>';
 	echo '<td><select name=TenderType>';
-//	echo '<option value=1>'._('View or Amend outstanding offers from').' '.$Supplier .'</option>';
+	echo '<option value=1>'._('View or Amend outstanding offers from').' '.$Supplier .'</option>';
 	echo '<option value=2>'._('Create a new offer from').' '.$Supplier .'</option>';
 //	echo '<option value=3>'._('View any open tenders without an offer from').' '.$Supplier .'</option>';
 	echo '</select></td></tr>';
@@ -152,6 +152,37 @@ if (isset($_POST['Save'])) {
 	exit;
 }
 
+/*The supplier has chosen option 1
+ */
+if (isset($_POST['TenderType']) and $_POST['TenderType']==1) {
+	$sql='SELECT offers.offerid,
+				offers.stockid,
+				stockmaster.description,
+				offers.quantity,
+				offers.uom,
+				offers.price,
+				offers.expirydate,
+				stockmaster.decimalplaces
+			FROM offers
+			LEFT JOIN stockmaster
+				ON offers.stockid=stockmaster.stockid
+			WHERE offers.supplierid="'.$_POST['SupplierID'].'"';
+	$result=DB_query($sql, $db);
+	$_SESSION['offer']=new Offer();
+	$_SESSION['offer']->SupplierID=$_POST['SupplierID'];
+	$_SESSION['offer']->CurrCode=$Currency;
+	while ($myrow=DB_fetch_array($result)) {
+		$_SESSION['offer']->add_to_offer(
+				$myrow['offerid'],
+				$myrow['stockid'],
+				$myrow['quantity'],
+				$myrow['description'],
+				$myrow['price'],
+				$myrow['uom'],
+				$myrow['decimalplaces']);
+	}
+}
+
 if (isset($_SESSION['offer']) and $_SESSION['offer']->LinesOnOffer>0 or isset($_POST['Update'])) {
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' .
@@ -190,11 +221,6 @@ if (isset($_SESSION['offer']) and $_SESSION['offer']->LinesOnOffer>0 or isset($_
 	echo '<br><div class="centre"><input type="submit" name="Update" value="Update offer">';
 	echo '<input type="submit" name="Save" value="Save offer"></div>';
 	echo '</form>';
-}
-
-/*The supplier has chosen option 1
- */
-if (isset($_POST['TenderType']) and $_POST['TenderType']==1) {
 }
 
 /*The supplier has chosen option 2
