@@ -38,7 +38,7 @@ If (isset($_POST['PrintPDF'])
 			echo '<br><br><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Back') . '</a>';
 			include('includes/footer.inc');
 			exit;
-		}	
+		}
 
 		$SQL = "SELECT debtorsmaster.name,
 				debtorsmaster.salestype
@@ -136,9 +136,9 @@ If (isset($_POST['PrintPDF'])
 		include('includes/footer.inc');
 		exit;
 	}
-	
+
 	PageHeader();
-	
+
 	$CurrCode ='';
 	$Category = '';
 	$CatTot_Val=0;
@@ -206,7 +206,7 @@ If (isset($_POST['PrintPDF'])
 					$LeftOvers = $pdf->Image($_SESSION['part_pics_dir'] . '/'.$PriceList['stockid'].'.jpg',120,$Page_Height-$Top_Margin-$YPos+20,0,40);
 				}
 			}/*end checked file exist*/
-	
+
 			$Split = explode("\r\n", $PriceList['longdescription']);
 			$FontSize2=6;
 			if ($YPos < ($Bottom_Margin + (count($Split)*$line_height))){
@@ -246,11 +246,14 @@ If (isset($_POST['PrintPDF'])
 	$title= _('Price Listing');
 	include('includes/header.inc');
 
+	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' .
+		_('Price List') . '" alt="">' . ' ' . _('Print a price list');
+
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action=' . $_SERVER['PHP_SELF'] . ' method="POST"><table>';
+		echo '<form action=' . $_SERVER['PHP_SELF'] . ' method="POST"><table class=selection>';
 
 		echo '<tr><td>'. _('From Inventory Category Code') .':</font></td><td><select name=FromCriteria>';
 
@@ -290,10 +293,10 @@ If (isset($_POST['PrintPDF'])
 		echo '<option Value="Customer Special Prices Only">'. _('Customer Special Prices Only');
 		echo '<option Value="Full Description">'. _('Full Description');
 		echo '</select></td></tr>';
-		
-		echo '<tr><td>' . _('Effective As At') . ':</td><td><input type="text" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '">';
 
-		echo '</table><div class="centre"><input type=Submit Name="PrintPDF" Value="'. _('Print PDF'). '"></div>';
+		echo '<tr><td>' . _('Effective As At') . ':</td><td><input type="text" size=11 class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '">';
+
+		echo '</table><br><div class="centre"><input type=Submit Name="PrintPDF" Value="'. _('Print PDF'). '"></div>';
 	}
 	include('includes/footer.inc');
 
@@ -314,17 +317,17 @@ function PageHeader () {
 	global $FontSize;
 	global $SalesTypeName;
 	global $CustomerName;
-	
+
 	if ($PageNumber>1){
 		$pdf->newPage();
 	}
-	
+
 	$FontSize=10;
 	$YPos= $Page_Height-$Top_Margin;
-	
+
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos,140,$FontSize, _('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);
-	
+
 	$YPos -=$line_height;
 	//Note, this is ok for multilang as this is the value of a Select, text in option is different
 	if ($_POST['CustomerSpecials']==_('Customer Special Prices Only')){
@@ -332,27 +335,27 @@ function PageHeader () {
 	} else {
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize, $SalesTypeName . ' ' ._('Prices For Categories') . ' ' . $_POST['FromCriteria'] . ' - ' . $_POST['ToCriteria'] . ' ' . _('Effective As At') . ' ' . $_POST['EffectiveDate'] );
 	}
-		
+
 	$YPos -=(2*$line_height);
 	/*Draw a rectangle to put the headings in     */
-	
+
 	$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
 	$pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos- $line_height);
 	$pdf->line($Left_Margin, $YPos- $line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
 	$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
-	
+
 	/*set up the headings */
 	$Xpos = $Left_Margin+1;
-	
+
 	$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,60,$FontSize, _('Category') . '/' . _('Item'), 'left');
 	$LeftOvers = $pdf->addTextWrap($Xpos+70,$YPos,60,$FontSize, _('Effective Date Range'), 'left');
-	
+
 	if ($_POST['CustomerSpecials']==_('Customer Special Prices Only')){
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47+130+65+25,$YPos,60,$FontSize, _('Branch'), 'centre');
 	}
-	
+
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47+130+20,$YPos,60,$FontSize, _('Price') , 'centre');
-	
+
 	if ($_POST['ShowGPPercentages']=='Yes'){
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47+130+65,$YPos,20,$FontSize, _('GP') .'%', 'centre');
 	}
@@ -360,7 +363,7 @@ function PageHeader () {
 	$FontSize=8;
 	$YPos -= (1.5 * $line_height);
 
-	$PageNumber++;	
-}	
+	$PageNumber++;
+}
 
 ?>
