@@ -54,6 +54,30 @@ switch ($PaperSize) {
       $Right_Margin=30;
       break;
 
+  case 'A5':
+
+	$DocumentPaper = 'A5'; $DocumentOrientation ='P';
+
+      $Page_Width=421;
+      $Page_Height=595;
+      $Top_Margin=30;
+      $Bottom_Margin=30;
+      $Left_Margin=40;
+      $Right_Margin=30;
+      break;
+
+  case 'A5_Landscape':
+
+	$DocumentPaper = 'A5'; $DocumentOrientation ='L';
+
+      $Page_Width=595;
+      $Page_Height=421;
+      $Top_Margin=30;
+      $Bottom_Margin=30;
+      $Left_Margin=40;
+      $Right_Margin=30;
+      break;
+
    case 'A3':
 
 	$DocumentPaper = 'A3'; $DocumentOrientation ='P';
