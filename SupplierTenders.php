@@ -265,7 +265,7 @@ if (isset($_SESSION['offer']) and $_SESSION['offer']->LinesOnOffer>0 or isset($_
 	echo '<th>'._('UOM').'</th>';
 	echo '<th>'._('Price').' ('.$Currency.')</th>';
 	echo '<th>'._('Line Total').' ('.$Currency.')</th>';
-	echo '<th>'._('Expiry Date').' ('.$Currency.')</th>';
+	echo '<th>'._('Expiry Date').'</th>';
 	echo '</tr>';
 	$k=0;
 	foreach ($_SESSION['offer']->LineItems as $LineItems) {
@@ -276,6 +276,9 @@ if (isset($_SESSION['offer']) and $_SESSION['offer']->LinesOnOffer>0 or isset($_
 			} else {
 				echo '<tr class="OddTableRows">';
 				$k=1;
+			}
+			if ($LineItems->ExpiryDate < date('Y-m-d')) {
+				echo '<tr bgcolor=#F7A9A9>';
 			}
 			echo '<td>'.$LineItems->StockID.'</td>';
 			echo '<td>'.$LineItems->ItemDescription.'</td>';
