@@ -267,3 +267,13 @@ INSERT INTO emailsettings VALUES(Null, 'localhost', 25, 'helo', '', '', 5, '', 0
 
 ALTER TABLE `salesorderdetails` ADD COLUMN `commissionrate` double NOT NULL DEFAULT 0.0;
 ALTER TABLE `salesorderdetails` ADD COLUMN `commissionearned` double NOT NULL DEFAULT 0.0;
+
+CREATE TABLE `suppliertype` (
+  `typeid` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `typename` varchar(100) NOT NULL,
+  PRIMARY KEY (`typeid`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `config` VALUES ('DefaultSupplierType', 1);
+INSERT INTO `suppliertype` VALUES(1, 'Default');
+ALTER TABLE `suppliers` ADD COLUMN `supptype` tinyint(4) NOT NULL DEFAULT 1 AFTER `address6`;

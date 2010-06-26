@@ -465,6 +465,7 @@ if (isset($_POST['submit'])) {
 							telephone='".$_POST['Phone']."',
 							fax = '".$_POST['Fax']."',
 							email = '".$_POST['Email']."',
+							supptype = ".$_POST['SupplierType'].",
 							currcode='" . $_POST['CurrCode'] . "',
 							suppliersince='$SQL_SupplierSince',
 							paymentterms='" . $_POST['PaymentTerms'] . "',
@@ -490,6 +491,7 @@ if (isset($_POST['submit'])) {
 							telephone='".$_POST['Phone']."',
 							fax = '".$_POST['Fax']."',
 							email = '".$_POST['Email']."',
+							supptype = ".$_POST['SupplierType'].",
 							suppliersince='$SQL_SupplierSince',
 							paymentterms='" . $_POST['PaymentTerms'] . "',
 							bankpartics='" . $_POST['BankPartics'] . "',
@@ -522,6 +524,7 @@ if (isset($_POST['submit'])) {
 							telephone,
 							fax,
 							email,
+							supptype,
 							currcode,
 							suppliersince,
 							paymentterms,
@@ -543,6 +546,7 @@ if (isset($_POST['submit'])) {
 						'".$_POST['Phone']."',
 						'".$_POST['Fax']."',
 						'".$_POST['Email']."',
+						".$_POST['SupplierType'].",
 						'" . $_POST['CurrCode'] . "',
 						'" . $SQL_SupplierSince . "',
 						'" . $_POST['PaymentTerms'] . "',
@@ -572,6 +576,7 @@ if (isset($_POST['submit'])) {
 			unset($_POST['Phone']);
 			unset($_POST['Fax']);
 			unset($_POST['Email']);
+			unset($_POST['SupplierType']);
 			unset($_POST['CurrCode']);
 			unset($SQL_SupplierSince);
 			unset($_POST['PaymentTerms']);
@@ -646,7 +651,7 @@ if (!isset($SupplierID)) {
 
 	echo "<input type='hidden' name='New' VALUE='Yes'>";
 
-	echo '<table>';
+	echo '<table class=selection>';
 	echo '<tr><td>' . _('Supplier Code') . ":</td><td><input type='text' name='SupplierID' size=11 maxlength=10></td></tr>";
 	echo '<tr><td>' . _('Supplier Name') . ":</td><td><input type='text' name='SuppName' size=42 maxlength=40></td></tr>";
 	echo '<tr><td>' . _('Address Line 1 (Street)') . ":</td><td><input type='text' name='Address1' size=42 maxlength=40></td></tr>";
@@ -656,6 +661,12 @@ if (!isset($SupplierID)) {
 	echo '<tr><td>' . _('Telephone') . ":</td><td><input type='text' name='Phone' size=30 maxlength=40></td></tr>";
 	echo '<tr><td>' . _('Facsimile') . ":</td><td><input type='text' name='Fax' size=30 maxlength=40></td></tr>";
 	echo '<tr><td>' . _('Email Address') . ":</td><td><input type='text' name='Email' size=30 maxlength=40></td></tr>";
+	echo '<tr><td>' . _('Supplier Type') . ":</td><td><select name='SupplierType'>";
+	$result=DB_query('SELECT typeid, typename FROM suppliertype', $db);
+	while ($myrow = DB_fetch_array($result)) {
+		echo "<option VALUE='". $myrow['typeid'] . "'>" . $myrow['typename'];
+	} //end while loop
+	echo "</select></td></tr>";
 
 	$DateString = Date($_SESSION['DefaultDateFormat']);
 	echo '<tr><td>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] . "):</td><td><input type='text' class='date' alt='".$_SESSION['DefaultDateFormat']."' name='SupplierSince' VALUE=$DateString size=12 maxlength=10></td></tr>";
@@ -734,7 +745,7 @@ if (!isset($SupplierID)) {
 //SupplierID exists - either passed when calling the form or from the form itself
 
 	echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>";
-	echo '<table>';
+	echo '<table class=selection>';
 
 	if (!isset($_POST['New'])) {
 		$sql = "SELECT supplierid,
@@ -746,6 +757,7 @@ if (!isset($SupplierID)) {
 				telephone,
 				fax,
 				email,
+				supptype,
 				currcode,
 				suppliersince,
 				paymentterms,
@@ -771,6 +783,7 @@ if (!isset($SupplierID)) {
 		$_POST['Phone'] = $myrow['telephone'];
 		$_POST['Fax'] = $myrow['fax'];
 		$_POST['Email'] = $myrow['email'];
+		$_POST['SupplierType'] = $myrow['supptype'];
 		$_POST['SupplierSince']  = ConvertSQLDate($myrow['suppliersince']);
 		$_POST['PaymentTerms']  = $myrow['paymentterms'];
 		$_POST['BankPartics']	= stripcslashes($myrow['bankpartics']);
@@ -797,6 +810,16 @@ if (!isset($SupplierID)) {
 	echo '<tr><td>' . _('Telephone') . ':</td><td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="Phone" VALUE="' . $_POST['Phone'] . '" size=42 maxlength=40></td></tr>';
 	echo '<tr><td>' . _('Facsimile') . ':</td><td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="Fax" VALUE="' . $_POST['Fax'] . '" size=42 maxlength=40></td></tr>';
 	echo '<tr><td>' . _('Email Address') . ':</td><td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="Email" VALUE="' . $_POST['Email'] . '" size=42 maxlength=40></td></tr>';
+	echo '<tr><td>' . _('Supplier Type') . ":</td><td><select name='SupplierType'>";
+	$result=DB_query('SELECT typeid, typename FROM suppliertype', $db);
+	while ($myrow = DB_fetch_array($result)) {
+		if ($_POST['SupplierType']==$myrow['typeid']) {
+			echo "<option selected value='". $myrow['typeid'] . "'>" . $myrow['typename'];
+		} else {
+			echo "<option value='". $myrow['typeid'] . "'>" . $myrow['typename'];
+		}
+	} //end while loop
+	echo "</select></td></tr>";
 
 	echo '<tr><td>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] .'):</td><td><input '.(in_array('SupplierSince',$Errors) ? 'class="inputerror"' : '').'  size=12 maxlength=10 type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="SupplierSince" VALUE=' . $_POST['SupplierSince'] . '></td></tr>';
 	echo '<tr><td>' . _('Bank Particulars') . ":</td><td><input type='text' name='BankPartics' size=13 maxlength=12 VALUE='" . $_POST['BankPartics'] . "'></td></tr>";
@@ -877,15 +900,15 @@ if (!isset($SupplierID)) {
 	if (isset($_POST['New'])) {
 		echo "<p><div class='centre'>><input type='Submit' name='submit' VALUE='" . _('Add These New Supplier Details') . "'></form>";
 	} else {
-		echo "<p><div class='centre'><input type='Submit' name='submit' VALUE='" . _('Update Supplier') . "'>";
+		echo "<br><p><div class='centre'><input type='Submit' name='submit' VALUE='" . _('Update Supplier') . "'></div><br>";
 //		echo '<p><font color=red><b>' . _('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed') . '<br></font></b>';
 		prnMsg(_('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed'), 'Warn');
-		echo "<input type='Submit' name='delete' VALUE='" . _('Delete Supplier') . "' onclick=\"return confirm('" . _('Are you sure you wish to delete this supplier?') . "');\"></form>";
-		echo "<br><a href='$rootpath/SupplierContacts.php?" . SID . "SupplierID=$SupplierID'>" . _('Review Contact Details') . '</a>';
+		echo "<br><div class=centre><input type='Submit' name='delete' VALUE='" . _('Delete Supplier') . "' onclick=\"return confirm('" .
+				_('Are you sure you wish to delete this supplier?') . "');\"></form>";
+		echo "<br><a href='$rootpath/SupplierContacts.php?" . SID . "SupplierID=$SupplierID'>" . _('Review Contact Details') . '</a></div>';
 	}
 	echo '</div>';
 } // end of main ifs
 
 include('includes/footer.inc');
 ?>
-
