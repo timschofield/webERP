@@ -7068,7 +7068,7 @@ INSERT INTO `workorders` VALUES (8,'MEL','2008-07-26','2008-07-26',0,0);
 INSERT INTO `workorders` VALUES (9,'MEL','2009-02-04','2009-02-04',0,0);
 
 
-INSERT INTO `www_users` VALUES ('admin','weberp','Demonstration user','','','','','MEL',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'jelly','en_GB', 0);
+INSERT INTO `www_users` VALUES ('admin','weberp','Demonstration user','','','','','MEL',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'silverwolf','en_GB', 0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
