@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db,$ErrMsg);
 
 		/*Add the new chart details records for existing periods first */
-
+/*Maybe not required since these will be created from GLPostings.inc with correct B/fwd balances
 		$ErrMsg = _('Could not add the chart details for the new account');
 
 		$sql = 'INSERT INTO chartdetails (accountcode, period)
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 					IN ( SELECT chartdetails.accountcode, chartdetails.period FROM chartdetails )';
 
 		$result = DB_query($sql,$db,$ErrMsg);
-
+*/
 		prnMsg(_('The new general ledger account has been added'),'success');
 	}
 
