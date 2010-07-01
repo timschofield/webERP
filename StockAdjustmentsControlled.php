@@ -20,7 +20,7 @@ if (!isset($_SESSION['Adjustment'])) {
 	exit;
 }
 if (isset($_SESSION['Adjustment'])){
-	if ($_GET['AdjType']!=''){
+	if (isset($_GET['AdjType']) and $_GET['AdjType']!=''){
 		$_SESSION['Adjustment']->AdjustmentType = $_GET['AdjType'];
 	}
 }

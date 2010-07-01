@@ -72,7 +72,9 @@ if ( isset($_POST['AddBatches']) && $_POST['AddBatches']!='') {
 		} /* end if posted Serialno . i is not blank */
 
 	} /* end of the loop aroung the form input fields */
-
+	if (!isset($_POST['Bundles'])) {
+		$_POST['Bundles']=0;
+	}
 	for ($i=0;$i < count($_POST['Bundles']);$i++){ /*there is an entry in the multi select list box */
 		if ($LineItem->Serialised==1){	/*only if the item is serialised */
 			$LineItem->SerialItems[$_POST['Bundles'][$i]] = new SerialItem ($_POST['Bundles'][$i],  ($InOutModifier>0?1:-1) );
@@ -119,7 +121,7 @@ if ( isset($_POST['AddSequence']) && $_POST['AddSequence']!='') {
   Validate an uploaded FILE and save entries
 ********************************************/
 $valid = true;
-if ($_POST['EntryType']=='FILE' && isset($_POST['ValidateFile'])){
+if (isset($_POST['EntryType']) and $_POST['EntryType']=='FILE' and isset($_POST['ValidateFile'])){
 
 	$filename = $_SESSION['CurImportFile']['tmp_name'];
 

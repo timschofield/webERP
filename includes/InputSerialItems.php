@@ -16,6 +16,8 @@ if (isset($_GET['LineNo'])){
 	$LineNo = $_GET['LineNo'];
 } elseif (isset($_POST['LineNo'])){
 	$LineNo = $_POST['LineNo'];
+} else {
+	$LineNo=0;
 }
 /*
         Entry Types:
@@ -31,6 +33,9 @@ if (isset($_GET['LineNo'])){
 
         possibly override setting elsewhere.
 */
+if (!isset($RecvQty)) {
+	$RecvQty=0;
+}
 if (!isset($_POST['EntryType']) OR trim($_POST['EntryType']) == ''){
 	if ($RecvQty <= 50) {
 		$_POST['EntryType'] = 'KEYED';
@@ -39,7 +44,7 @@ if (!isset($_POST['EntryType']) OR trim($_POST['EntryType']) == ''){
 		$_POST['EntryType'] = 'FILE';
 	}
 }
-	
+
 $invalid_imports = 0;
 $valid = true;
 

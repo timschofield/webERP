@@ -27,6 +27,7 @@ echo $tableheader;
 $TotalQuantity = 0; /*Variable to accumulate total quantity received */
 $RowCounter =0;
 
+$k=0;
 foreach ($LineItem->SerialItems as $Bundle){
 
 	if ($RowCounter == 10){
@@ -75,7 +76,7 @@ echo '<table>';
 echo $tableheader;
 
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?=' . $SID . '" name="Ga6uF5Wa" method="post">
+echo '<form action="' . $_SERVER['PHP_SELF'] . '?=' . SID . '" name="Ga6uF5Wa" method="post">
       <input type=hidden name=LineNo value="' . $LineNo . '">
       <input type=hidden name=StockID value="' . $StockID . '">
       <input type=hidden name=EntryType value="KEYED">';
@@ -83,7 +84,10 @@ if ( isset($_GET['EditControlled']) ) {
 	$EditControlled = isset($_GET['EditControlled'])?$_GET['EditControlled']:false;
 } elseif ( isset($_POST['EditControlled']) ){
 	$EditControlled = isset($_POST['EditControlled'])?$_POST['EditControlled']:false;
+} else {
+	$EditControlled=false;
 }
+
 $StartAddingAt = 0;
 if ($EditControlled){
 	foreach ($LineItem->SerialItems as $Bundle){

@@ -13,12 +13,12 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['NewAdjustment'])){
-     unset($_SESSION['Adjustment']);
-     $_SESSION['Adjustment'] = new StockAdjustment;
+	unset($_SESSION['Adjustment']);
+	$_SESSION['Adjustment'] = new StockAdjustment;
 }
 
 if (!isset($_SESSION['Adjustment'])){
-     $_SESSION['Adjustment'] = new StockAdjustment;
+	 $_SESSION['Adjustment'] = new StockAdjustment;
 }
 
 $NewAdjustment = false;
@@ -27,7 +27,7 @@ if (isset($_GET['StockID'])){
 	$_SESSION['Adjustment']->StockID = trim(strtoupper($_GET['StockID']));
 	$NewAdjustment = true;
 } elseif (isset($_POST['StockID'])){
-	if ($_POST['StockID'] != $_SESSION['Adjustment']->StockID){
+	if(isset($_POST['StockID']) and $_POST['StockID'] != $_SESSION['Adjustment']->StockID){
 		$NewAdjustment = true;
 		$_SESSION['Adjustment']->StockID = trim(strtoupper($_POST['StockID']));
 	}
@@ -38,6 +38,9 @@ if (isset($_GET['StockID'])){
 	}
 	$_SESSION['Adjustment']->Quantity = $_POST['Quantity'];
 }
+
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
+	_('Inventory Adjustment') . '" alt="">' . ' ' . _('Inventory Adjustment') . '</p>';
 
 if ($NewAdjustment){
 
@@ -55,7 +58,7 @@ if ($NewAdjustment){
 	$myrow = DB_fetch_row($result);
 
 	if (DB_num_rows($result)==0){
-                prnMsg( _('Unable to locate Stock Code').' '.$_SESSION['Adjustment']->StockID, 'error' );
+				prnMsg( _('Unable to locate Stock Code').' '.$_SESSION['Adjustment']->StockID, 'error' );
 				unset($_SESSION['Adjustment']);
 	} elseif (DB_num_rows($result)>0){
 
@@ -305,7 +308,7 @@ if (!isset($_SESSION['Adjustment'])) {
 	$Controlled = $_SESSION['Adjustment']->Controlled;
 	$Quantity = $_SESSION['Adjustment']->Quantity;
 }
-echo '<table><tr><td>'. _('Stock Code'). ':</td><td><input type=text name="StockID" size=21 value="' . $StockID . '" maxlength=20> <input type=submit name="CheckCode" VALUE="'._('Check Part').'"></td></tr>';
+echo '<br><table class=selection><tr><td>'. _('Stock Code'). ':</td><td><input type=text name="StockID" size=21 value="' . $StockID . '" maxlength=20> <input type=submit name="CheckCode" VALUE="'._('Check Part').'"></td></tr>';
 
 if (isset($_SESSION['Adjustment']) and strlen($_SESSION['Adjustment']->ItemDescription)>1){
 	echo '<tr><td colspan=3><font color=BLUE size=3>' . $_SESSION['Adjustment']->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Adjustment']->PartUnit . ' ) - ' . _('Unit Cost').' = ' . $_SESSION['Adjustment']->StandardCost . '</font></td></tr>';
@@ -318,9 +321,9 @@ $resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_SESSION['Adjustment']->StockLocation)){
 		if ($myrow['loccode'] == $_SESSION['Adjustment']->StockLocation){
-		     echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		} else {
-		     echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		}
 	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
 		 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
