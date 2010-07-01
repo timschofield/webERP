@@ -457,7 +457,7 @@ function Date1GreaterThanDate2 ($Date1, $Date2) {
 	 * 2 characters and the other >2 then then make them both 4 characters long. Assume
 	 *  a date >50 to be 1900's and less than to be 2000's
 	 */
-	
+
 	if (strlen($Year1)>2 AND strlen($Year2)==2){
 		if ($Year2>50) {
 			$Year2=1900+$Year2;
@@ -731,7 +731,7 @@ function CreatePeriod($PeriodNo, $PeriodEnd, &$db) {
 				$GetPrdResult = DB_query($GetPrdSQL, $db, $ErrMsg);
 
 /*I don't think this is necessary since GLPostings.inc handles this
- * 
+ *
 				$sql = 'INSERT INTO chartdetails (accountcode, period)
 						SELECT chartmaster.accountcode, periods.periodno
 							FROM chartmaster
@@ -739,7 +739,7 @@ function CreatePeriod($PeriodNo, $PeriodEnd, &$db) {
 						WHERE ( chartmaster.accountcode, periods.periodno ) NOT
 							IN ( SELECT chartdetails.accountcode, chartdetails.period FROM chartdetails )';
 
-//dont trap errors - chart details records created only as required - duplicate messages ignored 
+//dont trap errors - chart details records created only as required - duplicate messages ignored
 				$InsNewChartDetails = DB_query($sql,$db,'','','',false);
 */
 
@@ -803,7 +803,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 		$LastPeriodEnd = mktime(0,0,0,Date('m')+2,0,Date('Y'));
 	} else {
 		$Date_Array = explode('-', $myrow[0]);
-		$LastPeriodEnd = mktime(0,0,0,$Date_Array[1]+2,0,(int)$Date_Array[0]);
+		$LastPeriodEnd = mktime(0,0,0,$Date_Array[1]+1,0,(int)$Date_Array[0]);
 		$LastPeriod = $myrow[1];
 	}
 	/* Find the unix timestamp of the first period end date in periods table */
@@ -817,7 +817,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 	/* If the period number doesn't exist */
 	if (!PeriodExists($TransDate, $db)) {
 		/* if the transaction is after the last period */
-		echo ($TransDate > $LastPeriodEnd);
+		echo (date('d/m/Y',$TransDate) .' '. date('d/m/Y',$LastPeriodEnd));
 		if ($TransDate > $LastPeriodEnd) {
 			$PeriodEnd = mktime(0,0,0,Date('m', $TransDate)+1, 0, Date('Y', $TransDate));
 			$Period = $LastPeriod + 1;
