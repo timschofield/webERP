@@ -250,7 +250,8 @@ If (isset($PrintPDF)
 						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
 						stockmoves.narrative,
 						stockmaster.controlled,
-						stockmaster.units
+						stockmaster.units,
+						stockmoves.stkmoveno
 					FROM stockmoves,
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
@@ -267,7 +268,8 @@ If (isset($PrintPDF)
 						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
 						stockmoves.narrative,
 						stockmaster.controlled,
-						stockmaster.units
+						stockmaster.units,
+						stockmoves.stkmoveno
 					FROM stockmoves,
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
