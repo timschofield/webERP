@@ -1011,7 +1011,7 @@ CREATE TABLE `locstock` (
 CREATE TABLE `loctransfers` (
   `reference` int(11) NOT NULL DEFAULT '0',
   `stockid` varchar(20) NOT NULL DEFAULT '',
-  `shipqty` int(11) NOT NULL DEFAULT '0',
+  `shipqty` double NOT NULL DEFAULT '0.0',
   `recqty` int(11) NOT NULL DEFAULT '0',
   `shipdate` date NOT NULL DEFAULT '0000-00-00',
   `recdate` date NOT NULL DEFAULT '0000-00-00',
