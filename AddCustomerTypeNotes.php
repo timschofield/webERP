@@ -8,9 +8,9 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['Id'])){
-	$Id = $_GET['Id'];
+	$Id = (int)$_GET['Id'];
 } else if (isset($_POST['Id'])){
-	$Id = $_POST['Id'];
+	$Id = (int)$_POST['Id'];
 }
 if (isset($_POST['DebtorType'])){
 	$DebtorType = $_POST['DebtorType'];
@@ -45,7 +45,7 @@ if ( isset($_POST['submit']) ) {
 				href='" . $_POST['href'] . "',
 				priority='" . $_POST['priority'] . "'
 			WHERE typeid ='".$DebtorType."' 
-			AND noteid=".$Id;
+			AND noteid='".$Id."'";
 		$msg = _('Customer Group Notes') . ' ' . $DebtorType  . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
 			
@@ -70,12 +70,12 @@ if ( isset($_POST['submit']) ) {
 		unset($_POST['note']);
 		unset($_POST['noteid']);
 	}
-	} elseif ($_GET['delete']) {
+	} elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
 	
-	$sql="DELETE FROM debtortypenotes WHERE noteid=".$Id."
+	$sql="DELETE FROM debtortypenotes WHERE noteid='".$Id."'
 			and typeid='".$DebtorType."'";
 				$result = DB_query($sql,$db);
 						//echo '<br>'.$sql;
@@ -91,14 +91,14 @@ if (!isset($Id)) {
 	$SQLname='SELECT * from debtortype where typeid="'.$DebtorType.'"';
 	$Result = DB_query($SQLname,$db);
 	$row = DB_fetch_array($Result);
-	echo '<div class="centre">' . _('Notes for Customer Type: <b>') .$row['typename'].'</b></div>';
-	
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') . '" alt="">'  . _('Notes for Customer Type: <b>') .$row['typename'].'<br>';
+
 	
 	$sql = "SELECT * FROM debtortypenotes where typeid='".$DebtorType."' ORDER BY date DESC";
 	$result = DB_query($sql,$db);
 			//echo '<br>'.$sql;
 
-	echo '<table border=1>';
+	echo '<table class=selection>';
 	echo '<tr>
 			<th>' . _('Date') . '</th>
 			<th>' . _('Note') . '</th>
@@ -166,14 +166,20 @@ if (!isset($_GET['delete'])) {
 		echo '<input type=hidden name="Id" value='. $Id .'>';
 		echo '<input type=hidden name="Con_ID" value=' . $_POST['noteid'] . '>';
 		echo '<input type=hidden name="DebtorType" value=' . $_POST['typeid'] . '>';
-		echo '<table><tr><td>'. _('Note ID').':</td><td>' . $_POST['noteid'] . '</td></tr>';
+		echo '<table class=selection><tr><td>'. _('Note ID').':</td><td>' . $_POST['noteid'] . '</td></tr>';
 	} else {
-		echo '<table>';
+		echo '<table class=selection>';
+                $_POST['noteid'] = '';
+                $_POST['note']  = '';
+                $_POST['href']  = '';
+                $_POST['date']  = '';
+                $_POST['priority']  = '';
+                $_POST['typeid']  = '';
 	}
 
 	echo '<tr><td>'._('Contact Group Note').':</td>';
 	echo '<td><textarea name="note">'. $_POST['note'].'</textarea></td></tr>';
-	echo '<tr><td>'. _('href').':</td>';
+	echo '<tr><td>'. _('Web site').':</td>';
 	echo '<td><input type="text" name="href" value="'. $_POST['href'].'" size=35 maxlength=100></td></tr>
 		<tr><td>'. _('Date').':</td>';	
 	echo '<td><input type="text" name="date" class=date alt="'.$_SESSION['DefaultDateFormat'].'" value="'. $_POST['date'].
@@ -181,7 +187,7 @@ if (!isset($_GET['delete'])) {
 	echo '<tr><td>'. _('Priority').':</td>';
 	echo '<td><input type="Text" name="priority" value="'. $_POST['priority'].'" size=1 maxlength=3></td></td>
 	</table>';
-	echo '<div class="centre"><input type="Submit" name="submit" value="'. _('Enter Information').'"></div>';
+	echo '<br><div class="centre"><input type="Submit" name="submit" value="'. _('Enter Information').'"></div>';
 
 	echo '</form>';
 	
