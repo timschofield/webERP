@@ -8,7 +8,7 @@
 $PageSecurity = 2;
 include('includes/session.inc');
 
-If (isset($_POST['PrintPDF'])) {
+if (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',_('Quantity Extended BOM Listing'));
@@ -282,8 +282,9 @@ If (isset($_POST['PrintPDF'])) {
 
 	$title=_('Quantity Extended BOM Listing');
 	include('includes/header.inc');
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 
-	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
+	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table class=selection>";
 	echo '<tr><td>' . _('Part') . ":</td><td><input type ='text' name='Part' size='20'>";
 	echo '<tr><td>' . _('Quantity') . ":</td><td><input type='text' class=number name='Quantity' size='4'>";
 	echo '<tr><td>' . _('Selection Option') . ":</td><td><select name='Select'>";
@@ -294,7 +295,7 @@ If (isset($_POST['PrintPDF'])) {
 	echo "<option selected value='yes'>" . _('Print With Alternating Highlighted Lines');
 	echo "<option value='no'>" . _('Plain Print');
 	echo '</select></td></tr>';
-	echo "</table></br></br><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
+	echo "</table></br></br><div class='centre'><br><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
 
