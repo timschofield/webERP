@@ -253,14 +253,15 @@ if (isset($_POST['PrintPDF'])) {
 	$title=_('Reverse Indented BOM Listing');
 	include('includes/header.inc');
 
-	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
+	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table class=selection>";
 	echo '<tr><td>' . _('Part') . ":</td>";
 	echo "<td><input type ='text' name='Part' size='20'>";
 	echo '<tr><td>' . _('Print Option') . ":</td><td><select name='Fill'>";
 	echo "<option selected value='yes'>" . _('Print With Alternating Highlighted Lines');
 	echo "<option value='no'>" . _('Plain Print');
 	echo '</select></td></tr>';
-	echo "</table></br></br><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
+	echo "</table><p><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
 
