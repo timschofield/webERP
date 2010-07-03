@@ -8,9 +8,9 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['Id'])){
-	$Id = $_GET['Id'];
+	$Id = (int)$_GET['Id'];
 } else if (isset($_POST['Id'])){
-	$Id = $_POST['Id'];
+	$Id = (int)$_POST['Id'];
 }
 if (isset($_POST['DebtorNo'])){
 	$DebtorNo = $_POST['DebtorNo'];
@@ -55,7 +55,7 @@ if ( isset($_POST['submit']) ) {
 				phoneno='" . $_POST['conPhone'] . "',
 				notes='" . $_POST['conNotes'] . "'
 			WHERE debtorno ='".$DebtorNo."'
-			AND contid=".$Id;
+			AND contid='".$Id."'";
 		$msg = _('Customer Contacts') . ' ' . $DebtorNo  . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
 
@@ -158,7 +158,7 @@ if (!isset($_GET['delete'])) {
 	if (isset($Id)) {
 		//editing an existing Shipper
 
-		$sql = "SELECT * FROM custcontacts WHERE contid=".$Id."
+		$sql = "SELECT * FROM custcontacts WHERE contid='".$Id."'
 					and debtorno='".$DebtorNo."'";
 
 		$result = DB_query($sql, $db);
