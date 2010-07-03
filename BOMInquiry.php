@@ -19,7 +19,7 @@ if (!isset($_POST['StockID'])) {
 	 _('to view the costed bill of materials') . "." . "<br><font size=1>" .
 	 _('Parts must be defined in the stock item entry') . "/" . _('modification screen as manufactured') .
      ", " . _('kits or assemblies to be available for construction of a bill of material').'</div>'
-	."</font><br><table align='center' cellpadding=3 colspan=4><tr><td><font size=1>" . _('Enter text extracts in the') .
+	."</font><br><table class=selection cellpadding=3 colspan=4><tr><td><font size=1>" . _('Enter text extracts in the') .
 	 " <b>" . _('description') . "</b>:</font></td><td><input tabindex='1' type='Text' name='Keywords' size=20 maxlength=25></td>
 	 <td><font size=3><b>" . _('OR') . "</b></font></td><td><font size=1>" . _('Enter extract of the') .
      " <b>" . _('Stock Code') . "</b>:</font></td><td><input tabindex='2' type='Text' name='StockCode' size=15 maxlength=20></td>
@@ -85,9 +85,9 @@ if (isset($_POST['Search'])){
 	} //one of keywords or StockCode was more than a zero length string
 } //end of if search
 
-if (isset($result) AND !isset($SelectedParent)) {
+if (isset($_POST['Search']) and isset($result) AND !isset($SelectedParent)) {
 
-	echo '<br><hr><br><table align="center" cellpadding=2 colspan=7 BORDER=1>';
+	echo '<br><hr><br><table class=selection cellpadding=2 colspan=7>';
 	$TableHeader = '<tr><th>' . _('Code') . '</th>
 				<th>' . _('Description') . '</th>
 				<th>' . _('On Hand') . '</th>
@@ -127,7 +127,6 @@ if (isset($result) AND !isset($SelectedParent)) {
 //end of while loop
 
 	echo '</table><br>';
-
 }
 
 if (isset($StockID) and $StockID!=""){
@@ -141,7 +140,6 @@ if (isset($StockID) and $StockID!=""){
 	$ParentOverheadCost = $myrow['overheadcost'];
 	/*CCF end modification */
 
-	echo "<div class='centre'><br><font size=4><b>" . $myrow[0] . ' : ' . _('per') . ' ' . $myrow[1] . "</b></font></div>";
 
 	$sql = "SELECT bom.parent,
 			bom.component,
@@ -161,8 +159,12 @@ if (isset($StockID) and $StockID!=""){
 	if (DB_num_rows($BOMResult)==0){
 		prnMsg(_('The bill of material for this part is not set up') . ' - ' . _('there are no components defined for it'),'warn');
 	} else {
+		echo '<a href="'.$rootpath.'/index.php">'._('Return to Main Menu').'</a>';
+		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 
-		echo "<table cellpadding=2 border=2>";
+		echo "<table class=selection cellpadding=2>";
+		echo "<tr><th colspan=5><div class='centre'><font size=4><b>" . $myrow[0] . ' : ' . _('per') . ' ' . $myrow[1] . 
+			"</b></font></div></th></tr>";
 		$TableHeader = '<tr>
 				<th>' . _('Component') . '</th>
 				<th>' . _('Description') . '</th>
