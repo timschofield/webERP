@@ -8,7 +8,7 @@
 $PageSecurity = 2;
 include('includes/session.inc');
 
-If (isset($_POST['PrintPDF'])) {
+if (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',_('Indented BOM Listing'));
@@ -185,7 +185,7 @@ If (isset($_POST['PrintPDF'])) {
 
     $ListCount = DB_num_rows($result); // UldisN
 
-	While ($myrow = DB_fetch_array($result,$db)){
+	while ($myrow = DB_fetch_array($result,$db)){
 
 		$YPos -=$line_height;
 		$FontSize=8;
@@ -258,8 +258,9 @@ If (isset($_POST['PrintPDF'])) {
 
 	$title=_('Indented BOM Listing');
 	include('includes/header.inc');
+        echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 
-	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
+	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table class=selection>";
 	echo '<tr><td>' . _('Part') . ":</td>";
 	echo "<td><input type ='text' name='Part' size='20'>";
 	
@@ -272,7 +273,7 @@ If (isset($_POST['PrintPDF'])) {
 	echo "<option selected value='yes'>" . _('Print With Alternating Highlighted Lines');
 	echo "<option value='no'>" . _('Plain Print');
 	echo '</select></td></tr>';
-	echo "</table></br></br><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
+	echo "</table><p><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
 
