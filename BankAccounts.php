@@ -191,7 +191,7 @@ If (!isset($SelectedBankAccount)) {
 	$DbgMsg = _('The SQL used to retrieve the bank account details was') . '<br>' . $sql;
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-	echo '<table class="table1">';
+	echo '<table class="selection">';
 
 	echo "<tr><th>" . _('GL Account Code') . "</th>
 		<th>" . _('Bank Account Name') . "</th>
@@ -280,10 +280,10 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 
 	echo '<input type=hidden name=SelectedBankAccount VALUE=' . $SelectedBankAccount . '>';
 	echo '<input type=hidden name=AccountCode VALUE=' . $_POST['AccountCode'] . '>';
-	echo '<table> <tr><td>' . _('Bank Account GL Code') . ':</td><td>';
+	echo '<table class=selection> <tr><td>' . _('Bank Account GL Code') . ':</td><td>';
 	echo $_POST['AccountCode'] . '</td></tr>';
 } else { //end of if $Selectedbank account only do the else when a new record is being entered
-	echo '<table><tr><td>' . _('Bank Account GL Code') . 
+	echo '<table class=selection><tr><td>' . _('Bank Account GL Code') . 
 		":</td><td><Select tabindex='1' " . (in_array('AccountCode',$Errors) ?  'class="selecterror"' : '' ) ." name='AccountCode'>";
 
 	$sql = "SELECT accountcode,
@@ -368,7 +368,7 @@ if (isset($SelectedBankAccount)) {
 
 echo '</select></td>';
 
-echo '</tr></table>
+echo '</tr></table><br>
 		<div class="centre"><input tabindex="7" type="Submit" name="submit" value="'. _('Enter Information') .'"></div>';
 
 echo '</form>';
