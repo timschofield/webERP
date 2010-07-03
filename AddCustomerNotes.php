@@ -8,9 +8,9 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['Id'])){
-	$Id = $_GET['Id'];
+	$Id = (int)$_GET['Id'];
 } else if (isset($_POST['Id'])){
-	$Id = $_POST['Id'];
+	$Id = (int)$_POST['Id'];
 }
 if (isset($_POST['DebtorNo'])){
 	$DebtorNo = $_POST['DebtorNo'];
@@ -45,7 +45,7 @@ if ( isset($_POST['submit']) ) {
 				href='" . $_POST['href'] . "',
 				priority='" . $_POST['priority'] . "'
 			WHERE debtorno ='".$DebtorNo."'
-			AND noteid=".$Id;
+			AND noteid='".$Id."'";
 		$msg = _('Customer Notes') . ' ' . $DebtorNo  . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
 
@@ -78,7 +78,7 @@ if ( isset($_POST['submit']) ) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
 
-	$sql="DELETE FROM custnotes WHERE noteid=".$Id."
+	$sql="DELETE FROM custnotes WHERE noteid='".$Id."'
 			and debtorno='".$DebtorNo."'";
 				$result = DB_query($sql,$db);
 						//echo '<br>'.$sql;
@@ -151,7 +151,7 @@ if (!isset($_GET['delete'])) {
 	if (isset($Id)) {
 		//editing an existing
 
-		$sql = "SELECT * FROM custnotes WHERE noteid=".$Id."
+		$sql = "SELECT * FROM custnotes WHERE noteid='".$Id."'
 					and debtorno='".$DebtorNo."'";
 
 		$result = DB_query($sql, $db);
