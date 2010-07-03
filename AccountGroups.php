@@ -202,7 +202,7 @@ if (isset($_POST['submit'])) {
 
 }
 
- if (!isset($_GET['SelectedAccountGroup']) OR !isset($_POST['SelectedAccountGroup'])) {
+if (!isset($_GET['SelectedAccountGroup']) and !isset($_POST['SelectedAccountGroup'])) {
 
 /* An account group could be posted when one has been edited and is being updated or GOT when selected for modification
  SelectedAccountGroup will exist because it was sent with the page in a GET .
@@ -289,9 +289,14 @@ if (! isset($_GET['delete'])) {
 			FROM accountgroups
 			WHERE groupname='" . $_GET['SelectedAccountGroup'] ."'";
 
-    	$ErrMsg = _('An error occurred in retrieving the account group information');
-        $DbgMsg = _('The SQL that was used to retrieve the account group and that failed in the process was');
+		$ErrMsg = _('An error occurred in retrieving the account group information');
+		$DbgMsg = _('The SQL that was used to retrieve the account group and that failed in the process was');
 		$result = DB_query($sql, $db,$ErrMsg,$DbgMsg);
+		if (DB_num_rows($result) == 0) {
+			prnMsg( _('The account group name does not exist in the database'),'error');
+			include('includes/footer.inc');
+			exit;
+		}
 		$myrow = DB_fetch_array($result);
 
 		$_POST['GroupName'] = $myrow['groupname'];
