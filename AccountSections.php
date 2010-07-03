@@ -157,7 +157,7 @@ if (isset($_POST['submit'])) {
 	unset ($_POST['SectionName']);
 }
 
- if (!isset($_GET['SelectedSectionID']) OR !isset($_POST['SelectedSectionID'])) {
+if (!isset($_GET['SelectedSectionID']) and !isset($_POST['SelectedSectionID'])) {
 
 /* An account section could be posted when one has been edited and is being updated
   or GOT when selected for modification
