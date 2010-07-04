@@ -139,7 +139,7 @@ if (isset($_POST['submit'])) {
 			$NewCurrencyRate=$myrow[0];
 
 			/* Set new rates */
-			$sql='UPDATE currencies SET rate=rate/'.$NewCurrencyRate;
+			$sql='UPDATE currencies SET rate=rate/"'.$NewCurrencyRate.'"';
 			$ErrMsg =  _('Could not update the currency rates');
 			$result = DB_query($sql,$db,$ErrMsg);
 
@@ -155,10 +155,10 @@ if (isset($_POST['submit'])) {
 
 } /* end of if submit */
 
-
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 
 echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '>';
-echo '<table>';
+echo '<table class=selection>';
 
 if ($InputError != 1) {
 	$sql = "SELECT coyname,
@@ -467,7 +467,7 @@ if ($_POST['GLLink_Stock']==0){
 echo '</select></td></tr>';
 
 
-echo '</table><div class="centre"><input tabindex="26" type="Submit" Name="submit" value="' . _('Update') . '"></div>';
+echo '</table><br><div class="centre"><input tabindex="26" type="Submit" Name="submit" value="' . _('Update') . '"></div>';
 
 include('includes/footer.inc');
 ?>
