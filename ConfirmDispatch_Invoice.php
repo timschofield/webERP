@@ -30,7 +30,8 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 	unset($_SESSION['Items']->LineItems);
 	unset ($_SESSION['Items']);
 
-	$_SESSION['ProcessingOrder']=$_GET['OrderNumber'];
+	$_SESSION['ProcessingOrder']=(int)$_GET['OrderNumber'];
+	$_GET['OrderNumber']=(int)$_GET['OrderNumber'];
 	$_SESSION['Items'] = new cart;
 
 /*read in all the guff from the selected order into the Items cart  */
@@ -72,7 +73,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 			AND salesorders.debtorno = custbranch.debtorno
 			AND locations.loccode=salesorders.fromstkloc
 			AND debtorsmaster.currcode = currencies.currabrev
-			AND salesorders.orderno = ' . $_GET['OrderNumber'];
+			AND salesorders.orderno = "' . $_GET['OrderNumber'].'"';
 
 	$ErrMsg = _('The order cannot be retrieved because');
 	$DbgMsg = _('The SQL to get the order header was');
@@ -146,7 +147,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 						stockmaster.overheadcost AS standardcost
 				FROM salesorderdetails INNER JOIN stockmaster
 				 	ON salesorderdetails.stkcode = stockmaster.stockid
-				WHERE salesorderdetails.orderno =' . $_GET['OrderNumber'] . '
+				WHERE salesorderdetails.orderno ="' . $_GET['OrderNumber'] . '"
 				AND salesorderdetails.quantity - salesorderdetails.qtyinvoiced >0
 				ORDER BY salesorderdetails.orderlineno';
 
@@ -252,7 +253,7 @@ echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 /***************************************************************
 	Line Item Display
 ***************************************************************/
-echo '<table width="90%" cellpadding="2" colspan="7" BORDER="1">
+echo '<table width="90%" cellpadding="2" colspan="7" class=selection>
 	<tr>
 		<th>' . _('Item Code') . '</th>
 		<th>' . _('Item Description' ) . '</th>
@@ -290,8 +291,6 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 		$k=1;
 	}
 
-	echo $RowStarter;
-
 	$LineTotal = $LnItm->QtyDispatched * $LnItm->Price * (1 - $LnItm->DiscountPercent);
 
 	$_SESSION['Items']->total += $LineTotal;
@@ -306,12 +305,20 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 
 	if ($LnItm->Controlled==1){
 
-		echo '<td class="number"><input type=hidden name="' . $LnItm->LineNumber . '_QtyDispatched"  value="' . $LnItm->QtyDispatched . '"><a href="' . $rootpath .'/ConfirmDispatchControlled_Invoice.php?' . SID . '&LineNo='. $LnItm->LineNumber.'">' .$LnItm->QtyDispatched . '</a></td>';
-
+		if (isset($_POST['ProcessInvoice'])) {
+			echo '<td class="number">' . $LnItm->QtyDispatched . '</td>';
+		} else {
+			echo '<td class="number"><input type=hidden name="' . $LnItm->LineNumber . '_QtyDispatched"  value="' .
+				$LnItm->QtyDispatched . '"><a href="' . $rootpath .'/ConfirmDispatchControlled_Invoice.php?' . SID .
+					'&LineNo='. $LnItm->LineNumber.'">' .$LnItm->QtyDispatched . '</a></td>';
+		}
 	} else {
-
-		echo '<td class="number"><input tabindex="'.$j.'" type="text" class="number" name="' . $LnItm->LineNumber .'_QtyDispatched" maxlength=12 size=12 value="' . $LnItm->QtyDispatched . '"></td>';
-
+		if (isset($_POST['ProcessInvoice'])) {
+			echo '<td class="number">' .  $LnItm->QtyDispatched . '</td>';
+		} else {
+			echo '<td class="number"><input tabindex="'.$j.'" type="text" class="number" name="' . $LnItm->LineNumber .
+				'_QtyDispatched" maxlength=12 size=12 value="' . $LnItm->QtyDispatched . '"></td>';
+		}
 	}
 	$DisplayDiscountPercent = number_format($LnItm->DiscountPercent*100,2) . '%';
 	$DisplayLineNetTotal = number_format($LineTotal,2);
@@ -344,7 +351,12 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 		if ($i>0){
 			echo '<br>';
 		}
-		echo '<input type="text" class="number" name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" maxlength=4 size=4 value="' . $Tax->TaxRate*100 . '">';
+		if (isset($_POST['ProcessInvoice'])) {
+			echo  $Tax->TaxRate*100;
+		} else {
+			echo '<input type="text" class="number" name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder .
+				'_TaxRate" maxlength=4 size=4 value="' . $Tax->TaxRate*100 . '">';
+		}
 		$i++;
 		if ($Tax->TaxOnTax ==1){
 			$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
@@ -425,7 +437,7 @@ if(!isset($_SESSION['Items']->FreightCost)) {
 	}
 }
 
-if (!is_numeric($_POST['ChargeFreightCost'])){
+if (isset($_POST['ChargeFreightCost']) and !is_numeric($_POST['ChargeFreightCost'])){
 	$_POST['ChargeFreightCost'] =0;
 }
 
@@ -440,14 +452,21 @@ if ($_SESSION['DoFreightCalc']==True){
 //	echo '<td colspan="1"></td>';
 }
 $j++;
-
+if (!isset($_POST['ChargeFreightCost'])) {
+	$_POST['ChargeFreightCost']=0;
+}
 if ($_SESSION['Items']->Any_Already_Delivered()==1 and (!isset($_SESSION['Items']->FreightCost) or $_POST['ChargeFreightCost']==0)) {
 	echo '<td colspan=2 class=number>'. _('Charge Freight Cost inc Tax').'</td>
-		<td><input tabindex='.$j.' type="text" class="number" size="10" maxlength="12" name="ChargeFreightCost" VALUE="0"></td>';
+		<td><input tabindex='.$j.' type="text" class="number" size="10" maxlength="12" name="ChargeFreightCost" value="0"></td>';
 	$_SESSION['Items']->FreightCost=0;
 } else {
-	echo '<td colspan=2 class=number>'. _('Charge Freight Cost inc Tax').'</td>
-		<td><input tabindex='.$j.' type="text" class="number" size="10" maxlength="12" name="ChargeFreightCost" VALUE="' . $_SESSION['Items']->FreightCost . '"></td>';
+	echo '<td colspan=2 class=number>'. _('Charge Freight Cost inc Tax').'</td>';
+	if (isset($_POST['ProcessInvoice'])) {
+		echo '<td class=number>' . $_SESSION['Items']->FreightCost . '</td>';
+	} else {
+		echo '<td class=number><input tabindex='.$j.' type="text" class="number" size="10" maxlength="12"
+				name="ChargeFreightCost" VALUE="' . $_SESSION['Items']->FreightCost . '"></td>';
+	}
 	$_POST['ChargeFreightCost'] = $_SESSION['Items']->FreightCost;
 }
 
@@ -464,7 +483,7 @@ foreach ($_SESSION['Items']->FreightTaxes as $FreightTaxLine) {
 	$i++;
 }
 
-echo '</td><td>';
+echo '</td><td class=number>';
 
 $i=0;
 foreach ($_SESSION['Items']->FreightTaxes as $FreightTaxLine) {
@@ -472,7 +491,12 @@ foreach ($_SESSION['Items']->FreightTaxes as $FreightTaxLine) {
 		echo '<br>';
 	}
 
-	echo  '<input type="text" class="number" name="FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . '" maxlength="4" size="4" VALUE="' . $FreightTaxLine->TaxRate * 100 . '">';
+	if (isset($_POST['ProcessInvoice'])) {
+		echo   $FreightTaxLine->TaxRate * 100 ;
+	} else {
+		echo  '<input type="text" class="number" name="FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder .
+			'" maxlength="4" size="4" VALUE="' . $FreightTaxLine->TaxRate * 100 . '">';
+	}
 
 	if ($FreightTaxLine->TaxOnTax ==1){
 		$TaxTotals[$FreightTaxLine->TaxAuthID] += ($FreightTaxLine->TaxRate * ($_SESSION['Items']->FreightCost + $FreightTaxTotal));
@@ -629,7 +653,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			orderlineno
 		FROM salesorderdetails
 		WHERE completed=0
-		AND orderno = " . $_SESSION['ProcessingOrder'];
+		AND orderno = '" . $_SESSION['ProcessingOrder']."'";
 
 	$Result = DB_query($SQL,$db);
 
@@ -692,7 +716,10 @@ invoices can have a zero amount but there must be a quantity to invoice */
 DB_Txn_Begin($db);
 
 	if ($DefaultShipVia != $_SESSION['Items']->ShipVia){
-		$SQL = "UPDATE custbranch SET defaultshipvia ='" . $_SESSION['Items']->ShipVia . "' WHERE debtorno='" . $_SESSION['Items']->DebtorNo . "' AND branchcode='" . $_SESSION['Items']->Branch . "'";
+		$SQL = "UPDATE custbranch
+				SET defaultshipvia ='" . $_SESSION['Items']->ShipVia . "'
+				WHERE debtorno='" . $_SESSION['Items']->DebtorNo . "'
+					AND branchcode='" . $_SESSION['Items']->Branch . "'";
 		$ErrMsg = _('Could not update the default shipping carrier for this branch because');
 		$DbgMsg = _('The SQL used to update the branch default carrier was');
 		$result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
@@ -701,7 +728,9 @@ DB_Txn_Begin($db);
 	$DefaultDispatchDate = FormatDateForSQL($DefaultDispatchDate);
 
 /*Update order header for invoice charged on */
-	$SQL = "UPDATE salesorders SET comments = CONCAT(comments,' Inv ','" . $InvoiceNo . "') WHERE orderno= " . $_SESSION['ProcessingOrder'];
+	$SQL = "UPDATE salesorders
+			SET comments = CONCAT(comments,' Inv ','" . $InvoiceNo . "')
+			WHERE orderno= '" . $_SESSION['ProcessingOrder']."'";
 
 	$ErrMsg = _('CRITICAL ERROR') . ' ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order header could not be updated with the invoice number');
 	$DbgMsg = _('The following SQL to update the sales order was used');
@@ -729,22 +758,22 @@ DB_Txn_Begin($db);
 			consignment
 			)
 		VALUES (
-			". $InvoiceNo . ",
+			'". $InvoiceNo . "',
 			10,
 			'" . $_SESSION['Items']->DebtorNo . "',
 			'" . $_SESSION['Items']->Branch . "',
 			'" . $DefaultDispatchDate . "',
 			'" . date('Y-m-d H-i-s') . "',
-			" . $PeriodNo . ",
+			'" . $PeriodNo . "',
 			'',
 			'" . $_SESSION['Items']->DefaultSalesType . "',
-			" . $_SESSION['ProcessingOrder'] . ",
-			" . $_SESSION['Items']->total . ",
-			" . $TaxTotal . ",
-			" . $_POST['ChargeFreightCost'] . ",
-			" . $_SESSION['CurrencyRate'] . ",
+			'" . $_SESSION['ProcessingOrder'] . "',
+			'" . $_SESSION['Items']->total . "',
+			'" . $TaxTotal . "',
+			'" . $_POST['ChargeFreightCost'] . "',
+			'" . $_SESSION['CurrencyRate'] . "',
 			'" . $_POST['InvoiceText'] . "',
-			" . $_SESSION['Items']->ShipVia . ",
+			'" . $_SESSION['Items']->ShipVia . "',
 			'"  . $_POST['Consignment'] . "'
 		)";
 
@@ -757,12 +786,12 @@ DB_Txn_Begin($db);
 /* Insert the tax totals for each tax authority where tax was charged on the invoice */
 	foreach ($TaxTotals AS $TaxAuthID => $TaxAmount) {
 
-		$SQL = 'INSERT INTO debtortranstaxes (debtortransid,
+		$SQL = "INSERT INTO debtortranstaxes (debtortransid,
 							taxauthid,
 							taxamount)
-				VALUES (' . $DebtorTransID . ',
-					' . $TaxAuthID . ',
-					' . $TaxAmount/$_SESSION['CurrencyRate'] . ')';
+				VALUES ('" . $DebtorTransID . "',
+					'" . $TaxAuthID . "',
+					'" . $TaxAmount/$_SESSION['CurrencyRate'] . "')";
 
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction taxes records could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction taxes record was used');
@@ -777,7 +806,9 @@ DB_Txn_Begin($db);
 		if ($_POST['BOPolicy']=='CAN'){
 
 			$SQL = "UPDATE salesorderdetails
-				SET quantity = quantity - " . ($OrderLine->Quantity - $OrderLine->QtyDispatched) . " WHERE orderno = " . $_SESSION['ProcessingOrder'] . " AND stkcode = '" . $OrderLine->StockID . "'";
+					SET quantity = quantity - " . ($OrderLine->Quantity - $OrderLine->QtyDispatched) . "
+					WHERE orderno = '" . $_SESSION['ProcessingOrder'] . " '
+						AND stkcode = '" . $OrderLine->StockID . "'";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order detail record could not be updated because');
 			$DbgMsg = _('The following SQL to update the sales order detail record was used');
@@ -796,10 +827,10 @@ DB_Txn_Begin($db);
 						can_or_bo
 						)
 					VALUES (
-						" . $_SESSION['ProcessingOrder'] . ",
-						" . $InvoiceNo . ",
+						'" . $_SESSION['ProcessingOrder'] . "',
+						'" . $InvoiceNo . "',
 						'" . $OrderLine->StockID . "',
-						" . ($OrderLine->Quantity - $OrderLine->QtyDispatched) . ",
+						'" . ($OrderLine->Quantity - $OrderLine->QtyDispatched) . "',
 						'" . $_SESSION['Items']->DebtorNo . "',
 						'" . $_SESSION['Items']->Branch . "',
 						'CAN'
@@ -826,10 +857,10 @@ DB_Txn_Begin($db);
 					can_or_bo
 				)
 				VALUES (
-					" . $_SESSION['ProcessingOrder'] . ",
-					" . $InvoiceNo . ",
+					'" . $_SESSION['ProcessingOrder'] . "',
+					'" . $InvoiceNo . "',
 					'" . $OrderLine->StockID . "',
-					" . ($OrderLine->Quantity - $OrderLine->QtyDispatched) . ",
+					'" . ($OrderLine->Quantity - $OrderLine->QtyDispatched) . "',
 					'" . $_SESSION['Items']->DebtorNo . "',
 					'" . $_SESSION['Items']->Branch . "',
 					'BO'
@@ -850,13 +881,13 @@ DB_Txn_Begin($db);
 					SET qtyinvoiced = qtyinvoiced + " . $OrderLine->QtyDispatched . ",
 					actualdispatchdate = '" . $DefaultDispatchDate .  "',
 					completed=1
-					WHERE orderno = " . $_SESSION['ProcessingOrder'] . "
+					WHERE orderno = '" . $_SESSION['ProcessingOrder'] . "'
 					AND orderlineno = '" . $OrderLine->LineNumber . "'";
 			} else {
 				$SQL = "UPDATE salesorderdetails
 					SET qtyinvoiced = qtyinvoiced + " . $OrderLine->QtyDispatched . ",
 					actualdispatchdate = '" . $DefaultDispatchDate .  "'
-					WHERE orderno = " . $_SESSION['ProcessingOrder'] . "
+					WHERE orderno = '" . $_SESSION['ProcessingOrder'] . "'
 					AND orderlineno = '" . $OrderLine->LineNumber . "'";
 
 			}
@@ -867,7 +898,9 @@ DB_Txn_Begin($db);
 
 			 /* Update location stock records if not a dummy stock item
 			 need the MBFlag later too so save it to $MBFlag */
-			$Result = DB_query("SELECT mbflag FROM stockmaster WHERE stockid = '" . $OrderLine->StockID . "'",$db,"<br>Can't retrieve the mbflag");
+			$Result = DB_query("SELECT mbflag
+								FROM stockmaster
+								WHERE stockid = '" . $OrderLine->StockID . "'",$db,"<br>Can't retrieve the mbflag");
 
 			$myrow = DB_fetch_row($Result);
 			$MBFlag = $myrow[0];
@@ -960,17 +993,17 @@ DB_Txn_Begin($db);
 						) VALUES (
 							'" . $AssParts['component'] . "',
 							 10,
-							 " . $InvoiceNo . ",
+							 '" . $InvoiceNo . "',
 							 '" . $_SESSION['Items']->Location . "',
 							 '" . $DefaultDispatchDate . "',
 							 '" . $_SESSION['Items']->DebtorNo . "',
 							 '" . $_SESSION['Items']->Branch . "',
-							 " . $PeriodNo . ",
+							 '" . $PeriodNo . "',
 							 '" . _('Assembly') . ': ' . $OrderLine->StockID . ' ' . _('Order') . ': ' . $_SESSION['ProcessingOrder'] . "',
-							 " . -$AssParts['quantity'] * $OrderLine->QtyDispatched . ",
-							 " . $AssParts['standard'] . ",
+							 '" . -$AssParts['quantity'] * $OrderLine->QtyDispatched . "',
+							 '" . $AssParts['standard'] . "',
 							 0,
-							 newqoh-" . ($AssParts['quantity'] * $OrderLine->QtyDispatched) . "
+							 newqoh-" . ($AssParts['quantity'] * $OrderLine->QtyDispatched) . "'
 						)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records for the assembly components of'). ' '. $OrderLine->StockID . ' ' . _('could not be inserted because');
@@ -1018,18 +1051,18 @@ DB_Txn_Begin($db);
 						narrative )
 					VALUES ('" . $OrderLine->StockID . "',
 						10,
-						" . $InvoiceNo . ",
+						'" . $InvoiceNo . "',
 						'" . $_SESSION['Items']->Location . "',
 						'" . $DefaultDispatchDate . "',
 						'" . $_SESSION['Items']->DebtorNo . "',
 						'" . $_SESSION['Items']->Branch . "',
-						" . $LocalCurrencyPrice . ",
-						" . $PeriodNo . ",
+						'" . $LocalCurrencyPrice . "',
+						'" . $PeriodNo . "',
 						'" . $_SESSION['ProcessingOrder'] . "',
-						" . -$OrderLine->QtyDispatched . ",
-						" . $OrderLine->DiscountPercent . ",
-						" . $OrderLine->StandardCost . ",
-						" . ($QtyOnHandPrior - $OrderLine->QtyDispatched) . ",
+						'" . -$OrderLine->QtyDispatched . "',
+						'" . $OrderLine->DiscountPercent . "',
+						'" . $OrderLine->StandardCost . "',
+						'" . ($QtyOnHandPrior - $OrderLine->QtyDispatched) . "',
 						'" . DB_escape_string($OrderLine->Narrative) . "' )";
 			} else {
             // its an assembly or dummy and assemblies/dummies always have nil stock (by definition they are made up at the time of dispatch  so new qty on hand will be nil
@@ -1053,17 +1086,17 @@ DB_Txn_Begin($db);
 						narrative )
 					VALUES ('" . $OrderLine->StockID . "',
 						10,
-						" . $InvoiceNo . ",
+						'" . $InvoiceNo . "',
 						'" . $_SESSION['Items']->Location . "',
 						'" . $DefaultDispatchDate . "',
 						'" . $_SESSION['Items']->DebtorNo . "',
 						'" . $_SESSION['Items']->Branch . "',
-						" . $LocalCurrencyPrice . ",
-						" . $PeriodNo . ",
+						'" . $LocalCurrencyPrice . "',
+						'" . $PeriodNo . "',
 						'" . $_SESSION['ProcessingOrder'] . "',
-						" . -$OrderLine->QtyDispatched . ",
-						" . $OrderLine->DiscountPercent . ",
-						" . $OrderLine->StandardCost . ",
+						'" . -$OrderLine->QtyDispatched . "',
+						'" . $OrderLine->DiscountPercent . "',
+						'" . $OrderLine->StandardCost . "',
 						'" . DB_escape_string($OrderLine->Narrative) . "')";
 			}
 
@@ -1078,16 +1111,16 @@ DB_Txn_Begin($db);
 /*Insert the taxes that applied to this line */
 			foreach ($OrderLine->Taxes as $Tax) {
 
-				$SQL = 'INSERT INTO stockmovestaxes (stkmoveno,
+				$SQL = "INSERT INTO stockmovestaxes (stkmoveno,
 									taxauthid,
 									taxrate,
 									taxcalculationorder,
 									taxontax)
-						VALUES (' . $StkMoveNo . ',
-							' . $Tax->TaxAuthID . ',
-							' . $Tax->TaxRate . ',
-							' . $Tax->TaxCalculationOrder . ',
-							' . $Tax->TaxOnTax . ')';
+						VALUES ('" . $StkMoveNo . "',
+							'" . $Tax->TaxAuthID . "',
+							'" . $Tax->TaxRate . "',
+							'" . $Tax->TaxCalculationOrder . "',
+							'" . $Tax->TaxOnTax . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Taxes and rates applicable to this invoice line item could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement tax detail records was used');
@@ -1118,10 +1151,10 @@ DB_Txn_Begin($db);
 										stockid,
 										serialno,
 										moveqty)
-						VALUES (" . $StkMoveNo . ",
+						VALUES ('" . $StkMoveNo . "',
 							'" . $OrderLine->StockID . "',
 							'" . $Item->BundleRef . "',
-							" . -$Item->BundleQty . ")";
+							'" . -$Item->BundleQty . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
@@ -1150,7 +1183,7 @@ DB_Txn_Begin($db);
 				AND salesanalysis.area=custbranch.area
 				AND salesanalysis.salesperson=custbranch.salesman
 				AND salesanalysis.typeabbrev ='" . $_SESSION['Items']->DefaultSalesType . "'
-				AND salesanalysis.periodno=" . $PeriodNo . "
+				AND salesanalysis.periodno='" . $PeriodNo . "'
 				AND salesanalysis.cust " . LIKE . " '" . $_SESSION['Items']->DebtorNo . "'
 				AND salesanalysis.custbranch " . LIKE . " '" . $_SESSION['Items']->Branch . "'
 				AND salesanalysis.stockid " . LIKE . " '" . $OrderLine->StockID . "'
@@ -1180,7 +1213,7 @@ DB_Txn_Begin($db);
 					WHERE salesanalysis.area='" . $myrow[5] . "'
 					AND salesanalysis.salesperson='" . $myrow[8] . "'
 					AND typeabbrev ='" . $_SESSION['Items']->DefaultSalesType . "'
-					AND periodno = " . $PeriodNo . "
+					AND periodno = '" . $PeriodNo . "'
 					AND cust " . LIKE . " '" . $_SESSION['Items']->DebtorNo . "'
 					AND custbranch " . LIKE . " '" . $_SESSION['Items']->Branch . "'
 					AND stockid " . LIKE . " '" . $OrderLine->StockID . "'
@@ -1205,13 +1238,13 @@ DB_Txn_Begin($db);
 						stkcategory
 						)
 					SELECT '" . $_SESSION['Items']->DefaultSalesType . "',
-						" . $PeriodNo . ",
-						" . ($OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ",
-						" . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . ",
+						'" . $PeriodNo . "',
+						'" . ($OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . "',
+						'" . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . "',
 						'" . $_SESSION['Items']->DebtorNo . "',
 						'" . $_SESSION['Items']->Branch . "',
-						" . $OrderLine->QtyDispatched . ",
-						" . ($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ",
+						'" . $OrderLine->QtyDispatched . "',
+						'" . ($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . "',
 						'" . $OrderLine->StockID . "',
 						custbranch.area,
 						1,
@@ -1241,15 +1274,15 @@ DB_Txn_Begin($db);
 							periodno,
 							account,
 							narrative,
-							amount	)
+							amount)
 					VALUES (
 						10,
-						" . $InvoiceNo . ",
+						'" . $InvoiceNo . "',
 						'" . $DefaultDispatchDate . "',
-						" . $PeriodNo . ",
-						" . GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items']->DefaultSalesType, $db) . ",
+						'" . $PeriodNo . "',
+						'" . GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items']->DefaultSalesType, $db) . "',
 						'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
-						" . $OrderLine->StandardCost * $OrderLine->QtyDispatched . " 	)";
+						'" . $OrderLine->StandardCost * $OrderLine->QtyDispatched . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The cost of sales GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1265,15 +1298,15 @@ DB_Txn_Begin($db);
 							periodno,
 							account,
 							narrative,
-							amount	)
+							amount)
 					VALUES (
 						10,
-						" . $InvoiceNo . ",
+						'" . $InvoiceNo . "',
 						'" . $DefaultDispatchDate . "',
-						" . $PeriodNo . ",
-						" . $StockGLCode['stockact'] . ",
+						'" . $PeriodNo . "',
+						'" . $StockGLCode['stockact'] . "',
 						'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
-						" . (-$OrderLine->StandardCost * $OrderLine->QtyDispatched) . "	)";
+						'" . (-$OrderLine->StandardCost * $OrderLine->QtyDispatched) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock side of the cost of sales GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1295,12 +1328,12 @@ DB_Txn_Begin($db);
 							amount )
 					VALUES (
 						10,
-						" . $InvoiceNo . ",
+						'" . $InvoiceNo . "',
 						'" . $DefaultDispatchDate . "',
-						" . $PeriodNo . ",
-						" . $SalesGLAccounts['salesglcode'] . ",
+						'" . $PeriodNo . "',
+						'" . $SalesGLAccounts['salesglcode'] . "',
 						'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->Price . "',
-						" . (-$OrderLine->Price * $OrderLine->QtyDispatched/$_SESSION['CurrencyRate']) . " )";
+						'" . (-$OrderLine->Price * $OrderLine->QtyDispatched/$_SESSION['CurrencyRate']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales GL posting could not be inserted because');
 				$DbgMsg = '<br>' ._('The following SQL to insert the GLTrans record was used');
@@ -1315,15 +1348,15 @@ DB_Txn_Begin($db);
 							periodno,
 							account,
 							narrative,
-							amount	)
+							amount)
 						VALUES (
 							10,
-							" . $InvoiceNo . ",
+							'" . $InvoiceNo . "',
 							'" . $DefaultDispatchDate . "',
-							" . $PeriodNo . ",
-							" . $SalesGLAccounts['discountglcode'] . ",
+							'" . $PeriodNo . "',
+							'" . $SalesGLAccounts['discountglcode'] . "',
 							'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " @ " . ($OrderLine->DiscountPercent * 100) . "%',
-							" . ($OrderLine->Price * $OrderLine->QtyDispatched * $OrderLine->DiscountPercent/$_SESSION['CurrencyRate']) . " 	)";
+							'" . ($OrderLine->Price * $OrderLine->QtyDispatched * $OrderLine->DiscountPercent/$_SESSION['CurrencyRate']) . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales discount GL posting could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1346,15 +1379,15 @@ DB_Txn_Begin($db);
 						periodno,
 						account,
 						narrative,
-						amount	)
+						amount)
 					VALUES (
 						10,
-						" . $InvoiceNo . ",
+						'" . $InvoiceNo . "',
 						'" . $DefaultDispatchDate . "',
-						" . $PeriodNo . ",
-						" . $_SESSION['CompanyRecord']['debtorsact'] . ",
+						'" . $PeriodNo . "',
+						'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
 						'" . $_SESSION['Items']->DebtorNo . "',
-						" . (($_SESSION['Items']->total + $_SESSION['Items']->FreightCost + $TaxTotal)/$_SESSION['CurrencyRate']) . "	)";
+						'" . (($_SESSION['Items']->total + $_SESSION['Items']->FreightCost + $TaxTotal)/$_SESSION['CurrencyRate']) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The total debtor GL posting could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the total debtors control GLTrans record was used');
@@ -1374,12 +1407,12 @@ DB_Txn_Begin($db);
 						amount	)
 				VALUES (
 					10,
-					" . $InvoiceNo . ",
+					'" . $InvoiceNo . "',
 					'" . $DefaultDispatchDate . "',
-					" . $PeriodNo . ",
-					" . $_SESSION['CompanyRecord']['freightact'] . ",
+					'" . $PeriodNo . "',
+					'" . $_SESSION['CompanyRecord']['freightact'] . "',
 					'" . $_SESSION['Items']->DebtorNo . "',
-					" . (-($_SESSION['Items']->FreightCost)/$_SESSION['CurrencyRate']) . "	)";
+					'" . (-($_SESSION['Items']->FreightCost)/$_SESSION['CurrencyRate']) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The freight GL posting could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1394,15 +1427,15 @@ DB_Txn_Begin($db);
 						periodno,
 						account,
 						narrative,
-						amount	)
+						amount)
 					VALUES (
 						10,
-						" . $InvoiceNo . ",
+						'" . $InvoiceNo . "',
 						'" . $DefaultDispatchDate . "',
-						" . $PeriodNo . ",
-						" . $TaxGLCodes[$TaxAuthID] . ",
+						'" . $PeriodNo . "',
+						'" . $TaxGLCodes[$TaxAuthID] . "',
 						'" . $_SESSION['Items']->DebtorNo . "',
-						" . (-$TaxAmount/$_SESSION['CurrencyRate']) . "	)";
+						'" . (-$TaxAmount/$_SESSION['CurrencyRate']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The tax GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1444,7 +1477,7 @@ DB_Txn_Begin($db);
 		$_POST['InvoiceText']='';
 	}
 	$j++;
-	echo '<table><tr>
+	echo '<table class=selection><tr>
 		<td>' ._('Date On Invoice'). ':</td>
 	<td><input tabindex='.$j.' type="text" maxlength="10" size="15"
 	name="DispatchDate" value="'.$DefaultDispatchDate.'" id="datepicker"
@@ -1468,7 +1501,7 @@ DB_Txn_Begin($db);
 
 	$j++;
 	echo '</table>
-	<div class="centre">
+	<br><div class="centre">
 	<input type=submit tabindex='.$j.' name=Update Value=' . _('Update'). '><br>';
 
 	$j++;
