@@ -130,7 +130,7 @@ If (isset($_POST['PrintPDF'])
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table>";
+		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table class=selection>";
 
 		echo '<tr><td>' . _('From Inventory Part Code') . ':' . "</font></td><td><input tabindex='1' type=text name=FromCriteria size=20 maxlength=20 VALUE='1'></td></tr>";
 
