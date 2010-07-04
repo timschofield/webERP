@@ -12,9 +12,9 @@ $title = _('Specify Dispatched Controlled Items');
 include('includes/header.inc');
 
 if (isset($_GET['LineNo'])){
-        $LineNo = $_GET['LineNo'];
+        $LineNo = (int)$_GET['LineNo'];
 } elseif (isset($_POST['LineNo'])){
-        $LineNo = $_POST['LineNo'];
+        $LineNo = (int)$_POST['LineNo'];
 } else {
 	echo '<div class="centre"><a href="' . $rootpath . '/ConfirmDispatch_Invoice.php?' . SID . '">'.
 		_('Select a line item to invoice').'</a><br>';
