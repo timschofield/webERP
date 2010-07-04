@@ -26,6 +26,8 @@ if (isset($Errors)) {
 
 $Errors = array();
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
+
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
@@ -96,7 +98,7 @@ if (isset($_POST['submit'])) {
 					currency='" . $_POST['CurrencyName'] . "',
 					country='". $_POST['Country']. "',
 					hundredsname='" . $_POST['HundredsName'] . "',
-					rate=" .$_POST['ExchangeRate'] . "
+					rate='" .$_POST['ExchangeRate'] . "'
 					WHERE currabrev = '" . $SelectedCurrency . "'";
 
 		$msg = _('The currency definition record has been updated');
@@ -112,7 +114,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['Abbreviation'] . "',
 					'" . $_POST['Country'] . "',
 					'" . $_POST['HundredsName'] .  "',
-					" . $_POST['ExchangeRate'] . ")";
+					'" . $_POST['ExchangeRate'] . "')";
 
 		$msg = _('The currency definition record has been added');
 	}
@@ -141,7 +143,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('Cannot delete this currency because customer accounts have been created referring to this currency') .
 		 	'<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer accounts that refer to this currency'),'warn');
 	} else {
-		$sql= "SELECT COUNT(*) FROM suppliers WHERE suppliers.currcode = '$SelectedCurrency'";
+		$sql= "SELECT COUNT(*) FROM suppliers WHERE suppliers.currcode = '".$SelectedCurrency."'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0] > 0)
@@ -178,7 +180,7 @@ or deletion of the records*/
 	$sql = 'SELECT currency, currabrev, country, hundredsname, rate FROM currencies';
 	$result = DB_query($sql, $db);
 
-	echo '<table border=1>';
+	echo '<table class=selection>';
 	echo '<tr><td></td>
 			<th>' . _('ISO4217 Code') . '</th>
 			<th>' . _('Currency Name') . '</th>
@@ -192,6 +194,8 @@ or deletion of the records*/
 	/*Get published currency rates from Eurpoean Central Bank */
 	if ($_SESSION['UpdateCurrencyRatesDaily'] != '0') {
 		$CurrencyRatesArray = GetECBCurrencyRates();
+	} else {
+		$CurrencyRatesArray = array();
 	}
 
 	while ($myrow = DB_fetch_row($result)) {
@@ -297,14 +301,14 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedCurrency" VALUE="' . $SelectedCurrency . '">';
 		echo '<input type="hidden" name="Abbreviation" VALUE="' . $_POST['Abbreviation'] . '">';
-		echo '<table><tr>
+		echo '<table class=selection><tr>
 			<td>' . _('ISO 4217 Currency Code').':</td>
 			<td>';
 		echo $_POST['Abbreviation'] . '</td></tr>';
 
 	} else { //end of if $SelectedCurrency only do the else when a new record is being entered
 		if (!isset($_POST['Abbreviation'])) {$_POST['Abbreviation']='';}
-		echo '<table><tr>
+		echo '<table class=selection><tr>
 			<td>' ._('Currency Abbreviation') . ':</td>
 			<td><input ' . (in_array('Abbreviation',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Abbreviation" value="' . $_POST['Abbreviation'] . '" size=4 maxlength=3></td></tr>';
 	}
@@ -331,7 +335,7 @@ if (!isset($_GET['delete'])) {
 	echo '</td></tr>';
 	echo '</table>';
 
-	echo '<div class="centre"><input type="Submit" name="submit" value='._('Enter Information').'></div>';
+	echo '<br><div class="centre"><input type="Submit" name="submit" value='._('Enter Information').'></div>';
 
 	echo '</form>';
 

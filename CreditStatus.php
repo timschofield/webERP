@@ -213,7 +213,7 @@ if (!isset($_GET['delete'])) {
 
 		echo "<input type=hidden name='SelectedReason' VALUE='" . $SelectedReason . "'>";
 		echo "<input type=hidden name='ReasonCode' VALUE='" . $_POST['ReasonCode'] . "'>";
-		echo "<table><tr><td>". _('Status Code') .':</td><td>';
+		echo "<table class=selection><tr><td>". _('Status Code') .':</td><td>';
 		echo $_POST['ReasonCode'] . '</td></tr>';
 
 	} else { //end of if $SelectedReason only do the else when a new record is being entered
