@@ -1,5 +1,5 @@
 <?php
-/* $Id$ */
+/* $Id: PricesByCost.php 3475 2010-05-29 00:00:42Z daintree $ */
 // PricesByCost.php -
 $PageSecurity = 11;
 include ('includes/session.inc');
@@ -23,7 +23,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 		$Category ='';
 	}/*end of else StockCat */
 
-	$sql = 'SELECT 	stockmaster.stockid,
+	$sql = "SELECT 	stockmaster.stockid,
 				stockmaster.description,
 				prices.debtorno,
 				prices.branchcode,
@@ -32,17 +32,17 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 				prices.startdate,
 				prices.enddate
 			FROM stockmaster, prices
-			WHERE stockmaster.stockid=prices.stockid' . $Category . '
-			AND   prices.price' . $Comparator . '(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * ' . $_POST['Margin'] . "
+			WHERE stockmaster.stockid=prices.stockid" . $Category . "
+			AND   prices.price" . $Comparator . "(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * '" . $_POST['Margin'] . "'
 			AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
 			AND prices.currabrev ='" . $_POST['CurrCode'] . "'
 			AND (prices.enddate>='" . Date('Y-m-d') . "' OR prices.enddate='0000-00-00')";
 	$result = DB_query($sql, $db);
 	$numrow = DB_num_rows($result);
-	
+echo $sql;
 	if ($_POST['submit'] == 'Update') {
 			//Update Prices
-		$PriceCounter =0;	
+		$PriceCounter =0;
 		while ($myrow = DB_fetch_array($result)) {
 			//update database if update pressed
 			$SQLUpdate = "UPDATE prices
@@ -61,29 +61,29 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 		$result = DB_query($sql, $db); //re-run the query with the updated prices
 		$numrow = DB_num_rows($result); // get the new number - should be the same!!
 	}
-	
+
 	$sqlcat = "SELECT categorydescription
 				FROM stockcategory
 				WHERE categoryid='" . $_POST['StockCat'] . "'";
 	$ResultCat = DB_query($sqlcat, $db);
 	$CategoryRow = DB_fetch_array($ResultCat);
-	
+
 	$sqltype = "SELECT sales_type
 				FROM salestypes
 				WHERE typeabbrev='" . $_POST['SalesType'] . "'";
 	$ResultType = DB_query($sqltype, $db);
 	$SalesTypeRow = DB_fetch_array($ResultType);
-	
+
 	if (isset($CategoryRow['categorgdescription'])) {
 		$CategoryText = _('the') . ' ' . $CategoryRow['categorgdescription'] . ' ' . _('category');
 	} else {
 		$CategoryText = _('all Categories');
 	} /*end of else Category */
-	
+
 	echo '<div class="page_help_text">' . _('Items in') . ' ' . $CategoryText . ' ' . _('With Prices') . ' ' . $Comparator . '' . $_POST['Margin'] . ' ' . _('times') . ' ' . _('Cost in Price List') . ' ' . $SalesTypeRow['sales_type'] . '</div><br><br>';
-	
-	if ($numrow > 0) { //the number of prices returned from the main prices query is 
-		echo '<table>';
+
+	if ($numrow > 0) { //the number of prices returned from the main prices query is
+		echo '<table class=selection>';
 		echo '<tr><th>' . _('Code') . '</th>
 						<th>' . _('Description') . '</th>
 						<th>' . _('Customer') . '</th>
@@ -102,10 +102,10 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 			<input type="hidden" value=' . $_POST['CurrCode'] . ' name="CurrCode">
 			<input type="hidden" value=' . $_POST['Comparator'] . ' name="Comparator">
 			<input type="hidden" value=' . $_POST['SalesType'] . ' name="SalesType">';
-		
+
 		$PriceCounter =0;
 		while ($myrow = DB_fetch_array($result)) {
-			
+
 			if ($k == 1) {
 				echo '<tr class="EvenTableRows">';
 				$k = 0;
@@ -119,7 +119,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 			} else {
 				$Cost = $myrow['cost'];
 			} /*end of else Cost */
-						
+
 			//variables for update
 			echo '<input type="hidden" value=' . $myrow['stockid'] . ' name="StockID_' . $PriceCounter .'">
 					<input type="hidden" value=' . $myrow['debtorno'] . ' name="DebtorNo_' . $PriceCounter .'">
@@ -162,8 +162,8 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	}
 } else { /*The option to submit was not hit so display form */
 	echo '<div class="page_help_text">' . _('Use this report to display price list with the cost.') . '</div><br>';
-	echo '</br></br><form action="' . $_SERVER['PHP_SELF'] . '" method="post"><table>';
-	
+	echo '</br></br><form action="' . $_SERVER['PHP_SELF'] . '" method="post"><table class=selection>';
+
 	$SQL = 'SELECT categoryid, categorydescription
 		      FROM stockcategory
 			  ORDER BY categorydescription';
@@ -189,7 +189,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 		$_POST['Margin']=1;
 	}
 	echo '<td>
-				<input type="text" class="number" name="Margin" MAXLENGTH =2 size=2 value=' .$_POST['Margin'] . '></td></tr>';
+				<input type="text" class="number" name="Margin" MAXLENGTH =8 size=8 value=' .$_POST['Margin'] . '></td></tr>';
 	$result = DB_query('SELECT typeabbrev, sales_type FROM salestypes ', $db);
 	echo '<tr><td>' . _('Sales Type') . '/' . _('Price List') . ":</td>
 		<td><select name='SalesType'>";
