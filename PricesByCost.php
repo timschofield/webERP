@@ -39,7 +39,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 			AND (prices.enddate>='" . Date('Y-m-d') . "' OR prices.enddate='0000-00-00')";
 	$result = DB_query($sql, $db);
 	$numrow = DB_num_rows($result);
-echo $sql;
+
 	if ($_POST['submit'] == 'Update') {
 			//Update Prices
 		$PriceCounter =0;
