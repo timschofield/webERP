@@ -26,8 +26,8 @@ if(!isset($_GET['CustomerID']) AND !isset($_SESSION['CustomerID'])){
 }
 
 if (!isset($_POST['TransAfterDate'])) {
-	$sql = 'SELECT confvalue 
-			FROM `config` 
+	$sql = 'SELECT confvalue
+			FROM `config`
 			WHERE confname ="NumberOfMonthMustBeShown"';
 	$ErrMsg=_('The config value NumberOfMonthMustBeShown cannot be retrieved');
 	$result = DB_query($sql,$db,$ErrMsg);
@@ -121,22 +121,22 @@ if ($NIL_BALANCE==True){
 	$CustomerRecord['overdue2']=0;
 }
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . 
-	_('Customer') . '" alt="">' . ' ' . _('Customer') . ' : ' . $CustomerRecord['name'] . ' - (' . _('All amounts stated in') . 
-	' ' . $CustomerRecord['currency'] . ')<br><br>' . _('Terms') . ' : ' . $CustomerRecord['terms'] . '<br>' . _('Credit Limit') . 
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' .
+	_('Customer') . '" alt="">' . ' ' . _('Customer') . ' : ' . $CustomerRecord['name'] . ' - (' . _('All amounts stated in') .
+	' ' . $CustomerRecord['currency'] . ')<br><br>' . _('Terms') . ' : ' . $CustomerRecord['terms'] . '<br>' . _('Credit Limit') .
 	': ' . number_format($CustomerRecord['creditlimit'],0) . ' ' . _('Credit Status') . ': ' . $CustomerRecord['reasondescription'] . '';
 
 if ($CustomerRecord['dissallowinvoices']!=0){
 	echo '<br><font color=RED size=4><b>' . _('ACCOUNT ON HOLD') . '</font></b><br>';
 }
 
-echo "<table class=table2 BORDER=1>
+echo "<table class=selection width=70%>
 	<tr>
-		<th>" . _('Total Balance') . "</th>
-		<th>" . _('Current') . "</th>
-		<th>" . _('Now Due') . "</th>
-		<th>" . $_SESSION['PastDueDays1'] . "-" . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . "</th>
-		<th>" . _('Over') . ' ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</th></tr>';
+		<th width=20%>" . _('Total Balance') . "</th>
+		<th width=20%>" . _('Current') . "</th>
+		<th width=20%>" . _('Now Due') . "</th>
+		<th width=20%>" . $_SESSION['PastDueDays1'] . "-" . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . "</th>
+		<th width=20%>" . _('Over') . ' ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</th></tr>';
 
 echo '<tr><td class=number>' . number_format($CustomerRecord['balance'],2) . '</td>
 	<td class=number>' . number_format(($CustomerRecord['balance'] - $CustomerRecord['due']),2) . '</td>
@@ -182,9 +182,9 @@ if (DB_num_rows($TransResult)==0){
 }
 /*show a table of the invoices returned by the SQL */
 
-echo '<table class="table2" cellpadding="2" colspan="7">';
+echo '<table class="selection" cellpadding="2" colspan="7">';
 
-$tableheader = "<tr BGCOLOR =#800000>
+$tableheader = "<tr bgcolor =#800000>
 		<th>" . _('Type') . "</th>
 		<th>" . _('Number') . "</th>
 		<th>" . _('Date') . "</th>
