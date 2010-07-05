@@ -15,12 +15,25 @@ $ModuleList = array(_('Orders'),
 					_('Purchasing'),
 					_('Inventory'),
 					_('Manufacturing'),
+					_('Contracts'),
 					_('General Ledger'),
+					_('Asset Manager'),
+					_('Petty Cash'),
 					_('Setup'));
 
 echo "<a href='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</a><br>';
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' ' . $phone . _(' has been selected') . '<br>';//'</p>';
+$sql="SELECT name
+		FROM debtorsmaster
+		WHERE debtorno='".$_SESSION['CustomerID']."'";
+
+$result=DB_query($sql, $db);
+$myrow=DB_fetch_array($result);
+$CustomerName=$myrow['name'];
+
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') .
+	'" alt="">' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName. _(' has been selected') .
+		'<br>';//'</p>';
 //echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 
 
@@ -126,7 +139,7 @@ if (isset($_POST['submit'])) {
 	$_POST['ModulesAllowed']= $ModulesAllowed;
 
 
-	if ($SelectedUser AND $InputError !=1) {
+	if (isset($SelectedUser) AND $InputError !=1) {
 
 /*SelectedUser could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
@@ -146,13 +159,13 @@ if (isset($_POST['submit'])) {
 						".$UpdatePassword."
 						branchcode='" . $_POST['BranchCode'] . "',
 						pagesize='" . $_POST['PageSize'] . "',
-						fullaccess=" . $_POST['Access'] . ",
+						fullaccess='" . $_POST['Access'] . "',
 						theme='" . $_POST['Theme'] . "',
 						language ='" . $_POST['UserLanguage'] . "',
 						defaultlocation='" . $_POST['DefaultLocation'] ."',
 						modulesallowed='" . $ModulesAllowed . "',
-						blocked=" . $_POST['Blocked'] . "
-					WHERE userid = '$SelectedUser'";
+						blocked='" . $_POST['Blocked'] . "'
+					WHERE userid = '".$SelectedUser."'";
 
 		$msg = _('The selected user record has been updated');
 	} elseif ($InputError !=1) {
@@ -165,6 +178,7 @@ if (isset($_POST['submit'])) {
 						phone,
 						email,
 						pagesize,
+						lastvisitdate,
 						fullaccess,
 						defaultlocation,
 						modulesallowed,
@@ -179,10 +193,11 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['Phone'] . "',
 						'" . $_POST['Email'] ."',
 						'" . $_POST['PageSize'] ."',
-						" . $_POST['Access'] . ",
+						'" . date('Y-m-d') ."',
+						'" . $_POST['Access'] . "',
 						'" . $_POST['DefaultLocation'] ."',
 						'" . $ModulesAllowed . "',
-						" . $_SESSION['DefaultDisplayRecordsMax'] . ",
+						'" . $_SESSION['DefaultDisplayRecordsMax'] . "',
 						'" . $_POST['Theme'] . "',
 						'". $_POST['UserLanguage'] ."')";
 		$msg = _('A new user record has been inserted');
@@ -226,7 +241,7 @@ if (isset($_POST['submit'])) {
 			prnMsg(_('Cannot delete user as entries already exist in the audit trail'), 'warn');
 		} else {
 
-			$sql="DELETE FROM www_users WHERE userid='$SelectedUser'";
+			$sql="DELETE FROM www_users WHERE userid='".$SelectedUser."'";
 			$ErrMsg = _('The User could not be deleted because');;
 			$result = DB_query($sql,$db,$ErrMsg);
 			prnMsg(_('User Deleted'),'info');
@@ -254,7 +269,7 @@ if (!isset($SelectedUser)) {
 		FROM www_users WHERE customerid = '" . $_SESSION['CustomerID'] . "'";
 	$result = DB_query($sql,$db);
 
-	echo '<table>';
+	echo '<table class=selection>';
 	echo "<tr><th>" . _('User Login') . "</th>
 		<th>" . _('Full Name') . "</th>
 		<th>" . _('Telephone') . "</th>
