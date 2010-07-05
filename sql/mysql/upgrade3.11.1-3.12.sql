@@ -278,4 +278,4 @@ INSERT INTO `config` VALUES ('DefaultSupplierType', 1);
 INSERT INTO `suppliertype` VALUES(1, 'Default');
 ALTER TABLE `suppliers` ADD COLUMN `supptype` tinyint(4) NOT NULL DEFAULT 1 AFTER `address6`;
 
-ALTER TABLE `locatransfers` CHANGE COLUMN `shipqty` `shipqty` double NOT NULL DEFAULT 0.0;
+ALTER TABLE `loctransfers` CHANGE COLUMN `shipqty` `shipqty` double NOT NULL DEFAULT 0.0;
