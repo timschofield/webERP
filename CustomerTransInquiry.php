@@ -14,7 +14,7 @@ echo '<div class="page_help_text">' . _('Choose which type of transaction to rep
 
 echo "<form action='" . $_SERVER['PHP_SELF'] . "' method=post>";
 
-echo '<table cellpadding=2><tr>';
+echo '<table cellpadding=2 class=selection><tr>';
 
 echo '<td>' . _('Type') . ":</td><td><select tabindex=1 name='TransType'> ";
 
@@ -44,8 +44,7 @@ if (!isset($_POST['ToDate'])){
 echo '<td>' . _('From') . ':</td><td><input tabindex="2" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="TEXT" name="FromDate" maxlength="10" size="11" VALUE="' . $_POST['FromDate'] . '"></td>';
 echo '<td>' . _('To') . ':</td><td><input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="TEXT" name="ToDate" maxlength="10" size="11" VALUE="' . $_POST['ToDate'] . '"></td>';
 
-echo "</tr></table><div class='centre'><input tabindex=4 type=submit name='ShowResults' VALUE='" . _('Show Transactions') . "'>";
-echo '<hr>';
+echo "</tr></table><br><div class='centre'><input tabindex=4 type=submit name='ShowResults' VALUE='" . _('Show Transactions') . "'>";
 
 echo '</form></div>';
 
@@ -70,7 +69,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 
    $sql = $sql . "trandate >='" . $SQL_FromDate . "' AND trandate <= '" . $SQL_ToDate . "'";
 	if  ($_POST['TransType']!='All')  {
-		$sql .= " AND type = " . $_POST['TransType'];
+		$sql .= " AND type = '" . $_POST['TransType']."'";
 	}
 	$sql .=  " ORDER BY id";
 
@@ -78,7 +77,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
    $DbgMsg =  _('The SQL that failed was');
    $TransResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
 
-   echo '<table cellpadding=2 border=2>';
+   echo '<br><table cellpadding=2 class=selection>';
 
    $tableheader = "<tr>
 			<th>" . _('Type') . "</th>
