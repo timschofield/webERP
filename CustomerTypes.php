@@ -21,7 +21,7 @@ if (isset($Errors)) {
 $Errors = array();
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Customer Types') . '" alt="">' . _('Customer Type Setup') . '</p>';
-echo '<div class="page_help_text">' . _('Add/edit/delete Customer Types') . '</div><br>';
+echo '<div class="page_help_text">' . _('Add/edit/delete Customer Types') . '</div>';
 
 if (isset($_POST['submit'])) {
 
@@ -35,14 +35,15 @@ if (isset($_POST['submit'])) {
 	$i=1;
 	if (strlen($_POST['typename']) >100) {
 		$InputError = 1;
-		echo prnMsg(_('The customer type name description must be 100 characters or less long'),'error');
+		prnMsg(_('The customer type name description must be 100 characters or less long'),'error');
 		$Errors[$i] = 'CustomerType';
 		$i++;
 	}
 
 	if (strlen($_POST['typename'])==0) {
 		$InputError = 1;
-		echo prnMsg(_('The customer type name description must contain at least one character'),'error');
+		echo '<br>';
+		prnMsg(_('The customer type name description must contain at least one character'),'error');
 		$Errors[$i] = 'CustomerType';
 		$i++;
 	}
@@ -52,18 +53,19 @@ if (isset($_POST['submit'])) {
 		     WHERE typename = '" . $_POST['typename'] . "'";
 	$checkresult=DB_query($checksql, $db);
 	$checkrow=DB_fetch_row($checkresult);
-	if ($checkrow[0]>0) {
+	if ($checkrow[0]>0 and !isset($SelectedType)) {
 		$InputError = 1;
-		echo prnMsg(_('You already have a customer type called').' '.$_POST['typename'],'error');
+		echo '<br>';
+		prnMsg(_('You already have a customer type called').' '.$_POST['typename'],'error');
 		$Errors[$i] = 'CustomerName';
 		$i++;
-	}	
-	
+	}
+
 	if (isset($SelectedType) AND $InputError !=1) {
 
 		$sql = "UPDATE debtortype
 			SET typename = '" . $_POST['typename'] . "'
-			WHERE typeid = '$SelectedType'";
+			WHERE typeid = '" .$SelectedType."'";
 
 		$msg = _('The customer type') . ' ' . $SelectedType . ' ' .  _('has been updated');
 	} elseif ( $InputError !=1 ) {
@@ -72,7 +74,7 @@ if (isset($_POST['submit'])) {
 
 		$checkSql = "SELECT count(*)
 			     FROM debtortype
-			     WHERE typeid = '" . $_POST['typeid'] . "'";
+			     WHERE typename = '" . $_POST['typename'] . "'";
 
 		$checkresult = DB_query($checkSql,$db);
 		$checkrow = DB_fetch_row($checkresult);
@@ -104,12 +106,7 @@ if (isset($_POST['submit'])) {
 
 
 	// Fetch the default price list.
-		$sql = "SELECT confvalue
-					FROM config
-					WHERE confname='DefaultCustomerType'";
-		$result = DB_query($sql,$db);
-		$CustomerTypeRow = DB_fetch_row($result);
-		$DefaultCustomerType = $CustomerTypeRow[0];
+		$DefaultCustomerType = $_SESSION['DefaultCustomerType'];
 
 	// Does it exist
 		$checkSql = "SELECT count(*)
@@ -126,7 +123,7 @@ if (isset($_POST['submit'])) {
 			$result = DB_query($sql,$db);
 			$_SESSION['DefaultCustomerType'] = $_POST['typeid'];
 		}
-
+		echo '<br>';
 		prnMsg($msg,'success');
 
 		unset($SelectedType);
@@ -141,7 +138,7 @@ if (isset($_POST['submit'])) {
 
 	$sql= "SELECT COUNT(*)
 	       FROM debtortrans
-	       WHERE debtortrans.type='$SelectedType'";
+	       WHERE debtortrans.type='".$SelectedType."'";
 
 	$ErrMsg = _('The number of transactions using this customer type could not be retrieved');
 	$result = DB_query($sql,$db,$ErrMsg);
@@ -152,7 +149,7 @@ if (isset($_POST['submit'])) {
 
 	} else {
 
-		$sql = "SELECT COUNT(*) FROM debtorsmaster WHERE typeid='$SelectedType'";
+		$sql = "SELECT COUNT(*) FROM debtorsmaster WHERE typeid='".$SelectedType."'";
 
 		$ErrMsg = _('The number of transactions using this Type record could not be retrieved because');
 		$result = DB_query($sql,$db,$ErrMsg);
@@ -161,9 +158,10 @@ if (isset($_POST['submit'])) {
 			prnMsg (_('Cannot delete this type because customers are currently set up to use this type') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('customers with this type code'));
 		} else {
 
-			$sql="DELETE FROM debtortype WHERE typeid='$SelectedType'";
+			$sql="DELETE FROM debtortype WHERE typeid='".$SelectedType."'";
 			$ErrMsg = _('The Type record could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
+			echo '<br>';
 			prnMsg(_('Customer type') . $SelectedType  . ' ' . _('has been deleted') ,'success');
 
 			unset ($SelectedType);
@@ -183,7 +181,7 @@ or deletion of the records*/
 	$sql = 'SELECT typeid, typename FROM debtortype';
 	$result = DB_query($sql,$db);
 
-	echo '<br><table border=1>';
+	echo '<br><table class=selection>';
 	echo "<tr>
 		<th>" . _('Type ID') . "</th>
 		<th>" . _('Type Name') . "</th>
@@ -223,8 +221,7 @@ if (isset($SelectedType)) {
 if (! isset($_GET['delete'])) {
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	echo '<p><table border=1>'; //Main table
-	echo '<td><table>'; // First column
+	echo '<p><table class=selection>'; //Main table
 
 
 	// The user wish to EDIT an existing type
@@ -234,7 +231,7 @@ if (! isset($_GET['delete'])) {
 		$sql = "SELECT typeid,
 			       typename
 		        FROM debtortype
-		        WHERE typeid='$SelectedType'";
+		        WHERE typeid='".$SelectedType."'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -244,7 +241,7 @@ if (! isset($_GET['delete'])) {
 
 		echo "<input type=hidden name='SelectedType' VALUE=" . $SelectedType . ">";
 		echo "<input type=hidden name='typeid' VALUE=" . $_POST['typeid'] . ">";
-		echo "<table> <tr><td>";
+		echo "<table class=selection> <tr><td>";
 
 		// We dont allow the user to change an existing type code
 
@@ -254,7 +251,7 @@ if (! isset($_GET['delete'])) {
 
 		// This is a new type so the user may volunteer a type code
 
-		echo "<table>";
+		echo "<table class=selection>";
 
 	}
 
@@ -263,10 +260,9 @@ if (! isset($_GET['delete'])) {
 	}
 	echo "<tr><td>" . _('Type Name') . ":</td><td><input type='Text' name='typename' value='" . $_POST['typename'] . "'></td></tr>";
 
-   	echo '</table>'; // close table in first column
    	echo '</td></tr></table>'; // close main table
 
-	echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"></div>';
+	echo '<p><div class="centre"><input type=submit name=submit value="' . _('Accept') . '"></div>';
 
 	echo '</form>';
 
