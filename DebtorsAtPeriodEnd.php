@@ -6,7 +6,7 @@ $PageSecurity = 2;
 /* $Revision: 1.16 $ */
 include('includes/session.inc');
 
-If (isset($_POST['PrintPDF'])
+if (isset($_POST['PrintPDF'])
 	AND isset($_POST['FromCriteria'])
 	AND strlen($_POST['FromCriteria'])>=1
 	AND isset($_POST['ToCriteria'])
@@ -15,30 +15,30 @@ If (isset($_POST['PrintPDF'])
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',_('Customer Balance Listing'));
 	$pdf->addInfo('Subject',_('Customer Balances'));
-    $FontSize=12;
+	$FontSize=12;
 	$PageNumber=0;
 	$line_height=12;
 
 	/*Get the date of the last day in the period selected */
 
-	$SQL = 'SELECT lastdate_in_period FROM periods WHERE periodno = ' . $_POST['PeriodEnd'];
+	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno = '" . $_POST['PeriodEnd']."'";
 	$PeriodEndResult = DB_query($SQL,$db,_('Could not get the date of the last day in the period selected'));
 	$PeriodRow = DB_fetch_row($PeriodEndResult);
 	$PeriodEndDate = ConvertSQLDate($PeriodRow[0]);
 
-      /*Now figure out the aged analysis for the customer range under review */
+	  /*Now figure out the aged analysis for the customer range under review */
 
-	$SQL = 'SELECT debtorsmaster.debtorno,
+	$SQL = "SELECT debtorsmaster.debtorno,
 			debtorsmaster.name,
   			currencies.currency,
 			SUM((debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)/debtortrans.rate) AS balance,
 			SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) AS fxbalance,
-			SUM(CASE WHEN debtortrans.prd > ' . $_POST['PeriodEnd'] . ' THEN
+			SUM(CASE WHEN debtortrans.prd > '" . $_POST['PeriodEnd'] . "' THEN
 			(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount)/debtortrans.rate ELSE 0 END) AS afterdatetrans,
-			SUM(CASE WHEN debtortrans.prd > ' . $_POST['PeriodEnd'] . '
+			SUM(CASE WHEN debtortrans.prd > '" . $_POST['PeriodEnd'] . "'
 				AND (debtortrans.type=11 OR debtortrans.type=12) THEN
 				debtortrans.diffonexch ELSE 0 END) AS afterdatediffonexch,
-			SUM(CASE WHEN debtortrans.prd > ' . $_POST['PeriodEnd'] . " THEN
+			SUM(CASE WHEN debtortrans.prd > '" . $_POST['PeriodEnd'] . "' THEN
 			debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount ELSE 0 END
 			) AS fxafterdatetrans
 			FROM debtorsmaster,
@@ -70,7 +70,7 @@ If (isset($_POST['PrintPDF'])
 		$title = _('Customer Balances') . ' - ' . _('Problem Report');
 		include('includes/header.inc');
 		prnMsg(_('The customer details listing has no clients to report on'),'warn');
-		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		echo "<br><a href='".$rootpath."'/index.php?.'" . SID . "'>" . _('Back to the menu') . "</a>";
 		include('includes/footer.inc');
 		exit;
 	}
@@ -79,19 +79,20 @@ If (isset($_POST['PrintPDF'])
 
 	$TotBal=0;
 
-	While ($DebtorBalances = DB_fetch_array($CustomerResult,$db)){
+	while ($DebtorBalances = DB_fetch_array($CustomerResult,$db)){
 
 		$Balance = $DebtorBalances['balance'] - $DebtorBalances['afterdatetrans'] + $DebtorBalances['afterdatediffonexch'] ;
 		$FXBalance = $DebtorBalances['fxbalance'] - $DebtorBalances['fxafterdatetrans'];
 
-		if (ABS($Balance)>0.009 OR ABS($FXBalance)>0.009) {
+		if (abs($Balance)>0.009 OR ABS($FXBalance)>0.009) {
 
 			$DisplayBalance = number_format($DebtorBalances['balance'] - $DebtorBalances['afterdatetrans'],2);
 			$DisplayFXBalance = number_format($DebtorBalances['fxbalance'] - $DebtorBalances['fxafterdatetrans'],2);
 
 			$TotBal += $Balance;
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,220-$Left_Margin,$FontSize,$DebtorBalances['debtorno'] . ' - ' . $DebtorBalances['name'],'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+3,$YPos,220-$Left_Margin,$FontSize,$DebtorBalances['debtorno'] .
+				' - ' . html_entity_decode($DebtorBalances['name']),'left');
 			$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayBalance,'right');
 			$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayFXBalance,'right');
 			$LeftOvers = $pdf->addTextWrap(350,$YPos,100,$FontSize,$DebtorBalances['currency'],'left');
@@ -99,7 +100,7 @@ If (isset($_POST['PrintPDF'])
 
 			$YPos -=$line_height;
 			if ($YPos < $Bottom_Margin + $line_height){
-			include('includes/PDFDebtorBalsPageHeader.inc');
+				include('includes/PDFDebtorBalsPageHeader.inc');
 			}
 		}
 	} /*end customer aged analysis while loop */
@@ -112,8 +113,9 @@ If (isset($_POST['PrintPDF'])
 
 	$DisplayTotBalance = number_format($TotBal,2);
 
+	$LeftOvers = $pdf->addTextWrap(50,$YPos,160,$FontSize,_('Total balances'),'left');
 	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
-    /* UldisN
+	/* UldisN
 	$buf = $pdf->output();
 	$len = strlen($buf);
 
@@ -125,20 +127,22 @@ If (isset($_POST['PrintPDF'])
 	header('Pragma: public');
 
 	$pdf->stream();
-    */
-    $pdf->OutputD($_SESSION['DatabaseName'] . '_DebtorBals_' . date('Y-m-d').'.pdf');//UldisN
-    $pdf->__destruct(); //UldisN
+	*/
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_DebtorBals_' . date('Y-m-d').'.pdf');//UldisN
+	$pdf->__destruct(); //UldisN
 
 } else { /*The option to print PDF was not hit */
 
 	$title=_('Debtor Balances');
 	include('includes/header.inc');
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') .
+	 '" alt="">' . ' ' . $title.'<br>';
 
 	if (!isset($_POST['FromCriteria']) || !isset($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table>";
+		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table class=selection>";
 
 		echo '<tr><td>' . _('From Customer Code') .":</font></td><td><input tabindex=1 Type=text maxlength=6 size=7 name=FromCriteria value='1'></td></tr>";
 		echo '<tr><td>' . _('To Customer Code') . ":</td><td><input tabindex=2 Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></td></tr>";
@@ -158,7 +162,7 @@ If (isset($_POST['PrintPDF'])
 	echo '</select></td></tr>';
 
 
-	echo "</table><div class='centre'><input tabindex=5 type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
+	echo "</table><br><div class='centre'><input tabindex=5 type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
 } /*end of else not PrintPDF */

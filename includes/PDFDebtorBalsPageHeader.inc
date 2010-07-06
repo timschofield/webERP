@@ -22,18 +22,21 @@ $pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed') . ': '
 $YPos -=(3*$line_height);
 
 /*Draw a rectangle to put the headings in     */
-$pdf->line($Page_Width-$Right_Margin, $YPos-5,$Left_Margin, $YPos-5);
-$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Left_Margin, $YPos+$line_height);
-$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos-5);
-$pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos-5);
+$pdf->rectangle($Left_Margin, $YPos+$line_height, $Page_Width-$Right_Margin-$Left_Margin,$line_height+5 );
 
 /*set up the headings */
-$Xpos = $Left_Margin+1;
+$Xpos = $Left_Margin+3;
 
-$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,220 - $Left_Margin,$FontSize,_('Customer'),'centre');
-$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,_('Balance'),'centre');
-$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,_('FX'),'centre');
-$LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,_('Currency'),'centre');
+$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,220 - $Left_Margin,$FontSize,_('Customer'),'left');
+$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,_('Balance'),'right');
+$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,_('FX'),'right');
+$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,_('Currency'),'left');
+
+$pdf->rectangle($Left_Margin, $YPos+$line_height, $Page_Width-$Right_Margin-$Left_Margin,$Page_Height-($line_height*5)-$Bottom_Margin-5 );
+
+$pdf->line(218, $YPos+$line_height, 218, $Bottom_Margin);
+$pdf->line(282, $YPos+$line_height, 282, $Bottom_Margin);
+$pdf->line(342, $YPos+$line_height, 342, $Bottom_Margin);
 
 $YPos =$YPos - (2*$line_height);
 
