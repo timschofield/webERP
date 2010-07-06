@@ -33,7 +33,7 @@ if (isset($_POST['NewEDIInvMsg'])){
 						sequenceno,
 						section,
 						linetext)
-		SELECT '$PartnerCode',
+		SELECT '".$PartnerCode."',
 			'INVOIC',
 			sequenceno,
 			section,
@@ -46,74 +46,64 @@ if (isset($_POST['NewEDIInvMsg'])){
 	$result = DB_query($sql,$db,$ErrMsg);
 }
 
+$InputError = 0;
+if ($InputError !=1 and isset($_POST['update'])) {
 
-if (isset($_POST['submit'])) {
-
-	//initialise no input errors assumed initially before we test
-	$InputError = 0;
-
-	/* actions to take once the user has clicked the submit button
-	ie the page has called itself with some user input */
-
-	//first off validate inputs sensible
-
-	/*
-	 if (($_POST['PandL']!=1 AND $_POST['PandL']!=0 AND $_POST['PandL']!=-1)) {
-		$InputError = 1;
-		echo "The profit and loss account flag must be either 1 or 0. 1 indicates that the account is a profit and loss account";
+	/*SelectedMessageLine could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
+	if (!isset($SelectedMessageLine)) {
+		$SelectedMessageLine='';
 	}
-	*/
+	$sql = "UPDATE edimessageformat
+			SET partnercode='" . $PartnerCode . "',
+				messagetype='" . $MessageType . "',
+				section='" . $_POST['Section'] . "',
+				sequenceno='" . $_POST['SequenceNo'] . "',
+				linetext='" . $_POST['LineText'] . "'
+			WHERE id = '" . $SelectedMessageLine . "'";
+	$result = DB_query($sql,$db);
+	$msg = _('Message line updated');
+	unset ($SelectedMessageLine);
 
-	if ($InputError !=1) {
+} elseif ($InputError !=1 and isset($_POST['submit'])) {
 
-		/*SelectedMessageLine could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
-		if (!isset($SelectedMessageLine)) {$SelectedMessageLine='';}
-		$sql = "UPDATE edimessageformat
-				SET
-					partnercode='" . $PartnerCode . "',
-					messagetype='" . $MessageType . "',
-					section='" . $_POST['Section'] . "',
-					sequenceno=" . $_POST['SequenceNo'] . ",
-					linetext='" . $_POST['LineText'] . "'
-				WHERE id = '" . $SelectedMessageLine . "'";
+/*Selected group is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new message line form */
 
-		$msg = _('Message line updated');
-
-	} elseif ($InputError !=1) {
-
-	/*Selected group is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new message line form */
-
-		$sql = "INSERT INTO edimessageformat (
-					partnercode,
-					messagetype,
-					section,
-					sequenceno,
-					linetext)
-				VALUES (
-					'" . $PartnerCode . "',
-					'" . $MessageType . "',
-					'" . $_POST['Section'] . "',
-					" . $_POST['SequenceNo'] . ",
-					'" . $_POST['LineText'] . "'
-					)";
+	$sql = "INSERT INTO edimessageformat (
+				partnercode,
+				messagetype,
+				section,
+				sequenceno,
+				linetext)
+			VALUES (
+				'" . $PartnerCode . "',
+				'" . $MessageType . "',
+				'" . $_POST['Section'] . "',
+				'" . $_POST['SequenceNo'] . "',
+				'" . $_POST['LineText'] . "'
+				)";
 		$msg = _('Message line added');
-	}
 	//run the SQL from either of the above possibilites
 	$result = DB_query($sql,$db);
-	prnMsg($msg,'success');
 	unset ($SelectedMessageLine);
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 
-	$sql='DELETE FROM edimessageformat WHERE id=' . $_GET['delete'];
+	$sql="DELETE FROM edimessageformat WHERE id='" . $_GET['delete']."'";
 	$result = DB_query($sql,$db);
-	prnMsg(_('The selected message line has been deleted'),'success');
+	$msg='The selected message line has been deleted';
 
+}
+if (isset($msg)) {
+	prnMsg($msg,'success');
 }
 
 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+
+echo '<p><table border=0 width=100%>
+	<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
+		'" alt="">' . ' ' . $title.'</p>';
 
 if (!isset($SelectedMessageLine)) {
 
@@ -122,8 +112,6 @@ if (!isset($SelectedMessageLine)) {
 then none of the above are true and the list of message lines will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
-
-	echo '<font size=4>' . _('Definition of') . ' ' . $MessageType . ' ' . _('for') . ' ' . $PartnerCode;
 
 	$sql = "SELECT id,
 			section,
@@ -136,7 +124,8 @@ or deletion of the records*/
 
 	$result = DB_query($sql,$db);
 
-	echo '<table>';
+	echo '<table class=selection>';
+	echo '<tr><th colspan=5><font size=3>' . _('Definition of') . ' ' . $MessageType . ' ' . _('for') . ' ' . $PartnerCode."</font></th></tr>";
 	$TableHeader = "<tr>
 			<th>" . _('Section') . "</th>
 			<th>" . _('Sequence') . "</th>
@@ -173,7 +162,8 @@ or deletion of the records*/
 	} //END WHILE LIST LOOP
 	echo '</table><p>';
 	if (DB_num_rows($result)==0){
-		echo "<div class='centre'><input tabindex=1 type=submit name='NewEDIInvMsg' VALUE='" . _('Create New EDI Invoice Message From Default Template') . "'></div>";
+		echo "<div class='centre'><input tabindex=1 type=submit name='NewEDIInvMsg' value='" .
+			_('Create New EDI Invoice Message From Default Template') . "'></div><br>";
 	}
 } //end of ifs SelectedLine is not set
 
@@ -199,8 +189,6 @@ if (isset($SelectedMessageLine)) {
 	$_POST['SequenceNo']  = $myrow['sequenceno'];
 	$_POST['LineText']  = $myrow['linetext'];
 
-	echo '<font size=4>' . _('Definition of') . ' ' . $myrow['messagetype'] . ' ' . _('for') . ' ' . $myrow['partnercode'];
-
 	echo "<div class='centre'><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . 'MessageType=INVOIC&PartnerCode=' . $myrow['partnercode'] . "'>" . _('Review Message Lines') . '</a></div>';
 
 	echo "<input type=hidden name='SelectedMessageLine' VALUE='" . $SelectedMessageLine . "'>";
@@ -211,7 +199,11 @@ if (isset($SelectedMessageLine)) {
 	echo "<input type=hidden name='PartnerCode' VALUE='" . $PartnerCode . "'>";
 }
 
-echo '<table>';
+echo '<table class=selection>';
+
+if ($myrow['messagetype']!='') {
+	echo '<tr><th colspan=2><font size=3>' . _('Definition of') . ' ' . $myrow['messagetype'] . ' ' . _('for') . ' ' . $myrow['partnercode'].'</font></th></tr>';
+}
 
 echo '<tr><td>Section:</td>';
 echo '<td>';
@@ -239,22 +231,24 @@ echo '</select>';
 if (!isset($_POST['SequenceNo'])) {$_POST['SequenceNo']='';}
 if (!isset($_POST['LineText'])) {$_POST['LineText']='';}
 
-?>
 
-</td></tr>
+echo '</td></tr>';
 
-<tr><td>Sequence Number:</td>
-<td><input tabindex=3 type=TEXT name=SequenceNo size=3 maxlength=3 VALUE=<?php echo $_POST['SequenceNo'] ?>>
-</td></tr>
-<tr><td><?php echo _('Line Text') . ':'; ?></td>
-<td>
-<input tabindex=4 type="Text" name="LineText" size=50 maxlength=50 VALUE=<?php echo  $_POST['LineText']; ?>>
-</td></tr>
-</table>
-<div class="centre"><input TABINDEX=5 type="Submit" name="submit" value="<?php echo _('Enter Information'); ?>"></div>
+echo '<tr><td>Sequence Number:</td>';
+echo "<td><input tabindex=3 type=text name=SequenceNo size=3 maxlength=3 value=".$_POST['SequenceNo'].">";
+echo "</td></tr>";
+echo "<tr><td>" .  _('Line Text') . ':' ."</td>";
+echo "<td>";
+echo "<input tabindex=4 type='Text' name='LineText' size=50 maxlength=50 VALUE=".$_POST['LineText'] .">";
+echo "</td></tr>";
+echo "</table><br>";
+if (isset($_GET['SelectedMessageLine'])) {
+	echo "<div class='centre'><input tabindex=5 type='submit' name='update' value='".  _('Update Information'). "'></div>";
+} else {
+	echo "<div class='centre'><input tabindex=5 type='submit' name='submit' value='".  _('Enter Information'). "'></div>";
+}
 
-</form>
+echo "</form>";
 
-<?php
 include('includes/footer.inc');
 ?>
