@@ -127,7 +127,7 @@ if (isset($_POST['Update'])
 				prnMsg(_($_POST['FreightCost']),'warn');
 			}
 		}
-		$sql = 'SELECT custbranch.brname,
+		$sql = "SELECT custbranch.brname,
 				custbranch.braddress1,
 				custbranch.braddress2,
 				custbranch.braddress3,
@@ -142,8 +142,8 @@ if (isset($_POST['Update'])
 				custbranch.specialinstructions,
 				custbranch.estdeliverydays
 			FROM custbranch
-			WHERE custbranch.branchcode='."'" . $_SESSION['Items'.$identifier]->Branch . "'".
-			' AND custbranch.debtorno = '."'" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
+			WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
+			AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
 		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->CustomerName . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
@@ -221,9 +221,9 @@ if (isset($_POST['Update'])
 		- if shippers defined but the default shipper is bogus then use the first shipper defined
 		*/
 		if ((isset($BestShipper) and $BestShipper=='') AND ($_POST['ShipVia']=='' || !isset($_POST['ShipVia']))){
-			$sql =  'SELECT shipper_id
+			$sql =  "SELECT shipper_id
 						FROM shippers
-						WHERE shipper_id=' . $_SESSION['Default_Shipper'];
+						WHERE shipper_id='" . $_SESSION['Default_Shipper']."'";
 			$ErrMsg = _('There was a problem testing for the default shipper');
 			$DbgMsg = _('SQL used to test for the default shipper') . ':';
 			$TestShipperExists = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -234,8 +234,8 @@ if (isset($_POST['Update'])
 
 			} else {
 
-				$sql = 'SELECT shipper_id
-							FROM shippers';
+				$sql = "SELECT shipper_id
+							FROM shippers";
 				$TestShipperExists = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 				if (DB_num_rows($TestShipperExists)>=1){
@@ -284,12 +284,12 @@ If (isset($_POST['ProcessOrder'])) {
 	} else {
 
 /*check the customer's payment terms */
-		$sql = 'SELECT daysbeforedue,
+		$sql = "SELECT daysbeforedue,
 				dayinfollowingmonth
 			FROM debtorsmaster,
 				paymentterms
 			WHERE debtorsmaster.paymentterms=paymentterms.termsindicator
-			AND debtorsmaster.debtorno = '."'" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
+			AND debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
 		$ErrMsg = _('The customer terms cannot be determined') . '. ' . _('This order cannot be processed because');
 		$DbgMsg = _('SQL used to find the customer terms') . ':';
@@ -325,7 +325,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 	$OrderNo = GetNextTransNo(30, $db);
 
-	$HeaderSQL = 'INSERT INTO salesorders (
+	$HeaderSQL = "INSERT INTO salesorders (
 								orderno,
 								debtorno,
 								branchcode,
@@ -351,37 +351,37 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 								quotation,
 								deliverblind)
 							VALUES (
-								'. $OrderNo . ',
-								'."'" . $_SESSION['Items'.$identifier]->DebtorNo . "'".',
-								'."'" . $_SESSION['Items'.$identifier]->Branch . "'".',
-								'."'". DB_escape_string($_SESSION['Items'.$identifier]->CustRef) ."'".',
-								'."'". DB_escape_string($_SESSION['Items'.$identifier]->Comments) ."'".',
-								'."'" . Date("Y-m-d H:i") . "'".',
-								'."'" . $_SESSION['Items'.$identifier]->DefaultSalesType . "'".',
-								' . $_POST['ShipVia'] .',
-								'."'". DB_escape_string($_SESSION['Items'.$identifier]->DeliverTo) . "'".',
-								'."'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd1) . "'".',
-								'."'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd2) . "'".',
-								'."'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd3) . "'".',
-								'."'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd4) . "'".',
-								'."'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd5) . "'".',
-								'."'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd6) . "'".',
-								'."'" . $_SESSION['Items'.$identifier]->PhoneNo . "'".',
-								'."'" . $_SESSION['Items'.$identifier]->Email . "'".',
-								' . $_SESSION['Items'.$identifier]->FreightCost .',
-								'."'" . $_SESSION['Items'.$identifier]->Location ."'".',
-								'."'" . $DelDate . "'".',
-								'."'" . $QuotDate . "'".',
-								'."'" . $ConfDate . "'".',
-								' . $_SESSION['Items'.$identifier]->Quotation . ',
-								' . $_SESSION['Items'.$identifier]->DeliverBlind .'
-								)';
+								'". $OrderNo . "',
+								'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
+								'" . $_SESSION['Items'.$identifier]->Branch . "',
+								'". DB_escape_string($_SESSION['Items'.$identifier]->CustRef) ."',
+								'". DB_escape_string($_SESSION['Items'.$identifier]->Comments) ."',
+								'" . Date("Y-m-d H:i") . "',
+								'" . $_SESSION['Items'.$identifier]->DefaultSalesType . "',
+								'" . $_POST['ShipVia'] ."',
+								'". DB_escape_string($_SESSION['Items'.$identifier]->DeliverTo) . "',
+								'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd1) . "',
+								'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd2) . "',
+								'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd3) . "',
+								'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd4) . "',
+								'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd5) . "',
+								'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd6) . "',
+								'" . $_SESSION['Items'.$identifier]->PhoneNo . "',
+								'" . $_SESSION['Items'.$identifier]->Email . "',
+								'" . $_SESSION['Items'.$identifier]->FreightCost ."',
+								'" . $_SESSION['Items'.$identifier]->Location ."',
+								'" . $DelDate . "',
+								'" . $QuotDate . "',
+								'" . $ConfDate . "',
+								'" . $_SESSION['Items'.$identifier]->Quotation . "',
+								'" . $_SESSION['Items'.$identifier]->DeliverBlind ."'
+								)";
 
 	$ErrMsg = _('The order cannot be added because');
 	$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
 
 
-	$StartOf_LineItemsSQL = 'INSERT INTO salesorderdetails (
+	$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (
 											orderlineno,
 											orderno,
 											stkcode,
@@ -391,21 +391,21 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 											narrative,
 											poline,
 											itemdue)
-										VALUES (';
+										VALUES (";
 	$DbgMsg = _('The SQL that failed was');
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
-		$LineItemsSQL = $StartOf_LineItemsSQL .
-					$StockItem->LineNumber . ',
-					' . $OrderNo . ',
-					'."'" . $StockItem->StockID . "'".',
-					'. $StockItem->Price . ',
-					' . $StockItem->Quantity . ',
-					' . floatval($StockItem->DiscountPercent) . ',
-					'."'" . DB_escape_string($StockItem->Narrative) . "'".',
-					'."'" . $StockItem->POLine . "'".',
-					'."'" . FormatDateForSQL($StockItem->ItemDue) . "'".'
-				)';
+		$LineItemsSQL = $StartOf_LineItemsSQL ."
+					'" . $StockItem->LineNumber . "',
+					'" . $OrderNo . "',
+					'" . $StockItem->StockID . "',
+					'" . $StockItem->Price . "',
+					'" . $StockItem->Quantity . "',
+					'" . floatval($StockItem->DiscountPercent) . "',
+					'" . DB_escape_string($StockItem->Narrative) . "',
+					'" . $StockItem->POLine . "',
+					'" . FormatDateForSQL($StockItem->ItemDue) . "'
+				)";
 		$ErrMsg = _('Unable to add the sales order line');
 		$Ins_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg,true);
 
@@ -483,7 +483,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 												 loccode,
 												 requiredby,
 												 startdate)
-								 VALUES (" . $WONo . ",
+								 VALUES ('" . $WONo . "',
 										'" . $_SESSION['DefaultFactoryLocation'] . "',
 										'" . Date('Y-m-d') . "',
 										'" . Date('Y-m-d'). "')",
@@ -508,10 +508,10 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 											 stockid,
 											 qtyreqd,
 											 stdcost)
-								 VALUES ( " . $WONo . ",
+								 VALUES ( '" . $WONo . "',
 										 '" . $StockItem->StockID . "',
-										 " . $WOQuantity . ",
-										  " . $Cost . ")";
+										 '" . $WOQuantity . "',
+										 '" . $Cost . "')";
 				$ErrMsg = _('The work order item could not be added');
 				$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
@@ -535,12 +535,12 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 								$WOQuantity++;
 								prnMsg(($StockItem->NextSerialNo + $i) . ': ' . _('This automatically generated serial number already exists - it cannot be added to the work order'),'error');
 							} else {
-								$sql = 'INSERT INTO woserialnos (wo,
+								$sql = "INSERT INTO woserialnos (wo,
 																stockid,
 																serialno)
-													VALUES (' . $WONo . ",
+													VALUES ('" . $WONo . "',
 															'" . $StockItem->StockID . "',
-															" . ($StockItem->NextSerialNo + $i)	 . ')';
+															'" . ($StockItem->NextSerialNo + $i) . "')";
 								$ErrMsg = _('The serial number for the work order item could not be added');
 								$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 								$FactoryManagerEmail .= "\n" . ($StockItem->NextSerialNo + $i);
@@ -604,34 +604,34 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 	$Result = DB_Txn_Begin($db);
 
-	$HeaderSQL = 'UPDATE salesorders
-			SET debtorno = '."'" . $_SESSION['Items'.$identifier]->DebtorNo . "'".',
-				branchcode = '."'" . $_SESSION['Items'.$identifier]->Branch . "'".',
-				customerref = '."'". DB_escape_string($_SESSION['Items'.$identifier]->CustRef) ."'".',
-				comments = '."'". DB_escape_string($_SESSION['Items'.$identifier]->Comments) ."'".',
-				ordertype = '."'" . $_SESSION['Items'.$identifier]->DefaultSalesType . "'".',
-				shipvia = ' . $_POST['ShipVia'] .',
-				deliverydate = '."'" . FormatDateForSQL(DB_escape_string($_SESSION['Items'.$identifier]->DeliveryDate)) . "'".',
-				quotedate = '."'" . FormatDateForSQL(DB_escape_string($_SESSION['Items'.$identifier]->QuoteDate)) . "'".',
-				confirmeddate = '."'" . FormatDateForSQL(DB_escape_string($_SESSION['Items'.$identifier]->ConfirmedDate)) . "'".',
-				deliverto = '."'" . DB_escape_string($_SESSION['Items'.$identifier]->DeliverTo) . "'".',
-				deladd1 = '."'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd1) . "'".',
-				deladd2 = '."'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd2) . "'".',
-				deladd3 = '."'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd3) . "'".',
-				deladd4 = '."'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd4) . "'".',
-				deladd5 = '."'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd5) . "'".',
-				deladd6 = '."'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd6) . "'".',
-				contactphone = '."'" . $_SESSION['Items'.$identifier]->PhoneNo . "'".',
-				contactemail = '."'" . $_SESSION['Items'.$identifier]->Email . "'".',
-				freightcost = ' . $_SESSION['Items'.$identifier]->FreightCost .',
-				fromstkloc = '."'" . $_SESSION['Items'.$identifier]->Location ."'".',
-				deliverydate = '."'" . $DelDate . "'".',
-				quotedate = '."'" . $QuotDate . "'".',
-				confirmeddate = '."'" . $ConfDate . "'".',
-				printedpackingslip = ' . $_POST['ReprintPackingSlip'] . ',
-				quotation = ' . $_SESSION['Items'.$identifier]->Quotation . ',
-				deliverblind = ' . $_SESSION['Items'.$identifier]->DeliverBlind . '
-			WHERE salesorders.orderno=' . $_SESSION['ExistingOrder'];
+	$HeaderSQL = "UPDATE salesorders
+			SET debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "',
+				branchcode = '" . $_SESSION['Items'.$identifier]->Branch . "',
+				customerref = '". DB_escape_string($_SESSION['Items'.$identifier]->CustRef) ."',
+				comments = '". DB_escape_string($_SESSION['Items'.$identifier]->Comments) ."',
+				ordertype = '" . $_SESSION['Items'.$identifier]->DefaultSalesType . "',
+				shipvia = '" . $_POST['ShipVia'] . "',
+				deliverydate = '" . FormatDateForSQL(DB_escape_string($_SESSION['Items'.$identifier]->DeliveryDate)) . "',
+				quotedate = '" . FormatDateForSQL(DB_escape_string($_SESSION['Items'.$identifier]->QuoteDate)) . "',
+				confirmeddate = '" . FormatDateForSQL(DB_escape_string($_SESSION['Items'.$identifier]->ConfirmedDate)) . "',
+				deliverto = '" . DB_escape_string($_SESSION['Items'.$identifier]->DeliverTo) . "',
+				deladd1 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd1) . "',
+				deladd2 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd2) . "',
+				deladd3 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd3) . "',
+				deladd4 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd4) . "',
+				deladd5 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd5) . "',
+				deladd6 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd6) . "',
+				contactphone = '" . $_SESSION['Items'.$identifier]->PhoneNo . "',
+				contactemail = '" . $_SESSION['Items'.$identifier]->Email . "',
+				freightcost = '" . $_SESSION['Items'.$identifier]->FreightCost ."',
+				fromstkloc = '" . $_SESSION['Items'.$identifier]->Location ."',
+				deliverydate = '" . $DelDate . "',
+				quotedate = '" . $QuotDate . "',
+				confirmeddate = '" . $ConfDate . "',
+				printedpackingslip = '" . $_POST['ReprintPackingSlip'] . "',
+				quotation = '" . $_SESSION['Items'.$identifier]->Quotation . "',
+				deliverblind = '" . $_SESSION['Items'.$identifier]->DeliverBlind . "'
+			WHERE salesorders.orderno='" . $_SESSION['ExistingOrder'] ."'";
 
 	$DbgMsg = _('The SQL that was used to update the order and failed was');
 	$ErrMsg = _('The order cannot be updated because');
@@ -648,14 +648,14 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 			$Completed = 0;
 		}
 
-		$LineItemsSQL = 'UPDATE salesorderdetails SET unitprice='  . $StockItem->Price . ',
-								quantity=' . $StockItem->Quantity . ',
-								discountpercent=' . floatval($StockItem->DiscountPercent) . ',
-								completed=' . $Completed . ',
-								poline='."'" . $StockItem->POLine . "'".',
-								itemdue='."'" . FormatDateForSQL($StockItem->ItemDue) . "'".'
-					WHERE salesorderdetails.orderno=' . $_SESSION['ExistingOrder'] . '
-					AND salesorderdetails.orderlineno='."'" . $StockItem->LineNumber . "'";
+		$LineItemsSQL = "UPDATE salesorderdetails SET unitprice='"  . $StockItem->Price . "',
+								quantity='" . $StockItem->Quantity . "',
+								discountpercent='" . floatval($StockItem->DiscountPercent) . "',
+								completed='" . $Completed . "',
+								poline='" . $StockItem->POLine . "',
+								itemdue='" . FormatDateForSQL($StockItem->ItemDue) . "'
+					WHERE salesorderdetails.orderno='" . $_SESSION['ExistingOrder'] . "'
+					AND salesorderdetails.orderlineno='" . $StockItem->LineNumber . "'";
 
 		$DbgMsg = _('The SQL that was used to modify the order line and failed was');
 		$ErrMsg = _('The updated order line cannot be modified because');
