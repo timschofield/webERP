@@ -59,11 +59,12 @@ if (isset($_POST['submit'])) {
 							discountrate)
 					VALUES('" . $_POST['SalesType'] . "',
 						'" . $_POST['DiscountCategory'] . "',
-						" . $_POST['QuantityBreak'] . ",
-						" . ($_POST['DiscountRate']/100) . ')';
+						'" . $_POST['QuantityBreak'] . "',
+						'" . ($_POST['DiscountRate']/100) . "')";
 
 		$result = DB_query($sql,$db);
 		prnMsg( _('The discount matrix record has been added'),'success');
+		echo '<br>';
 		unset($_POST['DiscountCategory']);
 		unset($_POST['SalesType']);
 		unset($_POST['QuantityBreak']);
@@ -75,16 +76,17 @@ if (isset($_POST['submit'])) {
 	$sql="DELETE FROM discountmatrix
 		WHERE discountcategory='" .$_GET['DiscountCategory'] . "'
 		AND salestype='" . $_GET['SalesType'] . "'
-		AND quantitybreak=" . $_GET['QuantityBreak'];
+		AND quantitybreak='" . $_GET['QuantityBreak']."'";
 
 	$result = DB_query($sql,$db);
 	prnMsg( _('The discount matrix record has been deleted'),'success');
+	echo '<br>';
 }
 
 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 
-echo '<table>';
+echo '<table class=selection>';
 
 $sql = 'SELECT typeabbrev,
 		sales_type
@@ -133,7 +135,7 @@ echo '<tr><td>' . _('Discount Rate') . " (%):</td><td><input class='number' tabi
 		"type='text' name='DiscountRate' size=4 maxlength=4></td></tr>";
 echo '</table><br>';
 
-echo "<div class='centre'><input tabindex=5 type='submit' name='submit' value='" . _('Enter Information') . "'></div><hr>";
+echo "<div class='centre'><input tabindex=5 type='submit' name='submit' value='" . _('Enter Information') . "'></div><br>";
 
 $sql = 'SELECT sales_type,
 		salestype,
@@ -148,7 +150,7 @@ $sql = 'SELECT sales_type,
 
 $result = DB_query($sql,$db);
 
-echo '<table>';
+echo '<table class=selection>';
 echo "<tr><th>" . _('Sales Type') . "</th>
 	<th>" . _('Discount Category') . "</th>
 	<th>" . _('Quantity Break') . "</th>
