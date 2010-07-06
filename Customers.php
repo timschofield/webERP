@@ -171,17 +171,14 @@ if (isset($_POST['submit'])) {
 					address4='" . $_POST['Address4'] . "',
 					address5='" . $_POST['Address5'] . "',
 					address6='" . $_POST['Address6'] . "',
-					telephone='".$_POST['Phone']."',
-					fax = '".$_POST['Fax']."',
-					email = '".$_POST['Email']."',
 					currcode='" . $_POST['CurrCode'] . "',
-					clientsince='$SQL_ClientSince',
+					clientsince='" . $SQL_ClientSince. "',
 					holdreason='" . $_POST['HoldReason'] . "',
 					paymentterms='" . $_POST['PaymentTerms'] . "',
-					discount=" . ($_POST['Discount'])/100 . ",
+					discount='" . ($_POST['Discount'])/100 . "',
 					discountcode='" . $_POST['DiscountCode'] . "',
-					pymtdiscount=" . ($_POST['PymtDiscount'])/100 . ",
-					creditlimit=" . $_POST['CreditLimit'] . ",
+					pymtdiscount='" . ($_POST['PymtDiscount'])/100 . "',
+					creditlimit='" . $_POST['CreditLimit'] . "',
 					salestype = '" . $_POST['SalesType'] . "',
 					invaddrbranch='" . $_POST['AddrInvBranch'] . "',
 					taxref='" . $_POST['TaxRef'] . "',
@@ -205,16 +202,13 @@ if (isset($_POST['submit'])) {
 					address4='" . $_POST['Address4'] . "',
 					address5='" . $_POST['Address5'] . "',
 					address6='" . $_POST['Address6'] . "',
-					telephone='".$_POST['Phone']."',
-					fax = '".$_POST['Fax']."',
-					email = '".$_POST['Email']."',
-					clientsince='$SQL_ClientSince',
+					clientsince='" . $SQL_ClientSince . "',
 					holdreason='" . $_POST['HoldReason'] . "',
 					paymentterms='" . $_POST['PaymentTerms'] . "',
-					discount=" . ($_POST['Discount'])/100 . ",
+					discount='" . ($_POST['Discount'])/100 . "',
 					discountcode='" . $_POST['DiscountCode'] . "',
-					pymtdiscount=" . ($_POST['PymtDiscount'])/100 . ",
-					creditlimit=" . $_POST['CreditLimit'] . ",
+					pymtdiscount='" . ($_POST['PymtDiscount'])/100 . "',
+					creditlimit='" . $_POST['CreditLimit'] . "',
 					salestype = '" . $_POST['SalesType'] . "',
 					invaddrbranch='" . $_POST['AddrInvBranch'] . "',
 					taxref='" . $_POST['TaxRef'] . "',
@@ -251,9 +245,6 @@ if (isset($_POST['submit'])) {
 							address4,
 							address5,
 							address6,
-							telephone,
-							fax,
-							email,
 							currcode,
 							clientsince,
 							holdreason,
@@ -275,17 +266,14 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['Address4'] . "',
 					'" . $_POST['Address5'] . "',
 					'" . $_POST['Address6'] . "',
-					'".$_POST['Phone']."',
-					'".$_POST['Fax']."',
-					'".$_POST['Email']."',
 					'" . $_POST['CurrCode'] . "',
 					'" . $SQL_ClientSince . "',
-					" . $_POST['HoldReason'] . ",
+					'" . $_POST['HoldReason'] . "',
 					'" . $_POST['PaymentTerms'] . "',
-					" . ($_POST['Discount'])/100 . ",
+					'" . ($_POST['Discount'])/100 . "',
 					'" . $_POST['DiscountCode'] . "',
-					" . ($_POST['PymtDiscount'])/100 . ",
-					" . $_POST['CreditLimit'] . ",
+					'" . ($_POST['PymtDiscount'])/100 . "',
+					'" . $_POST['CreditLimit'] . "',
 					'" . $_POST['SalesType'] . "',
 					'" . $_POST['AddrInvBranch'] . "',
 					'" . $_POST['TaxRef'] . "',
@@ -363,6 +351,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db);
 		prnMsg( _('Customer') . ' ' . $_POST['DebtorNo'] . ' ' . _('has been deleted - together with all the associated contacts') . ' !','success');
 		include('includes/footer.inc');
+		unset($_SESSION['CustomerID']);
 		exit;
 	} //end if Delete Customer
 }
@@ -468,7 +457,7 @@ if (!isset($DebtorNo)) {
 
 	$DataError =0;
 
-	echo '<table border=2 cellspacing=4><tr><td><table>';
+	echo '<table class=selection cellspacing=4><tr><td valign=top><table class=selection>';
 
 	/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
 	then provide an input box for the DebtorNo to manually assigned */
@@ -497,41 +486,41 @@ if (!isset($DebtorNo)) {
 	echo '<tr><td>' . _('Address Line 6') . ':</td>
 		<td><input tabindex=8 type="Text" name="Address6" size=17 maxlength=15></td></tr>';
 
-  echo '</table></td><td><table>';
+  echo '</table></td><td><table class=selection>';
 
 // Show Sales Type drop down list
 	$result=DB_query('SELECT typeabbrev, sales_type FROM salestypes ',$db);
 	if (DB_num_rows($result)==0){
-               $DataError =1;
-               echo '<a href="SalesTypes.php?" target="_parent">Setup Types</a>';
-               echo '<tr><td colspan=2>' . prnMsg(_('No sales types/price lists defined'),'error') . '</td></tr>';
-       } else {
-               echo '<tr><td>' . _('Sales Type/Price List') . ':</td>
-                       <td><select tabindex=9 name="SalesType">';
+			   $DataError =1;
+			   echo '<a href="SalesTypes.php?" target="_parent">Setup Types</a>';
+			   echo '<tr><td colspan=2>' . prnMsg(_('No sales types/price lists defined'),'error') . '</td></tr>';
+	   } else {
+			   echo '<tr><td>' . _('Sales Type/Price List') . ':</td>
+					   <td><select tabindex=9 name="SalesType">';
 
-               while ($myrow = DB_fetch_array($result)) {
-                       echo '<option value="'. $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
-               } //end while loopre
-               DB_data_seek($result,0);
+			   while ($myrow = DB_fetch_array($result)) {
+					   echo '<option value="'. $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+			   } //end while loopre
+			   DB_data_seek($result,0);
 			   echo '</select></td></tr>';
-       }
+	   }
 
 // Show Customer Type drop down list
-       $result=DB_query('SELECT typeid, typename FROM debtortype ',$db);
-       if (DB_num_rows($result)==0){
-               $DataError =1;
-               echo '<a href="SalesTypes.php?" target="_parent">Setup Types</a>';
-               echo '<tr><td colspan=2>' . prnMsg(_('No Customer types/price lists defined'),'error') . '</td></tr>';
-	        } else {
-                echo '<tr><td>' . _('Customer Type') . ':</td>
-                        <td><select tabindex=9 name="typeid">';
+	   $result=DB_query('SELECT typeid, typename FROM debtortype ',$db);
+	   if (DB_num_rows($result)==0){
+			   $DataError =1;
+			   echo '<a href="SalesTypes.php?" target="_parent">Setup Types</a>';
+			   echo '<tr><td colspan=2>' . prnMsg(_('No Customer types/price lists defined'),'error') . '</td></tr>';
+			} else {
+				echo '<tr><td>' . _('Customer Type') . ':</td>
+						<td><select tabindex=9 name="typeid">';
 
-                while ($myrow = DB_fetch_array($result)) {
-                        echo '<option value="'. $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
-                } //end while loop
-                DB_data_seek($result,0);
-                echo '</select></td></tr>';
-        }
+				while ($myrow = DB_fetch_array($result)) {
+						echo '<option value="'. $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+				} //end while loop
+				DB_data_seek($result,0);
+				echo '</select></td></tr>';
+		}
 
 
 
@@ -616,7 +605,7 @@ if (!isset($DebtorNo)) {
 
 	echo'</table></td></tr></table>';
 	if ($DataError ==0){
-		echo "<div class='centre'><input tabindex=20 type='Submit' name='submit' value='" . _('Add New Customer') . "'><br><input tabindex=21 type=submit action=RESET VALUE='" . _('Reset') . "'></div>";
+		echo "<br><div class='centre'><input tabindex=20 type='Submit' name='submit' value='" . _('Add New Customer') . "'>&nbsp;<input tabindex=21 type=submit action=RESET VALUE='" . _('Reset') . "'></div>";
 	}
 	echo '</form>';
 
@@ -625,7 +614,7 @@ if (!isset($DebtorNo)) {
 //DebtorNo exists - either passed when calling the form or from the form itself
 
 	echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID ."'>";
-	echo '<table border=2 cellspacing=4><tr><td><table>';
+	echo '<table class=selection cellspacing=4><tr><td valign=top><table class=selection>';
 
 	if (!isset($_POST['New'])) {
 		$sql = "SELECT debtorsmaster.debtorno,
@@ -715,7 +704,7 @@ if (!isset($DebtorNo)) {
 		echo '<tr><td>' . _('Address Line 4 (Postal Code)') . ':</td><td>' . $_POST['Address4'] . '</td></tr>';
 		echo '<tr><td>' . _('Address Line 5') . ':</td><td>' . $_POST['Address5'] . '</td></tr>';
 		echo '<tr><td>' . _('Address Line 6') . ':</td><td>' . $_POST['Address6'] . '</td></tr>';
-		echo '</table></td><td><table>';
+		echo '</table></td><td><table class=selection>';
 	} else {
 		echo '<tr><td>' . _('Customer Name') . ':</td>
 			<td><input ' . (in_array('CustName',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="CustName" value="' . $_POST['CustName'] . '" size=42 maxlength=40></td></tr>';
@@ -737,13 +726,13 @@ if (!isset($DebtorNo)) {
 			<td><input ' . (in_array('Address5',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Address5" size=42 maxlength=40 value="' . $_POST['Address5'] . '"></td></tr>';
 		echo '<tr><td>' . _('Address Line 6') . ':</td>
 			<td><input ' . (in_array('Address6',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Address6" size=42 maxlength=40 value="' . $_POST['Address6'] . '"></td></tr>';
-		echo '</table></td><td><table>';
+		echo '</table></td><td><table class=selection>';
 	}
 // Select sales types for drop down list
 	if (isset($_GET['Modify'])) {
-        $result=DB_query('SELECT sales_type FROM salestypes WHERE typeabbrev="'.$_POST['SalesType'].'"',$db);
+		$result=DB_query('SELECT sales_type FROM salestypes WHERE typeabbrev="'.$_POST['SalesType'].'"',$db);
 		$myrow=DB_fetch_array($result);
-        echo '<tr><td>' . _('Sales Type') . ":</td><td>".$myrow['sales_type']."</td></tr>";
+		echo '<tr><td>' . _('Sales Type') . ":</td><td>".$myrow['sales_type']."</td></tr>";
 	} else {
 		$result=DB_query('SELECT typeabbrev, sales_type FROM salestypes ',$db);
 		echo '<tr><td>' . _('Sales Type') . '/' . _('Price List') . ":</td>
@@ -760,21 +749,21 @@ if (!isset($DebtorNo)) {
 
 // Select Customer types for drop down list for SELECT/UPDATE
 	if (isset($_GET['Modify'])) {
-        $result=DB_query('SELECT typename FROM debtortype WHERE typeid='.$_POST['typeid'],$db);
+		$result=DB_query("SELECT typename FROM debtortype WHERE typeid='".$_POST['typeid']."'",$db);
 		$myrow=DB_fetch_array($result);
-        echo '<tr><td>' . _('Customer Type') . ":</td><td>".$myrow['typename']."</td></tr>";
+		echo '<tr><td>' . _('Customer Type') . ":</td><td>".$myrow['typename']."</td></tr>";
 	} else {
-        $result=DB_query('SELECT typeid, typename FROM debtortype ORDER BY typename',$db);
-        echo '<tr><td>' . _('Customer Type') . ":</td>
-                <td><select name='typeid'>";
-        while ($myrow = DB_fetch_array($result)) {
-                if ($_POST['typeid']==$myrow['typeid']){
-                        echo "<option selected VALUE='". $myrow['typeid'] . "'>" . $myrow['typename'];
-                } else {
-                        echo "<option VALUE='". $myrow['typeid'] . "'>" . $myrow['typename'];
-                }
-        } //end while loop
-        DB_data_seek($result,0);
+		$result=DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename",$db);
+		echo '<tr><td>' . _('Customer Type') . ":</td>
+				<td><select name='typeid'>";
+		while ($myrow = DB_fetch_array($result)) {
+				if ($_POST['typeid']==$myrow['typeid']){
+						echo "<option selected VALUE='". $myrow['typeid'] . "'>" . $myrow['typename'];
+				} else {
+						echo "<option VALUE='". $myrow['typeid'] . "'>" . $myrow['typename'];
+				}
+		} //end while loop
+		DB_data_seek($result,0);
 	}
 
 	if (isset($_GET['Modify'])) {
@@ -802,9 +791,9 @@ if (!isset($DebtorNo)) {
 	}
 
 	if (isset($_GET['Modify'])) {
-        $result=DB_query('SELECT terms FROM paymentterms WHERE termsindicator='.$_POST['PaymentTerms'],$db);
+		$result=DB_query("SELECT terms FROM paymentterms WHERE termsindicator='".$_POST['PaymentTerms']."'",$db);
 		$myrow=DB_fetch_array($result);
-        echo '<tr><td>' . _('Payment Terms') . ":</td><td>".$myrow['terms']."</td></tr>";
+		echo '<tr><td>' . _('Payment Terms') . ":</td><td>".$myrow['terms']."</td></tr>";
 	} else {
 		$result=DB_query('SELECT terms, termsindicator FROM paymentterms',$db);
 		echo '<tr><td>' . _('Payment Terms') . ":</td>
@@ -821,9 +810,9 @@ if (!isset($DebtorNo)) {
 	}
 
 	if (isset($_GET['Modify'])) {
-        $result=DB_query('SELECT reasondescription FROM holdreasons WHERE reasoncode="'.$_POST['HoldReason'].'"',$db);
+		$result=DB_query('SELECT reasondescription FROM holdreasons WHERE reasoncode="'.$_POST['HoldReason'].'"',$db);
 		$myrow=DB_fetch_array($result);
-        echo '<tr><td>' . _('Credit Status') . ":</td><td>".$myrow['reasondescription']."</td></tr>";
+		echo '<tr><td>' . _('Credit Status') . ":</td><td>".$myrow['reasondescription']."</td></tr>";
 	} else {
 		$result=DB_query('SELECT reasoncode, reasondescription FROM holdreasons',$db);
 		echo '<tr><td>' . _('Credit Status') . ":</td>
@@ -840,9 +829,9 @@ if (!isset($DebtorNo)) {
 	}
 
 	if (isset($_GET['Modify'])) {
-        $result=DB_query('SELECT currency FROM currencies WHERE currabrev="'.$_POST['CurrCode'].'"',$db);
+		$result=DB_query('SELECT currency FROM currencies WHERE currabrev="'.$_POST['CurrCode'].'"',$db);
 		$myrow=DB_fetch_array($result);
-        echo '<tr><td>' . _('Credit Status') . ":</td><td>".$myrow['currency']."</td></tr>";
+		echo '<tr><td>' . _('Credit Status') . ":</td><td>".$myrow['currency']."</td></tr>";
 	} else {
 		$result=DB_query('SELECT currency, currabrev FROM currencies',$db);
 		echo '<tr><td>' . _('Customers Currency') . ":</td>
@@ -901,7 +890,7 @@ if (!isset($DebtorNo)) {
   	$sql = 'SELECT * FROM custcontacts where debtorno="'.$DebtorNo.'" ORDER BY contid';
 	$result = DB_query($sql,$db);
 
-	echo '<table border=1>';
+	echo '<table class=selection>';
 	if (isset($_GET['Modify'])) {
 		echo '<tr>
 			<th>' . _('Name') . '</th>
@@ -964,16 +953,16 @@ if (!isset($DebtorNo)) {
 		//	echo "<input type='Submit' name='addcontact' VALUE='" . _('ADD Contact') . "'>";
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?'.SID.'&DebtorNo="'.$DebtorNo.'"&ID='.$ID.'&Edit'.$Edit.'>';
 	if (isset($Edit) and $Edit!='') {
-		$SQLcustcontacts='SELECT * from custcontacts
-							WHERE debtorno="'.$DebtorNo.'"
-							and contid='.$ID;
+		$SQLcustcontacts="SELECT * from custcontacts
+							WHERE debtorno='".$DebtorNo."'
+							and contid='".$ID."'";
 		$resultcc = DB_query($SQLcustcontacts,$db);
 		$myrowcc = DB_fetch_array($resultcc);
 		$_POST['custname']=$myrowcc['contactname'];
 		$_POST['role']=$myrowcc['role'];
 		$_POST['phoneno']=$myrowcc['phoneno'];
 		$_POST['notes']=$myrowcc['notes'];
-		echo '<table border=1>';
+		echo '<table class=selection>';
 		echo "<tr>
 				<td>" . _('Name') . "</td><td><input type=text name='custname' value='".$_POST['custname']."'></td></tr><tr>
 				<td>" . _('Role') . "</td><td><input type=text name='role' value='".$_POST['role']."'></td></tr><tr>
@@ -1013,10 +1002,11 @@ if (!isset($DebtorNo)) {
 	echo'</td></tr></table>';
 
 	if (isset($_POST['New']) and $_POST['New']) {
-		echo "<div class='centre'><input type='Submit' name='submit' VALUE='" . _('Add New Customer') . "'><br><input type=submit name='reset' VALUE='" . _('Reset') . "'></form>";
+		echo "<div class='centre'><input type='Submit' name='submit' VALUE='" . _('Add New Customer') .
+			"'>&nbsp;<input type=submit name='reset' VALUE='" . _('Reset') . "'></div></form>";
 	} else if (!isset($_GET['Modify'])){
-		echo "<hr><div class='centre'><input type='Submit' name='submit' VALUE='" . _('Update Customer') . "'>";
-		echo '<p><input type="Submit" name="delete" VALUE="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';
+		echo "<br><div class='centre'><input type='Submit' name='submit' VALUE='" . _('Update Customer') . "'>";
+		echo '&nbsp;<input type="Submit" name="delete" VALUE="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';
 	}
 	if(isset($_POST['addcontact']) AND (isset($_POST['addcontact'])!=''))
 	{
