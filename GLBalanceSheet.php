@@ -17,29 +17,30 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	/*Show a form to allow input of criteria for TB to show */
 	include('includes/header.inc');
-echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . _('Balance Sheet') . '</div>';
-echo '<div class="page_help_text">'
-. _('Balance Sheet (or statement of financial position) is a summary  of balances. Assets, liabilities and ownership equity are listed as of a specific date, such as the end of its financial year. Of the four basic financial statements, the balance sheet is the only statement which applies to a single point in time.') . '<br>'
-. _('The balance sheet has three parts: assets, liabilities and ownership equity. The main categories of assets are listed first and are followed by the liabilities. The difference between the assets and the liabilities is known as equity or the net assets or the net worth or capital of the company and according to the accounting equation, net worth must equal assets minus liabilities.') . '<br>'
-. _('webERP is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.') . '</div>';
+	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="'
+		. _('Print') . '" alt="">' . ' ' . _('Balance Sheet') . '</p></div>';
+	echo '<div class="page_help_text">'
+	. _('Balance Sheet (or statement of financial position) is a summary  of balances. Assets, liabilities and ownership equity are listed as of a specific date, such as the end of its financial year. Of the four basic financial statements, the balance sheet is the only statement which applies to a single point in time.') . '<br>'
+	. _('The balance sheet has three parts: assets, liabilities and ownership equity. The main categories of assets are listed first and are followed by the liabilities. The difference between the assets and the liabilities is known as equity or the net assets or the net worth or capital of the company and according to the accounting equation, net worth must equal assets minus liabilities.') . '<br>'
+	. _('webERP is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.') . '</div>';
 
 	echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	echo '<p><table class="table"><tr><td>'._('Select the balance date').":</td><td><select Name='BalancePeriodEnd'>";
+	echo '<p><table class="selection"><tr><td>'._('Select the balance date').":</td><td><select Name='BalancePeriodEnd'>";
 
 	$periodno=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
-	$sql = 'SELECT lastdate_in_period FROM periods WHERE periodno='.$periodno;
+	$sql = "SELECT lastdate_in_period FROM periods WHERE periodno='".$periodno . "'";
 	$result = DB_query($sql,$db);
 	$myrow=DB_fetch_array($result, $db);
 	$lastdate_in_period=$myrow[0];
-	
+
 	$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
 	$Periods = DB_query($sql,$db);
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
 		if( $myrow['periodno']== $periodno){
-			echo '<option selected VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($lastdate_in_period);
+			echo '<option selected value=' . $myrow['periodno'] . '>' . ConvertSQLDate($lastdate_in_period);
 		} else {
-			echo '<option VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']);
+			echo '<option value=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']);
 		}
 	}
 
@@ -69,15 +70,15 @@ echo '<div class="page_help_text">'
 
 	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
 
-	$sql = 'SELECT lastdate_in_period FROM periods WHERE periodno=' . $_POST['BalancePeriodEnd'];
+	$sql = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['BalancePeriodEnd'] . "'";
 	$PrdResult = DB_query($sql, $db);
 	$myrow = DB_fetch_row($PrdResult);
 	$BalanceDate = ConvertSQLDate($myrow[0]);
 
 	/*Calculate B/Fwd retained earnings */
 
-	$SQL = 'SELECT Sum(CASE WHEN chartdetails.period=' . $_POST['BalancePeriodEnd'] . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS accumprofitbfwd,
-			Sum(CASE WHEN chartdetails.period=' . ($_POST['BalancePeriodEnd'] - 12) . " THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lyaccumprofitbfwd
+	$SQL = "SELECT Sum(CASE WHEN chartdetails.period='" . $_POST['BalancePeriodEnd'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS accumprofitbfwd,
+			Sum(CASE WHEN chartdetails.period='" . ($_POST['BalancePeriodEnd'] - 12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lyaccumprofitbfwd
 		FROM chartmaster INNER JOIN accountgroups
 		ON chartmaster.group_ = accountgroups.groupname INNER JOIN chartdetails
 		ON chartmaster.accountcode= chartdetails.accountcode
@@ -98,13 +99,13 @@ echo '<div class="page_help_text">'
 
 	$AccumProfitRow = DB_fetch_array($AccumProfitResult); /*should only be one row returned */
 
-	$SQL = 'SELECT accountgroups.sectioninaccounts,
+	$SQL = "SELECT accountgroups.sectioninaccounts,
 			accountgroups.groupname,
 			accountgroups.parentgroupname,
 			chartdetails.accountcode ,
 			chartmaster.accountname,
-			Sum(CASE WHEN chartdetails.period=' . $_POST['BalancePeriodEnd'] . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS balancecfwd,
-			Sum(CASE WHEN chartdetails.period=' . ($_POST['BalancePeriodEnd'] - 12) . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lybalancecfwd
+			Sum(CASE WHEN chartdetails.period='" . $_POST['BalancePeriodEnd'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS balancecfwd,
+			Sum(CASE WHEN chartdetails.period='" . ($_POST['BalancePeriodEnd'] - 12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lybalancecfwd
 		FROM chartmaster INNER JOIN accountgroups
 		ON chartmaster.group_ = accountgroups.groupname INNER JOIN chartdetails
 		ON chartmaster.accountcode= chartdetails.accountcode
@@ -118,7 +119,7 @@ echo '<div class="page_help_text">'
 		ORDER BY accountgroups.sectioninaccounts,
 			accountgroups.sequenceintb,
 			accountgroups.groupname,
-			chartdetails.accountcode';
+			chartdetails.accountcode";
 
 	$AccountsResult = DB_query($SQL,$db);
 
@@ -201,7 +202,7 @@ echo '<div class="page_help_text">'
 
 			$Section = $myrow['sectioninaccounts'];
 			if ($_POST['Detail']=='Detailed'){
-				
+
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$myrow['sectioninaccounts']]);
 				$YPos -= (2 * $line_height);
 
@@ -304,15 +305,15 @@ echo '<div class="page_help_text">'
 
 	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
 
-	$sql = 'SELECT lastdate_in_period FROM periods WHERE periodno=' . $_POST['BalancePeriodEnd'];
+	$sql = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['BalancePeriodEnd'] . "'";
 	$PrdResult = DB_query($sql, $db);
 	$myrow = DB_fetch_row($PrdResult);
 	$BalanceDate = ConvertSQLDate($myrow[0]);
 
 	/*Calculate B/Fwd retained earnings */
 
-	$SQL = 'SELECT Sum(CASE WHEN chartdetails.period=' . $_POST['BalancePeriodEnd'] . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS accumprofitbfwd,
-			Sum(CASE WHEN chartdetails.period=' . ($_POST['BalancePeriodEnd'] - 12) . " THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lyaccumprofitbfwd
+	$SQL = "SELECT Sum(CASE WHEN chartdetails.period='" . $_POST['BalancePeriodEnd'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS accumprofitbfwd,
+			Sum(CASE WHEN chartdetails.period='" . ($_POST['BalancePeriodEnd'] - 12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lyaccumprofitbfwd
 		FROM chartmaster INNER JOIN accountgroups
 		ON chartmaster.group_ = accountgroups.groupname INNER JOIN chartdetails
 		ON chartmaster.accountcode= chartdetails.accountcode
@@ -322,13 +323,13 @@ echo '<div class="page_help_text">'
 
 	$AccumProfitRow = DB_fetch_array($AccumProfitResult); /*should only be one row returned */
 
-	$SQL = 'SELECT accountgroups.sectioninaccounts, 
+	$SQL = "SELECT accountgroups.sectioninaccounts,
 			accountgroups.groupname,
 			accountgroups.parentgroupname,
 			chartdetails.accountcode,
 			chartmaster.accountname,
-			Sum(CASE WHEN chartdetails.period=' . $_POST['BalancePeriodEnd'] . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS balancecfwd,
-			Sum(CASE WHEN chartdetails.period=' . ($_POST['BalancePeriodEnd'] - 12) . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lybalancecfwd
+			Sum(CASE WHEN chartdetails.period='" . $_POST['BalancePeriodEnd'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS balancecfwd,
+			Sum(CASE WHEN chartdetails.period='" . ($_POST['BalancePeriodEnd'] - 12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lybalancecfwd
 		FROM chartmaster INNER JOIN accountgroups
 		ON chartmaster.group_ = accountgroups.groupname INNER JOIN chartdetails
 		ON chartmaster.accountcode= chartdetails.accountcode
@@ -342,14 +343,13 @@ echo '<div class="page_help_text">'
 		ORDER BY accountgroups.sectioninaccounts,
 			accountgroups.sequenceintb,
 			accountgroups.groupname,
-			chartdetails.accountcode';
+			chartdetails.accountcode";
 
 	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'));
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/preview.gif" title="' . _('Search') . '" alt=""> ' . _('HTML View') . '</p>';
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/preview.gif" title="' . _('Search') . '" alt=""> ' . _('HTML View') . '<a href="GLBalanceSheet.php"> ' . _('Return') . '</a></p>';
-        echo '<div class=invoice><table class="table1"><div class="centre"><font size=4 color=BLUE><b>' ._('Balance Sheet as at') . ' ' . $BalanceDate .'</b></font></div><br>';
-
-	echo '<table cellpadding=2>';
+	echo '<div class=invoice><table class="selection"><tr><th colspan=6><div class="centre"><font size=4 color=blue><b>' .
+		_('Balance Sheet as at') . ' ' . $BalanceDate .'</b></font></div></th></tr>';
 
 	if ($_POST['Detail']=='Detailed'){
 		$TableHeader = "<tr>
@@ -465,7 +465,7 @@ echo '<div class="page_help_text">'
 					<td><hr></td>
 					</tr>';
 				}
-	
+
 				printf('<tr>
 					<td colspan=3><font size=4>%s</font></td>
 					<td class=number>%s</td>
@@ -480,7 +480,7 @@ echo '<div class="page_help_text">'
 			$SectionBalanceLY = 0;
 			$SectionBalance = 0;
 			$Section = $myrow['sectioninaccounts'];
-			
+
 
 			if ($_POST['Detail']=='Detailed'){
 				printf('<tr>
@@ -495,7 +495,7 @@ echo '<div class="page_help_text">'
 			if ($ActGrp!='' AND $myrow['parentgroupname']==$ActGrp){
 				$Level++;
 			}
-		
+
 			if ($_POST['Detail']=='Detailed'){
 				$ActGrp = $myrow['groupname'];
 				printf('<tr>
@@ -548,9 +548,9 @@ echo '<div class="page_help_text">'
 				number_format($LYAccountBalance)
 				);
 			$j++;
-			
+
 		}
-		
+
 	}
 	//end of loop
 
@@ -595,7 +595,7 @@ echo '<div class="page_help_text">'
 		number_format($GroupTotal[$Level]),
 		number_format($LYGroupTotal[$Level])
 		);
-	
+
 	if ($_POST['Detail']=='Detailed'){
 		echo '<tr>
 		<td colspan=2></td>
@@ -622,7 +622,7 @@ echo '<div class="page_help_text">'
 	$Sections[$Section],
 	number_format($SectionBalance),
 	number_format($SectionBalanceLY));
-	
+
 	$Section = $myrow['sectioninaccounts'];
 
 	if (isset($myrow['sectioninaccounts']) and $_POST['Detail']=='Detailed'){
@@ -631,7 +631,7 @@ echo '<div class="page_help_text">'
 			</tr>',
 			$Sections[$myrow['sectioninaccounts']]);
 	}
-	
+
 	echo '<tr>
 		<td colspan=3></td>
       		<td><hr></td>
@@ -656,7 +656,7 @@ echo '<div class="page_help_text">'
 		</tr>';
 
 	echo '</table>';
-	echo "<div class='centre'><input type=submit Name='SelectADifferentPeriod' Value='"._('Select A Different Balance Date')."'></div>";
+	echo "<br><div class='centre'><input type=submit Name='SelectADifferentPeriod' Value='"._('Select A Different Balance Date')."'></div>";
 }
 
 echo '</form>';
