@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 					map_height='" . $_POST['map_height'] . "',
 					map_width='" . $_POST['map_width'] . "',
 					map_host='" . $_POST['map_host'] . "'
-					WHERE geocodeid = $SelectedParam";
+					WHERE geocodeid = '" . $SelectedParam . "'";
 		}
 		$msg = _('The geocode status record has been updated');
 
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 
 		if (isset($_POST['geocode_key']) and $_POST['geocode_key']>0){
 
-			$sql = 'INSERT INTO geocode_param (
+			$sql = "INSERT INTO geocode_param (
 					geocodeid,
 					geocode_key,
 					center_long,
@@ -72,16 +72,17 @@ if (isset($_POST['submit'])) {
 					map_height,
 					map_width,
 					map_host)
-					VALUES (' . "'
-					', '" .
-					$_POST['geocode_key'] . "', '" .
-					$_POST['center_long'] . "', '" .
-					$_POST['center_lat'] . "', '" .
-					$_POST['map_height'] . "', '" .
-					$_POST['map_width'] . "', '" .
-					$_POST['map_host'] . "')";
+					VALUES (" . "
+					'',
+					'" . $_POST['geocode_key'] . "',
+					'" . $_POST['center_long'] . "',
+					'" . $_POST['center_lat'] . "',
+					'" . $_POST['map_height'] . "',
+					'" . $_POST['map_width'] . "',
+					'" . $_POST['map_host'] . "'
+					)";
 		} else {
-			$sql = 'INSERT INTO geocode_param (
+			$sql = "INSERT INTO geocode_param (
 					geocodeid,
 					geocode_key,
 					center_long,
@@ -89,14 +90,15 @@ if (isset($_POST['submit'])) {
 					map_height,
 					map_width,
 					map_host)
-					VALUES (' . "'" .
-					$_POST['geocodeid'] . "', '" .
-					$_POST['geocode_key'] . "', '" .
-					$_POST['center_long'] . "', '" .
-					$_POST['center_lat'] . "', '" .
-					$_POST['map_height'] . "', '" .
-					$_POST['map_width'] . "', '" .
-					$_POST['map_host'] . "')";
+					VALUES (
+					'" . $_POST['geocodeid'] . "',
+					'" . $_POST['geocode_key'] . "',
+					'" . $_POST['center_long'] . "',
+					'" . $_POST['center_lat'] . "',
+					'" . $_POST['map_height'] . "',
+					'" . $_POST['map_width'] . "',
+					'" . $_POST['map_host'] . "
+					')";
 		}
 
 		$msg = _('A new geocode status record has been inserted');
@@ -110,7 +112,7 @@ if (isset($_POST['submit'])) {
 	}
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
-$sql = 'DELETE FROM geocode_param WHERE geocodeid = ' . $_GET['delete'] . ' LIMIT 1';
+$sql = "DELETE FROM geocode_param WHERE geocodeid = '" . $_GET['delete'] . "' LIMIT 1";
 $result = DB_query($sql,$db);
 $msg = _('Geocode deleted');
 	//end if status code used in customer or supplier accounts
@@ -126,7 +128,7 @@ then none of the above are true and the list of status codes will be displayed w
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = 'SELECT geocodeid, geocode_key, center_long, center_lat, map_height, map_width, map_host FROM geocode_param';
+	$sql = "SELECT geocodeid, geocode_key, center_long, center_lat, map_height, map_width, map_host FROM geocode_param";
 	$result = DB_query($sql, $db);
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="">'. _('Setup configuration for Geocoding of Customers and Suppliers') .'</p>';
@@ -203,7 +205,7 @@ if (!isset($_GET['delete'])) {
 				map_width,
 				map_host
 			FROM geocode_param
-			WHERE geocodeid='$SelectedParam'";
+			WHERE geocodeid='" . $SelectedParam . "'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
