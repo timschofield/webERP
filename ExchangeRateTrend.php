@@ -14,7 +14,7 @@ $graph = '/graph120.png';
 $FunctionalCurrency = $_SESSION['CompanyRecord']['currencydefault'];
 
 if ( isset($_GET['CurrencyToShow']) ){
-    $CurrencyToShow = $_GET['CurrencyToShow'];
+	$CurrencyToShow = $_GET['CurrencyToShow'];
 } elseif ( isset($_POST['CurrencyToShow']) ) {
 	$CurrencyToShow = $_POST['CurrencyToShow'];
 }
@@ -23,8 +23,9 @@ if ( isset($_GET['CurrencyToShow']) ){
 // SHOW OUR MAIN INPUT FORM
 // ************************
 
-	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	echo '<p><div class="centre"><font size=4 color=BLUE><b><U>' . _('View Currency Trend') . '</b></U></font></div>';
+	echo "<form method='post' name=update action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
+		_('View Currency Trend') . '" alt="">' . ' ' . _('View Currency Trend') . '';
 	echo '<table>'; // First column
 
 	$SQL = 'SELECT * FROM currencies';
@@ -32,7 +33,7 @@ if ( isset($_GET['CurrencyToShow']) ){
 
 
 	// CurrencyToShow Currency Picker
-	echo '<tr><td><select name="CurrencyToShow">';
+	echo '<tr><td><select name="CurrencyToShow" onChange="ReloadForm(update.submit)">';
 
 		DB_data_seek($result,0);
 		while ($myrow=DB_fetch_array($result)) {
@@ -62,8 +63,8 @@ if ( isset($_GET['CurrencyToShow']) ){
 	$graph = $CurrencyToShow. '/' . $FunctionalCurrency . $graph;
 	$image = 'http://www.x-rates.com/d/' . $graph;
 
-	echo '<p><div class="centre"><font size=4 color=BLUE><b><U>' . $FunctionalCurrency . ' / ' . $CurrencyToShow . '</b></U></font>';
-	echo '<p></div><table border=1>';
+	echo '<p></div><table class=selection>';
+	echo '<tr><th><div class="centre"><font size=4 color=BLUE><b><U>' . $FunctionalCurrency . ' / ' . $CurrencyToShow . '</b></U></font></th></tr>';
 	echo '<tr><td><img src=' . $image . ' alt="Trend Currently Unavailable"></td></tr>';
 	echo '</table>';
 
