@@ -24,7 +24,7 @@ if (!isset($_SESSION['JournalDetail'])){
 	Journals cannot be entered against bank accounts GL postings involving bank accounts must be done using
 	a receipt or a payment transaction to ensure a bank trans is available for matching off vs statements */
 
-	$SQL = 'SELECT accountcode FROM bankaccounts';
+	$SQL = "SELECT accountcode FROM bankaccounts";
 	$result = DB_query($SQL,$db);
 	$i=0;
 	while ($Act = DB_fetch_row($result)){
@@ -62,43 +62,45 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 	$TransNo = GetNextTransNo( 0, $db);
 
 	foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
-		$SQL = 'INSERT INTO gltrans (type,
+		$SQL = "INSERT INTO gltrans (type,
 						typeno,
 						trandate,
 						periodno,
 						account,
 						narrative,
 						amount,
-						tag) ';
-		$SQL= $SQL . 'VALUES (0,
-					' . $TransNo . ",
+						tag) ";
+		$SQL= $SQL . "VALUES (0,
+					'" . $TransNo . "',
 					'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
-					" . $PeriodNo . ",
-					" . $JournalItem->GLCode . ",
+					'" . $PeriodNo . "',
+					'" . $JournalItem->GLCode . "',
 					'" . $JournalItem->Narrative . "',
-					" . $JournalItem->Amount .
-					",'".$JournalItem->tag."')";
+					'" . $JournalItem->Amount . "',
+					'" . $JournalItem->tag."'
+					)";
 		$ErrMsg = _('Cannot insert a GL entry for the journal line because');
 		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 		if ($_POST['JournalType']==_('Reversing')){
-			$SQL = 'INSERT INTO gltrans (type,
+			$SQL = "INSERT INTO gltrans (type,
 							typeno,
 							trandate,
 							periodno,
 							account,
 							narrative,
 							amount,
-							tag) ';
-			$SQL= $SQL . 'VALUES (0,
-						' . $TransNo . ",
+							tag) ";
+			$SQL= $SQL . "VALUES (0,
+						'" . $TransNo . "',
 						'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
-						" . ($PeriodNo + 1) . ",
-						" . $JournalItem->GLCode . ",
+						'" . ($PeriodNo + 1) . "',
+						'" . $JournalItem->GLCode . "',
 						'Reversal - " . $JournalItem->Narrative . "',
-						" . -($JournalItem->Amount) .
-					",'".$JournalItem->tag."')";
+						'" . -($JournalItem->Amount) ."',
+						'".$JournalItem->tag."'
+						)";
 
 			$ErrMsg =_('Cannot insert a GL entry for the reversing journal because');
 			$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
@@ -163,9 +165,9 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 		}
 
 		if ($AllowThisPosting) {
-			$SQL = 'SELECT accountname
+			$SQL = "SELECT accountname
 							FROM chartmaster
-							WHERE accountcode=' . $_POST['GLManualCode'];
+							WHERE accountcode='" . $_POST['GLManualCode'] . "'";
 			$Result=DB_query($SQL,$db);
 
 			if (DB_num_rows($Result)==0){
@@ -234,8 +236,7 @@ if (!isset($_SESSION['JournalDetail']->JnlDate)){
 echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post name="form">';
 
 
-echo '<p><table border=0 width=100%>
-	<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<tr><hr></tr>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
 
 // A new table in the first column of the main table
 
@@ -244,8 +245,8 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 	$_SESSION['JournalDetail']->JnlDate = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m'),0,date('Y')));
 }
 
-	echo '<tr>
-			<td colspan=5><table border=0 width=30%><tr><td>'._('Date to Process Journal').":</td>
+	echo '<table><tr>
+			<td colspan=5><table class=selection><tr><td>'._('Date to Process Journal').":</td>
 			<td><input type='text' class='date' alt='".$_SESSION['DefaultDateFormat']."' name='JournalProcessDate' maxlength=10 size=11 value='" .
 						 $_SESSION['JournalDetail']->JnlDate . "'></td>";
 	echo '<td>' . _('Type') . ':</td>
@@ -265,8 +266,10 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 	/* close off the table in the first column  */
 
 	echo '<br>';
-	echo '<table border=0 width=70%>';
+	echo '<table class=selection width=70%>';
 	/* Set upthe form for the transaction entry for a GL Payment Analysis item */
+
+	echo '<tr><th colspan=3><div class="centre"><font size=3 color=blue><b>' . _('Journal Line Entry') . '</b></font></div></th></tr>';
 
 	/*now set up a GLCode field to select from avaialble GL accounts */
 	echo '<tr><th>' . _('GL Tag') . '</th>';
@@ -275,15 +278,13 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 
 /* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
-echo '<div class="centre"><font size=3 color=blue>' . _('Journal Line Entry') . '</font></div>';
-
 	//Select the tag
 	echo '<tr><td><select name="tag">';
 
-	$SQL = 'SELECT tagref,
+	$SQL = "SELECT tagref,
 				tagdescription
 		FROM tags
-		ORDER BY tagref';
+		ORDER BY tagref";
 
 	$result=DB_query($SQL,$db);
 	echo '<option value=0>0 - None';
@@ -304,10 +305,10 @@ echo '<div class="centre"><font size=3 color=blue>' . _('Journal Line Entry') . 
 		"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' .
 			' VALUE='. $_POST['GLManualCode'] .'  ></td>';
 
-	$sql='SELECT accountcode,
+	$sql="SELECT accountcode,
 				accountname
 			FROM chartmaster
-			ORDER BY accountcode';
+			ORDER BY accountcode";
 
 	$result=DB_query($sql, $db);
 	echo '<td><select name="GLCode" onChange="return assignComboToInput(this,'.'GLManualCode'.')">';
@@ -342,12 +343,14 @@ echo '<div class="centre"><font size=3 color=blue>' . _('Journal Line Entry') . 
 
 	echo '<td><input type="text" name="GLNarrative" maxlength=100 size=100 value="' . $_POST['GLNarrative'] . '"></td>';
 
-	echo '</tr></table>'; /*Close the main table */
-	echo "<div class='centre'><input type=submit name=Process value='" . _('Accept') . "'></div><br><hr><br>";
+	echo '</tr></table><br>'; /*Close the main table */
+	echo "<div class='centre'><input type=submit name=Process value='" . _('Accept') . "'></div><br><br>";
 
 
-	echo "<table border =1 width=85%><tr><td><table width=100%>
-					<tr>
+	echo "<table class=selection width=85%>";
+
+	echo '<tr><th colspan=6><div class="centre"><font size=3 color=blue><b>' . _('Journal Summary') . '</b></font></div></th></tr>';
+	echo "<tr>
 						<th>"._('GL Tag')."</th>
 						<th>"._('GL Account')."</th>
 						<th>"._('Debit')."</th>
@@ -366,9 +369,9 @@ echo '<div class="centre"><font size=3 color=blue>' . _('Journal Line Entry') . 
 									echo '<tr class="EvenTableRows">';
 									$j++;
 								}
-							$sql='SELECT tagdescription ' .
-									'FROM tags ' .
-									'WHERE tagref='.$JournalItem->tag;
+							$sql="SELECT tagdescription
+									FROM tags
+									WHERE tagref='".$JournalItem->tag . "'";
 							$result=DB_query($sql, $db);
 							$myrow=DB_fetch_row($result);
 							if ($JournalItem->tag==0) {
@@ -405,7 +408,7 @@ echo '<div class="centre"><font size=3 color=blue>' . _('Journal Line Entry') . 
 					number_format(abs($debittotal-$credittotal),2);
 			}
 			if ($debittotal>$credittotal) {echo ' Credit';} else if ($debittotal<$credittotal) {echo ' Debit';}
-			echo '</b></td></tr></table></td></tr></table>';
+			echo '</b></td></tr></table>';
 
 if (ABS($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDetail']->GLItemCounter > 0){
 	echo "<br><br><div class='centre'><input type=submit name='CommitBatch' value='"._('Accept and Process Journal')."'></div>";
