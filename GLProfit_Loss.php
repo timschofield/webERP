@@ -190,6 +190,9 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	$TotalIncome=0;
 	$TotalBudgetIncome=0;
 	$TotalLYIncome=0;
+	$PeriodProfitLoss=0;
+	$PeriodBudgetProfitLoss=0;
+	$PeriodLYProfitLoss=0;
 
 	while ($myrow = DB_fetch_array($AccountsResult)){
 
@@ -354,8 +357,17 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 		$PeriodLYProfitLoss += $AccountPeriodLY;
 
 		for ($i=0;$i<=$Level;$i++){
+			if (!isset($GrpPrdLY[$i])) {
+				$GrpPrdLY[$i]=0;
+			}
 			$GrpPrdLY[$i] +=$AccountPeriodLY;
+			if (!isset($GrpPrdActual[$i])) {
+				$GrpPrdActual[$i]=0;
+			}
 			$GrpPrdActual[$i] +=$AccountPeriodActual;
+			if (!isset($GrpPrdBudget[$i])) {
+				$GrpPrdBudget[$i]=0;
+			}
 			$GrpPrdBudget[$i] +=$AccountPeriodBudget;
 		}
 
@@ -444,7 +456,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	}
 	if ($Section != ''){
 
-		$pdf->setFont($header[0],'B');
+		$pdf->setFont('','B');
 		$pdf->line($Left_Margin+310, $YPos+10,$Left_Margin+500, $YPos+10);
 		$pdf->line($Left_Margin+310, $YPos,$Left_Margin+500, $YPos);
 
