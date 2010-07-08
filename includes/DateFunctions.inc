@@ -803,7 +803,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 		$LastPeriodEnd = mktime(0,0,0,Date('m')+2,0,Date('Y'));
 	} else {
 		$Date_Array = explode('-', $myrow[0]);
-		$LastPeriodEnd = mktime(0,0,0,$Date_Array[1]+1,0,(int)$Date_Array[0]);
+		$LastPeriodEnd = mktime(0,0,0,$Date_Array[1]+2,0,(int)$Date_Array[0]);
 		$LastPeriod = $myrow[1];
 	}
 	/* Find the unix timestamp of the first period end date in periods table */
@@ -817,7 +817,6 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 	/* If the period number doesn't exist */
 	if (!PeriodExists($TransDate, $db)) {
 		/* if the transaction is after the last period */
-		echo (date('d/m/Y',$TransDate) .' '. date('d/m/Y',$LastPeriodEnd));
 		if ($TransDate > $LastPeriodEnd) {
 			$PeriodEnd = mktime(0,0,0,Date('m', $TransDate)+1, 0, Date('Y', $TransDate));
 			$Period = $LastPeriod + 1;

@@ -34,10 +34,10 @@ echo '<table>';
 echo '</br><tr><td>'.  _('Select GL Account').  ":</td><td><select name='SelectedAccount'
 		onChange='ReloadForm(selectaccount.Select)'>";
 
-$SQL = 'SELECT accountcode,
+$SQL = "SELECT accountcode,
 						accountname
 					FROM chartmaster
-					ORDER BY accountcode';
+					ORDER BY accountcode";
 
 $result=DB_query($SQL,$db);
 if (DB_num_rows($result)==0){
@@ -84,12 +84,12 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 		$ErrMsg = _('Cannot update GL budgets');
 		$DbgMsg = _('The SQL that failed to update the GL budgets was');
 		for ($i=1; $i<=12; $i++) {
-			$SQL='UPDATE chartdetails SET budget='.Round($_POST[$i.'this'],2). '
-					WHERE period=' . ($CurrentYearEndPeriod-(12-$i)) ."
+			$SQL="UPDATE chartdetails SET budget='".Round($_POST[$i.'this'],2). "'
+					WHERE period='" . ($CurrentYearEndPeriod-(12-$i)) ."'
 					AND  accountcode = '" . $SelectedAccount."'";
 			$result=DB_query($SQL,$db,$ErrMsg,$DbgMsg);
-			$SQL='UPDATE chartdetails SET budget='.Round($_POST[$i.'next'],2).'
-					WHERE period=' .  ($CurrentYearEndPeriod+$i) ."
+			$SQL="UPDATE chartdetails SET budget='".Round($_POST[$i.'next'],2)."'
+					WHERE period='" .  ($CurrentYearEndPeriod+$i) ."'
 					AND  accountcode = '" . $SelectedAccount."'";
 			$result=DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 		}
@@ -107,11 +107,11 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 	}
 // End of create periods
 
-	$SQL='SELECT period,
+	$SQL="SELECT period,
 					budget,
 					actual
 				FROM chartdetails
-				WHERE accountcode=' . $SelectedAccount;
+				WHERE accountcode='" . $SelectedAccount . "'";
 
 	$result=DB_query($SQL,$db);
 	while ($myrow=DB_fetch_array($result)) {
@@ -215,14 +215,14 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 	$LastPeriod=$MyRow[0];
 
 	for ($i=$FirstPeriod;$i<=$LastPeriod;$i++) {
-		$sql='SELECT accountcode,
+		$sql="SELECT accountcode,
 							period,
 							budget,
 							actual,
 							bfwd,
 							bfwdbudget
 						FROM chartdetails
-						WHERE period ='. $i . ' AND  accountcode = ' . $SelectedAccount;
+						WHERE period ='". $i . "' AND  accountcode = '" . $SelectedAccount . "'";
 
 		$ErrMsg = _('Could not retrieve the ChartDetail records because');
 		$result = DB_query($sql,$db,$ErrMsg);
@@ -230,7 +230,10 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 		while ($myrow=DB_fetch_array($result)){
 
 			$CFwdBudget = $myrow['bfwdbudget'] + $myrow['budget'];
-			$sql = 'UPDATE chartdetails SET bfwdbudget=' . $CFwdBudget . ' WHERE period=' . ($myrow['period'] +1) . ' AND  accountcode = ' . $SelectedAccount;
+			$sql = "UPDATE chartdetails
+				SET bfwdbudget='" . $CFwdBudget . "'
+				WHERE period='" . ($myrow['period'] +1) . "'
+				AND  accountcode = '" . $SelectedAccount . "'";
 
 			$ErrMsg =_('Could not update the chartdetails record because');
 			$updresult = DB_query($sql,$db,$ErrMsg);
