@@ -3,12 +3,12 @@
 /* $Id$*/
 $PageSecurity = 10;
 include('includes/session.inc');
-$title = _('General Ledger Tags');
+$title = _('Maintain General Ledger Tags');
 
 include('includes/header.inc');
 
 if (isset($_GET['SelectedTag'])) {
-	$sql='SELECT tagref, tagdescription FROM tags where tagref='.$_GET['SelectedTag'];
+	$sql="SELECT tagref, tagdescription FROM tags where tagref='".$_GET['SelectedTag']."'";
 	$result= DB_query($sql,$db);
 	$myrow = DB_fetch_array($result,$db);
 	$ref=$myrow[0];
@@ -19,15 +19,17 @@ if (isset($_GET['SelectedTag'])) {
 }
 
 if (isset($_POST['submit'])) {
-	$sql = 'insert into tags values(NULL, "'.$_POST['description'].'")';
+	$sql = "insert into tags values(NULL, '".$_POST['description']."')";
 	$result= DB_query($sql,$db);
 }
 
 if (isset($_POST['update'])) {
-	$sql = 'update tags set tagdescription="'.$_POST['description'].
-		'" where tagref="'.$_POST['reference'].'"';
+	$sql = "update tags set tagdescription='".$_POST['description'].
+		"' where tagref='".$_POST['reference']."'";
 	$result= DB_query($sql,$db);
 }
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
+		_('Print') . '" alt="">' . ' ' . $title . '';
 
 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . ' name="form">';
 echo '<br><table><tr>';
@@ -47,11 +49,11 @@ echo '</td></tr></table><p></p>';
 
 echo '</form>';
 
-echo '<table>';
+echo '<table class=selection>';
 echo '<tr><th>'. _('Tag ID') .'</th>';
 echo '<th>'. _('Description'). '</th>';
 
-$sql='SELECT tagref, tagdescription FROM tags order by tagref';
+$sql="SELECT tagref, tagdescription FROM tags order by tagref";
 $result= DB_query($sql,$db);
 
 while ($myrow = DB_fetch_array($result,$db)){
