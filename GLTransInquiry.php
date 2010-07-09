@@ -10,7 +10,6 @@ $title = _('General Ledger Transaction Inquiry');
 include('includes/header.inc');
 
 // Page Border
-echo '<table border=1 width=100%><tr><td bgcolor="#FFFFFF"><div class="centre">';
 $menuUrl = '<a href="'. $rootpath . '/index.php?&Application=GL'. SID .'">' . _('General Ledger Menu') . '</a></div>';
 
 if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
@@ -18,10 +17,10 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 		prnMsg(_('This page requires a valid transaction type and number'),'warn');
 		echo $menuUrl;
 } else {
-		$typeSQL = 'SELECT typename,
+		$typeSQL = "SELECT typename,
 							typeno
 					FROM systypes
-					WHERE typeid = ' . $_GET['TypeID'];
+					WHERE typeid = '" . $_GET['TypeID'] . "'";
 
 		$TypeResult = DB_query($typeSQL,$db);
 
@@ -34,15 +33,14 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 				$TransName = $myrow[0];
 
 				// Context Navigation and Title
-				echo '<table width=100%>
-						<td width=40% align=left>' . $menuUrl. '</td>
-						<td align=left><font size=4 color=blue><u><b>' . $TransName . ' ' . $_GET['TransNo'] . '</b></u></font></td>
-				      </table><p>';
-
+				echo $menuUrl;
 				//
 				//========[ SHOW SYNOPSYS ]===========
 				//
-				echo '<table border=1>'; //Main table
+				echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="'
+					. _('Print') . '" alt="">' . ' ' . $title . '</p>';
+				echo '<table class=selection>'; //Main table
+				echo '<tr><th colspan=7><font size=3 color=blue><b>' . $TransName . ' ' . $_GET['TransNo'] . '</b></font></th></tr>';
 				echo '<tr>
 						<th>' . _('Date') . '</th>
 						<th>' . _('Period') .'</th>
@@ -60,12 +58,15 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 							gltrans.narrative,
 							gltrans.amount,
 							gltrans.posted,
-							chartmaster.accountname
+							chartmaster.accountname,
+							periods.lastdate_in_period
 						FROM gltrans,
-							chartmaster
+							chartmaster,
+							periods
 						WHERE gltrans.account = chartmaster.accountcode
-						AND gltrans.type= " . $_GET['TypeID'] . "
-						AND gltrans.typeno = " . $_GET['TransNo'] . "
+						AND periods.periodno=gltrans.periodno
+						AND gltrans.type= '" . $_GET['TypeID'] . "'
+						AND gltrans.typeno = '" . $_GET['TransNo'] . "'
 						ORDER BY gltrans.counterindex";
 				$TransResult = DB_query($SQL,$db);
 
@@ -90,7 +91,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 							$URL = $rootpath . '/CustomerInquiry.php?' . SID . '&CustomerID=';
 							$date = '&TransAfterDate=' . $TranDate;
 
-							$DetailSQL = 'SELECT debtortrans.debtorno,
+							$DetailSQL = "SELECT debtortrans.debtorno,
 											debtortrans.ovamount,
 											debtortrans.ovgst,
 											debtortrans.rate,
@@ -98,14 +99,14 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 											FROM debtortrans,
 											debtorsmaster
 											WHERE debtortrans.debtorno = debtorsmaster.debtorno
-											AND debtortrans.type = ' . $TransRow['type'] . '
-											AND debtortrans.transno = ' . $_GET['TransNo'];
+											AND debtortrans.type = '" . $TransRow['type'] . "'
+											AND debtortrans.transno = '" . $_GET['TransNo']. "'";
 							$DetailResult = DB_query($DetailSQL,$db);
 					} elseif ( $TransRow['account'] == $_SESSION['CompanyRecord']['creditorsact'] )	{
 							$URL = $rootpath . '/SupplierInquiry.php?' . SID . '&SupplierID=';
 							$date = '&FromDate=' . $TranDate;
 
-							$DetailSQL = 'SELECT supptrans.supplierno,
+							$DetailSQL = "SELECT supptrans.supplierno,
 											supptrans.ovamount,
 											supptrans.ovgst,
 											supptrans.rate,
@@ -113,8 +114,8 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 											FROM supptrans,
 											suppliers
 											WHERE supptrans.supplierno = suppliers.supplierid
-											AND supptrans.type = ' . $TransRow['type'] . '
-											AND supptrans.transno = ' . $_GET['TransNo'];
+											AND supptrans.type = '" . $TransRow['type'] . "'
+											AND supptrans.transno = '" . $_GET['TransNo'] . "'";
 							$DetailResult = DB_query($DetailSQL,$db);
 					} else {
 							$URL = $rootpath . '/GLAccountInquiry.php?' . SID . '&Account=' . $TransRow['account'];
@@ -134,7 +135,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 								$j++;
 							}
 							echo	'<td>' . $TranDate . '</td>
-									<td class=number>' . $TransRow['periodno'] . '</td>
+									<td class=number>' . MonthAndYearFromSQLDate($TransRow['lastdate_in_period']) . '</td>
 									<td><a href="' . $URL . '">' . $TransRow['accountname'] . '</a></td>
 									<td class=number>' . $DebitAmount . '</td>
 									<td class=number>' . $CreditAmount . '</td>
