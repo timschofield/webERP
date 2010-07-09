@@ -376,9 +376,7 @@ function FormatDateForSQL($DateEntry) {
 /* takes a date in a the format specified in $_SESSION['DefaultDateFormat']
 and converts to a yyyy/mm/dd format */
 
-
 	$DateEntry = trim($DateEntry);
-
 
 	if (strpos($DateEntry,'/')) {
 		$Date_Array = explode('/',$DateEntry);
@@ -397,29 +395,36 @@ and converts to a yyyy/mm/dd format */
 	}
 
 	if ($_SESSION['DefaultDateFormat']=='Y/m/d') {
-		return $Date_Array[0].'-'.$Date_Array[1].'-'.$Date_Array[2];
-	}
-
-//to modify assumption in 2030
-	if (strlen($Date_Array[0])==2) {
-		if ((int)$Date_Array[2] <60) {
-			$Date_Array[2] = '20'.$Date_Array[2];
-		} elseif ((int)$Date_Array[2] >59 AND (int)$Date_Array[2] <100) {
-			$Date_Array[0] = '19'.$Date_Array[2];
-		} elseif ((int)$Date_Array[2] >9999) {
-			return 0;
+		if (strlen($Date_Array[0])==2) {
+			if ((int)$Date_Array[0] <=60) {
+				$Date_Array[0] = '20'.$Date_Array[2];
+			} elseif ((int)$Date_Array[0] >60 AND (int)$Date_Array[2] <100) {
+				$Date_Array[0] = '19'.$Date_Array[2];
+			}
 		}
-	}
-	if (($_SESSION['DefaultDateFormat']=='d/m/Y')){
+		return $Date_Array[0].'-'.$Date_Array[1].'-'.$Date_Array[2];
+		
+	}elseif (($_SESSION['DefaultDateFormat']=='d/m/Y') OR $_SESSION['DefaultDateFormat']=='d.m.Y'){
+		if (strlen($Date_Array[2])==2) {
+			if ((int)$Date_Array[2] <=60) {
+				$Date_Array[2] = '20'.$Date_Array[2];
+			} elseif ((int)$Date_Array[2] >60 AND (int)$Date_Array[2] <100) {
+				$Date_Array[2] = '19'.$Date_Array[2];
+			}
+		}
 		/* echo '<BR>The date returned is ' . $Date_Array[2].'/'.$Date_Array[1].'/'.$Date_Array[0]; */
 		return $Date_Array[2].'-'.$Date_Array[1].'-'.$Date_Array[0];
-	} elseif ($_SESSION['DefaultDateFormat']=='d.m.Y') {
-		return $Date_Array[2].'-'.$Date_Array[1].'-'.$Date_Array[0];
+		
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y') {
+		if (strlen($Date_Array[2])==2) {
+			if ((int)$Date_Array[2] <=60) {
+				$Date_Array[2] = '20'.$Date_Array[2];
+			} elseif ((int)$Date_Array[2] >60 AND (int)$Date_Array[2] <100) {
+				$Date_Array[2] = '19'.$Date_Array[2];
+			}
+		}
 		return $Date_Array[2].'-'.$Date_Array[0].'-'.$Date_Array[1];
-	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d') {
-		return $Date_Array[0].'-'.$Date_Array[1].'-'.$Date_Array[2];
-	}
+	} 
 
 }// end of function
 

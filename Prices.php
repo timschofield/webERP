@@ -58,7 +58,7 @@ echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 echo _('Pricing for part') . ':<input type=text name="Item" MAXSIZEe=22 VALUE="' . $Item . '" maxlength=20><input type=submit name=NewPart Value="' . _('Review Prices') . '">';
 echo '<hr>';
 
-if ($myrow[1]=="K"){
+if ($myrow[1]=='K'){
 	prnMsg(_('The part selected is a kit set item') .', ' . _('these items explode into their components when selected on an order') . ', ' . _('prices must be set up for the components and no price can be set for the whole kit'),'error');
 	exit;
 }
@@ -79,17 +79,20 @@ if (isset($_POST['submit'])) {
 		$InputError =1;
 		prnMsg (_('The date this price is to take effect from must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 	}
-	if (! Is_Date($_POST['EndDate']) AND $_POST['EndDate']!=''){
-		$InputError =1;
-		prnMsg (_('The date this price is be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
-	}
-	if (Date1GreaterThanDate2($_POST['StartDate'],$_POST['EndDate']) AND $_POST['EndDate']!=''){
-		$InputError =1;
-		prnMsg (_('The end date is expected to be after the start date, enter an end date after the start date for this price'),'error');
-	}
-	if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['EndDate']) AND $_POST['EndDate']!=''){
-		$InputError =1;
-		prnMsg(_('The end date is expected to be after today. There is no point entering a new price where the effective date is before today!'),'error');
+	
+	if (FormatDateForSQL($_POST['EndDate'])!='0000-00-00'){
+		if (! Is_Date($_POST['EndDate']) AND $_POST['EndDate']!=''){
+			$InputError =1;
+			prnMsg (_('The date this price is be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
+		}
+		if (Date1GreaterThanDate2($_POST['StartDate'],$_POST['EndDate']) AND $_POST['EndDate']!='' AND FormatDateForSQL($_POST['EndDate'])!='0000-00-00'){
+			$InputError =1;
+			prnMsg (_('The end date is expected to be after the start date, enter an end date after the start date for this price'),'error');
+		}
+		if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['EndDate']) AND $_POST['EndDate']!='' AND FormatDateForSQL($_POST['EndDate'])!='0000-00-00'){
+			$InputError =1;
+			prnMsg(_('The end date is expected to be after today. There is no point entering a new price where the effective date is before today!'),'error');
+		}
 	}
 	if (Is_Date($_POST['EndDate'])){
 		$SQLEndDate = FormatDateForSQL($_POST['EndDate']);
@@ -270,14 +273,14 @@ if ($InputError ==0){
 		$_POST['TypeAbbrev'] = $_GET['TypeAbbrev'];
 		$_POST['Price'] = $_GET['Price'];
 		$_POST['StartDate'] = ConvertSQLDate($_GET['StartDate']);
-		if ($_GET['EndDate']==''){
-			$_POST['EndDate'] ='';
+		if ($_GET['EndDate']=='' OR $_GET['EndDate']=='0000-00-00'){
+			$_POST['EndDate'] = '';
 		} else {
 			$_POST['EndDate'] = ConvertSQLDate($_GET['EndDate']);		
 		}
 	}
 
-	$SQL = "SELECT currabrev, currency FROM currencies";
+	$SQL = 'SELECT currabrev, currency FROM currencies';
 	$result = DB_query($SQL,$db);
 
 	echo '<table><tr><td>' . _('Currency') . ':</td><td><select name="CurrAbrev">';
@@ -329,7 +332,9 @@ if ($InputError ==0){
 	<tr><td><?php echo _('Price'); ?>:</td>
 	<td>
 	<input type="Text" class=number name="Price" size=12 maxlength=11 value=
-	<?php if(isset($_POST['Price'])) {echo $_POST['Price'];}?>>
+	<?php if(isset($_POST['Price'])) {
+			echo $_POST['Price'];
+		   }?>>
 
 	</td></tr>
 
