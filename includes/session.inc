@@ -40,9 +40,15 @@ to limit possibility for SQL injection attacks and cross scripting attacks
 if (isset($_SESSION['DatabaseName'])){
 	foreach ($_POST as $key => $value) {
 		if (gettype($value) != "array") {
+			if(get_magic_quotes_gpc()) {
+				$_POST['name'] = stripslashes($_POST['name']);
+			}
 			$_POST[$key] = DB_escape_string($value);
 		} else {
 			foreach ($value as $key1 => $value1) {
+				if(get_magic_quotes_gpc()) {
+					$value[$key1] = stripslashes($value[$key1]);
+				}
 				$value[$key1] = DB_escape_string($value1);
 			}
 		}

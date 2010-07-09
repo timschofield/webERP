@@ -24,8 +24,10 @@ if (isset($_POST['FromPeriod']) and isset($_POST['ToPeriod']) and $_POST['FromPe
 if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])){
 
 	include  ('includes/header.inc');
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' .
+		_('Trial Balance') . '" alt="">' . ' ' . $title . '</div>';
 	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
-	
+
 	if (Date('m') > $_SESSION['YearEnd']){
 		/*Dates in SQL format */
 		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')));
@@ -37,9 +39,13 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 	$period=GetPeriod($FromDate, $db);
 
 	/*Show a form to allow input of criteria for TB to show */
-	echo '<table><tr><td>' . _('Select Period From:') . '</td><td><select Name="FromPeriod">';
+	echo '<table class=selection><tr><td>' . _('Select Period From:') . '</td><td><select Name="FromPeriod">';
 	$nextYear = date("Y-m-d",strtotime("+1 Year"));
-	$sql = "SELECT periodno, lastdate_in_period FROM periods where lastdate_in_period < '$nextYear' ORDER BY periodno DESC";
+	$sql = "SELECT periodno,
+					lastdate_in_period
+				FROM periods
+				WHERE lastdate_in_period < '" . $nextYear . "'
+				ORDER BY periodno DESC";
 	$Periods = DB_query($sql,$db);
 
 
@@ -62,7 +68,9 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 	echo '</select></td></tr>';
 	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']==''){
 		$lastDate = date("Y-m-d",mktime(0,0,0,Date('m')+1,0,Date('Y')));
-		$sql = "SELECT periodno FROM periods where lastdate_in_period = '$lastDate'";
+		$sql = "SELECT periodno
+				FROM periods
+				WHERE lastdate_in_period = '" . $lastDate . "'";
 		$MaxPrd = DB_query($sql,$db);
 		$MaxPrdrow = DB_fetch_row($MaxPrd);
 		$DefaultToPeriod = (int) ($MaxPrdrow[0]);
@@ -78,12 +86,12 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 	while ($myrow=DB_fetch_array($Periods,$db)){
 
 		if($myrow['periodno']==$DefaultToPeriod){
-			echo '<option selected VALUE="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
+			echo '<option selected value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 		} else {
-			echo '<option VALUE ="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
+			echo '<option value ="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 		}
 	}
-	echo '</select></td></tr></table>';
+	echo '</select></td></tr></table><br>';
 
 	echo '<div class="centre"><input type=submit Name="ShowTB" Value="' . _('Show Trial Balance') .'">';
 	echo "<input type=submit Name='PrintPDF' Value='"._('PrintPDF')."'></div>";
@@ -93,9 +101,9 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 	include ('includes/GLPostings.inc');
 
 } else if (isset($_POST['PrintPDF'])) {
-	
+
 	include('includes/PDFStarter.php');
-	
+
 	$pdf->addInfo('Title', _('Trial Balance') );
 	$pdf->addInfo('Subject', _('Trial Balance') );
 	$PageNumber = 0;
@@ -104,24 +112,26 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
 
-	$sql = 'SELECT lastdate_in_period FROM periods WHERE periodno=' . $_POST['ToPeriod'];
+	$sql = "SELECT lastdate_in_period
+			FROM periods
+			WHERE periodno='" . $_POST['ToPeriod'] . "'";
 	$PrdResult = DB_query($sql, $db);
 	$myrow = DB_fetch_row($PrdResult);
 	$PeriodToDate = MonthAndYearFromSQLDate($myrow[0]);
 
 	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
 
-	$SQL = 'SELECT accountgroups.groupname,
+	$SQL = "SELECT accountgroups.groupname,
 			accountgroups.parentgroupname,
 			accountgroups.pandl,
 			chartdetails.accountcode ,
 			chartmaster.accountname,
-			Sum(CASE WHEN chartdetails.period=' . $_POST['FromPeriod'] . ' THEN chartdetails.bfwd ELSE 0 END) AS firstprdbfwd,
-			Sum(CASE WHEN chartdetails.period=' . $_POST['FromPeriod'] . ' THEN chartdetails.bfwdbudget ELSE 0 END) AS firstprdbudgetbfwd,
-			Sum(CASE WHEN chartdetails.period=' . $_POST['ToPeriod'] . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lastprdcfwd,
-			Sum(CASE WHEN chartdetails.period=' . $_POST['ToPeriod'] . ' THEN chartdetails.actual ELSE 0 END) AS monthactual,
-			Sum(CASE WHEN chartdetails.period=' . $_POST['ToPeriod'] . ' THEN chartdetails.budget ELSE 0 END) AS monthbudget,
-			Sum(CASE WHEN chartdetails.period=' . $_POST['ToPeriod'] . ' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
+			Sum(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwd ELSE 0 END) AS firstprdbfwd,
+			Sum(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwdbudget ELSE 0 END) AS firstprdbudgetbfwd,
+			Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lastprdcfwd,
+			Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.actual ELSE 0 END) AS monthactual,
+			Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.budget ELSE 0 END) AS monthbudget,
+			Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
 		FROM chartmaster INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
 			INNER JOIN chartdetails ON chartmaster.accountcode= chartdetails.accountcode
 		GROUP BY accountgroups.groupname,
@@ -133,7 +143,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		ORDER BY accountgroups.pandl desc,
 			accountgroups.sequenceintb,
 			accountgroups.groupname,
-			chartdetails.accountcode';
+			chartdetails.accountcode";
 
 	$AccountsResult = DB_query($SQL,$db);
 	if (DB_error_no($db) !=0) {
@@ -156,9 +166,9 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		include('includes/footer.inc');
 		exit;
 	}
-	
+
 	include('includes/PDFTrialBalancePageHeader.inc');
-	
+
 	$j = 1;
 	$Level = 1;
 	$ActGrp = '';
@@ -168,13 +178,22 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 	$GrpBudget = array(0);
 	$GrpPrdActual = array(0);
 	$GrpPrdBudget = array(0);
+	$PeriodProfitLoss = 0;
+	$PeriodBudgetProfitLoss = 0;
+	$MonthProfitLoss = 0;
+	$MonthBudgetProfitLoss= 0;
+	$BFwdProfitLoss = 0;
+	$CheckMonth = 0;
+	$CheckBudgetMonth = 0;
+	$CheckPeriodActual = 0;
+	$CheckPeriodBudget = 0;
 
 	while ($myrow=DB_fetch_array($AccountsResult)) {
-		
+
 		if ($myrow['groupname']!= $ActGrp){
 
-			if ($ActGrp !=''){	
-				
+			if ($ActGrp !=''){
+
 				// Print heading if at end of page
 				if ($YPos < ($Bottom_Margin+ (2 * $line_height))) {
 					include('includes/PDFTrialBalancePageHeader.inc');
@@ -184,7 +203,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 					$ParentGroups[$Level]=$myrow['groupname'];
 				}elseif ($myrow['parentgroupname']==$ParentGroups[$Level]){
 					$YPos -= (.5 * $line_height);
-					$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
+					$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
 					$pdf->setFont('','B');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
@@ -200,11 +219,11 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 					$GrpBudget[$Level] =0;
 					$GrpPrdActual[$Level] =0;
 					$GrpPrdBduget[$Level] =0;
-					
+
 				} else {
 					do {
 						$YPos -= $line_height;
-						$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
+						$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
 						$pdf->setFont('','B');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
@@ -221,11 +240,11 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						$GrpPrdActual[$Level] =0;
 						$GrpPrdBduget[$Level] =0;
 						$Level--;
-					} while ($myrow['parentgroupname']!=$ParentGroups[$Level] AND $Level>0);
+					} while ($Level>0 and $myrow['parentgroupname']!=$ParentGroups[$Level]);
 
 					if ($Level>0){
 						$YPos -= $line_height;
-						$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
+						$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
 						$pdf->setFont('','B');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+60, $YPos, 190, $FontSize, $ParentGroups[$Level]);
@@ -265,7 +284,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 			$PeriodProfitLoss += $AccountPeriodActual;
 			$PeriodBudgetProfitLoss += $AccountPeriodBudget;
 			$MonthProfitLoss += $myrow['monthactual'];
-			$MonthBudgetProfitLoss += $myrow['budget'];
+			$MonthBudgetProfitLoss += $myrow['monthbudget'];
 			$BFwdProfitLoss += $myrow['firstprdbfwd'];
 		} else { /*PandL ==0 its a balance sheet account */
 			if ($myrow['accountcode']==$RetainedEarningsAct){
@@ -278,9 +297,21 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 
 		}
 		for ($i=0;$i<=$Level;$i++){
+			if (!isset($GrpActual[$i])) {
+				$GrpActual[$i]=0;
+			}
 			$GrpActual[$i] +=$myrow['monthactual'];
+			if (!isset($GrpBudget[$i])) {
+				$GrpBudget[$i]=0;
+			}
 			$GrpBudget[$i] +=$myrow['monthbudget'];
+			if (!isset($GrpPrdActual[$i])) {
+				$GrpPrdActual[$i]=0;
+			}
 			$GrpPrdActual[$i] +=$AccountPeriodActual;
+			if (!isset($GrpPrdBudget[$i])) {
+				$GrpPrdBudget[$i]=0;
+			}
 			$GrpPrdBudget[$i] +=$AccountPeriodBudget;
 		}
 
@@ -288,7 +319,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		$CheckBudgetMonth += $myrow['monthbudget'];
 		$CheckPeriodActual += $AccountPeriodActual;
 		$CheckPeriodBudget += $AccountPeriodBudget;
-		
+
 		// Print heading if at end of page
 		if ($YPos < ($Bottom_Margin)){
 			include('includes/PDFTrialBalancePageHeader.inc');
@@ -302,14 +333,14 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($AccountPeriodActual,2),'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($AccountPeriodBudget,2),'right');
 		$YPos -= $line_height;
-		
+
 	}  //end of while loop
-	
-	
-	while ($myrow['parentgroupname']!=$ParentGroups[$Level] AND $Level>0) {
-						
+
+
+	while ($Level>0 and $myrow['parentgroupname']!=$ParentGroups[$Level]) {
+
 		$YPos -= (.5 * $line_height);
-		$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
+		$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
 		$pdf->setFont('','B');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
@@ -327,16 +358,16 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		$Level--;
 	}
 
-	
+
 	$YPos -= (2 * $line_height);
-	$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
+	$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Check Totals'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($CheckMonth,2),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($CheckBudgetMonth,2),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($CheckPeriodActual,2),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($CheckPeriodBudget,2),'right');
-	$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  
-			
+	$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);
+
 	/*
 		header('Content-type: application/pdf');
 		header('Content-Length: ' . $len);
@@ -356,24 +387,26 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
 
-	$sql = 'SELECT lastdate_in_period FROM periods WHERE periodno=' . $_POST['ToPeriod'];
+	$sql = "SELECT lastdate_in_period
+			FROM periods
+			WHERE periodno='" . $_POST['ToPeriod'] . "'";
 	$PrdResult = DB_query($sql, $db);
 	$myrow = DB_fetch_row($PrdResult);
 	$PeriodToDate = MonthAndYearFromSQLDate($myrow[0]);
 
 	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
 
-	$SQL = 'SELECT accountgroups.groupname,
+	$SQL = "SELECT accountgroups.groupname,
 			accountgroups.parentgroupname,
 			accountgroups.pandl,
 			chartdetails.accountcode ,
 			chartmaster.accountname,
-			Sum(CASE WHEN chartdetails.period=' . $_POST['FromPeriod'] . ' THEN chartdetails.bfwd ELSE 0 END) AS firstprdbfwd,
-			Sum(CASE WHEN chartdetails.period=' . $_POST['FromPeriod'] . ' THEN chartdetails.bfwdbudget ELSE 0 END) AS firstprdbudgetbfwd,
-			Sum(CASE WHEN chartdetails.period=' . $_POST['ToPeriod'] . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lastprdcfwd,
-			Sum(CASE WHEN chartdetails.period=' . $_POST['ToPeriod'] . ' THEN chartdetails.actual ELSE 0 END) AS monthactual,
-			Sum(CASE WHEN chartdetails.period=' . $_POST['ToPeriod'] . ' THEN chartdetails.budget ELSE 0 END) AS monthbudget,
-			Sum(CASE WHEN chartdetails.period=' . $_POST['ToPeriod'] . ' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
+			Sum(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwd ELSE 0 END) AS firstprdbfwd,
+			Sum(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwdbudget ELSE 0 END) AS firstprdbudgetbfwd,
+			Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lastprdcfwd,
+			Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.actual ELSE 0 END) AS monthactual,
+			Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.budget ELSE 0 END) AS monthbudget,
+			Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
 		FROM chartmaster INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
 			INNER JOIN chartdetails ON chartmaster.accountcode= chartdetails.accountcode
 		GROUP BY accountgroups.groupname,
@@ -385,7 +418,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		ORDER BY accountgroups.pandl desc,
 			accountgroups.sequenceintb,
 			accountgroups.groupname,
-			chartdetails.accountcode';
+			chartdetails.accountcode";
 
 
 	$AccountsResult = DB_query($SQL,
@@ -393,12 +426,15 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 				 _('No general ledger accounts were returned by the SQL because'),
 				 _('The SQL that failed was:'));
 
-	echo '<div class="centre"><font size=4 color=BLUE><b>'. _('Trial Balance for the month of ') . $PeriodToDate . _(' and for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate .'</b></font></div><br>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' .
+		_('Trial Balance') . '" alt="">' . ' ' . _('Trial Balance Report') . '</div>';
 
 	/*show a table of the accounts info returned by the SQL
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
 
-	echo '<table cellpadding=2>';
+	echo '<table cellpadding=2 class=selection>';
+	echo '<tr><th colspan=6><font size=3 color=blue><b>'. _('Trial Balance for the month of ') . $PeriodToDate .
+		_(' and for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate .'</b></font></th></tr>';
 	$TableHeader = '<tr>
 			<th>' . _('Account') . '</th>
 			<th>' . _('Account Name') . '</th>
@@ -418,7 +454,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 	$GrpBudget =array(0);
 	$GrpPrdActual =array(0);
 	$GrpPrdBudget =array(0);
-		
+
 	$PeriodProfitLoss = 0;
 	$PeriodBudgetProfitLoss = 0;
 	$MonthProfitLoss = 0;
@@ -454,7 +490,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						number_format($GrpBudget[$Level],2),
 						number_format($GrpPrdActual[$Level],2),
 						number_format($GrpPrdBudget[$Level],2));
-			
+
 					$GrpActual[$Level] =0;
 					$GrpBudget[$Level] =0;
 					$GrpPrdActual[$Level] =0;
@@ -474,18 +510,18 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 							number_format($GrpBudget[$Level],2),
 							number_format($GrpPrdActual[$Level],2),
 							number_format($GrpPrdBudget[$Level],2));
-			
+
 						$GrpActual[$Level] =0;
 						$GrpBudget[$Level] =0;
 						$GrpPrdActual[$Level] =0;
 						$GrpPrdBudget[$Level] =0;
 						$ParentGroups[$Level]='';
 						$Level--;
-						
+
 						$j++;
 					} while ($Level>0 and $myrow['groupname']!=$ParentGroups[$Level]);
-					
-					if ($Level>0){	
+
+					if ($Level>0){
 						printf('<tr>
 						<td colspan=2><font size=2><I>%s ' . _('Total') . ' </I></font></td>
 						<td class=number><I>%s</I></td>
@@ -498,7 +534,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						number_format($GrpBudget[$Level],2),
 						number_format($GrpPrdActual[$Level],2),
 						number_format($GrpPrdBudget[$Level],2));
-			
+
 						$GrpActual[$Level] =0;
 						$GrpBudget[$Level] =0;
 						$GrpPrdActual[$Level] =0;
@@ -602,7 +638,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 				number_format($GrpBudget[$Level],2),
 				number_format($GrpPrdActual[$Level],2),
 				number_format($GrpPrdBudget[$Level],2));
-	
+
 			$GrpActual[$Level] =0;
 			$GrpBudget[$Level] =0;
 			$GrpPrdActual[$Level] =0;
@@ -622,18 +658,18 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 					number_format($GrpBudget[$Level],2),
 					number_format($GrpPrdActual[$Level],2),
 					number_format($GrpPrdBudget[$Level],2));
-	
+
 				$GrpActual[$Level] =0;
 				$GrpBudget[$Level] =0;
 				$GrpPrdActual[$Level] =0;
 				$GrpPrdBudget[$Level] =0;
 				$ParentGroups[$Level]='';
 				$Level--;
-				
+
 				$j++;
 			} while (isset($ParentGroups[$Level]) and ($myrow['groupname']!=$ParentGroups[$Level] and $Level>0));
-			
-			if ($Level >0){	
+
+			if ($Level >0){
 				printf('<tr>
 				<td colspan=2><font size=2><I>%s ' . _('Total') . ' </I></font></td>
 				<td class=number><I>%s</I></td>
@@ -646,7 +682,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 				number_format($GrpBudget[$Level],2),
 				number_format($GrpPrdActual[$Level],2),
 				number_format($GrpPrdBudget[$Level],2));
-	
+
 				$GrpActual[$Level] =0;
 				$GrpBudget[$Level] =0;
 				$GrpPrdActual[$Level] =0;
@@ -672,7 +708,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		number_format($CheckPeriodActual,2),
 		number_format($CheckPeriodBudget,2));
 
-	echo '</table>';
+	echo '</table><br>';
 	echo '<div class="centre"><input type=submit Name="SelectADifferentPeriod" Value="' . _('Select A Different Period') . '"></div>';
 }
 echo '</form>';
