@@ -8,7 +8,7 @@ $title = _('Inventory Location Transfer Shipment');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-If (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
+if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 /*Trap any errors in input */
 
 	$InputError = False; /*Start off hoping for the best */
@@ -65,7 +65,7 @@ If (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 	}
 
 /*Ship location and Receive location are different */
-	If ($_POST['FromStockLocation']==$_POST['ToStockLocation']){
+	if ($_POST['FromStockLocation']==$_POST['ToStockLocation']){
 		$InputError=True;
 		$ErrorMessage .= _('The transfer must have a different location to receive into and location sent from');
 	}
@@ -78,6 +78,11 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	for ($i=0;$i < $_POST['LinesCounter'];$i++){
 
 		if($_POST['StockID' . $i] != ""){
+			$DecimalsSql = "SELECT decimalplaces
+							FROM stockmaster
+							WHERE stockid='" . $_POST['StockID' . $i] . "'";
+			$DecimalResult = DB_Query($DecimalsSql, $db);
+			$DecimalRow = DB_fetch_array($DecimalResult);
 			$sql = "INSERT INTO loctransfers (reference,
 								stockid,
 								shipqty,
@@ -86,7 +91,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 								recloc)
 						VALUES ('" . $_POST['Trf_ID'] . "',
 							'" . $_POST['StockID' . $i] . "',
-							'" . $_POST['StockQTY' . $i] . "',
+							'" . round($_POST['StockQTY' . $i], $DecimalRow['decimalplaces']) . "',
 							'" . Date('Y-m-d') . "',
 							'" . $_POST['FromStockLocation']  ."',
 							'" . $_POST['ToStockLocation'] . "')";
@@ -94,15 +99,15 @@ if(isset($_POST['Submit']) AND $InputError==False){
 			$resultLocShip = DB_query($sql,$db, $ErrMsg);
 		}
 	}
-        $ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to COMMIT Location Transfer transaction');
-        DB_Txn_Commit($db);
+	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to COMMIT Location Transfer transaction');
+	DB_Txn_Commit($db);
 
 	prnMsg( _('The inventory transfer records have been created successfully'),'success');
 	echo '<p><a href="'.$rootpath.'/PDFStockLocTransfer.php?' . SID . 'TransferNo=' . $_POST['Trf_ID'] . '">'.
 		_('Print the Transfer Docket'). '</a>';
 	unset($_SESSION['DispatchingTransfer']);
 	unset($_SESSION['Transfer']);
-
+	include('includes/footer.inc');
 
 } else {
 	//Get next Inventory Transfer Shipment Reference Number
@@ -116,7 +121,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		$Trf_ID = GetNextTransNo(16,$db);
 	}
 
-	If (isset($InputError) and $InputError==true){
+	if (isset($InputError) and $InputError==true){
 		echo '<br>';
 
 		prnMsg($ErrorMessage, 'error');
@@ -124,13 +129,18 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 	}
 
-	echo '<hr><form action="' . $_SERVER['PHP_SELF'] . '?'. SID . '" method=post>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') .
+		'" alt="">' . ' ' . $title . '';
 
-	echo '<div class="centre"><input type=hidden name="Trf_ID" VALUE="' . $Trf_ID . '"><h2>'. _('Inventory Location Transfer Shipment Reference').' # '. $Trf_ID. '</h2>';
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '?'. SID . '" method=post>';
+
+	echo '<table class=selection>';
+	echo '<tr><th colspan=4><input type=hidden name="Trf_ID" VALUE="' . $Trf_ID . '"><font size=3 color=blue>'.
+			_('Inventory Location Transfer Shipment Reference').' # '. $Trf_ID. '</font></th></tr>';
 
 	$sql = 'SELECT loccode, locationname FROM locations';
 	$resultStkLocs = DB_query($sql,$db);
-	echo _('From Stock Location').':<select name="FromStockLocation">';
+	echo '<tr><td>'._('From Stock Location').':</td><td><select name="FromStockLocation">';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['FromStockLocation'])){
 			if ($myrow['loccode'] == $_POST['FromStockLocation']){
@@ -145,10 +155,10 @@ if(isset($_POST['Submit']) AND $InputError==False){
 			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		}
 	}
-	echo '</select>';
+	echo '</select></td>';
 
 	DB_data_seek($resultStkLocs,0); //go back to the start of the locations result
-	echo _('To Stock Location').':<select name="ToStockLocation">';
+	echo '<td>'._('To Stock Location').':</td><td><select name="ToStockLocation">';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['ToStockLocation'])){
 			if ($myrow['loccode'] == $_POST['ToStockLocation']){
@@ -163,9 +173,9 @@ if(isset($_POST['Submit']) AND $InputError==False){
 			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		}
 	}
-	echo '</select></div><br>';
+	echo '</select></td></tr></table><p>';
 
-	echo '<table>';
+	echo '<table class=selection>';
 
 	$tableheader = '<tr><th>'. _('Item Code'). '</th><th>'. _('Quantity'). '</th></tr>';
 	echo $tableheader;
@@ -205,7 +215,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	}
 
 	echo '</table><br><div class="centre">
-		<input type=hidden name="LinesCounter" value='. $i .'><input type=submit name="EnterMoreItems" value="'. _('Add More Items'). '"><input type=submit name="Submit" value="'. _('Create Transfer Shipment'). '"><br><hr>';
+		<input type=hidden name="LinesCounter" value='. $i .'><input type=submit name="EnterMoreItems" value="'. _('Add More Items'). '"><input type=submit name="Submit" value="'. _('Create Transfer Shipment'). '"><br>';
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].StockID0);</script>';
 	echo '</form></div>';
 	include('includes/footer.inc');

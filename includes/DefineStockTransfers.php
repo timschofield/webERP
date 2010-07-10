@@ -55,6 +55,7 @@ class LineItem {
 		$this->PartUnit = $PartUnit;
 		$this->Controlled = $Controlled;
 		$this->Serialised = $Serialised;
+		$this->DecimalPlaces = $DecimalPlaces;
 		$this->ShipQty = $Quantity;
 		if ($this->Controlled==1){
 			$this->Quantity = 0;
