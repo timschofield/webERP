@@ -63,7 +63,7 @@ Class Cart {
 		$this->total=0;
 		$this->ItemsOrdered=0;
 		$this->LineCounter=0;
-		$this->DefaltSalesType="";
+		$this->DefaultSalesType="";
 		$this->FreightCost =0;
 		$this->FreightTaxes = array();
 	}
@@ -97,7 +97,7 @@ Class Cart {
 							$ExRate=1){
 
 		if (isset($StockID) AND $StockID!="" AND $Qty>0 AND isset($Qty)){
-			
+
 			if ($Price<0){ /*madness check - use a credit note to give money away!*/
 				$Price=0;
 			}
@@ -170,13 +170,13 @@ Class Cart {
 		Return 0;
 	}
 
-	function update_cart_item( $UpdateLineNumber, 
-								$Qty, 
-								$Price, 
-								$Disc, 
-								$Narrative, 
-								$UpdateDB='No', 
-								$ItemDue, 
+	function update_cart_item( $UpdateLineNumber,
+								$Qty,
+								$Price,
+								$Disc,
+								$Narrative,
+								$UpdateDB='No',
+								$ItemDue,
 								$POLine,
 								$GPPercent){
 
@@ -489,7 +489,7 @@ Class LineDetails {
 		$this->StandardCost = $StandardCost;
 		$this->EOQ = $EOQ;
 		$this->NextSerialNo = $NextSerialNo;
-		
+
 		if ($Prc > 0){
 			$this->GPPercent = ((($Prc * (1 - $DiscPercent)) - ($StandardCost * $ExRate))*100)/$Prc;
 		} else {
