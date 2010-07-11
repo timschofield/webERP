@@ -10,7 +10,7 @@ function standard_deviation($Data){
 			$Counter++;
 	}
 	$Average = $Total/$Counter;
-	
+
 	$TotalDifferenceSquared =0;
 	foreach ($Data as $Element){
 			$TotalDifferenceSquared += (($Element-$Average) * ($Element-$Average));
@@ -20,7 +20,7 @@ function standard_deviation($Data){
 
 function NewPageHeader () {
 	global $PageNumber,
-			$pdf, 
+			$pdf,
 			$YPos,
 			$Page_Height,
 			$Page_Width,
@@ -30,7 +30,7 @@ function NewPageHeader () {
 			$Right_Margin,
 			$SupplierName,
 			$line_height;
-	
+
 	/*PDF page header for inventory planning report */
 
 	if ($PageNumber > 1){
@@ -46,7 +46,7 @@ function NewPageHeader () {
 
 	$FontSize=10;
 
-	$ReportTitle = _('Preferred Supplier Inventory Plan') . ' ' . $SupplerName;
+	$ReportTitle = _('Preferred Supplier Inventory Plan');
 
 
 	if ($_POST['Location']=='All'){
@@ -149,9 +149,9 @@ if (isset($_POST['PrintPDF'])){
 
       /*Now figure out the inventory data to report for the category range under review
       need QOH, QOO, QDem, Sales Mth -1, Sales Mth -2, Sales Mth -3, Sales Mth -4*/
-    		  
+
 	if ($_POST['Location']=='All'){
-					
+
 			$SQL = "SELECT stockmaster.description,
 						stockmaster.eoq,
 						locstock.stockid,
@@ -168,17 +168,17 @@ if (isset($_POST['PrintPDF'])){
 					AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
 					AND purchdata.stockid=stockmaster.stockid
 					AND purchdata.preferred=1
-					GROUP BY 
+					GROUP BY
 						purchdata.supplierno,
 						stockmaster.description,
 						stockmaster.eoq,
 						locstock.stockid
 					ORDER BY purchdata.supplierno,
-						stockmaster.stockid";	
-		
+						stockmaster.stockid";
+
 	} else {
-		
-			$SQL = "SELECT 
+
+			$SQL = "SELECT
 						stockmaster.description,
 						stockmaster.eoq,
 						purchdata.supplierno,
@@ -197,8 +197,8 @@ if (isset($_POST['PrintPDF'])){
 					AND locstock.loccode = '" . $_POST['Location'] . "'
 					AND purchdata.preferred=1
 					ORDER BY purchdata.supplierno,
-					stockmaster.stockid";	
-		
+					stockmaster.stockid";
+
 
 	}
 	$InventoryResult = DB_query($SQL, $db, '', '', false, false);
@@ -215,7 +215,7 @@ if (isset($_POST['PrintPDF'])){
 	   include('includes/footer.inc');
 	   exit;
 	}
-	
+
 	NewPageHeader();
 
 	$SupplierID = '';
@@ -246,23 +246,23 @@ if (isset($_POST['PrintPDF'])){
 
 
 		if ($_POST['Location']=='All'){
-   		   $SQL = 'SELECT SUM(CASE WHEN (prd>=' . $Period_1 . ' OR 
-									prd<=' . $Period_4 . ') THEN -qty ELSE 0 END) AS 4mthtotal,
-						SUM(CASE WHEN prd=' . $Period_1 . ' THEN -qty ELSE 0 END) AS prd1,
-						SUM(CASE WHEN prd=' . $Period_2 . ' THEN -qty ELSE 0 END) AS prd2,
-						SUM(CASE WHEN prd=' . $Period_3 . ' THEN -qty ELSE 0 END) AS prd3,
-						SUM(CASE WHEN prd=' . $Period_4 . " THEN -qty ELSE 0 END) AS prd4	
+   		   $SQL = "SELECT SUM(CASE WHEN (prd>='" . $Period_1 . "' OR
+									prd<='" . $Period_4 . "') THEN -qty ELSE 0 END) AS 4mthtotal,
+						SUM(CASE WHEN prd='" . $Period_1 . "' THEN -qty ELSE 0 END) AS prd1,
+						SUM(CASE WHEN prd='" . $Period_2 . "' THEN -qty ELSE 0 END) AS prd2,
+						SUM(CASE WHEN prd='" . $Period_3 . "' THEN -qty ELSE 0 END) AS prd3,
+						SUM(CASE WHEN prd='" . $Period_4 . "' THEN -qty ELSE 0 END) AS prd4
 						FROM stockmoves
 						WHERE stockid='" . $InventoryPlan['stockid'] . "'
 						AND (type=10 OR type=11)
 						AND stockmoves.hidemovt=0";
 		} else {
-  		   $SQL = 'SELECT SUM(CASE WHEN (prd>=' . $Period_1 . ' OR 
-									prd<=' . $Period_4 . ') THEN -qty ELSE 0 END) AS 4mthtotal,
-						SUM(CASE WHEN prd=' . $Period_1 . ' THEN -qty ELSE 0 END) AS prd1,
-						SUM(CASE WHEN prd=' . $Period_2 . ' THEN -qty ELSE 0 END) AS prd2,
-						SUM(CASE WHEN prd=' . $Period_3 . ' THEN -qty ELSE 0 END) AS prd3,
-						SUM(CASE WHEN prd=' . $Period_4 . " THEN -qty ELSE 0 END) AS prd4
+  		   $SQL = "SELECT SUM(CASE WHEN (prd>='" . $Period_1 . "' OR
+									prd<='" . $Period_4 . "') THEN -qty ELSE 0 END) AS 4mthtotal,
+						SUM(CASE WHEN prd='" . $Period_1 . "' THEN -qty ELSE 0 END) AS prd1,
+						SUM(CASE WHEN prd='" . $Period_2 . "' THEN -qty ELSE 0 END) AS prd2,
+						SUM(CASE WHEN prd='" . $Period_3 . "' THEN -qty ELSE 0 END) AS prd3,
+						SUM(CASE WHEN prd='" . $Period_4 . "' THEN -qty ELSE 0 END) AS prd4
 						FROM stockmoves
 						WHERE stockid='" . $InventoryPlan['stockid'] . "'
 						AND stockmoves.loccode ='" . $_POST['Location'] . "'
@@ -401,18 +401,18 @@ if (isset($_POST['PrintPDF'])){
 		$LeftOvers = $pdf->addTextWrap(100, $YPos, 150,6,$InventoryPlan['description'],'left');
 		$AverageOfLast4Months = $SalesRow['4mthtotal']/4;
 		$LeftOvers = $pdf->addTextWrap(251, $YPos, 50,$FontSize,number_format($AverageOfLast4Months,1),'right');
-		
+
 		$MaxMthSales = Max($SalesRow['prd1'], $SalesRow['prd2'], $SalesRow['prd3'], $SalesRow['prd4']);
 		$LeftOvers = $pdf->addTextWrap(309, $YPos, 50,$FontSize,number_format($MaxMthSales,0),'right');
-		
+
 		$Quantities = array($SalesRow['prd1'], $SalesRow['prd2'], $SalesRow['prd3'], $SalesRow['prd4']);
 		$StandardDeviation = standard_deviation($Quantities);
 		$LeftOvers = $pdf->addTextWrap(359, $YPos, 50,$FontSize,number_format($StandardDeviation,2),'right');
-		
+
 		$LeftOvers = $pdf->addTextWrap(409, $YPos, 50,$FontSize,number_format($InventoryPlan['monthsleadtime'],1),'right');
-		
+
 		$RequiredStockInSupplyChain = $AverageOfLast4Months * ($_POST['NumberMonthsHolding']+$InventoryPlan['monthsleadtime']);
-		
+
 		$LeftOvers = $pdf->addTextWrap(456, $YPos, 50,$FontSize,number_format($RequiredStockInSupplyChain,0),'right');
 		$LeftOvers = $pdf->addTextWrap(597, $YPos, 40,$FontSize,number_format($InventoryPlan['qoh'],0),'right');
 		$LeftOvers = $pdf->addTextWrap(638, $YPos, 40,$FontSize,number_format($TotalDemand,0),'right');
@@ -456,12 +456,13 @@ if (isset($_POST['PrintPDF'])){
 
 	$title=_('Preferred Supplier Inventory Planning');
 	include('includes/header.inc');
-	
 
-	echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method='POST'><table>";
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
+
+	echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method='POST'><table class=selection>";
 
 	echo '<tr><td>' . _('For Inventory in Location') . ':</td><td><select name="Location">';
-	$sql = 'SELECT loccode, locationname FROM locations';
+	$sql = "SELECT loccode, locationname FROM locations";
 	$LocnResult=DB_query($sql,$db);
 
 	echo '<option Value="All">' . _('All Locations');
@@ -473,7 +474,7 @@ if (isset($_POST['PrintPDF'])){
 
 	echo '<tr><td>' . _('Months Buffer Stock to Hold') . ':</td>
 				<td><select name="NumberMonthsHolding">';
-				
+
 	if (!isset($_POST['NumberMonthsHolding'])){
 		$_POST['NumberMonthsHolding']=1;
 	}
@@ -499,7 +500,7 @@ if (isset($_POST['PrintPDF'])){
 	}
 	echo '</select></td></tr>';
 
-	echo '</table><div class="centre"><input type=submit Name="PrintPDF" Value="' . _('Print PDF') . '"></div>';
+	echo '</table><br><div class="centre"><input type=submit Name="PrintPDF" Value="' . _('Print PDF') . '"></div>';
 
 	include('includes/footer.inc');
 } /*end of else not PrintPDF */
