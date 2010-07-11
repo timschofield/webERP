@@ -16,7 +16,7 @@ $YPos -=$line_height;
 
 $FontSize=10;
 
-if ($_POST['SupplierID']=="0"){ //no supplier selected its a stock category report
+if (isset($_POST['SupplierID']) and $_POST['SupplierID']=="0"){ //no supplier selected its a stock category report
 	$ReportTitle = _('Inventory Planning for Categories Between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria'];
 } else { //supplier selected its just planning for products from the supplier
 	$ReportTitle = _('Inventory Planning for Products Category') . ' ' . $_POST['FromCriteria'];
@@ -57,12 +57,12 @@ $LeftOvers = $pdf->addTextWrap(430,$YPos,40,$FontSize,$Period_1_Name . ' ' . _('
 $LeftOvers = $pdf->addTextWrap(471,$YPos,40,$FontSize,$Period_0_Name . ' ' . _('MTD'),'centre');
 
 $stat=$_POST['NumberMonthsHolding'];
-	if ($_POST['NumberMonthsHolding']>10){	
+	if ($_POST['NumberMonthsHolding']>10){
 		$NumberMonthsHolding=$_POST['NumberMonthsHolding']-10;
 	}
-	else{		
-		$NumberMonthsHolding=$_POST['NumberMonthsHolding'];	
-		
+	else{
+		$NumberMonthsHolding=$_POST['NumberMonthsHolding'];
+
 	}
 $LeftOvers = $pdf->addTextWrap(512,$YPos,40,$FontSize,$NumberMonthsHolding . ' ' . _('ms stk'),'centre');
 $LeftOvers = $pdf->addTextWrap(617,$YPos,40,$FontSize,_('QOH'),'centre');

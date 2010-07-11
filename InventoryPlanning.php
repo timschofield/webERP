@@ -144,23 +144,23 @@ if (isset($_POST['PrintPDF'])
 
 
 		if ($_POST['Location']=='All'){
-   		   $SQL = "SELECT SUM(CASE WHEN prd=" . $CurrentPeriod . " THEN -qty ELSE 0 END) AS prd0,
-		   		SUM(CASE WHEN prd=" . $Period_1 . " THEN -qty ELSE 0 END) AS prd1,
-				SUM(CASE WHEN prd=" . $Period_2 . " THEN -qty ELSE 0 END) AS prd2,
-				SUM(CASE WHEN prd=" . $Period_3 . " THEN -qty ELSE 0 END) AS prd3,
-				SUM(CASE WHEN prd=" . $Period_4 . " THEN -qty ELSE 0 END) AS prd4,
-				SUM(CASE WHEN prd=" . $Period_5 . " THEN -qty ELSE 0 END) AS prd5
+   		   $SQL = "SELECT SUM(CASE WHEN prd='" . $CurrentPeriod . "' THEN -qty ELSE 0 END) AS prd0,
+		   		SUM(CASE WHEN prd='" . $Period_1 . "' THEN -qty ELSE 0 END) AS prd1,
+				SUM(CASE WHEN prd='" . $Period_2 . "' THEN -qty ELSE 0 END) AS prd2,
+				SUM(CASE WHEN prd='" . $Period_3 . "' THEN -qty ELSE 0 END) AS prd3,
+				SUM(CASE WHEN prd='" . $Period_4 . "' THEN -qty ELSE 0 END) AS prd4,
+				SUM(CASE WHEN prd='" . $Period_5 . "' THEN -qty ELSE 0 END) AS prd5
 			FROM stockmoves
 			WHERE stockid='" . $InventoryPlan['stockid'] . "'
 			AND (type=10 OR type=11)
 			AND stockmoves.hidemovt=0";
 		} else {
-  		   $SQL = "SELECT SUM(CASE WHEN prd=" . $CurrentPeriod . " THEN -qty ELSE 0 END) AS prd0,
-		   		SUM(CASE WHEN prd=" . $Period_1 . " THEN -qty ELSE 0 END) AS prd1,
-				SUM(CASE WHEN prd=" . $Period_2 . " THEN -qty ELSE 0 END) AS prd2,
-				SUM(CASE WHEN prd=" . $Period_3 . " THEN -qty ELSE 0 END) AS prd3,
-				SUM(CASE WHEN prd=" . $Period_4 . " THEN -qty ELSE 0 END) AS prd4,
-				SUM(CASE WHEN prd=" . $Period_5 . " THEN -qty ELSE 0 END) AS prd5
+  		   $SQL = "SELECT SUM(CASE WHEN prd='" . $CurrentPeriod . "' THEN -qty ELSE 0 END) AS prd0,
+		   		SUM(CASE WHEN prd='" . $Period_1 . "' THEN -qty ELSE 0 END) AS prd1,
+				SUM(CASE WHEN prd='" . $Period_2 . "' THEN -qty ELSE 0 END) AS prd2,
+				SUM(CASE WHEN prd='" . $Period_3 . "' THEN -qty ELSE 0 END) AS prd3,
+				SUM(CASE WHEN prd='" . $Period_4 . "' THEN -qty ELSE 0 END) AS prd4,
+				SUM(CASE WHEN prd='" . $Period_5 . "' THEN -qty ELSE 0 END) AS prd5
 			FROM stockmoves
 			WHERE stockid='" . $InventoryPlan['stockid'] . "'
 			AND stockmoves.loccode ='" . $_POST['Location'] . "'
@@ -362,12 +362,13 @@ if (isset($_POST['PrintPDF'])
 	$title=_('Inventory Planning Reporting');
 	include('includes/header.inc');
 
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 
-	if (strlen($_POST['FromCriteria'])<1 || strlen($_POST['ToCriteria'])<1) {
+	if (empty($_POST['FromCriteria']) or empty($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method='POST'><table>";
+		echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method='POST'><table class=selection>";
 
 		echo '<tr>
 					<td>' . _('From Inventory Category Code') . ':</font></td>
@@ -428,7 +429,7 @@ if (isset($_POST['PrintPDF'])
 					</td>
 			 </tr>';
 
-		echo "</table><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
+		echo "</table><br><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
 	}
 	include('includes/footer.inc');
 
