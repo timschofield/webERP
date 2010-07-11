@@ -385,7 +385,7 @@ if (isset($_POST['SearchSuppliers'])){
 		if (strlen($_POST['Keywords'])>0) {
 		//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
-			
+
 			$SQL = "SELECT suppliers.supplierid,
 					suppliers.suppname,
 					suppliers.address1,
@@ -724,13 +724,16 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 		$sql='SELECT
 					price,
 					suppliersuom,
-					suppliers_partno
+					suppliers_partno,
+					conversionfactor
 				FROM purchdata
 				WHERE supplierno="'.$_GET['SelectedSupplier'] .'"
 				AND stockid="'.$purch_item.'" ';
 		$result=DB_query($sql, $db);
 		$purchdatarow=DB_fetch_array($result);
-
+		if (!isset($purchdatarow['conversionfactor'])) {
+			$purchdatarow['conversionfactor']=1;
+		}
 		$sql='SELECT
 					stockact
 				FROM stockcategory
@@ -759,6 +762,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 				$stockmasterrow['decimalplaces'],
 				$purch_item,
 				$purchdatarow['suppliersuom'],
+				$purchdatarow['conversionfactor'],
 				$purchdatarow['suppliers_partno'],
 				$Qty*$purchdatarow['price'],
 				'',

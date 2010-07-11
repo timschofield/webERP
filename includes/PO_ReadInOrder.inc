@@ -196,7 +196,8 @@
 					$date=DB_fetch_row($dateresult);
 					if ($date[0]!='') {
 						$sql='SELECT unitsofmeasure.unitname,
-									suppliers_partno
+									suppliers_partno,
+									conversionfactor
 								FROM purchdata
 								LEFT JOIN unitsofmeasure
 								ON purchdata.suppliersuom=unitsofmeasure.unitid
@@ -209,6 +210,7 @@
 						$sql='SELECT units as unitname, stockid as suppliers_partno FROM stockmaster WHERE stockid="'.$StockID.'"';
 						$purchdataresult=DB_query($sql, $db);
 						$myrow2=DB_fetch_array($purchdataresult);
+						$myrow2['conversionfactor']=1;
 					}
 
 					$_SESSION['PO'.$identifier]->add_to_order($_SESSION['PO'.$identifier]->LinesOnOrder+1,
@@ -230,6 +232,7 @@
 							$myrow['decimalplaces'],
 							$myrow['itemno'],
 							$myrow2['unitname'],
+							$myrow2['conversionfactor'],
 							$myrow2['suppliers_partno'],
 							$myrow['subtotal_amount'],
 							0,

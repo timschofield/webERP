@@ -96,6 +96,7 @@ Class PurchOrder {
 				$DecimalPlaces=2,
 				$itemno,
 				$uom,
+				$ConversionFactor,
 				$leadtime,
 				$suppliers_partno,
 				$subtotal_amount,
@@ -128,6 +129,7 @@ Class PurchOrder {
 				$DecimalPlaces,
 				$itemno,
 				$uom,
+				$ConversionFactor,
 				$leadtime,
 				$suppliers_partno,
 				$subtotal_amount,
@@ -155,6 +157,7 @@ Class PurchOrder {
 				$JobRef ,
 				$itemno,
 				$uom,
+				$ConversionFactor,
 				$suppliers_partno,
 				$subtotal_amount,
 				$package,
@@ -175,6 +178,7 @@ Class PurchOrder {
 			$this->LineItems[$LineNo]->JobRef = $JobRef;
 			$this->LineItems[$LineNo]->itemno = $itemno;
 			$this->LineItems[$LineNo]->uom = $uom;
+			$this->LineItems[$LineNo]->ConversionFactor = $ConversionFactor;
 			$this->LineItems[$LineNo]->suppliers_partno = $suppliers_partno;
 			$this->LineItems[$LineNo]->subtotal_amount = $subtotal_amount;
 			$this->LineItems[$LineNo]->package = $package;
@@ -244,6 +248,7 @@ Class LineDetails {
 	Var $JobRef;
 	Var $itemno;
 	Var $uom;
+	var $ConversionFactor;
 	Var $suppliers_partno;
 	Var $subtotal_amount;
 	Var $leadtime;
@@ -280,6 +285,7 @@ Class LineDetails {
 				$DecimalPlaces,
 				$itemno,
 				$uom,
+				$ConversionFactor,
 				$suppliers_partno,
 				$subtotal_amount,
 				$leadtime,
@@ -309,6 +315,7 @@ Class LineDetails {
 		$this->JobRef = $JobRef;
 		$this->itemno = $itemno;
 		$this->uom = $uom;
+		$this->ConversionFactor = $ConversionFactor;
 		$this->suppliers_partno = $suppliers_partno;
 		$this->subtotal_amount = $subtotal_amount;
 		$this->leadtime = $leadtime;
