@@ -6,7 +6,7 @@
 $PageSecurity = 2;
 include('includes/session.inc');
 
-If (isset($_POST['PrintPDF'])
+if (isset($_POST['PrintPDF'])
 	AND isset($_POST['FromCriteria'])
 	AND strlen($_POST['FromCriteria'])>=1
 	AND isset($_POST['ToCriteria'])
@@ -20,7 +20,7 @@ If (isset($_POST['PrintPDF'])
 	$PageNumber=1;
 	$line_height=12;
 
-      /*Now figure out the inventory data to report for the category range under review */
+	/*Now figure out the inventory data to report for the category range under review */
 	if ($_POST['Location']=='All'){
 		$SQL = "SELECT stockmaster.categoryid,
 				stockcategory.categorydescription,
@@ -78,7 +78,7 @@ If (isset($_POST['PrintPDF'])
 	   prnMsg( _('The inventory valuation could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
 	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<br>$SQL";
+		  echo "<br>$SQL";
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -87,19 +87,19 @@ If (isset($_POST['PrintPDF'])
 		$title = _('Print Inventory Valuation Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no items with any value to print out for the location specified'),'info');
-		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		echo "<br><a href='" . $rootpath . "/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
-		exit;	
-	}	
+		exit;
+	}
 
 	include ('includes/PDFInventoryValnPageHeader.inc');
 
-    $Tot_Val=0;
+	$Tot_Val=0;
 	$Category = '';
 	$CatTot_Val=0;
-    $CatTot_Qty=0;
+	$CatTot_Qty=0;
 
-	While ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
+	while ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
 
 		if ($Category!=$InventoryValn['categoryid']){
 			$FontSize=10;
@@ -116,9 +116,9 @@ If (isset($_POST['PrintPDF'])
 
 				$DisplayCatTotVal = number_format($CatTot_Val,2);
 				$DisplayCatTotQty = number_format($CatTot_Qty,0);
-                                $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
-	                        $LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
-                                $YPos -=$line_height;
+								$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
+							$LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
+								$YPos -=$line_height;
 
 				If ($_POST['DetailedReport']=='Yes'){
 				/*draw a line under the CATEGORY TOTAL*/
@@ -126,7 +126,7 @@ If (isset($_POST['PrintPDF'])
 					$YPos -=(2*$line_height);
 				}
 				$CatTot_Val=0;
-                                $CatTot_Qty=0;
+								$CatTot_Qty=0;
 			}
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$InventoryValn['categoryid'] . ' - ' . $InventoryValn['categorydescription']);
 			$Category = $InventoryValn['categoryid'];
@@ -137,7 +137,7 @@ If (isset($_POST['PrintPDF'])
 			$YPos -=$line_height;
 			$FontSize=8;
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,100,$FontSize,$InventoryValn['stockid']);				
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,100,$FontSize,$InventoryValn['stockid']);
 			$LeftOvers = $pdf->addTextWrap(170,$YPos,220,$FontSize,$InventoryValn['description']);
 			$DisplayUnitCost = number_format($InventoryValn['unitcost'],2);
 			$DisplayQtyOnHand = number_format($InventoryValn['qtyonhand'],0);
@@ -151,7 +151,7 @@ If (isset($_POST['PrintPDF'])
 		}
 		$Tot_Val += $InventoryValn['itemtotal'];
 		$CatTot_Val += $InventoryValn['itemtotal'];
-        $CatTot_Qty += $InventoryValn['qtyonhand'];
+		$CatTot_Qty += $InventoryValn['qtyonhand'];
 
 		if ($YPos < $Bottom_Margin + $line_height){
 		   include('includes/PDFInventoryValnPageHeader.inc');
@@ -166,9 +166,9 @@ If (isset($_POST['PrintPDF'])
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize, _('Total for') . ' ' . $Category . ' - ' . $CategoryName, 'left');
 	}
 	$DisplayCatTotVal = number_format($CatTot_Val,2);
-        $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
+		$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
 	$DisplayCatTotQty = number_format($CatTot_Qty,0);
-        $LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
+		$LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
 
 	If ($_POST['DetailedReport']=='Yes'){
 		/*draw a line under the CATEGORY TOTAL*/
@@ -184,7 +184,7 @@ If (isset($_POST['PrintPDF'])
 /*Print out the grand totals */
 	$LeftOvers = $pdf->addTextWrap(80,$YPos,260-$Left_Margin,$FontSize,_('Grand Total Value'), 'right');
 	$DisplayTotalVal = number_format($Tot_Val,2);
-    $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
+	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_Inventory_Valuation_' . Date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
@@ -198,8 +198,10 @@ If (isset($_POST['PrintPDF'])
 	if (empty($_POST['FromCriteria']) or empty($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
+		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
+			_('Inventory') . '" alt="">' . ' ' . $title . '';
 
-		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table>";
+		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table class=selection>";
 
 		echo '<tr><td>' . _('From Inventory Category Code') . ':</font></td><td><select name=FromCriteria>';
 
@@ -227,8 +229,8 @@ If (isset($_POST['PrintPDF'])
 		echo "<option value='All'>" . _('All Locations');
 
 		while ($myrow=DB_fetch_array($LocnResult)){
-		          echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
-		      		}
+				  echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+			  		}
 		echo '</select></td></tr>';
 
 		echo '<tr><td>' . _('Summary or Detailed Report') . ":</td><td><select name='DetailedReport'>";
@@ -236,7 +238,7 @@ If (isset($_POST['PrintPDF'])
 		echo "<option Value='Yes'>" . _('Detailed Report');
 		echo '</select></td></tr>';
 
-		echo "</table><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
+		echo "</table><br><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
 	}
 	include('includes/footer.inc');
 
