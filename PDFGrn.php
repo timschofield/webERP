@@ -91,6 +91,7 @@ while ($counter<=$ListCount) {
 			$uomresult=DB_query($sql, $db);
 			$uomrow=DB_fetch_array($uomresult);
 			$units=$uomrow['units'];
+			$myrow2['conversionfactor']=1;
 		} else {
 			$units=$myrow2['unitname'];
 		}
