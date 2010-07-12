@@ -101,7 +101,7 @@ $calendarsql = "SELECT COUNT(*),cal2.calendardate
 				  FROM mrpcalendar
 					LEFT JOIN mrpcalendar as cal2
 					  ON mrpcalendar.daynumber = cal2.daynumber
-				  WHERE mrpcalendar.calendardate = '$datearray[0]'
+				  WHERE mrpcalendar.calendardate = '".$datearray[0]."'
 					AND cal2.manufacturingflag='1'
 					GROUP BY cal2.calendardate";
 $resultdate = DB_query($calendarsql,$db);
@@ -127,7 +127,7 @@ for ($i = 1; $i <= ( $_POST['PeriodNumber'] - 1); $i++) {
 					  FROM mrpcalendar
 						LEFT JOIN mrpcalendar as cal2
 						  ON mrpcalendar.daynumber = cal2.daynumber
-					  WHERE mrpcalendar.calendardate = '$datearray[$i]'
+					  WHERE mrpcalendar.calendardate = '".$datearray[$i]."'
 						AND cal2.manufacturingflag='1'
 						GROUP BY cal2.calendardate";
 	$resultdate = DB_query($calendarsql,$db);
