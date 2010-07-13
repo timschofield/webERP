@@ -192,14 +192,24 @@ if (empty($_SESSION['LogoFile'])) {
 			}
 		} //loop through list of files in the company directory
 		if ($InCompanyDir !== FALSE) {
-			foreach($InCompanyDir as $logofilename)
-				if (strncasecmp($logofilename,'logo.jpg',8) === 0 AND
-				is_readable($dir . $logofilename) AND
+			foreach($InCompanyDir as $logofilename) {
+				if (strncasecmp($logofilename,'logo.png',8) === 0 AND
+					is_readable($dir . $logofilename) AND
 					is_file($dir . $logofilename)) {
-				$logo = $logofilename;
-				break;
+					$logo = $logofilename;
+					break;
+				}
 			}
-
+			if (!isset($logo)) {
+				foreach($InCompanyDir as $logofilename) {
+					if (strncasecmp($logofilename,'logo.jpg',8) === 0 AND
+						is_readable($dir . $logofilename) AND
+						is_file($dir . $logofilename)) {
+						$logo = $logofilename;
+						break;
+					}
+				}
+			}
 			if (empty($logo)) {
 				return null;
 			} else {
@@ -212,7 +222,6 @@ if (empty($_SESSION['LogoFile'])) {
 	if (!empty($_SESSION['DatabaseName'])) {
 		$_SESSION['LogoFile'] = findLogoFile($_SESSION['DatabaseName'], $PathPrefix);
 	}
-
 }
 
 if ($_SESSION['HTTPS_Only']==1){
