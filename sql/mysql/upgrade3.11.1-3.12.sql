@@ -279,3 +279,5 @@ INSERT INTO `suppliertype` VALUES(1, 'Default');
 ALTER TABLE `suppliers` ADD COLUMN `supptype` tinyint(4) NOT NULL DEFAULT 1 AFTER `address6`;
 
 ALTER TABLE `loctransfers` CHANGE COLUMN `shipqty` `shipqty` double NOT NULL DEFAULT 0.0;
+
+INSERT INTO `config` VALUES ('VersionNumber', '3.12');

@@ -13,7 +13,7 @@ $allow_demo_mode = True;
 
 // webERP version
 
-$Version = '3.13-rc0 UTF-8 capable';
+// $Version = '3.13-rc0 UTF-8 capable';
 
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time

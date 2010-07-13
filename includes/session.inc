@@ -95,7 +95,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 		echo '<br /><br /><br />';
 		prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'),'error');
 		include($PathPrefix . 'includes/footer.inc');
-		    exit;
+			exit;
 
 	case  UL_NOTVALID:
 		$demo_text = '<font size="3" color="red"><b>' .  _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
@@ -277,13 +277,16 @@ if (in_array(15, $_SESSION['AllowedPageSecurityTokens'])) {
 	$debug = 0;
 }
 function CryptPass( $Password ) {
-    	global $CryptFunction;
-    	if ( $CryptFunction == 'sha1' ) {
-    		return sha1($Password);
-    	} elseif ( $CryptFunction == 'md5' ) {
-    		return md5($Password);
+		global $CryptFunction;
+		if ( $CryptFunction == 'sha1' ) {
+			return sha1($Password);
+		} elseif ( $CryptFunction == 'md5' ) {
+			return md5($Password);
 	} else {
-    		return $Password;
-    	}
+			return $Password;
+		}
  }
+
+$Version = $_SESSION['VersionNumber'];
+
 ?>
