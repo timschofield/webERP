@@ -273,7 +273,7 @@ function LogBackTrace( $dest = 0 ) {
 	    // Either function args, or included file name(s)
 	    $msg .= ' (';
 	    foreach( $frame['args'] as $val ) {
-	    
+
 			$typ = gettype( $val );
 			switch( $typ ) {
 				case 'array':
@@ -293,15 +293,15 @@ function LogBackTrace( $dest = 0 ) {
 				case 'string':
 				    $msg .= $val . ', ';
 				    break;
-		
+
 				case 'integer':
 				    $msg .= sprintf( "%d, ", $val );
 				    break;
-		
+
 				default:
 				    $msg .= '<' . gettype( $val ) . '>, ';
 				    break;
-				
+
 		    	}
 		    $msg .= ' )';
 			}
@@ -313,4 +313,14 @@ function LogBackTrace( $dest = 0 ) {
 
     return;
 }
+
+function http_file_exists($url)  {
+	$f=@fopen($url,"r");
+	if($f) {
+		fclose($f);
+		return true;
+	}
+	return false;
+}
+
 ?>
