@@ -15,6 +15,9 @@ if (isset($_POST['SelectedDT'])){
 	$SelectedDT = trim(strtoupper($_GET['SelectedDT']));
 }
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
+		_('Inventory') . '" alt="">' . ' ' . $title . '</p>';
+
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
@@ -25,16 +28,16 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if (trim(strtoupper($_POST['mrpdemandtype']) == "WO") or 
+	if (trim(strtoupper($_POST['mrpdemandtype']) == "WO") or
 	   trim(strtoupper($_POST['mrpdemandtype']) == "SO")) {
 		$InputError = 1;
 		prnMsg(_('The Demand Type is reserved for the system'),'error');
-	} 
+	}
 
 	if (strlen($_POST['mrpdemandtype']) < 1) {
 		$InputError = 1;
 		prnMsg(_('The Demand Type code must be at least 1 character long'),'error');
-	} 
+	}
 	if (strlen($_POST['Description'])<3) {
 		$InputError = 1;
 		prnMsg(_('The Demand Type description must be at least 3 characters long'),'error');
@@ -51,8 +54,8 @@ if (isset($_POST['submit'])) {
 		$msg = _('The demand type record has been updated');
 	} elseif ($InputError !=1) {
 
-	//Selected demand type is null cos no item selected on first time round so must be adding a	
-	//record must be submitting new entries in the new work centre form 
+	//Selected demand type is null cos no item selected on first time round so must be adding a
+	//record must be submitting new entries in the new work centre form
 
 		$sql = "INSERT INTO mrpdemandtypes (mrpdemandtype,
 						description)
@@ -66,6 +69,7 @@ if (isset($_POST['submit'])) {
 	if ($InputError !=1){
 		$result = DB_query($sql,$db,_('The update/addition of the demand type failed because'));
 		prnMsg($msg,'success');
+		echo '<br>';
 		unset ($_POST['Description']);
 		unset ($_POST['mrpdemandtype']);
 		unset ($SelectedDT);
@@ -76,7 +80,7 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'MRPDemands'
 
-	$sql= "SELECT COUNT(*) FROM mrpdemands 
+	$sql= "SELECT COUNT(*) FROM mrpdemands
 	         WHERE mrpdemands.mrpdemandtype='$SelectedDT'
 	         GROUP BY mrpdemandtype";
 	$result = DB_query($sql,$db);
@@ -87,13 +91,14 @@ if (isset($_POST['submit'])) {
 			$sql="DELETE FROM mrpdemandtypes WHERE mrpdemandtype='$SelectedDT'";
 			$result = DB_query($sql,$db);
 			prnMsg(_('The selected demand type record has been deleted'),'succes');
+			echo '<br>';
 	} // end of MRPDemands test
 }
 
-if (!isset($SelectedDT)) {
+if (!isset($SelectedDT) or isset($_GET['delete'])) {
 
-//It could still be the second time the page has been run and a record has been selected 
-//for modification SelectedDT will exist because it was sent with the new call. If its  
+//It could still be the second time the page has been run and a record has been selected
+//for modification SelectedDT will exist because it was sent with the new call. If its
 //the first time the page has been displayed with no parameters
 //then none of the above are true and the list of demand types will be displayed with
 //links to delete or edit each. These will call the same page again and allow update/input
@@ -105,7 +110,7 @@ if (!isset($SelectedDT)) {
 
 	$result = DB_query($sql,$db);
 
-	echo "<table border=1>
+	echo "<table class=selection>
 		<tr BGCOLOR =#800000><th>" . _('Demand Type') . "</th>
 				<th>" . _('Description') . "</th>
 		</tr></font>";
@@ -130,13 +135,13 @@ if (!isset($SelectedDT)) {
 
 //end of ifs and buts!
 
-if (isset($SelectedDT)) {
+if (isset($SelectedDT) and !isset($_GET['delete'])) {
 	echo "<div class='centre'><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Show all Demand Types') . '</a></div>';
 }
 
 echo "<p><form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 
-if (isset($SelectedDT)) {
+if (isset($SelectedDT) and !isset($_GET['delete'])) {
 	//editing an existing demand type
 
 	$sql = "SELECT mrpdemandtype,
@@ -152,13 +157,13 @@ if (isset($SelectedDT)) {
 
 	echo '<input type=hidden name=SelectedDT value=' . $SelectedDT . '>';
 	echo "<input type=hidden name=mrpdemandtype value='" . $_POST['mrpdemandtype'] . "'>";
-	echo '<table><tr><td>' ._('Demand Type') . ':</td><td>' . $_POST['mrpdemandtype'] . '</td></tr>';
+	echo '<table class=selection><tr><td>' ._('Demand Type') . ':</td><td>' . $_POST['mrpdemandtype'] . '</td></tr>';
 
 } else { //end of if $SelectedDT only do the else when a new record is being entered
 	if (!isset($_POST['mrpdemandtype'])) {
 		$_POST['mrpdemandtype'] = '';
 	}
-	echo '<table><tr>
+	echo '<table class=selection><tr>
 			<td>' . _('Demand Type') . ":</td>
 			<td><input type='Text' name='mrpdemandtype' size=6 maxlength=5 value='" . $_POST['mrpdemandtype'] . "'></td>
 			</tr>" ;
@@ -173,7 +178,7 @@ echo '<tr><td>' . _('Demand Type Description') . ":</td>
 	</tr>
 	</table>";
 
-echo "<div class='centre'><input type='Submit' name='submit' value='" . _('Enter Information') . "'></div>";
+echo "<br><div class='centre'><input type='Submit' name='submit' value='" . _('Enter Information') . "'></div>";
 
 echo '</form>';
 include('includes/footer.inc');
