@@ -21,9 +21,9 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 	$wheredate = " ";
 	$reportdate = " ";
 	if (is_Date($_POST['cutoffdate'])) {
-               $formatdate = FormatDateForSQL($_POST['cutoffdate']);
-               $wheredate = ' AND duedate <= "' . $formatdate . '" ';
-               $reportdate = _(' Through  ') . $_POST['cutoffdate'];
+		$formatdate = FormatDateForSQL($_POST['cutoffdate']);
+		$wheredate = ' AND duedate <= "' . $formatdate . '" ';
+		$reportdate = _(' Through  ') . $_POST['cutoffdate'];
 	}
 
 	if ($_POST['Consolidation'] == 'None') {
@@ -33,70 +33,70 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
 					   stockmaster.actualcost,
-                      (stockmaster.materialcost + stockmaster.labourcost +
-	                   stockmaster.overheadcost ) as computedcost
+					  (stockmaster.materialcost + stockmaster.labourcost +
+					   stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
 				WHERE mrpplannedorders.part = stockmaster.stockid '  . "$wheredate" .
 				  ' AND stockmaster.mbflag = "M"
 				ORDER BY mrpplannedorders.part,mrpplannedorders.duedate';
 	} elseif ($_POST['Consolidation'] == 'Weekly') {
-	    $sql = 'SELECT mrpplannedorders.part,
-	                   SUM(mrpplannedorders.supplyquantity) as supplyquantity,
-	                   TRUNCATE(((TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE)) / 7),0) AS weekindex,
-	                   MIN(mrpplannedorders.duedate) as duedate,
-	                   MIN(mrpplannedorders.mrpdate) as mrpdate,
-	                   COUNT(*) AS consolidatedcount,
-	                   stockmaster.stockid,
-					   stockmaster.description,
-					   stockmaster.mbflag,
-					   stockmaster.decimalplaces,
-					   stockmaster.actualcost,
-                      (stockmaster.materialcost + stockmaster.labourcost +
-	                   stockmaster.overheadcost ) as computedcost
-				FROM mrpplannedorders, stockmaster
-				WHERE mrpplannedorders.part = stockmaster.stockid '  . "$wheredate" .
-				  ' AND stockmaster.mbflag = "M"
-				GROUP BY mrpplannedorders.part,
-				         weekindex,
-				         stockmaster.stockid,
-					     stockmaster.description,
-					     stockmaster.mbflag,
-					     stockmaster.decimalplaces,
-					     stockmaster.actualcost,
-					     stockmaster.materialcost,
-					     stockmaster.labourcost,
-					     stockmaster.overheadcost,
-					     computedcost
-				ORDER BY mrpplannedorders.part,weekindex
-	    ';
-	} else {
-	    $sql = 'SELECT mrpplannedorders.part,
-	                   SUM(mrpplannedorders.supplyquantity) as supplyquantity,
-	                   EXTRACT(YEAR_MONTH from duedate) AS yearmonth,
-	                   MIN(mrpplannedorders.duedate) as duedate,
-	                   MIN(mrpplannedorders.mrpdate) as mrpdate,
-	                   COUNT(*) AS consolidatedcount,
-	                   	stockmaster.stockid,
+		$sql = 'SELECT mrpplannedorders.part,
+					   SUM(mrpplannedorders.supplyquantity) as supplyquantity,
+					   TRUNCATE(((TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE)) / 7),0) AS weekindex,
+					   MIN(mrpplannedorders.duedate) as duedate,
+					   MIN(mrpplannedorders.mrpdate) as mrpdate,
+					   COUNT(*) AS consolidatedcount,
+					   stockmaster.stockid,
 					   stockmaster.description,
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
 					   stockmaster.actualcost,
 					  (stockmaster.materialcost + stockmaster.labourcost +
-	                   stockmaster.overheadcost ) as computedcost,
+					   stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
 				WHERE mrpplannedorders.part = stockmaster.stockid '  . "$wheredate" .
 				  ' AND stockmaster.mbflag = "M"
 				GROUP BY mrpplannedorders.part,
-				         yearmonth,
-	                   	 stockmaster.stockid,
-					     stockmaster.description,
-					     stockmaster.mbflag,
-					     stockmaster.decimalplaces,
-					     stockmaster.actualcost,
-					     stockmaster.materialcost,
-					     stockmaster.labourcost,
-					     stockmaster.overheadcost,
-					     computedcost
+						 weekindex,
+						 stockmaster.stockid,
+						 stockmaster.description,
+						 stockmaster.mbflag,
+						 stockmaster.decimalplaces,
+						 stockmaster.actualcost,
+						 stockmaster.materialcost,
+						 stockmaster.labourcost,
+						 stockmaster.overheadcost,
+						 computedcost
+				ORDER BY mrpplannedorders.part,weekindex
+		';
+	} else {
+		$sql = 'SELECT mrpplannedorders.part,
+					   SUM(mrpplannedorders.supplyquantity) as supplyquantity,
+					   EXTRACT(YEAR_MONTH from duedate) AS yearmonth,
+					   MIN(mrpplannedorders.duedate) as duedate,
+					   MIN(mrpplannedorders.mrpdate) as mrpdate,
+					   COUNT(*) AS consolidatedcount,
+					   	stockmaster.stockid,
+					   stockmaster.description,
+					   stockmaster.mbflag,
+					   stockmaster.decimalplaces,
+					   stockmaster.actualcost,
+					  (stockmaster.materialcost + stockmaster.labourcost +
+					   stockmaster.overheadcost ) as computedcost,
+				FROM mrpplannedorders, stockmaster
+				WHERE mrpplannedorders.part = stockmaster.stockid '  . "$wheredate" .
+				  ' AND stockmaster.mbflag = "M"
+				GROUP BY mrpplannedorders.part,
+						 yearmonth,
+					   	 stockmaster.stockid,
+						 stockmaster.description,
+						 stockmaster.mbflag,
+						 stockmaster.decimalplaces,
+						 stockmaster.actualcost,
+						 stockmaster.materialcost,
+						 stockmaster.labourcost,
+						 stockmaster.overheadcost,
+						 computedcost
 				ORDER BY mrpplannedorders.part,yearmonth ';
 	};
 	$result = DB_query($sql,$db,'','',false,true);
@@ -107,7 +107,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 	   prnMsg( _('The MRP planned work orders could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
 	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<br>$sql";
+		  echo "<br>$sql";
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -123,7 +123,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 
 
 
-	If (isset($_POST['PrintPDF'])) { // Print planned work orders
+	if (isset($_POST['PrintPDF'])) { // Print planned work orders
 
 		include('includes/PDFStarter.php');
 
@@ -150,8 +150,9 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		$holddecimalplaces = 0;
 		$totalpartqty = 0;
 		$totalpartcost = 0;
+		$Total_Extcost = 0;
 
-		While ($myrow = DB_fetch_array($result,$db)){
+		while ($myrow = DB_fetch_array($result,$db)){
 				$YPos -=$line_height;
 
 				// Use to alternate between lines with transparent and painted background
@@ -244,13 +245,14 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 
 		$title = _('Review/Convert MRP Planned Work Orders');
 		include('includes/header.inc');
+		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
+			_('Inventory') . '" alt="">' . ' ' . $title . '</p>';
 
-		echo "
-			<br /><br /><form action='MRPConvertWorkOrders.php' method='post'>";
-		echo "<div class='centre'><h3>Conolidation: " . $_POST['Consolidation'] . "</h3></div>";
-		echo "<div class='centre'><h3>Cutoff Date: " . $_POST['cutoffdate'] . "</h3></div>";
-		echo "<table><tr>
-				<th></th>
+		echo "<form action='MRPConvertWorkOrders.php' method='post'>";
+		echo "<table class=selection>";
+		echo "<tr><th colspan=9><font size=3 color=blue>Consolidation: " . $_POST['Consolidation'] .
+			"&nbsp;&nbsp;&nbsp;&nbsp;Cutoff Date: " . $_POST['cutoffdate'] . "</font></th></tr>";
+		echo "<tr><th></th>
 				<th>" . _('Code') . "</th>
 				<th>" . _('Description') . "</th>
 				<th>" . _('MRP Date') . "</th>
@@ -263,6 +265,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 
 		$totalpartqty = 0;
 		$totalpartcost = 0;
+		$Total_Extcost = 0;
 		$j=1; //row ID
 		$k=0; //row colour counter
 		While ($myrow = DB_fetch_array($result,$db)){
@@ -290,7 +293,9 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 			printf("\n <td class=number>%s</td>", number_format($myrow['supplyquantity'],$myrow['decimalplaces']));
 			printf("\n <td class=number>%.2f</td>", number_format($myrow['computedcost'],2));
 			printf("\n <td class=number>%.2f</td>", number_format($myrow['supplyquantity'] * $myrow['computedcost'],2));
-			printf("\n <td class=number>%s</td>", $myrow['consolidatedcount']);
+			if ($_POST['Consolidation']!='None') {
+				printf("\n <td class=number>%s</td>", $myrow['consolidatedcount']);
+			}
 			echo "</tr>";
 
 			$j++;
@@ -320,8 +325,10 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 
 	$title=_('MRP Planned Work Orders Reporting');
 	include('includes/header.inc');
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
+		_('Inventory') . '" alt="">' . ' ' . $title . '</p>';
 
-	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
+	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table class=selection>";
 	echo '<tr><td>' . _('Consolidation') . ":</td><td><select name='Consolidation'>";
 	echo "<option selected value='None'>" . _('None');
 	echo "<option value='Weekly'>" . _('Weekly');
@@ -332,14 +339,14 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 	echo "<option value='no'>" . _('Plain Print');
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Cut Off Date') . ":</td><td><input type ='text' class=date alt='".$_SESSION['DefaultDateFormat'] ."' name='cutoffdate' size='10' value='".date($_SESSION['DefaultDateFormat'])."'></tr>";
-	echo "</table></br><div class='centre'><input type=submit name='Review' value='" . _('Review') . "'> <input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
+	echo "</table><p><div class='centre'><input type=submit name='Review' value='" . _('Review') . "'> <input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
 
 } /*end of else not PrintPDF */
 
 function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-                     $Page_Width,$Right_Margin,$consolidation,$reportdate) {
+					 $Page_Width,$Right_Margin,$consolidation,$reportdate) {
 
 	/*PDF page header for MRP Planned Work Orders report */
 	if ($PageNumber>1){
