@@ -291,7 +291,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		   			include('includes/PDFStockComparisonPageHeader.inc');
 				}
 			} // end of loop printing count information
-			$LeftOvers = $pdf->addTextWrap($LeftMargin, $YPos, 375-$LeftMargin, $FontSize, _('Total for') . ': ' . $CheckItemRow['stockid'], 'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 375-$Left_Margin, $FontSize, _('Total for') . ': ' . $CheckItemRow['stockid'], 'right');
 			$LeftOvers = $pdf->addTextWrap(375, $YPos, 60, $FontSize, $TotalCount, 'right');
 			$LeftOvers = $pdf->addTextWrap(485, $YPos, 60, $FontSize, $TotalCount-$CheckItemRow['qoh'], 'right');
 		} //end of if there are counts to print
