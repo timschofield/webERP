@@ -116,6 +116,10 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 } else if (isset($_POST['PrintPDF'])) {
 
+	$tagsql="SELECT tagdescription FROM tags WHERE tagref='".$_POST['tag']."'";
+	$tagresult=DB_query($tagsql, $db);
+	$tagrow=DB_fetch_array($tagresult);
+	$Tag=$tagrow['tagdescription'];
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title', _('Income and Expenditure') );
 	$pdf->addInfo('Subject', _('Income and Expenditure') );
@@ -186,7 +190,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 		exit;
 	}
 
-	include('includes/PDFProfitAndLossPageHeader.inc');
+	include('includes/PDFTagProfitAndLossPageHeader.inc');
 
 	$Section = '';
 	$SectionPrdActual = 0;
@@ -201,7 +205,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 		// Print heading if at end of page
 		if ($YPos < ($Bottom_Margin)){
-			include('includes/PDFProfitAndLossPageHeader.inc');
+			include('includes/PDFTagProfitAndLossPageHeader.inc');
 		}
 
 		if ($myrow['groupname'] != $ActGrp){
@@ -229,7 +233,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 						$Level--;
 // Print heading if at end of page
 						if ($YPos < ($Bottom_Margin + (2*$line_height))){
-							include('includes/PDFProfitAndLossPageHeader.inc');
+							include('includes/PDFTagProfitAndLossPageHeader.inc');
 						}
 					} //end of loop
 					//still need to print out the group total for the same level
@@ -254,7 +258,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 		// Print heading if at end of page
 		if ($YPos < ($Bottom_Margin +(2 * $line_height))){
-			include('includes/PDFProfitAndLossPageHeader.inc');
+			include('includes/PDFTagProfitAndLossPageHeader.inc');
 		}
 
 		if ($myrow['sectioninaccounts'] != $Section){
@@ -296,6 +300,8 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 				}
 			}
 			$SectionPrdActual = 0;
+			$SectionPrdBudget = 0;
+			$SectionPrdLY = 0;
 
 			$Section = $myrow['sectioninaccounts'];
 
@@ -370,7 +376,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 				$Level--;
 				// Print heading if at end of page
 				if ($YPos < ($Bottom_Margin + (2*$line_height))){
-					include('includes/PDFProfitAndLossPageHeader.inc');
+					include('includes/PDFTagProfitAndLossPageHeader.inc');
 				}
 			}
 			//still need to print out the group total for the same level
@@ -393,7 +399,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	}
 	// Print heading if at end of page
 	if ($YPos < ($Bottom_Margin + (2*$line_height))){
-		include('includes/PDFProfitAndLossPageHeader.inc');
+		include('includes/PDFTagProfitAndLossPageHeader.inc');
 	}
 	if ($Section != ''){
 
