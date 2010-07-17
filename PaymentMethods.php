@@ -10,6 +10,9 @@ $title = _('Payment Methods');
 
 include('includes/header.inc');
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Payments') .
+	'" alt="">' . ' ' . $title.'</p>';
+
 if ( isset($_GET['SelectedPaymentID']) )
 	$SelectedPaymentID = $_GET['SelectedPaymentID'];
 elseif (isset($_POST['SelectedPaymentID']))
@@ -18,8 +21,8 @@ elseif (isset($_POST['SelectedPaymentID']))
 if (isset($Errors)) {
 	unset($Errors);
 }
-	
-$Errors = array();	
+
+$Errors = array();
 
 if (isset($_POST['submit'])) {
 
@@ -37,20 +40,20 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg( _('The payment method cannot contain the character') . " '&' " . _('or the character') ." '",'error');
 		$Errors[$i] = 'MethodName';
-		$i++;		
+		$i++;
 	}
 	if ( trim($_POST['MethodName']) == "") {
 		$InputError = 1;
 		prnMsg( _('The payment method may not be empty.'),'error');
 		$Errors[$i] = 'MethodName';
-		$i++;		
+		$i++;
 	}
-	if ($_POST['SelectedPaymentID']!='' AND $InputError !=1) {
+	if (isset($_POST['SelectedPaymentID']) AND $InputError !=1) {
 
 		/*SelectedPaymentID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 		// Check the name does not clash
-		$sql = "SELECT count(*) FROM paymentmethods 
-				WHERE paymentid <> " . $SelectedPaymentID ."
+		$sql = "SELECT count(*) FROM paymentmethods
+				WHERE paymentid <> '" . $SelectedPaymentID ."'
 				AND paymentname ".LIKE." '" . $_POST['MethodName'] . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
@@ -59,20 +62,20 @@ if (isset($_POST['submit'])) {
 			prnMsg( _('The payment method can not be renamed because another with the same name already exists.'),'error');
 		} else {
 			// Get the old name and check that the record still exists need to be very careful here
-			
-			$sql = "SELECT paymentname FROM paymentmethods 
-				WHERE paymentid = " . $SelectedPaymentID;
+
+			$sql = "SELECT paymentname FROM paymentmethods
+				WHERE paymentid = '" . $SelectedPaymentID . "'";
 			$result = DB_query($sql,$db);
 			if ( DB_num_rows($result) != 0 ) {
 				$myrow = DB_fetch_row($result);
 				$OldName = $myrow[0];
 				$sql = "UPDATE paymentmethods
 					SET paymentname='" . $_POST['MethodName'] . "',
-						paymenttype = " . $_POST['ForPayment'] . ",
-						receipttype = " . $_POST['ForReceipt'] . "
-					WHERE paymentname ".LIKE." '".$OldName."'";
-				
-				/* lets leave well alone existing entries 
+						paymenttype = '" . $_POST['ForPayment'] . "',
+						receipttype = '" . $_POST['ForReceipt'] . "'
+					WHERE paymentname LIKE '".$OldName."'";
+
+				/* lets leave well alone existing entries
 				if ($_POST['MethodName'] != $OldMeasureName ) {
 					// Less work if not required this could take a while.
 					$sql = "UPDATE banktrans
@@ -89,8 +92,8 @@ if (isset($_POST['submit'])) {
 		$ErrMsg = _('Could not update payment method');
 	} elseif ($InputError !=1) {
 		/*SelectedPaymentID is null cos no item selected on first time round so must be adding a record*/
-		$sql = "SELECT count(*) FROM paymentmethods 
-				WHERE paymentname " .LIKE. " '".$_POST['MethodName'] ."'";
+		$sql = "SELECT count(*) FROM paymentmethods
+				WHERE paymentname LIKE'".$_POST['MethodName'] ."'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ( $myrow[0] > 0 ) {
@@ -98,13 +101,13 @@ if (isset($_POST['submit'])) {
 			prnMsg( _('The payment method can not be created because another with the same name already exists.'),'error');
 		} else {
 			$sql = "INSERT INTO paymentmethods (
-						paymentname, 
-						paymenttype, 
+						paymentname,
+						paymenttype,
 						receipttype)
 				VALUES (
 					'" . $_POST['MethodName'] ."',
-					" . $_POST['ForPayment'] . ",
-					" . $_POST['ForReceipt'] . "
+					'" . $_POST['ForPayment'] ."',
+					'" . $_POST['ForReceipt'] ."'
 					)";
 		}
 		$msg = _('Record inserted');
@@ -114,6 +117,7 @@ if (isset($_POST['submit'])) {
 	if ($InputError!=1){
 		$result = DB_query($sql,$db, $ErrMsg);
 		prnMsg($msg,'success');
+		echo '<p>';
 	}
 	unset ($SelectedPaymentID);
 	unset ($_POST['SelectedPaymentID']);
@@ -125,8 +129,8 @@ if (isset($_POST['submit'])) {
 //the link to delete a selected record was clicked instead of the submit button
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'stockmaster'
 	// Get the original name of the payment method the ID is just a secure way to find the payment method
-	$sql = "SELECT paymentname FROM paymentmethods 
-		WHERE paymentid = " . $SelectedPaymentID;
+	$sql = "SELECT paymentname FROM paymentmethods
+		WHERE paymentid = '" . $SelectedPaymentID . "'";
 	$result = DB_query($sql,$db);
 	if ( DB_num_rows($result) == 0 ) {
 		// This is probably the safest way there is
@@ -134,16 +138,17 @@ if (isset($_POST['submit'])) {
 	} else {
 		$myrow = DB_fetch_row($result);
 		$OldMeasureName = $myrow[0];
-		$sql= "SELECT COUNT(*) FROM banktrans WHERE banktranstype ".LIKE." '" . $OldMeasureName . "'";
+		$sql= "SELECT COUNT(*) FROM banktrans WHERE banktranstype LIKE '" . $OldMeasureName . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg( _('Cannot delete this payment method because bank transactions have been created using this payment method'),'warn');
 			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('bank transactions that refer to this payment method') . '</font>';
 		} else {
-			$sql="DELETE FROM paymentmethods WHERE paymentname ".LIKE."'" . $OldMeasureName . "'";
+			$sql="DELETE FROM paymentmethods WHERE paymentname LIKE '" . $OldMeasureName . "'";
 			$result = DB_query($sql,$db);
 			prnMsg( $OldMeasureName . ' ' . _('payment method has been deleted') . '!','success');
+			echo '<br>';
 		} //end if not used
 	} //end if payment method exist
 	unset ($SelectedPaymentID);
@@ -158,7 +163,7 @@ if (isset($_POST['submit'])) {
 
  if (!isset($SelectedPaymentID)) {
 
-/* A payment method could be posted when one has been edited and is being updated 
+/* A payment method could be posted when one has been edited and is being updated
   or GOT when selected for modification
   SelectedPaymentID will exist because it was sent with the page in a GET .
   If its the first time the page has been displayed with no parameters
@@ -176,7 +181,7 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = _('Could not get payment methods because');
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	echo "<table>
+	echo "<table class=selection>
 		<tr>
 		<th>" . _('Payment Method') . "</th>
 		<th>" . _('For Payments') . "</th>
@@ -224,7 +229,7 @@ if (! isset($_GET['delete'])) {
 				paymenttype,
 				receipttype
 				FROM paymentmethods
-				WHERE paymentid=" . $SelectedPaymentID;
+				WHERE paymentid='" . $SelectedPaymentID . "'";
 
 		$result = DB_query($sql, $db);
 		if ( DB_num_rows($result) == 0 ) {
@@ -239,14 +244,14 @@ if (! isset($_GET['delete'])) {
 			$_POST['ForReceipt'] = $myrow['receipttype'];
 
 			echo "<input type=hidden name='SelectedPaymentID' VALUE='" . $_POST['MethodID'] . "'>";
-			echo "<table>";
+			echo "<table class=selection>";
 		}
 
 	}  else {
 		$_POST['MethodName']='';
 		$_POST['ForPayment'] = 1; // Default is use for payment
 		$_POST['ForReceipt'] = 1; // Default is use for receipts
-		echo "<table>";
+		echo "<table class=selection>";
 	}
 	echo "<tr>
 		<td>" . _('Payment Method') . ':' . "</td>
@@ -267,7 +272,7 @@ if (! isset($_GET['delete'])) {
 
 	echo '</table>';
 
-	echo '<div class="centre"><input type=Submit name=submit value=' . _('Enter Information') . '></div>';
+	echo '<br><div class="centre"><input type=Submit name=submit value=' . _('Enter Information') . '></div>';
 
 	echo '</form>';
 
