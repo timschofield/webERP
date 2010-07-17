@@ -1,7 +1,6 @@
 <?php
 
 /* $Id$*/
-
 	echo '</td>';
 	echo '</tr>';
 	echo '</table>';
@@ -11,6 +10,10 @@
 
 	echo '</table>';
 	setlocale(LC_ALL,$_SESSION['Language']);
+	if (!isset($DefaultClock)) {
+		include('config.php');
+		$Version=$_SESSION['VersionNumber'];
+	}
 	echo '<p style="text-align:right">'.(strftime('%A')).', '.(date($_SESSION['DefaultDateFormat']).' | '.(strftime(($DefaultClock==12) ? '%I:%M %p' : '%H:%M'))).'</p>';
 
 
