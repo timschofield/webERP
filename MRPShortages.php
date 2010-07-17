@@ -19,12 +19,12 @@ if (DB_num_rows($result)==0) {
 	exit;
 }
 
-If (isset($_POST['PrintPDF'])) {
+if (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',_('MRP Shortages Report'));
 	$pdf->addInfo('Subject',_('MRP Shortages'));
-    $FontSize=9;
+	$FontSize=9;
 	$PageNumber=1;
 	$line_height=12;
 
@@ -35,7 +35,7 @@ If (isset($_POST['PrintPDF'])) {
 	$sql = 'CREATE TEMPORARY TABLE demandtotal (
 				part char(20),
 				demand double,
-                KEY `PART` (`part`))';
+				KEY `PART` (`part`))';
 	$result = DB_query($sql,$db,_('Create of demandtotal failed because'));
 
 	$sql = 'INSERT INTO demandtotal
@@ -43,14 +43,14 @@ If (isset($_POST['PrintPDF'])) {
 						 demand)
 			   SELECT part,
 					  SUM(quantity) as demand
-			    FROM mrprequirements
-			    GROUP BY part';
+				FROM mrprequirements
+				GROUP BY part';
 	$result = DB_query($sql,$db);
 
 	$sql = 'CREATE TEMPORARY TABLE supplytotal (
 				part char(20),
 				supply double,
-                KEY `PART` (`part`))';
+				KEY `PART` (`part`))';
 	$result = DB_query($sql,$db,_('Create of supplytotal failed because'));
 
 /* 21/03/2010: Ricard modification to allow items with total supply = 0 be included in the report */
@@ -60,12 +60,12 @@ If (isset($_POST['PrintPDF'])) {
 						 supply)
 			SELECT stockid,
 				  0
-		    FROM stockmaster';
+			FROM stockmaster';
 	$result = DB_query($sql,$db);
 
 	$sql = 'UPDATE supplytotal
 			SET supply = (SELECT SUM(mrpsupplies.supplyquantity)
-					    	FROM mrpsupplies
+							FROM mrpsupplies
 							WHERE supplytotal.part = mrpsupplies.part
 								AND mrpsupplies.supplyquantity > 0)';
 	$result = DB_query($sql,$db);
@@ -79,21 +79,21 @@ If (isset($_POST['PrintPDF'])) {
 	// show demand for the lower level parts that the upper level part generates. See MRP.php for
 	// more notes - Decided not to exclude derived demand so using $sql, not $sqlexclude
 	$sqlexclude = "SELECT stockmaster.stockid,
-	                   stockmaster.description,
-	                   stockmaster.mbflag,
-	                   stockmaster.actualcost,
-	                   stockmaster.decimalplaces,
-	                   (stockmaster.materialcost + stockmaster.labourcost +
-	                    stockmaster.overheadcost ) as computedcost,
-	                   demandtotal.demand,
-	                   supplytotal.supply,
-	                   (demandtotal.demand - supplytotal.supply) *
-	                   (stockmaster.materialcost + stockmaster.labourcost +
-	                    stockmaster.overheadcost ) as extcost
-      FROM stockmaster
-        LEFT JOIN demandtotal ON stockmaster.stockid = demandtotal.part
-        LEFT JOIN supplytotal ON stockmaster.stockid = supplytotal.part
-      GROUP BY stockmaster.stockid,
+					   stockmaster.description,
+					   stockmaster.mbflag,
+					   stockmaster.actualcost,
+					   stockmaster.decimalplaces,
+					   (stockmaster.materialcost + stockmaster.labourcost +
+						stockmaster.overheadcost ) as computedcost,
+					   demandtotal.demand,
+					   supplytotal.supply,
+					   (demandtotal.demand - supplytotal.supply) *
+					   (stockmaster.materialcost + stockmaster.labourcost +
+						stockmaster.overheadcost ) as extcost
+	  FROM stockmaster
+		LEFT JOIN demandtotal ON stockmaster.stockid = demandtotal.part
+		LEFT JOIN supplytotal ON stockmaster.stockid = supplytotal.part
+	  GROUP BY stockmaster.stockid,
 			   stockmaster.description,
 			   stockmaster.mbflag,
 			   stockmaster.actualcost,
@@ -101,24 +101,24 @@ If (isset($_POST['PrintPDF'])) {
 			   supplytotal.supply,
 			   demandtotal.demand,
 			   extcost
-      HAVING demand > supply
-      ORDER BY " . $_POST['Sort'];
+	  HAVING demand > supply
+	  ORDER BY '" . $_POST['Sort']."'";
    	$sql = "SELECT stockmaster.stockid,
-        stockmaster.description,
-        stockmaster.mbflag,
-        stockmaster.actualcost,
-        stockmaster.decimalplaces,
-        (stockmaster.materialcost + stockmaster.labourcost +
-	     stockmaster.overheadcost ) as computedcost,
-	    demandtotal.demand,
-	    supplytotal.supply,
+		stockmaster.description,
+		stockmaster.mbflag,
+		stockmaster.actualcost,
+		stockmaster.decimalplaces,
+		(stockmaster.materialcost + stockmaster.labourcost +
+		 stockmaster.overheadcost ) as computedcost,
+		demandtotal.demand,
+		supplytotal.supply,
 	   (demandtotal.demand - supplytotal.supply) *
 	   (stockmaster.materialcost + stockmaster.labourcost +
 		stockmaster.overheadcost ) as extcost
-           FROM stockmaster
-             LEFT JOIN demandtotal ON stockmaster.stockid = demandtotal.part
-             LEFT JOIN supplytotal ON stockmaster.stockid = supplytotal.part
-           GROUP BY stockmaster.stockid,
+		   FROM stockmaster
+			 LEFT JOIN demandtotal ON stockmaster.stockid = demandtotal.part
+			 LEFT JOIN supplytotal ON stockmaster.stockid = supplytotal.part
+		   GROUP BY stockmaster.stockid,
 			   stockmaster.description,
 			   stockmaster.mbflag,
 			   stockmaster.actualcost,
@@ -130,7 +130,7 @@ If (isset($_POST['PrintPDF'])) {
 			   supplytotal.supply,
 			   demandtotal.demand
 			HAVING demandtotal.demand > supplytotal.supply
-			ORDER BY " . $_POST['Sort'] . $sortorder;
+			ORDER BY '" . $_POST['Sort'] . "'";
 	$result = DB_query($sql,$db,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
@@ -139,7 +139,7 @@ If (isset($_POST['PrintPDF'])) {
 	   prnMsg( _('The MRP shortages could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
 	   echo "</br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "</br>$sql";
+		  echo "</br>$sql";
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -151,21 +151,21 @@ If (isset($_POST['PrintPDF'])) {
 	   prnMsg( _('No MRP shortages retrieved'), 'warn');
 	   echo "</br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "</br>$sql";
+		  echo "</br>$sql";
 	   }
 	   include('includes/footer.inc');
 	   exit;
 	}
 
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-	                   $Right_Margin);
+					   $Right_Margin);
 
-    $Total_Shortage=0;
-    $Partctr = 0;
-    $fill = false;
-    $pdf->SetFillColor(224,235,255);  // Defines color to make alternating lines highlighted
-	While ($myrow = DB_fetch_array($result,$db)){
-        if ($myrow['demand'] > $myrow['supply']) {
+	$Total_Shortage=0;
+	$Partctr = 0;
+	$fill = false;
+	$pdf->SetFillColor(224,235,255);  // Defines color to make alternating lines highlighted
+	while ($myrow = DB_fetch_array($result,$db)){
+		if ($myrow['demand'] > $myrow['supply']) {
 			$YPos -=$line_height;
 			$FontSize=8;
 
@@ -185,11 +185,11 @@ If (isset($_POST['PrintPDF'])) {
 			$pdf->addTextWrap(280,$YPos,25,$FontSize,$myrow['mbflag'],'right',0,$fill);
 			$pdf->addTextWrap(305,$YPos,55,$FontSize,number_format($myrow['computedcost'],2),'right',0,$fill);
 			$pdf->addTextWrap(360,$YPos,50,$FontSize,number_format($myrow['supply'],
-			                 $myrow['decimalplaces']),'right',0,$fill);
+							 $myrow['decimalplaces']),'right',0,$fill);
 			$pdf->addTextWrap(410,$YPos,50,$FontSize,number_format($myrow['demand'],
-			                 $myrow['decimalplaces']),'right',0,$fill);
+							 $myrow['decimalplaces']),'right',0,$fill);
 			$pdf->addTextWrap(460,$YPos,50,$FontSize,number_format($shortage,
-			                 $myrow['decimalplaces']),'right',0,$fill);
+							 $myrow['decimalplaces']),'right',0,$fill);
 			$pdf->addTextWrap(510,$YPos,60,$FontSize,number_format($myrow['extcost'],2),'right',0,$fill);
 
 			$Total_Shortage += $myrow['extcost'];
@@ -197,7 +197,7 @@ If (isset($_POST['PrintPDF'])) {
 
 			if ($YPos < $Bottom_Margin + $line_height){
 			   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-	                   $Right_Margin);
+					   $Right_Margin);
 			}
 		}
 
@@ -208,14 +208,14 @@ If (isset($_POST['PrintPDF'])) {
 
 	if ($YPos < $Bottom_Margin + $line_height){
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-	                   $Right_Margin);
+					   $Right_Margin);
 	}
 /*Print out the grand totals */
-    $pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,_('Number of Parts: '), 'left');
-    $pdf->addTextWrap(150,$YPos,30,$FontSize,$Partctr, 'left');
+	$pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,_('Number of Parts: '), 'left');
+	$pdf->addTextWrap(150,$YPos,30,$FontSize,$Partctr, 'left');
 	$pdf->addTextWrap(300,$YPos,180,$FontSize,_('Total Extended Shortage:'), 'right');
 	$DisplayTotalVal = number_format($Total_Shortage,2);
-    $pdf->addTextWrap(510,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
+	$pdf->addTextWrap(510,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 /* UldisN
 	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);
@@ -238,23 +238,27 @@ If (isset($_POST['PrintPDF'])) {
 			$pdf->Output('MRPShortages.pdf', 'I');
 	}
 */
-    $pdf->OutputD($_SESSION['DatabaseName'] . '_MRPShortages_' . date('Y-m-d').'.pdf');//UldisN
-    $pdf->__destruct(); //UldisN
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_MRPShortages_' . date('Y-m-d').'.pdf');//UldisN
+	$pdf->__destruct(); //UldisN
 } else { /*The option to print PDF was not hit so display form */
 
 	$title=_('MRP Shortages Reporting');
 	include('includes/header.inc');
 
-	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="'
+		. _('Stock') . '" alt="">' . ' ' . $title . '</p>';
+
+	echo '<form action=' . $_SERVER['PHP_SELF'] . " method='post'>";
+	echo "<table class=selection>";
 	echo '<tr><td>' . _('Sort') . ":</td><td><select name='Sort'>";
-	echo "<option selected value='extcost'>" . _('Extended Shortage Dollars');
-	echo "<option value='stockid'>" . _('Part Number');
+	echo "<option selected value='extcost'>" . _('Extended Shortage Dollars')."</option>";
+	echo "<option value='stockid'>" . _('Part Number')."</option>";
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Print Option') . ":</td><td><select name='Fill'>";
-	echo "<option selected value='yes'>" . _('Print With Alternating Highlighted Lines');
-	echo "<option value='no'>" . _('Plain Print');
+	echo "<option selected value='yes'>" . _('Print With Alternating Highlighted Lines')."</option>";
+	echo "<option value='no'>" . _('Plain Print')."</option>";
 	echo '</select></td></tr>';
-	echo "</table></br><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
+	echo "</table><br><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
 
@@ -262,7 +266,7 @@ If (isset($_POST['PrintPDF'])) {
 
 
 function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-                     $Page_Width,$Right_Margin) {
+					 $Page_Width,$Right_Margin) {
 
 $line_height=12;
 /*PDF page header for MRP Shortages report */
@@ -279,11 +283,11 @@ $YPos -=$line_height;
 
 $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('MRP Shortages Report'));
 $pdf->addTextWrap($Page_Width-$Right_Margin-110,$YPos,160,$FontSize,_('Printed') . ': ' .
-     Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
+	 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
 
 $YPos -=(2*$line_height);
 
-/*Draw a rectangle to put the headings in     */
+/*Draw a rectangle to put the headings in	 */
 
 //$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
 //$pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos- $line_height);
