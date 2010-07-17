@@ -32,10 +32,12 @@ if (isset($StockID)) {
 <?php
 echo '<a href="' . $rootpath . '/SelectProduct.php?' . SID . '">' . _('Back to Items') . '</a><br>' . "\n";
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="'
+		. _('Stock') . '" alt="">' . ' ' . $title . '</p>';
 
 if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 
-	$result    = $_FILES['ItemPicture']['error'];
+	$result	= $_FILES['ItemPicture']['error'];
  	$UploadTheFile = 'Yes'; //Assume all is well to start off with
 	$filename = $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg';
 
@@ -48,7 +50,7 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 		$UploadTheFile ='No';
 	} elseif ( $_FILES['ItemPicture']['type'] == "text/plain" ) {  //File Type Check
 		prnMsg( _('Only graphics files can be uploaded'),'warn');
-         	$UploadTheFile ='No';
+		 	$UploadTheFile ='No';
 	} elseif (file_exists($filename)){
 		prnMsg(_('Attempting to overwrite an existing item image'),'warn');
 		$result = unlink($filename);
@@ -210,14 +212,14 @@ if (isset($_POST['submit'])) {
 			$sql = "SELECT mbflag,
 							controlled,
 							serialised
-					FROM stockmaster WHERE stockid = '$StockID'";
+					FROM stockmaster WHERE stockid = '".$StockID."'";
 			$MBFlagResult = DB_query($sql,$db);
 			$myrow = DB_fetch_row($MBFlagResult);
 			$OldMBFlag = $myrow[0];
 			$OldControlled = $myrow[1];
 			$OldSerialised = $myrow[2];
 
-			$sql = "SELECT SUM(locstock.quantity) FROM locstock WHERE stockid='$StockID'";
+			$sql = "SELECT SUM(locstock.quantity) FROM locstock WHERE stockid='".$StockID."'";
 			$result = DB_query($sql,$db);
 			$stkqtychk = DB_fetch_row($result);
 
@@ -238,7 +240,7 @@ if (isset($_POST['submit'])) {
 				if ($_POST['MBFlag']=='K') {
 					$sql = "SELECT quantity-qtyinvoiced
 						FROM salesorderdetails
-						WHERE stkcode = '$StockID'
+						WHERE stkcode = '".$StockID."'
 						AND completed=0";
 
 					$result = DB_query($sql,$db);
@@ -253,7 +255,7 @@ if (isset($_POST['submit'])) {
 
 					$sql = "SELECT quantityord-quantityrecd
 						FROM purchorderdetails
-						WHERE itemcode = '$StockID'
+						WHERE itemcode = '".$StockID."'
 						AND completed=0";
 
 					$result = DB_query($sql,$db);
@@ -266,7 +268,7 @@ if (isset($_POST['submit'])) {
 
 				/*now check that if it was a Manufactured, Kitset, Phantom or Assembly and is being changed to a purchased or dummy - that no BOM exists */
 				if (($OldMBFlag=='M' OR $OldMBFlag =='K' OR $OldMBFlag=='A' OR $OldMBFlag=='G') AND ($_POST['MBFlag']=='B' OR $_POST['MBFlag']=='D')) {
-					$sql = "SELECT COUNT(*) FROM bom WHERE parent = '$StockID'";
+					$sql = "SELECT COUNT(*) FROM bom WHERE parent = '".$StockID."'";
 					$result = DB_query($sql,$db);
 					$ChkBOM = DB_fetch_row($result);
 					if ($ChkBOM[0]!=0){
@@ -277,7 +279,7 @@ if (isset($_POST['submit'])) {
 
 				/*now check that if it was Manufac, Phantom or Purchased and is being changed to assembly or kitset, it is not a component on an existing BOM */
 				if (($OldMBFlag=='M' OR $OldMBFlag =='B' OR $OldMBFlag=='D' OR $OldMBFlag=='G') AND ($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K')) {
-					$sql = "SELECT COUNT(*) FROM bom WHERE component = '$StockID'";
+					$sql = "SELECT COUNT(*) FROM bom WHERE component = '".$StockID."'";
 					$result = DB_query($sql,$db);
 					$ChkBOM = DB_fetch_row($result);
 					if ($ChkBOM[0]!=0){
@@ -303,25 +305,25 @@ if (isset($_POST['submit'])) {
 				$sql = "UPDATE stockmaster
 						SET longdescription='" . $_POST['LongDescription'] . "',
 							description='" . $_POST['Description'] . "',
-							discontinued=" . $_POST['Discontinued'] . ",
-							controlled=" . $_POST['Controlled'] . ",
-							serialised=" . $_POST['Serialised'].",
-							perishable=" . $_POST['Perishable'].",
+							discontinued='" . $_POST['Discontinued'] . "',
+							controlled='" . $_POST['Controlled'] . "',
+							serialised='" . $_POST['Serialised']."',
+							perishable='" . $_POST['Perishable']."',
 							categoryid='" . $_POST['CategoryID'] . "',
 							units='" . $_POST['Units'] . "',
 							mbflag='" . $_POST['MBFlag'] . "',
-							eoq=" . $_POST['EOQ'] . ",
-							volume=" . $_POST['Volume'] . ",
-							kgs=" . $_POST['KGS'] . ",
+							eoq='" . $_POST['EOQ'] . "',
+							volume='" . $_POST['Volume'] . "',
+							kgs='" . $_POST['KGS'] . "',
 							barcode='" . $_POST['BarCode'] . "',
 							discountcategory='" . $_POST['DiscountCategory'] . "',
-							taxcatid=" . $_POST['TaxCat'] . ",
-							decimalplaces=" . $_POST['DecimalPlaces'] . ",
+							taxcatid='" . $_POST['TaxCat'] . "',
+							decimalplaces='" . $_POST['DecimalPlaces'] . "',
 							appendfile='" . $_POST['ItemPDF'] . "',
-							shrinkfactor=" . $_POST['ShrinkFactor'] . ",
-							pansize=" . $_POST['Pansize'] . ",
-							nextserialno=" . $_POST['NextSerialNo'] . "
-					WHERE stockid='$StockID'";
+							shrinkfactor='" . $_POST['ShrinkFactor'] . "',
+							pansize='" . $_POST['Pansize'] . "',
+							nextserialno='" . $_POST['NextSerialNo'] . "'
+					WHERE stockid='".$StockID."'";
 
 				$ErrMsg = _('The stock item could not be updated because');
 				$DbgMsg = _('The SQL that was used to update the stock item and failed was');
@@ -346,11 +348,12 @@ if (isset($_POST['submit'])) {
 																			stkcatpropid,
 																			value)
 														VALUES ('" . $StockID . "',
-																" . $_POST['PropID' . $i] . ",
+																'" . $_POST['PropID' . $i] . "',
 																'" . $_POST['PropValue' . $i] . "')",
 										$db);
 				} //end of loop around properties defined for the category
 				prnMsg( _('Stock Item') . ' ' . $StockID . ' ' . _('has been updated'), 'success');
+				echo '<br>';
 			}
 
 		} else { //it is a NEW part
@@ -381,26 +384,26 @@ if (isset($_POST['submit'])) {
 							appendfile,
 							shrinkfactor,
 							pansize)
-						VALUES ('$StockID',
+						VALUES ('".$StockID."',
 							'" . $_POST['Description'] . "',
 							'" . $_POST['LongDescription'] . "',
 							'" . $_POST['CategoryID'] . "',
 							'" . $_POST['Units'] . "',
 							'" . $_POST['MBFlag'] . "',
-							" . $_POST['EOQ'] . ",
-							" . $_POST['Discontinued'] . ",
-							" . $_POST['Controlled'] . ",
-							" . $_POST['Serialised']. ",
-							" . $_POST['Perishable']. ",
-							" . $_POST['Volume'] . ",
-							" . $_POST['KGS'] . ",
+							'" . $_POST['EOQ'] . "',
+							'" . $_POST['Discontinued'] . "',
+							'" . $_POST['Controlled'] . "',
+							'" . $_POST['Serialised']. "',
+							'" . $_POST['Perishable']. "',
+							'" . $_POST['Volume'] . "',
+							'" . $_POST['KGS'] . "',
 							'" . $_POST['BarCode'] . "',
 							'" . $_POST['DiscountCategory'] . "',
-							" . $_POST['TaxCat'] . ",
-							" . $_POST['DecimalPlaces']. ",
+							'" . $_POST['TaxCat'] . "',
+							'" . $_POST['DecimalPlaces']. "',
 							'" . $_POST['ItemPDF']. "',
-							" . $_POST['ShrinkFactor'] . ",
-							" . $_POST['Pansize'] . "
+							'" . $_POST['ShrinkFactor'] . "',
+							'" . $_POST['Pansize'] . "'
 							)";
 
 				$ErrMsg =  _('The item could not be added because');
@@ -421,6 +424,7 @@ if (isset($_POST['submit'])) {
 					if (DB_error_no($db) ==0) {
 						prnMsg( _('New Item') .' ' . "<a
 							href='SelectProduct.php?StockID=$StockID'>$StockID</a>" . ' '. _('has been added to the database'),'success');						unset($_POST['LongDescription']);
+						echo '<br>';
 						unset($_POST['Description']);
 						unset($_POST['EOQ']);
 // Leave Category ID set for ease of batch entry
@@ -458,7 +462,7 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'StockMoves'
 
-	$sql= "SELECT COUNT(*) FROM stockmoves WHERE stockid='$StockID'";
+	$sql= "SELECT COUNT(*) FROM stockmoves WHERE stockid='".$StockID."'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
@@ -467,7 +471,7 @@ if (isset($_POST['submit'])) {
 		echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock movements that refer to this item');
 
 	} else {
-		$sql= "SELECT COUNT(*) FROM bom WHERE component='$StockID'";
+		$sql= "SELECT COUNT(*) FROM bom WHERE component='".$StockID."'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
@@ -475,7 +479,7 @@ if (isset($_POST['submit'])) {
 			prnMsg( _('Cannot delete this item record because there are bills of material that require this part as a component'),'warn');
 			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('bills of material that require this part as a component');
 		} else {
-			$sql= "SELECT COUNT(*) FROM salesorderdetails WHERE stkcode='$StockID'";
+			$sql= "SELECT COUNT(*) FROM salesorderdetails WHERE stkcode='".$StockID."'";
 			$result = DB_query($sql,$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]>0) {
@@ -483,7 +487,7 @@ if (isset($_POST['submit'])) {
 				prnMsg( _('Cannot delete this item record because there are existing sales orders for this part'),'warn');
 				echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales order items against this part');
 			} else {
-				$sql= "SELECT COUNT(*) FROM salesanalysis WHERE stockid='$StockID'";
+				$sql= "SELECT COUNT(*) FROM salesanalysis WHERE stockid='".$StockID."'";
 				$result = DB_query($sql,$db);
 				$myrow = DB_fetch_row($result);
 				if ($myrow[0]>0) {
@@ -491,7 +495,7 @@ if (isset($_POST['submit'])) {
 					prnMsg(_('Cannot delete this item because sales analysis records exist for it'),'warn');
 					echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records against this part');
 				} else {
-					$sql= "SELECT COUNT(*) FROM purchorderdetails WHERE itemcode='$StockID'";
+					$sql= "SELECT COUNT(*) FROM purchorderdetails WHERE itemcode='".$StockID."'";
 					$result = DB_query($sql,$db);
 					$myrow = DB_fetch_row($result);
 					if ($myrow[0]>0) {
@@ -499,7 +503,7 @@ if (isset($_POST['submit'])) {
 						prnMsg(_('Cannot delete this item because there are existing purchase order items for it'),'warn');
 						echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('purchase order item record relating to this part');
 					} else {
-						$sql = "SELECT SUM(quantity) AS qoh FROM locstock WHERE stockid='$StockID'";
+						$sql = "SELECT SUM(quantity) AS qoh FROM locstock WHERE stockid='".$StockID."'";
 						$result = DB_query($sql,$db);
 						$myrow = DB_fetch_row($result);
 						if ($myrow[0]!=0) {
@@ -517,18 +521,18 @@ if (isset($_POST['submit'])) {
 		$result = DB_Txn_Begin($db);
 
 			/*Deletes LocStock records*/
-			$sql ="DELETE FROM locstock WHERE stockid='$StockID'";
+			$sql ="DELETE FROM locstock WHERE stockid='".$StockID."'";
 			$result=DB_query($sql,$db,_('Could not delete the location stock records because'),'',true);
 			/*Deletes Price records*/
-			$sql ="DELETE FROM prices WHERE stockid='$StockID'";
+			$sql ="DELETE FROM prices WHERE stockid='".$StockID."'";
 			$result=DB_query($sql,$db,_('Could not delete the prices for this stock record because'),'',true);
 			/*and cascade deletes in PurchData */
-			$sql ="DELETE FROM purchdata WHERE stockid='$StockID'";
+			$sql ="DELETE FROM purchdata WHERE stockid='".$StockID."'";
 			$result=DB_query($sql,$db,_('Could not delete the purchasing data because'),'',true);
 			/*and cascade delete the bill of material if any */
-			$sql = "DELETE FROM bom WHERE parent='$StockID'";
+			$sql = "DELETE FROM bom WHERE parent='".$StockID."'";
 			$result=DB_query($sql,$db,_('Could not delete the bill of material because'),'',true);
-			$sql="DELETE FROM stockmaster WHERE stockid='$StockID'";
+			$sql="DELETE FROM stockmaster WHERE stockid='".$StockID."'";
 			$result=DB_query($sql,$db, _('Could not delete the item record'),'',true);
 
 		$result = DB_Txn_Commit($db);
@@ -538,6 +542,7 @@ if (isset($_POST['submit'])) {
 		'<br>. . .' . _('and any bill of material that may have been set up for the part') .
 		'<br> . . . .' . _('and any purchasing data that may have been set up for the part') .
 		'<br> . . . . .' . _('and any prices that may have been set up for the part'),'success');
+		echo '<br>';
 		unset($_POST['LongDescription']);
 		unset($_POST['Description']);
 		unset($_POST['EOQ']);
@@ -556,8 +561,8 @@ if (isset($_POST['submit'])) {
 		unset($_POST['TaxCat']);
 		unset($_POST['DecimalPlaces']);
 		unset($_POST['ItemPDF']);
-		unset($StockID);
 		unset($_SESSION['SelectedStockItem']);
+		unset($StockID);
 		//echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/SelectProduct.php?' . SID  ."'>";
 
 
@@ -565,8 +570,8 @@ if (isset($_POST['submit'])) {
 }
 
 
-echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '?' .SID .'"><table>
-	<tr><td><table>'. "\n"; // Nested table
+echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '?' .SID .'"><table class=selection>
+	<tr><td>'. "\n"; // Nested table
 
 if (!isset($StockID) or $StockID=='') {
 
@@ -599,7 +604,7 @@ if (!isset($StockID) or $StockID=='') {
 					appendfile,
 					nextserialno
 		FROM stockmaster
-		WHERE stockid = '$StockID'";
+		WHERE stockid = '".$StockID."'";
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
@@ -620,7 +625,7 @@ if (!isset($StockID) or $StockID=='') {
 	$_POST['DiscountCategory']  = $myrow['discountcategory'];
 	$_POST['TaxCat'] = $myrow['taxcatid'];
 	$_POST['DecimalPlaces'] = $myrow['decimalplaces'];
-    $_POST['ItemPDF']  = $myrow['appendfile'];
+	$_POST['ItemPDF']  = $myrow['appendfile'];
 	$_POST['NextSerialNo'] = $myrow['nextserialno'];
 
 	echo '<tr><td>' . _('Item Code') . ':</td><td>'.$StockID.'</td></tr>'. "\n";
@@ -655,7 +660,7 @@ function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '
 	}
 	if ($handle = opendir($dir)) {
 		$mydir = "<select name=".$select_name.">\n";
-		$mydir .= '<option VALUE=0>none';
+		$mydir .= '<option value=0>none';
 		if (isset($_POST['ItemPDF'])) {
 			$curr_val = $_POST['ItemPDF'];
 		} else {
@@ -669,7 +674,7 @@ function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '
 		sort($files);
 		foreach ($files as $val) {
 			if (is_file($dir.$val)) {
-				$mydir .= '<option VALUE='.$val;
+				$mydir .= '<option value='.$val;
 				$mydir .= ($val == $curr_val) ? ' selected>' : '>';
 				$mydir .= $val."\n";
 				$teller++;
@@ -685,7 +690,27 @@ if (!isset($_POST['ItemPDF'])) {
 echo '<tr><td>' . _('PDF attachment (.pdf)') . ':' . "\n</td><td>" . select_files('companies/' . $_SESSION['DatabaseName'] .'/pdf_append//','' , 'ItemPDF', $_POST['ItemPDF'], '60') . '</td></tr>'. "\n";
 
 // Add image upload for New Item  - by Ori
-echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="ItemPicture" name="ItemPicture"></td></tr>';
+echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="ItemPicture" name="ItemPicture"></td>';
+
+ if (function_exists('imagecreatefromjpg')){
+	$StockImgLink = '<img src="GetStockImage.php?SID&automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
+		'&StockID='.urlencode($StockID).
+		'&text='.
+		'&width=64'.
+		'&height=64'.
+		'" >';
+} else {
+	if( isset($StockID) and file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
+		$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg" >';
+	} else {
+		$StockImgLink = _('No Image');
+	}
+}
+
+if ($StockImgLink!=_('No Image')) {
+	echo '</td><td>' . _('Image') . '<br>'.$StockImgLink . '</td></tr>';
+}
+
 // EOR Add Image upload for New Item  - by Ori
 
  echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID" onChange="ReloadForm(ItemForm.UpdateCategories)">';
@@ -697,36 +722,40 @@ $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
 	if (!isset($_POST['CategoryID']) or $myrow['categoryid']==$_POST['CategoryID']){
-		echo '<option selected VALUE="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'];
+		echo '<option selected value="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'];
 	} else {
-		echo '<option VALUE="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'];
+		echo '<option value="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'];
 	}
+	$Category=$myrow['categoryid'];
+}
+
+if (!isset($_POST['CategoryID'])) {
+	$_POST['CategoryID']=$Category;
 }
 
 echo '</select><a target="_blank" href="'. $rootpath . '/StockCategories.php?' . SID . '">' . _('Add or Modify Stock Categories') . '</a></td></tr>';
 
-
 if (!isset($_POST['EOQ']) or $_POST['EOQ']==''){
-    $_POST['EOQ']=0;
+	$_POST['EOQ']=0;
 }
 
 if (!isset($_POST['Volume']) or $_POST['Volume']==''){
-    $_POST['Volume']=0;
+	$_POST['Volume']=0;
 }
 if (!isset($_POST['KGS']) or $_POST['KGS']==''){
-    $_POST['KGS']=0;
+	$_POST['KGS']=0;
 }
 if (!isset($_POST['Controlled']) or $_POST['Controlled']==''){
-    $_POST['Controlled']=0;
+	$_POST['Controlled']=0;
 }
 if (!isset($_POST['Serialised']) or $_POST['Serialised']=='' || $_POST['Controlled']==0){
-    $_POST['Serialised']=0;
+	$_POST['Serialised']=0;
 }
 if (!isset($_POST['DecimalPlaces']) or $_POST['DecimalPlaces']==''){
 	$_POST['DecimalPlaces']=0;
 }
 if (!isset($_POST['Discontinued']) or $_POST['Discontinued']==''){
-    $_POST['Discontinued']=0;
+	$_POST['Discontinued']=0;
 }
 if (!isset($_POST['Pansize'])) {
 	$_POST['Pansize']=0;
@@ -755,11 +784,11 @@ if (!isset($_POST['Units'])) {
 	$UOMrow['unitname']=_('each');
 }
 while( $UOMrow = DB_fetch_array($UOMResult) ) {
-     if (isset($_POST['Units']) and $_POST['Units']==$UOMrow['unitname']){
-	    echo '<option selected value="' . $UOMrow['unitname'] . '">' . $UOMrow['unitname'] . '</option>';
-     } else {
-	    echo '<option value="' . $UOMrow['unitname'] . '">' . $UOMrow['unitname']  . '</option>';
-     }
+	 if (isset($_POST['Units']) and $_POST['Units']==$UOMrow['unitname']){
+		echo '<option selected value="' . $UOMrow['unitname'] . '">' . $UOMrow['unitname'] . '</option>';
+	 } else {
+		echo '<option value="' . $UOMrow['unitname'] . '">' . $UOMrow['unitname']  . '</option>';
+	 }
 }
 
 echo '</select></td></tr>';
@@ -817,7 +846,7 @@ echo '<tr><td>' . _('Batch, Serial or Lot Control') . ':</td><td><select name="C
 if ($_POST['Controlled']==0){
 	echo '<option selected value=0>' . _('No Control') . '</option>';
 } else {
-        echo '<option value=0>' . _('No Control') . '</option>';
+		echo '<option value=0>' . _('No Control') . '</option>';
 }
 if ($_POST['Controlled']==1){
 	echo '<option selected value=1>' . _('Controlled'). '</option>';
@@ -829,14 +858,14 @@ echo '</select></td></tr>';
 echo '<tr><td>' . _('Serialised') . ':</td><td><select ' . (in_array('Serialised',$Errors) ?  'class="selecterror"' : '' ) .'  name="Serialised">';
 
 if ($_POST['Serialised']==0){
-        echo '<Option selected value=0>' . _('No'). '</option>';
+		echo '<Option selected value=0>' . _('No'). '</option>';
 } else {
-        echo '<option value=0>' . _('No'). '</option>';
+		echo '<option value=0>' . _('No'). '</option>';
 }
 if ($_POST['Serialised']==1){
-        echo '<option selected value=1>' . _('Yes') . '</option>';
+		echo '<option selected value=1>' . _('Yes') . '</option>';
 } else {
-        echo '<option value=1>' . _('Yes'). '</option>';
+		echo '<option value=1>' . _('Yes'). '</option>';
 }
 echo '</select><i>' . _('Note') . ', ' . _('this has no effect if the item is not Controlled') . '</i></td></tr>';
 
@@ -844,19 +873,19 @@ if ($_POST['Serialised']==1 AND $_POST['MBFlag']=='M'){
 	echo '<tr><td>' . _('Next Serial No (>0 for auto numbering)') . ':</td><td><input ' . (in_array('NextSerialNo',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="NextSerialNo" size=15 maxlength=15 value="' . $_POST['NextSerialNo'] . '"><td></tr>';
 } else {
 	echo '<input type="hidden" name="NextSerialNo" value="0">';
-}	
+}
 
 echo '<tr><td>' . _('Perishable') . ':</td><td><select name="Perishable">';
 
 if (!isset($_POST['Perishable']) or $_POST['Perishable']==0){
-        echo '<option selected value=0>' . _('No'). '</option>';
+		echo '<option selected value=0>' . _('No'). '</option>';
 } else {
-        echo '<option value=0>' . _('No'). '</option>';
+		echo '<option value=0>' . _('No'). '</option>';
 }
 if (isset($_POST['Perishable']) and $_POST['Perishable']==1){
-        echo '<option selected value=1>' . _('Yes'). '</option>';
+		echo '<option selected value=1>' . _('Yes'). '</option>';
 } else {
-        echo '<option value=1>' . _('Yes'). '</option>';
+		echo '<option value=1>' . _('Yes'). '</option>';
 }
 echo '</select></td></tr>';
 
@@ -895,36 +924,20 @@ while ($myrow = DB_fetch_array($result)) {
 echo '</select></td></tr>';
 
 echo '<tr>
-        <td>' . _('Pan Size') . ':</td>
-	    <td><input type="Text" class="number" name="Pansize" size="6" maxlength="6" value=' . $_POST['Pansize'] . '></td>
-	</tr>	
-     <tr>
-        <td>' . _('Shrinkage Factor') . ':</td>
-	    <td><input type="Text" class="number" name="ShrinkFactor" size="6" maxlength="6" value=' . $_POST['ShrinkFactor'] . '></td>
+		<td>' . _('Pan Size') . ':</td>
+		<td><input type="Text" class="number" name="Pansize" size="6" maxlength="6" value=' . $_POST['Pansize'] . '></td>
+	</tr>
+	 <tr>
+		<td>' . _('Shrinkage Factor') . ':</td>
+		<td><input type="Text" class="number" name="ShrinkFactor" size="6" maxlength="6" value=' . $_POST['ShrinkFactor'] . '></td>
 	</tr>';
 
-
- if (function_exists('imagecreatefrompng')){
-	$StockImgLink = '<img src="GetStockImage.php?SID&automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
-		'&StockID='.urlencode($StockID).
-		'&text='.
-		'&width=64'.
-		'&height=64'.
-		'" >';
-} else {
-	if( isset($StockID) and file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
-		$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg" >';
-	} else {
-		$StockImgLink = _('No Image');
-	}
-}
-
-echo '</table></td><td>' . _('Image') . '<br>'.$StockImgLink . '</td></tr></table><div class="centre">';
+echo '</table><div class="centre">';
 
 if (!isset($_POST['CategoryID'])) {
 	$_POST['CategoryID'] = '';
 }
-echo '<table><tr><th colspan="2">' . _('Item Category Properties') . '</th></tr>';
+
 $sql = "SELECT stkcatpropid,
 				label,
 				controltype,
@@ -938,16 +951,24 @@ $PropertiesResult = DB_query($sql,$db);
 $PropertyCounter = 0;
 $PropertyWidth = array();
 
+echo '<br><table class=selection>';
+if (DB_num_rows($PropertiesResult)>0) {
+	echo '<tr><th colspan="2">' . _('Item Category Properties') . '</th></tr>';
+}
+
 while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 
-	$PropValResult = DB_query("SELECT value FROM
+	if (isset($StockID)) {
+		$PropValResult = DB_query("SELECT value FROM
 									stockitemproperties
 									WHERE stockid='" . $StockID . "'
-									AND stkcatpropid =" . $PropertyRow['stkcatpropid'],
+									AND stkcatpropid ='" . $PropertyRow['stkcatpropid']."'",
 								$db);
-	$PropValRow = DB_fetch_row($PropValResult);
-	$PropertyValue = $PropValRow[0];
-
+		$PropValRow = DB_fetch_row($PropValResult);
+		$PropertyValue = $PropValRow[0];
+	} else {
+		$PropertyValue =  '';
+	}
 	echo '<input type="hidden" name="PropID' . $PropertyCounter . '" value=' .$PropertyRow['stkcatpropid'] .'>';
 
 	echo '<tr><td>' . $PropertyRow['label'] . '</td>
@@ -979,8 +1000,9 @@ while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 	echo '<input type="hidden" name="PropType' . $PropertyCounter .'" value=' . $PropertyRow['controltype'] . '>';
 	echo '</td></tr>';
 	$PropertyCounter++;
+	unset($StockID);
 } //end loop round properties for the item category
-echo '</table>';
+echo '</table><br>';
 echo '<input type="hidden" name="PropertyCounter" value=' . $PropertyCounter . '>';
 
 if (isset($New)) {
