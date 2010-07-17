@@ -16,12 +16,12 @@ If (isset($_POST['PrintPDF'])
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',_('Outstanding GRNs Report'));
 	$pdf->addInfo('Subject',_('Outstanding GRNs Valuation'));
-    $FontSize=10;
+	$FontSize=10;
 	$PageNumber=1;
 	$line_height=12;
 	$Left_Margin=30;
 
-      /*Now figure out the data to report for the criteria under review */
+	  /*Now figure out the data to report for the criteria under review */
 
 	$SQL = "SELECT grnno,
 			orderno,
@@ -42,7 +42,7 @@ If (isset($_POST['PrintPDF'])
 		AND qtyrecd-quantityinv <>0
 		AND grns.supplierid >='" . $_POST['FromCriteria'] . "'
 		AND grns.supplierid <='" . $_POST['ToCriteria'] . "'
-		ORDER BY supplierid, 
+		ORDER BY supplierid,
 			grnno";
 
 	$GRNsResult = DB_query($SQL,$db,'','',false,false);
@@ -53,7 +53,7 @@ If (isset($_POST['PrintPDF'])
 	  prnMsg(_('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
 	   echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<br>$SQL";
+		  echo "<br>".$SQL;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -65,7 +65,7 @@ If (isset($_POST['PrintPDF'])
 	  prnMsg(_('No outstanding GRNs valuation details retrieved'), 'warn');
 	   echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<br>$SQL";
+		  echo "<br>$SQL";
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -97,7 +97,7 @@ If (isset($_POST['PrintPDF'])
 		}
 		$YPos -=$line_height;
 
-		$LeftOvers = $pdf->addTextWrap(30,$YPos,40,$FontSize,$GRNs['grnno']);
+		$LeftOvers = $pdf->addTextWrap(32,$YPos,40,$FontSize,$GRNs['grnno']);
 		$LeftOvers = $pdf->addTextWrap(70,$YPos,40,$FontSize,$GRNs['orderno']);
 		$LeftOvers = $pdf->addTextWrap(110,$YPos,200,$FontSize,$GRNs['itemcode'] . ' - ' . $GRNs['itemdescription']);
 		$DisplayStdCost = number_format($GRNs['stdcostunit'],2);
@@ -146,14 +146,14 @@ If (isset($_POST['PrintPDF'])
 	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);
 
-      if ($len<=20){
+	  if ($len<=20){
 		$title = _('Outstanding GRNs Valuation Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no GRNs with any value to print out for the specified supplier range'),'info');
 		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
-      } else {
+	  } else {
 		header('Content-type: application/pdf');
 		header('Content-Length: ' . $len);
 		header('Content-Disposition: inline; filename=OSGRNsValuation.pdf');
@@ -162,23 +162,26 @@ If (isset($_POST['PrintPDF'])
 		header('Pragma: public');
 
 		$pdf->Output('OutstandingGRNs.pdf','I');
-    }
+	}
 */
-    $pdf->OutputD($_SESSION['DatabaseName'] . '_OSGRNsValuation_' . date('Y-m-d').'.pdf');//UldisN
-    $pdf->__destruct(); //UldisN
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_OSGRNsValuation_' . date('Y-m-d').'.pdf');//UldisN
+	$pdf->__destruct(); //UldisN
 } else { /*The option to print PDF was not hit */
 
 	$title=_('Outstanding GRNs Report');
 	include('includes/header.inc');
 
-	echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table>";
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
+		'" alt="">' . ' ' . $title . '</p>';
+
+	echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table class=selection>";
 
 	echo '<tr><td>' . _('From Supplier Code') . ":</td>
-		<td><input type=TEXT name='FromCriteria' VALUE='0'></td></tr>";
+		<td><input type=text name='FromCriteria' value='0'></td></tr>";
 	echo '<tr><td>' . _('To Supplier Code'). ":</td>
-		<td><input type=TEXT name='ToCriteria' VALUE='zzzzzzz'></td></tr>";
+		<td><input type=text name='ToCriteria' value='zzzzzzz'></td></tr>";
 
-	echo "</table><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
+	echo "</table><br><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
 

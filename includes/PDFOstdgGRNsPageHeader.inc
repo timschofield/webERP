@@ -24,10 +24,16 @@ $pdf->line($Left_Margin, $YPos-$line_height,$Left_Margin, $YPos+10);
 $pdf->line($Left_Margin, $YPos+10,$Page_Width-$Right_Margin, $YPos+10);
 $pdf->line($Page_Width-$Right_Margin, $YPos-$line_height,$Page_Width-$Right_Margin, $YPos+10);
 
+/*Draw a rectangle to put the details in     */
+
+$pdf->line($Left_Margin, $Page_Height-$YPos-$line_height,$Page_Width-$Right_Margin, $Page_Height-$YPos-$line_height);
+$pdf->line($Left_Margin, $Page_Height-$YPos-$line_height,$Left_Margin, $YPos+10);
+$pdf->line($Page_Width-$Right_Margin, $Page_Height-$YPos-$line_height,$Page_Width-$Right_Margin, $YPos+10);
+
 /*set up the headings */
 $Xpos = $Left_Margin+1;
 
-$LeftOvers = $pdf->addTextWrap(30,$YPos,40,$FontSize,_('GRN'), 'centre');
+$LeftOvers = $pdf->addTextWrap(32,$YPos,40,$FontSize,_('GRN'), 'centre');
 $LeftOvers = $pdf->addTextWrap(70,$YPos,40,$FontSize,_('Order') . ' #', 'centre');
 $LeftOvers = $pdf->addTextWrap(110,$YPos,200,$FontSize,_('Item') . ' / ' . _('Description'), 'centre');
 $LeftOvers = $pdf->addTextWrap(310,$YPos,50,$FontSize,_('Qty Recd'), 'centre');
