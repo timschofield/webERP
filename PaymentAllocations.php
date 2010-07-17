@@ -18,8 +18,8 @@ include('includes/SQL_CommonFunctions.inc');
 
 	if (!isset($_GET['SuppID'])){
 		prnMsg( _('Supplier ID Number is not Set, can not display result'),'warn');
-        	include('includes/footer.inc');
-        	exit;
+			include('includes/footer.inc');
+			exit;
 	}
 
 	if (!isset($_GET['InvID'])){
@@ -70,7 +70,7 @@ if (DB_num_rows($Result) == 0){
 	exit;
 }
 
-echo '<table cellpadding=2 colspan=7 width=100% border=0>';
+echo '<table cellpadding=2 colspan=7 width=80% class=selection>';
 $TableHeader = "<tr>
 <th>" . _('Supplier Number') . '<br>' . _('Reference') . "</th>
 <th>" . _('Payment') .'<br>' . _('Reference') . "</th>
@@ -90,21 +90,17 @@ $k=0; //row colour counter
 		$k++;
 	}
 
-	printf('<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		</tr>',
-		$myrow['supplierno'],
-		$myrow['suppreference'],
-		ConvertSQLDate($myrow['trandate']),
-		$myrow['alloc']	);
+	echo '<td>'.$myrow['supplierno'].'</td>
+		<td>'.$myrow['suppreference'].'</td>
+		<td>'.ConvertSQLDate($myrow['trandate']).'</td>
+		<td class=number>'.number_format($myrow['alloc'],2).'</td>
+		</tr>';
 
 		$j++;
-		If ($j == 18){
-                $j=1;
-                echo $TableHeader;
-       }
+		if ($j == 18){
+			$j=1;
+			echo $TableHeader;
+		}
 
 }
   echo '</table>';
