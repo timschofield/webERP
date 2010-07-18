@@ -1,8 +1,9 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p></p>
-<p>18/07/10 Phil: CounterSales.php - was not retrieving ReceiptNumber if the debtor integration was disabled - also the correct period was not retrieved because the date format was not in the correct DateFormat because of a typo in SESSION['DefaultDateFormat'] 
-<p>18/07/10 Phil: New script ContractBOM.php to allow defining the bill of materials for a contract
-<p>18/07/10 Phil: Further work on Contracts.php
+<p>18/07/10 Tim: StockAdjustments.php - Provide option for tagging stock adjustments, change layout, allow for searching for a part code, and sql quoting</p>
+<p>18/07/10 Phil: CounterSales.php - was not retrieving ReceiptNumber if the debtor integration was disabled - also the correct period was not retrieved because the date format was not in the correct DateFormat because of a typo in SESSION['DefaultDateFormat'] </p>
+<p>18/07/10 Phil: New script ContractBOM.php to allow defining the bill of materials for a contract</p>
+<p>18/07/10 Phil: Further work on Contracts.php</p>
 <p>17/07/10 Tim: PaymentTerms.php - Bug fixes, SQL quoting and layout changes</p>
 <p>17/07/10 Tim: Payments.php - Bug fixes, SQL quoting and layout changes</p>
 <p>17/07/10 Tim: PaymentMethods.php - SQL quoting and layout changes</p>
@@ -41,8 +42,8 @@
 <p>09/07/10 Tim: GLTrialBalance.php - Bug fixes, layout improvements changed period number to date and year and sql fixes</p>
 <p>09/07/10 Tim: GLTransInquiry.php - Layout improvements changed period number to date and year and sql fixes</p>
 <p>09/07/10 Tim: GLTags - Layout improvements and sql fixes</p>
-<p>09/07/10 Phil: includes/DateFunctions.inc added assumption for 2 digit years to d/m/Y m/d/Y and Y/m/d formats
-<p>09/07/10 Phil: Prices.php fixed error trapping to allow end dates of 0000-00-00 - the default no end date used by the logic
+<p>09/07/10 Phil: includes/DateFunctions.inc added assumption for 2 digit years to d/m/Y m/d/Y and Y/m/d formats</p>
+<p>09/07/10 Phil: Prices.php fixed error trapping to allow end dates of 0000-00-00 - the default no end date used by the logic</p>
 <p>08/07/10 Tim: GLTagProfit_Loss - Layout improvements and sql fixes</p>
 <p>08/07/10 Tim: GLProfit_Loss - Layout improvements and sql fixes</p>
 <p>08/07/10 Tim: GLJournal - Layout improvements and sql fixes</p>
@@ -71,7 +72,7 @@
 <p>05/07/10 Tim: CustomerAllocations.php - Corrections to sql statements and layout changes</p>
 <p>05/07/10 Tim: CustomerAllocations.php - Corrections to sql statements and layout changes</p>
 <p>05/07/10 Tim: CustLoginSetup.php - Minor bug fixes, corrections to sql statements</p>
-<p>05/07/10 Pak Ricard: upgrade3.11.1-3.12.sql - Error in table name
+<p>05/07/10 Pak Ricard: upgrade3.11.1-3.12.sql - Error in table name</p>
 <p>05/07/10 Pak Ricard: PricesByCost.php - Margin must be decimal to allow margins like 2,5 or 3,3 time standard cost. Also ot has to be large enough to accept "currency margins". If you have a standard costs in EUR and want to check prices in IDR or viceversa, you'll need to compute large margins.</p>
 <p>04/07/10 Tim: CustEDISetup.php - Corrections to sql statements</p>
 <p>04/07/10 Tim: Currencies.php - Corrections to sql statements and layout changes</p>

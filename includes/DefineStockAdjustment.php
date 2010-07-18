@@ -11,6 +11,7 @@ class StockAdjustment {
         Var $StandardCost;
         Var $DecimalPlaces;
         Var $Quantity;
+        var $tag;
         var $SerialItems; /*array to hold controlled items*/
 
         //Constructor
@@ -25,6 +26,7 @@ class StockAdjustment {
         	$this->DecimalPlaces = 0;
             $this->SerialItems = array();
             $Quantity =0;
+            $this->tag=0;
         }
 }
 ?>
