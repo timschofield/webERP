@@ -33,11 +33,8 @@ if (empty($_GET['identifier'])) {
 	$identifier=$_GET['identifier'];
 }
 
-/*Page is called with NewContract=Yes when a new order is to be entered
- * the session variable that holds all the Contract data $_SESSION['Contract'][$identifier]
- * is unset to allow all new details to be created */
 
-if (isset($_GET['NewContract']) and isset($_SESSION['Contract'.$identifier])){
+if (isset($_GET['NewContract']) AND isset($_SESSION['Contract'.$identifier])){
 	unset($_SESSION['Contract'.$identifier]);
 	$_SESSION['ExistingContract'] = 0;
 }
@@ -53,21 +50,21 @@ if (isset($_GET['NewContract']) AND isset($_GET['SelectedCustomer'])) {
 		/* initialize new class object */
 		$_SESSION['Contract'.$identifier] = new Contract;
 		
-		$_SESSION['RequireCustomerSelection'] = 0;
 		$_POST['SelectedCustomer'] = $_GET['SelectedCustomer'];
+		
+		$_SESSION['Contract'.$identifier]->Status =0;
 		/*The customer is checked for credit and the Contract Object populated
 		 * using the usual logic of when a customer is selected 
 		 * */
 }
 
-if (isset($_POST['EnterContractBOM']) OR isset($_POST['EnterContractRequirements'])){
-/*User hit the button to enter line items -
- *  ensure session variables updated then meta refresh to Contract_Items.php*/
-
+if(isset($_SESSION['Contract'.$identifier]) AND 
+			(isset($_POST['EnterContractBOM']) 
+				OR isset($_POST['EnterContractRequirements']))){
+	/**  Ensure session variables updated */	
+	
 	$_SESSION['Contract'.$identifier]->ContractRef=$_POST['ContractRef'];
 	$_SESSION['Contract'.$identifier]->ContractDescription=$_POST['ContractDescription'];
-	$_SESSION['Contract'.$identifier]->DebtorNo = $_POST['DebtorNo'];
-	$_SESSION['Contract'.$identifier]->BranchCode = $_POST['BranchCode'];
 	$_SESSION['Contract'.$identifier]->CategoryID = $_POST['CategoryID'];
 	$_SESSION['Contract'.$identifier]->RequiredDate = $_POST['RequiredDate'];
 	$_SESSION['Contract'.$identifier]->Margin = $_POST['Margin'];
@@ -75,8 +72,18 @@ if (isset($_POST['EnterContractBOM']) OR isset($_POST['EnterContractRequirements
 	$_SESSION['Contract'.$identifier]->QuantityReqd = $_POST['QuantityReqd'];
 	$_SESSION['Contract'.$identifier]->Units = $_POST['Units'];
 	$_SESSION['Contract'.$identifier]->ExRate = $_POST['ExRate'];
-	if (isset($_POST['EnterContractBOM'])){
-		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/Contract_Items.php?' . SID . 'identifier='.$identifier. "'>";
+
+
+/*User hit the button to enter line items -
+  then meta refresh to Contract_Items.php*/
+	$InputError = false;
+	if(strlen($_SESSION['Contract'.$identifier]->ContractRef)<2){
+		prnMsg(_('The contract reference must be entered (and be longer than 2 characters) before the requirements of the contract can be setup'),'warn');
+		$InputError = true;
+	}
+	
+	if (isset($_POST['EnterContractBOM']) AND !$InputError){
+		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/ContractBOM.php?' . SID . 'identifier='.$identifier. "'>";
 		echo '<p>';
 		prnMsg(_('You should automatically be forwarded to the entry of the Contract line items page') . '. ' .
 		_('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
@@ -84,7 +91,7 @@ if (isset($_POST['EnterContractBOM']) OR isset($_POST['EnterContractRequirements
 		include('includes/footer.inc');
 		exit;
 	}
-	if (isset($_POST['EnterContractRequirements'])){
+	if (isset($_POST['EnterContractRequirements']) AND !$InputError){
 		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/ContractRequirements.php?' . SID . 'identifier='.$identifier. "'>";
 		echo '<p>';
 		prnMsg(_('You should automatically be forwarded to the entry of the Contract requirements page') . '. ' .
@@ -95,7 +102,7 @@ if (isset($_POST['EnterContractBOM']) OR isset($_POST['EnterContractRequirements
 	}
 } /* end of if going to contract BOM or contract requriements */
 
-echo '<a href="'. $rootpath . '/ContractSelect.php?' . SID . "identifier=".$identifier.'">'. _('Back to Contracts'). '</a><br>';
+echo '<a href="'. $rootpath . '/ContractSelect.php?' . SID . 'identifier='.$identifier.'">'. _('Back to Contracts'). '</a><br>';
 
 //attempting to upload the drawing image file
 if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION['Contract'.$identifier]->ContractRef!='') {
@@ -256,21 +263,18 @@ if (isset($_POST['CancelContract'])) {
 			$ErrMsg = _('The contract bill of materials could not be deleted because');
 			$DelResult=DB_query($sql,$db,$ErrMsg);
 			$sql = "DELETE FROM contractreqts WHERE contractref='" . $_SESSION['Contract'.$identifier]->ContractRef . "'";
-			$ErrMsg = _('The contract requirments could not be deleted because');
+			$ErrMsg = _('The contract requirements could not be deleted because');
 			$DelResult=DB_query($sql,$db,$ErrMsg);
 			$sql= "DELETE FROM contracts WHERE contractref='" . $_SESSION['Contract'.$identifier]->ContractRef . "'";
 			$ErrMsg = _('The contract could not be deleted because');
 			$DelResult=DB_query($sql,$db,$ErrMsg);
 			
 			prnMsg( _('Contract').' '.$_SESSION['Contract'.$identifier]->ContractRef.' '._('has been cancelled'), 'success');
-			unset($_SESSION['Contract'.$identifier]);
 			unset($_SESSION['ExistingContract']);
 		}
 		unset($_SESSION['Contract'.$identifier]->ContractBOM);
 		unset($_SESSION['Contract'.$identifier]->ContractReqts);
 		unset($_SESSION['Contract'.$identifier]);
-		$_SESSION['Contract'.$identifier] = new Contract;
-		$_SESSION['RequireCustomerSelection'] = 1;
 	}
 }
 
@@ -283,6 +287,8 @@ if (!isset($_SESSION['Contract'.$identifier])){
 
 		$_SESSION['ExistingContract']= 0;
 		$_SESSION['Contract'.$identifier] = new Contract;
+		
+		$_SESSION['Contract'.$identifier]->Status = 0; //new contracts are just quotes ...
 		
 		if ($_SESSION['Contract'.$identifier]->DebtorNo=='' OR !isset($_SESSION['Contract'.$identifier]->DebtorNo)){
 
@@ -428,8 +434,7 @@ if (isset($_POST['CommitContract'])){
 										" . $Requirement->Quantity . ")";
 				$result = DB_query($sql,$db,$ErrMsg);
 			}
-			
-							
+										
 			prnMsg(_('The changes to the contract have been committed to the database'),'success');
 		} 
 		if ($ExistingContract['status']==1 AND ! $InputError){
@@ -638,8 +643,7 @@ if (isset($_POST['SelectedCustomer'])) {
 } //end if a customer has just been selected
 
 
-if ($_SESSION['RequireCustomerSelection'] == 1 
-		OR !isset($_SESSION['Contract'.$identifier]->DebtorNo) 
+if (!isset($_SESSION['Contract'.$identifier]->DebtorNo) 
 		OR $_SESSION['Contract'.$identifier]->DebtorNo=='' ) {
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' .
@@ -724,9 +728,6 @@ if ($_SESSION['RequireCustomerSelection'] == 1
 	}
 	echo '</p>';
 	
-	//echo '<meta http-equiv="refresh" content="0; url=' . $rootpath . '/Contract_Items.php?' . SID . '&identifier='.$identifier. '">';
-	
-
 	/*Set up form for entry of contract header stuff */
 
 	echo '<table>';
@@ -799,7 +800,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1
 	echo '<tr><td>' . _('Contract Status') . ':</td><td><select name="Status">';
 	
 	$StatusText = array();
-	$StatusText[0] = _('Costing');
+	$StatusText[0] = _('Setup');
 	$StatusText[1] = _('Quote');
 	$StatusText[2] = _('Completed');
 	for ($Status=0;$Status<3;$Status++) {
@@ -868,7 +869,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1
 	echo'<p></p>';
 			
 	echo '<div class="centre"><input type="submit" name="EnterContractBOM" value="' . _('Enter Items Required') . '">
-		<input type=submit name="EnterContractReqts" value="' . _('Enter Other Requirements') .'">
+		<input type=submit name="EnterContractRequirements" value="' . _('Enter Other Requirements') .'">
 		<input type=submit name="CommitContract" value="' . _('Commit Changes') .'"></div>';
 	if ($_SESSION['Contract'.$identifier]->Status!=2) {
 		echo '<p><div class="centre"><input type="submit" name="CancelContract" value="' . _('Cancel and Delete Contract') . '"></div></p>';

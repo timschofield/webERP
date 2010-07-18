@@ -1148,7 +1148,7 @@ if (isset($_POST['ProcessSale']) && $_POST['ProcessSale'] != ""){
 	 * GetPeriod() in includes/DateFunctions.inc */
 	
 		$InvoiceNo = GetNextTransNo(10, $db);
-		$PeriodNo = GetPeriod(Date($SESSION['DefaultDateFormat']), $db);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 	
 	/*Start an SQL transaction */
 	
@@ -1774,106 +1774,111 @@ if (isset($_POST['ProcessSale']) && $_POST['ProcessSale'] != ""){
 				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			}//amount paid we not zero
 		} /*end of if Sales and GL integrated */
-		//Now need to add the receipt banktrans record
-		//First get the account currency that it has been banked into
-		$result = DB_query("SELECT rate FROM currencies 
-								INNER JOIN bankaccounts ON currencies.currabrev=bankaccounts.currcode 
-								WHERE bankaccounts.accountcode='" . $_POST['BankAccount'] . "'",$db);
-		$myrow = DB_fetch_row($result);
-		$BankAccountExRate = $myrow[0];
+		if ($_POST['AmountPaid']!=0){
+			if (!isset($ReceiptNumber)){
+				$ReceiptNumber = GetNextTransNo(12,$db);
+			}
+			//Now need to add the receipt banktrans record
+			//First get the account currency that it has been banked into
+			$result = DB_query("SELECT rate FROM currencies 
+									INNER JOIN bankaccounts ON currencies.currabrev=bankaccounts.currcode 
+									WHERE bankaccounts.accountcode='" . $_POST['BankAccount'] . "'",$db);
+			$myrow = DB_fetch_row($result);
+			$BankAccountExRate = $myrow[0];
+			
+			/*
+			 * Some interesting exchange rate conversion going on here
+			 * Say :
+			 * The business's functional currency is NZD
+			 * Customer location counter sales are in AUD - 1 NZD = 0.80 AUD
+			 * Banking money into a USD account - 1 NZD = 0.68 USD
+			 * 
+			 * Customer sale is for $100 AUD
+			 * GL entries  conver the AUD 100 to NZD  - 100 AUD / 0.80 = $125 NZD
+			 * Banktrans entries convert the AUD 100 to USD using 100/0.8 * 0.68
+			*/
+			
+			//insert the banktrans record in the currency of the bank account
+			
+			$SQL='INSERT INTO banktrans (type,
+						transno,
+						bankact,
+						ref,
+						exrate,
+						functionalexrate,
+						transdate,
+						banktranstype,
+						amount,
+						currcode)
+					VALUES (12,
+						' . $ReceiptNumber . ',
+						' . $_POST['BankAccount'] . ",
+						'" . $_SESSION['Items'.$identifier]->LocationName . ' ' . _('Counter Sale') . ' ' . $InvoiceNo . "',
+						" . $ExRate . ",
+						" . $BankAccountExRate . ",
+						'" . $DefaultDispatchDate . "',
+						'" . $_POST['PaymentMethod'] . "',
+						" . ($_POST['AmountPaid'] * $BankAccountExRate) . ",
+						'" . $_SESSION['Items'.$identifier]->DefaultCurrency . "')";
+						
+			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
+			$ErrMsg = _('Cannot insert a bank transaction');
+			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		
-		/*
-		 * Some interesting exchange rate conversion going on here
-		 * Say :
-		 * The business's functional currency is NZD
-		 * Customer location counter sales are in AUD - 1 NZD = 0.80 AUD
-		 * Banking money into a USD account - 1 NZD = 0.68 USD
-		 * 
-		 * Customer sale is for $100 AUD
-		 * GL entries  conver the AUD 100 to NZD  - 100 AUD / 0.80 = $125 NZD
-		 * Banktrans entries convert the AUD 100 to USD using 100/0.8 * 0.68
-		*/
-		
-		//insert the banktrans record in the currency of the bank account
-		
-		$SQL='INSERT INTO banktrans (type,
-					transno,
-					bankact,
-					ref,
-					exrate,
-					functionalexrate,
-					transdate,
-					banktranstype,
-					amount,
-					currcode)
-				VALUES (12,
-					' . $ReceiptNumber . ',
-					' . $_POST['BankAccount'] . ",
-					'" . $_SESSION['Items'.$identifier]->LocationName . ' ' . _('Counter Sale') . ' ' . $InvoiceNo . "',
-					" . $ExRate . ",
-					" . $BankAccountExRate . ",
-					'" . $DefaultDispatchDate . "',
-					'" . $_POST['PaymentMethod'] . "',
-					" . ($_POST['AmountPaid'] * $BankAccountExRate) . ",
-					'" . $_SESSION['Items'.$identifier]->DefaultCurrency . "')";
-					
-		$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
-		$ErrMsg = _('Cannot insert a bank transaction');
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			//insert a new debtortrans for the receipt 
+			
+			$SQL = 'INSERT INTO debtortrans (transno,
+							type,
+							debtorno,
+							trandate,
+							inputdate,
+							prd,
+							reference,
+							rate,
+							ovamount,
+							alloc,
+							invtext)
+					VALUES (' . $ReceiptNumber . ",
+						12,
+						'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
+						'" . $DefaultDispatchDate . "',
+						'" . date('Y-m-d H-i-s') . "',
+						" . $PeriodNo . ",
+						" . $InvoiceNo . ",
+						" . $ExRate . ",
+						" . -$_POST['AmountPaid'] . ",
+						" . -$_POST['AmountPaid'] . ",
+						'" . $_SESSION['Items'.$identifier]->LocationName . ' ' . _('Counter Sale') ."')";
+						
+			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
+			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
+			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 	
-		//insert a new debtortrans for the receipt 
+			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
+			
+			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . $DefaultDispatchDate . "',
+											lastpaid=" . $_POST['AmountPaid'] ."
+									WHERE debtorsmaster.debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
+	
+			$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
+			$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
+			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			
+			//and finally add the allocation record between receipt and invoice
+			
+			$SQL = 'INSERT INTO custallocns (	amt,
+												datealloc,
+												transid_allocfrom,
+												transid_allocto )
+									VALUES  (' . $_POST['AmountPaid'] . ",
+											'" . $DefaultDispatchDate . "',
+											 " . $ReceiptDebtorTransID . ",
+											 " . $DebtorTransID . ')';
+			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
+			$ErrMsg = _('Cannot insert the customer allocation of the receipt to the invoice because');
+			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		} //end if $_POST['AmountPaid']!= 0			
 		
-		$SQL = 'INSERT INTO debtortrans (transno,
-						type,
-						debtorno,
-						trandate,
-						inputdate,
-						prd,
-						reference,
-						rate,
-						ovamount,
-						alloc,
-						invtext)
-				VALUES (' . $ReceiptNumber . ",
-					12,
-					'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-					'" . $DefaultDispatchDate . "',
-					'" . date('Y-m-d H-i-s') . "',
-					" . $PeriodNo . ",
-					" . $InvoiceNo . ",
-					" . $ExRate . ",
-					" . -$_POST['AmountPaid'] . ",
-					" . -$_POST['AmountPaid'] . ",
-					'" . $_SESSION['Items'.$identifier]->LocationName . ' ' . _('Counter Sale') ."')";
-					
-		$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
-		$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-
-		$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
-		
-		$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . $DefaultDispatchDate . "',
-										lastpaid=" . $_POST['AmountPaid'] ."
-								WHERE debtorsmaster.debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
-
-		$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
-		$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-		
-		//and finally add the allocation record between receipt and invoice
-		
-		$SQL = 'INSERT INTO custallocns (	amt,
-											datealloc,
-											transid_allocfrom,
-											transid_allocto )
-								VALUES  (' . $_POST['AmountPaid'] . ",
-										'" . $DefaultDispatchDate . "',
-										 " . $ReceiptDebtorTransID . ",
-										 " . $DebtorTransID . ')';
-		$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
-		$ErrMsg = _('Cannot insert the customer allocation of the receipt to the invoice because');
-		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-				
 		DB_Txn_Commit($db);
 	// *************************************************************************
 	//   E N D   O F   I N V O I C E   S Q L   P R O C E S S I N G

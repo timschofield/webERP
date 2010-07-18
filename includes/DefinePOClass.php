@@ -96,17 +96,17 @@ Class PurchOrder {
 				$DecimalPlaces=2,
 				$itemno,
 				$uom,
-				$ConversionFactor,
-				$leadtime,
-				$suppliers_partno,
-				$subtotal_amount,
-				$package,
-				$pcunit,
-				$nw,
-				$gw,
-				$cuft,
-				$total_quantity,
-				$total_amount){
+				$ConversionFactor=1,
+				$leadtime=1,
+				$suppliers_partno='',
+				$subtotal_amount=0,
+				$package=0,
+				$pcunit=0,
+				$nw=0,
+				$gw=0,
+				$cuft=0,
+				$total_quantity=0,
+				$total_amount=0){
 
 		if ($Qty!=0 && isset($Qty)){
 

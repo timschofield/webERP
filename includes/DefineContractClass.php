@@ -41,7 +41,8 @@ Class Contract {
 
 	function Add_To_ContractBOM($StockID, $ItemDescription, $WorkCentre, $Quantity, $ItemCost, $UOM){
 		if (isset($StockID) AND $Quantity!=0){
-			$this->ContractBOM[$this->BOMComponentCounter] = new ContractComponent($StockID, 
+			$this->ContractBOM[$this->BOMComponentCounter] = new ContractComponent($this->BOMComponentCounter,
+																					$StockID, 
 																					$ItemDescription, 
 																					$WorkCentre, 
 																					$Quantity,
@@ -76,7 +77,7 @@ function Add_To_ContractRequirements($Requirment, $Quantity, $CostPerUnit,$Contr
 } /* end of class defintion */
 
 Class ContractComponent {
-
+	var $ComponentID;
 	var $StockID;
 	var $ItemDescription;
 	var $WorkCentre;
@@ -84,9 +85,10 @@ Class ContractComponent {
 	var $ItemCost;
 	var $UOM;
 	
-	function ContractComponent ($StockID, $ItemDescription, $WorkCentre, $Quantity, $ItemCost, $UOM){
+	function ContractComponent ($ComponentID, $StockID, $ItemDescription, $WorkCentre, $Quantity, $ItemCost, $UOM){
 
 /* Constructor function to add a new Contract Component object with passed params */
+		$this->ComponentID = $ComponentID;
 		$this->StockID = $StockID;
 		$this->ItemDescription = $ItemDescription;
 		$this->WorkCentre = $WorkCentre;
