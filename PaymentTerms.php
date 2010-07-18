@@ -11,8 +11,6 @@ $title = _('Payment Terms Maintenance');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Terms') . '" alt="">' . ' ' . $title . '</p>';
-echo '<div class="page_help_text">' . _('Payment Terms') . '.</div><br>';
-
 
 if (isset($_GET['SelectedTerms'])){
 	$SelectedTerms = $_GET['SelectedTerms'];
@@ -84,12 +82,12 @@ if (isset($_POST['submit'])) {
 			$sql = "UPDATE paymentterms SET
 					terms='" . $_POST['Terms'] . "',
 					dayinfollowingmonth=0,
-					daysbeforedue=" . $_POST['DayNumber'] . "
+					daysbeforedue='" . $_POST['DayNumber'] . "'
 				WHERE termsindicator = '" . $SelectedTerms . "'";
 		} else {
 			$sql = "UPDATE paymentterms SET
 					terms='" . $_POST['Terms'] . "',
-					dayinfollowingmonth=" . $_POST['DayNumber'] . ",
+					dayinfollowingmonth='" . $_POST['DayNumber'] . "',
 					daysbeforedue=0
 				WHERE termsindicator = '" . $SelectedTerms . "'";
 		}
@@ -107,7 +105,7 @@ if (isset($_POST['submit'])) {
 						VALUES (
 							'" . $_POST['TermsIndicator'] . "',
 							'" . $_POST['Terms'] . "',
-							" . $_POST['DayNumber'] . ",
+							'" . $_POST['DayNumber'] . "',
 							0
 						)";
 		} else {
@@ -119,7 +117,7 @@ if (isset($_POST['submit'])) {
 							'" . $_POST['TermsIndicator'] . "',
 							'" . $_POST['Terms'] . "',
 							0,
-							" . $_POST['DayNumber'] . "
+							'" . $_POST['DayNumber'] . "'
 							)";
 		}
 
@@ -141,14 +139,14 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN DebtorsMaster
 
-	$sql= "SELECT COUNT(*) FROM debtorsmaster WHERE debtorsmaster.paymentterms = '$SelectedTerms'";
+	$sql= "SELECT COUNT(*) FROM debtorsmaster WHERE debtorsmaster.paymentterms = '" . $SelectedTerms . "'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0] > 0) {
 		prnMsg( _('Cannot delete this payment term because customer accounts have been created referring to this term'),'warn');
 		echo '<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer accounts that refer to this payment term');
 	} else {
-		$sql= "SELECT COUNT(*) FROM suppliers WHERE suppliers.paymentterms = '$SelectedTerms'";
+		$sql= "SELECT COUNT(*) FROM suppliers WHERE suppliers.paymentterms = '" . $SelectedTerms . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0] > 0) {
@@ -157,7 +155,7 @@ if (isset($_POST['submit'])) {
 		} else {
 			//only delete if used in neither customer or supplier accounts
 
-			$sql="DELETE FROM paymentterms WHERE termsindicator='$SelectedTerms'";
+			$sql="DELETE FROM paymentterms WHERE termsindicator='" . $SelectedTerms . "'";
 			$result = DB_query($sql,$db);
 			prnMsg( _('The payment term definition record has been deleted') . '!','success');
 		}
@@ -176,7 +174,8 @@ or deletion of the records*/
 	$sql = 'SELECT termsindicator, terms, daysbeforedue, dayinfollowingmonth FROM paymentterms';
 	$result = DB_query($sql, $db);
 
-	echo '<table border=1>';
+	echo '<table class=selection>';
+	echo '<tr><th colspan=6><font color=blue size=3>'._('Payment Terms.').'</font></th></tr>';
 	echo '<tr><th>' . _('Term Code') . '</th>
 		<th>' . _('Description') . '</th>
 		<th>' . _('Following Month On') . '</th>
@@ -233,7 +232,7 @@ if (!isset($_GET['delete'])) {
 				daysbeforedue,
 				dayinfollowingmonth
 			FROM paymentterms
-			WHERE termsindicator='$SelectedTerms'";
+			WHERE termsindicator='" . $SelectedTerms . "'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -245,7 +244,9 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type=hidden name="SelectedTerms" VALUE="' . $SelectedTerms . '">';
 		echo '<input type=hidden name="TermsIndicator" VALUE="' . $_POST['TermsIndicator'] . '">';
-		echo '<table><tr><td>' . _('Term Code') . ':</td><td>';
+		echo '<br><table class=selection>';
+		echo '<tr><th colspan=6><font color=blue size=3>'._('Update Payment Terms.').'</font></th></tr>';
+		echo '<tr><td>' . _('Term Code') . ':</td><td>';
 		echo $_POST['TermsIndicator'] . '</td></tr>';
 
 	} else { //end of if $SelectedTerms only do the else when a new record is being entered
@@ -256,7 +257,9 @@ if (!isset($_GET['delete'])) {
 		unset($DayInFollowingMonth); // Rather unset for a new record
 		if (!isset($_POST['Terms'])) $_POST['Terms']='';
 
-		echo '<table><tr><td>' . _('Term Code') . ':</td><td><input type="Text" name="TermsIndicator"
+		echo '<table class=selection>';
+		echo '<tr><th colspan=6><font color=blue size=3>'._('New Payment Terms.').'</font></th></tr>';
+		echo '<tr><td>' . _('Term Code') . ':</td><td><input type="Text" name="TermsIndicator"
 		 ' . (in_array('TermsIndicator',$Errors) ? 'class="inputerror"' : '' ) .' value="' . $_POST['TermsIndicator'] .
 			'" size=3 maxlength=2></td></tr>';
 	}
@@ -275,7 +278,7 @@ if (!isset($_GET['delete'])) {
 			} else {
 			if (isset($DayInFollowingMonth)) {echo $DayInFollowingMonth;}
 			}
-	echo '></td></tr></table><div class="centre"><input type="Submit" name="submit" value="'._('Enter Information').'"></form></div>';
+	echo '></td></tr></table><br><div class="centre"><input type="Submit" name="submit" value="'._('Enter Information').'"></form></div>';
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.inc');
