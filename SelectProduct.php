@@ -1,7 +1,7 @@
 <?php
 /* $Id$*/
 $PageSecurity = 2;
-$PricesSecurity = 9;
+$PricesSecurity = 12;
 include ('includes/session.inc');
 $title = _('Search Inventory Items');
 include ('includes/header.inc');
