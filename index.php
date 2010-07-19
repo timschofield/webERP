@@ -1304,6 +1304,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/SelectAssetType.php?' . sid . '">' . _('Select an Asset Type') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/FixedAssetLocations.php?' . sid . '">' . _('Add or Maintain Asset Locations') . '</a></p>'; ?>
 							</td>
 							</tr>
