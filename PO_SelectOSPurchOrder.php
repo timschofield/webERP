@@ -5,6 +5,7 @@
 /* $Revision: 1.21 $ */
 
 $PageSecurity = 2;
+$PricesSecurity = 12;
 
 include('includes/session.inc');
 
@@ -40,8 +41,8 @@ if (isset($_POST['ResetPart'])){
 
 if (isset($OrderNumber) && $OrderNumber!='') {
 	if (!is_numeric($OrderNumber)){
-		  echo '<br><b>' . _('The Order Number entered') . ' <U>' . _('MUST') . '</U> ' . _('be numeric') . '.</b><br>';
-		  unset ($OrderNumber);
+		echo '<br><b>' . _('The Order Number entered') . ' <U>' . _('MUST') . '</U> ' . _('be numeric') . '.</b><br>';
+		unset ($OrderNumber);
 	} else {
 		echo _('Order Number') . ' - ' . $OrderNumber;
 	}
@@ -132,7 +133,7 @@ if (isset($_POST['SearchParts'])) {
 if (!isset($OrderNumber) or $OrderNumber=='' ){
 	echo '<a href="' . $rootpath . '/PO_Header.php?' .SID . '&NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'</p>';
-	echo '<div class="centre">'._('Order Number') . ': <input type=text name="OrderNumber" MAXLENGTH =8 size=9>  ' . _('Into Stock Location') . ':<select name="StockLocation"> ';
+	echo '<table class=selection><tr><td>'._('Order Number') . ': <input type=text name="OrderNumber" MAXLENGTH =8 size=9>  ' . _('Into Stock Location') . ':<select name="StockLocation"> ';
 	$sql = 'SELECT loccode, locationname FROM locations';
 	$resultStkLocs = DB_query($sql,$db);
 	while ($myrow=DB_fetch_array($resultStkLocs)){
@@ -149,47 +150,38 @@ if (!isset($OrderNumber) or $OrderNumber=='' ){
 		}
 	}
 
- 	echo '</select>  <input type=submit name="SearchOrders" VALUE="' . _('Search Purchase Orders') . '"></div>';
+ 	echo '</select>  <input type=submit name="SearchOrders" value="' . _('Search Purchase Orders') . '"></td></tr></table>';
 }
 
 $SQL='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription';
 $result1 = DB_query($SQL,$db);
 
-?>
+echo "<br><font size=1><div class='page_help_text'>" ._('To search for purchase orders for a specific part use the part selection facilities below')
+		."</div> </font>";
+echo "<br><table class=selection><tr>";
 
-<hr>
-<font size=1><div class='page_help_text'><?php echo _('To search for purchase orders for a specific part use the part selection facilities below'); ?></div> </font>
-<br><table align="center">
-<tr>
-<td><font size=1><?php echo _('Select a stock category'); ?>:</font>
-<select name="StockCat">
-<?php
+echo "<td><font size=1>" . _('Select a stock category') . ":</font><select name='StockCat'>";
+
 while ($myrow1 = DB_fetch_array($result1)) {
 	if (isset($_POST['StockCat']) and $myrow1['categoryid']==$_POST['StockCat']){
-		echo "<option selected VALUE='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
+		echo "<option selected value='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
 	} else {
-		echo "<option VALUE='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
+		echo "<option value='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
 	}
 }
-?>
-</select>
-<td><font size=1><?php echo _('Enter text extracts in the'); ?>  <b><?php echo _('description'); ?></b>:</font></td>
-<td><input type="Text" name="Keywords" size=20 maxlength=25></td></tr>
-<tr><td></td>
-<td><font SIZE 3><b><?php echo _('OR'); ?> </b></font><font size=1><?php echo _('Enter extract of the'); ?> <b><?php echo _('Stock Code'); ?></b>:</font></td>
-<td><input type="Text" name="StockCode" size=15 maxlength=18></td>
-</tr>
-</table><br>
-<table align="center"><tr><td><input type=submit name="SearchParts" VALUE="<?php echo _('Search Parts Now'); ?>">
-<input type=submit name="ResetPart" VALUE="<?php echo _('Show All'); ?>"></td></tr></table>
+echo "</select>";
+echo "<td><font size=1>" . _('Enter text extracts in the') . "<b>" . _('description') . "</b>:</font></td>";
+echo '<td><input type="Text" name="Keywords" size=20 maxlength=25></td></tr><tr><td></td>';
+echo "<td><font size<b>" . _('OR') . "</b></font><font size=1>" .  _('Enter extract of the') .  "<b>" .  _('Stock Code') . "</b>:</font></td>";
+echo '<td><input type="Text" name="StockCode" size=15 maxlength=18></td></tr></table><br>';
+echo '<table><tr><td><input type=submit name="SearchParts" value="' . _('Search Parts Now') . '">';
+echo '<input type=submit name="ResetPart" value="' . _('Show All') . '"></td></tr></table>';
 
-<hr>
-
-<?php
+echo "<br>";
 
 if (isset($StockItemsResult)) {
 
-	echo '<table cellpadding=2 colspan=7 BORDER=2>';
+	echo '<table cellpadding=2 colspan=7 class=selection>';
 	$TableHeader = 	'<tr><th>' . _('Code') . '</th>
 			<th>' . _('Description') . '</th>
 			<th>' . _('On Hand') . '</th>
@@ -398,22 +390,24 @@ $completed = " AND purchorderdetails.completed=0";
 
 	/*show a table of the orders returned by the SQL */
 
-	echo '<table cellpadding=2 colspan=7 WIDTH=100%>';
+	echo '<table cellpadding=2 colspan=7 width=97% class=selection>';
 
 //				   '</td><td class="tableheader">' . _('Receive') .
-	$TableHeader = '<tr><th>' . _('Order #') .
+
+	echo '<tr><th>' . _('Order #') .
 			'</th><th>' . _('Order Date') .
 			'</th><th>' . _('Initiated by') .
 			'</th><th>' . _('Supplier') .
 			'</th><th>' . _('Currency') .
-			'</th><th>' . _('Order Total') .
-			'</th><th>' . _('Status') .
+			'</th>';
+	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
+		echo '<th>' . _('Order Total') .'</th>';
+	}
+	echo '<th>' . _('Status') .
 			'</th><th>' . _('Modify') .
 			'</th><th>' . _('Print') .
 			'</th><th>' . _('Receive') .
 	'</th></tr>';
-
-	echo $TableHeader;
 	$j = 1;
 	$k=0; //row colour counter
 	while ($myrow=DB_fetch_array($PurchOrdersResult)) {
@@ -466,36 +460,19 @@ $completed = " AND purchorderdetails.completed=0";
 //			'</td><td class="tableheader">' . _('Requisition') .
 //			'</td><td class="tableheader">' . _('Initiator') .
 //				<td><a href='%s'>" . _('Receive') . "</a></td>
-		printf("<td>%s</font></td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</font></td>
-			<td class=number>%s</font></td>
-			<td>%s</td>
-			<td><a href='%s'>Modify</a></font></td>
-			<td>%s</font></td>
-			<td>%s</font></td>
-			</tr>",
-			$myrow["orderno"],
-			$FormatedOrderDate,
-			$myrow['initiator'],
-			$myrow['suppname'],
-			$myrow['currcode'],
-			$FormatedOrderValue,
-			_($myrow['status']),
-			$ModifyPage,
-			$PrintPurchOrder,
-			$ReceiveOrder
-			);
-
-
-
-		$j++;
-		If ($j == 12){
-			$j=1;
-			 echo $TableHeader;
+		echo "<td>".$myrow["orderno"]."</font></td>
+			<td>".$FormatedOrderDate."</td>
+			<td>".$myrow['initiator']."</td>
+			<td>".$myrow['suppname']."</td>
+			<td>".$myrow['currcode']."</td>";
+		if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
+			echo "<td class=number>".$FormatedOrderValue."</td>";
 		}
+			echo "<td>"._($myrow['status'])."</td>
+			<td><a href='".$ModifyPage."'>Modify</a></td>
+			<td>".$PrintPurchOrder."</td>
+			<td>".$ReceiveOrder."</td>
+			</tr>";
 	//end of page full new headings if
 	}
 	//end of while loop
