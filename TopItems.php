@@ -66,11 +66,15 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
 						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
 						stockmaster.description,
-						stockmaster.units
-				FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster
+						stockmaster.units,
+						currencies.rate,
+						debtorsmaster.currcode,
+						stockmaster.decimalplaces
+				FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster, currencies
 				WHERE 	salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
+						AND debtorsmaster.currcode = currencies.currabrev
 						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_POST['NumberOfDays'] . " DAY)
 				GROUP BY salesorderdetails.stkcode
 				ORDER BY " . $_POST["order"] . " DESC
@@ -82,11 +86,15 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
 						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
 						stockmaster.description,
-						stockmaster.units
-				FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster
+						stockmaster.units,
+						currencies.rate,
+						debtorsmaster.currcode,
+						stockmaster.decimalplaces
+				FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster, currencies
 				WHERE 	salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
+						AND debtorsmaster.currcode = currencies.currabrev
 						AND debtorsmaster.typeid = '" . $_POST["Customers"] . "'
 						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_POST['NumberOfDays'] . " DAY)
 				GROUP BY salesorderdetails.stkcode
@@ -100,11 +108,15 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
 						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
 						stockmaster.description,
-						stockmaster.units
-					FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster
+						stockmaster.units,
+						currencies.rate,
+						debtorsmaster.currcode,
+						stockmaster.decimalplaces
+					FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster, currencies
 					WHERE 	salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
+						AND debtorsmaster.currcode = currencies.currabrev
 						AND salesorders.fromstkloc = '" . $_POST["Location"] . "'
 						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_POST['NumberOfDays'] . " DAY)
 					GROUP BY salesorderdetails.stkcode
@@ -117,11 +129,15 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
 						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
 						stockmaster.description,
-						stockmaster.units
-					FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster
+						stockmaster.units,
+						currencies.rate,
+						debtorsmaster.currcode,
+						stockmaster.decimalplaces
+					FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster, currencies
 					WHERE 	salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
+						AND debtorsmaster.currcode = currencies.currabrev
 						AND salesorders.fromstkloc = '" . $_POST["Location"] . "'
 						AND debtorsmaster.typeid = '" . $_POST['Customers'] . "'
 						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_POST['NumberOfDays'] . " DAY)
@@ -165,7 +181,6 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 			echo '<tr class="OddTableRows">';
 			$k = 1;
 		}
-		$val = number_format($myrow['2'], 2);
 		printf('<td class="number">%s</td>
 						<td>%s</font></td>
 						<td>%s</td>
@@ -175,8 +190,8 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 						<td class="number">%s</td>
 						</tr>', $i, $myrow['0'], $myrow['3'], $myrow['1'], //total invoice here
 		$myrow['4'], //unit
-		$val, //value sales here
-		$ohRow[0] //on hand
+		number_format($myrow['2']/$myrow['5'],2), //value sales here
+		number_format($ohRow[0], $myrow['7']) //on hand
 		);
 		$i+= 1;
 	}
