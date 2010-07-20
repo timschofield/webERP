@@ -63,7 +63,7 @@ $sql= "SELECT type,
 		invtext
 	FROM debtortrans
 	WHERE type=" . $_POST['TransType'] . "
-	AND date_format(inputdate, '%Y/%m/%d')='".FormatDateForSQL($_POST['Date'])."'";
+	AND date_format(inputdate, '%Y-%m-%d')='".FormatDateForSQL($_POST['Date'])."'";
 
 $result=DB_query($sql,$db,'','',false,false);
 
