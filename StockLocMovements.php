@@ -11,6 +11,10 @@ include('includes/header.inc');
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 
+echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') .
+	'" alt="">' . ' ' . $title.'</p>';
+
+echo '<table class=selection><tr><td>';
 echo '  ' . _('From Stock Location') . ':<select name="StockLocation"> ';
 
 $sql = 'SELECT loccode, locationname FROM locations';
@@ -30,7 +34,7 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 	}
 }
 
-echo '</select><br>';
+echo '</select>';
 
 if (!isset($_POST['BeforeDate']) OR !Is_Date($_POST['BeforeDate'])){
    $_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -40,8 +44,8 @@ if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
 }
 echo ' ' . _('Show Movements before') . ': <input type=TEXT name="BeforeDate" size=12 maxlength=12 Value="' . $_POST['BeforeDate'] . '">';
 echo ' ' . _('But after') . ': <input type=TEXT name="AfterDate" size=12 maxlength=12 Value="' . $_POST['AfterDate'] . '">';
-echo ' <input type=submit name="ShowMoves" VALUE="' . _('Show Stock Movements') . '">';
-echo '<hr>';
+echo '</td></tr></table><br>';
+echo '<div class=centre><input type=submit name="ShowMoves" VALUE="' . _('Show Stock Movements') . '"></div><br>';
 
 
 $SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);
@@ -72,7 +76,7 @@ $sql = "SELECT stockmoves.stockid,
 $ErrMsg = _('The stock movements for the selected criteria could not be retrieved because');
 $MovtsResult = DB_query($sql, $db,$ErrMsg);
 
-echo '<table cellpadding=5 CELLSPACING=4 BORDER=0>';
+echo '<table cellpadding=5 CELLSPACING=4 class=selection>';
 $tableheader = '<tr>
 		<th>' . _('Item Code') . '</th>
 		<th>' . _('Type') . '</th>
@@ -83,6 +87,7 @@ $tableheader = '<tr>
 		<th>' . _('Reference') . '</th>
 		<th>' . _('Price') . '</th>
 		<th>' . _('Discount') . '</th>
+		<th>' . _('Quantity on Hand') . '</th>
 		</tr>';
 echo $tableheader;
 
@@ -111,6 +116,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 			<td>%s</td>
 			<td class=number>%s</td>
 			<td class=number>%s</td>
+			<td class=number>%s</td>
 			</tr>",
 			strtoupper($myrow['stockid']),
 			strtoupper($myrow['stockid']),
@@ -122,7 +128,8 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 			$myrow['decimalplaces']),
 			$myrow['reference'],
 			number_format($myrow['price'],2),
-			number_format($myrow['discountpercent']*100,2));
+			number_format($myrow['discountpercent']*100,2),
+			number_format($myrow['newqoh'],$myrow['decimalplaces']));
 	$j++;
 	If ($j == 16){
 		$j=1;
@@ -132,7 +139,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 }
 //end of while loop
 
-echo '</table><hr>';
+echo '</table>';
 echo '</form>';
 
 include('includes/footer.inc');
