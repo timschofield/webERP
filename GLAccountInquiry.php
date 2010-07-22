@@ -146,7 +146,7 @@ if (isset($_POST['Show'])){
 
 	echo '<br><table class=selection>';
 
-	echo '<tr><th colspan=7><b>' ._('Transactions for account').' '.$SelectedAccount. ' - '. $SelectedAccountName.'</b></th></tr>';
+	echo '<tr><th colspan=8><b>' ._('Transactions for account').' '.$SelectedAccount. ' - '. $SelectedAccountName.'</b></th></tr>';
 	$TableHeader = "<tr>
 			<th>" . _('Type') . "</th>
 			<th>" . _('Number') . "</th>
@@ -154,6 +154,7 @@ if (isset($_POST['Show'])){
 			<th>" . _('Debit') . "</th>
 			<th>" . _('Credit') . "</th>
 			<th>" . _('Narrative') . "</th>
+			<th>" . _('Balance') . "</th>
 			<th>" . _('Tag') . "</th>
 			</tr>";
 
@@ -162,7 +163,7 @@ if (isset($_POST['Show'])){
 	if ($PandLAccount==True) {
 		$RunningTotal = 0;
 	} else {
-		   // added to fix bug with Brought Forward Balance always being zero
+			// added to fix bug with Brought Forward Balance always being zero
 					$sql = "SELECT bfwd,
 						actual,
 						period
@@ -198,7 +199,6 @@ if (isset($_POST['Show'])){
 	$k=0; //row colour counter
 	$IntegrityReport='';
 	while ($myrow=DB_fetch_array($TransResult)) {
-
 		if ($myrow['periodno']!=$PeriodNo){
 			if ($PeriodNo!=-9999){ //ie its not the first time around
 				/*Get the ChartDetails balance b/fwd and the actual movement in the account for the period as recorded in the chart details - need to ensure integrity of transactions to the chart detail movements. Also, for a balance sheet account it is the balance carried forward that is important, not just the transactions*/
@@ -217,11 +217,17 @@ if (isset($_POST['Show'])){
 				echo "<tr bgcolor='#FDFEEF'>
 					<td colspan=3><b>" . _('Total for period') . ' ' . $PeriodNo . '</b></td>';
 				if ($PeriodTotal < 0 ){ //its a credit balance b/fwd
+					if ($PandLAccount==True) {
+						$RunningTotal = 0;
+					}
 					echo '<td></td>
 						<td class=number><b>' . number_format(-$PeriodTotal,2) . '</b></td>
 						<td></td>
 						</tr>';
 				} else { //its a debit balance b/fwd
+					if ($PandLAccount==True) {
+						$RunningTotal = 0;
+					}
 					echo '<td class=number><b>' . number_format($PeriodTotal,2) . '</b></td>
 						<td colspan=2></td>
 						</tr>';
@@ -268,6 +274,7 @@ if (isset($_POST['Show'])){
 			<td class=number>%s</td>
 			<td class=number>%s</td>
 			<td>%s</td>
+			<td class=number><b>%s</b></td>
 			<td>%s</td>
 			</tr>",
 			$myrow['typename'],
@@ -277,6 +284,7 @@ if (isset($_POST['Show'])){
 			$DebitAmount,
 			$CreditAmount,
 			$myrow['narrative'],
+			number_format($RunningTotal,2),
 			$tagrow['tagdescription']);
 
 	}
