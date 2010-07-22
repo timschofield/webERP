@@ -6,11 +6,11 @@ $PageSecurity = 6;
  include('includes/phplot/phplot.php');
  $title=_('Sales Report Graph');
  include('includes/header.inc');
- 
+
  $SelectADifferentPeriod ='';
- 
+
  if (isset($_POST['FromPeriod']) AND isset($_POST['ToPeriod'])){
- 
+
 	if ($_POST['FromPeriod'] > $_POST['ToPeriod']){
 		prnMsg(_('The selected period from is actually after the period to! Please re-select the reporting period'),'error');
 		$SelectADifferentPeriod =_('Select A Different Period');
@@ -24,14 +24,16 @@ $PageSecurity = 6;
 		$SelectADifferentPeriod= _('Select A Different Period');
 	}
  }
- 
- if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod'])) 
+
+ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	OR $SelectADifferentPeriod==_('Select A Different Period')){
-	
+
 	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'</p>';
  /*Show a form to allow input of criteria for TB to show */
-	echo '<table><tr><td>' . _('Select Period From:') . '</td><td><select Name="FromPeriod">';
-	
+	echo '<table class=selection><tr><td>' . _('Select Period From:') . '</td><td><select Name="FromPeriod">';
+
 	if (Date('m') > $_SESSION['YearEnd']){
 		/*Dates in SQL format */
 		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')));
@@ -59,11 +61,7 @@ $PageSecurity = 6;
 
 	echo '</select></td></tr>';
 	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']==''){
-		$sql = 'SELECT Max(periodno) FROM periods';
-		$MaxPrd = DB_query($sql,$db);
-		$MaxPrdrow = DB_fetch_row($MaxPrd);
-
-		$DefaultToPeriod = (int) ($MaxPrdrow[0]-1);
+		$DefaultToPeriod = GetPeriod(DateAdd(ConvertSQLDate($DefaultFromDate),'m',11),$db);
 	} else {
 		$DefaultToPeriod = $_POST['ToPeriod'];
 	}
@@ -81,9 +79,9 @@ $PageSecurity = 6;
 		}
 	}
 	echo '</select></td></tr>';
-	
+
 	$AreasResult = DB_query('SELECT areacode, areadescription FROM areas',$db);
-	
+
 	if (!isset($_POST['SalesArea'])){
 		$_POST['SalesArea']='';
 	}
@@ -101,9 +99,9 @@ $PageSecurity = 6;
 		}
 	}
 	echo '</select></td></tr>';
-	
+
 	$CategoriesResult = DB_query('SELECT categoryid, categorydescription FROM stockcategory',$db);
-	
+
 	if (!isset($_POST['CategoryID'])){
 		$_POST['CategoryID']='';
 	}
@@ -121,16 +119,16 @@ $PageSecurity = 6;
 		}
 	}
 	echo '</select></td></tr>';
-	
+
 	$SalesFolkResult = DB_query('SELECT salesmancode, salesmanname FROM salesman',$db);
-	
-	
+
+
 	if (! isset($_POST['SalesmanCode'])){
  		$_POST['SalesmanCode'] = '';
 	}
-	
+
 	echo '<tr><td>' . _('For Sales Person:') .'</td><td><select Name="SalesmanCode">';
-	
+
 	if($_POST['SalesmanCode']=='All'){
 		echo '<option selected VALUE="All">' . _('All');
 	} else {
@@ -144,7 +142,21 @@ $PageSecurity = 6;
 		}
 	}
 	echo '</select></td><td>' . $_POST['SalesmanCode'] . '</td></tr>';
-	
+
+	echo '<tr><td>'._('Graph Type').'</td>';
+	echo '<td><select name=GraphType>';
+	echo '<option value=bars>'._('Bar Graph').'</option>';
+	echo '<option value=stackedbars>'._('Stacked Bar Graph').'</option>';
+	echo '<option value=lines>'._('Line Graph').'</option>';
+	echo '<option value=linepoints>'._('Line Point Graph').'</option>';
+	echo '<option value=area>'._('Area Graph').'</option>';
+	echo '<option value=points>'._('Points Graph').'</option>';
+	echo '<option value=pie>'._('Pie Graph').'</option>';
+	echo '<option value=thinbarline>'._('Thin Bar Line Graph').'</option>';
+	echo '<option value=squared>'._('Squared Graph').'</option>';
+	echo '<option value=stackedarea>'._('Stacked Area Graph').'</option>';
+	echo '</select></td></tr>';
+
 	if (!isset($_POST['ValueFrom'])){
 		$_POST['ValueFrom']='';
 	}
@@ -157,17 +169,18 @@ $PageSecurity = 6;
 			<input type="RADIO" name="GraphOn" VALUE="StockID">' . _('Item Code') . '</td></tr>';
 	echo '<tr><td>' . _('From:') . ' <input type=TEXT name="ValueFrom" VALUE=' . $_POST['ValueFrom'] . '></td>
 	 		<td>' . _('To:') . ' <input type=TEXT name="ValueTo" VALUE=' . $_POST['ValueTo'] . '></td></tr>';
-	
+
 	echo '<tr><td>' . _('Graph Value:') . '</td><td>
 			<input type="RADIO" name="GraphValue" VALUE="Net" CHECKED>' . _('Net Sales Value') . '<br>
 			<input type="RADIO" name="GraphValue" VALUE="GP">' . _('Gross Profit') . '<br>
-			<input type="RADIO" name="GraphValue" VALUE="Quantity">' . _('Quantity') . '</td></tr>';	
-	
+			<input type="RADIO" name="GraphValue" VALUE="Quantity">' . _('Quantity') . '</td></tr>';
+
 	echo '</table>';
- 
+
 	echo '<br><div class="centre"><input type=submit Name="ShowGraph" Value="' . _('Show Sales Graph') .'"></div>';
- } else {
- 
+	include('includes/footer.inc');
+} else {
+
 	$graph =& new PHPlot(950,450);
 	$SelectClause ='';
 	$WhereClause ='';
@@ -182,9 +195,9 @@ $PageSecurity = 6;
 		$GraphTitle = _('Unit Sales');
 		$SelectClause = 'qty';
 	}
-	
+
 	$GraphTitle .= ' ' . _('From Period') . ' ' . $_POST['FromPeriod'] . ' ' . _('to') . ' ' . $_POST['ToPeriod'] . "\n\r";
-	
+
 	if ($_POST['SalesArea']=='All'){
 		$GraphTitle .= ' ' . _('For All Sales Areas');
 	} else {
@@ -200,7 +213,7 @@ $PageSecurity = 6;
 		$myrow = DB_fetch_row($result);
 		$GraphTitle .= ' ' . _('For') . ' ' . $myrow[0];
 		$WhereClause .= " stkcategory='" . $_POST['CategoryID'] . "' AND";
-		
+
 	}
 	if ($_POST['SalesmanCode']=='All'){
 		$GraphTitle .= ' ' . _('For All Salespeople');
@@ -209,7 +222,7 @@ $PageSecurity = 6;
 		$myrow = DB_fetch_row($result);
 		$GraphTitle .= ' ' . _('For Salesperson:') . ' ' . $myrow[0];
 		$WhereClause .= " salesperson='" . $_POST['SalesmanCode'] . "' AND";
-		
+
 	}
 	if ($_POST['GraphOn']=='Customer'){
 		$GraphTitle .= ' ' . _('For Customers from') . ' ' . $_POST['ValueFrom'] . ' ' . _('to') . ' ' . $_POST['ValueTo'];
@@ -219,45 +232,44 @@ $PageSecurity = 6;
 		$GraphTitle .= ' ' . _('For Items from') . ' ' . $_POST['ValueFrom'] . ' ' . _('to') . ' ' . $_POST['ValueTo'];
 		$WhereClause .= "  stockid>='" . $_POST['ValueFrom'] . "' AND stockid<='" . $_POST['ValueTo'] . "' AND";
 	}
-	
+
 	$WhereClause = 'WHERE ' . $WhereClause . ' salesanalysis.periodno>=' . $_POST['FromPeriod'] . ' AND salesanalysis.periodno <= ' . $_POST['ToPeriod'];
-		
-	$SQL = 'SELECT salesanalysis.periodno, 
-				periods.lastdate_in_period, 
+
+	$SQL = 'SELECT salesanalysis.periodno,
+				periods.lastdate_in_period,
 				SUM(CASE WHEN budgetoractual=1 THEN ' . $SelectClause . ' ELSE 0 END) AS sales,
 				SUM(CASE WHEN  budgetoractual=0 THEN ' . $SelectClause . ' ELSE 0 END) AS budget
 		FROM salesanalysis INNER JOIN periods ON salesanalysis.periodno=periods.periodno ' . $WhereClause . '
 		GROUP BY salesanalysis.periodno,
 			periods.lastdate_in_period
 		ORDER BY salesanalysis.periodno';
-		
-		
+
+
 	$graph->SetTitle($GraphTitle);
 	$graph->SetTitleColor('blue');
 	$graph->SetOutputFile('companies/' .$_SESSION['DatabaseName'] .  '/reports/salesgraph.png');
 	$graph->SetXTitle(_('Month'));
-	if ($_POST['GraphValue']=='Net'){	
+	if ($_POST['GraphValue']=='Net'){
 		$graph->SetYTitle(_('Sales Value'));
-	} elseif ($_POST['GraphValue']=='GP'){	
+	} elseif ($_POST['GraphValue']=='GP'){
 		$graph->SetYTitle(_('Gross Profit'));
 	} else {
 		$graph->SetYTitle(_('Quantity'));
 	}
 	$graph->SetXTickPos('none');
 	$graph->SetXTickLabelPos('none');
-	$graph->SetBackgroundColor("wheat");
+	$graph->SetBackgroundColor("selection");
 	$graph->SetTitleColor("blue");
 	$graph->SetFileFormat("png");
-	$graph->SetPlotType("bars");
+	$graph->SetPlotType($_POST['GraphType']);
 	$graph->SetIsInline("1");
 	$graph->SetShading(5);
 	$graph->SetDrawYGrid(TRUE);
-	$graph->SetMarginsPixels(80,40,40,40);
 	$graph->SetDataType('text-data');
-	
+
 	$SalesResult = DB_query($SQL, $db);
 	if (DB_error_no($db) !=0) {
-		
+
 		prnMsg(_('The sales graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
 		include('includes/footer.inc');
 		exit;
@@ -267,24 +279,26 @@ $PageSecurity = 6;
 		include('includes/footer.inc');
 		exit;
 	}
-	
+
 	$GraphArrays = array();
 	$i = 0;
 	while ($myrow = DB_fetch_array($SalesResult)){
 		$GraphArray[$i] = array(MonthAndYearFromSQLDate($myrow['lastdate_in_period']),$myrow['sales'],$myrow['budget']);
 		$i++;
 	}
-	
+
 	$graph->SetDataValues($GraphArray);
 	$graph->SetDataColors(
-		array('blue','red'),  //Data Colors
+		array('grey','wheat'),  //Data Colors
 		array('black')	//Border Colors
-	);  
+	);
 	$graph->SetLegend(array(_('Actual'),_('Budget')));
-	
+
 	//Draw it
 	$graph->DrawGraph();
+	echo '<table class=selection><tr><td>';
 	echo '<p><img src="companies/' .$_SESSION['DatabaseName'] .  '/reports/salesgraph.png" alt="Sales Report Graph"></img></p>';
+	echo '</td></tr></table>';
 	include('includes/footer.inc');
  }
  ?>
