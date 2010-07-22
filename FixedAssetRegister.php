@@ -48,23 +48,17 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		$line_height = 12;
 		include ('includes/PDFAssetRegisterHeader.inc');
 	} elseif (isset($_POST['csv'])) {
-		$csv_output = "Asset ID,Stock ID"; // 'Description','Serial Number','Location','Date Acquired','Cost','Depreciation','NBV','Cost','Depreciation','NBV','Disposal Value'";
+		$csv_output = "'Asset ID','Stock ID', 'Description','Serial Number','Location','Date Acquired','Cost','Depreciation','NBV','Disposal Value'";
 		$csv_output.= "\n";
 	} else {
-		echo '<form name="RegisterForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><table>';
-		echo '<br><table width=80% cellspacing="9"><tr>';
-		echo '<th colspan=6></th>';
-		echo '<th colspan=3>' . _('External Depreciation') . '</th>';
-		echo '<th colspan=3>' . _('Internal Depreciation') . '</th><th></th></tr><tr>';
+		echo '<form name="RegisterForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><table class=selection>';
+		echo '<br><table width=80% cellspacing="1" class=selection><tr>';
 		echo '<th>' . _('Asset ID') . '</th>';
 		echo '<th>' . _('Stock ID') . '</th>';
 		echo '<th>' . _('Description') . '</th>';
 		echo '<th>' . _('Serial Number') . '</th>';
 		echo '<th>' . _('Location') . '</th>';
 		echo '<th>' . _('Date Acquired') . '</th>';
-		echo '<th>' . _('Cost') . '</th>';
-		echo '<th>' . _('Depreciation') . '</th>';
-		echo '<th>' . _('NBV') . '</th>';
 		echo '<th>' . _('Cost') . '</th>';
 		echo '<th>' . _('Depreciation') . '</th>';
 		echo '<th>' . _('NBV') . '</th>';
@@ -84,17 +78,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 			$i++;
 			$ancestors[$i] = $parentrow['locationdescription'];
 		}
-		$catidsql = 'SELECT stkcatpropid FROM stockcatproperties WHERE categoryid="' . $myrow['categoryid'] . '" AND label="' . _('Annual Internal Depreciation Percentage') . '"';
-		$catidresult = DB_query($catidsql, $db);
-		$catidrow = DB_fetch_array($catidresult);
-		$catvaluesql = 'SELECT value FROM stockitemproperties WHERE stockid="' . $myrow['stockid'] . '" AND stkcatpropid=' . $catidrow['stkcatpropid'];
-		$catvalueresult = DB_query($catvaluesql, $db);
-		$catvaluerow = DB_fetch_array($catvalueresult);
 		$MonthsOld = DateDiff(date('d/m/Y'), ConvertSQLDate($myrow['datepurchased']), 'm');
-		$InternalDepreciation = $myrow['cost'] * $catvaluerow['value'] / 100 * $MonthsOld / 12;
-		if (($InternalDepreciation + $myrow['disposalvalue']) > $myrow['cost']) {
-			$InternalDepreciation = $myrow['cost'] - $myrow['disposalvalue'];
-		}
 		if (in_array($_POST['assetlocation'], $ancestors) or $_POST['assetlocation'] == 'All') {
 			if (isset($_POST['pdf'])) {
 				$LeftOvers = $pdf->addTextWrap($Xpos, $YPos, 300 - $Left_Margin, $FontSize, $myrow['id']);
@@ -114,15 +98,14 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 				$LeftOvers = $pdf->addTextWrap($Xpos + 440, $YPos, 55, $FontSize, number_format($myrow['cost'], 0), 'right');
 				$LeftOvers = $pdf->addTextWrap($Xpos + 495, $YPos, 55, $FontSize, number_format($myrow['depn'], 0), 'right');
 				$LeftOvers = $pdf->addTextWrap($Xpos + 550, $YPos, 50, $FontSize, number_format($myrow['cost'] - $myrow['depn'], 0), 'right');
-				$LeftOvers = $pdf->addTextWrap($Xpos + 600, $YPos, 55, $FontSize, number_format($myrow['cost'], 0), 'right');
-				$LeftOvers = $pdf->addTextWrap($Xpos + 655, $YPos, 55, $FontSize, number_format($InternalDepreciation, 0), 'right');
-				$LeftOvers = $pdf->addTextWrap($Xpos + 710, $YPos, 50, $FontSize, number_format($myrow['cost'] - $InternalDepreciation, 0), 'right');
 				$YPos = $TempYPos - (0.8 * $line_height);
 				if ($YPos < $Bottom_Margin + $line_height) {
 					include ('includes/PDFAssetRegisterHeader.inc');
 				}
 			} elseif (isset($_POST['csv'])) {
-				$csv_output.= $myrow['id'] . "," . $myrow['stockid'] . "\n"; //;.",".$myrow['longdescription'].",".$myrow['serialno'].",".$myrow['locationdescription'].",".$myrow['datepurchased'].",".$myrow['cost'].",".$myrow['depn'].",".($myrow['cost']-$myrow['depn']).",".$myrow['cost'].",".$InternalDepreciation.",".($myrow['cost']-$InternalDepreciation).",".$myrow['disposalvalue']."\n";
+				$csv_output.= $myrow['id'] . "," . $myrow['stockid'] .",".$myrow['longdescription'].",".
+						$myrow['serialno'].",".$myrow['locationdescription'].",".$myrow['datepurchased'].",".$myrow['cost'].
+						",".$myrow['depn'].",".($myrow['cost']-$myrow['depn'])."\n";
 
 			} else {
 				echo '<tr><td style="vertical-align:top">' . $myrow['id'] . '</td>';
@@ -140,16 +123,11 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 				echo '<td style="vertical-align:top" class=number>' . number_format($myrow['cost'], 2) . '</td>';
 				echo '<td style="vertical-align:top" class=number>' . number_format($myrow['depn'], 2) . '</td>';
 				echo '<td style="vertical-align:top" class=number>' . number_format($myrow['cost'] - $myrow['depn'], 2) . '</td>';
-				echo '<td style="vertical-align:top" class=number>' . number_format($myrow['cost'], 2) . '</td>';
-				echo '<td style="vertical-align:top" class=number>' . number_format($InternalDepreciation, 2) . '</td>';
-				echo '<td style="vertical-align:top" class=number>' . number_format($myrow['cost'] - $InternalDepreciation, 2) . '</td>';
 				echo '<td style="vertical-align:top" class=number>' . number_format($myrow['disposalvalue'], 2) . '</td></tr>';
 			}
 			$TotalCost = $TotalCost + $myrow['cost'];
-			$Totaldepn = $Totaldepn_pdf + $myrow['depn'];
+			$Totaldepn = $Totaldepn + $myrow['depn'];
 			$TotalNBV = $TotalCost - $Totaldepn;
-			$TotaldepnInt = $TotaldepnInt + $InternalDepreciation;
-			$TotalNBVInt = $TotalCost - $TotaldepInt;
 			$Totaldisp = $Totaldisp + $myrow['disposalvalue'];
 		}
 	}
@@ -164,19 +142,15 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		$LeftOvers = $pdf->addTextWrap($Xpos + 440, $YPos, 55, $FontSize, number_format($TotalCost, 2), 'right');
 		$LeftOvers = $pdf->addTextWrap($Xpos + 495, $YPos, 55, $FontSize, number_format($Totaldepn, 2), 'right');
 		$LeftOvers = $pdf->addTextWrap($Xpos + 550, $YPos, 50, $FontSize, number_format($TotalNBV, 2), 'right');
-		//$LeftOvers = $pdf->addTextWrap($Xpos+600,$YPos,50,$FontSize, number_format($TotalNBV_pdf,2),'right');
-		$LeftOvers = $pdf->addTextWrap($Xpos + 600, $YPos, 55, $FontSize, number_format($TotalCost, 2), 'right');
-		$LeftOvers = $pdf->addTextWrap($Xpos + 655, $YPos, 50, $FontSize, number_format($TotaldepnInt, 2), 'right');
-		$LeftOvers = $pdf->addTextWrap($Xpos + 705, $YPos, 55, $FontSize, number_format($TotalNBVInt, 2), 'right');
 		$pdf->Output($_SESSION['DatabaseName'] . '_Asset Register_' . date('Y-m-d') . '.pdf', 'I');
 		exit;
 	} elseif (isset($_POST['csv'])) {
 		// download now. WFT am I waiting for??? Don't use headers, kinda messy
 		// $filename="/tmp/".date("Y-m-d").".csv";
-		$filename = "/home/tim/workbench/webERP/trunk/companies/weberpdemo/reportwriter/test.csv";
+		$filename = "companies/".$_SESSION['DatabaseName']."/reportwriter/test.csv";
 		$csvfile = fopen($filename, 'w');
 		$i = fwrite($csvfile, $csv_output);
-		header("Location: companies/weberpdemo/reportwriter/test.csv");
+		header("Location: companies/".$_SESSION['DatabaseName']."/reportwriter/test.csv");
 		// echo "Testing successfully done";
 		// header("Content-Type: text/csv");
 		// header("Content-disposition: attachment; filename= $cvsfile");
@@ -188,31 +162,26 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		echo '<input type=hidden name=assettype value=' . $_POST['assettype'] . '>';
 		echo '<input type=hidden name=assetlocation value=' . $_POST['assetlocation'] . '>';
 		//Total Values
-		echo '<tr></tr>';
 		echo '<tr><th style="vertical-align:top">TOTAL</th>';
 		echo '<th style="vertical-align:top"></th>';
 		echo '<th style="vertical-align:top"></th>';
 		echo '<th style="vertical-align:top"></th>';
 		echo '<th style="vertical-align:top"></th>';
 		echo '<th style="vertical-align:top"></th>';
-		echo '<th style="vertical-align:top" class=number>' . number_format($TotalCost, 2) . '</th>';
-		echo '<th style="vertical-align:top" class=number>' . number_format($Totaldepn, 2) . '</th>';
-		echo '<th style="vertical-align:top" class=number>' . number_format($TotalNBV, 2) . '</th>';
-		echo '<th style="vertical-align:top" class=number>' . number_format($TotalCost, 2) . '</th>';
-		echo '<th style="vertical-align:top" class=number>' . number_format($TotaldepnInt, 2) . '</th>';
-		echo '<th style="vertical-align:top" class=number>' . number_format($TotalNBVInt, 2) . '</th>';
-		echo '<th style="vertical-align:top" class=number>' . number_format($Totaldisp, 2) . '</th></tr>';
+		echo '<th style="text-align:right">' . number_format($TotalCost, 2) . '</th>';
+		echo '<th style="text-align:right">' . number_format($Totaldepn, 2) . '</th>';
+		echo '<th style="text-align:right">' . number_format($TotalNBV, 2) . '</th>';
+		echo '<th style="text-align:right">' . number_format($Totaldisp, 2) . '</th></tr>';
 		echo '</table>';
-		echo '<div class="centre"><input type="Submit" name="pdf" value="' . _('Print as a pdf') . '"></div></form>';
-		echo '</p>';
-		echo '<div class="centre"><input type="Submit" name="csv" value="' . _('Print as CSV') . '"></div></form>';
+		echo '<br><div class="centre"><input type="Submit" name="pdf" value="' . _('Print as a pdf') . '">&nbsp;';
+		echo '<input type="Submit" name="csv" value="' . _('Print as CSV') . '"></div></form>';
 	}
 } else {
 	include ('includes/header.inc');
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
 	$sql = "SELECT * FROM stockcategory WHERE stocktype='" . 'A' . "'";
 	$result = DB_query($sql, $db);
-	echo '<form name="RegisterForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><table>';
+	echo '<form name="RegisterForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><table class=selection>';
 	echo '<tr><th>' . _('Asset Category') . '</th>';
 	echo '<td><select name=assetcategory>';
 	echo '<option value="%">' . _('ALL') . '</option>';
@@ -263,9 +232,9 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	echo '</tr>';
 	//end of FULUSI STUFF
 	echo '</table><br>';
-	echo '<div class="centre"><input type="Submit" name="submit" value="' . _('Show Assets') . '"></div><br />';
-	echo '<div class="centre"><input type="Submit" name="pdf" value="' . _('Print as a pdf') . '"></div><br/>';
-	echo '<div class="centre"><input type="Submit" name = "csv" value= "' . _('Print as CSV') . '"></div>';
+	echo '<div class="centre"><input type="Submit" name="submit" value="' . _('Show Assets') . '">&nbsp;';
+	echo '<input type="Submit" name="pdf" value="' . _('Print as a pdf') . '">&nbsp;';
+	echo '<input type="Submit" name = "csv" value= "' . _('Print as CSV') . '"></div>';
 	echo '</form>';
 }
 include ('includes/footer.inc');

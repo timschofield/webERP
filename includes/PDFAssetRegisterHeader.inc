@@ -54,8 +54,6 @@ $pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Marg
 /*set up the headings */
 $FontSize=8;
 $Xpos = $Left_Margin+1;
-$LeftOvers = $pdf->addTextWrap($Xpos+440,$YPos,300-$Left_Margin,$FontSize,  _('<--------------External Depreciation-------------->'), 'centre');
-$LeftOvers = $pdf->addTextWrap($Xpos+605,$YPos,300-$Left_Margin,$FontSize,  _('<--------------Internal Depreciation-------------->'), 'centre');
 $YPos -=(0.8*$line_height);
 $LeftOvers = $pdf->addTextWrap($Xpos,$YPos,40,$FontSize,  _('Asset ID'), 'centre');
 $LeftOvers = $pdf->addTextWrap($Xpos+40,$YPos,300-$Left_Margin,$FontSize,  _('Stock ID'), 'centre');
@@ -66,9 +64,6 @@ $LeftOvers = $pdf->addTextWrap($Xpos+380,$YPos,300-$Left_Margin,$FontSize,  _('D
 $LeftOvers = $pdf->addTextWrap($Xpos+440,$YPos,55,$FontSize,  _('Cost'), 'right');
 $LeftOvers = $pdf->addTextWrap($Xpos+495,$YPos,55,$FontSize,  _('Depn'), 'right');
 $LeftOvers = $pdf->addTextWrap($Xpos+550,$YPos,50,$FontSize,  _('NBV'), 'right');
-$LeftOvers = $pdf->addTextWrap($Xpos+600,$YPos,55,$FontSize,  _('Cost'), 'right');
-$LeftOvers = $pdf->addTextWrap($Xpos+655,$YPos,55,$FontSize,  _('Depn'), 'right');
-$LeftOvers = $pdf->addTextWrap($Xpos+710,$YPos,50,$FontSize,  _('NBV'), 'right');
 
 
 $pdf->line($Left_Margin, $YTopLeft,$Page_Width-$Right_Margin, $YTopLeft);
