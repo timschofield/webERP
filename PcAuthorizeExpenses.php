@@ -34,23 +34,24 @@ $Errors = array();
 
 if (isset($SelectedTabs)) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Petty Cash') .
-		'" alt="">' . ' <a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Authorization Of Petty Cash Expenses ') . ''.$SelectedTabs.'<a/>';
+		'" alt="">' . _('Authorization Of Petty Cash Expenses ') . ''.$SelectedTabs.'</p>';
 } else {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Petty Cash') .
-		'" alt="">' . ' <a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Authorization Of Petty Cash Expenses ') . '<a/>';
+		'" alt="">' . _('Authorization Of Petty Cash Expenses ') . '</p>';
 }
 if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR isset ($_POST['GO'])) {
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	echo "<div class='centre'><p>" . _('Detail Of Movement For Last ') .': ';
 
 	if(!isset ($Days)){
 		$Days=30;
 	}
 	echo "<input type=hidden name='SelectedTabs' VALUE=" . $SelectedTabs . ">";
+	echo '<br><table class=selection>';
+	echo "<tr><th colspan=7>" . _('Detail Of Movement For Last ') .': ';
 	echo "<input type=text class=number name='Days' VALUE=" . $Days . " MAXLENGTH =3 size=4> Days ";
-	echo '<input type=submit name="Go" value="' . _('Go') . '">';
-	echo '<p></div></form>';
+	echo '<input type=submit name="Go" value="' . _('Go') . '"></tr></th>';
+	echo '</form>';
 
 	$sql = "SELECT pcashdetails.counterindex,
 				pcashdetails.tabcode,
@@ -69,13 +70,12 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 			FROM pcashdetails, pctabs, currencies
 			WHERE pcashdetails.tabcode = pctabs.tabcode
 				AND pctabs.currency = currencies.currabrev
-				AND pcashdetails.tabcode = '$SelectedTabs'
-				AND pcashdetails.date >= DATE_SUB(CURDATE(), INTERVAL ".$Days." DAY)
+				AND pcashdetails.tabcode = '" . $SelectedTabs . "'
+				AND pcashdetails.date >= DATE_SUB(CURDATE(), INTERVAL '".$Days."' DAY)
 			ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";
 
 	$result = DB_query($sql,$db);
 
-	echo '<br><table BORDER=1>';
 	echo "<tr>
 		<th>" . _('Date') . "</th>
 		<th>" . _('Expense Code') . "</th>
@@ -124,6 +124,7 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 			//build narrative
 			$narrative= "PettyCash - ".$myrow['tabcode']." - ".$myrow['codeexpense']." - ".$myrow['notes']." - ".$myrow['receipt']."";
 			//insert to gltrans
+			DB_Txn_Begin($db);
 
 			$sqlFrom="INSERT INTO `gltrans`
 					(`counterindex`,
@@ -151,7 +152,7 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 					'',
 					0)";
 
-			$ResultFrom = DB_Query($sqlFrom, $db);
+			$ResultFrom = DB_Query($sqlFrom, $db, '', '', true);
 
 			$sqlTo="INSERT INTO `gltrans`
 					(`counterindex`,
@@ -179,12 +180,12 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 					'',
 					0)";
 
-			$ResultTo = DB_Query($sqlTo, $db);
+			$ResultTo = DB_Query($sqlTo, $db, '', '', true);
 
 			if ($myrow['codeexpense'] == 'ASSIGNCASH'){
 			// if it's a cash assignation we need to updated banktrans table as well.
 				$ReceiptTransNo = GetNextTransNo( 2, $db);
-				$SQLBank= 'INSERT INTO banktrans (transno,
+				$SQLBank= "INSERT INTO banktrans (transno,
 							type,
 							bankact,
 							ref,
@@ -194,15 +195,15 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 							banktranstype,
 							amount,
 							currcode)
-					VALUES (' . $ReceiptTransNo . ',
+					VALUES ('". $ReceiptTransNo . "',
 						1,
-						' . $AccountFrom . ", '"
-						. $narrative . " ',
+						'" . $AccountFrom . "',
+						'" . $narrative . "',
 						1,
-						" . $myrow['rate'] . ",
+						'" . $myrow['rate'] . "',
 						'" . $myrow['date'] . "',
 						'Cash',
-						" . -$myrow['amount'] . ",
+						'" . -$myrow['amount'] . "',
 						'" . $myrow['currency'] . "'
 					)";
 				$ErrMsg = _('Cannot insert a bank transaction because');
@@ -215,7 +216,8 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 					SET authorized = '".Date('Y-m-d')."',
 					posted = 1
 					WHERE counterindex = '".$myrow['counterindex']."'";
-			$resultupdate = DB_query($sql,$db);
+			$resultupdate = DB_query($sql,$db, '', '', true);
+			DB_Txn_Commit($db);
 		}
 
 		if ($k==1){
@@ -261,8 +263,7 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 
 
 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	echo '<p><table border=1>'; //Main table
-	echo '<td><table>'; // First column
+	echo '<p><table class=selection>'; //Main table
 
 echo '<tr><td>' . _('Authorize expenses to Petty Cash Tab') . ":</td><td><select name='SelectedTabs'>";
 
@@ -285,8 +286,7 @@ echo '<tr><td>' . _('Authorize expenses to Petty Cash Tab') . ":</td><td><select
 
 	echo '</select></td></tr>';
 
-	   	echo '</table>'; // close table in first column
-   	echo '</td></tr></table>'; // close main table
+	echo '</td></tr></table>'; // close main table
 
 	echo '<p><div class="centre"><input type=submit name=process VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
 
