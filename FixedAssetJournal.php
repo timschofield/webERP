@@ -1,7 +1,6 @@
 <?php
 
 /* $Revision: 1.1 $ */
-/* $Id$*/
 
 include('includes/DefineJournalClass.php');
 
@@ -59,7 +58,7 @@ if (!isset($_SESSION['JournalDetail']) or isset($_POST['update'])){
 		$typerow=DB_fetch_array($typeresult);
 		$assetarray[$i]['DepreciationType']=$typerow['value'];
 
-		// Find the depreciation rate 
+		// Find the depreciation rate
 		$ratesql='SELECT stockitemproperties.value
 				FROM stockitemproperties
 				LEFT JOIN stockcatproperties
@@ -71,18 +70,18 @@ if (!isset($_SESSION['JournalDetail']) or isset($_POST['update'])){
 		$assetarray[$i]['DepreciationRate']=$raterow['value'];
 
 
-		$bsnamesql='SELECT accountname FROM chartmaster WHERE accountcode='.$assetarray[$i]['bsdepn'];
+		$bsnamesql='SELECT accountname FROM chartmaster WHERE accountcode="'.$assetarray[$i]['bsdepn'].'"';
 		$bsnameresult=DB_query($bsnamesql, $db);
 		$bsnamerow=DB_fetch_array($bsnameresult);
 		$assetarray[$i]['bsdepnaccount']=$bsnamerow['accountname'];
-		$plnamesql='SELECT accountname FROM chartmaster WHERE accountcode='.$assetarray[$i]['pldepn'];
+		$plnamesql='SELECT accountname FROM chartmaster WHERE accountcode="'.$assetarray[$i]['pldepn'].'"';
 		$plnameresult=DB_query($plnamesql, $db);
 		$plnamerow=DB_fetch_array($plnameresult);
 		$assetarray[$i]['pldepnaccount']=$plnamerow['accountname'];
-		
-		/* Need a method to correctly enter the journal date, 
+
+		/* Need a method to correctly enter the journal date,
 		 * and for it to be available to the depn calculation - Tim
-		 */ 
+		 */
 
 		if (isset($_POST['JournalProcessDate'])) {
 			$_SESSION['JournalDetail']->JnlDate=$_POST['JournalProcessDate'];
@@ -92,7 +91,7 @@ if (!isset($_SESSION['JournalDetail']) or isset($_POST['update'])){
 			$_SESSION['JournalDetail']->JnlDate = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m'),0,date('Y')));
 		}
 
-		$NoOfMonths=DateDiff($_SESSION['JournalDetail']->JnlDate,FormatDateForSQL($assetarray[$i]['datepurchased']), 'm');
+		$NoOfMonths=DateDiff($_SESSION['JournalDetail']->JnlDate,ConvertSQLDate($assetarray[$i]['datepurchased']), 'm');
 		if ($assetarray[$i]['DepreciationType']==_('Straight Line')) {
 			$TotalDepnAmount=round(($NoOfMonths/12)*($assetarray[$i]['DepreciationRate']/100)*$assetarray[$i]['cost'],2);
 		} else {
@@ -107,18 +106,18 @@ if (!isset($_SESSION['JournalDetail']) or isset($_POST['update'])){
 			' - '.$assetarray[$i]['serialno'].' - '.$assetarray[$i]['locationdescription'];
 
 		$_SESSION['JournalDetail']->Add_To_GLAnalysis(
-			-($TotalDepnAmount-$assetarray[$i]['depn']), 
-			$assetarray[$i]['narrative'], 
-			$assetarray[$i]['bsdepn'], 
-			$assetarray[$i]['bsdepnaccount'], 
+			-($TotalDepnAmount-$assetarray[$i]['depn']),
+			$assetarray[$i]['narrative'],
+			$assetarray[$i]['bsdepn'],
+			$assetarray[$i]['bsdepnaccount'],
 			0,
 			$assetarray[$i]['id']);
 
 		$_SESSION['JournalDetail']->Add_To_GLAnalysis(
-			$TotalDepnAmount-$assetarray[$i]['depn'], 
-			$assetarray[$i]['narrative'], 
-			$assetarray[$i]['pldepn'], 
-			$assetarray[$i]['pldepnaccount'], 
+			$TotalDepnAmount-$assetarray[$i]['depn'],
+			$assetarray[$i]['narrative'],
+			$assetarray[$i]['pldepn'],
+			$assetarray[$i]['pldepnaccount'],
 			0,
 			$assetarray[$i]['id']);
 		$i++;
@@ -137,7 +136,6 @@ if (isset($_POST['JournalType'])){
 	$_SESSION['JournalDetail']->JournalType = $_POST['JournalType'];
 }
 $msg='';
-
 if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Process Journal')){
 
  /* once the GL analysis of the journal is entered
@@ -151,58 +149,40 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 	$result = DB_Txn_Begin($db);
 
 	$TransNo = GetNextTransNo( 0, $db);
-	
+	$BSorPL=1; // Balance sheet or P&L indicator
+
 	foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
-		if ($JournalItem->Amount>0) {
-			$sql='UPDATE assetmanager SET depn=depn+'.$JournalItem->Amount.' WHERE id='.$JournalItem->assetid;
+		$odd=$BSorPL%2;
+		if ($odd==0) {
+			$sql='UPDATE assetmanager SET depn=depn+"'.$JournalItem->Amount.'" WHERE id="'.$JournalItem->assetid.'"';
+			$ErrMsg = _('Cannot update the asset manager for this amount because');
+			$DbgMsg = _('The SQL that failed to update the asset manger record was');
 			$result=DB_query($sql, $db,$ErrMsg,$DbgMsg,true);
 		}
+		$BSorPL++;
 	}
 
 	foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
-		$SQL = 'INSERT INTO gltrans (type,
+		$SQL = "INSERT INTO gltrans (type,
 						typeno,
 						trandate,
 						periodno,
 						account,
 						narrative,
 						amount,
-						tag) ';
-		$SQL= $SQL . 'VALUES (0,
-					' . $TransNo . ",
+						tag) ";
+		$SQL= $SQL . "VALUES (0,
+					'" . $TransNo . "',
 					'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
-					" . $PeriodNo . ",
-					" . $JournalItem->GLCode . ",
+					'" . $PeriodNo . "',
+					'" . $JournalItem->GLCode . "',
 					'" . $JournalItem->Narrative . "',
-					" . $JournalItem->Amount .
-					",'".$JournalItem->tag."')";
+					'" . $JournalItem->Amount ."',
+					'" . $JournalItem->tag."'
+					)";
 		$ErrMsg = _('Cannot insert a GL entry for the journal line because');
 		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-
-		if ($_POST['JournalType']==_('Reversing')){
-			$SQL = 'INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount,
-							tag) ';
-			$SQL= $SQL . 'VALUES (0,
-						' . $TransNo . ",
-						'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
-						" . ($PeriodNo + 1) . ",
-						" . $JournalItem->GLCode . ",
-						'Reversal - " . $JournalItem->Narrative . "',
-						" . -($JournalItem->Amount) .
-					",'".$JournalItem->tag."')";
-
-			$ErrMsg =_('Cannot insert a GL entry for the reversing journal because');
-			$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-
-		}
 	}
 
 
@@ -217,9 +197,10 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 	unset($_SESSION['JournalDetail']);
 
 	/*Set up a newy in case user wishes to enter another */
-	echo "<br><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "&NewJournal=Yes'>"._('Enter Another General Ledger Journal').'</a>';
+	echo "<br><a href='index.php" . '?' . SID . "'>"._('Return to main menu').'</a>';
 	/*And post the journal too */
 	include ('includes/GLPostings.inc');
+	include ('includes/footer.inc');
 	exit;
 
 } elseif (isset($_GET['Delete'])){
@@ -330,14 +311,11 @@ if (!isset($_SESSION['JournalDetail']->JnlDate)){
 
 echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post name="form">';
 
-
-echo '<p><table border=0 width=100%>
-	<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<tr><hr></tr>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'</p>';
 
 // A new table in the first column of the main table
 
-echo '<tr>
-		<td colspan=5><table border=0 width=30%><tr><td>'._('Date to Process Journal').":</td>
+echo '<table class=selection width=30%><tr><td>'._('Date to Process Journal').":</td>
 		<td><input type='text' class='date' alt='".$_SESSION['DefaultDateFormat'].
 			"' name='JournalProcessDate' maxlength=10 size=11 value='" .
 				 $_SESSION['JournalDetail']->JnlDate . "'></td>";
@@ -348,7 +326,7 @@ echo '</tr>
 /* close off the table in the first column  */
 
 
-echo "<table border =1 width=85%><tr><td><table width=100%>
+echo "<table class=selection width=85%>
 				<tr>
 					<th>"._('GL Tag')."</th>
 					<th>"._('GL Account')."</th>
@@ -368,7 +346,7 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 		echo '<tr class="EvenTableRows">';
 		$j++;
 	}
-	$sql='SELECT tagdescription 
+	$sql='SELECT tagdescription
 		FROM tags
 		WHERE tagref='.$JournalItem->tag;
 	$result=DB_query($sql, $db);
@@ -407,7 +385,7 @@ if ($debittotal>$credittotal) {
 	echo ' Debit';
 }
 
-echo '</b></td></tr></table></td></tr></table>';
+echo '</b></td></tr></table>';
 
 if (ABS($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDetail']->GLItemCounter > 0){
 	echo "<br><br><div class='centre'><input type=submit name='CommitBatch' value='"._('Accept and Process Journal')."'></div>";
