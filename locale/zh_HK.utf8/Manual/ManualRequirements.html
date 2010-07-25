@@ -1,0 +1,80 @@
+﻿<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head><body><br><br>
+
+<a name="Requirements"><font size="+3"><b>安装需求 (Requirements) </b></font></a>
+
+<br><br>
+
+<font size="+2"><b>硬件要求：(Hardware Requirements) </b></font>
+
+<br><br>
+
+硬件方面存在多种配置，依企业的应用规模而定。
+
+<br><br>
+
+操作系统和数据库版本的选择也会对要求产生明显影响。每一个客户端到服务器和数据库的连接都会消耗内存，连接数越多，对于内存的使用要求也越高。类似的，所需要的磁盘空间也会受到用户数、供应商数目和应用程序数目的影响。因为自身的效率，有足够理由相信，本系统对硬件的需求比通常的服务器客户端应用程序要低很多。
+
+<br><br>
+
+通常，安装同时使用用户数为50个的系统硬件配置如下：
+Linux操作系统，Apache服务器, 512M 内存以及10M网卡足够胜任。
+对关键性应用推荐配备100M网卡和RAID SCSI热插拔硬盘。
+
+<br><br>
+
+SMP服务器群，负载均衡，单独的数据库服务器和大容量内存则是面向大负荷企业应用的推荐配置。
+
+<br><br>
+
+当使用第三方的服务器和IT设施的时候，请考虑以下因素：
+<ul>
+<li>备份 – 永远重要</li>
+<li>冗余硬件 – 比如应急服务器或者硬盘</li>
+<li>硬件设备的安全性，防盗装置等</li>
+<li>应急电力设备</li>
+<li>宽带接入的可靠性 </li>
+</ul>
+
+<font size="+2"><b>软件要求：(Software Requirements)</b></font>
+
+<br><br>
+
+Windows环境下<a href="http://apache2triad.net/">apache2triad bundle</a>提供便利的安装包。
+
+<a href=http://www.apachefriends.org/en/xampp.html">XAMPP</a>提供在windows/linux/unix环境下通用的安装包。
+<br><br>
+这两个安装包都能提供运行所需的套件。
+<br><br>
+另外的选项是，如果需要单独最新版本，可以分别下载以下软件并分别安装：
+<ul>
+	<li><a href="http://www.php.net/">PHP</a>
+	 4.2版本或以上。PHP 支持跨平台运行，因而webERP可以运行在不同的操作系统上。如果需要支持EDI orders，请安装PHP ftp extensions. 
+	</li><li><a href="http://www.mysql.com/">MySQL</a>需要最大的 Innodb transactional tables的支持. Innodb 于2001年被加入到MySQL并且具有和Oracle数据库类似的功能和速度。 MySQL 4.0以后的版本默认支持Innodb。 在Linux平台中，Innodb示例配置文件my.cnf 通常位于 /usr/local/mysql/var。请注意只有在事务处理功能中才使用Innodb，因为有争议认为MyISAM的反应速度更快。 
+	</li>
+	<li><a href="http://www.apache.org/">Apache</a>
+对PHP有良好的支持 – 除了Apache其它大多数web服务器也对PHP有不同程度的支持。 
+	</li><li>如果需要提供对互联网访问的支持，而不仅仅局限于企业内部网络，则需要加密的通信协议。在Apache中配置<a href="http://www.mod_ssl.org/">mod_ssl</a>
+和 <a href="http://www.openssl.org/">openssl</a>模块可以使用数据以加密的形式传输。
+</li></ul>
+系统可以使用其它类型的数据库，但请注意，系统的开发和测试环境是MySQL。 独立的调查显示MySQL是反应最快速的数据库之一，对于通用型数据库处理任务而言，特别是在建立连接方面 – 连接在各个页面中都会使用到。基于以上特性MySQL对于web开发环境特别适用。
+
+<br><br>
+<font size="+2"><b>在webERP中使用Wiki ： (Using webERP with a Wiki) </b></font>
+<br><br>
+Wiki允许用户在线编辑网页。webERP定义了 wiki页面的名字并提供对wiki信息的结构化管理 - 用户可以在线添加关于客户，产品和供应商的记录和信息。比如：webERP链接到客户页面 - 如果页面不存在则会显示创建页面的窗口。由应用环境来决定怎么使用wiki。举例来说，一个可能的情境是客户页面包括以下链接：
+<ul>
+<li>信用历史记录</li>
+<li>客户垂询记录</li>
+<li>销售记录</li>
+</ul>
+可以经由 Setup->General->Configuration Settings 设置wiki功能。webERP的菜单中已经包括Items (SelectProduct.php), Customers (SelectCustomer.php) 和 Suppliers (SelectSupplier.php)的链接。点击相应的链接就可以创建或者访问它。
+<br><br>
+webERP到wiki的链接可能包含具体的文档，产品保证和指引。Wiki使用得越多，它作为企业产品知识库的作用将越发得到体现。
+<br><br>
+<a href="http://wackowiki.com/WackoDownload/InEnglish">wacko wiki</a> 是非常轻量级应用灵活的wiki产品家族中的一员。可以非常容易地通过Setup->General->Configuration Settings来安装。
+<br><br>
+
+</body></html>

@@ -1,0 +1,296 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body><br><br>
+<a name="GettingStarted"><font size="+3"><b>开始旅程 (Getting Started)</b></font></a><br>
+<br>
+<font size="+2"><b>前提 (Prerequisites)</b></font><br>
+<br>
+<ul>
+<li>PHP 版本 4.2以上。 因为PHP跨平台的特性它可以在Windows(NT, 2000 or XP,Vista)操作系统下运行，可以设置PHP以CGI的方式和IIS一起工作或者Apache。系统在windows (NT and XP) 和 Linux都经过测试. 
+</li><li>MySQL 版本4.0以上，包括 Innodb 支持。
+</li><li>Web服务器. Apache 推荐，任何支持PHP都可以安装，比如MS IIS.
+</li><li>在Apache中安装openssl 和 mod-ssl 模块，它们支持数据加密传输，如果需要支持互联网访问。
+</li></ul>有一些现成的PHP和Mysql安装套件：<br>
+<br>
+<a href="http://logidac.com/apache/apache-install-rpm.phtml">http://logidac.com/apache/apache-install-rpm.phtml</a><br>
+<br>
+<a href="http://www.linux-sottises.net/en_apache_install.php">http://www.linux-sottises.net/en_apache_install.php</a><br>
+<br>
+重要提示：php.ini 中需要设置 session.auto_start = 0. 
+系统会在需要的任何时候启动sessions，设置为0是安全的做法。
+<br>
+<br>
+在PHP安装中常见的问题：
+<ol>
+<li>
+一些Windows安装中设置session.save_path= /tmp ，这是不合适的，应该指明具体的位置为session.save_path=C:\temp或者其它明确的路径。
+</li><li>
+当系统被安装在服务器群中，需要为session指明永久的明确路径，否则将找不到存储的session 和 cookie。
+在config.php 中 $SessionSavePath 可以设置这一相应路径。
+</li><li>出于某些原因，有些服务器不能自动得到正确的地址：$rootpath =
+dirname($_SERVER['PHP_SELF'])解决方法是在页面代码中直接设置$rootpath的地址。
+<br>
+<br>
+系统可以使用其它类型的数据库，但请注意，系统的开发和测试环境是MySQL。 
+针对Postgres，提供ConnectDB.inc。在config.php文件中的$dbtype设置允许系统管理员使用Postgres。
+Postgres 数据库 dumps 功能在安装当中也可以使用。
+独立的调查显示MySQL是反应最快速的数据库之一，对于通用型数据库处理任务而言，特别是在建立连接方面 – 连接在各个页面中都会使用到。基于以上特性MySQL对于web开发环境特别适用。
+<br>
+<br>
+如果需要选择整合公司的知识库，则可以选择安装Wacko Wiki在同一服务器上。高度提倡通过Wiki的方式在公司内部实现信息共享。
+<a href="http://wackowiki.com/WackoDownload/InEnglish?v=xlv">http://wackowiki.com/WackoDownload/InEnglish?v=xlv</a><br>
+<br>
+PHP中的ftp library在需要发送订单到Radio Beacon ftp 服务器器中的时候才要求安装。<br>
+<br>
+假设支持PHP的web服务器已经就绪，同时MySQL数据库已经安装完毕，不论是在同一台PHP服务器上或者是网络服务器上，全新的安装过程包括以下5个步骤：
+<br>
+<br>
+<ul>
+<li>复制所有的PHP页面代码及其它文件到web服务器document root根目录下。</li>
+<li>创建数据库并且插入初始数据。 </li>
+<li>编辑 config.php 文件，设置数据库连接及其它注明需要设置的地方。</li>
+<li>系统第一次登录。 </li>
+<li>设置系统参数。 </li>
+<li>设置和公司有关的信息。 </li>
+</ul><br>
+<br>
+<font size="+2"><b>复制PHP文件</b></font><br>
+<br>
+所有位于文件夹下的文件，除了INSTALL.txt, weberp-demo.sql和weberp-new.sql，都需要复制到web 服务器DocumentRoot下面。取决于具体的安装，但是： <br>
+<br>
+/srv/www/htdocs<br>
+<br>
+是在SuSE下面默认的Apache DocumentRoot目录。<br>
+<br>
+复制archive文件到此目录下并且解压。webERP目录会被创建于(/srv/www/htdocs/webERP)
+所有页面执行文件及其目录都会被复制。<br>
+<br>
+<font size="+2"><b>创建数据库</b></font><br>
+<br>
+系统提供适用于Postgres的sql dump文件。以下信息则是基于MySQL数据库。
+<br>
+<br>
+<br>
+应该具备MySQL的用户名和密码，默认为：<br>
+<br>
+user root
+<br>
+password ""<br>
+<br>
+从安全角度考虑，不应该使用这一用户名和密码，可以重新另设用户名并且把root的密码重新设置，不使其默认为空。<br>
+<br>
+以下所有的操作指引都是基于MySQL命令行。在Windows环境里需要打开DOS窗口。在XP或者Vista选择开始，运行，输入“cmd”。mysql.exe默认的地址为C:\mysql\bin\mysql.exe. 通过命令行的方式运行MySQL，有以下参数可供选择：<br>
+<br>
+编辑自MySQL手册：<br>
+MySQL root 是超级用户。所有的连接应该从local host建立。注意：root的初始密码为空，因此任何人皆可以连接数据库并取得超级权限，因为首要任务就是给root用户设立密码，通过以下途径：<br>
+<br>
+在MySQL Version 3.22 版本以上，使用 SET PASSWORD 命令：<br>
+<br>
+shell&gt; mysql -u root mysql
+<br>
+mysql&gt; SET PASSWORD FOR root=PASSWORD('new_password');"<br>
+<br>
+ 'new_password' 为所需要使用的新密码。<br>
+<br>
+编辑自MySQL手册：<br>
+如果更改了root的密码，必须在命令行中指明。可以用GRANT命令来增加新的用户：
+<br>
+<br>
+shell&gt; mysql --user=root -p 'new_password' mysql
+<br>
+mysql&gt; GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'some_pass' WITH GRANT OPTION;"<br>
+<br>
+ 'some_pass' 是所选择增加的新用户'weberp'的密码。注意 'weberp' 只能从本地进行连接，因此如果web服务器与MySQL服务器并非同一台机器，你需要给予从web服务器进行连接的权限。详见MySQL手册。
+<br>
+<br>
+需要运行Innodb，它对于ERP软件来说不可或缺。Innodb的参数设置可以在my.cnf中进行，可以在MySQL手册- Innodb tables中找到。设置完Innodb后只需要运行提供的SQL脚本就可以了：<br>
+<br>
+<br>
+<ol>
+<li>weberp-demo.sql 包括最小数量的示范性数据以及一个虚拟的公司信息，以便测试系统的功能。
+</li><li>weberp-new.sql 包含从头开始设立公司信息的基本数据。
+</li></ol><br>
+<br>
+文件 weberp-demo.sql ， web-erp-new.sql 位于PHP 脚本目录下，把它们放置在可执行目录下并输入：<br>
+<br>
+shell &gt; mysql --user=weberp --password='some_pass' &lt; /path_to_the_sql_script/weberp-demo.sql<br>
+<br>
+或<br>
+<br>
+shell &gt; mysql --user=weberp --password='some_pass' &lt; /path_to_the_sql_script/weberp-new.sql<br>
+<br>
+编辑用户 'weberp' 和密码 'some_pass' 根据实际的情况。编辑path_to_the_sql_script 为合适的路径，比如：
+/srv/www/htdocs/webERP/.<br>
+<br>
+<font size="+2"><b>编辑 config.php</b></font><br>
+<br>
+config.php 包含一系列用户定义的变量和对系统的设置。 关键的信息比如主机名，数据库用户和密码，以及使用的数据库选项，目前可选MySQL和postgres。<br>
+<br>
+用文本编辑器（比如:Notepad,Notepad++等）编辑 config.php，将它保存在相应的目录下。
+随着系统开发的持续进行，config.php文件的不同版本将会有所不同。 
+<br>
+<br>
+============================================<br>
+beginning of config.php<br>
+============================================<br>
+&lt;?php<br>
+<br>
+/* $Revision: 1.8 $<br>
+config.php<br>
+Web-ERP - http://web-erp.sourceforge.net<br>
+*/<br>
+<br>
+// User configurable variables<br>
+//---------------------------------------------------<br>
+<br>
+//用于登录和用户设置界面的默认语言<br>
+$DefaultLanguage ='en_GB';<br>
+<br>
+//是否显示demo的登和密码<br>
+$allow_demo_mode = false;<br>
+<br>
+// webERP version<br>
+$Version = '3.04';<br>
+<br>
+// 系统运行所在的时区，用于web服务器在海外且需要设置当地的时区<br>
+// 如果拥有本地服务器，这一选项可以忽略<br>
+// putenv('TZ=Europe/London');<br>
+// putenv('Australia/Melbourne');<br>
+// putenv('Australia/Sydney');<br>
+// putenv('TZ=Pacific/Auckland');<br>
+<br>
+// 数据库连接信息<br>
+// $host 为主机名或IP地址<br>
+// 假设web 服务与数据库位于同一服务器<br>
+$host = 'localhost';<br>
+<br>
+//使用的服务器类型，目前仅支持MySQL和Postgres<br>
+$dbType = 'mysql';<br>
+//$dbType = 'mysqli';<br>
+<br>
+// sql 用户名和密码<br>
+$dbuser = 'weberp_db_user';<br>
+$dbpassword = 'weberp_db_pwd';<br>
+<br>
+//在主机上关于公司的选项并非必要，此参数可以关闭<br>
+$AllowCompanySelectionBox = true;<br>
+<br>
+//如果 $AllowCompanySelectionBox = false 那么 $DefaultCompany 会默认显示在登录界面，否则用户需要在公司目录列表中选择一个进行登录。公司目录会在用 Z_MakeNewCompany.php 创建新公司时自动更新 - 同时创建公司数据库。<br>
+$DefaultCompany = 'weberp';<br>
+<br>
+//登录后允许的最长闲置时间<br>
+//以秒为单位<br>
+$SessionLifeTime = 3600;<br>
+<br>
+//允许服务器执行脚本的最长时间。<br>
+$MaximumExecutionTime =120;<br>
+<br>
+//session 文件存储的路径名 - 用于多主机的情况<br>
+//无需更改则采用默认设置<br>
+//$SessionSavePath = '/tmp';<br>
+<br>
+// 采用的加密方式<br>
+//$CryptFunction = "md5"; // MD5 Hash<br>
+$CryptFunction = "sha1"; // SHA1 Hash<br>
+//$CryptFunction = ""; // Plain Text<br>
+<br>
+<br>
+<br>
+// 用户设置到此结束<br>
+<br>
+<br>
+<br>
+/* $rootpath 用在大多数页面文件中指明安装时的设置。<br>
+<br>
+注意：在一些windows安装中这一命令可能不起作用，作为管理员应该手动设置安装的路径：
+比如，文件在web服务器根目录下，那么 rootpath =''；如果位于 weberp 下，那么 weberp 就是 rootpath - 不需要 "/"<br>
+*/<br>
+<br>
+$rootpath = dirname($_SERVER['PHP_SELF']);<br>
+if ($rootpath == "/" OR $rootpath == "\\") {<br>
+	$rootpath = "";<br>
+}<br>
+//$rootpath = '/web-erp';<br>
+<br>
+/* 报告所有的错误，除了 E_NOTICE
+这是php.ini中的默认设置，但是注意对大多数的安装情况下应该确认
+ */<br>
+<br>
+error_reporting (E_ALL & ~E_NOTICE);<br>
+<br>
+/* 注意在?>之后不应有任何内容 */
+?&gt;<br>
+============================================<br>
+config.php文件结尾<br>
+============================================<br>
+<br>
+<font size="+2"><b>第一次登录</b></font><br>
+<br>
+打开浏览器，输入安装webERP的地址。如果在本地打开，则地址看起来是：
+<br>
+<br>
+http://localhost/webERP/index.php<br>
+<br>
+输入用户名 'demo'<br>
+输入密码 'weberp'<br>
+<br>
+分号输入并不作要求。添加新的用户，到
+Main Menu &gt; Setup &gt; User Accounts。用户可以更改他们自己的密码，只要点击位于屏幕左上角自己的用户名就可以。
+比如说："webERP Demo: <i>administrator</i>"。
+注意不要删除原先的管理员，除非已经新建立了管理员帐户。
+如果不慎删除，只能通过手工在SQL数据库表WWW_Users里面添加的方式。
+如果安装了phpMyAdmin，则可以通过它来添加一条新的用户记录。<br>
+<br>
+再次注意给MySQL root用户设立密码的重要性，否则任何用户都可以编辑WWW_Users从而获得公司保密的信息。
+<br>
+<br>
+<font size="+2"><b>添加新的公司</b></font><br>
+<br>
+通过以上步骤你将可以登录基于一家公司的系统。如果希望添加新的公司，可以通过打开 URL:
+<br>
+<br>
+http://yourdomain/webERP/Z_MakeNewCompany.php
+<br>
+<br>
+这个页面允许你设立任何新的公司的信息 - 位于目录 webERP/companies 下面。每次登录系统，都会弹出公司的列表允许你进行选择。
+<br>
+<br>
+如果页面打开失败，则有可能是web 服务器没有相应的写目录的权限。
+<br>
+在默认的安装中一个名叫weberp的数据库将被创建，在系统文件中也存在一个名为weberp位于 webERP/companies 下。要添加另一个公司，需要复制
+<font size="+2"><b>Configuration Parameters</b></font><br>
+<br>
+在3.0之前的版本, 系统设置参数储存在 config.php 中，需要手工打开文件调整。在3.0 之后提供了新的界面允许直接在操作界面中调整系统运行的全局参数。这些参数储存在数据库中以便更新。系统参数的设置位于Main Menu &gt; Setup
+&gt; Configuration Settings。对这些参数的使用配有具体说明，更改之前请仔细阅读。<br>
+<br>在 webERP/doc/INSTALL.txt 中关于安装的补充信息
+<br>
+<font size="+2"><b>界面和风格的设置</b></font><br>
+<br>
+界面的设置因人喜好而异。应用 css (cascading style sheets) 使得字体大小和颜色可以进行自主设置。
+<br>
+<br>
+用户界面风格可以使用现有的风格或者重新创建一个。默认的风格有四种：
+ 'silverwold', 'default', 'professional' 和 'fresh'。<br>
+<br>
+每一个用户可以选择他们自己的使用偏好，在 user settings 界面中进行设置。
+进入设置界面只需要点击位于屏幕左上角的用户名。比如："webERP Demo: <i>administrator</i>"。<br>
+<br>
+创建新的用户界面，请拷贝默认的一个界面目录，并把它改为新的名字。界面目录位于 css 目录之下。
+拷贝完成之后，比如命名为 'New_theme'，则它可以按照所设想的风格进行编辑。新的风格会自动出现在用户的偏好设置选项当中以备选。<br>
+<br>
+
+<!-- Help Begin: WWW_Users -->
+
+<font size="+2"><b>设立用户帐号</b></font><br>
+<br>
+以'demo'用户登录。创建新的管理员用户，并且删除'demo'用户。
+从菜单上点击 'Setup' 选项然后点击'User Accounts'。关于创建用户的说明：用户名和密码长度应该分别大于5个字符。密码不能和用户名相同或者包含用户名。输入电话及其它详细信息并不是必须的。用户的权限设置则很重要，它决定了用户可以访问的页面。在商务活动中把员工的权限加以区分使得整个的流程操作不会被单个员工所操控，具有不言而喻的重要性。然而在一些相对小型的公司里也许却不适用这一原则。系统本身的灵活性可以确保可以适用于不同的情况，合理定义用户权限。参看安全信息部分。<br> 
+<br>
+除了接入的权限限制之外，系统也提供了灵活性，使得管理员可以禁用某些链接。在'User Accounts' 界面中系统管理员可以设置哪些选项对用户是可用的。<br>
+<br>
+对于客户的登录，系统同样也可做出设置。比如做出要求对方提供帐户包括发票副本的限制，并输入新的订单。客户登录之后不具有更改价格的权限。为了确保以上设置，务必不要更改config.php中关于客户登录的部分，比如 $PageSecurity = 1 。并且，客户代码以及相应的分支代码应该一并输入。
+<br>
+
+<!-- Help End: WWW_Users --></li></ol></body></html>
