@@ -197,7 +197,8 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 						((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . '* -stockmoves.qty) AS fxnet,
 						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
 						stockmoves.narrative,
-						stockmaster.units
+						stockmaster.units,
+						stockmaster.decimalplaces
 					FROM stockmoves,
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
@@ -213,7 +214,8 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 						((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . ' * stockmoves.qty) AS fxnet,
 						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
 						stockmoves.narrative,
-						stockmaster.units
+						stockmaster.units,
+						stockmaster.decimalplaces
 					FROM stockmoves,
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
@@ -252,8 +254,8 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 					$DisplayQty = $myrow2['quantity'];
 					$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x, $YPos,$FormDesign->Data->Column1->Length, $FormDesign->Data->Column1->FontSize, $myrow2['stockid']);
 					$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x, $YPos,$FormDesign->Data->Column2->Length, $FormDesign->Data->Column2->FontSize, $myrow2['description']);
-					$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column3->x, $YPos,$FormDesign->Data->Column3->Length, $FormDesign->Data->Column3->FontSize, $DisplayPrice, 'right');
-					$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column4->x, $YPos,$FormDesign->Data->Column4->Length, $FormDesign->Data->Column4->FontSize, $DisplayQty, 'right');
+					$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column3->x, $YPos,$FormDesign->Data->Column3->Length, $FormDesign->Data->Column3->FontSize, number_format($DisplayPrice,4), 'right');
+					$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column4->x, $YPos,$FormDesign->Data->Column4->Length, $FormDesign->Data->Column4->FontSize, number_format($DisplayQty,$myrow2['decimalplaces']), 'right');
 					$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x, $YPos,$FormDesign->Data->Column5->Length, $FormDesign->Data->Column5->FontSize, $myrow2['units'], 'centre');
 					$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column6->x, $YPos,$FormDesign->Data->Column6->Length, $FormDesign->Data->Column6->FontSize, $DisplayDiscount, 'right');
 					$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column7->x, $YPos,$FormDesign->Data->Column7->Length, $FormDesign->Data->Column7->FontSize, $DisplayNet, 'right');
