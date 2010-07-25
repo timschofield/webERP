@@ -1,8 +1,8 @@
 <?php
 
-/* $Id:  $ */
+/* $Id: $ */
 
-$PageSecurity = 4;
+$PageSecurity = 6;
 
 include('includes/DefineContractClass.php');
 
@@ -28,7 +28,7 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
 		foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $ContractComponent) {
 			if ($_POST['Qty'.$ContractComponent->ComponentID]==0){
 				//this is the same as deleting the line - so delete it
-				$_SESSION['Contract'.$identifier]->remove_ContractComponent($ContractComponent->ComponentID);
+				$_SESSION['Contract'.$identifier]->Remove_ContractComponent($ContractComponent->ComponentID);
 			} else {
 				$_SESSION['Contract'.$identifier]->ContractBOM[$ContractComponent->ComponentID]->Quantity=$_POST['Qty'.$ContractComponent->ComponentID];
 			} 
@@ -157,7 +157,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 if(isset($_GET['Delete'])){
 	if($_SESSION['Contract'.$identifier]->Status!=2){
-		$_SESSION['Contract'.$identifier]->remove_ContractComponent($_GET['Delete']);
+		$_SESSION['Contract'.$identifier]->Remove_ContractComponent($_GET['Delete']);
 	} else {
 		prnMsg( _('The contract BOM cannot be alterned because the customer has already placed the order'),'warn');
 	}
@@ -226,7 +226,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 echo '<form name="ContractBOMForm" action="' . $_SERVER['PHP_SELF'] . '?' . SID . 'identifier='.$identifier. '" method="post">';
 
 if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' .
 		_('Contract Bill of Material') . '" alt="">  '.$_SESSION['Contract'.$identifier]->CustomerName;
 
 	if (isset($_SESSION['Contract'.$identifier]->ContractRef)) {

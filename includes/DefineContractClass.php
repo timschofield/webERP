@@ -1,5 +1,5 @@
 <?php
-/* $Id:  $*/
+/* $Id: $*/
 /* definition of the Contract class */
 
 Class Contract {
@@ -18,9 +18,7 @@ Class Contract {
     var $Margin; /*the margin used in quoting for the contract */
     var $WO; /*the wo created when the quotation is converted to an order */
     var $RequiredDate;
-    var $QuantityReqd;
-	var $Units; /*the unit of measure of the contract item*/
-	var $Drawing; /*a link to the contract drawing*/
+  	var $Drawing; /*a link to the contract drawing*/
     var $CurrCode; /*the currency of the customer to quote in */
     var $ExRate; /*the rate of exchange between customer currency and company functional currency used when quoting */
     var $BOMComponentCounter;
@@ -35,11 +33,16 @@ Class Contract {
 		$this->ContractReqts = array();
 		$this->BOMComponentCounter=0;
 		$this->RequirementsCounter=0;
-		$this->QuantityReqd=1;
-		$this->Status =0;
+		$this->Status =100;
 	}
 
-	function Add_To_ContractBOM($StockID, $ItemDescription, $WorkCentre, $Quantity, $ItemCost, $UOM){
+	function Add_To_ContractBOM($StockID, 
+							    $ItemDescription, 
+							    $WorkCentre, 
+							    $Quantity, 
+							    $ItemCost, 
+							    $UOM){
+									
 		if (isset($StockID) AND $Quantity!=0){
 			$this->ContractBOM[$this->BOMComponentCounter] = new ContractComponent($this->BOMComponentCounter,
 																					$StockID, 
@@ -54,24 +57,28 @@ Class Contract {
 		Return 0;
 	}
 
-	function remove_ContractComponent($ContractComponent_ID){
+	function Remove_ContractComponent($ContractComponent_ID){
+		global $db;
+		$result = DB_query("DELETE FROM contractbom WHERE contractref='" . $this->ContractRef . "' AND stockid='" . $this->ContractBOM[$ContractComponent_ID]->StockID . "'",$db);
 		unset($this->ContractBOM[$ContractComponent_ID]);
 	}
 
 	
 /*Requirments Methods */
 
-function Add_To_ContractRequirements($Requirment, $Quantity, $CostPerUnit,$ContractReqID){
-		if (isset($Requirment) AND $Quantity!=0 AND $CostPerUnit!=0){
-			$this->ContractReqts[$this->RequirementsCounter] = new ContractRequirement($Requirment, $Quantity, $CostPerUnit,$ContractReqID);
+function Add_To_ContractRequirements($Requirement, $Quantity, $CostPerUnit,$ContractReqID=0){
+		if (isset($Requirement) AND $Quantity!=0 AND $CostPerUnit!=0){
+			$this->ContractReqts[$this->RequirementsCounter] = new ContractRequirement($Requirement, $Quantity, $CostPerUnit,$ContractReqID);
 			$this->RequirementsCounter++;
 			Return 1;
 		}
 		Return 0;
 	}
 
-	function remove_ContractRequirement($ContractRequirmentID){
-		unset($this->ContractReqts[$ContractRequirmentID]);
+	function Remove_ContractRequirement($ContractRequirementID){
+		global $db;
+		$result = DB_query("DELETE FROM contractreqts WHERE contractreqid='" . $this->ContractReqts[$ContractRequirementID]->ContractReqID . "'",$db);
+		unset($this->ContractReqts[$ContractRequirementID]);
 	}
 
 } /* end of class defintion */
@@ -105,18 +112,15 @@ Class ContractRequirement {
 	var $Quantity;
 	var $CostPerUnit;
 	
-	function ContractRequirement ($Requirment, $Quantity, $CostPerUnit,$ContractReqID=0){
+	function ContractRequirement ($Requirement, $Quantity, $CostPerUnit,$ContractReqID=0){
 
 /* Constructor function to add a new Contract Component object with passed params */
-		$this->Requirement =$Requirement;
+		$this->Requirement = $Requirement;
 		$this->Quantity = $Quantity;
 		$this->CostPerUnit = $CostPerUnit;
 		$this->ItemCost= $ItemCost;
 		$this->ContractReqID = $ContractReqID;
 	}
 }
-
-
-
 
 ?>

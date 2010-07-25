@@ -213,8 +213,6 @@ CREATE TABLE IF NOT EXISTS `contracts` (
   `margin` double NOT NULL DEFAULT '1',
   `wo` int(11) NOT NULL DEFAULT '0',
   `requireddate` date NOT NULL DEFAULT '0000-00-00',
-  `quantityreqd` double NOT NULL DEFAULT '1',
-  `units` varchar(15) NOT NULL DEFAULT 'Each',
   `drawing` varchar(50) NOT NULL DEFAULT '',
   `exrate` double NOT NULL DEFAULT '1',
   PRIMARY KEY (`contractref`),
@@ -282,3 +280,5 @@ ALTER TABLE `loctransfers` CHANGE COLUMN `shipqty` `shipqty` double NOT NULL DEF
 
 INSERT INTO `config` VALUES ('VersionNumber', '3.12');
 UPDATE `securitytokens` SET `tokenname`='Prices Security' WHERE tokenid=12;
+
+ALTER TABLE `www_users` CHANGE `supplierid` `supplierid` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '';

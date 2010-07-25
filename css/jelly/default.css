@@ -125,6 +125,13 @@ th {
 	text-align: center;
 }
 
+th.number {
+	font-weight: normal;
+	background: #ccc;
+	font-size: 12px;
+	color: #330000;
+	text-align: right;
+}
 div.error {
 	background:red;
 	color: white;

@@ -121,6 +121,13 @@ th {
 	color: white;
 }
 
+th.number {
+	text-align: right;
+	font-weight: normal;
+	background-color: #800000;
+	color: white;
+}
+
 div.error {
 	background-color:#fddbdb;
 	color: red;

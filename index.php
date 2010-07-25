@@ -1336,17 +1336,17 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 					<tr>
 					<td class="menu_group_items"> <!-- Contract Costing transactions options -->
 						<table width="100%" class="table_index">
-							<tr>
-							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/Contracts.php?' . sid . '">' . _('Create Contract') . '</a></p>'; ?>
-							</td>
-							</tr>
+							
 							<tr>
 						</table>
 					</td>
 					<td class="menu_group_items"> <!-- Contract Costing Inquiries/Reports options -->
 						<table width="100%" class="table_index">
-
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/SelectContract.php?' . sid . '">' . _('Select Contract') . '</a></p>'; ?>
+							</td>
+							</tr>
 							<tr>
 							<td class="menu_group_item">
 								<?php echo GetRptLinks('fa'); ?>
@@ -1356,7 +1356,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 					</td>
 					<td class="menu_group_items"> <!-- Contract Costing Maintenance options -->
 						<table width="100%" class="table_index">
-
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/Contracts.php?' . sid . '">' . _('Create Contract') . '</a></p>'; ?>
+							</td>
+							</tr>
 						</table>
 					</td>
 				</table>

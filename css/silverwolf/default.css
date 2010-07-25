@@ -15,7 +15,7 @@
 | reflected throughout Web-ERP.                     |
 \--------------------------------------------------*/
 
-/* $Id: default.css 3446 2010-05-05 10:11:54Z tim_schofield $*/
+/* $Id$*/
 
 body {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
@@ -67,6 +67,14 @@ th {
 	vertical-align: middle;
 }
 
+th.number {
+	font-weight: normal;
+	background-color: #cccce5;
+	font-size: 100%;
+	color: #300;
+	text-align: right;
+	vertical-align: middle;
+}
 .tableheader {
 	font-weight: normal;
 	background-color: #cccce5;
