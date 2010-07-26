@@ -23,54 +23,57 @@ if (isset($_POST['ToDate']) and !Is_Date($_POST['ToDate'])){
 if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 
 
-     $title = _('Payment Listing');
-     include ('includes/header.inc');
+	 $title = _('Payment Listing');
+	 include ('includes/header.inc');
 
-     if ($InputError==1){
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
+		 $title . '" alt="">' . ' ' . $title . '</p>';
+
+	 if ($InputError==1){
 	prnMsg($msg,'error');
-     }
+	 }
 
-     echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
-     echo '<table>
-     			<tr>
+	 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
+	 echo '<table class=selection>
+	 			<tr>
 				<td>' . _('Enter the date from which cheques are to be listed') . ":</td>
-				<td><input type=text name='FromDate' maxlength=10 size=10 onChange='return isDate(this, this.value, ".'"'.$_SESSION['DefaultDateFormat'].'"'.")'  VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td>
+				<td><input type=text name='FromDate' maxlength=10 size=10 class=date alt='".$_SESSION['DefaultDateFormat']."'  VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td>
 			</tr>";
-     echo '<tr><td>' . _('Enter the date to which cheques are to be listed') . ":</td>
-     		<td><input type=text name='ToDate' maxlength=10 size=10 onChange='return isDate(this, this.value, ".'"'.$_SESSION['DefaultDateFormat'].'"'.")'  VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td>
+	 echo '<tr><td>' . _('Enter the date to which cheques are to be listed') . ":</td>
+	 		<td><input type=text name='ToDate' maxlength=10 size=10  class=date alt='".$_SESSION['DefaultDateFormat']."'  VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td>
 	</tr>";
-     echo '<tr><td>' . _('Bank Account') . '</td><td>';
+	 echo '<tr><td>' . _('Bank Account') . '</td><td>';
 
-     $sql = 'SELECT bankaccountname, accountcode FROM bankaccounts';
-     $result = DB_query($sql,$db);
+	 $sql = 'SELECT bankaccountname, accountcode FROM bankaccounts';
+	 $result = DB_query($sql,$db);
 
 
-     echo "<select name='BankAccount'>";
+	 echo "<select name='BankAccount'>";
 
-     while ($myrow=DB_fetch_array($result)){
+	 while ($myrow=DB_fetch_array($result)){
 	echo '<option VALUE=' . $myrow['accountcode'] . '>' . $myrow['bankaccountname'];
-     }
+	 }
 
 
-     echo '</select></td></tr>';
+	 echo '</select></td></tr>';
 
-     echo '<tr><td>' . _('Email the report off') . ":</td><td><select name='Email'>";
-     echo "<option selected VALUE='No'>" . _('No');
-     echo "<option VALUE='Yes'>" . _('Yes');
-     echo "</select></td></tr></table><div class='centre'><input type=submit name='Go' VALUE='" . _('Create PDF') . "'></div>";
+	 echo '<tr><td>' . _('Email the report off') . ":</td><td><select name='Email'>";
+	 echo "<option selected VALUE='No'>" . _('No');
+	 echo "<option VALUE='Yes'>" . _('Yes');
+	 echo "</select></td></tr></table><br><div class='centre'><input type=submit name='Go' VALUE='" . _('Create PDF') . "'></div>";
 
 
-     include('includes/footer.inc');
-     exit;
+	 include('includes/footer.inc');
+	 exit;
 } else {
 
 	include('includes/ConnectDB.inc');
 }
 
 
-$SQL = 'SELECT bankaccountname
+$SQL = "SELECT bankaccountname
 	FROM bankaccounts
-	WHERE accountcode = ' .$_POST['BankAccount'];
+	WHERE accountcode = '" .$_POST['BankAccount'] . "'";
 $BankActResult = DB_query($SQL,$db);
 $myrow = DB_fetch_row($BankActResult);
 $BankAccountName = $myrow[0];
@@ -82,7 +85,7 @@ $SQL= "SELECT amount,
 		type,
 		transno
 	FROM banktrans
-	WHERE banktrans.bankact=" . $_POST['BankAccount'] . "
+	WHERE banktrans.bankact='" . $_POST['BankAccount'] . "'
 	AND (banktrans.type=1 or banktrans.type=22)
 	AND transdate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 	AND transdate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
@@ -94,7 +97,7 @@ if (DB_error_no($db)!=0){
 	include('includes/header.inc');
 	prnMsg(_('An error occurred getting the payments'),'error');
 	if ($Debug==1){
-        	prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br>' . $SQL,'error');
+			prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br>' . $SQL,'error');
 	}
 	include('includes/footer.inc');
   	exit;
@@ -120,17 +123,17 @@ include ('includes/PDFChequeListingPageHeader.inc');
 
 while ($myrow=DB_fetch_array($Result)){
 
-      	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format(-$myrow['amount'],2), 'right');
+	  	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format(-$myrow['amount'],2), 'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,90,$FontSize,$myrow['ref'], 'left');
 
-	$sql = 'SELECT accountname,
+	$sql = "SELECT accountname,
 			amount,
 			narrative
 		FROM gltrans,
 			chartmaster
 		WHERE chartmaster.accountcode=gltrans.account
-		AND gltrans.typeno =' . $myrow['transno'] . '
-		AND gltrans.type=' . $myrow['type'];
+		AND gltrans.typeno ='" . $myrow['transno'] . "'
+		AND gltrans.type='" . $myrow['type'] . "'";
 
 	$GLTransResult = DB_query($sql,$db,'','',false,false);
 	if (DB_error_no($db)!=0){
@@ -138,7 +141,7 @@ while ($myrow=DB_fetch_array($Result)){
 		include('includes/header.inc');
    		prnMsg(_('An error occurred getting the GL transactions'),'error');
 		if ($debug==1){
-        		prnMsg( _('The SQL used to get the receipt header information that failed was') . ':<br>' . $sql, 'error');
+				prnMsg( _('The SQL used to get the receipt header information that failed was') . ':<br>' . $sql, 'error');
 		}
 		include('includes/footer.inc');
   		exit;
@@ -149,21 +152,21 @@ while ($myrow=DB_fetch_array($Result)){
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,120,$FontSize,$GLRow['narrative'], 'left');
 		$YPos -= ($line_height);
 		if ($YPos - (2 *$line_height) < $Bottom_Margin){
-          		/*Then set up a new page */
-              		$PageNumber++;
-	      		include ('includes/PDFChequeListingPageHeader.inc');
-      		} /*end of new page header  */
+		  		/*Then set up a new page */
+			  		$PageNumber++;
+		  		include ('includes/PDFChequeListingPageHeader.inc');
+	  		} /*end of new page header  */
 	}
 	DB_free_result($GLTransResult);
 
-      $YPos -= ($line_height);
-      $TotalCheques = $TotalCheques - $myrow['amount'];
+	  $YPos -= ($line_height);
+	  $TotalCheques = $TotalCheques - $myrow['amount'];
 
-      if ($YPos - (2 *$line_height) < $Bottom_Margin){
-          /*Then set up a new page */
-              $PageNumber++;
-	      include ('includes/PDFChequeListingPageHeader.inc');
-      } /*end of new page header  */
+	  if ($YPos - (2 *$line_height) < $Bottom_Margin){
+		  /*Then set up a new page */
+			  $PageNumber++;
+		  include ('includes/PDFChequeListingPageHeader.inc');
+	  } /*end of new page header  */
 } /* end of while there are customer receipts in the batch to print */
 
 
@@ -190,7 +193,7 @@ if ($_POST['Email']=='Yes'){
 	if (file_exists($_SESSION['reports_dir'] . '/'.$ReportFileName)){
 		unlink($_SESSION['reports_dir'] . '/'.$ReportFileName);
 	}
-    	$fp = fopen( $_SESSION['reports_dir'] . '/'.$ReportFileName,'wb');
+		$fp = fopen( $_SESSION['reports_dir'] . '/'.$ReportFileName,'wb');
 	fwrite ($fp, $pdfcode);
 	fclose ($fp);
 
