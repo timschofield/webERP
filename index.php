@@ -1192,6 +1192,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/DailyBankTransactions.php?' . sid . '">' . _('Daily Bank Transactions') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . "/GLProfit_Loss.php?" . sid . '">' . _('Profit and Loss Statement') . '</a></p>'; ?>
 							</td>
 							</tr>
@@ -1336,7 +1341,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 					<tr>
 					<td class="menu_group_items"> <!-- Contract Costing transactions options -->
 						<table width="100%" class="table_index">
-							
+
 							<tr>
 						</table>
 					</td>

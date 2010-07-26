@@ -282,3 +282,4 @@ INSERT INTO `config` VALUES ('VersionNumber', '3.12');
 UPDATE `securitytokens` SET `tokenname`='Prices Security' WHERE tokenid=12;
 
 ALTER TABLE `www_users` CHANGE `supplierid` `supplierid` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '';
+ALTER TABLE `orderdeliverydifferenceslog` DROP PRIMARY KEY;
