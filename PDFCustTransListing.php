@@ -28,7 +28,7 @@ if (!isset($_POST['Date'])){
 	}
 
 	 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
-	 echo '<table>
+	 echo '<table class=selection>
 	 			<tr>
 				<td>' . _('Enter the date for which the transactions are to be listed') . ":</td>
 				<td><input type=text name='Date' maxlength=10 size=10 class=date alt='" . $_SESSION['DefaultDateFormat'] . "' value='" . Date($_SESSION['DefaultDateFormat']) . "'></td>
@@ -44,7 +44,7 @@ if (!isset($_POST['Date'])){
 
 	 echo '</select></td></tr>';
 
-	 echo "</select></td></tr></table><div class='centre'><input type=submit name='Go' value='" . _('Create PDF') . "'></div>";
+	 echo "</select></td></tr></table><br><div class='centre'><input type=submit name='Go' value='" . _('Create PDF') . "'></div>";
 
 
 	 include('includes/footer.inc');
@@ -62,7 +62,7 @@ $sql= "SELECT type,
 		ovgst,
 		invtext
 	FROM debtortrans
-	WHERE type=" . $_POST['TransType'] . "
+	WHERE type='" . $_POST['TransType'] . "'
 	AND date_format(inputdate, '%Y-%m-%d')='".FormatDateForSQL($_POST['Date'])."'";
 
 $result=DB_query($sql,$db,'','',false,false);
@@ -75,7 +75,7 @@ if (DB_error_no($db)!=0){
 			prnMsg(_('The SQL used to get the transaction information that failed was') . ':<br>' . $SQL,'error');
 	}
 	include('includes/footer.inc');
-  	exit;
+	exit;
 } elseif (DB_num_rows($result) == 0){
 	$title = _('Payment Listing');
 	include('includes/header.inc');
