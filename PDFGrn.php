@@ -31,14 +31,14 @@ $pdf->addInfo('Title', _('Goods Received Note') );
 if ($GRNNo=='Preview') {
 	$ListCount = 1; // UldisN
 } else {
-	$sql='SELECT grns.itemcode,
+	$sql="SELECT grns.itemcode,
 			grns.grnno,
 			grns.deliverydate,
 			grns.itemdescription,
 			grns.qtyrecd,
 			grns.supplierid
 		FROM grns
-		WHERE grnbatch='.$GRNNo;
+		WHERE grnbatch='".$GRNNo."'";
 	$result=DB_query($sql, $db);
 	$ListCount = DB_num_rows($result); // UldisN
 
@@ -54,27 +54,35 @@ while ($counter<=$ListCount) {
 		$Quantity='XXXXX.XX';
 		$Supplier=str_pad('',25,'x');
 	} else {
-		$sql='SELECT orddate from purchorders WHERE orderno='.$_GET['PONo'];
+		$sql="SELECT orddate from purchorders WHERE orderno='".$_GET['PONo']."'";
 		$purchorderresult=DB_query($sql, $db);
 		$purchorderdate=DB_fetch_array($purchorderresult);
 		$myrow=DB_fetch_array($result);
-		$datesql='SELECT max(effectivefrom) FROM purchdata WHERE supplierno="'.$myrow['supplierid'].'" AND stockid="'.$myrow['itemcode'].'" AND effectivefrom<="'.$purchorderdate[0].'"';
+		$datesql="SELECT max(effectivefrom)
+					FROM purchdata
+					WHERE supplierno='".$myrow['supplierid']."'
+						AND stockid='".$myrow['itemcode']."'
+						AND effectivefrom<='".$purchorderdate[0]."'";
 		$dateresult=DB_query($datesql, $db);
 		$date=DB_fetch_row($dateresult);
 		if ($date[0]!='') {
-			$sql='SELECT unitsofmeasure.unitname,
+			$sql="SELECT unitsofmeasure.unitname,
 					suppliers_partno,
 					conversionfactor
 				FROM purchdata
 				LEFT JOIN unitsofmeasure
 					ON purchdata.suppliersuom=unitsofmeasure.unitid
-				WHERE supplierno="'.$myrow['supplierid'].'"
-					AND stockid="'.$myrow['itemcode'].'"
-					AND effectivefrom="'.$date[0].'"';
+				WHERE supplierno='".$myrow['supplierid']."'
+					AND stockid='".$myrow['itemcode']."'
+					AND effectivefrom='".$date[0]."'";
 			$purchdataresult=DB_query($sql, $db);
 			$myrow2=DB_fetch_array($purchdataresult);
 		} else {
-			$sql='SELECT units as unitname, stockid as suppliers_partno, 1 as conversionfactor FROM stockmaster WHERE stockid="'.$StockID.'"';
+			$sql="SELECT units as unitname,
+						stockid as suppliers_partno,
+						1 as conversionfactor
+						FROM stockmaster
+						WHERE stockid='".$myrow['itemcode']."'";
 			$purchdataresult=DB_query($sql, $db);
 			$myrow2=DB_fetch_array($purchdataresult);
 		}
@@ -85,9 +93,9 @@ while ($counter<=$ListCount) {
 		$Quantity=$myrow[4];
 		$SupplierID=$myrow[5];
 		if ($myrow2['unitname']=='') {
-			$sql='SELECT units
+			$sql="SELECT units
 					FROM stockmaster
-					WHERE stockid="'.$myrow['itemcode'].'"';
+					WHERE stockid='".$myrow['itemcode']."'";
 			$uomresult=DB_query($sql, $db);
 			$uomrow=DB_fetch_array($uomresult);
 			$units=$uomrow['units'];
@@ -95,17 +103,17 @@ while ($counter<=$ListCount) {
 		} else {
 			$units=$myrow2['unitname'];
 		}
-		$sql='SELECT units,
+		$sql="SELECT units,
 					decimalplaces
 				FROM stockmaster
-				WHERE stockid="'.$myrow['itemcode'].'"';
+				WHERE stockid='".$myrow['itemcode']."'";
 		$uomresult=DB_query($sql, $db);
 		$uomrow=DB_fetch_array($uomresult);
 		$stockunits=$uomrow['units'];
 
-		$sql='SELECT suppname
+		$sql="SELECT suppname
 				FROM suppliers
-			WHERE supplierid="'.$SupplierID.'"';
+			WHERE supplierid='".$SupplierID."'";
 		$supplierresult=DB_query($sql, $db);
 		$suppliermyrow=DB_fetch_array($supplierresult);
 		$Supplier=$suppliermyrow[0];
