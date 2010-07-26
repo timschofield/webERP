@@ -21,133 +21,136 @@ if (isset($_POST['ToDate']) AND !Is_Date($_POST['ToDate'])){
 
 if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 
-     $title = _('Delivery In Full On Time (DIFOT) Report');
-     include ('includes/header.inc');
+	 $title = _('Delivery In Full On Time (DIFOT) Report');
+	 include ('includes/header.inc');
 
-     echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . sid . "'>";
-     echo '<table><tr><td>' . _('Enter the date from which variances between orders and deliveries are to be listed') . ":</td><td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='FromDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . "'></td></tr>";
-     echo '<tr><td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ":</td><td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='ToDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td></tr>";
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="">' . ' '
+		. _('DIFOT Report') . '</p>';
 
-     if (!isset($_POST['DaysAcceptable'])){
-        $_POST['DaysAcceptable'] = 1;
-     }
+	 echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . sid . "'>";
+	 echo '<table class=selection><tr><td>' . _('Enter the date from which variances between orders and deliveries are to be listed') . ":</td><td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='FromDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . "'></td></tr>";
+	 echo '<tr><td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ":</td><td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='ToDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td></tr>";
 
-     echo '<tr><td>' . _('Enter the number of days considered acceptable between delivery requested date and invoice date(ie the date dispatched)') . ":</td><td><input type=text class=number name='DaysAcceptable' maxlength=2 size=2 VALUE=" . $_POST['DaysAcceptable'] . "></td></tr>";
-     echo '<tr><td>' . _('Inventory Category') . '</td><td>';
+	 if (!isset($_POST['DaysAcceptable'])){
+		$_POST['DaysAcceptable'] = 1;
+	 }
 
-     $sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
-     $result = DB_query($sql,$db);
+	 echo '<tr><td>' . _('Enter the number of days considered acceptable between delivery requested date and invoice date(ie the date dispatched)') . ":</td><td><input type=text class=number name='DaysAcceptable' maxlength=2 size=2 VALUE=" . $_POST['DaysAcceptable'] . "></td></tr>";
+	 echo '<tr><td>' . _('Inventory Category') . '</td><td>';
 
-
-     echo "<select name='CategoryID'>";
-     echo "<option selected VALUE='All'>" . _('Over All Categories');
-
-     while ($myrow=DB_fetch_array($result)){
-	echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
-     }
+	 $sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
+	 $result = DB_query($sql,$db);
 
 
-     echo '</select></td></tr>';
+	 echo "<select name='CategoryID'>";
+	 echo "<option selected value='All'>" . _('Over All Categories');
 
-     echo '<tr><td>' . _('Inventory Location') . ":</td><td><select name='Location'>";
-     echo "<option selected VALUE='All'>" . _('All Locations');
+	 while ($myrow=DB_fetch_array($result)){
+	echo "<option value='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
+	 }
 
-     $result= DB_query('SELECT loccode, locationname FROM locations',$db);
-     while ($myrow=DB_fetch_array($result)){
-	echo "<option VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
-     }
-     echo '</select></td></tr>';
 
-     echo '<tr><td>' . _('Email the report off') . ":</td><td><select name='Email'>";
-     echo "<option selected VALUE='No'>" . _('No');
-     echo "<option VALUE='Yes'>" . _('Yes');
-     echo "</select></td></tr></table><div class='centre'><input type=submit name='Go' VALUE='" . _('Create PDF') . "'></div>";
+	 echo '</select></td></tr>';
 
-     if ($InputError==1){
-     	prnMsg($msg,'error');
-     }
-     include('includes/footer.inc');
-     exit;
+	 echo '<tr><td>' . _('Inventory Location') . ":</td><td><select name='Location'>";
+	 echo "<option selected value='All'>" . _('All Locations');
+
+	 $result= DB_query('SELECT loccode, locationname FROM locations',$db);
+	 while ($myrow=DB_fetch_array($result)){
+	echo "<option value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+	 }
+	 echo '</select></td></tr>';
+
+	 echo '<tr><td>' . _('Email the report off') . ":</td><td><select name='Email'>";
+	 echo "<option selected value='No'>" . _('No');
+	 echo "<option value='Yes'>" . _('Yes');
+	 echo "</select></td></tr></table><br><div class='centre'><input type=submit name='Go' value='" . _('Create PDF') . "'></div>";
+
+	 if ($InputError==1){
+	 	prnMsg($msg,'error');
+	 }
+	 include('includes/footer.inc');
+	 exit;
 } else {
-     include('includes/ConnectDB.inc');
+	 include('includes/ConnectDB.inc');
 }
 
 if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 	$sql= "SELECT salesorders.orderno,
-                      salesorders.deliverydate,
-	              salesorderdetails.actualdispatchdate,
-	              TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate) AS daydiff,
-	              salesorderdetails.quantity,
-	              salesorderdetails.stkcode,
-	              stockmaster.description,
-	              salesorders.debtorno,
-	              salesorders.branchcode
+					  salesorders.deliverydate,
+				  salesorderdetails.actualdispatchdate,
+				  TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate) AS daydiff,
+				  salesorderdetails.quantity,
+				  salesorderdetails.stkcode,
+				  stockmaster.description,
+				  salesorders.debtorno,
+				  salesorders.branchcode
 		FROM salesorderdetails INNER JOIN stockmaster
 			ON salesorderdetails.stkcode=stockmaster.stockid
 		INNER JOIN salesorders ON salesorderdetails.orderno=salesorders.orderno
-                WHERE salesorders.deliverydate >='" . FormatDateForSQL($_POST['FromDate']) . "'
+				WHERE salesorders.deliverydate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 		AND salesorders.deliverydate <='" . FormatDateForSQL($_POST['ToDate']) . "'
-                AND (TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate)) >" . $_POST['DaysAcceptable'];
+				AND (TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate)) >'" . $_POST['DaysAcceptable']."'";
 
 } elseif ($_POST['CategoryID']!='All' AND $_POST['Location']=='All') {
-                $sql= "SELECT salesorders.orderno,
-                      salesorders.deliverydate,
-	              salesorderdetails.actualdispatchdate,
-	              TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate) AS daydiff,
-	              salesorderdetails.quantity,
-	              salesorderdetails.stkcode,
-	              stockmaster.description,
-	              salesorders.debtorno,
-	              salesorders.branchcode
+				$sql= "SELECT salesorders.orderno,
+					  salesorders.deliverydate,
+				  salesorderdetails.actualdispatchdate,
+				  TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate) AS daydiff,
+				  salesorderdetails.quantity,
+				  salesorderdetails.stkcode,
+				  stockmaster.description,
+				  salesorders.debtorno,
+				  salesorders.branchcode
 		FROM salesorderdetails INNER JOIN stockmaster
 			ON salesorderdetails.stkcode=stockmaster.stockid
 		INNER JOIN salesorders ON salesorderdetails.orderno=salesorders.orderno
-                WHERE salesorders.deliverydate >='" . FormatDateForSQL($_POST['FromDate']) . "'
+				WHERE salesorders.deliverydate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 		AND salesorders.deliverydate <='" . FormatDateForSQL($_POST['ToDate']) . "'
 		AND stockmaster.categoryid='" . $_POST['CategoryID'] ."'
-                AND (TO_DAYS(salesorderdetails.actualdispatchdate)
-                                - TO_DAYS(salesorders.deliverydate)) >" . $_POST['DaysAcceptable'];
+				AND (TO_DAYS(salesorderdetails.actualdispatchdate)
+								- TO_DAYS(salesorders.deliverydate)) >'" . $_POST['DaysAcceptable']."'";
 
 } elseif ($_POST['CategoryID']=='All' AND $_POST['Location']!='All') {
 
-                $sql= "SELECT salesorders.orderno,
-                      salesorders.deliverydate,
-	              salesorderdetails.actualdispatchdate,
-	              TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate) AS daydiff,
-	              salesorderdetails.quantity,
-	              salesorderdetails.stkcode,
-	              stockmaster.description,
-	              salesorders.debtorno,
-	              salesorders.branchcode
+				$sql= "SELECT salesorders.orderno,
+					  salesorders.deliverydate,
+				  salesorderdetails.actualdispatchdate,
+				  TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate) AS daydiff,
+				  salesorderdetails.quantity,
+				  salesorderdetails.stkcode,
+				  stockmaster.description,
+				  salesorders.debtorno,
+				  salesorders.branchcode
 		FROM salesorderdetails INNER JOIN stockmaster
 			ON salesorderdetails.stkcode=stockmaster.stockid
 		INNER JOIN salesorders ON salesorderdetails.orderno=salesorders.orderno
-                WHERE salesorders.deliverydate >='" . FormatDateForSQL($_POST['FromDate']) . "'
+				WHERE salesorders.deliverydate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 		AND salesorders.deliverydate <='" . FormatDateForSQL($_POST['ToDate']) . "'
 		AND salesorders.fromstkloc='" . $_POST['Location'] . "'
-                AND (TO_DAYS(salesorderdetails.actualdispatchdate)
-                                - TO_DAYS(salesorders.deliverydate)) >" . $_POST['DaysAcceptable'];
+				AND (TO_DAYS(salesorderdetails.actualdispatchdate)
+								- TO_DAYS(salesorders.deliverydate)) >'" . $_POST['DaysAcceptable'] . "'";
 
-} elseif ($_POST['CategoryID']!='All' AND $_POST['location']!='All'){
+} elseif ($_POST['CategoryID']!='All' AND $_POST['Location']!='All'){
 
-                $sql= "SELECT salesorders.orderno,
-                      salesorders.deliverydate,
-	              salesorderdetails.actualdispatchdate,
-	              TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate) AS daydiff,
-	              salesorderdetails.quantity,
-	              salesorderdetails.stkcode,
-	              stockmaster.description,
-	              salesorders.debtorno,
-	              salesorders.branchcode
+				$sql= "SELECT salesorders.orderno,
+					  salesorders.deliverydate,
+				  salesorderdetails.actualdispatchdate,
+				  TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate) AS daydiff,
+				  salesorderdetails.quantity,
+				  salesorderdetails.stkcode,
+				  stockmaster.description,
+				  salesorders.debtorno,
+				  salesorders.branchcode
 		FROM salesorderdetails INNER JOIN stockmaster
 			ON salesorderdetails.stkcode=stockmaster.stockid
 		INNER JOIN salesorders ON salesorderdetails.orderno=salesorders.orderno
-                WHERE salesorders.deliverydate >='" . FormatDateForSQL($_POST['FromDate']) . "'
+				WHERE salesorders.deliverydate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 		AND salesorders.deliverydate <='" . FormatDateForSQL($_POST['ToDate']) . "'
 		AND stockmaster.categoryid='" . $_POST['CategoryID'] ."'
 		AND salesorders.fromstkloc='" . $_POST['Location'] . "'
-                AND (TO_DAYS(salesorderdetails.actualdispatchdate)
-                                - TO_DAYS(salesorders.deliverydate)) >" . $_POST['DaysAcceptable'];
+				AND (TO_DAYS(salesorderdetails.actualdispatchdate)
+								- TO_DAYS(salesorders.deliverydate)) >'" . $_POST['DaysAcceptable'] . "'";
 
 }
 
@@ -187,29 +190,29 @@ include ('includes/PDFDIFOTPageHeader.inc');
 
 while ($myrow=DB_fetch_array($Result)){
 
-      if (DayOfWeekFromSQLDate($myrow['actualdispatchdate'])==1){
-         $DaysDiff = $myrow['daydiff']-2;
-      } else {
-         $DaysDiff = $myrow['daydiff'];
-      }
-      if ($DaysDiff > $_POST['DaysAcceptable']){
-            $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,$myrow['orderno'], 'left');
-            $LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos,200,$FontSize,$myrow['stkcode'] .' - ' . $myrow['description'], 'left');
-            $LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,50,$FontSize,number_format($myrow['quantity']), 'right');
-            $LeftOvers = $pdf->addTextWrap($Left_Margin+295,$YPos,50,$FontSize,$myrow['debtorno'], 'left');
-            $LeftOvers = $pdf->addTextWrap($Left_Margin+345,$YPos,50,$FontSize,$myrow['branchcode'], 'left');
-            $LeftOvers = $pdf->addTextWrap($Left_Margin+395,$YPos,50,$FontSize,ConvertSQLDate($myrow['actualdispatchdate']), 'left');
-            $LeftOvers = $pdf->addTextWrap($Left_Margin+445,$YPos,20,$FontSize,$DaysDiff, 'left');
+	  if (DayOfWeekFromSQLDate($myrow['actualdispatchdate'])==1){
+		 $DaysDiff = $myrow['daydiff']-2;
+	  } else {
+		 $DaysDiff = $myrow['daydiff'];
+	  }
+	  if ($DaysDiff > $_POST['DaysAcceptable']){
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,$myrow['orderno'], 'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos,200,$FontSize,$myrow['stkcode'] .' - ' . $myrow['description'], 'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,50,$FontSize,number_format($myrow['quantity']), 'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+295,$YPos,50,$FontSize,$myrow['debtorno'], 'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+345,$YPos,50,$FontSize,$myrow['branchcode'], 'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+395,$YPos,50,$FontSize,ConvertSQLDate($myrow['actualdispatchdate']), 'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+445,$YPos,20,$FontSize,$DaysDiff, 'left');
 
-            $YPos -= ($line_height);
-            $TotalDiffs++;
+			$YPos -= ($line_height);
+			$TotalDiffs++;
 
-            if ($YPos - (2 *$line_height) < $Bottom_Margin){
-          /*Then set up a new page */
-              $PageNumber++;
-	      include ('includes/PDFDIFOTPageHeader.inc');
-            } /*end of new page header  */
-      }
+			if ($YPos - (2 *$line_height) < $Bottom_Margin){
+		  /*Then set up a new page */
+			  $PageNumber++;
+		  include ('includes/PDFDIFOTPageHeader.inc');
+			} /*end of new page header  */
+	  }
 } /* end of while there are delivery differences to print */
 
 
@@ -274,7 +277,7 @@ if ($_POST['Email']=='Yes'){
 	if (file_exists($_SESSION['reports_dir'] . '/'.$ReportFileName)){
 		unlink($_SESSION['reports_dir'] . '/'.$ReportFileName);
 	}
-    	$fp = fopen( $_SESSION['reports_dir'] . '/'.$ReportFileName,'wb');
+		$fp = fopen( $_SESSION['reports_dir'] . '/'.$ReportFileName,'wb');
 	fwrite ($fp, $pdfcode);
 	fclose ($fp);
 
