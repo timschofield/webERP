@@ -17,17 +17,17 @@ if (!isset($_POST['BatchNo'])){
 	include ('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' .
-		 $title . '" alt="">' . ' ' . $title . '';
+		 $title . '" alt="">' . ' ' . $title . '</p>';
 
-	$sql='SELECT DISTINCT 
-			transno, 
-			transdate 
-		FROM banktrans 
+	$sql='SELECT DISTINCT
+			transno,
+			transdate
+		FROM banktrans
 		WHERE type=12
 		ORDER BY transno DESC';
 	$result=DB_query($sql, $db);
 
-	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '><br><table>';
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '><table class=selection>';
 	echo '<tr><td>' . _('Select the batch number of receipts to be printed') . ':</td>';
 	echo '<td><select name=BatchNo>';
 	while ($myrow=DB_fetch_array($result)) {
@@ -53,7 +53,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 	FROM bankaccounts,
 		banktrans
 	WHERE bankaccounts.accountcode=banktrans.bankact
-	AND banktrans.transno=' . $_POST['BatchNo'] . '
+	AND banktrans.transno="' . $_POST['BatchNo'] . '"
 	AND banktrans.type=12';
 
 	$ErrMsg = _('An error occurred getting the header information about the receipt batch number') . ' ' . $_POST['BatchNo'];
@@ -86,8 +86,8 @@ $SQL = "SELECT debtorsmaster.name,
 	FROM debtorsmaster,
 		debtortrans
 	WHERE debtorsmaster.debtorno=debtortrans.debtorno
-	AND debtortrans.transno=" . $_POST['BatchNo'] . '
-	AND debtortrans.type=12';
+	AND debtortrans.transno='" . $_POST['BatchNo'] . "'
+	AND debtortrans.type=12";
 
 $CustRecs=DB_query($SQL,$db,'','',false,false);
 if (DB_error_no($db)!=0){
@@ -105,8 +105,8 @@ $SQL = "SELECT narrative,
 	FROM gltrans
 	WHERE gltrans.typeno=" . $_POST['BatchNo'] . "
 	AND gltrans.type=12 and gltrans.amount <0
-	AND gltrans.account !=" . $myrow['bankact'] . '
-	AND gltrans.account !=' . $_SESSION['CompanyRecord']['debtorsact'];
+	AND gltrans.account !='" . $myrow['bankact'] . "'
+	AND gltrans.account !='" . $_SESSION['CompanyRecord']['debtorsact'] . "'";
 
 $GLRecs=DB_query($SQL,$db,'','',false,false);
 if (DB_error_no($db)!=0){
@@ -191,15 +191,5 @@ $pdf->stream();
 $pdf->OutputD($_SESSION['DatabaseName'] . '_BankingSummary_' . date('Y-m-d').'.pdf');//UldisN
 $pdf->__destruct(); //UldisN
 }
-/*
-} else {
-	$title = _('Create PDF Print Out For A Batch Of Receipts');
-	include ('includes/header.inc');
-	echo '<br>';
-	prnMsg(_('You must first enter a batch number that you want to print'),'warning');
-	echo '<br><div class="centre"><a href="'.$_SERVER['PHP_SELF'].'">'._('Return to Entry screen').'</a>';
-	include ('includes/footer.inc');
-}
-*/
 
 ?>
