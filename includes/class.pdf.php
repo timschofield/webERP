@@ -127,7 +127,7 @@ class Cpdf extends TCPDF {
 	* nSeg is not allowed to be less than 2, as this will simply draw a line (and will even draw a
 	* pretty crappy shape at 2, as we are approximating with bezier curves.
 	*/
-	function ellipse($x0,$y0,$r1,$r2=0,$angle=0,$nSeg=8,$astart=0,$afinish=360,$close=1,$fill=0) {
+	function ellipse($x0,$y0,$r1,$r2=0,$angle=0,$nSeg=8,$astart=0,$afinish=360,$close=1,$fill=0,$fill_color=array(),$nc=8) {
 
 		if ($r1==0){
 			return;
