@@ -8,7 +8,7 @@
 	Due to limitation of R&OS class for foreign character support, this wrapper class was
 	written to allow the same code base to use the more functional fpdf.class by Olivier Plathey.
 
-	However, due to limitations of FPDF class for UTF-8 support, now this class inherits from 
+	However, due to limitations of FPDF class for UTF-8 support, now this class inherits from
 	the TCPDF class by Nicola Asuni.
 
 	Work to move from FPDF to TCPDF by:
@@ -54,7 +54,7 @@ class Cpdf extends TCPDF {
 		}
 
 		$this->SetFont($userpdffont, '', 11);
-		//     SetFont($family, $style='', $size=0, $fontfile='')	
+		//     SetFont($family, $style='', $size=0, $fontfile='')
 	}
 
 
@@ -62,37 +62,37 @@ class Cpdf extends TCPDF {
 /* Javier: 	$this->setPrintHeader(false);  This is not a removed call but added in. */
 		$this->AddPage();
 	}
-	
-	function line($x1,$y1,$x2,$y2) {
+
+	function line($x1,$y1,$x2,$y2,$style=array()) {
 // Javier	FPDF::line($x1, $this->h-$y1, $x2, $this->h-$y2);
 // Javier: width, color and style might be edited
-		TCPDF::Line ($x1,$this->h-$y1,$x2,$this->h-$y2);
+		TCPDF::Line ($x1,$this->h-$y1,$x2,$this->h-$y2,$style);
 	}
-	
-	function addText($xb,$yb,$size,$text)//,$angle=0,$wordSpaceAdjust=0) 
+
+	function addText($xb,$yb,$size,$text)//,$angle=0,$wordSpaceAdjust=0)
 															{
 // Javier	$text = html_entity_decode($text);
 		$this->SetFontSize($size);
 		$this->Text($xb, $this->h-$yb, $text);
 	}
-	
+
 	function addinfo($label, $value) {
 		if ($label == 'Creator') {
 
-/* Javier: Some scripts set the creator to be WebERP like this		
+/* Javier: Some scripts set the creator to be WebERP like this
 			$pdf->addInfo('Creator', 'WebERP http://www.weberp.org');
 	But the Creator is TCPDF by Nicola Asuni, PDF_CREATOR is defined as 'TCPDF' in tcpdf/config/tcpdfconfig.php
 */ 			$this->SetCreator(PDF_CREATOR);
 		}
 		if ($label == 'Author') {
-/* Javier: Many scripts set the author to be WebERP like this	
+/* Javier: Many scripts set the author to be WebERP like this
 			$pdf->addInfo('Author', 'WebERP ' . $Version);
 	But the Author might be set to be the user or make it constant here.
 */			$this->SetAuthor( $value );
 		}
 		if ($label == 'Title') {
 			$this->SetTitle( $value );
-		} 
+		}
 		if ($label == 'Subject') {
 			$this->SetSubject( $value );
 		}
@@ -105,18 +105,18 @@ class Cpdf extends TCPDF {
 	function addJpegFromFile($img,$x,$y,$w=0,$h=0){
 		$this->Image($img, $x, $this->h-$y-$h, $w, $h);
 	}
-	
+
 	/*
 	* Next Two functions are adopted from R&OS pdf class
 	*/
-	
+
 	/**
 	* draw a part of an ellipse
 	*/
 	function partEllipse($x0,$y0,$astart,$afinish,$r1,$r2=0,$angle=0,$nSeg=8) {
 		$this->ellipse($x0,$y0,$r1,$r2,$angle,$nSeg,$astart,$afinish,0);
 	}
-	
+
 	/**
 	* draw an ellipse
 	* note that the part and filled ellipse are just special cases of this function
@@ -124,11 +124,11 @@ class Cpdf extends TCPDF {
 	* draws an ellipse in the current line style
 	* centered at $x0,$y0, radii $r1,$r2
 	* if $r2 is not set, then a circle is drawn
-	* nSeg is not allowed to be less than 2, as this will simply draw a line (and will even draw a 
+	* nSeg is not allowed to be less than 2, as this will simply draw a line (and will even draw a
 	* pretty crappy shape at 2, as we are approximating with bezier curves.
 	*/
 	function ellipse($x0,$y0,$r1,$r2=0,$angle=0,$nSeg=8,$astart=0,$afinish=360,$close=1,$fill=0) {
-		
+
 		if ($r1==0){
 			return;
 		}
@@ -138,14 +138,14 @@ class Cpdf extends TCPDF {
 		if ($nSeg<2){
 			$nSeg=2;
 		}
-		
+
 		$astart = deg2rad((float)$astart);
 		$afinish = deg2rad((float)$afinish);
 		$totalAngle =$afinish-$astart;
-		
+
 		$dt = $totalAngle/$nSeg;
 		$dtm = $dt/3;
-		
+
 		if ($angle != 0){
 			$a = -1*deg2rad((float)$angle);
 			$tmp = "\n q ";
@@ -156,13 +156,13 @@ class Cpdf extends TCPDF {
 		} else {
 			$tmp='';
 		}
-		
+
 		$t1 = $astart;
 		$a0 = $x0+$r1*cos($t1);
 		$b0 = $y0+$r2*sin($t1);
 		$c0 = -$r1*sin($t1);
 		$d0 = $r2*cos($t1);
-		
+
 		$tmp.="\n".sprintf('%.3f',$a0).' '.sprintf('%.3f',$b0).' m ';
 		for ($i=1;$i<=$nSeg;$i++){
 			// draw this bit of the total curve
@@ -176,7 +176,7 @@ class Cpdf extends TCPDF {
 			$a0=$a1;
 			$b0=$b1;
 			$c0=$c1;
-			$d0=$d1;    
+			$d0=$d1;
 		}
 		if ($fill){
 			//$this->objects[$this->currentContents]['c']
@@ -202,7 +202,7 @@ class Cpdf extends TCPDF {
 */
 
 	function OutputI($DocumentFilename = 'Document.pdf') {
-		if (($DocumentFilename == null) or ($DocumentFilename == '')) { 
+		if (($DocumentFilename == null) or ($DocumentFilename == '')) {
 			$DocumentFilename = _('Document.pdf');
 		}
 		$this->Output($DocumentFilename,'I');
@@ -245,15 +245,15 @@ class Cpdf extends TCPDF {
 //		$txt = html_entity_decode($txt);
 		$this->x = $xb;
 		$this->y = $this->h - $yb - $h;
-		
+
 		switch($align) {
 			case 'right':
 			$align = 'R'; break;
-			case 'center':    
+			case 'center':
 			$align = 'C'; break;
-			default: 
+			default:
 			$align = 'L';
-		
+
 		}
 		$this->SetFontSize($h);
 		$cw=&$this->CurrentFont['cw'];
@@ -287,9 +287,9 @@ class Cpdf extends TCPDF {
 		$l= $ls=0;
 		$ns=0;
 		while($i<$nb) {
-		
+
 			$c=$s{$i};
-		
+
 			if($c==' ' AND $i>0) {
 				$sep=$i;
 				$ls=$l;
@@ -298,12 +298,12 @@ class Cpdf extends TCPDF {
 			$l+=$cw[$i];
 			if($l>$wmax)
 			break;
-			else 
+			else
 			$i++;
 		}
 		if($sep==-1) {
 			if($i==0) $i++;
-			
+
 			if(isset($this->ws) and $this->ws>0) {
 				$this->ws=0;
 				$this->_out('0 Tw');
@@ -313,15 +313,15 @@ class Cpdf extends TCPDF {
 			if($align=='J') {
 			$this->ws=($ns>1) ? ($wmax-$ls)/1000*$this->FontSize/($ns-1) : 0;
 				$this->_out(sprintf('%.3f Tw',$this->ws*$this->k));
-			}	
+			}
 		}
-		
+
 		$this->Cell($w,$h,substr($s,0,$sep),$b,2,$align,$fill);
 		$this->x=$this->lMargin;
-		
+
 		return substr($s,$sep);
 	}
-		
+
 } // end of class
 }
 ?>
