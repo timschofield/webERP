@@ -283,3 +283,5 @@ UPDATE `securitytokens` SET `tokenname`='Prices Security' WHERE tokenid=12;
 
 ALTER TABLE `www_users` CHANGE `supplierid` `supplierid` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '';
 ALTER TABLE `orderdeliverydifferenceslog` DROP PRIMARY KEY;
+
+ALTER TABLE `loctransfers` CHANGE COLUMN `recqty` `recqty` double NOT NULL DEFAULT 0.0;
