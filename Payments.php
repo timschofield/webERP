@@ -542,7 +542,7 @@ if (isset($_POST['CommitBatch'])){
 					'" . $_SESSION['PaymentDetail']->Account . "',
 					'" . $_SESSION['PaymentDetail']->Narrative . "',
 					'" . $_SESSION['PaymentDetail']->ExRate . "',
-					" . $_SESSION['PaymentDetail']->FunctionalExRate . "',
+					'" . $_SESSION['PaymentDetail']->FunctionalExRate . "',
 					'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 					'" . $_SESSION['PaymentDetail']->Paymenttype . "',
 					'" . -$PaymentItem->Amount . "',
