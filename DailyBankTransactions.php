@@ -55,7 +55,7 @@ if (!isset($_POST['Show'])) {
 	echo '<br><div class="centre"><input type="submit" name="Show" value="' . _('Show transactions'). '"></div>';
 	echo '</form>';
 } else {
-	$sql="SELECT *,
+	$sql="SELECT banktrans.*,
 				bankaccounts.bankaccountname,
 				systypes.typename,
 				systypes.typeid
@@ -88,8 +88,8 @@ if (!isset($_POST['Show'])) {
 		echo '<td>'.$myrow['ref'].'</td>';
 		echo '<td class=number>'.number_format($myrow['amount'],2).'</td>';
 		echo '<td class=number>'.number_format($myrow['amount'],2).'</td>';
-		echo '<td class=number>'.number_format($myrow['amount']/$myrow['functionalexrate'],2).'</td>';
-		echo '<td class=number>'.number_format($myrow['amount']/$myrow['functionalexrate'],2).'</td>';
+		echo '<td class=number>'.number_format($myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'],2).'</td>';
+		echo '<td class=number>'.number_format($myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'],2).'</td>';
 		echo '</tr>';
 		$AccountCurrTotal = $myrow['amount'];
 		$LocalCurrTotal = $myrow['amount']/$myrow['functionalexrate'];
