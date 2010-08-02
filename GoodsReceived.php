@@ -537,7 +537,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 									if ($OrderLine->Serialised == 1) {
 										$SQL = "UPDATE stockserialitems SET quantity = '" . $Item->BundleQty . " ";
 									} else {
-										$SQL = "UPDATE stockserialitems SET quantity = quantity + '" . $Item->BundleQty . " ";
+										$SQL = "UPDATE stockserialitems SET quantity = quantity + '" . $Item->BundleQty . "'";
 									}
 									$SQL .= "WHERE stockid='" . $OrderLine->StockID . "'
 											 AND loccode = '" . $_SESSION['PO']->Location . "'
