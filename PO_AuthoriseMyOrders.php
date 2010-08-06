@@ -22,9 +22,10 @@ if (isset($_POST['updateall'])) {
 			$status=$_POST['status'.$orderno];
 			$comment=date($_SESSION['DefaultDateFormat']).' - '._('Authorised by').' '.'<a href="mailto:'.
 				$emailrow['email'].'">'.$_SESSION['UserID'].'</a><br>'.$_POST['comment'];
-			$sql="UPDATE purchorders 
+			$sql="UPDATE purchorders
 				SET status='".$status."',
-				stat_comment='".$comment."'
+				stat_comment='".$comment."',
+				allowprint=1
 				WHERE orderno=".$orderno;
 			$result=DB_query($sql, $db);
 		}
@@ -33,13 +34,13 @@ if (isset($_POST['updateall'])) {
 
 /* Retrieve the purchase order header information
  */
-$sql='SELECT purchorders.*, 
+$sql='SELECT purchorders.*,
 			suppliers.suppname,
 			suppliers.currcode,
 			www_users.realname,
 			www_users.email
 			FROM purchorders
-		LEFT JOIN suppliers 
+		LEFT JOIN suppliers
 			ON suppliers.supplierid=purchorders.supplierno
 		LEFT JOIN www_users
 			ON www_users.userid=purchorders.initiator
@@ -59,7 +60,7 @@ echo '<th>'._('Status').'</th>';
 echo '</tr>';
 
 while ($myrow=DB_fetch_array($result)) {
-	
+
 	$authsql='SELECT authlevel FROM purchorderauth
 				WHERE userid="'.$_SESSION['UserID'].'"
 				AND currabrev="'.$myrow['currcode'].'"';
@@ -67,15 +68,15 @@ while ($myrow=DB_fetch_array($result)) {
 	$authresult=DB_query($authsql, $db);
 	$myauthrow=DB_fetch_array($authresult);
 	$authlevel=$myauthrow['authlevel'];
-	
+
 	$ordervaluesql='SELECT sum(unitprice*quantityord) as ordervalue
-			FROM purchorderdetails 
+			FROM purchorderdetails
 			WHERE orderno='.$myrow['orderno'];
 
 	$ordervalueresult=DB_query($ordervaluesql, $db);
 	$myordervaluerow=DB_fetch_array($ordervalueresult);
 	$ordervalue=$myordervaluerow['ordervalue'];
-	
+
 	if ($authlevel>=$ordervalue) {
 		echo '<tr>';
 		echo '<td>'.$myrow['orderno'].'</td>';

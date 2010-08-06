@@ -86,6 +86,7 @@ if (isset($_POST['UpdateStat']) AND $_POST['UpdateStat']!='') {
 					'</a>'.$_POST['StatComments'].'<br>'.$_POST['statcommentscomplete'];
 				$_SESSION['PO'.$identifier]->StatComments=$StatusComment;
 				$_SESSION['PO'.$identifier]->Stat=$NewStatus;
+				$_SESSION['PO'.$identifier]->AllowPrintPO=1;
 			} else {
 				$OK_to_updstat=0;
 				prnMsg( _('You do not have permission to authorise this purchase order').'.<br>'. _('This order is for').' '.
@@ -148,10 +149,15 @@ if (isset($_POST['UpdateStat']) AND $_POST['UpdateStat']!='') {
 
 			if($_SESSION['ExistingOrder']!=0){
 
-
+				if ($_SESSION['PO'.$identifier]->Stat==PurchOrder::STATUS_AUTHORISED) {
+					$AllowPrint=1;
+				} else {
+					$AllowPrint=0;
+				}
 				$SQL = "UPDATE purchorders SET
 				status='" . $_POST['Stat']. "',
-				stat_comment='" . $StatusComment ."'
+				stat_comment='" . $StatusComment ."',
+				allowprint='".$AllowPrint."'
 				WHERE purchorders.orderno =" . $_SESSION['ExistingOrder'];
 
 				$ErrMsg = _('The order status could not be updated because');
