@@ -73,6 +73,7 @@ if ($_SESSION['geocode_integration'] == 1 AND $_SESSION['CustomerID'] != "") {
 		</script>';
 	echo '<body onload="load()" onunload="GUnload()">';
 }
+unset($result);
 $msg = "";
 if (isset($_POST['Go1']) or isset($_POST['Go2'])) {
 	$_POST['PageOffset'] = (isset($_POST['Go1']) ? $_POST['PageOffset1'] : $_POST['PageOffset2']);
