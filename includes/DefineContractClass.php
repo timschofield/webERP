@@ -11,7 +11,7 @@ Class Contract {
     var $CustomerName;
     var $BranchCode;
     var $BranchName;
-    var $Status; /* 0 = initiated - 1=quoted - 2=completed */
+    var $Status; /* 100 = initiated - 1=quoted - 2=completed */
     var $CategoryID;   /* the category where the contract will be when converted to an item  for quotation*/
     var $OrderNo; /* the order number created when the contract is quoted */
     var $CustomerRef;
@@ -33,7 +33,7 @@ Class Contract {
 		$this->ContractReqts = array();
 		$this->BOMComponentCounter=0;
 		$this->RequirementsCounter=0;
-		$this->Status =100;
+		$this->Status = 0;
 	}
 
 	function Add_To_ContractBOM($StockID, 

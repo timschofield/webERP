@@ -162,11 +162,11 @@ while ($myrow=DB_fetch_array($ContractsResult)) {
 	}
 
 	$ModifyPage = $rootpath . '/Contracts.php?' . SID . '&ModifyContractRef=' . $myrow['contractref'];
-	$OrderModifyPage = $rootpath . '/SelectOrderItems.php?' . SID . '&ModifyOrderNo=' . $myrow['orderno'];
+	$OrderModifyPage = $rootpath . '/SelectOrderItems.php?' . SID . '&ModifyOrderNumber=' . $myrow['orderno'];
 	$IssueToWOPage = $rootpath . '/WOIssue.php?' . SID . '&WO=' . $myrow['wo'];
 	$FormatedRequiredDate = ConvertSQLDate($myrow['requireddate']);
 	
-	if ($myrow['status']==0){ //still setting up the contract
+	if ($myrow['status']==0 OR $myrow['status']==1){ //still setting up the contract
 		echo '<td><a href="' . $ModifyPage . '">' . _('Modify') . '</a></td>';
 	} else {
 		echo '<td>' . _('n/a') . '</td>';

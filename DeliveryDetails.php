@@ -601,8 +601,88 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 	$DelDate = FormatDateforSQL($_SESSION['Items'.$identifier]->DeliveryDate);
 	$QuotDate = FormatDateforSQL($_SESSION['Items'.$identifier]->QuoteDate);
 	$ConfDate = FormatDateforSQL($_SESSION['Items'.$identifier]->ConfirmedDate);
-
+	
 	$Result = DB_Txn_Begin($db);
+
+	/*see if this is a contract quotation being changed to an order? */
+	if ($_SESSION['Items'.$identifier]->Quotation==0) { //now its being changed? to an order
+		$ContractResult = DB_query("SELECT contractref,
+											requireddate
+									FROM contracts WHERE orderno='" .  $_SESSION['ExistingOrder'] ."'
+									AND status=1",$db);
+		if (DB_num_rows($ContractResult)==1){ //then it is a contract quotation being changed to an order
+			$ContractRow = DB_fetch_array($ContractResult);
+			$WONo = GetNextTransNo(40,$db);
+			$ErrMsg = _('Could not update the contract status');
+			$DbgMsg = _('The SQL that failed to update the contract status was');
+			$UpdContractResult=DB_query("UPDATE contracts SET status=2,
+																wo='" . $WONo . "'
+										WHERE orderno='" .$_SESSION['ExistingOrder'] . "'", $db,$ErrMsg,$DbgMsg,true);
+			$ErrMsg = _('Could not insert the contract bill of materials');			
+			$InsContractBOM = DB_query("INSERT INTO bom (parent, 
+														 component,
+														 workcentreadded,
+														 location,
+														 effectiveafter,
+														 effectiveto)
+											SELECT contractref,
+													stockid,
+													workcentreadded,
+												'" . $_SESSION['Items'.$identifier]->Location ."',
+												'" . Date('Y-m-d') . "',
+												'2037-12-31'
+											FROM contractbom 
+											WHERE contractref='" . $ContractRow['contractref'] . "'",$db,$ErrMsg,$DbgMsg);
+			
+			$ErrMsg = _('Unable to insert a new work order for the sales order item');
+			$InsWOResult = DB_query("INSERT INTO workorders (wo,
+															 loccode,
+															 requiredby,
+															 startdate)
+											 VALUES ('" . $WONo . "',
+													'" . $_SESSION['Items'.$identifier]->Location ."',
+													'" . $ContractRow['requireddate'] . "',
+													'" . Date('Y-m-d'). "')",
+													$db,$ErrMsg,$DbgMsg);
+			//Need to get the latest BOM to roll up cost but also add the contract other requirements
+			$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
+												FROM stockmaster INNER JOIN contractbom
+												ON stockmaster.stockid=contractbom.stockid
+												WHERE contractbom.contractref='" .  $ContractRow['contractref'] . "'",
+									$db);
+			$CostRow = DB_fetch_row($CostResult);
+			if (is_null($CostRow[0]) OR $CostRow[0]==0){
+				$Cost =0;
+				prnMsg(_('In automatically creating a work order for') . ' ' . $ContractRow['contractref'] . ' ' . _('an item on this sales order, the cost of this item as accumulated from the sum of the component costs is nil. This could be because there is no bill of material set up ... you may wish to double check this'),'warn');
+			} else {
+				$Cost = $CostRow[0]; //cost of contract BOM
+			}
+			$CostResult = DB_query("SELECT SUM(costperunit*quantity) AS cost
+												FROM contractreqts 
+												WHERE contractreqts.contractref='" .  $ContractRow['contractref'] . "'",
+									$db);
+			$CostRow = DB_fetch_row($CostResult);
+			//add other requirements cost to cost of contract BOM
+			$Cost += $CostRow[0];
+			
+			// insert parent item info
+			$sql = "INSERT INTO woitems (wo,
+										 stockid,
+										 qtyreqd,
+										 stdcost)
+							 VALUES ( '" . $WONo . "',
+									 '" . $ContractRow['contractref'] . "',
+									 '1',
+									 '" . $Cost . "')";
+			$ErrMsg = _('The work order item could not be added');
+			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+
+			//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
+			WoRealRequirements($db, $WONo, $_SESSION['Items'.$identifier]->Location, $ContractRow['contractref']);
+
+		} //end processing if the order was a contract quotation being changed to an order
+	} //end test to see if the order was a contract quotation being changed to an order
+	
 
 	$HeaderSQL = "UPDATE salesorders
 			SET debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "',
@@ -625,9 +705,6 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 				contactemail = '" . $_SESSION['Items'.$identifier]->Email . "',
 				freightcost = '" . $_SESSION['Items'.$identifier]->FreightCost ."',
 				fromstkloc = '" . $_SESSION['Items'.$identifier]->Location ."',
-				deliverydate = '" . $DelDate . "',
-				quotedate = '" . $QuotDate . "',
-				confirmeddate = '" . $ConfDate . "',
 				printedpackingslip = '" . $_POST['ReprintPackingSlip'] . "',
 				quotation = '" . $_SESSION['Items'.$identifier]->Quotation . "',
 				deliverblind = '" . $_SESSION['Items'.$identifier]->DeliverBlind . "'

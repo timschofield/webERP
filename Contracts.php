@@ -52,7 +52,6 @@ if (isset($_GET['NewContract']) AND isset($_GET['SelectedCustomer'])) {
 		
 		$_POST['SelectedCustomer'] = $_GET['SelectedCustomer'];
 		
-		$_SESSION['Contract'.$identifier]->Status =0;
 		/*The customer is checked for credit and the Contract Object populated
 		 * using the usual logic of when a customer is selected 
 		 * */
@@ -155,8 +154,8 @@ if (isset($_GET['ModifyContractRef'])){
 	/*read in all the guff from the selected contract into the contract Class variable  */
 
 	$ContractHeaderSQL = "SELECT contractdescription,
-					  				debtorno,
-					  				branchcode,
+					  				contracts.debtorno,
+					  				contracts.branchcode,
 					  				status,
 					  				categoryid,
 					  				orderno,
@@ -164,8 +163,16 @@ if (isset($_GET['ModifyContractRef'])){
 					  				wo,
 					  				requireddate,
 					  				drawing,
-					  				exrate
-					  		FROM contracts
+					  				exrate,
+									debtorsmaster.name,
+									custbranch.brname,
+									debtorsmaster.currcode
+							FROM contracts INNER JOIN debtorsmaster 
+							ON contracts.debtorno=debtorsmaster.debtorno
+							INNER JOIN currencies
+							ON debtorsmaster.currcode=currencies.currabrev
+							INNER JOIN custbranch 
+							ON debtorsmaster.debtorno=custbranch.debtorno  		
 					  		WHERE contractref= '" . $_GET['ModifyContractRef'] . "'";
 
 	$ErrMsg =  _('The contract cannot be retrieved because');
@@ -187,6 +194,11 @@ if (isset($_GET['ModifyContractRef'])){
 		$_SESSION['Contract'.$identifier]->RequiredDate = ConvertSQLDate($myrow['requireddate']);
 		$_SESSION['Contract'.$identifier]->Drawing = $myrow['drawing'];
 		$_SESSION['Contract'.$identifier]->ExRate = $myrow['exrate'];
+		$_SESSION['Contract'.$identifier]->BranchName = $myrow['brname'];
+		$_SESSION['RequireCustomerSelection'] = 0;
+		$_SESSION['Contract'.$identifier]->CustomerName = $myrow['name'];
+		$_SESSION['Contract'.$identifier]->CurrCode = $myrow['currcode'];
+	
 		
 /*now populate the contract BOM array with the items required for the contract */
 
@@ -241,33 +253,36 @@ if (isset($_GET['ModifyContractRef'])){
 
 if (isset($_POST['CancelContract'])) {
 /*The cancel button on the header screen - to delete the contract */
-	$OK_to_delete = 1;	 //assume this in the first instance
+	$OK_to_delete = true;	 //assume this in the first instance
 	if(!isset($_SESSION['ExistingContract']) OR $_SESSION['ExistingContract']!=0) {
-		/* need to check that not already ordered by the customer - status = 0  */
-		if($_SESSION['Contract'.$identifier]->Status==1){
-			$result = DB_query('SELECT orderno FROM salesorders WHERE orderno=' . $_SESSION['Contract'.$identifier]->OrderNo,$db);
-			if (DB_num_rows($result)==1){
-				$OK_to_delete =0;
-				prnMsg( _('The contract has already been ordered by the customer the order must also be deleted first before the contract can be deleted'),'warn');
-			}
+		/* need to check that not already ordered by the customer - status = 100  */
+		if($_SESSION['Contract'.$identifier]->Status==2){
+			$OK_to_delete = false;
+			prnMsg( _('The contract has already been ordered by the customer the order must also be deleted first before the contract can be deleted'),'warn');
 		}
 	}
-	if ($OK_to_delete==1){
-		if($_SESSION['ExistingContract']!=0){
-
-			$sql = "DELETE FROM contractbom WHERE contractref='" . $_SESSION['Contract'.$identifier]->ContractRef . "'";
-			$ErrMsg = _('The contract bill of materials could not be deleted because');
+	
+	if ($OK_to_delete==true){
+		$sql = "DELETE FROM contractbom WHERE contractref='" . $_SESSION['Contract'.$identifier]->ContractRef . "'";
+		$ErrMsg = _('The contract bill of materials could not be deleted because');
+		$DelResult=DB_query($sql,$db,$ErrMsg);
+		$sql = "DELETE FROM contractreqts WHERE contractref='" . $_SESSION['Contract'.$identifier]->ContractRef . "'";
+		$ErrMsg = _('The contract requirements could not be deleted because');
+		$DelResult=DB_query($sql,$db,$ErrMsg);
+		$sql= "DELETE FROM contracts WHERE contractref='" . $_SESSION['Contract'.$identifier]->ContractRef . "'";
+		$ErrMsg = _('The contract could not be deleted because');
+		$DelResult=DB_query($sql,$db,$ErrMsg);
+		
+		if ($_SESSION['Contract'.$identifier]->Status==1){
+			$sql = "DELETE FROM salesorderdetails WHERE orderno='" . $_SESSION['Contract'.$identifier]->OrderNo . "'";
+			$ErrMsg = _('The quotation line for the contract could not be deleted because');
 			$DelResult=DB_query($sql,$db,$ErrMsg);
-			$sql = "DELETE FROM contractreqts WHERE contractref='" . $_SESSION['Contract'.$identifier]->ContractRef . "'";
-			$ErrMsg = _('The contract requirements could not be deleted because');
+			$sql = "DELETE FROM salesorders WHERE orderno='" . $_SESSION['Contract'.$identifier]->OrderNo . "'";
+			$ErrMsg = _('The quotation for the contract could not be deleted because');
 			$DelResult=DB_query($sql,$db,$ErrMsg);
-			$sql= "DELETE FROM contracts WHERE contractref='" . $_SESSION['Contract'.$identifier]->ContractRef . "'";
-			$ErrMsg = _('The contract could not be deleted because');
-			$DelResult=DB_query($sql,$db,$ErrMsg);
-			
-			prnMsg( _('Contract').' '.$_SESSION['Contract'.$identifier]->ContractRef.' '._('has been cancelled'), 'success');
-			unset($_SESSION['ExistingContract']);
 		}
+		prnMsg( _('Contract').' '.$_SESSION['Contract'.$identifier]->ContractRef.' '._('has been cancelled'), 'success');
+		unset($_SESSION['ExistingContract']);
 		unset($_SESSION['Contract'.$identifier]->ContractBOM);
 		unset($_SESSION['Contract'.$identifier]->ContractReqts);
 		unset($_SESSION['Contract'.$identifier]);
@@ -283,10 +298,9 @@ if (!isset($_SESSION['Contract'.$identifier])){
 
 		$_SESSION['ExistingContract']= 0;
 		$_SESSION['Contract'.$identifier] = new Contract;
-		
-		$_SESSION['Contract'.$identifier]->Status = 0; //new contracts are just quotes ...
-		
-		if ($_SESSION['Contract'.$identifier]->DebtorNo=='' OR !isset($_SESSION['Contract'.$identifier]->DebtorNo)){
+				
+		if ($_SESSION['Contract'.$identifier]->DebtorNo=='' 
+				OR !isset($_SESSION['Contract'.$identifier]->DebtorNo)){
 
 /* a session variable will have to maintain if a supplier
  * has been selected for the order or not the session
@@ -298,7 +312,7 @@ if (!isset($_SESSION['Contract'.$identifier])){
 		}
 }
 
-if (isset($_POST['CommitContract'])){ 
+if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){ 
 	/*This is the bit where the contract object is commited to the database after a bit of error checking */
 	
 	//First update the session['Contract'.$identifier] variable with all inputs from the form
@@ -308,9 +322,14 @@ if (isset($_POST['CommitContract'])){
 		prnMsg(_('The contract reference is expected to be more than 2 characters long. Please alter the contract reference before proceeding.'),'error');
 		$InputError = true;
 	}
+	if(ContainsIllegalCharacters($_POST['ContractRef'])){
+		prnMsg(_('The contract reference cannot contain any spaces, slashes, or inverted commas. Please alter the contract reference before proceeding.'),'error');
+		$InputError = true;
+	}
+	
 	//The contractRef cannot be the same as an existing stockid or contractref
 	$result = DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['ContractRef'] . "'",$db); 
-	if (DB_num_rows($result)==1){
+	if (DB_num_rows($result)==1 AND $_SESSION['Contract'.$identifier]->Status ==0){
 		prnMsg(_('The contract reference cannot be the same as a previously created stock item. Please modify the contract reference before continuing'),'error');
 		$InputError=true;
 	}
@@ -361,8 +380,6 @@ if (isset($_POST['CommitContract'])){
 					requireddate,
 					margin,
 					customerref,
-					quantityreqd,
-					units,
 					exrate,
 					status 
 			FROM contracts 
@@ -420,8 +437,36 @@ if (isset($_POST['CommitContract'])){
 		} 
 		if ($ExistingContract['status']==1 AND ! $InputError){
 			//then the quotation will need to be updated with the revised contract cost if necessary
-			
-			
+			$ContractBOMCost =0;
+			foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component) {
+				$ContractBOMCost += ($Component->ItemCost *  $Component->Quantity);
+			}
+			$ContractReqtsCost=0;
+			foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $Requirement) {
+				$ContractReqtsCost += ($Requirement->CostPerUnit * $Requirement->Quantity);
+			}
+			$ContractCost = $ContractReqtsCost+$ContractBOMCost;
+			$ContractPrice = ($ContractBOMCost+$ContractReqtsCost)/((100-$_SESSION['Contract'.$identifier]->Margin)/100);
+		
+			$sql = "UPDATE stockmaster SET description='" . $_SESSION['Contract'.$identifier]->ContractDescription . "',
+										longdescription='" . $_SESSION['Contract'.$identifier]->ContractDescription . "',
+										categoryid = '" . $_SESSION['Contract'.$identifier]->CategoryID . "',
+										materialcost= '" . $ContractCost . "'
+								WHERE stockid ='" . $_SESSION['Contract'.$identifier]->ContractRef."'";
+			$ErrMsg =  _('The contract item could not be updated because');
+			$DbgMsg = _('The SQL that was used to update the contract item failed was');
+			$InsertNewItemResult = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+
+			//update the quotation
+			$sql = "UPDATE salesorderdetails 
+						SET unitprice = '" . $ContractPrice* $_SESSION['Contract'.$identifier]->ExRate . "'
+						WHERE stkcode='" .  $_SESSION['Contract'.$identifier]->ContractRef . "'
+						AND orderno='" .  $_SESSION['Contract'.$identifier]->OrderNo . "'";
+			$ErrMsg = _('The contract quotation could not be updated because');
+			$DbgMsg = _('The SQL that failed to update the quotation was');
+			$UpdQuoteResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+			pnMsg(_('The contract quotation has been updated based on the new contract cost and margin'),'success');
+			echo '<br><a href="' .$rootpath . '/SelectSalesOrder.php?OrderNumber=' .  $_SESSION['Contract'.$identifier]->OrderNo . '&Quotations=Quotes_Only">' . _('Go to Quotation') . ' ' .  $_SESSION['Contract'.$identifier]->OrderNo . '</a>';
 			
 		}
 		if ($ExistingContract['status'] == 0 AND $_POST['Status']==1){ 
@@ -433,11 +478,6 @@ if (isset($_POST['CommitContract'])){
 			
 		} 
 	} elseif (!$InputError) { /*Its a new contract - so insert */
-		
-		if ($_POST['Status'] !=0){
-			//a new contract being created with a status of not a quotation - create it anyway but with status=0
-			prnMsg(_('A contract can only be created with a status of costing initially'),'warn');
-		}
 		
 		$sql = "INSERT INTO contracts ( contractref,
 										debtorno,
@@ -488,19 +528,167 @@ if (isset($_POST['CommitContract'])){
 			$result = DB_query($sql,$db,$ErrMsg);
 		}
 		prnMsg(_('The new contract has been added to the database'),'success');
-		unset($_SESSION['Contract'.$identifier]->ContractBOM);
-		unset($_SESSION['Contract'.$identifier]->ContractReqts);
-		unset($_SESSION['Contract' . $identifier]);
-		unset($_POST['ContractRef']);
-		unset($_POST['Description']);
-		unset($_POST['CategoryID']);
-		unset($_POST['RequiredDate']);
-		unset($_POST['Margin']);
-		unset($_POST['CustomerRef']);
-		unset($_POST['ExRate']);
-		
+
 	} //end of adding a new contract
 }//end of commital to database
+
+if(isset($_POST['CreateQuotation']) AND !$InputError){
+//Create a quotation for the contract as entered 
+//First need to create the item in stockmaster
+
+//calculate the item's contract cost
+	$ContractBOMCost =0;
+	foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component) {
+		$ContractBOMCost += ($Component->ItemCost *  $Component->Quantity);
+	}
+	$ContractReqtsCost=0;
+	foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $Requirement) {
+		$ContractReqtsCost += ($Requirement->CostPerUnit * $Requirement->Quantity);
+	}
+	$ContractCost = $ContractReqtsCost+$ContractBOMCost;
+	$ContractPrice = ($ContractBOMCost+$ContractReqtsCost)/((100-$_SESSION['Contract'.$identifier]->Margin)/100);
+	
+//Check if the item exists already
+	$sql = "SELECT * FROM stockmaster WHERE stockid='" . $_SESSION['Contract'.$identifier]->ContractRef."'";
+	$ErrMsg =  _('The item could not be retrieved because');
+	$DbgMsg = _('The SQL that was used to find the item failed was');
+	$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+	if (DB_num_rows($result)==0) { //then the item doesn't currently exist so add it
+
+		$sql = "INSERT INTO stockmaster (stockid,
+										description,
+										longdescription,
+										categoryid,
+										mbflag,
+										taxcatid,
+										materialcost)
+							VALUES ('" . $_SESSION['Contract'.$identifier]->ContractRef."',
+									'" . $_SESSION['Contract'.$identifier]->ContractDescription . "',
+									'" . $_SESSION['Contract'.$identifier]->ContractDescription . "',
+									'" . $_SESSION['Contract'.$identifier]->CategoryID . "',
+									'M',
+									'" . $_SESSION['DefaultTaxCategory'] . "',
+									'" . $ContractCost . "')";
+		$ErrMsg =  _('The new contract item could not be added because');
+		$DbgMsg = _('The SQL that was used to insert the contract item failed was');
+		$InsertNewItemResult = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+		$sql = "INSERT INTO locstock (loccode,
+										stockid)
+						SELECT locations.loccode,
+								'" . $_SESSION['Contract'.$identifier]->ContractRef . "'
+						FROM locations";
+
+		$ErrMsg =  _('The locations for the item') . ' ' . $_SESSION['Contract'.$identifier]->ContractRef . ' ' . _('could not be added because');
+		$DbgMsg = _('NB Locations records can be added by opening the utility page') . ' <i>Z_MakeStockLocns.php</i> ' . _('The SQL that was used to add the location records that failed was');
+		$InsLocnsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg); 
+	} 
+	//now add the quotation for the item
+	
+	//first need to get some more details from the customer/branch record
+	$sql = "SELECT debtorsmaster.salestype,
+					custbranch.defaultshipvia,
+					custbranch.brname,
+					custbranch.braddress1,
+					custbranch.braddress2,
+					custbranch.braddress3,
+					custbranch.braddress4,
+					custbranch.braddress5,
+					custbranch.braddress6,
+					custbranch.phoneno,
+					custbranch.email,
+					custbranch.defaultlocation
+				FROM debtorsmaster INNER JOIN custbranch
+				ON debtorsmaster.debtorno=custbranch.debtorno
+				WHERE debtorsmaster.debtorno='" . $_SESSION['Contract'.$identifier]->DebtorNo  . "'
+				AND custbranch.branchcode='" . $_SESSION['Contract'.$identifier]->BranchCode . "'";
+	$ErrMsg =  _('The customer and branch details could not be retrieved because');
+	$DbgMsg = _('The SQL that was used to find the customer and branch details failed was');
+	$CustomerDetailsResult = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+	
+	$CustomerDetailsRow = DB_fetch_array($CustomerDetailsResult);
+	
+	//start a DB transaction
+	$Result = DB_Txn_Begin($db);
+	$OrderNo = GetNextTransNo(30, $db);
+	$HeaderSQL = "INSERT INTO salesorders (
+								orderno,
+								debtorno,
+								branchcode,
+								customerref,
+								orddate,
+								ordertype,
+								shipvia,
+								deliverto,
+								deladd1,
+								deladd2,
+								deladd3,
+								deladd4,
+								deladd5,
+								deladd6,
+								contactphone,
+								contactemail,
+								fromstkloc,
+								deliverydate,
+								quotedate,
+								quotation)
+							VALUES (
+								'". $OrderNo . "',
+								'" . DB_escape_string($_SESSION['Contract'.$identifier]->DebtorNo)  . "',
+								'" . DB_escape_string($_SESSION['Contract'.$identifier]->BranchCode) . "',
+								'". DB_escape_string($_SESSION['Contract'.$identifier]->CustomerRef) ."',
+								'" . DB_escape_string(Date('Y-m-d H:i')) . "',
+								'" . DB_escape_string($CustomerDetailsRow['salestype']) . "',
+								'" . DB_escape_string($CustomerDetailsRow['defaultshipvia']) ."',
+								'". DB_escape_string($CustomerDetailsRow['brname']) . "',
+								'" . DB_escape_string($CustomerDetailsRow['braddress1']) . "',
+								'" . DB_escape_string($CustomerDetailsRow['braddress2']) . "',
+								'" . DB_escape_string($CustomerDetailsRow['braddress3']) . "',
+								'" . DB_escape_string($CustomerDetailsRow['braddress4']) . "',
+								'" . DB_escape_string($CustomerDetailsRow['braddress5']) . "',
+								'" . DB_escape_string($CustomerDetailsRow['braddress6']) . "',
+								'" . DB_escape_string($CustomerDetailsRow['phoneno']) . "',
+								'" . DB_escape_string($CustomerDetailsRow['email']) . "',
+								'" . DB_escape_string($CustomerDetailsRow['defaultlocation']) ."',
+								'" . FormatDateForSQL($_SESSION['Contract'.$identifier]->RequiredDate) . "',
+								'" . Date('Y-m-d') . "',
+								'1' )";
+
+	$ErrMsg = _('The quotation cannot be added because');
+	$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg,true);
+	$LineItemSQL = "INSERT INTO salesorderdetails ( orderlineno,
+															orderno,
+															stkcode,
+															unitprice,
+															quantity,
+															poline,
+															itemdue)
+										VALUES ('0',
+												'" . $OrderNo . "',
+												'" . DB_escape_string($_SESSION['Contract'.$identifier]->ContractRef) . "',
+												'" . ($ContractPrice * $_SESSION['Contract'.$identifier]->ExRate) . "',
+												'1',
+												'" . DB_escape_string($_SESSION['Contract'.$identifier]->CustomerRef) . "',
+												'" . FormatDateForSQL($_SESSION['Contract'.$identifier]->RequiredDate) . "')";
+	$DbgMsg = _('The SQL that failed was');
+	$ErrMsg = _('Unable to add the quotation line');
+	$Ins_LineItemResult = DB_query($LineItemSQL,$db,$ErrMsg,$DbgMsg,true);
+	 //end of adding the quotation to salesorders/details
+	
+	//make the status of the contract 1 - to indicate that it is now quoted
+	$sql = "UPDATE contracts SET orderno='" . $OrderNo . "',
+								status='" . 1 . "' 
+						WHERE contractref='" . DB_escape_string($_SESSION['Contract'.$identifier]->ContractRef) . "'";
+	$ErrMsg = _('Unable to update the contract status and order number because');
+	$UpdContractResult = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+	$Result = DB_Txn_Commit($db);
+	$_SESSION['Contract'.$identifier]->Status=1;
+	$_SESSION['Contract'.$identifier]->OrderNo=$OrderNo;
+	prnMsg(_('The contract has been made into quotation number') . ' ' . $OrderNo,'info');
+	echo '<br><a href="' . $rootpath . '/SelectSalesOrder.php?OrderNumber=' . $OrderNo . '&Quotations=Quotes_Only">' . _('Go to quotation number:') . ' ' . $OrderNo . '</a>';
+	
+} //end of if making a quotation
+
+
 
 if (isset($_POST['SearchCustomers'])){
 
@@ -723,7 +911,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	echo '<table>';
 	echo '<tr><td>' . _('Contract Reference') . ':</td><td>';
-	if ($_SESSION['Contract'.$identifier]->Status==100) { 
+	if ($_SESSION['Contract'.$identifier]->Status==0) { 
 		/*Then the contract has not become an order yet and we can allow changes to the ContractRef */
 		echo '<input type="text" name="ContractRef" size=21	maxlength=20 value="' . $_SESSION['Contract'.$identifier]->ContractRef . '">';
 	} else {
@@ -748,19 +936,6 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	echo '</select><a target="_blank" href="'. $rootpath . '/StockCategories.php?' . SID . '">' . _('Add or Modify Contract Categories') . '</a></td></tr>';
 
-
-	echo '<tr><td>' . _('Units of Measure') . ':</td><td><select name="Units">';
-	$sql = 'SELECT unitname FROM unitsofmeasure ORDER by unitname';
-	$UOMResult = DB_query($sql,$db);
-	
-	while( $UOMrow = DB_fetch_array($UOMResult) ) {
-	     if (isset($_SESSION['Contract'.$identifier]->Units) AND $_SESSION['Contract'.$identifier]->Units==$UOMrow['unitname']){
-		    echo '<option selected value="' . $UOMrow['unitname'] . '">' . $UOMrow['unitname'] . '</option>';
-	     } else {
-		    echo '<option value="' . $UOMrow['unitname'] . '">' . $UOMrow['unitname']  . '</option>';
-	     }
-	}
-	echo '</select></td></tr>';
 
 	echo '<tr><td>' . _('Contract Description');
 	echo ':</td><td><textarea name="ContractDescription" style="width:100%" rows=5>' . $_SESSION['Contract'.$identifier]->ContractDescription . '</textarea></td></tr>';
@@ -795,15 +970,15 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	if ($_SESSION['Contract'.$identifier]->Status == 0){
 		echo _('Contract Setup');
 	} elseif ($_SESSION['Contract'.$identifier]->Status == 1){
-		echo _('Customer Already Quoted');
+		echo _('Customer Quoted');
 	} elseif ($_SESSION['Contract'.$identifier]->Status == 2){
 		echo _('Order Placed');
 	}
 	echo '</select></td></tr>';
-	if ($_SESSION['Contract'.$identifier]->Status>=1) {
-		echo '<tr><td>' . _('Quotation Reference/Sales Order No') . ':</td><td>' . $_SESSION['Contract'.$identifier]->OrderNo . '</td></tr>';
+	if ($_SESSION['Contract'.$identifier]->Status >=1) {
+		echo '<tr><td>' . _('Quotation Reference/Sales Order No') . ':</td><td><a href="' . $rootpath . '/SelectSalesOrder.php?OrderNumber=' . $_SESSION['Contract'.$identifier]->OrderNo . '&Quotations=Quotes_Only">' .  $_SESSION['Contract'.$identifier]->OrderNo . '</a></td></tr>';
 	}
-	if ($_SESSION['Contract'.$identifier]->Status!=0) {
+	if ($_SESSION['Contract'.$identifier]->Status!=2) {
 		echo '<tr><td>' . _('Contract Work Order Ref') . ':</td><td>' . $_SESSION['Contract'.$identifier]->WorkOrder . '</td></tr>';
 	}
 	echo '</table><hr>';
@@ -858,10 +1033,18 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	echo'<table><tr><th>' . _('Total Contract Cost') . '</th><th class="number">' . number_format(($ContractBOMCost+$ContractReqtsCost),2) . '</th><th>' . _('Contract Price') . '</th><th class="number">' . number_format(($ContractBOMCost+$ContractReqtsCost)/((100-$_SESSION['Contract'.$identifier]->Margin)/100),2) . '</th></tr></table>';
 	
 	echo'<p></p>';
-			
 	echo '<div class="centre"><input type="submit" name="EnterContractBOM" value="' . _('Enter Items Required') . '">
-		<input type=submit name="EnterContractRequirements" value="' . _('Enter Other Requirements') .'">
-		<input type=submit name="CommitContract" value="' . _('Commit Changes') .'"></div>';
+			<input type=submit name="EnterContractRequirements" value="' . _('Enter Other Requirements') .'">';
+	if($_SESSION['Contract'.$identifier]->Status==0){ // not yet quoted	
+		echo '<input type=submit name="CommitContract" value="' . _('Commit Changes') .'">';
+	} elseif($_SESSION['Contract'.$identifier]->Status==1){ //quoted but not yet ordered
+		echo '<input type=submit name="CommitContract" value="' . _('Update Quotation') .'">';
+	}		
+	if($_SESSION['Contract'.$identifier]->Status==0){ //not yet quoted		
+		echo ' <input type=submit name="CreateQuotation" value="' . _('Create Quotation') .'"></div>';
+	} else {
+		echo '</div>';
+	}
 	if ($_SESSION['Contract'.$identifier]->Status!=2) {
 		echo '<p><div class="centre"><input type="submit" name="CancelContract" value="' . _('Cancel and Delete Contract') . '"></div></p>';
 	}	

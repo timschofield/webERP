@@ -1601,10 +1601,10 @@ if (isset($_POST['ProcessSale']) && $_POST['ProcessSale'] != ""){
 										VALUES ( 10,
 												" . $InvoiceNo . ",
 												'" . $DefaultDispatchDate . "',
-												" . $PeriodNo . ",
-												" . GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db) . ",
+												'" . $PeriodNo . "',
+												'" . GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db) . "',
 												'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $OrderLine->StandardCost . "',
-												" . $OrderLine->StandardCost * $OrderLine->Quantity . ")";
+												'" . $OrderLine->StandardCost * $OrderLine->Quantity . "')";
 		
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The cost of sales GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1623,10 +1623,10 @@ if (isset($_POST['ProcessSale']) && $_POST['ProcessSale'] != ""){
 										VALUES ( 10,
 											" . $InvoiceNo . ",
 											'" . $DefaultDispatchDate . "',
-											" . $PeriodNo . ",
-											" . $StockGLCode['stockact'] . ",
+											'" . $PeriodNo . "',
+											'" . $StockGLCode['stockact'] . "',
 											'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $OrderLine->StandardCost . "',
-											" . (-$OrderLine->StandardCost * $OrderLine->Quantity) . ")";
+											'" . (-$OrderLine->StandardCost * $OrderLine->Quantity) . "')";
 		
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock side of the cost of sales GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1649,10 +1649,10 @@ if (isset($_POST['ProcessSale']) && $_POST['ProcessSale'] != ""){
 										VALUES ( 10,
 											" . $InvoiceNo . ",
 											'" . $DefaultDispatchDate . "',
-											" . $PeriodNo . ",
-											" . $SalesGLAccounts['salesglcode'] . ",
+											'" . $PeriodNo . "',
+											'" . $SalesGLAccounts['salesglcode'] . "',
 											'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $OrderLine->Price . "',
-											" . (-$OrderLine->Price * $OrderLine->Quantity/$ExRate) . ")";
+											'" . (-$OrderLine->Price * $OrderLine->Quantity/$ExRate) . "')";
 		
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales GL posting could not be inserted because');
 				$DbgMsg = '<br>' ._('The following SQL to insert the GLTrans record was used');
@@ -1671,10 +1671,10 @@ if (isset($_POST['ProcessSale']) && $_POST['ProcessSale'] != ""){
 												VALUES ( 10,
 													" . $InvoiceNo . ",
 													'" . $DefaultDispatchDate . "',
-													" . $PeriodNo . ",
-													" . $SalesGLAccounts['discountglcode'] . ",
+													'" . $PeriodNo . "',
+													'" . $SalesGLAccounts['discountglcode'] . "',
 													'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " @ " . ($OrderLine->DiscountPercent * 100) . "%',
-													" . ($OrderLine->Price * $OrderLine->Quantity * $OrderLine->DiscountPercent/$ExRate) . ")";
+													'" . ($OrderLine->Price * $OrderLine->Quantity * $OrderLine->DiscountPercent/$ExRate) . "')";
 								
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales discount GL posting could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1697,10 +1697,10 @@ if (isset($_POST['ProcessSale']) && $_POST['ProcessSale'] != ""){
 											VALUES ( 10,
 												" . $InvoiceNo . ",
 												'" . $DefaultDispatchDate . "',
-												" . $PeriodNo . ",
-												" . $_SESSION['CompanyRecord']['debtorsact'] . ",
+												'" . $PeriodNo . "',
+												'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
 												'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-												" . (($_SESSION['Items'.$identifier]->total + $TaxTotal)/$ExRate) . ")";
+												'" . (($_SESSION['Items'.$identifier]->total + $TaxTotal)/$ExRate) . "')";
 	
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The total debtor GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the total debtors control GLTrans record was used');
@@ -1720,10 +1720,10 @@ if (isset($_POST['ProcessSale']) && $_POST['ProcessSale'] != ""){
 												VALUES ( 10,
 													" . $InvoiceNo . ",
 													'" . $DefaultDispatchDate . "',
-													" . $PeriodNo . ",
-													" . $TaxGLCodes[$TaxAuthID] . ",
+													'" . $PeriodNo . "',
+													'" . $TaxGLCodes[$TaxAuthID] . "',
 													'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-													" . (-$TaxAmount/$ExRate) . ")";
+													'" . (-$TaxAmount/$ExRate) . "')";
 							
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The tax GL posting could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1745,10 +1745,10 @@ if (isset($_POST['ProcessSale']) && $_POST['ProcessSale'] != ""){
 					VALUES (12,
 						' . $ReceiptNumber . ",
 						'" . $DefaultDispatchDate . "',
-						" . $PeriodNo . ",
+						'" . $PeriodNo . "',
 						'" . $_POST['BankAccount'] . "',
 						'" . $_SESSION['Items'.$identifier]->LocationName . ' ' . _('Counter Sale') . ' ' . $InvoiceNo . "',
-						" . ($_POST['AmountPaid']/$ExRate) . ')';
+						'" . ($_POST['AmountPaid']/$ExRate) . "')";
 				$DbgMsg = _('The SQL that failed to insert the GL transaction for the bank account debit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
 				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -1764,11 +1764,10 @@ if (isset($_POST['ProcessSale']) && $_POST['ProcessSale'] != ""){
 				VALUES (12,
 					' . $ReceiptNumber . ",
 					'" . $DefaultDispatchDate . "',
-					" . $PeriodNo . ',
-					' . $_SESSION['CompanyRecord']['debtorsact'] . ",
-						'" . $_SESSION['Items'.$identifier]->LocationName . ' ' . _('Counter Sale') . ' ' . $InvoiceNo . "',
-						" . -($_POST['AmountPaid']/$ExRate) . '
-					)';
+					'" . $PeriodNo . "',
+					'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
+					'" . $_SESSION['Items'.$identifier]->LocationName . ' ' . _('Counter Sale') . ' ' . $InvoiceNo . "',
+					'" . -($_POST['AmountPaid']/$ExRate) . "')";
 				$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
 				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -1800,7 +1799,7 @@ if (isset($_POST['ProcessSale']) && $_POST['ProcessSale'] != ""){
 			
 			//insert the banktrans record in the currency of the bank account
 			
-			$SQL='INSERT INTO banktrans (type,
+			$SQL="INSERT INTO banktrans (type,
 						transno,
 						bankact,
 						ref,
@@ -1811,14 +1810,14 @@ if (isset($_POST['ProcessSale']) && $_POST['ProcessSale'] != ""){
 						amount,
 						currcode)
 					VALUES (12,
-						' . $ReceiptNumber . ',
-						' . $_POST['BankAccount'] . ",
+						'" . $ReceiptNumber . "',
+						'" . $_POST['BankAccount'] . "',
 						'" . $_SESSION['Items'.$identifier]->LocationName . ' ' . _('Counter Sale') . ' ' . $InvoiceNo . "',
-						" . $ExRate . ",
-						" . $BankAccountExRate . ",
+						'" . $ExRate . "',
+						'" . $BankAccountExRate . "',
 						'" . $DefaultDispatchDate . "',
 						'" . $_POST['PaymentMethod'] . "',
-						" . ($_POST['AmountPaid'] * $BankAccountExRate) . ",
+						'" . ($_POST['AmountPaid'] * $BankAccountExRate) . "',
 						'" . $_SESSION['Items'.$identifier]->DefaultCurrency . "')";
 						
 			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
@@ -1843,11 +1842,11 @@ if (isset($_POST['ProcessSale']) && $_POST['ProcessSale'] != ""){
 						'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 						'" . $DefaultDispatchDate . "',
 						'" . date('Y-m-d H-i-s') . "',
-						" . $PeriodNo . ",
-						" . $InvoiceNo . ",
-						" . $ExRate . ",
-						" . -$_POST['AmountPaid'] . ",
-						" . -$_POST['AmountPaid'] . ",
+						'" . $PeriodNo . "',
+						'" . $InvoiceNo . "',
+						'" . $ExRate . "',
+						'" . -$_POST['AmountPaid'] . "',
+						'" . -$_POST['AmountPaid'] . "',
 						'" . $_SESSION['Items'.$identifier]->LocationName . ' ' . _('Counter Sale') ."')";
 						
 			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
@@ -1857,7 +1856,7 @@ if (isset($_POST['ProcessSale']) && $_POST['ProcessSale'] != ""){
 			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
 			
 			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . $DefaultDispatchDate . "',
-											lastpaid=" . $_POST['AmountPaid'] ."
+											lastpaid='" . $_POST['AmountPaid'] . "'
 									WHERE debtorsmaster.debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 	
 			$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
@@ -1872,8 +1871,8 @@ if (isset($_POST['ProcessSale']) && $_POST['ProcessSale'] != ""){
 												transid_allocto )
 									VALUES  (' . $_POST['AmountPaid'] . ",
 											'" . $DefaultDispatchDate . "',
-											 " . $ReceiptDebtorTransID . ",
-											 " . $DebtorTransID . ')';
+											 '" . $ReceiptDebtorTransID . "',
+											 '" . $DebtorTransID . "')";
 			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
 			$ErrMsg = _('Cannot insert the customer allocation of the receipt to the invoice because');
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
