@@ -5,7 +5,7 @@ $PricesSecurity = 12;
 include ('includes/session.inc');
 $title = _('Search Inventory Items');
 include ('includes/header.inc');
-$msg = '';
+
 if (isset($_GET['StockID'])) {
 	//The page is called with a StockID
 	$_GET['StockID'] = trim(strtoupper($_GET['StockID']));
@@ -453,7 +453,7 @@ echo '</td></tr></table>';
 	echo '</td></tr></table>';
 } // end displaying item options if there is one and only one record
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
-echo '<b>' . $msg . '</b>';
+
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Search for Inventory Items');
 echo '<table class=selection><tr>';
 echo '<td>' . _('In Stock Category') . ':';
@@ -502,7 +502,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		$_POST['PageOffset'] = 1;
 	}
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
-		$msg = _('Stock description keywords have been used in preference to the Stock code extract entered');
+		prnMsg (_('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
 	}
 	if ($_POST['Keywords']) {
 		//insert wildcard characters in spaces
