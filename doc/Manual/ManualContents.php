@@ -616,6 +616,27 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 <?php
   if (!isset($_POST['Submit'])) {
 ?>
+              <input type="checkbox" name="SelectContractCosting">
+              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Contracts'; ?>">Contract Costing</A>
+<?php
+  } else {
+?>
+              <A HREF="#Contracts">Contract Costing</A>
+<?php
+  }
+?>
+              <UL>
+                <LI>Contract Costing Overview</LI>
+                <LI>Creating A New Contract</LI>
+                <LI>Selecting A Contract</LI>
+                <LI>Charging Against Contracts</LI>
+              </UL>
+              <BR>
+            </LI>
+            <LI>			
+<?php
+  if (!isset($_POST['Submit'])) {
+?>
               <input type="checkbox" name="SelectManufacturing">
               <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Manufacturing'; ?>">Manufacturing</A>
 <?php
@@ -976,7 +997,9 @@ if ($_GET['ViewTopic'] == 'SalesOrders' OR isset($_POST['SelectSalesOrders'])) {
 if ($_GET['ViewTopic'] == 'Shipments' OR isset($_POST['SelectShipments'])) {
   include('ManualShipments.html');
 }
-
+if ($_GET['ViewTopic'] == 'Contracts' OR isset($_POST['SelectContractCosting'])) {
+  include('ManualContracts.html');
+}
 if ($_GET['ViewTopic'] == 'GeneralLedger' OR isset($_POST['SelectGeneralLedger'])) {
   include('ManualGeneralLedger.html');
 }
