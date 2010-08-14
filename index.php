@@ -13,16 +13,16 @@ $title=_('Main Menu');
 $ModuleLink = array('orders', 'AR', 'AP', 'PO', 'stock', 'manuf', 'Contracts', 'GL', 'FA', 'PC', 'system');
 /*The headings showing on the tabs accross the main index used also in WWW_Users for defining what should be visible to the user */
 $ModuleList = array(_('Sales'),
-					_('Receivables'),
-					_('Payables'),
-					_('Purchases'),
-					_('Inventory'),
-					_('Manufacturing'),
-					_('Contracts'),
-					_('General Ledger'),
-					_('Asset Manager'),
-					_('Petty Cash'),
-					_('Setup'));
+									_('Receivables'),
+									_('Payables'),
+									_('Purchases'),
+									_('Inventory'),
+									_('Manufacturing'),
+									_('Contracts'),
+									_('General Ledger'),
+									_('Asset Manager'),
+									_('Petty Cash'),
+									_('Setup'));
 
 if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when the user clicks on a tab */
 	$_SESSION['Module'] = $_GET['Application'];

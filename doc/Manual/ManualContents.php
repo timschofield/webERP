@@ -662,7 +662,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 ?>
               <input type="checkbox" name="SelectMRP">
               <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=MRP'; ?>">
-              Maaterial Requirements Planning</A>
+              Material Requirements Planning</A>
 <?php
   } else {
 ?>

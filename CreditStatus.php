@@ -66,14 +66,14 @@ if (isset($_POST['submit'])) {
 
 		if (isset($_POST['DisallowInvoices']) and $_POST['DisallowInvoices']=='on'){
 			$sql = "UPDATE holdreasons SET
-					reasondescription='" . $_POST['ReasonDescription'] . "',
-					dissallowinvoices=1
-					WHERE reasoncode = '".$SelectedReason."'";
+							reasondescription='" . $_POST['ReasonDescription'] . "',
+							dissallowinvoices=1
+							WHERE reasoncode = '".$SelectedReason."'";
 		} else {
 			$sql = "UPDATE holdreasons SET
-					reasondescription='" . $_POST['ReasonDescription'] . "',
-					dissallowinvoices=0
-					WHERE reasoncode = '".$SelectedReason."'";
+							reasondescription='" . $_POST['ReasonDescription'] . "',
+							dissallowinvoices=0
+							WHERE reasoncode = '".$SelectedReason."'";
 		}
 		$msg = _('The credit status record has been updated');
 
@@ -193,7 +193,7 @@ if (isset($SelectedReason)) {
 
 if (!isset($_GET['delete'])) {
 
-	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 
 	if (isset($SelectedReason) and ($InputError!=1)) {
 		//editing an existing status code
@@ -232,17 +232,17 @@ if (!isset($_GET['delete'])) {
 		$_POST['ReasonDescription'] = '';
 	}
 	echo '<tr>
-		<td>'. _('Description') .":</td>
-		<td><input " . (in_array('ReasonDescription',$Errors) ? 'class="inputerror"' : '' ) .
-		 " tabindex=2 type='text' name='ReasonDescription' VALUE='". $_POST['ReasonDescription'] ."' size=28 maxlength=30>
-	</td></tr>
-	<tr><td>". _('Disallow Invoices') . "</td>";
+		<td>'. _('Description') .':</td>
+		<td><input ' . (in_array('ReasonDescription',$Errors) ? 'class="inputerror"' : '' ) .
+		 ' tabindex=2 type="text" name="ReasonDescription" VALUE="'. $_POST['ReasonDescription'] .'" size="28" maxlength="30">
+		</td></tr>
+		<tr><td>'. _('Disallow Invoices') . '</td>';
 	if (isset($_POST['DisallowInvoices']) and $_POST['DisallowInvoices']==1) {
-		echo "<td><input tabindex=3 type='checkbox' checked name='DisallowInvoices'></td></tr>";
+		echo '<td><input tabindex=3 type="checkbox" checked name="DisallowInvoices"></td></tr>';
 	} else {
-		echo "<td><input tabindex=3 type='checkbox' name='DisallowInvoices'></td></tr>";
+		echo '<td><input tabindex=3 type="checkbox" name="DisallowInvoices"></td></tr>';
 	}
-	echo "</table><br><div class='centre'><input tabindex=4 type='Submit' name='submit' value='" . _('Enter Information') . "'></div></form>";
+	echo '</table><br><div class="centre"><input tabindex=4 type="submit" name="submit" value="' . _('Enter Information') . '"></div></form>';
 } //end if record deleted no point displaying form to add record
 include('includes/footer.inc');
 ?>

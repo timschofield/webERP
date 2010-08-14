@@ -620,35 +620,35 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 										WHERE orderno='" .$_SESSION['ExistingOrder'] . "'", $db,$ErrMsg,$DbgMsg,true);
 			$ErrMsg = _('Could not insert the contract bill of materials');			
 			$InsContractBOM = DB_query("INSERT INTO bom (parent, 
-														 component,
-														 workcentreadded,
-														 location,
-														 effectiveafter,
-														 effectiveto)
-											SELECT contractref,
-													stockid,
-													workcentreadded,
-												'" . $_SESSION['Items'.$identifier]->Location ."',
-												'" . Date('Y-m-d') . "',
-												'2037-12-31'
-											FROM contractbom 
-											WHERE contractref='" . $ContractRow['contractref'] . "'",$db,$ErrMsg,$DbgMsg);
+																									 component,
+																									 workcentreadded,
+																									 loccode,
+																									 effectiveafter,
+																									 effectiveto)
+																						SELECT contractref,
+																								stockid,
+																								workcentreadded,
+																							'" . $_SESSION['Items'.$identifier]->Location ."',
+																							'" . Date('Y-m-d') . "',
+																							'2037-12-31'
+																						FROM contractbom 
+																						WHERE contractref='" . $ContractRow['contractref'] . "'",$db,$ErrMsg,$DbgMsg);
 			
 			$ErrMsg = _('Unable to insert a new work order for the sales order item');
 			$InsWOResult = DB_query("INSERT INTO workorders (wo,
-															 loccode,
-															 requiredby,
-															 startdate)
-											 VALUES ('" . $WONo . "',
-													'" . $_SESSION['Items'.$identifier]->Location ."',
-													'" . $ContractRow['requireddate'] . "',
-													'" . Date('Y-m-d'). "')",
-													$db,$ErrMsg,$DbgMsg);
+																											 loccode,
+																											 requiredby,
+																											 startdate)
+																							 VALUES ('" . $WONo . "',
+																									'" . $_SESSION['Items'.$identifier]->Location ."',
+																									'" . $ContractRow['requireddate'] . "',
+																									'" . Date('Y-m-d'). "')",
+																									$db,$ErrMsg,$DbgMsg);
 			//Need to get the latest BOM to roll up cost but also add the contract other requirements
-			$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
-												FROM stockmaster INNER JOIN contractbom
-												ON stockmaster.stockid=contractbom.stockid
-												WHERE contractbom.contractref='" .  $ContractRow['contractref'] . "'",
+			$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*contractbom.quantity) AS cost
+															FROM stockmaster INNER JOIN contractbom
+															ON stockmaster.stockid=contractbom.stockid
+															WHERE contractbom.contractref='" .  $ContractRow['contractref'] . "'",
 									$db);
 			$CostRow = DB_fetch_row($CostResult);
 			if (is_null($CostRow[0]) OR $CostRow[0]==0){

@@ -52,22 +52,22 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 					</tr>';
 
 				$SQL = "SELECT gltrans.type,
-							gltrans.trandate,
-							gltrans.periodno,
-							gltrans.account,
-							gltrans.narrative,
-							gltrans.amount,
-							gltrans.posted,
-							chartmaster.accountname,
-							periods.lastdate_in_period
-						FROM gltrans,
-							chartmaster,
-							periods
-						WHERE gltrans.account = chartmaster.accountcode
-						AND periods.periodno=gltrans.periodno
-						AND gltrans.type= '" . $_GET['TypeID'] . "'
-						AND gltrans.typeno = '" . $_GET['TransNo'] . "'
-						ORDER BY gltrans.counterindex";
+												gltrans.trandate,
+												gltrans.periodno,
+												gltrans.account,
+												gltrans.narrative,
+												gltrans.amount,
+												gltrans.posted,
+												chartmaster.accountname,
+												periods.lastdate_in_period
+											FROM gltrans,
+												chartmaster,
+												periods
+											WHERE gltrans.account = chartmaster.accountcode
+											AND periods.periodno=gltrans.periodno
+											AND gltrans.type= '" . $_GET['TypeID'] . "'
+											AND gltrans.typeno = '" . $_GET['TransNo'] . "'
+											ORDER BY gltrans.counterindex";
 				$TransResult = DB_query($SQL,$db);
 
 				$Posted = _('Yes');
@@ -135,23 +135,33 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 								$j++;
 							}
 							echo	'<td>' . $TranDate . '</td>
-									<td class=number>' . MonthAndYearFromSQLDate($TransRow['lastdate_in_period']) . '</td>
-									<td><a href="' . $URL . '">' . $TransRow['accountname'] . '</a></td>
-									<td class=number>' . $DebitAmount . '</td>
-									<td class=number>' . $CreditAmount . '</td>
-									<td>' . $TransRow['narrative'] . '</td>
-									<td>' . $Posted . '</td>
-								</tr>';
+										<td>' . MonthAndYearFromSQLDate($TransRow['lastdate_in_period']) . '</td>
+										<td><a href="' . $URL . '">' . $TransRow['accountname'] . '</a></td>
+										<td class=number>' . $DebitAmount . '</td>
+										<td class=number>' . $CreditAmount . '</td>
+										<td>' . $TransRow['narrative'] . '</td>
+										<td>' . $Posted . '</td>
+									</tr>';
 					}
 
 					if ($DetailResult) {
 						while ( $DetailRow = DB_fetch_row($DetailResult) ) {
 							if ( $TransRow['amount'] > 0){
-									$Debit = number_format(($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],2);
-									$Credit = '&nbsp';
+									if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
+										$Debit = number_format(($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],2);
+										$Credit = '&nbsp';
+									} else {
+										$Debit = number_format((-$DetailRow[1] - $DetailRow[2]) / $DetailRow[3],2);
+										$Credit = '&nbsp';
+									}
 							} else {
-									$Credit = number_format(-($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],2);
-									$Debit = '&nbsp';
+									if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
+										$Credit = number_format(-($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],2);
+										$Debit = '&nbsp';
+									} else {
+										$Credit = number_format(($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],2);
+										$Debit = '&nbsp';
+									}
 							}
 
 							if ($j==1) {
@@ -162,13 +172,13 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 								$j++;
 							}
 							echo	'<td>' . $TranDate . '</td>
-									<td class=number>' . $TransRow['periodno'] . '</td>
-									<td><a href="' . $URL . $DetailRow[0] . $date . '">' . $TransRow['accountname']  . ' - ' . $DetailRow[4] . '</a></td>
-									<td class=number>' . $Debit . '</td>
-									<td class=number>' . $Credit . '</td>
-									<td>' . $TransRow['narrative'] . '</td>
-									<td>' . $Posted . '</td>
-								</tr>';
+										<td>' . MonthAndYearFromSQLDate($TransRow['lastdate_in_period']) . '</td>
+										<td><a href="' . $URL . $DetailRow[0] . $date . '">' . $TransRow['accountname']  . ' - ' . $DetailRow[4] . '</a></td>
+										<td class=number>' . $Debit . '</td>
+										<td class=number>' . $Credit . '</td>
+										<td>' . $TransRow['narrative'] . '</td>
+										<td>' . $Posted . '</td>
+									</tr>';
 						}
 						DB_free_result($DetailResult);
 					}

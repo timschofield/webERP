@@ -86,13 +86,12 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 }
 echo '</p><table cellpadding=2>';
 
-$TableHeader = "<tr>
-		<th>" . _('Account') . "</th>
-		<th>" . _('Name') . "</th>
-		<th>" . _('Amount') . '<br>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</th>
-		<th>" . _('Job') . "</th>
-		<th>" . _('Narrative') . '</th>
-		</tr>';
+$TableHeader = '<tr>
+							<th>' . _('Account') . '</th>
+							<th>' . _('Name') . '</th>
+							<th>' . _('Amount') . '<br>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+							<th>' . _('Narrative') . '</th>
+							</tr>';
 echo $TableHeader;
 $TotalGLValue=0;
 
@@ -102,12 +101,11 @@ foreach ( $_SESSION['SuppTrans']->GLCodes as $EnteredGLCode){
 		<td>' . $EnteredGLCode->GLCode . '</td>
 		<td>' . $EnteredGLCode->GLActName . '</td>
 		<td class=number>' . number_format($EnteredGLCode->Amount,2) . '</td>
-		<td>' .$EnteredGLCode->JobRef . '</td>
 		<td>' . $EnteredGLCode->Narrative . "</td>
 		<td><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $EnteredGLCode->Counter . "'>" . _('Delete') . '</a></td>
 		</tr>';
 
-	$TotalGLValue = $TotalGLValue + $EnteredGLCode->Amount;
+	$TotalGLValue += $EnteredGLCode->Amount;
 
 	$i++;
 	if ($i>15){
@@ -124,27 +122,27 @@ echo '<tr>
 
 
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
-	echo "<br><a href='$rootpath/SupplierInvoice.php?" . SID . "'>" . _('Back to Invoice Entry') . '</a><hr>';
+	echo '<br><a href="' . $rootpath . '/SupplierInvoice.php?' . SID . '">' . _('Back to Invoice Entry') . '</a><hr>';
 } else {
-	echo "<br><a href='$rootpath/SupplierCredit.php?" . SID . "'>" . _('Back to Credit Note Entry') . '</a><hr>';
+	echo '<br><a href="' . $rootpath . '/SupplierCredit.php?' . SID . '">' . _('Back to Credit Note Entry') . '</a><hr>';
 }
 
 /*Set up a form to allow input of new GL entries */
-echo "<form action='" . $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
+echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="post">';
 
 echo '<table>';
 if (!isset($_POST['GLCode'])) {
 	$_POST['GLCode']='';
 }
 echo '<tr>
-	<td>' . _('Account Code') . ":</td>
-	<td><input type='Text' name='GLCode' size=12 maxlength=11 VALUE=" .  $_POST['GLCode'] . '></td>
+	<td>' . _('Account Code') . ':</td>
+	<td><input type="text" name="GLCode" size=12 maxlength=11 VALUE="' .  $_POST['GLCode'] . '"></td>
 	</tr>';
 echo '<tr>
-	<td>' . _('Account Selection') . ':<br><font size=1>' . _('If you know the code enter it above') . '<br>' . _('otherwise select the account from the list') . "</font></td>
-	<td><select name='AcctSelection'>";
+	<td>' . _('Account Selection') . ':<br>(' . _('If you know the code enter it above') . '<br>' . _('otherwise select the account from the list') . ')</td>
+	<td><select name="AcctSelection">';
 
-$sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
+$sql = 'SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode';
 
 $result = DB_query($sql, $db);
 
@@ -165,31 +163,20 @@ if (!isset($_POST['Amount'])) {
 	$_POST['Amount']=0;
 }
 echo '<tr>
-	<td>' . _('Amount') . ":</td>
-	<td><input type='Text' class='number' name='Amount' size=12 maxlength=11 VALUE=" .  $_POST['Amount'] . '></td>
+	<td>' . _('Amount') . ':</td>
+	<td><input type="text" class="number" name="Amount" size="12" maxlength="11" VALUE="' .  $_POST['Amount'] . '"></td>
 	</tr>';
-	if (!isset($_POST['JobRef'])) {
-		$_POST['JobRef']='';
-	}
-echo '<tr>
-	<td>' . _('Contract Ref') . ":</td>
-	<td><input type='Text' name='JobRef' size=21 maxlength=20 VALUE=" . $_POST['JobRef'] . ">";
 
-	 /* Once the contract stuff is written then it would be appropriate to have:
-	  <a TARGET='_blank' href='$rootpath/ContractsList.php?" . SID . "'>" . _('View Open Contracts/Jobs') . '</a> */
-
-echo ' </td>
-	</tr>';
-	if (!isset($_POST['Narrative'])) {
-		$_POST['Narrative']='';
-	}
+if (!isset($_POST['Narrative'])) {
+	$_POST['Narrative']='';
+}
 echo '<tr>
-	<td>' . _('Narrative') . ":</td>
-	<td><TEXTAREA name='Narrative' COLS=40 ROWS=2>" .  $_POST['Narrative'] . '</TEXTAREa></td>
+	<td>' . _('Narrative') . ':</td>
+	<td><TEXTAREA name="Narrative" cols=40 rows=2>' .  $_POST['Narrative'] . '</textarea></td>
 	</tr>
 	</table>';
 
-echo "<input type='Submit' name='AddGLCodeToTrans' VALUE='" . _('Enter GL Line') . "'>";
+echo '<input type="submit" name="AddGLCodeToTrans" VALUE="' . _('Enter GL Line') . '">';
 
 echo '</form>';
 include('includes/footer.inc');

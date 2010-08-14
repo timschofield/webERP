@@ -248,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `offers` (
 
 INSERT INTO `config` VALUES('PurchasingManagerEmail', '');
 
-CREATE TABLE `emailsettings` (
+CREATE TABLE IF NOT EXISTS `emailsettings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `host` varchar(30) NOT NULL,
   `port` char(5) NOT NULL,
@@ -285,3 +285,17 @@ ALTER TABLE `www_users` CHANGE `supplierid` `supplierid` VARCHAR( 10 ) CHARACTER
 ALTER TABLE `orderdeliverydifferenceslog` DROP PRIMARY KEY;
 
 ALTER TABLE `loctransfers` CHANGE COLUMN `recqty` `recqty` double NOT NULL DEFAULT 0.0;
+
+CREATE TABLE IF NOT EXISTS `contractcharges` (
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `contractref` varchar(20) NOT NULL,
+  `transtype` SMALLINT NOT NULL DEFAULT 20,
+  `transno` INT NOT NULL DEFAULT 0,
+  `amount` double NOT NULL DEFAULT 0,
+  `narrative` varchar(50) NOT NULL DEFAULT '',
+  `anticipated` TINYINT NOT NULL DEFAULT 0,
+  INDEX ( `contractref` , `transtype` , `transno` ),
+  CONSTRAINT `contractcharges_ibfk_1` FOREIGN KEY (`contractref`) REFERENCES `contracts` (`contractref`),
+  CONSTRAINT `contractcharges_ibfk_2` FOREIGN KEY (`transtype`) REFERENCES `systypes` (`typeid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
