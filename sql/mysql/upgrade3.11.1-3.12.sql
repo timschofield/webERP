@@ -229,8 +229,6 @@ CREATE TABLE IF NOT EXISTS `contracts` (
 ALTER TABLE `salestypes` CHANGE COLUMN `sales_type` `sales_type` VARCHAR(40) NOT NULL DEFAULT '';
 INSERT INTO `config` VALUES ('ShowValueOnGRN', 1);
 
-ALTER TABLE `www_users` CHANGE COLUMN `modulesallowed` `modulesallowed` varchar(40) NOT NULL DEFAULT '1,1,1,1,1,1,1,1,1,1,1,';
-
 CREATE TABLE IF NOT EXISTS `offers` (
   offerid int(11) NOT NULL AUTO_INCREMENT,
   tenderid int(11) NOT NULL DEFAULT 0,
@@ -292,7 +290,7 @@ CREATE TABLE IF NOT EXISTS `contractcharges` (
   `transtype` SMALLINT NOT NULL DEFAULT 20,
   `transno` INT NOT NULL DEFAULT 0,
   `amount` double NOT NULL DEFAULT 0,
-  `narrative` varchar(50) NOT NULL DEFAULT '',
+  `narrative` TEXT NOT NULL DEFAULT '',
   `anticipated` TINYINT NOT NULL DEFAULT 0,
   INDEX ( `contractref` , `transtype` , `transno` ),
   CONSTRAINT `contractcharges_ibfk_1` FOREIGN KEY (`contractref`) REFERENCES `contracts` (`contractref`),

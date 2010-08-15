@@ -15,17 +15,25 @@ echo '<form action=' . $_SERVER['PHP_SELF'] .'?' .SID . ' method=post>';
 
 echo '<p><div class="centre">';
 
-if (isset($_REQUEST['ContractRef']) AND $_REQUEST['ContractRef']!='') {
-	$_REQUEST['ContractRef'] = trim($_REQUEST['ContractRef']);
-	echo _('Contract Reference') . ' - ' . $_REQUEST['ContractRef'];
+if (isset($_GET['ContractRef'])){
+	$_POST['ContractRef']=$_GET['ContractRef'];
+}
+if (isset($_GET['SelectedCustomer'])){
+	$_POST['SelectedCustomer']=$_GET['SelectedCustomer'];
+}
+
+
+if (isset($_POST['ContractRef']) AND $_POST['ContractRef']!='') {
+	$_POST['ContractRef'] = trim($_POST['ContractRef']);
+	echo _('Contract Reference') . ' - ' . $_POST['ContractRef'];
 } else {
-	if (isset($_REQUEST['SelectedCustomer'])) {
-		echo _('For customer') . ': ' . $_REQUEST['SelectedCustomer'] . ' ' . _('and') . ' ';
-		echo '<input type="hidden" name="SelectedCustomer" value="' . $_REQUEST['SelectedCustomer'] . '">';
+	if (isset($_POST['SelectedCustomer'])) {
+		echo _('For customer') . ': ' . $_POST['SelectedCustomer'] . ' ' . _('and') . ' ';
+		echo '<input type="hidden" name="SelectedCustomer" value="' . $_POST['SelectedCustomer'] . '">';
 	}
 }
 
-if (!isset($_REQUEST['ContractRef']) or $_REQUEST['ContractRef']==''){
+if (!isset($_POST['ContractRef']) or $_POST['ContractRef']==''){
 
 	echo _('Contract Reference') . ': <input type="text" name="ContractRef" maxlength=20 size=20>&nbsp&nbsp';
 	echo '<select name="Status">';
@@ -75,7 +83,7 @@ echo '&nbsp;&nbsp;<a href="' . $rootpath . '/Contracts.php?' . SID . '">' . _('N
 
 //figure out the SQL required from the inputs available
 
-if (isset($_REQUEST['ContractRef']) AND $_REQUEST['ContractRef'] !='') {
+if (isset($_POST['ContractRef']) AND $_POST['ContractRef'] !='') {
 		$SQL = "SELECT contractref,
 					   contractdescription,
 					   categoryid,
@@ -89,10 +97,10 @@ if (isset($_REQUEST['ContractRef']) AND $_REQUEST['ContractRef'] !='') {
 					   requireddate
 				FROM contracts INNER JOIN debtorsmaster 
 				ON contracts.debtorno = debtorsmaster.debtorno
-				WHERE contractref='". $_REQUEST['ContractRef'] ."'";
+				WHERE contractref " . LIKE . " '%" .  $_POST['ContractRef'] ."%'";
 			
 } else { //contractref not selected
-	if (isset($_REQUEST['SelectedCustomer'])) {
+	if (isset($_POST['SelectedCustomer'])) {
 
 		$SQL = "SELECT contractref,
 					   contractdescription,
@@ -107,7 +115,7 @@ if (isset($_REQUEST['ContractRef']) AND $_REQUEST['ContractRef'] !='') {
 					   requireddate
 				FROM contracts INNER JOIN debtorsmaster 
 				ON contracts.debtorno = debtorsmaster.debtorno
-				WHERE debtorno='". $_REQUEST['SelectedCustomer'] ."'";
+				WHERE debtorno='". $_POST['SelectedCustomer'] ."'";
 		if ($_POST['Status']!=4){
 			$SQL .= " AND status='" . $_POST['Status'] . "'";		
 		}
@@ -142,6 +150,7 @@ $tableheader = '<tr>
 			    <th>' . _('Modify') . '</th>
 				<th>' . _('Order') . '</th>
 				<th>' . _('Issue To WO') . '</th>
+				<th>' . _('Costing') . '</th>
 				<th>' . _('Contract Ref') . '</th>
 				<th>' . _('Description') . '</th>
 				<th>' . _('Customer') . '</th>
@@ -163,7 +172,8 @@ while ($myrow=DB_fetch_array($ContractsResult)) {
 
 	$ModifyPage = $rootpath . '/Contracts.php?' . SID . '&ModifyContractRef=' . $myrow['contractref'];
 	$OrderModifyPage = $rootpath . '/SelectOrderItems.php?' . SID . '&ModifyOrderNumber=' . $myrow['orderno'];
-	$IssueToWOPage = $rootpath . '/WOIssue.php?' . SID . '&WO=' . $myrow['wo'];
+	$IssueToWOPage = $rootpath . '/WorkOrderIssue.php?' . SID . '&WO=' . $myrow['wo'] . '&StockID=' . $myrow['contractref'];
+	$CostingPage = $rootpath . '/ContractCosting.php?' . SID . '&SelectedContract=' . $myrow['contractref'];
 	$FormatedRequiredDate = ConvertSQLDate($myrow['requireddate']);
 	
 	if ($myrow['status']==0 OR $myrow['status']==1){ //still setting up the contract
@@ -177,9 +187,11 @@ while ($myrow=DB_fetch_array($ContractsResult)) {
 		echo '<td>' . _('n/a') . '</td>';
 	}	
 	if ($myrow['status']==2){ //the customer has accepted the quote but not completed contract yet
-		echo '<td><a href="' . $IssueToWOPage . '">' . $myrow['wo'] . '</a></td>';
+		echo '<td><a href="' . $IssueToWOPage . '">' . $myrow['wo'] . '</a></td>
+				  <td><a href="' . $CostingPage . '">' . _('View') . '<a></td>';
 	} else {
-		echo '<td>' . _('n/a') . '</td>';
+		echo '<td>' . _('n/a') . '</td>
+				  <td>' . _('n/a') . '</td>';
 	}
 	echo '<td>' . $myrow['contractref'] . '</td>
 		  <td>' . $myrow['contractdescription'] . '</td>

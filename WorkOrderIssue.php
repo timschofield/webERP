@@ -8,23 +8,29 @@ $title = _('Issue Materials To Work Order');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
+if (isset($_GET['WO'])){
+	$_POST['WO']=$_GET['WO'];
+}
+if (isset($_GET['StockID'])){
+	$_POST['StockID']=$_GET['StockID'];
+}
+
 echo '<a href="'. $rootpath . '/SelectWorkOrder.php?' . SID . '">' . _('Back to Work Orders'). '</a><br>';
-echo '<a href="'. $rootpath . '/WorkOrderCosting.php?' . SID . '&WO=' .  $_REQUEST['WO'] . '">' . _('Back to Costing'). '</a><br>';
+echo '<a href="'. $rootpath . '/WorkOrderCosting.php?' . SID . '&WO=' .  $_POST['WO'] . '">' . _('Back to Costing'). '</a><br>';
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 
-if (!isset($_REQUEST['WO']) OR !isset($_REQUEST['StockID'])) {
-    /* This page can only be called with a purchase order number for invoicing*/
+
+if (!isset($_POST['WO']) OR !isset($_POST['StockID'])) {
+    /* This page can only be called with a work order number for issuing stock to*/
     echo '<div class="centre"><a href="' . $rootpath . '/SelectWorkOrder.php?' . SID . '">'.
         _('Select a work order to issue materials to').'</a></div>';
     prnMsg(_('This page can only be opened if a work order has been selected. Please select a work order to issue materials to first'),'info');
     include ('includes/footer.inc');
     exit;
 } else {
-    echo '<input type="hidden" name="WO" value=' .$_REQUEST['WO'] . '>';
-    $_POST['WO']=$_REQUEST['WO'];
-    echo '<input type="hidden" name="StockID" value=' .$_REQUEST['StockID'] . '>';
-    $_POST['StockID']=$_REQUEST['StockID'];
+    echo '<input type="hidden" name="WO" value=' .$_POST['WO'] . '>';
+    echo '<input type="hidden" name="StockID" value=' .$_POST['StockID'] . '>';
 }
 if (isset($_GET['IssueItem'])){
     $_POST['IssueItem']=$_GET['IssueItem'];
