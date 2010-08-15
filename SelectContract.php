@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: $*/
+/* $Id: SelectContract.php 3692 2010-08-15 09:22:08Z daintree $*/
 
 $PageSecurity = 6;
 

@@ -1,5 +1,5 @@
 <?php
-/* $Id: $ */
+/* $Id: Contract_Readin.php 3692 2010-08-15 09:22:08Z daintree $ */
 /*Contract_Readin.php is used by the modify existing Contract in Contracts.php and also by ContractCosting.php */
 	
 $ContractHeaderSQL = "SELECT contractdescription,
