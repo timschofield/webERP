@@ -267,7 +267,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						supptel='" . $_SESSION['PO'.$identifier]->supptel . "',
 						contact='" . $_SESSION['PO'.$identifier]->contact . "',
 						paymentterms='" . $_SESSION['PO'.$identifier]->paymentterms . "',
-						allowprint='" . $_SESSION['PO'.$identifier]->AllowPrintPO . "'
+						allowprint='" . $_SESSION['PO'.$identifier]->AllowPrintPO . "',
+						status = '" . PurchOrder::STATUS_PENDING . "'
 						WHERE orderno = '" . $_SESSION['PO'.$identifier]->OrderNo ."'";
 
 			$ErrMsg =  _('The purchase order could not be updated because');
@@ -276,9 +277,6 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 			/*Now Update the purchase order detail records */
 			foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
-				$sql="UPDATE purchorders
-                      SET status = '" . PurchOrder::STATUS_PENDING . "'
-                      WHERE orderno = '" . $_SESSION['PO'.$identifier]->OrderNo . "'";
 				$result=DB_query($sql,$db,'','',true);
 				if ($POLine->Deleted==true) {
 					if ($POLine->PODetailRec!='') {
