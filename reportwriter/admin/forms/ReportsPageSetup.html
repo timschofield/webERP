@@ -182,7 +182,7 @@
 			if ($myrow['datafontalign']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
 		} ?> </select></td>
-    
+
     </tr>
     <tr>
       <td colspan="4"><?php echo RPT_TOTALS; ?></td>
@@ -210,7 +210,7 @@
   </table>
   <table align="center"  border="2" cellspacing="1" cellpadding="1">
     <tr bgcolor="#CCCCCC">
-      <td colspan="8"><div align="center"><?php echo RPT_CWDEF; ?></div></td>
+      <td colspan="20"><div align="center"><?php echo RPT_CWDEF; ?></div></td>
     </tr>
     <tr>
       <td><div align="center"><?php echo RPT_COL1W; ?></div></td>
@@ -221,6 +221,18 @@
       <td><div align="center"><?php echo RPT_COL6W; ?></div></td>
       <td><div align="center"><?php echo RPT_COL7W; ?></div></td>
       <td><div align="center"><?php echo RPT_COL8W; ?></div></td>
+      <td><div align="center"><?php echo RPT_COL9W; ?></div></td>
+      <td><div align="center"><?php echo RPT_COL10W; ?></div></td>
+      <td><div align="center"><?php echo RPT_COL11W; ?></div></td>
+      <td><div align="center"><?php echo RPT_COL12W; ?></div></td>
+      <td><div align="center"><?php echo RPT_COL13W; ?></div></td>
+      <td><div align="center"><?php echo RPT_COL14W; ?></div></td>
+      <td><div align="center"><?php echo RPT_COL15W; ?></div></td>
+      <td><div align="center"><?php echo RPT_COL16W; ?></div></td>
+      <td><div align="center"><?php echo RPT_COL17W; ?></div></td>
+      <td><div align="center"><?php echo RPT_COL18W; ?></div></td>
+      <td><div align="center"><?php echo RPT_COL19W; ?></div></td>
+      <td><div align="center"><?php echo RPT_COL20W; ?></div></td>
     </tr>
     <tr>
       <td><div align="center">
@@ -239,6 +251,30 @@
         <input name="Col7Width" type="text" value="<?php echo $myrow['col7width']; ?>" size="5" maxlength="3"></div></td>
       <td><div align="center">
         <input name="Col8Width" type="text" value="<?php echo $myrow['col8width']; ?>" size="5" maxlength="3"></div></td>
+      <td><div align="center">
+        <input name="Col9Width" type="text" value="<?php echo $myrow['col9width']; ?>" size="5" maxlength="3"></div></td>
+      <td><div align="center">
+        <input name="Col10Width" type="text" value="<?php echo $myrow['col10width']; ?>" size="5" maxlength="3"></div></td>
+      <td><div align="center">
+        <input name="Col11Width" type="text" value="<?php echo $myrow['col11width']; ?>" size="5" maxlength="3"></div></td>
+      <td><div align="center">
+        <input name="Col12Width" type="text" value="<?php echo $myrow['col12width']; ?>" size="5" maxlength="3"></div></td>
+      <td><div align="center">
+        <input name="Col13Width" type="text" value="<?php echo $myrow['col13width']; ?>" size="5" maxlength="3"></div></td>
+      <td><div align="center">
+        <input name="Col14Width" type="text" value="<?php echo $myrow['col14width']; ?>" size="5" maxlength="3"></div></td>
+      <td><div align="center">
+        <input name="Col15Width" type="text" value="<?php echo $myrow['col15width']; ?>" size="5" maxlength="3"></div></td>
+      <td><div align="center">
+        <input name="Col16Width" type="text" value="<?php echo $myrow['col16width']; ?>" size="5" maxlength="3"></div></td>
+      <td><div align="center">
+        <input name="Col17Width" type="text" value="<?php echo $myrow['col17width']; ?>" size="5" maxlength="3"></div></td>
+      <td><div align="center">
+        <input name="Col18Width" type="text" value="<?php echo $myrow['col18width']; ?>" size="5" maxlength="3"></div></td>
+      <td><div align="center">
+        <input name="Col19Width" type="text" value="<?php echo $myrow['col19width']; ?>" size="5" maxlength="3"></div></td>
+      <td><div align="center">
+        <input name="Col20Width" type="text" value="<?php echo $myrow['col20width']; ?>" size="5" maxlength="3"></div></td>
     </tr>
   </table>
   <?php } // end if ($Type<>'frm') ?>

@@ -5,7 +5,7 @@
   <input name="ReplaceReportID" type="hidden" value="<?php echo $ReplaceReportID; ?>">
   <table align="center"  border="1" cellspacing="1" cellpadding="1">
    <tr>
-     <td><?php if ($Type=='frm') echo FRM_RPTENTER; else echo RPT_RPTENTER; ?></td>
+     <td><?php if (isset($Type) and $Type=='frm') echo FRM_RPTENTER; else echo RPT_RPTENTER; ?></td>
      <td colspan="2">
 	   <input name="ReportName" type="text" value="<?php if (isset($_POST['ReportName'])) echo $_POST['ReportName']; ?>">
 	 <?php echo RPT_MAX30; ?></td>

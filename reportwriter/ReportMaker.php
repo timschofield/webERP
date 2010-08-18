@@ -1,7 +1,5 @@
 <?php
-
-/* $Id$ */
-
+/* $Revision: 1.7 $ */
 $DirectoryLevelsDeep =1;
 $PathPrefix = '../';
 $PageSecurity = 1; // set security level for webERP
@@ -11,8 +9,7 @@ $ReportLanguage = 'en_US';					// default language file
 
 define('DBReports','reports');			// name of the databse holding the main report information (ReportID)
 define('DBRptFields','reportfields');	// name of the database holding the report fields
-// Javier
-// define('FPDF_FONTPATH','../fonts/'); // FPDF path to fonts directory
+define('FPDF_FONTPATH','../fonts/'); // FPDF path to fonts directory
 
 // Fetch necessary include files - Host application specific (webERP)
 require($PathPrefix . 'includes/session.inc');
@@ -134,9 +131,7 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 		case RPT_BTN_EXPPDF:
 			$Prefs = ReadPostData($ReportID, $Prefs);
 			// include the necessary files to build report
-// Javier
-//			require($PathPrefix . 'includes/fpdf.php'); // FPDF class to generate reports
-			require($PathPrefix . 'includes/class.pdf.php'); // Cpdf TCPDF class to generate reports
+			require($PathPrefix . 'includes/fpdf.php'); // FPDF class to generate reports
 			require('WriteReport.inc');
 			$ReportData = '';
 			$success = BuildSQL($Prefs);
@@ -257,7 +252,10 @@ function RetrieveFields($ReportID, $EntryType) {
 	return $FieldListings;
 }
 
-function ChangeSequence($ReportID, $SeqNum, $EntryType, $UpDown) {
+function ChangeSequence($ReportID, 
+						$SeqNum, 
+						$EntryType, 
+						$UpDown) {
 	global $db;
 	// find the id of the row to move
 	$sql = "SELECT id FROM ".DBRptFields." 
@@ -476,7 +474,19 @@ function SavePrefs($ReportID) {
 			col5width = ".$_POST['Col5Width'].",
 			col6width = ".$_POST['Col6Width'].",
 			col7width = ".$_POST['Col7Width'].",
-			col8width = ".$_POST['Col8Width']."
+			col8width = ".$_POST['Col8Width'].",
+			col9width = ".$_POST['Col9Width'].",
+			col10width = ".$_POST['Col10Width'].",
+			col11width = ".$_POST['Col11Width'].",
+			col12width = ".$_POST['Col12Width'].",
+			col13width = ".$_POST['Col13Width'].",
+			col14width = ".$_POST['Col14Width'].",
+			col15width = ".$_POST['Col15Width'].",
+			col16width = ".$_POST['Col16Width'].",
+			col17width = ".$_POST['Col17Width'].",
+			col18width = ".$_POST['Col18Width'].",
+			col19width = ".$_POST['Col19Width'].",
+			col20width = ".$_POST['Col20Width'].",
 		WHERE id =".$ReportID.";";
 	$Result=DB_query($sql,$db,'','',false,true);
 	return true;

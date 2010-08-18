@@ -1,13 +1,13 @@
 <?php
-/* $Id$*/
+/* $Revision: 1.6 $ */
 
 /*
-This script has the responsibility to gather basic information necessary to retrieve data for reports.
-It is comprised of several steps designed to gather display preferences, database information, field
+This script has the responsibility to gather basic information necessary to retrieve data for reports. 
+It is comprised of several steps designed to gather display preferences, database information, field 
 information and filter/criteria information. The Report builder process is as follows:
 
 Step 1: (or script entry): displays the current listing of reports. Uses form ReportsHome.html as a UI.
-Step 2: (action=step2): After the user has selected an option, this step is followed to enter a report
+Step 2: (action=step2): After the user has selected an option, this step is followed to enter a report 
 	name and the type of report it is for grouping purposes.
 Step 3: Handles the page setup information.
 Step 4: Handles the database setup and link information.
@@ -18,15 +18,13 @@ Import: Handled in action=step8, calls an import function to read the setup info
 */
 
 $DirectoryLevelsDeep = 2;
-// Javier $PathPrefix = '../../'; se va un directorio mas arriba, si no funciona el cambio hay que hacerlo constante.
 $PathPrefix = '../../';
-
 $PageSecurity = 2; // set security level for webERP
 // Fetch necessary include files for webERP
 require ($PathPrefix . 'includes/session.inc');
 
 // Initialize some constants
-$ReportLanguage = 'en_US';				// default language file
+$ReportLanguage = 'en_US';				// default language file 
 define('DBReports','reports');		// name of the databse holding the main report information (ReportID)
 define('DBRptFields','reportfields');	// name of the database holding the report fields
 define ('DefRptPath',$PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/reportwriter/');	// path to default reports
@@ -41,8 +39,8 @@ require('RCFunctions.inc');
 $usrMsg = ''; // initialize array for return messages
 // a valid report id needs to be passed as a post field to do anything, except create new report
 if (!isset($_POST['ReportID'])) { // entered for the first time or created new report
-	$ReportID = '';
-} else {
+	$ReportID = ''; 
+} else { 
 	$ReportID = $_POST['ReportID'];
 	if (isset($_POST['Type'])) { // then the type was passed from the previous form
 		$Type=$_POST['Type'];
@@ -81,7 +79,7 @@ switch ($_GET['action']) {
 				$myrow = DB_fetch_array($Result);
 				$_POST['ReportName'] = $myrow['reportname'];
 				// continue like copy was pushed
-			case RPT_BTN_COPY: // Copy a report was selected
+			case RPT_BTN_COPY: // Copy a report was selected 
 				$FormParams = PrepStep('2');
 				break;
 			case RPT_BTN_DEL: // after confirmation, delete the report and go to the main report admin menu
@@ -103,7 +101,7 @@ switch ($_GET['action']) {
 				break;
 		}
 	break; // End Step 2
-
+	
 	case "step3": // entered from id setup page
 		switch ($_POST['todo']) {
 			case RPT_BTN_REPLACE: // Erase the default report and copy a new one with the same name
@@ -175,8 +173,8 @@ switch ($_GET['action']) {
 					$sql = "UPDATE ".DBReports." SET id=".$OrigID." WHERE id=0;";
 					$Result=DB_query($sql,$db,'','',false,true);
 					// Set the report name and group name per the form
-					$sql = "UPDATE ".DBReports." SET
-							reportname = '" . DB_escape_string($_POST['ReportName']) . "'
+					$sql = "UPDATE ".DBReports." SET 
+							reportname = '" . DB_escape_string($_POST['ReportName']) . "' 
 						WHERE id =".$ReportID.";";
 					$Result=DB_query($sql,$db,'','',false,true);
 					// fetch the fields and duplicate
@@ -184,7 +182,7 @@ switch ($_GET['action']) {
 					$Result=DB_query($sql,$db,'','',false,true);
 					while ($temp = DB_fetch_array($Result)) $field[] = $temp;
 					foreach ($field as $row) {
-						$sql = "INSERT INTO ".DBRptFields." (reportid, entrytype, seqnum, fieldname,
+						$sql = "INSERT INTO ".DBRptFields." (reportid, entrytype, seqnum, fieldname, 
 								displaydesc, visible, columnbreak, params)
 							VALUES (".$ReportID.", '".$row['entrytype']."', ".$row['seqnum'].",
 								'".$row['fieldname']."', '".$row['displaydesc']."', '".$row['visible']."',
@@ -198,7 +196,7 @@ switch ($_GET['action']) {
 				$myrow = DB_fetch_array($Result);
 				$FormParams = PrepStep('3');
 				break;
-
+	
 			case RPT_BTN_RENAME: // Rename a report was selected, fetch the report name and update
 				// input error check reportname, blank duplicate, bad characters, etc.
 				if ($_POST['ReportName']=='') { // no report name was entered, error and reload form
@@ -227,7 +225,7 @@ switch ($_GET['action']) {
 				$FormParams = PrepStep('1');
 		}
 	break;
-
+	
 	case "step4": // entered from page setup page
 		switch ($_POST['todo']) {
 			case RPT_BTN_UPDATE:
@@ -241,7 +239,7 @@ switch ($_GET['action']) {
 			case RPT_BTN_CONT: // fetch the report information and go to the page setup screen
 				$success = UpdatePageFields($ReportID);
 				// read in the data for the next form
-				$sql = "SELECT table1,
+				$sql = "SELECT table1, 
 						table2, table2criteria,
 						table3, table3criteria,
 						table4, table4criteria,
@@ -260,7 +258,7 @@ switch ($_GET['action']) {
 				$FormParams = PrepStep('1');
 		}
 	break;
-
+	
 	case "step5": // entered from dbsetup page
 		switch ($_POST['todo']) {
 			case RPT_BTN_BACK:
@@ -284,16 +282,16 @@ switch ($_GET['action']) {
 					}
 				}
 				$success = UpdateDBFields($ReportID);
-				if (!$success OR $_POST['todo']==RPT_BTN_UPDATE) {
+				if (!$success OR $_POST['todo']==RPT_BTN_UPDATE) { 
 					// update fields and stay on this form
 					if (!$success) $usrMsg[] = array('message'=>RPT_DUPDB, 'level'=>'error');
 					// read back in new data for next screen (will set defaults as defined in the db)
-					$sql = "SELECT table1,
-							table2, table2criteria,
-							table3, table3criteria,
-							table4, table4criteria,
-							table5, table5criteria,
-							table6, table6criteria,
+					$sql = "SELECT table1, 
+							table2, table2criteria, 
+							table3, table3criteria, 
+							table4, table4criteria, 
+							table5, table5criteria, 
+							table6, table6criteria, 
 							reportname
 						FROM ".DBReports." WHERE id='".$ReportID."'";
 					$Result=DB_query($sql,$db,'','',false,true);
@@ -311,7 +309,7 @@ switch ($_GET['action']) {
 				$FormParams = PrepStep('1');
 		}
 	break;
-
+	
 	case "step6": // entered from field setup page
 		if (!isset($_POST['todo'])) {	// then a sequence image button was pushed
 			$SeqNum = $_POST['SeqNum']; //fetch the sequence number
@@ -324,9 +322,9 @@ switch ($_GET['action']) {
 				if ($SeqNum<DB_num_rows($Result)) $success = ChangeSequence($SeqNum, 'fieldlist', 'down');
 				$FieldListings = RetrieveFields('fieldlist');
 			} elseif (isset($_POST['ed_x'])) { // the sequence edit button was pushed
-				// pre fill form with the field to edit and change button name
+				// pre fill form with the field to edit and change button name 
 				$FieldListings = RetrieveFields('fieldlist');
-				$sql = "SELECT * FROM ".DBRptFields."
+				$sql = "SELECT * FROM ".DBRptFields." 
 					WHERE reportid = ".$ReportID." AND entrytype = 'fieldlist' AND seqnum=".$SeqNum.";";
 				$Result=DB_query($sql,$db,'','',false,true);
 				$FieldListings['defaults'] = DB_fetch_array($Result);
@@ -340,12 +338,12 @@ switch ($_GET['action']) {
 		} else {
 			switch ($_POST['todo']) {
 				case RPT_BTN_BACK:
-					$sql = "SELECT table1,
-							table2, table2criteria,
-							table3, table3criteria,
-							table4, table4criteria,
-							table5, table5criteria,
-							table6, table6criteria,
+					$sql = "SELECT table1, 
+							table2, table2criteria, 
+							table3, table3criteria, 
+							table4, table4criteria, 
+							table5, table5criteria, 
+							table6, table6criteria, 
 							reportname
 						FROM ".DBReports." WHERE id='".$ReportID."'";
 					$Result=DB_query($sql,$db,'','',false,true);
@@ -374,7 +372,7 @@ switch ($_GET['action']) {
 						$reportname = $_POST['ReportName'];
 						$FormParams = PrepStep('5');
 						break;
-					}
+					} 
 					if ($_POST['todo']==RPT_BTN_ADDNEW) { // add new so insert
 						$_POST['SeqNum'] = InsertSequence($_POST['SeqNum'], 'fieldlist');
 					} else { // exists, so update it.
@@ -390,7 +388,7 @@ switch ($_GET['action']) {
 				case RPT_BTN_PROP: // Enter the properties of a given field
 					// see what form needs to be loaded and load based on index stored in params variable
 					$SeqNum = $_POST['SeqNum'];
-					$sql = "SELECT id, displaydesc, params FROM ".DBRptFields."
+					$sql = "SELECT id, displaydesc, params FROM ".DBRptFields." 
 						WHERE reportid = ".$ReportID." AND entrytype='fieldlist' AND seqnum = ".$SeqNum.";";
 					$Result = DB_query($sql,$db,'','',false,true);
 					$myrow = DB_fetch_assoc($Result);
@@ -419,13 +417,13 @@ switch ($_GET['action']) {
 			}
 		}
 	break;
-
+	
 	case "step6a": // entered from properties page for fields
 		$ButtonValue = RPT_BTN_ADDNEW; // default the field button to Add New unless overidden by the edit image pressed
 		$reportname = $_POST['ReportName'];
 		$SeqNum = $_POST['SeqNum'];
 		// first fetch the original Params
-		$sql = "SELECT id, params FROM ".DBRptFields."
+		$sql = "SELECT id, params FROM ".DBRptFields." 
 			WHERE reportid = ".$ReportID." AND entrytype='fieldlist' AND seqnum = ".$SeqNum.";";
 		$Result = DB_query($sql,$db,'','',false,true);
 		$myrow = DB_fetch_assoc($Result);
@@ -441,9 +439,9 @@ switch ($_GET['action']) {
 					$ButtonValue = RPT_BTN_CHANGE;
 				}
 			}
-			// Update field properties
+			// Update field properties 
 			$FormParams = PrepStep('prop');
-			$FormParams['id'] = $myrow['id'];
+			$FormParams['id'] = $myrow['id']; 
 		} else {
 			// fetch the choices with the form post data
 			foreach ($_POST as $key=>$value) $Params[$key]=$value;
@@ -460,36 +458,36 @@ switch ($_GET['action']) {
 						$Index = $_POST['FieldIndex'];
 						if ($Index<>'') $Params['Seq'] = array_merge(array_slice($Params['Seq'],0,$Index),array_slice($Params['Seq'],$Index+1));
 					} else { // it's the add button, error check
-						if ($_POST['TotalField']=='') {
+						if ($_POST['TotalField']=='') { 
 							$usrMsg[] = array('message'=>RPT_BADFLD, 'level'=>'error');
 							// reload form with bad data entered as field defaults, ready to be editted
 							$DisplayName =$_POST['DisplayName'];
 							$FormParams = PrepStep('prop');
-							$FormParams['id'] = $myrow['id'];
+							$FormParams['id'] = $myrow['id']; 
 							break;
-						}
+						} 
 						$Params['Seq'][] = $_POST['TotalField'];
 					}
-					// Update field properties
+					// Update field properties 
 					$sql = "UPDATE ".DBRptFields." SET params='".serialize($Params)."' WHERE id = ".$_POST['ID'].";";
 					$Result=DB_query($sql,$db,'','',false,true);
 					$Params['TotalField']='';
 					$FormParams = PrepStep('prop');
-					$FormParams['id'] = $myrow['id'];
+					$FormParams['id'] = $myrow['id']; 
 					break;
 				case RPT_BTN_CHANGE:
 				case RPT_BTN_ADDNEW:
 					// Error Check input, see if user entered a bad fieldname or description, error and reload
-					if ($_POST['TblField']=='' OR ($Params['index']=='Tbl' AND $_POST['TblDesc']=='')) {
+					if ($_POST['TblField']=='' OR ($Params['index']=='Tbl' AND $_POST['TblDesc']=='')) { 
 						$usrMsg[] = array('message'=>RPT_BADFLD, 'level'=>'error');
 						// reload form with bad data entered as field defaults, ready to be editted
 						if ($_POST['todo']==RPT_BTN_ADDNEW) $ButtonValue = RPT_BTN_ADDNEW;
 							else $ButtonValue = RPT_BTN_CHANGE;
 						$DisplayName =$_POST['DisplayName'];
 						$FormParams = PrepStep('prop');
-						$FormParams['id'] = $myrow['id'];
+						$FormParams['id'] = $myrow['id']; 
 						break;
-					}
+					} 
 					if ($_POST['todo']==RPT_BTN_ADDNEW) $success = InsertFormSeq($Params,'insert');
 						else $success = InsertFormSeq($Params, 'update');
 					// continue on
@@ -514,7 +512,7 @@ switch ($_GET['action']) {
 						$Params['TblDesc'] = '';
 						$Params['Processing'] = '';
 					}
-					// Update field properties
+					// Update field properties 
 					$sql = "UPDATE ".DBRptFields." SET params='".serialize($Params)."' WHERE id = ".$_POST['ID'].";";
 					$Result=DB_query($sql,$db,'','',false,true);
 					// check for update errors and reload
@@ -524,7 +522,7 @@ switch ($_GET['action']) {
 					} else { // print error message if need be and reload parameter form
 						$DisplayName =$_POST['DisplayName'];
 						$FormParams = PrepStep('prop');
-						$FormParams['id'] = $myrow['id'];
+						$FormParams['id'] = $myrow['id']; 
 					}
 					break;
 				default: // bail to reports home
@@ -534,7 +532,7 @@ switch ($_GET['action']) {
 			}
 		}
 	break;
-
+	
 	case "step7": // entered from criteria setup page
 		$OverrideDefaults = false;
 		if (!isset($_POST['todo'])) {	// then a sequence image button was pushed
@@ -548,8 +546,8 @@ switch ($_GET['action']) {
 				if ($SeqNum<DB_num_rows($Result)) $success = ChangeSequence($_POST['SeqNum'], $EntryType, 'down');
 			} elseif (isset($_POST['ed_x'])) { // the sequence edit button was pushed
 				$OverrideDefaults = true;
-				// pre fill form with the field to edit and change button name
-				$sql = "SELECT * FROM ".DBRptFields."
+				// pre fill form with the field to edit and change button name 
+				$sql = "SELECT * FROM ".DBRptFields." 
 					WHERE reportid = ".$ReportID." AND entrytype = '".$EntryType."' AND seqnum=".$SeqNum.";";
 				$Result=DB_query($sql,$db,'','',false,true);
 				$NewDefaults['defaults'] = DB_fetch_array($Result);
@@ -600,13 +598,13 @@ switch ($_GET['action']) {
 					if (isset($_POST['EntryType'])) $EntryType = $_POST['EntryType']; else $EntryType = '';
 					// build date string of choices from user
 					$DateString = '';
-					for ($i=1; $i<=count($DateChoices); $i++) {
+					for ($i=1; $i<=count($DateChoices); $i++) { 
 						if (isset($_POST['DateRange'.$i])) $DateString .= $_POST['DateRange'.$i];
 					}
 					// error check input for date
 					if ($DateString=='' OR $DateString=='a') { // then the report is date independent
 						$_POST['DateField'] = ''; // clear the date field since we don't need it
-						$IsValidField = true; //
+						$IsValidField = true; // 
 					} else { // check the input for a valid fieldname
 						$IsValidField = ValidateField($ReportID, $_POST['DateField'], 'TestField');
 					}
@@ -669,7 +667,7 @@ switch ($_GET['action']) {
 			}
 		}
 	break; // End Step 7
-
+	
 	case "step8": // Entered from import report form
 		switch ($_POST['todo']) {
 			case RPT_BTN_IMPORT: // Error check input and import the new report

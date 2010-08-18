@@ -1,6 +1,5 @@
 <?php
-
-/* $Id$ */
+/* $Revision: 1.3 $ */
 
 $DirectoryLevelsDeep = 1;
 $PathPrefix = '../';
@@ -8,11 +7,10 @@ $PageSecurity = 1; // set security level for webERP
 require($PathPrefix . 'includes/session.inc');
 
 // TBD The followiung line needs to be replace when more translations are available
-$ReportLanguage = 'en_US';		// default language file 
-define('DBReports','reports');		// name of the databse holding the main report information (ReportID)
+$ReportLanguage = 'en_US';					// default language file 
+define('DBReports','reports');			// name of the databse holding the main report information (ReportID)
 define('DBRptFields','reportfields');	// name of the database holding the report fields
-// Javier
-// define('FPDF_FONTPATH','../fonts/'); // FPDF path to fonts directory
+define('FPDF_FONTPATH','../fonts/'); // FPDF path to fonts directory
 define('DefRptPath',$PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/reportwriter/');	// path to default reports
 // Fetch necessary include files - Host application specific (webERP)
 require_once($PathPrefix . 'includes/DateFunctions.inc');
@@ -100,9 +98,7 @@ switch ($_POST['todo']) {
 			}
 		} // else use default settings, i.e. no overrides
 		// All done with setup, build the form
-// Javier
-//		require($PathPrefix . 'includes/fpdf.php'); // FPDF class to generate reports
-		require($PathPrefix . 'includes/class.pdf.php'); // Cpdf TCPDF class to generate reports
+		require($PathPrefix . 'includes/fpdf.php'); // FPDF class to generate reports
 		require('WriteForm.inc');
 		// build the pdf pages (this function exits the script if successful; otherwise returns with error)
 		$success = BuildPDF($ReportID, $Prefs); // build and output form, should not return from this function

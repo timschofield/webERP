@@ -9,7 +9,6 @@ For use with webERP
 Revision History:
 Revision 1.0 - 2005-11-03 - By D. Premo - Initial Release
 */
-/* $Id$*/
 function GetReports($GroupID) {
 	global $db, $rootpath;
 	$Title= array(_('Custom Reports'), _('Default Reports'));

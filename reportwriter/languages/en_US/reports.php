@@ -1,5 +1,5 @@
 <?php /* Version 1.0 */
-/* $Id$*/
+
 /**************************************************************************************
 Locale language file for reports. This file can be broken out for apps that use
 DEFINE statements. The report scripts and forms obtain their text definitions here.
@@ -172,6 +172,18 @@ define('RPT_COL5W',_('Column 5'));
 define('RPT_COL6W',_('Column 6'));
 define('RPT_COL7W',_('Column 7'));
 define('RPT_COL8W',_('Column 8'));
+define('RPT_COL9W',_('Column 9'));
+define('RPT_COL10W',_('Column 10'));
+define('RPT_COL11W',_('Column 11'));
+define('RPT_COL12W',_('Column 12'));
+define('RPT_COL13W',_('Column 13'));
+define('RPT_COL14W',_('Column 14'));
+define('RPT_COL15W',_('Column 15'));
+define('RPT_COL16W',_('Column 16'));
+define('RPT_COL17W',_('Column 17'));
+define('RPT_COL18W',_('Column 18'));
+define('RPT_COL19W',_('Column 19'));
+define('RPT_COL20W',_('Column 20'));
 define('RPT_CRITTYPE',_('Type of Criteria'));
 define('RPT_TYPECREATE',_('Select report or form type to create:'));
 define('RPT_CWDEF',_('Column widths - mm (0 for same as prior column)'));
