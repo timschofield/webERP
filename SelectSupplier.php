@@ -53,7 +53,7 @@ if ($_SESSION['geocode_integration'] == 1 AND isset($_SESSION['SupplierID'])) {
 			</script>
 			<body onload="load()" onunload="GUnload()">';
 }
-$msg = '';
+
 /*
 if (!isset($_POST['Search'])){
 $_POST['Search']='';
@@ -79,7 +79,7 @@ if (isset($_POST['Select'])) { /*User has hit the button selecting a supplier */
 }
 if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
 	if (strlen($_POST['Keywords']) > 0 AND strlen($_POST['SupplierCode']) > 0) {
-		$msg = '<br>' . _('Supplier name keywords have been used in preference to the Supplier code extract entered');
+		prnMsg( '<br>' . _('Supplier name keywords have been used in preference to the Supplier code extract entered'), 'info' );
 	}
 	if ($_POST['Keywords'] == '' AND $_POST['SupplierCode'] == '') {
 		$SQL = 'SELECT supplierid,
@@ -191,7 +191,6 @@ if (isset($_SESSION['SupplierID'])) {
 	echo '</td></tr></table>';
 }
 echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method=post>";
-echo '<b>' . $msg;
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') .
 		'" alt="">' . ' ' . _('Search for Suppliers') . '
 		<table cellpadding=3 colspan=4 class=selection><tr><td>' . _('Enter a partial Name') . ':</font></td><td>';

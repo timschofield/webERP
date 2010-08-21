@@ -733,10 +733,10 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		$_POST['StockCode']='%';
 	}
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
-		$msg=_('Stock description keywords have been used in preference to the Stock code extract entered');
+		prnMsg=( _('Stock description keywords have been used in preference to the Stock code extract entered'), 'info' );
 	}
 	if ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
-		$msg=_('At least one stock description keyword or an extract of a stock code must be entered for the search');
+		prnMsg( _('At least one stock description keyword or an extract of a stock code must be entered for the search'), 'info' );
 	} else {
 		if (strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
@@ -789,7 +789,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 if (!isset($SelectedParent)) {
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
-	echo "<form action=" . $_SERVER['PHP_SELF'] . "?" . SID ." method=post><b><br>" . $msg ."</b>" .
+	echo "<form action=" . $_SERVER['PHP_SELF'] . "?" . SID ." method=post>" .
 	'<div class="page_help_text">'. _('Select a manufactured part') . " (" . _('or Assembly or Kit part') . ") " .
 		 _('to maintain the bill of material for using the options below') . "." . "<br><font size=1>" .
 	 _('Parts must be defined in the stock item entry') . "/" . _('modification screen as manufactured') .

@@ -63,15 +63,14 @@ if (isset($_POST['CancelCredit'])) {
 if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 
 	 if ($_POST['Keywords'] AND $_POST['CustCode']) {
-		  $msg=_('Customer name keywords have been used in preference to the customer code extract entered');
+		  prnMsg( _('Customer name keywords have been used in preference to the customer code extract entered'), 'info' );
 	 }
 	 if ($_POST['Keywords']=='' AND $_POST['CustCode']=='') {
-		  $msg=_('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search');
+		  prnMsg( _('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search'), 'info' );
 	 } else {
 		  If (strlen($_POST['Keywords'])>0) {
 		  //insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
-		  	$msg='';
 
 			   $SQL = 'SELECT
 			   		custbranch.debtorno,
@@ -85,7 +84,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 				AND custbranch.disabletrans=0";
 
 		  } elseif (strlen($_POST['CustCode'])>0){
-			   $msg='';
+
 			   $SQL = 'SELECT
 			   		custbranch.debtorno,
 					custbranch.brname,
@@ -198,12 +197,9 @@ will be booked back into. */
 if ($_SESSION['RequireCustomerSelection'] ==1
 	OR !isset($_SESSION['CreditItems']->DebtorNo)
 	OR $_SESSION['CreditItems']->DebtorNo=='' ) {
-	if (!isset($msg)) {
-		$msg = '';
-	}
+
 	echo '<font size=3><div class="centre"><b> - ' . _('Customer Selection') . '</b></font></div><br>';
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
-	echo '<b><br>' . $msg . '</b>';
 	echo '<table cellpadding=3 colspan=4>';
 	echo '<tr>';
 	echo '<td><font size=1>' . _('Enter text in the customer name') . ':</font></td>';
@@ -272,13 +268,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	 echo '<font size=4><b><U><div class="centre">' . $_SESSION['CreditItems']->CustomerName  . ' - ' . $_SESSION['CreditItems']->DeliverTo . '</div></U></b></font><br>';
 
  /* do the search for parts that might be being looked up to add to the credit note */
-	 If (isset($_POST['Search'])){
+	 if (isset($_POST['Search'])){
 
-		  If ($_POST['Keywords']!='' AND $_POST['StockCode']!='') {
-			   $msg=_('Stock description keywords have been used in preference to the Stock code extract entered') . '.';
+		  if ($_POST['Keywords']!='' AND $_POST['StockCode']!='') {
+			   prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered') . '.', 'info' );
 		  }
 
-		If ($_POST['Keywords']!="") {
+		if ($_POST['Keywords']!="") {
 			//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
@@ -677,15 +673,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			   if ($k==1){
 				$RowStarter = '<tr class="EvenTableRows">';
-			   } elseif ($k==1){
-				$RowStarter = '<tr class="OddTableRows">';
 				$k=0;
 			   } else {
-				$RowStarter = '<tr bgcolor="#EEEEEE">';
-				$k=1;
+				$RowStarter = '<tr class="OddTableRows">';
+				$k++;
 			   }
-
-
+			   
 			   echo $RowStarter . '<td>' . $LineItem->StockID . '</td>
 			   			<td>' . $LineItem->ItemDescription . '</td>';
 

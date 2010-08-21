@@ -585,7 +585,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		$_POST['PageOffset'] = 1;
 	}
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
-		$msg = _('Stock description keywords have been used in preference to the Stock code extract entered');
+		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'), 'info' );
 	}
 	if ($_POST['Keywords']) {
 		//insert wildcard characters in spaces

@@ -114,7 +114,7 @@ if (isset($_POST['submit'])) {
 //the link to delete a selected record was clicked instead of the submit button
 $sql = "DELETE FROM geocode_param WHERE geocodeid = '" . $_GET['delete'] . "' LIMIT 1";
 $result = DB_query($sql,$db);
-$msg = _('Geocode deleted');
+	prnMsg( _('Geocode deleted'), 'success' );
 	//end if status code used in customer or supplier accounts
 	unset ($_GET['delete']);
 	unset ($SelectedParam);

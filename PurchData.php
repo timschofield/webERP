@@ -236,7 +236,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 
 if (isset($_POST['SearchSupplier'])) {
     if (isset($_POST['Keywords']) AND isset($_POST['SupplierCode'])) {
-        $msg = _('Supplier Name keywords have been used in preference to the Supplier Code extract entered') . '.';
+        prnMsg( _('Supplier Name keywords have been used in preference to the Supplier Code extract entered') . '.', 'info' );
     }
     if ($_POST['Keywords'] == '' AND $_POST['SupplierCode'] == '') {
         $_POST['Keywords'] = ' ';

@@ -371,7 +371,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 		_('Tenders') . '" alt="">' . ' ' . _('Select items to offer from').' '.$Supplier .'</p>';
 
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
-		$msg=_('Stock description keywords have been used in preference to the Stock code extract entered');
+		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'), 'info' );
 	}
 	if ($_POST['Keywords']) {
 		//insert wildcard characters in spaces

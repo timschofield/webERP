@@ -405,10 +405,10 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 if (isset($_POST['Search'])){  /*ie seach for stock items */
 
-	If ($_POST['Keywords'] AND $_POST['StockCode']) {
-		$msg=_('Stock description keywords have been used in preference to the Stock code extract entered');
+	if ($_POST['Keywords'] AND $_POST['StockCode']) {
+		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'), 'info' );
 	}
-	If ($_POST['Keywords']) {
+	if ($_POST['Keywords']) {
 		//insert wildcard characters in spaces
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 

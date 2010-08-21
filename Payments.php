@@ -190,8 +190,6 @@ if (isset($_POST['Discount']) and $_POST['Discount']!=''){
 }
 
 
-$msg='';
-
 if (isset($_POST['CommitBatch'])){
 
   /* once the GL analysis of the payment is entered (if the Creditors_GLLink is active),

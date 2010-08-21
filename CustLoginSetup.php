@@ -167,7 +167,7 @@ if (isset($_POST['submit'])) {
 						blocked='" . $_POST['Blocked'] . "'
 					WHERE userid = '".$SelectedUser."'";
 
-		$msg = _('The selected user record has been updated');
+		prnMsg( _('The selected user record has been updated'), 'success' );
 	} elseif ($InputError !=1) {
 
 		$sql = "INSERT INTO www_users (userid,
@@ -200,7 +200,7 @@ if (isset($_POST['submit'])) {
 						'" . $_SESSION['DefaultDisplayRecordsMax'] . "',
 						'" . $_POST['Theme'] . "',
 						'". $_POST['UserLanguage'] ."')";
-		$msg = _('A new user record has been inserted');
+		prnMsg( _('A new user record has been inserted'), 'success' );
 	}
 
 	if ($InputError!=1){

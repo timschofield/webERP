@@ -1,6 +1,6 @@
 #! /bin/bash
 
-BASE_DIR=/root/httpd/hiawatha/webERP;
+BASE_DIR=../;
 OUTPUT_DIR=/root/tmp;
 MYSQL_USER=root;
 MYSQL_PWD=woofwoof;

@@ -45,7 +45,6 @@ if (isset($_POST['JournalProcessDate'])){
 if (isset($_POST['JournalType'])){
 	$_SESSION['JournalDetail']->JournalType = $_POST['JournalType'];
 }
-$msg='';
 
 if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Process Journal')){
 
