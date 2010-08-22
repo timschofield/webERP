@@ -48,7 +48,7 @@ if (isset($_POST['BackToHeader'])){
 if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
-		prnMsg=(_('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
+		prnMsg(_('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
 	}
 
 	if ($_POST['Keywords']) {

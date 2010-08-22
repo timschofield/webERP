@@ -687,7 +687,7 @@ then do the updates and inserts to process the credit note entered */
 								amount)
 							VALUES (21, ' .
 						 		$CreditNoteNo . ",
-								'" . SQLCreditNoteDate. "',
+								'" . $SQLCreditNoteDate. "',
 								'" . $PeriodNo . "',
 								'". $WIPAccount . "',
 								'" . $_SESSION['SuppTrans']->SupplierID . ' ' . _('Contract charge against') . ' ' . $Contract->ContractRef . "',

@@ -41,14 +41,14 @@ Function GetStockGLCode ($StockID, &$db){
 
 /*Gets the GL Codes relevant to the stock item account from the stock category record */
 	$QuerySQL = "SELECT stockact,
-				adjglact,
-				purchpricevaract,
-				materialuseagevarac,
-				wipact
-			FROM stockmaster,
-				stockcategory
-			WHERE stockmaster.categoryid=stockcategory.categoryid
-			AND stockmaster.stockid = '" . $StockID . "'";
+											adjglact,
+											purchpricevaract,
+											materialuseagevarac,
+											wipact
+							FROM stockmaster,
+											stockcategory
+							WHERE stockmaster.categoryid=stockcategory.categoryid
+							AND stockmaster.stockid = '" . $StockID . "'";
 
 	$ErrMsg =  _('The stock GL codes could not be retrieved because');
 	$GetStkGLResult = DB_query($QuerySQL, $db, $ErrMsg);

@@ -187,11 +187,14 @@ while ($myrow=DB_fetch_array($ContractsResult)) {
 		echo '<td>' . _('n/a') . '</td>';
 	}	
 	if ($myrow['status']==2){ //the customer has accepted the quote but not completed contract yet
-		echo '<td><a href="' . $IssueToWOPage . '">' . $myrow['wo'] . '</a></td>
-				  <td><a href="' . $CostingPage . '">' . _('View') . '<a></td>';
+		echo '<td><a href="' . $IssueToWOPage . '">' . $myrow['wo'] . '</a></td>';
 	} else {
-		echo '<td>' . _('n/a') . '</td>
-				  <td>' . _('n/a') . '</td>';
+		echo '<td>' . _('n/a') . '</td>';
+	}
+	if ($myrow['status']==2 OR $myrow['status']==3){
+			echo '<td><a href="' . $CostingPage . '">' . _('View') . '<a></td>';
+		} else {
+			echo '<td>' . _('n/a') . '</td>';
 	}
 	echo '<td>' . $myrow['contractref'] . '</td>
 		  <td>' . $myrow['contractdescription'] . '</td>

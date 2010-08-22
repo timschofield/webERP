@@ -206,6 +206,7 @@ CREATE TABLE IF NOT EXISTS `contracts` (
   `contractdescription` text NOT NULL DEFAULT '',
   `debtorno` varchar(10) NOT NULL DEFAULT '',
   `branchcode` varchar(10) NOT NULL DEFAULT '',
+   `loccode` varchar(5) NOT NULL DEFAULT '',
   `status` tinyint NOT NULL DEFAULT 0,
   `categoryid` varchar(6) NOT NULL DEFAULT '',
   `orderno` int(11) NOT NULL DEFAULT '0',
@@ -220,9 +221,11 @@ CREATE TABLE IF NOT EXISTS `contracts` (
   KEY `CategoryID` (`categoryid`),
   KEY `Status` (`status`),
   KEY `WO` (`wo`),
+  KEY `loccode` (`loccode`),
   KEY `DebtorNo` (`debtorno`,`branchcode`),
   CONSTRAINT `contracts_ibfk_1` FOREIGN KEY (`debtorno`, `branchcode`) REFERENCES `custbranch` (`debtorno`, `branchcode`),
-  CONSTRAINT `contracts_ibfk_2` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`)
+  CONSTRAINT `contracts_ibfk_2` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`),
+  CONSTRAINT `contracts_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -297,3 +300,4 @@ CREATE TABLE IF NOT EXISTS `contractcharges` (
   CONSTRAINT `contractcharges_ibfk_2` FOREIGN KEY (`transtype`) REFERENCES `systypes` (`typeid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES ('32', 'Contract Close', '1');

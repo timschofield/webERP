@@ -5,6 +5,7 @@
 $ContractHeaderSQL = "SELECT contractdescription,
 															contracts.debtorno,
 															contracts.branchcode,
+															contracts.loccode,
 															status,
 															categoryid,
 															orderno,
@@ -21,7 +22,8 @@ $ContractHeaderSQL = "SELECT contractdescription,
 													INNER JOIN currencies
 													ON debtorsmaster.currcode=currencies.currabrev
 													INNER JOIN custbranch 
-													ON debtorsmaster.debtorno=custbranch.debtorno  		
+													ON debtorsmaster.debtorno=custbranch.debtorno 
+													AND contracts.branchcode=custbranch.branchcode 		
 													WHERE contractref= '" . $ContractRef . "'";
 
 $ErrMsg =  _('The contract cannot be retrieved because');
@@ -35,6 +37,7 @@ if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifi
 	$_SESSION['Contract'.$identifier]->ContractDescription = $myrow['contractdescription'];
 	$_SESSION['Contract'.$identifier]->DebtorNo = $myrow['debtorno'];
 	$_SESSION['Contract'.$identifier]->BranchCode = $myrow['branchcode'];
+	$_SESSION['Contract'.$identifier]->LocCode = $myrow['loccode'];
 	$_SESSION['Contract'.$identifier]->Status = $myrow['status'];
 	$_SESSION['Contract'.$identifier]->CategoryID = $myrow['categoryid'];
 	$_SESSION['Contract'.$identifier]->OrderNo = $myrow['orderno'];

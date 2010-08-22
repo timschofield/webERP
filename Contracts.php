@@ -27,7 +27,7 @@ include('includes/SQL_CommonFunctions.inc');
  * unix timestamp will be sufficient.
  */
 
-if (empty($_GET['identifier'])) {
+if (!isset($_GET['identifier'])) {
 	$identifier=date('U');
 } else {
 	$identifier=$_GET['identifier'];
@@ -65,6 +65,7 @@ if(isset($_SESSION['Contract'.$identifier]) AND
 	$_SESSION['Contract'.$identifier]->ContractRef=$_POST['ContractRef'];
 	$_SESSION['Contract'.$identifier]->ContractDescription=$_POST['ContractDescription'];
 	$_SESSION['Contract'.$identifier]->CategoryID = $_POST['CategoryID'];
+	$_SESSION['Contract'.$identifier]->LocCode = $_POST['LocCode'];
 	$_SESSION['Contract'.$identifier]->RequiredDate = $_POST['RequiredDate'];
 	$_SESSION['Contract'.$identifier]->Margin = $_POST['Margin'];
 	$_SESSION['Contract'.$identifier]->CustomerRef = $_POST['CustomerRef'];
@@ -201,7 +202,6 @@ if (!isset($_SESSION['Contract'.$identifier])){
 	 * code above if a modification to an existing contract. Also
 	 * $ExistingContract would be set to the ContractRef
 	 * */
-
 		$_SESSION['ExistingContract']= 0;
 		$_SESSION['Contract'.$identifier] = new Contract;
 				
@@ -256,6 +256,7 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 		$_SESSION['Contract'.$identifier]->ContractRef=$_POST['ContractRef'];
 		$_SESSION['Contract'.$identifier]->ContractDescription=$_POST['ContractDescription'];
 		$_SESSION['Contract'.$identifier]->CategoryID = $_POST['CategoryID'];
+		$_SESSION['Contract'.$identifier]->LocCode = $_POST['LocCode'];
 		$_SESSION['Contract'.$identifier]->RequiredDate = $_POST['RequiredDate'];
 		$_SESSION['Contract'.$identifier]->Margin = $_POST['Margin'];
 		$_SESSION['Contract'.$identifier]->Status = $_POST['Status'];
@@ -263,17 +264,17 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 		$_SESSION['Contract'.$identifier]->ExRate = $_POST['ExRate'];
 		
 		/*Get the first work centre for the users location - until we set this up properly */
-		$result = DB_query("SELECT code FROM workcentres WHERE location='" . $_SESSION['UserStockLocation'] ."'",$db);
+		$result = DB_query("SELECT code FROM workcentres WHERE location='" . $_SESSION['Contract'.$identifier]->LocCode ."'",$db);
 		if (DB_num_rows($result)>0){
 			$WorkCentreRow = DB_fetch_row($result);
 			$WorkCentre = $WorkCentreRow[0];
 		} else { //need to add a default work centre for the location
 			$result = DB_query("INSERT INTO workcentres (code, location, description, overheadrecoveryact)
-											VALUES ('" . $_SESSION['UserStockLocation'] . "', 
-													'" . $_SESSION['UserStockLocation'] . "', 
-													'" . _('Default for') . ' ' . $_SESSION['UserStockLocation'] . "',
+											VALUES ('" . $_SESSION['Contract'.$identifier]->LocCode . "', 
+													'" . $_SESSION['Contract'.$identifier]->LocCode . "', 
+													'" . _('Default for') . ' ' . $_SESSION['Contract'.$identifier]->LocCode . "',
 													'" . '1' . "')",$db);  
-			$WorkCentre = $_SESSION['UserStockLocation'];
+			$WorkCentre = $_SESSION['Contract'.$identifier]->LocCode;
 		}
 		/*The above is a bit of a hack to get a default workcentre for a location based on the users default location*/
 		
@@ -283,6 +284,7 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 					debtorno,
 					branchcode,
 					categoryid,
+					loccode,
 					requireddate,
 					margin,
 					customerref,
@@ -303,6 +305,7 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 			//then we can accept any changes at all do an update on the whole lot
 			$sql = "UPDATE contracts SET categoryid = '" . $_POST['CategoryID'] ."',
 										requireddate = '" . FormatDateForSQL($_POST['RequiredDate']) . "', 
+										loccode='" . $_POST['LocCode'] . "',
 										margin = " . $_POST['Margin'] . ", 
 										customerref = '" . $_POST['CustomerRef'] . "', 
 										exrate = " . $_POST['ExRate'] . "
@@ -386,23 +389,25 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 	} elseif (!$InputError) { /*Its a new contract - so insert */
 		
 		$sql = "INSERT INTO contracts ( contractref,
-										debtorno,
-										branchcode,
-										contractdescription,
-										categoryid,
-										requireddate,
-										margin,
-										customerref,
-										exrate)
+																	debtorno,
+																	branchcode,
+																	contractdescription,
+																	categoryid,
+																	loccode,
+																	requireddate,
+																	margin,
+																	customerref,
+																	exrate)
 							VALUES ('" . $_POST['ContractRef'] . "',
-									'" . $_SESSION['Contract'.$identifier]->DebtorNo  . "',
-									'" . $_SESSION['Contract'.$identifier]->BranchCode . "',
-									'" . $_POST['ContractDescription'] . "',
-									'" . $_POST['CategoryID'] . "',
-									'" . FormatDateForSQL($_POST['RequiredDate']) . "', 
-									" . $_POST['Margin'] . ",
-									'" . $_POST['CustomerRef'] . "',
-									". $_POST['ExRate'] .")";
+											'" . $_SESSION['Contract'.$identifier]->DebtorNo  . "',
+											'" . $_SESSION['Contract'.$identifier]->BranchCode . "',
+											'" . $_POST['ContractDescription'] . "',
+											'" . $_POST['CategoryID'] . "',
+											'" . $_POST['LocCode'] . "',
+											'" . FormatDateForSQL($_POST['RequiredDate']) . "', 
+											" . $_POST['Margin'] . ",
+											'" . $_POST['CustomerRef'] . "',
+											". $_POST['ExRate'] .")";
 				
 		$ErrMsg = _('The new contract could not be added because');
 		$result = DB_query($sql,$db,$ErrMsg);
@@ -411,26 +416,26 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 		$ErrMsg = _('Could not add a component to the contract bill of material');
 		foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component){
 			$sql = "INSERT INTO contractbom (contractref,
-											stockid,
-											workcentreadded,
-											quantity)
+																			stockid,
+																			workcentreadded,
+																			quantity)
 							VALUES ( '" . $_POST['ContractRef'] . "',
-									'" . $Component->StockID . "',
-									'" . $WorkCentre . "',
-									" . $Component->Quantity . ")";
+											'" . $Component->StockID . "',
+											'" . $WorkCentre . "',
+											" . $Component->Quantity . ")";
 			$result = DB_query($sql,$db,$ErrMsg);
 		}												
 		
 		$ErrMsg = _('Could not add a requirement to the contract requirements');
 		foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $Requirement){
 			$sql = "INSERT INTO contractreqts (contractref,
-											requirement,
-											costperunit,
-											quantity)
+																			requirement,
+																			costperunit,
+																			quantity)
 							VALUES ( '" . $_POST['ContractRef'] . "',
-									'" . $Requirement->Requirement . "',
-									'" . $Requirement->CostPerUnit . "',
-									" . $Requirement->Quantity . ")";
+											'" . $Requirement->Requirement . "',
+											'" . $Requirement->CostPerUnit . "',
+											" . $Requirement->Quantity . ")";
 			$result = DB_query($sql,$db,$ErrMsg);
 		}
 		prnMsg(_('The new contract has been added to the database'),'success');
@@ -554,7 +559,7 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 								'" . DB_escape_string($CustomerDetailsRow['braddress6']) . "',
 								'" . DB_escape_string($CustomerDetailsRow['phoneno']) . "',
 								'" . DB_escape_string($CustomerDetailsRow['email']) . "',
-								'" . DB_escape_string($CustomerDetailsRow['defaultlocation']) ."',
+								'" . DB_escape_string($_SESSION['Contract'.$identifier]->LocCode) ."',
 								'" . FormatDateForSQL($_SESSION['Contract'.$identifier]->RequiredDate) . "',
 								'" . Date('Y-m-d') . "',
 								'1' )";
@@ -595,7 +600,6 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 } //end of if making a quotation
 
 
-
 if (isset($_POST['SearchCustomers'])){
 
 	if (($_POST['CustKeywords']!='') AND (($_POST['CustCode']!='') OR ($_POST['CustPhone']!=''))) {
@@ -613,51 +617,51 @@ if (isset($_POST['SearchCustomers'])){
 			$SearchString = '%' . str_replace(' ', '%', $_POST['CustKeywords']) . '%';
 
 			$SQL = "SELECT custbranch.brname,
-					custbranch.contactname,
-					custbranch.phoneno,
-					custbranch.faxno,
-					custbranch.branchcode,
-					custbranch.debtorno,
-					debtorsmaster.name
-				FROM custbranch
-				LEFT JOIN debtorsmaster
-				ON custbranch.debtorno=debtorsmaster.debtorno
-				WHERE custbranch.brname " . LIKE . " '$SearchString'
-				AND custbranch.disabletrans=0
-				ORDER BY custbranch.debtorno, custbranch.branchcode";
+											custbranch.contactname,
+											custbranch.phoneno,
+											custbranch.faxno,
+											custbranch.branchcode,
+											custbranch.debtorno,
+											debtorsmaster.name
+							FROM custbranch
+							LEFT JOIN debtorsmaster
+							ON custbranch.debtorno=debtorsmaster.debtorno
+							WHERE custbranch.brname " . LIKE . " '$SearchString'
+							AND custbranch.disabletrans=0
+							ORDER BY custbranch.debtorno, custbranch.branchcode";
 	
 		} elseif (strlen($_POST['CustCode'])>0){
 
 			$_POST['CustCode'] = strtoupper(trim($_POST['CustCode']));
 
 			$SQL = "SELECT custbranch.brname,
-					custbranch.contactname,
-					custbranch.phoneno,
-					custbranch.faxno,
-					custbranch.branchcode,
-					custbranch.debtorno,
-					debtorsmaster.name
-				FROM custbranch
-				LEFT JOIN debtorsmaster
-				ON custbranch.debtorno=debtorsmaster.debtorno
-				WHERE custbranch.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%' OR custbranch.branchcode " . LIKE . " '%" . $_POST['CustCode'] . "%' 
-				AND custbranch.disabletrans=0
-				ORDER BY custbranch.debtorno";
-			
+											custbranch.contactname,
+											custbranch.phoneno,
+											custbranch.faxno,
+											custbranch.branchcode,
+											custbranch.debtorno,
+											debtorsmaster.name
+							FROM custbranch
+							LEFT JOIN debtorsmaster
+							ON custbranch.debtorno=debtorsmaster.debtorno
+							WHERE custbranch.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%' OR custbranch.branchcode " . LIKE . " '%" . $_POST['CustCode'] . "%' 
+							AND custbranch.disabletrans=0
+							ORDER BY custbranch.debtorno";
+						
 		} elseif (strlen($_POST['CustPhone'])>0){
 			$SQL = "SELECT custbranch.brname,
-					custbranch.contactname,
-					custbranch.phoneno,
-					custbranch.faxno,
-					custbranch.branchcode,
-					custbranch.debtorno,
-					debtorsmaster.name
-				FROM custbranch
-				LEFT JOIN debtorsmaster
-				ON custbranch.debtorno=debtorsmaster.debtorno
-				WHERE custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'
-				AND custbranch.disabletrans=0
-				ORDER BY custbranch.debtorno";
+											custbranch.contactname,
+											custbranch.phoneno,
+											custbranch.faxno,
+											custbranch.branchcode,
+											custbranch.debtorno,
+											debtorsmaster.name
+							FROM custbranch
+							LEFT JOIN debtorsmaster
+							ON custbranch.debtorno=debtorsmaster.debtorno
+							WHERE custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'
+							AND custbranch.disabletrans=0
+							ORDER BY custbranch.debtorno";
 		}
 
 		$ErrMsg = _('The searched customer records requested cannot be retrieved because');
@@ -683,20 +687,20 @@ if (isset($_POST['SelectedCustomer'])) {
 	$_SESSION['Contract'.$identifier]->BranchCode = trim($CustomerBranchArray[1]);
 	
 	$sql = "SELECT debtorsmaster.name,
-					custbranch.brname,
-					debtorsmaster.currcode,
-					debtorsmaster.holdreason,
-					holdreasons.dissallowinvoices,
-					currencies.rate
-			FROM debtorsmaster INNER JOIN currencies
-			ON debtorsmaster.currcode=currencies.currabrev
-			INNER JOIN custbranch 
-			ON debtorsmaster.debtorno=custbranch.debtorno
-			INNER JOIN holdreasons
-			ON debtorsmaster.holdreason=holdreasons.reasoncode
-			WHERE debtorsmaster.debtorno='" . $_SESSION['Contract'.$identifier]->DebtorNo  . "' 
-			AND custbranch.branchcode='" . $_SESSION['Contract'.$identifier]->BranchCode . "'" ;
-
+								custbranch.brname,
+								debtorsmaster.currcode,
+								debtorsmaster.holdreason,
+								holdreasons.dissallowinvoices,
+								currencies.rate
+					FROM debtorsmaster INNER JOIN currencies
+					ON debtorsmaster.currcode=currencies.currabrev
+					INNER JOIN custbranch 
+					ON debtorsmaster.debtorno=custbranch.debtorno
+					INNER JOIN holdreasons
+					ON debtorsmaster.holdreason=holdreasons.reasoncode
+					WHERE debtorsmaster.debtorno='" . $_SESSION['Contract'.$identifier]->DebtorNo  . "' 
+					AND custbranch.branchcode='" . $_SESSION['Contract'.$identifier]->BranchCode . "'" ;
+		
 	$ErrMsg = _('The customer record selected') . ': ' . $_POST['SelectedCustomer'] . ' ' .
 		_('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the customer details and failed was');
@@ -825,7 +829,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		echo '<input type="hidden" name="ContractRef" value="' . $_SESSION['Contract'.$identifier]->ContractRef . '">' . $_SESSION['Contract'.$identifier]->ContractRef;
 	}
 	echo '</td></tr>';
-	echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID" onChange="ReloadForm(ItemForm.UpdateCategories)">';
+	echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID" >';
 
 	$sql = 'SELECT categoryid, categorydescription FROM stockcategory WHERE stocktype!="A"';
 	$ErrMsg = _('The stock categories could not be retrieved because');
@@ -842,6 +846,21 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	echo '</select><a target="_blank" href="'. $rootpath . '/StockCategories.php?' . SID . '">' . _('Add or Modify Contract Categories') . '</a></td></tr>';
 
+	$sql = 'SELECT loccode, locationname FROM locations';
+	$ErrMsg = _('The stock locations could not be retrieved because');
+	$DbgMsg = _('The SQL used to retrieve stock locations and failed was');
+	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	
+	echo '<tr><td>' . _('Location') . ':</td><td><select name="LocCode" >';
+	while ($myrow=DB_fetch_array($result)){
+		if (!isset($_SESSION['Contract'.$identifier]->LocCode) or $myrow['loccode']==$_SESSION['Contract'.$identifier]->LocCode){
+			echo '<option selected VALUE="'. $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		} else {
+			echo '<option VALUE="'. $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		}
+	}
+
+	echo '</select></td></tr>';
 
 	echo '<tr><td>' . _('Contract Description');
 	echo ':</td><td><textarea name="ContractDescription" style="width:100%" rows=5>' . $_SESSION['Contract'.$identifier]->ContractDescription . '</textarea></td></tr>';
