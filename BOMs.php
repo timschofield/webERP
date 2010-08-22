@@ -733,7 +733,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		$_POST['StockCode']='%';
 	}
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
-		prnMsg=( _('Stock description keywords have been used in preference to the Stock code extract entered'), 'info' );
+		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'), 'info' );
 	}
 	if ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
 		prnMsg( _('At least one stock description keyword or an extract of a stock code must be entered for the search'), 'info' );
