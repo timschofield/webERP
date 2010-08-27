@@ -146,6 +146,11 @@
 			<y>274</y>
 		</Line4>
 	</SupplierAddress>
+	<RequisitionNumber type="SimpleText" name="Requisition Number" id="RequisitionNumber">
+		<FontSize>12</FontSize>
+		<x>446</x>
+		<y>236</y>
+	</RequisitionNumber>
 	<OrderDate type="SimpleText" name="Order date" id="OrderDate">
 		<FontSize>12</FontSize>
 		<x>446</x>

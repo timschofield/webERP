@@ -312,7 +312,7 @@ if (!isset($_POST['PostInvoice'])){
 		echo '<tr><td colspan=2 class=number><font size=4 color=blue>' . _('Total') . ':</font></td>
 			<td class=number><font size=4 color=BLUE><U>' .  number_format($TotalShiptValue,2) . '</U></font></td></tr></table>';
 	}
-	
+
 	if (count( $_SESSION['SuppTrans']->Contracts) > 0){   /*if there are any contract charges on the invoice*/
 
 		echo '<table cellpadding="2">';
@@ -326,7 +326,7 @@ if (!isset($_POST['PostInvoice'])){
 		foreach ($_SESSION['SuppTrans']->Contracts as $Contract){
 
 			echo '<tr><td>' . $Contract->ContractRef . '</td>
-								<td class=number>' . 	number_format($Contract->Amount,2) . '</td>
+								<td class=number>' .    number_format($Contract->Amount,2) . '</td>
 								<td>' . $Contract->Narrative . '</td>
 								</tr>';
 
@@ -350,7 +350,7 @@ if (!isset($_POST['PostInvoice'])){
 		if (count($_SESSION['SuppTrans']->GLCodes) > 0){
 			echo '<br><table cellpadding=2>';
 			$TableHeader = '<tr><th>' . _('Account') . '</th>
-													<th>' . _('Name') .	'</th>
+													<th>' . _('Name') .     '</th>
 													<th>' . _('Amount') . '<br>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 													<th>' . _('Shipment')  . '</th>
 													<th>' . _('Narrative') . '</th></tr>';
@@ -362,7 +362,7 @@ if (!isset($_POST['PostInvoice'])){
 
 				echo '<tr><td>' . $EnteredGLCode->GLCode . '</td>
 									<td>' . $EnteredGLCode->GLActName . '</td>
-									<td class=number>' . number_format($EnteredGLCode->Amount,2) .	'</td>
+									<td class=number>' . number_format($EnteredGLCode->Amount,2) .  '</td>
 									<td>' . $EnteredGLCode->ShiptRef . '</td>
 									<td>' . $EnteredGLCode->Narrative . '</td></tr>';
 
@@ -461,15 +461,12 @@ if (!isset($_POST['PostInvoice'])){
 
 	$DisplayTotal = number_format(( $_SESSION['SuppTrans']->OvAmount + $TaxTotal), 2);
 
-	echo '<tr><td>' . _('Invoice Total') . ':</td>
-						<td colspan=2 class="number"><b>' . $DisplayTotal . '</b></td>
-					</tr></table>';
+	echo '<tr><td>' . _('Invoice Total') . ':</td><td colspan=2 class=number><b>' . $DisplayTotal . '</b></td></tr></table>';
 
-	echo '<table><tr><td>' . _('Comments') . '</td>
-										<td><textarea name="Comments" cols="40" rows="2">' . $_SESSION['SuppTrans']->Comments . '</textarea></td>
-			</tr></table>';
+	echo '<table><tr><td>' . _('Comments') . '</td><td><TEXTAREA name=Comments COLS=40 ROWS=2>' .
+		$_SESSION['SuppTrans']->Comments . '</TEXTAREa></td></tr></table>';
 
-	echo '<p><div class="centre"><input type="submit" name="PostInvoice" value="' . _('Enter Invoice') . '"></div>';
+	echo "<p><div class='centre'><input type=submit name='PostInvoice' VALUE='" . _('Enter Invoice') . "'></div>";
 
 } else { //do the postings -and dont show the button to process
 
@@ -478,10 +475,12 @@ then do the updates and inserts to process the invoice entered */
 
 	foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 
+
 		/*Set the tax rate to what was entered */
 		if (isset($_POST['TaxRate'  . $Tax->TaxCalculationOrder])){
 			$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate = $_POST['TaxRate'  . $Tax->TaxCalculationOrder]/100;
 		}
+
 
 		if ($_POST['OverRideTax']=='Auto' OR !isset($_POST['OverRideTax'])){
 
@@ -513,7 +512,7 @@ then do the updates and inserts to process the invoice entered */
 	}
 
 	$InputError = False;
-	if ( ($TaxTotal + $_SESSION['SuppTrans']->OvAmount) <= 0){
+	if ( $TaxTotal + $_SESSION['SuppTrans']->OvAmount <= 0){
 		$InputError = True;
 		prnMsg(_('The invoice as entered cannot be processed because the total amount of the invoice is less than or equal to 0') . '. ' . _('Invoices are expected to have a charge'),'error');
 
@@ -521,7 +520,7 @@ then do the updates and inserts to process the invoice entered */
 		$InputError = True;
 		prnMsg(_('The invoice as entered cannot be processed because the there is no suppliers invoice number or reference entered') . '. ' . _('The supplier invoice number must be entered'),'error');
 
-	} elseif (!Is_Date( $_SESSION['SuppTrans']->TranDate)){
+	} elseif (!is_date( $_SESSION['SuppTrans']->TranDate)){
 		$InputError = True;
 		prnMsg( _('The invoice as entered cannot be processed because the invoice date entered is not in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 
@@ -529,19 +528,19 @@ then do the updates and inserts to process the invoice entered */
 		$InputError = True;
 		prnMsg(_('The invoice as entered cannot be processed because the invoice date is after today') . '. ' . _('Purchase invoices are expected to have a date prior to or today'),'error');
 
-	} elseif ( $_SESSION['SuppTrans']->ExRate <= 0){
+	}elseif ( $_SESSION['SuppTrans']->ExRate <= 0){
 		$InputError = True;
 		prnMsg( _('The invoice as entered cannot be processed because the exchange rate for the invoice has been entered as a negative or zero number') . '. ' . _('The exchange rate is expected to show how many of the suppliers currency there are in 1 of the local currency'),'error');
 
-	} elseif ( $_SESSION['SuppTrans']->OvAmount < round($TotalShiptValue + $TotalGLValue + $TotalGRNValue,2)){
+	}elseif ( $_SESSION['SuppTrans']->OvAmount < round($TotalShiptValue + $TotalGLValue + $TotalGRNValue,2)){
 		prnMsg( _('The invoice total as entered is less than the sum of the shipment charges, the general ledger entries (if any) and the charges for goods received') . '. ' . _('There must be a mistake somewhere, the invoice as entered will not be processed'),'error');
 		$InputError = True;
 
 	} else {
 		$sql = "SELECT count(*)
-						FROM supptrans
-						WHERE supplierno='" . $_SESSION['SuppTrans']->SupplierID . "'
-						AND supptrans.suppreference='" . $_POST['SuppReference'] . "'";
+			FROM supptrans
+			WHERE supplierno='" . $_SESSION['SuppTrans']->SupplierID . "'
+			AND supptrans.suppreference='" . $_POST['SuppReference'] . "'";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sql to check for the previous entry of the same invoice failed');
 		$DbgMsg = _('The following SQL to start an SQL transaction was used');
@@ -561,7 +560,13 @@ then do the updates and inserts to process the invoice entered */
 
 	/*Start an SQL transaction */
 
-		DB_Txn_Begin($db);
+		$SQL = 'BEGIN';
+
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The database does not support transactions');
+		$DbgMsg = _('The following SQL to start an SQL transaction was used');
+
+		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+
 		/*Get the next transaction number for internal purposes and the period to post GL transactions in based on the invoice date*/
 		$InvoiceNo = GetNextTransNo(20, $db);
 		$PeriodNo = GetPeriod( $_SESSION['SuppTrans']->TranDate, $db);
@@ -573,8 +578,6 @@ then do the updates and inserts to process the invoice entered */
 
 			/*the postings here are a little tricky, the logic goes like this:
 			if its a shipment entry then the cost must go against the GRN suspense account defined in the company record
-
-			if its a contract charge then a contract charge record is created - the work in progress account of the stock category of the contract item is debited
 
 			if its a general ledger amount it goes straight to the account specified
 
@@ -656,53 +659,30 @@ then do the updates and inserts to process the invoice entered */
 
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
-				$LocalTotal += ($ShiptChg->Amount/ $_SESSION['SuppTrans']->ExRate);
+				$LocalTotal += $ShiptChg->Amount/ $_SESSION['SuppTrans']->ExRate;
 
 			}
-			
-			foreach ($_SESSION['SuppTrans']->Contracts as $Contract){
+	$sql='SELECT conversionfactor
+					FROM purchdata
+					WHERE supplierno="'.$_SESSION['SuppTrans']->SupplierID.'"
+					AND stockid="'.$EnteredGRN->ItemCode.'"';
+				$result=DB_query($sql, $db);
+				if (DB_num_rows($result)>0) {
+					$myrow=DB_fetch_array($result);
+					$conversionfactor=$myrow['conversionfactor'];
+				} else {
+					$conversionfactor=1;
+				}
 
-			/*contract postings need to get the WIP from the contract item's stock category record
-			 *  debit postings to this WIP account
-			 * the WIP account is tidied up when the contract is closed*/
-				$result = DB_query("SELECT wipact FROM stockcategory 
-																				INNER JOIN stockmaster ON 
-																				stockcategory.categoryid=stockmaster.categoryid 
-																				WHERE stockmaster.stockid='" . $Contract->ContractRef . "'",$db);
-				$WIPRow = DB_fetch_row($result);
-				$WIPAccount = $WIPRow[0];
-
-				$SQL = 'INSERT INTO gltrans (type,
-								typeno,
-								trandate,
-								periodno,
-								account,
-								narrative,
-								amount)
-							VALUES (20, ' .
-						 		$InvoiceNo . ",
-								'" . $SQLInvoiceDate . "',
-								'" . $PeriodNo . "',
-								'". $WIPAccount . "',
-								'" . $_SESSION['SuppTrans']->SupplierID . ' ' . _('Contract charge against') . ' ' . $Contract->ContractRef . "',
-								'" . ($Contract->Amount/ $_SESSION['SuppTrans']->ExRate) . "')";
-
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the contract') . ' ' . $Contract->ContractRef . ' ' . _('could not be added because');
-
-				$DbgMsg = _('The following SQL to insert the GL transaction was used');
-
-				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
-
-				$LocalTotal += ($Contract->Amount/ $_SESSION['SuppTrans']->ExRate);
-
-			}
-			foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
+		 foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
 				if (strlen($EnteredGRN->ShiptRef) == 0 OR $EnteredGRN->ShiptRef == 0){
 				/*so its not a shipment item
 				  enter the GL entry to reverse the GRN suspense entry created on delivery at standard cost used on delivery */
-
-					if ($EnteredGRN->StdCostUnit * $EnteredGRN->This_QuantityInv != 0) {
+					if ($_SESSION['WeightedAverageCosting']==1){
+						$EnteredGRN->StdCostUnit=0;
+					} // If WeightedAverageCosting=1, directly posting purchasing cost to material
+					if ($EnteredGRN->StdCostUnit * ($EnteredGRN->This_QuantityInv * $conversionfactor) != 0) {
 						$SQL = 'INSERT INTO gltrans (type,
 										typeno,
 										trandate,
@@ -714,9 +694,9 @@ then do the updates and inserts to process the invoice entered */
 									'" . $SQLInvoiceDate . "',
 									" . $PeriodNo . ',
 									' . $_SESSION['SuppTrans']->GRNAct . ",
-									'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' @  ' .
+									'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv * $conversionfactor . ' @  ' .
 								 _('std cost of') . ' ' . $EnteredGRN->StdCostUnit  . "',
-								 	" . $EnteredGRN->StdCostUnit * $EnteredGRN->This_QuantityInv . ')';
+								 	" . $EnteredGRN->StdCostUnit * $EnteredGRN->This_QuantityInv * $conversionfactor . ')';
 
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
 
@@ -726,10 +706,17 @@ then do the updates and inserts to process the invoice entered */
 
 					}
 
-					$PurchPriceVar = round($EnteredGRN->This_QuantityInv * (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit),2);
 
 
-					/*Yes.... but where to post this difference to - if its a stock item the variance account must be retrieved from the stock category record if its a nominal purchase order item with no stock item then there will be no standard cost and it will all be variance so post it to the account specified in the purchase order detail record */
+					$PurchPriceVar = round($EnteredGRN->This_QuantityInv * (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit * $conversionfactor),2);
+
+				//	echo "\$PurchPriceVar is: ".$PurchPriceVar."<br/>";
+				 //       echo "\$EnteredGRN->StdCostUnit is:"."$EnteredGRN->StdCostUnit"."<br/>";
+				  //      echo "\$EnteredGRN->ChgPrice is:".$EnteredGRN->ChgPrice."<br/>";
+
+					/*Yes.... but where to post this difference to - if its a stock item the variance account must be retrieved from the stock category record
+					if its a nominal purchase order item with no stock item then there will be no standard cost and it will all be variance so post it to the
+					account specified in the purchase order detail record */
 
 					if ($PurchPriceVar !=0){ /* don't bother with this lot if there is no difference ! */
 						if (strlen($EnteredGRN->ItemCode)>0 OR $EnteredGRN->ItemCode != ''){ /*so it is a stock item */
@@ -764,30 +751,27 @@ then do the updates and inserts to process the invoice entered */
 
 								$WriteOffToVariances =0;
 
-								if ($EnteredGRN->This_QuantityInv > $TotalQuantityOnHand){
+								if ($EnteredGRN->This_QuantityInv * $conversionfactor > $TotalQuantityOnHand){
 
 									/*So we need to write off some of the variance to variances and only the balance of the quantity in stock to go to stock value */
 
-									$WriteOffToVariances =  ($EnteredGRN->This_QuantityInv
+									$WriteOffToVariances =  ($EnteredGRN->This_QuantityInv * $conversionfactor
 										- $TotalQuantityOnHand)
-									* (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit);
+									* (($EnteredGRN->ChgPric / $conversionfactor/ $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit);
 
 									$SQL = 'INSERT INTO gltrans (type,
-																							typeno,
-																							trandate,
-																							periodno,
-																							account,
-																							narrative,
-																							amount)
-																					VALUES (20, ' .
-																							 $InvoiceNo . ", 
-																							 '" . $SQLInvoiceDate . "', 
-																							 " . $PeriodNo . ', 
-																							 ' . $StockGLCode['purchpricevaract'] . ", 
-																							 '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo .
-																							 ' - ' . $EnteredGRN->ItemCode . ' x ' . ($EnteredGRN->This_QuantityInv-$TotalQuantityOnHand) . ' x  ' . _('price var of') . ' ' .
-																							 number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  . "', 
-																							 " . $WriteOffToVariances . ')';
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount)
+									VALUES (20, ' .
+									 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $StockGLCode['purchpricevaract'] .
+									 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo .
+									 ' - ' . $EnteredGRN->ItemCode . ' x ' . ($EnteredGRN->This_QuantityInv * $conversionfactor-$TotalQuantityOnHand) . ' x  ' . _('price var of') . ' ' .
+									 number_format(($EnteredGRN->ChgPrice / $conversionfactor / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .
+									 "', " . $WriteOffToVariances . ')';
 
 									$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 									$DbgMsg = _('The following SQL to insert the GL transaction was used');
@@ -811,7 +795,7 @@ then do the updates and inserts to process the invoice entered */
 									' . $StockGLCode['stockact'] . ",
 									'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Average Cost Adj') .
 									 ' - ' . $EnteredGRN->ItemCode . ' x ' . $TotalQuantityOnHand  . ' x ' .
-									 number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .
+									 number_format(($EnteredGRN->ChgPrice / $conversionfactor  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .
 									 "', " . ($PurchPriceVar - $WriteOffToVariances) . ')';
 
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
@@ -822,6 +806,7 @@ then do the updates and inserts to process the invoice entered */
 								/*Now to update the stock cost with the new weighted average */
 
 								/*Need to consider what to do if the cost has been changed manually between receiving the stock and entering the invoice - this code assumes there has been no cost updates made manually and all the price variance is posted to stock.
+
 								A nicety or important?? */
 
 
@@ -830,6 +815,7 @@ then do the updates and inserts to process the invoice entered */
 
 								if ($TotalQuantityOnHand>0) {
 
+
 									$CostIncrement = ($PurchPriceVar - $WriteOffToVariances) / $TotalQuantityOnHand;
 
 									$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
@@ -837,7 +823,7 @@ then do the updates and inserts to process the invoice entered */
 									$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
 								} else {
 									$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
-									materialcost=" . ($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) . " WHERE stockid='" . $EnteredGRN->ItemCode . "'";
+									materialcost=" . ($EnteredGRN->ChgPrice / $conversionfactor  / $_SESSION['SuppTrans']->ExRate) . " WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 									$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
 								}
 								/* End of Weighted Average Costing Code */
@@ -865,7 +851,9 @@ then do the updates and inserts to process the invoice entered */
 							}
 						} else {
 
-						/* its a nominal purchase order item that is not on a shipment so post the whole lot to the GLCode specified in the order, the purchase price var is actually the diff between the order price and the actual invoice price since the std cost was made equal to the order price in local currency at the time	the goods were received */
+						/* its a nominal purchase order item that is not on a shipment so post the whole lot to the GLCode specified in the order, the purchase price var is actually the diff between the
+						order price and the actual invoice price since the std cost was made equal to the order price in local currency at the time
+						the goods were received */
 
 							$SQL = 'INSERT INTO gltrans (type,
 											typeno,
@@ -980,14 +968,6 @@ then do the updates and inserts to process the invoice entered */
 
 		} /*Thats the end of the GL postings */
 
-		/*Shoel the invoice be on hold */
-		$Hold=0;
-		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
-			if ($EnteredGRN->Hold) {
-				$Hold=1;
-			}
-		}
-
 	/*Now insert the invoice into the SuppTrans table*/
 
 		$SQL = 'INSERT INTO supptrans (transno,
@@ -996,24 +976,20 @@ then do the updates and inserts to process the invoice entered */
 						suppreference,
 						trandate,
 						duedate,
-						inputdate,
 						ovamount,
 						ovgst,
 						rate,
-						transtext,
-						hold)
+						transtext)
 			VALUES ('. $InvoiceNo . ",
 				20 ,
 				'" . $_SESSION['SuppTrans']->SupplierID . "',
 				'" . $_SESSION['SuppTrans']->SuppReference . "',
 				'" . $SQLInvoiceDate . "',
 				'" . FormatDateForSQL($_SESSION['SuppTrans']->DueDate) . "',
-				'" . date('Y-m-d H-i-s') . "',
-				'" . round($_SESSION['SuppTrans']->OvAmount,2) . "',
-				'" . round($TaxTotal,2) . "',
-				'" .  $_SESSION['SuppTrans']->ExRate . "',
-				'" . $_SESSION['SuppTrans']->Comments . "',
-				" . $Hold . ")";
+				" . round($_SESSION['SuppTrans']->OvAmount,2) . ',
+				' . round($TaxTotal,2) . ',
+				' .  $_SESSION['SuppTrans']->ExRate . ",
+				'" . $_SESSION['SuppTrans']->Comments . "')";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The supplier invoice transaction could not be added to the database because');
 
@@ -1062,7 +1038,7 @@ then do the updates and inserts to process the invoice entered */
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
 
-			if (strlen($EnteredGRN->ShiptRef)>0 AND $EnteredGRN->ShiptRef != '0'){ //if the the GRN is on a shipment
+			if (strlen($EnteredGRN->ShiptRef)>0 AND $EnteredGRN->ShiptRef != '0'){
 
 				/* insert the shipment charge records */
 
@@ -1088,34 +1064,36 @@ then do the updates and inserts to process the invoice entered */
 
 		} /* end of the loop to do the updates for the quantity of order items the supplier has invoiced */
 
-		/*Add contract charges records as necessary */
+		/*Add shipment charges records as necessary */
 
-		foreach ($_SESSION['SuppTrans']->Contracts as $Contract){
-			
-			if($Contract->AnticipatedCost ==true){
-				$Anticipated =1;
-			} else {
-				$Anticipated =0;
-			}
-			$SQL = "INSERT INTO contractcharges (contractref,
-																					transtype,
-																					transno,
-																					amount,
-																					narrative,
-																					anticipated)
-																		VALUES ('" . $Contract->ContractRef . "',
-																			'20',
-																			'" . $InvoiceNo . "',
-																			'" . $Contract->Amount/ $_SESSION['SuppTrans']->ExRate . "',
-																			'" . $Contract->Narrative . "',
-																			'" . $Anticipated . "')";
+		foreach ($_SESSION['SuppTrans']->Shipts as $ShiptChg){
 
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The contract charge record for contract') . ' ' . $Contract->ContractRef . ' ' . _('could not be added because');
-			$DbgMsg = _('The following SQL to insert the contract charge record was used');
+			$SQL = 'INSERT INTO shipmentcharges (shiptref,
+								transtype,
+								transno,
+								value)
+					VALUES (' . $ShiptChg->ShiptRef . ',
+						20,
+						' . $InvoiceNo . ',
+						' . $ShiptChg->Amount/ $_SESSION['SuppTrans']->ExRate . ')';
+
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment charge record for the shipment') .
+						 ' ' . $ShiptChg->ShiptRef . ' ' . _('could not be added because');
+
+			$DbgMsg = _('The following SQL to insert the Shipment charge record was used');
+
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+
 		}
 
-		DB_Txn_Commit($db);
+
+		$SQL="COMMIT";
+
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The SQL COMMIT failed because');
+
+		$DbgMsg = _('The SQL COMMIT failed');
+
+		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
 		prnMsg(_('Supplier invoice number') . ' ' . $InvoiceNo . ' ' . _('has been processed'),'success');
 		echo '<br><div class="centre"><a href="' . $rootpath . '/SupplierInvoice.php?&SupplierID=' .$_SESSION['SuppTrans']->SupplierID . '">' . _('Enter another Invoice for this Supplier') . '</a></div>';
