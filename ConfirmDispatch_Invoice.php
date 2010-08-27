@@ -977,34 +977,34 @@ DB_Txn_Begin($db);
 						$AssParts['standard']=0;
 					}
 					$SQL = "INSERT INTO stockmoves (
-							stockid,
-							type,
-							transno,
-							loccode,
-							trandate,
-							debtorno,
-							branchcode,
-							prd,
-							reference,
-							qty,
-							standardcost,
-							show_on_inv_crds,
-							newqoh
-						) VALUES (
-							'" . $AssParts['component'] . "',
-							 10,
-							 '" . $InvoiceNo . "',
-							 '" . $_SESSION['Items']->Location . "',
-							 '" . $DefaultDispatchDate . "',
-							 '" . $_SESSION['Items']->DebtorNo . "',
-							 '" . $_SESSION['Items']->Branch . "',
-							 '" . $PeriodNo . "',
-							 '" . _('Assembly') . ': ' . $OrderLine->StockID . ' ' . _('Order') . ': ' . $_SESSION['ProcessingOrder'] . "',
-							 '" . -$AssParts['quantity'] * $OrderLine->QtyDispatched . "',
-							 '" . $AssParts['standard'] . "',
-							 0,
-							 newqoh-" . ($AssParts['quantity'] * $OrderLine->QtyDispatched) . "'
-						)";
+															stockid,
+															type,
+															transno,
+															loccode,
+															trandate,
+															debtorno,
+															branchcode,
+															prd,
+															reference,
+															qty,
+															standardcost,
+															show_on_inv_crds,
+															newqoh
+									) VALUES (
+														'" . $AssParts['component'] . "',
+														 10,
+														 '" . $InvoiceNo . "',
+														 '" . $_SESSION['Items']->Location . "',
+														 '" . $DefaultDispatchDate . "',
+														 '" . $_SESSION['Items']->DebtorNo . "',
+														 '" . $_SESSION['Items']->Branch . "',
+														 '" . $PeriodNo . "',
+														 '" . _('Assembly') . ': ' . $OrderLine->StockID . ' ' . _('Order') . ': ' . $_SESSION['ProcessingOrder'] . "',
+														 '" . -$AssParts['quantity'] * $OrderLine->QtyDispatched . "',
+														 '" . $AssParts['standard'] . "',
+														 0,
+														 '" . ($QtyOnHandPrior - $AssParts['quantity'] * $OrderLine->QtyDispatched) . "'
+									)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records for the assembly components of'). ' '. $OrderLine->StockID . ' ' . _('could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the assembly components stock movement records was used');
@@ -1012,9 +1012,9 @@ DB_Txn_Begin($db);
 
 
 					$SQL = "UPDATE locstock
-						SET quantity = locstock.quantity - " . $AssParts['quantity'] * $OrderLine->QtyDispatched . "
-						WHERE locstock.stockid = '" . $AssParts['component'] . "'
-						AND loccode = '" . $_SESSION['Items']->Location . "'";
+									SET quantity = locstock.quantity - " . $AssParts['quantity'] * $OrderLine->QtyDispatched . "
+									WHERE locstock.stockid = '" . $AssParts['component'] . "'
+									AND loccode = '" . $_SESSION['Items']->Location . "'";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Location stock record could not be updated for an assembly component because');
 					$DbgMsg = _('The following SQL to update the locations stock record for the component was used');
@@ -1165,37 +1165,37 @@ DB_Txn_Begin($db);
 /*Insert Sales Analysis records */
 
 			$SQL="SELECT COUNT(*),
-					salesanalysis.stockid,
-					salesanalysis.stkcategory,
-					salesanalysis.cust,
-					salesanalysis.custbranch,
-					salesanalysis.area,
-					salesanalysis.periodno,
-					salesanalysis.typeabbrev,
-					salesanalysis.salesperson
-				FROM salesanalysis,
-					custbranch,
-					stockmaster
-				WHERE salesanalysis.stkcategory=stockmaster.categoryid
-				AND salesanalysis.stockid=stockmaster.stockid
-				AND salesanalysis.cust=custbranch.debtorno
-				AND salesanalysis.custbranch=custbranch.branchcode
-				AND salesanalysis.area=custbranch.area
-				AND salesanalysis.salesperson=custbranch.salesman
-				AND salesanalysis.typeabbrev ='" . $_SESSION['Items']->DefaultSalesType . "'
-				AND salesanalysis.periodno='" . $PeriodNo . "'
-				AND salesanalysis.cust " . LIKE . " '" . $_SESSION['Items']->DebtorNo . "'
-				AND salesanalysis.custbranch " . LIKE . " '" . $_SESSION['Items']->Branch . "'
-				AND salesanalysis.stockid " . LIKE . " '" . $OrderLine->StockID . "'
-				AND salesanalysis.budgetoractual=1
-				GROUP BY salesanalysis.stockid,
-					salesanalysis.stkcategory,
-					salesanalysis.cust,
-					salesanalysis.custbranch,
-					salesanalysis.area,
-					salesanalysis.periodno,
-					salesanalysis.typeabbrev,
-					salesanalysis.salesperson";
+						salesanalysis.stockid,
+						salesanalysis.stkcategory,
+						salesanalysis.cust,
+						salesanalysis.custbranch,
+						salesanalysis.area,
+						salesanalysis.periodno,
+						salesanalysis.typeabbrev,
+						salesanalysis.salesperson
+					FROM salesanalysis,
+						custbranch,
+						stockmaster
+					WHERE salesanalysis.stkcategory=stockmaster.categoryid
+					AND salesanalysis.stockid=stockmaster.stockid
+					AND salesanalysis.cust=custbranch.debtorno
+					AND salesanalysis.custbranch=custbranch.branchcode
+					AND salesanalysis.area=custbranch.area
+					AND salesanalysis.salesperson=custbranch.salesman
+					AND salesanalysis.typeabbrev ='" . $_SESSION['Items']->DefaultSalesType . "'
+					AND salesanalysis.periodno='" . $PeriodNo . "'
+					AND salesanalysis.cust " . LIKE . " '" . $_SESSION['Items']->DebtorNo . "'
+					AND salesanalysis.custbranch " . LIKE . " '" . $_SESSION['Items']->Branch . "'
+					AND salesanalysis.stockid " . LIKE . " '" . $OrderLine->StockID . "'
+					AND salesanalysis.budgetoractual=1
+					GROUP BY salesanalysis.stockid,
+						salesanalysis.stkcategory,
+						salesanalysis.cust,
+						salesanalysis.custbranch,
+						salesanalysis.area,
+						salesanalysis.periodno,
+						salesanalysis.typeabbrev,
+						salesanalysis.salesperson";
 
 			$ErrMsg = _('The count of existing Sales analysis records could not run because');
 			$DbgMsg = '<br>'. _('SQL to count the no of sales analysis records');
