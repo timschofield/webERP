@@ -226,7 +226,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 					<td class="menu_group_items"> <!-- Orders Maintenance options -->
 						<table width="100%">
 							<tr>
-					<td class="menu_group_items"> 
+					<td class="menu_group_items">
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
@@ -688,6 +688,12 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/PDFStockNegatives.php?' . SID . '">' . _('List Negative Stocks') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PDFStockTransListing.php?' . SID . '">' . _('Daily Stock Transaction Listing') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -1342,7 +1348,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 		</table>
 		<?php
 	break;
-	
+
 	Case 'PC': /* Petty Cash Module */
 
 	?>
