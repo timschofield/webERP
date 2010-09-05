@@ -217,7 +217,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 
 		$k=0; //row colour counter
 
-	while ($myrow = DB_fetch_row($result)) {
+	while ($myrow = DB_fetch_array($result)) {
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
 			$k=0;
@@ -237,28 +237,28 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 			$Description['0']='ASSIGNCASH';
 		}
 
-		if (($myrow['5'] == "0000-00-00") and ($Description['0'] == 'ASSIGNCASH')){
+		if (($myrow['authorized'] == "0000-00-00") and ($Description['0'] == 'ASSIGNCASH')){
 			// only cash assignations NOT authorized can be modified or deleted
-			echo "<td>".ConvertSQLDate($myrow['2'])."</td>
+			echo "<td>".ConvertSQLDate($myrow['date'])."</td>
 				<td>".$Description['0']."</td>
-				<td class=number>".number_format($myrow['4'],2)."</td>
-				<td>".ConvertSQLDate($myrow['5'])."</td>
-				<td>".$myrow['7']."</td>
-				<td>".$myrow['8']."</td>
-				<td><a href='".$_SERVER['PHP_SELF'] . '?' . SID ."SelectedIndex=".$myrow['0']."&SelectedTabs=" .
+				<td class=number>".number_format($myrow['amount'],2)."</td>
+				<td>".ConvertSQLDate($myrow['authorized'])."</td>
+				<td>".$myrow['notes']."</td>
+				<td>".$myrow['receipt']."</td>
+				<td><a href='".$_SERVER['PHP_SELF'] . '?' . SID ."SelectedIndex=".$myrow['counterindex']."&SelectedTabs=" .
 					$SelectedTabs . "&Days=" . $Days . "&edit=yes'>" . _('Edit') . "</td>
-				<td><a href='".$_SERVER['PHP_SELF'] . '?' . SID ."SelectedIndex=".$myrow['0']."&SelectedTabs=" .
+				<td><a href='".$_SERVER['PHP_SELF'] . '?' . SID ."SelectedIndex=".$myrow['counterindex']."&SelectedTabs=" .
 					$SelectedTabs . "&Days=" . $Days . "&delete=yes' onclick=\"return confirm('" .
 						_('Are you sure you wish to delete this code and the expense it may have set up?') . "');\">" .
 							_('Delete') . "</td>
 				</tr>";
 		}else{
-			echo "<td>".ConvertSQLDate($myrow['2'])."</td>
+			echo "<td>".ConvertSQLDate($myrow['date'])."</td>
 				<td>".$Description['0']."</td>
-				<td class=number>".number_format($myrow['4'],2)."</td>
-				<td>".ConvertSQLDate($myrow['5'])."</td>
-				<td>".ConvertSQLDate($myrow['5'])."</td>
-				<td>".$myrow['7']."</td>
+				<td class=number>".number_format($myrow['amount'],2)."</td>
+				<td>".ConvertSQLDate($myrow['authorized'])."</td>
+				<td>".$myrow['notes']."</td>
+				<td>".$myrow['receipt']."</td>
 				</tr>";
 		}
 	}
