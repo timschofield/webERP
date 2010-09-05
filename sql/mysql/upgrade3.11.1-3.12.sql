@@ -301,3 +301,29 @@ CREATE TABLE IF NOT EXISTS `contractcharges` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES ('32', 'Contract Close', '1');
+
+ALTER TABLE `reports` ADD `col9width` INT( 3 ) NOT NULL DEFAULT '25' AFTER `col8width` ;
+
+ALTER TABLE `reports` ADD `col10width` INT( 3 ) NOT NULL DEFAULT '25' AFTER `col9width` ;
+
+ALTER TABLE `reports` ADD `col11width` INT( 3 ) NOT NULL DEFAULT '25' AFTER `col10width` ;
+
+ALTER TABLE `reports` ADD `col12width` INT( 3 ) NOT NULL DEFAULT '25' AFTER `col11width` ;
+
+ALTER TABLE `reports` ADD `col13width` INT( 3 ) NOT NULL DEFAULT '25' AFTER `col12width` ;
+
+ALTER TABLE `reports` ADD `col14width` INT( 3 ) NOT NULL DEFAULT '25' AFTER `col13width` ;
+
+ALTER TABLE `reports` ADD `col15width` INT( 3 ) NOT NULL DEFAULT '25' AFTER `col14width` ;
+
+ALTER TABLE `reports` ADD `col16width` INT( 3 ) NOT NULL DEFAULT '25' AFTER `col15width` ;
+
+ALTER TABLE `reports` ADD `col17width` INT( 3 ) NOT NULL DEFAULT '25' AFTER `col16width` ;
+
+ALTER TABLE `reports` ADD `col18width` INT( 3 ) NOT NULL DEFAULT '25' AFTER `col17width` ;
+
+ALTER TABLE `reports` ADD `col19width` INT( 3 ) NOT NULL DEFAULT '25' AFTER `col18width` ;
+
+ALTER TABLE `reports` ADD `col20width` INT( 3 ) NOT NULL DEFAULT '25' AFTER `col19width` ;
+
+ALTER TABLE `reportfields` CHANGE `fieldname` `fieldname` VARCHAR( 80) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT '';
