@@ -85,10 +85,10 @@ while ($myrow=DB_fetch_array($result)) {
 		echo '<td><a href="mailto:'.$myrow['email'].'">'.$myrow['realname'].'</td>';
 		echo '<td>'.ConvertSQLDate($myrow['deliverydate']).'</td>';
 		echo '<td><select name=status'.$myrow['orderno'].'>';
-		echo '<option selected value="'._('Pending').'">'._('Pending').'</option>';
-		echo '<option value="'._('Authorised').'">'._('Authorised').'</option>';
-		echo '<option value="'._('Rejected').'">'._('Rejected').'</option>';
-		echo '<option value="'._('Cancelled').'">'._('Cancelled').'</option>';
+		echo '<option selected value="Pending">'._('Pending').'</option>';
+		echo '<option value="Authorised">'._('Authorised').'</option>';
+		echo '<option value="Rejected">'._('Rejected').'</option>';
+		echo '<option value="Cancelled">'._('Cancelled').'</option>';
 		echo '</select></td>';
 		echo '</tr>';
 		echo "<input type='hidden' name='comment' value='".$myrow['stat_comment']."'>";
