@@ -3,18 +3,6 @@
 /* Definition of the PurchOrder class to hold all the information for a purchase order and delivery
 */
 
-/* Dummy for gettext */
-
-$sDummy  = _('New Order') .
-           _('Pending') .
-           _('Authorised') .
-           _('Rejected') .
-           _('Cancelled') .
-           _('Printed') .
-           _('Completed');
-
-unset($sDummy);
-
 
 Class PurchOrder {
 

@@ -6,6 +6,18 @@ $PageSecurity = 4;
 include('includes/DefinePOClass.php');
 include('includes/session.inc');
 
+/* Dummy for gettext */
+
+$sDummy  = _('New Order') .
+           _('Pending') .
+           _('Authorised') .
+           _('Rejected') .
+           _('Cancelled') .
+           _('Printed') .
+           _('Completed');
+
+unset($sDummy);
+
 if (isset($_GET['ModifyOrderNumber'])) {
 	$title = _('Modify Purchase Order') . ' ' . $_GET['ModifyOrderNumber'];
 } else {
