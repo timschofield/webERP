@@ -47,7 +47,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 
 
 	echo "<select name='CategoryID'>";
-	echo "<option selected VALUE='All'>" . _('Over All Categories');
+	echo "<option selected value='All'>" . _('Over All Categories');
 
 	while ($myrow=DB_fetch_array($result)){
 	echo '<option VALUE=' . $myrow['categoryid'] . '>' . $myrow['categorydescription'];
