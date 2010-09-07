@@ -27,7 +27,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo']=="") and !isset($_POST['TransD
 				locationname
 			FROM locations';
 	$result=DB_query($sql, $db);
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br></p>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Search') . '" alt=""></img>' . ' ' . $title.'<br></p>';
 	echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post name="form">';
 	echo '<table class="selection"><tr>';
 	echo '<td>'._('Create picking lists for all deliveries to be made on').' : '.'</td>';
@@ -80,7 +80,7 @@ if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
 	WHERE salesorders.debtorno=debtorsmaster.debtorno
 	AND salesorders.shipvia=shippers.shipper_id
 	AND salesorders.fromstkloc=locations.loccode
-	AND salesorders.orderno=" . $_GET['TransNo'];
+	AND salesorders.orderno='" . $_GET['TransNo']."'";
 } else if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
 /* We are printing picking lists for all orders on a day */
 	$sql = "SELECT salesorders.debtorno,
@@ -220,7 +220,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 			FROM salesorderdetails
 			INNER JOIN stockmaster
 				ON salesorderdetails.stkcode=stockmaster.stockid
-			WHERE salesorderdetails.orderno=" . $OrdersToPick[$i]['orderno'] ;;
+			WHERE salesorderdetails.orderno='" . $OrdersToPick[$i]['orderno'] ."'";
 		} else {
 		/* There are previous picking lists for this order so
 		 * need to take those quantities into account
@@ -241,7 +241,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 				ON salesorderdetails.orderno=pickinglists.orderno
 			LEFT JOIN pickinglistdetails
 				ON pickinglists.pickinglistno=pickinglistdetails.pickinglistno
-			WHERE salesorderdetails.orderno=" . $OrdersToPick[$i]['orderno'] ."
+			WHERE salesorderdetails.orderno='" . $OrdersToPick[$i]['orderno'] ."'
 			AND salesorderdetails.orderlineno=pickinglistdetails.orderlineno";
 		}
 		$lineresult=DB_query($sql,$db, $ErrMsg);
