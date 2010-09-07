@@ -28,74 +28,87 @@ if (isset($_POST['FromDate']) and isset($_POST['ToDate']) and Date1GreaterThanDa
 }
 
 if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
-     include ('includes/header.inc');
+	include ('includes/header.inc');
 	if ($InputError==1){
 		prnMsg($msg,'error');
 	}
 
-     echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . sid . "'>";
-     echo '<table><tr><td>' . _('Enter the date from which orders are to be listed') . ":</td><td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='FromDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . "'></td></tr>";
-     echo '<tr><td>' . _('Enter the date to which orders are to be listed') . ":</td>
-     		<td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='ToDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td></tr>";
-     echo '<tr><td>' . _('Inventory Category') . '</td><td>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt=""></img>' . ' '
+		. _('Orders Invoiced Report') . '</p>';
 
-     $sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
-     $result = DB_query($sql,$db);
+	echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . sid . "'>";
+	echo '<table class=selection><tr><td>' . _('Enter the date from which orders are to be listed') . ":</td><td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='FromDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . "'></td></tr>";
+	echo '<tr><td>' . _('Enter the date to which orders are to be listed') . ":</td>
+			<td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='ToDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td></tr>";
+	echo '<tr><td>' . _('Inventory Category') . '</td><td>';
+
+	$sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
+	$result = DB_query($sql,$db);
 
 
-     echo "<select name='CategoryID'>";
-     echo "<option selected VALUE='All'>" . _('Over All Categories');
+	echo "<select name='CategoryID'>";
+	echo "<option selected VALUE='All'>" . _('Over All Categories');
 
-     while ($myrow=DB_fetch_array($result)){
+	while ($myrow=DB_fetch_array($result)){
 	echo '<option VALUE=' . $myrow['categoryid'] . '>' . $myrow['categorydescription'];
-     }
-     echo '</select></td></tr>';
+	}
+	echo '</select></td></tr>';
 
-     echo '<tr><td>' . _('Inventory Location') . ":</td><td><select name='Location'>";
-     echo "<option selected VALUE='All'>" . _('All Locations');
+	echo '<tr><td>' . _('Inventory Location') . ":</td><td><select name='Location'>";
+	echo "<option selected VALUE='All'>" . _('All Locations');
 
-     $result= DB_query('SELECT loccode, locationname FROM locations',$db);
-     while ($myrow=DB_fetch_array($result)){
+	$result= DB_query('SELECT loccode, locationname FROM locations',$db);
+	while ($myrow=DB_fetch_array($result)){
 	echo "<option VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
-     }
-     echo '</select></td></tr>';
+	}
+	echo '</select></td></tr>';
 
-     echo "</table><div class='centre'><input type=submit name='Go' VALUE='" . _('Create PDF') . "'></div>";
+	echo "</table><br><div class='centre'><input type=submit name='Go' VALUE='" . _('Create PDF') . "'></div>";
 
-     include('includes/footer.inc');
-     exit;
+	include('includes/footer.inc');
+	exit;
 } else {
 	include('includes/PDFStarter.php');
-    $pdf->addinfo('Title',_('Orders Invoiced Report'));
-    $pdf->addinfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
-    $line_height=12;
-    $PageNumber = 1;
-    $TotalDiffs = 0;
+	$pdf->addinfo('Title',_('Orders Invoiced Report'));
+	$pdf->addinfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
+	$line_height=12;
+	$PageNumber = 1;
+	$TotalDiffs = 0;
 }
 
 if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 	$sql= "SELECT salesorders.orderno,
-                      salesorders.debtorno,
-                      salesorders.branchcode,
-                      salesorders.customerref,
-                      salesorders.orddate,
-                      salesorders.fromstkloc,
-                      salesorders.printedpackingslip,
-                      salesorders.datepackingslipprinted,
-                      salesorderdetails.stkcode,
-                      stockmaster.description,
-                      stockmaster.units,
-                      stockmaster.decimalplaces,
-                      SUM(salesorderdetails.quantity) AS totqty,
-                      SUM(salesorderdetails.qtyinvoiced) AS totqtyinvoiced
-                  FROM salesorders
-                     INNER JOIN salesorderdetails
-                     ON salesorders.orderno = salesorderdetails.orderno
-                     INNER JOIN stockmaster
-                     ON salesorderdetails.stkcode = stockmaster.stockid
-                WHERE orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
-                      AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
-	      GROUP BY salesorders.orderno,
+				  salesorders.debtorno,
+				  salesorders.branchcode,
+				  salesorders.customerref,
+				  salesorders.orddate,
+				  salesorders.fromstkloc,
+				  salesorders.printedpackingslip,
+				  salesorders.datepackingslipprinted,
+				  salesorderdetails.stkcode,
+				  stockmaster.description,
+				  stockmaster.units,
+				  stockmaster.decimalplaces,
+				  debtorsmaster.name,
+				  custbranch.brname,
+				  locations.locationname,
+				  SUM(salesorderdetails.quantity) AS totqty,
+				  SUM(salesorderdetails.qtyinvoiced) AS totqtyinvoiced
+			   FROM salesorders
+				 INNER JOIN salesorderdetails
+				 ON salesorders.orderno = salesorderdetails.orderno
+				 INNER JOIN stockmaster
+				 ON salesorderdetails.stkcode = stockmaster.stockid
+				 INNER JOIN debtorsmaster
+				 ON salesorders.debtorno=debtorsmaster.debtorno
+				 INNER JOIN custbranch
+				 ON custbranch.debtorno=salesorders.debtorno
+				 AND custbranch.branchcode=salesorders.branchcode
+				 INNER JOIN locations
+				 ON salesorders.fromstkloc=locations.loccode
+			 WHERE orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
+				  AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
+		 GROUP BY salesorders.orderno,
 				salesorders.debtorno,
 				salesorders.branchcode,
 				salesorders.customerref,
@@ -109,28 +122,38 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 
 } elseif ($_POST['CategoryID']!='All' AND $_POST['Location']=='All') {
 	$sql= "SELECT salesorders.orderno,
-                      salesorders.debtorno,
-                      salesorders.branchcode,
-                      salesorders.customerref,
-                      salesorders.orddate,
-                      salesorders.fromstkloc,
-                      salesorders.printedpackingslip,
-                      salesorders.datepackingslipprinted,
-                      salesorderdetails.stkcode,
-                      stockmaster.description,
-                      stockmaster.units,
-                      stockmaster.decimalplaces,
-                      SUM(salesorderdetails.quantity) AS totqty,
-                      SUM(salesorderdetails.qtyinvoiced) AS totqtyinvoiced
-                FROM salesorders
-                     INNER JOIN salesorderdetails
-                     ON salesorders.orderno = salesorderdetails.orderno
-                     INNER JOIN stockmaster
-                     ON salesorderdetails.stkcode = stockmaster.stockid
-                WHERE stockmaster.categoryid ='" . $_POST['CategoryID'] . "'
-                      AND orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
-                      AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
-	      GROUP BY salesorders.orderno,
+				  salesorders.debtorno,
+				  salesorders.branchcode,
+				  salesorders.customerref,
+				  salesorders.orddate,
+				  salesorders.fromstkloc,
+				  salesorders.printedpackingslip,
+				  salesorders.datepackingslipprinted,
+				  salesorderdetails.stkcode,
+				  stockmaster.description,
+				  stockmaster.units,
+				  stockmaster.decimalplaces,
+				  debtorsmaster.name,
+				  custbranch.brname,
+				  locations.locationname,
+				  SUM(salesorderdetails.quantity) AS totqty,
+				  SUM(salesorderdetails.qtyinvoiced) AS totqtyinvoiced
+			 FROM salesorders
+				 INNER JOIN salesorderdetails
+				 ON salesorders.orderno = salesorderdetails.orderno
+				 INNER JOIN stockmaster
+				 ON salesorderdetails.stkcode = stockmaster.stockid
+				 INNER JOIN debtorsmaster
+				 ON salesorders.debtorno=debtorsmaster.debtorno
+				 INNER JOIN custbranch
+				 ON custbranch.debtorno=salesorders.debtorno
+				 AND custbranch.branchcode=salesorders.branchcode
+				 INNER JOIN locations
+				 ON salesorders.fromstkloc=locations.loccode
+			 WHERE stockmaster.categoryid ='" . $_POST['CategoryID'] . "'
+				  AND orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
+				  AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
+		 GROUP BY salesorders.orderno,
 				salesorders.debtorno,
 				salesorders.branchcode,
 				salesorders.customerref,
@@ -143,28 +166,38 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 
 } elseif ($_POST['CategoryID']=='All' AND $_POST['Location']!='All') {
 	$sql= "SELECT salesorders.orderno,
-                      salesorders.debtorno,
-                      salesorders.branchcode,
-                      salesorders.customerref,
-                      salesorders.orddate,
-                      salesorders.fromstkloc,
-                      salesorders.printedpackingslip,
-                      salesorders.datepackingslipprinted,
-                      salesorderdetails.stkcode,
-                      stockmaster.description,
-                      stockmaster.units,
-                      stockmaster.decimalplaces,
-                      SUM(salesorderdetails.quantity) AS totqty,
-                      SUM(salesorderdetails.qtyinvoiced) AS totqtyinvoiced
-                FROM salesorders
-                     INNER JOIN salesorderdetails
-                     ON salesorders.orderno = salesorderdetails.orderno
-                     INNER JOIN stockmaster
-                     ON salesorderdetails.stkcode = stockmaster.stockid
-                WHERE salesorders.fromstkloc ='" . $_POST['Location'] . "'
-                      AND orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
-                      AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
-	      GROUP BY salesorders.orderno,
+				  salesorders.debtorno,
+				  salesorders.branchcode,
+				  salesorders.customerref,
+				  salesorders.orddate,
+				  salesorders.fromstkloc,
+				  salesorders.printedpackingslip,
+				  salesorders.datepackingslipprinted,
+				  salesorderdetails.stkcode,
+				  stockmaster.description,
+				  stockmaster.units,
+				  stockmaster.decimalplaces,
+				  debtorsmaster.name,
+				  custbranch.brname,
+				  locations.locationname,
+				  SUM(salesorderdetails.quantity) AS totqty,
+				  SUM(salesorderdetails.qtyinvoiced) AS totqtyinvoiced
+			 FROM salesorders
+				 INNER JOIN salesorderdetails
+				 ON salesorders.orderno = salesorderdetails.orderno
+				 INNER JOIN stockmaster
+				 ON salesorderdetails.stkcode = stockmaster.stockid
+				 INNER JOIN debtorsmaster
+				 ON salesorders.debtorno=debtorsmaster.debtorno
+				 INNER JOIN custbranch
+				 ON custbranch.debtorno=salesorders.debtorno
+				 AND custbranch.branchcode=salesorders.branchcode
+				 INNER JOIN locations
+				 ON salesorders.fromstkloc=locations.loccode
+			 WHERE salesorders.fromstkloc ='" . $_POST['Location'] . "'
+				  AND orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
+				  AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
+		 GROUP BY salesorders.orderno,
 				salesorders.debtorno,
 				salesorders.branchcode,
 				salesorders.customerref,
@@ -178,26 +211,36 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 } elseif ($_POST['CategoryID']!='All' AND $_POST['location']!='All'){
 
 	$sql= "SELECT salesorders.orderno,
-                      salesorders.debtorno,
-                      salesorders.branchcode,
-                      salesorders.customerref,
-                      salesorders.orddate,
-                      salesorders.fromstkloc,
-                      salesorderdetails.stkcode,
-                      stockmaster.description,
-                      stockmaster.units,
-                      stockmaster.decimalplaces,
-                      SUM(salesorderdetails.quantity) AS totqty,
-                      SUM(salesorderdetails.qtyinvoiced) AS totqtyinvoiced
-                FROM salesorders
-                     INNER JOIN salesorderdetails
-                     ON salesorders.orderno = salesorderdetails.orderno
-                     INNER JOIN stockmaster
-                     ON salesorderdetails.stkcode = stockmaster.stockid
-                WHERE stockmaster.categoryid ='" . $_POST['CategoryID'] . "'
-                      AND salesorders.fromstkloc ='" . $_POST['Location'] . "'
-                      AND orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
-                      AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
+				  salesorders.debtorno,
+				  salesorders.branchcode,
+				  salesorders.customerref,
+				  salesorders.orddate,
+				  salesorders.fromstkloc,
+				  salesorderdetails.stkcode,
+				  stockmaster.description,
+				  stockmaster.units,
+				  stockmaster.decimalplaces,
+				  debtorsmaster.name,
+				  custbranch.brname,
+				  locations.locationname,
+				  SUM(salesorderdetails.quantity) AS totqty,
+				  SUM(salesorderdetails.qtyinvoiced) AS totqtyinvoiced
+				 INNER JOIN locations
+				 ON salesorders.fromstkloc=locations.loccode
+			 FROM salesorders
+				 INNER JOIN salesorderdetails
+				 ON salesorders.orderno = salesorderdetails.orderno
+				 INNER JOIN stockmaster
+				 ON salesorderdetails.stkcode = stockmaster.stockid
+				 INNER JOIN debtorsmaster
+				 ON salesorders.debtorno=debtorsmaster.debtorno
+				 INNER JOIN custbranch
+				 ON custbranch.debtorno=salesorders.debtorno
+				 AND custbranch.branchcode=salesorders.branchcode
+			 WHERE stockmaster.categoryid ='" . $_POST['CategoryID'] . "'
+				  AND salesorders.fromstkloc ='" . $_POST['Location'] . "'
+				  AND orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
+				  AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
 		  GROUP BY salesorders.orderno,
 				salesorders.debtorno,
 				salesorders.branchcode,
@@ -239,119 +282,141 @@ $AccumTotalInv =0;
 $AccumOrderTotal =0;
 
 while ($myrow=DB_fetch_array($Result)){
-	
-	   if($OrderNo != $myrow['orderno']){
-	   	if ($AccumOrderTotal !=0){
+
+	if($OrderNo != $myrow['orderno']){
+		if ($AccumOrderTotal !=0){
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,120,$FontSize,_('Total Invoiced for order') . ' ' . $OrderNo , 'left');
-                 	$LeftOvers = $pdf->addTextWrap($Left_Margin+360,$YPos,80,$FontSize,number_format($AccumOrderTotal,2), 'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+360,$YPos,80,$FontSize,number_format($AccumOrderTotal,2), 'right');
 			$YPos -= ($line_height);
 			$AccumOrderTotal =0;
-        	}
+		}
+
 		$pdf->line($XPos, $YPos,$Page_Width-$Right_Margin, $YPos);
+
 		$YPos -= $line_height;
+		/*Set up headings */
+		/*draw a line */
+
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,40,$FontSize,_('Order'), 'left');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos,150,$FontSize,_('Customer'), 'left');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+190,$YPos,110,$FontSize,_('Branch'), 'left');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,60,$FontSize,_('Customer Ref'), 'left');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+360,$YPos,60,$FontSize,_('Ord Date'), 'left');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+420,$YPos,80,$FontSize,_('Location'), 'left');
+
+		$YPos-=$line_height;
+
+		/*draw a line */
+		$pdf->line($XPos, $YPos,$Page_Width-$Right_Margin, $YPos);
+		$pdf->line($XPos, $YPos-$line_height*2,$XPos, $YPos+$line_height*2);
+		$pdf->line($Page_Width-$Right_Margin, $YPos-$line_height*2,$Page_Width-$Right_Margin, $YPos+$line_height*2);
+
+		$YPos -= ($line_height);
 		if ($YPos - (2 *$line_height) < $Bottom_Margin){
-          		/*Then set up a new page */
-              		$PageNumber++;
-	      		include ('includes/PDFOrdersInvoicedPageHeader.inc');
+			/*Then set up a new page */
+			$PageNumber++;
+			include ('includes/PDFOrdersInvoicedPageHeader.inc');
 		} /*end of new page header  */
-	   }
+	}
 
 	if ($myrow['orderno']!=$OrderNo OR $NewPage){
-		  
-	        $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,$myrow['orderno'], 'left');
-        	$LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos,80,$FontSize,$myrow['debtorno'], 'left');
-	        $LeftOvers = $pdf->addTextWrap($Left_Margin+120,$YPos,80,$FontSize,$myrow['branchcode'], 'left');
 
-        	$LeftOvers = $pdf->addTextWrap($Left_Margin+200,$YPos,100,$FontSize,$myrow['customerref'], 'left');
-	        $LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,80,$FontSize,ConvertSQLDate($myrow['orddate']), 'left');
-        	$LeftOvers = $pdf->addTextWrap($Left_Margin+380,$YPos,20,$FontSize,$myrow['fromstkloc'], 'left');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,40,$FontSize,$myrow['orderno'], 'left');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos,150,$FontSize,html_entity_decode($myrow['name']), 'left');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+190,$YPos,110,$FontSize,$myrow['brname'], 'left');
 
-			if (isset($PackingSlipPrinted)) {
-        		$LeftOvers = $pdf->addTextWrap($Left_Margin+400,$YPos,100,$FontSize,$PackingSlipPrinted, 'left');
-			}
-			
-	  	$YPos -= ($line_height);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,60,$FontSize,$myrow['customerref'], 'left');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+360,$YPos,60,$FontSize,ConvertSQLDate($myrow['orddate']), 'left');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+420,$YPos,80,$FontSize,$myrow['locationname'], 'left');
 
-                $OrderNo = $myrow['orderno'];
-		 /*Set up the headings for the order */
-                $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Code'), 'center');
-                $LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,120,$FontSize,_('Description'), 'center');
-                $LeftOvers = $pdf->addTextWrap($Left_Margin+180,$YPos,60,$FontSize,_('Ordered'), 'center');
-                $LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,60,$FontSize,_('Invoiced'), 'centre');
-                $LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,60,$FontSize,_('Outstanding'), 'center');
-	        $YPos -= ($line_height);
-		$NewPage = false;
-        }
-       
-       $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$myrow['stkcode'], 'left');
-       $LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,120,$FontSize,$myrow['description'], 'left');
-       $LeftOvers = $pdf->addTextWrap($Left_Margin+180,$YPos,60,$FontSize,number_format($myrow['totqty'],$myrow['decimalplaces']), 'right');
-       $LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,60,$FontSize,number_format($myrow['totqtyinvoiced'],$myrow['decimalplaces']), 'right');
+		if (isset($PackingSlipPrinted)) {
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+400,$YPos,100,$FontSize,$PackingSlipPrinted, 'left');
+		}
 
-       if ($myrow['totqty']>$myrow['totqtyinvoiced']){
-             $LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,60,$FontSize,number_format($myrow['totqty']-$myrow['totqtyinvoiced'],$myrow['decimalplaces']), 'right');
-       } else {
-             $LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,60,$FontSize,_('Complete'), 'left');
-       }
-	
+		$YPos -= ($line_height);
+		$pdf->line($XPos, $YPos,$Page_Width-$Right_Margin, $YPos);
+		$YPos -= ($line_height);
+
+	}
+	$OrderNo = $myrow['orderno'];
+	/*Set up the headings for the order */
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Code'), 'left');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,120,$FontSize,_('Description'), 'left');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+180,$YPos,60,$FontSize,_('Ordered'), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,60,$FontSize,_('Invoiced'), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,60,$FontSize,_('Outstanding'), 'left');
+	$YPos -= ($line_height);
+	$NewPage = false;
+
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$myrow['stkcode'], 'left');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,120,$FontSize,$myrow['description'], 'left');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+180,$YPos,60,$FontSize,number_format($myrow['totqty'],$myrow['decimalplaces']), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,60,$FontSize,number_format($myrow['totqtyinvoiced'],$myrow['decimalplaces']), 'right');
+
+	if ($myrow['totqty']>$myrow['totqtyinvoiced']){
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,60,$FontSize,number_format($myrow['totqty']-$myrow['totqtyinvoiced'],$myrow['decimalplaces']), 'right');
+	} else {
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,60,$FontSize,_('Complete'), 'left');
+	}
+
 	$YPos -= ($line_height);
 	if ($YPos - (2 *$line_height) < $Bottom_Margin){
-        	/*Then set up a new page */
-        	$PageNumber++;
+		/*Then set up a new page */
+		$PageNumber++;
 		include ('includes/PDFOrdersInvoicedPageHeader.inc');
 	} /*end of new page header  */
-	
-	
-       /*OK now get the invoices where the item was charged */
-	$sql = 'SELECT debtortrans.order_,
+
+
+	/*OK now get the invoices where the item was charged */
+	$sql = "SELECT debtortrans.order_,
 			systypes.typename,
 			debtortrans.transno,
-	 		stockmoves.price, 
+	 		stockmoves.price,
 			-stockmoves.qty AS quantity
-		FROM debtortrans INNER JOIN stockmoves 
-			ON debtortrans.type = stockmoves.type 
-			AND debtortrans.transno=stockmoves.transno 
+		FROM debtortrans INNER JOIN stockmoves
+			ON debtortrans.type = stockmoves.type
+			AND debtortrans.transno=stockmoves.transno
 			INNER JOIN systypes ON debtortrans.type=systypes.typeid
-		WHERE debtortrans.order_ =' . $OrderNo . "
+		WHERE debtortrans.order_ ='" . $OrderNo . "'
 		AND stockmoves.stockid ='" . $myrow['stkcode'] . "'";
-		
+
 	$InvoicesResult =DB_query($sql,$db);
 	if (DB_num_rows($InvoicesResult)>0){
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+150,$YPos,90,$FontSize,_('Transaction Number'), 'center');
-                 $LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,60,$FontSize,_('Quantity'), 'center');
-                 $LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,60,$FontSize,_('Price'), 'center');
-                 $LeftOvers = $pdf->addTextWrap($Left_Margin+380,$YPos,60,$FontSize,_('Total'), 'centre');
-	         $YPos -= ($line_height);
-        }
-       
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,60,$FontSize,_('Quantity'), 'center');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,60,$FontSize,_('Price'), 'center');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+380,$YPos,60,$FontSize,_('Total'), 'centre');
+		$YPos -= ($line_height);
+	}
+
 	while ($InvRow=DB_fetch_array($InvoicesResult)){
-	
+
 		$ValueInvoiced = $InvRow['price']*$InvRow['quantity'];
-		
+
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+150,$YPos,90,$FontSize,$InvRow['typename'] . ' ' . $InvRow['transno'], 'left');
-                 $LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,60,$FontSize,number_format($InvRow['quantity'],$myrow['decimalplaces']), 'right');
-                 $LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,60,$FontSize,number_format($InvRow['price'],2), 'right');
-                 $LeftOvers = $pdf->addTextWrap($Left_Margin+360,$YPos,80,$FontSize,number_format($ValueInvoiced,2), 'right');
-	         
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,60,$FontSize,number_format($InvRow['quantity'],$myrow['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,60,$FontSize,number_format($InvRow['price'],2), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+360,$YPos,80,$FontSize,number_format($ValueInvoiced,2), 'right');
+
 		 $YPos -= ($line_height);
-		 
+
 		 if ($YPos - (2 *$line_height) < $Bottom_Margin){
-          		/*Then set up a new page */
-              		$PageNumber++;
-	      		include ('includes/PDFOrdersInvoicedPageHeader.inc');
+			/*Then set up a new page */
+			$PageNumber++;
+			include ('includes/PDFOrdersInvoicedPageHeader.inc');
 		} /*end of new page header  */
 		$AccumOrderTotal += $ValueInvoiced;
 		$AccumTotalInv += $ValueInvoiced;
 	}
-	
-	
-	
-      $YPos -= ($line_height);
-      if ($YPos - (2 *$line_height) < $Bottom_Margin){
-          /*Then set up a new page */
-              $PageNumber++;
-	      include ('includes/PDFOrdersInvoicedPageHeader.inc');
-      } /*end of new page header  */
+
+
+
+	 $YPos -= ($line_height);
+	 if ($YPos - (2 *$line_height) < $Bottom_Margin){
+		/*Then set up a new page */
+			$PageNumber++;
+		 include ('includes/PDFOrdersInvoicedPageHeader.inc');
+	 } /*end of new page header  */
 } /* end of while there are invoiced orders to print */
 
 $YPos -= ($line_height);
