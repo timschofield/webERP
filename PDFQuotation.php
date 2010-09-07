@@ -55,7 +55,7 @@ $sql = "SELECT salesorders.customerref,
 	AND salesorders.shipvia=shippers.shipper_id
 	AND salesorders.fromstkloc=locations.loccode
 	AND salesorders.quotation=1
-	AND salesorders.orderno=" . $_GET['QuotationNo'];
+	AND salesorders.orderno='" . $_GET['QuotationNo'] ."'";
 
 $result=DB_query($sql,$db, $ErrMsg);
 
@@ -104,7 +104,7 @@ $sql = "SELECT salesorderdetails.stkcode,
 		salesorderdetails.narrative
 	FROM salesorderdetails INNER JOIN stockmaster
 		ON salesorderdetails.stkcode=stockmaster.stockid
-	WHERE salesorderdetails.orderno=" . $_GET['QuotationNo'];
+	WHERE salesorderdetails.orderno='" . $_GET['QuotationNo'] . "'";
 
 $result=DB_query($sql,$db, $ErrMsg);
 
@@ -145,7 +145,7 @@ if (DB_num_rows($result)>0){
 			$TaxAuth = $myrow3['taxauthid'];
 		}
 
-		$sql4 = "SELECT * FROM taxauthrates WHERE dispatchtaxprovince=" .$TaxProv ." AND taxcatid=" .$TaxCat ." AND taxauthority=" .$TaxAuth;
+		$sql4 = "SELECT * FROM taxauthrates WHERE dispatchtaxprovince='" .$TaxProv ."' AND taxcatid='" .$TaxCat ."' AND taxauthority='" .$TaxAuth ."'";
 		$result4=DB_query($sql4,$db, $ErrMsg);
 		while ($myrow4=DB_fetch_array($result4)){
 			$TaxClass = 100 * $myrow4['taxrate'];
