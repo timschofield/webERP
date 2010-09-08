@@ -110,13 +110,13 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 								newqoh)
 						VALUES ('" . $myrow['stockid'] . "',
 							17,
-							" . $AdjustmentNumber . ",
+							'" . $AdjustmentNumber . "',
 							'" . $myrow['loccode'] . "',
 							'" . $SQLAdjustmentDate . "',
-							" . $PeriodNo . ",
+							'" . $PeriodNo . "',
 							'" . _('Inventory Check') . "',
-							" . $StockQtyDifference . ",
-							" . ($QtyOnHandPrior + $StockQtyDifference) . "
+							'" . $StockQtyDifference . "',
+							'" . ($QtyOnHandPrior + $StockQtyDifference) . "'
 						)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
@@ -124,7 +124,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 				$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 
 				$SQL = "UPDATE locstock
-						SET quantity = quantity + " . $StockQtyDifference . "
+						SET quantity = quantity + '" . $StockQtyDifference . "'
 						WHERE stockid='" . $myrow['stockid'] . "'
 						AND loccode='" . $myrow['loccode'] . "'";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
@@ -145,11 +145,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 									amount,
 									narrative)
 							VALUES (17,
-								" .$AdjustmentNumber . ",
+								'" .$AdjustmentNumber . "',
 								'" . $SQLAdjustmentDate . "',
-								" . $PeriodNo . ",
-								" .  $StockGLCodes['adjglact'] . ",
-								" . $myrow['standardcost'] * -($StockQtyDifference) . ",
+								'" . $PeriodNo . "',
+								'" .  $StockGLCodes['adjglact'] . "',
+								'" . $myrow['standardcost'] * -($StockQtyDifference) . "',
 								'" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
 					$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 
@@ -164,11 +164,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 									amount,
 									narrative)
 							VALUES (17,
-								" .$AdjustmentNumber . ",
+								'" .$AdjustmentNumber . "',
 								'" . $SQLAdjustmentDate . "',
-								" . $PeriodNo . ",
-								" .  $StockGLCodes['stockact'] . ",
-								" . $myrow['standardcost'] * $StockQtyDifference . ", '" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
+								'" . $PeriodNo . "',
+								'" .  $StockGLCodes['stockact'] . "',
+								'" . $myrow['standardcost'] * $StockQtyDifference . ", '" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
 					$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 
 				} //END INSERT GL TRANS
@@ -347,7 +347,10 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	$title= _('Inventory Comparison Report');
 	include('includes/header.inc');
 
-	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="POST"><table>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt=""></img>' . ' '
+		. $title . '</p>';
+
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="POST"><table class=selection>';
 
 	echo '<tr><td>' . _('Choose Option'). ':</font></td><td><select name="ReportOrClose">';
 
@@ -372,7 +375,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		echo '<option selected VALUE="Leave">' . _("Don't Adjust System stock to Nil");
 	}
 
-	echo '</table><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print PDF'). '"></div>';
+	echo '</table><br><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print PDF'). '"></div>';
 
 	include('includes/footer.inc');
 
