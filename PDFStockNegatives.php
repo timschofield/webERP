@@ -17,6 +17,7 @@ $line_height=15;
 
 $title = _('Negative Stock Listing Error');
 $ErrMsg = _('An error occurred retrieving the negative quantities.');
+$DbgMsg = _('The sql that failed to retrieve the negative quantities was');
 
 $sql = "SELECT stockmaster.stockid,
                stockmaster.description,
