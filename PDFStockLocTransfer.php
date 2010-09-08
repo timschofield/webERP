@@ -49,7 +49,7 @@ $sql = "SELECT loctransfers.reference,
 			   INNER JOIN stockmaster ON loctransfers.stockid=stockmaster.stockid
 			   INNER JOIN locations ON loctransfers.shiploc=locations.loccode
 			   INNER JOIN locations AS locationsrec ON loctransfers.recloc = locationsrec.loccode
-			   WHERE loctransfers.reference=" . $_GET['TransferNo'];
+			   WHERE loctransfers.reference='" . $_GET['TransferNo'] . "'";
 
 $result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 
