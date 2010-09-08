@@ -23,8 +23,8 @@ if (($_GET["location"] == "All") and ($_GET["customers"] == "All")) {
 				AND salesorders.debtorno = debtorsmaster.debtorno
 				AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_GET["numberofdays"] . " DAY)
 			GROUP BY salesorderdetails.stkcode
-			ORDER BY " . $_GET['order'] . " DESC
-			LIMIT 0," . $_GET['NumberOfTopItems'] . "";
+			ORDER BY '" . $_GET['order'] . "' DESC
+			LIMIT 0,'" . $_GET['NumberOfTopItems'] . "'";
 } else { //the situation if only location type selected "All"
 	if ($_GET["location"] == "All") {
 		$SQL = "SELECT 	salesorderdetails.stkcode,
@@ -39,8 +39,8 @@ if (($_GET["location"] == "All") and ($_GET["customers"] == "All")) {
 						AND debtorsmaster.typeid = '" . $_GET["customers"] . "'
 						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_GET["numberofdays"] . " DAY)
 				GROUP BY salesorderdetails.stkcode
-				ORDER BY " . $_GET['order'] . " DESC
-				LIMIT 0," . $_GET['NumberOfTopItems'] . "";
+				ORDER BY '" . $_GET['order'] . "' DESC
+				LIMIT 0,'" . $_GET['NumberOfTopItems'] . "'";
 	} else {
 		//the situation if the customer type selected "All"
 		if ($_GET["customers"] == "All") {
@@ -57,8 +57,8 @@ if (($_GET["location"] == "All") and ($_GET["customers"] == "All")) {
 						AND salesorders.fromstkloc = '" . $_GET["location"] . "'
 						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_GET["numberofdays"] . " DAY)
 					GROUP BY salesorderdetails.stkcode
-					ORDER BY " . $_GET['order'] . " DESC
-					LIMIT 0," . $_GET['NumberOfTopItems'] . "";
+					ORDER BY '" . $_GET['order'] . "' DESC
+					LIMIT 0,'" . $_GET['NumberOfTopItems'] . "'";
 		} else {
 			//the situation if the location and customer type not selected "All"
 			$SQL = "
@@ -75,8 +75,8 @@ if (($_GET["location"] == "All") and ($_GET["customers"] == "All")) {
 						AND debtorsmaster.typeid = '" . $_GET["customers"] . "'
 						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_GET["numberofdays"] . " DAY)
 					GROUP BY salesorderdetails.stkcode
-					ORDER BY " . $_GET['order'] . " DESC
-					LIMIT 0," . $_GET['NumberOfTopItems'] . "";
+					ORDER BY '" . $_GET['order'] . "' DESC
+					LIMIT 0,'" . $_GET['NumberOfTopItems'] . "'";
 		}
 	}
 }
