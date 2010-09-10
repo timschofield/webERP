@@ -11,7 +11,7 @@ include('includes/header.inc');
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title .
 	 '" alt="">' . ' ' . $title . '</p>';
 
-$emailsql='SELECT email FROM www_users WHERE userid="'.$_SESSION['UserID'].'"';
+$emailsql="SELECT email FROM www_users WHERE userid='".$_SESSION['UserID']."'";
 $emailresult=DB_query($emailsql, $db);
 $emailrow=DB_fetch_array($emailresult);
 
@@ -26,7 +26,7 @@ if (isset($_POST['updateall'])) {
 				SET status='".$status."',
 				stat_comment='".$comment."',
 				allowprint=1
-				WHERE orderno=".$orderno;
+				WHERE orderno='".$orderno."'";
 			$result=DB_query($sql, $db);
 		}
 	}
@@ -34,7 +34,7 @@ if (isset($_POST['updateall'])) {
 
 /* Retrieve the purchase order header information
  */
-$sql='SELECT purchorders.*,
+$sql="SELECT purchorders.*,
 			suppliers.suppname,
 			suppliers.currcode,
 			www_users.realname,
@@ -44,11 +44,11 @@ $sql='SELECT purchorders.*,
 			ON suppliers.supplierid=purchorders.supplierno
 		LEFT JOIN www_users
 			ON www_users.userid=purchorders.initiator
-	WHERE status="'. _('Pending'). '"';
+	WHERE status='Pending'";
 $result=DB_query($sql, $db);
 
 echo '<form method=post action="' . $_SERVER['PHP_SELF'] . '">';
-echo '<table><tr>';
+echo '<table class=selection><tr>';
 
 /* Create the table for the purchase order header */
 echo '<th>'._('Order Number').'</th>';
@@ -61,17 +61,17 @@ echo '</tr>';
 
 while ($myrow=DB_fetch_array($result)) {
 
-	$authsql='SELECT authlevel FROM purchorderauth
-				WHERE userid="'.$_SESSION['UserID'].'"
-				AND currabrev="'.$myrow['currcode'].'"';
+	$authsql="SELECT authlevel FROM purchorderauth
+				WHERE userid='".$_SESSION['UserID']."'
+				AND currabrev='".$myrow['currcode']."'";
 
 	$authresult=DB_query($authsql, $db);
 	$myauthrow=DB_fetch_array($authresult);
 	$authlevel=$myauthrow['authlevel'];
 
-	$ordervaluesql='SELECT sum(unitprice*quantityord) as ordervalue
+	$ordervaluesql="SELECT sum(unitprice*quantityord) as ordervalue
 			FROM purchorderdetails
-			WHERE orderno='.$myrow['orderno'];
+			WHERE orderno='".$myrow['orderno'] . "'";
 
 	$ordervalueresult=DB_query($ordervaluesql, $db);
 	$myordervaluerow=DB_fetch_array($ordervalueresult);
@@ -92,15 +92,15 @@ while ($myrow=DB_fetch_array($result)) {
 		echo '</select></td>';
 		echo '</tr>';
 		echo "<input type='hidden' name='comment' value='".$myrow['stat_comment']."'>";
-		$linesql='SELECT purchorderdetails.*,
+		$linesql="SELECT purchorderdetails.*,
 					stockmaster.description
 				FROM purchorderdetails
 				LEFT JOIN stockmaster
 				ON stockmaster.stockid=purchorderdetails.itemcode
-			WHERE orderno='.$myrow['orderno'];
+			WHERE orderno='".$myrow['orderno'] . "'";
 		$lineresult=DB_query($linesql, $db);
 
-		echo '<tr><td></td><td colspan=5 align=left><table align=left>';
+		echo '<tr><td></td><td colspan=5 align=left><table class=selection align=left>';
 		echo '<th>'._('Product').'</th>';
 		echo '<th>'._('Quantity Ordered').'</th>';
 		echo '<th>'._('Currency').'</th>';
