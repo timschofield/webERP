@@ -21,7 +21,7 @@ if (isset($_GET['FromGRNNo'])){
 		FROM purchorderdetails,
 			grns
 		WHERE purchorderdetails.podetailitem=grns.podetailitem
-		AND grns.grnno=" . $_GET['FromGRNNo'];
+		AND grns.grnno='" . $_GET['FromGRNNo'] ."'";
 
 	$ErrMsg = _('The search of the GRNs was unsuccessful') . ' - ' . _('the SQL statement returned the error');
 	$orderResult = DB_query($SQL, $db, $ErrMsg);
@@ -49,13 +49,16 @@ $OrderHeaderSQL = "SELECT purchorders.*,
 			suppliers.supplierid,
 			suppliers.suppname,
 			suppliers.currcode,
-			www_users.realname
+			www_users.realname,
+			locations.locationname
 		FROM purchorders
 		LEFT JOIN www_users
-		ON purchorders.initiator=www_users.userid,
-			suppliers
-		WHERE purchorders.supplierno = suppliers.supplierid
-		AND purchorders.orderno = " . $_GET['OrderNo'];
+		ON purchorders.initiator=www_users.userid
+		LEFT JOIN locations
+		ON locations.loccode=purchorders.intostocklocation
+		LEFT JOIN suppliers
+		ON purchorders.supplierno = suppliers.supplierid
+		WHERE purchorders.orderno = '" . $_GET['OrderNo'] ."'";
 
 $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db, $ErrMsg);
 
@@ -79,10 +82,13 @@ if (DB_num_rows($GetOrdHdrResult)!=1) {
 $myrow = DB_fetch_array($GetOrdHdrResult);
 
 /* SHOW ALL THE ORDER INFO IN ONE PLACE */
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
+		_('Purchase Order') . '" alt="">' . ' ' . $title . '</p>';
 
-echo '<br><table BORDER=0 cellpadding=2>';
-echo '<tr><th style="text-align:left">' . _('Supplier Code'). '</td><td>' . $myrow['supplierid'] . '</td>
-	<th style="text-align:left">' . _('Supplier Name'). '</td><td>' . $myrow['suppname'] . '</td></tr>';
+echo '<table class=selection cellpadding=2>';
+echo '<tr><th colspan=8><font size=3 color=navy>'. _('Order Header Details'). '</font></th></tr>';
+echo '<tr><th style="text-align:left">' . _('Supplier Code'). '</td><td><a href="SelectSupplier.php?SupplierID='.$myrow['supplierid'].'">' . $myrow['supplierid'] . '</a></td>
+	<th style="text-align:left">' . _('Supplier Name'). '</td><td><a href="SelectSupplier.php?SupplierID='.$myrow['supplierid'].'">' . $myrow['suppname'] . '</a></td></tr>';
 
 echo '<tr><th style="text-align:left">' . _('Ordered On'). '</td><td>' . ConvertSQLDate($myrow['orddate']) . '</td>
 	<th style="text-align:left">' . _('Delivery Address 1'). '</td><td>' . $myrow['deladd1'] . '</td></tr>';
@@ -93,7 +99,7 @@ echo '<tr><th style="text-align:left">' . _('Order Currency'). '</td><td>' . $my
 echo '<tr><th style="text-align:left">' . _('Exchange Rate'). '</td><td>' . $myrow['rate'] . '</td>
 	<th style="text-align:left">' . _('Delivery Address 3'). '</td><td>' . $myrow['deladd3'] . '</td></tr>';
 
-echo '<tr><th style="text-align:left">' . _('Deliver Into Location'). '</td><td>' . $myrow['intostocklocation'] . '</td>
+echo '<tr><th style="text-align:left">' . _('Deliver Into Location'). '</td><td>' . $myrow['locationname'] . '</td>
 	<th style="text-align:left">' . _('Delivery Address 4'). '</td><td>' . $myrow['deladd4'] . '</td></tr>';
 
 echo '<tr><th style="text-align:left">' . _('Initiator'). '</td><td>' . $myrow['realname'] . '</td>
@@ -116,7 +122,7 @@ if ($myrow['dateprinted'] == ''){
 echo  '</td></tr>';
 echo '<tr><th style="text-align:left">'. _('Status') . '</td><td>'. _($myrow['status']) . '</td></tr>';
 
-echo '<tr><th style="text-align:left">' . _('Comments'). '</td><td bgcolor=white colspan=3>' . $myrow['comments'] . '</td></tr>';
+echo '<tr><th style="text-align:left">' . _('Comments'). '</td><td colspan=3>' . $myrow['comments'] . '</td></tr>';
 
 echo '</table>';
 
@@ -125,14 +131,14 @@ echo '<br>';
 /*Now get the line items */
 $ErrMsg = _('The line items of the purchase order could not be retrieved');
 $LineItemsSQL = "SELECT purchorderdetails.* FROM purchorderdetails
-				WHERE purchorderdetails.orderno = " . $_GET['OrderNo'];
+				WHERE purchorderdetails.orderno = '" . $_GET['OrderNo'] ."'";
 
 $LineItemsResult = db_query($LineItemsSQL,$db, $ErrMsg);
 
-echo '<div class="centre"><font size=4 color=BLUE>'. _('Order Line Details'). '</font></div>';
 
-echo '<table colspan=8 BORDER=0 cellpadding=0>
-	<tr>
+echo '<table colspan=8 class=selection cellpadding=0>';
+echo '<tr><th colspan=8><font size=3 color=navy>'. _('Order Line Details'). '</font></th></tr>';
+echo '<tr>
 		<th>' . _('Item Code'). '</td>
 		<th>' . _('Item Description'). '</td>
 		<th>' . _('Ord Qty'). '</td>

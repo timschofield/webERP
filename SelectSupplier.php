@@ -8,6 +8,9 @@ include ('includes/SQL_CommonFunctions.inc');
 if (!isset($_SESSION['SupplierID'])) {
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Suppliers') . '';
 }
+if (isset($_GET['SupplierID'])) {
+	$_SESSION['SupplierID']=$_GET['SupplierID'];
+}
 // only get geocode information if integration is on, and supplier has been selected
 if ($_SESSION['geocode_integration'] == 1 AND isset($_SESSION['SupplierID'])) {
 	$sql = "SELECT * FROM geocode_param WHERE 1";
