@@ -96,7 +96,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 /*If all clear then proceed to update the database
  */
 	if ($InputError!=1){
-		$emailsql='SELECT email FROM www_users WHERE userid="'.$_SESSION['PO'.$identifier]->Initiator.'"';
+		$emailsql="SELECT email FROM www_users WHERE userid='".$_SESSION['PO'.$identifier]->Initiator."'";
 		$emailresult=DB_query($emailsql, $db);
 		$emailrow=DB_fetch_array($emailresult);
 		$sql = 'BEGIN';
@@ -457,7 +457,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 				and stockmaster.discontinued!=1
 				AND stockmaster.stockid LIKE '" . $_POST['StockCode'] . "'
 				ORDER BY stockmaster.stockid
-				LIMIT '".$_SESSION['DefaultDisplayRecordsMax']."'";
+				LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
 		} else {
 			$sql = "SELECT stockmaster.stockid,
 					stockmaster.description,
@@ -954,14 +954,14 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				$uom=$POLine->Units;
 			}
 			//			echo "<td>$POLine->StockID</td><td>$POLine->ItemDescription</td>td> class=number>$DisplayQuantity</td><td>$POLine->Units</td><td>$POLine->ReqDelDate</td>td> class=number>$DisplayPrice</td>td> class=number>$DisplayLineTotal</font></td><td><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "&Edit=" . $POLine->LineNo . "'>" . _('Select') . "</a></td></tr>";
-			echo "<td>$POLine->StockID</td>
+			echo "<td>".$POLine->StockID ."</td>
 				<td>".$POLine->ItemDescription."</td>
-				<td><input type=text class=number name=Qty$POLine->LineNo size=11 value=".$DisplayQuantity."></td>
-				<td>$uom</td>
-				<td><input type=text class=number name=nw$POLine->LineNo size=11 value=".$POLine->nw."></td>
-				<td><input type=text class=number name=Price$POLine->LineNo size=11 value=".$DisplayPrice."></td>
-				<td class=number>$DisplayLineTotal</td>
-				<td><input type=text class=date alt='".$_SESSION['DefaultDateFormat']."' name=ReqDelDate$POLine->LineNo size=11 value=".$POLine->ReqDelDate."></td>
+				<td><input type=text class=number name=Qty".$POLine->LineNo ." size=11 value=".$DisplayQuantity."></td>
+				<td>".$uom."</td>
+				<td><input type=text class=number name=nw".$POLine->LineNo." size=11 value=".$POLine->nw."></td>
+				<td><input type=text class=number name=Price".$POLine->LineNo." size=11 value=".$DisplayPrice."></td>
+				<td class=number>".$DisplayLineTotal."</td>
+				<td><input type=text class=date alt='".$_SESSION['DefaultDateFormat']."' name=ReqDelDate".$POLine->LineNo." size=11 value=".$POLine->ReqDelDate."></td>
 				<td><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "identifier=".$identifier. "&Delete=" . $POLine->LineNo . "'>" . _('Delete') . "</a></td></tr>";
 			$_SESSION['PO'.$identifier]->total = $_SESSION['PO'.$identifier]->total + $LineTotal;
 		}
@@ -984,11 +984,11 @@ if (isset($_POST['NonStockOrder'])) {
 	echo '<td><input type=text name=ItemDescription size=40></td></tr>';
 	echo '<tr><td>'._('General Ledger Code').'</td>';
 	echo '<td><select name="GLCode">';
-	$sql='SELECT
+	$sql="SELECT
 			accountcode,
 			accountname
 		  FROM chartmaster
-		  ORDER BY accountcode ASC';
+		  ORDER BY accountcode ASC";
 	$result=DB_query($sql, $db);
 	while ($myrow=DB_fetch_array($result)) {
 		echo '<option value="'.$myrow['accountcode'].'">'.$myrow['accountcode'].' - '.$myrow['accountname'].'</option>';
