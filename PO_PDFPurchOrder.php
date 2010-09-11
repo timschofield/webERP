@@ -1,6 +1,5 @@
 <?php
 /* $Id$*/
-/* $Revision: 1.30 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
@@ -31,9 +30,9 @@ $title = _('Print Purchase Order Number').' '. $OrderNo;
 /* If we are not previewing the order then find
  * the order status */
 if ($OrderNo != 'Preview') {
-	$sql='SELECT status
+	$sql="SELECT status
 		FROM purchorders
-		WHERE orderno='.$OrderNo;
+		WHERE orderno='".$OrderNo."'";
 	$result=DB_query($sql, $db);
 	$myrow=DB_fetch_array($result);
 	$OrderStatus=$myrow['status'];
@@ -95,7 +94,7 @@ if (isset($OrderNo) && $OrderNo != "" && $OrderNo > 0 && $OrderNo != 'Preview'){
 			suppliers.currcode
 		FROM purchorders INNER JOIN suppliers
 			ON purchorders.supplierno = suppliers.supplierid
-		WHERE purchorders.orderno=" . $OrderNo;
+		WHERE purchorders.orderno='" . $OrderNo ."'";
 	$result=DB_query($sql,$db, $ErrMsg);
 	if (DB_num_rows($result)==0){ /*There is no order header returned */
 		$title = _('Print Purchase Order Error');
@@ -190,7 +189,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				ON purchorderdetails.itemcode=stockmaster.stockid
 			LEFT JOIN unitsofmeasure
 				ON purchorderdetails.uom=unitsofmeasure.unitid
-			WHERE orderno =" . $OrderNo;
+			WHERE orderno ='" . $OrderNo ."'";
 		$result=DB_query($sql,$db);
 	}
 	if ($OrderNo=='Preview' or DB_num_rows($result)>0){
@@ -315,11 +314,11 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		}
 	}
 	if ($ViewingOnly==0 && !$failed) {
-		$commentsql='SELECT initiator,stat_comment FROM purchorders WHERE orderno='.$OrderNo;
+		$commentsql="SELECT initiator,stat_comment FROM purchorders WHERE orderno='".$OrderNo."'";
 		$commentresult=DB_query($commentsql,$db);
 		$commentrow=DB_fetch_array($commentresult);
 		$comment=$commentrow['stat_comment'];
-		$emailsql='SELECT email FROM www_users WHERE userid="'.$commentrow['initiator'].'"';
+		$emailsql="SELECT email FROM www_users WHERE userid='".$commentrow['initiator']."'";
 		$emailresult=DB_query($emailsql, $db);
 		$emailrow=DB_fetch_array($emailresult);
 		$date = date($_SESSION['DefaultDateFormat']);
@@ -333,7 +332,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				status		= '" . PurchOrder::STATUS_PRINTED . "',
 				stat_comment = '" . $StatusComment . "'
 			WHERE
-				purchorders.orderno = " .  $OrderNo;
+				purchorders.orderno = '" .  $OrderNo."'";
 		$result = DB_query($sql,$db);
 	}
 } /* There was enough info to either print or email the purchase order */
@@ -377,7 +376,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				suppliercontacts.email
 			FROM suppliercontacts INNER JOIN purchorders
 			ON suppliercontacts.supplierid=purchorders.supplierno
-			WHERE purchorders.orderno=$OrderNo";
+			WHERE purchorders.orderno='".$OrderNo."'";
 		$ContactsResult=DB_query($SQL,$db, $ErrMsg);
 		if (DB_num_rows($ContactsResult)>0){
 			echo '<tr><td>'. _('Email to') .':</td><td><select name="EmailTo">';
