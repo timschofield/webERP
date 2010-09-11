@@ -36,23 +36,24 @@ function userLogin($Name, $Password, $db) {
 			return  UL_SHOWLOGIN;
 		}
 		$sql = "SELECT www_users.fullaccess,
-				www_users.customerid,
-				www_users.lastvisitdate,
-				www_users.pagesize,
-				www_users.defaultlocation,
-				www_users.branchcode,
-				www_users.modulesallowed,
-				www_users.blocked,
-				www_users.realname,
-				www_users.theme,
-				www_users.displayrecordsmax,
-				www_users.userid,
-				www_users.language,
-				www_users.salesman
-			FROM www_users
-			WHERE www_users.userid='" . $Name . "'
-			AND (www_users.password='" . CryptPass($Password) . "'
-			OR  www_users.password='" . $Password . "')";
+									www_users.customerid,
+									www_users.lastvisitdate,
+									www_users.pagesize,
+									www_users.defaultlocation,
+									www_users.branchcode,
+									www_users.modulesallowed,
+									www_users.blocked,
+									www_users.realname,
+									www_users.theme,
+									www_users.displayrecordsmax,
+									www_users.userid,
+									www_users.language,
+									www_users.salesman,
+									www_users.pdflanguage
+						FROM www_users
+						WHERE www_users.userid='" . $Name . "'
+						AND (www_users.password='" . CryptPass($Password) . "'
+						OR  www_users.password='" . $Password . "')";
 		$Auth_Result = DB_query($sql, $db);
 		// Populate session variables with data base results
 		if (DB_num_rows($Auth_Result) > 0) {
@@ -74,6 +75,7 @@ function userLogin($Name, $Password, $db) {
 //			$_SESSION['UserID'] = $myrow[11];
 			$_SESSION['Language'] = $myrow['language'];
 			$_SESSION['SalesmanLogin'] = $myrow['salesman'];
+			$_SESSION['PDFLanguage'] = $myrow['pdflanguage'];
 			if ($myrow[10] > 0) {
 				$_SESSION['DisplayRecordsMax'] = $myrow['displayrecordsmax'];
 			} else {
