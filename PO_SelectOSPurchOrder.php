@@ -76,7 +76,7 @@ if (isset($_POST['SearchParts'])) {
 				INNER JOIN purchorderdetails
 					ON stockmaster.stockid=purchorderdetails.itemcode
 			WHERE $completed
-			AND stockmaster.description " . LIKE . " '$SearchString'
+			AND stockmaster.description LIKE " . $SearchString ."
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 			GROUP BY stockmaster.stockid,
 				stockmaster.description,
@@ -95,7 +95,7 @@ if (isset($_POST['SearchParts'])) {
 				INNER JOIN purchorderdetails
 					ON stockmaster.stockid=purchorderdetails.itemcode
 			WHERE $completed
-			AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
+			AND stockmaster.stockid LIKE '%" . $_POST['StockCode'] . "%'
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 			GROUP BY stockmaster.stockid,
 				stockmaster.description,
@@ -153,7 +153,7 @@ if (!isset($OrderNumber) or $OrderNumber=='' ){
  	echo '</select>  <input type=submit name="SearchOrders" value="' . _('Search Purchase Orders') . '"></td></tr></table>';
 }
 
-$SQL='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription';
+$SQL="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
 $result1 = DB_query($SQL,$db);
 
 echo "<br><font size=1><div class='page_help_text'>" ._('To search for purchase orders for a specific part use the part selection facilities below')
@@ -231,7 +231,7 @@ else {
 	//figure out the SQL required from the inputs available
 $completed = " AND purchorderdetails.completed=0";
 	if (isset($OrderNumber) && $OrderNumber !='') {
-		$SQL = 'SELECT purchorders.orderno,
+		$SQL = "SELECT purchorders.orderno,
 				suppliers.suppname,
 				purchorders.orddate,
 				purchorders.initiator,
@@ -244,9 +244,9 @@ $completed = " AND purchorderdetails.completed=0";
 				purchorderdetails,
 				suppliers
 			WHERE purchorders.orderno = purchorderdetails.orderno
-			AND purchorders.supplierno = suppliers.supplierid '.
+			AND purchorders.supplierno = suppliers.supplierid ".
 			$completed
-			.' AND purchorders.orderno="'. $OrderNumber .'"
+			." AND purchorders.orderno='". $OrderNumber ."'
 			GROUP BY purchorders.orderno ASC,
 				suppliers.suppname,
 				purchorders.orddate,
@@ -254,7 +254,7 @@ $completed = " AND purchorderdetails.completed=0";
 				purchorders.initiator,
 				purchorders.requisitionno,
 				purchorders.allowprint,
-				suppliers.currcode';
+				suppliers.currcode";
 	} else {
 
 		  /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
