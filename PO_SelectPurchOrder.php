@@ -53,7 +53,7 @@ if (isset($_POST['SearchParts'])) {
 			ON stockmaster.stockid = locstock.stockid INNER JOIN purchorderdetails
 			ON stockmaster.stockid=purchorderdetails.itemcode
 			WHERE purchorderdetails.completed=1
-			AND stockmaster.description " . LIKE . " '$SearchString'
+			AND stockmaster.description LIKE '" . $SearchString ."'
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 			GROUP BY stockmaster.stockid,
 				stockmaster.description,
@@ -69,7 +69,7 @@ if (isset($_POST['SearchParts'])) {
 				ON stockmaster.stockid = locstock.stockid
 				INNER JOIN purchorderdetails ON stockmaster.stockid=purchorderdetails.itemcode
 			WHERE purchorderdetails.completed=1
-			AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
+			AND stockmaster.stockid LIKE '%" . $_POST['StockCode'] . "%'
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 			GROUP BY stockmaster.stockid,
 				stockmaster.description,
@@ -125,8 +125,6 @@ $SQL = "SELECT categoryid, categorydescription FROM stockcategory ORDER BY categ
 $result1 = DB_query($SQL, $db);
 echo '<br><br><table class=selection><tr><td>';
 echo '<font size=1>' . _('To search for purchase orders for a specific part use the part selection facilities below') . '</font>';
-echo '<input type=submit name="SearchParts" value="' . _('Search Parts Now') . '">';
-echo '<input type=submit name="ResetPart" value="' . _('Show All') . '">';
 echo '<tr><td><font size=1>' . _('Select a stock category') . ':</font><select name="StockCat">';
 while ($myrow1 = DB_fetch_array($result1)) {
 	if (isset($_POST['StockCat']) and $myrow1['categoryid'] == $_POST['StockCat']) {
@@ -138,9 +136,12 @@ while ($myrow1 = DB_fetch_array($result1)) {
 echo '</select><td><font size=1>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</font></td>';
 echo '<td><input type="Text" name="Keywords" size=20 maxlength=25></td></tr><tr><td></td>';
 echo '<td><font size=3><b>' . _('OR') . ' </b></font><font size=1>' . _('Enter extract of the') . '<b>' . _('Stock Code') . '</b>:</font></td>';
-echo '<td><input type="text" name="StockCode" size=15 maxlength=18></td></tr></table><br><br>';
+echo '<td><input type="text" name="StockCode" size=15 maxlength=18></td></tr>';
+echo '<tr><td colspan=3><div class=centre><input type=submit name="SearchParts" value="' . _('Search Parts Now') . '">';
+echo '<input type=submit name="ResetPart" value="' . _('Show All') . '"></div></td></tr>';
+echo '</table><br><br>';
 if (isset($StockItemsResult)) {
-	echo '<table cellpadding=2 colspan=7 border=2>';
+	echo '<table cellpadding=2 colspan=7 class=selection>';
 	$TableHeader = '<tr><td class="tableheader">' . _('Code') . '</td>
 				<td class="tableheader">' . _('Description') . '</td>
 				<td class="tableheader">' . _('On Hand') . '</td>
@@ -192,7 +193,7 @@ else {
 				suppliers
 			WHERE purchorders.orderno = purchorderdetails.orderno
 			AND purchorders.supplierno = suppliers.supplierid
-			AND purchorders.orderno=" . $OrderNumber . "
+			AND purchorders.orderno='" . $OrderNumber . "'
 			GROUP BY purchorders.orderno";
 	} else {
 		/* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
@@ -302,14 +303,14 @@ else {
 	$PurchOrdersResult = DB_query($SQL, $db, $ErrMsg);
 	if (DB_num_rows($PurchOrdersResult) > 0) {
 		/*show a table of the orders returned by the SQL */
-		echo '<table cellpadding=2 colspan=7 WIDTH=90%>';
-		$TableHeader = '<tr><td class="tableheader">' . _('View') . '</td>
-				<td class="tableheader">' . _('Supplier') . '</td>
-				<td class="tableheader">' . _('Currency') . '</td>
-				<td class="tableheader">' . _('Requisition') . '</td>
-				<td class="tableheader">' . _('Order Date') . '</td>
-				<td class="tableheader">' . _('Initiator') . '</td>
-				<td class="tableheader">' . _('Order Total') . '</td>
+		echo '<table cellpadding=2 colspan=7 width=90% class=selection>';
+		$TableHeader = '<tr><th>' . _('View') . '</th>
+				<th>' . _('Supplier') . '</th>
+				<th>' . _('Currency') . '</th>
+				<th>' . _('Requisition') . '</th>
+				<th>' . _('Order Date') . '</th>
+				<th>' . _('Initiator') . '</th>
+				<th>' . _('Order Total') . '</th>
 				</tr>';
 		echo $TableHeader;
 		$j = 1;
