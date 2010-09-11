@@ -8,7 +8,7 @@ include('includes/session.inc');
 $title=_('Update Pricing From Costs');
 include('includes/header.inc');
 
-echo '<br><div class="page_help_text">' . _('This page adds new prices or updates already existing prices for a specified sales type (price list) and currency for the stock category selected - based on a percentage mark up from cost prices or from preferred supplier cost data.') . '</div><br><div class="centre">';
+echo '<br><div class="page_help_text">' . _('This page adds new prices or updates already existing prices for a specified sales type (price list) and currency for the stock category selected - based on a percentage mark up from cost prices or from preferred supplier cost data. The rounding factor ensures that prices are at least this amount or a multiple of it. A rounding factor of 1000 would mean that prices would be a minimum of 1000 and other prices would be expressed as multiples of 1000.') . '</div><br><div class="centre">';
 
 echo "<form method='POST' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 
