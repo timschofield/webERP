@@ -56,7 +56,7 @@ $sql = "SELECT salesorders.debtorno,
 	WHERE salesorders.debtorno=debtorsmaster.debtorno
 	AND salesorders.shipvia=shippers.shipper_id
 	AND salesorders.fromstkloc=locations.loccode
-	AND salesorders.orderno=" . $_GET['TransNo'];
+	AND salesorders.orderno='" . $_GET['TransNo'] . "'";
 
 $result=DB_query($sql,$db, $ErrMsg);
 
@@ -125,15 +125,15 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 	$ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' .
 		$_GET['TransNo'] . ' ' . _('from the database');
 
-	$sql = "SELECT salesorderdetails.stkcode, 
-			stockmaster.description, 
-			salesorderdetails.quantity, 
-			salesorderdetails.qtyinvoiced, 
+	$sql = "SELECT salesorderdetails.stkcode,
+			stockmaster.description,
+			salesorderdetails.quantity,
+			salesorderdetails.qtyinvoiced,
 			salesorderdetails.unitprice,
 			salesorderdetails.narrative
 		FROM salesorderdetails INNER JOIN stockmaster
 			ON salesorderdetails.stkcode=stockmaster.stockid
-		WHERE salesorderdetails.orderno=" . $_GET['TransNo'];
+		WHERE salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
 	$result=DB_query($sql,$db, $ErrMsg);
 
 	if (DB_num_rows($result)>0){
@@ -195,7 +195,7 @@ if ($ListCount == 0) {   //UldisN
 */
     	$pdf->OutputD($_SESSION['DatabaseName'] . '_PackingSlip_' . date('Y-m-d') . '.pdf');//UldisN
     	$pdf->__destruct(); //UldisN
-	$sql = "UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted='" . Date('Y-m-d') . "' WHERE salesorders.orderno=" .$_GET['TransNo'];
+	$sql = "UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted='" . Date('Y-m-d') . "' WHERE salesorders.orderno='" .$_GET['TransNo'] . "'";
 	$result = DB_query($sql,$db);
 }
 
