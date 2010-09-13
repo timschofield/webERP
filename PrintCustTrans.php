@@ -6,6 +6,8 @@ if (isset($_GET['FromTransNo'])) {
 	$FromTransNo = trim($_GET['FromTransNo']);
 } elseif (isset($_POST['FromTransNo'])) {
 	$FromTransNo = trim($_POST['FromTransNo']);
+} else {
+	$FromTransNo = '';
 }
 if (isset($_GET['InvOrCredit'])) {
 	$InvOrCredit = $_GET['InvOrCredit'];
@@ -50,7 +52,7 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 		notice that salesorder record must be present to print the invoice purging of sales orders will
 		nobble the invoice reprints */
 		if ($InvOrCredit == 'Invoice') {
-			$sql = 'SELECT debtortrans.trandate,
+			$sql = "SELECT debtortrans.trandate,
 					debtortrans.ovamount,
 					debtortrans.ovdiscount,
 					debtortrans.ovfreight,
@@ -107,19 +109,19 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 					paymentterms
 				WHERE debtortrans.order_ = salesorders.orderno
 				AND debtortrans.type=10
-				AND debtortrans.transno=' . $FromTransNo . '
+				AND debtortrans.transno='" . $FromTransNo . "'
 				AND debtortrans.shipvia=shippers.shipper_id
 				AND debtortrans.debtorno=debtorsmaster.debtorno
 				AND debtorsmaster.paymentterms=paymentterms.termsindicator
 				AND debtortrans.debtorno=custbranch.debtorno
 				AND debtortrans.branchcode=custbranch.branchcode
 				AND custbranch.salesman=salesman.salesmancode
-				AND salesorders.fromstkloc=locations.loccode';
+				AND salesorders.fromstkloc=locations.loccode";
 			if (isset($_POST['PrintEDI']) and $_POST['PrintEDI'] == 'No') {
-				$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
+				$sql = $sql . " AND debtorsmaster.ediinvoices=0";
 			}
 		} else {
-			$sql = 'SELECT debtortrans.trandate,
+			$sql = "SELECT debtortrans.trandate,
 					debtortrans.ovamount,
 					debtortrans.ovdiscount,
 					debtortrans.ovfreight,
@@ -160,11 +162,11 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 					paymentterms
 				WHERE debtortrans.type=11
 				AND debtorsmaster.paymentterms = paymentterms.termsindicator
-				AND debtortrans.transno=' . $FromTransNo . '
+				AND debtortrans.transno='" . $FromTransNo . "'
 				AND debtortrans.debtorno=debtorsmaster.debtorno
 				AND debtortrans.debtorno=custbranch.debtorno
 				AND debtortrans.branchcode=custbranch.branchcode
-				AND custbranch.salesman=salesman.salesmancode';
+				AND custbranch.salesman=salesman.salesmancode";
 			if ($_POST['PrintEDI'] == 'No') {
 				$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
 			}
@@ -190,12 +192,12 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 				$ExchRate = 'X';
 			}
 			if ($InvOrCredit == 'Invoice') {
-				$sql = 'SELECT stockmoves.stockid,
+				$sql = "SELECT stockmoves.stockid,
 						stockmaster.description,
 						-stockmoves.qty as quantity,
 						stockmoves.discountpercent,
-						((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . '* -stockmoves.qty) AS fxnet,
-						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
+						((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . "* -stockmoves.qty) AS fxnet,
+						(stockmoves.price * " . $ExchRate . ") AS fxprice,
 						stockmoves.narrative,
 						stockmaster.units,
 						stockmaster.decimalplaces
@@ -203,16 +205,16 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
 					AND stockmoves.type=10
-					AND stockmoves.transno=' . $FromTransNo . '
-					AND stockmoves.show_on_inv_crds=1';
+					AND stockmoves.transno='" . $FromTransNo . "'
+					AND stockmoves.show_on_inv_crds=1";
 			} else {
 				/* only credit notes to be retrieved */
-				$sql = 'SELECT stockmoves.stockid,
+				$sql = "SELECT stockmoves.stockid,
 						stockmaster.description,
 						stockmoves.qty as quantity,
 						stockmoves.discountpercent,
-						((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . ' * stockmoves.qty) AS fxnet,
-						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
+						((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . " * stockmoves.qty) AS fxnet,
+						(stockmoves.price * " . $ExchRate . ") AS fxprice,
 						stockmoves.narrative,
 						stockmaster.units,
 						stockmaster.decimalplaces
@@ -220,8 +222,8 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
 					AND stockmoves.type=11
-					AND stockmoves.transno=' . $FromTransNo . '
-					AND stockmoves.show_on_inv_crds=1';
+					AND stockmoves.transno='" . $FromTransNo . "'
+					AND stockmoves.show_on_inv_crds=1";
 			} // end else
 			if ($FromTransNo!='Preview') {
 				$result = DB_query($sql, $db);
@@ -392,13 +394,16 @@ if (isset($_GET['FromTransNo'])) {
 } elseif (isset($_POST['FromTransNo'])) {
 	$FromTransNo = trim($_POST['FromTransNo']);
 }
-if (($InvOrCredit == 'Invoice' or $InvOrCredit == 'Credit') and $PrintPDF) {
-	$sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
+if (!isset($InvOrCredit)) {
+	$InvOrCredit='';
+}
+if (($InvOrCredit == 'Invoice' or $InvOrCredit == 'Credit') and isset($PrintPDF)) {
+	$sql = "SELECT stockmoves.stockid, stockmaster.appendfile
 			FROM stockmoves, stockmaster
 			WHERE stockmoves.stockid = stockmaster.stockid
 			AND stockmoves.type=10
-			AND stockmoves.transno=' . $FromTransNo . '
-			AND stockmoves.show_on_inv_crds=1';
+			AND stockmoves.transno='" . $FromTransNo . "'
+			AND stockmoves.show_on_inv_crds=1";
 	// };
 	if ($FromTransNo!='Preview') {
 		$result = DB_query($sql, $db);
@@ -450,7 +455,7 @@ if (($InvOrCredit == 'Invoice' or $InvOrCredit == 'Credit') and $PrintPDF) {
 	include ('includes/header.inc');
 	if (!isset($FromTransNo) OR $FromTransNo == '') {
 		/* if FromTransNo is not set then show a form to allow input of either a single invoice number or a range of invoices to be printed. Also get the last invoice number created to show the user where the current range is up to */
-		echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method='POST'><table class='table1'>";
+		echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method='POST'><table class='selection'>";
 		echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . _('Print Invoices or Credit Notes (Landscape Mode)') . '</div>';
 		echo '<tr><td>' . _('Print Invoices or Credit Notes') . '</td><td><select name=InvOrCredit>';
 		if ($InvOrCredit == 'Invoice' OR !isset($InvOrCredit)) {
@@ -472,7 +477,7 @@ if (($InvOrCredit == 'Invoice' or $InvOrCredit == 'Credit') and $PrintPDF) {
 		echo '</select></td></tr>';
 		echo '<tr><td>' . _('Start invoice/credit note number to print') . '</td><td><input Type=text class=number max=6 size=7 name=FromTransNo></td></tr>';
 		echo '<tr><td>' . _('End invoice/credit note number to print') . "</td><td><input Type=text class=number max=6 size=7 name='ToTransNo'></td></tr></table>";
-		echo "<div class='centre'><input type=Submit Name='Print' Value='" . _('Print') . "'><p>";
+		echo "<br><div class='centre'><input type=Submit Name='Print' Value='" . _('Print') . "'><p>";
 		echo "<input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
 		$sql = 'SELECT typeno FROM systypes WHERE typeid=10';
 		$result = DB_query($sql, $db);
@@ -533,14 +538,14 @@ if (($InvOrCredit == 'Invoice' or $InvOrCredit == 'Credit') and $PrintPDF) {
 						salesman
 					WHERE debtortrans.order_ = salesorders.orderno
 					AND debtortrans.type=10
-					AND debtortrans.transno=" . $FromTransNo . "
+					AND debtortrans.transno='" . $FromTransNo . "'
 					AND debtortrans.shipvia=shippers.shipper_id
 					AND debtortrans.debtorno=debtorsmaster.debtorno
 					AND debtortrans.debtorno=custbranch.debtorno
 					AND debtortrans.branchcode=custbranch.branchcode
 					AND custbranch.salesman=salesman.salesmancode";
 			} else {
-				$sql = 'SELECT debtortrans.trandate,
+				$sql = "SELECT debtortrans.trandate,
 						debtortrans.ovamount,
 						debtortrans.ovdiscount,
 						debtortrans.ovfreight,
@@ -569,15 +574,15 @@ if (($InvOrCredit == 'Invoice' or $InvOrCredit == 'Credit') and $PrintPDF) {
 						custbranch,
 						salesman
 					WHERE debtortrans.type=11
-					AND debtortrans.transno=' . $FromTransNo . '
+					AND debtortrans.transno='" . $FromTransNo . "'
 					AND debtortrans.debtorno=debtorsmaster.debtorno
 					AND debtortrans.debtorno=custbranch.debtorno
 					AND debtortrans.branchcode=custbranch.branchcode
-					AND custbranch.salesman=salesman.salesmancode';
+					AND custbranch.salesman=salesman.salesmancode";
 			}
 			$result = DB_query($sql, $db);
 			if (DB_num_rows($result) == 0 OR DB_error_no($db) != 0) {
-				echo '<p>' . _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available');
+				echo '<div class="page_help_text">' . _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $FromTransNo . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available').'</div>';
 				if ($debug == 1) {
 					echo _('The SQL used to get this information that failed was') . "<br>$sql";
 				}
@@ -655,16 +660,16 @@ if (($InvOrCredit == 'Invoice' or $InvOrCredit == 'Credit') and $PrintPDF) {
 				   		stockmaster.description,
 						-stockmoves.qty as quantity,
 						stockmoves.discountpercent,
-						((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . '* -stockmoves.qty) AS fxnet,
-						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
+						((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . "* -stockmoves.qty) AS fxnet,
+						(stockmoves.price * " . $ExchRate . ") AS fxprice,
 						stockmoves.narrative,
 						stockmaster.units
 					FROM stockmoves,
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
 					AND stockmoves.type=10
-					AND stockmoves.transno=' . $FromTransNo . '
-					AND stockmoves.show_on_inv_crds=1';
+					AND stockmoves.transno='" . $FromTransNo . "'
+					AND stockmoves.show_on_inv_crds=1";
 				} else { /* then its a credit note */
 					echo "<table WIDTH=50%><tr>
 				   		<td align=left bgcolor='#BBBBBB'><b>" . _('Branch') . ":</b></td>
@@ -680,24 +685,24 @@ if (($InvOrCredit == 'Invoice' or $InvOrCredit == 'Credit') and $PrintPDF) {
 				   		<td bgcolor='#EEEEEE'>" . ConvertSQLDate($myrow['trandate']) . "</td>
 						<td bgcolor='#EEEEEE'>" . $myrow['salesmanname'] . '</td>
 					</tr></table>';
-					$sql = 'SELECT stockmoves.stockid,
+					$sql = "SELECT stockmoves.stockid,
 				   		stockmaster.description,
 						stockmoves.qty as quantity,
-						stockmoves.discountpercent, ((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . ' * stockmoves.qty) AS fxnet,
-						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
+						stockmoves.discountpercent, ((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . " * stockmoves.qty) AS fxnet,
+						(stockmoves.price * " . $ExchRate . ") AS fxprice,
 						stockmaster.units
 					FROM stockmoves,
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
 					AND stockmoves.type=11
-					AND stockmoves.transno=' . $FromTransNo . '
-					AND stockmoves.show_on_inv_crds=1';
+					AND stockmoves.transno='" . $FromTransNo . "'
+					AND stockmoves.show_on_inv_crds=1";
 				}
 				echo '<hr>';
 				echo '<div class="centre"><font size=2>' . _('All amounts stated in') . ' ' . $myrow['currcode'] . '</font></div>';
 				$result = DB_query($sql, $db);
 				if (DB_error_no($db) != 0) {
-					echo '<br>' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
+					echo '<div class="page_help_text">' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database').'</div>';
 					if ($debug == 1) {
 						echo '<br>' . _('The SQL used to get this information that failed was') . "<br>$sql";
 					}
