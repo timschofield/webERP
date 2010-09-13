@@ -5,7 +5,16 @@ $PageSecurity = 11;
 
 include('includes/session.inc');
 
-$title = _('Special Prices for') . ' '. $_SESSION['CustomerID'];
+$result = DB_query("SELECT debtorsmaster.name,
+							debtorsmaster.currcode,
+							debtorsmaster.salestype
+						 FROM
+							debtorsmaster
+						 WHERE
+							debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
+$myrow = DB_fetch_row($result);
+
+$title = _('Special Prices for') . ' '. $myrow[0];
 
 include('includes/header.inc');
 
@@ -17,8 +26,9 @@ if (isset($_GET['Item'])){
 
 if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']==""){
 
-	echo '<br><hr>';
-	prnMsg( _('A customer must be selected from the customer selection screen') . ', ' . _('then an item must be selected before this page is called') . '. ' . _('The product selection page should call this page with a valid product code'),'info');
+	prnMsg( _('A customer must be selected from the customer selection screen') . ', '
+		. _('then an item must be selected before this page is called') . '. '
+			. _('The product selection page should call this page with a valid product code'),'info');
 	echo '<hr>';
 	include('includes/footer.inc');
 	exit;
@@ -32,14 +42,16 @@ $result = DB_query("SELECT debtorsmaster.name,
 						 WHERE
 							debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
 $myrow = DB_fetch_row($result);
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
+		'" alt="">' . '</img>' . _('Special Customer Prices').'<br>';
 echo '<font color=BLUE><b>' . $myrow[0] . ' ' . _('in') . ' ' . $myrow[1] . '<br>' . ' ' . _('for') . ' ';
 
 $CurrCode = $myrow[1];
 $SalesType = $myrow[2];
 
-$result = DB_query("SELECT stockmaster.description, 
+$result = DB_query("SELECT stockmaster.description,
 							stockmaster.mbflag
-					FROM stockmaster 
+					FROM stockmaster
 					WHERE stockmaster.stockid='" . $Item . "'",$db);
 
 $myrow = DB_fetch_row($result);
@@ -52,7 +64,7 @@ if ($myrow[1]=='K'){
 	exit;
 }
 
-echo $Item . ' - ' . $myrow[0] . '</b></font><hr>';
+echo $Item . ' - ' . $myrow[0] . '</b></font></p>';
 
 if (isset($_POST['submit'])) {
 
@@ -81,7 +93,7 @@ if (isset($_POST['submit'])) {
 			$msg = _('The branch code entered is not currently defined');
 		}
 	}
-	
+
 	if (! Is_Date($_POST['StartDate'])){
 		$InputError =1;
 		$msg = _('The date this price is to take effect from must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'];
@@ -98,14 +110,14 @@ if (isset($_POST['submit'])) {
 		$InputError =1;
 		$msg = _('The end date is expected to be after today. There is no point entering a new price where the effective date is before today!');
 	}
-	
+
 	if ((isset($_POST['Editing']) and $_POST['Editing']=='Yes') AND strlen($Item)>1 AND $InputError !=1) {
 
 		//editing an existing price
 
 		$sql = "UPDATE prices SET typeabbrev='" . $SalesType . "',
 		                          currabrev='" . $CurrCode . "',
-								  price=" . $_POST['Price'] . ",
+								  price='" . $_POST['Price'] . "',
 								  branchcode='" . $_POST['Branch'] . "',
 								  startdate='" . FormatDateForSQL($_POST['StartDate']) . "',
 								  enddate='" . FormatDateForSQL($_POST['EndDate']) . "'
@@ -115,7 +127,7 @@ if (isset($_POST['submit'])) {
 				AND prices.startdate='" . $_POST['OldStartDate'] . "'
 				AND prices.enddate='" . $_POST['OldEndDate'] . "'
 				AND prices.debtorno='" . $_SESSION['CustomerID'] . "'";
-				
+
 		$msg = _('Price Updated');
 	} elseif ($InputError !=1) {
 
@@ -128,11 +140,11 @@ if (isset($_POST['submit'])) {
 									branchcode,
 									startdate,
 									enddate)
-							VALUES ('$Item',
-								'$SalesType',
-								'$CurrCode',
+							VALUES ('".$Item."',
+								'".$SalesType."',
+								'".$CurrCode."',
 								'" . $_SESSION['CustomerID'] . "',
-								" . $_POST['Price'] . ",
+								'" . $_POST['Price'] . "',
 								'" . $_POST['Branch'] . "',
 								'" . FormatDateForSQL($_POST['StartDate']) . "',
 								'" . FormatDateForSQL($_POST['EndDate']) . "'
@@ -169,7 +181,7 @@ if (isset($_POST['submit'])) {
 			AND prices.branchcode='" . $_GET['Branch'] . "'
 			AND prices.startdate='" . $_GET['StartDate'] . "'
 			AND prices.enddate='" . $_GET['EndDate'] . "'";
-			
+
 	$result = DB_query($sql,$db);
 	prnMsg( _('This price has been deleted') . '!','success');
 }
@@ -191,13 +203,13 @@ $sql = "SELECT prices.price,
 		ORDER BY currabrev,
 						typeabbrev,
 						startdate";
-	
+
 $ErrMsg = _('Could not retrieve the normal prices set up because');
 $DbgMsg = _('The SQL used to retrieve these records was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-echo '<table border=1><tr><td valign=top>';
-echo '<table>';
+echo '<table><tr><td valign=top>';
+echo '<table class=selection>';
 
 if (DB_num_rows($result) == 0) {
 	echo '<tr><td>' . _('There are no default prices set up for this part') . '</td></tr>';
@@ -212,14 +224,14 @@ if (DB_num_rows($result) == 0) {
 		printf('<tr class="EvenTableRows">
 						<td class=number>%0.2f</td>
 						<td class=date>%s</td>
-						<td class=date>%s</td></tr>', 
+						<td class=date>%s</td></tr>',
 						$myrow['price'],
 						ConvertSQLDate($myrow['startdate']),
 						$EndDateDisplay);
 	}
 }
 
-echo '</table></td><td VALIGN=TOp>';
+echo '</table></td><td valign=top>';
 
 //now get the prices for the customer selected
 
@@ -229,10 +241,10 @@ $sql = "SELECT prices.price,
 			   prices.startdate,
 			   prices.enddate
 		FROM prices LEFT JOIN custbranch ON prices.branchcode= custbranch.branchcode
-		WHERE prices.typeabbrev = '$SalesType'
-		AND prices.stockid='$Item'
+		WHERE prices.typeabbrev = '".$SalesType."'
+		AND prices.stockid='".$Item."'
 		AND prices.debtorno='" . $_SESSION['CustomerID'] . "'
-		AND prices.currabrev='$CurrCode'
+		AND prices.currabrev='".$CurrCode."'
 		AND (custbranch.debtorno='" . $_SESSION['CustomerID'] . "' OR
 						custbranch.debtorno IS NULL)
 		ORDER BY prices.branchcode,
@@ -242,7 +254,7 @@ $ErrMsg = _('Could not retrieve the special prices set up because');
 $DbgMsg = _('The SQL used to retrieve these records was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-echo '<table>';
+echo '<table class=selection>';
 
 if (DB_num_rows($result) == 0) {
 	echo '<tr><td>' . _('There are no special prices set up for this part') . '</td></tr>';
@@ -312,73 +324,88 @@ if (DB_num_rows($result) == 0) {
 			$_POST['EndDate']='';
 		}
 	}
-	
 	if (!isset($_POST['Branch'])) {
 		$_POST['Branch']='';
 	}
 	if (!isset($_POST['Price'])) {
 		$_POST['Price']=0;
 	}
-	
+
 	if (!isset($_POST['StartDate'])){
 		$_POST['StartDate'] = Date($_SESSION['DefaultDateFormat']);
 	}
-	
+
 	if (!isset($_POST['EndDate'])){
-		$_POST['EndDate'] = '';
+		$_POST['EndDate'] = DateAdd(Date($_SESSION['DefaultDateFormat']), 'y', 1);
 	}
 
-
-	echo '<table><tr><td>' . _('Branch') . ':</td>
-	                         <td><input type="Text" name="Branch" size=11 maxlength=10 value=' . $_POST['Branch'] . '></td></tr>';
+	$sql = "SELECT
+				branchcode,
+				brname
+				FROM custbranch
+				WHERE debtorno='".$_SESSION['CustomerID'] ."'";
+	$result = DB_query($sql, $db);
+	echo '<table class=selection>';
+	echo '<tr><td>' . _('Branch') . ':</td>';
+	echo '<td><select name="Branch"';
+	while ($myrow=DB_fetch_array($result)) {
+		if ($myrow['branchcode']==$_POST['branch']) {
+			echo '<option selected value='.$myrow['branchcode'].'>'.$myrow['brname'].'</option>';
+		} else {
+			echo '<option value='.$myrow['branchcode'].'>'.$myrow['brname'].'</option>';
+		}
+	}
+	echo '></td></tr>';
 	echo '<tr><td>' . _('Start Date') . ':</td>
-	                         <td><input type="Text" name="StartDate" size=11 maxlength=10 value=' . $_POST['StartDate'] . '></td></tr>';
+	                         <td><input type="Text" name="StartDate" class=date alt='.$_SESSION['DefaultDateFormat'].
+	                         ' size=11 maxlength=10 value=' . $_POST['StartDate'] . '></td></tr>';
 	echo '<tr><td>' . _('End Date') . ':</td>
-	                         <td><input type="Text" name="EndDate" size=11 maxlength=10 value=' . $_POST['EndDate'] . '></td></tr>';
-	                         
+	                         <td><input type="Text" name="EndDate" class=date alt='.$_SESSION['DefaultDateFormat'].
+	                         ' size=11 maxlength=10 value=' . $_POST['EndDate'] . '></td></tr>';
+
 	echo '<tr><td>' . _('Price') . ':</td>
 	          <td><input type="Text" class=number name="Price" size=11 maxlength=10 value=' . $_POST['Price'] . '></td>
 				</tr></table>';
-				
-				
-	echo '<div class="centre"><input type="Submit" name="submit" VALUE="' . _('Enter Information') . '"></div>';
+
+
+	echo '<br><div class="centre"><input type="Submit" name="submit" VALUE="' . _('Enter Information') . '"></div>';
 
 	echo '</form>';
 	include('includes/footer.inc');
-	
+
 	function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID, $db) {
-	
+
 		/*This is quite complicated - the idea is that prices set up should be unique and there is no way two prices could be returned as valid - when getting a price in includes/GetPrice.inc the logic is to first look for a price of the salestype/currency within the effective start and end dates - then if not get the price with a start date prior but a blank end date (the default price). We would not want two prices where the effective dates fall between an existing price so it is necessary to update enddates of prices  - with me - I am just hanging on here myself
-		 
+
 		 Prices with no end date are default prices and need to be ignored in this resquence*/
-	
-		$SQL = "SELECT branchcode, 
+
+		$SQL = "SELECT branchcode,
 						startdate,
-						enddate 
-						FROM prices 
-						WHERE debtorno='" . $CustomerID . "' 
+						enddate
+						FROM prices
+						WHERE debtorno='" . $CustomerID . "'
 						AND stockid='" . $Item . "'
 						AND currabrev='" . $CurrAbbrev . "'
 						AND typeabbrev='" . $PriceList . "'
 						AND enddate<>''
-						ORDER BY 
-						branchcode, 
-						startdate, 
+						ORDER BY
+						branchcode,
+						startdate,
 						enddate";
-						
+
 		$result = DB_query($SQL,$db);
-				
+
 		unset($BranchCode);
-		
+
 		while ($myrow = DB_fetch_array($result)){
-			if ($BranchCode != $myrow['branchcode']){
+			if (!isset($BranchCode)){
 				unset($NextDefaultStartDate); //a price with a blank end date
 				unset($NextStartDate);
 				unset($EndDate);
 				unset($StartDate);
 				$BranchCode = $myrow['branchcode'];
 			}
-			if (isset($NextStartDate)){ 
+			if (isset($NextStartDate)){
 				if (Date1GreaterThanDate2(ConvertSQLDate($myrow['startdate']),$NextStartDate)){
 					$NextStartDate = ConvertSQLDate($myrow['startdate']);
 					if (Date1GreaterThanDate2(ConvertSQLDate($EndDate),ConvertSQLDate($myrow['startdate']))) {
