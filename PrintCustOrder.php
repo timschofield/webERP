@@ -54,7 +54,7 @@ $sql = "SELECT salesorders.customerref,
 		ON salesorders.shipvia=shippers.shipper_id
 	INNER JOIN locations
 		ON salesorders.fromstkloc=locations.loccode
-	WHERE salesorders.orderno=" . $_GET['TransNo'];
+	WHERE salesorders.orderno='" . $_GET['TransNo']. "'";
 
 $result=DB_query($sql,$db, $ErrMsg);
 
@@ -115,7 +115,7 @@ $sql = "SELECT salesorderdetails.stkcode,
 		salesorderdetails.unitprice
 	FROM salesorderdetails INNER JOIN stockmaster
 		ON salesorderdetails.stkcode=stockmaster.stockid
-	 WHERE salesorderdetails.orderno=" . $_GET['TransNo'];
+	 WHERE salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
 $result=DB_query($sql, $db, $ErrMsg);
 
 if (DB_num_rows($result)>0){
@@ -188,7 +188,7 @@ if (DB_num_rows($result)>0){
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_Customer_Order_' . $_GET['TransNo'] . '_' . Date('Y-m-d') .'.pdf');
 	$pdf-> __destruct();
 
-	$sql = "UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted='" . Date('Y-m-d') . "' WHERE salesorders.orderno=" .$_GET['TransNo'];
+	$sql = "UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted='" . Date('Y-m-d') . "' WHERE salesorders.orderno='" .$_GET['TransNo'] . "'";
 	$result = DB_query($sql,$db);
 } else {
 	$title = _('Print Packing Slip Error');
