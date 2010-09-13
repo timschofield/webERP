@@ -7,6 +7,18 @@ define ('LIKE','LIKE');
 global  $db;		// Make sure it IS global, regardless of our context
 $db = mysql_connect($host.':'.$mysqlport , $dbuser, $dbpassword);
 
+//printf("tried making mysql Connection.\n");
+//$varabc =  mysql_client_encoding($db);
+//printf("client encoding is %s\n", $varabc);
+
+//this statement sets the charset to be used for sending data to and from the db server
+//if not set, both mysql server and mysql client/library may assume otherwise
+mysql_set_charset("utf8", $db);
+
+//$varabc =  mysql_client_encoding($db);
+//printf("client encoding is %s\n", $varabc);
+
+
 if ( !$db ) {
 	echo '<BR>' . _('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');
 	exit;

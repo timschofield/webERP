@@ -12,6 +12,18 @@ define ('LIKE','LIKE');
 global $db;	// Make sure it IS global, regardless of our context
 $db = mysqli_connect($host , $dbuser, $dbpassword,$_SESSION['DatabaseName'], $mysqlport);
 
+//printf("tried making mysql-i Connection.\n");
+//$varabc =  mysqli_client_encoding($db);
+//printf("client encoding is %s\n", $varabc);
+
+//this statement sets the charset to be used for sending data to and from the db server
+//if not set, both mysqli server and mysqli client/library may assume otherwise
+mysqli_set_charset($db, "utf8");
+
+//$varabc =  mysqli_client_encoding($db);
+//printf("client encoding is %s\n", $varabc);
+
+
 /* check connection */
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
