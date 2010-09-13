@@ -8,6 +8,7 @@ $PageSecurity = 2;
 include('includes/session.inc');
 $title = _('Daily Sales Inquiry');
 include('includes/header.inc');
+include('includes/DefineCartClass.php');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Daily Sales') . '" alt="">' . ' ' . _('Daily Sales') . '</p>';
 echo '<div class="page_help_text">' . _('Select the month to show daily sales for') . '</div><br>';
@@ -88,9 +89,8 @@ if ($_POST['Salesperson']!='All') {
 }
 
 $sql .= " GROUP BY stockmoves.trandate ORDER BY stockmoves.trandate"; 
-
 $ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg($db);
-$SalesResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
+$SalesResult = DB_query($sql, $db,$ErrMsg);
 
 echo '<table cellpadding=2>';
 
@@ -104,11 +104,18 @@ echo'<tr>
 	<th>' . _('Saturday') . '</th></tr>';
 
 $CumulativeTotalSales = 0;
+$CumulativeTotalCost = 0;
 $BilledDays = 0;
 $DaySalesArray = array();
 while ($DaySalesRow=DB_fetch_array($SalesResult)) {
+	if (isset($DaySalesRow['salesvalue'])) {
 	$DaySalesArray[DayOfMonthFromSQLDate($DaySalesRow['trandate'])]->Sales = $DaySalesRow['salesvalue'];
+	}
+	if ($DaySalesRow['salesvalue'] > 0 ) {
 	$DaySalesArray[DayOfMonthFromSQLDate($DaySalesRow['trandate'])]->GPPercent = ($DaySalesRow['salesvalue']-$DaySalesRow['cost'])/$DaySalesRow['salesvalue'];
+    } else {
+	$DaySalesArray[DayOfMonthFromSQLDate($DaySalesRow['trandate'])]->GPPercent = 0;
+    }
 	$BilledDays++;
 	$CumulativeTotalSales += $DaySalesRow['salesvalue'];
 	$CumulativeTotalCost += $DaySalesRow['cost'];
@@ -131,14 +138,15 @@ for ($i=0;$i<$ColumnCounter;$i++){
 }
 
 $LastDayOfMonth = DayOfMonthFromSQLDate($EndDateSQL);
-
 for ($i=1;$i<=$LastDayOfMonth;$i++){
-		echo '<td class="number">' . number_format($DaySalesArray[$i]->Sales,0) . '<br />' .  number_format($DaySalesArray[$i]->GPPercent*100,1) . '%</td>';
 		$ColumnCounter++;
+		if(isset($DaySalesArray[$i])) {
+		echo '<td class="number">' . number_format($DaySalesArray[$i]->Sales,0) . '<br />' .  number_format($DaySalesArray[$i]->GPPercent*100,1) . '</td>';
+		}
 		if ($ColumnCounter==7){
 			echo '</tr><tr>';
                         for ($j=1;$j<=7;$j++){
-                            echo '<th>' . $DayNumber . '</th>';
+							       echo '<th>' . $DayNumber. '</th>';
                             $DayNumber++;
                             if($DayNumber>$LastDayOfMonth){
                                    break;
@@ -147,6 +155,8 @@ for ($i=1;$i<=$LastDayOfMonth;$i++){
                         echo '</tr><tr>';
 			$ColumnCounter=0;
 		}
+		
+		
 }
 if ($ColumnCounter!=0) {
 	echo '</tr><tr>';

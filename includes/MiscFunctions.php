@@ -315,6 +315,7 @@ function LogBackTrace( $dest = 0 ) {
 }
 
 function http_file_exists($url)  {
+	return false;
 	$f=@fopen($url,"r");
 	if($f) {
 		fclose($f);

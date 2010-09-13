@@ -238,6 +238,7 @@ If (isset($_POST['PrintPDF'])
 /*Print out the category totals */
 
 	$FileName=$_SESSION['DatabaseName']. '_' . _('Price_List') . '_' . date('Y-m-d').'.pdf';
+	ob_clean();
 	$pdf->OutputD($FileName);
 	$pdf->__destruct();
 
