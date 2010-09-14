@@ -71,14 +71,14 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 					preferred)
 			VALUES ('" . $SupplierID . "',
 				'" . $StockID . "',
-				" . $_POST['Price'] . ",
+				'" . $_POST['Price'] . "',
 				'" . FormatDateForSQL($_POST['EffectiveFrom']) . "',
 				'" . $_POST['SuppliersUOM'] . "',
-				" . $_POST['ConversionFactor'] . ",
+				'" . $_POST['ConversionFactor'] . "',
 				'" . $_POST['SupplierDescription'] . "',
 				'" . $_POST['SupplierCode'] . "',
-				" . $_POST['LeadTime'] . ",
-				" . $_POST['Preferred'] . ')';
+				'" . $_POST['LeadTime'] . "',
+				'" . $_POST['Preferred'] . "')";
         $ErrMsg = _('The supplier purchasing details could not be added to the database because');
         $DbgMsg = _('The SQL that failed was');
         $AddResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
@@ -86,16 +86,16 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
     }
     if ($InputError == 0 AND isset($_POST['UpdateRecord'])) {
         $sql = "UPDATE purchdata SET
-			    price=" . $_POST['Price'] . ",
+			    price='" . $_POST['Price'] . "',
 			    effectivefrom='" . FormatDateForSQL($_POST['EffectiveFrom']) . "',
 				suppliersuom='" . $_POST['SuppliersUOM'] . "',
-				conversionfactor=" . $_POST['ConversionFactor'] . ",
+				conversionfactor='" . $_POST['ConversionFactor'] . "',
 				supplierdescription='" . $_POST['SupplierDescription'] . "',
 				suppliers_partno='" . $_POST['SupplierCode'] . "',
-				leadtime=" . $_POST['LeadTime'] . ",
-				preferred=" . $_POST['Preferred'] . "
-		WHERE purchdata.stockid='$StockID'
-		AND purchdata.supplierno='$SupplierID'
+				leadtime='" . $_POST['LeadTime'] . "',
+				preferred='" . $_POST['Preferred'] . "'
+		WHERE purchdata.stockid='".$StockID."'
+		AND purchdata.supplierno='".$SupplierID."'
 		AND purchdata.effectivefrom='" . $_POST['WasEffectiveFrom'] . "'";
         $ErrMsg = _('The supplier purchasing details could not be update because');
         $DbgMsg = _('The SQL that failed was');
@@ -120,8 +120,8 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 
 if (isset($_GET['Delete'])) {
     $sql = "DELETE FROM purchdata
-   				WHERE purchdata.supplierno='$SupplierID'
-   				AND purchdata.stockid='$StockID'
+   				WHERE purchdata.supplierno='".$SupplierID."'
+   				AND purchdata.stockid='".$StockID."'
    				AND purchdata.effectivefrom='" . $_GET['EffectiveFrom'] . "'";
     $ErrMsg = _('The supplier purchasing details could not be deleted because');
     $DelResult = DB_query($sql, $db, $ErrMsg);
@@ -153,7 +153,7 @@ if (!isset($_GET['Edit'])) {
 //        prnMsg(_('There is no purchasing data set up for the part selected'), 'info');
 		$NoPurchasingData=1;
     } else if ($StockID != '') {
-        echo '<table cellpadding=2 BORDER=2>';
+        echo '<table cellpadding=2 class=selection>';
         $TableHeader = '<tr><th>' . _('Supplier') . '</th>
 						<th>' . _('Price') . '</th>
 						<th>' . _('Currency') . '</th>
@@ -203,7 +203,7 @@ if (!isset($_GET['Edit'])) {
 } /* Only show the existing purchasing data records if one is not being edited */
 
 if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier'])) { /*NOT EDITING AN EXISTING BUT SUPPLIER selected OR ENTERED*/
-    $sql = "SELECT suppliers.suppname, suppliers.currcode FROM suppliers WHERE supplierid='$SupplierID'";
+    $sql = "SELECT suppliers.suppname, suppliers.currcode FROM suppliers WHERE supplierid='".$SupplierID."'";
     $ErrMsg = _('The supplier details for the selected supplier could not be retrieved because');
     $DbgMsg = _('The SQL that failed was');
     $SuppSelResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
@@ -220,7 +220,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 		echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title . ' ' . _('For Stock Code') . ' - ' . $StockID . '<br>';
 	}
     if (!isset($_POST['SearchSupplier'])) {
-        echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post><table cellpadding=3 colspan=4><tr>';
+        echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post><table cellpadding=3 colspan=4 class=selection><tr>';
         echo '<input type="hidden" name="StockID" value="' . $StockID . '">';
         echo '<td>' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</b>:</font></td>';
         echo '<td><input type="Text" name="Keywords" size=20 maxlength=25></td>';
@@ -234,9 +234,14 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
     };
 }
 
+if (isset($_GET['Edit'])) {
+	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title . ' ' . _('For Stock Code') . ' - ' . $StockID . '<br>';
+}
+
 if (isset($_POST['SearchSupplier'])) {
     if (isset($_POST['Keywords']) AND isset($_POST['SupplierCode'])) {
         prnMsg( _('Supplier Name keywords have been used in preference to the Supplier Code extract entered') . '.', 'info' );
+        echo '<br>';
     }
     if ($_POST['Keywords'] == '' AND $_POST['SupplierCode'] == '') {
         $_POST['Keywords'] = ' ';
@@ -251,7 +256,7 @@ if (isset($_POST['SearchSupplier'])) {
 					suppliers.address1,
 					suppliers.address2,
 					suppliers.address3
-					FROM suppliers WHERE suppliers.suppname " . LIKE . " '$SearchString'";
+					FROM suppliers WHERE suppliers.suppname LIKE . ".$SearchString;
     } elseif (strlen($_POST['SupplierCode']) > 0) {
         $SQL = "SELECT suppliers.supplierid,
 				suppliers.suppname,
@@ -260,7 +265,7 @@ if (isset($_POST['SearchSupplier'])) {
 				suppliers.address2,
 				suppliers.address3
 			FROM suppliers
-			WHERE suppliers.supplierid " . LIKE . " '%" . $_POST['SupplierCode'] . "%'";
+			WHERE suppliers.supplierid LIKE '%" . $_POST['SupplierCode'] . "%'";
     } //one of keywords or SupplierCode was more than a zero length string
     $ErrMsg = _('The suppliers matching the criteria entered could not be retrieved because');
     $DbgMsg = _('The SQL to retrieve supplier details that failed was');
@@ -273,7 +278,7 @@ if (isset($SuppliersResult)) {
 								stockmaster.units,
 								stockmaster.mbflag
 						FROM stockmaster
-						WHERE stockmaster.stockid='$StockID'", $db);
+						WHERE stockmaster.stockid='".$StockID."'", $db);
         $myrow = DB_fetch_row($result);
         $stockuom = $myrow[1];
         if (DB_num_rows($result) == 1) {
@@ -291,7 +296,7 @@ if (isset($SuppliersResult)) {
         $StockID = '';
         $stockuom = 'each';
     }
-    echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post><table cellpadding=2 colspan=7 BORDER=2>';
+    echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post><table cellpadding=2 colspan=7 class=selection>';
     $TableHeader = '<tr><th>' . _('Code') . '</th>
 	                	<th>' . _('Supplier Name') . '</th>
 				<th>' . _('Currency') . '</th>
@@ -300,9 +305,16 @@ if (isset($SuppliersResult)) {
 				<th>' . _('Address 3') . '</th>
 			</tr>';
     echo $TableHeader;
-    $j = 1;
+	$k = 0;
     while ($myrow = DB_fetch_array($SuppliersResult)) {
-        printf("<tr><td><font size=1><input type=submit name='SupplierID' VALUE='%s'</font></td>
+		if ($k==1){
+			echo '<tr class="EvenTableRows">';
+			$k=0;
+		} else {
+			echo '<tr class="OddTableRows">';
+			$k++;
+		}
+       printf("<td><font size=1><input type=submit name='SupplierID' VALUE='%s'</font></td>
 				<td><font size=1>%s</font></td>
 				<td><font size=1>%s</font></td>
 				<td><font size=1>%s</font></td>
@@ -311,12 +323,6 @@ if (isset($SuppliersResult)) {
 			</tr>", $myrow['supplierid'], $myrow['suppname'], $myrow['currcode'], $myrow['address1'], $myrow['address2'], $myrow['address3']);
         echo '<input type=hidden name=StockID value="' . $StockID . '">';
         echo '<input type=hidden name=stockuom value="' . $stockuom . '">';
-        $j++;
-        if ($j == 11) {
-            $j = 1;
-            echo $TableHeader;
-        }
-        //end of page full new headings if
 
     }
     //end of while loop
@@ -343,8 +349,8 @@ if (!isset($SuppliersResult)) {
 			ON purchdata.supplierno=suppliers.supplierid
 		INNER JOIN stockmaster
 			ON purchdata.stockid=stockmaster.stockid
-		WHERE purchdata.supplierno='$SupplierID'
-		AND purchdata.stockid='$StockID'
+		WHERE purchdata.supplierno='".$SupplierID."'
+		AND purchdata.stockid='".$StockID."'
 		AND purchdata.effectivefrom='" . $_GET['EffectiveFrom'] . "'";
         $ErrMsg = _('The supplier purchasing details for the selected supplier and item could not be retrieved because');
         $EditResult = DB_query($sql, $db, $ErrMsg);
@@ -361,7 +367,7 @@ if (!isset($SuppliersResult)) {
         $_POST['SupplierCode'] = $myrow['suppliers_partno'];
 		$stockuom=$myrow['units'];
     }
-    echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post><table>';
+    echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post><table class=selection>';
     if (!isset($SupplierID)) {
         $SupplierID = '';
     }
@@ -445,7 +451,7 @@ if (!isset($SuppliersResult)) {
         echo '<option VALUE=1>' . _('Yes');
         echo '<option selected VALUE=0>' . _('No');
     }
-    echo '</select></td></tr></table><div class="centre">';
+    echo '</select></td></tr></table><br><div class="centre">';
     if (isset($_GET['Edit'])) {
         echo '<input type=submit name="UpdateRecord" VALUE="' . _('Update') . '">';
     } else {
