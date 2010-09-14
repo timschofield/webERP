@@ -10,6 +10,8 @@ if (isset($_GET['FromTransNo'])) {
 	$FromTransNo = $_GET['FromTransNo'];
 } elseif (isset($_POST['FromTransNo'])){
 	$FromTransNo = $_POST['FromTransNo'];
+} else {
+	$FromTransNo = '';
 }
 
 if (isset($_GET['InvOrCredit'])) {
@@ -99,7 +101,7 @@ If (isset($PrintPDF)
 // gather the invoice data
 
 		if ($InvOrCredit=='Invoice') {
-			$sql = 'SELECT debtortrans.trandate,
+			$sql = "SELECT debtortrans.trandate,
 					debtortrans.ovamount,
 					debtortrans.ovdiscount,
 					debtortrans.ovfreight,
@@ -156,21 +158,21 @@ If (isset($PrintPDF)
 					paymentterms
 				WHERE debtortrans.order_ = salesorders.orderno
 				AND debtortrans.type=10
-				AND debtortrans.transno=' . $FromTransNo . '
+				AND debtortrans.transno='" . $FromTransNo . "'
 				AND debtortrans.shipvia=shippers.shipper_id
 				AND debtortrans.debtorno=debtorsmaster.debtorno
 				AND debtorsmaster.paymentterms=paymentterms.termsindicator
 				AND debtortrans.debtorno=custbranch.debtorno
 				AND debtortrans.branchcode=custbranch.branchcode
 				AND custbranch.salesman=salesman.salesmancode
-				AND salesorders.fromstkloc=locations.loccode';
+				AND salesorders.fromstkloc=locations.loccode";
 
 			if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No'){
 				$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
 			}
 		} else {
 
-			$sql = 'SELECT debtortrans.trandate,
+			$sql = "SELECT debtortrans.trandate,
 					debtortrans.ovamount,
 					debtortrans.ovdiscount,
 					debtortrans.ovfreight,
@@ -211,11 +213,11 @@ If (isset($PrintPDF)
 					paymentterms
 				WHERE debtortrans.type=11
 				AND debtorsmaster.paymentterms = paymentterms.termsindicator
-				AND debtortrans.transno=' . $FromTransNo .'
+				AND debtortrans.transno='" . $FromTransNo ."'
 				AND debtortrans.debtorno=debtorsmaster.debtorno
 				AND debtortrans.debtorno=custbranch.debtorno
 				AND debtortrans.branchcode=custbranch.branchcode
-				AND custbranch.salesman=salesman.salesmancode';
+				AND custbranch.salesman=salesman.salesmancode";
 
 			if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No'){
 				$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
@@ -242,12 +244,12 @@ If (isset($PrintPDF)
 			$ExchRate = $myrow['rate'];
 
 			if ($InvOrCredit == 'Invoice') {
-				$sql = 'SELECT stockmoves.stockid,
+				$sql = "SELECT stockmoves.stockid,
 						stockmaster.description,
 						-stockmoves.qty as quantity,
 						stockmoves.discountpercent,
-						((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . '* -stockmoves.qty) AS fxnet,
-						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
+						((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . "* -stockmoves.qty) AS fxnet,
+						(stockmoves.price * " . $ExchRate . ") AS fxprice,
 						stockmoves.narrative,
 						stockmaster.controlled,
 						stockmaster.units,
@@ -256,16 +258,16 @@ If (isset($PrintPDF)
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
 					AND stockmoves.type=10
-					AND stockmoves.transno=' . $FromTransNo . '
-					AND stockmoves.show_on_inv_crds=1';
+					AND stockmoves.transno='" . $FromTransNo . "'
+					AND stockmoves.show_on_inv_crds=1";
 			} else {
 				/* only credit notes to be retrieved */
-				$sql = 'SELECT stockmoves.stockid,
+				$sql = "SELECT stockmoves.stockid,
 						stockmaster.description,
 						stockmoves.qty as quantity,
 						stockmoves.discountpercent,
-						((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . ' * stockmoves.qty) AS fxnet,
-						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
+						((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . " * stockmoves.qty) AS fxnet,
+						(stockmoves.price * " . $ExchRate . ") AS fxprice,
 						stockmoves.narrative,
 						stockmaster.controlled,
 						stockmaster.units,
@@ -274,8 +276,8 @@ If (isset($PrintPDF)
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
 					AND stockmoves.type=11
-					AND stockmoves.transno=' . $FromTransNo . '
-					AND stockmoves.show_on_inv_crds=1';
+					AND stockmoves.transno='" . $FromTransNo . "'
+					AND stockmoves.show_on_inv_crds=1";
 			} // end else
 
 		$result=DB_query($sql,$db);
@@ -528,19 +530,19 @@ class concat_pdf extends FPDI {
 	}
 	// Check its an Invoice type again, then select appendfile filename
 	if ($InvOrCredit=='Invoice'){
-		$sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
+		$sql = "SELECT stockmoves.stockid, stockmaster.appendfile
 					FROM stockmoves INNER JOIN stockmaster
 		            ON stockmoves.stockid = stockmaster.stockid
 		            WHERE stockmoves.type=10
-		            AND stockmoves.transno=' . $FromTransNo . '
-					AND stockmoves.show_on_inv_crds=1';
+		            AND stockmoves.transno='" . $FromTransNo . "'
+					AND stockmoves.show_on_inv_crds=1";
 	} else {
-		 $sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
+		 $sql = "SELECT stockmoves.stockid, stockmaster.appendfile
 					FROM stockmoves INNER JOIN stockmaster
 		            ON stockmoves.stockid = stockmaster.stockid
 		            AND stockmoves.type=11
-					AND stockmoves.transno=' . $FromTransNo . '
-					AND stockmoves.show_on_inv_crds=1';
+					AND stockmoves.transno='" . $FromTransNo . "'
+					AND stockmoves.show_on_inv_crds=1";
 	}
 	$result=DB_query($sql,$db);
 	// Loop the result set and add appendfile if the field is not 0 or none
@@ -594,7 +596,7 @@ class concat_pdf extends FPDI {
 
 	/*if FromTransNo is not set then show a form to allow input of either a single invoice number or a range of invoices to be printed. Also get the last invoice number created to show the user where the current range is up to */
 
-		echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="POST"><table class="table1">';
+		echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="POST"><table class="selection">';
 		echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . _('Print Invoices or Credit Notes (Portrait Mode)') . '</div>';
 		echo '<tr><td>' . _('Print Invoices or Credit Notes') . '</td><td><select name=InvOrCredit>';
 		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)){
@@ -625,8 +627,8 @@ class concat_pdf extends FPDI {
 		}
 
 		echo '</select></td></tr>';
-		echo '<tr><td>' . _('Start invoice/credit note number to print') . '</td><td><input Type=text max=6 size=7 name=FromTransNo></td></tr>';
-		echo '<tr><td>' . _('End invoice/credit note number to print') . "</td><td><input Type=text max=6 size=7 name='ToTransNo'></td></tr></table>";
+		echo '<tr><td>' . _('Start invoice/credit note number to print') . '</td><td><input class=number type=text max=6 size=7 name=FromTransNo></td></tr>';
+		echo '<tr><td>' . _('End invoice/credit note number to print') . "</td><td><input class=number type=text max=6 size=7 name='ToTransNo'></td></tr></table>";
 		echo "<div class='centre'><br><input type=Submit Name='Print' Value='" . _('Print Preview') . "'><p>";
 		echo "<input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
 
@@ -699,7 +701,7 @@ class concat_pdf extends FPDI {
 					salesman
 				WHERE debtortrans.order_ = salesorders.orderno
 				AND debtortrans.type=10
-				AND debtortrans.transno=" . $FromTransNo . "
+				AND debtortrans.transno='" . $FromTransNo . "'
 				AND debtortrans.shipvia=shippers.shipper_id
 				AND debtortrans.debtorno=debtorsmaster.debtorno
 				AND debtortrans.debtorno=custbranch.debtorno
@@ -707,7 +709,7 @@ class concat_pdf extends FPDI {
 				AND custbranch.salesman=salesman.salesmancode";
 			} else {
 
-			   $sql = 'SELECT debtortrans.trandate,
+			   $sql = "SELECT debtortrans.trandate,
 			   		debtortrans.ovamount,
 					debtortrans.ovdiscount,
 					debtortrans.ovfreight,
@@ -736,11 +738,11 @@ class concat_pdf extends FPDI {
 					custbranch,
 					salesman
 				WHERE debtortrans.type=11
-				AND debtortrans.transno=' . $FromTransNo . '
+				AND debtortrans.transno='" . $FromTransNo . "'
 				AND debtortrans.debtorno=debtorsmaster.debtorno
 				AND debtortrans.debtorno=custbranch.debtorno
 				AND debtortrans.branchcode=custbranch.branchcode
-				AND custbranch.salesman=salesman.salesmancode';
+				AND custbranch.salesman=salesman.salesmancode";
 
 			}
 
@@ -786,7 +788,7 @@ class concat_pdf extends FPDI {
 				echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<br>';
 				echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<br>';
 
-				echo '</td><td WIDTH=50% class=number>';
+				echo '</td><td width=50% class=number>';
 
 	/*Now the customer charged to details in a sub table within a cell of the main table*/
 
@@ -833,12 +835,12 @@ class concat_pdf extends FPDI {
 						</tr>
 					</table>";
 
-				   $sql ='SELECT stockmoves.stockid,
+				   $sql ="SELECT stockmoves.stockid,
 				   		stockmaster.description,
-						-stockmoves.qty as Quantity,
+						-stockmoves.qty as quantity,
 						stockmoves.discountpercent,
-						((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . '* -stockmoves.qty) AS fxnet,
-						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
+						((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . "* -stockmoves.qty) AS fxnet,
+						(stockmoves.price * " . $ExchRate . ") AS fxprice,
 						stockmoves.narrative,
 						stockmaster.units,
 						stockmaster.decimalplaces
@@ -846,8 +848,8 @@ class concat_pdf extends FPDI {
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
 					AND stockmoves.type=10
-					AND stockmoves.transno=' . $FromTransNo . '
-					AND stockmoves.show_on_inv_crds=1';
+					AND stockmoves.transno='" . $FromTransNo . "'
+					AND stockmoves.show_on_inv_crds=1";
 
 				} else { /* then its a credit note */
 
@@ -867,18 +869,18 @@ class concat_pdf extends FPDI {
 					</tr></table>';
 
 
-				   $sql ='SELECT stockmoves.stockid,
+				   $sql ="SELECT stockmoves.stockid,
 				   		stockmaster.description,
-						stockmoves.qty as Quantity,
-						stockmoves.discountpercent, ((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . ' * stockmoves.qty) AS fxnet,
-						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
+						stockmoves.qty as quantity,
+						stockmoves.discountpercent, ((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . " * stockmoves.qty) AS fxnet,
+						(stockmoves.price * " . $ExchRate . ") AS fxprice,
 						stockmaster.units
 					FROM stockmoves,
 						stockmaster
 					WHERE stockmoves.stockid = stockmaster.stockid
 					AND stockmoves.type=11
-					AND stockmoves.transno=' . $FromTransNo . '
-					AND stockmoves.show_on_inv_crds=1';
+					AND stockmoves.transno='" . $FromTransNo . "'
+					AND stockmoves.show_on_inv_crds=1";
 				}
 
 				echo '<hr>';
@@ -996,7 +998,7 @@ class concat_pdf extends FPDI {
 				/* check to see enough space left to print the totals/footer */
 				$LinesRequiredForText = floor(strlen($myrow['invtext'])/140);
 
-				if ($LineCounter >= ($_SESSION['PageLength'] - 8 - $LinesRequiredFortext)){
+				if ($LineCounter >= ($_SESSION['PageLength'] - 8 - $LinesRequiredForText)){
 
 					/* head up a new invoice/credit note page */
 
