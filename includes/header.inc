@@ -6,17 +6,27 @@
 	//  $rootpath
 	//  $title - should be defined in the page this file is included with
 
+	$StrictXHTML=False;
+
 	if (!headers_sent()){
-		header('Content-type: text/html; charset=utf-8');
+		if ($StrictXHTML) {
+			header('Content-type: application/xhtml+xml; charset=utf8');
+		} else {
+			header('Content-type: text/html; charset=utf8');
+		}
 	}
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 
-	
+
 	echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>' . $title . '</title>';
 	echo '<link rel="shortcut icon" href="'. $rootpath.'/favicon.ico" />';
 	echo '<link rel="icon" href="' . $rootpath.'/favicon.ico" />';
-	echo '<meta http-equiv="Content-Type" content="text/html; charset="utf-8" />';
+	if ($StrictXHTML) {
+		echo '<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf8" />';
+	} else {
+		echo '<meta http-equiv="Content-Type" content="application/html; charset=utf8" />';
+	}
 	echo '<link href="' . $rootpath . '/css/'. $_SESSION['Theme'] .'/default.css" rel="stylesheet" type="text/css" />';
 	echo '<script type="text/javascript" src = "'.$rootpath.'/javascripts/MiscFunctions.js"></script>';
 	echo '</head>';
@@ -38,12 +48,10 @@
 		echo '<tr>';
 		echo '<td align="left" style="width:100%;" class="quick_menu_left">';
 // Use icons for company and user data, saves screen realestate, use ALT tag in case theme icon not avail.
-		echo '<img src="'.$rootpath.'/css/'.$theme.'/images/company.png" TITLE="' . _('Company') . '" ALT="' . _('Company') . '">';
-		echo ' ' . stripslashes($_SESSION['CompanyRecord']['coyname']) . '  <a href="' .  $rootpath . '/UserSettings.php?' . SID . '"><img src="'.$rootpath.'/css/'.$theme.'/images/user.png" TITLE="User" ALT="' . _('User') . '"> ' . stripslashes($_SESSION['UsersRealName']) . '</a>';
+		echo '<img src="'.$rootpath.'/css/'.$theme.'/images/company.png" TITLE="' . _('Company') . '" ALT="' . _('Company') . '"></img>';
+		echo ' ' . stripslashes($_SESSION['CompanyRecord']['coyname']) . '  <a href="' .  $rootpath . '/UserSettings.php?' . SID . '"><img src="'.$rootpath.'/css/'.$theme.'/images/user.png" TITLE="User" ALT="' . _('User') . '"> </img>' . stripslashes($_SESSION['UsersRealName']) . '</a>';
 // Make the title text a class, can be set to display:none is some themes
-		echo '<BR><font class="header_title"> ' . $title . '</font></td>';
-		echo ' </td>';
-
+		echo '<br /><font class="header_title"> ' . $title . '</font></td>';
 		echo '<td class="quick_menu_tabs">';
 		echo '<table cellpadding="0" cellspacing="0" class="quick_menu_tabs"><tr>';
 		echo '<td class="quick_menu_tab" align="center"><a accesskey="1" href="' .  $rootpath . '/index.php?' . SID . '"><span style="text-decoration:underline;">1</span> ' . _('Main Menu') . '</a></td>';
