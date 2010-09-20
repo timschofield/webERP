@@ -1,5 +1,5 @@
 <?php
-/* $Id: PricesByCost.php 3475 2010-05-29 00:00:42Z daintree $ */
+/* $Id: PricesByCost.php 3566 2010-07-05 13:06:08Z tim_schofield $ */
 // PricesByCost.php -
 $PageSecurity = 11;
 include ('includes/session.inc');
@@ -33,6 +33,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 				prices.enddate
 			FROM stockmaster, prices
 			WHERE stockmaster.stockid=prices.stockid" . $Category . "
+			AND stockmaster.discontinued = 0
 			AND   prices.price" . $Comparator . "(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * '" . $_POST['Margin'] . "'
 			AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
 			AND prices.currabrev ='" . $_POST['CurrCode'] . "'
