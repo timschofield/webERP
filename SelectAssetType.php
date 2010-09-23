@@ -3,7 +3,7 @@
 $PageSecurity = 2;
 $PricesSecurity = 9;
 include ('includes/session.inc');
-$title = _('Search Asset Types');
+$title = _('Select an Asset Type');
 include ('includes/header.inc');
 
 if (isset($_GET['StockID'])) {
@@ -74,7 +74,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	// options (links) to pages. This requires stock id also to be passed.
 } // end displaying item options if there is one and only one record
 echo '<form action="SelectAssetType.php?' . SID . '" method=post>';
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Search for Inventory Items');
+echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'</p>';
 echo '<table class=selection><tr>';
 echo '<td>' . _('In Stock Category') . ':';
 echo '<select name="StockCat">';
@@ -267,7 +267,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 //			echo '<input type=hidden name=Search value="Search">';
 			echo '<p></div>';
 		}
-		echo '<table cellpadding=2 colspan=7>';
+		echo '<table cellpadding=2 colspan=7 class=selection>';
 		$tableheader = '<tr>
 					<th>' . _('Code') . '</th>
 					<th>' . _('Description') . '</th>
