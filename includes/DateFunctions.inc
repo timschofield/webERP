@@ -403,7 +403,7 @@ and converts to a yyyy/mm/dd format */
 			}
 		}
 		return $Date_Array[0].'-'.$Date_Array[1].'-'.$Date_Array[2];
-		
+
 	}elseif (($_SESSION['DefaultDateFormat']=='d/m/Y') OR $_SESSION['DefaultDateFormat']=='d.m.Y'){
 		if (strlen($Date_Array[2])==2) {
 			if ((int)$Date_Array[2] <=60) {
@@ -414,7 +414,7 @@ and converts to a yyyy/mm/dd format */
 		}
 		/* echo '<BR>The date returned is ' . $Date_Array[2].'/'.$Date_Array[1].'/'.$Date_Array[0]; */
 		return $Date_Array[2].'-'.$Date_Array[1].'-'.$Date_Array[0];
-		
+
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y') {
 		if (strlen($Date_Array[2])==2) {
 			if ((int)$Date_Array[2] <=60) {
@@ -424,7 +424,7 @@ and converts to a yyyy/mm/dd format */
 			}
 		}
 		return $Date_Array[2].'-'.$Date_Array[0].'-'.$Date_Array[1];
-	} 
+	}
 
 }// end of function
 
@@ -707,7 +707,7 @@ function CalcEarliestDispatchDate (){
 /*This function will need to be modified depending on the business - many businesses run 24x7
 The default assumes no delivery on Sat and Sun*/
 
-	$EarliestDispatch = Mktime();
+	$EarliestDispatch = time();
 	if (Date('w',$EarliestDispatch)==0 ){
 
 /*if today is a sunday the dispatch date must be tomorrow (Monday) or after */
