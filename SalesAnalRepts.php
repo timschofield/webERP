@@ -10,6 +10,8 @@ $title = _('Sales Analysis Reports Maintenance');
 
 include('includes/header.inc');
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') . '" alt="">' . ' ' . $title . '</p>';
+
 function GrpByDataOptions($GroupByDataX) {
 
 /*Sales analysis headers group by data options */
@@ -137,27 +139,27 @@ if (isset($_POST['submit'])) {
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
-		$sql = "UPDATE reportheaders SET 
-				reportheading='" . $_POST['ReportHeading'] . "', 
-				groupbydata1='" . $_POST['GroupByData1'] . "', 
+		$sql = "UPDATE reportheaders SET
+				reportheading='" . $_POST['ReportHeading'] . "',
+				groupbydata1='" . $_POST['GroupByData1'] . "',
 				groupbydata2='" . $_POST['GroupByData2'] . "',
-				groupbydata3='" . $_POST['GroupByData3'] . "', 
-				groupbydata4='" . $_POST['GroupByData4'] . "', 
-				newpageafter1=" . $_POST['NewPageAfter1'] . ", 
-				newpageafter2=" . $_POST['NewPageAfter2'] . ", 
-				newpageafter3=" . $_POST['NewPageAfter3'] . ", 
-				lower1='" . $_POST['Lower1'] . "', 
-				upper1='" . $_POST['Upper1'] . "', 
-				lower2='" . $_POST['Lower2'] . "', 
-				upper2='" . $_POST['Upper2'] . "', 
-				lower3='" . $_POST['Lower3'] . "', 
-				upper3='" . $_POST['Upper3'] . "', 
-				lower4='" . $_POST['Lower4'] . "', 
-				upper4='" . $_POST['Upper4'] . "' 
+				groupbydata3='" . $_POST['GroupByData3'] . "',
+				groupbydata4='" . $_POST['GroupByData4'] . "',
+				newpageafter1='" . $_POST['NewPageAfter1'] . "',
+				newpageafter2='" . $_POST['NewPageAfter2'] . "',
+				newpageafter3='" . $_POST['NewPageAfter3'] . "',
+				lower1='" . $_POST['Lower1'] . "',
+				upper1='" . $_POST['Upper1'] . "',
+				lower2='" . $_POST['Lower2'] . "',
+				upper2='" . $_POST['Upper2'] . "',
+				lower3='" . $_POST['Lower3'] . "',
+				upper3='" . $_POST['Upper3'] . "',
+				lower4='" . $_POST['Lower4'] . "',
+				upper4='" . $_POST['Upper4'] . "'
 			WHERE reportid = " . $SelectedReport;
 
 		$ErrMsg = _('The report could not be updated because');
-		$Dbgmsg = _('The SQL used to update the report headers was');
+		$DbgMsg = _('The SQL used to update the report headers was');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 		prnMsg( _('The') .' ' . $_POST['ReportHeading'] . ' ' . _('report has been updated'),'success', 'Report Updated');
@@ -207,9 +209,9 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['GroupByData2'] . "',
 					'" . $_POST['GroupByData3'] . "',
 					'" . $_POST['GroupByData4'] . "',
-					" . $_POST['NewPageAfter1'] . ",
-					" . $_POST['NewPageAfter2'] . ",
-					" . $_POST['NewPageAfter3'] . ",
+					'" . $_POST['NewPageAfter1'] . "',
+					'" . $_POST['NewPageAfter2'] . "',
+					'" . $_POST['NewPageAfter3'] . "',
 					'" . $_POST['Lower1'] . "',
 					'" . $_POST['Upper1'] . "',
 					'" . $_POST['Lower2'] . "',
@@ -250,13 +252,13 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
-	$sql="DELETE FROM reportcolumns WHERE reportid=$SelectedReport";
+	$sql="DELETE FROM reportcolumns WHERE reportid='".$SelectedReport."'";
 	$ErrMsg = _("The deletion of the report's columns failed because");
 	$DbgMsg = _("The SQL used to delete the report's columns was");
 
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-	$sql="DELETE FROM reportheaders WHERE reportid=$SelectedReport";
+	$sql="DELETE FROM reportheaders WHERE reportid='".$SelectedReport."'";
 	$ErrMsg = _('The deletion of the report heading failed because');
 	$DbgMsg = _('The SQL used to delete the report headers was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -278,7 +280,7 @@ or deletion of the records*/
 	$sql = "SELECT reportid, reportheading FROM reportheaders ORDER BY reportid";
 	$result = DB_query($sql,$db);
 
-	echo '<table border=1>';
+	echo '<table class=selection>';
 	echo '<tr><th>' . _('Report No') . '</th>
 		<th>' . _('Report Title') . '</th>';
 
@@ -332,7 +334,6 @@ echo '<p>';
 
 
 if (!isset($_GET['delete'])) {
-	echo '<hr />';
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 
 	if (isset($SelectedReport)) {
@@ -356,7 +357,7 @@ if (!isset($_GET['delete'])) {
 				upper4,
 				lower4
 			FROM reportheaders
-			WHERE reportid=$SelectedReport";
+			WHERE reportid='".$SelectedReport."'";
 
 		$ErrMsg = _('The reports for display could not be retrieved because');
 		$DbgMsg = _('The SQL used to retrieve the report headers was');
@@ -378,20 +379,20 @@ if (!isset($_GET['delete'])) {
 		$_POST['Upper3'] = $myrow['upper3'];
 		$_POST['Lower3'] = $myrow['lower3'];
 		$_POST['GroupByData4'] = $myrow['groupbydata4'];
-        	$_POST['Upper4'] = $myrow['upper4'];
-        	$_POST['Lower4'] = $myrow['lower4'];
+       	$_POST['Upper4'] = $myrow['upper4'];
+       	$_POST['Lower4'] = $myrow['lower4'];
 
 		echo "<input type=hidden name='SelectedReport' VALUE=$SelectedReport>";
 		echo "<input type=hidden name='ReportID' VALUE=$ReportID>";
-		echo '<font size=3 color=BLUE><b>' . _('Edit The Selected Report') . '</b></font>';
+		echo '<table width=98% colspan=4 class=selection><tr><th colspan=8><font size=3 color=BLUE>' . _('Edit The Selected Report') . '</font></th></tr>';
 	} else {
-		echo '<font size=3 color=BLUE><b>' . _('Define A New Report') . '</b></font>';
+		echo '<table width=98% colspan=4 class=selection><tr><th colspan=8><font size=3 color=BLUE>' . _('Define A New Report') . '</font></th></tr>';
 	}
-	
+
 	if (!isset($_POST['ReportHeading'])) {
 		$_POST['ReportHeading']='';
 	}
-	echo '<table WIDTH=100% colspan=4><tr><td class=number>' . _('Report Heading') . ":</td><td colspan=2><input type='TEXT' size=80 maxlength=80 name=ReportHeading value='" . $_POST['ReportHeading'] . "'></td></tr>";
+	echo '<tr><td class=number>' . _('Report Heading') . ":</td><td colspan=2><input type='TEXT' size=80 maxlength=80 name=ReportHeading value='" . $_POST['ReportHeading'] . "'></td></tr>";
 
 	echo '<tr><td>' . _('Group By 1') . ': <select name=GroupByData1>';
 
@@ -408,11 +409,11 @@ if (!isset($_GET['delete'])) {
 	}
 
 	echo '</select></td>';
-	
+
 	if (!isset($_POST['Lower1'])) {
 		$_POST['Lower1'] = '';
 	}
-	
+
 	if (!isset($_POST['Upper1'])) {
 		$_POST['Upper1'] = '';
 	}
@@ -432,11 +433,11 @@ if (!isset($_GET['delete'])) {
 	  echo '<option value=0>' . _('No');
 	  echo '<option selected value=1>' . _('Yes');
 	}
-	
+
 	if (!isset($_POST['Lower2'])) {
 		$_POST['Lower2'] = '';
 	}
-	
+
 	if (!isset($_POST['Upper2'])) {
 		$_POST['Upper2'] = '';
 	}
@@ -460,11 +461,11 @@ if (!isset($_GET['delete'])) {
 	}
 
 	echo '</select></td>';
-	
+
 	if (!isset($_POST['Lower3'])) {
 		$_POST['Lower3'] = '';
 	}
-	
+
 	if (!isset($_POST['Upper3'])) {
 		$_POST['Upper3'] = '';
 	}
@@ -477,11 +478,11 @@ if (!isset($_GET['delete'])) {
 	GrpByDataOptions($_POST['GroupByData4']);
 
 	echo "</select></td><td></td>";
-	
+
 	if (!isset($_POST['Lower4'])) {
 		$_POST['Lower4'] = '';
 	}
-	
+
 	if (!isset($_POST['Upper4'])) {
 		$_POST['Upper4'] = '';
 	}
@@ -491,7 +492,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '</table>';
 
-	echo "<div class='centre'><input type='Submit' name='submit' value='" . _('Enter Information') . "'></div></form>";
+	echo "<br /><div class='centre'><input type='Submit' name='submit' value='" . _('Enter Information') . "'></div></form>";
 
 } //end if record deleted no point displaying form to add record
 
