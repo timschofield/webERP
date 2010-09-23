@@ -11,7 +11,7 @@ $title=_('Reorder Level Location Reporting');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="">' . ' ' . _('Inventory Reorder Level Location Report') . '';
-	
+
 if (isset($_POST['submit']) or isset($_POST['update'])) {
 
 	if ($_POST['NumberOfDays']==""){
@@ -37,19 +37,19 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 				WHERE locstock.stockid = stockmaster.stockid
 					AND stockmaster.categoryid = '" . $_POST['StockCat'] . "'
 					AND locstock.loccode = '" . $_POST['StockLocation'] . "'
-				ORDER BY " . $order . " ASC";
+				ORDER BY '" . $order . "' ASC";
 
 	$result = DB_query($sql,$db);
 
-	$sqlloc="SELECT locationname 
-		   FROM locations 
+	$sqlloc="SELECT locationname
+		   FROM locations
 		   WHERE loccode='".$_POST['StockLocation']."'";
-		   
+
 	$ResultLocation = DB_query($sqlloc,$db);
 	$Location=DB_fetch_array($ResultLocation);
 
-	echo'<p class="page_title_text" align="center"><strong>' . _('Location : ') . '' . $Location['0'] . ' </strong></p>';			
-	echo'<p class="page_title_text" align="center"><strong>' . _('Number Of Days Sales : ') . '' . $_POST['NumberOfDays'] . '' . _(' Days ') . ' </strong></p>';	
+	echo'<p class="page_title_text" align="center"><strong>' . _('Location : ') . '' . $Location['0'] . ' </strong></p>';
+	echo'<p class="page_title_text" align="center"><strong>' . _('Number Of Days Sales : ') . '' . $_POST['NumberOfDays'] . '' . _(' Days ') . ' </strong></p>';
 	echo "<table>";
 	echo '<tr><th>' . _('Code') . '</th>
 						<th>' . _('Description') . '</th>
@@ -65,11 +65,11 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 
 	while ($myrow=DB_fetch_array($result))	{
 
-	//update database if update pressed 
+	//update database if update pressed
 		if ($_POST['submit']=='Update'){
 
-			$SQLUpdate="UPDATE locstock SET reorderlevel = '" . $_POST[$myrow['0']] . "' 
-						    WHERE `locstock`.`loccode` = '" . $_POST['StockLocation'] . "' 
+			$SQLUpdate="UPDATE locstock SET reorderlevel = '" . $_POST[$myrow['0']] . "'
+						    WHERE `locstock`.`loccode` = '" . $_POST['StockLocation'] . "'
 						    AND `locstock`.`stockid` = '" . $myrow['0'] . "'";
 
 			$Resultup = DB_query($SQLUpdate,$db);
@@ -77,7 +77,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 		}
 
 		if (isset($_POST[$myrow['0']])){
-			$reorder=$_POST[$myrow['0']];					
+			$reorder=$_POST[$myrow['0']];
 		}else{
 			$reorder=$myrow[2];
 		}
@@ -92,7 +92,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 
 		//variable for update data
 
-		echo'<input type="hidden" value=' . $_POST['order'] . ' name='. _('order').' />				
+		echo'<input type="hidden" value=' . $_POST['order'] . ' name='. _('order').' />
 				<input type="hidden" value=' . $_POST['StockLocation'] . ' name='. _('StockLocation').' />
 				<input type="hidden" value=' . $_POST['StockCat'] . ' name='. _('StockCat').' />
 				<input type="hidden" value=' . $_POST['NumberOfDays'] . ' name='. _('NumberOfDays').' />
@@ -124,17 +124,17 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 
 		//get On Hand all
 		//find the quantity onhand item
-		$sqloh="SELECT   sum(quantity)as qty 
-						FROM     `locstock` 
+		$sqloh="SELECT   sum(quantity)as qty
+						FROM     `locstock`
 						WHERE     stockid='" . $myrow['0'] . "'";
 		$oh = db_query($sqloh,$db);
 		$ohRow = db_fetch_row($oh);
 		$ohRow[0];
 
 
-		//get On Hand in Location				
-		$sqlohin="SELECT SUM(quantity) AS qty 
-						FROM `locstock` 
+		//get On Hand in Location
+		$sqlohin="SELECT SUM(quantity) AS qty
+						FROM `locstock`
 						WHERE stockid='" . $myrow['0'] . "'
 						AND locstock.loccode = '" . $_POST['StockLocation'] . "'";
 		$ohin = db_query($sqlohin,$db);
@@ -152,7 +152,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 
 	} //end of looping
 	echo'<tr>
-			<td style="text-align:center" colspan=7><input type=submit name=submit value=' . _("Update") . '></td>																	
+			<td style="text-align:center" colspan=7><input type=submit name=submit value=' . _("Update") . '></td>
 			 </tr></form>';
 
 
@@ -165,8 +165,8 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	$sql = "SELECT loccode,
 				   locationname
 		    FROM locations";
-	$resultStkLocs = DB_query($sql,$db);	
-	echo '<table>
+	$resultStkLocs = DB_query($sql,$db);
+	echo '<table class=selection>
 				<tr>
 					<td>' . _('Location') . ':</td>
 					<td><select name="StockLocation"> ';
@@ -175,19 +175,19 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 
 		echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 
-	} 
+	}
 	echo '</select></td></tr>';
 
-	$SQL='SELECT categoryid, categorydescription 
-	      FROM stockcategory 
-		  ORDER BY categorydescription';
-		  
-	$result1 = DB_query($SQL,$db);	
+	$SQL="SELECT categoryid, categorydescription
+	      FROM stockcategory
+		  ORDER BY categorydescription";
+
+	$result1 = DB_query($SQL,$db);
 
 	echo '<tr><td>' . _('Category') . ':</td>
 			<td><select name="StockCat">';
 
-	while ($myrow1 = DB_fetch_array($result1)) {		
+	while ($myrow1 = DB_fetch_array($result1)) {
 		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
 	}
 
