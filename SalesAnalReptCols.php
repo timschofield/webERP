@@ -48,6 +48,7 @@ Function DataOptions ($DataX){
 }
 /* end of functions
 Right ... now to the meat	*/
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') . '" alt="">' . ' ' . $title . '</p>';
 
 if (isset($_GET['SelectedCol'])){
 	$SelectedCol = $_GET['SelectedCol'];
@@ -102,24 +103,24 @@ if (isset($_POST['submit'])) {
 	}
 
 
-	if ($SelectedCol AND $InputError !=1) {
+	if (isset($SelectedCol) AND $InputError !=1) {
 
 
 		$sql = "UPDATE reportcolumns SET heading1='" . $_POST['Heading1'] . "',
                                      heading2='" . $_POST['Heading2'] . "',
-                                     calculation=" . $_POST['Calculation'] . ",
-                                     periodfrom=" . $_POST['PeriodFrom'] . ",
-                                     periodto=" . $_POST['PeriodTo'] . ",
+                                     calculation='" . $_POST['Calculation'] . "',
+                                     periodfrom='" . $_POST['PeriodFrom'] . "',
+                                     periodto='" . $_POST['PeriodTo'] . "',
                                      datatype='" . $_POST['DataType'] . "',
-                                     colnumerator=" . $_POST['ColNumerator'] . ",
-                                     coldenominator=" . $_POST['ColDenominator'] . ",
+                                     colnumerator='" . $_POST['ColNumerator'] . "',
+                                     coldenominator='" . $_POST['ColDenominator'] . "',
                                      calcoperator='" . $_POST['CalcOperator'] . "',
-                                     budgetoractual=" . $_POST['BudgetOrActual'] . ",
+                                     budgetoractual='" . $_POST['BudgetOrActual'] . "',
                                      valformat='" . $_POST['ValFormat'] . "',
-                                     constant = " . $_POST['Constant'] . "
+                                     constant = '" . $_POST['Constant'] . "'
                                      WHERE
-                                     reportid = $ReportID AND
-                                     colno=$SelectedCol";
+                                     reportid = '".$ReportID."' AND
+                                     colno='". $SelectedCol ."'";
 		$ErrMsg = _('The report column could not be updated because');
 		$DbgMsg = _('The SQL used to update the report column was');
 
@@ -141,9 +142,9 @@ if (isset($_POST['submit'])) {
 		unset($_POST['BudgetOrActual']);
 
 
-	} elseif ($InputError !=1 AND 
-			(($_POST['Calculation']==1 AND 
-			(($_POST['ColNumerator']>0 AND $_POST['Constant']!=0) OR ($_POST['ColNumerator']>0 AND $_POST['ColDenominator']>0)) 
+	} elseif ($InputError !=1 AND
+			(($_POST['Calculation']==1 AND
+			(($_POST['ColNumerator']>0 AND $_POST['Constant']!=0) OR ($_POST['ColNumerator']>0 AND $_POST['ColDenominator']>0))
 			OR $_POST['Calculation']==0))) {
 
 	/*SelectedReport is null cos no item selected on first time round so must be adding a new column to the report */
@@ -234,10 +235,10 @@ $sql = "SELECT reportheaders.reportheading,
          FROM
                reportheaders,
                reportcolumns
-        WHERE  reportheaders.reportid = reportcolumns.reportid 
-	AND    reportcolumns.reportid=$ReportID
+        WHERE  reportheaders.reportid = reportcolumns.reportid
+	AND    reportcolumns.reportid='".$ReportID. "'
         ORDER BY reportcolumns.colno";
-	
+
 $ErrMsg = _('The column definitions could not be retrieved from the database because');
 $DbgMsg = _('The SQL used to retrieve the columns for the report was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -245,7 +246,7 @@ $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 if (DB_num_rows($result)!=0){
 
 	$myrow = DB_fetch_array($result);
-	echo '<div class="centre"><b>' . $myrow['reportheading'] . "</b><br></div><table border=1>\n";
+	echo '<div class="centre"><b>' . $myrow['reportheading'] . "</b><br></div><table class=selection>\n";
 	echo '<tr><th>' . _('Col') . ' #</th>
             <th>' . _('Heading 1') . '</th>
             <th>' . _('Heading 2') . '</th>';
@@ -320,7 +321,12 @@ if (DB_num_rows($result)>10){
 
 if (!isset($_GET['delete'])) {
 
+	$sql = "SELECT reportheading FROM reportheaders WHERE reportid='".$ReportID."'";
+	$result = DB_query($sql, $db);
+	$myrow=DB_fetch_array($result);
+	$ReportHeading=$myrow['reportheading'];
 	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="ReportHeading" value='.$ReportHeading.'>';
 	echo '<input type=hidden name="ReportID" VALUE=' . $ReportID . '>';
 	if (isset($SelectedCol)) {
 		//editing an existing Column
@@ -342,8 +348,8 @@ if (!isset($_GET['delete'])) {
                    	FROM
                    	reportcolumns
                    	WHERE
-                   	reportcolumns.reportid=$ReportID AND
-                   	reportcolumns.colno=$SelectedCol";
+                   	reportcolumns.reportid='".$ReportID."' AND
+                   	reportcolumns.colno='". $SelectedCol ."'";
 
 
 		$ErrMsg =  _('The column') . ' ' . $SelectedCol . ' ' . _('could not be retrieved because');
@@ -367,18 +373,29 @@ if (!isset($_GET['delete'])) {
 		$_POST['ValFormat']=$myrow['valformat'];
 
 		echo '<input type=hidden name="SelectedCol" VALUE=' . $SelectedCol . '>';
-		echo '<table>';
+		echo '<table class=selection>';
 
 	} else {
-		echo '<table>';
+		echo '<table class=selection>';
+		if (!isset($_POST['ColID'])) {
+			$_POST['ColID']=1;
+		}
 		echo '<tr><td>' . _('Column Number') . ':</td>
-              <td><input type="TEXT" class=number name=ColID size=3 maxlength=3 Value=' . $_POST['ColID'] . '><font size=1>(' . _('A number between 1 and 10 is expected') . ')</td>';
+              <td><input type="text" class=number name=ColID size=3 maxlength=3 Value=' . $_POST['ColID'] . '>&nbsp;<font size=1>(' . _('A number between 1 and 10 is expected') . ')</td>';
 	}
-
+	if (!isset($_POST['Heading1'])) {
+		$_POST['Heading1']='';
+	}
 	echo '<tr><td>' . _('Heading line 1') . ':</td>
             <td><input type="TEXT" size=16 maxlength=15 name="Heading1" value="' . $_POST['Heading1'] . '"></td></tr>';
+	if (!isset($_POST['Heading2'])) {
+		$_POST['Heading2']='';
+	}
 	echo '<tr><td>' . _('Heading line 2') . ':</td><td><input type="TEXT" size=16 maxlength=15 name="Heading2" value="' . $_POST['Heading2'] . '"></td></tr>';
 	echo '<tr><td>' . _('Calculation') . ':</td><td><select name="Calculation">';
+	if (!isset($_POST['Calculation'])) {
+		$_POST['Calculation']=0;
+	}
 	if ($_POST['Calculation'] ==1){
 		echo '<option selected Value=1>' . _('Yes');
 		echo '<option Value=0>' . _('No');
@@ -389,8 +406,35 @@ if (!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	if ($_POST['Calculation']==0){ /*Its not a calculated column */
-		echo '<tr><td>' . _('From Period') . ':</td><td><input type="TEXT" class=number size=4 maxlength=3 name="PeriodFrom" value=' . $_POST['PeriodFrom'] . '>  <a target="_blank" href="' . $rootpath . '/PeriodsInquiry.php?' . SID . '">' . _('View Periods') . '</a></td></tr>';
-		echo '<tr><td>' . _('To Period') . ':</td><td><input type="TEXT" class=number size=4 maxlength=3 name="PeriodTo" value=' . $_POST['PeriodTo'] . '></td></tr>';
+
+		echo '<tr><td>' . _('From Period') . ':</td>
+			<td><select name="PeriodFrom"';
+		$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
+		$ErrMsg = _('Could not load periods table');
+		$result = DB_query($sql,$db,$ErrMsg);
+		while ($PeriodRow = DB_fetch_row($result)){
+			if ($_POST['PeriodFrom']==$PeriodRow[0]){
+				echo  '<option selected value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[1]) . '</option>';
+			} else {
+				echo  '<option value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[1]) . '</option>';
+			}
+		}
+		echo '</select></td></tr>';
+
+		echo '<tr><td>' . _('ToPeriod') . ':</td>
+			<td><select name="PeriodTo"';
+		$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
+		$ErrMsg = _('Could not load periods table');
+		$result = DB_query($sql,$db,$ErrMsg);
+		while ($PeriodRow = DB_fetch_row($result)){
+			if ($_POST['PeriodTo']==$PeriodRow[0]){
+				echo  '<option selected value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[1]) . '</option>';
+			} else {
+				echo  '<option value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[1]) . '</option>';
+			}
+		}
+		echo '</select></td></tr>';
+
 		echo '<tr><td>' . _('Data to show') . ':</td><td><select name="DataType">';
 		DataOptions($_POST['DataType']);
 		echo '</select></td></tr>';
@@ -462,7 +506,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '</table>';
 
-	echo '<div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div></form>';
+	echo '<br /><div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div></form>';
 
 } //end if record deleted no point displaying form to add record
 
