@@ -10,6 +10,8 @@ $title = _('Sales Category Maintenance');
 
 include('includes/header.inc');
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') . '" alt="">' . ' ' . $title . '';
+
 if (isset($_GET['SelectedCategory'])){
 	$SelectedCategory = strtoupper($_GET['SelectedCategory']);
 } else if (isset($_POST['SelectedCategory'])){
@@ -32,13 +34,13 @@ if (isset($_GET['EditName'])){
 }
 
 if (isset($SelectedCategory) AND isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
-	
+
 	$result    = $_FILES['ItemPicture']['error'];
  	$UploadTheFile = 'Yes'; //Assume all is well to start off with
  	// Stock is always capatalized so there is no confusion since "cat_" is lowercase
-	$filename = $_SESSION['part_pics_dir'] . '/cat_' . $SelectedCategory . '.jpg'; 
-	
-	 //But check for the worst 
+	$filename = $_SESSION['part_pics_dir'] . '/cat_' . $SelectedCategory . '.jpg';
+
+	 //But check for the worst
 	if (strtoupper(substr(trim($_FILES['ItemPicture']['name']),strlen($_FILES['ItemPicture']['name'])-3))!='JPG'){
 		prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
 		$UploadTheFile ='No';
@@ -56,7 +58,7 @@ if (isset($SelectedCategory) AND isset($_FILES['ItemPicture']) AND $_FILES['Item
 			$UploadTheFile ='No';
 		}
 	}
-	
+
 	if ($UploadTheFile=='Yes'){
 		$result  =  move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $filename);
 		$message = ($result)?_('File url') ."<a href='". $filename ."'>" .  $filename . '</a>' : "Somthing is wrong with uploading a file.";
@@ -81,14 +83,14 @@ if (isset($_POST['submit'])  && $EditName == 1 ) { // Creating or updating a cat
 		prnMsg(_('The Sales category description must be twenty characters or less long'),'error');
 	}
 
-	if ($SelectedCategory && $InputError !=1 ) {
+	if (isset($SelectedCategory) and $InputError !=1 ) {
 
 		/*SelectedCategory could also exist if submit had not been clicked this code
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
 		$sql = "UPDATE salescat SET salescatname = '" . $_POST['SalesCatName'] . "'
-                            WHERE salescatid = " .$SelectedCategory;
+                            WHERE salescatid = '" .$SelectedCategory . "'";
 		$msg = _('The Sales category record has been updated');
 	} elseif ($InputError !=1) {
 
@@ -98,16 +100,16 @@ if (isset($_POST['submit'])  && $EditName == 1 ) { // Creating or updating a cat
                                        parentcatid)
                                        VALUES (
                                        '" . $_POST['SalesCatName'] . "',
-                                       " . (isset($ParentCategory)?($ParentCategory):('NULL')) . ")";
+                                       '" . (isset($ParentCategory)?($ParentCategory):('NULL')) . "')";
 		$msg = _('A new Sales category record has been added');
 	}
-	
+
 	if ($InputError!=1){
 		//run the SQL from either of the above possibilites
 		$result = DB_query($sql,$db);
 		prnMsg($msg,'success');
 	}
-	
+
 	unset ($SelectedCategory);
 	unset($_POST['SalesCatName']);
 	unset($EditName);
@@ -117,7 +119,7 @@ if (isset($_POST['submit'])  && $EditName == 1 ) { // Creating or updating a cat
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'StockMaster'
 
-	$sql= "SELECT COUNT(*) FROM salescatprod WHERE salescatid=".$SelectedCategory;
+	$sql= "SELECT COUNT(*) FROM salescatprod WHERE salescatid='".$SelectedCategory . "'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
@@ -125,16 +127,16 @@ if (isset($_POST['submit'])  && $EditName == 1 ) { // Creating or updating a cat
 			'<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('items under to this category'),'warn');
 
 	} else {
-		$sql = "SELECT COUNT(*) FROM salescat WHERE parentcatid='$SelectedCategory'";
+		$sql = "SELECT COUNT(*) FROM salescat WHERE parentcatid='".$SelectedCategory."'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 		prnMsg(_('Cannot delete this sales category because sub categories have been added to this category') .
 			'<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('sub categories'),'warn');
 		} else {
-			$sql="DELETE FROM salescat WHERE salescatid=".$SelectedCategory;
+			$sql="DELETE FROM salescat WHERE salescatid='".$SelectedCategory."'";
 			$result = DB_query($sql,$db);
-			prnMsg(_('The sales category') . ' ' . $SelectedCategory . ' ' . _('has been deleted') . 
+			prnMsg(_('The sales category') . ' ' . $SelectedCategory . ' ' . _('has been deleted') .
 				' !','success');
 			unset ($SelectedCategory);
 		}
@@ -142,32 +144,32 @@ if (isset($_POST['submit'])  && $EditName == 1 ) { // Creating or updating a cat
 	unset($_GET['delete']);
 	unset($EditName);
 } elseif( isset($_POST['submit'])  && isset($_POST['AddStockID']) ) {
-	$sql = "INSERT INTO salescatprod ( 
-				stockid, 
-				salescatid 
+	$sql = "INSERT INTO salescatprod (
+				stockid,
+				salescatid
 			) VALUES (
 				'". $_POST['AddStockID']."',
-				".(isset($ParentCategory)?($ParentCategory):('NULL'))."
+				'".(isset($ParentCategory)?($ParentCategory):('NULL'))."'
 			)";
 	$result = DB_query($sql,$db);
-	prnMsg(_('Stock item') . ' ' . $_POST['AddStockID'] . ' ' . _('has been added') . 
+	prnMsg(_('Stock item') . ' ' . $_POST['AddStockID'] . ' ' . _('has been added') .
 		' !','success');
 	unset($_POST['AddStockID']);
 } elseif( isset($_GET['DelStockID']) ) {
-	$sql = "DELETE FROM salescatprod WHERE 
+	$sql = "DELETE FROM salescatprod WHERE
 				stockid='". $_GET['DelStockID']."' AND
 				salescatid".(isset($ParentCategory)?('='.$ParentCategory):(' IS NULL'));
 	$result = DB_query($sql,$db);
-	prnMsg(_('Stock item') . ' ' . $_GET['DelStockID'] . ' ' . _('has been removed') . 
+	prnMsg(_('Stock item') . ' ' . $_GET['DelStockID'] . ' ' . _('has been removed') .
 		' !','success');
 	unset($_GET['DelStockID']);
 }
 
 
 // ----------------------------------------------------------------------------------------
-// Calculate Path for navigation 
+// Calculate Path for navigation
 
-$CategoryPath = '<a href="'.$_SERVER['PHP_SELF'] . '?' . SID . 
+$CategoryPath = '<a href="'.$_SERVER['PHP_SELF'] . '?' . SID .
 			'&ParentCategory=0">' . _('Main') . '</a>' . "&nbsp;\\&nbsp;";
 $TempPath = '';
 if (isset($ParentCategory)) {
@@ -175,17 +177,17 @@ if (isset($ParentCategory)) {
 }
 
 $LastParentName = '';
-for($Buzy = (isset($TmpParentID) && ($TmpParentID <> '')); 
+for($Buzy = (isset($TmpParentID) && ($TmpParentID <> ''));
 		$Buzy == true;
 		$Buzy = (isset($TmpParentID) && ($TmpParentID <> '')) ) {
-  	$sql = "SELECT parentcatid, salescatname FROM salescat WHERE salescatid=".$TmpParentID;
+  	$sql = "SELECT parentcatid, salescatname FROM salescat WHERE salescatid='".$TmpParentID."'";
 	$result = DB_query($sql,$db);
 	if( $result ) {
 		if (DB_num_rows($result) > 0) {
 			$row = DB_fetch_array($result);
 			$LastParentName =  $row['salescatname'];
-			$TempPath = '<a href="'.$_SERVER['PHP_SELF'] . '?' . SID . 
-				'&ParentCategory='.$TmpParentID.'">'.$LastParentName . 
+			$TempPath = '<a href="'.$_SERVER['PHP_SELF'] . '?' . SID .
+				'&ParentCategory='.$TmpParentID.'">'.$LastParentName .
 				'</a>'."&nbsp;\\&nbsp;".$TempPath;
 			$TmpParentID = $row['parentcatid']; // Set For Next Round
 		} else {
@@ -197,11 +199,11 @@ for($Buzy = (isset($TmpParentID) && ($TmpParentID <> ''));
 
 $CategoryPath = $CategoryPath.$TempPath;
 
-echo '<p><div class="centre"><i>'._("Selected Sales Category Path").'</i>&nbsp;:&nbsp;'. 
+echo '<p><div class="centre"><i>'._("Selected Sales Category Path").'</i>&nbsp;:&nbsp;'.
 	$CategoryPath .
 	'&nbsp;*&nbsp;</b></div></p>';
 
-// END Calculate Path for navigation 
+// END Calculate Path for navigation
 // ----------------------------------------------------------------------------------------
 
 
@@ -213,10 +215,10 @@ then none of the above are true and the list of stock categorys will be displaye
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-$sql = "SELECT salescatid, 
-		salescatname 
-	FROM salescat 
-	WHERE parentcatid". (isset($ParentCategory)?('='.$ParentCategory):' is NULL') . " 
+$sql = "SELECT salescatid,
+		salescatname
+	FROM salescat
+	WHERE parentcatid". (isset($ParentCategory)?('='.$ParentCategory):' is NULL') . "
 	ORDER BY salescatname";
 $result = DB_query($sql,$db);
 
@@ -225,7 +227,7 @@ echo '<p>';
 if (DB_num_rows($result) == 0) {
 	prnMsg(_('There are no categories defined at this level.'));
 } else {
-	echo "<table border=1>\n";
+	echo "<table class=selection>\n";
 	echo '<tr><th>' . _('Sub Category') . '</th></tr>';
 
 	$k=0; //row colour counter
@@ -238,7 +240,7 @@ if (DB_num_rows($result) == 0) {
 			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
-		
+
 		if (function_exists('imagecreatefrompng')){
 			$CatImgLink = '<img src="GetStockImage.php?SID&automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
 				'&stockid='.urlencode('cat_'.$myrow['salescatid'].'.jpg').
@@ -253,9 +255,9 @@ if (DB_num_rows($result) == 0) {
 			} else {
 				$CatImgLink = 'No Image';
 			}
-				
+
 		}
-		
+
 		printf("<td>%s</td>
             		<td><a href=\"%sParentCategory=%s\">" . _('Select') . "</td>
             		<td><a href=\"%sSelectedCategory=%s&ParentCategory=%s\">" . _('Edit') . "</td>
@@ -292,8 +294,8 @@ echo '<p><form ENCtype="MULTIPART/FORM-DATA" method="POST" action="' . $_SERVER[
 if (isset($SelectedCategory)) {
 	//editing an existing stock category
 
-	$sql = "SELECT salescatid, parentcatid, salescatname FROM salescat sc 
-			WHERE salescatid=". $SelectedCategory;
+	$sql = "SELECT salescatid, parentcatid, salescatname FROM salescat sc
+			WHERE salescatid='". $SelectedCategory."'";
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
@@ -303,7 +305,7 @@ if (isset($SelectedCategory)) {
 	$_POST['SalesCatName']  = $myrow['salescatname'];
 
 	echo '<input type=hidden name="SelectedCategory" VALUE="' . $SelectedCategory . '">';
-	echo '<input type=hidden name="ParentCategory" VALUE="' . 
+	echo '<input type=hidden name="ParentCategory" VALUE="' .
 		(isset($_POST['ParentCatId'])?($_POST['ParentCategory']):('0')) . '">';
 	$FormCaps = _('Edit Sub Category');
 
@@ -312,24 +314,24 @@ if (isset($SelectedCategory)) {
 	if (isset($ParentCategory)) {
 		$_POST['ParentCategory']  = $ParentCategory;
 	}
-	echo '<input type=hidden name="ParentCategory" VALUE="' . 
+	echo '<input type=hidden name="ParentCategory" VALUE="' .
 		(isset($_POST['ParentCategory'])?($_POST['ParentCategory']):('0')) . '">';
 	$FormCaps = _('New Sub Category');
 }
 echo '<input type=hidden name="EditName" VALUE="1">';
-echo '<table>';
+echo '<table class=selection>';
 echo '<tr><th colspan="2">' . $FormCaps . '</th></tr>';
 echo '<tr><td>' . _('Category Name') . ':</td>
-            <td><input type="Text" name="SalesCatName" size=20 maxlength=20 value="' . 
+            <td><input type="Text" name="SalesCatName" size=20 maxlength=20 value="' .
 			$_POST['SalesCatName'] . '"></td></tr>';
-// Image upload only if we have a selected category			
+// Image upload only if we have a selected category
 if (isset($SelectedCategory)) {
 	echo '<tr><td>'. _('Image File (.jpg)') . ':</td>
 		<td><input type="file" id="ItemPicture" name="ItemPicture"></td></tr>';
-}		
-	
+}
+
 echo '</table>';
-echo '<div class="centre"><input type="Submit" name="submit" value="' . _('Submit Information') . '"></div>';
+echo '<br /><div class="centre"><input type="Submit" name="submit" value="' . _('Submit Information') . '"></div>';
 
 echo '</form></p>';
 
@@ -342,26 +344,26 @@ echo '</form></p>';
 // $sql = "SELECT stockid, description FROM stockmaster ORDER BY stockid";
 /*
 $sql = "SELECT sm.stockid, sm.description FROM stockmaster as sm
-	WHERE NOT EXISTS 
+	WHERE NOT EXISTS
 		( SELECT scp.stockid FROM salescatprod as scp
-			WHERE 
-				scp.salescatid". (isset($ParentCategory)?('='.$ParentCategory):' IS NULL') ." 
-			AND 
-				scp.stockid = sm.stockid 
+			WHERE
+				scp.salescatid". (isset($ParentCategory)?('='.$ParentCategory):' IS NULL') ."
+			AND
+				scp.stockid = sm.stockid
 	) ORDER BY sm.stockid";
 */
 
 // Now add this stockid to the array
 $stockids = array();
-$sql = "SELECT stockid FROM salescatprod 
-		WHERE salescatid". (isset($ParentCategory)?('='.$ParentCategory):' is NULL') . " 
+$sql = "SELECT stockid FROM salescatprod
+		WHERE salescatid". (isset($ParentCategory)?('='.$ParentCategory):' is NULL') . "
 		ORDER BY stockid";
 $result = DB_query($sql,$db);
 if($result && DB_num_rows($result)) {
 	while( $myrow = DB_fetch_array($result) ) {
 		$stockids[] = $myrow['stockid']; // Add Stock
 	}
-	DB_free_result($result);	
+	DB_free_result($result);
 }
 
 // This query will return the stock that is available
@@ -373,11 +375,11 @@ if($result && DB_num_rows($result)) {
 	if( isset($SelectedCategory) ) { // If we selected a category we need to keep it selected
 		echo '<input type=hidden name="SelectedCategory" VALUE="' . $SelectedCategory . '">';
 	}
-	echo '<input type=hidden name="ParentCategory" VALUE="' . 
+	echo '<input type=hidden name="ParentCategory" VALUE="' .
 		(isset($_POST['ParentCategory'])?($_POST['ParentCategory']):('0')) . '">';
-	
+
 	echo '';
-	echo '<table>';
+	echo '<table class=selection>';
 	echo '<tr><th colspan="2">'._('Add Inventory to this category.').'</th></tr>';
 	echo '<tr><td>' . _('Select Inv. Item') . ':</td><td>';
 	echo '<select name="AddStockID">';
@@ -391,7 +393,7 @@ if($result && DB_num_rows($result)) {
 	}
 	echo '</select>';
 	echo '</td></tr></table>';
-	echo '<div class="centre"><input type="Submit" name="submit" value="' . _('Add Inventory Item') . '"></div>';
+	echo '<br /><div class="centre"><input type="Submit" name="submit" value="' . _('Add Inventory Item') . '"></div>';
 	echo '';
 	echo '</form></p>';
 } else {
@@ -411,13 +413,13 @@ unset($stockids);
 echo '<p>';
 $sql = "SELECT scp.stockid, sm.description FROM salescatprod scp
 			LEFT JOIN stockmaster sm ON sm.stockid = scp.stockid
-			WHERE scp.salescatid". (isset($ParentCategory)?('='.$ParentCategory):' is NULL') . " 
+			WHERE scp.salescatid". (isset($ParentCategory)?('='.$ParentCategory):' is NULL') . "
 		ORDER BY scp.stockid";
 
 $result = DB_query($sql,$db);
 if($result ) {
 	if( DB_num_rows($result)) {
-		echo '<table>';
+		echo '<table class=selection>';
 		echo '<tr><th colspan="3">'._('Inventory items in this category.').'</th></tr>';
 		echo '<tr><th>' . _('Stock Code') . '</th>';
 		echo '<th>' . _('Description') . '</th></tr>';
@@ -432,11 +434,11 @@ if($result ) {
 				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
-			
+
 			echo '<td>' . $myrow['stockid'] . '</td>';
 			echo '<td>' . $myrow['description'] . '</td>';
-			echo '<td><a href="'.$_SERVER['PHP_SELF'] . '?' . SID . 
-					'&ParentCategory='.$ParentCategory.'&DelStockID='.$myrow['stockid'].'">'. 
+			echo '<td><a href="'.$_SERVER['PHP_SELF'] . '?' . SID .
+					'&ParentCategory='.$ParentCategory.'&DelStockID='.$myrow['stockid'].'">'.
 					_('Remove').
 					'</a></td></tr>';
 		}
