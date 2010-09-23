@@ -19,6 +19,8 @@ if (isset($Errors)) {
 
 $Errors = array();
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'</p>';
+
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
@@ -56,7 +58,7 @@ if (isset($_POST['submit'])) {
 
 		$sql = "UPDATE salestypes
 			SET sales_type = '" . $_POST['Sales_Type'] . "'
-			WHERE typeabbrev = '$SelectedType'";
+			WHERE typeabbrev = '".$SelectedType."'";
 
 		$msg = _('The customer/sales/pricelist type') . ' ' . $SelectedType . ' ' .  _('has been updated');
 	} elseif ( $InputError !=1 ) {
@@ -135,7 +137,7 @@ if (isset($_POST['submit'])) {
 
 	$sql= "SELECT COUNT(*)
 	       FROM debtortrans
-	       WHERE debtortrans.tpe='$SelectedType'";
+	       WHERE debtortrans.tpe='".$SelectedType."'";
 
 	$ErrMsg = _('The number of transactions using this customer/sales/pricelist type could not be retrieved');
 	$result = DB_query($sql,$db,$ErrMsg);
@@ -146,7 +148,7 @@ if (isset($_POST['submit'])) {
 
 	} else {
 
-		$sql = "SELECT COUNT(*) FROM debtorsmaster WHERE salestype='$SelectedType'";
+		$sql = "SELECT COUNT(*) FROM debtorsmaster WHERE salestype='".$SelectedType."'";
 
 		$ErrMsg = _('The number of transactions using this Sales Type record could not be retrieved because');
 		$result = DB_query($sql,$db,$ErrMsg);
@@ -155,7 +157,7 @@ if (isset($_POST['submit'])) {
 			prnMsg (_('Cannot delete this sale type because customers are currently set up to use this sales type') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('customers with this sales type code'));
 		} else {
 
-			$sql="DELETE FROM salestypes WHERE typeabbrev='$SelectedType'";
+			$sql="DELETE FROM salestypes WHERE typeabbrev='".$SelectedType."'";
 			$ErrMsg = _('The Sales Type record could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
 			prnMsg(_('Sales type') . ' / ' . _('price list') . ' ' . $SelectedType  . ' ' . _('has been deleted') ,'success');
@@ -182,7 +184,7 @@ or deletion of the records*/
 	$sql = 'SELECT * FROM salestypes';
 	$result = DB_query($sql,$db);
 
-	echo '<table BORDER=1>';
+	echo '<table class=selection>';
 	echo "<tr>
 		<th>" . _('Type Code') . "</th>
 		<th>" . _('Type Name') . "</th>
@@ -221,9 +223,7 @@ if (isset($SelectedType)) {
 if (! isset($_GET['delete'])) {
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	echo '<div class="centre"><font size=4 color=blue><b><U>' . _('Sales Type/Price List Setup') . '</b></U></font></div>';
-	echo '<p><table border=1>'; //Main table
-	echo '<td><table>'; // First column
+	echo '<p><table class=selection>'; //Main table
 
 
 	// The user wish to EDIT an existing type
@@ -243,7 +243,9 @@ if (! isset($_GET['delete'])) {
 
 		echo "<input type=hidden name='SelectedType' VALUE=" . $SelectedType . ">";
 		echo "<input type=hidden name='TypeAbbrev' VALUE=" . $_POST['TypeAbbrev'] . ">";
-		echo "<table> <tr><td>" . _('Type Code') . ":</td><td>";
+		echo "<table class=selection>";
+		echo '<tr><th colspan=4><font size=2 color=blue><b>' . _('Sales Type/Price List Setup') . '</b></font></th></tr>';
+		echo "<tr><td>" . _('Type Code') . ":</td><td>";
 
 		// We dont allow the user to change an existing type code
 
@@ -253,7 +255,9 @@ if (! isset($_GET['delete'])) {
 
 		// This is a new type so the user may volunteer a type code
 
-		echo "<table><tr><td>" . _('Type Code') . ":</td><td><input type='Text'
+		echo "<table class=selection>";
+		echo '<tr><th colspan=4><font size=2 color=blue><b>' . _('Sales Type/Price List Setup') . '</b></font></th></tr>';
+		echo "<tr><td>" . _('Type Code') . ":</td><td><input type='Text'
 				" . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) ." size=3 maxlength=2 name='TypeAbbrev'></td></tr>";
 
 	}
@@ -263,7 +267,6 @@ if (! isset($_GET['delete'])) {
 	}
 	echo "<tr><td>" . _('Sales Type Name') . ":</td><td><input type='Text' name='Sales_Type' value='" . $_POST['Sales_Type'] . "'></td></tr>";
 
-   	echo '</table>'; // close table in first column
    	echo '</td></tr></table>'; // close main table
 
 	echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
