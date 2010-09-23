@@ -165,18 +165,18 @@ if (isset($_POST['submit'])) {
                                        valformat )
                                        VALUES (
                                        $ReportID,
-                                       " . $_POST['ColID'] . ",
+                                       '" . $_POST['ColID'] . "',
                                        '" . $_POST['Heading1'] . "',
                                        '" . $_POST['Heading2'] . "',
-                                       " . $_POST['Calculation'] . ",
-                                       " . $_POST['PeriodFrom'] . ",
-                                       " . $_POST['PeriodTo'] . ",
+                                       '" . $_POST['Calculation'] . "',
+                                       '" . $_POST['PeriodFrom'] . "',
+                                       '" . $_POST['PeriodTo'] . "',
                                        '" . $_POST['DataType'] . "',
-                                       " . $_POST['ColNumerator'] . ",
-                                       " . $_POST['ColDenominator'] . ",
+                                       '" . $_POST['ColNumerator'] . "',
+                                       '" . $_POST['ColDenominator'] . "',
                                        '" . $_POST['CalcOperator'] . "',
-                                       " . $_POST['Constant'] . ",
-                                       " . $_POST['BudgetOrActual'] . ",
+                                       '" . $_POST['Constant'] . "',
+                                       '" . $_POST['BudgetOrActual'] . "',
                                        '" . $_POST['ValFormat'] . "')";
 
 		$ErrMsg = _('The column could not be added to the report because');
@@ -206,7 +206,7 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
-	$sql="DELETE FROM reportcolumns WHERE reportid=$ReportID AND colno=$SelectedCol";
+	$sql="DELETE FROM reportcolumns WHERE reportid='".$ReportID."' AND colno='".$SelectedCol."'";
 
 	$ErrMsg = _('The deletion of the column failed because');
 	$DbgMsg = _('The SQL used to delete this report column was');
