@@ -16,8 +16,10 @@ if (isset($_GET['SelectedSaleperson'])){
 if (isset($Errors)) {
 	unset($Errors);
 }
-	
-$Errors = array();	
+
+$Errors = array();
+
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -34,17 +36,17 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The salesperson code must be three characters or less long'),'error');
 		$Errors[$i] = 'SalesmanCode';
-		$i++;		
+		$i++;
 	} elseif (strlen($_POST['SalesmanCode'])==0 OR $_POST['SalesmanCode']=='') {
 		$InputError = 1;
 		prnMsg(_('The salesperson code cannot be empty'),'error');
 		$Errors[$i] = 'SalesmanCode';
-		$i++;		
+		$i++;
 	} elseif (strlen($_POST['SalesmanName']) > 30) {
 		$InputError = 1;
 		prnMsg(_('The salesperson name must be thirty characters or less long'),'error');
 		$Errors[$i] = 'SalesmanName';
-		$i++;		
+		$i++;
 	} elseif (strlen($_POST['SManTel']) > 20) {
 		$InputError = 1;
 		prnMsg(_('The salesperson telephone number must be twenty characters or less long'),'error');
@@ -82,12 +84,12 @@ if (isset($_POST['submit'])) {
 		/*SelectedSaleperson could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
 		$sql = "UPDATE salesman SET salesmanname='" . $_POST['SalesmanName'] . "',
-						commissionrate1=" . $_POST['CommissionRate1'] . ",
+						commissionrate1='" . $_POST['CommissionRate1'] . "',
 						smantel='" . $_POST['SManTel'] . "',
 						smanfax='" . $_POST['SManFax'] . "',
-						breakpoint=" . $_POST['Breakpoint'] . ",
-						commissionrate2=" . $_POST['CommissionRate2'] . "
-				WHERE salesmancode = '$SelectedSaleperson'";
+						breakpoint='" . $_POST['Breakpoint'] . "',
+						commissionrate2='" . $_POST['CommissionRate2'] . "'
+				WHERE salesmancode = '".$SelectedSaleperson."'";
 
 		$msg = _('Salesperson record for') . ' ' . $_POST['SalesmanName'] . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
@@ -103,9 +105,9 @@ if (isset($_POST['submit'])) {
 						smanfax)
 				VALUES ('" . $_POST['SalesmanCode'] . "',
 					'" . $_POST['SalesmanName'] . "',
-					" . $_POST['CommissionRate1'] . ",
-					" . $_POST['CommissionRate2'] . ",
-					" . $_POST['Breakpoint'] . ",
+					'" . $_POST['CommissionRate1'] . "',
+					'" . $_POST['CommissionRate2'] . "',
+					'" . $_POST['Breakpoint'] . "',
 					'" . $_POST['SManTel'] . "',
 					'" . $_POST['SManFax'] . "'
 					)";
@@ -135,21 +137,21 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorsMaster'
 
-	$sql= "SELECT COUNT(*) FROM custbranch WHERE  custbranch.salesman='$SelectedSaleperson'";
+	$sql= "SELECT COUNT(*) FROM custbranch WHERE  custbranch.salesman='".$SelectedSaleperson."'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg(_('Cannot delete this salesperson because branches are set up referring to them') . ' - ' . _('first alter the branches concerned') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches that refer to this salesperson'),'error');
 
 	} else {
-		$sql= "SELECT COUNT(*) FROM salesanalysis WHERE salesanalysis.salesperson='$SelectedSaleperson'";
+		$sql= "SELECT COUNT(*) FROM salesanalysis WHERE salesanalysis.salesperson='".$SelectedSaleperson."'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg(_('Cannot delete this salesperson because sales analysis records refer to them') , '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records that refer to this salesperson'),'error');
 		} else {
 
-			$sql="DELETE FROM salesman WHERE salesmancode='$SelectedSaleperson'";
+			$sql="DELETE FROM salesman WHERE salesmancode='".$SelectedSaleperson."'";
 			$ErrMsg = _('The salesperson could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
@@ -178,7 +180,7 @@ or deletion of the records*/
 		FROM salesman";
 	$result = DB_query($sql,$db);
 
-	echo '<table BORDER=1>';
+	echo '<table class=selection>';
 	echo "<tr><th>" . _('Code') . "</th>
 		<th>" . _('Name') . "</th>
 		<th>" . _('Telephone') . "</th>
@@ -186,11 +188,18 @@ or deletion of the records*/
 		<th>" . _('Comm Rate 1') . "</th>
 		<th>" . _('Break') . "</th>
 		<th>" . _('Comm Rate 2') . "</th></tr>";
-
+	$k=0;
 	while ($myrow=DB_fetch_row($result)) {
 
+	if ($k==1){
+		echo '<tr class="EvenTableRows">';
+		$k=0;
+	} else {
+		echo '<tr class="OddTableRows">';
+		$k++;
+	}
 
-	printf("<tr>
+	printf("
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
@@ -214,7 +223,7 @@ or deletion of the records*/
 		$myrow[0]);
 
 	} //END WHILE LIST LOOP
-	echo '</table>';
+	echo '</table><br />';
 } //end of ifs and buts!
 
 if (isset($SelectedSaleperson)) {
@@ -236,7 +245,7 @@ if (! isset($_GET['delete'])) {
 				breakpoint,
 				commissionrate2
 			FROM salesman
-			WHERE salesmancode='$SelectedSaleperson'";
+			WHERE salesmancode='".$SelectedSaleperson."'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -252,12 +261,12 @@ if (! isset($_GET['delete'])) {
 
 		echo "<input type=hidden name='SelectedSaleperson' VALUE='" . $SelectedSaleperson . "'>";
 		echo "<input type=hidden name='SalesmanCode' VALUE='" . $_POST['SalesmanCode'] . "'>";
-		echo '<table> <tr><td>' . _('Salesperson code') . ':</td><td>';
+		echo '<table class=selection> <tr><td>' . _('Salesperson code') . ':</td><td>';
 		echo $_POST['SalesmanCode'] . '</td></tr>';
 
 	} else { //end of if $SelectedSaleperson only do the else when a new record is being entered
 
-		echo '<table><tr><td>' . _('Salesperson code') . ":</td>
+		echo '<table class=selection><tr><td>' . _('Salesperson code') . ":</td>
 			<td><input type='Text' ". (in_array('SalesmanCode',$Errors) ? 'class="inputerror"' : '' ) ." name='SalesmanCode' size=3 maxlength=3></td></tr>";
 	}
 	if (!isset($_POST['SalesmanName'])){
@@ -289,7 +298,7 @@ if (! isset($_GET['delete'])) {
 
 	echo '</table>';
 
-	echo "<div class='centre'><input type='Submit' name='submit' value='" . _('Enter Information') . "'></div>";
+	echo "<br /><div class='centre'><input type='Submit' name='submit' value='" . _('Enter Information') . "'></div>";
 
 	echo '</form>';
 
