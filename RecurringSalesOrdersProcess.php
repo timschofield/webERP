@@ -112,14 +112,14 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 							fromstkloc,
 							deliverydate )
 						VALUES (
-							" . $OrderNo . ",
+							'" . $OrderNo . "',
 							'" . $RecurrOrderRow['debtorno'] . "',
 							'" . $RecurrOrderRow['branchcode'] . "',
 							'". $RecurrOrderRow['customerref'] ."',
 							'". $RecurrOrderRow['comments'] ."',
 							'" . $DelDate . "',
 							'" . $RecurrOrderRow['ordertype'] . "',
-							" . $RecurrOrderRow['shipvia'] .",
+							'" . $RecurrOrderRow['shipvia'] ."',
 							'" . $RecurrOrderRow['deliverto'] . "',
 							'" . $RecurrOrderRow['deladd1'] . "',
 							'" . $RecurrOrderRow['deladd2'] . "',
@@ -129,7 +129,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 							'" . $RecurrOrderRow['deladd6'] . "',
 							'" . $RecurrOrderRow['contactphone'] . "',
 							'" . $RecurrOrderRow['contactemail'] . "',
-							" . $RecurrOrderRow['freightcost'] .",
+							'" . $RecurrOrderRow['freightcost'] ."',
 							'" . $RecurrOrderRow['fromstkloc'] ."',
 							'" . $DelDate . "')";
 
@@ -166,15 +166,15 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 																quantity,
 																discountpercent,
 																narrative)
-															VALUES (" . $OrderNo . ', ';
+															VALUES ('" . $OrderNo . "', ";
 
 		while ($RecurrOrderLineRow=DB_fetch_array($LineItemsResult)) {
 			$LineItemsSQL = $StartOf_LineItemsSQL .
-												' ' . $LineCounter . ",
+												" '" . $LineCounter . "',
 												'" . $RecurrOrderLineRow['stkcode'] . "',
-												". $RecurrOrderLineRow['unitprice'] . ',
-												' . $RecurrOrderLineRow['quantity'] . ',
-												' . floatval($RecurrOrderLineRow['discountpercent']) . ",
+												'". $RecurrOrderLineRow['unitprice'] . "',
+												'" . $RecurrOrderLineRow['quantity'] . "',
+												'" . floatval($RecurrOrderLineRow['discountpercent']) . "',
 												'" . $RecurrOrderLineRow['narrative'] . "')";
 
 			$Ins_LineItemResult = DB_query($LineItemsSQL,$db,_('Could not insert the order lines from the recurring order template'),true);	/*Populating a new order line items*/
@@ -183,7 +183,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 	} //end if there are line items on the recurring order
 
 	$sql = "UPDATE recurringsalesorders SET lastrecurrence = '" . $DelDate . "'
-			WHERE recurrorderno=" . $RecurrOrderRow['recurrorderno'];
+			WHERE recurrorderno='" . $RecurrOrderRow['recurrorderno'] ."'";
 	$ErrMsg = _('Could not update the last recurrence of the recurring order template. The database reported the error:');
 	$Result = DB_query($sql,$db,$ErrMsg,true);
 
@@ -257,9 +257,9 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				taxauthrates.taxauthority=taxgrouptaxes.taxauthid
 				INNER JOIN taxauthorities ON
 				taxauthrates.taxauthority=taxauthorities.taxid
-			WHERE taxgrouptaxes.taxgroupid=" . $RecurrOrderRow['taxgroupid'] . "
-			AND taxauthrates.dispatchtaxprovince=" . $DispTaxProvinceID . "
-			AND taxauthrates.taxcatid = " . $RecurrOrderLineRow['taxcatid'] . "
+			WHERE taxgrouptaxes.taxgroupid='" . $RecurrOrderRow['taxgroupid'] . "'
+			AND taxauthrates.dispatchtaxprovince='" . $DispTaxProvinceID . "'
+			AND taxauthrates.taxcatid = '" . $RecurrOrderLineRow['taxcatid'] . "'
 			ORDER BY taxgrouptaxes.calculationorder";
 
 			$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
@@ -307,7 +307,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 					SET qtyinvoiced = qtyinvoiced + " . $RecurrOrderLineRow['quantity'] . ",
 						actualdispatchdate = '" . $DelDate .  "',
 						completed=1
-				WHERE orderno = " . $OrderNo . "
+				WHERE orderno = '" . $OrderNo . "'
 				AND stkcode = '" . $RecurrOrderLineRow['stkcode'] . "'";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order detail record could not be updated because');
@@ -337,16 +337,16 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 					VALUES (
 						'" . $RecurrOrderLineRow['stkcode'] . "',
 						10,
-						" . $InvoiceNo . ",
+						'" . $InvoiceNo . "',
 						'" . $RecurrOrderRow['fromstkloc'] . "',
 						'" . $DelDate . "',
 						'" . $RecurrOrderRow['debtorno'] . "',
 						'" . $RecurrOrderRow['branchcode'] . "',
-						" . $LocalCurrencyPrice . ",
-						" . $PeriodNo . ",
+						'" . $LocalCurrencyPrice . "',
+						'" . $PeriodNo . "',
 						'" . $OrderNo . "',
-						" . -$RecurrOrderLineRow['quantity'] . ",
-						" . $RecurrOrderLineRow['discountpercent'] . ",
+						'" . -$RecurrOrderLineRow['quantity'] . "',
+						'" . $RecurrOrderLineRow['discountpercent'] . "',
 						0,
 						'" . $RecurrOrderLineRow['narrative'] . "')";
 
@@ -360,16 +360,16 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 			/*Insert the taxes that applied to this line */
 			foreach ($LineTaxes[$LineCounter] as $Tax) {
 
-				$SQL = 'INSERT INTO stockmovestaxes (stkmoveno,
+				$SQL = "INSERT INTO stockmovestaxes (stkmoveno,
 									taxauthid,
 									taxrate,
 									taxcalculationorder,
 									taxontax)
-						VALUES (' . $StkMoveNo . ',
-							' . $Tax['TaxAuthID'] . ',
-							' . $Tax['TaxRate'] . ',
-							' . $Tax['TaxCalculationOrder'] . ',
-							' . $Tax['TaxOnTax'] . ')';
+						VALUES ('" . $StkMoveNo . "',
+							'" . $Tax['TaxAuthID'] . "',
+							'" . $Tax['TaxRate'] . "',
+							'" . $Tax['TaxCalculationOrder'] . "',
+							'" . $Tax['TaxOnTax'] . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Taxes and rates applicable to this invoice line item could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement tax detail records was used');
@@ -396,10 +396,10 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				AND salesanalysis.area=custbranch.area
 				AND salesanalysis.salesperson=custbranch.salesman
 				AND salesanalysis.typeabbrev ='" . $RecurrOrderRow['ordertype'] . "'
-				AND salesanalysis.periodno=" . $PeriodNo . "
-				AND salesanalysis.cust " . LIKE . " '" . $RecurrOrderRow['debtorno'] . "'
-				AND salesanalysis.custbranch " . LIKE . " '" . $RecurrOrderRow['branchcode'] . "'
-				AND salesanalysis.stockid " . LIKE . " '" . $RecurrOrderLineRow['stkcode'] . "'
+				AND salesanalysis.periodno='" . $PeriodNo . "'
+				AND salesanalysis.cust  LIKE  '" . $RecurrOrderRow['debtorno'] . "'
+				AND salesanalysis.custbranch  LIKE  '" . $RecurrOrderRow['branchcode'] . "'
+				AND salesanalysis.stockid  LIKE . '" . $RecurrOrderLineRow['stkcode'] . "'
 				AND salesanalysis.budgetoractual=1
 				GROUP BY salesanalysis.stockid,
 					salesanalysis.stkcategory,
@@ -425,10 +425,10 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 					WHERE salesanalysis.area='" . $myrow[2] . "'
 					AND salesanalysis.salesperson='" . $myrow[3] . "'
 					AND typeabbrev ='" . $RecurrOrderRow['ordertype'] . "'
-					AND periodno = " . $PeriodNo . "
-					AND cust " . LIKE . " '" . $RecurrOrderRow['debtorno'] . "'
-					AND custbranch " . LIKE . " '" . $RecurrOrderRow['branchcode'] . "'
-					AND stockid " . LIKE . " '" . $RecurrOrderLineRow['stkcode'] . "'
+					AND periodno = '" . $PeriodNo . "'
+					AND cust  LIKE  '" . $RecurrOrderRow['debtorno'] . "'
+					AND custbranch  LIKE  '" . $RecurrOrderRow['branchcode'] . "'
+					AND stockid  LIKE  '" . $RecurrOrderLineRow['stkcode'] . "'
 					AND salesanalysis.stkcategory ='" . $myrow[1] . "'
 					AND budgetoractual=1";
 
@@ -450,13 +450,13 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 						stkcategory
 						)
 					SELECT '" . $RecurrOrderRow['ordertype']. "',
-						" . $PeriodNo . ",
-						" . ($RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] / $CurrencyRate) . ",
+						'" . $PeriodNo . "',
+						'" . ($RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] / $CurrencyRate) . "',
 						0,
 						'" . $RecurrOrderRow['debtorno'] . "',
 						'" . $RecurrOrderRow['branchcode'] . "',
-						" . $RecurrOrderLineRow['quantity'] . ",
-						" . ($RecurrOrderLineRow['discountpercent'] * $RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] / $CurrencyRate) . ",
+						'" . $RecurrOrderLineRow['quantity'] . "',
+						'" . ($RecurrOrderLineRow['discountpercent'] * $RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] / $CurrencyRate) . "',
 						'" . $RecurrOrderLineRow['stkcode'] . "',
 						custbranch.area,
 						1,
@@ -489,12 +489,12 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 						)
 					VALUES (
 						10,
-						" . $InvoiceNo . ",
+						'" . $InvoiceNo . "',
 						'" . $DelDate . "',
-						" . $PeriodNo . ",
-						" . $SalesGLAccounts['salesglcode'] . ",
+						'" . $PeriodNo . "',
+						'" . $SalesGLAccounts['salesglcode'] . "',
 						'" . $RecurrOrderRow['debtorno'] . " - " . $RecurrOrderLineRow['stkcode'] . " x " . $RecurrOrderLineRow['quantity'] . " @ " . $RecurrOrderLineRow['unitprice'] . "',
-						" . (-$RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity']/$CurrencyRate) . "
+						'" . (-$RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity']/$CurrencyRate) . "'
 					)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales GL posting could not be inserted because');
@@ -516,12 +516,12 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 						)
 						VALUES (
 							10,
-							" . $InvoiceNo . ",
+							'" . $InvoiceNo . "',
 							'" . $DelDate . "',
-							" . $PeriodNo . ",
-							" . $SalesGLAccounts['discountglcode'] . ",
+							'" . $PeriodNo . "',
+							'" . $SalesGLAccounts['discountglcode'] . "',
 							'" . $RecurrOrderRow['debtorno'] . " - " . $RecurrOrderLineRow['stkcode'] . " @ " . ($RecurrOrderLineRow['discountpercent'] * 100) . "%',
-							" . ($RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] * $RecurrOrderLineRow['discountpercent']/$CurrencyRate) . "
+							'" . ($RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] * $RecurrOrderLineRow['discountpercent']/$CurrencyRate) . "'
 						)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales discount GL posting could not be inserted because');
@@ -556,12 +556,12 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 					)
 					VALUES (
 					10,
-					" . $InvoiceNo . ",
+					'" . $InvoiceNo . "',
 					'" . $DelDate. "',
-					" . $PeriodNo . ",
-					" . $Tax['GLCode'] . ",
+					'" . $PeriodNo . "',
+					'" . $Tax['GLCode'] . "',
 					'" . $RecurrOrderRow['debtorno'] . "-" . $Tax['TaxAuthDescription'] . "',
-					" . (-$Tax['FXAmount']/$CurrencyRate) . "
+					'" . (-$Tax['FXAmount']/$CurrencyRate) . "'
 					)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The tax GL posting could not be inserted because');
@@ -583,12 +583,12 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 							)
 						VALUES (
 							10,
-							" . $InvoiceNo . ",
+							'" . $InvoiceNo . "',
 							'" . $DelDate . "',
-							" . $PeriodNo . ",
-							" . $_SESSION['CompanyRecord']['debtorsact'] . ",
+							'" . $PeriodNo . "',
+							'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
 							'" . $RecurrOrderRow['debtorno'] . "',
-							" . $TotalInvLocalCurr . "
+							'" . $TotalInvLocalCurr . "'
 						)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The total debtor GL posting could not be inserted because');
@@ -610,12 +610,12 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 						)
 					VALUES (
 						10,
-						" . $InvoiceNo . ",
+						'" . $InvoiceNo . "',
 						'" . $DelDate . "',
-						" . $PeriodNo . ",
-						" . $_SESSION['CompanyRecord']['freightact'] . ",
+						'" . $PeriodNo . "',
+						'" . $_SESSION['CompanyRecord']['freightact'] . "',
 						'" . $RecurrOrderRow['debtorno'] . "',
-						" . (-($RecurrOrderRow['freightcost'])/$CurrencyRate) . "
+						'" . (-($RecurrOrderRow['freightcost'])/$CurrencyRate) . "'
 					)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The freight GL posting could not be inserted because');
@@ -625,7 +625,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		} /*end of if Sales and GL integrated */
 
 	/*Update order header for invoice charged on */
-		$SQL = "UPDATE salesorders SET comments = CONCAT(comments,' Inv ','" . $InvoiceNo . "') WHERE orderno= " . $OrderNo;
+		$SQL = "UPDATE salesorders SET comments = CONCAT(comments,' Inv ','" . $InvoiceNo . "') WHERE orderno= '" . $OrderNo . "'";
 
 		$ErrMsg = _('CRITICAL ERROR') . ' ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order header could not be updated with the invoice number');
 		$DbgMsg = _('The following SQL to update the sales order was used');
@@ -652,22 +652,22 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				shipvia
 				)
 			VALUES (
-				". $InvoiceNo . ",
+				'". $InvoiceNo . "',
 				10,
 				'" . $RecurrOrderRow['debtorno'] . "',
 				'" . $RecurrOrderRow['branchcode'] . "',
 				'" . $DelDate . "',
 				'" . date('Y-m-d H-i-s') . "',
-				" . $PeriodNo . ",
+				'" . $PeriodNo . "',
 				'" . $RecurrOrderRow['customerref'] . "',
 				'" . $RecurrOrderRow['sales_type'] . "',
-				" . $OrderNo . ",
-				" . $TotalFXNetInvoice . ",
-				" . $TotalFXTax . ",
-				" . $RecurrOrderRow['freightcost'] . ",
-				" . $CurrencyRate . ",
+				'" . $OrderNo . "',
+				'" . $TotalFXNetInvoice . "',
+				'" . $TotalFXTax . "',
+				'" . $RecurrOrderRow['freightcost'] . "',
+				'" . $CurrencyRate . "',
 				'" . $RecurrOrderRow['comments'] . "',
-				" . $RecurrOrderRow['shipvia'] . ")";
+				'" . $RecurrOrderRow['shipvia'] . "')";
 
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
@@ -676,12 +676,12 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$DebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
 
 
-		$SQL = 'INSERT INTO debtortranstaxes (debtortransid,
+		$SQL = "INSERT INTO debtortranstaxes (debtortransid,
 							taxauthid,
 							taxamount)
-				VALUES (' . $DebtorTransID . ',
-					' . $TaxAuthID . ',
-					' . $Tax['FXAmount']/$CurrencyRate . ')';
+				VALUES ('" . $DebtorTransID . "',
+					'" . $TaxAuthID . "',
+					'" . $Tax['FXAmount']/$CurrencyRate . "')";
 
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction taxes records could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction taxes record was used');
