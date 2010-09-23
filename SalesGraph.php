@@ -181,7 +181,7 @@ $PageSecurity = 6;
 	include('includes/footer.inc');
 } else {
 
-	$graph =& new PHPlot(950,450);
+	$graph = new PHPlot(950,450);
 	$SelectClause ='';
 	$WhereClause ='';
 	$GraphTitle ='';
