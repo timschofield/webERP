@@ -198,7 +198,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		$PropValResult = DB_query("SELECT value
 							FROM stockitemproperties
 					WHERE stockid='" . $StockID . "'
-					AND stkcatpropid =" . $PropertyRow['stkcatpropid'], $db);
+					AND stkcatpropid ='" . $PropertyRow['stkcatpropid']."'", $db);
 		$PropValRow = DB_fetch_row($PropValResult);
 		$PropertyValue = $PropValRow[0];
 		echo '<tr><th align="right">' . $PropertyRow['label'] . ':</th>';
