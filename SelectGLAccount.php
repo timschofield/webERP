@@ -10,12 +10,12 @@ $title = _('Search GL Accounts');
 include('includes/header.inc');
 
 $msg='';
+unset($result);
 
-If (isset($_POST['Select'])) {
+if (isset($_POST['Select'])) {
 
 	$result = DB_query("SELECT accountname FROM chartmaster WHERE accountcode=" . $_POST['Select'],$db);
 	$myrow = DB_fetch_row($result);
-
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Search for General Ledger Accounts');
 
 	echo '<div class="page_help_text">' . _('Account Code') . ' <b>' . $_POST['Select'] . ' - ' . $myrow[0]  . ' </b>' . _('has been selected') . '. <br>' . _('Select one of the links below to operate using this Account') . '.</div>';
@@ -28,16 +28,16 @@ If (isset($_POST['Select'])) {
 
 } elseif (isset($_POST['Search'])){
 
-	If (strlen($_POST['Keywords']>0) AND strlen($_POST['GLCode'])>0) {
+	if (strlen($_POST['Keywords']>0) AND strlen($_POST['GLCode'])>0) {
 		$msg=_('Account name keywords have been used in preference to the account code extract entered');
 	}
-	If ($_POST['Keywords']=='' AND $_POST['GLCode']=='') {
+	if ($_POST['Keywords']=='' AND $_POST['GLCode']=='') {
 		$msg=_('At least one Account Name keyword OR an extract of an Account Code must be entered for the search');
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
-			
+
 			$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname,
 					chartmaster.group_,
@@ -60,14 +60,14 @@ If (isset($_POST['Select'])) {
 					FROM chartmaster,
 						accountgroups
 					WHERE chartmaster.group_=accountgroups.groupname
-					AND chartmaster.accountcode >= " . $_POST['GLCode'] . "
+					AND chartmaster.accountcode >= '" . $_POST['GLCode'] . "'
 					ORDER BY chartmaster.accountcode";
 		} elseif(!is_numeric($_POST['GLCode'])){
 			prnMsg(_('The general ledger code specified must be numeric - all account numbers must be numeric'),'warn');
 			unset($SQL);
 		}
 
-		if (isset($SQL)){
+		if (isset($SQL) and $SQL!=''){
 			$result = DB_query($SQL, $db);
 		}
 	} //one of keywords or GLCode was more than a zero length string
@@ -76,43 +76,43 @@ If (isset($_POST['Select'])) {
 if (!isset($AccountID)) {
 
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Search for General Ledger Accounts');
-echo "<br><form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method=post>";
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
+		'" alt="">' . ' ' . _('Search for General Ledger Accounts') . '</p>';
+	echo "<br><form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method=post>";
 
-if(strlen($msg)>1){
-	prnMsg($msg,'info');
-}
+	if(strlen($msg)>1){
+		prnMsg($msg,'info');
+	}
 
-echo '<table cellpadding=3 colspan=4>
-	<tr>
-	<td><font size=1>' . _('Enter extract of text in the Account name') .":</font></td>
-	<td><input type='Text' name='Keywords' size=20 maxlength=25></td>
-	<td><font size=3><b>" .  _('OR') . "</b></font></td>
-	<td><font size=1>" . _('Enter Account No. to search from') . ":</font></td>
-	<td><input type='Text' name='GLCode' size=15 maxlength=18 class=number ></td>
-	</tr>
-	</table><br>";
+	echo '<table cellpadding=3 colspan=4 class=selection>
+		<tr>
+		<td><font size=1>' . _('Enter extract of text in the Account name') .":</font></td>
+		<td><input type='Text' name='Keywords' size=20 maxlength=25></td>
+		<td><font size=3><b>" .  _('OR') . "</b></font></td>
+		<td><font size=1>" . _('Enter Account No. to search from') . ":</font></td>
+		<td><input type='Text' name='GLCode' size=15 maxlength=18 class=number ></td>
+		</tr>
+		</table><br>";
 
-echo '<div class="centre"><input type=submit name="Search" VALUE=' . _('Search Now') . '">
-	<input type=submit action=RESET VALUE="' . _('Reset') .'"></div>';
+	echo '<div class="centre"><input type=submit name="Search" value=' . _('Search Now') . '">
+		<input type=submit action=reset value="' . _('Reset') .'"></div>';
 
+	if (isset($result) and DB_num_rows($result)>0) {
 
-If (isset($result)) {
+		echo '<br /><table cellpadding=2 colspan=7 class=selection>';
 
-	echo '<table cellpadding=2 colspan=7 BORDER=2>';
-
-	$TableHeader = '<tr><th>' . _('Code') . '</th>
+		$TableHeader = '<tr><th>' . _('Code') . '</th>
                       <th>' . _('Account Name') . '</th>
                       <th>' . _('Group') . '</th>
                       <th>' . _('Account Type') . '</th></tr>';
 
-	echo $TableHeader;
+		echo $TableHeader;
 
-	$j = 1;
+		$j = 1;
 
-	while ($myrow=DB_fetch_array($result)) {
+		while ($myrow=DB_fetch_array($result)) {
 
-		printf("<tr><td><font size=1><input type=submit name='Select' VALUE='%s'</font></td>
+			printf("<tr><td><font size=1><input type=submit name='Select' VALUE='%s'</font></td>
                 <td><font size=1>%s</font></td>
                 <td><font size=1>%s</font></td>
                 <td><font size=1>%s</font></td>
@@ -122,26 +122,24 @@ If (isset($result)) {
                 $myrow['group_'],
                 $myrow['pl']);
 
-		$j++;
-		If ($j == 12){
-			$j=1;
+			$j++;
+			if ($j == 12){
+				$j=1;
 				echo $TableHeader;
 
-		}
+			}
 //end of page full new headings if
-	}
+		}
 //end of while loop
 
-	echo '</table>';
+		echo '</table>';
 
-}
+	}
 //end if results to show
 
-?>
+	echo '</form>';
 
-</form>
-
-<?php } //end AccountID already selected
+} //end AccountID already selected
 
 include('includes/footer.inc');
 ?>
