@@ -20,7 +20,7 @@ if (isset($_GET['Area'])) {
 	$_POST['CustAdd']='';
 	$_POST['CustType']='';
 }
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Customers') . '';
+echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Customers') . '</p>';
 if (!isset($_SESSION['CustomerType'])) { //initialise if not already done
 	$_SESSION['CustomerType'] = "";
 }
@@ -275,7 +275,7 @@ if ($_POST['Select'] != "" or ($_SESSION['CustomerID'] != "" and !isset($_POST['
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' - ' . $phone . _(' has been selected') . '</p>';
 	echo '<div class="page_help_text">' . _('Select a menu option to operate using this customer') . '.</div><br>';
 	$_POST['Select'] = NULL;
-	echo '<table cellpadding=4 width=90%><tr><th width=33%>' . _('Customer Inquiries') . '</th>
+	echo '<table cellpadding=4 width=90% class=selection><tr><th width=33%>' . _('Customer Inquiries') . '</th>
 			<th width=33%>' . _('Customer Transactions') . '</th>
 			<th width=33%>' . _('Customer Maintenance') . '</th></tr>';
 	echo '<tr><td valign=top class="select">';
@@ -450,7 +450,7 @@ if (isset($result)) {
 				<input type=submit name="Next" value="' . _('Next') . '">';
 			echo '</div>';
 		}
-		echo '<br><table cellpadding=2 colspan=7>';
+		echo '<br><table cellpadding=2 colspan=7 class=selection>';
 		$TableHeader = '<tr>
 				<th>' . _('Code') . '</th>
 				<th>' . _('Customer Name') . '</th>
