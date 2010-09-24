@@ -77,7 +77,7 @@ if (isset($_GET['ModifyOrderNumber'])
 
 /*read in all the guff from the selected order into the Items cart  */
 
-	$OrderHeaderSQL = 'SELECT salesorders.debtorno,
+	$OrderHeaderSQL = "SELECT salesorders.debtorno,
 								debtorsmaster.name,
 								salesorders.branchcode,
 								salesorders.customerref,
@@ -120,7 +120,7 @@ if (isset($_GET['ModifyOrderNumber'])
 							AND salesorders.branchcode = custbranch.branchcode
 							AND debtorsmaster.paymentterms=paymentterms.termsindicator
 							AND locations.loccode=salesorders.fromstkloc
-							AND salesorders.orderno = ' . $_GET['ModifyOrderNumber'];
+							AND salesorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
 
 
 	$ErrMsg =  _('The order cannot be retrieved because');
@@ -210,7 +210,7 @@ if (isset($_GET['ModifyOrderNumber'])
 									ON salesorderdetails.stkcode = stockmaster.stockid
 									INNER JOIN locstock ON locstock.stockid = stockmaster.stockid
 									WHERE  locstock.loccode = '" . $myrow['fromstkloc'] . "'
-									AND salesorderdetails.orderno =" . $_GET['ModifyOrderNumber'] . "
+									AND salesorderdetails.orderno ='" . $_GET['ModifyOrderNumber'] . "'
 									ORDER BY salesorderdetails.orderlineno";
 
 		$ErrMsg = _('The line items of the order cannot be retrieved because');
@@ -680,10 +680,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		if($_SESSION['ExistingOrder']!=0) { //need to check that not already dispatched
 
-			$sql = 'SELECT qtyinvoiced
+			$sql = "SELECT qtyinvoiced
 					FROM salesorderdetails
-					WHERE orderno=' . $_SESSION['ExistingOrder'] . '
-					AND qtyinvoiced>0';
+					WHERE orderno='" . $_SESSION['ExistingOrder'] . "'
+					AND qtyinvoiced>0";
 
 			$InvQties = DB_query($sql,$db);
 
@@ -698,7 +698,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if ($OK_to_delete==1){
 			if($_SESSION['ExistingOrder']!=0){
 
-				$SQL = 'DELETE FROM salesorderdetails WHERE salesorderdetails.orderno =' . $_SESSION['ExistingOrder'];
+				$SQL = "DELETE FROM salesorderdetails WHERE salesorderdetails.orderno ='" . $_SESSION['ExistingOrder'] . "'";
 				$ErrMsg =_('The order detail lines could not be deleted because');
 				$DelResult=DB_query($SQL,$db,$ErrMsg);
 
