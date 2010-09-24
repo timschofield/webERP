@@ -7,13 +7,16 @@ $title = _('Search Recurring Sales Orders');
 include('includes/header.inc');
 
 echo '<form action=' . $_SERVER['PHP_SELF'] .'?' .SID . ' method=post>';
+echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' .
+	_('Inventory Items') . '" alt="">' . ' ' . $title . '</p>';
 
-echo _('Select recurring order templates for delivery from:') . ' ' . '<select name="StockLocation">';
+echo '<table class=selection><tr><td>';
+echo _('Select recurring order templates for delivery from:') . ' </td><td>' . '<select name="StockLocation">';
 
 $sql = 'SELECT loccode, locationname FROM locations';
-		
+
 $resultStkLocs = DB_query($sql,$db);
-	
+
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation'])){
 		if ($myrow['loccode'] == $_POST['StockLocation']){
@@ -28,14 +31,12 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 	}
 }
 
-echo '</select>&nbsp&nbsp';
-	
-echo "<input type=submit name='SearchRecurringOrders' VALUE='" . _('Search Recurring Orders') . "'>";
+echo '</select></td></tr></table>';
 
-echo '<hr>';
+echo "<br /><div class=centre><input type=submit name='SearchRecurringOrders' VALUE='" . _('Search Recurring Orders') . "'></div>";
 
 if (isset($_POST['SearchRecurringOrders'])){
-	
+
 	$SQL = "SELECT recurringsalesorders.recurrorderno,
 				debtorsmaster.name,
 				custbranch.brname,
@@ -64,14 +65,14 @@ if (isset($_POST['SearchRecurringOrders'])){
 				recurringsalesorders.lastrecurrence,
 				recurringsalesorders.stopdate,
 				recurringsalesorders.frequency";
-	
+
 	$ErrMsg = _('No recurring orders were returned by the SQL because');
 	$SalesOrdersResult = DB_query($SQL,$db,$ErrMsg);
-	
+
 	/*show a table of the orders returned by the SQL */
-	
-	echo '<table cellpadding=2 colspan=7 WIDTH=100%>';
-	
+
+	echo '<br /><table cellpadding=2 colspan=7 width=90% class=selection>';
+
 	$tableheader = "<tr>
 			<th>" . _('Modify') . "</th>
 			<th>" . _('Customer') . "</th>
@@ -82,14 +83,14 @@ if (isset($_POST['SearchRecurringOrders'])){
 			<th>" . _('Times p.a.') . "</th>
 			<th>" . _('Order Total') . "</th>
 			</tr>";
-		
+
 	echo $tableheader;
-	
+
 	$j = 1;
 	$k=0; //row colour counter
 	while ($myrow=DB_fetch_array($SalesOrdersResult)) {
-	
-	
+
+
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
 			$k=0;
@@ -97,12 +98,12 @@ if (isset($_POST['SearchRecurringOrders'])){
 			echo '<tr class="OddTableRows">';;
 			$k++;
 		}
-	
+
 		$ModifyPage = $rootpath . "/RecurringSalesOrders.php?" . SID . '&ModifyRecurringSalesOrder=' . $myrow['recurrorderno'];
 		$FormatedLastRecurrence = ConvertSQLDate($myrow['lastrecurrence']);
 		$FormatedStopDate = ConvertSQLDate($myrow['stopdate']);
 		$FormatedOrderValue = number_format($myrow['ordervalue'],2);
-	
+
 		printf("<td><a href='%s'>%s</a></td>
 			<td>%s</td>
 			<td>%s</td>
@@ -121,7 +122,7 @@ if (isset($_POST['SearchRecurringOrders'])){
 			$FormatedStopDate,
 			$myrow['frequency'],
 			$FormatedOrderValue);
-				
+
 		$j++;
 		If ($j == 12){
 			$j=1;
@@ -130,7 +131,7 @@ if (isset($_POST['SearchRecurringOrders'])){
 	//end of page full new headings if
 	}
 	//end of while loop
-	
+
 	echo '</table></form>';
 }
 
