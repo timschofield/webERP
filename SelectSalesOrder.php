@@ -22,10 +22,10 @@ echo '<p><div class="centre">';
 if (isset($_REQUEST['OrderNumber']) AND $_REQUEST['OrderNumber']!='') {
 	$_REQUEST['OrderNumber'] = trim($_REQUEST['OrderNumber']);
 	if (!is_numeric($_REQUEST['OrderNumber'])){
-		  echo '<br><b>' . _('The Order Number entered MUST be numeric') . '</b><br>';
-		  unset ($_REQUEST['OrderNumber']);
-		  include('includes/footer.inc');
-		  exit;
+		echo '<br><b>' . _('The Order Number entered MUST be numeric') . '</b><br>';
+		unset ($_REQUEST['OrderNumber']);
+		include('includes/footer.inc');
+		exit;
 	} else {
 		echo _('Order Number') . ' - ' . $_REQUEST['OrderNumber'];
 	}
@@ -113,12 +113,14 @@ if (!isset($StockID)) {
 
 	if (!isset($_REQUEST['OrderNumber']) or $_REQUEST['OrderNumber']==''){
 
-		echo _('Order number') . ": <input type=text name='OrderNumber' maxlength=8 size=9>&nbsp " . _('From Stock Location') . ":<select name='StockLocation'> ";
-		
+		echo '<table class=selection>';
+		echo '<tr><td>' . _('Order number') . ": </td><td><input type=text name='OrderNumber' maxlength=8 size=9></td><td>" .
+				_('From Stock Location') . ":</td><td><select name='StockLocation'> ";
+
 		$sql = 'SELECT loccode, locationname FROM locations';
-		
+
 		$resultStkLocs = DB_query($sql,$db);
-		
+
 		while ($myrow=DB_fetch_array($resultStkLocs)){
 			if (isset($_POST['StockLocation'])){
 				if ($myrow['loccode'] == $_POST['StockLocation']){
@@ -133,13 +135,13 @@ if (!isset($StockID)) {
 			}
 		}
 
-		echo '</select> &nbsp&nbsp';
+		echo '</select></td><td>';
 		echo '<select name="Quotations">';
-		
+
 		if ($_GET['Quotations']=='Quotes_Only'){
 			$_POST['Quotations']='Quotes_Only';
 		}
-		
+
 		if ($_POST['Quotations']=='Quotes_Only'){
 			echo '<option selected VALUE="Quotes_Only">' . _('Quotations Only');
 			echo '<option VALUE="Orders_Only">' . _('Orders Only');
@@ -147,10 +149,11 @@ if (!isset($StockID)) {
 			echo '<option selected VALUE="Orders_Only">' . _('Orders Only');
 			echo '<option VALUE="Quotes_Only">' . _('Quotations Only');
 		}
-		
-		echo '</select> &nbsp&nbsp';
-		echo "<input type=submit name='SearchOrders' VALUE='" . _('Search') . "'>";
-    echo '&nbsp;&nbsp;<a href="' . $rootpath . '/SelectOrderItems.php?' . SID . '&NewOrder=Yes">' . _('Add Sales Order') . '</a>';
+
+		echo '</select> </td><td>';
+		echo "<input type=submit name='SearchOrders' VALUE='" . _('Search') . "'></td>";
+    echo '&nbsp;&nbsp;<td><a href="' . $rootpath . '/SelectOrderItems.php?' . SID . '&NewOrder=Yes">' .
+		_('Add Sales Order') . '</a></td></tr></table>';
 	}
 
 	$SQL='SELECT categoryid,
@@ -160,10 +163,11 @@ if (!isset($StockID)) {
 
 	$result1 = DB_query($SQL,$db);
 
-	echo '<hr>
-		<font size=1>' . _('To search for sales orders for a specific part use the part selection facilities below') . "</font>     <input type=submit name='SearchParts' VALUE='" . _('Search Parts Now') . "'><input type=submit name='ResetPart' VALUE='" . _('Show All') . "'>
-      </div><table>
-      	<tr>
+	echo "</font>";
+	echo "<br /><table class=selection>";
+	echo '<tr><th colspan=6><font size=3 color=navy>' . _('To search for sales orders for a specific part use the part selection facilities below');
+	echo '</th></tr>';
+	echo "<tr>
       		<td><font size=1>" . _('Select a stock category') . ":</font>
       			<select name='StockCat'>";
 
@@ -179,12 +183,13 @@ if (!isset($StockID)) {
       		<td><font size 3><b>" . _('OR') . ' </b></font><font size=1>' . _('Enter extract of the Stock Code') . "</b>:</font></td>
       		<td><input type='Text' name='StockCode' size=15 maxlength=18></td>
       	</tr>
-      </table>
-      <hr>";
+      </table>";
+	echo "<br /><input type=submit name='SearchParts' VALUE='" . _('Search Parts Now') .
+			"'><input type=submit name='ResetPart' VALUE='" . _('Show All') . "'></div><br />";
 
-if (isset($StockItemsResult)) {
+if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 
-	echo '<table cellpadding=2 colspan=7 BORDER=2>';
+	echo '<table cellpadding=2 colspan=7 class=selection>';
 	$TableHeader = "<tr>
 				<th>" . _('Code') . "</th>
 				<th>" . _('Description') . "</th>
@@ -260,7 +265,7 @@ if (isset($StockItemsResult)) {
 				AND debtorsmaster.debtorno = custbranch.debtorno
 				AND salesorderdetails.completed=0
 				AND salesorders.orderno=". $_REQUEST['OrderNumber'] ."
-				AND salesorders.quotation =" .$Quotations . " 
+				AND salesorders.quotation =" .$Quotations . "
 				GROUP BY salesorders.orderno,
 					debtorsmaster.name,
 					custbranch.brname,
@@ -299,7 +304,7 @@ if (isset($StockItemsResult)) {
 					AND salesorders.debtorno='" . $_REQUEST['SelectedCustomer'] ."'
 					AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'
 					ORDER BY salesorders.orderno";
-						
+
 
 			} else {
 				$SQL = "SELECT salesorders.orderno,
@@ -403,11 +408,11 @@ if (isset($StockItemsResult)) {
 	$SalesOrdersResult = DB_query($SQL,$db,$ErrMsg);
 
 	/*show a table of the orders returned by the SQL */
+	if (DB_num_rows($SalesOrdersResult)>0) {
+		echo '<table cellpadding=2 colspan=7 width=95% class=selection>';
 
-	echo '<table cellpadding=2 colspan=7 WIDTH=100%>';
-
-	if (isset($_POST['Quotations']) and $_POST['Quotations']=='Orders_Only'){
-		$tableheader = "<tr>
+		if (isset($_POST['Quotations']) and $_POST['Quotations']=='Orders_Only'){
+			$tableheader = "<tr>
 				<th>" . _('Modify') . "</th>
 				<th>" . _('Invoice') . "</th>
 				<th>" . _('Dispatch Note') . "</th>
@@ -419,8 +424,8 @@ if (isset($StockItemsResult)) {
 				<th>" . _('Req Del Date') . "</th>
 				<th>" . _('Delivery To') . "</th>
 				<th>" . _('Order Total') . "</th></tr>";
-	} else {
-		$tableheader = "<tr>
+		} else {
+			$tableheader = "<tr>
 				<th>" . _('Modify') . "</th>
 				<th>" . _('Print Quote') . "</th>
 				<th>" . _('Customer') . "</th>
@@ -430,26 +435,26 @@ if (isset($StockItemsResult)) {
 				<th>" . _('Req Del Date') . "</th>
 				<th>" . _('Delivery To') . "</th>
 				<th>" . _('Quote Total') . "</th></tr>";
-	}
-	
-	echo $tableheader;
-
-	$j = 1;
-	$k=0; //row colour counter
-	while ($myrow=DB_fetch_array($SalesOrdersResult)) {
-
-
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
 		}
+
+		echo $tableheader;
+		}
+		$j = 1;
+		$k=0; //row colour counter
+		while ($myrow=DB_fetch_array($SalesOrdersResult)) {
+
+
+			if ($k==1){
+				echo '<tr class="EvenTableRows">';
+				$k=0;
+			} else {
+				echo '<tr class="OddTableRows">';
+				$k++;
+			}
 
 		$ModifyPage = $rootpath . "/SelectOrderItems.php?" . SID . '&ModifyOrderNumber=' . $myrow['orderno'];
 		$Confirm_Invoice = $rootpath . '/ConfirmDispatch_Invoice.php?' . SID . '&OrderNumber=' .$myrow['orderno'];
-		
+
 		if ($_SESSION['PackNoteFormat']==1){ /*Laser printed A4 default */
 			$PrintDispatchNote = $rootpath . '/PrintCustOrder_generic.php?' . SID . '&TransNo=' . $myrow['orderno'];
 		} else { /*pre-printed stationery default */
@@ -466,7 +471,7 @@ if (isset($StockItemsResult)) {
 		} else {
 		  $PrintText = _('Reprint');
 		}
-		
+
 		if ($_POST['Quotations']=='Orders_Only'){
 			printf("<td><a href='%s'>%s</a></td>
 				<td><a href='%s'>" . _('Invoice') . "</a></td>
@@ -514,7 +519,7 @@ if (isset($StockItemsResult)) {
 				$myrow['deliverto'],
 				$FormatedOrderValue);
 		}
-		
+
 		$j++;
 		if ($j == 12){
 			$j=1;
