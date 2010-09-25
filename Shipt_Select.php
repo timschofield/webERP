@@ -7,6 +7,8 @@ $PageSecurity = 11;
 include('includes/session.inc');
 $title = _('Search Shipments');
 include('includes/header.inc');
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
+	'" alt="">' . ' ' . $title . '</p>';
 
 if (isset($_GET['SelectedStockItem'])){
 	$SelectedStockItem=$_GET['SelectedStockItem'];
@@ -42,7 +44,7 @@ If (isset($ShiptRef) && $ShiptRef!="") {
 		echo _('Shipment Number'). ' - '. $ShiptRef;
 	}
 } else {
-	If ($SelectedSupplier) {
+	if (isset($SelectedSupplier)) {
 		echo '<br>' ._('For supplier'). ': '. $SelectedSupplier . ' ' . _('and'). ' ';
 		echo '<input type=hidden name="SelectedSupplier" value="'. $SelectedSupplier. '">';
 	}
@@ -82,7 +84,7 @@ if (isset($_POST['SearchParts'])) {
 		$SQL .= " WHERE purchorderdetails.shiptref IS NOT NULL
 			AND purchorderdetails.shiptref<>0
 			AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
-			AND categoryid='" . $_POST['StockCat'];
+			AND categoryid='" . $_POST['StockCat'] ."'";
 
 	 } elseif (!$_POST['StockCode'] AND !$_POST['Keywords']) {
 		$SQL .= " WHERE purchorderdetails.shiptref IS NOT NULL
@@ -102,7 +104,7 @@ if (isset($_POST['SearchParts'])) {
 
 
 if (!isset($ShiptRef) or $ShiptRef==""){
-	echo '<div class="centre">';
+	echo '<table class=selection><tr><td>';
 	echo _('Shipment Number'). ': <input type=text name="ShiptRef" MAXLENGTH =10 size=10> '.
 		_('Into Stock Location').' :<select name="StockLocation"> ';
 	$sql = "SELECT loccode, locationname FROM locations";
@@ -132,25 +134,22 @@ if (!isset($ShiptRef) or $ShiptRef==""){
 		echo '<option VALUE=1>'. _('Closed Shipments Only');
 		echo '<option selected VALUE=0>'. _('Open Shipments Only');
 	}
-	echo '</select>';
+	echo '</select></td></tr></table>';
 
-	echo '<br><input type=submit name="SearchShipments" VALUE="'. _('Search Shipments'). '"></div>';
+	echo '<br /><div class=centre><input type=submit name="SearchShipments" VALUE="'. _('Search Shipments'). '"></div></div><br />';
 }
 
-$SQL="SELECT categoryid, 
-		categorydescription 
-	FROM stockcategory 
-	WHERE stocktype<>'D' 
+$SQL="SELECT categoryid,
+		categorydescription
+	FROM stockcategory
+	WHERE stocktype<>'D'
 	ORDER BY categorydescription";
 $result1 = DB_query($SQL,$db);
 
-?>
 
-<hr><div class='centre'>
-<font size=1><?php echo _('To search for shipments for a specific part use the part selection facilities below');?></font>
-<input type=submit name="SearchParts" VALUE="<?php echo _('Search Parts Now');?>">
-<input type=submit name="ResetPart" VALUE="<?php echo _('Show All');?>"></div>
-<table>
+echo '<table class=selection>';
+echo '<tr><th colspan=5><font size=3 color=navy>'._('To search for shipments for a specific part use the part selection facilities below') . '</font></th></tr>';
+?>
 <tr>
 <td><font size=1><?php echo _('Select a stock category');?>:</font>
 <select name="StockCat">
@@ -170,15 +169,15 @@ while ($myrow1 = DB_fetch_array($result1)) {
 <td><font SIZE 3><b><?php echo _('OR');?> </b></font><font size=1><?php echo _('Enter extract of the');?> <b><?php echo _('Stock Code');?></b>:</font></td>
 <td><input type="Text" name="StockCode" size=15 maxlength=18></td>
 </tr>
-</table>
-
-<hr>
+</table><br />
 
 <?php
+echo '<div class=centre><input type=submit name="SearchParts" value="'._('Search Parts Now').'">';
+echo '<input type=submit name="ResetPart" VALUE="'. _('Show All') .'"></div><br />';
 
-If (isset($StockItemsResult)) {
+if (isset($StockItemsResult)) {
 
-	echo "<table cellpadding=2 colspan=7 BORDER=2>";
+	echo "<table cellpadding=2 colspan=7 class=selection>";
 	$TableHeader = '<tr>
 			<th>'. _('Code').'</th>
 			<th>'. _('Description').'</th>
@@ -228,15 +227,15 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 	//figure out the SQL required from the inputs available
 
 	if (isset($ShiptRef) && $ShiptRef !="") {
-		$SQL = "SELECT shipments.shiptref, 
-				vessel, 
-				voyageref, 
-				suppliers.suppname, 
-				shipments.eta, 
+		$SQL = "SELECT shipments.shiptref,
+				vessel,
+				voyageref,
+				suppliers.suppname,
+				shipments.eta,
 				shipments.closed
 			FROM shipments INNER JOIN suppliers
 				ON shipments.supplierid = suppliers.supplierid
-			WHERE shipments.shiptref=". $ShiptRef;
+			WHERE shipments.shiptref='". $ShiptRef . "'";
 	} else {
 		$SQL = "SELECT DISTINCT shipments.shiptref, vessel, voyageref, suppliers.suppname, shipments.eta, shipments.closed
 			FROM shipments INNER JOIN suppliers
@@ -253,20 +252,20 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 					$SQL .= " WHERE purchorderdetails.itemcode='". $SelectedStockItem ."'
 						AND shipments.supplierid='" . $SelectedSupplier ."'
 						AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
-						AND shipments.closed=" . $_POST['OpenOrClosed'];
+						AND shipments.closed='" . $_POST['OpenOrClosed'] . "'";
 			} else {
 				$SQL .= "WHERE shipments.supplierid='" . $SelectedSupplier ."'
 					AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
-					AND shipments.closed=" . $_POST['OpenOrClosed'];
+					AND shipments.closed='" . $_POST['OpenOrClosed'] ."'";
 			}
 		} else { //no supplier selected
 			if (isset($SelectedStockItem)) {
 				$SQL .= "WHERE purchorderdetails.itemcode='". $SelectedStockItem ."'
 					AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
-					AND shipments.closed=" . $_POST['OpenOrClosed'];
+					AND shipments.closed='" . $_POST['OpenOrClosed'] . "'";
 			} else {
 				$SQL .= "WHERE purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
-					AND shipments.closed=" . $_POST['OpenOrClosed'];
+					AND shipments.closed='" . $_POST['OpenOrClosed'] . "'";
 			}
 
 		} //end selected supplier
@@ -279,7 +278,7 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 	if (DB_num_rows($ShipmentsResult)>0){
 		/*show a table of the shipments returned by the SQL */
 
-		echo '<table cellpadding=2 colspan=7 WIDTH=100%>';
+		echo '<table cellpadding=2 colspan=7 width=95% class=selection>';
 		$TableHeader = '<tr>
 				<th>'. _('Shipment'). '</th>
 				<th>'. _('Supplier'). '</th>
@@ -321,13 +320,13 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 					<td><a href="%s">'._('Costing').'</a></td>
 					<td><a href="%s">'._('Modify').'</a></td>
 					<td><a href="%s"><b>'._('Close').'</b></a></td>
-					</tr>', 
-					$myrow['shiptref'], 
-					$myrow['suppname'], 
-					$myrow['vessel'], 
+					</tr>',
+					$myrow['shiptref'],
+					$myrow['suppname'],
+					$myrow['vessel'],
 					$myrow['voyageref'],
-					$FormatedETA, 
-					$URL_View_Shipment, 
+					$FormatedETA,
+					$URL_View_Shipment,
 					$URL_Modify_Shipment,
 					$URL_Close_Shipment);
 
@@ -338,12 +337,12 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 					<td>%s</td>
 					<td>%s</td>
 					<td><a href="%s">'._('Costing').'</a></td>
-					</tr>', 
-					$myrow['shiptref'], 
-					$myrow['suppname'], 
-					$myrow['vessel'], 
+					</tr>',
+					$myrow['shiptref'],
+					$myrow['suppname'],
+					$myrow['vessel'],
 					$myrow['voyage'],
-					$FormatedETA, 
+					$FormatedETA,
 					$URL_View_Shipment);
 			}
 			$j++;
