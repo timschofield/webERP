@@ -160,7 +160,7 @@ if (isset($_SESSION['SupplierID'])) {
 	echo "<br><a href='$rootpath/PO_SelectOSPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Add / Receive / View Outstanding Purchase Orders') . '</a>';
 	echo "<br><a href='$rootpath/PO_SelectPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('View All Purchase Orders') . '</a><br>';
 	wikiLink('Supplier', $_SESSION['SupplierID']);
-	echo '<br>';
+	echo "<br><a href='$rootpath/ShiptsList.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "&SupplierName=".urlencode($SupplierName)."'>" . _('List all open shipments for') .' '.$SupplierName. '</a>';
 	echo "<br><a href='$rootpath/Shipt_Select.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Search / Modify / Close Shipments') . '</a>';
 	echo "<br><a href='$rootpath/SuppPriceList.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Supplier Price List') . '</a>';
 	echo '</td><td valign=top class="select">'; /* Supplier Transactions */

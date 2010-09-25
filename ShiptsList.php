@@ -7,9 +7,11 @@ include ('includes/session.inc');
 $title = _('Shipments Open Inquiry');
 include('includes/header.inc');
 
+echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' .
+				_('Supplier') . '" alt="">' . ' ' . _('Open Shipments for').' ' . $_GET['SupplierName']. '.</p>';
 
-if (!isset($_GET['SupplierID']) OR !isset($_GET['SupplierName'])){
-	echo '<p>';
+if (!isset($_GET['SupplierID']) or !isset($_GET['SupplierName'])){
+	echo '<br />';
 	prnMsg( _('This page must be given the supplier code to look for shipments for'), 'error');
 	include('includes/footer.inc');
 	exit;
@@ -30,10 +32,9 @@ if (DB_num_rows($ShiptsResult)==0){
 }
 /*show a table of the shipments returned by the SQL */
 
-echo '<div class="centre"><font size=4 color=BLUE>'. _('Open Shipments for').' ' . $_GET['SupplierName'] . '</font><br>
-	</div><table cellpadding=2 colspan=2>';
-$TableHeader = '<tr>
-		<th>'. _('Reference'). '</th>
+echo '<table cellpadding=2 colspan=2 class=selection>';
+echo '<tr>
+		<th>'. _('Reference'). '</a></th>
 		<th>'. _('Vessel'). '</th>
 		<th>'. _('ETA'). '</th></tr>';
 
@@ -49,19 +50,11 @@ while ($myrow=DB_fetch_array($ShiptsResult)) {
               $k=1;
        }
 
-       printf('<td >%s</td>
-       		<td>%s</td>
-		<td>%s</td>
-		</tr>',
-		$myrow['shiptref'],
-		$myrow['vessel'],
-		ConvertSQLDate($myrow['eta']));
+       echo '<td><a href="'.$rootpath.'/Shipments.php?' . SID . 'SelectedShipment='.$myrow['shiptref'].'">'.$myrow['shiptref'].'</a></td>
+       		<td>'.$myrow['vessel'].'</td>
+		<td>'.ConvertSQLDate($myrow['eta']).'</td>
+		</tr>';
 
-       $j++;
-       If ($j == 12){
-		$j=1;
-		$TableHeader;
-       }
 }
 //end of while loop
 
