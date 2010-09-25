@@ -26,10 +26,6 @@ if (isset($_REQUEST['WO']) AND $_REQUEST['WO']!='') {
 	} else {
 		echo _('Work Order Number') . ' - ' . $_REQUEST['WO'];
 	}
-} else {
-	if (isset($_REQUEST['SelectedStockItem'])) {
-		 echo _('for the item') . ': ' . $_REQUEST['SelectedStockItem'] . ' ' . _('and') . " <input type=hidden name='SelectedStockItem' value='" . $_REQUEST['SelectedStockItem'] . "'>";
-	}
 }
 
 if (isset($_POST['SearchParts'])){
@@ -108,6 +104,9 @@ if (!isset($StockID)) {
 
 	if (!isset($_REQUEST['WO']) or ($_REQUEST['WO']=='')){
 		echo '<table class=selection><tr><td>';
+		if (isset($_REQUEST['SelectedStockItem'])) {
+			echo _('For the item') . ': ' . $_REQUEST['SelectedStockItem'] . ' ' . _('and') . " <input type=hidden name='SelectedStockItem' value='" . $_REQUEST['SelectedStockItem'] . "'>";
+		}
 		echo _('Work Order number') . ": <input type=text name='WO' MAXLENGTH =8 size=9>&nbsp " . _('Processing at') . ":<select name='StockLocation'> ";
 
 		$sql = 'SELECT loccode, locationname FROM locations';
@@ -136,16 +135,16 @@ if (!isset($StockID)) {
 		}
 
 		if ($_POST['ClosedOrOpen']=='Closed_Only'){
-			echo '<option selected VALUE="Closed_Only">' . _('Closed Work Orders Only');
-			echo '<option VALUE="Open_Only">' . _('Open Work Orders Only');
+			echo '<option selected value="Closed_Only">' . _('Closed Work Orders Only');
+			echo '<option value="Open_Only">' . _('Open Work Orders Only');
 		} else {
-			echo '<option VALUE="Closed_Only">' . _('Closed Work Orders Only');
-			echo '<option selected VALUE="Open_Only">' . _('Open Work Orders Only');
+			echo '<option value="Closed_Only">' . _('Closed Work Orders Only');
+			echo '<option selected value="Open_Only">' . _('Open Work Orders Only');
 		}
 
 		echo '</select> &nbsp&nbsp';
-		echo "<input type=submit name='SearchOrders' VALUE='" . _('Search') . "'>";
-		echo '&nbsp;&nbsp;<a href="' . $rootpath . '/WorkOrderEntry.php?' . SID . '">' . _('New Work Order') . '</a></td></tr></table>';
+		echo "<input type=submit name='SearchOrders' value='" . _('Search') . "'>";
+		echo '&nbsp;&nbsp;<a href="' . $rootpath . '/WorkOrderEntry.php?' . SID . '">' . _('New Work Order') . '</a></td></tr></table><br />';
 	}
 
 	$SQL='SELECT categoryid,
@@ -155,17 +154,14 @@ if (!isset($StockID)) {
 
 	$result1 = DB_query($SQL,$db);
 
-	echo '<hr>
-		<table class=selection><tr><td><font size=1>' . _('To search for work orders for a specific item use the item selection facilities below') . "</font>
-		<input type=submit name='SearchParts' VALUE='" . _('Search Items Now') . "'>
-		<input type=submit name='ResetPart' VALUE='" . _('Show All') . "'> </td></tr></table><br>
-		<table class=selection>
+	echo "<table class=selection>
+		<tr><th colspan=6><font size=3 color=navy>" . _('To search for work orders for a specific item use the item selection facilities below') . "</font></th></tr>
 	  	<tr>
 	  		<td><font size=1>" . _('Select a stock category') . ":</font>
 	  			<select name='StockCat'>";
 
 	while ($myrow1 = DB_fetch_array($result1)) {
-		echo "<option VALUE='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
+		echo "<option value='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
 	}
 
 	  echo '</select>
@@ -173,15 +169,16 @@ if (!isset($StockID)) {
 	  		<td><input type='Text' name='Keywords' size=20 maxlength=25></td>
 	</tr>
 	  	<tr><td></td>
-	  		<td><font SIZE 3><b>" . _('OR') . ' </b></font><font size=1>' . _('Enter extract of the Stock Code') . "</b>:</font></td>
+	  		<td><font size=3><b>" . _('OR') . ' </b></font><font size=1>' . _('Enter extract of the Stock Code') . "</b>:</font></td>
 	  		<td><input type='Text' name='StockCode' size=15 maxlength=18></td>
 	  	</tr>
-	  </table>
-	  <hr>";
+	  </table><br />";
+	echo "<div class=centre><input type=submit name='SearchParts' value='" . _('Search Items Now') . "'>
+		<input type=submit name='ResetPart' value='" . _('Show All') . "'></div>";
 
 if (isset($StockItemsResult)) {
 
-	echo '<table cellpadding=2 colspan=7 BORDER=2>';
+	echo '<br /><table cellpadding=2 colspan=7 class=selection>';
 	$TableHeader = "<tr>
 				<th>" . _('Code') . "</th>
 				<th>" . _('Description') . "</th>
@@ -203,7 +200,7 @@ if (isset($StockItemsResult)) {
 			$k++;
 		}
 
-		printf("<td><input type=submit name='SelectedStockItem' VALUE='%s'</td>
+		printf("<td><input type=submit name='SelectedStockItem' value='%s'</td>
 			<td>%s</td>
 			<td class=number>%s</td>
 			<td>%s</td>
@@ -248,8 +245,8 @@ if (isset($StockItemsResult)) {
 					FROM workorders
 					INNER JOIN woitems ON workorders.wo=woitems.wo
 					INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
-					WHERE workorders.closed=" . $ClosedOrOpen . "
-					AND workorders.wo=". $_REQUEST['WO'] ."
+					WHERE workorders.closed='" . $ClosedOrOpen . "'
+					AND workorders.wo='". $_REQUEST['WO'] ."'
 					ORDER BY workorders.wo,
 							 woitems.stockid";
 	} else {
@@ -265,7 +262,7 @@ if (isset($StockItemsResult)) {
 					FROM workorders
 					INNER JOIN woitems ON workorders.wo=woitems.wo
 					INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
-					WHERE workorders.closed=" . $ClosedOrOpen . "
+					WHERE workorders.closed='" . $ClosedOrOpen . "'
 					AND woitems.stockid='". $_REQUEST['SelectedStockItem'] ."'
 					AND workorders.loccode='" . $_POST['StockLocation'] . "'
 					ORDER BY workorders.wo,
@@ -280,7 +277,7 @@ if (isset($StockItemsResult)) {
 					FROM workorders
 					INNER JOIN woitems ON workorders.wo=woitems.wo
 					INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
-					WHERE workorders.closed=" . $ClosedOrOpen . "
+					WHERE workorders.closed='" . $ClosedOrOpen . "'
 					AND workorders.loccode='" . $_POST['StockLocation'] . "'
 					ORDER BY workorders.wo,
 							 woitems.stockid";
@@ -291,11 +288,11 @@ if (isset($StockItemsResult)) {
 	$WorkOrdersResult = DB_query($SQL,$db,$ErrMsg);
 
 	/*show a table of the orders returned by the SQL */
+	if (DB_num_rows($WorkOrdersResult)>0) {
+		echo '<br /><table cellpadding=2 colspan=7 width=95% class=selection>';
 
-	echo '<table cellpadding=2 colspan=7 WIDTH=100%>';
 
-
-	$tableheader = "<tr>
+		$tableheader = "<tr>
 				<th>" . _('Modify') . "</th>
 				<th>" . _('Status') . "</th>
 				<th>" . _('Receive') . "</th>
@@ -308,8 +305,8 @@ if (isset($StockItemsResult)) {
 				<th>" . _('Required Date') . "</th>
 				</tr>";
 
-	echo $tableheader;
-
+		echo $tableheader;
+	}
 	$j = 1;
 	$k=0; //row colour counter
 	while ($myrow=DB_fetch_array($WorkOrdersResult)) {
