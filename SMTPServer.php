@@ -12,13 +12,13 @@ echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/
 		_('SMTP Server') . '" alt="">' . ' ' . _('SMTP Server Settings') . '</p>';
 
 if (isset($_POST['submit'])) {
-	$sql='UPDATE emailsettings SET
-				host="'.$_POST['host'].'",
-				port='.$_POST['port'].',
-				heloaddress="'.$_POST['heloaddress'].'",
-				username="'.$_POST['username'].'",
-				password="'.$_POST['password'].'",
-				auth='.$_POST['auth'];
+	$sql="UPDATE emailsettings SET
+				host='".$_POST['host']."',
+				port='".$_POST['port']."',
+				heloaddress='".$_POST['heloaddress']."',
+				username='".$_POST['username']."',
+				password='".$_POST['password']."',
+				auth='".$_POST['auth']."'";
 	$result=DB_query($sql, $db);
 	prnMsg(_('The settings for the SMTP server have been successfully updated'), 'success');
 	echo '<br>';
