@@ -10,12 +10,15 @@ include('includes/session.inc');
 $title = _('Stock On Hand By Date');
 include('includes/header.inc');
 
-echo "<hr><form action='" . $_SERVER['PHP_SELF'] . "?". SID . "' method=post>";
+echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
+'" alt=""><b>' . $title. '</p>';
+
+echo "<form action='" . $_SERVER['PHP_SELF'] . "?". SID . "' method=post>";
 
 $sql = 'SELECT categoryid, categorydescription FROM stockcategory';
 $resultStkLocs = DB_query($sql, $db);
 
-echo '<table><tr>';
+echo '<table class=selection><tr>';
 echo '<td>' . _('For Stock Category') . ":</td>
 	<td><select name='StockCategory'> ";
 
@@ -61,7 +64,7 @@ if (!isset($_POST['OnHandDate'])){
 echo '<td>' . _("On-Hand On Date") . ":</td>
 	<td><input type=TEXT class='date' alt='".$_SESSION['DefaultDateFormat']."' name='OnHandDate' size=12 maxlength=12 VALUE='" . $_POST['OnHandDate'] . "'></td></tr>";
 echo "<tr><td colspan=6><div class='centre'><input type=submit name='ShowStatus' VALUE='" . _('Show Stock Status') ."'></div></td></tr></table>";
-echo '</form><hr>';
+echo '</form>';
 
 $TotalQuantity = 0;
 
@@ -81,7 +84,7 @@ if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate']))
 
 	$SQLOnHandDate = FormatDateForSQL($_POST['OnHandDate']);
 
-	echo '<table cellpadding=5 cellspacing=4 border=0>';
+	echo '<br /><table cellpadding=5 cellspacing=1 class=selection>';
 
 	$tableheader = "<tr>
 				<th>" . _('Item Code') . "</th>
@@ -94,9 +97,9 @@ if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate']))
 		$sql = "SELECT stockid,
 				newqoh
 				FROM stockmoves
-				WHERE stockmoves.trandate <= '". $SQLOnHandDate . "' 
-				AND stockid = '" . $myrows['stockid'] . "' 
-				AND loccode = '" . $_POST['StockLocation'] ."' 
+				WHERE stockmoves.trandate <= '". $SQLOnHandDate . "'
+				AND stockid = '" . $myrows['stockid'] . "'
+				AND loccode = '" . $_POST['StockLocation'] ."'
 				ORDER BY stkmoveno DESC LIMIT 1";
 
 		$ErrMsg =  _('The stock held as at') . ' ' . $_POST['OnHandDate'] . ' ' . _('could not be retrieved because');
