@@ -292,7 +292,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		 $sql = $sql . "'" . $_SESSION['SPL']->SupplierID . "',
 		 		'" . $_SESSION['SPL']->Comments . "',
 				'" . Date("Y-m-d") . "',
-				" . $_SESSION['SPL']->SuppCurrExRate . ",
+				'" . $_SESSION['SPL']->SuppCurrExRate . "',
 				'" . $_SESSION['SPL']->Initiator . "',
 				'" . $_SESSION['SPL']->QuotationRef . "',
 				'" . $_SESSION['SPL']->StkLocation . "',
@@ -312,7 +312,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		/*Get the auto increment value of the order number created from the SQL above */
 //		$_SESSION['SPL']->PurchOrderNo = DB_Last_Insert_ID($db,'purchorders','orderno');
  		$_SESSION['SPL']->PurchOrderNo = GetNextTransNo(18, $db);
-		
+
 
 		/*Insert the purchase order detail records */
 		foreach ($_SESSION['SPL']->LineItems as $SPLLine) {
@@ -350,7 +350,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						'" . $SPLLine->StkCat . "',
 						'" . $SPLLine->ItemDescription . "',
 						'" .  $SPLLine->ItemDescription . "',
-						" . $SPLLine->Cost . ")";
+						'" . $SPLLine->Cost . "')";
 
 
 			$ErrMsg = _('The item record for line') . " " . $SPLLine->LineNo . " " . _('could not be create because');
@@ -381,14 +381,14 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 								glcode,
 								unitprice,
 								quantityord)
-					VALUES (";
-			$sql = $sql . $_SESSION['SPL']->PurchOrderNo . ",
+					VALUES ('";
+			$sql = $sql . $_SESSION['SPL']->PurchOrderNo . "',
 					'" . $PartCode . "',
 					'" . $OrderDate . "',
 					'" . $SPLLine->ItemDescription . "',
-					" . $GLCode . ",
-					" . $SPLLine->Cost . ",
-					" . $SPLLine->Quantity . ")";
+					'" . $GLCode . "',
+					'" . $SPLLine->Cost . "',
+					'" . $SPLLine->Quantity . "')";
 
 			$ErrMsg = _('One of the purchase order detail records could not be inserted into the database because');
 			$DbgMsg = _('The SQL statement used to insert the purchase order detail record and failed was');
@@ -442,12 +442,14 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							contactemail,
 							fromstkloc,
 							deliverydate)
-					VALUES (".$OrderNo.",'" . $_SESSION['SPL']->CustomerID . "',
+					VALUES (
+						'" . $OrderNo."',
+						'" . $_SESSION['SPL']->CustomerID . "',
 						'" . $_SESSION['SPL']->BranchCode . "',
-						'". $_SESSION['SPL']->CustRef ."',
+						'" . $_SESSION['SPL']->CustRef ."',
 						'" . Date("Y-m-d") . "',
 						'" . $BranchDetails['salestype'] . "',
-						" . $BranchDetails['defaultshipvia'] .",
+						'" . $BranchDetails['defaultshipvia'] ."',
 						'" . $BranchDetails['brname'] . "',
 						'" . $BranchDetails['braddress1'] . "',
 						'" . $BranchDetails['braddress2'] . "',
@@ -465,19 +467,19 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 //		$SalesOrderNo = DB_Last_Insert_ID($db,'salesorders','orderno');
 //		$SalesOrderNo = GetNextTransNo(30, $db);
-		
+
 		$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (orderno,
 									stkcode,
 									unitprice,
 									quantity,
 									orderlineno)
-						VALUES (" .  $OrderNo;
+						VALUES ('" .  $OrderNo . "'";
 
 		$ErrMsg = _('There was a problem inserting a line into the sales order because');
 
 		foreach ($_SESSION['SPL']->LineItems as $StockItem) {
 
-			$LineItemsSQL = $StartOf_LineItemsSQL . ", '" . $StockItem->PartCode . "',". $StockItem->Price . ", " . $StockItem->Quantity . ", " . $StockItem->LineNo . ")";
+			$LineItemsSQL = $StartOf_LineItemsSQL . "', '" . $StockItem->PartCode . "','". $StockItem->Price . "', '" . $StockItem->Quantity . "', '" . $StockItem->LineNo . "')";
 			$Ins_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg);
 
 		} /* inserted line items into sales order details */
