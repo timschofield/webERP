@@ -404,7 +404,7 @@ if ( isset($_POST['EnterTransfer']) ){
 }
 
 if (!isset($_SESSION['Transfer']->TransferItem[0]->StockID)) {
-	$_SESSION['Transfer']->TransferItem[0]->StockID = '';
+	$_SESSION['Transfer']->TransferItem[0]->StockID = ' ';
 }
 if (!isset($_SESSION['Transfer']->TransferItem[0]->ItemDescription)) {
 	$_SESSION['Transfer']->TransferItem[0]->ItemDescription = '';
