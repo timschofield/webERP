@@ -14,16 +14,15 @@ if (isset($_GET['StockID'])){
 	$StockID = trim(strtoupper($_POST['StockID']));
 }
 
+echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a>';
 
-echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><br>';
+echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
+'" alt=""><b>' . $title. '</p>';
 
 $result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='$StockID'", $db);
 $myrow = DB_fetch_row($result);
 
-echo '<div class="centre"><br><font color=BLUE size=3><b>' . $StockID . ' - ' . $myrow[0] . '</b>  (' . _('In Units of') . ' ' . $myrow[1] . ')</font>';
 echo "<form action='" . $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
-echo _('Stock Code') . ":<input type=TEXT name='StockID' size=21 VALUE='$StockID' maxlength=20>";
-echo "     <input type=submit name='Show' VALUE='" . _('Show Re-Order Levels') . "'><hr></div>";
 
 $sql = "SELECT locstock.loccode,
 		locations.locationname,
@@ -40,7 +39,10 @@ $DbgMsg = _('The SQL that failed was');
 
 $LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-echo "<table cellpadding=2 BORDER=2>";
+echo "<table cellpadding=2 class=selection>";
+echo '<tr><th colspan=3'._('Stock Code') . ":<input type=TEXT name='StockID' size=21 VALUE='$StockID' maxlength=20>";
+echo "     <input type=submit name='Show' VALUE='" . _('Show Re-Order Levels') . "'></th></tr>";
+echo '<tr><th colspan=3><font color=BLUE size=3><b>' . $StockID . ' - ' . $myrow[0] . '</b>  (' . _('In Units of') . ' ' . $myrow[1] . ')</font></th></tr>';
 
 $TableHeader = "<tr>
 		<th>" . _('Location') . "</th>
@@ -65,7 +67,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 	if (isset($_POST['UpdateData']) AND is_numeric($_POST[$myrow['loccode']]) AND $_POST[$myrow['loccode']]>=0){
 
 	   $myrow['reorderlevel'] = $_POST[$myrow['loccode']];
-	   $sql = 'UPDATE locstock SET reorderlevel = ' . $_POST[$myrow['loccode']] . "
+	   $sql = "UPDATE locstock SET reorderlevel = '" . $_POST[$myrow['loccode']] . "'
 	   		WHERE stockid = '" . $StockID . "'
 			AND loccode = '"  . $myrow['loccode'] ."'";
 	   $UpdateReorderLevel = DB_query($sql, $db);
@@ -74,7 +76,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 	printf("<td>%s</td>
 		<td class=number>%s</td>
-		<td><input type=TEXT class='number' name=%s maxlength=10 size=10 VALUE=%s></td>",
+		<td><input type=text class='number' name=%s maxlength=10 size=10 VALUE=%s></td>",
 		$myrow['locationname'],
 		number_format($myrow['quantity'],StockDecimalPlaces($StockID, $db)),
 		$myrow['loccode'],
@@ -88,7 +90,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 }
 //end of while loop
 
-echo "</table><div class='centre'><input type=submit name='UpdateData' VALUE='" . _('Update') . "'><hr>";
+echo "</table><br /><div class='centre'><input type=submit name='UpdateData' VALUE='" . _('Update') . "'><br /><br />";
 echo "<a href='$rootpath/StockMovements.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Movements') . '</a>';
 echo "<br><a href='$rootpath/StockUsage.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Usage') . '</a>';
 echo "<br><a href='$rootpath/SelectSalesOrder.php?" . SID . "&SelectedStockItem=$StockID'>" . _('Search Outstanding Sales Orders') . '</a>';
