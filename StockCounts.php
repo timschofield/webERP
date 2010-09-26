@@ -11,24 +11,27 @@ include('includes/header.inc');
 
 echo "<form action='" . $_SERVER['PHP_SELF'] . "' method=post>";
 
-echo "<br>";
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
+	_('Inventory Adjustment') . '" alt="">' . ' ' . $title . '</p>';
 
 if (!isset($_POST['Action']) and !isset($_GET['Action'])) {
 	$_GET['Action'] = 'Enter';
 }
-if (isset($_POST['Action'])) { 
-	$_GET['Action'] = $_POST['Action']; 
+if (isset($_POST['Action'])) {
+	$_GET['Action'] = $_POST['Action'];
 }
 
-if ($_GET['Action']!='View' and $_GET['Action']!='Enter'){ 
-	$_GET['Action'] = 'Enter'; 
+if ($_GET['Action']!='View' and $_GET['Action']!='Enter'){
+	$_GET['Action'] = 'Enter';
 }
 
+echo '<table class=selection><tr>';
 if ($_GET['Action']=='View'){
-	echo '<a href="' . $rootpath . '/StockCounts.php?' . SID . '&Action=Enter">' . _('Resuming Entering Counts') . '</a> <b>|</b>' . _('Viewing Entered Counts') . '<br><br>';
+	echo '<td><a href="' . $rootpath . '/StockCounts.php?' . SID . '&Action=Enter">' . _('Resuming Entering Counts') . '</a> </td><td>' . _('Viewing Entered Counts') . '</td>';
 } else {
-	echo _('Entering Counts') .'<b>|</b> <a href="' . $rootpath . '/StockCounts.php?' . SID . '&Action=View">' . _('View Entered Counts') . '</a><br><br>';
+	echo '<td>'._('Entering Counts') .'</td><td> <a href="' . $rootpath . '/StockCounts.php?' . SID . '&Action=View">' . _('View Entered Counts') . '</a></td>';
 }
+echo '</tr></table><br />';
 
 if ($_GET['Action'] == 'Enter'){
 
@@ -62,7 +65,7 @@ if ($_GET['Action'] == 'Enter'){
 									reference)
 								VALUES ('" . $_POST[$StockID] . "',
 									'" . $_POST['Location'] . "',
-									" . $_POST[$Quantity] . ",
+									'" . $_POST[$Quantity] . "',
 									'" . $_POST[$Reference] . "')";
 
 					$ErrMsg = _('The stock count line number') . ' ' . $i . ' ' . _('could not be entered because');
@@ -74,7 +77,9 @@ if ($_GET['Action'] == 'Enter'){
 		unset($_POST['EnterCounts']);
 	} // end of if enter counts button hit
 
-	echo _('Stock Check Counts at Location') . ":<select name='Location'>";
+
+	echo '<table cellpadding=2 class=selection>';
+	echo '<tr><th colspan=3>'._('Stock Check Counts at Location') . ":<select name='Location'>";
 	$sql = 'SELECT loccode, locationname FROM locations';
 	$result = DB_query($sql,$db);
 
@@ -86,9 +91,7 @@ if ($_GET['Action'] == 'Enter'){
 			echo "<option VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		}
 	}
-	echo '</select><br><br>';
-
-	echo '<table cellpadding=2 BORDER=1>';
+	echo '</select></th></tr>';
 	echo "<tr>
 		<th>" . _('Stock Code') . "</th>
 		<th>" . _('Quantity') . "</th>
@@ -103,7 +106,7 @@ if ($_GET['Action'] == 'Enter'){
 
 	}
 
-	echo "</table><br><input type=submit name='EnterCounts' VALUE='" . _('Enter Above Counts') . "'>";
+	echo "</table><br /><div class=centre><input type=submit name='EnterCounts' VALUE='" . _('Enter Above Counts') . "'></div>";
 
 //END OF action=ENTER
 } elseif ($_GET['Action']=='View'){
@@ -111,19 +114,19 @@ if ($_GET['Action'] == 'Enter'){
 	if (isset($_POST['DEL']) && is_array($_POST['DEL']) ){
 		foreach ($_POST['DEL'] as $id=>$val){
 			if ($val == 'on'){
-				$sql = "DELETE FROM stockcounts WHERE id=$id";
+				$sql = "DELETE FROM stockcounts WHERE id='".$id."'";
 				$ErrMsg = _('Failed to delete StockCount ID #').' '.$i;
 				$EnterResult = DB_query($sql, $db,$ErrMsg);
 				prnMsg( _('Deleted Id #') . ' ' . $id, 'success');
 			}
 		}
 	}
-	
+
 	//START OF action=VIEW
 	$SQL = "select * from stockcounts";
 	$result = DB_query($SQL, $db);
 	echo '<input type=hidden name=Action Value="View">';
-	echo '<table cellpadding=2 BORDER=1>';
+	echo '<table cellpadding=2 class=selection>';
 	echo "<tr>
 		<th>" . _('Stock Code') . "</th>
 		<th>" . _('Location') . "</th>
@@ -139,7 +142,7 @@ if ($_GET['Action'] == 'Enter'){
 			<td><input type=CHECKBOX name='DEL[" .$myrow['id']."]' maxlength=20 size=20></td></tr>";
 
 	}
-	echo "</table><br><input type=submit name='SubmitChanges' VALUE='" . _('Save Changes') . "'>";
+	echo "</table><br><div class=centre><input type=submit name='SubmitChanges' VALUE='" . _('Save Changes') . "'></div>";
 
 //END OF action=VIEW
 }
