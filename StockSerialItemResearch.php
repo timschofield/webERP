@@ -7,6 +7,9 @@ include('includes/session.inc');
 $title = _('Serial Item Research');
 include('includes/header.inc');
 
+echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
+'" alt=""><b>' . $title. '</p>';
+
 
 //validate the submission
 if (isset($_POST['serialno'])) {
@@ -18,18 +21,18 @@ if (isset($_POST['serialno'])) {
 }
 $SN = $SN;
 
-?>
-<div class="centre">
-<br>
-<form name=SNRESEARCH method=post action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<?php echo _('Serial Number') ?>: <input ID="serialno" name="serialno" size=21 maxlength=20 VALUE="<?php echo $SN; ?>"> &nbsp; 
-<input type=submit name=submit>
-</form>
-<SCRIPT>
-document.getElementById('serialno').focus();
-</SCRIPT>
 
-<?php
+echo '<div class="centre">
+<br>
+<form name=SNRESEARCH method=post action="' . $_SERVER['PHP_SELF'] .'">
+' .  _('Serial Number') .': <input ID="serialno" name="serialno" size=21 maxlength=20 VALUE="'. $SN . '"> &nbsp;
+<input type=submit name=submit></div><br />
+</form>';
+
+echo "<SCRIPT>
+document.getElementById('serialno').focus();
+</SCRIPT>";
+
 
 if ($SN!='') {
 	//the point here is to allow a semi fuzzy search, but still keep someone from killing the db server
@@ -43,9 +46,9 @@ if ($SN!='') {
 		}
 	}
 	$SQL = "SELECT ssi.serialno,
-			ssi.stockid, ssi.quantity CurInvQty, 
-			ssm.moveqty, 
-			sm.type, st.typename, 
+			ssi.stockid, ssi.quantity CurInvQty,
+			ssm.moveqty,
+			sm.type, st.typename,
 			sm.transno, sm.loccode, l.locationname, sm.trandate, sm.debtorno, sm.branchcode, sm.reference, sm.qty TotalMoveQty
 			FROM stockserialitems ssi INNER JOIN stockserialmoves ssm
 				ON ssi.serialno = ssm.serialno AND ssi.stockid=ssm.stockid
@@ -59,12 +62,12 @@ if ($SN!='') {
 			ORDER BY stkmoveno";
 
 	$result = DB_query($SQL,$db);
-	
+
 	if (DB_num_rows($result) == 0){
 		prnMsg( _('No History found for Serial Number'). ': <b>'.$SN.'</b>' , 'warn');
 	} else {
 		echo '<h4>'. _('Details for Serial Item').': <b>'.$SN.'</b><br>'. _('Length').'='.strlen($SN).'</h4>';
-		echo '<table BORDER=1>';
+		echo '<table class=selection>';
 		echo "<tr><th>" . _('StockID') . "</th>
 			<th>" . _('CurInvQty') . "</th>
 			<th>" . _('Move Qty') . "</th>
