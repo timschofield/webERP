@@ -19,6 +19,9 @@ if (isset($_GET['StockID'])){
 
 echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><br>';
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
+	_('Inventory Adjustment') . '" alt="">' . ' ' . $title . '</p>';
+
 if (isset($_POST['UpdateData'])){
 
 
@@ -57,7 +60,7 @@ if (isset($_POST['UpdateData'])){
  	$OldCost =$_POST['OldMaterialCost'] + $_POST['OldLabourCost'] + $_POST['OldOverheadCost'];
    	$NewCost =$_POST['MaterialCost'] + $_POST['LabourCost'] + $_POST['OverheadCost'];
 
-	$result = DB_query("SELECT * FROM stockmaster WHERE stockid='$StockID'",$db);
+	$result = DB_query("SELECT * FROM stockmaster WHERE stockid='".$StockID."'",$db);
 	$myrow = DB_fetch_row($result);
 	if (DB_num_rows($result)==0) {
 		prnMsg (_('The entered item code does not exist'),'error',_('Non-existent Item'));
@@ -68,10 +71,10 @@ if (isset($_POST['UpdateData'])){
 
 
 		$SQL = "UPDATE stockmaster SET
-					materialcost=" . $_POST['MaterialCost'] . ",
-					labourcost=" . $_POST['LabourCost'] . ",
-					overheadcost=" . $_POST['OverheadCost'] . ",
-					lastcost=" . $OldCost . "
+					materialcost='" . $_POST['MaterialCost'] . "',
+					labourcost='" . $_POST['LabourCost'] . "',
+					overheadcost='" . $_POST['OverheadCost'] . "',
+					lastcost='" . $OldCost . "'
 			WHERE stockid='" . $StockID . "'";
 
 		$ErrMsg = _('The cost details for the stock item could not be updated because');
@@ -115,12 +118,14 @@ $result = DB_query("SELECT description,
 
 
 $myrow = DB_fetch_array($result);
-echo "<br><div class='centre'><font color=BLUE size=3><b>" . $StockID . " - " . $myrow['description'] . '</b> - ' . _('Total Quantity On Hand') . ': ' . $myrow['totalqoh'] . " " . $myrow['units'] ."</font>";
 
 echo "<form action='" . $_SERVER['PHP_SELF'] . "?". SID ."' method=post>";
-echo _('Item Code') . ":<input type=text name='StockID' value='$StockID' 1 maxlength=20>";
 
-echo " <input type=submit name='Show' VALUE='" . _('Show Cost Details') . "'></div><hr>";
+echo '<table cellpadding=2 class=selection>';
+echo "<tr><th colspan=2>"._('Item Code') . ":<input type=text name='StockID' value='$StockID' 1 maxlength=20>";
+echo "<input type=submit name='Show' VALUE='" . _('Show Cost Details') . "'></th></tr>";
+echo "<tr><th colspan=2><font color=navy size=2>" . $StockID . " - " . $myrow['description'] . '</font></th></tr>';
+echo "<tr><th colspan=2><font color=navy size=2>". _('Total Quantity On Hand') . ': ' . $myrow['totalqoh'] . " " . $myrow['units'] ."</font></th></tr>";
 
 if (($myrow['mbflag']=='D' AND $myrow['stocktype'] != 'L')
 	OR $myrow['mbflag']=='A'
@@ -143,7 +148,6 @@ echo '<input type=hidden name=OldLabourCost VALUE=' . $myrow['labourcost'] .'>';
 echo '<input type=hidden name=OldOverheadCost VALUE=' . $myrow['overheadcost'] .">";
 echo '<input type=hidden name=QOH VALUE=' . $myrow['totalqoh'] .'>';
 
-echo '<table cellpadding=2 BORDER=2>';
 echo '<tr><td>' . _('Last Cost') .':</td><td class=number>' . number_format($myrow['lastcost'],2) . '</td></tr>';
 if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset($UpdateSecurity)){
 	echo '<tr><td>' . _('Cost') . ':</td><td class=number>' . number_format($myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'],2) . '</td></tr></table>';
@@ -152,15 +156,15 @@ if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset
 	if ($myrow['mbflag']=='M'){
 		echo '<input type=hidden name="MaterialCost" VALUE=' . $myrow['materialcost'] . '>';
 		echo '<tr><td>' . _('Standard Material Cost Per Unit') .':</td><td class=number>' . number_format($myrow['materialcost'],4) . '</td></tr>';
-		echo '<tr><td>' . _('Standard Labour Cost Per Unit') . ':</td><td><input type=TEXT class="number" name=LabourCost VALUE=' . $myrow['labourcost'] . '></td></tr>';
-		echo '<tr><td>' . _('Standard Overhead Cost Per Unit') . ':</td><td><input type=TEXT class="number" name=OverheadCost VALUE=' . $myrow['overheadcost'] . '></td></tr>';
+		echo '<tr><td>' . _('Standard Labour Cost Per Unit') . ':</td><td class=number><input type=TEXT class="number" name=LabourCost VALUE=' . $myrow['labourcost'] . '></td></tr>';
+		echo '<tr><td>' . _('Standard Overhead Cost Per Unit') . ':</td><td class=number><input type=TEXT class="number" name=OverheadCost VALUE=' . $myrow['overheadcost'] . '></td></tr>';
 	} elseif ($myrow['mbflag']=='B' OR  $myrow['mbflag']=='D') {
-		echo '<tr><td>' . _('Standard Cost') .':</td><td><input type=TEXT class="number" name="MaterialCost" VALUE=' . $myrow['materialcost'] . '></td></tr>';
+		echo '<tr><td>' . _('Standard Cost') .':</td><td class=number><input type=TEXT class="number" name="MaterialCost" VALUE=' . $myrow['materialcost'] . '></td></tr>';
 	} else 	{
 		echo '<input type=hidden name=LabourCost VALUE=0>';
 		echo '<input type=hidden name=OverheadCost VALUE=0>';
 	}
-    echo "</table><div class='centre'><input type=submit name='UpdateData' VALUE='" . _('Update') . "'><hr>";
+    echo "</table><br /><div class='centre'><input type=submit name='UpdateData' VALUE='" . _('Update') . "'><br /><br />";
 }
 if ($myrow['mbflag']!='D'){
 	echo "<a href='$rootpath/StockStatus.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Status') . '</a>';
