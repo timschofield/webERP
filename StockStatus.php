@@ -30,7 +30,7 @@ $result = DB_query("SELECT description,
                     FROM
                            stockmaster
                     WHERE
-                           stockid='$StockID'",
+                           stockid='".$StockID."'",
                            $db,
                            _('Could not retrieve the requested item'),
                            _('The SQL used to retrieve the items was'));
@@ -41,7 +41,8 @@ $DecimalPlaces = $myrow[3];
 $Serialised = $myrow[4];
 $Controlled = $myrow[5];
 
-echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt=""><b>' . ' ' . $StockID . ' - ' . $myrow['0'] . ' : ' . _('in units of') . ' : ' . $myrow[1] . '';
+echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
+	'" alt=""><b>' . ' ' . $StockID . ' - ' . $myrow['0'] . ' : ' . _('in units of') . ' : ' . $myrow[1] . '';
 
 $Its_A_KitSet_Assembly_Or_Dummy =False;
 if ($myrow[2]=='K'){
@@ -75,7 +76,7 @@ $ErrMsg = _('The stock held at each location cannot be retrieved because');
 $DbgMsg = _('The SQL that was used to update the stock item and failed was');
 $LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-echo '<br><table cellpadding=2 BORDER=0>';
+echo '<br><table cellpadding=2 class=selection>';
 
 if ($Its_A_KitSet_Assembly_Or_Dummy == True){
 	$tableheader = '<tr>
@@ -294,7 +295,7 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	}
 	if (isset($PriceHistory)) {
 	  echo '<p>' . _('Pricing history for sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo;
-	  echo '<table cellpadding=2 BORDER=0>';
+	  echo '<table cellpadding=2 class=selection>';
 	  $tableheader = "<tr>
 			<th>" . _('Date Range') . "</th>
 			<th>" . _('Quantity') . "</th>
@@ -307,7 +308,7 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 
 	  foreach($PriceHistory as $ph) {
 		$j--;
-		If ($j < 0 ){
+		if ($j < 0 ){
 			$j = 11;
 			echo $tableheader;
 		}
