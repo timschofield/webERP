@@ -9,6 +9,9 @@ $title = _('Stock Category Maintenance');
 
 include('includes/header.inc');
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
+	_('Inventory Adjustment') . '" alt="">' . ' ' . $title . '</p>';
+
 if (isset($_GET['SelectedCategory'])){
 	$SelectedCategory = strtoupper($_GET['SelectedCategory']);
 } else if (isset($_POST['SelectedCategory'])){
@@ -18,9 +21,9 @@ if (isset($_GET['SelectedCategory'])){
 if (isset($_GET['DeleteProperty'])){
 
 	$ErrMsg = _('Could not delete the property') . ' ' . $_GET['DeleteProperty'] . ' ' . _('because');
-	$sql = "DELETE FROM stockitemproperties WHERE stkcatpropid=" . $_GET['DeleteProperty'];
+	$sql = "DELETE FROM stockitemproperties WHERE stkcatpropid='" . $_GET['DeleteProperty'] . "'";
 	$result = DB_query($sql,$db,$ErrMsg);
-	$sql = "DELETE FROM stockcatproperties WHERE stkcatpropid=" . $_GET['DeleteProperty'];
+	$sql = "DELETE FROM stockcatproperties WHERE stkcatpropid='" . $_GET['DeleteProperty'] . "'";
 	$result = DB_query($sql,$db,$ErrMsg);
 	prnMsg(_('Deleted the property') . ' ' . $_GET['DeleteProperty'],'success');
 }
@@ -184,7 +187,7 @@ or deletion of the records*/
 	$sql = "SELECT * FROM stockcategory WHERE stocktype<>'".'A'."'";
 	$result = DB_query($sql,$db);
 
-	echo "<br><table border=1>\n";
+	echo "<br><table class=selection>\n";
 	echo '<tr><th>' . _('Cat Code') . '</th>
             <th>' . _('Description') . '</th>
             <th>' . _('Type') . '</th>
@@ -278,13 +281,13 @@ if (! isset($_GET['delete'])) {
 		}
 		echo '<input type=hidden name="SelectedCategory" value="' . $SelectedCategory . '">';
 		echo '<input type=hidden name="CategoryID" value="' . $_POST['CategoryID'] . '">';
-		echo '<table><tr><td>' . _('Category Code') . ':</td><td>' . $_POST['CategoryID'] . '</td></tr>';
+		echo '<table class=selection><tr><td>' . _('Category Code') . ':</td><td>' . $_POST['CategoryID'] . '</td></tr>';
 
 	} else { //end of if $SelectedCategory only do the else when a new record is being entered
 		if (!isset($_POST['CategoryID'])) {
 			$_POST['CategoryID'] = '';
 		}
-		echo '<table><tr><td>' . _('Category Code') . ':</td>
+		echo '<table class=selection><tr><td>' . _('Category Code') . ':</td>
                              <td><input type="Text" name="CategoryID" size=7 maxlength=6 value="' . $_POST['CategoryID'] . '"></td></tr>';
 	}
 
@@ -312,7 +315,7 @@ if (! isset($_GET['delete'])) {
 	if (!isset($_POST['CategoryDescription'])) {
 		$_POST['CategoryDescription'] = '';
 	}
-	
+
 	echo '<tr><td>' . _('Category Description') . ':</td>
             <td><input type="Text" name="CategoryDescription" size=22 maxlength=20 value="' . $_POST['CategoryDescription'] . '"></td></tr>';
 
@@ -341,7 +344,7 @@ if (! isset($_GET['delete'])) {
 		}
 
 	echo '</select></td></tr>';
-	
+
 	echo '<input type="submit" name="UpdateTypes" style="visibility:hidden;width:1px" value="Not Seen">';
 	if (isset($_POST['StockType']) and $_POST['StockType']=='L') {
 		$Result = $PnLAccountsResult;
@@ -351,9 +354,9 @@ if (! isset($_GET['delete'])) {
 		echo '<tr><td>' . _('Stock GL Code');
 	}
 	echo ':</td><td><select name="StockAct">';
-	
+
 	while ($myrow = DB_fetch_array($Result)){
-	
+
 		if (isset($_POST['StockAct']) and $myrow['accountcode']==$_POST['StockAct']) {
 			echo '<option selected value=';
 		} else {
@@ -368,7 +371,7 @@ if (! isset($_GET['delete'])) {
 	echo '<tr><td>' . _('WIP GL Code') . ':</td><td><select name="WIPAct">';
 
 	while ($myrow = DB_fetch_array($BSAccountsResult)) {
-	
+
 		if (isset($_POST['WIPAct']) and $myrow['accountcode']==$_POST['WIPAct']) {
 			echo '<option selected value=';
 		} else {
@@ -394,7 +397,7 @@ if (! isset($_GET['delete'])) {
 	} //end while loop
 	DB_data_seek($PnLAccountsResult,0);
 	echo '</select></td></tr>';
-	
+
 	echo '<tr><td>' . _('Price Variance GL Code') . ':</td>
             <td><select name="PurchPriceVarAct">';
 
@@ -429,8 +432,9 @@ if (! isset($_GET['delete'])) {
 	DB_free_result($PnLAccountsResult);
 	echo '</select></td></tr>
 			</table>';
-
-
+	if (!isset($SelectedCategory)) {
+		$SelectedCategory='';
+	}
 	if (isset($SelectedCategory)) {
 		//editing an existing stock category
 
@@ -448,7 +452,7 @@ if (! isset($_GET['delete'])) {
 /*		echo '<br>Number of rows returned by the sql = ' . DB_num_rows($result) .
 			'<br>The SQL was:<br>' . $sql;
 */
-		echo '<hr><table>';
+		echo '<br /><table class=selection>';
 		$TableHeader = '<tr><th>' . _('Property Label') . '</th>
 						<th>' . _('Control Type') . '</th>
 						<th>' . _('Default Value') . '</th>
@@ -513,7 +517,7 @@ if (! isset($_GET['delete'])) {
 	} /* end if there is a category selected */
 
 
-	echo '<div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';
+	echo '<br /><div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';
 
 
 	echo '</form>';
