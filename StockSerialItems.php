@@ -7,6 +7,8 @@ include('includes/session.inc');
 $title = _('Stock Of Controlled Items');
 include('includes/header.inc');
 
+echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
+'" alt=""><b>' . $title. '</p>';
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(strtoupper($_GET['StockID']));
@@ -23,17 +25,17 @@ $result = DB_query("SELECT description,
 			serialised,
 			controlled
 		FROM stockmaster
-		WHERE stockid='$StockID'",
+		WHERE stockid='".$StockID."'",
 		$db,
 		_('Could not retrieve the requested item because'));
 
 $myrow = DB_fetch_row($result);
 
+$Description = $myrow[0];
+$UOM = $myrow[1];
 $DecimalPlaces = $myrow[3];
 $Serialised = $myrow[4];
 $Controlled = $myrow[5];
-
-echo "<br><font color=BLUE size=3><b>$StockID - $myrow[0] </b>  (" . _('In units of') . ' ' . $myrow[1] . ')</font>';
 
 if ($myrow[2]=='K' OR $myrow[2]=='A' OR $myrow[2]=='D'){
 
@@ -41,13 +43,6 @@ if ($myrow[2]=='K' OR $myrow[2]=='A' OR $myrow[2]=='D'){
 	include('includes/footer.inc');
 	exit;
 }
-
-if ($Serialised==1){
-	echo '<br><b>' . _('Serialised items in') . ' ';
-} else {
-	echo '<br><b>' . _('Controlled items in') . ' ';
-}
-
 
 $result = DB_query("SELECT locationname
 			FROM locations
@@ -57,7 +52,6 @@ $result = DB_query("SELECT locationname
 			_('The SQL used to lookup the location was'));
 
 $myrow = DB_fetch_row($result);
-echo $myrow[0];
 
 $sql = "SELECT serialno,
 		quantity
@@ -70,7 +64,16 @@ $sql = "SELECT serialno,
 $ErrMsg = _('The serial numbers/batches held cannot be retrieved because');
 $LocStockResult = DB_query($sql, $db, $ErrMsg);
 
-echo '<table cellpadding=2 BORDER=0>';
+echo '<table cellpadding=2 class=selection>';
+
+if ($Serialised==1){
+	echo '<tr<th colspan=3><font color=navy size=2>' . _('Serialised items in') . ' ';
+} else {
+	echo '<tr<th colspan=3><font color=navy size=2>' . _('Controlled items in') . ' ';
+}
+echo $myrow[0]. '</font></th></tr>';
+
+echo "<tr><th colspan=3><font color=navy size=2>".$StockID ."-". $Description ."</b>  (" . _('In units of') . ' ' . $UOM . ')</font></th></tr>';
 
 if ($Serialised == 1){
 	$tableheader = "<tr>
@@ -131,7 +134,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 }
 //end of while loop
 
-echo '</table><hr>';
+echo '</table><br />';
 echo '<div class="centre"><br><b>' . _('Total quantity') . ': ' . number_format($TotalQuantity, $DecimalPlaces) . '<br></div>';
 
 echo '</form>';
