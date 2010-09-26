@@ -21,12 +21,20 @@ if (isset($_GET['StockID'])){
 // This is already linked from this page
 //echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" .  _('Back to Items') . '</a><br>';
 
-$result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='$StockID'",$db);
+$result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='".$StockID."'",$db);
 $myrow = DB_fetch_row($result);
-echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt=""><b>' . ' ' . $StockID . ' - ' . $myrow['0'] . ' : ' . _('in units of') . ' : ' . $myrow[1] . '';
+echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt=""><b>' . ' ' . $StockID . ' - ' . $myrow['0'] . ' : ' . _('in units of') . ' : ' . $myrow[1] . '</p>';
 
-echo "<div class='centre'><form action='". $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
-echo _('Stock Code') . ":<input type=TEXT name='StockID' size=21 VALUE='$StockID' maxlength=20>";
+echo "<form action='". $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
+
+if (!isset($_POST['BeforeDate']) OR !Is_Date($_POST['BeforeDate'])){
+   $_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
+}
+if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
+   $_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date("m")-3,Date("d"),Date("y")));
+}
+echo '<br /><table cellpadding=2 class=selection>';
+echo '<tr><th colspan=10>' . _('Stock Code') . ":<input type=TEXT name='StockID' size=21 VALUE='$StockID' maxlength=20>";
 
 echo '  ' . _('From Stock Location') . ":<select name='StockLocation'> ";
 
@@ -48,18 +56,10 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 	}
 }
 
-echo '</select><br>';
-
-if (!isset($_POST['BeforeDate']) OR !Is_Date($_POST['BeforeDate'])){
-   $_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
-}
-if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
-   $_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date("m")-3,Date("d"),Date("y")));
-}
-echo ' ' . _('Show Movements before') . ': <input type=TEXT name="BeforeDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="12" maxlength="12" VALUE="' . $_POST['BeforeDate'] . '">';
+echo '</select></th></tr>';
+echo '<tr><th colspan=10>' . _('Show Movements before') . ': <input type=text name="BeforeDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="12" maxlength="12" VALUE="' . $_POST['BeforeDate'] . '">';
 echo ' ' . _('But after') . ': <input type=TEXT name="AfterDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="12" maxlength="12" VALUE="' . $_POST['AfterDate'] . '">';
-echo "     <input type=submit name='ShowMoves' VALUE='" . _('Show Stock Movements') . "'>";
-echo '<hr>';
+echo "     <input type=submit name='ShowMoves' VALUE='" . _('Show Stock Movements') . "'></th></tr>";
 
 $SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);
 $SQLAfterDate = FormatDateForSQL($_POST['AfterDate']);
@@ -92,7 +92,6 @@ $DbgMsg = _('The SQL that failed was') . ' ';
 
 $MovtsResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-echo '<table cellpadding=2 BORDER=0>';
 $tableheader = "<tr>
 		<th>" . _('Type') . "</th><th>" . _('Number') . "</th>
 		<th>" . _('Date') . "</th><th>" . _('Customer') . "</th>
@@ -200,8 +199,8 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 }
 //end of while loop
 
-echo '</table><hr>';
-echo "<a href='$rootpath/StockStatus.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Status') . '</a>';
+echo '</table>';
+echo "<div class=centre><br /><a href='$rootpath/StockStatus.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Status') . '</a>';
 echo "<br><a href='$rootpath/StockUsage.php?" . SID . "&StockID=$StockID&StockLocation=" . $_POST['StockLocation'] . "'>" . _('Show Stock Usage') . '</a>';
 echo "<br><a href='$rootpath/SelectSalesOrder.php?" . SID . "&SelectedStockItem=$StockID&StockLocation=" . $_POST['StockLocation'] . "'>" . _('Search Outstanding Sales Orders') . '</a>';
 echo "<br><a href='$rootpath/SelectCompletedOrder.php?" . SID . "&SelectedStockItem=$StockID'>" . _('Search Completed Sales Orders') . '</a>';
