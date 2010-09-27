@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 
 		$sql = "UPDATE suppliertype
 			SET typename = '" . $_POST['typename'] . "'
-			WHERE typeid = '$SelectedType'";
+			WHERE typeid = '" . $SelectedType . "'";
 
 		$msg = _('The supplier type') . ' ' . $SelectedType . ' ' .  _('has been updated');
 	} elseif ( $InputError !=1 ) {
@@ -137,7 +137,7 @@ if (isset($_POST['submit'])) {
 
 } elseif ( isset($_GET['delete']) ) {
 
-	$sql = "SELECT COUNT(*) FROM suppliers WHERE supptype='$SelectedType'";
+	$sql = "SELECT COUNT(*) FROM suppliers WHERE supptype='" . $SelectedType . "'";
 
 	$ErrMsg = _('The number of suppliers using this Type record could not be retrieved because');
 	$result = DB_query($sql,$db,$ErrMsg);
@@ -147,7 +147,7 @@ if (isset($_POST['submit'])) {
 			_('There are') . ' ' . $myrow[0] . ' ' . _('suppliers with this type code'));
 	} else {
 
-		$sql="DELETE FROM suppliertype WHERE typeid='$SelectedType'";
+		$sql="DELETE FROM suppliertype WHERE typeid='" . $SelectedType . "'";
 		$ErrMsg = _('The Type record could not be deleted because');
 		$result = DB_query($sql,$db,$ErrMsg);
 		prnMsg(_('Supplier type') . $SelectedType  . ' ' . _('has been deleted') ,'success');
@@ -169,7 +169,7 @@ if (!isset($SelectedType)){
 	$sql = 'SELECT typeid, typename FROM suppliertype';
 	$result = DB_query($sql,$db);
 
-	echo '<br><table class=selection>';
+	echo '<table class=selection>';
 	echo "<tr>
 		<th>" . _('Type ID') . "</th>
 		<th>" . _('Type Name') . "</th>
@@ -210,7 +210,7 @@ if (isset($SelectedType)) {
 if (! isset($_GET['delete'])) {
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	echo '<p><table class=selection>'; //Main table
+	echo '<br /><table class=selection>'; //Main table
 	echo '<td>'; // First column
 
 
@@ -221,7 +221,7 @@ if (! isset($_GET['delete'])) {
 		$sql = "SELECT typeid,
 			       typename
 		        FROM suppliertype
-		        WHERE typeid='$SelectedType'";
+		        WHERE typeid='" . $SelectedType . "'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
