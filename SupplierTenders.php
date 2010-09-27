@@ -133,11 +133,11 @@ if (isset($_POST['Update'])) {
 		}
 	}
 	foreach ($_SESSION['offer']->LineItems as $LineItems) {
-		$sql='UPDATE offers SET
-				quantity='.$LineItems->Quantity.',
-				price='.$LineItems->Price.',
-				expirydate="'.FormatDateForSQL($LineItems->ExpiryDate).'"
-			WHERE offerid='.$LineItems->LineNo;
+		$sql="UPDATE offers SET
+				quantity='".$LineItems->Quantity."',
+				price='".$LineItems->Price."',
+				expirydate='".FormatDateForSQL($LineItems->ExpiryDate)."'
+			WHERE offerid='".$LineItems->LineNo . "'";
 		$ErrMsg =  _('The suppliers offer could not be updated on the database because');
 		$DbgMsg = _('The SQL statement used to update the suppliers offer record and failed was');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
@@ -179,7 +179,7 @@ if (isset($_POST['Save'])) {
 	}
 	foreach ($_SESSION['offer']->LineItems as $LineItems) {
 		if ($LineItems->Deleted==False) {
-			$sql='INSERT INTO offers (
+			$sql="INSERT INTO offers (
 					supplierid,
 					stockid,
 					quantity,
@@ -188,14 +188,14 @@ if (isset($_POST['Save'])) {
 					expirydate,
 					currcode)
 				VALUES (
-					"'.$_POST['SupplierID'].'",
-					"'.$LineItems->StockID.'",
-					'.$LineItems->Quantity.',
-					"'.$LineItems->Units.'",
-					'.$LineItems->Price.',
-					"'.FormatDateForSQL($LineItems->ExpiryDate).'",
-					"'.$Currency.'"
-				)';
+					'".$_POST['SupplierID']."',
+					'".$LineItems->StockID."',
+					'".$LineItems->Quantity."',
+					'".$LineItems->Units."',
+					'".$LineItems->Price."',
+					'".FormatDateForSQL($LineItems->ExpiryDate)."',
+					'".$Currency."'
+				)";
 			$ErrMsg =  _('The suppliers offer could not be inserted into the database because');
 			$DbgMsg = _('The SQL statement used to insert the suppliers offer record and failed was');
 			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
