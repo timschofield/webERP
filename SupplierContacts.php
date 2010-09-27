@@ -9,7 +9,6 @@ $title = _('Supplier Contacts');
 
 include('includes/header.inc');
 
-
 if (isset($_GET['SupplierID'])){
 	$SupplierID = $_GET['SupplierID'];
 } elseif (isset($_POST['SupplierID'])){
@@ -17,6 +16,9 @@ if (isset($_GET['SupplierID'])){
 }
 
 echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><br>';
+
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' .
+	_('Supplier Allocations') . '" alt="">' . ' ' . $title . '</p>';
 
 if (!isset($SupplierID)) {
 	echo '<p><p>';
@@ -59,7 +61,7 @@ if (isset($_POST['submit'])) {
 							fax='" . $_POST['Fax'] . "',
 							email='" . $_POST['Email'] . "',
 							mobile = '". $_POST['Mobile'] . "'
-				WHERE contact='$SelectedContact' AND supplierid='$SupplierID'";
+				WHERE contact='".$SelectedContact."' AND supplierid='".$SupplierID."'";
 
 		$msg = _('The supplier contact information has been updated');
 
@@ -104,8 +106,8 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['delete'])) {
 
 	$sql = "DELETE FROM suppliercontacts
-			WHERE contact='$SelectedContact'
-			AND supplierid = '$SupplierID'";
+			WHERE contact='".$SelectedContact."'
+			AND supplierid = '".$SupplierID."'";
 
 	$ErrMsg = _('The supplier contact could not be deleted because');
 	$DbgMsg = _('The SQL that was used but failed was');
@@ -129,16 +131,16 @@ if (!isset($SelectedContact)){
 		FROM suppliercontacts,
 			suppliers
 		WHERE suppliercontacts.supplierid=suppliers.supplierid
-		AND suppliercontacts.supplierid = '$SupplierID'";
+		AND suppliercontacts.supplierid = '".$SupplierID."'";
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_row($result);
 
-	if ($myrow) {
-		echo '<div class="centre"><b>' . _('Contacts Defined for') . " - $myrow[0]</b></div>";
-	}
+	echo "<table class=selection>\n";
 
-	echo "<table border=1>\n";
+	if ($myrow) {
+		echo '<tr><th colspan=7><font size=3 color=navy>' . _('Contacts Defined for') . " - ".$myrow[0]."</font></th></tr>";
+	}
 	echo "<tr><th>" . _('Name') . "</th>
 			<th>" . _('Position') . "</th>
 			<th>" . _('Phone No') . "</th>
@@ -172,7 +174,7 @@ if (!isset($SelectedContact)){
 
 //end of ifs and buts!
 
-echo '</table><p>';
+echo '</table><br />';
 
 if (isset($SelectedContact)) {
 	echo "<div class='centre'><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "SupplierID=$SupplierID" . "'>" .
@@ -193,8 +195,8 @@ if (! isset($_GET['delete'])) {
 				mobile,
 				email
 			FROM suppliercontacts
-			WHERE contact='$SelectedContact'
-			AND supplierid='$SupplierID'";
+			WHERE contact='".$SelectedContact."'
+			AND supplierid='".$SupplierID."'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -213,7 +215,7 @@ if (! isset($_GET['delete'])) {
 		if (!isset($_POST['Contact'])) {
 			$_POST['Contact']='';
 		}
-		echo '<table><tr><td>' . _('Contact Name') . ":</td>
+		echo '<table class=selection><tr><td>' . _('Contact Name') . ":</td>
 				<td><input type='Text' name='Contact' size=41 maxlength=40 VALUE='" . $_POST['Contact'] . "'></td></tr>";
 	}
 	if (!isset($_POST['Position'])) {
@@ -243,7 +245,7 @@ if (! isset($_GET['delete'])) {
 		<td><input type=text name='Mobile' size=31 maxlength=30 VALUE='" . $_POST['Mobile'] . "'></td></tr>
 		<tr><td><a href='Mailto:" . $_POST['Email'] . "'>" . _('Email') . ":</a></td>
 		<td><input type=text name='Email' size=51 maxlength=50 VALUE='" . $_POST['Email'] . "'></td></tr>
-		</table>";
+		</table><br />";
 
 	echo "<div class='centre'><input type='Submit' name='submit' VALUE='" . _('Enter Information') . "'>";
 	echo '</div></form>';
