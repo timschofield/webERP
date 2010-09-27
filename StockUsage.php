@@ -27,34 +27,37 @@ if (isset($_POST['ShowGraphUsage'])) {
 
 include('includes/header.inc');
 
-$result = DB_query("SELECT description, 
-				units, 
-				mbflag, 
-				decimalplaces 
-			FROM stockmaster 
-			WHERE stockid='$StockID'",$db);
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') .
+		'" alt="">' . ' ' . _('Select Item to Transfer') . '';
+
+$result = DB_query("SELECT description,
+				units,
+				mbflag,
+				decimalplaces
+			FROM stockmaster
+			WHERE stockid='".$StockID."'",$db);
 $myrow = DB_fetch_row($result);
 
 $DecimalPlaces = $myrow[3];
 
-echo '<div class="centre">';
+echo '<table class=selection>';
 
 $Its_A_KitSet_Assembly_Or_Dummy =False;
 if (($myrow[2]=='K') OR ($myrow[2]=='A') OR ($myrow[2]=='D')) {
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
-	echo "<br><font color=BLUE size=3><b>$StockID - $myrow[0] </b></font>";
+	echo "<font color=navy size=3><b>$StockID - $myrow[0] </b></font>";
 
 	echo '<br>' . _('The selected item is a dummy or assembly or kit-set item and cannot have a stock holding') . '. ' . _('Please select a different item');
 
 	$StockID = '';
 } else {
-echo '<br><font size=3>' . _('Item') . ' :<b> ' . $StockID . ' - ' . $myrow[0] . ' </b>  (' . _('in units of') . ' :<b> ' . $myrow[1] . ')</b></font><br><br>';
+	echo '<tr><th><font size=3 color=navy>' . _('Item') . ' :<b> ' . $StockID . ' - ' . $myrow[0] . ' </b>  (' . _('in units of') . ' :<b> ' . $myrow[1] . ')</b></font></th></tr>';
 }
 
-echo "<form action='" . $_SERVER['PHP_SELF'] . '?'. SID ."' method=post>";
+echo "<form action='" . $_SERVER['PHP_SELF'] . '?'. SID ."' method=post><tr><td>";
 echo _('Stock Code') . ":<input type=text name='StockID' size=21 maxlength=20 value='$StockID' >";
 
-echo _('From Stock Location') . ":<select name='StockLocation'> ";
+echo _('From Stock Location') . ":<select name='StockLocation'>";
 
 $sql = 'SELECT loccode, locationname FROM locations';
 $resultStkLocs = DB_query($sql,$db);
@@ -82,8 +85,7 @@ if (isset($_POST['StockLocation'])){
 echo '</select>';
 
 echo " <input type=submit name='ShowUsage' VALUE='" . _('Show Stock Usage') . "'>";
-echo " <input type=submit name='ShowGraphUsage' VALUE='" . _('Show Graph Of Stock Usage') . "'>";
-echo '<hr>';
+echo " <input type=submit name='ShowGraphUsage' VALUE='" . _('Show Graph Of Stock Usage') . "'></td></tr></table><br />";
 
 /* $_SESSION['NumberOfPeriodsOfStockUsage']  is defined in config.php as a user definable variable
 config.php is loaded by header.inc */
@@ -92,29 +94,29 @@ config.php is loaded by header.inc */
 but there is no physical stock movement - it makes sense honest ??? */
 if (isset($_POST['ShowUsage'])){
 	if($_POST['StockLocation']=='All'){
-		$sql = "SELECT periods.periodno, 
-				periods.lastdate_in_period, 
-				SUM(-stockmoves.qty) AS qtyused 
-			FROM stockmoves INNER JOIN periods 
-				ON stockmoves.prd=periods.periodno 
-			WHERE (stockmoves.type=10 OR stockmoves.type=11 OR stockmoves.type=28) 
-			AND stockmoves.hidemovt=0 
-			AND stockmoves.stockid = '" . $StockID . "' 
-			GROUP BY periods.periodno, 
-				periods.lastdate_in_period 
+		$sql = "SELECT periods.periodno,
+				periods.lastdate_in_period,
+				SUM(-stockmoves.qty) AS qtyused
+			FROM stockmoves INNER JOIN periods
+				ON stockmoves.prd=periods.periodno
+			WHERE (stockmoves.type=10 OR stockmoves.type=11 OR stockmoves.type=28)
+			AND stockmoves.hidemovt=0
+			AND stockmoves.stockid = '" . $StockID . "'
+			GROUP BY periods.periodno,
+				periods.lastdate_in_period
 			ORDER BY periodno DESC LIMIT " . $_SESSION['NumberOfPeriodsOfStockUsage'];
 	} else {
-		$sql = "SELECT periods.periodno, 
-				periods.lastdate_in_period, 
-				SUM(-stockmoves.qty) AS qtyused 
-			FROM stockmoves INNER JOIN periods 
-				ON stockmoves.prd=periods.periodno 
-			WHERE (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28) 
-			AND stockmoves.hidemovt=0 
-			AND stockmoves.loccode='" . $_POST['StockLocation'] . "' 
-			AND stockmoves.stockid = '" . $StockID . "' 
-			GROUP BY periods.periodno, 
-				periods.lastdate_in_period 
+		$sql = "SELECT periods.periodno,
+				periods.lastdate_in_period,
+				SUM(-stockmoves.qty) AS qtyused
+			FROM stockmoves INNER JOIN periods
+				ON stockmoves.prd=periods.periodno
+			WHERE (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28)
+			AND stockmoves.hidemovt=0
+			AND stockmoves.loccode='" . $_POST['StockLocation'] . "'
+			AND stockmoves.stockid = '" . $StockID . "'
+			GROUP BY periods.periodno,
+				periods.lastdate_in_period
 			ORDER BY periodno DESC LIMIT " . $_SESSION['NumberOfPeriodsOfStockUsage'];
 	}
 	$MovtsResult = DB_query($sql, $db);
@@ -125,19 +127,19 @@ if (isset($_POST['ShowUsage'])){
 		}
 		exit;
 	}
-	
-	echo '</div><table cellpadding=2 border=0>';
+
+	echo '</div><table cellpadding=2 class=selection>';
 	$tableheader = "<tr><th>" . _('Month') . "</th><th>" . _('Usage') . '</th></tr>';
 	echo $tableheader;
-	
+
 	$j = 1;
 	$k=0; //row colour counter
-	
+
 	$TotalUsage = 0;
 	$PeriodsCounter =0;
-	
+
 	while ($myrow=DB_fetch_array($MovtsResult)) {
-	
+
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
 			$k=0;
@@ -145,26 +147,26 @@ if (isset($_POST['ShowUsage'])){
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
-	
+
 		$DisplayDate = MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
-	
+
 		$TotalUsage += $myrow['qtyused'];
 		$PeriodsCounter++;
 		printf('<td>%s</td><td class=number>%s</td></tr>', $DisplayDate, number_format($myrow['qtyused'],$DecimalPlaces));
-	
+
 	//end of page full new headings if
 	}
 	//end of while loop
-	
-	echo '</table>';
+
 	if ($TotalUsage>0 && $PeriodsCounter>0){
-	echo '<br><div class="centre">' . _('Average Usage per month is') . ' ' . number_format($TotalUsage/$PeriodsCounter);
-	echo '</div>';
+	echo '<tr<th colspan=2>' . _('Average Usage per month is') . ' ' . number_format($TotalUsage/$PeriodsCounter);
+	echo '</th></tr>';
 	}
+	echo '</table>';
 } /* end if Show Usage is clicked */
 
-echo '<div class="centre">';
-echo "<hr><a href='$rootpath/StockStatus.php?". SID . "&StockID=$StockID'>" . _('Show Stock Status') .'</a>';
+echo '<br /><div class="centre">';
+echo "<a href='$rootpath/StockStatus.php?". SID . "&StockID=$StockID'>" . _('Show Stock Status') .'</a>';
 echo "<br><a href='$rootpath/StockMovements.php?". SID . "&StockID=$StockID&StockLocation=" . $_POST['StockLocation'] . "'>" . _('Show Stock Movements') . '</a>';
 echo "<br><a href='$rootpath/SelectSalesOrder.php?". SID . "&SelectedStockItem=$StockID&StockLocation=" . $_POST['StockLocation'] . "'>" . _('Search Outstanding Sales Orders') . '</a>';
 echo "<br><a href='$rootpath/SelectCompletedOrder.php?". SID . "&SelectedStockItem=$StockID'>" . _('Search Completed Sales Orders') . '</a>';
