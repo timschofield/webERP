@@ -176,7 +176,7 @@ if (isset($_SESSION['SupplierID'])) {
 	echo "<br><a href=\"$rootpath/SupplierContacts.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Add/Modify/Delete Supplier Contacts') . '</a>';
 	echo '<br>';
 	echo "<br><a href='$rootpath/Shipments.php?" . SID . "&NewShipment=Yes'>" . _('Set Up A New Shipment') . '</a>';
-	echo "<br><a href='$rootpath/SuppLoginSetup.php?" . SID . "&NewShipment=Yes'>" . _('Supplier Login Configuration') . '</a>';
+	echo "<br><a href='$rootpath/SuppLoginSetup.php?" . SID . "'>" . _('Supplier Login Configuration') . '</a>';
 	echo '</td></tr></table>';
 } else {
 	// Supplier is not selected yet

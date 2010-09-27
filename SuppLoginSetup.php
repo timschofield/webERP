@@ -124,7 +124,7 @@ if (isset($_POST['submit'])) {
 						supplierid='" . $_POST['Supp'] ."',
 						phone='" . $_POST['Phone'] ."',
 						email='" . $_POST['Email'] ."',
-						password='".CryptPass($UpdatePassword)."',
+						" . $UpdatePassword .",
 						pagesize='" . $_POST['PageSize'] . "',
 						fullaccess=" . $_POST['Access'] . ",
 						theme='" . $_POST['Theme'] . "',
@@ -132,7 +132,7 @@ if (isset($_POST['submit'])) {
 						defaultlocation='" . $_POST['DefaultLocation'] ."',
 						modulesallowed='" . $ModulesAllowed . "',
 						blocked=" . $_POST['Blocked'] . "
-					WHERE userid = '$SelectedUser'";
+					WHERE userid = '" . $SelectedUser . "'";
 
 		prnMsg( _('The selected user record has been updated'), 'success' );
 	} elseif ($InputError !=1) {
@@ -158,11 +158,11 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['Phone'] . "',
 						'" . $_POST['Email'] ."',
 						'" . $_POST['PageSize'] ."',
-						" . $_POST['Access'] . ",
+						'" . $_POST['Access'] . "',
 						'" . $_POST['DefaultLocation'] ."',
 						'" . date($_SESSION['DefaultDateFormat']) ."',
 						'" . $ModulesAllowed . "',
-						" . $_SESSION['DefaultDisplayRecordsMax'] . ",
+						'" . $_SESSION['DefaultDisplayRecordsMax'] . "',
 						'" . $_POST['Theme'] . "',
 						'". $_POST['UserLanguage'] ."')";
 		prnMsg( _('A new user record has been inserted'), 'success' );
@@ -206,7 +206,7 @@ if (isset($_POST['submit'])) {
 			prnMsg(_('Cannot delete user as entries already exist in the audit trail'), 'warn');
 		} else {
 
-			$sql="DELETE FROM www_users WHERE userid='$SelectedUser'";
+			$sql="DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The User could not be deleted because');;
 			$result = DB_query($sql,$db,$ErrMsg);
 			prnMsg(_('User Deleted'),'info');
@@ -233,7 +233,7 @@ if (!isset($SelectedUser)) {
 		FROM www_users WHERE supplierid = '" . $_SESSION['SupplierID'] . "'";
 	$result = DB_query($sql,$db);
 
-	echo '<table>';
+	echo '<table class=selection>';
 	echo "<tr><th>" . _('User Login') . "</th>
 		<th>" . _('Full Name') . "</th>
 		<th>" . _('Telephone') . "</th>
