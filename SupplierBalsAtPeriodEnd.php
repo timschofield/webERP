@@ -5,17 +5,17 @@
 $PageSecurity = 2;
 include('includes/session.inc');
 
-If (isset($_POST['PrintPDF']) 
-	AND isset($_POST['FromCriteria']) 
-	AND strlen($_POST['FromCriteria'])>=1 
-	AND isset($_POST['ToCriteria']) 
+If (isset($_POST['PrintPDF'])
+	AND isset($_POST['FromCriteria'])
+	AND strlen($_POST['FromCriteria'])>=1
+	AND isset($_POST['ToCriteria'])
 	AND strlen($_POST['ToCriteria'])>=1){
 
 	include('includes/PDFStarter.php');
 
 	$pdf->addInfo('Title',_('Supplier Balance Listing'));
 	$pdf->addInfo('Subject',_('Supplier Balances'));
-	
+
 	$FontSize=12;
 	$PageNumber=0;
 	$line_height=12;
@@ -30,7 +30,7 @@ If (isset($_POST['PrintPDF'])
 			SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
 	(supptrans.ovamount + supptrans.ovgst)/supptrans.rate ELSE 0 END)
 	 AS afterdatetrans,
-	 	Sum(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' 
+	 	Sum(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "'
 				AND (supptrans.type=22 OR supptrans.type=21) THEN
 	       supptrans.diffonexch ELSE 0 END)
 	 AS afterdatediffonexch,
@@ -44,8 +44,8 @@ If (isset($_POST['PrintPDF'])
 		AND suppliers.supplierid = supptrans.supplierno
 		AND suppliers.supplierid >= '" . $_POST['FromCriteria'] . "'
 		AND suppliers.supplierid <= '" . $_POST['ToCriteria'] . "'
-	GROUP BY suppliers.supplierid, 
-		suppliers.suppname, 
+	GROUP BY suppliers.supplierid,
+		suppliers.suppname,
 		currencies.currency";
 
 	$SupplierResult = DB_query($SQL,$db);
@@ -107,47 +107,53 @@ If (isset($_POST['PrintPDF'])
 	$DisplayTotBalance = number_format($TotBal,2);
 
 	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
-	
+
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_Supplier_Balances_at_Period_End_' . Date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
-	
+
 } else { /*The option to print PDF was not hit */
 
 	$title=_('Supplier Balances At A Period End');
 	include('includes/header.inc');
-	
-	if (strlen($_POST['FromCriteria'])<1 || strlen($_POST['ToCriteria'])<1) {
 
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' .
+		_('Supplier Allocations') . '" alt="">' . ' ' . $title . '</p>';
+	if (!isset($_POST['FromCriteria'])) {
+		$_POST['FromCriteria'] = '1';
+	}
+	if (!isset($_POST['ToCriteria'])) {
+		$_POST['ToCriteria'] = 'zzzzzz';
+	}
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
+	echo '<form action=' . $_SERVER['PHP_SELF'] . " method='post'><table class=selection>";
 
-		echo '<tr><td>' . _('From Supplier Code') . ":</font></td>
-			<td><input Type=text maxlength=6 size=7 name=FromCriteria value='1'></td></tr>";
-		echo '<tr><td>' . _('To Supplier Code') . ":</td>
-			<td><input Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></td></tr>";
+	echo '<tr><td>' . _('From Supplier Code') . ":</font></td>
+			<td><input Type=text maxlength=6 size=7 name=FromCriteria value=".$_POST['FromCriteria']."></td></tr>";
+	echo '<tr><td>' . _('To Supplier Code') . ":</td>
+			<td><input Type=text maxlength=6 size=7 name=ToCriteria value=".$_POST['ToCriteria']."></td></tr>";
 
-		echo '<tr><td>' . _('Balances As At') . ":</td>
+	echo '<tr><td>' . _('Balances As At') . ":</td>
 			<td><select Name='PeriodEnd'>";
 
-		$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
+	$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
 
-		$ErrMsg = _('Could not retrieve period data because');
-		$Periods = DB_query($sql,$db,$ErrMsg);
+	$ErrMsg = _('Could not retrieve period data because');
+	$Periods = DB_query($sql,$db,$ErrMsg);
 
-		while ($myrow = DB_fetch_array($Periods,$db)){
+	while ($myrow = DB_fetch_array($Periods,$db)){
 
-			echo '<option VALUE=' . $myrow['lastdate_in_period'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
+		echo '<option VALUE=' . $myrow['lastdate_in_period'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 
-		}
 	}
+
 
 	echo '</select></td></tr>';
 
 
-	echo "</table><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
+	echo "</table><br /><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
-} /*end of else not PrintPDF */
+}/*end of else not PrintPDF */
 
 ?>
