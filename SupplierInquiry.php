@@ -133,7 +133,7 @@ if (isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])){
 
 }
 
-echo "<table WIDTH=90% BORDER=1><tr><th>" . _('Total Balance') .
+echo "<table width=90% class=selection><tr><th>" . _('Total Balance') .
 	  "</th><th>" . _('Current') .
 	  "</th><th>" . _('Now Due') .
 	  "</th><th>" . $_SESSION['PastDueDays1'] . '-' . $_SESSION['PastDueDays2'] .
@@ -148,7 +148,7 @@ echo '<tr><td class=number>' . number_format($SupplierRecord['balance'],2) .
 
 echo "<br><div class='centre'><form action='" . $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
 echo _('Show all transactions after') . ': ' ."<input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='TransAfterDate' VALUE='" .
-	  $_POST['TransAfterDate'] . "' MAXLENGTH =10 size=10> <input type=submit name='Refresh Inquiry' VALUE='" . _('Refresh Inquiry') . "'></form><br>";
+	  $_POST['TransAfterDate'] . "' maxlength =10 size=10> <input type=submit name='Refresh Inquiry' VALUE='" . _('Refresh Inquiry') . "'></form><br>";
 echo '</div>';
 $DateAfterCriteria = FormatDateForSQL($_POST['TransAfterDate']);
 
@@ -169,7 +169,7 @@ $SQL = "SELECT supptrans.id,
 		systypes
 	WHERE supptrans.type = systypes.typeid
 	AND supptrans.supplierno = '" . $SupplierID . "'
-	AND supptrans.trandate >= '$DateAfterCriteria'
+	AND supptrans.trandate >= '" . $DateAfterCriteria . "'
 	ORDER BY supptrans.trandate";
 
 $ErrMsg = _('No transactions were returned by the SQL because');
@@ -187,7 +187,7 @@ if (DB_num_rows($TransResult) == 0){
 /*show a table of the transactions returned by the SQL */
 
 
-echo '<table width="90%" cellpadding="2" colspan="7">';
+echo '<table width="90%" cellpadding="2" colspan="7" class=selection>';
 $TableHeader = "<tr BGCOLOR =#800000><th>" . _('Trans') . ' #' .
 		"</th><th>" . _('Type') .
 		"</th><th>" . _('Supplier Ref') .
