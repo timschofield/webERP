@@ -465,20 +465,20 @@ if (isset($_POST['submit'])) {
 							telephone='".$_POST['Phone']."',
 							fax = '".$_POST['Fax']."',
 							email = '".$_POST['Email']."',
-							supptype = ".$_POST['SupplierType'].",
+							supptype = '".$_POST['SupplierType']."',
 							currcode='" . $_POST['CurrCode'] . "',
-							suppliersince='$SQL_SupplierSince',
+							suppliersince='".$SQL_SupplierSince . "',
 							paymentterms='" . $_POST['PaymentTerms'] . "',
 							bankpartics='" . $_POST['BankPartics'] . "',
 							bankref='" . $_POST['BankRef'] . "',
 					 		bankact='" . $_POST['BankAct'] . "',
-							remittance=" . $_POST['Remittance'] . ",
-							taxgroupid=" . $_POST['TaxGroup'] . ",
-							factorcompanyid=" . $_POST['FactorID'] .",
+							remittance='" . $_POST['Remittance'] . "',
+							taxgroupid='" . $_POST['TaxGroup'] . "',
+							factorcompanyid='" . $_POST['FactorID'] ."',
 							lat='" . $latitude ."',
 							lng='" . $longitude ."',
 							taxref='". $_POST['TaxRef'] ."'
-						WHERE supplierid = '$SupplierID'";
+						WHERE supplierid = '".$SupplierID."'";
 			} else {
 				if ($suppcurr[0] != $_POST['CurrCode']) {
 					prnMsg( _('Cannot change currency code as transactions already exist'), info);
@@ -491,19 +491,19 @@ if (isset($_POST['submit'])) {
 							telephone='".$_POST['Phone']."',
 							fax = '".$_POST['Fax']."',
 							email = '".$_POST['Email']."',
-							supptype = ".$_POST['SupplierType'].",
-							suppliersince='$SQL_SupplierSince',
+							supptype = '".$_POST['SupplierType']."',
+							suppliersince='" . $SQL_SupplierSince . "',
 							paymentterms='" . $_POST['PaymentTerms'] . "',
 							bankpartics='" . $_POST['BankPartics'] . "',
 							bankref='" . $_POST['BankRef'] . "',
 					 		bankact='" . $_POST['BankAct'] . "',
-							remittance=" . $_POST['Remittance'] . ",
-							taxgroupid=" . $_POST['TaxGroup'] . ",
-							factorcompanyid=" . $_POST['FactorID'] .",
+							remittance='" . $_POST['Remittance'] . "',
+							taxgroupid='" . $_POST['TaxGroup'] . "',
+							factorcompanyid='" . $_POST['FactorID'] ."',
 							lat='" . $latitude ."',
 							lng='" . $longitude ."',
 							taxref='". $_POST['TaxRef'] ."'
-						WHERE supplierid = '$SupplierID'";
+						WHERE supplierid = '" . $SupplierID . "'";
 			}
 
 			$ErrMsg = _('The supplier could not be updated because');
@@ -546,16 +546,16 @@ if (isset($_POST['submit'])) {
 						'".$_POST['Phone']."',
 						'".$_POST['Fax']."',
 						'".$_POST['Email']."',
-						".$_POST['SupplierType'].",
+						'".$_POST['SupplierType']."',
 						'" . $_POST['CurrCode'] . "',
 						'" . $SQL_SupplierSince . "',
 						'" . $_POST['PaymentTerms'] . "',
 						'" . $_POST['BankPartics'] . "',
 						'" . $_POST['BankRef'] . "',
 						'" . $_POST['BankAct'] . "',
-                       	" . $_POST['Remittance'] . ",
-                       	" . $_POST['TaxGroup'] . ",
-                       	" . $_POST['FactorID'] . ",
+                       	'" . $_POST['Remittance'] . "',
+                       	'" . $_POST['TaxGroup'] . "',
+                       	'" . $_POST['FactorID'] . "',
                        	'" . $latitude ."',
                        	'" . $longitude ."',
                        	'" . $_POST['TaxRef'] . "')";
@@ -604,7 +604,7 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SuppTrans' , PurchOrders, SupplierContacts
 
-	$sql= "SELECT COUNT(*) FROM supptrans WHERE supplierno='$SupplierID'";
+	$sql= "SELECT COUNT(*) FROM supptrans WHERE supplierno='" . $SupplierID . "'";
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0] > 0) {
@@ -613,7 +613,7 @@ if (isset($_POST['submit'])) {
 		echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('transactions against this supplier');
 
 	} else {
-		$sql= "SELECT COUNT(*) FROM purchorders WHERE supplierno='$SupplierID'";
+		$sql= "SELECT COUNT(*) FROM purchorders WHERE supplierno='" . $SupplierID . "'";
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0] > 0) {
@@ -621,7 +621,7 @@ if (isset($_POST['submit'])) {
 			prnMsg(_('Cannot delete the supplier record because purchase orders have been created against this supplier'),'warn');
 			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('orders against this supplier');
 		} else {
-			$sql= "SELECT COUNT(*) FROM suppliercontacts WHERE supplierid='$SupplierID'";
+			$sql= "SELECT COUNT(*) FROM suppliercontacts WHERE supplierid='" . $SupplierID . "'";
 			$result = DB_query($sql, $db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0] > 0) {
@@ -634,7 +634,7 @@ if (isset($_POST['submit'])) {
 
 	}
 	if ($CancelDelete == 0) {
-		$sql="DELETE FROM suppliers WHERE supplierid='$SupplierID'";
+		$sql="DELETE FROM suppliers WHERE supplierid='" . $SupplierID . "'";
 		$result = DB_query($sql, $db);
 		prnMsg(_('Supplier record for') . ' ' . $SupplierID . ' ' . _('has been deleted'),'success');
 		unset($SupplierID);
@@ -769,7 +769,7 @@ if (!isset($SupplierID)) {
 				factorcompanyid,
 				taxref
 			FROM suppliers
-			WHERE supplierid = '$SupplierID'";
+			WHERE supplierid = '" . $SupplierID . "'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
