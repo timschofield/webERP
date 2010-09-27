@@ -171,8 +171,8 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				/*Now update the SuppTrans for the allocation made and the fact that it is now settled */
 
 				$SQL = "UPDATE supptrans SET settled = 1,
-                                     				alloc = " . $DetailTrans['trantotal'] . ",
-                                     				diffonexch = " . ($DetailTrans['diffonexch'] + $DiffOnExch)  . "
+                                     				alloc = '" . $DetailTrans['trantotal'] . "',
+                                     				diffonexch = '" . ($DetailTrans['diffonexch'] + $DiffOnExch)  . "'
                                  	WHERE type = " . $DetailTrans['type'] . '
 					AND transno = ' . $DetailTrans['transno'];
 
@@ -234,13 +234,16 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	$title=_('Payment Run');
 	include('includes/header.inc');
 
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
+		. '" alt="">' . $title . '</p>';
+
 	if (isset($_POST['Currency']) AND !is_numeric($_POST['ExRate'])){
 		echo '<br>' . _('To process payments for') . ' ' . $_POST['Currency'] . ' ' . _('a numeric exchange rate applicable for purchasing the currency to make the payment with must be entered') . '. ' . _('This rate is used to calculate the difference in exchange and make the necessary postings to the General ledger if linked') . '.';
 	}
 
 	/* show form to allow input	*/
 
-	echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="POST"><table>';
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="POST"><table class=selection>';
 
 	if (!isset($_POST['FromCriteria']) or strlen($_POST['FromCriteria'])<1){
 		$DefaultFromCriteria = '1';
@@ -346,7 +349,7 @@ Payment types can be modified by editing that file */
 	echo '<tr><td>' . _('Starting Reference no (eg chq no)') . ':</td>
             <td><input type=text name="Ref" maxlength=11 size=12 VALUE=' . $_POST['Ref'] . '></td></tr>';
 
-	echo '</table><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print PDF Only') . '">
+	echo '</table><br /><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print PDF Only') . '">
                 <input type=Submit Name="PrintPDFAndProcess" Value="' . _('Print and Process Payments') . '"></div>';
 
 	include ('includes/footer.inc');
