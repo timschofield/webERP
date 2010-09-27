@@ -14,6 +14,10 @@ include('includes/DefineSuppTransClass.php');
 include('includes/session.inc');
 $title = _('Enter Supplier Invoice Against Goods Received');
 include('includes/header.inc');
+
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') .
+		'" alt="">' . ' ' . $title . '</p>';
+
 $Complete=false;
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('To enter a supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice must be clicked on'),'info');
@@ -104,8 +108,8 @@ if (isset($_GET['Delete'])){
 
 /*Show all the selected GRNs so far from the SESSION['SuppTrans']->GRNs array */
 
-echo '<div class="centre"><font size=4 color=BLUE>' . _('Invoiced Goods Received Selected');
-echo '</font></div><table cellpadding=1>';
+echo '<table cellpadding=1 class=selection>';
+echo '<tr><th colspan=6><font size=3 color=navy>' . _('Invoiced Goods Received Selected') . '</font></th></tr>';
 
 $tableheader = "<tr bgcolor=#800000>
 			<th>" . _('Sequence') . " #</th>
@@ -142,11 +146,11 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 }
 
 echo '<tr>
-	<td colspan=5 align=right><font size=4 color=BLUE>' . _('Total Value of Goods Charged') . ':</font></td>
-	<td class=number><font size=4 color=BLUE><U>' . number_format($TotalValueCharged,2) . '</U></font></td>
+	<td colspan=5 align=right><font size=2 color=navy>' . _('Total Value of Goods Charged') . ':</font></td>
+	<td class=number><font size=2 color=navy>' . number_format($TotalValueCharged,2) . '</font></td>
 </tr>';
 echo "</table>";
-echo "<div class='centre'><br><a href='$rootpath/SupplierInvoice.php?" . SID ."'>" . _('Back to Invoice Entry') . '</a><hr></div>';
+echo "<br /><div class='centre'><a href='$rootpath/SupplierInvoice.php?" . SID ."'>" . _('Back to Invoice Entry') . '</a></div><br />';
 
 
 /* Now get all the outstanding GRNs for this supplier from the database*/
@@ -219,9 +223,9 @@ if (isset($_GET['Modify'])){
 	$GRNNo = $_GET['Modify'];
 	$GRNTmp = $_SESSION['SuppTrans']->GRNs[$GRNNo];
 
-	echo '<p><div class="centre"><font size=4 color=BLUE><b>' . _('GRN Selected For Adding To A Purchase Invoice') . '</font></b></div>';
-	echo "<table>
-		<tr bgcolor=#800000>
+	echo "<table class=selection>";
+	echo '<tr><th colspan=10><font size=3 color=navy>' . _('GRN Selected For Adding To A Purchase Invoice') . '</font></th></tr>';
+	echo "<tr bgcolor=#800000>
 			<th>" . _('Sequence') . " #</th>
 			<th>" . _('Item') . "</th>
 			<th>" . _('Qty Outstanding') . "</th>
@@ -263,8 +267,8 @@ if (isset($_GET['Modify'])){
 }
 else {
 	if (count( $_SESSION['SuppTransTmp']->GRNs)>0){   /*if there are any outstanding GRNs then */
-		echo '<div class="centre"><font size=4 color=BLUE>' . _('Goods Received Yet to be Invoiced From') . ' ' . $_SESSION['SuppTrans']->SupplierName.'</div>';
-		echo "<table cellpadding=1 colspan=7>";
+		echo "<table cellpadding=1 colspan=7 class=selection>";
+		echo '<tr><th colspan=10><font size=3 color=navy>' . _('Goods Received Yet to be Invoiced From') . ' ' . $_SESSION['SuppTrans']->SupplierName.'</font></th></tr>';
 
 		$tableheader = "<tr bgcolor=#800000><th>" . _('Select') . "</th>
 				<th>" . _('Sequence') . " #</th>
@@ -312,7 +316,7 @@ else {
 		}
 		}
 		echo '</table>';
-		echo "<div class='centre'><input type=Submit Name='SelectAll' Value='" . _('Select All') . "'>";
+		echo "<br /><div class='centre'><input type=Submit Name='SelectAll' Value='" . _('Select All') . "'>";
 		echo "<input type=Submit Name='DeSelectAll' Value='" . _('Deselect All') . "'>";
 		echo "<br><input type=Submit Name='AddGRNToTrans' Value='" . _('Add to Invoice') . "'></div>";
 	}
