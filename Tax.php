@@ -5,15 +5,15 @@
 $PageSecurity = 2;
 include('includes/session.inc');
 
-if (isset($_POST['TaxAuthority']) AND 
-	isset($_POST['PrintPDF']) AND 
-	isset($_POST['NoOfPeriods']) AND 
+if (isset($_POST['TaxAuthority']) AND
+	isset($_POST['PrintPDF']) AND
+	isset($_POST['NoOfPeriods']) AND
 	isset($_POST['ToPeriod'])){
 
 	include('includes/PDFStarter.php');
-	
-	$sql = 'SELECT lastdate_in_period 
-		FROM periods 
+
+	$sql = 'SELECT lastdate_in_period
+		FROM periods
 		WHERE periodno=' . $_POST['ToPeriod'];
 	$ErrMsg = _('Could not determine the last date of the period selected') . '. ' . _('The sql returned the following error');
 	$PeriodEndResult = DB_query($sql,$db,$ErrMsg);
@@ -25,16 +25,16 @@ if (isset($_POST['TaxAuthority']) AND
 	$TaxAuthorityName =  $TaxAuthDescription[0];
 
 	$pdf->addInfo('Title',_('Taxation Report'));
-	$ReportTitle = $TaxAuthorityName . ' ' . _('Tax Report for') . ' ' . $_POST['NoOfPeriods'] . ' ' . _('months to') . ' ' . $PeriodEnd;  
+	$ReportTitle = $TaxAuthorityName . ' ' . _('Tax Report for') . ' ' . $_POST['NoOfPeriods'] . ' ' . _('months to') . ' ' . $PeriodEnd;
     $pdf->addInfo('Subject', $ReportTitle);
-	
+
 	$FontSize=12;
 	$PageNumber=0;
 	$line_height=12;
-    
+
       /*Now get the invoices for the tax report */
-	
-	$SQL = 'SELECT debtortrans.transno,
+
+	$SQL = "SELECT debtortrans.transno,
 			debtortrans.type,
 			systypes.typename,
 			debtortrans.trandate,
@@ -49,11 +49,11 @@ if (isset($_POST['TaxAuthority']) AND
 		INNER JOIN debtorsmaster ON debtortrans.debtorno=debtorsmaster.debtorno
 		INNER JOIN systypes ON debtortrans.type=systypes.typeid
 		INNER JOIN debtortranstaxes ON debtortrans.id = debtortranstaxes.debtortransid
-		WHERE debtortrans.prd >= ' . ($_POST['ToPeriod'] - $_POST['NoOfPeriods'] + 1) . '
-		AND debtortrans.prd <= ' . $_POST['ToPeriod'] . '
+		WHERE debtortrans.prd >= '" . ($_POST['ToPeriod'] - $_POST['NoOfPeriods'] + 1) . "'
+		AND debtortrans.prd <= '" . $_POST['ToPeriod'] . "'
 		AND (debtortrans.type=10 OR debtortrans.type=11)
-		AND debtortranstaxes.taxauthid = ' . $_POST['TaxAuthority'] . '
-		ORDER BY debtortrans.id';
+		AND debtortranstaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
+		ORDER BY debtortrans.id";
 
 	$DebtorTransResult = DB_query($SQL,$db,'','',false,false); //don't trap errors in DB_query
 
@@ -124,7 +124,7 @@ if (isset($_POST['TaxAuthority']) AND
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,350,12, _('Total Outputs'),'right');
 	}
 
-	
+
 	if ($_POST['DetailOrSummary']=='Detail'){
 		/*Print out the outputs totals */
 		$LeftOvers = $pdf->addTextWrap(410,$YPos,60,8, number_format($Outputs,2),'right');
@@ -160,12 +160,12 @@ if (isset($_POST['TaxAuthority']) AND
 			supptranstaxes.taxamount/supptrans.rate AS taxamt
 		FROM supptrans
 		INNER JOIN suppliers ON supptrans.supplierno=suppliers.supplierid
-		INNER JOIN systypes ON supptrans.type=systypes.typeid 
-		INNER JOIN supptranstaxes ON supptrans.id = supptranstaxes.supptransid 
+		INNER JOIN systypes ON supptrans.type=systypes.typeid
+		INNER JOIN supptranstaxes ON supptrans.id = supptranstaxes.supptransid
 		WHERE supptrans.trandate >= '" . $StartDateSQL . "'
 		AND supptrans.trandate <= '" . FormatDateForSQL($PeriodEnd) . "'
-		AND (supptrans.type=20 OR supptrans.type=21)  
-		AND supptranstaxes.taxauthid = " . $_POST['TaxAuthority'] . "
+		AND (supptrans.type=20 OR supptrans.type=21)
+		AND supptranstaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
 		ORDER BY supptrans.trandate";
 
 	$SuppTransResult = DB_query($SQL,$db,'','',false,false); //doint trap errors in DB_query
@@ -223,7 +223,7 @@ if (isset($_POST['TaxAuthority']) AND
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,350,12, _('Total Inputs'),'right');
 	}
 	/*Accumulate the input totals */
-	
+
 	if ($_POST['DetailOrSummary']=='Detail'){
 		/*Print out the input totals */
 		$LeftOvers = $pdf->addTextWrap(410,$YPos,60,8, number_format($Inputs,2),'right');
@@ -295,11 +295,14 @@ if (isset($_POST['TaxAuthority']) AND
 	$title=_('Tax Reporting');
 	include('includes/header.inc');
 
-	echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table>";
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
+	. '" alt="">' . $title. '</p>';
+
+	echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table class=selection>";
 
 	echo '<tr><td>' . _('Tax Authority To Report On:') . ':</font></td>
 			<td><select name=TaxAuthority>';
-			
+
 	$result = DB_query('SELECT taxid, description FROM taxauthorities',$db);
 	while ($myrow = DB_fetch_array($result)){
 		echo '<option Value=' . $myrow['taxid'] . '>' . $myrow['description'];
@@ -320,8 +323,8 @@ if (isset($_POST['TaxAuthority']) AND
 
 	$DefaultPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),0,Date('Y'))),$db);
 
-	$sql = 'SELECT periodno, 
-			lastdate_in_period 
+	$sql = 'SELECT periodno,
+			lastdate_in_period
 		FROM periods';
 
 	$ErrMsg = _('Could not retrieve the period data because');
@@ -345,7 +348,7 @@ if (isset($_POST['TaxAuthority']) AND
 
 
 	echo "</table>
-		<div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'>
+		<br /><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'>
 		</div>
 		</form>";
 
