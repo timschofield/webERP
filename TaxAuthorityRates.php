@@ -14,6 +14,9 @@ include('includes/session.inc');
 $title = _('Tax Rates');
 include('includes/header.inc');
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
+	. '" alt="">' . $title. '</p>';
+
 /* <-- $Revision: 1.16 $ --> */
 
 if (!isset($TaxAuthority)){
@@ -25,19 +28,19 @@ if (!isset($TaxAuthority)){
 
 if (isset($_POST['UpdateRates'])){
 
-	$TaxRatesResult = DB_query('SELECT taxauthrates.taxcatid,
+	$TaxRatesResult = DB_query("SELECT taxauthrates.taxcatid,
 						taxauthrates.taxrate,
 						taxauthrates.dispatchtaxprovince
 						FROM taxauthrates
-						WHERE taxauthrates.taxauthority=' . $TaxAuthority, 
+						WHERE taxauthrates.taxauthority='" . $TaxAuthority . "'",
 						$db);
 
 	while ($myrow=DB_fetch_array($TaxRatesResult)){
 
-		$sql = 'UPDATE taxauthrates SET taxrate=' . ($_POST[$myrow['dispatchtaxprovince'] . '_' . $myrow['taxcatid']]/100) . '
-						WHERE taxcatid = ' . $myrow['taxcatid'] . '
-						AND dispatchtaxprovince = ' . $myrow['dispatchtaxprovince'] . '
-						AND taxauthority = ' . $TaxAuthority;
+		$sql = "UPDATE taxauthrates SET taxrate=" . ($_POST[$myrow['dispatchtaxprovince'] . '_' . $myrow['taxcatid']]/100) . "
+						WHERE taxcatid = '" . $myrow['taxcatid'] . "'
+						AND dispatchtaxprovince = '" . $myrow['dispatchtaxprovince'] . "'
+						AND taxauthority = '" . $TaxAuthority . "'";
 		DB_query($sql,$db);
 	}
 	prnMsg(_('All rates updated successfully'),'info');
@@ -49,33 +52,33 @@ if (isset($_POST['UpdateRates'])){
 /*Display updated rates
 */
 
-$TaxAuthDetail = DB_query('SELECT description FROM taxauthorities WHERE taxid=' . $TaxAuthority,$db);
+$TaxAuthDetail = DB_query("SELECT description FROM taxauthorities WHERE taxid='" . $TaxAuthority . "'",$db);
 $myrow = DB_fetch_row($TaxAuthDetail);
-echo '<font size=3 color=BLUE><b>' . _('Update') . ' ' . $myrow[0] . ' ' . _('Rates') . '</b></font>';
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'" method=post>';
 
 echo '<input type=hidden name="TaxAuthority" VALUE=' . $TaxAuthority . '>';
 
-$TaxRatesResult = DB_query('SELECT taxauthrates.taxcatid,
+$TaxRatesResult = DB_query("SELECT taxauthrates.taxcatid,
 						taxcategories.taxcatname,
 						taxauthrates.taxrate,
 						taxauthrates.dispatchtaxprovince,
 						taxprovinces.taxprovincename
 						FROM taxauthrates INNER JOIN taxauthorities
 							ON taxauthrates.taxauthority=taxauthorities.taxid
-							INNER JOIN taxprovinces 
+							INNER JOIN taxprovinces
 							ON taxauthrates.dispatchtaxprovince= taxprovinces.taxprovinceid
-							INNER JOIN taxcategories 
+							INNER JOIN taxcategories
 							ON taxauthrates.taxcatid=taxcategories.taxcatid
-						WHERE taxauthrates.taxauthority=' . $TaxAuthority . "
-						ORDER BY taxauthrates.dispatchtaxprovince, 
+						WHERE taxauthrates.taxauthority='" . $TaxAuthority . "'
+						ORDER BY taxauthrates.dispatchtaxprovince,
 						taxauthrates.taxcatid",
 					$db);
 
 if (DB_num_rows($TaxRatesResult)>0){
 
-	echo '<table cellpadding=2 border=2>';
+	echo '<table cellpadding=2 class=selection>';
+	echo '<tr><th colspan=3><font size=3 color=navy>' . _('Update') . ' ' . $myrow[0] . ' ' . _('Rates') . '</font></th></tr>';
 	$TableHeader = '<tr><th>' . _('Deliveries From') . '<br>' . _('Tax Province') . '</th>
 						<th>' . _('Tax Category') . '</th>
 						<th>' . _('Tax Rate') . ' %</th></tr>';
@@ -83,9 +86,9 @@ if (DB_num_rows($TaxRatesResult)>0){
 	$j = 1;
 	$k = 0; //row counter to determine background colour
 	$OldProvince='';
-	
+
 	while ($myrow = DB_fetch_array($TaxRatesResult)){
-		
+
 		if ($OldProvince!=$myrow['dispatchtaxprovince'] AND $OldProvince!=''){
 			echo '<tr bgcolor="#555555"><font size=1> </font><td colspan=3></td></tr>';
 		}
@@ -106,14 +109,14 @@ if (DB_num_rows($TaxRatesResult)>0){
 			$myrow['taxcatname'],
 			$myrow['dispatchtaxprovince'] . '_' . $myrow['taxcatid'],
 			$myrow['taxrate']*100 );
-		
+
 		$OldProvince = $myrow['dispatchtaxprovince'];
 
 	}
 //end of while loop
 echo '</table>';
 echo "<br><div class='centre'><input type=submit name='UpdateRates' VALUE='" . _('Update Rates') . "'>";
-} //end if tax taxcatid/rates to show 
+} //end if tax taxcatid/rates to show
 	else {
 	prnMsg(_('There are no tax rates to show - perhaps the dispatch tax province records have not yet been created?'),'warn');
 }
