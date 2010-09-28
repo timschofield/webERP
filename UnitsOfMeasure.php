@@ -8,6 +8,8 @@ include('includes/session.inc');
 $title = _('Units Of Measure');
 
 include('includes/header.inc');
+echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' .
+		_('Top Sales Order Search') . '" alt="">' . ' ' . $title . '</p>';
 
 if ( isset($_GET['SelectedMeasureID']) )
 	$SelectedMeasureID = $_GET['SelectedMeasureID'];
@@ -39,7 +41,7 @@ if (isset($_POST['submit'])) {
 		/*SelectedMeasureID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 		// Check the name does not clash
 		$sql = "SELECT count(*) FROM unitsofmeasure
-				WHERE unitid <> " . $SelectedMeasureID ."
+				WHERE unitid <> '" . $SelectedMeasureID ."'
 				AND unitname ".LIKE." '" . $_POST['MeasureName'] . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
@@ -51,7 +53,7 @@ if (isset($_POST['submit'])) {
 			// idealy this is one of those sets that should be in a stored procedure simce even the checks are
 			// relavant
 			$sql = "SELECT unitname FROM unitsofmeasure
-				WHERE unitid = " . $SelectedMeasureID;
+				WHERE unitid = '" . $SelectedMeasureID . "'";
 			$result = DB_query($sql,$db);
 			if ( DB_num_rows($result) != 0 ) {
 				// This is probably the safest way there is
@@ -124,7 +126,7 @@ if (isset($_POST['submit'])) {
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'stockmaster'
 	// Get the original name of the unit of measure the ID is just a secure way to find the unit of measure
 	$sql = "SELECT unitname FROM unitsofmeasure
-		WHERE unitid = " . $SelectedMeasureID;
+		WHERE unitid = '" . $SelectedMeasureID . "'";
 	$result = DB_query($sql,$db);
 	if ( DB_num_rows($result) == 0 ) {
 		// This is probably the safest way there is
@@ -179,7 +181,7 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = _('Could not get unit of measures because');
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	echo "<table>
+	echo "<table class=selection>
 		<tr>
 		<th>" . _('Units of Measure') . "</th>
 		</tr>";
@@ -221,7 +223,7 @@ if (! isset($_GET['delete'])) {
 		$sql = "SELECT unitid,
 				unitname
 				FROM unitsofmeasure
-				WHERE unitid=" . $SelectedMeasureID;
+				WHERE unitid='" . $SelectedMeasureID . "'";
 
 		$result = DB_query($sql, $db);
 		if ( DB_num_rows($result) == 0 ) {
