@@ -203,7 +203,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	$sql = "SELECT supplierid,suppname FROM `suppliers`";
 	$result = DB_query($sql,$db);
-	echo '<table>';
+	echo '<table class=selection>';
 	echo '<tr><td>' . _('Supplier') . ':</td><td><select name="supplier"> ';
 	while ($myrow=DB_fetch_array($result)){
 		if (isset($_POST['supplierid']) and ($myrow['supplierid'] == $_POST['supplierid'])) {
