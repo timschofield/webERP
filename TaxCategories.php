@@ -9,6 +9,9 @@ $title = _('Tax Categories');
 
 include('includes/header.inc');
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
+	. '" alt="">' . $title. '</p>';
+
 if ( isset($_GET['SelectedTaxCategory']) )
 	$SelectedTaxCategory = $_GET['SelectedTaxCategory'];
 elseif (isset($_POST['SelectedTaxCategory']))
@@ -39,7 +42,7 @@ if (isset($_POST['submit'])) {
 		/*SelectedTaxCategory could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 		// Check the name does not clash
 		$sql = "SELECT count(*) FROM taxcategories
-				WHERE taxcatid <> " . $SelectedTaxCategory ."
+				WHERE taxcatid <> '" . $SelectedTaxCategory ."'
 				AND taxcatname ".LIKE." '" . $_POST['TaxCategoryName'] . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
@@ -50,7 +53,7 @@ if (isset($_POST['submit'])) {
 			// Get the old name and check that the record still exists
 
 			$sql = "SELECT taxcatname FROM taxcategories
-				WHERE taxcatid = " . $SelectedTaxCategory;
+				WHERE taxcatid = '" . $SelectedTaxCategory . "'";
 			$result = DB_query($sql,$db);
 			if ( DB_num_rows($result) != 0 ) {
 				// This is probably the safest way there is
@@ -88,13 +91,13 @@ if (isset($_POST['submit'])) {
 
 			$LastTaxCatID = DB_Last_Insert_ID($db, 'taxcategories','taxcatid');
 
-			$sql = 'INSERT INTO taxauthrates (taxauthority,
+			$sql = "INSERT INTO taxauthrates (taxauthority,
 					dispatchtaxprovince,
 					taxcatid)
 				SELECT taxauthorities.taxid,
  					taxprovinces.taxprovinceid,
-					' . $LastTaxCatID . '
-				FROM taxauthorities CROSS JOIN taxprovinces';
+					'" . $LastTaxCatID . "'
+				FROM taxauthorities CROSS JOIN taxprovinces";
 			$result = DB_query($sql,$db,$ErrMsg,true);
 
 			$result = DB_Txn_Commit($db);
@@ -114,7 +117,7 @@ if (isset($_POST['submit'])) {
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'stockmaster'
 	// Get the original name of the tax category the ID is just a secure way to find the tax category
 	$sql = "SELECT taxcatname FROM taxcategories
-		WHERE taxcatid = " . $SelectedTaxCategory;
+		WHERE taxcatid = '" . $SelectedTaxCategory . "'";
 	$result = DB_query($sql,$db);
 	if ( DB_num_rows($result) == 0 ) {
 		// This is probably the safest way there is
@@ -129,9 +132,9 @@ if (isset($_POST['submit'])) {
 			prnMsg( _('Cannot delete this tax category because inventory items have been created using this tax category'),'warn');
 			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('inventory items that refer to this tax category') . '</font>';
 		} else {
-			$sql = 'DELETE FROM taxauthrates WHERE taxcatid = ' . $SelectedTaxCategory;
+			$sql = "DELETE FROM taxauthrates WHERE taxcatid  = '" . $SelectedTaxCategory . "'";
 			$result = DB_query($sql,$db);
-			$sql = 'DELETE FROM taxcategories WHERE taxcatid = ' .$SelectedTaxCategory;;
+			$sql = "DELETE FROM taxcategories WHERE taxcatid = '" . $SelectedTaxCategory . "'";
 			$result = DB_query($sql,$db);
 			prnMsg( $OldTaxCategoryName . ' ' . _('tax category and any tax rates set for it have been deleted'),'success');
 		}
@@ -161,7 +164,7 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = _('Could not get tax categories because');
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	echo "<table>
+	echo "<table class=selection>
 		<tr>
 		<th>" . _('Tax Categories') . "</th>
 		</tr>";
@@ -203,7 +206,7 @@ if (! isset($_GET['delete'])) {
 		$sql = "SELECT taxcatid,
 				taxcatname
 				FROM taxcategories
-				WHERE taxcatid=" . $SelectedTaxCategory;
+				WHERE taxcatid='" . $SelectedTaxCategory . "'";
 
 		$result = DB_query($sql, $db);
 		if ( DB_num_rows($result) == 0 ) {
@@ -215,12 +218,12 @@ if (! isset($_GET['delete'])) {
 			$_POST['TaxCategoryName']  = $myrow['taxcatname'];
 
 			echo "<input type=hidden name='SelectedTaxCategory' VALUE='" . $myrow['taxcatid'] . "'>";
-			echo "<table>";
+			echo "<table class=selection>";
 		}
 
 	}  else {
 		$_POST['TaxCategoryName']='';
-		echo "<table>";
+		echo "<table class=selection>";
 	}
 	echo "<tr>
 		<td>" . _('Tax Category Name') . ':' . "</td>
@@ -228,7 +231,7 @@ if (! isset($_GET['delete'])) {
 		</tr>";
 	echo '</table>';
 
-	echo '<div class="centre"><input type=Submit name=submit value=' . _('Enter Information') . '></div>';
+	echo '<br /><div class="centre"><input type=Submit name=submit value=' . _('Enter Information') . '></div>';
 
 	echo '</form>';
 
