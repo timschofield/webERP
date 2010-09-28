@@ -10,7 +10,7 @@ include ('includes/header.inc');
 if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_POST['Customers']) and isset($_POST['NumberOfTopItems']) and isset($_POST['order']))) {
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="">' . ' ' . _('Top Sales Order Search') . '</p>';
 	echo "<form action=" . $_SERVER['PHP_SELF'] . '?' . SID . ' name="SelectCustomer" method=POST>';
-	echo '<table cellpadding=3 colspan=4>';
+	echo '<table cellpadding=3 colspan=4 class=selection>';
 	//to view store location
 	echo '<tr><td width="150">' . _('Select Location') . '  </td><td>:</td><td><select name=Location>';
 	$sql = 'SELECT loccode,
@@ -54,9 +54,9 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 		 <tr>
 			<td></td>
 			<td></td>
-			<td><input tabindex=5 type=submit Value="' . _('Search') . '"></td>
 		</tr>
-	</form>';
+	</form></table>';
+	echo '<br /><div class=centre><input tabindex=5 type=submit value="' . _('Search') . '"></div>';
 } else {
 	// everything below here to view NumberOfTopItems items sale on selected location
 	//the situation if the location and customer type selected "All"
@@ -149,7 +149,7 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 	}
 	$result = DB_query($SQL, $db);
 	echo '<p class="page_title_text" align="center"><strong>' . _('Top Sales Items List') . '</strong></p>';
-	echo "<form action=PDFTopItems.php  method='GET'> <table class='table1'>";
+	echo "<form action=PDFTopItems.php  method='GET'><table class='selection'>";
 	$TableHeader = '<tr><th><strong>' . _('#') . '</strong></th>
 								<th><strong>' . _('Code') . '</strong></th>
 								<th><strong>' . _('Description') . '</strong></th>
@@ -197,7 +197,7 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 	}
 	echo '</table>';
 	//			echo '<td style="text-align:center" colspan=6><a href="javascript:history.go(-1)" title="Return to previous page"><input type=Button Name="Back" Value="' . _('Back') . '"></a></font>&nbsp&nbsp&nbsp';
-	echo '<div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print To PDF') . '"></div>';
+	echo '<br /><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print To PDF') . '"></div>';
 	echo '</form>';
 	//end of the else statement
 
