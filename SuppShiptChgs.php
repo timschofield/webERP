@@ -19,6 +19,12 @@ $title = _('Shipment Charges or Credits');
 
 include('includes/header.inc');
 
+if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
+	echo '<a href="' . $rootpath . '/SupplierInvoice.php?' . SID . '">' . _('Back to Invoice Entry') . '</a>';
+} else {
+	echo '<a href="' . $rootpath . '/SupplierCredit.php?' . SID . '">' . _('Back to Credit Note Entry') . '</a>';
+}
+
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('Shipment charges or credits are entered against supplier invoices or credit notes respectively') . '. ' . _('To enter supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice or credit note must be clicked on'),'info');
 	echo "<br><a href='$rootpath/SelectSupplier.php?" . SID ."'>" . _('Select A Supplier') . '</a>';
@@ -64,7 +70,7 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit=='Invoice'){
 }
 echo $_SESSION['SuppTrans']->SuppReference . ' ' ._('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 echo '</div>';
-echo '<table cellpadding=2>';
+echo '<table cellpadding=2 class=selection>';
 $TableHeader = '<tr><th>' . _('Shipment') . '</th>
 		<th>' . _('Amount') . '</th></tr>';
 echo $TableHeader;
@@ -82,16 +88,10 @@ foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef){
 }
 
 echo '<tr>
-	<td colspan=2 class=number><font size=4 color=BLUE>' . _('Total') . ':</font></td>
-	<td class=number><font size=4 color=BLUE><U>' . number_format($TotalShiptValue,2) . '</U></font></td>
+	<td class=number><font size=2 color=navy>' . _('Total') . ':</font></td>
+	<td class=number><font size=2 color=navy><U>' . number_format($TotalShiptValue,2) . '</U></font></td>
 </tr>
-</table>';
-
-if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
-	echo '<br><a href="' . $rootpath . '/SupplierInvoice.php?' . SID . '">' . _('Back to Invoice Entry') . '</a><hr>';
-} else {
-	echo '<br><a href="' . $rootpath . '/SupplierCredit.php?' . SID . '">' . _('Back to Credit Note Entry') . '</a><hr>';
-}
+</table><br />';
 
 /*Set up a form to allow input of new Shipment charges */
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="post">';
@@ -99,17 +99,17 @@ echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="post">';
 if (!isset($_POST['ShiptRef'])) {
 	$_POST['ShiptRef']='';
 }
-echo '<table>';
+echo '<table class=selection>';
 echo '<tr><td>' . _('Shipment Reference') . ':</td>
 	<td><input type="text" name="ShiptRef" size="12" maxlength="11" VALUE="' .  $_POST['ShiptRef'] . '"></td></tr>';
 echo '<tr><td>' . _('Shipment Selection') . ':<br> ' . _('If you know the code enter it above') . '<br>' . _('otherwise select the shipment from the list') . '</td><td><select name="ShiptSelection">';
 
-$sql = 'SELECT shiptref, 
-							vessel, 
-							eta, 
-							suppname 
-						FROM shipments INNER JOIN suppliers 
-							ON shipments.supplierid=suppliers.supplierid 
+$sql = 'SELECT shiptref,
+							vessel,
+							eta,
+							suppname
+						FROM shipments INNER JOIN suppliers
+							ON shipments.supplierid=suppliers.supplierid
 						WHERE closed=0';
 
 $result = DB_query($sql, $db);
@@ -132,7 +132,7 @@ echo '<tr><td>' . _('Amount') . ':</td>
 	<td><input type="text" name="Amount" size="12" maxlength="11" VALUE="' .  $_POST['Amount'] . '"></td></tr>';
 echo '</table>';
 
-echo '<input type="submit" name="AddShiptChgToInvoice" VALUE="' . _('Enter Shipment Charge') . '">';
+echo '<br /><div class=centre><input type="submit" name="AddShiptChgToInvoice" VALUE="' . _('Enter Shipment Charge') . '"></div>';
 
 echo '</form>';
 include('includes/footer.inc');
