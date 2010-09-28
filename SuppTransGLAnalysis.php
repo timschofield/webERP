@@ -32,10 +32,10 @@ if (isset($_POST['AddGLCodeToTrans']) and $_POST['AddGLCodeToTrans'] == _('Enter
 		$_POST['GLCode'] = $_POST['AcctSelection'];
 	}
 
-	$sql = 'SELECT accountcode,
+	$sql = "SELECT accountcode,
 			accountname
 		FROM chartmaster
-		WHERE accountcode=' . $_POST['GLCode'];
+		WHERE accountcode='" . $_POST['GLCode'] . "'";
 	$result = DB_query($sql, $db);
 	if (DB_num_rows($result) == 0){
 		prnMsg(_('The account code entered is not a valid code') . '. ' . _('This line cannot be added to the transaction') . '.<br>' . _('You can use the selection box to select the account you want'),'error');
@@ -84,7 +84,7 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger') . '" alt="">' . ' '
 	. _('General Ledger Analysis of Credit Note From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 }
-echo '</p><table cellpadding=2>';
+echo '</p><table cellpadding=2 class=selection>';
 
 $TableHeader = '<tr>
 							<th>' . _('Account') . '</th>
@@ -116,21 +116,21 @@ foreach ( $_SESSION['SuppTrans']->GLCodes as $EnteredGLCode){
 
 echo '<tr>
 	<td colspan=2 class=number><font size=4 color=BLUE>' . _('Total') . ':</font></td>
-	<td class=number><font size=4 color=BLUE><U>' . number_format($TotalGLValue,2) . '</U></font></td>
+	<td class=number><font size=2 color=navy><U>' . number_format($TotalGLValue,2) . '</U></font></td>
 	</tr>
 	</table>';
 
 
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
-	echo '<br><a href="' . $rootpath . '/SupplierInvoice.php?' . SID . '">' . _('Back to Invoice Entry') . '</a><hr>';
+	echo '<br /><a href="' . $rootpath . '/SupplierInvoice.php?' . SID . '">' . _('Back to Invoice Entry') . '</a>';
 } else {
-	echo '<br><a href="' . $rootpath . '/SupplierCredit.php?' . SID . '">' . _('Back to Credit Note Entry') . '</a><hr>';
+	echo '<br /><a href="' . $rootpath . '/SupplierCredit.php?' . SID . '">' . _('Back to Credit Note Entry') . '</a>';
 }
 
 /*Set up a form to allow input of new GL entries */
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="post">';
 
-echo '<table>';
+echo '<br /><table class=selection>';
 if (!isset($_POST['GLCode'])) {
 	$_POST['GLCode']='';
 }
@@ -172,9 +172,9 @@ if (!isset($_POST['Narrative'])) {
 }
 echo '<tr>
 	<td>' . _('Narrative') . ':</td>
-	<td><TEXTAREA name="Narrative" cols=40 rows=2>' .  $_POST['Narrative'] . '</textarea></td>
+	<td><textarea name="Narrative" cols=40 rows=2>' .  $_POST['Narrative'] . '</textarea></td>
 	</tr>
-	</table>';
+	</table><br />';
 
 echo '<input type="submit" name="AddGLCodeToTrans" VALUE="' . _('Enter GL Line') . '">';
 
