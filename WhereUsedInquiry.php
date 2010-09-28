@@ -17,18 +17,18 @@ if (isset($_GET['StockID'])){
 echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><br>';
  echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
 if (isset($StockID)){
-	$result = DB_query("SELECT description, 
-					units, 
-					mbflag 
-				FROM stockmaster 
-				WHERE stockid='$StockID'",$db);
+	$result = DB_query("SELECT description,
+					units,
+					mbflag
+				FROM stockmaster
+				WHERE stockid='".$StockID."'",$db);
 	$myrow = DB_fetch_row($result);
 	if (DB_num_rows($result)==0){
 		prnMsg(_('The item code entered') . ' - ' . $StockID . ' ' . _('is not set up as an item in the system') . '. ' . _('Re-enter a valid item code or select from the Select Item link above'),'error');
 		include('includes/footer.inc');
 		exit;
 	}
-	echo "<br><br><font color=BLUE size=3><b>$StockID - $myrow[0] </b>  (" . _('in units of') . ' ' . $myrow[1] . ')</font>';
+	echo "<br /><font color=navy size=3><b>$StockID - $myrow[0] </b>  (" . _('in units of') . ' ' . $myrow[1] . ')</font>';
 }
 
 echo "<form action='" . $_SERVER['PHP_SELF'] . '?'. SID ."' method=post><div class='centre'>";
@@ -36,12 +36,12 @@ echo "<form action='" . $_SERVER['PHP_SELF'] . '?'. SID ."' method=post><div cla
 if (isset($StockID)) {
 	echo _('Enter an Item Code') . ": <input type=text name='StockID' size=21 maxlength=20 value='$StockID' >";
 } else {
-	echo _('Enter an Item Code') . ": <input type=text name='StockID' size=21 maxlength=20>";	
+	echo _('Enter an Item Code') . ": <input type=text name='StockID' size=21 maxlength=20>";
 }
 
-echo "<input type=submit name='ShowWhereUsed' VALUE='" . _('Show Where Used') . "'>";
+echo "<input type=submit name='ShowWhereUsed' value='" . _('Show Where Used') . "'>";
 
-echo '</div><hr>';
+echo '</div><br />';
 
 if (isset($StockID)) {
 
@@ -56,10 +56,10 @@ if (isset($StockID)) {
 	$ErrMsg = _('The parents for the selected part could not be retrieved because');;
 	$result = DB_query($SQL,$db,$ErrMsg);
 	if (DB_num_rows($result)==0){
-		prnMsg(_('The selected item') . ' ' . $StockID . ' ' . _('is not used as a component of any other parts'),'error');;
+		prnMsg(_('The selected item') . ' ' . $StockID . ' ' . _('is not used as a component of any other parts'),'error');
 	} else {
 
-    		echo '<table WIDTH=100%>';
+    		echo '<table width=97% class=selection>';
 
     		$tableheader = "<tr><th>" . _('Used By') . "</th>
 					<th>" . _('Work Centre') . "</th>
