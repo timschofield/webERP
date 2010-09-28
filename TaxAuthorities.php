@@ -7,6 +7,8 @@ include('includes/session.inc');
 $title = _('Tax Authorities');
 include('includes/header.inc');
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
+	. '" alt="">' . $title. '</p>';
 
 if (isset($_POST['SelectedTaxAuthID'])){
 	$SelectedTaxAuthID =$_POST['SelectedTaxAuthID'];
@@ -30,15 +32,15 @@ if (isset($_POST['submit'])) {
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
-		$sql = 'UPDATE taxauthorities
-				SET taxglcode =' . $_POST['TaxGLCode'] . ',
-				purchtaxglaccount =' . $_POST['PurchTaxGLCode'] . ",
+		$sql = "UPDATE taxauthorities
+				SET taxglcode ='" . $_POST['TaxGLCode'] . "',
+				purchtaxglaccount ='" . $_POST['PurchTaxGLCode'] . "',
 				description = '" . $_POST['Description'] . "',
 				bank = '". $_POST['Bank']."',
 				bankacctype = '". $_POST['BankAccType']."',
 				bankacc = '". $_POST['BankAcc']."',
 				bankswift = '". $_POST['BankSwift']."'
-			WHERE taxid = " . $SelectedTaxAuthID;
+			WHERE taxid = '" . $SelectedTaxAuthID . "'";
 
 		$ErrMsg = _('The update of this tax authority failed because');
 		$result = DB_query($sql,$db,$ErrMsg);
@@ -56,10 +58,10 @@ if (isset($_POST['submit'])) {
 						bank,
 						bankacctype,
 						bankacc,
-						bankswift) 
+						bankswift)
 			VALUES (
-				" . $_POST['TaxGLCode'] . ",
-				" . $_POST['PurchTaxGLCode'] . ",
+				'" . $_POST['TaxGLCode'] . "',
+				'" . $_POST['PurchTaxGLCode'] . "',
 				'" .$_POST['Description'] . "',
 				'" .$_POST['Bank'] . "',
 				'" .$_POST['BankAccType'] . "',
@@ -79,13 +81,13 @@ if (isset($_POST['submit'])) {
 					dispatchtaxprovince,
 					taxcatid
 					)
-				SELECT 
+				SELECT
 					' . $NewTaxID  . ',
 					taxprovinces.taxprovinceid,
 					taxcategories.taxcatid
-				FROM taxprovinces, 
+				FROM taxprovinces,
 					taxcategories';
-							
+
 			$InsertResult = DB_query($sql,$db);
 	}
 	//run the SQL from either of the above possibilites
@@ -95,26 +97,26 @@ if (isset($_POST['submit'])) {
 		unset( $_POST['Description']);
 		unset( $SelectedTaxID );
 	}
-	
+
 	prnMsg($msg);
-		
+
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN OTHER TABLES
 
-	$sql= 'SELECT COUNT(*) 
-			FROM taxgrouptaxes 
-		WHERE taxauthid=' . $SelectedTaxAuthID;
-		
+	$sql= "SELECT COUNT(*)
+			FROM taxgrouptaxes
+		WHERE taxauthid='" . $SelectedTaxAuthID . "'";
+
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnmsg(_('Cannot delete this tax authority because there are tax groups defined that use it'),'warn');
 	} else {
 		/*Cascade deletes in TaxAuthLevels */
-		$result = DB_query('DELETE FROM taxauthrates WHERE taxauthority= ' . $SelectedTaxAuthID,$db);
-		$result = DB_query('DELETE FROM taxauthorities WHERE taxid= ' . $SelectedTaxAuthID,$db);
+		$result = DB_query("DELETE FROM taxauthrates WHERE taxauthority= '" . $SelectedTaxAuthID . "'",$db);
+		$result = DB_query("DELETE FROM taxauthorities WHERE taxid= '" . $SelectedTaxAuthID . "'",$db);
 		prnMsg(_('The selected tax authority record has been deleted'),'success');
 		unset ($SelectedTaxAuthID);
 	} // end of related records testing
@@ -126,7 +128,7 @@ if (!isset($SelectedTaxAuthID)) {
 
 	$sql = 'SELECT taxid,
 			description,
-			taxglcode, 
+			taxglcode,
 			purchtaxglaccount,
 			bank,
 			bankacc,
@@ -138,7 +140,7 @@ if (!isset($SelectedTaxAuthID)) {
 	$DbgMsg = _('The following SQL to retrieve the tax authorities was used');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-	echo '<table border=1>';
+	echo '<table class=selection>';
 	echo "<tr>
 		<th>" . _('ID') . "</th>
 		<th>" . _('Description') . "</th>
@@ -149,10 +151,18 @@ if (!isset($SelectedTaxAuthID)) {
 		<th>" . _('Bank Act Type') . "</th>
 		<th>" . _('Bank Swift') . "</th>
 		</tr></font>";
-
+	$k=0;
 	while ($myrow = DB_fetch_row($result)) {
 
-		printf("<tr><td>%s</td>
+		if ($k==1){
+			echo '<tr class="EvenTableRows">';
+			$k=0;
+		} else {
+			echo '<tr class="OddTableRows">';
+			$k++;
+		}
+
+		printf("<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -160,10 +170,10 @@ if (!isset($SelectedTaxAuthID)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><td><a href=\"%s&TaxAuthority=%s\">" . _('Edit Rates') . "</a></td>
 				<td><a href=\"%s&SelectedTaxAuthID=%s\">" . _('Edit') . "</a></td>
-				<td><a href=\"%s&SelectedTaxAuthID=%s&delete=yes\">" . _('Delete') . '</a></td>
-			</tr>',
+				<td><a href=\"%s&SelectedTaxAuthID=%s&delete=yes\">" . _('Delete') . "</a></td>
+				<td><td><a href=\"%s&TaxAuthority=%s\">" . _('Edit Rates') . "</a></td>
+			</tr>",
 			$myrow[0],
 			$myrow[1],
 			$myrow[3],
@@ -172,11 +182,11 @@ if (!isset($SelectedTaxAuthID)) {
 			$myrow[5],
 			$myrow[6],
 			$myrow[7],
+			$_SERVER['PHP_SELF'] . '?' . SID,
+			$myrow[0],
+			$_SERVER['PHP_SELF'] . '?' . SID,
+			$myrow[0],
 			$rootpath . '/TaxAuthorityRates.php?' . SID,
-			$myrow[0],
-			$_SERVER['PHP_SELF'] . '?' . SID,
-			$myrow[0],
-			$_SERVER['PHP_SELF'] . '?' . SID,
 			$myrow[0]);
 
 	}
@@ -199,15 +209,15 @@ echo "<p><form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID .'>';
 if (isset($SelectedTaxAuthID)) {
 	//editing an existing tax authority
 
-	$sql = 'SELECT taxglcode, 
-			purchtaxglaccount, 
+	$sql = "SELECT taxglcode,
+			purchtaxglaccount,
 			description,
 			bank,
 			bankacc,
 			bankacctype,
-			bankswift 
-		FROM taxauthorities 
-		WHERE taxid=' . $SelectedTaxAuthID;
+			bankswift
+		FROM taxauthorities
+		WHERE taxid='" . $SelectedTaxAuthID . "'";
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
@@ -219,7 +229,7 @@ if (isset($SelectedTaxAuthID)) {
 	$_POST['BankAccType']	= $myrow['bankacctype'];
 	$_POST['BankAcc'] 	= $myrow['bankacc'];
 	$_POST['BankSwift']	= $myrow['bankswift'];
- 
+
 
 	echo "<input type=hidden name='SelectedTaxAuthID' VALUE=" . $SelectedTaxAuthID . '>';
 
@@ -231,14 +241,14 @@ $SQL = 'SELECT accountcode,
 	FROM chartmaster,
 		accountgroups
 	WHERE chartmaster.group_=accountgroups.groupname
-	AND accountgroups.pandl=0 
+	AND accountgroups.pandl=0
 	ORDER BY accountcode';
 $result = DB_query($SQL,$db);
 
 if (!isset($_POST['Description'])) {
 	$_POST['Description']='';
 }
-echo '<table>
+echo '<table class=selection>
 <tr><td>' . _('Tax Type Description') . ":</td>
 <td><input type=Text name='Description' size=21 maxlength=20 value='" . $_POST['Description'] . "'></td></tr>";
 
@@ -299,7 +309,7 @@ echo '<td><input type=Text name="BankSwift" size=15 maxlength=14 value="' . $_PO
 
 echo '</table>';
 
-echo '<div class="centre"><input type=submit name=submit value=' . _('Enter Information') . '></div></form>';
+echo '<br /><div class="centre"><input type=submit name=submit value=' . _('Enter Information') . '></div></form>';
 
 include('includes/footer.inc');
 
