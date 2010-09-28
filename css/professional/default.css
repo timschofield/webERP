@@ -192,7 +192,7 @@ font.header_title {
 }
 
 #trim {
-	background: "white";
+	background: white;
 }
 
 #page {
@@ -245,7 +245,6 @@ textarea:hover{
   width:90%;
   background: #eee;
   border: 0px 0px 2px 2px #222 solid;
-  background: #eee;
   margin: 0 auto;
 }
 /* Table type is used for UI tables type 2 */
@@ -253,7 +252,6 @@ textarea:hover{
   width:90%;
   background: #eee;
   border: 0px 0px 2px 2px #222 solid;
-  background: #eee;
   margin: 0 auto;
 }
 input.address3 {
@@ -668,7 +666,7 @@ select.selecterror {
 }
 
 .notavailable {
-	font-weight:light;
+	font-weight:lighter;
 	font-style:italic;
 	color:#555555;
 }

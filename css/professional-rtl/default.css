@@ -186,7 +186,7 @@ font.header_title {
 }
 
 #trim {
-	background: "white";
+	background: white;
 }
 
 #page {
@@ -662,7 +662,7 @@ select.selecterror {
 }
 
 .notavailable {
-	font-weight:light;
+	font-weight:lighter;
 	font-style:italic;
 	color:#555555;
 }
