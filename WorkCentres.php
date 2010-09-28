@@ -44,8 +44,8 @@ if (isset($_POST['submit'])) {
 
 		$sql = "UPDATE workcentres SET location = '" . $_POST['Location'] . "',
 						description = '" . $_POST['Description'] . "',
-						overheadrecoveryact =" . $_POST['OverheadRecoveryAct'] . ",
-						overheadperhour = " . $_POST['OverheadPerHour'] . "
+						overheadrecoveryact ='" . $_POST['OverheadRecoveryAct'] . "',
+						overheadperhour = '" . $_POST['OverheadPerHour'] . "'
 				WHERE code = '" . $SelectedWC . "'";
 		$msg = _('The work centre record has been updated');
 	} elseif ($InputError !=1) {
@@ -60,8 +60,8 @@ if (isset($_POST['submit'])) {
 					VALUES ('" . $_POST['Code'] . "',
 						'" . $_POST['Location'] . "',
 						'" . $_POST['Description'] . "',
-						" . $_POST['OverheadRecoveryAct'] . ",
-						" . $_POST['OverheadPerHour'] . "
+						'" . $_POST['OverheadRecoveryAct'] . "',
+						'" . $_POST['OverheadPerHour'] . "'
 						)";
 		$msg = _('The new work centre has been added to the database');
 	}
@@ -83,19 +83,19 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'BOM'
 
-	$sql= "SELECT COUNT(*) FROM bom WHERE bom.workcentreadded='$SelectedWC'";
+	$sql= "SELECT COUNT(*) FROM bom WHERE bom.workcentreadded='" . $SelectedWC . "'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg(_('Cannot delete this work centre because bills of material have been created requiring components to be added at this work center') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' ._('BOM items referring to this work centre code'),'warn');
 	}  else {
-		$sql= "SELECT COUNT(*) FROM contractbom WHERE contractbom.workcentreadded='$SelectedWC'";
+		$sql= "SELECT COUNT(*) FROM contractbom WHERE contractbom.workcentreadded='" . $SelectedWC . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg(_('Cannot delete this work centre because contract bills of material have been created having components added at this work center') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('Contract BOM items referring to this work centre code'),'warn');
 		} else {
-			$sql="DELETE FROM workcentres WHERE code='$SelectedWC'";
+			$sql="DELETE FROM workcentres WHERE code='" . $SelectedWC . "'";
 			$result = DB_query($sql,$db);
 			prnMsg(_('The selected work centre record has been deleted'),'succes');
 		} // end of Contract BOM test
@@ -120,8 +120,8 @@ or deletion of the records*/
 		WHERE workcentres.location = locations.loccode';
 
 	$result = DB_query($sql,$db);
-	echo "<table border=1>
-		<tr BGCOLOR =#800000><th>" . _('WC Code') . "</th>
+	echo "<table class=selection>
+		<tr bgcolor =#800000><th>" . _('WC Code') . "</th>
 				<th>" . _('Description') . "</th>
 				<th>" . _('Location') . "</th>
 				<th>" . _('Overhead GL Account') . "</th>
@@ -170,7 +170,7 @@ if (isset($SelectedWC)) {
 			overheadrecoveryact,
 			overheadperhour
 		FROM workcentres
-		WHERE code='$SelectedWC'";
+		WHERE code='" . $SelectedWC . "'";
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
@@ -183,13 +183,13 @@ if (isset($SelectedWC)) {
 
 	echo '<input type=hidden name="SelectedWC" value=' . $SelectedWC . '>';
 	echo '<input type=hidden name="Code" value="' . $_POST['Code'] . '">';
-	echo '<table><tr><td>' ._('Work Centre Code') . ':</td><td>' . $_POST['Code'] . '</td></tr>';
+	echo '<table class=selection><tr><td>' ._('Work Centre Code') . ':</td><td>' . $_POST['Code'] . '</td></tr>';
 
 } else { //end of if $SelectedWC only do the else when a new record is being entered
 	if (!isset($_POST['Code'])) {
 		$_POST['Code'] = '';
 	}
-	echo '<table><tr>
+	echo '<table class=selection><tr>
 			<td>' . _('Work Centre Code') . ":</td>
 			<td><input type='Text' name='Code' size=6 maxlength=5 value='" . $_POST['Code'] . "'></td>
 			</tr>";
