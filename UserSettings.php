@@ -8,7 +8,8 @@ include('includes/session.inc');
 $title = _('User Settings');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/user.png" title="' . _('User Settings') . '" alt="">' . ' ' . _('User Settings');
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/user.png" title="' .
+	_('User Settings') . '" alt="">' . ' ' . _('User Settings') . '</p>';
 
 $PDFLanguages = array(_('Latin Western Languages'),
 						_('Eastern European Russian Japanese'),
@@ -62,11 +63,11 @@ if (isset($_POST['Modify'])) {
 		// no errors
 		if ($update_pw != 'Y'){
 			$sql = "UPDATE www_users
-				SET displayrecordsmax=" . $_POST['DisplayRecordsMax'] . ",
+				SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
 					theme='" . $_POST['Theme'] . "',
 					language='" . $_POST['Language'] . "',
 					email='". $_POST['email'] ."',
-					pdflanguage=" . $_POST['PDFLanguage'] . "
+					pdflanguage='" . $_POST['PDFLanguage'] . "'
 				WHERE userid = '" . $_SESSION['UserID'] . "'";
 
 			$ErrMsg =  _('The user alterations could not be processed because');
@@ -77,11 +78,11 @@ if (isset($_POST['Modify'])) {
 			prnMsg( _('The user settings have been updated') . '. ' . _('Be sure to remember your password for the next time you login'),'success');
 		} else {
 			$sql = "UPDATE www_users
-				SET displayrecordsmax=" . $_POST['DisplayRecordsMax'] . ",
+				SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
 					theme='" . $_POST['Theme'] . "',
 					language='" . $_POST['Language'] . "',
 					email='". $_POST['email'] ."',
-					pdflanguage=" . $_POST['PDFLanguage'] . ",
+					pdflanguage='" . $_POST['PDFLanguage'] . "',
 					password='" . CryptPass($_POST['pass']) . "'
 				WHERE userid = '" . $_SESSION['UserID'] . "'";
 
@@ -111,7 +112,7 @@ If (!isset($_POST['DisplayRecordsMax']) OR $_POST['DisplayRecordsMax']=='') {
 
 }
 
-echo '<table><tr><td>' . _('User ID') . ':</td><td>';
+echo '<table class=selection><tr><td>' . _('User ID') . ':</td><td>';
 echo $_SESSION['UserID'] . '</td></tr>';
 
 echo '<tr><td>' . _('User Name') . ':</td><td>';
@@ -205,7 +206,7 @@ for($i=0;$i<=7;$i++){
 	}
 }
 echo "</select></td></tr></table>
-	<br><div class='centre'><input type='Submit' name='Modify' value=" . _('Modify') . '></div>
+	<br /><div class='centre'><input type='Submit' name='Modify' value=" . _('Modify') . '></div>
 	</form>';
 
 include('includes/footer.inc');
