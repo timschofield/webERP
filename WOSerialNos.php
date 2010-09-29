@@ -55,11 +55,14 @@ if (isset($_POST['AddControlledItems'])){
 												qualitytext,
 												serialno)
 										VALUES ";
-			$ValueLine = " ('" . $StockID . "', " . $WO . ",'' ,";
+			$ValueLine = " ('" . $StockID . "',
+							'" . $WO . "',
+							'' ,
+							";
 			for ($i=0;$i<$_POST['NumberToAdd'];$i++){
 				$NextItemNumber = $NextSerialNo + $i;
 				$result = DB_query("SELECT serialno FROM woserialnos
-									WHERE wo=" . $WO . "
+									WHERE wo='" . $WO . "'
 									AND stockid='" . $StockID ."'
 									AND serialno='" . $NextItemNumber . "'",$db);
 				if (DB_num_rows($result)!=0){
@@ -84,12 +87,12 @@ if (isset($_POST['AddControlledItems'])){
 			$ErrMsg = _('Unable to add the serial numbers requested');
 			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 			// update the nextserialno in the stockmaster for the item
-			$result = DB_query('UPDATE stockmaster
-								SET nextserialno=' . $NextSerialNo . "
+			$result = DB_query("UPDATE stockmaster
+								SET nextserialno='" . $NextSerialNo . "'
 								WHERE stockid='" . $StockID . "'",$db);
-			$result = DB_query('UPDATE woitems SET qtyreqd=qtyreqd+' . $_POST['NumberToAdd'] . "
+			$result = DB_query("UPDATE woitems SET qtyreqd=qtyreqd+" . $_POST['NumberToAdd'] . "
 								WHERE stockid='" . $StockID . "'
-								AND wo=" . $WO,$db,$ErrMsg,$DbgMsg,true);
+								AND wo='" . $WO . "'",$db,$ErrMsg,$DbgMsg,true);
 			DB_Txn_Commit($db);
 		}
 	} // end Adding a number of serial numbers automatically
@@ -104,7 +107,7 @@ if (isset($_POST['AddControlledItems'])){
 				$InputError=true;
 			}
 			$result = DB_query("SELECT serialno FROM woserialnos
-								WHERE wo=" . $WO . "
+								WHERE wo='" . $WO . "'
 								AND stockid='" . $StockID ."'
 								AND serialno='" . $_POST['Reference'] . "'",$db);
 			if (DB_num_rows($result)!=0){
@@ -121,19 +124,19 @@ if (isset($_POST['AddControlledItems'])){
 			if (!$InputError){
 				DB_Txn_Begin($db);
 				$ErrMsg = _('Could not add a new serial number/batch');
-				$result = DB_query('UPDATE woitems
-									SET qtyreqd=qtyreqd+' . $_POST['Quantity'] . "
+				$result = DB_query("UPDATE woitems
+									SET qtyreqd=qtyreqd+" . $_POST['Quantity'] . "
 									WHERE stockid='" . $StockID . "'
-									AND wo=" . $WO,$db,$ErrMsg,$DbgMsg,true);
+									AND wo='" . $WO . "'",$db,$ErrMsg,$DbgMsg,true);
 				$sql = "INSERT INTO woserialnos (stockid,
 												 wo,
 												 qualitytext,
 												 quantity,
 												 serialno)
 									 VALUES ('" . $StockID . "',
-											  " . $WO . ",
-											  '',
-											 " . $_POST['Quantity'] .  ",
+											 '" . $WO . "',
+											 '',
+											 '" . $_POST['Quantity'] .  "',
 											 '" . $_POST['Reference'] . "')";
 
 				$ErrMsg = _('Unable to add the batch or serial number requested');
@@ -148,13 +151,13 @@ if (isset($_GET['Delete'])){ //user hit delete link
 
 /*when serial numbers /lots received they are removed from the woserialnos table so no need to check if already received - they will only show here if they are in progress */
 	$result = DB_query("DELETE FROM woserialnos
-						WHERE wo=" . $WO . "
+						WHERE wo='" . $WO . "'
 						AND stockid='" . $StockID . "'
 						AND serialno='" . $_GET['Reference'] ."'",
 						$db);
 
 	$result = DB_query("UPDATE woitems SET qtyreqd=qtyreqd-" . $_GET['Quantity'] . "
-						WHERE wo=" . $WO . "
+						WHERE wo='" . $WO . "'
 						AND stockid = '" . $StockID . "'",$db);
 
 	prnMsg(_('The batch/serial number') . ' ' . $_GET['Reference'] . ' ' . _('has been deleted from this work order'),'info');
@@ -175,7 +178,7 @@ if (isset($_POST['UpdateItems'])){
 				}
 				if ($_POST['Reference' .$i] != $_POST['OldReference' .$i]){
 					$result = DB_query("SELECT serialno FROM woserialnos
-										WHERE wo=" . $WO . "
+										WHERE wo='" . $WO . "'
 										AND stockid='" . $StockID ."'
 										AND serialno='" . $_POST['Reference' . $i] . "'",$db);
 					if (DB_num_rows($result)!=0){
@@ -192,9 +195,9 @@ if (isset($_POST['UpdateItems'])){
 				}
 				if (!$InputError){
 					$sql[] = "UPDATE woserialnos SET serialno='" . $_POST['Reference'.$i] . "',
-														quantity=" . $_POST['Quantity'.$i] .",
+														quantity='" . $_POST['Quantity'.$i] ."',
 														qualitytext='" . $_POST['Notes'.$i] . "'
-											WHERE    wo=" . $WO . "
+											WHERE    wo='" . $WO . "'
 											AND stockid='" . $StockID . "'
 											AND serialno='" . $_POST['OldReference'.$i] . "'";
 					$WOQuantityTotal += $_POST['Quantity'.$i];
@@ -208,8 +211,8 @@ if (isset($_POST['UpdateItems'])){
 			foreach ($sql as $SQLStatement){
 					$result = DB_query($SQLStatement,$db,$ErrMsg,$DbgMsg,true);
 			}
-			$result = DB_query("UPDATE woitems SET qtyreqd = " . $WOQuantityTotal . "
-								WHERE wo = " .$WO . "
+			$result = DB_query("UPDATE woitems SET qtyreqd = '" . $WOQuantityTotal . "'
+								WHERE wo = '" .$WO . "'
 								AND stockid='" . $StockID . "'", $db, $ErrMsg,$DbgMsg,true);
 			$result = DB_Txn_Commit($db);
 		}
@@ -259,7 +262,7 @@ $sql = "SELECT serialno,
 				quantity,
 				qualitytext
 		FROM woserialnos
-		WHERE wo=" . $WO . "
+		WHERE wo='" . $WO . "'
 		AND stockid='" . $StockID . "'";
 
 $ErrMsg = _('Could note get the work order serial/batch items');
