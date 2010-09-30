@@ -215,13 +215,13 @@ if (isset($_POST['RunReport'])){
 	   prnMsg(_('An account or range of accounts must be selected from the list box'),'info');
 	   include('includes/footer.inc');
 	   exit;
-	
+
 	} else { //print the report
-	
+
 	/*
 		$pdfcode = $pdf->output();
 		$len = strlen($pdfcode);
-	
+
 	      if ($len<=20){
 			$title = _('Print GL Accounts Report Error');
 			include('includes/header.inc');
@@ -236,28 +236,29 @@ if (isset($_POST['RunReport'])){
 			header('Expires: 0');
 			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 			header('Pragma: public');
-	
+
 			$pdf->Output('GL_Accounts_' . date('Y-m-d') . '.pdf', 'I');
 		}
 	*/
 	    $pdf->OutputD($_SESSION['DatabaseName'] . '_GL_Accounts_' . date('Y-m-d') . '.pdf');
-	    $pdf->__destruct(); 
+	    $pdf->__destruct();
 	} //end if the report has some output
 } /* end of if PrintReport button hit */
  else {
-	$title = _('General Ledger Account Report');	
+	$title = _('General Ledger Account Report');
 	include('includes/header.inc');
 	include('includes/GLPostings.inc');
-		
+
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="">' . ' ' . _('General Ledger Account Report') . '</p>';
-	
+
 	echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br>';
-	
+
 	echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?'  . SID . '>';
-	
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
 	/*Dates in SQL format for the last day of last month*/
 	$DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
-	
+
 	/*Show a form to allow input of criteria for the report */
 	echo '<table>
 		        <tr>
@@ -275,13 +276,13 @@ if (isset($_POST['RunReport'])){
 		}
 	}
 	echo '</select></td>';
-	
+
 	echo '<td>'._('For Period range').':</td>
 			<td><select Name=Period[] multiple>';
 	$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
 	$Periods = DB_query($sql,$db);
 	$id=0;
-	
+
 	while ($myrow=DB_fetch_array($Periods,$db)){
 		if (isset($SelectedPeriod[$id]) and $myrow['periodno'] == $SelectedPeriod[$id]){
 			echo '<option selected VALUE=' . $myrow['periodno'] . '>' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period']));
@@ -291,15 +292,15 @@ if (isset($_POST['RunReport'])){
 		}
 	}
 	echo '</select></td></tr>';
-	
+
 	//Select the tag
 	echo '<tr><td>' . _('Select Tag') . ':</td><td><select name="tag">';
-	
+
 	$SQL = 'SELECT tagref,
 		       tagdescription
 		FROM tags
 		ORDER BY tagref';
-	
+
 	$result=DB_query($SQL,$db);
 	echo '<option value=0>0 - '._('All tags');
 	while ($myrow=DB_fetch_array($result)){
@@ -311,7 +312,7 @@ if (isset($_POST['RunReport'])){
 	}
 	echo '</select></td></tr>';
 	// End select tag
-	
+
 	echo '</table><p>
 		<div class="centre">
 			<input type=submit name="RunReport" VALUE="' ._('Run Report'). '"></div>
@@ -319,10 +320,10 @@ if (isset($_POST['RunReport'])){
 
 	include ('includes/footer.inc');
 	exit;
-}	
-	
-	
-	
+}
+
+
+
 function NewPageHeader () {
 	global $PageNumber,
 				$pdf,
