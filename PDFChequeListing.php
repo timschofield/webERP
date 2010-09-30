@@ -33,8 +33,9 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	prnMsg($msg,'error');
 	 }
 
-	 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
-	 echo '<table class=selection>
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<table class=selection>
 	 			<tr>
 				<td>' . _('Enter the date from which cheques are to be listed') . ":</td>
 				<td><input type=text name='FromDate' maxlength=10 size=10 class=date alt='".$_SESSION['DefaultDateFormat']."'  VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td>
