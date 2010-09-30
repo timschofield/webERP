@@ -36,19 +36,19 @@ if ( isset($_POST['submit']) ) {
 		$InputError = 1;
 		prnMsg( _("The contact's notes may not be empty"), 'error');
 	}
-	
+
 	if ($Id AND $InputError !=1) {
-	
-		$sql = "UPDATE debtortypenotes SET 
+
+		$sql = "UPDATE debtortypenotes SET
 				note='" . $_POST['note'] . "',
 				date='" . $_POST['date'] . "',
 				href='" . $_POST['href'] . "',
 				priority='" . $_POST['priority'] . "'
-			WHERE typeid ='".$DebtorType."' 
+			WHERE typeid ='".$DebtorType."'
 			AND noteid='".$Id."'";
 		$msg = _('Customer Group Notes') . ' ' . $DebtorType  . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
-			
+
 		$sql = "INSERT INTO debtortypenotes (typeid,href,note,date,priority)
 				VALUES (
 					'" . $DebtorType. "',
@@ -59,7 +59,7 @@ if ( isset($_POST['submit']) ) {
 					)";
 		$msg = _('The contact group notes record has been added');
 	}
-	
+
 	if ($InputError !=1) {
 		$result = DB_query($sql,$db);
 				//echo '<br>'.$sql;
@@ -74,7 +74,7 @@ if ( isset($_POST['submit']) ) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
-	
+
 	$sql="DELETE FROM debtortypenotes WHERE noteid='".$Id."'
 			and typeid='".$DebtorType."'";
 				$result = DB_query($sql,$db);
@@ -84,16 +84,16 @@ if ( isset($_POST['submit']) ) {
 				prnMsg( _('The contact group note record has been deleted'), 'success');
 				unset($Id);
 				unset($_GET['delete']);
-	
+
 	}
-	
+
 if (!isset($Id)) {
 	$SQLname='SELECT * from debtortype where typeid="'.$DebtorType.'"';
 	$Result = DB_query($SQLname,$db);
 	$row = DB_fetch_array($Result);
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') . '" alt="">'  . _('Notes for Customer Type: <b>') .$row['typename'].'<br>';
 
-	
+
 	$sql = "SELECT * FROM debtortypenotes where typeid='".$DebtorType."' ORDER BY date DESC";
 	$result = DB_query($sql,$db);
 			//echo '<br>'.$sql;
@@ -104,7 +104,7 @@ if (!isset($Id)) {
 			<th>' . _('Note') . '</th>
 			<th>' . _('href') . '</th>
 			<th>' . _('Priority') . '</th>';
-		
+
 	$k=0; //row colour counter
 
 	while ($myrow = DB_fetch_array($result)) {
@@ -125,13 +125,13 @@ if (!isset($Id)) {
 				$myrow[3],
 				$myrow[2],
 				$myrow[5],
-				$_SERVER['PHP_SELF'] . "?" . SID, 
-				$myrow[0], 
-				$myrow[1], 
-				$_SERVER['PHP_SELF'] . "?" . SID, 
+				$_SERVER['PHP_SELF'] . "?" . SID,
+				$myrow[0],
+				$myrow[1],
+				$_SERVER['PHP_SELF'] . "?" . SID,
 				$myrow[0],
 				$myrow[1]);
-			
+
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -145,7 +145,8 @@ if (isset($Id)) {  ?>
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '&DebtorType='.$DebtorType.'">';
-	
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
 	if (isset($Id)) {
 		//editing an existing
 
@@ -156,7 +157,7 @@ if (!isset($_GET['delete'])) {
 				//echo '<br>'.$sql;
 
 		$myrow = DB_fetch_array($result);
-		
+
 		$_POST['noteid'] = $myrow['noteid'];
 		$_POST['note']	= $myrow['note'];
 		$_POST['href']  = $myrow['href'];
@@ -181,7 +182,7 @@ if (!isset($_GET['delete'])) {
 	echo '<td><textarea name="note">'. $_POST['note'].'</textarea></td></tr>';
 	echo '<tr><td>'. _('Web site').':</td>';
 	echo '<td><input type="text" name="href" value="'. $_POST['href'].'" size=35 maxlength=100></td></tr>
-		<tr><td>'. _('Date').':</td>';	
+		<tr><td>'. _('Date').':</td>';
 	echo '<td><input type="text" name="date" class=date alt="'.$_SESSION['DefaultDateFormat'].'" value="'. $_POST['date'].
 		'" size=10 maxlength=10></td></tr>';
 	echo '<tr><td>'. _('Priority').':</td>';
@@ -190,8 +191,8 @@ if (!isset($_GET['delete'])) {
 	echo '<br><div class="centre"><input type="Submit" name="submit" value="'. _('Enter Information').'"></div>';
 
 	echo '</form>';
-	
-} //end if record deleted no point displaying form to add record 
+
+} //end if record deleted no point displaying form to add record
 
 include('includes/footer.inc');
 ?>
