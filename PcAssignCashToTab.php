@@ -129,6 +129,7 @@ if (!isset($SelectedTabs)){
 		_('Search') . '" alt="">' . ' ' . $title. '</p>';
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p><table class=selection>'; //Main table
 
 	echo '<tr><td>' . _('Petty Cash Tab To Assign Cash') . ":</td><td><select name='SelectedTabs'>";
@@ -201,6 +202,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 
 		echo '<table class=selection>';
 		echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo "<tr><th colspan=8>" . _('Detail Of PC Tab Movements For Last ') .': ';
 		echo "<input type=hidden name='SelectedTabs' value=" . $SelectedTabs . ">";
 		echo "<input type=text class=number name='Days' value=" . $Days  . " maxlength =3 size=4> Days ";
@@ -289,6 +291,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		}
 
 		echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<p><table class=selection>'; //Main table
 		if (isset($_GET['SelectedIndex'])) {
 			echo "<tr><th colspan=2><font color=blue size=3>"._('Update Cash Assignment')."</font></th></tr>";
