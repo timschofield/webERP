@@ -42,6 +42,7 @@ if (isset($SelectedTabs)) {
 if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR isset ($_POST['GO'])) {
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if(!isset ($Days)){
 		$Days=30;
@@ -88,6 +89,7 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 
 	$k=0; //row colour counter
 	echo'<form action="PcAuthorizeExpenses.php" method="POST" name="'._('update').'">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	while ($myrow=DB_fetch_array($result))	{
 
@@ -263,7 +265,8 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 
 
 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	echo '<p><table class=selection>'; //Main table
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<p><table class=selection>'; //Main table
 
 echo '<tr><td>' . _('Authorize expenses to Petty Cash Tab') . ":</td><td><select name='SelectedTabs'>";
 
