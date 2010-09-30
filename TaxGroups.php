@@ -215,6 +215,7 @@ if (isset($SelectedGroup)) {
 }
 echo '<br>';
 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if( isset($_POST['SelectedGroup'])) {
 	echo "<input type=hidden name='SelectedGroup' value='" . $_POST['SelectedGroup'] . "'>";
 }
@@ -261,6 +262,7 @@ if (isset($SelectedGroup)) {
 	/* the order and tax on tax will only be an issue if more than one tax authority in the group */
 	if (count($TaxAuthsUsed)>0) {
 		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID .'">';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<input type=hidden name="SelectedGroup" value="' . $SelectedGroup .'">';
 		echo '<table class=selection>';
 		echo '<tr><th colspan=3><font size=3 color=navy>'._('Calculation Order').'</font></th></tr>';
