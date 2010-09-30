@@ -14,6 +14,7 @@ echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/i
 '" alt=""><b>' . $title. '</p>';
 
 echo "<form action='" . $_SERVER['PHP_SELF'] . "?". SID . "' method=post>";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $sql = 'SELECT categoryid, categorydescription FROM stockcategory';
 $resultStkLocs = DB_query($sql, $db);
