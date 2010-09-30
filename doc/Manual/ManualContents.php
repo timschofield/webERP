@@ -27,6 +27,8 @@ include('ManualHeader.html');
 ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 <?php
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
 if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
      ((isset($_POST['Submit'])) AND (isset($_POST['SelectTableOfContents'])))) {
 // if not submittws then coming into manual to look at TOC
@@ -633,7 +635,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
               </UL>
               <BR>
             </LI>
-            <LI>			
+            <LI>
 <?php
   if (!isset($_POST['Submit'])) {
 ?>
@@ -751,11 +753,11 @@ if (!isset($_POST['Submit'])) {
               <UL>
                 <LI>Overview</LI>
                 <LI>Setup General Parameters</LI>
-                
+
               </UL>
               <BR>
             </LI>
-            <LI>            
+            <LI>
 <?php
   if (!isset($_POST['Submit'])) {
 ?>
