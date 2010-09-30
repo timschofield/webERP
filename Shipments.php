@@ -289,6 +289,7 @@ if (isset($_GET['Delete']) AND $_SESSION['Shipment']->Closed==0){ //shipment is 
 
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="POST">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table class=selection><tr><td><b>'. _('Shipment').': </td><td><b>' . $_SESSION['Shipment']->ShiptRef . '</b></td>
 		<td><b>'. _('From'). ' ' . $_SESSION['Shipment']->SupplierName . '</b></td></tr>';
