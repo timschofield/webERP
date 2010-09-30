@@ -180,6 +180,7 @@ if (isset($SelectedArea)) {
 if (!isset($_GET['delete'])) {
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '><br>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedArea)) {
 		//editing an existing area
