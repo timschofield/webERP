@@ -29,6 +29,7 @@ $tableresult = DB_show_tables($db);
 $userresult = DB_query('SELECT userid FROM www_users',$db);
 
 echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table>';
 
 echo '<tr><td>'. _('From Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</td>
@@ -67,10 +68,10 @@ echo '</form>';
 
 // View the audit trail
 if (isset($_POST['View'])) {
-	
+
 	$FromDate = str_replace('/','-',FormatDateForSQL($_POST['FromDate']).' 00:00:00');
 	$ToDate = str_replace('/','-',FormatDateForSQL($_POST['ToDate']).' 23:59:59');
-	
+
 	// Find the query type (insert/update/delete)
 	function Query_Type($SQLString) {
 		$SQLArray = explode(" ", $SQLString);
@@ -121,18 +122,18 @@ if (isset($_POST['View'])) {
 	}
 
 	if ($_POST['SelectedUser'] == 'ALL') {
-		$sql="SELECT transactiondate, 
-				userid, 
-				querystring 
-			FROM audittrail 
-			WHERE transactiondate 
+		$sql="SELECT transactiondate,
+				userid,
+				querystring
+			FROM audittrail
+			WHERE transactiondate
 			BETWEEN '". $FromDate."' AND '".$ToDate."'";
 	} else {
-		$sql="SELECT transactiondate, 
-				userid, 
-				querystring 
-			FROM audittrail 
-			WHERE userid='".$_POST['SelectedUser']."' 
+		$sql="SELECT transactiondate,
+				userid,
+				querystring
+			FROM audittrail
+			WHERE userid='".$_POST['SelectedUser']."'
 			AND transactiondate BETWEEN '".$FromDate."' AND '".$ToDate."'";
 	}
 	$result = DB_query($sql,$db);
