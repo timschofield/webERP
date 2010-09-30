@@ -684,6 +684,7 @@ customer record returned by the search - this record is then auto selected */
 
 
 echo '<form action=' . $_SERVER['PHP_SELF'] . ' method=post name=form1>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*show the batch header details and the entries in the batch so far */
 
