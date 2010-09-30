@@ -119,6 +119,7 @@ while ($myrow=DB_fetch_array($result)) {
 
 echo '</table><br>';
 echo '<form name="LocationForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><table class=selection>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<tr><th style="text-align:left">'._('Location ID').'</th>';
 if (isset($_GET['SelectedLocation'])) {
 	echo '<input type=hidden name=locationid value="'.$locationid.'">';
