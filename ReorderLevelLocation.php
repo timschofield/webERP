@@ -62,6 +62,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 
 	$k=0; //row colour counter
 	echo'<form action="ReorderLevelLocation.php" method="POST" name="'._('update').'">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	while ($myrow=DB_fetch_array($result))	{
 
@@ -162,6 +163,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div><br>';
 
 	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT loccode,
 				   locationname
 		    FROM locations";
