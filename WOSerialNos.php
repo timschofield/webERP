@@ -221,6 +221,7 @@ if (isset($_POST['UpdateItems'])){
 
 
 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="form">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<input type="hidden" name="StockID" value="' . $StockID . '">';
 echo '<input type="hidden" name="Description" value="' . $Description . '">';
