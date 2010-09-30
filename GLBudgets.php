@@ -29,6 +29,7 @@ if (isset($_POST['update'])) {
 //If an account hasn't been selected then select one here.
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
 echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post name="selectaccount">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table>';
 
 echo '</br><tr><td>'.  _('Select GL Account').  ":</td><td><select name='SelectedAccount'
@@ -138,6 +139,7 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 // Table Headers
 
 	echo '<form name="form" action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br><table class=selection>';
 	echo '<tr><th colspan=3>'. _('Last Financial Year') .'</th>';
 	echo '<th colspan=3>'. _('This Financial Year') .'</th>';
