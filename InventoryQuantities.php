@@ -147,6 +147,7 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 
 
 	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class=selection><tr><td>';
 	echo '<tr><td>' . _('Selection') . ":</td><td><select name='Selection'>";
 	echo "<option selected value='All'>" . _('All');
