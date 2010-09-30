@@ -153,6 +153,7 @@ while ($myrow=DB_fetch_array($Result)) {
 echo '</table><br><br>';
 
 echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method=post name='form1'>";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class=selection>';
 
 if (isset($_GET['Edit'])) {
