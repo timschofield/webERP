@@ -18,7 +18,7 @@ $identifier=$_GET['identifier'];
 if (!isset($_SESSION['Contract'.$identifier])){
 	header('Location:' . $rootpath . '/Contracts.php?' . SID);
 	exit;
-} 
+}
 include('includes/header.inc');
 
 $Maximum_Number_Of_Parts_To_Show=50;
@@ -31,7 +31,7 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
 				$_SESSION['Contract'.$identifier]->Remove_ContractComponent($ContractComponent->ComponentID);
 			} else {
 				$_SESSION['Contract'.$identifier]->ContractBOM[$ContractComponent->ComponentID]->Quantity=$_POST['Qty'.$ContractComponent->ComponentID];
-			} 
+			}
 		} // end loop around the items on the contract BOM
 	} // end if the contract is not currently committed to by the customer
 }// end if the user has hit the update lines or back to header buttons
@@ -188,7 +188,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 			}
 
 			if ($AlreadyOnThisBOM!=1 and $Quantity>0){
-				
+
 				$sql = "SELECT stockmaster.description,
 								stockmaster.stockid,
 								stockmaster.units,
@@ -196,19 +196,19 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 								stockmaster.materialcost+labourcost+overheadcost AS unitcost
 							FROM stockmaster
 							WHERE stockmaster.stockid = '". $ItemCode . "'";
-			
+
 				$ErrMsg = _('The item details could not be retrieved');
 				$DbgMsg = _('The SQL used to retrieve the item details but failed was');
 				$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 				if ($myrow = DB_fetch_array($result1)){
-					
+
 					$_SESSION['Contract'.$identifier]->Add_To_ContractBOM ($ItemCode,
 																			$myrow['description'],
 																			$DefaultWorkCentre,
 																			$Quantity, /* Qty */
 																			$myrow['unitcost'],
-																			$myrow['units']);	
+																			$myrow['units']);
 				} else {
 					prnMsg (_('The item code') . ' ' . $ItemCode . ' ' . _('does not exist in the database and therefore cannot be added to the contract BOM'),'error');
 					if ($debug==1){
@@ -225,6 +225,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
 echo '<form name="ContractBOMForm" action="' . $_SERVER['PHP_SELF'] . '?' . SID . 'identifier='.$identifier. '" method="post">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' .
@@ -233,7 +234,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 	if (isset($_SESSION['Contract'.$identifier]->ContractRef)) {
 		echo  ' ' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef;
 	}
-	
+
 	echo '<table cellpadding=2 colspan=7 border=1>';
 	echo '<tr>
 		<th>' . _('Item Code') . '</th>
@@ -250,9 +251,9 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 	foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $ContractComponent) {
 
 		$LineTotal = $ContractComponent->Quantity * $ContractComponent->ItemCost;
-			
+
 		$DisplayLineTotal = number_format($LineTotal,2);
-		
+
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
 			$k=0;
@@ -260,7 +261,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
-		
+
 		echo '<td>' . $ContractComponent->StockID . '</td>
 			  <td>' . $ContractComponent->ItemDescription . '</td>
 			  <td><input type=text class="number" name="Qty' . $ContractComponent->ComponentID . '" size="11" value="' . $ContractComponent->Quantity  . '"></td>
@@ -275,7 +276,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 	echo '<tr><td colspan=6 class="number">' . _('Total Cost') . '</td><td class="number"><b>' . $DisplayTotal . '</b></td></tr></table>';
 	echo '<br><div class="centre"><input type="submit" name="UpdateLines" value="' . _('Update Order Lines') . '">';
 	echo ' <input type="submit" name="BackToHeader" value="' . _('Back To Contract Header') . '">';
-	
+
 } /*Only display the contract BOM lines if there are any !! */
 
 if (!isset($_GET['Edit'])) {
