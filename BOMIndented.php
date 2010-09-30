@@ -49,17 +49,17 @@ if (isset($_POST['PrintPDF'])) {
 	$sql = 'INSERT INTO passbom (part, sortpart)
 			   SELECT bom.component AS part,
 					  CONCAT(bom.parent,bom.component) AS sortpart
-			  FROM bom 
-			  WHERE bom.parent =' . "'" . $_POST['Part'] . "' 
+			  FROM bom
+			  WHERE bom.parent =' . "'" . $_POST['Part'] . "'
 			  AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()";
 	$result = DB_query($sql,$db);
 
-	$levelctr = 2; 
+	$levelctr = 2;
 	// $levelctr is the level counter
 	$sql = "INSERT INTO tempbom (
-				parent, 
-				component, 
-				sortpart, 
+				parent,
+				component,
+				sortpart,
 				level,
 				workcentreadded,
 				loccode,
@@ -75,8 +75,8 @@ if (isset($_POST['PrintPDF'])) {
 					 bom.effectiveafter,
 					 bom.effectiveto,
 					 bom.quantity
-			  FROM bom 
-			  WHERE bom.parent ='" . $_POST['Part'] . "' 
+			  FROM bom
+			  WHERE bom.parent ='" . $_POST['Part'] . "'
 			  AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()";
 	$result = DB_query($sql,$db);
 	//echo "</br>sql is $sql</br>";
@@ -89,9 +89,9 @@ if (isset($_POST['PrintPDF'])) {
 		while ($componentctr > 0) {
 			$levelctr++;
 			$sql = "INSERT INTO tempbom (
-					parent, 
-					component, 
-					sortpart, 
+					parent,
+					component,
+					sortpart,
 					level,
 					workcentreadded,
 					loccode,
@@ -107,41 +107,41 @@ if (isset($_POST['PrintPDF'])) {
 						 bom.effectiveafter,
 						 bom.effectiveto,
 						 bom.quantity
-				 FROM bom,passbom 
+				 FROM bom,passbom
 				 WHERE bom.parent = passbom.part
 				  AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()";
 			$result = DB_query($sql,$db);
-			
+
 			$sql = 'DROP TABLE IF EXISTS passbom2';
 			$result = DB_query($sql,$db);
-			
+
 			$sql = 'ALTER TABLE passbom RENAME AS passbom2';
 			$result = DB_query($sql,$db);
-			
+
 			$sql = 'DROP TABLE IF EXISTS passbom';
 			$result = DB_query($sql,$db);
-			
+
 			$sql = 'CREATE TEMPORARY TABLE passbom (
-				part char(20),                                
+				part char(20),
 				sortpart text)';
 			$result = DB_query($sql,$db);
-			
-			
+
+
 			$sql = "INSERT INTO passbom (part, sortpart)
 					   SELECT bom.component AS part,
 							  CONCAT(passbom2.sortpart,bom.component) AS sortpart
-					   FROM bom,passbom2 
+					   FROM bom,passbom2
 					   WHERE bom.parent = passbom2.part
 						AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()";
 			$result = DB_query($sql,$db);
-			
-			
+
+
 			$sql = 'SELECT COUNT(*) FROM bom,passbom WHERE bom.parent = passbom.part';
 			$result = DB_query($sql,$db);
-			
+
 			$myrow = DB_fetch_row($result);
 			$componentctr = $myrow[0];
-				
+
 		} // End of while $componentctr > 0
 	} // End of if $_POST['Levels']
 
@@ -159,14 +159,14 @@ if (isset($_POST['PrintPDF'])) {
 
 
     $sql = 'SELECT stockmaster.stockid,
-                   stockmaster.description  
-              FROM stockmaster 
+                   stockmaster.description
+              FROM stockmaster
               WHERE stockid = ' . "'" . $_POST['Part'] . "'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_array($result,$db);
 	$assembly = $_POST['Part'];
 	$assemblydesc = $myrow['description'];
-	
+
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 	                   $Right_Margin,$assemblydesc);
 
@@ -174,7 +174,7 @@ if (isset($_POST['PrintPDF'])) {
     $sql = 'SELECT tempbom.*,
                    stockmaster.description,
                    stockmaster.mbflag
-              FROM tempbom,stockmaster 
+              FROM tempbom,stockmaster
               WHERE tempbom.component = stockmaster.stockid
               ORDER BY sortpart';
 	$result = DB_query($sql,$db);
@@ -189,15 +189,15 @@ if (isset($_POST['PrintPDF'])) {
 
 		$YPos -=$line_height;
 		$FontSize=8;
-		
+
 		$FormatedEffectiveAfter = ConvertSQLDate($myrow['effectiveafter']);
 		$FormatedEffectiveTo = ConvertSQLDate($myrow['effectiveto']);
-		
+
 
 		if ($_POST['Fill'] == 'yes'){
 		    $fill=!$fill;
 		}
-		
+
 		// Parameters for addTextWrap are defined in /includes/class.pdf.php
 		// 1) X position 2) Y position 3) Width
 		// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
@@ -208,7 +208,7 @@ if (isset($_POST['PrintPDF'])) {
 		$pdf->addTextWrap(360,$YPos,30,$FontSize,$myrow['loccode'],'right',0,$fill);
 		$pdf->addTextWrap(390,$YPos,25,$FontSize,$myrow['workcentreadded'],'right',0,$fill);
 		$pdf->addTextWrap(415,$YPos,45,$FontSize,number_format($myrow['quantity'],2),'right',0,$fill);
-		$pdf->addTextWrap(460,$YPos,55,$FontSize,$FormatedEffectiveAfter,'right',0,$fill);				
+		$pdf->addTextWrap(460,$YPos,55,$FontSize,$FormatedEffectiveAfter,'right',0,$fill);
 		$pdf->addTextWrap(515,$YPos,50,$FontSize,$FormatedEffectiveTo,'right',0,$fill);
 
 		if ($YPos < $Bottom_Margin + $line_height){
@@ -261,9 +261,10 @@ if (isset($_POST['PrintPDF'])) {
         echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 
 	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table class=selection>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<tr><td>' . _('Part') . ":</td>";
 	echo "<td><input type ='text' name='Part' size='20'>";
-	
+
 	echo '<tr><td>' . _('Levels') . ":</td><td><select name='Levels'>";
 	echo "<option selected value='All'>" . _('All Levels');
 	echo "<option value='One'>" . _('One Level');
@@ -289,23 +290,23 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	if ($PageNumber>1){
 		$pdf->newPage();
 	}
-	
+
 	$FontSize=9;
 	$YPos= $Page_Height-$Top_Margin-5;
-	
+
 	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
-	
+
 	$YPos -=$line_height;
-	
+
 	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('Indented BOM Listing'));
-	$pdf->addTextWrap($Page_Width-$Right_Margin-105,$YPos,160,$FontSize,_('Printed') . ': ' . 
+	$pdf->addTextWrap($Page_Width-$Right_Margin-105,$YPos,160,$FontSize,_('Printed') . ': ' .
 		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
-	
+
 	$YPos -=(2*$line_height);
-	
+
 	/*set up the headings */
 	$Xpos = $Left_Margin+1;
-	
+
 	$pdf->addTextWrap($Xpos,$YPos,90,$FontSize,_('Part Number'), 'left');
 	$pdf->addTextWrap(160,$YPos,20,$FontSize,_('M/B'), 'left');
 	$pdf->addTextWrap(180,$YPos,180,$FontSize,_('Description'), 'center');
@@ -315,10 +316,10 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$pdf->addTextWrap(460,$YPos,55,$FontSize,_('From Date'), 'right');
 	$pdf->addTextWrap(515,$YPos,50,$FontSize,_('To Date'), 'right');
 	$YPos =$YPos - $line_height;
-	
+
 	$FontSize=8;
 	$YPos =$YPos - (2*$line_height);
-	
+
 	$pdf->addTextWrap($Left_Margin+1,$YPos,40,$FontSize,_('Assembly:'),'',0);
 	$pdf->addTextWrap(85,$YPos,100,$FontSize,strtoupper($_POST['Part']),'',0);
 	$pdf->addTextWrap(185,$YPos,150,$FontSize,$assemblydesc,'',0);
@@ -326,9 +327,9 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$Xpos = $Left_Margin+5;
 	$pdf->addTextWrap($Xpos,$YPos,90,$FontSize,_(' 12345678901234567890'), 'left');
 	$YPos -=$line_height;
-				
+
 	$PageNumber++;
-	
+
 } // End of PrintHeader function
 
 
