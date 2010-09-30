@@ -648,6 +648,7 @@ if (!isset($SupplierID)) {
 /*If the page was called without $SupplierID passed to page then assume a new supplier is to be entered show a form with a Supplier Code field other wise the form showing the fields with the existing entries against the supplier will show for editing with only a hidden SupplierID field*/
 
 	echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo "<input type='hidden' name='New' VALUE='Yes'>";
 
@@ -745,6 +746,7 @@ if (!isset($SupplierID)) {
 //SupplierID exists - either passed when calling the form or from the form itself
 
 	echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class=selection>';
 
 	if (!isset($_POST['New'])) {
