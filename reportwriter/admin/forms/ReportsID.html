@@ -1,5 +1,6 @@
 <h2 align="center"><?php echo $FormParams['heading']; ?></h2>
 <form name="reportidform" method="post" action="ReportCreator.php?action=step3">
+	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
   <input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
   <input name="Type" type="hidden" value="<?php echo $Type; ?>">
   <input name="ReplaceReportID" type="hidden" value="<?php echo $ReplaceReportID; ?>">
