@@ -26,6 +26,7 @@ $myrow = DB_fetch_row($result);
 echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt=""><b>' . ' ' . $StockID . ' - ' . $myrow['0'] . ' : ' . _('in units of') . ' : ' . $myrow[1] . '</p>';
 
 echo "<form action='". $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['BeforeDate']) OR !Is_Date($_POST['BeforeDate'])){
    $_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
