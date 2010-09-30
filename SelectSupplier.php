@@ -194,6 +194,7 @@ if (isset($_SESSION['SupplierID'])) {
 	echo '</td></tr></table>';
 }
 echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method=post>";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') .
 		'" alt="">' . ' ' . _('Search for Suppliers') . '
 		<table cellpadding=3 colspan=4 class=selection><tr><td>' . _('Enter a partial Name') . ':</font></td><td>';
