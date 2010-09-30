@@ -225,6 +225,7 @@ if (!isset($_POST['PostInvoice'])){
 		</table>';
 
 	echo '<br><form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="post" name="form1">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<br /><table class=selection>';
 
