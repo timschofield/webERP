@@ -4,6 +4,7 @@
 <body>
 <h2 align="center"><?php echo $Prefs['reportname'].' - '.RPT_BTN_PGSETUP; ?></h2>
 <form name="RptPageSetup" method="post" action="ReportMaker.php?action=go">
+	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
   <input name="PageForm" type="hidden" value="1">
   <input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
   <input name="GoBackURL" type="hidden" value="<?php echo $GoBackURL; ?>">
@@ -68,12 +69,12 @@
 		<?php foreach($Fonts as $key => $value) {
 			if ($Prefs['coynamefont']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
+		} ?> </select>
       <?php echo RPT_SIZE ?><select name="CoyNameFontSize">
 		<?php foreach($FontSizes as $key => $value) {
 			if ($Prefs['coynamefontsize']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
+		} ?> </select>
       <?php echo RPT_COLOR ?><select name="CoyNameFontColor">
 		<?php foreach($FontColors as $key => $value) {
 			if ($Prefs['coynamefontcolor']==$key) $selected = ' selected'; else  $selected = '';
@@ -87,7 +88,7 @@
 	  </td>
     </tr>
     <tr>
-      <td colspan="3"><?php echo RPT_PGTITL1 ?> 
+      <td colspan="3"><?php echo RPT_PGTITL1 ?>
       <input name="Title1Desc" type="text" id="Title1Desc" value="<?php echo $Prefs['title1desc']; ?>" size="30" maxlength="50"></td>
       <td><?php echo RPT_SHOW ?>
 		<?php if ($Prefs['title1show']=='1') $selected = ' checked'; else  $selected = ''; ?>
@@ -97,12 +98,12 @@
 		<?php foreach($Fonts as $key => $value) {
 			if ($Prefs['title1font']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
+		} ?> </select>
       <?php echo RPT_SIZE ?><select name="Title1FontSize">
 		<?php foreach($FontSizes as $key => $value) {
 			if ($Prefs['title1fontsize']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
+		} ?> </select>
       <?php echo RPT_COLOR ?><select name="Title1FontColor">
 		<?php foreach($FontColors as $key => $value) {
 			if ($Prefs['title1fontcolor']==$key) $selected = ' selected'; else  $selected = '';
@@ -126,12 +127,12 @@
 		<?php foreach($Fonts as $key => $value) {
 			if ($Prefs['title2font']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
+		} ?> </select>
       <?php echo RPT_SIZE ?><select name="Title2FontSize">
 		<?php foreach($FontSizes as $key => $value) {
 			if ($Prefs['title2fontsize']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
+		} ?> </select>
       <?php echo RPT_COLOR ?><select name="Title2FontColor">
 		<?php foreach($FontColors as $key => $value) {
 			if ($Prefs['title2fontcolor']==$key) $selected = ' selected'; else  $selected = '';
@@ -151,12 +152,12 @@
 		<?php foreach($Fonts as $key => $value) {
 			if ($Prefs['filterfont']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
+		} ?> </select>
       <?php echo RPT_SIZE ?><select name="FilterFontSize">
 		<?php foreach($FontSizes as $key => $value) {
 			if ($Prefs['filterfontsize']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
+		} ?> </select>
       <?php echo RPT_COLOR ?><select name="FilterFontColor">
 		<?php foreach($FontColors as $key => $value) {
 			if ($Prefs['filterfontcolor']==$key) $selected = ' selected'; else  $selected = '';
@@ -176,12 +177,12 @@
 	  <?php foreach($Fonts as $key => $value) {
 			if ($Prefs['datafont']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
+		} ?> </select>
       <?php echo RPT_SIZE ?><select name="DataFontSize">
 		<?php foreach($FontSizes as $key => $value) {
 			if ($Prefs['datafontsize']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
+		} ?> </select>
       <?php echo RPT_COLOR ?><select name="DataFontColor">
 		<?php foreach($FontColors as $key => $value) {
 			if ($Prefs['datafontcolor']==$key) $selected = ' selected'; else  $selected = '';
@@ -202,12 +203,12 @@
 		<?php foreach($Fonts as $key => $value) {
 			if ($Prefs['totalsfont']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
+		} ?> </select>
       <?php echo RPT_SIZE ?><select name="TotalsFontSize">
 		<?php foreach($FontSizes as $key => $value) {
 			if ($Prefs['totalsfontsize']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
+		} ?> </select>
       <?php echo RPT_COLOR ?><select name="TotalsFontColor">
 		<?php foreach($FontColors as $key => $value) {
 			if ($Prefs['totalsfontcolor']==$key) $selected = ' selected'; else  $selected = '';
