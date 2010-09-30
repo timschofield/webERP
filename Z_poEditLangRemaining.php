@@ -14,17 +14,17 @@ $title = _('Edit Remaining Items');
 
 include('includes/header.inc');
 
-/* Your webserver user MUST have read/write access to here, 
+/* Your webserver user MUST have read/write access to here,
 	otherwise you'll be wasting your time */
-	
+
 $PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
 $PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
-	
+
 echo "<br>&nbsp;<a href='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
 echo '<br><br>&nbsp;' . _('Utility to edit a language file module');
 echo '<br>&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 
-  
+
 	$PathToLanguage_mo = substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) . '.mo';
 
   /* now read in the language file */
@@ -34,9 +34,10 @@ echo '<br>&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 
 	if (isset($_POST['submit'])) {
     // save the modifications
-    
+
 		echo '<br><table><tr><td>';
 		echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
     /* write the new language file */
 
@@ -52,7 +53,7 @@ echo '<br>&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 			$Result = fputs($fpOut, $LangFile[$i]);
 		}
 		$Result = fclose($fpOut);
-	
+
     /* Done writing, now move the original file to a .old */
     /* and the new one to the default */
 
@@ -64,7 +65,7 @@ echo '<br>&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 		if (file_exists($PathToLanguage . '.bak')) {
 			$Result = unlink($PathToLanguage . '.bak');
 		}
-		
+
     /*now need to create the .mo file from the .po file */
 		$msgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
 		system($msgfmtCommand);
@@ -92,8 +93,8 @@ echo '<br>&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 			}
 		}
 		$TotalLines = $j - 1;
-		
-						
+
+
 /* stick it on the screen */
 
     echo '<br>&nbsp;' . _('When finished modifying you must click on Modify at the bottom in order to save changes');
@@ -103,6 +104,7 @@ echo '<br>&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 		echo '<br>';
 		echo '</div>';
 		echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<table>';
 		echo '<tr><th ALIGN="center">' . _('Language File for') . ' "' . $_SESSION['Language'] . '"</th></tr>';
@@ -134,7 +136,7 @@ echo '<br>&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 		echo '<br><div class="centre">';
 		echo '<input type="Submit" name="submit" VALUE="' . _('Modify') . '">&nbsp;&nbsp;';
 		echo '<input type="hidden" name="module" VALUE="' . $_POST['module'] . '">';
-		
+
 		echo '</form>';
 		echo '</div>';
 	}

@@ -14,12 +14,12 @@ $title = _('Edit Module');
 
 include('includes/header.inc');
 
-/* Your webserver user MUST have read/write access to here, 
+/* Your webserver user MUST have read/write access to here,
 	otherwise you'll be wasting your time */
-	
+
 $PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
 $PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
-	
+
 echo "<br>&nbsp;<a href='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
 echo '<br><br>&nbsp;' . _('Utility to edit a language file module');
 echo '<br>&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
@@ -28,7 +28,7 @@ echo '<br>&nbsp;' . _('Make sure you have selected the correct language to trans
 
 if (isset($_POST['ReMergePO'])){
 
-/*update the messages.po file with any new strings */	
+/*update the messages.po file with any new strings */
 
 /*first rebuild the en_GB default with xgettext */
 
@@ -38,17 +38,17 @@ if (isset($_POST['ReMergePO'])){
 
 	system($xgettextCmd);
 /*now merge the translated file with the new template to get new strings*/
-	
+
 	$msgMergeCmd = 'msgmerge --no-wrap --update ' . $PathToLanguage . ' ' . $PathToDefault;
-	
+
 	system($msgMergeCmd);
 	//$Result = rename($PathToNewLanguage, $PathToLanguage);
 	exit;
 }
-	
-if (isset($_POST['module'])) {	
+
+if (isset($_POST['module'])) {
   // a module has been selected and is being modified
-  
+
 	$PathToLanguage_mo = substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) . '.mo';
 
   /* now read in the language file */
@@ -58,9 +58,10 @@ if (isset($_POST['module'])) {
 
 	if (isset($_POST['submit'])) {
     // save the modifications
-    
+
 		echo '<br><table><tr><td>';
 		echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
     /* write the new language file */
 
@@ -76,7 +77,7 @@ if (isset($_POST['module'])) {
 			$Result = fputs($fpOut, $LangFile[$i]);
 		}
 		$Result = fclose($fpOut);
-	
+
     /* Done writing, now move the original file to a .old */
     /* and the new one to the default */
 
@@ -88,7 +89,7 @@ if (isset($_POST['module'])) {
 		if (file_exists($PathToLanguage . '.bak')) {
 			$Result = unlink($PathToLanguage . '.bak');
 		}
-		
+
     /*now need to create the .mo file from the .po file */
 		$msgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
 		system($msgfmtCommand);
@@ -97,7 +98,7 @@ if (isset($_POST['module'])) {
 
 		echo '</form>';
 		echo '</td></tr></table>';
-	
+
 	/* End of Submit block */
 	} else {
 
@@ -117,7 +118,7 @@ if (isset($_POST['module'])) {
 			}
 		}
 		$TotalLines = $j - 1;
-						
+
 /* stick it on the screen */
 
     echo '<br>&nbsp;' . _('When finished modifying you must click on Modify at the bottom in order to save changes');
@@ -126,6 +127,7 @@ if (isset($_POST['module'])) {
 		prnMsg (_('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br>', 'info', _('PLEASE NOTE'));
 		echo '<br>';
 		echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '</div';
 		echo '<table>';
 		echo '<tr><th ALIGN="center">' . _('Language File for') . ' "' . $_POST['language'] . '"</th></tr>';
@@ -165,7 +167,7 @@ if (isset($_POST['module'])) {
 		echo '<br><div class="centre">';
 		echo '<input type="Submit" name="submit" VALUE="' . _('Modify') . '">&nbsp;&nbsp;';
 		echo '<input type="hidden" name="module" VALUE="' . $_POST['module'] . '">';
-		
+
 		echo '</form>';
 		echo '</div>';
 	}
@@ -202,7 +204,7 @@ if (isset($_POST['module'])) {
     	}
   	  closedir($handle);
 	}
-	
+
 	sort($AvailableModules);
 	$NumberOfModules = sizeof($AvailableModules) - 1;
 
@@ -213,6 +215,7 @@ else
 {
 	echo '<br><table><tr><td>';
 	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table>';
 
