@@ -208,6 +208,7 @@ if (isset($SelectedTab)) {
 if (!isset($_GET['delete'])) {
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p><table border=1>'; //Main table
 	echo '<td><table>'; // First column
 
