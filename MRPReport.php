@@ -532,6 +532,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	}
 
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Search for Inventory Items');
 	echo '<table class=selection><tr>';
 	echo '<td>' . _('In Stock Category') . ':';
@@ -713,6 +714,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 /* display list if there is more than one record */
 if (isset($searchresult) AND !isset($_POST['Select'])) {
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($searchresult);
 	if ($ListCount > 0) {
 		// If the user hit the search button and there is more than one item to show
