@@ -28,6 +28,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 		. _('Delivery Differences Report') . '</p>';
 
 	 echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . sid . "'>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	 echo '<table class=selection><tr><td>' . _('Enter the date from which variances between orders and deliveries are to be listed') .
 	 	":</td><td><input type=text class=date alt='".$_SESSION['DefaultDateFormat'].
 	 	"' name='FromDate' maxlength=10 size=10 value='" .
