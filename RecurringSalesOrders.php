@@ -307,6 +307,7 @@ If (isset($_POST['Process'])) {
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') .
 		'" alt=""><b>'.' '. _('Recurring Order for Customer') .' : ' . $_SESSION['Items'.$identifier]->CustomerName .'</b></p';
 echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID .'identifier='.$identifier. "' method=post>";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 echo "<table cellpadding=2 colspan=7 class=selection>";
