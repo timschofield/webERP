@@ -259,6 +259,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/c
 if (!isset($_POST['ProcessCredit'])) {
 
 	echo "<form action='" . $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 	echo "<table cellpadding=2 colspan=7 class=selection><tr>";
