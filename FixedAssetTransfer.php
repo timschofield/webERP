@@ -27,6 +27,7 @@ if (isset($_GET['AssetID'])) {
 	$sql='SELECT categoryid, categorydescription FROM stockcategory WHERE stocktype="'.'A'.'"';
 	$result=DB_query($sql, $db);
 	echo '<form action="'. $_SERVER['PHP_SELF'] . '?' . SID .'" method=post>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
 		'" alt="">' . ' ' . $title . '</p>';
 	echo '<table class=selection><tr>';
@@ -112,6 +113,7 @@ if (isset($_GET['AssetID'])) {
 				AND assetmanager.serialno like "'.$_POST['SerialNumber'].'"';
 		$result=DB_query($sql, $db);
 		echo '<form action="'. $_SERVER['PHP_SELF'] . '?' . SID .'" method=post><table class=selection>';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<tr><th>'._('Asset ID').'</th>
 				<th>'._('Stock Code').'</th>
 				<th>'._('Description').'</th>
