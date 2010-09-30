@@ -49,6 +49,7 @@ $invalid_imports = 0;
 $valid = true;
 
 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" enctype="multipart/form-data" >';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<input type=hidden name="LineNo" value="' . $LineNo . '">';
 echo '<input type=hidden name="StockID" value="'. $StockID. '">';
 echo '<table border=1><tr><td>';

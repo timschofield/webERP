@@ -80,6 +80,7 @@ echo '<form action="' . $_SERVER['PHP_SELF'] . '?=' . SID . '" name="Ga6uF5Wa" m
       <input type=hidden name=LineNo value="' . $LineNo . '">
       <input type=hidden name=StockID value="' . $StockID . '">
       <input type=hidden name=EntryType value="KEYED">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if ( isset($_GET['EditControlled']) ) {
 	$EditControlled = isset($_GET['EditControlled'])?$_GET['EditControlled']:false;
 } elseif ( isset($_POST['EditControlled']) ){

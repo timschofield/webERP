@@ -125,12 +125,12 @@ if ($ShowFileInfo){
 		<tr><td>'. _('Size') .':</td><td>' . number_format($_SESSION['CurImportFile']['size']/1024,4) . 'kb</td></tr>
 		<tr><td>'. _('Type') .':</td><td>' . $_SESSION['CurImportFile']['type'] . '</td></tr>
 		<tr><td>'. _('TempName') .':</td><td>' . $_SESSION['CurImportFile']['tmp_name'] . '</td></tr>
-	   <tr><td>'. _('Status') .':</td><td>' . 
+	   <tr><td>'. _('Status') .':</td><td>' .
 	($LineItem->SerialItemsValid?getMsg(_('Valid'),'success'):getMsg(_('Invalid'),'error')) . '</td></tr>
 	   </TABLE>'.
 		$invalid_imports.' '. _('out of') .' '.$TotalLines.' '. _('records are invalid').'<br>';
 	$filename = $_SESSION['CurImportFile']['tmp_name'];
-}  
+}
 
 if (!$LineItem->SerialItemsValid && !$_SESSION['CurImportFile']['Processed']){
 		// IF all items are not valid, show the raw first 10 lines of the file. maybe it will help.
@@ -143,8 +143,9 @@ if (!$LineItem->SerialItemsValid && !$_SESSION['CurImportFile']['Processed']){
 		}
 		fclose($handle);
 
-	echo '<br><form method=POST>
-			<input type=submit name=ValidateFile value=' . _('Validate File') . '>
+	echo '<br><form method=POST>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<input type=submit name=ValidateFile value=' . _('Validate File') . '>
 			<input type=hidden name=LineNo value="' . $LineNo . '">
 			<input type=hidden name=StockID value="' . $StockID . '">
 			<input type=hidden name=EntryType value="FILE">
