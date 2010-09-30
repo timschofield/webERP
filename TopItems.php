@@ -10,6 +10,7 @@ include ('includes/header.inc');
 if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_POST['Customers']) and isset($_POST['NumberOfTopItems']) and isset($_POST['order']))) {
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="">' . ' ' . _('Top Sales Order Search') . '</p>';
 	echo "<form action=" . $_SERVER['PHP_SELF'] . '?' . SID . ' name="SelectCustomer" method=POST>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table cellpadding=3 colspan=4 class=selection>';
 	//to view store location
 	echo '<tr><td width="150">' . _('Select Location') . '  </td><td>:</td><td><select name=Location>';
@@ -150,6 +151,7 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 	$result = DB_query($SQL, $db);
 	echo '<p class="page_title_text" align="center"><strong>' . _('Top Sales Items List') . '</strong></p>';
 	echo "<form action=PDFTopItems.php  method='GET'><table class='selection'>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$TableHeader = '<tr><th><strong>' . _('#') . '</strong></th>
 								<th><strong>' . _('Code') . '</strong></th>
 								<th><strong>' . _('Description') . '</strong></th>
