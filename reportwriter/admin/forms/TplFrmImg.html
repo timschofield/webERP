@@ -1,5 +1,6 @@
 <h2 align="center"><?php echo 'Form Field: '.$DisplayName.' - '.RPT_BTN_PROP; ?></h2>
 <form method="post" action="ReportCreator.php?action=step6a" enctype="multipart/form-data" name="DBRptLine">
+	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	<input name="DisplayName" type="hidden" value="<?php echo $DisplayName; ?>">
 	<input name="index" type="hidden" value="<?php echo $Params['index']; ?>">
 	<input name="ID" type="hidden" value="<?php echo $FormParams['id']; ?>">
@@ -17,7 +18,7 @@
     <tr>
       <td><?php echo RPT_IMAGECUR; ?></td>
       <td><div align="center">
-	  	<?php if ($Params['filename']) 
+	  	<?php if ($Params['filename'])
           echo '<img src="'.MyDocPath.$Params['filename'].'" height="32" border="0">';
           else echo 'No Image Selected!'; ?>
       </div></td>
@@ -43,7 +44,7 @@
 	  	<?php if (!$Params['LineXStrt']) $Params['LineXStrt']='10'; ?>
 		<input name="LineXStrt" type="text" value="<?php echo $Params['LineXStrt']; ?>" size="4" maxlength="3">
       </div></td>
-      <td width="50%"><div align="center"><?php echo RPT_ODINATE; ?> 
+      <td width="50%"><div align="center"><?php echo RPT_ODINATE; ?>
 	  	<?php if (!$Params['LineYStrt']) $Params['LineYStrt']='10'; ?>
         <input name="LineYStrt" type="text" value="<?php echo $Params['LineYStrt']; ?>" size="4" maxlength="3">
       </div></td>
