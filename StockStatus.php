@@ -57,6 +57,7 @@ if ($myrow[2]=='K'){
 }
 
 echo '<div class="centre"><form action="' . $_SERVER['PHP_SELF'] . '?'. SID . '" method=post>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo _('Stock Code') . ':<input type=text name="StockID" size=21 value="' . $StockID . '" maxlength=20>';
 
 echo ' <input type=submit name="ShowStatus" VALUE="' . _('Show Stock Status') . '"></div>';
