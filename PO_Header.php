@@ -618,6 +618,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
 		_('Purchase Order') . '" alt="">' . ' ' . _('Purchase Order: Select Supplier') . '';
 	echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "identifier=".$identifier."' method=post name='choosesupplier'>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (strlen($msg)>1){
 		prnMsg($msg,'warn');
 	}
@@ -688,6 +689,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 /* everything below here only do if a supplier is selected */
 
 	echo "<form name='form1' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "identifier=".$identifier. "' method=post>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 // Be careful not made confused by orderno and realorderno
 //	$orderno = previous_id("purchorders","orderno");

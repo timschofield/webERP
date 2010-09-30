@@ -48,6 +48,7 @@ $sql="SELECT purchorders.*,
 $result=DB_query($sql, $db);
 
 echo '<form method=post action="' . $_SERVER['PHP_SELF'] . '">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class=selection><tr>';
 
 /* Create the table for the purchase order header */
