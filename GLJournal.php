@@ -233,6 +233,7 @@ if (!isset($_SESSION['JournalDetail']->JnlDate)){
 */
 
 echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post name="form">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title;

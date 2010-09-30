@@ -24,6 +24,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 . _('The P&L represents a period of time. This contrasts with the Balance Sheet, which represents a single moment in time.') . '<br>'
 . _('webERP is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.') . '</div>';
 	echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (Date('m') > $_SESSION['YearEnd']){
 		/*Dates in SQL format */
@@ -529,6 +530,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 
 	include('includes/header.inc');
 	echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo "<input type=hidden name='FromPeriod' VALUE=" . $_POST['FromPeriod'] . "><input type=hidden name='ToPeriod' VALUE=" . $_POST['ToPeriod'] . '>';
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
