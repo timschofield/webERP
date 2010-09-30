@@ -249,6 +249,7 @@ if (isset($_POST['PrintPDF'])) {
 		. _('Stock') . '" alt="">' . ' ' . $title . '</p>';
 
 	echo '<form action=' . $_SERVER['PHP_SELF'] . " method='post'>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo "<table class=selection>";
 	echo '<tr><td>' . _('Sort') . ":</td><td><select name='Sort'>";
 	echo "<option selected value='extcost'>" . _('Extended Shortage Dollars')."</option>";

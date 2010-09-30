@@ -41,6 +41,7 @@ if (!isset($_POST['supplierid'])) {
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
 			_('Select Supplier') . '" alt="">' . ' ' . _('Select Supplier') . '</p>';
 		echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class=selection>';
 		echo '<tr><td>'._('Select Supplier').'</td>';
 		echo '<td><select name=supplierid>';
@@ -81,6 +82,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 	$result=DB_query($sql, $db);
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
 		_('Supplier Offers') . '" alt="">' . ' ' . _('Supplier Offers') . '</p>';
