@@ -13,6 +13,7 @@ echo '<br>' . _('This page updates already existing prices for a specified sales
 prnMsg (_('This script takes no account of start and end dates of prices and updates all historical prices as well as current prices - better to use new scripts under Inventory -> Maintenance'),'warn');
 
 echo "<form method='POST' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $SQL = 'SELECT sales_type, typeabbrev FROM salestypes';
 
@@ -101,33 +102,33 @@ if (isset($_POST['UpdatePrices']) AND isset($_POST['StkCat'])){
 
 		if ($_POST['WhichPrices'] == 'Only Non-customer special prices'){
 
-			$sql = 'UPDATE prices SET price=price*(1+' . $IncrementPercentage . ") 
-					WHERE typeabbrev='" . $_POST['PriceList'] . "' 
-					AND stockid='" . $myrow['stockid'] . "' 
-					AND typeabbrev='" . $_POST['PriceList'] . "' 
+			$sql = 'UPDATE prices SET price=price*(1+' . $IncrementPercentage . ")
+					WHERE typeabbrev='" . $_POST['PriceList'] . "'
+					AND stockid='" . $myrow['stockid'] . "'
+					AND typeabbrev='" . $_POST['PriceList'] . "'
 					AND debtorno=''";
 
 		}else if ($_POST['WhichPrices'] == 'Only customer special prices'){
 
-			$sql = "UPDATE prices SET price=price*(1+" . $IncrementPercentage . ") 
-					WHERE typeabbrev='" . $_POST['PriceList'] . "' 
-					AND stockid='" . $myrow['stockid'] . "' 
-					AND typeabbrev='" . $_POST['PriceList'] . "' 
+			$sql = "UPDATE prices SET price=price*(1+" . $IncrementPercentage . ")
+					WHERE typeabbrev='" . $_POST['PriceList'] . "'
+					AND stockid='" . $myrow['stockid'] . "'
+					AND typeabbrev='" . $_POST['PriceList'] . "'
 					AND debtorno!=''";
 
 		} else if ($_POST['WhichPrices'] == 'Both customer special prices and non-customer special prices'){
 
-			$sql = "UPDATE prices SET price=price*(1+" . $IncrementPercentage . ") 
-					WHERE typeabbrev='" . $_POST['PriceList'] . "' 
-					AND stockd='" . $myrow['stockid'] . "' 
+			$sql = "UPDATE prices SET price=price*(1+" . $IncrementPercentage . ")
+					WHERE typeabbrev='" . $_POST['PriceList'] . "'
+					AND stockd='" . $myrow['stockid'] . "'
 					AND typeabbrev='" . $_POST['PriceList'] . "'";
 
 		} else if ($_POST['WhichPrices'] == 'Selected customer special prices only'){
 
-			$sql = 'UPDATE prices SET price=price*(1+' . $IncrementPercentage . ") 
-					WHERE typeabbrev='" . $_POST['PriceList'] . "' 
-					AND stockid='" . $myrow['stockid'] . "' 
-					AND typeabbrev='" . $_POST['PriceList'] . "' 
+			$sql = 'UPDATE prices SET price=price*(1+' . $IncrementPercentage . ")
+					WHERE typeabbrev='" . $_POST['PriceList'] . "'
+					AND stockid='" . $myrow['stockid'] . "'
+					AND typeabbrev='" . $_POST['PriceList'] . "'
 					AND debtorno='" . $_SESSION['CustomerID'] . "'";
 
 		}
