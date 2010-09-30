@@ -29,6 +29,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo']=="") and !isset($_POST['TransD
 	$result=DB_query($sql, $db);
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Search') . '" alt=""></img>' . ' ' . $title.'<br></p>';
 	echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post name="form">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection"><tr>';
 	echo '<td>'._('Create picking lists for all deliveries to be made on').' : '.'</td>';
 	echo '<td><input type=text class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="TransDate" maxlength=10 size=11 value='.date($_SESSION['DefaultDateFormat'], mktime(date('m'),date('Y'),date('d')+1)).'></td></tr>';
