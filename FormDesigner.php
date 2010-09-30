@@ -131,6 +131,7 @@ if (isset($_POST['preview']) or isset($_POST['save'])) {
 if (empty($_POST['FormName'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 	echo '<form method="post" id="ChooseForm" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table><tr>';
 	echo '<td>'. _('Select the form to edit') .'</td><td><select name="FormName">';
 	/* Iterate throght the appropriate companies FormDesigns/ directory
@@ -159,6 +160,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/r
 echo '<div class="page_help_text">' . _('Enter the changes that you want in the form layout below.') .'<br /> '. _('All measurements are in millimetres') . '.</div><br>';
 $Papers=array('A4_Landscape', 'A4_Portrait', 'A5_Landscape', 'A5_Portrait', 'A3_Landscape', 'A3_Portrait', 'letter_Portrait', 'letter_Landscape', 'legal_Portrait', 'legal_Landscape'); // Possible paper sizes/orientations
 echo '<form method="post" id="Form" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<input name=FormName type=hidden value="'.$_POST['FormName'].'">';
 echo '<table width=95% border=1>'; //Start of outer table
 echo '<tr><th width=33%>'._('Form Name').'<input type="text" name="formname" value="'.$FormDesign['name'].'"></th>';
