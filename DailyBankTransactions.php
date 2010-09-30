@@ -10,6 +10,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 
 if (!isset($_POST['Show'])) {
 	echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table class=selection>';
 
@@ -111,6 +112,7 @@ if (!isset($_POST['Show'])) {
 		prnMsg( _('There are no transactions for this account on that day'), 'info');
 	}
 	echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br><div class="centre"><input type="submit" name="Return" value="' . _('Select Another Date'). '"></div>';
 	echo '</form>';
 }
