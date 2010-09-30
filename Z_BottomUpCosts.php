@@ -47,6 +47,7 @@ if (isset($Run)) { //start bom processing
 } else { //show file upload form
 
 	echo "<form action=" . $_SERVER['PHP_SELF'] . '?' . sid . " method=post name='form'>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Search') . '" alt="">' . ' ' . _('Update costs for all items listed in a bill of materials').'<br></p>';
 	echo "<div class=centre><input type='submit' name='Run' value='" . _('Run') . "'></div></form>";
 
