@@ -14,6 +14,7 @@ include('includes/header.inc');
 	// Page Border
 	echo '<table border=1 width=100%><tr><td bgcolor="#FFFFFF">';
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	// Context Navigation and Title
 	echo '<table width=100%>
