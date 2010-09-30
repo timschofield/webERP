@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Author: Ashish Shukla <gmail.com!wahjava>
  *
  * Script to duplicate BoMs.
@@ -19,7 +19,7 @@ if(isset($_POST['Submit'])) {
     $newstkid = $_POST['tostkid'];
   else
     $newstkid = $_POST['exstkid'];
-    
+
   $result = DB_query("begin", $db);
 
   if($type == 'N')
@@ -62,7 +62,7 @@ if(isset($_POST['Submit'])) {
       $result = DB_query($sql, $db);
 
       $row = DB_fetch_row($result);
-      
+
       $sql = "update stockmaster set
               lastcurcostdate = '".$row[0]."',
               actualcost      = ".$row[1].",
@@ -111,6 +111,7 @@ if(isset($_POST['Submit'])) {
      include('includes/header.inc');
 
      echo "<form method=\"post\" action=\"Z_CopyBOM.php\">";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
      $sql = "SELECT stockid, description FROM stockmaster WHERE stockid IN (SELECT DISTINCT parent FROM bom) AND  mbflag IN ('M', 'A', 'K');";
      $result = DB_query($sql, $db);
@@ -136,10 +137,10 @@ if(isset($_POST['Submit'])) {
 	     echo "<option value=\"$row[0]\">".$row[0]." -- ".$row[1]."</option>";
 	   }
 	 echo "</select>";
-       } 
+       }
      echo "</p>";
      echo "<input type=\"submit\" name=\"Submit\" value=\"Submit\"/></p>";
-    
+
      include("includes/footer.inc");
    }
 ?>
