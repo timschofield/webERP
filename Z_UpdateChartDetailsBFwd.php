@@ -9,6 +9,7 @@ include('includes/header.inc');
 
 
 echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if ($_POST['FromPeriod'] > $_POST['ToPeriod']){
 	prnMsg(_('The selected period from is actually after the period to') . '. ' . _('Please re-select the reporting period'),'error');

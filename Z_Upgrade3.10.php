@@ -10,6 +10,7 @@ prnMsg(_('This script will perform any modifications to the database since v 3.1
 
 if (!isset($_POST['DoUpgrade'])) {
     echo "<br><form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
     echo '<div class="centre"><input type=submit name=DoUpgrade value="' . _('Perform Upgrade') . '"></div>';
     echo '</form';
 }
