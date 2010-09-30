@@ -175,6 +175,7 @@ If (isset($_POST['PrintPDF'])
 		'" alt="">' . ' ' . $title . '</p>';
 
 	echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table class=selection>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<tr><td>' . _('From Supplier Code') . ":</td>
 		<td><input type=text name='FromCriteria' value='0'></td></tr>";

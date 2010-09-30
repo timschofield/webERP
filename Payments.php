@@ -244,6 +244,7 @@ if (isset($_POST['CommitBatch'])){
 		echo '<br><a href="' . $rootpath . '/PrintCheque.php?' . SID . '&ChequeNum=' . $_POST['ChequeNum'] . '">' . _('Print Cheque using pre-printed stationery') . '</a><br><br>';
 
 		echo '<form method=post action="' . $_SERVER['PHP_SELF'] . '">';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo _('Has the cheque been printed') . '?<br><br>';
 		echo '<input type="hidden" name="CommitBatch" VALUE="' . $_POST['CommitBatch'] . '">';
 		echo '<input type="submit" name="ChequePrinted" VALUE="' . _('Yes / Continue') . '">&nbsp;&nbsp;';
@@ -681,6 +682,7 @@ if (isset($_POST['BankAccount']) AND $_POST['BankAccount']!='') {
 
 
 echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 // Note this is duplicated
