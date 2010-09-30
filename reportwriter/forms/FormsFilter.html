@@ -2,6 +2,7 @@
 <body>
 <h2 align="center"><?php echo $Prefs['reportname'].' - '.RPT_BTN_CRIT; ?></h2>
 <form name="formfilter" method="post" action="FormMaker.php<?php echo $QueryString; ?>">
+	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
   <input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
   <input name="GoBackURL" type="hidden" value="<?php echo $GoBackURL; ?>">
   <input name="FormFilter" type="hidden" value="1">
@@ -37,8 +38,8 @@
 	  <td><input name="DefDateTo" type="text" value="<?php echo $DateArray[2]; ?>" id="DateTo" size="11" maxlength="10"></td>
     </tr>
 	<?php } //end if ($Prefs['DateListings']['displaydesc'])
-    if ($Prefs['CritListings'] <> '') { 
-		foreach ($Prefs['CritListings'] as $LineItem) echo BuildCriteria($LineItem);  
+    if ($Prefs['CritListings'] <> '') {
+		foreach ($Prefs['CritListings'] as $LineItem) echo BuildCriteria($LineItem);
 	} // end if ($CritListings <> '') ?>
   </table>
 </form>
