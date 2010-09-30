@@ -326,6 +326,7 @@ if (!isset($_GET['delete'])) {
 	$myrow=DB_fetch_array($result);
 	$ReportHeading=$myrow['reportheading'];
 	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="ReportHeading" value='.$ReportHeading.'>';
 	echo '<input type=hidden name="ReportID" VALUE=' . $ReportID . '>';
 	if (isset($SelectedCol)) {
