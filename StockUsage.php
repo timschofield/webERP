@@ -55,6 +55,7 @@ if (($myrow[2]=='K') OR ($myrow[2]=='A') OR ($myrow[2]=='D')) {
 }
 
 echo "<form action='" . $_SERVER['PHP_SELF'] . '?'. SID ."' method=post><tr><td>";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo _('Stock Code') . ":<input type=text name='StockID' size=21 maxlength=20 value='$StockID' >";
 
 echo _('From Stock Location') . ":<select name='StockLocation'>";
