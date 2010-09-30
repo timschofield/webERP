@@ -567,6 +567,7 @@ if (isset($_POST['submit'])) {
 		echo '</table></td>';
 	}
 	echo "<p><form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<td><table class=selection>';
 	// Generate selections for Location
 	echo '<tr><th colspan=3><font color=blue size=3>'._('This Run Details').'</font></th></tr>';
