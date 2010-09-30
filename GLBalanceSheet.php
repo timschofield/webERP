@@ -25,6 +25,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	. _('webERP is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.') . '</div>';
 
 	echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p><table class="selection"><tr><td>'._('Select the balance date').":</td><td><select Name='BalancePeriodEnd'>";
 
 	$periodno=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
@@ -301,6 +302,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 } else {
 	include('includes/header.inc');
 	echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo "<input type=hidden name='BalancePeriodEnd' VALUE=" . $_POST['BalancePeriodEnd'] . '>';
 
 	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
