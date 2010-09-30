@@ -452,6 +452,7 @@ if (!isset($DebtorNo)) {
 	}
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo "<input type='Hidden' name='New' value='Yes'>";
 
@@ -614,6 +615,7 @@ if (!isset($DebtorNo)) {
 //DebtorNo exists - either passed when calling the form or from the form itself
 
 	echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID ."'>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class=selection cellspacing=4><tr><td valign=top><table class=selection>';
 
 	if (!isset($_POST['New'])) {
@@ -952,6 +954,7 @@ if (!isset($DebtorNo)) {
 	echo '</table>';
 		//	echo "<input type='Submit' name='addcontact' VALUE='" . _('ADD Contact') . "'>";
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?'.SID.'&DebtorNo="'.$DebtorNo.'"&ID='.$ID.'&Edit'.$Edit.'>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (isset($Edit) and $Edit!='') {
 		$SQLcustcontacts="SELECT * from custcontacts
 							WHERE debtorno='".$DebtorNo."'
@@ -972,6 +975,7 @@ if (!isset($DebtorNo)) {
 				";
 
 		echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?'.SID.'&DebtorNo="'.$DebtorNo.'"&ID"'.$ID.'">';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 	}
