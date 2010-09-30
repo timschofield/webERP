@@ -12,13 +12,13 @@ $title = _('Edit Header');
 
 include('includes/header.inc');
 
-/* Your webserver user MUST have read/write access to here, 
+/* Your webserver user MUST have read/write access to here,
 	otherwise you'll be wasting your time */
 
 echo "<br>&nbsp;<a href='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
 echo '<br><br>&nbsp;' . _('Utility to edit a language file header');
 echo '<br>&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
-  
+
 $PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
 $PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
 
@@ -32,11 +32,12 @@ if (isset($_POST['submit'])) {
 
 	echo '<br><table><tr><td>';
 	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /* write the new header then the rest of the language file to a new file */
 
 	prnMsg (_('Writing the language file header') . '.....<br>', 'info', ' ');
-	
+
 	$fpOut = fopen($PathToNewLanguage, 'w');
 
 	for ($i=1; $i<=17; $i++) {
@@ -84,10 +85,11 @@ else
   echo '<br>&nbsp;' . _('When finished modifying you must click on Modify at the bottom in order to save changes');
 	echo '<div class="centre">';
 	echo '<br>';
-	prnMsg (_('Your existing translation file (messages.po) will be backed up as messages.po.old') . '<br><br>' . 
+	prnMsg (_('Your existing translation file (messages.po) will be backed up as messages.po.old') . '<br><br>' .
 				_('Make sure you know what you are doing BEFORE you edit the header'), 'info', _('PLEASE NOTE'));
 	echo '<br></div>';
 	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table><tr><th" colspan="2" ALIGN="center">'. _('Language File Header for') . ' "' . $_POST['language'] . '"</th></tr>';
 	echo '<tr><td colspan="2"></td></tr>';
