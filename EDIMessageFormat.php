@@ -100,6 +100,7 @@ if (isset($msg)) {
 }
 
 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p><table border=0 width=100%>
 	<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
