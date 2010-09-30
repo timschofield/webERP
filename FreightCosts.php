@@ -34,6 +34,7 @@ if (isset($_GET['SelectedFreightCost'])){
 if (!isset($LocationFrom) OR !isset($ShipperID)) {
 
 	echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = 'SELECT shippername, shipper_id FROM shippers';
 	$ShipperResults = DB_query($sql,$db);
 
@@ -272,6 +273,7 @@ if (isset($SelectedFreightCost)) {
 if (isset($LocationFrom) AND isset($ShipperID)) {
 
 	echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedFreightCost)) {
 		//editing an existing freight cost item
