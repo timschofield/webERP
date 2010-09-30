@@ -1,5 +1,6 @@
 <h2 align="center"><?php echo 'Form Field: '.$DisplayName.' - '.RPT_BTN_PROP; ?></h2>
 <form name="DBRptLine" method="post" action="ReportCreator.php?action=step6a">
+	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	<input name="DisplayName" type="hidden" value="<?php echo $DisplayName; ?>">
 	<input name="index" type="hidden" value="<?php echo $Params['index']; ?>">
 	<input name="ID" type="hidden" value="<?php echo $FormParams['id']; ?>">
@@ -22,7 +23,7 @@
 	  	<?php if (!$Params['LineXStrt']) $Params['LineXStrt']='10'; ?>
 		<input name="LineXStrt" type="text" value="<?php echo $Params['LineXStrt']; ?>" size="4" maxlength="3">
       </div></td>
-      <td width="50%"><div align="center"><?php echo RPT_ODINATE; ?> 
+      <td width="50%"><div align="center"><?php echo RPT_ODINATE; ?>
 	  	<?php if (!$Params['LineYStrt']) $Params['LineYStrt']='10'; ?>
         <input name="LineYStrt" type="text" value="<?php echo $Params['LineYStrt']; ?>" size="4" maxlength="3">
       </div></td>
@@ -76,7 +77,7 @@
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
 		} ?> </select></div></td>
 		<?php if ($Params['Color']=='2') $selected=' checked'; else $selected=''; ?>
-      <td nowrap><input name="Color" type="radio" value="2"<?php echo $selected; ?>><?php echo RPT_CUSTCOLOR; ?><br> 
+      <td nowrap><input name="Color" type="radio" value="2"<?php echo $selected; ?>><?php echo RPT_CUSTCOLOR; ?><br>
 		<div align="center">
 		<?php echo RPT_RED; ?> <input name="FontRed" type="text" value="<?php echo $Params['FontRed']; ?>" size="4" maxlength="3">
 		<?php echo RPT_GREEN; ?> <input name="FontGreen" type="text" value="<?php echo $Params['FontGreen']; ?>" size="4" maxlength="3">
@@ -101,8 +102,8 @@
 		<?php if ($Params['Line']=='2') $selected=' checked'; else $selected=''; ?>
       <td nowrap><input name="Line" type="radio" value="2"<?php echo $selected; ?>><?php echo RPT_CUSTCOLOR; ?><br>
 		<div align="center">
-		<?php echo RPT_RED; ?> <input name="BrdrRed" type="text" value="<?php echo $Params['BrdrRed']; ?>" size="4" maxlength="3"> 
-    	<?php echo RPT_GREEN; ?> <input name="BrdrGreen" type="text" value="<?php echo $Params['BrdrGreen']; ?>" size="4" maxlength="3"> 
+		<?php echo RPT_RED; ?> <input name="BrdrRed" type="text" value="<?php echo $Params['BrdrRed']; ?>" size="4" maxlength="3">
+    	<?php echo RPT_GREEN; ?> <input name="BrdrGreen" type="text" value="<?php echo $Params['BrdrGreen']; ?>" size="4" maxlength="3">
     	<?php echo RPT_BLUE; ?> <input name="BrdrBlue" type="text" value="<?php echo $Params['BrdrBlue']; ?>" size="4" maxlength="3">
 	  </div></td>
     </tr>
