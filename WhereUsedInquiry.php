@@ -32,6 +32,7 @@ if (isset($StockID)){
 }
 
 echo "<form action='" . $_SERVER['PHP_SELF'] . '?'. SID ."' method=post><div class='centre'>";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($StockID)) {
 	echo _('Enter an Item Code') . ": <input type=text name='StockID' size=21 maxlength=20 value='$StockID' >";
