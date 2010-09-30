@@ -84,6 +84,7 @@ if (isset($_POST['submit'])) {
 }
 
 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 echo '<table class=selection>';
