@@ -23,6 +23,7 @@ $result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='$S
 $myrow = DB_fetch_row($result);
 
 echo "<form action='" . $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $sql = "SELECT locstock.loccode,
 		locations.locationname,
