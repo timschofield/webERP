@@ -219,6 +219,7 @@ if (isset($_POST['submit'])) {
 if (!isset($_GET['delete'])) {
 
 	echo "<form method='post' name='GLAccounts' action='" . $_SERVER['PHP_SELF'] .  '?' . SID . "'>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedAccount)) {
 		//editing an existing account
