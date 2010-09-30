@@ -86,6 +86,7 @@ function search(&$db,&$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARC
 	// If the SELECT found records, display them
 	if (DB_num_rows($result) > 0) {
 		echo "<form action=" . $_SERVER['PHP_SELF'] . "?" . SID ." method=post>";
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table cellpadding=2 colspan=7 class=selection>';
 		$TableHeader = '<tr><th>' . _('Code') . '</th>
 						<th>' . _('Description') . '</th>
@@ -262,6 +263,7 @@ function listall(&$db,$part,$demandtype)  {//####LISTALL_LISTALL_LISTALL_LISTALL
 // demandtype
 
 	echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID .' method=post>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$where = " ";
 	if ($demandtype) {
 		$where = ' WHERE mrpdemandtype =' . "'"  .  $demandtype . "'";
@@ -320,6 +322,7 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 // the page is called, and is also invoked at the end of all of the other functions.
 // echo "<br/>DISPLAY - DemandID = $DemandID<br/>";
 	echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method="post">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (!isset($StockID)) {
 		echo'</font><table cellpadding=3 colspan=4 class=selection><tr>
 			<td><font size=1>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</font></td>
