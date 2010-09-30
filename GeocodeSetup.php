@@ -193,6 +193,7 @@ if (isset($SelectedParam)) {
 if (!isset($_GET['delete'])) {
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedParam) and ($InputError!=1)) {
 		//editing an existing status code
