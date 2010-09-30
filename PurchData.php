@@ -221,6 +221,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 	}
     if (!isset($_POST['SearchSupplier'])) {
         echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post><table cellpadding=3 colspan=4 class=selection><tr>';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
         echo '<input type="hidden" name="StockID" value="' . $StockID . '">';
         echo '<td>' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</b>:</font></td>';
         echo '<td><input type="Text" name="Keywords" size=20 maxlength=25></td>';
@@ -297,6 +298,7 @@ if (isset($SuppliersResult)) {
         $stockuom = 'each';
     }
     echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post><table cellpadding=2 colspan=7 class=selection>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
     $TableHeader = '<tr><th>' . _('Code') . '</th>
 	                	<th>' . _('Supplier Name') . '</th>
 				<th>' . _('Currency') . '</th>
@@ -368,6 +370,7 @@ if (!isset($SuppliersResult)) {
 		$stockuom=$myrow['units'];
     }
     echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post><table class=selection>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
     if (!isset($SupplierID)) {
         $SupplierID = '';
     }
