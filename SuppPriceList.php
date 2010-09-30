@@ -200,6 +200,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<div class="page_help_text">' . _('View the Price List from supplier') . '</div><br>';
 
 	echo '<br/><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$sql = "SELECT supplierid,suppname FROM `suppliers`";
 	$result = DB_query($sql,$db);
