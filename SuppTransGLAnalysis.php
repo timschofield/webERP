@@ -129,6 +129,7 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 
 /*Set up a form to allow input of new GL entries */
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="post">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<br /><table class=selection>';
 if (!isset($_POST['GLCode'])) {
