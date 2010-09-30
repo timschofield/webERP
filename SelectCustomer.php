@@ -310,6 +310,7 @@ if ($_POST['Select'] != "" or ($_SESSION['CustomerID'] != "" and !isset($_POST['
 	echo '</td></tr></table>';
 }
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo "<b><div class='centre'>" . $msg . "</div></b>";
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Search for Customers');
 echo "<table cellpadding=3 colspan=4 class=selection>";
