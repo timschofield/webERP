@@ -1,5 +1,6 @@
 <h2 align="center"><?php echo $FormParams['heading'].$reportname.' - '.RPT_BTN_CRIT; ?></h2>
 <form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
+	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
   <input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
   <input name="Type" type="hidden" value="<?php echo $Type; ?>">
   <input name="ReportName" type="hidden" value="<?php echo $reportname; ?>">
@@ -92,6 +93,7 @@
       <td>&nbsp;</td>
     </tr>
     <tr><form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
+	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	    <input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
 		<input name="Type" type="hidden" value="<?php echo $Type; ?>">
 		<input name="ReportName" type="hidden" value="<?php echo $reportname; ?>">
@@ -120,10 +122,11 @@
 	</tr>
 	<?php if (!$GroupListings['lists']) {
 		echo '<tr><td align="center" colspan="7">'.RPT_NOFIELD.'</td></tr>';
-	} else { 
+	} else {
 		foreach ($GroupListings['lists'] as $FieldDetails) { ?>
 			<tr>
 				<form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
+	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 				<input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
 				<input name="Type" type="hidden" value="<?php echo $Type; ?>">
 				<input name="ReportName" type="hidden" value="<?php echo $reportname; ?>">
@@ -138,14 +141,14 @@
 				  <?php if ($FieldDetails['params']=='1') $selected=' checked'; else $selected=''; ?>
 				  <td align = "center"><input disabled type="checkbox"<?php echo $selected; ?>></td>
 				  <td>
-					<INPUT type=image name="up" value="up" src="../images/upicon.png" border="0"> 
-					<INPUT type=image name="dn" value="down" src="../images/downicon.png" border="0"> 
-					<INPUT type=image name="ed" value="edit" src="../images/editicon.png" border="0"> 
-					<INPUT type=image name="rm" value="delete" src="../images/delicon.png" border="0" onClick="return confirm('Delete this field?')"> 
+					<INPUT type=image name="up" value="up" src="../images/upicon.png" border="0">
+					<INPUT type=image name="dn" value="down" src="../images/downicon.png" border="0">
+					<INPUT type=image name="ed" value="edit" src="../images/editicon.png" border="0">
+					<INPUT type=image name="rm" value="delete" src="../images/delicon.png" border="0" onClick="return confirm('Delete this field?')">
 				  </td>
 				  </form>
 			</tr>
-		<?php } // end foreach 
+		<?php } // end foreach
 	} // end else  ?>
     <tr bgcolor="#CCCCCC">
       <td colspan="5"><div align="center"><?php echo RPT_SORTLIST; ?></div></td>
@@ -159,6 +162,7 @@
     </tr>
     <tr>
 	<form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
+	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	  <input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
 	  <input name="Type" type="hidden" value="<?php echo $Type; ?>">
 	  <input name="ReportName" type="hidden" value="<?php echo $reportname; ?>">
@@ -187,10 +191,11 @@
 	</tr>
 	<?php if (!$SortListings['lists']) {
 		echo '<tr><td align="center" colspan="7">'.RPT_NOFIELD.'</td></tr>';
-	} else { 
+	} else {
 	foreach ($SortListings['lists'] as $FieldDetails) { ?>
 		<tr>
 		  <form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
+	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 		  <input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
 		  <input name="Type" type="hidden" value="<?php echo $Type; ?>">
 		  <input name="ReportName" type="hidden" value="<?php echo $reportname; ?>">
@@ -205,15 +210,15 @@
 		  <?php if ($FieldDetails['params']=='1') $selected=' checked'; else $selected=''; ?>
 		  <td align = "center"><input disabled type="checkbox"<?php echo $selected; ?>></td>
 		  <td>
-			<INPUT type=image name="up" value="up" src="../images/upicon.png" border="0"> 
-			<INPUT type=image name="dn" value="down" src="../images/downicon.png" border="0"> 
-			<INPUT type=image name="ed" value="edit" src="../images/editicon.png" border="0"> 
-			<INPUT type=image name="rm" value="delete" src="../images/delicon.png" border="0" onClick="return confirm('Delete this field?')"> 
+			<INPUT type=image name="up" value="up" src="../images/upicon.png" border="0">
+			<INPUT type=image name="dn" value="down" src="../images/downicon.png" border="0">
+			<INPUT type=image name="ed" value="edit" src="../images/editicon.png" border="0">
+			<INPUT type=image name="rm" value="delete" src="../images/delicon.png" border="0" onClick="return confirm('Delete this field?')">
 		  </td>
 		  </form>
 		</tr>
-	<?php } // end foreach 
-	} // end else 
+	<?php } // end foreach
+	} // end else
 } // end if ($Type<>'frm') ?>
     <tr bgcolor="#CCCCCC">
       <td colspan="5"><div align="center"><?php echo RPT_BTN_CRIT; ?></div></td>
@@ -227,6 +232,7 @@
     </tr>
     <tr>
 	  <form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
+	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	  <input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
 	  <input name="Type" type="hidden" value="<?php echo $Type; ?>">
 	  <input name="ReportName" type="hidden" value="<?php echo $reportname; ?>">
@@ -260,10 +266,11 @@
 	</tr>
 	<?php if (!$CritListings['lists']) {
 		echo '<tr><td align="center" colspan="7">'.RPT_NOFIELD.'</td></tr>';
-	} else { 
+	} else {
 	foreach ($CritListings['lists'] as $FieldDetails) { ?>
     <tr>
 	  <form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
+	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	  <input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
 	  <input name="Type" type="hidden" value="<?php echo $Type; ?>">
 	  <input name="ReportName" type="hidden" value="<?php echo $reportname; ?>">
@@ -277,13 +284,13 @@
       <td><?php echo $FieldDetails['displaydesc']; ?></td>
       <td align = "center"><?php echo substr($CritChoices[$FieldDetails['params']],2); ?></td>
       <td>
-		<INPUT type=image name="up" value="up" src="../images/upicon.png" border="0"> 
-		<INPUT type=image name="dn" value="down" src="../images/downicon.png" border="0"> 
-		<INPUT type=image name="ed" value="edit" src="../images/editicon.png" border="0"> 
-		<INPUT type=image name="rm" value="delete" src="../images/delicon.png" border="0" onClick="return confirm('Delete this field?')"> 
+		<INPUT type=image name="up" value="up" src="../images/upicon.png" border="0">
+		<INPUT type=image name="dn" value="down" src="../images/downicon.png" border="0">
+		<INPUT type=image name="ed" value="edit" src="../images/editicon.png" border="0">
+		<INPUT type=image name="rm" value="delete" src="../images/delicon.png" border="0" onClick="return confirm('Delete this field?')">
 	  </td>
       </form>
 	</tr>
-<?php } // end foreach 
+<?php } // end foreach
 } // end else ?>
 </table>

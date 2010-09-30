@@ -53,11 +53,11 @@ function change_data(type) {
 	if(type == 'demo') {
 		document.getElementById('db_file_demo').checked = true;
 		document.getElementById('db_file_new').checked = false;
-		
+
 	} else if(type == 'new') {
 		document.getElementById('db_file_demo').checked = false;
 		document.getElementById('db_file_new').checked = true;
-		
+
 	}
 }
 
@@ -75,6 +75,7 @@ function change_data(type) {
 </table>
 
 <form name="weberp_installation_wizard" action="save.php" method="post" enctype="multipart/form-data">
+<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 <input type="hidden" name="url" value="" />
 <input type="hidden" name="password_fieldname" value="admin_password" />
 <input type="hidden" name="remember" id="remember" value="true" />
@@ -135,19 +136,19 @@ function change_data(type) {
 		</tr>
 		<tr>
 			<td style="color: #666666;">Configuration file</td>
-			<td><?php if(is_writable($path_to_root)) { 
-						echo '<font class="good">Writeable</font>'; 
-					  } else { 
-						echo '<font class="bad">Unwriteable</font>'; 
+			<td><?php if(is_writable($path_to_root)) {
+						echo '<font class="good">Writeable</font>';
+					  } else {
+						echo '<font class="bad">Unwriteable</font>';
 					  } ?>
 			</td>
 			<td style="color: #666666;"><?php echo 'Company data dirs ('.  $comp_path. '/*)'; ?>
 			</td>
-			<td><?php if(is_writable($comp_path)) { 
-						echo '<font class="good">Writeable</font>'; 
-					  } else { 
-						echo '<font class="bad">Unwriteable</font>'; 
-					  } 
+			<td><?php if(is_writable($comp_path)) {
+						echo '<font class="good">Writeable</font>';
+					  } else {
+						echo '<font class="bad">Unwriteable</font>';
+					  }
 				 ?>
 		   </td>
 		</tr>
@@ -186,11 +187,11 @@ function change_data(type) {
 				<font style="cursor: pointer;" onclick="javascript: change_os('windows');">Windows</font>
 			</td>
 			<td>
-				<div name="file_perms_box" id="file_perms_box" style="margin: 0; padding: 0; display: <?php if(isset($_SESSION['operating_system']) AND $_SESSION['operating_system'] == 'windows') { 
-																												echo 'none'; 
-																											} else { 
-																												echo 'block'; 
-																											} 
+				<div name="file_perms_box" id="file_perms_box" style="margin: 0; padding: 0; display: <?php if(isset($_SESSION['operating_system']) AND $_SESSION['operating_system'] == 'windows') {
+																												echo 'none';
+																											} else {
+																												echo 'block';
+																											}
 																										?>
 																										;">
 					<input type="checkbox" tabindex="42" name="world_writeable" id="world_writeable" value="true"<?php if(isset($_SESSION['world_writeable']) AND $_SESSION['world_writeable'] == true) { echo 'checked'; } ?> />
@@ -211,18 +212,18 @@ function change_data(type) {
 			<td width="120" style="color: #666666;">Host Name:</td>
 			<td width="230">
 				<input type="text" tabindex="43" name="database_host" style="width: 98%;" value="<?php if(isset($_SESSION['database_host'])) {
-																										 echo $_SESSION['database_host']; 
-																									  } else { 
-																										 echo 'localhost'; 
+																										 echo $_SESSION['database_host'];
+																									  } else {
+																										 echo 'localhost';
 																									  } ?>" />
 			</td>
 			<td width="7">&nbsp;</td>
 			<td width="70" style="color: #666666;">Username:</td>
 			<td>
-				<input type="text" tabindex="44" name="database_username" style="width: 98%;" value="<?php if(isset($_SESSION['database_username'])) { 
-																											echo $_SESSION['database_username']; 
-																										  } else { 
-																											 echo 'root'; 
+				<input type="text" tabindex="44" name="database_username" style="width: 98%;" value="<?php if(isset($_SESSION['database_username'])) {
+																											echo $_SESSION['database_username'];
+																										  } else {
+																											 echo 'root';
 																										  } ?>" />
 			</td>
 		</tr>
@@ -233,18 +234,18 @@ function change_data(type) {
 			<td>&nbsp;</td>
 			<td style="color: #666666;">Password:</td>
 			<td>
-				<input type="password" tabindex="45" name="database_password" style="width: 98%;"<?php if(isset($_SESSION['database_password'])) { 
-																											echo ' value = "'.$_SESSION['database_password'].'"'; 
+				<input type="password" tabindex="45" name="database_password" style="width: 98%;"<?php if(isset($_SESSION['database_password'])) {
+																											echo ' value = "'.$_SESSION['database_password'].'"';
 																										} ?> />
 			</td>
 		</tr>
 		<tr>
-			
+
 			<td colspan="2">
-				<input type="checkbox" tabindex="46" name="install_tables" id="install_tables" value="true"<?php if(!isset($_SESSION['install_tables'])) { 
-																													echo ' checked'; 
-																												 } elseif($_SESSION['install_tables'] == 'true') { 
-																													echo ' checked'; 
+				<input type="checkbox" tabindex="46" name="install_tables" id="install_tables" value="true"<?php if(!isset($_SESSION['install_tables'])) {
+																													echo ' checked';
+																												 } elseif($_SESSION['install_tables'] == 'true') {
+																													echo ' checked';
 																												 } ?> />
 				<label for="install_tables" style="color: #666666;">Install Tables</label>
 				<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -264,7 +265,7 @@ function change_data(type) {
 			<td width="170">
 				Install the test company :
 			</td>
-		
+
 			<td width="180">
 				<input type="checkbox" tabindex="51" name="DemoData" id="db_file_demo" value="demo"<?php if(!isset($_SESSION['db_file']) OR $_SESSION['db_file'] == 'demo') { echo ' checked'; } ?> />
 				<font style="cursor: pointer;" onclick="javascript: change_data('demo');">weberpdemo company</font>
@@ -274,13 +275,13 @@ function change_data(type) {
 			<td width="170">
 				Time Zone
 			</td>
-		
+
 			<td width="180">
 				<SELECT name='timezone' tabindex="52">
 				<?php
 					include('timezone.php');
 					 ?>
-					
+
 				</SELECT>
 			</td>
 		</tr>
@@ -288,7 +289,7 @@ function change_data(type) {
 			<td width="170">
 				Logo Image File (.jpg)
 			</td>
-		
+
 			<td width="180">
 			    <input type="hidden" name="MAX_FILE_SIZE" <?php echo "value=\"" . $_SESSION['MaxLogoSize'] . "\"" ?> />
 			    <input type="FILE" size="50" ID="LogoFile" name="LogoFile" tabindex="53">
