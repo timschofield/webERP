@@ -1,6 +1,7 @@
 <html>
 <body>
 <form name="formhome" method="post" action="FormMaker.php<?php echo $QueryString; ?>">
+	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
   <input name="GoBackURL" type="hidden" value="<?php echo $GoBackURL; ?>">
   <table width="550" align="center" border="1" cellspacing="1" cellpadding="1">
 		<tr bgcolor="#CCCCCC"><td colspan="3" align="center"><?php echo RPT_FORMOUTPUT; ?></td></tr>
