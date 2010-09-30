@@ -18,7 +18,7 @@ $title=_('Email') . ' ' . $TransactionType . ' ' . _('Number') . ' ' . $_GET['Fr
 
 if (isset($_POST['DoIt']) AND IsEmailAddress($_POST['EmailAddr'])){
 
-	if ($_SESSION['InvoicePortraitFormat']==0){	
+	if ($_SESSION['InvoicePortraitFormat']==0){
 		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/PrintCustTrans.php?' . SID . '&FromTransNo=' . $_POST['TransNo'] . '&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . "'>";
 
 		prnMsg(_('The transaction should have been emailed off') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ')' . "<a href='" . $rootpath . '/PrintCustTrans.php?' . SID . '&FromTransNo=' . $_POST['FromTransNo'] . '&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . "'>" . _('click here') . '</a> ' . _('to email the customer transaction'),'success');
@@ -38,6 +38,7 @@ include ('includes/header.inc');
 
 
 echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method=post>";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo "<input type=hidden name='TransNo' VALUE=" . $_GET['FromTransNo'] . ">";
 echo "<input type=hidden name='InvOrCredit' VALUE=" . $_GET['InvOrCredit'] . '>';
