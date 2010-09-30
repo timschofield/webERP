@@ -351,6 +351,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		. $title . '</p>';
 
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="POST"><table class=selection>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<tr><td>' . _('Choose Option'). ':</font></td><td><select name="ReportOrClose">';
 
