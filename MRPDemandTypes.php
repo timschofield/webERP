@@ -140,6 +140,7 @@ if (isset($SelectedDT) and !isset($_GET['delete'])) {
 }
 
 echo "<p><form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedDT) and !isset($_GET['delete'])) {
 	//editing an existing demand type
