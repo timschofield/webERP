@@ -29,6 +29,7 @@ if (isset($_GET['SelectedSupplier'])){
 }
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 If (isset($_POST['ResetPart'])) {
