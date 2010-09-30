@@ -52,6 +52,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		$csv_output.= "\n";
 	} else {
 		echo '<form name="RegisterForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><table class=selection>';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<br><table width=80% cellspacing="1" class=selection><tr>';
 		echo '<th>' . _('Asset ID') . '</th>';
 		echo '<th>' . _('Stock ID') . '</th>';
@@ -182,6 +183,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	$sql = "SELECT * FROM stockcategory WHERE stocktype='" . 'A' . "'";
 	$result = DB_query($sql, $db);
 	echo '<form name="RegisterForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><table class=selection>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<tr><th>' . _('Asset Category') . '</th>';
 	echo '<td><select name=assetcategory>';
 	echo '<option value="%">' . _('ALL') . '</option>';
