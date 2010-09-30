@@ -11,9 +11,9 @@ $title = _('Rebuild');
 
 include('includes/header.inc');
 
-/* Your webserver user MUST have read/write access to here, 
+/* Your webserver user MUST have read/write access to here,
 	otherwise you'll be wasting your time */
-	
+
 $PathToDefault		= './locale/en_GB.utf8/LC_MESSAGES/messages.po';
 $FilesToInclude = '*.php includes/*.inc includes/*.php api/*.php reportwriter/languages/en_US/reports.php';
 $xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
@@ -25,19 +25,20 @@ if (isset($_POST['submit'])) {
 
 	echo '<br><table><tr><td>';
 	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /* Run xgettext to recreate the default message.po language file */
 
 	prnMsg (_('Rebuilding the default language file ') . '.....<br>', 'info', ' ');
 
-	system($xgettextCmd);	
+	system($xgettextCmd);
 
 	prnMsg (_('Done') .  '. ' . _('You should now edit the default language file header') . '<br>', 'info', ' ');
 
 	echo "<div class='centre'><a href='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the menu') . "</a></div>";
 	echo '</form>';
 	echo '</td></tr></table>';
-	
+
 } else {		/* set up the page for editing */
 
 	echo '<div class="centre">';
@@ -48,6 +49,7 @@ if (isset($_POST['submit'])) {
           _('Existing languages are not affected.') . '.', 'info', _('PLEASE NOTE'));
 	echo '<br>';
 	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="Submit" name="submit" VALUE="' . _('Proceed') . '">&nbsp;&nbsp;';
 	echo '</form>';
