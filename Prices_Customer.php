@@ -309,6 +309,7 @@ if (DB_num_rows($result) == 0) {
 
 <?php
 	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type=hidden name="Item" VALUE="' . $Item . '">';
 
 	if (isset($_GET['Edit']) and $_GET['Edit']==1){
