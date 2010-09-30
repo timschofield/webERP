@@ -56,6 +56,7 @@ $TaxAuthDetail = DB_query("SELECT description FROM taxauthorities WHERE taxid='"
 $myrow = DB_fetch_row($TaxAuthDetail);
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'" method=post>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<input type=hidden name="TaxAuthority" VALUE=' . $TaxAuthority . '>';
 
