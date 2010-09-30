@@ -23,7 +23,7 @@ if (isset($Errors)) {
 	unset($Errors);
 }
 
-$Errors = array();	
+$Errors = array();
 
 if (isset($_POST['submit'])) {
 
@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 	$i=1;
 
-	$sql="SELECT count(accountcode) 
+	$sql="SELECT count(accountcode)
 			FROM bankaccounts WHERE accountcode='".$_POST['AccountCode']."'";
 	$result=DB_query($sql, $db);
 	$myrow=DB_fetch_row($result);
@@ -45,43 +45,43 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg( _('The bank account code already exists in the database'),'error');
 		$Errors[$i] = 'AccountCode';
-		$i++;		
+		$i++;
 	}
 	if (strlen($_POST['BankAccountName']) >50) {
 		$InputError = 1;
 		prnMsg(_('The bank account name must be fifty characters or less long'),'error');
 		$Errors[$i] = 'AccountName';
-		$i++;		
+		$i++;
 	}
 	if ( trim($_POST['BankAccountName']) == '' ) {
 		$InputError = 1;
 		prnMsg(_('The bank account name may not be empty.'),'error');
 		$Errors[$i] = 'AccountName';
-		$i++;		
+		$i++;
 	}
 	if ( trim($_POST['BankAccountNumber']) == '' ) {
 		$InputError = 1;
 		prnMsg(_('The bank account number may not be empty.'),'error');
 		$Errors[$i] = 'AccountNumber';
-		$i++;		
+		$i++;
 	}
 	if (strlen($_POST['BankAccountNumber']) >50) {
 		$InputError = 1;
 		prnMsg(_('The bank account number must be fifty characters or less long'),'error');
 		$Errors[$i] = 'AccountNumber';
-		$i++;		
+		$i++;
 	}
 	if (strlen($_POST['BankAddress']) >50) {
 		$InputError = 1;
 		prnMsg(_('The bank address must be fifty characters or less long'),'error');
 		$Errors[$i] = 'BankAddress';
-		$i++;		
+		$i++;
 	}
 
 	if (isset($SelectedBankAccount) AND $InputError !=1) {
-		
+
 		/*Check if there are already transactions against this account - cant allow change currency if there are*/
-		
+
 		$sql = 'SELECT * FROM banktrans WHERE bankact=' . $SelectedBankAccount;
 		$BankTransResult = DB_query($sql,$db);
 		if (DB_num_rows($BankTransResult)>0) {
@@ -122,7 +122,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['BankAccountName'] . "',
 					'" . $_POST['BankAccountCode'] . "',
 					'" . $_POST['BankAccountNumber'] . "',
-					'" . $_POST['BankAddress'] . "', 
+					'" . $_POST['BankAddress'] . "',
 					'" . $_POST['CurrCode'] . "',
 					'" . $_POST['DefAccount'] . "'
 					)";
@@ -134,7 +134,7 @@ if (isset($_POST['submit'])) {
 		$ErrMsg = _('The bank account could not be inserted or modified because');
 		$DbgMsg = _('The SQL used to insert/modify the bank account details was');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-	
+
 		prnMsg($msg,'success');
 		echo '<br>';
 		unset($_POST['AccountCode']);
@@ -145,7 +145,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['DefAccount']);
 		unset($SelectedBankAccount);
 	}
-	
+
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -168,7 +168,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db);
 		prnMsg(_('Bank account deleted'),'success');
 	} //end if Delete bank account
-	
+
 	unset($_GET['delete']);
 	unset($SelectedBankAccount);
 }
@@ -186,7 +186,7 @@ If (!isset($SelectedBankAccount)) {
 		FROM bankaccounts,
 			chartmaster
 		WHERE bankaccounts.accountcode = chartmaster.accountcode";
-	
+
 	$ErrMsg = _('The bank accounts set up could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the bank account details was') . '<br>' . $sql;
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -253,6 +253,7 @@ if (isset($SelectedBankAccount)) {
 }
 
 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . ">";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	//editing an existing bank account  - not deleting
@@ -283,7 +284,7 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	echo '<table class=selection> <tr><td>' . _('Bank Account GL Code') . ':</td><td>';
 	echo $_POST['AccountCode'] . '</td></tr>';
 } else { //end of if $Selectedbank account only do the else when a new record is being entered
-	echo '<table class=selection><tr><td>' . _('Bank Account GL Code') . 
+	echo '<table class=selection><tr><td>' . _('Bank Account GL Code') .
 		":</td><td><Select tabindex='1' " . (in_array('AccountCode',$Errors) ?  'class="selecterror"' : '' ) ." name='AccountCode'>";
 
 	$sql = "SELECT accountcode,
