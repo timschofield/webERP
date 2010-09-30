@@ -460,6 +460,7 @@ if (isset($_POST['PrintPDF'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 
 	echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method='POST'><table class=selection>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<tr><td>' . _('For Inventory in Location') . ':</td><td><select name="Location">';
 	$sql = "SELECT loccode, locationname FROM locations";
