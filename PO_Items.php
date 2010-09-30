@@ -881,6 +881,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
 echo "<form name=form1 action='" . $_SERVER['PHP_SELF'] . "?" . SID . "identifier=".$identifier. "' method=post>";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 //echo  _('Purchase Order') . ': <font color=BLUE size=4><b>' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . $_SESSION['PO'.$identifier]->SupplierName . ' </b></font> - ' . _('All amounts stated in') . ' ' . $_SESSION['PO'.$identifier]->CurrCode . '<br>';
 
