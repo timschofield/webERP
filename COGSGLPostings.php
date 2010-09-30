@@ -239,6 +239,7 @@ if (isset($SelectedCOGSPostingID)) {
 echo "<p>";
 
 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . ">";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedCOGSPostingID)) {
 	//editing an existing cost of sales posting record
