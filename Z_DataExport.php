@@ -534,6 +534,7 @@ if ( isset($_POST['pricelist']) ) {
 
 	echo "<br>";
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
 	echo '<tr><th colspan=2>' . _('Price List Export') . '</th></tr>';
 	$sql = 'SELECT sales_type, typeabbrev FROM salestypes';
@@ -563,6 +564,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo "<br>";
 	// Export Stock For Location
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
 	echo '<tr><th colspan=2>' . _('Customer List Export') . '</th></tr>';
 
@@ -583,6 +585,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo "<br>";
 	// Export Stock For Location
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
 	echo '<tr><th colspan=2>' . _('Salesman List Export') . '</th></tr>';
 	echo "</table>";
@@ -591,6 +594,7 @@ if ( isset($_POST['pricelist']) ) {
 
 	// SELECT EXPORT FOR IMAGES
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
 	echo '<tr><th colspan=2>' . _('Image List Export') . '</th></tr>';
 	echo "</table>";
@@ -599,6 +603,7 @@ if ( isset($_POST['pricelist']) ) {
 
 	// SELECT EXPORT SECURITY TOKENS
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
 	echo '<tr><th colspan=2>' . _('Security Token List Export') . '</th></tr>';
 	echo "</table>";
@@ -607,6 +612,7 @@ if ( isset($_POST['pricelist']) ) {
 
 	// SELECT EXPORT SECURITY ROLES
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
 	echo '<tr><th colspan=2>' . _('Security Role List Export') . '</th></tr>';
 	echo "</table>";
@@ -615,6 +621,7 @@ if ( isset($_POST['pricelist']) ) {
 
 	// SELECT EXPORT SECURITY GROUPS
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
 	echo '<tr><th colspan=2>' . _('Security Group List Export') . '</th></tr>';
 	echo "</table>";
@@ -623,6 +630,7 @@ if ( isset($_POST['pricelist']) ) {
 
 	// SELECT EXPORT SECURITY USERS
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
 	echo '<tr><th colspan=2>' . _('Security User List Export') . '</th></tr>';
 	echo "</table>";
