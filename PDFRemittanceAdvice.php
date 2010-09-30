@@ -123,6 +123,7 @@ If ((isset($_POST['PrintPDF']))
 	/* show form to allow input	*/
 
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="POST"><table>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['FromCriteria']) or strlen($_POST['FromCriteria'])<1){
 		$DefaultFromCriteria = '1';
