@@ -277,6 +277,8 @@ if (isset($_POST['SelectedAccountGroup']) OR isset($_GET['SelectedAccountGroup']
 if (! isset($_GET['delete'])) {
 
 	echo '<br><form method="post" id="AccountGroups" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
 
 	if (isset($_GET['SelectedAccountGroup'])) {
 		//editing an existing account group

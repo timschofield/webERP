@@ -62,6 +62,8 @@ if (isset($_SESSION['DatabaseName'])){
 			$_GET[$key] = DB_escape_string($value);
 		}
 	}
+} else {
+	$_SESSION['FormID'] = sha1(uniqid(mt_rand(), true));
 }
 
 if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
@@ -297,5 +299,15 @@ function CryptPass( $Password ) {
  }
 
 $Version = $_SESSION['VersionNumber'];
+
+if (sizeof($_POST) > 0) {
+	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
+		$title = _('Error in form verificationm');
+		include('includes/header.inc');
+		prnMsg(_('This form was not submitted with a correct ID') , 'error');
+		include('includes/footer.inc');
+		exit;
+	}
+}
 
 ?>

@@ -31,6 +31,7 @@ if (get_magic_quotes_gpc()){
 	<div id="login_logo"></div>
 	<div id="login_box">
 	<form action="<?php echo $_SERVER['PHP_SELF'];?>" name="loginform" method="post">
+	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	<label><?php echo _('Company'); ?>:</label>
 	<?php
 		if ($AllowCompanySelectionBox == true){

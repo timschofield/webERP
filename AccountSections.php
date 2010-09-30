@@ -215,6 +215,7 @@ echo '<p>';
 if (! isset($_GET['delete'])) {
 
 	echo "<form method='post' name='AccountSections' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<br><form method="post" id="AccountGroups" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 
 	if (isset($_GET['SelectedSectionID'])) {
 		//editing an existing section
