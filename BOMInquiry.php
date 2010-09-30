@@ -24,6 +24,7 @@ if (!isset($_POST['StockID'])) {
 	 <td><font size=3><b>" . _('OR') . "</b></font></td><td><font size=1>" . _('Enter extract of the') .
      " <b>" . _('Stock Code') . "</b>:</font></td><td><input tabindex='2' type='Text' name='StockCode' size=15 maxlength=20></td>
 	 </tr></table><br><div class='centre'><input tabindex='3' type=submit name='Search' VALUE=" . _('Search Now') . "></div><br>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 }
 
 if (isset($_POST['Search'])){
@@ -163,7 +164,7 @@ if (isset($StockID) and $StockID!=""){
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 
 		echo "<table class=selection cellpadding=2>";
-		echo "<tr><th colspan=5><div class='centre'><font size=4><b>" . $myrow[0] . ' : ' . _('per') . ' ' . $myrow[1] . 
+		echo "<tr><th colspan=5><div class='centre'><font size=4><b>" . $myrow[0] . ' : ' . _('per') . ' ' . $myrow[1] .
 			"</b></font></div></th></tr>";
 		$TableHeader = '<tr>
 				<th>' . _('Component') . '</th>
