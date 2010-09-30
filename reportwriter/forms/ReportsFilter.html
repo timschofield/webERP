@@ -5,6 +5,7 @@
 <body>
 <h2 align="center"><?php echo $Prefs['reportname'].' - '.RPT_BTN_CRIT; ?></h2>
 <form name="reporthome" method="post" action="ReportMaker.php?action=go">
+	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
   <input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
   <input name="FilterForm" type="hidden" value="1">
   <input name="GoBackURL" type="hidden" value="<?php echo $GoBackURL; ?>">
@@ -61,7 +62,7 @@
       <td>&nbsp;</td>
       <td>&nbsp;</td>
     </tr>
-	<?php } // end if ($GroupListings)  
+	<?php } // end if ($GroupListings)
     if ($Prefs['SortListings'] <> '') { ?>
 	<tr>
       <td><?php echo RPT_SORT; ?></td>
@@ -81,7 +82,7 @@
 	  <td><?php echo RPT_TRUNC; ?></td>
 	  <td>
 	    <?php if ($Prefs['TruncListings']['params']=='1') $Checked = ' checked'; else $Checked = ''; ?>
-          <input type="radio" name="DefTrunc" value="1"<?php echo $Checked; ?>><?php echo RPT_YES; ?> 
+          <input type="radio" name="DefTrunc" value="1"<?php echo $Checked; ?>><?php echo RPT_YES; ?>
 	    <?php if ($Prefs['TruncListings']['params']=='0') $Checked = ' checked'; else $Checked = ''; ?>
           <input type="radio" name="DefTrunc" value="0"<?php echo $Checked; ?>><?php echo RPT_NO; ?> </td>
       <td>&nbsp;</td>
@@ -94,7 +95,7 @@
       <td><div align="center"><?php echo RPT_FROM; ?></div></td>
       <td><div align="center"><?php echo RPT_TO; ?></div></td>
     </tr>
-	<?php foreach ($Prefs['CritListings'] as $LineItem) echo BuildCriteria($LineItem);  
+	<?php foreach ($Prefs['CritListings'] as $LineItem) echo BuildCriteria($LineItem);
 	} // end if ($CritListings <> '') ?>
   </table>
   <?php if (!$Prefs['defaultreport']) { ?>
@@ -110,7 +111,7 @@
 			<td><div align="center"><?php echo RPT_COLUMN; ?></div></td>
 			<td><div align="center"><?php echo RPT_MOVE; ?></div></td>
 		</tr>
-	
+
 		<?php echo BuildFieldList($Prefs['FieldListings']); ?>
 	  </table>
   <?php } // end if (!$Prefs['defaultreport']) ?>
