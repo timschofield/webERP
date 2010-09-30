@@ -120,6 +120,7 @@ $result = DB_query("SELECT description,
 $myrow = DB_fetch_array($result);
 
 echo "<form action='" . $_SERVER['PHP_SELF'] . "?". SID ."' method=post>";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table cellpadding=2 class=selection>';
 echo "<tr><th colspan=2>"._('Item Code') . ":<input type=text name='StockID' value='$StockID' 1 maxlength=20>";
