@@ -12,6 +12,7 @@ $title = _('Bank Reconciliation');
 include('includes/header.inc');
 
 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($_POST['PostExchangeDifference']) and is_numeric($_POST['DoExchangeDifference'])){
 
