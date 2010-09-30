@@ -14,6 +14,7 @@ $title = _('Special Order Entry');
 include('includes/header.inc');
 
 echo "<form action='" . $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 if (isset($_GET['NewSpecial']) and $_GET['NewSpecial']=='yes'){
