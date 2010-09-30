@@ -415,6 +415,7 @@ if (isset($_SESSION['Transfer'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') .
 		'" alt="">' . ' ' . $title . '';
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '?'. SID . '" method=post>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	prnMsg(_('Please Verify Shipment Quantities Received'),'info');
 
@@ -493,6 +494,7 @@ if (isset($_SESSION['Transfer'])){
 		'" alt="">' . ' ' . $title . '';
 
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '?'. SID . '" method=post name=form1>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$LocResult = DB_query("SELECT locationname, loccode FROM locations",$db);
 
