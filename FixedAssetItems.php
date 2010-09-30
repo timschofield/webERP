@@ -590,6 +590,7 @@ if (isset($_POST['submit'])) {
 
 echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '?' .SID .
 	'"><table class=selection>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($StockID) or $StockID=='') {
 

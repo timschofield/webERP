@@ -220,6 +220,7 @@ if (isset($SelectedCategory)) {
 }
 
 echo '<form name="CategoryForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 	//editing an existing stock category
