@@ -249,6 +249,7 @@ echo '</b>&nbsp;' . _('Customer Name') . ' :<b> ' . $_SESSION['Items']->Customer
 echo '<br>' . _('Invoice amounts stated in') . ' ' . $_SESSION['Items']->DefaultCurrency . '';
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /***************************************************************
 	Line Item Display
