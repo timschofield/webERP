@@ -90,6 +90,7 @@ if (isset($_POST['ProcessStockChange'])) {
 	echo '<p>' . _('Stock Code') . ': ' . $_POST['OldStockCategory'] . ' ' . _('was successfully changed to') . ' : ' . $_POST['NewStockCategory'];
 }
 echo "<form action='" . $_SERVER['PHP_SELF'] . "?=" . $SID . "' method=post>";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<p><table>
 	<tr><td>' . _('Existing Inventory Category Code') . ":</td>
 	<td><input type=Text name='OldStockCategory' size=20 maxlength=20></td></tr>";
