@@ -277,6 +277,7 @@ If with a specific payment or credit show the invoices and credits available
 for allocating to  */
 
 echo "<form action='" . $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($_POST['SupplierID'])){
  	$_GET['SupplierID'] = $_POST['SupplierID'];
