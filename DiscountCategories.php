@@ -68,6 +68,7 @@ if (isset($_POST['submit'])) {
 
 if (isset($_POST['selectchoice'])) {
 	echo "<form name='update' method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$sql = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory <>''";
 	$result = DB_query($sql, $db);
@@ -90,6 +91,7 @@ if (isset($_POST['selectchoice'])) {
 	}
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="chooseoption" value="'.$_POST['chooseoption'].'">';
 	echo '<input type="hidden" name="selectchoice" value="'.$_POST['selectchoice'].'">';
 
@@ -219,6 +221,7 @@ if (isset($_POST['selectchoice'])) {
 
 if (!isset($_POST['selectchoice'])) {
 	echo "<form method='post' name='choose' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class=selection>';
 	echo '<tr><td>'._('Update discount category for').'</td>';
 	echo '<td><select name="chooseoption" onChange="ReloadForm(choose.selectchoice)">';
