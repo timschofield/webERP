@@ -394,6 +394,7 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 }
 
 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="form">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<br><table class=selection>';
 
