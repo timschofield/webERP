@@ -158,6 +158,7 @@ if (isset($_POST['submit'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
 
 echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class=selection>';
 
 if ($InputError != 1) {
