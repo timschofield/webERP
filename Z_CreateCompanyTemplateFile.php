@@ -66,7 +66,7 @@ if (isset($_POST['CreateTemplate'])){
           $SQLScript .= "TRUNCATE TABLE taxgrouptaxes;\n";
           $SQLScript .= "TRUNCATE TABLE taxcategories;\n";
           $SQLScript .= "TRUNCATE TABLE taxprovinces;\n";
-		  
+
 		  $GroupsResult = DB_query('SELECT groupname,
                                            sectioninaccounts,
                                            pandl,
@@ -82,18 +82,18 @@ if (isset($_POST['CreateTemplate'])){
                                           " . $GroupRow['sequenceintb'] . ",
                                           '" . $GroupRow['parentgroupname'] . "');\n";
           }
-          
+
 		  $ChartResult = DB_query('SELECT accountcode, accountname, group_ FROM chartmaster',$db);
           $i=0;
           while ($ChartRow = DB_fetch_array($ChartResult)){
                 if ($_POST['IncludeAccount_' .$i]=='on'){
-					
+
                          $SQLScript .= "INSERT INTO chartmaster (accountcode,accountname,group_)
                                                VALUES (" . $ChartRow['accountcode'] . ", '" . $ChartRow['accountname'] . "', '" . $ChartRow['group_'] . "');\n";
                 }
                 $i++;
           }
-      
+
           /*Now the tax set up */
 
           /*Tax Authorities table */
@@ -215,6 +215,7 @@ if (isset($_POST['CreateTemplate'])){
 } /*end submit button hit */
 
 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 prnMsg(_('Running the create a new company template script will export all account groups, account codes and tax set up tables including tax groups, tax authorities, tax rates etc. However, no transactions or private data will be exported. There is opportunity to prevent specific general ledger accounts from being exported where these are considered private - again no transactional or balance data is exported and you can inspect the contents of the sql file. The template file will be emailed automatically to the webERP project'),'info');
 
 echo _('Enter the name of the template to be created') . ':<input type="text" name="TemplateName">';
