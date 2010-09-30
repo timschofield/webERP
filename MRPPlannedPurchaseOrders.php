@@ -264,6 +264,7 @@ if (isset($_POST['PrintPDF'])) {
 		_('Inventory') . '" alt="">' . ' ' . $title . '</p>';
 
 	echo '<form action=' . $_SERVER['PHP_SELF'] . ' method="post"><table class=selection>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<tr><td>' . _('Consolidation') . ':</td><td><select name="Consolidation">';
 	echo '<option selected value="None">' . _('None') . '</option>';
 	echo '<option value="Weekly">' . _('Weekly') . '</option>';
