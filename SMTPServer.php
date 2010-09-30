@@ -36,6 +36,7 @@ $sql='SELECT id,
 $result=DB_query($sql, $db);
 $myrow=DB_fetch_array($result);
 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class=selection>';
 echo '<tr><td>'._('Server Host Name').'</td>
 		<td><input type=text name=host value='.$myrow['host'].'></td></tr>';
