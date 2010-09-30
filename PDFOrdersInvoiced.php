@@ -37,6 +37,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 		. _('Orders Invoiced Report') . '</p>';
 
 	echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . sid . "'>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class=selection><tr><td>' . _('Enter the date from which orders are to be listed') . ":</td><td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='FromDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . "'></td></tr>";
 	echo '<tr><td>' . _('Enter the date to which orders are to be listed') . ":</td>
 			<td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='ToDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td></tr>";
