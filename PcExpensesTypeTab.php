@@ -91,8 +91,9 @@ then none of the above are true and the list of sales types will be displayed wi
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	echo '<p><table border=1>'; //Main table
-	echo '<td><table>'; // First column
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<p><table border=1>'; //Main table
+echo '<td><table>'; // First column
 
 echo '<tr><td>' . _('Select Type of Tab') . ":</td><td><select name='SelectedTabs'>";
 
@@ -171,6 +172,7 @@ while ($myrow = DB_fetch_row($result)) {
 	if (! isset($_GET['delete'])) {
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p><table border=1>'; //Main table
 	echo '<td><table>'; // First column
 

@@ -117,7 +117,7 @@ if (isset($_POST['submit'])) {
 
 	} else {
 
-			$sql="DELETE FROM pcexpenses 
+			$sql="DELETE FROM pcexpenses
 				WHERE codeexpense='$SelectedExpense'";
 			$ErrMsg = _('The expense type record could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
@@ -125,8 +125,8 @@ if (isset($_POST['submit'])) {
 			unset ($SelectedExpense);
 			unset($_GET['delete']);
 
-		
-	} //end if tab type used in transactions 
+
+	} //end if tab type used in transactions
 }
 
 if (!isset($SelectedExpense)){
@@ -136,7 +136,7 @@ then none of the above are true and the list of sales types will be displayed wi
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = 'SELECT * 
+	$sql = 'SELECT *
 			FROM pcexpenses';
 	$result = DB_query($sql,$db);
 
@@ -158,11 +158,11 @@ or deletion of the records*/
 			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
-		
-		$sqldesc="SELECT accountname 
-					FROM chartmaster 
+
+		$sqldesc="SELECT accountname
+					FROM chartmaster
 					WHERE accountcode='". $myrow[2] . "'";
-			   
+
 		$ResultDes = DB_query($sqldesc,$db);
 		$Description=DB_fetch_array($ResultDes);
 
@@ -192,6 +192,7 @@ if (isset($SelectedExpense)) {
 if (! isset($_GET['delete'])) {
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p><table border=1>'; //Main table
 	echo '<td><table>'; // First column
 
@@ -238,9 +239,9 @@ if (! isset($_GET['delete'])) {
 	echo '<tr><td>' . _('Account Code') . ":</td><td><select name='glaccount'>";
 
 	DB_free_result($result);
-	$SQL = "SELECT accountcode, 
+	$SQL = "SELECT accountcode,
 				accountname
-			FROM chartmaster 
+			FROM chartmaster
 			ORDER BY accountcode";
 	$result = DB_query($SQL,$db);
 
@@ -251,11 +252,11 @@ if (! isset($_GET['delete'])) {
 			echo "<option VALUE='";
 		}
 		echo $myrow['accountcode'] . "'>" . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
-	
-	} //end while loop	
-	
+
+	} //end while loop
+
 	echo '</select></td></tr>';
-		
+
    	echo '</table>'; // close table in first column
    	echo '</td></tr></table>'; // close main table
 

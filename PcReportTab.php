@@ -19,6 +19,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 	include  ('includes/header.inc');
 	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['FromDate'])){
 		$_POST['FromDate']=Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
@@ -252,6 +253,7 @@ if (DB_error_no($db)!=0){
 	$SQL_ToDate = FormatDateForSQL($_POST['ToDate']);
 
 	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type=hidden name="FromDate" VALUE="' . $_POST['FromDate'] . '"><input type=hidden name="ToDate" VALUE="' . $_POST['ToDate'] . '">';
 
 	$SqlTabs = "SELECT * FROM pctabs
