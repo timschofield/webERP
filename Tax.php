@@ -299,6 +299,7 @@ if (isset($_POST['TaxAuthority']) AND
 	. '" alt="">' . $title. '</p>';
 
 	echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table class=selection>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<tr><td>' . _('Tax Authority To Report On:') . ':</font></td>
 			<td><select name=TaxAuthority>';
