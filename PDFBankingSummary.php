@@ -28,6 +28,7 @@ if (!isset($_POST['BatchNo'])){
 	$result=DB_query($sql, $db);
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '><table class=selection>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<tr><td>' . _('Select the batch number of receipts to be printed') . ':</td>';
 	echo '<td><select name=BatchNo>';
 	while ($myrow=DB_fetch_array($result)) {
