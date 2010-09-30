@@ -607,6 +607,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	echo '<div class="page_help_text">' . _('Orders/Quotations are placed against the Customer Branch. A Customer may have several Branches.') . '</div>';
 	?>
 	<form action="<?php echo $_SERVER['PHP_SELF'] . '?' .SID .'identifier='.$identifier;?>" name="SelectCustomer" method=post>
+<?php
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+?>
 	<b><?php echo '<p>' . $msg; ?></p>
 	<table cellpadding=3 colspan=4 class=selection>
 	<tr>
@@ -650,6 +653,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$k=1;
 			}
 			echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'identifier='.$identifier . '"& name="SelectParts" method=post>';
+			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 			if ($LastCustomer != $myrow['name']) {
 				echo '<td>'.$myrow['name'].'</td>';
 			} else {
@@ -874,6 +878,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 #Always do the stuff below if not looking for a customerid
 
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'identifier='.$identifier . '"& name="SelectParts" method=post>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 //Get The exchange rate used for GPPercent calculations on adding or amending items
 	if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord']['currencydefault']){
@@ -1514,6 +1519,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if (isset($SearchResult)) {
 			$j = 1;
 			echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'identifier='.$identifier . ' method=post name="orderform">';
+			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 			echo '<table class="table1">';
 			echo '<tr><td colspan=><input type="hidden" name="previous" value='.number_format($Offset-1).'><input tabindex='.number_format($j+7).' type="submit" name="Prev" value="'._('Prev').'"></td>';
 			echo '<td style="text-align:center" colspan=6><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+8).' type="submit" value="'._('Add to Sales Order').'"></td>';

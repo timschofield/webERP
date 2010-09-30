@@ -79,6 +79,7 @@ if (!isset($AccountID)) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
 		'" alt="">' . ' ' . _('Search for General Ledger Accounts') . '</p>';
 	echo "<br><form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method=post>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if(strlen($msg)>1){
 		prnMsg($msg,'info');
