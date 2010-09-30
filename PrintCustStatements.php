@@ -434,6 +434,7 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 	/*if FromTransNo is not set then show a form to allow input of either a single statement number or a range of statements to be printed. Also get the last statement number created to show the user where the current range is up to */
 
 		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="POST"><table class=selection>';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<tr><td>' . _('Starting Customer statement to print (Customer code)'). '
 			</td><td><input Type=text max=6 size=7 name=FromCust value="1"></td></tr>
