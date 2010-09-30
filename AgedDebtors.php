@@ -428,7 +428,7 @@ if (isset($_POST['PrintPDF'])
 
 /* Javier: This actually would produce the output
 	$buf = $pdf->output();
-	$len = strlen($buf); 
+	$len = strlen($buf);
 */
 
 //	if ($len < 1000) {
@@ -471,6 +471,7 @@ if (isset($_POST['PrintPDF'])
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
 		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<tr><td>' . _('From Customer Code') . ':' . "</font></td><td><input tabindex='1' Type=text maxlength=6 size=7 name=FromCriteria value='0'></td></tr>";
 		echo '<tr><td>' . _('To Customer Code') . ':' . "</td><td><input tabindex='2' Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></td></tr>";
