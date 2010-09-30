@@ -601,7 +601,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 	$DelDate = FormatDateforSQL($_SESSION['Items'.$identifier]->DeliveryDate);
 	$QuotDate = FormatDateforSQL($_SESSION['Items'.$identifier]->QuoteDate);
 	$ConfDate = FormatDateforSQL($_SESSION['Items'.$identifier]->ConfirmedDate);
-	
+
 	$Result = DB_Txn_Begin($db);
 
 	/*see if this is a contract quotation being changed to an order? */
@@ -618,8 +618,8 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 			$UpdContractResult=DB_query("UPDATE contracts SET status=2,
 																wo='" . $WONo . "'
 										WHERE orderno='" .$_SESSION['ExistingOrder'] . "'", $db,$ErrMsg,$DbgMsg,true);
-			$ErrMsg = _('Could not insert the contract bill of materials');			
-			$InsContractBOM = DB_query("INSERT INTO bom (parent, 
+			$ErrMsg = _('Could not insert the contract bill of materials');
+			$InsContractBOM = DB_query("INSERT INTO bom (parent,
 																									 component,
 																									 workcentreadded,
 																									 loccode,
@@ -631,9 +631,9 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 																							'" . $_SESSION['Items'.$identifier]->Location ."',
 																							'" . Date('Y-m-d') . "',
 																							'2037-12-31'
-																						FROM contractbom 
+																						FROM contractbom
 																						WHERE contractref='" . $ContractRow['contractref'] . "'",$db,$ErrMsg,$DbgMsg);
-			
+
 			$ErrMsg = _('Unable to insert a new work order for the sales order item');
 			$InsWOResult = DB_query("INSERT INTO workorders (wo,
 																											 loccode,
@@ -658,13 +658,13 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 				$Cost = $CostRow[0]; //cost of contract BOM
 			}
 			$CostResult = DB_query("SELECT SUM(costperunit*quantity) AS cost
-												FROM contractreqts 
+												FROM contractreqts
 												WHERE contractreqts.contractref='" .  $ContractRow['contractref'] . "'",
 									$db);
 			$CostRow = DB_fetch_row($CostResult);
 			//add other requirements cost to cost of contract BOM
 			$Cost += $CostRow[0];
-			
+
 			// insert parent item info
 			$sql = "INSERT INTO woitems (wo,
 										 stockid,
@@ -682,7 +682,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 		} //end processing if the order was a contract quotation being changed to an order
 	} //end test to see if the order was a contract quotation being changed to an order
-	
+
 
 	$HeaderSQL = "UPDATE salesorders
 			SET debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "',
@@ -764,6 +764,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/c
 echo '</b>&nbsp;' . _('Customer Name') . ' :<b> ' . $_SESSION['Items'.$identifier]->CustomerName . '</p>';
 //echo '<font size=4><b>'. _('Customer') .' : ' . $_SESSION['Items'.$identifier]->CustomerName . '</b></font>';
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID.'identifier='.$identifier  . '" method=post>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 /*Display the order with or without discount depending on access level*/
