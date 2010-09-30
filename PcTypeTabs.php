@@ -119,6 +119,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('Cannot delete this tab type because tabs have been created using this tab type'),'error');
 		echo '<br>';
 		echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<p><div class="centre"><input type=submit name=return VALUE="' . _('Return to list of tab types') . '"></div>';
 		echo '</form>';
 		include('includes/footer.inc');
@@ -185,6 +186,7 @@ if (isset($SelectedTab)) {
 if (! isset($_GET['delete'])) {
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p><table border=1>'; //Main table
 	echo '<td><table>'; // First column
 
