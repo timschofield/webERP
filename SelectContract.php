@@ -11,6 +11,7 @@ include('includes/header.inc');
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contracts') . '" alt="">' . ' ' . _('Select A Contract') . '</p> ';
 
 echo '<form action=' . $_SERVER['PHP_SELF'] .'?' .SID . ' method=post>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 echo '<p><div class="centre">';
@@ -37,7 +38,7 @@ if (!isset($_POST['ContractRef']) or $_POST['ContractRef']==''){
 
 	echo _('Contract Reference') . ': <input type="text" name="ContractRef" maxlength=20 size=20>&nbsp&nbsp';
 	echo '<select name="Status">';
-		
+
 	if (isset($_GET['Status'])){
 		$_POST['Status']=$_GET['Status'];
 	}
@@ -66,13 +67,13 @@ if (!isset($_POST['ContractRef']) or $_POST['ContractRef']==''){
 		echo '<option value="0">' . _('Not Yet Quoted'). '</option>';
 		echo '<option value="1">' . _('Quoted - No Order Placed'). '</option>';
 		echo '<option value="2">' . _('Order Placed') . '</option>';
-		echo '<option selected value="3">' . _('Completed') . '</option>';	
+		echo '<option selected value="3">' . _('Completed') . '</option>';
 		echo '<option value="4">' . _('All Contracts') . '</option>';
 	} elseif($_POST['Status']==4) {
 		echo '<option value="0">' . _('Not Yet Quoted'). '</option>';
 		echo '<option value="1">' . _('Quoted - No Order Placed'). '</option>';
 		echo '<option value="2">' . _('Order Placed') . '</option>';
-		echo '<option value="3">' . _('Completed') . '</option>';	
+		echo '<option value="3">' . _('Completed') . '</option>';
 		echo '<option selected value="4">' . _('All Contracts') . '</option>';
 	}
 	echo '</select> &nbsp&nbsp';
@@ -95,10 +96,10 @@ if (isset($_POST['ContractRef']) AND $_POST['ContractRef'] !='') {
 					   wo,
 					   customerref,
 					   requireddate
-				FROM contracts INNER JOIN debtorsmaster 
+				FROM contracts INNER JOIN debtorsmaster
 				ON contracts.debtorno = debtorsmaster.debtorno
 				WHERE contractref " . LIKE . " '%" .  $_POST['ContractRef'] ."%'";
-			
+
 } else { //contractref not selected
 	if (isset($_POST['SelectedCustomer'])) {
 
@@ -113,11 +114,11 @@ if (isset($_POST['ContractRef']) AND $_POST['ContractRef'] !='') {
 					   wo,
 					   customerref,
 					   requireddate
-				FROM contracts INNER JOIN debtorsmaster 
+				FROM contracts INNER JOIN debtorsmaster
 				ON contracts.debtorno = debtorsmaster.debtorno
 				WHERE debtorno='". $_POST['SelectedCustomer'] ."'";
 		if ($_POST['Status']!=4){
-			$SQL .= " AND status='" . $_POST['Status'] . "'";		
+			$SQL .= " AND status='" . $_POST['Status'] . "'";
 		}
 	} else { //no customer selected
 		$SQL = 'SELECT contractref,
@@ -131,11 +132,11 @@ if (isset($_POST['ContractRef']) AND $_POST['ContractRef'] !='') {
 					   wo,
 					   customerref,
 					   requireddate
-				FROM contracts INNER JOIN debtorsmaster 
+				FROM contracts INNER JOIN debtorsmaster
 				ON contracts.debtorno = debtorsmaster.debtorno';
 		if ($_POST['Status']!=4){
-			$SQL .= " AND status='" . $_POST['Status'] . "'";		
-		}			
+			$SQL .= " AND status='" . $_POST['Status'] . "'";
+		}
 	}
 } //end not contract ref selected
 
@@ -175,7 +176,7 @@ while ($myrow=DB_fetch_array($ContractsResult)) {
 	$IssueToWOPage = $rootpath . '/WorkOrderIssue.php?' . SID . '&WO=' . $myrow['wo'] . '&StockID=' . $myrow['contractref'];
 	$CostingPage = $rootpath . '/ContractCosting.php?' . SID . '&SelectedContract=' . $myrow['contractref'];
 	$FormatedRequiredDate = ConvertSQLDate($myrow['requireddate']);
-	
+
 	if ($myrow['status']==0 OR $myrow['status']==1){ //still setting up the contract
 		echo '<td><a href="' . $ModifyPage . '">' . _('Modify') . '</a></td>';
 	} else {
@@ -185,7 +186,7 @@ while ($myrow=DB_fetch_array($ContractsResult)) {
 		echo '<td><a href="' . $OrderModifyPage . '">' . $myrow['orderno'] . '</a></td>';
 	} else {
 		echo '<td>' . _('n/a') . '</td>';
-	}	
+	}
 	if ($myrow['status']==2){ //the customer has accepted the quote but not completed contract yet
 		echo '<td><a href="' . $IssueToWOPage . '">' . $myrow['wo'] . '</a></td>';
 	} else {
@@ -200,7 +201,7 @@ while ($myrow=DB_fetch_array($ContractsResult)) {
 		  <td>' . $myrow['contractdescription'] . '</td>
 		  <td>' . $myrow['customername'] . '</td>
 		  <td>' . $FormatedRequiredDate . '</td></tr>';
-		  
+
 	$j++;
 	if ($j == 12){
 		$j=1;
