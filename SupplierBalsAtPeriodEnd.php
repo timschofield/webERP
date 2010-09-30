@@ -127,6 +127,7 @@ If (isset($_POST['PrintPDF'])
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
 	echo '<form action=' . $_SERVER['PHP_SELF'] . " method='post'><table class=selection>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<tr><td>' . _('From Supplier Code') . ":</font></td>
 			<td><input Type=text maxlength=6 size=7 name=FromCriteria value=".$_POST['FromCriteria']."></td></tr>";
