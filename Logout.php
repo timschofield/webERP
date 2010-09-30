@@ -20,6 +20,9 @@ include('includes/session.inc');
 	<div id="login_logo"></div>
 	<div id="login_box">
 	<form action=" <?php echo $rootpath;?>/index.php" name="loginform" method="post">
+<?php
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+?>
 		<label><?php echo _('Thank you for using webERP'); ?></label>
 	<br />
 	<input class="button" type="submit" value="<?php echo _('Login'); ?>" name="SubmitUser" />
