@@ -3,8 +3,8 @@
 /* $Id:  $*/
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
-the SuppTrans class contains an array of Contract objects - containing details of all contract charges 
-Contract charges are posted to the debit of Work In Progress (based on the account specified in the stock category record of the contract item 
+the SuppTrans class contains an array of Contract objects - containing details of all contract charges
+Contract charges are posted to the debit of Work In Progress (based on the account specified in the stock category record of the contract item
 This is cleared against the cost of the contract as originally costed - when the contract is closed and any difference is taken to the price variance on the contract */
 
 include('includes/DefineSuppTransClass.php');
@@ -33,7 +33,7 @@ if (isset($_POST['AddContractChgToInvoice'])){
 	if ($_POST['ContractRef'] == ''){
 		$_POST['ContractRef'] = $_POST['ContractSelection'];
 	} else{
-		$result = DB_query("SELECT contractref FROM contracts 
+		$result = DB_query("SELECT contractref FROM contracts
 												WHERE status=2 AND contractref='" . $_POST['ContractRef'] . "'",$db);
 		if (DB_num_rows($result)==0){
 			prnMsg(_('The contract reference entered does not exist as a customer ordered contract. This contract cannot be charged to'),'error');
@@ -108,6 +108,7 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 
 /*Set up a form to allow input of new Contract charges */
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['ContractRef'])) {
 	$_POST['ContractRef']='';
@@ -144,7 +145,7 @@ echo '<tr><td>' . _('Narrative') . ':</td>
 	<td><input type="text" name="Narrative" size=42 maxlength=40 VALUE="' .  $_POST['Narrative'] . '"></td></tr>';
 echo '<tr><td>' . _('Aniticpated Cost') . ':</td>
 	<td>';
-if (isset($_POST['AnticipatedCost']) AND $_POST['AnticipatedCost']==1){	
+if (isset($_POST['AnticipatedCost']) AND $_POST['AnticipatedCost']==1){
 	echo '<input type="checkbox" name="AnticipatedCost" checked>';
 } else {
 	echo '<input type="checkbox" name="AnticipatedCost">';
