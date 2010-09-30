@@ -186,6 +186,7 @@ prnMsg( $totalrecords . ' ' . _('records have been created'),'success');
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
 		_('Inventory') . '" alt="">' . ' ' . $title . '</p>';
 	echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID .' method="post"><b><br></b>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class=selection>';
 	echo '<tr><td>' . _('Demand Type') . ':</td><td><select name="MRPDemandtype">';
 	$sql = 'SELECT mrpdemandtype,
