@@ -20,6 +20,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/t
 echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br>';
 
 echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?'  . SID . '>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*Dates in SQL format for the last day of last month*/
 $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
@@ -110,7 +111,7 @@ if (isset($_POST['MakeCSV'])){
 		include('includes/footer.inc');
 		exit;
 	}
-    
+
 	foreach ($_POST['Account'] as $SelectedAccount){
 		/*Is the account a balance sheet or a profit and loss account */
 		$result = DB_query("SELECT chartmaster.accountname,
@@ -224,7 +225,7 @@ if (isset($_POST['MakeCSV'])){
 			$RunningTotal += $myrow['amount'];
 			$PeriodTotal += $myrow['amount'];
 
-			
+
 			$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
 
 			$tagsql='SELECT tagdescription FROM tags WHERE tagref='.$myrow['tag'];
@@ -246,7 +247,7 @@ if (isset($_POST['MakeCSV'])){
 		if ($PandLAccount==True){
 			if ($RunningTotal < 0){
 				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Total Period Movement') . ',,,,' . -$RunningTotal . "\n");
-			} else {	
+			} else {
 				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Total Period Movement') . ',,,' . $RunningTotal . "\n");
 			}
 		} else { /*its a balance sheet account*/
