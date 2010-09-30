@@ -18,14 +18,14 @@ $identifier=$_GET['identifier'];
 if (!isset($_SESSION['Contract'.$identifier])){
 	header('Location:' . $rootpath . '/Contracts.php?' . SID);
 	exit;
-} 
+}
 include('includes/header.inc');
 
 
 if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
 	if($_SESSION['Contract'.$identifier]->Status!=2){ //dont do anything if the customer has committed to the contract
 		foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $ContractComponentID => $ContractRequirementItem) {
-			
+
 			if ($_POST['Qty'.$ContractComponentID]==0){
 				//this is the same as deleting the line - so delete it
 				$_SESSION['Contract'.$identifier]->Remove_ContractRequirement($ContractComponentID);
@@ -33,7 +33,7 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
 				$_SESSION['Contract'.$identifier]->ContractReqts[$ContractComponentID]->Quantity=$_POST['Qty'.$ContractComponentID];
 				$_SESSION['Contract'.$identifier]->ContractReqts[$ContractComponentID]->CostPerUnit=$_POST['CostPerUnit'.$ContractComponentID];
 				$_SESSION['Contract'.$identifier]->ContractReqts[$ContractComponentID]->Requirement=$_POST['Requirement'.$ContractComponentID];
-			} 
+			}
 		} // end loop around the items on the contract requirements array
 	} // end if the contract is not currently committed to by the customer
 }// end if the user has hit the update lines or back to header buttons
@@ -68,7 +68,7 @@ if (isset($_POST['EnterNewRequirement'])){
 	if (!$InputError){
 		$_SESSION['Contract'.$identifier]->Add_To_ContractRequirements ($_POST['RequirementDescription'],
 																		$_POST['Quantity'],
-																		$_POST['CostPerUnit']);	
+																		$_POST['CostPerUnit']);
 		unset($_POST['RequirementDescription']);
 		unset($_POST['Quantity']);
 		unset($_POST['CostPerUnit']);
@@ -78,16 +78,17 @@ if (isset($_POST['EnterNewRequirement'])){
 /* This is where the other requirement as entered/modified should be displayed reflecting any deletions or insertions*/
 
 echo '<form name="ContractReqtsForm" action="' . $_SERVER['PHP_SELF'] . '?' . SID . 'identifier='.$identifier. '" method="post">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' .
 		_('Contract Other Requirements') . '" alt="">  ' . _('Contract Other Requirements') . ' - ' . $_SESSION['Contract'.$identifier]->CustomerName;
-		
+
 if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
-	
+
 
 	if (isset($_SESSION['Contract'.$identifier]->ContractRef)) {
 		echo  ' ' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef;
 	}
-	
+
 	echo '<table cellpadding=2 colspan=7 border=1>';
 	echo '<tr>
 		<th>' . _('Description') . '</th>
@@ -102,9 +103,9 @@ if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 	foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $ContractReqtID => $ContractComponent) {
 
 		$LineTotal = $ContractComponent->Quantity * $ContractComponent->CostPerUnit;
-			
+
 		$DisplayLineTotal = number_format($LineTotal,2);
-		
+
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
 			$k=0;
@@ -112,7 +113,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
-		
+
 		echo '<td><textarea name="Requirement' . $ContractReqtID . '" cols="30" rows="3">' . $ContractComponent->Requirement . '</textarea></td>
 			  <td><input type=text class="number" name="Qty' . $ContractReqtID . '" size="11" value="' . $ContractComponent->Quantity  . '"></td>
 			  <td><input type=text class="number" name="CostPerUnit' . $ContractReqtID . '" size="11" value="' . $ContractComponent->CostPerUnit . '"></td>
@@ -125,7 +126,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 	echo '<tr><td colspan="4" class="number">' . _('Total Other Requirements Cost') . '</td><td class="number"><b>' . $DisplayTotal . '</b></td></tr></table>';
 	echo '<br><div class="centre"><input type="submit" name="UpdateLines" value="' . _('Update Other Requirements Lines') . '">';
 	echo ' <input type="submit" name="BackToHeader" value="' . _('Back To Contract Header') . '">';
-	
+
 } /*Only display the contract other requirements lines if there are any !! */
 
 echo '<hr>';
