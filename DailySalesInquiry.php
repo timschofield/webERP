@@ -14,6 +14,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/t
 echo '<div class="page_help_text">' . _('Select the month to show daily sales for') . '</div><br>';
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table cellpadding=2><tr>';
 
@@ -29,7 +30,7 @@ $PeriodsResult = DB_query('SELECT periodno, lastdate_in_period FROM periods',$db
 while ($PeriodRow = DB_fetch_array($PeriodsResult)){
 	if ($_POST['MonthToShow']==$PeriodRow['periodno']) {
 	     echo '<option selected Value="' . $PeriodRow['periodno'] . '">' . MonthAndYearFromSQLDate($PeriodRow['lastdate_in_period']) . '</option>';
-		 $EndDateSQL = $PeriodRow['lastdate_in_period'];	     
+		 $EndDateSQL = $PeriodRow['lastdate_in_period'];
 	} else {
 	     echo '<option Value="' . $PeriodRow['periodno'] . '">' . MonthAndYearFromSQLDate($PeriodRow['lastdate_in_period']) . '</option>';
 	}
@@ -43,9 +44,9 @@ if (!isset($_POST['Salesperson'])){
 	echo '<option selected value="All">' . _('All') . '</option>';
 } else {
 	echo '<option value="All">' . _('All') . '</option>';
-}	
+}
 while ($SalespersonRow = DB_fetch_array($SalespeopleResult)){
-	
+
 	if ($_POST['Salesperson']==$SalespersonRow['salesmancode']) {
 	     echo '<option selected value="' . $SalespersonRow['salesmancode'] . '">' . $SalespersonRow['salesmanname'] . '</option>';
 	} else {
@@ -77,7 +78,7 @@ $sql = "SELECT 	trandate,
 				SUM(price*(1-discountpercent)* (-qty)) as salesvalue,
 				SUM((standardcost * -qty)) as cost
 			FROM stockmoves
-				INNER JOIN custbranch ON stockmoves.debtorno=custbranch.debtorno 
+				INNER JOIN custbranch ON stockmoves.debtorno=custbranch.debtorno
 					AND stockmoves.branchcode=custbranch.branchcode
 			WHERE (stockmoves.type=10 or stockmoves.type=11)
 			AND show_on_inv_crds =1
@@ -88,7 +89,7 @@ if ($_POST['Salesperson']!='All') {
 	$sql .= " AND custbranch.salesman='" . $_POST['Salesperson'] . "'";
 }
 
-$sql .= " GROUP BY stockmoves.trandate ORDER BY stockmoves.trandate"; 
+$sql .= " GROUP BY stockmoves.trandate ORDER BY stockmoves.trandate";
 $ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg($db);
 $SalesResult = DB_query($sql, $db,$ErrMsg);
 
@@ -155,8 +156,8 @@ for ($i=1;$i<=$LastDayOfMonth;$i++){
                         echo '</tr><tr>';
 			$ColumnCounter=0;
 		}
-		
-		
+
+
 }
 if ($ColumnCounter!=0) {
 	echo '</tr><tr>';
