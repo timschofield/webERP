@@ -154,6 +154,7 @@ if (isset($Id)) {  ?>
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '&DebtorNo='.$DebtorNo.'">';
+	echo '<br><form method="post" id="AccountGroups" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 
 	if (isset($Id)) {
 		//editing an existing Shipper
