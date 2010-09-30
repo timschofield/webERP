@@ -10,6 +10,7 @@ if (empty($_POST['DoUpgrade'])){
 	prnMsg(_('This script will run perform any modifications to the database since v 3.10 required to allow the additional functionality in version 3.11 scripts'),'info');
 
 	echo "<p><form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<div class="centre"?><input type=submit name=DoUpgrade VALUE="' . _('Perform Upgrade') . '"></div>';
 	echo '</form>';
 }
@@ -19,7 +20,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 	echo '<br>';
 	prnMsg(_('If there are any failures then please check with your system administrator').
 		'. '._('Please read all notes carefully to ensure they are expected'),'info');
-	
+
 	$SQLScriptFile = file('./sql/mysql/upgrade3.10-3.11.sql');
 
 	$ScriptFileEntries = sizeof($SQLScriptFile);
@@ -88,7 +89,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 		} //end if its a valid sql line not a comment
 	} //end of for loop around the lines of the sql script
 	echo '</table>';
-	
+
 	/*Now run the data conversions required. */
 
 } /*Dont do upgrade */
