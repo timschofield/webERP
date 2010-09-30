@@ -285,6 +285,7 @@ if (isset($SelectedUser)) {
 }
 
 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedUser)) {
 	//editing an existing User
