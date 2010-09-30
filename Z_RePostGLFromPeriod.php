@@ -9,6 +9,7 @@ $title = _('Recalculation of GL Balances in Chart Details Table');
 include('includes/header.inc');
 
 echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['FromPeriod'])){
 
@@ -31,7 +32,7 @@ if (!isset($_POST['FromPeriod'])){
              </tr>
              </table>';
 
-	echo "<div class='centre'><input type=submit Name='recalc' Value='" . _('Do the Recalculation') . "' 
+	echo "<div class='centre'><input type=submit Name='recalc' Value='" . _('Do the Recalculation') . "'
 	  onclick=\"return confirm('" . _('Are you sure you wish to re-post all general ledger transactions since the selected period
 	   .... this can take some time?') . '\');"></div></form>';
 
@@ -45,16 +46,16 @@ if (!isset($_POST['FromPeriod'])){
 	$sql = 'UPDATE chartdetails SET actual =0 WHERE period >= ' . $_POST['FromPeriod'];
 	$UpdActualChartDetails = DB_query($sql,$db);
 
-	$ChartDetailBFwdResult = DB_query('SELECT accountcode, bfwd FROM chartdetails WHERE period=' . $_POST['FromPeriod'],$db);	
+	$ChartDetailBFwdResult = DB_query('SELECT accountcode, bfwd FROM chartdetails WHERE period=' . $_POST['FromPeriod'],$db);
 	while ($ChartRow=DB_fetch_array($ChartDetailBFwdResult)){
 		$sql = 'UPDATE chartdetails SET bfwd =' . $ChartRow['bfwd'] . ' WHERE period > ' . $_POST['FromPeriod'] . ' AND accountcode=' . $ChartRow['accountcode'];
 		$UpdActualChartDetails = DB_query($sql,$db);
 	}
-	
+
 	/*Now repost the lot */
 
 	include('includes/GLPostings.inc');
-	
+
 	prnMsg(_('All general ledger postings have been reposted from period') . ' ' . $_POST['FromPeriod'],'success');
 }
 include('includes/footer.inc');

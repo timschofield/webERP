@@ -84,6 +84,7 @@ if (isset($_POST['RevPayts']) AND Is_Date($_POST['PaytDate'])==1){
 
 
 echo "<form method=post action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<br>' . _('Enter the date of the payment run') . ": <input type=text name='PaytDate' maxlength=11 size=11 value='" . $_POST['PaytDate'] . "'>";
 echo "<input type=submit name='RevPayts' value='" . _('Reverse Supplier Payments on the Date Entered') . "'>";
 echo '</form>';
