@@ -11,6 +11,7 @@ include('includes/header.inc');
 $Period = 42;
 
 echo "<form method='POST' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $SQL = 'SELECT MonthName(lastdate_in_period) AS mnth,
 		YEAR(lastdate_in_period) AS yr,
@@ -39,7 +40,7 @@ if (isset($_POST['UpdateSalesAnalysis']) AND $_POST['PeriodNo']!=0){
 		FROM salesanalysis INNER JOIN stockmaster
 			ON salesanalysis.stockid=stockmaster.stockid
 		WHERE periodno=' . $_POST['PeriodNo']  . "
-		AND stockmaster.mbflag<>'D' 
+		AND stockmaster.mbflag<>'D'
 		GROUP BY stockmaster.stockid,
 			stockmaster.materialcost,
 			stockmaster.overheadcost,
