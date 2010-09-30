@@ -140,14 +140,14 @@ if (isset($_POST['submit'])) {
 						supplierid='" . $_POST['SupplierID'] . "',
 						salesman='" . $_POST['Salesman'] . "',
 						pagesize='" . $_POST['PageSize'] . "',
-						fullaccess=" . $_POST['Access'] . ",
+						fullaccess='" . $_POST['Access'] . "',
 						theme='" . $_POST['Theme'] . "',
 						language ='" . $_POST['UserLanguage'] . "',
 						defaultlocation='" . $_POST['DefaultLocation'] ."',
 						modulesallowed='" . $ModulesAllowed . "',
-						blocked=" . $_POST['Blocked'] . ",
-						pdflanguage=" . $_POST['PDFLanguage'] . "
-					WHERE userid = '$SelectedUser'";
+						blocked='" . $_POST['Blocked'] . "',
+						pdflanguage='" . $_POST['PDFLanguage'] . "'
+					WHERE userid = '". $SelectedUser . "'";
 
 		prnMsg( _('The selected user record has been updated'), 'success' );
 	} elseif ($InputError !=1) {
@@ -179,13 +179,13 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['Phone'] . "',
 						'" . $_POST['Email'] ."',
 						'" . $_POST['PageSize'] ."',
-						" . $_POST['Access'] . ",
+						'" . $_POST['Access'] . "',
 						'" . $_POST['DefaultLocation'] ."',
 						'" . $ModulesAllowed . "',
-						" . $_SESSION['DefaultDisplayRecordsMax'] . ",
+						'" . $_SESSION['DefaultDisplayRecordsMax'] . "',
 						'" . $_POST['Theme'] . "',
 						'". $_POST['UserLanguage'] ."',
-						" . $_POST['PDFLanguage'] . ")";
+						'" . $_POST['PDFLanguage'] . "')";
 		prnMsg( _('A new user record has been inserted'), 'success' );
 	}
 
@@ -230,7 +230,7 @@ if (isset($_POST['submit'])) {
 			prnMsg(_('Cannot delete user as entries already exist in the audit trail'), 'warn');
 		} else {
 
-			$sql="DELETE FROM www_users WHERE userid='$SelectedUser'";
+			$sql="DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The User could not be deleted because');;
 			$result = DB_query($sql,$db,$ErrMsg);
 			prnMsg(_('User Deleted'),'info');
@@ -261,7 +261,7 @@ if (!isset($SelectedUser)) {
 		FROM www_users';
 	$result = DB_query($sql,$db);
 
-	echo '<table border=1>';
+	echo '<table class=selection>';
 	echo "<tr><th>" . _('User Login') . "</th>
 		<th>" . _('Full Name') . "</th>
 		<th>" . _('Telephone') . "</th>
@@ -388,12 +388,12 @@ if (isset($SelectedUser)) {
 	echo "<input type='hidden' name='UserID' value='" . $_POST['UserID'] . "'>";
 	echo "<input type='hidden' name='ModulesAllowed' value='" . $_POST['ModulesAllowed'] . "'>";
 
-	echo '<table> <tr><td>' . _('User code') . ':</td><td>';
+	echo '<table class=selection> <tr><td>' . _('User code') . ':</td><td>';
 	echo $_POST['UserID'] . '</td></tr>';
 
 } else { //end of if $SelectedUser only do the else when a new record is being entered
 
-	echo '<table><tr><td>' . _('User Login') . ":</td><td><input type='text' name='UserID' size=22 maxlength=20 ></td></tr>";
+	echo '<table class=selection><tr><td>' . _('User Login') . ":</td><td><input type='text' name='UserID' size=22 maxlength=20 ></td></tr>";
 
 	/*set the default modules to show to all
 	this had trapped a few people previously*/
