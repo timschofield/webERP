@@ -210,6 +210,7 @@ if (isset($SelectedType)) {
 if (! isset($_GET['delete'])) {
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br /><table class=selection>'; //Main table
 	echo '<td>'; // First column
 
