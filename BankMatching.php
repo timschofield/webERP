@@ -8,16 +8,16 @@ include("includes/session.inc");
 $title = _('Bank Account Matching');
 include('includes/header.inc');
 
-if ((isset($_GET['Type']) AND $_GET['Type']=='Receipts') OR 
+if ((isset($_GET['Type']) AND $_GET['Type']=='Receipts') OR
 	(isset($_POST['Type']) and $_POST['Type']=='Receipts')){
 
 	$Type = 'Receipts';
 	$TypeName =_('Receipts');
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Bank Matching') . '" alt="">' . ' ' . _('Bank Account Matching - Receipts') . '</p>';
 
-} elseif ((isset($_GET['Type']) AND $_GET['Type']=='Payments') OR 
+} elseif ((isset($_GET['Type']) AND $_GET['Type']=='Payments') OR
 			(isset($_POST['Type']) and $_POST['Type']=='Payments')) {
-	
+
 	$Type = 'Payments';
 	$TypeName =_('Payments');
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_delete.png" title="' . _('Bank Matching') . '" alt="">' . ' ' . _('Bank Account Matching - Payments') . '</p>';
@@ -33,8 +33,8 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 	for ($Counter=1;$Counter <= $_POST['RowCounter']; $Counter++){
 		if (isset($_POST["Clear_" . $Counter]) and $_POST["Clear_" . $Counter]==True){
 			/*Get amount to be cleared */
-			$sql = 'SELECT amount, 
-						exrate 
+			$sql = 'SELECT amount,
+						exrate
 					FROM banktrans
 					WHERE banktransid="' . $_POST['BankTrans_' . $Counter].'"';
 			$ErrMsg =  _('Could not retrieve transaction information');
@@ -47,9 +47,9 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 			$ErrMsg =  _('Could not match off this payment because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
-		} elseif (isset($_POST['AmtClear_' . $Counter]) AND 
-					is_numeric((float) $_POST["AmtClear_" . $Counter]) AND 
-			((isset($_POST['AmtClear_' . $Counter]) AND $_POST['AmtClear_' . $Counter]<0 AND $Type=='Payments') OR 
+		} elseif (isset($_POST['AmtClear_' . $Counter]) AND
+					is_numeric((float) $_POST["AmtClear_" . $Counter]) AND
+			((isset($_POST['AmtClear_' . $Counter]) AND $_POST['AmtClear_' . $Counter]<0 AND $Type=='Payments') OR
 			($Type=='Receipts' AND (isset($_POST['AmtClear_' . $Counter]) and $_POST['AmtClear_' . $Counter]>0)))){
 			/*if the amount entered was numeric and negative for a payment or positive for a receipt */
 			$sql = 'UPDATE banktrans SET amountcleared=' .  $_POST['AmtClear_' . $Counter] . '
@@ -72,6 +72,7 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 echo '<div class="page_help_text">' . _('Use this screen to match webERP Receipts and Payments to your Bank Statement.  Check your bank statement and click the check-box when you find the matching transaction.') . '</div><br>';
 
 echo '<form action="'. $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<input type="hidden" name="Type" Value="' . $Type . '">';
 
@@ -140,7 +141,7 @@ if (!Is_Date($_POST['BeforeDate'])){
 }
 if (!Is_Date($_POST['AfterDate'])){
 	$InputError =1;
-	prnMsg( _('The date entered for the field to show') . ' ' . $Type . ' ' . _('after') . ', ' . 
+	prnMsg( _('The date entered for the field to show') . ' ' . $Type . ' ' . _('after') . ', ' .
 		_('is not entered in a recognised date format') . '. ' . _('Entry is expected in the format') . ' ' .
 		$_SESSION['DefaultDateFormat'],'error');
 }
