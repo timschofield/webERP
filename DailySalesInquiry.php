@@ -16,7 +16,7 @@ echo '<div class="page_help_text">' . _('Select the month to show daily sales fo
 echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<table cellpadding=2><tr>';
+echo '<table cellpadding=2 class=selection><tr>';
 
 echo '<td>' . _('Month to Show') . ':</td><td><select tabindex=1 name="MonthToShow">';
 
@@ -55,10 +55,9 @@ while ($SalespersonRow = DB_fetch_array($SalespeopleResult)){
 }
 echo '</select></td>';
 
-echo '</tr></table><div class="centre"><input tabindex=4 type=submit name="ShowResults" VALUE="' . _('Show Daily Sales For The Selected Month') . '">';
-echo '<hr>';
-
+echo '</tr></table><br /><div class="centre"><input tabindex=4 type=submit name="ShowResults" VALUE="' . _('Show Daily Sales For The Selected Month') . '">';
 echo '</form></div>';
+echo '<br />';
 /*Now get and display the sales data returned */
 if (strpos($EndDateSQL,'/')) {
 	$Date_Array = explode('/',$EndDateSQL);
@@ -93,7 +92,7 @@ $sql .= " GROUP BY stockmoves.trandate ORDER BY stockmoves.trandate";
 $ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg($db);
 $SalesResult = DB_query($sql, $db,$ErrMsg);
 
-echo '<table cellpadding=2>';
+echo '<table cellpadding=2 class=selection>';
 
 echo'<tr>
 	<th>' . _('Sunday') . '</th>
@@ -109,13 +108,16 @@ $CumulativeTotalCost = 0;
 $BilledDays = 0;
 $DaySalesArray = array();
 while ($DaySalesRow=DB_fetch_array($SalesResult)) {
-	if (isset($DaySalesRow['salesvalue'])) {
-	$DaySalesArray[DayOfMonthFromSQLDate($DaySalesRow['trandate'])]->Sales = $DaySalesRow['salesvalue'];
-	}
+	$DaySalesArray[DayOfMonthFromSQLDate($DaySalesRow['trandate'])] = new Cart;
+	if ($DaySalesRow['salesvalue'] > 0) {
+		$DaySalesArray[DayOfMonthFromSQLDate($DaySalesRow['trandate'])]->Sales = $DaySalesRow['salesvalue'];
+	} else {
+		$DaySalesArray[DayOfMonthFromSQLDate($DaySalesRow['trandate'])]->Sales = 0;
+    }
 	if ($DaySalesRow['salesvalue'] > 0 ) {
-	$DaySalesArray[DayOfMonthFromSQLDate($DaySalesRow['trandate'])]->GPPercent = ($DaySalesRow['salesvalue']-$DaySalesRow['cost'])/$DaySalesRow['salesvalue'];
+		$DaySalesArray[DayOfMonthFromSQLDate($DaySalesRow['trandate'])]->GPPercent = ($DaySalesRow['salesvalue']-$DaySalesRow['cost'])/$DaySalesRow['salesvalue'];
     } else {
-	$DaySalesArray[DayOfMonthFromSQLDate($DaySalesRow['trandate'])]->GPPercent = 0;
+		$DaySalesArray[DayOfMonthFromSQLDate($DaySalesRow['trandate'])]->GPPercent = 0;
     }
 	$BilledDays++;
 	$CumulativeTotalSales += $DaySalesRow['salesvalue'];
@@ -142,7 +144,9 @@ $LastDayOfMonth = DayOfMonthFromSQLDate($EndDateSQL);
 for ($i=1;$i<=$LastDayOfMonth;$i++){
 		$ColumnCounter++;
 		if(isset($DaySalesArray[$i])) {
-		echo '<td class="number">' . number_format($DaySalesArray[$i]->Sales,0) . '<br />' .  number_format($DaySalesArray[$i]->GPPercent*100,1) . '</td>';
+			echo '<td class="number" style="outline: 1px solid gray;">' . number_format($DaySalesArray[$i]->Sales,0) . '<br />' .  number_format($DaySalesArray[$i]->GPPercent*100,1) . '%</td>';
+		} else {
+			echo '<td class="number" style="outline: 1px solid gray;">' . number_format(0,0) . '<br />' .  number_format(0,1) . '%</td>';
 		}
 		if ($ColumnCounter==7){
 			echo '</tr><tr>';
@@ -171,7 +175,7 @@ if ($CumulativeTotalSales !=0){
 	$AverageDailySales = 0;
 }
 
-echo '<td colspan=7>' . _('Total Sales for month') . ': ' . number_format($CumulativeTotalSales,0) . ' ' . _('GP%') . ': ' . number_format($AverageGPPercent,1) . '% ' . _('Avg Daily Sales') . ': ' . number_format($AverageDailySales,0) . '</td></tr>';
+echo '<th colspan=7>' . _('Total Sales for month') . ': ' . number_format($CumulativeTotalSales,0) . ' ' . _('GP%') . ': ' . number_format($AverageGPPercent,1) . '% ' . _('Avg Daily Sales') . ': ' . number_format($AverageDailySales,0) . '</th></tr>';
 
 echo '</table>';
 
