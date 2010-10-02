@@ -82,7 +82,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-		if ($_POST['JournalType']==_('Reversing')){
+		if ($_POST['JournalType']=='Reversing'){
 			$SQL = "INSERT INTO gltrans (type,
 							typeno,
 							trandate,
