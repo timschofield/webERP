@@ -10,6 +10,8 @@ $title = _('Audit Trail');
 
 include('includes/header.inc');
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'</p>';
+
 if (!isset($_POST['FromDate'])){
 	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail']));
 }
@@ -30,7 +32,7 @@ $userresult = DB_query('SELECT userid FROM www_users',$db);
 
 echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table>';
+echo '<table class=selection>';
 
 echo '<tr><td>'. _('From Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</td>
 	<td><input tabindex="1" type=text class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="11" maxlength="10" value=' .$_POST['FromDate'].'></td></tr>';
@@ -62,8 +64,8 @@ while ($tables = DB_fetch_row($tableresult)) {
 }
 echo '</select></td></tr>';
 
-echo "<tr><td></td><td><input tabindex='5' type=submit name=View value='" . _('View') . "'></td></tr>";
-echo '</table></BR>';
+echo '</table><br />';
+echo "<div class=centre><input tabindex='5' type=submit name=View value='" . _('View') . "'></div>";
 echo '</form>';
 
 // View the audit trail
@@ -138,7 +140,7 @@ if (isset($_POST['View'])) {
 	}
 	$result = DB_query($sql,$db);
 
-	echo '<table border=0 width="100%">';
+	echo '<table border=0 width="98%" class=selection>';
 	echo '<tr><th>' . _('Date/Time') . '</th>
 				<th>' . _('User') . '</th>
 				<th>' . _('Type') . '</th>
