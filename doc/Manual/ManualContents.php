@@ -596,6 +596,28 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 <?php
   if (!isset($_POST['Submit'])) {
 ?>
+              <input type="checkbox" name="PurchaseOrdering">
+              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=PurchaseOrdering'; ?>">Purchase Ordering</A>
+<?php
+  } else {
+?>
+              <A HREF="#Shipments">Purchase Orders</A>
+<?php
+  }
+?>
+              <UL>
+                <LI>Overview</LI>
+                <LI>Purchase Orders</LI>
+                <LI>Adding a New Purchase Order</LI>
+                <LI>Authorising Purchase Orders </LI>
+                <LI>Recieving Purchase Orders</LI>
+              </UL>
+              <BR>
+            </LI>
+            <LI>
+<?php
+  if (!isset($_POST['Submit'])) {
+?>
               <input type="checkbox" name="SelectShipments">
               <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Shipments'; ?>">Shipments</A>
 <?php
@@ -996,6 +1018,9 @@ if ($_GET['ViewTopic'] == 'SalesOrders' OR isset($_POST['SelectSalesOrders'])) {
   include('ManualSalesOrders.html');
 }
 
+if ($_GET['ViewTopic'] == 'PurchaseOrdering' OR isset($_POST['PurchaseOrdering'])) {
+  include('ManualPurchaseOrdering.html');
+}
 if ($_GET['ViewTopic'] == 'Shipments' OR isset($_POST['SelectShipments'])) {
   include('ManualShipments.html');
 }
