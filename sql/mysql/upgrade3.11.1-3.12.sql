@@ -1,4 +1,12 @@
 SET FOREIGN_KEY_CHECKS=0;
+ALTER TABLE `workcentres` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `stockmaster` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `custbranch` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `stockcategory` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `locations` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `www_users` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `currencies` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `suppliers` CONVERT TO CHARACTER SET utf8;
 CREATE TABLE IF NOT EXISTS `fixedassetlocations` (
   `locationid` char(6) NOT NULL default '',
   `locationdescription` char(20) NOT NULL default '',
