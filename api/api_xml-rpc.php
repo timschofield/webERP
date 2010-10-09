@@ -1313,9 +1313,8 @@
 
 	function  xmlrpc_GetLocationList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/		{
-/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetLocationList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2){
+/*x*/			$rtn = new xmlrpcresp( php_xmlrpc_encode(GetLocationList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
 /*x*/		} else {
 /*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetLocationList( '', '')));
@@ -1823,6 +1822,33 @@
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
 /*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyStockCategory(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/		}
+		ob_end_flush();
+		return $rtn;
+	}
+	unset($Description);
+	unset($Parameter);
+	unset($ReturnValue);
+
+	$Description = _('This function returns a list of stock category abbreviations.');
+	$Parameter[0]['name'] = _('User name');
+	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[1]['name'] = _('User password');
+	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('If successful, this function returns an array of stock category ids. ')
+			._('Otherwise an array of error codes is returned and no stock categories are returned. ');
+
+/*E*/	$GetStockCategoryList_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetStockCategoryList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetStockCategoryList($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/if ($xmlrpcmsg->getNumParams() == 2){
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockCategoryList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockCategoryList( '', '')));
 /*x*/		}
 		ob_end_flush();
 		return $rtn;
@@ -2897,6 +2923,10 @@
 			"function" => "xmlrpc_StockCatPropertyList",
 			"signature" => $StockCatPropertyList_sig,
 			"docstring" => $StockCatPropertyList_doc),
+		"weberp.xmlrpc_GetStockCategoryList" => array(
+			"function" => "xmlrpc_GetStockCategoryList",
+			"signature" => $GetStockCategoryList_sig,
+			"docstring" => $GetStockCategoryList_doc),
 		"weberp.xmlrpc_GetGLAccountList" => array(
 			"function" => "xmlrpc_GetGLAccountList",
 			"signature" => $GetGLAccountList_sig,

@@ -52,12 +52,12 @@ function  LogoutAPI() {
 
     //  Is this user logged in?
     if (isset ($_SESSION['db']) ) {
-	// Cleanup is about all there is to do.
-	session_unset();
-	session_destroy();
-	$RetCode = 0;
+		// Cleanup is about all there is to do.
+		session_unset();
+		session_destroy();
+		$RetCode = 0;
     } else {
-	$RetCode = NoAuthorisation;
+		$RetCode = NoAuthorisation;
     }
 
     return $RetCode;

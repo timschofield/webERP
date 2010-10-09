@@ -208,4 +208,22 @@
 		return $Errors;
 	}				
 	
+	/* This function returns a list of the stock categories setup on webERP  */
+
+	function GetStockCategoryList($user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$sql = 'SELECT categoryid FROM stockcategory';
+		$result = DB_query($sql, $db);
+		$i=0;
+		while ($myrow=DB_fetch_array($result)) {
+			$StockCategoryList[$i]=$myrow[0];
+			$i++;
+		}
+		return $StockCategoryList;
+	}
 ?>
