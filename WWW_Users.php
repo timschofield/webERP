@@ -288,10 +288,10 @@ if (!isset($SelectedUser)) {
 			$k=1;
 		}
 
-	if ($myrow[7]=='') {
-		$LastVisitDate = Date('Y-m-d');
+	if ($myrow[8]=='') {
+		$LastVisitDate = Date($_SESSION['DefaultDateFormat']);
 	} else {
-		$LastVisitDate = ConvertSQLDate($myrow[7]);
+		$LastVisitDate = ConvertSQLDate($myrow[8]);
 	}
 
 		/*The SecurityHeadings array is defined in config.php */
