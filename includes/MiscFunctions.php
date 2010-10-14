@@ -145,7 +145,7 @@ class XmlElement {
 function GetECBCurrencyRates () {
 /* See http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
 for detail of the European Central Bank rates - published daily */
-	if (file_exists('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml')) {
+	if (http_file_exists('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml')) {
 		$xml = file_get_contents('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml');
 		$parser = xml_parser_create();
 		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
