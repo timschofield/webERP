@@ -136,6 +136,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/reports');
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/EDI_Sent');
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/EDI_Pending');
+			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/FormDesigns');
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/reportwriter');
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/pdf_append');
 
