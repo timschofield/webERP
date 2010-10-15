@@ -561,12 +561,7 @@ then do the updates and inserts to process the invoice entered */
 
 	/*Start an SQL transaction */
 
-		$SQL = 'BEGIN';
-
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The database does not support transactions');
-		$DbgMsg = _('The following SQL to start an SQL transaction was used');
-
-		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+		$Result = DB_Txn_Begin($db);
 
 		/*Get the next transaction number for internal purposes and the period to post GL transactions in based on the invoice date*/
 		$InvoiceNo = GetNextTransNo(20, $db);
@@ -663,19 +658,55 @@ then do the updates and inserts to process the invoice entered */
 				$LocalTotal += round($ShiptChg->Amount/ $_SESSION['SuppTrans']->ExRate,2);
 
 			}
-	$sql="SELECT conversionfactor
+			$sql="SELECT conversionfactor
 					FROM purchdata
 					WHERE supplierno='".$_SESSION['SuppTrans']->SupplierID."'
 					AND stockid='".$EnteredGRN->ItemCode."'";
-				$result=DB_query($sql, $db);
-				if (DB_num_rows($result)>0) {
-					$myrow=DB_fetch_array($result);
-					$conversionfactor=$myrow['conversionfactor'];
-				} else {
-					$conversionfactor=1;
-				}
+			$result=DB_query($sql, $db);
+			if (DB_num_rows($result)>0) {
+				$myrow=DB_fetch_array($result);
+				$conversionfactor=$myrow['conversionfactor'];
+			} else {
+				$conversionfactor=1;
+			}
 
-		 foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
+			foreach ($_SESSION['SuppTrans']->Contracts as $Contract){
+
+	/*contract postings need to get the WIP from the contract item's stock category record
+	*  debit postings to this WIP account
+	* the WIP account is tidied up when the contract is closed*/
+				$result = DB_query("SELECT wipact FROM stockcategory
+																					INNER JOIN stockmaster ON
+																					stockcategory.categoryid=stockmaster.categoryid
+														WHERE stockmaster.stockid='" . $Contract->ContractRef . "'",$db);
+				$WIPRow = DB_fetch_row($result);
+				$WIPAccount = $WIPRow[0];
+				$SQL = 'INSERT INTO gltrans (type,
+																	typeno,
+																	trandate,
+																	periodno,
+																	account,
+																	narrative,
+																	amount)
+													VALUES (20, ' .
+																	$InvoiceNo . ",
+																	'" . $SQLInvoiceDate . "',
+																	'" . $PeriodNo . "',
+																	'". $WIPAccount . "',
+																	'" . $_SESSION['SuppTrans']->SupplierID . ' ' . _('Contract charge against') . ' ' . $Contract->ContractRef . "',
+																	'" . ($Contract->Amount/ $_SESSION['SuppTrans']->ExRate) . "')";
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the contract') . ' ' . $Contract->ContractRef . ' ' . _('could not be added because');
+ 
+				$DbgMsg = _('The following SQL to insert the GL transaction was used');
+ 
+				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+ 
+				$LocalTotal += ($Contract->Amount/ $_SESSION['SuppTrans']->ExRate);
+ 
+			}
+
+
+			foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
 				if (strlen($EnteredGRN->ShiptRef) == 0 OR $EnteredGRN->ShiptRef == 0){
 				/*so its not a shipment item
@@ -1080,42 +1111,61 @@ then do the updates and inserts to process the invoice entered */
 		} /* end of the loop to do the updates for the quantity of order items the supplier has invoiced */
 
 		/*Add shipment charges records as necessary */
-
-		foreach ($_SESSION['SuppTrans']->Shipts as $ShiptChg){
-
-			$SQL = "INSERT INTO shipmentcharges (shiptref,
-								transtype,
-								transno,
-								value)
-					VALUES (
-						'" . $ShiptChg->ShiptRef . "',
-						20,
-						'" . $InvoiceNo . "',
-						'" . $ShiptChg->Amount/ $_SESSION['SuppTrans']->ExRate . "')";
-
+ 		foreach ($_SESSION['SuppTrans']->Shipts as $ShiptChg){
+	
+			$SQL = 'INSERT INTO shipmentcharges (shiptref,
+													transtype,
+													transno,
+													value)
+													VALUES (' . $ShiptChg->ShiptRef . ',
+																		20,
+																	' . $InvoiceNo . ',
+																	' . $ShiptChg->Amount/ $_SESSION['SuppTrans']->ExRate . ')';
+			
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment charge record for the shipment') .
-						 ' ' . $ShiptChg->ShiptRef . ' ' . _('could not be added because');
-
+			' ' . $ShiptChg->ShiptRef . ' ' . _('could not be added because');
+			
 			$DbgMsg = _('The following SQL to insert the Shipment charge record was used');
-
+			
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+			
+		} 
+	/*Add contract charges records as necessary */
 
+		foreach ($_SESSION['SuppTrans']->Contracts as $Contract){
+			
+			if($Contract->AnticipatedCost ==true){
+				$Anticipated =1;
+			} else {
+				$Anticipated =0;
+			}
+			$SQL = "INSERT INTO contractcharges (contractref,
+																					transtype,
+																					transno,
+																					amount,
+																					narrative,
+																					anticipated)
+																		VALUES ('" . $Contract->ContractRef . "',
+																			'20',
+																			'" . $InvoiceNo . "',
+																			'" . $Contract->Amount/ $_SESSION['SuppTrans']->ExRate . "',
+																			'" . $Contract->Narrative . "',
+																			'" . $Anticipated . "')";
+
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The contract charge record for contract') . ' ' . $Contract->ContractRef . ' ' . _('could not be added because');
+			$DbgMsg = _('The following SQL to insert the contract charge record was used');
+			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 		}
 
 
-		$SQL="COMMIT";
-
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The SQL COMMIT failed because');
-
-		$DbgMsg = _('The SQL COMMIT failed');
-
-		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+		$Result = DB_Txn_Commit($db);
 
 		prnMsg(_('Supplier invoice number') . ' ' . $InvoiceNo . ' ' . _('has been processed'),'success');
 		echo '<br><div class="centre"><a href="' . $rootpath . '/SupplierInvoice.php?&SupplierID=' .$_SESSION['SuppTrans']->SupplierID . '">' . _('Enter another Invoice for this Supplier') . '</a></div>';
 		unset( $_SESSION['SuppTrans']->GRNs);
 		unset( $_SESSION['SuppTrans']->Shipts);
 		unset( $_SESSION['SuppTrans']->GLCodes);
+		unset( $_SESSION['SuppTrans']->Contracts);
 		unset( $_SESSION['SuppTrans']);
 	}
 
