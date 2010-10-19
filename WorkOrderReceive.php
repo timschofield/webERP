@@ -523,7 +523,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 				} //end for all of the potential serialised fields received
 			} else { //the item is just batch/lot controlled not serialised
 			/*the form for entry of batch controlled items is only 15 possible fields */
-				for($i=0;$i<$_POST['CountOfItems'];$i++){
+				for($i=0;$i<$_POST['CountOfInputs'];$i++){
 				/*  We need to add the StockSerialItem record and
 					The StockSerialMoves as well */
 				//need to test if the batch/lot exists first already
