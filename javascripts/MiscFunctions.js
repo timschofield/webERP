@@ -148,8 +148,8 @@ return m+"/"+d+"/"+y;
 }
 function convertDate(dS,dF){
 var d,m,y;
-if (dF="d.m.Y")
-dA=dS.split(".")
+if (dF=="d.m.Y")
+dA=dS.split(".");
 else
 dA=dS.split("/");
 switch (dF){
