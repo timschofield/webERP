@@ -33,7 +33,7 @@ if (!isset($_SESSION['JournalDetail']) or isset($_POST['update'])){
 
 	/* Get list of assets for journal */
 	$sql='SELECT assetmanager.*,
-			stockcategory.stockact as bsdepn,
+			stockcategory.wipact as bsdepn,
 			stockcategory.adjglact as pldepn,
 			fixedassetlocations.locationdescription
 		FROM assetmanager

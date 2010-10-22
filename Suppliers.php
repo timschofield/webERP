@@ -905,8 +905,7 @@ if (!isset($SupplierID)) {
 		echo "<br><p><div class='centre'><input type='Submit' name='submit' VALUE='" . _('Update Supplier') . "'></div><br>";
 //		echo '<p><font color=red><b>' . _('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed') . '<br></font></b>';
 		prnMsg(_('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed'), 'Warn');
-		echo "<br><div class=centre><input type='Submit' name='delete' VALUE='" . _('Delete Supplier') . "' onclick=\"return confirm('" .
-				_('Are you sure you wish to delete this supplier?') . "');\"></form>";
+		echo "<br><div class=centre><input type='Submit' name='delete' VALUE='" . _('Delete Supplier') . "' onclick=\"return confirm('" . _('Are you sure you wish to delete this supplier?') . "');\"></form>";
 		echo "<br><a href='$rootpath/SupplierContacts.php?" . SID . "SupplierID=$SupplierID'>" . _('Review Contact Details') . '</a></div>';
 	}
 	echo '</div>';

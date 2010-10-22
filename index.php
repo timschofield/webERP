@@ -1292,6 +1292,17 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 					<tr>
 					<td class="menu_group_items"> <!--  Fixed Asset transactions options -->
 						<table width="100%" class="table_index">
+						<tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/FixedAssetItems.php?' . SID . '">' . _('Add a new Asset') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/SelectAssetType.php?' . SID . '">' . _('Select an Asset') . '</a></p>'; ?>
+							</td>
+							</tr>
 							<tr>
 							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/FixedAssetTransfer.php?' . SID . '">' . _('Change Asset Location') . '</a></p>'; ?>
@@ -1328,16 +1339,6 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/FixedAssetCategories.php?' . SID . '">' . _('Asset Categories Maintenance') . '</a></p>'; ?>
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/FixedAssetItems.php?' . SID . '">' . _('Add a new Asset Type') . '</a></p>'; ?>
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/SelectAssetType.php?' . SID . '">' . _('Select an Asset Type') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>
