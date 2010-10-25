@@ -617,6 +617,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . "/PDFPrintLabel.php?" . SID . '">' . _('Print Price Labels') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . "/StockMovements.php?" . SID . '">' . _('Inventory Item Movements') . '</a></p>'; ?>
 							</td>
 							</tr>
@@ -1012,6 +1017,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/FormDesigner.php">' . _('Form Layout Editor') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/Labels.php">' . _('Label Templates Maintenance') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>
