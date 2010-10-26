@@ -170,7 +170,7 @@ if (isset($_POST['submit'])  && $EditName == 1 ) { // Creating or updating a cat
 // Calculate Path for navigation
 
 $CategoryPath = '<a href="'.$_SERVER['PHP_SELF'] . '?' . SID .
-			'&ParentCategory=0">' . _('Main') . '</a>' . "&nbsp;\\&nbsp;";
+			'&ParentCategory=NULL">' . _('Main') . '</a>' . "&nbsp;\\&nbsp;";
 $TempPath = '';
 if (isset($ParentCategory)) {
 	$TmpParentID = $ParentCategory;
@@ -178,9 +178,9 @@ if (isset($ParentCategory)) {
 
 $LastParentName = '';
 for($Buzy = (isset($TmpParentID) && ($TmpParentID <> ''));
-		$Buzy == true;
-		$Buzy = (isset($TmpParentID) && ($TmpParentID <> '')) ) {
-  	$sql = "SELECT parentcatid, salescatname FROM salescat WHERE salescatid='".$TmpParentID."'";
+	$Buzy == true;
+	$Buzy = (isset($TmpParentID) && ($TmpParentID <> '')) ) {
+	$sql = "SELECT parentcatid, salescatname FROM salescat WHERE salescatid='".$TmpParentID."'";
 	$result = DB_query($sql,$db);
 	if( $result ) {
 		if (DB_num_rows($result) > 0) {
