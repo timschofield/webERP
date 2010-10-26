@@ -133,7 +133,7 @@ echo '<tr><td>' . _('Quantity Break') . ":</td><td><input class='number' tabinde
 
 echo '<tr><td>' . _('Discount Rate') . " (%):</td><td><input class='number' tabindex=4 "
 	. (in_array('DiscountRate',$Errors) ? "class='inputerror'" : "") .
-		"type='text' name='DiscountRate' size=4 maxlength=4></td></tr>";
+		"type='text' name='DiscountRate' size=11 maxlength=14></td></tr>";
 echo '</table><br>';
 
 echo "<div class='centre'><input tabindex=5 type='submit' name='submit' value='" . _('Enter Information') . "'></div><br>";
