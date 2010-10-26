@@ -50,9 +50,9 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 			// Only if stock exist at this location
 			$result = DB_query("SELECT quantity FROM locstock WHERE stockid='" . $_POST['StockID' . $i] . "' and loccode='".$_POST['FromStockLocation']."'",$db);
 			$myrow = DB_fetch_row($result);
-			if ($myrow[0] <= 0){
+			if ($myrow[0] <= $_POST['StockQTY' . $i]){
 				$InputError = True;
-				$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('does not have stock available for transfer.') . '.<br>';
+				$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('does not have enough stock available for transfer.') . '.<br>';
 				$_POST['LinesCounter'] -= 10;
 			}
 			DB_free_result( $result );
