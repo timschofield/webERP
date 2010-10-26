@@ -959,21 +959,21 @@ then do the updates and inserts to process the invoice entered */
 				/* Now the TAX account */
                                 if ($Tax->TaxOvAmount <>0){
                                 	$SQL = "INSERT INTO gltrans (type,
-								typeno,
-								trandate,
-								periodno,
-								account,
-								narrative,
-								amount)
-						VALUES (20,
-								'" . $InvoiceNo . "',
-								'" . $SQLInvoiceDate . "',
-								'" . $PeriodNo . "',
-								'" . $Tax->TaxGLCode . "',
-								'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Inv') . ' ' .
-						 $_SESSION['SuppTrans']->SuppReference . ' ' . $Tax->TaxAuthDescription . ' ' . number_format($Tax->TaxRate*100,2) . '% ' . $_SESSION['SuppTrans']->CurrCode .
-						 $Tax->TaxOvAmount  . ' @ ' . _('exch rate') . ' ' . $_SESSION['SuppTrans']->ExRate . "',
-								'" . round( $Tax->TaxOvAmount/ $_SESSION['SuppTrans']->ExRate,2) . "')";
+																							typeno,
+																							trandate,
+																							periodno,
+																							account,
+																							narrative,
+																							amount)
+																					VALUES (20,
+																							'" . $InvoiceNo . "',
+																							'" . $SQLInvoiceDate . "',
+																							'" . $PeriodNo . "',
+																							'" . $Tax->TaxGLCode . "',
+																							'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Inv') . ' ' .
+																					 $_SESSION['SuppTrans']->SuppReference . ' ' . $Tax->TaxAuthDescription . ' ' . number_format($Tax->TaxRate*100,2) . '% ' . $_SESSION['SuppTrans']->CurrCode .
+																					 $Tax->TaxOvAmount  . ' @ ' . _('exch rate') . ' ' . $_SESSION['SuppTrans']->ExRate . "',
+																							'" . round( $Tax->TaxOvAmount/ $_SESSION['SuppTrans']->ExRate,2) . "')";
 
 				        $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the tax could not be added because');
 
@@ -986,22 +986,22 @@ then do the updates and inserts to process the invoice entered */
 			/* Now the control account */
 
 			$SQL = "INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount)
-					VALUES (20,
-						'" . $InvoiceNo . "',
-						'" . $SQLInvoiceDate . "',
-						'" . $PeriodNo . "',
-						'" . $_SESSION['SuppTrans']->CreditorsAct .  "',
-						'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Inv') . ' ' .
-					 $_SESSION['SuppTrans']->SuppReference . ' ' . $_SESSION['SuppTrans']->CurrCode .
-					 number_format( $_SESSION['SuppTrans']->OvAmount + $TaxTotal,2)  .
-					 ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate . "',
-						'" .  -round(($LocalTotal + ( $TaxTotal / $_SESSION['SuppTrans']->ExRate)),2) . "')";
+																typeno,
+																trandate,
+																periodno,
+																account,
+																narrative,
+																amount)
+														VALUES (20,
+															'" . $InvoiceNo . "',
+															'" . $SQLInvoiceDate . "',
+															'" . $PeriodNo . "',
+															'" . $_SESSION['SuppTrans']->CreditorsAct .  "',
+															'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Inv') . ' ' .
+														 $_SESSION['SuppTrans']->SuppReference . ' ' . $_SESSION['SuppTrans']->CurrCode .
+														 number_format( $_SESSION['SuppTrans']->OvAmount + $TaxTotal,2)  .
+														 ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate . "',
+															'" .  -round(($LocalTotal + ( $TaxTotal / $_SESSION['SuppTrans']->ExRate)),2) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the control total could not be added because');
 
@@ -1014,26 +1014,26 @@ then do the updates and inserts to process the invoice entered */
 	/*Now insert the invoice into the SuppTrans table*/
 
 		$SQL = "INSERT INTO supptrans (transno,
-						type,
-						supplierno,
-						suppreference,
-						trandate,
-						duedate,
-						ovamount,
-						ovgst,
-						rate,
-						transtext)
-			VALUES (
-				'". $InvoiceNo . "',
-				20 ,
-				'" . $_SESSION['SuppTrans']->SupplierID . "',
-				'" . $_SESSION['SuppTrans']->SuppReference . "',
-				'" . $SQLInvoiceDate . "',
-				'" . FormatDateForSQL($_SESSION['SuppTrans']->DueDate) . "',
-				'" . round($_SESSION['SuppTrans']->OvAmount,2) . "',
-				'" . round($TaxTotal,2) . "',
-				'" .  $_SESSION['SuppTrans']->ExRate . "',
-				'" . $_SESSION['SuppTrans']->Comments . "')";
+																	type,
+																	supplierno,
+																	suppreference,
+																	trandate,
+																	duedate,
+																	ovamount,
+																	ovgst,
+																	rate,
+																	transtext)
+														VALUES (
+															'". $InvoiceNo . "',
+															20 ,
+															'" . $_SESSION['SuppTrans']->SupplierID . "',
+															'" . $_SESSION['SuppTrans']->SuppReference . "',
+															'" . $SQLInvoiceDate . "',
+															'" . FormatDateForSQL($_SESSION['SuppTrans']->DueDate) . "',
+															'" . round($_SESSION['SuppTrans']->OvAmount,2) . "',
+															'" . round($TaxTotal,2) . "',
+															'" .  $_SESSION['SuppTrans']->ExRate . "',
+															'" . $_SESSION['SuppTrans']->Comments . "')";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The supplier invoice transaction could not be added to the database because');
 
@@ -1047,12 +1047,12 @@ then do the updates and inserts to process the invoice entered */
 		foreach ($_SESSION['SuppTrans']->Taxes AS $TaxTotals) {
 
 			$SQL = "INSERT INTO supptranstaxes (supptransid,
-							taxauthid,
-							taxamount)
-				VALUES (
-					'" . $SuppTransID . "',
-					'" . $TaxTotals->TaxAuthID . "',
-					'" . $TaxTotals->TaxOvAmount . "')";
+																				taxauthid,
+																				taxamount)
+																	VALUES (
+																		'" . $SuppTransID . "',
+																		'" . $TaxTotals->TaxAuthID . "',
+																		'" . $TaxTotals->TaxOvAmount . "')";
 
 			$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The supplier transaction taxes records could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the supplier transaction taxes record was used:');
