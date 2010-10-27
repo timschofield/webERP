@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
 			amount = '" .- $_POST['amount'] . "',
 			notes = '" . $_POST['Notes'] . "',
 			receipt = '" . $_POST['Receipt'] . "'
-			WHERE counterindex = '$SelectedIndex'";
+			WHERE counterindex = '".$SelectedIndex."'";
 
 		$msg = _('The Expense Claim on Tab') . ' ' . $SelectedTabs . ' ' .  _('has been updated');
 
@@ -103,7 +103,7 @@ if (isset($_POST['submit'])) {
 } elseif ( isset($_GET['delete']) ) {
 
 	$sql="DELETE FROM pcashdetails
-			WHERE counterindex='$SelectedIndex'";
+			WHERE counterindex='".$SelectedIndex."'";
 	$ErrMsg = _('Petty Cash Expense record could not be deleted because');
 	$result = DB_query($sql,$db,$ErrMsg);
 	prnMsg(_('Petty cash Expense record') .  ' ' . $SelectedTabs  . ' ' . _('has been deleted') ,'success');
@@ -118,11 +118,12 @@ if (!isset($SelectedTabs)){
 	then none of the above are true and the list of sales types will be displayed with
 	links to delete or edit each. These will call the same page again and allow update/input
 	or deletion of the records*/
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
+	. '" alt="">' . ' ' . $title . '</p>';
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p><table border=1>'; //Main table
-	echo '<td><table>'; // First column
+	echo '<p><table class=selection>'; //Main table
 
 	echo '<tr><td>' . _('Petty Cash Tabs for User ') . $_SESSION['UserID'] . ":</td><td><select name='SelectedTabs'>";
 
@@ -144,7 +145,6 @@ if (!isset($SelectedTabs)){
 	} //end while loop
 
 	echo '</select></td></tr>';
-	echo '</table>'; // close table in first column
    	echo '</td></tr></table>'; // close main table
 
 	echo '<p><div class="centre"><input type=submit name=process VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
@@ -180,7 +180,7 @@ if (isset($_POST['process'])OR isset($SelectedTabs)) {
 		}
 
 		$sql = "SELECT * FROM pcashdetails
-				WHERE tabcode='$SelectedTabs'
+				WHERE tabcode='".$SelectedTabs."'
 					AND date >=DATE_SUB(CURDATE(), INTERVAL ".$Days." DAY)
 				ORDER BY date, counterindex ASC";
 
@@ -259,7 +259,7 @@ if (isset($_POST['process'])OR isset($SelectedTabs)) {
 
 		$sqlamount="SELECT sum(amount)
 					FROM pcashdetails
-					WHERE tabcode='$SelectedTabs'";
+					WHERE tabcode='".$SelectedTabs."'";
 
 		$ResultAmount = DB_query($sqlamount,$db);
 		$Amount=DB_fetch_array($ResultAmount);
@@ -286,7 +286,7 @@ if (isset($_POST['process'])OR isset($SelectedTabs)) {
 		if ( isset($_GET['edit'])) {
 			$sql = "SELECT *
 				FROM pcashdetails
-				WHERE counterindex='$SelectedIndex'";
+				WHERE counterindex='".$SelectedIndex."'";
 
 			$result = DB_query($sql, $db);
 			$myrow = DB_fetch_array($result);
@@ -318,7 +318,7 @@ if (isset($_POST['process'])OR isset($SelectedTabs)) {
 			FROM pctabexpenses, pcexpenses, pctabs
 			WHERE pctabexpenses.codeexpense = pcexpenses.codeexpense
 				AND pctabexpenses.typetabcode = pctabs.typetabcode
-				AND pctabs.tabcode = '$SelectedTabs'
+				AND pctabs.tabcode = '".$SelectedTabs."'
 			ORDER BY pcexpenses.codeexpense ASC";
 
 		$result = DB_query($SQL,$db);
