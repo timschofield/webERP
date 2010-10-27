@@ -125,6 +125,8 @@ if (DB_num_rows($result) > 0) {
 		echo '</option>';
 	}
 	echo '</select></td>';
+} else {
+	echo '<input type="hidden" name="DiscountCategory" value="">';
 }
 
 echo '<tr><td>' . _('Quantity Break') . ":</td><td><input class='number' tabindex=3 "
@@ -178,7 +180,7 @@ while ($myrow = DB_fetch_array($result)) {
 		$myrow['sales_type'],
 		$myrow['discountcategory'],
 		$myrow['quantitybreak'],
-		number_format($myrow['discountrate']*100,2) ,
+		$myrow['discountrate']*100 ,
 		$DeleteURL);
 
 }
