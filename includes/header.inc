@@ -10,9 +10,9 @@
 
 	if (!headers_sent()){
 		if ($StrictXHTML) {
-			header('Content-type: application/xhtml+xml; charset=utf8');
+			header('Content-type: application/xhtml+xml; charset=utf-8');
 		} else {
-			header('Content-type: text/html; charset=utf8');
+			header('Content-type: text/html; charset=utf-8');
 		}
 	}
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -23,9 +23,9 @@
 	echo '<link rel="shortcut icon" href="'. $rootpath.'/favicon.ico" />';
 	echo '<link rel="icon" href="' . $rootpath.'/favicon.ico" />';
 	if ($StrictXHTML) {
-		echo '<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf8" />';
+		echo '<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />';
 	} else {
-		echo '<meta http-equiv="Content-Type" content="application/html; charset=utf8" />';
+		echo '<meta http-equiv="Content-Type" content="application/html; charset=utf-8" />';
 	}
 	echo '<link href="' . $rootpath . '/css/'. $_SESSION['Theme'] .'/default.css" rel="stylesheet" type="text/css" />';
 	echo '<script type="text/javascript" src = "'.$rootpath.'/javascripts/MiscFunctions.js"></script>';
