@@ -18,6 +18,10 @@ if (isset($_POST['SelectedTabs'])){
 if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST['SelectDifferentDate'])){
 
 	include  ('includes/header.inc');
+
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
+	. '" alt="">' . ' ' . $title . '</p>';
+
 	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -30,7 +34,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	}
 
 	/*Show a form to allow input of criteria for Tabs to show */
-	echo '<table>';
+	echo '<table class=selection>';
 	echo '<tr><td>' . _('Code Of Petty Cash Tab') . ":</td><td><select name='SelectedTabs'>";
 
 	if ($_SESSION['AccessLevel'] >= 15){ // superuser can supervise the supervisors
@@ -82,7 +86,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$SQL_ToDate = FormatDateForSQL($_POST['ToDate']);
 
 	$SQL = "SELECT * FROM pcashdetails
-			WHERE tabcode='$SelectedTabs'
+			WHERE tabcode='".$SelectedTabs."'
 			AND date >='" . $SQL_FromDate . "' AND date <= '" . $SQL_ToDate . "'
 			ORDER BY date, counterindex ASC";
 
@@ -109,14 +113,14 @@ if (DB_error_no($db)!=0){
 	include('includes/PDFTabReportHeader.inc');
 
 	$SqlTabs = "SELECT * FROM pctabs
-			WHERE tabcode='$SelectedTabs'";
+			WHERE tabcode='".$SelectedTabs."'";
 
 	$TabResult = DB_query($SqlTabs,	$db, _('No Petty Cash tabs were returned by the SQL because'), _('The SQL that failed was:'));
 
 	$Tabs=DB_fetch_array($TabResult);
 
 	$SqlBalance = "SELECT SUM(amount) FROM pcashdetails
-			WHERE tabcode='$SelectedTabs'
+			WHERE tabcode='".$SelectedTabs."'
 			AND date<'".$SQL_FromDate."'";
 
 	$TabBalance = DB_query($SqlBalance,
@@ -200,7 +204,7 @@ if (DB_error_no($db)!=0){
 
 	$sqlamount="SELECT sum(amount)
 				FROM pcashdetails
-				WHERE tabcode='$SelectedTabs'
+				WHERE tabcode='".$SelectedTabs."'
 				AND date<='".$SQL_ToDate."'";
 
 	$ResultAmount = DB_query($sqlamount,$db);
@@ -248,6 +252,8 @@ if (DB_error_no($db)!=0){
 
 	include('includes/header.inc');
 
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
+	. '" alt="">' . ' ' . $title . '</p>';
 
 	$SQL_FromDate = FormatDateForSQL($_POST['FromDate']);
 	$SQL_ToDate = FormatDateForSQL($_POST['ToDate']);
@@ -257,7 +263,7 @@ if (DB_error_no($db)!=0){
 	echo '<input type=hidden name="FromDate" VALUE="' . $_POST['FromDate'] . '"><input type=hidden name="ToDate" VALUE="' . $_POST['ToDate'] . '">';
 
 	$SqlTabs = "SELECT * FROM pctabs
-			WHERE tabcode='$SelectedTabs'";
+			WHERE tabcode='".$SelectedTabs."'";
 
 	$TabResult = DB_query($SqlTabs,
 				$db,
@@ -266,7 +272,7 @@ if (DB_error_no($db)!=0){
 
 	$Tabs=DB_fetch_array($TabResult);
 
-	echo "<br><table >";
+	echo "<br><table class=selection>";
 
 	echo '<tr><td>' . _('Tab Code') . '</td>
 				<td>:</td>
@@ -287,7 +293,7 @@ if (DB_error_no($db)!=0){
 
 	$SqlBalance = "SELECT SUM(amount)
 			FROM pcashdetails
-			WHERE tabcode='$SelectedTabs'
+			WHERE tabcode='".$SelectedTabs."'
 			AND date<'".$SQL_FromDate."'";
 
 	$TabBalance = DB_query($SqlBalance, $db);
@@ -302,7 +308,7 @@ if (DB_error_no($db)!=0){
 
 	$SqlBalanceNotAut = "SELECT SUM(amount)
 			FROM pcashdetails
-			WHERE tabcode= '$SelectedTabs'
+			WHERE tabcode= '".$SelectedTabs."'
 			AND authorized = '0000-00-00'
 			AND date<'".$SQL_FromDate."'";
 
@@ -324,7 +330,7 @@ if (DB_error_no($db)!=0){
 
 
 	$SQL = "SELECT * FROM pcashdetails
-			WHERE tabcode='$SelectedTabs'
+			WHERE tabcode='".$SelectedTabs."'
 				AND date >='" . $SQL_FromDate . "'
 				AND date <= '" . $SQL_ToDate . "'
 			ORDER BY date, counterindex Asc";
@@ -334,7 +340,7 @@ if (DB_error_no($db)!=0){
 				 _('No Petty Cash movements for this tab were returned by the SQL because'),
 				 _('The SQL that failed was:'));
 
-	echo '<br><table BORDER=1>';
+	echo '<br><table class=selection>';
 	echo "<tr>
 		<th>" . _('Date Of Expense') . "</th>
 		<th>" . _('Expense Description') . "</th>
@@ -401,7 +407,7 @@ if (DB_error_no($db)!=0){
 
 	$sqlamount="SELECT sum(amount)
 				FROM pcashdetails
-				WHERE tabcode='$SelectedTabs'
+				WHERE tabcode='".$SelectedTabs."'
 				AND date<='".$SQL_ToDate."'";
 
 	$ResultAmount = DB_query($sqlamount,$db);
