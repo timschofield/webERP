@@ -441,13 +441,9 @@ If (isset($PrintPDF)
   		$pdf->addTextWrap($Left_Margin+5,$YPos+3,280,$FontSize,_('Payment Terms') . ': ' . $myrow['terms']);
 
 		$FontSize =8;
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-5,280,$FontSize,$myrow['invtext']);
-		if (strlen($LeftOvers)>0){
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-24,280,$FontSize,$LeftOvers);
-			if (strlen($LeftOvers)>0){
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-36,280,$FontSize,$LeftOvers);
-				/*If there is some of the InvText leftover after 3 lines 200 wide then it is not printed :( */
-			}
+		$LeftOvers=explode('\r\n',DB_escape_string($myrow['invtext']));
+		for ($i=0;$i<sizeOf($LeftOvers);$i++) {
+			$pdf->addText($Left_Margin+5, $YPos-8-($i*8), $FontSize, $LeftOvers[$i]);
 		}
 		$FontSize = 10;
 

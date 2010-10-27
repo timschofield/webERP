@@ -1497,7 +1497,7 @@ DB_Txn_Begin($db);
 	$j++;
 	echo '<tr>
 		<td>' ._('Invoice Text'). ':</td>
-		<td><textarea tabindex="'.$j.'" name="InvoiceText" COLS="31" ROWS="5">' . $_POST['InvoiceText'] . '</textarea></td>
+		<td><textarea tabindex="'.$j.'" name="InvoiceText" COLS="31" ROWS="5">' . reverse_escape($_POST['InvoiceText']) . '</textarea></td>
 	</tr>';
 
 	$j++;

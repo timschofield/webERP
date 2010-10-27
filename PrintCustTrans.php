@@ -325,13 +325,9 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 			$pdf->addTextWrap($FormDesign->PaymentTerms->x, $Page_Height - $FormDesign->PaymentTerms->y, $FormDesign->PaymentTerms->Length, $FormDesign->PaymentTerms->FontSize, _('Payment Terms') . ': ' . $myrow['terms']);
 			//      $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:***** Bank Account:*****'));
 			//	$FontSize=10;
-			$LeftOvers = $pdf->addTextWrap($FormDesign->InvoiceText->x, $Page_Height - $FormDesign->InvoiceText->y, $FormDesign->InvoiceText->Length, $FormDesign->InvoiceText->FontSize, $myrow['invtext']);
-			if (strlen($LeftOvers) > 0) {
-				$LeftOvers = $pdf->addTextWrap($FormDesign->InvoiceText->x, $Page_Height - $FormDesign->InvoiceText->y-10, $FormDesign->InvoiceText->Length, $FormDesign->InvoiceText->FontSize, $LeftOvers);
-				if (strlen($LeftOvers) > 0) {
-					$LeftOvers = $pdf->addTextWrap($FormDesign->InvoiceText->x, $Page_Height - $FormDesign->InvoiceText->y-20, $FormDesign->InvoiceText->Length, $FormDesign->InvoiceText->FontSize, $LeftOvers);
-					/*If there is some of the InvText leftover after 3 lines 200 wide then it is not printed :( */
-				}
+			$LeftOvers=explode('\r\n',DB_escape_string($myrow['invtext']));
+			for ($i=0;$i<sizeOf($LeftOvers);$i++) {
+				$pdf->addText($FormDesign->InvoiceText->x, $Page_Height - $FormDesign->InvoiceText->y-($i*10), $FormDesign->InvoiceText->FontSize, $LeftOvers[$i]);
 			}
 			$pdf->addText($FormDesign->SubTotalCaption->x, $Page_Height - $FormDesign->SubTotalCaption->y, $FormDesign->SubTotalCaption->FontSize, _('Sub Total'));
 			$LeftOvers = $pdf->addTextWrap($FormDesign->SubTotal->x, $Page_Height - $FormDesign->SubTotal->y, $FormDesign->SubTotal->Length, $FormDesign->SubTotal->FontSize, $DisplaySubTot, 'right');

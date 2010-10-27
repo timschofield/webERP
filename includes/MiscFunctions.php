@@ -12,6 +12,13 @@ function prnMsg($Msg,$Type='info', $Prefix=''){
 
 }//prnMsg
 
+function reverse_escape($str)
+{
+  $search=array("\\\\","\\0","\\n","\\r","\Z","\'",'\"');
+  $replace=array("\\","\0","\n","\r","\x1a","'",'"');
+  return str_replace($search,$replace,$str);
+}
+
 function getMsg($Msg,$Type='info',$Prefix=''){
 	$Colour='';
 	if ($_SESSION['LogSeverity']>0) {
