@@ -295,35 +295,35 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 			if (!isset($_POST['NextLotSNRef'.$i])) {
 				$_POST['NextLotSNRef'.$i]='';
 			}
-				if (isset($_POST['QtyRecd'.$i]) and $_POST['QtyRecd'.$i]>$_POST['OutputQty'.$i]){
-						$_POST['OutputQty'.$i]=$_POST['QtyRecd'.$i]; //OutputQty must be >= Qty already reced
-				}
-				if ($_POST['RecdQty'.$i]==0 AND (isset($_POST['HasWOSerialNos'.$i]) and $_POST['HasWOSerialNos'.$i]==false)){
-					/* can only change location cost if QtyRecd=0 */
-						$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
+			if (isset($_POST['QtyRecd'.$i]) and $_POST['QtyRecd'.$i]>$_POST['OutputQty'.$i]){
+				$_POST['OutputQty'.$i]=$_POST['QtyRecd'.$i]; //OutputQty must be >= Qty already reced
+			}
+			if ($_POST['RecdQty'.$i]==0 AND (!isset($_POST['HasWOSerialNos'.$i]) or $_POST['HasWOSerialNos'.$i]==false)){
+				/* can only change location cost if QtyRecd=0 */
+				$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
 														FROM stockmaster INNER JOIN bom
 														ON stockmaster.stockid=bom.component
 														WHERE bom.parent='" . $_POST['OutputItem'.$i] . "'
 														AND bom.loccode='" . $_POST['StockLocation'] . "'",
 									 $db);
-						$CostRow = DB_fetch_row($CostResult);
-						if (is_null($CostRow[0])){
-							$Cost =0;
-							prnMsg(_('The cost of this item as accumulated from the sum of the component costs is nil. This could be because there is no bill of material set up ... you may wish to double check this'),'warn');
-						} else {
-							$Cost = $CostRow[0];
-						}
-						$sql[] = "UPDATE woitems SET qtyreqd =  '". $_POST['OutputQty' . $i] . "',
+				$CostRow = DB_fetch_row($CostResult);
+				if (is_null($CostRow[0])){
+					$Cost =0;
+					prnMsg(_('The cost of this item as accumulated from the sum of the component costs is nil. This could be because there is no bill of material set up ... you may wish to double check this'),'warn');
+				} else {
+					$Cost = $CostRow[0];
+				}
+				$sql[] = "UPDATE woitems SET qtyreqd =  '". $_POST['OutputQty' . $i] . "',
 												 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."',
 												 stdcost ='" . $Cost . "'
 								  WHERE wo='" . $_POST['WO'] . "'
 								  AND stockid='" . $_POST['OutputItem'.$i] . "'";
-	  			} elseif (isset($_POST['HasWOSerialNos'.$i]) and $_POST['HasWOSerialNos'.$i]==false) {
-						$sql[] = "UPDATE woitems SET qtyreqd =  '". $_POST['OutputQty' . $i] . "',
+  			} elseif (isset($_POST['HasWOSerialNos'.$i]) and $_POST['HasWOSerialNos'.$i]==false) {
+				$sql[] = "UPDATE woitems SET qtyreqd =  '". $_POST['OutputQty' . $i] . "',
 												 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."'
 								  WHERE wo='" . $_POST['WO'] . "'
 								  AND stockid='" . $_POST['OutputItem'.$i] . "'";
-				}
+			}
 		}
 
 		//run the SQL from either of the above possibilites
@@ -479,7 +479,7 @@ if (!isset($_POST['RequiredBy'])){
 }
 
 echo '<tr><td class="label">' . _('Required By') . ':</td>
-		  <td><input type="textbox" name="RequiredBy"  size=12 maxlength=12 value="' . $_POST['RequiredBy'] .
+		  <td><input type="text" name="RequiredBy"  size=12 maxlength=12 value="' . $_POST['RequiredBy'] .
 			'" class="date" alt="'.$_SESSION['DefaultDateFormat'].'"></td></tr>';
 
 if (isset($WOResult)){

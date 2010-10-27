@@ -153,7 +153,12 @@ dA=dS.split(".");
 else
 dA=dS.split("/");
 switch (dF){
-case "d/m/Y","d.m.Y":
+case "d/m/Y":
+d=parseInt(dA[0],10);
+m=parseInt(dA[1],10)-1;
+y=parseInt(dA[2],10);
+break;
+case "d.m.Y":
 d=parseInt(dA[0],10);
 m=parseInt(dA[1],10)-1;
 y=parseInt(dA[2],10);
