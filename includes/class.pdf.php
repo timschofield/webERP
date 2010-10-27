@@ -247,7 +247,7 @@ class Cpdf extends TCPDF {
 
 		//some special characters are html encoded
 		//this code serves to make them appear human readable in pdf file
-		$txt = html_entity_decode($txt, ENT_QUOTES, UTF-8);
+		$txt = html_entity_decode($txt, ENT_QUOTES, 'UTF-8');
 
 		$this->x = $xb;
 		$this->y = $this->h - $yb - $h;
