@@ -7,6 +7,9 @@ include('includes/session.inc');
 $title = _('Maintenance Of Petty Cash Tabs');
 include('includes/header.inc');
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
+	. '" alt="">' . ' ' . $title . '</p>';
+
 if (isset($_POST['SelectedTab'])){
 	$SelectedTab = strtoupper($_POST['SelectedTab']);
 } elseif (isset($_GET['SelectedTab'])){
@@ -52,7 +55,7 @@ if (isset($_POST['submit'])) {
 			authorizer = '" . $_POST['SelectAuthorizer'] . "',
 			glaccountassignment = '" . $_POST['glaccountcash'] . "',
 			glaccountpcash = '" . $_POST['glaccountpcashtab'] . "'
-			WHERE tabcode = '$SelectedTab'";
+			WHERE tabcode = '".$SelectedTab."'";
 
 		$msg = _('The Tabs Of Code') . ' ' . $SelectedTab . ' ' .  _('has been updated');
 	} elseif ( $InputError !=1 ) {
@@ -115,7 +118,7 @@ if (isset($_POST['submit'])) {
 
 } elseif ( isset($_GET['delete']) ) {
 
-			$sql="DELETE FROM pctabs WHERE tabcode='$SelectedTab'";
+			$sql="DELETE FROM pctabs WHERE tabcode='".$SelectedTab."'";
 			$ErrMsg = _('The Tab record could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
 			prnMsg(_('Tab type') .  ' ' . $SelectedTab  . ' ' . _('has been deleted') ,'success');
@@ -136,7 +139,7 @@ or deletion of the records*/
 		ORDER BY tabcode';
 	$result = DB_query($sql,$db);
 
-	echo '<br><table BORDER=1>';
+	echo '<br><table class=selection>';
 	echo "<tr>
 		<th>" . _('Tab Code') . "</th>
 		<th>" . _('User Name') . "</th>
@@ -209,14 +212,13 @@ if (!isset($_GET['delete'])) {
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p><table border=1>'; //Main table
-	echo '<td><table>'; // First column
+	echo '<p><table class=selection>'; //Main table
 
 
 	if ( isset($SelectedTab) AND $SelectedTab!='' ) {
 
 		$sql = "SELECT * FROM pctabs
-				WHERE tabcode='$SelectedTab'";
+				WHERE tabcode='".$SelectedTab."'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -233,7 +235,7 @@ if (!isset($_GET['delete'])) {
 
 		echo "<input type=hidden name='SelectedTab' VALUE=" . $SelectedTab . ">";
 		echo "<input type=hidden name='tabcode' VALUE=" . $_POST['tabcode']. ">";
-		echo "<table> <tr><td>" . _('Tabcode') . ":</td><td>";
+		echo "<table class=selection> <tr><td>" . _('Tabcode') . ":</td><td>";
 
 		// We dont allow the user to change an existing type code
 
@@ -242,7 +244,7 @@ if (!isset($_GET['delete'])) {
 	} else 	{
 
 		// This is a new type so the user may volunteer a type code
-		echo "<table><tr><td>" . _('Tabcode') . ":</td><td><input type='Text'
+		echo "<table class=selection><tr><td>" . _('Tabcode') . ":</td><td><input type='Text'
 				" . (in_array('TypeTabCode',$Errors) ? 'class="inputerror"' : '' ) ." name='tabcode'></td></tr>";
 
 	}
@@ -379,8 +381,6 @@ if (!isset($_GET['delete'])) {
 	} //end while loop
 
 	echo '</select></td></tr>';
-
-   	echo '</table>'; // close table in first column
    	echo '</td></tr></table>'; // close main table
 
 	echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
