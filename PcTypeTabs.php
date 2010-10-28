@@ -7,6 +7,9 @@ include('includes/session.inc');
 $title = _('Maintenance Of Petty Cash Type of Tabs');
 include('includes/header.inc');
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
+	. '" alt="">' . ' ' . $title . '</p>';
+
 if (isset($_POST['SelectedTab'])){
 	$SelectedTab = strtoupper($_POST['SelectedTab']);
 } elseif (isset($_GET['SelectedTab'])){
@@ -51,7 +54,7 @@ if (isset($_POST['submit'])) {
 
 		$sql = "UPDATE pctypetabs
 			SET typetabdescription = '" . $_POST['typetabdescription'] . "'
-			WHERE typetabcode = '$SelectedTab'";
+			WHERE typetabcode = '".$SelectedTab."'";
 
 		$msg = _('The Tabs type') . ' ' . $SelectedTab . ' ' .  _('has been updated');
 	} elseif ( $InputError !=1 ) {
@@ -99,7 +102,7 @@ if (isset($_POST['submit'])) {
 
 	$sqlpctabexpenses= "SELECT COUNT(*)
 		FROM pctabexpenses
-		WHERE typetabcode='$SelectedTab'";
+		WHERE typetabcode='".$SelectedTab."'";
 
 	$ErrMsg = _('The number of tabs using this Tab type could not be retrieved');
 	$resultpctabexpenses = DB_query($sqlpctabexpenses,$db,$ErrMsg);
@@ -108,14 +111,13 @@ if (isset($_POST['submit'])) {
 
 	$sqlpctabs= "SELECT COUNT(*)
 		FROM pctabs
-		WHERE typetabcode='$SelectedTab'";
+		WHERE typetabcode='".$SelectedTab."'";
 
 	$ErrMsg = _('The number of tabs using this Tab type could not be retrieved');
 	$resultpctabs = DB_query($sqlpctabs,$db,$ErrMsg);
 
 	$myrowpctabs = DB_fetch_row($resultpctabs);
 	if ($myrowpctabexpenses[0]>0 or $myrowpctabs[0]>0) {
-		echo '<br>';
 		prnMsg(_('Cannot delete this tab type because tabs have been created using this tab type'),'error');
 		echo '<br>';
 		echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
@@ -126,7 +128,7 @@ if (isset($_POST['submit'])) {
 		exit;
 	} else {
 
-			$sql="DELETE FROM pctypetabs WHERE typetabcode='$SelectedTab'";
+			$sql="DELETE FROM pctypetabs WHERE typetabcode='".$SelectedTab."'";
 			$ErrMsg = _('The Tab Type record could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
 			prnMsg(_('Tab type') .  ' ' . $SelectedTab  . ' ' . _('has been deleted') ,'success');
@@ -147,7 +149,7 @@ or deletion of the records*/
 	$sql = 'SELECT * FROM pctypetabs';
 	$result = DB_query($sql,$db);
 
-	echo '<br><table BORDER=1>';
+	echo '<table class=selection>';
 	echo "<tr>
 		<th>" . _('Type Of Tab') . "</th>
 		<th>" . _('Description') . "</th>
@@ -187,9 +189,7 @@ if (! isset($_GET['delete'])) {
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p><table border=1>'; //Main table
-	echo '<td><table>'; // First column
-
+	echo '<p><table class=selection>'; //Main table
 
 	if ( isset($SelectedTab) AND $SelectedTab!='' )
 	{
@@ -197,7 +197,7 @@ if (! isset($_GET['delete'])) {
 		$sql = "SELECT typetabcode,
 						typetabdescription
 				FROM pctypetabs
-				WHERE typetabcode='$SelectedTab'";
+				WHERE typetabcode='".$SelectedTab."'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -217,7 +217,7 @@ if (! isset($_GET['delete'])) {
 
 		// This is a new type so the user may volunteer a type code
 
-		echo "<table><tr><td>" . _('Code Of Type Of Tab') . ":</td><td><input type='Text'
+		echo "<table class=selection><tr><td>" . _('Code Of Type Of Tab') . ":</td><td><input type='Text'
 				" . (in_array('TypeTabCode',$Errors) ? 'class="inputerror"' : '' ) ." name='typetabcode'></td></tr>";
 
 	}
@@ -227,7 +227,6 @@ if (! isset($_GET['delete'])) {
 	}
 	echo "<tr><td>" . _('Description Of Type of Tab') . ":</td><td><input type='Text' name='typetabdescription' size=50 maxlength=49 value='" . $_POST['typetabdescription'] . "'></td></tr>";
 
-	echo '</table>'; // close table in first column
 	echo '</td></tr></table>'; // close main table
 
 	echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
