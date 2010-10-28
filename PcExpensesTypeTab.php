@@ -7,6 +7,9 @@ include('includes/session.inc');
 $title = _('Maintenance Of Petty Cash Expenses For a Type Tab');
 include('includes/header.inc');
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
+	. '" alt="">' . ' ' . $title . '</p>';
+
 if (isset($_POST['SelectedType'])){
 	$SelectedType = strtoupper($_POST['SelectedType']);
 } elseif (isset($_GET['SelectedType'])){
@@ -73,8 +76,8 @@ if (isset($_POST['submit'])) {
 
 
 			$sql="DELETE FROM pctabexpenses
-				WHERE typetabcode='$SelectedTabs'
-				AND codeexpense='$SelectedType'";
+				WHERE typetabcode='".$SelectedTabs."'
+				AND codeexpense='".$SelectedType."'";
 			$ErrMsg = _('The Tab Type record could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
 			prnMsg(_('Expense code').' '. $SelectedType .' '. _('for type of tab').' '. $SelectedTabs .' '. _('has been deleted') ,'success');
@@ -92,8 +95,7 @@ links to delete or edit each. These will call the same page again and allow upda
 or deletion of the records*/
 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p><table border=1>'; //Main table
-echo '<td><table>'; // First column
+echo '<table class=selection>'; //Main table
 
 echo '<tr><td>' . _('Select Type of Tab') . ":</td><td><select name='SelectedTabs'>";
 
@@ -132,12 +134,12 @@ if (isset($_POST['process'])OR isset($SelectedTabs)) {
 	$sql = "SELECT pctabexpenses.codeexpense, pcexpenses.description
 			FROM pctabexpenses,pcexpenses
 			WHERE pctabexpenses.codeexpense=pcexpenses.codeexpense
-				AND pctabexpenses.typetabcode='$SelectedTabs'
+				AND pctabexpenses.typetabcode='".$SelectedTabs."'
 			ORDER BY pctabexpenses.codeexpense ASC";
 
 	$result = DB_query($sql,$db);
 
-	echo '<br><table BORDER=1>';
+	echo '<table class=selection>';
 	echo "<tr>
 		<th>" . _('Expense Code') . "</th>
 		<th>" . _('Description') . "</th>
@@ -173,8 +175,7 @@ while ($myrow = DB_fetch_row($result)) {
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p><table border=1>'; //Main table
-	echo '<td><table>'; // First column
+	echo '<br /><table  class=selection>'; //Main table
 
 
 
@@ -201,7 +202,6 @@ while ($myrow = DB_fetch_row($result)) {
 
 	echo "<input type=hidden name='SelectedTabs' VALUE=" . $SelectedTabs . ">";
 
-   	echo '</table>'; // close table in first column
    	echo '</td></tr></table>'; // close main table
 
 	echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
