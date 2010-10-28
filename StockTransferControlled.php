@@ -13,6 +13,8 @@ $title = _('Transfer Controlled Items');
 
 include('includes/header.inc');
 
+echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
+	'" alt=""><b>' . $title . '</p>';
 
 if (!isset($_SESSION['Transfer'])) {
 	/* This page can only be called when a stock Transfer is pending */
@@ -56,7 +58,7 @@ echo '<div class="centre">';
 if (isset($TransferItem)){
 
 	echo _('Transfer Items is set equal to') . ' ' . $TransferItem;
-	
+
 	echo '<br><a href="'.$rootpath.'/StockLocTransferReceive.php?'  . SID . '&StockID='.$LineItem->StockID.'">'._('Back To Transfer Screen').'</a>';
 } else {
 	echo '<br><a href="'.$rootpath.'/StockTransfers.php?'  . SID. '&StockID='.$LineItem->StockID. '">'._('Back To Transfer Screen').'</a>';

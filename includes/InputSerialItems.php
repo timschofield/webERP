@@ -49,10 +49,10 @@ $invalid_imports = 0;
 $valid = true;
 
 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" enctype="multipart/form-data" >';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<input type=hidden name="LineNo" value="' . $LineNo . '">';
 echo '<input type=hidden name="StockID" value="'. $StockID. '">';
-echo '<table border=1><tr><td>';
+echo '<table class=selection><tr><td>';
 echo '<input type=radio name=EntryType onClick="submit();" ';
 if ($_POST['EntryType']=='KEYED') {
 	echo ' checked ';
@@ -100,7 +100,6 @@ if ($LineItem->Serialised==1){
 }
 
 echo $EditLink . $RemoveLink;
-echo '<table><tr><td>';
 if ($_POST['EntryType'] == 'FILE'){
 	include('includes/InputSerialItemsFile.php');
 } elseif ($_POST['EntryType'] == 'SEQUENCE'){
@@ -108,5 +107,4 @@ if ($_POST['EntryType'] == 'FILE'){
 } else { /*KEYED or BARCODE */
 	include('includes/InputSerialItemsKeyed.php');
 }
-echo '</td></tr></table>';
 ?>

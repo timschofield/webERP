@@ -9,7 +9,7 @@
 if ( isset($_POST['AddBatches']) && $_POST['AddBatches']!='') {
 
 	for ($i=0;$i < 10;$i++){
-		if(strlen($_POST['SerialNo' . $i])>0){
+		if(isset($_POST['SerialNo' . $i]) and strlen($_POST['SerialNo' . $i])>0){
 			if ($ItemMustExist){
 				$ExistingBundleQty = ValidBundleRef($StockID, $LocationOut, $_POST['SerialNo' . $i]);
 				if ($ExistingBundleQty >0 or ($ExistingBundleQty==1 and $IsCredit=true)){

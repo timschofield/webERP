@@ -44,11 +44,11 @@ if(isset($_POST['ProcessTransfer'])){
 			prnMsg( _('The Quantity entered plus the Quantity Previously Received can not be greater than the Total Quantity shipped for').' '. $TrfLine->StockID , 'error');
 			$InputError = True;
 		}
-                if (isset($_POST['CancelBalance' . $i]) and $_POST['CancelBalance' . $i]==1){
-                    $_SESSION['Transfer']->TransferItem[$i]->CancelBalance=1;
-                } else {
-                     $_SESSION['Transfer']->TransferItem[$i]->CancelBalance=0;
-                }
+				if (isset($_POST['CancelBalance' . $i]) and $_POST['CancelBalance' . $i]==1){
+					$_SESSION['Transfer']->TransferItem[$i]->CancelBalance=1;
+				} else {
+					 $_SESSION['Transfer']->TransferItem[$i]->CancelBalance=0;
+				}
 		$TotalQuantity += $TrfLine->Quantity;
 		$i++;
 	} /*end loop to validate and update the SESSION['Transfer'] data */
@@ -454,20 +454,26 @@ if (isset($_SESSION['Transfer'])){
 		if (isset($_POST['Qty' . $i]) and is_numeric($_POST['Qty' . $i])){
 			$_SESSION['Transfer']->TransferItem[$i]->Quantity= $_POST['Qty' . $i];
 			$Qty = $_POST['Qty' . $i];
+		} else if ($TrfLine->Controlled==1) {
+			if (sizeOf($TrfLine->SerialItems)==0) {
+				$Qty = 0;
+			} else {
+				$Qty = $TrfLine->Quantity;
+			}
 		} else {
 			$Qty = $TrfLine->Quantity;
 		}
-                echo '<td class=number>' . number_format($TrfLine->PrevRecvQty, $TrfLine->DecimalPlaces) . '</td>';
+		echo '<td class=number>' . number_format($TrfLine->PrevRecvQty, $TrfLine->DecimalPlaces) . '</td>';
 
 		if ($TrfLine->Controlled==1){
-			echo '<td><input type=hidden name="Qty' . $i . '" VALUE="' . $Qty . '"><a href="' . $rootpath .'/StockTransferControlled.php?' . SID . '&TransferItem=' . $i . '">' . $Qty . '</a></td>';
+			echo '<td class=number><input type=hidden name="Qty' . $i . '" VALUE="' . $Qty . '"><a href="' . $rootpath .'/StockTransferControlled.php?' . SID . '&TransferItem=' . $i . '">' . $Qty . '</a></td>';
 		} else {
-			echo '<td><input type=TEXT class="number" name="Qty' . $i . '" maxlength=10 class="number" size=10 VALUE="' . $Qty . '"></td>';
+			echo '<td><input type=text class="number" name="Qty' . $i . '" maxlength=10 class="number" size=auto VALUE="' . $Qty . '"></td>';
 		}
 
 		echo '<td>' . $TrfLine->PartUnit . '</td>';
 
-        echo '<td><input type="checkbox" name="CancelBalance' . $i . '" value=1></td>';
+		echo '<td><input type="checkbox" name="CancelBalance' . $i . '" value=1></td>';
 
 
 		if ($TrfLine->Controlled==1){

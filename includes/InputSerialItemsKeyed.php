@@ -21,7 +21,7 @@ if (isset($_GET['LineNo'])){
 
 /*Display the batches already entered with quantities if not serialised */
 
-echo '<table><tr><td valign=top><table>';
+echo '<table class=selection><tr><td valign=top><table class=selection>';
 echo $tableheader;
 
 $TotalQuantity = 0; /*Variable to accumulate total quantity received */
@@ -72,7 +72,7 @@ then the multi select box for selection of existing bundle/serial nos for dispat
 //echo '<TABLE><TR><TD valign=TOP>';
 
 /*in the first column add a table for the input of newies */
-echo '<table>';
+echo '<table class=selection>';
 echo $tableheader;
 
 
@@ -125,7 +125,7 @@ for ($i=0;$i < 10;$i++){
 }
 
 echo '</table>';
-echo '<br><input type=submit name="AddBatches" value="'. _('Enter'). '"><br>';
+echo '<br><div class=centre><input type=submit name="AddBatches" value="'. _('Enter'). '"></div>';
 echo '</form></td><td valign=top>';
 if ($ShowExisting){
 	include('includes/InputSerialItemsExisting.php');
