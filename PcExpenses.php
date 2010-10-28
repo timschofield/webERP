@@ -7,6 +7,9 @@ include('includes/session.inc');
 $title = _('Maintenance Of Petty Cash Of Expenses');
 include('includes/header.inc');
 
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
+	. '" alt="">' . ' ' . $title . '</p>';
+
 if (isset($_POST['SelectedExpense'])){
 	$SelectedExpense = strtoupper($_POST['SelectedExpense']);
 } elseif (isset($_GET['SelectedExpense'])){
@@ -140,7 +143,7 @@ or deletion of the records*/
 			FROM pcexpenses';
 	$result = DB_query($sql,$db);
 
-	echo '<br><table BORDER=1>';
+	echo '<table class=selection>';
 	echo "<tr>
 		<th>" . _('Code Of Expense') . "</th>
 		<th>" . _('Description') . "</th>
@@ -193,9 +196,7 @@ if (! isset($_GET['delete'])) {
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p><table border=1>'; //Main table
-	echo '<td><table>'; // First column
-
+	echo '<p><table class=selection>'; //Main table
 
 	// The user wish to EDIT an existing type
 	if ( isset($SelectedExpense) AND $SelectedExpense!='' )
@@ -216,7 +217,7 @@ if (! isset($_GET['delete'])) {
 
 		echo "<input type=hidden name='SelectedExpense' VALUE=" . $SelectedExpense . ">";
 		echo "<input type=hidden name='codeexpense' VALUE=" . $_POST['codeexpense']. ">";
-		echo "<table> <tr><td>" . _('Code Of Expense') . ":</td><td>";
+		echo "<table class=selection> <tr><td>" . _('Code Of Expense') . ":</td><td>";
 
 		// We dont allow the user to change an existing type code
 
@@ -226,7 +227,7 @@ if (! isset($_GET['delete'])) {
 
 		// This is a new type so the user may volunteer a type code
 
-		echo "<table><tr><td>" . _('Code Of Expense') . ":</td><td><input type='Text'
+		echo "<table class=selection><tr><td>" . _('Code Of Expense') . ":</td><td><input type='Text'
 				" . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) ." name='codeexpense'></td></tr>";
 
 	}
@@ -257,7 +258,6 @@ if (! isset($_GET['delete'])) {
 
 	echo '</select></td></tr>';
 
-   	echo '</table>'; // close table in first column
    	echo '</td></tr></table>'; // close main table
 
 	echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
