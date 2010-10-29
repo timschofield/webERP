@@ -147,7 +147,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 	}
 	if ($_POST['GLManualCode'] != '' AND is_numeric($_POST['GLManualCode'])){
 				// If a manual code was entered need to check it exists and isnt a bank account
-	$AllowThisPosting = true; //by default
+		$AllowThisPosting = true; //by default
 		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1){
 			if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' AND $_POST['GLManualCode'] == $_SESSION['CompanyRecord']['debtorsact']){
 				prnMsg(_('GL Journals involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration'),'warn');
@@ -188,6 +188,10 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 				prnMsg(_('GL Journals involving the creditors control account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration'),'warn');
 				$AllowThisPosting = false;
 			}
+		}
+		if ($_POST['GLCode'] == '' and $_POST['GLManualCode'] == '') {
+			prnMsg(_('You must select a GL account code'),'info');
+			$AllowThisPosting = false;
 		}
 
 		if (in_array($_POST['GLCode'], $_SESSION['JournalDetail']->BankAccounts)) {
@@ -312,6 +316,7 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 
 	$result=DB_query($sql, $db);
 	echo '<td><select name="GLCode" onChange="return assignComboToInput(this,'.'GLManualCode'.')">';
+	echo '<option value="">' . _('Select a general ledger account code') . '</option>';
 	while ($myrow=DB_fetch_array($result)){
 		if (isset($_POST['tag']) and $_POST['tag']==$myrow['accountcode']){
 			echo '<option selected value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'].' - ' .$myrow['accountname'];
