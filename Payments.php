@@ -30,6 +30,13 @@ if (!isset($_SESSION['PaymentDetail'])){
 	$_SESSION['PaymentDetail']->GLItemCounter = 1;
 }
 
+if ((isset($_POST['UpdateHeader']) and $_POST['BankAccount']=='') or (isset($_POST['Process']) and $_POST['BankAccount']=='')) {
+	prnMsg(_('A bank account must be selected to make this payment from'), 'warn');
+	$BankAccountEmpty=TRUE;
+} else {
+	$BankAccountEmpty=FALSE;
+}
+
 //note this is already linked from this page
 //echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><br>';
 
@@ -218,6 +225,12 @@ if (isset($_POST['CommitBatch'])){
 		exit;
 	}
 
+	if ($_POST['BankAccount']=='') {
+		prnMsg( _('No bank account has been selected so this payment cannot be processed'),'warn');
+		include('includes/footer.inc');
+		exit;
+	}
+
 	/*Make an array of the defined bank accounts */
 	$SQL = 'SELECT bankaccounts.accountcode
 			FROM bankaccounts,
@@ -246,9 +259,9 @@ if (isset($_POST['CommitBatch'])){
 		echo '<form method=post action="' . $_SERVER['PHP_SELF'] . '">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo _('Has the cheque been printed') . '?<br><br>';
-		echo '<input type="hidden" name="CommitBatch" VALUE="' . $_POST['CommitBatch'] . '">';
-		echo '<input type="submit" name="ChequePrinted" VALUE="' . _('Yes / Continue') . '">&nbsp;&nbsp;';
-		echo '<input type="submit" name="PaymentCancelled" VALUE="' . _('No / Cancel Payment') . '">';
+		echo '<input type="hidden" name="CommitBatch" value="' . $_POST['CommitBatch'] . '">';
+		echo '<input type="submit" name="ChequePrinted" value="' . _('Yes / Continue') . '">&nbsp;&nbsp;';
+		echo '<input type="submit" name="PaymentCancelled" value="' . _('No / Cancel Payment') . '">';
 	} else {
 
 		//Start a transaction to do the whole lot inside
@@ -280,7 +293,7 @@ if (isset($_POST['CommitBatch'])){
 								amount,
 								chequeno,
 								tag) ';
-				 	$SQL= $SQL . "VALUES (1,
+				 	$SQL= $SQL . "valueS (1,
 						'" . $TransNo . "',
 						'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 						'" . $PeriodNo . "',
@@ -360,7 +373,7 @@ if (isset($_POST['CommitBatch'])){
 								banktranstype,
 								amount,
 								currcode)
-						VALUES ('" . $ReceiptTransNo . "',
+						valueS ('" . $ReceiptTransNo . "',
 							2,
 							'" . $PaymentItem->GLCode . "',
 							'" . _('Act Transfer From ') . $_SESSION['PaymentDetail']->Account . ' - ' . $PaymentItem->Narrative . "',
@@ -394,7 +407,7 @@ if (isset($_POST['CommitBatch'])){
 						rate,
 						ovamount,
 						transtext) ";
-			$SQL = $SQL . "VALUES ('" . $TransNo . "',
+			$SQL = $SQL . "valueS ('" . $TransNo . "',
 					22,
 					'" . $_SESSION['PaymentDetail']->SupplierID . "',
 					'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
@@ -433,7 +446,7 @@ if (isset($_POST['CommitBatch'])){
 							account,
 							narrative,
 							amount) ";
-				$SQL=$SQL . "VALUES (
+				$SQL=$SQL . "valueS (
 						22,
 						'" . $TransNo . "',
 						'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
@@ -455,7 +468,7 @@ if (isset($_POST['CommitBatch'])){
 								account,
 								narrative,
 								amount) ";
-					$SQL=$SQL . "VALUES (22,
+					$SQL=$SQL . "valueS (22,
 						'" . $TransNo . "',
 						'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 						'" . $PeriodNo . "',
@@ -481,7 +494,7 @@ if (isset($_POST['CommitBatch'])){
 							account,
 							narrative,
 							amount) ";
-				$SQL = $SQL . "VALUES ('" . $Transtype . "',
+				$SQL = $SQL . "valueS ('" . $Transtype . "',
 						'" . $TransNo . "',
 						'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 						'" . $PeriodNo . "',
@@ -509,7 +522,7 @@ if (isset($_POST['CommitBatch'])){
 					banktranstype,
 					amount,
 					currcode) ";
-			$SQL= $SQL . "VALUES ('" . $TransNo . "',
+			$SQL= $SQL . "valueS ('" . $TransNo . "',
 				'" . $Transtype . "',
 				'" . $_SESSION['PaymentDetail']->Account . "',
 				'" . $_SESSION['PaymentDetail']->Narrative . "',
@@ -536,7 +549,7 @@ if (isset($_POST['CommitBatch'])){
 					banktranstype,
 					amount,
 					currcode) ";
-				$SQL= $SQL . "VALUES ('" . $TransNo . "',
+				$SQL= $SQL . "valueS ('" . $TransNo . "',
 					'" . $Transtype . "',
 					'" . $_SESSION['PaymentDetail']->Account . "',
 					'" . $_SESSION['PaymentDetail']->Narrative . "',
@@ -592,12 +605,12 @@ if (isset($_POST['CommitBatch'])){
 } elseif (isset($_GET['Delete'])){
   /* User hit delete the receipt entry from the batch */
 	$_SESSION['PaymentDetail']->Remove_GLItem($_GET['Delete']);
-} elseif (isset($_POST['Process'])){ //user hit submit a new GL Analysis line into the payment
+} elseif (isset($_POST['Process']) and !$BankAccountEmpty){ //user hit submit a new GL Analysis line into the payment
 
 	$ChequeNoSQL='select account from gltrans where chequeno="'.$_POST['cheque'].'"';
 	$ChequeNoResult=DB_query($ChequeNoSQL, $db);
 
-	if ($_POST['GLManualCode']!="" AND is_numeric($_POST['GLManualCode'])){
+	if (is_numeric($_POST['GLManualCode'])){
 
 		$SQL = "select accountname
 			FROM chartmaster
@@ -618,9 +631,12 @@ if (isset($_POST['CommitBatch'])){
 								$myrow['accountname'],
 								$_POST['tag'],
 								$_POST['cheque']);
+			unset($_POST['GLManualCode']);
 		}
 	} else if (DB_num_rows($ChequeNoResult)!=0 and $_POST['cheque']!=''){
 		prnMsg( _('The cheque number has already been used') . ' - ' . _('This GL analysis item could not be added'),'error');
+	} else if ($_POST['GLCode'] == '') {
+			prnMsg( _('No General Ledger code has been chosen') . ' - ' . _('so this GL analysis item could not be added'),'warn');
 	} else {
 		$SQL = "select accountname FROM chartmaster WHERE accountcode='" . $_POST['GLCode'] . "'";
 		$Result=DB_query($SQL,$db);
@@ -721,15 +737,13 @@ if (DB_num_rows($AccountsResults)==0){
 	include('includes/footer.inc');
 	exit;
 } else {
+	echo '<option value=""></option>';
 	while ($myrow=DB_fetch_array($AccountsResults)){
 	/*list the bank account names */
-		if (!isset($_POST['BankAccount']) AND $myrow['currcode']==$_SESSION['CompanyRecord']['currencydefault']){
-			$_POST['BankAccount']=$myrow['accountcode'];
-		}
-		if ($_POST['BankAccount']==$myrow['accountcode']){
-			echo '<option selectED VALUE="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . ' - ' . $myrow['currcode'];
+		if (isset($_POST['BankAccount']) and $_POST['BankAccount']==$myrow['accountcode']){
+			echo '<option selected value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . ' - ' . $myrow['currcode'];
 		} else {
-			echo '<option VALUE="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . ' - ' . $myrow['currcode'];
+			echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . ' - ' . $myrow['currcode'];
 		}
 	}
 	echo '</select></td></tr>';
@@ -751,11 +765,11 @@ if ($_SESSION['PaymentDetail']->SupplierID==''){
 		prnMsg( _('No currencies are defined yet. Payments cannot be entered until a currency is defined'),'error');
 	} else {
 		while ($myrow=DB_fetch_array($result)){
-		if ($_SESSION['PaymentDetail']->Currency==$myrow['currabrev']){
-			echo '<option selected value=' . $myrow['currabrev'] . '>' . $myrow['currency'];
-		} else {
-			echo '<option value=' . $myrow['currabrev'] . '>' . $myrow['currency'];
-		}
+			if ($_SESSION['PaymentDetail']->Currency==$myrow['currabrev']){
+				echo '<option selected value=' . $myrow['currabrev'] . '>' . $myrow['currency'];
+			} else {
+				echo '<option value=' . $myrow['currabrev'] . '>' . $myrow['currency'];
+			}
 		}
 		echo '</select></td><td><i>' . _('The transaction currency does not need to be the same as the bank account currency') . '</i></td></tr>';
 	}
@@ -856,7 +870,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 		ORDER BY tagref';
 
 	$result=DB_query($SQL,$db);
-	echo '<option value=0>0 - None';
+	echo '<option value=0></option';
 	while ($myrow=DB_fetch_array($result)){
 		if (isset($_POST['tag']) and $_POST['tag']==$myrow["tagref"]){
 			echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
@@ -872,7 +886,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 		echo '<tr><td>' . _('Enter GL Account Manually') . ':</td>
 			<td><input type=Text class="number" Name="GLManualCode" Maxlength=12 size=12 onChange="return inArray(this, this.value, GLCode.options,'.
 		"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' .
-			' VALUE='. $_POST['GLManualCode'] .'  ></td></tr>';
+			' value='. $_POST['GLManualCode'] .'  ></td></tr>';
 	} else {
 		echo '<tr><td>' . _('Enter GL Account Manually') . ':</td>
 			<td><input type=Text class="number" Name="GLManualCode" Maxlength=12 size=12 onChange="return inArray(this, this.value, GLCode.options,'.
@@ -891,9 +905,10 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 		echo '</select></td></tr>';
 		prnMsg(_('No General ledger accounts have been set up yet') . ' - ' . _('payments cannot be analysed against GL accounts until the GL accounts are set up'),'error');
 	} else {
+		echo '<option value=""></option>';
 		while ($myrow=DB_fetch_array($result)){
 			if (isset($_POST['GLCode']) and $_POST['GLCode']==$myrow["accountcode"]){
-				echo '<option selectED value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
+				echo '<option selected value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
 			} else {
 				echo '<option value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
 			}
@@ -910,7 +925,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	}
 
 	if (isset($_POST['GLAmount'])) {
-		echo '<tr><td>' . _('Amount') . ' (' . $_SESSION['PaymentDetail']->Currency . '):</td><td><input type=Text Name="GLAmount" Maxlength=12 size=12 class=number VALUE=' . $_POST['GLAmount'] . '></td></tr>';
+		echo '<tr><td>' . _('Amount') . ' (' . $_SESSION['PaymentDetail']->Currency . '):</td><td><input type=Text Name="GLAmount" Maxlength=12 size=12 class=number value=' . $_POST['GLAmount'] . '></td></tr>';
 	} else {
 		echo '<tr><td>' . _('Amount') . ' (' . $_SESSION['PaymentDetail']->Currency . '):</td><td><input type=Text Name="GLAmount" Maxlength=12 size=12 class=number></td></tr>';
 	}
