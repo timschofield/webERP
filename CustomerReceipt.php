@@ -26,6 +26,10 @@ if (isset($_POST['Cancel'])) {
 	$Cancel=1;
 }
 
+if ($_GET['Type']=='GL') {
+	$_POST['GLEntry']=1;
+}
+
 if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ //always process a header update unless deleting an item
 
 

@@ -278,7 +278,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/CustomerReceipt.php?' . SID . '&NewReceipt=Yes">' . _('Enter Receipts') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/CustomerReceipt.php?' . SID . '&NewReceipt=Yes&Type=Customer">' . _('Enter Receipts') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -1171,7 +1171,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/CustomerReceipt.php?' . SID . '&NewReceipt=Yes">' . _('Bank Account Receipts Entry') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/CustomerReceipt.php?' . SID . '&NewReceipt=Yes&Type=GL">' . _('Bank Account Receipts Entry') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>
