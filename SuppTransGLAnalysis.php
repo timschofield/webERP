@@ -32,15 +32,20 @@ if (isset($_POST['AddGLCodeToTrans']) and $_POST['AddGLCodeToTrans'] == _('Enter
 		$_POST['GLCode'] = $_POST['AcctSelection'];
 	}
 
+	if ($_POST['GLCode'] == ''){
+		prnMsg( _('You must select a general ledger code from the list below') ,'warn');
+		$InputError = True;
+	}
+
 	$sql = "SELECT accountcode,
 			accountname
 		FROM chartmaster
 		WHERE accountcode='" . $_POST['GLCode'] . "'";
 	$result = DB_query($sql, $db);
-	if (DB_num_rows($result) == 0){
+	if (DB_num_rows($result) == 0 and $_POST['GLCode'] != ''){
 		prnMsg(_('The account code entered is not a valid code') . '. ' . _('This line cannot be added to the transaction') . '.<br>' . _('You can use the selection box to select the account you want'),'error');
 		$InputError = True;
-	} else {
+	} else if ($_POST['GLCode'] != '') {
 		$myrow = DB_fetch_row($result);
 		$GLActName = $myrow[1];
 		if (!is_numeric($_POST['Amount'])){
@@ -146,7 +151,7 @@ echo '<tr>
 $sql = 'SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode';
 
 $result = DB_query($sql, $db);
-
+echo '<option value=""></option>';
 while ($myrow = DB_fetch_array($result)) {
 	if ($myrow['accountcode'] == $_POST['AcctSelection']) {
 		echo '<option selected VALUE=';
