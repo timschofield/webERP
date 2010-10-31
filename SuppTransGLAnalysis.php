@@ -99,6 +99,7 @@ $TableHeader = '<tr>
 							</tr>';
 echo $TableHeader;
 $TotalGLValue=0;
+$i=0;
 
 foreach ( $_SESSION['SuppTrans']->GLCodes as $EnteredGLCode){
 
@@ -143,6 +144,7 @@ if (!isset($_POST['GLCode'])) {
 echo '<tr>
 	<td>' . _('Account Code') . ':</td>
 	<td><input type="text" name="GLCode" size=12 maxlength=11 VALUE="' .  $_POST['GLCode'] . '"></td>
+	<input type="hidden" name="JobRef" value="">
 	</tr>';
 echo '<tr>
 	<td>' . _('Account Selection') . ':<br>(' . _('If you know the code enter it above') . '<br>' . _('otherwise select the account from the list') . ')</td>
