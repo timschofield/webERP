@@ -385,7 +385,7 @@ ALTER TABLE `suppliers` ADD COLUMN `supptype` tinyint(4) NOT NULL DEFAULT 1 AFTE
 
 ALTER TABLE `loctransfers` CHANGE COLUMN `shipqty` `shipqty` double NOT NULL DEFAULT 0.0;
 
-INSERT INTO `config` VALUES ('VersionNumber', '3.12');
+INSERT INTO `config` VALUES ('VersionNumber', '4.00');
 UPDATE `securitytokens` SET `tokenname`='Prices Security' WHERE tokenid=12;
 
 ALTER TABLE `www_users` CHANGE `supplierid` `supplierid` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '';
