@@ -253,7 +253,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 if (!isset($_POST['Select'])) {
 	$_POST['Select'] = "";
 }
-$Debtor=explode('-', $_POST['Select']);
+$Debtor=explode(' ', $_POST['Select']);
 if ($_POST['Select'] != "" or ($_SESSION['CustomerID'] != "" and !isset($_POST['Keywords']) and !isset($_POST['CustCode']) and !isset($_POST['CustType']) and !isset($_POST['CustPhone']))) {
 	if ($_POST['Select'] != "") {
 		$SQL = "SELECT brname, phoneno FROM custbranch WHERE debtorno='" . $Debtor[0] . "'";
@@ -487,7 +487,7 @@ if (isset($result)) {
 				echo '<tr class="OddTableRows">';
 				$k = 1;
 			}
-			echo "<td><font size=1><input type=submit name='Select' value='" . $myrow['debtorno'].'-'.$myrow['branchcode'] . "'></font></td>
+			echo "<td><font size=1><input type=submit name='Select' value='" . $myrow['debtorno'].' '.$myrow['branchcode'] . "'></font></td>
 				<td><font size=1>" . $myrow['name'] . "</font></td>
 				<td><font size=1>" . $myrow['brname'] . "</font></td>
 				<td><font size=1>" . $myrow['contactname'] . "</font></td>
