@@ -514,7 +514,7 @@
 		}
 		$sql='SELECT * FROM debtorsmaster WHERE debtorno="'.$DebtorNumber.'"';
 		$result = DB_Query($sql, $db);
-		$Errors[0] = 0;	    // None found.
+		$Errors[0] = 0; // None found.
 		$Errors[1] = DB_fetch_array($result);
 
 		return $Errors;

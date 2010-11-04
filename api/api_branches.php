@@ -499,14 +499,12 @@
 				$DebtorNumber . '";';
 		$result = api_DB_query($sql, $db);
 		if (DB_error_no($db) != 0)
-			    $Errors[0] = DatabaseUpdateFailed;
-		else
-		{
-		    $Errors[0] = 0;	    // Signal data may follow.
-		    while ($myrow = DB_fetch_row($result))
-		    {
-			$Errors[] = $myrow[0];
-		    }
+			$Errors[0] = DatabaseUpdateFailed;
+		else {
+			$Errors[0] = 0;	    // Signal data may follow.
+			while ($myrow = DB_fetch_row($result)) {
+				$Errors[] = $myrow[0];
+			}
 		}
 
 		return  $Errors;
@@ -528,15 +526,13 @@
 		}
 		$sql='SELECT * FROM custbranch WHERE debtorno="'.$DebtorNumber.'" and branchcode="'.$BranchCode.'"';
 		$result = api_DB_Query($sql, $db);
-		if (DB_error_no($db) != 0 )
+		if (DB_error_no($db) != 0 ) {
 			$Errors[0] = DatabaseUpdateFailed;
-		else
-		{
+		} else {
 			$Errors[0] = 0;
 			if (DB_num_rows($result) > 0)
 			    $Errors += DB_fetch_array($result);
 		}
-
 		return  $Errors;
 	}
 

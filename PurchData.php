@@ -257,7 +257,7 @@ if (isset($_POST['SearchSupplier'])) {
 					suppliers.address1,
 					suppliers.address2,
 					suppliers.address3
-					FROM suppliers WHERE suppliers.suppname " . LIKE ."'" . $SearchString . "'";
+					FROM suppliers WHERE suppliers.suppname " . LIKE ."'%" . $SearchString . "%'";
     } elseif (strlen($_POST['SupplierCode']) > 0) {
         $SQL = "SELECT suppliers.supplierid,
 				suppliers.suppname,
