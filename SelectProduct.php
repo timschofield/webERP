@@ -1,5 +1,5 @@
 <?php
-/* $Id$*/
+/* $Id: SelectProduct.php 3971 2010-09-30 15:27:57Z tim_schofield $*/
 $PageSecurity = 2;
 $PricesSecurity = 12;
 include ('includes/session.inc');
@@ -321,6 +321,7 @@ if ($myrow['mbflag'] == 'B' or ($myrow['mbflag'] == 'M')) {
 				<th width="5%">' . _('Curr') . '</th>
 				<th width="15%">' . _('Eff Date') . '</th>
 				<th width="10%">' . _('Lead Time') . '</th>
+                           <th width="10%">' . _('Min Order Qty') . '</th>
 				<th width="5%">' . _('Prefer') . '</th></tr>';
 	$SuppResult = DB_query("SELECT  suppliers.suppname,
 						suppliers.currcode,
@@ -329,6 +330,7 @@ if ($myrow['mbflag'] == 'B' or ($myrow['mbflag'] == 'M')) {
 						purchdata.effectivefrom,
 						purchdata.leadtime,
 						purchdata.conversionfactor,
+                                         purchdata.MinOrderQty,
 						purchdata.preferred
 					FROM purchdata INNER JOIN suppliers
 					ON purchdata.supplierno=suppliers.supplierid
@@ -339,7 +341,9 @@ if ($myrow['mbflag'] == 'B' or ($myrow['mbflag'] == 'M')) {
 						<td class=select>' . number_format($SuppRow['price'] / $SuppRow['conversionfactor'], 2) . '</td>
 						<td class=select>' . $SuppRow['currcode'] . '</td>
 						<td class=select>' . ConvertSQLDate($SuppRow['effectivefrom']) . '</td>
-						<td class=select>' . $SuppRow['leadtime'] . '</td>';
+                                         <td class=select>' . $SuppRow['leadtime'] . '</td>
+						<td class=select>' . $SuppRow['MinOrderQty'] . '</td>';
+
 		switch ($SuppRow['preferred']) {
 				/* 2008-08-19 ToPu */
 			case 1:
