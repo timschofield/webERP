@@ -80,7 +80,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 					supplierdescription,
 					suppliers_partno,
 					leadtime,
-                                  MinOrderQty,
+					minorderqty,
 					preferred)
 			VALUES ('" . $SupplierID . "',
 				'" . $StockID . "',
@@ -107,7 +107,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 				supplierdescription='" . $_POST['SupplierDescription'] . "',
 				suppliers_partno='" . $_POST['SupplierCode'] . "',
 				leadtime='" . $_POST['LeadTime'] . "',
-                           MinOrderQty='" . $_POST['MinOrderQty'] . "',
+				minorderqty='" . $_POST['MinOrderQty'] . "',
 				preferred='" . $_POST['Preferred'] . "'
 		WHERE purchdata.stockid='".$StockID."'
 		AND purchdata.supplierno='".$SupplierID."'
@@ -156,7 +156,7 @@ if (!isset($_GET['Edit'])) {
 					purchdata.supplierdescription,
 					purchdata.leadtime,
 					purchdata.suppliers_partno,
-                                  purchdata.MinOrderQty,
+					purchdata.minorderqty,
 					purchdata.preferred
 			FROM purchdata INNER JOIN suppliers
 				ON purchdata.supplierno=suppliers.supplierid
@@ -176,7 +176,7 @@ if (!isset($_GET['Edit'])) {
 						<th>' . _('Currency') . '</th>
 						<th>' . _('Effective From') . '</th>
 						<th>' . _('Supplier Unit') . '</th>
-                                         <th>' . _('Min Order Qty') . '</th>
+						<th>' . _('Min Order Qty') . '</th>
 						<th>' . _('Lead Time') . '</th>
 						<th>' . _('Preferred') . '</th>
 					</tr>';
@@ -209,7 +209,7 @@ if (!isset($_GET['Edit'])) {
 			<td>%s</td>
 			<td><a href='%s?%s&StockID=%s&SupplierID=%s&Edit=1&EffectiveFrom=%s'>" . _('Edit') . "</a></td>
 			<td><a href='%s?%s&StockID=%s&SupplierID=%s&Delete=1&EffectiveFrom=%s' onclick=\"return confirm('" . _('Are you sure you wish to delete this suppliers price?') . "');\">" . _('Delete') . "</a></td>
-			</tr>", $myrow['suppname'], number_format($myrow['price'], 3), $myrow['currcode'], ConvertSQLDate($myrow['effectivefrom']), $myrow['unitname'],$myrow['MinOrderQty'], $myrow['leadtime'], $DisplayPreferred, $_SERVER['PHP_SELF'], SID, $StockID, $myrow['supplierno'], $myrow['effectivefrom'], $_SERVER['PHP_SELF'], SID, $StockID, $myrow['supplierno'], $myrow['effectivefrom']);
+			</tr>", $myrow['suppname'], number_format($myrow['price'], 3), $myrow['currcode'], ConvertSQLDate($myrow['effectivefrom']), $myrow['unitname'],$myrow['minorderqty'], $myrow['leadtime'], $DisplayPreferred, $_SERVER['PHP_SELF'], SID, $StockID, $myrow['supplierno'], $myrow['effectivefrom'], $_SERVER['PHP_SELF'], SID, $StockID, $myrow['supplierno'], $myrow['effectivefrom']);
         } //end of while loop
         echo '</table><br/>';
         if ($CountPreferreds > 1) {
@@ -364,7 +364,7 @@ if (!isset($SuppliersResult)) {
 				purchdata.leadtime,
 				purchdata.conversionfactor,
 				purchdata.suppliers_partno,
-                           purchdata.MinOrderQty,
+				purchdata.minorderqty,
 				purchdata.preferred,
 				stockmaster.units
 		FROM purchdata INNER JOIN suppliers
@@ -386,7 +386,7 @@ if (!isset($SuppliersResult)) {
         $_POST['LeadTime'] = $myrow['leadtime'];
         $_POST['ConversionFactor'] = $myrow['conversionfactor'];
         $_POST['Preferred'] = $myrow['preferred'];
-        $_POST['MinOrderQty'] = $myrow['MinOrderQty'];
+        $_POST['MinOrderQty'] = $myrow['minorderqty'];
         $_POST['SupplierCode'] = $myrow['suppliers_partno'];
 		$stockuom=$myrow['units'];
     }
