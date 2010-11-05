@@ -463,7 +463,7 @@ if (!isset($SuppliersResult)) {
     echo '<tr><td>' . _('Supplier Stock Code') . ':</td>
 	<td><input type=text name="SupplierCode" maxlength=15 size=15 VALUE="' . $_POST['SupplierCode'] . '"></td></tr>';
     echo '<tr><td>' . _('MinOrderQty') . ':</td>
-	<td><input type=text name="MinOrderQty" maxlength=15 size=15 VALUE="' . $_POST['MinOrderQty'] . '"></td></tr>';
+	<td><input type=text class=number name="MinOrderQty" maxlength=15 size=15 VALUE="' . $_POST['MinOrderQty'] . '"></td></tr>';
     echo '<tr><td>' . _('Supplier Stock Description') . ':</td>
 	<td><input type=text name="SupplierDescription" maxlength=50 size=51 VALUE="' . $_POST['SupplierDescription'] . '"></td></tr>';
     if (!isset($_POST['LeadTime']) OR $_POST['LeadTime'] == "") {
