@@ -330,7 +330,7 @@ if ($myrow['mbflag'] == 'B' or ($myrow['mbflag'] == 'M')) {
 						purchdata.effectivefrom,
 						purchdata.leadtime,
 						purchdata.conversionfactor,
-                                         purchdata.MinOrderQty,
+						purchdata.minorderqty,
 						purchdata.preferred
 					FROM purchdata INNER JOIN suppliers
 					ON purchdata.supplierno=suppliers.supplierid
@@ -342,7 +342,7 @@ if ($myrow['mbflag'] == 'B' or ($myrow['mbflag'] == 'M')) {
 						<td class=select>' . $SuppRow['currcode'] . '</td>
 						<td class=select>' . ConvertSQLDate($SuppRow['effectivefrom']) . '</td>
                                          <td class=select>' . $SuppRow['leadtime'] . '</td>
-						<td class=select>' . $SuppRow['MinOrderQty'] . '</td>';
+						<td class=select>' . $SuppRow['minorderqty'] . '</td>';
 
 		switch ($SuppRow['preferred']) {
 				/* 2008-08-19 ToPu */
@@ -353,7 +353,8 @@ if ($myrow['mbflag'] == 'B' or ($myrow['mbflag'] == 'M')) {
 				echo '<td class=select>' . _('No') . '</td>';
 			break;
 		}
-		echo '<td class=select><a href="' . $rootpath . '/PO_Header.php?' . SID . '&NewOrder=Yes' . '&SelectedSupplier=' . $SuppRow['supplierid'] . '&StockID=' . $StockID . '&Quantity=1">' . _('Order') . ' </a></td>';
+		echo '<td class=select><a href="' . $rootpath . '/PO_Header.php?' . SID . '&NewOrder=Yes' . '&SelectedSupplier=' .
+			$SuppRow['supplierid'] . '&StockID=' . $StockID . '&Quantity='.$SuppRow['minorderqty'].'">' . _('Order') . ' </a></td>';
 		echo '</tr>';
 	}
 	echo '</tr></table></td>';
@@ -402,7 +403,8 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
 		echo '<br>';
 		$SuppResult = DB_query("SELECT  suppliers.suppname,
 						suppliers.supplierid,
-						purchdata.preferred
+						purchdata.preferred,
+						purchdata.minorderqty
 					FROM purchdata INNER JOIN suppliers
 					ON purchdata.supplierno=suppliers.supplierid
 					WHERE purchdata.stockid = '" . $StockID . "'", $db);
@@ -410,11 +412,12 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
 			/**/
 			//
 			if ($myrow['eoq'] == 0) {
-				$EOQ = 1;
+				$EOQ = $SuppRow['minorderqty'];
 			} else {
 				$EOQ = $myrow['eoq'];
 			}
-			echo '<a href="' . $rootpath . '/PO_Header.php?' . SID . '&NewOrder=Yes' . '&SelectedSupplier=' . $SuppRow['supplierid'] . '&StockID=' . $StockID . '&Quantity=' . $EOQ . '">' . _('Purchase this Item from') . ' ' . $SuppRow['suppname'] . ' (default)</a><br>';
+			echo '<a href="' . $rootpath . '/PO_Header.php?' . SID . '&NewOrder=Yes' . '&SelectedSupplier=' . $SuppRow['supplierid'] .
+				'&StockID=' . $StockID . '&Quantity=' . $EOQ . '">' . _('Purchase this Item from') . ' ' . $SuppRow['suppname'] . ' (default)</a><br>';
 			/**/
 		} /* end of while */
 	} /* end of $myrow['mbflag'] == 'B' */

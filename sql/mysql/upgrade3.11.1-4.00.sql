@@ -263,7 +263,7 @@ INSERT INTO `systypes` VALUES(19, 'Picking List', 0);
 ALTER TABLE `prices` ADD `startdate` DATE NOT NULL DEFAULT '0000-00-00' , ADD `enddate` DATE NOT NULL DEFAULT '9999-12-31';
 ALTER TABLE prices DROP PRIMARY KEY ,
 ADD PRIMARY KEY ( `stockid` , `typeabbrev` , `currabrev` , `debtorno` , `branchcode`, `startdate` , `enddate` ) ;
-
+ALTER TABLE purchdata ADD column minorderqty int(11) NOT NULL default 1;
 UPDATE prices SET startdate='1999-01-01', enddate='';
 
 ALTER TABLE stockcheckfreeze ADD COLUMN stockcheckdate date NOT NULL;
