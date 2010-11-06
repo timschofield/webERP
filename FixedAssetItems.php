@@ -596,7 +596,7 @@ if (!isset($StockID) or $StockID=='') {
 /*If the page was called without $StockID passed to page then assume a new stock item is to be entered show a form with a part Code field other wise the form showing the fields with the existing entries against the part will show for editing with only a hidden StockID field. New is set to flag that the page may have called itself and still be entering a new part, in which case the page needs to know not to go looking up details for an existing part*/
 
 	$New = true;
-	echo '<input type="hidden" name="New" value=">'. "\n";
+	echo '<input type="hidden" name="New" value="">'. "\n";
 //	echo '<input type="hidden" name="StockID" value="'.$StockID.'">'. "\n";
 
 	echo '<tr><td>'. _('Asset Code'). ':</td><td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="StockID" size=21 maxlength=20></td></tr>'. "\n";
