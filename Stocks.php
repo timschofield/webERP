@@ -942,7 +942,10 @@ if (!isset($_POST['CategoryID'])) {
 $sql = "SELECT stkcatpropid,
 				label,
 				controltype,
-				defaultvalue
+				defaultvalue,
+				numericvalue,
+				minimumvalue,
+				maximumvalue
 		FROM stockcatproperties
 		WHERE categoryid ='" . $_POST['CategoryID'] . "'
 		AND reqatsalesorder =0
@@ -976,7 +979,12 @@ while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 				<td>';
 	switch ($PropertyRow['controltype']) {
 	 	case 0; //textbox
-	 		echo '<input type="textbox" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . $PropertyValue . '">';
+	 		if ($PropertyRow['numericvalue']==1) {
+				echo '<input type="textbox" class="number" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . $PropertyValue . '">';
+				echo _('A number between') . ' ' . $PropertyRow['minimumvalue'] . ' ' . _('and') . ' ' . $PropertyRow['maximumvalue'] . ' ' . _('is expected');
+			} else {
+				echo '<input type="textbox" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . $PropertyValue . '">';
+			}
 	 		break;
 	 	case 1; //select box
 	 		$OptionValues = explode(',',$PropertyRow['defaultvalue']);

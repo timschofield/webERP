@@ -53,6 +53,18 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The stock type selected must be one of') . ' "D" - ' . _('Dummy item') . ', "L" - ' . _('Labour stock item') . ', "F" - ' . _('Finished product') . ' ' . _('or') . ' "M" - ' . _('Raw Materials'),'error');
 	}
+	for ($i=0;$i<=$_POST['PropertyCounter'];$i++){
+		if (isset($_POST['PropNumeric' .$i]) and $_POST['PropNumeric' .$i] == true){
+			if (!is_numeric($_POST['PropMinimum' .$i])){
+				$InputError = 1;
+				prnMsg(_('The minimum value is expected to be a numeric value'),'error');
+        	}
+        	if (!is_numeric($_POST['PropMaximum' .$i])){
+				$InputError = 1;
+				prnMsg(_('The maximum value is expected to be a numeric value'),'error');
+        	}
+		}
+	} //check the properties are sensible
 
 	if ($SelectedCategory AND $InputError !=1) {
 
@@ -79,24 +91,38 @@ if (isset($_POST['submit'])) {
         	} else {
         			$_POST['PropReqSO' .$i] =0;
         	}
+        	if (isset($_POST['PropNumeric' .$i]) and $_POST['PropNumeric' .$i] == true){
+        			$_POST['PropNumeric' .$i] =1;
+        	} else {
+        			$_POST['PropNumeric' .$i] =0;
+        	}
         	if ($_POST['PropID' .$i] =='NewProperty' AND strlen($_POST['PropLabel'.$i])>0){
         		$sql = "INSERT INTO stockcatproperties (categoryid,
         												label,
         												controltype,
         												defaultvalue,
+        												minimumvalue,
+        												maximumvalue,
+        												numericvalue,
         												reqatsalesorder)
         									VALUES ('" . $SelectedCategory . "',
         											'" . $_POST['PropLabel' . $i] . "',
         											" . $_POST['PropControlType' . $i] . ",
         											'" . $_POST['PropDefault' .$i] . "',
+        											'" . $_POST['PropMinimum' .$i] . "',
+        											'" . $_POST['PropMaximum' .$i] . "',
+        											'" . $_POST['PropNumeric' .$i] . "',
         											" . $_POST['PropReqSO' .$i] . ')';
         		$ErrMsg = _('Could not insert a new category property for') . $_POST['PropLabel' . $i];
         		$result = DB_query($sql,$db,$ErrMsg);
         	} elseif ($_POST['PropID' .$i] !='NewProperty') { //we could be amending existing properties
         		$sql = "UPDATE stockcatproperties SET label ='" . $_POST['PropLabel' . $i] . "',
-        											  controltype = " . $_POST['PropControlType' . $i] . ",
-        											  defaultvalue = '"	. $_POST['PropDefault' .$i] . "',
-        											  reqatsalesorder = " . $_POST['PropReqSO' .$i] . "
+						        											  controltype = " . $_POST['PropControlType' . $i] . ",
+						        											  defaultvalue = '"	. $_POST['PropDefault' .$i] . "',
+						        											  minimumvalue = '" . $_POST['PropMinimum' .$i] . "',
+						        											  maximumvalue = '" . $_POST['PropMaximum' .$i] . "',
+						        											  numericvalue = '" . $_POST['PropNumeric' .$i] . "',
+						        											  reqatsalesorder = " . $_POST['PropReqSO' .$i] . "
         				WHERE stkcatpropid =" . $_POST['PropID' .$i];
         		$ErrMsg = _('Updated the stock category property for') . ' ' . $_POST['PropLabel' . $i];
         		$result = DB_query($sql,$db,$ErrMsg);
@@ -457,6 +483,9 @@ if (! isset($_GET['delete'])) {
 		$TableHeader = '<tr><th>' . _('Property Label') . '</th>
 						<th>' . _('Control Type') . '</th>
 						<th>' . _('Default Value') . '</th>
+						<th>' . _('Numeric Value') . '</th>
+						<th>' . _('Minimum Value') . '</th>
+						<th>' . _('Maximum Value') . '</th>
 						<th>' . _('Require in SO') . '</th>
 					</tr>';
 		echo $TableHeader;
@@ -490,7 +519,15 @@ if (! isset($_GET['delete'])) {
 
 			echo '</select></td>
 					<td><input type="textbox" name="PropDefault' . $PropertyCounter . '" value="' . $myrow['defaultvalue'] . '"></td>
-					<td align="center"><input type="checkbox" name="PropReqSO' . $PropertyCounter .'"';
+					<td><input type="checkbox" name="PropNumeric' . $PropertyCounter . '"';
+					
+			if ($myrow['numericvalue'] ==1){
+				echo 'checked';
+			} 
+			echo '"></td>
+					<td><input type="textbox" "name="PropMinimum' . $PropertyCounter . '" value="' . $myrow['minimumvalue'] . '"></td>
+						<td><input type="textbox" name="PropMaximum' . $PropertyCounter . '" value="' . $myrow['maximumvalue'] . '"></td>';
+			echo '<td align="center"><input type="checkbox" name="PropReqSO' . $PropertyCounter .'"';
 
 			if ($myrow['reqatsalesorder']==1){
 					echo 'checked';
@@ -511,6 +548,9 @@ if (! isset($_GET['delete'])) {
 		echo '<option value=2>' . _('Check Box') . '</option>';
 		echo '</select></td>
 				<td><input type="textbox" name="PropDefault' . $PropertyCounter . '"></td>
+				<td><input type="checkbox" name="PropNumeric' . $PropertyCounter . '"></td>
+				<td><input type="textbox" "name="PropMinimum' . $PropertyCounter . '"></td>
+				<td><input type="textbox" name="PropMaximum' . $PropertyCounter . '"></td>
 				<td align="center"><input type="checkbox" name="PropReqSO' . $PropertyCounter .'"></td></tr>';
 		echo '</table>';
 		echo '<input type=hidden name="PropertyCounter" value=' . $PropertyCounter . '>';

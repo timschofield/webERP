@@ -99,6 +99,9 @@ if (isset($_POST['submit'])) {
 					'"._('Depreciation Type')."',
 					'1',
 					'"._('Straight Line').","._('Reducing Balance')."',
+					'',
+					'',
+					'0',
 					'0')";
 		$result=DB_query($sql,$db);
 		$sql="INSERT INTO stockcatproperties
@@ -108,6 +111,9 @@ if (isset($_POST['submit'])) {
 					'"._('Annual Depreciation Percentage')."',
 					'0',
 					'5',
+					'100',
+					'0',
+					'1',
 					'0')";
 		$result=DB_query($sql,$db);
 	}
@@ -331,7 +337,7 @@ while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	} else {
 		echo '<option value=';
 	}
-	echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
+	echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')</option>';
 
 } //end while loop
 DB_data_seek($PnLAccountsResult,0);

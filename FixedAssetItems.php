@@ -241,9 +241,9 @@ if (isset($_POST['submit'])) {
 				/*now check that if the item is being changed to a kitset, there are no items on sales orders or purchase orders*/
 				if ($_POST['MBFlag']=='K') {
 					$sql = "SELECT quantity-qtyinvoiced
-						FROM salesorderdetails
-						WHERE stkcode = '" . $StockID . "'
-						AND completed=0";
+										FROM salesorderdetails
+										WHERE stkcode = '" . $StockID . "'
+										AND completed=0";
 
 					$result = DB_query($sql,$db);
 					$ChkSalesOrds = DB_fetch_row($result);
@@ -256,9 +256,9 @@ if (isset($_POST['submit'])) {
 				if ($_POST['MBFlag']=='K' OR $_POST['MBFlag']=='A' OR $_POST['MBFlag']=='D') {
 
 					$sql = "SELECT quantityord-quantityrecd
-						FROM purchorderdetails
-						WHERE itemcode = '" . $StockID . "'
-						AND completed=0";
+										FROM purchorderdetails
+										WHERE itemcode = '" . $StockID . "'
+										AND completed=0";
 
 					$result = DB_query($sql,$db);
 					$ChkPurchOrds = DB_fetch_row($result);
@@ -366,47 +366,47 @@ if (isset($_POST['submit'])) {
 				exit;
 			} else {
 				$sql = "INSERT INTO stockmaster (
-							stockid,
-							description,
-							longdescription,
-							categoryid,
-							units,
-							mbflag,
-							eoq,
-							discontinued,
-							controlled,
-							serialised,
-							perishable,
-							volume,
-							kgs,
-							barcode,
-							discountcategory,
-							taxcatid,
-							decimalplaces,
-							appendfile,
-							shrinkfactor,
-							pansize)
-						VALUES ('" . $StockID . "',
-							'" . $_POST['Description'] . "',
-							'" . $_POST['LongDescription'] . "',
-							'" . $_POST['CategoryID'] . "',
-							'" . $_POST['Units'] . "',
-							'" . $_POST['MBFlag'] . "',
-							'" . $_POST['EOQ'] . "',
-							'" . $_POST['Discontinued'] . "',
-							'" . $_POST['Controlled'] . "',
-							'" . $_POST['Serialised']. "',
-							'" . $_POST['Perishable']. "',
-							'" . $_POST['Volume'] . "',
-							'" . $_POST['KGS'] . "',
-							'" . $_POST['BarCode'] . "',
-							'" . $_POST['DiscountCategory'] . "',
-							'" . $_POST['TaxCat'] . "',
-							'" . $_POST['DecimalPlaces']. "',
-							'" . $_POST['ItemPDF']. "',
-							'" . $_POST['ShrinkFactor'] . "',
-							'" . $_POST['Pansize'] . "'
-							)";
+									stockid,
+									description,
+									longdescription,
+									categoryid,
+									units,
+									mbflag,
+									eoq,
+									discontinued,
+									controlled,
+									serialised,
+									perishable,
+									volume,
+									kgs,
+									barcode,
+									discountcategory,
+									taxcatid,
+									decimalplaces,
+									appendfile,
+									shrinkfactor,
+									pansize)
+								VALUES ('" . $StockID . "',
+									'" . $_POST['Description'] . "',
+									'" . $_POST['LongDescription'] . "',
+									'" . $_POST['CategoryID'] . "',
+									'" . $_POST['Units'] . "',
+									'" . $_POST['MBFlag'] . "',
+									'" . $_POST['EOQ'] . "',
+									'" . $_POST['Discontinued'] . "',
+									'" . $_POST['Controlled'] . "',
+									'" . $_POST['Serialised']. "',
+									'" . $_POST['Perishable']. "',
+									'" . $_POST['Volume'] . "',
+									'" . $_POST['KGS'] . "',
+									'" . $_POST['BarCode'] . "',
+									'" . $_POST['DiscountCategory'] . "',
+									'" . $_POST['TaxCat'] . "',
+									'" . $_POST['DecimalPlaces']. "',
+									'" . $_POST['ItemPDF']. "',
+									'" . $_POST['ShrinkFactor'] . "',
+									'" . $_POST['Pansize'] . "'
+									)";
 
 				$ErrMsg =  _('The item could not be added because');
 				$DbgMsg = _('The SQL that was used to add the item failed was');
@@ -534,7 +534,6 @@ if (isset($_POST['submit'])) {
 				}
 			}
 		}
-
 	}
 	if ($CancelDelete==0) {
 		$result = DB_Txn_Begin($db);
@@ -687,8 +686,7 @@ function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '
 		} else {
 			$curr_val .=  'none';
 		}
-		while (false !== ($file = readdir($handle)))
-		{
+		while (false !== ($file = readdir($handle)))	{
 			$files[] = $file;
 		}
 		closedir($handle);
@@ -867,13 +865,16 @@ if (!isset($_POST['CategoryID'])) {
 }
 echo '<br><table class=selection><tr><th colspan="2">' . _('Depreciation Properties') . '</th></tr>';
 $sql = "SELECT stkcatpropid,
-				label,
-				controltype,
-				defaultvalue
-		FROM stockcatproperties
-		WHERE categoryid ='" . $_POST['CategoryID'] . "'
-		AND reqatsalesorder =0
-		ORDER BY stkcatpropid";
+							label,
+							controltype,
+							defaultvalue,
+							maximumvalue,
+							minimumvalue,
+							numericvalue
+					FROM stockcatproperties
+					WHERE categoryid ='" . $_POST['CategoryID'] . "'
+					AND reqatsalesorder =0
+					ORDER BY stkcatpropid";
 
 $PropertiesResult = DB_query($sql,$db);
 $PropertyCounter = 0;
@@ -882,10 +883,10 @@ $PropertyWidth = array();
 while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 
 	$PropValResult = DB_query("SELECT value FROM
-									stockitemproperties
-									WHERE stockid='" . $StockID . "'
-									AND stkcatpropid ='" . $PropertyRow['stkcatpropid'] . "'",
-								$db);
+																		stockitemproperties
+																		WHERE stockid='" . $StockID . "'
+																		AND stkcatpropid ='" . $PropertyRow['stkcatpropid'] . "'",
+																	$db);
 	$PropValRow = DB_fetch_row($PropValResult);
 	$PropertyValue = $PropValRow[0];
 
@@ -895,7 +896,12 @@ while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 				<td>';
 	switch ($PropertyRow['controltype']) {
 	 	case 0; //textbox
-	 		echo '<input type="textbox" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . $PropertyValue . '">';
+	 		if ($PropertyRow['numericvalue']==1) {
+				echo '<input type="textbox" class="number" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . $PropertyValue . '">';
+				echo _('A number between') . ' ' . $PropertyRow['minimumvalue'] . ' ' . _('and') . ' ' . $PropertyRow['maximumvalue'] . ' ' . _('is expected');
+			} else {
+				echo '<input type="textbox" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . $PropertyValue . '">';
+			}
 	 		break;
 	 	case 1; //select box
 	 		$OptionValues = explode(',',$PropertyRow['defaultvalue']);

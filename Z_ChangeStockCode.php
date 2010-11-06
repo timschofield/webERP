@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_ChangeStockCode.php 3293 2010-01-12 11:02:25Z tim_schofield $*/
+/* $Id$*/
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;

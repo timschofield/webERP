@@ -1,5 +1,5 @@
 <?php
-/* $Id: PricesByCost.php 3566 2010-07-05 13:06:08Z tim_schofield $ */
+/* $Id$ */
 // PricesByCost.php -
 $PageSecurity = 11;
 include ('includes/session.inc');
