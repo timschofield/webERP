@@ -21,7 +21,7 @@ If (isset($_POST['PrintPDF'])) {
 	$wherecategory = " ";
 	$catdescription = " ";
 	if ($_POST['StockCat'] != 'All') {
-	    $wherecategory = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "' ";
+	    $wherecategory = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "' AND stockcategory.stocktype<>'A'";
 		$sql= "SELECT categoryid, categorydescription FROM stockcategory WHERE categoryid='" . $_POST['StockCat'] . "' ";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
@@ -39,7 +39,9 @@ If (isset($_POST['PrintPDF'])) {
 					stockmaster.serialised,
 					stockmaster.controlled
 				FROM locstock,
-					stockmaster,
+					stockmaster
+			LEFT JOIN stockcategory
+			ON stockmaster.categoryid=stockcategory.categoryid,
 					locations
 				WHERE locstock.stockid=stockmaster.stockid
 				AND locstock.loccode=locations.loccode
