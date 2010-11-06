@@ -181,8 +181,9 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	echo '</select></td></tr>';
 
 	$SQL="SELECT categoryid, categorydescription
-	      FROM stockcategory
-		  ORDER BY categorydescription";
+	    FROM stockcategory
+		WHERE stocktype<>'A'
+		ORDER BY categorydescription";
 
 	$result1 = DB_query($SQL,$db);
 
