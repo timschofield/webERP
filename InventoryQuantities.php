@@ -154,7 +154,7 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 	echo "<option value='Multiple'>" . _('Only Parts With Multiple Locations');
 	echo '</select></td></tr>';
 
-	$SQL="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
+	$SQL="SELECT categoryid, categorydescription FROM stockcategory where stocktype<>'A' ORDER BY categorydescription";
 	$result1 = DB_query($SQL,$db);
 	if (DB_num_rows($result1)==0){
 		echo '</table></td></tr>
