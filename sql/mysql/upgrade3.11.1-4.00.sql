@@ -436,4 +436,4 @@ ALTER TABLE `reportfields` CHANGE `fieldname` `fieldname` VARCHAR( 80) CHARACTER
 
 ALTER TABLE `stockcatproperties` ADD `maximumvalue` DOUBLE NOT NULL DEFAULT 999999999 AFTER `defaultvalue` ,
 ADD `minimumvalue` DOUBLE NOT NULL DEFAULT -999999999 AFTER `maximumvalue` ,
-ADD `numericvalue` TINYINT NOT NULL AFTER `minumumvalue` 
+ADD `numericvalue` TINYINT NOT NULL AFTER `minimumvalue`;
