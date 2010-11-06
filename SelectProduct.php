@@ -28,10 +28,11 @@ if (isset($_POST['StockCode'])) {
 	$_POST['StockCode'] = trim(strtoupper($_POST['StockCode']));
 }
 // Always show the search facilities
-$SQL = 'SELECT categoryid,
+$SQL = "SELECT categoryid,
 		categorydescription
 	FROM stockcategory
-	ORDER BY categorydescription';
+	WHERE stocktype<>'A'
+	ORDER BY categorydescription";
 $result1 = DB_query($SQL, $db);
 if (DB_num_rows($result1) == 0) {
 	echo '<p><font size=4 color=red>' . _('Problem Report') . ':</font><br>' . _('There are no stock categories currently defined please use the link below to set them up');
@@ -523,10 +524,13 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					stockmaster.units,
 					stockmaster.mbflag,
 					stockmaster.decimalplaces
-				FROM stockmaster,
+				FROM stockmaster
+				LEFT JOIN stockcategory
+				ON stockmaster.categoryid=stockcategory.categoryid,
 					locstock
 				WHERE stockmaster.stockid=locstock.stockid
 				AND stockmaster.description " . LIKE . " '$SearchString'
+				AND stockcategory.stocktype<>'A'
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.units,
@@ -561,10 +565,13 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					SUM(locstock.quantity) AS qoh,
 					stockmaster.units,
 					stockmaster.decimalplaces
-				FROM stockmaster,
+				FROM stockmaster
+				LEFT JOIN stockcategory
+				ON stockmaster.categoryid=stockcategory.categoryid,
 					locstock
 				WHERE stockmaster.stockid=locstock.stockid
 				AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
+				AND stockcategory.stocktype<>'A'
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.units,
@@ -598,9 +605,12 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					SUM(locstock.quantity) AS qoh,
 					stockmaster.units,
 					stockmaster.decimalplaces
-				FROM stockmaster,
+				FROM stockmaster
+				LEFT JOIN stockcategory
+				ON stockmaster.categoryid=stockcategory.categoryid,
 					locstock
 				WHERE stockmaster.stockid=locstock.stockid
+				AND stockcategory.stocktype<>'A'
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.units,
