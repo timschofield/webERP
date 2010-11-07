@@ -39,12 +39,14 @@ if (isset($_POST['AddShiptChgToInvoice'])){
 	$InputError = False;
 	if ($_POST['ShiptRef'] == ""){
 		$_POST['ShiptRef'] = $_POST['ShiptSelection'];
+	} else {
+		$result = DB_query("SELECT shiptref FROM shipments WHERE shiptref='". $_POST['ShiptRef'] . "'",$db);
+		if (DB_num_rows($result)==0) {
+			prnMsg(_('The shipment entered manually is not a valid shipment reference. If you do not know the shipment reference, select it from the list'),'error');
+			$InputError = True;
+		}
 	}
-	if (!is_numeric($_POST['ShiptRef'])){
-		prnMsg(_('The shipment reference must be numeric') . '. ' . _('This shipment charge cannot be added to the invoice'),'error');
-		$InputError = True;
-	}
-
+	
 	if (!is_numeric($_POST['Amount'])){
 		prnMsg(_('The amount entered is not numeric') . '. ' . _('This shipment charge cannot be added to the invoice'),'error');
 		$InputError = True;
