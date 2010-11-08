@@ -1,5 +1,5 @@
 <?php
-/* $Id$*/
+/* $Id: Z_ImportStocks.php 4043 2010-09-30 16:17:53Z tim_schofield $*/
 /* Script to make stock locations for all parts that do not have stock location records set up*/
 
 $PageSecurity = 15;
@@ -292,9 +292,8 @@ if ($_FILES['userfile']['name']) { //start file processing
 		<br />
 		<br />
 	';
-
-	echo "<form ENCtype='multipart/form-data' action='Z_ImportStocks.php' method=post>"
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo "<form ENCtype='multipart/form-data' action='Z_ImportStocks.php' method=post>";
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '">';
 
 	echo "<input type='hidden' name='MAX_FILE_SIZE' value='1000000'>" .
 			_('Upload file') . ": <input name='userfile' type='file'>
