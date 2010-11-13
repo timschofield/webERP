@@ -1230,7 +1230,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . "/GLProfit_Loss.php?" . SID . '">' . _('Profit and Loss Statement') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/GLProfit_Loss.php?' . SID . '">' . _('Profit and Loss Statement') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -1310,7 +1310,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/SelectAssetType.php?' . SID . '">' . _('Select an Asset') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/SelectAsset.php?' . SID . '">' . _('Select an Asset') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>
