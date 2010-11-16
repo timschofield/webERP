@@ -437,3 +437,36 @@ ALTER TABLE `reportfields` CHANGE `fieldname` `fieldname` VARCHAR( 80) CHARACTER
 ALTER TABLE `stockcatproperties` ADD `maximumvalue` DOUBLE NOT NULL DEFAULT 999999999 AFTER `defaultvalue` ,
 ADD `minimumvalue` DOUBLE NOT NULL DEFAULT -999999999,
 ADD `numericvalue` TINYINT NOT NULL DEFAULT 0 
+
+RENAME TABLE assetmanager to fixedassets;
+ALTER TABLE fixedassets ADD COLUMN `assetcategoryid` varchar(6) NOT NULL DEFAULT '';
+ALTER TABLE fixedassets ADD COLUMN `description` varchar(50) NOT NULL DEFAULT '';
+ALTER TABLE fixedassets ADD COLUMN `longdescription` text NOT NULL;
+ALTER TABLE fixedassets ADD COLUMN `depntype` int NOT NULL DEFAULT 1;
+ALTER TABLE fixedassets ADD COLUMN `depnrate` double NOT NULL;
+
+UPDATE fixedassets INNER JOIN stockmaster ON fixedassets.stockid=stockmaster.stockid SET assetcategoryid=stockmaster.categoryid, fixedassets.description=stockmaster.description, fixedassets.longdescription=stockmaster.longdescription;
+
+CREATE TABLE IF NOT EXISTS `fixedassetcategories` (
+  `categoryid` char(6) NOT NULL DEFAULT '',
+  `categorydescription` char(20) NOT NULL DEFAULT '',
+  `costact` int(11) NOT NULL DEFAULT '0',
+  `depnact` int(11) NOT NULL DEFAULT '0',
+  `disposalact` int(11) NOT NULL DEFAULT '80000',
+  `accumdepnact` int(11) NOT NULL DEFAULT '0',
+  defaultdepnrate double NOT NULL DEFAULT '.2',
+  defaultdepntype int NOT NULL DEFAULT '1'
+  PRIMARY KEY (`categoryid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO fixedassetcategories SELECT categoryid, categorydescription, stockact, adjglact, materialuseagevarac, wipact FROM stockcategory WHERE stocktype='A';
+
+DELETE locstock.* FROM locstock INNER JOIN stockmaster ON locstock.stockid=stockmaster.stockid INNER JOIN stockcategory ON stockmaster.categoryid=stockcategory.categoryid WHERE stockcategory.stocktype='A';
+
+DELETE stockitemproperties.* FROM stockitemproperties INNER JOIN stockmaster ON stockitemproperties.stockid=stockmaster.stockid INNER JOIN stockcategory ON stockmaster.categoryid=stockcategory.categoryid WHERE stockcategory.stocktype='A';
+
+DELETE stockmaster.* FROM stockmaster INNER JOIN stockcategory ON stockmaster.categoryid=stockcategory.categoryid WHERE stockcategory.stocktype='A';
+
+ALTER TABLE `fixedassets` CHANGE `id` `assetid` INT( 11 ) NOT NULL AUTO_INCREMENT ;
+DELETE FROM stockcategory WHERE stocktype='A';
+ALTER TABLE `fixedassets` DROP `stockid`;
