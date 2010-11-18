@@ -147,7 +147,7 @@ ALTER TABLE `purchorders` ADD COLUMN `supptel` varchar(30) NOT NULL DEFAULT '' A
 ALTER TABLE `purchorders` ADD COLUMN `tel` varchar(15) NOT NULL DEFAULT '' AFTER deladd6;
 ALTER TABLE `purchorders` ADD COLUMN `port` varchar(40) NOT NULL DEFAULT '' ;
 
-ALTER TABLE `suppliers` DROP KEY `suppliers_ibfk_4`;
+ALTER TABLE `suppliers` DROP FOREIGN KEY `suppliers_ibfk_4`;
 UPDATE `suppliers` SET `factorcompanyid`=0 WHERE `factorcompanyid`=1;
 DELETE FROM `factorcompanies` WHERE `coyname`='None';
 
@@ -436,7 +436,7 @@ ALTER TABLE `reportfields` CHANGE `fieldname` `fieldname` VARCHAR( 80) CHARACTER
 
 ALTER TABLE `stockcatproperties` ADD `maximumvalue` DOUBLE NOT NULL DEFAULT 999999999 AFTER `defaultvalue` ,
 ADD `minimumvalue` DOUBLE NOT NULL DEFAULT -999999999,
-ADD `numericvalue` TINYINT NOT NULL DEFAULT 0 
+ADD `numericvalue` TINYINT NOT NULL DEFAULT 0 ;
 
 RENAME TABLE assetmanager to fixedassets;
 ALTER TABLE fixedassets ADD COLUMN `assetcategoryid` varchar(6) NOT NULL DEFAULT '';
@@ -455,11 +455,11 @@ CREATE TABLE IF NOT EXISTS `fixedassetcategories` (
   `disposalact` int(11) NOT NULL DEFAULT '80000',
   `accumdepnact` int(11) NOT NULL DEFAULT '0',
   defaultdepnrate double NOT NULL DEFAULT '.2',
-  defaultdepntype int NOT NULL DEFAULT '1'
+  defaultdepntype int NOT NULL DEFAULT '1',
   PRIMARY KEY (`categoryid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO fixedassetcategories SELECT categoryid, categorydescription, stockact, adjglact, materialuseagevarac, wipact FROM stockcategory WHERE stocktype='A';
+INSERT INTO fixedassetcategories (categoryid, categorydescription, costact, depnact, disposalact, accumdepnact) SELECT categoryid, categorydescription, stockact, adjglact, materialuseagevarac, wipact FROM stockcategory WHERE stocktype='A';
 
 DELETE locstock.* FROM locstock INNER JOIN stockmaster ON locstock.stockid=stockmaster.stockid INNER JOIN stockcategory ON stockmaster.categoryid=stockcategory.categoryid WHERE stockcategory.stocktype='A';
 

@@ -55,7 +55,7 @@ If (isset($_POST['PrintPDF'])) {
 	}
 
 
-	$sql = 'SELECT locstock.stockid,
+	$sql = "SELECT locstock.stockid,
 				stockmaster.description,
 				locstock.loccode,
 				locstock.quantity,
@@ -64,22 +64,25 @@ If (isset($_POST['PrintPDF'])) {
 				stockmaster.serialised,
 				stockmaster.controlled,
 				ROUND((locstock.reorderlevel - locstock.quantity) *
-				   (1 + (' . $_POST['Percent'] . '/100)))
+				   (1 + (" . $_POST['Percent'] . "/100)))
 				as neededqty,
 			   (fromlocstock.quantity - fromlocstock.reorderlevel)  as available,
 			   fromlocstock.reorderlevel as fromreorderlevel,
 			   fromlocstock.quantity as fromquantity
-			FROM stockmaster,
-				locstock
+			FROM stockmaster
+			LEFT JOIN stockcategory
+				ON stockmaster.categoryid=stockcategory.categoryid,
+			locstock
 			LEFT JOIN locstock AS fromlocstock ON
 			  locstock.stockid = fromlocstock.stockid
-			  AND fromlocstock.loccode = "' . $_POST['FromLocation'] . '"
+			  AND fromlocstock.loccode = '" . $_POST['FromLocation'] . "'
 			WHERE locstock.stockid=stockmaster.stockid
-			AND locstock.loccode ="' . $_POST['ToLocation'] . '"
+			AND locstock.loccode ='" . $_POST['ToLocation'] . "'
 			AND locstock.reorderlevel > locstock.quantity
 			AND (fromlocstock.quantity - fromlocstock.reorderlevel) > 0
-			AND (stockmaster.mbflag="B" OR stockmaster.mbflag="M") ' .
-			$wherecategory . ' ORDER BY locstock.loccode,locstock.stockid';
+			AND stockcategory.stocktype<>'A'
+			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
+			$wherecategory . " ORDER BY locstock.loccode,locstock.stockid";
 
 	$result = DB_query($sql,$db,'','',false,true);
 
@@ -257,7 +260,7 @@ If (isset($_POST['PrintPDF'])) {
 	}
 	echo '</select></td></tr>';
 
-	$SQL='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription';
+	$SQL='SELECT categoryid, categorydescription FROM stockcategory WHERE stocktype<>"A" ORDER BY categorydescription';
 	$result1 = DB_query($SQL,$db);
 	if (DB_num_rows($result1)==0){
 		echo '</table></td></tr>
