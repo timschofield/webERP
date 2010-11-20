@@ -444,6 +444,8 @@ ALTER TABLE fixedassets ADD COLUMN `description` varchar(50) NOT NULL DEFAULT ''
 ALTER TABLE fixedassets ADD COLUMN `longdescription` text NOT NULL;
 ALTER TABLE fixedassets ADD COLUMN `depntype` int NOT NULL DEFAULT 1;
 ALTER TABLE fixedassets ADD COLUMN `depnrate` double NOT NULL;
+ALTER TABLE `fixedassets` CHANGE `depn` `accumdepn` DOUBLE NOT NULL DEFAULT '0'
+ALTER TABLE `fixedassets` CHANGE `location` `assetlocation` VARCHAR( 6 ) NOT NULL DEFAULT ''
 
 UPDATE fixedassets INNER JOIN stockmaster ON fixedassets.stockid=stockmaster.stockid SET assetcategoryid=stockmaster.categoryid, fixedassets.description=stockmaster.description, fixedassets.longdescription=stockmaster.longdescription;
 
@@ -470,3 +472,21 @@ DELETE stockmaster.* FROM stockmaster INNER JOIN stockcategory ON stockmaster.ca
 ALTER TABLE `fixedassets` CHANGE `id` `assetid` INT( 11 ) NOT NULL AUTO_INCREMENT ;
 DELETE FROM stockcategory WHERE stocktype='A';
 ALTER TABLE `fixedassets` DROP `stockid`;
+
+INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES ('42', 'Asset Category Change', '1');
+INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES ('43', 'Delete w/down asset', '1');
+
+CREATE TABLE `fixedassettrans` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`assetid` INT NOT NULL ,
+`transtype` TINYINT NOT NULL ,
+`transno` INT NOT NULL ,
+`inputdate` DATE NOT,
+`cost` DOUBLE NOT NULL ,
+`depn` DOUBLE NOT NULL ,
+INDEX ( `assetid` , `transtype` , `transno` ),
+INDEX ( inputdate )
+) ENGINE = InnoDB  DEFAULT CHARSET=utf8;
+
+
+UPDATE config SET confvalue='4.0-RC2' WHERE confname='VersionName';

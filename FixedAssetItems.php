@@ -8,6 +8,7 @@ $PageSecurity = 11;
 include('includes/session.inc');
 $title = _('Fixed Assets');
 include('includes/header.inc');
+include('includes/SQL_CommonFunctions.inc');
 
 echo '<a href="' . $rootpath . '/SelectAsset.php?' . SID . '">' . _('Back to Select') . '</a><br>' . "\n";
 
@@ -15,7 +16,6 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 		_('Fixed Asset Items') . '" alt="">' . ' ' . $title . '</p>';
 
 /* If this form is called with the AssetID then it is assumed that the asset is to be modified  */
-
 if (isset($_GET['AssetID'])){
 	$AssetID =$_GET['AssetID'];
 } elseif (isset($_POST['AssetID'])){
@@ -24,17 +24,6 @@ if (isset($_GET['AssetID'])){
 	$AssetID =$_POST['Select'];
 } else {
 	$AssetID = '';
-}
-
-if (isset($AssetID)) {
-	$sql = "SELECT COUNT(assetid) FROM fixedassets WHERE assetid='".$AssetID."'";
-	$result = DB_query($sql,$db);
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0]==0) {
-		$New=0;
-	} else {
-		$New=1;
-	}
 }
 
 if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
@@ -112,15 +101,123 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'AssetCategoryID';
 		$i++;
 	}
+	if (!is_numeric($_POST['DepnRate']) OR $_POST['DepnRate']>100 OR $_POST['DepnRate']<0){
+		$InputError = 1;
+		prnMsg(_('The depreciation rate is expected to be a number between 0 and 100'),'error');
+		$Errors[$i] = 'DepnRate';
+		$i++;
+	}
+	if (!Is_Date($_POST['DatePurchased'])){
+		$InputError = 1;
+		prnMsg(_('The date that the asset was purchased must be entered in the format') . ' ' . $SESSION['DefaultDateFormat'],'error');
+		$Errors[$i] = 'DatePurchased';
+		$i++;
+	}
 	
 	if ($InputError !=1){
 		
 		if ($_POST['submit']==_('Update')) { /*so its an existing one */
 
-				$sql = "UPDATE fixedassets
+			/*Start a transaction to do the whole lot inside */
+			$result = DB_Txn_Begin($db);
+		
+			/*Need to check if changing the balance sheet codes - as will need to do journals for the cost and accum depn of the asset to the new category */
+			$result = DB_query("SELECT assetcategoryid,  cost, accumdepn, costact, accumdepnact FROM fixedassets INNER JOIN fixedassetcategories WHERE assetid='" . $AssetID . "'",$db);
+			$OldDetails = DB_fetch_array($result);
+			if ($OldDetails['assetcategoryid'] !=$_POST['AssetCategoryID']  AND $OldDetails['cost']!=0){
+				
+				$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
+				/* Get the new account codes for the new asset category */
+				$result = DB_query("SELECT costact, accumdepnact FROM fixedassetcategories WHERE categoryid='" . $_POST['AssetCategoryID'] . "'",$db);
+				$NewAccounts = DB_fetch_array($result);
+				
+				$TransNo = GetNextTransNo( 42, $db); /* transaction type is asset category change */
+
+				//credit cost for the old category
+				$SQL = "INSERT INTO gltrans (type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount) ";
+				$SQL= $SQL . "VALUES (42,
+							'" . $TransNo . "',
+							'" . Date('Y-m-d') . "',
+							'" . $PeriodNo . "',
+							'" . $OldDetails['costact'] . "',
+							'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
+							'" . -$OldDetails['cost']. "'
+							)";
+				$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
+				$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
+				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			
+				//debit cost for the new category
+				$SQL = "INSERT INTO gltrans (type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount) ";
+				$SQL= $SQL . "VALUES (42,
+							'" . $TransNo . "',
+							'" . Date('Y-m-d') . "',
+							'" . $PeriodNo . "',
+							'" . $NewAccounts['costact'] . "',
+							'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
+							'" . $OldDetails['cost']. "'
+							)";
+				$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
+				$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
+				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				if ($OldDetails['accumdepn']!=0) {
+					//debit accumdepn for the old category
+					$SQL = "INSERT INTO gltrans (type,
+									typeno,
+									trandate,
+									periodno,
+									account,
+									narrative,
+									amount) ";
+					$SQL= $SQL . "VALUES (42,
+								'" . $TransNo . "',
+								'" . Date('Y-m-d') . "',
+								'" . $PeriodNo . "',
+								'" . $OldDetails['accumdepnact'] . "',
+								'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
+								'" . $OldDetails['accumdepn']. "'
+								)";
+					$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
+					$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
+					$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				
+					//credit accum depn for the new category
+					$SQL = "INSERT INTO gltrans (type,
+									typeno,
+									trandate,
+									periodno,
+									account,
+									narrative,
+									amount) ";
+					$SQL= $SQL . "VALUES (42,
+								'" . $TransNo . "',
+								'" . Date('Y-m-d') . "',
+								'" . $PeriodNo . "',
+								'" . $NewAccounts['accumdepnact'] . "',
+								'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
+								'" . $OldDetails['accumdepn']. "'
+								)";
+					$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
+					$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
+					$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				} /*end if there was accumulated depreciation for the asset */
+			} /* end if there is a change in asset category */
+			$sql = "UPDATE fixedassets
 									SET longdescription='" . $_POST['LongDescription'] . "',
 										description='" . $_POST['Description'] . "',
-										categoryid='" . $_POST['AssetCategoryID'] . "',
+										assetcategoryid='" . $_POST['AssetCategoryID'] . "',
 										assetlocation='" . $_POST['AssetLocation'] . "',
 										datepurchased='" . $_POST['DatePurchased'] . "',
 										depntype='" . $_POST['DepnType'] . "',
@@ -129,12 +226,12 @@ if (isset($_POST['submit'])) {
 										serialno='" . $_POST['SerialNo'] . "'
 									WHERE assetid='" . $AssetID . "'";
 
-				$ErrMsg = _('The asset could not be updated because');
-				$DbgMsg = _('The SQL that was used to update the asset and failed was');
-				$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+			$ErrMsg = _('The asset could not be updated because');
+			$DbgMsg = _('The SQL that was used to update the asset and failed was');
+			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-				prnMsg( _('Asset') . ' ' . $AssetID . ' ' . _('has been updated'), 'success');
-				echo '<br>';
+			prnMsg( _('Asset') . ' ' . $AssetID . ' ' . _('has been updated'), 'success');
+			echo '<br>';
 		} else { //it is a NEW part
 			$sql = "INSERT INTO fixedassets (
 																		description,
@@ -146,7 +243,7 @@ if (isset($_POST['submit'])) {
 																		depnrate,
 																		barcode,
 																		serialno)
-																	VALUES ('" . $AssetID . "',
+																	VALUES (
 																		'" . $_POST['Description'] . "',
 																		'" . $_POST['LongDescription'] . "',
 																		'" . $_POST['AssetCategoryID'] . "',
@@ -162,7 +259,7 @@ if (isset($_POST['submit'])) {
 			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 			
 			if (DB_error_no($db) ==0) {
-				prnMsg( _('New Item') .' ' . $AssetID . ' '. _('has been added to the database'),'success');
+				prnMsg( _('The new asset has been added to the database'),'success');
 				unset($_POST['LongDescription']);
 				unset($_POST['Description']);
 //				unset($_POST['AssetCategoryID']);
@@ -173,6 +270,7 @@ if (isset($_POST['submit'])) {
 				unset($_POST['BarCode']);
 				unset($_POST['SerialNo']);
 			}//ALL WORKED SO RESET THE FORM VARIABLES
+			$result = DB_Txn_Commit($db);
 		}
 	} else {
 		echo '<br>'. "\n";
@@ -184,16 +282,69 @@ if (isset($_POST['submit'])) {
 
 	$CancelDelete = 0;
 	//what validation is required before allowing deletion of assets ....  maybe there should be no deletion option?
-	$result = DB_query('SELECT cost-depn AS netbookvalue FROM fixedassets WHERE assetid="' . $AssetID . '"', $db);
-	$AssetRow = DB_fetch_row($result);
-	if ($AssetRow[0] !=0) {
+	$result = DB_query('SELECT cost, accumdepn, accumdepnact, costact FROM fixedassets INNER JOIN fixedassetcategories ON fixedassets.assetcategoryid=fixedassetcategories.categoryid WHERE assetid="' . $AssetID . '"', $db);
+	$AssetRow = DB_fetch_array($result);
+	$NBV = $AssetRow['cost'] -$AssetRow['accumdepn'];
+	if ($NBV!=0) {
 		$CancelDelete =1; //cannot delete assets where NBV is not 0
 	}
+	$result = DB_query('SELECT * FROM fixedassettrans WHERE assetid="' . $AssetID . '"',$db);
+	if (DB_num_rows($result) > 0){
+		$CancelDelete =1; /*cannot delete assets with transactions */
+	}
+	
 	if ($CancelDelete==0) {
 		$result = DB_Txn_Begin($db);
-
-			$sql="DELETE FROM fixedassets WHERE assetid='" . $AssetID . "'";
-			$result=DB_query($sql,$db, _('Could not delete the asset record'),'',true);
+		
+		/*Need to remove cost and accumulate depreciation from cost and accumdepn accounts */
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
+		$TransNo = GetNextTransNo( 43, $db); /* transaction type is asset deletion - (and remove cost/accumdepn from GL) */
+		if ($AssetRow['cost'] > 0){
+			//credit cost for the asset deleted
+			$SQL = "INSERT INTO gltrans (type,
+							typeno,
+							trandate,
+							periodno,
+							account,
+							narrative,
+							amount) ";
+			$SQL= $SQL . "VALUES (43,
+						'" . $TransNo . "',
+						'" . Date('Y-m-d') . "',
+						'" . $PeriodNo . "',
+						'" . $AssetRow['costact'] . "',
+						'" . _('Delete asset') . ' ' . $AssetID . "',
+						'" . -$AssetRow['cost']. "'
+						)";
+			$ErrMsg = _('Cannot insert a GL entry for the deletion of the asset because');
+			$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
+			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		
+			//debit accumdepn for the depreciation removed on deletion of this asset
+			$SQL = "INSERT INTO gltrans (type,
+							typeno,
+							trandate,
+							periodno,
+							account,
+							narrative,
+							amount) ";
+			$SQL= $SQL . "VALUES (43,
+						'" . $TransNo . "',
+						'" . Date('Y-m-d') . "',
+						'" . $PeriodNo . "',
+						'" . $AssetRow['accumdepnact'] . "',
+						'" . _('Delete asset') . ' ' . $AssetID . "',
+						'" . $Asset['accumdepn']. "'
+						)";
+			$ErrMsg = _('Cannot insert a GL entry for the reversal of accumulated depreciation on deletion of the asset because');
+			$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
+			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			
+		} //end if cost > 0
+		
+		
+		$sql="DELETE FROM fixedassets WHERE assetid='" . $AssetID . "'";
+		$result=DB_query($sql,$db, _('Could not delete the asset record'),'',true);
 
 		$result = DB_Txn_Commit($db);
 
@@ -210,18 +361,19 @@ if (isset($_POST['submit'])) {
 		unset($AssetID);
 		unset($_SESSION['SelectedAsset']);
 
-	} //end if Delete Asset
-}
+	} //end if OK Delete Asset
+} /* end if delete asset */
 
 echo '<form name="AssetForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '?' .SID .
 	'"><table class=selection>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
+
 if (!isset($AssetID) or $AssetID=='') {
 
 /*If the page was called without $AssetID passed to page then assume a new asset is to be entered other wise the form showing the fields with the existing entries against the asset will show for editing with a hidden AssetID field. New is set to flag that the page may have called itself and still be entering a new asset, in which case the page needs to know not to go looking up details for an existing asset*/
 
-	$New = true;
+	$New = 1;
 	echo '<input type="hidden" name="New" value="">'. "\n";
 	
 } elseif ($InputError!=1) { // Must be modifying an existing item and no changes made yet - need to lookup the details
@@ -255,7 +407,7 @@ if (!isset($AssetID) or $AssetID=='') {
 	echo '<input type="Hidden" name="AssetID" value='.$AssetID.'>'. "\n";
 
 } else { // some changes were made to the data so don't re-set form variables to DB ie the code above
-	echo '<tr><td>' . _('Asset Code') . ':</td><td>'.$AssetID.'</td></tr>';
+	echo '<tr><td>' . _('Asset Code') . ':</td><td>' . $AssetID . '</td></tr>';
 	echo '<input type="Hidden" name="AssetID" value="' . $AssetID . '">';
 }
 
@@ -264,7 +416,8 @@ if (isset($_POST['Description'])) {
 } else {
 	$Description ='';
 }
-echo '<tr><td>' . _('Asset Description') . ' (' . _('short') . '):</td><td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Description" size=52 maxlength=50 value="' . $Description . '"></td></tr>'."\n";
+echo '<tr><td>' . _('Asset Description') . ' (' . _('short') . '):</td>
+					<td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Description" size=52 maxlength=50 value="' . $Description . '"></td></tr>'."\n";
 
 if (isset($_POST['LongDescription'])) {
 	$LongDescription = AddCarriageReturns($_POST['LongDescription']);
@@ -273,32 +426,34 @@ if (isset($_POST['LongDescription'])) {
 }
 echo '<tr><td>' . _('Asset Description') . ' (' . _('long') . '):</td><td><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols=40 rows=4>' . stripslashes($LongDescription) . '</textarea></td></tr>'."\n";
 
-// Add image upload for New Item  - by Ori
-echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="ItemPicture" name="ItemPicture"></td>';
-// EOR Add Image upload for New Item  - by Ori
+if ($New == 0) { //ie not new at all!
+	// Add image upload for New Item  - by Ori
+	echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="ItemPicture" name="ItemPicture"></td>';
+	// EOR Add Image upload for New Item  - by Ori
 
-if (function_exists('imagecreatefromjpg')){
-	$StockImgLink = '<img src="GetStockImage.php?SID&automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
-		'&AssetID='.urlencode($AssetID).
-		'&text='.
-		'&width=64'.
-		'&height=64'.
-		'" >';
-} else {
-	if( isset($AssetID) and file_exists($_SESSION['part_pics_dir'] . '/ASSET_' .$AssetID.'.jpg') ) {
-		$AssetImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/ASSET_' .$AssetID.'.jpg" >';
+	if (function_exists('imagecreatefromjpg')){
+		$StockImgLink = '<img src="GetStockImage.php?SID&automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
+			'&AssetID='.urlencode($AssetID).
+			'&text='.
+			'&width=64'.
+			'&height=64'.
+			'" >';
 	} else {
-		$AssetImgLink = _('No Image');
+		if( isset($AssetID) and file_exists($_SESSION['part_pics_dir'] . '/ASSET_' .$AssetID.'.jpg') ) {
+			$AssetImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/ASSET_' .$AssetID.'.jpg" >';
+		} else {
+			$AssetImgLink = _('No Image');
+		}
 	}
-}
-
-if ($AssetImgLink!=_('No Image')) {
-	echo '<td>' . _('Image') . '<br>'.$AssetImgLink . '</td></tr>';
-} else {
-	echo '</td></tr>';
-}
-
-// EOR Add Image upload for New Item  - by Ori
+	
+	if ($AssetImgLink!=_('No Image')) {
+		echo '<td>' . _('Image') . '<br>'.$AssetImgLink . '</td></tr>';
+	} else {
+		echo '</td></tr>';
+	}
+	
+	// EOR Add Image upload for New Item  - by Ori
+} //only show the add image if the asset already exists - otherwise AssetID will not be set - and the image needs the AssetID to save
 
 echo '<tr><td>' . _('Asset Category') . ':</td><td><select name="AssetCategoryID">';
 
@@ -320,6 +475,13 @@ if (!isset($_POST['AssetCategoryID'])) {
 	$_POST['AssetCategoryID']=$category;
 }
 
+if ($_POST['DatePurchased']==''){
+	$_POST['DatePurchased'] = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m'),0,date('Y')));
+}
+
+echo '<tr><td>' . _('Date Purchased') . ':</td><td><input ' . (in_array('DatePurchased',$Errors) ?  'class="inputerror"' : 'class="date"' ) . ' alt="' .$_SESSION['DefaultDateFormat'] . '" type="Text" name="DatePurchased" size=12 maxlength=10 value="' . $_POST['DatePurchased '] . '"></td></tr>';
+
+
 $sql = 'SELECT locationid, locationdescription FROM fixedassetlocations';
 $ErrMsg = _('The asset locations could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve asset locations and failed was');
@@ -335,113 +497,38 @@ while ($myrow=DB_fetch_array($result)){
 }
 echo '</select></td></tr>';
 
-
-if (isset($_POST['BarCode'])) {
-	$BarCode = $_POST['BarCode'];
-} else {
-	$BarCode='';
-}
 echo '<tr><td>' . _('Bar Code') . ':</td><td><input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="Text" name="BarCode" size=22 maxlength=20 value="' . $BarCode . '"></td></tr>';
 
-echo '<tr><td>' . _('Tax Category') . ':</td><td><select name="TaxCat">';
-$sql = 'SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname';
-$result = DB_query($sql, $db);
+echo '<tr><td>' . _('Serial Number') . ':</td><td><input ' . (in_array('SerialNo',$Errors) ?  'class="inputerror"' : '' ) .'  type="Text" name="SerialNo" size=32 maxlength=30 value="' . $_POST['SerialNo'] . '"></td></tr>';
 
-if (!isset($_POST['TaxCat'])){
-	$_POST['TaxCat'] = $_SESSION['DefaultTaxCategory'];
+
+echo '<tr><td>' . _('Depreciation Type') . ':</td><td><select name="DepnType">';
+
+if (!isset($_POST['DepnType'])){
+	$_POST['DepnType'] = 0; //0 = Straight line - 1 = Diminishing Value
+}
+if ($_POST['DepnType']==0){ //straight line
+	echo '<option selected value="0">' . _('Straight Line') . '</option>';
+	echo '<option value="1">' . _('Diminishing Value') . '</option>';
+} else {
+	echo '<option value="0">' . _('Straight Line') . '</option>';
+	echo '<option selected value="1">' . _('Diminishing Value') . '</option>';
 }
 
-while ($myrow = DB_fetch_array($result)) {
-	if ($_POST['TaxCat'] == $myrow['taxcatid']){
-		echo '<option selected value=' . $myrow['taxcatid'] . '>' . $myrow['taxcatname'] . '</option>';
-	} else {
-		echo '<option value=' . $myrow['taxcatid'] . '>' . $myrow['taxcatname'] . '</option>';
-	}
-} //end while loop
+echo '</select></td></tr>';
 
-echo '</select></td></tr></table>';
+echo '<tr><td>' . _('Depreciation Rate') . ':</td><td><input ' . (in_array('DepnRate',$Errors) ?  'class="inputerror"' : 'class="number"' ) .'  type="Text" name="DepnRate" size=3 maxlength=3 value="' . $_POST['DepnRate'] . '"></td></tr>';
 
-
-if (!isset($_POST['AssetCategoryID'])) {
-	$_POST['AssetCategoryID'] = '';
-}
-echo '<br><table class=selection><tr><th colspan="2">' . _('Depreciation Properties') . '</th></tr>';
-$sql = "SELECT stkcatpropid,
-							label,
-							controltype,
-							defaultvalue,
-							maximumvalue,
-							minimumvalue,
-							numericvalue
-					FROM stockcatproperties
-					WHERE categoryid ='" . $_POST['AssetCategoryID'] . "'
-					AND reqatsalesorder =0
-					ORDER BY stkcatpropid";
-
-$PropertiesResult = DB_query($sql,$db);
-$PropertyCounter = 0;
-$PropertyWidth = array();
-
-while ($PropertyRow=DB_fetch_array($PropertiesResult)){
-
-	$PropValResult = DB_query("SELECT value FROM
-																		stockitemproperties
-																		WHERE assetid='" . $AssetID . "'
-																		AND stkcatpropid ='" . $PropertyRow['stkcatpropid'] . "'",
-																	$db);
-	$PropValRow = DB_fetch_row($PropValResult);
-	$PropertyValue = $PropValRow[0];
-
-	echo '<input type="hidden" name="PropID' . $PropertyCounter . '" value=' .$PropertyRow['stkcatpropid'] .'>';
-
-	echo '<tr><td>' . $PropertyRow['label'] . '</td>
-				<td>';
-	switch ($PropertyRow['controltype']) {
-	 	case 0; //textbox
-	 		if ($PropertyRow['numericvalue']==1) {
-				echo '<input type="textbox" class="number" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . $PropertyValue . '">';
-				echo _('A number between') . ' ' . $PropertyRow['minimumvalue'] . ' ' . _('and') . ' ' . $PropertyRow['maximumvalue'] . ' ' . _('is expected');
-			} else {
-				echo '<input type="textbox" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . $PropertyValue . '">';
-			}
-	 		break;
-	 	case 1; //select box
-	 		$OptionValues = explode(',',$PropertyRow['defaultvalue']);
-			echo '<select name="PropValue' . $PropertyCounter . '">';
-			foreach ($OptionValues as $PropertyOptionValue){
-				if ($PropertyOptionValue == $PropertyValue){
-					echo '<option selected value="' . $PropertyOptionValue . '">' . $PropertyOptionValue . '</option>';
-				} else {
-					echo '<option value="' . $PropertyOptionValue . '">' . $PropertyOptionValue . '</option>';
-				}
-			}
-			echo '</select>';
-			break;
-		case 2; //checkbox
-			echo '<input type="checkbox" name="PropValue' . $PropertyCounter . '"';
-			if ($PropertyValue==1){
-				echo '"checked"';
-			}
-			echo '>';
-			break;
-	} //end switch
-	echo '<input type="hidden" name="PropType' . $PropertyCounter .'" value=' . $PropertyRow['controltype'] . '>';
-	echo '</td></tr>';
-	$PropertyCounter++;
-} //end loop round properties for the item category
 echo '</table>';
-echo '<input type="hidden" name="PropertyCounter" value=1>';
 
 if ($New==1) {
-	echo '<div class=centre><br><input type="Submit" name="submit" value="' . _('Insert New Item') . '">';
+	echo '<div class=centre><br><input type="Submit" name="submit" value="' . _('Insert New Fixed Asset') . '">';
 
 } else {
-
-	// Now the form to enter the item properties
+	
 	echo '<br><div class=centre><input type="submit" name="submit" value="' . _('Update') . '"></div>';
-	echo '<input type="submit" name="UpdateCategories" style="visibility:hidden;width:1px" value="' . _('Categories') . '">';
-	prnMsg( _('Only click the Delete button if you are sure you wish to delete the asset.'), 'warn', _('WARNING'));
-	echo '<br><div class=centre><input type="Submit" name="delete" value="' . _('Delete This Asset') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');"></div>';
+	prnMsg( _('Only click the Delete button if you are sure you wish to delete the asset. Only assets with a zero book value can be deleted'), 'warn', _('WARNING'));
+	echo '<br><div class=centre><input type="Submit" name="delete" value="' . _('Delete This Asset') . '" onclick="return confirm(\'' . _('Are You Sure? Only assets with a zero book value can be deleted.') . '\');"></div>';
 }
 
 echo '</form></div>';

@@ -10,83 +10,73 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 
 if (isset($_POST['submit']) and !isset($_POST['delete'])) {
 	$InputError=0;
-	if (!isset($_POST['locationid']) or strlen($_POST['locationid'])<1) {
+	if (!isset($_POST['LocationID']) or strlen($_POST['LocationID'])<1) {
 		prnMsg(_('You must enter at least one character in the location ID'),'error');
 		$InputError=1;
 	}
-	if (!isset($_POST['locdesc']) or strlen($_POST['locdesc'])<1) {
+	if (!isset($_POST['LocationDescription']) or strlen($_POST['LocationDescription'])<1) {
 		prnMsg(_('You must enter at least one character in the location description'),'error');
 		$InputError=1;
 	}
 	if ($InputError==0) {
 		$sql='INSERT INTO fixedassetlocations
-			VALUES (
-				"'.$_POST['locationid'].'",
-				"'.$_POST['locdesc'].'",
-				"'.$_POST['parentlocationid'].'")';
+							VALUES (
+								"'.$_POST['LocationID'].'",
+								"'.$_POST['LocationDescription'].'",
+								"'.$_POST['ParentLocationID'].'")';
 		$result=DB_query($sql, $db);
 	}
 }
 if (isset($_GET['SelectedLocation'])) {
 	$sql='SELECT * FROM fixedassetlocations WHERE locationid="'.$_GET['SelectedLocation'].'"';
-	$result=DB_query($sql, $db);
-	$myrow=DB_fetch_array($result);
-	$locationid=$myrow['locationid'];
-	$locdesc=$myrow['locationdescription'];
-	$parentlocationid=$myrow['parentlocationid'];
+	$result = DB_query($sql, $db);
+	$myrow = DB_fetch_array($result);
+	$LocationID = $myrow['locationid'];
+	$LocationDescription = $myrow['locationdescription'];
+	$ParentLocationID = $myrow['parentlocationid'];
 
 } else {
-	$locationid='';
-	$locdesc='';
+	$LocationID = '';
+	$LocationDescription = '';
 }
-//Batman: Attempting to update fields
+
+//Attempting to update fields
 
 if (isset($_POST['update']) and !isset($_POST['delete'])) {
 		$InputError=0;
-		/*Batman: Removing the ID
-	if (!isset($_POST['locationid']) or strlen($_POST['locationid'])<1) {
-				prnMsg(_('You must enter at least one character in the location ID'),'error');
-				$InputError=1;
-		}*/
-		if (!isset($_POST['locdesc']) or strlen($_POST['locdesc'])<1) {
+		if (!isset($_POST['LocationDescription']) or strlen($_POST['LocationDescription'])<1) {
 				prnMsg(_('You must enter at least one character in the location description'),'error');
 				$InputError=1;
 		}
 		if ($InputError==0) {
-						 $sql='UPDATE fixedassetlocations SET
-								locationdescription="'.$_POST['locdesc'].'",
-								parentlocationid="'.$_POST['parentlocationid'].'"
-										  		  WHERE locationid		 ="'.$_POST['locationid'].'"';
-						 $result=DB_query($sql,$db);
-//Batman: Testing leaking sql echo $sql;
-				 echo '<meta http-equiv="Refresh" content="0; url="'.$_SERVER['PHP_SELF'].'">';
-				}
+			 $sql='UPDATE fixedassetlocations SET
+												locationdescription="'.$_POST['LocationDescription'].'",
+												parentlocationid="'.$_POST['ParentLocationID'].'"
+									WHERE locationid		 ="'.$_POST['LocationID'].'"';
+			 $result=DB_query($sql,$db);
+			 echo '<meta http-equiv="Refresh" content="0; url="'.$_SERVER['PHP_SELF'].'">';
+		}
 } else {
 	// if you are not updating then you want to delete but lets be sure first.
 	if (isset($_POST['delete']))  {
 		$InputError=0;
-
-		if (!isset($_POST['locdesc']) or strlen($_POST['locdesc'])<1) {
-			prnMsg(_('You must enter at least one character in the location description'),'error');
-			$InputError=1;
-		}
-
-		$sql="SELECT COUNT(locationid) FROM fixedassetlocations WHERE parentlocationid='" . $_POST['locationid']."'";
+		
+		$sql="SELECT COUNT(locationid) FROM fixedassetlocations WHERE parentlocationid='" . $_POST['LocationID']."'";
 		$result = DB_query($sql,$db);
 		$myrow=DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg(_('This location has child locations so cannot be removed'), 'warning');
 			$InputError=1;
 		}
-		$sql="SELECT COUNT(id) FROM assetmanager WHERE location='" . $_POST['locationid']."'";
+		$sql="SELECT COUNT(assetid) FROM fixedassets WHERE assetlocation='" . $_POST['LocationID']."'";
 		$result = DB_query($sql,$db);
 		$myrow=DB_fetch_row($result);
 		if ($myrow[0]>0) {
-			prnMsg(_('You have assets in this location location so cannot be removed'), 'warning');
+			prnMsg(_('You have assets in this location location so it cannot be removed'), 'warn');
 			$InputError=1;
 		}
 		if ($InputError==0) {
-			$sql = "DELETE FROM fixedassetlocations WHERE locationid = '".$_POST['locationid']."'";
+			$sql = "DELETE FROM fixedassetlocations WHERE locationid = '".$_POST['LocationID']."'";
 			$result = DB_query($sql,$db);
 			prnMsg(_('The location has been deleted successfully'), 'success');
 		}
@@ -99,61 +89,55 @@ $result=DB_query($sql, $db);
 if (DB_num_rows($result) > 0) {
 	echo '<table class=selection><tr>';
 	echo '<th>'._('Location ID').'</th>
-		<th>'._('Location Description').'</th>
-		<th>'._('Parent Location').'</th></tr>';
+				<th>'._('Location Description').'</th>
+				<th>'._('Parent Location').'</th></tr>';
 }
 while ($myrow=DB_fetch_array($result)) {
-
-	$parentsql="select locationdescription from fixedassetlocations where locationid='".$myrow['parentlocationid']."'";
+	echo '<tr><td>'.$myrow['locationid'].'</td>
+						<td>'.$myrow['locationdescription'].'</td>';
+	$parentsql="SELECT locationdescription FROM fixedassetlocations WHERE locationid='".$myrow['parentlocationid']."'";
 	$parentresult=DB_query($parentsql, $db);
 	$parentrow=DB_fetch_array($parentresult);
-	echo '<tr><td>'.$myrow['locationid'].'</td>';
-	echo '<td>'.$myrow['locationdescription'].'</td>';
 	echo '<td>'.$parentrow['locationdescription'].'</td>';
-	echo '<td><a href="'.$_SERVER['PHP_SELF'] . '?' . SID.'SelectedLocation='.$myrow['locationid'].'">' .
-		 _('Edit') . '</td>'; //Batman: added '; and duplicated line as below
-//Batman: Just hashed this out</tr>';
+	echo '<td><a href="'.$_SERVER['PHP_SELF'] . '?' . SID.'SelectedLocation='.$myrow['locationid'].'">' .  _('Edit') . '</td>'; 
 }
-//Batman: Capturing the location ID before the update process
-//echo $loc = "'.$_POST['locationid'].'";
 
 echo '</table><br>';
 echo '<form name="LocationForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><table class=selection>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<tr><th style="text-align:left">'._('Location ID').'</th>';
 if (isset($_GET['SelectedLocation'])) {
-	echo '<input type=hidden name=locationid value="'.$locationid.'">';
-	echo '<td>'.$locationid.'</td>';
+	echo '<input type=hidden name=LocationID value="'.$LocationID.'">';
+	echo '<td>'.$LocationID.'</td>';
 } else {
-	echo '<td><input type=text name=locationid size=6 value="'.$locationid.'"></td></tr>';
+	echo '<td><input type=text name=LocationID size=6 value="'.$LocationID.'"></td></tr>';
 }
 
 echo '<tr><th style="text-align:left">'._('Location Description').'</th>';
-echo '<td><input type=text name=locdesc size=20 value="'.$locdesc.'"></td></tr>';
+echo '<td><input type=text name=LocationDescription size=20 value="'.$LocationDescription.'"></td></tr>';
 
 echo '<tr><th style="text-align:left">'._('Parent Location').'</th>';
-echo '<td><select name=parentlocationid>';
+echo '<td><select name=ParentLocationID>';
 
 $sql='SELECT * FROM fixedassetlocations';
 $result=DB_query($sql, $db);
 
 echo '<option value=""></option>';
 while ($row=DB_fetch_array($result)) {
-	if ($row['locationid']==$parentlocationid) {
+	if ($row['locationid']==$ParentLocationID) {
 		echo '<option selected value="'.$row['locationid'].'">'.$row['locationdescription'].'</option>';
 	} else {
 		echo '<option value="'.$row['locationid'].'">'.$row['locationdescription'].'</option>';
 	}
 }
 echo '</select>';
-//Batman: Collecting all ParentLocations
 
 echo '</td></tr>';
 echo '</table><br>';
 
 
-//Batman: parentlocationid checking the location ID
-//echo $locationid;
+//Batman: ParentLocationID checking the location ID
+//echo $LocationID;
 
 echo '<div class="centre">';
 if (isset($_GET['SelectedLocation'])) {
