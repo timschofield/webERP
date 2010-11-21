@@ -639,8 +639,8 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 		if ($_SESSION['PO'.$identifier]->GLLink==1){
 
 			$sql = "SELECT accountname
-					FROM chartmaster
-					WHERE accountcode ='" . (int) $_POST['GLCode'] . "'";
+							FROM chartmaster
+							WHERE accountcode ='" . (int) $_POST['GLCode'] . "'";
 			$ErrMsg =  _('The account details for') . ' ' . $_POST['GLCode'] . ' ' . _('could not be retrieved because');
 			$DbgMsg =  _('The SQL used to retrieve the details of the account, but failed was');
 			$GLValidResult = DB_query($sql,$db,$ErrMsg,$DbgMsg,false,false);
@@ -664,6 +664,17 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 		else {
 			$_POST['GLCode']=0;
 		}
+		if (strlen($_POST['AssetID'])>0){
+			if (!is_numeric($_POST['AssetID'])){
+				$AllowUpdate = false;
+				prnMsg(_('An asset code was entered but it is not numeric. A numeric asset code that exists must be entered when ordering a fixed asset'),'error');
+			}
+			$ValidAssetResult = DB_query('SELECT assetid FROM fixedassets WHERE assetid="' . $_POST['AssetID'] . '"',$db);
+			if (DB_num_rows($ValidAssetResult)==0){ // then the asset id entered doesn't exist
+				$AllowUpdate = false;
+				prnMsg(_('An asset code was entered but it does not yet exist. Only pre-existing asset ids can be entered when ordering a fixed asset'),'error');
+			}
+		} //end if an AssetID is entered
 		if (strlen($_POST['ItemDescription'])<=3){
 			$AllowUpdate = false;
 			prnMsg(_('Cannot enter this order line') . ':<br>' . _('The description of the item being purchase is required where a non-stock item is being ordered'),'warn');
@@ -698,8 +709,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 																							$_POST['gw'],
 																							$_POST['cuft'],
 																							$_POST['total_quantity'],
-																							$_POST['total_amount']
-																							);
+																							$_POST['total_amount'] );
 		   include ('includes/PO_UnsetFormVbls.php');
 		}
 	}
@@ -925,7 +935,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
-			$uomsql="SELECT conversionfactor,
+			$UomSQL="SELECT conversionfactor,
 							suppliersuom,
 							unitsofmeasure.
 							unitname
@@ -935,27 +945,27 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 					WHERE supplierno='".$_SESSION['PO'.$identifier]->SupplierID."'
 					AND stockid='".$POLine->StockID."'";
 
-			$uomresult=DB_query($uomsql, $db);
-			if (DB_num_rows($uomresult)>0) {
-				$uomrow=DB_fetch_array($uomresult);
-				if (strlen($uomrow['suppliersuom'])>0) {
-					$uom=$uomrow['unitname'];
+			$UomResult=DB_query($UomSQL, $db);
+			if (DB_num_rows($UomResult)>0) {
+				$UomRow=DB_fetch_array($UomResult);
+				if (strlen($UomRow['suppliersuom'])>0) {
+					$Uom=$UomRow['unitname'];
 				} else {
-					$uom=$POLine->Units;
+					$Uom=$POLine->Units;
 				}
 			} else {
-				$uom=$POLine->Units;
+				$Uom=$POLine->Units;
 			}
 			//			echo "<td>$POLine->StockID</td><td>$POLine->ItemDescription</td>td> class=number>$DisplayQuantity</td><td>$POLine->Units</td><td>$POLine->ReqDelDate</td>td> class=number>$DisplayPrice</td>td> class=number>$DisplayLineTotal</font></td><td><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "&Edit=" . $POLine->LineNo . "'>" . _('Select') . "</a></td></tr>";
-			echo "<td>".$POLine->StockID ."</td>
-				<td>".$POLine->ItemDescription."</td>
-				<td><input type=text class=number name=Qty".$POLine->LineNo ." size=11 value=".$DisplayQuantity."></td>
-				<td>".$uom."</td>
-				<td><input type=text class=number name=nw".$POLine->LineNo." size=11 value=".$POLine->nw."></td>
-				<td><input type=text class=number name=Price".$POLine->LineNo." size=11 value=".$DisplayPrice."></td>
-				<td class=number>".$DisplayLineTotal."</td>
-				<td><input type=text class=date alt='".$_SESSION['DefaultDateFormat']."' name=ReqDelDate".$POLine->LineNo." size=11 value=".$POLine->ReqDelDate."></td>
-				<td><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "identifier=".$identifier. "&Delete=" . $POLine->LineNo . "'>" . _('Delete') . "</a></td></tr>";
+			echo '<td>' . $POLine->StockID  . '</td>
+				<td>' . $POLine->ItemDescription . '</td>
+				<td><input type="text" class="number" name="Qty' . $POLine->LineNo .'" size="11" value="' . $DisplayQuantity . '"></td>
+				<td>' . $Uom . '</td>
+				<td><input type="text" class="number" name="nw' . $POLine->LineNo . '" size="11" value="' . $POLine->nw . '"></td>
+				<td><input type="text" class="number" name="Price' . $POLine->LineNo . '" size="11" value="' .$DisplayPrice.'"></td>
+				<td class="number">' . $DisplayLineTotal . '</td>
+				<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'].'" name="ReqDelDate' . $POLine->LineNo.'" size="11" value="' .$POLine->ReqDelDate .'"></td>
+				<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . 'identifier='.$identifier. '&Delete=' . $POLine->LineNo . '">' . _('Delete') . '</a></td></tr>';
 			$_SESSION['PO'.$identifier]->total = $_SESSION['PO'.$identifier]->total + $LineTotal;
 		}
 	}
@@ -967,7 +977,6 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 	if (!isset($_POST['NewItem']) and isset($_GET['Edit'])) {
 
 	/*show a form for putting in a new line item with or without a stock entry */
-
 	}
 } /*Only display the order line items if there are any !! */
 
@@ -977,23 +986,25 @@ if (isset($_POST['NonStockOrder'])) {
 	echo '<td><input type=text name=ItemDescription size=40></td></tr>';
 	echo '<tr><td>'._('General Ledger Code').'</td>';
 	echo '<td><select name="GLCode">';
-	$sql="SELECT
-			accountcode,
-			accountname
-		  FROM chartmaster
-		  ORDER BY accountcode ASC";
+	$sql='SELECT accountcode,
+							accountname
+				FROM chartmaster
+				ORDER BY accountcode ASC';
+				
 	$result=DB_query($sql, $db);
 	while ($myrow=DB_fetch_array($result)) {
 		echo '<option value="'.$myrow['accountcode'].'">'.$myrow['accountcode'].' - '.$myrow['accountname'].'</option>';
 	}
 	echo '</td></tr>';
-	echo '<tr><td>'._('Quantity to purchase').'</td>';
-	echo '<td><input type=text class=number name=Qty size=10></td></tr>';
-	echo '<tr><td>'._('Price per item').'</td>';
-	echo '<td><input type=text class=number name=Price size=10></td></tr>';
-	echo '<tr><td>'._('Delivery Date').'</td>';
-	echo '<td><input type=text class=date alt="'.$_SESSION['DefaultDateFormat'].'" name=ReqDelDate size=11
-			value="'.$_SESSION['PO'.$identifier]->deliverydate .'"></td></tr>';
+	echo '<tr><td>'._('OR Asset ID'). '</td>
+						<td><input type="text" class="number" name="AssetID" size="10" maxlength=12>
+								<a href="FixedAssetItems.php" target=_blank>'. _('New Fixed Asset') . '</a></td>
+				<tr><td>'._('Quantity to purchase').'</td>
+						<td><input type="text" class="number" name="Qty" size=10></td></tr>
+				<tr><td>'._('Price per item').'</td>
+						<td><input type="text" class="number" name="Price" size=10></td></tr>
+				<tr><td>'._('Delivery Date').'</td>
+						<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ReqDelDate" size=11 value="'.$_SESSION['PO'.$identifier]->deliverydate .'"></td></tr>';
 	echo '</table>';
 	echo '<div class=centre><input type=submit name="EnterLine" value="Enter Item"></div>';
 }
@@ -1001,26 +1012,26 @@ if (isset($_POST['NonStockOrder'])) {
 /* Now show the stock item selection search stuff below */
 
 if (!isset($_GET['Edit'])) {
-	$sql="SELECT categoryid,
-			categorydescription
-		FROM stockcategory
-		WHERE stocktype<>'L'
-		AND stocktype<>'D'
-		ORDER BY categorydescription";
+	$sql='SELECT categoryid,
+							categorydescription
+				FROM stockcategory
+				WHERE stocktype<>"L"
+				AND stocktype<>"D"
+				ORDER BY categorydescription';
 	$ErrMsg = _('The supplier category details could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the category details but failed was');
 	$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	echo '<table class=selection><tr><th colspan=3><font size=3 color=blue>'. _('Search For Stock Items') . '</th>';
 
-	echo ":</font></tr><tr><td><select name='StockCat'>";
+	echo ':</font></tr><tr><td><select name="StockCat">';
 
-	echo "<option selected value='All'>" . _('All');
+	echo '<option selected value="All">' . _('All');
 	while ($myrow1 = DB_fetch_array($result1)) {
 		if (isset($_POST['StockCat']) and $_POST['StockCat']==$myrow1['categoryid']){
-			echo "<option selected value=". $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
+			echo '<option selected value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		} else {
-			echo "<option value=". $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
+			echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
 	}
 
@@ -1059,13 +1070,13 @@ if (isset($SearchResult)) {
 
 	echo "<table cellpadding=1 colspan=7 class=selection>";
 
-	$tableheader = "<tr>
-			<th>" . _('Code')  . "</th>
-			<th>" . _('Description') . "</th>
-			<th>" . _('Units') . "</th>
-			<th colspan=2><a href='#end'>"._('Go to end of list')."</a></th>
-			</tr>";
-	echo $tableheader;
+	$TableHeader = '<tr>
+								<th>' . _('Code')  . '</th>
+								<th>' . _('Description') . '</th>
+								<th>' . _('Units') . '</th>
+								<th colspan=2><a href="#end">'._('Go to end of list').'</a></th>
+								</tr>';
+	echo $TableHeader;
 
 	$j = 1;
 	$k=0; //row colour counter
@@ -1090,32 +1101,32 @@ if (isset($SearchResult)) {
 			$ImageSource = '<i>'._('No Image').'</i>';
 		}
 
-			$uomsql="SELECT conversionfactor,
-						suppliersuom,
-						unitsofmeasure.unitname
-					FROM purchdata
-					LEFT JOIN unitsofmeasure
-					ON purchdata.suppliersuom=unitsofmeasure.unitid
-					WHERE supplierno='".$_SESSION['PO'.$identifier]->SupplierID."'
-					AND stockid='".$myrow['stockid']."'";
+			$UomSQL="SELECT conversionfactor,
+												suppliersuom,
+												unitsofmeasure.unitname
+									FROM purchdata
+									LEFT JOIN unitsofmeasure
+									ON purchdata.suppliersuom=unitsofmeasure.unitid
+									WHERE supplierno='".$_SESSION['PO'.$identifier]->SupplierID."'
+									AND stockid='".$myrow['stockid']."'";
 
-			$uomresult=DB_query($uomsql, $db);
-			if (DB_num_rows($uomresult)>0) {
-				$uomrow=DB_fetch_array($uomresult);
-				if (strlen($uomrow['suppliersuom'])>0) {
-					$uom=$uomrow['unitname'];
+			$UomResult=DB_query($UomSQL, $db);
+			if (DB_num_rows($UomResult)>0) {
+				$UomRow=DB_fetch_array($UomResult);
+				if (strlen($UomRow['suppliersuom'])>0) {
+					$Uom=$UomRow['unitname'];
 				} else {
-					$uom=$myrow['units'];
+					$Uom=$myrow['units'];
 				}
 			} else {
-				$uom=$myrow['units'];
+				$Uom=$myrow['units'];
 			}
 			echo "<td>".$myrow['stockid']."</td>
 			<td>".$myrow['description']."</td>
-			<td>".$uom."</td>
+			<td>".$Uom."</td>
 			<td>".$ImageSource."</td>
 			<td><input class='number' type='text' size=6 value=0 name='qty".$myrow['stockid']."'></td>
-			<input type='hidden' size=6 value=".$uom." name=uom>
+			<input type='hidden' size=6 value=".$Uom." name=uom>
 			</tr>";
 
 		$PartsDisplayed++;

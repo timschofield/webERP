@@ -1112,7 +1112,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	} /*end of if its a new item */
 
-	if (isset($NewItem_array) && isset($_POST['order_items'])){
+	if (isset($NewItem_array) AND isset($_POST['order_items'])){
 /* get the item details from the database and hold them in the cart object make the quantity 1 by default then add it to the cart */
 /*Now figure out if the item is a kit set - the field MBFlag='K'*/
 		foreach($NewItem_array as $NewItem => $NewItemQty) {
@@ -1302,11 +1302,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,2);
 		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
-			$ColSpanNumber = 7;
+			$ColSpanNumber = 3;
 		} else {
-			$ColSpanNumber = 5;
+			$ColSpanNumber = 1;
 		}
-		echo '<tr class="EvenTableRows"><td></td><td><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
+		echo '<tr class="EvenTableRows"><td class="number" colspan=7><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
 							<td colspan="' . $ColSpanNumber . '" class=number>' . $DisplayTotal . '</td></tr></table>';
 
 		$DisplayVolume = number_format($_SESSION['Items'.$identifier]->totalVolume,2);

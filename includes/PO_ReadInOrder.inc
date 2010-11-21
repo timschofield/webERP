@@ -100,17 +100,17 @@
 			$_SESSION['PO'.$identifier]->paymentterms= $myrow['paymentterms'];
 
 			$supplierSQL = "SELECT suppliers.supplierid,
-					suppliers.suppname,
-					suppliers.address1,
-					suppliers.address2,
-					suppliers.address3,
-					suppliers.address4,
-					suppliers.address5,
-					suppliers.address6,
-					suppliers.currcode
-				FROM suppliers
-				WHERE suppliers.supplierid='" . $_SESSION['PO'.$identifier]->SupplierID."'
-				ORDER BY suppliers.supplierid";
+														suppliers.suppname,
+														suppliers.address1,
+														suppliers.address2,
+														suppliers.address3,
+														suppliers.address4,
+														suppliers.address5,
+														suppliers.address6,
+														suppliers.currcode
+												FROM suppliers
+												WHERE suppliers.supplierid='" . $_SESSION['PO'.$identifier]->SupplierID."'
+												ORDER BY suppliers.supplierid";
 
 			$ErrMsg = _('The searched supplier records requested cannot be retrieved because');
 			$result_SuppSelect = DB_query($supplierSQL,$db,$ErrMsg);
@@ -126,43 +126,44 @@
 /*now populate the line PO array with the purchase order details records */
 
 			  $LineItemsSQL = "SELECT podetailitem,
-										itemcode,
-										stockmaster.description,
-										purchorderdetails.deliverydate,
-										itemdescription,
-										glcode,
-										accountname,
-										qtyinvoiced,
-										unitprice,
-										units,
-										quantityord,
-										quantityrecd,
-										shiptref,
-										completed,
-										jobref,
-										stdcostunit,
-										itemno,
-										stockmaster.controlled,
-										stockmaster.serialised,
-										stockmaster.decimalplaces,
-										subtotal_amount,
-										package,
-										pcunit,
-										nw,
-										gw,
-										cuft,
-										total_quantity,
-										total_amount
-										FROM purchorderdetails
-											LEFT JOIN stockmaster
-											ON purchorderdetails.itemcode=stockmaster.stockid
-											LEFT JOIN purchorders
-											ON purchorders.orderno=purchorderdetails.orderno
-											LEFT JOIN chartmaster
-											ON purchorderdetails.glcode=chartmaster.accountcode
-										WHERE purchorderdetails.completed=0
-											AND purchorderdetails.orderno =" . $_GET['ModifyOrderNumber'] . '
-										ORDER BY podetailitem';
+																itemcode,
+																stockmaster.description,
+																purchorderdetails.deliverydate,
+																itemdescription,
+																glcode,
+																accountname,
+																qtyinvoiced,
+																unitprice,
+																units,
+																quantityord,
+																quantityrecd,
+																shiptref,
+																completed,
+																jobref,
+																stdcostunit,
+																itemno,
+																stockmaster.controlled,
+																stockmaster.serialised,
+																stockmaster.decimalplaces,
+																subtotal_amount,
+																package,
+																pcunit,
+																nw,
+																gw,
+																cuft,
+																total_quantity,
+																total_amount,
+																assetid
+																FROM purchorderdetails
+																	LEFT JOIN stockmaster
+																	ON purchorderdetails.itemcode=stockmaster.stockid
+																	LEFT JOIN purchorders
+																	ON purchorders.orderno=purchorderdetails.orderno
+																	LEFT JOIN chartmaster
+																	ON purchorderdetails.glcode=chartmaster.accountcode
+																WHERE purchorderdetails.completed=0
+																	AND purchorderdetails.orderno ='" . $_GET['ModifyOrderNumber'] . "'
+																ORDER BY podetailitem";
 
 		  $ErrMsg =  _('The lines on the purchase order cannot be retrieved because');
 		  $DbgMsg =  _('The SQL statement that was used to retrieve the purchase order lines was');
@@ -187,63 +188,63 @@
 					} else {
 						$StockID = $myrow['itemcode'];
 					}
-					$datesql='SELECT max(effectivefrom)
-							FROM purchdata
-							WHERE supplierno="'.$_SESSION['PO'.$identifier]->SupplierID.'"
-								AND stockid="'.$StockID.'"
-								AND effectivefrom<="'.$_SESSION['PO'.$identifier]->Orig_OrderDate.'"';
-					$dateresult=DB_query($datesql, $db);
-					$date=DB_fetch_row($dateresult);
-					if ($date[0]!='') {
+					$DateSQL='SELECT max(effectivefrom)
+											FROM purchdata
+											WHERE supplierno="'.$_SESSION['PO'.$identifier]->SupplierID.'"
+												AND stockid="'.$StockID.'"
+												AND effectivefrom<="'.$_SESSION['PO'.$identifier]->Orig_OrderDate.'"';
+					$DateResult=DB_query($DateSQL, $db);
+					$Date=DB_fetch_row($DateResult);
+					if ($Date[0]!='') {
 						$sql='SELECT unitsofmeasure.unitname,
-									suppliers_partno,
-									conversionfactor
-								FROM purchdata
-								LEFT JOIN unitsofmeasure
-								ON purchdata.suppliersuom=unitsofmeasure.unitid
-								WHERE supplierno="'.$_SESSION['PO'.$identifier]->SupplierID.'"
-								AND stockid="'.$StockID.'"
-								AND effectivefrom="'.$date[0].'"';
-						$purchdataresult=DB_query($sql, $db);
-						$myrow2=DB_fetch_array($purchdataresult);
+												suppliers_partno,
+												conversionfactor
+											FROM purchdata
+											LEFT JOIN unitsofmeasure
+											ON purchdata.suppliersuom=unitsofmeasure.unitid
+											WHERE supplierno="'.$_SESSION['PO'.$identifier]->SupplierID.'"
+											AND stockid="'.$StockID.'"
+											AND effectivefrom="'.$Date[0].'"';
+						$PurchDataResult=DB_query($sql, $db);
+						$myrow2=DB_fetch_array($PurchDataResult);
 					} else {
 						$sql='SELECT units as unitname, stockid as suppliers_partno FROM stockmaster WHERE stockid="'.$StockID.'"';
-						$purchdataresult=DB_query($sql, $db);
-						$myrow2=DB_fetch_array($purchdataresult);
+						$PurchDataResult=DB_query($sql, $db);
+						$myrow2=DB_fetch_array($PurchDataResult);
 						$myrow2['conversionfactor']=1;
 					}
 
 					$_SESSION['PO'.$identifier]->add_to_order($_SESSION['PO'.$identifier]->LinesOnOrder+1,
-							$StockID,
-							$myrow['serialised'],
-							$myrow['controlled'],
-							$myrow['quantityord'],
-							stripslashes($myrow['itemdescription']),
-							$myrow['unitprice'],
-							$Units,
-							$GLCode,
-							ConvertSQLDate($myrow['deliverydate']),
-							$myrow['shiptref'],
-							$myrow['completed'],
-							$myrow['jobref'],
-							$myrow['qtyinvoiced'],
-							$myrow['quantityrecd'],
-							$myrow['accountname'],
-							$myrow['decimalplaces'],
-							$myrow['itemno'],
-							$myrow2['unitname'],
-							$myrow2['conversionfactor'],
-							$myrow2['suppliers_partno'],
-							$myrow['subtotal_amount'],
-							0,
-							$myrow['package'],
-							$myrow['pcunit'],
-							$myrow['nw'],
-							$myrow['gw'],
-							$myrow['cuft'],
-							$myrow['total_quantity'],
-							$myrow['total_amount']);
-
+																									$StockID,
+																									$myrow['serialised'],
+																									$myrow['controlled'],
+																									$myrow['quantityord'],
+																									stripslashes($myrow['itemdescription']),
+																									$myrow['unitprice'],
+																									$Units,
+																									$GLCode,
+																									ConvertSQLDate($myrow['deliverydate']),
+																									$myrow['shiptref'],
+																									$myrow['completed'],
+																									$myrow['jobref'],
+																									$myrow['qtyinvoiced'],
+																									$myrow['quantityrecd'],
+																									$myrow['accountname'],
+																									$myrow['decimalplaces'],
+																									$myrow['itemno'],
+																									$myrow2['unitname'],
+																									$myrow2['conversionfactor'],
+																									$myrow2['suppliers_partno'],
+																									$myrow['subtotal_amount'],
+																									0,
+																									$myrow['package'],
+																									$myrow['pcunit'],
+																									$myrow['nw'],
+																									$myrow['gw'],
+																									$myrow['cuft'],
+																									$myrow['total_quantity'],
+																									$myrow['total_amount']);
+																		
 					$_SESSION['PO'.$identifier]->LineItems[$_SESSION['PO'.$identifier]->LinesOnOrder]->PODetailRec = $myrow['podetailitem'];
 					$_SESSION['PO'.$identifier]->LineItems[$_SESSION['PO'.$identifier]->LinesOnOrder]->StandardCost = $myrow['stdcostunit'];  /*Needed for receiving goods and GL interface */
 			 } /* line PO from purchase order details */

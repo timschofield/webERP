@@ -334,7 +334,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 			unset($_SESSION['PO']->LineItems);
 			unset($_SESSION['PO']);
 			unset($_POST['ProcessGoodsReceived']);
-			include ("includes/footer.inc");
+			include ('includes/footer.inc');
 			exit;
 		}
 		$LineNo++;
@@ -654,8 +654,8 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 		$StatusComment=$date.' - Order Completed'.'<br>'.$comment;
 		$sql="UPDATE purchorders
 					SET status='" . PurchOrder::STATUS_COMPLITED . "',
-					stat_comment='".$StatusComment."'
-					WHERE orderno='".$_SESSION['PO']->OrderNo . "'";
+					stat_comment='" . $StatusComment . "'
+					WHERE orderno='" . $_SESSION['PO']->OrderNo . "'";
 		$result=DB_query($sql,$db);
 	}
 
@@ -676,7 +676,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 
 } else { /*Process Goods received not set so show a link to allow mod of line items on order and allow input of date goods received*/
 
-	echo '<br><div class='centre'><a href="' . $rootpath . '/PO_Items.php?=' . SID . '">' . _('Modify Order Items'). '</a></div>';
+	echo '<br><div class="centre"><a href="' . $rootpath . '/PO_Items.php?=' . SID . '">' . _('Modify Order Items'). '</a></div>';
 
 	echo '<br><div class="centre"><input type=submit name=Update Value=' . _('Update') . '><p>';
 	echo '<input type=submit name="ProcessGoodsReceived" Value="' . _('Process Goods Received') . '"></div>';

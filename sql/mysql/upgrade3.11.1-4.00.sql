@@ -444,8 +444,9 @@ ALTER TABLE fixedassets ADD COLUMN `description` varchar(50) NOT NULL DEFAULT ''
 ALTER TABLE fixedassets ADD COLUMN `longdescription` text NOT NULL;
 ALTER TABLE fixedassets ADD COLUMN `depntype` int NOT NULL DEFAULT 1;
 ALTER TABLE fixedassets ADD COLUMN `depnrate` double NOT NULL;
-ALTER TABLE `fixedassets` CHANGE `depn` `accumdepn` DOUBLE NOT NULL DEFAULT '0'
-ALTER TABLE `fixedassets` CHANGE `location` `assetlocation` VARCHAR( 6 ) NOT NULL DEFAULT ''
+ALTER TABLE fixedassets ADD COLUMN  `barcode` VARCHAR( 30 ) NOT NULL;
+ALTER TABLE `fixedassets` CHANGE `depn` `accumdepn` DOUBLE NOT NULL DEFAULT '0';
+ALTER TABLE `fixedassets` CHANGE `location` `assetlocation` VARCHAR( 6 ) NOT NULL DEFAULT '';
 
 UPDATE fixedassets INNER JOIN stockmaster ON fixedassets.stockid=stockmaster.stockid SET assetcategoryid=stockmaster.categoryid, fixedassets.description=stockmaster.description, fixedassets.longdescription=stockmaster.longdescription;
 
@@ -490,6 +491,5 @@ CREATE TABLE `fixedassettrans` (
 INDEX ( `assetid` , `transtype` , `transno` ),
 INDEX ( inputdate )
 ) ENGINE = InnoDB  DEFAULT CHARSET=utf8;
-
 
 UPDATE config SET confvalue='4.0-RC2' WHERE confname='VersionName';
