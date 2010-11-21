@@ -1320,7 +1320,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/FixedAssetJournal.php?NewJournal=Yes' . SID . '">' . _('Depreciation Journal') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/FixedAssetDepreciation.php' . SID . '">' . _('Depreciation Journal') . '</a></p>'; ?>
 							</td>
 							</tr>
 						</table>
