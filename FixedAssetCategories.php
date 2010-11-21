@@ -41,6 +41,37 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The Fixed Asset Category description must be twenty characters or less long'),'error');
 	}
 
+	if ($_POST['CostAct'] == $_SESSION['CompanyRecord']['debtorsact']
+				OR $_POST['CostAct'] == $_SESSION['CompanyRecord']['creditorsact']
+				OR $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['debtorsact']
+				OR $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['creditorsact']
+				OR $_POST['CostAct'] == $_SESSION['CompanyRecord']['grnact']
+				OR $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['grnact']){
+		prnMsg(_('The accounts selected to post cost or accumulated depreciation to cannot be either of the debtors control account, creditors control account or GRN suspense accounts'),'error');
+		$InputError =1;
+	}
+	/*Make an array of the defined bank accounts */
+	$SQL = 'SELECT bankaccounts.accountcode
+			FROM bankaccounts,
+				chartmaster
+		WHERE bankaccounts.accountcode=chartmaster.accountcode';
+	$result = DB_query($SQL,$db);
+	$BankAccounts = array();
+	$i=0;
+
+	while ($Act = DB_fetch_row($result)){
+		$BankAccounts[$i]= $Act[0];
+		$i++;
+	}
+	if (in_array($_POST['CostAct'], $BankAccounts)) {
+		prnMsg( _('The asset cost account selected is a bank account - bank accounts are protected from having any other postings made to them. Select another balance sheet account for the asset cost'),'error');
+		$InputError =1;
+	}
+	if (in_array($_POST['AccumDepnAct'], $BankAccounts)) {
+		prnMsg( _('The accumulated depreciation account selected is a bank account - bank accounts are protected from having any other postings made to them. Select another balance sheet account for the asset accumulated depreciation'),'error');
+		$InputError =1;
+	}
+
 	if (isset($SelectedCategory) AND $InputError !=1) {
 
 		/*SelectedCategory could also exist if submit had not been clicked this code

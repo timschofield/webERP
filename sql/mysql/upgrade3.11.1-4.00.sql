@@ -473,14 +473,17 @@ ALTER TABLE `fixedassets` CHANGE `id` `assetid` INT( 11 ) NOT NULL AUTO_INCREMEN
 DELETE FROM stockcategory WHERE stocktype='A';
 ALTER TABLE `fixedassets` DROP `stockid`;
 
+INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES ('41', 'Asset Addition', '1');
 INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES ('42', 'Asset Category Change', '1');
 INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES ('43', 'Delete w/down asset', '1');
+INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES ('44', 'Depreciation', '1');
 
 CREATE TABLE `fixedassettrans` (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `assetid` INT NOT NULL ,
 `transtype` TINYINT NOT NULL ,
 `transno` INT NOT NULL ,
+`periodno` SMALLINT( 4 ) NOT NULL,
 `inputdate` DATE NOT,
 `cost` DOUBLE NOT NULL ,
 `depn` DOUBLE NOT NULL ,
