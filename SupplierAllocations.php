@@ -203,19 +203,19 @@ if (isset($_POST['UpdateDatabase'])){
 		      $_SESSION['Alloc']->TransDate = FormatDateForSQL($_SESSION['Alloc']->TransDate);
 
 		      $SQL = "INSERT INTO gltrans (type,
-		      					typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount)
-					VALUES ('" . $_SESSION['Alloc']->TransType . "',
-						'" . $_SESSION['Alloc']->TransNo . "',
-						'" . $_SESSION['Alloc']->TransDate . "',
-						'" . $PeriodNo . "',
-						'" . $_SESSION['CompanyRecord']['purchasesexchangediffact'] . "',
-						'". _('Exch diff') . "',
-						'" . $MovtInDiffOnExch . "')";
+											      					typeno,
+																trandate,
+																periodno,
+																account,
+																narrative,
+																amount)
+														VALUES ('" . $_SESSION['Alloc']->TransType . "',
+															'" . $_SESSION['Alloc']->TransNo . "',
+															'" . $_SESSION['Alloc']->TransDate . "',
+															'" . $PeriodNo . "',
+															'" . $_SESSION['CompanyRecord']['purchasesexchangediffact'] . "',
+															'". _('Exch diff') . "',
+															'" . $MovtInDiffOnExch . "')";
 
 		      $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
 		      			 _('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
@@ -225,20 +225,20 @@ if (isset($_POST['UpdateDatabase'])){
 
 
 		      $SQL = "INSERT INTO gltrans (type,
-		      					typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount)
-					VALUES ('" . $_SESSION['Alloc']->TransType . "',
-						'" . $_SESSION['Alloc']->TransNo . "',
-						'" . $_SESSION['Alloc']->TransDate . "',
-						'" . $PeriodNo . "',
-						'" . $_SESSION['CompanyRecord']['creditorsact'] . "',
-						'" . _('Exch Diff') . "',
-						'" . -$MovtInDiffOnExch . "')";
-
+											      					typeno,
+																trandate,
+																periodno,
+																account,
+																narrative,
+																amount)
+														VALUES ('" . $_SESSION['Alloc']->TransType . "',
+															'" . $_SESSION['Alloc']->TransNo . "',
+															'" . $_SESSION['Alloc']->TransDate . "',
+															'" . $PeriodNo . "',
+															'" . $_SESSION['CompanyRecord']['creditorsact'] . "',
+															'" . _('Exch Diff') . "',
+															'" . -$MovtInDiffOnExch . "')";
+									
 		      $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ' : ' .
 		      			 _('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
 
@@ -309,22 +309,22 @@ If (isset($_GET['AllocTrans'])){
 
 
 	$SQL= "SELECT systypes.typename,
-			supptrans.type,
-			supptrans.transno,
-			supptrans.trandate,
-			supptrans.supplierno,
-			suppliers.suppname,
-			rate,
-			(supptrans.ovamount+supptrans.ovgst) AS total,
-			supptrans.diffonexch,
-			supptrans.alloc
-		    FROM supptrans,
-		    	systypes,
-			suppliers
-		    WHERE supptrans.type = systypes.typeid
-		    AND supptrans.supplierno = suppliers.supplierid
-		    AND supptrans.id='" . $_SESSION['AllocTrans'] . "'";
-
+								supptrans.type,
+								supptrans.transno,
+								supptrans.trandate,
+								supptrans.supplierno,
+								suppliers.suppname,
+								rate,
+								(supptrans.ovamount+supptrans.ovgst) AS total,
+								supptrans.diffonexch,
+								supptrans.alloc
+							    FROM supptrans,
+							    	systypes,
+								suppliers
+							    WHERE supptrans.type = systypes.typeid
+							    AND supptrans.supplierno = suppliers.supplierid
+							    AND supptrans.id='" . $_SESSION['AllocTrans'] . "'";
+					
 	$Result = DB_query($SQL, $db);
 	if (DB_num_rows($Result) != 1){
 	echo _('There was a problem retrieving the information relating the transaction selected') . '. ' . _('Allocations are unable to proceed');
@@ -351,20 +351,20 @@ If (isset($_GET['AllocTrans'])){
 	/*First get the transactions that have outstanding balances ie Total-Alloc >0 */
 
 	$SQL= "SELECT supptrans.id,
-			typename,
-			transno,
-			trandate,
-			suppreference,
-			rate,
-			ovamount+ovgst AS total,
-			diffonexch,
-			alloc
-		FROM supptrans,
-			systypes
-		WHERE supptrans.type = systypes.typeid
-		AND supptrans.settled=0
-		AND abs(ovamount+ovgst-alloc)>0.009
-		AND supplierno='" . $_SESSION['Alloc']->SupplierID . "'";
+								typename,
+								transno,
+								trandate,
+								suppreference,
+								rate,
+								ovamount+ovgst AS total,
+								diffonexch,
+								alloc
+							FROM supptrans,
+								systypes
+							WHERE supptrans.type = systypes.typeid
+							AND supptrans.settled=0
+							AND abs(ovamount+ovgst-alloc)>0.009
+							AND supplierno='" . $_SESSION['Alloc']->SupplierID . "'";
 
 	$ErrMsg = _('There was a problem retrieving the transactions available to allocate to');
 
@@ -392,23 +392,23 @@ If (isset($_GET['AllocTrans'])){
 	above logic will be overwritten with the prev alloc detail below */
 
 	$SQL = "SELECT supptrans.id,
-			typename,
-			transno,
-			trandate,
-			suppreference,
-			rate,
-			ovamount+ovgst AS total,
-			diffonexch,
-			supptrans.alloc-suppallocs.amt AS prevallocs,
-			amt,
-			suppallocs.id AS allocid
-			  FROM supptrans,
-			  	systypes,
-				suppallocs
-			  WHERE supptrans.type = systypes.typeid
-			  AND supptrans.id=suppallocs.transid_allocto
-			  AND suppallocs.transid_allocfrom='" . $_SESSION['AllocTrans'] .
-			  "' AND supplierno='" . $_SESSION['Alloc']->SupplierID . "'";
+									typename,
+									transno,
+									trandate,
+									suppreference,
+									rate,
+									ovamount+ovgst AS total,
+									diffonexch,
+									supptrans.alloc-suppallocs.amt AS prevallocs,
+									amt,
+									suppallocs.id AS allocid
+									  FROM supptrans,
+									  	systypes,
+										suppallocs
+									  WHERE supptrans.type = systypes.typeid
+									  AND supptrans.id=suppallocs.transid_allocto
+									  AND suppallocs.transid_allocfrom='" . $_SESSION['AllocTrans'] .
+									  "' AND supplierno='" . $_SESSION['Alloc']->SupplierID . "'";
 
 	$ErrMsg = _('There was a problem retrieving the previously allocated transactions for modification');
 

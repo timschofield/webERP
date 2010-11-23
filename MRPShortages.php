@@ -35,7 +35,7 @@ if (isset($_POST['PrintPDF'])) {
 	$sql = 'CREATE TEMPORARY TABLE demandtotal (
 				part char(20),
 				demand double,
-				KEY `PART` (`part`))';
+				KEY `PART` (`part`)) DEFAULT CHARSET=utf8';
 	$result = DB_query($sql,$db,_('Create of demandtotal failed because'));
 
 	$sql = 'INSERT INTO demandtotal
@@ -50,7 +50,7 @@ if (isset($_POST['PrintPDF'])) {
 	$sql = 'CREATE TEMPORARY TABLE supplytotal (
 				part char(20),
 				supply double,
-				KEY `PART` (`part`))';
+				KEY `PART` (`part`)) DEFAULT CHARSET=utf8';
 	$result = DB_query($sql,$db,_('Create of supplytotal failed because'));
 
 /* 21/03/2010: Ricard modification to allow items with total supply = 0 be included in the report */

@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
 
 	$sql = 'CREATE TEMPORARY TABLE passbom (
 				part char(20),
-				sortpart text)';
+				sortpart text) DEFAULT CHARSET=utf8';
 	$ErrMsg = _('The SQL to to create passbom failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
 				parent char(20),
 				component char(20),
 				sortpart text,
-				level int)';
+				level int) DEFAULT CHARSET=utf8';
 	$result = DB_query($sql,$db,_('Create of tempbom failed because'));
 	// To create levels, first, find parts in bom that are top level assemblies.
 	// Do this by doing a LEFT JOIN from bom to bom (as bom2), linking
@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
 
 		$sql = 'CREATE TEMPORARY TABLE passbom (
 			part char(20),
-			sortpart text)';
+			sortpart text) DEFAULT CHARSET=utf8';
 		$result = DB_query($sql,$db);
 
 		$sql = "INSERT INTO passbom (part, sortpart)
@@ -109,7 +109,7 @@ if (isset($_POST['submit'])) {
 	flush();
 	$sql = 'CREATE TEMPORARY TABLE bomlevels (
 									part char(20),
-									level int)';
+									level int) DEFAULT CHARSET=utf8';
 	$result = DB_query($sql,$db);
 
 	// Read tempbom and split sortpart into separate parts. For each separate part, calculate level as
@@ -141,7 +141,7 @@ if (isset($_POST['submit'])) {
 							leadtime smallint(6) NOT NULL default "0",
 							pansize double NOT NULL default "0",
 							shrinkfactor double NOT NULL default "0",
-							eoq double NOT NULL default "0")';
+							eoq double NOT NULL default "0") DEFAULT CHARSET=utf8';
 	$result = DB_query($sql,$db);
 	$sql = 'INSERT INTO levels (part,
 								level,
@@ -229,7 +229,7 @@ if (isset($_POST['submit'])) {
 				mrpdemandtype varchar(6),
 				orderno int(11),
 				directdemand smallint,
-				whererequired char(20))';
+				whererequired char(20)) DEFAULT CHARSET=utf8';
 	$result = DB_query($sql,$db,_('Create of mrprequirements failed because'));
 
 	prnMsg(_('Loading requirements from sales orders'),'info');
@@ -343,7 +343,7 @@ if (isset($_POST['submit'])) {
 				orderno int(11),
 				mrpdate date,
 				updateflag smallint(6),
-				PRIMARY KEY (id))';
+				PRIMARY KEY (id)) DEFAULT CHARSET=utf8';
 	$result = DB_query($sql,$db,_('Create of mrpsupplies failed because'));
 
 	prnMsg(_('Loading supplies from purchase orders'),'info');
@@ -495,7 +495,7 @@ if (isset($_POST['submit'])) {
 						shrinkageflag varchar(5),
 						eoqflag varchar(5),
 						usemrpdemands varchar(5),
-						leeway smallint)';
+						leeway smallint) DEFAULT CHARSET=utf8';
 	$result = DB_query($sql,$db);
 	// Create entry for location field from $_POST['location'], which is an array
 	// since multiple locations can be selected
