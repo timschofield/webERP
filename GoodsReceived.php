@@ -78,12 +78,12 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 				'"></td></tr></table><br>';
 
 	echo '<table cellpadding=2 class=selection>
-		<tr><th>' . _('Item Code') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Quantity') . '<br>' . _('Ordered') . '</th>
-				<th>' . _('Units') . '</th>
-				<th>' . _('Already Received') . '</th>
-				<th>' . _('This Delivery') . '<br>' . _('Quantity') . '</th>';
+					<tr><th>' . _('Item Code') . '</th>
+							<th>' . _('Description') . '</th>
+							<th>' . _('Quantity') . '<br>' . _('Ordered') . '</th>
+							<th>' . _('Units') . '</th>
+							<th>' . _('Already Received') . '</th>
+							<th>' . _('This Delivery') . '<br>' . _('Quantity') . '</th>';
 
 	if ($_SESSION['ShowValueOnGRN']==1) {
 		echo '<th>' . _('Price') . '</th><th>' . _('Total Value') . '<br>' . _('Received') . '</th>';
@@ -362,8 +362,8 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 			if ($OrderLine->StockID!='') { /*Its a stock item line */
 				/*Need to get the current standard cost as it is now so we can process GL jorunals later*/
 				$SQL = "SELECT materialcost + labourcost + overheadcost as stdcost
-						FROM stockmaster
-						WHERE stockid='" . $OrderLine->StockID . "'";
+										FROM stockmaster
+										WHERE stockid='" . $OrderLine->StockID . "'";
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The standard cost of the item being received cannot be retrieved because');
 				$DbgMsg = _('The following SQL to retrieve the standard cost was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -482,7 +482,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
 
-	/* If its a stock item still .... Insert stock movements - with unit cost */
+	/* ... Insert stock movements - with unit cost */
 
 				$SQL = "INSERT INTO stockmoves (stockid,
 																				type,
@@ -579,6 +579,40 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 				}
 			} /*end of its a stock item - updates to locations and insert movements*/
 
+			/* Check to see if the line item was flagged as the purchase of an asset */
+			if ($OrderLine->AssetID !=''){ //then it is an asset
+				
+				/*first validate the AssetID and if it doesn't exist treat it like a normal nominal item  */
+				$CheckAssetExistsResult = DB_query("SELECT assetid, costact 
+																						FROM fixedassets INNER JOIN fixedassetcategories
+																						ON fixedassets.assetcategoryid=fixedassetcategories.categoryid 
+																						WHERE assetid='" . $OrderLine->AssetID . "'",$db);
+				if (DB_num_rows($CheckAssetExistsResult)==1){ //then work with the assetid provided
+					
+					/*Need to add a fixedassettrans for the cost of the asset being received */
+					$SQL = "INSERT INTO fixedassettrans (assetid,
+																						transtype,
+																						typeno,
+																						transdate,
+																						periodno,
+																						inputdate,
+																						cost)
+																	VALUES (25,
+																					'" . $GRN . "',
+																					'" . $_POST['DefaultReceivedDate'] . "',
+																					'" . $PeriodNo . "',
+																					'" . Date('Y-m-d') . "',
+																					'" . $CurrentStandardCost * $OrderLine->ReceiveQty . "')";
+					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
+					$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
+					$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
+				
+					/*Now get the correct cost GL account from the asset category */
+					$AssetRow = DB_fetch_array($CheckAssetExistsResult);
+					/*Over-ride any GL account specified in the order with the asset category cost account */
+					$_SESSION['PO']->LineItems[$OrderLine->LineNo]->GLCode = $AssetRow['costact'];
+				} //assetid provided doesn't exist so ignore it and treat as a normal nominal item
+			} //assetid is set so the nominal item is an asset
 /* If GLLink_Stock then insert GLTrans to debit the GL Code  and credit GRN Suspense account at standard cost*/
 			if ($_SESSION['PO']->GLLink==1 AND $OrderLine->GLCode !=0){ /*GLCode is set to 0 when the GLLink is not activated this covers a situation where the GLLink is now active but it wasn't when this PO was entered */
 

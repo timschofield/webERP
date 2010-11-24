@@ -16,45 +16,45 @@
 /*read in all the guff from the selected order into the PO PurchOrder Class variable  */
 
 	$OrderHeaderSQL = 'SELECT purchorders.supplierno,
-				suppliers.suppname,
-				purchorders.comments,
-				purchorders.orddate,
-				purchorders.rate,
-				purchorders.dateprinted,
-				purchorders.deladd1,
-				purchorders.deladd2,
-				purchorders.deladd3,
-				purchorders.deladd4,
-				purchorders.deladd5,
-				purchorders.deladd6,
-				purchorders.tel,
-				purchorders.suppdeladdress1,
-				purchorders.suppdeladdress2,
-				purchorders.suppdeladdress3,
-				purchorders.suppdeladdress4,
-				purchorders.suppdeladdress5,
-				purchorders.suppdeladdress6,
-				purchorders.suppliercontact,
-				purchorders.supptel,
-				purchorders.contact,
-				purchorders.allowprint,
-				purchorders.requisitionno,
-				purchorders.intostocklocation,
-				purchorders.initiator,
-				purchorders.version,
-				purchorders.status,
-				purchorders.stat_comment,
-				purchorders.deliverydate,
-				purchorders.port,
-				suppliers.currcode,
-				locations.managed ,
-				purchorders.paymentterms
-			FROM purchorders
-				LEFT JOIN locations ON purchorders.intostocklocation=locations.loccode,
-				suppliers
-			WHERE purchorders.supplierno = suppliers.supplierid
-			AND purchorders.orderno = ' . $_GET['ModifyOrderNumber'];
-
+														suppliers.suppname,
+														purchorders.comments,
+														purchorders.orddate,
+														purchorders.rate,
+														purchorders.dateprinted,
+														purchorders.deladd1,
+														purchorders.deladd2,
+														purchorders.deladd3,
+														purchorders.deladd4,
+														purchorders.deladd5,
+														purchorders.deladd6,
+														purchorders.tel,
+														purchorders.suppdeladdress1,
+														purchorders.suppdeladdress2,
+														purchorders.suppdeladdress3,
+														purchorders.suppdeladdress4,
+														purchorders.suppdeladdress5,
+														purchorders.suppdeladdress6,
+														purchorders.suppliercontact,
+														purchorders.supptel,
+														purchorders.contact,
+														purchorders.allowprint,
+														purchorders.requisitionno,
+														purchorders.intostocklocation,
+														purchorders.initiator,
+														purchorders.version,
+														purchorders.status,
+														purchorders.stat_comment,
+														purchorders.deliverydate,
+														purchorders.port,
+														suppliers.currcode,
+														locations.managed ,
+														purchorders.paymentterms
+													FROM purchorders
+														LEFT JOIN locations ON purchorders.intostocklocation=locations.loccode,
+														suppliers
+													WHERE purchorders.supplierno = suppliers.supplierid
+													AND purchorders.orderno = ' . $_GET['ModifyOrderNumber'];
+										
 	   $ErrMsg =  _('The order cannot be retrieved because');
 	   $DbgMsg =  _('The SQL statement that was used and failed was');
 	   $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg,$DbgMsg);
@@ -243,7 +243,8 @@
 																									$myrow['gw'],
 																									$myrow['cuft'],
 																									$myrow['total_quantity'],
-																									$myrow['total_amount']);
+																									$myrow['total_amount'],
+																									$myrow['assetid'] );
 																		
 					$_SESSION['PO'.$identifier]->LineItems[$_SESSION['PO'.$identifier]->LinesOnOrder]->PODetailRec = $myrow['podetailitem'];
 					$_SESSION['PO'.$identifier]->LineItems[$_SESSION['PO'.$identifier]->LinesOnOrder]->StandardCost = $myrow['stdcostunit'];  /*Needed for receiving goods and GL interface */

@@ -479,17 +479,18 @@ INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES ('42', 'Asset Cat
 INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES ('43', 'Delete w/down asset', '1');
 INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES ('44', 'Depreciation', '1');
 
-CREATE TABLE `fixedassettrans` (
-`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-`assetid` INT NOT NULL ,
-`transtype` TINYINT NOT NULL ,
-`transno` INT NOT NULL ,
-`periodno` SMALLINT( 4 ) NOT NULL,
-`inputdate` DATE NOT,
-`cost` DOUBLE NOT NULL ,
-`depn` DOUBLE NOT NULL ,
-INDEX ( `assetid` , `transtype` , `transno` ),
+CREATE TABLE fixedassettrans(
+id INT( 11 ) NOT NULL AUTO_INCREMENT ,
+assetid INT( 11 ) NOT NULL ,
+transtype TINYINT( 4 ) NOT NULL ,
+transno INT NOT NULL ,
+periodno SMALLINT( 6 ) NOT NULL ,
+inputdate DATE NOT NULL ,
+cost DOUBLE NOT NULL ,
+depn DOUBLE NOT NULL ,
+PRIMARY KEY ( id ) ,
+INDEX ( assetid, transtype, transno ) ,
 INDEX ( inputdate )
-) ENGINE = InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 UPDATE config SET confvalue='4.0-RC2' WHERE confname='VersionName';
