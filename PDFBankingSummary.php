@@ -43,19 +43,19 @@ if (!isset($_POST['BatchNo'])){
 
 if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 	$SQL= 'SELECT bankaccountname,
-		bankaccountnumber,
-		ref,
-		transdate,
-		banktranstype,
-		bankact,
-		banktrans.exrate,
-		banktrans.functionalexrate,
-		banktrans.currcode
-	FROM bankaccounts,
-		banktrans
-	WHERE bankaccounts.accountcode=banktrans.bankact
-	AND banktrans.transno="' . $_POST['BatchNo'] . '"
-	AND banktrans.type=12';
+								bankaccountnumber,
+								ref,
+								transdate,
+								banktranstype,
+								bankact,
+								banktrans.exrate,
+								banktrans.functionalexrate,
+								banktrans.currcode
+							FROM bankaccounts,
+								banktrans
+							WHERE bankaccounts.accountcode=banktrans.bankact
+							AND banktrans.transno="' . $_POST['BatchNo'] . '"
+							AND banktrans.type=12';
 
 	$ErrMsg = _('An error occurred getting the header information about the receipt batch number') . ' ' . $_POST['BatchNo'];
 	$DbgMsg = _('The SQL used to get the receipt header information that failed was');
@@ -81,15 +81,14 @@ $BankingReference = $myrow['ref'];
 
 
 $SQL = "SELECT debtorsmaster.name,
-		ovamount,
-		invtext,
-		reference
-	FROM debtorsmaster,
-		debtortrans
-	WHERE debtorsmaster.debtorno=debtortrans.debtorno
-	AND debtortrans.transno='" . $_POST['BatchNo'] . "'
-	AND debtortrans.type=12";
-
+								ovamount,
+								invtext,
+								reference
+							FROM debtorsmaster INNER JOIN debtortrans
+							ON debtorsmaster.debtorno=debtortrans.debtorno
+							WHERE debtortrans.transno='" . $_POST['BatchNo'] . "'
+							AND debtortrans.type=12";
+						
 $CustRecs=DB_query($SQL,$db,'','',false,false);
 if (DB_error_no($db)!=0){
 	$title = _('Create PDF Print-out For A Batch Of Receipts');
@@ -102,12 +101,12 @@ if (DB_error_no($db)!=0){
   	exit;
 }
 $SQL = "SELECT narrative,
-		amount
-	FROM gltrans
-	WHERE gltrans.typeno=" . $_POST['BatchNo'] . "
-	AND gltrans.type=12 and gltrans.amount <0
-	AND gltrans.account !='" . $myrow['bankact'] . "'
-	AND gltrans.account !='" . $_SESSION['CompanyRecord']['debtorsact'] . "'";
+								amount
+							FROM gltrans
+							WHERE gltrans.typeno='" . $_POST['BatchNo'] . "'
+							AND gltrans.type=12 and gltrans.amount <0
+							AND gltrans.account !='" . $myrow['bankact'] . "'
+							AND gltrans.account !='" . $_SESSION['CompanyRecord']['debtorsact'] . "'";
 
 $GLRecs=DB_query($SQL,$db,'','',false,false);
 if (DB_error_no($db)!=0){
@@ -121,16 +120,6 @@ if (DB_error_no($db)!=0){
 	exit;
 }
 
-if (DB_num_rows($GLRecs) == 0){
-	$title = _('Create PDF Print-out For A Batch Of Receipts');
-	include ('includes/header.inc');
-	prnMsg(_('No GL receipts retrieved for batch number') . ' ' . $_POST['BatchNo'], 'warn');
-	if ($debug==1){
-		prnMsg(_('The SQL used to get the GL receipt information that no any record retrieved') . ':<br>' . $SQL,'error');
-	}
-	include('includes/footer.inc');
-	exit;
-}
 
 include('includes/PDFStarter.php');
 
@@ -152,7 +141,7 @@ while ($myrow=DB_fetch_array($CustRecs)){
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+315,$YPos,100,$FontSize,$myrow['reference'], 'left');
 
 	$YPos -= ($line_height);
-	$TotalBanked = $TotalBanked - $myrow['ovamount'];
+	$TotalBanked -= $myrow['ovamount'];
 
 	if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		/*Then set up a new page */
@@ -162,11 +151,11 @@ while ($myrow=DB_fetch_array($CustRecs)){
 
 /* Right now print out the GL receipt entries in the batch */
 while ($myrow=DB_fetch_array($GLRecs)){
-
+	
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format((-$myrow['amount']*$ExRate*$FunctionalExRate),2), 'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,$myrow['narrative'], 'left');
 	$YPos -= ($line_height);
-	$TotalBanked = $TotalBanked + (-$myrow['amount']*$ExRate);
+	$TotalBanked +=  (-$myrow['amount']*$ExRate);
 
 	if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		/*Then set up a new page */
@@ -174,21 +163,11 @@ while ($myrow=DB_fetch_array($GLRecs)){
 	} /*end of new page header  */
 } /* end of while there are GL receipts in the batch to print */
 
+
 $YPos-=$line_height;
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format($TotalBanked,2), 'right');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,_('TOTAL') . ' ' . $Currency . ' ' . _('BANKED'), 'left');
-/* UldisN
-$buf = $pdf->output();
-$len = strlen($buf);
-header('Content-type: application/pdf');
-header('Content-Length: ' . $len);
-header('Content-Disposition: inline; filename=BankingSummary.pdf');
-header('Expires: 0');
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
 
-$pdf->stream();
-*/
 $pdf->OutputD($_SESSION['DatabaseName'] . '_BankingSummary_' . date('Y-m-d').'.pdf');//UldisN
 $pdf->__destruct(); //UldisN
 }

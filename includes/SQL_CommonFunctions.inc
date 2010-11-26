@@ -16,9 +16,9 @@ Also updates the transaction number
 
 */
 
-	DB_query("LOCK TABLES systypes WRITE",$db);
+	DB_query('LOCK TABLES systypes WRITE',$db);
 
-	$SQL = "SELECT typeno FROM systypes WHERE typeid = " . $TransType;
+	$SQL = 'SELECT typeno FROM systypes WHERE typeid = ' . $TransType;
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>' . _('The next transaction number could not be retrieved from the database because');
 	$DbgMsg =  _('The following SQL to retrieve the transaction number was used');
@@ -63,9 +63,9 @@ Function GetTaxRate ($TaxAuthority, $DispatchTaxProvince, $TaxCategory, &$db){
 
 	$QuerySQL = "SELECT taxrate
 			FROM taxauthrates
-			WHERE taxauthority=" . $TaxAuthority . "
-			AND dispatchtaxprovince=" . $DispatchTaxProvince . "
-			AND taxcatid = " . $TaxCategory;
+			WHERE taxauthority='" . $TaxAuthority . "'
+			AND dispatchtaxprovince='" . $DispatchTaxProvince . "'
+			AND taxcatid = '" . $TaxCategory . "'";
 
 	$ErrMsg = _('The tax rate for this item could not be retrieved because');
 	$GetTaxRateResult = DB_query($QuerySQL,$db,$ErrMsg);
@@ -92,9 +92,9 @@ Function GetTaxes ($TaxGroup, $DispatchTaxProvince, $TaxCategory, &$db) {
 				taxauthrates.taxauthority=taxgrouptaxes.taxauthid
 				INNER JOIN taxauthorities ON
 				taxauthrates.taxauthority=taxauthorities.taxid
-			WHERE taxgrouptaxes.taxgroupid=" . $TaxGroup . "
-			AND taxauthrates.dispatchtaxprovince=" . $DispatchTaxProvince . "
-			AND taxauthrates.taxcatid = " . $TaxCategory . "
+			WHERE taxgrouptaxes.taxgroupid='" . $TaxGroup . "'
+			AND taxauthrates.dispatchtaxprovince='" . $DispatchTaxProvince . "'
+			AND taxauthrates.taxcatid = '" . $TaxCategory . "'
 			ORDER BY taxgrouptaxes.calculationorder";
 
 
@@ -162,7 +162,7 @@ function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 		if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $QOH!=0){
 
 			$CostUpdateNo = GetNextTransNo(35, $db);
-			$PeriodNo = GetPeriod(Date('d/m/Y'), $db);
+			$PeriodNo = GetPeriod($_SESSION['DefaultDateFormat'], $db);
 			$StockGLCode = GetStockGLCode($StockID,$db);
 
 			$ValueOfChange = $QOH * ($NewCost - $OldCost);
