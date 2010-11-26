@@ -493,4 +493,6 @@ INDEX ( assetid, transtype, transno ) ,
 INDEX ( inputdate )
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
+ALTER TABLE stockcheckfreeze CHANGE stockcheckdate stockcheckdate date NOT NULL DEFAULT '0000-00-00';
+
 UPDATE config SET confvalue='4.0-RC2' WHERE confname='VersionName';
