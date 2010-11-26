@@ -83,11 +83,11 @@ if (!isset($_SESSION['Items'.$identifier])){
 			include('includes/footer.inc');
 			exit;
 		}
-
+		
 		$CashSaleCustomer = explode('-',$myrow['cashsalecustomer']);
 
-		$_SESSION['Items'.$identifier]->Branch  = $CashSaleCustomer[0];
-		$_SESSION['Items'.$identifier]->DebtorNo = $CashSaleCustomer[1];
+		$_SESSION['Items'.$identifier]->Branch  = $CashSaleCustomer[1];
+		$_SESSION['Items'.$identifier]->DebtorNo = $CashSaleCustomer[0];
 		$_SESSION['Items'.$identifier]->LocationName = $myrow['locationname'];
 		$_SESSION['Items'.$identifier]->Location = $_SESSION['UserStockLocation'];
 		$_SESSION['Items'.$identifier]->DispatchTaxProvince = $myrow['taxprovinceid'];
