@@ -221,8 +221,8 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 		$tableheader = '<tr>
 					<th>' . _('Asset Code') . '</th>
 					<th>' . _('Description') . '</th>
-					<th>' . _('Date Purchased') . '</th>
 					<th>' . _('Asset Location') . '</th>
+					<th>' . _('Date Purchased') . '</th>
 				</tr>';
 		echo $tableheader;
 		$j = 1;

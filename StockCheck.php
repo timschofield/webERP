@@ -23,10 +23,12 @@ If (isset($_POST['PrintPDF'])
 		$result = DB_query($sql,$db);
 		$sql = "INSERT INTO stockcheckfreeze (stockid,
 										  loccode,
-										  qoh)
+										  qoh,
+										  stockcheckdate)
 				   SELECT locstock.stockid,
 						  locstock.loccode,
-						  locstock.quantity
+						  locstock.quantity,
+						  '" . Date('Y-m-d') . "'
 				   FROM locstock,
 						stockmaster
 				   WHERE locstock.stockid=stockmaster.stockid and
@@ -73,19 +75,20 @@ If (isset($_POST['PrintPDF'])
 
 		$sql = "INSERT INTO stockcheckfreeze (stockid,
 										  loccode,
-										  qoh)
+										  qoh,
+										  stockcheckdate)
 				SELECT locstock.stockid,
 					loccode ,
-					locstock.quantity
-				FROM locstock,
-					stockmaster
-				WHERE locstock.stockid=stockmaster.stockid AND
-					locstock.loccode='" . $_POST['Location'] . "' AND
-					stockmaster.categoryid>='" . $_POST['FromCriteria'] . "' AND
-													 stockmaster.categoryid<='" . $_POST['ToCriteria'] . "' AND
-													 stockmaster.mbflag!='A' AND
-													 stockmaster.mbflag!='K' AND
-													 stockmaster.mbflag!='D'";
+					locstock.quantity,
+					'" . Date('Y-m-d') . "'
+				FROM locstock INNER JOIN stockmaster
+				ON locstock.stockid=stockmaster.stockid
+				WHERE locstock.loccode='" . $_POST['Location'] . "' AND
+								stockmaster.categoryid>='" . $_POST['FromCriteria'] . "' AND
+								 stockmaster.categoryid<='" . $_POST['ToCriteria'] . "' AND
+								 stockmaster.mbflag!='A' AND
+								 stockmaster.mbflag!='K' AND
+								 stockmaster.mbflag!='D'";
 
 		$result = DB_query($sql, $db,'','',false,false);
 		if (DB_error_no($db) !=0) {

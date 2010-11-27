@@ -94,7 +94,8 @@ Class SuppTrans {
 														$ShiptRef,
 														$JobRef,
 														$GLCode,
-														$PONo){
+														$PONo,
+														$AssetID=0){
 
 		if ($This_QuantityInv!=0 AND isset($This_QuantityInv)){
 			$this->GRNs[$GRNNo] = new GRNs($GRNNo,
@@ -111,7 +112,8 @@ Class SuppTrans {
 																			$ShiptRef,
 																			$JobRef,
 																			$GLCode,
-																			$PONo);
+																			$PONo,
+																			$AssetID);
 			Return 1;
 		}
 		Return 0;
@@ -147,8 +149,7 @@ Class SuppTrans {
 																	$ShiptRef,
 																	$JobRef,
 																	$GLCode,
-																	$Hold
-																	);
+																	$Hold );
 			Return 1;
 		}
 		Return 0;
@@ -172,6 +173,7 @@ Class SuppTrans {
 																								$GRNSrc->JobRef,
 																								$GRNSrc->GLCode,
 																								$GRNSrc->PONo,
+																								$GRNSrc->AssetID,
 																								$GRNSrc->Hold);
 			Return 1;
 		}
@@ -253,22 +255,26 @@ all the info to do the necessary entries without looking up ie additional querie
 	var $GLCode;
 	var $PONo;
 	var $Hold;
+	var $AssetID;
 
 	function GRNs ($GRNNo,
-			$PODetailItem,
-			$ItemCode,
-			$ItemDescription,
-			$QtyRecd,
-			$Prev_QuantityInv,
-			$This_QuantityInv,
-			$OrderPrice,
-			$ChgPrice,
-			$Complete,
-			$StdCostUnit=0,
-			$ShiptRef,
-			$JobRef,
-			$GLCode,
-			$PONo){
+								$PODetailItem,
+								$ItemCode,
+								$ItemDescription,
+								$QtyRecd,
+								$Prev_QuantityInv,
+								$This_QuantityInv,
+								$OrderPrice,
+								$ChgPrice,
+								$Complete,
+								$StdCostUnit=0,
+								$ShiptRef,
+								$JobRef,
+								$GLCode,
+								$PONo,
+								$AssetID,
+								$Hold=0){
+
 
 	/* Constructor function to add a new GRNs object with passed params */
 		$this->GRNNo = $GRNNo;
@@ -286,6 +292,8 @@ all the info to do the necessary entries without looking up ie additional querie
 		$this->JobRef = $JobRef;
 		$this->GLCode = $GLCode;
 		$this->PONo = $PONo;
+		$this->AssetID = $AssetID;
+		$this->Hold = $Hold;
 	}
 
 	function Modify ($PODetailItem,

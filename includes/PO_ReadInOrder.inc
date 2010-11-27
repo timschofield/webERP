@@ -117,7 +117,6 @@
 
 			if (DB_num_rows($result_SuppSelect)==1){
 				$myrow=DB_fetch_array($result_SuppSelect);
-//				$_POST['Select'] = $myrow['supplierid'];
 			} elseif (DB_num_rows($result_SuppSelect)==0){
 				prnMsg( _('No supplier records contain the selected text') . ' - ' .
 					_('please alter your search criteria and try again'),'info');
@@ -165,9 +164,9 @@
 																	AND purchorderdetails.orderno ='" . $_GET['ModifyOrderNumber'] . "'
 																ORDER BY podetailitem";
 
-		  $ErrMsg =  _('The lines on the purchase order cannot be retrieved because');
-		  $DbgMsg =  _('The SQL statement that was used to retrieve the purchase order lines was');
-			  $LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg);
+			$ErrMsg =  _('The lines on the purchase order cannot be retrieved because');
+			$DbgMsg =  _('The SQL statement that was used to retrieve the purchase order lines was');
+			$LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg);
 
 		  if (db_num_rows($LineItemsResult) > 0) {
 
@@ -188,14 +187,14 @@
 					} else {
 						$StockID = $myrow['itemcode'];
 					}
-					$DateSQL='SELECT max(effectivefrom)
+					$LatestPurchDataSQL='SELECT max(effectivefrom)
 											FROM purchdata
 											WHERE supplierno="'.$_SESSION['PO'.$identifier]->SupplierID.'"
-												AND stockid="'.$StockID.'"
+												AND stockid="'. $StockID.'"
 												AND effectivefrom<="'.$_SESSION['PO'.$identifier]->Orig_OrderDate.'"';
-					$DateResult=DB_query($DateSQL, $db);
-					$Date=DB_fetch_row($DateResult);
-					if ($Date[0]!='') {
+					$LatestPurchDataResult=DB_query($LatestPurchDataSQL, $db);
+					$LatestPurchDataRow=DB_fetch_row($LatestPurchDataResult);
+					if ($LatestPurchDataRow[0] != '') {
 						$sql='SELECT unitsofmeasure.unitname,
 												suppliers_partno,
 												conversionfactor
@@ -204,7 +203,7 @@
 											ON purchdata.suppliersuom=unitsofmeasure.unitid
 											WHERE supplierno="'.$_SESSION['PO'.$identifier]->SupplierID.'"
 											AND stockid="'.$StockID.'"
-											AND effectivefrom="'.$Date[0].'"';
+											AND effectivefrom="'.$LatestPurchDataRow[0].'"';
 						$PurchDataResult=DB_query($sql, $db);
 						$myrow2=DB_fetch_array($PurchDataResult);
 					} else {

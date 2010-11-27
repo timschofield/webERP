@@ -1,5 +1,9 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p></p>
+<p>27/11/10 Phil install/index.php check for critical requirements before allowing install to proceed</p>
+<p>27/11/10 Phil: includes/DefinePOClass.php change variable to camel case also PO_Header.php PO_Items.php PO_ReadInOrder.inc GoodsReceived.php - scope for error needs lots of testing please</p>
+<p>27/11/10 Phil: PurchData - fix MinOrderQty error trapping with appropriate text and default to 1</p>
+<p>27/11/10 Phil: SupplierInvoice.php removed check on weighted average costing to reverse GRN suspense posting and set cost to zero - this was defeating the price variance calculation and the proper valuation of stock. Also took out of the calculations the conversionfactor - will need to alter goods received code to ensure only our units recorded in quantity received.</p>
 <p>26/11/10 Tim: upgrade3.11.1-4.00.sql - Add default date for stockcheckdate field in stockcheckfreeze table</p>
 <p>26/11/10 Otandeka: CounterSales.php - Fix bug in counter sales script.</p>
 <p>24/11/10 Phil: GoodsReceived.php - modified to insert fixedassettrans and to post nominal POs to fixed asset cost account from fixedassetcategories.costact</p>

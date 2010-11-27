@@ -42,20 +42,21 @@ if (isset($_POST['AddGRNToTrans'])){
 
 	if ($InputError==False){
 		$_SESSION['SuppTrans']->Add_GRN_To_Trans($_POST['GRNNumber'],
-							$_POST['PODetailItem'],
-							$_POST['ItemCode'],
-							$_POST['ItemDescription'],
-							$_POST['QtyRecd'],
-							$_POST['Prev_QuantityInv'],
-							$_POST['This_QuantityCredited'],
-							$_POST['OrderPrice'],
-							$_POST['ChgPrice'],
-							$Complete,
-							$_POST['StdCostUnit'],
-							$_POST['ShiptRef'],
-							$_POST['JobRef'],
-							$_POST['GLCode'],
-							$_POST['PONo']);
+																						$_POST['PODetailItem'],
+																						$_POST['ItemCode'],
+																						$_POST['ItemDescription'],
+																						$_POST['QtyRecd'],
+																						$_POST['Prev_QuantityInv'],
+																						$_POST['This_QuantityCredited'],
+																						$_POST['OrderPrice'],
+																						$_POST['ChgPrice'],
+																						$Complete,
+																						$_POST['StdCostUnit'],
+																						$_POST['ShiptRef'],
+																						$_POST['JobRef'],
+																						$_POST['GLCode'],
+																						$_POST['PONo'],
+																						$_POST['AssetID']);
 	}
 }
 
@@ -64,7 +65,6 @@ if (isset($_GET['Delete'])){
 	$_SESSION['SuppTrans']->Remove_GRN_From_Trans($_GET['Delete']);
 
 }
-
 
 /*Show all the selected GRNs so far from the SESSION['SuppTrans']->GRNs array */
 
@@ -118,7 +118,8 @@ $SQL = "SELECT grnno,
                grns.itemdescription,
                grns.qtyrecd,
                grns.quantityinv,
-               purchorderdetails.stdcostunit
+               purchorderdetails.stdcostunit,
+               purchorderdetails.assetid
                FROM grns,
                     purchorderdetails
                WHERE grns.podetailitem=purchorderdetails.podetailitem AND
@@ -204,10 +205,11 @@ if (isset($_POST['GRNNo']) AND $_POST['GRNNo']!=''){
                  grns.qtyrecd,
                  grns.qtyrecd - grns.quantityinv
                  AS qtyostdg,
-                    purchorderdetails.stdcostunit,
-                    purchorderdetails.shiptref,
-                    purchorderdetails.jobref,
-                    shipments.closed
+                 purchorderdetails.stdcostunit,
+                 purchorderdetails.shiptref,
+                 purchorderdetails.jobref,
+                 shipments.closed,
+                 purchorderdetails.assetid   
                  FROM grns,
                       purchorderdetails
                  LEFT JOIN shipments ON purchorderdetails.shiptref=shipments.shiptref
@@ -257,6 +259,7 @@ if (isset($_POST['GRNNo']) AND $_POST['GRNNo']!=''){
 	echo '<input type=hidden name="GLCode" Value="' . $myrow['glcode'] . '">';
 	echo '<input type=hidden name="PODetailItem" Value="' . $myrow['podetailitem'] . '">';
 	echo '<input type=hidden name="PONo" Value="' . $myrow['orderno'] . '">';
+	echo '<input type=hidden name="AssetID" Value="' . $myrow['assetid'] . '">';
 }
 
 echo '</form>';

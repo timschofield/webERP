@@ -32,7 +32,6 @@ if ($LastDepnRun[1]==0 AND $LastDepnRun[0]==NULL) { //then depn has never been r
 	$AllowUserEnteredProcessDate = false;
 	$_POST['ProcessDate'] = DateAdd(ConvertSQLDate($LastDepnRun[0]),'m',1);
 }
-$PeriodNo = GetPeriod($_POST['ProcessDate'],$db);
 
 /* Get list of assets for journal */
 $sql='SELECT fixedassets.assetid,
@@ -41,19 +40,20 @@ $sql='SELECT fixedassets.assetid,
 						fixedassets.accumdepn,
 						fixedassets.depntype,
 						fixedassets.depnrate,
-						fixedassetcategories.accumdepnact AS bsdepn,
-						fixedassetcategories.depnact AS pldepn,
+						fixedassets.datepurchased,
+						fixedassetcategories.accumdepnact,
+						fixedassetcategories.depnact,
 						fixedassetcategories.categorydescription
 			FROM fixedassets
 			INNER JOIN fixedassetcategories
 				ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
 			ORDER BY assetcategoryid, assetid';
-$result=DB_query($sql, $db);
+$AssetsResult=DB_query($sql, $db);
 
 if (isset($_POST['CommitDepreciation'])){
 	$result = DB_Txn_Begin($db);
 	$TransNo = GetNextTransNo(44, $db);
-	
+	$PeriodNo = GetPeriod($_POST['ProcessDate'],$db);
 }
 
 echo '<p></p><table>';
@@ -76,8 +76,8 @@ $TotalDepn = 0;
 $RowCounter = 0;
 $k=0;
 
-while ($myrow=DB_fetch_array($result)) {
-	if ($AssetCategoryDescription != $myrow['categorydescription'] OR $AssetCategoryDescription =='0'){
+while ($AssetRow=DB_fetch_array($AssetsResult)) {
+	if ($AssetCategoryDescription != $AssetRow['categorydescription'] OR $AssetCategoryDescription =='0'){
 		if ($AssetCategoryDescription !='0'){ //then print totals
 			echo '<tr><th colspan=2 align="right">' . _('Total for') . ' ' . $AssetCategoryDescription . ' </th>
 								<th class="number">' . number_format($TotalCategoryCost,2) . '</th>
@@ -87,22 +87,26 @@ while ($myrow=DB_fetch_array($result)) {
 								<th class="number">' . number_format($TotalCategoryDepn,2) . '</th>
 								</tr>';
 		}
-		echo '<tr><th colspan=8 align="left">' . $myrow['categorydescription']  . '</th></tr>';
-		$AssetCategoryDescription = $myrow['categorydescription'];
+		echo '<tr><th colspan=8 align="left">' . $AssetRow['categorydescription']  . '</th></tr>';
+		$AssetCategoryDescription = $AssetRow['categorydescription'];
 		$TotalCategoryCost = 0;
 		$TotalCategoryAccumDepn =0;
 		$TotalCategoryDepn = 0;
 	}
-	$BookValueBfwd = $myrow['cost'] - $myrow['accumdepn'];
-	if ($myrow['depntype']==0){ //striaght line depreciation
+	$BookValueBfwd = $AssetRow['cost'] - $AssetRow['accumdepn'];
+	if ($AssetRow['depntype']==0){ //striaght line depreciation
 		$DepreciationType = _('SL');
-		$NewDepreciation = $myrow['cost'] * $myrow['depnrate']/100/12;
+		$NewDepreciation = $AssetRow['cost'] * $AssetRow['depnrate']/100/12;
 		if ($NewDepreciation > $BookValueBfwd){
 			$NewDepreciation = $BookValueBfwd;
 		}
 	} else { //Diminishing value depreciation
 		$DepreciationType = _('DV');
-		$NewDepreciation = $BookValueBfwd * $myrow['depnrate']/100/12;
+		$NewDepreciation = $BookValueBfwd * $AssetRow['depnrate']/100/12;
+	}
+	if (Date1GreaterThanDate2($AssetRow['datepurchased'],$_POST['ProcessDate'])){
+		/*Over-ride calculations as the asset was not purchased at the date of the calculation!! */
+		$NewDepreciation =0;
 	}
 	$RowCounter++;
 	if ($RowCounter ==15){
@@ -116,23 +120,24 @@ while ($myrow=DB_fetch_array($result)) {
 		echo '<tr class="OddTableRows">';
 		$k++;
 	}
-	echo '<td>' . $myrow['assetid'] . '</td>
-				<td>' . $myrow['description'] . '</td>
-				<td class="number">' . number_format($myrow['cost'],2) . '</td>
-				<td class="number">' . number_format($myrow['accumdepn'],2) . '</td>
-				<td class="number">' . number_format($myrow['cost']-$myrow['accumdepn'],2) . '</td>
+	echo '<td>' . $AssetRow['assetid'] . '</td>
+				<td>' . $AssetRow['description'] . '</td>
+				<td class="number">' . number_format($AssetRow['cost'],2) . '</td>
+				<td class="number">' . number_format($AssetRow['accumdepn'],2) . '</td>
+				<td class="number">' . number_format($AssetRow['cost']-$AssetRow['accumdepn'],2) . '</td>
 				<td align="center">' . $DepreciationType . '</td>
-				<td class="number">' . $myrow['depnrate']  . '</td>
-				<td class="number">' . $NewDepreciation  . '</td>
+				<td class="number">' . $AssetRow['depnrate']  . '</td>
+				<td class="number">' . number_format($NewDepreciation ,2) . '</td>
 			</tr>';
-	$TotalCategoryCost +=$myrow['cost'];
-	$TotalCategoryAccumDepn +=$myrow['accumdepn'];
+	$TotalCategoryCost +=$AssetRow['cost'];
+	$TotalCategoryAccumDepn +=$AssetRow['accumdepn'];
 	$TotalCategoryDepn +=$NewDepreciation;
-	$TotalCost +=$myrow['cost'];
-	$TotalAccumDepn +=$myrow['accumdepn'];
+	$TotalCost +=$AssetRow['cost'];
+	$TotalAccumDepn +=$AssetRow['accumdepn'];
 	$TotalDepn +=$NewDepreciation;
 	
 	if (isset($_POST['CommitDepreciation']) AND $NewDepreciation !=0){
+		
 		//debit depreciation expense
 		$SQL = "INSERT INTO gltrans (type,
 																typeno,
@@ -145,8 +150,8 @@ while ($myrow=DB_fetch_array($result)) {
 															'" . $TransNo . "',
 															'" . FormatDateForSQL($_POST['ProcessDate']) . "',
 															'" . $PeriodNo . "',
-															'" . $myrow['depnact'] . "',
-															'" . $myrow['assetid'] . "',
+															'" . $AssetRow['depnact'] . "',
+															'" . $AssetRow['assetid'] . "',
 															'" . $NewDepreciation ."')";
 		$ErrMsg = _('Cannot insert a depreciation GL entry for the depreciation because');
 		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
@@ -162,8 +167,8 @@ while ($myrow=DB_fetch_array($result)) {
 															'" . $TransNo . "',
 															'" . FormatDateForSQL($_POST['ProcessDate']) . "',
 															'" . $PeriodNo . "',
-															'" . $myrow['accumdepnact'] . "',
-															'" . $myrow['assetid'] . "',
+															'" . $AssetRow['accumdepnact'] . "',
+															'" . $AssetRow['assetid'] . "',
 															'" . -$NewDepreciation ."')";
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		
@@ -176,7 +181,7 @@ while ($myrow=DB_fetch_array($result)) {
 																			inputdate,
 																			cost,
 																			depn)
-															VALUES ('" . $myrow['assetid'] . "',
+															VALUES ('" . $AssetRow['assetid'] . "',
 																			'44',
 																			'" . $TransNo . "',
 																			'" . FormatDateForSQL($_POST['ProcessDate']) . "',
@@ -187,6 +192,13 @@ while ($myrow=DB_fetch_array($result)) {
 		$ErrMsg = _('Cannot insert a fixed asset transaction entry for the depreciation because');
 		$DbgMsg = _('The SQL that failed to insert the fixed asset transaction record was');
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		
+		/*now update the accum depn in fixedassets */
+		$SQL = "UPDATE fixedassets SET accumdepn = accumdepn + " . $NewDepreciation  . "
+												WHERE assetid = '" . $AssetRow['assetid'] . "'";
+		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset accumulated depreciation could not be updated:');
+		$DbgMsg = _('The following SQL was used to attempt the update the accumulated depreciation of the asset was:');
+		$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 	} //end if Committing the depreciation to DB
 } //end loop around the assets to calculate depreciation for
 echo '<tr><th colspan=2 align="right">' . _('Total for') . ' ' . $AssetCategoryDescription . ' </th>

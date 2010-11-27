@@ -805,13 +805,13 @@ then do the updates and inserts to process the credit note entered */
 								/*Now post any remaining price variance to stock rather than price variances */
 
 								$SQL = "INSERT INTO gltrans (type,
-											typeno,
-											trandate,
-											periodno,
-											account,
-											narrative,
-											amount)
-									VALUES (21,
+																					typeno,
+																					trandate,
+																					periodno,
+																					account,
+																					narrative,
+																					amount)
+																			VALUES (21,
 										'" . $CreditNoteNo . "',
 										'" . $SQLCreditNoteDate . "',
 										'" . $PeriodNo . "',
@@ -854,13 +854,13 @@ then do the updates and inserts to process the credit note entered */
 							} else { //It must be Standard Costing
 
 								$SQL = "INSERT INTO gltrans (type,
-											typeno,
-											trandate,
-											periodno,
-											account,
-											narrative,
-											amount)
-									VALUES (21,
+																				typeno,
+																				trandate,
+																				periodno,
+																				account,
+																				narrative,
+																				amount)
+											VALUES (21,
 										'" .  $CreditNoteNo . "',
 										'" . $SQLCreditNoteDate . "',
 										'" . $PeriodNo . "',
@@ -881,13 +881,55 @@ then do the updates and inserts to process the credit note entered */
 						order price and the actual invoice price since the std cost was made equal to the order price in local currency at the time
 						the goods were received */
 
+							$GLCode = $EnteredGRN->GLCode; //by default
+							
+							if ($EnteredGRN->AssetID!=0) { //then it is an asset
+
+								/*Need to get the asset details  for posting */
+								$result = DB_query('SELECT assetid, 
+																				costact, 
+																				cost 
+																	FROM fixedassets INNER JOIN fixedassetcategories 
+																	ON fixedassets.assetcategoryid= fixedassetcategories.categoryid
+																	WHERE assetid="' . $EnteredGRN->AssetID . '"',$db);
+								if (DB_num_rows($result)!=0){ // the asset exists
+									$AssetRow = DB_fetch_array($result);
+									$GLCode = $AssetRow['costact'];
+									/*Add the fixed asset trans for the difference in the cost */
+									$SQL = "INSERT INTO fixedassettrans (assetid,
+																						transtype,
+																						transno,
+																						transdate,
+																						periodno,
+																						inputdate,
+																						cost)
+																	VALUES ('" . $EnteredGRN->AssetID . "',
+																					21,
+																					'" . $CreditNoteNo . "',
+																					'" . $SQLCreditNoteDate . "',
+																					'" . $PeriodNo . "',
+																					'" . Date('Y-m-d') . "',
+																					'" . -($PurchPriceVar) . "')";
+									$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
+									$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
+									$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
+									
+									/*Now update the asset cost in fixedassets table */
+									$SQL = "UPDATE fixedassets SET cost = cost - " . $PurchPriceVar  . "
+												WHERE assetid = '" . $EnteredGRN->AssetID . "'";
+									$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost and date purchased was not able to be updated because:');
+									$DbgMsg = _('The following SQL was used to attempt the update of the cost and the date the asset was purchased');
+									$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
+								} 
+							} //the item was an asset
+
 							$SQL = "INSERT INTO gltrans (type,
-											typeno,
-											trandate,
-											periodno,
-											account,
-											narrative,
-											amount)
+																					typeno,
+																					trandate,
+																					periodno,
+																					account,
+																					narrative,
+																					amount)
 									VALUES (21,
 											'" . $CreditNoteNo . "',
 											'" . $SQLCreditNoteDate . "',

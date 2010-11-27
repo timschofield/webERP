@@ -483,6 +483,7 @@ CREATE TABLE fixedassettrans(
 id INT( 11 ) NOT NULL AUTO_INCREMENT ,
 assetid INT( 11 ) NOT NULL ,
 transtype TINYINT( 4 ) NOT NULL ,
+transdate DATE NOT NULL,
 transno INT NOT NULL ,
 periodno SMALLINT( 6 ) NOT NULL ,
 inputdate DATE NOT NULL ,
@@ -490,7 +491,8 @@ cost DOUBLE NOT NULL ,
 depn DOUBLE NOT NULL ,
 PRIMARY KEY ( id ) ,
 INDEX ( assetid, transtype, transno ) ,
-INDEX ( inputdate )
+INDEX ( inputdate ),
+INDEX (transdate)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 ALTER TABLE stockcheckfreeze CHANGE stockcheckdate stockcheckdate date NOT NULL DEFAULT '0000-00-00';

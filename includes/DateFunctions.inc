@@ -787,9 +787,8 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 		$TransDate = mktime(0,0,0,$Date_Array[1],$Date_Array[2],$Date_Array[0]);
 	}
 
-	if (strlen($_SESSION['ProhibitPostingsBefore'])>=8 and $UseProhibit){ //then the ProhibitPostingsBefore configuration is set
+	if (Is_Date(ConvertSQLDate($_SESSION['ProhibitPostingsBefore'])) AND $UseProhibit){ //then the ProhibitPostingsBefore configuration is set
 		$Date_Array = explode('-', $_SESSION['ProhibitPostingsBefore']);
-
 		$ProhibitPostingsBefore = mktime(0,0,0,$Date_Array[1],$Date_Array[2],$Date_Array[0]);
 
 		/* If transaction date is in a closed period use the month end of that period */

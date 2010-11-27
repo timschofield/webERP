@@ -1,13 +1,5 @@
 <?php
-/************************************************************/
-/*To deploy this revised version take the following steps:  */
-/*1. Add field called MinOrderQty as Int to purchdata       */
-/*2. Copy this code on top of the standard PurchData.php    */
-/*3. Copy the revised SelectProduct.php over the existing   */
-/* pbj 11/3/2010                                            */
-/************************************************************/
-
-/* $Id: PurchData.php 3952 2010-09-30 15:22:14Z tim_schofield $*/
+/* $Id$*/
 
 $PageSecurity = 4;
 
@@ -29,8 +21,8 @@ if (isset($_GET['StockID'])) {
     $StockID = trim(strtoupper($_POST['StockID']));
 }
 
-if (isset($_POST['stockuom'])) {
-	$stockuom=$_POST['stockuom'];
+if (isset($_POST['StockUOM'])) {
+	$StockUOM=$_POST['StockUOM'];
 }
 
 $NoPurchasingData=0;
@@ -50,7 +42,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
     if (!is_numeric($_POST['Price'])) {
         $InputError = 1;
         unset($_POST['Price']);
-        prnMsg(_('The price entered was not numeric') . ' (' . _('a number is expected') . ') - ' . _('no changes have been made to the database'), 'error');
+        prnMsg(_('The price entered was not numeric and a number is expected. No changes have been made to the database'), 'error');
     }
     if ($_POST['Price'] == 0) {
         prnMsg(_('The price entered is zero') . '   ' . _('Is this intentional?'), 'warn');
@@ -58,12 +50,12 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
     if (!is_numeric($_POST['LeadTime'])) {
         $InputError = 1;
         unset($_POST['LeadTime']);
-        prnMsg(_('The lead time entered was not numeric') . ' (' . _('a number is expected') . ') - ' . _('no changes have been made to the database'), 'error');
+        prnMsg(_('The lead time entered was not numeric a number of days is expected no changes have been made to the database'), 'error');
     }
     if (!is_numeric($_POST['MinOrderQty'])) {
         $InputError = 1;
-        unset($_POST['LeadTime']);
-        prnMsg(_('The lead time entered was not numeric') . ' (' . _('a number is expected') . ') - ' . _('no changes have been made to the database'), 'error');
+        unset($_POST['MinOrderQty']);
+        prnMsg(_('The minimum order quantity was not numeric and a number is expected no changes have been made to the database'), 'error');
     }
     if (!is_numeric($_POST['ConversionFactor'])) {
         $InputError = 1;
@@ -72,27 +64,27 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
     }
     if ($InputError == 0 AND isset($_POST['AddRecord'])) {
         $sql = "INSERT INTO purchdata (supplierno,
-					stockid,
-					price,
-					effectivefrom,
-					suppliersuom,
-					conversionfactor,
-					supplierdescription,
-					suppliers_partno,
-					leadtime,
-					minorderqty,
-					preferred)
-			VALUES ('" . $SupplierID . "',
-				'" . $StockID . "',
-				'" . $_POST['Price'] . "',
-				'" . FormatDateForSQL($_POST['EffectiveFrom']) . "',
-				'" . $_POST['SuppliersUOM'] . "',
-				'" . $_POST['ConversionFactor'] . "',
-				'" . $_POST['SupplierDescription'] . "',
-				'" . $_POST['SupplierCode'] . "',
-				'" . $_POST['LeadTime'] . "',
-                            '" . $_POST['MinOrderQty'] . "',
-				'" . $_POST['Preferred'] . "')";
+																stockid,
+																price,
+																effectivefrom,
+																suppliersuom,
+																conversionfactor,
+																supplierdescription,
+																suppliers_partno,
+																leadtime,
+																minorderqty,
+																preferred)
+														VALUES ('" . $SupplierID . "',
+															'" . $StockID . "',
+															'" . $_POST['Price'] . "',
+															'" . FormatDateForSQL($_POST['EffectiveFrom']) . "',
+															'" . $_POST['SuppliersUOM'] . "',
+															'" . $_POST['ConversionFactor'] . "',
+															'" . $_POST['SupplierDescription'] . "',
+															'" . $_POST['SupplierCode'] . "',
+															'" . $_POST['LeadTime'] . "',
+											                            '" . $_POST['MinOrderQty'] . "',
+															'" . $_POST['Preferred'] . "')";
         $ErrMsg = _('The supplier purchasing details could not be added to the database because');
         $DbgMsg = _('The SQL that failed was');
         $AddResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
@@ -100,17 +92,17 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
     }
     if ($InputError == 0 AND isset($_POST['UpdateRecord'])) {
         $sql = "UPDATE purchdata SET
-			    price='" . $_POST['Price'] . "',
-			    effectivefrom='" . FormatDateForSQL($_POST['EffectiveFrom']) . "',
-				suppliersuom='" . $_POST['SuppliersUOM'] . "',
-				conversionfactor='" . $_POST['ConversionFactor'] . "',
-				supplierdescription='" . $_POST['SupplierDescription'] . "',
-				suppliers_partno='" . $_POST['SupplierCode'] . "',
-				leadtime='" . $_POST['LeadTime'] . "',
-				minorderqty='" . $_POST['MinOrderQty'] . "',
-				preferred='" . $_POST['Preferred'] . "'
-		WHERE purchdata.stockid='".$StockID."'
-		AND purchdata.supplierno='".$SupplierID."'
+								    price='" . $_POST['Price'] . "',
+								    effectivefrom='" . FormatDateForSQL($_POST['EffectiveFrom']) . "',
+									suppliersuom='" . $_POST['SuppliersUOM'] . "',
+									conversionfactor='" . $_POST['ConversionFactor'] . "',
+									supplierdescription='" . $_POST['SupplierDescription'] . "',
+									suppliers_partno='" . $_POST['SupplierCode'] . "',
+									leadtime='" . $_POST['LeadTime'] . "',
+									minorderqty='" . $_POST['MinOrderQty'] . "',
+									preferred='" . $_POST['Preferred'] . "'
+							WHERE purchdata.stockid='".$StockID."'
+							AND purchdata.supplierno='".$SupplierID."'
 		AND purchdata.effectivefrom='" . $_POST['WasEffectiveFrom'] . "'";
         $ErrMsg = _('The supplier purchasing details could not be update because');
         $DbgMsg = _('The SQL that failed was');
@@ -148,22 +140,22 @@ if (isset($_GET['Delete'])) {
 if (!isset($_GET['Edit'])) {
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title . ' ' . _('For Stock Code') . ' - ' . $StockID . '<br>';
     $sql = "SELECT  purchdata.supplierno,
-					suppliers.suppname,
-					purchdata.price,
-					suppliers.currcode,
-					purchdata.effectivefrom,
-					unitsofmeasure.unitname,
-					purchdata.supplierdescription,
-					purchdata.leadtime,
-					purchdata.suppliers_partno,
-					purchdata.minorderqty,
-					purchdata.preferred
-			FROM purchdata INNER JOIN suppliers
-				ON purchdata.supplierno=suppliers.supplierid
-			LEFT JOIN unitsofmeasure
-				ON purchdata.suppliersuom=unitsofmeasure.unitid
-			WHERE purchdata.stockid = '" . $StockID . "'
-			ORDER BY purchdata.effectivefrom DESC";
+								suppliers.suppname,
+								purchdata.price,
+								suppliers.currcode,
+								purchdata.effectivefrom,
+								unitsofmeasure.unitname,
+								purchdata.supplierdescription,
+								purchdata.leadtime,
+								purchdata.suppliers_partno,
+								purchdata.minorderqty,
+								purchdata.preferred
+						FROM purchdata INNER JOIN suppliers
+							ON purchdata.supplierno=suppliers.supplierid
+						LEFT JOIN unitsofmeasure
+							ON purchdata.suppliersuom=unitsofmeasure.unitid
+						WHERE purchdata.stockid = '" . $StockID . "'
+						ORDER BY purchdata.effectivefrom DESC";
     $ErrMsg = _('The supplier purchasing details for the selected part could not be retrieved because');
     $PurchDataResult = DB_query($sql, $db, $ErrMsg);
     if (DB_num_rows($PurchDataResult) == 0 and $StockID != '') {
@@ -200,16 +192,16 @@ if (!isset($_GET['Edit'])) {
                 $DisplayPreferred = _('No');
             }
             printf("<td>%s</td>
-			<td class=number>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-                     <td>%s</td>
-			<td class=number>%s " . _('days') . "</td>
-			<td>%s</td>
-			<td><a href='%s?%s&StockID=%s&SupplierID=%s&Edit=1&EffectiveFrom=%s'>" . _('Edit') . "</a></td>
-			<td><a href='%s?%s&StockID=%s&SupplierID=%s&Delete=1&EffectiveFrom=%s' onclick=\"return confirm('" . _('Are you sure you wish to delete this suppliers price?') . "');\">" . _('Delete') . "</a></td>
-			</tr>", $myrow['suppname'], number_format($myrow['price'], 3), $myrow['currcode'], ConvertSQLDate($myrow['effectivefrom']), $myrow['unitname'],$myrow['minorderqty'], $myrow['leadtime'], $DisplayPreferred, $_SERVER['PHP_SELF'], SID, $StockID, $myrow['supplierno'], $myrow['effectivefrom'], $_SERVER['PHP_SELF'], SID, $StockID, $myrow['supplierno'], $myrow['effectivefrom']);
+							<td class=number>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+				                     <td>%s</td>
+							<td class=number>%s " . _('days') . "</td>
+							<td>%s</td>
+							<td><a href='%s?%s&StockID=%s&SupplierID=%s&Edit=1&EffectiveFrom=%s'>" . _('Edit') . "</a></td>
+							<td><a href='%s?%s&StockID=%s&SupplierID=%s&Delete=1&EffectiveFrom=%s' onclick=\"return confirm('" . _('Are you sure you wish to delete this suppliers price?') . "');\">" . _('Delete') . "</a></td>
+							</tr>", $myrow['suppname'], number_format($myrow['price'], 3), $myrow['currcode'], ConvertSQLDate($myrow['effectivefrom']), $myrow['unitname'],$myrow['minorderqty'], $myrow['leadtime'], $DisplayPreferred, $_SERVER['PHP_SELF'], SID, $StockID, $myrow['supplierno'], $myrow['effectivefrom'], $_SERVER['PHP_SELF'], SID, $StockID, $myrow['supplierno'], $myrow['effectivefrom']);
         } //end of while loop
         echo '</table><br/>';
         if ($CountPreferreds > 1) {
@@ -300,7 +292,7 @@ if (isset($SuppliersResult)) {
 						FROM stockmaster
 						WHERE stockmaster.stockid='".$StockID."'", $db);
         $myrow = DB_fetch_row($result);
-        $stockuom = $myrow[1];
+        $StockUOM = $myrow[1];
         if (DB_num_rows($result) == 1) {
             if ($myrow[2] == 'D' OR $myrow[2] == 'A' OR $myrow[2] == 'K') {
                 prnMsg($StockID . ' - ' . $myrow[0] . '<p> ' . _('The item selected is a dummy part or an assembly or kit set part') . ' - ' . _('it is not purchased') . '. ' . _('Entry of purchasing information is therefore inappropriate'), 'warn');
@@ -314,7 +306,7 @@ if (isset($SuppliersResult)) {
         }
     } else {
         $StockID = '';
-        $stockuom = 'each';
+        $StockUOM = 'each';
     }
     echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post><table cellpadding=2 colspan=7 class=selection>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -343,7 +335,7 @@ if (isset($SuppliersResult)) {
 				<td><font size=1>%s</font></td>
 			</tr>", $myrow['supplierid'], $myrow['suppname'], $myrow['currcode'], $myrow['address1'], $myrow['address2'], $myrow['address3']);
         echo '<input type=hidden name=StockID value="' . $StockID . '">';
-        echo '<input type=hidden name=stockuom value="' . $stockuom . '">';
+        echo '<input type=hidden name=StockUOM value="' . $StockUOM . '">';
 
     }
     //end of while loop
@@ -388,7 +380,7 @@ if (!isset($SuppliersResult)) {
         $_POST['Preferred'] = $myrow['preferred'];
         $_POST['MinOrderQty'] = $myrow['minorderqty'];
         $_POST['SupplierCode'] = $myrow['suppliers_partno'];
-		$stockuom=$myrow['units'];
+		$StockUOM=$myrow['units'];
     }
     echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post><table class=selection>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -431,17 +423,17 @@ if (!isset($SuppliersResult)) {
         $_POST['SupplierCode'] = '';
     }
    if (!isset($_POST['MinOrderQty'])) {
-        $_POST['MinOrderQty'] = '';
+        $_POST['MinOrderQty'] = '1';
     }
     echo '<tr><td>' . _('Currency') . ':</td>
 	<td><input type=hidden name="CurrCode" . VALUE="' . $CurrCode . '">' . $CurrCode . '</td></tr>';
     echo '<tr><td>' . _('Price') . ' (' . _('in Supplier Currency') . '):</td>
-	<td><input type=text class=number name="Price" maxlength=12 size=12 VALUE=' . number_format($_POST['Price'], DecimalPlaces($CurrCode, $db),'.','') . '></td></tr>';
+	<td><input type="text" class="number" name="Price" maxlength=12 size=12 VALUE=' . number_format($_POST['Price'], DecimalPlaces($CurrCode, $db),'.','') . '></td></tr>';
     echo '<tr><td>' . _('Date Updated') . ':</td>
-	<td><input type=text class=date alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveFrom" maxlength=10 size=11 VALUE="' . $_POST['EffectiveFrom'] . '"></td></tr>';
+	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveFrom" maxlength=10 size=11 VALUE="' . $_POST['EffectiveFrom'] . '"></td></tr>';
     echo '<tr><td>' . _('Our Unit of Measure') . ':</td>';
 	if (isset($SupplierID)) {
-		echo '<td>' . $stockuom . '</td></tr>';
+		echo '<td>' . $StockUOM . '</td></tr>';
 	}
     echo '<tr><td>' . _('Suppliers Unit of Measure') . ':</td>';
     echo '<td><select name="SuppliersUOM">';

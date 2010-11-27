@@ -26,8 +26,8 @@ if(!isset($_GET['sessions_checked']) || $_GET['sessions_checked'] != 'true') {
 		$session_support = '<font class="bad">Disabled</font>';
 	}
 }
-$path_to_root = '..';
-$comp_path = $path_to_root. '/companies';
+$PathToRoot = '..';
+$CompanyPath = $PathToRoot. '/companies';
 
 ?>
 
@@ -79,7 +79,7 @@ function change_data(type) {
 <input type="hidden" name="url" value="" />
 <input type="hidden" name="password_fieldname" value="admin_password" />
 <input type="hidden" name="remember" id="remember" value="true" />
-<input type="hidden" name="path_to_root" value="<?php echo $path_to_root; ?>" />
+<input type="hidden" name="path_to_root" value="<?php echo $PathToRoot; ?>" />
 
 <table cellpadding="0" cellspacing="0" border="0" width="750" align="center" style="margin-top: 10px;">
 <tr>
@@ -136,15 +136,15 @@ function change_data(type) {
 		</tr>
 		<tr>
 			<td style="color: #666666;">Configuration file</td>
-			<td><?php if(is_writable($path_to_root)) {
+			<td><?php if(is_writable($PathToRoot)) {
 						echo '<font class="good">Writeable</font>';
 					  } else {
 						echo '<font class="bad">Unwriteable</font>';
 					  } ?>
 			</td>
-			<td style="color: #666666;"><?php echo 'Company data dirs ('.  $comp_path. '/*)'; ?>
+			<td style="color: #666666;"><?php echo 'Company data dirs ('.  $CompanyPath. '/*)'; ?>
 			</td>
-			<td><?php if(is_writable($comp_path)) {
+			<td><?php if(is_writable($CompanyPath)) {
 						echo '<font class="good">Writeable</font>';
 					  } else {
 						echo '<font class="bad">Unwriteable</font>';
@@ -164,10 +164,17 @@ function change_data(type) {
 			<td>
 				<?php
 				// Try to guess installation URL
-				$guessed_url = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["SCRIPT_NAME"];
-				$guessed_url = rtrim(dirname($guessed_url), 'install');
+				$GuessedURL = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["SCRIPT_NAME"];
+				$GuessedURL = rtrim(dirname($GuessedURL), 'install');
 				?>
-				<input type="text" tabindex="30" name="ba_url" style="width: 99%;" value="<?php if(isset($_SESSION['ba_url'])) { echo $_SESSION['ba_url']; } else { echo $guessed_url; } ?>" />
+				<input type="text" tabindex="30" name="ba_url" style="width: 99%;" value="
+						<?php 
+						if(isset($_SESSION['ba_url'])) { 
+							echo $_SESSION['ba_url']; 
+						} else { 
+							echo $GuessedURL; 
+						} 
+				?>" />
 			</td>
 		</tr>
 		</table>
@@ -180,20 +187,32 @@ function change_data(type) {
 				Server Operating System:
 			</td>
 			<td width="180">
-				<input type="radio" tabindex="40" name="operating_system" id="operating_system_linux" onclick="document.getElementById('file_perms_box').style.display = 'block';" value="linux"<?php if(!isset($_SESSION['operating_system']) OR $_SESSION['operating_system'] == 'linux') { echo ' checked'; } ?> />
+				<input type="radio" tabindex="40" name="operating_system" id="operating_system_linux" onclick="document.getElementById('file_perms_box').style.display = 'block';" value="linux"
+				<?php 
+					if(!isset($_SESSION['operating_system']) OR $_SESSION['operating_system'] == 'linux') { 
+						echo ' checked'; 
+					} ?> 
+				/>
 				<font style="cursor: pointer;" onclick="javascript: change_os('linux');">Linux/Unix based</font>
 				<br />
-				<input type="radio" tabindex="41" name="operating_system" id="operating_system_windows" onclick="document.getElementById('file_perms_box').style.display = 'none';" value="windows"<?php if(isset($_SESSION['operating_system']) AND $_SESSION['operating_system'] == 'windows') { echo ' checked'; } ?> />
+				<input type="radio" tabindex="41" name="operating_system" id="operating_system_windows" onclick="document.getElementById('file_perms_box').style.display = 'none';" value="windows"
+				<?php 
+					if(isset($_SESSION['operating_system']) AND $_SESSION['operating_system'] == 'windows') { 
+						echo ' checked'; } 
+					?> 
+				/>
 				<font style="cursor: pointer;" onclick="javascript: change_os('windows');">Windows</font>
 			</td>
 			<td>
-				<div name="file_perms_box" id="file_perms_box" style="margin: 0; padding: 0; display: <?php if(isset($_SESSION['operating_system']) AND $_SESSION['operating_system'] == 'windows') {
-																												echo 'none';
-																											} else {
-																												echo 'block';
-																											}
-																										?>
-																										;">
+				<div name="file_perms_box" id="file_perms_box" style="margin: 0; padding: 0; display: 
+				<?php 
+					if(isset($_SESSION['operating_system']) AND $_SESSION['operating_system'] == 'windows') {
+						echo 'none';
+					} else {
+						echo 'block';
+					}
+				?>
+				;">
 					<input type="checkbox" tabindex="42" name="world_writeable" id="world_writeable" value="true"<?php if(isset($_SESSION['world_writeable']) AND $_SESSION['world_writeable'] == true) { echo 'checked'; } ?> />
 					<label for="world_writeable">
 						World-writeable file permissions (777)
@@ -220,11 +239,15 @@ function change_data(type) {
 			<td width="7">&nbsp;</td>
 			<td width="70" style="color: #666666;">Username:</td>
 			<td>
-				<input type="text" tabindex="44" name="database_username" style="width: 98%;" value="<?php if(isset($_SESSION['database_username'])) {
-																											echo $_SESSION['database_username'];
-																										  } else {
-																											 echo 'root';
-																										  } ?>" />
+				<input type="text" tabindex="44" name="database_username" style="width: 98%;" value="
+				<?php 
+					if(isset($_SESSION['database_username'])) {
+						echo $_SESSION['database_username'];
+					 } else {
+						echo 'root';
+					 } 
+				 ?>
+				 " />
 			</td>
 		</tr>
 		<tr>
@@ -302,7 +325,9 @@ function change_data(type) {
 			<td style="color: #666666;">Username:</td>
 			<td>
 				admin
-				<!--<input type="text" tabindex="60" name="admin_username" style="width: 98%;" value="<?php if(isset($_SESSION['admin_username'])) { echo $_SESSION['admin_username']; } else { echo 'admin'; } ?>" />-->
+				<!--<input type="text" tabindex="60" name="admin_username" style="width: 98%;" value="<?php if(isset($_SESSION['admin_username'])) { echo $_SESSION['admin_username']; 
+				} else { 
+					echo 'admin'; } ?>" />-->
 			</td>
 			<td>&nbsp;</td>
 			<td style="color: #666666;">Password:</td>
@@ -339,9 +364,16 @@ function change_data(type) {
 				</tr>
 				</table>
 			</td>
-			<td colspan="1" align="right">
-				<input type="submit" tabindex="20" name="submit" value="Install WebERP" class="submit" />
-			</td>
+			<?php //only show submit button if ready to go
+			if ($phpversion > 4.1 AND $_SESSION['session_support'] = '<font class="good">Enabled</font>'
+					AND is_writable($PathToRoot) AND is_writable($CompanyPath)){
+				echo '<td colspan="1" align="right">
+						<input type="submit" tabindex="20" name="submit" value="Install WebERP" class="submit" />
+						</td>';
+			} else {
+				echo '<td>FIX ERRORS FIRST</td></tr><tr><td colspan=5><h2>The installation cannot proceed until the above errors are resolved</h2></td>';
+			}
+			?>
 		</tr>
 		</table>
 

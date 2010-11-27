@@ -24,7 +24,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/s
 
 if (isset($_POST['UpdateData'])){
 
-	$sql = "SELECT  materialcost,
+	$sql = "SELECT materialcost,
 								labourcost,
 								overheadcost,
 								mbflag,

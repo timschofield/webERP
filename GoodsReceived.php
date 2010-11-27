@@ -93,7 +93,7 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 		</tr>';
 	/*show the line items on the order with the quantity being received for modification */
 
-	$_SESSION['PO']->total = 0;
+	$_SESSION['PO']->Total = 0;
 }
 
 $k=0; //row colour counter
@@ -120,33 +120,33 @@ if (count($_SESSION['PO']->LineItems)>0 and !isset($_POST['ProcessGoodsReceived'
 	//Setup & Format values for LineItem display
 
 		$LineTotal = ($LnItm->ReceiveQty * $LnItm->Price );
-		$_SESSION['PO']->total = $_SESSION['PO']->total + $LineTotal;
+		$_SESSION['PO']->Total = $_SESSION['PO']->Total + $LineTotal;
 		$DisplayQtyOrd = number_format($LnItm->Quantity,$LnItm->DecimalPlaces);
 		$DisplayQtyRec = number_format($LnItm->QtyReceived,$LnItm->DecimalPlaces);
 		$DisplayLineTotal = number_format($LineTotal,2);
 		$DisplayPrice = number_format($LnItm->Price,2);
 
-		$UomSQL="SELECT unitsofmeasure.unitname,
-										conversionfactor,
-										suppliersuom,
-										max(effectivefrom)
-									FROM purchdata
-									LEFT JOIN unitsofmeasure
-									ON purchdata.suppliersuom=unitsofmeasure.unitid
-									WHERE supplierno='".$_SESSION['PO']->SupplierID."'
-									AND stockid='".$LnItm->StockID."'
-									GROUP BY unitsofmeasure.unitname";
-					
-		$UomResult=DB_query($UomSQL, $db);
-		if (DB_num_rows($UomResult)>0) {
-			$UomRow=DB_fetch_array($UomResult);
-			if (strlen($UomRow['unitname'])>0) {
-				$Uom=$UomRow['unitname'];
+		$SupplierUomSQL="SELECT unitsofmeasure.unitname,
+															conversionfactor,
+															suppliersuom,
+															max(effectivefrom)
+												FROM purchdata
+												LEFT JOIN unitsofmeasure
+												ON purchdata.suppliersuom=unitsofmeasure.unitid
+												WHERE supplierno='".$_SESSION['PO']->SupplierID."'
+												AND stockid='".$LnItm->StockID."'
+												GROUP BY unitsofmeasure.unitname";
+								
+		$SupplierUOMResult=DB_query($SupplierUomSQL, $db);
+		if (DB_num_rows($SupplierUOMResult)>0) {
+			$SupplierUOMRow=DB_fetch_array($SupplierUOMResult);
+			if (strlen($SupplierUOMRow['unitname'])>0) {
+				$Uom=$SupplierUOMRow['unitname'];
 			} else {
 				$Uom=$LnItm->Units;
 			}
-			$ConversionFactor=$UomRow['conversionfactor'];
-		} else {
+			$ConversionFactor=$SupplierUOMRow['conversionfactor'];
+		} else { //using our units throughout
 			$Uom=$LnItm->Units;
 			$ConversionFactor=1;
 		}
@@ -185,7 +185,7 @@ if (count($_SESSION['PO']->LineItems)>0 and !isset($_POST['ProcessGoodsReceived'
 		echo '</tr>';
 	}//foreach(LineItem)
 	echo "<script>defaultControl(document.forms[0].RecvQty_$LnItm->LineNo);</script>";
-$DisplayTotal = number_format($_SESSION['PO']->total,2);
+$DisplayTotal = number_format($_SESSION['PO']->Total,2);
 if ($_SESSION['ShowValueOnGRN']==1) {
 	echo '<tr><td colspan=7 class=number><b>' . _('Total value of goods received'). '</b></td>
 						<td class=number><b>'. $DisplayTotal. '</b></td>
@@ -342,8 +342,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 
 	DB_free_result($Result);
 
-
-/************************ BEGIN SQL TRANSACTIONS ************************/
+/* *********************** BEGIN SQL TRANSACTIONS *********************** */
 
 	$Result = DB_Txn_Begin($db);
 /*Now Get the next GRN - function in SQL_CommonFunctions*/
@@ -357,7 +356,6 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 		if ($OrderLine->ReceiveQty !=0 AND $OrderLine->ReceiveQty!='' AND isset($OrderLine->ReceiveQty)) {
 
 			$LocalCurrencyPrice = ($OrderLine->Price / $_SESSION['PO']->ExRate);
-/*Update SalesOrderDetails for the new quantity received and the standard cost used for postings to GL and recorded in the stock movements for FIFO/LIFO stocks valuations*/
 
 			if ($OrderLine->StockID!='') { /*Its a stock item line */
 				/*Need to get the current standard cost as it is now so we can process GL jorunals later*/
@@ -380,7 +378,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 				 costs received = the total of standard cost posted to GRN suspense*/
 				$_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost = (($CurrentStandardCost * $OrderLine->ReceiveQty) + ($_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost *$OrderLine->QtyReceived)) / ($OrderLine->ReceiveQty + $OrderLine->QtyReceived);
 
-			} elseif ($OrderLine->QtyReceived==0 AND $OrderLine->StockID=="") {
+			} elseif ($OrderLine->QtyReceived==0 AND $OrderLine->StockID=='') {
 				/*Its a nominal item being received */
 				/*Need to record the value of the order per unit in the standard cost field to ensure GRN account entries clear */
 				$_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost = $LocalCurrencyPrice;
@@ -394,16 +392,16 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 
 			if ($OrderLine->ReceiveQty >= ($OrderLine->Quantity - $OrderLine->QtyReceived)){
 				$SQL = "UPDATE purchorderdetails SET
-							quantityrecd = quantityrecd + '" . $OrderLine->ReceiveQty . "',
-							stdcostunit='" . $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost . "',
-							completed=1
-					WHERE podetailitem = '" . $OrderLine->PODetailRec . "'";
+												quantityrecd = quantityrecd + '" . $OrderLine->ReceiveQty . "',
+												stdcostunit='" . $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost . "',
+												completed=1
+										WHERE podetailitem = '" . $OrderLine->PODetailRec . "'";
 			} else {
 				$SQL = "UPDATE purchorderdetails SET
-							quantityrecd = quantityrecd + '" . $OrderLine->ReceiveQty . "',
-							stdcostunit='" . $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost . "',
-							completed=0
-					WHERE podetailitem = '" . $OrderLine->PODetailRec . "'";
+												quantityrecd = quantityrecd + '" . $OrderLine->ReceiveQty . "',
+												stdcostunit='" . $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost . "',
+												completed=0
+										WHERE podetailitem = '" . $OrderLine->PODetailRec . "'";
 			}
 
 			$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The purchase order detail record could not be updated with the quantity received because');
@@ -434,7 +432,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 														'" . $_POST['DefaultReceivedDate'] . "',
 														'" . $OrderLine->ReceiveQty . "',
 														'" . $_SESSION['PO']->SupplierID . "',
-														'" . $CurrentStandardCost *$OrderLine->ConversionFactor. "')";
+														'" . $CurrentStandardCost . "')";
 									
 			$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('A GRN record could not be inserted') . '. ' . _('This receipt of goods has not been processed because');
 			$DbgMsg =  _('The following SQL to insert the GRN record was used');
@@ -459,19 +457,6 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 					$QtyOnHandPrior = 0;
 				}
 
-				$sql="SELECT conversionfactor
-							FROM purchdata
-							WHERE supplierno='".$_SESSION['PO']->SupplierID."'
-							AND stockid='".$OrderLine->StockID."'";
-				$result=DB_query($sql, $db);
-				if (DB_num_rows($result)>0) {
-					$myrow=DB_fetch_array($result);
-					$ConversionFactor=$myrow['conversionfactor'];
-				} else {
-					$ConversionFactor=1;
-				}
-				$OrderLine->ReceiveQty=$OrderLine->ReceiveQty*$ConversionFactor;
-
 				$SQL = "UPDATE locstock
 								SET quantity = locstock.quantity + '" . $OrderLine->ReceiveQty . "'
 								WHERE locstock.stockid = '" . $OrderLine->StockID . "'
@@ -481,8 +466,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 				$DbgMsg =  _('The following SQL to update the location stock record was used');
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
-
-	/* ... Insert stock movements - with unit cost */
+	/* Insert stock movements - with unit cost */
 
 				$SQL = "INSERT INTO stockmoves (stockid,
 																				type,
@@ -501,7 +485,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 																		'" . $GRN . "',
 																		'" . $_SESSION['PO']->Location . "',
 																		'" . $_POST['DefaultReceivedDate'] . "',
-																		'" . $LocalCurrencyPrice / $ConversionFactor . "',
+																		'" . $LocalCurrencyPrice . "',
 																		'" . $PeriodNo . "',
 																		'" . $_SESSION['PO']->SupplierID . " (" . $_SESSION['PO']->SupplierName . ") - " .$_SESSION['PO']->OrderNo . "',
 																		'" . $OrderLine->ReceiveQty . "',
@@ -562,15 +546,15 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 
 							/** now insert the serial stock movement **/
 							$SQL = "INSERT INTO stockserialmoves (stockmoveno,
-											stockid,
-											serialno,
-											moveqty)
-									VALUES (
-										'" . $StkMoveNo . "',
-										'" . $OrderLine->StockID . "',
-										'" . $Item->BundleRef . "',
-										'" . $Item->BundleQty . "'
-										)";
+																										stockid,
+																										serialno,
+																										moveqty)
+																								VALUES (
+																									'" . $StkMoveNo . "',
+																									'" . $OrderLine->StockID . "',
+																									'" . $Item->BundleRef . "',
+																									'" . $Item->BundleQty . "'
+																									)";
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 							$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -580,10 +564,12 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 			} /*end of its a stock item - updates to locations and insert movements*/
 
 			/* Check to see if the line item was flagged as the purchase of an asset */
-			if ($OrderLine->AssetID !=''){ //then it is an asset
+			if ($OrderLine->AssetID !='' AND $OrderLine->AssetID !='0'){ //then it is an asset
 				
 				/*first validate the AssetID and if it doesn't exist treat it like a normal nominal item  */
-				$CheckAssetExistsResult = DB_query("SELECT assetid, costact 
+				$CheckAssetExistsResult = DB_query("SELECT assetid, 
+																									datepurchased, 
+																									costact 
 																						FROM fixedassets INNER JOIN fixedassetcategories
 																						ON fixedassets.assetcategoryid=fixedassetcategories.categoryid 
 																						WHERE assetid='" . $OrderLine->AssetID . "'",$db);
@@ -592,12 +578,13 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 					/*Need to add a fixedassettrans for the cost of the asset being received */
 					$SQL = "INSERT INTO fixedassettrans (assetid,
 																						transtype,
-																						typeno,
+																						transno,
 																						transdate,
 																						periodno,
 																						inputdate,
 																						cost)
-																	VALUES (25,
+																	VALUES ('" . $OrderLine->AssetID . "',
+																					25,
 																					'" . $GRN . "',
 																					'" . $_POST['DefaultReceivedDate'] . "',
 																					'" . $PeriodNo . "',
@@ -611,6 +598,19 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 					$AssetRow = DB_fetch_array($CheckAssetExistsResult);
 					/*Over-ride any GL account specified in the order with the asset category cost account */
 					$_SESSION['PO']->LineItems[$OrderLine->LineNo]->GLCode = $AssetRow['costact'];
+					/*Now if there are no previous additions to this asset update the date purchased */
+					if ($AssetRow['datepurchased']=='0000-00-00'){
+						$SQL = "UPDATE fixedassets SET datepurchased='" . $_POST['DefaultReceivedDate'] . "',
+																					cost = cost + " . ($CurrentStandardCost * $OrderLine->ReceiveQty)  . "
+												WHERE assetid = '" . $OrderLine->AssetID . "'";
+					} else {
+							$SQL = "UPDATE fixedassets SET cost = cost + " . ($CurrentStandardCost * $OrderLine->ReceiveQty)  . "
+												WHERE assetid = '" . $OrderLine->AssetID . "'";
+					}
+					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost and date purchased was not able to be updated because:');
+					$DbgMsg = _('The following SQL was used to attempt the update of the cost and the date the asset was purchased');
+					$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
+					
 				} //assetid provided doesn't exist so ignore it and treat as a normal nominal item
 			} //assetid is set so the nominal item is an asset
 /* If GLLink_Stock then insert GLTrans to debit the GL Code  and credit GRN Suspense account at standard cost*/

@@ -26,15 +26,15 @@ Class PurchOrder {
 	var $DelAdd4;
 	var $DelAdd5;
 	var $DelAdd6;
-	var $tel;
-	var $suppDelAdd1;
-	var $suppDelAdd2;
-	var $suppDelAdd3;
-	var $suppDelAdd4;
-	var $suppDelAdd5;
-	var $suppDelAdd6;
+	var $Tel;
+	var $SuppDelAdd1;
+	var $SuppDelAdd2;
+	var $SuppDelAdd3;
+	var $SuppDelAdd4;
+	var $SuppDelAdd5;
+	var $SuppDelAdd6;
 	var $SupplierContact;
-	var $supptel;
+	var $SuppTel;
 	var $Comments;
 	var $Location;
 	Var $Managed;
@@ -45,17 +45,17 @@ Class PurchOrder {
 	var $LinesOnOrder;
 	var $PrintedPurchaseOrder;
 	var $DatePurchaseOrderPrinted;
-	var $total;
+	var $Total;
 	var $GLLink; /*Is the GL link to stock activated only checked when order initiated or reading in for modification */
-	var $version;
+	var $Version;
 	var $Stat;
 	var $StatComments;
 	var $AllowPrintPO;
-	var $revised;
-	var $deliveryby;
-	var $paymentterms;
-	var $contact;
-	var $port;
+	var $Revised;
+	var $DeliveryBy;
+	var $PaymentTerms;
+	var $Contact;
+	var $Port;
 
 	function PurchOrder(){
 	/*Constructor function initialises a new purchase order object */
@@ -64,39 +64,38 @@ Class PurchOrder {
 		$this->LinesOnOrder=0;
 	}
 
-	function add_to_order(
-				$LineNo,
-				$StockID,
-				$Serialised,
-				$Controlled,
-				$Qty,
-				$ItemDescr,
-				$Price,
-				$UOM,
-				$GLCode,
-				$ReqDelDate,
-				$ShiptRef,
-				$completed,
-				$JobRef,
-				$QtyInv=0,
-				$QtyRecd=0,
-				$GLActName='',
-				$DecimalPlaces=2,
-				$itemno,
-				$uom,
-				$ConversionFactor=1,
-				$LeadTime=1,
-				$Suppliers_PartNo='',
-				$SubTotal_Amount=0,
-				$Package=0,
-				$PcUnit=0,
-				$nw=0,
-				$gw=0,
-				$CuFt=0,
-				$Total_Quantity=0,
-				$Total_Amount=0,
-				$AssetID=''){
-
+	function add_to_order($LineNo,
+											$StockID,
+											$Serialised,
+											$Controlled,
+											$Qty,
+											$ItemDescr,
+											$Price,
+											$UOM,
+											$GLCode,
+											$ReqDelDate,
+											$ShiptRef,
+											$Completed,
+											$JobRef,
+											$QtyInv=0,
+											$QtyRecd=0,
+											$GLActName='',
+											$DecimalPlaces=2,
+											$ItemNo,
+											$uom,
+											$ConversionFactor=1,
+											$LeadTime=1,
+											$Suppliers_PartNo='',
+											$SubTotal_Amount=0,
+											$Package=0,
+											$PcUnit=0,
+											$nw=0,
+											$gw=0,
+											$CuFt=0,
+											$Total_Quantity=0,
+											$Total_Amount=0,
+											$AssetID=0){
+							
 		if ($Qty!=0 && isset($Qty)){
 
 			$this->LineItems[$LineNo] = new LineDetails($LineNo,
@@ -116,7 +115,7 @@ Class PurchOrder {
 																								$QtyRecd,
 																								$GLActName,
 																								$DecimalPlaces,
-																								$itemno,
+																								$ItemNo,
 																								$uom,
 																								$ConversionFactor,
 																								$LeadTime,
@@ -145,7 +144,7 @@ Class PurchOrder {
 														$ReqDelDate,
 														$ShiptRef,
 														$JobRef ,
-														$itemno,
+														$ItemNo,
 														$uom,
 														$ConversionFactor,
 														$Suppliers_PartNo,
@@ -234,7 +233,7 @@ Class LineDetails {
 	Var $QtyReceived;
 	Var $StandardCost;
 	var $ShiptRef;
-	var $completed;
+	var $Completed;
 	Var $JobRef;
 	Var $ItemNo;
 	Var $uom;
@@ -262,7 +261,7 @@ Class LineDetails {
 											$Controlled,
 											$Qty,
 											$ItemDescr,
-											$Prc,
+											$Price,
 											$UOM,
 											$GLCode,
 											$ReqDelDate,
@@ -297,13 +296,13 @@ Class LineDetails {
 		$this->ItemDescription = $ItemDescr;
 		$this->Quantity = $Qty;
 		$this->ReqDelDate = $ReqDelDate;
-		$this->Price = $Prc;
+		$this->Price = $Price;
 		$this->Units = $UOM;
 		$this->QtyReceived = $QtyRecd;
 		$this->QtyInv = $QtyInv;
 		$this->GLCode = $GLCode;
 		$this->JobRef = $JobRef;
-		$this->ItemNo = $itemno;
+		$this->ItemNo = $ItemNo;
 		$this->uom = $uom;
 		$this->ConversionFactor = $ConversionFactor;
 		$this->Suppliers_PartNo = $Suppliers_PartNo;
@@ -322,13 +321,12 @@ Class LineDetails {
 		}
 		$this->Completed = $Completed;
 		$this->GLActName = $GLActName;
-		$this->ReceiveQty =0;	/*initialise these last two only */
-		$this->StandardCost =0;
-		$this->Deleted=False;
+		$this->ReceiveQty = 0;	/*initialise these last two only */
+		$this->StandardCost = 0;
+		$this->Deleted = false;
 		$this->SerialItems = array(); /*if Controlled then need to populate this later */
 		$this->SerialItemsValid=false;
 		$this->AssetID= $AssetID;
 	}
 }
-
 ?>

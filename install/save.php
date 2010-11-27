@@ -11,6 +11,7 @@ if(!defined('SESSION_STARTED')){
 	session_start();
 	define('SESSION_STARTED', true);
 }
+
 if(!isset($_SESSION['MaxLogoSize'])) {
     $_SESSION['MaxLogoSize'] = 10 * 1024;       // Limit logo file size.
 }

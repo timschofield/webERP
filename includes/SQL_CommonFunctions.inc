@@ -168,13 +168,13 @@ function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 			$ValueOfChange = $QOH * ($NewCost - $OldCost);
 
 			$SQL = "INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount)
-						VALUES (35,
+																typeno,
+																trandate,
+																periodno,
+																account,
+																narrative,
+																amount)
+							VALUES (35,
 							" . $CostUpdateNo . ",
 							'" . Date('Y-m-d') . "',
 							" . $PeriodNo . ",

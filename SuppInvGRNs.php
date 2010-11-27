@@ -6,7 +6,6 @@
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
 
-
 $PageSecurity = 5;
 
 include('includes/DefineSuppTransClass.php');
@@ -21,7 +20,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 $Complete=false;
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('To enter a supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice must be clicked on'),'info');
-	echo "<br><a href='$rootpath/SelectSupplier.php?" . SID ."'>" . _('Select A Supplier to Enter a Transaction For') . '</a>';
+	echo '<br><a href="' . $rootpath . '/SelectSupplier.php?' . SID .'">' . _('Select A Supplier to Enter a Transaction For') . '</a>';
 	include('includes/footer.inc');
 	exit;
 	/*It all stops here if there aint no supplier selected and invoice initiated ie $_SESSION['SuppTrans'] started off*/
@@ -30,10 +29,10 @@ if (!isset($_SESSION['SuppTrans'])){
 /*If the user hit the Add to Invoice button then process this first before showing  all GRNs on the invoice
 otherwise it wouldnt show the latest additions*/
 if (isset($_POST['AddPOToTrans']) AND $_POST['AddPOToTrans']!=''){
-	foreach($_SESSION['SuppTransTmp']->GRNs as $GRNTmp) {
-		if ($_POST['AddPOToTrans']==$GRNTmp->PONo) {
-			$_SESSION['SuppTrans']->Copy_GRN_To_Trans($GRNTmp);
-			$_SESSION['SuppTransTmp']->Remove_GRN_From_Trans($GRNTmp->GRNNo);
+	foreach($_SESSION['SuppTransTmp']->GRNs as $GRNTmp) { //loop around temp GRNs array
+		if ($_POST['AddPOToTrans']==$GRNTmp->PONo) { 
+			$_SESSION['SuppTrans']->Copy_GRN_To_Trans($GRNTmp); //copy from  temp GRNs array to entered GRNs array
+			$_SESSION['SuppTransTmp']->Remove_GRN_From_Trans($GRNTmp->GRNNo); //remove from temp GRNs array
 		}
 	}
 }
@@ -83,20 +82,20 @@ if (isset($_POST['ModifyGRN'])){
 	if ($InputError==False){
 //		$_SESSION['SuppTrans']->Remove_GRN_From_Trans($_POST['GRNNumber']);
 		$_SESSION['SuppTrans']->Modify_GRN_To_Trans($_POST['GRNNumber'],
-							$_POST['PODetailItem'],
-							$_POST['ItemCode'],
-							$_POST['ItemDescription'],
-							$_POST['QtyRecd'],
-							$_POST['Prev_QuantityInv'],
-							$_POST['This_QuantityInv'],
-							$_POST['OrderPrice'],
-							$_POST['ChgPrice'],
-							$Complete,
-							$_POST['StdCostUnit'],
-							$_POST['ShiptRef'],
-							$_POST['JobRef'],
-							$_POST['GLCode'],
-							$Hold);
+																								$_POST['PODetailItem'],
+																								$_POST['ItemCode'],
+																								$_POST['ItemDescription'],
+																								$_POST['QtyRecd'],
+																								$_POST['Prev_QuantityInv'],
+																								$_POST['This_QuantityInv'],
+																								$_POST['OrderPrice'],
+																								$_POST['ChgPrice'],
+																								$Complete,
+																								$_POST['StdCostUnit'],
+																								$_POST['ShiptRef'],
+																								$_POST['JobRef'],
+																								$_POST['GLCode'],
+																								$Hold);
 	}
 }
 
@@ -131,10 +130,10 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 		<td>' . $EnteredGRN->ItemDescription . '</td>
 		<td class=number>' . number_format($EnteredGRN->This_QuantityInv,2) . '</td>
 		<td class=number>' . number_format($EnteredGRN->ChgPrice,2) . '</td>
-		<td class=number>' . number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,2) . "</td>
-		<td><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . '&Modify=' . $EnteredGRN->GRNNo . "'>". _('Modify') . "</a></td>
-		<td><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $EnteredGRN->GRNNo . "'>" . _('Delete') . "</a></td>
-	</tr>";
+		<td class=number>' . number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,2) . '</td>
+		<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Modify=' . $EnteredGRN->GRNNo . '">'. _('Modify') . '</a></td>
+		<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $EnteredGRN->GRNNo . '">' . _('Delete') . '</a></td>
+	</tr>';
 
 	$TotalValueCharged = $TotalValueCharged + ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv);
 
@@ -146,29 +145,30 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 }
 
 echo '<tr>
-	<td colspan=5 align=right><font size=2 color=navy>' . _('Total Value of Goods Charged') . ':</font></td>
-	<td class=number><font size=2 color=navy>' . number_format($TotalValueCharged,2) . '</font></td>
+	<td colspan=5 align="right"><font size="2" color="navy">' . _('Total Value of Goods Charged') . ':</font></td>
+	<td class="number"><font size="2" color="navy">' . number_format($TotalValueCharged,2) . '</font></td>
 </tr>';
-echo "</table>";
-echo "<br /><div class='centre'><a href='$rootpath/SupplierInvoice.php?" . SID ."'>" . _('Back to Invoice Entry') . '</a></div><br />';
+echo '</table>';
+echo '<br /><div class="centre"><a href="' . $rootpath . '/SupplierInvoice.php?' . SID .'">' . _('Back to Invoice Entry') . '</a></div><br />';
 
 
 /* Now get all the outstanding GRNs for this supplier from the database*/
 
 $SQL = "SELECT grnbatch,
-		grnno,
-		purchorderdetails.orderno,
-		purchorderdetails.unitprice,
-		grns.itemcode,
-		grns.deliverydate,
-		grns.itemdescription,
-		grns.qtyrecd,
-		grns.quantityinv,
-		grns.stdcostunit,
-		purchorderdetails.glcode,
-		purchorderdetails.shiptref,
-		purchorderdetails.jobref,
-		purchorderdetails.podetailitem
+								grnno,
+								purchorderdetails.orderno,
+								purchorderdetails.unitprice,
+								grns.itemcode,
+								grns.deliverydate,
+								grns.itemdescription,
+								grns.qtyrecd,
+								grns.quantityinv,
+								grns.stdcostunit,
+								purchorderdetails.glcode,
+								purchorderdetails.shiptref,
+								purchorderdetails.jobref,
+								purchorderdetails.podetailitem,
+								purchorderdetails.assetid
 	FROM grns INNER JOIN purchorderdetails
 		ON  grns.podetailitem=purchorderdetails.podetailitem
 	WHERE grns.supplierid ='" . $_SESSION['SuppTrans']->SupplierID . "'
@@ -184,7 +184,7 @@ if (DB_num_rows($GRNResults)==0){
 }
 
 /*Set up a table to show the GRNs outstanding for selection */
-echo "<form action='" . $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
+echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset( $_SESSION['SuppTransTmp'])){
@@ -200,20 +200,21 @@ if (!isset( $_SESSION['SuppTransTmp'])){
 		}
 		if ($GRNAlreadyOnInvoice == False){
 			$_SESSION['SuppTransTmp']->Add_GRN_To_Trans($myrow['grnno'],
-									$myrow['podetailitem'],
-								$myrow['itemcode'],
-								$myrow['itemdescription'],
-								$myrow['qtyrecd'],
-								$myrow['quantityinv'],
-								$myrow['qtyrecd'] - $myrow['quantityinv'],
-								$myrow['unitprice'],
-								$myrow['unitprice'],
-								$Complete,
-								$myrow['stdcostunit'],
-								$myrow['shiptref'],
-								$myrow['jobref'],
-								$myrow['glcode'],
-								$myrow['orderno']);
+																									$myrow['podetailitem'],
+																									$myrow['itemcode'],
+																									$myrow['itemdescription'],
+																									$myrow['qtyrecd'],
+																									$myrow['quantityinv'],
+																									$myrow['qtyrecd'] - $myrow['quantityinv'],
+																									$myrow['unitprice'],
+																									$myrow['unitprice'],
+																									$Complete,
+																									$myrow['stdcostunit'],
+																									$myrow['shiptref'],
+																									$myrow['jobref'],
+																									$myrow['glcode'],
+																									$myrow['orderno'],
+																									$myrow['assetid']);
 		}
 	}
 }
@@ -224,24 +225,24 @@ if (isset($_GET['Modify'])){
 	$GRNNo = $_GET['Modify'];
 	$GRNTmp = $_SESSION['SuppTrans']->GRNs[$GRNNo];
 
-	echo "<table class=selection>";
+	echo '<table class=selection>';
 	echo '<tr><th colspan=10><font size=3 color=navy>' . _('GRN Selected For Adding To A Purchase Invoice') . '</font></th></tr>';
-	echo "<tr bgcolor=#800000>
-			<th>" . _('Sequence') . " #</th>
-			<th>" . _('Item') . "</th>
-			<th>" . _('Qty Outstanding') . "</th>
-			<th>" . _('Qty Invoiced') . "</th>
-			<th>" . _('Order Price in') . ' ' .  $_SESSION['SuppTrans']->CurrCode . "</th>
-			<th>" . _('Actual Price in') . ' ' .  $_SESSION['SuppTrans']->CurrCode . "</th>
-		</tr>";
+	echo '<tr bgcolor=#800000>
+			<th>' . _('Sequence') . ' #</th>
+			<th>' . _('Item') . '</th>
+			<th>' . _('Qty Outstanding') . '</th>
+			<th>' . _('Qty Invoiced') . '</th>
+			<th>' . _('Order Price in') . ' ' .  $_SESSION['SuppTrans']->CurrCode . '</th>
+			<th>' . _('Actual Price in') . ' ' .  $_SESSION['SuppTrans']->CurrCode . '</th>
+		</tr>';
 
 	echo '<tr>
 		<td>' . $GRNTmp->GRNNo . '</td>
 		<td>' . $GRNTmp->ItemCode . ' ' . $GRNTmp->ItemDescription . '</td>
-		<td class=number>' . number_format($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv,2) . "</td>
-		<td><input type=Text class='number' Name='This_QuantityInv' Value=" . $GRNTmp->This_QuantityInv . ' size=11 maxlength=10></td>
-		<td class=number>' . $GRNTmp->OrderPrice . '</td>
-		<td><input type=Text class="number" Name="ChgPrice" Value=' . $GRNTmp->ChgPrice . ' size=11 maxlength=10></td>
+		<td class=number>' . number_format($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv,2) . '</td>
+		<td><input type="text" class="number" Name="This_QuantityInv" Value="' . $GRNTmp->This_QuantityInv . '" size=11 maxlength=10></td>
+		<td class=number>"' . $GRNTmp->OrderPrice . '"</td>
+		<td><input type="text" class="number" Name="ChgPrice" Value=' . $GRNTmp->ChgPrice . ' size="11" maxlength="10"></td>
 	</tr>';
 	echo '</table>';
 
@@ -265,22 +266,24 @@ if (isset($_GET['Modify'])){
 	echo "<input type=hidden name='JobRef' Value='" . $GRNTmp->JobRef . "'>";
 	echo "<input type=hidden name='GLCode' Value='" . $GRNTmp->GLCode . "'>";
 	echo "<input type=hidden name='PODetailItem' Value='" . $GRNTmp->PODetailItem . "'>";
+	echo "<input type=hidden name='AssetID' Value='" . $GRNTmp->AssetID . "'>";
 }
 else {
 	if (count( $_SESSION['SuppTransTmp']->GRNs)>0){   /*if there are any outstanding GRNs then */
-		echo "<table cellpadding=1 colspan=7 class=selection>";
-		echo '<tr><th colspan=10><font size=3 color=navy>' . _('Goods Received Yet to be Invoiced From') . ' ' . $_SESSION['SuppTrans']->SupplierName.'</font></th></tr>';
+		echo '<table cellpadding="1" colspan="7" class="selection">';
+		echo '<tr><th colspan="10"><font size="3" color="navy">' . _('Goods Received Yet to be Invoiced From') . ' ' . $_SESSION['SuppTrans']->SupplierName.'</font></th></tr>';
 
-		$tableheader = "<tr bgcolor=#800000><th>" . _('Select') . "</th>
-				<th>" . _('Sequence') . " #</th>
-				<th>" . _('Order') . "</th>
-				<th>" . _('Item Code') . "</th>
-				<th>" . _('Description') . "</th>
-				<th>" . _('Total Qty Received') . "</th>
-				<th>" . _('Qty Already Invoiced') . "</th>
-				<th>" . _('Qty Yet To Invoice') . "</th>
-				<th>" . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</th>
-				<th>" . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th></tr>';
+		$tableheader = '<tr bgcolor=#800000><th>' . _('Select') . '</th>
+				<th>' . _('Sequence') . ' #</th>
+				<th>' . _('Order') . '</th>
+				<th>' . _('Item Code') . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('Total Qty Received') . '</th>
+				<th>' . _('Qty Already Invoiced') . '</th>
+				<th>' . _('Qty Yet To Invoice') . '</th>
+				<th>' . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+				<th>' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+				</tr>';
 
 		$i = 0;
 		$POs = array();

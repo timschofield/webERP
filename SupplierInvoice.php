@@ -658,17 +658,6 @@ then do the updates and inserts to process the invoice entered */
 				$LocalTotal += round($ShiptChg->Amount/ $_SESSION['SuppTrans']->ExRate,2);
 
 			}
-			$sql="SELECT conversionfactor
-					FROM purchdata
-					WHERE supplierno='".$_SESSION['SuppTrans']->SupplierID."'
-					AND stockid='".$EnteredGRN->ItemCode."'";
-			$result=DB_query($sql, $db);
-			if (DB_num_rows($result)>0) {
-				$myrow=DB_fetch_array($result);
-				$conversionfactor=$myrow['conversionfactor'];
-			} else {
-				$conversionfactor=1;
-			}
 
 			foreach ($_SESSION['SuppTrans']->Contracts as $Contract){
 
@@ -705,30 +694,29 @@ then do the updates and inserts to process the invoice entered */
  
 			}
 
-
 			foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
 				if (strlen($EnteredGRN->ShiptRef) == 0 OR $EnteredGRN->ShiptRef == 0){
 				/*so its not a shipment item
 				  enter the GL entry to reverse the GRN suspense entry created on delivery at standard cost used on delivery */
-					if ($_SESSION['WeightedAverageCosting']==1){
-						$EnteredGRN->StdCostUnit=0;
-					} // If WeightedAverageCosting=1, directly posting purchasing cost to material
-					if ($EnteredGRN->StdCostUnit * ($EnteredGRN->This_QuantityInv * $conversionfactor) != 0) {
+				  
+				 /*Always do this - for weighted average costing and also for standard costing */
+				 
+					if ($EnteredGRN->StdCostUnit * ($EnteredGRN->This_QuantityInv ) != 0) {
 						$SQL = "INSERT INTO gltrans (type,
-										typeno,
-										trandate,
-										periodno,
-										account,
-										narrative,
-										amount)
+																			typeno,
+																			trandate,
+																			periodno,
+																			account,
+																			narrative,
+																			amount)
 								VALUES (20, '" . $InvoiceNo . "',
 									'" . $SQLInvoiceDate . "',
 									'" . $PeriodNo . "',
 									'" . $_SESSION['SuppTrans']->GRNAct . "',
-									'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv * $conversionfactor . ' @  ' .
+									'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' @  ' .
 								 _('std cost of') . ' ' . $EnteredGRN->StdCostUnit  . "',
-								 	'" . round($EnteredGRN->StdCostUnit * $EnteredGRN->This_QuantityInv * $conversionfactor,2) . "')";
+								 	'" . round($EnteredGRN->StdCostUnit * $EnteredGRN->This_QuantityInv ,2) . "')";
 
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
 
@@ -738,14 +726,9 @@ then do the updates and inserts to process the invoice entered */
 
 					}
 
+					$PurchPriceVar = $EnteredGRN->This_QuantityInv * (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit);
 
-
-					$PurchPriceVar = round($EnteredGRN->This_QuantityInv * (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit * $conversionfactor),2);
-
-				//	echo "\$PurchPriceVar is: ".$PurchPriceVar."<br/>";
-				 //       echo "\$EnteredGRN->StdCostUnit is:"."$EnteredGRN->StdCostUnit"."<br/>";
-				  //      echo "\$EnteredGRN->ChgPrice is:".$EnteredGRN->ChgPrice."<br/>";
-
+					
 					/*Yes.... but where to post this difference to - if its a stock item the variance account must be retrieved from the stock category record
 					if its a nominal purchase order item with no stock item then there will be no standard cost and it will all be variance so post it to the
 					account specified in the purchase order detail record */
@@ -775,6 +758,7 @@ then do the updates and inserts to process the invoice entered */
 								$QtyRow = DB_fetch_row($Result);
 								$TotalQuantityOnHand = $QtyRow[0];
 
+								echo '<br>Total Qty On hand = ' . $TotalQuantityOnHand;
 
 								/*The cost adjustment is the price variance / the total quantity in stock
 								But that's only provided that the total quantity in stock is > the quantity charged on this invoice
@@ -783,30 +767,29 @@ then do the updates and inserts to process the invoice entered */
 
 								$WriteOffToVariances =0;
 
-								if ($EnteredGRN->This_QuantityInv * $conversionfactor > $TotalQuantityOnHand){
+								if ($EnteredGRN->This_QuantityInv > $TotalQuantityOnHand){
 
 									/*So we need to write off some of the variance to variances and only the balance of the quantity in stock to go to stock value */
 
-									$WriteOffToVariances =  ($EnteredGRN->This_QuantityInv * $conversionfactor
-										- $TotalQuantityOnHand)
-									* (($EnteredGRN->ChgPric / $conversionfactor/ $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit);
+									$WriteOffToVariances =  ($EnteredGRN->This_QuantityInv - $TotalQuantityOnHand)
+									* (($EnteredGRN->ChgPrice /  $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit);
 
 									$SQL = "INSERT INTO gltrans (type,
-											typeno,
-											trandate,
-											periodno,
-											account,
-											narrative,
-											amount)
-									VALUES (20,
-										'" .  $InvoiceNo . "',
-										'" . $SQLInvoiceDate . "',
-										'" . $PeriodNo . "',
-										'" . $StockGLCode['purchpricevaract'] . "',
-										'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo .
-									 ' - ' . $EnteredGRN->ItemCode . ' x ' . ($EnteredGRN->This_QuantityInv * $conversionfactor-$TotalQuantityOnHand) . ' x  ' . _('price var of') . ' ' .
-									 round(($EnteredGRN->ChgPrice / $conversionfactor / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  . "',
-										'" . $WriteOffToVariances . "')";
+																						typeno,
+																						trandate,
+																						periodno,
+																						account,
+																						narrative,
+																						amount)
+																				VALUES (20,
+																					'" .  $InvoiceNo . "',
+																					'" . $SQLInvoiceDate . "',
+																					'" . $PeriodNo . "',
+																					'" . $StockGLCode['purchpricevaract'] . "',
+																					'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo .
+																				 ' - ' . $EnteredGRN->ItemCode . ' x ' . ($EnteredGRN->This_QuantityInv -$TotalQuantityOnHand) . ' x  ' . _('price var of') . ' ' .
+																				 round(($EnteredGRN->ChgPrice / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  . "',
+																					'" . $WriteOffToVariances . "')";
 
 									$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 									$DbgMsg = _('The following SQL to insert the GL transaction was used');
@@ -817,21 +800,21 @@ then do the updates and inserts to process the invoice entered */
 								/*Now post any remaining price variance to stock rather than price variances */
 
 								$SQL = "INSERT INTO gltrans (type,
-											typeno,
-											trandate,
-											periodno,
-											account,
-											narrative,
-											amount)
-									VALUES (20,
-									'" . $InvoiceNo . "',
-									'" . $SQLInvoiceDate . "',
-									'" . $PeriodNo . "',
-									'" . $StockGLCode['stockact'] . "',
-									'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Average Cost Adj') .
-									 ' - ' . $EnteredGRN->ItemCode . ' x ' . $TotalQuantityOnHand  . ' x ' .
-									 round(($EnteredGRN->ChgPrice / $conversionfactor  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  . "',
-									'" . ($PurchPriceVar - $WriteOffToVariances) . "')";
+																					typeno,
+																					trandate,
+																					periodno,
+																					account,
+																					narrative,
+																					amount)
+																			VALUES (20,
+																			'" . $InvoiceNo . "',
+																			'" . $SQLInvoiceDate . "',
+																			'" . $PeriodNo . "',
+																			'" . $StockGLCode['stockact'] . "',
+																			'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Average Cost Adj') .
+																			 ' - ' . $EnteredGRN->ItemCode . ' x ' . $TotalQuantityOnHand  . ' x ' .
+																			 round(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  . "',
+																			'" . ($PurchPriceVar - $WriteOffToVariances) . "')";
 
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 								$DbgMsg = _('The following SQL to insert the GL transaction was used');
@@ -850,7 +833,6 @@ then do the updates and inserts to process the invoice entered */
 
 								if ($TotalQuantityOnHand>0) {
 
-
 									$CostIncrement = ($PurchPriceVar - $WriteOffToVariances) / $TotalQuantityOnHand;
 
 									$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
@@ -858,7 +840,7 @@ then do the updates and inserts to process the invoice entered */
 									$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
 								} else {
 									$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
-									materialcost=" . ($EnteredGRN->ChgPrice / $conversionfactor  / $_SESSION['SuppTrans']->ExRate) . " WHERE stockid='" . $EnteredGRN->ItemCode . "'";
+									materialcost=" . ($EnteredGRN->ChgPrice /  $_SESSION['SuppTrans']->ExRate) . " WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 									$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
 								}
 								/* End of Weighted Average Costing Code */
@@ -866,45 +848,85 @@ then do the updates and inserts to process the invoice entered */
 							} else { //It must be Standard Costing
 
 								$SQL = "INSERT INTO gltrans (type,
-											typeno,
-											trandate,
-											periodno,
-											account,
-											narrative,
-											amount)
-									VALUES (20,
-										'" . $InvoiceNo . "',
-										'" . $SQLInvoiceDate . "',
-										'" . $PeriodNo . "',
-										'" . $StockGLCode['purchpricevaract'] . "',
-										'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo .
-									 ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var of') . ' ' .
-									 round(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .  "',
-										'" . $PurchPriceVar . "')";
-
+																					typeno,
+																					trandate,
+																					periodno,
+																					account,
+																					narrative,
+																					amount)
+																			VALUES (20,
+																				'" . $InvoiceNo . "',
+																				'" . $SQLInvoiceDate . "',
+																				'" . $PeriodNo . "',
+																				'" . $StockGLCode['purchpricevaract'] . "',
+																				'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo .
+																			 ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var of') . ' ' .
+																			 round(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .  "',
+																				'" . $PurchPriceVar . "')";
+										
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 								$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
 								$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 							}
 						} else {
+							/* its a nominal purchase order item that is not on a shipment so post the whole lot to the GLCode specified in the order, the purchase price var is actually the diff between the
+							order price and the actual invoice price since the std cost was made equal to the order price in local currency at the time
+							the goods were received */
+							$GLCode = $EnteredGRN->GLCode; //by default
+							
+							if ($EnteredGRN->AssetID!=0) { //then it is an asset
 
-						/* its a nominal purchase order item that is not on a shipment so post the whole lot to the GLCode specified in the order, the purchase price var is actually the diff between the
-						order price and the actual invoice price since the std cost was made equal to the order price in local currency at the time
-						the goods were received */
+								/*Need to get the asset details  for posting */
+								$result = DB_query('SELECT assetid, 
+																				costact, 
+																				cost 
+																	FROM fixedassets INNER JOIN fixedassetcategories 
+																	ON fixedassets.assetcategoryid= fixedassetcategories.categoryid
+																	WHERE assetid="' . $EnteredGRN->AssetID . '"',$db);
+								if (DB_num_rows($result)!=0){ // the asset exists
+									$AssetRow = DB_fetch_array($result);
+									$GLCode = $AssetRow['costact'];
+									/*Add the fixed asset trans for the difference in the cost */
+									$SQL = "INSERT INTO fixedassettrans (assetid,
+																						transtype,
+																						transno,
+																						transdate,
+																						periodno,
+																						inputdate,
+																						cost)
+																	VALUES ('" . $EnteredGRN->AssetID . "',
+																					20,
+																					'" . $InvoiceNo . "',
+																					'" . $SQLInvoiceDate . "',
+																					'" . $PeriodNo . "',
+																					'" . Date('Y-m-d') . "',
+																					'" . (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit) . "')";
+									$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
+									$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
+									$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
+									
+									/*Now update the asset cost in fixedassets table */
+									$SQL = "UPDATE fixedassets SET cost = cost + " . (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit)  . "
+												WHERE assetid = '" . $EnteredGRN->AssetID . "'";
+									$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost and date purchased was not able to be updated because:');
+									$DbgMsg = _('The following SQL was used to attempt the update of the cost and the date the asset was purchased');
+									$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
+								} 
+							} //the item was an asset
 
 							$SQL = "INSERT INTO gltrans (type,
-											typeno,
-											trandate,
-											periodno,
-											account,
-											narrative,
-											amount)
+																				typeno,
+																				trandate,
+																				periodno,
+																				account,
+																				narrative,
+																				amount)
 									VALUES (20,
 											'" . $InvoiceNo . "',
 											'" . $SQLInvoiceDate . "',
 											'" . $PeriodNo . "',
-											'" . $EnteredGRN->GLCode . "',
+											'" . $GLCode . "',
 											'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' .
 									 $EnteredGRN->ItemDescription . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var') .
 									 ' ' . round(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2) . "',
@@ -913,7 +935,6 @@ then do the updates and inserts to process the invoice entered */
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 
 							$DbgMsg = _('The following SQL to insert the GL transaction was used');
-
 							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 						}
 					}
@@ -922,23 +943,23 @@ then do the updates and inserts to process the invoice entered */
 					/*then its a purchase order item on a shipment - whole charge amount to GRN suspense pending closure of the shipment when the variance is calculated and the GRN act cleared up for the shipment */
 
 					$SQL = "INSERT INTO gltrans (type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									narrative,
-									amount)
-							VALUES (20,
-								'" . $InvoiceNo . "',
-								'" . $SQLInvoiceDate . "',
-								'" . $PeriodNo . "',
-								'" . $_SESSION['SuppTrans']->GRNAct . "',
-								'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' .
-							 $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' @ ' .
-							 $_SESSION['SuppTrans']->CurrCode . ' ' . $EnteredGRN->ChgPrice . ' @ ' . _('a rate of') . ' ' .
-							 $_SESSION['SuppTrans']->ExRate . "',
-								'" . round(($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv) / $_SESSION['SuppTrans']->ExRate,2) . "')";
-
+																		typeno,
+																		trandate,
+																		periodno,
+																		account,
+																		narrative,
+																		amount)
+																VALUES (20,
+																	'" . $InvoiceNo . "',
+																	'" . $SQLInvoiceDate . "',
+																	'" . $PeriodNo . "',
+																	'" . $_SESSION['SuppTrans']->GRNAct . "',
+																	'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' .
+																 $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' @ ' .
+																 $_SESSION['SuppTrans']->CurrCode . ' ' . $EnteredGRN->ChgPrice . ' @ ' . _('a rate of') . ' ' .
+																 $_SESSION['SuppTrans']->ExRate . "',
+																	'" . round(($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv) / $_SESSION['SuppTrans']->ExRate,2) . "')";
+									
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
 
 					$DbgMsg = _('The following SQL to insert the GL transaction was used');
@@ -1088,16 +1109,16 @@ then do the updates and inserts to process the invoice entered */
 				/* insert the shipment charge records */
 
 				$SQL = "INSERT INTO shipmentcharges (shiptref,
-									transtype,
-									transno,
-									stockid,
-									value)
-						VALUES (
-							'" . $EnteredGRN->ShiptRef . "',
-							20,
-							'" . $InvoiceNo . "',
-							'" . $EnteredGRN->ItemCode . "',
-							'" . ($EnteredGRN->This_QuantityInv * $EnteredGRN->ChgPrice) / $_SESSION['SuppTrans']->ExRate . "')";
+																						transtype,
+																						transno,
+																						stockid,
+																						value)
+																			VALUES (
+																				'" . $EnteredGRN->ShiptRef . "',
+																				20,
+																				'" . $InvoiceNo . "',
+																				'" . $EnteredGRN->ItemCode . "',
+																				'" . ($EnteredGRN->This_QuantityInv * $EnteredGRN->ChgPrice) / $_SESSION['SuppTrans']->ExRate . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment charge record for the shipment') .
 							 ' ' . $EnteredGRN->ShiptRef . ' ' . _('could not be added because');
