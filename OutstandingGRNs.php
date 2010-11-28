@@ -39,7 +39,7 @@ If (isset($_POST['PrintPDF'])
 			suppliers
 		WHERE grns.supplierid=suppliers.supplierid
 		AND grns.podetailitem = purchorderdetails.podetailitem
-		AND qtyrecd-quantityinv <>0
+		AND qtyrecd-quantityinv>0
 		AND grns.supplierid >='" . $_POST['FromCriteria'] . "'
 		AND grns.supplierid <='" . $_POST['ToCriteria'] . "'
 		ORDER BY supplierid,
