@@ -9,6 +9,7 @@ Class SuppTrans {
 	var $GLCodes; /*array of objects of class GLCode using a counter as the pointer */
 	var $Shipts;  /*array of objects of class Shipment using a counter as the pointer */
 	var $Contracts; /*array of objects of class Contract using a counter as the pointer */
+	var $Assets; /*array of objects of class Asset using a counter as the pointer */
 	var $SupplierID;
 	var $SupplierName;
 	var $CurrCode;
@@ -28,6 +29,7 @@ Class SuppTrans {
 	var $GLCodesCounter=0;
 	var $ShiptsCounter=0;
 	var $ContractsCounter=0;
+	var $AssetCounter=0;
 	var $TaxGroup;
 	var $LocalTaxProvince;
 	var $TaxGroupDescription;
@@ -40,6 +42,7 @@ Class SuppTrans {
 		$this->GLCodes = array();
 		$this->Shipts = array();
 		$this->Contracts = array();
+		$this->Assets = array();
 		$this->Taxes = array();
 	}
 
@@ -204,6 +207,17 @@ Class SuppTrans {
 		Return 0;
 	}
 	
+	function Add_Asset_To_Trans($AssetID, $Amount){
+		if ($Amount!=0){
+			$this->Assets[$this->AssetCounter] = new Asset($this->AssetCounter,
+																										$AssetID,
+																										$Amount);
+			$this->AssetCounter++;
+			Return 1;
+		}
+		Return 0;
+	}
+	
 	function Add_Contract_To_Trans($ContractRef, $Amount,$Narrative, $AnticipatedCost){
 		if ($Amount!=0){
 			$this->Contracts[$this->ContractsCounter] = new Contract($this->ContractsCounter,
@@ -216,7 +230,9 @@ Class SuppTrans {
 		}
 		Return 0;
 	}
-	
+	function Remove_Asset_From_Trans($AssetCounter){
+	     unset($this->Assets[$AssetCounter]);
+	}
 	function Remove_GRN_From_Trans($GRNNo){
 	     unset($this->GRNs[$GRNNo]);
 	}
@@ -361,6 +377,30 @@ Class Shipment {
 	}
 }
 
+Class Asset {
+
+	Var $Counter;
+	Var $AssetID;
+	Var $Description;
+	Var $CostAct;
+	Var $Amount;
+
+	function Asset ($Counter, $AssetID, $Amount){
+		global $db;
+		$this->Counter = $Counter;
+		$this->AssetID = $AssetID;
+		$this->Amount = $Amount;
+		
+		$result = DB_query('SELECT fixedassets.description, 
+															fixedassetcategories.costact 
+											FROM fixedassets INNER JOIN fixedassetcategories
+											ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
+											WHERE assetid="' . $AssetID . '"',$db);
+		$AssetRow = DB_fetch_array($result);
+		$this->Description = $AssetRow['description'];
+		$this->CostAct = $AssetRow['costact'];
+	}
+}
 
 Class Contract {
 

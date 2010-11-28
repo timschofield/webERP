@@ -36,17 +36,28 @@ if ($LastDepnRun[1]==0 AND $LastDepnRun[0]==NULL) { //then depn has never been r
 /* Get list of assets for journal */
 $sql='SELECT fixedassets.assetid,
 						fixedassets.description,
-						fixedassets.cost,
-						fixedassets.accumdepn,
+						fixedassets.depntype,
+						fixedassets.depnrate,
+						fixedassets.datepurchased,
+						fixedassetcategories.accumdepnact,
+						fixedassetcategories.depnact,
+						fixedassetcategories.categorydescription,
+						SUM(fixedassettrans.cost) AS costtotal,
+						SUM(fixedassettrans.depn) AS depnbfwd
+			FROM fixedassets
+			INNER JOIN fixedassetcategories
+				ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
+			INNER JOIN fixedassettrans
+				ON fixedassets.assetid=fixedassettrans.assetid
+			WHERE fixedassettrans.transdate<="' . FormatDateForSQL($_POST['ProcessDate']) . '"
+			GROUP BY fixedassets.assetid,
+						fixedassets.description,
 						fixedassets.depntype,
 						fixedassets.depnrate,
 						fixedassets.datepurchased,
 						fixedassetcategories.accumdepnact,
 						fixedassetcategories.depnact,
 						fixedassetcategories.categorydescription
-			FROM fixedassets
-			INNER JOIN fixedassetcategories
-				ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
 			ORDER BY assetcategoryid, assetid';
 $AssetsResult=DB_query($sql, $db);
 
@@ -93,10 +104,10 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 		$TotalCategoryAccumDepn =0;
 		$TotalCategoryDepn = 0;
 	}
-	$BookValueBfwd = $AssetRow['cost'] - $AssetRow['accumdepn'];
+	$BookValueBfwd = $AssetRow['costtotal'] - $AssetRow['depnbfwd'];
 	if ($AssetRow['depntype']==0){ //striaght line depreciation
 		$DepreciationType = _('SL');
-		$NewDepreciation = $AssetRow['cost'] * $AssetRow['depnrate']/100/12;
+		$NewDepreciation = $AssetRow['costtotal'] * $AssetRow['depnrate']/100/12;
 		if ($NewDepreciation > $BookValueBfwd){
 			$NewDepreciation = $BookValueBfwd;
 		}

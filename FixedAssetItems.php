@@ -39,7 +39,7 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 	} elseif ( $_FILES['ItemPicture']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
 		prnMsg(_('The file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'],'warn');
 		$UploadTheFile ='No';
-	} elseif ( $_FILES['ItemPicture']['type'] == "text/plain" ) {  //File Type Check
+	} elseif ( $_FILES['ItemPicture']['type'] == 'text/plain' ) {  //File Type Check
 		prnMsg( _('Only graphics files can be uploaded'),'warn');
          	$UploadTheFile ='No';
 	} elseif (file_exists($filename)){
@@ -251,7 +251,8 @@ if (isset($_POST['submit'])) {
 			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 			
 			if (DB_error_no($db) ==0) {
-				prnMsg( _('The new asset has been added to the database'),'success');
+				$NewAssetID = DB_Last_Insert_ID($db,'fixedassets', 'assetid');
+				prnMsg( _('The new asset has been added to the database with an asset code of:') . ' ' . $NewAssetID,'success');
 				unset($_POST['LongDescription']);
 				unset($_POST['Description']);
 //				unset($_POST['AssetCategoryID']);
@@ -301,7 +302,7 @@ if (isset($_POST['submit'])) {
 		
 		/*Need to remove cost and accumulate depreciation from cost and accumdepn accounts */
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
-		$TransNo = GetNextTransNo( 43, $db); /* transaction type is asset deletion - (and remove cost/accumdepn from GL) */
+		$TransNo = GetNextTransNo( 43, $db); /* transaction type is asset deletion - (and remove cost/acc5umdepn from GL) */
 		if ($AssetRow['cost'] > 0){
 			//credit cost for the asset deleted
 			$SQL = "INSERT INTO gltrans (type,
@@ -478,7 +479,7 @@ if (!isset($_POST['AssetCategoryID'])) {
 	$_POST['AssetCategoryID']=$category;
 }
 
-if ($AssetRow['datepurchased']!='0000-00-00'){
+if ($AssetRow['datepurchased']!='0000-00-00' AND $AssetRow['datepurchased']!=''){
 	echo '<tr><td>' . _('Date Purchased') . ':</td><td>' . ConvertSQLDate($AssetRow['datepurchased']) . '</td></tr>';
 }
 
@@ -517,7 +518,7 @@ if ($_POST['DepnType']==0){ //straight line
 
 echo '</select></td></tr>';
 
-echo '<tr><td>' . _('Depreciation Rate') . ':</td><td><input ' . (in_array('DepnRate',$Errors) ?  'class="inputerror"' : 'class="number"' ) .'  type="Text" name="DepnRate" size=3 maxlength=3 value="' . $_POST['DepnRate'] . '"></td></tr>';
+echo '<tr><td>' . _('Depreciation Rate') . ':</td><td><input ' . (in_array('DepnRate',$Errors) ?  'class="inputerror"' : 'class="number"' ) .'  type="Text" name="DepnRate" size=4 maxlength=4 value="' . $_POST['DepnRate'] . '"></td></tr>';
 echo '</table>';
 
 /*Get the last period depreciation (depn is transtype =44) was posted for */

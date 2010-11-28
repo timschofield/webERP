@@ -26,8 +26,12 @@ mysqli_set_charset($db, "utf8");
 
 /* check connection */
 if (mysqli_connect_errno()) {
-    printf("Connect failed: %s\n", mysqli_connect_error());
-    exit();
+	printf("Connect failed: %s\n", mysqli_connect_error());
+	session_unset();
+	session_destroy();
+	echo '<p>' . _('Click') . '<a href="index.php">' . _('here') . '</a>' ._('to try logging in
+again') . '</p>';
+	exit();
 }
 
 if ( !$db ) {
@@ -150,12 +154,9 @@ function DB_free_result (&$ResultIndex){
 function DB_num_rows (&$ResultIndex){
 	return mysqli_num_rows($ResultIndex);
 }
-// Added by MGT
+
 function DB_affected_rows(&$ResultIndex){
-/* PeterMoulding.com
-20071102 Add $db to DB_escape_string() and other functions;
-	return mysqli_affected_rows($ResultIndex);
-*/
+
 	global $db;
 	return mysqli_affected_rows($db);
 

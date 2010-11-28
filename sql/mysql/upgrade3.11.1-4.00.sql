@@ -497,4 +497,6 @@ INDEX (transdate)
 
 ALTER TABLE stockcheckfreeze CHANGE stockcheckdate stockcheckdate date NOT NULL DEFAULT '0000-00-00';
 
+ALTER TABLE purchorderdetails ADD COLUMN assetid int NOT NULL DEFAULT 0;
+
 UPDATE config SET confvalue='4.0-RC2' WHERE confname='VersionName';
