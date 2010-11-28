@@ -1,6 +1,6 @@
 <?php
 /* $Revision: 1.16 $ */
-/* $Id$*/
+/* $Id: CreditStatus.php 3863 2010-09-30 14:53:09Z tim_schofield $*/
 
 $PageSecurity = 3;
 include('includes/session.inc');
@@ -88,16 +88,16 @@ if (isset($_POST['submit'])) {
 					reasondescription,
 					dissallowinvoices)
 					VALUES (
-					'" .$_POST['ReasonCode'] . ",
-					'" .$_POST['ReasonDescription'] . "', 1)";
+					"."'" .$_POST['ReasonCode'] . "'".",'"
+					.$_POST['ReasonDescription'] . "', 1)";
 		} else {
 			$sql = "INSERT INTO holdreasons (
 					reasoncode,
 					reasondescription,
 					dissallowinvoices)
 					VALUES (
-					'" .$_POST['ReasonCode'] . ",
-					'" .$_POST['ReasonDescription'] . "', 0)";
+					"."'" .$_POST['ReasonCode'] . "'".",'" 
+					.$_POST['ReasonDescription'] . "', 0)";
 		}
 
 		$msg = _('A new credit status record has been inserted');
