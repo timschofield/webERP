@@ -1334,11 +1334,6 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/FixedAssetList.php?' . SID . '">' . _('List Asset properties') . '</a></p>'; ?>
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
 								<?php echo GetRptLinks('fa'); ?>
 							</td>
 							</tr>

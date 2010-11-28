@@ -468,6 +468,15 @@ DELETE locstock.* FROM locstock INNER JOIN stockmaster ON locstock.stockid=stock
 
 DELETE stockitemproperties.* FROM stockitemproperties INNER JOIN stockmaster ON stockitemproperties.stockid=stockmaster.stockid INNER JOIN stockcategory ON stockmaster.categoryid=stockcategory.categoryid WHERE stockcategory.stocktype='A';
 
+DELETE stockserialmoves.* FROM stockserialmoves, stockmoves,
+stockmaster,stockcategory WHERE stockserialmoves.stockmoveno=stockmoves.stkmoveno AND
+stockmoves.stockid = stockmaster.stockid AND stockmaster.categoryid = stockcategory.categoryid AND stockcategory.stocktype = 'A';
+
+DELETE stockserialitems.* FROM stockserialitems, stockmaster, stockcategory
+WHERE stockserialitems.stockid = stockmaster.stockid AND stockmaster.categoryid=stockcategory.categoryid AND stocktype='A';
+
+DELETE stockmoves . * FROM stockmoves, stockmaster, stockcategory WHERE stockmoves.stockid = stockmaster.stockid AND stockmaster.categoryid = stockcategory.categoryid AND stockcategory.stocktype = 'A';
+
 DELETE stockmaster.* FROM stockmaster INNER JOIN stockcategory ON stockmaster.categoryid=stockcategory.categoryid WHERE stockcategory.stocktype='A';
 
 ALTER TABLE `fixedassets` CHANGE `id` `assetid` INT( 11 ) NOT NULL AUTO_INCREMENT ;
