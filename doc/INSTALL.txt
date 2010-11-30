@@ -28,6 +28,20 @@ The old version scripts should be deleted and the new scripts extracted to the w
 
 ***************New Installations***************
 
+Automated Installation
+
+Extract the webERP archive under your web-root directory (folder). Browse to the 
+
+http://yourhost/webERP/
+
+Where "yourhost" is the host web-server. The install should start automatically. It is most important to ensure that the web-server can write to the hosting files and persmissions may need to be altered through cpanel or other means. They should be changed back once the installation is completed.
+
+
+
+Manual Installation
+
+Read on below if you cannot use the installer to set up your installation.
+
 Note: It is worth printing this document off and checking off the steps as you go.
 
 Pre-requisites:

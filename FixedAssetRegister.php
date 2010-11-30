@@ -23,10 +23,10 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 								fixedassets.datepurchased,
 								fixedassetlocations.parentlocationid,
 								fixedassets.assetlocation,
-								SUM(CASE WHEN (fixedassettrans.transdate <"' . $DateFrom . '") THEN fixedassettrans.cost ELSE 0 END) AS bfwdcost,
-								SUM(CASE WHEN (fixedassettrans.transdate <"' . $DateFrom .'") THEN fixedassettrans.depn ELSE 0 END) AS bfwddepn,
-								SUM(CASE WHEN (fixedassettrans.transdate >="' . $DateFrom .'"  AND fixedassettrans.transdate <="' . $DateTo . '") THEN fixedassettrans.cost ELSE 0 END) AS periodadditions,
-								SUM(CASE WHEN fixedassettrans.transdate >="' . $DateFrom . '"  AND fixedassettrans.transdate <="' . $DateTo . '" THEN fixedassettrans.depn ELSE 0 END) AS perioddepn
+								SUM(CASE WHEN (fixedassettrans.transdate <"' . $DateFrom . '" AND fixedassettrans.fixedassettranstype="cost") THEN fixedassettrans.amount ELSE 0 END) AS bfwdcost,
+								SUM(CASE WHEN (fixedassettrans.transdate <"' . $DateFrom .'" AND fixedassettrans.fixedassettranstype="depn") THEN fixedassettrans.amount ELSE 0 END) AS bfwddepn,
+								SUM(CASE WHEN (fixedassettrans.transdate >="' . $DateFrom .'"  AND fixedassettrans.transdate <="' . $DateTo . '" AND fixedassettrans.fixedassettranstype="cost") THEN fixedassettrans.amount ELSE 0 END) AS periodadditions,
+								SUM(CASE WHEN fixedassettrans.transdate >="' . $DateFrom . '"  AND fixedassettrans.transdate <="' . $DateTo . '" AND fixedassettrans.fixedassettranstype="depn" THEN fixedassettrans.amount ELSE 0 END) AS perioddepn
 					FROM fixedassets
 					INNER JOIN fixedassetcategories ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
 					INNER JOIN fixedassetlocations ON fixedassets.assetlocation=fixedassetlocations.locationid

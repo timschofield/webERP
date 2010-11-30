@@ -1,6 +1,6 @@
 <?php
 /* $Revision: 1.16 $ */
-/* $Id: CreditStatus.php 3863 2010-09-30 14:53:09Z tim_schofield $*/
+/* $Id$*/
 
 $PageSecurity = 3;
 include('includes/session.inc');
@@ -88,16 +88,17 @@ if (isset($_POST['submit'])) {
 					reasondescription,
 					dissallowinvoices)
 					VALUES (
-					"."'" .$_POST['ReasonCode'] . "'".",'"
-					.$_POST['ReasonDescription'] . "', 1)";
+					'" .$_POST['ReasonCode'] . "',
+					'".$_POST['ReasonDescription'] . "'
+					, 1)";
 		} else {
 			$sql = "INSERT INTO holdreasons (
 					reasoncode,
 					reasondescription,
 					dissallowinvoices)
 					VALUES (
-					"."'" .$_POST['ReasonCode'] . "'".",'" 
-					.$_POST['ReasonDescription'] . "', 0)";
+					'" . $_POST['ReasonCode'] . "',
+					'" . $_POST['ReasonDescription'] ."', 0)";
 		}
 
 		$msg = _('A new credit status record has been inserted');
@@ -143,14 +144,14 @@ then none of the above are true and the list of status codes will be displayed w
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT reasoncode, reasondescription, dissallowinvoices FROM holdreasons";
+	$sql = 'SELECT reasoncode, reasondescription, dissallowinvoices FROM holdreasons';
 	$result = DB_query($sql, $db);
 
 	echo '<table class=selection>';
-	echo "<tr>
-		<th>". _('Status Code') ."</th>
-		<th>". _('Description') ."</th>
-		<th>". _('Disallow Invoices') .'</th>';
+	echo '<tr>
+		<th>'. _('Status Code') .'</th>
+		<th>'. _('Description') .'</th>
+		<th>'. _('Disallow Invoices') .'</th>';
 
 	$k=0; //row colour counter
 	while ($myrow=DB_fetch_row($result)) {

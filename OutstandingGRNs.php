@@ -24,27 +24,27 @@ If (isset($_POST['PrintPDF'])
 	  /*Now figure out the data to report for the criteria under review */
 
 	$SQL = "SELECT grnno,
-			orderno,
-			grns.supplierid,
-			suppliers.suppname,
-			grns.itemcode,
-			grns.itemdescription,
-			qtyrecd,
-			quantityinv,
-			grns.stdcostunit,
-			actprice,
-			unitprice
-		FROM grns,
-			purchorderdetails,
-			suppliers
-		WHERE grns.supplierid=suppliers.supplierid
-		AND grns.podetailitem = purchorderdetails.podetailitem
-		AND qtyrecd-quantityinv>0
-		AND grns.supplierid >='" . $_POST['FromCriteria'] . "'
-		AND grns.supplierid <='" . $_POST['ToCriteria'] . "'
-		ORDER BY supplierid,
-			grnno";
-
+									orderno,
+									grns.supplierid,
+									suppliers.suppname,
+									grns.itemcode,
+									grns.itemdescription,
+									qtyrecd,
+									quantityinv,
+									grns.stdcostunit,
+									actprice,
+									unitprice
+								FROM grns,
+									purchorderdetails,
+									suppliers
+								WHERE grns.supplierid=suppliers.supplierid
+								AND grns.podetailitem = purchorderdetails.podetailitem
+								AND qtyrecd-quantityinv>0
+								AND grns.supplierid >='" . $_POST['FromCriteria'] . "'
+								AND grns.supplierid <='" . $_POST['ToCriteria'] . "'
+								ORDER BY supplierid,
+									grnno";
+						
 	$GRNsResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {

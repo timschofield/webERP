@@ -13,7 +13,12 @@ include('includes/SQL_CommonFunctions.inc');
 
 
 /*Get the last period depreciation (depn is transtype =44) was posted for */
-$result = DB_query('SELECT periods.lastdate_in_period, max(fixedassettrans.periodno) FROM fixedassettrans INNER JOIN periods ON fixedassettrans.periodno=periods.periodno WHERE transtype=44 GROUP BY periods.lastdate_in_period',$db);
+$result = DB_query('SELECT periods.lastdate_in_period, 
+											max(fixedassettrans.periodno) 
+									FROM fixedassettrans INNER JOIN periods 
+									ON fixedassettrans.periodno=periods.periodno 
+									WHERE transtype=44 
+									GROUP BY periods.lastdate_in_period',$db);
 
 $LastDepnRun = DB_fetch_row($result);
 
@@ -32,6 +37,7 @@ if ($LastDepnRun[1]==0 AND $LastDepnRun[0]==NULL) { //then depn has never been r
 	$AllowUserEnteredProcessDate = false;
 	$_POST['ProcessDate'] = DateAdd(ConvertSQLDate($LastDepnRun[0]),'m',1);
 }
+
 
 /* Get list of assets for journal */
 $sql='SELECT fixedassets.assetid,
@@ -61,7 +67,12 @@ $sql='SELECT fixedassets.assetid,
 			ORDER BY assetcategoryid, assetid';
 $AssetsResult=DB_query($sql, $db);
 
-if (isset($_POST['CommitDepreciation'])){
+$InputError = false; //always hope for the best
+if (Date1GreaterThanDate2($_POST['ProcessDate'],Date($_SESSION['DefaultDateFormat']))){
+	prnMsg(_('No depreciation will be committed as the processing date is beyond the current date. The depreciation run can only be run for periods prior to today'),'warn');
+	$InputError =true;
+}
+if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	$result = DB_Txn_Begin($db);
 	$TransNo = GetNextTransNo(44, $db);
 	$PeriodNo = GetPeriod($_POST['ProcessDate'],$db);
@@ -147,7 +158,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 	$TotalAccumDepn +=$AssetRow['accumdepn'];
 	$TotalDepn +=$NewDepreciation;
 	
-	if (isset($_POST['CommitDepreciation']) AND $NewDepreciation !=0){
+	if (isset($_POST['CommitDepreciation']) AND $NewDepreciation !=0 AND $InputError==false){
 		
 		//debit depreciation expense
 		$SQL = "INSERT INTO gltrans (type,
@@ -190,7 +201,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 																			transdate,
 																			periodno,
 																			inputdate,
-																			cost,
+																			fixedassettranstype,
 																			depn)
 															VALUES ('" . $AssetRow['assetid'] . "',
 																			'44',
@@ -198,7 +209,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 																			'" . FormatDateForSQL($_POST['ProcessDate']) . "',
 																			'" . $PeriodNo . "',
 																			'" . Date('Y-m-d') . "',
-																			'0',
+																			'depn',
 																			'" . $NewDepreciation . "')";
 		$ErrMsg = _('Cannot insert a fixed asset transaction entry for the depreciation because');
 		$DbgMsg = _('The SQL that failed to insert the fixed asset transaction record was');
@@ -229,7 +240,7 @@ echo '<tr><th colspan=2 align="right">' . _('GRAND Total') . ' </th>
 
 echo '</table><hr><p></p>';
 
-if (isset($_POST['CommitDepreciation'])){
+if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	$result = DB_Txn_Commit($db);
 	prnMsg(_('Depreciation') . ' ' . $TransNo . ' ' . _('has been successfully entered'),'success');
 	unset($_POST['ProcessDate']);

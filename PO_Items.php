@@ -663,20 +663,28 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 		else {
 			$_POST['GLCode']=0;
 		}
-		if (strlen($_POST['AssetID'])>0){
-			if (!is_numeric($_POST['AssetID'])){
-				$AllowUpdate = false;
-				prnMsg(_('An asset code was entered but it is not numeric. A numeric asset code that exists must be entered when ordering a fixed asset'),'error');
-			}
-			$ValidAssetResult = DB_query('SELECT assetid FROM fixedassets WHERE assetid="' . $_POST['AssetID'] . '"',$db);
+		if ($_POST['AssetID'] !='Not an Asset'){
+			$ValidAssetResult = DB_query('SELECT assetid, 
+																					description,
+																					costact
+																		FROM fixedassets 
+																		INNER JOIN fixedassetcategories
+																		ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
+																		WHERE assetid="' . $_POST['AssetID'] . '"',$db);
 			if (DB_num_rows($ValidAssetResult)==0){ // then the asset id entered doesn't exist
 				$AllowUpdate = false;
 				prnMsg(_('An asset code was entered but it does not yet exist. Only pre-existing asset ids can be entered when ordering a fixed asset'),'error');
+			} else {
+				$AssetRow = DB_fetch_array($ValidAssetResult);
+				$_POST['GLCode'] = $AssetRow['costact'];
+				if ($_POST['ItemDescription']==''){
+					$_POST['ItemDescription'] = $AssetRow['description'];
+				}
 			}
 		} //end if an AssetID is entered
 		if (strlen($_POST['ItemDescription'])<=3){
 			$AllowUpdate = false;
-			prnMsg(_('Cannot enter this order line') . ':<br>' . _('The description of the item being purchase is required where a non-stock item is being ordered'),'warn');
+			prnMsg(_('Cannot enter this order line') . ':<br>' . _('The description of the item being purchased is required where a non-stock item is being ordered'),'warn');
 		}
 
 		if ($AllowUpdate == true){
@@ -999,10 +1007,21 @@ if (isset($_POST['NonStockOrder'])) {
 	while ($myrow=DB_fetch_array($result)) {
 		echo '<option value="'.$myrow['accountcode'].'">'.$myrow['accountcode'].' - '.$myrow['accountname'].'</option>';
 	}
-	echo '</td></tr>';
+	echo '</select></td></tr>';
 	echo '<tr><td>'._('OR Asset ID'). '</td>
-						<td><input type="text" class="number" name="AssetID" size="10" maxlength=12>
-								<a href="FixedAssetItems.php" target=_blank>'. _('New Fixed Asset') . '</a></td>
+						<td><select name="AssetID">';
+	$AssetsResult = DB_query('SELECT assetid, description, datepurchased FROM fixedassets ORDER BY assetid DESC',$db);
+	echo '<option selected value="Not an Asset">' . _('Not an Asset') . '</option>';
+	while ($AssetRow = DB_fetch_array($AssetsResult)){
+		if ($AssetRow['datepurchased']=='0000-00-00'){
+			$DatePurchased = _('Not yet purchased');
+		} else {
+			$DatePurchased = ConvertSQLDate($AssetRow['datepurchased']);
+		}
+		echo '<option value="' . $AssetRow['assetid'] . '">'  . $AssetRow['assetid'] . ' - '.  $DatePurchased . ' - ' . $AssetRow['description'] . '</option>';
+	}
+	
+	echo'</select><a href="FixedAssetItems.php" target=_blank>'. _('New Fixed Asset') . '</a></td>
 				<tr><td>'._('Quantity to purchase').'</td>
 						<td><input type="text" class="number" name="Qty" size=10></td></tr>
 				<tr><td>'._('Price per item').'</td>

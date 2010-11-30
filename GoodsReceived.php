@@ -582,13 +582,15 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 																						transdate,
 																						periodno,
 																						inputdate,
-																						cost)
+																						fixedassettranstype
+																						amount)
 																	VALUES ('" . $OrderLine->AssetID . "',
 																					25,
 																					'" . $GRN . "',
 																					'" . $_POST['DefaultReceivedDate'] . "',
 																					'" . $PeriodNo . "',
 																					'" . Date('Y-m-d') . "',
+																					'cost',
 																					'" . $CurrentStandardCost * $OrderLine->ReceiveQty . "')";
 					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');

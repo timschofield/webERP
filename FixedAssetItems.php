@@ -101,9 +101,9 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'AssetCategoryID';
 		$i++;
 	}
-	if (!is_numeric($_POST['DepnRate']) OR $_POST['DepnRate']>100 OR $_POST['DepnRate']<0){
+	if (!is_numeric($_POST['DepnRate']) OR $_POST['DepnRate']>100 OR $_POST['DepnRate']<1){
 		$InputError = 1;
-		prnMsg(_('The depreciation rate is expected to be a number between 0 and 100'),'error');
+		prnMsg(_('The depreciation rate is expected to be a number between 1 and 100'),'error');
 		$Errors[$i] = 'DepnRate';
 		$i++;
 	}
@@ -518,7 +518,7 @@ if ($_POST['DepnType']==0){ //straight line
 
 echo '</select></td></tr>';
 
-echo '<tr><td>' . _('Depreciation Rate') . ':</td><td><input ' . (in_array('DepnRate',$Errors) ?  'class="inputerror"' : 'class="number"' ) .'  type="Text" name="DepnRate" size=4 maxlength=4 value="' . $_POST['DepnRate'] . '"></td></tr>';
+echo '<tr><td>' . _('Depreciation Rate') . ':</td><td><input ' . (in_array('DepnRate',$Errors) ?  'class="inputerror"' : 'class="number"' ) .'  type="Text" name="DepnRate" size=4 maxlength=4 value="' . $_POST['DepnRate'] . '">%</td></tr>';
 echo '</table>';
 
 /*Get the last period depreciation (depn is transtype =44) was posted for */

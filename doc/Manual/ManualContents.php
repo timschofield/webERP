@@ -733,6 +733,28 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
               <BR>
             </LI>
             <LI>
+ <?php
+  if (!isset($_POST['Submit'])) {
+?>
+              <input type="checkbox" name="SelectFixedAssets">
+              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=FixedAssets'; ?>">Fixed Assets</A>
+<?php
+  } else {
+?>
+              <A HREF="#Fixed Assets">Fixed Assets</A>
+<?php
+  }
+?>
+              <UL>
+                <LI>Fixed Assets Overview</LI>
+                <LI>Creating a Fixed Asset</LI>
+                <LI>Selecting Fixed Assets</LI>
+                <LI>Depreciation Run</LI>
+                <LI>Fixed Asset Schedule</LI>
+              </UL>
+              <BR>
+            </LI>
+            <LI>
 <?php
 if (!isset($_POST['Submit'])) {
 ?>
@@ -1029,6 +1051,9 @@ if ($_GET['ViewTopic'] == 'Contracts' OR isset($_POST['SelectContractCosting']))
 }
 if ($_GET['ViewTopic'] == 'GeneralLedger' OR isset($_POST['SelectGeneralLedger'])) {
   include('ManualGeneralLedger.html');
+}
+if ($_GET['ViewTopic'] == 'FixedAssets' OR isset($_POST['SelectFixedAssets'])) {
+  include('ManualFixedAssets.html');
 }
 if ($_GET['ViewTopic'] == 'Manufacturing' OR isset($_POST['SelectManufacturing'])) {
   include('ManualManufacturing.html');

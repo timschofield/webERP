@@ -1168,13 +1168,15 @@ then do the updates and inserts to process the invoice entered */
 																					transdate,
 																					periodno,
 																					inputdate,
-																					cost)
+																					fixedassettranstype,
+																					amount)
 												VALUES ('" . $EnteredGRN->AssetID . "',
 																20,
 																'" . $InvoiceNo . "',
 																'" . $SQLInvoiceDate . "',
 																'" . $PeriodNo . "',
 																'" . Date('Y-m-d') . "',
+																'cost',
 																'" . ($PurchPriceVar) . "')";
 				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
@@ -1250,13 +1252,15 @@ then do the updates and inserts to process the invoice entered */
 																					transdate,
 																					periodno,
 																					inputdate,
-																					cost)
+																					fixedassettranstype,
+																					amount)
 																VALUES ('" . $AssetAddition->AssetID . "',
 																				20,
 																				'" . $InvoiceNo . "',
 																				'" . $SQLInvoiceDate . "',
 																				'" . $PeriodNo . "',
 																				'" . Date('Y-m-d') . "',
+																				'cost',
 																				'" . ($AssetAddition->Amount  / $_SESSION['SuppTrans']->ExRate)  . "')";
 			$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
