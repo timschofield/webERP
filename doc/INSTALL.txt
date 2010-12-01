@@ -6,7 +6,9 @@ Upgrading
 
 A php upgrade script is provided for versions from 3.05 that applies the database changes required to move from the previous version to the newer version - this script also updates any data as required to work with the new version scripts. Simply point your browser to Z_Upgrade3.06-3.07.php (for an upgrade between 3.06 and 3.07 - similar naming convention applies to subsequent releases) and follow the prompts. If you are upgrading through several versions eg. from 3.05 to 3.08 then you must run each successive Z_UpgradeX.XX-X.XY.php script in sequence.
 
-If the database must be updated manually (as it must for versions prior to 3.05), the SQL scripts are included under webERP/sql/mysql/ to update an existing mysql webERP database to the current version. The upgrade script no longer assumes the weberp database is called webERP. If using the mysql command line client then each upgrade SQL script must be edited to enter the name of the database to upgrade by adding a line
+If the database must be updated manually (as it must for versions prior to 3.05):
+
+The SQL scripts are included under webERP/sql/mysql/ to update an existing mysql webERP database to the current version. The upgrade script no longer assumes the weberp database is called webERP. If using the mysql command line client then each upgrade SQL script must be edited to enter the name of the database to upgrade by adding a line
 
 USE mydatabase;
 
@@ -28,7 +30,7 @@ The old version scripts should be deleted and the new scripts extracted to the w
 
 ***************New Installations***************
 
-Automated Installation
+There is an automated Installation script to 
 
 Extract the webERP archive under your web-root directory (folder). Browse to the 
 
@@ -36,11 +38,13 @@ http://yourhost/webERP/
 
 Where "yourhost" is the host web-server. The install should start automatically. It is most important to ensure that the web-server can write to the hosting files and persmissions may need to be altered through cpanel or other means. They should be changed back once the installation is completed.
 
+The install script checks for the appropriate permissions and will not even attempt to install unless the web-server has the necessary write access to the files.
+
 
 
 Manual Installation
 
-Read on below if you cannot use the installer to set up your installation.
+Read on below if you cannot use the installer to set up your installation for some reason or you simply wish to understand what is going on when the installer runs.
 
 Note: It is worth printing this document off and checking off the steps as you go.
 

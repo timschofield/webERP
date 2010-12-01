@@ -508,4 +508,6 @@ ALTER TABLE stockcheckfreeze CHANGE stockcheckdate stockcheckdate date NOT NULL 
 
 ALTER TABLE purchorderdetails ADD COLUMN assetid int NOT NULL DEFAULT 0;
 
+INSERT INTO `systypes` (`typeid` ,`typename` ,`typeno`) VALUES ('49', 'Import Fixed Assets', '1');
+
 UPDATE config SET confvalue='4.0-RC2' WHERE confname='VersionName';

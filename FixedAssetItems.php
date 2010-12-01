@@ -101,11 +101,14 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'AssetCategoryID';
 		$i++;
 	}
-	if (!is_numeric($_POST['DepnRate']) OR $_POST['DepnRate']>100 OR $_POST['DepnRate']<1){
+	if (!is_numeric($_POST['DepnRate']) OR $_POST['DepnRate']>100 OR $_POST['DepnRate']<0){
 		$InputError = 1;
-		prnMsg(_('The depreciation rate is expected to be a number between 1 and 100'),'error');
+		prnMsg(_('The depreciation rate is expected to be a number between 0 and 100'),'error');
 		$Errors[$i] = 'DepnRate';
 		$i++;
+	}
+	if ($_POST['DepnRate']>0 AND $_POST['DepnRate']<1){
+		prnMsg(_('Numbers less than 1 are interpreted as less than 1%. The depreciation rate should be entered as a number between 0 and 100'),'warn');
 	}
 	
 	
