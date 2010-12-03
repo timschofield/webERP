@@ -48,8 +48,8 @@ $sql='SELECT fixedassets.assetid,
 						fixedassetcategories.accumdepnact,
 						fixedassetcategories.depnact,
 						fixedassetcategories.categorydescription,
-						SUM(fixedassettrans.cost) AS costtotal,
-						SUM(fixedassettrans.depn) AS depnbfwd
+						SUM(CASE WHEN fixedassettrans.fixedassettranstype="cost" THEN fixedassettrans.amount ELSE 0 END) AS costtotal,
+						SUM(CASE WHEN fixedassettrans.fixedassettranstype="depn" THEN fixedassettrans.amount ELSE 0 END) AS depnbfwd
 			FROM fixedassets
 			INNER JOIN fixedassetcategories
 				ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
