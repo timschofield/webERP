@@ -69,7 +69,6 @@ if (isset($_POST['Select']) and empty($_POST['SupplierContact'])) {
 }
 
 if (isset($_POST['UpdateStat']) AND $_POST['UpdateStat']!='') {
-	/*The cancel button on the header screen - to delete order */
 	$OK_to_updstat = 1;
 	$OldStatus=$_SESSION['PO'.$identifier]->Stat;
 	$NewStatus=$_POST['Stat'];
@@ -277,7 +276,7 @@ if (isset($_GET['ModifyOrderNumber'])){
 
 if (isset($_POST['CancelOrder']) AND $_POST['CancelOrder']!='') {
 /*The cancel button on the header screen - to delete order */
-	$OK_to_delete = 1;	 //assume this in the first instance
+	$OK_to_delete = 1;	 //alway assume the best to start with ... until we find out otherwise ...
 
 	if(!isset($_SESSION['ExistingOrder']) OR $_SESSION['ExistingOrder']!=0) {
 		/* need to check that not already dispatched or invoiced
@@ -294,35 +293,151 @@ if (isset($_POST['CancelOrder']) AND $_POST['CancelOrder']!='') {
 	}
 
 	if ($OK_to_delete==1){
-		$EmailSQL="SELECT email FROM www_users WHERE userid='".$_SESSION['PO'.$identifier]->Initiator."'";
-		$EmailResult=DB_query($EmailSQL, $db);
-		$EmailRow=DB_fetch_array($EmailResult);
-		$StatusComment=date($_SESSION['DefaultDateFormat']).
-			' - Order Cancelled by <a href="mailto:'.$EmailRow['email'].'">'.$_SESSION['UserID'].'</a><br>'.$_POST['statcommentscomplete'];
-		unset($_SESSION['PO'.$identifier]->LineItems);
-		unset($_SESSION['PO'.$identifier]);
-		$_SESSION['PO'.$identifier] = new PurchOrder;
-		$_SESSION['RequireSupplierSelection'] = 1;
 
 		if($_SESSION['ExistingOrder']!=0){
+			$EmailSQL="SELECT email FROM www_users WHERE userid='".$_SESSION['PO'.$identifier]->Initiator."'";
+			$EmailResult=DB_query($EmailSQL, $db);
+			$EmailRow=DB_fetch_array($EmailResult);
+			$StatusComment=date($_SESSION['DefaultDateFormat']). ' - ' . _('Order Cancelled by:') . ' <a href="mailto:'.$EmailRow['email'].'">'.$_SESSION['UserID'].'</a><br>'.$_POST['statcommentscomplete'];
+			
+			/* Copy the deleted orders to the purchorder_deleted table so there is an audit trail of who ordered what */
+			$sql = "INSERT INTO purchorders_deleted (	orderno,
+																							supplierno,
+																							comments,
+																							orddate,
+																							rate,
+																							initiator,
+																							requisitionno,
+																							intostocklocation,
+																							deladd1,
+																							deladd2,
+																							deladd3,
+																							deladd4,
+																							deladd5,
+																							deladd6,
+																							tel,
+																							suppdeladdress1,
+																							suppdeladdress2,
+																							suppdeladdress3,
+																							suppdeladdress4,
+																							suppdeladdress5,
+																							suppdeladdress6,
+																							suppliercontact,
+																							supptel,
+																							contact,
+																							version,
+																							revised,
+																							deliveryby,
+																							status,
+																							stat_comment,
+																							deliverydate,
+																							paymentterms)
+																						SELECT orderno,
+																										supplierno,
+																										comments,
+																										orddate,
+																										rate,
+																										initiator,
+																										requisitionno,
+																										intostocklocation,
+																										deladd1,
+																										deladd2,
+																										deladd3,
+																										deladd4,
+																										deladd5,
+																										deladd6,
+																										tel,
+																										suppdeladdress1,
+																										suppdeladdress2,
+																										suppdeladdress3,
+																										suppdeladdress4,
+																										suppdeladdress5,
+																										suppdeladdress6,
+																										suppliercontact,
+																										supptel,
+																										contact,
+																										version,
+																										revised,
+																										deliveryby,
+																										'" . PurchOrder::STATUS_CANCELLED . "',
+																										'" . $StatusComment . "',
+																										deliverydate,
+																										paymentterms 
+																		FROM purchorders 
+																		WHERE orderno ='" . $_SESSION['ExistingOrder'] . "'";
+				
+			$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
+			$DbgMsg = _('The SQL statement used to insert the purchase order header record and failed was');
+			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
-			$sql = "UPDATE purchorderdetails
-				SET completed=1
-				WHERE purchorderdetails.orderno ='" . $_SESSION['ExistingOrder'] ."'";
+		     /*Insert the purchase order detail records */
+			$sql = "INSERT INTO purchorderdetails_deleted ( orderno,
+																									itemcode,
+																									deliverydate,
+																									itemdescription,
+																									glcode,
+																									unitprice,
+																									quantityord,
+																									shiptref,
+																									jobref,
+																									itemno,
+																									uom,
+																									suppliers_partno,
+																									subtotal_amount,
+																									package,
+																									pcunit,
+																									nw,
+																									gw,
+																									cuft,
+																									total_quantity,
+																									total_amount,
+																									assetid )
+																SELECT orderno,
+																				itemcode,
+																				deliverydate,
+																				itemdescription,
+																				glcode,
+																				unitprice,
+																				quantityord,
+																				shiptref,
+																				jobref,
+																				itemno,
+																				uom,
+																				suppliers_partno,
+																				subtotal_amount,
+																				package,
+																				pcunit,
+																				nw,
+																				gw,
+																				cuft,
+																				total_quantity,
+																				total_amount,
+																				assetid 
+																FROM purchorderdetails
+																WHERE orderno='" .  $_SESSION['ExistingOrder'] . "'";
+																
+			$ErrMsg =_('The deleted purchase order detail records could not be inserted into the database because');
+			$DbgMsg =_('The SQL statement used to insert the deleted purchase order detail records and failed was');
+			$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+			
+			/*Now we have a copy to record the trail - we can delete this order from the database */
+			
+			$sql = "DELETE FROM purchorderdetails
+									WHERE purchorderdetails.orderno ='" . $_SESSION['ExistingOrder'] ."'";
 			$ErrMsg = _('The order detail lines could not be deleted because');
 			$DelResult=DB_query($sql,$db,$ErrMsg);
 
-			$sql="UPDATE purchorders
-				SET status='".PurchOrder::STATUS_CANCELLED."',
-				stat_comment='".$StatusComment."'
-				WHERE orderno='".$_SESSION['ExistingOrder']."'";
-
+			$sql="DELETE FROM purchorders
+							WHERE orderno='".$_SESSION['ExistingOrder']."'";
 			$ErrMsg = _('The order header could not be deleted because');
 			$DelResult=DB_query($sql,$db,$ErrMsg);
-			prnMsg( _('Order number').' '.$_SESSION['ExistingOrder'].' '._('has been cancelled'), 'success');
-			unset($_SESSION['PO'.$identifier]);
+			prnMsg( _('Order number').' '.$_SESSION['ExistingOrder'].' '._('has been deleted'), 'success');
 			unset($_SESSION['ExistingOrder']);
-		} else {
+			unset($_SESSION['PO'.$identifier]->LineItems);
+			unset($_SESSION['PO'.$identifier]);
+			$_SESSION['PO'.$identifier] = new PurchOrder;
+			$_SESSION['RequireSupplierSelection'] = 1;
+		} else { //it's not an existing order currently so just clear the session variable to delete it
 		// Re-Direct to right place
 			unset($_SESSION['PO'.$identifier]);
 			prnMsg( _('The creation of the new order has been cancelled'), 'success');
@@ -541,20 +656,20 @@ if (isset($_POST['Select'])) {
 } else {
 	$_POST['Select'] = $_SESSION['PO'.$identifier]->SupplierID;
 	$sql = "SELECT suppliers.suppname,
-			suppliers.currcode,
-			suppliers.paymentterms,
-			suppliers.address1,
-			suppliers.address2,
-			suppliers.address3,
-			suppliers.address4,
-			suppliers.address5,
-			suppliers.address6,
-			suppliers.phn,
-			suppliers.port
-		FROM suppliers INNER JOIN currencies
-		ON suppliers.currcode=currencies.currabrev
-		WHERE supplierid='" . $_POST['Select'] . "'";
-
+								suppliers.currcode,
+								suppliers.paymentterms,
+								suppliers.address1,
+								suppliers.address2,
+								suppliers.address3,
+								suppliers.address4,
+								suppliers.address5,
+								suppliers.address6,
+								suppliers.phn,
+								suppliers.port
+							FROM suppliers INNER JOIN currencies
+							ON suppliers.currcode=currencies.currabrev
+							WHERE supplierid='" . $_POST['Select'] . "'";
+					
 	$ErrMsg = _('The supplier record of the supplier selected') . ': ' . $_POST['Select'] . ' ' .
 		_('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the supplier details and failed was');

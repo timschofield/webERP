@@ -1,5 +1,6 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p></p>
+<p>5/12/10 Phil: Fixed bug in purchase orders that did not actually delete purchase orders that were cancelled. I think the reason was a fraud prevention issue so instead I have made new tables for purchorders_deleted and purchorderdetails_deleted to copy the details of the deleted orders to - should investigation be required.
 <p>3/12/10 Matt Elbrecht : Estonian translation
 <p>30/11/10 Phil: Changed table structure of new fixedassettrans and modified upgrade script - those who already ran that bit will need to change the table again. Modified fixed asset scripts again. New fixed assets manual</p>
 <p>28/11/10 Exsson: CreditStatus.php - Fix bug in sql statement</p>
