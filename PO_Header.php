@@ -79,9 +79,9 @@ if (isset($_POST['UpdateStat']) AND $_POST['UpdateStat']!='') {
 	if ($OldStatus!=$NewStatus) {
 	/* assume this in the first instance */
 		$authsql="SELECT authlevel
-			FROM purchorderauth
-			WHERE userid='".$_SESSION['UserID']."'
-			AND currabrev='".$_SESSION['PO'.$identifier]->CurrCode."'";
+								FROM purchorderauth
+								WHERE userid='".$_SESSION['UserID']."'
+								AND currabrev='".$_SESSION['PO'.$identifier]->CurrCode."'";
 
 		$authresult=DB_query($authsql,$db);
 		$myrow=DB_fetch_array($authresult);

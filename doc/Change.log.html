@@ -1,7 +1,8 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
-<p></p>
-<p>5/12/10 Phil: Fixed bug in purchase orders that did not actually delete purchase orders that were cancelled. I think the reason was a fraud prevention issue so instead I have made new tables for purchorders_deleted and purchorderdetails_deleted to copy the details of the deleted orders to - should investigation be required.
-<p>3/12/10 Matt Elbrecht : Estonian translation
+<p>/</p>
+<p>8/12/10 James Murray: fixed bug in SuppPaymentRun.php - was not showing anything as the test to see if there was anything to see was using a non-existant result set!</p>
+<p>5/12/10 Phil: Fixed bug in purchase orders that did not actually delete purchase orders that were cancelled. I think the reason was a fraud prevention issue so instead I have made new tables for purchorders_deleted and purchorderdetails_deleted to copy the details of the deleted orders to - should investigation be required.</p>
+<p>3/12/10 Matt Elbrecht : Estonian translation</p>
 <p>30/11/10 Phil: Changed table structure of new fixedassettrans and modified upgrade script - those who already ran that bit will need to change the table again. Modified fixed asset scripts again. New fixed assets manual</p>
 <p>28/11/10 Exsson: CreditStatus.php - Fix bug in sql statement</p>
 <p>28/11/10 Tim: OutstandingGRNs.php - Only show when the invoiced qty is less than the GRN qty</p>

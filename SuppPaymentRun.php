@@ -113,7 +113,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			include('includes/footer.inc');
 			exit;
 		}
-		if (DB_num_rows($TranResult)==0) {
+		if (DB_num_rows($TransResult)==0) {
 			$title = _('Payment Run -Problem Report');
 			include('includes/header.inc');
 			prnMsg(_('There are no outstanding supplier invoices to pay'),'info');
