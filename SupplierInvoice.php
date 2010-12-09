@@ -133,11 +133,15 @@ if (isset($_POST['ExRate'])){
 	$_SESSION['SuppTrans']->TranDate = $_POST['TranDate'];
 
 	if (substr( $_SESSION['SuppTrans']->Terms,0,1)=='1') { /*Its a day in the following month when due */
-		$_SESSION['SuppTrans']->DueDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')+1, substr( $_SESSION['SuppTrans']->Terms,1),Date('y')));
+		$DayInFollowingMonth = (int) substr( $_SESSION['SuppTrans']->Terms,1);
+		$DaysBeforeDue = 0;
 	} else { /*Use the Days Before Due to add to the invoice date */
-		$_SESSION['SuppTrans']->DueDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d') + (int) substr( $_SESSION['SuppTrans']->Terms,1),Date('y')));
+		$DayInFollowingMonth = 0;
+		$DaysBeforeDue = (int) substr( $_SESSION['SuppTrans']->Terms,1);
 	}
-
+	
+	$_SESSION['SuppTrans']->DueDate = CalcDueDate($_SESSION['SuppTrans']->TranDate, $DayInFollowingMonth, $DaysBeforeDue);
+	
 	$_SESSION['SuppTrans']->SuppReference = $_POST['SuppReference'];
 
 	if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){
