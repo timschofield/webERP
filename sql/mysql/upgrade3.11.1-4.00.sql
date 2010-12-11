@@ -432,7 +432,7 @@ ALTER TABLE `reports` ADD `col19width` INT( 3 ) NOT NULL DEFAULT '25' AFTER `col
 
 ALTER TABLE `reports` ADD `col20width` INT( 3 ) NOT NULL DEFAULT '25' AFTER `col19width` ;
 
-ALTER TABLE `reportfields` CHANGE `fieldname` `fieldname` VARCHAR( 80) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT '';
+ALTER TABLE `reportfields` CHANGE `fieldname` `fieldname` VARCHAR( 80) NOT NULL DEFAULT '';
 
 ALTER TABLE `stockcatproperties` ADD `maximumvalue` DOUBLE NOT NULL DEFAULT 999999999 AFTER `defaultvalue` ,
 ADD `minimumvalue` DOUBLE NOT NULL DEFAULT -999999999,

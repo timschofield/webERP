@@ -1,5 +1,6 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p>/</p>
+<p>11/12/10 Phil: Have populated the new field stockcheckdate in stockcheckfreeze and modified PDFStockCheckComparison to use this field when posting the GL - stockmoves need to be on the current day otherwise historical balances will all need to be updated. But narrative shows the date of the stock check for which the adjustment is being made</p>
 <p>9/12/10 James Murray: highlighted a bug in SupplierInvoice.php (and also in SupplierCredit.php) where the due date of the invoice/credit was not calculated correctly based on the terms - it was picking up the current date rather than the invoice/credit date. Now fixed</p>
 <p>8/12/10 James Murray: fixed bug in SuppPaymentRun.php - was not showing anything as the test to see if there was anything to see was using a non-existant result set!</p>
 <p>5/12/10 Phil: Fixed bug in purchase orders that did not actually delete purchase orders that were cancelled. I think the reason was a fraud prevention issue so instead I have made new tables for purchorders_deleted and purchorderdetails_deleted to copy the details of the deleted orders to - should investigation be required.</p>
