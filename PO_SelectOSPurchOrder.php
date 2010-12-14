@@ -422,64 +422,54 @@ else {
 		}
 
 		$ModifyPage = $rootpath . '/PO_Header.php?' . SID . '&ModifyOrderNumber=' . $myrow['orderno'];
-		if ($myrow['status'] == PurchOrder::STATUS_PRINTED) {
+		if ($myrow['status'] == 'Printed') {
 			$ReceiveOrder = '<a href="'.$rootpath . '/GoodsReceived.php?' . SID . '&PONumber=' . $myrow['orderno'].'">'.
 				_('Receive').'</a>';
 		} else {
 			$ReceiveOrder = _('Receive');
 		}
-		if ($myrow["allowprint"] == 1){
+		if ($myrow['allowprint'] == 1){
 			$PrintPurchOrder = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '">' . _('Print Now') . '</a>';
 		} else {
 // not open yet
 //			$PrintPurchOrder = '<font color=GREY>' . _('Printed') . '</font>';
 
 		}
-		if ($myrow['status'] == PurchOrder::STATUS_AUTHORISED) {
-			$PrintPurchOrder = '
-				<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=2">
+		if ($myrow['status'] == 'Authorisied') {
+			$PrintPurchOrder = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=2">
 				' . _('Print') . '
 				</a>';
 		} else {
-			$PrintPurchOrder = _(PurchOrder::STATUS_PRINTED);
+			$PrintPurchOrder = _('Printed');
 		}
-		$PrintPurchOrder2 = '
-			<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=1">
-				' . _('Show') . '
-			</a>';
+		
+		$PrintPurchOrder2 = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=1">' . _('Show') . '</a>';
+		
 		$s2 = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=1">' . $myrow['realorderno']. '</a>';
 
 		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 		$FormatedOrderValue = number_format($myrow['ordervalue'],2);
 
-// the tailed two column
-//			<td>%s</font></td>
-//			<td class=number>%s</font></td>
-//			$myrow['requisitionno'],
-//			$myrow['initiator']);
-//			'</td><td class="tableheader">' . _('Requisition') .
-//			'</td><td class="tableheader">' . _('Initiator') .
-//				<td><a href='%s'>" . _('Receive') . "</a></td>
-		echo "<td>".$myrow["orderno"]."</font></td>
-			<td>".$FormatedOrderDate."</td>
-			<td>".$myrow['initiator']."</td>
-			<td>".$myrow['suppname']."</td>
-			<td>".$myrow['currcode']."</td>";
+		echo '<td>' . $myrow['orderno'] . '</td>
+					<td>' . $FormatedOrderDate . '</td>
+					<td>' . $myrow['initiator'] . '</td>
+					<td>' . $myrow['suppname'] . '</td>
+					<td>' . $myrow['currcode'] . '</td>';
 		if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
 			echo "<td class=number>".$FormatedOrderValue."</td>";
 		}
-			echo "<td>"._($myrow['status'])."</td>
-			<td><a href='".$ModifyPage."'>Modify</a></td>
-			<td>".$PrintPurchOrder."</td>
-			<td>".$ReceiveOrder."</td>
-			</tr>";
+			echo '<td>'._($myrow['status']).'</td>
+						<td><a href="'.$ModifyPage.'">' . _('Modify') . '</a></td>
+						<td>'.$PrintPurchOrder.'</td>
+						<td>'.$ReceiveOrder.'</td>
+						</tr>';
 	//end of page full new headings if
 	}
 	//end of while loop
 
 	echo '</table>';
 }
-echo "<script>defaultControl(document.forms[0].StockCode);</script>";
+echo '<script>defaultControl(document.forms[0].StockCode);</script>';
 echo '</form>';
 include('includes/footer.inc');
 ?>

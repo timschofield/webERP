@@ -6,19 +6,11 @@
 
 Class PurchOrder {
 
-    const STATUS_NEW_ORDER  = 'New Order';
-    const STATUS_PENDING    = 'Pending';
-    const STATUS_AUTHORISED = 'Authorised';
-    const STATUS_REJECTED   = 'Rejected';
-    const STATUS_CANCELLED  = 'Cancelled';
-    const STATUS_PRINTED    = 'Printed';
-    const STATUS_COMPLITED  = 'Completed';
-
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
 	var $CurrCode;
 	var $ExRate;
 	var $Initiator;
-	var $deliverydate;
+	var $DeliveryDate;
 	var $RequisitionNo;
 	var $DelAdd1;
 	var $DelAdd2;
@@ -48,8 +40,8 @@ Class PurchOrder {
 	var $Total;
 	var $GLLink; /*Is the GL link to stock activated only checked when order initiated or reading in for modification */
 	var $Version;
-	var $Stat;
-	var $StatComments;
+	var $Status;
+	var $StatusComments;
 	var $AllowPrintPO;
 	var $Revised;
 	var $DeliveryBy;
@@ -82,7 +74,7 @@ Class PurchOrder {
 											$GLActName='',
 											$DecimalPlaces=2,
 											$ItemNo,
-											$uom,
+											$SuppUOM,
 											$ConversionFactor=1,
 											$LeadTime=1,
 											$Suppliers_PartNo='',
@@ -116,7 +108,7 @@ Class PurchOrder {
 																								$GLActName,
 																								$DecimalPlaces,
 																								$ItemNo,
-																								$uom,
+																								$SuppUOM,
 																								$ConversionFactor,
 																								$LeadTime,
 																								$Suppliers_PartNo,
@@ -177,7 +169,6 @@ Class PurchOrder {
 			$this->LineItems[$LineNo]->CuFt = $CuFt;
 			$this->LineItems[$LineNo]->Total_Quantity = $Total_Quantity;
 			$this->LineItems[$LineNo]->Total_Amount = $Total_Amount;
-			$this->LineItems[$LineNo]->Price = $Price;
 	}
 
 	function remove_from_order(&$LineNo){
@@ -227,7 +218,7 @@ Class LineDetails {
 	Var $GLActName;
 	Var $Quantity;
 	Var $Price;
-	Var $Units;
+	Var $Units; //errrrr what is uom for then
 	Var $ReqDelDate;
 	Var $QtyInv;
 	Var $QtyReceived;
@@ -236,7 +227,7 @@ Class LineDetails {
 	var $Completed;
 	Var $JobRef;
 	Var $ItemNo;
-	Var $uom;
+	Var $SuppUOM;
 	var $ConversionFactor;
 	Var $Suppliers_PartNo;
 	Var $SubTotal_Amount;
@@ -273,7 +264,7 @@ Class LineDetails {
 											$GLActName,
 											$DecimalPlaces,
 											$ItemNo,
-											$uom,
+											$SuppUOM,
 											$ConversionFactor,
 											$Suppliers_PartNo,
 											$SubTotal_Amount,
@@ -303,7 +294,7 @@ Class LineDetails {
 		$this->GLCode = $GLCode;
 		$this->JobRef = $JobRef;
 		$this->ItemNo = $ItemNo;
-		$this->uom = $uom;
+		$this->SuppUOM = $SuppUOM;
 		$this->ConversionFactor = $ConversionFactor;
 		$this->Suppliers_PartNo = $Suppliers_PartNo;
 		$this->Subtotal_Amount = $SubTotal_Amount;
