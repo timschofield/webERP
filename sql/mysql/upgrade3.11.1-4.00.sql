@@ -445,8 +445,10 @@ ALTER TABLE fixedassets ADD COLUMN `longdescription` text NOT NULL;
 ALTER TABLE fixedassets ADD COLUMN `depntype` int NOT NULL DEFAULT 1;
 ALTER TABLE fixedassets ADD COLUMN `depnrate` double NOT NULL;
 ALTER TABLE fixedassets ADD COLUMN  `barcode` VARCHAR( 30 ) NOT NULL;
+ALTER TABLE fixedassets ADD COLUMN  `disposaldate` DATE NOT NULL DEFAULT '0000-00-00';
 ALTER TABLE `fixedassets` CHANGE `depn` `accumdepn` DOUBLE NOT NULL DEFAULT '0';
 ALTER TABLE `fixedassets` CHANGE `location` `assetlocation` VARCHAR( 6 ) NOT NULL DEFAULT '';
+ALTER TABLE `fixedassets` CHANGE `disposalvalue` `disposalproceeds` DOUBLE NOT NULL DEFAULT '0'
 
 UPDATE fixedassets INNER JOIN stockmaster ON fixedassets.stockid=stockmaster.stockid SET assetcategoryid=stockmaster.categoryid, fixedassets.description=stockmaster.description, fixedassets.longdescription=stockmaster.longdescription;
 

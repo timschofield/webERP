@@ -982,6 +982,85 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		 unset($NewItem);
 	 } /* end of if quick entry */
 
+	if (isset($_POST['AssetDisposalEntered'])){ //its an asset being disposed of
+		if ($_POST['AssetToDisposeOf'] == 'NoAssetSelected'){ //don't do anything unless an asset is disposed of
+			prnMsg(_('No asset was selected to dispose of. No assets have been added to this customer order'),'warn');
+		} else { //need to add the asset to the order
+			/*First need to create a stock ID to hold the asset and record the sale - as only stock items can be sold 
+			 * 		and before that we need to add a disposal stock category - if not already created 
+			 * 		first off get the details about the asset being disposed of */
+			 $AssetDetailsResult = DB_query('SELECT  fixedassets.description,
+																							fixedassets.longdescription,
+																							fixedassets.barcode,
+																							fixedassetcategories.costact
+																					FROM fixedassetcategories INNER JOIN fixedassets
+																					ON fixedassetcategories.categoryid=fixedassets.assetcategoryid
+																					WHERE fixedassets.assetid="' . $_POST['AssetToDisposeOf'] . '"',$db);
+			$AssetRow = DB_fetch_array($AssetCatDetailsResult);
+			
+			$AssetCategoryResult = DB_query('SELECT  categoryid FROM stockcategory WHERE categoryid="ASSETS"',$db);
+			if (DB_num_rows($AssetCategoryResult)==0){
+				/*Although asset GL posting will come from the asset category - we should set the GL codes to something sensible 
+				 * based on the category of the asset under review at the moment - this may well change for any other assets sold subsequentely */
+				 
+				/*OK now we can insert the stock category for this asset */
+				$InsertAssetStockCatResult = DB_query('INSERT INTO stockcategory ( categoryid,
+																															categorydescription,
+																															stockact)
+																						VALUES ("ASSETS",
+																										"' . _('Asset Disposals') . '",
+																										"' . $AssetRow['costact'] . '")',$db);
+			} 
+			
+			/*First check to see that it doesn't exist already assets are of the format "ASSET-" . $AssetID
+			 */
+			 $TestAssetExistsAlreadyResult = DB_query('SELECT stockid FROM stockmaster WHERE stockid ="ASSET-' . $_POST['AssetToDisposeOf']  . '"',$db);
+			 if (DB_num_rows($TestAssetExistsAlreadyResult)==1){ //then it exists already ... bum
+				$j=1;
+				while (DB_num_rows($TestAssetExistsAlreadyResult)==1) {
+					$TestAssetExistsAlreadyResult = DB_query('SELECT stockid FROM stockmaster WHERE stockid ="ASSET-' . $_POST['AssetToDisposeOf']  . '-' . $j . '"',$db);
+					$j++;
+				}
+				$AssetStockID = 'ASSET-' . $_POST['AssetToDisposeOf']  . '-' . $j;
+			} else {
+				$AssetStockID = 'ASSET-' . $_POST['AssetToDisposeOf'];
+			}
+			/* Perhaps ought to check that the asset exists already as a stock item first */
+			
+			/*OK now we can insert the item for this asset */
+			$InsertAssetAsStockItemResult = DB_query('INSERT INTO stockmaster ( stockid,
+																																				description,
+																																				categoryid,
+																																				longdescription,
+																																				mbflag,
+																																				controlled,
+																																				serialised,
+																																				taxcatid)
+																										VALUES ("' . $AssetStockID . '",
+																														"' . $AssetRow['description'] . '",
+																														"' . $AssetRow['longdescription'] . '",
+																														"ASSETS",
+																														"B",
+																														"0",
+																														"0",
+																														"' . $_SESSION['DefaultTaxCategory'] . '")' , $db);
+			/*not forgetting the location records too */
+			$InsertStkLocRecsResult = DB_query('INSERT INTO locstock (loccode,
+																															stockid)
+																									SELECT loccode, "' . $AssetStockID . '" FROM locations',$db);
+			/*Now the asset has been added to the stock master we can add it to the sales order */
+			$NewItemDue = date($_SESSION['DefaultDateFormat']);
+			if (isset($_POST['POLine']){
+				$NewPOLine = $_POST['POLine'];
+			} else {
+				$NewPOLine = 0;
+			}
+			$NewItem = $AssetStockID;
+			include('includes/SelectOrderItems_IntoCart.inc');
+		}
+		
+			
+	}
 
 	 /*Now do non-quick entry delete/edits/adds */
 
@@ -1324,7 +1403,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 /* Now show the stock item selection search stuff below */
 
-	 if (isset($_POST['PartSearch']) && $_POST['PartSearch']!='' || !isset($_POST['QuickEntry'])){
+	 if ((isset($_POST['PartSearch']) 
+			AND $_POST['PartSearch']!=''
+			AND !isset($_POST['QuickEntry'])  
+			AND !isset($_POST['SelectAsset']))){
 
 		echo '<input type="hidden" name="PartSearch" value="' .  _('Yes Please') . '">';
 
@@ -1333,12 +1415,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 // Select the most recently ordered items for quick select
 			$SixMonthsAgo = DateAdd (Date($_SESSION['DefaultDateFormat']),'m',-6);
 
-			$SQL="SELECT stockmaster.units, stockmaster.description, stockmaster.stockid, salesorderdetails.stkcode, SUM(qtyinvoiced) Sales FROM `salesorderdetails`, `stockmaster`
-				  WHERE ActualDispatchDate >= '" . FormatDateForSQL($SixMonthsAgo) . "'
-				  AND salesorderdetails.stkcode = stockmaster.stockid
-				  GROUP BY stkcode
-				  ORDER BY sales DESC
-				  LIMIT " . $_SESSION['FrequentlyOrderedItems'];
+			$SQL="SELECT stockmaster.units, 
+										stockmaster.description, 
+										stockmaster.stockid, 
+										salesorderdetails.stkcode, 
+										SUM(qtyinvoiced) salesqty 
+							FROM `salesorderdetails`INNER JOIN `stockmaster`
+							ON  salesorderdetails.stkcode = stockmaster.stockid
+						  WHERE ActualDispatchDate >= '" . FormatDateForSQL($SixMonthsAgo) . "'
+						  GROUP BY stkcode
+						  ORDER BY salesqty DESC
+						  LIMIT " . $_SESSION['FrequentlyOrderedItems'];
+				  
 			$result2 = DB_query($SQL,$db);
 			echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ';
 			echo _('Frequently Ordered Items') . '<br>';
@@ -1370,13 +1458,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				// Find the quantity on outstanding sales orders
 				$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-						FROM salesorderdetails,
-							 salesorders
-						WHERE salesorders.orderno = salesorderdetails.orderno AND
-							 salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "' AND
-							 salesorderdetails.completed=0 AND
-							 salesorders.quotation=0 AND
-							 salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
+								FROM salesorderdetails,
+									 salesorders
+								WHERE salesorders.orderno = salesorderdetails.orderno AND
+									 salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "' AND
+									 salesorderdetails.completed=0 AND
+									 salesorders.quotation=0 AND
+									 salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
 
 				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' .
 					 _('cannot be retrieved because');
@@ -1390,9 +1478,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				}
 				// Find the quantity on purchase orders
 				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS dem
-						FROM purchorderdetails
-						WHERE purchorderdetails.completed=0
-						AND purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
+								FROM purchorderdetails
+								WHERE purchorderdetails.completed=0
+								AND purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
 
 				$ErrMsg = _('The order details for this product cannot be retrieved because');
 				$PurchResult = db_query($sql,$db,$ErrMsg);
@@ -1406,8 +1494,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				// Find the quantity on works orders
 				$sql = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) AS dedm
-					   FROM woitems
-					   WHERE stockid='" . $myrow['stockid'] ."'";
+							   FROM woitems
+							   WHERE stockid='" . $myrow['stockid'] ."'";
 				$ErrMsg = _('The order details for this product cannot be retrieved because');
 				$WoResult = db_query($sql,$db,$ErrMsg);
 				$WoRow = db_fetch_row($WoResult);
@@ -1429,26 +1517,26 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$Available = $qoh - $DemandQty + $OnOrder;
 
 				printf('<td>%s</font></td>
-						<td>%s</td>
-						<td>%s</td>
-						<td style="text-align:center">%s</td>
-						<td style="text-align:center">%s</td>
-						<td style="text-align:center">%s</td>
-						<td style="text-align:center">%s</td>
-						<td><font size=1><input class="number"  tabindex='.number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
-						</td>
-						</tr>',
-						$myrow['stockid'],
-						$myrow['description'],
-						$myrow['units'],
-						$qoh,
-						$DemandQty,
-						$OnOrder,
-						$Available,
-						$ImageSource,
-						$rootpath,
-						SID,
-						$myrow['stockid']);
+							<td>%s</td>
+							<td>%s</td>
+							<td style="text-align:center">%s</td>
+							<td style="text-align:center">%s</td>
+							<td style="text-align:center">%s</td>
+							<td style="text-align:center">%s</td>
+							<td><font size=1><input class="number"  tabindex='.number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
+							</td>
+							</tr>',
+							$myrow['stockid'],
+							$myrow['description'],
+							$myrow['units'],
+							$qoh,
+							$DemandQty,
+							$OnOrder,
+							$Available,
+							$ImageSource,
+							$rootpath,
+							SID,
+							$myrow['stockid']);
 				if ($j==1) {
 					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';
 				}
@@ -1466,16 +1554,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '<table class="selection"><tr><td><b>' . _('Select a Stock Category') . ': </b><select tabindex=1 name="StockCat">';
 
 		if (!isset($_POST['StockCat'])){
-			echo "<option selected value='All'>" . _('All');
+			echo '<option selected value="All">' . _('All');
 			$_POST['StockCat'] ='All';
 		} else {
-			echo "<option value='All'>" . _('All');
+			echo '<option value="All">' . _('All');
 		}
-		$SQL="SELECT categoryid,
-				categorydescription
-			FROM stockcategory
-			WHERE stocktype='F' OR stocktype='D'
-			ORDER BY categorydescription";
+		$SQL='SELECT categoryid,
+									categorydescription
+						FROM stockcategory
+						WHERE stocktype="F" OR stocktype="D"
+						ORDER BY categorydescription';
+						
 		$result1 = DB_query($SQL,$db);
 		while ($myrow1 = DB_fetch_array($result1)) {
 			if ($_POST['StockCat']==$myrow1['categoryid']){
@@ -1485,53 +1574,52 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 		}
 
-		?>
+		echo '</select></td>
+					<td><b>' . _('Enter partial Description') . ':</b><input tabindex=2 type="Text" name="Keywords" size=20 maxlength=25 value="' ;
+		
+		if (isset($_POST['Keywords'])) {
+			 echo$_POST['Keywords'] ;
+		}
+		echo '"></td>';
 
-		</select></td>
-		<td><b><?php echo _('Enter partial Description'); ?>:</b>
-		<input tabindex=2 type="Text" name="Keywords" size=20 maxlength=25 value="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>"></td>
-
-		<td align="right"><b><?php echo _('OR'); ?> </b><b><?php echo _('Enter extract of the Stock Code'); ?>:</b>
-		<input tabindex=3 type="Text" name="StockCode" size=15 maxlength=18 value="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></td>
-
-		</tr><tr>
-		<td style="text-align:center" colspan=1><input tabindex=4 type=submit name="Search" value="<?php echo _('Search Now'); ?>"></td>
-		<td style="text-align:center" colspan=1><input tabindex=5 type=submit name="QuickEntry" value="<?php echo _('Use Quick Entry'); ?>"></td>
-
-		<?php
+		echo '<td align="right"><b>' . _('OR') .  ' ' . _('Enter extract of the Stock Code') . ':</b><input tabindex=3 type="Text" name="StockCode" size=15 maxlength=18 value="';
+		if (isset($_POST['StockCode'])) {
+			echo  $_POST['StockCode'];
+		}
+		echo '"></td></tr>';
+		
+		echo '<tr>
+					<td style="text-align:center" colspan=1><input tabindex=4 type=submit name="Search" value="' . _('Search Now') . '"></td>
+					<td style="text-align:center" colspan=1><input tabindex=5 type=submit name="QuickEntry" value="' .  _('Use Quick Entry') . '"></td>';
+		
 		if (!isset($_POST['PartSearch'])) {
 			echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.Keywords);}</script>';
 		}
-		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
-			echo '<td style="text-align:center" colspan=1><input tabindex=6 type=submit name="ChangeCustomer" value="' . _('Change Customer') . '"></td>';
-		echo '</tr></table><br>';
-			echo '</b>';
-// Add some useful help as the order progresses
-			if (isset($SearchResult)) {
-				echo '<br>';
-				echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
-				echo '<br>';
-			}
-// Remove add stock item link, as this should be done through inventory
-//			echo '<div class="centre"><br><br><a tabindex=7 target="_blank" href="' . $rootpath . '/Stocks.php?' . SID . '"><b>' . _('Add a New Stock Item') . '</b></a></div>';
+		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){ //not a customer entry of own order
+			echo '<td style="text-align:center" colspan=1><input tabindex=6 type="submit" name="ChangeCustomer" value="' . _('Change Customer') . '"></td>
+						<td style="text-align:center" colspan=1><input tabindex=7 type="submit" name="SelectAsset" value="' . _('Fixed Asset Disposal') . '"></td>
+							</tr></table><br>';
 		}
 
 		if (isset($SearchResult)) {
+			echo '<br>';
+			echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
+			echo '<br>';
 			$j = 1;
 			echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'identifier='.$identifier . ' method=post name="orderform">';
 			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 			echo '<table class="table1">';
-			echo '<tr><td colspan=><input type="hidden" name="previous" value='.number_format($Offset-1).'><input tabindex='.number_format($j+7).' type="submit" name="Prev" value="'._('Prev').'"></td>';
-			echo '<td style="text-align:center" colspan=6><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+8).' type="submit" value="'._('Add to Sales Order').'"></td>';
-			echo '<td colspan=><input type="hidden" name="nextlist" value='.number_format($Offset+1).'><input tabindex='.number_format($j+9).' type="submit" name="Next" value="'._('Next').'"></td></tr>';
+			echo '<tr><td colspan=><input type="hidden" name="previous" value='.number_format($Offset-1).'><input tabindex='.number_format($j+8).' type="submit" name="Prev" value="'._('Prev').'"></td>';
+			echo '<td style="text-align:center" colspan=6><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+9).' type="submit" value="'._('Add to Sales Order').'"></td>';
+			echo '<td colspan=><input type="hidden" name="nextlist" value='.number_format($Offset+1).'><input tabindex='.number_format($j+10).' type="submit" name="Next" value="'._('Next').'"></td></tr>';
 			$TableHeader = '<tr><th>' . _('Code') . '</th>
-					   			<th>' . _('Description') . '</th>
-					   			<th>' . _('Units') . '</th>
-					   			<th>' . _('On Hand') . '</th>
-					   			<th>' . _('On Demand') . '</th>
-					   			<th>' . _('On Order') . '</th>
-					   			<th>' . _('Available') . '</th>
-					   			<th>' . _('Quantity') . '</th></tr>';
+										   			<th>' . _('Description') . '</th>
+										   			<th>' . _('Units') . '</th>
+										   			<th>' . _('On Hand') . '</th>
+										   			<th>' . _('On Demand') . '</th>
+										   			<th>' . _('On Order') . '</th>
+										   			<th>' . _('Available') . '</th>
+										   			<th>' . _('Quantity') . '</th></tr>';
 			echo $TableHeader;
 
 			$k=0; //row colour counter
@@ -1554,25 +1642,24 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 */
 				// Find the quantity in stock at location
 				$qohsql = "SELECT sum(quantity)
-						   FROM locstock
-						   WHERE stockid='" .$myrow['stockid'] . "' AND
-						   loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
+									   FROM locstock
+									   WHERE stockid='" .$myrow['stockid'] . "' AND
+									   loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
 				$qohresult =  DB_query($qohsql,$db);
 				$qohrow = DB_fetch_row($qohresult);
 				$qoh = $qohrow[0];
 
 				// Find the quantity on outstanding sales orders
 				$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-							 FROM salesorderdetails,
-					  			salesorders
-							 WHERE salesorders.orderno = salesorderdetails.orderno AND
-							 salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "' AND
- 							salesorderdetails.completed=0 AND
-		 					salesorders.quotation=0 AND
-				 			salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
+									 FROM salesorderdetails,
+							  			salesorders
+								 WHERE salesorders.orderno = salesorderdetails.orderno AND
+								 salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "' AND
+	 							salesorderdetails.completed=0 AND
+			 					salesorders.quotation=0 AND
+					 			salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
 
-				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' .
-					 _('cannot be retrieved because');
+				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' . _('cannot be retrieved because');
 				$DemandResult = DB_query($sql,$db,$ErrMsg);
 
 				$DemandRow = DB_fetch_row($DemandResult);
@@ -1620,30 +1707,29 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					$k=1;
 				}
 				$OnOrder = $PurchQty + $WoQty;
-
 				$Available = $qoh - $DemandQty + $OnOrder;
 
 				printf('<td>%s</font></td>
-					<td>%s</td>
-					<td>%s</td>
-					<td style="text-align:center">%s</td>
-					<td style="text-align:center">%s</td>
-					<td style="text-align:center">%s</td>
-					<td style="text-align:center">%s</td>
-					<td><font size=1><input class="number"  tabindex='.number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
-					</td>
-					</tr>',
-					$myrow['stockid'],
-					$myrow['description'],
-					$myrow['units'],
-					$qoh,
-					$DemandQty,
-					$OnOrder,
-					$Available,
-					$ImageSource,
-					$rootpath,
-					SID,
-					$myrow['stockid']);
+							<td>%s</td>
+							<td>%s</td>
+							<td style="text-align:center">%s</td>
+							<td style="text-align:center">%s</td>
+							<td style="text-align:center">%s</td>
+							<td style="text-align:center">%s</td>
+							<td><font size=1><input class="number"  tabindex='.number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
+							</td>
+							</tr>',
+							$myrow['stockid'],
+							$myrow['description'],
+							$myrow['units'],
+							$qoh,
+							$DemandQty,
+							$OnOrder,
+							$Available,
+							$ImageSource,
+							$rootpath,
+							SID,
+							$myrow['stockid']);
 				if ($j==1) {
 					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';
 				}
@@ -1659,9 +1745,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		}#end if SearchResults to show
 	} /*end of PartSearch options to be displayed */
-	   else { /* show the quick entry form variable */
+	   elseif( isset($_POST['QuickEntry'])) { /* show the quick entry form variable */
 		  /*FORM VARIABLES TO POST TO THE ORDER  WITH PART CODE AND QUANTITY */
-//		echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" name="quickentry" method=post>';
 	   	echo '<div class="page_help_text"><b>' . _('Use this screen for the '). _('Quick Entry')._(' of products to be ordered') . '</b></div><br>
 		 			<table border=1>
 					<tr>';
@@ -1691,7 +1776,28 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		 	echo '</table><br><div class="centre"><input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '">
 					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '"></div>';
 
-	  	}
+	  	} elseif (isset($_POST['SelectAsset'])){
+		
+			echo '<div class="page_help_text"><b>' . _('Use this screen to select an asset to dispose of to this customer') . '</b></div><br>
+		 			<table border=1>';
+			/*do not display colum unless customer requires po line number by sales order line*/
+		 	if($_SESSION['Items'.$identifier]->DefaultPOLine ==1){
+				echo	'<tr><td>' . _('PO Line') . '</td>	
+							<td><input type="text" name="poline" size=21 maxlength=20></td></tr>';
+			}
+			echo '<tr><td>' . _('Asset to Dispose Of') . ':</td>
+						<td><select name="AssetToDisposeOf">';
+			$AssetsResult = DB_query('SELECT assetid, description FROM fixedassets WHERE disposaldate="0000-00-00"',$db);
+			echo '<option selected value="NoAssetSelected">' . _('Select Asset To Dispose of From the List Below') . '</option>';
+			while ($AssetRow = DB_fetch_array($AssetsResult)){
+				echo '<option value="' . $AssetRow['assetid'] . '">' . $AssetRow['assetid'] . ' - ' . $AssetRow['description'] . '</option>';
+			}
+			echo '</select></td></tr></table>
+						<br><div class="centre"><input type="submit" name="AssetDisposalEntered" value="' . _('Add Asset To Order') . '">
+					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '"></div>';
+		
+		} //end of if it is a Quick Entry screen/part search or asset selection form to display
+		
 		if ($_SESSION['Items'.$identifier]->ItemsOrdered >=1){
 	  		echo '<br><div class="centre"><input type=submit name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');"></div>';
 		}

@@ -553,12 +553,13 @@ then do the updates and inserts to process the invoice entered */
 	}
 
 	$InputError = False;
-	if ( $TaxTotal + $_SESSION['SuppTrans']->OvAmount <= 0){
+	if ( $TaxTotal + $_SESSION['SuppTrans']->OvAmount < 0){
 		$InputError = True;
-		prnMsg(_('The invoice as entered cannot be processed because the total amount of the invoice is less than or equal to 0') . '. ' . _('Invoices are expected to have a charge'),'error');
+		prnMsg(_('The invoice as entered cannot be processed because the total amount of the invoice is less than  0') . '. ' . _('Invoices are expected to have a positive charge'),'error');
 		echo '<p> The tax total is : ' . $TaxTotal;
 		echo '<p> The ovamount is : ' . $_SESSION['SuppTrans']->OvAmount;
-
+	} elseif ( $TaxTotal + $_SESSION['SuppTrans']->OvAmount == 0){
+		prnMsg(_('The invoice as entered will be processed but be warned the amount of the invoice is  zero!') . '. ' . _('Invoices are normally expected to have a positive charge'),'warn');
 	} elseif (strlen( $_SESSION['SuppTrans']->SuppReference)<1){
 		$InputError = True;
 		prnMsg(_('The invoice as entered cannot be processed because the there is no suppliers invoice number or reference entered') . '. ' . _('The supplier invoice number must be entered'),'error');
