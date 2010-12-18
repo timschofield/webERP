@@ -12,8 +12,7 @@ function prnMsg($Msg,$Type='info', $Prefix=''){
 
 }//prnMsg
 
-function reverse_escape($str)
-{
+function reverse_escape($str) {
   $search=array("\\\\","\\0","\\n","\\r","\Z","\'",'\"');
   $replace=array("\\","\0","\n","\r","\x1a","'",'"');
   return str_replace($search,$replace,$str);
@@ -57,63 +56,53 @@ function getMsg($Msg,$Type='info',$Prefix=''){
 	return '<DIV class="'.$Class.'"><B>' . $Prefix . '</B> : ' .$Msg . '</DIV>';
 }//getMsg
 
-function IsEmailAddress($email){
+function IsEmailAddress($Email){
 
-	$atIndex = strrpos ($email, "@");
-	if ($atIndex === false)
-	{
+	$AtIndex = strrpos ($Email, "@");
+	if ($AtIndex == false) {
 	    return  false;	// No @ sign is not acceptable.
 	}
 
-	if (preg_match('/\\.\\./', $email))
+	if (preg_match('/\\.\\./', $Email)){
 	    return  false;	// > 1 consecutive dot is not allowed.
-
+	}
 	//  Check component length limits
-	$domain = substr ($email, $atIndex+1);
-	$local = substr ($email, 0, $atIndex);
-	$localLen = strlen ($local);
-	$domainLen = strlen ($domain);
-	if ($localLen < 1 || $localLen > 64)
-	{
+	$Domain = substr ($Email, $AtIndex+1);
+	$Local= substr ($Email, 0, $AtIndex);
+	$LocalLen = strlen ($Local);
+	$DomainLen = strlen ($Domain);
+	if ($LocalLen < 1 || $LocalLen > 64){
 	    // local part length exceeded
 	    return  false;
 	}
-	if ($domainLen < 1 || $domainLen > 255)
-	{
+	if ($DomainLen < 1 || $DomainLen > 255){
 	    // domain part length exceeded
 	    return  false;
 	}
 
-	if ($local[0] == '.' || $local[$localLen-1] == '.')
-	{
+	if ($Local[0] == '.' OR $Local[$LocalLen-1] == '.') {
 	    // local part starts or ends with '.'
 	    return  false;
 	}
-	if (!preg_match ('/^[A-Za-z0-9\\-\\.]+$/', $domain ))
-	{
+	if (!preg_match ('/^[A-Za-z0-9\\-\\.]+$/', $Domain )){
 	    // character not valid in domain part
 	    return  false;
 	}
-	if (!preg_match ('/^(\\\\.|[A-Za-z0-9!#%&`_=\\/$\'*+?^{}|~.-])+$/',
-		     str_replace ("\\\\", "" ,$local ) ))
-	{
+	if (!preg_match ('/^(\\\\.|[A-Za-z0-9!#%&`_=\\/$\'*+?^{}|~.-])+$/', str_replace ("\\\\", "" ,$Local) )){
 	    // character not valid in local part unless local part is quoted
-	    if (!preg_match ('/^"(\\\\"|[^"])+"$/',
-					str_replace("\\\\", "", $local) ))
-	    {
-		return  false;
+	    if (!preg_match ('/^"(\\\\"|[^"])+"$/', str_replace("\\\\", "", $Local) ))  {
+			return  false;
 	    }
 	}
 
 	//  Check for a DNS 'MX' or 'A' record.
 	//  Windows supported from PHP 5.3.0 on - so check.
-	$ret = true;
-	if (version_compare(PHP_VERSION, '5.3.0') >= 0
-		    || strtoupper(substr(PHP_OS, 0, 3) !== 'WIN')) {
-	    $ret = checkdnsrr( $domain, "MX" ) || checkdnsrr( $domain, "A" );
+	$Ret = true;
+	if (version_compare(PHP_VERSION, '5.3.0') >= 0 OR strtoupper(substr(PHP_OS, 0, 3) !== 'WIN')) {
+	    $Ret = checkdnsrr( $Domain, 'MX' ) OR checkdnsrr( $Domain, 'A' );
 	}
 
-	return  $ret;
+	return  $Ret;
 }
 
 
@@ -135,9 +124,9 @@ function ContainsIllegalCharacters ($CheckVariable) {
 
 
 function pre_var_dump(&$var){
-	echo "<div align=left><pre>";
+	echo '<div align=left><pre>';
 	var_dump($var);
-	echo "</pre></div>";
+	echo '</pre></div>';
 }
 
 
@@ -164,18 +153,18 @@ for detail of the European Central Bank rates - published daily */
 		$stack = array();
 		foreach ($tags as $tag) {
 			$index = count($elements);
-			if ($tag['type'] == "complete" || $tag['type'] == "open") {
+			if ($tag['type'] == 'complete' OR $tag['type'] == 'open') {
 				$elements[$index] = new XmlElement;
 				$elements[$index]->name = $tag['tag'];
 				$elements[$index]->attributes = $tag['attributes'];
 				$elements[$index]->content = $tag['value'];
-				if ($tag['type'] == "open") {  // push
+				if ($tag['type'] == 'open') {  // push
 					$elements[$index]->children = array();
 					$stack[count($stack)] = &$elements;
 					$elements = &$elements[$index]->children;
 				}
 			}
-			if ($tag['type'] == "close") {  // pop
+			if ($tag['type'] == 'close') {  // pop
 				$elements = &$stack[count($stack) - 1];
 				unset($stack[count($stack) - 1]);
 			}

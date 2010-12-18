@@ -260,11 +260,11 @@ CREATE TABLE IF NOT EXISTS `pickinglistdetails` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `systypes` VALUES(19, 'Picking List', 0);
-ALTER TABLE `prices` ADD `startdate` DATE NOT NULL DEFAULT '0000-00-00' , ADD `enddate` DATE NOT NULL DEFAULT '9999-12-31';
+ALTER TABLE `prices` ADD `startdate` DATE NOT NULL DEFAULT '0000-00-00' , ADD `enddate` DATE NOT NULL DEFAULT '0000-00-00';
 ALTER TABLE prices DROP PRIMARY KEY ,
 ADD PRIMARY KEY ( `stockid` , `typeabbrev` , `currabrev` , `debtorno` , `branchcode`, `startdate` , `enddate` ) ;
 ALTER TABLE purchdata ADD column minorderqty int(11) NOT NULL default 1;
-UPDATE prices SET startdate='1999-01-01', enddate='';
+UPDATE prices SET startdate='1999-01-01', enddate='0000-00-00';
 
 ALTER TABLE stockcheckfreeze ADD COLUMN stockcheckdate date NOT NULL;
 
@@ -385,7 +385,6 @@ ALTER TABLE `suppliers` ADD COLUMN `supptype` tinyint(4) NOT NULL DEFAULT 1 AFTE
 
 ALTER TABLE `loctransfers` CHANGE COLUMN `shipqty` `shipqty` double NOT NULL DEFAULT 0.0;
 
-INSERT INTO `config` VALUES ('VersionNumber', '4.00-RC1');
 UPDATE `securitytokens` SET `tokenname`='Prices Security' WHERE tokenid=12;
 
 ALTER TABLE `www_users` CHANGE `supplierid` `supplierid` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '';

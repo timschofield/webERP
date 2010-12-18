@@ -307,16 +307,16 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 			$SearchString = '%' . str_replace(' ', '%', $_POST['CustKeywords']) . '%';
 
 			$SQL = "SELECT custbranch.brname,
-					custbranch.contactname,
-					custbranch.phoneno,
-					custbranch.faxno,
-					custbranch.branchcode,
-					custbranch.debtorno,
-					debtorsmaster.name
-				FROM custbranch
-				LEFT JOIN debtorsmaster
-				ON custbranch.debtorno=debtorsmaster.debtorno
-				WHERE custbranch.brname " . LIKE . " '$SearchString'";
+										custbranch.contactname,
+										custbranch.phoneno,
+										custbranch.faxno,
+										custbranch.branchcode,
+										custbranch.debtorno,
+										debtorsmaster.name
+									FROM custbranch
+									LEFT JOIN debtorsmaster
+									ON custbranch.debtorno=debtorsmaster.debtorno
+									WHERE custbranch.brname " . LIKE . " '$SearchString'";
 
 			if ($_SESSION['SalesmanLogin']!=''){
 				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
@@ -329,17 +329,17 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 			$_POST['CustCode'] = strtoupper(trim($_POST['CustCode']));
 
 			$SQL = "SELECT custbranch.brname,
-					custbranch.contactname,
-					custbranch.phoneno,
-					custbranch.faxno,
-					custbranch.branchcode,
-					custbranch.debtorno,
-					debtorsmaster.name
-				FROM custbranch
-				LEFT JOIN debtorsmaster
-				ON custbranch.debtorno=debtorsmaster.debtorno
-				WHERE custbranch.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%' OR custbranch.branchcode " . LIKE . " '%" . $_POST['CustCode'] . "%'";
-
+										custbranch.contactname,
+										custbranch.phoneno,
+										custbranch.faxno,
+										custbranch.branchcode,
+										custbranch.debtorno,
+										debtorsmaster.name
+									FROM custbranch
+									LEFT JOIN debtorsmaster
+									ON custbranch.debtorno=debtorsmaster.debtorno
+									WHERE custbranch.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%' OR custbranch.branchcode " . LIKE . " '%" . $_POST['CustCode'] . "%'";
+					
 			if ($_SESSION['SalesmanLogin']!=''){
 				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 			}
@@ -347,23 +347,23 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 						ORDER BY custbranch.debtorno';
 		} elseif (strlen($_POST['CustPhone'])>0){
 			$SQL = "SELECT custbranch.brname,
-					custbranch.contactname,
-					custbranch.phoneno,
-					custbranch.faxno,
-					custbranch.branchcode,
-					custbranch.debtorno,
-					debtorsmaster.name
-				FROM custbranch
-				LEFT JOIN debtorsmaster
-				ON custbranch.debtorno=debtorsmaster.debtorno
-				WHERE custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'";
+										custbranch.contactname,
+										custbranch.phoneno,
+										custbranch.faxno,
+										custbranch.branchcode,
+										custbranch.debtorno,
+										debtorsmaster.name
+									FROM custbranch
+									LEFT JOIN debtorsmaster
+									ON custbranch.debtorno=debtorsmaster.debtorno
+									WHERE custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'";
 
 			if ($_SESSION['SalesmanLogin']!=''){
 				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 
 			$SQL .=	' AND custbranch.disabletrans=0
-						ORDER BY custbranch.debtorno';
+								ORDER BY custbranch.debtorno';
 		}
 
 		$ErrMsg = _('The searched customer records requested cannot be retrieved because');
@@ -389,20 +389,20 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 
 	// Now check to ensure this account is not on hold */
 	$sql = "SELECT debtorsmaster.name,
-					holdreasons.dissallowinvoices,
-					debtorsmaster.salestype,
-					salestypes.sales_type,
-					debtorsmaster.currcode,
-					debtorsmaster.customerpoline,
-					paymentterms.terms
-			FROM debtorsmaster,
-				holdreasons,
-				salestypes,
-				paymentterms
-			WHERE debtorsmaster.salestype=salestypes.typeabbrev
-			AND debtorsmaster.holdreason=holdreasons.reasoncode
-			AND debtorsmaster.paymentterms=paymentterms.termsindicator
-			AND debtorsmaster.debtorno = '" . $_POST['Select'] . "'";
+								holdreasons.dissallowinvoices,
+								debtorsmaster.salestype,
+								salestypes.sales_type,
+								debtorsmaster.currcode,
+								debtorsmaster.customerpoline,
+								paymentterms.terms
+						FROM debtorsmaster,
+							holdreasons,
+							salestypes,
+							paymentterms
+						WHERE debtorsmaster.salestype=salestypes.typeabbrev
+						AND debtorsmaster.holdreason=holdreasons.reasoncode
+						AND debtorsmaster.paymentterms=paymentterms.termsindicator
+						AND debtorsmaster.debtorno = '" . $_POST['Select'] . "'";
 
 	$ErrMsg = _('The details of the customer selected') . ': ' .  $_POST['Select'] . ' ' . _('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the customer details and failed was') . ':';
@@ -430,26 +430,26 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 # the branch was also selected from the customer selection so default the delivery details from the customer branches table CustBranch. The order process will ask for branch details later anyway
 
 		$sql = "SELECT custbranch.brname,
-				custbranch.braddress1,
-				custbranch.braddress2,
-				custbranch.braddress3,
-				custbranch.braddress4,
-				custbranch.braddress5,
-				custbranch.braddress6,
-				custbranch.phoneno,
-				custbranch.email,
-				custbranch.defaultlocation,
-				custbranch.defaultshipvia,
-				custbranch.deliverblind,
-				custbranch.specialinstructions,
-				custbranch.estdeliverydays,
-				locations.locationname,
-				custbranch.salesman
-			FROM custbranch
-			INNER JOIN locations
-			ON custbranch.defaultlocation=locations.loccode
-			WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
-			AND custbranch.debtorno = '" . $_POST['Select'] . "'";
+									custbranch.braddress1,
+									custbranch.braddress2,
+									custbranch.braddress3,
+									custbranch.braddress4,
+									custbranch.braddress5,
+									custbranch.braddress6,
+									custbranch.phoneno,
+									custbranch.email,
+									custbranch.defaultlocation,
+									custbranch.defaultshipvia,
+									custbranch.deliverblind,
+									custbranch.specialinstructions,
+									custbranch.estdeliverydays,
+									locations.locationname,
+									custbranch.salesman
+								FROM custbranch
+								INNER JOIN locations
+								ON custbranch.defaultlocation=locations.loccode
+								WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
+								AND custbranch.debtorno = '" . $_POST['Select'] . "'";
 
 		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
@@ -516,13 +516,13 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 #DefaultSalesType will not have been set as above
 
 	$sql = "SELECT debtorsmaster.name,
-					holdreasons.dissallowinvoices,
-					debtorsmaster.salestype,
-					debtorsmaster.currcode,
-					debtorsmaster.customerpoline
-			FROM debtorsmaster, holdreasons
-			WHERE debtorsmaster.holdreason=holdreasons.reasoncode
-			AND debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
+								holdreasons.dissallowinvoices,
+								debtorsmaster.salestype,
+								debtorsmaster.currcode,
+								debtorsmaster.customerpoline
+						FROM debtorsmaster, holdreasons
+						WHERE debtorsmaster.holdreason=holdreasons.reasoncode
+						AND debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
 	if (isset($_POST['Select'])) {
 		$ErrMsg = _('The details for the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
@@ -550,23 +550,23 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 	// the order process will ask for branch details later anyway
 
 		$sql = "SELECT custbranch.brname,
-						custbranch.branchcode,
-						custbranch.braddress1,
-						custbranch.braddress2,
-						custbranch.braddress3,
-						custbranch.braddress4,
-						custbranch.braddress5,
-						custbranch.braddress6,
-						custbranch.phoneno,
-						custbranch.email,
-						custbranch.defaultlocation,
-						custbranch.deliverblind,
-						custbranch.estdeliverydays,
-						locations.locationname
-				FROM custbranch INNER JOIN locations
-				ON custbranch.defaultlocation=locations.loccode
-				WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
-				AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
+									custbranch.branchcode,
+									custbranch.braddress1,
+									custbranch.braddress2,
+									custbranch.braddress3,
+									custbranch.braddress4,
+									custbranch.braddress5,
+									custbranch.braddress6,
+									custbranch.phoneno,
+									custbranch.email,
+									custbranch.defaultlocation,
+									custbranch.deliverblind,
+									custbranch.estdeliverydays,
+									locations.locationname
+							FROM custbranch INNER JOIN locations
+							ON custbranch.defaultlocation=locations.loccode
+							WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
+							AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
 		if (isset($_POST['Select'])) {
 			$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
@@ -685,9 +685,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if($_SESSION['ExistingOrder']!=0) { //need to check that not already dispatched
 
 			$sql = "SELECT qtyinvoiced
-					FROM salesorderdetails
-					WHERE orderno='" . $_SESSION['ExistingOrder'] . "'
-					AND qtyinvoiced>0";
+							FROM salesorderdetails
+							WHERE orderno='" . $_SESSION['ExistingOrder'] . "'
+							AND qtyinvoiced>0";
 
 			$InvQties = DB_query($sql,$db);
 
@@ -942,8 +942,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 			/*Now figure out if the item is a kit set - the field MBFlag='K'*/
 			$sql = "SELECT stockmaster.mbflag
-					FROM stockmaster
-					WHERE stockmaster.stockid='". $NewItem ."'";
+							FROM stockmaster
+							WHERE stockmaster.stockid='". $NewItem ."'";
 
 			$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
 			$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
@@ -1050,17 +1050,15 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 																									SELECT loccode, "' . $AssetStockID . '" FROM locations',$db);
 			/*Now the asset has been added to the stock master we can add it to the sales order */
 			$NewItemDue = date($_SESSION['DefaultDateFormat']);
-			if (isset($_POST['POLine']){
+			if (isset($_POST['POLine'])){
 				$NewPOLine = $_POST['POLine'];
 			} else {
 				$NewPOLine = 0;
 			}
 			$NewItem = $AssetStockID;
 			include('includes/SelectOrderItems_IntoCart.inc');
-		}
-		
-			
-	}
+		} //end if adding a fixed asset to the order
+	} //end if the fixed asset selection box was set
 
 	 /*Now do non-quick entry delete/edits/adds */
 
@@ -1403,9 +1401,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 /* Now show the stock item selection search stuff below */
 
-	 if ((isset($_POST['PartSearch']) 
-			AND $_POST['PartSearch']!=''
-			AND !isset($_POST['QuickEntry'])  
+	 if ((!isset($_POST['QuickEntry'])  
 			AND !isset($_POST['SelectAsset']))){
 
 		echo '<input type="hidden" name="PartSearch" value="' .  _('Yes Please') . '">';
