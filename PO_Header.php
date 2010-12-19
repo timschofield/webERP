@@ -847,8 +847,8 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 		echo '<input type=hidden name="StatusCommentsComplete" value="' . $_SESSION['PO'.$identifier]->StatusComments .'">';
 		echo '<tr><td><input type="submit" name="UpdateStatus" value="' . _('Status Update') .'"></td>';
 	} //end its not a new order
-	echo '<td><input type="submit" name="CancelOrder" value="' . _('Cancel and Delete Order') . '"></td></tr>';
-	echo '</table></td>';
+	
+	echo '</tr></table></td>';
 
 	echo '<table width=80%>
 		<tr>
