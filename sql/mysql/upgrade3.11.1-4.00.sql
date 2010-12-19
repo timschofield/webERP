@@ -103,26 +103,6 @@ ALTER TABLE workorders CONVERT TO CHARACTER SET utf8;
 ALTER TABLE woserialnos CONVERT TO CHARACTER SET utf8;
 ALTER TABLE www_users CONVERT TO CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `fixedassetlocations` (
-  `locationid` char(6) NOT NULL default '',
-  `locationdescription` char(20) NOT NULL default '',
-  `parentlocationid` char(6) DEFAULT '',
-  PRIMARY KEY  (`locationid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `assetmanager`;
-
-CREATE TABLE `assetmanager` (
-  `id` int(11) NOT NULL auto_increment,
-  `stockid` varchar(20) NOT NULL default '',
-  `serialno` varchar(30) NOT NULL default '',
-  `location` varchar(15) NOT NULL default '',
-  `cost` double NOT NULL default '0',
-  `depn` double NOT NULL default '0',
-  `datepurchased` date NOT NULL default '0000-00-00',
-  `disposalvalue` int(11) NOT NULL DEFAULT 0,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 UPDATE `www_users` SET `modulesallowed`=(SELECT insert(`modulesallowed`, 15,0,"1,"));
 INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FrequentlyOrderedItems',0);
@@ -437,20 +417,6 @@ ALTER TABLE `stockcatproperties` ADD `maximumvalue` DOUBLE NOT NULL DEFAULT 9999
 ADD `minimumvalue` DOUBLE NOT NULL DEFAULT -999999999,
 ADD `numericvalue` TINYINT NOT NULL DEFAULT 0 ;
 
-RENAME TABLE assetmanager to fixedassets;
-ALTER TABLE fixedassets ADD COLUMN `assetcategoryid` varchar(6) NOT NULL DEFAULT '';
-ALTER TABLE fixedassets ADD COLUMN `description` varchar(50) NOT NULL DEFAULT '';
-ALTER TABLE fixedassets ADD COLUMN `longdescription` text NOT NULL;
-ALTER TABLE fixedassets ADD COLUMN `depntype` int NOT NULL DEFAULT 1;
-ALTER TABLE fixedassets ADD COLUMN `depnrate` double NOT NULL;
-ALTER TABLE fixedassets ADD COLUMN  `barcode` VARCHAR( 30 ) NOT NULL;
-ALTER TABLE fixedassets ADD COLUMN  `disposaldate` DATE NOT NULL DEFAULT '0000-00-00';
-ALTER TABLE `fixedassets` CHANGE `depn` `accumdepn` DOUBLE NOT NULL DEFAULT '0';
-ALTER TABLE `fixedassets` CHANGE `location` `assetlocation` VARCHAR( 6 ) NOT NULL DEFAULT '';
-ALTER TABLE `fixedassets` CHANGE `disposalvalue` `disposalproceeds` DOUBLE NOT NULL DEFAULT '0'
-
-UPDATE fixedassets INNER JOIN stockmaster ON fixedassets.stockid=stockmaster.stockid SET assetcategoryid=stockmaster.categoryid, fixedassets.description=stockmaster.description, fixedassets.longdescription=stockmaster.longdescription;
-
 CREATE TABLE IF NOT EXISTS `fixedassetcategories` (
   `categoryid` char(6) NOT NULL DEFAULT '',
   `categorydescription` char(20) NOT NULL DEFAULT '',
@@ -463,26 +429,24 @@ CREATE TABLE IF NOT EXISTS `fixedassetcategories` (
   PRIMARY KEY (`categoryid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO fixedassetcategories (categoryid, categorydescription, costact, depnact, disposalact, accumdepnact) SELECT categoryid, categorydescription, stockact, adjglact, materialuseagevarac, wipact FROM stockcategory WHERE stocktype='A';
+CREATE TABLE IF NOT EXISTS `fixedassets` (
+  `assetid` int(11) NOT NULL AUTO_INCREMENT,
+  `serialno` varchar(30) NOT NULL DEFAULT '',
+  `barcode` varchar(20) NOT NULL,
+  `assetlocation` varchar(6) NOT NULL DEFAULT '',
+  `cost` double NOT NULL DEFAULT '0',
+  `accumdepn` double NOT NULL DEFAULT '0',
+  `datepurchased` date NOT NULL DEFAULT '0000-00-00',
+  `disposalproceeds` double NOT NULL DEFAULT '0',
+  `assetcategoryid` varchar(6) NOT NULL DEFAULT '',
+  `description` varchar(50) NOT NULL DEFAULT '',
+  `longdescription` text NOT NULL,
+  `depntype` int(11) NOT NULL DEFAULT '1',
+  `depnrate` double NOT NULL,
+  `disposaldate` date NOT NULL DEFAULT '0000-00-00'
+  PRIMARY KEY (`assetid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
-DELETE locstock.* FROM locstock INNER JOIN stockmaster ON locstock.stockid=stockmaster.stockid INNER JOIN stockcategory ON stockmaster.categoryid=stockcategory.categoryid WHERE stockcategory.stocktype='A';
-
-DELETE stockitemproperties.* FROM stockitemproperties INNER JOIN stockmaster ON stockitemproperties.stockid=stockmaster.stockid INNER JOIN stockcategory ON stockmaster.categoryid=stockcategory.categoryid WHERE stockcategory.stocktype='A';
-
-DELETE stockserialmoves.* FROM stockserialmoves, stockmoves,
-stockmaster,stockcategory WHERE stockserialmoves.stockmoveno=stockmoves.stkmoveno AND
-stockmoves.stockid = stockmaster.stockid AND stockmaster.categoryid = stockcategory.categoryid AND stockcategory.stocktype = 'A';
-
-DELETE stockserialitems.* FROM stockserialitems, stockmaster, stockcategory
-WHERE stockserialitems.stockid = stockmaster.stockid AND stockmaster.categoryid=stockcategory.categoryid AND stocktype='A';
-
-DELETE stockmoves . * FROM stockmoves, stockmaster, stockcategory WHERE stockmoves.stockid = stockmaster.stockid AND stockmaster.categoryid = stockcategory.categoryid AND stockcategory.stocktype = 'A';
-
-DELETE stockmaster.* FROM stockmaster INNER JOIN stockcategory ON stockmaster.categoryid=stockcategory.categoryid WHERE stockcategory.stocktype='A';
-
-ALTER TABLE `fixedassets` CHANGE `id` `assetid` INT( 11 ) NOT NULL AUTO_INCREMENT ;
-DELETE FROM stockcategory WHERE stocktype='A';
-ALTER TABLE `fixedassets` DROP `stockid`;
 
 INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES ('41', 'Asset Addition', '1');
 INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES ('42', 'Asset Category Change', '1');

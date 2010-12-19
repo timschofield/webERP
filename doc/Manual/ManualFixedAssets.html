@@ -40,6 +40,10 @@ The cost and accumulated depreciation cannot be entered or altered manually. The
 <br><br>
 The depreciation run must be run monthly to create the general ledger journals for depreciation at the rates and depreciation methods defined for the assets. In addition to the general ledger journals a log of the depreciation transactions is also created. The depreciation run checks the last month it was run and defaults to run for the following month ... in this way every time it is run it is self evident whether it has been run for the month under review. There is no functionality to reverse a depreciation run.
 <br><br>
+<font size="+1"><b>Fixed Asset Disposals</b></font>
+<br><br>
+To dispose of a fixed - an invoice is raised for a fixed asset in the usual order entry screen. Instead of selecting a stock item, there is a button that allows a fixed asset to be selected. By selecting a fixed asset to be sold, the system creates a stock item for the fixed asset. When the sales order is confirmed for invoicing and if the debtors ledger is integrated into the general ledger then entries to dispose of the asset to the general ledger accounts defined in the fixed asset category of the asset are created. The fixed asset transaction is created for the disposal and the fixed asset updated to show the date it was disposed and the proceeds on the disposal.
+<br><br>
 <font size="+1"><b>Fixed Asset Schedule</b></font>
 <br><br>
 The fixed asset schedule requires the entry of a starting date and an end date. The script can produce a pdf report, comma separated values for importing into a spreadsheet, or just view in html on screen. It shows the cost b/fwd at the start date, the total of any additions subsequent to the start date, the depreciation brought forward and the depreciation charged over the period, together with the carried forward cost, accumulated depreciation and net book value.
