@@ -99,19 +99,60 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus']!='') ) {
 
 
 		if ($_POST['Status'] == 'Rejected' AND $OKToUpdateStatus==1) {
-			
-			//need to copy the lines to purchorderdetails_deleted 
-			
-			if ($AuthorityLevel>$OrderTotal) {
-				$_SESSION['PO'.$identifier]->StatusComments = date($_SESSION['DefaultDateFormat']).' - ' . _('Rejected by') . '<a href="mailto:' . $EmailRow['email'] . '">' . $_SESSION['UserID']. '</a>'.$_POST['StatusComments'].'<br>'.$_POST['StatusCommentsComplete'];
-				$_SESSION['PO'.$identifier]->Status=$_POST['Status'];
-			} else {
-				$OKToUpdateStatus=0;
-				prnMsg( _('You do not have permission to reject this purchase order').'.<br>'. _('This order is for').' '.
-					$_SESSION['PO'.$identifier]->CurrCode.' '.$OrderTotal.'. '.
-					_('Your authorisation limit is set at').' '.$_SESSION['PO'.$identifier]->CurrCode.' '.$AuthorityLevel.'.<br>'.
-					_('If you think this is a mistake please contact the systems administrator') , 'warn');
+			$OKToReject = 1; //to start with
+			if(!isset($_SESSION['ExistingOrder']) OR $_SESSION['ExistingOrder']!=0) {
+			/* need to check that not already dispatched or invoiced
+			* by the supplier */
+
+				if($_SESSION['PO'.$identifier]->Any_Already_Received()==1){
+					$OKToReject =0; //its not ok to reject
+					prnMsg( _('This order cannot be cancelled because some of it has already been received') . '. ' .
+						_('The line item quantities may be modified to quantities more than already received') . '. ' .
+						_('Prices cannot be altered for lines that have already been received') .' '.
+						_('and quantities cannot be reduced below the quantity already received'),'warn');
+				}
 			}
+			if ($OKToReject==1){
+				if ($AuthorityLevel>$OrderTotal) {
+					$_SESSION['PO'.$identifier]->StatusComments = date($_SESSION['DefaultDateFormat']).' - ' . _('Rejected by') . '<a href="mailto:' . $EmailRow['email'] . '">' . $_SESSION['UserID']. '</a>'.$_POST['StatusComments'].'<br>'.$_POST['StatusCommentsComplete'];
+					$_SESSION['PO'.$identifier]->Status=$_POST['Status'];
+				} else {
+					$OKToUpdateStatus=0;
+					prnMsg( _('You do not have permission to reject this purchase order').'.<br>'. _('This order is for').' '.
+						$_SESSION['PO'.$identifier]->CurrCode.' '.$OrderTotal.'. '.
+						_('Your authorisation limit is set at').' '.$_SESSION['PO'.$identifier]->CurrCode.' '.$AuthorityLevel.'.<br>'.
+						_('If you think this is a mistake please contact the systems administrator') , 'warn');
+				}
+			}
+		}
+		if ($_POST['Status'] == 'Cancelled') {
+			$OKToCancel =1; //to start with
+			if(!isset($_SESSION['ExistingOrder']) OR $_SESSION['ExistingOrder']!=0) {
+			/* need to check that not already dispatched or invoiced
+			* by the supplier */
+
+				if($_SESSION['PO'.$identifier]->Any_Already_Received()==1){
+					$OKToCancel =0;
+					prnMsg( _('This order cannot be cancelled because some of it has already been received') . '. ' .
+						_('The line item quantities may be modified to quantities more than already received') . '. ' .
+						_('Prices cannot be altered for lines that have already been received') .' '.
+						_('and quantities cannot be reduced below the quantity already received'),'warn');
+				}
+			}
+
+			if ($OKToCancel==1){
+	
+				if ($AuthorityLevel>$OrderTotal) {
+					$_SESSION['PO'.$identifier]->StatusComments = date($_SESSION['DefaultDateFormat']).' - ' . _('Cancelled by') . '<a href="mailto:' . $EmailRow['email'] . '">' . $_SESSION['UserID']. '</a>'.$_POST['StatusComments'].'<br>'.$_POST['StatusCommentsComplete'];
+					$_SESSION['PO'.$identifier]->Status=$_POST['Status'];
+				} else {
+					$OKToUpdateStatus=0;
+					prnMsg( _('You do not have permission to cancel this purchase order').'.<br>'. _('This order is for').' '.
+						$_SESSION['PO'.$identifier]->CurrCode.' '.$OrderTotal.'. '.
+						_('Your authorisation limit is set at').' '.$_SESSION['PO'.$identifier]->CurrCode.' '.$AuthorityLevel.'.<br>'.
+						_('If you think this is a mistake please contact the systems administrator') , 'warn');
+				}
+			} //end if OKToCancel
 		}
 
 		if ($_POST['Status'] == 'Pending' and $OKToUpdateStatus==1) {
@@ -245,176 +286,6 @@ if (isset($_GET['ModifyOrderNumber'])){
 	include ('includes/PO_ReadInOrder.inc');
 }
 
-if (isset($_POST['CancelOrder']) AND $_POST['CancelOrder']!='') {
-/*The cancel button on the header screen - to delete order */
-	$OK_to_delete = 1;	 //alway assume the best to start with ... until we find out otherwise ...
-
-	if(!isset($_SESSION['ExistingOrder']) OR $_SESSION['ExistingOrder']!=0) {
-		/* need to check that not already dispatched or invoiced
-		 * by the supplier */
-
-		if($_SESSION['PO'.$identifier]->Any_Already_Received()==1){
-			$OK_to_delete =0;
-			prnMsg( _('This order cannot be cancelled because some of it has already been received') . '. ' .
-				_('The line item quantities may be modified to quantities more than already received') . '. ' .
-				_('Prices cannot be altered for lines that have already been received') .' '.
-				_('and quantities cannot be reduced below the quantity already received'),'warn');
-		}
-
-	}
-
-	if ($OK_to_delete==1){
-
-		if($_SESSION['ExistingOrder']!=0){
-			$EmailSQL="SELECT email FROM www_users WHERE userid='".$_SESSION['PO'.$identifier]->Initiator."'";
-			$EmailResult=DB_query($EmailSQL, $db);
-			$EmailRow=DB_fetch_array($EmailResult);
-			$StatusComment=date($_SESSION['DefaultDateFormat']). ' - ' . _('Order Cancelled by:') . ' <a href="mailto:'.$EmailRow['email'].'">'.$_SESSION['UserID'].'</a><br>'.$_POST['StatusCommentsComplete'];
-			
-			/* Copy the deleted orders to the purchorder_deleted table so there is an audit trail of who ordered what */
-			$sql = "INSERT INTO purchorders_deleted (	orderno,
-																							supplierno,
-																							comments,
-																							orddate,
-																							rate,
-																							initiator,
-																							requisitionno,
-																							intostocklocation,
-																							deladd1,
-																							deladd2,
-																							deladd3,
-																							deladd4,
-																							deladd5,
-																							deladd6,
-																							tel,
-																							suppdeladdress1,
-																							suppdeladdress2,
-																							suppdeladdress3,
-																							suppdeladdress4,
-																							suppdeladdress5,
-																							suppdeladdress6,
-																							suppliercontact,
-																							supptel,
-																							contact,
-																							version,
-																							revised,
-																							deliveryby,
-																							status,
-																							stat_comment,
-																							deliverydate,
-																							paymentterms)
-																						SELECT orderno,
-																										supplierno,
-																										comments,
-																										orddate,
-																										rate,
-																										initiator,
-																										requisitionno,
-																										intostocklocation,
-																										deladd1,
-																										deladd2,
-																										deladd3,
-																										deladd4,
-																										deladd5,
-																										deladd6,
-																										tel,
-																										suppdeladdress1,
-																										suppdeladdress2,
-																										suppdeladdress3,
-																										suppdeladdress4,
-																										suppdeladdress5,
-																										suppdeladdress6,
-																										suppliercontact,
-																										supptel,
-																										contact,
-																										version,
-																										revised,
-																										deliveryby,
-																										'" . PurchOrder::STATUS_CANCELLED . "',
-																										'" . $StatusComment . "',
-																										deliverydate,
-																										paymentterms 
-																		FROM purchorders 
-																		WHERE orderno ='" . $_SESSION['ExistingOrder'] . "'";
-				
-			$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
-			$DbgMsg = _('The SQL statement used to insert the purchase order header record and failed was');
-			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
-
-		     /*Insert the purchase order detail records */
-			$sql = "INSERT INTO purchorderdetails_deleted ( orderno,
-																									itemcode,
-																									deliverydate,
-																									itemdescription,
-																									glcode,
-																									unitprice,
-																									quantityord,
-																									shiptref,
-																									jobref,
-																									itemno,
-																									uom,
-																									suppliers_partno,
-																									subtotal_amount,
-																									package,
-																									pcunit,
-																									nw,
-																									gw,
-																									cuft,
-																									total_quantity,
-																									total_amount,
-																									assetid )
-																SELECT orderno,
-																				itemcode,
-																				deliverydate,
-																				itemdescription,
-																				glcode,
-																				unitprice,
-																				quantityord,
-																				shiptref,
-																				jobref,
-																				itemno,
-																				uom,
-																				suppliers_partno,
-																				subtotal_amount,
-																				package,
-																				pcunit,
-																				nw,
-																				gw,
-																				cuft,
-																				total_quantity,
-																				total_amount,
-																				assetid 
-																FROM purchorderdetails
-																WHERE orderno='" .  $_SESSION['ExistingOrder'] . "'";
-																
-			$ErrMsg =_('The deleted purchase order detail records could not be inserted into the database because');
-			$DbgMsg =_('The SQL statement used to insert the deleted purchase order detail records and failed was');
-			$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
-			
-			/*Now we have a copy to record the trail - we can delete this order from the database */
-			
-			$sql = "DELETE FROM purchorderdetails
-									WHERE purchorderdetails.orderno ='" . $_SESSION['ExistingOrder'] ."'";
-			$ErrMsg = _('The order detail lines could not be deleted because');
-			$DelResult=DB_query($sql,$db,$ErrMsg);
-
-			$sql="DELETE FROM purchorders
-							WHERE orderno='".$_SESSION['ExistingOrder']."'";
-			$ErrMsg = _('The order header could not be deleted because');
-			$DelResult=DB_query($sql,$db,$ErrMsg);
-			prnMsg( _('Order number').' '.$_SESSION['ExistingOrder'].' '._('has been deleted'), 'success');
-			unset($_SESSION['ExistingOrder']);
-			unset($_SESSION['PO'.$identifier]->LineItems);
-			unset($_SESSION['PO'.$identifier]);
-			$_SESSION['PO'.$identifier] = new PurchOrder;
-			$_SESSION['RequireSupplierSelection'] = 1;
-		} else { //it's not an existing order currently so just clear the session variable to delete it
-		// Re-Direct to right place
-			unset($_SESSION['PO'.$identifier]);
-			prnMsg( _('The creation of the new order has been cancelled'), 'success');
-		}
-	}
-}
 
 if (!isset($_SESSION['PO'.$identifier])){
 	/* It must be a new order being created
