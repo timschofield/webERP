@@ -23,10 +23,12 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 								fixedassets.datepurchased,
 								fixedassetlocations.parentlocationid,
 								fixedassets.assetlocation,
+								fixedassets.disposaldate,
 								SUM(CASE WHEN (fixedassettrans.transdate <"' . $DateFrom . '" AND fixedassettrans.fixedassettranstype="cost") THEN fixedassettrans.amount ELSE 0 END) AS bfwdcost,
 								SUM(CASE WHEN (fixedassettrans.transdate <"' . $DateFrom .'" AND fixedassettrans.fixedassettranstype="depn") THEN fixedassettrans.amount ELSE 0 END) AS bfwddepn,
 								SUM(CASE WHEN (fixedassettrans.transdate >="' . $DateFrom .'"  AND fixedassettrans.transdate <="' . $DateTo . '" AND fixedassettrans.fixedassettranstype="cost") THEN fixedassettrans.amount ELSE 0 END) AS periodadditions,
-								SUM(CASE WHEN fixedassettrans.transdate >="' . $DateFrom . '"  AND fixedassettrans.transdate <="' . $DateTo . '" AND fixedassettrans.fixedassettranstype="depn" THEN fixedassettrans.amount ELSE 0 END) AS perioddepn
+								SUM(CASE WHEN fixedassettrans.transdate >="' . $DateFrom . '"  AND fixedassettrans.transdate <="' . $DateTo . '" AND fixedassettrans.fixedassettranstype="depn" THEN fixedassettrans.amount ELSE 0 END) AS perioddepn,
+								SUM(CASE WHEN fixedassettrans.transdate >="' . $DateFrom . '"  AND fixedassettrans.transdate <="' . $DateTo . '" AND fixedassettrans.fixedassettranstype="disposal" THEN fixedassettrans.amount ELSE 0 END) AS perioddisposal
 					FROM fixedassets
 					INNER JOIN fixedassetcategories ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
 					INNER JOIN fixedassetlocations ON fixedassets.assetlocation=fixedassetlocations.locationid
@@ -111,68 +113,80 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 			$Ancestors[$i] = $ParentRow['locationdescription'];
 		}
 		*/
+		if (Date1GreaterThanDate2(ConvertSQLDate($myrow['disposaldate']),$_POST['FromDate']) OR $myrow['disposaldate']='0000-00-00'){
+			
+			if (Date1GreaterThanDate2($_POST['ToDate'], ConvertSQLDate($myrow['disposaldate']))){
+				/*The asset was disposed during the period */
+				$CostCfwd = 0;
+				$AccumDepnCfwd = 0;
+			} else {
+				$CostCfwd = $myrow['periodadditions'] + $myrow['costbfwd'];
+				$AccumDepnCfwd = $myrow['periodepn'] + $myrow['depnbfwd'];
+			}
+			
+			if (isset($_POST['pdf'])) {
 				
-		if (isset($_POST['pdf'])) {
-			$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 30 - $Left_Margin, $FontSize, $myrow['assetid']);
-			$LeftOvers = $pdf->addTextWrap($XPos + 30, $YPos, 150 - $Left_Margin, $FontSize, $myrow['description']);
-			$LeftOvers = $pdf->addTextWrap($XPos + 180, $YPos, 40 - $Left_Margin, $FontSize, $myrow['serialno']);
-			/*
-			 * $TempYPos = $YPos;
-			for ($i = 1;$i < sizeof($Ancestors) - 1;$i++) {
-				for ($j = 0;$j < $i;$j++) {
-					$TempYPos-= (0.8 * $line_height);
-					$LeftOvers = $pdf->addTextWrap($XPos + 300, $TempYPos, 300 - $Left_Margin, $FontSize, '	');
+				$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 30 - $Left_Margin, $FontSize, $myrow['assetid']);
+				$LeftOvers = $pdf->addTextWrap($XPos + 30, $YPos, 150 - $Left_Margin, $FontSize, $myrow['description']);
+				$LeftOvers = $pdf->addTextWrap($XPos + 180, $YPos, 40 - $Left_Margin, $FontSize, $myrow['serialno']);
+				/*
+				 * $TempYPos = $YPos;
+				for ($i = 1;$i < sizeof($Ancestors) - 1;$i++) {
+					for ($j = 0;$j < $i;$j++) {
+						$TempYPos-= (0.8 * $line_height);
+						$LeftOvers = $pdf->addTextWrap($XPos + 300, $TempYPos, 300 - $Left_Margin, $FontSize, '	');
+					}
+					$LeftOvers = $pdf->addTextWrap($XPos + 300, $TempYPos, 300 - $Left_Margin, $FontSize, '|_' . $Ancestors[$i]);
 				}
-				$LeftOvers = $pdf->addTextWrap($XPos + 300, $TempYPos, 300 - $Left_Margin, $FontSize, '|_' . $Ancestors[$i]);
-			}
-			* */
-			
-			$LeftOvers = $pdf->addTextWrap($XPos + 220, $YPos, 50 - $Left_Margin, $FontSize, ConvertSQLDate($myrow['datepurchased']));
-			$LeftOvers = $pdf->addTextWrap($XPos + 270, $YPos, 70, $FontSize, number_format($myrow['costbfwd'], 0), 'right');
-			$LeftOvers = $pdf->addTextWrap($XPos + 340, $YPos, 70, $FontSize, number_format($myrow['depnbfwd'], 0), 'right');
-			$LeftOvers = $pdf->addTextWrap($XPos + 410, $YPos, 70, $FontSize, number_format($myrow['periodadditions'], 0), 'right');
-			$LeftOvers = $pdf->addTextWrap($XPos + 480, $YPos, 70, $FontSize, number_format($myrow['perioddepn'], 0), 'right');
-			$LeftOvers = $pdf->addTextWrap($XPos + 550, $YPos, 70, $FontSize, number_format($myrow['periodadditions'] + $myrow['costbfwd'], 0), 'right');
-			$LeftOvers = $pdf->addTextWrap($XPos + 620, $YPos, 70, $FontSize, number_format($myrow['periodepn'] + $myrow['depnbfwd'], 0), 'right');
-			$LeftOvers = $pdf->addTextWrap($XPos + 690, $YPos, 70, $FontSize, number_format($myrow['periodadditions'] + $myrow['costbfwd'] - $myrow['periodepn'] - $myrow['depnbfwd'], 0), 'right');
-			
-			$YPos = $TempYPos - (0.8 * $line_height);
-			if ($YPos < $Bottom_Margin + $line_height) {
-				PDFPageHeader();
-			}
-		} elseif (isset($_POST['csv'])) {
-			$csv_output.= $myrow['assetid'] . "," . $myrow['longdescription'] .",".$myrow['serialno'].",".$myrow['locationdescription'].",".$myrow['datepurchased'].",".$myrow['costbfwd'].",".$myrow['periodadditions']."," . $myrow['depnbfwd'] . "," .$myrow['perioddepn'].",".($myrow['costbfwd']+$myrow['periodadditions']). ", " . ($myrow['depnbfwd']+$myrow['perioddepn']) . ", " . ($myrow['costbfwd']+$myrow['periodadditions']-$myrow['depnbfwd']-$myrow['perioddepn']) . "\n";
-
-		} else {
-			echo '<tr><td style="vertical-align:top">' . $myrow['assetid'] . '</td>';
-			echo '<td style="vertical-align:top">' . $myrow['longdescription'] . '</td>';
-			echo '<td style="vertical-align:top">' . $myrow['serialno'] . '</td>';
-			echo '<td>' . $myrow['locationdescription'] . '<br>';
-			for ($i = 1;$i < sizeOf($Ancestors) - 1;$i++) {
-				for ($j = 0;$j < $i;$j++) {
-					echo '&nbsp;&nbsp;&nbsp;&nbsp;';
+				* */
+				
+				$LeftOvers = $pdf->addTextWrap($XPos + 220, $YPos, 50 - $Left_Margin, $FontSize, ConvertSQLDate($myrow['datepurchased']));
+				$LeftOvers = $pdf->addTextWrap($XPos + 270, $YPos, 70, $FontSize, number_format($myrow['costbfwd'], 0), 'right');
+				$LeftOvers = $pdf->addTextWrap($XPos + 340, $YPos, 70, $FontSize, number_format($myrow['depnbfwd'], 0), 'right');
+				$LeftOvers = $pdf->addTextWrap($XPos + 410, $YPos, 70, $FontSize, number_format($myrow['periodadditions'], 0), 'right');
+				$LeftOvers = $pdf->addTextWrap($XPos + 480, $YPos, 70, $FontSize, number_format($myrow['perioddepn'], 0), 'right');
+				$LeftOvers = $pdf->addTextWrap($XPos + 550, $YPos, 70, $FontSize, number_format($CostCfwd, 0), 'right');
+				$LeftOvers = $pdf->addTextWrap($XPos + 620, $YPos, 70, $FontSize, number_format($AccumDepnCfwd, 0), 'right');
+				$LeftOvers = $pdf->addTextWrap($XPos + 690, $YPos, 70, $FontSize, number_format($CostCfwd - $AccumDepnCfwd, 0), 'right');
+				
+				$YPos = $TempYPos - (0.8 * $line_height);
+				if ($YPos < $Bottom_Margin + $line_height) {
+					PDFPageHeader();
 				}
-				echo '|_' . $Ancestors[$i] . '<br>';
+			} elseif (isset($_POST['csv'])) {
+				$csv_output.= $myrow['assetid'] . "," . $myrow['longdescription'] .",".$myrow['serialno'].",".$myrow['locationdescription'].",".$myrow['datepurchased'].",".$myrow['costbfwd'].",".$myrow['periodadditions']."," . $myrow['depnbfwd'] . "," .$myrow['perioddepn'].",". $CostCfwd . ", " . $AccumDepnCfwd . ", " . ($CostCfwd - $AccumDepnCfwd) . "," . $myrow['perioddisposal'] . "\n";
+	
+			} else {
+				echo '<tr><td style="vertical-align:top">' . $myrow['assetid'] . '</td>';
+				echo '<td style="vertical-align:top">' . $myrow['longdescription'] . '</td>';
+				echo '<td style="vertical-align:top">' . $myrow['serialno'] . '</td>';
+				echo '<td>' . $myrow['locationdescription'] . '<br>';
+				for ($i = 1;$i < sizeOf($Ancestors) - 1;$i++) {
+					for ($j = 0;$j < $i;$j++) {
+						echo '&nbsp;&nbsp;&nbsp;&nbsp;';
+					}
+					echo '|_' . $Ancestors[$i] . '<br>';
+				}
+				echo '</td><td style="vertical-align:top">' . ConvertSQLDate($myrow['datepurchased']) . '</td>';
+				echo '<td style="vertical-align:top" class=number>' . number_format($myrow['costbfwd'], 2) . '</td>';
+				echo '<td style="vertical-align:top" class=number>' . number_format($myrow['depnbfwd'], 2) . '</td>';
+				echo '<td style="vertical-align:top" class=number>' . number_format($myrow['periodadditions'], 2) . '</td>';
+				echo '<td style="vertical-align:top" class=number>' . number_format($myrow['perioddepn'], 2) . '</td>';
+				echo '<td style="vertical-align:top" class=number>' . number_format($CostCfwd , 2) . '</td>';
+				echo '<td style="vertical-align:top" class=number>' . number_format($AccumDepnCfwd, 2) . '</td>';
+				echo '<td style="vertical-align:top" class=number>' . number_format($CostCfwd - $AccumDepnCfwd, 2) . '</td>';
+				echo '<td style="vertical-align:top" class=number>' . number_format($myrow['perioddisposal'], 2) . '</td></tr>';
 			}
-			echo '</td><td style="vertical-align:top">' . ConvertSQLDate($myrow['datepurchased']) . '</td>';
-			echo '<td style="vertical-align:top" class=number>' . number_format($myrow['costbfwd'], 2) . '</td>';
-			echo '<td style="vertical-align:top" class=number>' . number_format($myrow['depnbfwd'], 2) . '</td>';
-			echo '<td style="vertical-align:top" class=number>' . number_format($myrow['periodadditions'], 2) . '</td>';
-			echo '<td style="vertical-align:top" class=number>' . number_format($myrow['perioddepn'], 2) . '</td>';
-			echo '<td style="vertical-align:top" class=number>' . number_format($myrow['costbfwd']+$myrow['periodadditions'], 2) . '</td>';
-			echo '<td style="vertical-align:top" class=number>' . number_format($myrow['perioddepn']+$myrow['depnbfwd'], 2) . '</td>';
-			echo '<td style="vertical-align:top" class=number>' . number_format($myrow['costbfwd']+$myrow['periodadditions']-$myrow['perioddepn']-$myrow['depnbfwd'], 2) . '</td>';
-			
-			//echo '<td style="vertical-align:top" class=number>' . number_format($myrow['disposalvalue'], 2) . '</td></tr>';
-		}
+		} // end of if the asset was either not disposed yet or disposed after the start date
 		$TotalCostBfwd +=$myrow['costbfwd'];
 		$TotalCostCfwd += ($myrow['costbfwd']+$myrow['periodadditions']);
 		$TotalDepnBfwd += $myrow['depnbfwd'];
 		$TotalDepnCfwd += ($myrow['depnbfwd']+$myrow['perioddepn']);
 		$TotalAdditions += $myrow['periodadditions'];
 		$TotalDepn += $myrow['perioddepn'];
-		$TotalDisposals += 0;
-		$TotalNBV += ($myrow['costbfwd']+$myrow['periodadditions']- $myrow['depnbfwd']-$myrow['perioddepn']);
+		$TotalDisposals += $myrow['perioddisposal'];
+		
+		$TotalNBV += ($CostCfwd - $AccumDepnCfwd);
 	}
 
 	if (isset($_POST['pdf'])) {
