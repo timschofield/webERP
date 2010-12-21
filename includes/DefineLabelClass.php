@@ -1,13 +1,18 @@
 <?php
-define("MAX_LINES_PER_LABEL", 5);
-define("LABELS_FILE", $_SESSION['reports_dir'] . "/labels.xml");
+define('MAX_LINES_PER_LABEL', 5);
+define('LABELS_FILE', $_SESSION['reports_dir'] . "/labels.xml");
 
 /**
  *  These tags contains the more general data of the labels
  */
-$GlobalTags = array(
-    'id'=>array('desc'=> _('Label id'), 'type'=>'t', 'sz'=>8, 'maxsz'=>12),  // text
-    'description'=>array('desc'=>_('Description'),'type'=>'t','sz'=>15,'maxsz'=>30)  // text
+$GlobalTags = array('id'=>array('desc'=> _('Label id'), 
+															'type'=>'t', 
+															'sz'=>8, 
+															'maxsz'=>12),  // text
+									'description'=>array('desc'=>_('Description'),
+																			'type'=>'t',
+																			'sz'=>15,
+																			'maxsz'=>30)  // text
 );
 /**
  *  These tags specifies the dimension of individual label
@@ -60,7 +65,7 @@ function getXMLFile($file) {
     if (file_exists($file)) {
         $list= simplexml_load_file($file, "LabelList");
         if (!$list) {
-            prnMsg(_("Failed loading XML file").' '. $file.':');
+            prnMsg(_('Failed loading XML file').' '. $file.':');
             foreach(libxml_get_errors() as $error) {
                 echo "
                 <br>", $error->message;

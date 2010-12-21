@@ -6,19 +6,18 @@ $PageSecurity = 10;
 $Version_adds= "1.2";
 
 include('includes/session.inc');
-require_once("includes/DefineLabelClass.php");
+require_once('includes/DefineLabelClass.php');
 
-$msgErr=null;
-$decimalplaces=2;
-$today = date('Y-m-d');
+$MsgErr=null;
+$DecimalPlaces=2;
 $pdf= null;
 
-	$allLabels =				 //!< The variable $allLabels is the global variable that contains the list
+	$AllLabels =				 //!< The variable $AllLabels is the global variable that contains the list
 		getXMLFile(LABELS_FILE); //!< of all the label objects defined until now. In case of a fresh
 								 //!<  installation or an empty XML labels file it holds a NULL value.
 
 // If there is no label templates, the user could select to set up a new one
-if ($allLabels==null) {
+if ($AllLabels==null) {
 	echo '<br/><br/>';
 	abortMsg( _("There isn't any label template to select for printing. Click") .
 		' <a href="Labels.php"><b>' . _('HERE'). '</b></a> '. _('to set up a new one') );
@@ -30,21 +29,21 @@ if ($allLabels==null) {
  */
 if (isset($_POST['PrintPDF']) OR isset($_POST['PDFTest']) ) {
 	if (!isset($_POST['QtyByItem']) OR (int)$_POST['QtyByItem']<1)
-		$msgErr = _('You must specify the number of labels per item required');
+		$MsgErr = _('You must specify the number of labels per item required');
 	else {
 		if (count($_POST['StockID'])<1)
-			$msgErr = _('You must select the items to be printed');
+			$MsgErr = _('You must select the items to be printed');
 		else {
 			//
-			$label = $allLabels->getLabel($_POST['labelID']);
+			$label = $AllLabels->getLabel($_POST['LabelID']);
 			list($dimensions, $lines) = resizeLabel($label);
 			$formatPage = getPageDimensions($dimensions);
 			list($Page_Width,
-				$Page_Height,
-				$Top_Margin,
-				$Bottom_Margin,
-				$Left_Margin,
-				$Right_Margin) = $formatPage;
+				   $Page_Height,
+				   $Top_Margin,
+				   $Bottom_Margin,
+				   $Left_Margin,
+				   $Right_Margin) = $formatPage;
 
 			// Do it!
 			$PaperSize = 'User_special'; // Don't use any of the predefined sizes
@@ -64,7 +63,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['PDFTest']) ) {
 			if ($ok)
 				exit(); // the print was success
 			else	// Has been ocurred an error
-				$msgErr = _('There were an error. Consult your IT staff');
+				$MsgErr = _('There was an error. Consult your IT staff');
 		}
 	}
 }
@@ -77,8 +76,9 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['PDFTest']) ) {
 $title = _('Print Price Labels');
 include('includes/header.inc');
 
-if ($msgErr!=null)
-	prnMsg($msgErr,'warn');
+if ($MsgErr!=null) {
+	prnMsg($MsgErr,'warn');
+}
 
 showLabelOptions();
 
@@ -86,7 +86,7 @@ include('includes/footer.inc');
 exit();
 
 function showLabelOptions() {
-	global $allLabels, $decimalplaces, $rootpath, $theme;
+	global $AllLabels, $DecimalPlaces, $rootpath, $theme;
 	$txt = array(
 		_('Label Sticker Printing'),
 		_('Select label type'),
@@ -94,27 +94,28 @@ function showLabelOptions() {
 		_('Price list'), _('Currency'),
 		_('Category'), _('Update values')
 	);
-	if (!isset($_POST['labelID']))
-		$_POST['labelID']=(string)$allLabels->label[0]->id;
-	$optionLabels = selLabels($_POST['labelID']);
+	if (!isset($_POST['LabelID']))
+		$_POST['LabelID']=(string)$AllLabels->label[0]->id;
+	$OptionLabels = selLabels($_POST['LabelID']);
 	if (!isset($_POST['QtyByItem']))
 		$_POST['QtyByItem']=1;
 	if (!isset($_POST['SalesType']))
 		$_POST['SalesType']=$_SESSION['DefaultPriceList'];
-	$optionSales = selSalesType($_POST['SalesType']);
+	$OptionSales = selSalesType($_POST['SalesType']);
 
-	if (!isset($_POST['Currency']))
+	if (!isset($_POST['Currency'])){
 		$_POST['Currency']=$_SESSION['CompanyRecord']['currencydefault'];
-	$decimalplaces=getDecimalPlaces($_POST['Currency']);
+	}
+	$DecimalPlaces=getDecimalPlaces($_POST['Currency']);
 
-	$optionCurrency = selCurrency($_POST['Currency']);
+	$OptionCurrency = selCurrency($_POST['Currency']);
 	if (!isset($_POST['Category']))
 		$_POST['Category']='';
-	$optionsCategory = selCategory($_POST['Category']);
+	$OptionsCategory = selCategory($_POST['Category']);
 
-	$tableItems = tableItems($_POST['Category'], $okItems);
+	$TableItems = tableItems($_POST['Category'], $okItems);
 
-	$sendButton = '<br /><div class=centre><input type="submit" name="PrintPDF" value="'. _('Print labels') .'">&nbsp;&nbsp;&nbsp;
+	$SendButton = '<br /><div class=centre><input type="submit" name="PrintPDF" value="'. _('Print labels') .'">&nbsp;&nbsp;&nbsp;
 		<input type="submit" name="PDFTest" value="'. _('Print labels with borders') .'"></div>';
 	$iTxt=0;
 
@@ -135,8 +136,8 @@ function showLabelOptions() {
 	echo '<tbody>';
 	echo '<tr>
 				<td class="number">'.$txt[$iTxt++].':</td>
-				<td><select name="labelID">'.
-					$optionLabels
+				<td><select name="LabelID">'.
+					$OptionLabels
 					.'</select></td>
 		</tr>';
 	echo '<tr>
@@ -147,18 +148,18 @@ function showLabelOptions() {
 	echo '<tr>
 				<td class="number">'.$txt[$iTxt++].':</td>
 				<td><select name="SalesType" onChange="ReloadForm(form1.refresh)">
-					'.$optionSales.'
+					'.$OptionSales.'
 					</select></td>
 			</tr>';
 	echo '<td class="number">'.$txt[$iTxt++].':</td>
 				<td><select name="Currency" onChange="ReloadForm(form1.refresh)">
-						'.$optionCurrency.'
+						'.$OptionCurrency.'
 					</select></td>
 			</tr>';
 	echo '<tr>
 				<td class="number">'.$txt[$iTxt++].':</td>
 				<td><select name="Category" onChange="ReloadForm(form1.refresh)">
-					'.$optionsCategory.'
+					'.$OptionsCategory.'
 					</select> </td>
 			</tr>';
 	echo '<tr>
@@ -167,21 +168,21 @@ function showLabelOptions() {
 				</th>';
 	echo '<tr>
 				<td colspan="2">
-					'.$tableItems.'
+					'.$TableItems.'
 				</td>
 			</tr>';
 
 	echo '</tbody>
 		</table>
-		'.$sendButton.'
+		'.$SendButton.'
 	</form>';
 }
 
 function selLabels($type) {
-	global $allLabels;
+	global $AllLabels;
 	$list=array();
 
-	foreach ($allLabels->label as $label)
+	foreach ($AllLabels->label as $label)
 		$list[(string)$label->id] = (string)$label->description;
 
 	return selectOptions($list, $type);
@@ -221,14 +222,14 @@ function selectOptions($list, $currentKey) {
 	return $html;
 }
 
-function tableItems($category, &$ok) {
-	global $db, $decimalplaces;
+function tableItems($CategoryID, &$ok) {
+	global $db, $DecimalPlaces;
 
-	if (empty($category)) {
+	if (empty($CategoryID)) {
 		$ok=false;
 		return noneButton( _('Select a Category') );
 	}
-	$result = getStockItems($category, $_POST['Currency'], $_POST['SalesType']);
+	$result = getStockItems($CategoryID, $_POST['Currency'], $_POST['SalesType']);
 	if (!DB_num_rows($result)) {
 		$ok=false;
 		return noneButton( _('This category has no items to show') );
@@ -256,7 +257,7 @@ function tableItems($category, &$ok) {
 	$ok=true;
 	$odd=true;
 	while ($myrow=DB_fetch_array($result)) {
-		$price = number_format($myrow['price'],$decimalplaces);
+		$price = number_format($myrow['price'],$DecimalPlaces);
 		$oddEven=$odd?"Odd":"Even";
 		$odd = !$odd;
 		$html .= <<<ZZZ
@@ -290,27 +291,33 @@ function noneButton($msg) {
  *  The routine works in two contexts: when only the category is given
  *  it looks for all the items
  */
-function getStockItems($category, $currAbrev, $typeSales, $stockID=false) {
-	global $db, $today;
-	if ($stockID!==false) {
-		$wS= "sm.stockid='$stockID' LIMIT 1";
+function getStockItems($CategoryID, $CurrCode, $SalesType, $StockID=false) {
+	global $db, $Today;
+	if ($StockID!==false) {
+		$WhereClause = "stockmaster.stockid='$StockID' LIMIT 1";
 	} else {
-		$wS= "sm.categoryid='$category' ORDER BY sm.stockid";
+		$WhereClause = "stockmaster.categoryid='$CategoryID' ORDER BY stockmaster.stockid";
 	}
 
-	$sql="SELECT sm.stockid, sm.description, sm.longdescription, sm.barcode, pr.price ".
-			"FROM stockmaster AS sm LEFT JOIN prices AS pr ON sm.stockid=pr.stockid ".
-			"AND pr.currabrev = '$currAbrev' " .
-			"AND pr.typeabbrev= '$typeSales' " .
-			"AND ('$today' BETWEEN pr.startdate AND pr.enddate) " .
-			"AND pr.debtorno='' " .
-			"WHERE $wS";
+	$sql="SELECT stockmaster.stockid, 
+							stockmaster.description, stockmaster.longdescription, stockmaster.barcode, prices.price 
+				FROM stockmaster LEFT JOIN prices ON stockmaster.stockid=prices.stockid 
+				AND prices.currabrev = '" . $CurrCode . "' 
+				AND prices.typeabbrev= '" . $SalesType . "'
+				AND prices.startdate >= '" . Date('Y-m-d') . "'
+				AND (prices.enddate <= '" . Date('Y-m-d') . "' OR prices.enddate='0000-00-00') 
+				AND prices.debtorno=''
+				WHERE " . $WhereClause;
 
+// if current prices are those with enddate = 0000-00-00 the following line was wrong			
+//			"AND ('$Today' BETWEEN pr.startdate AND prices.enddate) " .
+			
+			
 	return DB_query($sql, $db);
 }
 
-function getStockData($stockID, $currency, $salesType) {
-	$result = getStockItems(null, $currency, $salesType, $stockID);
+function getStockData($StockID, $Currency, $salesType) {
+	$result = getStockItems(null, $Currency, $salesType, $StockID);
 	return DB_fetch_array($result);
 }
 
@@ -379,17 +386,17 @@ function getPageDimensions($dimensions) {
 	);
 }
 
-function printLabels($dimensions, $lines, $qtyByItem, $currency, $salesType, $stockIDList) {
-	global $pdf, $decimalplaces, $Version;
+function printLabels($dimensions, $lines, $qtyByItem, $Currency, $salesType, $StockIDList) {
+	global $pdf, $DecimalPlaces, $Version;
 	$row = $col = 0;
 
-	$decimalplaces=getDecimalPlaces($currency);
+	$DecimalPlaces=getDecimalPlaces($Currency);
 
-	foreach ($stockIDList as $stockID=>$on) {  // At least there is one item
-		$itemData = getStockData($stockID, $currency, $salesType);
+	foreach ($StockIDList as $StockID=>$on) {  // At least there is one item
+		$itemData = getStockData($StockID, $Currency, $salesType);
 		$num=$qtyByItem;
 		while ($num-- > 0) {	// Print $num labels per item
-			printStockid($itemData, $dimensions, $lines, $currency, $row, $col);
+			printStockid($itemData, $dimensions, $lines, $Currency, $row, $col);
 			if (++$col>=$dimensions['Cols']) {
 				$col=0;
 				if (++$row>=$dimensions['Rows']) {
@@ -433,8 +440,8 @@ function printLabels($dimensions, $lines, $qtyByItem, $currency, $salesType, $st
  *  possible that the combination $data valid and $readonly false occurs when
  *  invalid data needs to be recaptured because an error in a new label capture.
  */
-function printStockid($itemData, $labelDim, $dataParams, $currency, $row, $col) {
-	global $pdf, $decimalplaces;
+function printStockid($itemData, $labelDim, $dataParams, $Currency, $row, $col) {
+	global $pdf, $DecimalPlaces;
 //echo $row.':'.$col.'<br>';
 	// Calculate the bottom left corner position
 	$iX = $labelDim['Lm'] + $col * $labelDim['Cw'];
@@ -473,7 +480,7 @@ function printStockid($itemData, $labelDim, $dataParams, $currency, $row, $col) 
 			unset($ldescrip);
 			break;
 		case 'price':
-			$txt = number_format($itemData['price'], $decimalplaces). ' '. $currency;
+			$txt = number_format($itemData['price'], $DecimalPlaces). ' '. $Currency;
 //			$adj='left';
 			break;
 		case 'bcode': break;
@@ -486,9 +493,9 @@ function printStockid($itemData, $labelDim, $dataParams, $currency, $row, $col) 
 	}
 }
 
-function getDecimalPlaces($currency) {
+function getDecimalPlaces($Currency) {
 	global $db;
-	$sql="SELECT decimalplaces FROM currencies WHERE currabrev='$currency'";
+	$sql="SELECT decimalplaces FROM currencies WHERE currabrev='$Currency'";
 	$result = DB_query($sql, $db);
 	if (!DB_num_rows($result))
 		abortMsg(_('Couldnt get the currency data'));
