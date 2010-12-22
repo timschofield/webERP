@@ -23,10 +23,10 @@ $Result = DB_query($SQLname,$db);
 $row = DB_fetch_array($Result);
 if (!isset($_GET['Id'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="">' . ' ' . _('Contacts for Customer: <b>') .$row['name'].'<br>';
+		'" alt="" />' . ' ' . _('Contacts for Customer: <b>') .$row['name'].'</p><br />';
 } else {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="">' . ' ' . _('Edit contact for <b>') .$row['name'].'<br>';
+		'" alt="" />' . ' ' . _('Edit contact for <b>') .$row['name'].'</p><br />';
 }
 if ( isset($_POST['submit']) ) {
 
