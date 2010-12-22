@@ -43,7 +43,7 @@ $result = DB_query("SELECT debtorsmaster.name,
 							debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
 $myrow = DB_fetch_row($result);
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="">' . '</img>' . _('Special Customer Prices').'<br>';
+		'" alt="" />' . _('Special Customer Prices').'</p><br />';
 echo '<font color=BLUE><b>' . $myrow[0] . ' ' . _('in') . ' ' . $myrow[1] . '<br>' . ' ' . _('for') . ' ';
 
 $CurrCode = $myrow[1];
