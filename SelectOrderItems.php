@@ -949,6 +949,85 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
 			$KitResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
 
+	if (isset($_POST['AssetDisposalEntered'])){ //its an asset being disposed of
+		if ($_POST['AssetToDisposeOf'] == 'NoAssetSelected'){ //don't do anything unless an asset is disposed of
+			prnMsg(_('No asset was selected to dispose of. No assets have been added to this customer order'),'warn');
+		} else { //need to add the asset to the order
+			/*First need to create a stock ID to hold the asset and record the sale - as only stock items can be sold 
+			 * 		and before that we need to add a disposal stock category - if not already created 
+			 * 		first off get the details about the asset being disposed of */
+			 $AssetDetailsResult = DB_query('SELECT  fixedassets.description,
+																							fixedassets.longdescription,
+																							fixedassets.barcode,
+																							fixedassetcategories.costact
+																					FROM fixedassetcategories INNER JOIN fixedassets
+																					ON fixedassetcategories.categoryid=fixedassets.assetcategoryid
+																					WHERE fixedassets.assetid="' . $_POST['AssetToDisposeOf'] . '"',$db);
+			$AssetRow = DB_fetch_array($AssetCatDetailsResult);
+			
+			$AssetCategoryResult = DB_query('SELECT  categoryid FROM stockcategory WHERE categoryid="ASSETS"',$db);
+			if (DB_num_rows($AssetCategoryResult)==0){
+				/*Although asset GL posting will come from the asset category - we should set the GL codes to something sensible 
+				 * based on the category of the asset under review at the moment - this may well change for any other assets sold subsequentely */
+				 
+				/*OK now we can insert the stock category for this asset */
+				$InsertAssetStockCatResult = DB_query('INSERT INTO stockcategory ( categoryid,
+																															categorydescription,
+																															stockact)
+																						VALUES ("ASSETS",
+																										"' . _('Asset Disposals') . '",
+																										"' . $AssetRow['costact'] . '")',$db);
+			} 
+			
+			/*First check to see that it doesn't exist already assets are of the format "ASSET-" . $AssetID
+			 */
+			 $TestAssetExistsAlreadyResult = DB_query('SELECT stockid FROM stockmaster WHERE stockid ="ASSET-' . $_POST['AssetToDisposeOf']  . '"',$db);
+			 if (DB_num_rows($TestAssetExistsAlreadyResult)==1){ //then it exists already ... bum
+				$j=1;
+				while (DB_num_rows($TestAssetExistsAlreadyResult)==1) {
+					$TestAssetExistsAlreadyResult = DB_query('SELECT stockid FROM stockmaster WHERE stockid ="ASSET-' . $_POST['AssetToDisposeOf']  . '-' . $j . '"',$db);
+					$j++;
+				}
+				$AssetStockID = 'ASSET-' . $_POST['AssetToDisposeOf']  . '-' . $j;
+			} else {
+				$AssetStockID = 'ASSET-' . $_POST['AssetToDisposeOf'];
+			}
+			/* Perhaps ought to check that the asset exists already as a stock item first */
+			
+			/*OK now we can insert the item for this asset */
+			$InsertAssetAsStockItemResult = DB_query('INSERT INTO stockmaster ( stockid,
+																																				description,
+																																				categoryid,
+																																				longdescription,
+																																				mbflag,
+																																				controlled,
+																																				serialised,
+																																				taxcatid)
+																										VALUES ("' . $AssetStockID . '",
+																														"' . $AssetRow['description'] . '",
+																														"' . $AssetRow['longdescription'] . '",
+																														"ASSETS",
+																														"B",
+																														"0",
+																														"0",
+																														"' . $_SESSION['DefaultTaxCategory'] . '")' , $db);
+			/*not forgetting the location records too */
+			$InsertStkLocRecsResult = DB_query('INSERT INTO locstock (loccode,
+																															stockid)
+																									SELECT loccode, "' . $AssetStockID . '" FROM locations',$db);
+			/*Now the asset has been added to the stock master we can add it to the sales order */
+			$NewItemDue = date($_SESSION['DefaultDateFormat']);
+			if (isset($_POST['POLine']){
+				$NewPOLine = $_POST['POLine'];
+			} else {
+				$NewPOLine = 0;
+			}
+			$NewItem = $AssetStockID;
+			include('includes/SelectOrderItems_IntoCart.inc');
+		}
+		
+			
+	}
 
 			if (DB_num_rows($KitResult)==0){
 				prnMsg( _('The item code') . ' ' . $NewItem . ' ' . _('could not be retrieved from the database and has not been added to the order'),'warn');
@@ -1692,8 +1771,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				// Find the quantity on works orders
 				$sql = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) AS dedm
-					   FROM woitems
-					   WHERE stockid='" . $myrow['stockid'] ."'";
+							   FROM woitems
+							   WHERE stockid='" . $myrow['stockid'] ."'";
 				$ErrMsg = _('The order details for this product cannot be retrieved because');
 				$WoResult = db_query($sql,$db,$ErrMsg);
 
