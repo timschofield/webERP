@@ -33,7 +33,7 @@ if (isset($StockID)) {
 echo '<a href="' . $rootpath . '/SelectProduct.php?' . SID . '">' . _('Back to Items') . '</a><br>' . "\n";
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="'
-		. _('Stock') . '" alt="">' . ' ' . $title . '</p>';
+		. _('Stock') . '" alt="" />' . ' ' . $title . '</p>';
 
 if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 
