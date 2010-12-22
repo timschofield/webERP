@@ -25,7 +25,7 @@ $sql = "SELECT loccode,
 $resultStkLocs = DB_query($sql,$db);
 
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') .
-	'" alt="">' . ' ' . $title.'</p>';
+	'" alt="" />' . ' ' . $title.'</p>';
 
 echo '<table class=selection><tr><td>' . _('From Stock Location') . ':</td><td><select name="StockLocation"> ';
 while ($myrow=DB_fetch_array($resultStkLocs)){
