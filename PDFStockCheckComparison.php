@@ -347,7 +347,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	$title= _('Inventory Comparison Report');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt=""></img>' . ' '
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' '
 		. $title . '</p>';
 
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="POST"><table class=selection>';
