@@ -15,7 +15,7 @@ if (isset($_POST['SelectedAccount'])){
 }
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' .
-		_('General Ledger Accounts') . '" alt="">' . ' ' . $title . '</p>';
+		_('General Ledger Accounts') . '" alt="" />' . ' ' . $title . '</p>';
 
 if (isset($_POST['submit'])) {
 
