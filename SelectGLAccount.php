@@ -16,7 +16,7 @@ if (isset($_POST['Select'])) {
 
 	$result = DB_query("SELECT accountname FROM chartmaster WHERE accountcode=" . $_POST['Select'],$db);
 	$myrow = DB_fetch_row($result);
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Search for General Ledger Accounts');
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for General Ledger Accounts') . '</p>';
 
 	echo '<div class="page_help_text">' . _('Account Code') . ' <b>' . $_POST['Select'] . ' - ' . $myrow[0]  . ' </b>' . _('has been selected') . '. <br>' . _('Select one of the links below to operate using this Account') . '.</div>';
 	$AccountID = $_POST['Select'];
@@ -77,7 +77,7 @@ if (!isset($AccountID)) {
 
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
-		'" alt="">' . ' ' . _('Search for General Ledger Accounts') . '</p>';
+		'" alt="" />' . ' ' . _('Search for General Ledger Accounts') . '</p>';
 	echo "<br><form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method=post>";
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
