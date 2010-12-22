@@ -9,7 +9,7 @@ include('includes/header.inc');
 echo '<form action=' . $_SERVER['PHP_SELF'] .'?' .SID . ' method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' .
-	_('Inventory Items') . '" alt="">' . ' ' . $title . '</p>';
+	_('Inventory Items') . '" alt="" />' . ' ' . $title . '</p>';
 
 echo '<table class=selection><tr><td>';
 echo _('Select recurring order templates for delivery from:') . ' </td><td>' . '<select name="StockLocation">';
