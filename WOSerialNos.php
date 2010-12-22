@@ -39,7 +39,7 @@ if (isset($_GET['StockID'])){ //the page was called for the first time - get var
 	$NextSerialNo = $_POST['NextSerialNo'];
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="" alt="">' . ' ' . _('For Work Order Number') . ' ' . $WO . ' ' . _('and output item') . ' ' . $StockID . ' - ' . $Description;
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="" alt="" />' . ' ' . _('For Work Order Number') . ' ' . $WO . ' ' . _('and output item') . ' ' . $StockID . ' - ' . $Description . '</p>';
 
 $DbgMsg = _('The SQL that failed was');
 
