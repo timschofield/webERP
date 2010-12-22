@@ -122,9 +122,9 @@ if ($NIL_BALANCE==True){
 }
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' .
-	_('Customer') . '" alt="">' . ' ' . _('Customer') . ' : ' . $CustomerRecord['name'] . ' - (' . _('All amounts stated in') .
+	_('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $CustomerRecord['name'] . ' - (' . _('All amounts stated in') .
 	' ' . $CustomerRecord['currency'] . ')<br><br>' . _('Terms') . ' : ' . $CustomerRecord['terms'] . '<br>' . _('Credit Limit') .
-	': ' . number_format($CustomerRecord['creditlimit'],0) . ' ' . _('Credit Status') . ': ' . $CustomerRecord['reasondescription'] . '';
+	': ' . number_format($CustomerRecord['creditlimit'],0) . ' ' . _('Credit Status') . ': ' . $CustomerRecord['reasondescription'] . '</p>';
 
 if ($CustomerRecord['dissallowinvoices']!=0){
 	echo '<br><font color=RED size=4><b>' . _('ACCOUNT ON HOLD') . '</font></b><br>';
