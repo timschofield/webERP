@@ -254,7 +254,7 @@ if ($_SESSION['CreditItems']->ItemsOrdered > 0 OR isset($_POST['NewItem'])){
 
 /* Always display credit quantities
 NB QtyDispatched in the LineItems array is used for the quantity to credit */
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/credit.gif" title="' . _('Search') . '" alt="">' . $title.'</img></p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/credit.gif" title="' . _('Search') . '" alt="" />' . $title.'</p>';
 
 if (!isset($_POST['ProcessCredit'])) {
 
