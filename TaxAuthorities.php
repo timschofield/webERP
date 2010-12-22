@@ -8,7 +8,7 @@ $title = _('Tax Authorities');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
-	. '" alt="">' . $title. '</p>';
+	. '" alt="" />' . $title. '</p>';
 
 if (isset($_POST['SelectedTaxAuthID'])){
 	$SelectedTaxAuthID =$_POST['SelectedTaxAuthID'];
