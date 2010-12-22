@@ -9,7 +9,7 @@ $title = _('Authorise Purchase Orders');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title .
-	 '" alt="">' . ' ' . $title . '</p>';
+	 '" alt="" />' . ' ' . $title . '</p>';
 
 $emailsql="SELECT email FROM www_users WHERE userid='".$_SESSION['UserID']."'";
 $emailresult=DB_query($emailsql, $db);
