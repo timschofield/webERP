@@ -16,7 +16,7 @@ if (isset($_POST['SelectedDT'])){
 }
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
-		_('Inventory') . '" alt="">' . ' ' . $title . '</p>';
+		_('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
 
 if (isset($_POST['submit'])) {
 
