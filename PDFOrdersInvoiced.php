@@ -33,7 +33,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 		prnMsg($msg,'error');
 	}
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt=""></img>' . ' '
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' '
 		. _('Orders Invoiced Report') . '</p>';
 
 	echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . sid . "'>";
