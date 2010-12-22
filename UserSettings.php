@@ -9,7 +9,7 @@ $title = _('User Settings');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/user.png" title="' .
-	_('User Settings') . '" alt="">' . ' ' . _('User Settings') . '</p>';
+	_('User Settings') . '" alt="" />' . ' ' . _('User Settings') . '</p>';
 
 $PDFLanguages = array(_('Latin Western Languages'),
 						_('Eastern European Russian Japanese'),
