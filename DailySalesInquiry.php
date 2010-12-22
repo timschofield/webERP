@@ -10,7 +10,7 @@ $title = _('Daily Sales Inquiry');
 include('includes/header.inc');
 include('includes/DefineCartClass.php');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Daily Sales') . '" alt="">' . ' ' . _('Daily Sales') . '</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Daily Sales') . '" alt="" />' . ' ' . _('Daily Sales') . '</p>';
 echo '<div class="page_help_text">' . _('Select the month to show daily sales for') . '</div><br>';
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
