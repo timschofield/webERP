@@ -161,7 +161,8 @@ if (isset($StockID) and $StockID!=""){
 		prnMsg(_('The bill of material for this part is not set up') . ' - ' . _('there are no components defined for it'),'warn');
 	} else {
 		echo '<a href="'.$rootpath.'/index.php">'._('Return to Main Menu').'</a>';
-		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
+		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
+			_('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
 		echo "<table class=selection cellpadding=2>";
 		echo "<tr><th colspan=5><div class='centre'><font size=4><b>" . $myrow[0] . ' : ' . _('per') . ' ' . $myrow[1] .
