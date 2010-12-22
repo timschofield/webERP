@@ -53,7 +53,7 @@ function getMsg($Msg,$Type='info',$Prefix=''){
 				fwrite($LogFile, date('Y-m-d h-m-s').','.$Type.','.$_SESSION['UserID'].','.trim($Msg,',')."\n");
 			}
 	}
-	return '<DIV class="'.$Class.'"><B>' . $Prefix . '</B> : ' .$Msg . '</DIV>';
+	return '<div class="'.$Class.'"><b>' . $Prefix . '</b> : ' .$Msg . '</div>';
 }//getMsg
 
 function IsEmailAddress($Email){
