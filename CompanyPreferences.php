@@ -155,7 +155,8 @@ if (isset($_POST['submit'])) {
 
 } /* end of if submit */
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
+		'" alt="" />' . ' ' . $title.'</p><br />';
 
 echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
