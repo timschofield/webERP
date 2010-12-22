@@ -48,7 +48,7 @@ Function DataOptions ($DataX){
 }
 /* end of functions
 Right ... now to the meat	*/
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') . '" alt="">' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
 
 if (isset($_GET['SelectedCol'])){
 	$SelectedCol = $_GET['SelectedCol'];
