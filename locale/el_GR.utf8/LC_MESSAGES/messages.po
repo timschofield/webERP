@@ -18,6 +18,8 @@ msgstr ""
 "X-Poedit-Country: GREECE\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Bookmarks: 316,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
+"X-Launchpad-Export-Date: 2010-09-16 09:48+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: AccountGroups.php:9 index.php:1251
 msgid "Account Groups"

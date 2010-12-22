@@ -19,6 +19,8 @@ msgstr ""
 "X-Poedit-Language: Spanish\n"
 "X-Poedit-Country: SPAIN\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Launchpad-Export-Date: 2010-09-16 09:48+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: AccountGroups.php:9 index.php:1251
 msgid "Account Groups"

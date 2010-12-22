@@ -16,6 +16,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "X-Poedit-Language: Romanian\n"
 "X-Poedit-Country: MOLDOVA, REPUBLIC OF\n"
+"X-Launchpad-Export-Date: 2010-09-16 09:48+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: AccountGroups.php:8
 #: index.php:1038

@@ -15,6 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2010-09-16 09:48+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: AccountGroups.php:8 index.php:1131
 msgid "Account Groups"
@@ -1766,7 +1768,7 @@ msgstr "Liigendatud BOM nimekiri"
 
 #: BOMIndented.php:27
 msgid "The SQL to create passbom failed with the message"
-msgstr "SQL ei suutnud passbom'i luua ja andis järgneva teate:"
+msgstr "SQL ei suutnud passbomi luua ja andis järgneva teate"
 
 #: BOMIndented.php:149 BOMIndentedReverse.php:148
 msgid "The Indented BOM Listing could not be retrieved by the SQL because"
