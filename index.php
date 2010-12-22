@@ -63,7 +63,7 @@ while ($myrow=DB_fetch_array($result)) {
 }
 echo '</tr></table>';
 
-echo "<div style='margin-left: 10px; position: absolute; top:50px; z-index:99;'><ul class='makeMenu'>";
+echo "<div style='margin-left: 10px; position: absolute; top:60px; z-index:99;'><ul class='makeMenu'>";
 $ModuleID=0;
 for ($i=0; $i<sizeOf($MenuStructure); $i++) {
 	if ($MenuStructure[$i]['parent']==-1) {

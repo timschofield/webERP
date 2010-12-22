@@ -19,7 +19,7 @@
 
 body {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 14px;
+	font-size: 10px;
 	background-color: #CCCCDD;
 	margin-left: 5px;
 	margin-top: 5px;
@@ -35,7 +35,7 @@ img {
 /*links before selection */
 a {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: bold;
 	text-decoration: none;
 	color: black;
@@ -65,7 +65,7 @@ div.centre {
 /*table detail items default format */
 td {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 	text-align: left;
 }
 
@@ -154,7 +154,7 @@ div.info {
 
 input {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 }
 
 input.number{
@@ -171,7 +171,7 @@ input:hover{
 
 select {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 }
 
 font.good {
@@ -202,7 +202,7 @@ font.header_title {
 #page {
 	width: 100%;
 	color: black;
-	font-size: 12px;
+	font-size: 10px;
 	white-space: nowrap;
 	border: none;
 }
@@ -239,7 +239,7 @@ font.header_title {
 
 textarea{
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 }
 
 textarea:hover{
@@ -297,7 +297,7 @@ div.csv {
 	width: 100%;
 	margin: 0px;
 	padding: 0px;
- 	font-size: 12px;
+ 	font-size: 10px;
 }
 
 /* Main page heading with quick menu within */
@@ -323,7 +323,7 @@ div.csv {
 /*The main page heading left part before quick menu */
 .quick_menu_left {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: bold;
 	border: 0px;
 	white-space: nowrap;
@@ -391,12 +391,12 @@ div.csv {
 }
 
 .system_menu_tabs a {
-	font-size: 12px;
+	font-size: 10px;
 	color: black;
 }
 
 .system_menu_tabs a:hover {
-	font-size: 12px;
+	font-size: 10px;
   color: black;
 }
 
@@ -408,7 +408,7 @@ div.csv {
 
 .main_menu {
 	background-color: #40FC40;
-	font-size: 14px;
+	font-size: 10px;
 	border-top: 1px #AAAAAA solid;
 	border-bottom: 1px #AAAAAA solid;
 	font-weight: normal;
@@ -471,7 +471,7 @@ div.csv {
 
 span.main_menu_nolink {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: bold;
 	color: #777777;
 	text-decoration: none;
@@ -505,7 +505,7 @@ span.main_menu_nolink {
 
 .menu_group_area {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 14px;
+	font-size: 10px;
   border: 2px inset white;
 	color: #cc6600;
 	background-color: #CCCCCC;
@@ -527,7 +527,7 @@ span.main_menu_nolink {
 
 .menu_group_headers_text {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: bold;
 	color: white;
 }
@@ -559,7 +559,7 @@ span.main_menu_nolink {
         padding-top: 2px;
         padding-bottom: 2px;
 	font-weight: bold;
-	font-size: 12px;
+	font-size: 10px;
 	color: black;
 	TEXT-ALIGN:center;
 }
@@ -604,7 +604,7 @@ DIV.system_check {
 
 span.menu_group_nolink {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: normal;
 	color: #777777;
 	text-decoration: none;
