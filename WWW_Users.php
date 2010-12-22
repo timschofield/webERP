@@ -35,7 +35,7 @@ $title = _('User Maintenance');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
 // Make an array of the security roles
 $sql = 'SELECT secroleid,
