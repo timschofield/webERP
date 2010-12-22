@@ -959,13 +959,15 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			 $AssetDetailsResult = DB_query('SELECT  fixedassets.description,
 																							fixedassets.longdescription,
 																							fixedassets.barcode,
-																							fixedassetcategories.costact
+																							fixedassetcategories.costact,
+																							fixedassets.cost-fixedassets.accumdepn AS nbv
 																					FROM fixedassetcategories INNER JOIN fixedassets
 																					ON fixedassetcategories.categoryid=fixedassets.assetcategoryid
 																					WHERE fixedassets.assetid="' . $_POST['AssetToDisposeOf'] . '"',$db);
-			$AssetRow = DB_fetch_array($AssetCatDetailsResult);
+			$AssetRow = DB_fetch_array($AssetDetailsResult);
 			
-			$AssetCategoryResult = DB_query('SELECT  categoryid FROM stockcategory WHERE categoryid="ASSETS"',$db);
+			/* Check that the stock category for disposal "ASSETS" is defined already */
+			$AssetCategoryResult = DB_query('SELECT categoryid FROM stockcategory WHERE categoryid="ASSETS"',$db);
 			if (DB_num_rows($AssetCategoryResult)==0){
 				/*Although asset GL posting will come from the asset category - we should set the GL codes to something sensible 
 				 * based on the category of the asset under review at the moment - this may well change for any other assets sold subsequentely */
@@ -982,39 +984,46 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			/*First check to see that it doesn't exist already assets are of the format "ASSET-" . $AssetID
 			 */
 			 $TestAssetExistsAlreadyResult = DB_query('SELECT stockid FROM stockmaster WHERE stockid ="ASSET-' . $_POST['AssetToDisposeOf']  . '"',$db);
-			 if (DB_num_rows($TestAssetExistsAlreadyResult)==1){ //then it exists already ... bum
-				$j=1;
-				while (DB_num_rows($TestAssetExistsAlreadyResult)==1) {
-					$TestAssetExistsAlreadyResult = DB_query('SELECT stockid FROM stockmaster WHERE stockid ="ASSET-' . $_POST['AssetToDisposeOf']  . '-' . $j . '"',$db);
-					$j++;
-				}
+			 $j=0;
+			while (DB_num_rows($TestAssetExistsAlreadyResult)==1) { //then it exists already ... bum
+				$j++;
+				$TestAssetExistsAlreadyResult = DB_query('SELECT stockid FROM stockmaster WHERE stockid ="ASSET-' . $_POST['AssetToDisposeOf']  . '-' . $j . '"',$db);
+			}
+			if ($j>0){
 				$AssetStockID = 'ASSET-' . $_POST['AssetToDisposeOf']  . '-' . $j;
 			} else {
 				$AssetStockID = 'ASSET-' . $_POST['AssetToDisposeOf'];
 			}
-			/* Perhaps ought to check that the asset exists already as a stock item first */
-			
+			if ($AssetRow['nbv']==0){
+				$NBV = 0.001; /* stock must have a cost to be invoiced if the flag is set so set to 0.001 */
+			} else {
+				$NBV = $AssetRow['nbv'];
+			}
 			/*OK now we can insert the item for this asset */
 			$InsertAssetAsStockItemResult = DB_query('INSERT INTO stockmaster ( stockid,
 																																				description,
-																																				categoryid,
 																																				longdescription,
+																																				categoryid,
 																																				mbflag,
 																																				controlled,
 																																				serialised,
-																																				taxcatid)
+																																				taxcatid,
+																																				materialcost)
 																										VALUES ("' . $AssetStockID . '",
 																														"' . $AssetRow['description'] . '",
 																														"' . $AssetRow['longdescription'] . '",
 																														"ASSETS",
-																														"B",
+																														"D",
 																														"0",
 																														"0",
-																														"' . $_SESSION['DefaultTaxCategory'] . '")' , $db);
+																														"' . $_SESSION['DefaultTaxCategory'] . '",
+																														"'. $NBV . '")' , $db);
 			/*not forgetting the location records too */
 			$InsertStkLocRecsResult = DB_query('INSERT INTO locstock (loccode,
 																															stockid)
-																									SELECT loccode, "' . $AssetStockID . '" FROM locations',$db);
+																									SELECT loccode, 
+																												"' . $AssetStockID . '" 
+																									FROM locations',$db);
 			/*Now the asset has been added to the stock master we can add it to the sales order */
 			$NewItemDue = date($_SESSION['DefaultDateFormat']);
 			if (isset($_POST['POLine']){
