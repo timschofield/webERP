@@ -246,7 +246,7 @@ if (isset($_POST['PrintPDF'])) {
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="'
-		. _('Stock') . '" alt="">' . ' ' . $title . '</p>';
+		. _('Stock') . '" alt="" />' . ' ' . $title . '</p>';
 
 	echo '<form action=' . $_SERVER['PHP_SELF'] . " method='post'>";
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
