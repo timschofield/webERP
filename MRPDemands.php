@@ -25,7 +25,7 @@ if (isset($_POST['StockID'])){
 }
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
-	_('Inventory') . '" alt="">' . ' ' . $title . '</p>';
+	_('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
 
 if (isset($_POST['Search'])) {
 	search($db,$StockID);
