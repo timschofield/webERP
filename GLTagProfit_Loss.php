@@ -21,7 +21,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="'
-		. _('Print') . '" alt="">' . ' ' . $title . '</p>';
+		. _('Print') . '" alt="" />' . ' ' . $title . '</p>';
 
 	if (Date('m') > $_SESSION['YearEnd']){
 		/*Dates in SQL format */
@@ -495,7 +495,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	/*show a table of the accounts info returned by the SQL
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="'
-		. _('Print') . '" alt="">' . ' ' . $title . '</p>';
+		. _('Print') . '" alt="" />' . ' ' . $title . '</p>';
 
 	echo '<table cellpadding=2 class=selection>';
 	echo '<tr><th colspan=9><div class="centre"><font size=3 color=blue><b>' . _('Statement of Income and Expenditure for Tag'). ' ' .
