@@ -34,6 +34,15 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 		$_SESSION[$myrow['script']]=$myrow['security'];
 	}
 
+	$sql="SELECT confvalue FROM config WHERE confname='DBUpdateNumber'";
+	$result=DB_query($sql, $db);
+	if (DB_num_rows($result)==0) {
+		$_SESSION['DBUpdateNumber']=0;
+	} else {
+		$myrow=DB_fetch_array($result);
+		$_SESSION['DBUpdateNumber']=$myrow['confvalue'];
+	}
+
 /* Also reads all the company data set up in the company record and returns an array */
 
 	$sql=	'SELECT
