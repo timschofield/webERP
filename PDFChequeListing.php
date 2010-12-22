@@ -27,7 +27,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	 include ('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
-		 $title . '" alt="">' . ' ' . $title . '</p>';
+		 $title . '" alt="" />' . ' ' . $title . '</p>';
 
 	 if ($InputError==1){
 	prnMsg($msg,'error');
