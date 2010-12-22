@@ -66,12 +66,12 @@ if (isset($_GET['Delete'])){
 
 /*Show all the selected ShiptRefs so far from the SESSION['SuppInv']->Shipts array */
 if ($_SESSION['SuppTrans']->InvoiceOrCredit=='Invoice'){
-	echo '<div class="centre"><p class="page_title_text">'. _('Shipment charges on Invoice') . ' ';
+	echo '<p class="page_title_text">'. _('Shipment charges on Invoice') . ' ';
 } else {
-	echo '<div class="centre"><p class="page_title_text">' . _('Shipment credits on Credit Note') . ' ';
+	echo '<p class="page_title_text">' . _('Shipment credits on Credit Note') . ' ';
 }
 echo $_SESSION['SuppTrans']->SuppReference . ' ' ._('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
-echo '</div>';
+echo '</p>';
 echo '<table cellpadding=2 class=selection>';
 $TableHeader = '<tr><th>' . _('Shipment') . '</th>
 		<th>' . _('Amount') . '</th></tr>';
