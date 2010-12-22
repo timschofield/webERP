@@ -4,7 +4,7 @@ $PageSecurity = 2;
 include ('includes/session.inc');
 $title = _('Search Purchase Orders');
 include ('includes/header.inc');
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Purchase Orders') . '" alt="">' . ' ' . _('Purchase Orders') . '';
+echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Purchase Orders') . '" alt=""  />' . ' ' . _('Purchase Orders') . '</p>';
 if (isset($_GET['SelectedStockItem'])) {
 	$SelectedStockItem = $_GET['SelectedStockItem'];
 } elseif (isset($_POST['SelectedStockItem'])) {
