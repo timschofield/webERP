@@ -215,12 +215,19 @@ if (isset($_POST['ShowStatus'])){
 		}
 
 
-		$sql = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) AS qoo
+		$sql = "SELECT SUM(purchorderdetails.quantityord*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)
+				- purchorderdetails.quantityrecd*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)) AS qoo
                    	FROM purchorderdetails
                    	INNER JOIN purchorders
                    		ON purchorderdetails.orderno=purchorders.orderno
+				LEFT JOIN purchdata
+				ON purchorders.supplierno=purchdata.supplierno
+				AND purchorderdetails.itemcode=purchdata.stockid
                    	WHERE purchorders.intostocklocation='" . $myrow['loccode'] . "'
-			AND purchorderdetails.itemcode='" . $StockID . "'";
+			AND purchorderdetails.itemcode='" . $StockID . "'
+				AND purchorders.status <> 'Cancelled'
+				AND purchorders.status <> 'Rejected'
+				AND purchorders.status <> 'Pending'";
 
 		$ErrMsg = _('The quantity on order for this product to be received into') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
 		$QOOResult = DB_query($sql,$db,$ErrMsg);
@@ -289,7 +296,7 @@ if (isset($_POST['ShowStatus'])){
 					number_format($DemandQty,$myrow['decimalplaces']),
 					strtoupper($myrow['stockid']),
 					number_format($myrow['quantity'] - $DemandQty,$myrow['decimalplaces']),
-					number_format($QOO,$myrow['decimalplaces']).'xxx');
+					number_format($QOO,$myrow['decimalplaces']));
 				if ($myrow['serialised'] ==1){ /*The line is a serialised item*/
 
 					echo '<td><a target="_blank" href="' . $rootpath . '/StockSerialItems.php?' . SID . '&Serialised=Yes&Location=' . $myrow['loccode'] . '&StockID=' . $StockID . '">' . _('Serial Numbers') . '</a></td></tr>';
