@@ -48,20 +48,20 @@ while ($myrow=DB_fetch_array($result)) {
 	echo ':<select name="RefreshRate'.$myrow['id'].'" onChange="ReloadForm(Update'.$myrow['id'].')">';
 	for ($i=0; $i<sizeOf($RefreshTimes); $i++) {
 		if ($myrow['refresh']==$RefreshTimes[$i]) {
-			echo '<option selected value='.$RefreshTimes[$i].'>'.$RefreshValues[$i].'</option>';
+			echo '<option selected="True" value="'.$RefreshTimes[$i].'">'.$RefreshValues[$i].'</option>';
 		} else {
-			echo '<option value='.$RefreshTimes[$i].'>'.$RefreshValues[$i].'</option>';
+			echo '<option value="'.$RefreshTimes[$i].'">'.$RefreshValues[$i].'</option>';
 		}
 	}
 	echo '</select>';
-	echo '<input type="submit" name="Update'.$myrow['id'].'" value="Go">';
+	echo '<input type="submit" name="Update'.$myrow['id'].'" value="Go" />';
 	echo '</th></tr>';
-	echo '<tr><td colspan=2><iframe frameborder="0" height="100%" width="100%" src="dashboard/ReportletContainer.php?Reportlet='.$myrow['id'].'&amp;Refresh='.$RefreshRate.'"></iframe>';
-	echo '</td></tr></table></form>';
+	echo '<tr><td colspan="2"><iframe frameborder="0" height="100%" width="100%" src="dashboard/ReportletContainer.php?Reportlet='.$myrow['id'].'&amp;Refresh='.$RefreshRate.'"></iframe>';
+	echo '</td></tr></table></form></td>';
 	if (($j % 2) == 0) echo '</tr><tr>';
 	$j++;
 }
-echo '</table>';
+echo '</tr></table>';
 
 echo "<div style='margin-left: 10px; position: absolute; top:50px; z-index:99;'><ul class='makeMenu'>";
 $ModuleID=0;
