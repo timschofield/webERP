@@ -8,7 +8,7 @@ $title = _('Maintenance Of Petty Cash Of Expenses');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
-	. '" alt="">' . ' ' . $title . '</p>';
+	. '" alt="" />' . ' ' . $title . '</p>';
 
 if (isset($_POST['SelectedExpense'])){
 	$SelectedExpense = strtoupper($_POST['SelectedExpense']);
