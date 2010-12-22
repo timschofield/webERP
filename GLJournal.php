@@ -120,7 +120,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 	unset($_SESSION['JournalDetail']);
 
 	/*Set up a newy in case user wishes to enter another */
-	echo "<br><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "&NewJournal=Yes'>"._('Enter Another General Ledger Journal').'</a>';
+	echo "<br /><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "&amp;NewJournal=Yes'>"._('Enter Another General Ledger Journal').'</a>';
 	/*And post the journal too */
 	include ('includes/GLPostings.inc');
 	include ('includes/footer.inc');
@@ -236,11 +236,11 @@ if (!isset($_SESSION['JournalDetail']->JnlDate)){
 }
 */
 
-echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post name="form">';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="post" name="form">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>';
 
 // A new table in the first column of the main table
 
@@ -250,18 +250,18 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 }
 
 	echo '<table><tr>
-			<td colspan=5><table class=selection><tr><td>'._('Date to Process Journal').":</td>
-			<td><input type='text' class='date' alt='".$_SESSION['DefaultDateFormat']."' name='JournalProcessDate' maxlength=10 size=11 value='" .
-						 $_SESSION['JournalDetail']->JnlDate . "'></td>";
+			<td colspan="5"><table class="selection"><tr><td>'._('Date to Process Journal').":</td>
+			<td><input type='text' class='date' alt='".$_SESSION['DefaultDateFormat']."' name='JournalProcessDate' maxlength='10' size='11' value='" .
+						 $_SESSION['JournalDetail']->JnlDate . "' /></td>";
 	echo '<td>' . _('Type') . ':</td>
-			<td><select name=JournalType>';
+			<td><select name="JournalType">';
 
 	if ($_POST['JournalType'] == 'Reversing'){
-		echo "<option selected value = 'Reversing'>" . _('Reversing');
-		echo "<option value = 'Normal'>" . _('Normal');
+		echo "<option selected='True' value = 'Reversing'>" . _('Reversing')."</option>";
+		echo "<option value = 'Normal'>" . _('Normal')."</option>";
 	} else {
-		echo "<option value = 'Reversing'>" . _('Reversing');
-		echo "<option selected value = 'Normal'>" . _('Normal');
+		echo "<option value = 'Reversing'>" . _('Reversing')."</option>";
+		echo "<option selected='True' value = 'Normal'>" . _('Normal')."</option>";
 	}
 
 	echo '</select></td>
@@ -269,11 +269,11 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 		</table>';
 	/* close off the table in the first column  */
 
-	echo '<br>';
-	echo '<table class=selection width=70%>';
+	echo '<br />';
+	echo '<table class="selection" width="70%">';
 	/* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
-	echo '<tr><th colspan=3><div class="centre"><font size=3 color=blue><b>' . _('Journal Line Entry') . '</b></font></div></th></tr>';
+	echo '<tr><th colspan="3"><div class="centre"><font size="3" color="blue"><b>' . _('Journal Line Entry') . '</b></font></div></th></tr>';
 
 	/*now set up a GLCode field to select from avaialble GL accounts */
 	echo '<tr><th>' . _('GL Tag') . '</th>';
@@ -291,12 +291,12 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 		ORDER BY tagref";
 
 	$result=DB_query($SQL,$db);
-	echo '<option value=0>0 - None';
+	echo '<option value="0">0 - None</option>';
 	while ($myrow=DB_fetch_array($result)){
 		if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
-			echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+			echo '<option selected value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription']."</option>";
 		} else {
-			echo '<option value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+			echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription']."</option>";
 		}
 	}
 	echo '</select></td>';
@@ -305,9 +305,9 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 	if (!isset($_POST['GLManualCode'])) {
 		$_POST['GLManualCode']='';
 	}
-	echo '<td><input class="number" type=Text Name="GLManualCode" Maxlength=12 size=12 onChange="inArray(this.value, GLCode.options,'.
+	echo '<td><input class="number" type="text" Name="GLManualCode" Maxlength="12" size="12" onChange="inArray(this.value, GLCode.options,'.
 		"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' .
-			' VALUE='. $_POST['GLManualCode'] .'  ></td>';
+			' value="'. $_POST['GLManualCode'] .'"  /></td>';
 
 	$sql="SELECT accountcode,
 				accountname
@@ -319,9 +319,9 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 	echo '<option value="">' . _('Select a general ledger account code') . '</option>';
 	while ($myrow=DB_fetch_array($result)){
 		if (isset($_POST['tag']) and $_POST['tag']==$myrow['accountcode']){
-			echo '<option selected value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'].' - ' .$myrow['accountname'];
+			echo '<option selected value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'].' - ' .htmlentities($myrow['accountname'])."</option>";
 		} else {
-			echo '<option value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'].' - ' .$myrow['accountname'];
+			echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'].' - ' .htmlentities($myrow['accountname'])."</option>";
 		}
 	}
 	echo '</select></td>';
@@ -337,24 +337,24 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 	}
 
 
-	echo '</tr><tr><th>' . _('Debit') . "</th>".'<td><input type=Text class="number" Name = "Debit" ' .
+	echo '</tr><tr><th>' . _('Debit') . "</th>".'<td><input type="text" class="number" Name = "Debit" ' .
 				'onChange="eitherOr(this, '.'Credit'.')"'.
-				'Maxlength=12 size=10 value=' . $_POST['Debit'] . '></td>';
-	echo '</tr><tr><th>' . _('Credit') . "</th>".'<td><input type=Text class="number" Name = "Credit" ' .
+				' Maxlength="12" size="10" value="' . $_POST['Debit'] . '" /></td>';
+	echo '</tr><tr><th>' . _('Credit') . "</th>".'<td><input type="text" class="number" Name = "Credit" ' .
 				'onChange="eitherOr(this, '.'Debit'.')"'.
-				'Maxlength=12 size=10 value=' . $_POST['Credit'] . '></td>';
+				' Maxlength="12" size="10" value="' . $_POST['Credit'] . '" /></td>';
 	echo '</tr><tr><td></td><td></td><th>'. _('Narrative'). '</th>';
 	echo '</tr><tr><th></th><th>' . _('GL Narrative') . "</th>";
 
-	echo '<td><input type="text" name="GLNarrative" maxlength=100 size=100 value="' . $_POST['GLNarrative'] . '"></td>';
+	echo '<td><input type="text" name="GLNarrative" maxlength="100" size="100" value="' . $_POST['GLNarrative'] . '" /></td>';
 
-	echo '</tr></table><br>'; /*Close the main table */
-	echo "<div class='centre'><input type=submit name=Process value='" . _('Accept') . "'></div><br><br>";
+	echo '</tr></table><br />'; /*Close the main table */
+	echo "<div class='centre'><input type='submit' name='Process' value='" . _('Accept') . "' /></div><br /><br />";
 
 
-	echo "<table class=selection width=85%>";
+	echo "<table class='selection' width='85%'>";
 
-	echo '<tr><th colspan=6><div class="centre"><font size=3 color=blue><b>' . _('Journal Summary') . '</b></font></div></th></tr>';
+	echo '<tr><th colspan="6"><div class="centre"><font size="3" color="blue"><b>' . _('Journal Summary') . '</b></font></div></th></tr>';
 	echo "<tr>
 						<th>"._('GL Tag')."</th>
 						<th>"._('GL Account')."</th>
@@ -400,25 +400,29 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 								}
 
 							echo '<td>' . $JournalItem->Narrative  . "</td>
-									<td><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $JournalItem->ID . "'>"._('Delete').'</a></td>
+									<td><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . '&amp;Delete=' . $JournalItem->ID . "'>"._('Delete').'</a></td>
 							</tr>';
 						}
 
 			echo '<tr class="EvenTableRows"><td></td>
-					<td class=number><b> Total </b></td>
-					<td class=number class="number"><b>' . number_format($debittotal,2) . '</b></td>
-					<td class=number class="number"><b>' . number_format($credittotal,2) . '</b></td>';
+					<td class="number"><b> Total </b></td>
+					<td class="number"><b>' . number_format($debittotal,2) . '</b></td>
+					<td class="number"><b>' . number_format($credittotal,2) . '</b></td></tr>';
 			if ($debittotal!=$credittotal) {
-				echo '<td align=center style="background-color: #fddbdb"><b>Required to balance - ' .
+				echo '<td align="center" style="background-color: #fddbdb"><b>Required to balance - </b>' .
 					number_format(abs($debittotal-$credittotal),2);
 			}
-			if ($debittotal>$credittotal) {echo ' Credit';} else if ($debittotal<$credittotal) {echo ' Debit';}
-			echo '</b></td></tr></table>';
+			if ($debittotal>$credittotal) {
+				echo ' Credit</td></tr>';
+			} else if ($debittotal<$credittotal) {
+				echo ' Debit</td></tr>';
+			}
+			echo '</table>';
 
 if (ABS($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDetail']->GLItemCounter > 0){
-	echo "<br><br><div class='centre'><input type=submit name='CommitBatch' value='"._('Accept and Process Journal')."'></div>";
+	echo "<br /><br /><div class='centre'><input type='submit' name='CommitBatch' value='"._('Accept and Process Journal')."' /></div>";
 } elseif(count($_SESSION['JournalDetail']->GLEntries)>0) {
-	echo '<br><br>';
+	echo '<br /><br />';
 	prnMsg(_('The journal must balance ie debits equal to credits before it can be processed'),'warn');
 }
 
