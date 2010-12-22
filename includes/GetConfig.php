@@ -37,7 +37,7 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	$sql="SELECT confvalue FROM config WHERE confname='DBUpdateNumber'";
 	$result=DB_query($sql, $db);
 	if (DB_num_rows($result)==0) {
-		$_SESSION['DBUpdateNumber']=0;
+		$_SESSION['DBUpdateNumber']=-1;
 	} else {
 		$myrow=DB_fetch_array($result);
 		$_SESSION['DBUpdateNumber']=$myrow['confvalue'];
