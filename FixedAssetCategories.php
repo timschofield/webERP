@@ -10,7 +10,7 @@ $title = _('Fixed Asset Category Maintenance');
 include('includes/header.inc');
 
 echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
-		_('Fixed Asset Categories') . '" alt="">' . ' ' . $title . '';
+		_('Fixed Asset Categories') . '" alt="" />' . ' ' . $title . '</p>';
 
 if (isset($_GET['SelectedCategory'])){
 	$SelectedCategory = strtoupper($_GET['SelectedCategory']);
