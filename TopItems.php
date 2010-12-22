@@ -8,7 +8,7 @@ $title = _('Top Items Searching');
 include ('includes/header.inc');
 //check if input already
 if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_POST['Customers']) and isset($_POST['NumberOfTopItems']) and isset($_POST['order']))) {
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="">' . ' ' . _('Top Sales Order Search') . '</p>';
+	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '</p>';
 	echo "<form action=" . $_SERVER['PHP_SELF'] . '?' . SID . ' name="SelectCustomer" method=POST>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table cellpadding=3 colspan=4 class=selection>';
