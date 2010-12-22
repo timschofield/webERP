@@ -15,7 +15,7 @@ include('includes/SQL_CommonFunctions.inc');
 if (isset($_POST['CheckCode'])) {
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') .
-		'" alt="">' . ' ' . _('Select Item to Transfer') . '';
+		'" alt="" />' . ' ' . _('Select Item to Transfer') . '</p>';
 
 	if (strlen($_POST['StockText'])>0) {
 		$sql='SELECT stockid, description from stockmaster where description like "%'.$_POST['StockText'].'%"';
@@ -414,7 +414,7 @@ if (!isset($_SESSION['Transfer']->TransferItem[0]->Controlled)) {
 }
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') .
-		'" alt="">' . ' ' . $title . '';
+		'" alt="" />' . ' ' . $title . '</p>';
 
 echo '<form action="'. $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
