@@ -17,7 +17,7 @@ $title = _('Enter Supplier Credit Note Against Goods Received');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') .
-		'" alt="">' . ' ' . $title . '</p>';
+		'" alt="" />' . ' ' . $title . '</p>';
 
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('To enter a supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier credit note must be clicked on'),'info');
