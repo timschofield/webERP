@@ -95,7 +95,7 @@ if (!isset($Id)) {
 	$Result = DB_query($SQLname,$db);
 	$row = DB_fetch_array($Result);
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="">' . _('Notes for Customer: <b>') .$row['name'].'<br>';
+		'" alt="" />' . _('Notes for Customer').': <b>' .$row['name'].'</b></p><br />';
 
 	$sql = "SELECT * FROM custnotes where debtorno='".$DebtorNo."' ORDER BY date DESC";
 	$result = DB_query($sql,$db);
