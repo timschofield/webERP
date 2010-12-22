@@ -15,7 +15,7 @@ $title = _('Enter Supplier Invoice Against Goods Received');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') .
-		'" alt="">' . ' ' . $title . '</p>';
+		'" alt="" />' . ' ' . $title . '</p>';
 
 $Complete=false;
 if (!isset($_SESSION['SuppTrans'])){
