@@ -91,7 +91,8 @@ if (!isset($Id)) {
 	$SQLname='SELECT * from debtortype where typeid="'.$DebtorType.'"';
 	$Result = DB_query($SQLname,$db);
 	$row = DB_fetch_array($Result);
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') . '" alt="">'  . _('Notes for Customer Type: <b>') .$row['typename'].'<br>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') .
+		'" alt="" />'  . _('Notes for Customer Type').': <b>' .$row['typename'].'</b></p><br />';
 
 
 	$sql = "SELECT * FROM debtortypenotes where typeid='".$DebtorType."' ORDER BY date DESC";
