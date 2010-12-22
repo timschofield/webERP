@@ -74,7 +74,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 												AND locations.loccode=salesorders.fromstkloc
 												AND debtorsmaster.currcode = currencies.currabrev
 												AND salesorders.orderno = "' . $_GET['OrderNumber'].'"';
-									
+
 	$ErrMsg = _('The order cannot be retrieved because');
 	$DbgMsg = _('The SQL to get the order header was');
 	$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg,$DbgMsg);
@@ -241,10 +241,12 @@ set all the necessary session variables changed by the POST  */
 if ($_SESSION['Items']->SpecialInstructions) {
   prnMsg($_SESSION['Items']->SpecialInstructions,'warn');
 }
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Confirm Invoice') . '" alt="">' . ' ' . _('Confirm Dispatch and Invoice');
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Customer Code') . ' :<b> ' . $_SESSION['Items']->DebtorNo;
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Confirm Invoice') .
+	'" alt="" />' . ' ' . _('Confirm Dispatch and Invoice'). '</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') .
+	'" alt="" />' . ' ' . _('Customer Code') . ' :<b> ' . $_SESSION['Items']->DebtorNo.'</b></p>';
 //echo '<br><br><font size=4>' . _('Customer Code') . ':<b> ' . $_SESSION['Items']->DebtorNo;
-echo '</b>&nbsp;' . _('Customer Name') . ' :<b> ' . $_SESSION['Items']->CustomerName. '</b>';
+echo '&nbsp;' . _('Customer Name') . ' :<b> ' . $_SESSION['Items']->CustomerName. '</b>';
 //echo '<font size=4><b><U>' . $_SESSION['Items']->CustomerName . '</U></b></font><font size=3> - ' .
 echo '<br>' . _('Invoice amounts stated in') . ' ' . $_SESSION['Items']->DefaultCurrency . '';
 
@@ -815,8 +817,8 @@ DB_Txn_Begin($db);
 				$IsAsset = false;
 				$AssetNumber = 0;
 			}
-		
-		
+
+
 		if ($_POST['BOPolicy']=='CAN'){
 
 			$SQL = "UPDATE salesorderdetails
@@ -875,7 +877,7 @@ DB_Txn_Begin($db);
 																										'" . $_SESSION['Items']->Branch . "',
 																										'BO'
 																									)";
-																					
+
 			$ErrMsg =  '<br>' . _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The order delivery differences log record could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the order delivery differences record was used');
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -1032,7 +1034,7 @@ DB_Txn_Begin($db);
 				$_SESSION['Items']->LineItems[$OrderLine->LineNumber]->StandardCost = $StandardCost;
 				$OrderLine->StandardCost = $StandardCost;
 			} /* end of its an assembly */
-			
+
 			// Insert stock movements - with unit cost
 			$LocalCurrencyPrice= ($OrderLine->Price / $_SESSION['CurrencyRate']);
 
@@ -1283,7 +1285,7 @@ DB_Txn_Begin($db);
 																	'" . GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items']->DefaultSalesType, $db) . "',
 																	'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
 																	'" . $OrderLine->StandardCost * $OrderLine->QtyDispatched . "')";
-	
+
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The cost of sales GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -1306,18 +1308,18 @@ DB_Txn_Begin($db);
 																	'" . $StockGLCode['stockact'] . "',
 																	'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
 																	'" . (-$OrderLine->StandardCost * $OrderLine->QtyDispatched) . "')";
-											
+
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock side of the cost of sales GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			} /* end of if GL and stock integrated and standard cost !=0  and not an asset */
-			
+
 			if ($_SESSION['CompanyRecord']['gllink_debtors']==1 AND $OrderLine->Price !=0){
 
 				if (!$IsAsset){ // its a normal stock item
 					//Post sales transaction to GL credit sales
 					$SalesGLAccounts = GetSalesGLAccount($Area, $OrderLine->StockID, $_SESSION['Items']->DefaultSalesType, $db);
-	
+
 					$SQL = "INSERT INTO gltrans (  type,
 																			typeno,
 																			trandate,
@@ -1333,13 +1335,13 @@ DB_Txn_Begin($db);
 																		'" . $SalesGLAccounts['salesglcode'] . "',
 																		'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->Price . "',
 																		'" . (-$OrderLine->Price * $OrderLine->QtyDispatched/$_SESSION['CurrencyRate']) . "')";
-												
+
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales GL posting could not be inserted because');
 					$DbgMsg = '<br>' ._('The following SQL to insert the GLTrans record was used');
 					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-	
+
 					if ($OrderLine->DiscountPercent !=0){
-	
+
 						$SQL = "INSERT INTO gltrans ( type,
 																				typeno,
 																				trandate,
@@ -1355,12 +1357,12 @@ DB_Txn_Begin($db);
 																				'" . $SalesGLAccounts['discountglcode'] . "',
 																				'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " @ " . ($OrderLine->DiscountPercent * 100) . "%',
 																				'" . ($OrderLine->Price * $OrderLine->QtyDispatched * $OrderLine->DiscountPercent/$_SESSION['CurrencyRate']) . "')";
-	
+
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales discount GL posting could not be inserted because');
 						$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 						$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 					} /*end of if discount !=0 */
-				
+
 				} else {
 					/* then the item being sold is an asset disposal
 					 * the cost of sales account will be the gain or loss on disposal account
@@ -1369,21 +1371,21 @@ DB_Txn_Begin($db);
 													accumdepn,
 													costact,
 													accumdepnact,
-													disposalact 
-										FROM fixedassetcategories INNER JOIN fixedassets 
+													disposalact
+										FROM fixedassetcategories INNER JOIN fixedassets
 										ON fixedassetcategories.categoryid = fixedassets.assetcategoryid
 										WHERE assetid ='" . $AssetNumber . "'";
 					$ErrMsg = _('The asset disposal GL posting details could not be retrieved because');
 					$DbgMsg = _('The following SQL was used to get the asset posting details');
 					$DisposalResult = DB_query( $SQL,$db,$ErrMsg,$DbgMsg);
 					$DisposalRow = DB_fetch_array($DisposalResult);
-					
+
 				  /*Need to :
 					 *  1.) debit accum depn  account with whole amount of accum depn
 					 *  2.) credit cost account with the whole amount of the cost
 					 *  3.) debit the disposal account with the NBV
 					 *  4.) credit the disposal account with the sale proceeds net of discounts */
-					
+
 					/* 1 debit accum depn */
 					if ($DisposalRow['accumdpen']!=0){
 						$SQL = "INSERT INTO gltrans (  type,
@@ -1401,7 +1403,7 @@ DB_Txn_Begin($db);
 																		'" . $DisposalRow['accumdepnact'] . "',
 																		'" . $_SESSION['Items']->DebtorNo . ' - ' . $OrderLine->StockID . ' ' . _('disposal') . "',
 																		'" . -$DisposalRow['accumdpen'] . "')";
-		
+
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The reversal of accumulated depreciation GL posting on disposal could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -1423,7 +1425,7 @@ DB_Txn_Begin($db);
 																		'" . $DisposalRow['costact'] . "',
 																		'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . ' ' . _('disposal') . "',
 																		'" . -$DisposalRow['cost'] . "')";
-												
+
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The reversal of asset cost on dispoal GL posting could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -1445,12 +1447,12 @@ DB_Txn_Begin($db);
 																		'" . $DisposalRow['disposalact'] . "',
 																		'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID .  ' ' . _('disposal') . "',
 																		'" . ($DisposalRow['cost']-$DisposalRow['accumdepn']) . "')";
-												
+
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The disposal net book value GL posting could not be inserted because');
 					$DbgMsg = '<br>' ._('The following SQL to insert the GLTrans record was used');
 					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 				}
-				
+
 				//4. Credit the disposal account with the proceeds
 				$SQL = "INSERT INTO gltrans (  type,
 																		typeno,
@@ -1467,14 +1469,14 @@ DB_Txn_Begin($db);
 																	'" . $DisposalRow['disposalact'] . "',
 																	'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID .  ' ' . _('disposal') . "',
 																	'" . (-$OrderLine->Price * $OrderLine->QtyDispatched* (1 - $OrderLine->DiscountPercent)/$_SESSION['CurrencyRate']) . "')";
-											
+
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The disposal proceeds GL posting could not be inserted because');
 				$DbgMsg = '<br>' ._('The following SQL to insert the GLTrans record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 				} // end if the item being sold was an asset
 			} /*end of if sales integrated with debtors */
-			
+
 			if ($IsAsset) {
 				/* then the item being sold is an asset disposal
 					* need to create fixedassettrans
@@ -1499,15 +1501,15 @@ DB_Txn_Begin($db);
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The fixed asset transaction could not be inserted because');
 				$DbgMsg = '<br>' ._('The following SQL to insert the fixed asset transaction record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-				
+
 				$SQL = "UPDATE fixedassets SET disposalproceeds ='" . ($OrderLine->Price * $OrderLine->QtyDispatched* (1 - $OrderLine->DiscountPercent)/$_SESSION['CurrencyRate']) . "',
 																			disposaldate ='" . $DefaultDispatchDate . "'
 															WHERE assetid ='" . $AssetNumber . "'";
-				
+
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The fixed asset record could not be updated for the disposal because');
 				$DbgMsg = '<br>' ._('The following SQL to update the fixed asset record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-			
+
 			}
 		} /*Quantity dispatched is more than 0 */
 	} /*end of OrderLine loop */
