@@ -20,7 +20,7 @@ if (isset($_GET['StockID'])){
 echo '<a href="' . $rootpath . '/SelectProduct.php?' . SID . '">' . _('Back to Items') . '</a><br>';
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-	_('Inventory Adjustment') . '" alt="">' . ' ' . $title . '</p>';
+	_('Inventory Adjustment') . '" alt="" />' . ' ' . $title . '</p>';
 
 if (isset($_POST['UpdateData'])){
 
