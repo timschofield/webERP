@@ -322,7 +322,7 @@ if (isset($_GET['AllocTrans'])) {
 }
 
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Allocate Receipt') . '" alt="">' . ' ' . _('Allocate Receipts') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Allocate Receipt') . '" alt="" />' . ' ' . _('Allocate Receipts') . '</p>';
 
 	$TableHeader = "<tr>
 			 		<th>" . _('Trans Type') . "</th>
