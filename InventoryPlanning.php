@@ -99,9 +99,9 @@ if (isset($_POST['PrintPDF'])
 	  $title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  include('includes/header.inc');
 	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+	   echo "<br /><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<br>$SQL";
+	      echo "<br />$SQL";
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -174,9 +174,9 @@ if (isset($_POST['PrintPDF'])
 	 		 $title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
 	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   		echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+	   		echo "<br /><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-	      		echo "<br>$SQL";
+	      		echo "<br />$SQL";
 	   		}
 
 	   		include('includes/footer.inc');
@@ -209,9 +209,9 @@ if (isset($_POST['PrintPDF'])
 	 		$title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
 	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   		echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+	   		echo "<br /><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-	      			echo "<br>$SQL";
+	      			echo "<br />$SQL";
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -252,29 +252,43 @@ if (isset($_POST['PrintPDF'])
 	 		$title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
 	   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   		echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+	   		echo "<br /><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-	      			echo "<br>$SQL";
+	      			echo "<br />$SQL";
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
 		}
 
 		if ($_POST['Location']=='All'){
-			$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) as qtyonorder
-				FROM purchorderdetails,
-					purchorders
-				WHERE purchorderdetails.orderno = purchorders.orderno
-				AND purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
-				AND purchorderdetails.completed = 0";
-		} else {
-			$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) AS qtyonorder
-				FROM purchorderdetails,
-					purchorders
-				WHERE purchorderdetails.orderno = purchorders.orderno
-				AND purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
+			$SQL = "SELECT SUM(purchorderdetails.quantityord*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)
+				- purchorderdetails.quantityrecd*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)) as qtyonorder
+				FROM purchorderdetails
+				LEFT JOIN purchorders
+				ON purchorderdetails.orderno = purchorders.orderno
+				LEFT JOIN purchdata
+				ON purchorders.supplierno=purchdata.supplierno
+				AND purchorderdetails.itemcode=purchdata.stockid
+				WHERE  purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
 				AND purchorderdetails.completed = 0
-				AND purchorders.intostocklocation=  '" . $_POST['Location'] . "'";
+				AND purchorders.status <> 'Cancelled'
+				AND purchorders.status <> 'Rejected'
+				AND purchorders.status <> 'Pending'";
+		} else {
+			$SQL = "SELECT SUM(purchorderdetails.quantityord*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)
+				- purchorderdetails.quantityrecd*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)) as qtyonorder
+				FROM purchorderdetails
+				LEFT JOIN purchorders
+				ON purchorderdetails.orderno = purchorders.orderno
+				LEFT JOIN purchdata
+				ON purchorders.supplierno=purchdata.supplierno
+				AND purchorderdetails.itemcode=purchdata.stockid
+				WHERE purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
+				AND purchorderdetails.completed = 0
+				AND purchorders.intostocklocation=  '" . $_POST['Location'] . "'
+				AND purchorders.status <> 'Cancelled'
+				AND purchorders.status <> 'Rejected'
+				AND purchorders.status <> 'Pending'";
 		}
 
 		$DemandRow = DB_fetch_array($DemandResult);
@@ -286,9 +300,9 @@ if (isset($_POST['PrintPDF'])
 	 		 $title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
 	   		prnMsg( _('The purchase order quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   		echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+	   		echo "<br /><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-	      			echo "<br>$SQL";
+	      			echo "<br />$SQL";
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -349,7 +363,7 @@ if (isset($_POST['PrintPDF'])
 		$title = _('Print Inventory Planning Report Empty');
 		include('includes/header.inc');
 		prnMsg( _('There were no items in the range and location specified'), 'error');
-		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		echo "<br /><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	} else {
@@ -362,23 +376,23 @@ if (isset($_POST['PrintPDF'])
 	$title=_('Inventory Planning Reporting');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
 	if (empty($_POST['FromCriteria']) or empty($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method='POST'><table class=selection>";
+		echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method='POST'><table class='selection'>";
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<tr>
-					<td>' . _('From Inventory Category Code') . ':</font></td>
-					<td><select name=FromCriteria>';
+					<td>' . _('From Inventory Category Code') . ':</td>
+					<td><select name="FromCriteria">';
 
 					$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
 					$CatResult= DB_query($sql,$db);
 					While ($myrow = DB_fetch_array($CatResult)){
-					echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . " - " . $myrow['categorydescription'];
+					echo "<option value='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . " - " . $myrow['categorydescription'] .'</option>';
 					}
 					echo "</select>
 					</td>
@@ -386,13 +400,13 @@ if (isset($_POST['PrintPDF'])
 
 		echo '<tr>
 					<td>' . _('To Inventory Category Code') . ':</td>
-					<td><select name=ToCriteria>';
+					<td><select name="ToCriteria">';
 
 					/*Set the index for the categories result set back to 0 */
 					DB_data_seek($CatResult,0);
 
 					While ($myrow = DB_fetch_array($CatResult)){
-					echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . " - " . $myrow['categorydescription'];
+					echo "<option value='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . " - " . $myrow['categorydescription'].'</option>';
 					}
 					echo '</select></td>
 			 </tr>';
@@ -402,10 +416,10 @@ if (isset($_POST['PrintPDF'])
 					$sql = 'SELECT loccode, locationname FROM locations';
 					$LocnResult=DB_query($sql,$db);
 
-					echo "<option Value='All'>" . _('All Locations');
+					echo "<option value='All'>" . _('All Locations').'</option>';
 
 					while ($myrow=DB_fetch_array($LocnResult)){
-					echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+					echo "<option value='" . $myrow['loccode'] . "'>" . $myrow['locationname'].'</option>';
 		      		}
 					echo '</select>
 					</td>
@@ -414,23 +428,23 @@ if (isset($_POST['PrintPDF'])
 		echo '<tr>
 					<td>' . _('Stock Planning') . ":</td>
 					<td><select name='NumberMonthsHolding'>";
-					echo '<option selected Value=1>' . _('One Month MAX');
-					echo '<option Value=1.5>' . _('One Month and a half MAX');
-					echo '<option Value=2>' . _('Two Months MAX');
-					echo '<option Value=2.5>' . _('Two Month and a half MAX');
-					echo '<option Value=3>' . _('Three Months MAX');
-					echo '<option Value=4>' . _('Four Months MAX');
-					echo '<option Value=11>' . _('One Month AVG');
-					echo '<option Value=11.5>' . _('One Month and a half AVG');
-					echo '<option Value=12>' . _('Two Months AVG');
-					echo '<option Value=12.5>' . _('Two Month and a half AVG');
-					echo '<option Value=13>' . _('Three Months AVG');
-					echo '<option Value=14>' . _('Four Months AVG');
+					echo '<option selected="True" value="1">' . _('One Month MAX') .'</option>';
+					echo '<option value="1.5">' . _('One Month and a half MAX') .'</option>';
+					echo '<option value="2">' . _('Two Months MAX') .'</option>';
+					echo '<option value="2.5">' . _('Two Month and a half MAX') .'</option>';
+					echo '<option value="3">' . _('Three Months MAX') .'</option>';
+					echo '<option value="4">' . _('Four Months MAX') .'</option>';
+					echo '<option value="11">' . _('One Month AVG') .'</option>';
+					echo '<option value="11.5">' . _('One Month and a half AVG') .'</option>';
+					echo '<option value="12">' . _('Two Months AVG') .'</option>';
+					echo '<option value="12.5">' . _('Two Month and a half AVG') .'</option>';
+					echo '<option value="13">' . _('Three Months AVG') .'</option>';
+					echo '<option value="14">' . _('Four Months AVG') .'</option>';
 					echo '</select>
 					</td>
 			 </tr>';
 
-		echo "</table><br><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
+		echo "</table><br /><div class='centre'><input type='submit' Name='PrintPDF' value='" . _('Print PDF') . "' /></div></form>";
 	}
 	include('includes/footer.inc');
 
