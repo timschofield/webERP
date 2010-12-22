@@ -1,7 +1,7 @@
 <?php
 /* $Revision: 1.6 $ */
 /* $Id$*/
-$PageSecurity = 3;
+//$PageSecurity = 3;
 include('includes/session.inc');
 $title = _('Customer Contacts');
 include('includes/header.inc');
