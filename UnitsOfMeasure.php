@@ -9,7 +9,7 @@ $title = _('Units Of Measure');
 
 include('includes/header.inc');
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' .
-		_('Top Sales Order Search') . '" alt="">' . ' ' . $title . '</p>';
+		_('Top Sales Order Search') . '" alt="" />' . ' ' . $title . '</p>';
 
 if ( isset($_GET['SelectedMeasureID']) )
 	$SelectedMeasureID = $_GET['SelectedMeasureID'];
