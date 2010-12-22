@@ -27,6 +27,13 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 		$_SESSION['MenuAccess'][$myrow['menuid']]=$myrow['access'];
 	}
 
+	$sql="SELECT script, security FROM pagesecurity";
+	$result=DB_query($sql, $db);
+
+	while ($myrow=DB_fetch_array($result)) {
+		$_SESSION[$myrow['script']]=$myrow['security'];
+	}
+
 /* Also reads all the company data set up in the company record and returns an array */
 
 	$sql=	'SELECT
@@ -61,8 +68,8 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	$ReadCoyResult = DB_query($sql,$db,$ErrMsg);
 
 	if (DB_num_rows($ReadCoyResult)==0) {
-      		echo '<BR><B>';
-		prnMsg( _('The company record has not yet been set up') . '</B><BR>' . _('From the system setup tab select company maintenance to enter the company information and system preferences'),'error',_('CRITICAL PROBLEM'));
+      		echo '<br /><b>';
+		prnMsg( _('The company record has not yet been set up') . '</b><br />' . _('From the system setup tab select company maintenance to enter the company information and system preferences'),'error',_('CRITICAL PROBLEM'));
 		exit;
 	} else {
 		$_SESSION['CompanyRecord'] = DB_fetch_array($ReadCoyResult);

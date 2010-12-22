@@ -4,7 +4,7 @@
 
 /* $Revision: 1.91 $ */
 
-$PageSecurity = 1;
+// $PageSecurity = 1;
 
 include('includes/session.inc');
 $title=_('Main Menu');

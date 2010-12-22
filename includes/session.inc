@@ -113,6 +113,8 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 /*User is logged in so get configuration parameters  - save in session*/
 include($PathPrefix . 'includes/GetConfig.php');
 
+$PageSecurity = $_SESSION[basename($_SERVER['SCRIPT_NAME'])];
+
 if(isset($_SESSION['DB_Maintenance'])){
 	if ($_SESSION['DB_Maintenance']!=0)  {
 		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
