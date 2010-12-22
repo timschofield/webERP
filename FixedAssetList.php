@@ -5,7 +5,7 @@ include('includes/session.inc');
 $title = _('Fixed Asset Properties List');
 include('includes/header.inc');
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
-	 _('Search') . '" alt="">' . ' ' . $title;
+	 _('Search') . '" alt="" />' . ' ' . $title .'</p>';
 
 $sql='SELECT stockmaster.stockid,
 			assetmanager.serialno,
