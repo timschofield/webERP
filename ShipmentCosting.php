@@ -11,7 +11,7 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
-	'" alt="">' . ' ' . $title . '</p>';
+	'" alt="" />' . ' ' . $title . '</p>';
 
 if (isset($_GET['NewShipment']) and $_GET['NewShipment']=='Yes'){
 	unset($_SESSION['Shipment']->LineItems);
