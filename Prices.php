@@ -30,7 +30,7 @@ if (!isset($_POST['CurrAbrev'])){
 }
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Search') .
-		'" alt="">' . '</img>' . $title.'</p>';
+		'" alt="" />' . '</img>' . $title.'</p>';
 
 echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><br>';
 
