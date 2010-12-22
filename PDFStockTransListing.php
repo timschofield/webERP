@@ -20,8 +20,8 @@ if (!isset($_POST['Date'])){
 	 $title = _('Stock Transaction Listing');
 	 include ('includes/header.inc');
 
-	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="">' . ' '
-		. _('Stock Transaction Listing').'</img></p></div>';
+	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' '
+		. _('Stock Transaction Listing').'</p></div>';
 
 	if ($InputError==1){
 		prnMsg($msg,'error');
