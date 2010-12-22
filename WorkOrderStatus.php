@@ -40,7 +40,7 @@ include('includes/header.inc');
     echo '<a href="'. $rootpath . '/WorkOrderCosting.php?' . SID . '&WO=' .  $_REQUEST['WO'] . '">' . _('Back to Costing'). '</a><br>';
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' .
-		_('Search') . '" alt="">' . ' ' . $title.'</p';
+		_('Search') . '" alt="" />' . ' ' . $title.'</p';
 
 	echo '<table cellpadding=2 class=selection>
 		<tr><td class="label">' . _('Issue to work order') . ':</td><td>' . $_REQUEST['WO'] .'</td><td class="label">' . _('Item') . ':</td><td>' . $_REQUEST['StockID'] . ' - ' . $WORow['description'] . '</td></tr>
