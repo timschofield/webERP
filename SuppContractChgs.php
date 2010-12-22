@@ -66,7 +66,7 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit=='Invoice'){
 
 echo  $_SESSION['SuppTrans']->SuppReference . ' ' ._('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 
-echo '</div>';
+echo '</p></div>';
 
 echo '<table cellpadding=2>';
 $TableHeader = '<tr><th>' . _('Contract') . '</th>
