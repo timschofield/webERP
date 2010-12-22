@@ -8,7 +8,7 @@ and shows the balance sheets as at the end of the period selected - so first off
 while the user is selecting the criteria the system is posting any unposted transactions */
 
 
-$PageSecurity = 8;
+//$PageSecurity = 8;
 
 include ('includes/session.inc');
 $title = _('Trial Balance');

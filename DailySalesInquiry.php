@@ -3,7 +3,7 @@
 /* $Revision: 1.00$ */
 /* $Id$*/
 
-$PageSecurity = 2;
+//$PageSecurity = 2;
 
 include('includes/session.inc');
 $title = _('Daily Sales Inquiry');

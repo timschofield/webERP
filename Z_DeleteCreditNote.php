@@ -9,7 +9,7 @@ must be called directly with path/DeleteCreditnote.php?CreditNoteNo=???????
 
 !! */
 
-$PageSecurity=15;
+//$PageSecurity=15;
 
 include ('includes/session.inc');
 $title = _('Delete Credit Note');

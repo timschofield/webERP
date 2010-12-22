@@ -5,7 +5,7 @@
 // Script to do some Sales Integrity checks
 // No SQL updates or Inserts - so safe to run
 
-$PageSecurity=15;
+//$PageSecurity=15;
 
 include ('includes/session.inc');
 $title = _('Sales Integrity');
@@ -37,9 +37,9 @@ while ($myrow = DB_fetch_array($Result)) {
 		echo '<font color=RED>' . _('Has no Tax Entry') . '</font>';
 	}
 
-	$SQL4 = 'SELECT typeno 
-				FROM gltrans 
-				WHERE type = 10 
+	$SQL4 = 'SELECT typeno
+				FROM gltrans
+				WHERE type = 10
 				AND typeno = ' . $myrow['transno'];
 	$Result4 = DB_query($SQL4,$db);
 
@@ -55,11 +55,11 @@ $SQL = 'SELECT DISTINCT typeno, counterindex FROM gltrans WHERE type = 10';
 $Result = DB_query($SQL,$db);
 
 while ($myrow = DB_fetch_array($Result)) {
-	$SQL2 = 'SELECT id, 
-					transno, 
-					trandate 
-				FROM debtortrans 
-				WHERE type = 10 
+	$SQL2 = 'SELECT id,
+					transno,
+					trandate
+				FROM debtortrans
+				WHERE type = 10
 				AND transno = ' . $myrow['typeno'];
 	$Result2 = DB_query($SQL2,$db);
 
@@ -70,20 +70,20 @@ while ($myrow = DB_fetch_array($Result)) {
 }
 
 echo '<br><br>'._('Check Receipt totals').'<br>';
-$SQL = 'SELECT typeno, 
-				amount 
-		FROM gltrans 
-		WHERE type = 12 
+$SQL = 'SELECT typeno,
+				amount
+		FROM gltrans
+		WHERE type = 12
 		AND account = ' . $_SESSION['CompanyRecord']['debtorsact'];
-		
+
 $Result = DB_query($SQL,$db);
 
 while ($myrow = DB_fetch_array($Result)) {
-	$SQL2 = 'SELECT SUM((ovamount+ovgst)/rate) 
-			FROM debtortrans 
-			WHERE type = 12 
+	$SQL2 = 'SELECT SUM((ovamount+ovgst)/rate)
+			FROM debtortrans
+			WHERE type = 12
 			AND transno = ' . $myrow['typeno'];
-			
+
 	$Result2 = DB_query($SQL2,$db);
 	$myrow2 = DB_fetch_row($Result2);
 
@@ -114,13 +114,13 @@ $SQL = 'SELECT orderno, orddate FROM salesorders';
 $Result = DB_query($SQL,$db);
 
 while ($myrow = DB_fetch_array($Result)) {
-	$SQL2 = 'SELECT transno, 
-					order_, 
-					trandate 
-				FROM debtortrans 
-				WHERE type = 10 
+	$SQL2 = 'SELECT transno,
+					order_,
+					trandate
+				FROM debtortrans
+				WHERE type = 10
 				AND order_ = ' . $myrow['orderno'];
-				
+
 	$Result2 = DB_query($SQL2,$db);
 
 	if ( DB_num_rows($Result2) == 0) {
@@ -143,18 +143,18 @@ while ($myrow = DB_fetch_array($Result)) {
 			echo ', <font color=RED>'._('Has no Sales Order').'</font>';
 	}
 
-	$sumsql = 'SELECT SUM( qtyinvoiced * unitprice ) AS InvoiceTotal 
+	$sumsql = 'SELECT SUM( qtyinvoiced * unitprice ) AS InvoiceTotal
 				FROM salesorderdetails
 				WHERE orderno = ' . $myrow['orderno'];
 	$sumresult = DB_query($sumsql,$db);
 
 	if ($sumrow = DB_fetch_array($sumresult)) {
-		$invSQL = 'SELECT transno, 
-							type, 
-							trandate, 
-							settled, 
-							rate, 
-							ovamount, 
+		$invSQL = 'SELECT transno,
+							type,
+							trandate,
+							settled,
+							rate,
+							ovamount,
 							ovgst
 				 	FROM debtortrans WHERE order_ = ' . $myrow['orderno'];
 		$invResult = DB_query($invSQL,$db);
@@ -177,13 +177,13 @@ $SQL = 'SELECT stkmoveno, transno FROM stockmoves';
 $Result = DB_query($SQL,$db);
 
 while ($myrow = DB_fetch_array($Result)) {
-	$SQL2 = 'SELECT transno, 
-					order_, 
-					trandate 
-				FROM debtortrans 
-				WHERE type BETWEEN 10 AND 11 
+	$SQL2 = 'SELECT transno,
+					order_,
+					trandate
+				FROM debtortrans
+				WHERE type BETWEEN 10 AND 11
 				AND transno = ' . $myrow['transno'];
-				
+
 	$Result2 = DB_query($SQL2,$db);
 
 	if ( DB_num_rows($Result2) == 0) {

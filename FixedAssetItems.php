@@ -3,7 +3,7 @@
 /* $Id$ */
 /* $Revision: 1.3 $ */
 
-$PageSecurity = 11;
+//$PageSecurity = 11;
 
 include('includes/session.inc');
 $title = _('Fixed Assets');
@@ -87,14 +87,14 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'LongDescription';
 		$i++;
 	}
-	
+
 	if (strlen($_POST['BarCode']) >20) {
 		$InputError = 1;
 		prnMsg(_('The barcode must be 20 characters or less long'),'error');
 		$Errors[$i] = 'BarCode';
 		$i++;
 	}
-	
+
 	if (trim($_POST['AssetCategoryID'])==''){
 		$InputError = 1;
 		prnMsg(_('There are no asset categories defined. All assets must belong to a valid category,'),'error');
@@ -110,25 +110,25 @@ if (isset($_POST['submit'])) {
 	if ($_POST['DepnRate']>0 AND $_POST['DepnRate']<1){
 		prnMsg(_('Numbers less than 1 are interpreted as less than 1%. The depreciation rate should be entered as a number between 0 and 100'),'warn');
 	}
-	
-	
+
+
 	if ($InputError !=1){
-		
+
 		if ($_POST['submit']==_('Update')) { /*so its an existing one */
 
 			/*Start a transaction to do the whole lot inside */
 			$result = DB_Txn_Begin($db);
-		
+
 			/*Need to check if changing the balance sheet codes - as will need to do journals for the cost and accum depn of the asset to the new category */
 			$result = DB_query("SELECT assetcategoryid,  cost, accumdepn, costact, accumdepnact FROM fixedassets INNER JOIN fixedassetcategories WHERE assetid='" . $AssetID . "'",$db);
 			$OldDetails = DB_fetch_array($result);
 			if ($OldDetails['assetcategoryid'] !=$_POST['AssetCategoryID']  AND $OldDetails['cost']!=0){
-				
+
 				$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
 				/* Get the new account codes for the new asset category */
 				$result = DB_query("SELECT costact, accumdepnact FROM fixedassetcategories WHERE categoryid='" . $_POST['AssetCategoryID'] . "'",$db);
 				$NewAccounts = DB_fetch_array($result);
-				
+
 				$TransNo = GetNextTransNo( 42, $db); /* transaction type is asset category change */
 
 				//credit cost for the old category
@@ -150,7 +150,7 @@ if (isset($_POST['submit'])) {
 				$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
 				$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
 				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-			
+
 				//debit cost for the new category
 				$SQL = "INSERT INTO gltrans (type,
 								typeno,
@@ -190,7 +190,7 @@ if (isset($_POST['submit'])) {
 					$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
 					$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
 					$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-				
+
 					//credit accum depn for the new category
 					$SQL = "INSERT INTO gltrans (type,
 									typeno,
@@ -252,7 +252,7 @@ if (isset($_POST['submit'])) {
 			$ErrMsg =  _('The asset could not be added because');
 			$DbgMsg = _('The SQL that was used to add the asset failed was');
 			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
-			
+
 			if (DB_error_no($db) ==0) {
 				$NewAssetID = DB_Last_Insert_ID($db,'fixedassets', 'assetid');
 				prnMsg( _('The new asset has been added to the database with an asset code of:') . ' ' . $NewAssetID,'success');
@@ -277,12 +277,12 @@ if (isset($_POST['submit'])) {
 
 	$CancelDelete = 0;
 	//what validation is required before allowing deletion of assets ....  maybe there should be no deletion option?
-	$result = DB_query('SELECT cost, 
-														accumdepn, 
-														accumdepnact, 
-														costact 
-											FROM fixedassets INNER JOIN fixedassetcategories 
-											ON fixedassets.assetcategoryid=fixedassetcategories.categoryid 
+	$result = DB_query('SELECT cost,
+														accumdepn,
+														accumdepnact,
+														costact
+											FROM fixedassets INNER JOIN fixedassetcategories
+											ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
 											WHERE assetid="' . $AssetID . '"', $db);
 	$AssetRow = DB_fetch_array($result);
 	$NBV = $AssetRow['cost'] -$AssetRow['accumdepn'];
@@ -302,7 +302,7 @@ if (isset($_POST['submit'])) {
 	}
 	if ($CancelDelete==0) {
 		$result = DB_Txn_Begin($db);
-		
+
 		/*Need to remove cost and accumulate depreciation from cost and accumdepn accounts */
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
 		$TransNo = GetNextTransNo( 43, $db); /* transaction type is asset deletion - (and remove cost/acc5umdepn from GL) */
@@ -326,7 +326,7 @@ if (isset($_POST['submit'])) {
 			$ErrMsg = _('Cannot insert a GL entry for the deletion of the asset because');
 			$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-		
+
 			//debit accumdepn for the depreciation removed on deletion of this asset
 			$SQL = "INSERT INTO gltrans (type,
 																typeno,
@@ -346,10 +346,10 @@ if (isset($_POST['submit'])) {
 			$ErrMsg = _('Cannot insert a GL entry for the reversal of accumulated depreciation on deletion of the asset because');
 			$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-			
+
 		} //end if cost > 0
-		
-		
+
+
 		$sql="DELETE FROM fixedassets WHERE assetid='" . $AssetID . "'";
 		$result=DB_query($sql,$db, _('Could not delete the asset record'),'',true);
 
@@ -381,7 +381,7 @@ if (!isset($AssetID) or $AssetID=='') {
 
 	$New = 1;
 	echo '<input type="hidden" name="New" value="">'. "\n";
-	
+
 } elseif ($InputError!=1) { // Must be modifying an existing item and no changes made yet - need to lookup the details
 
 	$sql = "SELECT assetid,
@@ -409,7 +409,7 @@ if (!isset($AssetID) or $AssetID=='') {
 	$_POST['DepnType']  = $AssetRow['depntype'];
 	$_POST['BarCode']  = $AssetRow['barcode'];
 	$_POST['DepnRate']  = $AssetRow['depnrate'];
-	
+
 	echo '<tr><td>' . _('Asset Code') . ':</td><td>'.$AssetID.'</td></tr>'. "\n";
 	echo '<input type="Hidden" name="AssetID" value='.$AssetID.'>'. "\n";
 
@@ -452,13 +452,13 @@ if ($New == 0) { //ie not new at all!
 			$AssetImgLink = _('No Image');
 		}
 	}
-	
+
 	if ($AssetImgLink!=_('No Image')) {
 		echo '<td>' . _('Image') . '<br>'.$AssetImgLink . '</td></tr>';
 	} else {
 		echo '</td></tr>';
 	}
-	
+
 	// EOR Add Image upload for New Item  - by Ori
 } //only show the add image if the asset already exists - otherwise AssetID will not be set - and the image needs the AssetID to save
 
@@ -546,7 +546,7 @@ if ($New==1) {
 	echo '<div class=centre><br><input type="Submit" name="submit" value="' . _('Insert New Fixed Asset') . '">';
 
 } else {
-	
+
 	echo '<br><div class=centre><input type="submit" name="submit" value="' . _('Update') . '"></div>';
 	prnMsg( _('Only click the Delete button if you are sure you wish to delete the asset. Only assets with a zero book value can be deleted'), 'warn', _('WARNING'));
 	echo '<br><div class=centre><input type="Submit" name="delete" value="' . _('Delete This Asset') . '" onclick="return confirm(\'' . _('Are You Sure? Only assets with a zero book value can be deleted.') . '\');"></div>';

@@ -4,7 +4,7 @@
 
 /* $Revision: 1.44 $ */
 
-$PageSecurity = 11;
+//$PageSecurity = 11;
 
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/DefinePOClass.php');
@@ -136,7 +136,7 @@ if (count($_SESSION['PO']->LineItems)>0 and !isset($_POST['ProcessGoodsReceived'
 												WHERE supplierno='".$_SESSION['PO']->SupplierID."'
 												AND stockid='".$LnItm->StockID."'
 												GROUP BY unitsofmeasure.unitname";
-								
+
 		$SupplierUOMResult=DB_query($SupplierUomSQL, $db);
 		if (DB_num_rows($SupplierUOMResult)>0) {
 			$SupplierUOMRow=DB_fetch_array($SupplierUOMResult);
@@ -233,7 +233,7 @@ if (count($_SESSION['PO']->LineItems)>0){
 				prnMsg(_('Receiving a negative quantity that results in negative stock is prohibited by the parameter settings. This delivery of stock cannot be processed until the stock of the item is corrected.'),'error',$OrderLine->StockID . ' Cannot Go Negative');
 			}
 		} /*end if ReceiveQty negative and not allowed negative stock */
-	} /* end loop around the items received */ 
+	} /* end loop around the items received */
 } /* end if there are lines received */
 
 if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then dont bother proceeding cos nothing to do ! */
@@ -433,7 +433,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 														'" . $OrderLine->ReceiveQty . "',
 														'" . $_SESSION['PO']->SupplierID . "',
 														'" . $CurrentStandardCost . "')";
-									
+
 			$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('A GRN record could not be inserted') . '. ' . _('This receipt of goods has not been processed because');
 			$DbgMsg =  _('The following SQL to insert the GRN record was used');
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -447,7 +447,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 								FROM locstock
 								WHERE locstock.stockid='" . $OrderLine->StockID . "'
 								AND loccode= '" . $_SESSION['PO']->Location . "'";
-			
+
 				$Result = DB_query($SQL, $db);
 				if (DB_num_rows($Result)==1){
 					$LocQtyRow = DB_fetch_row($Result);
@@ -461,7 +461,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 								SET quantity = locstock.quantity + '" . $OrderLine->ReceiveQty . "'
 								WHERE locstock.stockid = '" . $OrderLine->StockID . "'
 								AND loccode = '" . $_SESSION['PO']->Location . "'";
-			
+
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
 				$DbgMsg =  _('The following SQL to update the location stock record was used');
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -492,7 +492,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 																		'" . $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost . "',
 																		'" . ($QtyOnHandPrior + $OrderLine->ReceiveQty) . "'
 																		)";
-												
+
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('stock movement records could not be inserted because');
 				$DbgMsg =  _('The following SQL to insert the stock movement records was used');
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -565,16 +565,16 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 
 			/* Check to see if the line item was flagged as the purchase of an asset */
 			if ($OrderLine->AssetID !='' AND $OrderLine->AssetID !='0'){ //then it is an asset
-				
+
 				/*first validate the AssetID and if it doesn't exist treat it like a normal nominal item  */
-				$CheckAssetExistsResult = DB_query("SELECT assetid, 
-																									datepurchased, 
-																									costact 
+				$CheckAssetExistsResult = DB_query("SELECT assetid,
+																									datepurchased,
+																									costact
 																						FROM fixedassets INNER JOIN fixedassetcategories
-																						ON fixedassets.assetcategoryid=fixedassetcategories.categoryid 
+																						ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
 																						WHERE assetid='" . $OrderLine->AssetID . "'",$db);
 				if (DB_num_rows($CheckAssetExistsResult)==1){ //then work with the assetid provided
-					
+
 					/*Need to add a fixedassettrans for the cost of the asset being received */
 					$SQL = "INSERT INTO fixedassettrans (assetid,
 																						transtype,
@@ -595,7 +595,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
 					$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
-				
+
 					/*Now get the correct cost GL account from the asset category */
 					$AssetRow = DB_fetch_array($CheckAssetExistsResult);
 					/*Over-ride any GL account specified in the order with the asset category cost account */
@@ -612,7 +612,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost and date purchased was not able to be updated because:');
 					$DbgMsg = _('The following SQL was used to attempt the update of the cost and the date the asset was purchased');
 					$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
-					
+
 				} //assetid provided doesn't exist so ignore it and treat as a normal nominal item
 			} //assetid is set so the nominal item is an asset
 /* If GLLink_Stock then insert GLTrans to debit the GL Code  and credit GRN Suspense account at standard cost*/

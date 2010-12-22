@@ -2,7 +2,7 @@
 /* $Id$*/
 /* Script to update costs for all BOM items, from the bottom up */
 
-$PageSecurity = 15;
+//$PageSecurity = 15;
 include('includes/session.inc');
 $title = _('Recalculate BOM costs');
 include('includes/header.inc');

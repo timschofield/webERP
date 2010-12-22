@@ -1,7 +1,7 @@
 <?php
 /* $Id$*/
 
-$PageSecurity = 15;
+//$PageSecurity = 15;
 include ('includes/session.inc');
 $title = _('Identify Allocation Stuff Ups');
 include ('includes/header.inc');

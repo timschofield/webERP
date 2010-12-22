@@ -1,6 +1,6 @@
 <?php
 
-$PageSecurity = 11;
+//$PageSecurity = 11;
 
 include('includes/session.inc');
 
@@ -103,9 +103,9 @@ if (isset($_POST['Search'])) {
 		$_POST['SerialNumber']='%';
 	}
 	$sql= 'SELECT fixedassets.assetid,
-								fixedassets.cost, 
-								fixedassets.accumdepn, 
-								fixedassets.description, 
+								fixedassets.cost,
+								fixedassets.accumdepn,
+								fixedassets.description,
 								fixedassets.depntype,
 								fixedassets.serialno,
 								fixedassets.barcode,
@@ -129,12 +129,12 @@ if (isset($_POST['Search'])) {
 			<th>' . _('Current Location') . '</th>
 			<th>' . _('Move To :') . '</th>
 			</tr>';
-	
+
 	$locationsql='SELECT locationid, locationdescription from fixedassetlocations';
 	$LocationResult=DB_query($locationsql, $db);
-	
+
 	while ($myrow=DB_fetch_array($Result)) {
-		
+
 		echo '<tr><td>'.$myrow['assetid'].'</td>
 						<td>'.$myrow['description'].'</td>
 						<td>'.$myrow['serialno'].'</td>

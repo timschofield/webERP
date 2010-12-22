@@ -6,7 +6,7 @@
 not included on any menu for obvious reasons
 This page must be called directly using path/Z_DeleteInvoice.php?InvoiceNo=?????    !! */
 
-$PageSecurity=15;
+//$PageSecurity=15;
 
 include ('includes/session.inc');
 $title = _('Delete Invoice');

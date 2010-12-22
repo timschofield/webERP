@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/DefineCartClass.php');
-$PageSecurity = 1;
+//$PageSecurity = 1;
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
 

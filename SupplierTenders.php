@@ -1,7 +1,7 @@
 <?php
 /* $Id$*/
 
-$PageSecurity = 9;
+//$PageSecurity = 9;
 
 include('includes/DefineOfferClass.php');
 include('includes/session.inc');

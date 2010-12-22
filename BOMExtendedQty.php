@@ -5,7 +5,7 @@
 /* $Revision: 1.8 $ */
 
 // BOMExtendedQty.php - Quantiy Extended Bill of Materials
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include('includes/session.inc');
 
 if (isset($_POST['PrintPDF'])) {

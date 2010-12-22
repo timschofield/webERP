@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-$PageSecurity = 9; /*viewing possible with inquiries but not mods */
+//$PageSecurity = 9; /*viewing possible with inquiries but not mods */
 
 $UpdateSecurity =10;
 
@@ -67,18 +67,18 @@ if (isset($_POST['UpdateData'])){
 
 		$Result = DB_Txn_Begin($db);
 		ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $_POST['QOH']);
-	
+
 		$SQL = "UPDATE stockmaster SET
 											materialcost='" . $_POST['MaterialCost'] . "',
 											labourcost='" . $_POST['LabourCost'] . "',
 											overheadcost='" . $_POST['OverheadCost'] . "',
 											lastcost='" . $OldCost . "'
 									WHERE stockid='" . $StockID . "'";
-	
+
 		$ErrMsg = _('The cost details for the stock item could not be updated because');
 		$DbgMsg = _('The SQL that failed was');
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-	
+
 		$Result = DB_Txn_Commit($db);
 		UpdateCost($db, $StockID); //Update any affected BOMs
 
@@ -113,7 +113,7 @@ $result = DB_query("SELECT description,
 													mbflag,
 													stocktype",
 												$db,$ErrMsg,$DbgMsg);
-					
+
 
 $myrow = DB_fetch_array($result);
 

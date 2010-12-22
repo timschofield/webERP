@@ -4,7 +4,7 @@
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 
-$PageSecurity = 11;
+//$PageSecurity = 11;
 
 include('includes/session.inc');
 

@@ -1,6 +1,6 @@
 <?php
 /* $Id$*/
-$PageSecurity = 2;
+//$PageSecurity = 2;
 $PricesSecurity = 9;
 include ('includes/session.inc');
 $title = _('Select an Asset');
@@ -117,9 +117,9 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 									description,
 									datepurchased,
 									fixedassetlocations.locationdescription
-							FROM fixedassets INNER JOIN fixedassetlocations 
+							FROM fixedassets INNER JOIN fixedassetlocations
 							ON fixedassets.assetlocation=fixedassetlocations.locationid ';
-							
+
 	if ($_POST['Keywords']) {
 		//insert wildcard characters in spaces
 		$_POST['Keywords'] = strtoupper($_POST['Keywords']);
@@ -136,7 +136,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 			} else {
 				$SQL .= "WHERE fixedassets.assetlocation='" . $_POST['AssetLocation'] . "' AND description " . LIKE .  "'" . $SearchString . "' AND  assetcategoryid='" . $_POST['AssetCategory'] . "'
 								ORDER BY fixedassets.assetid";
-			}				
+			}
 		}
 	} elseif (isset($_POST['AssetCode'])) {
 		if ($_POST['AssetCategory'] == 'ALL') {
@@ -214,7 +214,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 				<input type=submit name="Go" value="' . _('Go') . '">
 				<input type=submit name="Previous" value="' . _('Previous') . '">
 				<input type=submit name="Next" value="' . _('Next') . '">';
-			
+
 			echo '<p></div>';
 		}
 		echo '<table cellpadding=2 colspan=7 class=selection>';

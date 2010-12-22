@@ -2,7 +2,7 @@
 
 /* $Id$ */
 
-$PageSecurity = 4;
+//$PageSecurity = 4;
 
 include('includes/DefinePOClass.php');
 include('includes/SQL_CommonFunctions.inc');
@@ -387,7 +387,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			}
 		} /*end of if its a new order or an existing one */
 
-		
+
 		$Result = DB_Txn_Commit($db);
 		unset($_SESSION['PO'.$identifier]); /*Clear the PO data to allow a newy to be input*/
 		echo "<br><a href='".$rootpath."/PO_SelectOSPurchOrder.php?" . SID . "'>" . _('Return To PO List') . '</a>';
@@ -531,7 +531,7 @@ if (isset($_POST['LookupPrice']) and isset($_POST['StockID2'])){
 					FROM purchdata
 					WHERE  purchdata.supplierno = '" . $_SESSION['PO'.$identifier]->SupplierID . "'
 					AND purchdata.stockid = '". strtoupper($_POST['StockID2']) . "'";
-	
+
 	$ErrMsg = _('The supplier pricing details for') . ' ' . strtoupper($_POST['StockID']) . ' ' . _('could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the pricing details but failed was');
 	$LookupResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -593,7 +593,7 @@ if (isset($_POST['UpdateLine'])){
 																								$_POST['JobRef'],
 																								$_POST['ItemNo'],
 																								$_SESSION['PO'.$identifier]->LineItems[$_POST['LineNo']]->uom,
-																								1, //conversion factor not set??  
+																								1, //conversion factor not set??
 																								$_POST['Suppliers_PartNo'],
 																								$_POST['Qty']*$_POST['Price'],
 																								$_POST['Package'],
@@ -664,10 +664,10 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 			$_POST['GLCode']=0;
 		}
 		if ($_POST['AssetID'] !='Not an Asset'){
-			$ValidAssetResult = DB_query('SELECT assetid, 
+			$ValidAssetResult = DB_query('SELECT assetid,
 																					description,
 																					costact
-																		FROM fixedassets 
+																		FROM fixedassets
 																		INNER JOIN fixedassetcategories
 																		ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
 																		WHERE assetid="' . $_POST['AssetID'] . '"',$db);
@@ -841,7 +841,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 																										$Quantity,
 																										$Quantity*$myrow['price']
 																										);
-																										
+
 					} else { /*There was no supplier purchasing data for the item selected so enter a purchase order line with zero price */
 
 						$_SESSION['PO'.$identifier]->add_to_order ($_SESSION['PO'.$identifier]->LinesOnOrder+1,
@@ -993,7 +993,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 
 
 if (isset($_POST['NonStockOrder'])) {
-	
+
 	echo '<br><table class=selection><tr><td>'._('Item Description').'</td>';
 	echo '<td><input type=text name=ItemDescription size=40></td></tr>';
 	echo '<tr><td>'._('General Ledger Code').'</td>';
@@ -1002,7 +1002,7 @@ if (isset($_POST['NonStockOrder'])) {
 							accountname
 				FROM chartmaster
 				ORDER BY accountcode ASC';
-				
+
 	$result=DB_query($sql, $db);
 	while ($myrow=DB_fetch_array($result)) {
 		echo '<option value="'.$myrow['accountcode'].'">'.$myrow['accountcode'].' - '.$myrow['accountname'].'</option>';
@@ -1020,7 +1020,7 @@ if (isset($_POST['NonStockOrder'])) {
 		}
 		echo '<option value="' . $AssetRow['assetid'] . '">'  . $AssetRow['assetid'] . ' - '.  $DatePurchased . ' - ' . $AssetRow['description'] . '</option>';
 	}
-	
+
 	echo'</select><a href="FixedAssetItems.php" target=_blank>'. _('New Fixed Asset') . '</a></td>
 				<tr><td>'._('Quantity to purchase').'</td>
 						<td><input type="text" class="number" name="Qty" size=10></td></tr>

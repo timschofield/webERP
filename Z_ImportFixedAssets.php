@@ -2,7 +2,7 @@
 /* $Id:  $*/
 /* Script to import fixed assets into a specified period*/
 
-$PageSecurity = 15;
+//$PageSecurity = 15;
 include('includes/session.inc');
 $title = _('Import Fixed Assets');
 include('includes/header.inc');
@@ -14,7 +14,7 @@ include('includes/SQL_CommonFunctions.inc');
 
 $FieldNames = array(
 	'Description',  //0
-	'LongDescription', //1 
+	'LongDescription', //1
 	'AssetCategoryID', //2
 	'SerialNo',  //3
 	'BarCode', //4
@@ -31,7 +31,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 	//initialize
 	$InputError = false;
 
-/*	
+/*
 	if ($_FILES['SelectedAssetFile']['type'] != 'text/csv') {
 		prnMsg (_('File has type') . ' ' . $_FILES['SelectedAssetFile']['type'] . ', ' . _('but only "text/csv" is allowed.'),'error');
 		include('includes/footer.inc');
@@ -119,7 +119,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 					break;
 			} //end switch
 		} //end loop around fields from import
-			
+
 		if (strlen($Description)==0 OR strlen($Description)>50){
 			prnMsg('The description of the asset is expected to be more than 3 characters long and less than 50 characters long','error');
 			echo '<br>' . _('Row:') . $Row . ' - ' . _('Invalid Description:') . ' ' . $Description;
@@ -179,18 +179,18 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 		} else {
 			$DepnType=0;
 		}
-		
+
 		if ($InputError == false){ //no errors
 
 			$TransNo = GetNextTransNo(49,$db);
 			$PeriodNo = GetPeriod(ConvertSQLDate($_POST['DateToEnter']),$db);
-			
+
 			//attempt to insert the stock item
 			$sql = "INSERT INTO fixedassets (description,
 																		longdescription,
 																		assetcategoryid,
-																		serialno, 
-																		barcode, 
+																		serialno,
+																		barcode,
 																		assetlocation,
 																		cost,
 																		accumdepn,
@@ -215,7 +215,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 
 			if (DB_error_no($db) ==0) { //the insert of the new code worked so bang in the fixedassettrans records too
 
-				
+
 				$AssetID = DB_Last_Insert_ID($db, 'fixedassets','assetid');
 				$sql = "INSERT INTO fixedassettrans ( assetid,
 																					transtype,
@@ -261,7 +261,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 
 				if (DB_error_no($db) ==0) {
 					prnMsg( _('Inserted the new asset:') . ' ' . $Description,'info');
-				} 
+				}
 			}
 		} // there were errors checking the row so no inserts
 		$Row++;

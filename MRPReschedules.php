@@ -5,7 +5,7 @@
 /* $Revision: 1.4 $ */
 // MRPReschedules.php - Report of purchase orders and work orders that MRP determines should be
 // rescheduled.
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include('includes/session.inc');
 
 $sql='show tables where Tables_in_'.$_SESSION['DatabaseName'].'="mrprequirements"';

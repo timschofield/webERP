@@ -9,7 +9,7 @@ This is cleared against the cost of the contract as originally costed - when the
 
 include('includes/DefineSuppTransClass.php');
 
-$PageSecurity = 5;
+//$PageSecurity = 5;
 
 /* Session started here for password checking and authorisation level check */
 include('includes/session.inc');

@@ -7,7 +7,7 @@ the SuppTrans class contains an array of GRNs objects - containing details of GR
 Also an array of GLCodes objects - only used if the AP - GL link is effective
 Also an array of shipment charges for charges to shipments to be apportioned accross the cost of stock items */
 
-$PageSecurity = 5;
+//$PageSecurity = 5;
 
 include('includes/DefineSuppTransClass.php');
 /* Session started in header.inc for password checking and authorisation level check */
@@ -139,9 +139,9 @@ if (isset($_POST['ExRate'])){
 		$DayInFollowingMonth = 0;
 		$DaysBeforeDue = (int) substr( $_SESSION['SuppTrans']->Terms,1);
 	}
-	
+
 	$_SESSION['SuppTrans']->DueDate = CalcDueDate($_SESSION['SuppTrans']->TranDate, $DayInFollowingMonth, $DaysBeforeDue);
-	
+
 	$_SESSION['SuppTrans']->SuppReference = $_POST['SuppReference'];
 
 	if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){
@@ -267,7 +267,7 @@ if (!isset($_POST['PostInvoice'])){
 
 	if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){
 		echo '<input type="submit" name="GL" VALUE="' . _('General Ledger') . '"> ';
-	} 
+	}
 	echo ' <input type="submit" name="FixedAssets" VALUE="' . _('Fixed Assets') . '"></div>';
 
 
@@ -331,8 +331,8 @@ if (!isset($_POST['PostInvoice'])){
 		echo '<tr><td colspan=2 class=number><font size=4 color=blue>' . _('Total') . ':</font></td>
 			<td class=number><font size=4 color=BLUE><U>' .  number_format($TotalShiptValue,2) . '</U></font></td></tr></table>';
 	}
-	
-	
+
+
 	if (count( $_SESSION['SuppTrans']->Assets) > 0){   /*if there are any fixed assets on the invoice*/
 
 		echo '<br /><table cellpadding=2 class=selection>
@@ -362,9 +362,9 @@ if (!isset($_POST['PostInvoice'])){
 		echo '<tr><td colspan=2 class=number><font size=4 color=blue>' . _('Total') . ':</font></td>
 			<td class=number><font size=4 color=BLUE><U>' .  number_format($TotalAssetValue,2) . '</U></font></td></tr></table>';
 	} //end loop around assets added to invocie
-	
-	
-	
+
+
+
 	if (count( $_SESSION['SuppTrans']->Contracts) > 0){   /*if there are any contract charges on the invoice*/
 
 		echo '<br /><table cellpadding="2" class=selection>
@@ -721,7 +721,7 @@ then do the updates and inserts to process the invoice entered */
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the asset addition could not be added because');
  				$DbgMsg = _('The following SQL to insert the GL transaction was used');
  				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
- 				
+
  				$LocalTotal += round($AssetAddition->Amount/ $_SESSION['SuppTrans']->ExRate,2);
 			}
 
@@ -751,24 +751,24 @@ then do the updates and inserts to process the invoice entered */
 																	'" . $_SESSION['SuppTrans']->SupplierID . ' ' . _('Contract charge against') . ' ' . $Contract->ContractRef . "',
 																	'" . ($Contract->Amount/ $_SESSION['SuppTrans']->ExRate) . "')";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the contract') . ' ' . $Contract->ContractRef . ' ' . _('could not be added because');
- 
+
 				$DbgMsg = _('The following SQL to insert the GL transaction was used');
- 
+
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
- 
+
 				$LocalTotal += ($Contract->Amount/ $_SESSION['SuppTrans']->ExRate);
- 
+
 			}
 
 			foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
 				if (strlen($EnteredGRN->ShiptRef) == 0 OR $EnteredGRN->ShiptRef == 0){
 				/*so its not a GRN shipment item
-				  enter the GL entry to reverse the GRN suspense entry created on delivery 
+				  enter the GL entry to reverse the GRN suspense entry created on delivery
 				  * at standard cost/or weighted average cost used on delivery */
-				  
+
 				 /*Always do this - for weighted average costing and also for standard costing */
-				 
+
 					if ($EnteredGRN->StdCostUnit * ($EnteredGRN->This_QuantityInv ) != 0) {
 						$SQL = "INSERT INTO gltrans (type,
 																			typeno,
@@ -795,7 +795,7 @@ then do the updates and inserts to process the invoice entered */
 
 					$PurchPriceVar = $EnteredGRN->This_QuantityInv * (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit);
 
-					
+
 					/*Yes.... but where to post this difference to - if its a stock item the variance account must be retrieved from the stock category record
 					if its a nominal purchase order item with no stock item then there will be no standard cost and it will all be variance so post it to the
 					account specified in the purchase order detail record */
@@ -930,7 +930,7 @@ then do the updates and inserts to process the invoice entered */
 																			 ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var of') . ' ' .
 																			 round(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .  "',
 																				'" . $PurchPriceVar . "')";
-										
+
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 								$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
@@ -941,12 +941,12 @@ then do the updates and inserts to process the invoice entered */
 							order price and the actual invoice price since the std cost was made equal to the order price in local currency at the time
 							the goods were received */
 							$GLCode = $EnteredGRN->GLCode; //by default
-							
+
 							if ($EnteredGRN->AssetID!=0) { //then it is an asset
 
 								/*Need to get the asset details  for posting */
 								$result = DB_query('SELECT costact
-																	FROM fixedassets INNER JOIN fixedassetcategories 
+																	FROM fixedassets INNER JOIN fixedassetcategories
 																	ON fixedassets.assetcategoryid= fixedassetcategories.categoryid
 																	WHERE assetid="' . $EnteredGRN->AssetID . '"',$db);
 								if (DB_num_rows($result)!=0){ // the asset exists
@@ -999,7 +999,7 @@ then do the updates and inserts to process the invoice entered */
 																 $_SESSION['SuppTrans']->CurrCode . ' ' . $EnteredGRN->ChgPrice . ' @ ' . _('a rate of') . ' ' .
 																 $_SESSION['SuppTrans']->ExRate . "',
 																	'" . round(($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv) / $_SESSION['SuppTrans']->ExRate,2) . "')";
-									
+
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
 
 					$DbgMsg = _('The following SQL to insert the GL transaction was used');
@@ -1163,7 +1163,7 @@ then do the updates and inserts to process the invoice entered */
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
 			} //end of adding GRN shipment charges
-			
+
 			if ($EnteredGRN->AssetID!=0) { //then it is an asset
 
 				/*Add the fixed asset trans for the difference in the cost */
@@ -1186,7 +1186,7 @@ then do the updates and inserts to process the invoice entered */
 				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
-				
+
 				/*Now update the asset cost in fixedassets table */
 				$SQL = "UPDATE fixedassets SET cost = cost - " . ($PurchPriceVar)  . " WHERE assetid = '" . $EnteredGRN->AssetID . "'";
 				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost could not be updated because:');
@@ -1197,7 +1197,7 @@ then do the updates and inserts to process the invoice entered */
 
 		/*Add shipment charges records as necessary */
  		foreach ($_SESSION['SuppTrans']->Shipts as $ShiptChg){
-	
+
 			$SQL = 'INSERT INTO shipmentcharges (shiptref,
 													transtype,
 													transno,
@@ -1206,19 +1206,19 @@ then do the updates and inserts to process the invoice entered */
 																		20,
 																	' . $InvoiceNo . ',
 																	' . $ShiptChg->Amount/ $_SESSION['SuppTrans']->ExRate . ')';
-			
+
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment charge record for the shipment') .
 			' ' . $ShiptChg->ShiptRef . ' ' . _('could not be added because');
-			
+
 			$DbgMsg = _('The following SQL to insert the Shipment charge record was used');
-			
+
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
-			
-		} 
+
+		}
 	/*Add contract charges records as necessary */
 
 		foreach ($_SESSION['SuppTrans']->Contracts as $Contract){
-			
+
 			if($Contract->AnticipatedCost ==true){
 				$Anticipated =1;
 			} else {
@@ -1244,12 +1244,12 @@ then do the updates and inserts to process the invoice entered */
 
 		foreach ($_SESSION['SuppTrans']->Assets as $AssetAddition){
 
-			/*Asset additions need to have 
+			/*Asset additions need to have
 			 * 	1. A fixed asset transaction inserted for the cost
 			 * 	2. A general ledger transaction to fixed asset cost account if creditors linked
 			 * 	3. The fixedasset table cost updated by the addition
 			 */
-			
+
 			/* First the fixed asset transaction */
 			$SQL = "INSERT INTO fixedassettrans (assetid,
 																					transtype,
@@ -1270,13 +1270,13 @@ then do the updates and inserts to process the invoice entered */
 			$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
 			$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
-			
+
 			/*Now update the asset cost in fixedassets table */
 			$result = DB_query('SELECT datepurchased
-												FROM fixedassets 
+												FROM fixedassets
 												WHERE assetid="' . $AssetAddition->AssetID . '"',$db);
 			$AssetRow = DB_fetch_array($result);
-			
+
 			$SQL = "UPDATE fixedassets SET cost = cost + " . ($AssetAddition->Amount  / $_SESSION['SuppTrans']->ExRate) ;
 			if ($AssetRow['datepurchased']=='0000-00-00'){
 				$SQL .= ", datepurchased='" . $SQLInvoiceDate . "'";

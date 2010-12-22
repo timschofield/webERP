@@ -3,7 +3,7 @@
 /* $Revision: 1.11 $ */
 /* $Id$*/
 
-$PageSecurity =15;
+//$PageSecurity =15;
 
 include ('includes/session.inc');
 include ('includes/header.inc');

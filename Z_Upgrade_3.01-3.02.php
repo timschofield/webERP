@@ -1,7 +1,7 @@
 <?php
 /* $Id$*/
 
-$PageSecurity = 15;
+//$PageSecurity = 15;
 include('includes/session.inc');
 $title = _('Upgrade webERP 3.01 - 3.02');
 include('includes/header.inc');
@@ -22,17 +22,17 @@ $orderno = 0;
 $SalesOrdersResult = DB_query('SELECT orderno, stkcode FROM salesorderdetails ORDER BY orderno', $db);
 
 while ($SalesOrderDetails = DB_fetch_array($SalesOrdersResult)) {
-	
+
 	if($OrderNo != $SalesOrderDetails['orderno']) {
 		$LineNo = 0;
 	} else {
 		$LineNo++;
 	}
-	
+
 	$OrderNo = $SalesOrderDetails['orderno'];
-	DB_query('UPDATE salesorderdetails 
-		SET orderlineno=' . $LineNo . ' 
-		WHERE orderno=' . $OrderNo . " 
+	DB_query('UPDATE salesorderdetails
+		SET orderlineno=' . $LineNo . '
+		WHERE orderno=' . $OrderNo . "
 		AND stkcode='" . $SalesOrderDetails['stkcode'] ."'", $db);
 
 }

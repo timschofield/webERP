@@ -2,7 +2,7 @@
 /* $Id$*/
 /*This page adds the total of allocation records and compares this to the recorded allocation total in DebtorTrans table */
 
-$PageSecurity = 2;
+//$PageSecurity = 2;
 
 include('includes/session.inc');
 $title = _('Customer Allocations != DebtorTrans.Alloc');

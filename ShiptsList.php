@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include ('includes/session.inc');
 $title = _('Shipments Open Inquiry');
 include('includes/header.inc');

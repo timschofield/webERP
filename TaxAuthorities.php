@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-$PageSecurity=15;
+//$PageSecurity=15;
 include('includes/session.inc');
 $title = _('Tax Authorities');
 include('includes/header.inc');

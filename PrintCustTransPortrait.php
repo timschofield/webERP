@@ -2,7 +2,7 @@
 
 /* $Id$ */
 
-$PageSecurity = 1;
+//$PageSecurity = 1;
 
 include('includes/session.inc');
 

@@ -6,7 +6,7 @@ include('includes/DefineCartClass.php');
 
 /* Session started in header.inc for password checking the session will contain the details of the order from the Cart class object. The details of the order come from SelectOrderItems.php */
 
-$PageSecurity=1;
+//$PageSecurity=1;
 include('includes/session.inc');
 $title = _('Recurring Orders');
 include('includes/header.inc');

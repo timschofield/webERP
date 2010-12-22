@@ -10,7 +10,7 @@ Call this page with:
 */
 
 include('includes/DefineCustAllocsClass.php');
-$PageSecurity = 3;
+//$PageSecurity = 3;
 include('includes/session.inc');
 $title = _('Customer Receipt') . '/' . _('Credit Note Allocations');
 include('includes/header.inc');

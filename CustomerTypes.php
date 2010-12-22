@@ -2,7 +2,7 @@
 /* $Revision: 1.6 $ */
 /* $Id$*/
 
-$PageSecurity = 15;
+//$PageSecurity = 15;
 
 include('includes/session.inc');
 $title = _('Customer Types') . ' / ' . _('Maintenance');

@@ -3,7 +3,7 @@
 /* $Id$*/
 /* $Revision: 1.11 $ */
 
-$PageSecurity = 2;
+//$PageSecurity = 2;
 
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');

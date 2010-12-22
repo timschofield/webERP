@@ -2,7 +2,7 @@
 /* $Id: SelectOrderItems.php 3453 2010-05-06 06:39:52Z lindsayh $*/
 
 include('includes/DefineCartClass.php');
-$PageSecurity = 1;
+//$PageSecurity = 1;
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
 
@@ -83,7 +83,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 			include('includes/footer.inc');
 			exit;
 		}
-		
+
 		$CashSaleCustomer = explode('-',$myrow['cashsalecustomer']);
 
 		$_SESSION['Items'.$identifier]->Branch  = $CashSaleCustomer[1];

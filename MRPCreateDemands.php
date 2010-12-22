@@ -3,7 +3,7 @@
 /* $Id$*/
 // MRPCreateDemands.php - Create mrpdemands based on sales order history
 
-$PageSecurity=9;
+//$PageSecurity=9;
 
 include('includes/session.inc');
 $title = _('MRP Create Demands');

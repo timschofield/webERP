@@ -5,7 +5,7 @@
 
 include('includes/DefineReceiptClass.php');
 
-$PageSecurity = 3;
+//$PageSecurity = 3;
 include('includes/session.inc');
 
 $title = _('Receipt Entry');

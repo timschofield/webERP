@@ -5,7 +5,7 @@
 
 include('includes/SQL_CommonFunctions.inc');
 
-$PageSecurity = 1;
+//$PageSecurity = 1;
 
 include('includes/session.inc');
 $title = _('Customer Inquiry');

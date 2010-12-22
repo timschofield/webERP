@@ -19,29 +19,29 @@ $graph->SetMarginsPixels(40,40,40,40);
 $graph->SetDataType('text-data');
 
 if($_GET['StockLocation']=='All'){
-	$sql = "SELECT periods.periodno, 
-			periods.lastdate_in_period, 
-			SUM(-stockmoves.qty) AS qtyused 
-		FROM stockmoves INNER JOIN periods 
-			ON stockmoves.prd=periods.periodno 
-		WHERE (stockmoves.type=10 OR stockmoves.type=11 OR stockmoves.type=28) 
-		AND stockmoves.hidemovt=0 
-		AND stockmoves.stockid = '" . trim(strtoupper($_GET['StockID'])) . "' 
-		GROUP BY periods.periodno, 
-			periods.lastdate_in_period 
+	$sql = "SELECT periods.periodno,
+			periods.lastdate_in_period,
+			SUM(-stockmoves.qty) AS qtyused
+		FROM stockmoves INNER JOIN periods
+			ON stockmoves.prd=periods.periodno
+		WHERE (stockmoves.type=10 OR stockmoves.type=11 OR stockmoves.type=28)
+		AND stockmoves.hidemovt=0
+		AND stockmoves.stockid = '" . trim(strtoupper($_GET['StockID'])) . "'
+		GROUP BY periods.periodno,
+			periods.lastdate_in_period
 		ORDER BY periodno  LIMIT 24";
 } else {
-	$sql = "SELECT periods.periodno, 
-			periods.lastdate_in_period, 
-			SUM(-stockmoves.qty) AS qtyused 
-		FROM stockmoves INNER JOIN periods 
-			ON stockmoves.prd=periods.periodno 
-		WHERE (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28) 
-		AND stockmoves.hidemovt=0 
-		AND stockmoves.loccode='" . $_GET['StockLocation'] . "' 
-		AND stockmoves.stockid = '" . trim(strtoupper($_GET['StockID'])) . "' 
-		GROUP BY periods.periodno, 
-			periods.lastdate_in_period 
+	$sql = "SELECT periods.periodno,
+			periods.lastdate_in_period,
+			SUM(-stockmoves.qty) AS qtyused
+		FROM stockmoves INNER JOIN periods
+			ON stockmoves.prd=periods.periodno
+		WHERE (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28)
+		AND stockmoves.hidemovt=0
+		AND stockmoves.loccode='" . $_GET['StockLocation'] . "'
+		AND stockmoves.stockid = '" . trim(strtoupper($_GET['StockID'])) . "'
+		GROUP BY periods.periodno,
+			periods.lastdate_in_period
 		ORDER BY periodno  LIMIT 24";
 }
 $MovtsResult = DB_query($sql, $db);
@@ -69,7 +69,7 @@ if ($NumberOfPeriodsUsage!=24){
 	$graph->SetDataColors(
 		array("blue"),  //Data Colors
 		array("black")	//Border Colors
-		);  
+		);
 	for ($i=1;$i++;$i<=$NumberOfPeriodsUsage){
 		$UsageRow = DB_fetch_array($MovtsResult);
 		if (!$UsageRow){
@@ -82,7 +82,7 @@ if ($NumberOfPeriodsUsage!=24){
 	$graph->SetDataColors(
 		array("blue","red"),  //Data Colors
 		array("black")	//Border Colors
-	);  
+	);
 	for ($i=1;$i++;$i<=12){
 		$UsageRow = DB_fetch_array($MovtsResult);
 		if (!$UsageRow){
@@ -104,7 +104,7 @@ $graph->SetDataValues($UsageArray);
 $graph->SetDataColors(
 	array("blue","red"),  //Data Colors
 	array("black")	//Border Colors
-);  
+);
 
 
 //Draw it

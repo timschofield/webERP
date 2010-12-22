@@ -6,7 +6,7 @@
 
 // BOMIndented.php - Reverse Indented Bill of Materials - From lowest level component to top level
 // assembly
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include('includes/session.inc');
 
 if (isset($_POST['PrintPDF'])) {

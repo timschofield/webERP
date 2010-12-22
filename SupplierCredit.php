@@ -21,7 +21,7 @@ an array of GLCodes objects - only used if the AP - GL link is effective */
 
 include('includes/DefineSuppTransClass.php');
 
-$PageSecurity = 5;
+//$PageSecurity = 5;
 
 /* Session started in header.inc for password checking and authorisation level check */
 
@@ -156,9 +156,9 @@ if (isset($_POST['ExRate'])){
 		$DayInFollowingMonth = 0;
 		$DaysBeforeDue = (int) substr( $_SESSION['SuppTrans']->Terms,1);
 	}
-	
+
 	$_SESSION['SuppTrans']->DueDate = CalcDueDate($_SESSION['SuppTrans']->TranDate, $DayInFollowingMonth, $DaysBeforeDue);
-	
+
 	$_SESSION['SuppTrans']->SuppReference = $_POST['SuppReference'];
 
 	/*if (!isset($_POST['OvAmount'])) {
@@ -294,7 +294,7 @@ echo '<input type="submit" name="Shipts" value="' . _('Shipments') . '"> ';
 echo '<input type="submit" name="Contracts" VALUE="' . _('Contracts') . '"> ';
 if ( $_SESSION['SuppTrans']->GLLink_Creditors ==1){
 	echo '<input type="submit" name="GL" value="' . _('General Ledger') . '"> ';
-} 
+}
 echo '<input type="submit" name="FixedAssets" VALUE="' . _('Fixed Assets') . '"></div>';
 echo '<br />';
 
@@ -717,7 +717,7 @@ then do the updates and inserts to process the credit note entered */
 				$LocalTotal += round($ShiptChg->Amount/$_SESSION['SuppTrans']->ExRate,2);
 
 			}
-			
+
 			foreach ($_SESSION['SuppTrans']->Assets as $AssetAddition){
 				/* only the GL entries if the creditors->GL integration is enabled */
 				$SQL = 'INSERT INTO gltrans (type,
@@ -737,10 +737,10 @@ then do the updates and inserts to process the credit note entered */
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the asset addition could not be added because');
  				$DbgMsg = _('The following SQL to insert the GL transaction was used');
  				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
- 				
+
  				$LocalTotal += round($AssetAddition->Amount/ $_SESSION['SuppTrans']->ExRate,2);
 			}
-			
+
 			foreach ($_SESSION['SuppTrans']->Contracts as $Contract){
 
 			/*contract postings need to get the WIP from the contract item's stock category record
@@ -958,16 +958,16 @@ then do the updates and inserts to process the credit note entered */
 						the goods were received */
 
 							$GLCode = $EnteredGRN->GLCode; //by default
-							
+
 							if ($EnteredGRN->AssetID!=0) { //then it is an asset
 
 								/*Need to get the asset details  for posting */
 								$result = DB_query('SELECT costact
-																	FROM fixedassets INNER JOIN fixedassetcategories 
+																	FROM fixedassets INNER JOIN fixedassetcategories
 																	ON fixedassets.assetcategoryid= fixedassetcategories.categoryid
 																	WHERE assetid="' . $EnteredGRN->AssetID . '"',$db);
 								$AssetRow = DB_fetch_array($result);
-								$GLCode = $AssetRow['costact']; 
+								$GLCode = $AssetRow['costact'];
 							} //the item was an asset
 
 							$SQL = "INSERT INTO gltrans (type,
@@ -1189,7 +1189,7 @@ then do the updates and inserts to process the credit note entered */
 				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
-				
+
 				/*Now update the asset cost in fixedassets table */
 				$SQL = "UPDATE fixedassets SET cost = cost - " . $PurchPriceVar  . "
 							WHERE assetid = '" . $EnteredGRN->AssetID . "'";
@@ -1246,16 +1246,16 @@ then do the updates and inserts to process the credit note entered */
 			$DbgMsg = _('The following SQL to insert the contract charge record was used');
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 		} //end of loop around contracts on credit note
-		
-		
+
+
 		foreach ($_SESSION['SuppTrans']->Assets as $AssetAddition){
 
-			/*Asset additions need to have 
+			/*Asset additions need to have
 			 * 	1. A fixed asset transaction inserted for the cost
 			 * 	2. A general ledger transaction to fixed asset cost account if creditors linked - done in the GLCreditors Link above
 			 * 	3. The fixedasset table cost updated by the negative addition
 			 */
-			
+
 			/* First the fixed asset transaction */
 			$SQL = "INSERT INTO fixedassettrans (assetid,
 																					transtype,
@@ -1276,10 +1276,10 @@ then do the updates and inserts to process the credit note entered */
 			$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
 			$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
-			
+
 			/*Now update the asset cost in fixedassets table */
-			$SQL = "UPDATE fixedassets 
-								SET cost = cost - " . ($AssetAddition->Amount  / $_SESSION['SuppTrans']->ExRate) . " 
+			$SQL = "UPDATE fixedassets
+								SET cost = cost - " . ($AssetAddition->Amount  / $_SESSION['SuppTrans']->ExRate) . "
 								WHERE assetid = '" . $AssetAddition->AssetID . "'";
 			$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost  was not able to be updated because:');
 			$DbgMsg = _('The following SQL was used to attempt the update of the asset cost:');

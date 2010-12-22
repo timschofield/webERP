@@ -2,7 +2,7 @@
 
 /* $Id: SelectContract.php 3692 2010-08-15 09:22:08Z daintree $*/
 
-$PageSecurity = 6;
+//$PageSecurity = 6;
 
 include('includes/session.inc');
 $title = _('Select Contract');

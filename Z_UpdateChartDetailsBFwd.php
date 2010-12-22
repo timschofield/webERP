@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-$PageSecurity=15;
+//$PageSecurity=15;
 include ('includes/session.inc');
 $title = _('Recalculation of Brought Forward Balances in Chart Details Table');
 include('includes/header.inc');

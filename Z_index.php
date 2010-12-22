@@ -26,7 +26,7 @@
 	echo "<p><a href='$rootpath/Z_ImportStocks.php?" . SID . "'>" . _('Import Stock Items from .csv') . '</a>';
 	echo "<p><a href='$rootpath/Z_ImportFixedAssets.php?" . SID . "'>" . _('Import Fixed Assets from .csv file') . '</a>';
 	echo "<p><a href='$rootpath/Z_CreateCompanyTemplateFile.php?" . SID . "'>" . _('Create new company template SQL file and submit to webERP') . '</a>';
-	
+
 
 	echo '<br><br><hr><br>' . _('The stuff below is really quite dangerous!');
 

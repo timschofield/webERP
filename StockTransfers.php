@@ -5,7 +5,7 @@
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
-$PageSecurity = 11;
+//$PageSecurity = 11;
 include('includes/session.inc');
 $title = _('Stock Transfers');
 

@@ -4,7 +4,7 @@
 
 /* $Revision: 1.21 $ */
 
-$PageSecurity = 2;
+//$PageSecurity = 2;
 $PricesSecurity = 12;
 
 include('includes/session.inc');
@@ -244,7 +244,7 @@ else {
 							purchorderdetails,
 							suppliers
 						WHERE purchorders.orderno = purchorderdetails.orderno
-						AND purchorders.supplierno = suppliers.supplierid 
+						AND purchorders.supplierno = suppliers.supplierid
 						AND purchorderdetails.completed=0
 						AND purchorders.orderno='". $OrderNumber ."'
 						GROUP BY purchorders.orderno ASC,

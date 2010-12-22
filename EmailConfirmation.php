@@ -101,7 +101,7 @@ if (DB_num_rows($result)==0){
                 include('includes/footer.inc');
                 exit;
         }//packing slip has been printed.
-        $MailSubject = "Order Confirmation-Sales Order " .  $_GET['TransNo'] . " - Your PO " . 
+        $MailSubject = "Order Confirmation-Sales Order " .  $_GET['TransNo'] . " - Your PO " .
                 $myrow['customerref'] ;
 }
 
@@ -111,39 +111,39 @@ if (DB_num_rows($result)==0){
 )
 LETS GO */
 
-$MailMessage =  "<html><head><title>Email Confirmation</title></head><body>" . 
-                 "<Table cellpadding='2' cellspacing='2'><tr>" . 
+$MailMessage =  "<html><head><title>Email Confirmation</title></head><body>" .
+                 "<Table cellpadding='2' cellspacing='2'><tr>" .
                  "<td align='center' colspan='4'><H1>" . $_SESSION['CompanyRecord']['coyname'] . "</H1>" ;
 $MailMessage =  $MailMessage .   "</td></tr>";
-$MailMessage = $MailMessage . "<tr><td colspan='4'> <b>" . 
+$MailMessage = $MailMessage . "<tr><td colspan='4'> <b>" .
 										$_SESSION['CompanyRecord']['regoffice1'] . "</td></tr>";
-$MailMessage = $MailMessage . "<tr><td colspan='4'> <b>" .										
+$MailMessage = $MailMessage . "<tr><td colspan='4'> <b>" .
 										$_SESSION['CompanyRecord']['regoffice4'] . ",";
-$MailMessage = $MailMessage . "<b>" .					
+$MailMessage = $MailMessage . "<b>" .
 										$_SESSION['CompanyRecord']['regoffice5'] . "</td></tr>";
-$MailMessage = $MailMessage . "<tr><td colspan='4'> <b>" . 
-										$_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax'). ': ' . 
+$MailMessage = $MailMessage . "<tr><td colspan='4'> <b>" .
+										$_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax'). ': ' .
 										$_SESSION['CompanyRecord']['fax'] . "</td></tr>";
-$MailMessage = $MailMessage . "<tr><td colspan='4'> <b>" . 
+$MailMessage = $MailMessage . "<tr><td colspan='4'> <b>" .
 										$_SESSION['CompanyRecord']['email'] . "<br><br><br></td></tr>";
-$MailMessage = $MailMessage . "<Table><tr><td align='center' colspan='4'> 
+$MailMessage = $MailMessage . "<Table><tr><td align='center' colspan='4'>
                  <h2> Order Acknowledgement</h2></td></tr>";
-$MailMessage = $MailMessage . "<tr><td align='center' colspan='4'> <b>Order Number " . 
+$MailMessage = $MailMessage . "<tr><td align='center' colspan='4'> <b>Order Number " .
                               $_GET['TransNo'] .  "</b><br><br><br></td></tr>";
 $MailMessage = $MailMessage . "<tr><td colspan='4'> <b>Delivered To:</b></td></tr>";
-$MailMessage = $MailMessage . "<tr><td colspan='4'> <b>" . 
+$MailMessage = $MailMessage . "<tr><td colspan='4'> <b>" .
 										$myrow['deliverto'] . "</td></tr>";
-$MailMessage = $MailMessage . "<tr><td colspan='4'> <b>" . 
+$MailMessage = $MailMessage . "<tr><td colspan='4'> <b>" .
 										$myrow['deladd1'] . "</td></tr>";
 If(strlen(trim($myrow['deladd2'])))
 {
       $MailMessage = $MailMessage . "<tr><td> <b>" . $myrow['deladd2'] . "</td></tr>";
-      $MailMessage = $MailMessage . "<tr><td> <b>" . $myrow['deladd3'] . 
+      $MailMessage = $MailMessage . "<tr><td> <b>" . $myrow['deladd3'] .
                               ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5']. "<br><br><br></td></tr>";
 }
 else
 {
-      $MailMessage = $MailMessage . "<tr><td> <b>" . $myrow['deladd3'] . ' ' . 
+      $MailMessage = $MailMessage . "<tr><td> <b>" . $myrow['deladd3'] . ' ' .
                               $myrow['deladd4'] . ' ' . $myrow['deladd5'] . "<br><br><br></td></tr>";
 }
 $MailMessage = $MailMessage . "</table><table border='1' width='50%'><tr>";
@@ -156,10 +156,10 @@ if($_REQUEST['POLine'] == 1){
       		<td>Due Date</td></tr>";
 
 
-	$sql = "SELECT salesorderdetails.stkcode, 
-			stockmaster.description, 
-			salesorderdetails.quantity, 
-			salesorderdetails.qtyinvoiced, 
+	$sql = "SELECT salesorderdetails.stkcode,
+			stockmaster.description,
+			salesorderdetails.quantity,
+			salesorderdetails.qtyinvoiced,
 			salesorderdetails.unitprice,
 			salesorderdetails.narrative,
 			salesorderdetails.poline,
@@ -188,15 +188,15 @@ if($_REQUEST['POLine'] == 1){
        			 else
         		{
         			$ItemDue[$i] = date('M d, Y',strtotime($myrow2['itemdue']));
-        		}         		
+        		}
 			$MailMessage = $MailMessage . "<tr>";
 			if($_REQUEST['POLine'] == 1){
 				$MailMessage = $MailMessage . "<td align='right'>" . $POLine[$i] . "</td>";
 			}
 			$MailMessage = $MailMessage . "<td>" . $myrow2['stkcode'] .
-			                "</td><td>" . 
-			                $myrow2['description'] . "</td><td align='right'>" . 
-			                $DisplayQty . "</td><td align='center'>" . $ItemDue[$i]  . 			                
+			                "</td><td>" .
+			                $myrow2['description'] . "</td><td align='right'>" .
+			                $DisplayQty . "</td><td align='center'>" . $ItemDue[$i]  .
                  			 "</td></tr>";
 
          $i = $i + 1;
@@ -236,23 +236,23 @@ IF(mail( $MailTo, $MailSubject, $MailMessage, $headers )){
  		<td colspan='2' nowrap width="50%"> <b><?=$myrow['deliverto']?></td>
  	</tr>
   	<tr>
-  		<td colspan='2' nowrap width="50%"> 
+  		<td colspan='2' nowrap width="50%">
   			<b><?=$_SESSION['CompanyRecord']['regoffice4']?>,
 				<?=$_SESSION['CompanyRecord']['regoffice5']?> </b>
 		</td>
 		<td colspan='2' nowrap width="50%"> <b><?=$myrow['deladd1']?></td>
 	</tr>
  	<tr>
- 		<td colspan='2' nowrap width="50%"> 
- 			<b><?=$_SESSION['CompanyRecord']['telephone']?>  
+ 		<td colspan='2' nowrap width="50%">
+ 			<b><?=$_SESSION['CompanyRecord']['telephone']?>
  			Fax:<?=$_SESSION['CompanyRecord']['fax']?></b>
  		</td>
  		<td nowrap width="50%"><b><?=$myrow['deladd2']?></td>
  	</tr>
  	<tr>
- 		<td colspan='2' nowrap width="50%"> 
+ 		<td colspan='2' nowrap width="50%">
  			<b><?=$_SESSION['CompanyRecord']['email']?><br><br><br>
- 		</td> 		
+ 		</td>
      		<td nowrap width="50%">
        		<b><?=$myrow['deladd3']?> <?=$myrow['deladd4'] ?> <?=$myrow['deladd5']?><br><br><br>
       		</td>
@@ -262,11 +262,11 @@ IF(mail( $MailTo, $MailSubject, $MailMessage, $headers )){
 	<tr>
 <?
 if($_REQUEST['POLine'] == 1){
-?>	
+?>
 		<td align="center">PO Line</td>
 <?
 }
-?>		
+?>
 		<td align="center">Stock Code</td>
 		<td align="center">Description</td>
 		<td align="center">Quantity Ordered</td>
@@ -279,11 +279,11 @@ For( $j=0; $j<$i; $j++)
 	<tr>
 <?
 	if($_REQUEST['POLine']){
-?>	
+?>
 		<td align='right'><?=$POLine[$j]?></td>
 <?
 	}
-?>		
+?>
 		<td><?=$StkCode[$j]?></td>
 		<td><?=$DscCode[$j]?></td>
 		<td align="right"><?=$QtyCode[$j]?></td>
@@ -291,7 +291,7 @@ For( $j=0; $j<$i; $j++)
    	</tr>
 <?
 }
-?>   
+?>
 </table>
 </body>
 </html>

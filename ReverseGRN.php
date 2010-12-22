@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-$PageSecurity = 11;
+//$PageSecurity = 11;
 
 /* Session started in header.inc for password checking and authorisation level check */
 
@@ -143,7 +143,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 /*Need to update or delete the existing GRN item */
 	if ($QtyToReverse==$GRN['qtyrecd']){ //then ok to delete the whole thing
 	/* if this is not deleted then the purchorderdetail line cannot be deleted subsequentely */
-		
+
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GRN record could not be deleted because');
 		$DbgMsg = _('The following SQL to delete the GRN record was used');
 		$result = DB_query('DELETE FROM grns WHERE grnno="' . $_GET['GRNNo'] . '"',$db,$ErrMsg,$DbgMsg,true);
@@ -151,7 +151,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		$SQL = "UPDATE grns
 						SET qtyrecd = qtyrecd - $QtyToReverse
 						WHERE grns.grnno='" . $_GET['GRNNo'] . "'";
-				
+
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GRN record could not be updated') . '. ' . _('This reversal of goods received has not been processed because');
 		$DbgMsg = _('The following SQL to insert the GRN record was used');
 		$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -175,16 +175,16 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
 		$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
-		
+
 		/*now reverse the cost put to fixedassets */
 		$SQL = "UPDATE fixedassets SET cost = cost - " . ($GRN['stdcostunit'] * $QtyToReverse)  . "
 												WHERE assetid = '" . $GRN['assetid'] . "'";
 		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost addition could not be reversed:');
 		$DbgMsg = _('The following SQL was used to attempt the reduce the cost of the asset was:');
 		$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
-	
+
 	} //end of if it is an asset
-	
+
 	$SQL = "SELECT stockmaster.controlled
 						FROM stockmaster
 						WHERE stockmaster.stockid = '" . $GRN['itemcode'] . "'";
@@ -244,7 +244,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 																			'" . $GRN['stdcostunit'] . "',
 																			'" . ($QtyOnHandPrior - $QtyToReverse) . "'
 																			)";
-															
+
   		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the stock movement records was used');
 		$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -326,7 +326,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 	 } /* end of if GL and stock integrated*/
 
-	
+
 	$Result = DB_Txn_Commit($db);
 
 	echo '<br>' . _('GRN number') . ' ' . $_GET['GRNNo'] . ' ' . _('for') . ' ' . $QtyToReverse . ' x ' . $GRN['itemcode'] . ' - ' . $GRN['itemdescription'] . ' ' . _('has been reversed') . '<br>';
@@ -361,7 +361,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 								FROM grns
 								WHERE grns.supplierid = '" . $_POST['SupplierID'] . "'
 								AND (grns.qtyrecd-grns.quantityinv) >0";
-					
+
 		$ErrMsg = _('An error occurred in the attempt to get the outstanding GRNs for') . ' ' . $_POST['SuppName'] . '. ' . _('The message was') . ':';
   		$DbgMsg = _('The SQL that failed was') . ':';
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);

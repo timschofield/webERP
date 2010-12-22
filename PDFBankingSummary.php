@@ -4,7 +4,7 @@
 
 /* $Revision: 1.14 $ */
 
-$PageSecurity = 3;
+//$PageSecurity = 3;
 include ('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -88,7 +88,7 @@ $SQL = "SELECT debtorsmaster.name,
 							ON debtorsmaster.debtorno=debtortrans.debtorno
 							WHERE debtortrans.transno='" . $_POST['BatchNo'] . "'
 							AND debtortrans.type=12";
-						
+
 $CustRecs=DB_query($SQL,$db,'','',false,false);
 if (DB_error_no($db)!=0){
 	$title = _('Create PDF Print-out For A Batch Of Receipts');
@@ -151,7 +151,7 @@ while ($myrow=DB_fetch_array($CustRecs)){
 
 /* Right now print out the GL receipt entries in the batch */
 while ($myrow=DB_fetch_array($GLRecs)){
-	
+
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format((-$myrow['amount']*$ExRate*$FunctionalExRate),2), 'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,$myrow['narrative'], 'left');
 	$YPos -= ($line_height);

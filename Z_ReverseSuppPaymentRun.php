@@ -4,7 +4,7 @@
 
 /* Script to delete all supplier payments entered or created from a payment run on a specified day
  */
-$PageSecurity=15;
+//$PageSecurity=15;
 include ('includes/session.inc');
 $title = _('Reverse and Delete Supplier Payments');
 include('includes/header.inc');

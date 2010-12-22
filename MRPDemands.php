@@ -6,7 +6,7 @@
 // to pass values of $db and $StockID to functions. - when just used $db as variable,
 // got error: Catchable fatal error: Object of class mysqli could not be converted to string
 
-$PageSecurity=9;
+//$PageSecurity=9;
 
 include('includes/session.inc');
 $title = _('MRP Demands');

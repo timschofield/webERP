@@ -10,7 +10,7 @@ purchase price variance calculated when the shipment is closed */
 
 include('includes/DefineSuppTransClass.php');
 
-$PageSecurity = 5;
+//$PageSecurity = 5;
 
 /* Session started here for password checking and authorisation level check */
 include('includes/session.inc');
@@ -46,7 +46,7 @@ if (isset($_POST['AddShiptChgToInvoice'])){
 			$InputError = True;
 		}
 	}
-	
+
 	if (!is_numeric($_POST['Amount'])){
 		prnMsg(_('The amount entered is not numeric') . '. ' . _('This shipment charge cannot be added to the invoice'),'error');
 		$InputError = True;

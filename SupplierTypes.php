@@ -2,7 +2,7 @@
 /* $Revision: 1.6 $ */
 /* $Id$*/
 
-$PageSecurity = 4;
+//$PageSecurity = 4;
 
 include('includes/session.inc');
 $title = _('Supplier Types') . ' / ' . _('Maintenance');

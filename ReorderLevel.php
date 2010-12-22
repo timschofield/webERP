@@ -6,7 +6,7 @@
 
 // ReorderLevel.php - Report of parts with quantity below reorder level
 // Shows if there are other locations that have quantities for the parts that are short
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include('includes/session.inc');
 If (isset($_POST['PrintPDF'])) {
 

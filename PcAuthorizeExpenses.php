@@ -1,7 +1,7 @@
 <?php
 /* $Revision: 1.0 $ */
 
-$PageSecurity = 6;
+//$PageSecurity = 6;
 
 include('includes/session.inc');
 $title = _('Authorization of Petty Cash Expenses');

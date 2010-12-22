@@ -5,7 +5,7 @@
 /* $Revision: 1.5 $ */
 
 // MRPReport.php - Shows supply and demand for a part as determined by MRP
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include('includes/session.inc');
 
 if (isset($_POST['Select'])) {

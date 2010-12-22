@@ -20,7 +20,7 @@
 
 include('includes/DefineSuppAllocsClass.php');
 
-$PageSecurity = 5;
+//$PageSecurity = 5;
 
 include('includes/session.inc');
 
@@ -238,7 +238,7 @@ if (isset($_POST['UpdateDatabase'])){
 															'" . $_SESSION['CompanyRecord']['creditorsact'] . "',
 															'" . _('Exch Diff') . "',
 															'" . -$MovtInDiffOnExch . "')";
-									
+
 		      $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ' : ' .
 		      			 _('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
 
@@ -324,7 +324,7 @@ If (isset($_GET['AllocTrans'])){
 							    WHERE supptrans.type = systypes.typeid
 							    AND supptrans.supplierno = suppliers.supplierid
 							    AND supptrans.id='" . $_SESSION['AllocTrans'] . "'";
-					
+
 	$Result = DB_query($SQL, $db);
 	if (DB_num_rows($Result) != 1){
 	echo _('There was a problem retrieving the information relating the transaction selected') . '. ' . _('Allocations are unable to proceed');

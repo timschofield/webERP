@@ -6,7 +6,7 @@ an array of GLCodes objects - only used if the AP - GL link is effective */
 
 include('includes/DefineSuppTransClass.php');
 
-$PageSecurity = 5;
+//$PageSecurity = 5;
 
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');

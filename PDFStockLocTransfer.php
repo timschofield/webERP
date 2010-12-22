@@ -4,7 +4,7 @@
 
 /* $Revision: 1.12 $ */
 
-$PageSecurity =1;
+//$PageSecurity =1;
 
 $title = _('Stock Location Transfer Docket Error');
 include('includes/session.inc');

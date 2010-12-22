@@ -3,7 +3,7 @@
 /* $Id$*/
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
-$PageSecurity = 3;
+//$PageSecurity = 3;
 include('includes/session.inc');
 
 $title = _('Specify Credited Controlled Items');
@@ -28,7 +28,7 @@ if (isset($_GET['LineNo'])){
         $LineNo = $_GET['LineNo'];
 } elseif (isset($_POST['LineNo'])){
         $LineNo = $_POST['LineNo'];
-} else { 
+} else {
 	echo '<div class="centre"><a href="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Select Credit Items'). '</a><br><br>';
 	prnMsg( _('This page can only be opened if a Line Item on a credit note has been selected.') . ' ' . _('Please do that first'), 'error');
 	echo '</div>';

@@ -3,7 +3,7 @@
 /* $Revision: 1.20 $ */
 /* $Id$*/
 
-$PageSecurity =11;
+//$PageSecurity =11;
 
 include ('includes/session.inc');
 
@@ -459,18 +459,18 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 						break;
 					case 'SN':
 						/*Store Number - get the branch details from the store number - snag here too cos need to ensure got the Customer detail first before try looking up its branches */
-						$BranchResult = DB_query("SELECT branchcode, 
-										brname, 
+						$BranchResult = DB_query("SELECT branchcode,
+										brname,
 										braddress1,
-										braddress2, 
-										braddress3, 
-										braddress4, 
-										braddress5, 
-										braddress6, 
-										contactname, 
-										defaultlocation, 
-										phoneno, 
-										email 
+										braddress2,
+										braddress3,
+										braddress4,
+										braddress5,
+										braddress6,
+										contactname,
+										defaultlocation,
+										phoneno,
+										email
 									FROM custbranch INNER JOIN debtorsmaster ON custbranch.debtorno = custbranch.debtorno WHERE custbranchcode='" . $NAD_C082[0] . "' AND custbranch.debtorno='" . $Order->DebtorNo . "' AND debtorsmaster.ediorders=1",$db);
 						if (DB_num_rows($BranchResult)!=1){
 							$EmailText .= "\n" . _('The Store number was specified as') . ' ' . $NAD_C082[0] . ' ' . _('Unfortunately there are either no branches of customer code') . ' ' . $Order->DebtorNo . ' ' ._('or several that match this store number') . '. ' . _('This order could not be processed further');

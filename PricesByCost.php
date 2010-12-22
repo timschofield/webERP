@@ -1,7 +1,7 @@
 <?php
 /* $Id$ */
 // PricesByCost.php -
-$PageSecurity = 11;
+//$PageSecurity = 11;
 include ('includes/session.inc');
 $title = _('Update of Prices By Cost');
 include ('includes/header.inc');

@@ -4,7 +4,7 @@
 
 /* $Revision: 1.7 $ */
 // MRPShortages.php - Report of parts with demand greater than supply as determined by MRP
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include('includes/session.inc');
 
 $sql='show tables where Tables_in_'.$_SESSION['DatabaseName'].'="mrprequirements"';

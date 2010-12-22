@@ -1,7 +1,7 @@
 <?php
 /* $Id$*/
 
-$PageSecurity = 11; // only allow accountant access
+//$PageSecurity = 11; // only allow accountant access
 
 if (isset($_POST['TaxAuthority'])){
 	$TaxAuthority = $_POST['TaxAuthority'];

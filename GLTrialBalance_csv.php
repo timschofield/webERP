@@ -6,10 +6,10 @@
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
 while the user is selecting the criteria the system is posting any unposted transactions */
 
-/*Needs to have FromPeriod and ToPeriod sent with URL 
+/*Needs to have FromPeriod and ToPeriod sent with URL
  * also need to work on authentication with username and password sent too*/
 
-$PageSecurity = 8;
+//$PageSecurity = 8;
 $AllowAnyone =true;
 //$_POST['UserNameEntryField'] = $_GET['Identifier'];
 //$_POST['Password'] = $_GET['IdentifierCheck'];
@@ -71,7 +71,7 @@ while ($myrow=DB_fetch_array($AccountsResult)) {
 				$AccountPeriodBudget = $myrow['firstprdbfwd'] + $myrow['lastprdbudgetcfwd'] - $myrow['firstprdbudgetbfwd'];
 			}
 	}
-	
+
 	$CSV_File .= $myrow['accountcode'] . ', ' . stripcomma($myrow['accountname']) . ', ' . $AccountPeriodActual . ', ' . $AccountPeriodBudget  . "\n";
 }
 

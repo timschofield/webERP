@@ -2,7 +2,7 @@
 /* $Revision: 1.3 $ */
 /* $Id$*/
 
-$PageSecurity = 2;
+//$PageSecurity = 2;
 
 include('includes/session.inc');
 $title = _('View Currency Trends');

@@ -2,7 +2,7 @@
 /* $Revision: 1.16 $ */
 /* $Id$*/
 
-$PageSecurity = 3;
+//$PageSecurity = 3;
 include('includes/session.inc');
 $title = _('Credit Status Code Maintenance');
 include('includes/header.inc');

@@ -2,7 +2,7 @@
 /* $Revision: 1.23 $ */
 /* $Id$*/
 
-$PageSecurity = 7;
+//$PageSecurity = 7;
 
 include("includes/session.inc");
 $title = _('Bank Account Matching');

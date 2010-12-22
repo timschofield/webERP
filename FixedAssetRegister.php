@@ -1,5 +1,5 @@
 <?php
-$PageSecurity = 11;
+//$PageSecurity = 11;
 include ('includes/session.inc');
 $title = _('Fixed Asset Register');
 $csv_output = '';
@@ -58,7 +58,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 			$CategoryRow=DB_fetch_array($CategoryResult);
 			$AssetCategory=$CategoryRow['categorydescription'];
 		}
-	
+
 		if ($_POST['AssetID']=='%') {
 			$AssetDescription =_('All');
 		} else {
@@ -96,7 +96,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	$TotalDepn = 0;
 	$TotalDisposals = 0;
 	$TotalNBV = 0;
-	
+
 	while ($myrow = DB_fetch_array($result)) {
 		/*
 		 * $Ancestors = array();
@@ -198,7 +198,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		$LeftOvers = $pdf->addTextWrap($XPos + 550, $YPos, 70, $FontSize, number_format($TotalCostCfwd, 0), 'right');
 		$LeftOvers = $pdf->addTextWrap($XPos + 620, $YPos, 70, $FontSize, number_format($TotalDepnCfwd, 0), 'right');
 		$LeftOvers = $pdf->addTextWrap($XPos + 690, $YPos, 70, $FontSize, number_format($TotalNBV, 0), 'right');
-		
+
 		$pdf->Output($_SESSION['DatabaseName'] . '_Asset Register_' . date('Y-m-d') . '.pdf', 'I');
 		exit;
 	} elseif (isset($_POST['csv'])) {
@@ -230,7 +230,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 } else {
 	include ('includes/header.inc');
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
-	
+
 	$result = DB_query('SELECT categoryid,categorydescription FROM fixedassetcategories', $db);
 	echo '<form name="RegisterForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><table class=selection>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -306,18 +306,18 @@ function PDFPageHeader (){
 				$line_height;
 				$AssetDescription;
 				$AssetCategory;
-				
+
 	if ($PageNumber>1){
 		$pdf->newPage();
 	}
-	
+
 	$FontSize=10;
 	$YPos= $Page_Height-$Top_Margin;
 	$XPos=0;
 	$pdf->addJpegFromFile($_SESSION['LogoFile'] ,$XPos+20,$YPos-50,0,60);
-	
-	
-	
+
+
+
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos,240,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos-($line_height*1),240,$FontSize, _('Asset Category ').' ' . $AssetCategory );
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos-($line_height*2),240,$FontSize, _('Asset Location ').' ' . $_POST['AssetLocation'] );
@@ -325,21 +325,21 @@ function PDFPageHeader (){
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos-($line_height*4),240,$FontSize, _('From').': ' . $_POST['FromDate']);
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos-($line_height*5),240,$FontSize, _('To').': ' . $_POST['ToDate']);
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos-($line_height*7),240,$FontSize, _('Page'). ' ' . $PageNumber);
-	
+
 	$YPos -= 60;
-	
+
 	$YPos -=2*$line_height;
 	//Note, this is ok for multilang as this is the value of a Select, text in option is different
-	
+
 	$YPos -=(2*$line_height);
-	
+
 	/*Draw a rectangle to put the headings in     */
 	$YTopLeft=$YPos+$line_height;
 	$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
 	$pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos- $line_height);
 	$pdf->line($Left_Margin, $YPos- $line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
 	$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
-	
+
 	/*set up the headings */
 	$FontSize=10;
 	$XPos = $Left_Margin+1;
@@ -356,15 +356,15 @@ function PDFPageHeader (){
 	$LeftOvers = $pdf->addTextWrap($XPos+620,$YPos,70,$FontSize,  _('Depn C/Fwd'), 'centre');
 	$LeftOvers = $pdf->addTextWrap($XPos+690,$YPos,70,$FontSize,  _('Net Book Value'), 'centre');
 	//$LeftOvers = $pdf->addTextWrap($XPos+760,$YPos,70,$FontSize,  _('Disposal Proceeds'), 'centre');
-	
+
 	$pdf->line($Left_Margin, $YTopLeft,$Page_Width-$Right_Margin, $YTopLeft);
 	$pdf->line($Left_Margin, $YTopLeft,$Left_Margin, $Bottom_Margin);
 	$pdf->line($Left_Margin, $Bottom_Margin,$Page_Width-$Right_Margin, $Bottom_Margin);
 	$pdf->line($Page_Width-$Right_Margin, $Bottom_Margin,$Page_Width-$Right_Margin, $YTopLeft);
-	
+
 	$FontSize=8;
 	$YPos -= (1.5 * $line_height);
-	
+
 	$PageNumber++;
 }
 

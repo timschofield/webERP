@@ -1,7 +1,7 @@
 <?php
 /* $Id$*/
 
-$PageSecurity = 11;
+//$PageSecurity = 11;
 
 include('includes/session.inc');
 
@@ -520,10 +520,10 @@ if (! isset($_GET['delete'])) {
 			echo '</select></td>
 					<td><input type="textbox" name="PropDefault' . $PropertyCounter . '" value="' . $myrow['defaultvalue'] . '"></td>
 					<td><input type="checkbox" name="PropNumeric' . $PropertyCounter . '"';
-					
+
 			if ($myrow['numericvalue'] ==1){
 				echo 'checked';
-			} 
+			}
 			echo '"></td>
 					<td><input type="textbox" "name="PropMinimum' . $PropertyCounter . '" value="' . $myrow['minimumvalue'] . '"></td>
 						<td><input type="textbox" name="PropMaximum' . $PropertyCounter . '" value="' . $myrow['maximumvalue'] . '"></td>';

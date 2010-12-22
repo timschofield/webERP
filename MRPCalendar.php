@@ -5,7 +5,7 @@
 // MRPCalendar.php
 // Maintains the calendar of valid manufacturing dates for MRP
 
-$PageSecurity=9;
+//$PageSecurity=9;
 
 include('includes/session.inc');
 $title = _('MRP Calendar');

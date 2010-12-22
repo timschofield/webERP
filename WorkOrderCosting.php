@@ -1,7 +1,7 @@
 <?php
 /* $Id$*/
 
-$PageSecurity = 11;
+//$PageSecurity = 11;
 
 include('includes/session.inc');
 $title = _('Work Order Costing');

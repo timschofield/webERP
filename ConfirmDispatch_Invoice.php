@@ -6,7 +6,7 @@
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include('includes/session.inc');
 $title = _('Confirm Dispatches and Invoice An Order');
 

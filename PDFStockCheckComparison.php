@@ -4,7 +4,7 @@
 
 /* $Revision: 1.18 $ */
 
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include('includes/session.inc');
 
 If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){

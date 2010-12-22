@@ -4,7 +4,7 @@
 
 /* $Revision: 1.11 $ */
 
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include('includes/session.inc');
 
 If (isset($_POST['PrintPDF'])
@@ -44,7 +44,7 @@ If (isset($_POST['PrintPDF'])
 								AND grns.supplierid <='" . $_POST['ToCriteria'] . "'
 								ORDER BY supplierid,
 									grnno";
-						
+
 	$GRNsResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {

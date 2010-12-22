@@ -6,7 +6,7 @@
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
 
-$PageSecurity = 5;
+//$PageSecurity = 5;
 
 include('includes/DefineSuppTransClass.php');
 /* Session started in header.inc for password checking and authorisation level check */
@@ -30,7 +30,7 @@ if (!isset($_SESSION['SuppTrans'])){
 otherwise it wouldnt show the latest additions*/
 if (isset($_POST['AddPOToTrans']) AND $_POST['AddPOToTrans']!=''){
 	foreach($_SESSION['SuppTransTmp']->GRNs as $GRNTmp) { //loop around temp GRNs array
-		if ($_POST['AddPOToTrans']==$GRNTmp->PONo) { 
+		if ($_POST['AddPOToTrans']==$GRNTmp->PONo) {
 			$_SESSION['SuppTrans']->Copy_GRN_To_Trans($GRNTmp); //copy from  temp GRNs array to entered GRNs array
 			$_SESSION['SuppTransTmp']->Remove_GRN_From_Trans($GRNTmp->GRNNo); //remove from temp GRNs array
 		}

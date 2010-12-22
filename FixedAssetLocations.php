@@ -1,6 +1,6 @@
 <?php
 
-$PageSecurity = 11;
+//$PageSecurity = 11;
 
 include('includes/session.inc');
 $title = _('Fixed Asset Locations');
@@ -60,7 +60,7 @@ if (isset($_POST['update']) and !isset($_POST['delete'])) {
 	// if you are not updating then you want to delete but lets be sure first.
 	if (isset($_POST['delete']))  {
 		$InputError=0;
-		
+
 		$sql="SELECT COUNT(locationid) FROM fixedassetlocations WHERE parentlocationid='" . $_POST['LocationID']."'";
 		$result = DB_query($sql,$db);
 		$myrow=DB_fetch_row($result);
@@ -99,7 +99,7 @@ while ($myrow=DB_fetch_array($result)) {
 	$parentresult=DB_query($parentsql, $db);
 	$parentrow=DB_fetch_array($parentresult);
 	echo '<td>'.$parentrow['locationdescription'].'</td>';
-	echo '<td><a href="'.$_SERVER['PHP_SELF'] . '?' . SID.'SelectedLocation='.$myrow['locationid'].'">' .  _('Edit') . '</td>'; 
+	echo '<td><a href="'.$_SERVER['PHP_SELF'] . '?' . SID.'SelectedLocation='.$myrow['locationid'].'">' .  _('Edit') . '</td>';
 }
 
 echo '</table><br>';

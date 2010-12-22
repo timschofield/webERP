@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-$PageSecurity = 10;
+//$PageSecurity = 10;
 
 include('includes/session.inc');
 $title = _('Work Order Entry');

@@ -4,7 +4,7 @@
 
 include('includes/DefineJournalClass.php');
 
-$PageSecurity = 10;
+//$PageSecurity = 10;
 include('includes/session.inc');
 $title = _('Depreciation Journal Entry');
 
@@ -13,11 +13,11 @@ include('includes/SQL_CommonFunctions.inc');
 
 
 /*Get the last period depreciation (depn is transtype =44) was posted for */
-$result = DB_query('SELECT periods.lastdate_in_period, 
-											max(fixedassettrans.periodno) 
-									FROM fixedassettrans INNER JOIN periods 
-									ON fixedassettrans.periodno=periods.periodno 
-									WHERE transtype=44 
+$result = DB_query('SELECT periods.lastdate_in_period,
+											max(fixedassettrans.periodno)
+									FROM fixedassettrans INNER JOIN periods
+									ON fixedassettrans.periodno=periods.periodno
+									WHERE transtype=44
 									GROUP BY periods.lastdate_in_period',$db);
 
 $LastDepnRun = DB_fetch_row($result);
@@ -27,13 +27,13 @@ $LastDepnRun = DB_fetch_row($result);
 $AllowUserEnteredProcessDate = true;
 
 if ($LastDepnRun[1]==0 AND $LastDepnRun[0]==NULL) { //then depn has never been run yet?
-	
+
 	/*in this case default depreciation calc to the last day of last month - and allow user to select a period */
 	if (!isset($_POST['ProcessDate'])) {
 		$_POST['ProcessDate'] = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m'),0,date('Y')));
 	}
-	
-} else { //depn calc has been run previously 
+
+} else { //depn calc has been run previously
 	$AllowUserEnteredProcessDate = false;
 	$_POST['ProcessDate'] = DateAdd(ConvertSQLDate($LastDepnRun[0]),'m',1);
 }
@@ -157,9 +157,9 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 	$TotalCost +=$AssetRow['cost'];
 	$TotalAccumDepn +=$AssetRow['accumdepn'];
 	$TotalDepn +=$NewDepreciation;
-	
+
 	if (isset($_POST['CommitDepreciation']) AND $NewDepreciation !=0 AND $InputError==false){
-		
+
 		//debit depreciation expense
 		$SQL = "INSERT INTO gltrans (type,
 																typeno,
@@ -167,7 +167,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 																periodno,
 																account,
 																narrative,
-																amount) 
+																amount)
 												VALUES (44,
 															'" . $TransNo . "',
 															'" . FormatDateForSQL($_POST['ProcessDate']) . "',
@@ -184,7 +184,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 																periodno,
 																account,
 																narrative,
-																amount) 
+																amount)
 												VALUES (44,
 															'" . $TransNo . "',
 															'" . FormatDateForSQL($_POST['ProcessDate']) . "',
@@ -193,7 +193,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 															'" . $AssetRow['assetid'] . "',
 															'" . -$NewDepreciation ."')";
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-		
+
 		//insert the fixedassettrans record
 		$SQL = "INSERT INTO fixedassettrans (assetid,
 																			transtype,
@@ -214,7 +214,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 		$ErrMsg = _('Cannot insert a fixed asset transaction entry for the depreciation because');
 		$DbgMsg = _('The SQL that failed to insert the fixed asset transaction record was');
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-		
+
 		/*now update the accum depn in fixedassets */
 		$SQL = "UPDATE fixedassets SET accumdepn = accumdepn + " . $NewDepreciation  . "
 												WHERE assetid = '" . $AssetRow['assetid'] . "'";

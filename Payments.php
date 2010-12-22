@@ -3,7 +3,7 @@
 /* $Id$*/
 /* $Revision: 1.39 $ */
 
-$PageSecurity = 5;
+//$PageSecurity = 5;
 
 include('includes/DefinePaymentClass.php');
 include('includes/session.inc');

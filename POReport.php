@@ -6,7 +6,7 @@
 // Inquiry on Purchase Orders
 // If Date Type is Order, the main file is purchorderdetails
 // If Date Type is Delivery, the main file is grns
-$PageSecurity=2;
+//$PageSecurity=2;
 
 include('includes/session.inc');
 $title = _('Purchase Order Report');

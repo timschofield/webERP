@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-$PageSecurity = 11;
+//$PageSecurity = 11;
 include('includes/DefineShiptClass.php');
 include('includes/session.inc');
 $title = _('Shipments');

@@ -3,7 +3,7 @@
 /* $Id$*/
 // MRPPlannedWorkOrders.php - Report of manufactured parts that MRP has determined should have
 // work orders created for them
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include('includes/session.inc');
 $sql='show tables where Tables_in_'.$_SESSION['DatabaseName'].'="mrprequirements"';
 $result=DB_query($sql,$db);

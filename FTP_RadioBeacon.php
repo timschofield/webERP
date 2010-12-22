@@ -4,7 +4,7 @@
 
 /*Variables required to configure this script must be set in config.php */
 
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include('includes/session.inc');
 $title=_('FTP order to Radio Beacon');
 include('includes/header.inc');

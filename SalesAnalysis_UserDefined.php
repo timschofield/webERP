@@ -2,7 +2,7 @@
 
 /* $Id$ */
 
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include('includes/session.inc');
 
 if (!in_array($PageSecurity,$_SESSION['AllowedPageSecurityTokens'])){

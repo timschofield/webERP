@@ -3,7 +3,7 @@
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockAdjustment.php');
 
-$PageSecurity = 11;
+//$PageSecurity = 11;
 include('includes/session.inc');
 
 $title = _('Adjusting Controlled Items');

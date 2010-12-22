@@ -4,7 +4,7 @@
 
 /* $Revision: 1.5 $ */
 
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include('includes/session.inc');
 
 if (isset($_POST['GRNNo'])) {

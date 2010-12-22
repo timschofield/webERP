@@ -1,7 +1,7 @@
 <?php
 /* $Revision: 1.2 $ */
 
-$PageSecurity = 10;
+//$PageSecurity = 10;
 
 $Version_adds= "1.2";
 

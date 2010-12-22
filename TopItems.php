@@ -1,6 +1,6 @@
 <?php
 /* $Revision: 1.3 $ */
-$PageSecurity = 2;
+//$PageSecurity = 2;
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
 include ('includes/session.inc');

@@ -2,7 +2,7 @@
 
 /* $Id$ */
 
-$PageSecurity = 1;
+//$PageSecurity = 1;
 $AllowAnyone = true;
 
 $FromCriteria ='1'; /*Category From */
@@ -63,48 +63,48 @@ $line_height = 12;
 /*Now figure out the inventory data to report for the category range under review */
 if ($Location=='All'){
 
-	$SQL = "SELECT stockmaster.categoryid, 
-			stockcategory.categorydescription, 
-			stockmaster.stockid, 
-			stockmaster.description, 
-			SUM(locstock.quantity) as qtyonhand, 
+	$SQL = "SELECT stockmaster.categoryid,
+			stockcategory.categorydescription,
+			stockmaster.stockid,
+			stockmaster.description,
+			SUM(locstock.quantity) as qtyonhand,
 			stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
-			SUM(locstock.quantity) *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal 
-		FROM stockmaster, 
-			stockcategory, 
-			locstock 
-		WHERE stockmaster.stockid=locstock.stockid 
-		AND stockmaster.categoryid=stockcategory.categoryid 
-		GROUP BY stockmaster.categoryid, 
-			stockcategory.categorydescription, 
-			unitcost, 
-			stockmaster.stockid, 
-			stockmaster.description 
-		HAVING SUM(locstock.quantity)!=0 
-		AND stockmaster.categoryid >= '" . $FromCriteria . "' 
-		AND stockmaster.categoryid <= '" . $ToCriteria . "' 
-		ORDER BY stockmaster.categoryid, 
+			SUM(locstock.quantity) *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
+		FROM stockmaster,
+			stockcategory,
+			locstock
+		WHERE stockmaster.stockid=locstock.stockid
+		AND stockmaster.categoryid=stockcategory.categoryid
+		GROUP BY stockmaster.categoryid,
+			stockcategory.categorydescription,
+			unitcost,
+			stockmaster.stockid,
+			stockmaster.description
+		HAVING SUM(locstock.quantity)!=0
+		AND stockmaster.categoryid >= '" . $FromCriteria . "'
+		AND stockmaster.categoryid <= '" . $ToCriteria . "'
+		ORDER BY stockmaster.categoryid,
 			stockmaster.stockid";
 
 } else {
 
-	$SQL = "SELECT stockmaster.categoryid, 
-			stockcategory.categorydescription, 
-			stockmaster.stockid, 
-			stockmaster.description, 
-			locstock.quantity as qtyonhand, 
-			stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost, 
-			locstock.quantity *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal 
-		FROM stockmaster, 
-			stockcategory, 
-			locstock 
-		WHERE stockmaster.stockid=locstock.stockid 
-		AND stockmaster.categoryid=stockcategory.categoryid 
-		AND locstock.quantity!=0 
-		AND stockmaster.categoryid >= '" . $FromCriteria . "' 
-		AND stockmaster.categoryid <= '" . $ToCriteria . "' 
-		AND locstock.loccode = '" . $Location . "' 
-		ORDER BY stockmaster.categoryid, 
+	$SQL = "SELECT stockmaster.categoryid,
+			stockcategory.categorydescription,
+			stockmaster.stockid,
+			stockmaster.description,
+			locstock.quantity as qtyonhand,
+			stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
+			locstock.quantity *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
+		FROM stockmaster,
+			stockcategory,
+			locstock
+		WHERE stockmaster.stockid=locstock.stockid
+		AND stockmaster.categoryid=stockcategory.categoryid
+		AND locstock.quantity!=0
+		AND stockmaster.categoryid >= '" . $FromCriteria . "'
+		AND stockmaster.categoryid <= '" . $ToCriteria . "'
+		AND locstock.loccode = '" . $Location . "'
+		ORDER BY stockmaster.categoryid,
 			stockmaster.stockid";
 
 }

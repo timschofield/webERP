@@ -2,7 +2,7 @@
 /* $Revision: 1.7 $ */
 /* $Id$*/
 
-$PageSecurity=9;
+//$PageSecurity=9;
 
 include('includes/session.inc');
 $title = _('Run MRP Calculation');

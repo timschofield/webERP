@@ -2,7 +2,7 @@
 /* $Revision: 1.25 $ */
 /* $Id$*/
 
-$PageSecurity = 2;
+//$PageSecurity = 2;
 
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');

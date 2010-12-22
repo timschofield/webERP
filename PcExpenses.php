@@ -1,7 +1,7 @@
 <?php
 /* $Revision: 1.0$ */
 
-$PageSecurity = 15;
+//$PageSecurity = 15;
 
 include('includes/session.inc');
 $title = _('Maintenance Of Petty Cash Of Expenses');

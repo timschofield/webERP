@@ -2,7 +2,7 @@
 /* $Revision: 1.3 $ */
 /* $Id$*/
 
-$PageSecurity=9;
+//$PageSecurity=9;
 
 include('includes/session.inc');
 $title = _('MRP Demand Types');

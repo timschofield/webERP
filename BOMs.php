@@ -2,7 +2,7 @@
 /* $Revision: 1.37 $ */
 /* $Id$*/
 
-$PageSecurity = 9;
+//$PageSecurity = 9;
 
 include('includes/session.inc');
 

@@ -3,7 +3,7 @@
 /* $Id$*/
 /* $Revision: 1.9 $ */
 
-$PageSecurity = 8;
+//$PageSecurity = 8;
 include ('includes/session.inc');
 
 $title = _('GL Codes Inquiry');

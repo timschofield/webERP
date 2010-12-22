@@ -2,7 +2,7 @@
 /* $Id$*/
 /* contributed by Chris Bice */
 
-$PageSecurity = 11;
+//$PageSecurity = 11;
 include('includes/session.inc');
 $title = _('Inventory Location Transfer Shipment');
 include('includes/header.inc');

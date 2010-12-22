@@ -8,10 +8,10 @@ include('includes/header.inc');
 
 echo '<font size=4><b>' . _('Suppliers Balances By Currency Totals') . '</b></font>';
 
-$sql = 'SELECT SUM(ovamount+ovgst-alloc) AS currencybalance, 
-		currcode, 
-		SUM((ovamount+ovgst-alloc)/rate) AS localbalance 
-		FROM supptrans INNER JOIN suppliers ON supptrans.supplierno=suppliers.supplierid 
+$sql = 'SELECT SUM(ovamount+ovgst-alloc) AS currencybalance,
+		currcode,
+		SUM((ovamount+ovgst-alloc)/rate) AS localbalance
+		FROM supptrans INNER JOIN suppliers ON supptrans.supplierno=suppliers.supplierid
 		WHERE (ovamount+ovgst-alloc)<>0 GROUP BY currcode';
 
 $result = DB_query($sql,$db);

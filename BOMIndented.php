@@ -5,7 +5,7 @@
 /* $Revision: 1.5 $ */
 
 // BOMIndented.php - Indented Bill of Materials
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include('includes/session.inc');
 
 if (isset($_POST['PrintPDF'])) {

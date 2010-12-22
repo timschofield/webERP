@@ -1,6 +1,6 @@
 <?php
 
-$PageSecurity = 8;
+//$PageSecurity = 8;
 include ('includes/session.inc');
 $title = _('Daily Banking Inquiry');
 include('includes/header.inc');

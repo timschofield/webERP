@@ -3,7 +3,7 @@
 /* Script to make stock locations for all parts that do not have stock location records set up*/
 
 
-$PageSecurity=15;
+//$PageSecurity=15;
 include ('includes/session.inc');
 $title = _('Make LocStock Records');
 include('includes/header.inc');
@@ -13,9 +13,9 @@ echo '<br><br>' . _('This script makes stock location records for parts where th
 
 $sql = 'INSERT INTO locstock (stockid, loccode)
 		SELECT stockmaster.stockid,
-			locations.loccode 
+			locations.loccode
 		FROM stockmaster CROSS JOIN locations
-			LEFT JOIN locstock 
+			LEFT JOIN locstock
 				ON stockmaster.stockid = locstock.stockid
 				AND locations.loccode = locstock.loccode
                 WHERE locstock.stockid IS NULL';

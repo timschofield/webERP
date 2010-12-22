@@ -2,7 +2,7 @@
 
 /* $Id: $ */
 
-$PageSecurity = 6;
+//$PageSecurity = 6;
 
 include('includes/DefineContractClass.php');
 

@@ -3,7 +3,7 @@
 /*Script to insert a dummy sales order if one is not already set up - at least one order is needed for the sales order pages to work.
 Also inserts a blank company record if one is not already set up */
 
-$PageSecurity=15;
+//$PageSecurity=15;
 include ("includes/session.inc");
 
 $title = _('UTILITY PAGE That sets up a new blank company record if not already existing');

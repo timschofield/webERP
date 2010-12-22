@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-$PageSecurity=15;
+//$PageSecurity=15;
 
 if (isset($_POST['UserID']) AND isset($_POST['ID'])){
 	if ($_POST['UserID'] == $_POST['ID']) {

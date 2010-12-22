@@ -6,7 +6,7 @@
  */
 /* $Id$*/
 
-$PageSecurity=9;
+//$PageSecurity=9;
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 

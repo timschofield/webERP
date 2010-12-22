@@ -1,7 +1,7 @@
 <?php
 /* $Revision: 1.1 $ */
 
-$PageSecurity = 11;
+//$PageSecurity = 11;
 
 include('includes/session.inc');
 
@@ -108,7 +108,7 @@ if (isset($_POST['submit'])) {
 		$ErrMsg = _('Could not insert the new fixed asset category') . $_POST['CategoryDescription'] . _('because');
 		$result = DB_query($sql,$db,$ErrMsg);
 		prnMsg(_('A new fixed asset category record has been added for') . ' ' . $_POST['CategoryDescription'],'success');
-		
+
 	}
 	//run the SQL from either of the above possibilites
 
@@ -226,7 +226,7 @@ if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 	$_POST['DepnAct']  = $myrow['depnact'];
 	$_POST['DisposalAct']  = $myrow['disposalact'];
 	$_POST['AccumDepnAct']  = $myrow['accumdepnact'];
-	
+
 	echo '<input type=hidden name="SelectedCategory" value="' . $SelectedCategory . '">';
 	echo '<input type=hidden name="CategoryID" value="' . $_POST['CategoryID'] . '">';
 	echo '<table class=selection><tr><td>' . _('Category Code') . ':</td><td>' . $_POST['CategoryID'] . '</td></tr>';

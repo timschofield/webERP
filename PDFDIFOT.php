@@ -4,7 +4,7 @@
 
 /* $Revision: 1.4 $ */
 
-$PageSecurity = 3;
+//$PageSecurity = 3;
 include ('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 

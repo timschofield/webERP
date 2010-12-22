@@ -5,7 +5,7 @@
 // that can be processed using Bulk Inventory Transfer - Receive.
 
 
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 If (isset($_POST['PrintPDF'])) {

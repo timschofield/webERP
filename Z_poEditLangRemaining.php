@@ -6,7 +6,7 @@
 
 /* This code is really ugly ... */
 
-$PageSecurity = 15;
+//$PageSecurity = 15;
 
 include ('includes/session.inc');
 

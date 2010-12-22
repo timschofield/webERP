@@ -2,7 +2,7 @@
 /* $Id$*/
 /*Script to Delete all sales transactions*/
 
-$PageSecurity=15;
+//$PageSecurity=15;
 include ('includes/session.inc');
 $title = _('UTILITY PAGE To Changes A Customer Code In All Tables');
 include('includes/header.inc');

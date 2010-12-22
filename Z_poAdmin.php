@@ -3,7 +3,7 @@
 /* Steve Kitchen */
 /* Up front menu for language file maintenance */
 
-$PageSecurity = 15;
+//$PageSecurity = 15;
 
 include ('includes/session.inc');
 

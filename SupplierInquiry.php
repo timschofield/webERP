@@ -4,7 +4,7 @@
 
 include('includes/SQL_CommonFunctions.inc');
 
-$PageSecurity=2;
+//$PageSecurity=2;
 
 include('includes/session.inc');
 $title = _('Supplier Inquiry');
