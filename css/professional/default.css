@@ -34,7 +34,7 @@ img {
 /*links before selection */
 a {
 	font-family: Arial, Verdana, Helvetica;
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: normal;
 	text-decoration: none;
 	color: #0000FF;
@@ -63,7 +63,7 @@ div.centre {
 /*table detail items default format */
 td {
 	font-family: Arial, Verdana, Helvetica;
-	font-size: 12px;
+	font-size: 10px;
 	text-align: left;
 }
 
@@ -115,7 +115,7 @@ td.number {
 
 th {
 	font-weight: normal;
-	font-size: 12px;
+	font-size: 10px;
 	background-color: #cccce5;
 	color: #330000;
 	text-align: center;
@@ -123,7 +123,7 @@ th {
 
 th.number {
 	font-weight: normal;
-	font-size: 12px;
+	font-size: 10px;
 	background-color: #cccce5;
 	color: #330000;
 	text-align: right;
@@ -155,7 +155,7 @@ div.info {
 
 input {
 	font-family: Arial, Verdana, Helvetica;
-	font-size: 12px;
+	font-size: 10px;
 }
 
 input.number{
@@ -172,7 +172,7 @@ input:hover{
 
 select {
 	font-family: Arial, Verdana, Helvetica;
-	font-size: 12px;
+	font-size: 10px;
 }
 
 font.good {
@@ -240,7 +240,7 @@ font.header_title {
 
 textarea{
 	font-family: Arial, Verdana, Helvetica;
-	font-size: 12px;
+	font-size: 10px;
 }
 
 textarea:hover{
@@ -297,7 +297,7 @@ div.csv {
 	width: 100%;
 	margin: 0px;
 	padding: 0px;
- 	font-size: 12px;
+ 	font-size: 10px;
 }
 
 /* Main page heading with quick menu within */
@@ -323,7 +323,7 @@ div.csv {
 /*The main page heading left part before quick menu */
 .quick_menu_left {
 	font-family: Arial, Verdana, Helvetica;
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: bold;
 	border: 0px;
 	white-space: nowrap;
@@ -390,12 +390,12 @@ div.csv {
 }
 
 .system_menu_tabs a {
-	font-size: 12px;
+	font-size: 10px;
    color: black;
 }
 
 .system_menu_tabs a:hover {
-	font-size: 12px;
+	font-size: 10px;
 	color: black;
 }
 
@@ -455,7 +455,7 @@ div.csv {
 
 span.main_menu_nolink {
 	font-family: Arial, Verdana, Helvetica;
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: bold;
 	color: #777777;
 	text-decoration: none;
@@ -503,7 +503,7 @@ span.main_menu_nolink {
 
 .menu_group_headers_text {
 	font-family: Arial, Verdana, Helvetica;
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: bold;
 	color: black;
 }
@@ -532,7 +532,7 @@ span.main_menu_nolink {
         padding-top: 2px;
         padding-bottom: 2px;
 	font-weight: bold;
-	font-size: 12px;
+	font-size: 10px;
 	color: black;
 	TEXT-ALIGN:center;
 }
@@ -577,7 +577,7 @@ DIV.system_check {
 
 span.menu_group_nolink {
 	font-family: Arial, Verdana, Helvetica;
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: normal;
 	color: #777777;
 	text-decoration: none;
