@@ -201,7 +201,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' .
-		_('Search') . '" alt="">' . ' ' . _('Select Customer For Credit Note').'</p>';
+		_('Search') . '" alt="" />' . ' ' . _('Select Customer For Credit Note').'</p>';
 	echo '<table cellpadding=3 colspan=4 class=selection>';
 	echo '<tr><th colspan=5><font size=3 color=navy><b> ' . _('Customer Selection') . '</b></font></th></tr>';
 	echo '<tr>';
@@ -269,7 +269,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
    first add a header to show who we are making a credit note for */
 
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' .
-		_('Search') . '" alt="">' . ' ' . $_SESSION['CreditItems']->CustomerName  . ' - ' . $_SESSION['CreditItems']->DeliverTo.'</p>';
+		_('Search') . '" alt="" />' . ' ' . $_SESSION['CreditItems']->CustomerName  . ' - ' . $_SESSION['CreditItems']->DeliverTo.'</p>';
 
  /* do the search for parts that might be being looked up to add to the credit note */
 	 if (isset($_POST['Search'])){
