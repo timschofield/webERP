@@ -116,8 +116,8 @@ if ($NIL_BALANCE == True){
 }
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-	_('Supplier') . '" alt="">' . ' ' . _('Supplier') . ' : ' . $SupplierRecord['suppname'] . ' - (' . _('All amounts stated in') .
-	  ' ' . $SupplierRecord['currency'] . ')<br><br>' . _('Terms') . ': ' . $SupplierRecord['terms'] . '</p>';
+	_('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : ' . $SupplierRecord['suppname'] . ' - (' . _('All amounts stated in') .
+	  ' ' . $SupplierRecord['currency'] . ')<br /><br />' . _('Terms') . ': ' . $SupplierRecord['terms'] . '</p>';
 
 if (isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])){
 
