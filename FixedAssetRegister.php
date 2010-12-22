@@ -10,7 +10,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		include ('includes/PDFStarter.php');
 	} else if (empty($_POST['csv'])) {
 		include ('includes/header.inc');
-		echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
+		echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>';
 	}
 	$DateFrom = FormatDateForSQL($_POST['FromDate']);
 	$DateTo = FormatDateForSQL($_POST['ToDate']);
@@ -58,7 +58,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 			$CategoryRow=DB_fetch_array($CategoryResult);
 			$AssetCategory=$CategoryRow['categorydescription'];
 		}
-	
+
 		if ($_POST['AssetID']=='%') {
 			$AssetDescription =_('All');
 		} else {
@@ -96,7 +96,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	$TotalDepn = 0;
 	$TotalDisposals = 0;
 	$TotalNBV = 0;
-	
+
 	while ($myrow = DB_fetch_array($result)) {
 		/*
 		 * $Ancestors = array();
@@ -114,7 +114,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		}
 		*/
 		if (Date1GreaterThanDate2(ConvertSQLDate($myrow['disposaldate']),$_POST['FromDate']) OR $myrow['disposaldate']='0000-00-00'){
-			
+
 			if (Date1GreaterThanDate2($_POST['ToDate'], ConvertSQLDate($myrow['disposaldate']))){
 				/*The asset was disposed during the period */
 				$CostCfwd = 0;
@@ -123,9 +123,9 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 				$CostCfwd = $myrow['periodadditions'] + $myrow['costbfwd'];
 				$AccumDepnCfwd = $myrow['periodepn'] + $myrow['depnbfwd'];
 			}
-			
+
 			if (isset($_POST['pdf'])) {
-				
+
 				$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 30 - $Left_Margin, $FontSize, $myrow['assetid']);
 				$LeftOvers = $pdf->addTextWrap($XPos + 30, $YPos, 150 - $Left_Margin, $FontSize, $myrow['description']);
 				$LeftOvers = $pdf->addTextWrap($XPos + 180, $YPos, 40 - $Left_Margin, $FontSize, $myrow['serialno']);
@@ -139,7 +139,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 					$LeftOvers = $pdf->addTextWrap($XPos + 300, $TempYPos, 300 - $Left_Margin, $FontSize, '|_' . $Ancestors[$i]);
 				}
 				* */
-				
+
 				$LeftOvers = $pdf->addTextWrap($XPos + 220, $YPos, 50 - $Left_Margin, $FontSize, ConvertSQLDate($myrow['datepurchased']));
 				$LeftOvers = $pdf->addTextWrap($XPos + 270, $YPos, 70, $FontSize, number_format($myrow['costbfwd'], 0), 'right');
 				$LeftOvers = $pdf->addTextWrap($XPos + 340, $YPos, 70, $FontSize, number_format($myrow['depnbfwd'], 0), 'right');
@@ -148,14 +148,14 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 				$LeftOvers = $pdf->addTextWrap($XPos + 550, $YPos, 70, $FontSize, number_format($CostCfwd, 0), 'right');
 				$LeftOvers = $pdf->addTextWrap($XPos + 620, $YPos, 70, $FontSize, number_format($AccumDepnCfwd, 0), 'right');
 				$LeftOvers = $pdf->addTextWrap($XPos + 690, $YPos, 70, $FontSize, number_format($CostCfwd - $AccumDepnCfwd, 0), 'right');
-				
+
 				$YPos = $TempYPos - (0.8 * $line_height);
 				if ($YPos < $Bottom_Margin + $line_height) {
 					PDFPageHeader();
 				}
 			} elseif (isset($_POST['csv'])) {
 				$csv_output.= $myrow['assetid'] . "," . $myrow['longdescription'] .",".$myrow['serialno'].",".$myrow['locationdescription'].",".$myrow['datepurchased'].",".$myrow['costbfwd'].",".$myrow['periodadditions']."," . $myrow['depnbfwd'] . "," .$myrow['perioddepn'].",". $CostCfwd . ", " . $AccumDepnCfwd . ", " . ($CostCfwd - $AccumDepnCfwd) . "," . $myrow['perioddisposal'] . "\n";
-	
+
 			} else {
 				echo '<tr><td style="vertical-align:top">' . $myrow['assetid'] . '</td>';
 				echo '<td style="vertical-align:top">' . $myrow['longdescription'] . '</td>';
@@ -185,7 +185,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		$TotalAdditions += $myrow['periodadditions'];
 		$TotalDepn += $myrow['perioddepn'];
 		$TotalDisposals += $myrow['perioddisposal'];
-		
+
 		$TotalNBV += ($CostCfwd - $AccumDepnCfwd);
 	}
 
@@ -198,7 +198,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		$LeftOvers = $pdf->addTextWrap($XPos + 550, $YPos, 70, $FontSize, number_format($TotalCostCfwd, 0), 'right');
 		$LeftOvers = $pdf->addTextWrap($XPos + 620, $YPos, 70, $FontSize, number_format($TotalDepnCfwd, 0), 'right');
 		$LeftOvers = $pdf->addTextWrap($XPos + 690, $YPos, 70, $FontSize, number_format($TotalNBV, 0), 'right');
-		
+
 		$pdf->Output($_SESSION['DatabaseName'] . '_Asset Register_' . date('Y-m-d') . '.pdf', 'I');
 		exit;
 	} elseif (isset($_POST['csv'])) {
@@ -230,7 +230,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 } else {
 	include ('includes/header.inc');
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
-	
+
 	$result = DB_query('SELECT categoryid,categorydescription FROM fixedassetcategories', $db);
 	echo '<form name="RegisterForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><table class=selection>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -306,18 +306,18 @@ function PDFPageHeader (){
 				$line_height;
 				$AssetDescription;
 				$AssetCategory;
-				
+
 	if ($PageNumber>1){
 		$pdf->newPage();
 	}
-	
+
 	$FontSize=10;
 	$YPos= $Page_Height-$Top_Margin;
 	$XPos=0;
 	$pdf->addJpegFromFile($_SESSION['LogoFile'] ,$XPos+20,$YPos-50,0,60);
-	
-	
-	
+
+
+
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos,240,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos-($line_height*1),240,$FontSize, _('Asset Category ').' ' . $AssetCategory );
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos-($line_height*2),240,$FontSize, _('Asset Location ').' ' . $_POST['AssetLocation'] );
@@ -325,21 +325,21 @@ function PDFPageHeader (){
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos-($line_height*4),240,$FontSize, _('From').': ' . $_POST['FromDate']);
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos-($line_height*5),240,$FontSize, _('To').': ' . $_POST['ToDate']);
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-240,$YPos-($line_height*7),240,$FontSize, _('Page'). ' ' . $PageNumber);
-	
+
 	$YPos -= 60;
-	
+
 	$YPos -=2*$line_height;
 	//Note, this is ok for multilang as this is the value of a Select, text in option is different
-	
+
 	$YPos -=(2*$line_height);
-	
+
 	/*Draw a rectangle to put the headings in     */
 	$YTopLeft=$YPos+$line_height;
 	$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
 	$pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos- $line_height);
 	$pdf->line($Left_Margin, $YPos- $line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
 	$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
-	
+
 	/*set up the headings */
 	$FontSize=10;
 	$XPos = $Left_Margin+1;
@@ -356,15 +356,15 @@ function PDFPageHeader (){
 	$LeftOvers = $pdf->addTextWrap($XPos+620,$YPos,70,$FontSize,  _('Depn C/Fwd'), 'centre');
 	$LeftOvers = $pdf->addTextWrap($XPos+690,$YPos,70,$FontSize,  _('Net Book Value'), 'centre');
 	//$LeftOvers = $pdf->addTextWrap($XPos+760,$YPos,70,$FontSize,  _('Disposal Proceeds'), 'centre');
-	
+
 	$pdf->line($Left_Margin, $YTopLeft,$Page_Width-$Right_Margin, $YTopLeft);
 	$pdf->line($Left_Margin, $YTopLeft,$Left_Margin, $Bottom_Margin);
 	$pdf->line($Left_Margin, $Bottom_Margin,$Page_Width-$Right_Margin, $Bottom_Margin);
 	$pdf->line($Page_Width-$Right_Margin, $Bottom_Margin,$Page_Width-$Right_Margin, $YTopLeft);
-	
+
 	$FontSize=8;
 	$YPos -= (1.5 * $line_height);
-	
+
 	$PageNumber++;
 }
 
