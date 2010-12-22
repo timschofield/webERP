@@ -229,6 +229,11 @@ input.number {
 	text-align: right;
 }
 
+input.image {
+	border-width:0px;
+	background-color: transparent;
+}
+
 /* From merge, uncomment to apply style
 input:hover { }
 */
@@ -705,7 +710,7 @@ End merge */
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	color: black;
 	font-weight: normal;
-	font-size: 8px;
+	font-size: 10px;
 	text-align: center;
 }
 
