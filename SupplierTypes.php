@@ -21,7 +21,7 @@ if (isset($Errors)) {
 $Errors = array();
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
-	. '" alt="">' . _('Supplier Type Setup') . '</p>';
+	. '" alt="" />' . _('Supplier Type Setup') . '</p>';
 echo '<div class="page_help_text">' . _('Add/edit/delete Supplier Types') . '</div><br>';
 
 if (isset($_POST['submit'])) {
