@@ -33,7 +33,7 @@ if (!isset($_POST['Commit'])) {
 }
 
 // add new request here 08-09-26
-if (isset($_POST['StockID2']) AND $_GET['Edit']=='') {
+if (isset($_POST['StockID2']) && $_GET['Edit']=='') {
 /* If a stock item is selected and a purchdata record
  * exists for it then find that record.
  */
@@ -95,15 +95,15 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 /*If all clear then proceed to update the database
  */
 	if ($InputError!=1){
-		$EmailSql="SELECT email FROM www_users WHERE userid='".$_SESSION['PO'.$identifier]->Initiator."'";
-		$EmailResult=DB_query($EmailSql, $db);
-		$EmailRow=DB_fetch_array($EmailResult);
-		
+		$emailsql="SELECT email FROM www_users WHERE userid='".$_SESSION['PO'.$identifier]->Initiator."'";
+		$emailresult=DB_query($emailsql, $db);
+		$emailrow=DB_fetch_array($emailresult);
+
 		$result = DB_Txn_Begin($db);
 
 		if ($_SESSION['ExistingOrder']==0){ /*its a new order to be inserted */
 
-			$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . ' <a href="mailto:'.$EmailRow['email'].'">'.$_SESSION['PO'.$identifier]->Initiator.
+			$StatusComment=date($_SESSION['DefaultDateFormat']).' - Order Created by <a href="mailto:'.$emailrow['email'].'">'.$_SESSION['PO'.$identifier]->Initiator.
 				'</a> - '.$_SESSION['PO'.$identifier]->StatusMessage.'<br>';
 
 			/*Get the order number */
@@ -168,7 +168,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																				'" . $_SESSION['PO'.$identifier]->Version . "',
 																				'" . Date('Y-m-d') . "',
 																				'" . $_SESSION['PO'.$identifier]->DeliveryBy . "',
-																				'Pending',
+																				'" . 'Pending' . "',
 																				'" . $StatusComment . "',
 																				'" . FormatDateForSQL($_SESSION['PO'.$identifier]->DeliveryDate) . "',
 																				'" . $_SESSION['PO'.$identifier]->PaymentTerms. "'
@@ -264,7 +264,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																		contact='" . $_SESSION['PO'.$identifier]->Contact . "',
 																		paymentterms='" . $_SESSION['PO'.$identifier]->PaymentTerms . "',
 																		allowprint='" . $_SESSION['PO'.$identifier]->AllowPrintPO . "',
-																		status = 'Pending'
+																		status = '" . PurchOrder::STATUS_PENDING . "'
 																		WHERE orderno = '" . $_SESSION['PO'.$identifier]->OrderNo ."'";
 
 			$ErrMsg =  _('The purchase order could not be updated because');
