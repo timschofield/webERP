@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 	$InputError = 0;
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
-		_('Search') . '" alt="">' . ' ' . $title. '</p>';
+		_('Search') . '" alt="" />' . ' ' . $title. '</p>';
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
@@ -126,7 +126,7 @@ if (!isset($SelectedTabs)){
 	links to delete or edit each. These will call the same page again and allow update/input
 	or deletion of the records*/
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
-		_('Search') . '" alt="">' . ' ' . $title. '</p>';
+		_('Search') . '" alt="" />' . ' ' . $title. '</p>';
 
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -162,7 +162,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 
 	if (!isset($_POST['submit'])) {
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
-			_('Search') . '" alt="">' . ' ' . $title. '</p>';
+			_('Search') . '" alt="" />' . ' ' . $title. '</p>';
 	}
 	echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Details Of Petty Cash Tab ') . '' .$SelectedTabs. '<a/></div>';
 
