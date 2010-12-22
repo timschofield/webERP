@@ -47,12 +47,12 @@ if (isset($_GET['StockID'])){
 }
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-	_('Inventory Adjustment') . '" alt="">' . ' ' . _('Inventory Adjustment') . '</p>';
+	_('Inventory Adjustment') . '" alt="" />' . ' ' . _('Inventory Adjustment') . '</p>';
 
 if (isset($_POST['CheckCode'])) {
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') .
-		'" alt="">' . ' ' . _('Select Item to Adjust') . '';
+		'" alt="" />' . ' ' . _('Select Item to Adjust') . '</p>';
 
 	if (strlen($_POST['StockText'])>0) {
 		$sql='SELECT stockid, description from stockmaster where description like "%'.$_POST['StockText'].'%"';

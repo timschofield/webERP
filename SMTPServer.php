@@ -9,7 +9,7 @@ $title = _('SMTP Server details');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/email.gif" title="' .
-		_('SMTP Server') . '" alt="">' . ' ' . _('SMTP Server Settings') . '</p>';
+		_('SMTP Server') . '" alt="" />' . ' ' . _('SMTP Server Settings') . '</p>';
 
 if (isset($_POST['submit'])) {
 	$sql="UPDATE emailsettings SET
