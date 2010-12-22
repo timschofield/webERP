@@ -30,7 +30,7 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' .
-	_('Supplier Allocations') . '" alt="">' . ' ' . _('Supplier Allocations') . '</p>';
+	_('Supplier Allocations') . '" alt="" />' . ' ' . _('Supplier Allocations') . '</p>';
 
 if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 
