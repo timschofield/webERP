@@ -27,7 +27,7 @@ if (isset($_POST['update'])) {
 }
 
 //If an account hasn't been selected then select one here.
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>';
 echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post name="selectaccount">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table>';
