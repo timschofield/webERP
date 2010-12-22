@@ -22,14 +22,14 @@ while ($myrow=DB_fetch_array($result)) {
 
 foreach ($_POST as $key => $value) {
 	if (substr($key, 0, 6)=='Update') {
-		$WidgetID=substr($key, 6, strlen($key)-6);
+		$ReportletID=substr($key, 6, strlen($key)-6);
 
-		$sql="UPDATE widgets SET refresh='".$_POST['RefreshRate'.$WidgetID]."' WHERE userid='".$_SESSION['UserID']."' AND id='".$WidgetID."'";
+		$sql="UPDATE reportlets SET refresh='".$_POST['RefreshRate'.$ReportletID]."' WHERE userid='".$_SESSION['UserID']."' AND id='".$ReportletID."'";
 		$result=DB_query($sql, $db);
 	}
 }
 
-$sql="SELECT * FROM widgets WHERE userid='".$_SESSION['UserID']."'";
+$sql="SELECT * FROM reportlets WHERE userid='".$_SESSION['UserID']."'";
 $result=DB_query($sql, $db);
 $j=1;
 
@@ -56,7 +56,7 @@ while ($myrow=DB_fetch_array($result)) {
 	echo '</select>';
 	echo '<input type="submit" name="Update'.$myrow['id'].'" value="Go">';
 	echo '</th></tr>';
-	echo '<tr><td colspan=2><iframe frameborder="0" height="100%" width="100%" src="dashboard_widgets/WidgetContainer.php?Widget='.$myrow['id'].'&amp;Refresh='.$RefreshRate.'"></iframe>';
+	echo '<tr><td colspan=2><iframe frameborder="0" height="100%" width="100%" src="dashboard/ReportletContainer.php?Reportlet='.$myrow['id'].'&amp;Refresh='.$RefreshRate.'"></iframe>';
 	echo '</td></tr></table></form>';
 	if (($j % 2) == 0) echo '</tr><tr>';
 	$j++;
