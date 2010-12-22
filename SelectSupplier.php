@@ -6,7 +6,7 @@ $title = _('Search Suppliers');
 include ('includes/header.inc');
 include ('includes/SQL_CommonFunctions.inc');
 if (!isset($_SESSION['SupplierID'])) {
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Suppliers') . '';
+	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Suppliers') . '</p>';
 }
 if (isset($_GET['SupplierID'])) {
 	$_SESSION['SupplierID']=$_GET['SupplierID'];
@@ -145,7 +145,7 @@ if (isset($_SESSION['SupplierID'])) {
 		$SupplierName = $myrow[0];
 	}
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' .
-				_('Supplier') . '" alt="">' . ' ' . _('Supplier') . ' : <b>' . $_SESSION['SupplierID'] .
+				_('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : <b>' . $_SESSION['SupplierID'] .
 				" - $SupplierName</b> " . _('has been selected') . '.</p>';
 	echo '<div class="page_help_text">' . _('Select a menu option to operate using this supplier.') . '</div>';
 	echo '<br><table width=90% colspan=2 cellpadding=4>';
@@ -196,7 +196,7 @@ if (isset($_SESSION['SupplierID'])) {
 echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method=post>";
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') .
-		'" alt="">' . ' ' . _('Search for Suppliers') . '
+		'" alt="" />' . ' ' . _('Search for Suppliers') . '</p>
 		<table cellpadding=3 colspan=4 class=selection><tr><td>' . _('Enter a partial Name') . ':</font></td><td>';
 if (isset($_POST['Keywords'])) {
 	echo "<input type='Text' name='Keywords' value='" . $_POST['Keywords'] . "' size=20 maxlength=25>";
