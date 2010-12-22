@@ -20,6 +20,13 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	DB_free_result($ConfigResult); // no longer needed
 	/*Maybe we should check config directories exist and try to create if not */
 
+	$sql="SELECT menuid, access FROM usermenurights WHERE userid='".$_SESSION['UserID']."'";
+	$result=DB_query($sql, $db);
+
+	while ($myrow=DB_fetch_array($result)) {
+		$_SESSION['MenuAccess'][$myrow['menuid']]=$myrow['access'];
+	}
+
 /* Also reads all the company data set up in the company record and returns an array */
 
 	$sql=	'SELECT
