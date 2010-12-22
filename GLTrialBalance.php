@@ -25,7 +25,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 
 	include  ('includes/header.inc');
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' .
-		_('Trial Balance') . '" alt="">' . ' ' . $title . '</div>';
+		_('Trial Balance') . '" alt="" />' . ' ' . $title . '</p>';
 	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -429,7 +429,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 				 _('The SQL that failed was:'));
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' .
-		_('Trial Balance') . '" alt="">' . ' ' . _('Trial Balance Report') . '</div>';
+		_('Trial Balance') . '" alt="" />' . ' ' . _('Trial Balance Report') . '</p';
 
 	/*show a table of the accounts info returned by the SQL
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
