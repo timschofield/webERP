@@ -362,20 +362,34 @@ if (isset($_POST['PrintPDF'])){
 		}
 
 		if ($_POST['Location']=='All'){
-			$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) as qtyonorder
-					FROM purchorderdetails,
-						purchorders
-					WHERE purchorderdetails.orderno = purchorders.orderno
-					AND purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
-					AND purchorderdetails.completed = 0";
+			$SQL = "SELECT SUM(purchorderdetails.quantityord*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)
+				- purchorderdetails.quantityrecd*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)) as qtyonorder
+				FROM purchorderdetails
+				LEFT JOIN purchorders
+				ON purchorderdetails.orderno = purchorders.orderno
+				LEFT JOIN purchdata
+				ON purchorders.supplierno=purchdata.supplierno
+				AND purchorderdetails.itemcode=purchdata.stockid
+				WHERE  purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
+				AND purchorderdetails.completed = 0
+				AND purchorders.status <> 'Cancelled'
+				AND purchorders.status <> 'Rejected'
+				AND purchorders.status <> 'Pending'";
 		} else {
-			$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) AS qtyonorder
-					FROM purchorderdetails,
-						purchorders
-					WHERE purchorderdetails.orderno = purchorders.orderno
-					AND purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
-					AND purchorderdetails.completed = 0
-					AND purchorders.intostocklocation=  '" . $_POST['Location'] . "'";
+			$SQL = "SELECT SUM(purchorderdetails.quantityord*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)
+				- purchorderdetails.quantityrecd*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)) as qtyonorder
+				FROM purchorderdetails
+				LEFT JOIN purchorders
+				ON purchorderdetails.orderno = purchorders.orderno
+				LEFT JOIN purchdata
+				ON purchorders.supplierno=purchdata.supplierno
+				AND purchorderdetails.itemcode=purchdata.stockid
+				WHERE purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
+				AND purchorderdetails.completed = 0
+				AND purchorders.intostocklocation=  '" . $_POST['Location'] . "'
+				AND purchorders.status <> 'Cancelled'
+				AND purchorders.status <> 'Rejected'
+				AND purchorders.status <> 'Pending'";
 		}
 
 		$DemandRow = DB_fetch_array($DemandResult);
