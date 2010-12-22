@@ -117,7 +117,7 @@ If (isset($_POST['PrintPDF'])
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' .
-		_('Supplier Allocations') . '" alt="">' . ' ' . $title . '</p>';
+		_('Supplier Allocations') . '" alt="" />' . ' ' . $title . '</p>';
 	if (!isset($_POST['FromCriteria'])) {
 		$_POST['FromCriteria'] = '1';
 	}
