@@ -11,7 +11,7 @@ include('includes/SQL_CommonFunctions.inc');
 echo '<a href="'. $rootpath . '/SelectWorkOrder.php?' . SID . '">' . _('Back to Work Orders'). '</a><br>';
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
-	_('Search') . '" alt="">' . ' ' . $title . '</p>';
+	_('Search') . '" alt="" />' . ' ' . $title . '</p>';
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
