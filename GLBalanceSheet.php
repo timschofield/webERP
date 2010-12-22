@@ -18,7 +18,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	/*Show a form to allow input of criteria for TB to show */
 	include('includes/header.inc');
 	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="'
-		. _('Print') . '" alt="">' . ' ' . _('Balance Sheet') . '</p></div>';
+		. _('Print') . '" alt="" />' . ' ' . _('Balance Sheet') . '</p></div>';
 	echo '<div class="page_help_text">'
 	. _('Balance Sheet (or statement of financial position) is a summary  of balances. Assets, liabilities and ownership equity are listed as of a specific date, such as the end of its financial year. Of the four basic financial statements, the balance sheet is the only statement which applies to a single point in time.') . '<br>'
 	. _('The balance sheet has three parts: assets, liabilities and ownership equity. The main categories of assets are listed first and are followed by the liabilities. The difference between the assets and the liabilities is known as equity or the net assets or the net worth or capital of the company and according to the accounting equation, net worth must equal assets minus liabilities.') . '<br>'
@@ -348,7 +348,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			chartdetails.accountcode";
 
 	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'));
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/preview.gif" title="' . _('Search') . '" alt=""> ' . _('HTML View') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/preview.gif" title="' . _('Search') . '" alt="" /> ' . _('HTML View') . '</p>';
 
 	echo '<div class=invoice><table class="selection"><tr><th colspan=6><div class="centre"><font size=4 color=blue><b>' .
 		_('Balance Sheet as at') . ' ' . $BalanceDate .'</b></font></div></th></tr>';
