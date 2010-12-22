@@ -18,7 +18,7 @@ if (isset($Errors)) {
 }
 $Errors = array();
 $InputError = 0;
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
 if (isset($_POST['submit'])) {
 
