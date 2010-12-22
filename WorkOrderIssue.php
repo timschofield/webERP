@@ -19,7 +19,7 @@ echo '<a href="'. $rootpath . '/SelectWorkOrder.php?' . SID . '">' . _('Back to 
 echo '<a href="'. $rootpath . '/WorkOrderCosting.php?' . SID . '&WO=' .  $_POST['WO'] . '">' . _('Back to Costing'). '</a><br>';
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' .
-	_('Search') . '" alt="">' . ' ' . $title.'</p';
+	_('Search') . '" alt="" />' . ' ' . $title.'</p';
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
