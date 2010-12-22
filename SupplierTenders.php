@@ -45,7 +45,7 @@ if (isset($_POST['SupplierID']) and empty($_POST['TenderType']) and empty($_POST
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' .
-		_('Tenders') . '" alt="">' . ' ' . _('Create or View Offers from') . ' '.$Supplier.'</p>';
+		_('Tenders') . '" alt="" />' . ' ' . _('Create or View Offers from') . ' '.$Supplier.'</p>';
 	echo '<table class=selection>';
 	echo'<tr><td>'._('Select option for tendering').'</td>';
 	echo '<td><select name=TenderType>';
@@ -258,7 +258,7 @@ if (isset($_SESSION['offer']) and $_SESSION['offer']->LinesOnOffer>0 or isset($_
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' .
-		_('Search') . '" alt="">' . ' ' . _('Items to offer from').' '.$Supplier;
+		_('Search') . '" alt="" />' . ' ' . _('Items to offer from').' '.$Supplier .'</p>';
 	echo '<table>';
 	echo '<tr>';
 	echo '<th>'._('Stock ID').'</th>';
@@ -315,7 +315,7 @@ if (isset($_POST['TenderType']) and $_POST['TenderType']==2 and !isset($_POST['S
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' .
-		_('Search') . '" alt="">' . ' ' . _('Search for Inventory Items');
+		_('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items') . '</p>';
 	$sql = 'SELECT categoryid,
 			categorydescription
 		FROM stockcategory
@@ -372,7 +372,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' .
-		_('Tenders') . '" alt="">' . ' ' . _('Select items to offer from').' '.$Supplier .'</p>';
+		_('Tenders') . '" alt="" />' . ' ' . _('Select items to offer from').' '.$Supplier .'</p>';
 
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
 		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'), 'info' );
