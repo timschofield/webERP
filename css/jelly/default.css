@@ -220,6 +220,11 @@ input.number{
 	text-align: right;
 }
 
+input.image {
+	border-width:0px;
+	background-color: transparent;
+}
+
 input:hover{
 	background: url(images/inputh.png) #eee;
 	color:#000;
