@@ -131,7 +131,8 @@ or deletion of the records*/
 	$sql = "SELECT geocodeid, geocode_key, center_long, center_lat, map_height, map_width, map_host FROM geocode_param";
 	$result = DB_query($sql, $db);
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="">'. _('Setup configuration for Geocoding of Customers and Suppliers') .'</p>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />'.
+			_('Setup configuration for Geocoding of Customers and Suppliers') .'</p>';
 	echo '<div class="page_help_text">'. _('Get a google API key at ') .
 		'<a href="http://code.google.com/apis/maps/signup.html" target="_blank"> http://code.google.com/apis/maps/signup.html</a></b>';
 	echo '<div class="centre"><p>'. _('Find the lat/long for your map center point at ') .
