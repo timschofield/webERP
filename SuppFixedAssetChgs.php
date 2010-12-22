@@ -70,7 +70,7 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit=='Invoice'){
 	echo '<div class="centre"><p class="page_title_text">' . _('Fixed Asset credits on Credit Note') . ' ';
 }
 echo $_SESSION['SuppTrans']->SuppReference . ' ' ._('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
-echo '</div>';
+echo '</p></div>';
 echo '<table cellpadding=2 class=selection>';
 $TableHeader = '<tr><th>' . _('Asset ID') . '</th>
 										<th>' . _('Description') . '</th>
