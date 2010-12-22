@@ -486,20 +486,20 @@ if (isset($_POST['Select'])) {
 } else {
 	$_POST['Select'] = $_SESSION['PO'.$identifier]->SupplierID;
 	$sql = "SELECT suppliers.suppname,
-								suppliers.currcode,
-								suppliers.paymentterms,
-								suppliers.address1,
-								suppliers.address2,
-								suppliers.address3,
-								suppliers.address4,
-								suppliers.address5,
-								suppliers.address6,
-								suppliers.phn,
-								suppliers.port
-							FROM suppliers INNER JOIN currencies
-							ON suppliers.currcode=currencies.currabrev
-							WHERE supplierid='" . $_POST['Select'] . "'";
-					
+			suppliers.currcode,
+			suppliers.paymentterms,
+			suppliers.address1,
+			suppliers.address2,
+			suppliers.address3,
+			suppliers.address4,
+			suppliers.address5,
+			suppliers.address6,
+			suppliers.phn,
+			suppliers.port
+		FROM suppliers INNER JOIN currencies
+		ON suppliers.currcode=currencies.currabrev
+		WHERE supplierid='" . $_POST['Select'] . "'";
+
 	$ErrMsg = _('The supplier record of the supplier selected') . ': ' . $_POST['Select'] . ' ' .
 		_('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the supplier details and failed was');
