@@ -15,7 +15,7 @@ if (isset($_GET['SelectedSalesPostingID'])){
 
 $InputError=false;
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') . '" alt="">' . ' ' . $title . '';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
 
 if (isset($_POST['submit'])) {
 
