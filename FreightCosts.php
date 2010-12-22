@@ -29,7 +29,7 @@ if (isset($_GET['SelectedFreightCost'])){
 }
 
 	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-		_('Freight Costs') . '" alt="">' . ' ' . $title . '</p>';
+		_('Freight Costs') . '" alt="" />' . ' ' . $title . '</p>';
 
 if (!isset($LocationFrom) OR !isset($ShipperID)) {
 
