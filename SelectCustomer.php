@@ -20,7 +20,7 @@ if (isset($_GET['Area'])) {
 	$_POST['CustAdd']='';
 	$_POST['CustType']='';
 }
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Customers') . '</p>';
+echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customers') . '</p>';
 if (!isset($_SESSION['CustomerType'])) { //initialise if not already done
 	$_SESSION['CustomerType'] = "";
 }
@@ -272,7 +272,7 @@ if ($_POST['Select'] != "" or ($_SESSION['CustomerID'] != "" and !isset($_POST['
 	}
 	unset($result);
 	// Adding customer encoding. Not needed for general use. This is not a recommended upgrade submission. Gilles Deacur
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' - ' . $phone . _(' has been selected') . '</p>';
+	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' - ' . $phone . _(' has been selected') . '</p>';
 	echo '<div class="page_help_text">' . _('Select a menu option to operate using this customer') . '.</div><br>';
 	$_POST['Select'] = NULL;
 	echo '<table cellpadding=4 width=90% class=selection><tr><th width=33%>' . _('Customer Inquiries') . '</th>
@@ -312,7 +312,7 @@ if ($_POST['Select'] != "" or ($_SESSION['CustomerID'] != "" and !isset($_POST['
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo "<b><div class='centre'>" . $msg . "</div></b>";
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . _('Search for Customers');
+echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Customers').'</p>';
 echo "<table cellpadding=3 colspan=4 class=selection>";
 echo "<tr><td colspan=2>" . _('Enter a partial Name') . ":</td><td>";
 if (isset($_POST['Keywords'])) {
