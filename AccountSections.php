@@ -174,9 +174,9 @@ if (!isset($_GET['SelectedSectionID']) and !isset($_POST['SelectedSectionID'])) 
 
 	$ErrMsg = _('Could not get account group sections because');
 	$result = DB_query($sql,$db,$ErrMsg);
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
-	echo "<table name='SectionList' class=selection>
+	echo "<table name='SectionList' class='selection'>
 		<tr>
 		<th>" . _('Section Number') . "</th>
 		<th>" . _('Section Description') . "</th>
@@ -194,15 +194,15 @@ if (!isset($_GET['SelectedSectionID']) and !isset($_POST['SelectedSectionID'])) 
 		}
 
 		echo '<td>' . $myrow[0] . '</td><td>' . $myrow[1] . '</td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedSectionID=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&amp;SelectedSectionID=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
 		if ( $myrow[0] == '1' || $myrow[0] == '2' ) {
 			echo '<td><b>'._('Restricted').'</b></td>';
 		} else {
-			echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedSectionID=' . $myrow[0] . '&delete=1">' . _('Delete') .'</a></td>';
+			echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&amp;SelectedSectionID=' . $myrow[0] . '&amp;delete=1">' . _('Delete') .'</a></td>';
 		}
 		echo '</tr>';
 	} //END WHILE LIST LOOP
-	echo '</table><p>';
+	echo '</table><br />';
 } //end of ifs and buts!
 
 
@@ -210,11 +210,9 @@ if (isset($_POST['SelectedSectionID']) or isset($_GET['SelectedSectionID'])) {
 	echo '<div class="centre"><a href=' . $_SERVER['PHP_SELF'] . '?' . SID .'>' . _('Review Account Sections') . '</a></div>';
 }
 
-echo '<p>';
-
 if (! isset($_GET['delete'])) {
 
-	echo "<form method='post' name='AccountSections' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo "<form method='post' name='AccountSections' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($_GET['SelectedSectionID'])) {
@@ -252,17 +250,17 @@ if (! isset($_GET['delete'])) {
 		if (!isset($_POST['SectionName'])) {
 			$_POST['SectionName']='';
 		}
-		echo "<table class=selection>
+		echo "<table class='selection'>
 			<tr>
 			<td>" . _('Section Number') . ':' . '</td>
-			<td><input tabindex="1" ' . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) ." type='text' name='SectionID' class=number size=4 maxlength=4 value='" . $_POST['SectionID'] . "'></td></tr>";
+			<td><input tabindex="1" ' . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) ." type='text' name='SectionID' class='number' size='4' maxlength='4' value='" . $_POST['SectionID'] . "' /></td></tr>";
 	}
 	echo "<tr><td>" . _('Section Description') . ':' . '</td>
-		<td><input tabindex="2" ' . (in_array('SectionName',$Errors) ?  'class="inputerror"' : '' ) ." type='text' name='SectionName' size=30 maxlength=30 value='" . $_POST['SectionName'] . "'></td>
+		<td><input tabindex="2" ' . (in_array('SectionName',$Errors) ?  'class="inputerror"' : '' ) ." type='text' name='SectionName' size='30' maxlength='30' value='" . $_POST['SectionName'] . "' /></td>
 		</tr>";
 
-	echo '<tr><td colspan=2><div class=centre><input tabindex="3" type=Submit name=submit value=' . _('Enter Information') . '></div></td></tr>';
-	echo '</table>';
+	echo '<tr><td colspan="2"><div class="centre"><input tabindex="3" type="submit" name="submit" value="' . _('Enter Information') . '" /></div></td></tr>';
+	echo '</table><br />';
 
 	if (!isset($_GET['SelectedSectionID']) or $_GET['SelectedSectionID']=='') {
 		echo "<script>defaultControl(document.AccountSections.SectionID);</script>";
