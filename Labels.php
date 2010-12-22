@@ -114,7 +114,7 @@ if (isset($_POST['Update'])) {
  *  template, for edit, copy or to create a new one
  */
 if ($showList) {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'</p>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>';
 	showLabelsList($allLabels->label);
 }
 include('includes/footer.inc');
@@ -270,7 +270,7 @@ function showLabel($label, $msg, $theme, $readonly=false) {
 	$tableGD = setTableGD($label, $readonly);
 	$tableLines = setTableLines($label->data->line);
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $msg.'</p>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $msg.'</p>';
 
 	echo '<br>
 	<form action="'.$_SERVER['PHP_SELF'].'" method="POST">
