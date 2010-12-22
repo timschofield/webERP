@@ -276,7 +276,7 @@ if (isset($_POST['EnterLines'])){
 		exit;
 } /* end of if isset _POST'EnterLines' */
 
-echo '<a href="'. $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . "identifier=".$identifier.'">'. _('Back to Purchase Orders'). '</a><br>';
+echo '<span style="float:left"><a href="'. $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . "identifier=".$identifier.'">'. _('Back to Purchase Orders'). '</a></span>';
 
 /*The page can be called with ModifyOrderNumber=x where x is a purchase
  * order number. The page then looks up the details of order x and allows
@@ -588,12 +588,12 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 				$k++;
 			}
 
-			echo "<td><input type='submit' style='width:100%' name='Select' value='".$myrow['supplierid']."' ></td>
+			echo "<td><input type='submit' style='width:100%' name='Select' value='".$myrow['supplierid']."' /></td>
 				<td>".$myrow['suppname']."</td><td>";
 
 			for ($i=1; $i<=6; $i++) {
 				if ($myrow['address'.$i] != '') {
-					echo $myrow['address'.$i].'<br>';
+					echo $myrow['address'.$i].'<br />';
 				}
 			}
 			echo "</td><td>".$myrow['currcode']."</td></tr>";
@@ -656,7 +656,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 								stockcategory.stockact
 				FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-				LEFT JOIN purchdata 
+				LEFT JOIN purchdata
 					ON stockmaster.stockid = purchdata.stockid
 				WHERE stockmaster.stockid='".$Purch_Item. "'
 				AND purchdata.supplierno ='" . $_GET['SelectedSupplier'] . "'";
@@ -666,7 +666,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 		if (!isset($PurchItemRow['conversionfactor'])) {
 			$PurchItemRow['conversionfactor']=1;
 		}
-		
+
 		$_SESSION['PO'.$identifier]->add_to_order(	1,
 																						$Purch_Item,
 																						$PurchItemRow['serialised'],
@@ -756,13 +756,13 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 		$_POST['DeliveryDate']= date($_SESSION['DefaultDateFormat']);
 	}
 
-	echo '<tr><td>' . _('Version'). ' #' . ":</td><td><input type='hidden' name='Version' size=16 maxlength=15
-		value='" . $_POST['Version'] . "'>".$_POST['Version']."</td></tr>";
-	echo '<tr><td>' . _('Revised') . ":</td><td><input type='hidden' name='Revised' size=11 maxlength=15 value=" .
-		date($_SESSION['DefaultDateFormat']) . '>'. date($_SESSION['DefaultDateFormat']).'</td></tr>';
+	echo '<tr><td>' . _('Version'). ' #' . ":</td><td><input type='hidden' name='Version' size='16' maxlength='15'
+		value='" . $_POST['Version'] . "' />".$_POST['Version']."</td></tr>";
+	echo '<tr><td>' . _('Revised') . ":</td><td><input type='hidden' name='Revised' size='11' maxlength='15' value='" .
+		date($_SESSION['DefaultDateFormat']) . "' />". date($_SESSION['DefaultDateFormat']).'</td></tr>';
 
-	echo '<tr><td>' . _('Delivery Date') . ":</td><td><input type='text' class=date alt='".$_SESSION['DefaultDateFormat'].
-		"' name='DeliveryDate' size=11 value=" . $_POST['DeliveryDate'] . '>'."</td></tr>";
+	echo '<tr><td>' . _('Delivery Date') . ":</td><td><input type='text' class='date' alt='".$_SESSION['DefaultDateFormat'].
+		"' name='DeliveryDate' size='11' value='" . $_POST['DeliveryDate'] . "' /></td></tr>";
 
 	if (!isset($_POST['Initiator'])) {
 		$_POST['Initiator'] = $_SESSION['UserID'];
@@ -770,10 +770,10 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 	}
 
 	echo '<tr><td>' . _('Initiated By') . ":</td>
-			<td><input type='hidden' name='Initiator' size=11 maxlength=10 value=" .
-			$_POST['Initiator'] . ">".$_POST['Initiator']."</td></tr>";
-	echo '<tr><td>' . _('Requisition Ref') . ":</td><td><input type='text' name='Requisition' size=16
-		maxlength=15 value=" . $_POST['Requisition'] . '></td></tr>';
+			<td><input type='hidden' name='Initiator' size='11' maxlength='10' value='" .
+			$_POST['Initiator'] . "' />".$_POST['Initiator']."</td></tr>";
+	echo '<tr><td>' . _('Requisition Ref') . ":</td><td><input type='text' name='Requisition' size='16'
+		maxlength='15' value='" . $_POST['Requisition'] . "' /></td></tr>";
 
 //	echo '<tr><td>' . _('Exchange Rate') . ":</td>
 //			<td><input type=TEXT name='ExRate' size=16 maxlength=15 VALUE=" . $_POST['ExRate'] . '></td>
@@ -786,7 +786,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 		$Printed = True;
 	} else {
 		$Printed = False;
-		echo _('Not yet printed');
+		echo _('Not yet printed').'</td></tr>';
 	}
 
 	if (isset($_POST['AllowRePrint'])) {
@@ -1108,7 +1108,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 
 	echo '</table>';
 
-	echo '</td></tr></table><br>'; /* end of main table */
+	echo '</td></tr></table><br />'; /* end of main table */
 	// discard change supplier submit buttom
 
 	echo "<div class='centre'>
