@@ -52,7 +52,7 @@ while ($InventoryIssuesRow = DB_fetch_array($InventoryIssuesResult)){
 }
 
 echo '<p class="page_title_text">
-            <img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract') . '" alt="">';
+            <img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract') . '" alt="" />';
 if ($_SESSION['Contract'.$identifier]->Status==3){
 	echo _('Closed')  . ' ';
 } elseif ($_SESSION['Contract'.$identifier]->Status==2){
@@ -60,7 +60,7 @@ if ($_SESSION['Contract'.$identifier]->Status==3){
 } elseif ($_SESSION['Contract'.$identifier]->Status==1){
 	echo _('Quoted')  . ' ';
 }
-echo _('Contract') . '<br>' . $_SESSION['Contract'.$identifier]->CustomerName . '<br>' . $_SESSION['Contract'.$identifier]->ContractDescription;
+echo _('Contract') . '<br />' . $_SESSION['Contract'.$identifier]->CustomerName . '<br />' . $_SESSION['Contract'.$identifier]->ContractDescription.'</p>';
 
 echo '<table>
 	<tr>
