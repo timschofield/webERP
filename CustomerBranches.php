@@ -371,7 +371,7 @@ if (!isset($SelectedBranch)){
 	$TotalDisable = 0;
 	if ($myrow) {
 		echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') .
-			'" alt="">' . ' ' . _('Branches defined for'). ' '. $DebtorNo . ' - ' . $myrow[0] . '</p>';
+			'" alt="" />' . ' ' . _('Branches defined for'). ' '. $DebtorNo . ' - ' . $myrow[0] . '</p>';
 		echo '<table class=selection>';
 		echo "<tr><th>"._('Code')."</th>
 			<th>"._('Name')."</th>
