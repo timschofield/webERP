@@ -83,7 +83,7 @@ $myrow = DB_fetch_array($GetOrdHdrResult);
 
 /* SHOW ALL THE ORDER INFO IN ONE PLACE */
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-		_('Purchase Order') . '" alt="">' . ' ' . $title . '</p>';
+		_('Purchase Order') . '" alt="" />' . ' ' . $title . '</p>';
 
 echo '<table class=selection cellpadding=2>';
 echo '<tr><th colspan=8><font size=3 color=navy>'. _('Order Header Details'). '</font></th></tr>';
