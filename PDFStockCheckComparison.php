@@ -23,13 +23,12 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	if ($_POST['ReportOrClose']=='ReportAndClose'){
 
 		$sql = "SELECT stockcheckfreeze.stockid,
-									stockcheckfreeze.loccode,
-									qoh,
-									materialcost+labourcost+overheadcost AS standardcost,
-									stockcheckfreeze.stockcheckdate
-								FROM stockmaster INNER JOIN stockcheckfreeze
-									ON stockcheckfreeze.stockid=stockmaster.stockid
-								ORDER BY stockcheckfreeze.loccode, stockcheckfreeze.stockid";
+				stockcheckfreeze.loccode,
+				qoh,
+				materialcost+labourcost+overheadcost AS standardcost
+			FROM stockmaster INNER JOIN stockcheckfreeze
+				ON stockcheckfreeze.stockid=stockmaster.stockid
+			ORDER BY stockcheckfreeze.loccode, stockcheckfreeze.stockid";
 
 		$StockChecks = DB_query($sql, $db,'','',false,false);
 		if (DB_error_no($db) !=0) {
@@ -45,16 +44,18 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 			exit;
 		}
 
+		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']), $db);
+		$SQLAdjustmentDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 		$AdjustmentNumber = GetNextTransNo(17,$db);
 
 		while ($myrow = DB_fetch_array($StockChecks)){
 
 			$sql = "SELECT SUM(stockcounts.qtycounted) AS totcounted,
-										COUNT(stockcounts.stockid) AS noofcounts
-									FROM stockcounts
-									WHERE stockcounts.stockid='" . $myrow['stockid'] . "'
-									AND stockcounts.loccode='" . $myrow['loccode'] . "'";
-					
+					COUNT(stockcounts.stockid) AS noofcounts
+				FROM stockcounts
+				WHERE stockcounts.stockid='" . $myrow['stockid'] . "'
+				AND stockcounts.loccode='" . $myrow['loccode'] . "'";
+
 			$StockCounts = DB_query($sql, $db);
 			if (DB_error_no($db) !=0) {
 				$title = _('Stock Count Comparison') . ' - ' . _('Problem Report') . '....';
@@ -80,12 +81,14 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 			if ($StockQtyDifference !=0){ // only adjust stock if there is an adjustment to make!!
 
-				DB_Txn_Begin($db);
+				$SQL = 'BEGIN';
+				$Result = DB_query($SQL,$db);
+
 				// Need to get the current location quantity will need it later for the stock movement
 				$SQL="SELECT locstock.quantity
-									FROM locstock
-								WHERE locstock.stockid='" . $myrow['stockid'] . "'
-								AND loccode= '" . $myrow['loccode'] . "'";
+						FROM locstock
+					WHERE locstock.stockid='" . $myrow['stockid'] . "'
+					AND loccode= '" . $myrow['loccode'] . "'";
 
 				$Result = DB_query($SQL, $db);
 				if (DB_num_rows($Result)==1){
@@ -95,9 +98,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 					// There must actually be some error this should never happen
 					$QtyOnHandPrior = 0;
 				}
-				
-				$PeriodNo = GetPeriod (ConvertSQLDate($myrow['stockcheckdate']), $db);
-				
+
 				$SQL = "INSERT INTO stockmoves (stockid,
 								type,
 								transno,
@@ -111,9 +112,9 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 							17,
 							'" . $AdjustmentNumber . "',
 							'" . $myrow['loccode'] . "',
-							'" . Date('Y-m-d') . "',
+							'" . $SQLAdjustmentDate . "',
 							'" . $PeriodNo . "',
-							'" . _('Inventory Check') . ' - '  . ConvertSQLDate($myrow['stockcheckdate']) . "',
+							'" . _('Inventory Check') . "',
 							'" . $StockQtyDifference . "',
 							'" . ($QtyOnHandPrior + $StockQtyDifference) . "'
 						)";
@@ -123,9 +124,9 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 				$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 
 				$SQL = "UPDATE locstock
-												SET quantity = quantity + '" . $StockQtyDifference . "'
-								WHERE stockid='" . $myrow['stockid'] . "'
-								AND loccode='" . $myrow['loccode'] . "'";
+						SET quantity = quantity + '" . $StockQtyDifference . "'
+						WHERE stockid='" . $myrow['stockid'] . "'
+						AND loccode='" . $myrow['loccode'] . "'";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
 				$DbgMsg = _('The following SQL to update the stock record was used');
 				$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
@@ -145,7 +146,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 									narrative)
 							VALUES (17,
 								'" .$AdjustmentNumber . "',
-								'" . $myrow['stockcheckdate'] . "',
+								'" . $SQLAdjustmentDate . "',
 								'" . $PeriodNo . "',
 								'" .  $StockGLCodes['adjglact'] . "',
 								'" . $myrow['standardcost'] * -($StockQtyDifference) . "',
@@ -164,15 +165,16 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 									narrative)
 							VALUES (17,
 								'" .$AdjustmentNumber . "',
-								'" . $myrow['stockcheckdate'] . "',
+								'" . $SQLAdjustmentDate . "',
 								'" . $PeriodNo . "',
 								'" .  $StockGLCodes['stockact'] . "',
-								'" . $myrow['standardcost'] * $StockQtyDifference . "', 
-								'" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
+								'" . $myrow['standardcost'] * $StockQtyDifference . ", '" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
 					$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 
 				} //END INSERT GL TRANS
-				DB_Txn_Commit($db);
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Unable to COMMIT transaction while adjusting stock in StockCheckAdjustmet report');
+				$SQL = "COMMIT";
+				$Result = DB_query($SQL,$db, $ErrMsg,'',true);
 
 			} // end if $StockQtyDifference !=0
 
