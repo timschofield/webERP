@@ -29,7 +29,7 @@ if (!isset($_POST['SupplierID']) OR $_POST['SupplierID']==""){
 }
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Sales') .
-	'" alt="">' . ' ' . _('Reverse Goods Received from') . ' ' . $_POST['SuppName'] .  '</p> ';
+	'" alt="" />' . ' ' . _('Reverse Goods Received from') . ' ' . $_POST['SuppName'] .  '</p> ';
 
 if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 /* SQL to process the postings for the GRN reversal.. */
