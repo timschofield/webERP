@@ -339,7 +339,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 									LEFT JOIN debtorsmaster
 									ON custbranch.debtorno=debtorsmaster.debtorno
 									WHERE custbranch.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%' OR custbranch.branchcode " . LIKE . " '%" . $_POST['CustCode'] . "%'";
-
+					
 			if ($_SESSION['SalesmanLogin']!=''){
 				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 			}
@@ -949,94 +949,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
 			$KitResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
 
-	if (isset($_POST['AssetDisposalEntered'])){ //its an asset being disposed of
-		if ($_POST['AssetToDisposeOf'] == 'NoAssetSelected'){ //don't do anything unless an asset is disposed of
-			prnMsg(_('No asset was selected to dispose of. No assets have been added to this customer order'),'warn');
-		} else { //need to add the asset to the order
-			/*First need to create a stock ID to hold the asset and record the sale - as only stock items can be sold
-			 * 		and before that we need to add a disposal stock category - if not already created
-			 * 		first off get the details about the asset being disposed of */
-			 $AssetDetailsResult = DB_query('SELECT  fixedassets.description,
-																							fixedassets.longdescription,
-																							fixedassets.barcode,
-																							fixedassetcategories.costact,
-																							fixedassets.cost-fixedassets.accumdepn AS nbv
-																					FROM fixedassetcategories INNER JOIN fixedassets
-																					ON fixedassetcategories.categoryid=fixedassets.assetcategoryid
-																					WHERE fixedassets.assetid="' . $_POST['AssetToDisposeOf'] . '"',$db);
-			$AssetRow = DB_fetch_array($AssetDetailsResult);
-
-			/* Check that the stock category for disposal "ASSETS" is defined already */
-			$AssetCategoryResult = DB_query('SELECT categoryid FROM stockcategory WHERE categoryid="ASSETS"',$db);
-			if (DB_num_rows($AssetCategoryResult)==0){
-				/*Although asset GL posting will come from the asset category - we should set the GL codes to something sensible
-				 * based on the category of the asset under review at the moment - this may well change for any other assets sold subsequentely */
-
-				/*OK now we can insert the stock category for this asset */
-				$InsertAssetStockCatResult = DB_query('INSERT INTO stockcategory ( categoryid,
-																															categorydescription,
-																															stockact)
-																						VALUES ("ASSETS",
-																										"' . _('Asset Disposals') . '",
-																										"' . $AssetRow['costact'] . '")',$db);
-			}
-
-			/*First check to see that it doesn't exist already assets are of the format "ASSET-" . $AssetID
-			 */
-			 $TestAssetExistsAlreadyResult = DB_query('SELECT stockid FROM stockmaster WHERE stockid ="ASSET-' . $_POST['AssetToDisposeOf']  . '"',$db);
-			 $j=0;
-			while (DB_num_rows($TestAssetExistsAlreadyResult)==1) { //then it exists already ... bum
-				$j++;
-				$TestAssetExistsAlreadyResult = DB_query('SELECT stockid FROM stockmaster WHERE stockid ="ASSET-' . $_POST['AssetToDisposeOf']  . '-' . $j . '"',$db);
-			}
-			if ($j>0){
-				$AssetStockID = 'ASSET-' . $_POST['AssetToDisposeOf']  . '-' . $j;
-			} else {
-				$AssetStockID = 'ASSET-' . $_POST['AssetToDisposeOf'];
-			}
-			if ($AssetRow['nbv']==0){
-				$NBV = 0.001; /* stock must have a cost to be invoiced if the flag is set so set to 0.001 */
-			} else {
-				$NBV = $AssetRow['nbv'];
-			}
-			/*OK now we can insert the item for this asset */
-			$InsertAssetAsStockItemResult = DB_query('INSERT INTO stockmaster ( stockid,
-																																				description,
-																																				longdescription,
-																																				categoryid,
-																																				mbflag,
-																																				controlled,
-																																				serialised,
-																																				taxcatid,
-																																				materialcost)
-																										VALUES ("' . $AssetStockID . '",
-																														"' . $AssetRow['description'] . '",
-																														"' . $AssetRow['longdescription'] . '",
-																														"ASSETS",
-																														"D",
-																														"0",
-																														"0",
-																														"' . $_SESSION['DefaultTaxCategory'] . '",
-																														"'. $NBV . '")' , $db);
-			/*not forgetting the location records too */
-			$InsertStkLocRecsResult = DB_query('INSERT INTO locstock (loccode,
-																															stockid)
-																									SELECT loccode,
-																												"' . $AssetStockID . '"
-																									FROM locations',$db);
-			/*Now the asset has been added to the stock master we can add it to the sales order */
-			$NewItemDue = date($_SESSION['DefaultDateFormat']);
-			if (isset($_POST['POLine']){
-				$NewPOLine = $_POST['POLine'];
-			} else {
-				$NewPOLine = 0;
-			}
-			$NewItem = $AssetStockID;
-			include('includes/SelectOrderItems_IntoCart.inc');
-		}
-		
-			
-	}
 
 			if (DB_num_rows($KitResult)==0){
 				prnMsg( _('The item code') . ' ' . $NewItem . ' ' . _('could not be retrieved from the database and has not been added to the order'),'warn');
@@ -1498,7 +1410,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 /* Now show the stock item selection search stuff below */
 
-	 if ((!isset($_POST['QuickEntry'])
+	 if ((!isset($_POST['QuickEntry'])  
 			AND !isset($_POST['SelectAsset']))){
 
 		echo '<input type="hidden" name="PartSearch" value="' .  _('Yes Please') . '">';
@@ -1508,21 +1420,21 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 // Select the most recently ordered items for quick select
 			$SixMonthsAgo = DateAdd (Date($_SESSION['DefaultDateFormat']),'m',-6);
 
-			$SQL="SELECT stockmaster.units,
-										stockmaster.description,
-										stockmaster.stockid,
-										salesorderdetails.stkcode,
-										SUM(qtyinvoiced) salesqty
+			$SQL="SELECT stockmaster.units, 
+										stockmaster.description, 
+										stockmaster.stockid, 
+										salesorderdetails.stkcode, 
+										SUM(qtyinvoiced) salesqty 
 							FROM `salesorderdetails`INNER JOIN `stockmaster`
 							ON  salesorderdetails.stkcode = stockmaster.stockid
 						  WHERE ActualDispatchDate >= '" . FormatDateForSQL($SixMonthsAgo) . "'
 						  GROUP BY stkcode
 						  ORDER BY salesqty DESC
 						  LIMIT " . $_SESSION['FrequentlyOrderedItems'];
-
+				  
 			$result2 = DB_query($SQL,$db);
 			echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
-			echo _('Frequently Ordered Items') . '</p><br />';
+			echo _('Frequently Ordered Items') . '</p><br>';
 			echo '<div class="page_help_text">' . _('Frequently Ordered Items') . _(', shows the most frequently ordered items in the last 6 months.  You can choose from this list, or search further for other items') . '.</div><br>';
 			echo '<table class="table1">';
 			$TableHeader = '<tr><th>' . _('Code') . '</th>
@@ -1657,7 +1569,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						FROM stockcategory
 						WHERE stocktype="F" OR stocktype="D"
 						ORDER BY categorydescription';
-
+						
 		$result1 = DB_query($SQL,$db);
 		while ($myrow1 = DB_fetch_array($result1)) {
 			if ($_POST['StockCat']==$myrow1['categoryid']){
@@ -1669,7 +1581,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		echo '</select></td>
 					<td><b>' . _('Enter partial Description') . ':</b><input tabindex=2 type="Text" name="Keywords" size=20 maxlength=25 value="' ;
-
+		
 		if (isset($_POST['Keywords'])) {
 			 echo$_POST['Keywords'] ;
 		}
@@ -1680,11 +1592,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo  $_POST['StockCode'];
 		}
 		echo '"></td></tr>';
-
+		
 		echo '<tr>
 					<td style="text-align:center" colspan=1><input tabindex=4 type=submit name="Search" value="' . _('Search Now') . '"></td>
 					<td style="text-align:center" colspan=1><input tabindex=5 type=submit name="QuickEntry" value="' .  _('Use Quick Entry') . '"></td>';
-
+		
 		if (!isset($_POST['PartSearch'])) {
 			echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.Keywords);}</script>';
 		}
@@ -1780,8 +1692,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				// Find the quantity on works orders
 				$sql = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) AS dedm
-							   FROM woitems
-							   WHERE stockid='" . $myrow['stockid'] ."'";
+					   FROM woitems
+					   WHERE stockid='" . $myrow['stockid'] ."'";
 				$ErrMsg = _('The order details for this product cannot be retrieved because');
 				$WoResult = db_query($sql,$db,$ErrMsg);
 
@@ -1870,12 +1782,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '"></div>';
 
 	  	} elseif (isset($_POST['SelectAsset'])){
-
+		
 			echo '<div class="page_help_text"><b>' . _('Use this screen to select an asset to dispose of to this customer') . '</b></div><br>
 		 			<table border=1>';
 			/*do not display colum unless customer requires po line number by sales order line*/
 		 	if($_SESSION['Items'.$identifier]->DefaultPOLine ==1){
-				echo	'<tr><td>' . _('PO Line') . '</td>
+				echo	'<tr><td>' . _('PO Line') . '</td>	
 							<td><input type="text" name="poline" size=21 maxlength=20></td></tr>';
 			}
 			echo '<tr><td>' . _('Asset to Dispose Of') . ':</td>
@@ -1888,9 +1800,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '</select></td></tr></table>
 						<br><div class="centre"><input type="submit" name="AssetDisposalEntered" value="' . _('Add Asset To Order') . '">
 					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '"></div>';
-
+		
 		} //end of if it is a Quick Entry screen/part search or asset selection form to display
-
+		
 		if ($_SESSION['Items'.$identifier]->ItemsOrdered >=1){
 	  		echo '<br><div class="centre"><input type=submit name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');"></div>';
 		}
