@@ -464,7 +464,8 @@ if (isset($_POST['PrintPDF'])
 	$title=_('Aged Debtor Analysis');
 	include('includes/header.inc');
 
-    echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'<br>';
+    echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' .
+		_('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
 	if ((!isset($_POST['FromCriteria']) || !isset($_POST['ToCriteria']))) {
 
