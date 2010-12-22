@@ -23,7 +23,7 @@ $map_host = $row['map_host'];
 define("MAPS_HOST", $map_host);
 define("KEY", $api_key);
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="">' . ' ' . _('Geocoding of Customers and Suppliers') .'</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' . ' ' . _('Geocoding of Customers and Suppliers') .'</p>';
 
 // select all the customer branches
 $sql = "SELECT * FROM custbranch WHERE 1";
