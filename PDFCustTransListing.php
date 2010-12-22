@@ -21,7 +21,7 @@ if (!isset($_POST['Date'])){
 	 include ('includes/header.inc');
 
 	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="">' . ' '
-		. _('Customer Transaction Listing');
+		. _('Customer Transaction Listing').'</p>';
 
 	if ($InputError==1){
 		prnMsg($msg,'error');
