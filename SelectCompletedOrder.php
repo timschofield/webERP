@@ -11,7 +11,7 @@ $title = _('Search All Sales Orders');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
-	'" alt="">' . ' ' . _('Search Sales Orders') . '</p>';
+	'" alt="" />' . ' ' . _('Search Sales Orders') . '</p>';
 
 echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID ."' method=post>";
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -63,7 +63,7 @@ if (isset($_POST['ResetPart'])) {
 
 if (isset($OrderNumber)) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Sales Order') .
-		'" alt="">' . ' ' . _('Order Number') . ' - ' . $OrderNumber . '</p>';
+		'" alt="" />' . ' ' . _('Order Number') . ' - ' . $OrderNumber . '</p>';
 } elseif (isset($CustomerRef)) {
 	echo _('Customer Ref') . ' - ' . $CustomerRef;
 } else {
