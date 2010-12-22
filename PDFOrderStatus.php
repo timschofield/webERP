@@ -30,7 +30,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 		prnMsg($msg,'error');
 	}
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt=""></img>' . ' '
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' '
 		. _('Order Status Report') . '</p>';
 
 	echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
