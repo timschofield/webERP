@@ -44,9 +44,9 @@ if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 	$SupplierName=$_SESSION['SuppTrans']->SupplierName;
 }
 
-echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Supplier Credit Note') . '" alt="">' . ' '
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Supplier Credit Note') . '" alt="" />' . ' '
         . _('Enter Supplier Credit Note:') . ' ' . $SupplierName;
-echo '</div>';
+echo '</p>';
 if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 
  /*It must be a new credit note entry - clear any existing credit note details from the SuppTrans object and initiate a newy*/
