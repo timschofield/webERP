@@ -108,7 +108,7 @@ if (!isset($SelectedWC)) {
 then none of the above are true and the list of work centres will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
 
 	$sql = 'SELECT workcentres.code,
 			workcentres.description,
@@ -155,7 +155,7 @@ or deletion of the records*/
 //end of ifs and buts!
 
 if (isset($SelectedWC)) {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
 	echo "<div class='centre'><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Show all Work Centres') . '</a></div>';
 }
 
