@@ -231,7 +231,7 @@ if (isset($_POST['CommitBatch'])){
 	$k=0; //Table row counter for row styles
 	$CustomerReceiptCounter=1; //Count lines of customer receipts in this batch
 
-	echo '<br /><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Allocate') . '" alt="">' . ' ' . _('Summary of Receipt Batch').'</p><br />';
+	echo '<br /><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Allocate') . '" alt="" />' . ' ' . _('Summary of Receipt Batch').'</p><br />';
 
 	echo '<table class=selection><tr><th>'._('Batch Number').'</th>
 				<th>'._('Date Banked').'</th>
