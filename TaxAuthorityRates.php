@@ -15,7 +15,7 @@ $title = _('Tax Rates');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
-	. '" alt="">' . $title. '</p>';
+	. '" alt="" />' . $title. '</p>';
 
 /* <-- $Revision: 1.16 $ --> */
 
