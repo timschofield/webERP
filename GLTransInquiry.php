@@ -38,7 +38,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 				//========[ SHOW SYNOPSYS ]===========
 				//
 				echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="'
-					. _('Print') . '" alt="">' . ' ' . $title . '</p>';
+					. _('Print') . '" alt="" />' . ' ' . $title . '</p>';
 				echo '<table class=selection>'; //Main table
 				echo '<tr><th colspan=7><font size=3 color=blue><b>' . $TransName . ' ' . $_GET['TransNo'] . '</b></font></th></tr>';
 				echo '<tr>
