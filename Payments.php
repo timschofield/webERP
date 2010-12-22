@@ -41,7 +41,7 @@ if ((isset($_POST['UpdateHeader']) and $_POST['BankAccount']=='') or (isset($_PO
 //echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><br>';
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Payment Entry')
-	. '" alt="">' . ' ' . _('Payment Entry') . '</p>';
+	. '" alt="" />' . ' ' . _('Payment Entry') . '</p>';
 echo '<div class="page_help_text">' . _('Use this screen to enter payments FROM your bank account.  <br>Note: To enter a payment FROM a supplier, first select the Supplier, click Enter a Payment to, or Receipt from the Supplier, and use a negative Payment amount on this form.') . '</div><br><div class="centre">';
 
 if (isset($_GET['SupplierID'])){
