@@ -6,7 +6,7 @@ $title = _('Daily Banking Inquiry');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
-	 _('Search') . '" alt="">' . ' ' . $title.'</p>';
+	 _('Search') . '" alt="" />' . ' ' . $title.'</p>';
 
 if (!isset($_POST['Show'])) {
 	echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post>';
