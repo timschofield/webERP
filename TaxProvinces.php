@@ -9,7 +9,7 @@ $title = _('Dispatch Tax Provinces');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>';
 
 if ( isset($_GET['SelectedTaxProvince']) )
 	$SelectedTaxProvince = $_GET['SelectedTaxProvince'];
