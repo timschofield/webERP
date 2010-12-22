@@ -26,7 +26,7 @@ if ( isset($_GET['CurrencyToShow']) ){
 	echo "<form method='post' name=update action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
-		_('View Currency Trend') . '" alt="">' . ' ' . _('View Currency Trend') . '';
+		_('View Currency Trend') . '" alt="" />' . ' ' . _('View Currency Trend') . '</p>';
 	echo '<table>'; // First column
 
 	$SQL = 'SELECT * FROM currencies';
