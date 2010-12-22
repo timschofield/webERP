@@ -41,7 +41,7 @@ function getModuleSetting($pModuleName,$pSetting) {
  $vModules = parsePHPModules();
  return $vModules[$pModuleName][$pSetting];
 }
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('System Check') . '" alt="">' . ' ' . _('System Check') . '</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('System Check') . '" alt="" />' . ' ' . _('System Check') . '</p>';
 echo '<div class="system_check">';
 echo '<h3>PHP Settings</h3>';
 echo '<p>PHP version: ' . phpversion();
