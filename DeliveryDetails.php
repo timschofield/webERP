@@ -759,8 +759,8 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 if (isset($_SESSION['Items'.$identifier]->SpecialInstructions) and strlen($_SESSION['Items'.$identifier]->SpecialInstructions)>0) {
 	prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'info');
 }
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Delivery') . '" alt="">' . ' ' . _('Delivery Details');
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Customer Code') . ' :<b> ' . $_SESSION['Items'.$identifier]->DebtorNo;
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Delivery') . '" alt="" />' . ' ' . _('Delivery Details');
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer Code') . ' :<b> ' . $_SESSION['Items'.$identifier]->DebtorNo;
 echo '</b>&nbsp;' . _('Customer Name') . ' :<b> ' . $_SESSION['Items'.$identifier]->CustomerName . '</p>';
 //echo '<font size=4><b>'. _('Customer') .' : ' . $_SESSION['Items'.$identifier]->CustomerName . '</b></font>';
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID.'identifier='.$identifier  . '" method=post>';
