@@ -60,10 +60,10 @@ if ($Status != PurchOrder::STATUS_PRINTED) {
 /* Always display quantities received and recalc balance for all items on the order */
 
 
-echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-	_('Receive') . '" alt="">' . ' ' . _('Receive Purchase Order') . '';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
+	_('Receive') . '" alt="" />' . ' ' . _('Receive Purchase Order') . '';
 
-echo ' : '. $_SESSION['PO']->OrderNo .' '. _('from'). ' ' . $_SESSION['PO']->SupplierName . ' </u></b></font></div>';
+echo ' : '. $_SESSION['PO']->OrderNo .' '. _('from'). ' ' . $_SESSION['PO']->SupplierName . '</p>';
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
