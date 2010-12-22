@@ -413,7 +413,7 @@ if (isset($_SESSION['Transfer'])){
 	//Begin Form for receiving shipment
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') .
-		'" alt="">' . ' ' . $title . '';
+		'" alt="" />' . ' ' . $title . '</p>';
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '?'. SID . '" method=post>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -497,7 +497,7 @@ if (isset($_SESSION['Transfer'])){
 } else { /*Not $_SESSION['Transfer'] set */
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') .
-		'" alt="">' . ' ' . $title . '';
+		'" alt="" />' . ' ' . $title . '</p>';
 
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '?'. SID . '" method=post name=form1>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
