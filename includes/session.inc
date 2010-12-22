@@ -113,7 +113,9 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 /*User is logged in so get configuration parameters  - save in session*/
 include($PathPrefix . 'includes/GetConfig.php');
 
-$PageSecurity = $_SESSION[basename($_SERVER['SCRIPT_NAME'])];
+if (isset($_SESSION[basename($_SERVER['SCRIPT_NAME'])])) {
+	$PageSecurity = $_SESSION[basename($_SERVER['SCRIPT_NAME'])];
+}
 
 if (($DBVersion>$_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php')) {
 	header("Location: UpgradeDatabase.php");
@@ -303,8 +305,11 @@ function CryptPass( $Password ) {
 			return $Password;
 		}
  }
-
-$Version = $_SESSION['VersionNumber'];
+if (isset($_SESSION['VersionNumber'])) {
+	$Version = $_SESSION['VersionNumber'];
+} else {
+	$Version='';
+}
 
 if (sizeof($_POST) > 0) {
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {

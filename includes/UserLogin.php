@@ -19,7 +19,7 @@ define('UL_MAINTENANCE', 5);	/* Maintenance mode - no user logins */
  */
 
 function userLogin($Name, $Password, $db) {
-	
+
 	if (!isset($_SESSION['AccessLevel']) OR $_SESSION['AccessLevel'] == '' OR
 		(isset($Name) AND $Name != '')) {
 	/* if not logged in */
@@ -35,21 +35,7 @@ function userLogin($Name, $Password, $db) {
 		if (!isset($Name) or $Name == '') {
 			return  UL_SHOWLOGIN;
 		}
-		$sql = "SELECT www_users.fullaccess,
-									www_users.customerid,
-									www_users.lastvisitdate,
-									www_users.pagesize,
-									www_users.defaultlocation,
-									www_users.branchcode,
-									www_users.modulesallowed,
-									www_users.blocked,
-									www_users.realname,
-									www_users.theme,
-									www_users.displayrecordsmax,
-									www_users.userid,
-									www_users.language,
-									www_users.salesman,
-									www_users.pdflanguage
+		$sql = "SELECT *
 						FROM www_users
 						WHERE www_users.userid='" . $Name . "'
 						AND (www_users.password='" . CryptPass($Password) . "'
@@ -75,7 +61,12 @@ function userLogin($Name, $Password, $db) {
 //			$_SESSION['UserID'] = $myrow[11];
 			$_SESSION['Language'] = $myrow['language'];
 			$_SESSION['SalesmanLogin'] = $myrow['salesman'];
-			$_SESSION['PDFLanguage'] = $myrow['pdflanguage'];
+			if (isset($myrow['pdflanguage'])) {
+				$_SESSION['PDFLanguage'] = $myrow['pdflanguage'];
+			} else {
+				$_SESSION['PDFLanguage'] = '';
+			}
+
 			if ($myrow[10] > 0) {
 				$_SESSION['DisplayRecordsMax'] = $myrow['displayrecordsmax'];
 			} else {
@@ -116,7 +107,7 @@ function userLogin($Name, $Password, $db) {
 		}
 	}		// End of userid/password check
 	// Run with debugging messages for the system administrator(s) but not anyone else
-	
+
 	return   UL_OK;		    /* All is well */
 }
 

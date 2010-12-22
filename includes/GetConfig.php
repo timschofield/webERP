@@ -20,15 +20,28 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	DB_free_result($ConfigResult); // no longer needed
 	/*Maybe we should check config directories exist and try to create if not */
 
-	$sql="SELECT menuid, access FROM usermenurights WHERE userid='".$_SESSION['UserID']."'";
+	$sql="SHOW tables WHERE Tables_in_".$_SESSION['DatabaseName']."='usermenurights'";
 	$result=DB_query($sql, $db);
+	if (DB_num_rows($result)>0) {
+		$sql="SELECT menuid, access FROM usermenurights WHERE userid='".$_SESSION['UserID']."'";
+		$result=DB_query($sql, $db);
+	} else if (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php') {
+		header("Location: UpgradeDatabase.php");
+	}
+
 
 	while ($myrow=DB_fetch_array($result)) {
 		$_SESSION['MenuAccess'][$myrow['menuid']]=$myrow['access'];
 	}
 
-	$sql="SELECT script, security FROM pagesecurity";
+	$sql="SHOW tables WHERE Tables_in_".$_SESSION['DatabaseName']."='pagesecurity'";
 	$result=DB_query($sql, $db);
+	if (DB_num_rows($result)>0) {
+		$sql="SELECT script, security FROM pagesecurity";
+		$result=DB_query($sql, $db);
+	} else if (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php') {
+		header("Location: UpgradeDatabase.php");
+	}
 
 	while ($myrow=DB_fetch_array($result)) {
 		$_SESSION[$myrow['script']]=$myrow['security'];
@@ -85,7 +98,10 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	}
 } //end if force reload or not set already
 
-$sql='SELECT id,
+$sql="SHOW tables WHERE Tables_in_".$_SESSION['DatabaseName']."='emailsettings'";
+$result=DB_query($sql, $db);
+if (DB_num_rows($result)>0) {
+	$sql='SELECT id,
 				host,
 				port,
 				heloaddress,
@@ -94,16 +110,19 @@ $sql='SELECT id,
 				timeout,
 				auth
 			FROM emailsettings';
-$result=DB_query($sql, $db);
-$myrow=DB_fetch_array($result);
+	$result=DB_query($sql, $db);
+	$myrow=DB_fetch_array($result);
 
-$_SESSION['SMTPSettings']['host']=$myrow['host'];
-$_SESSION['SMTPSettings']['port']=$myrow['port'];
-$_SESSION['SMTPSettings']['heloaddress']=$myrow['heloaddress'];
-$_SESSION['SMTPSettings']['username']=$myrow['username'];
-$_SESSION['SMTPSettings']['password']=$myrow['password'];
-$_SESSION['SMTPSettings']['timeout']=$myrow['timeout'];
-$_SESSION['SMTPSettings']['auth']=$myrow['auth'];
+	$_SESSION['SMTPSettings']['host']=$myrow['host'];
+	$_SESSION['SMTPSettings']['port']=$myrow['port'];
+	$_SESSION['SMTPSettings']['heloaddress']=$myrow['heloaddress'];
+	$_SESSION['SMTPSettings']['username']=$myrow['username'];
+	$_SESSION['SMTPSettings']['password']=$myrow['password'];
+	$_SESSION['SMTPSettings']['timeout']=$myrow['timeout'];
+	$_SESSION['SMTPSettings']['auth']=$myrow['auth'];
+} else if (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php') {
+	header("Location: UpgradeDatabase.php");
+}
 
 	/*
 
