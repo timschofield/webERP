@@ -229,7 +229,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' .
-		_('Contract Bill of Material') . '" alt="">  '.$_SESSION['Contract'.$identifier]->CustomerName;
+		_('Contract Bill of Material') . '" alt="" />  '.$_SESSION['Contract'.$identifier]->CustomerName . '</p>';
 
 	if (isset($_SESSION['Contract'.$identifier]->ContractRef)) {
 		echo  ' ' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef;
