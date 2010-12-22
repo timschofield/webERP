@@ -59,15 +59,15 @@ if (isset($_POST['SummaryType']) and $_POST['SummaryType'] == 'suppname') {
 
 if (isset($_POST['submit'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="">' . ' ' . $title.'</p>';
+		'" alt="" />' . ' ' . $title.'</p>';
 	submit($db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierName,$SupplierNameOp,$savesummarytype);
 } else if (isset($_POST['submitcsv'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="">' . ' ' . $title.'</p>';
+		'" alt="" />' . ' ' . $title.'</p>';
 	submitcsv($db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierName,$SupplierNameOp,$savesummarytype);
 } else {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="">' . '</img>' . $title.'</p>';
+		'" alt="" />' . '</img>' . $title.'</p>';
 	display($db);
 }
 
