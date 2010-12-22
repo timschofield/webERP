@@ -582,7 +582,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 																						transdate,
 																						periodno,
 																						inputdate,
-																						fixedassettranstype,
+																						fixedassettranstype
 																						amount)
 																	VALUES ('" . $OrderLine->AssetID . "',
 																					25,
