@@ -442,9 +442,9 @@ else {
 		} else {
 			$PrintPurchOrder = _('Printed');
 		}
-		
+
 		$PrintPurchOrder2 = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=1">' . _('Show') . '</a>';
-		
+
 		$s2 = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=1">' . $myrow['realorderno']. '</a>';
 
 		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);

@@ -1,21 +1,21 @@
 <?php
 
 /* $Id$*/
-$PageSecurity = 3;
+//$PageSecurity = 3;
 $title = _('Geocode Generate XML');
 
 include ('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-function parseToXML($htmlStr) 
-{ 
-$xmlStr=str_replace('<','&lt;',$htmlStr); 
-$xmlStr=str_replace('>','&gt;',$xmlStr); 
-$xmlStr=str_replace('"','&quot;',$xmlStr); 
-$xmlStr=str_replace("'",'&#39;',$xmlStr); 
-$xmlStr=str_replace("&",'&amp;',$xmlStr); 
-return $xmlStr; 
-} 
+function parseToXML($htmlStr)
+{
+$xmlStr=str_replace('<','&lt;',$htmlStr);
+$xmlStr=str_replace('>','&gt;',$xmlStr);
+$xmlStr=str_replace('"','&quot;',$xmlStr);
+$xmlStr=str_replace("'",'&#39;',$xmlStr);
+$xmlStr=str_replace("&",'&amp;',$xmlStr);
+return $xmlStr;
+}
 
 $sql = "SELECT * FROM suppliers WHERE 1";
 $ErrMsg = _('An error occurred in retrieving the information');;

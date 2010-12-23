@@ -1,6 +1,6 @@
 <?php
 /* $Id$ */
-$PageSecurity = 14;
+//$PageSecurity = 14;
 include('includes/session.inc');
 $title = _('Form Designer');
 include('includes/header.inc');

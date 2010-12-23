@@ -1,7 +1,7 @@
 <?php
 
 /* $Id$*/
-$PageSecurity = 1;
+//$PageSecurity = 1;
 include ('includes/session.inc');
 /*
 http://127.0.0.1/~brink/webERP/GetStockImage.php

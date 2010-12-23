@@ -1,6 +1,6 @@
 <?php
 
-$PageSecurity = 15;
+//$PageSecurity = 15;
 
 include('includes/session.inc');
 

@@ -1,7 +1,7 @@
 <?php
 /* $Revision: 1.3 $ */
 /* $Id$*/
-$PageSecurity = 3;
+//$PageSecurity = 3;
 include('includes/session.inc');
 $title = _('Customer Type (Group) Notes');
 include('includes/header.inc');

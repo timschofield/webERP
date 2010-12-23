@@ -1,7 +1,7 @@
 <?php
 /* $Revision: 1.2 $ */
 /* $Id$*/
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include ('includes/session.inc');
 include ('includes/PDFStarter.php');
 $FontSize = 10;

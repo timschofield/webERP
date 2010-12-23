@@ -1,7 +1,7 @@
 <?php
 
 /* $Id$*/
-$PageSecurity = 3;
+//$PageSecurity = 3;
 include('includes/session.inc');
 $title = _('Geocode Maintenance');
 include('includes/header.inc');

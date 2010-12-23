@@ -1,6 +1,6 @@
 <?php
 /* $Id$*/
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include('includes/session.inc');
 $result = DB_query("SELECT description FROM stockmaster WHERE stockid='" . trim(strtoupper($_GET['StockID'])) . "'",$db);
 $myrow = DB_fetch_row($result);

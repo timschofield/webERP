@@ -1,6 +1,6 @@
 <?php
 /* $Id$*/
-$PageSecurity =10;
+//$PageSecurity =10;
 include('includes/session.inc');
 $title = _('System Check');
 include('includes/header.inc');

@@ -1,6 +1,6 @@
 <?php
 /* $Id$*/
-$PageSecurity=15;
+//$PageSecurity=15;
 
 include('includes/session.inc');
 $title=_('Check Period Sales Ledger Control Account');

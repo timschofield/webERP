@@ -1,6 +1,6 @@
 <?php
 /* $Id$*/
-$PageSecurity = 2;
+//$PageSecurity = 2;
 $PricesSecurity = 12;
 include ('includes/session.inc');
 $title = _('Search Inventory Items');

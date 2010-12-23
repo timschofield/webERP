@@ -1,7 +1,7 @@
 <?php
 
 /* $Id$*/
-$PageSecurity = 3;
+//$PageSecurity = 3;
 $title = _('Geocode Generate');
 
 include ('includes/session.inc');

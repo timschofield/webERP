@@ -1,7 +1,7 @@
 <?php
 
 /* $Id$*/
-$PageSecurity = 6;
+//$PageSecurity = 6;
  include('includes/session.inc');
  include('includes/phplot/phplot.php');
  $title=_('Sales Report Graph');

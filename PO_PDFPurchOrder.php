@@ -1,6 +1,6 @@
 <?php
 /* $Id$*/
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/DefinePOClass.php');

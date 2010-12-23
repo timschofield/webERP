@@ -1,7 +1,7 @@
 <?php
 /* $Revision: 1.35 $ */
 /* $Id$*/
-$PageSecurity =3;
+//$PageSecurity =3;
 
 
 /*Functions to get the GL codes to post the transaction to */

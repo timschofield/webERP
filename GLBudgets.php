@@ -1,7 +1,7 @@
 <?php
 
 /* $Id$*/
-$PageSecurity = 10;
+//$PageSecurity = 10;
 
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');

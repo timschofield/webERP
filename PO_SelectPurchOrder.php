@@ -1,6 +1,6 @@
 <?php
 /* $Id$*/
-$PageSecurity = 2;
+//$PageSecurity = 2;
 include ('includes/session.inc');
 $title = _('Search Purchase Orders');
 include ('includes/header.inc');

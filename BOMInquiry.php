@@ -1,7 +1,7 @@
 <?php
 /* $Revision: 1.12 $ */
 /* $Id$*/
-$PageSecurity = 2;
+//$PageSecurity = 2;
 
 include('includes/session.inc');
 $title = _('Costed Bill Of Material');

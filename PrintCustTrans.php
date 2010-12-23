@@ -1,6 +1,6 @@
 <?php
 /* $Id$ */
-$PageSecurity = 1;
+//$PageSecurity = 1;
 include ('includes/session.inc');
 if (isset($_GET['FromTransNo'])) {
 	$FromTransNo = trim($_GET['FromTransNo']);
