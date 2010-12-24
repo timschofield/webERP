@@ -20,20 +20,6 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	DB_free_result($ConfigResult); // no longer needed
 	/*Maybe we should check config directories exist and try to create if not */
 
-	$sql="SHOW tables WHERE Tables_in_".$_SESSION['DatabaseName']."='usermenurights'";
-	$result=DB_query($sql, $db);
-	if (DB_num_rows($result)>0) {
-		$sql="SELECT menuid, access FROM usermenurights WHERE userid='".$_SESSION['UserID']."'";
-		$result=DB_query($sql, $db);
-	} else if (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php') {
-		header("Location: UpgradeDatabase.php");
-	}
-
-
-	while ($myrow=DB_fetch_array($result)) {
-		$_SESSION['MenuAccess'][$myrow['menuid']]=$myrow['access'];
-	}
-
 	$sql="SHOW tables WHERE Tables_in_".$_SESSION['DatabaseName']."='pagesecurity'";
 	$result=DB_query($sql, $db);
 	if (DB_num_rows($result)>0) {
