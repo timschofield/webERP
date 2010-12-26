@@ -7,7 +7,7 @@ define('UL_OK',  0);		/* User verified, session initialised */
 define('UL_NOTVALID', 1);	/* User/password do not agree */
 define('UL_BLOCKED', 2);	/* Account locked, too many failed logins */
 define('UL_CONFIGERR', 3);	/* Configuration error in webERP or server */
-define('UL_SHOWLOGIN', 4);	
+define('UL_SHOWLOGIN', 4);
 define('UL_MAINTENANCE', 5);
 
 /*	UserLogin
@@ -18,9 +18,9 @@ define('UL_MAINTENANCE', 5);
  */
 
 function userLogin($Name, $Password, $db) {
-	
+
 	global $debug;
-	
+
 	if (!isset($_SESSION['AccessLevel']) OR $_SESSION['AccessLevel'] == '' OR
 		(isset($Name) AND $Name != '')) {
 	/* if not logged in */
@@ -37,19 +37,19 @@ function userLogin($Name, $Password, $db) {
 			return  UL_SHOWLOGIN;
 		}
 		$sql = "SELECT customerid,
--									lastvisitdate,
--									pagesize,
--									defaultlocation,
--									branchcode,
--									modulesallowed,
--									blocked,
--									realname,
--									theme,
--									displayrecordsmax,
--									userid,
--									language,
--									salesman,
--									pdflanguage,
+									lastvisitdate,
+									pagesize,
+									defaultlocation,
+									branchcode,
+									modulesallowed,
+									blocked,
+									realname,
+									theme,
+									displayrecordsmax,
+									userid,
+									language,
+									salesman,
+									pdflanguage,
 									fullaccess
 						FROM www_users
 						WHERE www_users.userid='" . $Name . "'
