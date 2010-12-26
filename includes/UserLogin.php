@@ -84,7 +84,7 @@ function userLogin($Name, $Password, $db) {
 				$_SESSION['PDFLanguage'] = '0'; //default to latin western languages
 			}
 
-			if ($myrow[10] > 0) {
+			if ($myrow['displayrecordsmax'] > 0) {
 				$_SESSION['DisplayRecordsMax'] = $myrow['displayrecordsmax'];
 			} else {
 				$_SESSION['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax'];  // default comes from config.php
