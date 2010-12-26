@@ -13,7 +13,7 @@ if (!file_exists($PathPrefix . 'config.php')){
 	header('Location:' . $rootpath . '/install/index.php');
 }
 include($PathPrefix . 'config.php');
-$DBVersion=52;
+$DBVersion=53;
 if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
 }
@@ -118,7 +118,7 @@ include($PathPrefix . 'includes/GetConfig.php');
 if (isset($_SESSION[basename($_SERVER['SCRIPT_NAME'])])) {
 	$PageSecurity = $_SESSION[basename($_SERVER['SCRIPT_NAME'])];
 }
-	
+
 if (($DBVersion>$_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php')) {
 	header("Location: UpgradeDatabase.php");
 }
@@ -286,7 +286,7 @@ if (!isset($AllowAnyone)){
 					</tr>
 					</table>
 					</td>';
-			
+
 		include($PathPrefix . 'includes/footer.inc');
 		exit;
 	}
