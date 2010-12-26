@@ -12,13 +12,8 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/u
 	_('User Settings') . '" alt="" />' . ' ' . _('User Settings') . '</p>';
 
 $PDFLanguages = array(_('Latin Western Languages'),
-						_('Eastern European Russian Japanese'),
-						_('Chinese'),
-						_('Korean'),
-						_('Vietnamese'),
-						_('Hebrew'),
-						_('Arabic'),
-						_('Thai'));
+											_('Eastern European Russian Japanese Korean Hebrew Arabic Thai'),
+											_('Chinese'));
 
 
 if (isset($_POST['Modify'])) {

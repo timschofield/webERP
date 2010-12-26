@@ -37,7 +37,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 /*Now check that the new code doesn't already exist */
 	$result=DB_query("SELECT debtorno FROM custbranch WHERE debtorno='" . $_POST['DebtorNo'] . "' AND branchcode ='" . $_POST['NewBranchCode'] . "'",$db);
 	if (DB_num_rows($result)!=0){
-		prmMsg(_('The replacement customer branch code') . ': ' . $_POST['NewBranchCode'] . ' ' . _('already exists as a branch code for the same customer') . ' - ' . _('a unique branch code must be entered for the new code'),'error');
+		prnMsg(_('The replacement customer branch code') . ': ' . $_POST['NewBranchCode'] . ' ' . _('already exists as a branch code for the same customer') . ' - ' . _('a unique branch code must be entered for the new code'),'error');
 		include('includes/footer.inc');
 		exit;
 	}

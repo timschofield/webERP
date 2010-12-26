@@ -36,24 +36,19 @@ class Cpdf extends TCPDF {
 
 		if (isset($_SESSION['PDFLanguage'])) {
 
-			$userpdflang = $_SESSION['PDFLanguage'];
+			$UserPdfLang = $_SESSION['PDFLanguage'];
 
-			switch ($userpdflang) {
-				case 0: $userpdffont = 'times';     break;
-				case 1: $userpdffont = 'javierjp';  break;
-				case 2: $userpdffont = 'javiergb';  break;
-				case 3: $userpdffont = 'javierjp';  break;
-				case 4: $userpdffont = 'javierjp';  break;
-				case 5: $userpdffont = 'javierjp';  break;
-				case 6: $userpdffont = 'javierjp';  break;
-				case 7: $userpdffont = 'javierjp';  break;
+			switch ($UserPdfLang) {
+				case 0: $UserPdfFont = 'times';     break;
+				case 1: $UserPdfFont = 'javierjp';  break;
+				case 2: $UserPdfFont = 'javiergb';  break;
 			}
 
 		} else {
-			$userpdffont = 'helvetica';
+			$UserPdfFont = 'helvetica';
 		}
 
-		$this->SetFont($userpdffont, '', 11);
+		$this->SetFont($UserPdfFont, '', 11);
 		//     SetFont($family, $style='', $size=0, $fontfile='')
 	}
 

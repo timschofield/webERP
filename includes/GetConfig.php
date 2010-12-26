@@ -5,8 +5,9 @@
 
 if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
 	global  $db;		// It is global, we may not be.
-	$sql = 'SELECT confname, confvalue FROM config'; // dont care about the order by
-	$ConfigResult = DB_query($sql,$db);
+	$sql = 'SELECT confname, confvalue FROM config'; 
+	$ErrMsg = _('Could not get the configuration parameters from the database because');
+	$ConfigResult = DB_query($sql,$db,$ErrMsg);
 	while( $myrow = DB_fetch_row($ConfigResult) ) {
 		if (is_numeric($myrow[1]) and $myrow[0]!='DefaultPriceList'){
 			//the variable name is given by $myrow[0]
@@ -14,64 +15,60 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 		} else {
 			$_SESSION[$myrow[0]] =  $myrow[1];
 		}
-
 	} //end loop through all config variables
 	$_SESSION['CompanyDefaultsLoaded'] = true;
+	if (!isset($_SESSION['DBUpdateNumber'])){ // the config record for DBUpdateNumber is not yet added
+		$_SESSION['DBUpdateNumber']=-1;
+		header('Location: UpgradeDatabase.php'); //divert to the db upgrade if the DBUpdateNumber is not in the config table
+	}
+		
 	DB_free_result($ConfigResult); // no longer needed
 	/*Maybe we should check config directories exist and try to create if not */
 
-	$sql="SHOW tables WHERE Tables_in_".$_SESSION['DatabaseName']."='pagesecurity'";
-	$result=DB_query($sql, $db);
+	$sql='SHOW tables WHERE Tables_in_'.$_SESSION['DatabaseName']."='pagesecurity'";
+	$ErrMsg = _('Could not determine if the pagesecurity table is in the database');
+	$result=DB_query($sql, $db,$ErrMsg);
 	if (DB_num_rows($result)>0) {
-		$sql="SELECT script, security FROM pagesecurity";
+		$sql='SELECT script, security FROM pagesecurity';
+		$ErrMsg = _('Could not get the page security details from the database because');
 		$result=DB_query($sql, $db);
-	} else if (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php') {
-		header("Location: UpgradeDatabase.php");
+	} else if (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php') { 
+		header('Location: UpgradeDatabase.php');  //divert to upgrade database if the pagesecurity table does not exist
 	}
 
 	while ($myrow=DB_fetch_array($result)) {
 		$_SESSION[$myrow['script']]=$myrow['security'];
 	}
-
-	$sql="SELECT confvalue FROM config WHERE confname='DBUpdateNumber'";
-	$result=DB_query($sql, $db);
-	if (DB_num_rows($result)==0) {
-		$_SESSION['DBUpdateNumber']=-1;
-	} else {
-		$myrow=DB_fetch_array($result);
-		$_SESSION['DBUpdateNumber']=$myrow['confvalue'];
-	}
-
+	
 /* Also reads all the company data set up in the company record and returns an array */
 
-	$sql=	'SELECT
-				coyname,
-				gstno,
-				regoffice1,
-				regoffice2,
-				regoffice3,
-				regoffice4,
-				regoffice5,
-				regoffice6,
-				telephone,
-				fax,
-				email,
-				currencydefault,
-				debtorsact,
-				pytdiscountact,
-				creditorsact,
-				payrollact,
-				grnact,
-				exchangediffact,
-				purchasesexchangediffact,
-				retainedearnings,
-				freightact,
-				gllink_debtors,
-				gllink_creditors,
-				gllink_stock
-			FROM companies
-				WHERE coycode=1';
-
+	$sql=	'SELECT	coyname,
+								gstno,
+								regoffice1,
+								regoffice2,
+								regoffice3,
+								regoffice4,
+								regoffice5,
+								regoffice6,
+								telephone,
+								fax,
+								email,
+								currencydefault,
+								debtorsact,
+								pytdiscountact,
+								creditorsact,
+								payrollact,
+								grnact,
+								exchangediffact,
+								purchasesexchangediffact,
+								retainedearnings,
+								freightact,
+								gllink_debtors,
+								gllink_creditors,
+								gllink_stock
+							FROM companies
+								WHERE coycode=1';
+				
 	$ErrMsg = _('An error occurred accessing the database to retrieve the company information');
 	$ReadCoyResult = DB_query($sql,$db,$ErrMsg);
 
@@ -84,40 +81,31 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	}
 } //end if force reload or not set already
 
-$sql="SHOW tables WHERE Tables_in_".$_SESSION['DatabaseName']."='emailsettings'";
+$sql='SELECT id,
+						host,
+						port,
+						heloaddress,
+						username,
+						password,
+						timeout,
+						auth
+					FROM emailsettings';
 $result=DB_query($sql, $db);
-if (DB_num_rows($result)>0) {
-	$sql='SELECT id,
-				host,
-				port,
-				heloaddress,
-				username,
-				password,
-				timeout,
-				auth
-			FROM emailsettings';
-	$result=DB_query($sql, $db);
-	$myrow=DB_fetch_array($result);
+$myrow=DB_fetch_array($result);
 
-	$_SESSION['SMTPSettings']['host']=$myrow['host'];
-	$_SESSION['SMTPSettings']['port']=$myrow['port'];
-	$_SESSION['SMTPSettings']['heloaddress']=$myrow['heloaddress'];
-	$_SESSION['SMTPSettings']['username']=$myrow['username'];
-	$_SESSION['SMTPSettings']['password']=$myrow['password'];
-	$_SESSION['SMTPSettings']['timeout']=$myrow['timeout'];
-	$_SESSION['SMTPSettings']['auth']=$myrow['auth'];
-} else if (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php') {
-	header("Location: UpgradeDatabase.php");
-}
+$_SESSION['SMTPSettings']['host']=$myrow['host'];
+$_SESSION['SMTPSettings']['port']=$myrow['port'];
+$_SESSION['SMTPSettings']['heloaddress']=$myrow['heloaddress'];
+$_SESSION['SMTPSettings']['username']=$myrow['username'];
+$_SESSION['SMTPSettings']['password']=$myrow['password'];
+$_SESSION['SMTPSettings']['timeout']=$myrow['timeout'];
+$_SESSION['SMTPSettings']['auth']=$myrow['auth'];
 
-	/*
+/*
+These variable if required are in config.php
 
-
-Stay in config.php
 $DefaultLanguage = en_GB
 $allow_demo_mode = 1
-
-
 
 $EDIHeaderMsgId = D:01B:UN:EAN010
 $EDIReference = WEBERP

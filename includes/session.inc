@@ -4,6 +4,7 @@
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
 }
+
 if (!file_exists($PathPrefix . 'config.php')){
 	$rootpath = dirname($_SERVER['PHP_SELF']);
 	if ($rootpath == '/' OR $rootpath == "\\") {
@@ -110,13 +111,14 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 	}
 } /* only do security checks if AllowAnyone is not true */
 
+
 /*User is logged in so get configuration parameters  - save in session*/
 include($PathPrefix . 'includes/GetConfig.php');
 
 if (isset($_SESSION[basename($_SERVER['SCRIPT_NAME'])])) {
 	$PageSecurity = $_SESSION[basename($_SERVER['SCRIPT_NAME'])];
 }
-
+	
 if (($DBVersion>$_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php')) {
 	header("Location: UpgradeDatabase.php");
 }
@@ -264,6 +266,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $_SESSION['AllowedPageS
 } else {
 	$SupplierLogin=0;
 }
+/* Nasty kludge to allow Supplier only logins as well as Customer logins  - .... hmmmmm */
+if ($SupplierLogin==1) {
+	$_SESSION['AllowedPageSecurityTokens'][0]=9;
+}
+
 
 if (!isset($AllowAnyone)){
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
@@ -276,24 +283,20 @@ if (!isset($AllowAnyone)){
 		echo '<b><font style="size:+1; text-align:center;">' . _('The security settings on your account do not permit you to access this function') . '</font></b>';
 
 		echo '</td>
-		</tr>
-		</table>
-		</td>';
-
+					</tr>
+					</table>
+					</td>';
+			
 		include($PathPrefix . 'includes/footer.inc');
 		exit;
 	}
  }
 
-/* Nasty kludge to allow Supplier only logins as well as Customer logins */
-if ($SupplierLogin==1) {
-	$_SESSION['AllowedPageSecurityTokens'][0]=9;
-}
 
-if (in_array(15, $_SESSION['AllowedPageSecurityTokens'])) {
-	$debug = 1;
+if (in_array(15, $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */
+	$debug = 1; //allow debug messages
 } else {
-	$debug = 0;
+	$debug = 0; //don't allow debug messages
 }
 function CryptPass( $Password ) {
 		global $CryptFunction;

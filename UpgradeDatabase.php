@@ -6,7 +6,7 @@ include('includes/session.inc');
 
 $title = _('Database Upgrade');
 
-ob_start();
+//ob_start(); /*what is this for? */
 
 include('includes/header.inc');
 
@@ -390,7 +390,7 @@ if (!isset($_POST['continue'])) {
 } else {
 	$StartingUpdate=$_SESSION['DBUpdateNumber']+1;
 	$EndingUpdate=$DBVersion;
-	ob_end_flush();
+	//ob_end_flush();
 	echo '<table>';
 	for($UpdateNumber=$StartingUpdate; $UpdateNumber<=$EndingUpdate; $UpdateNumber++) {
 		ob_start();
