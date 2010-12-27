@@ -11,10 +11,10 @@ if (isset($_POST['ProcessCustomerChange'])){
 
 /*First check the customer code exists */
 	$result=DB_query("SELECT debtorno,
-				branchcode
-			FROM custbranch
-			WHERE debtorno='" . $_POST['DebtorNo'] . "'
-			AND branchcode='" . $_POST['OldBranchCode'] . "'",$db);
+													branchcode
+												FROM custbranch
+												WHERE debtorno='" . $_POST['DebtorNo'] . "'
+												AND branchcode='" . $_POST['OldBranchCode'] . "'",$db);
 	if (DB_num_rows($result)==0){
 		prnMsg (_('The customer branch code') . ': ' . $_POST['DebtorNo'] . ' - ' . $_POST['OldBranchCode'] . ' ' . _('does not currently exist as a customer branch code in the system'),'error');
 		include('includes/footer.inc');
@@ -189,7 +189,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 		AND branchcode='" . $_POST['OldBranchCode'] . "'";
 
 	$ErrMsg = _('The SQL to delete the old customer branch record failed because');
-	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true,true);
 
 
 }

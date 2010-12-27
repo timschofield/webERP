@@ -65,7 +65,8 @@ function DB_query ($SQL,
 					$ErrorMessage='',
 					$DebugMessage= '',
 					$Transaction=false,
-					$TrapErrors=true){
+					$TrapErrors=true,
+					$IgnoreForeignKeys=false){
 
 	global $debug;
 	global $PathPrefix;
@@ -74,6 +75,10 @@ function DB_query ($SQL,
 20071102 Change from mysql to mysqli;
 	$result=mysql_query($SQL,$Conn);
 */
+
+	if ($IgnoreForeignKeys) {
+		$SQL = 'SET FOREIGN_KEY_CHECKS=0; '  . $SQL . ' SET FOREIGN_KEY_CHECKS=1;';
+	}
 	$result=mysqli_query($Conn, $SQL);
 	$_SESSION['LastInsertId'] = mysqli_insert_id($Conn);
 
