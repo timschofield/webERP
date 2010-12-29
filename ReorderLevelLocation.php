@@ -3,7 +3,7 @@
 /* $Id$*/
 
 // ReorderLevelLocation.php - Report of reorder level by category
-//$PageSecurity = 2;
+//$PageSecurity = 2; now comes from DB
 
 include('includes/session.inc');
 
@@ -181,14 +181,13 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	echo '</select></td></tr>';
 
 	$SQL="SELECT categoryid, categorydescription
-	    FROM stockcategory
-		WHERE stocktype<>'A'
-		ORDER BY categorydescription";
+				    FROM stockcategory
+					ORDER BY categorydescription";
 
 	$result1 = DB_query($SQL,$db);
 
 	echo '<tr><td>' . _('Category') . ':</td>
-			<td><select name="StockCat">';
+				<td><select name="StockCat">';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
 		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];

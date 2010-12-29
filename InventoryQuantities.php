@@ -18,14 +18,14 @@ If (isset($_POST['PrintPDF'])) {
 	$line_height=12;
 
 	$Xpos = $Left_Margin+1;
-	$wherecategory = " ";
-	$catdescription = " ";
+	$WhereCategory = " ";
+	$CatDescription = " ";
 	if ($_POST['StockCat'] != 'All') {
-	    $wherecategory = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "' AND stockcategory.stocktype<>'A'";
+	    $WhereCategory = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "'";
 		$sql= "SELECT categoryid, categorydescription FROM stockcategory WHERE categoryid='" . $_POST['StockCat'] . "' ";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
-		$catdescription = $myrow[1];
+		$CatDescription = $myrow[1];
 	}
 
     if ($_POST['Selection'] == 'All') {
@@ -47,7 +47,7 @@ If (isset($_POST['PrintPDF'])) {
 				AND locstock.loccode=locations.loccode
 				AND locstock.quantity <> 0
 				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
-				$wherecategory . " ORDER BY locstock.stockid,locstock.loccode";
+				$WhereCategory . " ORDER BY locstock.stockid,locstock.loccode";
 	} else {
 		// sql to only select parts in more than one location
 		// The SELECT statement at the beginning of the WHERE clause limits the selection to
@@ -73,7 +73,7 @@ If (isset($_POST['PrintPDF'])) {
 				AND locstock.loccode=locations.loccode
 				AND locstock.quantity <> 0
 				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
-				$wherecategory . " ORDER BY locstock.stockid,locstock.loccode";
+				$WhereCategory . " ORDER BY locstock.stockid,locstock.loccode";
 	}
 
 
@@ -100,7 +100,7 @@ If (isset($_POST['PrintPDF'])) {
 	}
 
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-	            $Page_Width,$Right_Margin,$catdescription);
+	            $Page_Width,$Right_Margin,$CatDescription);
 
     $FontSize=8;
 
@@ -128,13 +128,13 @@ If (isset($_POST['PrintPDF'])) {
 
 			if ($YPos < $Bottom_Margin + $line_height){
 			   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-			               $Right_Margin,$catdescription);
+			               $Right_Margin,$CatDescription);
 			}
 	} /*end while loop */
 
 	if ($YPos < $Bottom_Margin + $line_height){
 	       PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-	                   $Right_Margin,$catdescription);
+	                   $Right_Margin,$CatDescription);
 	}
 /*Print out the grand totals */
 
@@ -192,7 +192,7 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 } /*end of else not PrintPDF */
 
 function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-                     $Page_Width,$Right_Margin,$catdescription) {
+                     $Page_Width,$Right_Margin,$CatDescription) {
 
 	/*PDF page header for Reorder Level report */
 	if ($PageNumber>1){
@@ -212,7 +212,7 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$YPos -= $line_height;
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Category'));
 	$pdf->addTextWrap(95,$YPos,50,$FontSize,$_POST['StockCat']);
-	$pdf->addTextWrap(160,$YPos,150,$FontSize,$catdescription,'left');
+	$pdf->addTextWrap(160,$YPos,150,$FontSize,$CatDescription,'left');
 	$YPos -=(2*$line_height);
 
 	/*set up the headings */

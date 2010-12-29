@@ -35,7 +35,6 @@ if (isset($_POST['PrintPDF'])
 				locstock
 			WHERE stockmaster.stockid=locstock.stockid
 			AND stockmaster.categoryid=stockcategory.categoryid
-			AND stockcategory.stocktype<>'A'
 			GROUP BY stockmaster.categoryid,
 				stockcategory.categorydescription,
 				unitcost,
@@ -68,7 +67,6 @@ if (isset($_POST['PrintPDF'])
 			AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
 			AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
 			AND locstock.loccode = '" . $_POST['Location'] . "'
-			AND stockcategory.stocktype<>'A'
 			ORDER BY stockmaster.categoryid,
 				stockmaster.stockid";
 	}

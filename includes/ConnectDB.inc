@@ -1,5 +1,10 @@
 <?php
 /* $Id$*/
+/*DBVersion is compared against the value for config.confvalue WHERE confname=DBUpdateNumber in the database 
+ * this value is saved in the $_SESSION['DBUpdateNumber'] when includes/GetConfig.php is run
+ * if DBUpdateNumber is < DBVersion then */
+
+$DBVersion=1; //must update manually every time there is a DB change
 
 require_once ($PathPrefix .'includes/MiscFunctions.php');
 if (!isset($_SESSION['DatabaseName'])){

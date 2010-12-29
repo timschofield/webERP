@@ -65,8 +65,7 @@ function DB_query ($SQL,
 					$ErrorMessage='',
 					$DebugMessage= '',
 					$Transaction=false,
-					$TrapErrors=true,
-					$IgnoreForeignKeys=false){
+					$TrapErrors=true){
 
 	global $debug;
 	global $PathPrefix;
@@ -76,12 +75,9 @@ function DB_query ($SQL,
 	$result=mysql_query($SQL,$Conn);
 */
 
-	if ($IgnoreForeignKeys) {
-		$SQL = 'SET FOREIGN_KEY_CHECKS=0; '  . $SQL . ' SET FOREIGN_KEY_CHECKS=1;';
-	}
+	
 	$result=mysqli_query($Conn, $SQL);
 	$_SESSION['LastInsertId'] = mysqli_insert_id($Conn);
-
 
 	if ($DebugMessage == '') {
 		$DebugMessage = _('The SQL that failed was');
@@ -234,5 +230,10 @@ function DB_Txn_Commit($Conn){
 function DB_Txn_Rollback($Conn){
 	mysqli_query($Conn,'ROLLBACK');
 }
-
+function DB_IgnoreForeignKeys($Conn){
+	mysqli_query($Conn,'SET FOREIGN_KEY_CHECKS=0');
+}
+function DB_ReinstateForeignKeys($Conn){
+	mysqli_query($Conn, 'SET FOREIGN_KEY_CHECKS=1');
+}
 ?>

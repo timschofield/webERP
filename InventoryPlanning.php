@@ -53,26 +53,26 @@ if (isset($_POST['PrintPDF'])
       need QOH, QOO, QDem, Sales Mth -1, Sales Mth -2, Sales Mth -3, Sales Mth -4*/
 	if ($_POST['Location']=='All'){
 		$SQL = "SELECT stockmaster.categoryid,
-				stockmaster.description,
-				stockcategory.categorydescription,
-				locstock.stockid,
-				SUM(locstock.quantity) AS qoh
-			FROM locstock,
-				stockmaster,
-				stockcategory
-			WHERE locstock.stockid=stockmaster.stockid
-			AND stockmaster.discontinued = 0
-			AND stockmaster.categoryid=stockcategory.categoryid
-			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
-			AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
-			AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
-			GROUP BY stockmaster.categoryid,
-				stockmaster.description,
-				stockcategory.categorydescription,
-				locstock.stockid,
-				stockmaster.stockid
-			ORDER BY stockmaster.categoryid,
-				stockmaster.stockid";
+										stockmaster.description,
+										stockcategory.categorydescription,
+										locstock.stockid,
+										SUM(locstock.quantity) AS qoh
+									FROM locstock,
+										stockmaster,
+										stockcategory
+									WHERE locstock.stockid=stockmaster.stockid
+									AND stockmaster.discontinued = 0
+									AND stockmaster.categoryid=stockcategory.categoryid
+									AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
+									AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
+									AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+									GROUP BY stockmaster.categoryid,
+										stockmaster.description,
+										stockcategory.categorydescription,
+										locstock.stockid,
+										stockmaster.stockid
+									ORDER BY stockmaster.categoryid,
+										stockmaster.stockid";
 	} else {
 		$SQL = "SELECT stockmaster.categoryid,
 					locstock.stockid,
@@ -261,34 +261,24 @@ if (isset($_POST['PrintPDF'])
 		}
 
 		if ($_POST['Location']=='All'){
-			$SQL = "SELECT SUM(purchorderdetails.quantityord*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)
-				- purchorderdetails.quantityrecd*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)) as qtyonorder
-				FROM purchorderdetails
-				LEFT JOIN purchorders
-				ON purchorderdetails.orderno = purchorders.orderno
-				LEFT JOIN purchdata
-				ON purchorders.supplierno=purchdata.supplierno
-				AND purchorderdetails.itemcode=purchdata.stockid
-				WHERE  purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
-				AND purchorderdetails.completed = 0
-				AND purchorders.status <> 'Cancelled'
-				AND purchorders.status <> 'Rejected'
-				AND purchorders.status <> 'Pending'";
+			$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) as qtyonorder
+							FROM purchorderdetails INNER JOIN purchorders
+							ON purchorderdetails.orderno = purchorders.orderno
+							WHERE  purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
+							AND purchorderdetails.completed = 0
+							AND purchorders.status <> 'Cancelled'
+							AND purchorders.status <> 'Rejected'
+							AND purchorders.status <> 'Pending'";
 		} else {
-			$SQL = "SELECT SUM(purchorderdetails.quantityord*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)
-				- purchorderdetails.quantityrecd*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)) as qtyonorder
-				FROM purchorderdetails
-				LEFT JOIN purchorders
-				ON purchorderdetails.orderno = purchorders.orderno
-				LEFT JOIN purchdata
-				ON purchorders.supplierno=purchdata.supplierno
-				AND purchorderdetails.itemcode=purchdata.stockid
-				WHERE purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
-				AND purchorderdetails.completed = 0
-				AND purchorders.intostocklocation=  '" . $_POST['Location'] . "'
-				AND purchorders.status <> 'Cancelled'
-				AND purchorders.status <> 'Rejected'
-				AND purchorders.status <> 'Pending'";
+			$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) as qtyonorder
+							FROM purchorderdetails INNER JOIN purchorders
+							ON purchorderdetails.orderno = purchorders.orderno
+							WHERE purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
+							AND purchorderdetails.completed = 0
+							AND purchorders.intostocklocation=  '" . $_POST['Location'] . "'
+							AND purchorders.status <> 'Cancelled'
+							AND purchorders.status <> 'Rejected'
+							AND purchorders.status <> 'Pending'";
 		}
 
 		$DemandRow = DB_fetch_array($DemandResult);
@@ -300,9 +290,9 @@ if (isset($_POST['PrintPDF'])
 	 		 $title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
 	   		prnMsg( _('The purchase order quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   		echo "<br /><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+	   		echo "<br /><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-	      			echo "<br />$SQL";
+	      			echo '<br />' . $SQL;
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;

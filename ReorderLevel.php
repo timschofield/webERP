@@ -21,8 +21,8 @@ If (isset($_POST['PrintPDF'])) {
 	$wherecategory = " ";
 	$catdescription = " ";
 	if ($_POST['StockCat'] != 'All') {
-	    $wherecategory = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "' AND stockcategory.stocktype<>'A'";
-		$sql= "SELECT categoryid, categorydescription FROM stockcategory WHERE categoryid='" . $_POST['StockCat'] . "' ";
+	    $wherecategory = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "'";
+		$sql= "SELECT categoryid, categorydescription FROM stockcategory WHERE categoryid='" . $_POST['StockCat'] . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		$catdescription = $myrow[1];
@@ -33,25 +33,25 @@ If (isset($_POST['PrintPDF'])) {
 	}
 
 	$sql = "SELECT locstock.stockid,
-				stockmaster.description,
-				locstock.loccode,
-				locations.locationname,
-				locstock.quantity,
-				locstock.reorderlevel,
-				stockmaster.decimalplaces,
-				stockmaster.serialised,
-				stockmaster.controlled
-			FROM locstock,
-				stockmaster
-			LEFT JOIN stockcategory
-			ON stockmaster.categoryid=stockcategory.categoryid,
-				locations
-			WHERE locstock.stockid=stockmaster.stockid " .
-			$wherelocation .
-			"AND locstock.loccode=locations.loccode
-			AND locstock.reorderlevel > locstock.quantity
-			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
-			$wherecategory . " ORDER BY locstock.loccode,locstock.stockid";
+					stockmaster.description,
+					locstock.loccode,
+					locations.locationname,
+					locstock.quantity,
+					locstock.reorderlevel,
+					stockmaster.decimalplaces,
+					stockmaster.serialised,
+					stockmaster.controlled
+				FROM locstock,
+					stockmaster
+				LEFT JOIN stockcategory
+				ON stockmaster.categoryid=stockcategory.categoryid,
+					locations
+				WHERE locstock.stockid=stockmaster.stockid " .
+				$wherelocation .
+				"AND locstock.loccode=locations.loccode
+				AND locstock.reorderlevel > locstock.quantity
+				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
+				$wherecategory . " ORDER BY locstock.loccode,locstock.stockid";
 
 	$result = DB_query($sql,$db,'','',false,true);
 

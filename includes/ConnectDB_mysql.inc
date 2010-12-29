@@ -53,14 +53,11 @@ function DB_query ($SQL,
 		$ErrorMessage='',
 		$DebugMessage= '',
 		$Transaction=false,
-		$TrapErrors=true,
-		$IgnoreForeignKeys=false){
+		$TrapErrors=true){
 
 	global $debug;
 	global $PathPrefix;
-	if ($IgnoreForeignKeys) {
-		$SQL = 'SET FOREIGN_KEY_CHECKS=0; '  . $SQL . ' SET FOREIGN_KEY_CHECKS=1;';
-	}
+	
 	$result=mysql_query($SQL,$Conn);
 	$_SESSION['LastInsertId'] = mysql_insert_id($Conn);
 
@@ -214,5 +211,11 @@ function DB_Txn_Rollback($Conn){
     mysql_query('ROLLBACK', $Conn );
 }
 
+function DB_IgnoreForeignKeys($Conn){
+	msql_query('SET FOREIGN_KEY_CHECKS=0',$Conn);
+}
+function DB_ReinstateForeignKeys($Conn){
+	msql_query('SET FOREIGN_KEY_CHECKS=1',$Conn);
+}
 
 ?>

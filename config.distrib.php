@@ -55,7 +55,6 @@ $MaximumExecutionTime =120;
 //this can be left commented out
 //$SessionSavePath = '/tmp';
 
-
 // which encryption function should be used
 //$CryptFunction = "md5"; // MD5 Hash
 $CryptFunction = "sha1"; // SHA1 Hash
