@@ -802,6 +802,4 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 ('Z_UploadForm.php', 15, 'Utility to upload a file to a remote server'),
 ('Z_UploadResult.php', 15, 'Utility to upload a file to a remote server');
 
-UPDATE config SET confvalue='1' WHERE confname='DBUpdateNumber';
-
-UPDATE config SET confvalue='4.0-RC2' WHERE confname='VersionNumber';
+INSERT INTO config (confname, confvalue) VALUES ('VersionNumber', '4.00');

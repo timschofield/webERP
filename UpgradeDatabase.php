@@ -7,7 +7,8 @@ include('includes/header.inc');
 
 
 if (empty($_POST['DoUpgrade'])){
-	
+	if (!isset($_SESSION['VersionNumber')){
+		prnMsg(_('The webERP code is version')  . ' ' . $Version . ' ' . _('the database is a prior version and upgrade scripts are required to be run. Upgrades to the database prior to ')
 	prnMsg(_('This script will run perform any modifications to the database since v 3.11 required to allow the additional functionality in later scripts'),'info');
 
 	echo "<p><form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
@@ -22,7 +23,7 @@ if ($_POST['DoUpgrade'] == _('Perform Database Upgrade')){
 	prnMsg(_('If there are any failures then please check with your system administrator').
 		'. '._('Please read all notes carefully to ensure they are expected'),'info');
 
-	if($_SESSION['DBUpdateNumber']< 1) { /* DBUpdateNumber set to 1 when upgrade3.11.1-4.00.sql is run */
+	if($_SESSION['VersionNumber']< '4.00') { /* VersionNumber is set to '4.00' when upgrade3.11.1-4.00.sql is run */
 		if ($dbType=='mysql' OR $dbType =='mysqli'){
 			$SQLScripts[0] = './sql/mysql/upgrade3.11.1-4.00.sql';
 		}
@@ -99,12 +100,11 @@ if ($_POST['DoUpgrade'] == _('Perform Database Upgrade')){
 			} //end if its a valid sql line not a comment
 		} //end of for loop around the lines of the sql script
 	echo '</table>';
-	} //end of loop around SQLScripts to apply
+	} //end of loop around SQLScripts  apply
 	$result =DB_ReinstateForeignKeys($db);
-	/*Now get the modified DBUpgradeNumber */
-	$result = DB_query('SELECT confvalue FROM config WHERE confname="DBUpdateNumber"',$db);
-	$myrow = DB_fetch_array($result);
-	$_SESSION['DBUpdateNumber'] = $myrow['confvalue'];
+	/*Now get the modified VersionNumber and script pagesecurities */
+	$ForceConfigReload=true;
+	include('includes/GetConfig.php');
 
 } /*Dont do upgrade */
 
