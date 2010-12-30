@@ -1,6 +1,6 @@
 <?php
 /* $Id$*/
-/*Version is compared against the value for config.confvalue WHERE confname=VersionNumber in the database 
+/* $Version is compared against the value for config.confvalue WHERE confname=VersionNumber in the database 
  * this value is saved in the $_SESSION['Versionumber'] when includes/GetConfig.php is run
  * if  VersionNumber is < $Version  then the DB update script is run */
 

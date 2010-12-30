@@ -21,15 +21,48 @@ if (empty($_POST['DoUpgrade'])){
 }
 
 if ($_POST['DoUpgrade'] == _('Perform Database Upgrade')){
+	
+	/* First do a backup */
+	$BackupFile = $_SESSION['DatabaseName'] . date('Y-m-d-H-i-s') . '.gz';
+	$command = "mysqldump --opt -h $dbhost -u $dbuser -p $dbpass $dbname | gzip > $backupFile";
+	system($command);
 
 	echo '<br>';
 	prnMsg(_('If there are any failures then please check with your system administrator').
 		'. '._('Please read all notes carefully to ensure they are expected'),'info');
-
-	if($_SESSION['VersionNumber']< '4.00') { /* VersionNumber is set to '4.00' when upgrade3.11.1-4.00.sql is run */
-		if ($dbType=='mysql' OR $dbType =='mysqli'){
-			$SQLScripts[0] = './sql/mysql/upgrade3.11.1-4.00.sql';
+	if ($dbType=='mysql' OR $dbType =='mysqli'){
+		
+		switch (substr($Version,0,4)) { // the first 4 characters of the $Version should be enough ?
+			//since there are no "break" statements subsequent upgrade scripts will be added to the array
+			case '3.00':
+				$SQLScripts[] = './sql/mysql/upgrade3.00-3.01.sql';
+			case '3.01':
+				$SQLScripts[] = './sql/mysql/upgrade3.01-3.02.sql';
+			case '3.02':
+				$SQLScripts[] = './sql/mysql/upgrade3.02-3.03.sql';
+			case '3.03':
+				$SQLScripts[] = './sql/mysql/upgrade3.03-3.04.sql';
+			case '3.04':
+				$SQLScripts[] = './sql/mysql/upgrade3.04-3.05.sql';
+			case '3.05':
+				$SQLScripts[] = './sql/mysql/upgrade3.05-3.06.sql';
+			case '3.06':
+				$SQLScripts[] = './sql/mysql/upgrade3.06-3.07.sql';
+			case '3.07':
+				$SQLScripts[] = './sql/mysql/upgrade3.07-3.08.sql';
+			case '3.08':
+			case '3.09':
+				$SQLScripts[] = './sql/mysql/upgrade3.09-3.10.sql';
+			case '3.10':
+				$SQLScripts[] = './sql/mysql/upgrade3.10-3.11.sql';
+				break;
+		} //end switch
+		if($_SESSION['VersionNumber']< '4.00' OR !isset($_SESSION['VersionNumber'])) { /* VersionNumber is set to '4.00' when upgrade3.11.1-4.00.sql is run */
+			$SQLScripts[] = './sql/mysql/upgrade3.11.1-4.00.sql';
 		}
+		
+	} elseif ($dbType=='Some Other DB') {
+		//specify upgrade script files here
 	}
 	$result = DB_IgnoreForeignKeys($db);
 	
@@ -37,7 +70,6 @@ if ($_POST['DoUpgrade'] == _('Perform Database Upgrade')){
 		
 		$SQLEntries = file($SQLScriptFile);
 		$ScriptFileEntries = sizeof($SQLEntries);
-		$ErrMsg = _('The script to upgrade the database failed because');
 		$sql ='';
 		$InAFunction = false;
 		echo '<br><table>
