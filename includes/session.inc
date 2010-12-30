@@ -115,12 +115,11 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 /*User is logged in so get configuration parameters  - save in session*/
 include($PathPrefix . 'includes/GetConfig.php');
 
-if (isset($_SESSION[basename($_SERVER['SCRIPT_NAME'])])) {
-	/*The page security variable is now retrieved from the database in GetConfig.php and stored in the $SESSION['PageSecurity'] array
-	 * the key for the array is the script name - the script name is retrieved from the basename ($_SERVER['SCRIPT_NAME']) 
-	 */
-	$PageSecurity = $_SESSION['PageSecurity'][basename($_SERVER['SCRIPT_NAME'])];
-}
+/*The page security variable is now retrieved from the database in GetConfig.php and stored in the $SESSION['PageSecurity'] array
+ * the key for the array is the script name - the script name is retrieved from the basename ($_SERVER['SCRIPT_NAME']) 
+ */
+$PageSecurity = $_SESSION['PageSecurity'][basename($_SERVER['SCRIPT_NAME'])];
+
 /*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
 if (($Version>$_SESSION['VersionNumber']) and (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php')) {
 	header('Location: UpgradeDatabase.php');
@@ -311,11 +310,7 @@ function CryptPass( $Password ) {
 			return $Password;
 		}
  }
-if (isset($_SESSION['VersionNumber'])) {
-	$Version = $_SESSION['VersionNumber'];
-} else {
-	$Version='';
-}
+
 
 if (sizeof($_POST) > 0) {
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {

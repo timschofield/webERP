@@ -7,9 +7,12 @@ include('includes/header.inc');
 
 
 if (empty($_POST['DoUpgrade'])){
-	if (!isset($_SESSION['VersionNumber')){
-		prnMsg(_('The webERP code is version')  . ' ' . $Version . ' ' . _('the database is a prior version and upgrade scripts are required to be run. Upgrades to the database prior to ')
-	prnMsg(_('This script will run perform any modifications to the database since v 3.11 required to allow the additional functionality in later scripts'),'info');
+	if (!isset($_SESSION['VersionNumber'])){
+		prnMsg(_('The webERP code is version')  . ' ' . $Version . ' ' . _('and the database version is not actually recorded at this version'),'info');
+	} else {
+		prnMsg(_('The webERP code is version')  . ' ' . $Version . ' ' . _('and the database version is') . ' ' . $_SESSION['VersionNumber'],'info');
+	}
+	prnMsg(_('This script will run perform any modifications to the database required to allow the additional functionality in later scripts'),'info');
 
 	echo "<p><form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -82,6 +85,10 @@ if ($_POST['DoUpgrade'] == _('Perform Database Upgrade')){
 							echo '<tr><td>' . $sql . '</td><td bgcolor="yellow">'._('Note').' - '.
 								_('Entry has already been done').'</td></tr>';
 							break;
+						case 1064:
+							echo '<tr><td>' . $sql . '</td><td bgcolor="red">'._('Note').' - '.
+								_('SQL syntax error. The SQL error message is'). ' ' . DB_error_msg($db) . '</td></tr>';
+							break;
 						case 1068:
 							echo '<tr><td>' . $sql . '</td><td bgcolor="yellow">'._('Note').' - '.
 								_('Primary key already exists').'</td></tr>';
@@ -92,7 +99,7 @@ if ($_POST['DoUpgrade'] == _('Perform Database Upgrade')){
 							break;
 						default:
 							echo '<tr><td>' . $sql . '</td><td bgcolor="red">'._('Failure').' - '.
-								_('Error number').' - '.DB_error_no($db) .'</td></tr>';
+								_('Error number').' - '.DB_error_no($db) .' ' . DB_error_msg($db) . '</td></tr>';
 							break;
 					}
 					unset($sql);

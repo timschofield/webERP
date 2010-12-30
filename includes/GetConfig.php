@@ -25,7 +25,7 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	
 	$sql='SELECT script, pagesecurity FROM scripts';
 	$ErrMsg = _('Could not get the page security details from the database because');
-	$result=DB_query($sql, $db);
+	$result=DB_query($sql, $db,_('Could not get page security details from the scripts table because'));
 	
 	while ($myrow=DB_fetch_array($result)) {
 		$_SESSION['PageSecurity'][$myrow['script']]=$myrow['pagesecurity'];

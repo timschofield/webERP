@@ -440,9 +440,10 @@ CREATE TABLE IF NOT EXISTS `fixedassets` (
   `longdescription` text NOT NULL,
   `depntype` int(11) NOT NULL DEFAULT '1',
   `depnrate` double NOT NULL,
-  `disposaldate` date NOT NULL DEFAULT '0000-00-00'
+  `disposaldate` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`assetid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
 
 
 INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES ('41', 'Asset Addition', '1');
@@ -802,4 +803,6 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 ('Z_UploadForm.php', 15, 'Utility to upload a file to a remote server'),
 ('Z_UploadResult.php', 15, 'Utility to upload a file to a remote server');
 
-INSERT INTO config (confname, confvalue) VALUES ('VersionNumber', '4.00');
+INSERT INTO config (confname, confvalue) VALUES ('VersionNumber', '3.12.0');
+UPDATE config SET confvalue='3.12.1' WHERE confname='VersionNumber';
+
