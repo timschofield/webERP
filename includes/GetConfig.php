@@ -21,20 +21,21 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	DB_free_result($ConfigResult); // no longer needed
 	/*Maybe we should check config directories exist and try to create if not */
 	
+	if (!isset($_SESSION['VersionNumber'])){ // the config record for VersionNumber is not yet added
+		header('Location: UpgradeDatabase.php'); //divert to the db upgrade if the VersionNumber is not in the config table
+	}
+	
 	/*Load the pagesecurity settings from the database */
-	
 	$sql='SELECT script, pagesecurity FROM scripts';
-	$ErrMsg = _('Could not get the page security details from the database because');
-	$result=DB_query($sql, $db,_('Could not get page security details from the scripts table because'));
-	
+	$result=DB_query($sql, $db,'','',false,false);
+	if (DB_error_no($db)!=0){ // the table may not exist with the pagesecurity field in it if it is an older webERP database
+		header('Location: UpgradeDatabase.php'); //divert to the db upgrade if the VersionNumber is not in the config table
+	}
+	//Populate the PageSecurity array for each script's  PageSecurity value
 	while ($myrow=DB_fetch_array($result)) {
 		$_SESSION['PageSecurity'][$myrow['script']]=$myrow['pagesecurity'];
 	}
 
-	if (!isset($_SESSION['VersionNumber'])){ // the config record for VersionNumber is not yet added
-		$_SESSION['VersionNumber']=-1;
-		header('Location: UpgradeDatabase.php'); //divert to the db upgrade if the VersionNumber is not in the config table
-	}
 
 /* Also reads all the company data set up in the company record and returns an array */
 

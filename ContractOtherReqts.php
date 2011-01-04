@@ -40,8 +40,8 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
 
 
 if (isset($_POST['BackToHeader'])){
-	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/Contracts.php?' . SID . 'identifier='.$identifier. '">';
-	echo '<p>';
+	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/Contracts.php?' . SID . 'identifier='.$identifier. '" />';
+	echo '<br />';
 	prnMsg(_('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') .	'<a href="' . $rootpath . '/Contracts.php?' . SID. 'identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
 	include('includes/footer.inc');
 	exit;
@@ -84,12 +84,12 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/c
 
 if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 
+	echo '<table cellpadding="2" colspan="7" class="selection">';
 
 	if (isset($_SESSION['Contract'.$identifier]->ContractRef)) {
-		echo  ' ' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef;
+		echo  '<tr><th colspan="5">' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef.'</th></tr>';
 	}
 
-	echo '<table cellpadding=2 colspan=7 border=1>';
 	echo '<tr>
 		<th>' . _('Description') . '</th>
 		<th>' . _('Quantity') . '</th>
@@ -115,31 +115,36 @@ if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 		}
 
 		echo '<td><textarea name="Requirement' . $ContractReqtID . '" cols="30" rows="3">' . $ContractComponent->Requirement . '</textarea></td>
-			  <td><input type=text class="number" name="Qty' . $ContractReqtID . '" size="11" value="' . $ContractComponent->Quantity  . '"></td>
-			  <td><input type=text class="number" name="CostPerUnit' . $ContractReqtID . '" size="11" value="' . $ContractComponent->CostPerUnit . '"></td>
+			  <td><input type="text" class="number" name="Qty' . $ContractReqtID . '" size="11" value="' . $ContractComponent->Quantity  . '" /></td>
+			  <td><input type="text" class="number" name="CostPerUnit' . $ContractReqtID . '" size="11" value="' . $ContractComponent->CostPerUnit . '" /></td>
 			  <td class="number">' . $DisplayLineTotal . '</td>
-			  <td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . 'identifier='.$identifier. '&Delete=' . $ContractReqtID . '">' . _('Delete') . '</a></td></tr>';
+			  <td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . 'identifier='.$identifier. '&amp;Delete=' . $ContractReqtID . '">' . _('Delete') . '</a></td></tr>';
 		$TotalCost += $LineTotal;
 	}
 
 	$DisplayTotal = number_format($TotalCost,2);
 	echo '<tr><td colspan="4" class="number">' . _('Total Other Requirements Cost') . '</td><td class="number"><b>' . $DisplayTotal . '</b></td></tr></table>';
-	echo '<br><div class="centre"><input type="submit" name="UpdateLines" value="' . _('Update Other Requirements Lines') . '">';
-	echo ' <input type="submit" name="BackToHeader" value="' . _('Back To Contract Header') . '">';
+	echo '<br /><div class="centre"><input type="submit" name="UpdateLines" value="' . _('Update Other Requirements Lines') . '" />';
+	echo ' <input type="submit" name="BackToHeader" value="' . _('Back To Contract Header') . '" /></div>';
 
 } /*Only display the contract other requirements lines if there are any !! */
 
-echo '<hr>';
+echo '<br />';
 /*Now show  form to add new requirements to the contract */
-echo '<table>
+if (!isset($_POST['RequirementDescription'])) {
+	$_POST['RequirementDescription']='';
+	$_POST['Quantity']=0;
+	$_POST['CostPerUnit']=0;
+}
+echo '<table class="selection">
 		<tr><th colspan="2">' . _('Enter New Requirements') . '</th></tr>
 		<tr><td>' . _('Requirement Description') . '</td>
 		<td><textarea name="RequirementDescription" cols="30" rows="3">' . $_POST['RequirementDescription'] . '</textarea></td></tr>';
-echo '<tr><td>' . _('Quantity Required') . ':</td><td><input type="text" name="Quantity" size=10	maxlength=10 value="' . $_POST['Quantity'] . '"></td></tr>';
-echo '<tr><td>' . _('Cost Per Unit') . ':</td><td><input type="text" name="CostPerUnit" size=10	maxlength=10 value="' . $_POST['CostPerUnit'] . '"></td></tr>';
+echo '<tr><td>' . _('Quantity Required') . ':</td><td><input type="text" class="number" name="Quantity" size="10"	maxlength="10" value="' . $_POST['Quantity'] . '" /></td></tr>';
+echo '<tr><td>' . _('Cost Per Unit') . ':</td><td><input type="text" class="number" name="CostPerUnit" size="10"	maxlength="10" value="' . $_POST['CostPerUnit'] . '" /></td></tr>';
 echo '</table>';
 
-echo '<div class="centre"><input type="submit" name="EnterNewRequirement" value="' . _('Enter New Contract Requirement') . '"></div>';
+echo '<br /><div class="centre"><input type="submit" name="EnterNewRequirement" value="' . _('Enter New Contract Requirement') . '" /></div>';
 
 echo '</form>';
 include('includes/footer.inc');

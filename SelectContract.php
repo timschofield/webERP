@@ -10,7 +10,7 @@ include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contracts') . '" alt="" />' . ' ' . _('Select A Contract') . '</p> ';
 
-echo '<form action=' . $_SERVER['PHP_SELF'] .'?' .SID . ' method=post>';
+echo '<form action="' . $_SERVER['PHP_SELF'] .'?' .SID . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -36,7 +36,7 @@ if (isset($_POST['ContractRef']) AND $_POST['ContractRef']!='') {
 
 if (!isset($_POST['ContractRef']) or $_POST['ContractRef']==''){
 
-	echo _('Contract Reference') . ': <input type="text" name="ContractRef" maxlength=20 size=20>&nbsp&nbsp';
+	echo _('Contract Reference') . ': <input type="text" name="ContractRef" maxlength="20" size="20" />&nbsp;&nbsp;';
 	echo '<select name="Status">';
 
 	if (isset($_GET['Status'])){
@@ -46,40 +46,40 @@ if (!isset($_POST['ContractRef']) or $_POST['ContractRef']==''){
 		$_POST['Status']=4;
 	}
 	if ($_POST['Status']==0){
-		echo '<option selected value="0">' . _('Not Yet Quoted'). '</option>';
+		echo '<option selected="True" value="0">' . _('Not Yet Quoted'). '</option>';
 		echo '<option value="1">' . _('Quoted - No Order Placed'). '</option>';
 		echo '<option value="2">' . _('Order Placed') . '</option>';
 		echo '<option value="3">' . _('Completed') . '</option>';
 		echo '<option value="4">' . _('All Contracts') . '</option>';
 	} elseif($_POST['Status']==1) {
 		echo '<option value="0">' . _('Not Yet Quoted'). '</option>';
-		echo '<option selected value="1">' . _('Quoted - No Order Placed'). '</option>';
+		echo '<option selected="True" value="1">' . _('Quoted - No Order Placed'). '</option>';
 		echo '<option value="2">' . _('Order Placed') . '</option>';
 		echo '<option value="3">' . _('Completed') . '</option>';
 		echo '<option value="4">' . _('All Contracts') . '</option>';
 	} elseif($_POST['Status']==2) {
 		echo '<option value="0">' . _('Not Yet Quoted'). '</option>';
 		echo '<option value="1">' . _('Quoted - No Order Placed'). '</option>';
-		echo '<option selected value="2">' . _('Order Placed') . '</option>';
+		echo '<option selected="True" value="2">' . _('Order Placed') . '</option>';
 		echo '<option value="3">' . _('Completed') . '</option>';
 		echo '<option value="4">' . _('All Contracts') . '</option>';
 	} elseif($_POST['Status']==3) {
 		echo '<option value="0">' . _('Not Yet Quoted'). '</option>';
 		echo '<option value="1">' . _('Quoted - No Order Placed'). '</option>';
 		echo '<option value="2">' . _('Order Placed') . '</option>';
-		echo '<option selected value="3">' . _('Completed') . '</option>';
+		echo '<option selected="True" value="3">' . _('Completed') . '</option>';
 		echo '<option value="4">' . _('All Contracts') . '</option>';
 	} elseif($_POST['Status']==4) {
 		echo '<option value="0">' . _('Not Yet Quoted'). '</option>';
 		echo '<option value="1">' . _('Quoted - No Order Placed'). '</option>';
 		echo '<option value="2">' . _('Order Placed') . '</option>';
 		echo '<option value="3">' . _('Completed') . '</option>';
-		echo '<option selected value="4">' . _('All Contracts') . '</option>';
+		echo '<option selected="True" value="4">' . _('All Contracts') . '</option>';
 	}
-	echo '</select> &nbsp&nbsp';
+	echo '</select> &nbsp;&nbsp;';
 }
-echo '<input type="submit" name="SearchContracts" VALUE="' . _('Search') . '">';
-echo '&nbsp;&nbsp;<a href="' . $rootpath . '/Contracts.php?' . SID . '">' . _('New Contract') . '</a>';
+echo '<input type="submit" name="SearchContracts" value="' . _('Search') . '" />';
+echo '&nbsp;&nbsp;<a href="' . $rootpath . '/Contracts.php?' . SID . '">' . _('New Contract') . '</a></div></p>';
 
 
 //figure out the SQL required from the inputs available
@@ -121,7 +121,7 @@ if (isset($_POST['ContractRef']) AND $_POST['ContractRef'] !='') {
 			$SQL .= " AND status='" . $_POST['Status'] . "'";
 		}
 	} else { //no customer selected
-		$SQL = 'SELECT contractref,
+		$SQL = "SELECT contractref,
 					   contractdescription,
 					   categoryid,
 					   contracts.debtorno,
@@ -133,7 +133,7 @@ if (isset($_POST['ContractRef']) AND $_POST['ContractRef'] !='') {
 					   customerref,
 					   requireddate
 				FROM contracts INNER JOIN debtorsmaster
-				ON contracts.debtorno = debtorsmaster.debtorno';
+				ON contracts.debtorno = debtorsmaster.debtorno";
 		if ($_POST['Status']!=4){
 			$SQL .= " AND status='" . $_POST['Status'] . "'";
 		}
@@ -145,9 +145,9 @@ $ContractsResult = DB_query($SQL,$db,$ErrMsg);
 
 /*show a table of the contracts returned by the SQL */
 
-echo '<table cellpadding=2 colspan=7 WIDTH=100%>';
+echo '<table cellpadding="2" colspan="7" width="98%" class="selection">';
 
-$tableheader = '<tr>
+$TableHeader = '<tr>
 			    <th>' . _('Modify') . '</th>
 				<th>' . _('Order') . '</th>
 				<th>' . _('Issue To WO') . '</th>
@@ -158,7 +158,7 @@ $tableheader = '<tr>
 				<th>' . _('Required Date') . '</th>
 				</tr>';
 
-echo $tableheader;
+echo $TableHeader;
 
 $j = 1;
 $k=0; //row colour counter
@@ -171,10 +171,10 @@ while ($myrow=DB_fetch_array($ContractsResult)) {
 		$k++;
 	}
 
-	$ModifyPage = $rootpath . '/Contracts.php?' . SID . '&ModifyContractRef=' . $myrow['contractref'];
-	$OrderModifyPage = $rootpath . '/SelectOrderItems.php?' . SID . '&ModifyOrderNumber=' . $myrow['orderno'];
-	$IssueToWOPage = $rootpath . '/WorkOrderIssue.php?' . SID . '&WO=' . $myrow['wo'] . '&StockID=' . $myrow['contractref'];
-	$CostingPage = $rootpath . '/ContractCosting.php?' . SID . '&SelectedContract=' . $myrow['contractref'];
+	$ModifyPage = $rootpath . '/Contracts.php?' . SID . '&amp;ModifyContractRef=' . $myrow['contractref'];
+	$OrderModifyPage = $rootpath . '/SelectOrderItems.php?' . SID . '&amp;ModifyOrderNumber=' . $myrow['orderno'];
+	$IssueToWOPage = $rootpath . '/WorkOrderIssue.php?' . SID . '&amp;WO=' . $myrow['wo'] . '&amp;StockID=' . $myrow['contractref'];
+	$CostingPage = $rootpath . '/ContractCosting.php?' . SID . '&amp;SelectedContract=' . $myrow['contractref'];
 	$FormatedRequiredDate = ConvertSQLDate($myrow['requireddate']);
 
 	if ($myrow['status']==0 OR $myrow['status']==1){ //still setting up the contract
@@ -193,7 +193,7 @@ while ($myrow=DB_fetch_array($ContractsResult)) {
 		echo '<td>' . _('n/a') . '</td>';
 	}
 	if ($myrow['status']==2 OR $myrow['status']==3){
-			echo '<td><a href="' . $CostingPage . '">' . _('View') . '<a></td>';
+			echo '<td><a href="' . $CostingPage . '">' . _('View') . '</a></td>';
 		} else {
 			echo '<td>' . _('n/a') . '</td>';
 	}
@@ -205,12 +205,12 @@ while ($myrow=DB_fetch_array($ContractsResult)) {
 	$j++;
 	if ($j == 12){
 		$j=1;
-		echo $tableheader;
+		echo $TableHeader;
 	}
 //end of page full new headings if
 }
 //end of while loop
 
-echo '</table></form>';
+echo '</table></form><br />';
 include('includes/footer.inc');
 ?>

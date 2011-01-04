@@ -2,9 +2,7 @@
 
 /* $Id$*/
 
-/* $Revision: 1.91 $ */
-
-//$PageSecurity = 1;
+//$PageSecurity = 1; now comes from DB scripts table
 
 include('includes/session.inc');
 $title=_('Main Menu');
@@ -885,8 +883,6 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 	<?php
 		break;
 
-
-
 	Case 'system': //System setup
 
 	?>
@@ -1510,8 +1506,14 @@ be generated, one for standard reports and the other for custom reports.
 
 	$Title= array(_('Custom Reports'), _('Standard Reports and Forms'));
 
-	$sql= "SELECT id, reporttype, defaultreport, groupname, reportname
-		FROM reports ORDER BY groupname, reportname";
+	$sql= "SELECT id, 
+								reporttype, 
+								defaultreport, 
+								groupname, 
+								reportname
+				FROM reports 
+				ORDER BY groupname, 
+									reportname";
 	$Result=DB_query($sql,$db,'','',false,true);
 	$ReportList = '';
 	while ($Temp = DB_fetch_array($Result)) $ReportList[] = $Temp;

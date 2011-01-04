@@ -27,37 +27,37 @@ $headers   .=  'MIME-Version: 1.0\n' . 'Content-Type: text/html; charset="utf-8"
 $ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
 
 $sql = "SELECT salesorders.debtorno,
-    		salesorders.customerref,
-		salesorders.comments,
-		salesorders.orddate,
-		salesorders.deliverto,
-		salesorders.deladd1,
-		salesorders.deladd2,
-		salesorders.deladd3,
-		salesorders.deladd4,
-		salesorders.deladd5,
-		salesorders.deladd6,
-		salesorders.deliverblind,
-		debtorsmaster.name,
-		debtorsmaster.address1,
-		debtorsmaster.address2,
-		debtorsmaster.address3,
-		debtorsmaster.address4,
-		debtorsmaster.address5,
-		debtorsmaster.address6,
-		shippers.shippername,
-		salesorders.printedpackingslip,
-		salesorders.datepackingslipprinted,
-		locations.locationname,
-		salesorders.deliverydate
-	FROM salesorders,
-		debtorsmaster,
-		shippers,
-		locations
-	WHERE salesorders.debtorno=debtorsmaster.debtorno
-	AND salesorders.shipvia=shippers.shipper_id
-	AND salesorders.fromstkloc=locations.loccode
-	AND salesorders.orderno=" . $_GET['TransNo'];
+							salesorders.customerref,
+							salesorders.comments,
+							salesorders.orddate,
+							salesorders.deliverto,
+							salesorders.deladd1,
+							salesorders.deladd2,
+							salesorders.deladd3,
+							salesorders.deladd4,
+							salesorders.deladd5,
+							salesorders.deladd6,
+							salesorders.deliverblind,
+							debtorsmaster.name,
+							debtorsmaster.address1,
+							debtorsmaster.address2,
+							debtorsmaster.address3,
+							debtorsmaster.address4,
+							debtorsmaster.address5,
+							debtorsmaster.address6,
+							shippers.shippername,
+							salesorders.printedpackingslip,
+							salesorders.datepackingslipprinted,
+							locations.locationname,
+							salesorders.deliverydate
+						FROM salesorders,
+							debtorsmaster,
+							shippers,
+							locations
+						WHERE salesorders.debtorno=debtorsmaster.debtorno
+						AND salesorders.shipvia=shippers.shipper_id
+						AND salesorders.fromstkloc=locations.loccode
+						AND salesorders.orderno=" . $_GET['TransNo'];
 
 $result=DB_query($sql,$db, $ErrMsg);
 
@@ -102,7 +102,7 @@ if (DB_num_rows($result)==0){
                 exit;
         }//packing slip has been printed.
         $MailSubject = "Order Confirmation-Sales Order " .  $_GET['TransNo'] . " - Your PO " .
-                $myrow['customerref'] ;
+        $myrow['customerref'] ;
 }
 
 /*retrieve the order details from the database to print */

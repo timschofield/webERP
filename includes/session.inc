@@ -63,7 +63,7 @@ if (isset($_SESSION['DatabaseName'])){
 			$_GET[$key] = DB_escape_string($value);
 		}
 	}
-} else {
+} else { //set SESSION['FormID'] before the a user has even logged in
 	$_SESSION['FormID'] = sha1(uniqid(mt_rand(), true));
 }
 
@@ -118,7 +118,9 @@ include($PathPrefix . 'includes/GetConfig.php');
 /*The page security variable is now retrieved from the database in GetConfig.php and stored in the $SESSION['PageSecurity'] array
  * the key for the array is the script name - the script name is retrieved from the basename ($_SERVER['SCRIPT_NAME']) 
  */
-$PageSecurity = $_SESSION['PageSecurity'][basename($_SERVER['SCRIPT_NAME'])];
+if (!isset($PageSecurity)){ //maybe hardcoded in the UpgradeDatabase script - so old versions that don't have the scripts.pagesecurity field do not choke
+	$PageSecurity = $_SESSION['PageSecurity'][basename($_SERVER['SCRIPT_NAME'])];
+}
 
 /*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
 if (($Version>$_SESSION['VersionNumber']) and (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php')) {
@@ -268,7 +270,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $_SESSION['AllowedPageS
 } else {
 	$SupplierLogin=0;
 }
-/* Nasty kludge to allow Supplier only logins as well as Customer logins  - .... hmmmmm */
+/* Nasty kludge to allow Supplier only logins as well as Customer logins  - .... hmmmmm some work to do here then! */
 if ($SupplierLogin==1) {
 	$_SESSION['AllowedPageSecurityTokens'][0]=9;
 }
@@ -313,6 +315,7 @@ function CryptPass( $Password ) {
 
 
 if (sizeof($_POST) > 0) {
+	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
 		$title = _('Error in form verificationm');
 		include('includes/header.inc');

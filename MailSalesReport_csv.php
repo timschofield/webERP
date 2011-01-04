@@ -13,9 +13,9 @@ and an array of the receipients and the company database to use*/
 /*The Sales report to send */
 $ReportID = 4;
 /*The company database to use */
-$DatabaseName = 'weberp';
+$DatabaseName = 'weberpdemo';
 /*The people to receive the emailed report */
-$Recipients = array('"Root" <root@localhost>','"someone else" <someoneelese@sowhere.com>');
+$Recipients = array('"Root" <root@localhost>','"someone else" <someoneelese@somewhere.com>');
 
 /* ----------------------------------------------------------------------------------------------*/
 

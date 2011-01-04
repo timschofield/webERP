@@ -1,5 +1,5 @@
 <?php
-/* $Id: $*/
+/* $Id:  $*/
 /* definition of the Contract class */
 
 Class Contract {
@@ -38,20 +38,20 @@ Class Contract {
 	}
 
 	function Add_To_ContractBOM($StockID, 
-							    $ItemDescription, 
-							    $WorkCentre, 
-							    $Quantity, 
-							    $ItemCost, 
-							    $UOM){
-									
+														    $ItemDescription, 
+														    $WorkCentre, 
+														    $Quantity, 
+														    $ItemCost, 
+														    $UOM){
+																
 		if (isset($StockID) AND $Quantity!=0){
 			$this->ContractBOM[$this->BOMComponentCounter] = new ContractComponent($this->BOMComponentCounter,
-																					$StockID, 
-																					$ItemDescription, 
-																					$WorkCentre, 
-																					$Quantity,
-																					$ItemCost, 
-																					$UOM);
+																																								$StockID, 
+																																								$ItemDescription, 
+																																								$WorkCentre, 
+																																								$Quantity,
+																																								$ItemCost, 
+																																								$UOM);
 			$this->BOMComponentCounter++;
 			Return 1;
 		}
@@ -60,7 +60,10 @@ Class Contract {
 
 	function Remove_ContractComponent($ContractComponent_ID){
 		global $db;
-		$result = DB_query("DELETE FROM contractbom WHERE contractref='" . $this->ContractRef . "' AND stockid='" . $this->ContractBOM[$ContractComponent_ID]->StockID . "'",$db);
+		$result = DB_query("DELETE FROM contractbom 
+											WHERE contractref='" . $this->ContractRef . "' 
+											AND stockid='" . $this->ContractBOM[$ContractComponent_ID]->StockID . "'",
+											$db);
 		unset($this->ContractBOM[$ContractComponent_ID]);
 	}
 
@@ -93,7 +96,13 @@ Class ContractComponent {
 	var $ItemCost;
 	var $UOM;
 	
-	function ContractComponent ($ComponentID, $StockID, $ItemDescription, $WorkCentre, $Quantity, $ItemCost, $UOM){
+	function ContractComponent ($ComponentID, 
+															$StockID, 
+															$ItemDescription, 
+															$WorkCentre, 
+															$Quantity, 
+															$ItemCost, 
+															$UOM){
 
 /* Constructor function to add a new Contract Component object with passed params */
 		$this->ComponentID = $ComponentID;
@@ -113,15 +122,16 @@ Class ContractRequirement {
 	var $Quantity;
 	var $CostPerUnit;
 	
-	function ContractRequirement ($Requirement, $Quantity, $CostPerUnit,$ContractReqID=0){
+	function ContractRequirement ($Requirement, 
+																$Quantity, 
+																$CostPerUnit,
+																$ContractReqID=0){
 
 /* Constructor function to add a new Contract Component object with passed params */
 		$this->Requirement = $Requirement;
 		$this->Quantity = $Quantity;
 		$this->CostPerUnit = $CostPerUnit;
-		$this->ItemCost= $ItemCost;
 		$this->ContractReqID = $ContractReqID;
 	}
 }
-
 ?>

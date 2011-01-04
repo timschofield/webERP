@@ -29,8 +29,8 @@ Class PurchOrder {
 	var $SuppTel;
 	var $Comments;
 	var $Location;
-	Var $Managed;
-	Var $SupplierID;
+	var $Managed;
+	var $SupplierID;
 	var $SupplierName;
 	var $Orig_OrderDate;
 	var $OrderNo; /*Only used for modification of existing orders otherwise only established when order committed */

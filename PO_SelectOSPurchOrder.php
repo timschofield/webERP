@@ -58,7 +58,8 @@ if (isset($OrderNumber) && $OrderNumber!='') {
 }
 
 if (isset($_POST['SearchParts'])) {
-
+	
+	
 	if (isset($_POST['Keywords']) AND isset($_POST['StockCode'])) {
 		echo '<div class="page_help_text">' ._('Stock description keywords have been used in preference to the Stock code extract entered') . '.</div>';
 	}
@@ -96,7 +97,7 @@ if (isset($_POST['SearchParts'])) {
 					ON stockmaster.stockid=purchorderdetails.itemcode
 			WHERE purchorderdetails.completed=0
 			AND stockmaster.stockid LIKE '%" . $_POST['StockCode'] . "%'
-			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+			AND stockmaster.categoryid='" . $_POST['StockCat'] . "' 
 			GROUP BY stockmaster.stockid,
 				stockmaster.description,
 				stockmaster.units
@@ -113,7 +114,7 @@ if (isset($_POST['SearchParts'])) {
 				INNER JOIN purchorderdetails
 					ON stockmaster.stockid=purchorderdetails.itemcode
 			WHERE purchorderdetails.completed=0
-			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+			AND stockmaster.categoryid='" . $_POST['StockCat'] . "' 
 			GROUP BY stockmaster.stockid,
 				stockmaster.description,
 				stockmaster.units
@@ -150,7 +151,33 @@ if (!isset($OrderNumber) or $OrderNumber=='' ){
 		}
 	}
 
- 	echo '</select>  <input type=submit name="SearchOrders" value="' . _('Search Purchase Orders') . '"></td></tr></table>';
+ 	echo '</select> ' . _('Order Status:') .' <select name="Status">';
+ 	if (!isset($_POST['Status']) OR $_POST['Status']=='Pending_Authorised'){
+		echo '<option selected value="Pending_Authorised">' . _('Pending and Authorised') . '</option>';
+	} else {
+		echo '<option value="Pending_Authorised">' . _('Pending and Authorised') . '</option>';
+	}
+	if ($_POST['Status']=='Pending'){
+		echo '<option selected value="Pending">' . _('Pending') . '</option>';
+	} else {
+		echo '<option value="Pending">' . _('Pending') . '</option>';
+	}
+ 	if ($_POST['Status']=='Authorised'){
+		echo '<option selected value="Authorised">' . _('Authorised') . '</option>';
+	} else {
+		echo '<option value="Authorised">' . _('Authorised') . '</option>';
+	}
+	if ($_POST['Status']=='Cancelled'){
+		echo '<option selected value="Cancelled">' . _('Cancelled') . '</option>';
+	} else {
+		echo '<option value="Cancelled">' . _('Cancelled') . '</option>';
+	}
+	if ($_POST['Status']=='Rejected'){
+		echo '<option selected value="Rejected">' . _('Rejected') . '</option>';
+	} else {
+		echo '<option value="Rejected">' . _('Rejected') . '</option>';
+	}
+ 	echo '</select> <input type=submit name="SearchOrders" value="' . _('Search Purchase Orders') . '"></td></tr></table>';
 }
 
 $SQL="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
@@ -230,6 +257,18 @@ else {
 
 	//figure out the SQL required from the inputs available
 
+	if (!isset($_POST['Status']) OR $_POST['Status']=='Pending_Authorised'){
+		$StatusCriteria = " AND (purchorders.status='Pending' OR purchorders.status='Authorised' OR purchorders.status='Printed') ";
+	}elseif ($_POST['Status']=='Authorised'){
+		$StatusCriteria = " AND (purchorders.status='Authorised' OR purchorders.status='Printed')";
+	}elseif ($_POST['Status']=='Pending'){
+		$StatusCriteria = " AND purchorders.status='Pending' ";
+	}elseif ($_POST['Status']=='Rejected'){
+		$StatusCriteria = " AND purchorders.status='Rejected' ";
+	}elseif ($_POST['Status']=='Cancelled'){
+		$StatusCriteria = " AND purchorders.status='Cancelled' ";
+	}
+
 	if (isset($OrderNumber) && $OrderNumber !='') {
 		$SQL = "SELECT purchorders.orderno,
 										suppliers.suppname,
@@ -284,7 +323,8 @@ else {
 								AND purchorderdetails.completed=0
 								AND purchorderdetails.itemcode='". $SelectedStockItem ."'
 								AND purchorders.supplierno='" . $SelectedSupplier ."'
-								AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
+								AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "' 
+								" . $StatusCriteria . "
 								GROUP BY purchorders.orderno ASC,
 												purchorders.realorderno,
 												suppliers.suppname,
@@ -312,7 +352,8 @@ else {
 								AND purchorders.supplierno = suppliers.supplierid
 								AND purchorderdetails.completed=0
 								AND purchorders.supplierno='" . $SelectedSupplier ."'
-								AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
+								AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "' 
+								" . $StatusCriteria . "
 								GROUP BY purchorders.orderno ASC,
 												purchorders.realorderno,
 												suppliers.suppname,
@@ -343,7 +384,8 @@ else {
 								AND purchorders.supplierno = suppliers.supplierid
 								AND purchorderdetails.completed=0
 								AND purchorderdetails.itemcode='". $SelectedStockItem ."'
-								AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
+								AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "' 
+								" . $StatusCriteria . "
 								GROUP BY purchorders.orderno ASC,
 												purchorders.realorderno,
 												suppliers.suppname,
@@ -370,7 +412,8 @@ else {
 								WHERE purchorders.orderno = purchorderdetails.orderno
 								AND purchorders.supplierno = suppliers.supplierid
 								AND purchorderdetails.completed=0
-								AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
+								AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "' 
+								" . $StatusCriteria . "
 								GROUP BY purchorders.orderno ASC,
 												purchorders.realorderno,
 												suppliers.suppname,

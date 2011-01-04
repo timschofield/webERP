@@ -52,16 +52,17 @@ function userLogin($Name, $Password, $db) {
 				return  UL_BLOCKED;
 			}
 			/*reset the attempts counter on successful login */
+			$_SESSION['UserID'] = $myrow['userid'];
 			$_SESSION['AttemptsCounter'] = 0;
 			$_SESSION['AccessLevel'] = $myrow['fullaccess'];
 			$_SESSION['CustomerID'] = $myrow['customerid'];
 			$_SESSION['UserBranch'] = $myrow['branchcode'];
 			$_SESSION['DefaultPageSize'] = $myrow['pagesize'];
 			$_SESSION['UserStockLocation'] = $myrow['defaultlocation'];
+			$_SESSION['UserEmail'] = $myrow['email'];
 			$_SESSION['ModulesEnabled'] = explode(",", $myrow['modulesallowed']);
 			$_SESSION['UsersRealName'] = $myrow['realname'];
 			$_SESSION['Theme'] = $myrow['theme'];
-//			$_SESSION['UserID'] = $myrow[11];
 			$_SESSION['Language'] = $myrow['language'];
 			$_SESSION['SalesmanLogin'] = $myrow['salesman'];
 			if (isset($myrow['pdflanguage'])) {
@@ -75,7 +76,7 @@ function userLogin($Name, $Password, $db) {
 			} else {
 				$_SESSION['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax'];  // default comes from config.php
 			}
-			$_SESSION['UserID'] = $myrow['userid'];
+			
 			$sql = "UPDATE www_users SET lastvisitdate='". date('Y-m-d H:i:s') ."'
 							WHERE www_users.userid='" . $Name . "'";
 			$Auth_Result = DB_query($sql, $db);
@@ -93,7 +94,7 @@ function userLogin($Name, $Password, $db) {
 					$i++;
 				}
 			}
-			//  Temporary shift - disable log messages.
+			//  Temporary shift - disable log messages - how temporary?
 		} else {     // Incorrect password
 			// 5 login attempts, show failed login screen
 			if (!isset($_SESSION['AttemptsCounter'])) {

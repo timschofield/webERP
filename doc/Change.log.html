@@ -1,8 +1,11 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p>/</p>
-<p>31/12/10 Tim: Tidy up of CounterSales.php - CamelCasing, quoting SQL, closing slashes in xhtml tags
-<p>29/12/10 Phil: Reverted to single SQL upgrade file per release - but retaining Tim's upgrade mechanism if the DBUpgradeNumber is out of date. Removed pseudo SQL language required for upgrade script - just applies plain vanilla SQL from the scripts required</p>
-<p>29/12/10 Tim: DB upgrade mechanism with separate sudo SQL for each database change in a separate file + 52 files of updates since 3.11.4</p>
+<p>4/1/11 Phil: Rework of purchase order scripts ... again.</p>
+<p>4/1/11 Phil: Select Purchase orders now defaults to just pending and authorised/printed - other statii are options</p>
+<p>1/1/11 Phil: Upgrade script make capable of upgrades from any earlier version - and email a backup to the user.</p>
+<p>31/12/10 Tim: Tidy up of CounterSales.php - CamelCasing, quoting SQL, closing slashes in xhtml tags</p>
+<p>29/12/10 Phil: Reverted to single SQL upgrade file per release - but retaining Tim's upgrade mechanism if the DBUpgradeNumber is out of date. Removed pseudo SQL language required for upgrade script and the 52 update files - just applies plain vanilla SQL from the scripts required</p>
+<p>29/12/10 Tim: DB upgrade mechanism with separate pseudo SQL for each database change in a separate file + 52 files of updates since 3.11.4</p>
 <p>21/12/10 Phil : Reworked PDFPrintLabels.php to conform to standards and corrected SQL for prices</p>
 <p>21/12/10 Ricard Andreu: PDFPrintLabels.php was not checking for end date of prices - fixed</p>
 <p>19/12/10 Phil: SelectOrderItems.php ConfirmDispatch_Invoice.php add code to handle asset disposals.</p>

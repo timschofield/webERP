@@ -7,7 +7,8 @@
 $Version='3.12.1'; //must update manually every time there is a DB change
 
 require_once ($PathPrefix .'includes/MiscFunctions.php');
-if (!isset($_SESSION['DatabaseName'])){
+
+if (!isset($_SESSION['DatabaseName'])){ //need to get the database name from the file structure 
 	if (isset($_POST['CompanyNameField'])){
 		if (is_dir('companies/' . $_POST['CompanyNameField']) AND $_POST['CompanyNameField'] != '..'){
 			$_SESSION['DatabaseName'] = $_POST['CompanyNameField'];
@@ -20,9 +21,7 @@ if (!isset($_SESSION['DatabaseName'])){
 	} elseif (isset($DatabaseName)) { /* Scripts that do not require a login must have the $DatabaseName variable set in hard code */
 		$_SESSION['DatabaseName'] = $DatabaseName;
 		include_once ($PathPrefix . 'includes/ConnectDB_' . $dbType . '.inc');
-	} elseif ($AllowAnyone) {
-	    include_once($PathPrefix .'includes/ConnectDB_' . $dbType . '.inc'); /* Fix call to undefined function DB_query in GetConfig.php, line 9 when calling RecurringSalesOrdersProcess.php from Cron */
-	}
+	} 
 } else {
  	include_once($PathPrefix .'includes/ConnectDB_' . $dbType . '.inc');
 }

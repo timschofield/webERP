@@ -805,4 +805,3 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 
 INSERT INTO config (confname, confvalue) VALUES ('VersionNumber', '3.12.0');
 UPDATE config SET confvalue='3.12.1' WHERE confname='VersionNumber';
-

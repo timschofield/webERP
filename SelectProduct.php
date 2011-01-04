@@ -28,10 +28,10 @@ if (isset($_POST['StockCode'])) {
 	$_POST['StockCode'] = trim(strtoupper($_POST['StockCode']));
 }
 // Always show the search facilities
-$SQL = "SELECT categoryid,
+$SQL = 'SELECT categoryid,
 								categorydescription
 					FROM stockcategory
-					ORDER BY categorydescription";
+					ORDER BY categorydescription';
 $result1 = DB_query($SQL, $db);
 if (DB_num_rows($result1) == 0) {
 	echo '<p><font size=4 color=red>' . _('Problem Report') . ':</font><br />' . _('There are no stock categories currently defined please use the link below to set them up').'</p>';
@@ -247,7 +247,6 @@ switch ($myrow['mbflag']) {
 		$QOOSQL="SELECT SUM(purchorderdetails.quantityord -purchorderdetails.quantityrecd) AS QtyOnOrder
 									FROM purchorders INNER JOIN purchorderdetails
 									ON purchorders.orderno=purchorderdetails.orderno
-									AND purchorderdetails.itemcode=purchdata.stockid
 									WHERE purchorderdetails.itemcode='" . $StockID . "'
 									AND purchorderdetails.completed =0 
 									AND purchorders.status<>'Cancelled'

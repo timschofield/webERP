@@ -38,8 +38,8 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
 
 
 if (isset($_POST['BackToHeader'])){
-	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/Contracts.php?' . SID . 'identifier='.$identifier. '">';
-	echo '<p>';
+	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/Contracts.php?' . SID . 'identifier='.$identifier. '" />';
+	echo '<br />';
 	prnMsg(_('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') .	'<a href="' . $rootpath . '/Contracts.php?' . SID. 'identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
 	include('includes/footer.inc');
 	exit;
@@ -144,7 +144,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 	$DbgMsg = _('The SQL statement that failed was');
 	$SearchResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-	if (DB_num_rows($SearchResult)==0 && $debug==1){
+	if (DB_num_rows($SearchResult)==0 AND $debug==1){
 		prnMsg( _('There are no products to display matching the criteria provided'),'warn');
 	}
 	if (DB_num_rows($SearchResult)==1){
@@ -212,7 +212,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 				} else {
 					prnMsg (_('The item code') . ' ' . $ItemCode . ' ' . _('does not exist in the database and therefore cannot be added to the contract BOM'),'error');
 					if ($debug==1){
-						echo "<br>".$sql;
+						echo "<br />".$sql;
 					}
 					include('includes/footer.inc');
 					exit;
@@ -231,11 +231,12 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' .
 		_('Contract Bill of Material') . '" alt="" />  '.$_SESSION['Contract'.$identifier]->CustomerName . '</p>';
 
+	echo '<table cellpadding="2" class="selection">';
+
 	if (isset($_SESSION['Contract'.$identifier]->ContractRef)) {
-		echo  ' ' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef;
+		echo  '<tr><th colspan="7"><font color="navy" size="2">' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef.'</font></th></tr>';
 	}
 
-	echo '<table cellpadding=2 colspan=7 border=1>';
 	echo '<tr>
 		<th>' . _('Item Code') . '</th>
 		<th>' . _('Description') . '</th>
@@ -264,18 +265,18 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 
 		echo '<td>' . $ContractComponent->StockID . '</td>
 			  <td>' . $ContractComponent->ItemDescription . '</td>
-			  <td><input type=text class="number" name="Qty' . $ContractComponent->ComponentID . '" size="11" value="' . $ContractComponent->Quantity  . '"></td>
+			  <td><input type="text" class="number" name="Qty' . $ContractComponent->ComponentID . '" size="11" value="' . $ContractComponent->Quantity  . '" /></td>
 			  <td>' . $ContractComponent->UOM . '</td>
 			  <td class="number">' . $ContractComponent->ItemCost . '</td>
 			  <td class="number">' . $DisplayLineTotal . '</td>
-			  <td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . 'identifier='.$identifier. '&Delete=' . $ContractComponent->ComponentID . '">' . _('Delete') . '</a></td></tr>';
+			  <td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . 'identifier='.$identifier. '&amp;Delete=' . $ContractComponent->ComponentID . '">' . _('Delete') . '</a></td></tr>';
 		$TotalCost += $LineTotal;
 	}
 
 	$DisplayTotal = number_format($TotalCost,2);
-	echo '<tr><td colspan=6 class="number">' . _('Total Cost') . '</td><td class="number"><b>' . $DisplayTotal . '</b></td></tr></table>';
-	echo '<br><div class="centre"><input type="submit" name="UpdateLines" value="' . _('Update Order Lines') . '">';
-	echo ' <input type="submit" name="BackToHeader" value="' . _('Back To Contract Header') . '">';
+	echo '<tr><td colspan="6" class="number">' . _('Total Cost') . '</td><td class="number"><b>' . $DisplayTotal . '</b></td></tr></table>';
+	echo '<br /><div class="centre"><input type="submit" name="UpdateLines" value="' . _('Update Lines') . '" />';
+	echo '<input type="submit" name="BackToHeader" value="' . _('Back To Contract Header') . '" /></div>';
 
 } /*Only display the contract BOM lines if there are any !! */
 
@@ -289,18 +290,18 @@ if (!isset($_GET['Edit'])) {
 	$ErrMsg = _('The supplier category details could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the category details but failed was');
 	$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' .
+		_('Print') . '" alt="" />' . ' ' . _('Search For Stock Items') . '</p>';
+	echo '<table class="selection"><tr>';
 
-	echo '<table class=selection><tr><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' .
-		_('Print') . '" alt="">' . ' ' . _('Search For Stock Items') . '';
+	echo ":</tr><tr><td><select name='StockCat'>";
 
-	echo ":</font></tr><tr><td><select name='StockCat'>";
-
-	echo "<option selected value='All'>" . _('All');
+	echo "<option selected='True' value='All'>" . _('All').'</option>';
 	while ($myrow1 = DB_fetch_array($result1)) {
 		if (isset($_POST['StockCat']) and $_POST['StockCat']==$myrow1['categoryid']){
-			echo "<option selected value=". $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
+			echo '<option selected value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'].'</option>';
 		} else {
-			echo "<option value=". $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
+			echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'].'</option>';
 		}
 	}
 
@@ -316,19 +317,19 @@ if (!isset($_GET['Edit'])) {
 	}
 
 	echo '</select></td>
-		<td><font size=2>' . _('Enter text extracts in the description') . ":</font></td>
-		<td><input type='text' name='Keywords' size=20 maxlength=25 value='" . $_POST['Keywords'] . "'></td></tr>
+		<td><font size="2">' . _('Enter text extracts in the description') . ':</font></td>
+		<td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td></tr>
 		<tr><td></td>
-		<td><font size=3><b>" . _('OR') . ' </b></font><font size=2>' . _('Enter extract of the Stock Code') .
-			":</font></td>
-		<td><input type='text' name='StockCode' size=15 maxlength=18 value='" . $_POST['StockCode'] . "'></td>
+		<td><font size="3"> <b>' . _('OR') . ' </b></font><font size="2">' . _('Enter extract of the Stock Code') .
+			':</font></td>
+		<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
 		</tr>
 		<tr><td></td>
-		<td><font size=3><b>" . _('OR') . ' </b></font><font size=2><a target="_blank" href="'.$rootpath.'/Stocks.php?"' . SID .
-			 '">' . _('Create a New Stock Item') . "</a></font></td></tr>
-		</table><br>
-		<div class='centre'><input type=submit name='Search' value='" . _('Search Now') . "'>
-		</div><br>";
+		<td><font size="3"><b>' . _('OR') . ' </b></font><font size="2"><a target="_blank" href="'.$rootpath.'/Stocks.php?' . SID .
+			 '">' . _('Create a New Stock Item') . '</a></font></td></tr>
+		</table><br />
+		<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" />
+		</div><br />';
 
 
 	$PartsDisplayed =0;
@@ -336,16 +337,16 @@ if (!isset($_GET['Edit'])) {
 
 if (isset($SearchResult)) {
 
-	echo '<table cellpadding=1 colspan=7>';
+	echo '<table cellpadding="1" colspan="7">';
 
-	$tableheader = '<tr>
+	$TableHeader = '<tr>
 					<th>' . _('Code')  . '</th>
 					<th>' . _('Description') . '</th>
 					<th>' . _('Units') . '</th>
 					<th>' . _('Image') . '</th>
-					<th>' . _('Quantity') . '</th
+					<th>' . _('Quantity') . '</th>
 					</tr>';
-	echo $tableheader;
+	echo $TableHeader;
 
 	$j = 1;
 	$k=0; //row colour counter
@@ -362,7 +363,7 @@ if (isset($SearchResult)) {
 
 		$filename = $myrow['stockid'] . '.jpg';
 		if (file_exists( $_SESSION['part_pics_dir'] . '/' . $filename) ) {
-			$ImageSource = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $filename . '" width="50" height="50">';
+			$ImageSource = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $filename . '" width="50" height="50" />';
 		} else {
 			$ImageSource = '<i>'._('No Image').'</i>';
 		}
@@ -371,7 +372,7 @@ if (isset($SearchResult)) {
 				<td>'.$myrow['description'].'</td>
 				<td>'.$myrow['units'] . '</td>
 				<td>'.$ImageSource.'</td>
-				<td><input class="number" type="text" size="6" value="0" name="qty'.$myrow['stockid'].'"></td>
+				<td><input class="number" type="text" size="6" value="0" name="qty'.$myrow['stockid'].'" /></td>
 				</tr>';
 
 		$PartsDisplayed++;
@@ -389,10 +390,10 @@ if (isset($SearchResult)) {
 		prnMsg( _('Only the first') . ' ' . $Maximum_Number_Of_Parts_To_Show . ' ' . _('can be displayed') . '. ' .
 			_('Please restrict your search to only the parts required'),'info');
 	}
-	echo '<br><div class="centre"><input type="submit" name="NewItem" value="' . _('Add to Contract Bill Of Material') .'"></div>';
+	echo '<br /><div class="centre"><input type="submit" name="NewItem" value="' . _('Add to Contract Bill Of Material') .'" /></div>';
 }#end if SearchResults to show
 
-echo '<hr>';
+echo '<hr />';
 
 echo '</form>';
 include('includes/footer.inc');
