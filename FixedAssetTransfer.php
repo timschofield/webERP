@@ -8,13 +8,13 @@ $title = _('Change Asset Location');
 
 include('includes/header.inc');
 
-foreach ($_POST as $key => $value) {
-	if (substr($key,0,4)=='move') {
-		$AssetID=substr($key,4);
-		$location=$_POST['location'.$AssetID];
+foreach ($_POST as $AssetToMove => $Value) { //Value is not used?
+	if (substr($AssetToMove,0,4)=='Move') { // the form variable is of the format MoveAssetID so need to strip the move bit off
+		$AssetID=substr($AssetToMove,4);
 		$sql='UPDATE fixedassets
-						SET assetlocation="'.$location.'"
-						WHERE assetid='.$AssetID;
+					SET assetlocation="'.$_POST['Location'.$AssetID] .'"
+					WHERE assetid="'. $AssetID . '"';
+
 		$result=DB_query($sql, $db);
 	}
 }
@@ -58,24 +58,13 @@ if (isset($_GET['AssetID'])) {
 
 	echo '</td></tr><tr><td></td>';
 
-	echo '<td><font size 3><b>' . _('OR').' ' . '</b></font>' . _('Enter partial') .' <b>'. _('Stock Code') . '</b>:</td>';
+	echo '<td><font size 3><b>' . _('OR').' ' . '</b></font>' . _('Enter partial') .' <b>'. _('Asset Code') . '</b>:</td>';
 	echo '<td>';
 
 	if (isset($_POST['AssetID'])) {
 		echo '<input type="text" name="AssetID" value="'. trim($_POST['AssetID'],'%') . '" size=15 maxlength=18>';
 	} else {
 		echo '<input type="text" name="AssetID" size=15 maxlength=18>';
-	}
-
-	echo '<tr><td></td>';
-
-	echo '<td><font size 3><b>' . _('OR').' ' . '</font></b>' . _('Enter partial').' <b>'. _('Serial Number') . '</b>:</td>';
-	echo '<td>';
-
-	if (isset($_POST['AssetID'])) {
-		echo '<input type="text" name="SerialNumber" value="'. trim($_POST['SerialNumber'],'%') . '" size=15 maxlength=18>';
-	} else {
-		echo '<input type="text" name="SerialNumber" size=15 maxlength=18>';
 	}
 
 	echo '</td></tr></table><br>';
@@ -97,11 +86,7 @@ if (isset($_POST['Search'])) {
 	} else {
 		$_POST['AssetID']='%';
 	}
-	if (isset($_POST['SerialNumber'])) {
-		$_POST['SerialNumber']='%'.$_POST['SerialNumber'].'%';
-	} else {
-		$_POST['SerialNumber']='%';
-	}
+	
 	$sql= 'SELECT fixedassets.assetid,
 								fixedassets.cost,
 								fixedassets.accumdepn,
@@ -111,13 +96,13 @@ if (isset($_POST['Search'])) {
 								fixedassets.barcode,
 								fixedassets.assetlocation,
 								fixedassetlocations.locationdescription
-			FROM fixedassets
-			INNER JOIN fixedassetlocations
-			ON fixedassets.assetlocation=fixedassetlocations.locationid
-			WHERE fixedassets.assetcategoryid ' . LIKE . '"'.$_POST['AssetCat'].'"
-			AND fixedassets.description ' . LIKE . '"'.$_POST['Keywords'].'"
-			AND fixedassets.assetid ' . LIKE . '"'.$_POST['AssetID'].'"
-			AND fixedassets.serialno ' . LIKE . '"'.$_POST['SerialNumber'].'"';
+				FROM fixedassets
+				INNER JOIN fixedassetlocations
+				ON fixedassets.assetlocation=fixedassetlocations.locationid
+				WHERE fixedassets.assetcategoryid ' . LIKE . '"'.$_POST['AssetCat'].'"
+				AND fixedassets.description ' . LIKE . '"'.$_POST['Keywords'].'"
+				AND fixedassets.assetid ' . LIKE . '"'.$_POST['AssetID'].'"
+				AND fixedassets.serialno ' . LIKE . '"'.$_POST['SerialNumber'].'"';
 	$Result=DB_query($sql, $db);
 	echo '<form action="'. $_SERVER['PHP_SELF'] . '?' . SID .'" method=post><table class=selection>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -141,7 +126,7 @@ if (isset($_POST['Search'])) {
 						<td class=number>'.number_format($myrow['cost'],2).'</td>
 						<td class=number>'.number_format($myrow['accumdepn'],2).'</td>
 						<td>'.$myrow['locationdescription'].'</td>';
-		echo '<td><select name="location'.$myrow['assetid'].'" onChange="ReloadForm(move'.$myrow['assetid'].')">';
+		echo '<td><select name="Location'.$myrow['assetid'].'" onChange="ReloadForm(Move'.$myrow['assetid'].')">';
 		echo '<option></option>';
 		while ($LocationRow=DB_fetch_array($LocationResult)) {
 			if ($LocationRow['locationid']==$myrow['location']) {
@@ -155,9 +140,8 @@ if (isset($_POST['Search'])) {
 		echo '<input type=hidden name=AssetCat value="' . $_POST['AssetCat'].'"';
 		echo '<input type=hidden name=Keywords value="' . $_POST['Keywords'].'"';
 		echo '<input type=hidden name=AssetID value="' . $_POST['AssetID'].'"';
-		echo '<input type=hidden name=SerialNumber value="' . $_POST['SerialNumber'].'"';
 		echo '<input type=hidden name=Search value="' . $_POST['Search'].'"';
-		echo '<td><input type=submit name="move'.$myrow['id'].'" value=Move></td>';
+		echo '<td><input type=submit name="Move'.$myrow['assetid'].'" value=Move></td>';
 		echo '</tr>';
 	}
 	echo '</table></form>';

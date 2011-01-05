@@ -123,52 +123,51 @@ if (!isset($SelectedContact)){
 
 
 	$sql = "SELECT suppliers.suppname,
-			contact,
-			position,
-			tel,
-			suppliercontacts.fax,
-			suppliercontacts.email
-		FROM suppliercontacts,
-			suppliers
-		WHERE suppliercontacts.supplierid=suppliers.supplierid
-		AND suppliercontacts.supplierid = '".$SupplierID."'";
+								contact,
+								position,
+								tel,
+								suppliercontacts.fax,
+								suppliercontacts.email
+				FROM suppliercontacts,
+					suppliers
+				WHERE suppliercontacts.supplierid=suppliers.supplierid
+				AND suppliercontacts.supplierid = '".$SupplierID."'";
 
 	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_row($result);
-
-	echo "<table class=selection>\n";
-
-	if ($myrow) {
-		echo '<tr><th colspan=7><font size=3 color=navy>' . _('Contacts Defined for') . " - ".$myrow[0]."</font></th></tr>";
+	
+	if (DB_num_rows($result)>0){
+		echo '<table class=selection><tr><th colspan=7><font size=3 color=navy>' . _('Contacts Defined for') . ' - ' . $myrow['suppname'] . '</font></th></tr>';
+	
+		echo '<tr><th>' . _('Name') . '</th>
+							<th>' . _('Position') . '</th>
+							<th>' . _('Phone No') . '</th>
+							<th>' . _('Fax No') . '</th>
+							<th>' . _('Email') . '</th></tr>';
+	
+		while ($myrow = DB_fetch_array($result)) {
+			printf("<tr><td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td><a href='mailto:%s'>%s</td>
+					<td><a href='%s&SupplierID=%s&SelectedContact=%s'>" . _('Edit') . "</td>
+					<td><a href='%s&SupplierID=%s&SelectedContact=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this contact?') . "');\">" .  _('Delete') . '</td></tr>',
+					$myrow['suppname'],
+					$myrow['position'],
+					$myrow['tel'],
+					$myrow['fax'],
+					$myrow['email'],
+					$myrow['email'],
+					$_SERVER['PHP_SELF'] . '?' . SID,
+					$SupplierID,
+					$myrow['contact'],
+					$_SERVER['PHP_SELF']. '?' . SID,
+					$SupplierID,
+					$myrow['contact']);
+		}
+	} else {
+		prnMsg(_('There are no contacts defined for this supplier'),'info');
 	}
-	echo "<tr><th>" . _('Name') . "</th>
-			<th>" . _('Position') . "</th>
-			<th>" . _('Phone No') . "</th>
-			<th>" . _('Fax No') . "</th><th>" . _('Email') .
-			"</th></tr>\n";
-
-	while ($myrow = DB_fetch_row($result)) {
-		printf("<tr><td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href='mailto:%s'>%s</td>
-				<td><a href='%s&SupplierID=%s&SelectedContact=%s'>" . _('Edit') . "</td>
-				<td><a href='%s&SupplierID=%s&SelectedContact=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this contact?') . "');\">" .  _('Delete') . '</td></tr>',
-				$myrow[1],
-				$myrow[2],
-				$myrow[3],
-				$myrow[4],
-				$myrow[5],
-				$myrow[5],
-				$_SERVER['PHP_SELF'] . '?' . SID,
-				$SupplierID,
-				$myrow[1],
-				$_SERVER['PHP_SELF']. '?' . SID,
-				$SupplierID,
-				$myrow[1]);
-	};
-
 	//END WHILE LIST LOOP
 }
 
@@ -187,17 +186,17 @@ if (! isset($_GET['delete'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedContact)) {
-		//editing an existing branch
+		//editing an existing contact
 
 		$sql = "SELECT contact,
-				position,
-				tel,
-				fax,
-				mobile,
-				email
-			FROM suppliercontacts
-			WHERE contact='".$SelectedContact."'
-			AND supplierid='".$SupplierID."'";
+									position,
+									tel,
+									fax,
+									mobile,
+									email
+								FROM suppliercontacts
+								WHERE contact='".$SelectedContact."'
+								AND supplierid='".$SupplierID."'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);

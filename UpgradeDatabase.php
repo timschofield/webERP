@@ -30,6 +30,9 @@ if (!isset($_POST['DoUpgrade'])){
 		echo '<option value="3.11">' . _('Version 3.11') . '</option>';
 		echo '</select></td></tr></table>';
 	} else {
+		if ($_SESSION['VersionNumber']=='4.00-RC1'){
+			$_SESSION['VersionNumber']='3.12';
+		}
 		prnMsg(_('The webERP code is version')  . ' ' . $Version . ' ' . _('and the database version is') . ' ' . $_SESSION['VersionNumber'],'info');
 		echo '<input type="hidden" name="OldVersion" value="' . $_SESSION['VersionNumber'] . '" />';
 	}
@@ -55,7 +58,7 @@ if (isset($_POST['DoUpgrade'])){
 		$mail->addAttachment($attachment, $BackupFile, 'application/gz');
 		$mail->setSubject(_('Database Backup'));
 		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-		$result = $mail->send(array('"' . $_SESSION['RealName'] . '" <' . $_SESSION['UserEmail'] . '>'));
+		$result = $mail->send(array('"' . $_SESSION['UsersRealName'] . '" <' . $_SESSION['UserEmail'] . '>'));
 		
 		prnMsg(_('A backup of the database has been taken and emailed to you'), 'info');
 		unlink($BackupFile); // would be a security issue to leave it there for all to download/see
