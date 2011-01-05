@@ -547,7 +547,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 																qualitytext = '" . DB_escape_string($QualityText) . "'
 										WHERE stockid='" . $_POST['StockID'] . "'
 										AND loccode = '" . $_POST['IntoLocation'] . "'
-										AND serialno = '" . $POST['BatchRef' .$i] . "'";
+										AND serialno = '" . $_POST['BatchRef' .$i] . "'";
 						} else {
 							$SQL = "INSERT INTO stockserialitems (stockid,
 																loccode,
