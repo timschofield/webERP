@@ -3,14 +3,14 @@
 
 $DirectoryLevelsDeep = 1;
 $PathPrefix = '../';
-$PageSecurity = 1; // set security level for webERP 
+//$PageSecurity = 1; // set security level for webERP 
 require($PathPrefix . 'includes/session.inc');
 
 // TBD The followiung line needs to be replace when more translations are available
 $ReportLanguage = 'en_US';					// default language file 
 define('DBReports','reports');			// name of the databse holding the main report information (ReportID)
 define('DBRptFields','reportfields');	// name of the database holding the report fields
-define('FPDF_FONTPATH','../fonts/'); // FPDF path to fonts directory
+//define('FPDF_FONTPATH','../fonts/');  FPDF path to fonts directory
 define('DefRptPath',$PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/reportwriter/');	// path to default reports
 // Fetch necessary include files - Host application specific (webERP)
 require_once($PathPrefix . 'includes/DateFunctions.inc');
@@ -98,7 +98,7 @@ switch ($_POST['todo']) {
 			}
 		} // else use default settings, i.e. no overrides
 		// All done with setup, build the form
-		require($PathPrefix . 'includes/fpdf.php'); // FPDF class to generate reports
+		require($PathPrefix . 'includes/tcpdf.php'); // TCPDF class to generate reports
 		require('WriteForm.inc');
 		// build the pdf pages (this function exits the script if successful; otherwise returns with error)
 		$success = BuildPDF($ReportID, $Prefs); // build and output form, should not return from this function
@@ -139,9 +139,14 @@ function BuildFormList($GroupID) {
 		foreach ($ReportGroups as $key=>$GName) {
 			$OutputString .= '<tr bgcolor="#CCCCCC"><td colspan="3" align="center">'.$GName.'</td></tr>';
 			$OutputString .= '<tr><td colspan="3" width="250" valign="top">';
-			$sql= "SELECT id, groupname, reportname FROM ".DBReports." 
-				WHERE defaultreport='1' AND reporttype='frm' 
-				ORDER BY groupname, reportname";
+			$sql= "SELECT id, 
+										groupname, 
+										reportname 
+							FROM ".DBReports." 
+							WHERE defaultreport='1' 
+							AND reporttype='frm' 
+							ORDER BY groupname, 
+												reportname";
 			$Result=DB_query($sql,$db,'','',false,true);
 			$FormList = '';
 			while ($Temp = DB_fetch_array($Result)) $FormList[] = $Temp;
@@ -160,9 +165,11 @@ function BuildFormList($GroupID) {
 			$OutputString .= '</td></tr>';
 		}
 	} else { // fetch the forms specific to a group GroupID
-		$sql= "SELECT id, reportname FROM ".DBReports." 
-			WHERE defaultreport='1' AND groupname='".$GroupID."' 
-			ORDER BY reportname";
+		$sql= "SELECT id, 
+									reportname 
+						FROM ".DBReports." 
+						WHERE defaultreport='1' AND groupname='".$GroupID."' 
+						ORDER BY reportname";
 		$Result=DB_query($sql,$db,'','',false,true);
 		$OutputString .= '<tr><td colspan="3" width="250" valign="top">';
 		while ($Forms = DB_fetch_array($Result)) {
@@ -175,15 +182,33 @@ function BuildFormList($GroupID) {
 
 function FetchReportDetails($ReportID) {
 	global $db;
-	$sql= "SELECT reportname, reporttype, groupname, papersize, paperorientation,
-			margintop, marginbottom, marginleft, marginright,
-			table1, table2, table2criteria, table3, table3criteria, table4, table4criteria,
-			table5, table5criteria, table6, table6criteria
-		FROM ".DBReports." 
-		WHERE id = ".$ReportID.";";
+	$sql= "SELECT reportname, 
+								reporttype, 
+								groupname, 
+								papersize, 
+								paperorientation,
+								margintop, 
+								marginbottom, 
+								marginleft, 
+								marginright,
+								table1, 
+								table2, 
+								table2criteria, 
+								table3, 
+								table3criteria, 
+								table4, 
+								table4criteria,
+								table5, 
+								table5criteria, 
+								table6, 
+								table6criteria
+				FROM " . DBReports . " 
+				WHERE id = ".$ReportID.";";
 	$Result=DB_query($sql,$db,'','',false,true);
 	$myrow=DB_fetch_assoc($Result);
-	foreach ($myrow as $key=>$value) $Prefs[$key]=$value;
+	foreach ($myrow as $key=>$value) {
+		$Prefs[$key]=$value;
+	}
 	// Build drop down menus for selectable criteria
 	$Temp = RetrieveFields($ReportID, 'dateselect');
 	$Prefs['DateListings'] = $Temp[0]; // only need the first field
@@ -196,8 +221,9 @@ function RetrieveFields($ReportID, $EntryType) {
 	global $db;
 	$FieldListings = '';
 	$sql= "SELECT *	FROM ".DBRptFields." 
-		WHERE reportid = ".$ReportID." AND entrytype = '".$EntryType."'
-		ORDER BY seqnum";
+					WHERE reportid = '".$ReportID."' 
+					AND entrytype = '".$EntryType."'
+					ORDER BY seqnum";
 	$Result=DB_query($sql,$db,'','',false,true);
 	while ($FieldValues = DB_fetch_assoc($Result)) { $FieldListings[] = $FieldValues; }
 	return $FieldListings;
@@ -210,9 +236,15 @@ function BuildCriteria($FieldListings) {
 	// retrieve the dropdown based on the params field (dropdown type)
 	$Params = explode(':',$FieldListings['params']);  // the first value is the criteria type
 	$CritBlocks = explode(':',$CritChoices[array_shift($Params)]);
-	if (!isset($Params[0])) $Params[0] = '-'; // default to no default if this parameter doesn't exist
-	if (!isset($Params[1])) $Params[1] = ''; // default to no entry for default from box
-	if (!isset($Params[2])) $Params[2] = ''; // default to no entry for default to box
+	if (!isset($Params[0])) {
+		$Params[0] = '-'; // default to no default if this parameter doesn't exist
+	}
+	if (!isset($Params[1])) {
+		$Params[1] = ''; // default to no entry for default from box
+	}
+	if (!isset($Params[2])) {
+		$Params[2] = ''; // default to no entry for default to box
+	}
 	switch (array_shift($CritBlocks)) { // determine how many text boxes to build
 		default:
 		case 0: $EndString = '<td>&nbsp;</td><td>&nbsp;</td>'; 
@@ -225,7 +257,11 @@ function BuildCriteria($FieldListings) {
 	} // end switch array_shift($CritBlocks)
 	$CriteriaString .= '<td><select name="defcritsel'.$SeqNum.'">';
 	foreach ($CritBlocks as $value) {
-		if ($Params[0]==$value) $Selected = ' selected'; else $Selected = '';  // find the default
+		if ($Params[0]==$value) {
+			$Selected = ' selected'; 
+		} else {
+			$Selected = '';  // find the default
+		}
 		$CriteriaString .= '<option value="'.$value.'"'.$Selected.'>'.$value.'</option>';
 	}
 	$CriteriaString .= '</select></td>';

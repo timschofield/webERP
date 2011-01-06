@@ -805,3 +805,9 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 
 INSERT INTO config (confname, confvalue) VALUES ('VersionNumber', '3.12.0');
 UPDATE config SET confvalue='3.12.1' WHERE confname='VersionNumber';
+
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
+('FormMaker.php', 1, 'Allows running user defined Forms'),
+('ReportMaker.php', 1, 'Produces reports from the report writer templates created'),
+('ReportCreator.php', 13, 'Report Writer and Form Creator script that creates templates for user defined reports and forms');
+UPDATE config SET confvalue='3.12.2' WHERE confname='VersionNumber';

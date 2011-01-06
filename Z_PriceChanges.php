@@ -103,33 +103,33 @@ if (isset($_POST['UpdatePrices']) AND isset($_POST['StkCat'])){
 		if ($_POST['WhichPrices'] == 'Only Non-customer special prices'){
 
 			$sql = 'UPDATE prices SET price=price*(1+' . $IncrementPercentage . ")
-					WHERE typeabbrev='" . $_POST['PriceList'] . "'
-					AND stockid='" . $myrow['stockid'] . "'
-					AND typeabbrev='" . $_POST['PriceList'] . "'
-					AND debtorno=''";
+							WHERE typeabbrev='" . $_POST['PriceList'] . "'
+							AND stockid='" . $myrow['stockid'] . "'
+							AND typeabbrev='" . $_POST['PriceList'] . "'
+							AND debtorno=''";
 
 		}else if ($_POST['WhichPrices'] == 'Only customer special prices'){
 
 			$sql = "UPDATE prices SET price=price*(1+" . $IncrementPercentage . ")
-					WHERE typeabbrev='" . $_POST['PriceList'] . "'
-					AND stockid='" . $myrow['stockid'] . "'
-					AND typeabbrev='" . $_POST['PriceList'] . "'
-					AND debtorno!=''";
+							WHERE typeabbrev='" . $_POST['PriceList'] . "'
+							AND stockid='" . $myrow['stockid'] . "'
+							AND typeabbrev='" . $_POST['PriceList'] . "'
+							AND debtorno!=''";
 
 		} else if ($_POST['WhichPrices'] == 'Both customer special prices and non-customer special prices'){
 
 			$sql = "UPDATE prices SET price=price*(1+" . $IncrementPercentage . ")
-					WHERE typeabbrev='" . $_POST['PriceList'] . "'
-					AND stockd='" . $myrow['stockid'] . "'
-					AND typeabbrev='" . $_POST['PriceList'] . "'";
+							WHERE typeabbrev='" . $_POST['PriceList'] . "'
+							AND stockd='" . $myrow['stockid'] . "'
+							AND typeabbrev='" . $_POST['PriceList'] . "'";
 
 		} else if ($_POST['WhichPrices'] == 'Selected customer special prices only'){
 
 			$sql = 'UPDATE prices SET price=price*(1+' . $IncrementPercentage . ")
-					WHERE typeabbrev='" . $_POST['PriceList'] . "'
-					AND stockid='" . $myrow['stockid'] . "'
-					AND typeabbrev='" . $_POST['PriceList'] . "'
-					AND debtorno='" . $_SESSION['CustomerID'] . "'";
+							WHERE typeabbrev='" . $_POST['PriceList'] . "'
+							AND stockid='" . $myrow['stockid'] . "'
+							AND typeabbrev='" . $_POST['PriceList'] . "'
+							AND debtorno='" . $_SESSION['CustomerID'] . "'";
 
 		}
 

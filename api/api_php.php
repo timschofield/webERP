@@ -10,7 +10,7 @@
 	$PathPrefix=dirname(__FILE__).'/../';
 	include('api_session.inc');
 
-	include 'api_errorcodes.php';
+	include('api_errorcodes.php');
 	/* Include SQL_CommonFunctions.inc, to use GetNextTransNo().*/
 	include($PathPrefix.'includes/SQL_CommonFunctions.inc');
 

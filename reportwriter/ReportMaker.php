@@ -2,14 +2,14 @@
 /* $Revision: 1.7 $ */
 $DirectoryLevelsDeep =1;
 $PathPrefix = '../';
-$PageSecurity = 1; // set security level for webERP
+//$PageSecurity = 1; // set security level for webERP
 
 // TBD The followiung line needs to be replace when more translations are available
 $ReportLanguage = 'en_US';					// default language file 
 
-define('DBReports','reports');			// name of the databse holding the main report information (ReportID)
-define('DBRptFields','reportfields');	// name of the database holding the report fields
-define('FPDF_FONTPATH','../fonts/'); // FPDF path to fonts directory
+define('DBReports','reports');			// name of the databse table holding the main report information (ReportID)
+define('DBRptFields','reportfields');	// name of the database table holding the report fields
+//define('FPDF_FONTPATH','../fonts/');  FPDF path to fonts directory
 
 // Fetch necessary include files - Host application specific (webERP)
 require($PathPrefix . 'includes/session.inc');
@@ -49,7 +49,7 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 		if ($SeqNum<>1) $success = ChangeSequence($ReportID, $SeqNum, 'fieldlist', 'up');
 	} elseif (isset($_POST['dn'.$SeqNum.'_x'])) { // the shift down button was pushed
 		$sql = "SELECT seqnum FROM ".DBRptFields." 
-			WHERE reportid = ".$ReportID." AND entrytype = 'fieldlist';";
+						WHERE reportid = ".$ReportID." AND entrytype = 'fieldlist';";
 		$Result=DB_query($sql,$db,'','',false,true);
 		if ($SeqNum<DB_num_rows($Result)) {
 			$success = ChangeSequence($ReportID, $SeqNum, 'fieldlist', 'down');
@@ -131,7 +131,7 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 		case RPT_BTN_EXPPDF:
 			$Prefs = ReadPostData($ReportID, $Prefs);
 			// include the necessary files to build report
-			require($PathPrefix . 'includes/fpdf.php'); // FPDF class to generate reports
+			require($PathPrefix . 'includes/tcpdf/tcpdf.php'); // TCPDF class to generate reports
 			require('WriteReport.inc');
 			$ReportData = '';
 			$success = BuildSQL($Prefs);
