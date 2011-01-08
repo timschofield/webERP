@@ -58,7 +58,8 @@ if (isset($_POST['ProcessCustomerChange'])){
 									`editransport`,
 									`ediaddress`,
 									`ediserveruser`,
-									`ediserverpwd`)
+									`ediserverpwd`,
+									`typeid`)
 					SELECT '" . $_POST['NewDebtorNo'] . "',
 									`name`,
 									`address1`,
@@ -83,7 +84,8 @@ if (isset($_POST['ProcessCustomerChange'])){
 									`editransport`,
 									`ediaddress`,
 									`ediserveruser`,
-									`ediserverpwd`
+									`ediserverpwd`,
+									`typeid`
 							FROM debtorsmaster
 							WHERE debtorno='" . $_POST['OldDebtorNo'] . "'";
 
