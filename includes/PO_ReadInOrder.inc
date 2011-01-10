@@ -50,7 +50,7 @@
 														locations.managed ,
 														purchorders.paymentterms
 													FROM purchorders
-														LEFT JOIN locations ON purchorders.intostocklocation=locations.loccode,
+														INNER JOIN locations ON purchorders.intostocklocation=locations.loccode,
 														suppliers
 													WHERE purchorders.supplierno = suppliers.supplierid
 													AND purchorders.orderno = ' . $_GET['ModifyOrderNumber'];

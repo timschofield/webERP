@@ -811,3 +811,7 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 ('ReportMaker.php', 1, 'Produces reports from the report writer templates created'),
 ('ReportCreator.php', 13, 'Report Writer and Form Creator script that creates templates for user defined reports and forms');
 UPDATE config SET confvalue='3.12.2' WHERE confname='VersionNumber';
+ALTER TABLE `purchorderdetails` CHANGE `nw` `netweight` VARCHAR( 50 )  DEFAULT '';
+ALTER TABLE `purchorderdetails` CHANGE `gw` `kgs` VARCHAR( 50 )  DEFAULT '';
+ALTER TABLE `purchorderdetails` ADD `suppconversionfactor` DOUBLE NOT NULL DEFAULT '1';
+UPDATE config SET confvalue='3.12.3' WHERE confname='VersionNumber';

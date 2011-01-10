@@ -81,8 +81,8 @@ Class PurchOrder {
 											$SubTotal_Amount=0,
 											$Package=0,
 											$PcUnit=0,
-											$nw=0,
-											$gw=0,
+											$NetWeight=0,
+											$KGs=0,
 											$CuFt=0,
 											$Total_Quantity=0,
 											$Total_Amount=0,
@@ -115,8 +115,8 @@ Class PurchOrder {
 																								$SubTotal_Amount,
 																								$Package,
 																								$PcUnit,
-																								$nw,
-																								$gw,
+																								$NetWeight,
+																								$KGs,
 																								$CuFt,
 																								$Total_Quantity,
 																								$Total_Amount,
@@ -143,11 +143,12 @@ Class PurchOrder {
 														$SubTotal_Amount,
 														$Package,
 														$PcUnit,
-														$nw,
-														$gw,
+														$NetWeight,
+														$KGs,
 														$CuFt,
 														$Total_Quantity,
-														$Total_Amount){
+														$Total_Amount,
+														$SuppUOM){
 
 			$this->LineItems[$LineNo]->ItemDescription = $ItemDescription;
 			$this->LineItems[$LineNo]->Quantity = $Qty;
@@ -164,11 +165,12 @@ Class PurchOrder {
 			$this->LineItems[$LineNo]->Subtotal_Amount = $SubTotal_Amount;
 			$this->LineItems[$LineNo]->Package = $Package;
 			$this->LineItems[$LineNo]->PcUnit = $PcUnit;
-			$this->LineItems[$LineNo]->nw = $nw;
-			$this->LineItems[$LineNo]->gw = $gw;
+			$this->LineItems[$LineNo]->NetWeight = $NetWeight;
+			$this->LineItems[$LineNo]->KGs = $KGs;
 			$this->LineItems[$LineNo]->CuFt = $CuFt;
 			$this->LineItems[$LineNo]->Total_Quantity = $Total_Quantity;
 			$this->LineItems[$LineNo]->Total_Amount = $Total_Amount;
+			$this->LineItems[$LineNo]->SuppUOM = $SuppUOM;
 	}
 
 	function remove_from_order(&$LineNo){
@@ -218,7 +220,7 @@ Class LineDetails {
 	Var $GLActName;
 	Var $Quantity;
 	Var $Price;
-	Var $Units; //errrrr what is uom for then
+	Var $Units;
 	Var $ReqDelDate;
 	Var $QtyInv;
 	Var $QtyReceived;
@@ -227,15 +229,15 @@ Class LineDetails {
 	var $Completed;
 	Var $JobRef;
 	Var $ItemNo;
-	Var $SuppUOM;
 	var $ConversionFactor;
+	var $SuppUOM;
 	Var $Suppliers_PartNo;
 	Var $SubTotal_Amount;
 	Var $LeadTime;
 	Var $Package;
 	Var $PcUnit;
-	Var $nw;
-	Var $gw;
+	Var $NetWeight;
+	Var $KGs;
 	Var $CuFt;
 	Var $Total_Quantity;
 	Var $Total_Amount;
@@ -271,8 +273,8 @@ Class LineDetails {
 											$LeadTime,
 											$Package,
 											$PcUnit,
-											$nw,
-											$gw,
+											$NetWeight,
+											$KGs,
 											$CuFt,
 											$Total_Quantity,
 											$Total_Amount,
@@ -300,8 +302,8 @@ Class LineDetails {
 		$this->Subtotal_Amount = $SubTotal_Amount;
 		$this->LeadTime = $LeadTime;
 		$this->PcUnit = $PcUnit;
-		$this->nw = $nw;
-		$this->gw = $gw;
+		$this->NetWeight = $NetWeight;
+		$this->KGs = $KGs;
 		$this->CuFt = $CuFt;
 		$this->Total_Quantity = $Total_Quantity;
 		$this->Total_Amount = $Total_Amount;
