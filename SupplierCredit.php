@@ -661,22 +661,21 @@ then do the updates and inserts to process the credit note entered */
 			the debit is to creditors control act  done later for the total credit note value + tax*/
 
 				$SQL = "INSERT INTO gltrans (type,
-								typeno,
-								trandate,
-								periodno,
-								account,
-								narrative,
-								amount,
-								jobref)
-						 	VALUES (21,
-								'" . $CreditNoteNo . "',
-								'" . $SQLCreditNoteDate . "',
-								'" . $PeriodNo . "',
-								'" . $EnteredGLCode->GLCode . "',
-								'" . $_SESSION['SuppTrans']->SupplierID . " " . $EnteredGLCode->Narrative . "',
-						 		'" . round(-$EnteredGLCode->Amount/$_SESSION['SuppTrans']->ExRate,2) ."',
-						 		''
-						 		)";
+																		typeno,
+																		trandate,
+																		periodno,
+																		account,
+																		narrative,
+																		amount,
+																		jobref)
+								 	VALUES (21,
+													'" . $CreditNoteNo . "',
+													'" . $SQLCreditNoteDate . "',
+													'" . $PeriodNo . "',
+													'" . $EnteredGLCode->GLCode . "',
+													'" . $_SESSION['SuppTrans']->SupplierID . " " . $EnteredGLCode->Narrative . "',
+											 		'" . round(-$EnteredGLCode->Amount/$_SESSION['SuppTrans']->ExRate,2) ."',
+											 		'' )";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
 
@@ -694,20 +693,19 @@ then do the updates and inserts to process the credit note entered */
 			these entries are reversed from the GRN suspense when the shipment is closed - entries only to open shipts*/
 
 				$SQL = "INSERT INTO gltrans (type,
-								typeno,
-								trandate,
-								periodno,
-								account,
-								narrative,
-								amount)
-							VALUES (21,
-								'" . $CreditNoteNo . "',
-								'" . $SQLCreditNoteDate . "',
-								'" . $PeriodNo . "',
-								'" . $_SESSION['SuppTrans']->GRNAct . "',
-								'" . $_SESSION['SuppTrans']->SupplierID . ' ' .	 _('Shipment credit against') . ' ' . $ShiptChg->ShiptRef . "',
-								'" . round(-$ShiptChg->Amount/$_SESSION['SuppTrans']->ExRate,2) . "'
-								)";
+																		typeno,
+																		trandate,
+																		periodno,
+																		account,
+																		narrative,
+																		amount)
+								VALUES (21,
+												'" . $CreditNoteNo . "',
+												'" . $SQLCreditNoteDate . "',
+												'" . $PeriodNo . "',
+												'" . $_SESSION['SuppTrans']->GRNAct . "',
+												'" . $_SESSION['SuppTrans']->SupplierID . ' ' .	 _('Shipment credit against') . ' ' . $ShiptChg->ShiptRef . "',
+												'" . round(-$ShiptChg->Amount/$_SESSION['SuppTrans']->ExRate,2) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the shipment') . ' ' . $ShiptChg->ShiptRef . ' ' . _('could not be added because');
 				$DbgMsg = _('The following SQL to insert the GL transaction was used');
@@ -810,7 +808,7 @@ then do the updates and inserts to process the credit note entered */
 					}
 
 
-                  $PurchPriceVar = round($EnteredGRN->This_QuantityInv * (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit),2);
+                  $PurchPriceVar = $EnteredGRN->This_QuantityInv * (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit);
 					/*Yes but where to post this difference to - if its a stock item the variance account must be retrieved from the stock category record
 					if its a nominal purchase order item with no stock item then  post it to the account specified in the purchase order detail record */
 
@@ -1125,7 +1123,8 @@ then do the updates and inserts to process the credit note entered */
  			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		}
 
-		/* Now update the GRN and PurchOrderDetails records for amounts invoiced */
+		/* Now update the GRN and PurchOrderDetails records for amounts invoiced 
+		 * can't use the previous loop around GRNs as this was only for where the creditors->GL link was active*/
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
@@ -1169,34 +1168,37 @@ then do the updates and inserts to process the credit note entered */
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 			}
 			if ($EnteredGRN->AssetID!=0) { //then it is an asset
-				/*Add the fixed asset trans for the difference in the cost */
-				$SQL = "INSERT INTO fixedassettrans (assetid,
-																	transtype,
-																	transno,
-																	transdate,
-																	periodno,
-																	inputdate,
-																	fixedassettranstype,
-																	amount)
-												VALUES ('" . $EnteredGRN->AssetID . "',
-																21,
-																'" . $CreditNoteNo . "',
-																'" . $SQLCreditNoteDate . "',
-																'" . $PeriodNo . "',
-																'" . Date('Y-m-d') . "',
-																'cost',
-																'" . -($PurchPriceVar) . "')";
-				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
-				$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
-
-				/*Now update the asset cost in fixedassets table */
-				$SQL = "UPDATE fixedassets SET cost = cost - " . $PurchPriceVar  . "
-							WHERE assetid = '" . $EnteredGRN->AssetID . "'";
-				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost was not able to be updated because:');
-				$DbgMsg = _('The following SQL was used to attempt the update of the fixed asset cost:');
-				$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
-			}
+				$PurchPriceVar = $EnteredGRN->This_QuantityInv * (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit);
+				if ($PurchPriceVar !=0){
+					/*Add the fixed asset trans for the difference in the cost */
+					$SQL = "INSERT INTO fixedassettrans (assetid,
+																		transtype,
+																		transno,
+																		transdate,
+																		periodno,
+																		inputdate,
+																		fixedassettranstype,
+																		amount)
+													VALUES ('" . $EnteredGRN->AssetID . "',
+																	21,
+																	'" . $CreditNoteNo . "',
+																	'" . $SQLCreditNoteDate . "',
+																	'" . $PeriodNo . "',
+																	'" . Date('Y-m-d') . "',
+																	'cost',
+																	'" . -($PurchPriceVar) . "')";
+					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
+					$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
+					$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
+	
+					/*Now update the asset cost in fixedassets table */
+					$SQL = "UPDATE fixedassets SET cost = cost - " . $PurchPriceVar  . "
+								WHERE assetid = '" . $EnteredGRN->AssetID . "'";
+					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost was not able to be updated because:');
+					$DbgMsg = _('The following SQL was used to attempt the update of the fixed asset cost:');
+					$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
+				} //end if there is a cost difference on invoice compared to purchase order for the fixed asset
+			}//the line is a fixed asset
 		} /* end of the loop to do the updates for the quantity of order items the supplier has credited */
 
 		/*Add shipment charges records as necessary */

@@ -102,8 +102,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		if ($_SESSION['ExistingOrder']==0){ /*its a new order to be inserted */
 
 //Do we need to check authorisation to create - no because already trapped when new PO session started
-			$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . ' <a href="mailto:'. $_SESSION['UserEmail'] .'">'.$_SESSION['PO'.$identifier]->Initiator.
-				'</a> - '.$_SESSION['PO'.$identifier]->StatusMessage.'<br>';
+			$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . ' <a href="mailto:'. $_SESSION['UserEmail'] .'">' . $_SESSION['PO'.$identifier]->Initiator . 	'</a> - '.$_SESSION['PO'.$identifier]->StatusMessage.'<br>';
 
 			/*Get the order number */
 			$_SESSION['PO'.$identifier]->OrderNo =  GetNextTransNo(18, $db);

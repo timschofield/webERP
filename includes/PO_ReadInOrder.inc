@@ -99,7 +99,7 @@
 			$_SESSION['ExistingOrder'] = $_SESSION['PO'.$identifier]->OrderNo;
 			$_SESSION['PO'.$identifier]->PaymentTerms= $myrow['paymentterms'];
 
-			$supplierSQL = "SELECT suppliers.supplierid,
+			$SupplierSQL = "SELECT suppliers.supplierid,
 														suppliers.suppname,
 														suppliers.address1,
 														suppliers.address2,
@@ -113,7 +113,7 @@
 												ORDER BY suppliers.supplierid";
 
 			$ErrMsg = _('The searched supplier records requested cannot be retrieved because');
-			$result_SuppSelect = DB_query($supplierSQL,$db,$ErrMsg);
+			$result_SuppSelect = DB_query($SupplierSQL,$db,$ErrMsg);
 
 			if (DB_num_rows($result_SuppSelect)==1){
 				$myrow=DB_fetch_array($result_SuppSelect);
@@ -147,16 +147,17 @@
 																subtotal_amount,
 																package,
 																pcunit,
-																nw,
-																gw,
+																purchorderdetails.netweight,
+																purchorderdetails.kgs,
 																cuft,
 																total_quantity,
 																total_amount,
-																assetid
+																assetid,
+																suppconversionfactor
 																FROM purchorderdetails
 																	LEFT JOIN stockmaster
 																	ON purchorderdetails.itemcode=stockmaster.stockid
-																	LEFT JOIN purchorders
+																	INNER JOIN purchorders
 																	ON purchorders.orderno=purchorderdetails.orderno
 																	LEFT JOIN chartmaster
 																	ON purchorderdetails.glcode=chartmaster.accountcode

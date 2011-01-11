@@ -15,7 +15,7 @@
 	</Title>
 	<BillingDetailBox type="CurvedRectangle" name="Billing detail box" id="BillingDetailBox">
 		<x>567</x>
-		<y>51</y>
+		<y>61</y>
 		<width>225</width>
 		<height>88</height>
 		<radius>10</radius>
@@ -248,7 +248,7 @@
 	</Currency>
 	<MainOutputBox type="CurvedRectangle" name="Main Output Box" id="MainOutputBox">
 		<x>40</x>
-		<y>164</y>
+		<y>176</y>
 		<width>762</width>
 		<height>390</height>
 		<radius>10</radius>
@@ -256,44 +256,44 @@
 	<CustomerTaxReferenceCaption type="SimpleText" name="Customer Tax Reference Caption" id="CustomerTaxReferenceCaption">
 		<FontSize>10</FontSize>
 		<x>44</x>
-		<y>174</y>
+		<y>166</y>
 	</CustomerTaxReferenceCaption>
 	<CustomerTaxReference type="SimpleText" name="Customer Tax Reference" id="CustomerTaxReference">
 		<FontSize>10</FontSize>
 		<x>130</x>
-		<y>174</y>
+		<y>166</y>
 	</CustomerTaxReference>
 	<OrderRefLine type="Line" name="Order Reference Line" id="OrderRefLine">
 		<startx>288</startx>
-		<starty>155</starty>
+		<starty>165</starty>
 		<endx>288</endx>
 		<endy>182</endy>
 	</OrderRefLine>
 	<CustomerOrderReferenceCaption type="SimpleText" name="Customer Order Reference Caption" id="CustomerOrderReferenceCaption">
 		<FontSize>10</FontSize>
 		<x>290</x>
-		<y>174</y>
+		<y>166</y>
 	</CustomerOrderReferenceCaption>
 	<CustomerOrderReference type="SimpleText" name="Customer Order Reference" id="CustomerOrderReference">
 		<FontSize>10</FontSize>
 		<x>388</x>
-		<y>174</y>
+		<y>166</y>
 	</CustomerOrderReference>
 	<SalesmanLine type="Line" name="Salesman Line" id="SalesmanLine">
 		<startx>490</startx>
-		<starty>155</starty>
+		<starty>165</starty>
 		<endx>490</endx>
 		<endy>182</endy>
 	</SalesmanLine>
 	<SalesmanReferenceCaption type="SimpleText" name="Salesman Reference Caption" id="SalesmanReferenceCaption">
 		<FontSize>10</FontSize>
 		<x>493</x>
-		<y>174</y>
+		<y>166</y>
 	</SalesmanReferenceCaption>
 	<SalesmanReference type="SimpleText" name="Salesman Reference" id="SalesmanReference">
 		<FontSize>10</FontSize>
 		<x>570</x>
-		<y>174</y>
+		<y>166</y>
 	</SalesmanReference>
 	<LineAboveColumns type="Line" name="Line Above Columns" id="LineAboveColumns">
 		<startx>40</startx>
@@ -311,37 +311,37 @@
 		<Column1 type="SimpleText" name="Heading 1" id="Heading1">
 			<FontSize>10</FontSize>
 			<x>44</x>
-			<y>194</y>
+			<y>184</y>
 		</Column1>
 		<Column2 type="SimpleText" name="Heading 2" id="Heading2">
 			<FontSize>10</FontSize>
 			<x>140</x>
-			<y>194</y>
+			<y>184</y>
 		</Column2>
 		<Column3 type="SimpleText" name="Heading 3" id="Heading3">
 			<FontSize>10</FontSize>
 			<x>431</x>
-			<y>194</y>
+			<y>184</y>
 		</Column3>
 		<Column4 type="SimpleText" name="Heading 4" id="Heading4">
 			<FontSize>10</FontSize>
 			<x>541</x>
-			<y>194</y>
+			<y>184</y>
 		</Column4>
 		<Column5 type="SimpleText" name="Heading 5" id="Heading5">
 			<FontSize>10</FontSize>
 			<x>596</x>
-			<y>194</y>
+			<y>184</y>
 		</Column5>
 		<Column6 type="SimpleText" name="Heading 6" id="Heading6">
 			<FontSize>10</FontSize>
 			<x>631</x>
-			<y>194</y>
+			<y>184</y>
 		</Column6>
 		<Column7 type="SimpleText" name="Heading 7" id="Heading7">
 			<FontSize>10</FontSize>
 			<x>731</x>
-			<y>194</y>
+			<y>184</y>
 		</Column7>
 	</Headings>
 	<Data type="ElementArray" name="Column Data">
@@ -441,7 +441,7 @@
 	<SubTotalCaption type="SimpleText" name="Sub-Total Caption" id="SubTotalCaption">
 		<FontSize>10</FontSize>
 		<x>592</x>
-		<y>512</y>
+		<y>502</y>
 	</SubTotalCaption>
 	<SubTotal type="MultiLineText" name="Sub-Total" id="SubTotal">
 		<FontSize>10</FontSize>
@@ -452,7 +452,7 @@
 	<FreightCaption type="SimpleText" name="Freight Caption" id="FreightCaption">
 		<FontSize>10</FontSize>
 		<x>592</x>
-		<y>528</y>
+		<y>518</y>
 	</FreightCaption>
 	<Freight type="MultiLineText" name="Freight" id="Freight">
 		<FontSize>10</FontSize>
@@ -463,7 +463,7 @@
 	<TaxCaption type="SimpleText" name="Tax Caption" id="TaxCaption">
 		<FontSize>10</FontSize>
 		<x>592</x>
-		<y>544</y>
+		<y>534</y>
 	</TaxCaption>
 	<Tax type="MultiLineText" name="Tax" id="Tax">
 		<FontSize>10</FontSize>
@@ -479,14 +479,14 @@
 	</TotalLine>
 	<RomalpaLine type="Line" name="Romalpa Line" id="RomalpaLine">
 		<startx>590</startx>
-		<starty>490</starty>
+		<starty>500</starty>
 		<endx>590</endx>
-		<endy>565</endy>
+		<endy>575</endy>
 	</RomalpaLine>
 	<TotalCaption type="SimpleText" name="Total Caption" id="TotalCaption">
 		<FontSize>10</FontSize>
 		<x>592</x>
-		<y>560</y>
+		<y>550</y>
 	</TotalCaption>
 	<Total type="MultiLineText" name="Total" id="Total">
 		<FontSize>10</FontSize>

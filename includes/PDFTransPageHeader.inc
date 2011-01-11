@@ -71,7 +71,11 @@ if ($InvOrCredit=='Invoice') {
 }
 /*draw a nice curved corner box around the billing details */
 /*from the top right*/
-$pdf->RoundRectangle($FormDesign->BillingDetailBox->x, $Page_Height - $FormDesign->BillingDetailBox->y,$FormDesign->BillingDetailBox->width, $FormDesign->BillingDetailBox->height, $FormDesign->BillingDetailBox->radius);
+$pdf->RoundRectangle($FormDesign->BillingDetailBox->x, 
+											$Page_Height - $FormDesign->BillingDetailBox->y,
+											$FormDesign->BillingDetailBox->width, 
+											$FormDesign->BillingDetailBox->height, 
+											$FormDesign->BillingDetailBox->radius);
 
 $pdf->addText($FormDesign->NumberCaption->x, $Page_Height -$FormDesign->NumberCaption->y, $FormDesign->NumberCaption->FontSize, _('Number'));
 $pdf->addText($FormDesign->InvoiceNumber->x, $Page_Height -$FormDesign->InvoiceNumber->y, $FormDesign->InvoiceNumber->FontSize, $FromTransNo);
@@ -160,28 +164,41 @@ $pdf->addText($FormDesign->Currency->x, $Page_Height -$FormDesign->Currency->y, 
 
 /*draw a box with nice round corner for entering line items */
 /*90 degree arc at top right of box 0 degrees starts a bottom */
-$pdf->RoundRectangle($FormDesign->MainOutputBox->x, $Page_Height - $FormDesign->MainOutputBox->y,$FormDesign->MainOutputBox->width, $FormDesign->MainOutputBox->height, $FormDesign->MainOutputBox->radius);
+$pdf->RoundRectangle($FormDesign->MainOutputBox->x, 
+											$Page_Height - $FormDesign->MainOutputBox->y,
+											$FormDesign->MainOutputBox->width, 
+											$FormDesign->MainOutputBox->height, 
+											$FormDesign->MainOutputBox->radius);
 
 /*Set up headings */
 $pdf->addText($FormDesign->CustomerTaxReferenceCaption->x, $Page_Height -$FormDesign->CustomerTaxReferenceCaption->y, $FormDesign->CustomerTaxReferenceCaption->FontSize, _('Customer Tax Ref') . ':');
 $pdf->addText($FormDesign->CustomerTaxReference->x, $Page_Height -$FormDesign->CustomerTaxReference->y, $FormDesign->CustomerTaxReference->FontSize, $myrow['taxref']);
 
 /*Print a vertical line */
-$pdf->line($FormDesign->OrderRefLine->startx, $Page_Height -$FormDesign->OrderRefLine->starty,$FormDesign->OrderRefLine->endx, $Page_Height -$FormDesign->OrderRefLine->endy);
+$pdf->line($FormDesign->OrderRefLine->startx, 
+					$Page_Height -$FormDesign->OrderRefLine->starty,
+					$FormDesign->OrderRefLine->endx, 
+					$Page_Height -$FormDesign->OrderRefLine->endy);
 
 $pdf->addText($FormDesign->CustomerOrderReferenceCaption->x, $Page_Height -$FormDesign->CustomerOrderReferenceCaption->y, $FormDesign->CustomerOrderReferenceCaption->FontSize, _('Customer Order Ref.') . ':');
 $pdf->addText($FormDesign->CustomerOrderReference->x, $Page_Height -$FormDesign->CustomerOrderReference->y, $FormDesign->CustomerOrderReference->FontSize, $myrow['customerref']);
 
 /*Print a vertical line */
-$pdf->line($FormDesign->SalesmanLine->startx, $Page_Height -$FormDesign->SalesmanLine->starty,$FormDesign->SalesmanLine->endx, $Page_Height -$FormDesign->SalesmanLine->endy);
+$pdf->line($FormDesign->SalesmanLine->startx, 
+					$Page_Height -$FormDesign->SalesmanLine->starty,
+					$FormDesign->SalesmanLine->endx, 
+					$Page_Height -$FormDesign->SalesmanLine->endy);
 
 $pdf->addText($FormDesign->SalesmanReferenceCaption->x, $Page_Height -$FormDesign->SalesmanReferenceCaption->y, $FormDesign->SalesmanReferenceCaption->FontSize, _('Sales Person') . ':');
 $pdf->addText($FormDesign->SalesmanReference->x, $Page_Height -$FormDesign->SalesmanReference->y, $FormDesign->SalesmanReference->FontSize, $myrow['salesmanname']);
 
 /*draw a line */
-$pdf->line($FormDesign->LineAboveColumns->startx, $Page_Height -$FormDesign->LineAboveColumns->starty,$FormDesign->LineAboveColumns->endx, $Page_Height -$FormDesign->LineAboveColumns->endy);
+$pdf->line($FormDesign->LineAboveColumns->startx, 
+					$Page_Height -$FormDesign->LineAboveColumns->starty,
+					$FormDesign->LineAboveColumns->endx, 
+					$Page_Height -$FormDesign->LineAboveColumns->endy);
 
-$pdf->addText($FormDesign->Headings->Column1->x,$Page_Height - $FormDesign->Headings->Column1->y, $FormDesign->Headings->Column1->FontSize, _('Item Code'));
+$pdf->addText($FormDesign->Headings->Column1->x, $Page_Height - $FormDesign->Headings->Column1->y, $FormDesign->Headings->Column1->FontSize, _('Item Code'));
 $pdf->addText($FormDesign->Headings->Column2->x,$Page_Height - $FormDesign->Headings->Column2->y, $FormDesign->Headings->Column2->FontSize, _('Description'));
 $pdf->addText($FormDesign->Headings->Column3->x,$Page_Height - $FormDesign->Headings->Column3->y, $FormDesign->Headings->Column3->FontSize, _('Unit Price'));
 $pdf->addText($FormDesign->Headings->Column4->x,$Page_Height - $FormDesign->Headings->Column4->y, $FormDesign->Headings->Column4->FontSize, _('Quantity'));
@@ -190,6 +207,9 @@ $pdf->addText($FormDesign->Headings->Column6->x,$Page_Height - $FormDesign->Head
 $pdf->addText($FormDesign->Headings->Column7->x,$Page_Height - $FormDesign->Headings->Column7->y, $FormDesign->Headings->Column7->FontSize, _('Extended Price'));
 
 /*draw a line */
-$pdf->line($FormDesign->LineBelowColumns->startx, $Page_Height -$FormDesign->LineBelowColumns->starty,$FormDesign->LineBelowColumns->endx, $Page_Height -$FormDesign->LineBelowColumns->endy);
+$pdf->line($FormDesign->LineBelowColumns->startx, 
+					$Page_Height -$FormDesign->LineBelowColumns->starty,
+					$FormDesign->LineBelowColumns->endx, 
+					$Page_Height -$FormDesign->LineBelowColumns->endy);
 
 ?>

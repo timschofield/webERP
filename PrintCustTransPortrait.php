@@ -41,8 +41,8 @@ If (isset($PrintPDF)
 	and isset($InvOrCredit)
 	and $FromTransNo!=''){
 
-        include ('includes/class.pdf.php');
-        require('fpdi/fpdi.php');
+	include ('includes/class.pdf.php');
+
 
     $Page_Width=595;
     $Page_Height=842;
@@ -487,101 +487,35 @@ If (isset($PrintPDF)
 	    $FromTransNo++;
 	} /* end loop to print invoices */
 
-/* Javier: This actually would produce the output, and maybe it should do
-//	$pdfcode = $pdf->stream();
-	$pdfcode = $pdf->Output('Invoice.pdf', "I"); una mala jugada de cierta persona
-	$len = strlen($pdfcode); Este fichero es especial pq $len anulado en L596
-*/
-
-// Start FPDI concatination to append PDF files conditionally to the invoice
-// This part taken from FPDI example page - but not actually used .... yet Muz??
-class concat_pdf extends FPDI {
-
-            var $files = array();
-
-            function setFiles($files) {
-                $this->files = $files;
-            }
-
-            function concat() {
-                foreach($this->files AS $file) {
-                    $pagecount = $this->setSourceFile($file);
-                    for ($i = 1; $i <= $pagecount; $i++) {
-                         $tplidx = $this->ImportPage($i);
-                         $s = $this->getTemplatesize($tplidx);
-                         $this->AddPage($s['h'] > $s['w'] ? 'P' : 'L');
-                         $this->useTemplate($tplidx);
-                    }
-                }
-            }
-        }
-
-//        $pdf =& new concat_pdf();
-
-// Have to get the TransNo again, $_GET{FromTransNo] is updated with each pass
-	if (isset($_GET['FromTransNo'])){
-	        $FromTransNo = trim($_GET['FromTransNo']);
-	} elseif (isset($_POST['FromTransNo'])){
-	        $FromTransNo = trim($_POST['FromTransNo']);
-	}
-	// Check its an Invoice type again, then select appendfile filename
-	if ($InvOrCredit=='Invoice'){
-		$sql = "SELECT stockmoves.stockid, stockmaster.appendfile
-					FROM stockmoves INNER JOIN stockmaster
-		            ON stockmoves.stockid = stockmaster.stockid
-		            WHERE stockmoves.type=10
-		            AND stockmoves.transno='" . $FromTransNo . "'
-					AND stockmoves.show_on_inv_crds=1";
-	} else {
-		 $sql = "SELECT stockmoves.stockid, stockmaster.appendfile
-					FROM stockmoves INNER JOIN stockmaster
-		            ON stockmoves.stockid = stockmaster.stockid
-		            AND stockmoves.type=11
-					AND stockmoves.transno='" . $FromTransNo . "'
-					AND stockmoves.show_on_inv_crds=1";
-	}
-	$result=DB_query($sql,$db);
-	// Loop the result set and add appendfile if the field is not 0 or none
-
-	while ($row=DB_fetch_array($result)){
-	    if ($row['appendfile'] !='0' AND $row['appendfile'] !=='none') {
-	        $pdf->setFiles(array($_SESSION['reports_dir'] . '/Invoice.pdf','companies/' . $_SESSION['DatabaseName'] . '/pdf_append/' . $row['appendfile']));
-	        $pdf->concat();
-	     }
-	}//End FPDI Concat
 
 	if (isset($_GET['Email'])){ //email the invoice to address supplied
 		include('includes/header.inc');
 
 		include ('includes/htmlMimeMail.php');
-		$pdf->Output($_SESSION['reports_dir'] . '/Invoice.pdf','F');
-		$pdf-> __destruct();
+		$FileName = $_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $_GET['FromTransNo'] . '.pdf';
+		$pdf->Output($FileName,'F');
 		$mail = new htmlMimeMail();
-		$filename = $_SESSION['reports_dir'] . '/Invoice.pdf';
-    	$fp = fopen( $_SESSION['reports_dir'] . '/Invoice.pdf','wb');
-		fwrite ($fp, $pdfcode);
-		fclose ($fp);
-
-		$attachment = $mail->getFile($filename);
+		
+		$Attachment = $mail->getFile($FileName);
 		$mail->setText(_('Please find attached') . ' ' . $InvOrCredit . ' ' . $_GET['FromTransNo'] );
 		$mail->SetSubject($InvOrCredit . ' ' . $_GET['FromTransNo']);
-		$mail->addAttachment($attachment, $filename, 'application/pdf');
+		$mail->addAttachment($Attachment, $FileName, 'application/pdf');
 		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
 		$result = $mail->send(array($_GET['Email']));
 
-		unlink($filename); //delete the temporary file
+		unlink($FileName); //delete the temporary file
 
 		$title = _('Emailing') . ' ' .$InvOrCredit . ' ' . _('Number') . ' ' . $FromTransNo;
 		include('includes/header.inc');
-		echo "<p>$InvOrCredit " . _('number') . ' ' . $_GET['FromTransNo'] . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
+		echo '<p>' . $InvOrCredit . ' '  . _('number') . ' ' . $_GET['FromTransNo'] . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
 		include('includes/footer.inc');
 		exit;
 
 	} else { //its not an email just print the invoice to PDF
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_Invoice' . date('Y-m-d') . '.pdf');
-		$pdf-> __destruct();
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $_GET['FromTransNo'] . '.pdf');
+		
 	}
-
+	$pdf->__destruct();
 } else { /*The option to print PDF was not hit */
 
 	$title=_('Select Invoices/Credit Notes To Print');

@@ -207,6 +207,25 @@ Class PurchOrder {
 		}
 		return $TotalValue;
 	}
+	
+	function AllLinesReceived(){
+		foreach ($this->LineItems as $OrderedItems) {
+			if (($OrderedItems->QtyReceived + $OrderedItems->ReceiveQty) < $OrderedItems->Quantity){
+				return 0;
+			}
+		}
+		return 1; //all lines must be fully received
+	}
+	
+	function SomethingReceived(){
+		foreach ($this->LineItems as $OrderedItems) {
+			if ($OrderedItems->ReceiveQty !=0){
+				return 1;
+			}
+		}
+		return 0; //nowt received
+	}
+	
 } /* end of class defintion */
 
 Class LineDetails {
@@ -241,7 +260,7 @@ Class LineDetails {
 	Var $CuFt;
 	Var $Total_Quantity;
 	Var $Total_Amount;
-	Var $ReceiveQty;
+	Var $ReceiveQty; //this receipt of stock
 	Var $Deleted;
 	Var $Controlled;
 	Var $Serialised;

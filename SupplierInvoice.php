@@ -7,7 +7,7 @@ the SuppTrans class contains an array of GRNs objects - containing details of GR
 Also an array of GLCodes objects - only used if the AP - GL link is effective
 Also an array of shipment charges for charges to shipments to be apportioned accross the cost of stock items */
 
-//$PageSecurity = 5;
+//$PageSecurity = 5; now retrieved from database
 
 include('includes/DefineSuppTransClass.php');
 /* Session started in header.inc for password checking and authorisation level check */
@@ -1122,10 +1122,11 @@ then do the updates and inserts to process the invoice entered */
  			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		}
 
-		/* Now update the GRN and PurchOrderDetails records for amounts invoiced */
+		/* Now update the GRN and PurchOrderDetails records for amounts invoiced  - can't use the other loop through the GRNs as this was only where the GL link to credtors is active */
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
+			
 			$SQL = "UPDATE purchorderdetails SET qtyinvoiced = qtyinvoiced + " . $EnteredGRN->This_QuantityInv .",
 								actprice = '" . $EnteredGRN->ChgPrice . "'
 						WHERE podetailitem = '" . $EnteredGRN->PODetailItem . "'";
@@ -1166,32 +1167,35 @@ then do the updates and inserts to process the invoice entered */
 
 			if ($EnteredGRN->AssetID!=0) { //then it is an asset
 
-				/*Add the fixed asset trans for the difference in the cost */
-				$SQL = "INSERT INTO fixedassettrans (assetid,
-																					transtype,
-																					transno,
-																					transdate,
-																					periodno,
-																					inputdate,
-																					fixedassettranstype,
-																					amount)
-												VALUES ('" . $EnteredGRN->AssetID . "',
-																20,
-																'" . $InvoiceNo . "',
-																'" . $SQLInvoiceDate . "',
-																'" . $PeriodNo . "',
-																'" . Date('Y-m-d') . "',
-																'cost',
-																'" . ($PurchPriceVar) . "')";
-				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
-				$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
-
-				/*Now update the asset cost in fixedassets table */
-				$SQL = "UPDATE fixedassets SET cost = cost - " . ($PurchPriceVar)  . " WHERE assetid = '" . $EnteredGRN->AssetID . "'";
-				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost could not be updated because:');
-				$DbgMsg = _('The following SQL was used to attempt the update of the asset cost:');
-				$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
+				$PurchPriceVar = $EnteredGRN->This_QuantityInv * (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit);
+				if ($PurchPriceVar !=0) {
+					/*Add the fixed asset trans for the difference in the cost */
+					$SQL = "INSERT INTO fixedassettrans (assetid,
+																						transtype,
+																						transno,
+																						transdate,
+																						periodno,
+																						inputdate,
+																						fixedassettranstype,
+																						amount)
+													VALUES ('" . $EnteredGRN->AssetID . "',
+																	20,
+																	'" . $InvoiceNo . "',
+																	'" . $SQLInvoiceDate . "',
+																	'" . $PeriodNo . "',
+																	'" . Date('Y-m-d') . "',
+																	'cost',
+																	'" . ($PurchPriceVar) . "')";
+					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
+					$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
+					$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
+	
+					/*Now update the asset cost in fixedassets table */
+					$SQL = "UPDATE fixedassets SET cost = cost + " . ($PurchPriceVar)  . " WHERE assetid = '" . $EnteredGRN->AssetID . "'";
+					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost could not be updated because:');
+					$DbgMsg = _('The following SQL was used to attempt the update of the asset cost:');
+					$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
+				} //end if there was a difference in the cost
 			} //the item was an asset received on a purchase order
 		} /* end of the GRN loop to do the updates for the quantity of order items the supplier has invoiced */
 

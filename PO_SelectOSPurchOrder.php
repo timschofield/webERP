@@ -446,15 +446,14 @@ else {
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
 		echo '<th>' . _('Order Total') .'</th>';
 	}
-	echo '<th>' . _('Status') .
-			'</th><th>' . _('Modify') .
-			'</th><th>' . _('Print') .
-			'</th><th>' . _('Receive') .
-	'</th></tr>';
+	echo '<th>' . _('Status') . '</th>
+				<th>' . _('Modify') . '</th>
+				<th>' . _('Print') . '</th>
+				<th>' . _('Receive') . '</th>
+				</tr>';
 	$j = 1;
 	$k=0; //row colour counter
 	while ($myrow=DB_fetch_array($PurchOrdersResult)) {
-
 
 		if ($k==1){ /*alternate bgcolour of row for highlighting */
 			echo '<tr class="EvenTableRows">';
@@ -471,25 +470,18 @@ else {
 		} else {
 			$ReceiveOrder = _('Receive');
 		}
-		if ($myrow['allowprint'] == 1){
+		if ($myrow['status'] == 'Authorised' AND $myrow['allowprint'] == 1){
 			$PrintPurchOrder = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '">' . _('Print Now') . '</a>';
-		} else {
-// not open yet
-//			$PrintPurchOrder = '<font color=GREY>' . _('Printed') . '</font>';
-
-		}
-		if ($myrow['status'] == 'Authorisied') {
-			$PrintPurchOrder = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=2">
-				' . _('Print') . '
-				</a>';
-		} else {
+		} elseif ($myrow['status'] == 'Authorisied' AND $myrow['allowprint'] == 0) {
 			$PrintPurchOrder = _('Printed');
+		} elseif ($myrow['status'] == 'Printed'){
+			$PrintPurchOrder = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=2">
+				' . _('Print') . '</a>';
+		} else {
+			$PrintPurchOrder = _('N/A');
 		}
 
-		$PrintPurchOrder2 = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=1">' . _('Show') . '</a>';
-
-		$s2 = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=1">' . $myrow['realorderno']. '</a>';
-
+		
 		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 		$FormatedOrderValue = number_format($myrow['ordervalue'],2);
 
@@ -499,12 +491,12 @@ else {
 					<td>' . $myrow['suppname'] . '</td>
 					<td>' . $myrow['currcode'] . '</td>';
 		if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
-			echo "<td class=number>".$FormatedOrderValue."</td>";
+			echo '<td class=number>'.$FormatedOrderValue . '</td>';
 		}
-			echo '<td>'._($myrow['status']).'</td>
+			echo '<td>' . _($myrow['status']) . '</td>
 						<td><a href="'.$ModifyPage.'">' . _('Modify') . '</a></td>
-						<td>'.$PrintPurchOrder.'</td>
-						<td>'.$ReceiveOrder.'</td>
+						<td>' . $PrintPurchOrder  . '</td>
+						<td>' . $ReceiveOrder . '</td>
 						</tr>';
 	//end of page full new headings if
 	}
