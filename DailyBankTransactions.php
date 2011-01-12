@@ -1,8 +1,8 @@
 <?php
 
-//$PageSecurity = 8;
+//$PageSecurity = 8; now from Database Scripts table
 include ('includes/session.inc');
-$title = _('Daily Banking Inquiry');
+$title = _('Bank Transactions Inquiry');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
@@ -14,12 +14,12 @@ if (!isset($_POST['Show'])) {
 
 	echo '<table class=selection>';
 
-	$SQL = 'SELECT bankaccountname,
-				bankaccounts.accountcode,
-				bankaccounts.currcode
-			FROM bankaccounts,
-				chartmaster
-			WHERE bankaccounts.accountcode=chartmaster.accountcode';
+	$SQL = 'SELECT 	bankaccountname,
+									bankaccounts.accountcode,
+									bankaccounts.currcode
+							FROM bankaccounts,
+								chartmaster
+							WHERE bankaccounts.accountcode=chartmaster.accountcode';
 
 	$ErrMsg = _('The bank accounts could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the bank accounts was');
@@ -46,8 +46,11 @@ if (!isset($_POST['Show'])) {
 		}
 		echo '</select></td></tr>';
 	}
-	echo '<tr><td>' . _('Transactions Dated') . ':</td>
-		<td><input type="text" name="TransDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" maxlength=10 size=11
+	echo '<tr><td>' . _('Transactions Dated From') . ':</td>
+		<td><input type="text" name="FromTransDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" maxlength=10 size=11 onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' .
+				date($_SESSION['DefaultDateFormat']) . '"></td></tr>
+		<tr><td>' . _('Transactions Dated To') . ':</td>
+		<td><input type="text" name="ToTransDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" maxlength=10 size=11
 			onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' .
 				date($_SESSION['DefaultDateFormat']) . '"></td>
 		</tr>';
@@ -56,61 +59,72 @@ if (!isset($_POST['Show'])) {
 	echo '<br><div class="centre"><input type="submit" name="Show" value="' . _('Show transactions'). '"></div>';
 	echo '</form>';
 } else {
-	$sql="SELECT banktrans.*,
-				bankaccounts.bankaccountname,
-				systypes.typename,
-				systypes.typeid
-			FROM banktrans
-			LEFT JOIN bankaccounts
-			ON banktrans.bankact=bankaccounts.accountcode
-			LEFT JOIN systypes
-			ON banktrans.type=systypes.typeid
-			WHERE bankact='".$_POST['BankAccount']."'
-				AND transdate='".FormatDateForSQL($_POST['TransDate'])."'";
+	$SQL = "SELECT 	bankaccountname,
+									bankaccounts.currcode
+							FROM bankaccounts
+							WHERE bankaccounts.accountcode='" . $_POST['BankAccount'] . "'";
+	$BankResult = DB_query($SQL,$db,_('Could not retrieve the bank account details'));
+	
+	
+	$sql="SELECT 	banktrans.currcode,
+								banktrans.amount,
+								banktrans.functionalexrate,
+								banktrans.exrate,
+								banktrans.banktranstype,
+								banktrans.transdate,
+								bankaccounts.bankaccountname,
+								systypes.typename,
+								systypes.typeid
+							FROM banktrans
+							INNER JOIN bankaccounts
+							ON banktrans.bankact=bankaccounts.accountcode
+							INNER JOIN systypes
+							ON banktrans.type=systypes.typeid
+							WHERE bankact='".$_POST['BankAccount']."'
+								AND transdate>='" . FormatDateForSQL($_POST['FromTransDate']) . "'
+								AND transdate<='" . FormatDateForSQL($_POST['ToTransDate']) . "'";
 	$result = DB_query($sql, $db);
-	if (DB_num_rows($result)>0) {
-		$myrow = DB_fetch_array($result);
-		echo '<table class=selection>';
-		echo '<tr><th colspan=7><font size=3 color=blue>';
-		echo _('Account Transactions For').' '.$myrow['bankaccountname'].' '._('On').' '.$_POST['TransDate'];
-		echo '</font></th></tr>';
-		echo '<tr>';
-		echo '<th>'._('Transaction type').'</th>';
-		echo '<th>'._('Type').'</th>';
-		echo '<th>'._('Reference').'</th>';
-		echo '<th>'._('Amount in').' '.$myrow['currcode'].'</th>';
-		echo '<th>'._('Running Total').' '.$myrow['currcode'].'</th>';
-		echo '<th>'._('Amount in').' '.$_SESSION['CompanyRecord']['currencydefault'].'</th>';
-		echo '<th>'._('Running Total').' '.$_SESSION['CompanyRecord']['currencydefault'].'</th>';
-		echo '</tr>';
-		echo '<tr>';
-		echo '<td>'.$myrow['typename'].'</td>';
-		echo '<td>'.$myrow['banktranstype'].'</td>';
-		echo '<td>'.$myrow['ref'].'</td>';
-		echo '<td class=number>'.number_format($myrow['amount'],2).'</td>';
-		echo '<td class=number>'.number_format($myrow['amount'],2).'</td>';
-		echo '<td class=number>'.number_format($myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'],2).'</td>';
-		echo '<td class=number>'.number_format($myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'],2).'</td>';
-		echo '</tr>';
-		$AccountCurrTotal = $myrow['amount'];
-		$LocalCurrTotal = $myrow['amount']/$myrow['functionalexrate'];
-		while ($myrow=DB_fetch_array($result)) {
+	if (DB_num_rows($result)==0) {
+		prnMsg(_('There are no transactions for this account in the date range selected'), 'info');
+	} else {
+		$BankDetailRow = DB_fetch_array($BankResult);
+		echo '<table class=selection>
+						<tr>
+							<th colspan=7><font size=3 color=blue>' . _('Account Transactions For').' '.$BankDetailRow['bankaccountname'].' '._('Between').' '.$_POST['FromTransDate'] . ' ' . _('and') . ' ' . $_POST['ToTransDate'] . '</font></th>
+						</tr>';
+		echo '<tr>
+						<th>' . ('Date') . '</th>
+						<th>'._('Transaction type').'</th>
+						<th>'._('Type').'</th>
+						<th>'._('Reference').'</th>
+						<th>'._('Amount in').' '.$BankDetailRow['currcode'].'</th>
+						<th>'._('Running Total').' '.$BankDetailRow['currcode'].'</th>
+						<th>'._('Amount in').' '.$_SESSION['CompanyRecord']['currencydefault'].'</th>
+						<th>'._('Running Total').' '.$_SESSION['CompanyRecord']['currencydefault'].'</th>
+					</tr>';
+		
+		$AccountCurrTotal=0;
+		$LocalCurrTotal =0;
+		
+		while ($myrow = DB_fetch_array($result)){
+			
 			$AccountCurrTotal += $myrow['amount'];
-			$LocalCurrTotal += $myrow['amount']/$myrow['functionalexrate'];
-			echo '<tr>';
-			echo '<td>'.$myrow['typename'].'</td>';
-			echo '<td>'.$myrow['banktranstype'].'</td>';
-			echo '<td>'.$myrow['ref'].'</td>';
-			echo '<td class=number>'.number_format($myrow['amount'],2).'</td>';
-			echo '<td class=number>'.number_format($AccountCurrTotal,2).'</td>';
-			echo '<td class=number>'.number_format($myrow['amount']/$myrow['functionalexrate'],2).'</td>';
-			echo '<td class=number>'.number_format($LocalCurrTotal,2).'</td>';
-			echo '</tr>';
+			$LocalCurrTotal += $myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'];
+			
+			echo '<tr>
+							<td>'. ConvertSQLDate($myrow['transdate']) . '</td>
+							<td>'.$myrow['typename'].'</td>
+							<td>'.$myrow['banktranstype'].'</td>
+							<td>'.$myrow['ref'].'</td>
+							<td class=number>'.number_format($myrow['amount'],2).'</td>
+							<td class=number>'.number_format($AccountCurrTotal,2).'</td>
+							<td class=number>'.number_format($myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'],2).'</td>
+							<td class=number>'.number_format($LocalCurrTotal,2).'</td>
+						</tr>';
 		}
 		echo '</table>';
-	} else {
-		prnMsg( _('There are no transactions for this account on that day'), 'info');
-	}
+	} //end if no bank trans in the range to show
+	
 	echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br><div class="centre"><input type="submit" name="Return" value="' . _('Select Another Date'). '"></div>';
