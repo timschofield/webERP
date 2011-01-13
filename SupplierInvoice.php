@@ -577,18 +577,17 @@ then do the updates and inserts to process the invoice entered */
 		prnMsg( _('The invoice as entered cannot be processed because the exchange rate for the invoice has been entered as a negative or zero number') . '. ' . _('The exchange rate is expected to show how many of the suppliers currency there are in 1 of the local currency'),'error');
 
 	}elseif ( $_SESSION['SuppTrans']->OvAmount < round($TotalShiptValue + $TotalGLValue + $TotalContractsValue+ $TotalAssetValue+$TotalGRNValue,2)){
-		prnMsg( _('The invoice total as entered is less than the sum of the shipment charges, the general ledger entries (if any) and the charges for goods received') . '. ' . _('There must be a mistake somewhere, the invoice as entered will not be processed'),'error');
+		prnMsg( _('The invoice total as entered is less than the sum of the shipment charges, the general ledger entries (if any), the charges for goods received, contract charges and fixed asset charges. There must be a mistake somewhere, the invoice as entered will not be processed'),'error');
 		$InputError = True;
 
 	} else {
 		$sql = "SELECT count(*)
-			FROM supptrans
-			WHERE supplierno='" . $_SESSION['SuppTrans']->SupplierID . "'
-			AND supptrans.suppreference='" . $_POST['SuppReference'] . "'";
+						FROM supptrans
+						WHERE supplierno='" . $_SESSION['SuppTrans']->SupplierID . "'
+						AND supptrans.suppreference='" . $_POST['SuppReference'] . "'";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sql to check for the previous entry of the same invoice failed');
-		$DbgMsg = _('The following SQL to start an SQL transaction was used');
-
+		$DbgMsg = _('The following SQL to test for a previous invoice with the same reference from the same supplier was used');
 		$result=DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
 
 		$myrow=DB_fetch_row($result);
@@ -601,7 +600,6 @@ then do the updates and inserts to process the invoice entered */
 	if ($InputError == False){
 
 	/* SQL to process the postings for purchase invoice */
-
 	/*Start an SQL transaction */
 
 		$Result = DB_Txn_Begin($db);
@@ -647,21 +645,21 @@ then do the updates and inserts to process the invoice entered */
 			the credit is to creditors control act  done later for the total invoice value + tax*/
 
 				$SQL = "INSERT INTO gltrans (type,
-								typeno,
-								trandate,
-								periodno,
-								account,
-								narrative,
-								amount,
-								jobref)
-						VALUES (20,
-							'" . $InvoiceNo . "',
-							'" . $SQLInvoiceDate . "',
-							'" . $PeriodNo . "',
-							'" . $EnteredGLCode->GLCode . "',
-							'" . $_SESSION['SuppTrans']->SupplierID . ' ' . $EnteredGLCode->Narrative . "',
-							'" . round($EnteredGLCode->Amount/ $_SESSION['SuppTrans']->ExRate,2) . "',
-							'" . $EnteredGLCode->JobRef . "')";
+																		typeno,
+																		trandate,
+																		periodno,
+																		account,
+																		narrative,
+																		amount,
+																		jobref)
+																VALUES (20,
+																	'" . $InvoiceNo . "',
+																	'" . $SQLInvoiceDate . "',
+																	'" . $PeriodNo . "',
+																	'" . $EnteredGLCode->GLCode . "',
+																	'" . $_SESSION['SuppTrans']->SupplierID . ' ' . $EnteredGLCode->Narrative . "',
+																	'" . round($EnteredGLCode->Amount/ $_SESSION['SuppTrans']->ExRate,2) . "',
+																	'" . $EnteredGLCode->JobRef . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
 				$DbgMsg = _('The following SQL to insert the GL transaction was used');
@@ -684,12 +682,12 @@ then do the updates and inserts to process the invoice entered */
 																		narrative,
 																		amount)
 							VALUES (20,
-								'" . $InvoiceNo . "',
-								'" . $SQLInvoiceDate . "',
-								'" . $PeriodNo . "',
-								'" . $_SESSION['SuppTrans']->GRNAct . "',
-								'" . $_SESSION['SuppTrans']->SupplierID . ' ' . _('Shipment charge against') . ' ' . $ShiptChg->ShiptRef . "',
-								'" . round($ShiptChg->Amount/ $_SESSION['SuppTrans']->ExRate,2) . "')";
+											'" . $InvoiceNo . "',
+											'" . $SQLInvoiceDate . "',
+											'" . $PeriodNo . "',
+											'" . $_SESSION['SuppTrans']->GRNAct . "',
+											'" . $_SESSION['SuppTrans']->SupplierID . ' ' . _('Shipment charge against') . ' ' . $ShiptChg->ShiptRef . "',
+											'" . round($ShiptChg->Amount/ $_SESSION['SuppTrans']->ExRate,2) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the shipment') .
 							' ' . $ShiptChg->ShiptRef . ' ' . _('could not be added because');

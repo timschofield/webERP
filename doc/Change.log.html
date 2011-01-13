@@ -1,12 +1,13 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p></p>
+<p>13/1/11:Phil PO_Items.php remove redundant code, setup entry of lines in supplier units</p>
+<p>13/1/11:Tim Z_ChangeCustomerCode.php now has foreign key checks defeated when deleting the old customer record and custbranch record </p>
+<p>13/1/11:Phil SupplierInvoice.php and SupplierCredit.php now check to ensure the total of contracts fixed asset charges goods received charges, shipment charges and GL charges are at least equal to the amount of the invoice or credit. It was possible when GL interface turned off to get strange results</p>
 <p>12/1/11:Phil DailyBankTransactions.php made it so a range of dates can be selected but defaults to just today</p>
 <p>11/1/11:Phil fix choice of portrait or landscape invoices - fix landscape default form layout. Fix portrait invoice logo position</p>
 <p>11/1/11:Phil fix customer transaction inquiries to show correct links where user is not authorised for credit notes or GL inquiries</p>
 <p>11/1/11:Phil SupplierCredit.php and SupplierInvoice.php recalculate price variance to post differences on fixed asset additions correctly</p>
 <p>11/1/11:Phil PO_PDFPurchOrder.php - fixed for coding conventions removed uneccessary sql calls</p>
-<p>11/1/11:Phil  
-<p>11/1/11:Phil
 <p>11/1/11: Murray Collingwood: Emailing invoices was writing the pdf file twice  - once with fwrite and once with the TCPDF output function with the option 'F'</p>
 <p>8/1/11 Ricard Andreu: Z_ChangeCustomerCode.php added typeid field that made change customer code fail. Also corrected typo for foreign key checking side stepping for Z_ChangeBranchCode.php</p>
 <p>5/1/11 Phil: Bug fixes AssetLocationTransfer and Supplier Contacts</p>
@@ -14,7 +15,7 @@
 <p>5/1/11 Phil: Bug fixes AssetLocationTransfer and Supplier Contacts</p>
 <p>4/1/11 Phil: Start rework of purchase order scripts ... again.</p>
 <p>4/1/11 Phil: Select Purchase orders now defaults to just pending and authorised/printed - other statii are options</p>
-<p>1/1/11 Phil: Upgrade script make capable of upgrades from any earlier version - and email a backup to the user.</p>
+<p>1/1/11 Phil: Upgrade script make capable of upgrades from any earlier version - and email a backup to the user. Deleted DBUpgradeNumber config variable now use the VersionNumber already there</p>
 <p>31/12/10 Tim: Tidy up of CounterSales.php - CamelCasing, quoting SQL, closing slashes in xhtml tags</p>
 <p>29/12/10 Phil: Reverted to single SQL upgrade file per release - but retaining Tim's upgrade mechanism if the DBUpgradeNumber is out of date. Removed pseudo SQL language required for upgrade script and the 52 update files - just applies plain vanilla SQL from the scripts required</p>
 <p>29/12/10 Tim: DB upgrade mechanism with separate pseudo SQL for each database change in a separate file + 52 files of updates since 3.11.4</p>

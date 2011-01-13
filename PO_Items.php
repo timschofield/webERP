@@ -32,44 +32,25 @@ if (!isset($_POST['Commit'])) {
 	echo '<a href="'.$rootpath.'/PO_Header.php?' . SID . 'identifier=' . $identifier. '">' ._('Back To Purchase Order Header') . '</a><br>';
 }
 
-if (isset($_POST['StockID2']) AND $_GET['Edit']=='') {
-/* If a stock item is selected and a purchdata record
- * exists for it then find that record.
- */
-	$sql = "SELECT stockmaster.description,
-								purchdata.suppliers_partno,
-								purchdata.converstionfactor,
-								stockmaster.pkg_type,
-								stockmaster.units,
-								stockmaster.netweight,
-								stockmaster.kgs,
-								stockmaster.volume
-								FROM purchdata INNER JOIN stockmaster
-								ON purchdata.stockid=stockmaster.stockid
-								WHERE purchdata.stockid='" . $_POST['StockID2'] . "' AND
-								purchdata.supplierno='".$_SESSION['PO'.$identifier]->SupplierID."'";
-
-	$ErrMsg = _('The stock record of the stock selected') . ': ' . $_POST['Stock'] . ' ' .
-		_('cannot be retrieved because');
-	$DbgMsg = _('The SQL used to retrieve the supplier details and failed was');
-	$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
-	$myrow = DB_fetch_array($result);
-
-	$_POST['ItemDescription'] = $myrow['description'];
-	$_POST['Suppliers_PartNo'] = $myrow['suppliers_partno'];
-	$_POST['Package'] = $myrow['pkg_type'];
-	$_POST['uom'] = $myrow['units'];
-	$_POST['NetWeight'] = $myrow['netweight'];
-	$_POST['KGs'] = $myrow['kgs'];
-	$_POST['ConversionFactor']=$myrow['conversionfactor'];
-	$_POST['CuFt'] = $myrow[6];
-} // end if (isset($_POST['StockID2']) && $_GET['Edit']=='')
-
-if (isset($_POST['UpdateLines']) OR isset($_POST['Commit'])) {
+if (isset($_POST['UpdateLines']) OR isset($_POST['Commit'])) { 
 	foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
 		if ($POLine->Deleted == false) {
-			$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Quantity=$_POST['Qty'.$POLine->LineNo];
-			$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Price=$_POST['Price'.$POLine->LineNo];
+			if (!is_numeric($_POST['ConversionFactor'.$POLine->LineNo])){
+				prnMsg(_('The conversion factor is expected to be numeric - the figure which converts from our units to the supplier units. e.g. if the supplier units is a tonne and our unit is a kilogram then the conversion factor that converts our unit to the suppliers unit is 1000'),'error');
+				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor = 1;
+			} else { //a valid number for the conversion factor is entered
+				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor = $_POST['ConversionFactor'.$POLine->LineNo];
+			}
+			if (!is_numeric($_POST['SuppQty'.$POLine->LineNo])){
+				prnMsg(_('The quantity in the supplier units is expected to be numeric. Please re-enter as a number'),'error');
+			} else { //ok to update the PO object variables
+				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Quantity=$_POST['SuppQty'.$POLine->LineNo]*$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor;
+			}
+			if (!is_numeric($_POST['SuppPrice'.$POLine->LineNo])){
+				prnMsg(_('The supplier price is expected to be numeric. Please re-enter as a number'),'error');
+			} else { //ok to update the PO object variables
+				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Price=$_POST['SuppPrice'.$POLine->LineNo]/$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor;
+			}
 			$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->NetWeight=$_POST['NetWeight'.$POLine->LineNo];
 			$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ReqDelDate=$_POST['ReqDelDate'.$POLine->LineNo];
 		}
@@ -522,30 +503,6 @@ if(isset($_GET['Delete'])){
 }
 
 
-if (isset($_POST['LookupPrice']) and isset($_POST['StockID2'])){
-	$sql = "SELECT purchdata.price,
-								purchdata.conversionfactor,
-								purchdata.suppliersuom,
-								purchdata.supplierdescription
-					FROM purchdata
-					WHERE  purchdata.supplierno = '" . $_SESSION['PO'.$identifier]->SupplierID . "'
-					AND purchdata.stockid = '". strtoupper($_POST['StockID2']) . "'";
-
-	$ErrMsg = _('The supplier pricing details for') . ' ' . strtoupper($_POST['StockID']) . ' ' . _('could not be retrieved because');
-	$DbgMsg = _('The SQL used to retrieve the pricing details but failed was');
-	$LookupResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-
-	if (DB_num_rows($LookupResult)==1){
-		$myrow = DB_fetch_array($LookupResult);
-		$_POST['Price'] = $myrow['price']/$myrow['conversionfactor'];
-		$_POST['SuppliersUOM'] = $myrow['suppliersuom'];
-		$_POST['ConversionFactor'] = $myrow['conversionfactor'];
-		
-	} else {
-		prnMsg(_('There is no purchasing data set up for this supplier') . '  - ' . $_SESSION['PO'.$identifier]->SupplierID . ' ' . _('and item') . ' ' . strtoupper($_POST['StockID']),'warn');
-	}
-}
-
 if (isset($_POST['UpdateLine'])){
 	$AllowUpdate=true; /*Start assuming the best ... now look for the worst*/
 
@@ -730,9 +687,12 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
  /*end if Enter line button was hit */
 
 
-if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as the part code selected */
-/* take the form entries and enter the data from the form into the PurchOrder class variable 
- * A series of form variables of the format "Qty" with the ItemCode concatenated are created on the search for adding new items for each of these form variables need to parse out the items and look up the details to add them to the purchase order  $_POST is of course the global array of all posted form variables */
+if (isset($_POST['NewItem'])){ 
+	/* NewItem is set from the part selection list as the part code selected 
+	* take the form entries and enter the data from the form into the PurchOrder class variable 
+	* A series of form variables of the format "Qty" with the ItemCode concatenated are created on the search for adding new 
+	* items for each of these form variables need to parse out the items and look up the details to add them to the purchase
+	* order  $_POST is of course the global array of all posted form variables */
 
 	foreach ($_POST as $FormVariableName => $Quantity) {
 		if (substr($FormVariableName, 0, 6)=='NewQty') { //if the form variable represents a Qty to add to the order
@@ -783,13 +743,12 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 									ON purchdata.suppliersuom=unitsofmeasure.unitid
 									AND purchdata.supplierno = '" . $_SESSION['PO'.$identifier]->SupplierID . "'
 									WHERE chartmaster.accountcode = stockcategory.stockact
-										AND stockcategory.categoryid = stockmaster.categoryid
-										AND stockmaster.stockid = '". $ItemCode . "'
-										AND purchdata.effectivefrom =
-											(SELECT max(effectivefrom)
-												FROM purchdata
-												WHERE purchdata.stockid='". $ItemCode . "'
-												AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "')";
+									AND stockcategory.categoryid = stockmaster.categoryid
+									AND stockmaster.stockid = '". $ItemCode . "'
+									AND purchdata.effectivefrom =	(SELECT max(effectivefrom)
+																									FROM purchdata
+																									WHERE purchdata.stockid='". $ItemCode . "'
+																									AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "')";
 				} else {
 					$sql="SELECT stockmaster.description,
 												stockmaster.stockid,
@@ -884,7 +843,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 				} else {
 					prnMsg (_('The item code') . ' ' . $ItemCode . ' ' . _('does not exist in the database and therefore cannot be added to the order'),'error');
 					if ($debug==1){
-						echo "<br>".$sql;
+						echo '<br / >'.$sql;
 					}
 					include('includes/footer.inc');
 					exit;
@@ -913,12 +872,13 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 	echo '<tr>
 			<th>' . _('Item Code') . '</th>
 			<th>' . _('Description') . '</th>
-			<th>' . _('Quantity') . '</th>
-			<th>' . _('Our Unit') .'</th>
-			<th>' . _('Quantity') . '<th>
-			<th>' .  _('Supp Unit') . '</th>
 			<th>' . _('Weight') . '</th>
+			<th>' . _('Quantity Our Units') . '</th>
+			<th>' . _('Our Unit') .'</th>
 			<th>' . _('Price Our Units') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
+			<th>' . _('Unit Conversion Factor') . '</th>
+			<th>' . _('Quantity Supplier Units') . '</th>
+			<th>' .  _('Supplier Unit') . '</th>
 			<th>' . _('Price Supp Units') . ' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
 			<th>' . _('Subtotal') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
 			<th>' . _('Deliver By') .'</th>
@@ -931,7 +891,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 
 		if ($POLine->Deleted==False) {
 			$LineTotal = $POLine->Quantity * $POLine->Price;
-			$DisplayLineTotal = number_format($LineTotal,$POLine->DecimalPlaces);
+			$DisplayLineTotal = number_format($LineTotal,2);
 			// Note if the price is greater than 1 use 2 decimal place, if the price is a fraction of 1, use 4 decimal places
 			// This should help display where item-price is a fraction
 			if ($POLine->Price > 1) {
@@ -950,29 +910,29 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 
 			echo '<td>' . $POLine->StockID  . '</td>
 				<td>' . $POLine->ItemDescription . '</td>
-				<td><input type="text" class="number" name="Qty' . $POLine->LineNo .'" size="11" value="' . number_format($POLine->Quantity,$POLine->DecimalPlaces) . '"></td>
+				<td><input type="text" class="number" name="NetWeight' . $POLine->LineNo . '" size="8" value="' . $POLine->NetWeight . '"></td>
+				<td class="number">' . number_format($POLine->Quantity,$POLine->DecimalPlaces) . '</td>
 				<td>' . $POLine->Units . '</td>
-				<td><input type="text" class="number" name="SuppQty' . $POLine->LineNo .'" size="11" value="' . number_format($POLine->Quantity/$POLine->ConversionFactor,$POLine->DecimalPlaces) . '"></td>
+				<td class="number">' . $DisplayPrice . '</td>
+				<td><input type="text" class="number" name="ConversionFactor' . $POLine->LineNo .'" size="8" value="' . $POLine->ConversionFactor . '"></td>
+				<td><input type="text" class="number" name="SuppQty' . $POLine->LineNo .'" size="10" value="' . number_format($POLine->Quantity/$POLine->ConversionFactor,$POLine->DecimalPlaces) . '"></td>
 				<td>' . $POLine->SuppUOM . '</td>
-				<td><input type="text" class="number" name="NetWeight' . $POLine->LineNo . '" size="11" value="' . $POLine->NetWeight . '"></td>
-				<td><input type="text" class="number" name="Price' . $POLine->LineNo . '" size="11" value="' .$DisplayPrice.'"></td>
+				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' .number_format(($POLine->Price *$POLine->ConversionFactor),2) .'"></td>
 				<td class="number">' . $DisplayLineTotal . '</td>
-				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="11" value="' .number_format($POLine->Price/$POLine->ConversionFactor,2) .'"></td>
-				<td class="number">' . $DisplayLineTotal . '</td>
-				<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'].'" name="ReqDelDate' . $POLine->LineNo.'" size="11" value="' .$POLine->ReqDelDate .'"></td>
+				<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'].'" name="ReqDelDate' . $POLine->LineNo.'" size="10" value="' .$POLine->ReqDelDate .'"></td>
 				<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . 'identifier='.$identifier. '&Delete=' . $POLine->LineNo . '">' . _('Delete') . '</a></td></tr>';
 			$_SESSION['PO'.$identifier]->Total = $_SESSION['PO'.$identifier]->Total + $LineTotal;
 		}
 	}
 
 	$DisplayTotal = number_format($_SESSION['PO'.$identifier]->Total,2);
-	echo '<tr><td colspan=6 class=number>' . _('TOTAL') . _(' excluding Tax') . '</td><td class=number><b>' . $DisplayTotal . '</b></td></tr></table>';
+	echo '<tr><td colspan="10" class=number>' . _('TOTAL') . _(' excluding Tax') . '</td>
+						<td class=number><b>' . $DisplayTotal . '</b></td>
+			</tr></table>';
 	echo '<br><div class="centre"><input type="submit" name="UpdateLines" value="Update Order Lines">';
+	
 	echo '&nbsp;<input type="submit" name="Commit" value="Process Order"></div>';
-	if (!isset($_POST['NewItem']) and isset($_GET['Edit'])) {
-
-	/*show a form for putting in a new line item with or without a stock entry */
-	}
+	
 } /*Only display the order line items if there are any !! */
 
 

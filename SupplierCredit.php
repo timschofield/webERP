@@ -611,8 +611,8 @@ then do the updates and inserts to process the credit note entered */
 	}elseif ($_SESSION['SuppTrans']->ExRate <= 0){
 		$InputError = True;
 		prnMsg(_('The credit note as entered cannot be processed because the exchange rate for the credit note has been entered as a negative or zero number') . '. ' . _('The exchange rate is expected to show how many of the suppliers currency there are in 1 of the local currency'),'warn');
-	}elseif ($_SESSION['SuppTrans']->OvAmount < round($TotalShiptValue + $TotalGLValue + $TotalAssetValue + $TotalGRNValue,2)){
-		prnMsg(_('The credit note total as entered is less than the sum of the shipment charges') . ', ' . _('the general ledger entries (if any) and the charges for goods received') . '. ' . _('There must be a mistake somewhere') . ', ' . _('the credit note as entered will not be processed'),'error');
+	}elseif ($_SESSION['SuppTrans']->OvAmount < round($TotalGRNValue + $TotalGLValue + $TotalAssetValue + $TotalShiptValue + $TotalContractsValue,2)){
+		prnMsg(_('The credit note total as entered is less than the sum of the shipment charges, the general ledger entries (if any) and the charges for goods received, contracts and fixed assets. There must be a mistake somewhere, the credit note as entered will not be processed'),'error');
 		$InputError = True;
 	} else {
 
