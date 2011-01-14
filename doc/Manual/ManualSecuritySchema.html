@@ -129,8 +129,14 @@ The value of the default settings can be modified as needed.<br>
     is pre-defined and can not be edited<br>
     using any webERP tool.</td>
 </tr>
-</tbody></table></body></html>
+</tbody></table>
 
+<br>
+<br>
+<b>Changes in Later Versions</b>
+<br>
+<br>
+Below the default security roles and page security values are set out. However, be aware that all these settings are now modifiable in the database. The roles can be defined choosing which security tokens will be allowed. Also, as of version 4.0 it is now possible to change the PageSecurity of each script to allow access to be more tightly defined. The PageSecurity value for a particular script is mapped to the security token that is either available to a particular user or not. Without the security token being in the users list of allowed security tokens then the script will not be available to that user.
 <br>
 <br>
 <b>Security Roles: Defaults for webERP version 3.0.5:</b><br>
@@ -177,7 +183,7 @@ The value of the default settings can be modified as needed.<br>
 <br>
 <table border="2">
 <tbody><tr><th>Page (script) File Name
-</th><th>PageSecurity value 
+</th><th>PageSecurity value
 </th></tr>
 <tr>
 

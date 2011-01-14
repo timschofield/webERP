@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 // Start a session
 if(!defined('SESSION_STARTED')) {
-	session_name('ba_session_id');
+        session_name('ba_session_id');
 	session_start();
 	define('SESSION_STARTED', true);
 }
@@ -105,11 +105,11 @@ function change_data(type) {
 		</tr>
 		<?php } ?>
 		<tr>
-			<td width="140" style="color: #666666;">PHP Version > 4.1.0</td>
+			<td width="140" style="color: #666666;">PHP Version > 5.1.0</td>
 			<td width="35">
 				<?php
 				$phpversion = substr(PHP_VERSION, 0, 6);
-				if($phpversion > 4.1) {
+				if($phpversion > 5.1) {
 					?><font class="good">Yes</font><?php
 				} else {
 					?><font class="bad">No</font><?php
@@ -165,15 +165,14 @@ function change_data(type) {
 				<?php
 				// Try to guess installation URL
 				$GuessedURL = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["SCRIPT_NAME"];
-				$GuessedURL = rtrim(dirname($GuessedURL), 'install');
+				$GuessedURL = trim(rtrim(dirname($GuessedURL), 'install'));
 				?>
-				<input type="text" tabindex="30" name="ba_url" style="width: 99%;" value="
-						<?php 
-						if(isset($_SESSION['ba_url'])) { 
-							echo $_SESSION['ba_url']; 
-						} else { 
-							echo $GuessedURL; 
-						} 
+				<input type="text" tabindex="30" name="ba_url" style="width: 99%;" value="<?php
+						if(isset($_SESSION['ba_url'])) {
+							echo $_SESSION['ba_url'];
+						} else {
+							echo $GuessedURL;
+						}
 				?>" />
 			</td>
 		</tr>
@@ -239,15 +238,13 @@ function change_data(type) {
 			<td width="7">&nbsp;</td>
 			<td width="70" style="color: #666666;">Username:</td>
 			<td>
-				<input type="text" tabindex="44" name="database_username" style="width: 98%;" value="
-				<?php 
+				<input type="text" tabindex="44" name="database_username" style="width: 98%;" value="<?php
 					if(isset($_SESSION['database_username'])) {
 						echo $_SESSION['database_username'];
 					 } else {
 						echo 'root';
-					 } 
-				 ?>
-				 " />
+					 }
+				 ?>" />
 			</td>
 		</tr>
 		<tr>

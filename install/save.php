@@ -236,7 +236,12 @@ if ($_POST['DemoData']==false){
 	$Result = mkdir($CompanyDir . '/EDI_Pending');
 	$Result = mkdir($CompanyDir . '/reportwriter');
 	$Result = mkdir($CompanyDir . '/pdf_append');
-
+	$Result = mkdir($CompanyDir . '/FormDesigns');
+        copy ($path_to_root . '/companies/weberpdemo/FormDesigns/GoodsReceived.xml', $CompanyDir . '/FormDesigns/GoodsReceived.xml');
+        copy ($path_to_root . '/companies/weberpdemo/FormDesigns/PickingList.xml', $CompanyDir . '/FormDesigns/PickingList.xml');
+        copy ($path_to_root . '/companies/weberpdemo/FormDesigns/PurchaseOrder.xml', $CompanyDir . '/FormDesigns/PurchaseOrder.xml');
+        copy ($path_to_root . '/companies/weberpdemo/FormDesigns/SalesInvoice.xml', $CompanyDir . '/FormDesigns/SalesInvoice.xml');
+        
 	// Now have a destination to place the logo image.
 	if (isset($_FILES['LogoFile'])) {
 	    if ($_FILES['LogoFile']['error'] == UPLOAD_ERR_OK) {
@@ -257,15 +262,6 @@ if ($_POST['DemoData']==false){
 	}
 }
 
-//Need to get the new version number
-$ConfigDistributionFile = file($path_to_root . '/config.distrib.php');
-$ConfigDistributionFileLines = sizeof($ConfigDistributionFile);
-for ($i=0; $i<$ConfigDistributionFileLines; $i++) {
-	$ConfigDistributionFile[$i] = trim($ConfigDistributionFile[$i]);
-	if (substr($ConfigDistributionFile[$i], 0, 8) == '$Version'){
-		$VersionString = $ConfigDistributionFile[$i];
-	}
-}
 //$msg holds the text of the new config.php file
 $msg = "<?php\n\n";
 $msg .= "/* \$Revision: 1.7 $ */\n";
@@ -275,8 +271,6 @@ $msg .= "//DefaultLanguage to use for the login screen and the setup of new user
 $msg .= "\$DefaultLanguage ='en_GB.utf8';\n\n";
 $msg .= "// Whether to display the demo login and password or not on the login screen\n";
 $msg .= "\$allow_demo_mode = False;\n\n";
-$msg .= "// webERP version\n\n";
-$msg .= $VersionString . "\n\n";
 $msg .= "//  Connection information for the database\n";
 $msg .= "// \$host is the computer ip address or name where the database is located\n";
 $msg .= "// assuming that the web server is also the sql server\n";

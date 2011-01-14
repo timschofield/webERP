@@ -141,26 +141,30 @@ This rate is used to convert the currency amounts entered on the invoice to the 
 <BR><BR>
 <font size="+1"><b>Comments</B></FONT>
 <BR><BR>
-Comments are entirely optional. They appear in the supplier inquiry screen against the invoice. 
+Comments are entirely optional. They appear in the supplier inquiry screen against the invoice.
 <BR><BR>
 <font size="+1"><b>Different Types Of Charges On A Purchase Invoice</B></FONT>
 <BR><BR>
-Depending on the nature of the supplier's charge and the items purchased there are several choices as to how the amount of the invoice is entered. 
+Depending on the nature of the supplier's charge and the items purchased there are several choices as to how the amount of the invoice is entered.
 <BR>
 <UL>
-<LI>Charges for Stock Items - Entered against Goods Received</LI>
+<LI>Charges for stock items on purchase order items received - Entered against purchase orders</LI>
 <LI>Charges for other expenses coded to different GL accounts</LI>
 <LI>Charges for Shipments where the cost is to be split between all items on the shipment</LI>
+<LI>Charges for contracts - where the amounts are charged out against a contract</LI>
+<LI>Charges for the purchase of fixed assets</li>
 </UL>
-Supplier invoices can be entered for any or all of the choices together.
+Supplier invoices (and credit notes) can be entered for any or all of the choices together.
+<BR><BR>
+<font size="+1"><b>Creditors GL Interface</B></FONT>
+<BR><BR>
+If the GL interface to creditors is not set to yes in the company preferences screen then the total amount of the invoice can be entered directly. There is a check though to ensure that the total of the charges entered against purchase orders, shipments, contracts and gl is less than the total invoice amount entered directly. If the amount entered is less than the sum of the charges then a warning shows. However, if the GL interface is active the total of the charges against purchase orders, contracts, fixed assets, gl and shipments is accumulated into the main invoice entry screen amount of the invoice.
 <BR><BR>
 <font size="+1"><b>Entry of Charges for Stock/Inventory Items</B></FONT>
 <BR><BR>
 All stock items must be received into stock against a purchase order. In the process a GRN (goods received note) entry created. Goods received will be evidenced in webERP by the stock movements inquiry showing the receipt of stock and also by the creation of a GRN against the supplier. If the general ledger interface is active a liability is posted to the GRN suspense account (defined in the company record) and the stock value is increased by the standard cost of the item at the time it is entered as received. The purchase order inquiry will also show the quantity received of the item (against the order). Entering a purchase invoice for stock items requires that the GRN records created for each item being charged for be matched off against the invoice. A special screen is available to search the GRNs outstanding for the supplier. This screen can be accessed directly from the invoice entry screen by clicking the button to enter against stock items.
 <BR><BR>
 The list of all the outstanding GRNs is shown together with any quantity already invoiced (on other invoices) and the price at which the purchase order was entered. The actual (currency) price that the supplier charged should be entered and the number of the items being invoiced on this invoice should be entered against the GRN too. This allows the actual charge for the item to be recorded against the GRN. Ultimately when the invoice is posted the actual cost (as converted at the invoice exchange rate)is recorded against the stock movement inquiry. When the invoice is entered, any for all GRNs matched to invoice charges, the purchase price variance calculated and posted to the general ledger (if the GL interface is active).
-<BR><BR>
-If the GL interface is active the total of the charges against GRNs is accumulated into the main invoice entry screen.
 <BR><BR>
 <font size="+1"><b>Entry of Invoices for Shipment Charges</B></FONT>
 <BR><BR>
