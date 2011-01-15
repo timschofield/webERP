@@ -88,7 +88,7 @@ if ( isset($_POST['submit']) ) {
 	}
 
 if (!isset($Id)) {
-	$SQLname='SELECT * from debtortype where typeid="'.$DebtorType.'"';
+	$SQLname="SELECT * from debtortype where typeid='".$DebtorType."'";
 	$Result = DB_query($SQLname,$db);
 	$row = DB_fetch_array($Result);
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') .

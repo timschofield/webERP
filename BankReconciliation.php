@@ -21,10 +21,10 @@ if (isset($_POST['PostExchangeDifference']) and is_numeric($_POST['DoExchangeDif
 		echo '<p>' . $_POST['BankStatmentBalance'];
 	} else {
 		/* Now need to get the currency of the account and the current table ex rate */
-		$SQL = 'SELECT rate, bankaccountname
+		$SQL = "SELECT rate, bankaccountname
 						FROM bankaccounts INNER JOIN currencies
 						ON bankaccounts.currcode=currencies.currabrev
-				WHERE bankaccounts.accountcode = "' . $_POST['BankAccount'].'"';
+				WHERE bankaccounts.accountcode = '" . $_POST['BankAccount']."'";
 
 		$ErrMsg = _('Could not retrieve the exchange rate for the selected bank account');
 		$CurrencyResult = DB_query($SQL,$db);
@@ -44,7 +44,7 @@ if (isset($_POST['PostExchangeDifference']) and is_numeric($_POST['DoExchangeDif
 
 //yet to code the journal
 
-		$SQL = 'INSERT INTO gltrans (type,
+		$SQL = "INSERT INTO gltrans (type,
 									typeno,
 									trandate,
 									periodno,
@@ -52,17 +52,17 @@ if (isset($_POST['PostExchangeDifference']) and is_numeric($_POST['DoExchangeDif
 									narrative,
 									amount)
 								  VALUES (36,
-									"' . $ExDiffTransNo . '",
-									"' . FormatDateForSQL($PostingDate) . '",
-									"' . $PeriodNo . '",
-									"' . $_SESSION['CompanyRecord']['exchangediffact'] . '",
-									"' . $BankAccountName . ' ' . _('reconciliation on') . ' ' .
-										Date($_SESSION['DefaultDateFormat']) . '","' . $ExchangeDifference . '")';
+									'" . $ExDiffTransNo . "',
+									'" . FormatDateForSQL($PostingDate) . "',
+									'" . $PeriodNo . "',
+									'" . $_SESSION['CompanyRecord']['exchangediffact'] . "',
+									'" . $BankAccountName . ' ' . _('reconciliation on') . " " .
+										Date($_SESSION['DefaultDateFormat']) . "','" . $ExchangeDifference . "')";
 
 		$ErrMsg = _('Cannot insert a GL entry for the exchange difference because');
 		$DbgMsg = _('The SQL that failed to insert the exchange difference GL entry was');
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-		$SQL = 'INSERT INTO gltrans (type,
+		$SQL = "INSERT INTO gltrans (type,
 									typeno,
 									trandate,
 									periodno,
@@ -70,12 +70,12 @@ if (isset($_POST['PostExchangeDifference']) and is_numeric($_POST['DoExchangeDif
 									narrative,
 									amount)
 								  VALUES (36,
-									"' . $ExDiffTransNo . '",
-									"' . FormatDateForSQL($PostingDate) . '",
-									"' . $PeriodNo . '",
-									"' . $_POST['BankAccount'] . '",
-									"' . $BankAccountName . ' ' . _('reconciliation on') . ' ' . Date($_SESSION['DefaultDateFormat']) . '",
-									"' . (-$ExchangeDifference) . '")';
+									'" . $ExDiffTransNo . "',
+									'" . FormatDateForSQL($PostingDate) . "',
+									'" . $PeriodNo . "',
+									'" . $_POST['BankAccount'] . "',
+									'" . $BankAccountName . ' ' . _('reconciliation on') . ' ' . Date($_SESSION['DefaultDateFormat']) . "',
+									'" . (-$ExchangeDifference) . "')";
 
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
@@ -123,13 +123,13 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 
 /*Get the balance of the bank account concerned */
 
-	$sql = 'SELECT MAX(period) FROM chartdetails WHERE accountcode="' . $_POST['BankAccount'].'"';
+	$sql = "SELECT MAX(period) FROM chartdetails WHERE accountcode='" . $_POST['BankAccount']."'";
 	$PrdResult = DB_query($sql, $db);
 	$myrow = DB_fetch_row($PrdResult);
 	$LastPeriod = $myrow[0];
 
-	$SQL = 'SELECT bfwd+actual AS balance
-				FROM chartdetails WHERE period="' . $LastPeriod . '" AND accountcode="' . $_POST['BankAccount'].'"';
+	$SQL = "SELECT bfwd+actual AS balance
+				FROM chartdetails WHERE period='" . $LastPeriod . "' AND accountcode='" . $_POST['BankAccount']."'";
 
 	$ErrMsg = _('The bank account balance could not be returned by the SQL because');
 	$BalanceResult = DB_query($SQL,$db,$ErrMsg);
@@ -138,12 +138,12 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	$Balance = $myrow[0];
 
 	/* Now need to get the currency of the account and the current table ex rate */
-	$SQL = 'SELECT rate,
+	$SQL = "SELECT rate,
 					bankaccounts.currcode,
 					bankaccounts.bankaccountname
 				FROM bankaccounts INNER JOIN currencies
 				ON bankaccounts.currcode=currencies.currabrev
-				WHERE bankaccounts.accountcode = "' . $_POST['BankAccount'].'"';
+				WHERE bankaccounts.accountcode = '" . $_POST['BankAccount']."'";
 	$ErrMsg = _('Could not retrieve the currency and exchange rate for the selected bank account');
 	$CurrencyResult = DB_query($SQL,$db);
 	$CurrencyRow =  DB_fetch_row($CurrencyResult);
@@ -159,7 +159,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	echo '</b></td>
 			<td valign=bottom class=number><b>' . number_format($Balance*$ExRate,2) . '</b></td></tr>';
 
-	$SQL = 'SELECT amount/exrate AS amt,
+	$SQL = "SELECT amount/exrate AS amt,
 					amountcleared,
 					(amount/exrate)-amountcleared as outstanding,
 					ref,
@@ -169,9 +169,9 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 				FROM banktrans,
 					systypes
 				WHERE banktrans.type = systypes.typeid
-				AND banktrans.bankact="' . $_POST['BankAccount'] . '"
+				AND banktrans.bankact='" . $_POST['BankAccount'] . "'
 				AND amount < 0
-				AND ABS((amount/exrate)-amountcleared)>0.009 ORDER BY transdate';
+				AND ABS((amount/exrate)-amountcleared)>0.009 ORDER BY transdate";
 
 	echo '<tr></tr>'; /*Bang in a blank line */
 
@@ -230,7 +230,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	echo '<tr></tr>
 			<tr class=EvenTableRows><td colspan=6>' . _('Total of all unpresented cheques') . '</td><td class=number>' . number_format($TotalUnpresentedCheques,2) . '</td></tr>';
 
-	$SQL = 'SELECT amount/exrate AS amt,
+	$SQL = "SELECT amount/exrate AS amt,
 				amountcleared,
 				(amount/exrate)-amountcleared as outstanding,
 				ref,
@@ -240,9 +240,9 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 			FROM banktrans,
 				systypes
 			WHERE banktrans.type = systypes.typeid
-			AND banktrans.bankact="' . $_POST['BankAccount'] . '"
+			AND banktrans.bankact='" . $_POST['BankAccount'] . "'
 			AND amount > 0
-			AND ABS((amount/exrate)-amountcleared)>0.009 ORDER BY transdate';
+			AND ABS((amount/exrate)-amountcleared)>0.009 ORDER BY transdate";
 
 	echo '<tr></tr>'; /*Bang in a blank line */
 

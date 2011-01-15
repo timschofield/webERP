@@ -17,12 +17,6 @@ $title = _('Fixed Asset Charges or Credits');
 
 include('includes/header.inc');
 
-if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
-	echo '<a href="' . $rootpath . '/SupplierInvoice.php?' . SID . '">' . _('Back to Invoice Entry') . '</a>';
-} else {
-	echo '<a href="' . $rootpath . '/SupplierCredit.php?' . SID . '">' . _('Back to Credit Note Entry') . '</a>';
-}
-
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('Fixed asset additions or credits are entered against supplier invoices or credit notes respectively') . '. ' . _('To enter supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice or credit note must be clicked on'),'info');
 	echo '<br><a href="' . $rootpath . '/SelectSupplier.php?' . SID .'">' . _('Select A Supplier') . '</a>';
@@ -96,20 +90,27 @@ echo '<tr>
 </tr>
 </table><br />';
 
+if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
+	echo '<div class="centre"><a href="' . $rootpath . '/SupplierInvoice.php?' . SID . '">' . _('Back to Invoice Entry') . '</a></div>';
+} else {
+	echo '<div class="centre"><a href="' . $rootpath . '/SupplierCredit.php?' . SID . '">' . _('Back to Credit Note Entry') . '</a></div>';
+}
+
 /*Set up a form to allow input of new Shipment charges */
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="post">';
+echo '<br /><form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['AssetID'])) {
 	$_POST['AssetID']='';
 }
-echo '<table class=selection>';
 
 prnMsg(_('If you know the code enter it in the Asset ID input box, otherwise select the asset from the list below. Only  assets with no cost will show in the list'),'info');
 
-echo '<tr><td>' . _('Asset ID') . ':</td>
+echo '<br /><table class=selection>';
+
+echo '<tr><td>' . _('Enter Asset ID') . ':</td>
 	<td><input type="text" name="AssetID" size="5" maxlength="6" VALUE="' .  $_POST['AssetID'] . '"> <a href="FixedAssetItems.php" target=_blank>'. _('New Fixed Asset') . '</a></td></tr>';
-echo '<tr><td>' . _('Asset Selection') . ':</td><td><select name="AssetSelection">';
+echo '<tr><td><b>' . _('OR') .' </b>'. _('Select from list') . ':</td><td><select name="AssetSelection">';
 
 $sql = 'SELECT assetid,
 							description
@@ -134,7 +135,7 @@ if (!isset($_POST['Amount'])) {
 	$_POST['Amount']=0;
 }
 echo '<tr><td>' . _('Amount') . ':</td>
-	<td><input type="text" name="Amount" size="12" maxlength="11" VALUE="' .  $_POST['Amount'] . '"></td></tr>';
+	<td><input type="text" class="number" name="Amount" size="12" maxlength="11" VALUE="' .  $_POST['Amount'] . '"></td></tr>';
 echo '</table>';
 
 echo '<br /><div class=centre><input type="submit" name="AddAssetToInvoice" VALUE="' . _('Enter Fixed Asset') . '"></div>';

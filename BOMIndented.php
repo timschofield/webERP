@@ -46,11 +46,11 @@ if (isset($_POST['PrintPDF'])) {
 	// those parts into tempbom
 
 	// This finds the top level
-	$sql = 'INSERT INTO passbom (part, sortpart)
+	$sql = "INSERT INTO passbom (part, sortpart)
 			   SELECT bom.component AS part,
 					  CONCAT(bom.parent,bom.component) AS sortpart
 			  FROM bom
-			  WHERE bom.parent =' . "'" . $_POST['Part'] . "'
+			  WHERE bom.parent =" . "'" . $_POST['Part'] . "'
 			  AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()";
 	$result = DB_query($sql,$db);
 
@@ -158,10 +158,10 @@ if (isset($_POST['PrintPDF'])) {
 	}
 
 
-    $sql = 'SELECT stockmaster.stockid,
+    $sql = "SELECT stockmaster.stockid,
                    stockmaster.description
               FROM stockmaster
-              WHERE stockid = ' . "'" . $_POST['Part'] . "'";
+              WHERE stockid = " . "'" . $_POST['Part'] . "'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_array($result,$db);
 	$assembly = $_POST['Part'];

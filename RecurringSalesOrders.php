@@ -179,6 +179,7 @@ if (isset($_POST['DeleteRecurringOrder'])){
 	exit;
 }
 If (isset($_POST['Process'])) {
+	$Result = DB_Txn_Begin($db);
 	$InputErrors =0;
 	If (!Is_Date($_POST['StartDate'])){
 		$InputErrors =1;
@@ -199,10 +200,11 @@ If (isset($_POST['Process'])) {
 
 	if ($InputErrors == 0 ){  /*Error checks above all passed ok so lets go*/
 
+
+
 		if ($NewRecurringOrder=='Yes'){
 
 			/* finally write the recurring order header to the database and then the line details*/
-
 			$DelDate = FormatDateforSQL($_SESSION['Items'.$identifier]->DeliveryDate);
 
 			$HeaderSQL = "INSERT INTO recurringsalesorders (
@@ -228,7 +230,7 @@ If (isset($_POST['Process'])) {
 										stopdate,
 										frequency,
 										autoinvoice)
-									valueS (
+									values (
 										'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 										'" . $_SESSION['Items'.$identifier]->Branch . "',
 										'". $_SESSION['Items'.$identifier]->CustRef ."',
@@ -253,9 +255,10 @@ If (isset($_POST['Process'])) {
 										'" . $_POST['AutoInvoice'] . "')";
 
 			$ErrMsg = _('The recurring order cannot be added because');
-			$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
+			$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg,true);
 
 			$RecurrOrderNo = DB_Last_Insert_ID($db,'recurringsalesorders','recurrorderno');
+			echo 'xxx'.$RecurrOrderNo;
 			$StartOf_LineItemsSQL = "INSERT INTO recurrsalesorderdetails (
 						recurrorderno,
 						stkcode,
@@ -275,7 +278,7 @@ If (isset($_POST['Process'])) {
 					'" . $StockItem->DiscountPercent . "',
 					'" . $StockItem->Narrative . "'
 				)";
-				$Ins_LineItemResult = DB_query($LineItemsSQL,$db);
+				$Ins_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg,true);
 			} /* inserted line items into sales order details */
 
 			prnmsg(_('The new recurring order template has been added'),'success');
@@ -302,6 +305,7 @@ If (isset($_POST['Process'])) {
 	exit;
 
 	}
+	$result = DB_Txn_Commit($db);
 }
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') .

@@ -27,7 +27,7 @@ NEED to have a function that reposts from a given period having first checked th
 */
 
 
-$FirstPeriodResult = DB_query('SELECT MIN(periodno) FROM periods',$db);
+$FirstPeriodResult = DB_query("SELECT MIN(periodno) FROM periods",$db);
 $FirstPeriodRow = DB_fetch_row($FirstPeriodResult);
 $CreateFrom = $FirstPeriodRow[0];
 
@@ -38,7 +38,7 @@ if (is_null($FirstPeriodRow[0])){
 	$CreateFrom=0;
 }
 
-$LastPeriodResult = DB_query('SELECT MAX(periodno) FROM periods',$db);
+$LastPeriodResult = DB_query("SELECT MAX(periodno) FROM periods",$db);
 $LastPeriodRow = DB_fetch_row($LastPeriodResult);
 
 
@@ -48,28 +48,28 @@ $CreateTo = $LastPeriodRow[0];
 
 /*First off see if there are in fact any chartdetails */
 
-$ChartDetailsResult = DB_query('SELECT * FROM chartdetails',$db);
-$sql = 'SELECT chartmaster.accountcode, MIN(periods.periodno) AS startperiod
+$ChartDetailsResult = DB_query("SELECT * FROM chartdetails",$db);
+$sql = "SELECT chartmaster.accountcode, MIN(periods.periodno) AS startperiod
 				FROM (chartmaster CROSS JOIN periods)
 				LEFT JOIN chartdetails ON chartmaster.accountcode = chartdetails.accountcode
 				AND periods.periodno = chartdetails.period
 
-				WHERE (periods.periodno BETWEEN '  . $CreateFrom . ' AND ' . $CreateTo . ')
+				WHERE (periods.periodno BETWEEN '"  . $CreateFrom . "' AND '" . $CreateTo . "')
 				AND chartdetails.actual IS NULL
-				GROUP BY chartmaster.accountcode';
+				GROUP BY chartmaster.accountcode";
 
 $ChartDetailsNotSetUpResult = DB_query($sql,$db,_('Could not test to see that all chart detail records properly initiated'));
 
 if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 
 		/*Now insert the chartdetails records that do not already exist */
-		$sql = 'INSERT INTO chartdetails (accountcode, period)
+		$sql = "INSERT INTO chartdetails (accountcode, period)
 					SELECT chartmaster.accountcode, periods.periodno
 					FROM (chartmaster CROSS JOIN periods)
 					LEFT JOIN chartdetails ON chartmaster.accountcode = chartdetails.accountcode
 					AND periods.periodno = chartdetails.period
-					WHERE (periods.periodno BETWEEN '  . $CreateFrom . ' AND ' . $CreateTo . ')
-					AND chartdetails.accountcode IS NULL';
+					WHERE (periods.periodno BETWEEN '"  . $CreateFrom . "' AND '" . $CreateTo . "')
+					AND chartdetails.accountcode IS NULL'";
 
 		$ErrMsg = _('Inserting new chart details records required failed because');
 		$InsChartDetailsRecords = DB_query($sql,$db,$ErrMsg);
@@ -81,14 +81,14 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 
 for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 
-		$sql = 'SELECT counterindex,
+		$sql = "SELECT counterindex,
 			periodno,
 			account,
 			amount
 		FROM gltrans
 		WHERE posted=0
-		AND periodno=' . $CurrPeriod . '
-		ORDER BY account';
+		AND periodno='" . $CurrPeriod . "'
+		ORDER BY account";
 
 	$UnpostedTransResult = DB_query($sql, $db);
 
@@ -166,15 +166,15 @@ if (DB_num_rows($ChartDetailsNotSetUpResult)>0){
 		/*Now run through each of the new chartdetail records created for each account and update them with the B/Fwd and B/Fwd budget no updates would be required where there were previously no chart details set up */
 
 
-		$sql = 'SELECT actual,
+		$sql = "SELECT actual,
 				bfwd,
 				budget,
 				bfwdbudget,
 				period
 			FROM chartdetails
-			WHERE period >=' . ($AccountRow['startperiod']-1) . '
-			AND accountcode=' . $AccountRow['accountcode'] . '
-			ORDER BY period';
+			WHERE period >='" . ($AccountRow['startperiod']-1) . "'
+			AND accountcode='" . $AccountRow['accountcode'] . "'
+			ORDER BY period";
 		$ChartDetails = DB_query($sql,$db);
 
 		DB_Txn_Begin($db);

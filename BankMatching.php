@@ -33,17 +33,17 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 	for ($Counter=1;$Counter <= $_POST['RowCounter']; $Counter++){
 		if (isset($_POST["Clear_" . $Counter]) and $_POST["Clear_" . $Counter]==True){
 			/*Get amount to be cleared */
-			$sql = 'SELECT amount,
+			$sql = "SELECT amount,
 						exrate
 					FROM banktrans
-					WHERE banktransid="' . $_POST['BankTrans_' . $Counter].'"';
+					WHERE banktransid='" . $_POST['BankTrans_' . $Counter]."'";
 			$ErrMsg =  _('Could not retrieve transaction information');
 			$result = DB_query($sql,$db,$ErrMsg);
 			$myrow=DB_fetch_array($result);
 			$AmountCleared = round($myrow[0] / $myrow[1],2);
 			/*Update the banktrans recoord to match it off */
-			$sql = 'UPDATE banktrans SET amountcleared= '. $AmountCleared .
-					' WHERE banktransid=' . $_POST['BankTrans_' . $Counter];
+			$sql = "UPDATE banktrans SET amountcleared= ". $AmountCleared .
+					" WHERE banktransid='" . $_POST['BankTrans_' . $Counter] . "'";
 			$ErrMsg =  _('Could not match off this payment because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
@@ -52,15 +52,15 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 			((isset($_POST['AmtClear_' . $Counter]) AND $_POST['AmtClear_' . $Counter]<0 AND $Type=='Payments') OR
 			($Type=='Receipts' AND (isset($_POST['AmtClear_' . $Counter]) and $_POST['AmtClear_' . $Counter]>0)))){
 			/*if the amount entered was numeric and negative for a payment or positive for a receipt */
-			$sql = 'UPDATE banktrans SET amountcleared=' .  $_POST['AmtClear_' . $Counter] . '
-					 WHERE banktransid="' . $_POST['BankTrans_' . $Counter].'"';
+			$sql = "UPDATE banktrans SET amountcleared=" .  $_POST['AmtClear_' . $Counter] . "
+					 WHERE banktransid='" . $_POST['BankTrans_' . $Counter]."'";
 
 			$ErrMsg = _('Could not update the amount matched off this bank transaction because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
 		} elseif (isset($_POST['Unclear_' . $Counter]) and $_POST['Unclear_' . $Counter]==True){
-			$sql = 'UPDATE banktrans SET amountcleared = 0
-					 WHERE banktransid="' . $_POST['BankTrans_' . $Counter].'"';
+			$sql = "UPDATE banktrans SET amountcleared = 0
+					 WHERE banktransid='" . $_POST['BankTrans_' . $Counter]."'";
 			$ErrMsg =  _('Could not unclear this bank transaction because');
 			$result = DB_query($sql,$db,$ErrMsg);
 		}

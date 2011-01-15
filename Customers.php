@@ -733,11 +733,11 @@ if (!isset($DebtorNo)) {
 	}
 // Select sales types for drop down list
 	if (isset($_GET['Modify'])) {
-		$result=DB_query('SELECT sales_type FROM salestypes WHERE typeabbrev="'.$_POST['SalesType'].'"',$db);
+		$result=DB_query("SELECT sales_type FROM salestypes WHERE typeabbrev='".$_POST['SalesType']."'",$db);
 		$myrow=DB_fetch_array($result);
 		echo '<tr><td>' . _('Sales Type') . ":</td><td>".$myrow['sales_type']."</td></tr>";
 	} else {
-		$result=DB_query('SELECT typeabbrev, sales_type FROM salestypes ',$db);
+		$result=DB_query('SELECT typeabbrev, sales_type FROM salestypes',$db);
 		echo '<tr><td>' . _('Sales Type') . '/' . _('Price List') . ":</td>
 			<td><select name='SalesType'>";
 		while ($myrow = DB_fetch_array($result)) {
@@ -813,7 +813,7 @@ if (!isset($DebtorNo)) {
 	}
 
 	if (isset($_GET['Modify'])) {
-		$result=DB_query('SELECT reasondescription FROM holdreasons WHERE reasoncode="'.$_POST['HoldReason'].'"',$db);
+		$result=DB_query("SELECT reasondescription FROM holdreasons WHERE reasoncode='".$_POST['HoldReason']."'",$db);
 		$myrow=DB_fetch_array($result);
 		echo '<tr><td>' . _('Credit Status') . ":</td><td>".$myrow['reasondescription']."</td></tr>";
 	} else {
@@ -832,7 +832,7 @@ if (!isset($DebtorNo)) {
 	}
 
 	if (isset($_GET['Modify'])) {
-		$result=DB_query('SELECT currency FROM currencies WHERE currabrev="'.$_POST['CurrCode'].'"',$db);
+		$result=DB_query("SELECT currency FROM currencies WHERE currabrev='".$_POST['CurrCode']."'",$db);
 		$myrow=DB_fetch_array($result);
 		echo '<tr><td>' . _('Credit Status') . ":</td><td>".$myrow['currency']."</td></tr>";
 	} else {
@@ -890,7 +890,7 @@ if (!isset($DebtorNo)) {
 	echo '</select></td></tr></table></td></tr>';
 	echo '<tr><td colspan=2>';
 
-  	$sql = 'SELECT * FROM custcontacts where debtorno="'.$DebtorNo.'" ORDER BY contid';
+  	$sql = "SELECT * FROM custcontacts where debtorno='".$DebtorNo."' ORDER BY contid";
 	$result = DB_query($sql,$db);
 
 	echo '<table class=selection>';
@@ -982,20 +982,20 @@ if (!isset($DebtorNo)) {
 	}
 	if (isset($_POST['update'])) {
 
-			$SQLupdatecc='UPDATE custcontacts
-							SET contactname="'.$_POST['custname'].'",
-							role="'.$_POST['role'].'",
-							phoneno="'.$_POST['phoneno'].'",
-							notes="'.DB_escape_string($_POST['notes']).'"
-							Where debtorno="'.$DebtorNo.'"
-							and contid="'.$Edit.'"';
+			$SQLupdatecc="UPDATE custcontacts
+							SET contactname='".$_POST['custname']."',
+							role='".$_POST['role']."',
+							phoneno='".$_POST['phoneno']."',
+							notes='".DB_escape_string($_POST['notes'])."'
+							Where debtorno='".$DebtorNo."'
+							and contid='".$Edit."'";
 			$resultupcc = DB_query($SQLupdatecc,$db);
 			echo '<br>'.$SQLupdatecc;
 			echo '<meta http-equiv="Refresh" content="0; url="' . $_SERVER['PHP_SELF'] . '?'.SID.'&DebtorNo='.$DebtorNo.'&ID='.$ID.'">';
 		}
 	if (isset($_GET['delete'])) {
-		$SQl='DELETE FROM custcontacts where debtorno="'.$DebtorNo.'"
-				and contid="'.$ID.'"';
+		$SQl="DELETE FROM custcontacts where debtorno='".$DebtorNo."'
+				and contid='".$ID."'";
 		$resultupcc = DB_query($SQl,$db);
 
 		echo '<meta http-equiv="Refresh" content="0; url=' . $_SERVER['PHP_SELF'] . '?'.SID.'&DebtorNo='.$DebtorNo.'">';

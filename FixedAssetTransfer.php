@@ -11,9 +11,9 @@ include('includes/header.inc');
 foreach ($_POST as $AssetToMove => $Value) { //Value is not used?
 	if (substr($AssetToMove,0,4)=='Move') { // the form variable is of the format MoveAssetID so need to strip the move bit off
 		$AssetID=substr($AssetToMove,4);
-		$sql='UPDATE fixedassets
-					SET assetlocation="'.$_POST['Location'.$AssetID] .'"
-					WHERE assetid="'. $AssetID . '"';
+		$sql="UPDATE fixedassets
+					SET assetlocation='".$_POST['Location'.$AssetID] ."'
+					WHERE assetid='". $AssetID . "'";
 
 		$result=DB_query($sql, $db);
 	}
@@ -87,7 +87,7 @@ if (isset($_POST['Search'])) {
 		$_POST['AssetID']='%';
 	}
 	
-	$sql= 'SELECT fixedassets.assetid,
+	$sql= "SELECT fixedassets.assetid,
 								fixedassets.cost,
 								fixedassets.accumdepn,
 								fixedassets.description,
@@ -99,10 +99,10 @@ if (isset($_POST['Search'])) {
 				FROM fixedassets
 				INNER JOIN fixedassetlocations
 				ON fixedassets.assetlocation=fixedassetlocations.locationid
-				WHERE fixedassets.assetcategoryid ' . LIKE . '"'.$_POST['AssetCat'].'"
-				AND fixedassets.description ' . LIKE . '"'.$_POST['Keywords'].'"
-				AND fixedassets.assetid ' . LIKE . '"'.$_POST['AssetID'].'"
-				AND fixedassets.serialno ' . LIKE . '"'.$_POST['SerialNumber'].'"';
+				WHERE fixedassets.assetcategoryid " . LIKE . "'".$_POST['AssetCat']."'
+				AND fixedassets.description " . LIKE . "'".$_POST['Keywords']."'
+				AND fixedassets.assetid " . LIKE . "'".$_POST['AssetID']."'
+				AND fixedassets.serialno " . LIKE . "'".$_POST['SerialNumber']."'";
 	$Result=DB_query($sql, $db);
 	echo '<form action="'. $_SERVER['PHP_SELF'] . '?' . SID .'" method=post><table class=selection>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

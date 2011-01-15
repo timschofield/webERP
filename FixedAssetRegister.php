@@ -14,7 +14,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	}
 	$DateFrom = FormatDateForSQL($_POST['FromDate']);
 	$DateTo = FormatDateForSQL($_POST['ToDate']);
-	$sql = 'SELECT fixedassets.assetid,
+	$sql = "SELECT fixedassets.assetid,
 								fixedassets.description,
 								fixedassets.longdescription,
 								fixedassets.assetcategoryid,
@@ -24,17 +24,17 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 								fixedassetlocations.parentlocationid,
 								fixedassets.assetlocation,
 								fixedassets.disposaldate,
-								SUM(CASE WHEN (fixedassettrans.transdate <"' . $DateFrom . '" AND fixedassettrans.fixedassettranstype="cost") THEN fixedassettrans.amount ELSE 0 END) AS bfwdcost,
-								SUM(CASE WHEN (fixedassettrans.transdate <"' . $DateFrom .'" AND fixedassettrans.fixedassettranstype="depn") THEN fixedassettrans.amount ELSE 0 END) AS bfwddepn,
-								SUM(CASE WHEN (fixedassettrans.transdate >="' . $DateFrom .'"  AND fixedassettrans.transdate <="' . $DateTo . '" AND fixedassettrans.fixedassettranstype="cost") THEN fixedassettrans.amount ELSE 0 END) AS periodadditions,
-								SUM(CASE WHEN fixedassettrans.transdate >="' . $DateFrom . '"  AND fixedassettrans.transdate <="' . $DateTo . '" AND fixedassettrans.fixedassettranstype="depn" THEN fixedassettrans.amount ELSE 0 END) AS perioddepn,
-								SUM(CASE WHEN fixedassettrans.transdate >="' . $DateFrom . '"  AND fixedassettrans.transdate <="' . $DateTo . '" AND fixedassettrans.fixedassettranstype="disposal" THEN fixedassettrans.amount ELSE 0 END) AS perioddisposal
+								SUM(CASE WHEN (fixedassettrans.transdate <'" . $DateFrom . "' AND fixedassettrans.fixedassettranstype='cost') THEN fixedassettrans.amount ELSE 0 END) AS bfwdcost,
+								SUM(CASE WHEN (fixedassettrans.transdate <'" . $DateFrom . "' AND fixedassettrans.fixedassettranstype='depn') THEN fixedassettrans.amount ELSE 0 END) AS bfwddepn,
+								SUM(CASE WHEN (fixedassettrans.transdate >='" . $DateFrom ."'  AND fixedassettrans.transdate <='" . $DateTo . "' AND fixedassettrans.fixedassettranstype='cost') THEN fixedassettrans.amount ELSE 0 END) AS periodadditions,
+								SUM(CASE WHEN fixedassettrans.transdate >='" . $DateFrom . "'  AND fixedassettrans.transdate <='" . $DateTo . "' AND fixedassettrans.fixedassettranstype='depn' THEN fixedassettrans.amount ELSE 0 END) AS perioddepn,
+								SUM(CASE WHEN fixedassettrans.transdate >='" . $DateFrom . "'  AND fixedassettrans.transdate <='" . $DateTo . "' AND fixedassettrans.fixedassettranstype='disposal' THEN fixedassettrans.amount ELSE 0 END) AS perioddisposal
 					FROM fixedassets
 					INNER JOIN fixedassetcategories ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
 					INNER JOIN fixedassetlocations ON fixedassets.assetlocation=fixedassetlocations.locationid
 					INNER JOIN fixedassettrans ON fixedassets.assetid=fixedassettrans.assetid
-					WHERE fixedassets.assetcategoryid ' . LIKE . '"' . $_POST['AssetCategory'] . '"
-					AND fixedassets.assetid ' . LIKE . '"' . $_POST['AssetID'] . '"
+					WHERE fixedassets.assetcategoryid " . LIKE . "'" . $_POST['AssetCategory'] . "'
+					AND fixedassets.assetid " . LIKE . "'" . $_POST['AssetID'] . "'
 					GROUP BY fixedassets.assetid,
 										fixedassets.description,
 										fixedassets.longdescription,
@@ -43,7 +43,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 										fixedassetlocations.locationdescription,
 										fixedassets.datepurchased,
 										fixedassetlocations.parentlocationid,
-										fixedassets.assetlocation';
+										fixedassets.assetlocation";
 	$result = DB_query($sql, $db);
 	if (isset($_POST['pdf'])) {
 		$FontSize = 10;
@@ -53,7 +53,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		if ($_POST['AssetCategory']=='%') {
 			$AssetCategory=_('All');
 		} else {
-			$CategorySQL='SELECT categorydescription FROM fixedassetcategories WHERE categoryid="'.$_POST['AssetCategory'].'"';
+			$CategorySQL="SELECT categorydescription FROM fixedassetcategories WHERE categoryid='".$_POST['AssetCategory']."'";
 			$CategoryResult=DB_query($CategorySQL, $db);
 			$CategoryRow=DB_fetch_array($CategoryResult);
 			$AssetCategory=$CategoryRow['categorydescription'];
@@ -62,7 +62,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		if ($_POST['AssetID']=='%') {
 			$AssetDescription =_('All');
 		} else {
-			$AssetSQL='SELECT description FROM fixedassets WHERE assetid="'.$_POST['AssetID'].'"';
+			$AssetSQL="SELECT description FROM fixedassets WHERE assetid='".$_POST['AssetID']."'";
 			$AssetResult=DB_query($AssetSQL, $db);
 			$AssetRow=DB_fetch_array($AssetResult);
 			$AssetDescription =$AssetRow['description'];
@@ -103,10 +103,10 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		$Ancestors[0] = $myrow['locationdescription'];
 		$i = 0;
 		while ($Ancestors[$i] != '') {
-			$LocationSQL = 'SELECT parentlocationid from fixedassetlocations where locationdescription="' . $Ancestors[$i] . '"';
+			$LocationSQL = "SELECT parentlocationid from fixedassetlocations where locationdescription='" . $Ancestors[$i] . "'";
 			$LocationResult = DB_query($LocationSQL, $db);
 			$LocationRow = DB_fetch_array($LocationResult);
-			$ParentSQL = 'SELECT locationdescription from fixedassetlocations where locationid="' . $LocationRow['parentlocationid'] . '"';
+			$ParentSQL = "SELECT locationdescription from fixedassetlocations where locationid='" . $LocationRow['parentlocationid'] . "'";
 			$ParentResult = DB_query($ParentSQL, $db);
 			$ParentRow = DB_fetch_array($ParentResult);
 			$i++;

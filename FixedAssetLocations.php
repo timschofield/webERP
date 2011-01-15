@@ -19,16 +19,16 @@ if (isset($_POST['submit']) and !isset($_POST['delete'])) {
 		$InputError=1;
 	}
 	if ($InputError==0) {
-		$sql='INSERT INTO fixedassetlocations
+		$sql="INSERT INTO fixedassetlocations
 							VALUES (
-								"'.$_POST['LocationID'].'",
-								"'.$_POST['LocationDescription'].'",
-								"'.$_POST['ParentLocationID'].'")';
+								'".$_POST['LocationID']."',
+								'".$_POST['LocationDescription']."',
+								'".$_POST['ParentLocationID']."')";
 		$result=DB_query($sql, $db);
 	}
 }
 if (isset($_GET['SelectedLocation'])) {
-	$sql='SELECT * FROM fixedassetlocations WHERE locationid="'.$_GET['SelectedLocation'].'"';
+	$sql="SELECT * FROM fixedassetlocations WHERE locationid='".$_GET['SelectedLocation']."'";
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 	$LocationID = $myrow['locationid'];
@@ -49,10 +49,10 @@ if (isset($_POST['update']) and !isset($_POST['delete'])) {
 				$InputError=1;
 		}
 		if ($InputError==0) {
-			 $sql='UPDATE fixedassetlocations SET
-												locationdescription="'.$_POST['LocationDescription'].'",
-												parentlocationid="'.$_POST['ParentLocationID'].'"
-									WHERE locationid		 ="'.$_POST['LocationID'].'"';
+			 $sql="UPDATE fixedassetlocations SET
+												locationdescription='".$_POST['LocationDescription']."',
+												parentlocationid='".$_POST['ParentLocationID']."'
+									WHERE locationid ='".$_POST['LocationID']."'";
 			 $result=DB_query($sql,$db);
 			 echo '<meta http-equiv="Refresh" content="0; url="'.$_SERVER['PHP_SELF'].'">';
 		}

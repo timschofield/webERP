@@ -18,7 +18,7 @@ Also updates the transaction number
 
 	DB_query('LOCK TABLES systypes WRITE',$db);
 
-	$SQL = 'SELECT typeno FROM systypes WHERE typeid = ' . $TransType;
+	$SQL = "SELECT typeno FROM systypes WHERE typeid = '" . $TransType . "'";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>' . _('The next transaction number could not be retrieved from the database because');
 	$DbgMsg =  _('The following SQL to retrieve the transaction number was used');
@@ -26,7 +26,7 @@ Also updates the transaction number
 
 	$myrow = DB_fetch_row($GetTransNoResult);
 
-	$SQL = 'UPDATE systypes SET typeno = ' . ($myrow[0] + 1) . ' WHERE typeid = ' . $TransType;
+	$SQL = "UPDATE systypes SET typeno = '" . ($myrow[0] + 1) . "' WHERE typeid = '" . $TransType . "'";
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The transaction number could not be incremented');
 	$DbgMsg =  _('The following SQL to increment the transaction number was used');
 	$UpdTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);

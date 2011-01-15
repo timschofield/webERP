@@ -6,7 +6,7 @@ class PDF extends Cpdf {
 var $y0; // current y position
 var $x0; // current x position
 var $pageY; // y value of bottom of page less bottom margin
-	
+
 	function PDF() {
 		global $Prefs;
 		$PaperSize = explode(':',$Prefs['papersize']);
@@ -18,14 +18,14 @@ var $pageY; // y value of bottom of page less bottom margin
 		}
 		$this->SetMargins($Prefs['marginleft'], $Prefs['margintop'], $Prefs['marginright']);
 		$this->SetAutoPageBreak(0, $Prefs['marginbottom']);
-		
+
 		$this->SetDrawColor(128,0,0);
 		$this->SetLineWidth(.35); // 1 point
 		$this->AliasNbPages();
 		$this->AddPage();
-	
+
 	}
-	
+
 	function Header() {
 		global $Prefs, $Heading, $Seq;
 		define(RowSpace,2); // define separation between the heading rows
@@ -67,14 +67,14 @@ var $pageY; // y value of bottom of page less bottom margin
 		// Fetch the column break array
 		foreach ($Seq as $Temp) {
 			if ($Temp['break']) {
-				$ColBreak[] = true; 
+				$ColBreak[] = true;
 			} else {
 				$ColBreak[] = false;
 			}
 		}
 		// See if we need to truncate the data
 		if ($Prefs['TruncListings']['params']=='1') {
-			$trunc=true; 
+			$trunc=true;
 		} else {
 			$trunc=false;
 		}
@@ -91,7 +91,7 @@ var $pageY; // y value of bottom of page less bottom margin
 				$value=$this->TruncData($value, $Prefs['col'.$col.'width']);
 			}
 			$this->MultiCell($CellXPos[$col]-$CellXPos[$col-1],$CellHeight,$value);
-			if ($ColBreak[$key]) { 
+			if ($ColBreak[$key]) {
 				$col++;
 				$LastY = $this->y0;
 			} else $LastY = $this->GetY();
@@ -104,7 +104,7 @@ var $pageY; // y value of bottom of page less bottom margin
 		$this->Cell(0,$maxY-$this->y0,' ','B');
 		$this->y0=$maxY+0.35;
 	}
-	
+
 	function SubTitle($Title) {
 		global $Prefs;
 		// substitutes a command string with current information
@@ -112,7 +112,7 @@ var $pageY; // y value of bottom of page less bottom margin
 		$Title=preg_replace('/%reportname%/', $Prefs['reportname'], $Title);
 		return $Title;
 	}
-	
+
 	function Footer() {
 	    //Position at 1.5 cm from bottom
 	    $this->SetY(-15);
@@ -121,10 +121,10 @@ var $pageY; // y value of bottom of page less bottom margin
 	    //Page number
 	    $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
 	}
-	
+
 	function ReportTable($Data) {
 		global $Prefs, $Seq;
-	
+
 		$FillColor = array(224, 235, 255);
 		$this->SetFillColor($FillColor[0],$FillColor[1],$FillColor[2]);
 		$Colors = explode(':',$Prefs['datafontcolor']);
@@ -143,7 +143,7 @@ var $pageY; // y value of bottom of page less bottom margin
 		}
 		// See if we need to truncate the data
 		if ($Prefs['TruncListings']['params']=='1') {
-			$trunc=true; 
+			$trunc=true;
 		} else {
 			$trunc=false;
 		}
@@ -185,15 +185,15 @@ var $pageY; // y value of bottom of page less bottom margin
 					// now fall into the 'd' case to show the data
 				case "d": // data element
 				default:
-					// figure out if a border needs to be drawn for total separation 
+					// figure out if a border needs to be drawn for total separation
 					// and fill color (draws an empty box over the row just written with the fill color)
 					$brdr = 0;
 					if ($NeedTop=='Yes') {
-						$brdr='T'; 
+						$brdr='T';
 						$fill=false; // set so first data after total will not be filled
 						$NeedTop='No';
 					} elseif ($NeedTop=='Next') {
-						$brdr='LR'; 
+						$brdr='LR';
 						$NeedTop='Yes';
 					}
 					// Draw a fill box
@@ -223,7 +223,7 @@ var $pageY; // y value of bottom of page less bottom margin
 						// truncate data if necessary
 						if ($trunc) $value=$this->TruncData($value, $Prefs['col'.$col.'width']);
 						$this->MultiCell($CellXPos[$col]-$CellXPos[$col-1],$CellHeight,$value,0);
-						if ($ColBreak[$key]) { 
+						if ($ColBreak[$key]) {
 							$col++;
 							$LastY = $this->y0;
 						} else $LastY = $this->GetY();
@@ -244,7 +244,7 @@ var $pageY; // y value of bottom of page less bottom margin
 		$this->SetFillColor(255);
 		$this->Cell(0,$this->pageY-$this->y0,'','T',0,'L',1);
 	}
-	
+
 	function TruncData($strData, $ColWidth) {
 		$percent=0.90; //percent to truncate from max to account for proportional spacing
 		$CurWidth = $this->GetStringWidth($strData);
@@ -257,7 +257,7 @@ var $pageY; // y value of bottom of page less bottom margin
 		}
 		return $strData;
 	}
-	
+
 	function Stream($FileName) {
 	  $this->Output($FileName,'D');
 	}
@@ -267,8 +267,8 @@ var $pageY; // y value of bottom of page less bottom margin
 function BuildSQL($Prefs) {
 	//fetch the listing fields (must have at least one) to build select field
 	$strField = '';
-	if (is_array($Prefs['FieldListings'])) while ($FieldValues = array_shift($Prefs['FieldListings'])) { 
-		if ($FieldValues['visible']) $strField .= $FieldValues['fieldname'].', '; 
+	if (is_array($Prefs['FieldListings'])) while ($FieldValues = array_shift($Prefs['FieldListings'])) {
+		if ($FieldValues['visible']) $strField .= $FieldValues['fieldname'].', ';
 	}
 	// check for at least one field selected to show
 	if (!$strField) { // No fields are checked to show, that's bad
@@ -281,16 +281,16 @@ function BuildSQL($Prefs) {
 	$Prefs['filterdesc'] = RPT_RPTFILTER; // Initialize the filter display string
 	//fetch the groupings and build first level of SORT BY string (for sub totals)
 	$strGroup = '';
-	if (is_array($Prefs['GroupListings'])) while ($FieldValues = array_shift($Prefs['GroupListings'])) { 
+	if (is_array($Prefs['GroupListings'])) while ($FieldValues = array_shift($Prefs['GroupListings'])) {
 		if ($FieldValues['params']=='1') {  // then it's the group by field match
-			$strGroup .= $FieldValues['fieldname']; 
+			$strGroup .= $FieldValues['fieldname'];
 			$Prefs['filterdesc'] .= ' '.RPT_GROUPBY.' '.$FieldValues['displaydesc'].';';
 			break;
 		}
 	}
 	// fetch the sort order and add to group by string to finish ORDER BY string
 	$strSort = $strGroup;
-	if (is_array($Prefs['SortListings'])) while ($FieldValues = array_shift($Prefs['SortListings'])) { 
+	if (is_array($Prefs['SortListings'])) while ($FieldValues = array_shift($Prefs['SortListings'])) {
 		if ($FieldValues['params']=='1') {  // then it's the sort by field match
 			if ($strSort=='') $strSort=$FieldValues['fieldname']; else $strSort.=', '.$FieldValues['fieldname'];
 			$Prefs['filterdesc'] .= ' '.RPT_SORTBY.' '.$FieldValues['displaydesc'].';';
@@ -328,7 +328,7 @@ function BuildSQL($Prefs) {
 				$d .= $df."<='".FormatDateForSQL($DateArray[2])."'";
 				$fildesc .= ' '.RPT_TO.' '.$DateArray[1];
 			}
-			$fildesc .= ';';			
+			$fildesc .= ';';
 			break;
 		case "c": // RPT_GROUP_TODAY
 			$d = $df."='".$Today."'";
@@ -397,7 +397,7 @@ function BuildSQL($Prefs) {
 	// Fetch the Criteria
 	$strCrit = '';
 	$filCrit = '';
-	if (is_array($Prefs['CritListings'])) while ($FieldValues = array_shift($Prefs['CritListings'])) { 
+	if (is_array($Prefs['CritListings'])) while ($FieldValues = array_shift($Prefs['CritListings'])) {
 		$Params = explode(':',$FieldValues['params']);
 		switch ($Params[1]) {
 			case RPT_RANGE:
@@ -433,7 +433,7 @@ function BuildSQL($Prefs) {
 				$strCrit .= $FieldValues['fieldname'].'=0';
 				if (strlen($filCrit)>0) $filCrit .= ' AND ';
 				$filCrit .= $FieldValues['displaydesc'].'='.$Params[1];
-				break;					
+				break;
 			case RPT_STOCK: // TBD field to compare so default to nothing
 			case RPT_ASSEMBLY: // TBD field to compare so default to nothing
 			case RPT_ALL: // sql default anyway
@@ -447,7 +447,7 @@ function BuildSQL($Prefs) {
 	if ($Prefs['table3']) $strTable .= ' INNER JOIN '.$Prefs['table3']. ' ON '.$Prefs['table3criteria'];
 	if ($Prefs['table4']) $strTable .= ' INNER JOIN '.$Prefs['table4']. ' ON '.$Prefs['table4criteria'];
 	// Build query string and execute
-	$sql = 'SELECT '.$strField.' FROM '.$strTable;
+	$sql = "SELECT ".$strField." FROM ".$strTable;
 	if ($strCrit AND $strDate) $sql .= ' WHERE '.$strDate.' AND '.$strCrit;
 	if (!$strCrit AND $strDate) $sql .= ' WHERE '.$strDate;
 	if ($strCrit AND !$strDate) $sql .= ' WHERE '.$strCrit;
@@ -503,7 +503,7 @@ function BuildDataArray($ReportID, $sql, $Prefs) {
 			$GrpWorking = $myrow[$GrpField]; // set to new grouping value
 		}
 		$OutputArray[$RowCnt][0] = 'd'; // let the display class know its a data element
-		foreach($Seq as $key=>$TableCtl) { // 
+		foreach($Seq as $key=>$TableCtl) { //
 			// insert data into output array and set to next column
 			$OutputArray[$RowCnt][$ColCnt] = $myrow[$key];
 			$ColCnt++;
@@ -527,7 +527,7 @@ function BuildDataArray($ReportID, $sql, $Prefs) {
 	}
 	// see if we have a total to send
 	$ShowTotals = false;
-	foreach($Seq as $TotalCtl) if ($TotalCtl['total']=='1') $ShowTotals = true; 
+	foreach($Seq as $TotalCtl) if ($TotalCtl['total']=='1') $ShowTotals = true;
 	if ($ShowTotals) {
 		$OutputArray[$RowCnt][0] = 'r:'.$Prefs['reportname'];
 		foreach($Seq as $TotalCtl) {
@@ -577,7 +577,7 @@ function GenerateCSVFile($Data, $Prefs) {
 	header('Expires: '.date('r', time()+60*60));
 	header('Last-Modified: '.date('r', time()));
 	print $CSVOutput;
-	exit();  
+	exit();
 }
 
 function GeneratePDFFile($Data, $Prefs) {
@@ -586,14 +586,14 @@ function GeneratePDFFile($Data, $Prefs) {
 	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);
 	$ReportName = ReplaceNonAllowedCharacters($Prefs['reportname']) .'.pdf';
-	
+
 	header('Content-type: application/pdf');
 	header('Content-Length: ' . $len);
 	header('Content-Disposition: inline; filename="' . $ReportName . '"');
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
-	
+
 	$pdf->Stream($ReportName);
 	exit(); // needs to be here to properly render the pdf file.
 }
@@ -603,9 +603,9 @@ function ReplaceNonAllowedCharacters ($String) {
 	$DodgyCharactersArray = array('"',' ', '&',"'");
 	$ContainsDodgyCharacters = true;
 	while ($ContainsDodgyCharacters == true){
-		
+
 		$ContainsDodgyCharacters = false; //assume all dodgy characters are replaced on the last pass
-		
+
 		foreach ($DodgyCharactersArray as $DodgyCharacter){
 			if (strpos($String,$DodgyCharacter,0)){
 				$StrPointer = strpos($String,$DodgyCharacter,0);

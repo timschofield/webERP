@@ -131,7 +131,7 @@ if (isset($ReportID)){
 	$_GET['ReportID']==$ReportID;
 }
 
-$GetReportSpecSQL='SELECT reportheading,
+$GetReportSpecSQL="SELECT reportheading,
 				groupbydata1,
 				newpageafter1,
 				lower1,
@@ -149,12 +149,12 @@ $GetReportSpecSQL='SELECT reportheading,
 				lower4,
 				upper4
 			FROM reportheaders
-			WHERE reportid=' . $_GET['ReportID'];
+			WHERE reportid='" . $_GET['ReportID'] . "'";
 
 $SpecResult= DB_query($GetReportSpecSQL,$db);
 $ReportSpec = DB_fetch_array($SpecResult);
 
-$GetColsSQL = 'SELECT colno,
+$GetColsSQL = "SELECT colno,
 			heading1,
 			heading2,
 			calculation,
@@ -168,7 +168,7 @@ $GetColsSQL = 'SELECT colno,
 			budgetoractual,
 			valformat
 		FROM reportcolumns
-		WHERE reportid=' . $_GET['ReportID'];
+		WHERE reportid='" . $_GET['ReportID'] . "'";
 
 $ColsResult = DB_query($GetColsSQL,$db);
 

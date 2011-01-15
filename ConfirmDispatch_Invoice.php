@@ -36,7 +36,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 
 /*read in all the guff from the selected order into the Items cart  */
 
-	$OrderHeaderSQL = 'SELECT salesorders.orderno,
+	$OrderHeaderSQL = "SELECT salesorders.orderno,
 														salesorders.debtorno,
 														debtorsmaster.name,
 														salesorders.branchcode,
@@ -73,7 +73,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 												AND salesorders.debtorno = custbranch.debtorno
 												AND locations.loccode=salesorders.fromstkloc
 												AND debtorsmaster.currcode = currencies.currabrev
-												AND salesorders.orderno = "' . $_GET['OrderNumber'].'"';
+												AND salesorders.orderno = '" . $_GET['OrderNumber']."'";
 
 	$ErrMsg = _('The order cannot be retrieved because');
 	$DbgMsg = _('The SQL to get the order header was');
@@ -122,7 +122,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 
 /*now populate the line items array with the sales order details records */
 
-		$LineItemsSQL = 'SELECT stkcode,
+		$LineItemsSQL = "SELECT stkcode,
 					stockmaster.description,
 					stockmaster.controlled,
 					stockmaster.serialised,
@@ -147,9 +147,9 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 						stockmaster.overheadcost AS standardcost
 				FROM salesorderdetails INNER JOIN stockmaster
 				 	ON salesorderdetails.stkcode = stockmaster.stockid
-				WHERE salesorderdetails.orderno ="' . $_GET['OrderNumber'] . '"
+				WHERE salesorderdetails.orderno ='" . $_GET['OrderNumber'] . "'
 				AND salesorderdetails.quantity - salesorderdetails.qtyinvoiced >0
-				ORDER BY salesorderdetails.orderlineno';
+				ORDER BY salesorderdetails.orderlineno";
 
 		$ErrMsg = _('The line items of the order cannot be retrieved because');
 		$DbgMsg = _('The SQL that failed was');
@@ -420,7 +420,7 @@ if(!isset($_SESSION['Items']->FreightCost)) {
 		$FreightCost =0;
   	}
   	if (!is_numeric($BestShipper)){
-  		$SQL =  'SELECT shipper_id FROM shippers WHERE shipper_id=' . $_SESSION['Default_Shipper'];
+  		$SQL =  "SELECT shipper_id FROM shippers WHERE shipper_id='" . $_SESSION['Default_Shipper'] . "'";
 		$ErrMsg = _('There was a problem testing for a default shipper because');
 		$TestShipperExists = DB_query($SQL,$db, $ErrMsg);
 		if (DB_num_rows($TestShipperExists)==1){

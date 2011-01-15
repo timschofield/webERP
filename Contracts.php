@@ -374,7 +374,7 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 			$ErrMsg = _('The contract quotation could not be updated because');
 			$DbgMsg = _('The SQL that failed to update the quotation was');
 			$UpdQuoteResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-			pnMsg(_('The contract quotation has been updated based on the new contract cost and margin'),'success');
+			prnMsg(_('The contract quotation has been updated based on the new contract cost and margin'),'success');
 			echo '<br /><a href="' .$rootpath . '/SelectSalesOrder.php?OrderNumber=' .  $_SESSION['Contract'.$identifier]->OrderNo . '&amp;Quotations=Quotes_Only">' . _('Go to Quotation') . ' ' .  $_SESSION['Contract'.$identifier]->OrderNo . '</a>';
 
 		}

@@ -206,7 +206,7 @@ Class SuppTrans {
 		}
 		Return 0;
 	}
-	
+
 	function Add_Asset_To_Trans($AssetID, $Amount){
 		if ($Amount!=0){
 			$this->Assets[$this->AssetCounter] = new Asset($this->AssetCounter,
@@ -217,7 +217,7 @@ Class SuppTrans {
 		}
 		Return 0;
 	}
-	
+
 	function Add_Contract_To_Trans($ContractRef, $Amount,$Narrative, $AnticipatedCost){
 		if ($Amount!=0){
 			$this->Contracts[$this->ContractsCounter] = new Contract($this->ContractsCounter,
@@ -236,15 +236,15 @@ Class SuppTrans {
 	function Remove_GRN_From_Trans($GRNNo){
 	     unset($this->GRNs[$GRNNo]);
 	}
-	
+
 	function Remove_GLCodes_From_Trans($GLCodeCounter){
 	     unset($this->GLCodes[$GLCodeCounter]);
 	}
-	
+
 	function Remove_Shipt_From_Trans($ShiptCounter){
 	     unset($this->Shipts[$ShiptCounter]);
 	}
-	
+
 	function Remove_Contract_From_Trans($ContractID){
 	     unset($this->Contracts[$ContractID]);
 	}
@@ -390,12 +390,12 @@ Class Asset {
 		$this->Counter = $Counter;
 		$this->AssetID = $AssetID;
 		$this->Amount = $Amount;
-		
-		$result = DB_query('SELECT fixedassets.description, 
-															fixedassetcategories.costact 
+
+		$result = DB_query("SELECT fixedassets.description,
+															fixedassetcategories.costact
 											FROM fixedassets INNER JOIN fixedassetcategories
 											ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-											WHERE assetid="' . $AssetID . '"',$db);
+											WHERE assetid='" . $AssetID . "'",$db);
 		$AssetRow = DB_fetch_array($result);
 		$this->Description = $AssetRow['description'];
 		$this->CostAct = $AssetRow['costact'];

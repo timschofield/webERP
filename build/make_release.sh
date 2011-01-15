@@ -116,7 +116,7 @@ echo "SET FOREIGN_KEY_CHECKS = 1;" >> $BASE_DIR/sql/mysql/weberp-new.sql
 echo "UPDATE systypes SET typeno=0;" >> $BASE_DIR/sql/mysql/weberp-new.sql
 echo "INSERT INTO shippers VALUES (1,'Default Shipper',0);" >> $BASE_DIR/sql/mysql/weberp-new.sql
 echo "UPDATE config SET confvalue='1' WHERE confname='Default_Shipper';" >> $BASE_DIR/sql/mysql/weberp-new.sql
-
+echo "TRUNCATE TABLE audittrail;" >> $BASE_DIR/sql/mysql/weberp-demo.sql
 echo "SET FOREIGN_KEY_CHECKS = 1;" >> $BASE_DIR/sql/mysql/weberp-demo.sql
 
 rm $OUTPUT_DIR/webERP.zip

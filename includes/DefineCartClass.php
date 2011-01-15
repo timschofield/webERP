@@ -289,7 +289,7 @@ Class Cart {
 		/*Gets the Taxes and rates applicable to this line from the TaxGroup of the branch and TaxCategory of the item
 		and the taxprovince of the dispatch location */
 
-		$sql = 'SELECT stockmovestaxes.taxauthid,
+		$sql = "SELECT stockmovestaxes.taxauthid,
 				taxauthorities.description,
 				taxauthorities.taxglcode,
 				stockmovestaxes.taxcalculationorder,
@@ -297,8 +297,8 @@ Class Cart {
 				stockmovestaxes.taxrate
 			FROM stockmovestaxes INNER JOIN taxauthorities
 				ON stockmovestaxes.taxauthid = taxauthorities.taxid
-			WHERE stkmoveno = ' . $stkmoveno . '
-			ORDER BY taxcalculationorder';
+			WHERE stkmoveno = '" . $stkmoveno . "'
+			ORDER BY taxcalculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
 		$GetTaxRatesResult = DB_query($sql,$db,$ErrMsg);
@@ -368,7 +368,7 @@ Class Cart {
 		  exit();
 		}
 
-		$SQL = 'SELECT taxgrouptaxes.calculationorder,
+		$SQL = "SELECT taxgrouptaxes.calculationorder,
 					taxauthorities.description,
 					taxgrouptaxes.taxauthid,
 					taxauthorities.taxglcode,
@@ -378,10 +378,10 @@ Class Cart {
 					taxauthrates.taxauthority=taxgrouptaxes.taxauthid
 					INNER JOIN taxauthorities ON
 					taxauthrates.taxauthority=taxauthorities.taxid
-				WHERE taxgrouptaxes.taxgroupid=' . $this->TaxGroup . '
-				AND taxauthrates.dispatchtaxprovince=' . $this->DispatchTaxProvince . '
-				AND taxauthrates.taxcatid = ' . $TaxCatID . '
-				ORDER BY taxgrouptaxes.calculationorder';
+				WHERE taxgrouptaxes.taxgroupid='" . $this->TaxGroup . "'
+				AND taxauthrates.dispatchtaxprovince='" . $this->DispatchTaxProvince . "'
+				AND taxauthrates.taxcatid = '" . $TaxCatID . "'
+				ORDER BY taxgrouptaxes.calculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
 		$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);

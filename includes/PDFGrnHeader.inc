@@ -5,7 +5,7 @@ if ($PageNumber>1){
 	$pdf->newPage();
 }
 
-$sql='SELECT suppliers.supplierid,
+$sql="SELECT suppliers.supplierid,
 				suppname,
 				address1,
 				address2 ,
@@ -16,7 +16,7 @@ $sql='SELECT suppliers.supplierid,
 			FROM suppliers
 			LEFT JOIN grns
 			ON grns.supplierid=suppliers.supplierid
-			WHERE grnbatch="'.$GRNNo.'"';
+			WHERE grnbatch='".$GRNNo."'";
 $supplierresult=DB_query($sql, $db);
 $supplierrow=DB_fetch_array($supplierresult);
 

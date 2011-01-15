@@ -91,7 +91,7 @@ if ( isset($_POST['submit']) ) {
 	}
 
 if (!isset($Id)) {
-	$SQLname='SELECT * from debtorsmaster where debtorno="'.$DebtorNo.'"';
+	$SQLname="SELECT * from debtorsmaster where debtorno='".$DebtorNo."'";
 	$Result = DB_query($SQLname,$db);
 	$row = DB_fetch_array($Result);
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .

@@ -228,7 +228,7 @@ if (isset($_POST['MakeCSV'])){
 
 			$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
 
-			$tagsql='SELECT tagdescription FROM tags WHERE tagref='.$myrow['tag'];
+			$tagsql="SELECT tagdescription FROM tags WHERE tagref='".$myrow['tag'] . "'";
 			$tagresult=DB_query($tagsql,$db);
 			$tagrow = DB_fetch_array($tagresult);
 			if ($myrow['amount']<0){

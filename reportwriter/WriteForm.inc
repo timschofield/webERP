@@ -31,7 +31,7 @@ class PDF extends PDF_Language {
 		$this->SetFont('Helvetica');
 		$this->SetDrawColor(128,0,0);
 		$this->SetLineWidth(.35); // 1 point
-	
+
 		if ($_SESSION['Language']=='zh_CN'){
 			$this->AddBig5Font();
 		} elseif ($_SESSION['Language']=='ja_JP'){
@@ -46,25 +46,25 @@ class PDF extends PDF_Language {
 		$i=0; // set sequence to pull data fields should be sorted by seqnum
 		foreach ($FieldListings as $SingleObject) {
 			switch ($SingleObject['params']['index']) {
-				case "Data": 
+				case "Data":
 					$SingleObject['params']['TextField'] = $FieldValues[$i]; // fill the data to display
 					$i++; // increment to the next field
-				case "TBlk": // same operation as page number 
-				case "Text": 
-				case "CDta": 
-				case "CBlk": 
-				case "PgNum": 
-					$this->FormText($SingleObject['params']); 
+				case "TBlk": // same operation as page number
+				case "Text":
+				case "CDta":
+				case "CBlk":
+				case "PgNum":
+					$this->FormText($SingleObject['params']);
 					break;
 
-				case "Img": 
-					$this->FormImage($SingleObject['params']); 
+				case "Img":
+					$this->FormImage($SingleObject['params']);
 					break;
-				case "Line": 
-					$this->FormLine($SingleObject['params']); 
+				case "Line":
+					$this->FormLine($SingleObject['params']);
 					break;
-				case "Rect": 
-					$this->FormRect($SingleObject['params']); 
+				case "Rect":
+					$this->FormRect($SingleObject['params']);
 					break;
 
 				default: // do nothing
@@ -116,7 +116,7 @@ class PDF extends PDF_Language {
 		}  elseif ($Params['LineType']=='3') { // Custom
 			$XEnd = $Params['LineXEnd'];
 			$YEnd = $Params['LineYEnd'];
-		} 
+		}
 		$this->Line($Params['LineXStrt'],$Params['LineYStrt'],$XEnd,$YEnd);
 	}
 
@@ -126,7 +126,7 @@ class PDF extends PDF_Language {
 		if ($Params['Line']=='0') {  // No Border
 			$this->SetDrawColor(255);
 			$this->SetLineWidth(0);
-		} else { 
+		} else {
 			$DrawFill = 'D';
 			if ($Params['Line']=='2') $RGB=$Params['BrdrRed'].':'.$Params['BrdrGreen'].':'.$Params['BrdrBlue'];
 				else $RGB=$Params['BrdrColor'];
@@ -156,7 +156,7 @@ class PDF extends PDF_Language {
 		$this->SetTextColor($FC[0],$FC[1],$FC[2]);
 		if ($Params['Line']=='0') {  // No Border
 			$Border = '0';
-		} else { 
+		} else {
 			$Border = '1';
 			if ($Params['Line']=='2') $RGB=$Params['BrdrRed'].':'.$Params['BrdrGreen'].':'.$Params['BrdrBlue'];
 				else $RGB=$Params['BrdrColor'];
@@ -166,7 +166,7 @@ class PDF extends PDF_Language {
 		}
 		if ($Params['Fill']=='0') {  // No Fill
 			$Fill = '0';
-		} else { 
+		} else {
 			$Fill = '1';
 			if ($Params['Fill']=='2') $RGB=$Params['FillRed'].':'.$Params['FillGreen'].':'.$Params['FillBlue'];
 				else $RGB=$Params['FillColor'];
@@ -206,8 +206,8 @@ class PDF extends PDF_Language {
 			}
 			$this->SetLeftMargin($Params['LineXStrt']);
 			$this->SetXY($Params['LineXStrt'], $this->y0);
-			// Fill with Fill color if it's time 
-			if ($FillThisRow AND $Params['Fill']) $this->SetFillColor($FC[0],$FC[1],$FC[2]); 
+			// Fill with Fill color if it's time
+			if ($FillThisRow AND $Params['Fill']) $this->SetFillColor($FC[0],$FC[1],$FC[2]);
 				else $this->SetFillColor(255);
 			$this->Cell($Params['BoxWidth'],$MaxBoxY-$this->y0,'',0,0,'L',1);
 			// fill in the data
@@ -232,7 +232,7 @@ class PDF extends PDF_Language {
 				$CellHeight = ($Params['Seq'][$Col]['FontSize']+RowSpace)*0.35;
 //				if ($trunc) $value=$this->TruncData($value, $Params['Seq'][$Col]['TblColWidth']);
 				if ($Heading) { // center the heading
-					$FA='C'; 
+					$FA='C';
 				} else {
 					$FA=$Params['Seq'][$Col]['FontAlign'];
 					if (isset($Params['Seq'][$Col]['Processing'])) $value = $this->ProcessData($value, $Params['Seq'][$Col]['Processing']);
@@ -303,11 +303,11 @@ function BuildPDF($ReportID, $Prefs) {
 	global $FieldListings, $FieldValues;
 	// first fetch all the fields we need to display
 	$FieldListings = '';
-	$sql = "SELECT seqnum, params FROM ".DBRptFields." 
+	$sql = "SELECT seqnum, params FROM ".DBRptFields."
 		WHERE reportid=".$ReportID." AND entrytype='fieldlist' AND visible=1
 		ORDER BY seqnum";
 	$Result=DB_query($sql,$db,'','',false,true);
-	while ($FieldValues = DB_fetch_assoc($Result)) { 
+	while ($FieldValues = DB_fetch_assoc($Result)) {
 		$FieldValues['params'] = unserialize($FieldValues['params']);
 		$FieldListings[] = $FieldValues;
 	}
@@ -323,7 +323,7 @@ function BuildPDF($ReportID, $Prefs) {
 	foreach ($FieldListings as $OneField) { // check for a data field and build sql field list
 		if ($OneField['params']['index']=='Data') { // then it's data field make sure it's not empty
 			if ($OneField['params']['DataField']<>'') {
-				$strField .= $OneField['params']['DataField'].', '; 
+				$strField .= $OneField['params']['DataField'].', ';
 			} else { // the field is empty, bad news, error and exit
 				$usrMsg['message'] = RPT_EMPTYFIELD.$OneField['seqnum'];
 				$usrMsg['level'] = 'error';
@@ -332,7 +332,7 @@ function BuildPDF($ReportID, $Prefs) {
 		}
 	}
 	// strip the extra comma, space and continue
-	$strField = substr($strField,0,-2); 
+	$strField = substr($strField,0,-2);
 
 	// fetch date filter info
 	$df = $Prefs['DateListings']['fieldname'];
@@ -341,15 +341,15 @@ function BuildPDF($ReportID, $Prefs) {
 	$ThisMonth = substr($Today,5,2);
 	$ThisYear = substr($Today,0,4);
 	// find total number of days in this month
-	if ($ThisMonth=='04' OR $ThisMonth=='06' OR $ThisMonth=='09' OR $ThisMonth=='11') { 
-		$TotalDays=30; 
-	} elseif ($ThisMonth=='02' AND date('L')) { 
-		$TotalDays=29; 
+	if ($ThisMonth=='04' OR $ThisMonth=='06' OR $ThisMonth=='09' OR $ThisMonth=='11') {
+		$TotalDays=30;
+	} elseif ($ThisMonth=='02' AND date('L')) {
+		$TotalDays=29;
 	} // Leap year
-	 elseif ($ThisMonth=='02' AND !date('L')) { 
-		$TotalDays=28; 
-	} else { 
-		$TotalDays=31; 
+	 elseif ($ThisMonth=='02' AND !date('L')) {
+		$TotalDays=28;
+	} else {
+		$TotalDays=31;
 	}
 	// Calculate date range
 	$DateArray=explode(':',$Prefs['DateListings']['params']);
@@ -388,8 +388,8 @@ function BuildPDF($ReportID, $Prefs) {
 		case "h": // RPT_GROUP_QUARTER
 			$QtrStrt = intval(($ThisMonth-1)/3)*3+1;
 			$QtrEnd = intval(($ThisMonth-1)/3)*3+3;
-			if ($QtrEnd==4 OR $QtrEnd==6 OR $QtrEnd==9 OR $QtrEnd==11) { 
-				$TotalDays=30; 
+			if ($QtrEnd==4 OR $QtrEnd==6 OR $QtrEnd==9 OR $QtrEnd==11) {
+				$TotalDays=30;
 			}
 			$qs = date('Y-m-d', mktime(0,0,0, $QtrStrt, 1, $ThisYear));
 			$qe = date('Y-m-d', mktime(0,0,0, $QtrEnd, $TotalDays, $ThisYear));
@@ -412,7 +412,7 @@ function BuildPDF($ReportID, $Prefs) {
 
 	// Fetch the Criteria
 	$strCrit = '';
-	if (is_array($Prefs['CritListings'])) while ($FieldValues = array_shift($Prefs['CritListings'])) { 
+	if (is_array($Prefs['CritListings'])) while ($FieldValues = array_shift($Prefs['CritListings'])) {
 		$Params = explode(':',$FieldValues['params']);
 		switch ($Params[1]) {
 			case RPT_RANGE:
@@ -440,7 +440,7 @@ function BuildPDF($ReportID, $Prefs) {
 			case RPT_UNPRINTED:
 				if (strlen($strCrit)>0) $strCrit .= ' AND ';
 				$strCrit .= $FieldValues['fieldname'].'=0';
-				break;					
+				break;
 			case RPT_STOCK: // TBD field to compare so default to nothing
 			case RPT_ASSEMBLY: // TBD field to compare so default to nothing
 			case RPT_ALL: // sql default anyway
@@ -464,9 +464,9 @@ function BuildPDF($ReportID, $Prefs) {
 
 	// We now have the sql, find out how many groups in the query (to determine the number of forms)
 	$PageBreakField = $Prefs['GroupListings'][0]['fieldname'];
-	$sql = 'SELECT '.$PageBreakField.' FROM '.$sqlTable;
+	$sql = "SELECT ".$PageBreakField." FROM ".$sqlTable;
 	if ($sqlCrit) $sql .=' WHERE '.$sqlCrit;
-	$sql .=' GROUP BY '.$PageBreakField;
+	$sql .=" GROUP BY ".$PageBreakField;
 	// execute sql to see if we have data
 	$Result=DB_query($sql,$db,'','',false,true);
 	if (DB_num_rows($Result)==0) {
@@ -482,7 +482,7 @@ function BuildPDF($ReportID, $Prefs) {
 	foreach ($FieldListings as $OneField) { // check for a data field and build sql field list
 		if ($OneField['params']['index']=='CDta') { // then it's data field make sure it's not empty
 			if ($OneField['params']['DataField']<>'') {
-				$strTxtBlk .= $OneField['params']['DataField'].', '; 
+				$strTxtBlk .= $OneField['params']['DataField'].', ';
 			} else { // the field is empty, bad news, error and exit
 				$usrMsg['message'] = RPT_EMPTYFIELD.$OneField['seqnum'];
 				$usrMsg['level'] = 'error';
@@ -491,7 +491,7 @@ function BuildPDF($ReportID, $Prefs) {
 		}
 	}
 	if ($strTxtBlk<>'') { // then we have data, fill in TextField value with data
-		$strTxtBlk = substr($strTxtBlk,0,-2); 
+		$strTxtBlk = substr($strTxtBlk,0,-2);
 		$sql = "SELECT ".$strTxtBlk." FROM ".CompanyDataBase." LIMIT 1;";
 		$Result=DB_query($sql,$db,'','',false,true);
 		$CoyData = DB_fetch_row($Result);
@@ -512,8 +512,8 @@ function BuildPDF($ReportID, $Prefs) {
 				return $usrMsg;
 			}
 			$strTxtBlk=''; // Build the fieldlist
-			foreach ($SingleObject['params']['Seq'] as $OneField) $strTxtBlk .= $OneField['TblField'].', '; 
-			$strTxtBlk = substr($strTxtBlk,0,-2); 
+			foreach ($SingleObject['params']['Seq'] as $OneField) $strTxtBlk .= $OneField['TblField'].', ';
+			$strTxtBlk = substr($strTxtBlk,0,-2);
 			$sql = "SELECT ".$strTxtBlk." FROM ".CompanyDataBase." LIMIT 1;";
 			$Result=DB_query($sql,$db,'','',false,true);
 			$TxtBlkValues = DB_fetch_row($Result);
@@ -540,8 +540,8 @@ function BuildPDF($ReportID, $Prefs) {
 					return $usrMsg;
 				}
 				$strTxtBlk=''; // Build the fieldlist
-				foreach ($SingleObject['params']['Seq'] as $OneField) $strTxtBlk .= $OneField['TblField'].', '; 
-				$strTxtBlk = substr($strTxtBlk,0,-2); 
+				foreach ($SingleObject['params']['Seq'] as $OneField) $strTxtBlk .= $OneField['TblField'].', ';
+				$strTxtBlk = substr($strTxtBlk,0,-2);
 				$sql = "SELECT ".$strTxtBlk.$TrailingSQL;
 				$Result=DB_query($sql,$db,'','',false,true);
 				$TxtBlkValues = DB_fetch_row($Result);
@@ -554,7 +554,7 @@ function BuildPDF($ReportID, $Prefs) {
 		$pdf->AddPage();
 		// Pre-load all total fields with 'Continued' label for multipage
 		foreach ($FieldListings as $key=>$SingleObject) {
-			if ($SingleObject['params']['index']=='Ttl') 
+			if ($SingleObject['params']['index']=='Ttl')
 				$FieldListings[$key]['params']['TextField'] = 'Continued';
 		}
 		// Send the table

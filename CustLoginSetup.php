@@ -235,7 +235,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The demonstration user called demo cannot be deleted'),'error');
 	} else {
 	*/
-		$sql='SELECT userid FROM audittrail where userid="'. $SelectedUser .'"';
+		$sql="SELECT userid FROM audittrail where userid='". $SelectedUser ."'";
 		$result=DB_query($sql, $db);
 		if (DB_num_rows($result)!=0) {
 			prnMsg(_('Cannot delete user as entries already exist in the audit trail'), 'warn');

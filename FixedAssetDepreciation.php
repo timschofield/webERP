@@ -40,7 +40,7 @@ if ($LastDepnRun[1]==0 AND $LastDepnRun[0]==NULL) { //then depn has never been r
 
 
 /* Get list of assets for journal */
-$sql='SELECT fixedassets.assetid,
+$sql="SELECT fixedassets.assetid,
 						fixedassets.description,
 						fixedassets.depntype,
 						fixedassets.depnrate,
@@ -48,14 +48,14 @@ $sql='SELECT fixedassets.assetid,
 						fixedassetcategories.accumdepnact,
 						fixedassetcategories.depnact,
 						fixedassetcategories.categorydescription,
-						SUM(CASE WHEN fixedassettrans.fixedassettranstype="cost" THEN fixedassettrans.amount ELSE 0 END) AS costtotal,
-						SUM(CASE WHEN fixedassettrans.fixedassettranstype="depn" THEN fixedassettrans.amount ELSE 0 END) AS depnbfwd
+						SUM(CASE WHEN fixedassettrans.fixedassettranstype='cost' THEN fixedassettrans.amount ELSE 0 END) AS costtotal,
+						SUM(CASE WHEN fixedassettrans.fixedassettranstype='depn' THEN fixedassettrans.amount ELSE 0 END) AS depnbfwd
 			FROM fixedassets
 			INNER JOIN fixedassetcategories
 				ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
 			INNER JOIN fixedassettrans
 				ON fixedassets.assetid=fixedassettrans.assetid
-			WHERE fixedassettrans.transdate<="' . FormatDateForSQL($_POST['ProcessDate']) . '"
+			WHERE fixedassettrans.transdate<='" . FormatDateForSQL($_POST['ProcessDate']) . "'
 			GROUP BY fixedassets.assetid,
 						fixedassets.description,
 						fixedassets.depntype,
@@ -64,7 +64,7 @@ $sql='SELECT fixedassets.assetid,
 						fixedassetcategories.accumdepnact,
 						fixedassetcategories.depnact,
 						fixedassetcategories.categorydescription
-			ORDER BY assetcategoryid, assetid';
+			ORDER BY assetcategoryid, assetid";
 $AssetsResult=DB_query($sql, $db);
 
 $InputError = false; //always hope for the best

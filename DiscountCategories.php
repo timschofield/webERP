@@ -127,12 +127,12 @@ if (isset($_POST['selectchoice'])) {
 
 		if (isset($_POST['search'])) {
 			if ($_POST['PartID']!='' and $_POST['PartDesc']=='')
-				$sql='SELECT stockid, description FROM stockmaster WHERE stockid LIKE"%'.$_POST['PartID'].'%"';
+				$sql="SELECT stockid, description FROM stockmaster WHERE stockid LIKE '%".$_POST['PartID']."%'";
 			if ($_POST['PartID']=='' and $_POST['PartDesc']!='')
-				$sql='SELECT stockid, description FROM stockmaster WHERE description LIKE"%'.$_POST['PartDesc'].'%"';
+				$sql="SELECT stockid, description FROM stockmaster WHERE description LIKE '%".$_POST['PartDesc']."%'";
 			if ($_POST['PartID']!='' and $_POST['PartDesc']!='')
-				$sql='SELECT stockid, description FROM stockmaster WHERE stockid LIKE"%'.$_POST['PartID'].'%" and
-				 description LIKE"%'.$_POST['PartDesc'].'%"';
+				$sql="SELECT stockid, description FROM stockmaster WHERE stockid LIKE '%".$_POST['PartID']."%' and
+				 description LIKE '%".$_POST['PartDesc']."%'";
 			$result=DB_query($sql,$db);
 			if (!isset($_POST['stockID'])) {
 				echo _('Select a part code').':<br>';

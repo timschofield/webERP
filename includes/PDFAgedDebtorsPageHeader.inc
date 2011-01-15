@@ -18,7 +18,8 @@ $numHeads=2;
 $HeadingLine1 = _('Aged Customer Balances For Customers from') . ' ' . $_POST['FromCriteria'] . ' ' .  _('to') . ' ' . $_POST['ToCriteria'];
 $HeadingLine2 = _('And Trading in') . ' ' . $_POST['Currency'];
 if (trim($_POST['Salesman'])!=''){
-	$SQL = 'SELECT salesmanname FROM salesman WHERE salesmancode="'.$_POST['Salesman'].'"';	$rs = DB_query($SQL,$db,'','',False,False);
+	$SQL = "SELECT salesmanname FROM salesman WHERE salesmancode='".$_POST['Salesman']."'";
+	$rs = DB_query($SQL,$db,'','',False,False);
 	$row = DB_fetch_array($rs,$db);
 	$HeadingLine3 = _('And Has at Least 1 Branch Serviced By Sales Person #'). ' '. $_POST['Salesman'] . ' - ' . $row['salesmanname'];
 	$numHeads++;

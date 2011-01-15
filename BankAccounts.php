@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
 
 		/*Check if there are already transactions against this account - cant allow change currency if there are*/
 
-		$sql = 'SELECT * FROM banktrans WHERE bankact=' . $SelectedBankAccount;
+		$sql = "SELECT * FROM banktrans WHERE bankact='" . $SelectedBankAccount . "'";
 		$BankTransResult = DB_query($sql,$db);
 		if (DB_num_rows($BankTransResult)>0) {
 			$sql = "UPDATE bankaccounts
@@ -355,7 +355,7 @@ if (!isset($_POST['DefAccount']) OR $_POST['DefAccount']==''){
 }
 
 if (isset($SelectedBankAccount)) {
-	$result = DB_query('SELECT invoice FROM bankaccounts where accountcode =' . $SelectedBankAccount ,$db);
+	$result = DB_query("SELECT invoice FROM bankaccounts where accountcode ='" . $SelectedBankAccount  ."'",$db);
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['invoice']== 1) {
 			echo '<option selected VALUE=1>'._('Yes').'</option><option value=0>'._('No').'</option>';

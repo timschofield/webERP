@@ -51,18 +51,18 @@ if (isset($_POST['PrintPDF'])) {
 	// those parts into tempbom
 
 	// This finds the top level
-	$sql = 'INSERT INTO passbom (part, extendedqpa, sortpart)
+	$sql = "INSERT INTO passbom (part, extendedqpa, sortpart)
 			   SELECT bom.component AS part,
-					  (' . $_POST['Quantity'] . ' * bom.quantity) as extendedqpa,
+					  (" . $_POST['Quantity'] . " * bom.quantity) as extendedqpa,
 					   CONCAT(bom.parent,bom.component) AS sortpart
 					  FROM bom
-			  WHERE bom.parent =' . "'" . $_POST['Part'] . "'
+			  WHERE bom.parent =" . "'" . $_POST['Part'] . "'
 			  AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()";
 	$result = DB_query($sql,$db);
 
 	$levelctr = 2;
 	// $levelctr is the level counter
-	$sql = 'INSERT INTO tempbom (
+	$sql = "INSERT INTO tempbom (
 				parent,
 				component,
 				sortpart,
@@ -74,15 +74,15 @@ if (isset($_POST['PrintPDF'])) {
 				quantity)
 			  SELECT bom.parent,
 					 bom.component,
-					 CONCAT(bom.parent,bom.component) AS sortpart,'
-					 . $levelctr . ' as level,
+					 CONCAT(bom.parent,bom.component) AS sortpart,"
+					 . $levelctr . " as level,
 					 bom.workcentreadded,
 					 bom.loccode,
 					 bom.effectiveafter,
 					 bom.effectiveto,
-					 (' . $_POST['Quantity'] . ' * bom.quantity) as extendedqpa
+					 (" . $_POST['Quantity'] . " * bom.quantity) as extendedqpa
 					 FROM bom
-			  WHERE bom.parent =' . "'" . $_POST['Part'] . "'
+			  WHERE bom.parent =" . "'" . $_POST['Part'] . "'
 			  AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()";
 	$result = DB_query($sql,$db);
 	//echo "</br>sql is $sql</br>";
@@ -166,9 +166,9 @@ if (isset($_POST['PrintPDF'])) {
 
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 	                   $Right_Margin);
-    $sql = 'SELECT stockmaster.stockid,stockmaster.description
+    $sql = "SELECT stockmaster.stockid,stockmaster.description
               FROM stockmaster
-              WHERE stockid = ' . "'" . $_POST['Part'] . "'";
+              WHERE stockid = " . "'" . $_POST['Part'] . "'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_array($result,$db);
 	$assembly = $_POST['Part'];

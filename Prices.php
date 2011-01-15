@@ -324,7 +324,7 @@ if ($InputError ==0){
 	}
 
 	if (!isset($_POST['EndDate'])){
-		$_POST['EndDate'] = DateAdd(date($_SESSION['DefaultDateFormat']),'y',1);
+		$_POST['EndDate'] = DateAdd(date($_SESSION['DefaultDateFormat']),'y',3);
 	}
 	echo '<tr><td>' . _('Price Effective From Date')  . ':</td>
 				<td><input type="Text" class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" size=10 maxlength=10 value="' . $_POST['StartDate'] . '"></td></tr>';

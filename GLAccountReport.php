@@ -104,12 +104,12 @@ if (isset($_POST['RunReport'])){
 		if ($PandLAccount==True) {
 			$RunningTotal = 0;
 		} else {
-			$sql = 'SELECT bfwd,
+			$sql = "SELECT bfwd,
 					actual,
 					period
 				FROM chartdetails
-				WHERE chartdetails.accountcode=' .  $SelectedAccount .
-				' AND chartdetails.period=' . $FirstPeriodSelected;
+				WHERE chartdetails.accountcode='" .  $SelectedAccount .
+				"' AND chartdetails.period='" . $FirstPeriodSelected . "'";
 
 			$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
 			$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
@@ -136,12 +136,12 @@ if (isset($_POST['RunReport'])){
 			if ($myrow['periodno']!=$PeriodNo){
 				if ($PeriodNo!=-9999){ //ie its not the first time around
 					/*Get the ChartDetails balance b/fwd and the actual movement in the account for the period as recorded in the chart details - need to ensure integrity of transactions to the chart detail movements. Also, for a balance sheet account it is the balance carried forward that is important, not just the transactions*/
-					$sql = 'SELECT bfwd,
+					$sql = "SELECT bfwd,
 							actual,
 							period
 						FROM chartdetails
-						WHERE chartdetails.accountcode=' . $SelectedAccount .
-						' AND chartdetails.period=' . $PeriodNo;
+						WHERE chartdetails.accountcode='" . $SelectedAccount .
+						"' AND chartdetails.period='" . $PeriodNo . "'";
 
 					$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
 					$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
@@ -171,7 +171,7 @@ if (isset($_POST['RunReport'])){
 
 			$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
 
-			$tagsql='SELECT tagdescription FROM tags WHERE tagref='.$myrow['tag'];
+			$tagsql="SELECT tagdescription FROM tags WHERE tagref='".$myrow['tag'] . "'";
 			$tagresult=DB_query($tagsql,$db);
 			$tagrow = DB_fetch_array($tagresult);
 
@@ -264,7 +264,7 @@ if (isset($_POST['RunReport'])){
 		        <tr>
 		         <td>'._('Selected Accounts') . ':</td>
 		         <td><select name="Account[]" multiple>';
-	$sql = 'SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode';
+	$sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 	$AccountsResult = DB_query($sql,$db);
 	$i=0;
 	while ($myrow=DB_fetch_array($AccountsResult,$db)){
@@ -279,7 +279,7 @@ if (isset($_POST['RunReport'])){
 
 	echo '<td>'._('For Period range').':</td>
 			<td><select Name=Period[] multiple>';
-	$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
+	$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 	$Periods = DB_query($sql,$db);
 	$id=0;
 
@@ -296,10 +296,10 @@ if (isset($_POST['RunReport'])){
 	//Select the tag
 	echo '<tr><td>' . _('Select Tag') . ':</td><td><select name="tag">';
 
-	$SQL = 'SELECT tagref,
+	$SQL = "SELECT tagref,
 		       tagdescription
 		FROM tags
-		ORDER BY tagref';
+		ORDER BY tagref";
 
 	$result=DB_query($SQL,$db);
 	echo '<option value=0>0 - '._('All tags');

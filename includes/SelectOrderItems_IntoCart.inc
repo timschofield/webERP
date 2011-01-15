@@ -77,7 +77,7 @@ if ($AlreadyOnThisOrder!=1){
 
 		   	if ($_SESSION['ExistingOrder']!=0){
 				$UpdateDB = 'Yes';
-				$result = DB_query('SELECT MAX(orderlineno) AS newlineno FROM  salesorderdetails WHERE orderno=' . $_SESSION['ExistingOrder'],$db);
+				$result = DB_query("SELECT MAX(orderlineno) AS newlineno FROM  salesorderdetails WHERE orderno='" . $_SESSION['ExistingOrder'] . "'",$db);
 				$MaxNumRow = DB_fetch_row($result);
 				if ($MaxNumRow[0] != "" && $MaxNumRow[0] > 0) {
 					$NewLineNo = $MaxNumRow[0]+1;
@@ -155,8 +155,8 @@ if ($AlreadyOnThisOrder!=1){
 															$myItemRow['standardcost'],
 															$myItemRow['eoq'],
 															$myItemRow['nextserialno'],
-															$ExRate);															
-				
+															$ExRate);
+
 			}
          } else {
 			prnMsg(_('The item code') . ' ' . $NewItem . ' ' . _('does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered'),'warn');
