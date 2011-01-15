@@ -69,9 +69,9 @@ if (isset($_POST['UpdateSalesAnalysis']) AND $_POST['PeriodNo']!=0){
 			$Cost = $ItemsToUpdate['standardcost'];
 		}
 
-		$SQL = 'UPDATE salesanalysis SET cost = (qty * ' . $Cost . ")
+		$SQL = "UPDATE salesanalysis SET cost = (qty * " . $Cost . ")
 				WHERE stockid='" . $ItemsToUpdate['stockid'] . "'
-				AND periodno =" . $_POST['PeriodNo'];
+				AND periodno ='" . $_POST['PeriodNo'] . "'";
 
 		$ErrMsg = _('Could not update the sales analysis records for') . ' ' . $ItemsToUpdate['stockid'] . ' ' . _('because');
 		$UpdResult = DB_query($SQL,$db,$ErrMsg);

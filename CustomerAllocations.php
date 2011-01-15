@@ -88,7 +88,7 @@ if (isset($_POST['UpdateDatabase'])) {
 		foreach ($_SESSION['Alloc']->Allocs as $AllocnItem) {
 			if ($AllocnItem->PrevAllocRecordID != 'NA') {
 			// original allocation has changed so delete the old allocation record
-				$SQL = 'DELETE FROM custallocns WHERE id = ' . $AllocnItem->PrevAllocRecordID;
+				$SQL = "DELETE FROM custallocns WHERE id = '" . $AllocnItem->PrevAllocRecordID . "'";
 				if( !$Result = DB_query($SQL,$db) ) {
 					$error = 'Could not delete old allocation record';
 				}

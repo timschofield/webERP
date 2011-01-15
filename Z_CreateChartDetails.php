@@ -74,10 +74,10 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 			} else {
 				$BFwd +=$myrow['actual'];
 				$BFwdBudget += $myrow['budget'];
-				$sql = 'UPDATE chartdetails SET bfwd =' . $BFwd . ',
-							bfwdbudget =' . $BFwdBudget . '
-					WHERE accountcode = ' . $AccountRow['accountcode'] . '
-					AND period =' . $myrow['period']+1;
+				$sql = "UPDATE chartdetails SET bfwd ='" . $BFwd . "',
+							bfwdbudget ='" . $BFwdBudget . "'
+					WHERE accountcode = '" . $AccountRow['accountcode'] . "'
+					AND period ='" . $myrow['period']+1 . "'";
 
 				$UpdChartDetails = DB_query($sql,$db, '', '', '', false);
 			}

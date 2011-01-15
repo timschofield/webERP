@@ -8,7 +8,7 @@ include ('includes/session.inc');
 $title = _('Recalculation of GL Balances in Chart Details Table');
 include('includes/header.inc');
 
-echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['FromPeriod'])){

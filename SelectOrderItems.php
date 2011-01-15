@@ -706,7 +706,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$ErrMsg =_('The order detail lines could not be deleted because');
 				$DelResult=DB_query($SQL,$db,$ErrMsg);
 
-				$SQL = 'DELETE FROM salesorders WHERE salesorders.orderno=' . $_SESSION['ExistingOrder'];
+				$SQL = "DELETE FROM salesorders WHERE salesorders.orderno='" . $_SESSION['ExistingOrder'] . "'";
 				$ErrMsg = _('The order header could not be deleted because');
 				$DelResult=DB_query($SQL,$db,$ErrMsg);
 
@@ -989,38 +989,38 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			/*First need to create a stock ID to hold the asset and record the sale - as only stock items can be sold 
 			 * 		and before that we need to add a disposal stock category - if not already created 
 			 * 		first off get the details about the asset being disposed of */
-			 $AssetDetailsResult = DB_query('SELECT  fixedassets.description,
+			 $AssetDetailsResult = DB_query("SELECT  fixedassets.description,
 																							fixedassets.longdescription,
 																							fixedassets.barcode,
 																							fixedassetcategories.costact,
 																							fixedassets.cost-fixedassets.accumdepn AS nbv
 																					FROM fixedassetcategories INNER JOIN fixedassets
 																					ON fixedassetcategories.categoryid=fixedassets.assetcategoryid
-																					WHERE fixedassets.assetid="' . $_POST['AssetToDisposeOf'] . '"',$db);
+																					WHERE fixedassets.assetid='" . $_POST['AssetToDisposeOf'] . "'",$db);
 			$AssetRow = DB_fetch_array($AssetDetailsResult);
 			
 			/* Check that the stock category for disposal "ASSETS" is defined already */
-			$AssetCategoryResult = DB_query('SELECT categoryid FROM stockcategory WHERE categoryid="ASSETS"',$db);
+			$AssetCategoryResult = DB_query("SELECT categoryid FROM stockcategory WHERE categoryid='ASSETS'",$db);
 			if (DB_num_rows($AssetCategoryResult)==0){
 				/*Although asset GL posting will come from the asset category - we should set the GL codes to something sensible 
 				 * based on the category of the asset under review at the moment - this may well change for any other assets sold subsequentely */
 				 
 				/*OK now we can insert the stock category for this asset */
-				$InsertAssetStockCatResult = DB_query('INSERT INTO stockcategory ( categoryid,
+				$InsertAssetStockCatResult = DB_query("INSERT INTO stockcategory ( categoryid,
 																															categorydescription,
 																															stockact)
-																						VALUES ("ASSETS",
-																										"' . _('Asset Disposals') . '",
-																										"' . $AssetRow['costact'] . '")',$db);
+																						VALUES ('ASSETS',
+																										'" . _('Asset Disposals') . "',
+																										'" . $AssetRow['costact'] . "')",$db);
 			} 
 			
 			/*First check to see that it doesn't exist already assets are of the format "ASSET-" . $AssetID
 			 */
-			 $TestAssetExistsAlreadyResult = DB_query('SELECT stockid FROM stockmaster WHERE stockid ="ASSET-' . $_POST['AssetToDisposeOf']  . '"',$db);
+			 $TestAssetExistsAlreadyResult = DB_query("SELECT stockid FROM stockmaster WHERE stockid ='ASSET-" . $_POST['AssetToDisposeOf']  . "'",$db);
 			 $j=0;
 			while (DB_num_rows($TestAssetExistsAlreadyResult)==1) { //then it exists already ... bum
 				$j++;
-				$TestAssetExistsAlreadyResult = DB_query('SELECT stockid FROM stockmaster WHERE stockid ="ASSET-' . $_POST['AssetToDisposeOf']  . '-' . $j . '"',$db);
+				$TestAssetExistsAlreadyResult = DB_query("SELECT stockid FROM stockmaster WHERE stockid ='ASSET-" . $_POST['AssetToDisposeOf']  . '-' . $j . "'",$db);
 			}
 			if ($j>0){
 				$AssetStockID = 'ASSET-' . $_POST['AssetToDisposeOf']  . '-' . $j;
@@ -1033,7 +1033,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$NBV = $AssetRow['nbv'];
 			}
 			/*OK now we can insert the item for this asset */
-			$InsertAssetAsStockItemResult = DB_query('INSERT INTO stockmaster ( stockid,
+			$InsertAssetAsStockItemResult = DB_query("INSERT INTO stockmaster ( stockid,
 																																				description,
 																																				longdescription,
 																																				categoryid,
@@ -1042,21 +1042,21 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 																																				serialised,
 																																				taxcatid,
 																																				materialcost)
-																										VALUES ("' . $AssetStockID . '",
-																														"' . $AssetRow['description'] . '",
-																														"' . $AssetRow['longdescription'] . '",
-																														"ASSETS",
-																														"D",
-																														"0",
-																														"0",
-																														"' . $_SESSION['DefaultTaxCategory'] . '",
-																														"'. $NBV . '")' , $db);
+																										VALUES ('" . $AssetStockID . "',
+																														'" . $AssetRow['description'] . "',
+																														'" . $AssetRow['longdescription'] . "',
+																														'ASSETS',
+																														'D',
+																														'0',
+																														'0',
+																														'" . $_SESSION['DefaultTaxCategory'] . "',
+																														'". $NBV . "')" , $db);
 			/*not forgetting the location records too */
-			$InsertStkLocRecsResult = DB_query('INSERT INTO locstock (loccode,
+			$InsertStkLocRecsResult = DB_query("INSERT INTO locstock (loccode,
 																															stockid)
 																									SELECT loccode, 
-																												"' . $AssetStockID . '" 
-																									FROM locations',$db);
+																												'" . $AssetStockID . "' 
+																									FROM locations",$db);
 			/*Now the asset has been added to the stock master we can add it to the sales order */
 			$NewItemDue = date($_SESSION['DefaultDateFormat']);
 			if (isset($_POST['POLine'])){

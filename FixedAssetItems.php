@@ -369,6 +369,7 @@ if (isset($_POST['submit'])) {
 
 	} //end if OK Delete Asset
 } /* end if delete asset */
+$result = DB_Txn_Commit($db);
 
 echo '<form name="AssetForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '?' .SID .
 	'"><table class=selection>';
@@ -382,6 +383,15 @@ if (!isset($AssetID) or $AssetID=='') {
 	$New = 1;
 	echo '<input type="hidden" name="New" value="">'. "\n";
 
+	$_POST['LongDescription'] = '';
+	$_POST['Description'] = '';
+	$_POST['AssetCategoryID']  = '';
+	$_POST['SerialNo']  = '';
+	$_POST['AssetLocation']  = '';
+	$_POST['DepnType']  = '';
+	$_POST['BarCode']  = '';
+	$_POST['DepnRate']  = 0;
+
 } elseif ($InputError!=1) { // Must be modifying an existing item and no changes made yet - need to lookup the details
 
 	$sql = "SELECT assetid,
@@ -394,7 +404,8 @@ if (!isset($AssetID) or $AssetID=='') {
 					depntype,
 					depnrate,
 					cost,
-					accumdepn
+					accumdepn,
+					barcode
 		FROM fixedassets
 		WHERE assetid ='" . $AssetID . "'";
 
@@ -482,7 +493,7 @@ if (!isset($_POST['AssetCategoryID'])) {
 	$_POST['AssetCategoryID']=$category;
 }
 
-if ($AssetRow['datepurchased']!='0000-00-00' AND $AssetRow['datepurchased']!=''){
+if (isset($AssetRow) AND ($AssetRow['datepurchased']!='0000-00-00' AND $AssetRow['datepurchased']!='')){
 	echo '<tr><td>' . _('Date Purchased') . ':</td><td>' . ConvertSQLDate($AssetRow['datepurchased']) . '</td></tr>';
 }
 
@@ -501,7 +512,7 @@ while ($myrow=DB_fetch_array($result)){
 }
 echo '</select></td></tr>';
 
-echo '<tr><td>' . _('Bar Code') . ':</td><td><input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="Text" name="BarCode" size=22 maxlength=20 value="' . $BarCode . '"></td></tr>';
+echo '<tr><td>' . _('Bar Code') . ':</td><td><input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="Text" name="BarCode" size=22 maxlength=20 value="' . $_POST['BarCode'] . '"></td></tr>';
 
 echo '<tr><td>' . _('Serial Number') . ':</td><td><input ' . (in_array('SerialNo',$Errors) ?  'class="inputerror"' : '' ) .'  type="Text" name="SerialNo" size=32 maxlength=30 value="' . $_POST['SerialNo'] . '"></td></tr>';
 

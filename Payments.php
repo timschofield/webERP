@@ -284,7 +284,7 @@ if (isset($_POST['CommitBatch'])){
 					 payment currenct amount  / the bank account currency exchange rate  - to get to the bank account currency
 					 then / the functional currency exchange rate to get to the functional currency */
 					if ($PaymentItem->cheque=='') $PaymentItem->cheque=0;
-					$SQL = 'INSERT INTO gltrans (type,
+					$SQL = "INSERT INTO gltrans (type,
 								typeno,
 								trandate,
 								periodno,
@@ -292,8 +292,8 @@ if (isset($_POST['CommitBatch'])){
 								narrative,
 								amount,
 								chequeno,
-								tag) ';
-				 	$SQL= $SQL . "valueS (1,
+								tag) ";
+				 	$SQL= $SQL . "values (1,
 						'" . $TransNo . "',
 						'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 						'" . $PeriodNo . "',

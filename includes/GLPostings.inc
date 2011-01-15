@@ -69,7 +69,7 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 					LEFT JOIN chartdetails ON chartmaster.accountcode = chartdetails.accountcode
 					AND periods.periodno = chartdetails.period
 					WHERE (periods.periodno BETWEEN '"  . $CreateFrom . "' AND '" . $CreateTo . "')
-					AND chartdetails.accountcode IS NULL'";
+					AND chartdetails.accountcode IS NULL";
 
 		$ErrMsg = _('Inserting new chart details records required failed because');
 		$InsChartDetailsRecords = DB_query($sql,$db,$ErrMsg);
@@ -98,14 +98,14 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 	while ($UnpostedTrans=DB_fetch_array($UnpostedTransResult)){
 		if($CurrentAccount != $UnpostedTrans['account']) {
 			if($CurrentAccount != 0) {
-				$sql = 'UPDATE chartdetails SET actual = actual + ' . $TotalAmount . '
-					WHERE accountcode = ' . $CurrentAccount . '
-					AND period= ' . $CurrPeriod;
+				$sql = "UPDATE chartdetails SET actual = actual + " . $TotalAmount . "
+					WHERE accountcode = '" . $CurrentAccount . "'
+					AND period= '" . $CurrPeriod . "'";
 				$PostPrd = DB_query($sql,$db);
 				/*Update the BFwd for all following ChartDetail records */
-				$sql = 'UPDATE chartdetails SET bfwd = bfwd + ' . $TotalAmount . '
-					WHERE accountcode = ' . $CurrentAccount . '
-					AND period > ' . $CurrPeriod;
+				$sql = "UPDATE chartdetails SET bfwd = bfwd + " . $TotalAmount . "
+					WHERE accountcode = '" . $CurrentAccount . "'
+					AND period > '" . $CurrPeriod . "'";
 				$PostBFwds = DB_query($sql,$db);
 			}
 			$TotalAmount = 0;
@@ -113,19 +113,19 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 		}
 		$TotalAmount = $TotalAmount + $UnpostedTrans['amount'];
 		/*Update the Actual charge in the period of the transaction */
-		$sql = 'UPDATE gltrans SET posted = 1 WHERE counterindex = ' . $UnpostedTrans['counterindex'];
+		$sql = "UPDATE gltrans SET posted = 1 WHERE counterindex = '" . $UnpostedTrans['counterindex'] . "'";
 		$Posted = DB_query($sql,$db);
 	}
 	// There will be one chartdetail update outstanding if we processed anything
 	if($CurrentAccount != 0) {
-		$sql = 'UPDATE chartdetails SET actual = actual + ' . $TotalAmount . '
-			WHERE accountcode = ' . $CurrentAccount . '
-			AND period= ' . $CurrPeriod;
+		$sql = "UPDATE chartdetails SET actual = actual + " . $TotalAmount . "
+			WHERE accountcode = '" . $CurrentAccount . "'
+			AND period= '" . $CurrPeriod . "'";
 		$PostPrd = DB_query($sql,$db);
 		/*Update the BFwd for all following ChartDetail records */
-		$sql = 'UPDATE chartdetails SET bfwd = bfwd + ' . $TotalAmount . '
-			WHERE accountcode = ' . $CurrentAccount . '
-			AND period > ' . $CurrPeriod;
+		$sql = "UPDATE chartdetails SET bfwd = bfwd + " . $TotalAmount . "
+			WHERE accountcode = '" . $CurrentAccount . "'
+			AND period > '" . $CurrPeriod . "'";
 		$PostBFwds = DB_query($sql,$db);
 	}
 	$TransCommit = DB_Txn_Commit($db);
@@ -142,17 +142,17 @@ $UnpostedTransResult = DB_query($sql, $db);
 $TransStart = DB_Txn_Begin($db);
 
 while ($UnpostedTrans=DB_fetch_array($UnpostedTransResult)){
-	$sql = 'UPDATE chartdetails SET actual = actual + ' . $UnpostedTrans['amount'] . '
+	$sql = "UPDATE chartdetails SET actual = actual + ' . $UnpostedTrans['amount'] . '
 		WHERE accountcode = ' . $UnpostedTrans['account'] . '
 		AND period= ' . $UnpostedTrans['periodno'];
 	$PostPrd = DB_query($sql,$db);
 
-	$sql = 'UPDATE chartdetails SET bfwd = bfwd + ' . $UnpostedTrans['amount'] . '
+	$sql = "UPDATE chartdetails SET bfwd = bfwd + ' . $UnpostedTrans['amount'] . '
 			WHERE accountcode = ' . $UnpostedTrans['account'] . '
 			AND period > ' . $UnpostedTrans['periodno'];
 	$PostBFwds = DB_query($sql,$db);
 
-	$sql = 'UPDATE gltrans SET posted = 1 WHERE counterindex = ' . $UnpostedTrans['counterindex'];
+	$sql = "UPDATE gltrans SET posted = 1 WHERE counterindex = ' . $UnpostedTrans['counterindex'];
 	$Posted = DB_query($sql,$db);
 
 }
@@ -187,10 +187,10 @@ if (DB_num_rows($ChartDetailsNotSetUpResult)>0){
 			if ($myrow['period'] < $CreateTo) {
 				$BFwd +=$myrow['actual'];
 				$BFwdBudget += $myrow['budget'];
-				$sql = 'UPDATE chartdetails SET bfwd =' . $BFwd . ',
-							bfwdbudget =' . $BFwdBudget . '
-					WHERE accountcode = ' . $AccountRow['accountcode'] . '
-					AND period =' . $myrow['period']+1;
+				$sql = "UPDATE chartdetails SET bfwd ='" . $BFwd . "',
+							bfwdbudget ='" . $BFwdBudget . "'
+					WHERE accountcode = '" . $AccountRow['accountcode'] . "'
+					AND period ='" . $myrow['period']+1 . "'";
 
 				$UpdChartDetails = DB_query($sql,$db, '', '', '', false);
 			}

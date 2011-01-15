@@ -254,13 +254,13 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 		if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
 			$LinesToShow=DB_num_rows($lineresult);
 			$PickingListNo = GetNextTransNo(19, $db);
-			$sql='INSERT INTO pickinglists
-				VALUES ('.
-				$PickingListNo .','.
-				$OrdersToPick[$i]['orderno'].',"'.
-				FormatDateForSQL($_POST['TransDate']).'","'.
-				date('Y-m-d').'",
-				"0000-00-00")';
+			$sql="INSERT INTO pickinglists
+				VALUES (
+				'" . $PickingListNo ."',
+				'" . $OrdersToPick[$i]['orderno']."',
+				'" . FormatDateForSQL($_POST['TransDate'])."',
+				'" . date('Y-m-d')."',
+				'0000-00-00')";
 			$headerresult=DB_query($sql, $db);
 		} else {
 			$LinesToShow=1;
@@ -287,12 +287,13 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 				$DisplayPrevDel = number_format($myrow2['qtyinvoiced'],2);
 				$DisplayQtySupplied = number_format($myrow2['quantity'] - $myrow2['qtyinvoiced']-$myrow2['qtyexpected']-$myrow2['qtypicked'],2);
 				$itemdesc = $myrow2['description'] . ' - ' . $myrow2['narrative'];
-				$sql='INSERT INTO pickinglistdetails
-					VALUES('.
-					$PickingListNo .','.
-					$Lines.','.
-					$myrow2['orderlineno'].','.
-					$DisplayQtySupplied.',0)';
+				$sql="INSERT INTO pickinglistdetails
+					VALUES(
+					'" . $PickingListNo ."',
+					'" . $Lines."',
+					'" . $myrow2['orderlineno']."',
+					'" . $DisplayQtySupplied."',
+					0)";
 					$lineresult=DB_query($sql, $db);
 			}
 			$ListCount ++;

@@ -718,15 +718,15 @@ then do the updates and inserts to process the credit note entered */
 
 			foreach ($_SESSION['SuppTrans']->Assets as $AssetAddition){
 				/* only the GL entries if the creditors->GL integration is enabled */
-				$SQL = 'INSERT INTO gltrans (type,
+				$SQL = "INSERT INTO gltrans (type,
 																	typeno,
 																	trandate,
 																	periodno,
 																	account,
 																	narrative,
 																	amount)
-													VALUES (21, ' .
-																	$CreditNoteNo . ",
+													VALUES (21, '" .
+																	$CreditNoteNo . "',
 																	'" . $SQLCreditNoteDate . "',
 																	'" . $PeriodNo . "',
 																	'". $AssetAddition->CostAct . "',

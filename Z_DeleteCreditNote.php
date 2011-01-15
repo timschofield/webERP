@@ -52,8 +52,8 @@ prnMsg(_('The number of stock movements to be deleted is') . ': ' . DB_num_rows(
 $Result = DB_Txn_Begin($db); /* commence a database transaction */
 /*Now delete the DebtorTrans */
 
-$SQL = 'DELETE FROM debtortrans
-               WHERE transno =' . $_GET['CreditNoteNo'] . ' AND Type=11';
+$SQL = "DELETE FROM debtortrans
+               WHERE transno ='" . $_GET['CreditNoteNo'] . "' AND Type=11";
 $DbgMsg = _('The SQL that failed was');
 $ErrMsg = _('A problem was encountered trying to delete the Debtor transaction record');
 $Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -62,8 +62,8 @@ $Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 foreach ($StockMovement as $CreditLine) {
 
-	$SQL = 'UPDATE salesorderdetails SET qtyinvoiced = qtyinvoiced - ' . $CreditLine['qty'] . '
-                       WHERE orderno = ' . $OrderNo . "
+	$SQL = "UPDATE salesorderdetails SET qtyinvoiced = qtyinvoiced - " . $CreditLine['qty'] . "
+                       WHERE orderno = '" . $OrderNo . "'
                        AND stkcode = '" . $CreditLine['stockid'] . "'";
 
 	$ErrMsg =_('A problem was encountered attempting to reverse the update the sales order detail record') . ' - ' . _('the SQL server returned the following error message');
@@ -71,7 +71,7 @@ foreach ($StockMovement as $CreditLine) {
 
 /*reverse the update to LocStock */
 
-	$SQL = 'UPDATE locstock SET locstock.quantity = locstock.quantity + ' . $CreditLine['qty'] . "
+	$SQL = "UPDATE locstock SET locstock.quantity = locstock.quantity + " . $CreditLine['qty'] . "
              WHERE  locstock.stockid = '" . $CreditLine['stockid'] . "'
              AND loccode = '" . $CreditLine['loccode'] . "'";
 
@@ -80,11 +80,11 @@ foreach ($StockMovement as $CreditLine) {
 	$Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg, true);
 
 /*Delete Sales Analysis records */
-	$SQL = 'DELETE FROM salesanalysis
-                       WHERE periodno = ' . $CreditLine['prd'] . "
+	$SQL = "DELETE FROM salesanalysis
+                       WHERE periodno = '" . $CreditLine['prd'] . "'
                        AND cust='" . $CreditLine['debtorno'] . "'
                        AND custbranch = '" . $CreditLine['branchcode'] . "'
-                       AND qty = " . $CreditLine['qty'] . "
+                       AND qty = '" . $CreditLine['qty'] . "'
                        AND stockid = '" . $CreditLine['stockid'] . "'";
 
 	$ErrMsg = _('The SQL to delete the sales analysis records with the message');
@@ -94,8 +94,8 @@ foreach ($StockMovement as $CreditLine) {
 
 /* Delete the stock movements  */
 
-$SQL = 'DELETE FROM stockmoves
-               WHERE type=11 AND transno = ' . $_GET['CreditNoteNo'];
+$SQL = "DELETE FROM stockmoves
+               WHERE type=11 AND transno = '" . $_GET['CreditNoteNo'] . "'";
 
 $ErrMsg = _('SQL to delete the stock movement record failed with the message');
 $Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);

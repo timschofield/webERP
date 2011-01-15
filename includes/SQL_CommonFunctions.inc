@@ -237,7 +237,7 @@ function UpdateCost($db, $item) {
 	while ($MyRow=DB_fetch_array($result)){
 		$NewParent = $MyRow['parent'];
 		$MaterialCost = BomMaterialCost($NewParent, $db);
-		$SQL = 'UPDATE stockmaster SET materialcost=' . $MaterialCost . " WHERE stockid='" . $NewParent . "'";
+		$SQL = "UPDATE stockmaster SET materialcost='" . $MaterialCost . "' WHERE stockid='" . $NewParent . "'";
 		$result1 = DB_query($SQL,$db);
 		if (DB_error_no($db)!=0) {
 			return 1;

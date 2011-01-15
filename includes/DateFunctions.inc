@@ -730,19 +730,22 @@ The default assumes no delivery on Sat and Sun*/
 }
 
 function CreatePeriod($PeriodNo, $PeriodEnd, &$db) {
-				$GetPrdSQL = 'INSERT INTO periods (periodno, lastdate_in_period) VALUES ('
-					. $PeriodNo . ", '" . Date('Y/m/d', $PeriodEnd) . "')";
+				$GetPrdSQL = "INSERT INTO periods (periodno,
+													lastdate_in_period)
+												VALUES (
+													'" . $PeriodNo . "',
+													'" . Date('Y-m-d', $PeriodEnd) . "')";
 				$ErrMsg = _('An error occurred in adding a new period number');
 				$GetPrdResult = DB_query($GetPrdSQL, $db, $ErrMsg);
 
 /*I don't think this is necessary since GLPostings.inc handles this
  *
-				$sql = 'INSERT INTO chartdetails (accountcode, period)
+				$sql = "INSERT INTO chartdetails (accountcode, period)
 						SELECT chartmaster.accountcode, periods.periodno
 							FROM chartmaster
 								CROSS  JOIN periods
 						WHERE ( chartmaster.accountcode, periods.periodno ) NOT
-							IN ( SELECT chartdetails.accountcode, chartdetails.period FROM chartdetails )';
+							IN ( SELECT chartdetails.accountcode, chartdetails.period FROM chartdetails )";
 
 //dont trap errors - chart details records created only as required - duplicate messages ignored
 				$InsNewChartDetails = DB_query($sql,$db,'','','',false);

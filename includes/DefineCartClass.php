@@ -215,17 +215,17 @@ Class Cart {
 			global $db;
 			if ($this->Some_Already_Delivered($LineNumber)==0){
 				/* nothing has been delivered, delete it. */
-				$result = DB_query('DELETE FROM salesorderdetails
-									WHERE orderno=' . $_SESSION['ExistingOrder'] . '
-									AND orderlineno=' . $LineNumber,
+				$result = DB_query("DELETE FROM salesorderdetails
+									WHERE orderno='" . $_SESSION['ExistingOrder'] . "'
+									AND orderlineno='" . $LineNumber . "'",
 									$db,
 									_('The order line could not be deleted because')
 									);
 				prnMsg( _('Deleted Line Number'). ' ' . $LineNumber . ' ' . _('from existing Order Number').' ' . $_SESSION['ExistingOrder'], 'success');
 			} else {
 				/* something has been delivered. Clear the remaining Qty and Mark Completed */
-				$result = DB_query('UPDATE salesorderdetails SET quantity=qtyinvoiced, completed=1
-									WHERE orderno='.$_SESSION['ExistingOrder'].' AND orderlineno=' . $LineNumber ,
+				$result = DB_query("UPDATE salesorderdetails SET quantity=qtyinvoiced, completed=1
+									WHERE orderno='".$_SESSION['ExistingOrder']."' AND orderlineno='" . $LineNumber . "'" ,
 									$db,
 								   _('The order line could not be updated as completed because')
 								   );

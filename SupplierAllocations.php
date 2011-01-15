@@ -121,7 +121,7 @@ if (isset($_POST['UpdateDatabase'])){
 			  /*Orignial allocation was not 0 and it has now changed
 			    need to delete the old allocation record */
 
-				     $SQL = 'DELETE FROM suppallocs WHERE id = ' . $AllocnItem->PrevAllocRecordID;
+				     $SQL = "DELETE FROM suppallocs WHERE id = '" . $AllocnItem->PrevAllocRecordID . "'";
 
 					  $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The existing allocation for') . ' ' . $AllocnItem->TransType .' ' . $AllocnItem->TypeNo . ' ' . _('could not be deleted because');
 					  $DbgMsg = _('The following SQL to delete the allocation record was used');

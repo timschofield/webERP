@@ -122,9 +122,9 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/s
 if (isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])){
 
 	if ($_GET['HoldStatus'] == _('Hold')){
-		$SQL = 'UPDATE supptrans SET hold=1 WHERE type=' . $_GET['HoldType'] . ' AND transno=' . $_GET['HoldTrans'];
+		$SQL = "UPDATE supptrans SET hold=1 WHERE type='" . $_GET['HoldType'] . "' AND transno='" . $_GET['HoldTrans'] . "'";
 	} elseif ($_GET['HoldStatus'] == _('Release')){
-		$SQL = 'UPDATE supptrans SET hold=0 WHERE type=' . $_GET['HoldType'] . ' AND transno=' . $_GET['HoldTrans'];
+		$SQL = "UPDATE supptrans SET hold=0 WHERE type='" . $_GET['HoldType'] . "' AND transno='" . $_GET['HoldTrans'] . "'";
 	}
 
 	$ErrMsg = _('The Supplier Transactions could not be updated because');

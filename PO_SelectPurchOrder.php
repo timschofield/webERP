@@ -259,7 +259,7 @@ else {
 											AND purchorders.supplierno = suppliers.supplierid
 											AND  purchorderdetails.itemcode='" . $SelectedStockItem . "'
 											AND purchorders.supplierno='" . $SelectedSupplier . "'
-											AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "' 
+											AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
 											" . $StatusCriteria . "
 											GROUP BY purchorders.orderno,
 												suppliers.suppname,
@@ -284,7 +284,7 @@ else {
 											WHERE purchorders.orderno = purchorderdetails.orderno
 											AND purchorders.supplierno = suppliers.supplierid
 											AND purchorders.supplierno='" . $SelectedSupplier . "'
-											AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "' 
+											AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
 											" . $StatusCriteria . "
 											GROUP BY purchorders.orderno,
 												suppliers.suppname,
@@ -311,7 +311,7 @@ else {
 											WHERE purchorders.orderno = purchorderdetails.orderno
 											AND purchorders.supplierno = suppliers.supplierid
 											AND purchorderdetails.itemcode='" . $SelectedStockItem . "'
-											AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "' 
+											AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
 											" . $StatusCriteria . "
 											GROUP BY purchorders.orderno,
 												suppliers.suppname,
@@ -335,7 +335,7 @@ else {
 												suppliers
 											WHERE purchorders.orderno = purchorderdetails.orderno
 											AND purchorders.supplierno = suppliers.supplierid
-											AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "' 
+											AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
 											" . $StatusCriteria . "
 											GROUP BY purchorders.orderno,
 												suppliers.suppname,

@@ -113,7 +113,7 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 		$myrow=DB_fetch_array($Result);
 		if ($myrow['taxontax']==1){
 			prnMsg(_('It is inappropriate to set tax on tax where the tax is the first in the calculation order. The system has changed it back to no tax on tax for this tax authority'),'warning');
-			$Result = DB_query('UPDATE taxgrouptaxes SET taxontax=0 WHERE taxgroupid=' . $SelectedGroup . ' AND taxauthid=' . $myrow['taxauthid'],$db);
+			$Result = DB_query("UPDATE taxgrouptaxes SET taxontax=0 WHERE taxgroupid='" . $SelectedGroup . "' AND taxauthid='" . $myrow['taxauthid'] . "'",$db);
 		}
 	}
 } elseif (isset($_GET['Delete'])) {

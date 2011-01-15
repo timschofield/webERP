@@ -543,7 +543,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 							$QualityText ='';
 						}
 						if ($AlreadyExistsRow[0]>0){
-							$SQL = 'UPDATE stockserialitems SET quantity = quantity + ' . $_POST['Qty' . $i] . ",
+							$SQL = "UPDATE stockserialitems SET quantity = quantity + " . $_POST['Qty' . $i] . ",
 																qualitytext = '" . DB_escape_string($QualityText) . "'
 										WHERE stockid='" . $_POST['StockID'] . "'
 										AND loccode = '" . $_POST['IntoLocation'] . "'

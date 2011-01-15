@@ -1199,12 +1199,12 @@ function TempStockmoves(&$db)
 	$ErrMsg = _('The SQL to create temporary stockmoves failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	$sql = 'UPDATE tempstockmoves, stockmoves
+	$sql = "UPDATE tempstockmoves, stockmoves
 	          SET tempstockmoves.reference = stockmoves.reference
-	          WHERE tempstockmoves.type="11"
+	          WHERE tempstockmoves.type='11'
 	            AND SUBSTR(tempstockmoves.reference,10,10) = stockmoves.transno
                 AND tempstockmoves.stockid = stockmoves.stockid
-                AND stockmoves.type ="10"';
+                AND stockmoves.type ='10'";
 	$ErrMsg = _('The SQL to to update tempstockmoves failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 

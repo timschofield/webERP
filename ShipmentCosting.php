@@ -327,8 +327,8 @@ if (db_num_rows($LineItemsResult) > 0) {
 																   materialcost=materialcost+' . $CostIncrement . ' WHERE stockid="' . $myrow['itemcode'] . '"';
 					$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg,'',TRUE);
 				} else {
-					$sql = 'UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
-								materialcost=' . $ItemShipmentCost . ' WHERE stockid="' . $myrow['itemcode'] . '"';
+					$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
+								materialcost='" . $ItemShipmentCost . "' WHERE stockid='" . $myrow['itemcode'] . "'";
 					$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg,'',TRUE);
 								}
 				/* End of Weighted Average Costing Code */

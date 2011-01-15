@@ -38,17 +38,17 @@ if (isset($_POST['PrintPDFAndProcess'])){
 					diffonexch,
 					alloc) ";
 	$SQL = $SQL .  "VALUES (22,
-				" . $SuppPaymentNo . ",
+				'" . $SuppPaymentNo . "',
 				'" . $PaytReference . "',
 				'" . $SupplierID . "',
 				'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
 				'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
 				'" . date('Y-m-d H-i-s') . "',
 				1,
-				" . $_POST['ExRate'] . ",
-				" . -$AccumBalance . ",
-				" . -$AccumDiffOnExch . ",
-				" . -$AccumBalance . ")";
+				'" . $_POST['ExRate'] . "',
+				'" . -$AccumBalance . "',
+				'" . -$AccumDiffOnExch . "',
+				'" . -$AccumBalance . "')";
 	$ProcessResult = DB_query($SQL,$db,'','',false,false);
 	if (DB_error_no($db) !=0) {
 		$title = _('Payment Processing - Problem Report');
@@ -69,14 +69,15 @@ if (isset($_POST['PrintPDFAndProcess'])){
 
 	foreach ($Allocs AS $AllocTrans){ /*loop through the array of allocations */
 
-		$SQL = 'INSERT INTO suppallocs (amt,
+		$SQL = "INSERT INTO suppallocs (amt,
 						datealloc,
 						transid_allocfrom,
 						transid_allocto)
-				VALUES (' . $AllocTrans->Amount . ",
-		                         '" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
-                	                " . $PaymentTransID . ',
-                        	        ' . $AllocTrans->TransID . ')';
+				VALUES (
+						'" . $AllocTrans->Amount . "',
+						'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
+						'" . $PaymentTransID . "',
+						'" . $AllocTrans->TransID . "')";
 
 		$ProcessResult = DB_query($SQL,$db);
 		if (DB_error_no($db) !=0) {
@@ -128,7 +129,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 
 		/*Do the GL trans for the payment CR bank */
 
-		$SQL = 'INSERT INTO gltrans (type,
+		$SQL = "INSERT INTO gltrans (type,
 						typeno,
 						trandate,
 						periodno,
@@ -136,12 +137,12 @@ if (isset($_POST['PrintPDFAndProcess'])){
 						narrative,
 						amount )
 				VALUES (22,
-					' . $SuppPaymentNo . ",
+					'" . $SuppPaymentNo . "',
 					'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
-					" . $PeriodNo . ",
-					" . $_POST['BankAccount'] . ",
+					'" . $PeriodNo . "',
+					'" . $_POST['BankAccount'] . "',
 					'" . $SupplierID . " - " . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . ' - ' . $PaytReference . "',
-					" . (-$AccumBalance/ $_POST['ExRate']) . ")";
+					'" . (-$AccumBalance/ $_POST['ExRate']) . "')";
 
 		$ProcessResult = DB_query($SQL,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
@@ -159,7 +160,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 
 		/*Do the GL trans for the payment DR creditors */
 
-		$SQL = 'INSERT INTO gltrans (type,
+		$SQL = "INSERT INTO gltrans (type,
 						typeno,
 						trandate,
 						periodno,
@@ -167,12 +168,12 @@ if (isset($_POST['PrintPDFAndProcess'])){
 						narrative,
 						amount )
 				VALUES (22,
-					' . $SuppPaymentNo . ",
+					'" . $SuppPaymentNo . "',
 					'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
-					" . $PeriodNo . ',
-					' . $_SESSION['CompanyRecord']['creditorsact'] . ",
+					'" . $PeriodNo . "',
+					'" . $_SESSION['CompanyRecord']['creditorsact'] . "',
 					'" . $SupplierID . ' - ' . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . ' - ' . $PaytReference . "',
-					" . ($AccumBalance/ $_POST['ExRate']  + $AccumDiffOnExch) . ')';
+					'" . ($AccumBalance/ $_POST['ExRate']  + $AccumDiffOnExch) . "')";
 
 		$ProcessResult = DB_query($SQL,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
@@ -191,7 +192,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 
 		/*Do the GL trans for the exch diff */
 		if ($AccumDiffOnExch != 0){
-			$SQL = 'INSERT INTO gltrans (type,
+			$SQL = "INSERT INTO gltrans (type,
 							typeno,
 							trandate,
 							periodno,
@@ -199,21 +200,21 @@ if (isset($_POST['PrintPDFAndProcess'])){
 							narrative,
 							amount )
 						VALUES (22,
-							' . $SuppPaymentNo . ",
+							'" . $SuppPaymentNo . "',
 							'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
-							" . $PeriodNo . ',
-							' . $_SESSION['CompanyRecord']['purchasesexchangediffact'] . ",
+							'" . $PeriodNo . "',
+							'" . $_SESSION['CompanyRecord']['purchasesexchangediffact'] . "',
 							'" . $SupplierID . ' - ' . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . " - " . $PaytReference . "',
-							" . (-$AccumDiffOnExch) . ")";
+							'" . (-$AccumDiffOnExch) . "')";
 
 			$ProcessResult = DB_query($SQL,$db,'','',false,false);
 			if (DB_error_no($db) !=0) {
 				$title = _('Payment Processing - Problem Report');
 				include('header.inc');
 				prnMsg(_('None of the payments will be processed since the general ledger posting for the exchange difference on') . ' ' . $SupplierName . ' ' . _('could not be inserted because') .' - ' . DB_error_msg($db),'error');
-				echo "<BR><A HREF='$rootpath/index.php'>" . _('Back to the menu') . '</A>';
+				echo "<br /><a href='$rootpath/index.php'>" . _('Back to the menu') . '</a>';
 				if ($debug==1){
-					prnMsg(_('The SQL that failed was: ') . '<BR>' . $SQL,'error');
+					prnMsg(_('The SQL that failed was: ') . '<br />' . $SQL,'error');
 				}
 				$ProcessResult = DB_Txn_Rollback($db);
 				include('footer.inc');

@@ -76,17 +76,17 @@ if (isset($_POST['submit'])) {
 
 		$NewTaxID = DB_Last_Insert_ID($db,'taxauthorities','taxid');
 
-		$sql = 'INSERT INTO taxauthrates (
+		$sql = "INSERT INTO taxauthrates (
 					taxauthority,
 					dispatchtaxprovince,
 					taxcatid
 					)
 				SELECT
-					' . $NewTaxID  . ',
+					'" . $NewTaxID  . "',
 					taxprovinces.taxprovinceid,
 					taxcategories.taxcatid
 				FROM taxprovinces,
-					taxcategories';
+					taxcategories";
 
 			$InsertResult = DB_query($sql,$db);
 	}

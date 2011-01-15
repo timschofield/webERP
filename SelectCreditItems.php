@@ -1102,12 +1102,12 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 	/* Insert the tax totals for each tax authority where tax was charged on the invoice */
 	foreach ($TaxTotals AS $TaxAuthID => $TaxAmount) {
 
-		$SQL = 'INSERT INTO debtortranstaxes (debtortransid,
+		$SQL = "INSERT INTO debtortranstaxes (debtortransid,
 							taxauthid,
 							taxamount)
-				VALUES (' . $CreditTransID . ',
-					' . $TaxAuthID . ',
-					' . -($TaxAmount)/$_SESSION['CurrencyRate'] . ')';
+				VALUES ('" . $CreditTransID . "',
+					'" . $TaxAuthID . "',
+					'" . -($TaxAmount)/$_SESSION['CurrencyRate'] . "')";
 
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction taxes records could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction taxes record was used');

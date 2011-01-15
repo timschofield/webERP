@@ -67,9 +67,9 @@ $result = DB_Txn_Begin($db);
 
 /*Delete any log entries */
 
-$SQL = 'DELETE FROM orderdeliverydifferenceslog
-               WHERE orderno = '. $ProcessingOrder . '
-               AND invoiceno = ' . $_GET['InvoiceNo'];
+$SQL = "DELETE FROM orderdeliverydifferenceslog
+               WHERE orderno = '". $ProcessingOrder . "'
+               AND invoiceno = '" . $_GET['InvoiceNo'] . "'";
 
 $ErrMsg = _('The SQL to delete the delivery differences records failed because');
 $Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -91,9 +91,9 @@ prnMsg(_('The debtor transaction record has been deleted'),'info');
 
 foreach ($StockMovement as $OrderLine) {
 
-	$SQL = 'UPDATE salesorderdetails SET qtyinvoiced = qtyinvoiced - ' . $OrderLine['qty'] . ',
+	$SQL = "UPDATE salesorderdetails SET qtyinvoiced = qtyinvoiced - " . $OrderLine['qty'] . ",
                                              completed = 0
-                                WHERE orderno = ' . $ProcessingOrder . "
+                                WHERE orderno = '" . $ProcessingOrder . "'
                                 AND stkcode = '" . $OrderLine['stockid'] . "'";
 
 	$ErrMsg = _('The SQL to reverse the update of the sales order detail records failed because');
@@ -110,11 +110,11 @@ foreach ($StockMovement as $OrderLine) {
 /*This is a problem - should only update sales analysis what happens where there
 have been previous sales to the same customer/branch for the same item
 Delete Sales Analysis records */
-	$SQL = 'DELETE FROM salesanalysis
-                       WHERE  periodno = ' . $OrderLine['prd'] . "
+	$SQL = "DELETE FROM salesanalysis
+                       WHERE  periodno = '" . $OrderLine['prd'] . "'
                        AND cust='" . $OrderLine['debtorno'] . "'
                        AND custbranch = '" . $OrderLine['branchcode'] . "'
-                       AND qty = " . $OrderLine['qty'] . "
+                       AND qty = '" . $OrderLine['qty'] . "'
                        AND stockid = '" . $OrderLine['stockid'] . "'";
 
 	$ErrMsg = _('The SQL to delete the sales analysis records failed because');
@@ -124,7 +124,7 @@ Delete Sales Analysis records */
 }
 
 /* Delete the stock movements  */
-$SQL = 'DELETE FROM stockmoves WHERE type=10 AND transno = ' . $_GET['InvoiceNo'];
+$SQL = "DELETE FROM stockmoves WHERE type=10 AND transno = '" . $_GET['InvoiceNo'] . "'";
 
 $ErrMsg = _('The SQL to delete the stock movement records failed because');
 $Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
@@ -132,7 +132,7 @@ prnMsg(_('The stock movement records associated with the invoice have been delet
 echo '<br><br>';
 
 /* Delete any GL Transaction records*/
-$SQL = 'DELETE FROM gltrans WHERE type=10 AND transno=' . $_GET['InvoiceNo'];
+$SQL = "DELETE FROM gltrans WHERE type=10 AND transno='" . $_GET['InvoiceNo'] . "'";
 $ErrMsg = _('The SQL to delete the general ledger journal records failed because');
 $Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
 prnMsg(_('The GL journal records associated with the invoice have been deleted'),'info');
