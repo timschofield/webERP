@@ -738,8 +738,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo _('Order for customer') . ' ';
 		}
 
-		echo ':<b> ' . $_SESSION['Items'.$identifier]->DebtorNo;
-		echo '</b>&nbsp;' . _('Customer Name') . ': ' . $_SESSION['Items'.$identifier]->CustomerName;
+		echo ':<b> ' . $_SESSION['Items'.$identifier]->DebtorNo  . ' ' . _('Customer Name') . ': ' . $_SESSION['Items'.$identifier]->CustomerName;
 		echo '</b></p><div class="page_help_text">' . '<b>' . _('Default Options (can be modified during order):') . '</b><br>' . _('Deliver To') . ':<b> ' . $_SESSION['Items'.$identifier]->DeliverTo;
 		echo '</b>&nbsp;' . _('From Location') . ':<b> ' . $_SESSION['Items'.$identifier]->LocationName;
 		echo '</b><br>' . _('Sales Type') . '/' . _('Price List') . ':<b> ' . $_SESSION['Items'.$identifier]->SalesTypeName;
@@ -859,10 +858,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		if (DB_num_rows($SearchResult)==0 ){
 			prnMsg (_('There are no products available meeting the criteria specified'),'info');
-
-//			if ($debug==1){
-//				prnMsg(_('The SQL statement used was') . ':<br>' . $SQL,'info');
-//			}
 		}
 		if (DB_num_rows($SearchResult)==1){
 			$myrow=DB_fetch_array($SearchResult);
@@ -1204,8 +1199,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		foreach($NewItem_array as $NewItem => $NewItemQty) {
 				if($NewItemQty > 0)	{
 					$sql = "SELECT stockmaster.mbflag
-							FROM stockmaster
-							WHERE stockmaster.stockid='". $NewItem ."'";
+									FROM stockmaster
+									WHERE stockmaster.stockid='". $NewItem ."'";
 
 					$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
 
@@ -1217,7 +1212,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					if ($myrow=DB_fetch_array($KitResult)){
 						if ($myrow['mbflag']=='K'){	/*It is a kit set item */
 							$sql = "SELECT bom.component,
-											bom.quantity
+														bom.quantity
 											FROM bom
 											WHERE bom.parent='" . $NewItem . "'
 											AND bom.effectiveto > '" . Date('Y-m-d') . "'
@@ -1249,7 +1244,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	}
 
-
 	/* Run through each line of the order and work out the appropriate discount from the discount matrix */
 	$DiscCatsDone = array();
 	$counter =0;
@@ -1266,10 +1260,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				}
 			}
 			$result = DB_query("SELECT MAX(discountrate) AS discount
-									FROM discountmatrix
-									WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
-									AND discountcategory ='" . $OrderLine->DiscCat . "'
-									AND quantitybreak <" . $QuantityOfDiscCat,$db);
+													FROM discountmatrix
+													WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
+													AND discountcategory ='" . $OrderLine->DiscCat . "'
+													AND quantitybreak <" . $QuantityOfDiscCat,$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]!=0){ /* need to update the lines affected */
 				foreach ($_SESSION['Items'.$identifier]->LineItems as $StkItems_2) {
@@ -1287,8 +1281,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
 		echo '<br>
-			<table width="90%" cellpadding="2" colspan="7">
-			<tr bgcolor=#800000>';
+					<table width="90%" cellpadding="2" colspan="7">
+					<tr bgcolor=#800000>';
 		if($_SESSION['Items'.$identifier]->DefaultPOLine == 1){
 			echo '<th>' . _('PO Line') . '</th>';
 		}
@@ -1302,10 +1296,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 			echo '<th>' . _('Discount') . '</th>
-				  <th>' . _('GP %') . '</th>';
+						<th>' . _('GP %') . '</th>';
 		}
 		echo '<th>' . _('Total') . '</th>
-			  <th>' . _('Due Date') . '</th></tr>';
+					<th>' . _('Due Date') . '</th></tr>';
 
 		$_SESSION['Items'.$identifier]->total = 0;
 		$_SESSION['Items'.$identifier]->totalVolume = 0;
@@ -1321,7 +1315,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			if ($OrderLine->QOHatLoc < $OrderLine->Quantity AND ($OrderLine->MBflag=='B' OR $OrderLine->MBflag=='M')) {
 				/*There is a stock deficiency in the stock location selected */
-				$RowStarter = '<tr bgcolor="#EEAABB">';
+				$RowStarter = '<tr bgcolor="#EEAABB">'; //rows show red where stock deficiency
 			} elseif ($k==1){
 				$RowStarter = '<tr class="OddTableRows">';
 				$k=0;
@@ -1453,13 +1447,15 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 // This code needs sorting out, but until then :
 				$ImageSource = _('No Image');
 // Find the quantity in stock at location
-				$qohsql = "SELECT sum(quantity)
-								   FROM locstock
-								   WHERE stockid='" .$myrow['stockid'] . "' AND
-								   loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
-				$qohresult =  DB_query($qohsql,$db);
-				$qohrow = DB_fetch_row($qohresult);
-				$qoh = $qohrow[0];
+				$QOHSQL = "SELECT sum(locstock.quantity) AS qoh,
+													stockmaster.decimalplaces
+									   FROM locstock INNER JOIN stockmaster
+									   ON locstock.stockid=stockmaster.stockid
+									   WHERE locstock.stockid='" .$myrow['stockid'] . "' AND
+									   loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
+				$QOHResult =  DB_query($QOHSQL,$db);
+				$QOHRow = DB_fetch_array($QOHResult);
+				$QOH = $QOHRow['qoh'];
 
 				// Find the quantity on outstanding sales orders
 				$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
@@ -1483,8 +1479,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				}
 				// Find the quantity on purchase orders
 				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS dem
-								FROM purchorderdetails
+								FROM purchorderdetails INNER JOIN purchorders
 								WHERE purchorderdetails.completed=0
+								AND purchorders.status<> 'Completed'
+								AND purchorders.status<> 'Rejected'
 								AND purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
 
 				$ErrMsg = _('The order details for this product cannot be retrieved because');
@@ -1519,25 +1517,25 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				}
 				$OnOrder = $PurchQty + $WoQty;
 
-				$Available = $qoh - $DemandQty + $OnOrder;
+				$Available = $QOH - $DemandQty + $OnOrder;
 
 				printf('<td>%s</font></td>
 							<td>%s</td>
 							<td>%s</td>
-							<td style="text-align:center">%s</td>
-							<td style="text-align:center">%s</td>
-							<td style="text-align:center">%s</td>
-							<td style="text-align:center">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
 							<td><font size=1><input class="number"  tabindex='.number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
 							</td>
 							</tr>',
 							$myrow['stockid'],
 							$myrow['description'],
 							$myrow['units'],
-							$qoh,
-							$DemandQty,
-							$OnOrder,
-							$Available,
+							number_format($QOH, $QOHRow['decimalplaces']),
+							number_format($DemandQty, $QOHRow['decimalplaces']),
+							number_format($OnOrder, $QOHRow['decimalplaces']),
+							number_format($Available, $QOHRow['decimalplaces']),
 							$ImageSource,
 							$rootpath,
 							SID,
@@ -1630,29 +1628,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$k=0; //row colour counter
 
 			while ($myrow=DB_fetch_array($SearchResult)) {
-// This code needs sorting out, but until then :
-				$ImageSource = _('No Image');
 
-/*
-				if (function_exists('imagecreatefrompng') ){
-					$ImageSource = '<IMG SRC="GetStockImage.php?SID&automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($myrow['stockid']). '&text=&width=64&height=64">';
-				} else {
-					if(file_exists($_SERVER['DOCUMENT_ROOT'] . $rootpath. '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg')) {
-						$ImageSource = '<IMG SRC="' .$_SERVER['DOCUMENT_ROOT'] . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg">';
-					} else {
-						$ImageSource = _('No Image');
-					}
-				}
-
-*/
 				// Find the quantity in stock at location
-				$qohsql = "SELECT sum(quantity)
-									   FROM locstock
-									   WHERE stockid='" .$myrow['stockid'] . "' AND
+				$QOHSQL = "SELECT sum(quantity) AS qoh,
+													stockmaster.decimalplaces
+									   FROM locstock INNER JOIN stockmaster
+									   ON locstock.stockid = stockmaster.stockid
+									   WHERE locstock.stockid='" .$myrow['stockid'] . "' AND
 									   loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
-				$qohresult =  DB_query($qohsql,$db);
-				$qohrow = DB_fetch_row($qohresult);
-				$qoh = $qohrow[0];
+				$QOHResult =  DB_query($QOHSQL,$db);
+				$QOHRow = DB_fetch_array($QOHResult);
+				$QOH = $QOHRow['qoh'];
 
 				// Find the quantity on outstanding sales orders
 				$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
@@ -1676,9 +1662,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				// Find the quantity on purchase orders
 				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS dem
-							 FROM purchorderdetails
-							 WHERE purchorderdetails.completed=0 AND
-							purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
+							 FROM purchorderdetails INNER JOIN purchorders
+							 WHERE purchorderdetails.completed=0 
+							 AND purchorders.status<>'Cancelled'
+							 AND purchorders.status<>'Rejected'
+							AND purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
 
 				$ErrMsg = _('The order details for this product cannot be retrieved because');
 				$PurchResult = db_query($sql,$db,$ErrMsg);
@@ -1712,25 +1700,25 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					$k=1;
 				}
 				$OnOrder = $PurchQty + $WoQty;
-				$Available = $qoh - $DemandQty + $OnOrder;
+				$Available = $QOH - $DemandQty + $OnOrder;
 
 				printf('<td>%s</font></td>
 							<td>%s</td>
 							<td>%s</td>
-							<td style="text-align:center">%s</td>
-							<td style="text-align:center">%s</td>
-							<td style="text-align:center">%s</td>
-							<td style="text-align:center">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
 							<td><font size=1><input class="number"  tabindex='.number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
 							</td>
 							</tr>',
 							$myrow['stockid'],
 							$myrow['description'],
 							$myrow['units'],
-							$qoh,
-							$DemandQty,
-							$OnOrder,
-							$Available,
+							number_format($QOH,$QOHRow['decimalplaces']),
+							number_format($DemandQty,$QOHRow['decimalplaces']),
+							number_format($OnOrder,$QOHRow['decimalplaces']),
+							number_format($Available,$QOHRow['decimalplaces']),
 							$ImageSource,
 							$rootpath,
 							SID,

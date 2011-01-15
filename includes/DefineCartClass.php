@@ -144,21 +144,21 @@ Class Cart {
 
 				global $db;
 				$sql = "INSERT INTO salesorderdetails (orderlineno,
-									orderno,
-									stkcode,
-									quantity,
-									unitprice,
-									discountpercent,
-									itemdue,
-									poline)
-								VALUES(" . $this->LineCounter . ",
-									" . $_SESSION['ExistingOrder'] . ",
-									'" . trim(strtoupper($StockID)) ."',
-									" . $Qty . ",
-									" . $Price . ",
-									" . $Disc . ",'
-									" . $ItemDue . "',
-									" . $POLine . ")";
+																						orderno,
+																						stkcode,
+																						quantity,
+																						unitprice,
+																						discountpercent,
+																						itemdue,
+																						poline)
+																					VALUES(" . $this->LineCounter . ",
+																						" . $_SESSION['ExistingOrder'] . ",
+																						'" . trim(strtoupper($StockID)) ."',
+																						" . $Qty . ",
+																						" . $Price . ",
+																						" . $Disc . ",'
+																						" . $ItemDue . "',
+																						" . $POLine . ")";
 				$result = DB_query($sql,
 							$db ,
 							_('The order line for') . ' ' . strtoupper($StockID) . ' ' ._('could not be inserted'));
@@ -171,14 +171,14 @@ Class Cart {
 	}
 
 	function update_cart_item( $UpdateLineNumber,
-								$Qty,
-								$Price,
-								$Disc,
-								$Narrative,
-								$UpdateDB='No',
-								$ItemDue,
-								$POLine,
-								$GPPercent){
+														$Qty,
+														$Price,
+														$Disc,
+														$Narrative,
+														$UpdateDB='No',
+														$ItemDue,
+														$POLine,
+														$GPPercent){
 
 		if ($Qty>0){
 			$this->LineItems[$UpdateLineNumber]->Quantity = $Qty;
@@ -191,16 +191,15 @@ Class Cart {
 		$this->LineItems[$UpdateLineNumber]->GPPercent = $GPPercent;
 		if ($UpdateDB=='Yes'){
 			global $db;
-			$result = DB_query("UPDATE salesorderdetails
-						SET quantity=" . $Qty . ",
-						unitprice=" . $Price . ",
-						discountpercent=" . $Disc . ",
-						narrative ='" . DB_escape_string($Narrative) . "',
-						itemdue = '" . FormatDateForSQL($ItemDue) . "',
-						poline = '" . DB_escape_string($POLine) . "'
-					WHERE orderno=" . $_SESSION['ExistingOrder'] . "
-					AND orderlineno=" . $UpdateLineNumber
-				, $db
+			$result = DB_query("UPDATE salesorderdetails SET quantity=" . $Qty . ",
+																										unitprice=" . $Price . ",
+																										discountpercent=" . $Disc . ",
+																										narrative ='" . DB_escape_string($Narrative) . "',
+																										itemdue = '" . FormatDateForSQL($ItemDue) . "',
+																										poline = '" . DB_escape_string($POLine) . "'
+														WHERE orderno=" . $_SESSION['ExistingOrder'] . "
+														AND orderlineno=" . $UpdateLineNumber
+													, $db
 				, _('The order line number') . ' ' . $UpdateLineNumber .  ' ' . _('could not be updated'));
 		}
 	}

@@ -114,13 +114,13 @@ Function GetTaxes ($TaxGroup, $DispatchTaxProvince, $TaxCategory, &$db) {
 Function GetCreditAvailable($DebtorNo,&$db) {
 
 	$sql = "SELECT debtorsmaster.debtorno,
-			debtorsmaster.creditlimit,
-			SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) as balance
-		FROM debtorsmaster INNER JOIN debtortrans
-			ON debtorsmaster.debtorno=debtortrans.debtorno
-		WHERE debtorsmaster.debtorno='" . $DebtorNo . "'
-		GROUP BY debtorsmaster.debtorno,
-			debtorsmaster.creditlimit";
+								debtorsmaster.creditlimit,
+								SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) as balance
+					FROM debtorsmaster INNER JOIN debtortrans
+						ON debtorsmaster.debtorno=debtortrans.debtorno
+					WHERE debtorsmaster.debtorno='" . $DebtorNo . "'
+					GROUP BY debtorsmaster.debtorno,
+										debtorsmaster.creditlimit";
 
 	$ErrMsg =  _('The current account balance of the customer could not be retrieved because');
 	$GetAccountBalanceResult = DB_query($sql, $db, $ErrMsg);
@@ -131,8 +131,8 @@ Function GetCreditAvailable($DebtorNo,&$db) {
 		$CreditAvailable = $myrow['creditlimit'] - $myrow['balance'];
 	} else {
 		$sql = "SELECT creditlimit
-				FROM debtorsmaster
-				WHERE debtorno='" . $DebtorNo . "'";
+					FROM debtorsmaster
+					WHERE debtorno='" . $DebtorNo . "'";
 		$GetAccountBalanceResult = DB_query($sql, $db, $ErrMsg);
 		$myrow = DB_fetch_array($GetAccountBalanceResult);
 		$CreditAvailable = $myrow['creditlimit'];

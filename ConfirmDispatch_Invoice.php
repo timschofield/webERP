@@ -15,9 +15,6 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/FreightCalculation.inc');
 include('includes/GetSalesTransGLCodes.inc');
 
-// This is not required
-//echo '<a href="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Back to Sales Orders'). '</a><br>';
-
 if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 	/* This page can only be called with an order number for invoicing*/
 	echo '<div class="centre"><a href="' . $rootpath . '/SelectSalesOrder.php?' . SID . '">' . _('Select a sales order to invoice'). '</a></div>';
@@ -243,12 +240,16 @@ if ($_SESSION['Items']->SpecialInstructions) {
 }
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Confirm Invoice') .
 	'" alt="" />' . ' ' . _('Confirm Dispatch and Invoice'). '</p>';
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') .
-	'" alt="" />' . ' ' . _('Customer Code') . ' :<b> ' . $_SESSION['Items']->DebtorNo.'</b></p>';
-//echo '<br><br><font size=4>' . _('Customer Code') . ':<b> ' . $_SESSION['Items']->DebtorNo;
-echo '&nbsp;' . _('Customer Name') . ' :<b> ' . $_SESSION['Items']->CustomerName. '</b>';
-//echo '<font size=4><b><U>' . $_SESSION['Items']->CustomerName . '</U></b></font><font size=3> - ' .
-echo '<br>' . _('Invoice amounts stated in') . ' ' . $_SESSION['Items']->DefaultCurrency . '';
+echo '<table class="selection">
+			<tr>
+				<th><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer Code') . ' :<b> ' . $_SESSION['Items']->DebtorNo.'</b></th>
+				<th>' . _('Customer Name') . ' :<b> ' . $_SESSION['Items']->CustomerName. '</b></th>
+			</tr>
+			<tr>
+				<th colspan ="2"><b>' . _('Invoice amounts stated in') . ' ' . $_SESSION['Items']->DefaultCurrency . '</b></th>
+			</tr>
+			</table>
+			<br />';
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

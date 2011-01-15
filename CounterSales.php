@@ -1,5 +1,5 @@
 <?php
-/* $Id:  $*/
+/* $Id: CounterSales.php 4469 2011-01-15 02:28:37Z daintree $*/
 
 include('includes/DefineCartClass.php');
 //$PageSecurity = 1;
@@ -94,55 +94,55 @@ if (!isset($_SESSION['Items'.$identifier])){
 
 		// Now check to ensure this account exists and set defaults */
 		$sql = "SELECT debtorsmaster.name,
-						holdreasons.dissallowinvoices,
-						debtorsmaster.salestype,
-						salestypes.sales_type,
-						debtorsmaster.currcode,
-						debtorsmaster.customerpoline,
-						paymentterms.terms
-				FROM debtorsmaster,
-					holdreasons,
-					salestypes,
-					paymentterms
-				WHERE debtorsmaster.salestype=salestypes.typeabbrev
-				AND debtorsmaster.holdreason=holdreasons.reasoncode
-				AND debtorsmaster.paymentterms=paymentterms.termsindicator
-				AND debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
+									holdreasons.dissallowinvoices,
+									debtorsmaster.salestype,
+									salestypes.sales_type,
+									debtorsmaster.currcode,
+									debtorsmaster.customerpoline,
+									paymentterms.terms
+							FROM debtorsmaster,
+								holdreasons,
+								salestypes,
+								paymentterms
+							WHERE debtorsmaster.salestype=salestypes.typeabbrev
+							AND debtorsmaster.holdreason=holdreasons.reasoncode
+							AND debtorsmaster.paymentterms=paymentterms.termsindicator
+							AND debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
 		$ErrMsg = _('The details of the customer selected') . ': ' .  $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('The SQL used to retrieve the customer details and failed was') . ':';
 		// echo $sql;
 		$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-		$myrow = DB_fetch_row($result);
-		if ($myrow[1] != 1){
-			if ($myrow[1]==2){
-				prnMsg($myrow[0] . ' ' . _('Although this account is defined as the cash sale account for the location.  The account is currently flagged as an account that needs to be watched. Please contact the credit control personnel to discuss'),'warn');
+		$myrow = DB_fetch_array($result);
+		if ($myrow['dissallowinvoices'] != 1){
+			if ($myrow['dissallowinvoices']==2){
+				prnMsg($myrow['name'] . ' ' . _('Although this account is defined as the cash sale account for the location.  The account is currently flagged as an account that needs to be watched. Please contact the credit control personnel to discuss'),'warn');
 			}
 
 			$_SESSION['RequireCustomerSelection']=0;
-			$_SESSION['Items'.$identifier]->CustomerName = $myrow[0];
+			$_SESSION['Items'.$identifier]->CustomerName = $myrow['name'];
 			// the sales type is the price list to be used for this sale
-			$_SESSION['Items'.$identifier]->DefaultSalesType = $myrow[2];
-			$_SESSION['Items'.$identifier]->SalesTypeName = $myrow[3];
-			$_SESSION['Items'.$identifier]->DefaultCurrency = $myrow[4];
-			$_SESSION['Items'.$identifier]->DefaultPOLine = $myrow[5];
-			$_SESSION['Items'.$identifier]->PaymentTerms = $myrow[6];
+			$_SESSION['Items'.$identifier]->DefaultSalesType = $myrow['salestype'];
+			$_SESSION['Items'.$identifier]->SalesTypeName = $myrow['sales_type'];
+			$_SESSION['Items'.$identifier]->DefaultCurrency = $myrow['currcode'];
+			$_SESSION['Items'.$identifier]->DefaultPOLine = $myrow['customerpoline'];
+			$_SESSION['Items'.$identifier]->PaymentTerms = $myrow['terms'];
 
 			/* now get the branch defaults from the customer branches table CustBranch. */
 
 			$sql = "SELECT custbranch.brname,
-							custbranch.braddress1,
-							custbranch.defaultshipvia,
-							custbranch.deliverblind,
-							custbranch.specialinstructions,
-							custbranch.estdeliverydays,
-							custbranch.salesman,
-							custbranch.taxgroupid,
-							custbranch.defaultshipvia
-						FROM custbranch
-						WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
-						AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
+										custbranch.braddress1,
+										custbranch.defaultshipvia,
+										custbranch.deliverblind,
+										custbranch.specialinstructions,
+										custbranch.estdeliverydays,
+										custbranch.salesman,
+										custbranch.taxgroupid,
+										custbranch.defaultshipvia
+									FROM custbranch
+									WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
+									AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
 			$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('cannot be retrieved because');
 			$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
@@ -178,7 +178,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 				$_SESSION['Items'.$identifier]->CreditAvailable = GetCreditAvailable($_SESSION['Items'.$identifier]->DebtorNo,$db);
 
 				if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
-					prnMsg(_('The') . ' ' . $myrow[0] . ' ' . _('account is currently at or over their credit limit'),'warn');
+					prnMsg(_('The') . ' ' . $myrow['brname'] . ' ' . _('account is currently at or over their credit limit'),'warn');
 				} elseif ($_SESSION['CheckCreditLimits']==2 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
 					prnMsg(_('No more orders can be placed by') . ' ' . $myrow[0] . ' ' . _(' their account is currently at or over their credit limit'),'warn');
 					include('includes/footer.inc');
@@ -187,7 +187,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 			}
 
 		} else {
-			prnMsg($myrow[0] . ' ' . _('Although the account is defined as the cash sale account for the location  the account is currently on hold. Please contact the credit control personnel to discuss'),'warn');
+			prnMsg($myrow['brname'] . ' ' . _('Although the account is defined as the cash sale account for the location  the account is currently on hold. Please contact the credit control personnel to discuss'),'warn');
 		}
 
 	}
@@ -239,7 +239,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 					AND stockmaster.mbflag <>'G'
 					AND stockmaster.controlled <> 1
-					AND stockmaster.description " . LIKE . " '$SearchString'
+					AND stockmaster.description " . LIKE . " '" . $SearchString . "'
 					AND stockmaster.discontinued=0
 					ORDER BY stockmaster.stockid";
 		} else {
@@ -413,8 +413,8 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 		}
 		/*Now figure out if the item is a kit set - the field MBFlag='K'*/
 		$sql = "SELECT stockmaster.mbflag, stockmaster.controlled
-				FROM stockmaster
-				WHERE stockmaster.stockid='". $NewItem ."'";
+						FROM stockmaster
+						WHERE stockmaster.stockid='". $NewItem ."'";
 
 		$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
 		$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
@@ -426,11 +426,11 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 		} elseif ($myrow=DB_fetch_array($KitResult)){
 			if ($myrow['mbflag']=='K'){	/*It is a kit set item */
 				$sql = "SELECT bom.component,
-						bom.quantity
-						FROM bom
-						WHERE bom.parent='" . $NewItem . "'
-						AND bom.effectiveto > '" . Date('Y-m-d') . "'
-						AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+											bom.quantity
+								FROM bom
+								WHERE bom.parent='" . $NewItem . "'
+								AND bom.effectiveto > '" . Date('Y-m-d') . "'
+								AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
 
 				$ErrMsg =  _('Could not retrieve kitset components from the database because') . ' ';
 				$KitResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -520,9 +520,9 @@ Now figure out if the item is a kit set - the field MBFlag='K'
 * controlled items and ghost/phantom items cannot be selected because the SQL to show items to select doesn't show 'em
 * */
 	$sql = "SELECT stockmaster.mbflag,
-					stockmaster.taxcatid
-	   		FROM stockmaster
-			WHERE stockmaster.stockid='". $NewItem ."'";
+								stockmaster.taxcatid
+				   		FROM stockmaster
+						WHERE stockmaster.stockid='". $NewItem ."'";
 
 	$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
 
@@ -534,11 +534,11 @@ Now figure out if the item is a kit set - the field MBFlag='K'
 	if ($myrow=DB_fetch_array($KitResult)){
 	   	if ($myrow['mbflag']=='K'){	/*It is a kit set item */
 			$sql = "SELECT bom.component,
-						bom.quantity
-					FROM bom
-					WHERE bom.parent='" . $NewItem . "'
-					AND bom.effectiveto > '" . Date('Y-m-d') . "'
-					AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+									bom.quantity
+								FROM bom
+								WHERE bom.parent='" . $NewItem . "'
+								AND bom.effectiveto > '" . Date('Y-m-d') . "'
+								AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
 
 			$ErrMsg = _('Could not retrieve kitset components from the database because');
 			$KitResult = DB_query($sql,$db,$ErrMsg);
@@ -571,8 +571,8 @@ if (isset($NewItemArray) and isset($_POST['OrderItems'])){
 	foreach($NewItemArray as $NewItem => $NewItemQty) {
 		if($NewItemQty > 0)	{
 			$sql = "SELECT stockmaster.mbflag
-					FROM stockmaster
-					WHERE stockmaster.stockid='". $NewItem ."'";
+							FROM stockmaster
+							WHERE stockmaster.stockid='". $NewItem ."'";
 
 			$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
 
@@ -584,7 +584,7 @@ if (isset($NewItemArray) and isset($_POST['OrderItems'])){
 			if ($myrow=DB_fetch_array($KitResult)){
 				if ($myrow['mbflag']=='K'){	/*It is a kit set item */
 					$sql = "SELECT bom.component,
-									bom.quantity
+												bom.quantity
 									FROM bom
 									WHERE bom.parent='" . $NewItem . "'
 									AND bom.effectiveto > '" . Date('Y-m-d') . "'
@@ -631,10 +631,10 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 			}
 		}
 		$result = DB_query("SELECT MAX(discountrate) AS discount
-								FROM discountmatrix
-								WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
-								AND discountcategory ='" . $OrderLine->DiscCat . "'
-								AND quantitybreak <" . $QuantityOfDiscCat,$db);
+											FROM discountmatrix
+											WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
+											AND discountcategory ='" . $OrderLine->DiscCat . "'
+											AND quantitybreak <'" . $QuantityOfDiscCat . "'",$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]!=0){ /* need to update the lines affected */
 			foreach ($_SESSION['Items'.$identifier]->LineItems as $StkItems_2) {
@@ -897,8 +897,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 	/* Now Get the area where the sale is to from the branches table */
 
-		$SQL = "SELECT area,
-				defaultshipvia
+		$SQL = "SELECT 	area,
+										defaultshipvia
 				FROM custbranch
 				WHERE custbranch.debtorno ='". $_SESSION['Items'.$identifier]->DebtorNo . "'
 				AND custbranch.branchcode = '" . $_SESSION['Items'.$identifier]->Branch . "'";
@@ -1008,43 +1008,44 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				$QOH = $QOHRow[0];
 
 				$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
-						FROM salesorderdetails
-						WHERE salesorderdetails.stkcode = '" . $StockItem->StockID . "'
-						AND salesorderdetails.completed = 0";
+									FROM salesorderdetails
+									WHERE salesorderdetails.stkcode = '" . $StockItem->StockID . "'
+									AND salesorderdetails.completed = 0";
 				$DemandResult = DB_query($SQL,$db);
 				$DemandRow = DB_fetch_row($DemandResult);
 				$QuantityDemand = $DemandRow[0];
 
 				$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-						FROM salesorderdetails,
-							bom,
-							stockmaster
-						WHERE salesorderdetails.stkcode=bom.parent
-						AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-						AND bom.component='" . $StockItem->StockID . "'
-						AND stockmaster.stockid=bom.parent
-						AND stockmaster.mbflag='A'
-						AND salesorderdetails.completed=0";
+								FROM salesorderdetails,
+									bom,
+									stockmaster
+								WHERE salesorderdetails.stkcode=bom.parent
+								AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
+								AND bom.component='" . $StockItem->StockID . "'
+								AND stockmaster.stockid=bom.parent
+								AND salesorderdetails.completed=0";
 				$AssemblyDemandResult = DB_query($SQL,$db);
 				$AssemblyDemandRow = DB_fetch_row($AssemblyDemandResult);
 				$QuantityAssemblyDemand = $AssemblyDemandRow[0];
 
 				$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) as qtyonorder
-						FROM purchorderdetails,
-							purchorders
-						WHERE purchorderdetails.orderno = purchorders.orderno
-						AND purchorderdetails.itemcode = '" . $StockItem->StockID . "'
-						AND purchorderdetails.completed = 0";
+								FROM purchorderdetails INNER JOIN purchorders
+								ON purchorderdetails.orderno = purchorders.orderno
+								WHERE purchorderdetails.itemcode = '" . $StockItem->StockID . "'
+								AND purchorderdetails.completed = 0
+								AND purchorders.status<>'Rejected'
+								AND purchorders.status<>'Pending'
+								AND purchorders.status<>'Completed'";
 				$PurchOrdersResult = DB_query($SQL,$db);
 				$PurchOrdersRow = DB_fetch_row($PurchOrdersResult);
 				$QuantityPurchOrders = $PurchOrdersRow[0];
 
 				$SQL = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) as qtyonorder
-						FROM woitems INNER JOIN workorders
-						ON woitems.wo=workorders.wo
-						WHERE woitems.stockid = '" . $StockItem->StockID . "'
-						AND woitems.qtyreqd > woitems.qtyrecd
-						AND workorders.closed = 0";
+								FROM woitems INNER JOIN workorders
+								ON woitems.wo=workorders.wo
+								WHERE woitems.stockid = '" . $StockItem->StockID . "'
+								AND woitems.qtyreqd > woitems.qtyrecd
+								AND workorders.closed = 0";
 				$WorkOrdersResult = DB_query($SQL,$db);
 				$WorkOrdersRow = DB_fetch_row($WorkOrdersResult);
 				$QuantityWorkOrders = $WorkOrdersRow[0];
@@ -1073,11 +1074,11 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 											$db,$ErrMsg,$DbgMsg,true);
 					//Need to get the latest BOM to roll up cost
 					$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
-														FROM stockmaster INNER JOIN bom
-														ON stockmaster.stockid=bom.component
-														WHERE bom.parent='" . $StockItem->StockID . "'
-														AND bom.loccode='" . $_SESSION['DefaultFactoryLocation'] . "'",
-											$db);
+																	FROM stockmaster INNER JOIN bom
+																	ON stockmaster.stockid=bom.component
+																	WHERE bom.parent='" . $StockItem->StockID . "'
+																	AND bom.loccode='" . $_SESSION['DefaultFactoryLocation'] . "'",
+																$db);
 					$CostRow = DB_fetch_row($CostResult);
 					if (is_null($CostRow[0]) OR $CostRow[0]==0){
 						$Cost =0;
@@ -1286,9 +1287,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 					/* Need to get the current location quantity
 					will need it later for the stock movement */
 					$SQL="SELECT locstock.quantity
-							FROM locstock
-							WHERE locstock.stockid='" . $AssParts['component'] . "'
-							AND loccode= '" . $_SESSION['Items'.$identifier]->Location . "'";
+									FROM locstock
+									WHERE locstock.stockid='" . $AssParts['component'] . "'
+									AND loccode= '" . $_SESSION['Items'.$identifier]->Location . "'";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Can not retrieve assembly components location stock quantities because ');
 					$DbgMsg = _('The SQL that failed was');
@@ -1784,8 +1785,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			//Now need to add the receipt banktrans record
 			//First get the account currency that it has been banked into
 			$result = DB_query("SELECT rate FROM currencies
-									INNER JOIN bankaccounts ON currencies.currabrev=bankaccounts.currcode
-									WHERE bankaccounts.accountcode='" . $_POST['BankAccount'] . "'",$db);
+													INNER JOIN bankaccounts ON currencies.currabrev=bankaccounts.currcode
+													WHERE bankaccounts.accountcode='" . $_POST['BankAccount'] . "'",$db);
 			$myrow = DB_fetch_row($result);
 			$BankAccountExRate = $myrow[0];
 
@@ -1958,22 +1959,22 @@ if (!isset($_POST['ProcessSale'])){
 				$ImageSource = _('No Image');
 	// Find the quantity in stock at location
 				$QohSql = "SELECT sum(quantity)
-								   FROM locstock
-								   WHERE stockid='" .$myrow['stockid'] . "' AND
-								   loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
+									   FROM locstock
+									   WHERE stockid='" .$myrow['stockid'] . "' AND
+									   loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
 				$QohResult =  DB_query($QohSql,$db);
 				$QohRow = DB_fetch_row($QohResult);
 				$QOH = $QohRow[0];
 
 				// Find the quantity on outstanding sales orders
 				$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-						FROM salesorderdetails,
-							 salesorders
-						WHERE salesorders.orderno = salesorderdetails.orderno AND
-							 salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "' AND
-							 salesorderdetails.completed=0 AND
-							 salesorders.quotation=0 AND
-							 salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
+									FROM salesorderdetails,
+										 salesorders
+									WHERE salesorders.orderno = salesorderdetails.orderno AND
+										 salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "' AND
+										 salesorderdetails.completed=0 AND
+										 salesorders.quotation=0 AND
+										 salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
 
 				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' .
 					 _('cannot be retrieved because');
@@ -1986,15 +1987,17 @@ if (!isset($_POST['ProcessSale'])){
 				  $DemandQty = 0;
 				}
 				// Find the quantity on purchase orders
-				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS dem
-						FROM purchorderdetails
-						WHERE purchorderdetails.completed=0
-						AND purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
-
+				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS QOO
+								FROM purchorderdetails INNER JOIN purchorders
+								WHERE purchorderdetails.completed=0
+								AND purchorders.status<>'Cancelled'
+								AND purchorders.status<>'Rejected'
+								AND purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
+		
 				$ErrMsg = _('The order details for this product cannot be retrieved because');
 				$PurchResult = db_query($sql,$db,$ErrMsg);
 
-				$PurchRow = db_fetch_row($PurchResult);
+				$PurchRow = DB_fetch_row($PurchResult);
 				if ($PurchRow[0]!=null){
 				  $PurchQty =  $PurchRow[0];
 				} else {
@@ -2003,8 +2006,8 @@ if (!isset($_POST['ProcessSale'])){
 
 				// Find the quantity on works orders
 				$sql = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) AS dedm
-					   FROM woitems
-					   WHERE stockid='" . $myrow['stockid'] ."'";
+							   FROM woitems
+							   WHERE stockid='" . $myrow['stockid'] ."'";
 				$ErrMsg = _('The order details for this product cannot be retrieved because');
 				$WoResult = db_query($sql,$db,$ErrMsg);
 				$WoRow = db_fetch_row($WoResult);
@@ -2132,42 +2135,27 @@ if (!isset($_POST['ProcessSale'])){
 			$k=0; //row colour counter
 
 			while ($myrow=DB_fetch_array($SearchResult)) {
-	// This code needs sorting out, but until then :
-				$ImageSource = _('No Image');
 
-	/*
-				if (function_exists('imagecreatefrompng') ){
-					$ImageSource = '<IMG SRC="GetStockImage.php?SID&automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($myrow['stockid']). '&text=&width=64&height=64">';
-				} else {
-					if(file_exists($_SERVER['DOCUMENT_ROOT'] . $rootpath. '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg')) {
-						$ImageSource = '<IMG SRC="' .$_SERVER['DOCUMENT_ROOT'] . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg">';
-					} else {
-						$ImageSource = _('No Image');
-					}
-				}
-
-	*/
 				// Find the quantity in stock at location
-				$QohSql = "SELECT sum(quantity)
-						   FROM locstock
-						   WHERE stockid='" .$myrow['stockid'] . "' AND
-						   loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
-				$qohresult =  DB_query($QohSql,$db);
-				$QohRow = DB_fetch_row($QohResult);
-				$QOH = $qohrow[0];
+				$QOHSql = "SELECT sum(quantity) AS QOH,
+													stockmaster.decimalplaces
+										FROM locstock INNER JOIN stockmaster
+										WHERE locstock.stockid='" .$myrow['stockid'] . "' 
+										AND loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
+				$QOHResult =  DB_query($QOHSql,$db);
+				$QOHRow = DB_fetch_array($QOHResult);
+				$QOH = $QOHRow['QOH'];
 
 				// Find the quantity on outstanding sales orders
 				$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-							 FROM salesorderdetails,
-					  			salesorders
-							 WHERE salesorders.orderno = salesorderdetails.orderno AND
-							 salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "' AND
-							salesorderdetails.completed=0 AND
-		 					salesorders.quotation=0 AND
-				 			salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
+								 FROM salesorderdetails INNER JOIN salesorders
+								 ON salesorders.orderno = salesorderdetails.orderno 
+								 WHERE salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "' 
+								 AND salesorderdetails.completed=0 
+								 AND salesorders.quotation=0 
+								 AND salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
 
-				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' .
-					 _('cannot be retrieved because');
+				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' . _('cannot be retrieved because');
 				$DemandResult = DB_query($sql,$db,$ErrMsg);
 
 				$DemandRow = DB_fetch_row($DemandResult);
@@ -2178,10 +2166,12 @@ if (!isset($_POST['ProcessSale'])){
 				}
 
 				// Find the quantity on purchase orders
-				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS dem
-							 FROM purchorderdetails
-							 WHERE purchorderdetails.completed=0 AND
-							purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
+				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS QOO
+							 FROM purchorderdetails INNER JOIN purchorders
+							 WHERE purchorderdetails.completed=0 
+							 AND purchorders.status <>'Cancelled'
+							 AND purchorders.status <>'Rejected'
+							AND purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
 
 				$ErrMsg = _('The order details for this product cannot be retrieved because');
 				$PurchResult = db_query($sql,$db,$ErrMsg);
@@ -2195,8 +2185,8 @@ if (!isset($_POST['ProcessSale'])){
 
 				// Find the quantity on works orders
 				$sql = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) AS dedm
-					   FROM woitems
-					   WHERE stockid='" . $myrow['stockid'] ."'";
+							   FROM woitems
+							   WHERE stockid='" . $myrow['stockid'] ."'";
 				$ErrMsg = _('The order details for this product cannot be retrieved because');
 				$WoResult = db_query($sql,$db,$ErrMsg);
 
@@ -2219,26 +2209,26 @@ if (!isset($_POST['ProcessSale'])){
 				$Available = $qoh - $DemandQty + $OnOrder;
 
 				printf('<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td style="text-align:center">%s</td>
-					<td style="text-align:center">%s</td>
-					<td style="text-align:center">%s</td>
-					<td style="text-align:center">%s</td>
-					<td><font size="1"><input class="number"  tabindex="'.number_format($j+7).'" type="textbox" size="6" name="itm'.$myrow['stockid'].'" value="0" />
-					</font></td>
-					</tr>',
-					$myrow['stockid'],
-					$myrow['description'],
-					$myrow['units'],
-					$QOH,
-					$DemandQty,
-					$OnOrder,
-					$Available,
-					$ImageSource,
-					$rootpath,
-					SID,
-					$myrow['stockid']);
+							<td>%s</td>
+							<td>%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td><font size="1"><input class="number"  tabindex="'.number_format($j+7).'" type="textbox" size="6" name="itm'.$myrow['stockid'].'" value="0" />
+							</font></td>
+							</tr>',
+							$myrow['stockid'],
+							$myrow['description'],
+							$myrow['units'],
+							number_format($QOH, $QOHRow['decimalplaces']),
+							number_format($DemandQty, $QOHRow['decimalplaces']),
+							number_format($OnOrder, $QOHRow['decimalplaces']),
+							number_format($Available, $QOHRow['decimalplaces']),
+							$ImageSource,
+							$rootpath,
+							SID,
+							$myrow['stockid']);
 				if ($j==1) {
 					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';
 				}
