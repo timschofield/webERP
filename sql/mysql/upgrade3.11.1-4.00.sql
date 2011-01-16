@@ -815,3 +815,5 @@ ALTER TABLE `purchorderdetails` CHANGE `nw` `netweight` VARCHAR( 50 )  DEFAULT '
 ALTER TABLE `purchorderdetails` CHANGE `gw` `kgs` VARCHAR( 50 )  DEFAULT '';
 ALTER TABLE `purchorderdetails` ADD `suppconversionfactor` DOUBLE NOT NULL DEFAULT '1';
 UPDATE config SET confvalue='3.12.3' WHERE confname='VersionNumber';
+ALTER TABLE `fixedassets` ADD `disposaldate` DATE NOT NULL , ADD INDEX ( `disposaldate` ) ;
+UPDATE config SET confvalue='3.12.4' WHERE confname='VersionNumber';

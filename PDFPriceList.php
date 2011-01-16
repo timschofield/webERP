@@ -174,7 +174,7 @@ If (isset($_POST['PrintPDF'])
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47,$YPos,47,$FontSize,$DisplayEndDate);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47,$YPos,130,$FontSize,$PriceList['description']);
 		$DisplayUnitPrice = number_format($PriceList['price'],2);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47+130,$YPos,60,$FontSize,$DisplayUnitPrice, 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47+130,$YPos,150,$FontSize,$DisplayUnitPrice, 'right');
 
 		if ($PriceList['price']!=0){
 			$DisplayGPPercent = (int)(($PriceList['price']-$PriceList['standardcost'])*100/$PriceList['price']) . '%';
@@ -356,7 +356,7 @@ function PageHeader () {
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47+130+65+25,$YPos,60,$FontSize, _('Branch'), 'centre');
 	}
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47+130+20,$YPos,60,$FontSize, _('Price') , 'centre');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47+130+20,$YPos,130,$FontSize, _('Price') , 'right');
 
 	if ($_POST['ShowGPPercentages']=='Yes'){
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47+130+65,$YPos,20,$FontSize, _('GP') .'%', 'centre');
