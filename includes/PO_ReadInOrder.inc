@@ -125,35 +125,37 @@
 /*now populate the line PO array with the purchase order details records */
 
 			  $LineItemsSQL = "SELECT podetailitem,
-																itemcode,
+																purchorderdetails.itemcode,
 																stockmaster.description,
 																purchorderdetails.deliverydate,
-																itemdescription,
+																purchorderdetails.itemdescription,
 																glcode,
 																accountname,
-																qtyinvoiced,
-																unitprice,
-																units,
-																quantityord,
-																quantityrecd,
-																shiptref,
-																completed,
-																jobref,
-																stdcostunit,
-																itemno,
+																purchorderdetails.qtyinvoiced,
+																purchorderdetails.unitprice,
+																stockmaster.units, 
+																purchorderdetails.quantityord,
+																purchorderdetails.quantityrecd,
+																purchorderdetails.shiptref,
+																purchorderdetails.completed,
+																purchorderdetails.jobref,
+																purchorderdetails.stdcostunit,
+																purchorderdetails.itemno,
 																stockmaster.controlled,
 																stockmaster.serialised,
 																stockmaster.decimalplaces,
-																subtotal_amount,
-																package,
-																pcunit,
+																purchorderdetails.subtotal_amount,
+																purchorderdetails.package,
+																purchorderdetails.pcunit,
 																purchorderdetails.netweight,
 																purchorderdetails.kgs,
-																cuft,
-																total_quantity,
-																total_amount,
-																assetid,
-																suppconversionfactor
+																purchorderdetails.cuft,
+																purchorderdetails.total_quantity,
+																purchorderdetails.total_amount,
+																purchorderdetails.assetid,
+																purchorderdetails.conversionfactor,
+																purchorderdetails.suppliersunit,
+																purchorderdetails.suppliers_partno
 																FROM purchorderdetails
 																	LEFT JOIN stockmaster
 																	ON purchorderdetails.itemcode=stockmaster.stockid
@@ -188,32 +190,7 @@
 					} else {
 						$StockID = $myrow['itemcode'];
 					}
-					$LatestPurchDataSQL='SELECT max(effectivefrom)
-											FROM purchdata
-											WHERE supplierno="'.$_SESSION['PO'.$identifier]->SupplierID.'"
-												AND stockid="'. $StockID.'"
-												AND effectivefrom<="'.$_SESSION['PO'.$identifier]->Orig_OrderDate.'"';
-					$LatestPurchDataResult=DB_query($LatestPurchDataSQL, $db);
-					$LatestPurchDataRow=DB_fetch_row($LatestPurchDataResult);
-					if ($LatestPurchDataRow[0] != '') {
-						$sql='SELECT unitsofmeasure.unitname,
-												suppliers_partno,
-												conversionfactor
-											FROM purchdata
-											LEFT JOIN unitsofmeasure
-											ON purchdata.suppliersuom=unitsofmeasure.unitid
-											WHERE supplierno="'.$_SESSION['PO'.$identifier]->SupplierID.'"
-											AND stockid="'.$StockID.'"
-											AND effectivefrom="'.$LatestPurchDataRow[0].'"';
-						$PurchDataResult=DB_query($sql, $db);
-						$myrow2=DB_fetch_array($PurchDataResult);
-					} else {
-						$sql='SELECT units as unitname, stockid as suppliers_partno FROM stockmaster WHERE stockid="'.$StockID.'"';
-						$PurchDataResult=DB_query($sql, $db);
-						$myrow2=DB_fetch_array($PurchDataResult);
-						$myrow2['conversionfactor']=1;
-					}
-
+					
 					$_SESSION['PO'.$identifier]->add_to_order($_SESSION['PO'.$identifier]->LinesOnOrder+1,
 																									$StockID,
 																									$myrow['serialised'],
@@ -232,9 +209,9 @@
 																									$myrow['accountname'],
 																									$myrow['decimalplaces'],
 																									$myrow['itemno'],
-																									$myrow2['unitname'],
-																									$myrow2['conversionfactor'],
-																									$myrow2['suppliers_partno'],
+																									$myrow['suppliersunit'],
+																									$myrow['conversionfactor'],
+																									$myrow['suppliers_partno'],
 																									$myrow['subtotal_amount'],
 																									0,
 																									$myrow['package'],

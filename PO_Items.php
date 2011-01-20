@@ -170,7 +170,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																							shiptref,
 																							jobref,
 																							itemno,
-																							uom,
+																							suppliersunit,
 																							suppliers_partno,
 																							subtotal_amount,
 																							package,
@@ -193,7 +193,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																							'" . $POLine->ShiptRef . "',
 																							'" . $POLine->JobRef . "',
 																							'" . $POLine->ItemNo . "',
-																							'" . $POLine->uom . "',
+																							'" . $POLine->SuppliersUnit . "',
 																							'" . $POLine->Suppliers_PartNo . "',
 																							'" . $POLine->SubTotal_Amount . "',
 																							'" . $POLine->Package . "',
@@ -204,7 +204,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																							'" . $POLine->Total_Quantity . "',
 																							'" . $POLine->Total_Amount . "',
 																							'" . $POLine->AssetID . "',
-																							'" . $POLine->SuppConversionFactor . "')";
+																							'" . $POLine->ConversionFactor . "')";
 					$ErrMsg =_('One of the purchase order detail records could not be inserted into the database because');
 					$DbgMsg =_('The SQL statement used to insert the purchase order detail record and failed was');
 					$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
@@ -274,7 +274,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																							shiptref,
 																							jobref,
 																							itemno,
-																							uom,
+																							suppliersunit,
 																							suppliers_partno,
 																							subtotal_amount,
 																							package,
@@ -285,7 +285,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																							total_quantity,
 																							total_amount,
 																							assetid,
-																							suppconversionfactor )
+																							conversionfactor)
 																						VALUES (
 																							'" . $_SESSION['PO'.$identifier]->OrderNo . "',
 																							'" . $POLine->StockID . "',
@@ -297,7 +297,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																							'" . $POLine->ShiptRef . "',
 																							'" . $POLine->JobRef . "',
 																							'" . $POLine->ItemNo . "',
-																							'" . $POLine->uom . "',
+																							'" . $POLine->SuppliersUnit . "',
 																							'" . $POLine->Suppliers_PartNo . "',
 																							'" . $POLine->SubTotal_Amount . "',
 																							'" . $POLine->Package . "',
@@ -321,7 +321,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																							shiptref='" . $POLine->ShiptRef . "',
 																							jobref='" . $POLine->JobRef . "',
 																							itemno='" . $POLine->ItemNo . "',
-																							uom='" . $POLine->uom . "',
+																							suppliersunit='" . $POLine->SuppliersUnit . "',
 																							suppliers_partno='" . $POLine->Suppliers_PartNo . "',
 																							subtotal_amount='" . $POLine->SubTotal_Amount . "',
 																							package='" . $POLine->Package . "',
@@ -333,7 +333,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																							total_amount='" . $POLine->Total_Amount . "',
 																							completed=1,
 																							assetid='" . $POLine->AssetID . "',
-																							suppconversionfactor = '" . $POLine->ConversionFactor . "' 
+																							conversionfactor = '" . $POLine->ConversionFactor . "' 
 														WHERE podetailitem='" . $POLine->PODetailRec . "'";
 					} else {
 						$sql = "UPDATE purchorderdetails SET itemcode='" . $POLine->StockID . "',
@@ -345,7 +345,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																								shiptref='" . $POLine->ShiptRef . "',
 																								jobref='" . $POLine->JobRef . "',
 																								itemno='" . $POLine->ItemNo . "',
-																								uom='" . $POLine->uom . "',
+																								suppliersunit='" . $POLine->SuppliersUnit . "',
 																								suppliers_partno='" . $POLine->Suppliers_PartNo . "',
 																								subtotal_amount='" . $POLine->SubTotal_Amount . "',
 																								package='" . $POLine->Package . "',
@@ -356,7 +356,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																								total_quantity='" . $POLine->Total_Quantity . "',
 																								total_amount='" . $POLine->Total_Amount . "',
 																								assetid='" . $POLine->AssetID . "',
-																								suppconversionfactor = '" . $POLine->ConversionFactor . "'
+																								conversionfactor = '" . $POLine->ConversionFactor . "'
 																	WHERE podetailitem='" . $POLine->PODetailRec . "'";
 					}
 				}
@@ -377,125 +377,12 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 		$Result = DB_Txn_Commit($db);
 		unset($_SESSION['PO'.$identifier]); /*Clear the PO data to allow a newy to be input*/
-		echo "<br /><a href='".$rootpath."/PO_SelectOSPurchOrder.php?" . SID . "'>" . _('Return To PO List') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '">' . _('Return To PO List') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	} /*end if there were no input errors trapped */
 } /* end of the code to do transfer the PO object to the database  - user hit the place PO*/
 
-if (isset($_POST['Search'])){  /*ie seach for stock items */
-
-	if ($_POST['Keywords'] AND $_POST['StockCode']) {
-		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'), 'info' );
-	}
-	if ($_POST['Keywords']) {
-		//insert wildcard characters in spaces
-		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
-
-		if ($_POST['StockCat']=='All'){
-			$sql = "SELECT stockmaster.stockid,
-										stockmaster.description,
-										stockmaster.units
-							FROM stockmaster INNER JOIN stockcategory
-							ON stockmaster.categoryid=stockcategory.categoryid
-							WHERE stockmaster.mbflag!='D'
-							AND stockmaster.mbflag!='K'
-							AND stockmaster.mbflag!='G'
-							and stockmaster.discontinued<>1
-							AND stockmaster.description " . LIKE . " '" . $SearchString ."'
-							ORDER BY stockmaster.stockid
-							LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
-		} else {
-			$sql = "SELECT stockmaster.stockid,
-										stockmaster.description,
-										stockmaster.units
-							FROM stockmaster INNER JOIN stockcategory
-							ON stockmaster.categoryid=stockcategory.categoryid
-							WHERE stockmaster.mbflag!='D'
-							AND stockmaster.mbflag!='K'
-							AND stockmaster.mbflag!='G'
-							and stockmaster.discontinued<>1
-							AND stockmaster.description " . LIKE . " '". $SearchString ."'
-							AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-							ORDER BY stockmaster.stockid
-							LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
-		}
-
-	} elseif ($_POST['StockCode']){
-
-		$_POST['StockCode'] = '%' . $_POST['StockCode'] . '%';
-
-		if ($_POST['StockCat']=='All'){
-			$sql = "SELECT stockmaster.stockid,
-										stockmaster.description,
-										stockmaster.units
-							FROM stockmaster INNER JOIN stockcategory
-							ON stockmaster.categoryid=stockcategory.categoryid
-							WHERE stockmaster.mbflag<>'D'
-							AND stockmaster.mbflag<>'K'
-							AND stockmaster.mbflag<>'G'
-							and stockmaster.discontinued!=1
-							AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
-							ORDER BY stockmaster.stockid
-							LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
-		} else {
-			$sql = "SELECT stockmaster.stockid,
-										stockmaster.description,
-										stockmaster.units
-							FROM stockmaster INNER JOIN stockcategory
-							ON stockmaster.categoryid=stockcategory.categoryid
-							WHERE stockmaster.mbflag<>'D'
-							AND stockmaster.mbflag<>'K'
-							AND stockmaster.mbflag<>'G'
-							and stockmaster.discontinued!=1
-							AND stockmaster.stockid " . LIKE  . " '" . $_POST['StockCode'] . "'
-							AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-							ORDER BY stockmaster.stockid
-							LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
-		}
-
-	} else {
-		if ($_POST['StockCat']=='All'){
-			$sql = "SELECT stockmaster.stockid,
-										stockmaster.description,
-										stockmaster.units
-							FROM stockmaster INNER JOIN stockcategory
-							ON stockmaster.categoryid=stockcategory.categoryid
-							WHERE stockmaster.mbflag!='D'
-							AND stockmaster.mbflag!='K'
-							and stockmaster.discontinued!=1
-							ORDER BY stockmaster.stockid
-							LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
-		} else {
-			$sql = "SELECT stockmaster.stockid,
-										stockmaster.description,
-										stockmaster.units
-							FROM stockmaster INNER JOIN stockcategory
-							ON stockmaster.categoryid=stockcategory.categoryid
-							WHERE stockmaster.mbflag!='D'
-							AND stockmaster.mbflag!='K'
-							and stockmaster.discontinued!=1
-							AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-							ORDER BY stockmaster.stockid
-							LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
-		}
-	}
-
-	$ErrMsg = _('There is a problem selecting the part records to display because');
-	$DbgMsg = _('The SQL statement that failed was');
-	$SearchResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-
-	if (DB_num_rows($SearchResult)==0 AND $debug==1){
-		prnMsg( _('There are no products to display matching the criteria provided'),'warn');
-	}
-	if (DB_num_rows($SearchResult)==1){
-
-		$myrow=DB_fetch_array($SearchResult);
-		$_GET['NewItem'] = $myrow['stockid'];
-		DB_data_seek($SearchResult,0);
-	}
-
-} //end of if search
 
 /* Always do the stuff below if not looking for a supplierid */
 
@@ -534,95 +421,95 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
  /*It's not a stock item */
 
 		/*need to check GL Code is valid if GLLink is active */
-		if ($_SESSION['PO'.$identifier]->GLLink==1){
+	if ($_SESSION['PO'.$identifier]->GLLink==1){
 
-			$sql = "SELECT accountname
-							FROM chartmaster
-							WHERE accountcode ='" . (int) $_POST['GLCode'] . "'";
-			$ErrMsg =  _('The account details for') . ' ' . $_POST['GLCode'] . ' ' . _('could not be retrieved because');
-			$DbgMsg =  _('The SQL used to retrieve the details of the account, but failed was');
-			$GLValidResult = DB_query($sql,$db,$ErrMsg,$DbgMsg,false,false);
-			if (DB_error_no($db) !=0) {
-				$AllowUpdate = false;
-				prnMsg( _('The validation process for the GL Code entered could not be executed because') . ' ' . DB_error_msg($db), 'error');
-				if ($debug==1){
-					prnMsg (_('The SQL used to validate the code entered was') . ' ' . $sql,'error');
-				}
-				include('includes/footer.inc');
-				exit;
-			}
-			if (DB_num_rows($GLValidResult) == 0) { /*The GLCode entered does not exist */
-				$AllowUpdate = false;
-				prnMsg( _('Cannot enter this order line') . ':<br />' . _('The general ledger code') . ' - ' . $_POST['GLCode'] . ' ' . _('is not a general ledger code that is defined in the chart of accounts') . ' . ' . _('Please use a code that is already defined') . '. ' . _('See the Chart list from the link below'),'error');
-			} else {
-				$myrow = DB_fetch_row($GLValidResult);
-				$GLAccountName = $myrow[0];
-			}
-		} /* dont bother checking the GL Code if there is no GL code to check ie not linked to GL */
-		else {
-			$_POST['GLCode']=0;
-		}
-		if ($_POST['AssetID'] !='Not an Asset'){
-			$ValidAssetResult = DB_query('SELECT assetid,
-																					description,
-																					costact
-																		FROM fixedassets
-																		INNER JOIN fixedassetcategories
-																		ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-																		WHERE assetid="' . $_POST['AssetID'] . '"',$db);
-			if (DB_num_rows($ValidAssetResult)==0){ // then the asset id entered doesn't exist
-				$AllowUpdate = false;
-				prnMsg(_('An asset code was entered but it does not yet exist. Only pre-existing asset ids can be entered when ordering a fixed asset'),'error');
-			} else {
-				$AssetRow = DB_fetch_array($ValidAssetResult);
-				$_POST['GLCode'] = $AssetRow['costact'];
-				if ($_POST['ItemDescription']==''){
-					$_POST['ItemDescription'] = $AssetRow['description'];
-				}
-			}
-		} //end if an AssetID is entered
-		if (strlen($_POST['ItemDescription'])<=3){
+		$sql = "SELECT accountname
+						FROM chartmaster
+						WHERE accountcode ='" . (int) $_POST['GLCode'] . "'";
+		$ErrMsg =  _('The account details for') . ' ' . $_POST['GLCode'] . ' ' . _('could not be retrieved because');
+		$DbgMsg =  _('The SQL used to retrieve the details of the account, but failed was');
+		$GLValidResult = DB_query($sql,$db,$ErrMsg,$DbgMsg,false,false);
+		if (DB_error_no($db) !=0) {
 			$AllowUpdate = false;
-			prnMsg(_('Cannot enter this order line') . ':<br />' . _('The description of the item being purchased is required where a non-stock item is being ordered'),'warn');
+			prnMsg( _('The validation process for the GL Code entered could not be executed because') . ' ' . DB_error_msg($db), 'error');
+			if ($debug==1){
+				prnMsg (_('The SQL used to validate the code entered was') . ' ' . $sql,'error');
+			}
+			include('includes/footer.inc');
+			exit;
 		}
-
-		if ($AllowUpdate == true){
-
-			$_SESSION['PO'.$identifier]->add_to_order ($_SESSION['PO'.$identifier]->LinesOnOrder+1,
-																							'',
-																							0, /*Serialised */
-																							0, /*Controlled */
-																							$_POST['Qty'],
-																							$_POST['ItemDescription'],
-																							$_POST['Price'],
-																							$_POST['uom'],
-																							$_POST['GLCode'],
-																							$_POST['ReqDelDate'],
-																							$_POST['ShiptRef'],
-																							0,
-																							$_POST['JobRef'],
-																							0,
-																							0,
-																							$GLAccountName,
-																							$_POST['DecimalPlaces'],
-																							$_POST['ItemNo'],
-																							$_POST['SuppliersUOM'],
-																							$_POST['ConversionFactor'],
-																							$_POST['LeadTime'],
-																							$_POST['Suppliers_PartNo'],
-																							$_POST['SubTotal_Amount'],
-																							$_POST['Package'],
-																							$_POST['PcUnit'],
-																							$_POST['NetWeight'],
-																							$_POST['KGs'],
-																							$_POST['CuFt'],
-																							$_POST['Total_Quantity'],
-																							$_POST['Total_Amount'],
-																							$_POST['AssetID']);
-
-		   include ('includes/PO_UnsetFormVbls.php');
+		if (DB_num_rows($GLValidResult) == 0) { /*The GLCode entered does not exist */
+			$AllowUpdate = false;
+			prnMsg( _('Cannot enter this order line') . ':<br />' . _('The general ledger code') . ' - ' . $_POST['GLCode'] . ' ' . _('is not a general ledger code that is defined in the chart of accounts') . ' . ' . _('Please use a code that is already defined') . '. ' . _('See the Chart list from the link below'),'error');
+		} else {
+			$myrow = DB_fetch_row($GLValidResult);
+			$GLAccountName = $myrow[0];
 		}
+	} /* dont bother checking the GL Code if there is no GL code to check ie not linked to GL */
+	else {
+		$_POST['GLCode']=0;
 	}
+	if ($_POST['AssetID'] !='Not an Asset'){
+		$ValidAssetResult = DB_query("SELECT assetid,
+																				description,
+																				costact
+																	FROM fixedassets
+																	INNER JOIN fixedassetcategories
+																	ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
+																	WHERE assetid='" . $_POST['AssetID'] . "'",$db);
+		if (DB_num_rows($ValidAssetResult)==0){ // then the asset id entered doesn't exist
+			$AllowUpdate = false;
+			prnMsg(_('An asset code was entered but it does not yet exist. Only pre-existing asset ids can be entered when ordering a fixed asset'),'error');
+		} else {
+			$AssetRow = DB_fetch_array($ValidAssetResult);
+			$_POST['GLCode'] = $AssetRow['costact'];
+			if ($_POST['ItemDescription']==''){
+				$_POST['ItemDescription'] = $AssetRow['description'];
+			}
+		}
+	} //end if an AssetID is entered
+	if (strlen($_POST['ItemDescription'])<=3){
+		$AllowUpdate = false;
+		prnMsg(_('Cannot enter this order line') . ':<br />' . _('The description of the item being purchased is required where a non-stock item is being ordered'),'warn');
+	}
+
+	if ($AllowUpdate == true){
+
+		$_SESSION['PO'.$identifier]->add_to_order ($_SESSION['PO'.$identifier]->LinesOnOrder+1,
+																						'',
+																						0, /*Serialised */
+																						0, /*Controlled */
+																						$_POST['Qty'],
+																						$_POST['ItemDescription'],
+																						$_POST['Price'],
+																						$_POST['uom'],
+																						$_POST['GLCode'],
+																						$_POST['ReqDelDate'],
+																						$_POST['ShiptRef'],
+																						0,
+																						$_POST['JobRef'],
+																						0,
+																						0,
+																						$GLAccountName,
+																						$_POST['DecimalPlaces'],
+																						$_POST['ItemNo'],
+																						$_POST['SuppliersUOM'],
+																						$_POST['ConversionFactor'],
+																						$_POST['LeadTime'],
+																						$_POST['Suppliers_PartNo'],
+																						$_POST['SubTotal_Amount'],
+																						$_POST['Package'],
+																						$_POST['PcUnit'],
+																						$_POST['NetWeight'],
+																						$_POST['KGs'],
+																						$_POST['CuFt'],
+																						$_POST['Total_Quantity'],
+																						$_POST['Total_Amount'],
+																						$_POST['AssetID']);
+
+	   include ('includes/PO_UnsetFormVbls.php');
+	}
+}
  /*end if Enter line button was hit */
 
 
@@ -653,7 +540,7 @@ if (isset($_POST['NewItem'])){
 					} /* end of the foreach loop to look for preexisting items of the same code */
 				}
 			}
-			if ($AlreadyOnThisOrder!=1 AND $Quantity>0){
+			if ($AlreadyOnThisOrder!=1 AND $Quantity > 0){
 				$sql = "SELECT description,
 											stockid,
 											units,
@@ -700,9 +587,9 @@ if (isset($_POST['NewItem'])){
 					$PurchDataResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 					if (DB_num_rows($PurchDataResult)==1){ //the purchasing data is set up
 						$PurchRow = DB_fetch_array($PurchDataResult);
-						$PurchPrice = $PurchRow['price'];
+						$PurchPrice = $PurchRow['price']/$PurchRow['conversionfactor'];
 						$ConversionFactor = $PurchRow['conversionfactor'];
-						$SupplierDescription = 	$PurchRow['supplierdescription'];
+						$SupplierDescription = 	$PurchRow['suppliers_partno'] .' - ' . $PurchRow['supplierdescription'];
 						$SuppliersUnitOfMeasure = $PurchRow['unitname'];
 						$SuppliersPartNo = $PurchRow['suppliers_partno'];
 						$LeadTime = $PurchRow['leadtime'];
@@ -719,8 +606,8 @@ if (isset($_POST['NewItem'])){
 																									$ItemCode,
 																									0, /*Serialised */
 																									0, /*Controlled */
-																									$Quantity, /* Qty */
-																									$ItemRow['description'],
+																									$Quantity*$ConversionFactor, /* Qty */
+																									$SupplierDescription,
 																									$PurchPrice,
 																									$ItemRow['units'],
 																									$ItemRow['stockact'],
@@ -744,7 +631,7 @@ if (isset($_POST['NewItem'])){
 																									$ItemRow['kgs'],
 																									'',
 																									$Quantity,
-																									$Quantity*$Purchprice );
+																									$Quantity*$PurchPrice );
 				} else { //no rows returned by the SQL to get the item
 					prnMsg (_('The item code') . ' ' . $ItemCode . ' ' . _('does not exist in the database and therefore cannot be added to the order'),'error');
 					if ($debug==1){
@@ -821,7 +708,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				<td class="number">' . $DisplayPrice . '</td>
 				<td><input type="text" class="number" name="ConversionFactor' . $POLine->LineNo .'" size="8" value="' . $POLine->ConversionFactor . '"></td>
 				<td><input type="text" class="number" name="SuppQty' . $POLine->LineNo .'" size="10" value="' . number_format($POLine->Quantity/$POLine->ConversionFactor,$POLine->DecimalPlaces) . '"></td>
-				<td>' . $POLine->SuppUOM . '</td>
+				<td>' . $POLine->SuppliersUnit . '</td>
 				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' .number_format(($POLine->Price *$POLine->ConversionFactor),2) .'"></td>
 				<td class="number">' . $DisplayLineTotal . '</td>
 				<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'].'" name="ReqDelDate' . $POLine->LineNo.'" size="10" value="' .$POLine->ReqDelDate .'"></td>
@@ -882,6 +769,164 @@ if (isset($_POST['NonStockOrder'])) {
 }
 
 /* Now show the stock item selection search stuff below */
+if (isset($_POST['Search'])){  /*ie seach for stock items */
+
+	if ($_POST['Keywords'] AND $_POST['StockCode']) {
+		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'), 'info' );
+	}
+	if ($_POST['Keywords']) {
+		//insert wildcard characters in spaces
+		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
+
+		if ($_POST['StockCat']=='All'){
+
+			$sql = "SELECT stockmaster.stockid,
+										stockmaster.description,
+										stockmaster.units,
+										unitsofmeasure.unitname
+							FROM stockmaster INNER JOIN stockcategory
+							ON stockmaster.categoryid=stockcategory.categoryid
+							LEFT JOIN purchdata
+							ON stockmaster.stockid=purchdata.stockid
+							LEFT JOIN unitsofmeasure 
+							ON unitsofmeasure.unitid=purchdata.suppliersuom
+							WHERE stockmaster.mbflag<>'D'
+							AND stockmaster.mbflag<>'K'
+							AND stockmaster.mbflag<>'G'
+							AND stockmaster.discontinued<>1
+							AND stockmaster.description " . LIKE . " '" . $SearchString ."'
+							AND (purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID."' 
+										OR purchdata.supplierno IS NULL)
+							ORDER BY stockmaster.stockid
+							LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+		} else {
+			$sql = "SELECT stockmaster.stockid,
+										stockmaster.description,
+										stockmaster.units,
+										unitsofmeasure.unitname
+							FROM stockmaster INNER JOIN stockcategory
+							ON stockmaster.categoryid=stockcategory.categoryid
+							LEFT JOIN purchdata
+							ON stockmaster.stockid=purchdata.stockid
+							LEFT JOIN unitsofmeasure 
+							ON unitsofmeasure.unitid=purchdata.suppliersuom
+							WHERE stockmaster.mbflag<>'D'
+							AND stockmaster.mbflag<>'K'
+							AND stockmaster.mbflag<>'G'
+							AND stockmaster.discontinued<>1
+							AND (purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID."' 
+										OR purchdata.supplierno IS NULL)
+							AND stockmaster.description " . LIKE . " '". $SearchString ."'
+							AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+							ORDER BY stockmaster.stockid
+							LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+		}
+
+	} elseif ($_POST['StockCode']){
+
+		$_POST['StockCode'] = '%' . $_POST['StockCode'] . '%';
+
+		if ($_POST['StockCat']=='All'){
+			$sql = "SELECT stockmaster.stockid,
+										stockmaster.description,
+										stockmaster.units,
+										unitsofmeasure.unitname
+							FROM stockmaster INNER JOIN stockcategory
+							ON stockmaster.categoryid=stockcategory.categoryid
+							LEFT JOIN purchdata
+							ON stockmaster.stockid=purchdata.stockid
+							LEFT JOIN unitsofmeasure 
+							ON unitsofmeasure.unitid=purchdata.suppliersuom
+							WHERE stockmaster.mbflag<>'D'
+							AND stockmaster.mbflag<>'K'
+							AND stockmaster.mbflag<>'G'
+							AND stockmaster.discontinued<>1
+							AND (purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID."' 
+										OR purchdata.supplierno IS NULL)
+							AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
+							ORDER BY stockmaster.stockid
+							LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+		} else {
+			$sql = "SELECT stockmaster.stockid,
+										stockmaster.description,
+										stockmaster.units,
+										unitsofmeasure.unitname
+							FROM stockmaster INNER JOIN stockcategory
+							ON stockmaster.categoryid=stockcategory.categoryid
+							LEFT JOIN purchdata
+							ON stockmaster.stockid=purchdata.stockid
+							LEFT JOIN unitsofmeasure 
+							ON unitsofmeasure.unitid=purchdata.suppliersuom
+							WHERE stockmaster.mbflag<>'D'
+							AND stockmaster.mbflag<>'K'
+							AND stockmaster.mbflag<>'G'
+							and stockmaster.discontinued<>1
+							AND (purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID."' 
+										OR purchdata.supplierno IS NULL)
+							AND stockmaster.stockid " . LIKE  . " '" . $_POST['StockCode'] . "'
+							AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+							ORDER BY stockmaster.stockid
+							LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+		}
+
+	} else {
+		if ($_POST['StockCat']=='All'){
+			$sql = "SELECT stockmaster.stockid,
+										stockmaster.description,
+										stockmaster.units,
+										unitsofmeasure.unitname
+							FROM stockmaster INNER JOIN stockcategory
+							ON stockmaster.categoryid=stockcategory.categoryid
+							LEFT JOIN purchdata
+							ON stockmaster.stockid=purchdata.stockid
+							LEFT JOIN unitsofmeasure 
+							ON unitsofmeasure.unitid=purchdata.suppliersuom
+							WHERE stockmaster.mbflag<>'D'
+							AND stockmaster.mbflag<>'K'
+							AND stockmaster.mbflag<>'G'
+							AND stockmaster.discontinued<>1
+							AND (purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID."' 
+										OR purchdata.supplierno IS NULL)
+							ORDER BY stockmaster.stockid
+							LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
+		} else {
+			$sql = "SELECT stockmaster.stockid,
+										stockmaster.description,
+										stockmaster.units,
+										unitsofmeasure.unitname
+							FROM stockmaster INNER JOIN stockcategory
+							ON stockmaster.categoryid=stockcategory.categoryid
+							LEFT JOIN purchdata
+							ON stockmaster.stockid=purchdata.stockid
+							LEFT JOIN unitsofmeasure 
+							ON unitsofmeasure.unitid=purchdata.suppliersuom
+							WHERE stockmaster.mbflag<>'D'
+							AND stockmaster.mbflag<>'K'
+							AND stockmaster.mbflag<>'G'
+							AND stockmaster.discontinued<>1
+							AND (purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID."' 
+										OR purchdata.supplierno IS NULL)
+							AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+							ORDER BY stockmaster.stockid
+							LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
+		}
+	}
+
+	$ErrMsg = _('There is a problem selecting the part records to display because');
+	$DbgMsg = _('The SQL statement that failed was');
+	$SearchResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+
+	if (DB_num_rows($SearchResult)==0 AND $debug==1){
+		prnMsg( _('There are no products to display matching the criteria provided'),'warn');
+	}
+	if (DB_num_rows($SearchResult)==1){
+
+		$myrow=DB_fetch_array($SearchResult);
+		$_GET['NewItem'] = $myrow['stockid'];
+		DB_data_seek($SearchResult,0);
+	}
+
+} //end of if search
 
 if (!isset($_GET['Edit'])) {
 	$sql='SELECT categoryid,
@@ -944,7 +989,8 @@ if (isset($SearchResult)) {
 	$TableHeader = '<tr>
 								<th>' . _('Code')  . '</th>
 								<th>' . _('Description') . '</th>
-								<th>' . _('Units') . '</th>
+								<th>' . _('Our Units') . '</th>
+								<th>' . _('Supplier/Order') . '<br />' .  _('Units') . '</th>
 								<th colspan=2><a href="#end">'._('Go to end of list').'</a></th>
 								</tr>';
 	echo $TableHeader;
@@ -962,9 +1008,8 @@ if (isset($SearchResult)) {
 			$k=1;
 		}
 
-		$filename = $myrow['stockid'] . '.jpg';
-		if (file_exists( $_SESSION['part_pics_dir'] . '/' . $filename) ) {
-
+		$FileName = $myrow['stockid'] . '.jpg';
+		if (file_exists( $_SESSION['part_pics_dir'] . '/' . $FileName) ) {
 			$ImageSource = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] .
 				'.jpg" width="50" height="50">';
 
@@ -972,34 +1017,19 @@ if (isset($SearchResult)) {
 			$ImageSource = '<i>'._('No Image').'</i>';
 		}
 
-			$UomSQL="SELECT conversionfactor,
-												suppliersuom,
-												unitsofmeasure.unitname
-									FROM purchdata
-									LEFT JOIN unitsofmeasure
-									ON purchdata.suppliersuom=unitsofmeasure.unitid
-									WHERE supplierno='".$_SESSION['PO'.$identifier]->SupplierID."'
-									AND stockid='".$myrow['stockid']."'";
-
-			$UomResult=DB_query($UomSQL, $db);
-			if (DB_num_rows($UomResult)>0) {
-				$UomRow=DB_fetch_array($UomResult);
-				if (strlen($UomRow['suppliersuom'])>0) {
-					$Uom=$UomRow['unitname'];
-				} else {
-					$Uom=$myrow['units'];
-				}
-			} else {
-				$Uom=$myrow['units'];
-			}
-			echo "<td>".$myrow['stockid']."</td>
-			<td>".$myrow['description']."</td>
-			<td>".$Uom."</td>
-			<td>".$ImageSource."</td>
-			<td><input class='number' type='text' size=6 value=0 name='NewQty".$myrow['stockid']."'></td>
-			<input type='hidden' size=6 value=".$Uom." name=uom>
-			</tr>";
-
+		if (strlen($myrow['unitname'])>0) {
+			$OrderUnits=$myrow['unitname'];
+		} else {
+			$OrderUnits=$myrow['units'];
+		}
+		echo '<td>' . $myrow['stockid'] .'</td>
+					<td>' . $myrow['description'] .'</td>
+					<td>' . $myrow['units'] .'</td>
+					<td>' . $OrderUnits . '</td>
+					<td>' . $ImageSource . '</td>
+					<td><input class="number" type="text" size="6" value="0" name="NewQty' . $myrow['stockid'] . '"></td>
+					</tr>';
+					
 		$PartsDisplayed++;
 		if ($PartsDisplayed == $Maximum_Number_Of_Parts_To_Show){
 			break;
@@ -1009,9 +1039,7 @@ if (isset($SearchResult)) {
 #end of while loop
 	echo '</table>';
 	if ($PartsDisplayed == $Maximum_Number_Of_Parts_To_Show){
-
-	/*$Maximum_Number_Of_Parts_To_Show defined in config.php */
-
+		/*$Maximum_Number_Of_Parts_To_Show defined in config.php */
 		prnMsg( _('Only the first') . ' ' . $Maximum_Number_Of_Parts_To_Show . ' ' . _('can be displayed') . '. ' .
 			_('Please restrict your search to only the parts required'),'info');
 	}

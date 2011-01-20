@@ -78,8 +78,8 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	include('includes/PDFStarter.php');
 	$PageNumber = 0;
 	$FontSize = 10;
-	$pdf->addinfo('Title', _('Petty Cash Report Of Tab') );
-	$pdf->addinfo('Subject', _('Petty Cash Report Of Tab') );
+	$pdf->addInfo('Title', _('Petty Cash Report Of Tab') );
+	$pdf->addInfo('Subject', _('Petty Cash Report Of Tab') );
 	$line_height = 12;
 
 	$SQL_FromDate = FormatDateForSQL($_POST['FromDate']);

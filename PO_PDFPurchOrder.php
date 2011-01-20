@@ -8,7 +8,7 @@ include('includes/DefinePOClass.php');
 if(!isset($_GET['OrderNo']) && !isset($_POST['OrderNo'])){
 	$title = _('Select a Purchase Order');
 	include('includes/header.inc');
-	echo '<div class="centre"><br><br><br>';
+	echo '<div class="centre"><br /><br /><br />';
 	prnMsg( _('Select a Purchase Order Number to Print before calling this page') , 'error');
 	echo '<br />
 				<br />
@@ -26,8 +26,8 @@ if(!isset($_GET['OrderNo']) && !isset($_POST['OrderNo'])){
 	include('includes/footer.inc');
 	exit();
 
-	echo '<div class="centre"><br><br><br>' . _('This page must be called with a purchase order number to print');
-	echo '<br><a href="'. $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a></div>';
+	echo '<div class="centre"><br /><br /><br />' . _('This page must be called with a purchase order number to print');
+	echo '<br /><a href="'. $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a></div>';
 	exit;
 }
 if (isset($_GET['OrderNo'])){
@@ -36,28 +36,7 @@ if (isset($_GET['OrderNo'])){
 	$OrderNo = $_POST['OrderNo'];
 }
 $title = _('Print Purchase Order Number').' '. $OrderNo;
-/* If we are not previewing the order then find
- * the order status */
-if ($OrderNo != 'Preview') { // then we are printing a real order
-	$sql="SELECT status
-				FROM purchorders
-				WHERE orderno='".$OrderNo."'";
-	$result=DB_query($sql, $db);
-	$myrow=DB_fetch_array($result);
-	$OrderStatus=$myrow['status'];
-} else {
-	/* otherwise set it to Printed */
-	$_POST['ShowAmounts']='Yes';
-	$OrderStatus = _('Printed');
-	$MakePDFThenDisplayIt = True;
-}
-if ($OrderStatus != 'Authorised' AND $OrderStatus != 'Printed') {
-	include('includes/header.inc');
-	prnMsg( _('Purchase orders can only be printed once they have been authorised') . '. ' .
-		_('This order is currently at a status of') . ' ' . _($OrderStatus),'warn');
-	include('includes/footer.inc');
-	exit;
-}
+
 if ($_POST['PrintOrEmail']=='Email' AND ! IsEmailAddress($_POST['EmailTo'])){
 	include('includes/header.inc');
 	prnMsg( _('The email address entered does not appear to be valid. No emails have been sent.'),'warn');
@@ -73,6 +52,10 @@ if (isset($_GET['ViewingOnly']) AND $_GET['ViewingOnly']!='') {
 /* If we are previewing the order then we dont want to email it */
 if ($OrderNo == 'Preview') { //OrderNo is set to 'Preview' when just looking at the format of the printed order
 	$_POST['PrintOrEmail']='Print';
+	/*These are required to kid the system - I hate this */
+	$_POST['ShowAmounts']='Yes';
+	$OrderStatus = _('Printed');
+	$MakePDFThenDisplayIt = True;
 }
 if (isset($_POST['DoIt'])  AND ($_POST['PrintOrEmail']=='Print' OR $ViewingOnly==1) ){
 	$MakePDFThenDisplayIt = True;
@@ -113,7 +96,7 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 	if (DB_num_rows($result)==0){ /*There is no order header returned */
 		$title = _('Print Purchase Order Error');
 		include('includes/header.inc');
-		echo '<div class="centre"><br><br><br>';
+		echo '<div class="centre"><br /><br /><br />';
 		prnMsg( _('Unable to Locate Purchase Order Number') . ' : ' . $OrderNo . ' ', 'error');
 		echo '<br />
 					<br />
@@ -125,21 +108,30 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 						</td>
 						</tr>
 					</table>
-					</div><br><br><br>';
+					</div><br /><br /><br />';
 		include('includes/footer.inc');
 		exit();
-	} elseif (DB_num_rows($result)==1){ /*There is only one order header returned */
+	} elseif (DB_num_rows($result)==1){ /*There is only one order header returned  (as it should be!)*/
+
 		$POHeader = DB_fetch_array($result);
+		
+		if ($POHeader['status'] != 'Authorised' AND $POHeader['status'] != 'Printed') {
+			include('includes/header.inc');
+			prnMsg( _('Purchase orders can only be printed once they have been authorised') . '. ' . _('This order is currently at a status of') . ' ' . _($OrderStatus),'warn');
+			include('includes/footer.inc');
+			exit;
+		}
+		
 		if ($ViewingOnly==0) {
 			if ($POHeader['allowprint']==0){
 				$title = _('Purchase Order Already Printed');
 				include('includes/header.inc');
 				echo '<p>';
 				prnMsg( _('Purchase Order Number').' ' . $OrderNo . ' '. _('has previously been printed') . '. ' . _('It was printed on'). ' ' .
-				ConvertSQLDate($POHeader['dateprinted']) . '<br>'.
-					_('To re-print the order it must be modified to allow a reprint'). '<br>'.
+				ConvertSQLDate($POHeader['dateprinted']) . '<br />'.
+					_('To re-print the order it must be modified to allow a reprint'). '<br />'.
 					_('This check is there to ensure that duplicate purchase orders are not sent to the supplier resulting in several deliveries of the same supplies'), 'warn');
-				echo '<br><table class="table_index">
+				echo '<br /><table class="table_index">
 					<tr><td class="menu_group_item">
  					<li><a href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . 'OrderNo=' . $OrderNo . '&ViewingOnly=1">'.
 				_('Print This Order as a Copy'). '</a>
@@ -201,13 +193,13 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 									deliverydate,
 									itemdescription,
 									unitprice,
-									unitname as units,
+									suppliersunit,
 									quantityord,
-									decimalplaces
+									decimalplaces,
+									conversionfactor,
+									suppliers_partno
 							FROM purchorderdetails LEFT JOIN stockmaster
 								ON purchorderdetails.itemcode=stockmaster.stockid
-							LEFT JOIN unitsofmeasure
-								ON purchorderdetails.uom=unitsofmeasure.unitid
 							WHERE orderno ='" . $OrderNo ."'";
 		$result=DB_query($sql,$db);
 	}
@@ -228,9 +220,9 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				$POLine['quantityord']=999.99;
 				$POLine['decimalplaces']=2;
 			}
-			$DisplayQty = number_format($POLine['quantityord'],$POLine['decimalplaces']);
+			$DisplayQty = number_format($POLine['quantityord']/$POLine['conversionfactor'],$POLine['decimalplaces']);
 			if ($_POST['ShowAmounts']=='Yes'){
-				$DisplayPrice = number_format($POLine['unitprice'],2);
+				$DisplayPrice = number_format($POLine['unitprice']*$POLine['conversionfactor'],2);
 			} else {
 				$DisplayPrice = '----';
 			}
@@ -240,29 +232,13 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			} else {
 				$DisplayLineTotal = '----';
 			}
-			/* Dont search for supplier data if it is a preview */
-			if ($OrderNo !='Preview') {
-				//check the supplier code from code item
-				$sqlsupp = "SELECT supplierdescription
-											FROM purchdata
-											WHERE stockid='" . $POLine['itemcode'] . "'
-											AND supplierno ='" . $POHeader['supplierno'] . "'
-											AND price='".$POLine['unitprice']."'";
-				$SuppResult = DB_query($sqlsupp,$db);
-				$SuppDescRow = DB_fetch_row($SuppResult);
-			} else {
-				$SuppDescRow[0]='';
-			}
-			if($SuppDescRow[0]==""){
-				$Desc=$POLine['itemdescription'];
-			}else{
-				$Desc= $SuppDescRow['0'].' - '.$POLine['itemdescription']."";
-			}
+			$Desc=$POLine['itemdescription'];
+			
 			$OrderTotal += ($POLine['unitprice']*$POLine['quantityord']);
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x,$YPos,$FormDesign->Data->Column1->Length,$FormDesign->Data->Column1->FontSize,$POLine['itemcode'], 'left');
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize,$Desc, 'left');
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column3->x,$YPos,$FormDesign->Data->Column3->Length,$FormDesign->Data->Column3->FontSize,$DisplayQty, 'left');
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column4->x,$YPos,$FormDesign->Data->Column4->Length,$FormDesign->Data->Column4->FontSize,$POLine['units'], 'left');
+			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column4->x,$YPos,$FormDesign->Data->Column4->Length,$FormDesign->Data->Column4->FontSize,$POLine['suppliersunit'], 'left');
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x,$YPos,$FormDesign->Data->Column5->Length,$FormDesign->Data->Column5->FontSize,$DisplayDelDate, 'left');
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column6->x,$YPos,$FormDesign->Data->Column6->Length,$FormDesign->Data->Column6->FontSize,$DisplayPrice, 'right');
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column7->x,$YPos,$FormDesign->Data->Column7->Length,$FormDesign->Data->Column7->FontSize,$DisplayLineTotal, 'right');
@@ -342,7 +318,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	if ($ViewingOnly==1){
 		echo '<input type=hidden name="ViewingOnly" VALUE=1>';
 	}
-	echo '<br><br>';
+	echo '<br /><br />';
 	echo '<input type=hidden name="OrderNo" VALUE="'. $OrderNo. '">';
 	echo '<table><tr><td>'. _('Print or Email the Order'). '</td><td>
 		<select name="PrintOrEmail">';
@@ -391,15 +367,15 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			}
 			echo '</select></td></tr></table>';
 		} else {
-			echo '</table><br>';
+			echo '</table><br />';
 			prnMsg ( _('There are no contacts defined for the supplier of this order') . '. ' .
 				_('You must first set up supplier contacts before emailing an order'), 'error');
-			echo '<br>';
+			echo '<br />';
 		}
 	} else {
 		echo '</table>';
 	}
-	echo '<br><div class="centre"><input type=submit name="DoIt" VALUE="' . _('OK') . '"></div>';
+	echo '<br /><div class="centre"><input type=submit name="DoIt" VALUE="' . _('OK') . '"></div>';
 	echo '</form>';
 	include('includes/footer.inc');
 }

@@ -5,7 +5,7 @@
 
 include('includes/DefineReceiptClass.php');
 
-//$PageSecurity = 3;
+//$PageSecurity = 3; now retrieved from the DB
 include('includes/session.inc');
 
 $title = _('Receipt Entry');
@@ -249,7 +249,7 @@ if (isset($_POST['CommitBatch'])){
 			$k=1;
 		}
 
-		$SQL = "select accountname FROM chartmaster WHERE accountcode='" . $ReceiptItem->GLCode . "'";
+		$SQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $ReceiptItem->GLCode . "'";
 		$Result=DB_query($SQL,$db);
 		$myrow=DB_fetch_array($Result);
 
@@ -267,13 +267,13 @@ if (isset($_POST['CommitBatch'])){
 		if ($ReceiptItem->GLCode !=''){ //so its a GL receipt
 			if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter a GLTrans record */
 				 $SQL = "INSERT INTO gltrans (type,
-			 			typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount,
-						tag)
+															 			typeno,
+																		trandate,
+																		periodno,
+																		account,
+																		narrative,
+																		amount,
+																		tag)
 					VALUES (
 						12,
 						'" . $_SESSION['ReceiptBatch']->BatchNo . "',
@@ -341,15 +341,15 @@ if (isset($_POST['CommitBatch'])){
 
 				$PaymentTransNo = GetNextTransNo( 1, $db);
 				$SQL="INSERT INTO banktrans (transno,
-							type,
-							bankact,
-							ref,
-							exrate,
-							functionalexrate,
-							transdate,
-							banktranstype,
-							amount,
-							currcode)
+																			type,
+																			bankact,
+																			ref,
+																			exrate,
+																			functionalexrate,
+																			transdate,
+																			banktranstype,
+																			amount,
+																			currcode)
 						VALUES (
 							'" . $PaymentTransNo . "',
 							1,
@@ -374,18 +374,18 @@ if (isset($_POST['CommitBatch'])){
 			/*Create a DebtorTrans entry for each customer deposit */
 
 			$SQL = "INSERT INTO debtortrans (transno,
-							type,
-							debtorno,
-							branchcode,
-							trandate,
-							inputdate,
-							prd,
-							reference,
-							tpe,
-							rate,
-							ovamount,
-							ovdiscount,
-							invtext)
+																			type,
+																			debtorno,
+																			branchcode,
+																			trandate,
+																			inputdate,
+																			prd,
+																			reference,
+																			tpe,
+																			rate,
+																			ovamount,
+																			ovdiscount,
+																			invtext)
 					VALUES (
 						'" . $_SESSION['ReceiptBatch']->BatchNo . "',
 						12,
@@ -426,12 +426,12 @@ if (isset($_POST['CommitBatch'])){
 		if ($BatchReceiptsTotal!=0){
 			/* Bank account entry first */
 			$SQL="INSERT INTO gltrans (type,
-					typeno,
-					trandate,
-					periodno,
-					account,
-					narrative,
-					amount)
+																typeno,
+																trandate,
+																periodno,
+																account,
+																narrative,
+																amount)
 				VALUES (
 					12,
 					'" . $_SESSION['ReceiptBatch']->BatchNo . "',
@@ -448,15 +448,15 @@ if (isset($_POST['CommitBatch'])){
 			/*now enter the BankTrans entry */
 
 			$SQL="INSERT INTO banktrans (type,
-					transno,
-					bankact,
-					ref,
-					exrate,
-					functionalexrate,
-					transdate,
-					banktranstype,
-					amount,
-					currcode)
+																	transno,
+																	bankact,
+																	ref,
+																	exrate,
+																	functionalexrate,
+																	transdate,
+																	banktranstype,
+																	amount,
+																	currcode)
 				VALUES (
 					12,
 					'" . $_SESSION['ReceiptBatch']->BatchNo . "',
@@ -476,21 +476,21 @@ if (isset($_POST['CommitBatch'])){
 		if ($BatchDebtorTotal!=0){
 			/* Now Credit Debtors account with receipts + discounts */
 			$SQL="INSERT INTO gltrans ( type,
-					typeno,
-					trandate,
-					periodno,
-					account,
-					narrative,
-					amount)
-			VALUES (
-				12,
-				'" . $_SESSION['ReceiptBatch']->BatchNo . "',
-				'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
-				'" . $PeriodNo . "',
-				'". $_SESSION['CompanyRecord']['debtorsact'] . "',
-				'" . $_SESSION['ReceiptBatch']->Narrative . "',
-				'" . -$BatchDebtorTotal . "'
-				)";
+																typeno,
+																trandate,
+																periodno,
+																account,
+																narrative,
+																amount)
+						VALUES (
+							12,
+							'" . $_SESSION['ReceiptBatch']->BatchNo . "',
+							'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
+							'" . $PeriodNo . "',
+							'". $_SESSION['CompanyRecord']['debtorsact'] . "',
+							'" . $_SESSION['ReceiptBatch']->Narrative . "',
+							'" . -$BatchDebtorTotal . "'
+							)";
 			$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
 			$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -500,21 +500,21 @@ if (isset($_POST['CommitBatch'])){
 		if ($BatchDiscount!=0){
 			/* Now Debit Discount account with discounts allowed*/
 			$SQL="INSERT INTO gltrans ( type,
-					typeno,
-					trandate,
-					periodno,
-					account,
-					narrative,
-					amount)
-				VALUES (
-					12,
-					'" . $_SESSION['ReceiptBatch']->BatchNo . "',
-					'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
-					'" . $PeriodNo . "',
-					'" . $_SESSION['CompanyRecord']['pytdiscountact'] . "',
-					'" . $_SESSION['ReceiptBatch']->Narrative . "',
-					'" . $BatchDiscount . "'
-				)";
+																typeno,
+																trandate,
+																periodno,
+																account,
+																narrative,
+																amount)
+						VALUES (
+								12,
+								'" . $_SESSION['ReceiptBatch']->BatchNo . "',
+								'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
+								'" . $PeriodNo . "',
+								'" . $_SESSION['CompanyRecord']['pytdiscountact'] . "',
+								'" . $_SESSION['ReceiptBatch']->Narrative . "',
+								'" . $BatchDiscount . "'
+							)";
 			$DbgMsg = _('The SQL that failed to insert the GL transaction for the payment discount debit was');
 			$ErrMsg = _('Cannot insert a GL transaction for the payment discount debit');
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -525,7 +525,7 @@ if (isset($_POST['CommitBatch'])){
 	$ErrMsg = _('Cannot commit the changes');
 	$DbgMsg = _('The SQL that failed was');
 	$result = DB_Txn_Commit($db);
-
+	echo '<br />';
 	prnMsg( _('Receipt batch') . ' ' . $_SESSION['ReceiptBatch']->BatchNo . ' ' . _('has been successfully entered into the database'),'success');
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . '<a href="' . $rootpath . '/PDFBankingSummary.php?BatchNo=' . $_SESSION['ReceiptBatch']->BatchNo . '">' . _('Print PDF Batch Summary') . '</a></p>';
@@ -606,30 +606,30 @@ customer record returned by the search - this record is then auto selected */
 	}
 
 	$SQL = "SELECT debtorsmaster.name,
-			debtorsmaster.pymtdiscount,
-			debtorsmaster.currcode,
-			currencies.currency,
-			currencies.rate,
-			paymentterms.terms,
-			debtorsmaster.creditlimit,
-			holdreasons.dissallowinvoices,
-			holdreasons.reasondescription,
-			SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) AS balance,
-			SUM(CASE WHEN paymentterms.daysbeforedue > 0  THEN
-				CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >= paymentterms.daysbeforedue  THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
-			ELSE
-				CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1','MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ")) >= 0 THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
-			END) AS due,
-			SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-				CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue	AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ") THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight - debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
-			ELSE
-				CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1', 'MONTH') ."), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))', 'DAY') . ")) >= " . $_SESSION['PastDueDays1'] . ") THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
-			END) AS overdue1,
-			SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-				CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
-			ELSE
-				CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1','MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ")) >= " . $_SESSION['PastDueDays2'] . ") THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
-			END) AS overdue2
+				debtorsmaster.pymtdiscount,
+				debtorsmaster.currcode,
+				currencies.currency,
+				currencies.rate,
+				paymentterms.terms,
+				debtorsmaster.creditlimit,
+				holdreasons.dissallowinvoices,
+				holdreasons.reasondescription,
+				SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) AS balance,
+				SUM(CASE WHEN paymentterms.daysbeforedue > 0  THEN
+					CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >= paymentterms.daysbeforedue  THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+				ELSE
+					CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1','MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ")) >= 0 THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+				END) AS due,
+				SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
+					CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue	AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ") THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight - debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+				ELSE
+					CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1', 'MONTH') ."), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))', 'DAY') . ")) >= " . $_SESSION['PastDueDays1'] . ") THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+				END) AS overdue1,
+				SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
+					CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+				ELSE
+					CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1','MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ")) >= " . $_SESSION['PastDueDays2'] . ") THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+				END) AS overdue2
 			FROM debtorsmaster,
 				paymentterms,
 				holdreasons,
@@ -665,22 +665,22 @@ customer record returned by the search - this record is then auto selected */
 		$NIL_BALANCE = True;
 
 		$SQL = "SELECT debtorsmaster.name,
-				debtorsmaster.pymtdiscount,
-				currencies.currency,
-				currencies.rate,
-				paymentterms.terms,
-				debtorsmaster.creditlimit,
-				debtorsmaster.currcode,
-				holdreasons.dissallowinvoices,
-				holdreasons.reasondescription
-			FROM debtorsmaster,
-				paymentterms,
-				holdreasons,
-				currencies
-			WHERE debtorsmaster.paymentterms = paymentterms.termsindicator
-			AND debtorsmaster.currcode = currencies.currabrev
-			AND debtorsmaster.holdreason = holdreasons.reasoncode
-			AND debtorsmaster.debtorno = '" . $_POST['CustomerID'] . "'";
+									debtorsmaster.pymtdiscount,
+									currencies.currency,
+									currencies.rate,
+									paymentterms.terms,
+									debtorsmaster.creditlimit,
+									debtorsmaster.currcode,
+									holdreasons.dissallowinvoices,
+									holdreasons.reasondescription
+								FROM debtorsmaster,
+									paymentterms,
+									holdreasons,
+									currencies
+								WHERE debtorsmaster.paymentterms = paymentterms.termsindicator
+								AND debtorsmaster.currcode = currencies.currabrev
+								AND debtorsmaster.holdreason = holdreasons.reasoncode
+								AND debtorsmaster.debtorno = '" . $_POST['CustomerID'] . "'";
 
 		$ErrMsg = _('The customer details could not be retrieved because');
 		$DbgMsg = _('The SQL that failed was');
@@ -820,9 +820,9 @@ include('includes/GetPaymentMethods.php');
 
 foreach ($ReceiptTypes as $RcptType) {
 	if (isset($_POST['ReceiptType']) and $_POST['ReceiptType']==$RcptType){
-		echo "<option selected Value='$RcptType'>$RcptType";
+		echo '<option selected value="' . $RcptType . '">' . $RcptType .'</option>';
 	} else {
-		echo "<option Value='$RcptType'>$RcptType";
+		echo '<option Value="' .$RcptType . '">' . $RcptType .'</option>';
 	}
 }
 echo '</select></td></tr>';
@@ -939,14 +939,14 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 	echo '<tr><td>' . _('Select Tag') . ':</td><td><select name="tag">';
 
 	$SQL = 'SELECT tagref,
-				tagdescription
-		FROM tags
-		ORDER BY tagref';
+								tagdescription
+					FROM tags
+					ORDER BY tagref';
 
 	$result=DB_query($SQL,$db);
 	echo '<option value=0></option>';
 	while ($myrow=DB_fetch_array($result)){
-		if (isset($_POST['tag']) and $_POST['tag']==$myrow["tagref"]){
+		if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
 		echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
 		} else {
 			echo '<option value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
@@ -1017,12 +1017,11 @@ if (((isset($_SESSION['CustomerRecord'])
 	echo '<br><div class="centre"><input tabindex=14 type="submit" name="Process" value="' . _('Accept') . '">';
 	echo '<input tabindex=14 type="submit" name="Cancel" value="' . _('Cancel') . '"></div>';
 
-} elseif (isset($_SESSION['ReceiptBatch']) && !isset($_POST['GLEntry'])){
+} elseif (isset($_SESSION['ReceiptBatch']) AND !isset($_POST['GLEntry'])){
 
 	/*Show the form to select a customer */
 	echo '<br />';
 
-	echo prnMsg($msg, 'warn');
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Select a Customer') . '</b>';
 	echo '<table cellpadding=3 colspan=4  class=selection>';
 	echo '<tr><td>' . _('Text in the Customer') . ' ' . '<b>' . _('name') . '</b>:</td>';
@@ -1036,11 +1035,7 @@ if (((isset($_SESSION['CustomerRecord'])
 	echo '</tr></table>';
 	echo '<div class="centre"><br>';
 	echo '<input tabindex=11 type=submit name="Search" value="' . _('Search Now') . '">';
-	echo '<br/><br/><input tabindex=12 type=submit name="GLEntry" value="' . _('Enter A GL Receipt') . '"><br />';
-
-	if (count($_SESSION['ReceiptBatch']->Items) > 0){
-		echo '<br/><br/><input tabindex=13 type=submit name="CommitBatch" VALUE="' . _('Accept and Process Batch') . '"></div>';
-	}
+	echo '<br/><br/><input tabindex=12 type=submit name="GLEntry" value="' . _('Enter A GL Receipt') . '"><br /></div>';
 
 	if (isset($CustomerSearchResult)) {
 
@@ -1078,8 +1073,10 @@ if (((isset($_SESSION['CustomerRecord'])
 
 		echo '</table>';
 
+	}	//end if results to show
+	if (isset($_SESSION['ReceiptBatch']->Items) and count($_SESSION['ReceiptBatch']->Items) > 0){
+		echo '<div class="centre"><br/><input tabindex=13 type=submit name="CommitBatch" VALUE="' . _('Accept and Process Batch') . '"></div>';
 	}
-	//end if results to show
 }
 
 echo '</form>';

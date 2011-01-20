@@ -57,7 +57,7 @@ if (isset($_GET['NewContract']) AND isset($_GET['SelectedCustomer'])) {
 		 * */
 }
 
-if(isset($_SESSION['Contract'.$identifier]) AND
+if (isset($_SESSION['Contract'.$identifier]) AND
 			(isset($_POST['EnterContractBOM'])
 				OR isset($_POST['EnterContractRequirements']))){
 	/**  Ensure session variables updated */
@@ -132,7 +132,6 @@ if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION[
 		$result  =  move_uploaded_file($_FILES['Drawing']['tmp_name'], $filename);
 		$message = ($result)?_('File url') ."<a href='". $filename ."'>" .  $filename . '</a>' : _('Something is wrong with uploading the file');
 	}
- /* EOR Add Image upload for New Item  - by Ori */
 }
 
 
@@ -281,17 +280,17 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 	}
 
 	$sql = "SELECT contractref,
-					debtorno,
-					branchcode,
-					categoryid,
-					loccode,
-					requireddate,
-					margin,
-					customerref,
-					exrate,
-					status
-			FROM contracts
-			WHERE contractref='" . $_POST['ContractRef'] . "'";
+								debtorno,
+								branchcode,
+								categoryid,
+								loccode,
+								requireddate,
+								margin,
+								customerref,
+								exrate,
+								status
+				FROM contracts
+				WHERE contractref='" . $_POST['ContractRef'] . "'";
 
 	$result = DB_query($sql,$db);
 	if (DB_num_rows($result)==1){ // then we have an existing contract with this contractref
@@ -317,13 +316,13 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 			$ErrMsg = _('Could not add a component to the contract bill of material');
 			foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component){
 				$sql = "INSERT INTO contractbom (contractref,
-												stockid,
-												workcentreadded,
-												quantity)
-								VALUES ( '" . $_POST['ContractRef'] . "',
-										'" . $Component->StockID . "',
-										'" . $WorkCentre . "',
-										'" . $Component->Quantity . "')";
+																				stockid,
+																				workcentreadded,
+																				quantity)
+																VALUES ( '" . $_POST['ContractRef'] . "',
+																		'" . $Component->StockID . "',
+																		'" . $WorkCentre . "',
+																		'" . $Component->Quantity . "')";
 				$result = DB_query($sql,$db,$ErrMsg);
 			}
 
@@ -332,13 +331,13 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 			$ErrMsg = _('Could not add a requirement to the contract requirements');
 			foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $Requirement){
 				$sql = "INSERT INTO contractreqts (contractref,
-												requirement,
-												costperunit,
-												quantity)
-								VALUES ( '" . $_POST['ContractRef'] . "',
-										'" . $Requirement->Requirement . "',
-										'" . $Requirement->CostPerUnit . "',
-										'" . $Requirement->Quantity . "')";
+																				requirement,
+																				costperunit,
+																				quantity)
+																VALUES ( '" . $_POST['ContractRef'] . "',
+																		'" . $Requirement->Requirement . "',
+																		'" . $Requirement->CostPerUnit . "',
+																		'" . $Requirement->Quantity . "')";
 				$result = DB_query($sql,$db,$ErrMsg);
 			}
 
@@ -358,9 +357,9 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 			$ContractPrice = ($ContractBOMCost+$ContractReqtsCost)/((100-$_SESSION['Contract'.$identifier]->Margin)/100);
 
 			$sql = "UPDATE stockmaster SET description='" . $_SESSION['Contract'.$identifier]->ContractDescription . "',
-										longdescription='" . $_SESSION['Contract'.$identifier]->ContractDescription . "',
-										categoryid = '" . $_SESSION['Contract'.$identifier]->CategoryID . "',
-										materialcost= '" . $ContractCost . "'
+																		longdescription='" . $_SESSION['Contract'.$identifier]->ContractDescription . "',
+																		categoryid = '" . $_SESSION['Contract'.$identifier]->CategoryID . "',
+																		materialcost= '" . $ContractCost . "'
 								WHERE stockid ='" . $_SESSION['Contract'.$identifier]->ContractRef."'";
 			$ErrMsg =  _('The contract item could not be updated because');
 			$DbgMsg = _('The SQL that was used to update the contract item failed was');
@@ -368,9 +367,9 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 
 			//update the quotation
 			$sql = "UPDATE salesorderdetails
-						SET unitprice = '" . $ContractPrice* $_SESSION['Contract'.$identifier]->ExRate . "'
-						WHERE stkcode='" .  $_SESSION['Contract'.$identifier]->ContractRef . "'
-						AND orderno='" .  $_SESSION['Contract'.$identifier]->OrderNo . "'";
+								SET unitprice = '" . $ContractPrice* $_SESSION['Contract'.$identifier]->ExRate . "'
+								WHERE stkcode='" .  $_SESSION['Contract'.$identifier]->ContractRef . "'
+								AND orderno='" .  $_SESSION['Contract'.$identifier]->OrderNo . "'";
 			$ErrMsg = _('The contract quotation could not be updated because');
 			$DbgMsg = _('The SQL that failed to update the quotation was');
 			$UpdQuoteResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -521,58 +520,57 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 	//start a DB transaction
 	$Result = DB_Txn_Begin($db);
 	$OrderNo = GetNextTransNo(30, $db);
-	$HeaderSQL = "INSERT INTO salesorders (
-								orderno,
-								debtorno,
-								branchcode,
-								customerref,
-								orddate,
-								ordertype,
-								shipvia,
-								deliverto,
-								deladd1,
-								deladd2,
-								deladd3,
-								deladd4,
-								deladd5,
-								deladd6,
-								contactphone,
-								contactemail,
-								fromstkloc,
-								deliverydate,
-								quotedate,
-								quotation)
-							VALUES (
-								'". $OrderNo . "',
-								'" . DB_escape_string($_SESSION['Contract'.$identifier]->DebtorNo)  . "',
-								'" . DB_escape_string($_SESSION['Contract'.$identifier]->BranchCode) . "',
-								'". DB_escape_string($_SESSION['Contract'.$identifier]->CustomerRef) ."',
-								'" . DB_escape_string(Date('Y-m-d H:i')) . "',
-								'" . DB_escape_string($CustomerDetailsRow['salestype']) . "',
-								'" . DB_escape_string($CustomerDetailsRow['defaultshipvia']) ."',
-								'". DB_escape_string($CustomerDetailsRow['brname']) . "',
-								'" . DB_escape_string($CustomerDetailsRow['braddress1']) . "',
-								'" . DB_escape_string($CustomerDetailsRow['braddress2']) . "',
-								'" . DB_escape_string($CustomerDetailsRow['braddress3']) . "',
-								'" . DB_escape_string($CustomerDetailsRow['braddress4']) . "',
-								'" . DB_escape_string($CustomerDetailsRow['braddress5']) . "',
-								'" . DB_escape_string($CustomerDetailsRow['braddress6']) . "',
-								'" . DB_escape_string($CustomerDetailsRow['phoneno']) . "',
-								'" . DB_escape_string($CustomerDetailsRow['email']) . "',
-								'" . DB_escape_string($_SESSION['Contract'.$identifier]->LocCode) ."',
-								'" . FormatDateForSQL($_SESSION['Contract'.$identifier]->RequiredDate) . "',
-								'" . Date('Y-m-d') . "',
-								'1' )";
+	$HeaderSQL = "INSERT INTO salesorders (	orderno,
+																				debtorno,
+																				branchcode,
+																				customerref,
+																				orddate,
+																				ordertype,
+																				shipvia,
+																				deliverto,
+																				deladd1,
+																				deladd2,
+																				deladd3,
+																				deladd4,
+																				deladd5,
+																				deladd6,
+																				contactphone,
+																				contactemail,
+																				fromstkloc,
+																				deliverydate,
+																				quotedate,
+																				quotation)
+																			VALUES (
+																				'". $OrderNo . "',
+																				'" . DB_escape_string($_SESSION['Contract'.$identifier]->DebtorNo)  . "',
+																				'" . DB_escape_string($_SESSION['Contract'.$identifier]->BranchCode) . "',
+																				'". DB_escape_string($_SESSION['Contract'.$identifier]->CustomerRef) ."',
+																				'" . DB_escape_string(Date('Y-m-d H:i')) . "',
+																				'" . DB_escape_string($CustomerDetailsRow['salestype']) . "',
+																				'" . DB_escape_string($CustomerDetailsRow['defaultshipvia']) ."',
+																				'". DB_escape_string($CustomerDetailsRow['brname']) . "',
+																				'" . DB_escape_string($CustomerDetailsRow['braddress1']) . "',
+																				'" . DB_escape_string($CustomerDetailsRow['braddress2']) . "',
+																				'" . DB_escape_string($CustomerDetailsRow['braddress3']) . "',
+																				'" . DB_escape_string($CustomerDetailsRow['braddress4']) . "',
+																				'" . DB_escape_string($CustomerDetailsRow['braddress5']) . "',
+																				'" . DB_escape_string($CustomerDetailsRow['braddress6']) . "',
+																				'" . DB_escape_string($CustomerDetailsRow['phoneno']) . "',
+																				'" . DB_escape_string($CustomerDetailsRow['email']) . "',
+																				'" . DB_escape_string($_SESSION['Contract'.$identifier]->LocCode) ."',
+																				'" . FormatDateForSQL($_SESSION['Contract'.$identifier]->RequiredDate) . "',
+																				'" . Date('Y-m-d') . "',
+																				'1' )";
 
 	$ErrMsg = _('The quotation cannot be added because');
 	$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg,true);
 	$LineItemSQL = "INSERT INTO salesorderdetails ( orderlineno,
-															orderno,
-															stkcode,
-															unitprice,
-															quantity,
-															poline,
-															itemdue)
+																							orderno,
+																							stkcode,
+																							unitprice,
+																							quantity,
+																							poline,
+																							itemdue)
 										VALUES ('0',
 												'" . $OrderNo . "',
 												'" . DB_escape_string($_SESSION['Contract'.$identifier]->ContractRef) . "',

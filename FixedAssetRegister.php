@@ -24,8 +24,8 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 								fixedassetlocations.parentlocationid,
 								fixedassets.assetlocation,
 								fixedassets.disposaldate,
-								SUM(CASE WHEN (fixedassettrans.transdate <'" . $DateFrom . "' AND fixedassettrans.fixedassettranstype='cost') THEN fixedassettrans.amount ELSE 0 END) AS bfwdcost,
-								SUM(CASE WHEN (fixedassettrans.transdate <'" . $DateFrom . "' AND fixedassettrans.fixedassettranstype='depn') THEN fixedassettrans.amount ELSE 0 END) AS bfwddepn,
+								SUM(CASE WHEN (fixedassettrans.transdate <'" . $DateFrom . "' AND fixedassettrans.fixedassettranstype='cost') THEN fixedassettrans.amount ELSE 0 END) AS costbfwd,
+								SUM(CASE WHEN (fixedassettrans.transdate <'" . $DateFrom . "' AND fixedassettrans.fixedassettranstype='depn') THEN fixedassettrans.amount ELSE 0 END) AS depnbfwd,
 								SUM(CASE WHEN (fixedassettrans.transdate >='" . $DateFrom ."'  AND fixedassettrans.transdate <='" . $DateTo . "' AND fixedassettrans.fixedassettranstype='cost') THEN fixedassettrans.amount ELSE 0 END) AS periodadditions,
 								SUM(CASE WHEN fixedassettrans.transdate >='" . $DateFrom . "'  AND fixedassettrans.transdate <='" . $DateTo . "' AND fixedassettrans.fixedassettranstype='depn' THEN fixedassettrans.amount ELSE 0 END) AS perioddepn,
 								SUM(CASE WHEN fixedassettrans.transdate >='" . $DateFrom . "'  AND fixedassettrans.transdate <='" . $DateTo . "' AND fixedassettrans.fixedassettranstype='disposal' THEN fixedassettrans.amount ELSE 0 END) AS perioddisposal
@@ -48,7 +48,8 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	$result = DB_query($sql, $db);
 	if (isset($_POST['pdf'])) {
 		$FontSize = 10;
-		$pdf->addinfo('Title', _('Fixed Asset Register'));
+		$pdf->addInfo('Title', _('Fixed Asset Register'));
+		$pdf->addInfo('Subject', _('Fixed Asset Register'));
 		$PageNumber = 1;
 		$line_height = 12;
 		if ($_POST['AssetCategory']=='%') {
@@ -74,6 +75,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	} else {
 		echo '<form name="RegisterForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><table class=selection>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<div class="centre">' ._('From') . ':' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '</div>';
 		echo '<br><table width=80% cellspacing="1" class=selection><tr>';
 		echo '<th>' . _('Asset ID') . '</th>';
 		echo '<th>' . _('Description') . '</th>';
@@ -114,9 +116,10 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 			$Ancestors[$i] = $ParentRow['locationdescription'];
 		}
 		*/
-		if (Date1GreaterThanDate2(ConvertSQLDate($myrow['disposaldate']),$_POST['FromDate']) OR $myrow['disposaldate']='0000-00-00'){
+		if (Date1GreaterThanDate2(ConvertSQLDate($myrow['disposaldate']),$_POST['FromDate']) 
+																										OR $myrow['disposaldate']='0000-00-00'){
 
-			if (Date1GreaterThanDate2($_POST['ToDate'], ConvertSQLDate($myrow['disposaldate']))){
+			if ($myrow['disposaldate']!='0000-00-00' AND Date1GreaterThanDate2($_POST['ToDate'], ConvertSQLDate($myrow['disposaldate']))){
 				/*The asset was disposed during the period */
 				$CostCfwd = 0;
 				$AccumDepnCfwd = 0;
@@ -150,12 +153,12 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 				$LeftOvers = $pdf->addTextWrap($XPos + 620, $YPos, 70, $FontSize, number_format($AccumDepnCfwd, 0), 'right');
 				$LeftOvers = $pdf->addTextWrap($XPos + 690, $YPos, 70, $FontSize, number_format($CostCfwd - $AccumDepnCfwd, 0), 'right');
 
-				$YPos = $TempYPos - (0.8 * $line_height);
+				$YPos = $YPos - (0.8 * $line_height);
 				if ($YPos < $Bottom_Margin + $line_height) {
 					PDFPageHeader();
 				}
 			} elseif (isset($_POST['csv'])) {
-				$csv_output.= $myrow['assetid'] . "," . $myrow['longdescription'] .",".$myrow['serialno'].",".$myrow['locationdescription'].",".$myrow['datepurchased'].",".$myrow['costbfwd'].",".$myrow['periodadditions']."," . $myrow['depnbfwd'] . "," .$myrow['perioddepn'].",". $CostCfwd . ", " . $AccumDepnCfwd . ", " . ($CostCfwd - $AccumDepnCfwd) . "," . $myrow['perioddisposal'] . "\n";
+				$csv_output .= $myrow['assetid'] . ',' . $myrow['longdescription'] .',' . $myrow['serialno'] . ',' . $myrow['locationdescription'] . ',' . $myrow['datepurchased'] . ',' . $myrow['costbfwd'] . ',' . $myrow['periodadditions'] . ',' . $myrow['depnbfwd'] . ',' . $myrow['perioddepn'] . ',' . $CostCfwd . ',' . $AccumDepnCfwd . ',' . ($CostCfwd - $AccumDepnCfwd) . ',' . $myrow['perioddisposal'] . "\n";
 
 			} else {
 				echo '<tr><td style="vertical-align:top">' . $myrow['assetid'] . '</td>';
@@ -203,9 +206,9 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		$pdf->Output($_SESSION['DatabaseName'] . '_Asset Register_' . date('Y-m-d') . '.pdf', 'I');
 		exit;
 	} elseif (isset($_POST['csv'])) {
-		$filename =  $_SESSION['reports_dir'] . '/FixedAssetRegister_' . Date('Y-m-d') .'.csv';
-		$csvfile = fopen($filename, 'w');
-		$i = fwrite($csvfile, $csv_output);
+		$FileName =  $_SESSION['reports_dir'] . '/FixedAssetRegister_' . Date('Y-m-d') .'.csv';
+		$csvFile = fopen($FileName, 'w');
+		$i = fwrite($csvFile, $csv_output);
 		header('Location: ' .$_SESSION['reports_dir'] . '/FixedAssetRegister_' . Date('Y-m-d') .'.csv');
 
 	} else {
@@ -278,12 +281,12 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	if (empty($_POST['ToDate'])) {
 		$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 	}
-	//FULUSI CHANGE BELOW TO ADD TIME
+
 	echo '<tr><th>' . _(' From Date') . "</th><td><input type='text' class='date' alt='" . $_SESSION['DefaultDateFormat'] . "' name='FromDate' maxlength=10 size=11 value='" . $_POST['FromDate'] . "'></td>";
 	echo '</tr>';
 	echo '<tr><th>' . _('To Date ') . "</th><td><input type='text' class='date' alt='" . $_SESSION['DefaultDateFormat'] . "' name='ToDate' maxlength=10 size=11 value='" . $_POST['ToDate'] . "'></td>";
 	echo '</tr>';
-	//end of FULUSI STUFF
+
 	echo '</table><br>';
 	echo '<div class="centre"><input type="Submit" name="submit" value="' . _('Show Assets') . '">&nbsp;';
 	echo '<input type="Submit" name="pdf" value="' . _('Print as a pdf') . '">&nbsp;';

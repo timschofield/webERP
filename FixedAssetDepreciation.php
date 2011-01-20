@@ -81,6 +81,7 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 echo '<p></p><table>';
 $Heading = '<tr><th>' . _('Asset ID') . '</th>
 								<th>' . _('Description') . '</th>
+								<th>' . _('Date Purchased') . '</th>
 								<th>' . _('Cost') . '</th>
 								<th>' . _('Accum Depn') . '</th>
 								<th>' . _('B/fwd Book Value') . '</th>
@@ -101,7 +102,7 @@ $k=0;
 while ($AssetRow=DB_fetch_array($AssetsResult)) {
 	if ($AssetCategoryDescription != $AssetRow['categorydescription'] OR $AssetCategoryDescription =='0'){
 		if ($AssetCategoryDescription !='0'){ //then print totals
-			echo '<tr><th colspan=2 align="right">' . _('Total for') . ' ' . $AssetCategoryDescription . ' </th>
+			echo '<tr><th colspan=3 align="right">' . _('Total for') . ' ' . $AssetCategoryDescription . ' </th>
 								<th class="number">' . number_format($TotalCategoryCost,2) . '</th>
 								<th class="number">' . number_format($TotalCategoryAccumDepn,2) . '</th>
 								<th class="number">' . number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),2) . '</th>
@@ -109,7 +110,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 								<th class="number">' . number_format($TotalCategoryDepn,2) . '</th>
 								</tr>';
 		}
-		echo '<tr><th colspan=8 align="left">' . $AssetRow['categorydescription']  . '</th></tr>';
+		echo '<tr><th colspan=9 align="left">' . $AssetRow['categorydescription']  . '</th></tr>';
 		$AssetCategoryDescription = $AssetRow['categorydescription'];
 		$TotalCategoryCost = 0;
 		$TotalCategoryAccumDepn =0;
@@ -144,18 +145,19 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 	}
 	echo '<td>' . $AssetRow['assetid'] . '</td>
 				<td>' . $AssetRow['description'] . '</td>
-				<td class="number">' . number_format($AssetRow['cost'],2) . '</td>
-				<td class="number">' . number_format($AssetRow['accumdepn'],2) . '</td>
-				<td class="number">' . number_format($AssetRow['cost']-$AssetRow['accumdepn'],2) . '</td>
+				<td>' . ConvertSQLDate($AssetRow['datepurchased']) . '</td>
+				<td class="number">' . number_format($AssetRow['costtotal'],2) . '</td>
+				<td class="number">' . number_format($AssetRow['depnbfwd'],2) . '</td>
+				<td class="number">' . number_format($AssetRow['costtotal']-$AssetRow['depnbfwd'],2) . '</td>
 				<td align="center">' . $DepreciationType . '</td>
 				<td class="number">' . $AssetRow['depnrate']  . '</td>
 				<td class="number">' . number_format($NewDepreciation ,2) . '</td>
 			</tr>';
-	$TotalCategoryCost +=$AssetRow['cost'];
-	$TotalCategoryAccumDepn +=$AssetRow['accumdepn'];
+	$TotalCategoryCost +=$AssetRow['costtotal'];
+	$TotalCategoryAccumDepn +=$AssetRow['depnbfwd'];
 	$TotalCategoryDepn +=$NewDepreciation;
-	$TotalCost +=$AssetRow['cost'];
-	$TotalAccumDepn +=$AssetRow['accumdepn'];
+	$TotalCost +=$AssetRow['costtotal'];
+	$TotalAccumDepn +=$AssetRow['depnbfwd'];
 	$TotalDepn +=$NewDepreciation;
 
 	if (isset($_POST['CommitDepreciation']) AND $NewDepreciation !=0 AND $InputError==false){
@@ -223,14 +225,14 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 		$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 	} //end if Committing the depreciation to DB
 } //end loop around the assets to calculate depreciation for
-echo '<tr><th colspan=2 align="right">' . _('Total for') . ' ' . $AssetCategoryDescription . ' </th>
+echo '<tr><th colspan=3 align="right">' . _('Total for') . ' ' . $AssetCategoryDescription . ' </th>
 					<th class="number">' . number_format($TotalCategoryCost,2) . '</th>
 					<th class="number">' . number_format($TotalCategoryAccumDepn,2) . '</th>
 					<th class="number">' . number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),2) . '</th>
 					<th colspan=2></th>
 					<th class="number">' . number_format($TotalCategoryDepn,2) . '</th>
 					</tr>';
-echo '<tr><th colspan=2 align="right">' . _('GRAND Total') . ' </th>
+echo '<tr><th colspan=3 align="right">' . _('GRAND Total') . ' </th>
 					<th class="number">' . number_format($TotalCost,2) . '</th>
 					<th class="number">' . number_format($TotalAccumDepn,2) . '</th>
 					<th class="number">' . number_format(($TotalCost-$TotalAccumDepn),2) . '</th>

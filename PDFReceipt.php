@@ -7,7 +7,7 @@ include('includes/session.inc');
 include('includes/PDFStarter.php');
 
 $FontSize=10;
-$pdf->addinfo('Title', _('Sales Receipt') );
+$pdf->addInfo('Title', _('Sales Receipt') );
 
 $PageNumber=1;
 $line_height=12;

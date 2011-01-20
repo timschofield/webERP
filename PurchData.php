@@ -128,9 +128,9 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 
 if (isset($_GET['Delete'])) {
     $sql = "DELETE FROM purchdata
-   				WHERE purchdata.supplierno='".$SupplierID."'
-   				AND purchdata.stockid='".$StockID."'
-   				AND purchdata.effectivefrom='" . $_GET['EffectiveFrom'] . "'";
+	   				WHERE purchdata.supplierno='".$SupplierID."'
+	   				AND purchdata.stockid='".$StockID."'
+	   				AND purchdata.effectivefrom='" . $_GET['EffectiveFrom'] . "'";
     $ErrMsg = _('The supplier purchasing details could not be deleted because');
     $DelResult = DB_query($sql, $db, $ErrMsg);
     prnMsg(_('This purchasing data record has been successfully deleted'), 'success');
@@ -160,7 +160,7 @@ if (!isset($_GET['Edit'])) {
     $ErrMsg = _('The supplier purchasing details for the selected part could not be retrieved because');
     $PurchDataResult = DB_query($sql, $db, $ErrMsg);
     if (DB_num_rows($PurchDataResult) == 0 and $StockID != '') {
-//        prnMsg(_('There is no purchasing data set up for the part selected'), 'info');
+		prnMsg(_('There is no purchasing data set up for the part selected'), 'info');
 		$NoPurchasingData=1;
     } else if ($StockID != '') {
         echo '<table cellpadding=2 class=selection>';

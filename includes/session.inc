@@ -118,7 +118,8 @@ include($PathPrefix . 'includes/GetConfig.php');
 /*The page security variable is now retrieved from the database in GetConfig.php and stored in the $SESSION['PageSecurity'] array
  * the key for the array is the script name - the script name is retrieved from the basename ($_SERVER['SCRIPT_NAME']) 
  */
-if (!isset($PageSecurity)){ //maybe hardcoded in the UpgradeDatabase script - so old versions that don't have the scripts.pagesecurity field do not choke
+if (!isset($PageSecurity)){ 
+//only hardcoded in the UpgradeDatabase script - so old versions that don't have the scripts.pagesecurity field do not choke
 	$PageSecurity = $_SESSION['PageSecurity'][basename($_SERVER['SCRIPT_NAME'])];
 }
 
@@ -264,15 +265,13 @@ if (!is_array($_SESSION['AllowedPageSecurityTokens']) AND !isset($AllowAnyone)) 
 }
 
 /* Nasty kludge to allow Supplier only logins as well as Customer logins */
-if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $_SESSION['AllowedPageSecurityTokens'][0]==9 and $PageSecurity==1){
+if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND 
+		$_SESSION['AllowedPageSecurityTokens'][0]==9 and $PageSecurity==1){
+			
 	$_SESSION['AllowedPageSecurityTokens'][0]=1;
 	$SupplierLogin=1;
 } else {
 	$SupplierLogin=0;
-}
-/* Nasty kludge to allow Supplier only logins as well as Customer logins  - .... hmmmmm some work to do here then! */
-if ($SupplierLogin==1) {
-	$_SESSION['AllowedPageSecurityTokens'][0]=9;
 }
 
 
@@ -295,6 +294,11 @@ if (!isset($AllowAnyone)){
 		exit;
 	}
  }
+
+/* Nasty kludge to allow Supplier only logins as well as Customer logins  - .... hmmmmm some work to do here then! */
+if ($SupplierLogin==1) {
+	$_SESSION['AllowedPageSecurityTokens'][0]=9;
+}
 
 
 if (in_array(15, $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */

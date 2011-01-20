@@ -74,7 +74,7 @@ Class PurchOrder {
 											$GLActName='',
 											$DecimalPlaces=2,
 											$ItemNo,
-											$SuppUOM,
+											$SuppliersUnit,
 											$ConversionFactor=1,
 											$LeadTime=1,
 											$Suppliers_PartNo='',
@@ -108,7 +108,7 @@ Class PurchOrder {
 																								$GLActName,
 																								$DecimalPlaces,
 																								$ItemNo,
-																								$SuppUOM,
+																								$SuppliersUnit,
 																								$ConversionFactor,
 																								$LeadTime,
 																								$Suppliers_PartNo,
@@ -137,7 +137,7 @@ Class PurchOrder {
 														$ShiptRef,
 														$JobRef ,
 														$ItemNo,
-														$uom,
+														$SuppliersUnit,
 														$ConversionFactor,
 														$Suppliers_PartNo,
 														$SubTotal_Amount,
@@ -159,7 +159,7 @@ Class PurchOrder {
 			$this->LineItems[$LineNo]->ShiptRef = $ShiptRef;
 			$this->LineItems[$LineNo]->JobRef = $JobRef;
 			$this->LineItems[$LineNo]->ItemNo = $ItemNo;
-			$this->LineItems[$LineNo]->uom = $uom;
+			$this->LineItems[$LineNo]->SuppliersUnit = $SuppliersUnit;
 			$this->LineItems[$LineNo]->ConversionFactor = $ConversionFactor;
 			$this->LineItems[$LineNo]->Suppliers_PartNo = $Suppliers_PartNo;
 			$this->LineItems[$LineNo]->Subtotal_Amount = $SubTotal_Amount;
@@ -249,7 +249,7 @@ Class LineDetails {
 	Var $JobRef;
 	Var $ItemNo;
 	var $ConversionFactor;
-	var $SuppUOM;
+	var $SuppliersUnit;
 	Var $Suppliers_PartNo;
 	Var $SubTotal_Amount;
 	Var $LeadTime;
@@ -285,7 +285,7 @@ Class LineDetails {
 											$GLActName,
 											$DecimalPlaces,
 											$ItemNo,
-											$SuppUOM,
+											$SuppliersUnit,
 											$ConversionFactor,
 											$Suppliers_PartNo,
 											$SubTotal_Amount,
@@ -315,7 +315,7 @@ Class LineDetails {
 		$this->GLCode = $GLCode;
 		$this->JobRef = $JobRef;
 		$this->ItemNo = $ItemNo;
-		$this->SuppUOM = $SuppUOM;
+		$this->SuppliersUnit = $SuppliersUnit;
 		$this->ConversionFactor = $ConversionFactor;
 		$this->Suppliers_PartNo = $Suppliers_PartNo;
 		$this->Subtotal_Amount = $SubTotal_Amount;

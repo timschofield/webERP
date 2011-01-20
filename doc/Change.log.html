@@ -1,6 +1,11 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p></p>
-<p>15/1/11: Tim removed MX record check from IsEmail function in includes/MiscFunctions.php
+<p>20/1/11: Tim changed back addinfo calls to addInfo on PDF reports - Zhigio originally thought to be an issue with Turkish utf-8 pdfs but turned out to be a red herring. class.pdf call changed back to addInfo too - most of calls had not been changed to lower case info</p>
+<p>20/1/11: Tim changed PricesBasedOnMarkUp to have end date day before new prices effective from</p>
+<p>20/1/11: Phil FixedAssetRegister.php FixedAssetDepreciation.php fixes </p>
+<p>19/1/11: Phil modified GLBudgets.php to allow entry of last years budget too</p>
+<p>17/1/11: Phil More purchasing work removing redundant queries rationalising code - new layout with supplier units</p>
+<p>15/1/11: Tim removed MX record check from IsEmail function in includes/MiscFunctions.php</p>
 <p>15/1/11: Tim/Peter Otandeka SQL quoting a whole bunch of scripts - changing single quotes to doubles - didn't apply ones where no variables required quoting</p>
 <p>14/1/11: Phil install scripts modified to copy over FormDesigns under the new company directory created</p>
 <p>14/1/11: Phil Updates to manual for security and supplier invoice entry</p>
@@ -8,8 +13,8 @@
 <p>13/1/11:Tim Z_ChangeCustomerCode.php now has foreign key checks defeated when deleting the old customer record and custbranch record </p>
 <p>13/1/11:Phil SupplierInvoice.php and SupplierCredit.php now check to ensure the total of contracts fixed asset charges goods received charges, shipment charges and GL charges are at least equal to the amount of the invoice or credit. It was possible when GL interface turned off to get strange results</p>
 <p>12/1/11:Phil DailyBankTransactions.php made it so a range of dates can be selected but defaults to just today</p>
-<p>11/1/11:Phil fix choice of portrait or landscape invoices - fix landscape default form layout. Fix portrait invoice logo position</p>
-<p>11/1/11:Phil fix customer transaction inquiries to show correct links where user is not authorised for credit notes or GL inquiries</p>
+<p>11/1/11:Phil Fix choice of portrait or landscape invoices - fix landscape default form layout. Fix portrait invoice logo position</p>
+<p>11/1/11:Phil Fix customer transaction inquiries to show correct links where user is not authorised for credit notes or GL inquiries</p>
 <p>11/1/11:Phil SupplierCredit.php and SupplierInvoice.php recalculate price variance to post differences on fixed asset additions correctly</p>
 <p>11/1/11:Phil PO_PDFPurchOrder.php - fixed for coding conventions removed uneccessary sql calls</p>
 <p>11/1/11: Murray Collingwood: Emailing invoices was writing the pdf file twice  - once with fwrite and once with the TCPDF output function with the option 'F'</p>

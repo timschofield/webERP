@@ -13,8 +13,8 @@ If (isset($_POST['PrintPDF'])
 	include('includes/PDFStarter.php');
 
 	$FontSize=10;
-	$pdf->addinfo('Title', _('Price Listing Report') );
-	$pdf->addinfo('Subject', _('Price List') );
+	$pdf->addInfo('Title', _('Price Listing Report') );
+	$pdf->addInfo('Subject', _('Price List') );
 
 	$PageNumber=1;
 	$line_height=12;

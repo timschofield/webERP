@@ -14,8 +14,8 @@ if (isset($_POST['PrintPDF'])) {
 	include('includes/PDFStarter.php');
 
 	$FontSize=9;
-	$pdf->addinfo('Title',_('Supplier Price List'));
-	$pdf->addinfo('Subject',_('Price List of goods from a Supplier'));
+	$pdf->addInfo('Title',_('Supplier Price List'));
+	$pdf->addInfo('Subject',_('Price List of goods from a Supplier'));
 
 	$PageNumber=1;
 	$line_height=12;

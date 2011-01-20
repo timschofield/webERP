@@ -46,8 +46,8 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 		$_POST['ToCust'] = strtoupper($_POST['ToCust']);
 	}
 	include('includes/PDFStarter.php');
-	$pdf->addinfo('Title', _('Customer Statements') );
-	$pdf->addinfo('Subject', _('Statements from') . ' ' . $_POST['FromCust'] . ' ' . _('to') . ' ' . $_POST['ToCust']);
+	$pdf->addInfo('Title', _('Customer Statements') );
+	$pdf->addInfo('Subject', _('Statements from') . ' ' . $_POST['FromCust'] . ' ' . _('to') . ' ' . $_POST['ToCust']);
 	$PageNumber = 1;
 	$line_height=16;
 

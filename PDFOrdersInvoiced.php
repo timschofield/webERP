@@ -70,8 +70,8 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	exit;
 } else {
 	include('includes/PDFStarter.php');
-	$pdf->addinfo('Title',_('Orders Invoiced Report'));
-	$pdf->addinfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
+	$pdf->addInfo('Title',_('Orders Invoiced Report'));
+	$pdf->addInfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
 	$line_height=12;
 	$PageNumber = 1;
 	$TotalDiffs = 0;

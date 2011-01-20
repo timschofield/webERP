@@ -192,8 +192,7 @@ CREATE TABLE IF NOT EXISTS `pctypetabs` (
   PRIMARY KEY (`typetabcode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `pcexpenses`
-  ADD CONSTRAINT `pcexpenses_ibfk_1` FOREIGN KEY (`glaccount`) REFERENCES `chartmaster` (`accountcode`);
+ALTER TABLE `pcexpenses`   ADD CONSTRAINT `pcexpenses_ibfk_1` FOREIGN KEY (`glaccount`) REFERENCES `chartmaster` (`accountcode`);
 
 ALTER TABLE `pctabexpenses`
   ADD CONSTRAINT `pctabexpenses_ibfk_1` FOREIGN KEY (`typetabcode`) REFERENCES `pctypetabs` (`typetabcode`),
@@ -206,11 +205,9 @@ ALTER TABLE `pctabs`
   ADD CONSTRAINT `pctabs_ibfk_4` FOREIGN KEY (`authorizer`) REFERENCES `www_users` (`userid`),
   ADD CONSTRAINT `pctabs_ibfk_5` FOREIGN KEY (`glaccountassignment`) REFERENCES `chartmaster` (`accountcode`);
 
-ALTER TABLE `supptrans`
-  ADD COLUMN `inputdate` datetime NOT NULL AFTER `duedate` ;
+ALTER TABLE `supptrans`  ADD COLUMN `inputdate` datetime NOT NULL AFTER `duedate` ;
 
-ALTER TABLE `debtortrans`
-  ADD COLUMN `inputdate` datetime NOT NULL AFTER `trandate` ;
+ALTER TABLE `debtortrans`  ADD COLUMN `inputdate` datetime NOT NULL AFTER `trandate` ;
 
 ALTER TABLE `reportfields` CHANGE COLUMN `fieldname` `fieldname` VARCHAR(60) NOT NULL DEFAULT '';
 
@@ -813,7 +810,7 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 UPDATE config SET confvalue='3.12.2' WHERE confname='VersionNumber';
 ALTER TABLE `purchorderdetails` CHANGE `nw` `netweight` VARCHAR( 50 )  DEFAULT '';
 ALTER TABLE `purchorderdetails` CHANGE `gw` `kgs` VARCHAR( 50 )  DEFAULT '';
-ALTER TABLE `purchorderdetails` ADD `suppconversionfactor` DOUBLE NOT NULL DEFAULT '1';
+ALTER TABLE `purchorderdetails` ADD `conversionfactor` DOUBLE NOT NULL DEFAULT '1';
 UPDATE config SET confvalue='3.12.3' WHERE confname='VersionNumber';
-ALTER TABLE `fixedassets` ADD `disposaldate` DATE NOT NULL , ADD INDEX ( `disposaldate` ) ;
-UPDATE config SET confvalue='3.12.4' WHERE confname='VersionNumber';
+ALTER TABLE `purchorderdetails` CHANGE `uom` `suppliersunit` VARCHAR( 50 )
+UPDATE config SET confvalue='3.12.31' WHERE confname='VersionNumber';
