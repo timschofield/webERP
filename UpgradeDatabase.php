@@ -104,7 +104,7 @@ if (isset($_POST['DoUpgrade'])){
 	}
 	
 	$result = DB_IgnoreForeignKeys($db);
-	
+
 	foreach ($SQLScripts AS $SQLScriptFile) {
 		
 		$SQLEntries = file($SQLScriptFile);
@@ -135,7 +135,7 @@ if (isset($_POST['DoUpgrade'])){
 				}
 				if (strpos($SQLEntries[$i],';')>0 AND ! $InAFunction){
 					$sql = substr($sql,0,strlen($sql)-1);
-					$result = DB_query($sql, $db, $ErrMsg, $DBMsg, false, false);
+					$result = DB_query($sql, $db, '','', false, false);
 					echo '<tr><td>' . $sql . '</td>';
 					switch (DB_error_no($db)) {
 						case 0:

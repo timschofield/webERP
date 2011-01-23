@@ -153,12 +153,12 @@ if (isset($_POST['submit'])) {
 
 				//debit cost for the new category
 				$SQL = "INSERT INTO gltrans (type,
-								typeno,
-								trandate,
-								periodno,
-								account,
-								narrative,
-								amount) ";
+																	typeno,
+																	trandate,
+																	periodno,
+																	account,
+																	narrative,
+																	amount) ";
 				$SQL= $SQL . "VALUES (42,
 							'" . $TransNo . "',
 							'" . Date('Y-m-d') . "',
@@ -230,8 +230,7 @@ if (isset($_POST['submit'])) {
 			prnMsg( _('Asset') . ' ' . $AssetID . ' ' . _('has been updated'), 'success');
 			echo '<br>';
 		} else { //it is a NEW part
-			$sql = "INSERT INTO fixedassets (
-																		description,
+			$sql = "INSERT INTO fixedassets (description,
 																		longdescription,
 																		assetcategoryid,
 																		assetlocation,
@@ -247,8 +246,7 @@ if (isset($_POST['submit'])) {
 																		'" . $_POST['DepnType'] . "',
 																		'" . $_POST['DepnRate']. "',
 																		'" . $_POST['BarCode'] . "',
-																		'" . $_POST['SerialNo'] . "'
-																		)";
+																		'" . $_POST['SerialNo'] . "' )";
 			$ErrMsg =  _('The asset could not be added because');
 			$DbgMsg = _('The SQL that was used to add the asset failed was');
 			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
@@ -349,7 +347,6 @@ if (isset($_POST['submit'])) {
 
 		} //end if cost > 0
 
-
 		$sql="DELETE FROM fixedassets WHERE assetid='" . $AssetID . "'";
 		$result=DB_query($sql,$db, _('Could not delete the asset record'),'',true);
 
@@ -444,10 +441,9 @@ if (isset($_POST['LongDescription'])) {
 }
 echo '<tr><td>' . _('Asset Description') . ' (' . _('long') . '):</td><td><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols=40 rows=4>' . stripslashes($LongDescription) . '</textarea></td></tr>'."\n";
 
-if ($New == 0) { //ie not new at all!
-	// Add image upload for New Item  - by Ori
+if (!isset($New) ) { //ie not new at all!
+	
 	echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="ItemPicture" name="ItemPicture"></td>';
-	// EOR Add Image upload for New Item  - by Ori
 
 	if (function_exists('imagecreatefromjpg')){
 		$StockImgLink = '<img src="GetStockImage.php?SID&automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
@@ -553,7 +549,7 @@ echo '<tr><td>' . _('Depreciation last run') . ':</td><td>' . $LastRunDate . '</
 			</table>';
 
 
-if ($New==1) {
+if (isset($New)) {
 	echo '<div class=centre><br><input type="Submit" name="submit" value="' . _('Insert New Fixed Asset') . '">';
 
 } else {

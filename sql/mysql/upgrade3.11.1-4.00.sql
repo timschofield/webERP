@@ -812,5 +812,5 @@ ALTER TABLE `purchorderdetails` CHANGE `nw` `netweight` VARCHAR( 50 )  DEFAULT '
 ALTER TABLE `purchorderdetails` CHANGE `gw` `kgs` VARCHAR( 50 )  DEFAULT '';
 ALTER TABLE `purchorderdetails` ADD `conversionfactor` DOUBLE NOT NULL DEFAULT '1';
 UPDATE config SET confvalue='3.12.3' WHERE confname='VersionNumber';
-ALTER TABLE `purchorderdetails` CHANGE `uom` `suppliersunit` VARCHAR( 50 )
+ALTER TABLE `purchorderdetails` CHANGE `uom` `suppliersunit` VARCHAR( 50 );
 UPDATE config SET confvalue='3.12.31' WHERE confname='VersionNumber';

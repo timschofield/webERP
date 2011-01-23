@@ -291,11 +291,6 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/SelectCustomer.php?' . SID . '">' . _('Customer Transaction Inquiries') . '</a></p>'; ?>
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/CustWhereAlloc.php?' . SID . '">' . _('Where Allocated Inquiry') . '</a></p>'; ?>
 							</td>
 							</tr>
@@ -327,11 +322,6 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/CustomerTransInquiry.php?' . SID . '">' . _('Transaction Inquiries') . '</a></p>'; ?>
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/PDFBankingSummary.php?' . SID . '">' . _('Re-Print A Deposit Listing') . '</a></p>'; ?>
 							</td>
 							</tr>
@@ -353,6 +343,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/PDFCustTransListing.php?' . SID . '">' . _('List Daily Transactions') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/CustomerTransInquiry.php?' . SID . '">' . _('Customer Transaction Inquiries') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -1506,13 +1501,13 @@ be generated, one for standard reports and the other for custom reports.
 
 	$Title= array(_('Custom Reports'), _('Standard Reports and Forms'));
 
-	$sql= "SELECT id, 
-								reporttype, 
-								defaultreport, 
-								groupname, 
+	$sql= "SELECT id,
+								reporttype,
+								defaultreport,
+								groupname,
 								reportname
-				FROM reports 
-				ORDER BY groupname, 
+				FROM reports
+				ORDER BY groupname,
 									reportname";
 	$Result=DB_query($sql,$db,'','',false,true);
 	$ReportList = '';

@@ -200,7 +200,7 @@ if (isset($_POST['UpdatePrices'])){
 		$InputError =1;
 	}
 	if ($_POST['CostType']=='OtherPriceList' AND $_POST['BasePriceList']=='0'){
-		echo '<br />Base price list selected: ' .$_POST['BasePriceList'];
+		echo '<br />' . _('Base price list selected') . ': ' .$_POST['BasePriceList'];
 		prnMsg(_('When you are updating prices based on another price list - the other price list must also be selected. No updates will take place until the other price list is selected'),'error');
 		$InputError =1;
 	}

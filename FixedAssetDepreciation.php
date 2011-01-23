@@ -26,16 +26,22 @@ $LastDepnRun = DB_fetch_row($result);
 
 $AllowUserEnteredProcessDate = true;
 
-if ($LastDepnRun[1]==0 AND $LastDepnRun[0]==NULL) { //then depn has never been run yet?
-
+if (DB_num_rows($result)==0) { //then depn has never been run yet?
 	/*in this case default depreciation calc to the last day of last month - and allow user to select a period */
 	if (!isset($_POST['ProcessDate'])) {
 		$_POST['ProcessDate'] = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m'),0,date('Y')));
+	} else { //ProcessDate is set - make sure it is on the last day of the month selected
+		if (!Is_Date($_POST['ProcessDate'])){
+			prnMsg(_('The date is expected to be in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
+			$InputError =true;
+		}else {
+			$_POST['ProcessDate'] = LastDayOfMonth($_POST['ProcessDate']);
+		}
 	}
 
 } else { //depn calc has been run previously
 	$AllowUserEnteredProcessDate = false;
-	$_POST['ProcessDate'] = DateAdd(ConvertSQLDate($LastDepnRun[0]),'m',1);
+	$_POST['ProcessDate'] = LastDayOfMonth(DateAdd(ConvertSQLDate($LastDepnRun[0]),'d',28));
 }
 
 
@@ -204,7 +210,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 																			periodno,
 																			inputdate,
 																			fixedassettranstype,
-																			depn)
+																			amount)
 															VALUES ('" . $AssetRow['assetid'] . "',
 																			'44',
 																			'" . $TransNo . "',
@@ -254,11 +260,14 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p></p>';
 	echo '<table class=selection width=30%><tr></tr><tr>';
-	if (AllowUserEnteredProcessDate){
+	if ($AllowUserEnteredProcessDate){
 		echo '<td>'._('Date to Process Depreciation'). ':</td>
 					<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" name="ProcessDate" maxlength=10 size=11 value="' . $_POST['ProcessDate'] . '"></td>';
+	} else {
+		echo '<td>'._('Date to Process Depreciation'). ':</td>
+					<td>' . $_POST['ProcessDate'] .'</td>';
 	}
-	echo '<td><input type="submit" name="CommitDepreciation" value="'._('Commit Depreciation').'">';
+	echo '<td><div class="centre"><input type="submit" name="CommitDepreciation" value="'._('Commit Depreciation').'"></div>';
 	echo '</tr></table><br>';
 	echo '</form>';
 }

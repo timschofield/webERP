@@ -15,7 +15,7 @@ or d.m.Y  for Germany ;) Juergen Ruemmler heinrich@ruemmler.net
 
 */
 
-function is_date($DateEntry) {
+function Is_date($DateEntry) {
 
 	$DateEntry =Trim($DateEntry);
 
@@ -40,7 +40,6 @@ function is_date($DateEntry) {
 	if (!isset($Date_Array) or sizeof($Date_Array)<3) {
 		return 0;
 	}
-
 
 	if ((int)$Date_Array[2] >9999) {
 		return 0;
@@ -77,7 +76,6 @@ function is_date($DateEntry) {
 	}
 
 } //end of Is_Date function
-
 
 
 //_______________________________________________________________
@@ -338,7 +336,7 @@ function Format_Date($DateEntry) {
 
 	if ((int)$Date_Array[2] <60) {
 		$Date_Array[2] = '20'.$Date_Array[2];
-	} elseif ((int)$Date_Array[2] >59 AND (int)$Date_Array[2] <100)						{
+	} elseif ((int)$Date_Array[2] >59 AND (int)$Date_Array[2] <100){
 		$Date_Array[2] = '19'.$Date_Array[2];
 	} elseif ((int)$Date_Array[2] >9999) {
 		return 0;
@@ -354,11 +352,11 @@ function Format_Date($DateEntry) {
 				return $Date_Array[0].'.'.$Date_Array[1].'.'.$Date_Array[2];
 			}
 		} elseif ($_SESSION['DefaultDateFormat']='m/d/Y'){
-			if (checkdate((int)$Date_Array[0],(int)$Date_Array[1],(int)$Date_Array[2]))							{
+			if (checkdate((int)$Date_Array[0],(int)$Date_Array[1],(int)$Date_Array[2])){
 				return $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2];
 			}
 		} elseif ($_SESSION['DefaultDateFormat']='Y/m/d'){
-			if (checkdate((int)$Date_Array[2],(int)$Date_Array[0],(int)$Date_Array[1]))							{
+			if (checkdate((int)$Date_Array[2],(int)$Date_Array[0],(int)$Date_Array[1])){
 				return $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2];
 			}
 		} // end if check date
@@ -366,9 +364,6 @@ function Format_Date($DateEntry) {
 		return 0;
 	}
 }// end of function
-
-
-
 
 function FormatDateForSQL($DateEntry) {
 
@@ -433,6 +428,69 @@ function FormatDateWithTimeForSQL ($datetime) {
 
     return FormatDateForSQL( $dt[0] ) . ' ' . $dt[1];
 }
+
+function LastDayOfMonth ( $DateEntry) {
+	/*Expects a date in DefaultDateFormat and
+	 * Returns the last day of the month in the entered date
+	 * in the DefaultDateFormat 
+	 * 
+	 * mktime (0,0,0 month, day, year)
+	 */
+	
+	$DateEntry = trim($DateEntry);
+
+	if (strpos($DateEntry,'/')) {
+		$Date_Array = explode('/',$DateEntry);
+	} elseif (strpos ($DateEntry,'-')) {
+		$Date_Array = explode('-',$DateEntry);
+	} elseif (strpos ($DateEntry,'.')) {
+		$Date_Array = explode('.',$DateEntry);
+	} elseif (strlen($DateEntry)==6) {
+		$Date_Array[0]= substr($DateEntry,0,2);
+		$Date_Array[1]= substr($DateEntry,2,2);
+		$Date_Array[2]= substr($DateEntry,4,2);
+	} elseif (strlen($DateEntry)==8) {
+		$Date_Array[0]= substr($DateEntry,0,4);
+		$Date_Array[1]= substr($DateEntry,4,2);
+		$Date_Array[2]= substr($DateEntry,6,2);
+	}
+
+	if ($_SESSION['DefaultDateFormat']=='Y/m/d') {
+		if (strlen($Date_Array[0])==2) {
+			if ((int)$Date_Array[0] <=60) {
+				$Date_Array[0] = '20'.$Date_Array[2];
+			} elseif ((int)$Date_Array[0] >60 AND (int)$Date_Array[2] <100) {
+				$Date_Array[0] = '19'.$Date_Array[2];
+			}
+		}
+
+		$DateStamp =  mktime(0,0,0, $Date_Array[1]+1, 0, $Date_Array[0]);
+
+	}elseif (($_SESSION['DefaultDateFormat']=='d/m/Y') OR $_SESSION['DefaultDateFormat']=='d.m.Y'){
+		if (strlen($Date_Array[2])==2) {
+			if ((int)$Date_Array[2] <=60) {
+				$Date_Array[2] = '20'.$Date_Array[2];
+			} elseif ((int)$Date_Array[2] >60 AND (int)$Date_Array[2] <100) {
+				$Date_Array[2] = '19'.$Date_Array[2];
+			}
+		}
+		$DateStamp =  mktime(0,0,0, $Date_Array[1]+1, 0, $Date_Array[2]);
+		
+		
+	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y') {
+		if (strlen($Date_Array[2])==2) {
+			if ((int)$Date_Array[2] <=60) {
+				$Date_Array[2] = '20'.$Date_Array[2];
+			} elseif ((int)$Date_Array[2] >60 AND (int)$Date_Array[2] <100) {
+				$Date_Array[2] = '19'.$Date_Array[2];
+			}
+		}
+		return $Date_Array[2].'-'.$Date_Array[0].'-'.$Date_Array[1];
+		$DateStamp =  mktime(0,0,0, $Date_Array[0]+1, 0, $Date_Array[2]);
+	}
+	return Date($_SESSION['DefaultDateFormat'],$DateStamp);
+}// end of Last Day in the month function
+
 
 
 function Date1GreaterThanDate2 ($Date1, $Date2) {
@@ -874,5 +932,6 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 
 	return $myrow[0];
 }
+
 
 ?>

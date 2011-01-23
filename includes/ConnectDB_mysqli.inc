@@ -9,6 +9,9 @@
 
 define ('LIKE','LIKE');
 
+if (!isset($mysqlport)){
+	$mysqlport = 3306;
+}
 global $db;	// Make sure it IS global, regardless of our context
 $db = mysqli_connect($host , $dbuser, $dbpassword,$_SESSION['DatabaseName'], $mysqlport);
 

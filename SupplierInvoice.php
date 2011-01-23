@@ -270,7 +270,8 @@ if (!isset($_POST['PostInvoice'])){
 	}
 	echo ' <input type="submit" name="FixedAssets" VALUE="' . _('Fixed Assets') . '"></div>';
 
-
+	$TotalGRNValue = 0;
+	
 	if (count( $_SESSION['SuppTrans']->GRNs)>0){   /*if there are any GRNs selected for invoicing then */
 		/*Show all the selected GRNs so far from the SESSION['SuppInv']->GRNs array */
 
@@ -283,8 +284,6 @@ if (!isset($_POST['PostInvoice'])){
 				<th>' . _('Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 				<th>' . _('Line Total') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th></tr>';
 		echo $tableheader;
-
-		$TotalGRNValue = 0;
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
@@ -304,6 +303,8 @@ if (!isset($_POST['PostInvoice'])){
 		echo '</table>';
 	}
 
+	$TotalShiptValue = 0;
+
 	if (count( $_SESSION['SuppTrans']->Shipts) > 0){   /*if there are any Shipment charges on the invoice*/
 
 		echo '<br /><table cellpadding=2 class=selection>
@@ -312,7 +313,7 @@ if (!isset($_POST['PostInvoice'])){
 				<th>" . _('Amount') . '</th></tr>';
 		echo $TableHeader;
 
-		$TotalShiptValue = 0;
+		
 
 		foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef){
 
@@ -332,6 +333,7 @@ if (!isset($_POST['PostInvoice'])){
 			<td class=number><font size=4 color=BLUE><U>' .  number_format($TotalShiptValue,2) . '</U></font></td></tr></table>';
 	}
 
+	$TotalAssetValue = 0;
 
 	if (count( $_SESSION['SuppTrans']->Assets) > 0){   /*if there are any fixed assets on the invoice*/
 
@@ -341,8 +343,6 @@ if (!isset($_POST['PostInvoice'])){
 												<th>' . _('Description') . '</th>
 												<th>' . _('Amount') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th></tr>';
 		echo $TableHeader;
-
-		$TotalAssetValue = 0;
 
 		foreach ($_SESSION['SuppTrans']->Assets as $EnteredAsset){
 
@@ -363,7 +363,7 @@ if (!isset($_POST['PostInvoice'])){
 			<td class=number><font size=4 color=BLUE><U>' .  number_format($TotalAssetValue,2) . '</U></font></td></tr></table>';
 	} //end loop around assets added to invocie
 
-
+	$TotalContractsValue = 0;
 
 	if (count( $_SESSION['SuppTrans']->Contracts) > 0){   /*if there are any contract charges on the invoice*/
 
@@ -374,7 +374,7 @@ if (!isset($_POST['PostInvoice'])){
 												<th>' . _('Narrative') . '</th></tr>';
 		echo $TableHeader;
 
-		$TotalContractsValue = 0;
+		
 		$i=0;
 		foreach ($_SESSION['SuppTrans']->Contracts as $Contract){
 
@@ -397,7 +397,8 @@ if (!isset($_POST['PostInvoice'])){
 				</tr></table>';
 	}
 
-
+	$TotalGLValue = 0;
+	
 	if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){
 
 		if (count($_SESSION['SuppTrans']->GLCodes) > 0){
@@ -408,8 +409,6 @@ if (!isset($_POST['PostInvoice'])){
 													<th>' . _('Amount') . '<br>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 													<th>' . _('Narrative') . '</th></tr>';
 			echo $TableHeader;
-
-			$TotalGLValue = 0;
 
 			foreach ($_SESSION['SuppTrans']->GLCodes as $EnteredGLCode){
 
@@ -427,21 +426,6 @@ if (!isset($_POST['PostInvoice'])){
 					</tr></table>';
 		}
 
-		if (!isset($TotalGRNValue)){
-			$TotalGRNValue = 0;
-		}
-		if (!isset($TotalGLValue)){
-			$TotalGLValue = 0;
-		}
-		if (!isset($TotalShiptValue)){
-			$TotalShiptValue = 0;
-		}
-		if (!isset($TotalContractsValue)){
-			$TotalContractsValue = 0;
-		}
-		if (!isset($TotalAssetValue)){
-			$TotalAssetValue = 0;
-		}
 		$_SESSION['SuppTrans']->OvAmount = ($TotalGRNValue + $TotalGLValue + $TotalAssetValue + $TotalShiptValue + $TotalContractsValue);
 
 		echo '<br /><table class=selection><tr><td>' . _('Amount in supplier currency') . ':</td><td colspan=2 class=number>' .
@@ -500,7 +484,7 @@ if (!isset($_POST['PostInvoice'])){
 		} else { /*Tax being entered manually accept the taxamount entered as is*/
 //			if (!isset($_POST['TaxAmount'  . $Tax->TaxCalculationOrder])) {
 //				$_POST['TaxAmount'  . $Tax->TaxCalculationOrder]=0;
-//			}
+//		}
 			$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_POST['TaxAmount'  . $Tax->TaxCalculationOrder];
 
 			echo  ' <input type="hidden" name="TaxRate"' . $Tax->TaxCalculationOrder . ' value="' . $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100 . '">';
@@ -554,33 +538,43 @@ then do the updates and inserts to process the invoice entered */
 
 	$InputError = False;
 	if ( $TaxTotal + $_SESSION['SuppTrans']->OvAmount < 0){
+	
 		$InputError = True;
 		prnMsg(_('The invoice as entered cannot be processed because the total amount of the invoice is less than  0') . '. ' . _('Invoices are expected to have a positive charge'),'error');
 		echo '<p> The tax total is : ' . $TaxTotal;
 		echo '<p> The ovamount is : ' . $_SESSION['SuppTrans']->OvAmount;
+	
 	} elseif ( $TaxTotal + $_SESSION['SuppTrans']->OvAmount == 0){
+	
 		prnMsg(_('The invoice as entered will be processed but be warned the amount of the invoice is  zero!') . '. ' . _('Invoices are normally expected to have a positive charge'),'warn');
+	
 	} elseif (strlen( $_SESSION['SuppTrans']->SuppReference)<1){
+		
 		$InputError = True;
 		prnMsg(_('The invoice as entered cannot be processed because the there is no suppliers invoice number or reference entered') . '. ' . _('The supplier invoice number must be entered'),'error');
 
 	} elseif (!is_date( $_SESSION['SuppTrans']->TranDate)){
+	
 		$InputError = True;
 		prnMsg( _('The invoice as entered cannot be processed because the invoice date entered is not in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 
-	} elseif (DateDiff(Date($_SESSION['DefaultDateFormat']), $_SESSION['SuppTrans']->TranDate, "d") < 0){
+	} elseif (DateDiff(Date($_SESSION['DefaultDateFormat']), $_SESSION['SuppTrans']->TranDate, 'd') < 0){
+	
 		$InputError = True;
 		prnMsg(_('The invoice as entered cannot be processed because the invoice date is after today') . '. ' . _('Purchase invoices are expected to have a date prior to or today'),'error');
 
 	}elseif ( $_SESSION['SuppTrans']->ExRate <= 0){
+	
 		$InputError = True;
 		prnMsg( _('The invoice as entered cannot be processed because the exchange rate for the invoice has been entered as a negative or zero number') . '. ' . _('The exchange rate is expected to show how many of the suppliers currency there are in 1 of the local currency'),'error');
-
-	}elseif ( $_SESSION['SuppTrans']->OvAmount < round($TotalShiptValue + $TotalGLValue + $TotalContractsValue+ $TotalAssetValue+$TotalGRNValue,2)){
+	
+	} elseif ( $_SESSION['SuppTrans']->OvAmount < round($TotalShiptValue + $TotalGLValue + $TotalContractsValue+ $TotalAssetValue+$TotalGRNValue,2)){
+	
 		prnMsg( _('The invoice total as entered is less than the sum of the shipment charges, the general ledger entries (if any), the charges for goods received, contract charges and fixed asset charges. There must be a mistake somewhere, the invoice as entered will not be processed'),'error');
 		$InputError = True;
 
 	} else {
+	
 		$sql = "SELECT count(*)
 						FROM supptrans
 						WHERE supplierno='" . $_SESSION['SuppTrans']->SupplierID . "'

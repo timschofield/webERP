@@ -20,7 +20,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 
 	$wheredate = " ";
 	$reportdate = " ";
-	if (is_Date($_POST['cutoffdate'])) {
+	if (Is_Date($_POST['cutoffdate'])) {
 		$formatdate = FormatDateForSQL($_POST['cutoffdate']);
 		$wheredate = ' AND duedate <= "' . $formatdate . '" ';
 		$reportdate = _(' Through  ') . $_POST['cutoffdate'];

@@ -125,7 +125,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 				$AccumDepnCfwd = 0;
 			} else {
 				$CostCfwd = $myrow['periodadditions'] + $myrow['costbfwd'];
-				$AccumDepnCfwd = $myrow['periodepn'] + $myrow['depnbfwd'];
+				$AccumDepnCfwd = $myrow['perioddepn'] + $myrow['depnbfwd'];
 			}
 
 			if (isset($_POST['pdf'])) {
@@ -165,12 +165,14 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 				echo '<td style="vertical-align:top">' . $myrow['longdescription'] . '</td>';
 				echo '<td style="vertical-align:top">' . $myrow['serialno'] . '</td>';
 				echo '<td>' . $myrow['locationdescription'] . '<br>';
-				for ($i = 1;$i < sizeOf($Ancestors) - 1;$i++) {
+			/*	Not reworked yet
+			 * for ($i = 1;$i < sizeOf($Ancestors) - 1;$i++) {
 					for ($j = 0;$j < $i;$j++) {
 						echo '&nbsp;&nbsp;&nbsp;&nbsp;';
 					}
 					echo '|_' . $Ancestors[$i] . '<br>';
 				}
+			*/
 				echo '</td><td style="vertical-align:top">' . ConvertSQLDate($myrow['datepurchased']) . '</td>';
 				echo '<td style="vertical-align:top" class="number">' . number_format($myrow['costbfwd'], 2) . '</td>';
 				echo '<td style="vertical-align:top" class="number">' . number_format($myrow['depnbfwd'], 2) . '</td>';
@@ -304,11 +306,12 @@ function PDFPageHeader (){
 				$Page_Height,
 				$Page_Width,
 				$Top_Margin,
+				$Bottom_Margin,
 				$FontSize,
 				$Left_Margin,
 				$Right_Margin,
-				$line_height;
-				$AssetDescription;
+				$line_height,
+				$AssetDescription,
 				$AssetCategory;
 
 	if ($PageNumber>1){
