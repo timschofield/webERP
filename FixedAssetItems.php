@@ -538,7 +538,14 @@ echo '<tr><td>' . _('Accumulated Costs') . ':</td><td class="number">' . number_
 echo '<tr><td>' . _('Accumulated Depreciation') . ':</td><td class="number">' . number_format($AssetRow['accumdepn'],2) . '</td></tr>';
 echo '<tr><td>' . _('Net Book Value') . ':</td><td class="number">' . number_format($AssetRow['cost']-$AssetRow['accumdepn'],2) . '</td></tr>';
 
-$result = DB_query('SELECT periods.lastdate_in_period, max(fixedassettrans.periodno) FROM fixedassettrans INNER JOIN periods ON fixedassettrans.periodno=periods.periodno WHERE transtype=44 GROUP BY periods.lastdate_in_period',$db);
+$result = DB_query('SELECT periods.lastdate_in_period, 
+												max(fixedassettrans.periodno) 
+									FROM fixedassettrans INNER JOIN periods 
+									ON fixedassettrans.periodno=periods.periodno 
+									WHERE transtype=44 
+									GROUP BY periods.lastdate_in_period
+									ORDER BY periods.lastdate_in_period DESC',$db);
+									
 $LastDepnRun = DB_fetch_row($result);
 if(DB_num_rows($result)==0){
 	$LastRunDate = _('Not Yet Run');

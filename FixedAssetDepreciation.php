@@ -18,7 +18,8 @@ $result = DB_query('SELECT periods.lastdate_in_period,
 									FROM fixedassettrans INNER JOIN periods
 									ON fixedassettrans.periodno=periods.periodno
 									WHERE transtype=44
-									GROUP BY periods.lastdate_in_period',$db);
+									GROUP BY periods.lastdate_in_period
+									ORDER BY periods.lastdate_in_period DESC',$db);
 
 $LastDepnRun = DB_fetch_row($result);
 
@@ -41,6 +42,8 @@ if (DB_num_rows($result)==0) { //then depn has never been run yet?
 
 } else { //depn calc has been run previously
 	$AllowUserEnteredProcessDate = false;
+	prnMsg('LastDepnRun[0] = ' . $LastDepnRun[0] . '<br />ConvertSQLDate($LastDepnRun[0]) = ' . ConvertSQLDate($LastDepnRun[0]) . '<br />DateAdd(ConvertSQLDate($LastDepnRun[0]),d,28) = ' . DateAdd(ConvertSQLDate($LastDepnRun[0]),'d',28), 'info');
+	
 	$_POST['ProcessDate'] = LastDayOfMonth(DateAdd(ConvertSQLDate($LastDepnRun[0]),'d',28));
 }
 

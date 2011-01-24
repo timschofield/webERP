@@ -124,7 +124,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		//insert wildcard characters in spaces
 		$_POST['Keywords'] = strtoupper($_POST['Keywords']);
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
-		if ($_POST['AssetCategory'] == 'All') {
+		if ($_POST['AssetCategory'] == 'ALL') {
 			if ($_POST['AssetLocation']=='ALL'){
 				$SQL .= 'WHERE description ' . LIKE .  "'" . $SearchString . "' ORDER BY fixedassets.assetid";
 			} else {
@@ -171,6 +171,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	$ErrMsg = _('No assets were returned by the SQL because');
 	$DbgMsg = _('The SQL that returned an error was');
 	$searchresult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	
 	if (DB_num_rows($searchresult) == 0) {
 		prnMsg(_('No assets were returned by this search please re-enter alternative criteria to try again'), 'info');
 	}
