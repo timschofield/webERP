@@ -1624,7 +1624,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 										   			<th>' . _('Available') . '</th>
 										   			<th>' . _('Quantity') . '</th></tr>';
 			echo $TableHeader;
-
+			$ImageSource = _('No Image');
+			
 			$k=0; //row colour counter
 
 			while ($myrow=DB_fetch_array($SearchResult)) {
