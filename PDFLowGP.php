@@ -161,7 +161,7 @@ if (isset($_POST['PrintPDF'])) {
 								<td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='ToDate' size=10 maxlength=10 VALUE='" . $_POST['ToDate'] . "'></td>
 						</tr>";
 
-		echo '<tr><td>' . _('Show sales with GP % below') . ":</td>
+		echo '<tr><td>' . _('Show sales with GP') . '%' . _('below') . ":</td>
 								<td><input type=text class='number' name='GPMin' maxlength=3 size=3 value=" . $_POST['GPMin'] . "></td>
 						</tr>";
 

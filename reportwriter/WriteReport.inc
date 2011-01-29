@@ -10,7 +10,7 @@ var $pageY; // y value of bottom of page less bottom margin
 	function PDF() {
 		global $Prefs;
 		$PaperSize = explode(':',$Prefs['papersize']);
-		$this->Cpdf($Prefs['paperorientation'], 'mm', $PaperSize[0]);
+		parent::__construct($Prefs['paperorientation'], 'mm', $PaperSize[0]);
 		if ($Prefs['paperorientation']=='P') { // Portrait - calculate max page height
 			$this->pageY = $PaperSize[2]-$Prefs['marginbottom'];
 		} else { // Landscape
