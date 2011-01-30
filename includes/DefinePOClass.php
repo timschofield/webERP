@@ -226,6 +226,15 @@ Class PurchOrder {
 		return 0; //nowt received
 	}
 	
+	function GetLineNoFromPODetailItem($PODetailItem){
+		foreach ($this->LineItems as $OrderedItems) {
+			if ($OrderedItems->PODetailRec ==$PODetailItem){
+				return $OrderedItems->LineNo;
+			}
+		}
+		return false; //PODetailItem not on the order
+	}
+	
 } /* end of class defintion */
 
 Class LineDetails {

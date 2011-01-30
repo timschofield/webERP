@@ -2,14 +2,11 @@
 
 /* $Id$*/
 
-/* $Revision: 1.5 $ */
-
-//$PageSecurity = 2;
+//$PageSecurity = 2; Now comes from DB - read in from session
 include('includes/session.inc');
+include('includes/DefinePOClass.php');
 
-if (isset($_POST['GRNNo'])) {
-	$GRNNo=$_POST['GRNNo'];
-} else if (isset($_GET['GRNNo'])) {
+if (isset($_GET['GRNNo'])) {
 	$GRNNo=$_GET['GRNNo'];
 } else {
 	$GRNNo='';
@@ -29,105 +26,62 @@ include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Goods Received Note') );
 
 if ($GRNNo=='Preview') {
-	$ListCount = 1; // UldisN
+	$ListCount = 1; 
 } else {
 	$sql="SELECT grns.itemcode,
 			grns.grnno,
 			grns.deliverydate,
 			grns.itemdescription,
 			grns.qtyrecd,
-			grns.supplierid
+			grns.supplierid,
+			grns.podetailitem
 		FROM grns
 		WHERE grnbatch='".$GRNNo."'";
-	$result=DB_query($sql, $db);
-	$ListCount = DB_num_rows($result); // UldisN
-
-	include('includes/PDFGrnHeader.inc');
+	$GRNResult=DB_query($sql, $db);
+	$NoOfGRNs = DB_num_rows($GRNResult);
+	if ($NoOfGRNs>0){
+		$_GET['ModifyOrderNumber'] = (int)$_GET['PONo'];
+		$identifier=date('U');
+		include('includes/PO_ReadInOrder.inc'); //Read the PO in
+		include('includes/PDFGrnHeader.inc');
+	}
 }
-$counter=1;
+$i=1;
 $YPos=$FormDesign->Data->y;
-while ($counter<=$ListCount) {
+while ($i<=$NoOfGRNs) {
 	if ($GRNNo=='Preview') {
 		$StockID=str_pad('',10,'x');
 		$Date='1/1/1900';
 		$Description=str_pad('',30,'x');
-		$Quantity='XXXXX.XX';
+		$SuppliersQuantity='XXXXX.XX';
+		$OurUnitsQuantity='XXXXX.XX';
 		$Supplier=str_pad('',25,'x');
+		$Units = str_pad('',10,'x');
+		$SupplierUnits =str_pad('',10,'x');
 	} else {
-		$sql="SELECT orddate from purchorders WHERE orderno='".$_GET['PONo']."'";
-		$purchorderresult=DB_query($sql, $db);
-		$purchorderdate=DB_fetch_array($purchorderresult);
-		$myrow=DB_fetch_array($result);
-		$datesql="SELECT max(effectivefrom)
-					FROM purchdata
-					WHERE supplierno='".$myrow['supplierid']."'
-						AND stockid='".$myrow['itemcode']."'
-						AND effectivefrom<='".$purchorderdate[0]."'";
-		$dateresult=DB_query($datesql, $db);
-		$date=DB_fetch_row($dateresult);
-		if ($date[0]!='') {
-			$sql="SELECT unitsofmeasure.unitname,
-					suppliers_partno,
-					conversionfactor
-				FROM purchdata
-				LEFT JOIN unitsofmeasure
-					ON purchdata.suppliersuom=unitsofmeasure.unitid
-				WHERE supplierno='".$myrow['supplierid']."'
-					AND stockid='".$myrow['itemcode']."'
-					AND effectivefrom='".$date[0]."'";
-			$purchdataresult=DB_query($sql, $db);
-			$myrow2=DB_fetch_array($purchdataresult);
-		} else {
-			$sql="SELECT units as unitname,
-						stockid as suppliers_partno,
-						1 as conversionfactor
-						FROM stockmaster
-						WHERE stockid='".$myrow['itemcode']."'";
-			$purchdataresult=DB_query($sql, $db);
-			$myrow2=DB_fetch_array($purchdataresult);
-		}
-		$StockID=$myrow[0];
-		$GRNNo=$myrow[1];
-		$Date=ConvertSQLDate($myrow[2]);
-		$Description=$myrow[3];
-		$Quantity=$myrow[4];
-		$SupplierID=$myrow[5];
-		if ($myrow2['unitname']=='') {
-			$sql="SELECT units
-					FROM stockmaster
-					WHERE stockid='".$myrow['itemcode']."'";
-			$uomresult=DB_query($sql, $db);
-			$uomrow=DB_fetch_array($uomresult);
-			$units=$uomrow['units'];
-			$myrow2['conversionfactor']=1;
-		} else {
-			$units=$myrow2['unitname'];
-		}
-		$sql="SELECT units,
-					decimalplaces
-				FROM stockmaster
-				WHERE stockid='".$myrow['itemcode']."'";
-		$uomresult=DB_query($sql, $db);
-		$uomrow=DB_fetch_array($uomresult);
-		$stockunits=$uomrow['units'];
-
-		$sql="SELECT suppname
-				FROM suppliers
-			WHERE supplierid='".$SupplierID."'";
-		$supplierresult=DB_query($sql, $db);
-		$suppliermyrow=DB_fetch_array($supplierresult);
-		$Supplier=$suppliermyrow[0];
+		$myrow = DB_fetch_array($GRNResult);
+		$LineNo = $_SESSION['PO'.$identifier]->GetLineNoFromPODetailItem($myrow['podetailitem']);
+		echo '<br />The podetailitem is ' . $myrow['podetailitem'] . '<br />Got the line number it is: ' . $LineNo;
+		$StockID=$myrow['itemcode'];
+		$GRNNo=$myrow['grnno'];
+		$Date=ConvertSQLDate($myrow['deliverydate']);
+		$Description=$myrow['itemdescription'];
+		$SuppliersQuantity=number_format($myrow['qtyrecd']/$_SESSION['PO' . $identifier]->LineItems[$LineNo]->ConversionFactor,$_SESSION['PO' . $identifier]->LineItems[$LineNo]->DecimalPlaces);
+		$OurUnitsQuantity=number_format($myrow['qtyrecd'],$_SESSION['PO' . $identifier]->LineItems[$LineNo]->DecimalPlaces);
+		$SupplierID=$myrow['supplierid'];
+		$Units = $_SESSION['PO' . $identifier]->LineItems[$LineNo]->Units;
+		$SuppliersUnit = $_SESSION['PO' . $identifier]->LineItems[$LineNo]->SuppliersUnit;
+		$Supplier = $_SESSION['PO' . $identifier]->SupplierName;
 	}
-
 	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x,$Page_Height-$YPos,$FormDesign->Data->Column1->Length,$FormDesign->Data->Column1->FontSize, $StockID);
 	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$Page_Height-$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize, $Description);
 	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column3->x,$Page_Height-$YPos,$FormDesign->Data->Column3->Length,$FormDesign->Data->Column3->FontSize, $Date);
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column4->x,$Page_Height-$YPos,$FormDesign->Data->Column4->Length,$FormDesign->Data->Column4->FontSize, number_format($Quantity,$uomrow['decimalplaces']), 'right');
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x,$Page_Height-$YPos,$FormDesign->Data->Column5->Length,$FormDesign->Data->Column5->FontSize, $units, 'left');
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column6->x,$Page_Height-$YPos,$FormDesign->Data->Column6->Length,$FormDesign->Data->Column6->FontSize, number_format($Quantity*$myrow2['conversionfactor'],$uomrow['decimalplaces']), 'right');
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column7->x,$Page_Height-$YPos,$FormDesign->Data->Column7->Length,$FormDesign->Data->Column7->FontSize, $stockunits, 'left');
+	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column4->x,$Page_Height-$YPos,$FormDesign->Data->Column4->Length,$FormDesign->Data->Column4->FontSize, $SuppliersQuantity, 'right');
+	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x,$Page_Height-$YPos,$FormDesign->Data->Column5->Length,$FormDesign->Data->Column5->FontSize, $SuppliersUnit, 'left');
+	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column6->x,$Page_Height-$YPos,$FormDesign->Data->Column6->Length,$FormDesign->Data->Column6->FontSize, $OurUnitsQuantity, 'right');
+	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column7->x,$Page_Height-$YPos,$FormDesign->Data->Column7->Length,$FormDesign->Data->Column7->FontSize, $Units, 'left');
 	$YPos += $line_height;
-	$counter++;
+	$i++;
 	if ($YPos >= $FormDesign->LineAboveFooter->starty){
 		/* We reached the end of the page so finsih off the page and start a newy */
 		$PageNumber++;
@@ -140,10 +94,10 @@ $LeftOvers = $pdf->addText($FormDesign->ReceiptDate->x,$Page_Height-$FormDesign-
 
 $LeftOvers = $pdf->addText($FormDesign->SignedFor->x,$Page_Height-$FormDesign->SignedFor->y,$FormDesign->SignedFor->FontSize, _('Signed for ').'______________________');
 
-if ($ListCount == 0) {   //UldisN
+if ($NoOfGRNs == 0) {  
 	$title = _('GRN Error');
 	include('includes/header.inc');
-	prnMsg(_('There were no GRN to print'),'warn');
+	prnMsg(_('There were no GRNs to print'),'warn');
 	echo '<br><a href="'.$rootpath.'/index.php?' . SID . '">'. _('Back to the menu').'</a>';
 	include('includes/footer.inc');
 	exit;

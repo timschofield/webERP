@@ -37,11 +37,13 @@ if (isset($_GET['OrderNo'])){
 }
 $title = _('Print Purchase Order Number').' '. $OrderNo;
 
-if ($_POST['PrintOrEmail']=='Email' AND ! IsEmailAddress($_POST['EmailTo'])){
-	include('includes/header.inc');
-	prnMsg( _('The email address entered does not appear to be valid. No emails have been sent.'),'warn');
-	include('includes/footer.inc');
-	exit;
+if (isset($_POST['PrintOrEmail']) ){
+	if ($_POST['PrintOrEmail'] =='Email' AND ! IsEmailAddress($_POST['EmailTo'])){
+		include('includes/header.inc');
+		prnMsg( _('The email address entered does not appear to be valid. No emails have been sent.'),'warn');
+		include('includes/footer.inc');
+		exit;
+	}
 }
 $ViewingOnly = 0;
 if (isset($_GET['ViewingOnly']) AND $_GET['ViewingOnly']!='') {

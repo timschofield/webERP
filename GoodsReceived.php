@@ -81,12 +81,21 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 				'"></td></tr></table><br>';
 
 	echo '<table cellpadding=2 class=selection>
+					<tr><th colspan="2"></th>
+								<th align="centre" colspan="3"><b>' . _('Supplier Units') . '</b></th>
+								<th></th>
+								<th align="centre" colspan="5"><b>' . _('Our Units') . '</b></th>
+						</tr>
 					<tr><th>' . _('Item Code') . '</th>
 							<th>' . _('Description') . '</th>
 							<th>' . _('Quantity') . '<br>' . _('Ordered') . '</th>
 							<th>' . _('Units') . '</th>
-							<th>' . _('Already Received') . '</th>
-							<th>' . _('This Delivery') . '<br>' . _('Quantity') . '</th>';
+							<th>' . _('Already') . '<br />' . _('Received') . '</th>
+							<th>' . _('Conversion') . '<br />' . _('Factor') . '</th>
+							<th>' . _('Quantity') . '<br>' . _('Ordered') . '</th>
+							<th>' . _('Units') . '</th>
+							<th>' . _('Already') . '<br />' . _('Received') . '</th>
+							<th>' . _('This Delivery') . '<br />' . _('Quantity') . '</th>';
 
 	if ($_SESSION['ShowValueOnGRN']==1) {
 		echo '<th>' . _('Price') . '</th><th>' . _('Total Value') . '<br>' . _('Received') . '</th>';
@@ -125,41 +134,23 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 
 		$LineTotal = ($LnItm->ReceiveQty * $LnItm->Price );
 		$_SESSION['PO'.$identifier]->Total = $_SESSION['PO'.$identifier]->Total + $LineTotal;
+		$DisplaySupplierQtyOrd = number_format($LnItm->Quantity/$LnItm->ConversionFactor,$LnItm->DecimalPlaces);
+		$DisplaySupplierQtyRec = number_format($LnItm->QtyReceived/$LnItm->ConversionFactor,$LnItm->DecimalPlaces);
 		$DisplayQtyOrd = number_format($LnItm->Quantity,$LnItm->DecimalPlaces);
 		$DisplayQtyRec = number_format($LnItm->QtyReceived,$LnItm->DecimalPlaces);
 		$DisplayLineTotal = number_format($LineTotal,2);
 		$DisplayPrice = number_format($LnItm->Price,2);
 
-		$SupplierUomSQL="SELECT unitsofmeasure.unitname,
-															conversionfactor,
-															suppliersuom,
-															max(effectivefrom)
-												FROM purchdata
-												LEFT JOIN unitsofmeasure
-												ON purchdata.suppliersuom=unitsofmeasure.unitid
-												WHERE supplierno='".$_SESSION['PO'.$identifier]->SupplierID."'
-												AND stockid='".$LnItm->StockID."'
-												GROUP BY unitsofmeasure.unitname";
-
-		$SupplierUOMResult=DB_query($SupplierUomSQL, $db);
-		if (DB_num_rows($SupplierUOMResult)>0) {
-			$SupplierUOMRow=DB_fetch_array($SupplierUOMResult);
-			if (strlen($SupplierUOMRow['unitname'])>0) {
-				$Uom=$SupplierUOMRow['unitname'];
-			} else {
-				$Uom=$LnItm->Units;
-			}
-			$ConversionFactor=$SupplierUOMRow['conversionfactor'];
-		} else { //using our units throughout
-			$Uom=$LnItm->Units;
-			$ConversionFactor=1;
-		}
 
 		//Now Display LineItem
 		echo '<td>' . $LnItm->StockID . '</td>';
 		echo '<td>' . $LnItm->ItemDescription . '</td>';
+		echo '<td class=number>' . $DisplaySupplierQtyOrd . '</td>';
+		echo '<td>' . $LnItm->SuppliersUnit . '</td>';
+		echo '<td class=number>' . $DisplaySupplierQtyRec . '</td>';
+		echo '<td class=number>' . $LnItm->ConversionFactor . '</td>';
 		echo '<td class=number>' . $DisplayQtyOrd . '</td>';
-		echo '<td>' . $LnItm->uom . '</td>';
+		echo '<td>' . $LnItm->Units . '</td>';
 		echo '<td class=number>' . $DisplayQtyRec . '</td>';
 		echo '<td class=number>';
 
@@ -191,7 +182,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 	echo "<script>defaultControl(document.forms[0].RecvQty_$LnItm->LineNo);</script>";
 $DisplayTotal = number_format($_SESSION['PO'.$identifier]->Total,2);
 if ($_SESSION['ShowValueOnGRN']==1) {
-	echo '<tr><td colspan=7 class=number><b>' . _('Total value of goods received'). '</b></td>
+	echo '<tr><td colspan="11" class=number><b>' . _('Total value of goods received'). '</b></td>
 						<td class=number><b>'. $DisplayTotal. '</b></td>
 				</tr></table>';
 } else {
@@ -675,7 +666,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 	
 	
 	if ($_SESSION['PO'.$identifier]->AllLinesReceived()==1) { //all lines on the purchase order are now completed
-		$StatusComment=date($_SESSION['DefaultDateFormat']) .' - ' . _('Order Completed') .'<br />' . $_SESSION['PO'.$identifier]->StatusComment;
+		$StatusComment=date($_SESSION['DefaultDateFormat']) .' - ' . _('Order Completed') .'<br />' . $_SESSION['PO'.$identifier]->StatusComments;
 		$sql="UPDATE purchorders
 					SET status='Completed',
 					stat_comment='" . $StatusComment . "'
