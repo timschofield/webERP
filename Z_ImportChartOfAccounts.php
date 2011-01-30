@@ -77,7 +77,7 @@ if (isset($_POST['update'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table><tr><td>'._('File to import').'</td>'.
 		'<td><input type="file" id="ImportFile" name="ImportFile"></td></tr></table>';
-	echo 'div class="centre"><input type="submit" name="update" value="Process"></div>';
+	echo '<div class="centre"><input type="submit" name="update" value="Process"></div>';
 	echo '</form>';
 }
 
