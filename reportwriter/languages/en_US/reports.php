@@ -243,6 +243,8 @@ define('RPT_RECEIVABLES',_('Receivables'));
 define('RPT_INVENTORY',_('Inventory'));
 define('RPT_MANUFAC',_('Manufacturing'));
 define('RPT_GL',_('General Ledger'));
+define('RPT_AM',_('Asset Manager'));
+define('RPT_PC',_('Petty Cash'));
 define('RPT_FINANCIAL',_('Financial Reports'));
 define('RPT_MISC',_('Miscellaneous'));
 

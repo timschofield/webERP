@@ -13,9 +13,11 @@ $ReportGroups = array (
 	'inv' => RPT_INVENTORY,
 	'man' => RPT_MANUFAC,
 	'gl' => RPT_GL,
+	'am' => RPT_AM,
+	'pc' => RPT_PC,
 	'misc' => RPT_MISC);  // do not delete misc category
 
-// This array is imploded with the first entry = number of text boxes to build (0, 1 or 2), 
+// This array is imploded with the first entry = number of text boxes to build (0, 1 or 2),
 // the remaining is the dropdown menu listings
 $CritChoices = array(
 	0 => '2:'.RPT_ALL.':'.RPT_RANGE,
@@ -30,7 +32,7 @@ $CritChoices = array(
 $PaperOrientation = array (
 	'P' => RPT_PORTRAIT,
 	'L' => RPT_LANDSCAPE);
-	
+
 // Paper sizes supported in fpdf class, includes dimensions width, length in mm for page setup
 $PaperSizes = array (
 	'A3:297:420' => RPT_A3,
@@ -47,31 +49,31 @@ $Fonts = array (
 
 // Available font sizes in units: points
 $FontSizes = array (
-	'8' => RPT_8, 
-	'10' => RPT_10, 
-	'12' => RPT_12, 
-	'14' => RPT_14, 
-	'16' => RPT_16, 
-	'18' => RPT_18, 
-	'20' => RPT_20, 
-	'24' => RPT_24, 
-	'28' => RPT_28, 
-	'32' => RPT_32, 
-	'36' => RPT_36, 
-	'40' => RPT_40, 
+	'8' => RPT_8,
+	'10' => RPT_10,
+	'12' => RPT_12,
+	'14' => RPT_14,
+	'16' => RPT_16,
+	'18' => RPT_18,
+	'20' => RPT_20,
+	'24' => RPT_24,
+	'28' => RPT_28,
+	'32' => RPT_32,
+	'36' => RPT_36,
+	'40' => RPT_40,
 	'50' => RPT_50);
 
 // Available font sizes in units: points
 $LineSizes = array (
-	'1' => RPT_1, 
-	'2' => RPT_2, 
-	'3' => RPT_3, 
-	'4' => RPT_4, 
-	'5' => RPT_5, 
-	'6' => RPT_6, 
-	'7' => RPT_7, 
-	'8' => RPT_8, 
-	'9' => RPT_9, 
+	'1' => RPT_1,
+	'2' => RPT_2,
+	'3' => RPT_3,
+	'4' => RPT_4,
+	'5' => RPT_5,
+	'6' => RPT_6,
+	'7' => RPT_7,
+	'8' => RPT_8,
+	'9' => RPT_9,
 	'10' => RPT_10);
 
 // Font colors keyed by color Red:Green:Blue
@@ -107,8 +109,8 @@ $DateChoices = array(
 
 /*********************************************************************************************
 Form unique defaults
-**********************************************************************************************/ 
-// Sets the groupings for forms indexed to a specific report (top level) grouping, 
+**********************************************************************************************/
+// Sets the groupings for forms indexed to a specific report (top level) grouping,
 // index is of the form ReportGroup[index]:FormGroup[index], each have a max of 4 chars
 // This array is linked to the ReportGroups array by using the index values of ReportGroup
 // the first value must match an index value of ReportGroup.
