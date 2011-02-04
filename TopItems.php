@@ -1,13 +1,18 @@
 <?php
 /* $Revision: 1.3 $ */
-//$PageSecurity = 2;
+//$PageSecurity = 2; Now from db
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
 include ('includes/session.inc');
 $title = _('Top Items Searching');
 include ('includes/header.inc');
 //check if input already
-if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_POST['Customers']) and isset($_POST['NumberOfTopItems']) and isset($_POST['order']))) {
+if (!(isset($_POST['Location']) 
+		AND isset($_POST['NumberOfDays']) 
+		AND isset($_POST['Customers']) 
+		AND isset($_POST['NumberOfTopItems']) 
+		AND isset($_POST['Sequence']))) {
+			
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '</p>';
 	echo "<form action=" . $_SERVER['PHP_SELF'] . '?' . SID . ' name="SelectCustomer" method=POST>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -18,27 +23,27 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 					locationname
 				FROM `locations`';
 	$result = DB_query($sql, $db);
-	echo "<option value='All'>" . _('All');
+	echo '<option value="All">' . _('All') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
-		echo "<option VALUE='" . $myrow['loccode'] . "'>" . $myrow['loccode'] . " - " . $myrow['locationname'];
+		echo "<option VALUE='" . $myrow['loccode'] . "'>" . $myrow['loccode'] . " - " . $myrow['locationname'] . '</option>';
 	}
-	echo "</select></td></tr>";
+	echo '</select></td></tr>';
 	//to view list of customer
 	echo '<tr><td width="150">' . _('Select Customer Type') . '   </td><td>:</td><td><select name=Customers>';
 	$sql = 'SELECT typename,
 					typeid
 				FROM debtortype';
 	$result = DB_query($sql, $db);
-	echo "<option value='All'>" . _('All');
+	echo "<option value='All'>" . _('All') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
-		echo "<option VALUE='" . $myrow['typeid'] . "'>" . $myrow['typename'];
+		echo "<option VALUE='" . $myrow['typeid'] . "'>" . $myrow['typename'] . '</option>';
 	}
-	echo "</select></td>
-		</tr>";
+	echo '</select></td>
+			</tr>';
 	//view order by list to display
 	echo '<tr>	<td width="150">' . _('Select Order By ') . ' </td>
 				<td>:</td>
-				<td><select name=order>';
+				<td><select name="Sequence">';
 	echo '	<option value=TotalInvoiced>' . _('Total Pieces') . '';
 	echo '	<option value=ValueSales>' . _('Value of Sales') . '';
 	echo '	</select></td>
@@ -60,10 +65,11 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 	echo '<br /><div class=centre><input tabindex=5 type=submit value="' . _('Search') . '"></div>';
 } else {
 	// everything below here to view NumberOfTopItems items sale on selected location
+	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$_POST['NumberOfDays']));
 	//the situation if the location and customer type selected "All"
-	if (($_POST['Location'] == "All") and ($_POST['Customers'] == "All")) {
-		$SQL = "
-				SELECT 	salesorderdetails.stkcode,
+	if (($_POST['Location'] == 'All') and ($_POST['Customers'] == 'All')) {
+		
+		$SQL = "SELECT 	salesorderdetails.stkcode,
 						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
 						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
 						stockmaster.description,
@@ -76,12 +82,12 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
 						AND debtorsmaster.currcode = currencies.currabrev
-						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_POST['NumberOfDays'] . " DAY)
+						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "' 
 				GROUP BY salesorderdetails.stkcode
-				ORDER BY " . $_POST["order"] . " DESC
-				LIMIT 0," . $_POST['NumberOfTopItems'] . "";
+				ORDER BY " . $_POST['Sequence'] . " DESC
+				LIMIT " . $_POST['NumberOfTopItems'] . "";
 	} else { //the situation if only location type selected "All"
-		if ($_POST['Location'] == "All") {
+		if ($_POST['Location'] == 'All') {
 			$SQL = "
 				SELECT 	salesorderdetails.stkcode,
 						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
@@ -96,16 +102,15 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
 						AND debtorsmaster.currcode = currencies.currabrev
-						AND debtorsmaster.typeid = '" . $_POST["Customers"] . "'
-						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_POST['NumberOfDays'] . " DAY)
+						AND debtorsmaster.typeid = '" . $_POST['Customers'] . "'
+						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "'
 				GROUP BY salesorderdetails.stkcode
-				ORDER BY " . $_POST["order"] . " DESC
-				LIMIT 0," . $_POST[NumberOfTopItems] . "";
+				ORDER BY " . $_POST['Sequence'] . " DESC
+				LIMIT " . $_POST[NumberOfTopItems] . "";
 		} else {
 			//the situation if the customer type selected "All"
 			if ($_POST['Customers'] == "All") {
-				$SQL = "
-					SELECT 	salesorderdetails.stkcode,
+				$SQL = "SELECT 	salesorderdetails.stkcode,
 						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
 						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
 						stockmaster.description,
@@ -118,15 +123,14 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
 						AND debtorsmaster.currcode = currencies.currabrev
-						AND salesorders.fromstkloc = '" . $_POST["Location"] . "'
-						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_POST['NumberOfDays'] . " DAY)
+						AND salesorders.fromstkloc = '" . $_POST['Location'] . "'
+						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "'
 					GROUP BY salesorderdetails.stkcode
-					ORDER BY " . $_POST["order"] . " DESC
-					LIMIT 0," . $_POST[NumberOfTopItems] . "";
+					ORDER BY " . $_POST['Sequence'] . " DESC
+					LIMIT " . $_POST['NumberOfTopItems'] . "";
 			} else {
 				//the situation if the location and customer type not selected "All"
-				$SQL = "
-					SELECT 	salesorderdetails.stkcode,
+				$SQL = "SELECT 	salesorderdetails.stkcode,
 						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
 						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
 						stockmaster.description,
@@ -139,12 +143,12 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
 						AND debtorsmaster.currcode = currencies.currabrev
-						AND salesorders.fromstkloc = '" . $_POST["Location"] . "'
+						AND salesorders.fromstkloc = '" . $_POST['Location'] . "'
 						AND debtorsmaster.typeid = '" . $_POST['Customers'] . "'
-						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_POST['NumberOfDays'] . " DAY)
+						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "'
 					GROUP BY salesorderdetails.stkcode
-					ORDER BY " . $_POST["order"] . " DESC
-					LIMIT 0," . $_POST[NumberOfTopItems] . "";
+					ORDER BY " . $_POST['Sequence'] . " DESC
+					LIMIT " . $_POST['NumberOfTopItems'] . "";
 			}
 		}
 	}
@@ -161,11 +165,11 @@ if (!(isset($_POST['Location']) and isset($_POST['NumberOfDays']) and isset($_PO
 								<th><strong>' . _('On Hand') . '</strong></th>';
 	echo $TableHeader;
 	echo '
-			<input type="hidden" value=' . $_POST["Location"] . ' name=location />
-			<input type="hidden" value=' . $_POST["order"] . ' name=order />
-			<input type="hidden" value=' . $_POST["NumberOfDays"] . ' name=numberofdays />
-			<input type="hidden" value=' . $_POST["Customers"] . ' name=customers />
-			<input type="hidden" value=' . $_POST["NumberOfTopItems"] . ' name=NumberOfTopItems />
+			<input type="hidden" value=' . $_POST['Location'] . ' name=location />
+			<input type="hidden" value=' . $_POST['Sequence'] . ' name=Sequence />
+			<input type="hidden" value=' . $_POST['NumberOfDays'] . ' name=numberofdays />
+			<input type="hidden" value=' . $_POST['Customers'] . ' name=customers />
+			<input type="hidden" value=' . $_POST['NumberOfTopItems'] . ' name=NumberOfTopItems />
 			';
 	$k = 0; //row colour counter
 	$i = 1;

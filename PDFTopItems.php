@@ -10,6 +10,8 @@ $PageNumber = 1;
 $line_height = 12;
 include ('includes/PDFTopItemsHeader.inc');
 $FontSize = 10;
+$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$_POST['NumberOfDays']));
+
 //the situation if the location and customer type selected "All"
 if (($_GET["location"] == "All") and ($_GET["customers"] == "All")) {
 	$SQL = "SELECT 	salesorderdetails.stkcode,
@@ -21,7 +23,7 @@ if (($_GET["location"] == "All") and ($_GET["customers"] == "All")) {
 			WHERE 	salesorderdetails.orderno = salesorders.orderno
 				AND salesorderdetails.stkcode = stockmaster.stockid
 				AND salesorders.debtorno = debtorsmaster.debtorno
-				AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_GET["numberofdays"] . " DAY)
+				AND salesorderdetails.ActualDispatchDate >='" . $FromDate . "' 
 			GROUP BY salesorderdetails.stkcode
 			ORDER BY '" . $_GET['order'] . "' DESC
 			LIMIT 0," . $_GET['NumberOfTopItems'] ;
@@ -37,7 +39,7 @@ if (($_GET["location"] == "All") and ($_GET["customers"] == "All")) {
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
 						AND debtorsmaster.typeid = '" . $_GET["customers"] . "'
-						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_GET["numberofdays"] . " DAY)
+						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "' 
 				GROUP BY salesorderdetails.stkcode
 				ORDER BY '" . $_GET['order'] . "' DESC
 				LIMIT 0," . $_GET['NumberOfTopItems'];
@@ -54,8 +56,8 @@ if (($_GET["location"] == "All") and ($_GET["customers"] == "All")) {
 					WHERE 	salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
-						AND salesorders.fromstkloc = '" . $_GET["location"] . "'
-						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_GET["numberofdays"] . " DAY)
+						AND salesorders.fromstkloc = '" . $_GET['location'] . "'
+						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "' 
 					GROUP BY salesorderdetails.stkcode
 					ORDER BY '" . $_GET['order'] . "' DESC
 					LIMIT 0," . $_GET['NumberOfTopItems'];
@@ -71,9 +73,9 @@ if (($_GET["location"] == "All") and ($_GET["customers"] == "All")) {
 					WHERE 	salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
-						AND salesorders.fromstkloc = '" . $_GET["location"] . "'
-						AND debtorsmaster.typeid = '" . $_GET["customers"] . "'
-						AND salesorderdetails.ActualDispatchDate >= DATE_SUB(CURDATE(), INTERVAL " . $_GET["numberofdays"] . " DAY)
+						AND salesorders.fromstkloc = '" . $_GET['location'] . "'
+						AND debtorsmaster.typeid = '" . $_GET['customers'] . "'
+						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "' 
 					GROUP BY salesorderdetails.stkcode
 					ORDER BY '" . $_GET['order'] . "' DESC
 					LIMIT 0," . $_GET['NumberOfTopItems'];

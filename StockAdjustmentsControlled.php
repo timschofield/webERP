@@ -26,7 +26,7 @@ if (isset($_SESSION['Adjustment'])){
 }
 
 /*Save some typing by referring to the line item class object in short form */
-$LineItem = &$_SESSION['Adjustment'];
+$LineItem = $_SESSION['Adjustment'];
 
 //Make sure this item is really controlled
 if ( $LineItem->Controlled != 1 ){

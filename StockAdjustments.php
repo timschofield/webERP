@@ -26,10 +26,16 @@ $NewAdjustment = false;
 if (isset($_GET['StockID'])){
 	$StockID = trim(strtoupper($_GET['StockID']));
 	$_SESSION['Adjustment']->StockID = trim(strtoupper($StockID));
-	$_SESSION['Adjustment']->ItemDescription = trim(strtoupper($_GET['Description']));
-	$result = DB_query("SELECT controlled FROM stockmaster WHERE stockid='" . $_SESSION['Adjustment']->StockID . "'",$db);
-	$myrow = DB_fetch_row($result);
-	$_SESSION['Adjustment']->Controlled = $myrow[0];
+	$result = DB_query("SELECT description, controlled, serialised, decimalplaces FROM stockmaster WHERE stockid='" . $_SESSION['Adjustment']->StockID . "'",$db);
+	$myrow = DB_fetch_array($result);
+	$_SESSION['Adjustment']->ItemDescription = $myrow['description'];
+	$_SESSION['Adjustment']->Controlled = $myrow['controlled'];
+	$_SESSION['Adjustment']->Serialised = $myrow['serialised'];
+	$_SESSION['Adjustment']->DecimalPlaces = $myrow['decimalplaces'];
+	$_SESSION['Adjustment']->SerialItems = array();
+	if (!isset($_SESSION['Adjustment']->Quantity)or !is_numeric($_SESSION['Adjustment']->Quantity)){
+		$_SESSION['Adjustment']->Quantity=0;
+	}
 	$NewAdjustment = true;
 } elseif (isset($_POST['StockID'])){
 	if(isset($_POST['StockID']) and $_POST['StockID'] != $_SESSION['Adjustment']->StockID){
@@ -357,7 +363,7 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 }
 
 echo '</select></td></tr>';
-if (!isset($_SESSION['Adjustment']->Narrative)) {
+if (isset($_SESSION['Adjustment']) and !isset($_SESSION['Adjustment']->Narrative)) {
 	$_SESSION['Adjustment']->Narrative = '';
 }
 
@@ -368,14 +374,13 @@ echo '<tr><td>'._('Adjustment Quantity').':</td>';
 
 echo '<td>';
 if ($Controlled==1){
-		if ($_SESSION['Adjustment']->StockLocation != ''){
-			echo '<input type="HIDDEN" name="Quantity" Value="' . $_SESSION['Adjustment']->Quantity . '">
+		if ($_SESSION['Adjustment']->StockLocation == ''){
+			$_SESSION['Adjustment']->StockLocation = $_SESSION['UserStockLocation'];
+		}
+		echo '<input type="HIDDEN" name="Quantity" Value="' . $_SESSION['Adjustment']->Quantity . '">
 				'.$_SESSION['Adjustment']->Quantity.' &nbsp; &nbsp; &nbsp; &nbsp;
 				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=REMOVE&' . SID . '">'._('Remove').'</a>]
 				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=ADD&' . SID . '">'._('Add').'</a>]';
-		} else {
-			prnMsg( _('Please select a location and press') . ' "' . _('Enter Stock Adjustment') . '" ' . _('below to enter Controlled Items'), 'info');
-		}
 } else {
 	echo '<input type=TEXT class="number" name="Quantity" size=12 maxlength=12 Value="' . $Quantity . '">';
 }

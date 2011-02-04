@@ -4,7 +4,7 @@
 
 //$PageSecurity = 9; /*viewing possible with inquiries but not mods */
 
-//$UpdateSecurity =10;
+$UpdateSecurity =10;
 
 include('includes/session.inc');
 $title = _('Stock Cost Update');
@@ -148,29 +148,29 @@ echo '<input type=hidden name=OldOverheadCost VALUE=' . $myrow['overheadcost'] .
 echo '<input type=hidden name="QOH" VALUE=' . $myrow['totalqoh'] .'>';
 
 echo '<tr><td>' . _('Last Cost') .':</td><td class=number>' . number_format($myrow['lastcost'],2) . '</td></tr>';
-if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset($UpdateSecurity)){
+if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 	echo '<tr><td>' . _('Cost') . ':</td><td class=number>' . number_format($myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'],2) . '</td></tr></table>';
 } else {
 
 	if ($myrow['mbflag']=='M'){
 		echo '<input type=hidden name="MaterialCost" VALUE=' . $myrow['materialcost'] . '>';
 		echo '<tr><td>' . _('Standard Material Cost Per Unit') .':</td><td class=number>' . number_format($myrow['materialcost'],4) . '</td></tr>';
-		echo '<tr><td>' . _('Standard Labour Cost Per Unit') . ':</td><td class=number><input type=TEXT class="number" name=LabourCost VALUE=' . $myrow['labourcost'] . '></td></tr>';
-		echo '<tr><td>' . _('Standard Overhead Cost Per Unit') . ':</td><td class=number><input type=TEXT class="number" name=OverheadCost VALUE=' . $myrow['overheadcost'] . '></td></tr>';
+		echo '<tr><td>' . _('Standard Labour Cost Per Unit') . ':</td><td class=number><input type=text class="number" name="LabourCost" value=' . $myrow['labourcost'] . '></td></tr>';
+		echo '<tr><td>' . _('Standard Overhead Cost Per Unit') . ':</td><td class=number><input type=text class="number" name="OverheadCost" value=' . $myrow['overheadcost'] . '></td></tr>';
 	} elseif ($myrow['mbflag']=='B' OR  $myrow['mbflag']=='D') {
-		echo '<tr><td>' . _('Standard Cost') .':</td><td class=number><input type=TEXT class="number" name="MaterialCost" VALUE=' . $myrow['materialcost'] . '></td></tr>';
+		echo '<tr><td>' . _('Standard Cost') .':</td><td class=number><input type="text" class="number" name="MaterialCost" value=' . $myrow['materialcost'] . '></td></tr>';
 	} else 	{
-		echo '<input type=hidden name=LabourCost VALUE=0>';
-		echo '<input type=hidden name=OverheadCost VALUE=0>';
+		echo '<input type="hidden" name="LabourCost" VALUE=0>';
+		echo '<input type="hidden" name="OverheadCost" VALUE=0>';
 	}
     echo '</table><br /><div class="centre"><input type="submit" name="UpdateData" VALUE="' . _('Update') . '"><br /><br />';
 }
 if ($myrow['mbflag']!='D'){
-	echo '<a href="' . $rootpath . '/StockStatus.php?' . SID . '&StockID=' . $StockID . '>' . _('Show Stock Status') . '</a>';
+	echo '<div class="centre"><a href="' . $rootpath . '/StockStatus.php?' . SID . '&StockID=' . $StockID . '>' . _('Show Stock Status') . '</a>';
 	echo '<br><a href="' . $rootpath . '/StockMovements.php?' . SID . '&StockID=' . $StockID . '">' . _('Show Stock Movements') . '</a>';
 	echo '<br><a href="' . $rootpath . '/StockUsage.php?' . SID . '&StockID=' . $StockID . '">' . _('Show Stock Usage')  .'</a>';
 	echo '<br><a href="' . $rootpath . '/SelectSalesOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';
-	echo '<br><a href="' . $rootpath . '/SelectCompletedOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
+	echo '<br><a href="' . $rootpath . '/SelectCompletedOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a></div>';
 }
 echo '</form></div>';
 include('includes/footer.inc');
