@@ -1,10 +1,8 @@
 <?php
 
-/* $Revision: 1.1 $ */
+/* $Id: FixedAssetDepreciation.php 4213 2010-12-22 14:33:20Z tim_schofield $*/
 
-include('includes/DefineJournalClass.php');
-
-//$PageSecurity = 10;
+//$PageSecurity = 10; Now from DB
 include('includes/session.inc');
 $title = _('Depreciation Journal Entry');
 
@@ -23,8 +21,6 @@ $result = DB_query('SELECT periods.lastdate_in_period,
 
 $LastDepnRun = DB_fetch_row($result);
 
-//echo '<BR>LastRun period = ' . $LastDepnRun[1] . ' Last date in period = ' . $LastDepnRun[0];
-
 $AllowUserEnteredProcessDate = true;
 
 if (DB_num_rows($result)==0) { //then depn has never been run yet?
@@ -42,8 +38,6 @@ if (DB_num_rows($result)==0) { //then depn has never been run yet?
 
 } else { //depn calc has been run previously
 	$AllowUserEnteredProcessDate = false;
-	prnMsg('LastDepnRun[0] = ' . $LastDepnRun[0] . '<br />ConvertSQLDate($LastDepnRun[0]) = ' . ConvertSQLDate($LastDepnRun[0]) . '<br />DateAdd(ConvertSQLDate($LastDepnRun[0]),d,28) = ' . DateAdd(ConvertSQLDate($LastDepnRun[0]),'d',28), 'info');
-	
 	$_POST['ProcessDate'] = LastDayOfMonth(DateAdd(ConvertSQLDate($LastDepnRun[0]),'d',28));
 }
 
