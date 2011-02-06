@@ -1,6 +1,8 @@
 <?php
-/* $Id:  $*/
-$PageSecurity = 15;
+/* $Id UpgradeDatabase.php 4183 2010-12-14 09:30:20Z daintree $ */
+
+$PageSecurity = 15; //hard coded in case database is old and PageSecurity stuff cannot be retrieved
+
 include('includes/session.inc');
 $title = _('Upgrade webERP Database');
 include('includes/header.inc');
@@ -144,6 +146,9 @@ if (isset($_POST['DoUpgrade'])){
 						case 1050:
 							echo '<td bgcolor="yellow">'._('Note').' - '. _('Table has already been created').'</td></tr>';
 							break;
+						case 1054:
+							echo '<td bgcolor="yellow">'._('Note').' - '. _('Column has already been changed').'</td></tr>';
+							break;
 						case 1060:
 							echo '<td bgcolor="yellow">'._('Note').' - '. _('Column has already been created').'</td></tr>';
 							break;
@@ -166,7 +171,7 @@ if (isset($_POST['DoUpgrade'])){
 							echo '<td bgcolor="red">'._('Failure').' - '. 	_('Error number').' - '.DB_error_no($db) .' ' . DB_error_msg($db) . '</td></tr>';
 							break;
 					}
-					unset($sql);
+					$sql='';
 				}
 			} //end if its a valid sql line not a comment
 		} //end of for loop around the lines of the sql script

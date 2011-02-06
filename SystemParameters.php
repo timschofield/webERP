@@ -282,6 +282,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['FrequentlyOrderedItems'] != $_POST['X_FrequentlyOrderedItems']){
 			$sql[] = "UPDATE config SET confvalue='" . $_POST['X_FrequentlyOrderedItems'] . "' WHERE confname='FrequentlyOrderedItems'";
 		}
+		if ($_SESSION['AutoAuthorisePO'] != $_POST['X_AutoAuthorisePO']){
+			$sql[] = "UPDATE config SET confvalue='" . $_POST['X_AutoAuthorisePO'] . "' WHERE confname='AutoAuthorisePO'";
+		}
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 1 ) {
 			$result = DB_Txn_Begin($db);
@@ -390,6 +393,13 @@ echo '<tr style="outline: 1px solid"><td>' . _('Frequently Ordered Items') . ':<
 	<td><input type="Text" class="number" Name="X_FrequentlyOrderedItems" value="' . $_SESSION['FrequentlyOrderedItems'] . '" size=3 maxlength=2></td>
 	<td>' . _('To show the most frequently ordered items enter the number of frequently ordered items you wish to display from 1 to 99. If you do not wish to display the frequently ordered item list enter 0.') . '</td></tr>';
 
+// SO_AllowSameItemMultipleTimes
+echo '<tr style="outline: 1px solid"><td>' . _('Sales Order Allows Same Item Multiple Times') . ':</td>
+	<td><select Name="X_SO_AllowSameItemMultipleTimes">
+	<option '.($_SESSION['SO_AllowSameItemMultipleTimes']?'selected ':'').'value="1">'._('Yes').'
+	<option '.(!$_SESSION['SO_AllowSameItemMultipleTimes']?'selected ':'').'value="0">'._('No').'
+	</select></td><td>&nbsp;</td></tr>';
+
 //'AllowOrderLineItemNarrative'
 echo '<tr style="outline: 1px solid"><td>' . _('Order Entry allows Line Item Narrative') . ':</td>
 	<td><select Name="X_AllowOrderLineItemNarrative">
@@ -443,16 +453,6 @@ echo '<tr style="outline: 1px solid"><td>' . _('Show company details on packing 
 	</select></td>
 	<td>' . _('Customer branches can be set by default not to print packing slips with the company logo and address. This is useful for companies that ship to customers customers and to show the source of the shipment would be inappropriate. There is an option on the setup of customer branches to ship blind, this setting is the default applied to all new customer branches') . '</td>
 	</tr>';
-
-//Show values on GRN
-echo '<tr style="outline: 1px solid"><td>' . _('Show order values on GRN') . ':</td>
-	<td><select Name="X_ShowValueOnGRN">
-	<option '.($_SESSION['ShowValueOnGRN']?'selected ':'').'value="1">'._('Yes').'
-	<option '.(!$_SESSION['ShowValueOnGRN']?'selected ':'').'value="0">'._('No').'
-	</select></td>
-	<td>' . _('Should the value of the purchased stock be shown on the GRN screen') . '</td>
-	</tr>';
-
 
 // DispatchCutOffTime
 echo '<tr style="outline: 1px solid"><td>' . _('Dispatch Cut-Off Time') . ':</td>
@@ -583,6 +583,15 @@ for ($i=1; $i <= 12; $i++ )
 	echo '<option '.($_SESSION['NumberOfPeriodsOfStockUsage'] == $i?'selected ':'').'value="'.$i.'">'.$i;
 echo '</select></td><td>' . _('In stock usage inquiries this determines how many periods of stock usage to show. An average is calculated over this many periods') .'</td></tr>';
 
+//Show values on GRN
+echo '<tr style="outline: 1px solid"><td>' . _('Show order values on GRN') . ':</td>
+	<td><select Name="X_ShowValueOnGRN">
+	<option '.($_SESSION['ShowValueOnGRN']?'selected ':'').'value="1">'._('Yes').'
+	<option '.(!$_SESSION['ShowValueOnGRN']?'selected ':'').'value="0">'._('No').'
+	</select></td>
+	<td>' . _('Should the value of the purchased stock be shown on the GRN screen') . '</td>
+	</tr>';
+
 // Check_Qty_Charged_vs_Del_Qty
 echo '<tr style="outline: 1px solid"><td>' . _('Check Quantity Charged vs Deliver Qty') . ':</td>
 	<td><select Name="X_Check_Qty_Charged_vs_Del_Qty">
@@ -612,16 +621,17 @@ echo '<tr style="outline: 1px solid"><td>' . _('Allowed Over Receive Proportion'
 // PO_AllowSameItemMultipleTimes
 echo '<tr style="outline: 1px solid"><td>' . _('Purchase Order Allows Same Item Multiple Times') . ':</td>
 	<td><select Name="X_PO_AllowSameItemMultipleTimes">
-	<option '.($_SESSION['PO_AllowSameItemMultipleTimes']?'selected ':'').'value="1">'._('Yes').'
-	<option '.(!$_SESSION['PO_AllowSameItemMultipleTimes']?'selected ':'').'value="0">'._('No').'
+	<option '.($_SESSION['PO_AllowSameItemMultipleTimes']?'selected ':'').'value="1">'._('Yes') . '</option>
+	<option '.(!$_SESSION['PO_AllowSameItemMultipleTimes']?'selected ':'').'value="0">'._('No') . '</option>
 	</select></td>&nbsp;<td></td></tr>';
 
-// SO_AllowSameItemMultipleTimes
-echo '<tr style="outline: 1px solid"><td>' . _('Sales Order Allows Same Item Multiple Times') . ':</td>
-	<td><select Name="X_SO_AllowSameItemMultipleTimes">
-	<option '.($_SESSION['SO_AllowSameItemMultipleTimes']?'selected ':'').'value="1">'._('Yes').'
-	<option '.(!$_SESSION['SO_AllowSameItemMultipleTimes']?'selected ':'').'value="0">'._('No').'
-	</select></td><td>&nbsp;</td></tr>';
+// AutoAuthorisePO
+echo '<tr style="outline: 1px solid"><td>' . _('Automatically authorise purchase orders if user has authority') . ':</td>
+	<td><select Name="X_AutoAuthorisePO">
+	<option '.($_SESSION['AutoAuthorisePO'] ?'selected ':'').'value="1">'._('Yes').'
+	<option '.(!$_SESSION['AutoAuthorisePO'] ?'selected ':'').'value="0">'._('No').'
+	</select></td>' . _('If the user changing an existing purchase order or adding a new puchase order is set up to authorise purchase orders and the order is within their limit, then the purchase order status is automatically set to authorised') . '<td></td></tr>';
+
 
 echo '<tr><th colspan=3>' . _('General Settings') . '</th></tr>';
 echo $TableHeader;

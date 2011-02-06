@@ -4,7 +4,6 @@
 
 //$PageSecurity = 2; Now comes from DB - read in from session
 include('includes/session.inc');
-include('includes/DefinePOClass.php');
 
 if (isset($_GET['GRNNo'])) {
 	$GRNNo=$_GET['GRNNo'];
@@ -12,11 +11,7 @@ if (isset($_GET['GRNNo'])) {
 	$GRNNo='';
 }
 
-if ($GRNNo=='Preview') {
-	$FormDesign = simplexml_load_file(sys_get_temp_dir().'/GoodsReceived.xml');
-} else {
-	$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/GoodsReceived.xml');
-}
+$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/GoodsReceived.xml');
 
 // Set the paper size/orintation
 $PaperSize = $FormDesign->PaperSize;
@@ -25,84 +20,83 @@ $line_height=$FormDesign->LineHeight;
 include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Goods Received Note') );
 
-if ($GRNNo=='Preview') {
-	$ListCount = 1; 
-} else {
-	$sql="SELECT grns.itemcode,
-			grns.grnno,
-			grns.deliverydate,
-			grns.itemdescription,
-			grns.qtyrecd,
-			grns.supplierid,
-			grns.podetailitem
-		FROM grns
-		WHERE grnbatch='".$GRNNo."'";
-	$GRNResult=DB_query($sql, $db);
-	$NoOfGRNs = DB_num_rows($GRNResult);
-	if ($NoOfGRNs>0){
-		$_GET['ModifyOrderNumber'] = (int)$_GET['PONo'];
-		$identifier=date('U');
-		include('includes/PO_ReadInOrder.inc'); //Read the PO in
-		include('includes/PDFGrnHeader.inc');
-	}
-}
-$i=1;
-$YPos=$FormDesign->Data->y;
-while ($i<=$NoOfGRNs) {
-	if ($GRNNo=='Preview') {
-		$StockID=str_pad('',10,'x');
-		$Date='1/1/1900';
-		$Description=str_pad('',30,'x');
-		$SuppliersQuantity='XXXXX.XX';
-		$OurUnitsQuantity='XXXXX.XX';
-		$Supplier=str_pad('',25,'x');
-		$Units = str_pad('',10,'x');
-		$SupplierUnits =str_pad('',10,'x');
-	} else {
-		$myrow = DB_fetch_array($GRNResult);
-		$LineNo = $_SESSION['PO'.$identifier]->GetLineNoFromPODetailItem($myrow['podetailitem']);
-		echo '<br />The podetailitem is ' . $myrow['podetailitem'] . '<br />Got the line number it is: ' . $LineNo;
-		$StockID=$myrow['itemcode'];
-		$GRNNo=$myrow['grnno'];
-		$Date=ConvertSQLDate($myrow['deliverydate']);
-		$Description=$myrow['itemdescription'];
-		$SuppliersQuantity=number_format($myrow['qtyrecd']/$_SESSION['PO' . $identifier]->LineItems[$LineNo]->ConversionFactor,$_SESSION['PO' . $identifier]->LineItems[$LineNo]->DecimalPlaces);
-		$OurUnitsQuantity=number_format($myrow['qtyrecd'],$_SESSION['PO' . $identifier]->LineItems[$LineNo]->DecimalPlaces);
-		$SupplierID=$myrow['supplierid'];
-		$Units = $_SESSION['PO' . $identifier]->LineItems[$LineNo]->Units;
-		$SuppliersUnit = $_SESSION['PO' . $identifier]->LineItems[$LineNo]->SuppliersUnit;
-		$Supplier = $_SESSION['PO' . $identifier]->SupplierName;
-	}
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x,$Page_Height-$YPos,$FormDesign->Data->Column1->Length,$FormDesign->Data->Column1->FontSize, $StockID);
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$Page_Height-$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize, $Description);
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column3->x,$Page_Height-$YPos,$FormDesign->Data->Column3->Length,$FormDesign->Data->Column3->FontSize, $Date);
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column4->x,$Page_Height-$YPos,$FormDesign->Data->Column4->Length,$FormDesign->Data->Column4->FontSize, $SuppliersQuantity, 'right');
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x,$Page_Height-$YPos,$FormDesign->Data->Column5->Length,$FormDesign->Data->Column5->FontSize, $SuppliersUnit, 'left');
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column6->x,$Page_Height-$YPos,$FormDesign->Data->Column6->Length,$FormDesign->Data->Column6->FontSize, $OurUnitsQuantity, 'right');
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column7->x,$Page_Height-$YPos,$FormDesign->Data->Column7->Length,$FormDesign->Data->Column7->FontSize, $Units, 'left');
-	$YPos += $line_height;
-	$i++;
-	if ($YPos >= $FormDesign->LineAboveFooter->starty){
-		/* We reached the end of the page so finsih off the page and start a newy */
-		$PageNumber++;
-		$YPos=$FormDesign->Data->y;
-		include ('includes/PDFGrnHeader.inc');
-	} //end if need a new page headed up
-}
+$sql="SELECT grns.itemcode,
+		grns.grnno,
+		grns.deliverydate,
+		grns.itemdescription,
+		grns.qtyrecd,
+		grns.supplierid,
+		purchorderdetails.suppliersunit,
+		purchorderdetails.conversionfactor,
+		stockmaster.units,
+		stockmaster.decimalplaces
+	FROM grns INNER JOIN purchorderdetails
+	ON grns.podetailitem=purchorderdetails.podetailitem
+	LEFT JOIN stockmaster
+	ON grns.itemcode=stockmaster.stockid
+	WHERE grnbatch='".$GRNNo."'";
 
-$LeftOvers = $pdf->addText($FormDesign->ReceiptDate->x,$Page_Height-$FormDesign->ReceiptDate->y,$FormDesign->ReceiptDate->FontSize, _('Date of Receipt: ').$Date);
+$GRNResult=DB_query($sql, $db);
 
-$LeftOvers = $pdf->addText($FormDesign->SignedFor->x,$Page_Height-$FormDesign->SignedFor->y,$FormDesign->SignedFor->FontSize, _('Signed for ').'______________________');
+if(DB_num_rows($GRNResult)>0) { //there are GRNs to print
+	
+	$sql = "SELECT suppliers.suppname,
+		suppliers.address1,
+		suppliers.address2 ,
+		suppliers.address3,
+		suppliers.address4,
+		suppliers.address5,
+		suppliers.address6
+	FROM grns INNER JOIN suppliers
+	ON grns.supplierid=suppliers.supplierid
+	WHERE grnbatch='".$GRNNo."'";
+	$SuppResult = DB_query($sql,$db,_('Could not get the supplier of the selected GRN'));
+	$SuppRow = DB_fetch_array($SuppResult);
+	
+	include ('includes/PDFGrnHeader.inc'); //head up the page
+	
+	$YPos=$FormDesign->Data->y;
+	while ($myrow = DB_fetch_array($GRNResult)) {
 
-if ($NoOfGRNs == 0) {  
-	$title = _('GRN Error');
+		if (is_numeric($myrow['decimalplaces'])){
+			$DecimalPlaces=$myrow['decimalplaces'];
+		} else {
+			$DecimalPlaces=2;
+		}
+		if (is_numeric($myrow['conversionfactor']) AND $myrow['conversionfactor'] !=0){
+			$SuppliersQuantity=number_format($myrow['qtyrecd']/$myrow['conversionfactor'],$DecimalPlaces);
+		} else {
+			$SuppliersQuantity=number_format($myrow['qtyrecd'],$DecimalPlaces);
+		}
+		$OurUnitsQuantity=number_format($myrow['qtyrecd'],$DecimalPlaces);
+		$DeliveryDate = ConvertSQLDate($myrow['deliverydate']);
+		
+		$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x,$Page_Height-$YPos,$FormDesign->Data->Column1->Length,$FormDesign->Data->Column1->FontSize, $myrow['itemcode']);
+		$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$Page_Height-$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize, $myrow['itemdescription']);
+		$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column3->x,$Page_Height-$YPos,$FormDesign->Data->Column3->Length,$FormDesign->Data->Column3->FontSize, $DeliveryDate);
+		$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column4->x,$Page_Height-$YPos,$FormDesign->Data->Column4->Length,$FormDesign->Data->Column4->FontSize, $SuppliersQuantity, 'right');
+		$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x,$Page_Height-$YPos,$FormDesign->Data->Column5->Length,$FormDesign->Data->Column5->FontSize, $myrow['suppliersunit'], 'left');
+		$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column6->x,$Page_Height-$YPos,$FormDesign->Data->Column6->Length,$FormDesign->Data->Column6->FontSize, $OurUnitsQuantity, 'right');
+		$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column7->x,$Page_Height-$YPos,$FormDesign->Data->Column7->Length,$FormDesign->Data->Column7->FontSize, $myrow['units'], 'left');
+		$YPos += $line_height;
+
+		if ($YPos >= $FormDesign->LineAboveFooter->starty){
+			/* We reached the end of the page so finsih off the page and start a newy */
+			$PageNumber++;
+			$YPos=$FormDesign->Data->y;
+			include ('includes/PDFGrnHeader.inc');
+		} //end if need a new page headed up
+	} //end of loop around GRNs to print
+
+	$LeftOvers = $pdf->addText($FormDesign->ReceiptDate->x,$Page_Height-$FormDesign->ReceiptDate->y,$FormDesign->ReceiptDate->FontSize, _('Date of Receipt: ') . $DeliveryDate);
+	$LeftOvers = $pdf->addText($FormDesign->SignedFor->x,$Page_Height-$FormDesign->SignedFor->y,$FormDesign->SignedFor->FontSize, _('Signed for ').'______________________');
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_GRN_' . date('Y-m-d').'.pdf');//UldisN
+    $pdf->__destruct(); //UldisN
+} else { //there were not GRNs to print
+		$title = _('GRN Error');
 	include('includes/header.inc');
 	prnMsg(_('There were no GRNs to print'),'warn');
 	echo '<br><a href="'.$rootpath.'/index.php?' . SID . '">'. _('Back to the menu').'</a>';
 	include('includes/footer.inc');
-	exit;
-} else {
-    $pdf->OutputD($_SESSION['DatabaseName'] . '_GRN_' . date('Y-m-d').'.pdf');//UldisN
-    $pdf->__destruct(); //UldisN
 }
 ?>

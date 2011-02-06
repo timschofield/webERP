@@ -814,3 +814,5 @@ ALTER TABLE `purchorderdetails` ADD `conversionfactor` DOUBLE NOT NULL DEFAULT '
 UPDATE config SET confvalue='3.12.3' WHERE confname='VersionNumber';
 ALTER TABLE `purchorderdetails` CHANGE `uom` `suppliersunit` VARCHAR( 50 );
 UPDATE config SET confvalue='3.12.31' WHERE confname='VersionNumber';
+INSERT INTO `weberpdemo`.`config` (`confname`, `confvalue`) VALUES ('AutoAuthorisePO', '1');
+UPDATE config SET confvalue='3.12.32' WHERE confname='VersionNumber';

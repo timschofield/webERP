@@ -20,7 +20,7 @@ $identifier=$_GET['identifier'];
  */
 
 if (!isset($_SESSION['PO'.$identifier])){
-	header('Location:' . $rootpath . '/PO_Header.php?' . SID);
+	header('Location:' . $rootpath . '/PO_Header.php');
 	exit;
 } //end if (!isset($_SESSION['PO'.$identifier]))
 
@@ -29,7 +29,7 @@ include('includes/header.inc');
 $Maximum_Number_Of_Parts_To_Show=50;
 
 if (!isset($_POST['Commit'])) {
-	echo '<a href="'.$rootpath.'/PO_Header.php?' . SID . 'identifier=' . $identifier. '">' ._('Back To Purchase Order Header') . '</a><br />';
+	echo '<a href="'.$rootpath.'/PO_Header.php?identifier=' . $identifier. '">' ._('Back To Purchase Order Header') . '</a><br />';
 }
 
 if (isset($_POST['UpdateLines']) OR isset($_POST['Commit'])) { 
@@ -80,11 +80,52 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		
 		$result = DB_Txn_Begin($db);
 
+		/*figure out what status to set the order to */
+		if (IsEmailAddress($_SESSION['UserEmail'])){
+			$UserDetails  = ' <a href="mailto:' . $_SESSION['UserEmail'] . '">' . $_SESSION['UsersRealName']. '</a>';
+		} else {
+			$UserDetails  = ' ' . $_SESSION['UsersRealName'] . ' ';
+		}
+		if ($_SESSION['AutoAuthorisePO']==1) { //if the user has authority to authorise the PO then it will automatically be authorised
+			$AuthSQL ="SELECT authlevel
+						FROM purchorderauth
+						WHERE userid='".$_SESSION['UserID']."'
+						AND currabrev='".$_SESSION['PO'.$identifier]->CurrCode."'";
+
+			$AuthResult=DB_query($AuthSQL,$db);
+			$AuthRow=DB_fetch_array($AuthResult);
+			
+			if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $_SESSION['PO'.$identifier]->Order_Value()) { //user has authority to authrorise as well as create the order
+				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . $UserDetails . ' - '.$_SESSION['PO'.$identifier]->StatusMessage.'<br />';
+				$_SESSION['PO'.$identifier]->AllowPrintPO=1;
+				$_SESSION['PO'.$identifier]->Status = 'Authorised';
+			} else { // no authority to authorise this order
+				if (DB_num_rows($AuthResult) ==0){
+					$AuthMessage = _('Your authority to approve purchase orders in') . ' ' . $_SESSION['PO'.$identifier]->CurrCode . ' ' . _('has not yet been set up') . '<br />';
+				} else {
+					$AuthMessage = _('You can only authorise up to').' '.$_SESSION['PO'.$identifier]->CurrCode.' '.$AuthorityLevel.'.<br />';
+				}
+				
+				prnMsg( _('You do not have permission to authorise this purchase order').'.<br />'. _('This order is for').' '.
+					$_SESSION['PO'.$identifier]->CurrCode . ' '. $_SESSION['PO'.$identifier]->Order_Value() .'. '.
+					$AuthMessage .
+					_('If you think this is a mistake please contact the systems administrator') . '<br />'.
+					_('The order will be created with a status of pending and will require authorisation'), 'warn');
+					
+				$_SESSION['PO'.$identifier]->AllowPrintPO=0;
+				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . $UserDetails . ' - '.$_SESSION['PO'.$identifier]->StatusMessage.'<br />';
+				$_SESSION['PO'.$identifier]->Status = 'Pending';
+			}
+		} else { //auto authorise is set to off
+			$_SESSION['PO'.$identifier]->AllowPrintPO=0;
+			$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . $UserDetails . ' - '.$_SESSION['PO'.$identifier]->StatusMessage.'<br />';
+			$_SESSION['PO'.$identifier]->Status = 'Pending';
+		}
+
 		if ($_SESSION['ExistingOrder']==0){ /*its a new order to be inserted */
 
 //Do we need to check authorisation to create - no because already trapped when new PO session started
-			$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . ' <a href="mailto:'. $_SESSION['UserEmail'] .'">' . $_SESSION['PO'.$identifier]->Initiator . 	'</a> - '.$_SESSION['PO'.$identifier]->StatusMessage.'<br />';
-
+			
 			/*Get the order number */
 			$_SESSION['PO'.$identifier]->OrderNo =  GetNextTransNo(18, $db);
 
@@ -119,7 +160,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																			status,
 																			stat_comment,
 																			deliverydate,
-																			paymentterms)
+																			paymentterms,
+																			allowprint)
 																		VALUES(	'" . $_SESSION['PO'.$identifier]->OrderNo . "',
 																						'" . $_SESSION['PO'.$identifier]->SupplierID . "',
 																						'" . $_SESSION['PO'.$identifier]->Comments . "',
@@ -147,10 +189,11 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																						'" . $_SESSION['PO'.$identifier]->Version . "',
 																						'" . Date('Y-m-d') . "',
 																						'" . $_SESSION['PO'.$identifier]->DeliveryBy . "',
-																						'Pending',
+																						'" . $_SESSION['PO'.$identifier]->Status . "',
 																						'" . $StatusComment . "',
 																						'" . FormatDateForSQL($_SESSION['PO'.$identifier]->DeliveryDate) . "',
-																						'" . $_SESSION['PO'.$identifier]->PaymentTerms. "'
+																						'" . $_SESSION['PO'.$identifier]->PaymentTerms. "',
+																						'" . $_SESSION['PO'.$identifier]->AllowPrintPO . "'
 																					)";
 
 			$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
@@ -245,7 +288,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																		contact='" . $_SESSION['PO'.$identifier]->Contact . "',
 																		paymentterms='" . $_SESSION['PO'.$identifier]->PaymentTerms . "',
 																		allowprint='" . $_SESSION['PO'.$identifier]->AllowPrintPO . "',
-																		status = 'Pending'
+																		status = '" . $_SESSION['PO'.$identifier]->Status . "'
 																		WHERE orderno = '" . $_SESSION['PO'.$identifier]->OrderNo ."'";
 
 			$ErrMsg =  _('The purchase order could not be updated because');
@@ -474,7 +517,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 	}
 
 	if ($AllowUpdate == true){
-
+	//adding the non-stock item
 		$_SESSION['PO'.$identifier]->add_to_order ($_SESSION['PO'.$identifier]->LinesOnOrder+1,
 																						'',
 																						0, /*Serialised */
@@ -482,35 +525,35 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 																						$_POST['Qty'],
 																						$_POST['ItemDescription'],
 																						$_POST['Price'],
-																						$_POST['uom'],
+																						$_POST['SuppliersUnit'],
 																						$_POST['GLCode'],
 																						$_POST['ReqDelDate'],
-																						$_POST['ShiptRef'],
+																						'',
 																						0,
-																						$_POST['JobRef'],
+																						'',
 																						0,
 																						0,
 																						$GLAccountName,
-																						$_POST['DecimalPlaces'],
-																						$_POST['ItemNo'],
-																						$_POST['SuppliersUOM'],
-																						$_POST['ConversionFactor'],
-																						$_POST['LeadTime'],
-																						$_POST['Suppliers_PartNo'],
-																						$_POST['SubTotal_Amount'],
-																						$_POST['Package'],
-																						$_POST['PcUnit'],
-																						$_POST['NetWeight'],
-																						$_POST['KGs'],
-																						$_POST['CuFt'],
-																						$_POST['Total_Quantity'],
-																						$_POST['Total_Amount'],
+																						2,
+																						'',
+																						$_POST['SuppliersUnit'],
+																						1,
+																						'',
+																						'',
+																						($_POST['Qty']*$_POST['Price']),
+																						'',
+																						'',
+																						'',
+																						'',
+																						'',
+																						$_POST['Qty'],
+																						($_POST['Qty']*$_POST['Price']),
 																						$_POST['AssetID']);
 
 	   include ('includes/PO_UnsetFormVbls.php');
 	}
 }
- /*end if Enter line button was hit */
+ /*end if Enter line button was hit - adding non stock items */
 
 
 if (isset($_POST['NewItem'])){ 
@@ -759,9 +802,11 @@ if (isset($_POST['NonStockOrder'])) {
 
 	echo'</select><a href="FixedAssetItems.php" target=_blank>'. _('New Fixed Asset') . '</a></td>
 				<tr><td>'._('Quantity to purchase').'</td>
-						<td><input type="text" class="number" name="Qty" size=10></td></tr>
+						<td><input type="text" class="number" name="Qty" size="10" value="1"></td></tr>
 				<tr><td>'._('Price per item').'</td>
-						<td><input type="text" class="number" name="Price" size=10></td></tr>
+						<td><input type="text" class="number" name="Price" size="10"></td></tr>
+				<tr><td>'._('Unit').'</td>
+						<td><input type="text" name="SuppliersUnit" size="10" value="' . _('each') . '"></td></tr>
 				<tr><td>'._('Delivery Date').'</td>
 						<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ReqDelDate" size=11 value="'.$_SESSION['PO'.$identifier]->DeliveryDate .'"></td></tr>';
 	echo '</table>';

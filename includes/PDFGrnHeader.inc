@@ -5,30 +5,15 @@ if ($PageNumber>1){
 	$pdf->newPage();
 }
 
-$sql="SELECT suppliers.supplierid,
-				suppname,
-				address1,
-				address2 ,
-				address3,
-				address4,
-				address5,
-				address6
-			FROM suppliers
-			LEFT JOIN grns
-			ON grns.supplierid=suppliers.supplierid
-			WHERE grnbatch='".$GRNNo."'";
-$supplierresult=DB_query($sql, $db);
-$supplierrow=DB_fetch_array($supplierresult);
-
 $pdf->addJpegFromFile($_SESSION['LogoFile'] ,$FormDesign->logo->x,$Page_Height-$FormDesign->logo->y,$FormDesign->logo->width,$FormDesign->logo->height);
 
-$LeftOvers = $pdf->addText($FormDesign->SupplierName->x,$Page_Height-$FormDesign->SupplierName->y,$FormDesign->SupplierName->FontSize,$supplierrow['suppname']);
-$LeftOvers = $pdf->addText($FormDesign->SupplierAddress1->x,$Page_Height-$FormDesign->SupplierAddress1->y,$FormDesign->SupplierAddress1->FontSize,$supplierrow['address1']);
-$LeftOvers = $pdf->addText($FormDesign->SupplierAddress2->x,$Page_Height-$FormDesign->SupplierAddress2->y,$FormDesign->SupplierAddress2->FontSize,$supplierrow['address2']);
-$LeftOvers = $pdf->addText($FormDesign->SupplierAddress3->x,$Page_Height-$FormDesign->SupplierAddress3->y,$FormDesign->SupplierAddress3->FontSize,$supplierrow['address3']);
-$LeftOvers = $pdf->addText($FormDesign->SupplierAddress4->x,$Page_Height-$FormDesign->SupplierAddress4->y,$FormDesign->SupplierAddress4->FontSize,$supplierrow['address4']);
-$LeftOvers = $pdf->addText($FormDesign->SupplierAddress5->x,$Page_Height-$FormDesign->SupplierAddress5->y,$FormDesign->SupplierAddress5->FontSize,$supplierrow['address5']);
-$LeftOvers = $pdf->addText($FormDesign->SupplierAddress6->x,$Page_Height-$FormDesign->SupplierAddress6->y,$FormDesign->SupplierAddress6->FontSize,$supplierrow['address6']);
+$LeftOvers = $pdf->addText($FormDesign->SupplierName->x,$Page_Height-$FormDesign->SupplierName->y,$FormDesign->SupplierName->FontSize,$SuppRow['suppname']);
+$LeftOvers = $pdf->addText($FormDesign->SupplierAddress1->x,$Page_Height-$FormDesign->SupplierAddress1->y,$FormDesign->SupplierAddress1->FontSize,$SuppRow['address1']);
+$LeftOvers = $pdf->addText($FormDesign->SupplierAddress2->x,$Page_Height-$FormDesign->SupplierAddress2->y,$FormDesign->SupplierAddress2->FontSize,$SuppRow['address2']);
+$LeftOvers = $pdf->addText($FormDesign->SupplierAddress3->x,$Page_Height-$FormDesign->SupplierAddress3->y,$FormDesign->SupplierAddress3->FontSize,$SuppRow['address3']);
+$LeftOvers = $pdf->addText($FormDesign->SupplierAddress4->x,$Page_Height-$FormDesign->SupplierAddress4->y,$FormDesign->SupplierAddress4->FontSize,$SuppRow['address4']);
+$LeftOvers = $pdf->addText($FormDesign->SupplierAddress5->x,$Page_Height-$FormDesign->SupplierAddress5->y,$FormDesign->SupplierAddress5->FontSize,$SuppRow['address5']);
+$LeftOvers = $pdf->addText($FormDesign->SupplierAddress6->x,$Page_Height-$FormDesign->SupplierAddress6->y,$FormDesign->SupplierAddress6->FontSize,$SuppRow['address6']);
 
 
 $LeftOvers = $pdf->addText($FormDesign->CompanyName->x,$Page_Height-$FormDesign->CompanyName->y,$FormDesign->CompanyName->FontSize,$_SESSION['CompanyRecord']['coyname']);

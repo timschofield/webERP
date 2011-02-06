@@ -160,6 +160,22 @@ function ConvertSQLDate($DateEntry) {
 		$Date_Array = explode('-',$DateEntry);
 	} elseif (strpos ($DateEntry,'.')) {
 		$Date_Array = explode('.',$DateEntry);
+	} else {
+		prnMsg(_('The date does not appear to be in a valid format. The date being converted from SQL format was:') . ' ' . $DateEntry,'error');
+		switch ($_SESSION['DefaultDateFormat']) {
+			case 'd/m/Y':
+				return '0/0/000';
+				break;
+			case 'd.m.Y':
+				return '0.0.000';
+				break;
+			case 'm/d/Y':
+				return '0/0/0000';
+				break;
+			case 'Y/m/d':
+				return '0000/0/0';
+				break;
+		}
 	}
 
 	if (strlen($Date_Array[2])>4) {  /*chop off the time stuff */
