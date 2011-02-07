@@ -1,21 +1,21 @@
 <?php
 /* $Id$ */
-// PricesByCost.php -
-//$PageSecurity = 11;
+
+//$PageSecurity = 11; Now from DB
 include ('includes/session.inc');
-$title = _('Update of Prices By Cost');
+$title = _('Update of Prices By A Multiple Of Cost');
 include ('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Update Price By Cost') . '</p>';
 
 if (isset($_POST['submit']) or isset($_POST['update'])) {
-	if ($_POST['Margin'] == "") {
+	if ($_POST['Margin'] == '') {
 		header('Location: PricesByCost.php');
 	}
 	if ($_POST['Comparator'] == 1) {
-		$Comparator = "<=";
+		$Comparator = '<=';
 	} else {
-		$Comparator = ">=";
+		$Comparator = '>=';
 	} /*end of else Comparator */
 	if ($_POST['StockCat'] != 'all') {
 		$Category = " AND stockmaster.categoryid = '" . $_POST['StockCat'] . "'";
@@ -47,7 +47,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 		while ($myrow = DB_fetch_array($result)) {
 			//update database if update pressed
 			$SQLUpdate = "UPDATE prices	SET price = '" . $_POST['Price_' . $PriceCounter] . "'
-										WHERE `prices`.`stockid` = '" . $_POST['StockID_' . $PriceCounter] . "'
+										WHERE stockid = '" . $_POST['StockID_' . $PriceCounter] . "'
 										AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
 										AND prices.currabrev ='" . $_POST['CurrCode'] . "'
 										AND prices.debtorno ='" . $_POST['DebtorNo_' . $PriceCounter] . "'
@@ -217,9 +217,9 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 		<td><select name='SalesType'>";
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['SalesType'] == $myrow['typeabbrev']) {
-			echo "<option selected value='" . $myrow['typeabbrev'] . "'>" . $myrow['sales_type'];
+			echo "<option selected value='" . $myrow['typeabbrev'] . "'>" . $myrow['sales_type'] . '</option>';
 		} else {
-			echo "<option value='" . $myrow['typeabbrev'] . "'>" . $myrow['sales_type'];
+			echo "<option value='" . $myrow['typeabbrev'] . "'>" . $myrow['sales_type'] . '</option>';
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
@@ -229,9 +229,9 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 		<td><select name='CurrCode'>";
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['CurrCode']) and $_POST['CurrCode'] == $myrow['currabrev']) {
-			echo '<option selected value=' . $myrow['currabrev'] . '>' . $myrow['currency'];
+			echo '<option selected value=' . $myrow['currabrev'] . '>' . $myrow['currency'] . '</option>';
 		} else {
-			echo '<option value=' . $myrow['currabrev'] . '>' . $myrow['currency'];
+			echo '<option value=' . $myrow['currabrev'] . '>' . $myrow['currency'] . '</option>';
 		}
 	} //end while loop
 	DB_data_seek($result, 0);

@@ -725,7 +725,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/PricesBasedOnMarkUp.php?' . SID . '">' . _('Add or Update Prices Based On Costs') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PricesBasedOnMarkUp.php?' . SID . '">' . _('Add or Update Prices Based On Costs Or Other Price List') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>

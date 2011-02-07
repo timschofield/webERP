@@ -20,39 +20,57 @@ $line_height=$FormDesign->LineHeight;
 include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Goods Received Note') );
 
-$sql="SELECT grns.itemcode,
-		grns.grnno,
-		grns.deliverydate,
-		grns.itemdescription,
-		grns.qtyrecd,
-		grns.supplierid,
-		purchorderdetails.suppliersunit,
-		purchorderdetails.conversionfactor,
-		stockmaster.units,
-		stockmaster.decimalplaces
-	FROM grns INNER JOIN purchorderdetails
-	ON grns.podetailitem=purchorderdetails.podetailitem
-	LEFT JOIN stockmaster
-	ON grns.itemcode=stockmaster.stockid
-	WHERE grnbatch='".$GRNNo."'";
-
-$GRNResult=DB_query($sql, $db);
-
-if(DB_num_rows($GRNResult)>0) { //there are GRNs to print
+if ($GRNNo == 'Preview'){
+	$myrow['itemcode'] = strpad('', 15,'x');
+	$myrow['deliverydate'] = '0000-00-00';
+	$myrow['itemdescription'] =  strpad('', 30,'x');
+	$myrow['qtyrecd'] = 99999.99;
+	$myrow['supplierid'] = strpad('', 10,'x');
+	$myrow['suppliersunit'] = strpad('', 10,'x');
+	$myrow['units'] = strpad('', 10,'x');
+	$SuppRow['suppname'] = strpad('', 30,'x');
+	$SuppRow['address1'] = strpad('', 30,'x');
+	$SuppRow['address2'] = strpad('', 30,'x');
+	$SuppRow['address3'] = strpad('', 20,'x');
+	$SuppRow['address4'] = strpad('', 20,'x');
+	$SuppRow['address5'] = strpad('', 10,'x');
+	$SuppRow['address6'] = strpad('', 10,'x');
+} else { //NOT PREVIEW
+		
+	$sql="SELECT grns.itemcode,
+			grns.grnno,
+			grns.deliverydate,
+			grns.itemdescription,
+			grns.qtyrecd,
+			grns.supplierid,
+			purchorderdetails.suppliersunit,
+			purchorderdetails.conversionfactor,
+			stockmaster.units,
+			stockmaster.decimalplaces
+		FROM grns INNER JOIN purchorderdetails
+		ON grns.podetailitem=purchorderdetails.podetailitem
+		LEFT JOIN stockmaster
+		ON grns.itemcode=stockmaster.stockid
+		WHERE grnbatch='".$GRNNo."'";
 	
-	$sql = "SELECT suppliers.suppname,
-		suppliers.address1,
-		suppliers.address2 ,
-		suppliers.address3,
-		suppliers.address4,
-		suppliers.address5,
-		suppliers.address6
-	FROM grns INNER JOIN suppliers
-	ON grns.supplierid=suppliers.supplierid
-	WHERE grnbatch='".$GRNNo."'";
-	$SuppResult = DB_query($sql,$db,_('Could not get the supplier of the selected GRN'));
-	$SuppRow = DB_fetch_array($SuppResult);
+	$GRNResult=DB_query($sql, $db);
 	
+	if(DB_num_rows($GRNResult)>0) { //there are GRNs to print
+		
+		$sql = "SELECT suppliers.suppname,
+			suppliers.address1,
+			suppliers.address2 ,
+			suppliers.address3,
+			suppliers.address4,
+			suppliers.address5,
+			suppliers.address6
+		FROM grns INNER JOIN suppliers
+		ON grns.supplierid=suppliers.supplierid
+		WHERE grnbatch='".$GRNNo."'";
+		$SuppResult = DB_query($sql,$db,_('Could not get the supplier of the selected GRN'));
+		$SuppRow = DB_fetch_array($SuppResult);
+	}
+} // get data to print
 	include ('includes/PDFGrnHeader.inc'); //head up the page
 	
 	$YPos=$FormDesign->Data->y;

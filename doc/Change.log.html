@@ -1,10 +1,11 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p
 <p></p>
-<p>6/2/11:sotandeka Fix typos left debug comments prnMsg in</p>
-<p>5/2/11: Phil: SystemParameters.php new option to AutoAuthorisePO when the user has authority to do so</p>
-<p>5/2/11: Phil: PO_Items.php fixed non-existant variables on Enter nominal line. Added option to automatically authorise when user is an authoriser as well as a creator</p>
-<p>5/2/11: PDFGrn.php rewrote - preview never used - confused logic fixed<p>
-<p>4/2/11: Tim: CostUpdate.php allow cost update with appropriate permissions token 10 hard coded</p>
+<p>7/2/11: Phil PDFGrn.php turns out preview is used from the form modification script doh!  Over simplificaton reversed to reinstate preview mode<p>
+<p>6/2/11: Otandeka Removed debug prnMsg in FixedAssetDepreciation</p>
+<p>5/2/11: Phil SystemParameters.php new option to AutoAuthorisePO when the user has authority to do so</p>
+<p>5/2/11: Phil PO_Items.php fixed non-existant variables on Enter nominal line. Added option to automatically authorise when user is an authoriser as well as a creator</p>
+<p>5/2/11: Phil PDFGrn.php rewrote - preview never used - simplified<p>
+<p>4/2/11: Tim CostUpdate.php allow cost update with appropriate permissions token 10 hard coded</p>
 <p>4/2/11: Phil SelectCustomer.php rejig selection options in more logical way. Used non-specific SQL to search by any part of the address</p>
 <p>2/2/11: Phil PDFTopItems.php and TopItems.php removed mysql specific SQL</p> 
 <p>30/1/11: Phil GoodsReceived.php  rework for supplier units and conversion factor etc now in PO class</p>
@@ -13,7 +14,7 @@
 <p>29/1/11:Tim fix reportwriter with tcpdf using parent::__construct rather than $this->Cpdf( </p>
 <p>24/1/11:Phil Depreciation fixes - SelectAsset by description fix</p>
 <p>23/1/11:Peter Otandeka: PDFTopItems.php  SQL quoting fixes</p>
-<p>23/1/11: phil Fix Depreciation posting and dates of end of periods</p>
+<p>23/1/11: Phil Fix Depreciation posting and dates of end of periods</p>
 <p>23/1/11:Phil changed back references throughout several MRP scripts from is_date to Is_Date - as Is_Date is used throughout the code and much bigger job to change all references to is_date</p>
 <p>20/1/11: Tim changed back addinfo calls to addInfo on PDF reports - Zhigio originally thought to be an issue with Turkish utf-8 pdfs but turned out to be a red herring. class.pdf call changed back to addInfo too - most of calls had not been changed to lower case info</p>
 <p>20/1/11: Tim changed PricesBasedOnMarkUp to have end date day before new prices effective from</p>
