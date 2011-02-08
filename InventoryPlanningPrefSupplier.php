@@ -288,19 +288,19 @@ if (isset($_POST['PrintPDF'])){
 
 		if ($_POST['Location']=='All'){
 			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
-				FROM salesorderdetails,
-					salesorders
-				WHERE salesorderdetails.orderno=salesorders.orderno
-				AND salesorderdetails.stkcode = '" . $InventoryPlan['stockid'] . "'
-				AND salesorderdetails.completed = 0";
+				FROM salesorderdetails INNER JOIN salesorders
+				ON salesorderdetails.orderno=salesorders.orderno
+				WHERE salesorderdetails.stkcode = '" . $InventoryPlan['stockid'] . "'
+				AND salesorderdetails.completed = 0
+				AND salesorders.quotation=0";
 		} else {
 			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
-				FROM salesorderdetails,
-					salesorders
-				WHERE salesorderdetails.orderno=salesorders.orderno
-				AND salesorders.fromstkloc ='" . $_POST['Location'] . "'
+				FROM salesorderdetails INNER JOIN salesorders
+				ON salesorderdetails.orderno=salesorders.orderno
+				WHERE salesorders.fromstkloc ='" . $_POST['Location'] . "'
 				AND salesorderdetails.stkcode = '" . $InventoryPlan['stockid'] . "'
-				AND salesorderdetails.completed = 0";
+				AND salesorderdetails.completed = 0
+				AND salesorders.quotation=0";
 		}
 
 		$DemandResult = DB_query($SQL, $db, '', '', false, false);
@@ -322,29 +322,31 @@ if (isset($_POST['PrintPDF'])){
 
 		if ($_POST['Location']=='All'){
 			$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-					FROM salesorderdetails,
-						bom,
-						stockmaster
-					WHERE salesorderdetails.stkcode=bom.parent
-					AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
+					FROM salesorderdetails INNER JOIN bom
+					ON salesorderdetails.stkcode=bom.parent
+					INNER JOIN	stockmaster
+					ON stockmaster.stockid=bom.parent
+					INNER JOIN salesorders
+					ON salesorders.orderno = salesorderdetails.orderno
+					WHERE  salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
 					AND bom.component='" . $InventoryPlan['stockid'] . "'
-					AND stockmaster.stockid=bom.parent
 					AND stockmaster.mbflag='A'
-					AND salesorderdetails.completed=0";
+					AND salesorderdetails.completed=0
+					AND salesorders.quotation=0";
 		} else {
 			$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-					FROM salesorderdetails,
-						salesorders,
-						bom,
-						stockmaster
-					WHERE salesorderdetails.orderno=salesorders.orderno
-					AND salesorderdetails.stkcode=bom.parent
-					AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
+					FROM salesorderdetails INNER JOIN bom
+					ON salesorderdetails.stkcode=bom.parent
+					INNER JOIN	stockmaster
+					ON stockmaster.stockid=bom.parent
+					INNER JOIN salesorders
+					ON salesorders.orderno = salesorderdetails.orderno
+					WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
 					AND bom.component='" . $InventoryPlan['stockid'] . "'
-					AND stockmaster.stockid=bom.parent
 					AND salesorders.fromstkloc ='" . $_POST['Location'] . "'
 					AND stockmaster.mbflag='A'
-					AND salesorderdetails.completed=0";
+					AND salesorderdetails.completed=0
+					AND salesorders.quotation=0";
 		}
 
 		$BOMDemandResult = DB_query($SQL,$db,'','',false,false);
@@ -362,8 +364,7 @@ if (isset($_POST['PrintPDF'])){
 		}
 
 		if ($_POST['Location']=='All'){
-			$SQL = "SELECT SUM(purchorderdetails.quantityord*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)
-				- purchorderdetails.quantityrecd*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)) as qtyonorder
+			$SQL = "SELECT SUM(purchorderdetails.quantityord- purchorderdetails.quantityrecd) as qtyonorder
 				FROM purchorderdetails
 				LEFT JOIN purchorders
 				ON purchorderdetails.orderno = purchorders.orderno
@@ -376,8 +377,7 @@ if (isset($_POST['PrintPDF'])){
 				AND purchorders.status <> 'Rejected'
 				AND purchorders.status <> 'Pending'";
 		} else {
-			$SQL = "SELECT SUM(purchorderdetails.quantityord*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)
-				- purchorderdetails.quantityrecd*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END)) as qtyonorder
+			$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) as qtyonorder
 				FROM purchorderdetails
 				LEFT JOIN purchorders
 				ON purchorderdetails.orderno = purchorders.orderno
