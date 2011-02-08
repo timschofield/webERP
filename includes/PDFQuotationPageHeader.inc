@@ -14,7 +14,7 @@ $XPos = $XPos + 80;
 $FontSize=18;
 $pdf->addText($XPos, 500,$FontSize, _('Quotation'));
 $FontSize=14;
-$YPos = 480;
+$YPos = 482;
 $pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 $FontSize =10;
 $pdf->addText($XPos, $YPos-12,$FontSize, $_SESSION['CompanyRecord']['regoffice1']);
@@ -44,7 +44,7 @@ $pdf->addText($XPos, $YPos-60,$FontSize, $myrow['address3'] . ' ' . $myrow['addr
 
 
 $XPos= 50;
-$YPos += 25;
+$YPos += 12;
 /*draw a nice curved corner box around the delivery details */
 /*from the top right */
 $pdf->partEllipse($XPos+225,$YPos+60,0,90,10,10);
@@ -106,32 +106,28 @@ $LeftOvers = $pdf->addTextWrap(585,$YPos,85,$FontSize, _('Tax Class'),'right');
 $LeftOvers = $pdf->addTextWrap(650,$YPos,85,$FontSize, _('Tax Amount'),'right');
 $LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize, _('Total'),'right');
 
-
 /*draw a box with nice round corner for entering line items */
 /*90 degree arc at top right of box 0 degrees starts a bottom */
-$pdf->partEllipse($Page_Width-$Right_Margin-10, $Bottom_Margin+370,0,90,10,10);
+$pdf->partEllipse($Page_Width-$Right_Margin-10, $Bottom_Margin+350,0,90,10,10);
 /*line to the top left */
-$pdf->line($Page_Width-$Right_Margin-10, $Bottom_Margin+380,$Left_Margin+10, $Bottom_Margin+380);
+$pdf->line($Page_Width-$Right_Margin-10, $Bottom_Margin+360,$Left_Margin+10, $Bottom_Margin+360);
 
 /*line under headings to top left */
-$pdf->line($Page_Width-$Right_Margin, $Bottom_Margin+355,$Left_Margin, $Bottom_Margin+355);
+$pdf->line($Page_Width-$Right_Margin, $Bottom_Margin+335,$Left_Margin, $Bottom_Margin+335);
 
 
 /*Dow top left corner */
-$pdf->partEllipse($Left_Margin+10, $Bottom_Margin+370,90,180,10,10);
+$pdf->partEllipse($Left_Margin+10, $Bottom_Margin+350,90,180,10,10);
 /*Do a line to the bottom left corner */
-$pdf->line($Left_Margin, $Bottom_Margin+370,$Left_Margin, $Bottom_Margin+10);
+$pdf->line($Left_Margin, $Bottom_Margin+350,$Left_Margin, $Bottom_Margin+10);
 /*Now do the bottom left corner 180 - 270 coming back west*/
 $pdf->partEllipse($Left_Margin+10, $Bottom_Margin+10,180,270,10,10);
 /*Now a line to the bottom right */
 $pdf->line($Left_Margin+10, $Bottom_Margin,$Page_Width-$Right_Margin-10, $Bottom_Margin);
 /*Now do the bottom right corner */
-$pdf->partEllipse($Page_Width-$Right_Margin-10, $Bottom_Margin+10,270,360,10,10);
+$pdf->partEllipse($Page_Width-$Right_Margin-10, $Bottom_Margin+10,270,350,10,10);
 /*Finally join up to the top right corner where started */
-$pdf->line($Page_Width-$Right_Margin, $Bottom_Margin+10,$Page_Width-$Right_Margin, $Bottom_Margin+370);
+$pdf->line($Page_Width-$Right_Margin, $Bottom_Margin+10,$Page_Width-$Right_Margin, $Bottom_Margin+350);
 
-$YPos -= $line_height;
-
-$FontSize =12;
-
+$YPos -= (2*$line_height);
 ?>

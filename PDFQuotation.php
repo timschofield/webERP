@@ -86,7 +86,7 @@ $pdf->addInfo('Title', _('Customer Quotation') );
 $pdf->addInfo('Subject', _('Quotation') . ' ' . $_GET['QuotationNo']);
 $FontSize=12;
 $PageNumber = 1;
-$line_height=24;
+$line_height=15;
 // $pdf->selectFont('./fonts/Helvetica.afm');
 
 /* Now ... Has the order got any line items still outstanding to be invoiced */
@@ -171,11 +171,11 @@ if (DB_num_rows($result)>0){
 		$LeftOvers = $pdf->addTextWrap(650,$YPos,85,$FontSize,$DisplayTaxAmount,'right');
 		$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,$DisplayTotal,'right');
 		if (strlen($myrow2['narrative'])>1){
-			$YPos -= 10;
-			$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,750,10,$myrow2['narrative']);
-			if (strlen($LeftOvers>1)){
-				$YPos -= 10;
-				$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,750,10,$LeftOvers);
+			$YPos -= ($line_height);
+			$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,800,$FontSize,$myrow2['narrative']);
+			if (strlen($LeftOvers) >1){
+				$YPos -= 11;
+				$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,800,$FontSize,$LeftOvers);
 			}
 		}
 		$QuotationTotal +=$LineTotal;
@@ -186,13 +186,13 @@ if (DB_num_rows($result)>0){
 		$YPos -= ($line_height);
 
 	} //end while there are line items to print out
+	
 	if ((strlen($myrow['comments']) >200 AND $YPos-$line_height <= 75)
 			OR (strlen($myrow['comments']) >1 AND $YPos-$line_height <= 62)
 			OR $YPos-$line_height <= 50){
-		/* We reached the end of the page so finsih off the page and start a newy */
+		/* We reached the end of the page so finish off the page and start a newy */
 			$PageNumber++;
 			include ('includes/PDFQuotationPageHeader.inc');
-
 	} //end if need a new page headed up
 
 	$LeftOvers = $pdf->addTextWrap($XPos,$YPos-80,200,10,_('Notes:'));

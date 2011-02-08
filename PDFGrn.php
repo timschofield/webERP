@@ -21,20 +21,24 @@ include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Goods Received Note') );
 
 if ($GRNNo == 'Preview'){
-	$myrow['itemcode'] = strpad('', 15,'x');
+	$myrow['itemcode'] = str_pad('', 15,'x');
 	$myrow['deliverydate'] = '0000-00-00';
-	$myrow['itemdescription'] =  strpad('', 30,'x');
-	$myrow['qtyrecd'] = 99999.99;
-	$myrow['supplierid'] = strpad('', 10,'x');
-	$myrow['suppliersunit'] = strpad('', 10,'x');
-	$myrow['units'] = strpad('', 10,'x');
-	$SuppRow['suppname'] = strpad('', 30,'x');
-	$SuppRow['address1'] = strpad('', 30,'x');
-	$SuppRow['address2'] = strpad('', 30,'x');
-	$SuppRow['address3'] = strpad('', 20,'x');
-	$SuppRow['address4'] = strpad('', 20,'x');
-	$SuppRow['address5'] = strpad('', 10,'x');
-	$SuppRow['address6'] = strpad('', 10,'x');
+	$myrow['itemdescription'] =  str_pad('', 30,'x');
+	$myrow['qtyrecd'] = 99999999.99;
+	$myrow['decimalplaces'] =2;
+	$myrow['conversionfactor']=1;
+	$myrow['supplierid'] = str_pad('', 10,'x');
+	$myrow['suppliersunit'] = str_pad('', 10,'x');
+	$myrow['units'] = str_pad('', 10,'x');
+	
+	$SuppRow['suppname'] = str_pad('', 30,'x');
+	$SuppRow['address1'] = str_pad('', 30,'x');
+	$SuppRow['address2'] = str_pad('', 30,'x');
+	$SuppRow['address3'] = str_pad('', 30,'x');
+	$SuppRow['address4'] = str_pad('', 20,'x');
+	$SuppRow['address5'] = str_pad('', 10,'x');
+	$SuppRow['address6'] = str_pad('', 10,'x');
+	$NoOfGRNs =1;
 } else { //NOT PREVIEW
 		
 	$sql="SELECT grns.itemcode,
@@ -54,8 +58,8 @@ if ($GRNNo == 'Preview'){
 		WHERE grnbatch='".$GRNNo."'";
 	
 	$GRNResult=DB_query($sql, $db);
-	
-	if(DB_num_rows($GRNResult)>0) { //there are GRNs to print
+	$NoOfGRNs = DB_num_rows($GRNResult);
+	if($NoOfGRNs>0) { //there are GRNs to print
 		
 		$sql = "SELECT suppliers.suppname,
 			suppliers.address1,
@@ -71,11 +75,14 @@ if ($GRNNo == 'Preview'){
 		$SuppRow = DB_fetch_array($SuppResult);
 	}
 } // get data to print
+if ($NoOfGRNs >0){
 	include ('includes/PDFGrnHeader.inc'); //head up the page
 	
 	$YPos=$FormDesign->Data->y;
-	while ($myrow = DB_fetch_array($GRNResult)) {
-
+	for ($i=1;$i<=$NoOfGRNs;$i++) {
+		if ($GRNNo!='Preview'){
+			$myrow = DB_fetch_array($GRNResult);
+		}
 		if (is_numeric($myrow['decimalplaces'])){
 			$DecimalPlaces=$myrow['decimalplaces'];
 		} else {
@@ -111,7 +118,7 @@ if ($GRNNo == 'Preview'){
     $pdf->OutputD($_SESSION['DatabaseName'] . '_GRN_' . date('Y-m-d').'.pdf');//UldisN
     $pdf->__destruct(); //UldisN
 } else { //there were not GRNs to print
-		$title = _('GRN Error');
+	$title = _('GRN Error');
 	include('includes/header.inc');
 	prnMsg(_('There were no GRNs to print'),'warn');
 	echo '<br><a href="'.$rootpath.'/index.php?' . SID . '">'. _('Back to the menu').'</a>';

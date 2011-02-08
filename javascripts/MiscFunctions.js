@@ -1,24 +1,37 @@
 function defaultControl(c){
-c.select();
-c.focus();
+	c.select();
+	c.focus();
 }
 function ReloadForm(fB){
-fB.click();
+	fB.click();
 }
 function rTN(event){
-	if (window.event) k=window.event.keyCode;
-	else if (event) k=event.which;
-	else return true;
+	if (window.event) {
+		k=window.event.keyCode;
+	}
+	else if (event) {
+		k=event.which;
+	} else {
+		return true;
+	}
 	kC=String.fromCharCode(k);
-	if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
-	else if ((("0123456789.-").indexOf(kC)>-1)) return true;
-	else return false;
+	if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) {
+		return true;
+	} else if ((("0123456789.-").indexOf(kC)>-1)) {
+		return true;
+	}	else 
+		return false;
+	}
 }
 function assignComboToInput(c,i){
 	i.value=c.value;
 }
 function inArray(v,tA,m){
-	for (i=0;i<tA.length;i++) if (v==tA[i].value) return true;
+	for (i=0;i<tA.length;i++) {
+		if (v.value==tA[i].value) {
+			return true;
+		}
+	}
 	alert(m);
 	return false;
 }
@@ -173,7 +186,7 @@ function convertDate(dS,dF){
 		m=parseInt(dA[0],10)-1;
 		y=parseInt(dA[2],10);
 		break;
-}
+	}
 return new Date(y,m,d);
 }
 function postDate(mydate,dS){
