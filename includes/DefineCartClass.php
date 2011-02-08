@@ -56,6 +56,8 @@ Class Cart {
 	VAR $vtigerProductID;
 	Var $DefaultPOLine;
 	Var $DeliveryDays;
+	var $TaxTotals;
+	var $TaxGLCodes;
 
 	function Cart(){
 	/*Constructor function initialises a new shopping cart */
@@ -338,7 +340,7 @@ Class Cart {
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
 		$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);
-
+		unset($this->LineItems[$LineNumber]->Taxes);
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
 			$this->LineItems[$LineNumber]->Taxes[$myrow['calculationorder']] = new Tax($myrow['calculationorder'],
