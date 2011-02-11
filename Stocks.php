@@ -18,7 +18,7 @@ if (isset($_GET['StockID'])){
 	$StockID = '';
 }
 
-if (isset($StockID)) {
+if (isset($StockID) and !isset($_POST['UpdateCategories'])) {
 	$sql = "SELECT COUNT(stockid) FROM stockmaster WHERE stockid='".$StockID."'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
@@ -574,14 +574,18 @@ echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="
 	<tr><td>'. "\n"; // Nested table
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-if (!isset($StockID) or $StockID=='') {
+if (!isset($StockID) or $StockID=='' or isset($_POST['UpdateCategories'])) {
 
 /*If the page was called without $StockID passed to page then assume a new stock item is to be entered show a form with a part Code field other wise the form showing the fields with the existing entries against the part will show for editing with only a hidden StockID field. New is set to flag that the page may have called itself and still be entering a new part, in which case the page needs to know not to go looking up details for an existing part*/
 
 	$New = true;
 	echo '<input type="hidden" name="New" value="1">'. "\n";
-
-	echo '<tr><td>'. _('Item Code'). ':</td><td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="StockID" size=21 maxlength=20></td></tr>'. "\n";
+	if (!isset($StockID)) {
+		echo '<tr><td>'. _('Item Code'). ':</td><td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="StockID" size=21 maxlength=20 /></td></tr>'. "\n";
+	} else {
+		echo '<tr><td>'. _('Item Code'). ':</td><td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="StockID" size=21 maxlength=20
+			value="'.$StockID.'" /></td></tr>'. "\n";
+	}
 
 } elseif (!isset($_POST['UpdateCategories']) and $InputError!=1) { // Must be modifying an existing item and no changes made yet
 
@@ -716,7 +720,7 @@ if ($StockImgLink!=_('No Image')) {
 
  echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID" onChange="ReloadForm(ItemForm.UpdateCategories)">';
 
-$sql = 'SELECT categoryid, categorydescription FROM stockcategory WHERE stocktype!="A"';
+$sql = "SELECT categoryid, categorydescription FROM stockcategory";
 $ErrMsg = _('The stock categories could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve stock categories and failed was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -778,7 +782,7 @@ echo '<tr><td>' . _('Packaged Weight (KGs)') . ':</td><td><input ' . (in_array('
 echo '<tr><td>' . _('Units of Measure') . ':</td><td><select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="Units">';
 
 
-$sql = 'SELECT unitname FROM unitsofmeasure ORDER by unitname';
+$sql = "SELECT unitname FROM unitsofmeasure ORDER by unitname";
 $UOMResult = DB_query($sql,$db);
 
 if (!isset($_POST['Units'])) {
@@ -907,7 +911,7 @@ if (isset($_POST['DiscountCategory'])) {
 echo '<tr><td>' . _('Discount Category') . ':</td><td><input type="Text" name="DiscountCategory" size=2 maxlength=2 value="' . $DiscountCategory . '"></td></tr>';
 
 echo '<tr><td>' . _('Tax Category') . ':</td><td><select name="TaxCat">';
-$sql = 'SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname';
+$sql = "SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname";
 $result = DB_query($sql, $db);
 
 if (!isset($_POST['TaxCat'])){
