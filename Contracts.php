@@ -667,23 +667,37 @@ if (isset($_POST['SearchCustomers'])){
 
 		if (DB_num_rows($result_CustSelect)==1){
 			$myrow=DB_fetch_array($result_CustSelect);
-			$_POST['SelectedCustomer'] = $myrow['debtorno'] . '-' . $myrow['branchcode'];
+			$SelectedCustomer = $myrow['debtorno'] . '-' . $myrow['branchcode'];
 		} elseif (DB_num_rows($result_CustSelect)==0){
 			prnMsg(_('No Customer Branch records contain the search criteria') . ' - ' . _('please try again') . ' - ' . _('Note a Customer Branch Name may be different to the Customer Name'),'info');
 		}
 	} /*one of keywords or custcode was more than a zero length string */
 } /*end of if search for customer codes/names */
 
+if (isset($_POST['JustSelectedACustomer'])){
+	/*Need to figure out the number of the form variable that the user clicked on */
+	for ($i=1;$i<count($_POST);$i++){ //loop through the returned customers 
+		if(isset($_POST['SubmitCustomerSelection'.$i])){
+			break;
+		}
+	}
+	if ($i==count($_POST)){ 
+			prnMsg(_('Unable to identify the selected customer'),'error');
+	} else {
+		$SelectedCustomer = $_POST['SelectedCustomer'.$i];
+	}
+}
 
-if (isset($_POST['SelectedCustomer'])) {
+if (isset($SelectedCustomer)) {
 
-/* will only be true if page called from customer selection form
- * or set because only one customer record returned from a search
- * so parse the $Select string into debtorno and branch code */
-	$CustomerBranchArray = explode('-',$_POST['SelectedCustomer']);
+/* will only be true if page called from customer selection 
+ * or set because only one customer record returned from a search - isset($SelectedCustomer)
+ * so parse the returned SelectedCustomer string into debtorno and branch code */
+  
+	$CustomerBranchArray = explode('-',$SelectedCustomer);
 	$_SESSION['Contract'.$identifier]->DebtorNo  = trim($CustomerBranchArray[0]);
 	$_SESSION['Contract'.$identifier]->BranchCode = trim($CustomerBranchArray[1]);
-
+	
 	$sql = "SELECT debtorsmaster.name,
 								custbranch.brname,
 								debtorsmaster.currcode,
@@ -699,8 +713,7 @@ if (isset($_POST['SelectedCustomer'])) {
 					WHERE debtorsmaster.debtorno='" . $_SESSION['Contract'.$identifier]->DebtorNo  . "'
 					AND custbranch.branchcode='" . $_SESSION['Contract'.$identifier]->BranchCode . "'" ;
 
-	$ErrMsg = _('The customer record selected') . ': ' . $_POST['SelectedCustomer'] . ' ' .
-		_('cannot be retrieved because');
+	$ErrMsg = _('The customer record selected') . ': ' .$_SESSION['Contract'.$identifier]->DebtorNo. ' ' . _('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the customer details and failed was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	$myrow = DB_fetch_array($result);
@@ -783,8 +796,8 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 			} else {
 				echo '<td></td>';
 			}
-			echo '<td><input tabindex="'.number_format($j+5).'" type="submit" name="Submit" value="'.htmlentities($myrow['brname']).'" /></td>
-					<input type="hidden" name="SelectedCustomer" value="'.$myrow['debtorno'].' - '.$myrow['branchcode'].'" />
+			echo '<td><input tabindex="'.($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="'.htmlentities($myrow['brname']).'" /></td>
+					<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'].' - '.$myrow['branchcode'].'" />
 					<td>'.htmlentities($myrow['contactname']).'</td>
 					<td>'.$myrow['phoneno'].'</td>
 					<td>'.$myrow['faxno'].'</td>
@@ -794,7 +807,8 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 //end of page full new headings if
 		}
 //end of while loop
-
+		echo '<input type="hidden" name="JustSelectedACustomer" value="Yes">';
+		
 		echo '</table></form>';
 
 	}//end if results to show

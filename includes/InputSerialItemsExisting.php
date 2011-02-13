@@ -29,10 +29,11 @@ if ($_POST['EntryType'] == 'KEYED'){
 
 		echo '<form action="' . $_SERVER['PHP_SELF'] . '?=' . SID . '" method="POST">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-        echo '<input type=hidden name=LineNo value="' . $LineNo . '">
-                        <input type=hidden name=StockID value="' . $StockID . '">
-                        <input type=hidden name=EntryType value="KEYED">
-			<input type=hidden name=EditControlled value="true">
+        echo '<input type=hidden name="LineNo" value="' . $LineNo . '">
+                        <input type="hidden" name="StockID" value="' . $StockID . '">
+                        <input type="hidden" name="EntryType" value="KEYED">
+                        <input type=hidden name="identifier" value="' . $identifier . '">
+			<input type="hidden" name="EditControlled" value="true">
 			<select Name=Bundles[] multiple>';
 
                 $id=0;

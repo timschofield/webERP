@@ -48,7 +48,7 @@ if (!isset($_POST['EntryType']) OR trim($_POST['EntryType']) == ''){
 $invalid_imports = 0;
 $valid = true;
 
-echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" enctype="multipart/form-data" >';
+echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier .'" enctype="multipart/form-data" >';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<input type=hidden name="LineNo" value="' . $LineNo . '">';
 echo '<input type=hidden name="StockID" value="'. $StockID. '">';
@@ -71,7 +71,7 @@ if ($LineItem->Serialised==1){
 }
 
 echo '<td valign=bottom>';
-echo '<input type=radio id="FileEntry" name=EntryType onClick="submit();" ';
+echo '<input type="radio" id="FileEntry" name="EntryType" onClick="submit();" ';
 if ($_POST['EntryType']=='FILE') {
 	echo ' checked ';
 }
@@ -84,9 +84,9 @@ echo '</form>';
 
 global $tableheader;
 /* Link to clear the list and start from scratch */
-$EditLink =  '<br><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&EditControlled=true&StockID=' . $LineItem->StockID .
+$EditLink =  '<br><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '&EditControlled=true&StockID=' . $LineItem->StockID .
 	'&LineNo=' . $LineNo .'">'. _('Edit'). '</a> | ';
-$RemoveLink = '<a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&DELETEALL=YES&StockID=' . $LineItem->StockID .
+$RemoveLink = '<a href="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '&DELETEALL=YES&StockID=' . $LineItem->StockID .
 	'&LineNo=' . $LineNo .'">'. _('Remove All'). '</a><br></div>';
 if ($LineItem->Serialised==1){
 	$tableheader .= '<tr>

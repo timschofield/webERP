@@ -29,7 +29,7 @@ if (!isset($_POST['DoUpgrade'])){
 		echo '<option value="3.08">' . _('Version 3.08') . '</option>';
 		echo '<option value="3.09">' . _('Version 3.09') . '</option>';
 		echo '<option value="3.10">' . _('Version 3.10') . '</option>';
-		echo '<option value="3.11">' . _('Version 3.11') . '</option>';
+		echo '<option value="3.11">' . _('Version 3.11 or 4.01 - 4.02') . '</option>';
 		echo '</select></td></tr></table>';
 	} else {
 		if ($_SESSION['VersionNumber']=='4.00-RC1'){
@@ -48,7 +48,7 @@ if (isset($_POST['DoUpgrade'])){
 	if ($dbType=='mysql' OR $dbType =='mysqli'){
 		
 		/* First do a backup */
-		$BackupFile = '.' . $PathPrefix . '/companies/' . $_SESSION['DatabaseName']  .'/' . _('Backup') . '_' . Date('Y-m-d-H-i-s') . '.gz';
+		$BackupFile =  $PathPrefix . './companies/' . $_SESSION['DatabaseName']  .'/' . _('Backup') . '_' . Date('Y-m-d-H-i-s') . '.sql.gz';
 		$Command = 'mysqldump --opt -h' . $host . ' -u' . $dbuser . ' -p' . $dbpassword  . '  ' . $_SESSION['DatabaseName'] . '| gzip > ' . $BackupFile;
 		system($Command);
 		

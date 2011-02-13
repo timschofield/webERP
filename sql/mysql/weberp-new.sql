@@ -58,6 +58,25 @@ CREATE TABLE `areas` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `assetmanager`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `assetmanager` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `serialno` varchar(30) NOT NULL DEFAULT '',
+  `location` varchar(15) NOT NULL DEFAULT '',
+  `cost` double NOT NULL DEFAULT '0',
+  `depn` double NOT NULL DEFAULT '0',
+  `datepurchased` date NOT NULL DEFAULT '0000-00-00',
+  `disposalvalue` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `audittrail`
 --
 
@@ -482,7 +501,7 @@ CREATE TABLE `custcontacts` (
   `phoneno` varchar(20) NOT NULL,
   `notes` varchar(255) NOT NULL,
   PRIMARY KEY (`contid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -597,10 +616,9 @@ CREATE TABLE `debtortrans` (
   KEY `TransNo` (`transno`),
   KEY `Type_2` (`type`,`transno`),
   KEY `EDISent` (`edisent`),
-  CONSTRAINT `debtortrans_ibfk_1` FOREIGN KEY (`debtorno`) REFERENCES `custbranch` (`debtorno`),
   CONSTRAINT `debtortrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `debtortrans_ibfk_3` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -777,7 +795,7 @@ CREATE TABLE `emailsettings` (
   `companyname` varchar(50) DEFAULT NULL,
   `auth` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -805,6 +823,20 @@ CREATE TABLE `factorcompanies` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `favourites`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `favourites` (
+  `userid` varchar(20) NOT NULL DEFAULT '',
+  `caption` varchar(50) NOT NULL DEFAULT '',
+  `href` varchar(200) NOT NULL DEFAULT '#',
+  PRIMARY KEY (`userid`,`caption`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `fixedassetcategories`
 --
 
@@ -817,8 +849,6 @@ CREATE TABLE `fixedassetcategories` (
   `depnact` int(11) NOT NULL DEFAULT '0',
   `disposalact` int(11) NOT NULL DEFAULT '80000',
   `accumdepnact` int(11) NOT NULL DEFAULT '0',
-  `defaultdepnrate` double NOT NULL DEFAULT '0.2',
-  `defaultdepntype` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`categoryid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -846,21 +876,20 @@ CREATE TABLE `fixedassetlocations` (
 CREATE TABLE `fixedassets` (
   `assetid` int(11) NOT NULL AUTO_INCREMENT,
   `serialno` varchar(30) NOT NULL DEFAULT '',
-  `barcode` varchar(30) NOT NULL,
-  `assetlocation` varchar(15) NOT NULL DEFAULT '',
+  `barcode` varchar(20) NOT NULL,
+  `assetlocation` varchar(6) NOT NULL DEFAULT '',
   `cost` double NOT NULL DEFAULT '0',
   `accumdepn` double NOT NULL DEFAULT '0',
   `datepurchased` date NOT NULL DEFAULT '0000-00-00',
-  `disposalvalue` int(11) NOT NULL DEFAULT '0',
+  `disposalproceeds` double NOT NULL DEFAULT '0',
   `assetcategoryid` varchar(6) NOT NULL DEFAULT '',
   `description` varchar(50) NOT NULL DEFAULT '',
   `longdescription` text NOT NULL,
   `depntype` int(11) NOT NULL DEFAULT '1',
   `depnrate` double NOT NULL,
-  `disposaldate` date NOT NULL,
-  PRIMARY KEY (`assetid`),
-  KEY `disposaldate` (`disposaldate`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+  `disposaldate` date NOT NULL DEFAULT '0000-00-00',
+  PRIMARY KEY (`assetid`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -870,21 +899,20 @@ CREATE TABLE `fixedassets` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fixedassettrans` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `transid` int(11) NOT NULL AUTO_INCREMENT,
   `assetid` int(11) NOT NULL,
   `transtype` tinyint(4) NOT NULL,
   `transno` int(11) NOT NULL,
-  `transdate` date NOT NULL,
-  `periodno` smallint(6) NOT NULL,
+  `periodno` smallint(4) NOT NULL,
   `inputdate` date NOT NULL,
   `fixedassettranstype` varchar(8) NOT NULL,
   `amount` double NOT NULL,
-  PRIMARY KEY (`id`),
+  `transdate` date NOT NULL,
+  PRIMARY KEY (`transid`),
   KEY `assetid` (`assetid`,`transtype`,`transno`),
   KEY `inputdate` (`inputdate`),
-  KEY `transdate` (`transdate`),
   KEY `fixedassettranstype` (`fixedassettranstype`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -963,7 +991,7 @@ CREATE TABLE `gltrans` (
   CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=363 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=370 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -990,7 +1018,7 @@ CREATE TABLE `grns` (
   KEY `SupplierID` (`supplierid`),
   CONSTRAINT `grns_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`supplierid`),
   CONSTRAINT `grns_ibfk_2` FOREIGN KEY (`podetailitem`) REFERENCES `purchorderdetails` (`podetailitem`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1115,6 +1143,21 @@ CREATE TABLE `loctransfers` (
   CONSTRAINT `loctransfers_ibfk_2` FOREIGN KEY (`recloc`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `loctransfers_ibfk_3` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Stores Shipments To And From Locations';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `menu`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `menu` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `caption` varchar(70) NOT NULL DEFAULT '',
+  `parent` int(11) NOT NULL DEFAULT '-1',
+  `href` varchar(200) NOT NULL DEFAULT '#',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1477,7 +1520,7 @@ CREATE TABLE `prices` (
   `price` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `branchcode` varchar(10) NOT NULL DEFAULT '',
   `startdate` date NOT NULL DEFAULT '0000-00-00',
-  `enddate` date NOT NULL DEFAULT '9999-12-31',
+  `enddate` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`stockid`,`typeabbrev`,`currabrev`,`debtorno`,`branchcode`,`startdate`,`enddate`),
   KEY `CurrAbrev` (`currabrev`),
   KEY `DebtorNo` (`debtorno`),
@@ -1555,7 +1598,7 @@ CREATE TABLE `purchorderdetails` (
   `jobref` varchar(20) NOT NULL DEFAULT '',
   `completed` tinyint(4) NOT NULL DEFAULT '0',
   `itemno` varchar(50) NOT NULL DEFAULT '',
-  `suppliersunit` varchar(50) NOT NULL DEFAULT '',
+  `suppliersunit` varchar(50) DEFAULT NULL,
   `subtotal_amount` varchar(50) NOT NULL DEFAULT '',
   `package` varchar(100) NOT NULL DEFAULT '',
   `pcunit` varchar(50) NOT NULL DEFAULT '',
@@ -1565,7 +1608,7 @@ CREATE TABLE `purchorderdetails` (
   `cuft` varchar(50) NOT NULL DEFAULT '',
   `total_quantity` varchar(50) NOT NULL DEFAULT '',
   `total_amount` varchar(50) NOT NULL DEFAULT '',
-  `assetid` int(11) NOT NULL,
+  `assetid` int(11) NOT NULL DEFAULT '0',
   `conversionfactor` double NOT NULL DEFAULT '1',
   PRIMARY KEY (`podetailitem`),
   KEY `DeliveryDate` (`deliverydate`),
@@ -1575,9 +1618,8 @@ CREATE TABLE `purchorderdetails` (
   KEY `OrderNo` (`orderno`),
   KEY `ShiptRef` (`shiptref`),
   KEY `Completed` (`completed`),
-  KEY `assetid` (`assetid`),
   CONSTRAINT `purchorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `purchorders` (`orderno`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1629,7 +1671,7 @@ CREATE TABLE `purchorders` (
   KEY `AllowPrintPO` (`allowprint`),
   CONSTRAINT `purchorders_ibfk_1` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`),
   CONSTRAINT `purchorders_ibfk_2` FOREIGN KEY (`intostocklocation`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1737,7 +1779,7 @@ CREATE TABLE `reportfields` (
   `params` text,
   PRIMARY KEY (`id`),
   KEY `reportid` (`reportid`)
-) ENGINE=MyISAM AUTO_INCREMENT=1810 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1805 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1768,6 +1810,21 @@ CREATE TABLE `reportheaders` (
   PRIMARY KEY (`reportid`),
   KEY `ReportHeading` (`reportheading`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `reportlets`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reportlets` (
+  `userid` varchar(20) NOT NULL DEFAULT '',
+  `id` varchar(50) NOT NULL DEFAULT '',
+  `title` varchar(50) NOT NULL DEFAULT '',
+  `refresh` int(11) NOT NULL DEFAULT '600',
+  PRIMARY KEY (`userid`,`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1863,7 +1920,7 @@ CREATE TABLE `reports` (
   `table6criteria` varchar(75) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`reportname`,`groupname`)
-) ENGINE=MyISAM AUTO_INCREMENT=137 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=136 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1898,7 +1955,7 @@ CREATE TABLE `salesanalysis` (
   KEY `BudgetOrActual` (`budgetoractual`),
   KEY `Salesperson` (`salesperson`),
   CONSTRAINT `salesanalysis_ibfk_1` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2215,12 +2272,12 @@ CREATE TABLE `stockcatproperties` (
   `controltype` tinyint(4) NOT NULL DEFAULT '0',
   `defaultvalue` varchar(100) NOT NULL DEFAULT '''''',
   `maximumvalue` double NOT NULL DEFAULT '999999999',
-  `reqatsalesorder` tinyint(4) NOT NULL DEFAULT '0',
   `minimumvalue` double NOT NULL DEFAULT '-999999999',
-  `numericvalue` tinyint(4) NOT NULL DEFAULT '0',
+  `numericvalue` tinyint(4) NOT NULL,
+  `reqatsalesorder` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`stkcatpropid`),
   KEY `categoryid` (`categoryid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2367,7 +2424,7 @@ CREATE TABLE `stockmoves` (
   CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `stockmoves_ibfk_4` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2505,7 +2562,6 @@ CREATE TABLE `suppliers` (
   `taxgroupid` tinyint(4) NOT NULL DEFAULT '1',
   `factorcompanyid` int(11) NOT NULL DEFAULT '1',
   `taxref` varchar(20) NOT NULL DEFAULT '',
-  `phn` varchar(50) NOT NULL DEFAULT '',
   `port` varchar(200) NOT NULL DEFAULT '',
   `email` varchar(55) DEFAULT NULL,
   `fax` varchar(25) DEFAULT NULL,
@@ -2570,7 +2626,7 @@ CREATE TABLE `supptrans` (
   KEY `Type` (`type`),
   CONSTRAINT `supptrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `supptrans_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2730,7 +2786,21 @@ CREATE TABLE `unitsofmeasure` (
   `unitid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `unitname` varchar(15) NOT NULL DEFAULT '',
   PRIMARY KEY (`unitid`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `usermenurights`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usermenurights` (
+  `userid` varchar(20) NOT NULL DEFAULT '',
+  `menuid` int(11) NOT NULL DEFAULT '0',
+  `access` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`userid`,`menuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2872,7 +2942,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-01-20 22:29:00
+-- Dump completed on 2011-02-13 17:04:32
 -- MySQL dump 10.13  Distrib 5.1.47-MariaDB, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -3091,7 +3161,7 @@ INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',2,0.
 --
 
 INSERT INTO `holdreasons` VALUES (1,'Good History',0);
-INSERT INTO `holdreasons` VALUES (20,'Watch \'em',0);
+INSERT INTO `holdreasons` VALUES (20,'Watch',0);
 INSERT INTO `holdreasons` VALUES (51,'In liquidation',1);
 
 --
@@ -3125,33 +3195,33 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',2);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',2);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',14);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',29);
 INSERT INTO `systypes` VALUES (11,'Credit Note',2);
-INSERT INTO `systypes` VALUES (12,'Receipt',10);
+INSERT INTO `systypes` VALUES (12,'Receipt',9);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',22);
-INSERT INTO `systypes` VALUES (17,'Stock Adjustment',24);
-INSERT INTO `systypes` VALUES (18,'Purchase Order',13);
+INSERT INTO `systypes` VALUES (17,'Stock Adjustment',22);
+INSERT INTO `systypes` VALUES (18,'Purchase Order',18);
 INSERT INTO `systypes` VALUES (19,'Picking List',0);
-INSERT INTO `systypes` VALUES (20,'Purchase Invoice',41);
-INSERT INTO `systypes` VALUES (21,'Debit Note',10);
+INSERT INTO `systypes` VALUES (20,'Purchase Invoice',27);
+INSERT INTO `systypes` VALUES (21,'Debit Note',7);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',4);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',52);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',38);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',4);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',10);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
-INSERT INTO `systypes` VALUES (30,'Sales Order',26);
+INSERT INTO `systypes` VALUES (30,'Sales Order',27);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (32,'Contract Close',6);
-INSERT INTO `systypes` VALUES (35,'Cost Update',19);
+INSERT INTO `systypes` VALUES (35,'Cost Update',17);
 INSERT INTO `systypes` VALUES (36,'Exchange Difference',1);
 INSERT INTO `systypes` VALUES (40,'Work Order',13);
 INSERT INTO `systypes` VALUES (41,'Asset Addition',1);
 INSERT INTO `systypes` VALUES (42,'Asset Category Change',1);
-INSERT INTO `systypes` VALUES (43,'Delete w/down asset',3);
-INSERT INTO `systypes` VALUES (44,'Depreciation',8);
-INSERT INTO `systypes` VALUES (49,'Import Fixed Assets',6);
+INSERT INTO `systypes` VALUES (43,'Delete w/down asset',2);
+INSERT INTO `systypes` VALUES (44,'Depreciation',3);
+INSERT INTO `systypes` VALUES (49,'Import Fixed Assets',1);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
 INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',0);
 
@@ -3212,7 +3282,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','phil@logicworks.co.nz','MEL',8,'2011-01-20 20:55:46','','A4','1,1,1,1,1,1,1,1,1,1',0,50,'jelly','hi_ID.utf8',0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','phil@logicworks.co.nz','MEL',8,'2011-02-13 16:40:08','','A4','1,1,1,1,1,1,1,1,1,1',0,50,'jelly','en_GB.utf8',0);
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -3363,6 +3433,7 @@ INSERT INTO `edi_orders_seg_groups` VALUES (50,1,0);
 
 INSERT INTO `config` VALUES ('AllowOrderLineItemNarrative','1');
 INSERT INTO `config` VALUES ('AllowSalesOfZeroCostItems','0');
+INSERT INTO `config` VALUES ('AutoAuthorisePO','1');
 INSERT INTO `config` VALUES ('AutoCreateWOs','1');
 INSERT INTO `config` VALUES ('AutoDebtorNo','0');
 INSERT INTO `config` VALUES ('AutoIssue','1');
@@ -3372,7 +3443,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','AUD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','30');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2011-01-20');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2011-01-23');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultCustomerType','1');
@@ -3400,7 +3471,7 @@ INSERT INTO `config` VALUES ('FreightTaxCategory','1');
 INSERT INTO `config` VALUES ('FrequentlyOrderedItems','0');
 INSERT INTO `config` VALUES ('geocode_integration','0');
 INSERT INTO `config` VALUES ('HTTPS_Only','0');
-INSERT INTO `config` VALUES ('InvoicePortraitFormat','0');
+INSERT INTO `config` VALUES ('InvoicePortraitFormat','1');
 INSERT INTO `config` VALUES ('LogPath','');
 INSERT INTO `config` VALUES ('LogSeverity','0');
 INSERT INTO `config` VALUES ('MaxImageSize','300');
@@ -3418,7 +3489,7 @@ INSERT INTO `config` VALUES ('PO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('ProhibitJournalsToControlAccounts','1');
 INSERT INTO `config` VALUES ('ProhibitNegativeStock','1');
 INSERT INTO `config` VALUES ('ProhibitPostingsBefore','2010-09-30');
-INSERT INTO `config` VALUES ('PurchasingManagerEmail','manager@company.com');
+INSERT INTO `config` VALUES ('PurchasingManagerEmail','');
 INSERT INTO `config` VALUES ('QuickEntries','10');
 INSERT INTO `config` VALUES ('RadioBeaconFileCounter','/home/RadioBeacon/FileCounter');
 INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server user name');
@@ -3435,7 +3506,7 @@ INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','Tax Ref');
 INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','0');
-INSERT INTO `config` VALUES ('VersionNumber','3.12.4');
+INSERT INTO `config` VALUES ('VersionNumber','4.03');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
 INSERT INTO `config` VALUES ('WikiApp','Disabled');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
@@ -3451,7 +3522,6 @@ INSERT INTO `unitsofmeasure` VALUES (3,'kgs');
 INSERT INTO `unitsofmeasure` VALUES (4,'litres');
 INSERT INTO `unitsofmeasure` VALUES (5,'length');
 INSERT INTO `unitsofmeasure` VALUES (6,'pack');
-INSERT INTO `unitsofmeasure` VALUES (7,'10 Pack');
 
 --
 -- Dumping data for table `paymentmethods`
@@ -3855,7 +3925,7 @@ INSERT INTO `securitytokens` VALUES (9,'Supplier centre - Supplier access only')
 INSERT INTO `securitytokens` VALUES (10,'General Ledger Maintenance, stock valuation & Configuration');
 INSERT INTO `securitytokens` VALUES (11,'Inventory Management and Pricing');
 INSERT INTO `securitytokens` VALUES (12,'Prices Security');
-INSERT INTO `securitytokens` VALUES (13,'Report Writer');
+INSERT INTO `securitytokens` VALUES (13,'Unknown');
 INSERT INTO `securitytokens` VALUES (14,'Unknown');
 INSERT INTO `securitytokens` VALUES (15,'User Management and System Administration');
 
@@ -3891,7 +3961,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-01-20 22:29:01
+-- Dump completed on 2011-02-13 17:04:34
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);

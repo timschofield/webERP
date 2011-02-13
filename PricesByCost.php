@@ -95,7 +95,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	$SalesTypeRow = DB_fetch_array($ResultType);
 
 	if (isset($CategoryRow['categorgdescription'])) {
-		$CategoryText = _('the') . ' ' . $CategoryRow['categorgdescription'] . ' ' . _('category');
+		$CategoryText = $CategoryRow['categorgdescription'] . ' ' . _('category');
 	} else {
 		$CategoryText = _('all Categories');
 	} /*end of else Category */

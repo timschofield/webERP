@@ -51,7 +51,7 @@ foreach ($LineItem->SerialItems as $Bundle){
 		echo '<td class=number>' . number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
 	}
 
-	echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . 'Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'">'. _('Delete'). '</a></td></tr>';
+	echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '&Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'">'. _('Delete'). '</a></td></tr>';
 
 	$TotalQuantity += $Bundle->BundleQty;
 }
@@ -76,9 +76,10 @@ echo '<table class=selection>';
 echo $tableheader;
 
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?=' . SID . '" name="Ga6uF5Wa" method="post">
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" name="Ga6uF5Wa" method="post">
       <input type=hidden name=LineNo value="' . $LineNo . '">
       <input type=hidden name=StockID value="' . $StockID . '">
+      <input type=hidden name="identifier" value="' . $identifier . '">
       <input type=hidden name=EntryType value="KEYED">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if ( isset($_GET['EditControlled']) ) {

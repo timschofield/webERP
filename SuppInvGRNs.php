@@ -241,7 +241,7 @@ if (isset($_GET['Modify'])){
 		<td>' . $GRNTmp->ItemCode . ' ' . $GRNTmp->ItemDescription . '</td>
 		<td class=number>' . number_format($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv,2) . '</td>
 		<td><input type="text" class="number" Name="This_QuantityInv" Value="' . $GRNTmp->This_QuantityInv . '" size=11 maxlength=10></td>
-		<td class=number>"' . $GRNTmp->OrderPrice . '"</td>
+		<td class=number>' . $GRNTmp->OrderPrice . '</td>
 		<td><input type="text" class="number" Name="ChgPrice" Value=' . $GRNTmp->ChgPrice . ' size="11" maxlength="10"></td>
 	</tr>';
 	echo '</table>';

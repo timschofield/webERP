@@ -623,14 +623,14 @@ echo '<tr style="outline: 1px solid"><td>' . _('Purchase Order Allows Same Item 
 	<td><select Name="X_PO_AllowSameItemMultipleTimes">
 	<option '.($_SESSION['PO_AllowSameItemMultipleTimes']?'selected ':'').'value="1">'._('Yes') . '</option>
 	<option '.(!$_SESSION['PO_AllowSameItemMultipleTimes']?'selected ':'').'value="0">'._('No') . '</option>
-	</select></td>&nbsp;<td></td></tr>';
+	</select></td><td>' . _('If a purchase order can have the same item on the order several times this parameter should be set to yes') . '</td></tr>';
 
 // AutoAuthorisePO
 echo '<tr style="outline: 1px solid"><td>' . _('Automatically authorise purchase orders if user has authority') . ':</td>
 	<td><select Name="X_AutoAuthorisePO">
 	<option '.($_SESSION['AutoAuthorisePO'] ?'selected ':'').'value="1">'._('Yes').'
 	<option '.(!$_SESSION['AutoAuthorisePO'] ?'selected ':'').'value="0">'._('No').'
-	</select></td>' . _('If the user changing an existing purchase order or adding a new puchase order is set up to authorise purchase orders and the order is within their limit, then the purchase order status is automatically set to authorised') . '<td></td></tr>';
+	</select></td><td>' . _('If the user changing an existing purchase order or adding a new puchase order is set up to authorise purchase orders and the order is within their limit, then the purchase order status is automatically set to authorised') . '</td></tr>';
 
 
 echo '<tr><th colspan=3>' . _('General Settings') . '</th></tr>';

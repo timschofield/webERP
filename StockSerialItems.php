@@ -11,6 +11,11 @@ echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/i
 '" alt="" /><b>' . $title. '</b></p>';
 
 if (isset($_GET['StockID'])){
+	if (ContainsIllegalCharacters ($_GET['StockID'])){
+		prnMsg(_('The stock code sent to this page appears to be invalid'),'error');
+		include('includes/footer.inc');
+		exit;
+	}
 	$StockID = trim(strtoupper($_GET['StockID']));
 } else {
 	prnMsg( _('This page must be called with parameters specifying the item to show the serial references and quantities') . '. ' . _('It cannot be displayed without the proper parameters being passed'),'error');
