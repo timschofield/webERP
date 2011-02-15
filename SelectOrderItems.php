@@ -35,7 +35,8 @@ if (isset($_GET['NewItem'])){
 }
 
 
-if (empty($_GET['identifier'])) {
+if (empty($_GET['identifier'])) { 
+	/*unique session identifier to ensure that there is no conflict with other order entry sessions on the same machine  */
 	$identifier=date('U');
 } else {
 	$identifier=$_GET['identifier'];
@@ -1365,7 +1366,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			echo '<td><input type=text class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ItemDue_' . $OrderLine->LineNumber . '" size=10 maxlength=10 value=' . $LineDueDate . '></td>';
 
-			echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID .'identifier='.$identifier . '&Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . $RemTxt . '</a></td></tr>';
+			echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '&Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . $RemTxt . '</a></td></tr>';
 
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
 				echo $RowStarter;

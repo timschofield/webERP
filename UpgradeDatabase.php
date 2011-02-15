@@ -32,7 +32,7 @@ if (!isset($_POST['DoUpgrade'])){
 		echo '<option value="3.11">' . _('Version 3.11 or 4.01 - 4.02') . '</option>';
 		echo '</select></td></tr></table>';
 	} else {
-		if ($_SESSION['VersionNumber']=='4.00-RC1'){
+		if ($_SESSION['VersionNumber']=='4.00RC1'){
 			$_SESSION['VersionNumber']='3.12';
 		}
 		prnMsg(_('The webERP code is version')  . ' ' . $Version . ' ' . _('and the database version is') . ' ' . $_SESSION['VersionNumber'],'info');
@@ -97,7 +97,7 @@ if (isset($_POST['DoUpgrade'])){
 					$SQLScripts[] = './sql/mysql/upgrade3.11.1-4.00.sql';
 					break;
 			} //end switch
-			if(isset($_SESSION['VersionNumber']) AND $_SESSION['VersionNumber']< '4.00') { /* VersionNumber is set to '4.00' when upgrade3.11.1-4.00.sql is run */
+			if(isset($_SESSION['VersionNumber']) AND $_SESSION['VersionNumber']< '4.03') { /* VersionNumber is set to '4.03' when upgrade3.11.1-4.00.sql is run */
 				$SQLScripts[] = './sql/mysql/upgrade3.11.1-4.00.sql';
 			}
 		}	

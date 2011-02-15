@@ -172,7 +172,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 																			$myrow['controlled'],
 																			$myrow['serialised'],
 																			$myrow['decimalplaces'],
-																			$myrow['narrative'],
+																			htmlspecialchars_decode($myrow['narrative']),
 																			'No',
 																			$myrow['orderlineno'],
 																			$myrow['taxcatid'],

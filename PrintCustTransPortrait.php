@@ -360,7 +360,7 @@ If (isset($PrintPDF)
 				}
 				$YPos -= ($FontSize*$lines);
 
-				$lines=explode('\r\n',$myrow2['narrative']);
+				$lines=explode('\r\n',htmlspecialchars_decode($myrow2['narrative']));
 				for ($i=0;$i<sizeOf($lines);$i++) {
 				while (strlen($lines[$i])>1){
 					if ($YPos-$line_height <= $Bottom_Margin){
@@ -391,10 +391,8 @@ If (isset($PrintPDF)
 
 		/* check to see enough space left to print the 4 lines for the totals/footer */
 		if (($YPos-$Bottom_Margin)<(2*$line_height)){
-
 			PrintLinesToBottom ();
 			include ('includes/PDFTransPageHeaderPortrait.inc');
-
 		}
 		/*Print a column vertical line  with enough space for the footer*/
 		/*draw the vertical column lines to 4 lines shy of the bottom
@@ -426,9 +424,7 @@ If (isset($PrintPDF)
 		     $DisplayFreight = number_format($myrow['ovfreight'],2);
 		     $DisplayTax = number_format($myrow['ovgst'],2);
 		     $DisplayTotal = number_format($myrow['ovfreight']+$myrow['ovgst']+$myrow['ovamount'],2);
-
 		} else {
-
 		     $DisplaySubTot = number_format(-$myrow['ovamount'],2);
 		     $DisplayFreight = number_format(-$myrow['ovfreight'],2);
 		     $DisplayTax = number_format(-$myrow['ovgst'],2);

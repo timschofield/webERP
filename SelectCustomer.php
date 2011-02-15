@@ -316,7 +316,9 @@ if ($_POST['Select'] != '' OR ($_SESSION['CustomerID'] != '' AND !isset($_POST['
 }
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-prnMsg($msg,'info');
+if (strlen($msg)>1){
+	prnMsg($msg,'info');
+}
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Customers').'</p>';
 echo "<table cellpadding=3 colspan=4 class=selection>";
 echo "<tr><td colspan=2>" . _('Enter a partial Name') . ":</td><td>";

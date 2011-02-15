@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 3.08\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-13 17:03+1300\n"
+"POT-Creation-Date: 2011-02-15 18:44+1200\n"
 "PO-Revision-Date: 2010-07-25 17:04+0000\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -219,9 +219,9 @@ msgstr "Nemohu získat účetní skupiny, protože"
 #: SalesCategories.php:13 SalesGLPostings.php:18 SalesGraph.php:34
 #: SalesPeople.php:22 SalesTypes.php:22 SelectAsset.php:44
 #: SelectCompletedOrder.php:13 SelectContract.php:81 SelectCreditItems.php:204
-#: SelectCreditItems.php:272 SelectCustomer.php:320 SelectGLAccount.php:19
-#: SelectGLAccount.php:79 SelectOrderItems.php:606 SelectOrderItems.php:1430
-#: SelectOrderItems.php:1554 SelectProduct.php:456 SelectSalesOrder.php:155
+#: SelectCreditItems.php:272 SelectCustomer.php:322 SelectGLAccount.php:19
+#: SelectGLAccount.php:79 SelectOrderItems.php:607 SelectOrderItems.php:1431
+#: SelectOrderItems.php:1555 SelectProduct.php:456 SelectSalesOrder.php:155
 #: SelectSupplier.php:9 SelectSupplier.php:198 SelectWorkOrder.php:11
 #: SelectWorkOrder.php:147 ShipmentCosting.php:13 Shipments.php:18
 #: Shippers.php:123 Shippers.php:159 Shipt_Select.php:10
@@ -342,9 +342,9 @@ msgstr "Ne"
 #: PcTypeTabs.php:171 PO_AuthorisationLevels.php:148 Prices_Customer.php:283
 #: Prices.php:227 PurchData.php:207 SalesCategories.php:263
 #: SalesGLPostings.php:135 SalesGLPostings.php:247 SalesPeople.php:210
-#: SalesTypes.php:206 SelectCustomer.php:607 SelectCustomer.php:623
-#: SelectCustomer.php:645 SelectCustomer.php:661 SelectCustomer.php:683
-#: SelectCustomer.php:699 Shippers.php:144 StockCategories.php:244
+#: SalesTypes.php:206 SelectCustomer.php:609 SelectCustomer.php:625
+#: SelectCustomer.php:647 SelectCustomer.php:663 SelectCustomer.php:685
+#: SelectCustomer.php:701 Shippers.php:144 StockCategories.php:244
 #: SupplierContacts.php:153 SupplierTypes.php:192 SuppLoginSetup.php:274
 #: TaxAuthorities.php:173 TaxCategories.php:184 TaxGroups.php:179
 #: TaxProvinces.php:178 UnitsOfMeasure.php:201 WorkCentres.php:138
@@ -370,9 +370,9 @@ msgstr "Upravit"
 #: PO_Items.php:758 Prices_Customer.php:284 Prices.php:228 PurchData.php:208
 #: SalesAnalReptCols.php:294 SalesAnalRepts.php:305 SalesCategories.php:264
 #: SalesGLPostings.php:136 SalesGLPostings.php:248 SalesPeople.php:211
-#: SalesTypes.php:207 SelectCreditItems.php:747 SelectCustomer.php:608
-#: SelectCustomer.php:624 SelectCustomer.php:646 SelectCustomer.php:662
-#: SelectCustomer.php:684 SelectCustomer.php:700 SelectOrderItems.php:1357
+#: SalesTypes.php:207 SelectCreditItems.php:747 SelectCustomer.php:610
+#: SelectCustomer.php:626 SelectCustomer.php:648 SelectCustomer.php:664
+#: SelectCustomer.php:686 SelectCustomer.php:702 SelectOrderItems.php:1358
 #: Shipments.php:424 Shippers.php:145 SpecialOrder.php:590
 #: StockCategories.php:245 StockCategories.php:539 SuppContractChgs.php:91
 #: SuppCreditGRNs.php:93 SuppFixedAssetChgs.php:81 SuppInvGRNs.php:135
@@ -500,8 +500,8 @@ msgstr "Přezkoumání účtu Sekce"
 msgid "Could not retrieve the requested section please try again."
 msgstr "Nepodařilo se získat požadovanou sekci prosím zkuste to znovu."
 
-#: AddCustomerContacts.php:6 AddCustomerContacts.php:59 SelectCustomer.php:601
-#: SelectCustomer.php:630
+#: AddCustomerContacts.php:6 AddCustomerContacts.php:59 SelectCustomer.php:603
+#: SelectCustomer.php:632
 msgid "Customer Contacts"
 msgstr "Zákazník Kontakty"
 
@@ -550,7 +550,7 @@ msgstr "Kontakt záznam byl odstraněn"
 
 #: AddCustomerContacts.php:112 CompanyPreferences.php:229
 #: CustomerBranches.php:377 Customers.php:899 Customers.php:905
-#: Customers.php:971 SalesPeople.php:185 SelectCustomer.php:603
+#: Customers.php:971 SalesPeople.php:185 SelectCustomer.php:605
 #: StockDispatch.php:186 StockDispatch.php:198 SupplierContacts.php:141
 #: SupplierCredit.php:433 SupplierInvoice.php:408 SuppTransGLAnalysis.php:96
 #: includes/InputSerialItemsFile.php:84 includes/InputSerialItemsFile.php:124
@@ -559,7 +559,7 @@ msgid "Name"
 msgstr "Název"
 
 #: AddCustomerContacts.php:113 AddCustomerContacts.php:190 Customers.php:900
-#: Customers.php:906 Customers.php:972 SelectCustomer.php:604
+#: Customers.php:906 Customers.php:972 SelectCustomer.php:606
 #: WWW_Access.php:111 WWW_Access.php:172
 msgid "Role"
 msgstr "Roli"
@@ -572,7 +572,7 @@ msgstr "Telefonní číslo"
 #: Customers.php:908 Customers.php:974 PcAssignCashToTab.php:216
 #: PcAssignCashToTab.php:341 PcAuthorizeExpenses.php:85
 #: PcClaimExpensesFromTab.php:195 PcClaimExpensesFromTab.php:348
-#: PcReportTab.php:348 SelectCustomer.php:606 SystemParameters.php:316
+#: PcReportTab.php:348 SelectCustomer.php:608 SystemParameters.php:316
 #: WOSerialNos.php:277 WOSerialNos.php:279
 msgid "Notes"
 msgstr "Bere na vědomí"
@@ -591,14 +591,14 @@ msgstr "Jméno kontaktní osoby"
 
 #: AddCustomerContacts.php:196 Contracts.php:777 PDFRemittanceAdvice.php:247
 #: PO_Header.php:958 PO_Header.php:1028 SelectCreditItems.php:225
-#: SelectCustomer.php:461 SelectOrderItems.php:638
+#: SelectCustomer.php:463 SelectOrderItems.php:639
 #: includes/PDFStatementPageHeader.inc:63 includes/PDFTransPageHeader.inc:117
 #: includes/PDFTransPageHeaderPortrait.inc:105
 msgid "Phone"
 msgstr "Telefon"
 
-#: AddCustomerNotes.php:6 AddCustomerNotes.php:49 SelectCustomer.php:638
-#: SelectCustomer.php:668
+#: AddCustomerNotes.php:6 AddCustomerNotes.php:49 SelectCustomer.php:640
+#: SelectCustomer.php:670
 msgid "Customer Notes"
 msgstr "Zákazník bere na vědomí"
 
@@ -639,7 +639,7 @@ msgstr "Poznámky pro zákazníka"
 #: GLAccountReport.php:369 GLTransInquiry.php:45 MRPCalendar.php:217
 #: PaymentAllocations.php:77 PcAssignCashToTab.php:212
 #: PcAuthorizeExpenses.php:81 PDFRemittanceAdvice.php:308
-#: PrintCustTrans.php:616 PrintCustTransPortrait.php:794 ReverseGRN.php:378
+#: PrintCustTrans.php:616 PrintCustTransPortrait.php:790 ReverseGRN.php:378
 #: ShipmentCosting.php:503 ShipmentCosting.php:574 Shipments.php:467
 #: StockDispatch.php:188 StockDispatch.php:200 StockLocMovements.php:85
 #: StockMovements.php:98 StockSerialItemResearch.php:79
@@ -685,7 +685,7 @@ msgstr "Poznámka: ID"
 msgid "Contact Note"
 msgstr "Kontakt Poznámka:"
 
-#: AddCustomerTypeNotes.php:6 SelectCustomer.php:676
+#: AddCustomerTypeNotes.php:6 SelectCustomer.php:678
 msgid "Customer Type (Group) Notes"
 msgstr "Typ zákazníka (Group) Poznámky"
 
@@ -693,7 +693,7 @@ msgstr "Typ zákazníka (Group) Poznámky"
 msgid "The Contact priority must be an integer."
 msgstr "Prioritou Kontakt musí být celé číslo."
 
-#: AddCustomerTypeNotes.php:49 SelectCustomer.php:706
+#: AddCustomerTypeNotes.php:49 SelectCustomer.php:708
 msgid "Customer Group Notes"
 msgstr "Zákaznická skupina bere na vědomí"
 
@@ -917,7 +917,7 @@ msgstr "Podrobná zpráva"
 #: OutstandingGRNs.php:185 PDFCustomerList.php:412 PDFLowGP.php:168
 #: PDFPriceList.php:301 PDFRemittanceAdvice.php:152
 #: PDFStockCheckComparison.php:379 PrintCustTrans.php:416
-#: PrintCustTransPortrait.php:564 ReorderLevel.php:229 StockDispatch.php:309
+#: PrintCustTransPortrait.php:560 ReorderLevel.php:229 StockDispatch.php:309
 #: SupplierBalsAtPeriodEnd.php:155 SuppPriceList.php:237 Tax.php:352
 msgid "Print PDF"
 msgstr "Tisknout PDF"
@@ -1108,7 +1108,7 @@ msgstr "Uživatel"
 #: CustomerTransInquiry.php:21 CustomerTransInquiry.php:85
 #: CustWhereAlloc.php:18 CustWhereAlloc.php:87 DailyBankTransactions.php:98
 #: GLAccountInquiry.php:152 GLAccountReport.php:367 GLJournal.php:256
-#: MRPReschedules.php:204 SelectCustomer.php:460 ShipmentCosting.php:501
+#: MRPReschedules.php:204 SelectCustomer.php:462 ShipmentCosting.php:501
 #: ShipmentCosting.php:572 StockCategories.php:219 StockLocMovements.php:83
 #: StockMovements.php:97 SupplierAllocations.php:462 SupplierInquiry.php:193
 #: SupplierTransInquiry.php:19 SupplierTransInquiry.php:86
@@ -1599,8 +1599,8 @@ msgstr "Přidat zpět unpresented kontroly"
 #: CustomerInquiry.php:190 CustomerTransInquiry.php:86 CustWhereAlloc.php:88
 #: EmailCustTrans.php:17 GLAccountInquiry.php:153 PrintCustTrans.php:378
 #: PrintCustTrans.php:542 PrintCustTrans.php:696 PrintCustTrans.php:735
-#: PrintCustTransPortrait.php:508 PrintCustTransPortrait.php:708
-#: PrintCustTransPortrait.php:898 PrintCustTransPortrait.php:943
+#: PrintCustTransPortrait.php:504 PrintCustTransPortrait.php:704
+#: PrintCustTransPortrait.php:894 PrintCustTransPortrait.php:939
 #: StockMovements.php:97 SupplierAllocations.php:463
 #: SupplierAllocations.php:575 SupplierAllocations.php:645
 #: SupplierTransInquiry.php:87 Z_CheckAllocs.php:60
@@ -1669,7 +1669,7 @@ msgstr ""
 "měny bankovního účtu"
 
 #: BankReconciliation.php:311 CounterSales.php:781 Customers.php:1014
-#: SelectOrderItems.php:1368 Stocks.php:1033 WorkOrderCosting.php:512
+#: SelectOrderItems.php:1369 Stocks.php:1033 WorkOrderCosting.php:512
 #: WorkOrderEntry.php:549
 msgid "Are You Sure?"
 msgstr "Opravdu provést?"
@@ -1747,14 +1747,14 @@ msgstr "Část"
 #: OffersReceived.php:196 OffersReceived.php:245 OrderDetails.php:155
 #: PDFOrdersInvoiced.php:387 POReport.php:699 POReport.php:1365
 #: PrintCustTrans.php:650 PrintCustTrans.php:713 PrintCustTrans.php:751
-#: PrintCustTransPortrait.php:833 PrintCustTransPortrait.php:916
-#: PrintCustTransPortrait.php:960 RecurringSalesOrders.php:322
+#: PrintCustTransPortrait.php:829 PrintCustTransPortrait.php:912
+#: PrintCustTransPortrait.php:956 RecurringSalesOrders.php:322
 #: ReorderLevel.php:268 ReverseGRN.php:379 ReverseGRN.php:380
 #: SalesAnalReptCols.php:18 SalesAnalReptCols.php:20 SalesGraph.php:177
 #: SalesGraph.php:258 SalesInquiry.php:974 SelectCreditItems.php:653
-#: SelectCreditItems.php:1004 SelectOrderItems.php:1292
-#: SelectOrderItems.php:1441 SelectOrderItems.php:1625
-#: SelectOrderItems.php:1753 ShipmentCosting.php:140 ShipmentCosting.php:141
+#: SelectCreditItems.php:1004 SelectOrderItems.php:1293
+#: SelectOrderItems.php:1442 SelectOrderItems.php:1626
+#: SelectOrderItems.php:1754 ShipmentCosting.php:140 ShipmentCosting.php:141
 #: Shipments.php:386 Shipments.php:388 Shipments.php:389 Shipments.php:464
 #: Shipments.php:466 SpecialOrder.php:551 StockCounts.php:98
 #: StockLocMovements.php:87 StockLocTransfer.php:181 StockMovements.php:99
@@ -1854,8 +1854,8 @@ msgstr "Vytištěno"
 #: MRPReport.php:827 MRPReschedules.php:191 MRPShortages.php:287
 #: PDFPriceList.php:331 PDFReceipt.php:32 PDFRemittanceAdvice.php:218
 #: PrintCustTrans.php:560 PrintCustTrans.php:709 PrintCustTrans.php:747
-#: PrintCustTransPortrait.php:730 PrintCustTransPortrait.php:912
-#: PrintCustTransPortrait.php:956 ReorderLevel.php:252 StockDispatch.php:338
+#: PrintCustTransPortrait.php:726 PrintCustTransPortrait.php:908
+#: PrintCustTransPortrait.php:952 ReorderLevel.php:252 StockDispatch.php:338
 #: SuppPriceList.php:264 Tax.php:252 includes/PDFAgedDebtorsPageHeader.inc:34
 #: includes/PDFAgedSuppliersPageHeader.inc:21
 #: includes/PDFBalanceSheetPageHeader.inc:26
@@ -1913,7 +1913,7 @@ msgstr "Stavět"
 #: CounterSales.php:2170 PO_SelectOSPurchOrder.php:214
 #: PO_SelectPurchOrder.php:174 ReorderLevelLocation.php:58
 #: ReorderLevelLocation.php:59 SelectCompletedOrder.php:468
-#: SelectOrderItems.php:1437 SelectOrderItems.php:1621
+#: SelectOrderItems.php:1438 SelectOrderItems.php:1622
 #: SelectSalesOrder.php:197 SelectWorkOrder.php:186 Shipt_Select.php:185
 #: TopItems.php:165 includes/PDFTopItemsHeader.inc:59
 msgid "On Hand"
@@ -2002,8 +2002,8 @@ msgstr "O jednu úroveň"
 #: PricesByCost.php:108 ReorderLevelLocation.php:55 ReorderLevel.php:266
 #: ReverseGRN.php:377 SalesCategories.php:427 SelectAsset.php:224
 #: SelectCompletedOrder.php:467 SelectContract.php:156
-#: SelectCreditItems.php:958 SelectOrderItems.php:1435
-#: SelectOrderItems.php:1619 SelectProduct.php:476 SelectProduct.php:681
+#: SelectCreditItems.php:958 SelectOrderItems.php:1436
+#: SelectOrderItems.php:1620 SelectProduct.php:476 SelectProduct.php:681
 #: SelectSalesOrder.php:196 SelectWorkOrder.php:185 Shipt_Select.php:184
 #: StockCategories.php:218 StockDispatch.php:357 StockDispatch.php:364
 #: StockLocStatus.php:149 StockQuantityByDate.php:92 SuppCreditGRNs.php:75
@@ -2106,10 +2106,10 @@ msgstr "popis"
 #: MRPReport.php:563 PO_Header.php:516 PO_Items.php:1015 PO_Items.php:1020
 #: PO_SelectOSPurchOrder.php:202 PO_SelectPurchOrder.php:165 PurchData.php:264
 #: SelectAsset.php:93 SelectCompletedOrder.php:450 SelectCreditItems.php:210
-#: SelectCreditItems.php:944 SelectCustomer.php:328 SelectCustomer.php:334
-#: SelectCustomer.php:341 SelectCustomer.php:349 SelectCustomer.php:393
-#: SelectGLAccount.php:92 SelectOrderItems.php:618 SelectOrderItems.php:621
-#: SelectOrderItems.php:1588 SelectProduct.php:483 SelectSalesOrder.php:184
+#: SelectCreditItems.php:944 SelectCustomer.php:330 SelectCustomer.php:336
+#: SelectCustomer.php:343 SelectCustomer.php:351 SelectCustomer.php:395
+#: SelectGLAccount.php:92 SelectOrderItems.php:619 SelectOrderItems.php:622
+#: SelectOrderItems.php:1589 SelectProduct.php:483 SelectSalesOrder.php:184
 #: SelectSupplier.php:206 SelectWorkOrder.php:173 Shipt_Select.php:170
 #: SuppFixedAssetChgs.php:113 SupplierTenders.php:358 WorkOrderEntry.php:583
 #: WorkOrderIssue.php:638
@@ -2138,8 +2138,8 @@ msgstr "Skladový kód"
 #: CounterSales.php:2142 CustomerReceipt.php:1037 FixedAssetTransfer.php:72
 #: MRPDemands.php:335 MRPReport.php:571 PO_Header.php:521 PO_Items.php:1023
 #: SelectAsset.php:101 SelectCreditItems.php:215 SelectCreditItems.php:949
-#: SelectCustomer.php:416 SelectGLAccount.php:98 SelectOrderItems.php:626
-#: SelectOrderItems.php:1595 SelectProduct.php:491 SelectSupplier.php:212
+#: SelectCustomer.php:418 SelectGLAccount.php:98 SelectOrderItems.php:627
+#: SelectOrderItems.php:1596 SelectProduct.php:491 SelectSupplier.php:212
 #: SelectSupplier.php:245 SupplierTenders.php:366 WorkOrderEntry.php:587
 #: WorkOrderIssue.php:642
 msgid "Search Now"
@@ -2180,8 +2180,8 @@ msgstr "SQL najít vybrané části nepodařilo se zprávou"
 #: PricesByCost.php:107 PurchData.php:338 ReorderLevelLocation.php:54
 #: ReorderLevelLocation.php:203 SalesPeople.php:184
 #: SelectCompletedOrder.php:466 SelectCreditItems.php:222
-#: SelectCreditItems.php:957 SelectCustomer.php:456 SelectGLAccount.php:105
-#: SelectOrderItems.php:1434 SelectOrderItems.php:1618 SelectProduct.php:680
+#: SelectCreditItems.php:957 SelectCustomer.php:458 SelectGLAccount.php:105
+#: SelectOrderItems.php:1435 SelectOrderItems.php:1619 SelectProduct.php:680
 #: SelectSalesOrder.php:195 SelectSupplier.php:249 SelectWorkOrder.php:184
 #: Shipt_Select.php:183 SpecialOrder.php:134 SupplierTenders.php:488
 #: SuppPriceList.php:281 TopItems.php:160 WorkOrderEntry.php:598
@@ -2196,7 +2196,7 @@ msgstr "Kód"
 #: MRPReport.php:762 OffersReceived.php:95 PO_Items.php:1038
 #: PO_SelectOSPurchOrder.php:216 PO_SelectPurchOrder.php:176
 #: SelectCompletedOrder.php:471 SelectCreditItems.php:959
-#: SelectOrderItems.php:1436 SelectOrderItems.php:1620 SelectProduct.php:108
+#: SelectOrderItems.php:1437 SelectOrderItems.php:1621 SelectProduct.php:108
 #: SelectProduct.php:683 SelectSalesOrder.php:198 SelectWorkOrder.php:187
 #: Shipments.php:387 Shipments.php:465 Shipt_Select.php:187
 #: StockLocTransferReceive.php:435 SupplierTenders.php:490 TopItems.php:163
@@ -2645,7 +2645,7 @@ msgstr "Skladová kategorie"
 #: Customers.php:738 Customers.php:741 DiscountMatrix.php:98
 #: DiscountMatrix.php:157 PricesByCost.php:216 Prices.php:199
 #: SalesAnalRepts.php:34 SalesAnalRepts.php:36 SalesGLPostings.php:115
-#: SalesGLPostings.php:226 SalesGLPostings.php:354 SelectOrderItems.php:744
+#: SalesGLPostings.php:226 SalesGLPostings.php:354 SelectOrderItems.php:745
 #: api/api_xml-rpc.php:931 api/api_xml-rpc.php:974
 msgid "Sales Type"
 msgstr "Prodej Typ"
@@ -2672,7 +2672,7 @@ msgstr "Jiné"
 #: COGSGLPostings.php:307 Customers.php:741 EDIProcessOrders.php:389
 #: PDFCustomerList.php:334 PDFPriceList.php:17 PDFPriceList.php:121
 #: PDFPriceList.php:251 PricesBasedOnMarkUp.php:223 PricesByCost.php:216
-#: SalesGLPostings.php:354 SelectOrderItems.php:744 SuppPriceList.php:118
+#: SalesGLPostings.php:354 SelectOrderItems.php:745 SuppPriceList.php:118
 #: SuppPriceList.php:231
 msgid "Price List"
 msgstr "Ceník"
@@ -2961,7 +2961,7 @@ msgstr ""
 "první z obrazovky dodání podrobnosti klikněte na Potvrdit pro fakturaci"
 
 #: ConfirmDispatch_Invoice.php:75 OrderDetails.php:53
-#: RecurringSalesOrders.php:68 SelectOrderItems.php:126
+#: RecurringSalesOrders.php:68 SelectOrderItems.php:127
 #: includes/PO_ReadInOrder.inc:58
 msgid "The order cannot be retrieved because"
 msgstr "Aby nemůže získat, protože"
@@ -2971,7 +2971,7 @@ msgid "The SQL to get the order header was"
 msgstr "SQL získat pořadí záhlaví byl"
 
 #: ConfirmDispatch_Invoice.php:151 Credit_Invoice.php:127 OrderDetails.php:140
-#: RecurringSalesOrders.php:126 SelectOrderItems.php:216
+#: RecurringSalesOrders.php:126 SelectOrderItems.php:217
 msgid "The line items of the order cannot be retrieved because"
 msgstr "Řádkové položky v řádu nelze načíst, protože"
 
@@ -3003,7 +3003,7 @@ msgstr "Potvrdit Expedice a faktury"
 #: DeliveryDetails.php:763 FTP_RadioBeacon.php:52 PDFOrdersInvoiced.php:302
 #: PDFOrderStatus.php:269 PricesByCost.php:109 SalesGraph.php:169
 #: SelectCompletedOrder.php:517 SelectContract.php:157 SelectCustomer.php:23
-#: SelectCustomer.php:280 SelectOrderItems.php:635
+#: SelectCustomer.php:280 SelectOrderItems.php:636
 #: SelectRecurringSalesOrder.php:79 SelectSalesOrder.php:421
 #: SelectSalesOrder.php:432 StockLocMovements.php:86 StockMovements.php:98
 #: includes/PDFAgedDebtorsPageHeader.inc:48
@@ -3034,7 +3034,7 @@ msgstr "Kód zákazníka"
 #: SalesInquiry.php:758 SalesInquiry.php:782 SalesInquiry.php:926
 #: SalesInquiry.php:937 SalesInquiry.php:943 SalesInquiry.php:949
 #: SalesInquiry.php:1088 SalesInquiry.php:1142 SalesInquiry.php:1158
-#: SelectCustomer.php:457 SelectOrderItems.php:741
+#: SelectCustomer.php:459 SelectOrderItems.php:742
 msgid "Customer Name"
 msgstr "Název zákazníka"
 
@@ -3047,10 +3047,10 @@ msgstr "Všechny částky v"
 #: CounterSales.php:2301 Credit_Invoice.php:271 DeliveryDetails.php:783
 #: GoodsReceived.php:89 OrderDetails.php:153 PO_Items.php:708
 #: PO_OrderDetails.php:142 PrintCustTrans.php:648 PrintCustTrans.php:711
-#: PrintCustTrans.php:749 PrintCustTransPortrait.php:831
-#: PrintCustTransPortrait.php:914 PrintCustTransPortrait.php:958
+#: PrintCustTrans.php:749 PrintCustTransPortrait.php:827
+#: PrintCustTransPortrait.php:910 PrintCustTransPortrait.php:954
 #: RecurringSalesOrders.php:320 ReverseGRN.php:376 SalesGraph.php:170
-#: SelectCreditItems.php:651 SelectOrderItems.php:1290 StockCostUpdate.php:124
+#: SelectCreditItems.php:651 SelectOrderItems.php:1291 StockCostUpdate.php:124
 #: StockLocMovements.php:82 StockLocTransfer.php:181
 #: StockLocTransferReceive.php:430 StockQuantityByDate.php:91 Stocks.php:584
 #: Stocks.php:586 Stocks.php:636 Stocks.php:640 SuppCreditGRNs.php:74
@@ -3071,9 +3071,9 @@ msgstr "Kód položky"
 #: Credit_Invoice.php:272 DeliveryDetails.php:784 DeliveryDetails.php:849
 #: OrderDetails.php:154 PO_Items.php:776 PO_OrderDetails.php:143
 #: PrintCustTrans.php:649 PrintCustTrans.php:712 PrintCustTrans.php:750
-#: PrintCustTransPortrait.php:832 PrintCustTransPortrait.php:915
-#: PrintCustTransPortrait.php:959 RecurringSalesOrders.php:321
-#: SelectCreditItems.php:652 SelectOrderItems.php:1291 SpecialOrder.php:549
+#: PrintCustTransPortrait.php:828 PrintCustTransPortrait.php:911
+#: PrintCustTransPortrait.php:955 RecurringSalesOrders.php:321
+#: SelectCreditItems.php:652 SelectOrderItems.php:1292 SpecialOrder.php:549
 #: StockLocTransferReceive.php:431 includes/PDFOrderPageHeader_generic.inc:92
 #: includes/PDFPickingListHeader.inc:73
 #: includes/PDFQuotationPageHeader.inc:101
@@ -3111,10 +3111,10 @@ msgstr "Tato zásilka"
 #: PDFPrintLabel.php:239 PO_AuthoriseMyOrders.php:108 PricesByCost.php:201
 #: Prices_Customer.php:367 Prices.php:200 Prices.php:339
 #: PrintCustTrans.php:652 PrintCustTrans.php:715 PrintCustTrans.php:753
-#: PrintCustTransPortrait.php:835 PrintCustTransPortrait.php:918
-#: PrintCustTransPortrait.php:962 PurchData.php:168 PurchData.php:455
+#: PrintCustTransPortrait.php:831 PrintCustTransPortrait.php:914
+#: PrintCustTransPortrait.php:958 PurchData.php:168 PurchData.php:455
 #: RecurringSalesOrders.php:324 SelectCreditItems.php:655
-#: SelectOrderItems.php:1295 Shipments.php:390 StockLocMovements.php:89
+#: SelectOrderItems.php:1296 Shipments.php:390 StockLocMovements.php:89
 #: StockMovements.php:100 StockStatus.php:310 SuppCreditGRNs.php:227
 #: SuppCreditGRNs.php:228 SupplierTenders.php:268 SupplierTenders.php:493
 #: SuppPriceList.php:283 includes/DefineLabelClass.php:49
@@ -3127,10 +3127,10 @@ msgstr "Cena"
 #: ConfirmDispatch_Invoice.php:269 CounterSales.php:705 Credit_Invoice.php:277
 #: CustomerReceipt.php:846 DeliveryDetails.php:788 OrderDetails.php:158
 #: PrintCustTrans.php:653 PrintCustTrans.php:716 PrintCustTrans.php:754
-#: PrintCustTransPortrait.php:836 PrintCustTransPortrait.php:919
-#: PrintCustTransPortrait.php:963 RecurringSalesOrders.php:325
+#: PrintCustTransPortrait.php:832 PrintCustTransPortrait.php:915
+#: PrintCustTransPortrait.php:959 RecurringSalesOrders.php:325
 #: SalesAnalReptCols.php:43 SalesAnalReptCols.php:45 SelectCreditItems.php:657
-#: SelectOrderItems.php:1298 StockLocMovements.php:90 StockMovements.php:101
+#: SelectOrderItems.php:1299 StockLocMovements.php:90 StockMovements.php:101
 #: StockStatus.php:311 includes/PDFQuotationPageHeader.inc:104
 #: includes/PDFTransPageHeader.inc:206
 msgid "Discount"
@@ -3149,7 +3149,7 @@ msgstr "Sleva"
 #: OrderDetails.php:159 PDFCustTransListing.php:127 PDFOrdersInvoiced.php:389
 #: PDFRemittanceAdvice.php:310 PDFSuppTransListing.php:127
 #: RecurringSalesOrders.php:326 SelectCreditItems.php:658
-#: SelectCreditItems.php:662 SelectOrderItems.php:1301 SuppContractChgs.php:98
+#: SelectCreditItems.php:662 SelectOrderItems.php:1302 SuppContractChgs.php:98
 #: SuppFixedAssetChgs.php:88 SupplierAllocations.php:466
 #: SupplierAllocations.php:577 SupplierAllocations.php:647
 #: SupplierCredit.php:389 SupplierCredit.php:421 SupplierCredit.php:456
@@ -3178,7 +3178,7 @@ msgstr "DPH %"
 
 #: ConfirmDispatch_Invoice.php:273 CounterSales.php:708 Credit_Invoice.php:280
 #: Credit_Invoice.php:281 PrintCustTrans.php:335 PrintCustTrans.php:783
-#: PrintCustTransPortrait.php:456 PrintCustTransPortrait.php:999
+#: PrintCustTransPortrait.php:452 PrintCustTransPortrait.php:995
 #: SelectCreditItems.php:660 SelectCreditItems.php:661
 #: includes/PDFTaxPageHeader.inc:40
 msgid "Tax"
@@ -3721,7 +3721,7 @@ msgstr "Nelze načíst součásti sestavy množství umístění skladu, protož
 #: DeliveryDetails.php:586 DeliveryDetails.php:753 MRPReport.php:412
 #: PDFOrdersInvoiced.php:301 PDFOrderStatus.php:268
 #: SelectCompletedOrder.php:516 SelectContract.php:152
-#: SelectOrderItems.php:733 SelectProduct.php:356 Shipments.php:384
+#: SelectOrderItems.php:734 SelectProduct.php:356 Shipments.php:384
 #: Shipments.php:462 SuppCreditGRNs.php:149 SuppCreditGRNs.php:227
 #: SuppInvGRNs.php:278 TaxGroups.php:271
 #: includes/PDFDeliveryDifferencesPageHeader.inc:41
@@ -3994,7 +3994,7 @@ msgstr "zpracované"
 #: PO_SelectOSPurchOrder.php:451 PO_SelectOSPurchOrder.php:479
 #: PrintCustStatements.php:89 PrintCustStatements.php:431
 #: PrintCustTrans.php:394 PrintCustTrans.php:415
-#: PrintCustTransPortrait.php:531 SelectSalesOrder.php:471
+#: PrintCustTransPortrait.php:527 SelectSalesOrder.php:471
 msgid "Print"
 msgstr "Tisk"
 
@@ -4065,7 +4065,7 @@ msgstr ""
 #: Contracts.php:97 DeliveryDetails.php:261 DeliveryDetails.php:270
 #: EmailCustTrans.php:24 EmailCustTrans.php:28 GLAccountCSV.php:263
 #: PO_Header.php:237 POReport.php:1404 SalesAnalysis_UserDefined.php:46
-#: SelectOrderItems.php:1145 StockQties_csv.php:46 StockUsage.php:24
+#: SelectOrderItems.php:1146 StockQties_csv.php:46 StockUsage.php:24
 #: SupplierCredit.php:216 SupplierCredit.php:228 SupplierCredit.php:240
 #: SupplierCredit.php:249 SupplierCredit.php:257 SupplierInvoice.php:193
 #: SupplierInvoice.php:201 SupplierInvoice.php:209 SupplierInvoice.php:217
@@ -4077,7 +4077,7 @@ msgstr "klikněte zde"
 #: ContractBOM.php:43 ContractOtherReqts.php:45 Contracts.php:88
 #: Contracts.php:97 DeliveryDetails.php:261 DeliveryDetails.php:270
 #: PO_Header.php:237 SalesAnalysis_UserDefined.php:46
-#: SelectOrderItems.php:1145 StockUsage.php:24 SupplierCredit.php:216
+#: SelectOrderItems.php:1146 StockUsage.php:24 SupplierCredit.php:216
 #: SupplierCredit.php:228 SupplierCredit.php:240 SupplierCredit.php:249
 #: SupplierCredit.php:257 SupplierInvoice.php:193 SupplierInvoice.php:201
 #: SupplierInvoice.php:209 SupplierInvoice.php:217 SupplierInvoice.php:225
@@ -4086,7 +4086,7 @@ msgid "to continue"
 msgstr "pro pokračování"
 
 #: ContractBOM.php:143 CounterSales.php:330 PO_Items.php:960
-#: SelectCreditItems.php:370 SelectOrderItems.php:855 SupplierTenders.php:469
+#: SelectCreditItems.php:370 SelectOrderItems.php:856 SupplierTenders.php:469
 #: WorkOrderEntry.php:153 WorkOrderIssue.php:469
 msgid "There is a problem selecting the part records to display because"
 msgstr "To je problém výběru část záznamy k zobrazení, protože"
@@ -4132,7 +4132,7 @@ msgid "The SQL used to retrieve the item details but failed was"
 msgstr "SQL používá k načtení položky detaily, ale nepodařilo se"
 
 #: ContractBOM.php:213 CounterSales.php:425 PO_Items.php:679
-#: SelectOrderItems.php:949 includes/SelectOrderItems_IntoCart.inc:58
+#: SelectOrderItems.php:950 includes/SelectOrderItems_IntoCart.inc:58
 #: includes/SelectOrderItems_IntoCart.inc:162
 msgid "The item code"
 msgstr "Položku kód"
@@ -4191,8 +4191,8 @@ msgstr "Hledat na sklade"
 #: ReorderLevel.php:217 ReorderLevel.php:219 SalesGraph.php:91
 #: SalesGraph.php:93 SalesGraph.php:111 SalesGraph.php:113 SalesGraph.php:134
 #: SalesGraph.php:136 SalesGraph.php:168 SalesInquiry.php:1060
-#: SalesInquiry.php:1103 SelectCreditItems.php:925 SelectOrderItems.php:1560
-#: SelectOrderItems.php:1563 SelectProduct.php:464 SelectProduct.php:466
+#: SalesInquiry.php:1103 SelectCreditItems.php:925 SelectOrderItems.php:1561
+#: SelectOrderItems.php:1564 SelectProduct.php:464 SelectProduct.php:466
 #: StockDispatch.php:283 StockDispatch.php:285 StockLocStatus.php:62
 #: StockLocStatus.php:64 StockLocStatus.php:82 StockLocStatus.php:86
 #: StockLocStatus.php:90 SupplierTenders.php:337 SupplierTenders.php:339
@@ -4210,7 +4210,7 @@ msgstr "Zadejte text extrakty v popisu"
 
 #: ContractBOM.php:323 CounterSales.php:2138 PO_Items.php:1015
 #: SelectCompletedOrder.php:450 SelectCreditItems.php:944
-#: SelectOrderItems.php:1588 SelectSalesOrder.php:184 SelectWorkOrder.php:173
+#: SelectOrderItems.php:1589 SelectSalesOrder.php:184 SelectWorkOrder.php:173
 msgid "Enter extract of the Stock Code"
 msgstr "Zadejte extrakt skladem zákoníku"
 
@@ -4225,7 +4225,7 @@ msgstr "Obrázek"
 
 #: ContractBOM.php:368 CounterSales.php:2001 FixedAssetItems.php:459
 #: FixedAssetItems.php:463 PO_Items.php:1062 SelectCreditItems.php:971
-#: SelectOrderItems.php:1448 SelectOrderItems.php:1627 Stocks.php:711
+#: SelectOrderItems.php:1449 SelectOrderItems.php:1628 Stocks.php:711
 #: Stocks.php:715 SupplierTenders.php:517 WorkOrderEntry.php:618
 #: WorkOrderIssue.php:676
 msgid "No Image"
@@ -4296,9 +4296,9 @@ msgstr "Inventury"
 #: CounterSales.php:703 DeliveryDetails.php:786 DeliveryDetails.php:851
 #: OrderDetails.php:156 PO_Items.php:808 PrintCustTrans.php:651
 #: PrintCustTrans.php:714 PrintCustTrans.php:752
-#: PrintCustTransPortrait.php:834 PrintCustTransPortrait.php:917
-#: PrintCustTransPortrait.php:961 RecurringSalesOrders.php:323
-#: SelectCreditItems.php:654 SelectOrderItems.php:1294
+#: PrintCustTransPortrait.php:830 PrintCustTransPortrait.php:913
+#: PrintCustTransPortrait.php:957 RecurringSalesOrders.php:323
+#: SelectCreditItems.php:654 SelectOrderItems.php:1295
 #: includes/PDFTopItemsHeader.inc:57 includes/PO_PDFOrderPageHeader.inc:79
 msgid "Unit"
 msgstr "Jednotkou"
@@ -4550,7 +4550,7 @@ msgstr "Pokud se tak nestane"
 
 #: Contracts.php:87 Contracts.php:96 Customers.php:293 DeliveryDetails.php:261
 #: DeliveryDetails.php:270 EmailCustTrans.php:24 PO_Header.php:236
-#: SelectOrderItems.php:1144 StockUsage.php:23 SupplierCredit.php:214
+#: SelectOrderItems.php:1145 StockUsage.php:23 SupplierCredit.php:214
 #: SupplierCredit.php:226 SupplierCredit.php:238 SupplierCredit.php:248
 #: SupplierCredit.php:256 SupplierInvoice.php:192 SupplierInvoice.php:200
 #: SupplierInvoice.php:208 SupplierInvoice.php:216 SupplierInvoice.php:224
@@ -4813,7 +4813,7 @@ msgstr "Tato smlouva byla předložena do citace číslo"
 msgid "Go to quotation number:"
 msgstr "Přejít na nabídku číslo:"
 
-#: Contracts.php:604 SelectOrderItems.php:294
+#: Contracts.php:604 SelectOrderItems.php:295
 msgid ""
 "Customer Branch Name keywords have been used in preference to the Customer "
 "Branch Code or Branch Phone Number entered"
@@ -4821,7 +4821,7 @@ msgstr ""
 "Zákazník Obor Název klíčová slova byla použita v preferenci k zákazníkovi "
 "Pobočka kódu nebo pobočky Telefon vstoupil"
 
-#: Contracts.php:607 SelectOrderItems.php:297
+#: Contracts.php:607 SelectOrderItems.php:298
 msgid ""
 "Customer Branch Code has been used in preference to the Customer Branch "
 "Phone Number entered"
@@ -4829,7 +4829,7 @@ msgstr ""
 "Zákazník Pobočka Kód byl použit v preferenci k zákazníkovi pobočky telefonní "
 "číslo zadané"
 
-#: Contracts.php:610 SelectOrderItems.php:300
+#: Contracts.php:610 SelectOrderItems.php:301
 msgid ""
 "At least one Customer Branch Name keyword OR an extract of a Customer Branch "
 "Code or Branch Phone Number must be entered for the search"
@@ -4838,23 +4838,23 @@ msgstr ""
 "zákazníka kódu nebo pobočky telefonní číslo musí být zapsány na vyhledávání"
 
 #: Contracts.php:665 CustomerReceipt.php:575 SelectCustomer.php:245
-#: SelectOrderItems.php:367
+#: SelectOrderItems.php:368
 msgid "The searched customer records requested cannot be retrieved because"
 msgstr "Hledali záznamy zákazníků požadovaná nelze načíst, protože"
 
-#: Contracts.php:672 SelectOrderItems.php:374
+#: Contracts.php:672 SelectOrderItems.php:375
 msgid "No Customer Branch records contain the search criteria"
 msgstr "Zákazník žádné pobočky záznamy obsahují kritéria vyhledávání"
 
-#: Contracts.php:672 SelectOrderItems.php:374
+#: Contracts.php:672 SelectOrderItems.php:375
 msgid "please try again"
 msgstr "prosím zkuste to znovu"
 
-#: Contracts.php:672 SelectOrderItems.php:374
+#: Contracts.php:672 SelectOrderItems.php:375
 msgid "Note a Customer Branch Name may be different to the Customer Name"
 msgstr "Poznámka: Zákazník pobočka Název se může lišit Jméno zákazníka"
 
-#: Contracts.php:685 SelectOrderItems.php:387
+#: Contracts.php:685 SelectOrderItems.php:388
 #, fuzzy
 msgid "Unable to identify the selected customer"
 msgstr "Nelze určit segment tag"
@@ -4866,9 +4866,9 @@ msgstr "Zákazník vybraný záznam"
 #: Contracts.php:716 CounterSales.php:112 CounterSales.php:147
 #: CounterSales.php:2022 CounterSales.php:2200 DeliveryDetails.php:148
 #: PO_Header.php:395 PO_Header.php:462 SelectCreditItems.php:136
-#: SelectCreditItems.php:174 SelectOrderItems.php:417 SelectOrderItems.php:463
-#: SelectOrderItems.php:536 SelectOrderItems.php:576 SelectOrderItems.php:1471
-#: SelectOrderItems.php:1654 SpecialOrder.php:59 SpecialOrder.php:82
+#: SelectCreditItems.php:174 SelectOrderItems.php:418 SelectOrderItems.php:464
+#: SelectOrderItems.php:537 SelectOrderItems.php:577 SelectOrderItems.php:1472
+#: SelectOrderItems.php:1655 SpecialOrder.php:59 SpecialOrder.php:82
 #: StockCheck.php:222 StockLocStatus.php:172 StockLocStatus.php:196
 #: StockLocStatus.php:232 StockStatus.php:120 StockStatus.php:144
 #: StockStatus.php:164 StockStatus.php:186 StockStatus.php:203
@@ -4877,7 +4877,7 @@ msgid "cannot be retrieved because"
 msgstr "nelze načíst, protože"
 
 #: Contracts.php:717 CounterSales.php:113 SelectCreditItems.php:137
-#: SelectOrderItems.php:418 SpecialOrder.php:83
+#: SelectOrderItems.php:419 SpecialOrder.php:83
 msgid "The SQL used to retrieve the customer details and failed was"
 msgstr "SQL slouží k získání údajů o zákaznících a neúspěšný byl"
 
@@ -4890,20 +4890,20 @@ msgid "The SQL used that failed to get the customer details was:"
 msgstr "SQL používá, že se nepodařilo získat zákazníka detaily o:"
 
 #: Contracts.php:735 CounterSales.php:181 SalesAnalRepts.php:165
-#: SalesAnalRepts.php:229 SelectOrderItems.php:424 SelectOrderItems.php:509
-#: SelectOrderItems.php:518 SpecialOrder.php:89
+#: SalesAnalRepts.php:229 SelectOrderItems.php:425 SelectOrderItems.php:510
+#: SelectOrderItems.php:519 SpecialOrder.php:89
 msgid "The"
 msgstr ""
 
-#: Contracts.php:735 CounterSales.php:181 SelectOrderItems.php:509
+#: Contracts.php:735 CounterSales.php:181 SelectOrderItems.php:510
 msgid "account is currently at or over their credit limit"
 msgstr "účet je v současné době, nebo přes jejich úvěrového limitu"
 
-#: Contracts.php:737 CounterSales.php:183 SelectOrderItems.php:511
+#: Contracts.php:737 CounterSales.php:183 SelectOrderItems.php:512
 msgid "No more orders can be placed by"
 msgstr "Žádné další objednávky mohou být umístěny na"
 
-#: Contracts.php:737 CounterSales.php:183 SelectOrderItems.php:511
+#: Contracts.php:737 CounterSales.php:183 SelectOrderItems.php:512
 msgid " their account is currently at or over their credit limit"
 msgstr "jejich účet je v současné době, nebo přes jejich úvěrového limitu"
 
@@ -4911,20 +4911,20 @@ msgstr "jejich účet je v současné době, nebo přes jejich úvěrového limi
 msgid "Contract: Select Customer"
 msgstr "Smlouvy: Vyberte zákazníky"
 
-#: Contracts.php:756 SelectOrderItems.php:616
+#: Contracts.php:756 SelectOrderItems.php:617
 msgid "Part of the Customer Branch Name"
 msgstr "Část Jméno zákazníka pobočky"
 
-#: Contracts.php:759 SelectOrderItems.php:619
+#: Contracts.php:759 SelectOrderItems.php:620
 msgid "Part of the Customer Branch Code"
 msgstr "Část kódu zákazníka pobočky"
 
-#: Contracts.php:762 SelectOrderItems.php:622
+#: Contracts.php:762 SelectOrderItems.php:623
 msgid "Part of the Branch Phone Number"
 msgstr "Část číslo pobočky telefonu"
 
 #: Contracts.php:767 Customers.php:610 Customers.php:1011 PO_Header.php:522
-#: SelectGLAccount.php:99 SelectOrderItems.php:627
+#: SelectGLAccount.php:99 SelectOrderItems.php:628
 msgid "Reset"
 msgstr "Vymazat formulář"
 
@@ -4932,8 +4932,8 @@ msgstr "Vymazat formulář"
 #: FTP_RadioBeacon.php:53 PDFOrdersInvoiced.php:303 PDFOrderStatus.php:270
 #: PDFPriceList.php:356 PricesByCost.php:110 Prices_Customer.php:264
 #: Prices_Customer.php:350 PrintCustTrans.php:610
-#: PrintCustTransPortrait.php:788 SelectCompletedOrder.php:518
-#: SelectCreditItems.php:223 SelectCustomer.php:458 SelectOrderItems.php:636
+#: PrintCustTransPortrait.php:784 SelectCompletedOrder.php:518
+#: SelectCreditItems.php:223 SelectCustomer.php:460 SelectOrderItems.php:637
 #: SelectRecurringSalesOrder.php:80 SelectSalesOrder.php:422
 #: SelectSalesOrder.php:433 StockMovements.php:99
 #: StockSerialItemResearch.php:81
@@ -4945,13 +4945,13 @@ msgid "Branch"
 msgstr "Větev"
 
 #: Contracts.php:776 Factors.php:169 SelectCreditItems.php:224
-#: SelectCustomer.php:459 SelectOrderItems.php:637 SupplierContacts.php:212
+#: SelectCustomer.php:461 SelectOrderItems.php:638 SupplierContacts.php:212
 msgid "Contact"
 msgstr "Kontakt"
 
 #: Contracts.php:778 EmailConfirmation.php:125 Factors.php:281
 #: PDFCustomerList.php:344 PDFRemittanceAdvice.php:249
-#: SelectCreditItems.php:226 SelectCustomer.php:462 SelectOrderItems.php:639
+#: SelectCreditItems.php:226 SelectCustomer.php:464 SelectOrderItems.php:640
 #: includes/PDFOrderPageHeader_generic.inc:32
 #: includes/PDFPickingListHeader.inc:24 includes/PDFQuotationPageHeader.inc:23
 #: includes/PDFSalesOrder_generic.inc:34
@@ -4963,7 +4963,7 @@ msgstr "Fax"
 
 #: Contracts.php:827 CustomerInquiry.php:125 CustomerReceipt.php:900
 #: PDFRemittanceAdvice.php:275 PO_Header.php:580 PrintCustTrans.php:637
-#: PrintCustTransPortrait.php:818 SupplierInquiry.php:119
+#: PrintCustTransPortrait.php:814 SupplierInquiry.php:119
 #: includes/PDFStatementPageHeader.inc:116 includes/PDFTransPageHeader.inc:163
 #: includes/PDFTransPageHeaderPortrait.inc:209
 #: includes/PO_PDFOrderPageHeader.inc:72
@@ -5161,7 +5161,7 @@ msgstr ""
 "by měl být zadán pomocí kód zákazníka hypen pak větev kód zákazníka k "
 "použití."
 
-#: CounterSales.php:112 SelectOrderItems.php:417
+#: CounterSales.php:112 SelectOrderItems.php:418
 msgid "The details of the customer selected"
 msgstr "Podrobnosti o vybrané zákazníky"
 
@@ -5176,34 +5176,34 @@ msgstr ""
 "pracovníky úvěrového řízení k projednání"
 
 #: CounterSales.php:147 DeliveryDetails.php:148 SelectCreditItems.php:174
-#: SelectOrderItems.php:463 SelectOrderItems.php:576
+#: SelectOrderItems.php:464 SelectOrderItems.php:577
 msgid "The customer branch record of the customer selected"
 msgstr "Zákazník pobočka záznam vybrané zákazníky"
 
 #: CounterSales.php:148 DeliveryDetails.php:149 SelectCreditItems.php:175
-#: SelectOrderItems.php:464 SelectOrderItems.php:577
+#: SelectOrderItems.php:465 SelectOrderItems.php:578
 msgid "SQL used to retrieve the branch details was"
 msgstr "SQL slouží k načtení informací větev byla"
 
-#: CounterSales.php:153 DeliveryDetails.php:153 SelectOrderItems.php:469
+#: CounterSales.php:153 DeliveryDetails.php:153 SelectOrderItems.php:470
 msgid "The branch details for branch code"
 msgstr "Podrobnosti pobočka pro obor kód"
 
-#: CounterSales.php:153 DeliveryDetails.php:153 SelectOrderItems.php:469
+#: CounterSales.php:153 DeliveryDetails.php:153 SelectOrderItems.php:470
 msgid "against customer code"
 msgstr "před kód zákazníka"
 
 #: CounterSales.php:153 DeliveryDetails.php:153 GLAccountCSV.php:183
 #: GLAccountCSV.php:212 GLAccountInquiry.php:175 GLAccountInquiry.php:214
-#: GLAccountReport.php:114 GLAccountReport.php:146 SelectOrderItems.php:469
+#: GLAccountReport.php:114 GLAccountReport.php:146 SelectOrderItems.php:470
 msgid "could not be retrieved"
 msgstr "se nepodařilo získat"
 
-#: CounterSales.php:153 DeliveryDetails.php:153 SelectOrderItems.php:469
+#: CounterSales.php:153 DeliveryDetails.php:153 SelectOrderItems.php:470
 msgid "Check the set up of the customer and branch"
 msgstr "Zkontrolujte nastavení na zákazníka a pobočky"
 
-#: CounterSales.php:156 DeliveryDetails.php:156 SelectOrderItems.php:472
+#: CounterSales.php:156 DeliveryDetails.php:156 SelectOrderItems.php:473
 msgid "The SQL that failed to get the branch details was"
 msgstr "SQL, které se nepodařilo dostat pobočky podrobnosti byl"
 
@@ -5242,58 +5242,58 @@ msgstr "Popis byl použit při hledání"
 msgid "Item Code has been used in search"
 msgstr "Položka Kód byl použit při hledání"
 
-#: CounterSales.php:225 SelectOrderItems.php:756
+#: CounterSales.php:225 SelectOrderItems.php:757
 msgid "Stock Category has been used in search"
 msgstr "Skladem Kategorie byl použit při hledání"
 
-#: CounterSales.php:331 SelectOrderItems.php:856 WorkOrderEntry.php:154
+#: CounterSales.php:331 SelectOrderItems.php:857 WorkOrderEntry.php:154
 #: WorkOrderIssue.php:470
 msgid "The SQL used to get the part selection was"
 msgstr "SQL používá k získání části Výběr byl"
 
-#: CounterSales.php:335 SelectOrderItems.php:860 WorkOrderEntry.php:158
+#: CounterSales.php:335 SelectOrderItems.php:861 WorkOrderEntry.php:158
 #: WorkOrderIssue.php:474
 msgid "There are no products available meeting the criteria specified"
 msgstr "Nejsou žádné výrobky k dispozici splňují kritéria stanovená"
 
-#: CounterSales.php:410 SelectOrderItems.php:934 SelectOrderItems.php:1108
+#: CounterSales.php:410 SelectOrderItems.php:935 SelectOrderItems.php:1109
 msgid "An invalid date entry was made for "
 msgstr "Neplatné datum vstupu byla pro"
 
-#: CounterSales.php:410 SelectOrderItems.php:934 SelectOrderItems.php:1108
+#: CounterSales.php:410 SelectOrderItems.php:935 SelectOrderItems.php:1109
 msgid "The date entry"
 msgstr "Datum vstupu"
 
-#: CounterSales.php:410 SelectOrderItems.php:934 SelectOrderItems.php:1108
+#: CounterSales.php:410 SelectOrderItems.php:935 SelectOrderItems.php:1109
 msgid "must be in the format"
 msgstr "musí být ve formátu"
 
 #: CounterSales.php:419 CounterSales.php:522 CounterSales.php:566
-#: CounterSales.php:616 SelectOrderItems.php:943 SelectOrderItems.php:1157
-#: SelectOrderItems.php:1205
+#: CounterSales.php:616 SelectOrderItems.php:944 SelectOrderItems.php:1158
+#: SelectOrderItems.php:1206
 msgid ""
 "Could not determine if the part being ordered was a kitset or not because"
 msgstr "Nepodařilo se určit, zda část je uložena byla kitset nebo ne, protože"
 
-#: CounterSales.php:420 CounterSales.php:523 SelectOrderItems.php:944
+#: CounterSales.php:420 CounterSales.php:523 SelectOrderItems.php:945
 msgid ""
 "The sql that was used to determine if the part being ordered was a kitset or "
 "not was "
 msgstr ""
 "Sql, který byl použit k určení, zda část je uložena byla kitset byl či nebyl"
 
-#: CounterSales.php:425 SelectOrderItems.php:949
+#: CounterSales.php:425 SelectOrderItems.php:950
 msgid ""
 "could not be retrieved from the database and has not been added to the order"
 msgstr "se nepodařilo získat z databáze a nebyl přidán do objednávky"
 
 #: CounterSales.php:435 CounterSales.php:534 CounterSales.php:582
-#: CounterSales.php:632 SelectOrderItems.php:959 SelectOrderItems.php:1173
-#: SelectOrderItems.php:1221
+#: CounterSales.php:632 SelectOrderItems.php:960 SelectOrderItems.php:1174
+#: SelectOrderItems.php:1222
 msgid "Could not retrieve kitset components from the database because"
 msgstr "Nepodařilo se načíst kitset komponenty z databáze, protože"
 
-#: CounterSales.php:447 SelectOrderItems.php:971
+#: CounterSales.php:447 SelectOrderItems.php:972
 msgid ""
 "Phantom assemblies cannot be sold, these items exist only as bills of "
 "materials used in other manufactured items. The following item has not been "
@@ -5311,7 +5311,7 @@ msgstr ""
 "Systém nemá v současné době uspokojit proti prodeji zboží partie "
 "kontrolovaných nebo serializovaných"
 
-#: CounterSales.php:493 SelectOrderItems.php:1113
+#: CounterSales.php:493 SelectOrderItems.php:1114
 msgid ""
 "The item could not be updated because you are attempting to set the quantity "
 "ordered to less than 0 or the price less than 0 or the discount more than "
@@ -5322,20 +5322,20 @@ msgstr ""
 "než 0%"
 
 #: CounterSales.php:702 InventoryPlanningPrefSupplier.php:95
-#: SelectOrderItems.php:1293 StockDispatch.php:370 StockDispatch.php:372
+#: SelectOrderItems.php:1294 StockDispatch.php:370 StockDispatch.php:372
 #: includes/PDFInventoryPlanPageHeader.inc:68
 #: includes/PDFStockCheckPageHeader.inc:37
 #: includes/PDFStockComparisonPageHeader.inc:34
 msgid "QOH"
 msgstr "QOH"
 
-#: CounterSales.php:706 PricesByCost.php:114 SelectOrderItems.php:1299
+#: CounterSales.php:706 PricesByCost.php:114 SelectOrderItems.php:1300
 msgid "GP %"
 msgstr "GP%"
 
 #: CounterSales.php:707 PrintCustTrans.php:654 PrintCustTrans.php:717
-#: PrintCustTrans.php:755 PrintCustTransPortrait.php:837
-#: PrintCustTransPortrait.php:920 PrintCustTransPortrait.php:964
+#: PrintCustTrans.php:755 PrintCustTransPortrait.php:833
+#: PrintCustTransPortrait.php:916 PrintCustTransPortrait.php:960
 #: includes/PDFTaxPageHeader.inc:39
 msgid "Net"
 msgstr "Čistý"
@@ -5343,7 +5343,7 @@ msgstr "Čistý"
 #: CounterSales.php:785 CustomerReceipt.php:832 CustomerReceipt.php:849
 #: CustomerReceipt.php:1014 GLAccountInquiry.php:157 GLAccountReport.php:372
 #: GLJournal.php:346 GLJournal.php:363 Payments.php:938
-#: SelectOrderItems.php:1372 SuppContractChgs.php:74 SuppContractChgs.php:144
+#: SelectOrderItems.php:1373 SuppContractChgs.php:74 SuppContractChgs.php:144
 #: SupplierCredit.php:400 SupplierCredit.php:435 SupplierInvoice.php:374
 #: SupplierInvoice.php:410 SupplierTransInquiry.php:146
 #: SuppTransGLAnalysis.php:98 SuppTransGLAnalysis.php:182
@@ -5385,7 +5385,7 @@ msgstr "Klopené do"
 msgid "Amount Paid"
 msgstr "Částka vyplacená"
 
-#: CounterSales.php:859 SelectOrderItems.php:1401
+#: CounterSales.php:859 SelectOrderItems.php:1402
 msgid "Re-Calculate"
 msgstr "Re-Spočítejte"
 
@@ -5596,16 +5596,16 @@ msgid ""
 "Cannot insert the customer allocation of the receipt to the invoice because"
 msgstr "Nelze vložit přidělování zákazníků po obdržení k faktuře, protože"
 
-#: CounterSales.php:1963 SelectCreditItems.php:912 SelectOrderItems.php:1410
+#: CounterSales.php:1963 SelectCreditItems.php:912 SelectOrderItems.php:1411
 msgid "Yes Please"
 msgstr "Ano, prosím"
 
-#: CounterSales.php:1984 CounterSales.php:1985 SelectOrderItems.php:1431
-#: SelectOrderItems.php:1432 SystemParameters.php:392
+#: CounterSales.php:1984 CounterSales.php:1985 SelectOrderItems.php:1432
+#: SelectOrderItems.php:1433 SystemParameters.php:392
 msgid "Frequently Ordered Items"
 msgstr "Často objednané položky"
 
-#: CounterSales.php:1985 SelectOrderItems.php:1432
+#: CounterSales.php:1985 SelectOrderItems.php:1433
 msgid ""
 ", shows the most frequently ordered items in the last 6 months.  You can "
 "choose from this list, or search further for other items"
@@ -5613,31 +5613,31 @@ msgstr ""
 ", Ukazuje nejčastěji objednaného zboží v posledních 6 měsících. Můžete si "
 "vybrat z tohoto seznamu, nebo hledat další za další položky"
 
-#: CounterSales.php:1991 CounterSales.php:2171 SelectOrderItems.php:1438
-#: SelectOrderItems.php:1622
+#: CounterSales.php:1991 CounterSales.php:2171 SelectOrderItems.php:1439
+#: SelectOrderItems.php:1623
 msgid "On Demand"
 msgstr "On Demand"
 
-#: CounterSales.php:1992 CounterSales.php:2172 SelectOrderItems.php:1439
-#: SelectOrderItems.php:1623 StockLocStatus.php:154 StockStatus.php:94
+#: CounterSales.php:1992 CounterSales.php:2172 SelectOrderItems.php:1440
+#: SelectOrderItems.php:1624 StockLocStatus.php:154 StockStatus.php:94
 msgid "On Order"
 msgstr "Na objednávku"
 
-#: CounterSales.php:1993 CounterSales.php:2173 SelectOrderItems.php:1440
-#: SelectOrderItems.php:1624 StockLocStatus.php:153 StockStatus.php:93
+#: CounterSales.php:1993 CounterSales.php:2173 SelectOrderItems.php:1441
+#: SelectOrderItems.php:1625 StockLocStatus.php:153 StockStatus.php:93
 #: includes/PDFStockCheckPageHeader.inc:39
 msgid "Available"
 msgstr "K dispozici"
 
-#: CounterSales.php:2021 CounterSales.php:2200 SelectOrderItems.php:1470
-#: SelectOrderItems.php:1654 StockCheck.php:222 StockLocStatus.php:172
+#: CounterSales.php:2021 CounterSales.php:2200 SelectOrderItems.php:1471
+#: SelectOrderItems.php:1655 StockCheck.php:222 StockLocStatus.php:172
 #: StockLocStatus.php:196 StockStatus.php:120 StockStatus.php:144
 msgid "The demand for this product from"
 msgstr "Poptávka po tomto produktu ze"
 
 #: CounterSales.php:2039 CounterSales.php:2053 CounterSales.php:2218
-#: CounterSales.php:2232 SelectOrderItems.php:1488 SelectOrderItems.php:1502
-#: SelectOrderItems.php:1673 SelectOrderItems.php:1687
+#: CounterSales.php:2232 SelectOrderItems.php:1489 SelectOrderItems.php:1503
+#: SelectOrderItems.php:1674 SelectOrderItems.php:1688
 msgid "The order details for this product cannot be retrieved because"
 msgstr "Podrobnosti objednávky pro tento produkt není možné získat, protože"
 
@@ -5649,7 +5649,7 @@ msgstr "Přidat k prodeji"
 msgid "Search for Items"
 msgstr "Hledání položky"
 
-#: CounterSales.php:2109 SelectOrderItems.php:1556
+#: CounterSales.php:2109 SelectOrderItems.php:1557
 msgid ""
 ", Searches the database for items, you can narrow the results by selecting a "
 "stock category, or just enter a partial item description or partial item code"
@@ -5657,33 +5657,33 @@ msgstr ""
 ", Vyhledávání v databázi pro položky, můžete zúžit výsledky výběrem akcií "
 "kategorie, nebo stačí zadat dílčí položky popis nebo dílčí položky kód"
 
-#: CounterSales.php:2110 SelectOrderItems.php:1557
+#: CounterSales.php:2110 SelectOrderItems.php:1558
 msgid "Select a Stock Category"
 msgstr "Vyberte kategorii skladem"
 
-#: CounterSales.php:2135 SelectOrderItems.php:1581
+#: CounterSales.php:2135 SelectOrderItems.php:1582
 msgid "Enter partial Description"
 msgstr "Zadejte část Popis"
 
-#: CounterSales.php:2143 SelectOrderItems.php:1596
+#: CounterSales.php:2143 SelectOrderItems.php:1597
 msgid "Use Quick Entry"
 msgstr "Použití rychlé zadávání"
 
-#: CounterSales.php:2154 SelectOrderItems.php:1609
+#: CounterSales.php:2154 SelectOrderItems.php:1610
 msgid ""
 "Select an item by entering the quantity required.  Click Order when ready."
 msgstr ""
 "Vyberte položku zadáním požadované množství. Klepněte na tlačítko Objednat "
 "kdy připraven."
 
-#: CounterSales.php:2164 CounterSales.php:2287 SelectOrderItems.php:1615
-#: SelectOrderItems.php:1735
+#: CounterSales.php:2164 CounterSales.php:2287 SelectOrderItems.php:1616
+#: SelectOrderItems.php:1736
 msgid "Prev"
 msgstr "Předcházející"
 
 #: CounterSales.php:2166 CounterSales.php:2289 MRPReport.php:750
-#: SelectAsset.php:217 SelectCustomer.php:451 SelectCustomer.php:527
-#: SelectOrderItems.php:1617 SelectOrderItems.php:1737 SelectProduct.php:671
+#: SelectAsset.php:217 SelectCustomer.php:453 SelectCustomer.php:529
+#: SelectOrderItems.php:1618 SelectOrderItems.php:1738 SelectProduct.php:671
 #: SelectSupplier.php:242 SelectSupplier.php:302
 msgid "Next"
 msgstr "Další"
@@ -5695,12 +5695,12 @@ msgstr ""
 "jsou již známy"
 
 #: CounterSales.php:2323 SelectCreditItems.php:951 SelectCreditItems.php:1001
-#: SelectOrderItems.php:1745 SelectOrderItems.php:1771
+#: SelectOrderItems.php:1746 SelectOrderItems.php:1772
 msgid "Quick Entry"
 msgstr "Rychlé zadávání"
 
-#: CounterSales.php:2324 SelectCreditItems.php:1014 SelectOrderItems.php:1772
-#: SelectOrderItems.php:1792
+#: CounterSales.php:2324 SelectCreditItems.php:1014 SelectOrderItems.php:1773
+#: SelectOrderItems.php:1793
 msgid "Search Parts"
 msgstr "Hledat díly"
 
@@ -6523,8 +6523,8 @@ msgstr "Celé jméno"
 #: CustLoginSetup.php:275 Customers.php:472 Customers.php:701
 #: Customers.php:714 Factors.php:170 Factors.php:280 OrderDetails.php:99
 #: PrintCustTrans.php:551 PrintCustTrans.php:706 PrintCustTrans.php:744
-#: PrintCustTransPortrait.php:718 PrintCustTransPortrait.php:909
-#: PrintCustTransPortrait.php:953 SalesPeople.php:186 Suppliers.php:662
+#: PrintCustTransPortrait.php:714 PrintCustTransPortrait.php:905
+#: PrintCustTransPortrait.php:949 SalesPeople.php:186 Suppliers.php:662
 #: Suppliers.php:812 SuppLoginSetup.php:239 WWW_Users.php:267
 msgid "Telephone"
 msgstr "Telefon"
@@ -6534,8 +6534,8 @@ msgstr "Telefon"
 #: Factors.php:172 Factors.php:282 Locations.php:528 OrderDetails.php:105
 #: PDFRemittanceAdvice.php:251 PO_PDFPurchOrder.php:332
 #: PO_PDFPurchOrder.php:335 PrintCustTrans.php:553 PrintCustTrans.php:708
-#: PrintCustTrans.php:746 PrintCustTransPortrait.php:720
-#: PrintCustTransPortrait.php:911 PrintCustTransPortrait.php:955
+#: PrintCustTrans.php:746 PrintCustTransPortrait.php:716
+#: PrintCustTransPortrait.php:907 PrintCustTransPortrait.php:951
 #: SupplierContacts.php:145 SupplierContacts.php:246 SuppLoginSetup.php:240
 #: UserSettings.php:181 WWW_Users.php:268 includes/PDFPickingListHeader.inc:25
 #: includes/PDFStatementPageHeader.inc:67 includes/PDFTransPageHeader.inc:119
@@ -6902,7 +6902,7 @@ msgstr ""
 #: CustomerBranches.php:101 geocode_genxml_customers.php:21
 #: geocode_genxml_suppliers.php:21 geocode.php:12 geocode.php:30
 #: geocode.php:35 SelectCustomer.php:30 SelectCustomer.php:43
-#: SelectCustomer.php:555 SelectSupplier.php:17 SelectSupplier.php:26
+#: SelectCustomer.php:557 SelectSupplier.php:17 SelectSupplier.php:26
 #: SelectSupplier.php:332 Suppliers.php:403
 msgid "An error occurred in retrieving the information"
 msgstr "Došlo k chybě při získávání informací"
@@ -7181,7 +7181,7 @@ msgid "Draw Stock From"
 msgstr "Remíza populace od"
 
 #: CustomerBranches.php:703 Customers.php:901 Customers.php:907
-#: SelectCustomer.php:605
+#: SelectCustomer.php:607
 msgid "Phone Number"
 msgstr "Telefonní číslo"
 
@@ -7253,7 +7253,7 @@ msgstr "Vyberte zákazník se může informovat o"
 msgid "The config value NumberOfMonthMustBeShown cannot be retrieved"
 msgstr "Config hodnota NumberOfMonthMustBeShown nelze načíst"
 
-#: CustomerInquiry.php:126 CustomerReceipt.php:900 SelectOrderItems.php:745
+#: CustomerInquiry.php:126 CustomerReceipt.php:900 SelectOrderItems.php:746
 #: SupplierCredit.php:265 SupplierInquiry.php:120 SupplierInvoice.php:233
 msgid "Terms"
 msgstr "Podmínky"
@@ -7538,7 +7538,7 @@ msgstr ""
 "Alespoň jedno klíčové slovo Jméno zákazníka nebo výpis z Zákazník kodexu "
 "musí být zapsány na vyhledávání"
 
-#: CustomerReceipt.php:577 SelectCreditItems.php:101 SelectOrderItems.php:537
+#: CustomerReceipt.php:577 SelectCreditItems.php:101 SelectOrderItems.php:538
 msgid "SQL used to retrieve the customer details was"
 msgstr "SQL slouží k získání údajů o zákaznících byla"
 
@@ -7891,8 +7891,8 @@ msgstr "Klikněte zde pro pokračování"
 
 #: Customers.php:474 Customers.php:702 Customers.php:716
 #: PrintCustTrans.php:552 PrintCustTrans.php:707 PrintCustTrans.php:745
-#: PrintCustTransPortrait.php:719 PrintCustTransPortrait.php:910
-#: PrintCustTransPortrait.php:954 SalesPeople.php:187 Suppliers.php:663
+#: PrintCustTransPortrait.php:715 PrintCustTransPortrait.php:906
+#: PrintCustTransPortrait.php:950 SalesPeople.php:187 Suppliers.php:663
 #: Suppliers.php:813
 msgid "Facsimile"
 msgstr "Faksimile"
@@ -7964,7 +7964,7 @@ msgstr ""
 
 #: Customers.php:550 Customers.php:799 Customers.php:802 index.php:1055
 #: PaymentTerms.php:13 PO_Header.php:1034 PrintCustTrans.php:324
-#: PrintCustTransPortrait.php:441 Suppliers.php:680 Suppliers.php:833
+#: PrintCustTransPortrait.php:437 Suppliers.php:680 Suppliers.php:833
 #: includes/PO_PDFOrderPageHeader.inc:62 includes/PO_PDFOrderPageHeader.inc:64
 msgid "Payment Terms"
 msgstr "Platební podmínky"
@@ -8653,22 +8653,22 @@ msgid "Order Summary"
 msgstr "Aby Shrnutí"
 
 #: DeliveryDetails.php:830 OrderDetails.php:201 RecurringSalesOrders.php:367
-#: SelectOrderItems.php:1389
+#: SelectOrderItems.php:1390
 msgid "TOTAL Excl Tax/Freight"
 msgstr "Celkem bez DPH a dopravy"
 
 #: DeliveryDetails.php:837 DeliveryDetails.php:889 DeliveryDetails.php:898
-#: OrderDetails.php:208 SelectOrderItems.php:1394
+#: OrderDetails.php:208 SelectOrderItems.php:1395
 msgid "Total Weight"
 msgstr "Celková hmotnost"
 
 #: DeliveryDetails.php:839 DeliveryDetails.php:891 DeliveryDetails.php:900
-#: OrderDetails.php:210 SelectOrderItems.php:1396
+#: OrderDetails.php:210 SelectOrderItems.php:1397
 msgid "Total Volume"
 msgstr "Celkový objem"
 
 #: DeliveryDetails.php:907 OrderDetails.php:72 RecurringSalesOrders.php:375
-#: SelectOrderItems.php:742 includes/PDFPickingListHeader.inc:28
+#: SelectOrderItems.php:743 includes/PDFPickingListHeader.inc:28
 #: includes/PO_PDFOrderPageHeader.inc:31
 msgid "Deliver To"
 msgstr "Chcete-li dodat"
@@ -9538,8 +9538,8 @@ msgstr "Tam byl problém získávání informací, aby záhlaví pro pořadové 
 #: PrintCustStatements.php:100 PrintCustStatements.php:118
 #: PrintCustTrans.php:178 PrintCustTrans.php:233 PrintCustTrans.php:520
 #: PrintCustTrans.php:640 PrintCustTransPortrait.php:234
-#: PrintCustTransPortrait.php:287 PrintCustTransPortrait.php:682
-#: PrintCustTransPortrait.php:822 PrintSalesOrder_generic.php:27
+#: PrintCustTransPortrait.php:287 PrintCustTransPortrait.php:678
+#: PrintCustTransPortrait.php:818 PrintSalesOrder_generic.php:27
 #: PrintSalesOrder_generic.php:130
 msgid "from the database"
 msgstr "z databáze"
@@ -9640,7 +9640,7 @@ msgstr ""
 msgid "There was a problem retrieving the contact details for the customer"
 msgstr "Tam byl problém získávat kontaktní údaje pro zákazníka"
 
-#: EmailCustTrans.php:65 PrintCustTrans.php:380 PrintCustTransPortrait.php:510
+#: EmailCustTrans.php:65 PrintCustTrans.php:380 PrintCustTransPortrait.php:506
 #: SupplierAllocations.php:442
 msgid "number"
 msgstr "číslo"
@@ -10750,7 +10750,7 @@ msgstr "Objednávka odběratele"
 #: FTP_RadioBeacon.php:55 MRPReschedules.php:206 POReport.php:534
 #: POReport.php:595 POReport.php:1222 POReport.php:1273 POReport.php:1428
 #: PO_SelectOSPurchOrder.php:441 PO_SelectPurchOrder.php:361
-#: PrintCustTrans.php:578 PrintCustTransPortrait.php:752 SalesInquiry.php:803
+#: PrintCustTrans.php:578 PrintCustTransPortrait.php:748 SalesInquiry.php:803
 #: SalesInquiry.php:822 SalesInquiry.php:1054 SelectCompletedOrder.php:520
 #: SelectSalesOrder.php:424 includes/PDFOrderPageHeader_generic.inc:77
 #: includes/PDFSalesOrder_generic.inc:79 includes/PDFTransPageHeader.inc:92
@@ -12469,7 +12469,7 @@ msgid "Where Allocated Inquiry"
 msgstr "Kde Přidělené Poptávka"
 
 #: index.php:301 index.php:303 PrintCustTrans.php:395
-#: PrintCustTransPortrait.php:532
+#: PrintCustTransPortrait.php:528
 msgid "Print Invoices or Credit Notes"
 msgstr "Tisk faktur / dobropisů"
 
@@ -13771,7 +13771,7 @@ msgstr "Naleznete tímto hodnoty oddělené čárkou prodeje zprávu"
 msgid "Sales Analysis"
 msgstr "Analýzy prodeje"
 
-#: MailSalesReport_csv.php:34 SelectCustomer.php:416
+#: MailSalesReport_csv.php:34 SelectCustomer.php:418
 msgid "CSV Format"
 msgstr "Formát CSV"
 
@@ -13996,7 +13996,7 @@ msgstr "byly odstraněny"
 
 #: MRPDemands.php:293 MRPDemands.php:382 MRPPlannedPurchaseOrders.php:321
 #: MRPPlannedWorkOrders.php:260 MRPPlannedWorkOrders.php:386 MRPReport.php:414
-#: MRPReport.php:420 SelectOrderItems.php:1302 SelectOrderItems.php:1754
+#: MRPReport.php:420 SelectOrderItems.php:1303 SelectOrderItems.php:1755
 #: SupplierTransInquiry.php:92
 msgid "Due Date"
 msgstr "Termín"
@@ -14505,8 +14505,8 @@ msgstr ""
 "Č. skladových položek byly vráceny toto hledání, prosím re-zadat "
 "alternativní kritéria a zkuste to znovu"
 
-#: MRPReport.php:736 SelectAsset.php:203 SelectCustomer.php:437
-#: SelectCustomer.php:513 SelectProduct.php:657 SelectSupplier.php:228
+#: MRPReport.php:736 SelectAsset.php:203 SelectCustomer.php:439
+#: SelectCustomer.php:515 SelectProduct.php:657 SelectSupplier.php:228
 #: SelectSupplier.php:288 SupplierTenders.php:147 SupplierTenders.php:205
 #: WorkOrderIssue.php:354 WorkOrderReceive.php:674
 #: includes/Add_SerialItemsOut.php:24 includes/Add_SerialItems.php:33
@@ -14515,27 +14515,27 @@ msgstr ""
 msgid "of"
 msgstr "ze dne"
 
-#: MRPReport.php:736 SelectAsset.php:203 SelectCustomer.php:437
-#: SelectCustomer.php:513 SelectProduct.php:657 SelectSupplier.php:228
+#: MRPReport.php:736 SelectAsset.php:203 SelectCustomer.php:439
+#: SelectCustomer.php:515 SelectProduct.php:657 SelectSupplier.php:228
 #: SelectSupplier.php:288
 msgid "pages"
 msgstr "stránky"
 
-#: MRPReport.php:736 SelectAsset.php:203 SelectCustomer.php:437
-#: SelectCustomer.php:513 SelectProduct.php:657 SelectSupplier.php:228
+#: MRPReport.php:736 SelectAsset.php:203 SelectCustomer.php:439
+#: SelectCustomer.php:515 SelectProduct.php:657 SelectSupplier.php:228
 #: SelectSupplier.php:288
 msgid "Go to Page"
 msgstr "Přejít na stránku"
 
 #: MRPReport.php:748 PcAssignCashToTab.php:209 PcAuthorizeExpenses.php:54
-#: PcClaimExpensesFromTab.php:171 SelectAsset.php:215 SelectCustomer.php:449
-#: SelectCustomer.php:525 SelectProduct.php:669 SelectSupplier.php:240
+#: PcClaimExpensesFromTab.php:171 SelectAsset.php:215 SelectCustomer.php:451
+#: SelectCustomer.php:527 SelectProduct.php:669 SelectSupplier.php:240
 #: SelectSupplier.php:300
 msgid "Go"
 msgstr "Jdi"
 
-#: MRPReport.php:749 SelectAsset.php:216 SelectCustomer.php:450
-#: SelectCustomer.php:526 SelectProduct.php:670 SelectSupplier.php:241
+#: MRPReport.php:749 SelectAsset.php:216 SelectCustomer.php:452
+#: SelectCustomer.php:528 SelectProduct.php:670 SelectSupplier.php:241
 #: SelectSupplier.php:301
 msgid "Previous"
 msgstr "Předchozí"
@@ -15335,8 +15335,8 @@ msgid "th"
 msgstr "čt"
 
 #: PaymentTerms.php:196 PrintCustStatements.php:366
-#: PrintCustStatements.php:367 PurchData.php:205 SelectCustomer.php:583
-#: SelectCustomer.php:586
+#: PrintCustStatements.php:367 PurchData.php:205 SelectCustomer.php:585
+#: SelectCustomer.php:588
 #, php-format
 msgid "days"
 msgstr "dnů"
@@ -16120,14 +16120,14 @@ msgstr "Zadejte datum, pro které transakce by měly být uvedeny"
 
 #: PDFCustTransListing.php:42 PDFSuppTransListing.php:42
 #: PO_AuthorisationLevels.php:127 PrintCustTrans.php:397
-#: PrintCustTrans.php:401 PrintCustTransPortrait.php:535
-#: PrintCustTransPortrait.php:541 Z_CheckDebtorsControl.php:79
+#: PrintCustTrans.php:401 PrintCustTransPortrait.php:531
+#: PrintCustTransPortrait.php:537 Z_CheckDebtorsControl.php:79
 msgid "Invoices"
 msgstr "Faktury"
 
 #: PDFCustTransListing.php:43 PDFSuppTransListing.php:43
 #: PrintCustTrans.php:398 PrintCustTrans.php:400
-#: PrintCustTransPortrait.php:536 PrintCustTransPortrait.php:540
+#: PrintCustTransPortrait.php:532 PrintCustTransPortrait.php:536
 msgid "Credit Notes"
 msgstr "Dobropisů"
 
@@ -18092,7 +18092,7 @@ msgid "Please find herewith our purchase order number"
 msgstr "Naleznete tímto naše číslo objednávky"
 
 #: PO_PDFPurchOrder.php:299 PrintCustTrans.php:380
-#: PrintCustTransPortrait.php:510
+#: PrintCustTransPortrait.php:506
 msgid "has been emailed to"
 msgstr "bylo zasláno"
 
@@ -19067,14 +19067,14 @@ msgid "Transaction Print Error Report"
 msgstr "Transakce Chyba tisku zprávy"
 
 #: PrintCustTrans.php:178 PrintCustTrans.php:520
-#: PrintCustTransPortrait.php:234 PrintCustTransPortrait.php:682
+#: PrintCustTransPortrait.php:234 PrintCustTransPortrait.php:678
 msgid ""
 "There was a problem retrieving the invoice or credit note details for note "
 "number"
 msgstr "Tam byl problém načítání fakturu nebo dobropis Z poznámky číslo"
 
 #: PrintCustTrans.php:178 PrintCustTrans.php:520
-#: PrintCustTransPortrait.php:234 PrintCustTransPortrait.php:682
+#: PrintCustTransPortrait.php:234 PrintCustTransPortrait.php:678
 msgid ""
 "To print an invoice, the sales order record, the customer transaction record "
 "and the branch record for the customer must not have been purged"
@@ -19083,7 +19083,7 @@ msgstr ""
 "záznam a záznam pobočka pro zákazníka nesmí být očištěn"
 
 #: PrintCustTrans.php:178 PrintCustTrans.php:520
-#: PrintCustTransPortrait.php:234 PrintCustTransPortrait.php:682
+#: PrintCustTransPortrait.php:234 PrintCustTransPortrait.php:678
 msgid ""
 "To print a credit note only requires the customer, transaction, salesman and "
 "branch records be available"
@@ -19093,13 +19093,13 @@ msgstr ""
 
 #: PrintCustTrans.php:180 PrintCustTrans.php:235 PrintCustTrans.php:522
 #: PrintCustTrans.php:642 PrintCustTransPortrait.php:236
-#: PrintCustTransPortrait.php:289 PrintCustTransPortrait.php:684
-#: PrintCustTransPortrait.php:824
+#: PrintCustTransPortrait.php:289 PrintCustTransPortrait.php:680
+#: PrintCustTransPortrait.php:820
 msgid "The SQL used to get this information that failed was"
 msgstr "SQL slouží k získání těchto informací, které se nepodařilo se"
 
 #: PrintCustTrans.php:233 PrintCustTrans.php:640
-#: PrintCustTransPortrait.php:287 PrintCustTransPortrait.php:822
+#: PrintCustTransPortrait.php:287 PrintCustTransPortrait.php:818
 msgid ""
 "There was a problem retrieving the invoice or credit note stock movement "
 "details for invoice number"
@@ -19108,34 +19108,34 @@ msgstr ""
 "faktury"
 
 #: PrintCustTrans.php:331 PrintCustTrans.php:779
-#: PrintCustTransPortrait.php:450 PrintCustTransPortrait.php:995
+#: PrintCustTransPortrait.php:446 PrintCustTransPortrait.php:991
 msgid "Sub Total"
 msgstr "Mezisoučet"
 
 #: PrintCustTrans.php:333 PrintCustTrans.php:781
-#: PrintCustTransPortrait.php:453 PrintCustTransPortrait.php:997
+#: PrintCustTransPortrait.php:449 PrintCustTransPortrait.php:993
 msgid "Freight"
 msgstr "Nákladní"
 
 #: PrintCustTrans.php:342 PrintCustTrans.php:786
-#: PrintCustTransPortrait.php:467 PrintCustTransPortrait.php:1002
+#: PrintCustTransPortrait.php:463 PrintCustTransPortrait.php:998
 msgid "TOTAL INVOICE"
 msgstr "Celkové fakturované částky"
 
 #: PrintCustTrans.php:355 PrintCustTrans.php:789
-#: PrintCustTransPortrait.php:482 PrintCustTransPortrait.php:1005
+#: PrintCustTransPortrait.php:478 PrintCustTransPortrait.php:1001
 msgid "TOTAL CREDIT"
 msgstr "Celkový úvěrový"
 
-#: PrintCustTrans.php:372 PrintCustTransPortrait.php:500
+#: PrintCustTrans.php:372 PrintCustTransPortrait.php:496
 msgid "Please find attached"
 msgstr "Zasílám"
 
-#: PrintCustTrans.php:378 PrintCustTransPortrait.php:508
+#: PrintCustTrans.php:378 PrintCustTransPortrait.php:504
 msgid "Emailing"
 msgstr "E-mailem"
 
-#: PrintCustTrans.php:388 PrintCustTransPortrait.php:521
+#: PrintCustTrans.php:388 PrintCustTransPortrait.php:517
 msgid "Select Invoices/Credit Notes To Print"
 msgstr "Vyberte faktury / dobropisy k tisku"
 
@@ -19143,37 +19143,37 @@ msgstr "Vyberte faktury / dobropisy k tisku"
 msgid "Print Invoices or Credit Notes (Landscape Mode)"
 msgstr "Tisk faktury nebo dobropisy (landscape mód)"
 
-#: PrintCustTrans.php:404 PrintCustTransPortrait.php:547
+#: PrintCustTrans.php:404 PrintCustTransPortrait.php:543
 msgid "Print EDI Transactions"
 msgstr "Tisk EDI transakce"
 
 #: PrintCustTrans.php:406 PrintCustTrans.php:409
-#: PrintCustTransPortrait.php:550 PrintCustTransPortrait.php:555
+#: PrintCustTransPortrait.php:546 PrintCustTransPortrait.php:551
 msgid "Do not Print PDF EDI Transactions"
 msgstr "Nepoužívejte Tisk PDF EDI transakcí"
 
 #: PrintCustTrans.php:407 PrintCustTrans.php:410
-#: PrintCustTransPortrait.php:551 PrintCustTransPortrait.php:556
+#: PrintCustTransPortrait.php:547 PrintCustTransPortrait.php:552
 msgid "Print PDF EDI Transactions Too"
 msgstr "Tisk PDF EDI transakce příliš"
 
-#: PrintCustTrans.php:413 PrintCustTransPortrait.php:561
+#: PrintCustTrans.php:413 PrintCustTransPortrait.php:557
 msgid "Start invoice/credit note number to print"
 msgstr "Start faktury / dobropisu číslo k tisku"
 
-#: PrintCustTrans.php:414 PrintCustTransPortrait.php:562
+#: PrintCustTrans.php:414 PrintCustTransPortrait.php:558
 msgid "End invoice/credit note number to print"
 msgstr "Konec faktury / dobropisu číslo k tisku"
 
-#: PrintCustTrans.php:420 PrintCustTransPortrait.php:571
+#: PrintCustTrans.php:420 PrintCustTransPortrait.php:567
 msgid "The last invoice created was number"
 msgstr "Poslední vytvořené faktury, číslo"
 
-#: PrintCustTrans.php:420 PrintCustTransPortrait.php:571
+#: PrintCustTrans.php:420 PrintCustTransPortrait.php:567
 msgid "If only a single invoice is required"
 msgstr "Kdyby jen v jedné faktuře je nutné"
 
-#: PrintCustTrans.php:420 PrintCustTransPortrait.php:571
+#: PrintCustTrans.php:420 PrintCustTransPortrait.php:567
 msgid ""
 "enter the invoice number to print in the Start transaction number to print "
 "field and leave the End transaction number to print field blank"
@@ -19181,7 +19181,7 @@ msgstr ""
 "Zadejte číslo faktury pro tisk ve Spustit číslo transakce k tisku pole a "
 "nechat na konec číslo transakce k tisku pole prázdné"
 
-#: PrintCustTrans.php:420 PrintCustTransPortrait.php:571
+#: PrintCustTrans.php:420 PrintCustTransPortrait.php:567
 msgid ""
 "Only use the end invoice to print field if you wish to print a sequential "
 "range of invoices"
@@ -19189,22 +19189,22 @@ msgstr ""
 "Používejte pouze na konci faktury pro tisk pole, pokud chcete vytisknout "
 "sekvenční řadu faktur"
 
-#: PrintCustTrans.php:424 PrintCustTransPortrait.php:578
+#: PrintCustTrans.php:424 PrintCustTransPortrait.php:574
 msgid "The last credit note created was number"
 msgstr "Poslední úvěr vytvořený na vědomí, byl počet"
 
-#: PrintCustTrans.php:424 PrintCustTransPortrait.php:578
+#: PrintCustTrans.php:424 PrintCustTransPortrait.php:574
 msgid ""
 "A sequential range can be printed using the same method as for invoices above"
 msgstr "Sekvenční rozsah lze vytisknout stejnou metodou jako u faktur výše"
 
-#: PrintCustTrans.php:424 PrintCustTransPortrait.php:578
+#: PrintCustTrans.php:424 PrintCustTransPortrait.php:574
 msgid ""
 "A single credit note can be printed by only entering a start transaction "
 "number"
 msgstr "Jeden dobropis mohou být vytištěny pouze zadáním start číslo transakce"
 
-#: PrintCustTrans.php:531 PrintCustTransPortrait.php:694
+#: PrintCustTrans.php:531 PrintCustTransPortrait.php:690
 msgid ""
 "This transaction is addressed to another customer and cannot be displayed "
 "for privacy reasons"
@@ -19212,74 +19212,74 @@ msgstr ""
 "Tato transakce je určeno k dalšímu zákazníkovi, a nemůže být zobrazen pro "
 "důvodů ochrany soukromí"
 
-#: PrintCustTrans.php:531 PrintCustTransPortrait.php:694
+#: PrintCustTrans.php:531 PrintCustTransPortrait.php:690
 msgid "Please select only transactions relevant to your company"
 msgstr "Prosím, vyberte pouze operace relevantní pro vaši společnost"
 
 #: PrintCustTrans.php:538 PrintCustTrans.php:692 PrintCustTrans.php:731
-#: PrintCustTransPortrait.php:704 PrintCustTransPortrait.php:894
-#: PrintCustTransPortrait.php:939 includes/PDFTransPageHeader.inc:68
+#: PrintCustTransPortrait.php:700 PrintCustTransPortrait.php:890
+#: PrintCustTransPortrait.php:935 includes/PDFTransPageHeader.inc:68
 #: includes/PDFTransPageHeaderPortrait.inc:17
 msgid "TAX INVOICE"
 msgstr "Daňový doklad"
 
 #: PrintCustTrans.php:540 PrintCustTrans.php:694 PrintCustTrans.php:733
-#: PrintCustTransPortrait.php:706 PrintCustTransPortrait.php:896
-#: PrintCustTransPortrait.php:941 includes/PDFTransPageHeaderPortrait.inc:19
+#: PrintCustTransPortrait.php:702 PrintCustTransPortrait.php:892
+#: PrintCustTransPortrait.php:937 includes/PDFTransPageHeaderPortrait.inc:19
 msgid "TAX CREDIT NOTE"
 msgstr "Daňový dobropis"
 
-#: PrintCustTrans.php:542 PrintCustTransPortrait.php:708
+#: PrintCustTrans.php:542 PrintCustTransPortrait.php:704
 msgid "Tax Authority Ref"
 msgstr "Daňový úřad Ref"
 
-#: PrintCustTrans.php:556 PrintCustTransPortrait.php:726
+#: PrintCustTrans.php:556 PrintCustTransPortrait.php:722
 msgid "Charge To"
 msgstr "Chcete-li poplatek"
 
-#: PrintCustTrans.php:566 PrintCustTransPortrait.php:738
+#: PrintCustTrans.php:566 PrintCustTransPortrait.php:734
 #: includes/PDFTransPageHeader.inc:151
 #: includes/PDFTransPageHeaderPortrait.inc:188
 msgid "Charge Branch"
 msgstr "Pobočka poplatek"
 
-#: PrintCustTrans.php:567 PrintCustTransPortrait.php:739
+#: PrintCustTrans.php:567 PrintCustTransPortrait.php:735
 #: includes/PDFOrderPageHeader_generic.inc:40
 #: includes/PDFSalesOrder_generic.inc:42 includes/PDFTransPageHeader.inc:141
 msgid "Delivered To"
 msgstr "Chcete-li dodané"
 
-#: PrintCustTrans.php:576 PrintCustTransPortrait.php:750
+#: PrintCustTrans.php:576 PrintCustTransPortrait.php:746
 msgid "Your Order Ref"
 msgstr "Vaše objednávka Ref"
 
-#: PrintCustTrans.php:577 PrintCustTransPortrait.php:751
+#: PrintCustTrans.php:577 PrintCustTransPortrait.php:747
 msgid "Our Order No"
 msgstr "Naše vyhláška č."
 
-#: PrintCustTrans.php:579 PrintCustTransPortrait.php:753 SalesInquiry.php:1055
+#: PrintCustTrans.php:579 PrintCustTransPortrait.php:749 SalesInquiry.php:1055
 #: SupplierInvoice.php:256
 msgid "Invoice Date"
 msgstr "Datum faktury"
 
 #: PrintCustTrans.php:580 PrintCustTrans.php:617
-#: PrintCustTransPortrait.php:754 PrintCustTransPortrait.php:795
+#: PrintCustTransPortrait.php:750 PrintCustTransPortrait.php:791
 #: SalesAnalRepts.php:49 SalesAnalRepts.php:51
 #: includes/PDFTransPageHeader.inc:192
 #: includes/PDFTransPageHeaderPortrait.inc:244
 msgid "Sales Person"
 msgstr "Prodej osoba"
 
-#: PrintCustTrans.php:581 PrintCustTransPortrait.php:755
+#: PrintCustTrans.php:581 PrintCustTransPortrait.php:751
 msgid "Shipper"
 msgstr "Přepravce"
 
-#: PrintCustTrans.php:582 PrintCustTransPortrait.php:756
+#: PrintCustTrans.php:582 PrintCustTransPortrait.php:752
 msgid "Consignment Ref"
 msgstr "Zásilka Ref"
 
 #: PrintCustTrans.php:696 PrintCustTrans.php:735
-#: PrintCustTransPortrait.php:898 PrintCustTransPortrait.php:943
+#: PrintCustTransPortrait.php:894 PrintCustTransPortrait.php:939
 msgid "GST Number"
 msgstr "Počet GST"
 
@@ -19291,11 +19291,11 @@ msgstr "V úvahu:"
 msgid "Bank Code:"
 msgstr "Kód banky:"
 
-#: PrintCustTransPortrait.php:531
+#: PrintCustTransPortrait.php:527
 msgid "Print Invoices or Credit Notes (Portrait Mode)"
 msgstr "Tisk faktury nebo dobropisy (Portrét Režim)"
 
-#: PrintCustTransPortrait.php:563
+#: PrintCustTransPortrait.php:559
 msgid "Print Preview"
 msgstr "Náhled"
 
@@ -21636,11 +21636,11 @@ msgstr "Jste si jisti, že chcete zrušit celou tohoto dobropisu?"
 msgid "Process Credit Note"
 msgstr "Proces dobropis"
 
-#: SelectCreditItems.php:950 SelectOrderItems.php:1602
+#: SelectCreditItems.php:950 SelectOrderItems.php:1603
 msgid "Change Customer"
 msgstr "Změna zákazníka"
 
-#: SelectCreditItems.php:1003 SelectOrderItems.php:1752
+#: SelectCreditItems.php:1003 SelectOrderItems.php:1753
 #: Z_ImportPartCodes.php:28
 msgid "Part Code"
 msgstr "Část zákoníku"
@@ -21835,140 +21835,140 @@ msgstr "Přidat / Upravit / Odstranit zákazníka Pobočky"
 msgid "Customer EDI Configuration"
 msgstr "Zákazník EDI konfigurace"
 
-#: SelectCustomer.php:320
+#: SelectCustomer.php:322
 msgid "Search for Customers"
 msgstr "Hledat zákazníky"
 
-#: SelectCustomer.php:322 SelectSupplier.php:200
+#: SelectCustomer.php:324 SelectSupplier.php:200
 msgid "Enter a partial Name"
 msgstr "Zadejte část názvu"
 
-#: SelectCustomer.php:328 SelectSupplier.php:206
+#: SelectCustomer.php:330 SelectSupplier.php:206
 msgid "Enter a partial Code"
 msgstr "Zadejte kód částečný"
 
-#: SelectCustomer.php:334
+#: SelectCustomer.php:336
 msgid "Enter a partial Phone Number"
 msgstr "Zadejte částečné telefonní číslo"
 
-#: SelectCustomer.php:341
+#: SelectCustomer.php:343
 msgid "Enter part of the Address"
 msgstr "Zadejte část adresy"
 
-#: SelectCustomer.php:349
+#: SelectCustomer.php:351
 msgid "Choose a Type"
 msgstr "Vyberte typ"
 
-#: SelectCustomer.php:357 SelectCustomer.php:379
+#: SelectCustomer.php:359 SelectCustomer.php:381
 msgid "No Customer types defined"
 msgstr "Č. zákazníků definované typy"
 
-#: SelectCustomer.php:361 SelectCustomer.php:383 SelectCustomer.php:403
+#: SelectCustomer.php:363 SelectCustomer.php:385 SelectCustomer.php:405
 msgid "Any"
 msgstr "Jakékoliv"
 
-#: SelectCustomer.php:393
+#: SelectCustomer.php:395
 msgid "Choose an Area"
 msgstr "Vyberte oblast"
 
-#: SelectCustomer.php:399
+#: SelectCustomer.php:401
 msgid "No Sales Areas defined"
 msgstr "Definovány žádné oblasti prodeje"
 
-#: SelectCustomer.php:418
+#: SelectCustomer.php:420
 msgid "Your account enables you to see only customers allocated to you"
 msgstr "Váš účet vám umožňuje zobrazit pouze zákazníky, připadla na Vás"
 
-#: SelectCustomer.php:418
+#: SelectCustomer.php:420
 msgid "Note: Sales-person Login"
 msgstr "Poznámka: Prodej-osoba Přihlásit"
 
-#: SelectCustomer.php:472
+#: SelectCustomer.php:474
 msgid "Click to view the csv Search Result"
 msgstr "Klikněte pro zobrazení csv Výsledek hledání"
 
-#: SelectCustomer.php:537
+#: SelectCustomer.php:539
 msgid "Mapping is enabled, but no Mapping data to display for this Customer."
 msgstr ""
 "Mapování je povoleno, ale ne Mapování data na displej pro tohoto zákazníka."
 
-#: SelectCustomer.php:541
+#: SelectCustomer.php:543
 msgid "Customer Mapping"
 msgstr "Zákazník Mapování"
 
-#: SelectCustomer.php:543 SelectSupplier.php:318
+#: SelectCustomer.php:545 SelectSupplier.php:318
 msgid "Mapping is enabled, Map will display below."
 msgstr "Mapování je povoleno, bude mapa zobrazovat níže."
 
-#: SelectCustomer.php:577
+#: SelectCustomer.php:579
 msgid "Customer Data"
 msgstr "Zákaznická data"
 
-#: SelectCustomer.php:581
+#: SelectCustomer.php:583
 msgid "No receipts from this customer."
 msgstr "Žádné příjmy z tohoto zákazníka."
 
-#: SelectCustomer.php:583
+#: SelectCustomer.php:585
 msgid "Last Paid Date:"
 msgstr "Poslední Placené Datum:"
 
-#: SelectCustomer.php:585
+#: SelectCustomer.php:587
 msgid "Last Paid Amount (inc tax):"
 msgstr "Poslední zaplacené částky (s DPH):"
 
-#: SelectCustomer.php:586
+#: SelectCustomer.php:588
 msgid "Customer since:"
 msgstr "Zákazník od:"
 
-#: SelectCustomer.php:588
+#: SelectCustomer.php:590
 msgid "No Spend from this Customer."
 msgstr "Strávit žádný z tohoto zákazníka."
 
-#: SelectCustomer.php:590
+#: SelectCustomer.php:592
 msgid "Total Spend from this Customer (inc tax):"
 msgstr "Celkové výdaje od tohoto zákazníka (s DPH):"
 
-#: SelectCustomer.php:592
+#: SelectCustomer.php:594
 msgid "Customer Type:"
 msgstr "Typ zákazníka:"
 
-#: SelectCustomer.php:609 SelectCustomer.php:630
+#: SelectCustomer.php:611 SelectCustomer.php:632
 msgid "Add New Contact"
 msgstr "Přidat nový kontakt"
 
-#: SelectCustomer.php:641 SelectCustomer.php:679
+#: SelectCustomer.php:643 SelectCustomer.php:681
 msgid "date"
 msgstr "datum"
 
-#: SelectCustomer.php:642 SelectCustomer.php:680
+#: SelectCustomer.php:644 SelectCustomer.php:682
 msgid "note"
 msgstr "poznámka"
 
-#: SelectCustomer.php:643
+#: SelectCustomer.php:645
 msgid "hyperlink"
 msgstr "hypertextový odkaz"
 
-#: SelectCustomer.php:644 SelectCustomer.php:682
+#: SelectCustomer.php:646 SelectCustomer.php:684
 msgid "priority"
 msgstr "prioritních"
 
-#: SelectCustomer.php:647
+#: SelectCustomer.php:649
 msgid "Add New Note"
 msgstr "Přidat nový Poznámka"
 
-#: SelectCustomer.php:668
+#: SelectCustomer.php:670
 msgid "Add New Note for this Customer"
 msgstr "Přidat nový Poznámka pro tohoto zákazníka"
 
-#: SelectCustomer.php:676
+#: SelectCustomer.php:678
 msgid "Customer Type (Group) Notes for:<b> "
 msgstr "Typ zákazníka (Group) Poznámky k:"
 
-#: SelectCustomer.php:681
+#: SelectCustomer.php:683
 msgid "file link / reference / URL"
 msgstr "odkaz na soubor / reference / URL"
 
-#: SelectCustomer.php:685 SelectCustomer.php:706
+#: SelectCustomer.php:687 SelectCustomer.php:708
 msgid "Add New Group Note"
 msgstr "Přidat novou skupinu poznámka"
 
@@ -22040,7 +22040,7 @@ msgstr "Úprava objednávky"
 msgid "Select Order Items"
 msgstr "Vyberte položky objednávky"
 
-#: SelectOrderItems.php:133
+#: SelectOrderItems.php:134
 msgid ""
 "Your account is set up to see only a specific salespersons orders. You are "
 "not authorised to modify this order"
@@ -22048,14 +22048,14 @@ msgstr ""
 "Váš účet je nastaven tak, aby vidět jen prodavači konkrétní objednávky. "
 "Nejste oprávněn měnit tuto objednávku"
 
-#: SelectOrderItems.php:286
+#: SelectOrderItems.php:287
 msgid ""
 "The customer the order is for cannot be modified once some of the order has "
 "been invoiced"
 msgstr ""
 "Zákazník pořadí je nelze změnit, jakmile některá objednávka byla fakturována"
 
-#: SelectOrderItems.php:424
+#: SelectOrderItems.php:425
 msgid ""
 "account is currently flagged as an account that needs to be watched. Please "
 "contact the credit control personnel to discuss"
@@ -22063,7 +22063,7 @@ msgstr ""
 "účet je v současné době označen jako účet, který je třeba sledovat. Prosím, "
 "kontaktujte pracovníky úvěrového řízení k projednání"
 
-#: SelectOrderItems.php:481
+#: SelectOrderItems.php:482
 msgid ""
 "Your login is only set up for a particular salesperson. This customer has a "
 "different salesperson."
@@ -22071,7 +22071,7 @@ msgstr ""
 "Vaše přihlašovací jméno je pouze nastavit pro konkrétní prodejce. Tento "
 "zákazník má jiný prodejce."
 
-#: SelectOrderItems.php:518
+#: SelectOrderItems.php:519
 msgid ""
 "account is currently on hold please contact the credit control personnel to "
 "discuss"
@@ -22079,11 +22079,11 @@ msgstr ""
 "Účet je v současné době drží na obraťte se na pracovníky úvěrového řízení k "
 "projednání"
 
-#: SelectOrderItems.php:536
+#: SelectOrderItems.php:537
 msgid "The details for the customer selected"
 msgstr "Podrobnosti o vybrané zákazníky"
 
-#: SelectOrderItems.php:595
+#: SelectOrderItems.php:596
 msgid ""
 "Sorry, your account has been put on hold for some reason, please contact the "
 "credit control personnel."
@@ -22091,15 +22091,15 @@ msgstr ""
 "Omlouváme se, ale váš účet byl kladen na držení nějakého důvodu, prosím, "
 "kontaktujte pracovníky úvěrového řízení."
 
-#: SelectOrderItems.php:607
+#: SelectOrderItems.php:608
 msgid "Enter an Order or Quotation"
 msgstr "Zadejte objednávky či citát"
 
-#: SelectOrderItems.php:607
+#: SelectOrderItems.php:608
 msgid "Search for the Customer Branch."
 msgstr "Hledání zákazníka Branch."
 
-#: SelectOrderItems.php:608
+#: SelectOrderItems.php:609
 msgid ""
 "Orders/Quotations are placed against the Customer Branch. A Customer may "
 "have several Branches."
@@ -22107,7 +22107,7 @@ msgstr ""
 "Objednávky / Citace jsou umístěny proti zákazníka Branch. Zákazník může mít "
 "několik větví."
 
-#: SelectOrderItems.php:698
+#: SelectOrderItems.php:699
 msgid ""
 "There are lines on this order that have already been invoiced. Please delete "
 "only the lines on the order that are no longer required"
@@ -22115,7 +22115,7 @@ msgstr ""
 "Tam jsou linky na tomto pořadí, které již byly vyfakturovány. Prosím smazat "
 "pouze čáry na pořadí, které již nepotřebujete"
 
-#: SelectOrderItems.php:698
+#: SelectOrderItems.php:699
 msgid ""
 "There is an option on confirming a dispatch/invoice to automatically cancel "
 "any balance on the order at the time of invoicing if you know the customer "
@@ -22125,43 +22125,43 @@ msgstr ""
 "zůstatek na pořadí v okamžiku vystavení faktury, pokud víte, že zákazník "
 "nebude chtít zpět, aby"
 
-#: SelectOrderItems.php:706
+#: SelectOrderItems.php:707
 msgid "The order detail lines could not be deleted because"
 msgstr "Řádky, aby podrobně nemohl být odstraněn, protože"
 
-#: SelectOrderItems.php:710
+#: SelectOrderItems.php:711
 msgid "The order header could not be deleted because"
 msgstr "Aby záhlaví nelze odstranit, protože"
 
-#: SelectOrderItems.php:727
+#: SelectOrderItems.php:728
 msgid "This sales order has been cancelled as requested"
 msgstr "Tento prodejní objednávka byla zrušena, jak požaduje"
 
-#: SelectOrderItems.php:736
+#: SelectOrderItems.php:737
 msgid "Quotation for customer"
 msgstr "Citát pro zákazníka"
 
-#: SelectOrderItems.php:738
+#: SelectOrderItems.php:739
 msgid "Order for customer"
 msgstr "Aby pro zákazníka"
 
-#: SelectOrderItems.php:742
+#: SelectOrderItems.php:743
 msgid "Default Options (can be modified during order):"
 msgstr "Výchozí nastavení (lze upravit při objednávce):"
 
-#: SelectOrderItems.php:743
+#: SelectOrderItems.php:744
 msgid "From Location"
 msgstr "Od Umístění"
 
-#: SelectOrderItems.php:752
+#: SelectOrderItems.php:753
 msgid "Order Item description has been used in search"
 msgstr "Aby Popis byl použit při hledání"
 
-#: SelectOrderItems.php:754
+#: SelectOrderItems.php:755
 msgid "Stock Code has been used in search"
 msgstr "Skladem Kód byl použit při hledání"
 
-#: SelectOrderItems.php:982
+#: SelectOrderItems.php:983
 msgid ""
 "No asset was selected to dispose of. No assets have been added to this "
 "customer order"
@@ -22169,11 +22169,11 @@ msgstr ""
 "Žádná pohledávka byla vybrána nakládat. Žádný majetek, které byly přidány k "
 "této objednávky zákazníka"
 
-#: SelectOrderItems.php:1008
+#: SelectOrderItems.php:1009
 msgid "Asset Disposals"
 msgstr "Úbytky majetku"
 
-#: SelectOrderItems.php:1115
+#: SelectOrderItems.php:1116
 msgid ""
 "The item you attempting to modify the price for has already had some "
 "quantity invoiced at the old price the items unit price cannot be modified "
@@ -22182,7 +22182,7 @@ msgstr ""
 "Položku, kterou se snaží upravit cenu za již nějaké množství fakturované na "
 "stará cena jednotková cena položky nelze měnit zpětně"
 
-#: SelectOrderItems.php:1118
+#: SelectOrderItems.php:1119
 msgid ""
 "The item you attempting to modify has had some quantity invoiced at the old "
 "discount percent the items discount cannot be modified retrospectively"
@@ -22190,7 +22190,7 @@ msgstr ""
 "Položku, kterou se snaží změnit měl nějaké množství fakturované na staré "
 "slevou procent položek slevu nelze změnit zpětně"
 
-#: SelectOrderItems.php:1121
+#: SelectOrderItems.php:1122
 msgid ""
 "You are attempting to make the quantity ordered a quantity less than has "
 "already been invoiced"
@@ -22198,27 +22198,27 @@ msgstr ""
 "Pokoušíte se provést objednaného množství nižší množství, než již bylo "
 "fakturováno"
 
-#: SelectOrderItems.php:1121
+#: SelectOrderItems.php:1122
 msgid "The quantity delivered and invoiced cannot be modified retrospectively"
 msgstr "Dodané množství a fakturovány nelze upravit dodatečně"
 
-#: SelectOrderItems.php:1144
+#: SelectOrderItems.php:1145
 msgid ""
 "You should automatically be forwarded to the entry of the delivery details "
 "page"
 msgstr ""
 "Měli byste být automaticky předána na vstup na stránce dodání podrobnosti"
 
-#: SelectOrderItems.php:1144
+#: SelectOrderItems.php:1145
 msgid "if this does not happen"
 msgstr "pokud se tak nestane"
 
-#: SelectOrderItems.php:1287 SelectOrderItems.php:1750
-#: SelectOrderItems.php:1780
+#: SelectOrderItems.php:1288 SelectOrderItems.php:1751
+#: SelectOrderItems.php:1781
 msgid "PO Line"
 msgstr "PO Line"
 
-#: SelectOrderItems.php:1289
+#: SelectOrderItems.php:1290
 msgid ""
 "Quantity (required) - Enter the number of units ordered.  Price (required) - "
 "Enter the unit price.  Discount (optional) - Enter a percentage discount.  GP"
@@ -22230,56 +22230,56 @@ msgstr ""
 "(nepovinné) - Zadejte procenta hrubého zisku (GP), přidat do jednotkových "
 "nákladů. Termín (nepovinné) - Zadejte datum dodání."
 
-#: SelectOrderItems.php:1355
+#: SelectOrderItems.php:1356
 msgid "Clear Remaining"
 msgstr "Zbývající jasné"
 
-#: SelectOrderItems.php:1402
+#: SelectOrderItems.php:1403
 msgid "Enter Delivery Details and Confirm Order"
 msgstr "Zadejte dodací Detaily a Potvrdit objednávku"
 
-#: SelectOrderItems.php:1550 SelectOrderItems.php:1616
-#: SelectOrderItems.php:1736
+#: SelectOrderItems.php:1551 SelectOrderItems.php:1617
+#: SelectOrderItems.php:1737
 msgid "Add to Sales Order"
 msgstr "Přidat do prodejní objednávky"
 
-#: SelectOrderItems.php:1555 SelectOrderItems.php:1556
+#: SelectOrderItems.php:1556 SelectOrderItems.php:1557
 msgid "Search for Order Items"
 msgstr "Vyhledávání objednávky položky"
 
-#: SelectOrderItems.php:1603
+#: SelectOrderItems.php:1604
 msgid "Fixed Asset Disposal"
 msgstr "Likvidace dlouhodobého majetku"
 
-#: SelectOrderItems.php:1745
+#: SelectOrderItems.php:1746
 msgid "Use this screen for the "
 msgstr "Tato obrazovka slouží pro"
 
-#: SelectOrderItems.php:1745
+#: SelectOrderItems.php:1746
 msgid " of products to be ordered"
 msgstr "výrobků, které mají být uložena"
 
-#: SelectOrderItems.php:1776
+#: SelectOrderItems.php:1777
 msgid "Use this screen to select an asset to dispose of to this customer"
 msgstr "Tato obrazovka slouží k výběru aktiv se zbavit tohoto zákazníka"
 
-#: SelectOrderItems.php:1783
+#: SelectOrderItems.php:1784
 msgid "Asset to Dispose Of"
 msgstr "Asset disponovat"
 
-#: SelectOrderItems.php:1786
+#: SelectOrderItems.php:1787
 msgid "Select Asset To Dispose of From the List Below"
 msgstr "Vyberte aktiva do Vyhoďte z níže uvedeného seznamu"
 
-#: SelectOrderItems.php:1791
+#: SelectOrderItems.php:1792
 msgid "Add Asset To Order"
 msgstr "Přidat Asset na míru"
 
-#: SelectOrderItems.php:1797
+#: SelectOrderItems.php:1798
 msgid "Cancel Whole Order"
 msgstr "Zrušit celé zakázky"
 
-#: SelectOrderItems.php:1797
+#: SelectOrderItems.php:1798
 msgid "Are you sure you wish to cancel this entire order?"
 msgstr "Jste si jisti, že chcete zrušit celou tuto objednávku?"
 
@@ -32037,36 +32037,6 @@ msgstr "Může být null pole"
 msgid "Default"
 msgstr "Výchozí"
 
-#: Z_FixedAssetCostAccumDepnFix.php:8
-#, fuzzy
-msgid "Fixed Fixed Asset Records"
-msgstr "Hmotného majetku Kredity"
-
-#: Z_FixedAssetCostAccumDepnFix.php:12
-msgid "This script repairs the fixedasset table cost and accum depn"
-msgstr ""
-
-#: Z_FixedAssetCostAccumDepnFix.php:18
-#, fuzzy
-msgid "Updated asset"
-msgstr "Sazby aktualizace"
-
-#: Z_FixedAssetCostAccumDepnFix.php:18
-#, fuzzy
-msgid "to have a cost of"
-msgstr "std náklady"
-
-#: Z_FixedAssetCostAccumDepnFix.php:18
-#, fuzzy
-msgid "and accum depn of"
-msgstr "Accum Depn GL"
-
-#: Z_FixedAssetCostAccumDepnFix.php:22
-msgid ""
-"Asset cost and accumulated depreciation has now been fixed to the "
-"transaction cost and depreciation"
-msgstr ""
-
 #: Z_ImportChartOfAccounts.php:7 Z_ImportGLAccountGroups.php:7
 #: Z_ImportGLAccountSections.php:7
 msgid "Import Chart of Accounts"
@@ -37156,6 +37126,22 @@ msgstr "Parametry"
 #: api/api_xml-rpc.php:3027
 msgid "Return Value"
 msgstr "Return Value"
+
+#, fuzzy
+#~ msgid "Fixed Fixed Asset Records"
+#~ msgstr "Hmotného majetku Kredity"
+
+#, fuzzy
+#~ msgid "Updated asset"
+#~ msgstr "Sazby aktualizace"
+
+#, fuzzy
+#~ msgid "to have a cost of"
+#~ msgstr "std náklady"
+
+#, fuzzy
+#~ msgid "and accum depn of"
+#~ msgstr "Accum Depn GL"
 
 #~ msgid "Transaction Inquiries"
 #~ msgstr "Informace o transakcích"

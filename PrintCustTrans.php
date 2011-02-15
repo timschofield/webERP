@@ -261,7 +261,7 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 					$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column6->x, $YPos,$FormDesign->Data->Column6->Length, $FormDesign->Data->Column6->FontSize, $DisplayDiscount, 'right');
 					$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column7->x, $YPos,$FormDesign->Data->Column7->Length, $FormDesign->Data->Column7->FontSize, $DisplayNet, 'right');
 					$YPos-= ($line_height);
-					$lines = explode('\r\n', $myrow2['narrative']);
+					$lines = explode('\r\n', htmlspecialchars_decode($myrow2['narrative']));
 					for ($i = 0;$i < sizeOf($lines);$i++) {
 						while (strlen($lines[$i]) > 1) {
 							if ($YPos - $line_height <= $Bottom_Margin) {
