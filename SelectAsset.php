@@ -171,6 +171,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	$ErrMsg = _('No assets were returned by the SQL because');
 	$DbgMsg = _('The SQL that returned an error was');
 	$searchresult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	echo $SQL;
 	
 	if (DB_num_rows($searchresult) == 0) {
 		prnMsg(_('No assets were returned by this search please re-enter alternative criteria to try again'), 'info');

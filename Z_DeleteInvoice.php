@@ -132,7 +132,7 @@ prnMsg(_('The stock movement records associated with the invoice have been delet
 echo '<br><br>';
 
 /* Delete any GL Transaction records*/
-$SQL = "DELETE FROM gltrans WHERE type=10 AND transno='" . $_GET['InvoiceNo'] . "'";
+$SQL = "DELETE FROM gltrans WHERE gltrans.type=10 AND gltrans.typeno='" . $_GET['InvoiceNo'] . "'";
 $ErrMsg = _('The SQL to delete the general ledger journal records failed because');
 $Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
 prnMsg(_('The GL journal records associated with the invoice have been deleted'),'info');

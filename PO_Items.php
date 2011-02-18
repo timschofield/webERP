@@ -35,21 +35,21 @@ if (!isset($_POST['Commit'])) {
 if (isset($_POST['UpdateLines']) OR isset($_POST['Commit'])) { 
 	foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
 		if ($POLine->Deleted == false) {
-			if (!is_numeric($_POST['ConversionFactor'.$POLine->LineNo])){
+			if (!is_numeric(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['ConversionFactor'.$POLine->LineNo])))){
 				prnMsg(_('The conversion factor is expected to be numeric - the figure which converts from our units to the supplier units. e.g. if the supplier units is a tonne and our unit is a kilogram then the conversion factor that converts our unit to the suppliers unit is 1000'),'error');
 				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor = 1;
 			} else { //a valid number for the conversion factor is entered
-				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor = $_POST['ConversionFactor'.$POLine->LineNo];
+				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor = doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['ConversionFactor'.$POLine->LineNo]));
 			}
-			if (!is_numeric($_POST['SuppQty'.$POLine->LineNo])){
+			if (!is_numeric(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['SuppQty'.$POLine->LineNo])))){
 				prnMsg(_('The quantity in the supplier units is expected to be numeric. Please re-enter as a number'),'error');
 			} else { //ok to update the PO object variables
-				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Quantity=$_POST['SuppQty'.$POLine->LineNo]*$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor;
+				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Quantity=doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['SuppQty'.$POLine->LineNo]))*doubleval(str_replace($locale_info['thousands_sep'],'',$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor));
 			}
-			if (!is_numeric($_POST['SuppPrice'.$POLine->LineNo])){
+			if (!is_numeric(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['SuppPrice'.$POLine->LineNo])))){
 				prnMsg(_('The supplier price is expected to be numeric. Please re-enter as a number'),'error');
 			} else { //ok to update the PO object variables
-				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Price=$_POST['SuppPrice'.$POLine->LineNo]/$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor;
+				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Price=doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['SuppPrice'.$POLine->LineNo]))/doubleval(str_replace($locale_info['thousands_sep'],'',$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor));
 			}
 			$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->NetWeight=$_POST['NetWeight'.$POLine->LineNo];
 			$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ReqDelDate=$_POST['ReqDelDate'.$POLine->LineNo];
@@ -413,14 +413,14 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			if ($_SESSION['PO'.$identifier]->AllowPrintPO==1 
 					AND ($_SESSION['PO'.$identifier]->Status=='Authorised'
 								OR $_SESSION['PO'.$identifier]->Status=='Printed')){
-				echo '<br /><a target="_blank" href="'.$rootpath.'/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $_SESSION['PO'.$identifier]->OrderNo . '">' . _('Print Purchase Order') . '</a>';
+				echo '<br /><a target="_blank" href="'.$rootpath.'/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['PO'.$identifier]->OrderNo . '">' . _('Print Purchase Order') . '</a>';
 			}
 		} /*end of if its a new order or an existing one */
 
 
 		$Result = DB_Txn_Commit($db);
 		unset($_SESSION['PO'.$identifier]); /*Clear the PO data to allow a newy to be input*/
-		echo '<br /><a href="' . $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '">' . _('Return To PO List') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/PO_SelectOSPurchOrder.php">' . _('Return To PO List') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	} /*end if there were no input errors trapped */
@@ -450,7 +450,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 		$AllowUpdate = false;
 		prnMsg( _('Cannot Enter this order line') . '<br />' . _('The quantity of the ordered item entered must be a positive amount'),'error');
 	}
-	if (!is_numeric($_POST['Price'])){
+	if (!is_numeric(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['Price'])))){
 		$AllowUpdate = false;
 		prnMsg( _('Cannot Enter this order line') . '<br />' . _('The price entered must be numeric'),'error');
 	}
@@ -518,6 +518,9 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 
 	if ($AllowUpdate == true){
 	//adding the non-stock item
+		$_POST['Price'] = doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['Price']));
+		$_POST['Qty'] = doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['Qty']));
+		
 		$_SESSION['PO'.$identifier]->add_to_order ($_SESSION['PO'.$identifier]->LinesOnOrder+1,
 																						'',
 																						0, /*Serialised */
@@ -549,7 +552,6 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 																						$_POST['Qty'],
 																						($_POST['Qty']*$_POST['Price']),
 																						$_POST['AssetID']);
-
 	   include ('includes/PO_UnsetFormVbls.php');
 	}
 }

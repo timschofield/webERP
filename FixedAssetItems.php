@@ -101,6 +101,12 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'AssetCategoryID';
 		$i++;
 	}
+	if (trim($_POST['AssetLocation'])==''){
+		$InputError = 1;
+		prnMsg(_('There are no asset locations defined. All assets must belong to a valid location,'),'error');
+		$Errors[$i] = 'AssetLocation';
+		$i++;
+	}
 	if (!is_numeric($_POST['DepnRate']) OR $_POST['DepnRate']>100 OR $_POST['DepnRate']<0){
 		$InputError = 1;
 		prnMsg(_('The depreciation rate is expected to be a number between 0 and 100'),'error');
@@ -506,7 +512,7 @@ while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['locationid'] .'">' . $myrow['locationdescription'] . '</option>';
 	}
 }
-echo '</select></td></tr>';
+echo '</select><a target="_blank" href="'. $rootpath . '/FixedAssetLocations.php">'.' ' . _('Add Asset Location') . '</a></td></tr>';
 
 echo '<tr><td>' . _('Bar Code') . ':</td><td><input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="Text" name="BarCode" size=22 maxlength=20 value="' . $_POST['BarCode'] . '"></td></tr>';
 

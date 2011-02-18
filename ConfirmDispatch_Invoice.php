@@ -336,7 +336,7 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 	$i=0;
 	foreach ($_SESSION['Items']->LineItems[$LnItm->LineNumber]->Taxes AS $Tax) {
 		if ($i>0){
-			echo '<br>';
+			echo '<br />';
 		}
 		echo $Tax->TaxAuthDescription;
 		$i++;
@@ -353,7 +353,7 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 			$TaxTotals[$Tax->TaxAuthID]=0;
 		}
 		if ($i>0){
-			echo '<br>';
+			echo '<br />';
 		}
 		if (isset($_POST['ProcessInvoice'])) {
 			echo  $Tax->TaxRate*100;

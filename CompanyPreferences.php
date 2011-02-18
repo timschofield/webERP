@@ -456,7 +456,7 @@ if ($_POST['GLLink_Creditors']==0){
 
 echo '</select></td></tr>';
 
-echo '<tr><td>' . _('Create GL entries for stock transactions') . ' (' . _('at standard cost') . '):</td><td><select tabindex="25" Name=GLLink_Stock>';
+echo '<tr><td>' . _('Create GL entries for stock transactions')  . '):</td><td><select tabindex="25" Name=GLLink_Stock>';
 
 if ($_POST['GLLink_Stock']==0){
 	echo '<option selected VALUE=0>' . _('No');
