@@ -31,9 +31,9 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	if (DB_error_no($db)!=0){ // the table may not exist with the pagesecurity field in it if it is an older webERP database
 		header('Location: UpgradeDatabase.php'); //divert to the db upgrade if the VersionNumber is not in the config table
 	}
-	//Populate the PageSecurity array for each script's  PageSecurity value
+	//Populate the PageSecurityArray array for each script's  PageSecurity value
 	while ($myrow=DB_fetch_array($result)) {
-		$_SESSION['PageSecurity'][$myrow['script']]=$myrow['pagesecurity'];
+		$_SESSION['PageSecurityArray'][$myrow['script']]=$myrow['pagesecurity'];
 	}
 
 
