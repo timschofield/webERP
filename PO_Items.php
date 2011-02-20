@@ -35,21 +35,21 @@ if (!isset($_POST['Commit'])) {
 if (isset($_POST['UpdateLines']) OR isset($_POST['Commit'])) { 
 	foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
 		if ($POLine->Deleted == false) {
-			if (!is_numeric(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['ConversionFactor'.$POLine->LineNo])))){
+			if (!is_numeric(str_replace($locale_info['thousands_sep'],'',$_POST['ConversionFactor'.$POLine->LineNo]))){
 				prnMsg(_('The conversion factor is expected to be numeric - the figure which converts from our units to the supplier units. e.g. if the supplier units is a tonne and our unit is a kilogram then the conversion factor that converts our unit to the suppliers unit is 1000'),'error');
 				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor = 1;
 			} else { //a valid number for the conversion factor is entered
 				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor = doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['ConversionFactor'.$POLine->LineNo]));
 			}
-			if (!is_numeric(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['SuppQty'.$POLine->LineNo])))){
+			if (!is_numeric(str_replace($locale_info['thousands_sep'],'',$_POST['SuppQty'.$POLine->LineNo]))){
 				prnMsg(_('The quantity in the supplier units is expected to be numeric. Please re-enter as a number'),'error');
 			} else { //ok to update the PO object variables
 				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Quantity=doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['SuppQty'.$POLine->LineNo]))*doubleval(str_replace($locale_info['thousands_sep'],'',$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor));
 			}
-			if (!is_numeric(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['SuppPrice'.$POLine->LineNo])))){
+			if (!is_numeric(str_replace($locale_info['thousands_sep'],'',$_POST['SuppPrice'.$POLine->LineNo]))){
 				prnMsg(_('The supplier price is expected to be numeric. Please re-enter as a number'),'error');
 			} else { //ok to update the PO object variables
-				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Price=doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['SuppPrice'.$POLine->LineNo]))/doubleval(str_replace($locale_info['thousands_sep'],'',$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor));
+				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Price=(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['SuppPrice'.$POLine->LineNo]))/$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor);
 			}
 			$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->NetWeight=$_POST['NetWeight'.$POLine->LineNo];
 			$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ReqDelDate=$_POST['ReqDelDate'.$POLine->LineNo];
