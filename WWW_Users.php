@@ -23,13 +23,8 @@ $ModuleList = array(_('Orders'),
 					_('Setup'));
 
 $PDFLanguages = array(_('Latin Western Languages'),
-						_('Eastern European Russian Japanese'),
-						_('Chinese'),
-						_('Korean'),
-						_('Vietnamese'),
-						_('Hebrew'),
-						_('Arabic'),
-						_('Thai'));
+						_('Eastern European Russian Japanese Korean Vietnamese Hebrew Arabic Thai'),
+						_('Chinese'));
 
 $title = _('User Maintenance');
 include('includes/header.inc');
@@ -620,7 +615,7 @@ if (!isset($_POST['PDFLanguage'])){
 }
 
 echo '<tr><td>' . _('PDF Language Support') . ': </td><td><select name="PDFLanguage">';
-for($i=0;$i<=7;$i++){
+for($i=0;$i<count($PDFLanguages);$i++){
 	if ($_POST['PDFLanguage']==$i){
 		echo '<option selected value=' . $i .'>' . $PDFLanguages[$i] . '</option>';
 	} else {

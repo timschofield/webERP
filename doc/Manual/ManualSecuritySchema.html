@@ -35,12 +35,9 @@ However, an administrator can edit the underlying table (securitytokens).<br>
 <br>  
 </li><li>
 PageSecurity values:<br>
-Each webERP page includes a Page Security value from 1 to 15.<br>
-This is hard coded into each page; for example: $PageSecurity = 1;<br>
-For user access Page Security values correspond to 'Security Token' values.<br>
+Each webERP page is given a Page Security value from 1 to 15 in the table scripts. The system reads all the scripts and the PageSecurity value for each into a SESSION array - $_SESSION['PageSecurityArray'] - the key for each element is the script name and the value is the PageSecurity value for that script. The key - the script name is retrieved from the $_SERVER['SCRIPT_NAME'] variable. In this way every time a script is called, the PageSecurity is retrieved from the array.
 +++<br>
-There is no webERP tool to change PageSecurity values.<br>
-However, an administrator can edit the pages directly.<br>
+There is a webERP tool to change PageSecurity values, for each script which is accessible from the Setup menu.<br>
 <br></ol>
 These parts work together as follows. The user name and password combination
 entered at log on enables the system to identify the 'Security Role' for the User.
@@ -52,13 +49,11 @@ equal to the 'Security Token' values available to that User.<br>
 <u>A more comprehensive description of the security scheme follows:</u><br>
 <br>
 Each webERP page (script) is assigned a specific PageSecurity value.
-This page security value is hard coded inside each script. At the time 
-of writing this is a number between 1 and 15.  If more levels of security
+This page security value is stored in the scripts table of the database and read into a SESSION array on login (from the GetConfig.php script). At the time of writing this is a number between 1 and 15.  If more levels of security
 are necessary then this can be expanded by an administrator or developer. 
-The default PageSecurity values for each page are set out in the table 
-below.<br>
+The default PageSecurity values for each page can be inspected by browsing the scripts table<br>
 <br>
-The user is allowed access to a page if the PageSecurity value of the page 
+The user is allowed access to a page if the PageSecurity value of the page/script 
 is a number contained in the SESSION AllowedPageSecurityTokens array as 
 determined from the users access level (Security Role). The user access level Security Role) is an integer 
 that represents the Security Role assigned to the user in the user set up page 
@@ -84,7 +79,7 @@ By changing the Security Role assigned to each users and the Security
 Tokens assigned to each Security Role the security access can
 be tailored for all users. When making these changes reference the default 
 values in the tables below. PageSecurity values must also be known.
-The value of the default settings can be modified as needed.<br>
+The value of the default settings can be modified as needed from the Page Security script accessible from the Setup module<br>
 <br>
 <u>Security Scheme Tables:</u><br>
 <br>

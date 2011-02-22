@@ -2,8 +2,6 @@
 
 /* $Id$*/
 
-//$PageSecurity=1;
-
 include('includes/session.inc');
 $title = _('User Settings');
 include('includes/header.inc');
@@ -93,7 +91,7 @@ if (isset($_POST['Modify'])) {
 		$_SESSION['Theme'] = trim($_POST['Theme']); /*already set by session.inc but for completeness */
 		$theme = $_SESSION['Theme'];
 		$_SESSION['Language'] = trim($_POST['Language']);
-
+		$_SESSION['PDFLanguage'] = $_POST['PDFLanguage'];
 		include ('includes/LanguageSetup.php');
 
 	}
@@ -137,9 +135,9 @@ echo '<tr>
 				AND $LanguageEntry!='.'){
 
 			if ($_SESSION['Language'] == $LanguageEntry){
-				echo "<option selected VALUE='$LanguageEntry'>$LanguageEntry";
+				echo '<option selected value="' . $LanguageEntry . '">' . $LanguageEntry . '</option>';
 			} else {
-				echo "<option VALUE='$LanguageEntry'>$LanguageEntry";
+				echo '<option value="' . $LanguageEntry . '">' . $LanguageEntry . '</option>';
 			}
 		}
 	}
@@ -159,9 +157,9 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 	if (is_dir("css/$ThemeName") AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
 
 		if ($_SESSION['Theme'] == $ThemeName){
-			echo "<option selected VALUE='$ThemeName'>$ThemeName";
+			echo '<option selected value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		} else {
-			echo "<option VALUE='$ThemeName'>$ThemeName";
+			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		}
 	}
 }
@@ -190,11 +188,11 @@ if(!isset($_POST['email'])){
 echo "<td><input type=text name='email' size=40 value='" . $_POST['email'] . "'></td></tr>";
 
 if (!isset($_POST['PDFLanguage'])){
-	$_POST['PDFLanguage']=0;
+	$_POST['PDFLanguage']=$_SESSION['PDFLanguage'];
 }
 
 echo '<tr><td>' . _('PDF Language Support') . ': </td><td><select name="PDFLanguage">';
-for($i=0;$i<=7;$i++){
+for($i=0;$i<count($PDFLanguages);$i++){
 	if ($_POST['PDFLanguage']==$i){
 		echo '<option selected value=' . $i .'>' . $PDFLanguages[$i] . '</option>';
 	} else {

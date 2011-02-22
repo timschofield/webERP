@@ -7,11 +7,7 @@ include ('includes/session.inc');
 $title = _('Top Items Searching');
 include ('includes/header.inc');
 //check if input already
-if (!(isset($_POST['Location']) 
-		AND isset($_POST['NumberOfDays']) 
-		AND isset($_POST['Customers']) 
-		AND isset($_POST['NumberOfTopItems']) 
-		AND isset($_POST['Sequence']))) {
+if (!(isset($_POST['Search']))) {
 			
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '</p>';
 	echo "<form action=" . $_SERVER['PHP_SELF'] . '?' . SID . ' name="SelectCustomer" method=POST>';
@@ -44,8 +40,8 @@ if (!(isset($_POST['Location'])
 	echo '<tr>	<td width="150">' . _('Select Order By ') . ' </td>
 				<td>:</td>
 				<td><select name="Sequence">';
-	echo '	<option value=TotalInvoiced>' . _('Total Pieces') . '';
-	echo '	<option value=ValueSales>' . _('Value of Sales') . '';
+	echo '	<option value="TotalInvoiced">' . _('Total Pieces') . '';
+	echo '	<option value="ValueSales">' . _('Value of Sales') . '';
 	echo '	</select></td>
 				</tr>';
 	//View number of days
@@ -61,8 +57,10 @@ if (!(isset($_POST['Location'])
 			<td></td>
 			<td></td>
 		</tr>
-	</form></table>';
-	echo '<br /><div class=centre><input tabindex=5 type=submit value="' . _('Search') . '"></div>';
+	</table>
+	<br /><div class=centre>
+				<input tabindex=5 type=submit name="Search" value="' . _('Search') . '">
+				</div></form>';
 } else {
 	// everything below here to view NumberOfTopItems items sale on selected location
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$_POST['NumberOfDays']));
@@ -153,31 +151,32 @@ if (!(isset($_POST['Location'])
 		}
 	}
 	$result = DB_query($SQL, $db);
+	
 	echo '<p class="page_title_text" align="center"><strong>' . _('Top Sales Items List') . '</strong></p>';
-	echo "<form action=PDFTopItems.php  method='GET'><table class='selection'>";
+	echo '<form action="PDFTopItems.php"  method="GET"><table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	$TableHeader = '<tr><th><strong>' . _('#') . '</strong></th>
-								<th><strong>' . _('Code') . '</strong></th>
-								<th><strong>' . _('Description') . '</strong></th>
-								<th><strong>' . _('Total Invoiced') . '</strong></th>
-								<th><strong>' . _('Units') . '</strong></th>
-								<th><strong>' . _('Value Sales') . '</strong></th>
-								<th><strong>' . _('On Hand') . '</strong></th>';
+	$TableHeader = '<tr><th>' . _('#') . '</th>
+								<th>' . _('Code') . '</th>
+								<th>' . _('Description') . '</th>
+								<th>' . _('Total Invoiced') . '</th>
+								<th>' . _('Units') . '</th>
+								<th>' . _('Value Sales') . '</th>
+								<th>' . _('On Hand') . '</th>';
 	echo $TableHeader;
 	echo '
-			<input type="hidden" value=' . $_POST['Location'] . ' name=location />
-			<input type="hidden" value=' . $_POST['Sequence'] . ' name=Sequence />
-			<input type="hidden" value=' . $_POST['NumberOfDays'] . ' name=numberofdays />
-			<input type="hidden" value=' . $_POST['Customers'] . ' name=customers />
-			<input type="hidden" value=' . $_POST['NumberOfTopItems'] . ' name=NumberOfTopItems />
+			<input type="hidden" value=' . $_POST['Location'] . ' name="Location" />
+			<input type="hidden" value=' . $_POST['Sequence'] . ' name="Sequence" />
+			<input type="hidden" value=' . $_POST['NumberOfDays'] . ' name="NumberOfDays" />
+			<input type="hidden" value=' . $_POST['Customers'] . ' name="Customers" />
+			<input type="hidden" value=' . $_POST['NumberOfTopItems'] . ' name="NumberOfTopItems" />
 			';
 	$k = 0; //row colour counter
 	$i = 1;
 	while ($myrow = DB_fetch_array($result)) {
 		//find the quantity onhand item
 		$sqloh = "SELECT   sum(quantity)as qty
-						FROM     `locstock`
-						WHERE     stockid='" . $myrow['0'] . "'";
+							FROM `locstock`
+							WHERE stockid='" . $myrow['0'] . "'";
 		$oh = db_query($sqloh, $db);
 		$ohRow = db_fetch_row($oh);
 		if ($k == 1) {
@@ -194,19 +193,20 @@ if (!(isset($_POST['Location'])
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						</tr>', $i, $myrow['0'], $myrow['3'], $myrow['1'], //total invoice here
-		$myrow['4'], //unit
-		number_format($myrow['2']/$myrow['5'],2), //value sales here
-		number_format($ohRow[0], $myrow['7']) //on hand
-		);
-		$i+= 1;
+						</tr>', 
+						$i, 
+						$myrow['0'], 
+						$myrow['3'], 
+						$myrow['1'], //total invoice here
+						$myrow['4'], //unit
+						number_format($myrow['2']/$myrow['5'],2), //value sales here
+						number_format($ohRow[0], $myrow['7']) //on hand
+					);
+		$i++;
 	}
 	echo '</table>';
-	//			echo '<td style="text-align:center" colspan=6><a href="javascript:history.go(-1)" title="Return to previous page"><input type=Button Name="Back" Value="' . _('Back') . '"></a></font>&nbsp&nbsp&nbsp';
 	echo '<br /><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print To PDF') . '"></div>';
 	echo '</form>';
-	//end of the else statement
-
 }
 include ('includes/footer.inc');
 ?>
