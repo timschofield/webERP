@@ -3,16 +3,19 @@
 /* $Id$*/
 // MRPPlannedPurchaseOrders.php - Report of purchase parts that MRP has determined should have
 // purchase orders created for them
-//$PageSecurity = 2;
+
 include('includes/session.inc');
-$sql='show tables where Tables_in_'.$_SESSION['DatabaseName'].'="mrprequirements"';
+
+//maybe not ansi sql ??
+$sql='SHOW TABLES WHERE Tables_in_'.$_SESSION['DatabaseName'].'="mrprequirements"';
+
 $result=DB_query($sql,$db);
 if (DB_num_rows($result)==0) {
-	$title='MRP error';
+	$title=_('MRP error');
 	include('includes/header.inc');
-	echo '<br>';
+	echo '<br />';
 	prnMsg( _('The MRP calculation must be run before you can run this report').'<br>'.
-			_('To run the MRP calculation click').' '.'<a href='.$rootpath .'/MRP.php?' . SID .'>'._('here').'</a>', 'error');
+			_('To run the MRP calculation click').' '.'<a href='.$rootpath .'/MRP.php>'._('here').'</a>', 'error');
 	include('includes/footer.inc');
 	exit;
 }
@@ -111,9 +114,9 @@ if (isset($_POST['PrintPDF'])) {
 	  $title = _('MRP Planned Purchase Orders') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The MRP planned purchase orders could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+	   echo '<br><a href="' .$rootpath .'/index.php?">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-		  echo "<br>$sql";
+		  echo '<br />' . $sql;
 	   }
 	   include('includes/footer.inc');
 	   exit;

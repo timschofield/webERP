@@ -18,7 +18,7 @@ Also updates the transaction number
 
 	DB_query('LOCK TABLES systypes WRITE',$db);
 
-	$SQL = "SELECT typeno FROM systypes WHERE typeid = '" . $TransType . "'";
+	$SQL = 'SELECT typeno FROM systypes WHERE typeid = ' . $TransType;
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>' . _('The next transaction number could not be retrieved from the database because');
 	$DbgMsg =  _('The following SQL to retrieve the transaction number was used');
@@ -26,7 +26,7 @@ Also updates the transaction number
 
 	$myrow = DB_fetch_row($GetTransNoResult);
 
-	$SQL = "UPDATE systypes SET typeno = '" . ($myrow[0] + 1) . "' WHERE typeid = '" . $TransType . "'";
+	$SQL = 'UPDATE systypes SET typeno = ' . ($myrow[0] + 1) . ' WHERE typeid = ' . $TransType;
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The transaction number could not be incremented');
 	$DbgMsg =  _('The following SQL to increment the transaction number was used');
 	$UpdTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
@@ -114,13 +114,13 @@ Function GetTaxes ($TaxGroup, $DispatchTaxProvince, $TaxCategory, &$db) {
 Function GetCreditAvailable($DebtorNo,&$db) {
 
 	$sql = "SELECT debtorsmaster.debtorno,
-								debtorsmaster.creditlimit,
-								SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) as balance
-					FROM debtorsmaster INNER JOIN debtortrans
-						ON debtorsmaster.debtorno=debtortrans.debtorno
-					WHERE debtorsmaster.debtorno='" . $DebtorNo . "'
-					GROUP BY debtorsmaster.debtorno,
-										debtorsmaster.creditlimit";
+			debtorsmaster.creditlimit,
+			SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) as balance
+		FROM debtorsmaster INNER JOIN debtortrans
+			ON debtorsmaster.debtorno=debtortrans.debtorno
+		WHERE debtorsmaster.debtorno='" . $DebtorNo . "'
+		GROUP BY debtorsmaster.debtorno,
+			debtorsmaster.creditlimit";
 
 	$ErrMsg =  _('The current account balance of the customer could not be retrieved because');
 	$GetAccountBalanceResult = DB_query($sql, $db, $ErrMsg);
@@ -131,8 +131,8 @@ Function GetCreditAvailable($DebtorNo,&$db) {
 		$CreditAvailable = $myrow['creditlimit'] - $myrow['balance'];
 	} else {
 		$sql = "SELECT creditlimit
-					FROM debtorsmaster
-					WHERE debtorno='" . $DebtorNo . "'";
+				FROM debtorsmaster
+				WHERE debtorno='" . $DebtorNo . "'";
 		$GetAccountBalanceResult = DB_query($sql, $db, $ErrMsg);
 		$myrow = DB_fetch_array($GetAccountBalanceResult);
 		$CreditAvailable = $myrow['creditlimit'];
@@ -162,7 +162,7 @@ function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 		if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $QOH!=0){
 
 			$CostUpdateNo = GetNextTransNo(35, $db);
-			$PeriodNo = GetPeriod($_SESSION['DefaultDateFormat'], $db);
+			$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
 			$StockGLCode = GetStockGLCode($StockID,$db);
 
 			$ValueOfChange = $QOH * ($NewCost - $OldCost);
@@ -237,7 +237,7 @@ function UpdateCost($db, $item) {
 	while ($MyRow=DB_fetch_array($result)){
 		$NewParent = $MyRow['parent'];
 		$MaterialCost = BomMaterialCost($NewParent, $db);
-		$SQL = "UPDATE stockmaster SET materialcost='" . $MaterialCost . "' WHERE stockid='" . $NewParent . "'";
+		$SQL = 'UPDATE stockmaster SET materialcost=' . $MaterialCost . " WHERE stockid='" . $NewParent . "'";
 		$result1 = DB_query($SQL,$db);
 		if (DB_error_no($db)!=0) {
 			return 1;
