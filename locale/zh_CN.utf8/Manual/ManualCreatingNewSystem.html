@@ -1,0 +1,705 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=gb2312">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Exson Qu">
+	<META NAME="CREATED" CONTENT="20110216;10403100">
+	<META NAME="CHANGEDBY" CONTENT="Exson Qu">
+	<META NAME="CHANGED" CONTENT="20110217;19445000">
+	<META NAME="CHANGEDBY" CONTENT="Exson Qu">
+	<META NAME="CHANGEDBY" CONTENT="Exson Qu">
+	<META NAME="CHANGEDBY" CONTENT="Exson Qu">
+	<META NAME="CHANGEDBY" CONTENT="Exson Qu">
+	<META NAME="CHANGEDBY" CONTENT="Exson Qu">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 2cm }
+		TD P { margin-bottom: 0cm }
+		P { margin-bottom: 0.21cm }
+		A:link { so-language: zxx }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="zh-CN" DIR="LTR">
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>创建一个新系统</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>运行演示版数据库</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>由于演示系统已经输入了虚拟的数据，所以不需要从零开始创建数据就可以探索系统的特性。如果您只是希望探索系统的已有特性，演示数据已经足够。有一些基础数据决定系统如何运作。这些基础信息从以下两方面定义：</FONT></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">1</SPAN></FONT></FONT></FONT></SPAN></FONT><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>）主菜单：系统设置；</FONT></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">2</SPAN></FONT></FONT></FONT></SPAN></FONT><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>）配置文件</FONT></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">config.php</SPAN></FONT></FONT></FONT></SPAN></FONT><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>。如果为了演示目的，不需要对他们做任何的更改，除了要在</FONT></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">config.php</SPAN></FONT></FONT></FONT></SPAN></FONT><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>里更改连接</FONT></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">mysql</SPAN></FONT></FONT></FONT></SPAN></FONT><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>的细节。位于主脚本目录下的</FONT></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">config.php</SPAN></FONT></FONT></FONT></SPAN></FONT><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>文件，包含必须的数据库连接参数和数据库类型</FONT></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">(</SPAN></FONT></FONT></FONT></SPAN></FONT><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>目前只支持</FONT></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">mysql</SPAN></FONT></FONT></FONT></SPAN></FONT><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>和</FONT></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">postgress)</SPAN></FONT></FONT></FONT></SPAN></FONT><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>。这个文件中也有一些对话</FONT></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">session</SPAN></FONT></FONT></FONT></SPAN></FONT><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>参数和</FONT></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">php</SPAN></FONT></FONT></FONT></SPAN></FONT><FONT COLOR="#0000ff"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>警告级别，通常可以保留默认值。</FONT></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>设置一个系统</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>公司的</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><SPAN LANG="en-US"><B>logo</B></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>公司的</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">logo</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>会出现在每个屏幕上，它必须用</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">.jpg</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>文件的格式保存，并且复制到路径</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">companies/your
+company
+name/</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>的文件</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">logo.jpg</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>中，</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>允许多个公司使用同一的脚本，而每个公司的配置都存在数据库中。公司名称数据库有一个路径，它位于</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">companies/</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>下，</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">companies/</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>位于</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>根目录下。在运行的网页服务器上，用户需要被赋予</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">logo</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>文件的读取权限（对运行在</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">linux</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>上的</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">apache</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>而言，通常用户为&ldquo;</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">nobody&rdquo;
+</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><I>注：</I></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><I>www-data</I></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><I>现在的用法</I></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>）</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">.</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>当然在</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">windows</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>安装就不存在这种权限问题。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>会计科目表</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>系统设置了一个默认的会计科目表。然而，大多数情况下，公司会希望采取他们一直在使用的会计科目表。会计科目表的维护&mdash;即从总账标签增删科目。对于将数据输入新系统而言，这应该是个起点。当要使用总账整合的功能时，设置会计科目表是必须的第一步。一旦一个总账账户有一次过帐，那它就不允许被删除。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在总分类账中，存在一个金字塔等级结构：会计要素</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&gt;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>科目组</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&gt;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>总账科目。总帐科目&mdash;&mdash;&mdash;即会计科目表，科目组，会计要素－－可以从总帐</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">--&gt;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>维护来增加或者修改。在输入数据之前，设置正确的会计科目表是非常重要的，否则更改科目表非常困难。你无法删除已经过帐的科目。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=3><SPAN LANG="en-US"><BR><BR><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>公司参数</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>公司参数需要自公司设置界面正确设定。这些参数大多可以顾名思义。公司名称，公司编号，邮递地址，实际地址等。也包括电话号码和默认的企业本国货币。如果还没有设置默认货币，从主菜单</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">--&gt;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>系统的设置标签，找到货币维护表单的链接，这里允许定义新的货币，以及默认可以更新的汇率。</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>公司记录也提供一个方便的地方来为下列科目储存默认的总分类帐代码：</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>应收账款总帐科目</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>应付账款总帐科目</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>工资和工资净额结算总帐科目</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>收货结算总帐科目</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>留存收益结算总账科目</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>补收运费总账科目</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>汇率差异总账科目</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>销货汇率差异总账科目</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>购货汇率差异总账科目</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>付款折扣总账科目</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>公司记录也记录总帐整合设置</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>为应收账款交易创建总帐分录</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>为应付账款交易创建总帐分录</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>为存货交易建立总帐分录（以标准成本）</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>注意：存货总帐的整合是一个分开的标识。如果应收账款的总帐整合被设置成</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">yes,</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>那么系统就会创建日记帐，即为销售顾客开发票或开立红字发票，但是不会为销货成本和存货创建日记帐。对于后者的整合，需要将存货交易建立总帐分录设置为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">yes.</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>对于销售层面的总帐整合，对指定的销售种类，销售区域和存货种类的销售，其过账代码，需要从设置</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">--&gt;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>销售总帐界面过帐</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">setup&gt;Sales
+GL Interface
+Postings</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>定义。对于存货的总帐整合而言，对指定的销售种类，销售区域和存货种类销货成本，其过账代码也需要从</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">Setup&gt;COGS
+GLinterfacePostings</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>设定</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">.</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果相关的总帐代码没有指定，系统会自动地为过账创建一个新的总账科目数字</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">1.</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果这个账目持续出现，那是个好的信号，意味着默认的过账代码还没有被创建。</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>系统配置</B></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>从设置标签，主要的系统的配置参数可以从&rdquo;配置设置&rdquo;这个链接设定。每个参数旁边都有一个解释，可以给用户一个基本的概念什么地方需要使用这个设定。</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0 STYLE="page-break-before: always">
+	<COL WIDTH=128*>
+	<COL WIDTH=128*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><B>参数</B></FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><B>描述</B></FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Default
+			Date Format (for input and to appear on reports) </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>默认日期格式</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>默认日期的输入和显示格式英国</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">/</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>澳大利亚</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">/</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>新西兰使用</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">d/m/Y</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>形式。英国和加拿大使用</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">m/dY</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>格式</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">New
+			Users Default Theme: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>新用户默认主题</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>默认主题适用于还没有定义自己颜色主题的新用户</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2 WIDTH=100% VALIGN=TOP>
+			<P ALIGN=CENTER><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>应收应付设置</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">First
+			Overdue Deadline in (days): </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>第一过期日</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>顾客和供应商账户余额显示为过此期限多少天数。此参数用于顾客和供应商查询界面和过期列表</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Second
+			Overdue Deadline in (days): </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>第二过期日</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>同上，但是属于第二层次的过期日</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Default
+			Credit Limit: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>默认信用限额</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>新设置顾客的默认值</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Check
+			Credit Limits: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>检查信用限额</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在输入订单时，信用限额被检查。如果顾客付款余额超过限定，是进行警告还是禁止输入订单</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Show
+			Settled Last Month: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>显示上个月已结清</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>此设置指顾客对账单的格式。如果要显示本月已经付款和结清的发票和红字发票，那么选择</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Yes</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>。如果选择</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">No</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，只会显示当前未完成发票，红字发票和还没有分配的付款。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50% HEIGHT=21>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Romalpa
+			Clause: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>罗马百条款</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这些文字以小号出现在发票和红字发票上。正常情况下，保留条款给公司（在大多数国家很有限）的权利收回还没有付款的货物</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>为坏账加些保护。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Quick
+			Entries: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>快速输入</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这些参数定义了销售订单输入屏幕的布局。快速输入时的字段数。可以输入</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">1</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>到</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">99</SPAN></FONT></FONT></SPAN></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Format
+			of Packing Slips: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>装箱单格式</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>选择默认情况下装箱单应该打印的格式</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Show
+			company details on packing slips: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在装箱单上显示公司细节</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>公司分公司可以默认设置为不在装箱单上打印公司</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">logo</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>和地址。这对于发运到顾客的顾客的公司而言，有时显示运输来源地是不合适的。印象在设置顾客分公司有个选项可以设置匿名运送，此设置为所有新顾客分公司的默认设置</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Dispatch
+			Cut-Off Time: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>送货截止时间</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>订单输入后，经过这个时间将默认为将在下一天发货，这个可以在输入订单时修改。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Allow
+			Sales Of Zero Cost Items: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>允许销售零成本商品</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果在订单输入时选择的商品没有设置成本并且这个参数设置为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">NO</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，那么这个订单行就不能输入。在一个整合的系统中，例如</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">webERP,
+			</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>输入不正确的数据会导致下单困难。销售成本为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">0</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>的商品也在销售分析和总帐过账中记录为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">0.
+			</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这对于完全整合的运作而言是个有用的防错措施。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Controlled
+			Items Must Exist For Crediting: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>要开红字发票的收款商品必须存在</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这个参数与受控商品代码的行为相关。如果有序列号的商品先前不存在，并且这个参数设置为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Yes,</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>那么就不可以开红字发票。使用这个参数要小心，因为如果它被设置为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Yes</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，那么有可能无法将新的序列号商品退回仓库，因为旧数据被删除了。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Default
+			Price List: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>默认价格表</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果价格表中没有为顾客设置商品的价格，这个价格表被用作最后一个救命稻草。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Default
+			Shipper: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>默认承运人</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果先前没有定义顾客分公司最好的承运人，系统会使用此承运人。关键是确保这里输入的承运人确实在承运人列表中定义了。承运人在设置</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">--&gt;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>承运人维护定义</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Do
+			Freight Calculation: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>做运费计算</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果这被设置为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Yes</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，那么系统会试着计算根据重量和体积及每个承运人和他们不同地点之间的费率来计算运费。这些结果只有在商品重量和体积的数据被设置且每个承运人的运费被正确维护才有意义。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Apply
+			freight charges if an order is less than: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>只有订单低于下列值时才收取运费：</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这个参数只有在计算运费被设置为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">Yes</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>时才有效。如果它被设置为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">0</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，那么总是收取运费。订单总值会与这个值比较以决定是否收取运费。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Create
+			Debtor Codes Automatically: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>自动生成顾客编码</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>设置为自动 </FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">-
+			</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>顾客代码是系统自动产生的</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>是一个序列号。下个顾客的号码如同其他交易号码一样定义在</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">systypes</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>表中。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Default
+			Tax Category: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>默认税收种类</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这个税收种类用于输入供应商发票和运费征税的种类</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">Tax
+			Authority Reference Name: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>税务局编号名称</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这个参数显示在税收发票和红字发票上表示公司所属的税务当局例如在澳大利亚，它是</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">GST
+			No. </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在英国</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">,</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>它是</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">VAT
+			Regn. No.</SPAN></FONT></FONT></SPAN></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Country
+			Of Operation: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>运营所在国</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+			</P>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>此参数仅仅在进行运费计算设置为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Yes</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>时生效。它被用作进行运费计算。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Number
+			Of Periods Of Stock Usage: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>库存用量的期间数：</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在库存用量查询中，这个决定显示多少个（库存用量）期间。通过这些期间数计算出平均用量。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Check
+			Quantity Charged vs Deliver Qty: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>检查收费数量</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">vs
+			</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>付运数量</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在输入应付发票时，这个决定是否检查收进库存的数量与开发票的数量相等。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Check
+			Price Charged vs Order Price: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>检查付费价格和订单价格</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在输入应付发票时，这个参数决定是否检查发票价格和订单价格相等。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Allowed
+			OverCharge Proportion: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>允许多收费的比例</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>是否&ldquo;检查收费价格</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">vs</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>订单价格&rdquo;设置为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">yes,</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>那么这个比例决定发票对应相关价格可以多收的比例。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Allowed
+			Over Receive Proportion: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>允许多收的比例</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果&ldquo;检查付费数量</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">vs</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>付运数量&rdquo;设置为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">yes,</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>那么这个比例决定该此付运可以多收的比例。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">Purchase
+			Order Allows Same Item Multiple Times: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>采购订单允许同一商品多次出现</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果设置为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">yes,</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>那么采购订单可以多次出现同一商品</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这使供应商可以对于同一商品在不同日期付运不同数量成为可能。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2 WIDTH=100% VALIGN=TOP>
+			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US"><B>General
+			Settings</B> </SPAN></FONT></FONT>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>参数</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>描述</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">Financial
+			Year Ends On: </SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>财年结束于：</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>定义财年在那个月结束为系统的总帐报告提供有用的默认值。系统提供了可以选择一年的月份的选项。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">Report
+			Page Length: </SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>报告页长度</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">Default
+			Maximum Number of Records to Show: </SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-weight: normal">默认显示的最大记录数</SPAN></FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>当页面有代码限制返回记录的数量</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>例如选择顾客，供应商和商品，那么这将为没有自己改变这些设置的用户显示的默认记录数量。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">Maximum
+			Size in KB of uploaded images: </SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>最大上传图片尺寸</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">,</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>以</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">KB</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>表示</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>商品的图片文件可以上传到服务器。系统在允许上传之前，将检查上传文件，他们的大小必须小于这个限制（以</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><FONT SIZE=4><SPAN LANG="en-US">KB</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>计）。大的图片将使系统变慢（尤其是通过拨号连接）并且在库存维护画面查看时将非常困难。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">The
+			directory where images are stored: </SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>图片储存的路径</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>所有图片将存放的路径。图片文件的格式为
+			</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><I>商品代码</I></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><I>.jpg
+			&ndash;</I></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-style: normal">他们必须是</SPAN></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">.jpg</SPAN></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-style: normal">文件，并且部品代码是图像文件的名称。这是上传时自动的命名。系统将检查以确保图片是</SPAN></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">.jpg</SPAN></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-style: normal">文件。</SPAN></FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">The
+			directory where reports are stored: </SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>报告存放的路径</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>所有的</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">pdf</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>文件将创建于此路径。建议使用一个单独的路径。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">Only
+			allow secure socket connections: </SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>仅允许安全套接字连接</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>强制只能通过安全套接字连接&mdash;例如仅限于加密数据。当这个参数设置为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">yes</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>时要小心，因为系统将不允许通常的</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">http
+			</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>协议连接，并且坚持仅使用</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">https</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>连接。如果您的网页服务器不支持</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">https,</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>那么需要直接在数据库里编辑配置参数才能使用标准的</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">http</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>连接。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">Perform
+			Database Maintenance At Logon: </SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在登录时进行数据库维护</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P STYLE="border: none; padding: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在一个规则的间隔内&mdash;当每个用户每次登录时，使用在</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">ConnectDB&nbsp;XXXX.inc</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>中定义的数据库维护函数</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">DB_Maintenance</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>进行数据库的维护。这个对于有些需要定期重新索引的数据库而言是非常有用的，比如</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">postgres.&nbsp;Mysql/innodb</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>很少需要数据库的管理。建议使用</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">cron&nbsp;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>或者有计划地在正常工作时间之外维护数据库，尤其是大型数据库时，登录时的维护会延误用户的登入。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">Enable
+			Wiki Integration </SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>启用维基整合</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P STYLE="border: none; padding: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">Wiki</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>是个通用的名字，是指一种允许创建自由格式互联的通告网络程序。这样的系统与</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>整合是个强有力的联合。在</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>中，针对顾客，供应商或者商品发出的通知可以在</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">wiki</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>上发出或者查找。我们选择的程序&ldquo;</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">wacko
+			wiki&rsquo;&mdash;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>是个最小的下载并且有几个翻译版本。然而，</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">wacko
+			wiki</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>是</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">wakka
+			wiki</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>的一个分支，任何的源自的</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">wakka
+			wiki</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>都可以使用。要使这种整合有效，必须将它设定为&rdquo;</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">Enabled&rdquo;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>可用。</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">Wiki
+			Path </SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>维基路径</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P STYLE="margin-bottom: 0.5cm; border: none; padding: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">Wacko
+			wiki</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>必须安装在同一网页服务器上。并且是</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>目录树的上一级目录：例如不是在</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>路径之下，但是处于其同级&mdash;此地需要输入网页服务器所安装的路径名。这样</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>可以创建与</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">wiki</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>页相连的链接。当前的整合仅限于供应商，产品和顾客菜单－－当选择了其一之后。这个链接在&ldquo;整合</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">wacko</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>维基为可用时&rdquo;才出现。如果维基页目前不存在，那么</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">wacko</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>维基会询问你是否希望生成新页－否则的话，</FONT></FONT><FONT COLOR="#000000"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>会显示已经存在的页面</FONT></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>。可以生成这些页面之外的互联的新页面来显示上传的图片或者相关的产品</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">/</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>顾客</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">/</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>供应商的文件。此维基也是保存公司流程和方针文件的好地方。必要时，</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">Wacko</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>维基允许页面进行安全设置－－禁止修改。整个业务知识基地和内部网络可以从团队的知识积累中建立起来。由于</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">wacko</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>维基也允许创建到任何其他网页的链接，</FONT></FONT><FONT COLOR="#000000"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>尤其是</FONT></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT COLOR="#000000"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></FONT></FONT></SPAN></FONT><FONT COLOR="#000000"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>特殊信息的指针（在维基中可以提供，它将引导维基的浏览者直接去浏览</FONT></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT COLOR="#000000"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></FONT></FONT></SPAN></FONT><FONT COLOR="#000000"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>操作手册中的信息）</FONT></FONT></FONT></P>
+			<P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>产品
+			&ldquo;维基&rdquo; 可以包括信息例如：</FONT></FONT></P>
+			<UL>
+				<LI><P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>产品开发备忘录
+				</FONT></FONT>
+				</P>
+				<LI><P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>产品说明
+				</FONT></FONT>
+				</P>
+				<LI><P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>产品保证书
+				</FONT></FONT>
+				</P>
+				<LI><P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>产品技术信息
+				</FONT></FONT>
+				</P>
+			</UL>
+			<P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>顾客维基</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><SPAN LANG="en-US"><B>:</B></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><SPAN LANG="en-US">
+			</SPAN></FONT></FONT></SPAN></FONT>
+			</P>
+			<UL>
+				<LI><P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>顾客联系人日志
+				</FONT></FONT>
+				</P>
+				<LI><P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>信用事项</FONT></FONT></P>
+				<LI><P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>关系备忘</FONT></FONT></P>
+				<LI><P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>关键联系备忘</FONT></FONT></P>
+				<LI><P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>合同文件</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">/</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>特别条款</FONT></FONT></P>
+			</UL>
+			<P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>供应商维基</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><SPAN LANG="en-US"><B>:
+			</B></SPAN></FONT></FONT></SPAN></FONT>
+			</P>
+			<UL>
+				<LI><P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>关键人员
+				</FONT></FONT>
+				</P>
+				<LI><P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>关系备忘
+				</FONT></FONT>
+				</P>
+				<LI><P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>付款事项
+				</FONT></FONT>
+				</P>
+				<LI><P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>合同文件
+				</FONT></FONT>
+				</P>
+			</UL>
+			<P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>对于分布式公司而言，维基是一个有价值的企业优势。然而，如果只是</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">5</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>个人在同一个办公室就没有意义了&mdash;这也是</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">wacko
+			wiki</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>没有与</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>绑定的原因&mdash;仅仅是因为不适用于所有可能使用</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>的公司。</FONT></FONT></P>
+			<P STYLE="margin-bottom: 0.5cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><A HREF="http://wackowiki.com/files/wacko.r4.2.zip">Get
+			Wacko Wiki</A> </SPAN></FONT></SPAN></FONT>
+			</P>
+			<P><BR>
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>基本数据需求</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在设置顾客前，需要以下基础信息（所有这些信息都从系统的</FONT></FONT><FONT COLOR="#ff0000"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>设置</FONT></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>标签设置）</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>货币－顾客帐户的货币</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>销售类型－价格在此阶段设置。销售类型与顾客的货币一起决定适用于他们的价格表。每个顾客的主记录必须对应一种销售类型。</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>信用状况记录，这是记录信用的标志－－顾客的信誉。每个顾客帐户都对应于一个信用状况类型。有些信用状况记录可以被设置为禁止开发票。</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>付款条件。由于可以定义任意数量的付款条件记录，顾客记录必须对应于一个付款条件记录。系统为如何定义这些付款条件提供些灵活性。他们可以对应于某个天数的信用或者按照发票中指定的月度中某一天。为顾客和供应商准备的过期余额报告是基于这些付款条件的。</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&middot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>税组－为从顾客销售中收税要求的税务机关分组。每个顾客分公司必须对应于一个税组，并且销往这些分公司的销售额会被自动计算税负－－按&nbsp;照销售的来源，以及所开发票商品对应的税目。税务系统提供了极大的灵活性。</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>一旦上述的信息被输入，就可以输入顾客记录了。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>然而，应收账款也需要某些分公司的信息，例如必须输入每个顾客的相关的付运地址。但是在创建顾客的分公司之前，必须输入下列信息－－要定义所有这些信息的表格的链接都可以从主菜单的系统设置得到。</FONT></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>销售区域</FONT></FONT>&mdash;<FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这些用来依照区域做销售分析。同时，可以设置总帐整合来依据顾客的区域来决定销售过帐的总帐科目。顾客帐户的每个分公司必须对应一个销售区域。如果您的业务不需要销售区域，您必须定义一个地域－－称为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&quot;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>默认区域&rdquo;。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>由于可以按所需数量设置销售类型，需要记住价格是对应于销售类型（和币种）的。销售类型可以反应销售是否是贸易销售，零售，批发，订购，现金交易，特殊销售等。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>顾客分公司记录也必须对应于销售员，他负责管理与顾客的关系并且负责这个分公司。如果你的生意不需要销售人员，那么仍然需要指&nbsp;定一个销售员，称为默认的销售员。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>需要设置存货存放的地点。每个顾客分公司必须指定库存地点，它将作为取货的最有运输效率的地点。</FONT></FONT></P>
+</UL>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>设置完这些基础信息后，就可以开始设置顾客帐户和有付运地址的顾客分公司了。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>桌面型数据库，试算表和</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">CSV(</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>逗号分割值）导出文件也可以被用于导入这些信息。使用</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">MS
+Access,</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>过程包括在安装了</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">MS
+Access</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>和</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">Windows</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>的台式机上为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">Mysql</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>安装</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">ODBC</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>驱动，然后在新的空</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">Access</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>数据库中连接</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">weberp</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>数据库表</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">DebtorsMaster</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>和</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">CustBranch.
+CSV</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>文件和试算表文件被导入</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">Access</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>数据库，然后进行附加查询将</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">CSV</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>表／试算表转换为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">DebtorsMaster</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>和</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">CustBranch</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>字段。可能在</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">CustBranch</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>表</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>中有很多记录，对每个顾客而言有不同的分公司代码，保存在</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">DebtorMster</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>中。它强制确保不会有顾客的记录或者分公司代码指向上述描述中不存在的基础数据，从这种意义上讲，它是危险的。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>设置库存项目</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在定义库存商品前，也需要基础信息。</FONT></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>存货种类（物料组）是包含公司所有产品宽泛名称。存货也可以包含服务商品例如劳务。存货种类中记录的信息是将存货整合到总帐需要的所有额外信息。所有的库存商品如设置为同一特殊存货种类，都将用同样方式过帐。存货种类在系统的设置标签定义。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>所有的可能适用的库存商品单位可以从主菜单</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">--&gt;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>库存</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">--&gt;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>设置标签定义</FONT></FONT></P>
+</UL>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>为开发票和分析，可以为非物理存货创建库存商品，这些应该设置为虚拟存货商品－－使用制造或者购买标志。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>输入存货余额</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>一旦库存商品的所有信息都被输入，当然首先需要基本的数据（最好都提前输入），每个库存地点的存货余额必须以库存调整输入。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>存货</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">/</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>总帐界面应该在公司参数设置界面设置为不可用，直到通过存货价值报告，将总帐中的存货余额与所有输入系统的库存商品的标准成本核对正确为止。此调整要求每个商品输入的标准成本是正确的，同时需要存放在所有地点的商品总数也是正确的。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>存货整合至总帐的问题</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>一旦财务模块中的存货帐户与存货价值报告相符，可以从公司参数界面激活库存总帐整合标志。库存变动会由总帐日记帐反映出来。如果没有手动输入分录到这些账户，存货帐户余额将会总是与存货价值报告保持一致。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>重要的是理解有两个层次的总帐整合。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>首先，销售整合允许销货发票，红字发票和收款与债务人统制帐户（应收账户）整合。这一层次不会为存货销售成本产生任何的总帐分录。系统有灵活的配置允许很多方法来配置帐户－－发票和红字发票过帐到销售帐户。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>其次，存货整合的启用会自动创建销货成本和存货帐户总帐分录。同时，采购订单收货和存货销售引起的存货变化也会生成分录存档。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>不必非用到总帐的库存整合，尽管一个完全的标准成本为基础的会计系统，伴随总帐整合，按理来说可以为制造商提供最快的非正式的财务报告系统。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>销货总分类帐－应收账款整合到总帐的问题</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在如何将销售交易过帐到总帐的方面，系统提供了一些灵活性。根据顾客销售区域，销售类型和商品的存货种类的组合，可以使用不同的销售帐户。在输入任何的销货之前，定义过帐的安排是非常重要的，可以从销售总帐界面过帐来设置。同样的灵活性也提供给销货成本</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">COGS</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>的过帐－－当然这些分录只在存货的总帐界面启用时才可以创建。如果是这样的话，关键是确保为</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">COGS</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>设置过帐安排－－在</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">COGS</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>总帐界面过帐－－</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&gt;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>设置标签。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR></SPAN></FONT></FONT></SPAN></FONT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>税</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>必须设置税。在设置部分有税收组别维护，发货地税（收省份）维护，税目维护，和税务局及税率维护。当您在设置顾客分公司之前，与此分公司相关的税收组别必须定义－－税收组别指定销往分部的货物税收向谁缴纳。系统允许在一个税收组别中包含任何数量的税务局。税目必须在设置商品时指定。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>有些商品会以高税率征税，这些必须被标识。税目的数量可以根据需要定义。在手册中对税收的细节有专门部分介绍。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR></SPAN></FONT></FONT></SPAN></FONT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>设置顾客</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR></SPAN></FONT></FONT></SPAN></FONT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>由于可以设置任意数量的分公司，建议为所有的顾客联系人都自由使用分部，哪怕不会给这些分公司开发票。因此所有属于顾客的联系人都会被保留。每个分公司都要求有一个销售区域和销售人员。销售区域为分析目的而定义。销售区域和销售人员都从主菜单－－</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">&gt;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>系统设置来设定。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>输入顾客账户余额</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>债务人总分类帐是一个&ldquo;未完成项目（记录明细，与结转余额系统对应）&rdquo;系统，它需要输入每张未付款发票，使帐户余额相符。对于以前使用的余额结转的债务人帐户而言，这是一个令人气馁的工作。然而，顾客将收到的附加信息，连同随之减少的每月对帐的烦恼</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>--</FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这些多由于无法追踪帐户余额的组成引起，将大大补偿起步要求的额外工作。&ldquo;未完成项目&rdquo;债务人也要求任何收到的付款都分配给对应的未付款发票。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>理想情况下，所有的未完成交易应该在月末前及时输入。在正常业务不受影响的情况下，未完成的余额交易可以很容易地被识别为属于某一个期间。第一步是确保总帐整合界面被设置为不可用，以阻止系统为与前一期间有关的发票销售和债务人统制帐户创建分录。建议在实施之前的一个月，为所有顾客准备好对帐和调帐，－－如果
+以前使用的是&ldquo;未完成项目&rdquo;系统，对账单会提供所有需要输入的信息。所有未完成的发票（和红字发票）需要输入，使顾客帐户的余额与其一致。使用创建发票时的原始汇率。建议使用发票的实际日期作为原始发票的日期，并且用旧发票的编号作为一个参照，这样可以很容易交叉找到新发票和旧发票的对应。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>核对债务人分类统制帐户</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>确认</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>来自过期的列表所有顾客帐户余额和旧系统中统制帐户是一致的是非常重要的，（包括以本币和外币计算）。总帐中的余额（所有顾客的余额）通常用手工分录的方式输入，但是这个分录的金额额应该与顾客列表的金额一致。当然，用不同的货币输入的余额会因为输入时的汇率不同而有不同的本币值。有一个工具将所有的货币余额计值，汇率依据交易时输入的汇率。这就是脚本</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">Z_CurrencyDebtorBalances.php.
+</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>对应于供应商的余额，有个类似的工具。在系统上线前需要对每个帐户进行复查。一旦顾客帐户被核对并且输入（被复核过），总分类帐界面应该从公司参数界面启用（系统设置标签）。系统会在总帐中维护统制帐户，它将总是和余额列表一致。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>银行账户余额和其他总帐余额</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>总帐是会计的中心－－理解会计概念为正确设置</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，在掌握哪些是必须做的事项方面是至关重要的。本文件不是介绍普通会计的文本，但是简要的说明是必要的。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>总帐－－例如应收账款</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT SIZE=4>Accounts
+receivable</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>－－是由很多帐户组成的，尽管不像应收账款那样，余额与顾客欠你多少款项没有关系－－他们代表企业的所有的金额：</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">&middot;</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>存在于仓库</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">&middot;</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>存在于车辆和设备</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">&middot;</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>存于银行</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">&middot;</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>存在于总的顾客余额</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">&middot;</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>存在总的供应商欠款余额</FONT></FONT></P>
+<P STYLE="margin-left: 0.64cm; margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">&middot;</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>作为借款或者投资者股本的形式投入。</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>列出所有这些帐户的报告称为&ldquo;资产负债表&rdquo;，因为所有这些项目的价值会等于累积的利润减去任何的股东撤资和付给股东的股息。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>总帐也保持追溯多少花在费用方面，多少作为销售将由顾客支付－－无论这些金额是否真正付给了供应商或者销售已经由顾客支付。真正的兴趣在于看看这些帐户在一段时间内，业务已经发生的收入和费用的情况，据此作出&ldquo;损益表&rdquo;。然而，在将业务搬到</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>webERP,</FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>是资产负债表，它代表业务的总价值（在以前的会计期间），是记录的重点</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>---</FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这些被称为资产负债表账户（费用和收入账户被称为损益账户）。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>复式记账法</B></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>当总帐中每个帐户的余额相加时，净额将总是</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">0</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>－－这是因为每个总帐的输入都由两部分组成借方（正金额）和贷方（负金额）。例如，我们在燃料方面花费了</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">100</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>元－借方记在车辆费用，贷方记在银行存款帐户（这是由于银行存款余额减少了</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">100</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>元），车辆使用的累计成本增加了</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">100</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>元。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>按字面理解，每次输入被记录了两次，一次在一个帐户中记增加，另一次在另一个帐户记减少。这就是当把借方余额与贷方余额加总后，结果总是</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">0</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>的原因。历史上，当会计检查他们的手工帐时，为了保证每笔帐都记得正确，他们列出所有的余额并且把他们加总在一个叫做&ldquo;试算表&rdquo;的报告中－－来检查总帐确实是平衡的。今天，从计算机出来的一个试算表是所有总帐余额的列表－－在表尾有个核对总数来显示计算机正确地记录了日记帐。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>作为一个例子，思考如下帐目组成的试算表</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2>：</FONT></FONT></P>
+<TABLE WIDTH=702 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=117>
+	<COL WIDTH=577>
+	<TR>
+		<TD WIDTH=117>
+			<P STYLE="border: none; padding: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>账户</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=577>
+			<P STYLE="border: none; padding: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>金额</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=117>
+			<P STYLE="border: none; padding: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><B>银行账户</B></FONT></FONT></P>
+		</TD>
+		<TD WIDTH=577>
+			<P ALIGN=RIGHT STYLE="border: none; padding: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US">1,000.00</SPAN></FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=117>
+			<P STYLE="border: none; padding: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><B>应收</B></FONT></FONT></P>
+		</TD>
+		<TD WIDTH=577>
+			<P ALIGN=RIGHT STYLE="border: none; padding: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US">5,000.00</SPAN></FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=117>
+			<P STYLE="border: none; padding: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><B>应付</B></FONT></FONT></P>
+		</TD>
+		<TD WIDTH=577>
+			<P ALIGN=RIGHT STYLE="border: none; padding: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US">(2,000.00)</SPAN></FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=117>
+			<P STYLE="border: none; padding: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><B>车辆费用</B></FONT></FONT></P>
+		</TD>
+		<TD WIDTH=577>
+			<P ALIGN=RIGHT STYLE="border: none; padding: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US">10,000.00</SPAN></FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=117>
+			<P STYLE="border: none; padding: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><B>贷款</B></FONT></FONT></P>
+		</TD>
+		<TD WIDTH=577>
+			<P ALIGN=RIGHT STYLE="border: none; padding: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US">(3,000.00)</SPAN></FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=117>
+			<P STYLE="border: none; padding: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><B>累计利润</B></FONT></FONT></P>
+		</TD>
+		<TD WIDTH=577>
+			<P ALIGN=RIGHT STYLE="border: none; padding: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US">(11,000.00)</SPAN></FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=117>
+			<P><BR>
+			</P>
+		</TD>
+		<TD WIDTH=577>
+			<SPAN ID="框1" DIR="LTR" STYLE="position: absolute; left: 0cm; width: 15.27cm; height: 0.08cm; border: none; padding: 0cm; background: #ffffff">
+				<P><IMG SRC="/C:%5CDOCUME%7E1%5CPRINCE%7E1%5CLOCALS%7E1%5CTemp%5Cksohtml%5Cwps_clip_image-30480.png" NAME="图形1" ALIGN=BOTTOM WIDTH=577 HEIGHT=3 BORDER=0></P>
+			</SPAN></TD>
+	</TR>
+	<TR>
+		<TD WIDTH=117>
+			<P STYLE="border: none; padding: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><B>检查总额</B></FONT></FONT></P>
+		</TD>
+		<TD WIDTH=577>
+			<P ALIGN=RIGHT STYLE="border: none; padding: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US">0.00</SPAN></FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=117></TD>
+		<TD WIDTH=577>
+			<SPAN ID="框2" DIR="LTR" STYLE="position: absolute; left: 0cm; width: 15.27cm; height: 0.08cm; border: none; padding: 0cm; background: #ffffff">
+				<P><IMG SRC="/C:%5CDOCUME%7E1%5CPRINCE%7E1%5CLOCALS%7E1%5CTemp%5Cksohtml%5Cwps_clip_image-7301.png" NAME="图形2" ALIGN=BOTTOM WIDTH=577 HEIGHT=3 BORDER=0></P>
+			</SPAN></TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0cm">&nbsp;<FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>系统阻止用户向定义为银行帐户的总分类帐输入分录。银行帐户首先必须如是定义为（银行账户）－－从设置标签－－银行帐户。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>然而，在总帐－－银行帐户收款－－是可以输入总帐收款的－－有一个按钮是输入&ldquo;总帐收款&rdquo;允许无需选择顾客就可以输入收款。组成此收入的其他总帐帐目可以由此输入。这就说明了总帐平衡是如何达成的。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>创建一笔总帐收款</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">1,000.00</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>元使得银行帐户余额正确。当创建这笔收入时，用户必须选择总帐帐户，存款代表你可以向需要的总帐帐户输入不同的金额。在正常情形下，这笔收入可能是，例如车辆销售－－此处合适的总帐帐户可能是固定资产处置的减值，可能某些数量是销售税</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">/GST/VAT.</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>然而在我们的例子中，我们输入的未完成余额</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">1000</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>元存款真实情况是</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<TABLE CELLPADDING=2 CELLSPACING=2>
+	<TR>
+		<TD>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>应收统制账户</FONT></FONT></P>
+		</TD>
+		<TD>
+			<P ALIGN=RIGHT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">5,000.00</SPAN></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>应付统制账户</FONT></FONT></P>
+		</TD>
+		<TD>
+			<P ALIGN=RIGHT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">(2,000.00)</SPAN></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>运输工具</FONT></FONT></P>
+		</TD>
+		<TD>
+			<P ALIGN=RIGHT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">10,000.00</SPAN></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>贷款</FONT></FONT></P>
+		</TD>
+		<TD>
+			<P ALIGN=RIGHT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">(3,000.00)</SPAN></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>累计利润</FONT></FONT></P>
+		</TD>
+		<TD>
+			<P ALIGN=RIGHT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">(11,000.00)</SPAN></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P><BR>
+			</P>
+		</TD>
+		<TD VALIGN=TOP></TD>
+	</TR>
+	<TR>
+		<TD>
+			<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>银行总存款</FONT></FONT></P>
+		</TD>
+		<TD>
+			<P ALIGN=RIGHT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">$1,000</SPAN></FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=2><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>所以输入收入的分析如上－
+－</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">5</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">000</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>债务人统制帐户，－</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">10</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">000</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>机动车辆，</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">3,000</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>借款和</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">11</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">000</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>累积利润将和银行帐户收入</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">1</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">000</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>相符。重要的是收入的日期记在新</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>系统上线前一个月。这种方式，结转的余额对新期间而言将是正确的。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>当有几个银行帐户且每个帐户定义为不同的总帐账户，那么收入可以被输入有余额的每个帐户（或者是付款，如果银行帐户被透支）－－这些余额可以通过过帐到一个暂记帐目而结清。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT COLOR="#000000"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>重要的是债务人统制帐户和债权人统制帐户的总帐输入应分别与以本币记账的应收账款和应付账款相等。</FONT></FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT COLOR="#000000"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>结束语</B></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>一旦顾客帐户和总帐债务人统制帐户所有输入核对后，系统需要备份。</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">mysql</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>的工具</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">mysqldump</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>是一种生成</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">sql</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>脚本的方式，他可以将系统恢复到创建这个脚本时的状态。对于系统外的用户－－为避免任何的锁定问题－－假设</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">mysqldump</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在系统路径：</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR>&gt;</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>从命令提示符，使用安装</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">mysql</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>时创建的用户名和密码</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR>#mysqldump
+-u username -p password&mdash;opt
+weberp&gt;/home/myhomedir/weberp_backup.sql </SPAN></FONT></FONT></SPAN></FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>数据库</FONT></FONT><FONT FACE="Times New Roman, serif"><SPAN LANG="en-US"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">postgres</SPAN></FONT></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>有相似的工具。</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+</BODY>
+</HTML>
