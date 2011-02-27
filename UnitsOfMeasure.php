@@ -1,8 +1,6 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity = 15;
-
 include('includes/session.inc');
 
 $title = _('Units Of Measure');
@@ -141,19 +139,10 @@ if (isset($_POST['submit'])) {
 			prnMsg( _('Cannot delete this unit of measure because inventory items have been created using this unit of measure'),'warn');
 			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('inventory items that refer to this unit of measure') . '</font>';
 		} else {
-			$sql= "SELECT COUNT(*) FROM contracts WHERE units ".LIKE." '" . $OldMeasureName . "'";
+			$sql="DELETE FROM unitsofmeasure WHERE unitname ".LIKE."'" . $OldMeasureName . "'";
 			$result = DB_query($sql,$db);
-			$myrow = DB_fetch_row($result);
-			if ($myrow[0]>0) {
-				prnMsg( _('Cannot delete this unit of measure because contracts have been created using this unit of measure'),'warn');
-				echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('contracts that refer to this unit of measure') . '</font>';
-			} else {
-				$sql="DELETE FROM unitsofmeasure WHERE unitname ".LIKE."'" . $OldMeasureName . "'";
-				$result = DB_query($sql,$db);
-				prnMsg( $OldMeasureName . ' ' . _('unit of measure has been deleted') . '!','success');
-			}
+			prnMsg( $OldMeasureName . ' ' . _('unit of measure has been deleted') . '!','success');
 		}
-
 	} //end if account group used in GL accounts
 	unset ($SelectedMeasureID);
 	unset ($_GET['SelectedMeasureID']);
