@@ -4,8 +4,6 @@
 
 /* $Revision: 1.44 $ */
 
-//$PageSecurity = 11; now stored in the database
-
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
@@ -72,6 +70,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 if (!isset($_POST['ProcessGoodsReceived'])) {
 	if (!isset($_POST['DefaultReceivedDate'])){
+		/* This is meant to be the date the goods are received - it does not make sense to set this to the date that we requested delivery in the purchase order - I have not applied your change here Tim for this reason - let me know if I have it wrong - Phil */
 		$_POST['DefaultReceivedDate'] = Date($_SESSION['DefaultDateFormat']);
 	}
 

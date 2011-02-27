@@ -2,7 +2,6 @@
 
 /* $Id$*/
 
-//$PageSecurity = 2;
 
 include('includes/session.inc');
 
@@ -93,32 +92,38 @@ config.php is loaded by header.inc */
 
 /*HideMovt ==1 if the movement was only created for the purpose of a transaction but is not a physical movement eg. A price credit will create a movement record for the purposes of display on a credit note
 but there is no physical stock movement - it makes sense honest ??? */
+
+$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
+
 if (isset($_POST['ShowUsage'])){
 	if($_POST['StockLocation']=='All'){
 		$sql = "SELECT periods.periodno,
 				periods.lastdate_in_period,
-				SUM(-stockmoves.qty) AS qtyused
-			FROM stockmoves INNER JOIN periods
-				ON stockmoves.prd=periods.periodno
-			WHERE (stockmoves.type=10 OR stockmoves.type=11 OR stockmoves.type=28)
-			AND stockmoves.hidemovt=0
-			AND stockmoves.stockid = '" . $StockID . "'
+				SUM(CASE WHEN (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28) 
+												AND stockmoves.hidemovt=0 
+												AND stockmoves.stockid = '" . $StockID . "' 
+									THEN -stockmoves.qty ELSE 0 END) AS qtyused
+			FROM periods LEFT JOIN stockmoves 
+				ON periods.periodno=stockmoves.prd
+			WHERE periods.periodno <='" . $CurrentPeriod . "'
 			GROUP BY periods.periodno,
 				periods.lastdate_in_period
 			ORDER BY periodno DESC LIMIT " . $_SESSION['NumberOfPeriodsOfStockUsage'];
 	} else {
 		$sql = "SELECT periods.periodno,
 				periods.lastdate_in_period,
-				SUM(-stockmoves.qty) AS qtyused
-			FROM stockmoves INNER JOIN periods
-				ON stockmoves.prd=periods.periodno
-			WHERE (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28)
-			AND stockmoves.hidemovt=0
-			AND stockmoves.loccode='" . $_POST['StockLocation'] . "'
-			AND stockmoves.stockid = '" . $StockID . "'
+				SUM(CASE WHEN (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28) 
+												AND stockmoves.hidemovt=0 
+												AND stockmoves.stockid = '" . $StockID . "'
+												AND stockmoves.loccode='" . $_POST['StockLocation'] . "'
+									THEN -stockmoves.qty ELSE 0 END) AS qtyused
+			FROM periods LEFT JOIN stockmoves 
+				ON periods.periodno=stockmoves.prd
+			WHERE periods.periodno <='" . $CurrentPeriod . "'
 			GROUP BY periods.periodno,
 				periods.lastdate_in_period
 			ORDER BY periodno DESC LIMIT " . $_SESSION['NumberOfPeriodsOfStockUsage'];
+			
 	}
 	$MovtsResult = DB_query($sql, $db);
 	if (DB_error_no($db) !=0) {
