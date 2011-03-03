@@ -66,7 +66,7 @@ if ( isset($_POST['AddBatches']) && $_POST['AddBatches']!='') {
 				}
 
 				if (!$SerialError){
-					$LineItem->SerialItems[$NewSerialNo] = new SerialItem ($_POST['SerialNo' . $i], $NewQty);
+					$LineItem->SerialItems[$NewSerialNo] = new SerialItem ($_POST['SerialNo' . $i], $NewQty, $_POST['ExpiryDate' . $i]);
 				}
 			}
 		} /* end if posted Serialno . i is not blank */
@@ -75,7 +75,8 @@ if ( isset($_POST['AddBatches']) && $_POST['AddBatches']!='') {
 	if (!isset($_POST['Bundles'])) {
 		$_POST['Bundles']=0;
 	}
-	for ($i=0;$i < count($_POST['Bundles']);$i++){ /*there is an entry in the multi select list box */
+	echo count($_POST['Bundles']);
+	for ($i=0;$i < count($_POST['Bundles'])-1;$i++){ /*there is an entry in the multi select list box */
 		if ($LineItem->Serialised==1){	/*only if the item is serialised */
 			$LineItem->SerialItems[$_POST['Bundles'][$i]] = new SerialItem ($_POST['Bundles'][$i],  ($InOutModifier>0?1:-1) );
 		} else {

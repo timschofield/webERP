@@ -516,11 +516,13 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 																											loccode,
 																											serialno,
 																											qualitytext,
+																											expirationdate,
 																											quantity)
 																										VALUES ('" . $OrderLine->StockID . "',
 																											'" . $_SESSION['PO'.$identifier]->Location . "',
 																											'" . $Item->BundleRef . "',
 																											'',
+																											'" . FormatDateForSQL($Item->ExpiryDate) . "',
 																											'" . $Item->BundleQty . "')";
 								}
 

@@ -580,8 +580,8 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 		} else {
 			/*link to print the quotation */
-			echo '<br><table class=selection><tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Order') . '" alt=""></td><td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotation.php?identifier='.$identifier . '&QuotationNo=' . $OrderNo . '">'. _('Print Quotation') .'</a></td></tr></table>';
-
+			echo '<br><table class=selection><tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Order') . '" alt=""></td><td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotation.php?' . SID .'identifier='.$identifier . '&QuotationNo=' . $OrderNo . '">'. _('Print Quotation (Landscape)') .'</a></td></tr></table>';
+			echo '<br><table class=selection><tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Order') . '" alt=""></td><td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotationPortrait.php?' . SID .'identifier='.$identifier . '&QuotationNo=' . $OrderNo . '">'. _('Print Quotation (Portrait)') .'</a></td></tr></table>';
 		}
 		echo '<br><table class=selection><tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Order') . '" alt=""></td><td>' . ' ' . '<a href="'. $rootpath .'/SelectOrderItems.php?identifier='.$identifier . '&NewOrder=Yes">'. _('Add Another Sales Order') .'</a></td></tr></table>';
 	} else {

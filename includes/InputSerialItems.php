@@ -88,15 +88,27 @@ $EditLink =  '<br><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?iden
 	'&LineNo=' . $LineNo .'">'. _('Edit'). '</a> | ';
 $RemoveLink = '<a href="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '&DELETEALL=YES&StockID=' . $LineItem->StockID .
 	'&LineNo=' . $LineNo .'">'. _('Remove All'). '</a><br></div>';
+$sql="SELECT perishable
+		FROM stockmaster
+		WHERE stockid='".$StockID."'";
+$result=DB_query($sql, $db);
+$myrow=DB_fetch_array($result);
+$Perishable=$myrow['perishable'];
 if ($LineItem->Serialised==1){
 	$tableheader .= '<tr>
 			<th>'. _('Serial No').'</th>
-			</Tr>';
-} else {
-	$tableheader = '<TR>
-			<th>'. _('Batch/Roll/Bundle'). ' #</th>
-			<th class=tableheader>'. _('Quantity'). '</th>
 			</tr>';
+} else if ($LineItem->Serialised==0 and $Perishable==1){
+	$tableheader = '<tr>
+			<th>'. _('Batch/Roll/Bundle'). ' #</th>
+			<th>'. _('Quantity'). '</th>
+			<th>'. _('Expiry Date'). '</th>
+		</tr>';
+} else {
+	$tableheader = '<tr>
+			<th>'. _('Batch/Roll/Bundle'). ' #</th>
+			<th>'. _('Quantity'). '</th>
+		</tr>';
 }
 
 echo $EditLink . $RemoveLink;

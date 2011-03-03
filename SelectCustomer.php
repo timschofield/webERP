@@ -1,6 +1,6 @@
 <?php
 /* $Id$*/
-//$PageSecurity = 2;
+
 include ('includes/session.inc');
 $title = _('Search Customers');
 include ('includes/header.inc');
@@ -119,8 +119,9 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 				custbranch.phoneno,
 				custbranch.faxno
 			FROM debtorsmaster LEFT JOIN custbranch
-				ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
-			WHERE debtorsmaster.typeid = debtortype.typeid";
+				ON debtorsmaster.debtorno = custbranch.debtorno
+				INNER JOIN debtortype
+				ON debtorsmaster.typeid = debtortype.typeid";
 	} else {
 		if (strlen($_POST['Keywords']) > 0) {
 			//using the customer name

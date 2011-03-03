@@ -175,7 +175,8 @@ If (isset($_POST['PrintPDF'])
 
 		$FontSize=10;
 		$YPos -=$line_height;
-				if ($_POST['ShowInfo']==true){
+
+		if (isset($_POST['ShowInfo']) and $_POST['ShowInfo']==true){
 
 			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
 				   		FROM salesorderdetails,

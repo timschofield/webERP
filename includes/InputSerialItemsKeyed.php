@@ -47,8 +47,11 @@ foreach ($LineItem->SerialItems as $Bundle){
 
 	echo '<td>' . $Bundle->BundleRef . '</td>';
 
-	if ($LineItem->Serialised==0){
+	if ($LineItem->Serialised==0 and $Perishable==0){
 		echo '<td class=number>' . number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
+	} else if ($LineItem->Serialised==0 and $Perishable==1){
+		echo '<td class=number>' . number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
+		echo '<td class=number>' . $Bundle->ExpiryDate . '</td>';
 	}
 
 	echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '&Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'">'. _('Delete'). '</a></td></tr>';
@@ -81,7 +84,7 @@ echo '<form action="' . $_SERVER['PHP_SELF'] . '" name="Ga6uF5Wa" method="post">
       <input type=hidden name=StockID value="' . $StockID . '">
       <input type=hidden name="identifier" value="' . $identifier . '">
       <input type=hidden name=EntryType value="KEYED">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if ( isset($_GET['EditControlled']) ) {
 	$EditControlled = isset($_GET['EditControlled'])?$_GET['EditControlled']:false;
 } elseif ( isset($_POST['EditControlled']) ){
@@ -102,6 +105,9 @@ if ($EditControlled){
 
 		if ($LineItem->Serialised==1){
 			echo '<input type=hidden name="Qty' . $StartAddingAt .'" Value=1></TR>';
+		} else if ($LineItem->Serialised==0 and $Perishable==1) {
+			echo '<td><input type=text class="number" name="Qty' . $StartAddingAt .'" size=11
+				value="'. number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength=10></tr>';
 		} else {
 			echo '<td><input type=text class="number" name="Qty' . $StartAddingAt .'" size=11
 				value="'. number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength=10></tr>';
@@ -120,6 +126,10 @@ for ($i=0;$i < 10;$i++){
 
 	if ($LineItem->Serialised==1){
 		echo '<input type=hidden name="Qty' . ($StartAddingAt+$i) .'" Value=1></tr>';
+	} else if ($LineItem->Serialised==0 and $Perishable==1) {
+		echo '<td><input type=text class="number" name="Qty' . ($StartAddingAt+$i) .'" size=11  maxlength=10></td>';
+		echo '<td><input type=text class="date" name="ExpiryDate' . ($StartAddingAt+$i) .'" size=11
+		 value="" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength=10></td></tr>';
 	} else {
 		echo '<td><input type=text class="number" name="Qty' . ($StartAddingAt+$i) .'" size=11  maxlength=10></tr>';
 	}

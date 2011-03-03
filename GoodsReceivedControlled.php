@@ -4,8 +4,6 @@
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 
-//$PageSecurity = 11;
-
 include('includes/session.inc');
 
 $title = _('Receive Controlled Items');
@@ -32,7 +30,7 @@ if (!isset($_SESSION['PO'.$identifier])) {
 	exit;
 }
 
-if (isset($_GET['LineNo'])){
+if (isset($_GET['LineNo']) AND $_GET['LineNo']>0){
 	$LineNo = $_GET['LineNo'];
 } elseif (isset($_POST['LineNo'])){
 	$LineNo = $_POST['LineNo'];

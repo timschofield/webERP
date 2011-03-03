@@ -66,7 +66,7 @@ $LocationOut = $_SESSION['Items']->Location;
 $InOutModifier=1;
 $ShowExisting=false;
 
-include ('includes/InputSerialItems.php');
+include ('includes/OutputSerialItems.php');
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for dispatch */

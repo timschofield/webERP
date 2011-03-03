@@ -35,6 +35,10 @@ include('includes/SQL_CommonFunctions.inc');
 //this is available from the menu on this page already
 //echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><br>';
 
+if (isset($_GET['New'])) {
+	unset($_SESSION['SuppTrans']);
+}
+
 if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 	$sql='SELECT suppname FROM suppliers WHERE supplierid="'.$_GET['SupplierID'].'"';
 	$result = DB_query($sql,$db);

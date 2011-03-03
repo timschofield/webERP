@@ -28,16 +28,22 @@ $pdf->line($Page_Width-$Right_Margin, $YPos+$BoxHeight,$Page_Width-$Right_Margin
 $Xpos = $Left_Margin+1;
 
 /*draw vertical lines */
-$pdf->line(350, $YPos-$line_height,350, $Bottom_Margin+24);
-$pdf->line(415, $YPos-$line_height,415, $Bottom_Margin+24);
-$pdf->line(475, $YPos-$line_height,475, $Bottom_Margin+24);
+$pdf->line(370, $YPos+$BoxHeight,370, $Bottom_Margin+24);
 
 $LeftOvers = $pdf->addTextWrap($Xpos,$YPos,300-$Left_Margin,$FontSize,_('Item'), 'centre');
-if ($_POST['ShowInfo']==true){
+if (isset($_POST['ShowInfo']) and $_POST['ShowInfo']==true){
+	/*draw vertical lines */
+	$pdf->line(415, $YPos-$line_height,415, $Bottom_Margin+24);
+	$pdf->line(475, $YPos-$line_height,475, $Bottom_Margin+24);
 	$LeftOvers = $pdf->addTextWrap(341,$YPos,60,$FontSize,_('QOH'), 'centre');
 	$LeftOvers = $pdf->addTextWrap(341+61,$YPos,80,$FontSize,_('Cust Ords'), 'centre');
 	$LeftOvers = $pdf->addTextWrap(341+61+61,$YPos,80,$FontSize,_('Available'), 'centre');
-	}
+} else {
+	/*draw vertical lines */
+	$pdf->line(435, $YPos+$BoxHeight,435, $Bottom_Margin+24);
+	$LeftOvers = $pdf->addTextWrap(371,$YPos,60,$FontSize,_('Quantity'), 'centre');
+	$LeftOvers = $pdf->addTextWrap(341+61+61,$YPos,80,$FontSize,_('Remarks'), 'centre');
+}
 $FontSize=10;
 $YPos -=($line_height);
 ?>

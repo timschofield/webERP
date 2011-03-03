@@ -444,11 +444,11 @@ if (isset($_POST['submit'])) {
 		}
 		if (!isset($_POST['New'])) {
 
-			$supptranssql = "SELECT COUNT(supplierno)
-													FROM supptrans
-													WHERE supplierno='".$SupplierID ."'";
+			$supptranssql = "SELECT supplierno
+								FROM supptrans
+								WHERE supplierno='".$SupplierID ."'";
 			$suppresult = DB_query($supptranssql, $db);
-			$supptrans = DB_fetch_row($suppresult);
+			$supptrans = DB_num_rows($suppresult);
 
 			$suppcurrssql = "SELECT currcode
 													FROM suppliers
@@ -481,7 +481,7 @@ if (isset($_POST['submit'])) {
 						WHERE supplierid = '".$SupplierID."'";
 			} else {
 				if ($suppcurr[0] != $_POST['CurrCode']) {
-					prnMsg( _('Cannot change currency code as transactions already exist'), info);
+					prnMsg( _('Cannot change currency code as transactions already exist'), 'info');
 				}
 				$sql = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "',
 							address1='" . $_POST['Address1'] . "',

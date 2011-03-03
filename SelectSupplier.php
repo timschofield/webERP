@@ -166,7 +166,7 @@ if (isset($_SESSION['SupplierID'])) {
 	echo '</td><td valign=top class="select">'; /* Supplier Transactions */
 	echo "<a href=\"$rootpath/PO_Header.php?" . SID . '&NewOrder=Yes&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Purchase Order for This Supplier') . '</a><br>';
 	echo "<a href=\"$rootpath/SupplierInvoice.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Suppliers Invoice') . '</a><br>';
-	echo "<a href=\"$rootpath/SupplierCredit.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Suppliers Credit Note') . '</a><br>';
+	echo "<a href=\"$rootpath/SupplierCredit.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . '&New=True' . "\">" . _('Enter a Suppliers Credit Note') . '</a><br>';
 	echo "<a href=\"$rootpath/Payments.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Payment to, or Receipt from the Supplier') . '</a><br>';
 	echo '<br>';
 	echo "<br><a href='$rootpath/ReverseGRN.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "'>" . _('Reverse an Outstanding Goods Received Note (GRN)') . '</a>';
