@@ -2,8 +2,6 @@
 
 /* $Id$ */
 
-//$PageSecurity = 11;
-
 include('includes/session.inc');
 $title = _('Item Maintenance');
 include('includes/header.inc');
@@ -19,7 +17,7 @@ if (isset($_GET['StockID'])){
 }
 
 if (isset($StockID) and !isset($_POST['UpdateCategories'])) {
-	$sql = "SELECT COUNT(stockid) FROM stockmaster WHERE stockid='".$StockID."'";
+	$sql = "SELECT COUNT(stockid) FROM stockmaster WHERE stockid='".$StockID."' GROUP BY stockid";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]==0) {
@@ -48,7 +46,7 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 	} elseif ( $_FILES['ItemPicture']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
 		prnMsg(_('The file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'],'warn');
 		$UploadTheFile ='No';
-	} elseif ( $_FILES['ItemPicture']['type'] == "text/plain" ) {  //File Type Check
+	} elseif ( $_FILES['ItemPicture']['type'] == 'text/plain' ) {  //File Type Check
 		prnMsg( _('Only graphics files can be uploaded'),'warn');
 		 	$UploadTheFile ='No';
 	} elseif (file_exists($filename)){
@@ -219,7 +217,7 @@ if (isset($_POST['submit'])) {
 			$OldControlled = $myrow[1];
 			$OldSerialised = $myrow[2];
 
-			$sql = "SELECT SUM(locstock.quantity) FROM locstock WHERE stockid='".$StockID."'";
+			$sql = "SELECT SUM(locstock.quantity) FROM locstock WHERE stockid='".$StockID."' GROUP BY stockid";
 			$result = DB_query($sql,$db);
 			$stkqtychk = DB_fetch_row($result);
 
@@ -268,7 +266,7 @@ if (isset($_POST['submit'])) {
 
 				/*now check that if it was a Manufactured, Kitset, Phantom or Assembly and is being changed to a purchased or dummy - that no BOM exists */
 				if (($OldMBFlag=='M' OR $OldMBFlag =='K' OR $OldMBFlag=='A' OR $OldMBFlag=='G') AND ($_POST['MBFlag']=='B' OR $_POST['MBFlag']=='D')) {
-					$sql = "SELECT COUNT(*) FROM bom WHERE parent = '".$StockID."'";
+					$sql = "SELECT COUNT(*) FROM bom WHERE parent = '".$StockID."' GROUP BY parent";
 					$result = DB_query($sql,$db);
 					$ChkBOM = DB_fetch_row($result);
 					if ($ChkBOM[0]!=0){
@@ -279,7 +277,7 @@ if (isset($_POST['submit'])) {
 
 				/*now check that if it was Manufac, Phantom or Purchased and is being changed to assembly or kitset, it is not a component on an existing BOM */
 				if (($OldMBFlag=='M' OR $OldMBFlag =='B' OR $OldMBFlag=='D' OR $OldMBFlag=='G') AND ($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K')) {
-					$sql = "SELECT COUNT(*) FROM bom WHERE component = '".$StockID."'";
+					$sql = "SELECT COUNT(*) FROM bom WHERE component = '".$StockID."' GROUP BY component";
 					$result = DB_query($sql,$db);
 					$ChkBOM = DB_fetch_row($result);
 					if ($ChkBOM[0]!=0){
@@ -462,7 +460,7 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'StockMoves'
 
-	$sql= "SELECT COUNT(*) FROM stockmoves WHERE stockid='".$StockID."'";
+	$sql= "SELECT COUNT(*) FROM stockmoves WHERE stockid='".$StockID."' GROUP BY stockid";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
@@ -471,7 +469,7 @@ if (isset($_POST['submit'])) {
 		echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock movements that refer to this item');
 
 	} else {
-		$sql= "SELECT COUNT(*) FROM bom WHERE component='".$StockID."'";
+		$sql= "SELECT COUNT(*) FROM bom WHERE component='".$StockID."' GROUP BY component";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
@@ -479,7 +477,7 @@ if (isset($_POST['submit'])) {
 			prnMsg( _('Cannot delete this item record because there are bills of material that require this part as a component'),'warn');
 			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('bills of material that require this part as a component');
 		} else {
-			$sql= "SELECT COUNT(*) FROM salesorderdetails WHERE stkcode='".$StockID."'";
+			$sql= "SELECT COUNT(*) FROM salesorderdetails WHERE stkcode='".$StockID."' GROUP BY stockid";
 			$result = DB_query($sql,$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]>0) {
@@ -487,7 +485,7 @@ if (isset($_POST['submit'])) {
 				prnMsg( _('Cannot delete this item record because there are existing sales orders for this part'),'warn');
 				echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales order items against this part');
 			} else {
-				$sql= "SELECT COUNT(*) FROM salesanalysis WHERE stockid='".$StockID."'";
+				$sql= "SELECT COUNT(*) FROM salesanalysis WHERE stockid='".$StockID."' GROUP BY stockid";
 				$result = DB_query($sql,$db);
 				$myrow = DB_fetch_row($result);
 				if ($myrow[0]>0) {
@@ -495,7 +493,7 @@ if (isset($_POST['submit'])) {
 					prnMsg(_('Cannot delete this item because sales analysis records exist for it'),'warn');
 					echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records against this part');
 				} else {
-					$sql= "SELECT COUNT(*) FROM purchorderdetails WHERE itemcode='".$StockID."'";
+					$sql= "SELECT COUNT(*) FROM purchorderdetails WHERE itemcode='".$StockID."' GROUP BY stockid";
 					$result = DB_query($sql,$db);
 					$myrow = DB_fetch_row($result);
 					if ($myrow[0]>0) {
@@ -503,7 +501,7 @@ if (isset($_POST['submit'])) {
 						prnMsg(_('Cannot delete this item because there are existing purchase order items for it'),'warn');
 						echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('purchase order item record relating to this part');
 					} else {
-						$sql = "SELECT SUM(quantity) AS qoh FROM locstock WHERE stockid='".$StockID."'";
+						$sql = "SELECT SUM(quantity) AS qoh FROM locstock WHERE stockid='".$StockID."' GROUP BY stockid";
 						$result = DB_query($sql,$db);
 						$myrow = DB_fetch_row($result);
 						if ($myrow[0]!=0) {

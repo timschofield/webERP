@@ -1,5 +1,7 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p>
+<p>5/3/11: Kovács Attila fix to Stocks.php to use ANSI GROUP BY for aggregate functions SQL</p>
+<p>5/3/11: Kovács Attila fix to LanguageSetup.php to use utf-8 not ISO-8859-1. Phil hardcoded UTF- now as no dynamic changing of character set required all translations are utf-8</p>
 <p>3/3/11: Exson/Baran/Phil fix to customer login to ensure that other customers orders are not displayed when searching by customer ref or order no</p>
 <p>3/3/11: Tim launchpad mods to revision 4441 including change to allow supplier currency to be changed if there are no transactions already against the supplier.  Ensure credit note session variable is unset before attempting to create a new credit note from the supplier form. Tim's work to add perisable expiry dates to the serial items logic - affects quite a few scripts. Headings to stock check script even if no quantity is shown. Portrait quotations. Not included change to default delivery date to the date the customer requested - left to be the current day's date. Not included Tim's unit pricing work .. yet launchpad revisions 4442-4447 inclusive</p>
 <p>27/2/11: Phil/Tim/Peter launchpad added category option for MRPShortages.php links with matching quotes in WorkOrderEntry</p>

@@ -37,7 +37,7 @@ if (function_exists('gettext')){
   //putenv('LANG=$Language_Country');
 	bindtextdomain ('messages', $PathPrefix . 'locale');
 	textdomain ('messages');
-    bind_textdomain_codeset('messages', _('ISO-8859-1')); 
+    bind_textdomain_codeset('messages', 'UTF-8'); 
 	$locale_info = localeconv();
 	
 } else {
