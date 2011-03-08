@@ -195,7 +195,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																						'" . $_SESSION['PO'.$identifier]->PaymentTerms. "',
 																						'" . $_SESSION['PO'.$identifier]->AllowPrintPO . "'
 																					)";
-
+			
 			$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
 			$DbgMsg = _('The SQL statement used to insert the purchase order header record and failed was');
 			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
@@ -250,6 +250,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																							'" . $POLine->ConversionFactor . "')";
 					$ErrMsg =_('One of the purchase order detail records could not be inserted into the database because');
 					$DbgMsg =_('The SQL statement used to insert the purchase order detail record and failed was');
+					
 					$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 				}
 			} /* end of the loop round the detail line items on the order */
@@ -510,7 +511,10 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 				$_POST['ItemDescription'] = $AssetRow['description'];
 			}
 		}
-	} //end if an AssetID is entered
+	} /*end if an AssetID is entered */
+	  else {
+		  $_POST['AssetID'] = 0; // cannot commit a string to an integer field so make it 0 if AssetID = 'Not an Asset'
+	}
 	if (strlen($_POST['ItemDescription'])<=3){
 		$AllowUpdate = false;
 		prnMsg(_('Cannot enter this order line') . ':<br />' . _('The description of the item being purchased is required where a non-stock item is being ordered'),'warn');
