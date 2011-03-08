@@ -2,7 +2,7 @@
 
 /* $Id$ */
 
-//$PageSecurity = 2;
+
 include('includes/session.inc');
 
 if (!in_array($PageSecurity,$_SESSION['AllowedPageSecurityTokens'])){
@@ -18,9 +18,9 @@ if (isset($_GET['ProducePDF'])){
 
 	if ($Counter >0) {
 		$pdf->OutputD('SalesAnalysis_' . date('Y-m-d') . '.pdf');
-		$pdf-> __destruct();
+		$pdf->__destruct();
 	} else {
-		$pdf-> __destruct();
+		$pdf->__destruct();
 		$title = _('User Defined Sales Analysis Problem');
 		include('includes/header.inc');
 		echo '<p>' . _('The report did not have any none zero lines of information to show and so it has not been created');
@@ -46,5 +46,4 @@ if ($_GET['ProduceCVSFile']==True){
 	 echo '<p>' . _('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . _('If this does not happen') . ' <a href="' . $rootpath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv">' . _('click here') . '</a> ' . _('to continue') . '<br />';
 	 include('includes/footer.inc');
 }
-
 ?>
