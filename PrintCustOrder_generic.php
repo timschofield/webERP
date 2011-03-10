@@ -9,6 +9,7 @@
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 
+
 //Get Out if we have no order number to work with
 If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
         $title = _('Select Order To Print');
@@ -119,6 +120,7 @@ $ListCount = 0; // UldisN
 
 for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for office */
 	if ($i==2){
+                $PageNumber = 1;
 		$pdf->newPage();
 	}
 	/* Now ... Has the order got any line items still outstanding to be invoiced */

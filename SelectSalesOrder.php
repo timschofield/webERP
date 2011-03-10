@@ -2,11 +2,257 @@
 
 /* $Id$*/
 
-//$PageSecurity = 2;
-
 include('includes/session.inc');
 $title = _('Search Outstanding Sales Orders');
 include('includes/header.inc');
+
+
+if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders */
+	/*Note the button would not have been displayed if the user had no authority to create purchase orders */
+	$OrdersToPlacePOFor = '';
+	for ($i=1;$i<count($_POST);$i++){
+		if ($_POST['PlacePO_' . $i]== 'on') {
+			if ($OrdersToPlacePOFor==''){
+				$OrdersToPlacePOFor .= ' orderno=' . $_POST['OrderNo_PO_'.$i];
+			} else {
+				$OrdersToPlacePOFor .= ' OR orderno=' . $_POST['OrderNo_PO_'.$i];
+			}
+		}
+	}
+	if (strlen($OrdersToPlacePOFor)==''){
+		prnMsg(_('There were no sales orders checked to place purchase orders for. No purchase orders will be created.'),'info');
+	} else {
+   /*  Now build SQL of items to purchase with purchasing data and preferred suppliers - sorted by preferred supplier */
+		$sql = "SELECT purchdata.supplierno,
+					 purchdata.stockid,
+					 purchdata.price,
+					 purchdata.suppliers_partno,
+					 purchdata.supplierdescription,
+					 purchdata.conversionfactor,
+					 purchdata.leadtime,
+					 stockmaster.kgs,
+					 stockmaster.cuft
+					 SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS OrderQty
+				FROM purchdata INNER JOIN salesorderdetails ON
+					 purchdata.stockid = salesorderdetails.stkcode
+					 INNER JOIN stockmaster  ON
+					 purchdata.stockid = stockmaster.stockid
+				WHERE purchdata.preferred=1 
+				AND purchdata.effectivefrom <='" . Date('Y-m-d') . "'
+				AND (" . $OrdersToPlacePOFor . ")
+				GROUP BY purchdata.supplierno,
+							purchdata.stockid,
+							purchdata.price,
+							purchdata.suppliers_partno,
+							purchdata.supplierdescription,
+							purchdata.conversionfactor,
+							purchdata.leadtime,
+							stockmaster.kgs,
+							stockmaster.cuft
+				ORDER BY purchdata.supplierno,
+							 purchdata.stockid";
+		$ErrMsg = _('Unable to retrieve the items on the selected orders for creating purchase orders for');
+		$ItemResult = DB_query($sql,$db,$ErrMsg);
+		$SupplierID = '';
+		while ($ItemRow = DB_fetch_array($ItemResult)){
+			$SupplierID = $ItemRow['supplierno'];
+			/*Now get all the required details for the supplier */
+			
+			
+			
+			
+			
+			
+			
+			
+			$result = DB_Txn_Begin($db);
+
+			/*figure out what status to set the order to */
+			if (IsEmailAddress($_SESSION['UserEmail'])){
+				$UserDetails  = ' <a href="mailto:' . $_SESSION['UserEmail'] . '">' . $_SESSION['UsersRealName']. '</a>';
+			} else {
+				$UserDetails  = ' ' . $_SESSION['UsersRealName'] . ' ';
+			}
+			if ($_SESSION['AutoAuthorisePO']==1) { //if the user has authority to authorise the PO then it will automatically be authorised
+				$AuthSQL ="SELECT authlevel
+							FROM purchorderauth
+							WHERE userid='".$_SESSION['UserID']."'
+							AND currabrev='".$_SESSION['PO'.$identifier]->CurrCode."'";
+	
+				$AuthResult=DB_query($AuthSQL,$db);
+				$AuthRow=DB_fetch_array($AuthResult);
+				
+				if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $_SESSION['PO'.$identifier]->Order_Value()) { //user has authority to authrorise as well as create the order
+					$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . $UserDetails . ' - '.$_SESSION['PO'.$identifier]->StatusMessage.'<br />';
+					$_SESSION['PO'.$identifier]->AllowPrintPO=1;
+					$_SESSION['PO'.$identifier]->Status = 'Authorised';
+				} else { // no authority to authorise this order
+					if (DB_num_rows($AuthResult) ==0){
+						$AuthMessage = _('Your authority to approve purchase orders in') . ' ' . $_SESSION['PO'.$identifier]->CurrCode . ' ' . _('has not yet been set up') . '<br />';
+					} else {
+						$AuthMessage = _('You can only authorise up to').' '.$_SESSION['PO'.$identifier]->CurrCode.' '.$AuthorityLevel.'.<br />';
+					}
+					
+					prnMsg( _('You do not have permission to authorise this purchase order').'.<br />'. _('This order is for').' '.
+						$_SESSION['PO'.$identifier]->CurrCode . ' '. $_SESSION['PO'.$identifier]->Order_Value() .'. '.
+						$AuthMessage .
+						_('If you think this is a mistake please contact the systems administrator') . '<br />'.
+						_('The order will be created with a status of pending and will require authorisation'), 'warn');
+						
+					$_SESSION['PO'.$identifier]->AllowPrintPO=0;
+					$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . $UserDetails . ' - '.$_SESSION['PO'.$identifier]->StatusMessage.'<br />';
+					$_SESSION['PO'.$identifier]->Status = 'Pending';
+				}
+			} else { //auto authorise is set to off
+				$_SESSION['PO'.$identifier]->AllowPrintPO=0;
+				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . $UserDetails . ' - '.$_SESSION['PO'.$identifier]->StatusMessage.'<br />';
+				$_SESSION['PO'.$identifier]->Status = 'Pending';
+			}
+	
+			if ($_SESSION['ExistingOrder']==0){ /*its a new order to be inserted */
+	
+	//Do we need to check authorisation to create - no because already trapped when new PO session started
+				
+				/*Get the order number */
+				$_SESSION['PO'.$identifier]->OrderNo =  GetNextTransNo(18, $db);
+	
+				/*Insert to purchase order header record */
+				$sql = "INSERT INTO purchorders (	orderno,
+									supplierno,
+									comments,
+									orddate,
+									rate,
+									initiator,
+									requisitionno,
+									intostocklocation,
+									deladd1,
+									deladd2,
+									deladd3,
+									deladd4,
+									deladd5,
+									deladd6,
+									tel,
+									suppdeladdress1,
+									suppdeladdress2,
+									suppdeladdress3,
+									suppdeladdress4,
+									suppdeladdress5,
+									suppdeladdress6,
+									suppliercontact,
+									supptel,
+									contact,
+									version,
+									revised,
+									deliveryby,
+									status,
+									stat_comment,
+									deliverydate,
+									paymentterms,
+									allowprint)
+								VALUES(	'" . $_SESSION['PO'.$identifier]->OrderNo . "',
+												'" . $_SESSION['PO'.$identifier]->SupplierID . "',
+												'" . $_SESSION['PO'.$identifier]->Comments . "',
+												'" . Date('Y-m-d') . "',
+												'" . $_SESSION['PO'.$identifier]->ExRate . "',
+												'" . $_SESSION['PO'.$identifier]->Initiator . "',
+												'" . $_SESSION['PO'.$identifier]->RequisitionNo . "',
+												'" . $_SESSION['PO'.$identifier]->Location . "',
+												'" . $_SESSION['PO'.$identifier]->DelAdd1 . "',
+												'" . $_SESSION['PO'.$identifier]->DelAdd2 . "',
+												'" . $_SESSION['PO'.$identifier]->DelAdd3 . "',
+												'" . $_SESSION['PO'.$identifier]->DelAdd4 . "',
+												'" . $_SESSION['PO'.$identifier]->DelAdd5 . "',
+												'" . $_SESSION['PO'.$identifier]->DelAdd6 . "',
+												'" . $_SESSION['PO'.$identifier]->Tel . "',
+												'" . $_SESSION['PO'.$identifier]->SuppDelAdd1 . "',
+												'" . $_SESSION['PO'.$identifier]->SuppDelAdd2 . "',
+												'" . $_SESSION['PO'.$identifier]->SuppDelAdd3 . "',
+												'" . $_SESSION['PO'.$identifier]->SuppDelAdd4 . "',
+												'" . $_SESSION['PO'.$identifier]->SuppDelAdd5 . "',
+												'" . $_SESSION['PO'.$identifier]->SuppDelAdd6 . "',
+												'" . $_SESSION['PO'.$identifier]->SupplierContact . "',
+												'" . $_SESSION['PO'.$identifier]->SuppTel. "',
+												'" . $_SESSION['PO'.$identifier]->Contact . "',
+												'" . $_SESSION['PO'.$identifier]->Version . "',
+												'" . Date('Y-m-d') . "',
+												'" . $_SESSION['PO'.$identifier]->DeliveryBy . "',
+												'" . $_SESSION['PO'.$identifier]->Status . "',
+												'" . $StatusComment . "',
+												'" . FormatDateForSQL($_SESSION['PO'.$identifier]->DeliveryDate) . "',
+												'" . $_SESSION['PO'.$identifier]->PaymentTerms. "',
+												'" . $_SESSION['PO'.$identifier]->AllowPrintPO . "'
+											)";
+	
+				$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
+				$DbgMsg = _('The SQL statement used to insert the purchase order header record and failed was');
+				$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+	
+			     /*Insert the purchase order detail records */
+				foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
+					if ($POLine->Deleted==False) {
+						$sql = "INSERT INTO purchorderdetails ( orderno,
+																								itemcode,
+																								deliverydate,
+																								itemdescription,
+																								glcode,
+																								unitprice,
+																								quantityord,
+																								shiptref,
+																								jobref,
+																								itemno,
+																								suppliersunit,
+																								suppliers_partno,
+																								subtotal_amount,
+																								package,
+																								pcunit,
+																								netweight,
+																								kgs,
+																								cuft,
+																								total_quantity,
+																								total_amount,
+																								assetid,
+																								conversionfactor )
+																						VALUES (
+																								'" . $_SESSION['PO'.$identifier]->OrderNo . "',
+																								'" . $POLine->StockID . "',
+																								'" . FormatDateForSQL($POLine->ReqDelDate) . "',
+																								'" . $POLine->ItemDescription . "',
+																								'" . $POLine->GLCode . "',
+																								'" . $POLine->Price . "',
+																								'" . $POLine->Quantity . "',
+																								'" . $POLine->ShiptRef . "',
+																								'" . $POLine->JobRef . "',
+																								'" . $POLine->ItemNo . "',
+																								'" . $POLine->SuppliersUnit . "',
+																								'" . $POLine->Suppliers_PartNo . "',
+																								'" . $POLine->SubTotal_Amount . "',
+																								'" . $POLine->Package . "',
+																								'" . $POLine->PcUnit . "',
+																								'" . $POLine->NetWeight . "',
+																								'" . $POLine->KGs . "',
+																								'" . $POLine->CuFt . "',
+																								'" . $POLine->Total_Quantity . "',
+																								'" . $POLine->Total_Amount . "',
+																								'" . $POLine->AssetID . "',
+																								'" . $POLine->ConversionFactor . "')";
+						$ErrMsg =_('One of the purchase order detail records could not be inserted into the database because');
+						$DbgMsg =_('The SQL statement used to insert the purchase order detail record and failed was');
+						
+						$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+					}
+				} /* end of the loop round the detail line items on the order */
+				echo '<p>';
+				prnMsg(_('Purchase Order') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . _('on') . ' ' .
+			     	$_SESSION['PO'.$identifier]->SupplierName . ' ' . _('has been created'),'success');
+		}
+	}
+}/*end of purchase order creation code */
+/* ******************************************************************************************* */
+
+
+
+
+/*To the sales order selection form */
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Sales') . '" alt="" />' . ' ' . _('Outstanding Sales Orders') . '</p> ';
 
@@ -410,37 +656,53 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 
 	/*show a table of the orders returned by the SQL */
 	if (DB_num_rows($SalesOrdersResult)>0) {
-		echo '<table cellpadding=2 colspan=7 width=95% class=selection>';
+		
+                /* Get users authority to place POs */
+                $AuthSql="SELECT cancreate
+			FROM purchorderauth
+			WHERE userid='". $_SESSION['UserID'] . "'";
+			
+		/*we don't know what currency these orders might be in but if no authority at all then don't show option*/
+		$AuthResult=DB_query($AuthSQL,$db);
+		$AuthRow=DB_fetch_array($AuthResult);
+
+                echo '<table cellpadding=2 colspan=7 width=95% class=selection>';
 
 		if (isset($_POST['Quotations']) and $_POST['Quotations']=='Orders_Only'){
-			$tableheader = "<tr>
-				<th>" . _('Modify') . "</th>
-				<th>" . _('Invoice') . "</th>
-				<th>" . _('Dispatch Note') . "</th>
-				<th>" . _('Sales Order') . "</th>
-				<th>" . _('Customer') . "</th>
-				<th>" . _('Branch') . "</th>
-				<th>" . _('Cust Order') . " #</th>
-				<th>" . _('Order Date') . "</th>
-				<th>" . _('Req Del Date') . "</th>
-				<th>" . _('Delivery To') . "</th>
-				<th>" . _('Order Total') . "</th></tr>";
-		} else {
-			$tableheader = "<tr>
-				<th>" . _('Modify') . "</th>
-				<th>" . _('Print Quote') . "</th>
-				<th>" . _('Customer') . "</th>
-				<th>" . _('Branch') . "</th>
-				<th>" . _('Cust Ref') . " #</th>
-				<th>" . _('Quote Date') . "</th>
-				<th>" . _('Req Del Date') . "</th>
-				<th>" . _('Delivery To') . "</th>
-				<th>" . _('Quote Total') . "</th></tr>";
+			$tableheader = '<tr>
+						<th>' . _('Modify') . '</th>
+						<th>' . _('Invoice') . '</th>
+						<th>' . _('Dispatch Note') . '</th>
+						<th>' . _('Sales Order') . '</th>
+						<th>' . _('Customer') . '</th>
+						<th>' . _('Branch') . '</th>
+						<th>' . _('Cust Order') . ' #</th>
+						<th>' . _('Order Date') . '</th>
+						<th>' . _('Req Del Date') . '</th>
+						<th>' . _('Delivery To') . '</th>
+						<th>' . _('Order Total') . '</th>';
+			if ($AuthRow['cancreate']==0){ //If cancreate==0 then this means the user can create orders hmmm!!
+				$tableheader .= '<th>' . _('Place PO') . '</th></tr>';
+			} else {
+				$tableheader .= '</tr>';
+			}
+		} else {  /* displaying only quotations */
+			$tableheader = '<tr>
+						<th>' . _('Modify') . '</th>
+						<th>' . _('Print Quote') . '</th>
+						<th>' . _('Customer') . '</th>
+						<th>' . _('Branch') . '</th>
+						<th>' . _('Cust Ref') . ' #</th>
+						<th>' . _('Quote Date') . '</th>
+						<th>' . _('Req Del Date') . '</th>
+						<th>' . _('Delivery To') . '</th>
+						<th>' . _('Quote Total') . '</th></tr>';
 		}
 
 		echo $tableheader;
 		}
-		$j = 1;
+		$i = 1;
+                $j = 1;
 		$k=0; //row colour counter
 		while ($myrow=DB_fetch_array($SalesOrdersResult)) {
 
@@ -474,30 +736,64 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 		}
 
 		if ($_POST['Quotations']=='Orders_Only'){
-			printf("<td><a href='%s'>%s</a></td>
-				<td><a href='%s'>" . _('Invoice') . "</a></td>
-				<td><a target='_blank' href='%s'>" . $PrintText . " <IMG SRC='" .$rootpath."/css/".$theme."/images/pdf.png' title='" . _('Click for PDF') . "'></a></td>
-				<td><a target='_blank' href='%s'>" . $PrintText . " <IMG SRC='" .$rootpath."/css/".$theme."/images/pdf.png' title='" . _('Click for PDF') . "'></a></td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class=number>%s</td>
-				</tr>",
-				$ModifyPage,
-				$myrow['orderno'],
-				$Confirm_Invoice,
-				$PrintDispatchNote,
-				$PrintSalesOrder,
-				$myrow['name'],
-				$myrow['brname'],
-				$myrow['customerref'],
-				$FormatedOrderDate,
-				$FormatedDelDate,
-				$myrow['deliverto'],
-				$FormatedOrderValue);
+
+                     /*Check authority to create POs if user has authority then show the check boxes to select sales orders to place POs for otherwise don't provide this option */
+                        if ($AuthRow['cancreate']==0){ //cancreate==0 if the user can create POs
+        			printf("<td><a href='%s'>%s</a></td>
+        				<td><a href='%s'>" . _('Invoice') . "</a></td>
+        				<td><a target='_blank' href='%s'>" . $PrintText . " <IMG SRC='" .$rootpath."/css/".$theme."/images/pdf.png' title='" . _('Click for PDF') . "'></a></td>
+        				<td><a target='_blank' href='%s'>" . $PrintText . " <IMG SRC='" .$rootpath."/css/".$theme."/images/pdf.png' title='" . _('Click for PDF') . "'></a></td>
+        				<td>%s</td>
+        				<td>%s</td>
+        				<td>%s</td>
+        				<td>%s</td>
+        				<td>%s</td>
+        				<td>%s</td>
+        				<td class=number>%s</td>
+        				<td><input type=checkbox name=PlacePO_%s><input type=hidden name=OrderNo_PO_%s value=%s></td>
+        				</tr>",
+        				$ModifyPage,
+        				$myrow['orderno'],
+        				$Confirm_Invoice,
+        				$PrintDispatchNote,
+        				$PrintSalesOrder,
+        				$myrow['name'],
+        				$myrow['brname'],
+        				$myrow['customerref'],
+        				$FormatedOrderDate,
+        				$FormatedDelDate,
+        				$myrow['deliverto'],
+        				$FormatedOrderValue,
+                                        $i,
+                                        $i,
+                                        $myrow['orderno']);
+                        } else {  /*User is not authorised to create POs so don't even show the option */
+                               	printf("<td><a href='%s'>%s</a></td>
+        				<td><a href='%s'>" . _('Invoice') . "</a></td>
+        				<td><a target='_blank' href='%s'>" . $PrintText . " <IMG SRC='" .$rootpath."/css/".$theme."/images/pdf.png' title='" . _('Click for PDF') . "'></a></td>
+        				<td><a target='_blank' href='%s'>" . $PrintText . " <IMG SRC='" .$rootpath."/css/".$theme."/images/pdf.png' title='" . _('Click for PDF') . "'></a></td>
+        				<td>%s</td>
+        				<td>%s</td>
+        				<td>%s</td>
+        				<td>%s</td>
+        				<td>%s</td>
+        				<td>%s</td>
+        				<td class=number>%s</td>
+        				</tr>",
+        				$ModifyPage,
+        				$myrow['orderno'],
+        				$Confirm_Invoice,
+        				$PrintDispatchNote,
+        				$PrintSalesOrder,
+        				$myrow['name'],
+        				$myrow['brname'],
+        				$myrow['customerref'],
+        				$FormatedOrderDate,
+        				$FormatedDelDate,
+        				$myrow['deliverto'],
+        				$FormatedOrderValue);
+                        }
+
 		} else { /*must be quotes only */
 			printf("<td><a href='%s'>%s</a></td>
 				<td><a href='%s'>" . $PrintText . "</a></td>
@@ -520,7 +816,7 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 				$myrow['deliverto'],
 				$FormatedOrderValue);
 		}
-
+                $i++;
 		$j++;
 		if ($j == 12){
 			$j=1;
@@ -529,7 +825,9 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 	//end of page full new headings if
 	}
 	//end of while loop
-
+        if ($_POST['Quotations']=='Orders_Only'  AND $AuthRow['cancreate']==0){ //cancreate==0 means can create POs
+          echo '<tr><td colspan="10"><td><td colspan="2"><input type="submit" name="PlacePO" value="' . _('Place PO') . '" onclick="return confirm(\'' . _('This will create purchase orders for all the items on the checked sales orders above, based on the preferred supplier purchasing data held in the system. Are You Absolutely Sure?') . '\');"></td</tr>';
+        }
 	echo '</table>';
 }
 

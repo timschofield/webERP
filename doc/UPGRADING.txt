@@ -2,6 +2,8 @@ UPGRADING FROM PREVIOUS VERSIONS OF WEBERP
 
 /* $Id$*/
 
+From version 4.01 database upgrades are now automatically processed if the version number of the code is different to the version number of the database. The first login will require the system administrator to allow the system to upgrade it's own database. A backup of the database prior to the running the upgrade is advisable. The new upgrade system will not be able to identify versions prior to 3.11 so it is necessary to select the version being upgraded from manaully. It can process database upgrades from version 3.00 onwards.
+
 From version 3.05 an upgrade script will be provided that applies the database modifications automatically and does any data conversions required for the new scripts to work.
 
 The upgrade script to convert a 3.05 database to work with 3.06 scripts is:
@@ -13,7 +15,7 @@ Once the new scripts have been loaded onto the web-server and a backup of the ol
 Previous to version 3.05, the database conversion had to be done manually - the instructions to complete upgrades from older versions are provided below:
 
 
-CONVERTING THE DATABASE 
+CONVERTING THE DATABASE MANUALY - THE DETAIL
 
 As each new version is released the new php scripts will use new database fields or changed field names. A a consequence, the new scripts will most likely not work unless the database structure has been converted to the new database structure. Normally the changes to the database between versions are small. However, between 2.9b and 3.0 the changes were significant and the upgrade script may take some time to run. It should not be run from a phpMyAdmin window since PHP will time out long before the upgrade script will have finished.
 
@@ -26,9 +28,9 @@ upgradeXX.XX-YY.YY.sql
 where XX.XX is the old version number and YY.YY is the new version number.
 
 No other users should be using the database. The upgrade script will need to be edited to use the name of the database that your webERP installation was created with - by default this is weberp. If the default has not been changed then the following line will need to be added to the upgrade script - right at the beginning:
- 
+
 	use weberp;
- 
+
 A similar line will be required but substituting the name of the database that your installation uses where the default database name has been changed.
 
 
@@ -58,7 +60,7 @@ NOTES ON UPGRADING FROM 2.9B TO 3.0
 
 There are extensive changes to the database and the upgrade2.9b-3.0.sql may take some time to run depending on how much data there is in the system. A backup of the 2.9b database dump should be taken prior to attempting to run the upgrade script.
 
-IMPORTANT: Note that version of mysql 4.1.8 or greater is required because from the mysql change log: 
+IMPORTANT: Note that version of mysql 4.1.8 or greater is required because from the mysql change log:
 	"Fix two hangs: FOREIGN KEY constraints treated table and database names as case-insensitive. RENAME TABLE t TO T would hang in an endless loop if t had a foreign key constraint defined on it. Fix also a hang over the dictionary mutex that would occur if one tried in ALTER TABLE or RENAME TABLE to create a foreign key constraint name that collided with another existing name. (Bug
 #3478)"
 
@@ -71,6 +73,6 @@ NOTES ON UPGRADING FROM 3.04 to 3.05
 3.05 now has Dave Premo's report writer scripts included in the distribution - additional tables are required for this functionality. Also, 3.05 allows for weighted average stock valuation - using the existing data fields and retaining integrated general ledger stock values. This requires cost information to be copied over into the grns table.
 The upgrade script Z_Upgrade_3.04-3.05.php applies all the additional tables to the database and does the data conversions required wihtout any manual intervention.
 
-NOTES ON UPGRADING FROM 3.11 to 3.12
+NOTES ON UPGRADING FROM 3.11 to 4.x
 
-PHP 5 is now required because of the simpleXML module of PHP only comes with PHP 5. This is used on the new XML definition of report formats.
+PHP 5 is now required because of the simpleXML module of PHP only comes with PHP 5+. This is used on the new XML definition of report formats.

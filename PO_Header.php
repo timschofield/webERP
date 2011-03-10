@@ -618,7 +618,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 					ON stockmaster.stockid = purchdata.stockid
 				WHERE stockmaster.stockid='".$Purch_Item. "'
 				AND purchdata.supplierno ='" . $_GET['SelectedSupplier'] . "'";
-		$Result=DB_query($sql, $db);
+		$result=DB_query($sql, $db);
 		$PurchItemRow=DB_fetch_array($result);
 
 		if (!isset($PurchItemRow['conversionfactor'])) {

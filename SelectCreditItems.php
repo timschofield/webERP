@@ -72,7 +72,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 		  //insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
-			   $SQL = "SELECT
+			   $SQL = 'SELECT
 			   		custbranch.debtorno,
 					custbranch.brname,
 					custbranch.contactname,
@@ -80,7 +80,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 					custbranch.faxno,
 					custbranch.branchcode
 				FROM custbranch
-				WHERE custbranch.brname " . LIKE  . "'" . $SearchString . "'
+				WHERE custbranch.brname ' . LIKE  . " '" . $SearchString . "'
 				AND custbranch.disabletrans=0";
 
 		  } elseif (strlen($_POST['CustCode'])>0){
@@ -1102,12 +1102,12 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 	/* Insert the tax totals for each tax authority where tax was charged on the invoice */
 	foreach ($TaxTotals AS $TaxAuthID => $TaxAmount) {
 
-		$SQL = "INSERT INTO debtortranstaxes (debtortransid,
+		$SQL = 'INSERT INTO debtortranstaxes (debtortransid,
 							taxauthid,
 							taxamount)
-				VALUES ('" . $CreditTransID . "',
-					'" . $TaxAuthID . "',
-					'" . -($TaxAmount)/$_SESSION['CurrencyRate'] . "')";
+				VALUES (' . $CreditTransID . ',
+					' . $TaxAuthID . ',
+					' . -($TaxAmount)/$_SESSION['CurrencyRate'] . ')';
 
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction taxes records could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction taxes record was used');

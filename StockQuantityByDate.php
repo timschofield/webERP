@@ -22,16 +22,17 @@ $resultStkLocs = DB_query($sql, $db);
 echo '<table class=selection><tr>';
 echo '<td>' . _('For Stock Category') . ":</td>
 	<td><select name='StockCategory'> ";
+echo '<option value="All">' . _('All') . '</option>';
 
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockCategory']) AND $_POST['StockCategory']!='All'){
 		if ($myrow['categoryid'] == $_POST['StockCategory']){
-		     echo "<option selected VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
+		     echo "<option selected VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'] . '</option>';
 		} else {
-		     echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
+		     echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'] . '</option>';
 		}
 	}else {
-		 echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
+		 echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'] . '</option>';
 	}
 }
 echo '</select></td>';
@@ -69,14 +70,21 @@ echo '</form>';
 
 $TotalQuantity = 0;
 
-if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate']))
-{
-	$sql = "SELECT stockid,
-			description,
-			decimalplaces
-		FROM stockmaster
-		WHERE categoryid = '" . $_POST['StockCategory'] . "'
-		AND (mbflag='M' OR mbflag='B')";
+if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate'])) {
+        if ($_POST['StockCategory']='All') {
+                 $sql = "SELECT stockid,
+                                 description,
+                                 decimalplaces
+                         FROM stockmaster
+                         WHERE (mbflag='M' OR mbflag='B')";
+         } else {
+                 $sql = "SELECT stockid,
+                                 description,
+                                 decimalplaces
+                         FROM stockmaster
+                         WHERE categoryid = '" . $_POST['StockCategory'] . "'
+                         AND (mbflag='M' OR mbflag='B')";
+         }
 
 	$ErrMsg = _('The stock items in the category selected cannot be retrieved because');
 	$DbgMsg = _('The SQL that failed was');
