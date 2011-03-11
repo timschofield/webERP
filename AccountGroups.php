@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
 	}
 	if (ContainsIllegalCharacters($_POST['GroupName'])) {
 		$InputError = 1;
-		prnMsg( _('The account group name cannot contain the character') . " '&' " . _('or the character') ." '",'error');
+		prnMsg( _('The account group name cannot contain the character') . " '&' " . _('or the character') ."' '",'error');
 		$Errors[$i] = 'GroupName';
 		$i++;
 	}
@@ -257,13 +257,13 @@ or deletion of the records*/
 			break;
 		} //end of switch statement
 
-		echo '<td>' . htmlentities($myrow[0]) . '</td>
+		echo '<td>' . htmlentities($myrow[0], ENT_QUOTES,'UTF-8') . '</td>
 			<td>' . $myrow[1] . '</td>
 			<td>' . $myrow[2] . '</td>
 			<td>' . $PandLText . '</td>
 			<td>' . $myrow[4] . '</td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&amp;SelectedAccountGroup=' . htmlentities($myrow[0]) . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&amp;SelectedAccountGroup=' . htmlentities($myrow[0]) . '&amp;delete=1">' . _('Delete') .'</a></td></tr>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&amp;SelectedAccountGroup=' . htmlentities($myrow[0], ENT_QUOTES,'UTF-8') . '">' . _('Edit') . '</a></td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&amp;SelectedAccountGroup=' . htmlentities($myrow[0], ENT_QUOTES,'UTF-8') . '&amp;delete=1">' . _('Delete') .'</a></td></tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table>';
@@ -353,9 +353,9 @@ if (! isset($_GET['delete'])) {
 	while ( $grouprow = DB_fetch_array($groupresult) ) {
 
 		if (isset($_POST['ParentGroupName']) and $_POST['ParentGroupName']==$grouprow['groupname']) {
-			echo '<option selected="selected" value="'.htmlentities($grouprow['groupname']).'">' .htmlentities($grouprow['groupname']).'</option>';
+			echo '<option selected="selected" value="'.htmlentities($grouprow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlentities($grouprow['groupname'], ENT_QUOTES,'UTF-8').'</option>';
 		} else {
-			echo '<option value="'.htmlentities($grouprow['groupname']).'">' .htmlentities($grouprow['groupname']).'</option>';
+			echo '<option value="'.htmlentities($grouprow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlentities($grouprow['groupname'], ENT_QUOTES,'UTF-8').'</option>';
 		}
 	}
 	echo '</select>';

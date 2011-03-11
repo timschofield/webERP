@@ -5,8 +5,6 @@
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
 
-//$PageSecurity = 3;
-
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 /* Session started in session.inc for password checking and authorisation level check */

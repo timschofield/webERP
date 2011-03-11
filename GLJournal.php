@@ -249,175 +249,173 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 	$_SESSION['JournalDetail']->JnlDate = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m'),0,date('Y')));
 }
 
-	echo '<table><tr>
-			<td colspan="5"><table class="selection"><tr><td>'._('Date to Process Journal').":</td>
-			<td><input type='text' class='date' alt='".$_SESSION['DefaultDateFormat']."' name='JournalProcessDate' maxlength='10' size='11' value='" .
-						 $_SESSION['JournalDetail']->JnlDate . "' /></td>";
-	echo '<td>' . _('Type') . ':</td>
-			<td><select name="JournalType">';
+echo '<table><tr>
+		<td colspan="5"><table class="selection"><tr><td>'._('Date to Process Journal').":</td>
+		<td><input type='text' class='date' alt='".$_SESSION['DefaultDateFormat']."' name='JournalProcessDate' maxlength='10' size='11' value='" .
+					 $_SESSION['JournalDetail']->JnlDate . "' /></td>";
+echo '<td>' . _('Type') . ':</td>
+		<td><select name="JournalType">';
 
-	if ($_POST['JournalType'] == 'Reversing'){
-		echo "<option selected='True' value = 'Reversing'>" . _('Reversing')."</option>";
-		echo "<option value = 'Normal'>" . _('Normal')."</option>";
-	} else {
-		echo "<option value = 'Reversing'>" . _('Reversing')."</option>";
-		echo "<option selected='True' value = 'Normal'>" . _('Normal')."</option>";
-	}
+if ($_POST['JournalType'] == 'Reversing'){
+	echo '<option selected="True" value = "Reversing">' . _('Reversing').'</option>';
+	echo '<option value = "Normal">' . _('Normal').'</option>';
+} else {
+	echo '<option value = "Reversing">' . _('Reversing').'</option>';
+	echo '<option selected="True" value = "Normal">' . _('Normal') . '</option>';
+}
 
-	echo '</select></td>
-			</tr>
-		</table>';
-	/* close off the table in the first column  */
+echo '</select></td>
+		</tr>
+	</table>';
+/* close off the table in the first column  */
 
-	echo '<br />';
-	echo '<table class="selection" width="70%">';
-	/* Set upthe form for the transaction entry for a GL Payment Analysis item */
+echo '<br />';
+echo '<table class="selection" width="70%">';
+/* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
-	echo '<tr><th colspan="3"><div class="centre"><font size="3" color="blue"><b>' . _('Journal Line Entry') . '</b></font></div></th></tr>';
+echo '<tr><th colspan="3"><div class="centre"><font size="3" color="blue"><b>' . _('Journal Line Entry') . '</b></font></div></th></tr>';
 
-	/*now set up a GLCode field to select from avaialble GL accounts */
-	echo '<tr><th>' . _('GL Tag') . '</th>';
-	echo '<th>' . _('GL Account Code') . '</th>';
-	echo '<th>' . _('Select GL Account') . '</th></tr>';
+/*now set up a GLCode field to select from avaialble GL accounts */
+echo '<tr><th>' . _('GL Tag') . '</th>';
+echo '<th>' . _('GL Account Code') . '</th>';
+echo '<th>' . _('Select GL Account') . '</th></tr>';
 
 /* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
-	//Select the tag
-	echo '<tr><td><select name="tag">';
+//Select the tag
+echo '<tr><td><select name="tag">';
 
-	$SQL = "SELECT tagref,
-				tagdescription
-		FROM tags
-		ORDER BY tagref";
+$SQL = 'SELECT tagref,
+			tagdescription
+	FROM tags
+	ORDER BY tagref';
 
-	$result=DB_query($SQL,$db);
-	echo '<option value="0">0 - None</option>';
-	while ($myrow=DB_fetch_array($result)){
-		if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
-			echo '<option selected value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription']."</option>";
-		} else {
-			echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription']."</option>";
-		}
+$result=DB_query($SQL,$db);
+echo '<option value="0">0 - None</option>';
+while ($myrow=DB_fetch_array($result)){
+	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
+		echo '<option selected value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'].'</option>';
+	} else {
+		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 	}
-	echo '</select></td>';
+}
+echo '</select></td>';
 // End select tag
 
-	if (!isset($_POST['GLManualCode'])) {
-		$_POST['GLManualCode']='';
+if (!isset($_POST['GLManualCode'])) {
+	$_POST['GLManualCode']='';
+}
+echo '<td><input class="number" type="text" Name="GLManualCode" Maxlength="12" size="12" onChange="inArray(this.value, GLCode.options,'.
+	"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' .
+		' value="'. $_POST['GLManualCode'] .'"  /></td>';
+
+$sql="SELECT accountcode,
+			accountname
+		FROM chartmaster
+		ORDER BY accountcode";
+
+$result=DB_query($sql, $db);
+echo '<td><select name="GLCode" onChange="return assignComboToInput(this,'.'GLManualCode'.')">';
+echo '<option value="">' . _('Select a general ledger account code') . '</option>';
+while ($myrow=DB_fetch_array($result)){
+	if (isset($_POST['tag']) and $_POST['tag']==$myrow['accountcode']){
+		echo '<option selected value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'].' - ' .htmlentities($myrow['accountname'], ENT_QUOTES,'UTF-8') . '</option>';
+	} else {
+		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'].' - ' .htmlentities($myrow['accountname'], ENT_QUOTES,'UTF-8') .'</option>';
 	}
-	echo '<td><input class="number" type="text" Name="GLManualCode" Maxlength="12" size="12" onChange="inArray(this.value, GLCode.options,'.
-		"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' .
-			' value="'. $_POST['GLManualCode'] .'"  /></td>';
+}
+echo '</select></td>';
 
-	$sql="SELECT accountcode,
-				accountname
-			FROM chartmaster
-			ORDER BY accountcode";
+if (!isset($_POST['GLNarrative'])) {
+	$_POST['GLNarrative'] = '';
+}
+if (!isset($_POST['Credit'])) {
+	$_POST['Credit'] = '';
+}
+if (!isset($_POST['Debit'])) {
+	$_POST['Debit'] = '';
+}
 
-	$result=DB_query($sql, $db);
-	echo '<td><select name="GLCode" onChange="return assignComboToInput(this,'.'GLManualCode'.')">';
-	echo '<option value="">' . _('Select a general ledger account code') . '</option>';
-	while ($myrow=DB_fetch_array($result)){
-		if (isset($_POST['tag']) and $_POST['tag']==$myrow['accountcode']){
-			echo '<option selected value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'].' - ' .htmlentities($myrow['accountname'])."</option>";
+
+echo '</tr><tr><th>' . _('Debit') . '</th>'.'<td><input type="text" class="number" Name = "Debit" ' .
+			'onChange="eitherOr(this, '.'Credit'.')"'.
+			' Maxlength="12" size="10" value="' . $_POST['Debit'] . '" /></td>';
+echo '</tr><tr><th>' . _('Credit') . "</th>".'<td><input type="text" class="number" Name = "Credit" ' .
+			'onChange="eitherOr(this, '.'Debit'.')"'.
+			' Maxlength="12" size="10" value="' . $_POST['Credit'] . '" /></td>';
+echo '</tr><tr><td></td><td></td><th>'. _('Narrative'). '</th>';
+echo '</tr><tr><th></th><th>' . _('GL Narrative') . "</th>";
+
+echo '<td><input type="text" name="GLNarrative" maxlength="100" size="100" value="' . $_POST['GLNarrative'] . '" /></td>';
+
+echo '</tr></table><br />'; /*Close the main table */
+echo "<div class='centre'><input type='submit' name='Process' value='" . _('Accept') . "' /></div><br /><br />";
+
+
+echo '<table class="selection" width="85%">';
+
+echo '<tr><th colspan="6"><div class="centre"><font size="3" color="blue"><b>' . _('Journal Summary') . '</b></font></div></th></tr>';
+echo '<tr>
+		<th>'._('GL Tag').'</th>
+		<th>'._('GL Account').'</th>
+		<th>'._('Debit').'</th>
+		<th>'._('Credit').'</th>
+		<th>'._('Narrative').'</th></tr>';
+
+$debittotal=0;
+$credittotal=0;
+$j=0;
+
+foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
+		if ($j==1) {
+			echo '<tr class="OddTableRows">';
+			$j=0;
 		} else {
-			echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'].' - ' .htmlentities($myrow['accountname'])."</option>";
+			echo '<tr class="EvenTableRows">';
+			$j++;
 		}
+	$sql="SELECT tagdescription
+			FROM tags
+			WHERE tagref='".$JournalItem->tag . "'";
+	$result=DB_query($sql, $db);
+	$myrow=DB_fetch_row($result);
+	if ($JournalItem->tag==0) {
+		$tagdescription='None';
+	} else {
+		$tagdescription=$myrow[0];
 	}
-	echo '</select></td>';
-
-	if (!isset($_POST['GLNarrative'])) {
-		$_POST['GLNarrative'] = '';
+	echo '<td>' . $JournalItem->tag . ' - ' . $tagdescription . '</td>';
+	echo '<td>' . $JournalItem->GLCode . ' - ' . $JournalItem->GLActName . '</td>';
+	if ($JournalItem->Amount>0) {
+		echo '<td class="number">' . number_format($JournalItem->Amount,2) . '</td><td></td>';
+		$debittotal=$debittotal+$JournalItem->Amount;
+	
+	} elseif($JournalItem->Amount<0) {
+		$credit=(-1 * $JournalItem->Amount);
+		echo '<td></td>
+			<td class="number">' . number_format($credit,2) . '</td>';
+		$credittotal=$credittotal+$credit;
 	}
-	if (!isset($_POST['Credit'])) {
-		$_POST['Credit'] = '';
-	}
-	if (!isset($_POST['Debit'])) {
-		$_POST['Debit'] = '';
-	}
 
+	echo '<td>' . $JournalItem->Narrative  . "</td>
+			<td><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . '&amp;Delete=' . $JournalItem->ID . "'>"._('Delete').'</a></td>
+	</tr>';
+}
 
-	echo '</tr><tr><th>' . _('Debit') . "</th>".'<td><input type="text" class="number" Name = "Debit" ' .
-				'onChange="eitherOr(this, '.'Credit'.')"'.
-				' Maxlength="12" size="10" value="' . $_POST['Debit'] . '" /></td>';
-	echo '</tr><tr><th>' . _('Credit') . "</th>".'<td><input type="text" class="number" Name = "Credit" ' .
-				'onChange="eitherOr(this, '.'Debit'.')"'.
-				' Maxlength="12" size="10" value="' . $_POST['Credit'] . '" /></td>';
-	echo '</tr><tr><td></td><td></td><th>'. _('Narrative'). '</th>';
-	echo '</tr><tr><th></th><th>' . _('GL Narrative') . "</th>";
-
-	echo '<td><input type="text" name="GLNarrative" maxlength="100" size="100" value="' . $_POST['GLNarrative'] . '" /></td>';
-
-	echo '</tr></table><br />'; /*Close the main table */
-	echo "<div class='centre'><input type='submit' name='Process' value='" . _('Accept') . "' /></div><br /><br />";
-
-
-	echo "<table class='selection' width='85%'>";
-
-	echo '<tr><th colspan="6"><div class="centre"><font size="3" color="blue"><b>' . _('Journal Summary') . '</b></font></div></th></tr>';
-	echo "<tr>
-						<th>"._('GL Tag')."</th>
-						<th>"._('GL Account')."</th>
-						<th>"._('Debit')."</th>
-						<th>"._('Credit')."</th>
-						<th>"._('Narrative').'</th></tr>';
-
-						$debittotal=0;
-						$credittotal=0;
-						$j=0;
-
-						foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
-								if ($j==1) {
-									echo '<tr class="OddTableRows">';
-									$j=0;
-								} else {
-									echo '<tr class="EvenTableRows">';
-									$j++;
-								}
-							$sql="SELECT tagdescription
-									FROM tags
-									WHERE tagref='".$JournalItem->tag . "'";
-							$result=DB_query($sql, $db);
-							$myrow=DB_fetch_row($result);
-							if ($JournalItem->tag==0) {
-								$tagdescription='None';
-							} else {
-								$tagdescription=$myrow[0];
-							}
-							echo "<td>" . $JournalItem->tag . ' - ' . $tagdescription . "</td>";
-							echo "<td>" . $JournalItem->GLCode . ' - ' . $JournalItem->GLActName . "</td>";
-								if($JournalItem->Amount>0)
-								{
-								echo "<td class='number'>" . number_format($JournalItem->Amount,2) . '</td><td></td>';
-								$debittotal=$debittotal+$JournalItem->Amount;
-								}
-								elseif($JournalItem->Amount<0)
-								{
-									$credit=(-1 * $JournalItem->Amount);
-								echo "<td></td>
-										<td class='number'>" . number_format($credit,2) . '</td>';
-								$credittotal=$credittotal+$credit;
-								}
-
-							echo '<td>' . $JournalItem->Narrative  . "</td>
-									<td><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . '&amp;Delete=' . $JournalItem->ID . "'>"._('Delete').'</a></td>
-							</tr>';
-						}
-
-			echo '<tr class="EvenTableRows"><td></td>
-					<td class="number"><b> Total </b></td>
-					<td class="number"><b>' . number_format($debittotal,2) . '</b></td>
-					<td class="number"><b>' . number_format($credittotal,2) . '</b></td></tr>';
-			if ($debittotal!=$credittotal) {
-				echo '<td align="center" style="background-color: #fddbdb"><b>Required to balance - </b>' .
-					number_format(abs($debittotal-$credittotal),2);
-			}
-			if ($debittotal>$credittotal) {
-				echo ' Credit</td></tr>';
-			} else if ($debittotal<$credittotal) {
-				echo ' Debit</td></tr>';
-			}
-			echo '</table>';
+echo '<tr class="EvenTableRows"><td></td>
+		<td class="number"><b> Total </b></td>
+		<td class="number"><b>' . number_format($debittotal,2) . '</b></td>
+		<td class="number"><b>' . number_format($credittotal,2) . '</b></td></tr>';
+if ($debittotal!=$credittotal) {
+	echo '<td align="center" style="background-color: #fddbdb"><b>Required to balance - </b>' .
+		number_format(abs($debittotal-$credittotal),2);
+}
+if ($debittotal>$credittotal) {
+	echo ' Credit</td></tr>';
+} else if ($debittotal<$credittotal) {
+	echo ' Debit</td></tr>';
+}
+echo '</table>';
 
 if (ABS($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDetail']->GLItemCounter > 0){
 	echo "<br /><br /><div class='centre'><input type='submit' name='CommitBatch' value='"._('Accept and Process Journal')."' /></div>";

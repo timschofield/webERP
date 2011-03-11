@@ -660,7 +660,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			} else {
 				echo '<td></td>';
 			}
-			echo '<td><input tabindex='.($j+5).' type=submit name="SubmitCustomerSelection' . $j .'" value="' . htmlentities($myrow['brname']) . '"></td>
+			echo '<td><input tabindex='.($j+5).' type=submit name="SubmitCustomerSelection' . $j .'" value="' . htmlentities($myrow['brname'], ENT_QUOTES,'UTF-8'). '"></td>
 					<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'] .' - '.$myrow['branchcode'].'">
 					<td>'.$myrow['contactname'].'</td>
 					<td>'.$myrow['phoneno'].'</td>
