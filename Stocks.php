@@ -477,7 +477,7 @@ if (isset($_POST['submit'])) {
 			prnMsg( _('Cannot delete this item record because there are bills of material that require this part as a component'),'warn');
 			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('bills of material that require this part as a component');
 		} else {
-			$sql= "SELECT COUNT(*) FROM salesorderdetails WHERE stkcode='".$StockID."' GROUP BY stockid";
+			$sql= "SELECT COUNT(*) FROM salesorderdetails WHERE stkcode='".$StockID."' GROUP BY stkcode";
 			$result = DB_query($sql,$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]>0) {
@@ -493,7 +493,7 @@ if (isset($_POST['submit'])) {
 					prnMsg(_('Cannot delete this item because sales analysis records exist for it'),'warn');
 					echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records against this part');
 				} else {
-					$sql= "SELECT COUNT(*) FROM purchorderdetails WHERE itemcode='".$StockID."' GROUP BY stockid";
+					$sql= "SELECT COUNT(*) FROM purchorderdetails WHERE itemcode='".$StockID."' GROUP BY itemcode";
 					$result = DB_query($sql,$db);
 					$myrow = DB_fetch_row($result);
 					if ($myrow[0]>0) {

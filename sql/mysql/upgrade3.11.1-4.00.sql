@@ -816,4 +816,18 @@ ALTER TABLE `purchorderdetails` CHANGE `uom` `suppliersunit` VARCHAR( 50 );
 UPDATE config SET confvalue='3.12.31' WHERE confname='VersionNumber';
 INSERT INTO config (`confname`, `confvalue`) VALUES ('AutoAuthorisePO', '1');
 UPDATE config SET confvalue='4.03' WHERE confname='VersionNumber';
+ALTER TABLE `salesorders` ADD `poplaced` TINYINT NOT NULL DEFAULT '0',
+ADD INDEX ( `poplaced` );
+UPDATE config SET confvalue='4.03.1' WHERE confname='VersionNumber';
 
+CREATE TABLE IF NOT EXISTS `fixedassetlocations` (
+  `locationid` char(6) NOT NULL DEFAULT '',
+  `locationdescription` char(20) NOT NULL DEFAULT '',
+  `parentlocationid` char(6) DEFAULT '',
+  PRIMARY KEY (`locationid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `fixedassetlocations` (`locationid`, `locationdescription`, `parentlocationid`) VALUES
+('HEADOF', 'Head Office', '');
+UPDATE config SET confvalue='4.03.2' WHERE confname='VersionNumber';

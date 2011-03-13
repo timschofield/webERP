@@ -1,5 +1,7 @@
 <p><font SIZE=4 COLOR=BLUE><b>webERP Change Log</b></font></p>
 <p>
+<p>12/3/11: SelectSalesOrder.php now allows any number of sales orders to be selected and purchase orders placed for the aggregate of items on the selected sales orders</p>
+<p>12/3/11: SuppPriceList.php removed a round trip to DB to get currency - fixed function to get pdf to new TCPDF Output </p>
 <p>12/3/11: Exson fix all htmlentities to use ENTQUOTES, 'UTF-8' option so other character sets work with it</p>
 <p>10/3/11: Phil fix pagination of PrintCustOrder_generic.php - second copy was not restarting page numbers</p>
 <p>10/3/11: Tims launchpad fixes brought in MRP.php fix for table charset utf8 so joins work correctly; typeo in PO_Header preventing purchasing data being retrieved ($result not $Result); correct sql on searching for customer in SelectCreditItems.php; StockStatus.php pricing history bug resolved (4450); StockQuantityByDate.php now allowed to show for all categories - enclosed 'All' in gettext</p>
