@@ -97,7 +97,7 @@ if (isset($_POST['DoUpgrade'])){
 					$SQLScripts[] = './sql/mysql/upgrade3.11.1-4.00.sql';
 					break;
 			} //end switch
-			if(isset($_SESSION['VersionNumber']) AND $_SESSION['VersionNumber']< '4.03') { /* VersionNumber is set to '4.03' when upgrade3.11.1-4.00.sql is run */
+			if(isset($_SESSION['VersionNumber']) AND strcmp($_SESSION['VersionNumber'],'4.04')<0) { /* VersionNumber is set to '4.04' when upgrade3.11.1-4.00.sql is run */
 				$SQLScripts[] = './sql/mysql/upgrade3.11.1-4.00.sql';
 			}
 		}	

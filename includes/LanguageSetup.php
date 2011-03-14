@@ -75,8 +75,8 @@ if (function_exists('gettext')){
 		}
 	}
 	//if (substr($_SESSION['Language'],0,2) == 'en'){
-		$locale_info['thousands_sep'] = ',';
-		$locale_info['decimal_point'] = '.';
+	$locale_info['thousands_sep'] = ',';
+	$locale_info['decimal_point'] = '.';
 	/*
 	} else {
 		$locale_info['thousands_sep'] = '.';
