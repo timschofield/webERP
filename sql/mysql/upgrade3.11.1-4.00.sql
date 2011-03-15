@@ -831,3 +831,6 @@ CREATE TABLE IF NOT EXISTS `fixedassetlocations` (
 INSERT INTO `fixedassetlocations` (`locationid`, `locationdescription`, `parentlocationid`) VALUES
 ('HEADOF', 'Head Office', '');
 UPDATE config SET confvalue='4.03.2' WHERE confname='VersionNumber';
+ALTER TABLE locations ADD cashsalebranch varchar(10) DEFAULT '';
+ALTER TABLE `locations` CHANGE `cashsalecustomer` `cashsalecustomer` VARCHAR( 10 ) DEFAULT '';
+UPDATE config SET confvalue='4.03.3' WHERE confname='VersionNumber';

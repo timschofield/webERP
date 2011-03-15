@@ -66,10 +66,11 @@ if (!isset($_SESSION['Items'.$identifier])){
 	$_SESSION['PrintedPackingSlip'] = 0; /*Of course 'cos the order ain't even started !!*/
 	/*Get the default customer-branch combo from the user's default location record */
 	$sql = "SELECT cashsalecustomer,
-								locationname,
-								taxprovinceid
-						 FROM locations
-						 WHERE loccode='" . $_SESSION['UserStockLocation'] ."'";
+	               cashsalebranch,
+	               locationname,
+		       taxprovinceid
+		 FROM locations
+		 WHERE loccode='" . $_SESSION['UserStockLocation'] ."'";
 	$result = DB_query($sql,$db);
 	if (DB_num_rows($result)==0) {
 		prnMsg(_('Your user account does not have a valid default inventory location set up. Please see the system administrator to modify your user account.'),'error');
@@ -78,36 +79,34 @@ if (!isset($_SESSION['Items'.$identifier])){
 	} else {
 		$myrow = DB_fetch_array($result); //get the only row returned
 
-		if ($myrow['cashsalecustomer']==''){
-			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location. The default cash sale customer is defined under set up ->Inventory Locations Maintenance. The customer should be entered using the customer code a hypen then the branch code of the customer to use.'),'error');
+		if ($myrow['cashsalecustomer']=='' OR $myrow['cashsalebranch']==''){
+			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location. The default cash sale customer is defined under set up ->Inventory Locations Maintenance. The customer should be entered using the customer code and a valid branch code of the customer entered.'),'error');
 			include('includes/footer.inc');
 			exit;
 		}
 
-		$CashSaleCustomer = explode('-',$myrow['cashsalecustomer']);
-
-		$_SESSION['Items'.$identifier]->Branch  = $CashSaleCustomer[1];
-		$_SESSION['Items'.$identifier]->DebtorNo = $CashSaleCustomer[0];
+		$_SESSION['Items'.$identifier]->Branch = $myrow['cashsalebranch'];
+		$_SESSION['Items'.$identifier]->DebtorNo = $myrow['cashsalecustomer'];
 		$_SESSION['Items'.$identifier]->LocationName = $myrow['locationname'];
 		$_SESSION['Items'.$identifier]->Location = $_SESSION['UserStockLocation'];
 		$_SESSION['Items'.$identifier]->DispatchTaxProvince = $myrow['taxprovinceid'];
 
 		// Now check to ensure this account exists and set defaults */
 		$sql = "SELECT debtorsmaster.name,
-									holdreasons.dissallowinvoices,
-									debtorsmaster.salestype,
-									salestypes.sales_type,
-									debtorsmaster.currcode,
-									debtorsmaster.customerpoline,
-									paymentterms.terms
-							FROM debtorsmaster,
-								holdreasons,
-								salestypes,
-								paymentterms
-							WHERE debtorsmaster.salestype=salestypes.typeabbrev
-							AND debtorsmaster.holdreason=holdreasons.reasoncode
-							AND debtorsmaster.paymentterms=paymentterms.termsindicator
-							AND debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
+				holdreasons.dissallowinvoices,
+				debtorsmaster.salestype,
+				salestypes.sales_type,
+				debtorsmaster.currcode,
+				debtorsmaster.customerpoline,
+				paymentterms.terms
+			FROM debtorsmaster,
+				holdreasons,
+				salestypes,
+				paymentterms
+			WHERE debtorsmaster.salestype=salestypes.typeabbrev
+			AND debtorsmaster.holdreason=holdreasons.reasoncode
+			AND debtorsmaster.paymentterms=paymentterms.termsindicator
+			AND debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
 		$ErrMsg = _('The details of the customer selected') . ': ' .  $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('The SQL used to retrieve the customer details and failed was') . ':';
@@ -132,19 +131,18 @@ if (!isset($_SESSION['Items'.$identifier])){
 			/* now get the branch defaults from the customer branches table CustBranch. */
 
 			$sql = "SELECT custbranch.brname,
-										custbranch.braddress1,
-										custbranch.defaultshipvia,
-										custbranch.deliverblind,
-										custbranch.specialinstructions,
-										custbranch.estdeliverydays,
-										custbranch.salesman,
-										custbranch.taxgroupid,
-										custbranch.defaultshipvia
-									FROM custbranch
-									WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
-									AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
-
-			$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('cannot be retrieved because');
+				       custbranch.braddress1,
+				       custbranch.defaultshipvia,
+				       custbranch.deliverblind,
+				       custbranch.specialinstructions,
+				       custbranch.estdeliverydays,
+				       custbranch.salesman,
+				       custbranch.taxgroupid,
+				       custbranch.defaultshipvia
+				FROM custbranch
+				WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
+				AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
+                        $ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('cannot be retrieved because');
 			$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
 			$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
@@ -210,7 +208,6 @@ if (isset($_POST['CancelOrder'])) {
 } else { /*Not cancelling the order */
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Counter Sales') . '" alt="" />' . ' ';
-
 	echo _('Counter Sale') . ' - ' . $_SESSION['Items'.$identifier]->LocationName . ' (' . _('all amounts in') . ' ' . $_SESSION['Items'.$identifier]->DefaultCurrency . ')';
 	echo '</p>';
 }
@@ -231,30 +228,30 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 
 		if ($_POST['StockCat']=='All'){
 			$SQL = "SELECT stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.units
-					FROM stockmaster,
-							stockcategory
-					WHERE stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.controlled <> 1
-					AND stockmaster.description " . LIKE . " '" . $SearchString . "'
-					AND stockmaster.discontinued=0
-					ORDER BY stockmaster.stockid";
+					stockmaster.description,
+					stockmaster.units
+				FROM stockmaster,
+					stockcategory
+				WHERE stockmaster.categoryid=stockcategory.categoryid
+				AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+				AND stockmaster.mbflag <>'G'
+				AND stockmaster.controlled <> 1
+				AND stockmaster.description " . LIKE . " '" . $SearchString . "'
+				AND stockmaster.discontinued=0
+				ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.units
-					FROM stockmaster, stockcategory
-					WHERE  stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.controlled <> 1
-					AND stockmaster.discontinued=0
-					AND stockmaster.description " . LIKE . " '" . $SearchString . "'
-					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid";
+					stockmaster.description,
+					stockmaster.units
+				FROM stockmaster, stockcategory
+				WHERE  stockmaster.categoryid=stockcategory.categoryid
+				AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+				AND stockmaster.mbflag <>'G'
+				AND stockmaster.controlled <> 1
+				AND stockmaster.discontinued=0
+				AND stockmaster.description " . LIKE . " '" . $SearchString . "'
+				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+				ORDER BY stockmaster.stockid";
 		}
 
 	} else if (strlen($_POST['StockCode'])>0){
@@ -264,55 +261,55 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 
 		if ($_POST['StockCat']=='All'){
 			$SQL = "SELECT stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.units
-					FROM stockmaster, stockcategory
-					WHERE stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.controlled <> 1
-					AND stockmaster.discontinued=0
-					ORDER BY stockmaster.stockid";
+					stockmaster.description,
+					stockmaster.units
+				FROM stockmaster, stockcategory
+				WHERE stockmaster.categoryid=stockcategory.categoryid
+				AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+				AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
+				AND stockmaster.mbflag <>'G'
+				AND stockmaster.controlled <> 1
+				AND stockmaster.discontinued=0
+				ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.units
-					FROM stockmaster, stockcategory
-					WHERE stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.controlled <> 1
-					AND stockmaster.discontinued=0
-					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid";
+					stockmaster.description,
+					stockmaster.units
+				FROM stockmaster, stockcategory
+				WHERE stockmaster.categoryid=stockcategory.categoryid
+				AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+				AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
+				AND stockmaster.mbflag <>'G'
+				AND stockmaster.controlled <> 1
+				AND stockmaster.discontinued=0
+				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+				ORDER BY stockmaster.stockid";
 		}
 
 	} else {
 		if ($_POST['StockCat']=='All'){
 			$SQL = "SELECT stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.units
-					FROM stockmaster, stockcategory
-					WHERE  stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.controlled <> 1
-					AND stockmaster.discontinued=0
-					ORDER BY stockmaster.stockid";
-		} else {
+					stockmaster.description,
+					stockmaster.units
+				FROM stockmaster, stockcategory
+				WHERE  stockmaster.categoryid=stockcategory.categoryid
+				AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+				AND stockmaster.mbflag <>'G'
+				AND stockmaster.controlled <> 1
+				AND stockmaster.discontinued=0
+				ORDER BY stockmaster.stockid";
+        	} else {
 			$SQL = "SELECT stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.units
-					FROM stockmaster, stockcategory
-					WHERE stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.controlled <> 1
-					AND stockmaster.discontinued=0
-					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid";
+					stockmaster.description,
+					stockmaster.units
+				FROM stockmaster, stockcategory
+				WHERE stockmaster.categoryid=stockcategory.categoryid
+				AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+				AND stockmaster.mbflag <>'G'
+				AND stockmaster.controlled <> 1
+				AND stockmaster.discontinued=0
+				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+				ORDER BY stockmaster.stockid";
 		  }
 	}
 
@@ -426,11 +423,11 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 		} elseif ($myrow=DB_fetch_array($KitResult)){
 			if ($myrow['mbflag']=='K'){	/*It is a kit set item */
 				$sql = "SELECT bom.component,
-											bom.quantity
-								FROM bom
-								WHERE bom.parent='" . $NewItem . "'
-								AND bom.effectiveto > '" . Date('Y-m-d') . "'
-								AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+						bom.quantity
+					FROM bom
+					WHERE bom.parent='" . $NewItem . "'
+					AND bom.effectiveto > '" . Date('Y-m-d') . "'
+					AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
 
 				$ErrMsg =  _('Could not retrieve kitset components from the database because') . ' ';
 				$KitResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -441,6 +438,7 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 					$NewItemQty = $KitParts['quantity'] * $ParentQty;
 					$NewPOLine = 0;
 					include('includes/SelectOrderItems_IntoCart.inc');
+					$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
 				}
 
 			} else if ($myrow['mbflag']=='G'){
@@ -449,6 +447,7 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 				prnMsg(_('The system does not currently cater for counter sales of lot controlled or serialised items'),'warn');
 			} else { /*Its not a kit set item*/
 				include('includes/SelectOrderItems_IntoCart.inc');
+				$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
 			}
 		}
 	 }
@@ -515,9 +514,10 @@ if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)) {
 if (isset($_POST['Recalculate'])) {
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 		$NewItem=$OrderLine->StockID;
-		$sql = "SELECT stockmaster.mbflag, stockmaster.controlled
-					FROM stockmaster
-					WHERE stockmaster.stockid='". $OrderLine->StockID."'";
+		$sql = "SELECT stockmaster.mbflag, 
+                               stockmaster.controlled
+			FROM stockmaster
+			WHERE stockmaster.stockid='". $OrderLine->StockID."'";
 
 		$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
 		$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
@@ -525,11 +525,11 @@ if (isset($_POST['Recalculate'])) {
 		if ($myrow=DB_fetch_array($KitResult)){
 			if ($myrow['mbflag']=='K'){	/*It is a kit set item */
 				$sql = "SELECT bom.component,
-									bom.quantity
-								FROM bom
-								WHERE bom.parent='" . $OrderLine->StockID. "'
-								AND bom.effectiveto > '" . Date('Y-m-d') . "'
-								AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+						bom.quantity
+					FROM bom
+					WHERE bom.parent='" . $OrderLine->StockID. "'
+					AND bom.effectiveto > '" . Date('Y-m-d') . "'
+					AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
 
 				$ErrMsg = _('Could not retrieve kitset components from the database because');
 				$KitResult = DB_query($sql,$db,$ErrMsg);
@@ -559,9 +559,9 @@ Now figure out if the item is a kit set - the field MBFlag='K'
 * controlled items and ghost/phantom items cannot be selected because the SQL to show items to select doesn't show 'em
 * */
 	$sql = "SELECT stockmaster.mbflag,
-								stockmaster.taxcatid
-				   		FROM stockmaster
-						WHERE stockmaster.stockid='". $NewItem ."'";
+			stockmaster.taxcatid
+		FROM stockmaster
+		WHERE stockmaster.stockid='". $NewItem ."'";
 
 	$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
 
@@ -573,11 +573,11 @@ Now figure out if the item is a kit set - the field MBFlag='K'
 	if ($myrow=DB_fetch_array($KitResult)){
 	   	if ($myrow['mbflag']=='K'){	/*It is a kit set item */
 			$sql = "SELECT bom.component,
-									bom.quantity
-								FROM bom
-								WHERE bom.parent='" . $NewItem . "'
-								AND bom.effectiveto > '" . Date('Y-m-d') . "'
-								AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+					bom.quantity
+				FROM bom
+				WHERE bom.parent='" . $NewItem . "'
+				AND bom.effectiveto > '" . Date('Y-m-d') . "'
+				AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
 
 			$ErrMsg = _('Could not retrieve kitset components from the database because');
 			$KitResult = DB_query($sql,$db,$ErrMsg);
@@ -610,8 +610,8 @@ if (isset($NewItemArray) and isset($_POST['OrderItems'])){
 	foreach($NewItemArray as $NewItem => $NewItemQty) {
 		if($NewItemQty > 0)	{
 			$sql = "SELECT stockmaster.mbflag
-							FROM stockmaster
-							WHERE stockmaster.stockid='". $NewItem ."'";
+				FROM stockmaster
+				WHERE stockmaster.stockid='". $NewItem ."'";
 
 			$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
 
@@ -623,11 +623,11 @@ if (isset($NewItemArray) and isset($_POST['OrderItems'])){
 			if ($myrow=DB_fetch_array($KitResult)){
 				if ($myrow['mbflag']=='K'){	/*It is a kit set item */
 					$sql = "SELECT bom.component,
-												bom.quantity
-									FROM bom
-									WHERE bom.parent='" . $NewItem . "'
-									AND bom.effectiveto > '" . Date('Y-m-d') . "'
-									AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+	        					bom.quantity
+		          			FROM bom
+						WHERE bom.parent='" . $NewItem . "'
+						AND bom.effectiveto > '" . Date('Y-m-d') . "'
+						AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
 
 					$ErrMsg = _('Could not retrieve kitset components from the database because');
 					$KitResult = DB_query($sql,$db,$ErrMsg);
@@ -670,10 +670,10 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 			}
 		}
 		$result = DB_query("SELECT MAX(discountrate) AS discount
-											FROM discountmatrix
-											WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
-											AND discountcategory ='" . $OrderLine->DiscCat . "'
-											AND quantitybreak <'" . $QuantityOfDiscCat . "'",$db);
+			            FROM discountmatrix
+				    WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
+				    AND discountcategory ='" . $OrderLine->DiscCat . "'
+				    AND quantitybreak <'" . $QuantityOfDiscCat . "'",$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]!=0){ /* need to update the lines affected */
 			foreach ($_SESSION['Items'.$identifier]->LineItems as $StkItems_2) {
@@ -697,17 +697,17 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 		<table width="90%" cellpadding="2" colspan="7">
 		<tr bgcolor="#800000">';
 	echo '<th>' . _('Item Code') . '</th>
-			<th>' . _('Item Description') . '</th>
-			<th>' . _('Quantity') . '</th>
-			<th>' . _('QOH') . '</th>
-			<th>' . _('Unit') . '</th>
-			<th>' . _('Price') . '</th>
-			<th>' . _('Discount') . '</th>
-			<th>' . _('GP %') . '</th>
-			<th>' . _('Net') . '</th>
-			<th>' . _('Tax') . '</th>
-			<th>' . _('Total') . '<br />' . _('Incl Tax') . '</th>
-			</tr>';
+   	      <th>' . _('Item Description') . '</th>
+	      <th>' . _('Quantity') . '</th>
+	      <th>' . _('QOH') . '</th>
+	      <th>' . _('Unit') . '</th>
+	      <th>' . _('Price') . '</th>
+	      <th>' . _('Discount') . '</th>
+	      <th>' . _('GP %') . '</th>
+	      <th>' . _('Net') . '</th>
+	      <th>' . _('Tax') . '</th>
+	      <th>' . _('Total') . '<br />' . _('Incl Tax') . '</th>
+	      </tr>';
 
 	$_SESSION['Items'.$identifier]->total = 0;
 	$_SESSION['Items'.$identifier]->totalVolume = 0;
@@ -744,8 +744,8 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $OrderLine->LineNumber . '" size="6" maxlength="6" value="' . $OrderLine->Quantity . '" />';
 
 		echo '</td>
-				<td class="number">' . $OrderLine->QOHatLoc . '</td>
-				<td>' . $OrderLine->Units . '</td>';
+			<td class="number">' . $OrderLine->QOHatLoc . '</td>
+			<td>' . $OrderLine->Units . '</td>';
 
 		echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size="16" maxlength="16" value="' . $OrderLine->Price . '" /></td>
 				<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size="5" maxlength="4" value="' . ($OrderLine->DiscountPercent * 100) . '" /></td>

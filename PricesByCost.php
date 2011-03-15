@@ -24,20 +24,20 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	}/*end of else StockCat */
 
 	$sql = "SELECT 	stockmaster.stockid,
-									stockmaster.description,
-									prices.debtorno,
-									prices.branchcode,
-									(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) as cost,
-									prices.price as price, prices.debtorno as customer, prices.branchcode as branch,
-									prices.startdate,
-									prices.enddate
-								FROM stockmaster, prices
-								WHERE stockmaster.stockid=prices.stockid" . $Category . "
-								AND stockmaster.discontinued = 0
-								AND   prices.price" . $Comparator . "(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * '" . $_POST['Margin'] . "'
-								AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
-								AND prices.currabrev ='" . $_POST['CurrCode'] . "'
-								AND (prices.enddate>='" . Date('Y-m-d') . "' OR prices.enddate='0000-00-00')";
+					stockmaster.description,
+					prices.debtorno,
+					prices.branchcode,
+					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) as cost,
+					prices.price as price, prices.debtorno as customer, prices.branchcode as branch,
+					prices.startdate,
+					prices.enddate
+				FROM stockmaster, prices
+				WHERE stockmaster.stockid=prices.stockid" . $Category . "
+				AND stockmaster.discontinued = 0
+				AND   prices.price" . $Comparator . "(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * '" . $_POST['Margin'] . "'
+				AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
+				AND prices.currabrev ='" . $_POST['CurrCode'] . "'
+				AND (prices.enddate>='" . Date('Y-m-d') . "' OR prices.enddate='0000-00-00')";
 	$result = DB_query($sql, $db);
 	$numrow = DB_num_rows($result);
 
@@ -45,25 +45,36 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 			//Update Prices
 		$PriceCounter =0;
 		while ($myrow = DB_fetch_array($result)) {
-			//update database if update pressed
-			$SQLUpdate = "UPDATE prices	SET price = '" . $_POST['Price_' . $PriceCounter] . "'
-										WHERE stockid = '" . $_POST['StockID_' . $PriceCounter] . "'
-										AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
-										AND prices.currabrev ='" . $_POST['CurrCode'] . "'
-										AND prices.debtorno ='" . $_POST['DebtorNo_' . $PriceCounter] . "'
-										AND prices.branchcode ='" . $_POST['BranchCode_' . $PriceCounter] . "'
-										AND prices.startdate ='" . $_POST['StartDate_' . $PriceCounter] . "'
-										AND prices.enddate ='" . $_POST['EndDate_' . $PriceCounter] . "'";
-			$ResultUpdate = DB_query($SQLUpdate, $db);
-			$SQLInsert = "INSERT INTO prices (
+
+            $SQLTestExists = "SELECT price FROM prices
+        							WHERE stockid = '" . $_POST['StockID_' . $PriceCounter] . "'
+               			      		AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
+			                    	AND prices.currabrev ='" . $_POST['CurrCode'] . "'
+                        			AND prices.debtorno ='" . $_POST['DebtorNo_' . $PriceCounter] . "'
+						        	AND prices.branchcode ='" . $_POST['BranchCode_' . $PriceCounter] . "'
+							        AND prices.startdate ='" . date('Y-m-d') . "'";
+             $TestExistsResult = DB_query($SQLTestExists,$db);
+             if (DB_num_rows($TestExistsResult)==1){
+                 //then we are updating
+                $SQLUpdate = "UPDATE prices	SET price = '" . $_POST['Price_' . $PriceCounter] . "'
+				             WHERE stockid = '" . $_POST['StockID_' . $PriceCounter] . "'
+				      		AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
+							AND prices.currabrev ='" . $_POST['CurrCode'] . "'
+							AND prices.debtorno ='" . $_POST['DebtorNo_' . $PriceCounter] . "'
+							AND prices.branchcode ='" . $_POST['BranchCode_' . $PriceCounter] . "'
+							AND prices.startdate ='" . date('Y-m-d') . "'
+							AND prices.enddate ='" . $_POST['EndDate_' . $PriceCounter] . "'";
+			    $ResultUpdate = DB_query($SQLUpdate, $db);
+             } else {
+                 //we need to add a new price from today
+                 $SQLInsert = "INSERT INTO prices (
 							stockid,
 							price,
 							typeabbrev,
 							currabrev,
 							debtorno,
 							branchcode,
-							startdate,
-							enddate
+							startdate
 						) VALUES (
 							'" . $_POST['StockID_' . $PriceCounter] . "',
 							'" . $_POST['Price_' . $PriceCounter] . "',
@@ -71,10 +82,10 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 							'" . $_POST['CurrCode'] . "',
 							'" . $_POST['DebtorNo_' . $PriceCounter] . "',
 							'" . $_POST['BranchCode_' . $PriceCounter] . "',
-							'" . date('Y-m-d') . "',
-							'2030-12-31'
+							'" . date('Y-m-d') . "'
 						)";
-			$ResultInsert = DB_query($SQLInsert, $db);
+			      $ResultInsert = DB_query($SQLInsert, $db);
+             }
 			$PriceCounter++;
 		}
 		DB_free_result($result); //clear the old result

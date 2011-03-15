@@ -35,7 +35,7 @@ if (isset($_GET['NewItem'])){
 }
 
 
-if (empty($_GET['identifier'])) { 
+if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other order entry sessions on the same machine  */
 	$identifier=date('U');
 } else {
@@ -79,50 +79,49 @@ if (isset($_GET['ModifyOrderNumber'])
 /*read in all the guff from the selected order into the Items cart  */
 
 	$OrderHeaderSQL = "SELECT salesorders.debtorno,
-								debtorsmaster.name,
-								salesorders.branchcode,
-								salesorders.customerref,
-								salesorders.comments,
-								salesorders.orddate,
-								salesorders.ordertype,
-								salestypes.sales_type,
-								salesorders.shipvia,
-								salesorders.deliverto,
-								salesorders.deladd1,
-								salesorders.deladd2,
-								salesorders.deladd3,
-								salesorders.deladd4,
-								salesorders.deladd5,
-								salesorders.deladd6,
-								salesorders.contactphone,
-								salesorders.contactemail,
-								salesorders.freightcost,
-								salesorders.deliverydate,
-								debtorsmaster.currcode,
-								paymentterms.terms,
-								salesorders.fromstkloc,
-								salesorders.printedpackingslip,
-								salesorders.datepackingslipprinted,
-								salesorders.quotation,
-								salesorders.deliverblind,
-								debtorsmaster.customerpoline,
-								locations.locationname,
-								custbranch.estdeliverydays,
-								custbranch.salesman
-							FROM salesorders,
-								debtorsmaster,
-								salestypes,
-								custbranch,
-								paymentterms,
-								locations
-							WHERE salesorders.ordertype=salestypes.typeabbrev
-							AND salesorders.debtorno = debtorsmaster.debtorno
-							AND salesorders.debtorno = custbranch.debtorno
-							AND salesorders.branchcode = custbranch.branchcode
-							AND debtorsmaster.paymentterms=paymentterms.termsindicator
-							AND locations.loccode=salesorders.fromstkloc
-							AND salesorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
-
+ 				  debtorsmaster.name,
+				  salesorders.branchcode,
+				  salesorders.customerref,
+				  salesorders.comments,
+				  salesorders.orddate,
+				  salesorders.ordertype,
+				  salestypes.sales_type,
+				  salesorders.shipvia,
+				  salesorders.deliverto,
+				  salesorders.deladd1,
+				  salesorders.deladd2,
+				  salesorders.deladd3,
+				  salesorders.deladd4,
+				  salesorders.deladd5,
+				  salesorders.deladd6,
+				  salesorders.contactphone,
+				  salesorders.contactemail,
+				  salesorders.freightcost,
+				  salesorders.deliverydate,
+				  debtorsmaster.currcode,
+				  paymentterms.terms,
+				  salesorders.fromstkloc,
+				  salesorders.printedpackingslip,
+				  salesorders.datepackingslipprinted,
+				  salesorders.quotation,
+				  salesorders.deliverblind,
+				  debtorsmaster.customerpoline,
+				  locations.locationname,
+				  custbranch.estdeliverydays,
+				  custbranch.salesman
+				FROM salesorders,
+				     debtorsmaster,
+				     salestypes,
+				     custbranch,
+				     paymentterms,
+				     locations
+				WHERE salesorders.ordertype=salestypes.typeabbrev
+				AND salesorders.debtorno = debtorsmaster.debtorno
+				AND salesorders.debtorno = custbranch.debtorno
+				AND salesorders.branchcode = custbranch.branchcode
+				AND debtorsmaster.paymentterms=paymentterms.termsindicator
+				AND locations.loccode=salesorders.fromstkloc
+				AND salesorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
 
 	$ErrMsg =  _('The order cannot be retrieved because');
 	$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg);
@@ -338,7 +337,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 									LEFT JOIN debtorsmaster
 									ON custbranch.debtorno=debtorsmaster.debtorno
 									WHERE custbranch.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%' OR custbranch.branchcode " . LIKE . " '%" . $_POST['CustCode'] . "%'";
-					
+
 			if ($_SESSION['SalesmanLogin']!=''){
 				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 			}
@@ -346,16 +345,16 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 						ORDER BY custbranch.debtorno';
 		} elseif (strlen($_POST['CustPhone'])>0){
 			$SQL = "SELECT custbranch.brname,
-										custbranch.contactname,
-										custbranch.phoneno,
-										custbranch.faxno,
-										custbranch.branchcode,
-										custbranch.debtorno,
-										debtorsmaster.name
-									FROM custbranch
-									LEFT JOIN debtorsmaster
-									ON custbranch.debtorno=debtorsmaster.debtorno
-									WHERE custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'";
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno,
+					custbranch.branchcode,
+					custbranch.debtorno,
+					debtorsmaster.name
+				FROM custbranch
+				INNER JOIN debtorsmaster
+				ON custbranch.debtorno=debtorsmaster.debtorno
+				WHERE custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'";
 
 			if ($_SESSION['SalesmanLogin']!=''){
 				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
@@ -370,7 +369,8 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 
 		if (DB_num_rows($result_CustSelect)==1){
 			$myrow=DB_fetch_array($result_CustSelect);
-			$SelectedCustomer= $myrow['debtorno'] . ' - ' . $myrow['branchcode'];
+			$SelectedCustomer = $myrow['debtorno'];
+                        $SelectedBranch = $myrow['branchcode'];
 		} elseif (DB_num_rows($result_CustSelect)==0){
 			prnMsg(_('No Customer Branch records contain the search criteria') . ' - ' . _('please try again') . ' - ' . _('Note a Customer Branch Name may be different to the Customer Name'),'info');
 		}
@@ -388,15 +388,15 @@ if (isset($_POST['JustSelectedACustomer'])){
 			prnMsg(_('Unable to identify the selected customer'),'error');
 	} else {
 		$SelectedCustomer = $_POST['SelectedCustomer'.$i];
+		$SelectedBranch = $_POST['SelectedBranch'.$i];
 	}
 }
 /* will only be true if page called from customer selection form or set because only one customer
  record returned from a search so parse the $SelectCustomer string into customer code and branch code */
 if (isset($SelectedCustomer)) {
-	
-	$CustomerBranchArray = explode('-',$SelectedCustomer);
-	$_SESSION['Items'.$identifier]->DebtorNo  = trim($CustomerBranchArray[0]);
-	$_SESSION['Items'.$identifier]->Branch = trim($CustomerBranchArray[1]);
+
+	$_SESSION['Items'.$identifier]->DebtorNo  = trim($SelectedCustomer);
+	$_SESSION['Items'.$identifier]->Branch = trim($SelectedBranch);
 
 	// Now check to ensure this account is not on hold */
 	$sql = "SELECT debtorsmaster.name,
@@ -661,7 +661,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				echo '<td></td>';
 			}
 			echo '<td><input tabindex='.($j+5).' type=submit name="SubmitCustomerSelection' . $j .'" value="' . htmlentities($myrow['brname'], ENT_QUOTES,'UTF-8'). '"></td>
-					<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'] .' - '.$myrow['branchcode'].'">
+					<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'].'"><input type="hidden" name="SelectedBranch' . $j .'" value="'. $myrow['branchcode'].'">
 					<td>'.$myrow['contactname'].'</td>
 					<td>'.$myrow['phoneno'].'</td>
 					<td>'.$myrow['faxno'].'</td>
@@ -1418,7 +1418,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$SQL="SELECT stockmaster.units, 
 										stockmaster.description, 
 										stockmaster.stockid, 
-										salesorderdetails.stkcode, 
+										salesorderdetails.stkcode,
 										SUM(qtyinvoiced) salesqty 
 							FROM `salesorderdetails`INNER JOIN `stockmaster`
 							ON  salesorderdetails.stkcode = stockmaster.stockid
@@ -1580,7 +1580,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		echo '</select></td>
 					<td><b>' . _('Enter partial Description') . ':</b><input tabindex=2 type="Text" name="Keywords" size=20 maxlength=25 value="' ;
-		
+
 		if (isset($_POST['Keywords'])) {
 			 echo$_POST['Keywords'] ;
 		}
