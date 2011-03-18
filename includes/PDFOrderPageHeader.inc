@@ -11,14 +11,14 @@ $YPos = 575;
 $pdf->addText($XPos, $YPos,$FontSize, $myrow['deliverto']);
 $pdf->addText($XPos, $YPos-13,$FontSize, $myrow['deladd1']);
 $pdf->addText($XPos, $YPos-26,$FontSize, $myrow['deladd2']);
-$pdf->addText($XPos, $YPos-39,$FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5']);
+$pdf->addText($XPos, $YPos-39,$FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5'] . ' ' . $myrow['deladd6']);
 
 $YPos = 510;
 
 $pdf->addText($XPos, $YPos,$FontSize, $myrow['name']);
 $pdf->addText($XPos, $YPos-13,$FontSize, $myrow['address1']);
 $pdf->addText($XPos, $YPos-26,$FontSize, $myrow['address2']);
-$pdf->addText($XPos, $YPos-39,$FontSize, $myrow['address3'] . ' ' . $myrow['address4'] . ' ' . $myrow['address5']);
+$pdf->addText($XPos, $YPos-39,$FontSize, $myrow['address3'] . ' ' . $myrow['address4'] . ' ' . $myrow['address5']. ' ' . $myrow['deladd6']);
 
 
 /*Print Dispatch Date - as current date

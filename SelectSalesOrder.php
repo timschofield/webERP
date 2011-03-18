@@ -885,7 +885,7 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 			}
 	                $i++;
 			$j++;
-			$TotalOrders += $myrow['ordervalue'];
+			$OrdersTotal += $myrow['ordervalue'];
 			if ($j == 12){
 				$j=1;
 				echo $tableheader;
@@ -901,7 +901,7 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 		} else {
 			echo '<b>' . _('Total Quotation(s) Value in');
 		}
-		echo ' ' . $_SESSION['CompanyRecord']['currencydefault'] . ' :</b></td><td class="number"><b>' . number_format($TotalOrders,2) . '</b></td></tr>
+		echo ' ' . $_SESSION['CompanyRecord']['currencydefault'] . ' :</b></td><td class="number"><b>' . number_format($OrdersTotal,2) . '</b></td></tr>
 			</table>';
 	} //end if there are some orders to show  
 }

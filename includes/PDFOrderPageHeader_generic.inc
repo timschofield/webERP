@@ -41,7 +41,7 @@ $pdf->addText($XPos, $YPos,$FontSize, _('Delivered To').':' );
 $pdf->addText($XPos, $YPos-15,$FontSize, $myrow['deliverto']);
 $pdf->addText($XPos, $YPos-30,$FontSize, $myrow['deladd1']);
 $pdf->addText($XPos, $YPos-45,$FontSize, $myrow['deladd2']);
-$pdf->addText($XPos, $YPos-60,$FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5']);
+$pdf->addText($XPos, $YPos-60,$FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5'] . ' ' . $myrow['deladd6']);
 
 $YPos -= 80;
 
@@ -49,7 +49,7 @@ $pdf->addText($XPos, $YPos,$FontSize, _('Customer').':');
 $pdf->addText($XPos, $YPos-15,$FontSize, $myrow['name']);
 $pdf->addText($XPos, $YPos-30,$FontSize, $myrow['address1']);
 $pdf->addText($XPos, $YPos-45,$FontSize, $myrow['address2']);
-$pdf->addText($XPos, $YPos-60,$FontSize, $myrow['address3'] . ' ' . $myrow['address4'] . ' ' . $myrow['address5']);
+$pdf->addText($XPos, $YPos-60,$FontSize, $myrow['address3'] . ' ' . $myrow['address4'] . ' ' . $myrow['address5']. ' ' . $myrow['address6']);
 
 
 $pdf->addText($XPos, $YPos-82,$FontSize, _('Customer No.'). ' : ' . $myrow['debtorno']);
