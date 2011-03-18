@@ -82,7 +82,8 @@ if (!isset($_POST['Show'])) {
 							ON banktrans.type=systypes.typeid
 							WHERE bankact='".$_POST['BankAccount']."'
 								AND transdate>='" . FormatDateForSQL($_POST['FromTransDate']) . "'
-								AND transdate<='" . FormatDateForSQL($_POST['ToTransDate']) . "'";
+								AND transdate<='" . FormatDateForSQL($_POST['ToTransDate']) . "' 
+							ORDER BY banktrans.transdate";
 	$result = DB_query($sql, $db);
 	if (DB_num_rows($result)==0) {
 		prnMsg(_('There are no transactions for this account in the date range selected'), 'info');

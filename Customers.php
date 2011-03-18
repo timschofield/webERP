@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('The customer number already exists in the database'),'error');
 		$Errors[$i] = 'DebtorNo';
 		$i++;
-	} elseif (strlen($_POST['CustName']) > 40 OR strlen($_POST['CustName'])==0) {
+	}elseif (strlen($_POST['CustName']) > 40 OR strlen($_POST['CustName'])==0) {
 		$InputError = 1;
 		prnMsg( _('The customer name must be entered and be forty characters or less long'),'error');
 		$Errors[$i] = 'CustName';
@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('The debtor code cannot be empty'),'error');
 		$Errors[$i] = 'DebtorNo';
 		$i++;
-	} elseif ($_SESSION['AutoDebtorNo']==0 AND ContainsIllegalCharacters($_POST['DebtorNo'])) {
+	} elseif ($_SESSION['AutoDebtorNo']==0 AND (ContainsIllegalCharacters($_POST['DebtorNo']) OR strpos($_POST['DebtorNo'], ' '))) {
 		$InputError = 1;
 		prnMsg( _('The customer code cannot contain any of the following characters') . " . - ' & + \" " . _('or a space'),'error');
 		$Errors[$i] = 'DebtorNo';
