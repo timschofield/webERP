@@ -130,7 +130,6 @@ echo '<tr>
 
 		if (is_dir('locale/' . $LanguageEntry)
 				AND $LanguageEntry != '..'
-				AND $LanguageEntry != 'CVS'
 				AND $LanguageEntry != '.svn'
 				AND $LanguageEntry!='.'){
 

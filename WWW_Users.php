@@ -79,7 +79,7 @@ if (isset($_POST['submit'])) {
 	}
 	//comment out except for demo!  Do not want anyone modifying demo user.
 	/*
-	  elseif ($_POST['UserID'] == 'demo') {
+	  elseif ($_POST['UserID'] == 'admin') {
 		prnMsg(_('The demonstration user called demo cannot be modified.'),'error');
 		$InputError = 1;
 	}
@@ -215,7 +215,7 @@ if (isset($_POST['submit'])) {
 
 	// comment out except for demo!  Do not want anyopne deleting demo user.
 	/*
-	if ($SelectedUser == 'demo') {
+	if ($SelectedUser == 'admin') {
 		prnMsg(_('The demonstration user called demo cannot be deleted'),'error');
 	} else {
 	*/

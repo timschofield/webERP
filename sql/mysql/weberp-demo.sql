@@ -1,5 +1,3 @@
-CREATE DATABASE weberpdemo;
-USE weberpdemo;
 SET FOREIGN_KEY_CHECKS = 0;
 -- MySQL dump 10.13  Distrib 5.1.47-MariaDB, for pc-linux-gnu (i686)
 --
@@ -142,7 +140,7 @@ CREATE TABLE `banktrans` (
   KEY `CurrCode` (`currcode`),
   CONSTRAINT `banktrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `banktrans_ibfk_2` FOREIGN KEY (`bankact`) REFERENCES `bankaccounts` (`accountcode`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -618,10 +616,9 @@ CREATE TABLE `debtortrans` (
   KEY `TransNo` (`transno`),
   KEY `Type_2` (`type`,`transno`),
   KEY `EDISent` (`edisent`),
-  CONSTRAINT `debtortrans_ibfk_1` FOREIGN KEY (`debtorno`) REFERENCES `custbranch` (`debtorno`),
   CONSTRAINT `debtortrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `debtortrans_ibfk_3` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -798,7 +795,7 @@ CREATE TABLE `emailsettings` (
   `companyname` varchar(50) DEFAULT NULL,
   `auth` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -826,6 +823,20 @@ CREATE TABLE `factorcompanies` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `favourites`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `favourites` (
+  `userid` varchar(20) NOT NULL DEFAULT '',
+  `caption` varchar(50) NOT NULL DEFAULT '',
+  `href` varchar(200) NOT NULL DEFAULT '#',
+  PRIMARY KEY (`userid`,`caption`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `fixedassetcategories`
 --
 
@@ -838,8 +849,6 @@ CREATE TABLE `fixedassetcategories` (
   `depnact` int(11) NOT NULL DEFAULT '0',
   `disposalact` int(11) NOT NULL DEFAULT '80000',
   `accumdepnact` int(11) NOT NULL DEFAULT '0',
-  `defaultdepnrate` double NOT NULL DEFAULT '0.2',
-  `defaultdepntype` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`categoryid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -880,7 +889,7 @@ CREATE TABLE `fixedassets` (
   `depnrate` double NOT NULL,
   `disposaldate` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`assetid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -890,20 +899,20 @@ CREATE TABLE `fixedassets` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fixedassettrans` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `transid` int(11) NOT NULL AUTO_INCREMENT,
   `assetid` int(11) NOT NULL,
   `transtype` tinyint(4) NOT NULL,
-  `transdate` date NOT NULL,
   `transno` int(11) NOT NULL,
-  `periodno` smallint(6) NOT NULL,
+  `periodno` smallint(4) NOT NULL,
   `inputdate` date NOT NULL,
   `fixedassettranstype` varchar(8) NOT NULL,
   `amount` double NOT NULL,
-  PRIMARY KEY (`id`),
+  `transdate` date NOT NULL,
+  PRIMARY KEY (`transid`),
   KEY `assetid` (`assetid`,`transtype`,`transno`),
   KEY `inputdate` (`inputdate`),
-  KEY `transdate` (`transdate`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `fixedassettranstype` (`fixedassettranstype`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -982,7 +991,7 @@ CREATE TABLE `gltrans` (
   CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=217 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=370 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1009,7 +1018,7 @@ CREATE TABLE `grns` (
   KEY `SupplierID` (`supplierid`),
   CONSTRAINT `grns_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`supplierid`),
   CONSTRAINT `grns_ibfk_2` FOREIGN KEY (`podetailitem`) REFERENCES `purchorderdetails` (`podetailitem`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1049,6 +1058,23 @@ CREATE TABLE `lastcostrollup` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `levels`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `levels` (
+  `part` char(20) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
+  `leadtime` smallint(6) NOT NULL DEFAULT '0',
+  `pansize` double NOT NULL DEFAULT '0',
+  `shrinkfactor` double NOT NULL DEFAULT '0',
+  `eoq` double NOT NULL DEFAULT '0',
+  KEY `part` (`part`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `locations`
 --
 
@@ -1068,8 +1094,9 @@ CREATE TABLE `locations` (
   `email` varchar(55) NOT NULL DEFAULT '',
   `contact` varchar(30) NOT NULL DEFAULT '',
   `taxprovinceid` tinyint(4) NOT NULL DEFAULT '1',
-  `cashsalecustomer` varchar(21) NOT NULL,
+  `cashsalecustomer` varchar(10) DEFAULT '',
   `managed` int(11) DEFAULT '0',
+  `cashsalebranch` varchar(10) DEFAULT '',
   PRIMARY KEY (`loccode`),
   KEY `taxprovinceid` (`taxprovinceid`),
   CONSTRAINT `locations_ibfk_1` FOREIGN KEY (`taxprovinceid`) REFERENCES `taxprovinces` (`taxprovinceid`)
@@ -1120,6 +1147,21 @@ CREATE TABLE `loctransfers` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `menu`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `menu` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `caption` varchar(70) NOT NULL DEFAULT '',
+  `parent` int(11) NOT NULL DEFAULT '-1',
+  `href` varchar(200) NOT NULL DEFAULT '#',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `mrpcalendar`
 --
 
@@ -1151,7 +1193,7 @@ CREATE TABLE `mrpdemands` (
   KEY `mrpdemands_ibfk_1` (`mrpdemandtype`),
   CONSTRAINT `mrpdemands_ibfk_1` FOREIGN KEY (`mrpdemandtype`) REFERENCES `mrpdemandtypes` (`mrpdemandtype`),
   CONSTRAINT `mrpdemands_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1166,6 +1208,80 @@ CREATE TABLE `mrpdemandtypes` (
   PRIMARY KEY (`mrpdemandtype`),
   KEY `mrpdemandtype` (`mrpdemandtype`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mrpparameters`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mrpparameters` (
+  `runtime` datetime DEFAULT NULL,
+  `location` varchar(50) DEFAULT NULL,
+  `pansizeflag` varchar(5) DEFAULT NULL,
+  `shrinkageflag` varchar(5) DEFAULT NULL,
+  `eoqflag` varchar(5) DEFAULT NULL,
+  `usemrpdemands` varchar(5) DEFAULT NULL,
+  `leeway` smallint(6) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mrpplannedorders`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mrpplannedorders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `part` char(20) DEFAULT NULL,
+  `duedate` date DEFAULT NULL,
+  `supplyquantity` double DEFAULT NULL,
+  `ordertype` varchar(6) DEFAULT NULL,
+  `orderno` int(11) DEFAULT NULL,
+  `mrpdate` date DEFAULT NULL,
+  `updateflag` smallint(6) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mrprequirements`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mrprequirements` (
+  `part` char(20) DEFAULT NULL,
+  `daterequired` date DEFAULT NULL,
+  `quantity` double DEFAULT NULL,
+  `mrpdemandtype` varchar(6) DEFAULT NULL,
+  `orderno` int(11) DEFAULT NULL,
+  `directdemand` smallint(6) DEFAULT NULL,
+  `whererequired` char(20) DEFAULT NULL,
+  KEY `part` (`part`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mrpsupplies`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mrpsupplies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `part` char(20) DEFAULT NULL,
+  `duedate` date DEFAULT NULL,
+  `supplyquantity` double DEFAULT NULL,
+  `ordertype` varchar(6) DEFAULT NULL,
+  `orderno` int(11) DEFAULT NULL,
+  `mrpdate` date DEFAULT NULL,
+  `updateflag` smallint(6) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `part` (`part`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1405,7 +1521,7 @@ CREATE TABLE `prices` (
   `price` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `branchcode` varchar(10) NOT NULL DEFAULT '',
   `startdate` date NOT NULL DEFAULT '0000-00-00',
-  `enddate` date NOT NULL DEFAULT '9999-12-31',
+  `enddate` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`stockid`,`typeabbrev`,`currabrev`,`debtorno`,`branchcode`,`startdate`,`enddate`),
   KEY `CurrAbrev` (`currabrev`),
   KEY `DebtorNo` (`debtorno`),
@@ -1504,7 +1620,7 @@ CREATE TABLE `purchorderdetails` (
   KEY `ShiptRef` (`shiptref`),
   KEY `Completed` (`completed`),
   CONSTRAINT `purchorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `purchorders` (`orderno`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1556,7 +1672,7 @@ CREATE TABLE `purchorders` (
   KEY `AllowPrintPO` (`allowprint`),
   CONSTRAINT `purchorders_ibfk_1` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`),
   CONSTRAINT `purchorders_ibfk_2` FOREIGN KEY (`intostocklocation`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1597,7 +1713,7 @@ CREATE TABLE `recurringsalesorders` (
   KEY `locationindex` (`fromstkloc`),
   KEY `branchcode` (`branchcode`,`debtorno`),
   CONSTRAINT `recurringsalesorders_ibfk_1` FOREIGN KEY (`branchcode`, `debtorno`) REFERENCES `custbranch` (`branchcode`, `debtorno`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1695,6 +1811,21 @@ CREATE TABLE `reportheaders` (
   PRIMARY KEY (`reportid`),
   KEY `ReportHeading` (`reportheading`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `reportlets`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reportlets` (
+  `userid` varchar(20) NOT NULL DEFAULT '',
+  `id` varchar(50) NOT NULL DEFAULT '',
+  `title` varchar(50) NOT NULL DEFAULT '',
+  `refresh` int(11) NOT NULL DEFAULT '600',
+  PRIMARY KEY (`userid`,`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1825,7 +1956,7 @@ CREATE TABLE `salesanalysis` (
   KEY `BudgetOrActual` (`budgetoractual`),
   KEY `Salesperson` (`salesperson`),
   CONSTRAINT `salesanalysis_ibfk_1` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1963,6 +2094,7 @@ CREATE TABLE `salesorders` (
   `datepackingslipprinted` date NOT NULL DEFAULT '0000-00-00',
   `quotation` tinyint(4) NOT NULL DEFAULT '0',
   `quotedate` date NOT NULL DEFAULT '0000-00-00',
+  `poplaced` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`orderno`),
   KEY `DebtorNo` (`debtorno`),
   KEY `OrdDate` (`orddate`),
@@ -1971,6 +2103,7 @@ CREATE TABLE `salesorders` (
   KEY `BranchCode` (`branchcode`,`debtorno`),
   KEY `ShipVia` (`shipvia`),
   KEY `quotation` (`quotation`),
+  KEY `poplaced` (`poplaced`),
   CONSTRAINT `salesorders_ibfk_1` FOREIGN KEY (`branchcode`, `debtorno`) REFERENCES `custbranch` (`branchcode`, `debtorno`),
   CONSTRAINT `salesorders_ibfk_2` FOREIGN KEY (`shipvia`) REFERENCES `shippers` (`shipper_id`),
   CONSTRAINT `salesorders_ibfk_3` FOREIGN KEY (`fromstkloc`) REFERENCES `locations` (`loccode`)
@@ -2142,12 +2275,12 @@ CREATE TABLE `stockcatproperties` (
   `controltype` tinyint(4) NOT NULL DEFAULT '0',
   `defaultvalue` varchar(100) NOT NULL DEFAULT '''''',
   `maximumvalue` double NOT NULL DEFAULT '999999999',
-  `reqatsalesorder` tinyint(4) NOT NULL DEFAULT '0',
   `minimumvalue` double NOT NULL DEFAULT '-999999999',
-  `numericvalue` tinyint(4) NOT NULL DEFAULT '0',
+  `numericvalue` tinyint(4) NOT NULL,
+  `reqatsalesorder` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`stkcatpropid`),
   KEY `categoryid` (`categoryid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2294,7 +2427,7 @@ CREATE TABLE `stockmoves` (
   CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `stockmoves_ibfk_4` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2432,7 +2565,6 @@ CREATE TABLE `suppliers` (
   `taxgroupid` tinyint(4) NOT NULL DEFAULT '1',
   `factorcompanyid` int(11) NOT NULL DEFAULT '1',
   `taxref` varchar(20) NOT NULL DEFAULT '',
-  `phn` varchar(50) NOT NULL DEFAULT '',
   `port` varchar(200) NOT NULL DEFAULT '',
   `email` varchar(55) DEFAULT NULL,
   `fax` varchar(25) DEFAULT NULL,
@@ -2497,7 +2629,7 @@ CREATE TABLE `supptrans` (
   KEY `Type` (`type`),
   CONSTRAINT `supptrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `supptrans_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2661,6 +2793,20 @@ CREATE TABLE `unitsofmeasure` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `usermenurights`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usermenurights` (
+  `userid` varchar(20) NOT NULL DEFAULT '',
+  `menuid` int(11) NOT NULL DEFAULT '0',
+  `access` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`userid`,`menuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `woitems`
 --
 
@@ -2799,7 +2945,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-02-15 18:44:57
+-- Dump completed on 2011-03-20 10:54:33
 -- MySQL dump 10.13  Distrib 5.1.47-MariaDB, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -2861,8 +3007,62 @@ INSERT INTO `areas` VALUES ('TR','Toronto');
 -- Dumping data for table `audittrail`
 --
 
-INSERT INTO `audittrail` VALUES ('2011-02-15 19:35:19','admin','UPDATE config\n				SET confvalue=\'2011-02-15\'\n				WHERE confname=\'DB_Maintenance_LastRun\'');
-INSERT INTO `audittrail` VALUES ('2011-02-15 19:35:19','admin','DELETE FROM audittrail\n						WHERE  transactiondate &lt;= \'2011-01-15\'');
+INSERT INTO `audittrail` VALUES ('2011-02-12 17:44:17','admin','INSERT INTO purchdata (supplierno,\n																stockid,\n																price,\n																effectivefrom,\n																suppliersuom,\n																conversionfactor,\n																supplierdescription,\n																suppliers_partno,\n																leadtime,\n																minorderqty,\n																preferred)\n														VALUES (\'CRUISE\',\n															\'DVD-CASE\',\n															\'3.50\',\n															\'2011-02-12\',\n															\'6\',\n															\'12\',\n															\'\',\n															\'DVD-Case-12pack\',\n															\'25\',\n											                            \'1\',\n															\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-02-12 17:45:49','admin','INSERT INTO purchorders (	orderno,\n																			supplierno,\n																			comments,\n																			orddate,\n																			rate,\n																			initiator,\n																			requisitionno,\n																			intostocklocation,\n																			deladd1,\n																			deladd2,\n																			deladd3,\n																			deladd4,\n																			deladd5,\n																			deladd6,\n																			tel,\n																			suppdeladdress1,\n																			suppdeladdress2,\n																			suppdeladdress3,\n																			suppdeladdress4,\n																			suppdeladdress5,\n																			suppdeladdress6,\n																			suppliercontact,\n																			supptel,\n																			contact,\n																			version,\n																			revised,\n																			deliveryby,\n																			status,\n																			stat_comment,\n																			deliverydate,\n																			paymentterms,\n																			allowprint)\n																		VALUES(	\'17\',\n																						\'CRUISE\',\n																						\'\',\n																						\'2011-02-12\',\n																						\'0.8\',\n																						\'admin\',\n																						\'\',\n																						\'MEL\',\n																						\'1234 Collins Street\',\n																						\'Melbourne\',\n																						\'Victoria 2345\',\n																						\'\',\n																						\'\',\n																						\'Australia\',\n																						\'+61 3 56789012\',\n																						\'Box 2001\',\n																						\'Ft Lauderdale, Florida\',\n																						\'\',\n																						\'\',\n																						\'\',\n																						\'\',\n																						\'Barry Toad\',\n																						\'\',\n																						\'Jack Roberts\',\n																						\'1\',\n																						\'2011-02-12\',\n																						\'1\',\n																						\'Authorised\',\n																						\'12/02/2011 - Order Created and Authorised by &lt;a href=&quot;mailto:phil@logicworks.co.nz&quot;&gt;Demonstration user&lt;/a&gt; - &lt;br /&gt;\',\n																						\'2011-02-12\',\n																						\'30\',\n																						\'1\'\n																					)');
+INSERT INTO `audittrail` VALUES ('2011-02-12 17:45:49','admin','INSERT INTO purchorderdetails ( orderno,\n																							itemcode,\n																							deliverydate,\n																							itemdescription,\n																							glcode,\n																							unitprice,\n																							quantityord,\n																							shiptref,\n																							jobref,\n																							itemno,\n																							suppliersunit,\n																							suppliers_partno,\n																							subtotal_amount,\n																							package,\n																							pcunit,\n																							netweight,\n																							kgs,\n																							cuft,\n																							total_quantity,\n																							total_amount,\n																							assetid,\n																							conversionfactor )\n																					VALUES (\n																							\'17\',\n																							\'DVD-CASE\',\n																							\'2011-02-12\',\n																							\'DVD-Case-12pack - \',\n																							\'1460\',\n																							\'0.29166666666667\',\n																							\'24\',\n																							\'0\',\n																							\'0\',\n																							\'DVD-CASE\',\n																							\'pack\',\n																							\'25\',\n																							\'\',\n																							\'\',\n																							\'0\',\n																							\'0.0000\',\n																							\'0.0000\',\n																							\'\',\n																							\'2\',\n																							\'0.58333333333333\',\n																							\'0\',\n																							\'12\')');
+INSERT INTO `audittrail` VALUES ('2011-02-12 17:46:13','admin','UPDATE purchorders	SET	allowprint =  0,\n																	dateprinted  = \'2011-02-12\',\n																	status = \'Printed\',\n																	stat_comment = \'12/02/2011 - Printed by&lt;a href=&quot;mailto:phil@logicworks.co.nz&quot;&gt;Demonstration user&lt;/a&gt;&lt;br /&gt;12/02/2011 - Order Created and Authorised by &lt;a href=&quot;mailto:phil@logicworks.co.nz&quot;&gt;Demonstration user&lt;/a&gt; - &lt;br /&gt;\'\n																WHERE purchorders.orderno = \'17\'');
+INSERT INTO `audittrail` VALUES ('2011-02-12 17:47:38','admin','UPDATE purchorderdetails SET\n												quantityrecd = quantityrecd + \'12\',\n												stdcostunit=\'0.3\',\n												completed=0\n										WHERE podetailitem = \'12\'');
+INSERT INTO `audittrail` VALUES ('2011-02-12 17:47:38','admin','INSERT INTO grns (grnbatch,\n															podetailitem,\n															itemcode,\n															itemdescription,\n															deliverydate,\n															qtyrecd,\n															supplierid,\n															stdcostunit)\n													VALUES (\'38\',\n														\'12\',\n														\'DVD-CASE\',\n														\'DVD-Case-12pack - \',\n														\'2011-02-12\',\n														\'12\',\n														\'CRUISE\',\n														\'0.3000\')');
+INSERT INTO `audittrail` VALUES ('2011-02-12 17:47:38','admin','UPDATE locstock\n								SET quantity = locstock.quantity + \'12\'\n								WHERE locstock.stockid = \'DVD-CASE\'\n								AND loccode = \'MEL\'');
+INSERT INTO `audittrail` VALUES ('2011-02-12 17:47:38','admin','INSERT INTO stockmoves (stockid,\n																				type,\n																				transno,\n																				loccode,\n																				trandate,\n																				price,\n																				prd,\n																				reference,\n																				qty,\n																				standardcost,\n																				newqoh)\n																	VALUES (\n																		\'DVD-CASE\',\n																		25,\n																		\'38\',\n																		\'MEL\',\n																		\'2011-02-12\',\n																		\'0.36458333333334\',\n																		\'6\',\n																		\'CRUISE (Cruise Company Inc) - 17\',\n																		\'12\',\n																		\'0.3\',\n																		\'18\'\n																		)');
+INSERT INTO `audittrail` VALUES ('2011-02-12 17:47:38','admin','INSERT INTO gltrans (type,\n																	typeno,\n																	trandate,\n																	periodno,\n																	account,\n																	narrative,\n																	amount)\n															VALUES (\n																25,\n																\'38\',\n																\'2011-02-12\',\n																\'6\',\n																\'1460\',\n																\'PO: 17 CRUISE - DVD-CASE - DVD-Case-12pack -  x 12 @ 0.30\',\n																\'3.6\'\n																)');
+INSERT INTO `audittrail` VALUES ('2011-02-12 17:47:38','admin','INSERT INTO gltrans (type,\n																	typeno,\n																	trandate,\n																	periodno,\n																	account,\n																	narrative,\n																	amount)\n															VALUES (25,\n																\'38\',\n																\'2011-02-12\',\n																\'6\',\n																\'2150\',\n																\'PO1297486035: 17 CRUISE - DVD-CASE - DVD-Case-12pack -  x 12 @ 0.30\',\n																\'-3.6\'\n																)');
+INSERT INTO `audittrail` VALUES ('2011-02-13 09:57:38','admin','DELETE FROM contractbom WHERE contractref=\'\'');
+INSERT INTO `audittrail` VALUES ('2011-02-13 09:57:38','admin','DELETE FROM contractreqts WHERE contractref=\'\'');
+INSERT INTO `audittrail` VALUES ('2011-02-13 09:57:38','admin','DELETE FROM contracts WHERE contractref=\'\'');
+INSERT INTO `audittrail` VALUES ('2011-02-13 09:58:53','admin','DELETE FROM contractbom WHERE contractref=\'\'');
+INSERT INTO `audittrail` VALUES ('2011-02-13 09:58:53','admin','DELETE FROM contractreqts WHERE contractref=\'\'');
+INSERT INTO `audittrail` VALUES ('2011-02-13 09:58:53','admin','DELETE FROM contracts WHERE contractref=\'\'');
+INSERT INTO `audittrail` VALUES ('2011-02-13 10:39:45','admin','DELETE FROM contractbom WHERE contractref=\'\'');
+INSERT INTO `audittrail` VALUES ('2011-02-13 10:39:45','admin','DELETE FROM contractreqts WHERE contractref=\'\'');
+INSERT INTO `audittrail` VALUES ('2011-02-13 10:39:45','admin','DELETE FROM contracts WHERE contractref=\'\'');
+INSERT INTO `audittrail` VALUES ('2011-02-13 13:45:11','admin','INSERT INTO purchdata (supplierno,\n																stockid,\n																price,\n																effectivefrom,\n																suppliersuom,\n																conversionfactor,\n																supplierdescription,\n																suppliers_partno,\n																leadtime,\n																minorderqty,\n																preferred)\n														VALUES (\'GOTSTUFF\',\n															\'FLOUR\',\n															\'10.00\',\n															\'2011-02-13\',\n															\'6\',\n															\'25\',\n															\'Sack of Flour\',\n															\'sackflour\',\n															\'2\',\n											                            \'1\',\n															\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-02-13 13:45:56','admin','INSERT INTO purchorders (	orderno,\n																			supplierno,\n																			comments,\n																			orddate,\n																			rate,\n																			initiator,\n																			requisitionno,\n																			intostocklocation,\n																			deladd1,\n																			deladd2,\n																			deladd3,\n																			deladd4,\n																			deladd5,\n																			deladd6,\n																			tel,\n																			suppdeladdress1,\n																			suppdeladdress2,\n																			suppdeladdress3,\n																			suppdeladdress4,\n																			suppdeladdress5,\n																			suppdeladdress6,\n																			suppliercontact,\n																			supptel,\n																			contact,\n																			version,\n																			revised,\n																			deliveryby,\n																			status,\n																			stat_comment,\n																			deliverydate,\n																			paymentterms,\n																			allowprint)\n																		VALUES(	\'18\',\n																						\'GOTSTUFF\',\n																						\'\',\n																						\'2011-02-13\',\n																						\'0.85\',\n																						\'admin\',\n																						\'\',\n																						\'MEL\',\n																						\'1234 Collins Street\',\n																						\'Melbourne\',\n																						\'Victoria 2345\',\n																						\'\',\n																						\'\',\n																						\'Australia\',\n																						\'+61 3 56789012\',\n																						\'Test line 1\',\n																						\'Test line 2\',\n																						\'Test line 3\',\n																						\'Test line 4 - editing\',\n																						\'\',\n																						\'\',\n																						\'\',\n																						\'\',\n																						\'Jack Roberts\',\n																						\'1\',\n																						\'2011-02-13\',\n																						\'1\',\n																						\'Authorised\',\n																						\'13/02/2011 - Order Created and Authorised by &lt;a href=&quot;mailto:phil@logicworks.co.nz&quot;&gt;Demonstration user&lt;/a&gt; - &lt;br /&gt;\',\n																						\'2011-02-13\',\n																						\'20\',\n																						\'1\'\n																					)');
+INSERT INTO `audittrail` VALUES ('2011-02-13 13:45:56','admin','INSERT INTO purchorderdetails ( orderno,\n																							itemcode,\n																							deliverydate,\n																							itemdescription,\n																							glcode,\n																							unitprice,\n																							quantityord,\n																							shiptref,\n																							jobref,\n																							itemno,\n																							suppliersunit,\n																							suppliers_partno,\n																							subtotal_amount,\n																							package,\n																							pcunit,\n																							netweight,\n																							kgs,\n																							cuft,\n																							total_quantity,\n																							total_amount,\n																							assetid,\n																							conversionfactor )\n																					VALUES (\n																							\'18\',\n																							\'FLOUR\',\n																							\'2011-02-13\',\n																							\'sackflour - Sack of Flour\',\n																							\'1460\',\n																							\'0.4\',\n																							\'125\',\n																							\'0\',\n																							\'0\',\n																							\'FLOUR\',\n																							\'pack\',\n																							\'2\',\n																							\'\',\n																							\'\',\n																							\'0\',\n																							\'0.0000\',\n																							\'0.0000\',\n																							\'\',\n																							\'5\',\n																							\'2\',\n																							\'0\',\n																							\'25\')');
+INSERT INTO `audittrail` VALUES ('2011-02-13 13:46:13','admin','UPDATE purchorders	SET	allowprint =  0,\n																	dateprinted  = \'2011-02-13\',\n																	status = \'Printed\',\n																	stat_comment = \'13/02/2011 - Printed by&lt;a href=&quot;mailto:phil@logicworks.co.nz&quot;&gt;Demonstration user&lt;/a&gt;&lt;br /&gt;13/02/2011 - Order Created and Authorised by &lt;a href=&quot;mailto:phil@logicworks.co.nz&quot;&gt;Demonstration user&lt;/a&gt; - &lt;br /&gt;\'\n																WHERE purchorders.orderno = \'18\'');
+INSERT INTO `audittrail` VALUES ('2011-02-20 16:50:20','admin','UPDATE purchorders SET supplierno = \'GOTSTUFF\' ,\n																		comments=\'\',\n																		rate=\'0.85\',\n																		initiator=\'admin\',\n																		requisitionno= \'\',\n																		version= \'2\',\n																		deliveryby=\'1\',\n																		deliverydate=\'2011-02-13\',\n																		revised= \'2011-02-20\',\n																		intostocklocation=\'MEL\',\n																		deladd1=\'1234 Collins Street\',\n																		deladd2=\'Melbourne\',\n																		deladd3=\'Victoria 2345\',\n																		deladd4=\'\',\n																		deladd5=\'\',\n																		deladd6=\'Australia\',\n																		deladd6=\'+61 3 56789012\',\n																		suppdeladdress1=\'Test line 1\',\n																		suppdeladdress2=\'Test line 2\',\n																		suppdeladdress3=\'Test line 3\',\n																		suppdeladdress4=\'Test line 4 - editing\',\n																		suppdeladdress5=\'\',\n																		suppdeladdress6=\'\',\n																		suppliercontact=\'\',\n																		supptel=\'\',\n																		contact=\'Jack Roberts\',\n																		paymentterms=\'20\',\n																		allowprint=\'1\',\n																		status = \'Authorised\'\n																		WHERE orderno = \'18\'');
+INSERT INTO `audittrail` VALUES ('2011-02-20 16:50:20','admin','UPDATE purchorders SET supplierno = \'GOTSTUFF\' ,\n																		comments=\'\',\n																		rate=\'0.85\',\n																		initiator=\'admin\',\n																		requisitionno= \'\',\n																		version= \'2\',\n																		deliveryby=\'1\',\n																		deliverydate=\'2011-02-13\',\n																		revised= \'2011-02-20\',\n																		intostocklocation=\'MEL\',\n																		deladd1=\'1234 Collins Street\',\n																		deladd2=\'Melbourne\',\n																		deladd3=\'Victoria 2345\',\n																		deladd4=\'\',\n																		deladd5=\'\',\n																		deladd6=\'Australia\',\n																		deladd6=\'+61 3 56789012\',\n																		suppdeladdress1=\'Test line 1\',\n																		suppdeladdress2=\'Test line 2\',\n																		suppdeladdress3=\'Test line 3\',\n																		suppdeladdress4=\'Test line 4 - editing\',\n																		suppdeladdress5=\'\',\n																		suppdeladdress6=\'\',\n																		suppliercontact=\'\',\n																		supptel=\'\',\n																		contact=\'Jack Roberts\',\n																		paymentterms=\'20\',\n																		allowprint=\'1\',\n																		status = \'Authorised\'\n																		WHERE orderno = \'18\'');
+INSERT INTO `audittrail` VALUES ('2011-02-20 16:50:20','admin','UPDATE purchorderdetails SET itemcode=\'FLOUR\',\n																								deliverydate =\'2011-02-13\',\n																								itemdescription=\'sackflour - Sack of Flour\',\n																								glcode=\'1460\',\n																								unitprice=\'1.18\',\n																								quantityord=\'150\',\n																								shiptref=\'0\',\n																								jobref=\'0\',\n																								itemno=\'FLOUR\',\n																								suppliersunit=\'pack\',\n																								suppliers_partno=\'2\',\n																								subtotal_amount=\'\',\n																								package=\'\',\n																								pcunit=\'0\',\n																								netweight=\'0.0000\',\n																								kgs=\'0.0000\',\n																								cuft=\'\',\n																								total_quantity=\'5\',\n																								total_amount=\'2\',\n																								assetid=\'0\',\n																								conversionfactor = \'2.5\'\n																	WHERE podetailitem=\'13\'');
+INSERT INTO `audittrail` VALUES ('2011-03-12 15:29:16','admin','UPDATE config\n				SET confvalue=\'2011-03-12\'\n				WHERE confname=\'DB_Maintenance_LastRun\'');
+INSERT INTO `audittrail` VALUES ('2011-03-12 15:29:16','admin','DELETE FROM audittrail\n						WHERE  transactiondate &lt;= \'2011-02-12\'');
+INSERT INTO `audittrail` VALUES ('2011-03-12 15:35:07','admin','UPDATE www_users SET lastvisitdate=\'2011-03-12 15:35:07\'\n							WHERE www_users.userid=\'admin\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:34:38','admin','INSERT INTO suppliers (`supplierid`,\n							`suppname`,  \n							`address1`, \n							`address2`, \n							`address3`,\n							`address4`,  \n							`address5`,  \n							`address6`, \n							`supptype`, \n							`lat`, \n							`lng`,\n							`currcode`,  \n							`suppliersince`, \n							`paymentterms`, \n							`lastpaid`,\n							`lastpaiddate`, \n							`bankact`, \n							`bankref`, \n							`bankpartics`,\n							`remittance`, \n							`taxgroupid`, \n							`factorcompanyid`, \n							`taxref`,\n							`port`, \n							`email`, \n							`fax`, \n							`telephone`)\n    SELECT \'REGOLD\',\n			`suppname`,  \n			`address1`, \n			`address2`, \n			`address3`,\n			`address4`,  \n			`address5`,  \n			`address6`, \n			`supptype`, \n			`lat`, \n			`lng`,\n			`currcode`,  \n			`suppliersince`, \n			`paymentterms`, \n			`lastpaid`,\n			`lastpaiddate`, \n			`bankact`, \n			`bankref`, \n			`bankpartics`,\n			`remittance`, \n			`taxgroupid`, \n			`factorcompanyid`, \n			`taxref`,\n			`port`, \n			`email`, \n			`fax`, \n			`telephone`\n        FROM suppliers WHERE supplierid=\'REGNEW\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:34:38','admin','UPDATE grns SET supplierid=\'REGOLD\' WHERE supplierid=\'REGNEW\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:34:38','admin','UPDATE offers SET supplierid=\'REGOLD\' WHERE supplierid=\'REGNEW\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:34:38','admin','UPDATE purchdata SET supplierno=\'REGOLD\' WHERE supplierno=\'REGNEW\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:34:38','admin','UPDATE purchorders SET supplierno=\'REGOLD\' WHERE supplierno=\'REGNEW\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:34:38','admin','UPDATE shipments SET supplierid=\'REGOLD\' WHERE supplierid=\'REGNEW\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:34:39','admin','UPDATE suppliercontacts SET supplierid=\'REGOLD\' WHERE supplierid=\'REGNEW\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:34:39','admin','UPDATE supptrans SET supplierno=\'REGOLD\' WHERE supplierno=\'REGNEW\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:34:39','admin','UPDATE www_users SET supplierid=\'REGOLD\' WHERE supplierid=\'REGNEW\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:34:39','admin','DELETE FROM suppliers WHERE supplierid=\'REGNEW\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:39:14','admin','INSERT INTO suppliers (`supplierid`,\n							`suppname`,  \n							`address1`, \n							`address2`, \n							`address3`,\n							`address4`,  \n							`address5`,  \n							`address6`, \n							`supptype`, \n							`lat`, \n							`lng`,\n							`currcode`,  \n							`suppliersince`, \n							`paymentterms`, \n							`lastpaid`,\n							`lastpaiddate`, \n							`bankact`, \n							`bankref`, \n							`bankpartics`,\n							`remittance`, \n							`taxgroupid`, \n							`factorcompanyid`, \n							`taxref`,\n							`port`, \n							`email`, \n							`fax`, \n							`telephone`)\n    SELECT \'REGNEW\',\n			`suppname`,  \n			`address1`, \n			`address2`, \n			`address3`,\n			`address4`,  \n			`address5`,  \n			`address6`, \n			`supptype`, \n			`lat`, \n			`lng`,\n			`currcode`,  \n			`suppliersince`, \n			`paymentterms`, \n			`lastpaid`,\n			`lastpaiddate`, \n			`bankact`, \n			`bankref`, \n			`bankpartics`,\n			`remittance`, \n			`taxgroupid`, \n			`factorcompanyid`, \n			`taxref`,\n			`port`, \n			`email`, \n			`fax`, \n			`telephone`\n        FROM suppliers WHERE supplierid=\'REGOLD\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:39:14','admin','UPDATE grns SET supplierid=\'REGNEW\' WHERE supplierid=\'REGOLD\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:39:14','admin','UPDATE offers SET supplierid=\'REGNEW\' WHERE supplierid=\'REGOLD\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:39:14','admin','UPDATE purchdata SET supplierno=\'REGNEW\' WHERE supplierno=\'REGOLD\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:39:14','admin','UPDATE purchorders SET supplierno=\'REGNEW\' WHERE supplierno=\'REGOLD\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:39:14','admin','UPDATE shipments SET supplierid=\'REGNEW\' WHERE supplierid=\'REGOLD\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:39:14','admin','UPDATE suppliercontacts SET supplierid=\'REGNEW\' WHERE supplierid=\'REGOLD\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:39:14','admin','UPDATE supptrans SET supplierno=\'REGNEW\' WHERE supplierno=\'REGOLD\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:39:14','admin','UPDATE www_users SET supplierid=\'REGNEW\' WHERE supplierid=\'REGOLD\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:39:14','admin','DELETE FROM suppliers WHERE supplierid=\'REGOLD\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:45:08','admin','INSERT INTO stockmaster (\n							stockid,\n							description,\n							longdescription,\n							categoryid,\n							units,\n							mbflag,\n							eoq,\n							discontinued,\n							controlled,\n							serialised,\n							perishable,\n							volume,\n							kgs,\n							barcode,\n							discountcategory,\n							taxcatid,\n							decimalplaces,\n							appendfile,\n							shrinkfactor,\n							pansize)\n						VALUES (\'TES AA\',\n							\'tesdsa\',\n							\'tesfdds\',\n							\'FOOD\',\n							\'each\',\n							\'B\',\n							\'0\',\n							\'0\',\n							\'0\',\n							\'0\',\n							\'0\',\n							\'0\',\n							\'0\',\n							\'\',\n							\'\',\n							\'1\',\n							\'0\',\n							\'0\',\n							\'0\',\n							\'0\'\n							)');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:45:08','admin','INSERT INTO locstock (loccode,\n													stockid)\n										SELECT locations.loccode,\n										\'TES AA\'\n										FROM locations');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:45:32','admin','DELETE FROM locstock WHERE stockid=\'TES\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:45:32','admin','DELETE FROM prices WHERE stockid=\'TES\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:45:32','admin','DELETE FROM purchdata WHERE stockid=\'TES\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:45:32','admin','DELETE FROM bom WHERE parent=\'TES\'');
+INSERT INTO `audittrail` VALUES ('2011-03-18 18:45:32','admin','DELETE FROM stockmaster WHERE stockid=\'TES\'');
 
 --
 -- Dumping data for table `bankaccounts`
@@ -2882,6 +3082,7 @@ INSERT INTO `banktrans` VALUES (4,12,3,1030,'',0,1,1,'2009-02-04','Cash',299,'AU
 INSERT INTO `banktrans` VALUES (5,12,5,1040,'Melbourne Counter Sale 10',0,1,1,'2010-05-31','2',10.5,'USD');
 INSERT INTO `banktrans` VALUES (8,12,8,1030,'Melbourne Counter Sale 13',0,0.85,1,'2010-05-31','2',5.8823529411765,'USD');
 INSERT INTO `banktrans` VALUES (9,12,9,1030,'Melbourne Counter Sale 14',0,0.85,1,'2010-05-31','1',138.23529411765,'USD');
+INSERT INTO `banktrans` VALUES (10,12,10,1030,'',0,0.85,1,'2010-11-26','Cash',25.39,'USD');
 
 --
 -- Dumping data for table `bom`
@@ -3419,40 +3620,40 @@ INSERT INTO `chartdetails` VALUES (1100,0,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1100,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1100,2,0,46.4,0,0);
 INSERT INTO `chartdetails` VALUES (1100,3,0,-15.95,0,0);
-INSERT INTO `chartdetails` VALUES (1100,4,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,5,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,6,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,7,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,8,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,9,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,10,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,11,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,12,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,13,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,14,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,15,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,16,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,17,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,18,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,19,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,20,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,21,0,-99,0,0);
-INSERT INTO `chartdetails` VALUES (1100,22,0,0,-99,0);
-INSERT INTO `chartdetails` VALUES (1100,23,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,24,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,25,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,26,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,27,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,28,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,29,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,30,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,31,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,32,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,33,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,34,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,35,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,36,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,37,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1100,4,0,312.5,0,0);
+INSERT INTO `chartdetails` VALUES (1100,5,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,6,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,7,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,8,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,9,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,10,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,11,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,12,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,13,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,14,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,15,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,16,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,17,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,18,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,19,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,20,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,21,0,-99,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,22,0,0,213.5,0);
+INSERT INTO `chartdetails` VALUES (1100,23,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,24,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,25,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,26,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,27,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,28,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,29,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,30,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,31,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,32,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,33,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,34,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,35,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,36,0,0,312.5,0);
+INSERT INTO `chartdetails` VALUES (1100,37,0,0,312.5,0);
 INSERT INTO `chartdetails` VALUES (1150,-11,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1150,-10,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1150,-9,0,0,0,0);
@@ -3808,43 +4009,43 @@ INSERT INTO `chartdetails` VALUES (1440,-3,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1440,-2,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1440,-1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1440,0,0,1425.5905,0,0);
-INSERT INTO `chartdetails` VALUES (1440,1,0,470.97925,1425.5905,0);
-INSERT INTO `chartdetails` VALUES (1440,2,0,15.56,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,3,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,4,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,5,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,6,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,7,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,8,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,9,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,10,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,11,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,12,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,13,0,0.75,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,14,0,0,1897.31975,0);
-INSERT INTO `chartdetails` VALUES (1440,15,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,16,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,17,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,18,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,19,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,20,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,21,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,22,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,23,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,24,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,25,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,26,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,27,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,28,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,29,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,30,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,31,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,32,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,33,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,34,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,35,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,36,0,0,1896.56975,0);
-INSERT INTO `chartdetails` VALUES (1440,37,0,0,1896.56975,0);
+INSERT INTO `chartdetails` VALUES (1440,1,0,1883.917,1425.5905,0);
+INSERT INTO `chartdetails` VALUES (1440,2,0,15.56,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,3,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,4,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,5,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,6,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,7,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,8,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,9,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,10,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,11,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,12,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,13,0,0.75,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,14,0,0,3310.2575,0);
+INSERT INTO `chartdetails` VALUES (1440,15,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,16,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,17,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,18,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,19,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,20,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,21,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,22,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,23,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,24,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,25,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,26,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,27,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,28,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,29,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,30,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,31,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,32,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,33,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,34,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,35,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,36,0,0,3309.5075,0);
+INSERT INTO `chartdetails` VALUES (1440,37,0,0,3309.5075,0);
 INSERT INTO `chartdetails` VALUES (1460,-11,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1460,-10,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1460,-9,0,0,0,0);
@@ -3860,40 +4061,40 @@ INSERT INTO `chartdetails` VALUES (1460,0,0,125.90325,0,0);
 INSERT INTO `chartdetails` VALUES (1460,1,0,0,125.90325,0);
 INSERT INTO `chartdetails` VALUES (1460,2,0,-28.91,125.90325,0);
 INSERT INTO `chartdetails` VALUES (1460,3,0,14.19,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,4,0,0,134.84325,0);
-INSERT INTO `chartdetails` VALUES (1460,5,0,0,134.84325,0);
-INSERT INTO `chartdetails` VALUES (1460,6,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,7,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,8,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,9,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,10,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,11,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,12,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,13,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,14,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,15,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,16,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,17,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,18,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,19,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,20,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,21,0,637.25,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,22,0,0,763.15325,0);
-INSERT INTO `chartdetails` VALUES (1460,23,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,24,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,25,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,26,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,27,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,28,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,29,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,30,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,31,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,32,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,33,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,34,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,35,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,36,0,0,125.90325,0);
-INSERT INTO `chartdetails` VALUES (1460,37,0,0,125.90325,0);
+INSERT INTO `chartdetails` VALUES (1460,4,0,-376.727,134.84325,0);
+INSERT INTO `chartdetails` VALUES (1460,5,0,0,-241.88375,0);
+INSERT INTO `chartdetails` VALUES (1460,6,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,7,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,8,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,9,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,10,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,11,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,12,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,13,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,14,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,15,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,16,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,17,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,18,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,19,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,20,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,21,0,637.25,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,22,0,0,386.42625,0);
+INSERT INTO `chartdetails` VALUES (1460,23,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,24,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,25,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,26,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,27,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,28,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,29,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,30,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,31,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,32,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,33,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,34,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,35,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,36,0,0,-250.82375,0);
+INSERT INTO `chartdetails` VALUES (1460,37,0,0,-250.82375,0);
 INSERT INTO `chartdetails` VALUES (1500,-11,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1500,-10,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1500,-9,0,0,0,0);
@@ -6993,43 +7194,43 @@ INSERT INTO `chartdetails` VALUES (5000,-3,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (5000,-2,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (5000,-1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (5000,0,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (5000,1,0,-470.97925,0,0);
-INSERT INTO `chartdetails` VALUES (5000,2,0,13.35,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,3,0,-5.25,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,4,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,5,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,6,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,7,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,8,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,9,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,10,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,11,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,12,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,13,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,14,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,15,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,16,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,17,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,18,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,19,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,20,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,21,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,22,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,23,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,24,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,25,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,26,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,27,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,28,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,29,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,30,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,31,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,32,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,33,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,34,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,35,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,36,0,0,-470.97925,0);
-INSERT INTO `chartdetails` VALUES (5000,37,0,0,-470.97925,0);
+INSERT INTO `chartdetails` VALUES (5000,1,0,-1883.917,0,0);
+INSERT INTO `chartdetails` VALUES (5000,2,0,13.35,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,3,0,-5.25,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,4,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,5,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,6,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,7,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,8,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,9,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,10,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,11,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,12,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,13,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,14,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,15,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,16,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,17,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,18,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,19,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,20,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,21,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,22,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,23,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,24,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,25,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,26,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,27,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,28,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,29,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,30,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,31,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,32,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,33,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,34,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,35,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,36,0,0,-1883.917,0);
+INSERT INTO `chartdetails` VALUES (5000,37,0,0,-1883.917,0);
 INSERT INTO `chartdetails` VALUES (5100,-11,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (5100,-10,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (5100,-9,0,0,0,0);
@@ -7241,40 +7442,40 @@ INSERT INTO `chartdetails` VALUES (5700,0,0,-166.25,0,0);
 INSERT INTO `chartdetails` VALUES (5700,1,0,0,-166.25,0);
 INSERT INTO `chartdetails` VALUES (5700,2,0,0,-166.25,0);
 INSERT INTO `chartdetails` VALUES (5700,3,0,-8.94,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,4,0,0,-175.19,0);
-INSERT INTO `chartdetails` VALUES (5700,5,0,0,-175.19,0);
-INSERT INTO `chartdetails` VALUES (5700,6,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,7,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,8,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,9,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,10,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,11,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,12,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,13,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,14,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,15,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,16,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,17,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,18,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,19,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,20,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,21,0,-600.85,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,22,0,0,-767.1,0);
-INSERT INTO `chartdetails` VALUES (5700,23,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,24,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,25,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,26,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,27,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,28,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,29,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,30,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,31,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,32,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,33,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,34,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,35,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,36,0,0,-166.25,0);
-INSERT INTO `chartdetails` VALUES (5700,37,0,0,-166.25,0);
+INSERT INTO `chartdetails` VALUES (5700,4,0,376.727,-175.19,0);
+INSERT INTO `chartdetails` VALUES (5700,5,0,0,201.537,0);
+INSERT INTO `chartdetails` VALUES (5700,6,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,7,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,8,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,9,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,10,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,11,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,12,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,13,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,14,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,15,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,16,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,17,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,18,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,19,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,20,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,21,0,-600.85,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,22,0,0,-390.373,0);
+INSERT INTO `chartdetails` VALUES (5700,23,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,24,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,25,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,26,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,27,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,28,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,29,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,30,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,31,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,32,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,33,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,34,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,35,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,36,0,0,210.477,0);
+INSERT INTO `chartdetails` VALUES (5700,37,0,0,210.477,0);
 INSERT INTO `chartdetails` VALUES (5800,-11,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (5800,-10,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (5800,-9,0,0,0,0);
@@ -9740,40 +9941,40 @@ INSERT INTO `chartdetails` VALUES (8100,0,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (8100,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (8100,2,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (8100,3,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,4,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,5,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,6,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,7,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,8,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,9,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,10,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,11,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,12,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,13,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,14,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,15,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,16,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,17,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,18,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,19,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,20,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,21,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,22,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,23,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,24,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,25,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,26,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,27,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,28,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,29,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,30,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,31,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,32,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,33,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,34,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,35,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,36,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (8100,37,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (8100,4,0,-312.5,0,0);
+INSERT INTO `chartdetails` VALUES (8100,5,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,6,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,7,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,8,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,9,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,10,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,11,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,12,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,13,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,14,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,15,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,16,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,17,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,18,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,19,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,20,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,21,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,22,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,23,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,24,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,25,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,26,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,27,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,28,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,29,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,30,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,31,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,32,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,33,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,34,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,35,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,36,0,0,-312.5,0);
+INSERT INTO `chartdetails` VALUES (8100,37,0,0,-312.5,0);
 INSERT INTO `chartdetails` VALUES (8200,-11,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (8200,-10,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (8200,-9,0,0,0,0);
@@ -10280,7 +10481,7 @@ INSERT INTO `cogsglpostings` VALUES (3,'AN','ANY',5000,'AN');
 -- Dumping data for table `companies`
 --
 
-INSERT INTO `companies` VALUES (1,'webERP\'s Demo Company Inc','not entered yet','','123 Web Way','PO Box 123','Queen Street','Melbourne','Victoria 3043','Australia','+61 3 4567 8901','+61 3 4567 8902','weberp@weberpdemo.com','AUD',1100,4900,2100,2400,2150,4200,5200,3500,1,1,1,5600);
+INSERT INTO `companies` VALUES (1,'weberpdemo','not entered yet','','123 Web Way','PO Box 123','Queen Street','Melbourne','Victoria 3043','Australia','+61 3 4567 8901','+61 3 4567 8902','weberp@weberpdemo.com','AUD',1100,4900,2100,2400,2150,4200,5200,3500,1,1,1,5600);
 
 --
 -- Dumping data for table `config`
@@ -10298,7 +10499,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','AUD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','30');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2011-02-15');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2011-03-12');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultCustomerType','1');
@@ -10361,7 +10562,7 @@ INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','Tax Ref');
 INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','0');
-INSERT INTO `config` VALUES ('VersionNumber','4.03');
+INSERT INTO `config` VALUES ('VersionNumber','4.03.4');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
 INSERT INTO `config` VALUES ('WikiApp','Disabled');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
@@ -10442,7 +10643,7 @@ INSERT INTO `custcontacts` VALUES (5,'ANGRY','Bob (Robert) Bruce','Chairman','10
 --
 
 INSERT INTO `debtorsmaster` VALUES ('ANGRY','Angus Rouledge Younger &amp; Son','P O Box 67','Gowerbridge','Upperton','Michigan','','','USD','DE','2005-04-30 00:00:00',1,'7',0,0,117.5,'2010-05-31 00:00:00',5000,0,'',0,0,'','email','','','','1344-654-112',0,1);
-INSERT INTO `debtorsmaster` VALUES ('DUMBLE','Dumbledoor McGonagal & Co','Hogwarts castle','Platform 9.75','','','','','GBP','DE','2005-06-18 00:00:00',1,'30',0,0,0,NULL,1000,0,'',0,0,'','email','','','','',0,1);
+INSERT INTO `debtorsmaster` VALUES ('DUMBLE','Dumbledoor McGonagal &amp; Co','Hogwarts castle','Platform 9.75','','','','','GBP','DE','2005-06-18 00:00:00',1,'30',0,0,0,NULL,10000,0,'',0,0,'','email','','','','',0,1);
 INSERT INTO `debtorsmaster` VALUES ('JOLOMU','Lorrima Productions Inc','3215 Great Western Highway','Blubberhouses','Yorkshire','England','','','GBP','DE','2005-06-15 00:00:00',1,'30',0,0,0,NULL,1000,0,'',0,0,'','email','','','','',0,1);
 INSERT INTO `debtorsmaster` VALUES ('QUARTER','Quarter Back to Back','1356 Union Drive','Holborn','England','','','','CHF','DE','2005-09-03 00:00:00',1,'20',0,0,0,NULL,1000,0,'',0,0,'','email','','','','',0,1);
 INSERT INTO `debtorsmaster` VALUES ('QUICK','Quick Brown PLC','Fox Street','Jumped Over','The Lazy Dog','','','','USD','DE','2007-01-30 00:00:00',1,'20',0,0,0,NULL,1000,0,'',0,0,'','email','','','','',0,1);
@@ -10467,6 +10668,11 @@ INSERT INTO `debtortrans` VALUES (15,13,10,'ANGRY','ANGRY','2010-05-31 00:00:00'
 INSERT INTO `debtortrans` VALUES (16,8,12,'ANGRY','','2010-05-31 00:00:00','2010-05-31 17:02:36',-11,0,'13','',0,0.85,-5,0,0,0,0,0,'Melbourne Counter Sale',0,0,'');
 INSERT INTO `debtortrans` VALUES (17,14,10,'ANGRY','ANGRY','2010-05-31 00:00:00','2010-05-31 17:20:14',-11,0,'','DE',18,0.85,117.5,0,0,0,0,117.5,'',1,0,'');
 INSERT INTO `debtortrans` VALUES (18,9,12,'ANGRY','','2010-05-31 00:00:00','2010-05-31 17:20:14',-11,0,'14','',0,0.85,-117.5,0,0,0,0,-117.5,'Melbourne Counter Sale',0,0,'');
+INSERT INTO `debtortrans` VALUES (19,15,10,'DUMBLE','DUMBLE','2010-12-20 00:00:00','2010-12-19 12:04:00',4,0,'','DE',25,0.8,150,0,0,0,0,0,'',10,0,'');
+INSERT INTO `debtortrans` VALUES (20,10,12,'QUICK','','2010-11-26 00:00:00','2010-11-26 19:18:46',0,0,'Cash ','',0,0.85,-5.39,0,0,0,0,0,'',0,0,'');
+INSERT INTO `debtortrans` VALUES (30,26,10,'DUMBLE','DUMBLE','2010-12-20 00:00:00','2010-12-19 12:40:40',4,0,'','DE',26,0.8,250,0,0,0,0,0,'',10,0,'');
+INSERT INTO `debtortrans` VALUES (32,28,10,'DUMBLE','DUMBLE','2010-12-20 00:00:00','2010-12-19 12:58:03',4,0,'','DE',26,0.8,250,0,0,0,0,0,'',10,0,'');
+INSERT INTO `debtortrans` VALUES (33,29,10,'DUMBLE','DUMBLE','2010-12-20 00:00:00','2010-12-19 13:07:29',4,0,'','DE',26,0.8,250,0,0,0,0,0,'',10,0,'');
 
 --
 -- Dumping data for table `debtortranstaxes`
@@ -10480,6 +10686,10 @@ INSERT INTO `debtortranstaxes` VALUES (7,13,0);
 INSERT INTO `debtortranstaxes` VALUES (8,13,0);
 INSERT INTO `debtortranstaxes` VALUES (9,13,0);
 INSERT INTO `debtortranstaxes` VALUES (17,13,0);
+INSERT INTO `debtortranstaxes` VALUES (19,13,0);
+INSERT INTO `debtortranstaxes` VALUES (30,13,0);
+INSERT INTO `debtortranstaxes` VALUES (32,13,0);
+INSERT INTO `debtortranstaxes` VALUES (33,13,0);
 
 --
 -- Dumping data for table `debtortype`
@@ -10661,6 +10871,31 @@ INSERT INTO `edi_orders_segs` VALUES (95,'UNT',50,1);
 
 INSERT INTO `emailsettings` VALUES (1,'localhost','25','helo','','',5,'',0);
 INSERT INTO `emailsettings` VALUES (2,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (3,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (4,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (5,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (6,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (7,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (8,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (9,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (10,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (11,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (12,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (13,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (14,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (15,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (16,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (17,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (18,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (19,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (20,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (21,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (22,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (23,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (24,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (25,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (26,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (27,'localhost','25','helo','','',5,'',0);
 
 --
 -- Dumping data for table `factorcompanies`
@@ -10668,9 +10903,16 @@ INSERT INTO `emailsettings` VALUES (2,'localhost','25','helo','','',5,'',0);
 
 
 --
+-- Dumping data for table `favourites`
+--
+
+
+--
 -- Dumping data for table `fixedassetcategories`
 --
 
+INSERT INTO `fixedassetcategories` VALUES ('BLDG','Buildings',1600,7750,8100,1620);
+INSERT INTO `fixedassetcategories` VALUES ('PLANT','Plant and Equipment',1650,7750,8100,1670);
 
 --
 -- Dumping data for table `fixedassetlocations`
@@ -10682,11 +10924,29 @@ INSERT INTO `fixedassetlocations` VALUES ('HEADOF','Head Office','');
 -- Dumping data for table `fixedassets`
 --
 
+INSERT INTO `fixedassets` VALUES (1,'','','HEADOF',0,0,'0000-00-00',312.5,'PLANT','testing 123 - 456','test 123 456',0,12,'2010-12-20');
 
 --
 -- Dumping data for table `fixedassettrans`
 --
 
+INSERT INTO `fixedassettrans` VALUES (3,1,10,29,4,'2010-12-19','disposal',312.5,'2010-12-20');
+INSERT INTO `fixedassettrans` VALUES (12,6,20,35,2010,'0000-00-00','2010-11-',0,'0000-00-00');
+INSERT INTO `fixedassettrans` VALUES (13,6,20,36,2010,'0000-00-00','2010-11-',0,'0000-00-00');
+INSERT INTO `fixedassettrans` VALUES (15,6,21,10,2010,'0000-00-00','2010-11-',0,'0000-00-00');
+INSERT INTO `fixedassettrans` VALUES (16,6,44,8,2010,'0000-00-00','2010-11-',0,'2000-04-29');
+INSERT INTO `fixedassettrans` VALUES (17,8,49,1,2010,'2000-03-17','2010-12-',0,'0000-00-00');
+INSERT INTO `fixedassettrans` VALUES (18,8,49,1,2010,'2000-03-17','2010-12-',0,'0000-00-00');
+INSERT INTO `fixedassettrans` VALUES (19,9,49,1,2010,'2000-03-17','2010-12-',0,'2000-02-00');
+INSERT INTO `fixedassettrans` VALUES (20,9,49,1,2010,'2000-03-17','2010-12-',0,'0000-00-00');
+INSERT INTO `fixedassettrans` VALUES (21,10,49,2,2010,'2000-03-17','2010-12-',0,'0000-00-00');
+INSERT INTO `fixedassettrans` VALUES (22,10,49,2,2010,'2000-03-17','2010-12-',0,'0000-00-00');
+INSERT INTO `fixedassettrans` VALUES (23,11,49,3,2010,'2000-03-17','2010-12-',0,'2000-02-00');
+INSERT INTO `fixedassettrans` VALUES (24,11,49,3,2010,'2000-03-17','2010-12-',0,'0000-00-00');
+INSERT INTO `fixedassettrans` VALUES (27,13,49,5,2010,'0000-00-00','2010-12-',0,'0000-00-00');
+INSERT INTO `fixedassettrans` VALUES (28,13,49,5,2010,'0000-00-00','2010-12-',0,'0000-00-00');
+INSERT INTO `fixedassettrans` VALUES (29,14,49,6,2010,'0000-00-00','2010-12-',0,'2000-02-00');
+INSERT INTO `fixedassettrans` VALUES (30,14,49,6,2010,'0000-00-00','2010-12-',0,'0000-00-00');
 
 --
 -- Dumping data for table `freightcosts`
@@ -10894,12 +11154,127 @@ INSERT INTO `gltrans` VALUES (203,28,10,0,'2010-08-15',0,1440,'12 SALT x 1.3 @ 2
 INSERT INTO `gltrans` VALUES (204,28,10,0,'2010-08-15',0,1460,'12 SALT x 1.3 @ 2.50',-3.25,1,'',0);
 INSERT INTO `gltrans` VALUES (205,32,2,0,'2010-08-22',1,1440,'Variance on contract BirthdayCakeConstruc',470.97925,1,'',0);
 INSERT INTO `gltrans` VALUES (206,32,2,0,'2010-08-22',1,5000,'Variance on contract BirthdayCakeConstruc',-470.97925,1,'',0);
-INSERT INTO `gltrans` VALUES (209,32,4,0,'2010-08-22',1,1440,'Variance on contract BirthdayCakeConstruc',470.97925,0,'',0);
-INSERT INTO `gltrans` VALUES (210,32,4,0,'2010-08-22',1,5000,'Variance on contract BirthdayCakeConstruc',-470.97925,0,'',0);
-INSERT INTO `gltrans` VALUES (213,32,5,0,'2010-08-22',1,1440,'Variance on contract BirthdayCakeConstruc',470.97925,0,'',0);
-INSERT INTO `gltrans` VALUES (214,32,5,0,'2010-08-22',1,5000,'Variance on contract BirthdayCakeConstruc',-470.97925,0,'',0);
-INSERT INTO `gltrans` VALUES (215,32,6,0,'2010-08-22',1,1440,'Variance on contract BirthdayCakeConstruc',470.97925,0,'',0);
-INSERT INTO `gltrans` VALUES (216,32,6,0,'2010-08-22',1,5000,'Variance on contract BirthdayCakeConstruc',-470.97925,0,'',0);
+INSERT INTO `gltrans` VALUES (209,32,4,0,'2010-08-22',1,1440,'Variance on contract BirthdayCakeConstruc',470.97925,1,'',0);
+INSERT INTO `gltrans` VALUES (210,32,4,0,'2010-08-22',1,5000,'Variance on contract BirthdayCakeConstruc',-470.97925,1,'',0);
+INSERT INTO `gltrans` VALUES (213,32,5,0,'2010-08-22',1,1440,'Variance on contract BirthdayCakeConstruc',470.97925,1,'',0);
+INSERT INTO `gltrans` VALUES (214,32,5,0,'2010-08-22',1,5000,'Variance on contract BirthdayCakeConstruc',-470.97925,1,'',0);
+INSERT INTO `gltrans` VALUES (215,32,6,0,'2010-08-22',1,1440,'Variance on contract BirthdayCakeConstruc',470.97925,1,'',0);
+INSERT INTO `gltrans` VALUES (216,32,6,0,'2010-08-22',1,5000,'Variance on contract BirthdayCakeConstruc',-470.97925,1,'',0);
+INSERT INTO `gltrans` VALUES (217,12,10,0,'2010-11-26',0,1030,'',29.870588235294,1,'',0);
+INSERT INTO `gltrans` VALUES (218,17,22,0,'2010-12-11',4,5700,'BREAD x -62 @ 6.0085 - Inventory Check',372.527,1,'',0);
+INSERT INTO `gltrans` VALUES (219,17,22,0,'2010-12-11',4,1460,'BREAD x -62 @ 6.0085 - Inventory Check',-372.527,1,'',0);
+INSERT INTO `gltrans` VALUES (220,17,22,0,'2010-12-11',4,5700,'DVD-DHWV x 12 @ 2.3200 - Inventory Check',-27.84,1,'',0);
+INSERT INTO `gltrans` VALUES (221,17,22,0,'2010-12-11',4,1460,'DVD-DHWV x 12 @ 2.3200 - Inventory Check',27.84,1,'',0);
+INSERT INTO `gltrans` VALUES (222,17,22,0,'2010-12-11',4,5700,'DVD-LTWP x 3 @ 2.7000 - Inventory Check',-8.1,1,'',0);
+INSERT INTO `gltrans` VALUES (223,17,22,0,'2010-12-11',4,1460,'DVD-LTWP x 3 @ 2.7000 - Inventory Check',8.1,1,'',0);
+INSERT INTO `gltrans` VALUES (224,17,22,0,'2010-12-11',4,5700,'DVD-TOPGUN x 1 @ 6.5000 - Inventory Check',-6.5,1,'',0);
+INSERT INTO `gltrans` VALUES (225,17,22,0,'2010-12-11',4,1460,'DVD-TOPGUN x 1 @ 6.5000 - Inventory Check',6.5,1,'',0);
+INSERT INTO `gltrans` VALUES (226,17,22,0,'2010-12-11',4,5700,'DVD-UNSG x 10 @ 5.0000 - Inventory Check',-50,1,'',0);
+INSERT INTO `gltrans` VALUES (227,17,22,0,'2010-12-11',4,1460,'DVD-UNSG x 10 @ 5.0000 - Inventory Check',50,1,'',0);
+INSERT INTO `gltrans` VALUES (228,17,22,0,'2010-12-11',4,5700,'DVD-UNSG2 x 10 @ 5.0000 - Inventory Check',-50,1,'',0);
+INSERT INTO `gltrans` VALUES (229,17,22,0,'2010-12-11',4,1460,'DVD-UNSG2 x 10 @ 5.0000 - Inventory Check',50,1,'',0);
+INSERT INTO `gltrans` VALUES (230,17,22,0,'2010-12-11',4,5700,'DVD_ACTION x -10 @ 16.2200 - Inventory Check',162.2,1,'',0);
+INSERT INTO `gltrans` VALUES (231,17,22,0,'2010-12-11',4,1460,'DVD_ACTION x -10 @ 16.2200 - Inventory Check',-162.2,1,'',0);
+INSERT INTO `gltrans` VALUES (232,17,22,0,'2010-12-11',4,5700,'FLOUR x 4 @ 3.8900 - Inventory Check',-15.56,1,'',0);
+INSERT INTO `gltrans` VALUES (233,17,22,0,'2010-12-11',4,1460,'FLOUR x 4 @ 3.8900 - Inventory Check',15.56,1,'',0);
+INSERT INTO `gltrans` VALUES (234,17,22,0,'2010-12-11',4,5700,'SALT x -2.2204460492503E-16 @ 2.5000 - Inventory Check',5.5511151231258e-16,1,'',0);
+INSERT INTO `gltrans` VALUES (235,17,22,0,'2010-12-11',4,1460,'SALT x -2.2204460492503E-16 @ 2.5000 - Inventory Check',-5.5511151231258e-16,1,'',0);
+INSERT INTO `gltrans` VALUES (236,20,24,0,'2010-11-25',0,2100,'DINGO - Inv sd2222 AUD65.00 @ a rate of 1',-65,1,'',0);
+INSERT INTO `gltrans` VALUES (237,17,23,0,'2010-11-26',0,5700,'DVD-LTWP x -10 @ 16.0333 ',160.333,1,'',0);
+INSERT INTO `gltrans` VALUES (238,17,23,0,'2010-11-26',0,1460,'DVD-LTWP x -10 @ 16.0333 ',-160.333,1,'',0);
+INSERT INTO `gltrans` VALUES (239,25,34,0,'2010-11-27',0,1460,'PO: 5 DINGO - DVD-LTWP - Lethal Weapon Linked x 1 @ 0.00',0,1,'',0);
+INSERT INTO `gltrans` VALUES (240,25,34,0,'2010-11-27',0,2150,'PO: 5 DINGO - DVD-LTWP - Lethal Weapon Linked x 1 @ 0.00',0,1,'',0);
+INSERT INTO `gltrans` VALUES (241,20,25,0,'2010-11-26',0,1460,'DINGO - Average Cost Adj - DVD-LTWP x 1 x 5',5,1,'',0);
+INSERT INTO `gltrans` VALUES (242,20,25,0,'2010-11-26',0,2310,'DINGO - Inv 4233 Australian GST 10.00% AUD0.5 @ exch rate 1',0.5,1,'',0);
+INSERT INTO `gltrans` VALUES (243,20,25,0,'2010-11-26',0,2310,'DINGO - Inv 4233 Sales Tax 20.00% AUD1 @ exch rate 1',1,1,'',0);
+INSERT INTO `gltrans` VALUES (244,20,25,0,'2010-11-26',0,2100,'DINGO - Inv 4233 AUD6.50 @ a rate of 1',-6.5,1,'',0);
+INSERT INTO `gltrans` VALUES (245,25,35,0,'2010-11-27',0,1460,'PO: 5 DINGO - DVD-LTWP - Lethal Weapon Linked x 1 @ 5.00',5,1,'',0);
+INSERT INTO `gltrans` VALUES (246,10,29,0,'2010-12-20',4,8100,'DUMBLE - ASSET-1-1 disposal',-312.5,1,'',0);
+INSERT INTO `gltrans` VALUES (247,10,29,0,'2010-12-20',4,1100,'DUMBLE',312.5,1,'',0);
+INSERT INTO `gltrans` VALUES (248,20,26,0,'2010-11-26',0,2310,'DINGO - Inv 1234 Australian GST 10.00% AUD0.75 @ exch rate 1',0.75,1,'',0);
+INSERT INTO `gltrans` VALUES (249,20,26,0,'2010-11-26',0,2310,'DINGO - Inv 1234 Sales Tax 20.00% AUD1.5 @ exch rate 1',1.5,1,'',0);
+INSERT INTO `gltrans` VALUES (250,20,26,0,'2010-11-26',0,2100,'DINGO - Inv 1234 AUD9.75 @ a rate of 1',-9.75,1,'',0);
+INSERT INTO `gltrans` VALUES (251,25,36,0,'2010-11-27',0,1460,'PO: 5 DINGO - DVD-LTWP - Lethal Weapon Linked x 10 @ 8.75',87.5,1,'',0);
+INSERT INTO `gltrans` VALUES (252,25,36,0,'2010-11-27',0,2150,'PO: 5 DINGO - DVD-LTWP - Lethal Weapon Linked x 10 @ 8.75',-87.5,1,'',0);
+INSERT INTO `gltrans` VALUES (253,20,27,0,'2010-11-26',0,1460,'DINGO - Average Cost Adj - DVD-LTWP x 12 x 1',10,1,'',0);
+INSERT INTO `gltrans` VALUES (254,20,27,0,'2010-11-26',0,2310,'DINGO - Inv 987 Australian GST 10.00% AUD1 @ exch rate 1',1,1,'',0);
+INSERT INTO `gltrans` VALUES (255,20,27,0,'2010-11-26',0,2310,'DINGO - Inv 987 Sales Tax 20.00% AUD2 @ exch rate 1',2,1,'',0);
+INSERT INTO `gltrans` VALUES (256,20,27,0,'2010-11-26',0,2100,'DINGO - Inv 987 AUD13.00 @ a rate of 1',-13,1,'',0);
+INSERT INTO `gltrans` VALUES (257,17,24,0,'2010-11-27',0,5700,'DVD-LTWP x -12 @ 9.5833 ',114.9996,1,'',0);
+INSERT INTO `gltrans` VALUES (258,17,24,0,'2010-11-27',0,1460,'DVD-LTWP x -12 @ 9.5833 ',-114.9996,1,'',0);
+INSERT INTO `gltrans` VALUES (259,35,19,0,'2010-11-27',1,5700,'DVD_ACTION cost was 16.2200 changed to 13.52 x Quantity on hand of 10',27,1,'',0);
+INSERT INTO `gltrans` VALUES (260,35,19,0,'2010-11-27',1,1460,'DVD_ACTION cost was 16.2200 changed to 13.52 x Quantity on hand of 10',-27,1,'',0);
+INSERT INTO `gltrans` VALUES (261,25,37,0,'2010-11-27',0,1460,'PO: 5 DINGO - DVD-LTWP - Lethal Weapon Linked x 1 @ 0.00',0,1,'',0);
+INSERT INTO `gltrans` VALUES (262,25,37,0,'2010-11-27',0,2150,'PO: 5 DINGO - DVD-LTWP - Lethal Weapon Linked x 1 @ 0.00',0,1,'',0);
+INSERT INTO `gltrans` VALUES (263,20,28,0,'2010-11-26',0,1460,'DINGO - Average Cost Adj - DVD-LTWP x 1 x 5',5,1,'',0);
+INSERT INTO `gltrans` VALUES (264,20,28,0,'2010-11-26',0,2310,'DINGO - Inv 9544 Australian GST 10.00% AUD0.5 @ exch rate 1',0.5,1,'',0);
+INSERT INTO `gltrans` VALUES (265,20,28,0,'2010-11-26',0,2310,'DINGO - Inv 9544 Sales Tax 20.00% AUD1 @ exch rate 1',1,1,'',0);
+INSERT INTO `gltrans` VALUES (266,20,28,0,'2010-11-26',0,2100,'DINGO - Inv 9544 AUD6.50 @ a rate of 1',-6.5,1,'',0);
+INSERT INTO `gltrans` VALUES (267,25,38,0,'2010-11-27',0,1460,'PO: 5 DINGO - DVD-LTWP - Lethal Weapon Linked x 1 @ 5.00',5,1,'',0);
+INSERT INTO `gltrans` VALUES (268,25,38,0,'2010-11-27',0,2150,'PO: 5 DINGO - DVD-LTWP - Lethal Weapon Linked x 1 @ 5.00',-5,1,'',0);
+INSERT INTO `gltrans` VALUES (269,20,29,0,'2010-11-26',0,1460,'DINGO - Average Cost Adj - DVD-LTWP x 2 x 10',10,1,'',0);
+INSERT INTO `gltrans` VALUES (270,20,29,0,'2010-11-26',0,2310,'DINGO - Inv 977 Australian GST 10.00% AUD1 @ exch rate 1',1,1,'',0);
+INSERT INTO `gltrans` VALUES (271,20,29,0,'2010-11-26',0,2310,'DINGO - Inv 977 Sales Tax 20.00% AUD2 @ exch rate 1',2,1,'',0);
+INSERT INTO `gltrans` VALUES (272,20,29,0,'2010-11-26',0,2100,'DINGO - Inv 977 AUD13.00 @ a rate of 1',-13,1,'',0);
+INSERT INTO `gltrans` VALUES (273,25,39,0,'2010-11-27',0,1460,'PO: 5 DINGO - DVD-LTWP - Lethal Weapon Linked x 1 @ 10.00',10,1,'',0);
+INSERT INTO `gltrans` VALUES (274,25,39,0,'2010-11-27',0,2150,'PO: 5 DINGO - DVD-LTWP - Lethal Weapon Linked x 1 @ 10.00',-10,1,'',0);
+INSERT INTO `gltrans` VALUES (275,20,30,0,'2010-11-26',0,1460,'DINGO - Average Cost Adj - DVD-LTWP x 3 x 5',5,1,'',0);
+INSERT INTO `gltrans` VALUES (276,20,30,0,'2010-11-26',0,2310,'DINGO - Inv ssaa Australian GST 10.00% AUD0.5 @ exch rate 1',0.5,1,'',0);
+INSERT INTO `gltrans` VALUES (277,20,30,0,'2010-11-26',0,2310,'DINGO - Inv ssaa Sales Tax 20.00% AUD1 @ exch rate 1',1,1,'',0);
+INSERT INTO `gltrans` VALUES (278,20,30,0,'2010-11-26',0,2100,'DINGO - Inv ssaa AUD6.50 @ a rate of 1',-6.5,1,'',0);
+INSERT INTO `gltrans` VALUES (279,25,40,0,'2010-11-27',0,1460,'PO: 5 DINGO - DVD-LTWP - Lethal Weapon Linked x 1 @ 11.67',11.6667,1,'',0);
+INSERT INTO `gltrans` VALUES (280,25,40,0,'2010-11-27',0,2150,'PO: 5 DINGO - DVD-LTWP - Lethal Weapon Linked x 1 @ 11.67',-11.6667,1,'',0);
+INSERT INTO `gltrans` VALUES (281,20,31,0,'2010-11-26',0,2150,'DINGO - GRN 23 - DVD-LTWP x 1 @  std cost of 11.6667',11.67,1,'',0);
+INSERT INTO `gltrans` VALUES (282,20,31,0,'2010-11-26',0,1460,'DINGO - Average Cost Adj - DVD-LTWP x 4 x -6.67',-6.6667,1,'',0);
+INSERT INTO `gltrans` VALUES (283,20,31,0,'2010-11-26',0,2310,'DINGO - Inv 4221 Australian GST 10.00% AUD0.5 @ exch rate 1',0.5,1,'',0);
+INSERT INTO `gltrans` VALUES (284,20,31,0,'2010-11-26',0,2310,'DINGO - Inv 4221 Sales Tax 20.00% AUD1 @ exch rate 1',1,1,'',0);
+INSERT INTO `gltrans` VALUES (285,20,31,0,'2010-11-26',0,2100,'DINGO - Inv 4221 AUD6.50 @ a rate of 1',-6.5,1,'',0);
+INSERT INTO `gltrans` VALUES (286,25,41,0,'2010-11-27',3,1,'PO: 6 DINGO -  - Rolls Royce x 1 @ 8,950.00',8950,1,'',0);
+INSERT INTO `gltrans` VALUES (287,25,41,0,'2010-11-27',3,2150,'PO: 6 DINGO -  - Rolls Royce x 1 @ 8,950.00',-8950,1,'',0);
+INSERT INTO `gltrans` VALUES (288,25,24,0,'2010-11-27',3,1,'GRN Reversal for PO: 6 DINGO - -Rolls Royce x 1 @ 8,950.00',-8950,1,'',0);
+INSERT INTO `gltrans` VALUES (289,25,24,0,'2010-11-27',3,2150,'GRN Reversal PO: 6 DINGO - -Rolls Royce x 1 @ 8,950.00',8950,1,'',0);
+INSERT INTO `gltrans` VALUES (290,25,42,0,'2010-11-27',3,1460,'PO: 5 DINGO - DVD-LTWP - Lethal Weapon Linked x 1 @ 10.00',10,1,'',0);
+INSERT INTO `gltrans` VALUES (291,25,42,0,'2010-11-27',3,2150,'PO: 5 DINGO - DVD-LTWP - Lethal Weapon Linked x 1 @ 10.00',-10,1,'',0);
+INSERT INTO `gltrans` VALUES (292,25,25,0,'2010-11-27',3,1460,'GRN Reversal for PO: 5 DINGO - DVD-LTWP-Lethal Weapon Linked x 1 @ 7.20',-7.2026945945947,1,'',0);
+INSERT INTO `gltrans` VALUES (293,25,25,0,'2010-11-27',3,2150,'GRN Reversal PO: 5 DINGO - DVD-LTWP-Lethal Weapon Linked x 1 @ 7.20',7.2026945945947,1,'',0);
+INSERT INTO `gltrans` VALUES (330,20,35,0,'2010-11-27',3,1760,'BINGO Asset Addition 6: Rolls Royce Silver Shadow',29411.764705882,1,'',0);
+INSERT INTO `gltrans` VALUES (331,20,35,0,'2010-11-27',3,2310,'BINGO - Inv 5443 Australian GST 10.00% USD2500 @ exch rate 0.85',2941.18,1,'',0);
+INSERT INTO `gltrans` VALUES (332,20,35,0,'2010-11-27',3,2310,'BINGO - Inv 5443 Sales Tax 20.00% USD5000 @ exch rate 0.85',5882.35,1,'',0);
+INSERT INTO `gltrans` VALUES (333,20,35,0,'2010-11-27',3,2100,'BINGO - Inv 5443 USD32,500.00 @ a rate of 0.85',-38235.29,1,'',0);
+INSERT INTO `gltrans` VALUES (334,20,36,0,'2010-11-27',3,1760,'BINGO Asset Addition 6: Rolls Royce Silver Shadow',23.529411764706,1,'',0);
+INSERT INTO `gltrans` VALUES (335,20,36,0,'2010-11-27',3,2310,'BINGO - Inv 122 Australian GST 10.00% USD2 @ exch rate 0.85',2.35,1,'',0);
+INSERT INTO `gltrans` VALUES (336,20,36,0,'2010-11-27',3,2310,'BINGO - Inv 122 Sales Tax 20.00% USD4 @ exch rate 0.85',4.71,1,'',0);
+INSERT INTO `gltrans` VALUES (337,20,36,0,'2010-11-27',3,2100,'BINGO - Inv 122 USD26.00 @ a rate of 0.85',-30.59,1,'',0);
+INSERT INTO `gltrans` VALUES (340,21,10,0,'2010-11-27',3,1760,'BINGO Asset Credit 6: Rolls Royce Silver Shadow',-10,1,'',0);
+INSERT INTO `gltrans` VALUES (341,21,10,0,'2010-11-27',3,2310,'BINGO - Credit note 4311 USD0.85 @ a rate of 0.85',-1,1,'',0);
+INSERT INTO `gltrans` VALUES (342,21,10,0,'2010-11-27',3,2310,'BINGO - Credit note 4311 USD2.244 @ a rate of 0.85',-2.64,1,'',0);
+INSERT INTO `gltrans` VALUES (343,21,10,0,'2010-11-27',3,2100,'BINGO - Credit Note 4311 USD8.50 @ a rate of 0.85',13.64,1,'',0);
+INSERT INTO `gltrans` VALUES (344,44,8,0,'2010-11-30',3,7750,'6',429.11887254901,1,'',0);
+INSERT INTO `gltrans` VALUES (345,44,8,0,'2010-11-30',3,1770,'6',-429.11887254901,1,'',0);
+INSERT INTO `gltrans` VALUES (346,20,37,0,'2010-11-15',3,1420,'BINGO ',14.12,0,'',0);
+INSERT INTO `gltrans` VALUES (347,20,37,0,'2010-11-15',3,2310,'BINGO - Inv asas Australian GST 10.00% USD1.2 @ exch rate 0.85',1.41,0,'',0);
+INSERT INTO `gltrans` VALUES (348,20,37,0,'2010-11-15',3,2310,'BINGO - Inv asas Sales Tax 20.00% USD2.4 @ exch rate 0.85',2.82,0,'',0);
+INSERT INTO `gltrans` VALUES (349,20,37,0,'2010-11-15',3,2100,'BINGO - Inv asas USD15.60 @ a rate of 0.85',-18.36,0,'',0);
+INSERT INTO `gltrans` VALUES (350,20,38,0,'2010-10-12',2,2050,'BINGO ',5.88,0,'',0);
+INSERT INTO `gltrans` VALUES (351,20,38,0,'2010-10-12',2,2310,'BINGO - Inv 324 Australian GST 10.00% USD0.5 @ exch rate 0.85',0.59,0,'',0);
+INSERT INTO `gltrans` VALUES (352,20,38,0,'2010-10-12',2,2310,'BINGO - Inv 324 Sales Tax 20.00% USD1 @ exch rate 0.85',1.18,0,'',0);
+INSERT INTO `gltrans` VALUES (353,20,38,0,'2010-10-12',2,2100,'BINGO - Inv 324 USD6.50 @ a rate of 0.85',-7.64,0,'',0);
+INSERT INTO `gltrans` VALUES (354,20,39,0,'2010-12-21',4,4500,'CAMPBELL ',176.47,0,'',0);
+INSERT INTO `gltrans` VALUES (355,20,39,0,'2010-12-21',4,2100,'CAMPBELL - Inv 564 USD150.00 @ a rate of 0.85',-176.47,0,'',0);
+INSERT INTO `gltrans` VALUES (356,25,32,0,'2011-01-30',5,1460,'PO: 3 BINGO - BREAD - Bread x 5 @ 6.01',30.0425,0,'',0);
+INSERT INTO `gltrans` VALUES (357,25,32,0,'2011-01-30',5,2150,'PO1296361048: 3 BINGO - BREAD - Bread x 5 @ 6.01',-30.0425,0,'',0);
+INSERT INTO `gltrans` VALUES (358,25,33,0,'2011-01-30',5,1460,'PO: 5 BINGO - BREAD - Bread x 2 @ 6.01',12.017,0,'',0);
+INSERT INTO `gltrans` VALUES (359,25,33,0,'2011-01-30',5,2150,'PO1296363731: 5 BINGO - BREAD - Bread x 2 @ 6.01',-12.017,0,'',0);
+INSERT INTO `gltrans` VALUES (360,25,34,0,'2011-01-30',5,1460,'PO: 3 BINGO - BREAD - Bread x 1 @ 6.01',6.0085,0,'',0);
+INSERT INTO `gltrans` VALUES (361,25,34,0,'2011-01-30',5,2150,'PO1296363959: 3 BINGO - BREAD - Bread x 1 @ 6.01',-6.0085,0,'',0);
+INSERT INTO `gltrans` VALUES (362,25,35,0,'2011-02-05',6,1460,'PO: 3 BINGO - BREAD - Bread x 1.2 @ 6.01',7.2102,0,'',0);
+INSERT INTO `gltrans` VALUES (363,25,35,0,'2011-02-05',6,2150,'PO1296879501: 3 BINGO - BREAD - Bread x 1.2 @ 6.01',-7.2102,0,'',0);
+INSERT INTO `gltrans` VALUES (364,25,36,0,'2011-02-06',6,1460,'PO: 3 BINGO - BREAD - Bread x .5 @ 6.01',3.00425,0,'',0);
+INSERT INTO `gltrans` VALUES (365,25,36,0,'2011-02-06',6,2150,'PO1296934797: 3 BINGO - BREAD - Bread x .5 @ 6.01',-3.00425,0,'',0);
+INSERT INTO `gltrans` VALUES (366,25,37,0,'2011-02-06',6,1460,'PO: 1 CAMPBELL - DVD-CASE - webERP Demo DVD Case x 6 @ 0.30',1.8,0,'',0);
+INSERT INTO `gltrans` VALUES (367,25,37,0,'2011-02-06',6,2150,'PO1296936986: 1 CAMPBELL - DVD-CASE - webERP Demo DVD Case x 6 @ 0.30',-1.8,0,'',0);
+INSERT INTO `gltrans` VALUES (368,25,38,0,'2011-02-12',6,1460,'PO: 17 CRUISE - DVD-CASE - DVD-Case-12pack -  x 12 @ 0.30',3.6,0,'',0);
+INSERT INTO `gltrans` VALUES (369,25,38,0,'2011-02-12',6,2150,'PO1297486035: 17 CRUISE - DVD-CASE - DVD-Case-12pack -  x 12 @ 0.30',-3.6,0,'',0);
 
 --
 -- Dumping data for table `grns`
@@ -10919,6 +11294,24 @@ INSERT INTO `grns` VALUES (28,11,3,'SALT','2009-02-05','Salt',1,0,'GOTSTUFF',2.5
 INSERT INTO `grns` VALUES (29,12,3,'SALT','2009-02-05','Salt',1,0,'GOTSTUFF',2.5);
 INSERT INTO `grns` VALUES (30,13,3,'SALT','2009-02-05','Salt',1,0,'GOTSTUFF',2.5);
 INSERT INTO `grns` VALUES (31,14,3,'SALT','2009-02-05','Salt',1,0,'GOTSTUFF',2.5);
+INSERT INTO `grns` VALUES (32,15,6,'DVD-LTWP','2010-11-26','Lethal Weapon Linked',10,10,'DINGO',2.7);
+INSERT INTO `grns` VALUES (33,16,6,'DVD-LTWP','2010-11-26','Lethal Weapon Linked',10,10,'DINGO',11.0333);
+INSERT INTO `grns` VALUES (34,17,6,'DVD-LTWP','2010-11-27','Lethal Weapon Linked',1,1,'DINGO',0);
+INSERT INTO `grns` VALUES (35,18,6,'DVD-LTWP','2010-11-27','Lethal Weapon Linked',1,1,'DINGO',5);
+INSERT INTO `grns` VALUES (36,19,6,'DVD-LTWP','2010-11-27','Lethal Weapon Linked',10,10,'DINGO',8.75);
+INSERT INTO `grns` VALUES (37,20,6,'DVD-LTWP','2010-11-27','Lethal Weapon Linked',1,1,'DINGO',0);
+INSERT INTO `grns` VALUES (38,21,6,'DVD-LTWP','2010-11-27','Lethal Weapon Linked',1,1,'DINGO',5);
+INSERT INTO `grns` VALUES (39,22,6,'DVD-LTWP','2010-11-27','Lethal Weapon Linked',1,1,'DINGO',10);
+INSERT INTO `grns` VALUES (40,23,6,'DVD-LTWP','2010-11-27','Lethal Weapon Linked',1,1,'DINGO',11.6667);
+INSERT INTO `grns` VALUES (42,25,6,'DVD-LTWP','2010-11-27','Lethal Weapon Linked',0,0,'DINGO',10);
+INSERT INTO `grns` VALUES (50,33,11,'','2010-11-27','Rolls Royce Silver Shadow',1,0,'DINGO',9500);
+INSERT INTO `grns` VALUES (32,34,4,'BREAD','2011-01-30','Bread',5,0,'BINGO',6.0085);
+INSERT INTO `grns` VALUES (33,35,7,'BREAD','2011-01-30','Bread',2,0,'BINGO',6.0085);
+INSERT INTO `grns` VALUES (34,36,4,'BREAD','2011-01-30','Bread',1,0,'BINGO',6.0085);
+INSERT INTO `grns` VALUES (35,37,4,'BREAD','2011-02-05','Bread',1.2,0,'BINGO',6.0085);
+INSERT INTO `grns` VALUES (36,38,4,'BREAD','2011-02-06','Bread',0.5,0,'BINGO',6.0085);
+INSERT INTO `grns` VALUES (37,39,1,'DVD-CASE','2011-02-06','webERP Demo DVD Case',6,0,'CAMPBELL',0.3);
+INSERT INTO `grns` VALUES (38,40,12,'DVD-CASE','2011-02-12','DVD-Case-12pack - ',12,0,'CRUISE',0.3);
 
 --
 -- Dumping data for table `holdreasons`
@@ -10934,39 +11327,69 @@ INSERT INTO `holdreasons` VALUES (51,'In liquidation',1);
 
 
 --
+-- Dumping data for table `levels`
+--
+
+INSERT INTO `levels` VALUES ('BIGEARS12',1,0,0,0,0);
+INSERT INTO `levels` VALUES ('BirthdayCakeConstruc',2,0,0,0,0);
+INSERT INTO `levels` VALUES ('BREAD',1,0,0,0,0);
+INSERT INTO `levels` VALUES ('DVD-CASE',0,0,0,0,0);
+INSERT INTO `levels` VALUES ('DVD-DHWV',0,0,0,0,0);
+INSERT INTO `levels` VALUES ('DVD-LTWP',0,0,0,0,0);
+INSERT INTO `levels` VALUES ('DVD-UNSG',0,0,0,0,0);
+INSERT INTO `levels` VALUES ('DVD-UNSG2',0,5,0,0,0);
+INSERT INTO `levels` VALUES ('DVD_ACTION',1,0,0,0,0);
+INSERT INTO `levels` VALUES ('FLOUR',0,0,0,0,0);
+INSERT INTO `levels` VALUES ('FUJI990101',0,0,0,0,0);
+INSERT INTO `levels` VALUES ('FUJI990102',0,0,0,0,0);
+INSERT INTO `levels` VALUES ('FUJI9901ASS',1,0,0,0,0);
+INSERT INTO `levels` VALUES ('SALT',0,0,0,0,0);
+INSERT INTO `levels` VALUES ('SLICE',2,0,0,0,0);
+INSERT INTO `levels` VALUES ('YEAST',0,0,0,0,0);
+INSERT INTO `levels` VALUES ('DR_TUMMY',0,0,0,0,0);
+INSERT INTO `levels` VALUES ('DVD-TOPGUN',0,0,0,0,0);
+INSERT INTO `levels` VALUES ('HIT3042-4',0,0,0,0,5);
+INSERT INTO `levels` VALUES ('HIT3043-5',0,5,0,0,5);
+
+--
 -- Dumping data for table `locations`
 --
 
-INSERT INTO `locations` VALUES ('MEL','Melbourne','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','+61 3 56789013','jacko@webdemo.com','Jack Roberts',1,'ANGRY-ANGRY',0);
-INSERT INTO `locations` VALUES ('TOR','Toronto','Level 100 ','CN Tower','Toronto','','','','','','','Clive Contrary',1,'',1);
+INSERT INTO `locations` VALUES ('MEL','Melbourne','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','+61 3 56789013','jacko@webdemo.com','Jack Roberts',1,'ANGRY-ANGR',0,'');
+INSERT INTO `locations` VALUES ('TOR','Toronto','Level 100 ','CN Tower','Toronto','','','','','','','Clive Contrary',1,'',1,'');
 
 --
 -- Dumping data for table `locstock`
 --
 
+INSERT INTO `locstock` VALUES ('MEL','ASSET-1',0,0);
+INSERT INTO `locstock` VALUES ('MEL','ASSET-1-1',0,0);
 INSERT INTO `locstock` VALUES ('MEL','BIGEARS12',0,0);
 INSERT INTO `locstock` VALUES ('MEL','BirthdayCakeConstruc',0,0);
-INSERT INTO `locstock` VALUES ('MEL','BREAD',62,0);
+INSERT INTO `locstock` VALUES ('MEL','BREAD',7.7,0);
 INSERT INTO `locstock` VALUES ('MEL','DR_TUMMY',0,0);
-INSERT INTO `locstock` VALUES ('MEL','DVD-CASE',0,0);
-INSERT INTO `locstock` VALUES ('MEL','DVD-DHWV',-12,0);
-INSERT INTO `locstock` VALUES ('MEL','DVD-LTWP',-3,0);
-INSERT INTO `locstock` VALUES ('MEL','DVD-TOPGUN',-1,0);
-INSERT INTO `locstock` VALUES ('MEL','DVD-UNSG',-10,0);
-INSERT INTO `locstock` VALUES ('MEL','DVD-UNSG2',-10,0);
-INSERT INTO `locstock` VALUES ('MEL','DVD_ACTION',10,0);
-INSERT INTO `locstock` VALUES ('MEL','FLOUR',-4,0);
+INSERT INTO `locstock` VALUES ('MEL','DVD-CASE',18,0);
+INSERT INTO `locstock` VALUES ('MEL','DVD-DHWV',0,0);
+INSERT INTO `locstock` VALUES ('MEL','DVD-LTWP',0,0);
+INSERT INTO `locstock` VALUES ('MEL','DVD-TOPGUN',0,0);
+INSERT INTO `locstock` VALUES ('MEL','DVD-UNSG',0,0);
+INSERT INTO `locstock` VALUES ('MEL','DVD-UNSG2',0,0);
+INSERT INTO `locstock` VALUES ('MEL','DVD_ACTION',0,0);
+INSERT INTO `locstock` VALUES ('MEL','FLOUR',0,0);
 INSERT INTO `locstock` VALUES ('MEL','FUJI990101',0,0);
 INSERT INTO `locstock` VALUES ('MEL','FUJI990102',0,0);
 INSERT INTO `locstock` VALUES ('MEL','FUJI9901ASS',0,0);
 INSERT INTO `locstock` VALUES ('MEL','HIT3042-4',0,0);
 INSERT INTO `locstock` VALUES ('MEL','HIT3043-5',0,0);
-INSERT INTO `locstock` VALUES ('MEL','SALT',2.22044604925031e-16,0);
+INSERT INTO `locstock` VALUES ('MEL','SALT',9.61424228238108e-31,0);
 INSERT INTO `locstock` VALUES ('MEL','SLICE',0,0);
+INSERT INTO `locstock` VALUES ('MEL','TES AA',0,0);
 INSERT INTO `locstock` VALUES ('MEL','YEAST',0,0);
+INSERT INTO `locstock` VALUES ('TOR','ASSET-1',0,0);
+INSERT INTO `locstock` VALUES ('TOR','ASSET-1-1',0,0);
 INSERT INTO `locstock` VALUES ('TOR','BIGEARS12',0,0);
 INSERT INTO `locstock` VALUES ('TOR','BirthdayCakeConstruc',0,0);
-INSERT INTO `locstock` VALUES ('TOR','BREAD',6.5,0);
+INSERT INTO `locstock` VALUES ('TOR','BREAD',8.5,0);
 INSERT INTO `locstock` VALUES ('TOR','DR_TUMMY',0,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-CASE',179,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-DHWV',-1,0);
@@ -10983,6 +11406,7 @@ INSERT INTO `locstock` VALUES ('TOR','HIT3042-4',0,0);
 INSERT INTO `locstock` VALUES ('TOR','HIT3043-5',0,0);
 INSERT INTO `locstock` VALUES ('TOR','SALT',23.7,0);
 INSERT INTO `locstock` VALUES ('TOR','SLICE',0,0);
+INSERT INTO `locstock` VALUES ('TOR','TES AA',0,0);
 INSERT INTO `locstock` VALUES ('TOR','YEAST',9.2,0);
 
 --
@@ -10995,6 +11419,250 @@ INSERT INTO `loctransfers` VALUES (19,'BREAD',1,1,'2009-02-05','2009-02-06','MEL
 INSERT INTO `loctransfers` VALUES (20,'BREAD',1,0,'2009-02-05','0000-00-00','MEL','TOR');
 INSERT INTO `loctransfers` VALUES (21,'BREAD',1,0,'2009-02-05','0000-00-00','MEL','TOR');
 INSERT INTO `loctransfers` VALUES (22,'BREAD',1,0,'2009-02-05','0000-00-00','MEL','TOR');
+INSERT INTO `loctransfers` VALUES (13,'BREAD',10,10,'2009-02-05','2009-02-06','MEL','TOR');
+INSERT INTO `loctransfers` VALUES (18,'BREAD',1,1,'2009-02-05','2009-02-06','MEL','TOR');
+INSERT INTO `loctransfers` VALUES (19,'BREAD',1,1,'2009-02-05','2009-02-06','MEL','TOR');
+INSERT INTO `loctransfers` VALUES (20,'BREAD',1,0,'2009-02-05','0000-00-00','MEL','TOR');
+INSERT INTO `loctransfers` VALUES (21,'BREAD',1,0,'2009-02-05','0000-00-00','MEL','TOR');
+INSERT INTO `loctransfers` VALUES (22,'BREAD',1,0,'2009-02-05','0000-00-00','MEL','TOR');
+INSERT INTO `loctransfers` VALUES (13,'BREAD',10,10,'2009-02-05','2009-02-06','MEL','TOR');
+INSERT INTO `loctransfers` VALUES (18,'BREAD',1,1,'2009-02-05','2009-02-06','MEL','TOR');
+INSERT INTO `loctransfers` VALUES (19,'BREAD',1,1,'2009-02-05','2009-02-06','MEL','TOR');
+INSERT INTO `loctransfers` VALUES (20,'BREAD',1,0,'2009-02-05','0000-00-00','MEL','TOR');
+INSERT INTO `loctransfers` VALUES (21,'BREAD',1,0,'2009-02-05','0000-00-00','MEL','TOR');
+INSERT INTO `loctransfers` VALUES (22,'BREAD',1,0,'2009-02-05','0000-00-00','MEL','TOR');
+
+--
+-- Dumping data for table `menu`
+--
+
+INSERT INTO `menu` VALUES (1,'Sales',-1,'#');
+INSERT INTO `menu` VALUES (2,'Transactions',1,'#');
+INSERT INTO `menu` VALUES (3,'Enter An Order or Quotation',2,'SelectOrderItems.php?&amp;NewOrder=Yes');
+INSERT INTO `menu` VALUES (4,'Enter Counter Sales',2,'CounterSales.php?');
+INSERT INTO `menu` VALUES (5,'Print Picking Lists',2,'PDFPickingList.php?');
+INSERT INTO `menu` VALUES (6,'Outstanding Sales Orders/Quotations',2,'SelectSalesOrder.php?');
+INSERT INTO `menu` VALUES (7,'Special Order',2,'SpecialOrder.php?&amp;NewSpecial=Yes');
+INSERT INTO `menu` VALUES (8,'Recurring Order Template',2,'SelectRecurringSalesOrder.php?');
+INSERT INTO `menu` VALUES (9,'Process Recurring Orders',2,'RecurringSalesOrdersProcess.php?');
+INSERT INTO `menu` VALUES (10,'Inquiries and Reports ',1,'#');
+INSERT INTO `menu` VALUES (11,'Order Inquiry',10,'SelectCompletedOrder.php?');
+INSERT INTO `menu` VALUES (12,'Print Price Lists',10,'PDFPriceList.php?');
+INSERT INTO `menu` VALUES (13,'Order Status Report',10,'PDFOrderStatus.php?');
+INSERT INTO `menu` VALUES (14,'Orders Invoiced Reports',10,'PDFOrdersInvoiced.php?');
+INSERT INTO `menu` VALUES (15,'Daily Sales Inquiry',10,'DailySalesInquiry.php?');
+INSERT INTO `menu` VALUES (16,'Order Delivery Differences Report',10,'PDFDeliveryDifferences.php?');
+INSERT INTO `menu` VALUES (17,'Delivery In Full On Time (DIFOT) Report',10,'PDFDIFOT.php?');
+INSERT INTO `menu` VALUES (18,'Sales Order Detail Or Summary Inquiries',10,'SalesInquiry.php?');
+INSERT INTO `menu` VALUES (19,'Top Sales Items Report',10,'TopItems.php?');
+INSERT INTO `menu` VALUES (20,'Sales With Low Gross Profit Report',10,'PDFLowGP.php?');
+INSERT INTO `menu` VALUES (21,'Maintenance',1,'#');
+INSERT INTO `menu` VALUES (22,'Select Contract',21,'SelectContract.php?');
+INSERT INTO `menu` VALUES (23,'Create Contract',21,'Contracts.php?');
+INSERT INTO `menu` VALUES (24,'Receivables',-1,'#');
+INSERT INTO `menu` VALUES (25,'Transactions',24,'#');
+INSERT INTO `menu` VALUES (26,'Select Order to Invoice',25,'SelectSalesOrder.php?');
+INSERT INTO `menu` VALUES (27,'Create A Credit Note',25,'SelectCreditItems.php?&amp;NewCredit=Yes');
+INSERT INTO `menu` VALUES (28,'Enter Receipts',25,'CustomerReceipt.php?&amp;NewReceipt=Yes&amp;Type=Customer');
+INSERT INTO `menu` VALUES (29,'Allocate Receipts or Credit Notes',25,'CustomerAllocations.php?');
+INSERT INTO `menu` VALUES (30,'Inquiries and Reports',24,'#');
+INSERT INTO `menu` VALUES (31,'Customer Transaction Inquiries',30,'SelectCustomer.php?');
+INSERT INTO `menu` VALUES (32,'Where Allocated Inquiry',30,'CustWhereAlloc.php?');
+INSERT INTO `menu` VALUES (33,'Print Invoices or Credit Notes',30,'PrintCustTransPortrait.php?');
+INSERT INTO `menu` VALUES (34,'Print Statements',30,'PrintCustStatements.php?');
+INSERT INTO `menu` VALUES (35,'Sales Analysis Reports',30,'SalesAnalRepts.php?');
+INSERT INTO `menu` VALUES (36,'Aged Customer Balances/Overdues Report',30,'AgedDebtors.php?');
+INSERT INTO `menu` VALUES (37,'Transaction Inquiries',30,'CustomerTransInquiry.php?');
+INSERT INTO `menu` VALUES (38,'Re-Print A Deposit Listing',30,'PDFBankingSummary.php?');
+INSERT INTO `menu` VALUES (39,'Debtor Balances At A Prior Month End',30,'DebtorsAtPeriodEnd.php?');
+INSERT INTO `menu` VALUES (40,'Customer Listing By Area/Salesperson',30,'PDFCustomerList.php?');
+INSERT INTO `menu` VALUES (41,'Sales Graphs',30,'SalesGraph.php?');
+INSERT INTO `menu` VALUES (42,'List Daily Transactions',30,'PDFCustTransListing.php?');
+INSERT INTO `menu` VALUES (43,'Maintenance',24,'#');
+INSERT INTO `menu` VALUES (44,'Add Customer',43,'Customers.php?');
+INSERT INTO `menu` VALUES (45,'Customers',43,'SelectCustomer.php?');
+INSERT INTO `menu` VALUES (46,'Payables',-1,'#');
+INSERT INTO `menu` VALUES (47,'Transactions',46,'#');
+INSERT INTO `menu` VALUES (48,'Select Supplier',47,'SelectSupplier.php?');
+INSERT INTO `menu` VALUES (49,'Supplier Allocations',47,'SupplierAllocations.php?');
+INSERT INTO `menu` VALUES (50,'Inquiries and Reports',46,'#');
+INSERT INTO `menu` VALUES (51,'Aged Supplier Report',50,'AgedSuppliers.php?');
+INSERT INTO `menu` VALUES (52,'Payment Run Report',50,'SuppPaymentRun.php?');
+INSERT INTO `menu` VALUES (53,'Remittance Advices',50,'PDFRemittanceAdvice.php?');
+INSERT INTO `menu` VALUES (54,'Outstanding GRNs Report',50,'OutstandingGRNs.php?');
+INSERT INTO `menu` VALUES (55,'Supplier Balances At A Prior Month End',50,'SupplierBalsAtPeriodEnd.php?');
+INSERT INTO `menu` VALUES (56,'List Daily Transactions',50,'PDFSuppTransListing.php?');
+INSERT INTO `menu` VALUES (57,'Supplier Transaction Inquiries',50,'SupplierTransInquiry.php?');
+INSERT INTO `menu` VALUES (58,'Maintenance',46,'#');
+INSERT INTO `menu` VALUES (59,'Add Supplier',58,'Suppliers.php?');
+INSERT INTO `menu` VALUES (60,'Maintain Factor Companies',58,'Factors.php?');
+INSERT INTO `menu` VALUES (61,'Purchases',-1,'#');
+INSERT INTO `menu` VALUES (62,'Transactions',61,'#');
+INSERT INTO `menu` VALUES (63,'Purchase Orders',62,'PO_SelectOSPurchOrder.php?');
+INSERT INTO `menu` VALUES (64,'Add Purchase Order',62,'PO_Header.php?&amp;NewOrder=Yes');
+INSERT INTO `menu` VALUES (65,'Process Tenders and Offers',62,'OffersReceived.php?');
+INSERT INTO `menu` VALUES (66,'Orders to Authorise',62,'PO_AuthoriseMyOrders.php?');
+INSERT INTO `menu` VALUES (67,'Shipment Entry',62,'SelectSupplier.php?');
+INSERT INTO `menu` VALUES (68,'Select A Shipment',62,'Shipt_Select.php?');
+INSERT INTO `menu` VALUES (69,'Inquiries and Reports',61,'#');
+INSERT INTO `menu` VALUES (70,'Purchase Order Inquiry',69,'PO_SelectPurchOrder.php?');
+INSERT INTO `menu` VALUES (71,'Purchase Order Detail Or Summary Inquiries',69,'POReport.php?');
+INSERT INTO `menu` VALUES (72,'Inventory',-1,'#');
+INSERT INTO `menu` VALUES (73,'Transactions',72,'#');
+INSERT INTO `menu` VALUES (74,'Receive Purchase Orders',73,'PO_SelectOSPurchOrder.php?');
+INSERT INTO `menu` VALUES (75,'Bulk Inventory Transfer - Dispatch',73,'StockLocTransfer.php');
+INSERT INTO `menu` VALUES (76,'Bulk Inventory Transfer - Receive',73,'StockLocTransferReceive.php?');
+INSERT INTO `menu` VALUES (77,'Inventory Location Transfers',73,'StockTransfers.php?');
+INSERT INTO `menu` VALUES (78,'Inventory Adjustments',73,'StockAdjustments.php?&amp;NewAdjustment=Yes');
+INSERT INTO `menu` VALUES (79,'Reverse Goods Received',73,'ReverseGRN.php?');
+INSERT INTO `menu` VALUES (80,'Enter Stock Counts',73,'StockCounts.php?');
+INSERT INTO `menu` VALUES (81,'Inquiries and Reports',72,'#');
+INSERT INTO `menu` VALUES (82,'Serial Item Research Tool',81,'StockSerialItemResearch.php?');
+INSERT INTO `menu` VALUES (83,'Print Price Labels',81,'PDFPrintLabel.php?');
+INSERT INTO `menu` VALUES (84,'Inventory Item Movements',81,'StockMovements.php?');
+INSERT INTO `menu` VALUES (85,'Inventory Item Status',81,'StockStatus.php?');
+INSERT INTO `menu` VALUES (86,'Inventory Item Usage',81,'StockUsage.php?');
+INSERT INTO `menu` VALUES (87,'Inventory Quantities',81,'InventoryQuantities.php?');
+INSERT INTO `menu` VALUES (88,'Reorder Level',81,'ReorderLevel.php?');
+INSERT INTO `menu` VALUES (89,'Reorder Level By Category/Location',81,'ReorderLevelLocation.php?');
+INSERT INTO `menu` VALUES (90,'Stock Dispatch',81,'StockDispatch.php?');
+INSERT INTO `menu` VALUES (91,'Inventory Valuation Report',81,'InventoryValuation.php?');
+INSERT INTO `menu` VALUES (92,'Inventory Planning Report',81,'InventoryPlanning.php?');
+INSERT INTO `menu` VALUES (93,'Inventory Planning Based On Preferred Supplier Data',81,'InventoryPlanningPrefSupplier.php?');
+INSERT INTO `menu` VALUES (94,'Inventory Stock Check Sheets',81,'StockCheck.php?');
+INSERT INTO `menu` VALUES (95,'Make Inventory Quantities CSV',81,'StockQties_csv.php?');
+INSERT INTO `menu` VALUES (96,'Compare Counts Vs Stock Check Data',81,'PDFStockCheckComparison.php?');
+INSERT INTO `menu` VALUES (97,'All Inventory Movements By Location/Date',81,'StockLocMovements.php?');
+INSERT INTO `menu` VALUES (98,'List Inventory Status By Location/Category',81,'StockLocStatus.php?');
+INSERT INTO `menu` VALUES (99,'Historical Stock Quantity By Location/Category',81,'StockQuantityByDate.php?');
+INSERT INTO `menu` VALUES (100,'List Negative Stocks',81,'PDFStockNegatives.php?');
+INSERT INTO `menu` VALUES (101,'Daily Stock Transaction Listing',81,'PDFStockTransListing.php?');
+INSERT INTO `menu` VALUES (102,'Maintenance',72,'#');
+INSERT INTO `menu` VALUES (103,'Add A New Item',102,'Stocks.php?');
+INSERT INTO `menu` VALUES (104,'Select An Item',102,'SelectProduct.php?');
+INSERT INTO `menu` VALUES (105,'Sales Category Maintenance',102,'SalesCategories.php?');
+INSERT INTO `menu` VALUES (106,'Add or Update Prices Based On Costs',102,'PricesBasedOnMarkUp.php?');
+INSERT INTO `menu` VALUES (107,'View or Update Prices Based On Costs',102,'PricesByCost.php?');
+INSERT INTO `menu` VALUES (108,'Manufacturing',-1,'#');
+INSERT INTO `menu` VALUES (109,'Transactions',108,'#');
+INSERT INTO `menu` VALUES (110,'Work Order Entry',109,'WorkOrderEntry.php?');
+INSERT INTO `menu` VALUES (111,'Select A Work Order',109,'SelectWorkOrder.php?');
+INSERT INTO `menu` VALUES (112,'Inquiries and Reports',108,'#');
+INSERT INTO `menu` VALUES (113,'Select A Work Order',112,'SelectWorkOrder.php?');
+INSERT INTO `menu` VALUES (114,'Costed Bill Of Material Inquiry',112,'BOMInquiry.php?');
+INSERT INTO `menu` VALUES (115,'Where Used Inquiry',112,'WhereUsedInquiry.php?');
+INSERT INTO `menu` VALUES (116,'Indented Bill Of Material Listing',112,'BOMIndented.php?');
+INSERT INTO `menu` VALUES (117,'List Components Required',112,'BOMExtendedQty.php?');
+INSERT INTO `menu` VALUES (118,'Indented Where Used Listing',112,'BOMIndentedReverse.php?');
+INSERT INTO `menu` VALUES (119,'MRP',112,'MRPReport.php?');
+INSERT INTO `menu` VALUES (120,'MRP Shortages',112,'MRPShortages.php?');
+INSERT INTO `menu` VALUES (121,'MRP Suggested Purchase Orders',112,'MRPPlannedPurchaseOrders.php?');
+INSERT INTO `menu` VALUES (122,'MRP Suggested Work Orders',112,'MRPPlannedWorkOrders.php?');
+INSERT INTO `menu` VALUES (123,'MRP Reschedules Required',112,'MRPReschedules.php?');
+INSERT INTO `menu` VALUES (124,'Maintenance',108,'#');
+INSERT INTO `menu` VALUES (125,'Work Centre',124,'WorkCentres.php?');
+INSERT INTO `menu` VALUES (126,'Bills Of Material',124,'BOMs.php?');
+INSERT INTO `menu` VALUES (127,'Master Schedule',124,'MRPDemands.php?');
+INSERT INTO `menu` VALUES (128,'Auto Create Master Schedule',124,'MRPCreateDemands.php?');
+INSERT INTO `menu` VALUES (129,'MRP Calculation',124,'MRP.php?');
+INSERT INTO `menu` VALUES (130,'General Ledger',-1,'#');
+INSERT INTO `menu` VALUES (131,'Transactions',130,'#');
+INSERT INTO `menu` VALUES (132,'Bank Account Payments Entry',131,'Payments.php?&amp;NewPayment=Yes');
+INSERT INTO `menu` VALUES (133,'Bank Account Receipts Entry',131,'CustomerReceipt.php?&amp;NewReceipt=Yes&amp;Type=GL');
+INSERT INTO `menu` VALUES (134,'Journal Entry',131,'GLJournal.php?&amp;NewJournal=Yes');
+INSERT INTO `menu` VALUES (135,'Bank Account Payments Matching',131,'BankMatching.php?&amp;Type=Payments');
+INSERT INTO `menu` VALUES (136,'Bank Account Receipts Matching',131,'BankMatching.php?&amp;Type=Receipts');
+INSERT INTO `menu` VALUES (137,'Inquiries and Reports',130,'#');
+INSERT INTO `menu` VALUES (138,'Trial Balance',137,'GLTrialBalance.php?');
+INSERT INTO `menu` VALUES (139,'Account Inquiry',137,'SelectGLAccount.php?');
+INSERT INTO `menu` VALUES (140,'Account Listing',137,'GLAccountReport.php?');
+INSERT INTO `menu` VALUES (141,'Account Listing to CSV File',137,'GLAccountCSV.php?');
+INSERT INTO `menu` VALUES (142,'Bank Account Reconciliation Statement',137,'BankReconciliation.php?');
+INSERT INTO `menu` VALUES (143,'Cheque Payments Listing',137,'PDFChequeListing.php?');
+INSERT INTO `menu` VALUES (144,'Daily Bank Transactions',137,'DailyBankTransactions.php?');
+INSERT INTO `menu` VALUES (145,'Profit and Loss Statement',137,'GLProfit_Loss.php?');
+INSERT INTO `menu` VALUES (146,'Balance Sheet',137,'GLBalanceSheet.php?');
+INSERT INTO `menu` VALUES (147,'Tag Reports',137,'GLTagProfit_Loss.php?');
+INSERT INTO `menu` VALUES (148,'Tax Reports',137,'Tax.php?');
+INSERT INTO `menu` VALUES (149,'Maintenance',130,'#');
+INSERT INTO `menu` VALUES (150,'GL Account',149,'GLAccounts.php?');
+INSERT INTO `menu` VALUES (151,'GL Budgets',149,'GLBudgets.php?');
+INSERT INTO `menu` VALUES (152,'Account Groups',149,'AccountGroups.php?');
+INSERT INTO `menu` VALUES (153,'Account Sections',149,'AccountSections.php?');
+INSERT INTO `menu` VALUES (154,'GL Tags',149,'GLTags.php?');
+INSERT INTO `menu` VALUES (155,'Asset Manager',-1,'#');
+INSERT INTO `menu` VALUES (156,'Transactions',155,'#');
+INSERT INTO `menu` VALUES (157,'Add a new Asset',156,'FixedAssetItems.php?');
+INSERT INTO `menu` VALUES (158,'Select an Asset',156,'SelectAsset.php?');
+INSERT INTO `menu` VALUES (159,'Change Asset Location',156,'FixedAssetTransfer.php?');
+INSERT INTO `menu` VALUES (160,'Depreciation Journal',156,'FixedAssetDepreciation.php');
+INSERT INTO `menu` VALUES (161,'Inquiries and Reports',155,'#');
+INSERT INTO `menu` VALUES (162,'Asset Register',161,'FixedAssetRegister.php?');
+INSERT INTO `menu` VALUES (163,'Maintenance',155,'#');
+INSERT INTO `menu` VALUES (164,'Asset Categories Maintenance',163,'FixedAssetCategories.php?');
+INSERT INTO `menu` VALUES (165,'Add or Maintain Asset Locations',163,'FixedAssetLocations.php?');
+INSERT INTO `menu` VALUES (166,'Petty Cash',-1,'#');
+INSERT INTO `menu` VALUES (167,'Transactions',166,'#');
+INSERT INTO `menu` VALUES (168,'Assign Cash to PC Tab',167,'PcAssignCashToTab.php?');
+INSERT INTO `menu` VALUES (169,'Claim Expenses From PC Tab',167,'PcClaimExpensesFromTab.php');
+INSERT INTO `menu` VALUES (170,'Expenses Authorisation',167,'PcAuthorizeExpenses.php?');
+INSERT INTO `menu` VALUES (171,'Inquiries and Reports',166,'#');
+INSERT INTO `menu` VALUES (172,'PC Tab General Report',171,'PcReportTab.php?');
+INSERT INTO `menu` VALUES (173,'Maintenance',166,'#');
+INSERT INTO `menu` VALUES (174,'Types of PC Tabs',173,'PcTypeTabs.php?');
+INSERT INTO `menu` VALUES (175,'PC Tabs',173,'PcTabs.php?');
+INSERT INTO `menu` VALUES (176,'PC Expenses',173,'PcExpenses.php?');
+INSERT INTO `menu` VALUES (177,'Expenses for Type of PC Tab',173,'PcExpensesTypeTab.php?');
+INSERT INTO `menu` VALUES (178,'Configuration',-1,'#');
+INSERT INTO `menu` VALUES (179,'General Settings',178,'#');
+INSERT INTO `menu` VALUES (180,'Company Preferences',179,'CompanyPreferences.php?');
+INSERT INTO `menu` VALUES (181,'Configuration Settings',179,'SystemParameters.php?');
+INSERT INTO `menu` VALUES (182,'Users',178,'#');
+INSERT INTO `menu` VALUES (183,'User Maintenance',182,'WWW_Users.php?');
+INSERT INTO `menu` VALUES (184,'Role Permissions',182,'WWW_Access.php?');
+INSERT INTO `menu` VALUES (185,'Menu Access Rights',182,'MenuAccess.php?');
+INSERT INTO `menu` VALUES (186,'General Ledger Setup',178,'#');
+INSERT INTO `menu` VALUES (187,'Bank Accounts',186,'BankAccounts.php?');
+INSERT INTO `menu` VALUES (188,'Page Security Settings',179,'PageSecurity.php?');
+INSERT INTO `menu` VALUES (189,'Currency Maintenance',186,'Currencies.php?');
+INSERT INTO `menu` VALUES (190,'Tax Authorities and Rates Maintenance',186,'TaxAuthorities.php?');
+INSERT INTO `menu` VALUES (191,'Tax Group Maintenance',186,'TaxGroups.php?');
+INSERT INTO `menu` VALUES (192,'Dispatch Tax Province Maintenance',186,'TaxProvinces.php?');
+INSERT INTO `menu` VALUES (193,'Tax Category Maintenance',186,'TaxCategories.php?');
+INSERT INTO `menu` VALUES (194,'List Periods Defined (Periods are automatically maintained)',186,'PeriodsInquiry.php?');
+INSERT INTO `menu` VALUES (195,'Report Builder Tool',179,'ReportCreator.php?');
+INSERT INTO `menu` VALUES (196,'View Audit Trail',179,'AuditTrail.php?');
+INSERT INTO `menu` VALUES (197,'View System Check',179,'SystemCheck.php?');
+INSERT INTO `menu` VALUES (198,'Geocode Setup',179,'GeocodeSetup.php?');
+INSERT INTO `menu` VALUES (199,'Form Layout Editor',179,'FormDesigner.php?');
+INSERT INTO `menu` VALUES (200,'Label Templates Maintenance',179,'Labels.php?');
+INSERT INTO `menu` VALUES (201,'SMTP Server Details',179,'SMTPServer.php?');
+INSERT INTO `menu` VALUES (202,'Sales/Receivables Setup',178,'#');
+INSERT INTO `menu` VALUES (203,'Sales Types',202,'SalesTypes.php?');
+INSERT INTO `menu` VALUES (204,'Customer Types',202,'CustomerTypes.php?');
+INSERT INTO `menu` VALUES (205,'Credit Status',202,'CreditStatus.php?');
+INSERT INTO `menu` VALUES (206,'Customer Payment Terms',202,'PaymentTerms.php?');
+INSERT INTO `menu` VALUES (207,'Customer Payment Methods',202,'PaymentMethods.php?');
+INSERT INTO `menu` VALUES (208,'Sales People',202,'SalesPeople.php?');
+INSERT INTO `menu` VALUES (209,'Sales Areas',202,'Areas.php?');
+INSERT INTO `menu` VALUES (210,'Sales GL Interface Postings',202,'SalesGLPostings.php?');
+INSERT INTO `menu` VALUES (211,'COGS GL Interface Postings',202,'COGSGLPostings.php?');
+INSERT INTO `menu` VALUES (212,'Purchases/Payables Setup',178,'#');
+INSERT INTO `menu` VALUES (213,'Supplier Types',212,'SupplierTypes.php?');
+INSERT INTO `menu` VALUES (214,'Supplier Payment Terms',212,'PaymentTerms.php?');
+INSERT INTO `menu` VALUES (215,'Set Purchase Order Authorisation levels',212,'PO_AuthorisationLevels.php?');
+INSERT INTO `menu` VALUES (216,'Supplier Payment Methods',212,'PaymentMethods.php?');
+INSERT INTO `menu` VALUES (217,'Shippers',212,'Shippers.php?');
+INSERT INTO `menu` VALUES (218,'Freight Costs Maintenance',212,'FreightCosts.php?');
+INSERT INTO `menu` VALUES (219,'Discount Matrix',202,'DiscountMatrix.php?');
+INSERT INTO `menu` VALUES (220,'Inventory Setup',178,'#');
+INSERT INTO `menu` VALUES (221,'Inventory Categories Maintenance',220,'StockCategories.php?');
+INSERT INTO `menu` VALUES (222,'Inventory Locations Maintenance',220,'Locations.php?');
+INSERT INTO `menu` VALUES (223,'Discount Category Maintenance',220,'DiscountCategories.php?');
+INSERT INTO `menu` VALUES (224,'Units of Measure',220,'UnitsOfMeasure.php?');
+INSERT INTO `menu` VALUES (225,'Manufacturing Setup',178,'#');
+INSERT INTO `menu` VALUES (226,'MRP Available Production Days',225,'MRPCalendar.php?');
+INSERT INTO `menu` VALUES (227,'MRP Demand Types',225,'MRPDemandTypes.php?');
 
 --
 -- Dumping data for table `mrpcalendar`
@@ -11005,12 +11673,79 @@ INSERT INTO `loctransfers` VALUES (22,'BREAD',1,0,'2009-02-05','0000-00-00','MEL
 -- Dumping data for table `mrpdemands`
 --
 
+INSERT INTO `mrpdemands` VALUES (2,'DVD-TOPGUN','FOR',50,'2010-11-11');
 
 --
 -- Dumping data for table `mrpdemandtypes`
 --
 
 INSERT INTO `mrpdemandtypes` VALUES ('FOR','Forecast');
+
+--
+-- Dumping data for table `mrpparameters`
+--
+
+INSERT INTO `mrpparameters` VALUES ('2010-11-24 07:13:32','All','y','y','y','y',0);
+
+--
+-- Dumping data for table `mrpplannedorders`
+--
+
+INSERT INTO `mrpplannedorders` VALUES (1,'BIRTHDAYCAKECONSTRUC','2010-12-20',1,'SO',23,'2010-12-20',0);
+INSERT INTO `mrpplannedorders` VALUES (2,'DVD-DHWV','2010-11-24',1,'REORD',1,'2010-11-24',0);
+INSERT INTO `mrpplannedorders` VALUES (3,'DVD-DHWV','2010-11-24',12,'REORD',1,'2010-11-24',0);
+INSERT INTO `mrpplannedorders` VALUES (4,'DVD-LTWP','2010-11-24',1,'REORD',1,'2010-11-24',0);
+INSERT INTO `mrpplannedorders` VALUES (5,'DVD-LTWP','2010-11-24',3,'REORD',1,'2010-11-24',0);
+INSERT INTO `mrpplannedorders` VALUES (6,'DVD-UNSG','2010-11-24',10,'REORD',1,'2010-11-24',0);
+INSERT INTO `mrpplannedorders` VALUES (7,'DVD-UNSG2','2010-11-24',10,'REORD',1,'2010-11-24',0);
+INSERT INTO `mrpplannedorders` VALUES (8,'FLOUR','2007-06-21',16.8,'WO',5,'2007-06-21',0);
+INSERT INTO `mrpplannedorders` VALUES (9,'FLOUR','2010-11-24',4,'REORD',1,'2010-11-24',0);
+INSERT INTO `mrpplannedorders` VALUES (10,'FLOUR','2010-12-20',1,'SO',23,'2010-12-20',0);
+INSERT INTO `mrpplannedorders` VALUES (11,'DVD-TOPGUN','2010-11-24',1,'REORD',1,'2010-11-24',0);
+
+--
+-- Dumping data for table `mrprequirements`
+--
+
+INSERT INTO `mrprequirements` VALUES ('BREAD','2010-05-31',5,'SO',11,1,'BREAD');
+INSERT INTO `mrprequirements` VALUES ('BIGEARS12','2010-10-15',1,'SO',22,1,'BIGEARS12');
+INSERT INTO `mrprequirements` VALUES ('BIRTHDAYCAKECONSTRUC','2010-12-20',1,'SO',23,1,'BIRTHDAYCAKECONSTRUC');
+INSERT INTO `mrprequirements` VALUES ('BREAD','2010-10-08',2,'SO',25,1,'BREAD');
+INSERT INTO `mrprequirements` VALUES ('BREAD','2007-06-21',10,'WO',4,1,'SLICE');
+INSERT INTO `mrprequirements` VALUES ('FLOUR','2007-06-21',16.8,'WO',5,1,'BREAD');
+INSERT INTO `mrprequirements` VALUES ('SALT','2007-06-21',0.3,'WO',5,1,'BREAD');
+INSERT INTO `mrprequirements` VALUES ('YEAST','2007-06-21',1.2,'WO',5,1,'BREAD');
+INSERT INTO `mrprequirements` VALUES ('DVD-CASE','2010-10-15',1,'WO',13,1,'BIGEARS12');
+INSERT INTO `mrprequirements` VALUES ('DVD-DHWV','2010-11-24',12,'REORD',1,1,'DVD-DHWV');
+INSERT INTO `mrprequirements` VALUES ('DVD-LTWP','2010-11-24',3,'REORD',1,1,'DVD-LTWP');
+INSERT INTO `mrprequirements` VALUES ('DVD-TOPGUN','2010-11-24',1,'REORD',1,1,'DVD-TOPGUN');
+INSERT INTO `mrprequirements` VALUES ('DVD-UNSG','2010-11-24',10,'REORD',1,1,'DVD-UNSG');
+INSERT INTO `mrprequirements` VALUES ('DVD-UNSG2','2010-11-24',10,'REORD',1,1,'DVD-UNSG2');
+INSERT INTO `mrprequirements` VALUES ('FLOUR','2010-11-24',4,'REORD',1,1,'FLOUR');
+INSERT INTO `mrprequirements` VALUES ('DVD-DHWV','2010-11-24',1,'REORD',1,1,'DVD-DHWV');
+INSERT INTO `mrprequirements` VALUES ('DVD-LTWP','2010-11-24',1,'REORD',1,1,'DVD-LTWP');
+INSERT INTO `mrprequirements` VALUES ('BREAD','2010-12-20',1,'SO',23,0,'BIRTHDAYCAKECONSTRUC');
+INSERT INTO `mrprequirements` VALUES ('DVD-CASE','2010-12-20',1,'SO',23,0,'BIRTHDAYCAKECONSTRUC');
+INSERT INTO `mrprequirements` VALUES ('FLOUR','2010-12-20',1,'SO',23,0,'BIRTHDAYCAKECONSTRUC');
+INSERT INTO `mrprequirements` VALUES ('SALT','2010-12-20',1,'SO',23,0,'BIRTHDAYCAKECONSTRUC');
+INSERT INTO `mrprequirements` VALUES ('YEAST','2010-12-20',1,'SO',23,0,'BIRTHDAYCAKECONSTRUC');
+
+--
+-- Dumping data for table `mrpsupplies`
+--
+
+INSERT INTO `mrpsupplies` VALUES (1,'DVD-CASE','2007-06-25',45,'PO',1,'2050-12-31',0);
+INSERT INTO `mrpsupplies` VALUES (2,'SALT','2009-02-05',13,'PO',2,'2050-12-31',0);
+INSERT INTO `mrpsupplies` VALUES (3,'BREAD','2010-08-14',12,'PO',3,'2050-12-31',0);
+INSERT INTO `mrpsupplies` VALUES (4,'','2010-11-21',2,'PO',4,'2010-11-21',0);
+INSERT INTO `mrpsupplies` VALUES (5,'BREAD','0000-00-00',68.5,'QOH',1,'0000-00-00',0);
+INSERT INTO `mrpsupplies` VALUES (6,'DVD-CASE','0000-00-00',179,'QOH',1,'0000-00-00',0);
+INSERT INTO `mrpsupplies` VALUES (7,'DVD_ACTION','0000-00-00',10,'QOH',1,'0000-00-00',0);
+INSERT INTO `mrpsupplies` VALUES (8,'SALT','0000-00-00',23.7,'QOH',1,'0000-00-00',0);
+INSERT INTO `mrpsupplies` VALUES (9,'YEAST','0000-00-00',9.2,'QOH',1,'0000-00-00',0);
+INSERT INTO `mrpsupplies` VALUES (10,'SLICE','2007-06-21',100,'WO',4,'2050-12-31',0);
+INSERT INTO `mrpsupplies` VALUES (11,'BREAD','2007-06-21',12,'WO',5,'2050-12-31',0);
+INSERT INTO `mrpsupplies` VALUES (12,'BIGEARS12','2010-10-15',1,'WO',13,'2010-10-15',0);
 
 --
 -- Dumping data for table `offers`
@@ -11071,6 +11806,323 @@ INSERT INTO `paymentterms` VALUES ('CA','Cash Only',2,0);
 INSERT INTO `periods` VALUES (0,'2010-08-31');
 INSERT INTO `periods` VALUES (1,'2010-09-30');
 INSERT INTO `periods` VALUES (2,'2010-10-31');
+INSERT INTO `periods` VALUES (3,'2010-11-30');
+INSERT INTO `periods` VALUES (4,'2010-12-31');
+INSERT INTO `periods` VALUES (5,'2011-01-31');
+INSERT INTO `periods` VALUES (6,'2011-02-28');
+INSERT INTO `periods` VALUES (7,'2011-03-31');
+INSERT INTO `periods` VALUES (8,'2011-04-30');
+INSERT INTO `periods` VALUES (9,'2011-05-31');
+INSERT INTO `periods` VALUES (10,'2011-06-30');
+INSERT INTO `periods` VALUES (11,'2011-07-31');
+INSERT INTO `periods` VALUES (12,'2011-08-31');
+INSERT INTO `periods` VALUES (13,'2011-09-30');
+INSERT INTO `periods` VALUES (14,'2011-10-31');
+INSERT INTO `periods` VALUES (15,'2011-11-30');
+INSERT INTO `periods` VALUES (16,'2011-12-31');
+INSERT INTO `periods` VALUES (17,'2012-01-31');
+INSERT INTO `periods` VALUES (18,'2012-02-29');
+INSERT INTO `periods` VALUES (19,'2012-03-31');
+INSERT INTO `periods` VALUES (20,'2012-04-30');
+INSERT INTO `periods` VALUES (21,'2012-05-31');
+INSERT INTO `periods` VALUES (22,'2012-06-30');
+INSERT INTO `periods` VALUES (23,'2012-07-31');
+INSERT INTO `periods` VALUES (24,'2012-08-31');
+INSERT INTO `periods` VALUES (25,'2012-09-30');
+INSERT INTO `periods` VALUES (26,'2012-10-31');
+INSERT INTO `periods` VALUES (27,'2012-11-30');
+INSERT INTO `periods` VALUES (28,'2012-12-31');
+INSERT INTO `periods` VALUES (29,'2013-01-31');
+INSERT INTO `periods` VALUES (30,'2013-02-28');
+INSERT INTO `periods` VALUES (31,'2013-03-31');
+INSERT INTO `periods` VALUES (32,'2013-04-30');
+INSERT INTO `periods` VALUES (33,'2013-05-31');
+INSERT INTO `periods` VALUES (34,'2013-06-30');
+INSERT INTO `periods` VALUES (35,'2013-07-31');
+INSERT INTO `periods` VALUES (36,'2013-08-31');
+INSERT INTO `periods` VALUES (37,'2013-09-30');
+INSERT INTO `periods` VALUES (38,'2013-10-31');
+INSERT INTO `periods` VALUES (39,'2013-11-30');
+INSERT INTO `periods` VALUES (40,'2013-12-31');
+INSERT INTO `periods` VALUES (41,'2014-01-31');
+INSERT INTO `periods` VALUES (42,'2014-02-28');
+INSERT INTO `periods` VALUES (43,'2014-03-31');
+INSERT INTO `periods` VALUES (44,'2014-04-30');
+INSERT INTO `periods` VALUES (45,'2014-05-31');
+INSERT INTO `periods` VALUES (46,'2014-06-30');
+INSERT INTO `periods` VALUES (47,'2014-07-31');
+INSERT INTO `periods` VALUES (48,'2014-08-31');
+INSERT INTO `periods` VALUES (49,'2014-09-30');
+INSERT INTO `periods` VALUES (50,'2014-10-31');
+INSERT INTO `periods` VALUES (51,'2014-11-30');
+INSERT INTO `periods` VALUES (52,'2014-12-31');
+INSERT INTO `periods` VALUES (53,'2015-01-31');
+INSERT INTO `periods` VALUES (54,'2015-02-28');
+INSERT INTO `periods` VALUES (55,'2015-03-31');
+INSERT INTO `periods` VALUES (56,'2015-04-30');
+INSERT INTO `periods` VALUES (57,'2015-05-31');
+INSERT INTO `periods` VALUES (58,'2015-06-30');
+INSERT INTO `periods` VALUES (59,'2015-07-31');
+INSERT INTO `periods` VALUES (60,'2015-08-31');
+INSERT INTO `periods` VALUES (61,'2015-09-30');
+INSERT INTO `periods` VALUES (62,'2015-10-31');
+INSERT INTO `periods` VALUES (63,'2015-11-30');
+INSERT INTO `periods` VALUES (64,'2015-12-31');
+INSERT INTO `periods` VALUES (65,'2016-01-31');
+INSERT INTO `periods` VALUES (66,'2016-02-29');
+INSERT INTO `periods` VALUES (67,'2016-03-31');
+INSERT INTO `periods` VALUES (68,'2016-04-30');
+INSERT INTO `periods` VALUES (69,'2016-05-31');
+INSERT INTO `periods` VALUES (70,'2016-06-30');
+INSERT INTO `periods` VALUES (71,'2016-07-31');
+INSERT INTO `periods` VALUES (72,'2016-08-31');
+INSERT INTO `periods` VALUES (73,'2016-09-30');
+INSERT INTO `periods` VALUES (74,'2016-10-31');
+INSERT INTO `periods` VALUES (75,'2016-11-30');
+INSERT INTO `periods` VALUES (76,'2016-12-31');
+INSERT INTO `periods` VALUES (77,'2017-01-31');
+INSERT INTO `periods` VALUES (78,'2017-02-28');
+INSERT INTO `periods` VALUES (79,'2017-03-31');
+INSERT INTO `periods` VALUES (80,'2017-04-30');
+INSERT INTO `periods` VALUES (81,'2017-05-31');
+INSERT INTO `periods` VALUES (82,'2017-06-30');
+INSERT INTO `periods` VALUES (83,'2017-07-31');
+INSERT INTO `periods` VALUES (84,'2017-08-31');
+INSERT INTO `periods` VALUES (85,'2017-09-30');
+INSERT INTO `periods` VALUES (86,'2017-10-31');
+INSERT INTO `periods` VALUES (87,'2017-11-30');
+INSERT INTO `periods` VALUES (88,'2017-12-31');
+INSERT INTO `periods` VALUES (89,'2018-01-31');
+INSERT INTO `periods` VALUES (90,'2018-02-28');
+INSERT INTO `periods` VALUES (91,'2018-03-31');
+INSERT INTO `periods` VALUES (92,'2018-04-30');
+INSERT INTO `periods` VALUES (93,'2018-05-31');
+INSERT INTO `periods` VALUES (94,'2018-06-30');
+INSERT INTO `periods` VALUES (95,'2018-07-31');
+INSERT INTO `periods` VALUES (96,'2018-08-31');
+INSERT INTO `periods` VALUES (97,'2018-09-30');
+INSERT INTO `periods` VALUES (98,'2018-10-31');
+INSERT INTO `periods` VALUES (99,'2018-11-30');
+INSERT INTO `periods` VALUES (100,'2018-12-31');
+INSERT INTO `periods` VALUES (101,'2019-01-31');
+INSERT INTO `periods` VALUES (102,'2019-02-28');
+INSERT INTO `periods` VALUES (103,'2019-03-31');
+INSERT INTO `periods` VALUES (104,'2019-04-30');
+INSERT INTO `periods` VALUES (105,'2019-05-31');
+INSERT INTO `periods` VALUES (106,'2019-06-30');
+INSERT INTO `periods` VALUES (107,'2019-07-31');
+INSERT INTO `periods` VALUES (108,'2019-08-31');
+INSERT INTO `periods` VALUES (109,'2019-09-30');
+INSERT INTO `periods` VALUES (110,'2019-10-31');
+INSERT INTO `periods` VALUES (111,'2019-11-30');
+INSERT INTO `periods` VALUES (112,'2019-12-31');
+INSERT INTO `periods` VALUES (113,'2020-01-31');
+INSERT INTO `periods` VALUES (114,'2020-02-29');
+INSERT INTO `periods` VALUES (115,'2020-03-31');
+INSERT INTO `periods` VALUES (116,'2020-04-30');
+INSERT INTO `periods` VALUES (117,'2020-05-31');
+INSERT INTO `periods` VALUES (118,'2020-06-30');
+INSERT INTO `periods` VALUES (119,'2020-07-31');
+INSERT INTO `periods` VALUES (120,'2020-08-31');
+INSERT INTO `periods` VALUES (121,'2020-09-30');
+INSERT INTO `periods` VALUES (122,'2020-10-31');
+INSERT INTO `periods` VALUES (123,'2020-11-30');
+INSERT INTO `periods` VALUES (124,'2020-12-31');
+INSERT INTO `periods` VALUES (125,'2021-01-31');
+INSERT INTO `periods` VALUES (126,'2021-02-28');
+INSERT INTO `periods` VALUES (127,'2021-03-31');
+INSERT INTO `periods` VALUES (128,'2021-04-30');
+INSERT INTO `periods` VALUES (129,'2021-05-31');
+INSERT INTO `periods` VALUES (130,'2021-06-30');
+INSERT INTO `periods` VALUES (131,'2021-07-31');
+INSERT INTO `periods` VALUES (132,'2021-08-31');
+INSERT INTO `periods` VALUES (133,'2021-09-30');
+INSERT INTO `periods` VALUES (134,'2021-10-31');
+INSERT INTO `periods` VALUES (135,'2021-11-30');
+INSERT INTO `periods` VALUES (136,'2021-12-31');
+INSERT INTO `periods` VALUES (137,'2022-01-31');
+INSERT INTO `periods` VALUES (138,'2022-02-28');
+INSERT INTO `periods` VALUES (139,'2022-03-31');
+INSERT INTO `periods` VALUES (140,'2022-04-30');
+INSERT INTO `periods` VALUES (141,'2022-05-31');
+INSERT INTO `periods` VALUES (142,'2022-06-30');
+INSERT INTO `periods` VALUES (143,'2022-07-31');
+INSERT INTO `periods` VALUES (144,'2022-08-31');
+INSERT INTO `periods` VALUES (145,'2022-09-30');
+INSERT INTO `periods` VALUES (146,'2022-10-31');
+INSERT INTO `periods` VALUES (147,'2022-11-30');
+INSERT INTO `periods` VALUES (148,'2022-12-31');
+INSERT INTO `periods` VALUES (149,'2023-01-31');
+INSERT INTO `periods` VALUES (150,'2023-02-28');
+INSERT INTO `periods` VALUES (151,'2023-03-31');
+INSERT INTO `periods` VALUES (152,'2023-04-30');
+INSERT INTO `periods` VALUES (153,'2023-05-31');
+INSERT INTO `periods` VALUES (154,'2023-06-30');
+INSERT INTO `periods` VALUES (155,'2023-07-31');
+INSERT INTO `periods` VALUES (156,'2023-08-31');
+INSERT INTO `periods` VALUES (157,'2023-09-30');
+INSERT INTO `periods` VALUES (158,'2023-10-31');
+INSERT INTO `periods` VALUES (159,'2023-11-30');
+INSERT INTO `periods` VALUES (160,'2023-12-31');
+INSERT INTO `periods` VALUES (161,'2024-01-31');
+INSERT INTO `periods` VALUES (162,'2024-02-29');
+INSERT INTO `periods` VALUES (163,'2024-03-31');
+INSERT INTO `periods` VALUES (164,'2024-04-30');
+INSERT INTO `periods` VALUES (165,'2024-05-31');
+INSERT INTO `periods` VALUES (166,'2024-06-30');
+INSERT INTO `periods` VALUES (167,'2024-07-31');
+INSERT INTO `periods` VALUES (168,'2024-08-31');
+INSERT INTO `periods` VALUES (169,'2024-09-30');
+INSERT INTO `periods` VALUES (170,'2024-10-31');
+INSERT INTO `periods` VALUES (171,'2024-11-30');
+INSERT INTO `periods` VALUES (172,'2024-12-31');
+INSERT INTO `periods` VALUES (173,'2025-01-31');
+INSERT INTO `periods` VALUES (174,'2025-02-28');
+INSERT INTO `periods` VALUES (175,'2025-03-31');
+INSERT INTO `periods` VALUES (176,'2025-04-30');
+INSERT INTO `periods` VALUES (177,'2025-05-31');
+INSERT INTO `periods` VALUES (178,'2025-06-30');
+INSERT INTO `periods` VALUES (179,'2025-07-31');
+INSERT INTO `periods` VALUES (180,'2025-08-31');
+INSERT INTO `periods` VALUES (181,'2025-09-30');
+INSERT INTO `periods` VALUES (182,'2025-10-31');
+INSERT INTO `periods` VALUES (183,'2025-11-30');
+INSERT INTO `periods` VALUES (184,'2025-12-31');
+INSERT INTO `periods` VALUES (185,'2026-01-31');
+INSERT INTO `periods` VALUES (186,'2026-02-28');
+INSERT INTO `periods` VALUES (187,'2026-03-31');
+INSERT INTO `periods` VALUES (188,'2026-04-30');
+INSERT INTO `periods` VALUES (189,'2026-05-31');
+INSERT INTO `periods` VALUES (190,'2026-06-30');
+INSERT INTO `periods` VALUES (191,'2026-07-31');
+INSERT INTO `periods` VALUES (192,'2026-08-31');
+INSERT INTO `periods` VALUES (193,'2026-09-30');
+INSERT INTO `periods` VALUES (194,'2026-10-31');
+INSERT INTO `periods` VALUES (195,'2026-11-30');
+INSERT INTO `periods` VALUES (196,'2026-12-31');
+INSERT INTO `periods` VALUES (197,'2027-01-31');
+INSERT INTO `periods` VALUES (198,'2027-02-28');
+INSERT INTO `periods` VALUES (199,'2027-03-31');
+INSERT INTO `periods` VALUES (200,'2027-04-30');
+INSERT INTO `periods` VALUES (201,'2027-05-31');
+INSERT INTO `periods` VALUES (202,'2027-06-30');
+INSERT INTO `periods` VALUES (203,'2027-07-31');
+INSERT INTO `periods` VALUES (204,'2027-08-31');
+INSERT INTO `periods` VALUES (205,'2027-09-30');
+INSERT INTO `periods` VALUES (206,'2027-10-31');
+INSERT INTO `periods` VALUES (207,'2027-11-30');
+INSERT INTO `periods` VALUES (208,'2027-12-31');
+INSERT INTO `periods` VALUES (209,'2028-01-31');
+INSERT INTO `periods` VALUES (210,'2028-02-29');
+INSERT INTO `periods` VALUES (211,'2028-03-31');
+INSERT INTO `periods` VALUES (212,'2028-04-30');
+INSERT INTO `periods` VALUES (213,'2028-05-31');
+INSERT INTO `periods` VALUES (214,'2028-06-30');
+INSERT INTO `periods` VALUES (215,'2028-07-31');
+INSERT INTO `periods` VALUES (216,'2028-08-31');
+INSERT INTO `periods` VALUES (217,'2028-09-30');
+INSERT INTO `periods` VALUES (218,'2028-10-31');
+INSERT INTO `periods` VALUES (219,'2028-11-30');
+INSERT INTO `periods` VALUES (220,'2028-12-31');
+INSERT INTO `periods` VALUES (221,'2029-01-31');
+INSERT INTO `periods` VALUES (222,'2029-02-28');
+INSERT INTO `periods` VALUES (223,'2029-03-31');
+INSERT INTO `periods` VALUES (224,'2029-04-30');
+INSERT INTO `periods` VALUES (225,'2029-05-31');
+INSERT INTO `periods` VALUES (226,'2029-06-30');
+INSERT INTO `periods` VALUES (227,'2029-07-31');
+INSERT INTO `periods` VALUES (228,'2029-08-31');
+INSERT INTO `periods` VALUES (229,'2029-09-30');
+INSERT INTO `periods` VALUES (230,'2029-10-31');
+INSERT INTO `periods` VALUES (231,'2029-11-30');
+INSERT INTO `periods` VALUES (232,'2029-12-31');
+INSERT INTO `periods` VALUES (233,'2030-01-31');
+INSERT INTO `periods` VALUES (234,'2030-02-28');
+INSERT INTO `periods` VALUES (235,'2030-03-31');
+INSERT INTO `periods` VALUES (236,'2030-04-30');
+INSERT INTO `periods` VALUES (237,'2030-05-31');
+INSERT INTO `periods` VALUES (238,'2030-06-30');
+INSERT INTO `periods` VALUES (239,'2030-07-31');
+INSERT INTO `periods` VALUES (240,'2030-08-31');
+INSERT INTO `periods` VALUES (241,'2030-09-30');
+INSERT INTO `periods` VALUES (242,'2030-10-31');
+INSERT INTO `periods` VALUES (243,'2030-11-30');
+INSERT INTO `periods` VALUES (244,'2030-12-31');
+INSERT INTO `periods` VALUES (245,'2031-01-31');
+INSERT INTO `periods` VALUES (246,'2031-02-28');
+INSERT INTO `periods` VALUES (247,'2031-03-31');
+INSERT INTO `periods` VALUES (248,'2031-04-30');
+INSERT INTO `periods` VALUES (249,'2031-05-31');
+INSERT INTO `periods` VALUES (250,'2031-06-30');
+INSERT INTO `periods` VALUES (251,'2031-07-31');
+INSERT INTO `periods` VALUES (252,'2031-08-31');
+INSERT INTO `periods` VALUES (253,'2031-09-30');
+INSERT INTO `periods` VALUES (254,'2031-10-31');
+INSERT INTO `periods` VALUES (255,'2031-11-30');
+INSERT INTO `periods` VALUES (256,'2031-12-31');
+INSERT INTO `periods` VALUES (257,'2032-01-31');
+INSERT INTO `periods` VALUES (258,'2032-02-29');
+INSERT INTO `periods` VALUES (259,'2032-03-31');
+INSERT INTO `periods` VALUES (260,'2032-04-30');
+INSERT INTO `periods` VALUES (261,'2032-05-31');
+INSERT INTO `periods` VALUES (262,'2032-06-30');
+INSERT INTO `periods` VALUES (263,'2032-07-31');
+INSERT INTO `periods` VALUES (264,'2032-08-31');
+INSERT INTO `periods` VALUES (265,'2032-09-30');
+INSERT INTO `periods` VALUES (266,'2032-10-31');
+INSERT INTO `periods` VALUES (267,'2032-11-30');
+INSERT INTO `periods` VALUES (268,'2032-12-31');
+INSERT INTO `periods` VALUES (269,'2033-01-31');
+INSERT INTO `periods` VALUES (270,'2033-02-28');
+INSERT INTO `periods` VALUES (271,'2033-03-31');
+INSERT INTO `periods` VALUES (272,'2033-04-30');
+INSERT INTO `periods` VALUES (273,'2033-05-31');
+INSERT INTO `periods` VALUES (274,'2033-06-30');
+INSERT INTO `periods` VALUES (275,'2033-07-31');
+INSERT INTO `periods` VALUES (276,'2033-08-31');
+INSERT INTO `periods` VALUES (277,'2033-09-30');
+INSERT INTO `periods` VALUES (278,'2033-10-31');
+INSERT INTO `periods` VALUES (279,'2033-11-30');
+INSERT INTO `periods` VALUES (280,'2033-12-31');
+INSERT INTO `periods` VALUES (281,'2034-01-31');
+INSERT INTO `periods` VALUES (282,'2034-02-28');
+INSERT INTO `periods` VALUES (283,'2034-03-31');
+INSERT INTO `periods` VALUES (284,'2034-04-30');
+INSERT INTO `periods` VALUES (285,'2034-05-31');
+INSERT INTO `periods` VALUES (286,'2034-06-30');
+INSERT INTO `periods` VALUES (287,'2034-07-31');
+INSERT INTO `periods` VALUES (288,'2034-08-31');
+INSERT INTO `periods` VALUES (289,'2034-09-30');
+INSERT INTO `periods` VALUES (290,'2034-10-31');
+INSERT INTO `periods` VALUES (291,'2034-11-30');
+INSERT INTO `periods` VALUES (292,'2034-12-31');
+INSERT INTO `periods` VALUES (293,'2035-01-31');
+INSERT INTO `periods` VALUES (294,'2035-02-28');
+INSERT INTO `periods` VALUES (295,'2035-03-31');
+INSERT INTO `periods` VALUES (296,'2035-04-30');
+INSERT INTO `periods` VALUES (297,'2035-05-31');
+INSERT INTO `periods` VALUES (298,'2035-06-30');
+INSERT INTO `periods` VALUES (299,'2035-07-31');
+INSERT INTO `periods` VALUES (300,'2035-08-31');
+INSERT INTO `periods` VALUES (301,'2035-09-30');
+INSERT INTO `periods` VALUES (302,'2035-10-31');
+INSERT INTO `periods` VALUES (303,'2035-11-30');
+INSERT INTO `periods` VALUES (304,'2035-12-31');
+INSERT INTO `periods` VALUES (305,'2036-01-31');
+INSERT INTO `periods` VALUES (306,'2036-02-29');
+INSERT INTO `periods` VALUES (307,'2036-03-31');
+INSERT INTO `periods` VALUES (308,'2036-04-30');
+INSERT INTO `periods` VALUES (309,'2036-05-31');
+INSERT INTO `periods` VALUES (310,'2036-06-30');
+INSERT INTO `periods` VALUES (311,'2036-07-31');
+INSERT INTO `periods` VALUES (312,'2036-08-31');
+INSERT INTO `periods` VALUES (313,'2036-09-30');
+INSERT INTO `periods` VALUES (314,'2036-10-31');
+INSERT INTO `periods` VALUES (315,'2036-11-30');
+INSERT INTO `periods` VALUES (316,'2036-12-31');
+INSERT INTO `periods` VALUES (317,'2037-01-31');
+INSERT INTO `periods` VALUES (318,'2037-02-28');
+INSERT INTO `periods` VALUES (319,'2037-03-31');
 
 --
 -- Dumping data for table `pickinglistdetails`
@@ -11112,7 +12164,10 @@ INSERT INTO `prices` VALUES ('YEAST','DE','AUD','','123.0000','','1999-01-01','0
 --
 
 INSERT INTO `purchdata` VALUES ('BINGO','HIT3043-5','1235.0000','',1,'',5,1,'2009-09-18','',1);
+INSERT INTO `purchdata` VALUES ('CRUISE','DVD-CASE','3.5000','6',12,'',25,1,'2011-02-12','DVD-Case-12pack',1);
 INSERT INTO `purchdata` VALUES ('CRUISE','DVD-UNSG2','200.0000','10 Pack',10,'',5,1,'2009-09-18','',1);
+INSERT INTO `purchdata` VALUES ('DINGO','DVD-LTWP','5.8000','6',5,'',1,1,'2010-11-27','LTWP',1);
+INSERT INTO `purchdata` VALUES ('GOTSTUFF','FLOUR','10.0000','6',25,'Sack of Flour',2,1,'2011-02-13','sackflour',1);
 
 --
 -- Dumping data for table `purchorderauth`
@@ -11127,10 +12182,19 @@ INSERT INTO `purchorderauth` VALUES ('admin','USD',0,9999999,0);
 -- Dumping data for table `purchorderdetails`
 --
 
-INSERT INTO `purchorderdetails` VALUES (1,1,'DVD-CASE','2007-06-25','webERP Demo DVD Case',1460,0,0.23,0,0,45,0,0,'',0,'','','','','','','','','','','',0,1);
+INSERT INTO `purchorderdetails` VALUES (1,1,'DVD-CASE','2007-06-25','webERP Demo DVD Case',1460,0,0.23,0,0.3,45,6,0,'',0,'','','','','','','','','','','',0,1);
 INSERT INTO `purchorderdetails` VALUES (2,1,'DVD-LTWP','2007-06-25','Lethal Weapon Linked',1460,0,2.98,0,2.7,7,7,0,'',1,'','','','','','','','','','','',0,1);
 INSERT INTO `purchorderdetails` VALUES (3,2,'SALT','2009-02-05','Salt',1460,0,100,0,2.5,20,7,0,'',0,'','','','','','','','','','','',0,1);
-INSERT INTO `purchorderdetails` VALUES (4,3,'BREAD','2010-08-14','Bread',1460,0,0.25,0,0,12,0,0,'0',0,'BREAD','each','0','','0','0','','0','0','0','0',0,1);
+INSERT INTO `purchorderdetails` VALUES (4,3,'BREAD','2010-08-14','Bread',1460,0,0.25,0,6.0085,12,7.7,0,'0',0,'BREAD','each','0','','0','0','','0','0','0','0',0,1);
+INSERT INTO `purchorderdetails` VALUES (5,4,'DVD-CASE','2010-12-19','webERP Demo DVD Case',1460,0,5,0,0,2,0,0,'0',0,'DVD-CASE','','','','','0','1','0','0','0','0',0,1);
+INSERT INTO `purchorderdetails` VALUES (6,4,'DVD-UNSG','2010-12-19','Under Siege Linked',1460,0,2.5,0,0,1,0,0,'0',0,'DVD-UNSG','','','','','0','1','0','0','0','0',0,1);
+INSERT INTO `purchorderdetails` VALUES (7,5,'BREAD','2011-01-03','Bread',1460,0,6.25,0,6.0085,2,2,0,'0',1,'BREAD','','','','','0','BREAD','0','0','0','0',0,1);
+INSERT INTO `purchorderdetails` VALUES (8,6,'FLOUR','2011-01-03','High Grade Flour',1460,0,2.33,0,0,50,0,0,'0',0,'FLOUR','','','','','0','1','0','0','0','0',0,1);
+INSERT INTO `purchorderdetails` VALUES (9,16,'DVD-CASE','2011-02-06','webERP Demo DVD Case',1460,0,0,0,0,2,0,0,'0',0,'DVD-CASE','each','','','0','0.0000','1','0.0000','','2','0',0,1);
+INSERT INTO `purchorderdetails` VALUES (10,16,'SALT','2011-02-06','Salt',1460,0,0,0,0,5,0,0,'0',0,'SALT','kgs','','','0','0.0000','1','0.0000','','5','0',0,1);
+INSERT INTO `purchorderdetails` VALUES (11,16,'','2011-02-06','Something important',6100,0,12.5,0,0,1,0,0,'',0,'','each','','','','','','','','1','12.5',0,1);
+INSERT INTO `purchorderdetails` VALUES (12,17,'DVD-CASE','2011-02-12','DVD-Case-12pack - ',1460,0,0.29166666666667,0,0.3,24,12,0,'0',0,'DVD-CASE','pack','','','0','0.0000','25','0.0000','','2','0.58333333333333',0,12);
+INSERT INTO `purchorderdetails` VALUES (13,18,'FLOUR','2011-02-13','sackflour - Sack of Flour',1460,0,1.18,0,0,150,0,0,'0',0,'FLOUR','pack','','','0','0.0000','2','0.0000','','5','2',0,2.5);
 
 --
 -- Dumping data for table `purchorders`
@@ -11139,6 +12203,16 @@ INSERT INTO `purchorderdetails` VALUES (4,3,'BREAD','2010-08-14','Bread',1460,0,
 INSERT INTO `purchorders` VALUES (1,'CAMPBELL','','2007-06-25 00:00:00',1,'2007-06-25 00:00:00',0,'','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','','','','','','','','','','','1.00','0000-00-00','','','2007-06-25','Printed','','','');
 INSERT INTO `purchorders` VALUES (2,'GOTSTUFF','','2009-02-05 00:00:00',1,NULL,1,'','0','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','','','','','','','','','','','1.00','0000-00-00','','','2009-02-05','Authorised','','','');
 INSERT INTO `purchorders` VALUES (3,'BINGO','','2010-08-14 00:00:00',0.85,'2010-08-14 00:00:00',0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Box 3499','Gardenier','San Fransisco','California 54424','','','','','Jack Roberts','1.00','2010-08-14','','1','2010-08-14','Printed','14/08/2010 - Printed by <a href=\"mailto:\">admin</a><br>14/08/2010 - Authorised by <a href=\"mailto:\">admin</a><br>14/08/2010 - Order Created by &lt;a href=&quot;mailto:&quot;&gt;admin&lt;/a&gt; - &lt;br&gt;','30','');
+INSERT INTO `purchorders` VALUES (4,'CRUISE','','2010-12-19 00:00:00',0.8,NULL,0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Box 2001','Ft Lauderdale, Florida','','','','','Barry Toad','','Jack Roberts','1.00','2010-12-19','','1','2010-12-19','Rejected','04/01/2011 - Rejected by Demonstration user <br>04/01/2011 - Order set to pending status by Demonstration user &lt;br&gt;04/01/2011 - Authorised by Demonstration user &lt;br&gt;04/01/2011 - Order set to pending status by Demonstration user &lt;br&gt;04/01/2011 - Authorised by  &lt;br&gt;04/01/2011 - Order set to pending status byadmin&lt;br&gt;04/01/2011 - Authorised by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;admin&lt;/a&gt;&lt;br&gt;04/01/2011 - Order set to pending status by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;admin&lt;/a&gt;&lt;br&gt;04/01/2011 - Authorised by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;admin&lt;/a&gt;&lt;br&gt;04/01/2011 - Order set to pending status by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;admin&lt;/a&gt;&lt;br&gt;04/01/2011 - Authorised by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;admin&lt;/a&gt;&lt;br&gt;04/01/2011 - Order set to pending status by &lt;a href=&quot;mailto:&quot;&gt;admin&lt;/a&gt;&lt;br&gt;04/01/2011 - Authorised by &lt;a href=&quot;mailto:&quot;&gt;admin&lt;/a&gt;&lt;br&gt;','30','');
+INSERT INTO `purchorders` VALUES (5,'BINGO','','2011-01-03 00:00:00',0.85,'2011-01-30 00:00:00',0,'admin','','TOR','Level 100 ','CN Tower','Toronto','','','','','Box 3499','Gardenier','San Fransisco','California 54424','','','','','Clive Contrary','2.00','2011-01-03','','1','2011-01-03','Completed','30/01/2011 - Order Completed<br />','20','');
+INSERT INTO `purchorders` VALUES (6,'CAMPBELL','','2011-01-03 00:00:00',0.85,NULL,0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Box 9882','Ottowa Rise','','','','','','','Jack Roberts','1.00','2011-01-03','','1','2011-01-03','Rejected','03/01/2011 - Rejected by <a href=\"mailto:\">admin</a><br>03/01/2011 - Order set to pending status by &lt;a href=&quot;mailto:&quot;&gt;admin&lt;/a&gt;&lt;br&gt;03/01/2011 - Authorised by &lt;a href=&quot;mailto:&quot;&gt;admin&lt;/a&gt;&lt;br&gt;','30','');
+INSERT INTO `purchorders` VALUES (7,'DINGO','','2010-11-27 00:00:00',1,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','+61 3 56789012','+61 3 56789012','2933 Main Street','Perenjori','','Western Australia','','','','','Jack Roberts','2.00','2010-11-27','','1','2010-11-27','Completed','27/11/2010 - Order Cancelled by <a href=\"mailto:phil@logicworks.co.nz\">admin</a><br>27/11/2010 - Order Created by &lt;a href=&quot;mailto:phil@logicworks.co.nz&quot;&gt;admin&lt;/a&gt; - &lt;br&gt;','20','');
+INSERT INTO `purchorders` VALUES (8,'BINGO','','2010-11-30 00:00:00',0.85,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Box 3499','Gardenier','San Fransisco','California 54424','','','','','Jack Roberts','1.00','2010-11-30','','1','2010-11-30','Authorised','30/11/2010 - Order Created by <a href=\"mailto:phil@logicworks.co.nz\">admin</a> - <br>','30','');
+INSERT INTO `purchorders` VALUES (9,'CAMPBELL','','2010-12-14 00:00:00',0.85,NULL,0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','','+61 3 56789012','','','','','','','','','','1.00','2010-12-14','','1','2010-12-14','Printed','14/12/2010 - Cancelled by <a href=\"mailto:phil@logicworks.co.nz\">admin</a><br>14/12/2010 - Order Created by &lt;a href=&quot;mailto:phil@logicworks.co.nz&quot;&gt;admin&lt;/a&gt; - &lt;br&gt;','20','');
+INSERT INTO `purchorders` VALUES (10,'CAMPBELL','','2010-12-14 00:00:00',0.85,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','+61 3 56789012','+61 3 56789012','','','','','','','','','','2.00','2010-12-14','','1','2010-12-14','Authorised','','20','');
+INSERT INTO `purchorders` VALUES (16,'GOTSTUFF','','2011-02-06 00:00:00',0.85,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Test line 1','Test line 2','Test line 3','Test line 4 - editing','','','','','Jack Roberts','1.00','2011-02-06','','1','2011-02-06','Authorised','06/02/2011 - Order Created and Authorised by <a href=\"mailto:phil@logicworks.co.nz\">Demonstration user</a> - <br />','20','');
+INSERT INTO `purchorders` VALUES (17,'CRUISE','','2011-02-12 00:00:00',0.8,'2011-02-12 00:00:00',0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Box 2001','Ft Lauderdale, Florida','','','','','Barry Toad','','Jack Roberts','1.00','2011-02-12','','1','2011-02-12','Printed','12/02/2011 - Printed by<a href=\"mailto:phil@logicworks.co.nz\">Demonstration user</a><br />12/02/2011 - Order Created and Authorised by <a href=\"mailto:phil@logicworks.co.nz\">Demonstration user</a> - <br />','30','');
+INSERT INTO `purchorders` VALUES (18,'GOTSTUFF','','2011-02-13 00:00:00',0.85,'2011-02-13 00:00:00',1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','+61 3 56789012','+61 3 56789012','Test line 1','Test line 2','Test line 3','Test line 4 - editing','','','','','Jack Roberts','2.00','2011-02-20','','1','2011-02-13','Authorised','13/02/2011 - Printed by<a href=\"mailto:phil@logicworks.co.nz\">Demonstration user</a><br />13/02/2011 - Order Created and Authorised by <a href=\"mailto:phil@logicworks.co.nz\">Demonstration user</a> - <br />','20','');
 
 --
 -- Dumping data for table `recurringsalesorders`
@@ -11149,6 +12223,7 @@ INSERT INTO `recurringsalesorders` VALUES (4,'ANGRY','ANGRY','',NULL,NULL,'2007-
 INSERT INTO `recurringsalesorders` VALUES (5,'ANGRY','ANGRY','',NULL,NULL,'2007-02-01','DE',1,'','','','','','','0422 2245 2213','graville@angry.com','Angus Rouledge - Toronto',0,'DEN','2007-02-01','2009-02-01',6,0);
 INSERT INTO `recurringsalesorders` VALUES (6,'ANGRY','ANGRY','',NULL,NULL,'2007-03-01','DE',1,'','','','','','','0422 2245 2213','graville@angry.com','Angus Rouledge - Toronto',0,'DEN','2007-03-01','2009-03-01',6,0);
 INSERT INTO `recurringsalesorders` VALUES (7,'ANGRY','ANGRY','',NULL,NULL,'2007-04-01','DE',1,'','','','','','','0422 2245 2213','graville@angry.com','Angus Rouledge - Toronto',0,'DEN','2007-04-01','2009-04-01',6,0);
+INSERT INTO `recurringsalesorders` VALUES (8,'ANGRY','ANGRY','',NULL,'','2010-11-11','DE',1,'P O Box 671','Gowerbridge','Upperton','Toronto ','Canada','','0422 2245 2213','graville@angry.com','Angus Rouledge - Toronto',0,'TOR','2010-10-08','2011-11-12',52,0);
 
 --
 -- Dumping data for table `recurrsalesorderdetails`
@@ -11164,6 +12239,27 @@ INSERT INTO `recurrsalesorderdetails` VALUES (4,'DVD-LTWP',28,3,0,'');
 INSERT INTO `recurrsalesorderdetails` VALUES (5,'DVD-UNSG2',15,5,0,'');
 INSERT INTO `recurrsalesorderdetails` VALUES (6,'DVD-UNSG',17.5,6,0,'');
 INSERT INTO `recurrsalesorderdetails` VALUES (7,'DVD-DHWV',30,1,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (3,'DVD-DHWV',50,2,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (4,'DVD-LTWP',28,3,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (5,'DVD-UNSG2',15,5,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (6,'DVD-UNSG',17.5,6,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (7,'DVD-DHWV',30,1,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (3,'DVD-DHWV',50,2,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (4,'DVD-LTWP',28,3,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (5,'DVD-UNSG2',15,5,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (6,'DVD-UNSG',17.5,6,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (7,'DVD-DHWV',30,1,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (3,'DVD-DHWV',50,2,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (4,'DVD-LTWP',28,3,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (5,'DVD-UNSG2',15,5,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (6,'DVD-UNSG',17.5,6,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (7,'DVD-DHWV',30,1,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (3,'DVD-DHWV',50,2,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (4,'DVD-LTWP',28,3,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (5,'DVD-UNSG2',15,5,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (6,'DVD-UNSG',17.5,6,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (7,'DVD-DHWV',30,1,0,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (8,'BREAD',1.5,2,0,'test');
 
 --
 -- Dumping data for table `reportcolumns`
@@ -11191,9 +12287,921 @@ INSERT INTO `reportfields` VALUES (1804,135,'sortlist',1,'stockmaster.stockid','
 INSERT INTO `reportheaders` VALUES (1,'Test report','Sales Area',0,'0','zzzzz','Customer Code',0,'1','zzzzzzzzzz','Product Code',0,'1','zzzzzzzzz','Not Used',0,'','');
 
 --
+-- Dumping data for table `reportlets`
+--
+
+INSERT INTO `reportlets` VALUES ('admin','SalesGraph','Graph of last 12 months sales activity',60);
+INSERT INTO `reportlets` VALUES ('admin','TopSalesQty','Top selling items by quantity',60);
+INSERT INTO `reportlets` VALUES ('admin','TopSalesVal','Top selling items by value',60);
+
+--
 -- Dumping data for table `reportlinks`
 --
 
+INSERT INTO `reportlinks` VALUES ('accountgroups','accountsection','accountgroups.sectioninaccounts=accountsection.sectionid');
+INSERT INTO `reportlinks` VALUES ('accountsection','accountgroups','accountsection.sectionid=accountgroups.sectioninaccounts');
+INSERT INTO `reportlinks` VALUES ('bankaccounts','chartmaster','bankaccounts.accountcode=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','bankaccounts','chartmaster.accountcode=bankaccounts.accountcode');
+INSERT INTO `reportlinks` VALUES ('banktrans','systypes','banktrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','banktrans','systypes.typeid=banktrans.type');
+INSERT INTO `reportlinks` VALUES ('banktrans','bankaccounts','banktrans.bankact=bankaccounts.accountcode');
+INSERT INTO `reportlinks` VALUES ('bankaccounts','banktrans','bankaccounts.accountcode=banktrans.bankact');
+INSERT INTO `reportlinks` VALUES ('bom','stockmaster','bom.parent=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','bom','stockmaster.stockid=bom.parent');
+INSERT INTO `reportlinks` VALUES ('bom','stockmaster','bom.component=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','bom','stockmaster.stockid=bom.component');
+INSERT INTO `reportlinks` VALUES ('bom','workcentres','bom.workcentreadded=workcentres.code');
+INSERT INTO `reportlinks` VALUES ('workcentres','bom','workcentres.code=bom.workcentreadded');
+INSERT INTO `reportlinks` VALUES ('bom','locations','bom.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','bom','locations.loccode=bom.loccode');
+INSERT INTO `reportlinks` VALUES ('buckets','workcentres','buckets.workcentre=workcentres.code');
+INSERT INTO `reportlinks` VALUES ('workcentres','buckets','workcentres.code=buckets.workcentre');
+INSERT INTO `reportlinks` VALUES ('chartdetails','chartmaster','chartdetails.accountcode=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','chartdetails','chartmaster.accountcode=chartdetails.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartdetails','periods','chartdetails.period=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','chartdetails','periods.periodno=chartdetails.period');
+INSERT INTO `reportlinks` VALUES ('chartmaster','accountgroups','chartmaster.group_=accountgroups.groupname');
+INSERT INTO `reportlinks` VALUES ('accountgroups','chartmaster','accountgroups.groupname=chartmaster.group_');
+INSERT INTO `reportlinks` VALUES ('contractbom','workcentres','contractbom.workcentreadded=workcentres.code');
+INSERT INTO `reportlinks` VALUES ('workcentres','contractbom','workcentres.code=contractbom.workcentreadded');
+INSERT INTO `reportlinks` VALUES ('contractbom','locations','contractbom.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','contractbom','locations.loccode=contractbom.loccode');
+INSERT INTO `reportlinks` VALUES ('contractbom','stockmaster','contractbom.component=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','contractbom','stockmaster.stockid=contractbom.component');
+INSERT INTO `reportlinks` VALUES ('contractreqts','contracts','contractreqts.contract=contracts.contractref');
+INSERT INTO `reportlinks` VALUES ('contracts','contractreqts','contracts.contractref=contractreqts.contract');
+INSERT INTO `reportlinks` VALUES ('contracts','custbranch','contracts.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','contracts','custbranch.debtorno=contracts.debtorno');
+INSERT INTO `reportlinks` VALUES ('contracts','stockcategory','contracts.branchcode=stockcategory.categoryid');
+INSERT INTO `reportlinks` VALUES ('stockcategory','contracts','stockcategory.categoryid=contracts.branchcode');
+INSERT INTO `reportlinks` VALUES ('contracts','salestypes','contracts.typeabbrev=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','contracts','salestypes.typeabbrev=contracts.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('custallocns','debtortrans','custallocns.transid_allocfrom=debtortrans.id');
+INSERT INTO `reportlinks` VALUES ('debtortrans','custallocns','debtortrans.id=custallocns.transid_allocfrom');
+INSERT INTO `reportlinks` VALUES ('custallocns','debtortrans','custallocns.transid_allocto=debtortrans.id');
+INSERT INTO `reportlinks` VALUES ('debtortrans','custallocns','debtortrans.id=custallocns.transid_allocto');
+INSERT INTO `reportlinks` VALUES ('custbranch','debtorsmaster','custbranch.debtorno=debtorsmaster.debtorno');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','custbranch','debtorsmaster.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','areas','custbranch.area=areas.areacode');
+INSERT INTO `reportlinks` VALUES ('areas','custbranch','areas.areacode=custbranch.area');
+INSERT INTO `reportlinks` VALUES ('custbranch','salesman','custbranch.salesman=salesman.salesmancode');
+INSERT INTO `reportlinks` VALUES ('salesman','custbranch','salesman.salesmancode=custbranch.salesman');
+INSERT INTO `reportlinks` VALUES ('custbranch','locations','custbranch.defaultlocation=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','custbranch','locations.loccode=custbranch.defaultlocation');
+INSERT INTO `reportlinks` VALUES ('custbranch','shippers','custbranch.defaultshipvia=shippers.shipper_id');
+INSERT INTO `reportlinks` VALUES ('shippers','custbranch','shippers.shipper_id=custbranch.defaultshipvia');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','holdreasons','debtorsmaster.holdreason=holdreasons.reasoncode');
+INSERT INTO `reportlinks` VALUES ('holdreasons','debtorsmaster','holdreasons.reasoncode=debtorsmaster.holdreason');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','currencies','debtorsmaster.currcode=currencies.currabrev');
+INSERT INTO `reportlinks` VALUES ('currencies','debtorsmaster','currencies.currabrev=debtorsmaster.currcode');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','paymentterms','debtorsmaster.paymentterms=paymentterms.termsindicator');
+INSERT INTO `reportlinks` VALUES ('paymentterms','debtorsmaster','paymentterms.termsindicator=debtorsmaster.paymentterms');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','salestypes','debtorsmaster.salestype=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','debtorsmaster','salestypes.typeabbrev=debtorsmaster.salestype');
+INSERT INTO `reportlinks` VALUES ('debtortrans','custbranch','debtortrans.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','debtortrans','custbranch.debtorno=debtortrans.debtorno');
+INSERT INTO `reportlinks` VALUES ('debtortrans','systypes','debtortrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','debtortrans','systypes.typeid=debtortrans.type');
+INSERT INTO `reportlinks` VALUES ('debtortrans','periods','debtortrans.prd=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','debtortrans','periods.periodno=debtortrans.prd');
+INSERT INTO `reportlinks` VALUES ('debtortranstaxes','taxauthorities','debtortranstaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','debtortranstaxes','taxauthorities.taxid=debtortranstaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('debtortranstaxes','debtortrans','debtortranstaxes.debtortransid=debtortrans.id');
+INSERT INTO `reportlinks` VALUES ('debtortrans','debtortranstaxes','debtortrans.id=debtortranstaxes.debtortransid');
+INSERT INTO `reportlinks` VALUES ('discountmatrix','salestypes','discountmatrix.salestype=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','discountmatrix','salestypes.typeabbrev=discountmatrix.salestype');
+INSERT INTO `reportlinks` VALUES ('freightcosts','locations','freightcosts.locationfrom=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','freightcosts','locations.loccode=freightcosts.locationfrom');
+INSERT INTO `reportlinks` VALUES ('freightcosts','shippers','freightcosts.shipperid=shippers.shipper_id');
+INSERT INTO `reportlinks` VALUES ('shippers','freightcosts','shippers.shipper_id=freightcosts.shipperid');
+INSERT INTO `reportlinks` VALUES ('gltrans','chartmaster','gltrans.account=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','gltrans','chartmaster.accountcode=gltrans.account');
+INSERT INTO `reportlinks` VALUES ('gltrans','systypes','gltrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','gltrans','systypes.typeid=gltrans.type');
+INSERT INTO `reportlinks` VALUES ('gltrans','periods','gltrans.periodno=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','gltrans','periods.periodno=gltrans.periodno');
+INSERT INTO `reportlinks` VALUES ('grns','suppliers','grns.supplierid=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','grns','suppliers.supplierid=grns.supplierid');
+INSERT INTO `reportlinks` VALUES ('grns','purchorderdetails','grns.podetailitem=purchorderdetails.podetailitem');
+INSERT INTO `reportlinks` VALUES ('purchorderdetails','grns','purchorderdetails.podetailitem=grns.podetailitem');
+INSERT INTO `reportlinks` VALUES ('locations','taxprovinces','locations.taxprovinceid=taxprovinces.taxprovinceid');
+INSERT INTO `reportlinks` VALUES ('taxprovinces','locations','taxprovinces.taxprovinceid=locations.taxprovinceid');
+INSERT INTO `reportlinks` VALUES ('locstock','locations','locstock.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','locstock','locations.loccode=locstock.loccode');
+INSERT INTO `reportlinks` VALUES ('locstock','stockmaster','locstock.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','locstock','stockmaster.stockid=locstock.stockid');
+INSERT INTO `reportlinks` VALUES ('loctransfers','locations','loctransfers.shiploc=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','loctransfers','locations.loccode=loctransfers.shiploc');
+INSERT INTO `reportlinks` VALUES ('loctransfers','locations','loctransfers.recloc=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','loctransfers','locations.loccode=loctransfers.recloc');
+INSERT INTO `reportlinks` VALUES ('loctransfers','stockmaster','loctransfers.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','loctransfers','stockmaster.stockid=loctransfers.stockid');
+INSERT INTO `reportlinks` VALUES ('orderdeliverydifferencesl','stockmaster','orderdeliverydifferenceslog.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','orderdeliverydifferencesl','stockmaster.stockid=orderdeliverydifferenceslog.stockid');
+INSERT INTO `reportlinks` VALUES ('orderdeliverydifferencesl','custbranch','orderdeliverydifferenceslog.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','orderdeliverydifferencesl','custbranch.debtorno=orderdeliverydifferenceslog.debtorno');
+INSERT INTO `reportlinks` VALUES ('orderdeliverydifferencesl','salesorders','orderdeliverydifferenceslog.branchcode=salesorders.orderno');
+INSERT INTO `reportlinks` VALUES ('salesorders','orderdeliverydifferencesl','salesorders.orderno=orderdeliverydifferenceslog.branchcode');
+INSERT INTO `reportlinks` VALUES ('prices','stockmaster','prices.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','prices','stockmaster.stockid=prices.stockid');
+INSERT INTO `reportlinks` VALUES ('prices','currencies','prices.currabrev=currencies.currabrev');
+INSERT INTO `reportlinks` VALUES ('currencies','prices','currencies.currabrev=prices.currabrev');
+INSERT INTO `reportlinks` VALUES ('prices','salestypes','prices.typeabbrev=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','prices','salestypes.typeabbrev=prices.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('purchdata','stockmaster','purchdata.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','purchdata','stockmaster.stockid=purchdata.stockid');
+INSERT INTO `reportlinks` VALUES ('purchdata','suppliers','purchdata.supplierno=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','purchdata','suppliers.supplierid=purchdata.supplierno');
+INSERT INTO `reportlinks` VALUES ('purchorderdetails','purchorders','purchorderdetails.orderno=purchorders.orderno');
+INSERT INTO `reportlinks` VALUES ('purchorders','purchorderdetails','purchorders.orderno=purchorderdetails.orderno');
+INSERT INTO `reportlinks` VALUES ('purchorders','suppliers','purchorders.supplierno=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','purchorders','suppliers.supplierid=purchorders.supplierno');
+INSERT INTO `reportlinks` VALUES ('purchorders','locations','purchorders.intostocklocation=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','purchorders','locations.loccode=purchorders.intostocklocation');
+INSERT INTO `reportlinks` VALUES ('recurringsalesorders','custbranch','recurringsalesorders.branchcode=custbranch.branchcode');
+INSERT INTO `reportlinks` VALUES ('custbranch','recurringsalesorders','custbranch.branchcode=recurringsalesorders.branchcode');
+INSERT INTO `reportlinks` VALUES ('recurrsalesorderdetails','recurringsalesorders','recurrsalesorderdetails.recurrorderno=recurringsalesorders.recurrorderno');
+INSERT INTO `reportlinks` VALUES ('recurringsalesorders','recurrsalesorderdetails','recurringsalesorders.recurrorderno=recurrsalesorderdetails.recurrorderno');
+INSERT INTO `reportlinks` VALUES ('recurrsalesorderdetails','stockmaster','recurrsalesorderdetails.stkcode=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','recurrsalesorderdetails','stockmaster.stockid=recurrsalesorderdetails.stkcode');
+INSERT INTO `reportlinks` VALUES ('reportcolumns','reportheaders','reportcolumns.reportid=reportheaders.reportid');
+INSERT INTO `reportlinks` VALUES ('reportheaders','reportcolumns','reportheaders.reportid=reportcolumns.reportid');
+INSERT INTO `reportlinks` VALUES ('salesanalysis','periods','salesanalysis.periodno=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','salesanalysis','periods.periodno=salesanalysis.periodno');
+INSERT INTO `reportlinks` VALUES ('salescatprod','stockmaster','salescatprod.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','salescatprod','stockmaster.stockid=salescatprod.stockid');
+INSERT INTO `reportlinks` VALUES ('salescatprod','salescat','salescatprod.salescatid=salescat.salescatid');
+INSERT INTO `reportlinks` VALUES ('salescat','salescatprod','salescat.salescatid=salescatprod.salescatid');
+INSERT INTO `reportlinks` VALUES ('salesorderdetails','salesorders','salesorderdetails.orderno=salesorders.orderno');
+INSERT INTO `reportlinks` VALUES ('salesorders','salesorderdetails','salesorders.orderno=salesorderdetails.orderno');
+INSERT INTO `reportlinks` VALUES ('salesorderdetails','stockmaster','salesorderdetails.stkcode=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','salesorderdetails','stockmaster.stockid=salesorderdetails.stkcode');
+INSERT INTO `reportlinks` VALUES ('salesorders','custbranch','salesorders.branchcode=custbranch.branchcode');
+INSERT INTO `reportlinks` VALUES ('custbranch','salesorders','custbranch.branchcode=salesorders.branchcode');
+INSERT INTO `reportlinks` VALUES ('salesorders','shippers','salesorders.debtorno=shippers.shipper_id');
+INSERT INTO `reportlinks` VALUES ('shippers','salesorders','shippers.shipper_id=salesorders.debtorno');
+INSERT INTO `reportlinks` VALUES ('salesorders','locations','salesorders.fromstkloc=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','salesorders','locations.loccode=salesorders.fromstkloc');
+INSERT INTO `reportlinks` VALUES ('securitygroups','securityroles','securitygroups.secroleid=securityroles.secroleid');
+INSERT INTO `reportlinks` VALUES ('securityroles','securitygroups','securityroles.secroleid=securitygroups.secroleid');
+INSERT INTO `reportlinks` VALUES ('securitygroups','securitytokens','securitygroups.tokenid=securitytokens.tokenid');
+INSERT INTO `reportlinks` VALUES ('securitytokens','securitygroups','securitytokens.tokenid=securitygroups.tokenid');
+INSERT INTO `reportlinks` VALUES ('shipmentcharges','shipments','shipmentcharges.shiptref=shipments.shiptref');
+INSERT INTO `reportlinks` VALUES ('shipments','shipmentcharges','shipments.shiptref=shipmentcharges.shiptref');
+INSERT INTO `reportlinks` VALUES ('shipmentcharges','systypes','shipmentcharges.transtype=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','shipmentcharges','systypes.typeid=shipmentcharges.transtype');
+INSERT INTO `reportlinks` VALUES ('shipments','suppliers','shipments.supplierid=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','shipments','suppliers.supplierid=shipments.supplierid');
+INSERT INTO `reportlinks` VALUES ('stockcheckfreeze','stockmaster','stockcheckfreeze.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockcheckfreeze','stockmaster.stockid=stockcheckfreeze.stockid');
+INSERT INTO `reportlinks` VALUES ('stockcheckfreeze','locations','stockcheckfreeze.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockcheckfreeze','locations.loccode=stockcheckfreeze.loccode');
+INSERT INTO `reportlinks` VALUES ('stockcounts','stockmaster','stockcounts.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockcounts','stockmaster.stockid=stockcounts.stockid');
+INSERT INTO `reportlinks` VALUES ('stockcounts','locations','stockcounts.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockcounts','locations.loccode=stockcounts.loccode');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockcategory','stockmaster.categoryid=stockcategory.categoryid');
+INSERT INTO `reportlinks` VALUES ('stockcategory','stockmaster','stockcategory.categoryid=stockmaster.categoryid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','taxcategories','stockmaster.taxcatid=taxcategories.taxcatid');
+INSERT INTO `reportlinks` VALUES ('taxcategories','stockmaster','taxcategories.taxcatid=stockmaster.taxcatid');
+INSERT INTO `reportlinks` VALUES ('stockmoves','stockmaster','stockmoves.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockmoves','stockmaster.stockid=stockmoves.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmoves','systypes','stockmoves.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','stockmoves','systypes.typeid=stockmoves.type');
+INSERT INTO `reportlinks` VALUES ('stockmoves','locations','stockmoves.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockmoves','locations.loccode=stockmoves.loccode');
+INSERT INTO `reportlinks` VALUES ('stockmoves','periods','stockmoves.prd=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','stockmoves','periods.periodno=stockmoves.prd');
+INSERT INTO `reportlinks` VALUES ('stockmovestaxes','taxauthorities','stockmovestaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','stockmovestaxes','taxauthorities.taxid=stockmovestaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('stockserialitems','stockmaster','stockserialitems.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockserialitems','stockmaster.stockid=stockserialitems.stockid');
+INSERT INTO `reportlinks` VALUES ('stockserialitems','locations','stockserialitems.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockserialitems','locations.loccode=stockserialitems.loccode');
+INSERT INTO `reportlinks` VALUES ('stockserialmoves','stockmoves','stockserialmoves.stockmoveno=stockmoves.stkmoveno');
+INSERT INTO `reportlinks` VALUES ('stockmoves','stockserialmoves','stockmoves.stkmoveno=stockserialmoves.stockmoveno');
+INSERT INTO `reportlinks` VALUES ('stockserialmoves','stockserialitems','stockserialmoves.stockid=stockserialitems.stockid');
+INSERT INTO `reportlinks` VALUES ('stockserialitems','stockserialmoves','stockserialitems.stockid=stockserialmoves.stockid');
+INSERT INTO `reportlinks` VALUES ('suppallocs','supptrans','suppallocs.transid_allocfrom=supptrans.id');
+INSERT INTO `reportlinks` VALUES ('supptrans','suppallocs','supptrans.id=suppallocs.transid_allocfrom');
+INSERT INTO `reportlinks` VALUES ('suppallocs','supptrans','suppallocs.transid_allocto=supptrans.id');
+INSERT INTO `reportlinks` VALUES ('supptrans','suppallocs','supptrans.id=suppallocs.transid_allocto');
+INSERT INTO `reportlinks` VALUES ('suppliercontacts','suppliers','suppliercontacts.supplierid=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','suppliercontacts','suppliers.supplierid=suppliercontacts.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','currencies','suppliers.currcode=currencies.currabrev');
+INSERT INTO `reportlinks` VALUES ('currencies','suppliers','currencies.currabrev=suppliers.currcode');
+INSERT INTO `reportlinks` VALUES ('suppliers','paymentterms','suppliers.paymentterms=paymentterms.termsindicator');
+INSERT INTO `reportlinks` VALUES ('paymentterms','suppliers','paymentterms.termsindicator=suppliers.paymentterms');
+INSERT INTO `reportlinks` VALUES ('suppliers','taxgroups','suppliers.taxgroupid=taxgroups.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('taxgroups','suppliers','taxgroups.taxgroupid=suppliers.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('supptrans','systypes','supptrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','supptrans','systypes.typeid=supptrans.type');
+INSERT INTO `reportlinks` VALUES ('supptrans','suppliers','supptrans.supplierno=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','supptrans','suppliers.supplierid=supptrans.supplierno');
+INSERT INTO `reportlinks` VALUES ('supptranstaxes','taxauthorities','supptranstaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','supptranstaxes','taxauthorities.taxid=supptranstaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('supptranstaxes','supptrans','supptranstaxes.supptransid=supptrans.id');
+INSERT INTO `reportlinks` VALUES ('supptrans','supptranstaxes','supptrans.id=supptranstaxes.supptransid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','chartmaster','taxauthorities.taxglcode=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','taxauthorities','chartmaster.accountcode=taxauthorities.taxglcode');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','chartmaster','taxauthorities.purchtaxglaccount=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','taxauthorities','chartmaster.accountcode=taxauthorities.purchtaxglaccount');
+INSERT INTO `reportlinks` VALUES ('taxauthrates','taxauthorities','taxauthrates.taxauthority=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','taxauthrates','taxauthorities.taxid=taxauthrates.taxauthority');
+INSERT INTO `reportlinks` VALUES ('taxauthrates','taxcategories','taxauthrates.taxcatid=taxcategories.taxcatid');
+INSERT INTO `reportlinks` VALUES ('taxcategories','taxauthrates','taxcategories.taxcatid=taxauthrates.taxcatid');
+INSERT INTO `reportlinks` VALUES ('taxauthrates','taxprovinces','taxauthrates.dispatchtaxprovince=taxprovinces.taxprovinceid');
+INSERT INTO `reportlinks` VALUES ('taxprovinces','taxauthrates','taxprovinces.taxprovinceid=taxauthrates.dispatchtaxprovince');
+INSERT INTO `reportlinks` VALUES ('taxgrouptaxes','taxgroups','taxgrouptaxes.taxgroupid=taxgroups.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('taxgroups','taxgrouptaxes','taxgroups.taxgroupid=taxgrouptaxes.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('taxgrouptaxes','taxauthorities','taxgrouptaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','taxgrouptaxes','taxauthorities.taxid=taxgrouptaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('workcentres','locations','workcentres.location=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','workcentres','locations.loccode=workcentres.location');
+INSERT INTO `reportlinks` VALUES ('worksorders','locations','worksorders.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','worksorders','locations.loccode=worksorders.loccode');
+INSERT INTO `reportlinks` VALUES ('worksorders','stockmaster','worksorders.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','worksorders','stockmaster.stockid=worksorders.stockid');
+INSERT INTO `reportlinks` VALUES ('www_users','locations','www_users.defaultlocation=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','www_users','locations.loccode=www_users.defaultlocation');
+INSERT INTO `reportlinks` VALUES ('accountgroups','accountsection','accountgroups.sectioninaccounts=accountsection.sectionid');
+INSERT INTO `reportlinks` VALUES ('accountsection','accountgroups','accountsection.sectionid=accountgroups.sectioninaccounts');
+INSERT INTO `reportlinks` VALUES ('bankaccounts','chartmaster','bankaccounts.accountcode=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','bankaccounts','chartmaster.accountcode=bankaccounts.accountcode');
+INSERT INTO `reportlinks` VALUES ('banktrans','systypes','banktrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','banktrans','systypes.typeid=banktrans.type');
+INSERT INTO `reportlinks` VALUES ('banktrans','bankaccounts','banktrans.bankact=bankaccounts.accountcode');
+INSERT INTO `reportlinks` VALUES ('bankaccounts','banktrans','bankaccounts.accountcode=banktrans.bankact');
+INSERT INTO `reportlinks` VALUES ('bom','stockmaster','bom.parent=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','bom','stockmaster.stockid=bom.parent');
+INSERT INTO `reportlinks` VALUES ('bom','stockmaster','bom.component=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','bom','stockmaster.stockid=bom.component');
+INSERT INTO `reportlinks` VALUES ('bom','workcentres','bom.workcentreadded=workcentres.code');
+INSERT INTO `reportlinks` VALUES ('workcentres','bom','workcentres.code=bom.workcentreadded');
+INSERT INTO `reportlinks` VALUES ('bom','locations','bom.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','bom','locations.loccode=bom.loccode');
+INSERT INTO `reportlinks` VALUES ('buckets','workcentres','buckets.workcentre=workcentres.code');
+INSERT INTO `reportlinks` VALUES ('workcentres','buckets','workcentres.code=buckets.workcentre');
+INSERT INTO `reportlinks` VALUES ('chartdetails','chartmaster','chartdetails.accountcode=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','chartdetails','chartmaster.accountcode=chartdetails.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartdetails','periods','chartdetails.period=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','chartdetails','periods.periodno=chartdetails.period');
+INSERT INTO `reportlinks` VALUES ('chartmaster','accountgroups','chartmaster.group_=accountgroups.groupname');
+INSERT INTO `reportlinks` VALUES ('accountgroups','chartmaster','accountgroups.groupname=chartmaster.group_');
+INSERT INTO `reportlinks` VALUES ('contractbom','workcentres','contractbom.workcentreadded=workcentres.code');
+INSERT INTO `reportlinks` VALUES ('workcentres','contractbom','workcentres.code=contractbom.workcentreadded');
+INSERT INTO `reportlinks` VALUES ('contractbom','locations','contractbom.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','contractbom','locations.loccode=contractbom.loccode');
+INSERT INTO `reportlinks` VALUES ('contractbom','stockmaster','contractbom.component=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','contractbom','stockmaster.stockid=contractbom.component');
+INSERT INTO `reportlinks` VALUES ('contractreqts','contracts','contractreqts.contract=contracts.contractref');
+INSERT INTO `reportlinks` VALUES ('contracts','contractreqts','contracts.contractref=contractreqts.contract');
+INSERT INTO `reportlinks` VALUES ('contracts','custbranch','contracts.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','contracts','custbranch.debtorno=contracts.debtorno');
+INSERT INTO `reportlinks` VALUES ('contracts','stockcategory','contracts.branchcode=stockcategory.categoryid');
+INSERT INTO `reportlinks` VALUES ('stockcategory','contracts','stockcategory.categoryid=contracts.branchcode');
+INSERT INTO `reportlinks` VALUES ('contracts','salestypes','contracts.typeabbrev=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','contracts','salestypes.typeabbrev=contracts.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('custallocns','debtortrans','custallocns.transid_allocfrom=debtortrans.id');
+INSERT INTO `reportlinks` VALUES ('debtortrans','custallocns','debtortrans.id=custallocns.transid_allocfrom');
+INSERT INTO `reportlinks` VALUES ('custallocns','debtortrans','custallocns.transid_allocto=debtortrans.id');
+INSERT INTO `reportlinks` VALUES ('debtortrans','custallocns','debtortrans.id=custallocns.transid_allocto');
+INSERT INTO `reportlinks` VALUES ('custbranch','debtorsmaster','custbranch.debtorno=debtorsmaster.debtorno');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','custbranch','debtorsmaster.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','areas','custbranch.area=areas.areacode');
+INSERT INTO `reportlinks` VALUES ('areas','custbranch','areas.areacode=custbranch.area');
+INSERT INTO `reportlinks` VALUES ('custbranch','salesman','custbranch.salesman=salesman.salesmancode');
+INSERT INTO `reportlinks` VALUES ('salesman','custbranch','salesman.salesmancode=custbranch.salesman');
+INSERT INTO `reportlinks` VALUES ('custbranch','locations','custbranch.defaultlocation=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','custbranch','locations.loccode=custbranch.defaultlocation');
+INSERT INTO `reportlinks` VALUES ('custbranch','shippers','custbranch.defaultshipvia=shippers.shipper_id');
+INSERT INTO `reportlinks` VALUES ('shippers','custbranch','shippers.shipper_id=custbranch.defaultshipvia');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','holdreasons','debtorsmaster.holdreason=holdreasons.reasoncode');
+INSERT INTO `reportlinks` VALUES ('holdreasons','debtorsmaster','holdreasons.reasoncode=debtorsmaster.holdreason');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','currencies','debtorsmaster.currcode=currencies.currabrev');
+INSERT INTO `reportlinks` VALUES ('currencies','debtorsmaster','currencies.currabrev=debtorsmaster.currcode');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','paymentterms','debtorsmaster.paymentterms=paymentterms.termsindicator');
+INSERT INTO `reportlinks` VALUES ('paymentterms','debtorsmaster','paymentterms.termsindicator=debtorsmaster.paymentterms');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','salestypes','debtorsmaster.salestype=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','debtorsmaster','salestypes.typeabbrev=debtorsmaster.salestype');
+INSERT INTO `reportlinks` VALUES ('debtortrans','custbranch','debtortrans.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','debtortrans','custbranch.debtorno=debtortrans.debtorno');
+INSERT INTO `reportlinks` VALUES ('debtortrans','systypes','debtortrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','debtortrans','systypes.typeid=debtortrans.type');
+INSERT INTO `reportlinks` VALUES ('debtortrans','periods','debtortrans.prd=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','debtortrans','periods.periodno=debtortrans.prd');
+INSERT INTO `reportlinks` VALUES ('debtortranstaxes','taxauthorities','debtortranstaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','debtortranstaxes','taxauthorities.taxid=debtortranstaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('debtortranstaxes','debtortrans','debtortranstaxes.debtortransid=debtortrans.id');
+INSERT INTO `reportlinks` VALUES ('debtortrans','debtortranstaxes','debtortrans.id=debtortranstaxes.debtortransid');
+INSERT INTO `reportlinks` VALUES ('discountmatrix','salestypes','discountmatrix.salestype=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','discountmatrix','salestypes.typeabbrev=discountmatrix.salestype');
+INSERT INTO `reportlinks` VALUES ('freightcosts','locations','freightcosts.locationfrom=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','freightcosts','locations.loccode=freightcosts.locationfrom');
+INSERT INTO `reportlinks` VALUES ('freightcosts','shippers','freightcosts.shipperid=shippers.shipper_id');
+INSERT INTO `reportlinks` VALUES ('shippers','freightcosts','shippers.shipper_id=freightcosts.shipperid');
+INSERT INTO `reportlinks` VALUES ('gltrans','chartmaster','gltrans.account=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','gltrans','chartmaster.accountcode=gltrans.account');
+INSERT INTO `reportlinks` VALUES ('gltrans','systypes','gltrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','gltrans','systypes.typeid=gltrans.type');
+INSERT INTO `reportlinks` VALUES ('gltrans','periods','gltrans.periodno=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','gltrans','periods.periodno=gltrans.periodno');
+INSERT INTO `reportlinks` VALUES ('grns','suppliers','grns.supplierid=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','grns','suppliers.supplierid=grns.supplierid');
+INSERT INTO `reportlinks` VALUES ('grns','purchorderdetails','grns.podetailitem=purchorderdetails.podetailitem');
+INSERT INTO `reportlinks` VALUES ('purchorderdetails','grns','purchorderdetails.podetailitem=grns.podetailitem');
+INSERT INTO `reportlinks` VALUES ('locations','taxprovinces','locations.taxprovinceid=taxprovinces.taxprovinceid');
+INSERT INTO `reportlinks` VALUES ('taxprovinces','locations','taxprovinces.taxprovinceid=locations.taxprovinceid');
+INSERT INTO `reportlinks` VALUES ('locstock','locations','locstock.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','locstock','locations.loccode=locstock.loccode');
+INSERT INTO `reportlinks` VALUES ('locstock','stockmaster','locstock.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','locstock','stockmaster.stockid=locstock.stockid');
+INSERT INTO `reportlinks` VALUES ('loctransfers','locations','loctransfers.shiploc=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','loctransfers','locations.loccode=loctransfers.shiploc');
+INSERT INTO `reportlinks` VALUES ('loctransfers','locations','loctransfers.recloc=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','loctransfers','locations.loccode=loctransfers.recloc');
+INSERT INTO `reportlinks` VALUES ('loctransfers','stockmaster','loctransfers.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','loctransfers','stockmaster.stockid=loctransfers.stockid');
+INSERT INTO `reportlinks` VALUES ('orderdeliverydifferencesl','stockmaster','orderdeliverydifferenceslog.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','orderdeliverydifferencesl','stockmaster.stockid=orderdeliverydifferenceslog.stockid');
+INSERT INTO `reportlinks` VALUES ('orderdeliverydifferencesl','custbranch','orderdeliverydifferenceslog.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','orderdeliverydifferencesl','custbranch.debtorno=orderdeliverydifferenceslog.debtorno');
+INSERT INTO `reportlinks` VALUES ('orderdeliverydifferencesl','salesorders','orderdeliverydifferenceslog.branchcode=salesorders.orderno');
+INSERT INTO `reportlinks` VALUES ('salesorders','orderdeliverydifferencesl','salesorders.orderno=orderdeliverydifferenceslog.branchcode');
+INSERT INTO `reportlinks` VALUES ('prices','stockmaster','prices.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','prices','stockmaster.stockid=prices.stockid');
+INSERT INTO `reportlinks` VALUES ('prices','currencies','prices.currabrev=currencies.currabrev');
+INSERT INTO `reportlinks` VALUES ('currencies','prices','currencies.currabrev=prices.currabrev');
+INSERT INTO `reportlinks` VALUES ('prices','salestypes','prices.typeabbrev=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','prices','salestypes.typeabbrev=prices.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('purchdata','stockmaster','purchdata.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','purchdata','stockmaster.stockid=purchdata.stockid');
+INSERT INTO `reportlinks` VALUES ('purchdata','suppliers','purchdata.supplierno=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','purchdata','suppliers.supplierid=purchdata.supplierno');
+INSERT INTO `reportlinks` VALUES ('purchorderdetails','purchorders','purchorderdetails.orderno=purchorders.orderno');
+INSERT INTO `reportlinks` VALUES ('purchorders','purchorderdetails','purchorders.orderno=purchorderdetails.orderno');
+INSERT INTO `reportlinks` VALUES ('purchorders','suppliers','purchorders.supplierno=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','purchorders','suppliers.supplierid=purchorders.supplierno');
+INSERT INTO `reportlinks` VALUES ('purchorders','locations','purchorders.intostocklocation=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','purchorders','locations.loccode=purchorders.intostocklocation');
+INSERT INTO `reportlinks` VALUES ('recurringsalesorders','custbranch','recurringsalesorders.branchcode=custbranch.branchcode');
+INSERT INTO `reportlinks` VALUES ('custbranch','recurringsalesorders','custbranch.branchcode=recurringsalesorders.branchcode');
+INSERT INTO `reportlinks` VALUES ('recurrsalesorderdetails','recurringsalesorders','recurrsalesorderdetails.recurrorderno=recurringsalesorders.recurrorderno');
+INSERT INTO `reportlinks` VALUES ('recurringsalesorders','recurrsalesorderdetails','recurringsalesorders.recurrorderno=recurrsalesorderdetails.recurrorderno');
+INSERT INTO `reportlinks` VALUES ('recurrsalesorderdetails','stockmaster','recurrsalesorderdetails.stkcode=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','recurrsalesorderdetails','stockmaster.stockid=recurrsalesorderdetails.stkcode');
+INSERT INTO `reportlinks` VALUES ('reportcolumns','reportheaders','reportcolumns.reportid=reportheaders.reportid');
+INSERT INTO `reportlinks` VALUES ('reportheaders','reportcolumns','reportheaders.reportid=reportcolumns.reportid');
+INSERT INTO `reportlinks` VALUES ('salesanalysis','periods','salesanalysis.periodno=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','salesanalysis','periods.periodno=salesanalysis.periodno');
+INSERT INTO `reportlinks` VALUES ('salescatprod','stockmaster','salescatprod.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','salescatprod','stockmaster.stockid=salescatprod.stockid');
+INSERT INTO `reportlinks` VALUES ('salescatprod','salescat','salescatprod.salescatid=salescat.salescatid');
+INSERT INTO `reportlinks` VALUES ('salescat','salescatprod','salescat.salescatid=salescatprod.salescatid');
+INSERT INTO `reportlinks` VALUES ('salesorderdetails','salesorders','salesorderdetails.orderno=salesorders.orderno');
+INSERT INTO `reportlinks` VALUES ('salesorders','salesorderdetails','salesorders.orderno=salesorderdetails.orderno');
+INSERT INTO `reportlinks` VALUES ('salesorderdetails','stockmaster','salesorderdetails.stkcode=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','salesorderdetails','stockmaster.stockid=salesorderdetails.stkcode');
+INSERT INTO `reportlinks` VALUES ('salesorders','custbranch','salesorders.branchcode=custbranch.branchcode');
+INSERT INTO `reportlinks` VALUES ('custbranch','salesorders','custbranch.branchcode=salesorders.branchcode');
+INSERT INTO `reportlinks` VALUES ('salesorders','shippers','salesorders.debtorno=shippers.shipper_id');
+INSERT INTO `reportlinks` VALUES ('shippers','salesorders','shippers.shipper_id=salesorders.debtorno');
+INSERT INTO `reportlinks` VALUES ('salesorders','locations','salesorders.fromstkloc=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','salesorders','locations.loccode=salesorders.fromstkloc');
+INSERT INTO `reportlinks` VALUES ('securitygroups','securityroles','securitygroups.secroleid=securityroles.secroleid');
+INSERT INTO `reportlinks` VALUES ('securityroles','securitygroups','securityroles.secroleid=securitygroups.secroleid');
+INSERT INTO `reportlinks` VALUES ('securitygroups','securitytokens','securitygroups.tokenid=securitytokens.tokenid');
+INSERT INTO `reportlinks` VALUES ('securitytokens','securitygroups','securitytokens.tokenid=securitygroups.tokenid');
+INSERT INTO `reportlinks` VALUES ('shipmentcharges','shipments','shipmentcharges.shiptref=shipments.shiptref');
+INSERT INTO `reportlinks` VALUES ('shipments','shipmentcharges','shipments.shiptref=shipmentcharges.shiptref');
+INSERT INTO `reportlinks` VALUES ('shipmentcharges','systypes','shipmentcharges.transtype=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','shipmentcharges','systypes.typeid=shipmentcharges.transtype');
+INSERT INTO `reportlinks` VALUES ('shipments','suppliers','shipments.supplierid=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','shipments','suppliers.supplierid=shipments.supplierid');
+INSERT INTO `reportlinks` VALUES ('stockcheckfreeze','stockmaster','stockcheckfreeze.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockcheckfreeze','stockmaster.stockid=stockcheckfreeze.stockid');
+INSERT INTO `reportlinks` VALUES ('stockcheckfreeze','locations','stockcheckfreeze.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockcheckfreeze','locations.loccode=stockcheckfreeze.loccode');
+INSERT INTO `reportlinks` VALUES ('stockcounts','stockmaster','stockcounts.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockcounts','stockmaster.stockid=stockcounts.stockid');
+INSERT INTO `reportlinks` VALUES ('stockcounts','locations','stockcounts.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockcounts','locations.loccode=stockcounts.loccode');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockcategory','stockmaster.categoryid=stockcategory.categoryid');
+INSERT INTO `reportlinks` VALUES ('stockcategory','stockmaster','stockcategory.categoryid=stockmaster.categoryid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','taxcategories','stockmaster.taxcatid=taxcategories.taxcatid');
+INSERT INTO `reportlinks` VALUES ('taxcategories','stockmaster','taxcategories.taxcatid=stockmaster.taxcatid');
+INSERT INTO `reportlinks` VALUES ('stockmoves','stockmaster','stockmoves.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockmoves','stockmaster.stockid=stockmoves.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmoves','systypes','stockmoves.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','stockmoves','systypes.typeid=stockmoves.type');
+INSERT INTO `reportlinks` VALUES ('stockmoves','locations','stockmoves.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockmoves','locations.loccode=stockmoves.loccode');
+INSERT INTO `reportlinks` VALUES ('stockmoves','periods','stockmoves.prd=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','stockmoves','periods.periodno=stockmoves.prd');
+INSERT INTO `reportlinks` VALUES ('stockmovestaxes','taxauthorities','stockmovestaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','stockmovestaxes','taxauthorities.taxid=stockmovestaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('stockserialitems','stockmaster','stockserialitems.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockserialitems','stockmaster.stockid=stockserialitems.stockid');
+INSERT INTO `reportlinks` VALUES ('stockserialitems','locations','stockserialitems.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockserialitems','locations.loccode=stockserialitems.loccode');
+INSERT INTO `reportlinks` VALUES ('stockserialmoves','stockmoves','stockserialmoves.stockmoveno=stockmoves.stkmoveno');
+INSERT INTO `reportlinks` VALUES ('stockmoves','stockserialmoves','stockmoves.stkmoveno=stockserialmoves.stockmoveno');
+INSERT INTO `reportlinks` VALUES ('stockserialmoves','stockserialitems','stockserialmoves.stockid=stockserialitems.stockid');
+INSERT INTO `reportlinks` VALUES ('stockserialitems','stockserialmoves','stockserialitems.stockid=stockserialmoves.stockid');
+INSERT INTO `reportlinks` VALUES ('suppallocs','supptrans','suppallocs.transid_allocfrom=supptrans.id');
+INSERT INTO `reportlinks` VALUES ('supptrans','suppallocs','supptrans.id=suppallocs.transid_allocfrom');
+INSERT INTO `reportlinks` VALUES ('suppallocs','supptrans','suppallocs.transid_allocto=supptrans.id');
+INSERT INTO `reportlinks` VALUES ('supptrans','suppallocs','supptrans.id=suppallocs.transid_allocto');
+INSERT INTO `reportlinks` VALUES ('suppliercontacts','suppliers','suppliercontacts.supplierid=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','suppliercontacts','suppliers.supplierid=suppliercontacts.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','currencies','suppliers.currcode=currencies.currabrev');
+INSERT INTO `reportlinks` VALUES ('currencies','suppliers','currencies.currabrev=suppliers.currcode');
+INSERT INTO `reportlinks` VALUES ('suppliers','paymentterms','suppliers.paymentterms=paymentterms.termsindicator');
+INSERT INTO `reportlinks` VALUES ('paymentterms','suppliers','paymentterms.termsindicator=suppliers.paymentterms');
+INSERT INTO `reportlinks` VALUES ('suppliers','taxgroups','suppliers.taxgroupid=taxgroups.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('taxgroups','suppliers','taxgroups.taxgroupid=suppliers.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('supptrans','systypes','supptrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','supptrans','systypes.typeid=supptrans.type');
+INSERT INTO `reportlinks` VALUES ('supptrans','suppliers','supptrans.supplierno=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','supptrans','suppliers.supplierid=supptrans.supplierno');
+INSERT INTO `reportlinks` VALUES ('supptranstaxes','taxauthorities','supptranstaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','supptranstaxes','taxauthorities.taxid=supptranstaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('supptranstaxes','supptrans','supptranstaxes.supptransid=supptrans.id');
+INSERT INTO `reportlinks` VALUES ('supptrans','supptranstaxes','supptrans.id=supptranstaxes.supptransid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','chartmaster','taxauthorities.taxglcode=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','taxauthorities','chartmaster.accountcode=taxauthorities.taxglcode');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','chartmaster','taxauthorities.purchtaxglaccount=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','taxauthorities','chartmaster.accountcode=taxauthorities.purchtaxglaccount');
+INSERT INTO `reportlinks` VALUES ('taxauthrates','taxauthorities','taxauthrates.taxauthority=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','taxauthrates','taxauthorities.taxid=taxauthrates.taxauthority');
+INSERT INTO `reportlinks` VALUES ('taxauthrates','taxcategories','taxauthrates.taxcatid=taxcategories.taxcatid');
+INSERT INTO `reportlinks` VALUES ('taxcategories','taxauthrates','taxcategories.taxcatid=taxauthrates.taxcatid');
+INSERT INTO `reportlinks` VALUES ('taxauthrates','taxprovinces','taxauthrates.dispatchtaxprovince=taxprovinces.taxprovinceid');
+INSERT INTO `reportlinks` VALUES ('taxprovinces','taxauthrates','taxprovinces.taxprovinceid=taxauthrates.dispatchtaxprovince');
+INSERT INTO `reportlinks` VALUES ('taxgrouptaxes','taxgroups','taxgrouptaxes.taxgroupid=taxgroups.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('taxgroups','taxgrouptaxes','taxgroups.taxgroupid=taxgrouptaxes.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('taxgrouptaxes','taxauthorities','taxgrouptaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','taxgrouptaxes','taxauthorities.taxid=taxgrouptaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('workcentres','locations','workcentres.location=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','workcentres','locations.loccode=workcentres.location');
+INSERT INTO `reportlinks` VALUES ('worksorders','locations','worksorders.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','worksorders','locations.loccode=worksorders.loccode');
+INSERT INTO `reportlinks` VALUES ('worksorders','stockmaster','worksorders.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','worksorders','stockmaster.stockid=worksorders.stockid');
+INSERT INTO `reportlinks` VALUES ('www_users','locations','www_users.defaultlocation=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','www_users','locations.loccode=www_users.defaultlocation');
+INSERT INTO `reportlinks` VALUES ('accountgroups','accountsection','accountgroups.sectioninaccounts=accountsection.sectionid');
+INSERT INTO `reportlinks` VALUES ('accountsection','accountgroups','accountsection.sectionid=accountgroups.sectioninaccounts');
+INSERT INTO `reportlinks` VALUES ('bankaccounts','chartmaster','bankaccounts.accountcode=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','bankaccounts','chartmaster.accountcode=bankaccounts.accountcode');
+INSERT INTO `reportlinks` VALUES ('banktrans','systypes','banktrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','banktrans','systypes.typeid=banktrans.type');
+INSERT INTO `reportlinks` VALUES ('banktrans','bankaccounts','banktrans.bankact=bankaccounts.accountcode');
+INSERT INTO `reportlinks` VALUES ('bankaccounts','banktrans','bankaccounts.accountcode=banktrans.bankact');
+INSERT INTO `reportlinks` VALUES ('bom','stockmaster','bom.parent=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','bom','stockmaster.stockid=bom.parent');
+INSERT INTO `reportlinks` VALUES ('bom','stockmaster','bom.component=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','bom','stockmaster.stockid=bom.component');
+INSERT INTO `reportlinks` VALUES ('bom','workcentres','bom.workcentreadded=workcentres.code');
+INSERT INTO `reportlinks` VALUES ('workcentres','bom','workcentres.code=bom.workcentreadded');
+INSERT INTO `reportlinks` VALUES ('bom','locations','bom.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','bom','locations.loccode=bom.loccode');
+INSERT INTO `reportlinks` VALUES ('buckets','workcentres','buckets.workcentre=workcentres.code');
+INSERT INTO `reportlinks` VALUES ('workcentres','buckets','workcentres.code=buckets.workcentre');
+INSERT INTO `reportlinks` VALUES ('chartdetails','chartmaster','chartdetails.accountcode=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','chartdetails','chartmaster.accountcode=chartdetails.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartdetails','periods','chartdetails.period=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','chartdetails','periods.periodno=chartdetails.period');
+INSERT INTO `reportlinks` VALUES ('chartmaster','accountgroups','chartmaster.group_=accountgroups.groupname');
+INSERT INTO `reportlinks` VALUES ('accountgroups','chartmaster','accountgroups.groupname=chartmaster.group_');
+INSERT INTO `reportlinks` VALUES ('contractbom','workcentres','contractbom.workcentreadded=workcentres.code');
+INSERT INTO `reportlinks` VALUES ('workcentres','contractbom','workcentres.code=contractbom.workcentreadded');
+INSERT INTO `reportlinks` VALUES ('contractbom','locations','contractbom.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','contractbom','locations.loccode=contractbom.loccode');
+INSERT INTO `reportlinks` VALUES ('contractbom','stockmaster','contractbom.component=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','contractbom','stockmaster.stockid=contractbom.component');
+INSERT INTO `reportlinks` VALUES ('contractreqts','contracts','contractreqts.contract=contracts.contractref');
+INSERT INTO `reportlinks` VALUES ('contracts','contractreqts','contracts.contractref=contractreqts.contract');
+INSERT INTO `reportlinks` VALUES ('contracts','custbranch','contracts.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','contracts','custbranch.debtorno=contracts.debtorno');
+INSERT INTO `reportlinks` VALUES ('contracts','stockcategory','contracts.branchcode=stockcategory.categoryid');
+INSERT INTO `reportlinks` VALUES ('stockcategory','contracts','stockcategory.categoryid=contracts.branchcode');
+INSERT INTO `reportlinks` VALUES ('contracts','salestypes','contracts.typeabbrev=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','contracts','salestypes.typeabbrev=contracts.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('custallocns','debtortrans','custallocns.transid_allocfrom=debtortrans.id');
+INSERT INTO `reportlinks` VALUES ('debtortrans','custallocns','debtortrans.id=custallocns.transid_allocfrom');
+INSERT INTO `reportlinks` VALUES ('custallocns','debtortrans','custallocns.transid_allocto=debtortrans.id');
+INSERT INTO `reportlinks` VALUES ('debtortrans','custallocns','debtortrans.id=custallocns.transid_allocto');
+INSERT INTO `reportlinks` VALUES ('custbranch','debtorsmaster','custbranch.debtorno=debtorsmaster.debtorno');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','custbranch','debtorsmaster.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','areas','custbranch.area=areas.areacode');
+INSERT INTO `reportlinks` VALUES ('areas','custbranch','areas.areacode=custbranch.area');
+INSERT INTO `reportlinks` VALUES ('custbranch','salesman','custbranch.salesman=salesman.salesmancode');
+INSERT INTO `reportlinks` VALUES ('salesman','custbranch','salesman.salesmancode=custbranch.salesman');
+INSERT INTO `reportlinks` VALUES ('custbranch','locations','custbranch.defaultlocation=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','custbranch','locations.loccode=custbranch.defaultlocation');
+INSERT INTO `reportlinks` VALUES ('custbranch','shippers','custbranch.defaultshipvia=shippers.shipper_id');
+INSERT INTO `reportlinks` VALUES ('shippers','custbranch','shippers.shipper_id=custbranch.defaultshipvia');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','holdreasons','debtorsmaster.holdreason=holdreasons.reasoncode');
+INSERT INTO `reportlinks` VALUES ('holdreasons','debtorsmaster','holdreasons.reasoncode=debtorsmaster.holdreason');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','currencies','debtorsmaster.currcode=currencies.currabrev');
+INSERT INTO `reportlinks` VALUES ('currencies','debtorsmaster','currencies.currabrev=debtorsmaster.currcode');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','paymentterms','debtorsmaster.paymentterms=paymentterms.termsindicator');
+INSERT INTO `reportlinks` VALUES ('paymentterms','debtorsmaster','paymentterms.termsindicator=debtorsmaster.paymentterms');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','salestypes','debtorsmaster.salestype=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','debtorsmaster','salestypes.typeabbrev=debtorsmaster.salestype');
+INSERT INTO `reportlinks` VALUES ('debtortrans','custbranch','debtortrans.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','debtortrans','custbranch.debtorno=debtortrans.debtorno');
+INSERT INTO `reportlinks` VALUES ('debtortrans','systypes','debtortrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','debtortrans','systypes.typeid=debtortrans.type');
+INSERT INTO `reportlinks` VALUES ('debtortrans','periods','debtortrans.prd=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','debtortrans','periods.periodno=debtortrans.prd');
+INSERT INTO `reportlinks` VALUES ('debtortranstaxes','taxauthorities','debtortranstaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','debtortranstaxes','taxauthorities.taxid=debtortranstaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('debtortranstaxes','debtortrans','debtortranstaxes.debtortransid=debtortrans.id');
+INSERT INTO `reportlinks` VALUES ('debtortrans','debtortranstaxes','debtortrans.id=debtortranstaxes.debtortransid');
+INSERT INTO `reportlinks` VALUES ('discountmatrix','salestypes','discountmatrix.salestype=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','discountmatrix','salestypes.typeabbrev=discountmatrix.salestype');
+INSERT INTO `reportlinks` VALUES ('freightcosts','locations','freightcosts.locationfrom=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','freightcosts','locations.loccode=freightcosts.locationfrom');
+INSERT INTO `reportlinks` VALUES ('freightcosts','shippers','freightcosts.shipperid=shippers.shipper_id');
+INSERT INTO `reportlinks` VALUES ('shippers','freightcosts','shippers.shipper_id=freightcosts.shipperid');
+INSERT INTO `reportlinks` VALUES ('gltrans','chartmaster','gltrans.account=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','gltrans','chartmaster.accountcode=gltrans.account');
+INSERT INTO `reportlinks` VALUES ('gltrans','systypes','gltrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','gltrans','systypes.typeid=gltrans.type');
+INSERT INTO `reportlinks` VALUES ('gltrans','periods','gltrans.periodno=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','gltrans','periods.periodno=gltrans.periodno');
+INSERT INTO `reportlinks` VALUES ('grns','suppliers','grns.supplierid=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','grns','suppliers.supplierid=grns.supplierid');
+INSERT INTO `reportlinks` VALUES ('grns','purchorderdetails','grns.podetailitem=purchorderdetails.podetailitem');
+INSERT INTO `reportlinks` VALUES ('purchorderdetails','grns','purchorderdetails.podetailitem=grns.podetailitem');
+INSERT INTO `reportlinks` VALUES ('locations','taxprovinces','locations.taxprovinceid=taxprovinces.taxprovinceid');
+INSERT INTO `reportlinks` VALUES ('taxprovinces','locations','taxprovinces.taxprovinceid=locations.taxprovinceid');
+INSERT INTO `reportlinks` VALUES ('locstock','locations','locstock.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','locstock','locations.loccode=locstock.loccode');
+INSERT INTO `reportlinks` VALUES ('locstock','stockmaster','locstock.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','locstock','stockmaster.stockid=locstock.stockid');
+INSERT INTO `reportlinks` VALUES ('loctransfers','locations','loctransfers.shiploc=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','loctransfers','locations.loccode=loctransfers.shiploc');
+INSERT INTO `reportlinks` VALUES ('loctransfers','locations','loctransfers.recloc=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','loctransfers','locations.loccode=loctransfers.recloc');
+INSERT INTO `reportlinks` VALUES ('loctransfers','stockmaster','loctransfers.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','loctransfers','stockmaster.stockid=loctransfers.stockid');
+INSERT INTO `reportlinks` VALUES ('orderdeliverydifferencesl','stockmaster','orderdeliverydifferenceslog.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','orderdeliverydifferencesl','stockmaster.stockid=orderdeliverydifferenceslog.stockid');
+INSERT INTO `reportlinks` VALUES ('orderdeliverydifferencesl','custbranch','orderdeliverydifferenceslog.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','orderdeliverydifferencesl','custbranch.debtorno=orderdeliverydifferenceslog.debtorno');
+INSERT INTO `reportlinks` VALUES ('orderdeliverydifferencesl','salesorders','orderdeliverydifferenceslog.branchcode=salesorders.orderno');
+INSERT INTO `reportlinks` VALUES ('salesorders','orderdeliverydifferencesl','salesorders.orderno=orderdeliverydifferenceslog.branchcode');
+INSERT INTO `reportlinks` VALUES ('prices','stockmaster','prices.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','prices','stockmaster.stockid=prices.stockid');
+INSERT INTO `reportlinks` VALUES ('prices','currencies','prices.currabrev=currencies.currabrev');
+INSERT INTO `reportlinks` VALUES ('currencies','prices','currencies.currabrev=prices.currabrev');
+INSERT INTO `reportlinks` VALUES ('prices','salestypes','prices.typeabbrev=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','prices','salestypes.typeabbrev=prices.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('purchdata','stockmaster','purchdata.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','purchdata','stockmaster.stockid=purchdata.stockid');
+INSERT INTO `reportlinks` VALUES ('purchdata','suppliers','purchdata.supplierno=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','purchdata','suppliers.supplierid=purchdata.supplierno');
+INSERT INTO `reportlinks` VALUES ('purchorderdetails','purchorders','purchorderdetails.orderno=purchorders.orderno');
+INSERT INTO `reportlinks` VALUES ('purchorders','purchorderdetails','purchorders.orderno=purchorderdetails.orderno');
+INSERT INTO `reportlinks` VALUES ('purchorders','suppliers','purchorders.supplierno=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','purchorders','suppliers.supplierid=purchorders.supplierno');
+INSERT INTO `reportlinks` VALUES ('purchorders','locations','purchorders.intostocklocation=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','purchorders','locations.loccode=purchorders.intostocklocation');
+INSERT INTO `reportlinks` VALUES ('recurringsalesorders','custbranch','recurringsalesorders.branchcode=custbranch.branchcode');
+INSERT INTO `reportlinks` VALUES ('custbranch','recurringsalesorders','custbranch.branchcode=recurringsalesorders.branchcode');
+INSERT INTO `reportlinks` VALUES ('recurrsalesorderdetails','recurringsalesorders','recurrsalesorderdetails.recurrorderno=recurringsalesorders.recurrorderno');
+INSERT INTO `reportlinks` VALUES ('recurringsalesorders','recurrsalesorderdetails','recurringsalesorders.recurrorderno=recurrsalesorderdetails.recurrorderno');
+INSERT INTO `reportlinks` VALUES ('recurrsalesorderdetails','stockmaster','recurrsalesorderdetails.stkcode=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','recurrsalesorderdetails','stockmaster.stockid=recurrsalesorderdetails.stkcode');
+INSERT INTO `reportlinks` VALUES ('reportcolumns','reportheaders','reportcolumns.reportid=reportheaders.reportid');
+INSERT INTO `reportlinks` VALUES ('reportheaders','reportcolumns','reportheaders.reportid=reportcolumns.reportid');
+INSERT INTO `reportlinks` VALUES ('salesanalysis','periods','salesanalysis.periodno=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','salesanalysis','periods.periodno=salesanalysis.periodno');
+INSERT INTO `reportlinks` VALUES ('salescatprod','stockmaster','salescatprod.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','salescatprod','stockmaster.stockid=salescatprod.stockid');
+INSERT INTO `reportlinks` VALUES ('salescatprod','salescat','salescatprod.salescatid=salescat.salescatid');
+INSERT INTO `reportlinks` VALUES ('salescat','salescatprod','salescat.salescatid=salescatprod.salescatid');
+INSERT INTO `reportlinks` VALUES ('salesorderdetails','salesorders','salesorderdetails.orderno=salesorders.orderno');
+INSERT INTO `reportlinks` VALUES ('salesorders','salesorderdetails','salesorders.orderno=salesorderdetails.orderno');
+INSERT INTO `reportlinks` VALUES ('salesorderdetails','stockmaster','salesorderdetails.stkcode=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','salesorderdetails','stockmaster.stockid=salesorderdetails.stkcode');
+INSERT INTO `reportlinks` VALUES ('salesorders','custbranch','salesorders.branchcode=custbranch.branchcode');
+INSERT INTO `reportlinks` VALUES ('custbranch','salesorders','custbranch.branchcode=salesorders.branchcode');
+INSERT INTO `reportlinks` VALUES ('salesorders','shippers','salesorders.debtorno=shippers.shipper_id');
+INSERT INTO `reportlinks` VALUES ('shippers','salesorders','shippers.shipper_id=salesorders.debtorno');
+INSERT INTO `reportlinks` VALUES ('salesorders','locations','salesorders.fromstkloc=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','salesorders','locations.loccode=salesorders.fromstkloc');
+INSERT INTO `reportlinks` VALUES ('securitygroups','securityroles','securitygroups.secroleid=securityroles.secroleid');
+INSERT INTO `reportlinks` VALUES ('securityroles','securitygroups','securityroles.secroleid=securitygroups.secroleid');
+INSERT INTO `reportlinks` VALUES ('securitygroups','securitytokens','securitygroups.tokenid=securitytokens.tokenid');
+INSERT INTO `reportlinks` VALUES ('securitytokens','securitygroups','securitytokens.tokenid=securitygroups.tokenid');
+INSERT INTO `reportlinks` VALUES ('shipmentcharges','shipments','shipmentcharges.shiptref=shipments.shiptref');
+INSERT INTO `reportlinks` VALUES ('shipments','shipmentcharges','shipments.shiptref=shipmentcharges.shiptref');
+INSERT INTO `reportlinks` VALUES ('shipmentcharges','systypes','shipmentcharges.transtype=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','shipmentcharges','systypes.typeid=shipmentcharges.transtype');
+INSERT INTO `reportlinks` VALUES ('shipments','suppliers','shipments.supplierid=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','shipments','suppliers.supplierid=shipments.supplierid');
+INSERT INTO `reportlinks` VALUES ('stockcheckfreeze','stockmaster','stockcheckfreeze.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockcheckfreeze','stockmaster.stockid=stockcheckfreeze.stockid');
+INSERT INTO `reportlinks` VALUES ('stockcheckfreeze','locations','stockcheckfreeze.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockcheckfreeze','locations.loccode=stockcheckfreeze.loccode');
+INSERT INTO `reportlinks` VALUES ('stockcounts','stockmaster','stockcounts.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockcounts','stockmaster.stockid=stockcounts.stockid');
+INSERT INTO `reportlinks` VALUES ('stockcounts','locations','stockcounts.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockcounts','locations.loccode=stockcounts.loccode');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockcategory','stockmaster.categoryid=stockcategory.categoryid');
+INSERT INTO `reportlinks` VALUES ('stockcategory','stockmaster','stockcategory.categoryid=stockmaster.categoryid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','taxcategories','stockmaster.taxcatid=taxcategories.taxcatid');
+INSERT INTO `reportlinks` VALUES ('taxcategories','stockmaster','taxcategories.taxcatid=stockmaster.taxcatid');
+INSERT INTO `reportlinks` VALUES ('stockmoves','stockmaster','stockmoves.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockmoves','stockmaster.stockid=stockmoves.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmoves','systypes','stockmoves.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','stockmoves','systypes.typeid=stockmoves.type');
+INSERT INTO `reportlinks` VALUES ('stockmoves','locations','stockmoves.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockmoves','locations.loccode=stockmoves.loccode');
+INSERT INTO `reportlinks` VALUES ('stockmoves','periods','stockmoves.prd=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','stockmoves','periods.periodno=stockmoves.prd');
+INSERT INTO `reportlinks` VALUES ('stockmovestaxes','taxauthorities','stockmovestaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','stockmovestaxes','taxauthorities.taxid=stockmovestaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('stockserialitems','stockmaster','stockserialitems.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockserialitems','stockmaster.stockid=stockserialitems.stockid');
+INSERT INTO `reportlinks` VALUES ('stockserialitems','locations','stockserialitems.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockserialitems','locations.loccode=stockserialitems.loccode');
+INSERT INTO `reportlinks` VALUES ('stockserialmoves','stockmoves','stockserialmoves.stockmoveno=stockmoves.stkmoveno');
+INSERT INTO `reportlinks` VALUES ('stockmoves','stockserialmoves','stockmoves.stkmoveno=stockserialmoves.stockmoveno');
+INSERT INTO `reportlinks` VALUES ('stockserialmoves','stockserialitems','stockserialmoves.stockid=stockserialitems.stockid');
+INSERT INTO `reportlinks` VALUES ('stockserialitems','stockserialmoves','stockserialitems.stockid=stockserialmoves.stockid');
+INSERT INTO `reportlinks` VALUES ('suppallocs','supptrans','suppallocs.transid_allocfrom=supptrans.id');
+INSERT INTO `reportlinks` VALUES ('supptrans','suppallocs','supptrans.id=suppallocs.transid_allocfrom');
+INSERT INTO `reportlinks` VALUES ('suppallocs','supptrans','suppallocs.transid_allocto=supptrans.id');
+INSERT INTO `reportlinks` VALUES ('supptrans','suppallocs','supptrans.id=suppallocs.transid_allocto');
+INSERT INTO `reportlinks` VALUES ('suppliercontacts','suppliers','suppliercontacts.supplierid=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','suppliercontacts','suppliers.supplierid=suppliercontacts.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','currencies','suppliers.currcode=currencies.currabrev');
+INSERT INTO `reportlinks` VALUES ('currencies','suppliers','currencies.currabrev=suppliers.currcode');
+INSERT INTO `reportlinks` VALUES ('suppliers','paymentterms','suppliers.paymentterms=paymentterms.termsindicator');
+INSERT INTO `reportlinks` VALUES ('paymentterms','suppliers','paymentterms.termsindicator=suppliers.paymentterms');
+INSERT INTO `reportlinks` VALUES ('suppliers','taxgroups','suppliers.taxgroupid=taxgroups.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('taxgroups','suppliers','taxgroups.taxgroupid=suppliers.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('supptrans','systypes','supptrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','supptrans','systypes.typeid=supptrans.type');
+INSERT INTO `reportlinks` VALUES ('supptrans','suppliers','supptrans.supplierno=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','supptrans','suppliers.supplierid=supptrans.supplierno');
+INSERT INTO `reportlinks` VALUES ('supptranstaxes','taxauthorities','supptranstaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','supptranstaxes','taxauthorities.taxid=supptranstaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('supptranstaxes','supptrans','supptranstaxes.supptransid=supptrans.id');
+INSERT INTO `reportlinks` VALUES ('supptrans','supptranstaxes','supptrans.id=supptranstaxes.supptransid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','chartmaster','taxauthorities.taxglcode=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','taxauthorities','chartmaster.accountcode=taxauthorities.taxglcode');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','chartmaster','taxauthorities.purchtaxglaccount=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','taxauthorities','chartmaster.accountcode=taxauthorities.purchtaxglaccount');
+INSERT INTO `reportlinks` VALUES ('taxauthrates','taxauthorities','taxauthrates.taxauthority=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','taxauthrates','taxauthorities.taxid=taxauthrates.taxauthority');
+INSERT INTO `reportlinks` VALUES ('taxauthrates','taxcategories','taxauthrates.taxcatid=taxcategories.taxcatid');
+INSERT INTO `reportlinks` VALUES ('taxcategories','taxauthrates','taxcategories.taxcatid=taxauthrates.taxcatid');
+INSERT INTO `reportlinks` VALUES ('taxauthrates','taxprovinces','taxauthrates.dispatchtaxprovince=taxprovinces.taxprovinceid');
+INSERT INTO `reportlinks` VALUES ('taxprovinces','taxauthrates','taxprovinces.taxprovinceid=taxauthrates.dispatchtaxprovince');
+INSERT INTO `reportlinks` VALUES ('taxgrouptaxes','taxgroups','taxgrouptaxes.taxgroupid=taxgroups.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('taxgroups','taxgrouptaxes','taxgroups.taxgroupid=taxgrouptaxes.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('taxgrouptaxes','taxauthorities','taxgrouptaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','taxgrouptaxes','taxauthorities.taxid=taxgrouptaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('workcentres','locations','workcentres.location=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','workcentres','locations.loccode=workcentres.location');
+INSERT INTO `reportlinks` VALUES ('worksorders','locations','worksorders.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','worksorders','locations.loccode=worksorders.loccode');
+INSERT INTO `reportlinks` VALUES ('worksorders','stockmaster','worksorders.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','worksorders','stockmaster.stockid=worksorders.stockid');
+INSERT INTO `reportlinks` VALUES ('www_users','locations','www_users.defaultlocation=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','www_users','locations.loccode=www_users.defaultlocation');
+INSERT INTO `reportlinks` VALUES ('accountgroups','accountsection','accountgroups.sectioninaccounts=accountsection.sectionid');
+INSERT INTO `reportlinks` VALUES ('accountsection','accountgroups','accountsection.sectionid=accountgroups.sectioninaccounts');
+INSERT INTO `reportlinks` VALUES ('bankaccounts','chartmaster','bankaccounts.accountcode=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','bankaccounts','chartmaster.accountcode=bankaccounts.accountcode');
+INSERT INTO `reportlinks` VALUES ('banktrans','systypes','banktrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','banktrans','systypes.typeid=banktrans.type');
+INSERT INTO `reportlinks` VALUES ('banktrans','bankaccounts','banktrans.bankact=bankaccounts.accountcode');
+INSERT INTO `reportlinks` VALUES ('bankaccounts','banktrans','bankaccounts.accountcode=banktrans.bankact');
+INSERT INTO `reportlinks` VALUES ('bom','stockmaster','bom.parent=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','bom','stockmaster.stockid=bom.parent');
+INSERT INTO `reportlinks` VALUES ('bom','stockmaster','bom.component=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','bom','stockmaster.stockid=bom.component');
+INSERT INTO `reportlinks` VALUES ('bom','workcentres','bom.workcentreadded=workcentres.code');
+INSERT INTO `reportlinks` VALUES ('workcentres','bom','workcentres.code=bom.workcentreadded');
+INSERT INTO `reportlinks` VALUES ('bom','locations','bom.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','bom','locations.loccode=bom.loccode');
+INSERT INTO `reportlinks` VALUES ('buckets','workcentres','buckets.workcentre=workcentres.code');
+INSERT INTO `reportlinks` VALUES ('workcentres','buckets','workcentres.code=buckets.workcentre');
+INSERT INTO `reportlinks` VALUES ('chartdetails','chartmaster','chartdetails.accountcode=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','chartdetails','chartmaster.accountcode=chartdetails.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartdetails','periods','chartdetails.period=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','chartdetails','periods.periodno=chartdetails.period');
+INSERT INTO `reportlinks` VALUES ('chartmaster','accountgroups','chartmaster.group_=accountgroups.groupname');
+INSERT INTO `reportlinks` VALUES ('accountgroups','chartmaster','accountgroups.groupname=chartmaster.group_');
+INSERT INTO `reportlinks` VALUES ('contractbom','workcentres','contractbom.workcentreadded=workcentres.code');
+INSERT INTO `reportlinks` VALUES ('workcentres','contractbom','workcentres.code=contractbom.workcentreadded');
+INSERT INTO `reportlinks` VALUES ('contractbom','locations','contractbom.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','contractbom','locations.loccode=contractbom.loccode');
+INSERT INTO `reportlinks` VALUES ('contractbom','stockmaster','contractbom.component=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','contractbom','stockmaster.stockid=contractbom.component');
+INSERT INTO `reportlinks` VALUES ('contractreqts','contracts','contractreqts.contract=contracts.contractref');
+INSERT INTO `reportlinks` VALUES ('contracts','contractreqts','contracts.contractref=contractreqts.contract');
+INSERT INTO `reportlinks` VALUES ('contracts','custbranch','contracts.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','contracts','custbranch.debtorno=contracts.debtorno');
+INSERT INTO `reportlinks` VALUES ('contracts','stockcategory','contracts.branchcode=stockcategory.categoryid');
+INSERT INTO `reportlinks` VALUES ('stockcategory','contracts','stockcategory.categoryid=contracts.branchcode');
+INSERT INTO `reportlinks` VALUES ('contracts','salestypes','contracts.typeabbrev=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','contracts','salestypes.typeabbrev=contracts.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('custallocns','debtortrans','custallocns.transid_allocfrom=debtortrans.id');
+INSERT INTO `reportlinks` VALUES ('debtortrans','custallocns','debtortrans.id=custallocns.transid_allocfrom');
+INSERT INTO `reportlinks` VALUES ('custallocns','debtortrans','custallocns.transid_allocto=debtortrans.id');
+INSERT INTO `reportlinks` VALUES ('debtortrans','custallocns','debtortrans.id=custallocns.transid_allocto');
+INSERT INTO `reportlinks` VALUES ('custbranch','debtorsmaster','custbranch.debtorno=debtorsmaster.debtorno');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','custbranch','debtorsmaster.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','areas','custbranch.area=areas.areacode');
+INSERT INTO `reportlinks` VALUES ('areas','custbranch','areas.areacode=custbranch.area');
+INSERT INTO `reportlinks` VALUES ('custbranch','salesman','custbranch.salesman=salesman.salesmancode');
+INSERT INTO `reportlinks` VALUES ('salesman','custbranch','salesman.salesmancode=custbranch.salesman');
+INSERT INTO `reportlinks` VALUES ('custbranch','locations','custbranch.defaultlocation=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','custbranch','locations.loccode=custbranch.defaultlocation');
+INSERT INTO `reportlinks` VALUES ('custbranch','shippers','custbranch.defaultshipvia=shippers.shipper_id');
+INSERT INTO `reportlinks` VALUES ('shippers','custbranch','shippers.shipper_id=custbranch.defaultshipvia');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','holdreasons','debtorsmaster.holdreason=holdreasons.reasoncode');
+INSERT INTO `reportlinks` VALUES ('holdreasons','debtorsmaster','holdreasons.reasoncode=debtorsmaster.holdreason');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','currencies','debtorsmaster.currcode=currencies.currabrev');
+INSERT INTO `reportlinks` VALUES ('currencies','debtorsmaster','currencies.currabrev=debtorsmaster.currcode');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','paymentterms','debtorsmaster.paymentterms=paymentterms.termsindicator');
+INSERT INTO `reportlinks` VALUES ('paymentterms','debtorsmaster','paymentterms.termsindicator=debtorsmaster.paymentterms');
+INSERT INTO `reportlinks` VALUES ('debtorsmaster','salestypes','debtorsmaster.salestype=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','debtorsmaster','salestypes.typeabbrev=debtorsmaster.salestype');
+INSERT INTO `reportlinks` VALUES ('debtortrans','custbranch','debtortrans.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','debtortrans','custbranch.debtorno=debtortrans.debtorno');
+INSERT INTO `reportlinks` VALUES ('debtortrans','systypes','debtortrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','debtortrans','systypes.typeid=debtortrans.type');
+INSERT INTO `reportlinks` VALUES ('debtortrans','periods','debtortrans.prd=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','debtortrans','periods.periodno=debtortrans.prd');
+INSERT INTO `reportlinks` VALUES ('debtortranstaxes','taxauthorities','debtortranstaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','debtortranstaxes','taxauthorities.taxid=debtortranstaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('debtortranstaxes','debtortrans','debtortranstaxes.debtortransid=debtortrans.id');
+INSERT INTO `reportlinks` VALUES ('debtortrans','debtortranstaxes','debtortrans.id=debtortranstaxes.debtortransid');
+INSERT INTO `reportlinks` VALUES ('discountmatrix','salestypes','discountmatrix.salestype=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','discountmatrix','salestypes.typeabbrev=discountmatrix.salestype');
+INSERT INTO `reportlinks` VALUES ('freightcosts','locations','freightcosts.locationfrom=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','freightcosts','locations.loccode=freightcosts.locationfrom');
+INSERT INTO `reportlinks` VALUES ('freightcosts','shippers','freightcosts.shipperid=shippers.shipper_id');
+INSERT INTO `reportlinks` VALUES ('shippers','freightcosts','shippers.shipper_id=freightcosts.shipperid');
+INSERT INTO `reportlinks` VALUES ('gltrans','chartmaster','gltrans.account=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','gltrans','chartmaster.accountcode=gltrans.account');
+INSERT INTO `reportlinks` VALUES ('gltrans','systypes','gltrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','gltrans','systypes.typeid=gltrans.type');
+INSERT INTO `reportlinks` VALUES ('gltrans','periods','gltrans.periodno=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','gltrans','periods.periodno=gltrans.periodno');
+INSERT INTO `reportlinks` VALUES ('grns','suppliers','grns.supplierid=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','grns','suppliers.supplierid=grns.supplierid');
+INSERT INTO `reportlinks` VALUES ('grns','purchorderdetails','grns.podetailitem=purchorderdetails.podetailitem');
+INSERT INTO `reportlinks` VALUES ('purchorderdetails','grns','purchorderdetails.podetailitem=grns.podetailitem');
+INSERT INTO `reportlinks` VALUES ('locations','taxprovinces','locations.taxprovinceid=taxprovinces.taxprovinceid');
+INSERT INTO `reportlinks` VALUES ('taxprovinces','locations','taxprovinces.taxprovinceid=locations.taxprovinceid');
+INSERT INTO `reportlinks` VALUES ('locstock','locations','locstock.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','locstock','locations.loccode=locstock.loccode');
+INSERT INTO `reportlinks` VALUES ('locstock','stockmaster','locstock.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','locstock','stockmaster.stockid=locstock.stockid');
+INSERT INTO `reportlinks` VALUES ('loctransfers','locations','loctransfers.shiploc=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','loctransfers','locations.loccode=loctransfers.shiploc');
+INSERT INTO `reportlinks` VALUES ('loctransfers','locations','loctransfers.recloc=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','loctransfers','locations.loccode=loctransfers.recloc');
+INSERT INTO `reportlinks` VALUES ('loctransfers','stockmaster','loctransfers.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','loctransfers','stockmaster.stockid=loctransfers.stockid');
+INSERT INTO `reportlinks` VALUES ('orderdeliverydifferencesl','stockmaster','orderdeliverydifferenceslog.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','orderdeliverydifferencesl','stockmaster.stockid=orderdeliverydifferenceslog.stockid');
+INSERT INTO `reportlinks` VALUES ('orderdeliverydifferencesl','custbranch','orderdeliverydifferenceslog.debtorno=custbranch.debtorno');
+INSERT INTO `reportlinks` VALUES ('custbranch','orderdeliverydifferencesl','custbranch.debtorno=orderdeliverydifferenceslog.debtorno');
+INSERT INTO `reportlinks` VALUES ('orderdeliverydifferencesl','salesorders','orderdeliverydifferenceslog.branchcode=salesorders.orderno');
+INSERT INTO `reportlinks` VALUES ('salesorders','orderdeliverydifferencesl','salesorders.orderno=orderdeliverydifferenceslog.branchcode');
+INSERT INTO `reportlinks` VALUES ('prices','stockmaster','prices.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','prices','stockmaster.stockid=prices.stockid');
+INSERT INTO `reportlinks` VALUES ('prices','currencies','prices.currabrev=currencies.currabrev');
+INSERT INTO `reportlinks` VALUES ('currencies','prices','currencies.currabrev=prices.currabrev');
+INSERT INTO `reportlinks` VALUES ('prices','salestypes','prices.typeabbrev=salestypes.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('salestypes','prices','salestypes.typeabbrev=prices.typeabbrev');
+INSERT INTO `reportlinks` VALUES ('purchdata','stockmaster','purchdata.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','purchdata','stockmaster.stockid=purchdata.stockid');
+INSERT INTO `reportlinks` VALUES ('purchdata','suppliers','purchdata.supplierno=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','purchdata','suppliers.supplierid=purchdata.supplierno');
+INSERT INTO `reportlinks` VALUES ('purchorderdetails','purchorders','purchorderdetails.orderno=purchorders.orderno');
+INSERT INTO `reportlinks` VALUES ('purchorders','purchorderdetails','purchorders.orderno=purchorderdetails.orderno');
+INSERT INTO `reportlinks` VALUES ('purchorders','suppliers','purchorders.supplierno=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','purchorders','suppliers.supplierid=purchorders.supplierno');
+INSERT INTO `reportlinks` VALUES ('purchorders','locations','purchorders.intostocklocation=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','purchorders','locations.loccode=purchorders.intostocklocation');
+INSERT INTO `reportlinks` VALUES ('recurringsalesorders','custbranch','recurringsalesorders.branchcode=custbranch.branchcode');
+INSERT INTO `reportlinks` VALUES ('custbranch','recurringsalesorders','custbranch.branchcode=recurringsalesorders.branchcode');
+INSERT INTO `reportlinks` VALUES ('recurrsalesorderdetails','recurringsalesorders','recurrsalesorderdetails.recurrorderno=recurringsalesorders.recurrorderno');
+INSERT INTO `reportlinks` VALUES ('recurringsalesorders','recurrsalesorderdetails','recurringsalesorders.recurrorderno=recurrsalesorderdetails.recurrorderno');
+INSERT INTO `reportlinks` VALUES ('recurrsalesorderdetails','stockmaster','recurrsalesorderdetails.stkcode=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','recurrsalesorderdetails','stockmaster.stockid=recurrsalesorderdetails.stkcode');
+INSERT INTO `reportlinks` VALUES ('reportcolumns','reportheaders','reportcolumns.reportid=reportheaders.reportid');
+INSERT INTO `reportlinks` VALUES ('reportheaders','reportcolumns','reportheaders.reportid=reportcolumns.reportid');
+INSERT INTO `reportlinks` VALUES ('salesanalysis','periods','salesanalysis.periodno=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','salesanalysis','periods.periodno=salesanalysis.periodno');
+INSERT INTO `reportlinks` VALUES ('salescatprod','stockmaster','salescatprod.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','salescatprod','stockmaster.stockid=salescatprod.stockid');
+INSERT INTO `reportlinks` VALUES ('salescatprod','salescat','salescatprod.salescatid=salescat.salescatid');
+INSERT INTO `reportlinks` VALUES ('salescat','salescatprod','salescat.salescatid=salescatprod.salescatid');
+INSERT INTO `reportlinks` VALUES ('salesorderdetails','salesorders','salesorderdetails.orderno=salesorders.orderno');
+INSERT INTO `reportlinks` VALUES ('salesorders','salesorderdetails','salesorders.orderno=salesorderdetails.orderno');
+INSERT INTO `reportlinks` VALUES ('salesorderdetails','stockmaster','salesorderdetails.stkcode=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','salesorderdetails','stockmaster.stockid=salesorderdetails.stkcode');
+INSERT INTO `reportlinks` VALUES ('salesorders','custbranch','salesorders.branchcode=custbranch.branchcode');
+INSERT INTO `reportlinks` VALUES ('custbranch','salesorders','custbranch.branchcode=salesorders.branchcode');
+INSERT INTO `reportlinks` VALUES ('salesorders','shippers','salesorders.debtorno=shippers.shipper_id');
+INSERT INTO `reportlinks` VALUES ('shippers','salesorders','shippers.shipper_id=salesorders.debtorno');
+INSERT INTO `reportlinks` VALUES ('salesorders','locations','salesorders.fromstkloc=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','salesorders','locations.loccode=salesorders.fromstkloc');
+INSERT INTO `reportlinks` VALUES ('securitygroups','securityroles','securitygroups.secroleid=securityroles.secroleid');
+INSERT INTO `reportlinks` VALUES ('securityroles','securitygroups','securityroles.secroleid=securitygroups.secroleid');
+INSERT INTO `reportlinks` VALUES ('securitygroups','securitytokens','securitygroups.tokenid=securitytokens.tokenid');
+INSERT INTO `reportlinks` VALUES ('securitytokens','securitygroups','securitytokens.tokenid=securitygroups.tokenid');
+INSERT INTO `reportlinks` VALUES ('shipmentcharges','shipments','shipmentcharges.shiptref=shipments.shiptref');
+INSERT INTO `reportlinks` VALUES ('shipments','shipmentcharges','shipments.shiptref=shipmentcharges.shiptref');
+INSERT INTO `reportlinks` VALUES ('shipmentcharges','systypes','shipmentcharges.transtype=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','shipmentcharges','systypes.typeid=shipmentcharges.transtype');
+INSERT INTO `reportlinks` VALUES ('shipments','suppliers','shipments.supplierid=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','shipments','suppliers.supplierid=shipments.supplierid');
+INSERT INTO `reportlinks` VALUES ('stockcheckfreeze','stockmaster','stockcheckfreeze.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockcheckfreeze','stockmaster.stockid=stockcheckfreeze.stockid');
+INSERT INTO `reportlinks` VALUES ('stockcheckfreeze','locations','stockcheckfreeze.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockcheckfreeze','locations.loccode=stockcheckfreeze.loccode');
+INSERT INTO `reportlinks` VALUES ('stockcounts','stockmaster','stockcounts.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockcounts','stockmaster.stockid=stockcounts.stockid');
+INSERT INTO `reportlinks` VALUES ('stockcounts','locations','stockcounts.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockcounts','locations.loccode=stockcounts.loccode');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockcategory','stockmaster.categoryid=stockcategory.categoryid');
+INSERT INTO `reportlinks` VALUES ('stockcategory','stockmaster','stockcategory.categoryid=stockmaster.categoryid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','taxcategories','stockmaster.taxcatid=taxcategories.taxcatid');
+INSERT INTO `reportlinks` VALUES ('taxcategories','stockmaster','taxcategories.taxcatid=stockmaster.taxcatid');
+INSERT INTO `reportlinks` VALUES ('stockmoves','stockmaster','stockmoves.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockmoves','stockmaster.stockid=stockmoves.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmoves','systypes','stockmoves.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','stockmoves','systypes.typeid=stockmoves.type');
+INSERT INTO `reportlinks` VALUES ('stockmoves','locations','stockmoves.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockmoves','locations.loccode=stockmoves.loccode');
+INSERT INTO `reportlinks` VALUES ('stockmoves','periods','stockmoves.prd=periods.periodno');
+INSERT INTO `reportlinks` VALUES ('periods','stockmoves','periods.periodno=stockmoves.prd');
+INSERT INTO `reportlinks` VALUES ('stockmovestaxes','taxauthorities','stockmovestaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','stockmovestaxes','taxauthorities.taxid=stockmovestaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('stockserialitems','stockmaster','stockserialitems.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','stockserialitems','stockmaster.stockid=stockserialitems.stockid');
+INSERT INTO `reportlinks` VALUES ('stockserialitems','locations','stockserialitems.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','stockserialitems','locations.loccode=stockserialitems.loccode');
+INSERT INTO `reportlinks` VALUES ('stockserialmoves','stockmoves','stockserialmoves.stockmoveno=stockmoves.stkmoveno');
+INSERT INTO `reportlinks` VALUES ('stockmoves','stockserialmoves','stockmoves.stkmoveno=stockserialmoves.stockmoveno');
+INSERT INTO `reportlinks` VALUES ('stockserialmoves','stockserialitems','stockserialmoves.stockid=stockserialitems.stockid');
+INSERT INTO `reportlinks` VALUES ('stockserialitems','stockserialmoves','stockserialitems.stockid=stockserialmoves.stockid');
+INSERT INTO `reportlinks` VALUES ('suppallocs','supptrans','suppallocs.transid_allocfrom=supptrans.id');
+INSERT INTO `reportlinks` VALUES ('supptrans','suppallocs','supptrans.id=suppallocs.transid_allocfrom');
+INSERT INTO `reportlinks` VALUES ('suppallocs','supptrans','suppallocs.transid_allocto=supptrans.id');
+INSERT INTO `reportlinks` VALUES ('supptrans','suppallocs','supptrans.id=suppallocs.transid_allocto');
+INSERT INTO `reportlinks` VALUES ('suppliercontacts','suppliers','suppliercontacts.supplierid=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','suppliercontacts','suppliers.supplierid=suppliercontacts.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','currencies','suppliers.currcode=currencies.currabrev');
+INSERT INTO `reportlinks` VALUES ('currencies','suppliers','currencies.currabrev=suppliers.currcode');
+INSERT INTO `reportlinks` VALUES ('suppliers','paymentterms','suppliers.paymentterms=paymentterms.termsindicator');
+INSERT INTO `reportlinks` VALUES ('paymentterms','suppliers','paymentterms.termsindicator=suppliers.paymentterms');
+INSERT INTO `reportlinks` VALUES ('suppliers','taxgroups','suppliers.taxgroupid=taxgroups.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('taxgroups','suppliers','taxgroups.taxgroupid=suppliers.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('supptrans','systypes','supptrans.type=systypes.typeid');
+INSERT INTO `reportlinks` VALUES ('systypes','supptrans','systypes.typeid=supptrans.type');
+INSERT INTO `reportlinks` VALUES ('supptrans','suppliers','supptrans.supplierno=suppliers.supplierid');
+INSERT INTO `reportlinks` VALUES ('suppliers','supptrans','suppliers.supplierid=supptrans.supplierno');
+INSERT INTO `reportlinks` VALUES ('supptranstaxes','taxauthorities','supptranstaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','supptranstaxes','taxauthorities.taxid=supptranstaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('supptranstaxes','supptrans','supptranstaxes.supptransid=supptrans.id');
+INSERT INTO `reportlinks` VALUES ('supptrans','supptranstaxes','supptrans.id=supptranstaxes.supptransid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','chartmaster','taxauthorities.taxglcode=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','taxauthorities','chartmaster.accountcode=taxauthorities.taxglcode');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','chartmaster','taxauthorities.purchtaxglaccount=chartmaster.accountcode');
+INSERT INTO `reportlinks` VALUES ('chartmaster','taxauthorities','chartmaster.accountcode=taxauthorities.purchtaxglaccount');
+INSERT INTO `reportlinks` VALUES ('taxauthrates','taxauthorities','taxauthrates.taxauthority=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','taxauthrates','taxauthorities.taxid=taxauthrates.taxauthority');
+INSERT INTO `reportlinks` VALUES ('taxauthrates','taxcategories','taxauthrates.taxcatid=taxcategories.taxcatid');
+INSERT INTO `reportlinks` VALUES ('taxcategories','taxauthrates','taxcategories.taxcatid=taxauthrates.taxcatid');
+INSERT INTO `reportlinks` VALUES ('taxauthrates','taxprovinces','taxauthrates.dispatchtaxprovince=taxprovinces.taxprovinceid');
+INSERT INTO `reportlinks` VALUES ('taxprovinces','taxauthrates','taxprovinces.taxprovinceid=taxauthrates.dispatchtaxprovince');
+INSERT INTO `reportlinks` VALUES ('taxgrouptaxes','taxgroups','taxgrouptaxes.taxgroupid=taxgroups.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('taxgroups','taxgrouptaxes','taxgroups.taxgroupid=taxgrouptaxes.taxgroupid');
+INSERT INTO `reportlinks` VALUES ('taxgrouptaxes','taxauthorities','taxgrouptaxes.taxauthid=taxauthorities.taxid');
+INSERT INTO `reportlinks` VALUES ('taxauthorities','taxgrouptaxes','taxauthorities.taxid=taxgrouptaxes.taxauthid');
+INSERT INTO `reportlinks` VALUES ('workcentres','locations','workcentres.location=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','workcentres','locations.loccode=workcentres.location');
+INSERT INTO `reportlinks` VALUES ('worksorders','locations','worksorders.loccode=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','worksorders','locations.loccode=worksorders.loccode');
+INSERT INTO `reportlinks` VALUES ('worksorders','stockmaster','worksorders.stockid=stockmaster.stockid');
+INSERT INTO `reportlinks` VALUES ('stockmaster','worksorders','stockmaster.stockid=worksorders.stockid');
+INSERT INTO `reportlinks` VALUES ('www_users','locations','www_users.defaultlocation=locations.loccode');
+INSERT INTO `reportlinks` VALUES ('locations','www_users','locations.loccode=www_users.defaultlocation');
 INSERT INTO `reportlinks` VALUES ('accountgroups','accountsection','accountgroups.sectioninaccounts=accountsection.sectionid');
 INSERT INTO `reportlinks` VALUES ('accountsection','accountgroups','accountsection.sectionid=accountgroups.sectioninaccounts');
 INSERT INTO `reportlinks` VALUES ('bankaccounts','chartmaster','bankaccounts.accountcode=chartmaster.accountcode');
@@ -11663,6 +13671,8 @@ INSERT INTO `salesanalysis` VALUES ('DE',3,-15.95,-5.25,'QUARTER','QUARTER',-1,0
 INSERT INTO `salesanalysis` VALUES ('DE',-11,234.56470588235,186.2635,'ANGRY','ANGRY',31,6.21,'BREAD','TR',1,'ERI','FOOD',5);
 INSERT INTO `salesanalysis` VALUES ('DE',-11,66.8576470588235,16.75,'ANGRY','ANGRY',6.7,0.04485,'SALT','TR',1,'ERI','BAKE',6);
 INSERT INTO `salesanalysis` VALUES ('DE',36,0,-30.0425,'ANGRY','ANGRY',-5,0,'BREAD','TR',1,'ERI','FOOD',7);
+INSERT INTO `salesanalysis` VALUES ('DE',4,187.5,0.001,'DUMBLE','DUMBLE',1,0,'ASSET-1','TR',1,'ERI','ASSETS',8);
+INSERT INTO `salesanalysis` VALUES ('DE',4,937.5,0.003,'DUMBLE','DUMBLE',3,0,'ASSET-1-1','TR',1,'ERI','ASSETS',9);
 
 --
 -- Dumping data for table `salescat`
@@ -11708,33 +13718,40 @@ INSERT INTO `salesorderdetails` VALUES (0,17,'BREAD',1,5,1,0,0,'2010-05-31 00:00
 INSERT INTO `salesorderdetails` VALUES (0,18,'BREAD',12,9.5,12,0,0,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (0,22,'BIGEARS12',0,5369.2307692308,1,0,0,'0000-00-00 00:00:00',0,'','2010-10-15','',0,0);
 INSERT INTO `salesorderdetails` VALUES (0,23,'BIRTHDAYCAKECONSTRUC',0,2500,1,0,0,'0000-00-00 00:00:00',0,'','2010-08-15','',0,0);
+INSERT INTO `salesorderdetails` VALUES (0,25,'ASSET-1',1,150,1,0,0,'2010-12-20 00:00:00',1,'','2010-12-19','',0,0);
+INSERT INTO `salesorderdetails` VALUES (0,26,'ASSET-1-1',1,250,1,0,0,'2010-12-20 00:00:00',1,'','2010-12-19','',0,0);
+INSERT INTO `salesorderdetails` VALUES (0,27,'DVD-CASE',0,2.5,20,0,0,'0000-00-00 00:00:00',0,'','2011-01-18','',0,0);
 INSERT INTO `salesorderdetails` VALUES (1,6,'SALT',3,3.25,3,0,0,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,7,'SALT',3,3.25,3,0,0,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,8,'SALT',3,3.25,3,0,0,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,9,'SALT',1,2.99,1,0,0.015,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,14,'BREAD',2,5.25,2,0,0,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,18,'SALT',0.7,5,0.7,0,0,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
+INSERT INTO `salesorderdetails` VALUES (1,27,'DVD-UNSG2',0,152.25,5,0,0,'0000-00-00 00:00:00',0,'','2011-01-15','',0,0);
 
 --
 -- Dumping data for table `salesorders`
 --
 
-INSERT INTO `salesorders` VALUES (6,'ANGRY','ANGRY','',NULL,'Testing comments','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','0422 2245 2213','graville@angry.com','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00');
-INSERT INTO `salesorders` VALUES (7,'ANGRY','ANGRY','',NULL,'Testing comments','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','0422 2245 2213','graville@angry.com','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00');
-INSERT INTO `salesorders` VALUES (8,'ANGRY','ANGRY','',NULL,'Testing comments Invoice: 4','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','0422 2245 2213','graville@angry.com','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00');
-INSERT INTO `salesorders` VALUES (9,'ANGRY','ANGRY','211547',NULL,' Invoice: 5','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','0422 2245 2213','graville@angry.com','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00');
-INSERT INTO `salesorders` VALUES (10,'ANGRY','ANGRY','',NULL,' Invoice: 6','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00');
-INSERT INTO `salesorders` VALUES (11,'ANGRY','ANGRY','',NULL,' Invoice: 7','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00');
-INSERT INTO `salesorders` VALUES (12,'ANGRY','ANGRY','',NULL,'','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00');
-INSERT INTO `salesorders` VALUES (13,'ANGRY','ANGRY','',NULL,' Invoice: 9','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00');
-INSERT INTO `salesorders` VALUES (14,'ANGRY','ANGRY','',NULL,' Invoice: 10','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00');
-INSERT INTO `salesorders` VALUES (15,'ANGRY','ANGRY','',NULL,' Invoice: 11','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00');
-INSERT INTO `salesorders` VALUES (16,'ANGRY','ANGRY','',NULL,' Invoice: 12','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00');
-INSERT INTO `salesorders` VALUES (17,'ANGRY','ANGRY','',NULL,' Invoice: 13','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00');
-INSERT INTO `salesorders` VALUES (18,'ANGRY','ANGRY','',NULL,' Invoice: 14','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00');
-INSERT INTO `salesorders` VALUES (19,'DUMBLE','DUMBLE','',NULL,NULL,'2010-08-08','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal &amp; Co',1,0,'TOR','2010-09-08','0000-00-00',0,'0000-00-00',1,'2010-08-08');
-INSERT INTO `salesorders` VALUES (22,'QUARTER','QUARTER','89-OOPDS',NULL,'','2010-08-08','DE',1,'1356 Union Drive','Holborn','England','','','','123456','','Quarter Back to Back',1,0,'TOR','2010-10-15','2010-08-16',0,'0000-00-00',0,'2010-08-16');
-INSERT INTO `salesorders` VALUES (23,'DUMBLE','DUMBLE','',NULL,'','2010-08-08','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal &amp;amp;amp; Co',1,0,'TOR','2010-12-20','2010-08-16',0,'0000-00-00',0,'2010-08-16');
+INSERT INTO `salesorders` VALUES (6,'ANGRY','ANGRY','',NULL,'Testing comments','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','0422 2245 2213','graville@angry.com','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (7,'ANGRY','ANGRY','',NULL,'Testing comments','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','0422 2245 2213','graville@angry.com','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (8,'ANGRY','ANGRY','',NULL,'Testing comments Invoice: 4','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','0422 2245 2213','graville@angry.com','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (9,'ANGRY','ANGRY','211547',NULL,' Invoice: 5','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','0422 2245 2213','graville@angry.com','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (10,'ANGRY','ANGRY','',NULL,' Invoice: 6','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (11,'ANGRY','ANGRY','',NULL,' Invoice: 7','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (12,'ANGRY','ANGRY','',NULL,'','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (13,'ANGRY','ANGRY','',NULL,' Invoice: 9','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (14,'ANGRY','ANGRY','',NULL,' Invoice: 10','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (15,'ANGRY','ANGRY','',NULL,' Invoice: 11','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (16,'ANGRY','ANGRY','',NULL,' Invoice: 12','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (17,'ANGRY','ANGRY','',NULL,' Invoice: 13','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (18,'ANGRY','ANGRY','',NULL,' Invoice: 14','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (19,'DUMBLE','DUMBLE','',NULL,NULL,'2010-08-08','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal &amp; Co',1,0,'TOR','2010-09-08','0000-00-00',0,'0000-00-00',1,'2010-08-08',0);
+INSERT INTO `salesorders` VALUES (22,'QUARTER','QUARTER','89-OOPDS',NULL,'','2010-08-08','DE',1,'1356 Union Drive','Holborn','England','','','','123456','','Quarter Back to Back',1,0,'TOR','2010-10-15','2010-08-16',0,'0000-00-00',0,'2010-08-16',0);
+INSERT INTO `salesorders` VALUES (23,'DUMBLE','DUMBLE','',NULL,'','2010-08-08','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal &amp;amp;amp; Co',1,0,'TOR','2010-12-20','2010-08-16',0,'0000-00-00',0,'2010-08-16',0);
+INSERT INTO `salesorders` VALUES (25,'DUMBLE','DUMBLE','',NULL,' Inv 15','2010-12-19','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal &amp;amp; Co',1,0,'TOR','2010-12-20','2010-12-20',1,'2010-12-19',0,'2010-12-20',0);
+INSERT INTO `salesorders` VALUES (26,'DUMBLE','DUMBLE','',NULL,' Inv 26 Inv 28 Inv 29','2010-12-19','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal &amp;amp; Co',1,0,'TOR','2010-12-20','2010-12-20',0,'0000-00-00',0,'2010-12-20',0);
+INSERT INTO `salesorders` VALUES (27,'ANGRY','ANGRY','',NULL,'','2011-01-15','DE',1,'P O Box 671','Gowerbridge','Upperton','Toronto ','Canada','','0422 2245 2213','graville@angry.com','Angus Rouledge - Toronto',1,0,'TOR','2011-01-17','2011-01-17',0,'0000-00-00',0,'2011-01-17',0);
 
 --
 -- Dumping data for table `salestypes`
@@ -11808,7 +13825,6 @@ INSERT INTO `scripts` VALUES ('FixedAssetLocations.php',11,'Allows the locations
 INSERT INTO `scripts` VALUES ('FixedAssetRegister.php',11,'Produces a csv, html or pdf report of the fixed assets over a period showing period depreciation, additions and disposals');
 INSERT INTO `scripts` VALUES ('FixedAssetTransfer.php',11,'Allows the fixed asset locations to be changed in bulk');
 INSERT INTO `scripts` VALUES ('FormDesigner.php',14,'');
-INSERT INTO `scripts` VALUES ('FormMaker.php',1,'Allows running user defined Forms');
 INSERT INTO `scripts` VALUES ('FreightCosts.php',11,'Defines the setup of the freight cost using different shipping methods to different destinations. The system can use this information to calculate applicable freight if the items are defined with the correct kgs and cubic volume');
 INSERT INTO `scripts` VALUES ('FTP_RadioBeacon.php',2,'FTPs sales orders for dispatch to a radio beacon software enabled warehouse dispatching facility');
 INSERT INTO `scripts` VALUES ('geocode.php',3,'');
@@ -11920,9 +13936,7 @@ INSERT INTO `scripts` VALUES ('RecurringSalesOrders.php',1,'');
 INSERT INTO `scripts` VALUES ('ReorderLevel.php',2,'Allows reorder levels of inventory to be updated');
 INSERT INTO `scripts` VALUES ('ReorderLevelLocation.php',2,'');
 INSERT INTO `scripts` VALUES ('ReportBug.php',15,'');
-INSERT INTO `scripts` VALUES ('ReportCreator.php',13,'Report Writer and Form Creator script that creates templates for user defined reports and forms');
 INSERT INTO `scripts` VALUES ('ReportletContainer.php',1,'');
-INSERT INTO `scripts` VALUES ('ReportMaker.php',1,'Produces reports from the report writer templates created');
 INSERT INTO `scripts` VALUES ('ReverseGRN.php',11,'Reverses the entry of goods received - creating stock movements back out and necessary general ledger journals to effect the reversal');
 INSERT INTO `scripts` VALUES ('SalesAnalReptCols.php',2,'Entry of the definition of a sales analysis report\'s columns.');
 INSERT INTO `scripts` VALUES ('SalesAnalRepts.php',2,'Entry of the definition of a sales analysis report headers');
@@ -12021,6 +14035,7 @@ INSERT INTO `scripts` VALUES ('Z_ChangeBranchCode.php',15,'Utility to change the
 INSERT INTO `scripts` VALUES ('Z_ChangeCustomerCode.php',15,'Utility to change a customer code that cascades the change through all the necessary tables');
 INSERT INTO `scripts` VALUES ('Z_ChangeStockCategory.php',15,'');
 INSERT INTO `scripts` VALUES ('Z_ChangeStockCode.php',15,'Utility to change an item code that cascades the change through all the necessary tables');
+INSERT INTO `scripts` VALUES ('Z_ChangeSupplierCode.php',15,'Script to change a supplier code accross all tables necessary');
 INSERT INTO `scripts` VALUES ('Z_CheckAllocationsFrom.php',15,'');
 INSERT INTO `scripts` VALUES ('Z_CheckAllocs.php',2,'');
 INSERT INTO `scripts` VALUES ('Z_CheckDebtorsControl.php',15,'Inquiry that shows the total local currency (functional currency) balance of all customer accounts to reconcile with the general ledger debtors account');
@@ -12177,26 +14192,47 @@ INSERT INTO `shippers` VALUES (10,'Not Specified',0);
 --
 
 INSERT INTO `stockcategory` VALUES ('AIRCON','Air Conditioning','F',1460,5700,5200,5100,1440);
+INSERT INTO `stockcategory` VALUES ('ASSETS','Asset Disposals','F',1650,0,80000,80000,0);
 INSERT INTO `stockcategory` VALUES ('BAKE','Baking Ingredients','F',1460,5700,5200,5000,1440);
 INSERT INTO `stockcategory` VALUES ('DVD','DVDs','F',1460,5700,5000,5200,1440);
 INSERT INTO `stockcategory` VALUES ('FOOD','Food','F',1460,5700,5200,5000,1440);
-INSERT INTO `stockcategory` VALUES ('PLANT','Plant and Equipment','A',1650,7750,80000,1,1670);
 
 --
 -- Dumping data for table `stockcatproperties`
 --
 
-INSERT INTO `stockcatproperties` VALUES (1,'AIRCON','kw heating',0,'',999999999,0,-999999999,0);
-INSERT INTO `stockcatproperties` VALUES (2,'AIRCON','kw cooling',0,'',999999999,0,-999999999,0);
-INSERT INTO `stockcatproperties` VALUES (3,'AIRCON','inverter',2,'',999999999,0,-999999999,0);
-INSERT INTO `stockcatproperties` VALUES (4,'DVD','Genre',1,'Action,Thriller,Comedy,Romance,Kids,Adult',999999999,0,-999999999,0);
-INSERT INTO `stockcatproperties` VALUES (5,'PLANT','Depreciation Type',1,'Straight Line,Reducing Balance',999999999,0,-999999999,0);
-INSERT INTO `stockcatproperties` VALUES (6,'PLANT','Annual Depreciation Percentage',0,'5',999999999,0,-999999999,0);
+INSERT INTO `stockcatproperties` VALUES (1,'AIRCON','kw heating',0,'',0,0,0,0);
+INSERT INTO `stockcatproperties` VALUES (2,'AIRCON','kw cooling',0,'',0,0,0,0);
+INSERT INTO `stockcatproperties` VALUES (3,'AIRCON','inverter',2,'',0,0,0,0);
+INSERT INTO `stockcatproperties` VALUES (4,'DVD','Genre',1,'Action,Thriller,Comedy,Romance,Kids,Adult',0,0,0,0);
+INSERT INTO `stockcatproperties` VALUES (5,'PLANT','Depreciation Type',1,'Straight Line,Reducing Balance',999999999,0,-128,0);
+INSERT INTO `stockcatproperties` VALUES (6,'PLANT','Annual Depreciation Percentage',0,'5',999999999,0,-128,0);
+INSERT INTO `stockcatproperties` VALUES (8,'BLDG','Depreciation Type',1,'Straight Line,Reducing Balance',0,0,0,0);
+INSERT INTO `stockcatproperties` VALUES (9,'BLDG','Annual Depreciation Percentage',0,'5',100,0,1,0);
 
 --
 -- Dumping data for table `stockcheckfreeze`
 --
 
+INSERT INTO `stockcheckfreeze` VALUES ('BIGEARS12','MEL',0,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('BirthdayCakeConstruc','MEL',0,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('BREAD','MEL',62,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('DR_TUMMY','MEL',0,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('DVD-CASE','MEL',0,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('DVD-DHWV','MEL',-12,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('DVD-LTWP','MEL',0,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('DVD-TOPGUN','MEL',-1,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('DVD-UNSG','MEL',-10,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('DVD-UNSG2','MEL',-10,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('DVD_ACTION','MEL',10,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('FLOUR','MEL',-4,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('FUJI990101','MEL',0,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('FUJI990102','MEL',0,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('HIT3042-4','MEL',0,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('HIT3043-5','MEL',0,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('SALT','MEL',2.22044604925031e-16,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('SLICE','MEL',0,'2010-11-27');
+INSERT INTO `stockcheckfreeze` VALUES ('YEAST','MEL',0,'2010-11-27');
 
 --
 -- Dumping data for table `stockcounts`
@@ -12207,6 +14243,7 @@ INSERT INTO `stockcatproperties` VALUES (6,'PLANT','Annual Depreciation Percenta
 -- Dumping data for table `stockitemproperties`
 --
 
+INSERT INTO `stockitemproperties` VALUES ('TESTIN123',0,'');
 INSERT INTO `stockitemproperties` VALUES ('DVD-CASE',4,'Action');
 INSERT INTO `stockitemproperties` VALUES ('DVD-DHWV',4,'Action');
 
@@ -12214,6 +14251,8 @@ INSERT INTO `stockitemproperties` VALUES ('DVD-DHWV',4,'Action');
 -- Dumping data for table `stockmaster`
 --
 
+INSERT INTO `stockmaster` VALUES ('ASSET-1','ASSETS','testing 123','test','each','D','1800-01-01','0.0000','0.0000','0.0010','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('ASSET-1-1','ASSETS','testing 123','test','each','D','1800-01-01','0.0000','0.0000','0.0010','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,'0.0000');
 INSERT INTO `stockmaster` VALUES ('BIGEARS12','DVD','Big Ears and Noddy episodes on DVD','Big Ears and Noddy episodes on DVD','each','M','1800-01-01','0.0000','0.0000','3490.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,'0.0000');
 INSERT INTO `stockmaster` VALUES ('BirthdayCakeConstruc','BAKE','12 foot birthday cake for wrestling tournament','12 foot birthday cake for wrestling tournament','each','M','1800-01-01','0.0000','0.0000','1145.4175','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,'0.0000');
 INSERT INTO `stockmaster` VALUES ('BREAD','FOOD','Bread','Bread','each','M','1800-01-01','0.0000','8.8785','6.0085','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,'0.0000');
@@ -12233,6 +14272,7 @@ INSERT INTO `stockmaster` VALUES ('HIT3042-4','AIRCON','Hitachi Aircond Rev Cycl
 INSERT INTO `stockmaster` VALUES ('HIT3043-5','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor unit - including 5m piping for fitting to HIT3042-4 indoor unit\r\n5 year guaranttee','each','B','1800-01-01','0.0000','0.0000','1235.0000','0.0000','0.0000',0,0,1,5,'0.8500','16.0000','','',1,1,'none',0,0,0,0,0,'0.0000');
 INSERT INTO `stockmaster` VALUES ('SALT','BAKE','Salt','Salt','kgs','B','1800-01-01','0.0000','1.2000','2.5000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,3,0,0,0,'0.0000');
 INSERT INTO `stockmaster` VALUES ('SLICE','FOOD','Slice Of Bread','Slice Of Bread','each','M','1800-01-01','0.0000','0.0000','0.6009','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,'0.0000');
+INSERT INTO `stockmaster` VALUES ('TES AA','FOOD','tesdsa','tesfdds','each','B','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'0',0,0,0,0,0,'0.0000');
 INSERT INTO `stockmaster` VALUES ('YEAST','BAKE','Yeast','Yeast','kgs','B','1800-01-01','0.0000','3.8500','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'0',0,3,0,0,0,'0.0000');
 
 --
@@ -12294,6 +14334,28 @@ INSERT INTO `stockmoves` VALUES (55,'YEAST',17,19,'TOR','2010-08-15','','','0.00
 INSERT INTO `stockmoves` VALUES (56,'YEAST',28,9,'TOR','2010-08-15','','','5.0000',0,'12',-0.75,0,5,1,9.2,0,NULL);
 INSERT INTO `stockmoves` VALUES (57,'SALT',17,20,'TOR','2010-08-15','','','0.0000',0,'',25,0,0,1,25,0,NULL);
 INSERT INTO `stockmoves` VALUES (58,'SALT',28,10,'TOR','2010-08-15','','','2.5000',0,'12',-1.3,0,2.5,1,23.7,0,NULL);
+INSERT INTO `stockmoves` VALUES (59,'DVD-LTWP',25,32,'MEL','2010-11-26','','','5.0000',0,'DINGO (Dingo Productions Pty Ltd) - 5',10,0,2.7,1,7,0,NULL);
+INSERT INTO `stockmoves` VALUES (60,'BREAD',17,22,'MEL','2010-12-11','','','0.0000',4,'Inventory Check - 11/12/2010',-62,0,0,1,0,0,NULL);
+INSERT INTO `stockmoves` VALUES (61,'DVD-DHWV',17,22,'MEL','2010-12-11','','','0.0000',4,'Inventory Check - 11/12/2010',12,0,0,1,0,0,NULL);
+INSERT INTO `stockmoves` VALUES (62,'DVD-LTWP',17,22,'MEL','2010-12-11','','','0.0000',4,'Inventory Check - 11/12/2010',3,0,0,1,0,0,NULL);
+INSERT INTO `stockmoves` VALUES (63,'DVD-TOPGUN',17,22,'MEL','2010-12-11','','','0.0000',4,'Inventory Check - 11/12/2010',1,0,0,1,0,0,NULL);
+INSERT INTO `stockmoves` VALUES (64,'DVD-UNSG',17,22,'MEL','2010-12-11','','','0.0000',4,'Inventory Check - 11/12/2010',10,0,0,1,0,0,NULL);
+INSERT INTO `stockmoves` VALUES (65,'DVD-UNSG2',17,22,'MEL','2010-12-11','','','0.0000',4,'Inventory Check - 11/12/2010',10,0,0,1,0,0,NULL);
+INSERT INTO `stockmoves` VALUES (66,'DVD_ACTION',17,22,'MEL','2010-12-11','','','0.0000',4,'Inventory Check - 11/12/2010',-10,0,0,1,0,0,NULL);
+INSERT INTO `stockmoves` VALUES (67,'FLOUR',17,22,'MEL','2010-12-11','','','0.0000',4,'Inventory Check - 11/12/2010',4,0,0,1,0,0,NULL);
+INSERT INTO `stockmoves` VALUES (68,'SALT',17,22,'MEL','2010-12-11','','','0.0000',4,'Inventory Check - 11/12/2010',-2.2204460492503e-16,0,0,1,0,0,NULL);
+INSERT INTO `stockmoves` VALUES (69,'ASSET-1',10,15,'TOR','2010-12-20','DUMBLE','DUMBLE','187.5000',4,'25',-1,0,0.001,1,0,0,'');
+INSERT INTO `stockmoves` VALUES (70,'ASSET-1-1',10,26,'TOR','2010-12-20','DUMBLE','DUMBLE','312.5000',4,'26',-1,0,0.001,1,0,0,'');
+INSERT INTO `stockmoves` VALUES (71,'DVD-LTWP',25,40,'MEL','2010-11-27','','','5.0000',0,'DINGO (Dingo Productions Pty Ltd) - 5',1,0,7.1249916666668,1,4,0,NULL);
+INSERT INTO `stockmoves` VALUES (72,'ASSET-1-1',10,28,'TOR','2010-12-20','DUMBLE','DUMBLE','312.5000',4,'26',-1,0,0.001,1,0,0,'');
+INSERT INTO `stockmoves` VALUES (73,'ASSET-1-1',10,29,'TOR','2010-12-20','DUMBLE','DUMBLE','312.5000',4,'26',-1,0,0.001,1,0,0,'');
+INSERT INTO `stockmoves` VALUES (74,'BREAD',25,32,'MEL','2011-01-30','','','0.2941',5,'BINGO (Binary Green Ocean Inc) - 3',5,0,6.0085,1,5,0,NULL);
+INSERT INTO `stockmoves` VALUES (75,'BREAD',25,33,'TOR','2011-01-30','','','7.3529',5,'BINGO (Binary Green Ocean Inc) - 5',2,0,6.0085,1,8.5,0,NULL);
+INSERT INTO `stockmoves` VALUES (76,'BREAD',25,34,'MEL','2011-01-30','','','0.2941',5,'BINGO (Binary Green Ocean Inc) - 3',1,0,6.0085,1,6,0,NULL);
+INSERT INTO `stockmoves` VALUES (77,'BREAD',25,35,'MEL','2011-02-05','','','0.2941',6,'BINGO (Binary Green Ocean Inc) - 3',1.2,0,6.0085,1,7.2,0,NULL);
+INSERT INTO `stockmoves` VALUES (78,'BREAD',25,36,'MEL','2011-02-06','','','0.2941',6,'BINGO (Binary Green Ocean Inc) - 3',0.5,0,6.0085,1,7.7,0,NULL);
+INSERT INTO `stockmoves` VALUES (79,'DVD-CASE',25,37,'MEL','2011-02-06','','','0.2300',6,'CAMPBELL (Campbell Roberts Inc) - 1',6,0,0.3,1,6,0,NULL);
+INSERT INTO `stockmoves` VALUES (80,'DVD-CASE',25,38,'MEL','2011-02-12','','','0.3646',6,'CRUISE (Cruise Company Inc) - 17',12,0,0.3,1,18,0,NULL);
 
 --
 -- Dumping data for table `stockmovestaxes`
@@ -12310,6 +14372,10 @@ INSERT INTO `stockmovestaxes` VALUES (40,13,0,0,0);
 INSERT INTO `stockmovestaxes` VALUES (41,13,0,0,0);
 INSERT INTO `stockmovestaxes` VALUES (42,13,0,0,0);
 INSERT INTO `stockmovestaxes` VALUES (50,13,0,0,0);
+INSERT INTO `stockmovestaxes` VALUES (69,13,0,0,0);
+INSERT INTO `stockmovestaxes` VALUES (70,13,0,0,0);
+INSERT INTO `stockmovestaxes` VALUES (72,13,0,0,0);
+INSERT INTO `stockmovestaxes` VALUES (73,13,0,0,0);
 
 --
 -- Dumping data for table `stockserialitems`
@@ -12334,17 +14400,18 @@ INSERT INTO `stockserialmoves` VALUES (2,9,'FLOUR','5433',4);
 -- Dumping data for table `suppliercontacts`
 --
 
+INSERT INTO `suppliercontacts` VALUES ('CAMPBELL','Freddie Mercury','Lead','454444','4545444','6555','freddie@queen.com',0);
 INSERT INTO `suppliercontacts` VALUES ('CRUISE','Barry Toad','Slips','92827','0204389','','',0);
 
 --
 -- Dumping data for table `suppliers`
 --
 
-INSERT INTO `suppliers` VALUES ('BINGO','Binary Green Ocean Inc','Box 3499','Gardenier','San Fransisco','California 54424','','',1,0.000000,0.000000,'USD','2003-03-01','30',12,'2007-04-26 00:00:00','','0','',0,1,0,'','','',NULL,NULL,NULL);
-INSERT INTO `suppliers` VALUES ('CAMPBELL','Campbell Roberts Inc','Box 9882','Ottowa Rise','','','','',1,0.000000,0.000000,'USD','2005-06-23','30',0,NULL,'','0','',0,2,0,'','','',NULL,NULL,NULL);
-INSERT INTO `suppliers` VALUES ('CRUISE','Cruise Company Inc','Box 2001','Ft Lauderdale, Florida','','','','',1,0.000000,0.000000,'GBP','2005-06-23','30',0,NULL,'123456789012345678901234567890','0','',0,3,0,'','','',NULL,NULL,NULL);
-INSERT INTO `suppliers` VALUES ('GOTSTUFF','We Got the Stuff Inc','Test line 1','Test line 2','Test line 3','Test line 4 - editing','','',1,0.000000,0.000000,'USD','2005-10-29','20',0,NULL,'','ok then','tell me abou',0,1,0,'','','',NULL,NULL,NULL);
-INSERT INTO `suppliers` VALUES ('REGNEW','Reg Newall Inc','P O 5432','Wichita','Wyoming','','','',1,0.000000,0.000000,'USD','2005-04-30','30',0,NULL,'','0','',0,1,0,'','','',NULL,NULL,NULL);
+INSERT INTO `suppliers` VALUES ('BINGO','Binary Green Ocean Inc','Box 3499','Gardenier','San Fransisco','California 54424','','',1,0.000000,0.000000,'USD','2003-03-01','30',12,'2007-04-26 00:00:00','','0','',0,1,0,'','',NULL,NULL,NULL);
+INSERT INTO `suppliers` VALUES ('CAMPBELL','Campbell Roberts Inc','Box 9882','Ottowa Rise','','','','',1,0.000000,0.000000,'USD','2005-06-23','30',0,NULL,'','0','',0,2,0,'','',NULL,NULL,NULL);
+INSERT INTO `suppliers` VALUES ('CRUISE','Cruise Company Inc','Box 2001','Ft Lauderdale, Florida','','','','',1,0.000000,0.000000,'GBP','2005-06-23','30',0,NULL,'123456789012345678901234567890','0','',0,3,0,'','',NULL,NULL,NULL);
+INSERT INTO `suppliers` VALUES ('GOTSTUFF','We Got the Stuff Inc','Test line 1','Test line 2','Test line 3','Test line 4 - editing','','',1,0.000000,0.000000,'USD','2005-10-29','20',0,NULL,'','ok then','tell me abou',0,1,0,'','',NULL,NULL,NULL);
+INSERT INTO `suppliers` VALUES ('REGNEW','Reg Newall Inc','P O 5432','Wichita','Wyoming','','','',1,0.000000,0.000000,'USD','2005-04-30','30',0,NULL,'','0','',0,1,0,'','',NULL,NULL,NULL);
 
 --
 -- Dumping data for table `suppliertype`
@@ -12363,6 +14430,21 @@ INSERT INTO `supptrans` VALUES (22,20,'CRUISE','9877-877','2010-08-13','2010-09-
 INSERT INTO `supptrans` VALUES (5,21,'CRUISE','30299','2010-08-13','2010-09-30','2010-08-14 07:16:10',0,0.8,-90,0,0,0,'',0,6);
 INSERT INTO `supptrans` VALUES (6,21,'CRUISE','57748-OPP','2010-08-13','2010-09-30','2010-08-14 07:35:46',0,0.8,-100,0,0,0,'',0,7);
 INSERT INTO `supptrans` VALUES (7,21,'CRUISE','9sjkja_099','2010-08-13','2010-09-30','2010-08-14 07:39:38',0,0.8,-104.41,0,0,0,'',0,8);
+INSERT INTO `supptrans` VALUES (23,20,'DINGO','12122','2010-11-25','2010-12-22','0000-00-00 00:00:00',0,1,50,15,0,0,'',0,9);
+INSERT INTO `supptrans` VALUES (24,20,'DINGO','sd2222','2010-11-25','2010-12-22','0000-00-00 00:00:00',0,1,50,15,0,0,'',0,10);
+INSERT INTO `supptrans` VALUES (25,20,'DINGO','4233','2010-11-26','2010-12-22','0000-00-00 00:00:00',0,1,5,1.5,0,0,'',0,11);
+INSERT INTO `supptrans` VALUES (26,20,'DINGO','1234','2010-11-26','2010-12-22','0000-00-00 00:00:00',0,1,7.5,2.25,0,0,'',0,12);
+INSERT INTO `supptrans` VALUES (27,20,'DINGO','987','2010-11-26','2010-12-22','0000-00-00 00:00:00',0,1,10,3,0,0,'',0,13);
+INSERT INTO `supptrans` VALUES (28,20,'DINGO','9544','2010-11-26','2010-12-22','0000-00-00 00:00:00',0,1,5,1.5,0,0,'',0,14);
+INSERT INTO `supptrans` VALUES (29,20,'DINGO','977','2010-11-26','2010-12-22','0000-00-00 00:00:00',0,1,10,3,0,0,'',0,15);
+INSERT INTO `supptrans` VALUES (30,20,'DINGO','ssaa','2010-11-26','2010-12-22','0000-00-00 00:00:00',0,1,5,1.5,0,0,'',0,16);
+INSERT INTO `supptrans` VALUES (31,20,'DINGO','4221','2010-11-26','2010-12-22','0000-00-00 00:00:00',0,1,5,1.5,0,0,'',0,17);
+INSERT INTO `supptrans` VALUES (35,20,'BINGO','5443','2010-11-27','2010-12-30','2010-11-28 00:00:00',0,0.85,25000,7500,0,0,'',0,22);
+INSERT INTO `supptrans` VALUES (36,20,'BINGO','122','2010-11-27','2010-12-30','2010-11-28 00:00:00',0,0.85,20,6,0,0,'',0,23);
+INSERT INTO `supptrans` VALUES (10,21,'BINGO','4311','2010-11-27','2010-12-30','2010-11-28 16:14:22',0,0.85,-8.5,-3.09,0,0,'',0,24);
+INSERT INTO `supptrans` VALUES (37,20,'BINGO','asas','2010-11-15','2011-01-30','2010-12-09 00:00:00',0,0.85,12,3.6,0,0,'',0,25);
+INSERT INTO `supptrans` VALUES (38,20,'BINGO','324','2010-10-12','2010-11-30','2010-12-09 00:00:00',0,0.85,5,1.5,0,0,'',0,26);
+INSERT INTO `supptrans` VALUES (39,20,'CAMPBELL','564','2010-12-21','2011-01-31','2010-12-22 00:00:00',0,0.85,150,0,0,0,'',0,27);
 
 --
 -- Dumping data for table `supptranstaxes`
@@ -12375,6 +14457,34 @@ INSERT INTO `supptranstaxes` VALUES (5,13,0);
 INSERT INTO `supptranstaxes` VALUES (6,13,0);
 INSERT INTO `supptranstaxes` VALUES (7,13,0);
 INSERT INTO `supptranstaxes` VALUES (8,13,0);
+INSERT INTO `supptranstaxes` VALUES (9,1,5);
+INSERT INTO `supptranstaxes` VALUES (9,5,10);
+INSERT INTO `supptranstaxes` VALUES (10,1,5);
+INSERT INTO `supptranstaxes` VALUES (10,5,10);
+INSERT INTO `supptranstaxes` VALUES (11,1,0.5);
+INSERT INTO `supptranstaxes` VALUES (11,5,1);
+INSERT INTO `supptranstaxes` VALUES (12,1,0.75);
+INSERT INTO `supptranstaxes` VALUES (12,5,1.5);
+INSERT INTO `supptranstaxes` VALUES (13,1,1);
+INSERT INTO `supptranstaxes` VALUES (13,5,2);
+INSERT INTO `supptranstaxes` VALUES (14,1,0.5);
+INSERT INTO `supptranstaxes` VALUES (14,5,1);
+INSERT INTO `supptranstaxes` VALUES (15,1,1);
+INSERT INTO `supptranstaxes` VALUES (15,5,2);
+INSERT INTO `supptranstaxes` VALUES (16,1,0.5);
+INSERT INTO `supptranstaxes` VALUES (16,5,1);
+INSERT INTO `supptranstaxes` VALUES (17,1,0.5);
+INSERT INTO `supptranstaxes` VALUES (17,5,1);
+INSERT INTO `supptranstaxes` VALUES (22,5,5000);
+INSERT INTO `supptranstaxes` VALUES (23,1,2);
+INSERT INTO `supptranstaxes` VALUES (23,5,4);
+INSERT INTO `supptranstaxes` VALUES (24,1,-0.85);
+INSERT INTO `supptranstaxes` VALUES (24,5,-2.244);
+INSERT INTO `supptranstaxes` VALUES (25,1,1.2);
+INSERT INTO `supptranstaxes` VALUES (25,5,2.4);
+INSERT INTO `supptranstaxes` VALUES (26,1,0.5);
+INSERT INTO `supptranstaxes` VALUES (26,5,1);
+INSERT INTO `supptranstaxes` VALUES (27,13,0);
 
 --
 -- Dumping data for table `systypes`
@@ -12384,23 +14494,23 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',2);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',2);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',14);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',29);
 INSERT INTO `systypes` VALUES (11,'Credit Note',2);
 INSERT INTO `systypes` VALUES (12,'Receipt',9);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',22);
-INSERT INTO `systypes` VALUES (17,'Stock Adjustment',20);
-INSERT INTO `systypes` VALUES (18,'Purchase Order',3);
+INSERT INTO `systypes` VALUES (17,'Stock Adjustment',22);
+INSERT INTO `systypes` VALUES (18,'Purchase Order',18);
 INSERT INTO `systypes` VALUES (19,'Picking List',0);
-INSERT INTO `systypes` VALUES (20,'Purchase Invoice',22);
+INSERT INTO `systypes` VALUES (20,'Purchase Invoice',27);
 INSERT INTO `systypes` VALUES (21,'Debit Note',7);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',4);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',31);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',38);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',4);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',10);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
-INSERT INTO `systypes` VALUES (30,'Sales Order',24);
+INSERT INTO `systypes` VALUES (30,'Sales Order',27);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (32,'Contract Close',6);
 INSERT INTO `systypes` VALUES (35,'Cost Update',17);
@@ -12408,8 +14518,8 @@ INSERT INTO `systypes` VALUES (36,'Exchange Difference',1);
 INSERT INTO `systypes` VALUES (40,'Work Order',13);
 INSERT INTO `systypes` VALUES (41,'Asset Addition',1);
 INSERT INTO `systypes` VALUES (42,'Asset Category Change',1);
-INSERT INTO `systypes` VALUES (43,'Delete w/down asset',1);
-INSERT INTO `systypes` VALUES (44,'Depreciation',1);
+INSERT INTO `systypes` VALUES (43,'Delete w/down asset',2);
+INSERT INTO `systypes` VALUES (44,'Depreciation',3);
 INSERT INTO `systypes` VALUES (49,'Import Fixed Assets',1);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
 INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',0);
@@ -12494,6 +14604,238 @@ INSERT INTO `unitsofmeasure` VALUES (5,'length');
 INSERT INTO `unitsofmeasure` VALUES (6,'pack');
 
 --
+-- Dumping data for table `usermenurights`
+--
+
+INSERT INTO `usermenurights` VALUES ('admin',1,1);
+INSERT INTO `usermenurights` VALUES ('admin',2,1);
+INSERT INTO `usermenurights` VALUES ('admin',3,1);
+INSERT INTO `usermenurights` VALUES ('admin',4,1);
+INSERT INTO `usermenurights` VALUES ('admin',5,1);
+INSERT INTO `usermenurights` VALUES ('admin',6,1);
+INSERT INTO `usermenurights` VALUES ('admin',7,1);
+INSERT INTO `usermenurights` VALUES ('admin',8,1);
+INSERT INTO `usermenurights` VALUES ('admin',9,1);
+INSERT INTO `usermenurights` VALUES ('admin',10,1);
+INSERT INTO `usermenurights` VALUES ('admin',11,1);
+INSERT INTO `usermenurights` VALUES ('admin',12,1);
+INSERT INTO `usermenurights` VALUES ('admin',13,1);
+INSERT INTO `usermenurights` VALUES ('admin',14,1);
+INSERT INTO `usermenurights` VALUES ('admin',15,1);
+INSERT INTO `usermenurights` VALUES ('admin',16,1);
+INSERT INTO `usermenurights` VALUES ('admin',17,1);
+INSERT INTO `usermenurights` VALUES ('admin',18,1);
+INSERT INTO `usermenurights` VALUES ('admin',19,1);
+INSERT INTO `usermenurights` VALUES ('admin',20,1);
+INSERT INTO `usermenurights` VALUES ('admin',21,1);
+INSERT INTO `usermenurights` VALUES ('admin',22,1);
+INSERT INTO `usermenurights` VALUES ('admin',23,1);
+INSERT INTO `usermenurights` VALUES ('admin',24,1);
+INSERT INTO `usermenurights` VALUES ('admin',25,1);
+INSERT INTO `usermenurights` VALUES ('admin',26,1);
+INSERT INTO `usermenurights` VALUES ('admin',27,1);
+INSERT INTO `usermenurights` VALUES ('admin',28,1);
+INSERT INTO `usermenurights` VALUES ('admin',29,1);
+INSERT INTO `usermenurights` VALUES ('admin',30,1);
+INSERT INTO `usermenurights` VALUES ('admin',31,1);
+INSERT INTO `usermenurights` VALUES ('admin',32,1);
+INSERT INTO `usermenurights` VALUES ('admin',33,1);
+INSERT INTO `usermenurights` VALUES ('admin',34,1);
+INSERT INTO `usermenurights` VALUES ('admin',35,1);
+INSERT INTO `usermenurights` VALUES ('admin',36,1);
+INSERT INTO `usermenurights` VALUES ('admin',37,1);
+INSERT INTO `usermenurights` VALUES ('admin',38,1);
+INSERT INTO `usermenurights` VALUES ('admin',39,1);
+INSERT INTO `usermenurights` VALUES ('admin',40,1);
+INSERT INTO `usermenurights` VALUES ('admin',41,1);
+INSERT INTO `usermenurights` VALUES ('admin',42,1);
+INSERT INTO `usermenurights` VALUES ('admin',43,1);
+INSERT INTO `usermenurights` VALUES ('admin',44,1);
+INSERT INTO `usermenurights` VALUES ('admin',45,1);
+INSERT INTO `usermenurights` VALUES ('admin',46,1);
+INSERT INTO `usermenurights` VALUES ('admin',47,1);
+INSERT INTO `usermenurights` VALUES ('admin',48,1);
+INSERT INTO `usermenurights` VALUES ('admin',49,1);
+INSERT INTO `usermenurights` VALUES ('admin',50,1);
+INSERT INTO `usermenurights` VALUES ('admin',51,1);
+INSERT INTO `usermenurights` VALUES ('admin',52,1);
+INSERT INTO `usermenurights` VALUES ('admin',53,1);
+INSERT INTO `usermenurights` VALUES ('admin',54,1);
+INSERT INTO `usermenurights` VALUES ('admin',55,1);
+INSERT INTO `usermenurights` VALUES ('admin',56,1);
+INSERT INTO `usermenurights` VALUES ('admin',57,1);
+INSERT INTO `usermenurights` VALUES ('admin',58,1);
+INSERT INTO `usermenurights` VALUES ('admin',59,1);
+INSERT INTO `usermenurights` VALUES ('admin',60,1);
+INSERT INTO `usermenurights` VALUES ('admin',61,1);
+INSERT INTO `usermenurights` VALUES ('admin',62,1);
+INSERT INTO `usermenurights` VALUES ('admin',63,1);
+INSERT INTO `usermenurights` VALUES ('admin',64,1);
+INSERT INTO `usermenurights` VALUES ('admin',65,1);
+INSERT INTO `usermenurights` VALUES ('admin',66,1);
+INSERT INTO `usermenurights` VALUES ('admin',67,1);
+INSERT INTO `usermenurights` VALUES ('admin',68,1);
+INSERT INTO `usermenurights` VALUES ('admin',69,1);
+INSERT INTO `usermenurights` VALUES ('admin',70,1);
+INSERT INTO `usermenurights` VALUES ('admin',71,1);
+INSERT INTO `usermenurights` VALUES ('admin',72,1);
+INSERT INTO `usermenurights` VALUES ('admin',73,1);
+INSERT INTO `usermenurights` VALUES ('admin',74,1);
+INSERT INTO `usermenurights` VALUES ('admin',75,1);
+INSERT INTO `usermenurights` VALUES ('admin',76,1);
+INSERT INTO `usermenurights` VALUES ('admin',77,1);
+INSERT INTO `usermenurights` VALUES ('admin',78,1);
+INSERT INTO `usermenurights` VALUES ('admin',79,1);
+INSERT INTO `usermenurights` VALUES ('admin',80,1);
+INSERT INTO `usermenurights` VALUES ('admin',81,1);
+INSERT INTO `usermenurights` VALUES ('admin',82,1);
+INSERT INTO `usermenurights` VALUES ('admin',83,1);
+INSERT INTO `usermenurights` VALUES ('admin',84,1);
+INSERT INTO `usermenurights` VALUES ('admin',85,1);
+INSERT INTO `usermenurights` VALUES ('admin',86,1);
+INSERT INTO `usermenurights` VALUES ('admin',87,1);
+INSERT INTO `usermenurights` VALUES ('admin',88,1);
+INSERT INTO `usermenurights` VALUES ('admin',89,1);
+INSERT INTO `usermenurights` VALUES ('admin',90,1);
+INSERT INTO `usermenurights` VALUES ('admin',91,1);
+INSERT INTO `usermenurights` VALUES ('admin',92,1);
+INSERT INTO `usermenurights` VALUES ('admin',93,1);
+INSERT INTO `usermenurights` VALUES ('admin',94,1);
+INSERT INTO `usermenurights` VALUES ('admin',95,1);
+INSERT INTO `usermenurights` VALUES ('admin',96,1);
+INSERT INTO `usermenurights` VALUES ('admin',97,1);
+INSERT INTO `usermenurights` VALUES ('admin',98,1);
+INSERT INTO `usermenurights` VALUES ('admin',99,1);
+INSERT INTO `usermenurights` VALUES ('admin',100,1);
+INSERT INTO `usermenurights` VALUES ('admin',101,1);
+INSERT INTO `usermenurights` VALUES ('admin',102,1);
+INSERT INTO `usermenurights` VALUES ('admin',103,1);
+INSERT INTO `usermenurights` VALUES ('admin',104,1);
+INSERT INTO `usermenurights` VALUES ('admin',105,1);
+INSERT INTO `usermenurights` VALUES ('admin',106,1);
+INSERT INTO `usermenurights` VALUES ('admin',107,1);
+INSERT INTO `usermenurights` VALUES ('admin',108,1);
+INSERT INTO `usermenurights` VALUES ('admin',109,1);
+INSERT INTO `usermenurights` VALUES ('admin',110,1);
+INSERT INTO `usermenurights` VALUES ('admin',111,1);
+INSERT INTO `usermenurights` VALUES ('admin',112,1);
+INSERT INTO `usermenurights` VALUES ('admin',113,1);
+INSERT INTO `usermenurights` VALUES ('admin',114,1);
+INSERT INTO `usermenurights` VALUES ('admin',115,1);
+INSERT INTO `usermenurights` VALUES ('admin',116,1);
+INSERT INTO `usermenurights` VALUES ('admin',117,1);
+INSERT INTO `usermenurights` VALUES ('admin',118,1);
+INSERT INTO `usermenurights` VALUES ('admin',119,1);
+INSERT INTO `usermenurights` VALUES ('admin',120,1);
+INSERT INTO `usermenurights` VALUES ('admin',121,1);
+INSERT INTO `usermenurights` VALUES ('admin',122,1);
+INSERT INTO `usermenurights` VALUES ('admin',123,1);
+INSERT INTO `usermenurights` VALUES ('admin',124,1);
+INSERT INTO `usermenurights` VALUES ('admin',125,1);
+INSERT INTO `usermenurights` VALUES ('admin',126,1);
+INSERT INTO `usermenurights` VALUES ('admin',127,1);
+INSERT INTO `usermenurights` VALUES ('admin',128,1);
+INSERT INTO `usermenurights` VALUES ('admin',129,1);
+INSERT INTO `usermenurights` VALUES ('admin',130,1);
+INSERT INTO `usermenurights` VALUES ('admin',131,1);
+INSERT INTO `usermenurights` VALUES ('admin',132,1);
+INSERT INTO `usermenurights` VALUES ('admin',133,1);
+INSERT INTO `usermenurights` VALUES ('admin',134,1);
+INSERT INTO `usermenurights` VALUES ('admin',135,1);
+INSERT INTO `usermenurights` VALUES ('admin',136,1);
+INSERT INTO `usermenurights` VALUES ('admin',137,1);
+INSERT INTO `usermenurights` VALUES ('admin',138,1);
+INSERT INTO `usermenurights` VALUES ('admin',139,1);
+INSERT INTO `usermenurights` VALUES ('admin',140,1);
+INSERT INTO `usermenurights` VALUES ('admin',141,1);
+INSERT INTO `usermenurights` VALUES ('admin',142,1);
+INSERT INTO `usermenurights` VALUES ('admin',143,1);
+INSERT INTO `usermenurights` VALUES ('admin',144,1);
+INSERT INTO `usermenurights` VALUES ('admin',145,1);
+INSERT INTO `usermenurights` VALUES ('admin',146,1);
+INSERT INTO `usermenurights` VALUES ('admin',147,1);
+INSERT INTO `usermenurights` VALUES ('admin',148,1);
+INSERT INTO `usermenurights` VALUES ('admin',149,1);
+INSERT INTO `usermenurights` VALUES ('admin',150,1);
+INSERT INTO `usermenurights` VALUES ('admin',151,1);
+INSERT INTO `usermenurights` VALUES ('admin',152,1);
+INSERT INTO `usermenurights` VALUES ('admin',153,1);
+INSERT INTO `usermenurights` VALUES ('admin',154,1);
+INSERT INTO `usermenurights` VALUES ('admin',155,1);
+INSERT INTO `usermenurights` VALUES ('admin',156,1);
+INSERT INTO `usermenurights` VALUES ('admin',157,1);
+INSERT INTO `usermenurights` VALUES ('admin',158,1);
+INSERT INTO `usermenurights` VALUES ('admin',159,1);
+INSERT INTO `usermenurights` VALUES ('admin',160,1);
+INSERT INTO `usermenurights` VALUES ('admin',161,1);
+INSERT INTO `usermenurights` VALUES ('admin',162,1);
+INSERT INTO `usermenurights` VALUES ('admin',163,1);
+INSERT INTO `usermenurights` VALUES ('admin',164,1);
+INSERT INTO `usermenurights` VALUES ('admin',165,1);
+INSERT INTO `usermenurights` VALUES ('admin',166,1);
+INSERT INTO `usermenurights` VALUES ('admin',167,1);
+INSERT INTO `usermenurights` VALUES ('admin',168,1);
+INSERT INTO `usermenurights` VALUES ('admin',169,1);
+INSERT INTO `usermenurights` VALUES ('admin',170,1);
+INSERT INTO `usermenurights` VALUES ('admin',171,1);
+INSERT INTO `usermenurights` VALUES ('admin',172,1);
+INSERT INTO `usermenurights` VALUES ('admin',173,1);
+INSERT INTO `usermenurights` VALUES ('admin',174,1);
+INSERT INTO `usermenurights` VALUES ('admin',175,1);
+INSERT INTO `usermenurights` VALUES ('admin',176,1);
+INSERT INTO `usermenurights` VALUES ('admin',177,1);
+INSERT INTO `usermenurights` VALUES ('admin',178,1);
+INSERT INTO `usermenurights` VALUES ('admin',179,1);
+INSERT INTO `usermenurights` VALUES ('admin',180,1);
+INSERT INTO `usermenurights` VALUES ('admin',181,1);
+INSERT INTO `usermenurights` VALUES ('admin',182,1);
+INSERT INTO `usermenurights` VALUES ('admin',183,1);
+INSERT INTO `usermenurights` VALUES ('admin',184,1);
+INSERT INTO `usermenurights` VALUES ('admin',185,1);
+INSERT INTO `usermenurights` VALUES ('admin',186,1);
+INSERT INTO `usermenurights` VALUES ('admin',187,1);
+INSERT INTO `usermenurights` VALUES ('admin',188,1);
+INSERT INTO `usermenurights` VALUES ('admin',189,1);
+INSERT INTO `usermenurights` VALUES ('admin',190,1);
+INSERT INTO `usermenurights` VALUES ('admin',191,1);
+INSERT INTO `usermenurights` VALUES ('admin',192,1);
+INSERT INTO `usermenurights` VALUES ('admin',193,1);
+INSERT INTO `usermenurights` VALUES ('admin',194,1);
+INSERT INTO `usermenurights` VALUES ('admin',195,1);
+INSERT INTO `usermenurights` VALUES ('admin',196,1);
+INSERT INTO `usermenurights` VALUES ('admin',197,1);
+INSERT INTO `usermenurights` VALUES ('admin',198,1);
+INSERT INTO `usermenurights` VALUES ('admin',199,1);
+INSERT INTO `usermenurights` VALUES ('admin',200,1);
+INSERT INTO `usermenurights` VALUES ('admin',201,1);
+INSERT INTO `usermenurights` VALUES ('admin',202,1);
+INSERT INTO `usermenurights` VALUES ('admin',203,1);
+INSERT INTO `usermenurights` VALUES ('admin',204,1);
+INSERT INTO `usermenurights` VALUES ('admin',205,1);
+INSERT INTO `usermenurights` VALUES ('admin',206,1);
+INSERT INTO `usermenurights` VALUES ('admin',207,1);
+INSERT INTO `usermenurights` VALUES ('admin',208,1);
+INSERT INTO `usermenurights` VALUES ('admin',209,1);
+INSERT INTO `usermenurights` VALUES ('admin',210,1);
+INSERT INTO `usermenurights` VALUES ('admin',211,1);
+INSERT INTO `usermenurights` VALUES ('admin',212,1);
+INSERT INTO `usermenurights` VALUES ('admin',213,1);
+INSERT INTO `usermenurights` VALUES ('admin',214,1);
+INSERT INTO `usermenurights` VALUES ('admin',215,1);
+INSERT INTO `usermenurights` VALUES ('admin',216,1);
+INSERT INTO `usermenurights` VALUES ('admin',217,1);
+INSERT INTO `usermenurights` VALUES ('admin',218,1);
+INSERT INTO `usermenurights` VALUES ('admin',219,1);
+INSERT INTO `usermenurights` VALUES ('admin',220,1);
+INSERT INTO `usermenurights` VALUES ('admin',221,1);
+INSERT INTO `usermenurights` VALUES ('admin',222,1);
+INSERT INTO `usermenurights` VALUES ('admin',223,1);
+INSERT INTO `usermenurights` VALUES ('admin',224,1);
+INSERT INTO `usermenurights` VALUES ('admin',225,1);
+INSERT INTO `usermenurights` VALUES ('admin',226,1);
+INSERT INTO `usermenurights` VALUES ('admin',227,1);
+
+--
 -- Dumping data for table `woitems`
 --
 
@@ -12553,7 +14895,7 @@ INSERT INTO `workorders` VALUES (13,'TOR','2010-10-15','2010-08-14',0,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','weberp','Demonstration user','','','','','','MEL',8,'2011-02-15 19:35:19','','A4','1,1,1,1,1,1,1,1,1,1',0,50,'jelly','hi_ID.utf8',0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','phil@logicworks.co.nz','MEL',8,'2011-03-18 18:19:16','','A4','1,1,1,1,1,1,1,1,1,1',0,50,'jelly','en_GB.utf8',0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -12561,6 +14903,6 @@ INSERT INTO `www_users` VALUES ('admin','weberp','Demonstration user','','','','
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-02-15 18:44:58
+-- Dump completed on 2011-03-20 10:54:34
 TRUNCATE TABLE audittrail;
 SET FOREIGN_KEY_CHECKS = 1;
