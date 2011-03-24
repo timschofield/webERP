@@ -2,10 +2,34 @@
 
 /* $Id$*/
 
-/* $Revision: 1.5 $ */
-
-//$PageSecurity = 2;
 include('includes/session.inc');
+
+if (!isset($_GET['TransferNo'])){
+	if (isset($_POST['TransferNo'])){
+		if (is_numeric($_POST['TransferNo'])){
+			$_GET['TransferNo'] = $_POST['TransferNo'];
+		} else {
+			prnMsg(_('The entered transfer reference is expected to be numeric'),'error');
+			unset($_POST['TransferNo']);
+		}
+	}
+	if (!isset($_GET['TransferNo'])){ //still not set from a post then
+	//open a form for entering a transfer number
+		$title = _('Print Stock Transfer');
+		include('includes/header.inc');
+		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print Transfer Note') . '" alt="" />' . ' ' . $title.'</p><br />';
+		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post" name="form">';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<table class="selection"><tr>';
+		echo '<td>'._('Print Stock Transfer Note').' : '.'</td>';
+		echo '<td><input type=text class="number"  name="TransferNo" maxlength=10 size=11 /></td></tr>';
+		echo '</table>';
+		echo '<br><div class="centre"><input type="submit" name="Process" value="' . _('Print Transfer Note') . '"></div></form>';
+		include('includes/footer.inc');
+		exit();
+	}
+}
+
 
 include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Stock Transfer Form') );
@@ -18,55 +42,42 @@ $FontSize =10;
 
 /*Print out the category totals */
 
-$sql="SELECT stockid, transno, loccode, trandate, qty from stockmoves where transno='".$_GET['TransferNo']."' and type=16";
+$sql="SELECT stockmoves.stockid, 
+			description,
+			transno, 
+			stockmoves.loccode, 
+			locationname,
+			trandate, 
+			qty 
+		FROM stockmoves 
+		INNER JOIN stockmaster
+		ON stockmoves.stockid=stockmaster.stockid
+		INNER JOIN locations
+		ON stockmoves.loccode=locations.loccode
+		WHERE transno='".$_GET['TransferNo']."' 
+		AND type=16";
 $result=DB_query($sql, $db);
-$myrow=DB_fetch_array($result);
-$StockID=$myrow[0];
-$FromCode=$myrow[2];
-$Date=$myrow[3];
-
-$myrow=DB_fetch_array($result);
-$ToCode=$myrow[2];
-$Quantity=$myrow[4];
-
-$sql="select description from stockmaster where stockid='".$StockID."'";
-$result=DB_query($sql, $db);
-
 if (DB_num_rows($result) == 0){
+	$title = _('Print Stock Transfer - Error');
 	include ('includes/header.inc');
-	prnMsg(_('There are no decription for '.$StockID), 'warn');
+	prnMsg(_('There was no transfer found with number') . ': ' . $_GET['TransferNo'], 'error');
+	echo '<a href="PDFStockTransfer.php">' . _('Try Again') .'</a>';
 	include ('includes/footer.inc');
 	exit;
 }
-
+//get the first stock movement which will be the quantity taken from the initiating location
 $myrow=DB_fetch_array($result);
-$Description=$myrow[0];
+$StockID=$myrow['stockid'];
+$FromCode=$myrow['loccode'];
+$From = $myrow['locationname'];
+$Date=$myrow['trandate'];
+//get the next row which will be the quantity received in the receiving location
+$myNextRow=DB_fetch_array($result);
+$ToCode=$myNextRow['loccode'];
+$To = $myrow['locationname'];
+$Quantity=$myNextRow['qty'];
+$Description=$myNextRow['description'];
 
-$sql="select locationname from locations where loccode='".$FromCode."'";
-$result=DB_query($sql, $db);
-
-if (DB_num_rows($result) == 0){
-	include ('includes/header.inc');
-	prnMsg(_('There are no location From for '.$StockID), 'warn');
-	include ('includes/footer.inc');
-	exit;
-}
-
-$myrow=DB_fetch_array($result);
-$From=$myrow[0];
-
-$sql="select locationname from locations where loccode='".$ToCode."'";
-$result=DB_query($sql, $db);
-
-if (DB_num_rows($result) == 0){
-	include ('includes/header.inc');
-	prnMsg(_('There are no location To for '.$StockID), 'warn');
-	include ('includes/footer.inc');
-	exit;
-}
-
-$myrow=DB_fetch_array($result);
-$To=$myrow[0];
 
 $LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos-10,300-$Left_Margin,$FontSize, $StockID);
 $LeftOvers = $pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize, $Description);
@@ -78,30 +89,7 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-70,300-$Left_Margin,$FontSize,
 
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-120,300-$Left_Margin,$FontSize, _('Signed for ').$From.'______________________');
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-160,300-$Left_Margin,$FontSize, _('Signed for ').$To.'______________________');
-/*
-$pdfcode = $pdf->output();
-$len = strlen($pdfcode);
 
-if ($len<=20){
-	$title = _('Print Price List Error');
-	include('includes/header.inc');
-	prnMsg(_('There were no stock transfer details to print'),'warn');
-	echo '<br><a href="'.$rootpath.'/index.php?' . SID . '">'. _('Back to the menu').'</a>';
-	include('includes/footer.inc');
-	exit;
-} else {
-	header('Content-type: application/pdf');
-	header('Content-Length: ' . $len);
-	header('Content-Disposition: inline; filename=StockTransfer.pdf');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
-
-	$pdf->Output('StockTransfer.pdf', 'I');
-}
-*/
-$pdf->OutputD($_SESSION['DatabaseName'] . '_StockTransfer_' . date('Y-m-d') . '.pdf');//UldisN
-$pdf->__destruct(); //UldisN
-
- /*end of else not PrintPDF */
+$pdf->OutputD($_SESSION['DatabaseName'] . '_StockTransfer_' . date('Y-m-d') . '.pdf');
+$pdf->__destruct(); 
 ?>
