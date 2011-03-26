@@ -35,17 +35,27 @@ if (isset($_POST['submit'])) {
 
 	if ($_POST['codeexpense']=='' OR $_POST['codeexpense']==' ' OR $_POST['codeexpense']=='  ') {
 		$InputError = 1;
-		prnMsg('<br>' . _('The Expense type  code cannot be an empty string or spaces'),'error');
+		prnMsg(_('The Expense type  code cannot be an empty string or spaces'),'error');
 		$Errors[$i] = 'PcExpenses';
 		$i++;
 	} elseif (strlen($_POST['codeexpense']) >20) {
 		$InputError = 1;
-		echo prnMsg(_('The Expense code must be twenty characters or less long'),'error');
+		prnMsg(_('The Expense code must be twenty characters or less long'),'error');
 		$Errors[$i] = 'PcExpenses';
 		$i++;
-	}elseif (strlen($_POST['description']) >50) {
+	}elseif (ContainsIllegalCharacters($_POST['codeexpense'])){
 		$InputError = 1;
-		echo prnMsg(_('The tab code must be Fifty characters or less long'),'error');
+		prnMsg(_('The Expense code cannot contain any of the following characters " \' - &'),'error');
+		$Errors[$i] = 'PcExpenses';
+		$i++;
+	} elseif (ContainsIllegalCharacters($_POST['description'])){
+		$InputError = 1;
+		prnMsg(_('The Expense description cannot contain any of the following characters " \' - &'),'error');
+		$Errors[$i] = 'TypeTabCode';
+		$i++;
+	} elseif (strlen($_POST['description']) >50) {
+		$InputError = 1;
+		prnMsg(_('The tab code must be Fifty characters or less long'),'error');
 		$Errors[$i] = 'TypeTabCode';
 		$i++;
 	}
@@ -71,7 +81,7 @@ if (isset($_POST['submit'])) {
 
 		if ( $checkrow[0] > 0 ) {
 			$InputError = 1;
-			prnMsg( _('The Expense type ') . $_POST['codeexpense'] . _(' already exist.'),'error');
+			prnMsg( _('The Expense type ') . $_POST['codeexpense'] . _(' already exists.'),'error');
 		} else {
 
 			// Add new record on submit

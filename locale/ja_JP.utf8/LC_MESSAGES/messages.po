@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UTF-8 Japanese 3.08\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-20 10:47+1300\n"
+"POT-Creation-Date: 2011-03-26 16:22+1200\n"
 "PO-Revision-Date: 2010-03-28 20:17+0800\n"
 "Last-Translator: \n"
 "Language-Team: Japanese <weberp@okid.sakura.ne.jp>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2010-09-16 09:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: AccountGroups.php:9 index.php:1268
+#: AccountGroups.php:9 index.php:1272
 msgid "Account Groups"
 msgstr "勘定グループ"
 
@@ -147,7 +147,7 @@ msgstr ""
 #: Locations.php:264 Locations.php:272 Locations.php:280 Locations.php:288
 #: Locations.php:296 Locations.php:304 MRPDemandTypes.php:89
 #: PaymentMethods.php:146 PaymentTerms.php:147 PaymentTerms.php:154
-#: PcExpenses.php:119 SalesCategories.php:127 SalesCategories.php:135
+#: PcExpenses.php:129 SalesCategories.php:127 SalesCategories.php:135
 #: SalesPeople.php:144 SalesPeople.php:151 SalesTypes.php:147
 #: SalesTypes.php:157 Shippers.php:82 Shippers.php:94 StockCategories.php:182
 #: Stocks.php:469 Stocks.php:478 Stocks.php:486 Stocks.php:494 Stocks.php:502
@@ -230,7 +230,7 @@ msgstr "勘定グループを得ることができなかったのは"
 #: SelectCompletedOrder.php:13 SelectContract.php:81 SelectCreditItems.php:202
 #: SelectCreditItems.php:270 SelectCustomer.php:323 SelectGLAccount.php:19
 #: SelectGLAccount.php:79 SelectOrderItems.php:607 SelectOrderItems.php:1431
-#: SelectOrderItems.php:1555 SelectProduct.php:456 SelectSalesOrder.php:457
+#: SelectOrderItems.php:1555 SelectProduct.php:473 SelectSalesOrder.php:457
 #: SelectSupplier.php:9 SelectSupplier.php:198 SelectWorkOrder.php:11
 #: SelectWorkOrder.php:147 ShipmentCosting.php:13 Shipments.php:18
 #: Shippers.php:123 Shippers.php:159 Shipt_Select.php:10
@@ -347,8 +347,8 @@ msgstr "No"
 #: FreightCosts.php:243 GeocodeSetup.php:169 GLAccounts.php:319 GLTags.php:62
 #: Labels.php:414 Locations.php:380 MRPDemands.php:304 MRPDemandTypes.php:122
 #: PaymentMethods.php:205 PaymentTerms.php:203 PcAssignCashToTab.php:251
-#: PcClaimExpensesFromTab.php:229 PcExpenses.php:176 PcTabs.php:188
-#: PcTypeTabs.php:171 PO_AuthorisationLevels.php:148 Prices_Customer.php:283
+#: PcClaimExpensesFromTab.php:229 PcExpenses.php:186 PcTabs.php:188
+#: PcTypeTabs.php:174 PO_AuthorisationLevels.php:148 Prices_Customer.php:283
 #: Prices.php:227 PurchData.php:207 SalesCategories.php:263
 #: SalesGLPostings.php:135 SalesGLPostings.php:247 SalesPeople.php:210
 #: SalesTypes.php:206 SelectCustomer.php:610 SelectCustomer.php:626
@@ -375,8 +375,8 @@ msgstr "編集"
 #: GLAccounts.php:320 GLJournal.php:401 Labels.php:414 Locations.php:381
 #: MRPDemands.php:305 MRPDemandTypes.php:123 PaymentMethods.php:206
 #: Payments.php:958 PaymentTerms.php:204 PcAssignCashToTab.php:255
-#: PcClaimExpensesFromTab.php:230 PcExpenses.php:177 PcExpensesTypeTab.php:161
-#: PcTabs.php:189 PcTypeTabs.php:172 PO_AuthorisationLevels.php:150
+#: PcClaimExpensesFromTab.php:230 PcExpenses.php:187 PcExpensesTypeTab.php:164
+#: PcTabs.php:189 PcTypeTabs.php:175 PO_AuthorisationLevels.php:150
 #: PO_Items.php:764 Prices_Customer.php:284 Prices.php:228 PurchData.php:208
 #: SalesAnalReptCols.php:294 SalesAnalRepts.php:305 SalesCategories.php:264
 #: SalesGLPostings.php:136 SalesGLPostings.php:248 SalesPeople.php:211
@@ -453,7 +453,7 @@ msgstr "勘定のセクション"
 msgid "Enter Information"
 msgstr "情報入力"
 
-#: AccountSections.php:9 index.php:1273
+#: AccountSections.php:9 index.php:1277
 msgid "Account Sections"
 msgstr "勘定セクション"
 
@@ -554,8 +554,8 @@ msgstr "税カテゴリ名称は空白にできない"
 #: AddCustomerContacts.php:59 AddCustomerNotes.php:49
 #: AddCustomerTypeNotes.php:49 Areas.php:74 CustomerTypes.php:71
 #: DeliveryDetails.php:748 Factors.php:117 FixedAssetItems.php:236
-#: PcAssignCashToTab.php:73 PcClaimExpensesFromTab.php:61 PcExpenses.php:60
-#: PcTabs.php:60 PcTypeTabs.php:59 PO_Items.php:413 SalesAnalReptCols.php:129
+#: PcAssignCashToTab.php:73 PcClaimExpensesFromTab.php:61 PcExpenses.php:70
+#: PcTabs.php:60 PcTypeTabs.php:62 PO_Items.php:413 SalesAnalReptCols.php:129
 #: SalesPeople.php:94 SalesTypes.php:63 Stocks.php:353 Suppliers.php:514
 #: SupplierTypes.php:69
 msgid "has been updated"
@@ -894,8 +894,8 @@ msgstr "取り出すことができなかったのは"
 #: SuppPaymentRun.php:111 SuppPaymentRun.php:186 SuppPaymentRun.php:216
 #: WorkOrderCosting.php:393 WorkOrderReceive.php:272 WOSerialNos.php:44
 #: Z_ChangeBranchCode.php:108 Z_ChangeCustomerCode.php:92
-#: Z_ChangeSupplierCode.php:119 Z_DeleteCreditNote.php:57
-#: Z_DeleteInvoice.php:83 includes/PDFPaymentRun_PymtFooter.php:59
+#: Z_DeleteCreditNote.php:57 Z_DeleteInvoice.php:83
+#: includes/PDFPaymentRun_PymtFooter.php:59
 #: includes/PDFPaymentRun_PymtFooter.php:89
 #: includes/PDFPaymentRun_PymtFooter.php:118
 #: includes/PDFPaymentRun_PymtFooter.php:154
@@ -1090,8 +1090,8 @@ msgstr "地域コード"
 #: Areas.php:133 CustomerTypes.php:166 Factors.php:142
 #: FixedAssetCategories.php:137 GLAccounts.php:208 Locations.php:328
 #: MRPDemands.php:248 PcAssignCashToTab.php:118 PcClaimExpensesFromTab.php:109
-#: PcExpenses.php:127 PcExpensesTypeTab.php:83 PcTabs.php:124
-#: PcTypeTabs.php:134 SalesAnalReptCols.php:215 SalesCategories.php:139
+#: PcExpenses.php:137 PcExpensesTypeTab.php:86 PcTabs.php:124
+#: PcTypeTabs.php:137 SalesAnalReptCols.php:215 SalesCategories.php:139
 #: SalesTypes.php:163 StockCategories.php:199 Suppliers.php:639
 #: SupplierTypes.php:153 Z_DeleteInvoice.php:142
 msgid "has been deleted"
@@ -1144,7 +1144,7 @@ msgid "Table "
 msgstr "有効"
 
 #: AuditTrail.php:68 MRPReport.php:789 PO_SelectPurchOrder.php:363
-#: SelectContract.php:196 SelectProduct.php:710
+#: SelectContract.php:196 SelectProduct.php:727
 msgid "View"
 msgstr "伝票"
 
@@ -2080,16 +2080,16 @@ msgstr "レベル"
 #: InventoryQuantities.php:222 Labels.php:413 MRPDemands.php:92
 #: MRPDemands.php:290 MRPDemandTypes.php:115 MRPPlannedWorkOrders.php:258
 #: MRPReport.php:556 MRPReport.php:760 MRPReschedules.php:202
-#: MRPShortages.php:299 PaymentTerms.php:180 PcExpenses.php:149
-#: PcExpenses.php:238 PcExpensesTypeTab.php:145 PcReportTab.php:174
-#: PcTypeTabs.php:155 PDFOrdersInvoiced.php:345 PDFOrderStatus.php:313
+#: MRPShortages.php:299 PaymentTerms.php:180 PcExpenses.php:159
+#: PcExpenses.php:248 PcExpensesTypeTab.php:148 PcReportTab.php:174
+#: PcTypeTabs.php:158 PDFOrdersInvoiced.php:345 PDFOrderStatus.php:313
 #: PDFPrintLabel.php:239 PO_Items.php:715 PO_Items.php:1042
 #: PO_SelectOSPurchOrder.php:213 PO_SelectPurchOrder.php:178
 #: PricesByCost.php:119 ReorderLevelLocation.php:55 ReorderLevel.php:266
 #: ReverseGRN.php:377 SalesCategories.php:427 SelectAsset.php:225
 #: SelectCompletedOrder.php:535 SelectContract.php:156
 #: SelectCreditItems.php:956 SelectOrderItems.php:1436
-#: SelectOrderItems.php:1620 SelectProduct.php:476 SelectProduct.php:681
+#: SelectOrderItems.php:1620 SelectProduct.php:493 SelectProduct.php:698
 #: SelectSalesOrder.php:497 SelectWorkOrder.php:185 Shipt_Select.php:184
 #: StockCategories.php:218 StockDispatch.php:357 StockDispatch.php:364
 #: StockLocStatus.php:149 StockQuantityByDate.php:100 SuppCreditGRNs.php:75
@@ -2201,7 +2201,7 @@ msgstr "内容"
 #: SelectCreditItems.php:942 SelectCustomer.php:331 SelectCustomer.php:337
 #: SelectCustomer.php:344 SelectCustomer.php:352 SelectCustomer.php:396
 #: SelectGLAccount.php:92 SelectOrderItems.php:619 SelectOrderItems.php:622
-#: SelectOrderItems.php:1589 SelectProduct.php:483 SelectSalesOrder.php:485
+#: SelectOrderItems.php:1589 SelectProduct.php:500 SelectSalesOrder.php:485
 #: SelectSupplier.php:206 SelectWorkOrder.php:173 Shipt_Select.php:170
 #: SuppFixedAssetChgs.php:113 SupplierTenders.php:358 WorkOrderEntry.php:581
 #: WorkOrderIssue.php:638
@@ -2216,7 +2216,7 @@ msgstr "一部入力 of "
 
 #: BOMInquiry.php:25 BOMs.php:802 MRPDemands.php:331 MRPReport.php:563
 #: PO_SelectOSPurchOrder.php:202 PO_SelectPurchOrder.php:170
-#: SalesCategories.php:426 SelectProduct.php:483 Shipt_Select.php:170
+#: SalesCategories.php:426 SelectProduct.php:500 Shipt_Select.php:170
 #: StockAdjustments.php:71 StockAdjustments.php:326 StockCounts.php:97
 #: StockCounts.php:132 StockMovements.php:38 StockReorderLevel.php:44
 #: StockStatus.php:61 StockTransfers.php:28 StockTransfers.php:431
@@ -2231,7 +2231,7 @@ msgstr "品目コード"
 #: MRPDemands.php:335 MRPReport.php:571 PO_Header.php:521 PO_Items.php:1029
 #: SelectAsset.php:101 SelectCreditItems.php:213 SelectCreditItems.php:947
 #: SelectCustomer.php:419 SelectGLAccount.php:98 SelectOrderItems.php:627
-#: SelectOrderItems.php:1596 SelectProduct.php:491 SelectSupplier.php:212
+#: SelectOrderItems.php:1596 SelectProduct.php:508 SelectSupplier.php:212
 #: SelectSupplier.php:245 SupplierTenders.php:366 WorkOrderEntry.php:585
 #: WorkOrderIssue.php:642
 msgid "Search Now"
@@ -2240,7 +2240,7 @@ msgstr "検索"
 #: BOMInquiry.php:36 BOMs.php:738 ContractBOM.php:51 MRPDemands.php:57
 #: MRPReport.php:589 PO_Items.php:826 PO_SelectOSPurchOrder.php:64
 #: PO_SelectPurchOrder.php:43 SelectCompletedOrder.php:95
-#: SelectCreditItems.php:276 SelectProduct.php:504 SelectSalesOrder.php:348
+#: SelectCreditItems.php:276 SelectProduct.php:521 SelectSalesOrder.php:348
 #: SelectWorkOrder.php:35 Shipt_Select.php:62 SupplierTenders.php:378
 #: WorkOrderEntry.php:62 WorkOrderIssue.php:380
 msgid ""
@@ -2269,7 +2269,7 @@ msgstr ""
 #: ReorderLevelLocation.php:203 SalesPeople.php:184
 #: SelectCompletedOrder.php:534 SelectCreditItems.php:220
 #: SelectCreditItems.php:955 SelectCustomer.php:459 SelectGLAccount.php:105
-#: SelectOrderItems.php:1435 SelectOrderItems.php:1619 SelectProduct.php:680
+#: SelectOrderItems.php:1435 SelectOrderItems.php:1619 SelectProduct.php:697
 #: SelectSalesOrder.php:496 SelectSupplier.php:249 SelectWorkOrder.php:184
 #: Shipt_Select.php:183 SpecialOrder.php:134 SupplierTenders.php:488
 #: SuppPriceList.php:272 TopItems.php:159 WorkOrderEntry.php:596
@@ -2285,7 +2285,7 @@ msgstr "コード"
 #: PO_SelectOSPurchOrder.php:216 PO_SelectPurchOrder.php:181
 #: SelectCompletedOrder.php:539 SelectCreditItems.php:957
 #: SelectOrderItems.php:1437 SelectOrderItems.php:1621 SelectProduct.php:108
-#: SelectProduct.php:683 SelectSalesOrder.php:499 SelectWorkOrder.php:187
+#: SelectProduct.php:700 SelectSalesOrder.php:499 SelectWorkOrder.php:187
 #: Shipments.php:387 Shipments.php:465 Shipt_Select.php:187
 #: StockLocTransferReceive.php:435 SupplierTenders.php:490 TopItems.php:162
 #: WorkOrderCosting.php:86 WorkOrderEntry.php:598 WorkOrderIssue.php:661
@@ -2417,7 +2417,7 @@ msgstr "ドリルダウン"
 #: PaymentTerms.php:188 PaymentTerms.php:194 PO_SelectOSPurchOrder.php:481
 #: SalesAnalReptCols.php:280 SelectProduct.php:106 SelectProduct.php:144
 #: SelectProduct.php:154 SelectProduct.php:237 SelectProduct.php:238
-#: SelectProduct.php:702
+#: SelectProduct.php:719
 msgid "N/A"
 msgstr "該当無"
 
@@ -2609,7 +2609,7 @@ msgstr "レベル"
 msgid "Location"
 msgstr "場所"
 
-#: BOMs.php:520 index.php:846 WhereUsedInquiry.php:66
+#: BOMs.php:520 index.php:850 WhereUsedInquiry.php:66
 msgid "Work Centre"
 msgstr "作業場"
 
@@ -2730,7 +2730,7 @@ msgid "COGS Account"
 msgstr "売上原価勘定"
 
 #: COGSGLPostings.php:200 CustomerReceipt.php:959 GLJournal.php:360
-#: GLTransInquiry.php:47 index.php:1258 Payments.php:937
+#: GLTransInquiry.php:47 index.php:1262 Payments.php:937
 #: SupplierTransInquiry.php:146 TaxAuthorities.php:147 TaxAuthorities.php:148
 msgid "GL Account"
 msgstr "GL勘定"
@@ -2756,7 +2756,7 @@ msgstr "価格表"
 msgid "Post to GL account"
 msgstr "ＧＬ勘定転記"
 
-#: CompanyPreferences.php:10 index.php:935
+#: CompanyPreferences.php:10 index.php:939
 msgid "Company Preferences"
 msgstr "会社設定"
 
@@ -4253,7 +4253,7 @@ msgstr "在庫品目の検索"
 #: SalesGraph.php:93 SalesGraph.php:111 SalesGraph.php:113 SalesGraph.php:134
 #: SalesGraph.php:136 SalesGraph.php:168 SalesInquiry.php:1060
 #: SalesInquiry.php:1103 SelectCreditItems.php:923 SelectOrderItems.php:1561
-#: SelectOrderItems.php:1564 SelectProduct.php:464 SelectProduct.php:466
+#: SelectOrderItems.php:1564 SelectProduct.php:481 SelectProduct.php:483
 #: StockDispatch.php:283 StockDispatch.php:285 StockLocStatus.php:62
 #: StockLocStatus.php:64 StockLocStatus.php:82 StockLocStatus.php:86
 #: StockLocStatus.php:90 StockQuantityByDate.php:25 SupplierTenders.php:337
@@ -4287,9 +4287,9 @@ msgstr "イメージ"
 
 #: ContractBOM.php:368 CounterSales.php:2001 FixedAssetItems.php:465
 #: FixedAssetItems.php:469 PO_Items.php:1068 SelectCreditItems.php:969
-#: SelectOrderItems.php:1449 SelectOrderItems.php:1628 Stocks.php:709
-#: Stocks.php:713 SupplierTenders.php:517 WorkOrderEntry.php:616
-#: WorkOrderIssue.php:676
+#: SelectOrderItems.php:1449 SelectOrderItems.php:1628 SelectProduct.php:408
+#: Stocks.php:709 Stocks.php:713 SupplierTenders.php:517
+#: WorkOrderEntry.php:616 WorkOrderIssue.php:676
 msgid "No Image"
 msgstr "イメージ無"
 
@@ -5792,7 +5792,7 @@ msgstr "価格"
 
 #: CounterSales.php:2166 CounterSales.php:2289 MRPReport.php:750
 #: SelectAsset.php:218 SelectCustomer.php:454 SelectCustomer.php:530
-#: SelectOrderItems.php:1618 SelectOrderItems.php:1738 SelectProduct.php:671
+#: SelectOrderItems.php:1618 SelectOrderItems.php:1738 SelectProduct.php:688
 #: SelectSupplier.php:242 SelectSupplier.php:302
 msgid "Next"
 msgstr "次へ"
@@ -6616,7 +6616,7 @@ msgstr "電話"
 #: PrintCustTrans.php:746 PrintCustTransPortrait.php:716
 #: PrintCustTransPortrait.php:907 PrintCustTransPortrait.php:951
 #: SupplierContacts.php:145 SupplierContacts.php:246 SuppLoginSetup.php:240
-#: UserSettings.php:179 WWW_Users.php:263 includes/PDFPickingListHeader.inc:25
+#: UserSettings.php:178 WWW_Users.php:263 includes/PDFPickingListHeader.inc:25
 #: includes/PDFStatementPageHeader.inc:67 includes/PDFTransPageHeader.inc:119
 #: includes/PDFTransPageHeaderPortrait.inc:109
 #: includes/PO_PDFOrderPageHeader.inc:29
@@ -6643,7 +6643,7 @@ msgid "Report Size"
 msgstr "レポートサイズ"
 
 #: CustLoginSetup.php:282 CustLoginSetup.php:534 SuppLoginSetup.php:245
-#: SuppLoginSetup.php:457 UserSettings.php:149 WWW_Users.php:271
+#: SuppLoginSetup.php:457 UserSettings.php:148 WWW_Users.php:271
 #: WWW_Users.php:549
 msgid "Theme"
 msgstr "テーマ"
@@ -6904,8 +6904,8 @@ msgstr "割当処理"
 #: CustomerAllocations.php:426 CustomerReceipt.php:1018 Labels.php:268
 #: Payments.php:931 PcAssignCashToTab.php:156 PcAssignCashToTab.php:355
 #: PcAuthorizeExpenses.php:294 PcClaimExpensesFromTab.php:150
-#: PcClaimExpensesFromTab.php:359 PcExpenses.php:263 PcExpensesTypeTab.php:123
-#: PcExpensesTypeTab.php:207 PcTabs.php:386 PcTypeTabs.php:232
+#: PcClaimExpensesFromTab.php:359 PcExpenses.php:273 PcExpensesTypeTab.php:126
+#: PcExpensesTypeTab.php:210 PcTabs.php:386 PcTypeTabs.php:235
 #: SalesTypes.php:273 SelectCreditItems.php:899 Z_CheckDebtorsControl.php:67
 msgid "Cancel"
 msgstr "取消"
@@ -7351,7 +7351,7 @@ msgstr "信用限度"
 
 #: CustomerInquiry.php:127 CustomerReceipt.php:900 Customers.php:560
 #: Customers.php:818 Customers.php:821 Customers.php:837 Customers.php:855
-#: Customers.php:857 index.php:1050
+#: Customers.php:857 index.php:1054
 msgid "Credit Status"
 msgstr "信用状況"
 
@@ -7711,8 +7711,8 @@ msgstr "受取タイプ"
 #: GLJournal.php:352 OffersReceived.php:100 Payments.php:931
 #: PcAssignCashToTab.php:156 PcAssignCashToTab.php:355
 #: PcAuthorizeExpenses.php:294 PcClaimExpensesFromTab.php:150
-#: PcClaimExpensesFromTab.php:359 PcExpenses.php:263 PcExpensesTypeTab.php:123
-#: PcExpensesTypeTab.php:207 PcTabs.php:386 PcTypeTabs.php:232
+#: PcClaimExpensesFromTab.php:359 PcExpenses.php:273 PcExpensesTypeTab.php:126
+#: PcExpensesTypeTab.php:210 PcTabs.php:386 PcTypeTabs.php:235
 #: SalesTypes.php:273 SupplierTypes.php:247 Z_CheckDebtorsControl.php:66
 msgid "Accept"
 msgstr "入力"
@@ -8055,7 +8055,7 @@ msgid ""
 "main menu and set at least one up first"
 msgstr ""
 
-#: Customers.php:550 Customers.php:799 Customers.php:802 index.php:1055
+#: Customers.php:550 Customers.php:799 Customers.php:802 index.php:1059
 #: PaymentTerms.php:13 PO_Header.php:1034 PrintCustTrans.php:324
 #: PrintCustTransPortrait.php:437 Suppliers.php:680 Suppliers.php:833
 #: includes/PO_PDFOrderPageHeader.inc:62 includes/PO_PDFOrderPageHeader.inc:64
@@ -8177,12 +8177,12 @@ msgstr "為替レート"
 msgid "Click to preview the credit"
 msgstr ""
 
-#: CustomerTypes.php:8 CustomerTypes.php:23 index.php:1040
+#: CustomerTypes.php:8 CustomerTypes.php:23 index.php:1044
 #, fuzzy
 msgid "Customer Types"
 msgstr "得意先"
 
-#: CustomerTypes.php:8 index.php:1477 index.php:1480 SupplierTypes.php:8
+#: CustomerTypes.php:8 index.php:1481 index.php:1484 SupplierTypes.php:8
 msgid "Maintenance"
 msgstr "メンテナンス"
 
@@ -8220,8 +8220,8 @@ msgstr "終了得意先コード"
 msgid "The customer type "
 msgstr "終了得意先コード"
 
-#: CustomerTypes.php:85 PcExpenses.php:74 PcTabs.php:74 PcTypeTabs.php:73
-#: SalesTypes.php:77 SupplierTypes.php:83
+#: CustomerTypes.php:85 PcTabs.php:74 PcTypeTabs.php:76 SalesTypes.php:77
+#: SupplierTypes.php:83
 msgid " already exist."
 msgstr ""
 
@@ -8231,7 +8231,7 @@ msgid "Customer type"
 msgstr "得意先参照"
 
 #: CustomerTypes.php:95 PcAssignCashToTab.php:97 PcClaimExpensesFromTab.php:88
-#: PcExpenses.php:86 PcExpensesTypeTab.php:58 PcTabs.php:97 PcTypeTabs.php:84
+#: PcExpenses.php:96 PcExpensesTypeTab.php:61 PcTabs.php:97 PcTypeTabs.php:87
 #: PO_Items.php:259 SalesTypes.php:88 SelectSalesOrder.php:135
 #: SelectSalesOrder.php:300 SpecialOrder.php:400 SupplierTypes.php:93
 msgid "has been created"
@@ -10686,7 +10686,7 @@ msgstr "郵便コード"
 msgid "Depn C/Fwd"
 msgstr "次期繰越残高"
 
-#: FixedAssetTransfer.php:7 index.php:1314
+#: FixedAssetTransfer.php:7 index.php:1318
 #, fuzzy
 msgid "Change Asset Location"
 msgstr "在庫場所"
@@ -10697,7 +10697,7 @@ msgid "In Asset Category"
 msgstr "在庫カテゴリ内"
 
 #: FixedAssetTransfer.php:50 FixedAssetTransfer.php:61 MRPReport.php:556
-#: MRPReport.php:563 SelectProduct.php:476 SelectProduct.php:483
+#: MRPReport.php:563 SelectProduct.php:493 SelectProduct.php:500
 #: SupplierTenders.php:349 SupplierTenders.php:358
 #, fuzzy
 msgid "Enter partial"
@@ -10969,7 +10969,7 @@ msgstr ""
 #: PO_SelectOSPurchOrder.php:497 SelectContract.php:151 SelectContract.php:181
 #: SelectRecurringSalesOrder.php:78 SelectSalesOrder.php:744
 #: SelectSalesOrder.php:761 SelectWorkOrder.php:297 Shipt_Select.php:322
-#: SuppInvGRNs.php:134 UserSettings.php:203 Z_poEditLangHeader.php:106
+#: SuppInvGRNs.php:134 UserSettings.php:202 Z_poEditLangHeader.php:106
 #: Z_poEditLangModule.php:168 Z_poEditLangRemaining.php:137
 #, php-format
 msgid "Modify"
@@ -11117,7 +11117,7 @@ msgstr "入力されたコードは"
 msgid "Geocode Generate"
 msgstr "レコード追加済"
 
-#: geocode.php:26 GeocodeSetup.php:134 GeocodeSetup.php:225 index.php:1010
+#: geocode.php:26 GeocodeSetup.php:134 GeocodeSetup.php:225 index.php:1014
 msgid "Geocode Setup"
 msgstr ""
 
@@ -11601,8 +11601,8 @@ msgid ""
 msgstr ""
 "定義済み銀行勘定の1つが使われるので、この勘定を削除することができません"
 
-#: GLAccounts.php:238 GLAccounts.php:241 GLAccounts.php:297 PcExpenses.php:150
-#: PcExpenses.php:240 SelectGLAccount.php:21 SuppTransGLAnalysis.php:145
+#: GLAccounts.php:238 GLAccounts.php:241 GLAccounts.php:297 PcExpenses.php:160
+#: PcExpenses.php:250 SelectGLAccount.php:21 SuppTransGLAnalysis.php:145
 #: Z_CreateCompanyTemplateFile.php:230 Z_ImportChartOfAccounts.php:28
 #: Z_UpdateChartDetailsBFwd.php:75
 msgid "Account Code"
@@ -11620,7 +11620,7 @@ msgstr "勘定科目名"
 
 #: GLAccounts.php:285 GLBalanceSheet.php:12 GLBalanceSheet.php:21
 #: GLBalanceSheet.php:66 GLBalanceSheet.php:67 GLBalanceSheet.php:90
-#: GLBalanceSheet.php:128 index.php:1234 SelectGLAccount.php:46
+#: GLBalanceSheet.php:128 index.php:1238 SelectGLAccount.php:46
 #: SelectGLAccount.php:59
 msgid "Balance Sheet"
 msgstr "Balance Sheet"
@@ -11826,7 +11826,7 @@ msgstr "GLコード問合せ"
 msgid "Group"
 msgstr "グループ"
 
-#: GLJournal.php:10 index.php:1175
+#: GLJournal.php:10 index.php:1179
 msgid "Journal Entry"
 msgstr "仕訳入力"
 
@@ -12176,7 +12176,7 @@ msgstr "転記済"
 
 #: GLTrialBalance.php:14 GLTrialBalance.php:28 GLTrialBalance.php:108
 #: GLTrialBalance.php:109 GLTrialBalance.php:151 GLTrialBalance.php:432
-#: index.php:1194
+#: index.php:1198
 msgid "Trial Balance"
 msgstr "試算表"
 
@@ -12942,417 +12942,422 @@ msgstr "場所/カテゴリ別履歴在庫数量"
 msgid "List Negative Stocks"
 msgstr "マイナス在庫リスト"
 
-#: index.php:699
+#: index.php:698
 #, fuzzy
 msgid "Daily Stock Transaction Listing"
 msgstr "得意先トランザクション問合せ"
 
-#: index.php:713
+#: index.php:703
+#, fuzzy
+msgid "Stock Transfer Note"
+msgstr "在庫移動"
+
+#: index.php:717
 msgid "Add A New Item"
 msgstr "新品目追加"
 
-#: index.php:718
+#: index.php:722
 msgid "Select An Item"
 msgstr "品目選択"
 
-#: index.php:723 SalesCategories.php:9
+#: index.php:727 SalesCategories.php:9
 msgid "Sales Category Maintenance"
 msgstr "販売カテゴリメンテナンス"
 
-#: index.php:728
+#: index.php:732
 msgid "Add or Update Prices Based On Costs Or Other Price List"
 msgstr ""
 
-#: index.php:733
+#: index.php:737
 msgid "View or Update Prices Based On Costs"
 msgstr ""
 
-#: index.php:738
+#: index.php:742
 msgid "Reorder Level By Category/Location"
 msgstr ""
 
-#: index.php:768 WorkOrderEntry.php:6
+#: index.php:772 WorkOrderEntry.php:6
 msgid "Work Order Entry"
 msgstr "作業指図入力"
 
-#: index.php:773 index.php:782
+#: index.php:777 index.php:786
 msgid "Select A Work Order"
 msgstr "作業指図選択"
 
-#: index.php:787
+#: index.php:791
 msgid "Costed Bill Of Material Inquiry"
 msgstr "原材料構成原価問合せ"
 
-#: index.php:792 WhereUsedInquiry.php:8
+#: index.php:796 WhereUsedInquiry.php:8
 msgid "Where Used Inquiry"
 msgstr "使用箇所問合せ"
 
-#: index.php:797
+#: index.php:801
 #, fuzzy
 msgid "Indented Bill Of Material Listing"
 msgstr "原材料構成作表"
 
-#: index.php:802
+#: index.php:806
 #, fuzzy
 msgid "List Components Required"
 msgstr "不要"
 
-#: index.php:807
+#: index.php:811
 msgid "Indented Where Used Listing"
 msgstr ""
 
-#: index.php:812
+#: index.php:816
 msgid "MRP"
 msgstr ""
 
-#: index.php:817 MRPShortages.php:26 MRPShortages.php:145 MRPShortages.php:157
+#: index.php:821 MRPShortages.php:26 MRPShortages.php:145 MRPShortages.php:157
 msgid "MRP Shortages"
 msgstr ""
 
-#: index.php:822
+#: index.php:826
 #, fuzzy
 msgid "MRP Suggested Purchase Orders"
 msgstr "未入庫購買発注"
 
-#: index.php:827
+#: index.php:831
 #, fuzzy
 msgid "MRP Suggested Work Orders"
 msgstr "未入庫購買発注"
 
-#: index.php:832
+#: index.php:836
 msgid "MRP Reschedules Required"
 msgstr ""
 
-#: index.php:851
+#: index.php:855
 msgid "Bills Of Material"
 msgstr "部品構成"
 
-#: index.php:857
+#: index.php:861
 msgid "Master Schedule"
 msgstr ""
 
-#: index.php:862
+#: index.php:866
 msgid "Auto Create Master Schedule"
 msgstr ""
 
-#: index.php:867
+#: index.php:871
 #, fuzzy
 msgid "MRP Calculation"
 msgstr "計算"
 
-#: index.php:893
+#: index.php:897
 msgid "General Setup Options"
 msgstr "一般設定オプション"
 
-#: index.php:896
+#: index.php:900
 msgid "General"
 msgstr "一般"
 
-#: index.php:905
+#: index.php:909
 msgid "Receivables/Payables Setup"
 msgstr "売掛金/買掛金設定"
 
-#: index.php:908
+#: index.php:912
 msgid "Receivables/Payables"
 msgstr "売掛金/買掛金"
 
-#: index.php:918 index.php:921
+#: index.php:922 index.php:925
 msgid "Inventory Setup"
 msgstr "在庫設定"
 
-#: index.php:940
+#: index.php:944
 msgid "Configuration Settings"
 msgstr "構成設定"
 
-#: index.php:945 WWW_Users.php:29
+#: index.php:949 WWW_Users.php:29
 msgid "User Maintenance"
 msgstr "ユーザーメンテナンス"
 
-#: index.php:950
+#: index.php:954
 msgid "Role Permissions"
 msgstr "ロール認可"
 
-#: index.php:955
+#: index.php:959
 #, fuzzy
 msgid "Page Security Settings"
 msgstr "一般設定"
 
-#: index.php:960
+#: index.php:964
 msgid "Bank Accounts"
 msgstr "銀行口座"
 
-#: index.php:965
+#: index.php:969
 msgid "Currency Maintenance"
 msgstr "通貨メンテナンス"
 
-#: index.php:970
+#: index.php:974
 msgid "Tax Authorities and Rates Maintenance"
 msgstr "税務当局と税率メンテナンス"
 
-#: index.php:975
+#: index.php:979
 msgid "Tax Group Maintenance"
 msgstr "税グループメンテナンス"
 
-#: index.php:980
+#: index.php:984
 msgid "Dispatch Tax Province Maintenance"
 msgstr "発送地方税メンテナンス"
 
-#: index.php:985
+#: index.php:989
 msgid "Tax Category Maintenance"
 msgstr "税カテゴリメンテナンス"
 
-#: index.php:990
+#: index.php:994
 msgid "List Periods Defined"
 msgstr "リスト期間指定"
 
-#: index.php:990
+#: index.php:994
 msgid "Periods are automatically maintained"
 msgstr "期間自動更新"
 
-#: index.php:995
+#: index.php:999
 msgid "Report Builder Tool"
 msgstr "レポート・ビルダー・ツール"
 
-#: index.php:1000
+#: index.php:1004
 msgid "View Audit Trail"
 msgstr ""
 
-#: index.php:1005
+#: index.php:1009
 msgid "View System Check"
 msgstr ""
 
-#: index.php:1015
+#: index.php:1019
 msgid "Form Layout Editor"
 msgstr ""
 
-#: index.php:1020
+#: index.php:1024
 #, fuzzy
 msgid "Label Templates Maintenance"
 msgstr "営業担当メンテナンス"
 
-#: index.php:1025
+#: index.php:1029
 #, fuzzy
 msgid "SMTP Server Details"
 msgstr "注文納品詳細"
 
-#: index.php:1035 SalesTypes.php:7
+#: index.php:1039 SalesTypes.php:7
 msgid "Sales Types"
 msgstr "販売タイプ"
 
-#: index.php:1045 SupplierTypes.php:8 SupplierTypes.php:23
+#: index.php:1049 SupplierTypes.php:8 SupplierTypes.php:23
 #: SuppPaymentRun.php:237 SystemParameters.php:13 TaxAuthorities.php:10
 #: TaxAuthorityRates.php:17 TaxCategories.php:12 Tax.php:298
 #, fuzzy
 msgid "Supplier Types"
 msgstr "仕入先"
 
-#: index.php:1060
+#: index.php:1064
 #, fuzzy
 msgid "Set Purchase Order Authorisation levels"
 msgstr "購買発注品目"
 
-#: index.php:1065 PaymentMethods.php:9
+#: index.php:1069 PaymentMethods.php:9
 msgid "Payment Methods"
 msgstr "支払方法"
 
-#: index.php:1070
+#: index.php:1074
 msgid "Sales People"
 msgstr "営業担当"
 
-#: index.php:1075
+#: index.php:1079
 msgid "Sales Areas"
 msgstr "販売地域"
 
-#: index.php:1080
+#: index.php:1084
 msgid "Shippers"
 msgstr "運送会社"
 
-#: index.php:1085
+#: index.php:1089
 msgid "Sales GL Interface Postings"
 msgstr "販売ＧＬインターフェース転記"
 
-#: index.php:1090
+#: index.php:1094
 msgid "COGS GL Interface Postings"
 msgstr "売上原価ＧＬインターフェース転記"
 
-#: index.php:1095
+#: index.php:1099
 msgid "Freight Costs Maintenance"
 msgstr "運賃メンテナンス"
 
-#: index.php:1100
+#: index.php:1104
 msgid "Discount Matrix"
 msgstr "値引表"
 
-#: index.php:1110
+#: index.php:1114
 msgid "Inventory Categories Maintenance"
 msgstr "在庫カテゴリメンテナンス"
 
-#: index.php:1115
+#: index.php:1119
 msgid "Inventory Locations Maintenance"
 msgstr "在庫場所メンテナンス"
 
-#: index.php:1120
+#: index.php:1124
 msgid "Discount Category Maintenance"
 msgstr "値引カテゴリメンテナンス"
 
-#: index.php:1125 Stocks.php:780 UnitsOfMeasure.php:175
+#: index.php:1129 Stocks.php:780 UnitsOfMeasure.php:175
 msgid "Units of Measure"
 msgstr "単位"
 
-#: index.php:1132
+#: index.php:1136
 msgid "MRP Available Production Days"
 msgstr ""
 
-#: index.php:1137 MRPDemandTypes.php:8
+#: index.php:1141 MRPDemandTypes.php:8
 msgid "MRP Demand Types"
 msgstr ""
 
-#: index.php:1165
+#: index.php:1169
 #, fuzzy
 msgid "Bank Account Payments Entry"
 msgstr "銀行口座支払"
 
-#: index.php:1170
+#: index.php:1174
 #, fuzzy
 msgid "Bank Account Receipts Entry"
 msgstr "銀行口座入金"
 
-#: index.php:1180
+#: index.php:1184
 msgid "Bank Account Payments Matching"
 msgstr "銀行口座の支払照合"
 
-#: index.php:1185
+#: index.php:1189
 #, fuzzy
 msgid "Bank Account Receipts Matching"
 msgstr "銀行口座の入金照合"
 
-#: index.php:1199 SelectGLAccount.php:26
+#: index.php:1203 SelectGLAccount.php:26
 msgid "Account Inquiry"
 msgstr "勘定問合せ"
 
-#: index.php:1204
+#: index.php:1208
 #, fuzzy
 msgid "Account Listing"
 msgstr "勘定セクション"
 
-#: index.php:1209
+#: index.php:1213
 msgid "Account Listing to CSV File"
 msgstr ""
 
-#: index.php:1214
+#: index.php:1218
 #, fuzzy
 msgid "Bank Account Reconciliation Statement"
 msgstr "銀行調整明細"
 
-#: index.php:1219
+#: index.php:1223
 msgid "Cheque Payments Listing"
 msgstr "小切手支払リスト"
 
-#: index.php:1224
+#: index.php:1228
 #, fuzzy
 msgid "Daily Bank Transactions"
 msgstr "EDIトランザクション印刷"
 
-#: index.php:1229
+#: index.php:1233
 msgid "Profit and Loss Statement"
 msgstr "損益計算書明細"
 
-#: index.php:1239
+#: index.php:1243
 #, fuzzy
 msgid "Tag Reports"
 msgstr "税レポート"
 
-#: index.php:1244
+#: index.php:1248
 msgid "Tax Reports"
 msgstr "税レポート"
 
-#: index.php:1263
+#: index.php:1267
 msgid "GL Budgets"
 msgstr "ＧＬ予算"
 
-#: index.php:1278
+#: index.php:1282
 msgid "GL Tags"
 msgstr ""
 
-#: index.php:1304
+#: index.php:1308
 #, fuzzy
 msgid "Add a new Asset"
 msgstr "新得意先追加"
 
-#: index.php:1309 SelectAsset.php:6
+#: index.php:1313 SelectAsset.php:6
 #, fuzzy
 msgid "Select an Asset"
 msgstr "新得意先追加"
 
-#: index.php:1319
+#: index.php:1323
 #, fuzzy
 msgid "Depreciation Journal"
 msgstr "調整を表示"
 
-#: index.php:1328
+#: index.php:1332
 msgid "Asset Register"
 msgstr ""
 
-#: index.php:1342
+#: index.php:1346
 #, fuzzy
 msgid "Asset Categories Maintenance"
 msgstr "値引きカテゴリメンテナンス"
 
-#: index.php:1347
+#: index.php:1351
 msgid "Add or Maintain Asset Locations"
 msgstr ""
 
-#: index.php:1374
+#: index.php:1378
 msgid "Assign Cash to PC Tab"
 msgstr ""
 
-#: index.php:1379
+#: index.php:1383
 msgid "Claim Expenses From PC Tab"
 msgstr ""
 
-#: index.php:1384
+#: index.php:1388
 #, fuzzy
 msgid "Expenses Authorisation"
 msgstr "税務当局"
 
-#: index.php:1393
+#: index.php:1397
 msgid "PC Tab General Report"
 msgstr ""
 
-#: index.php:1407
+#: index.php:1411
 msgid "Types of PC Tabs"
 msgstr ""
 
-#: index.php:1412
+#: index.php:1416
 msgid "PC Tabs"
 msgstr ""
 
-#: index.php:1417
+#: index.php:1421
 msgid "PC Expenses"
 msgstr ""
 
-#: index.php:1422
+#: index.php:1426
 msgid "Expenses for Type of PC Tab"
 msgstr ""
 
-#: index.php:1453 index.php:1456 PDFCustTransListing.php:127
+#: index.php:1457 index.php:1460 PDFCustTransListing.php:127
 #: PDFSuppTransListing.php:127
 msgid "Transactions"
 msgstr "トランザクション"
 
-#: index.php:1465 index.php:1468
+#: index.php:1469 index.php:1472
 msgid "Inquiries and Reports"
 msgstr "問合せとレポート"
 
-#: index.php:1502
+#: index.php:1506
 msgid "Custom Reports"
 msgstr "特注レポート"
 
-#: index.php:1502
+#: index.php:1506
 msgid "Standard Reports and Forms"
 msgstr "標準レポートとフォーム"
 
-#: index.php:1544
+#: index.php:1548
 msgid "There are no reports to show!"
 msgstr "表示レポートがありません！"
 
@@ -13659,7 +13664,7 @@ msgid "Define Stock Categories"
 msgstr ""
 
 #: InventoryQuantities.php:171 MRPReport.php:538 ReorderLevel.php:212
-#: SelectProduct.php:458 StockDispatch.php:278 StockLocStatus.php:57
+#: SelectProduct.php:475 StockDispatch.php:278 StockLocStatus.php:57
 #: SupplierTenders.php:331
 msgid "In Stock Category"
 msgstr "在庫カテゴリ内"
@@ -14884,28 +14889,28 @@ msgid ""
 "be selected"
 msgstr ""
 
-#: MRPReport.php:536 SelectProduct.php:456 SupplierTenders.php:318
+#: MRPReport.php:536 SelectProduct.php:473 SupplierTenders.php:318
 #, fuzzy
 msgid "Search for Inventory Items"
 msgstr "品目検索"
 
 #: MRPReport.php:705 PO_SelectOSPurchOrder.php:124 PO_SelectPurchOrder.php:94
-#: SelectCompletedOrder.php:214 SelectProduct.php:626 SelectSalesOrder.php:398
+#: SelectCompletedOrder.php:214 SelectProduct.php:643 SelectSalesOrder.php:398
 msgid "No stock items were returned by the SQL because"
 msgstr ""
 
-#: MRPReport.php:706 SelectAsset.php:172 SelectProduct.php:627
+#: MRPReport.php:706 SelectAsset.php:172 SelectProduct.php:644
 msgid "The SQL that returned an error was"
 msgstr ""
 
-#: MRPReport.php:709 SelectProduct.php:630
+#: MRPReport.php:709 SelectProduct.php:647
 msgid ""
 "No stock items were returned by this search please re-enter alternative "
 "criteria to try again"
 msgstr ""
 
 #: MRPReport.php:736 SelectAsset.php:204 SelectCustomer.php:440
-#: SelectCustomer.php:516 SelectProduct.php:657 SelectSupplier.php:228
+#: SelectCustomer.php:516 SelectProduct.php:674 SelectSupplier.php:228
 #: SelectSupplier.php:288 SupplierTenders.php:147 SupplierTenders.php:205
 #: WorkOrderIssue.php:354 WorkOrderReceive.php:674
 #: includes/Add_SerialItemsOut.php:23 includes/Add_SerialItems.php:33
@@ -14915,35 +14920,35 @@ msgid "of"
 msgstr ""
 
 #: MRPReport.php:736 SelectAsset.php:204 SelectCustomer.php:440
-#: SelectCustomer.php:516 SelectProduct.php:657 SelectSupplier.php:228
+#: SelectCustomer.php:516 SelectProduct.php:674 SelectSupplier.php:228
 #: SelectSupplier.php:288
 msgid "pages"
 msgstr ""
 
 #: MRPReport.php:736 SelectAsset.php:204 SelectCustomer.php:440
-#: SelectCustomer.php:516 SelectProduct.php:657 SelectSupplier.php:228
+#: SelectCustomer.php:516 SelectProduct.php:674 SelectSupplier.php:228
 #: SelectSupplier.php:288
 msgid "Go to Page"
 msgstr ""
 
 #: MRPReport.php:748 PcAssignCashToTab.php:209 PcAuthorizeExpenses.php:54
 #: PcClaimExpensesFromTab.php:171 SelectAsset.php:216 SelectCustomer.php:452
-#: SelectCustomer.php:528 SelectProduct.php:669 SelectSupplier.php:240
+#: SelectCustomer.php:528 SelectProduct.php:686 SelectSupplier.php:240
 #: SelectSupplier.php:300
 msgid "Go"
 msgstr ""
 
 #: MRPReport.php:749 SelectAsset.php:217 SelectCustomer.php:453
-#: SelectCustomer.php:529 SelectProduct.php:670 SelectSupplier.php:241
+#: SelectCustomer.php:529 SelectProduct.php:687 SelectSupplier.php:241
 #: SelectSupplier.php:301
 msgid "Previous"
 msgstr "前へ"
 
-#: MRPReport.php:761 SelectProduct.php:682
+#: MRPReport.php:761 SelectProduct.php:699
 msgid "Total Qty On Hand"
 msgstr "在庫合計数量"
 
-#: MRPReport.php:763 SelectProduct.php:684 StockStatus.php:9
+#: MRPReport.php:763 SelectProduct.php:701 StockStatus.php:9
 msgid "Stock Status"
 msgstr "在庫状況"
 
@@ -15827,7 +15832,7 @@ msgid "Detail Of PC Tab Movements For Last "
 msgstr ""
 
 #: PcAssignCashToTab.php:213 PcAuthorizeExpenses.php:82
-#: PcExpensesTypeTab.php:144
+#: PcExpensesTypeTab.php:147
 #, fuzzy
 msgid "Expense Code"
 msgstr "タイプコード"
@@ -15841,7 +15846,7 @@ msgid "Authorised"
 msgstr "税務当局"
 
 #: PcAssignCashToTab.php:254 PcClaimExpensesFromTab.php:230
-#: PcExpensesTypeTab.php:161
+#: PcExpensesTypeTab.php:164
 #, fuzzy, php-format
 msgid ""
 "Are you sure you wish to delete this code and the expense it may have set up?"
@@ -15938,8 +15943,8 @@ msgstr "支払総額"
 msgid "Expense Description"
 msgstr "品目内容"
 
-#: PcClaimExpensesFromTab.php:312 PcExpenses.php:148 PcExpenses.php:220
-#: PcExpenses.php:230
+#: PcClaimExpensesFromTab.php:312 PcExpenses.php:158 PcExpenses.php:230
+#: PcExpenses.php:240
 msgid "Code Of Expense"
 msgstr ""
 
@@ -15956,66 +15961,84 @@ msgstr ""
 msgid "The Expense code must be twenty characters or less long"
 msgstr "地域コードは3文字以下でなければなりません"
 
-#: PcExpenses.php:48 PcTypeTabs.php:48
+#: PcExpenses.php:48
+#, fuzzy
+msgid ""
+"The Expense code cannot contain any of the following characters \" ' - &"
+msgstr "地域税名は文字列を含むことができません"
+
+#: PcExpenses.php:53
+#, fuzzy
+msgid ""
+"The Expense description cannot contain any of the following characters \" ' "
+"- &"
+msgstr "勘定セクション名は文字列を含むことができません"
+
+#: PcExpenses.php:58 PcTypeTabs.php:51
 #, fuzzy
 msgid "The tab code must be Fifty characters or less long"
 msgstr "バーコードは20文字以下でなければなりません"
 
-#: PcExpenses.php:60
+#: PcExpenses.php:70
 #, fuzzy
 msgid "The Expenses type"
 msgstr "終了得意先コード"
 
-#: PcExpenses.php:74
+#: PcExpenses.php:84
 #, fuzzy
 msgid "The Expense type "
 msgstr "終了得意先コード"
 
-#: PcExpenses.php:86
+#: PcExpenses.php:84
+#, fuzzy
+msgid " already exists."
+msgstr "入力されたコードは"
+
+#: PcExpenses.php:96
 msgid "Expense "
 msgstr ""
 
-#: PcExpenses.php:114
+#: PcExpenses.php:124
 #, fuzzy
 msgid ""
 "The number of type of tabs using this expense code could not be retrieved"
 msgstr "設定される銀行口座は取り戻しできませんでした理由は"
 
-#: PcExpenses.php:119
+#: PcExpenses.php:129
 #, fuzzy
 msgid ""
 "Cannot delete this petty cash expense because it is used in some tab types"
 msgstr ""
 "定義済み銀行勘定の1つが使われるので、この勘定を削除することができません"
 
-#: PcExpenses.php:119
+#: PcExpenses.php:129
 #, fuzzy
 msgid "tab types using this expense code"
 msgstr "この地域コードを使った支店"
 
-#: PcExpenses.php:125
+#: PcExpenses.php:135
 #, fuzzy
 msgid "The expense type record could not be deleted because"
 msgstr "システム構成は更新できませんでした、理由は"
 
-#: PcExpenses.php:127
+#: PcExpenses.php:137
 #, fuzzy
 msgid "Expense type"
 msgstr "販売タイプ"
 
-#: PcExpenses.php:151
+#: PcExpenses.php:161
 #, fuzzy
 msgid "Account Description"
 msgstr "勘定セクション"
 
-#: PcExpenses.php:177
+#: PcExpenses.php:187
 #, fuzzy, php-format
 msgid ""
 "Are you sure you wish to delete this expense code and all the details it may "
 "have set up?"
 msgstr "この仕入先価格を削除してもよろしいですか？"
 
-#: PcExpenses.php:193
+#: PcExpenses.php:203
 #, fuzzy
 msgid "Show All Petty Cash Expenses Defined"
 msgstr "全販売タイプ定義表示"
@@ -16024,48 +16047,54 @@ msgstr "全販売タイプ定義表示"
 msgid "Maintenance Of Petty Cash Expenses For a Type Tab"
 msgstr ""
 
-#: PcExpensesTypeTab.php:47
+#: PcExpensesTypeTab.php:20
+msgid ""
+"The petty cash tab type contain any of the following characters \" ' - & or "
+"a space"
+msgstr ""
+
+#: PcExpensesTypeTab.php:50
 msgid "The Expense "
 msgstr ""
 
-#: PcExpensesTypeTab.php:47
+#: PcExpensesTypeTab.php:50
 #, fuzzy
 msgid " already exist in this Type of Tab."
 msgstr "はデータベースに定義されてない"
 
-#: PcExpensesTypeTab.php:58
+#: PcExpensesTypeTab.php:61
 #, fuzzy
 msgid "Expense code:"
 msgstr "ユーザーコード"
 
-#: PcExpensesTypeTab.php:58
+#: PcExpensesTypeTab.php:61
 msgid "for Type of Tab:"
 msgstr ""
 
-#: PcExpensesTypeTab.php:81 PcTypeTabs.php:132
+#: PcExpensesTypeTab.php:84 PcTypeTabs.php:135
 #, fuzzy
 msgid "The Tab Type record could not be deleted because"
 msgstr "システム構成は更新できませんでした、理由は"
 
-#: PcExpensesTypeTab.php:83
+#: PcExpensesTypeTab.php:86
 #, fuzzy
 msgid "Expense code"
 msgstr "ユーザーコード"
 
-#: PcExpensesTypeTab.php:83
+#: PcExpensesTypeTab.php:86
 msgid "for type of tab"
 msgstr ""
 
-#: PcExpensesTypeTab.php:100
+#: PcExpensesTypeTab.php:103
 #, fuzzy
 msgid "Select Type of Tab"
 msgstr "終了期間選択"
 
-#: PcExpensesTypeTab.php:132
+#: PcExpensesTypeTab.php:135
 msgid "Expense Codes for Type of Tab "
 msgstr ""
 
-#: PcExpensesTypeTab.php:182
+#: PcExpensesTypeTab.php:185
 #, fuzzy
 msgid "Select Expense Code"
 msgstr "作業指図選択"
@@ -16262,7 +16291,7 @@ msgstr "カテゴリコード"
 msgid "The Tab record could not be deleted because"
 msgstr "システム構成は更新できませんでした、理由は"
 
-#: PcTabs.php:124 PcTypeTabs.php:134
+#: PcTabs.php:124 PcTypeTabs.php:137
 #, fuzzy
 msgid "Tab type"
 msgstr "タイプ"
@@ -16272,7 +16301,7 @@ msgstr "タイプ"
 msgid "User Name"
 msgstr ""
 
-#: PcTabs.php:146 PcTabs.php:276 PcTypeTabs.php:154
+#: PcTabs.php:146 PcTabs.php:276 PcTypeTabs.php:157
 #, fuzzy
 msgid "Type Of Tab"
 msgstr "タイプ名"
@@ -16290,7 +16319,7 @@ msgstr ""
 msgid "GL Account Petty Cash Tab"
 msgstr "勘定コード"
 
-#: PcTabs.php:189 PcTypeTabs.php:172
+#: PcTabs.php:189 PcTypeTabs.php:175
 #, fuzzy, php-format
 msgid ""
 "Are you sure you wish to delete this code and all the description it may "
@@ -16329,47 +16358,53 @@ msgstr ""
 msgid "The tab code must be twenty characters or less long"
 msgstr "地域コードは3文字以下でなければなりません"
 
-#: PcTypeTabs.php:59
+#: PcTypeTabs.php:48
+msgid ""
+"The petty cash tab type code cannot contain any of the following characters "
+"\" ' - & or a space"
+msgstr ""
+
+#: PcTypeTabs.php:62
 #, fuzzy
 msgid "The Tabs type"
 msgstr "終了得意先コード"
 
-#: PcTypeTabs.php:73
+#: PcTypeTabs.php:76
 #, fuzzy
 msgid "The Tab type "
 msgstr "販売タイプ"
 
-#: PcTypeTabs.php:84
+#: PcTypeTabs.php:87
 #, fuzzy
 msgid "Tabs type"
 msgstr "伝票種別"
 
-#: PcTypeTabs.php:107 PcTypeTabs.php:116
+#: PcTypeTabs.php:110 PcTypeTabs.php:119
 #, fuzzy
 msgid "The number of tabs using this Tab type could not be retrieved"
 msgstr "設定される銀行口座は取り戻しできませんでした理由は"
 
-#: PcTypeTabs.php:121
+#: PcTypeTabs.php:124
 #, fuzzy
 msgid ""
 "Cannot delete this tab type because tabs have been created using this tab "
 "type"
 msgstr "この地域を使って得意先支店がつくられたので、この地域を削除できません"
 
-#: PcTypeTabs.php:125
+#: PcTypeTabs.php:128
 msgid "Return to list of tab types"
 msgstr ""
 
-#: PcTypeTabs.php:186
+#: PcTypeTabs.php:189
 #, fuzzy
 msgid "Show All Types Tabs Defined"
 msgstr "全販売タイプ定義表示"
 
-#: PcTypeTabs.php:210 PcTypeTabs.php:220
+#: PcTypeTabs.php:213 PcTypeTabs.php:223
 msgid "Code Of Type Of Tab"
 msgstr ""
 
-#: PcTypeTabs.php:228
+#: PcTypeTabs.php:231
 #, fuzzy
 msgid "Description Of Type of Tab"
 msgstr "価格表タイプ"
@@ -16781,7 +16816,7 @@ msgstr "品目の払出が取出しできませんでした理由は"
 msgid "Date of Receipt: "
 msgstr "受取総額"
 
-#: PDFGrn.php:117 PDFStockTransfer.php:79 PDFStockTransfer.php:80
+#: PDFGrn.php:117 PDFStockTransfer.php:90 PDFStockTransfer.php:91
 #, fuzzy
 msgid "Signed for "
 msgstr "と　範囲"
@@ -17550,27 +17585,47 @@ msgstr "トランザクション情報取り出しに用いられたSQLは失敗
 msgid "There are no negative stocks to list"
 msgstr "リストするマイナス在庫がありません"
 
-#: PDFStockTransfer.php:11
+#: PDFStockTransfer.php:12
+#, fuzzy
+msgid "The entered transfer reference is expected to be numeric"
+msgstr "注文品目の数量は数字でなければならない"
+
+#: PDFStockTransfer.php:18
+#, fuzzy
+msgid "Print Stock Transfer"
+msgstr "在庫移動入力"
+
+#: PDFStockTransfer.php:20 PDFStockTransfer.php:27
+#, fuzzy
+msgid "Print Transfer Note"
+msgstr "移動記録簿印刷"
+
+#: PDFStockTransfer.php:24
+#, fuzzy
+msgid "Print Stock Transfer Note"
+msgstr "移動記録簿印刷"
+
+#: PDFStockTransfer.php:35
 #, fuzzy
 msgid "Stock Transfer Form"
 msgstr "在庫移動"
 
-#: PDFStockTransfer.php:37
+#: PDFStockTransfer.php:61
 #, fuzzy
-msgid "There are no decription for "
-msgstr "価格設定がありません for "
-
-#: PDFStockTransfer.php:50
-#, fuzzy
-msgid "There are no location From for "
-msgstr "実行する割当がありません"
+msgid "Print Stock Transfer - Error"
+msgstr "在庫移動"
 
 #: PDFStockTransfer.php:63
 #, fuzzy
-msgid "There are no location To for "
-msgstr "実行する割当がありません"
+msgid "There was no transfer found with number"
+msgstr "最終作成請求書の番号"
 
-#: PDFStockTransfer.php:77
+#: PDFStockTransfer.php:64
+#, fuzzy
+msgid "Try Again"
+msgstr "開始位置へ"
+
+#: PDFStockTransfer.php:88
 #, fuzzy
 msgid "Date of transfer: "
 msgstr "最終日"
@@ -22962,15 +23017,15 @@ msgstr "終了日"
 msgid "Prefer"
 msgstr "優先"
 
-#: SelectProduct.php:364 SelectProduct.php:440
+#: SelectProduct.php:364 SelectProduct.php:457
 msgid "Item Inquiries"
 msgstr "品目問合せ"
 
-#: SelectProduct.php:365 SelectProduct.php:441
+#: SelectProduct.php:365 SelectProduct.php:458
 msgid "Item Transactions"
 msgstr "品目トランザクション"
 
-#: SelectProduct.php:366 SelectProduct.php:442 Stocks.php:6
+#: SelectProduct.php:366 SelectProduct.php:459 Stocks.php:6
 msgid "Item Maintenance"
 msgstr "品目メンテナンス"
 
@@ -23009,45 +23064,45 @@ msgstr "数量調整"
 msgid "Location Transfers"
 msgstr "場所移動"
 
-#: SelectProduct.php:411
+#: SelectProduct.php:428
 #, fuzzy
 msgid "Purchase this Item from"
 msgstr "購買元"
 
-#: SelectProduct.php:411
+#: SelectProduct.php:428
 #, fuzzy
 msgid "default"
 msgstr "初期値"
 
-#: SelectProduct.php:418 SelectProduct.php:450
+#: SelectProduct.php:435 SelectProduct.php:467
 msgid "Add Inventory Items"
 msgstr "在庫品目追加"
 
-#: SelectProduct.php:419
+#: SelectProduct.php:436
 msgid "Modify Item Details"
 msgstr "品目詳細修正"
 
-#: SelectProduct.php:421
+#: SelectProduct.php:438
 msgid "Maintain Reorder Levels"
 msgstr "再注文レベルメンテナンス"
 
-#: SelectProduct.php:422 SelectProduct.php:426
+#: SelectProduct.php:439 SelectProduct.php:443
 msgid "Maintain Standard Cost"
 msgstr "標準原価メンテナンス"
 
-#: SelectProduct.php:423
+#: SelectProduct.php:440
 msgid "Maintain Purchasing Data"
 msgstr "購買データメンテナンス"
 
-#: SelectProduct.php:429
+#: SelectProduct.php:446
 msgid "Maintain Pricing"
 msgstr "価格設定メンテナンス"
 
-#: SelectProduct.php:431
+#: SelectProduct.php:448
 msgid "Special Prices for customer"
 msgstr "得意先用特別価格"
 
-#: SelectProduct.php:433
+#: SelectProduct.php:450
 #, fuzzy
 msgid "Maintain Discount Category"
 msgstr "値引きカテゴリ"
@@ -30158,19 +30213,19 @@ msgstr ""
 msgid "Maximum Number of Records to Display"
 msgstr ""
 
-#: UserSettings.php:174
+#: UserSettings.php:173
 msgid "New Password"
 msgstr "新パスワード"
 
-#: UserSettings.php:176
+#: UserSettings.php:175
 msgid "Confirm Password"
 msgstr "確認パスワード"
 
-#: UserSettings.php:178
+#: UserSettings.php:177
 msgid "If you leave the password boxes empty your password will not change"
 msgstr ""
 
-#: UserSettings.php:194 WWW_Users.php:617
+#: UserSettings.php:193 WWW_Users.php:617
 msgid "PDF Language Support"
 msgstr ""
 
@@ -31370,7 +31425,7 @@ msgstr ""
 
 #: Z_ChangeBranchCode.php:207 Z_ChangeCustomerCode.php:239
 #: Z_ChangeStockCategory.php:99 Z_ChangeStockCode.php:319
-#: Z_ChangeSupplierCode.php:24 Z_DeleteSalesTransActions.php:179
+#: Z_DeleteSalesTransActions.php:179
 msgid "Process"
 msgstr "処理"
 
@@ -31406,12 +31461,11 @@ msgstr ""
 msgid "Inserting the new debtors master record"
 msgstr ""
 
-#: Z_ChangeCustomerCode.php:93 Z_ChangeSupplierCode.php:120
+#: Z_ChangeCustomerCode.php:93
 msgid "The SQL to insert the new debtors master record failed"
 msgstr ""
 
-#: Z_ChangeCustomerCode.php:93 Z_ChangeSupplierCode.php:120
-#: Z_DeleteSalesTransActions.php:56
+#: Z_ChangeCustomerCode.php:93 Z_DeleteSalesTransActions.php:56
 msgid "the SQL statement was"
 msgstr ""
 
@@ -31470,7 +31524,7 @@ msgstr ""
 msgid "Deleting the customer code from the DebtorsMaster table"
 msgstr ""
 
-#: Z_ChangeCustomerCode.php:218 Z_ChangeSupplierCode.php:133
+#: Z_ChangeCustomerCode.php:218
 msgid "The SQL to delete the old debtor record failed"
 msgstr ""
 
@@ -31828,73 +31882,6 @@ msgstr ""
 
 #: Z_ChangeStockCode.php:316
 msgid "New Inventory Code"
-msgstr ""
-
-#: Z_ChangeSupplierCode.php:5
-#, fuzzy
-msgid "UTILITY PAGE To Changes A Supplier Code In All Tables"
-msgstr "在庫カテゴリ内"
-
-#: Z_ChangeSupplierCode.php:17
-#, fuzzy
-msgid "Existing Supplier Code"
-msgstr "仕入先コード"
-
-#: Z_ChangeSupplierCode.php:20
-#, fuzzy
-msgid "New Supplier Code"
-msgstr "仕入先コード"
-
-#: Z_ChangeSupplierCode.php:45
-#, fuzzy
-msgid "The Supplier code"
-msgstr "仕入先コード"
-
-#: Z_ChangeSupplierCode.php:45
-#, fuzzy
-msgid "does not currently exist as a Supplier code in the system"
-msgstr "は品目としてシステムに設定されていない"
-
-#: Z_ChangeSupplierCode.php:52
-#, fuzzy
-msgid "The replacement Supplier code"
-msgstr "仕入先コード"
-
-#: Z_ChangeSupplierCode.php:53
-#, fuzzy
-msgid "already exists as a Supplier code in the system"
-msgstr "は品目としてシステムに設定されていない"
-
-#: Z_ChangeSupplierCode.php:53
-#, fuzzy
-msgid "a unique Supplier code must be entered for the new code"
-msgstr "在庫レコードは値引カテゴリ無しに更新された"
-
-#: Z_ChangeSupplierCode.php:62
-#, fuzzy
-msgid "Inserting the new supplier record"
-msgstr "新品目追加"
-
-#: Z_ChangeSupplierCode.php:124
-msgid "Changing"
-msgstr ""
-
-#: Z_ChangeSupplierCode.php:124
-#, fuzzy
-msgid "records"
-msgstr "レポート"
-
-#: Z_ChangeSupplierCode.php:130
-msgid "Deleting the Supplier code from the DebtorsMaster table"
-msgstr ""
-
-#: Z_ChangeSupplierCode.php:149
-#, fuzzy
-msgid "The New supplier code"
-msgstr "仕入先コード"
-
-#: Z_ChangeSupplierCode.php:149
-msgid "must be not empty nor with spaces"
 msgstr ""
 
 #: Z_CheckAllocationsFrom.php:6
@@ -32540,34 +32527,6 @@ msgstr ""
 #, fuzzy
 msgid "Default"
 msgstr "初期値"
-
-#: Z_FixedAssetCostAccumDepnFix.php:8
-#, fuzzy
-msgid "Fixed Fixed Asset Records"
-msgstr "販売カテゴリメンテナンス"
-
-#: Z_FixedAssetCostAccumDepnFix.php:12
-msgid "This script repairs the fixedasset table cost and accum depn"
-msgstr ""
-
-#: Z_FixedAssetCostAccumDepnFix.php:18
-#, fuzzy
-msgid "Updated asset"
-msgstr "得意先更新"
-
-#: Z_FixedAssetCostAccumDepnFix.php:18
-msgid "to have a cost of"
-msgstr ""
-
-#: Z_FixedAssetCostAccumDepnFix.php:18
-msgid "and accum depn of"
-msgstr ""
-
-#: Z_FixedAssetCostAccumDepnFix.php:22
-msgid ""
-"Asset cost and accumulated depreciation has now been fixed to the "
-"transaction cost and depreciation"
-msgstr ""
 
 #: Z_ImportChartOfAccounts.php:7 Z_ImportGLAccountGroups.php:7
 #: Z_ImportGLAccountSections.php:7
@@ -37699,6 +37658,70 @@ msgstr "支払条件"
 #, fuzzy
 msgid "Return Value"
 msgstr "税別価格"
+
+#, fuzzy
+#~ msgid "There are no decription for "
+#~ msgstr "価格設定がありません for "
+
+#, fuzzy
+#~ msgid "There are no location From for "
+#~ msgstr "実行する割当がありません"
+
+#, fuzzy
+#~ msgid "There are no location To for "
+#~ msgstr "実行する割当がありません"
+
+#, fuzzy
+#~ msgid "UTILITY PAGE To Changes A Supplier Code In All Tables"
+#~ msgstr "在庫カテゴリ内"
+
+#, fuzzy
+#~ msgid "Existing Supplier Code"
+#~ msgstr "仕入先コード"
+
+#, fuzzy
+#~ msgid "New Supplier Code"
+#~ msgstr "仕入先コード"
+
+#, fuzzy
+#~ msgid "The Supplier code"
+#~ msgstr "仕入先コード"
+
+#, fuzzy
+#~ msgid "does not currently exist as a Supplier code in the system"
+#~ msgstr "は品目としてシステムに設定されていない"
+
+#, fuzzy
+#~ msgid "The replacement Supplier code"
+#~ msgstr "仕入先コード"
+
+#, fuzzy
+#~ msgid "already exists as a Supplier code in the system"
+#~ msgstr "は品目としてシステムに設定されていない"
+
+#, fuzzy
+#~ msgid "a unique Supplier code must be entered for the new code"
+#~ msgstr "在庫レコードは値引カテゴリ無しに更新された"
+
+#, fuzzy
+#~ msgid "Inserting the new supplier record"
+#~ msgstr "新品目追加"
+
+#, fuzzy
+#~ msgid "records"
+#~ msgstr "レポート"
+
+#, fuzzy
+#~ msgid "The New supplier code"
+#~ msgstr "仕入先コード"
+
+#, fuzzy
+#~ msgid "Fixed Fixed Asset Records"
+#~ msgstr "販売カテゴリメンテナンス"
+
+#, fuzzy
+#~ msgid "Updated asset"
+#~ msgstr "得意先更新"
 
 #~ msgid "at standard cost"
 #~ msgstr "標準原価で"

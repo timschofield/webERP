@@ -576,7 +576,7 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 ('Locations.php', 11, 'Defines the inventory stocking locations or warehouses'),
 ('Logout.php', 1, 'Shows when the user logs out of webERP'),
 ('MailInventoryValuation.php', 1, 'Meant to be run as a scheduled process to email the stock valuation off to a specified person. Creates the same stock valuation report as InventoryValuation.php'),
-('ManualContents.php', 10, ''),
+('ManualContents.php', 1, ''),
 ('MenuAccess.php', 15, ''),
 ('MRP.php', 9, ''),
 ('MRPCalendar.php', 9, ''),

@@ -15,7 +15,10 @@ if (isset($_POST['SelectedType'])){
 } elseif (isset($_GET['SelectedType'])){
 	$SelectedType = strtoupper($_GET['SelectedType']);
 }
-
+if (ContainsIllegalCharacters($SelectedType) OR strpos($SelectedType,' ')>0){
+	$InputError = 1;
+	prnMsg(_('The petty cash tab type contain any of the following characters " \' - & or a space'),'error');
+} 
 if (isset($_POST['SelectedTabs'])){
 	$SelectedTabs = strtoupper($_POST['SelectedTabs']);
 } elseif (isset($_GET['SelectedTabs'])){
@@ -162,8 +165,8 @@ while ($myrow = DB_fetch_row($result)) {
 		</tr>",
 		$myrow[0],
 		$myrow[1],
-		$_SERVER['PHP_SELF'] . '?' . SID, $myrow[0],
-		$_SERVER['PHP_SELF'] . '?' . SID, $myrow[0]);
+		$_SERVER['PHP_SELF'], $myrow[0],
+		$_SERVER['PHP_SELF'], $myrow[0]);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -173,7 +176,7 @@ while ($myrow = DB_fetch_row($result)) {
 
 	if (! isset($_GET['delete'])) {
 
-	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br /><table  class=selection>'; //Main table
 
