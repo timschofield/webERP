@@ -2,7 +2,27 @@ webERP README
 
 /* $Id$*/
 
-Thankyou for using webERP.
+Version  4.03 of webERP
+
+Now fully utf-8 compatible. Now reports can be created in any language using the utf-8 character set, the resultant pdf reports  use Adobe CID fonts and the fonts that come with the Adobe Acrobat reader on client computers. This avoids the problem of large pdf downloads on the creation of reports as the alternative is to bundle the enormous utf-8 fonts with the reports. 
+
+Also, this release comes with an automated database upgrade system, so that database changes in later versions will be applied automatically on upgrade of the scripts.
+
+Other than the re-engineering of pdf reporting using the TCPDF pdf report creation class, that has enabled the utf-8 pdf reporting, the other new areas of functionality since the 3 series include:
+
+1. Fixed assets module, this allows the recording of fixed asset additions, depreciation calculations on a monthly basis and disposals all integrated with the sale/debtors system with appropriate general ledger journals also created.
+
+2. Contract Costing functionality that allows contracts to be defined and the costs recorded against the contract. Contracts can be created using items from stock and also other items that might be required to be purchased that are not currently stock items. Contracts can be converted to quotations and from a quotation to a sales order/sale. The final variances on contracts are recorded and a final costing comparison report available.
+
+3. Significant work has also been done in conjunction with Secunia, the software security testing people, who have scruitinised webERP for security vulnerabilities. Their findings were useful in identifying scripts that needed to be changed. All identified weaknesses have now been removed.
+
+4. Prices can now be set for a period - with start and end date, to allow for promotional periods where the price should revert back and can be set ahead of time.
+
+5. Counter Sales functionality to allow sales to be processed to a default cash sales account and receipt of cash processed at the same time. This avoids having to enter a sales order, confirm the dispatch to invoice, the also entering the receipt as separate process and effectively enables a kind of point of sale system for each inventory location.
+
+6. A significant push has been made to try to reduce the number of bugs, with a great deal of testing from all quarters.
+
+The change log shows descriptions and dates of all changes made.
 
 Installation instructions are in the file INSTALL.txt in the doc directory. It is important to read the INSTALL.txt file in its entirety before proceeding. A printout is recommended.
 

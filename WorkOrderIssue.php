@@ -556,8 +556,8 @@ if (!isset($_POST['IssueItem'])){
 	echo '</select>';
 } else {
 	$LocResult = DB_query("SELECT loccode, locationname
-				FROM locations
-				WHERE loccode='" . $_POST['FromLocation'] . "'",
+						FROM locations
+						WHERE loccode='" . $_POST['FromLocation'] . "'",
 				$db);
 	$LocRow = DB_fetch_array($LocResult);
 	echo '<input type="hidden" name="FromLocation" value="' . $_POST['FromLocation'] . '">';
@@ -615,10 +615,10 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 	echo '<table class=selection><tr><td>' . _('Select a stock category') . ':<select name="StockCat">';
 
 	if (!isset($_POST['StockCat'])){
-		echo "<option selected VALUE='All'>" . _('All');
+		echo "<option selected VALUE='All'>" . _('All') . '</option>';
 		$_POST['StockCat'] ='All';
 	} else {
-		echo "<option VALUE='All'>" . _('All');
+		echo "<option VALUE='All'>" . _('All') . '</option>';
 	}
 
 	while ($myrow1 = DB_fetch_array($result1)) {
@@ -636,7 +636,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 	<td><input type="Text" name="Keywords" size=20 maxlength=25 VALUE="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>"></td></tr>
 	<tr><td></td>
 			<td><font SIZE 3><b><?php echo _('OR'); ?> </b></font><?php echo _('Enter extract of the'); ?> <b><?php echo _('Stock Code'); ?></b>:</td>
-		<td><input type="Text" name="StockCode" size=15 maxlength=18 VALUE="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></td>
+		<td><input type="Text" name="StockCode" size="15" maxlength="18" VALUE="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></td>
 			</tr>
 			</table>
 			<br /><div class="centre"><input type=submit name="Search" VALUE="<?php echo _('Search Now'); ?>">
@@ -767,13 +767,13 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 					  <td><input type="textbox" name="Qty' . $i .'"></td></tr>';
 			}
 			echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '">';
-			echo '<tr><td colspan=2><div class=centre><input type=submit name="Process" value="' . _('Process Items Issued') . '"><</div>/td></tr>';
+			echo '<tr><td colspan=2><div class=centre><input type=submit name="Process" value="' . _('Process Items Issued') . '"></div></td></tr>';
 		} //end of lot/batch control
 	} else { //not controlled - an easy one!
 		echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '">';
 		echo '<tr><td>' . _('Quantity Issued') . ':</td>
 			  <td><input class=number type="textbox" name="Qty"></tr>';
-		echo '<tr><td colspan=2><div class=centre><input type=submit name="Process" value="' . _('Process Items Issued') . '"></div></td></tr>';
+		echo '<tr><td colspan=2><input type=submit name="Process" value="' . _('Process Items Issued') . '"></div></td></tr>';
 	}
 } //end if selecting new item to issue or entering the issued item quantities
 echo '</table>';

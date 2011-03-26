@@ -834,5 +834,5 @@ UPDATE config SET confvalue='4.03.2' WHERE confname='VersionNumber';
 ALTER TABLE locations ADD cashsalebranch varchar(10) DEFAULT '';
 ALTER TABLE `locations` CHANGE `cashsalecustomer` `cashsalecustomer` VARCHAR( 10 ) DEFAULT '';
 UPDATE config SET confvalue='4.03.3' WHERE confname='VersionNumber';
-INSERT INTO `weberpdemo`.`scripts` (`script`, `pagesecurity`, `description`) VALUES ('Z_ChangeSupplierCode.php', '15', 'Script to change a supplier code accross all tables necessary');
-UPDATE config SET confvalue='4.03.4' WHERE confname='VersionNumber';
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('Z_ChangeSupplierCode.php', '15', 'Script to change a supplier code accross all tables necessary');
+UPDATE config SET confvalue='4.03.5' WHERE confname='VersionNumber';
