@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web-erp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-26 16:22+1200\n"
+"POT-Creation-Date: 2011-03-27 19:34+1200\n"
 "PO-Revision-Date: 2010-07-31 06:49+0000\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: Swahili <sw@li.org>\n"
@@ -261,12 +261,12 @@ msgstr "माता पिता के समूह"
 #: CustomerBranches.php:420 Customers.php:600 Customers.php:857
 #: Customers.php:864 Customers.php:867 DeliveryDetails.php:1034
 #: DeliveryDetails.php:1074 DeliveryDetails.php:1077 GLTransInquiry.php:73
-#: MRPCalendar.php:222 MRP.php:530 MRP.php:534 MRP.php:538 MRP.php:542
+#: MRPCalendar.php:222 MRP.php:529 MRP.php:533 MRP.php:537 MRP.php:541
 #: PaymentMethods.php:203 PaymentMethods.php:204 PaymentMethods.php:264
 #: PaymentMethods.php:270 PDFChequeListing.php:63
 #: PDFDeliveryDifferences.php:64 PDFDIFOT.php:67
 #: PO_AuthorisationLevels.php:132 PO_AuthorisationLevels.php:137
-#: PO_Header.php:758 PO_PDFPurchOrder.php:344 PO_PDFPurchOrder.php:347
+#: PO_Header.php:754 PO_PDFPurchOrder.php:344 PO_PDFPurchOrder.php:347
 #: PurchData.php:192 PurchData.php:494 PurchData.php:497
 #: RecurringSalesOrders.php:483 RecurringSalesOrders.php:486
 #: SalesAnalReptCols.php:279 SalesAnalReptCols.php:401
@@ -296,12 +296,12 @@ msgstr "हां"
 #: CustomerBranches.php:420 Customers.php:599 Customers.php:855
 #: Customers.php:863 Customers.php:866 DeliveryDetails.php:1035
 #: DeliveryDetails.php:1075 DeliveryDetails.php:1078 GLTransInquiry.php:127
-#: MRPCalendar.php:224 MRP.php:528 MRP.php:532 MRP.php:536 MRP.php:540
+#: MRPCalendar.php:224 MRP.php:527 MRP.php:531 MRP.php:535 MRP.php:539
 #: PaymentMethods.php:203 PaymentMethods.php:204 PaymentMethods.php:265
 #: PaymentMethods.php:271 PDFChequeListing.php:62
 #: PDFDeliveryDifferences.php:63 PDFDIFOT.php:66
 #: PO_AuthorisationLevels.php:134 PO_AuthorisationLevels.php:139
-#: PO_Header.php:757 PO_PDFPurchOrder.php:345 PO_PDFPurchOrder.php:348
+#: PO_Header.php:753 PO_PDFPurchOrder.php:345 PO_PDFPurchOrder.php:348
 #: PurchData.php:195 PurchData.php:495 PurchData.php:498
 #: RecurringSalesOrders.php:482 RecurringSalesOrders.php:485
 #: SalesAnalReptCols.php:277 SalesAnalReptCols.php:402
@@ -362,7 +362,7 @@ msgstr "संपादित करें"
 #: Payments.php:958 PaymentTerms.php:204 PcAssignCashToTab.php:255
 #: PcClaimExpensesFromTab.php:230 PcExpenses.php:187 PcExpensesTypeTab.php:164
 #: PcTabs.php:189 PcTypeTabs.php:175 PO_AuthorisationLevels.php:150
-#: PO_Items.php:764 Prices_Customer.php:284 Prices.php:228 PurchData.php:208
+#: PO_Items.php:762 Prices_Customer.php:284 Prices.php:228 PurchData.php:208
 #: SalesAnalReptCols.php:294 SalesAnalRepts.php:305 SalesCategories.php:264
 #: SalesGLPostings.php:136 SalesGLPostings.php:248 SalesPeople.php:211
 #: SalesTypes.php:207 SelectCreditItems.php:745 SelectCustomer.php:611
@@ -528,7 +528,7 @@ msgstr "संपर्क का नाम खाली नहीं हो स
 #: AddCustomerTypeNotes.php:49 Areas.php:74 CustomerTypes.php:71
 #: DeliveryDetails.php:748 Factors.php:117 FixedAssetItems.php:236
 #: PcAssignCashToTab.php:73 PcClaimExpensesFromTab.php:61 PcExpenses.php:70
-#: PcTabs.php:60 PcTypeTabs.php:62 PO_Items.php:413 SalesAnalReptCols.php:129
+#: PcTabs.php:60 PcTypeTabs.php:62 PO_Items.php:411 SalesAnalReptCols.php:129
 #: SalesPeople.php:94 SalesTypes.php:63 Stocks.php:353 Suppliers.php:514
 #: SupplierTypes.php:69
 msgid "has been updated"
@@ -584,7 +584,7 @@ msgid "Contact Name"
 msgstr "संपर्क नाम"
 
 #: AddCustomerContacts.php:196 Contracts.php:777 PDFRemittanceAdvice.php:247
-#: PO_Header.php:958 PO_Header.php:1028 SelectCreditItems.php:223
+#: PO_Header.php:956 PO_Header.php:1026 SelectCreditItems.php:223
 #: SelectCustomer.php:464 SelectOrderItems.php:639
 #: includes/PDFStatementPageHeader.inc:63 includes/PDFTransPageHeader.inc:117
 #: includes/PDFTransPageHeaderPortrait.inc:105
@@ -819,8 +819,8 @@ msgid "The details of outstanding transactions for customer"
 msgstr "ग्राहकों के लिए बकाया लेनदेन का विवरण"
 
 #: AgedDebtors.php:367 AgedSuppliers.php:189 GLAccountCSV.php:169
-#: GLAccountInquiry.php:145 GLAccountReport.php:93 PO_Items.php:473
-#: PO_Items.php:607 PO_Items.php:634 SalesAnalReptCols.php:356
+#: GLAccountInquiry.php:145 GLAccountReport.php:93 PO_Items.php:471
+#: PO_Items.php:605 PO_Items.php:632 SalesAnalReptCols.php:356
 #: SpecialOrder.php:369 StockLocTransferReceive.php:373
 #: StockQuantityByDate.php:114 includes/SelectOrderItems_IntoCart.inc:53
 msgid "could not be retrieved because"
@@ -849,7 +849,7 @@ msgstr "हो पुनः प्राप्त नहीं किया ज�
 #: includes/PDFPaymentRun_PymtFooter.php:89
 #: includes/PDFPaymentRun_PymtFooter.php:118
 #: includes/PDFPaymentRun_PymtFooter.php:154
-#: includes/PDFPaymentRun_PymtFooter.php:185 includes/ConnectDB_mysqli.inc:86
+#: includes/PDFPaymentRun_PymtFooter.php:185 includes/ConnectDB_mysqli.inc:79
 #: includes/ConnectDB_mysql.inc:68
 msgid "The SQL that failed was"
 msgstr "एसक्यूएल है कि विफल रही थी"
@@ -1816,7 +1816,7 @@ msgstr "विस्तारित मात्रा BOM लिस्टिं
 #: InventoryQuantities.php:210 MRPPlannedPurchaseOrders.php:305
 #: MRPPlannedWorkOrders.php:367 MRPReport.php:826 MRPReschedules.php:190
 #: MRPShortages.php:283 PDFOrderStatus.php:299 PDFPriceList.php:331
-#: PDFReceipt.php:32 PO_Header.php:792 PO_PDFPurchOrder.php:59
+#: PDFReceipt.php:32 PO_Header.php:789 PO_PDFPurchOrder.php:59
 #: PO_SelectOSPurchOrder.php:476 ReorderLevel.php:251 StockDispatch.php:337
 #: SuppPriceList.php:254 Tax.php:252 includes/PDFAgedDebtorsPageHeader.inc:34
 #: includes/PDFAgedSuppliersPageHeader.inc:21
@@ -1998,7 +1998,7 @@ msgstr "एक स्तर"
 #: MRPShortages.php:299 PaymentTerms.php:180 PcExpenses.php:159
 #: PcExpenses.php:248 PcExpensesTypeTab.php:148 PcReportTab.php:174
 #: PcTypeTabs.php:158 PDFOrdersInvoiced.php:345 PDFOrderStatus.php:313
-#: PDFPrintLabel.php:239 PO_Items.php:715 PO_Items.php:1042
+#: PDFPrintLabel.php:239 PO_Items.php:713 PO_Items.php:1046
 #: PO_SelectOSPurchOrder.php:213 PO_SelectPurchOrder.php:178
 #: PricesByCost.php:119 ReorderLevelLocation.php:55 ReorderLevel.php:266
 #: ReverseGRN.php:377 SalesCategories.php:427 SelectAsset.php:225
@@ -2104,7 +2104,7 @@ msgstr "विवरण"
 #: CustomerReceipt.php:1029 CustomerReceipt.php:1032
 #: DiscountCategories.php:103 DiscountCategories.php:106
 #: FixedAssetTransfer.php:61 MRPDemands.php:330 MRPDemands.php:333
-#: MRPReport.php:563 PO_Header.php:516 PO_Items.php:1021 PO_Items.php:1026
+#: MRPReport.php:563 PO_Header.php:516 PO_Items.php:1025 PO_Items.php:1030
 #: PO_SelectOSPurchOrder.php:202 PO_SelectPurchOrder.php:170 PurchData.php:264
 #: SelectAsset.php:93 SelectCompletedOrder.php:518 SelectCreditItems.php:208
 #: SelectCreditItems.php:942 SelectCustomer.php:331 SelectCustomer.php:337
@@ -2137,7 +2137,7 @@ msgstr "स्टॉक कोड"
 
 #: BOMInquiry.php:26 BOMs.php:803 ContractBOM.php:331 Contracts.php:766
 #: CounterSales.php:2142 CustomerReceipt.php:1037 FixedAssetTransfer.php:72
-#: MRPDemands.php:335 MRPReport.php:571 PO_Header.php:521 PO_Items.php:1029
+#: MRPDemands.php:335 MRPReport.php:571 PO_Header.php:521 PO_Items.php:1033
 #: SelectAsset.php:101 SelectCreditItems.php:213 SelectCreditItems.php:947
 #: SelectCustomer.php:419 SelectGLAccount.php:98 SelectOrderItems.php:627
 #: SelectOrderItems.php:1596 SelectProduct.php:508 SelectSupplier.php:212
@@ -2147,7 +2147,7 @@ msgid "Search Now"
 msgstr "अब खोजें"
 
 #: BOMInquiry.php:36 BOMs.php:738 ContractBOM.php:51 MRPDemands.php:57
-#: MRPReport.php:589 PO_Items.php:826 PO_SelectOSPurchOrder.php:64
+#: MRPReport.php:589 PO_Items.php:824 PO_SelectOSPurchOrder.php:64
 #: PO_SelectPurchOrder.php:43 SelectCompletedOrder.php:95
 #: SelectCreditItems.php:276 SelectProduct.php:521 SelectSalesOrder.php:348
 #: SelectWorkOrder.php:35 Shipt_Select.php:62 SupplierTenders.php:378
@@ -2177,7 +2177,7 @@ msgstr "एसक्यूएल भागों संदेश के सा�
 #: CustomerReceipt.php:1043 GLCodesInquiry.php:28 MRPDemands.php:91
 #: MRPPlannedWorkOrders.php:257 MRPReport.php:759 PDFOrdersInvoiced.php:344
 #: PDFOrderStatus.php:312 PDFPrintLabel.php:239 PO_Header.php:531
-#: PO_Items.php:1041 PO_SelectOSPurchOrder.php:212 PO_SelectPurchOrder.php:177
+#: PO_Items.php:1045 PO_SelectOSPurchOrder.php:212 PO_SelectPurchOrder.php:177
 #: PricesByCost.php:118 PurchData.php:338 ReorderLevelLocation.php:54
 #: ReorderLevelLocation.php:203 SalesPeople.php:184
 #: SelectCompletedOrder.php:534 SelectCreditItems.php:220
@@ -2194,7 +2194,7 @@ msgstr "कोड"
 #: BOMInquiry.php:95 BOMs.php:812 ConfirmDispatch_Invoice.php:271
 #: ContractBOM.php:345 CounterSales.php:1989 CounterSales.php:2169
 #: Credit_Invoice.php:273 GoodsReceived.php:91 GoodsReceived.php:95
-#: MRPReport.php:762 OffersReceived.php:95 PO_Items.php:1044
+#: MRPReport.php:762 OffersReceived.php:95 PO_Items.php:1049
 #: PO_SelectOSPurchOrder.php:216 PO_SelectPurchOrder.php:181
 #: SelectCompletedOrder.php:539 SelectCreditItems.php:957
 #: SelectOrderItems.php:1437 SelectOrderItems.php:1621 SelectProduct.php:108
@@ -2521,7 +2521,7 @@ msgid "Level"
 msgstr "स्तर"
 
 #: BOMs.php:519 BOMs.php:636 Contracts.php:868 FixedAssetRegister.php:83
-#: InventoryQuantities.php:223 Locations.php:328 MRP.php:549 MRP.php:563
+#: InventoryQuantities.php:223 Locations.php:328 MRP.php:548 MRP.php:562
 #: PDFOrdersInvoiced.php:306 PDFOrderStatus.php:272
 #: ReorderLevelLocation.php:173 ReorderLevel.php:258 ReorderLevel.php:267
 #: StockCounts.php:133 StockReorderLevel.php:49 StockSerialItemResearch.php:78
@@ -2863,8 +2863,8 @@ msgstr "शेयर लेनदेन के लिए जीएल प्र�
 #: CompanyPreferences.php:472 ConfirmDispatch_Invoice.php:626
 #: ConfirmDispatch_Invoice.php:1658 Credit_Invoice.php:1529
 #: FixedAssetItems.php:123 FixedAssetItems.php:570 GLBudgets.php:219
-#: GLTags.php:44 GoodsReceived.php:228 GoodsReceived.php:234
-#: GoodsReceived.php:241 GoodsReceived.php:697 Labels.php:262
+#: GLTags.php:44 GoodsReceived.php:230 GoodsReceived.php:236
+#: GoodsReceived.php:243 GoodsReceived.php:699 Labels.php:262
 #: MRPCalendar.php:309 Payments.php:852 PcAuthorizeExpenses.php:262
 #: PO_AuthoriseMyOrders.php:125 PricesByCost.php:188 PurchData.php:502
 #: ReorderLevelLocation.php:156 SelectCreditItems.php:898 SMTPServer.php:63
@@ -3042,7 +3042,7 @@ msgstr "चालान में कहा गया है मात्रा"
 #: ConfirmDispatch_Invoice.php:268 ContractBOM.php:241 ContractCosting.php:72
 #: ContractCosting.php:78 Contracts.php:930 CounterSales.php:699
 #: CounterSales.php:2301 Credit_Invoice.php:270 DeliveryDetails.php:783
-#: GoodsReceived.php:88 OrderDetails.php:153 PO_Items.php:714
+#: GoodsReceived.php:88 OrderDetails.php:153 PO_Items.php:712
 #: PO_OrderDetails.php:142 PrintCustTrans.php:648 PrintCustTrans.php:711
 #: PrintCustTrans.php:749 PrintCustTransPortrait.php:827
 #: PrintCustTransPortrait.php:910 PrintCustTransPortrait.php:954
@@ -3067,7 +3067,7 @@ msgstr "मद कोड"
 #: ConfirmDispatch_Invoice.php:269 ContractCosting.php:73
 #: ContractCosting.php:79 Contracts.php:931 CounterSales.php:700
 #: Credit_Invoice.php:271 DeliveryDetails.php:784 DeliveryDetails.php:849
-#: OrderDetails.php:154 PO_Items.php:782 PO_OrderDetails.php:143
+#: OrderDetails.php:154 PO_Items.php:780 PO_OrderDetails.php:143
 #: PrintCustTrans.php:649 PrintCustTrans.php:712 PrintCustTrans.php:750
 #: PrintCustTransPortrait.php:828 PrintCustTransPortrait.php:911
 #: PrintCustTransPortrait.php:955 RecurringSalesOrders.php:321
@@ -3312,12 +3312,12 @@ msgid "Please remedy this"
 msgstr "इस उपाय करें"
 
 #: ConfirmDispatch_Invoice.php:653 Credit_Invoice.php:484
-#: GoodsReceived.php:251
+#: GoodsReceived.php:253
 msgid "The company information and preferences could not be retrieved"
 msgstr "कंपनी की जानकारी और वरीयताओं को पुनः प्राप्त नहीं किया जा सका"
 
 #: ConfirmDispatch_Invoice.php:653 Credit_Invoice.php:484
-#: GoodsReceived.php:251
+#: GoodsReceived.php:253
 msgid "see your system administrator"
 msgstr "अपने सिस्टम व्यवस्थापक से संपर्क करें"
 
@@ -3336,7 +3336,7 @@ msgid ""
 msgstr ""
 "इस क्रम बदल दिया गया है या चालान के बाद से इस वितरण की पुष्टि होना शुरू कर दिया था"
 
-#: ConfirmDispatch_Invoice.php:681 GoodsReceived.php:288
+#: ConfirmDispatch_Invoice.php:681 GoodsReceived.php:290
 msgid "Processing halted"
 msgstr "प्रसंस्करण रुका"
 
@@ -3427,10 +3427,10 @@ msgstr "एसक्यूएल अद्यतन करने के लि�
 #: Credit_Invoice.php:1070 Credit_Invoice.php:1093 Credit_Invoice.php:1264
 #: Credit_Invoice.php:1304 Credit_Invoice.php:1331 Credit_Invoice.php:1352
 #: Credit_Invoice.php:1381 Credit_Invoice.php:1407 Credit_Invoice.php:1433
-#: GoodsReceived.php:270 GoodsReceived.php:351 GoodsReceived.php:393
-#: GoodsReceived.php:423 GoodsReceived.php:451 GoodsReceived.php:482
-#: GoodsReceived.php:500 GoodsReceived.php:529 GoodsReceived.php:546
-#: GoodsReceived.php:634 GoodsReceived.php:659 PDFStockCheckComparison.php:122
+#: GoodsReceived.php:272 GoodsReceived.php:353 GoodsReceived.php:395
+#: GoodsReceived.php:425 GoodsReceived.php:453 GoodsReceived.php:484
+#: GoodsReceived.php:502 GoodsReceived.php:531 GoodsReceived.php:548
+#: GoodsReceived.php:636 GoodsReceived.php:661 PDFStockCheckComparison.php:122
 #: PDFStockCheckComparison.php:130 PDFStockCheckComparison.php:137
 #: PDFStockCheckComparison.php:156 PDFStockCheckComparison.php:175
 #: RecurringSalesOrdersProcess.php:321 RecurringSalesOrdersProcess.php:361
@@ -3536,11 +3536,11 @@ msgstr "गंभीर त्रुटि"
 #: Credit_Invoice.php:990 Credit_Invoice.php:1029 Credit_Invoice.php:1070
 #: Credit_Invoice.php:1093 Credit_Invoice.php:1264 Credit_Invoice.php:1304
 #: Credit_Invoice.php:1331 Credit_Invoice.php:1352 Credit_Invoice.php:1381
-#: Credit_Invoice.php:1407 Credit_Invoice.php:1433 GoodsReceived.php:270
-#: GoodsReceived.php:351 GoodsReceived.php:393 GoodsReceived.php:423
-#: GoodsReceived.php:451 GoodsReceived.php:482 GoodsReceived.php:500
-#: GoodsReceived.php:529 GoodsReceived.php:546 GoodsReceived.php:634
-#: GoodsReceived.php:659 PDFStockCheckComparison.php:122
+#: Credit_Invoice.php:1407 Credit_Invoice.php:1433 GoodsReceived.php:272
+#: GoodsReceived.php:353 GoodsReceived.php:395 GoodsReceived.php:425
+#: GoodsReceived.php:453 GoodsReceived.php:484 GoodsReceived.php:502
+#: GoodsReceived.php:531 GoodsReceived.php:548 GoodsReceived.php:636
+#: GoodsReceived.php:661 PDFStockCheckComparison.php:122
 #: PDFStockCheckComparison.php:130 PDFStockCheckComparison.php:137
 #: PDFStockCheckComparison.php:156 PDFStockCheckComparison.php:175
 #: RecurringSalesOrdersProcess.php:321 RecurringSalesOrdersProcess.php:361
@@ -3693,7 +3693,7 @@ msgid "Location stock record could not be updated because"
 msgstr "स्थान स्टॉक रिकॉर्ड क्योंकि अद्यतन नहीं किया जा सकता है"
 
 #: ConfirmDispatch_Invoice.php:950 ContractCosting.php:306
-#: CounterSales.php:1304 Credit_Invoice.php:684 GoodsReceived.php:452
+#: CounterSales.php:1304 Credit_Invoice.php:684 GoodsReceived.php:454
 #: ReverseGRN.php:220 SelectCreditItems.php:1360 StockTransfers.php:382
 #: StockTransfers.php:392 WorkOrderIssue.php:163 WorkOrderReceive.php:320
 #: WorkOrderReceive.php:426
@@ -3780,7 +3780,7 @@ msgstr "शेयर आंदोलन रिकॉर्ड वजह से �
 
 #: ConfirmDispatch_Invoice.php:1119 ContractCosting.php:335
 #: CounterSales.php:1474 Credit_Invoice.php:892 Credit_Invoice.php:991
-#: Credit_Invoice.php:1030 GoodsReceived.php:483
+#: Credit_Invoice.php:1030 GoodsReceived.php:485
 #: RecurringSalesOrdersProcess.php:362 ReverseGRN.php:249
 #: SelectCreditItems.php:1254 WorkOrderIssue.php:194 WorkOrderReceive.php:349
 #: WorkOrderReceive.php:456
@@ -3823,7 +3823,7 @@ msgstr ""
 "निम्नलिखित एसक्यूएल धारावाहिक भंडार वस्तु रिकॉर्ड इस्तेमाल किया गया था अद्यतन करने के लिए"
 
 #: ConfirmDispatch_Invoice.php:1172 Credit_Invoice.php:946
-#: GoodsReceived.php:546 SelectCreditItems.php:1338 StockAdjustments.php:226
+#: GoodsReceived.php:548 SelectCreditItems.php:1338 StockAdjustments.php:226
 #: StockLocTransferReceive.php:172 StockLocTransferReceive.php:285
 #: StockTransfers.php:260 StockTransfers.php:368 WorkOrderIssue.php:230
 #: WorkOrderIssue.php:285 WorkOrderReceive.php:507 WorkOrderReceive.php:578
@@ -3831,7 +3831,7 @@ msgid "The serial stock movement record could not be inserted because"
 msgstr "धारावाहिक स्टॉक आंदोलन रिकॉर्ड वजह से हो सकता है नहीं डाला"
 
 #: ConfirmDispatch_Invoice.php:1173 Credit_Invoice.php:947
-#: GoodsReceived.php:547 StockAdjustments.php:227
+#: GoodsReceived.php:549 StockAdjustments.php:227
 #: StockLocTransferReceive.php:173 StockLocTransferReceive.php:286
 #: StockTransfers.php:261 StockTransfers.php:369 WorkOrderIssue.php:231
 #: WorkOrderIssue.php:286 WorkOrderReceive.php:508 WorkOrderReceive.php:579
@@ -3951,7 +3951,7 @@ msgstr "The sales GL posting could not be inserted because"
 msgid "The fixed asset transaction could not be inserted because"
 msgstr "देनदार लेनदेन रिकॉर्ड वजह से हो सकता है नहीं डाला"
 
-#: ConfirmDispatch_Invoice.php:1509 GoodsReceived.php:584 ReverseGRN.php:176
+#: ConfirmDispatch_Invoice.php:1509 GoodsReceived.php:586 ReverseGRN.php:176
 #: SupplierCredit.php:1195 SupplierCredit.php:1283 SupplierInvoice.php:1182
 #: SupplierInvoice.php:1267
 #, fuzzy
@@ -4102,18 +4102,18 @@ msgstr "यहाँ क्लिक करें"
 msgid "to continue"
 msgstr "जारी रखने के लिए"
 
-#: ContractBOM.php:143 CounterSales.php:327 PO_Items.php:966
+#: ContractBOM.php:143 CounterSales.php:327 PO_Items.php:970
 #: SelectCreditItems.php:368 SelectOrderItems.php:856 SupplierTenders.php:469
 #: WorkOrderEntry.php:151 WorkOrderIssue.php:469
 msgid "There is a problem selecting the part records to display because"
 msgstr "वहाँ एक हिस्सा अभिलेख चयन करने के लिए क्योंकि प्रदर्शन समस्या है"
 
-#: ContractBOM.php:144 PO_Items.php:967 SupplierTenders.php:470
+#: ContractBOM.php:144 PO_Items.php:971 SupplierTenders.php:470
 #: Z_ChangeStockCategory.php:63 Z_ChangeStockCode.php:95
 msgid "The SQL statement that failed was"
 msgstr "SQL कथन है कि विफल रही थी"
 
-#: ContractBOM.php:148 PO_Items.php:971 SupplierTenders.php:474
+#: ContractBOM.php:148 PO_Items.php:975 SupplierTenders.php:474
 msgid "There are no products to display matching the criteria provided"
 msgstr "कोई उत्पादों मिलान मापदंड प्रदान की प्रदर्शित करने के लिए कर रहे हैं"
 
@@ -4123,7 +4123,7 @@ msgid ""
 "the order"
 msgstr "अनुबंध BOM क्योंकि ग्राहक पहले से ही आदेश दिया है नहीं किया जा सकता है alterned"
 
-#: ContractBOM.php:185 PO_Items.php:587
+#: ContractBOM.php:185 PO_Items.php:585
 #: includes/SelectOrderItems_IntoCart.inc:26
 #: includes/SelectOrderItems_IntoCart.inc:63
 msgid "The item"
@@ -4142,11 +4142,11 @@ msgstr ""
 msgid "The item details could not be retrieved"
 msgstr "आइटम विवरण को पुनः प्राप्त नहीं किया जा सका"
 
-#: ContractBOM.php:201 PO_Items.php:608 SelectCreditItems.php:600
+#: ContractBOM.php:201 PO_Items.php:606 SelectCreditItems.php:600
 msgid "The SQL used to retrieve the item details but failed was"
 msgstr "एसक्यूएल को मद विवरण पाने के लिये प्रयुक्त लेकिन असफल रहा था"
 
-#: ContractBOM.php:213 CounterSales.php:422 PO_Items.php:685
+#: ContractBOM.php:213 CounterSales.php:422 PO_Items.php:683
 #: SelectOrderItems.php:950 includes/SelectOrderItems_IntoCart.inc:58
 #: includes/SelectOrderItems_IntoCart.inc:162
 msgid "The item code"
@@ -4185,24 +4185,24 @@ msgstr "अद्यतन आदेश लाइन्स"
 msgid "Back To Contract Header"
 msgstr "वापस शीर्ष करने के लिए अनुबंध"
 
-#: ContractBOM.php:290 PO_Items.php:989
+#: ContractBOM.php:290 PO_Items.php:993
 msgid "The supplier category details could not be retrieved because"
 msgstr "आपूर्तिकर्ता श्रेणी विवरण वजह से हो सकता है नहीं लिया गया"
 
-#: ContractBOM.php:291 PO_Items.php:990
+#: ContractBOM.php:291 PO_Items.php:994
 msgid "The SQL used to retrieve the category details but failed was"
 msgstr "करने के लिए SQL श्रेणी जानकारी पाने के लिये प्रयुक्त लेकिन असफल रहा था"
 
-#: ContractBOM.php:294 PO_Items.php:993
+#: ContractBOM.php:294 PO_Items.php:997
 msgid "Search For Stock Items"
 msgstr "शेयर आइटम्स के लिए खोज"
 
 #: ContractBOM.php:299 CounterSales.php:2113 CounterSales.php:2116
 #: DailySalesInquiry.php:44 DailySalesInquiry.php:46 FixedAssetRegister.php:56
 #: FixedAssetRegister.php:65 InventoryQuantities.php:155
-#: InventoryQuantities.php:176 InventoryQuantities.php:178 MRP.php:565
+#: InventoryQuantities.php:176 InventoryQuantities.php:178 MRP.php:564
 #: MRPReport.php:544 MRPReport.php:546 MRPReschedules.php:161
-#: PDFPriceList.php:194 PDFPrintLabel.php:240 PO_Items.php:997
+#: PDFPriceList.php:194 PDFPrintLabel.php:240 PO_Items.php:1001
 #: POReport.php:1486 ReorderLevel.php:187 ReorderLevel.php:189
 #: ReorderLevel.php:217 ReorderLevel.php:219 SalesGraph.php:91
 #: SalesGraph.php:93 SalesGraph.php:111 SalesGraph.php:113 SalesGraph.php:134
@@ -4219,18 +4219,18 @@ msgstr "शेयर आइटम्स के लिए खोज"
 msgid "All"
 msgstr "सभी"
 
-#: ContractBOM.php:320 PO_Items.php:1018 SelectCompletedOrder.php:515
+#: ContractBOM.php:320 PO_Items.php:1022 SelectCompletedOrder.php:515
 #: SelectCreditItems.php:939
 msgid "Enter text extracts in the description"
 msgstr "विवरण में पाठ निष्कर्षों दर्ज"
 
-#: ContractBOM.php:323 CounterSales.php:2138 PO_Items.php:1021
+#: ContractBOM.php:323 CounterSales.php:2138 PO_Items.php:1025
 #: SelectCompletedOrder.php:518 SelectCreditItems.php:942
 #: SelectOrderItems.php:1589 SelectSalesOrder.php:485 SelectWorkOrder.php:173
 msgid "Enter extract of the Stock Code"
 msgstr "स्टॉक कोड के उद्धरण दर्ज"
 
-#: ContractBOM.php:329 PO_Items.php:1027
+#: ContractBOM.php:329 PO_Items.php:1031
 msgid "Create a New Stock Item"
 msgstr "एक नया स्टॉक आइटम बनाएँ"
 
@@ -4240,22 +4240,22 @@ msgid "Image"
 msgstr "छवि"
 
 #: ContractBOM.php:368 CounterSales.php:2001 FixedAssetItems.php:465
-#: FixedAssetItems.php:469 PO_Items.php:1068 SelectCreditItems.php:969
+#: FixedAssetItems.php:469 PO_Items.php:1073 SelectCreditItems.php:969
 #: SelectOrderItems.php:1449 SelectOrderItems.php:1628 SelectProduct.php:408
 #: Stocks.php:709 Stocks.php:713 SupplierTenders.php:517
 #: WorkOrderEntry.php:616 WorkOrderIssue.php:676
 msgid "No Image"
 msgstr "कोई छवि"
 
-#: ContractBOM.php:390 PO_Items.php:1094 SupplierTenders.php:561
+#: ContractBOM.php:390 PO_Items.php:1102 SupplierTenders.php:561
 msgid "Only the first"
 msgstr "केवल पहले"
 
-#: ContractBOM.php:390 PO_Items.php:1094 SupplierTenders.php:561
+#: ContractBOM.php:390 PO_Items.php:1102 SupplierTenders.php:561
 msgid "can be displayed"
 msgstr "प्रदर्शित कर सकते हैं"
 
-#: ContractBOM.php:391 PO_Items.php:1095 SupplierTenders.php:562
+#: ContractBOM.php:391 PO_Items.php:1103 SupplierTenders.php:562
 msgid "Please restrict your search to only the parts required"
 msgstr "कृपया केवल आवश्यक भागों के लिए अपनी खोज को सीमित"
 
@@ -4309,7 +4309,7 @@ msgstr "सूची आवश्यक"
 
 #: ContractCosting.php:75 ContractCosting.php:81 Contracts.php:933
 #: CounterSales.php:703 DeliveryDetails.php:786 DeliveryDetails.php:851
-#: OrderDetails.php:156 PO_Items.php:814 PrintCustTrans.php:651
+#: OrderDetails.php:156 PO_Items.php:812 PrintCustTrans.php:651
 #: PrintCustTrans.php:714 PrintCustTrans.php:752
 #: PrintCustTransPortrait.php:830 PrintCustTransPortrait.php:913
 #: PrintCustTransPortrait.php:957 RecurringSalesOrders.php:323
@@ -4402,7 +4402,7 @@ msgstr "कार्य आदेश अद्यतन नहीं किय�
 msgid "The SQL used to close the work order was:"
 msgstr "SQL के पास काम करने गया था प्रयोग किया है:"
 
-#: ContractCosting.php:305 GoodsReceived.php:451
+#: ContractCosting.php:305 GoodsReceived.php:453
 #: PDFStockCheckComparison.php:130 ReverseGRN.php:219 StockAdjustments.php:239
 #: StockLocTransferReceive.php:297 StockLocTransferReceive.php:306
 #: StockTransfers.php:381 StockTransfers.php:391 WorkOrderIssue.php:162
@@ -5052,7 +5052,7 @@ msgstr "सेटअप"
 msgid "Quote"
 msgstr "उद्धरण"
 
-#: Contracts.php:908 PO_Header.php:795 POReport.php:1487
+#: Contracts.php:908 PO_Header.php:793 POReport.php:1487
 #: PO_SelectPurchOrder.php:140 PO_SelectPurchOrder.php:142
 #: SalesInquiry.php:1104 SelectContract.php:52 SelectContract.php:58
 #: SelectContract.php:64 SelectContract.php:70 SelectContract.php:76
@@ -5954,7 +5954,7 @@ msgstr "माल इस क्रेडिट नोट के लिए पो
 msgid "Credit Note number"
 msgstr "क्रेडिट नोट संख्या"
 
-#: Credit_Invoice.php:1447 GoodsReceived.php:685 SupplierCredit.php:1297
+#: Credit_Invoice.php:1447 GoodsReceived.php:687 SupplierCredit.php:1297
 #: SupplierInvoice.php:1288 WorkOrderIssue.php:354 WorkOrderReceive.php:674
 #: Z_BottomUpCosts.php:33
 msgid "has been processed"
@@ -6380,7 +6380,7 @@ msgstr "क्रय"
 #: CustLoginSetup.php:16 index.php:17 InventoryQuantities.php:147
 #: InventoryValuation.php:202 Locations.php:353 Locations.php:412
 #: MRPCalendar.php:22 MRPCreateDemands.php:187 MRPDemands.php:28
-#: MRPDemandTypes.php:19 MRP.php:518 MRPPlannedPurchaseOrders.php:267
+#: MRPDemandTypes.php:19 MRP.php:517 MRPPlannedPurchaseOrders.php:267
 #: MRPPlannedWorkOrders.php:249 MRPPlannedWorkOrders.php:330
 #: PricesByCost.php:9 ReorderLevelLocation.php:13 ReorderLevel.php:173
 #: SelectProduct.php:71 StockDispatch.php:220 StockMovements.php:26
@@ -7599,7 +7599,7 @@ msgstr "बैंकिंग"
 msgid "Banked into the"
 msgstr "बैंकिंग में"
 
-#: CustomerReceipt.php:841 Payments.php:719 PO_Items.php:258
+#: CustomerReceipt.php:841 Payments.php:719 PO_Items.php:256
 #: SelectSalesOrder.php:135 SelectSalesOrder.php:300 SpecialOrder.php:400
 msgid "on"
 msgstr "पर"
@@ -7820,14 +7820,14 @@ msgstr ""
 "आदेश में एक नए ग्राहक आप पहली बार कम से कम एक प्रकार की बिक्री / कीमत सूची सेट करना "
 "होगा बनाने के लिए"
 
-#: Customers.php:436 Customers.php:445 includes/ConnectDB_mysqli.inc:35
+#: Customers.php:436 Customers.php:445 includes/ConnectDB_mysqli.inc:29
 #: includes/ConnectDB_mysql.inc:29
 msgid "Click"
 msgstr "क्लिक करें"
 
 #: Customers.php:436 Customers.php:445 MRPPlannedPurchaseOrders.php:18
 #: MRPPlannedWorkOrders.php:15 MRPReschedules.php:18 MRPShortages.php:17
-#: OffersReceived.php:229 PO_Header.php:437 includes/ConnectDB_mysqli.inc:35
+#: OffersReceived.php:229 PO_Header.php:437 includes/ConnectDB_mysqli.inc:29
 #: includes/ConnectDB_mysql.inc:29
 msgid "here"
 msgstr "यहाँ"
@@ -7925,7 +7925,7 @@ msgstr ""
 "कम एक पहले से"
 
 #: Customers.php:550 Customers.php:799 Customers.php:802 index.php:1059
-#: PaymentTerms.php:13 PO_Header.php:1034 PrintCustTrans.php:324
+#: PaymentTerms.php:13 PO_Header.php:1032 PrintCustTrans.php:324
 #: PrintCustTransPortrait.php:437 Suppliers.php:680 Suppliers.php:833
 #: includes/PO_PDFOrderPageHeader.inc:62 includes/PO_PDFOrderPageHeader.inc:64
 msgid "Payment Terms"
@@ -8096,7 +8096,7 @@ msgstr "ग्राहक प्रकार"
 
 #: CustomerTypes.php:95 PcAssignCashToTab.php:97 PcClaimExpensesFromTab.php:88
 #: PcExpenses.php:96 PcExpensesTypeTab.php:61 PcTabs.php:97 PcTypeTabs.php:87
-#: PO_Items.php:259 SalesTypes.php:88 SelectSalesOrder.php:135
+#: PO_Items.php:257 SalesTypes.php:88 SelectSalesOrder.php:135
 #: SelectSalesOrder.php:300 SpecialOrder.php:400 SupplierTypes.php:93
 msgid "has been created"
 msgstr "बनाया गया"
@@ -8784,7 +8784,7 @@ msgstr "शेयर गुरु रिकॉर्ड कोई छूट श�
 msgid "Discount Category Code"
 msgstr "छूट श्रेणी कोड"
 
-#: DiscountCategories.php:90 DiscountCategories.php:231 PO_Header.php:848
+#: DiscountCategories.php:90 DiscountCategories.php:231 PO_Header.php:846
 #: SalesCategories.php:262 SuppInvGRNs.php:276 SupplierTenders.php:57
 #, php-format
 msgid "Select"
@@ -10387,7 +10387,7 @@ msgid "Disposal Value"
 msgstr "निपटान मूल्य"
 
 #: FixedAssetRegister.php:199 FixedAssetRegister.php:223
-#: PDFBankingSummary.php:169 PDFChequeListing.php:176 PO_Items.php:770
+#: PDFBankingSummary.php:169 PDFChequeListing.php:176 PO_Items.php:768
 #: includes/PDFSalesAnalysis.inc:71 includes/PDFSalesAnalysis.inc:125
 #: includes/PDFSalesAnalysis.inc:178 includes/PDFSalesAnalysis.inc:312
 #: includes/PDFSalesAnalysis.inc:364 includes/PDFSalesAnalysis.inc:414
@@ -10752,7 +10752,7 @@ msgstr "आदेश दिनांक"
 msgid "Req Del Date"
 msgstr "अनुरोध डेल दिनांक"
 
-#: FTP_RadioBeacon.php:57 PO_Header.php:824 PO_Header.php:1050
+#: FTP_RadioBeacon.php:57 PO_Header.php:822 PO_Header.php:1050
 #: SelectCompletedOrder.php:590 SelectSalesOrder.php:752
 #: SelectSalesOrder.php:768 includes/PDFQuotationPageHeader.inc:31
 #: includes/PDFQuotationPortraitPageHeader.inc:30
@@ -12062,17 +12062,17 @@ msgstr "तिथि का सामान / सेवा प्राप्त
 msgid "Supplier Units"
 msgstr "आपूर्तिकर्ता यूनिट"
 
-#: GoodsReceived.php:86 PO_Items.php:1043
+#: GoodsReceived.php:86
 #, fuzzy
-msgid "Our Units"
+msgid "Our Receiving Units"
 msgstr "इकाइयों"
 
-#: GoodsReceived.php:93
+#: GoodsReceived.php:93 PO_Items.php:1048
 #, fuzzy
 msgid "Conversion"
 msgstr "रूपांतरण फैक्टर (हमारे UOM करने के लिए)"
 
-#: GoodsReceived.php:93
+#: GoodsReceived.php:93 PO_Items.php:1048
 #, fuzzy
 msgid "Factor"
 msgstr "के लिए"
@@ -12097,7 +12097,7 @@ msgstr "बैचों दर्ज"
 msgid "Total value of goods received"
 msgstr "माल का कुल मूल्य प्राप्त"
 
-#: GoodsReceived.php:219
+#: GoodsReceived.php:221
 msgid ""
 "Receiving a negative quantity that results in negative stock is prohibited "
 "by the parameter settings. This delivery of stock cannot be processed until "
@@ -12106,15 +12106,15 @@ msgstr ""
 "एक नकारात्मक मात्रा में है कि नकारात्मक स्टॉक में परिणाम पैरामीटर सेटिंग द्वारा निषिद्ध है "
 "प्राप्त करना. स्टॉक का यह वितरण जब तक इस मद के शेयर सुधारे नहीं जा सकती."
 
-#: GoodsReceived.php:227
+#: GoodsReceived.php:229
 msgid "There is nothing to process"
 msgstr "वहाँ कुछ भी नहीं है के लिए प्रक्रिया"
 
-#: GoodsReceived.php:227
+#: GoodsReceived.php:229
 msgid "Please enter valid quantities greater than zero"
 msgstr "कृपया शून्य से अधिक मान्य मात्रा दर्ज"
 
-#: GoodsReceived.php:232
+#: GoodsReceived.php:234
 msgid ""
 "Negative stocks would result by processing a negative delivery - quantities "
 "must be changed or the stock quantity of the item going negative corrected "
@@ -12124,7 +12124,7 @@ msgstr ""
 "परिवर्तित किया जाना चाहिए आइटम के स्टॉक मात्रा इस से पहले प्रसव कार्रवाई की जाएगी "
 "सही नकारात्मक जा रहा है."
 
-#: GoodsReceived.php:238
+#: GoodsReceived.php:240
 msgid ""
 "Entered quantities cannot be greater than the quantity entered on the "
 "purchase invoice including the allowed over-receive percentage"
@@ -12132,24 +12132,24 @@ msgstr ""
 "प्रवेश मात्रा से अधिक नहीं हो मात्रा खरीद सहित चालान पर दर्ज किया जा सकता से अधिक "
 "प्रतिशत प्राप्त की अनुमति दी"
 
-#: GoodsReceived.php:240
+#: GoodsReceived.php:242
 msgid ""
 "Modify the ordered items on the purchase invoice if you wish to increase the "
 "quantities"
 msgstr "संशोधित खरीद चालान पर आदेश दिया मदों यदि आप मात्रा में वृद्धि करना चाहते हैं"
 
-#: GoodsReceived.php:270
+#: GoodsReceived.php:272
 msgid ""
 "Could not check that the details of the purchase order had not been changed "
 "by another user because"
 msgstr ""
 "जाँच करें कि खरीद आदेश की जानकारी किसी अन्य उपयोगकर्ता वजह से नहीं बदला था नहीं कर सका"
 
-#: GoodsReceived.php:271
+#: GoodsReceived.php:273
 msgid "The following SQL to retrieve the purchase order details was used"
 msgstr "निम्नलिखित एसक्यूएल खरीद आदेश विवरण इस्तेमाल किया गया था प्राप्त करने के लिए"
 
-#: GoodsReceived.php:288
+#: GoodsReceived.php:290
 msgid ""
 "This order has been changed or invoiced since this delivery was started to "
 "be actioned"
@@ -12157,11 +12157,11 @@ msgstr ""
 "इस क्रम बदल दिया गया है या चालान के बाद से इस प्रसव के लिए actioned होना शुरू कर "
 "दिया था"
 
-#: GoodsReceived.php:288
+#: GoodsReceived.php:290
 msgid "To enter a delivery against this purchase order"
 msgstr "इस खरीद के आदेश के खिलाफ एक प्रसव दर्ज करें"
 
-#: GoodsReceived.php:288
+#: GoodsReceived.php:290
 msgid ""
 "it must be re-selected and re-read again to update the changes made by the "
 "other user"
@@ -12169,84 +12169,84 @@ msgstr ""
 "यह होना चाहिए फिर से चुने और फिर से फिर से पढ़ने के लिए अन्य उपयोगकर्ता द्वारा किए गए "
 "परिवर्तनों को अद्यतन"
 
-#: GoodsReceived.php:292
+#: GoodsReceived.php:294
 msgid "GL Code of the Line Item"
 msgstr "पंक्ति वस्तु जी एल कोड"
 
-#: GoodsReceived.php:295
+#: GoodsReceived.php:297
 msgid "ShiptRef of the Line Item"
 msgstr "पंक्ति वस्तु की ShiptRef"
 
-#: GoodsReceived.php:298
+#: GoodsReceived.php:300
 msgid "Contract Reference of the Line Item"
 msgstr "पंक्ति वस्तु के अनुबंध संदर्भ"
 
-#: GoodsReceived.php:302
+#: GoodsReceived.php:304
 msgid "Quantity Invoiced of the Line Item"
 msgstr "मात्रा पंक्ति वस्तु का चालान"
 
-#: GoodsReceived.php:305
+#: GoodsReceived.php:307
 msgid "Stock Code of the Line Item"
 msgstr "पंक्ति वस्तु का स्टॉक कोड"
 
-#: GoodsReceived.php:308
+#: GoodsReceived.php:310
 msgid "Order Quantity of the Line Item"
 msgstr "पंक्ति वस्तु का आदेश मात्रा"
 
-#: GoodsReceived.php:311
+#: GoodsReceived.php:313
 msgid "Quantity of the Line Item Already Received"
 msgstr "पंक्ति वस्तु की मात्रा पहले से ही प्राप्त"
 
-#: GoodsReceived.php:317 GoodsReceived.php:688
+#: GoodsReceived.php:319 GoodsReceived.php:690
 msgid "Select a different purchase order for receiving goods against"
 msgstr "के खिलाफ माल प्राप्त करने के लिए एक अलग खरीद आदेश का चयन करें"
 
-#: GoodsReceived.php:319
+#: GoodsReceived.php:321
 msgid "Re-read the updated purchase order for receiving goods against"
 msgstr "पुनः के खिलाफ माल प्राप्त करने के लिए अद्यतन खरीद आदेश पढ़ा"
 
-#: GoodsReceived.php:351
+#: GoodsReceived.php:353
 msgid ""
 "The standard cost of the item being received cannot be retrieved because"
 msgstr "आइटम के मानक लागत को नहीं पाया जा सकता है क्योंकि प्राप्त किया जा रहा है"
 
-#: GoodsReceived.php:352
+#: GoodsReceived.php:354
 msgid "The following SQL to retrieve the standard cost was used"
 msgstr "निम्नलिखित SQL मानक लागत इस्तेमाल किया गया था प्राप्त करने के लिए"
 
-#: GoodsReceived.php:393
+#: GoodsReceived.php:395
 msgid ""
 "The purchase order detail record could not be updated with the quantity "
 "received because"
 msgstr ""
 "खरीद आदेश विस्तार रिकॉर्ड के साथ मात्रा क्योंकि प्राप्त अद्यतन नहीं किया जा सकता है"
 
-#: GoodsReceived.php:394 ReverseGRN.php:128
+#: GoodsReceived.php:396 ReverseGRN.php:128
 msgid "The following SQL to update the purchase order detail record was used"
 msgstr ""
 "निम्नलिखित एसक्यूएल क्रय आदेश विस्तार रिकॉर्ड इस्तेमाल किया गया था अद्यतन करने के लिए"
 
-#: GoodsReceived.php:423
+#: GoodsReceived.php:425
 msgid "A GRN record could not be inserted"
 msgstr "एक GRN रिकॉर्ड डाला नहीं जा सका"
 
-#: GoodsReceived.php:423
+#: GoodsReceived.php:425
 msgid "This receipt of goods has not been processed because"
 msgstr "माल की यह रसीद वजह से संसाधित नहीं किया"
 
-#: GoodsReceived.php:424 ReverseGRN.php:156
+#: GoodsReceived.php:426 ReverseGRN.php:156
 msgid "The following SQL to insert the GRN record was used"
 msgstr "निम्नलिखित सम्मिलित करने के लिए SQL GRN रिकॉर्ड इस्तेमाल किया गया था"
 
-#: GoodsReceived.php:482
+#: GoodsReceived.php:484
 msgid "stock movement records could not be inserted because"
 msgstr "शेयर आंदोलन रिकॉर्ड वजह से हो सकता है नहीं डाला"
 
-#: GoodsReceived.php:500
+#: GoodsReceived.php:502
 msgid "Could not check if a batch or lot stock item already exists because"
 msgstr "अगर जांच एक बैच या बहुत भंडार वस्तु पहले से ही मौजूद नहीं किया जा सका क्योंकि"
 
-#: GoodsReceived.php:501
+#: GoodsReceived.php:503
 msgid ""
 "The following SQL to test for an already existing controlled but not "
 "serialised stock item was used"
@@ -12254,77 +12254,77 @@ msgstr ""
 "निम्नलिखित एसक्यूएल के लिए परीक्षण करने के लिए एक पहले से ही नियंत्रित लेकिन मौजूदा स्टॉक "
 "नहीं आइटम serialized इस्तेमाल किया गया था"
 
-#: GoodsReceived.php:529 WorkOrderIssue.php:215 WorkOrderReceive.php:492
+#: GoodsReceived.php:531 WorkOrderIssue.php:215 WorkOrderReceive.php:492
 #: WorkOrderReceive.php:563
 msgid "The serial stock item record could not be inserted because"
 msgstr "धारावाहिक भंडार वस्तु रिकॉर्ड वजह से हो सकता है नहीं डाला"
 
-#: GoodsReceived.php:530 WorkOrderIssue.php:216 WorkOrderReceive.php:493
+#: GoodsReceived.php:532 WorkOrderIssue.php:216 WorkOrderReceive.php:493
 #: WorkOrderReceive.php:564
 msgid "The following SQL to insert the serial stock item records was used"
 msgstr ""
 "निम्नलिखित सम्मिलित करने के लिए धारावाहिक भंडार वस्तु रिकॉर्ड एसक्यूएल इस्तेमाल किया गया "
 "था"
 
-#: GoodsReceived.php:583 ReverseGRN.php:175 SupplierCredit.php:1194
+#: GoodsReceived.php:585 ReverseGRN.php:175 SupplierCredit.php:1194
 #: SupplierCredit.php:1282 SupplierInvoice.php:1181 SupplierInvoice.php:1266
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset "
 "transaction could not be inserted because"
 msgstr ""
 
-#: GoodsReceived.php:603 SupplierInvoice.php:1281
+#: GoodsReceived.php:605 SupplierInvoice.php:1281
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset "
 "cost and date purchased was not able to be updated because:"
 msgstr ""
 
-#: GoodsReceived.php:604 SupplierInvoice.php:1282
+#: GoodsReceived.php:606 SupplierInvoice.php:1282
 #, fuzzy
 msgid ""
 "The following SQL was used to attempt the update of the cost and the date "
 "the asset was purchased"
 msgstr "निम्नलिखित एसक्यूएल अनुबंध की स्थिति बदलने के लिए इस्तेमाल किया गया था"
 
-#: GoodsReceived.php:634
+#: GoodsReceived.php:636
 msgid "The purchase GL posting could not be inserted because"
 msgstr "खरीद पोस्टिंग जीएल वजह से हो सकता है नहीं डाला"
 
-#: GoodsReceived.php:635 ReverseGRN.php:303
+#: GoodsReceived.php:637 ReverseGRN.php:303
 msgid "The following SQL to insert the purchase GLTrans record was used"
 msgstr "निम्नलिखित सम्मिलित करने के लिए SQL खरीद GLTrans रिकॉर्ड इस्तेमाल किया गया था"
 
-#: GoodsReceived.php:653 SelectSalesOrder.php:896
+#: GoodsReceived.php:655 SelectSalesOrder.php:896
 msgid "PO"
 msgstr "पीओ"
 
-#: GoodsReceived.php:659 ReverseGRN.php:324
+#: GoodsReceived.php:661 ReverseGRN.php:324
 msgid "The GRN suspense side of the GL posting could not be inserted because"
 msgstr "पोस्टिंग जीएल की GRN रहस्य पक्ष वजह से हो सकता है नहीं डाला"
 
-#: GoodsReceived.php:660 ReverseGRN.php:325
+#: GoodsReceived.php:662 ReverseGRN.php:325
 msgid "The following SQL to insert the GRN Suspense GLTrans record was used"
 msgstr ""
 "निम्नलिखित सम्मिलित करने के लिए SQL GRN सस्पेंस GLTrans रिकॉर्ड इस्तेमाल किया गया था"
 
-#: GoodsReceived.php:670
+#: GoodsReceived.php:672
 #, fuzzy
 msgid "Order Completed"
 msgstr "पूरा"
 
-#: GoodsReceived.php:685 ReverseGRN.php:332
+#: GoodsReceived.php:687 ReverseGRN.php:332
 msgid "GRN number"
 msgstr "GRN संख्या"
 
-#: GoodsReceived.php:686
+#: GoodsReceived.php:688
 msgid "Print this Goods Received Note (GRN)"
 msgstr "प्रिंट इस सामग्री प्राप्त करें (GRN)"
 
-#: GoodsReceived.php:695
+#: GoodsReceived.php:697
 msgid "Modify Order Items"
 msgstr "संशोधित आदेश आइटम"
 
-#: GoodsReceived.php:698
+#: GoodsReceived.php:700
 msgid "Process Goods Received"
 msgstr "प्रक्रिया का सामान मिला"
 
@@ -14112,103 +14112,103 @@ msgstr "बनाने में विफल रहा क्योंकि m
 msgid "Loading requirements from sales orders"
 msgstr "बिक्री आदेश से आवश्यकताओं लोड हो रहा है"
 
-#: MRP.php:255
+#: MRP.php:254
 msgid "Loading requirements from work orders"
 msgstr "काम के आदेश से लोड आवश्यकताओं"
 
-#: MRP.php:297
+#: MRP.php:296
 msgid "Loading requirements based on mrpdemands"
 msgstr "mrpdemands पर आधारित आवश्यकताओं लोड हो रहा है"
 
-#: MRP.php:317
+#: MRP.php:316
 msgid "Loading requirements based on reorder level"
 msgstr "आवश्यकताओं लोड हो रहा है पुनःक्रमित स्तर के आधार पर"
 
-#: MRP.php:324
+#: MRP.php:323
 msgid "Creating supplies table"
 msgstr "आपूर्ति तालिका बनाना"
 
-#: MRP.php:338
+#: MRP.php:337
 msgid "Create of mrpsupplies failed because"
 msgstr "बनाएँ mrpsupplies क्योंकि विफल"
 
-#: MRP.php:340
+#: MRP.php:339
 msgid "Loading supplies from purchase orders"
 msgstr "खरीद आदेश से लोड की आपूर्ति"
 
-#: MRP.php:366
+#: MRP.php:365
 msgid "Loading supplies from inventory on hand"
 msgstr "हाथ पर सूची से आपूर्ति लोड हो रहा है"
 
-#: MRP.php:407
+#: MRP.php:406
 msgid "Loading supplies from work orders"
 msgstr "काम के आदेश से लोड की आपूर्ति"
 
-#: MRP.php:436
+#: MRP.php:435
 msgid "Creating planned orders table"
 msgstr "योजना बनाई आदेश तालिका बनाना"
 
-#: MRP.php:448
+#: MRP.php:447
 msgid "Create of mrpplannedorders failed because"
 msgstr "क्योंकि विफल mrpplannedorders का बनाएँ"
 
-#: MRP.php:467
+#: MRP.php:466
 msgid "Processing level"
 msgstr "प्रसंस्करण स्तर"
 
-#: MRP.php:474
+#: MRP.php:473
 msgid "End time"
 msgstr "अंत समय"
 
-#: MRP.php:546
+#: MRP.php:545
 msgid "Last Run Details"
 msgstr "पिछले भागो विवरण"
 
-#: MRP.php:548
+#: MRP.php:547
 msgid "Last Run Time"
 msgstr "पिछले भागो समय"
 
-#: MRP.php:550 MRP.php:579
+#: MRP.php:549 MRP.php:578
 msgid "Days Leeway"
 msgstr "दिन छूट"
 
-#: MRP.php:551
+#: MRP.php:550
 msgid "Use MRP Demands"
 msgstr "एमआरपी मांगों का प्रयोग करें"
 
-#: MRP.php:552
+#: MRP.php:551
 msgid "Use EOQ"
 msgstr "उपयोग EOQ"
 
-#: MRP.php:553
+#: MRP.php:552
 msgid "Use Pan Size"
 msgstr "आकार पैन का प्रयोग करें"
 
-#: MRP.php:554
+#: MRP.php:553
 msgid "Use Shrinkage"
 msgstr "उपयोग संकोचन"
 
-#: MRP.php:561
+#: MRP.php:560
 msgid "This Run Details"
 msgstr "इस भागो विवरण"
 
-#: MRP.php:580
+#: MRP.php:579
 msgid "Use MRP Demands?"
 msgstr "एमआरपी मांगों का प्रयोग करें?"
 
-#: MRP.php:582
+#: MRP.php:581
 msgid "Use EOQ?"
 msgstr "उपयोग EOQ?"
 
-#: MRP.php:584
+#: MRP.php:583
 msgid "Use Pan Size?"
 msgstr "आकार पैन का प्रयोग करें?"
 
-#: MRP.php:586
+#: MRP.php:585
 msgid "Use Shrinkage?"
 msgstr "उपयोग संकोचन?"
 
-#: MRP.php:588
+#: MRP.php:587
 msgid "Run MRP"
 msgstr "भागो एमआरपी"
 
@@ -14685,8 +14685,8 @@ msgstr "निम्नलिखित के लिए आप को स्व�
 msgid "An official order will be sent to you in due course"
 msgstr "एक सरकारी आदेश के कारण पाठ्यक्रम में आप के लिए भेजा जाएगा"
 
-#: OffersReceived.php:180 PO_AuthoriseMyOrders.php:89 PO_Header.php:782
-#: PO_Header.php:787 PO_Header.php:791 PO_Header.php:799 PO_Header.php:805
+#: OffersReceived.php:180 PO_AuthoriseMyOrders.php:89 PO_Header.php:778
+#: PO_Header.php:783 PO_Header.php:788 PO_Header.php:797 PO_Header.php:803
 #: PO_SelectOSPurchOrder.php:161 PO_SelectOSPurchOrder.php:163
 #: PO_SelectPurchOrder.php:130 PO_SelectPurchOrder.php:132
 msgid "Pending"
@@ -15412,8 +15412,8 @@ msgstr "पिछले के लिए पीसी टैब आंदोल�
 msgid "Expense Code"
 msgstr "व्यय कोड"
 
-#: PcAssignCashToTab.php:215 PO_AuthoriseMyOrders.php:90 PO_Header.php:783
-#: PO_Header.php:788 PO_Header.php:800 PO_Header.php:804
+#: PcAssignCashToTab.php:215 PO_AuthoriseMyOrders.php:90 PO_Header.php:779
+#: PO_Header.php:784 PO_Header.php:798 PO_Header.php:802
 #: PO_SelectOSPurchOrder.php:166 PO_SelectOSPurchOrder.php:168
 #: PO_SelectPurchOrder.php:135 PO_SelectPurchOrder.php:137
 msgid "Authorised"
@@ -15679,7 +15679,7 @@ msgstr "एक त्रुटि हो रही आदेश विवरण 
 
 #: PcReportTab.php:97 PcReportTab.php:99 PcReportTab.php:107
 #: PDFOrdersInvoiced.php:263 PDFOrdersInvoiced.php:265
-#: PDFOrdersInvoiced.php:273 includes/ConnectDB_mysqli.inc:93
+#: PDFOrdersInvoiced.php:273 includes/ConnectDB_mysqli.inc:86
 #: includes/ConnectDB_mysql.inc:75
 msgid "Database Error"
 msgstr "डेटाबेस त्रुटि"
@@ -16425,7 +16425,7 @@ msgstr "सभी आदेश दिखाएँ"
 msgid "Order Status Report - No Data"
 msgstr "आदेश स्थिति रिपोर्ट - कोई डेटा"
 
-#: PDFOrderStatus.php:273 PO_AuthoriseMyOrders.php:60 PO_Header.php:778
+#: PDFOrderStatus.php:273 PO_AuthoriseMyOrders.php:60 PO_Header.php:774
 #: PO_OrderDetails.php:123 PO_SelectOSPurchOrder.php:449
 #: PO_SelectPurchOrder.php:370 SelectWorkOrder.php:298 SelectWorkOrder.php:333
 #: WorkOrderCosting.php:88 WorkOrderCosting.php:100
@@ -16434,7 +16434,7 @@ msgstr "आदेश स्थिति रिपोर्ट - कोई डे
 msgid "Status"
 msgstr "स्थिति"
 
-#: PDFOrderStatus.php:301 PO_Header.php:746 PO_OrderDetails.php:115
+#: PDFOrderStatus.php:301 PO_Header.php:742 PO_OrderDetails.php:115
 msgid "Not yet printed"
 msgstr "नहीं अभी तक मुद्रित"
 
@@ -17225,18 +17225,19 @@ msgstr "तिथि का आदेश दिया"
 msgid "Initiator"
 msgstr "सर्जक"
 
-#: PO_AuthoriseMyOrders.php:59 PO_Header.php:722 PO_Items.php:816
+#: PO_AuthoriseMyOrders.php:59 PO_Header.php:722 PO_Items.php:814
 #: POReport.php:1429 includes/PDFPickingListHeader.inc:46
 msgid "Delivery Date"
 msgstr "प्रसव तिथि"
 
-#: PO_AuthoriseMyOrders.php:91 PO_Header.php:784 PO_Header.php:798
+#: PO_AuthoriseMyOrders.php:91 PO_Header.php:780 PO_Header.php:796
 #: PO_SelectOSPurchOrder.php:176 PO_SelectOSPurchOrder.php:178
 #: PO_SelectPurchOrder.php:150 PO_SelectPurchOrder.php:152
 msgid "Rejected"
 msgstr "अस्वीकृत"
 
-#: PO_AuthoriseMyOrders.php:92 PO_Header.php:803 PO_SelectOSPurchOrder.php:171
+#: PO_AuthoriseMyOrders.php:92 PO_Header.php:785 PO_Header.php:790
+#: PO_Header.php:801 PO_SelectOSPurchOrder.php:171
 #: PO_SelectOSPurchOrder.php:173 PO_SelectPurchOrder.php:145
 #: PO_SelectPurchOrder.php:147
 msgid "Cancelled"
@@ -17295,22 +17296,22 @@ msgid ""
 "This is a new order. It must be created before you can change the status"
 msgstr "यह एक नया आदेश है. इससे पहले कि आप स्थिति को बदल सकते हैं बनाया जाना चाहिए"
 
-#: PO_Header.php:93 PO_Items.php:109 SelectSalesOrder.php:126
+#: PO_Header.php:93 PO_Items.php:107 SelectSalesOrder.php:126
 #: SelectSalesOrder.php:294
 msgid "You do not have permission to authorise this purchase order"
 msgstr "आप इस खरीद के आदेश को अधिकृत की अनुमति नहीं है"
 
-#: PO_Header.php:93 PO_Header.php:117 PO_Header.php:138 PO_Items.php:109
+#: PO_Header.php:93 PO_Header.php:117 PO_Header.php:138 PO_Items.php:107
 #: SelectSalesOrder.php:126 SelectSalesOrder.php:294
 msgid "This order is for"
 msgstr "इस आदेश के लिए है"
 
-#: PO_Header.php:95 PO_Items.php:106 SelectSalesOrder.php:123
+#: PO_Header.php:95 PO_Items.php:104 SelectSalesOrder.php:123
 #: SelectSalesOrder.php:291
 msgid "You can only authorise up to"
 msgstr "आप केवल करने के लिए प्राधिकृत कर सकते हैं"
 
-#: PO_Header.php:96 PO_Header.php:120 PO_Header.php:138 PO_Items.php:112
+#: PO_Header.php:96 PO_Header.php:120 PO_Header.php:138 PO_Items.php:110
 #: SelectSalesOrder.php:128 SelectSalesOrder.php:294
 msgid "If you think this is a mistake please contact the systems administrator"
 msgstr "अगर आपको लगता है कि यह एक गलती कृपया सिस्टम व्यवस्थापक से संपर्क करें"
@@ -17441,8 +17442,8 @@ msgstr "कृपया अपने अधिक जानकारी के �
 msgid "You can setup authorisations"
 msgstr "आप सेटअप प्राधिकरण कर सकते हैं"
 
-#: PO_Header.php:508 PO_Header.php:579 PO_Items.php:258 PO_Items.php:413
-#: PO_Items.php:706 PO_Items.php:709 PO_OrderDetails.php:86
+#: PO_Header.php:508 PO_Header.php:579 PO_Items.php:256 PO_Items.php:411
+#: PO_Items.php:704 PO_Items.php:707 PO_OrderDetails.php:86
 #: PO_PDFPurchOrder.php:185 PO_PDFPurchOrder.php:299 SelectSalesOrder.php:135
 #: SelectSalesOrder.php:300 SpecialOrder.php:400
 msgid "Purchase Order"
@@ -17469,9 +17470,9 @@ msgstr "दर्ज पाठ आपूर्तिकर्ता कोड �
 msgid "Supplier Name"
 msgstr "प्रदायक का नाम"
 
-#: PO_Header.php:533 PO_Header.php:940 PO_Header.php:943 PO_Header.php:946
-#: PO_Header.php:949 PO_Header.php:952 PO_Header.php:955 PO_Header.php:1013
-#: PO_Header.php:1016 PO_Header.php:1019 PO_Header.php:1022 PO_Header.php:1025
+#: PO_Header.php:533 PO_Header.php:938 PO_Header.php:941 PO_Header.php:944
+#: PO_Header.php:947 PO_Header.php:950 PO_Header.php:953 PO_Header.php:1011
+#: PO_Header.php:1014 PO_Header.php:1017 PO_Header.php:1020 PO_Header.php:1023
 msgid "Address"
 msgstr "पता"
 
@@ -17511,48 +17512,48 @@ msgstr "द्वारा शुरू की"
 msgid "Requisition Ref"
 msgstr "मांग रेफरी"
 
-#: PO_Header.php:740
+#: PO_Header.php:736
 msgid "Date Printed"
 msgstr "तिथि मुद्रित"
 
-#: PO_Header.php:755
+#: PO_Header.php:751
 msgid "Allow Reprint"
 msgstr "पुनर्मुद्रण की अनुमति दें"
 
-#: PO_Header.php:762
+#: PO_Header.php:758
 msgid "Reprint Now"
 msgstr "अब पुनर्मुद्रण"
 
-#: PO_Header.php:772
+#: PO_Header.php:768
 msgid "Receive this order"
 msgstr "इस आदेश प्राप्त"
 
-#: PO_Header.php:776
+#: PO_Header.php:772
 #, fuzzy
 msgid "New Purchase Order"
 msgstr "खरीद आदेश"
 
-#: PO_Header.php:811
+#: PO_Header.php:809
 msgid "Status Comment"
 msgstr "स्थिति टिप्पणी"
 
-#: PO_Header.php:816
+#: PO_Header.php:814
 msgid "Status Update"
 msgstr "स्थिति अपडेट"
 
-#: PO_Header.php:823
+#: PO_Header.php:821
 msgid "Warehouse Info"
 msgstr "गोदाम इन्फो"
 
-#: PO_Header.php:825
+#: PO_Header.php:823
 msgid "Supplier Info"
 msgstr "आपूर्तिकर्ता इन्फो"
 
-#: PO_Header.php:830 includes/PDFPickingListHeader.inc:13
+#: PO_Header.php:828 includes/PDFPickingListHeader.inc:13
 msgid "Warehouse"
 msgstr "गोदाम"
 
-#: PO_Header.php:894
+#: PO_Header.php:892
 msgid ""
 "The default stock location set up for this user is not a currently defined "
 "stock location"
@@ -17560,27 +17561,27 @@ msgstr ""
 "डिफ़ॉल्ट शेयर इस उपयोगकर्ता के लिए स्थापित स्थान पर एक वर्तमान में उल्लिखित स्टॉक स्थान "
 "नहीं है"
 
-#: PO_Header.php:895
+#: PO_Header.php:893
 msgid "Your system administrator needs to amend your user record"
 msgstr "अपने सिस्टम प्रशासक अपने उपयोगकर्ता रिकॉर्ड में संशोधन की जरूरत"
 
-#: PO_Header.php:937
+#: PO_Header.php:935
 msgid "Delivery Contact"
 msgstr "वितरण संपर्क करें"
 
-#: PO_Header.php:962
+#: PO_Header.php:960
 msgid "Delivery By"
 msgstr "द्वारा डिलिवरी"
 
-#: PO_Header.php:978
+#: PO_Header.php:976
 msgid "Supplier Selection"
 msgstr "आपूर्तिकर्ता का चयन"
 
-#: PO_Header.php:992
+#: PO_Header.php:990
 msgid "Select Now"
 msgstr "अब चुनें"
 
-#: PO_Header.php:994
+#: PO_Header.php:992
 msgid "Supplier Contact"
 msgstr "आपूर्तिकर्ता से संपर्क करें"
 
@@ -17588,15 +17589,15 @@ msgstr "आपूर्तिकर्ता से संपर्क करे
 msgid "Enter Line Items"
 msgstr "लाइन आइटम दर्ज करें"
 
-#: PO_Items.php:14
+#: PO_Items.php:12
 msgid "Purchase Order Items"
 msgstr "खरीद आदेश आइटम"
 
-#: PO_Items.php:32
+#: PO_Items.php:30
 msgid "Back To Purchase Order Header"
 msgstr "वापस शीर्ष लेख आदेश खरीद करने के लिए"
 
-#: PO_Items.php:39
+#: PO_Items.php:37
 msgid ""
 "The conversion factor is expected to be numeric - the figure which converts "
 "from our units to the supplier units. e.g. if the supplier units is a tonne "
@@ -17604,20 +17605,20 @@ msgid ""
 "to the suppliers unit is 1000"
 msgstr ""
 
-#: PO_Items.php:45
+#: PO_Items.php:43
 #, fuzzy
 msgid ""
 "The quantity in the supplier units is expected to be numeric. Please re-"
 "enter as a number"
 msgstr "नई आवश्यकता का मात्रा के सांख्यिक होने की उम्मीद है"
 
-#: PO_Items.php:50
+#: PO_Items.php:48
 #, fuzzy
 msgid ""
 "The supplier price is expected to be numeric. Please re-enter as a number"
 msgstr "छूट की दर एक सकारात्मक संख्या के रूप में दर्ज होना चाहिए"
 
-#: PO_Items.php:67
+#: PO_Items.php:65
 #, fuzzy
 msgid ""
 "The purchase order cannot be committed to the database because there is no "
@@ -17626,7 +17627,7 @@ msgstr ""
 "खरीद आदेश डेटाबेस को प्रतिबद्ध नहीं है क्योंकि वहाँ कोई प्रसव सड़क का पता निर्दिष्ट किया "
 "जा सकता है"
 
-#: PO_Items.php:70
+#: PO_Items.php:68
 msgid ""
 "The purchase order can not be committed to the database because there is no "
 "location specified to book any stock items into"
@@ -17634,7 +17635,7 @@ msgstr ""
 "खरीद आदेश डेटाबेस को प्रतिबद्ध नहीं है क्योंकि वहाँ कोई किताब को निर्दिष्ट किसी भी शेयर "
 "मदों में स्थान है सकते हैं"
 
-#: PO_Items.php:73 SpecialOrder.php:249
+#: PO_Items.php:71 SpecialOrder.php:249
 msgid ""
 "The purchase order can not be committed to the database because there are no "
 "lines entered on this order"
@@ -17642,39 +17643,39 @@ msgstr ""
 "खरीद आदेश डेटाबेस को प्रतिबद्ध नहीं है क्योंकि वहाँ कोई इस आदेश पर दर्ज किया लाइनें हैं कर "
 "सकते हैं"
 
-#: PO_Items.php:99 SelectSalesOrder.php:111 SelectSalesOrder.php:279
+#: PO_Items.php:97 SelectSalesOrder.php:111 SelectSalesOrder.php:279
 #, fuzzy
 msgid "Order Created and Authorised by"
 msgstr "आदेश तिथि"
 
-#: PO_Items.php:104 SelectSalesOrder.php:121 SelectSalesOrder.php:289
+#: PO_Items.php:102 SelectSalesOrder.php:121 SelectSalesOrder.php:289
 #, fuzzy
 msgid "Your authority to approve purchase orders in"
 msgstr "आप करने के लिए खरीद आदेश उठाने के लिए अधिकार नहीं है"
 
-#: PO_Items.php:104 SelectSalesOrder.php:121 SelectSalesOrder.php:289
+#: PO_Items.php:102 SelectSalesOrder.php:121 SelectSalesOrder.php:289
 #, fuzzy
 msgid "has not yet been set up"
 msgstr "कंपनी रिकॉर्ड अभी तक नहीं गठन किया गया है"
 
-#: PO_Items.php:113
+#: PO_Items.php:111
 msgid ""
 "The order will be created with a status of pending and will require "
 "authorisation"
 msgstr ""
 
-#: PO_Items.php:116 PO_Items.php:121 SelectSalesOrder.php:165
+#: PO_Items.php:114 PO_Items.php:119 SelectSalesOrder.php:165
 #, fuzzy
 msgid "Order Created by"
 msgstr "आदेश तिथि"
 
-#: PO_Items.php:199 SelectSalesOrder.php:224 SpecialOrder.php:309
+#: PO_Items.php:197 SelectSalesOrder.php:224 SpecialOrder.php:309
 msgid ""
 "The purchase order header record could not be inserted into the database "
 "because"
 msgstr "खरीद आदेश हैडर रिकॉर्ड डेटाबेस क्योंकि में नहीं डाला सका"
 
-#: PO_Items.php:200 SelectSalesOrder.php:225 SpecialOrder.php:310
+#: PO_Items.php:198 SelectSalesOrder.php:225 SpecialOrder.php:310
 msgid ""
 "The SQL statement used to insert the purchase order header record and failed "
 "was"
@@ -17682,127 +17683,127 @@ msgstr ""
 "SQL बयान सम्मिलित करने के लिए खरीद आदेश शीर्ष लेख अभिलेख का इस्तेमाल किया और विफल रहा "
 "था"
 
-#: PO_Items.php:251 SelectSalesOrder.php:255 SpecialOrder.php:394
+#: PO_Items.php:249 SelectSalesOrder.php:255 SpecialOrder.php:394
 msgid ""
 "One of the purchase order detail records could not be inserted into the "
 "database because"
 msgstr "एक खरीद आदेश विस्तार अभिलेखों का डेटाबेस क्योंकि में नहीं डाला सका"
 
-#: PO_Items.php:252 SelectSalesOrder.php:256 SpecialOrder.php:395
+#: PO_Items.php:250 SelectSalesOrder.php:256 SpecialOrder.php:395
 msgid ""
 "The SQL statement used to insert the purchase order detail record and failed "
 "was"
 msgstr "SQL बयान सम्मिलित करने के लिए खरीद आदेश विस्तार रिकॉर्ड करते थे और विफल रहा था"
 
-#: PO_Items.php:295
+#: PO_Items.php:293
 msgid "The purchase order could not be updated because"
 msgstr "खरीद आदेश क्योंकि अद्यतन नहीं किया जा सकता है"
 
-#: PO_Items.php:296
+#: PO_Items.php:294
 msgid ""
 "The SQL statement used to update the purchase order header record, that "
 "failed was"
 msgstr "एसक्यूएल को क्रय आदेश शीर्ष लेख अभिलेख अद्यतन किया बयान है कि विफल रही थी"
 
-#: PO_Items.php:305
+#: PO_Items.php:303
 msgid "The purchase order could not be deleted because"
 msgstr "खरीद आदेश क्योंकि मिटाया नहीं जा सकता"
 
-#: PO_Items.php:306
+#: PO_Items.php:304
 msgid ""
 "The SQL statement used to delete the purchase order header record, that "
 "failed was"
 msgstr "एसक्यूएल को क्रय आदेश शीर्ष लेख अभिलेख को नष्ट किया बयान है कि विफल रही थी"
 
-#: PO_Items.php:408
+#: PO_Items.php:406
 msgid "One of the purchase order detail records could not be updated because"
 msgstr "एक खरीद आदेश विस्तार रिकॉर्ड की वजह से अद्यतन नहीं किया जा सकता है"
 
-#: PO_Items.php:409
+#: PO_Items.php:407
 msgid ""
 "The SQL statement used to update the purchase order detail record that "
 "failed was"
 msgstr "SQL बयान करने के लिए खरीद आदेश विस्तार रिकार्ड है कि विफल रहा था अद्यतन किया"
 
-#: PO_Items.php:417 SpecialOrder.php:401
+#: PO_Items.php:415 SpecialOrder.php:401
 msgid "Print Purchase Order"
 msgstr "प्रिंट खरीद आदेश"
 
-#: PO_Items.php:424
+#: PO_Items.php:422
 msgid "Return To PO List"
 msgstr "वापसी करने के लिए सूची पीओ"
 
-#: PO_Items.php:438
+#: PO_Items.php:437
 msgid ""
 "This item cannot be deleted because some of it has already been received"
 msgstr "इस मद क्योंकि यह कुछ पहले से ही प्राप्त किया गया है मिटाया नहीं जा सकता"
 
-#: PO_Items.php:448 PO_Items.php:452 PO_Items.php:456 PO_Items.php:460
+#: PO_Items.php:446 PO_Items.php:450 PO_Items.php:454 PO_Items.php:458
 #: SpecialOrder.php:192 SpecialOrder.php:197 SpecialOrder.php:202
 #: SpecialOrder.php:207 SpecialOrder.php:212 SpecialOrder.php:217
 msgid "Cannot Enter this order line"
 msgstr "इस आदेश पंक्ति दर्ज नहीं कर सकते"
 
-#: PO_Items.php:448 SpecialOrder.php:192
+#: PO_Items.php:446 SpecialOrder.php:192
 msgid "The quantity of the order item must be numeric"
 msgstr "आदेश मद की मात्रा संख्यात्मक होना चाहिए"
 
-#: PO_Items.php:452 SpecialOrder.php:197
+#: PO_Items.php:450 SpecialOrder.php:197
 msgid "The quantity of the ordered item entered must be a positive amount"
 msgstr "आदेश मद की मात्रा एक सकारात्मक होना चाहिए राशि में प्रवेश किया"
 
-#: PO_Items.php:456 Prices_Customer.php:81 Prices.php:74 SpecialOrder.php:202
+#: PO_Items.php:454 Prices_Customer.php:81 Prices.php:74 SpecialOrder.php:202
 msgid "The price entered must be numeric"
 msgstr "मूल्य संख्यात्मक होना चाहिए में प्रवेश किया"
 
-#: PO_Items.php:460 SpecialOrder.php:217
+#: PO_Items.php:458 SpecialOrder.php:217
 msgid "The date entered must be in the format"
 msgstr "प्रवेश तिथि प्रारूप में होना चाहिए"
 
-#: PO_Items.php:473
+#: PO_Items.php:471
 msgid "The account details for"
 msgstr "खाते के विवरण"
 
-#: PO_Items.php:474
+#: PO_Items.php:472
 msgid "The SQL used to retrieve the details of the account, but failed was"
 msgstr "एसक्यूएल को खाते के विवरण को पुनः प्राप्त करते थे, लेकिन असफल रहा था"
 
-#: PO_Items.php:478
+#: PO_Items.php:476
 msgid ""
 "The validation process for the GL Code entered could not be executed because"
 msgstr "जीएल कोड के लिए मान्यता प्रक्रिया निष्पादित नहीं किया जा सका क्योंकि प्रवेश"
 
-#: PO_Items.php:480
+#: PO_Items.php:478
 msgid "The SQL used to validate the code entered was"
 msgstr "एसक्यूएल को मान्य कोड दर्ज किया गया था इस्तेमाल किया"
 
-#: PO_Items.php:487 PO_Items.php:520
+#: PO_Items.php:485 PO_Items.php:518
 msgid "Cannot enter this order line"
 msgstr "इस आदेश पंक्ति में प्रवेश नहीं कर सकते"
 
-#: PO_Items.php:487
+#: PO_Items.php:485
 msgid "The general ledger code"
 msgstr "सामान्य खाता बही कोड"
 
-#: PO_Items.php:487
+#: PO_Items.php:485
 msgid "is not a general ledger code that is defined in the chart of accounts"
 msgstr "एक सामान्य खाता बही कोड है कि खातों के चार्ट में परिभाषित किया गया है नहीं है"
 
-#: PO_Items.php:487
+#: PO_Items.php:485
 msgid "Please use a code that is already defined"
 msgstr "एक कोड है कि पहले से ही परिभाषित किया गया है का उपयोग करें"
 
-#: PO_Items.php:487
+#: PO_Items.php:485
 msgid "See the Chart list from the link below"
 msgstr "नीचे दिए गए लिंक से सूची देखें चार्ट"
 
-#: PO_Items.php:506
+#: PO_Items.php:504
 msgid ""
 "An asset code was entered but it does not yet exist. Only pre-existing asset "
 "ids can be entered when ordering a fixed asset"
 msgstr ""
 
-#: PO_Items.php:520
+#: PO_Items.php:518
 #, fuzzy
 msgid ""
 "The description of the item being purchased is required where a non-stock "
@@ -17810,139 +17811,144 @@ msgid ""
 msgstr ""
 "मद की जा रही खरीद के विवरण जहां एक गैर स्टॉक मद का आदेश दिया जा रहा है की आवश्यकता है"
 
-#: PO_Items.php:587
+#: PO_Items.php:585
 msgid "is already on this order"
 msgstr "इस आदेश पर पहले से ही है"
 
-#: PO_Items.php:587
+#: PO_Items.php:585
 msgid "The system will not allow the same item on the order more than once"
 msgstr "प्रणाली के आदेश पर ही मद से अधिक बार अनुमति नहीं दी जाएगी"
 
-#: PO_Items.php:587
+#: PO_Items.php:585
 msgid ""
 "However you can change the quantity ordered of the existing line if necessary"
 msgstr "हालांकि आप बदल सकते हैं मात्रा मौजूदा पंक्ति अगर आवश्यक का आदेश दिया"
 
-#: PO_Items.php:607
+#: PO_Items.php:605
 #, fuzzy
 msgid "The item details for"
 msgstr "विवरण के लिए"
 
-#: PO_Items.php:634
+#: PO_Items.php:632
 #, fuzzy
 msgid "The purchasing data for"
 msgstr "क्रय डेटा"
 
-#: PO_Items.php:635
+#: PO_Items.php:633
 #, fuzzy
 msgid "The SQL used to retrieve the purchasing data but failed was"
 msgstr "एसक्यूएल को मूल्य के विवरण पाने के लिये प्रयुक्त लेकिन असफल रहा था"
 
-#: PO_Items.php:685
+#: PO_Items.php:683
 msgid ""
 "does not exist in the database and therefore cannot be added to the order"
 msgstr "करता है डेटाबेस में मौजूद नहीं है और इसलिए आदेश को जोड़ा नहीं जा सकता"
 
-#: PO_Items.php:711
+#: PO_Items.php:709
 msgid " Order Summary"
 msgstr "आदेश सारांश"
 
-#: PO_Items.php:716 SelectProduct.php:110
+#: PO_Items.php:714 SelectProduct.php:110
 msgid "Weight"
 msgstr "वजन"
 
-#: PO_Items.php:717
+#: PO_Items.php:715
 #, fuzzy
 msgid "Quantity Our Units"
 msgstr "ओर मात्रा"
 
-#: PO_Items.php:718
+#: PO_Items.php:716
 #, fuzzy
 msgid "Our Unit"
 msgstr "इकाई"
 
-#: PO_Items.php:719
+#: PO_Items.php:717
 #, fuzzy
 msgid "Price Our Units"
 msgstr "आइटम प्रति मूल्य"
 
-#: PO_Items.php:720
+#: PO_Items.php:718
 #, fuzzy
 msgid "Unit Conversion Factor"
 msgstr "रूपांतरण कारक ग़लत"
 
-#: PO_Items.php:721
+#: PO_Items.php:719
 #, fuzzy
 msgid "Quantity Supplier Units"
 msgstr "आपूर्तिकर्ता यूनिट"
 
-#: PO_Items.php:722 PurchData.php:169
+#: PO_Items.php:720 PurchData.php:169
 msgid "Supplier Unit"
 msgstr "आपूर्तिकर्ता यूनिट"
 
-#: PO_Items.php:723
+#: PO_Items.php:721
 #, fuzzy
 msgid "Price Supp Units"
 msgstr "आइटम प्रति मूल्य"
 
-#: PO_Items.php:724
+#: PO_Items.php:722
 msgid "Subtotal"
 msgstr "आधा"
 
-#: PO_Items.php:725
+#: PO_Items.php:723
 msgid "Deliver By"
 msgstr "द्वारा वितरित"
 
-#: PO_Items.php:770
+#: PO_Items.php:768
 msgid " excluding Tax"
 msgstr "टैक्स को छोड़कर"
 
-#: PO_Items.php:784
+#: PO_Items.php:782
 msgid "General Ledger Code"
 msgstr "सामान्य खाता बही कोड"
 
-#: PO_Items.php:796
+#: PO_Items.php:794
 #, fuzzy
 msgid "OR Asset ID"
 msgstr "संपत्ति आईडी"
 
-#: PO_Items.php:799
+#: PO_Items.php:797
 #, fuzzy
 msgid "Not an Asset"
 msgstr "एक परिसंपत्ति के प्रकार का चयन करें"
 
-#: PO_Items.php:802
+#: PO_Items.php:800
 #, fuzzy
 msgid "Not yet purchased"
 msgstr "नहीं अभी तक मुद्रित"
 
-#: PO_Items.php:809 SuppFixedAssetChgs.php:112
+#: PO_Items.php:807 SuppFixedAssetChgs.php:112
 #, fuzzy
 msgid "New Fixed Asset"
 msgstr "फिक्स्ड आस्ति आइटम"
 
-#: PO_Items.php:810
+#: PO_Items.php:808
 msgid "Quantity to purchase"
 msgstr "मात्रा की खरीद के लिए"
 
-#: PO_Items.php:812
+#: PO_Items.php:810
 msgid "Price per item"
 msgstr "आइटम प्रति मूल्य"
 
-#: PO_Items.php:815 Stocks.php:787 includes/PO_ReadInOrder.inc:184
+#: PO_Items.php:813 Stocks.php:787 includes/PO_ReadInOrder.inc:184
 msgid "each"
 msgstr "प्रत्येक"
 
-#: PO_Items.php:1030
+#: PO_Items.php:1034
 msgid "Order a non stock item"
 msgstr "आदेश एक गैर स्टॉक मद"
 
-#: PO_Items.php:1044
+#: PO_Items.php:1047
+#, fuzzy
+msgid "Our Units"
+msgstr "इकाइयों"
+
+#: PO_Items.php:1049
 #, fuzzy
 msgid "Supplier/Order"
 msgstr "आपूर्तिकर्ता आदेश"
 
-#: PO_Items.php:1045
+#: PO_Items.php:1050
 msgid "Go to end of list"
 msgstr "सूची के अंत जाओ"
 
@@ -34012,13 +34018,13 @@ msgstr ""
 "कंपनी का नाम संक्षिप्त नाम लॉगिन में प्रवेश भी एक कंपनी निर्देशिका में परिभाषित किया जाना "
 "चाहिए. अपने सिस्टम व्यवस्थापक देखें"
 
-#: includes/ConnectDB_mysqli.inc:35 includes/ConnectDB_mysql.inc:29
+#: includes/ConnectDB_mysqli.inc:29 includes/ConnectDB_mysql.inc:29
 msgid ""
 "to try logging in\n"
 "again"
 msgstr ""
 
-#: includes/ConnectDB_mysqli.inc:41 includes/ConnectDB_mysql.inc:26
+#: includes/ConnectDB_mysqli.inc:35 includes/ConnectDB_mysql.inc:26
 msgid ""
 "The configuration in the file config.php for the database user name and "
 "password do not provide the information required to connect to the database "
@@ -34027,7 +34033,7 @@ msgstr ""
 "डेटाबेस उपयोगकर्ता नाम और पासवर्ड के लिए फ़ाइल config.php में विन्यास को डेटाबेस सर्वर से "
 "कनेक्ट करने के लिए आवश्यक जानकारी प्रदान नहीं करते हैं"
 
-#: includes/ConnectDB_mysqli.inc:48 includes/ConnectDB_mysqli.inc:55
+#: includes/ConnectDB_mysqli.inc:42 includes/ConnectDB_mysqli.inc:49
 #: includes/ConnectDB_mysql.inc:38 includes/ConnectDB_mysql.inc:44
 msgid ""
 "The company name entered does not correspond to a database on the database "
@@ -34037,26 +34043,26 @@ msgstr ""
 "कंपनी का नाम डेटाबेस config.php विन्यास फाइल में निर्दिष्ट सर्वर पर कोई डेटाबेस के अनुरूप "
 "नहीं में प्रवेश किया. एक अलग कंपनी के नाम के साथ में प्रवेश करने का प्रयास करें"
 
-#: includes/ConnectDB_mysqli.inc:48 includes/ConnectDB_mysqli.inc:49
-#: includes/ConnectDB_mysqli.inc:55 includes/ConnectDB_mysqli.inc:56
+#: includes/ConnectDB_mysqli.inc:42 includes/ConnectDB_mysqli.inc:43
+#: includes/ConnectDB_mysqli.inc:49 includes/ConnectDB_mysqli.inc:50
 #: includes/ConnectDB_mysql.inc:38 includes/ConnectDB_mysql.inc:44
 #: includes/ConnectDB_postgres.inc:29
 msgid "Back to login page"
 msgstr "वापस पृष्ठ लॉगइन करने के लिए"
 
-#: includes/ConnectDB_mysqli.inc:95 includes/ConnectDB_mysql.inc:77
+#: includes/ConnectDB_mysqli.inc:88 includes/ConnectDB_mysql.inc:77
 msgid "Database SQL Failure"
 msgstr "डेटाबेस SQL विफलता"
 
-#: includes/ConnectDB_mysqli.inc:101 includes/ConnectDB_mysql.inc:83
+#: includes/ConnectDB_mysqli.inc:94 includes/ConnectDB_mysql.inc:83
 msgid "Error Rolling Back Transaction"
 msgstr "वापस लेनदेन रोलिंग त्रुटि"
 
-#: includes/ConnectDB_mysqli.inc:101 includes/ConnectDB_mysql.inc:83
+#: includes/ConnectDB_mysqli.inc:94 includes/ConnectDB_mysql.inc:83
 msgid "Database Rollback Error"
 msgstr "डेटाबेस त्रुटि रॉलबैक"
 
-#: includes/ConnectDB_mysqli.inc:210 includes/ConnectDB_mysql.inc:189
+#: includes/ConnectDB_mysqli.inc:203 includes/ConnectDB_mysql.inc:189
 msgid ""
 "The system has just run the regular database administration and optimisation "
 "routine."

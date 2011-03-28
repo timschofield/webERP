@@ -64,9 +64,6 @@ if (isset($_POST['submit'])) {
 				$sql[] = "UPDATE stockmaster
 					SET units='" . $_POST['MeasureName'] . "'
 					WHERE units ".LIKE." '" . $OldMeasureName . "'";
-				$sql[] = "UPDATE contracts
-					SET units='" . $_POST['MeasureName'] . "'
-					WHERE units ".LIKE." '" . $OldMeasureName . "'";
 			} else {
 				$InputError = 1;
 				prnMsg( _('The unit of measure no longer exist.'),'error');

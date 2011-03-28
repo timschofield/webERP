@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WEBERP3.05 VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-26 16:22+1200\n"
+"POT-Creation-Date: 2011-03-27 19:34+1200\n"
 "PO-Revision-Date: 2011-02-25 18:22+0800\n"
 "Last-Translator: Exson qu <hexinfans@yahoo.com.cn>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
@@ -256,12 +256,12 @@ msgstr "父組"
 #: CustomerBranches.php:420 Customers.php:600 Customers.php:857
 #: Customers.php:864 Customers.php:867 DeliveryDetails.php:1034
 #: DeliveryDetails.php:1074 DeliveryDetails.php:1077 GLTransInquiry.php:73
-#: MRPCalendar.php:222 MRP.php:530 MRP.php:534 MRP.php:538 MRP.php:542
+#: MRPCalendar.php:222 MRP.php:529 MRP.php:533 MRP.php:537 MRP.php:541
 #: PaymentMethods.php:203 PaymentMethods.php:204 PaymentMethods.php:264
 #: PaymentMethods.php:270 PDFChequeListing.php:63
 #: PDFDeliveryDifferences.php:64 PDFDIFOT.php:67
 #: PO_AuthorisationLevels.php:132 PO_AuthorisationLevels.php:137
-#: PO_Header.php:758 PO_PDFPurchOrder.php:344 PO_PDFPurchOrder.php:347
+#: PO_Header.php:754 PO_PDFPurchOrder.php:344 PO_PDFPurchOrder.php:347
 #: PurchData.php:192 PurchData.php:494 PurchData.php:497
 #: RecurringSalesOrders.php:483 RecurringSalesOrders.php:486
 #: SalesAnalReptCols.php:279 SalesAnalReptCols.php:401
@@ -291,12 +291,12 @@ msgstr "是"
 #: CustomerBranches.php:420 Customers.php:599 Customers.php:855
 #: Customers.php:863 Customers.php:866 DeliveryDetails.php:1035
 #: DeliveryDetails.php:1075 DeliveryDetails.php:1078 GLTransInquiry.php:127
-#: MRPCalendar.php:224 MRP.php:528 MRP.php:532 MRP.php:536 MRP.php:540
+#: MRPCalendar.php:224 MRP.php:527 MRP.php:531 MRP.php:535 MRP.php:539
 #: PaymentMethods.php:203 PaymentMethods.php:204 PaymentMethods.php:265
 #: PaymentMethods.php:271 PDFChequeListing.php:62
 #: PDFDeliveryDifferences.php:63 PDFDIFOT.php:66
 #: PO_AuthorisationLevels.php:134 PO_AuthorisationLevels.php:139
-#: PO_Header.php:757 PO_PDFPurchOrder.php:345 PO_PDFPurchOrder.php:348
+#: PO_Header.php:753 PO_PDFPurchOrder.php:345 PO_PDFPurchOrder.php:348
 #: PurchData.php:195 PurchData.php:495 PurchData.php:498
 #: RecurringSalesOrders.php:482 RecurringSalesOrders.php:485
 #: SalesAnalReptCols.php:277 SalesAnalReptCols.php:402
@@ -357,7 +357,7 @@ msgstr "編輯"
 #: Payments.php:958 PaymentTerms.php:204 PcAssignCashToTab.php:255
 #: PcClaimExpensesFromTab.php:230 PcExpenses.php:187 PcExpensesTypeTab.php:164
 #: PcTabs.php:189 PcTypeTabs.php:175 PO_AuthorisationLevels.php:150
-#: PO_Items.php:764 Prices_Customer.php:284 Prices.php:228 PurchData.php:208
+#: PO_Items.php:762 Prices_Customer.php:284 Prices.php:228 PurchData.php:208
 #: SalesAnalReptCols.php:294 SalesAnalRepts.php:305 SalesCategories.php:264
 #: SalesGLPostings.php:136 SalesGLPostings.php:248 SalesPeople.php:211
 #: SalesTypes.php:207 SelectCreditItems.php:745 SelectCustomer.php:611
@@ -521,7 +521,7 @@ msgstr "聯繫人名稱不能留空"
 #: AddCustomerTypeNotes.php:49 Areas.php:74 CustomerTypes.php:71
 #: DeliveryDetails.php:748 Factors.php:117 FixedAssetItems.php:236
 #: PcAssignCashToTab.php:73 PcClaimExpensesFromTab.php:61 PcExpenses.php:70
-#: PcTabs.php:60 PcTypeTabs.php:62 PO_Items.php:413 SalesAnalReptCols.php:129
+#: PcTabs.php:60 PcTypeTabs.php:62 PO_Items.php:411 SalesAnalReptCols.php:129
 #: SalesPeople.php:94 SalesTypes.php:63 Stocks.php:353 Suppliers.php:514
 #: SupplierTypes.php:69
 msgid "has been updated"
@@ -577,7 +577,7 @@ msgid "Contact Name"
 msgstr "聯繫人名稱"
 
 #: AddCustomerContacts.php:196 Contracts.php:777 PDFRemittanceAdvice.php:247
-#: PO_Header.php:958 PO_Header.php:1028 SelectCreditItems.php:223
+#: PO_Header.php:956 PO_Header.php:1026 SelectCreditItems.php:223
 #: SelectCustomer.php:464 SelectOrderItems.php:639
 #: includes/PDFStatementPageHeader.inc:63 includes/PDFTransPageHeader.inc:117
 #: includes/PDFTransPageHeaderPortrait.inc:105
@@ -810,8 +810,8 @@ msgid "The details of outstanding transactions for customer"
 msgstr "該用戶未清算的交易明細"
 
 #: AgedDebtors.php:367 AgedSuppliers.php:189 GLAccountCSV.php:169
-#: GLAccountInquiry.php:145 GLAccountReport.php:93 PO_Items.php:473
-#: PO_Items.php:607 PO_Items.php:634 SalesAnalReptCols.php:356
+#: GLAccountInquiry.php:145 GLAccountReport.php:93 PO_Items.php:471
+#: PO_Items.php:605 PO_Items.php:632 SalesAnalReptCols.php:356
 #: SpecialOrder.php:369 StockLocTransferReceive.php:373
 #: StockQuantityByDate.php:114 includes/SelectOrderItems_IntoCart.inc:53
 msgid "could not be retrieved because"
@@ -840,7 +840,7 @@ msgstr "不能取得, 因為"
 #: includes/PDFPaymentRun_PymtFooter.php:89
 #: includes/PDFPaymentRun_PymtFooter.php:118
 #: includes/PDFPaymentRun_PymtFooter.php:154
-#: includes/PDFPaymentRun_PymtFooter.php:185 includes/ConnectDB_mysqli.inc:86
+#: includes/PDFPaymentRun_PymtFooter.php:185 includes/ConnectDB_mysqli.inc:79
 #: includes/ConnectDB_mysql.inc:68
 msgid "The SQL that failed was"
 msgstr "運行失敗的 SQL 是"
@@ -1800,7 +1800,7 @@ msgstr ""
 #: InventoryQuantities.php:210 MRPPlannedPurchaseOrders.php:305
 #: MRPPlannedWorkOrders.php:367 MRPReport.php:826 MRPReschedules.php:190
 #: MRPShortages.php:283 PDFOrderStatus.php:299 PDFPriceList.php:331
-#: PDFReceipt.php:32 PO_Header.php:792 PO_PDFPurchOrder.php:59
+#: PDFReceipt.php:32 PO_Header.php:789 PO_PDFPurchOrder.php:59
 #: PO_SelectOSPurchOrder.php:476 ReorderLevel.php:251 StockDispatch.php:337
 #: SuppPriceList.php:254 Tax.php:252 includes/PDFAgedDebtorsPageHeader.inc:34
 #: includes/PDFAgedSuppliersPageHeader.inc:21
@@ -1982,7 +1982,7 @@ msgstr "一層"
 #: MRPShortages.php:299 PaymentTerms.php:180 PcExpenses.php:159
 #: PcExpenses.php:248 PcExpensesTypeTab.php:148 PcReportTab.php:174
 #: PcTypeTabs.php:158 PDFOrdersInvoiced.php:345 PDFOrderStatus.php:313
-#: PDFPrintLabel.php:239 PO_Items.php:715 PO_Items.php:1042
+#: PDFPrintLabel.php:239 PO_Items.php:713 PO_Items.php:1046
 #: PO_SelectOSPurchOrder.php:213 PO_SelectPurchOrder.php:178
 #: PricesByCost.php:119 ReorderLevelLocation.php:55 ReorderLevel.php:266
 #: ReverseGRN.php:377 SalesCategories.php:427 SelectAsset.php:225
@@ -2088,7 +2088,7 @@ msgstr "物料描述"
 #: CustomerReceipt.php:1029 CustomerReceipt.php:1032
 #: DiscountCategories.php:103 DiscountCategories.php:106
 #: FixedAssetTransfer.php:61 MRPDemands.php:330 MRPDemands.php:333
-#: MRPReport.php:563 PO_Header.php:516 PO_Items.php:1021 PO_Items.php:1026
+#: MRPReport.php:563 PO_Header.php:516 PO_Items.php:1025 PO_Items.php:1030
 #: PO_SelectOSPurchOrder.php:202 PO_SelectPurchOrder.php:170 PurchData.php:264
 #: SelectAsset.php:93 SelectCompletedOrder.php:518 SelectCreditItems.php:208
 #: SelectCreditItems.php:942 SelectCustomer.php:331 SelectCustomer.php:337
@@ -2121,7 +2121,7 @@ msgstr "物料號"
 
 #: BOMInquiry.php:26 BOMs.php:803 ContractBOM.php:331 Contracts.php:766
 #: CounterSales.php:2142 CustomerReceipt.php:1037 FixedAssetTransfer.php:72
-#: MRPDemands.php:335 MRPReport.php:571 PO_Header.php:521 PO_Items.php:1029
+#: MRPDemands.php:335 MRPReport.php:571 PO_Header.php:521 PO_Items.php:1033
 #: SelectAsset.php:101 SelectCreditItems.php:213 SelectCreditItems.php:947
 #: SelectCustomer.php:419 SelectGLAccount.php:98 SelectOrderItems.php:627
 #: SelectOrderItems.php:1596 SelectProduct.php:508 SelectSupplier.php:212
@@ -2131,7 +2131,7 @@ msgid "Search Now"
 msgstr "查找"
 
 #: BOMInquiry.php:36 BOMs.php:738 ContractBOM.php:51 MRPDemands.php:57
-#: MRPReport.php:589 PO_Items.php:826 PO_SelectOSPurchOrder.php:64
+#: MRPReport.php:589 PO_Items.php:824 PO_SelectOSPurchOrder.php:64
 #: PO_SelectPurchOrder.php:43 SelectCompletedOrder.php:95
 #: SelectCreditItems.php:276 SelectProduct.php:521 SelectSalesOrder.php:348
 #: SelectWorkOrder.php:35 Shipt_Select.php:62 SupplierTenders.php:378
@@ -2157,7 +2157,7 @@ msgstr "查找物料的SQL運行失敗，資料庫消息"
 #: CustomerReceipt.php:1043 GLCodesInquiry.php:28 MRPDemands.php:91
 #: MRPPlannedWorkOrders.php:257 MRPReport.php:759 PDFOrdersInvoiced.php:344
 #: PDFOrderStatus.php:312 PDFPrintLabel.php:239 PO_Header.php:531
-#: PO_Items.php:1041 PO_SelectOSPurchOrder.php:212 PO_SelectPurchOrder.php:177
+#: PO_Items.php:1045 PO_SelectOSPurchOrder.php:212 PO_SelectPurchOrder.php:177
 #: PricesByCost.php:118 PurchData.php:338 ReorderLevelLocation.php:54
 #: ReorderLevelLocation.php:203 SalesPeople.php:184
 #: SelectCompletedOrder.php:534 SelectCreditItems.php:220
@@ -2174,7 +2174,7 @@ msgstr "編號"
 #: BOMInquiry.php:95 BOMs.php:812 ConfirmDispatch_Invoice.php:271
 #: ContractBOM.php:345 CounterSales.php:1989 CounterSales.php:2169
 #: Credit_Invoice.php:273 GoodsReceived.php:91 GoodsReceived.php:95
-#: MRPReport.php:762 OffersReceived.php:95 PO_Items.php:1044
+#: MRPReport.php:762 OffersReceived.php:95 PO_Items.php:1049
 #: PO_SelectOSPurchOrder.php:216 PO_SelectPurchOrder.php:181
 #: SelectCompletedOrder.php:539 SelectCreditItems.php:957
 #: SelectOrderItems.php:1437 SelectOrderItems.php:1621 SelectProduct.php:108
@@ -2494,7 +2494,7 @@ msgid "Level"
 msgstr "層"
 
 #: BOMs.php:519 BOMs.php:636 Contracts.php:868 FixedAssetRegister.php:83
-#: InventoryQuantities.php:223 Locations.php:328 MRP.php:549 MRP.php:563
+#: InventoryQuantities.php:223 Locations.php:328 MRP.php:548 MRP.php:562
 #: PDFOrdersInvoiced.php:306 PDFOrderStatus.php:272
 #: ReorderLevelLocation.php:173 ReorderLevel.php:258 ReorderLevel.php:267
 #: StockCounts.php:133 StockReorderLevel.php:49 StockSerialItemResearch.php:78
@@ -2834,8 +2834,8 @@ msgstr "為庫存賬生成總帳憑證"
 #: CompanyPreferences.php:472 ConfirmDispatch_Invoice.php:626
 #: ConfirmDispatch_Invoice.php:1658 Credit_Invoice.php:1529
 #: FixedAssetItems.php:123 FixedAssetItems.php:570 GLBudgets.php:219
-#: GLTags.php:44 GoodsReceived.php:228 GoodsReceived.php:234
-#: GoodsReceived.php:241 GoodsReceived.php:697 Labels.php:262
+#: GLTags.php:44 GoodsReceived.php:230 GoodsReceived.php:236
+#: GoodsReceived.php:243 GoodsReceived.php:699 Labels.php:262
 #: MRPCalendar.php:309 Payments.php:852 PcAuthorizeExpenses.php:262
 #: PO_AuthoriseMyOrders.php:125 PricesByCost.php:188 PurchData.php:502
 #: ReorderLevelLocation.php:156 SelectCreditItems.php:898 SMTPServer.php:63
@@ -3003,7 +3003,7 @@ msgstr "貨幣"
 #: ConfirmDispatch_Invoice.php:268 ContractBOM.php:241 ContractCosting.php:72
 #: ContractCosting.php:78 Contracts.php:930 CounterSales.php:699
 #: CounterSales.php:2301 Credit_Invoice.php:270 DeliveryDetails.php:783
-#: GoodsReceived.php:88 OrderDetails.php:153 PO_Items.php:714
+#: GoodsReceived.php:88 OrderDetails.php:153 PO_Items.php:712
 #: PO_OrderDetails.php:142 PrintCustTrans.php:648 PrintCustTrans.php:711
 #: PrintCustTrans.php:749 PrintCustTransPortrait.php:827
 #: PrintCustTransPortrait.php:910 PrintCustTransPortrait.php:954
@@ -3028,7 +3028,7 @@ msgstr "物料編號"
 #: ConfirmDispatch_Invoice.php:269 ContractCosting.php:73
 #: ContractCosting.php:79 Contracts.php:931 CounterSales.php:700
 #: Credit_Invoice.php:271 DeliveryDetails.php:784 DeliveryDetails.php:849
-#: OrderDetails.php:154 PO_Items.php:782 PO_OrderDetails.php:143
+#: OrderDetails.php:154 PO_Items.php:780 PO_OrderDetails.php:143
 #: PrintCustTrans.php:649 PrintCustTrans.php:712 PrintCustTrans.php:750
 #: PrintCustTransPortrait.php:828 PrintCustTransPortrait.php:911
 #: PrintCustTransPortrait.php:955 RecurringSalesOrders.php:321
@@ -3267,12 +3267,12 @@ msgid "Please remedy this"
 msgstr "請修正"
 
 #: ConfirmDispatch_Invoice.php:653 Credit_Invoice.php:484
-#: GoodsReceived.php:251
+#: GoodsReceived.php:253
 msgid "The company information and preferences could not be retrieved"
 msgstr "無法取得公司資訊"
 
 #: ConfirmDispatch_Invoice.php:653 Credit_Invoice.php:484
-#: GoodsReceived.php:251
+#: GoodsReceived.php:253
 msgid "see your system administrator"
 msgstr "請聯繫系統管理員"
 
@@ -3290,7 +3290,7 @@ msgid ""
 "be confirmed"
 msgstr "本次交貨前此訂單已被其他用戶更新"
 
-#: ConfirmDispatch_Invoice.php:681 GoodsReceived.php:288
+#: ConfirmDispatch_Invoice.php:681 GoodsReceived.php:290
 msgid "Processing halted"
 msgstr "執行終止"
 
@@ -3377,10 +3377,10 @@ msgstr "用作更新客戶分公司默認承運人的SQL是"
 #: Credit_Invoice.php:1070 Credit_Invoice.php:1093 Credit_Invoice.php:1264
 #: Credit_Invoice.php:1304 Credit_Invoice.php:1331 Credit_Invoice.php:1352
 #: Credit_Invoice.php:1381 Credit_Invoice.php:1407 Credit_Invoice.php:1433
-#: GoodsReceived.php:270 GoodsReceived.php:351 GoodsReceived.php:393
-#: GoodsReceived.php:423 GoodsReceived.php:451 GoodsReceived.php:482
-#: GoodsReceived.php:500 GoodsReceived.php:529 GoodsReceived.php:546
-#: GoodsReceived.php:634 GoodsReceived.php:659 PDFStockCheckComparison.php:122
+#: GoodsReceived.php:272 GoodsReceived.php:353 GoodsReceived.php:395
+#: GoodsReceived.php:425 GoodsReceived.php:453 GoodsReceived.php:484
+#: GoodsReceived.php:502 GoodsReceived.php:531 GoodsReceived.php:548
+#: GoodsReceived.php:636 GoodsReceived.php:661 PDFStockCheckComparison.php:122
 #: PDFStockCheckComparison.php:130 PDFStockCheckComparison.php:137
 #: PDFStockCheckComparison.php:156 PDFStockCheckComparison.php:175
 #: RecurringSalesOrdersProcess.php:321 RecurringSalesOrdersProcess.php:361
@@ -3486,11 +3486,11 @@ msgstr "嚴重錯誤"
 #: Credit_Invoice.php:990 Credit_Invoice.php:1029 Credit_Invoice.php:1070
 #: Credit_Invoice.php:1093 Credit_Invoice.php:1264 Credit_Invoice.php:1304
 #: Credit_Invoice.php:1331 Credit_Invoice.php:1352 Credit_Invoice.php:1381
-#: Credit_Invoice.php:1407 Credit_Invoice.php:1433 GoodsReceived.php:270
-#: GoodsReceived.php:351 GoodsReceived.php:393 GoodsReceived.php:423
-#: GoodsReceived.php:451 GoodsReceived.php:482 GoodsReceived.php:500
-#: GoodsReceived.php:529 GoodsReceived.php:546 GoodsReceived.php:634
-#: GoodsReceived.php:659 PDFStockCheckComparison.php:122
+#: Credit_Invoice.php:1407 Credit_Invoice.php:1433 GoodsReceived.php:272
+#: GoodsReceived.php:353 GoodsReceived.php:395 GoodsReceived.php:425
+#: GoodsReceived.php:453 GoodsReceived.php:484 GoodsReceived.php:502
+#: GoodsReceived.php:531 GoodsReceived.php:548 GoodsReceived.php:636
+#: GoodsReceived.php:661 PDFStockCheckComparison.php:122
 #: PDFStockCheckComparison.php:130 PDFStockCheckComparison.php:137
 #: PDFStockCheckComparison.php:156 PDFStockCheckComparison.php:175
 #: RecurringSalesOrdersProcess.php:321 RecurringSalesOrdersProcess.php:361
@@ -3640,7 +3640,7 @@ msgid "Location stock record could not be updated because"
 msgstr "更新物料庫存失敗,因為"
 
 #: ConfirmDispatch_Invoice.php:950 ContractCosting.php:306
-#: CounterSales.php:1304 Credit_Invoice.php:684 GoodsReceived.php:452
+#: CounterSales.php:1304 Credit_Invoice.php:684 GoodsReceived.php:454
 #: ReverseGRN.php:220 SelectCreditItems.php:1360 StockTransfers.php:382
 #: StockTransfers.php:392 WorkOrderIssue.php:163 WorkOrderReceive.php:320
 #: WorkOrderReceive.php:426
@@ -3723,7 +3723,7 @@ msgstr "物料移動記錄未能插入,因為"
 
 #: ConfirmDispatch_Invoice.php:1119 ContractCosting.php:335
 #: CounterSales.php:1474 Credit_Invoice.php:892 Credit_Invoice.php:991
-#: Credit_Invoice.php:1030 GoodsReceived.php:483
+#: Credit_Invoice.php:1030 GoodsReceived.php:485
 #: RecurringSalesOrdersProcess.php:362 ReverseGRN.php:249
 #: SelectCreditItems.php:1254 WorkOrderIssue.php:194 WorkOrderReceive.php:349
 #: WorkOrderReceive.php:456
@@ -3762,7 +3762,7 @@ msgid "The following SQL to update the serial stock item record was used"
 msgstr "用於更新物料序列號的SQL是"
 
 #: ConfirmDispatch_Invoice.php:1172 Credit_Invoice.php:946
-#: GoodsReceived.php:546 SelectCreditItems.php:1338 StockAdjustments.php:226
+#: GoodsReceived.php:548 SelectCreditItems.php:1338 StockAdjustments.php:226
 #: StockLocTransferReceive.php:172 StockLocTransferReceive.php:285
 #: StockTransfers.php:260 StockTransfers.php:368 WorkOrderIssue.php:230
 #: WorkOrderIssue.php:285 WorkOrderReceive.php:507 WorkOrderReceive.php:578
@@ -3770,7 +3770,7 @@ msgid "The serial stock movement record could not be inserted because"
 msgstr "帶序列號的物料移動記錄未能插入,因為"
 
 #: ConfirmDispatch_Invoice.php:1173 Credit_Invoice.php:947
-#: GoodsReceived.php:547 StockAdjustments.php:227
+#: GoodsReceived.php:549 StockAdjustments.php:227
 #: StockLocTransferReceive.php:173 StockLocTransferReceive.php:286
 #: StockTransfers.php:261 StockTransfers.php:369 WorkOrderIssue.php:231
 #: WorkOrderIssue.php:286 WorkOrderReceive.php:508 WorkOrderReceive.php:579
@@ -3880,7 +3880,7 @@ msgstr "因為下列原因處置所得款過賬未能完成"
 msgid "The fixed asset transaction could not be inserted because"
 msgstr "因為下列原因，固定資產交易未能完成"
 
-#: ConfirmDispatch_Invoice.php:1509 GoodsReceived.php:584 ReverseGRN.php:176
+#: ConfirmDispatch_Invoice.php:1509 GoodsReceived.php:586 ReverseGRN.php:176
 #: SupplierCredit.php:1195 SupplierCredit.php:1283 SupplierInvoice.php:1182
 #: SupplierInvoice.php:1267
 msgid "The following SQL to insert the fixed asset transaction record was used"
@@ -4024,18 +4024,18 @@ msgstr "點擊這裏"
 msgid "to continue"
 msgstr "繼續"
 
-#: ContractBOM.php:143 CounterSales.php:327 PO_Items.php:966
+#: ContractBOM.php:143 CounterSales.php:327 PO_Items.php:970
 #: SelectCreditItems.php:368 SelectOrderItems.php:856 SupplierTenders.php:469
 #: WorkOrderEntry.php:151 WorkOrderIssue.php:469
 msgid "There is a problem selecting the part records to display because"
 msgstr "查找物料發生錯誤"
 
-#: ContractBOM.php:144 PO_Items.php:967 SupplierTenders.php:470
+#: ContractBOM.php:144 PO_Items.php:971 SupplierTenders.php:470
 #: Z_ChangeStockCategory.php:63 Z_ChangeStockCode.php:95
 msgid "The SQL statement that failed was"
 msgstr "失敗的 SQL 陳述式是"
 
-#: ContractBOM.php:148 PO_Items.php:971 SupplierTenders.php:474
+#: ContractBOM.php:148 PO_Items.php:975 SupplierTenders.php:474
 msgid "There are no products to display matching the criteria provided"
 msgstr "沒有符合條件的物料"
 
@@ -4045,7 +4045,7 @@ msgid ""
 "the order"
 msgstr "因為顧客已經下單，因此此合同物料清單無法更改"
 
-#: ContractBOM.php:185 PO_Items.php:587
+#: ContractBOM.php:185 PO_Items.php:585
 #: includes/SelectOrderItems_IntoCart.inc:26
 #: includes/SelectOrderItems_IntoCart.inc:63
 msgid "The item"
@@ -4064,11 +4064,11 @@ msgstr ""
 msgid "The item details could not be retrieved"
 msgstr "無法找到商品細節"
 
-#: ContractBOM.php:201 PO_Items.php:608 SelectCreditItems.php:600
+#: ContractBOM.php:201 PO_Items.php:606 SelectCreditItems.php:600
 msgid "The SQL used to retrieve the item details but failed was"
 msgstr "用作提取物料資訊失敗的 SQL 是"
 
-#: ContractBOM.php:213 CounterSales.php:422 PO_Items.php:685
+#: ContractBOM.php:213 CounterSales.php:422 PO_Items.php:683
 #: SelectOrderItems.php:950 includes/SelectOrderItems_IntoCart.inc:58
 #: includes/SelectOrderItems_IntoCart.inc:162
 msgid "The item code"
@@ -4106,24 +4106,24 @@ msgstr "更新行"
 msgid "Back To Contract Header"
 msgstr "返回合同表頭"
 
-#: ContractBOM.php:290 PO_Items.php:989
+#: ContractBOM.php:290 PO_Items.php:993
 msgid "The supplier category details could not be retrieved because"
 msgstr "未能提取供應商種類明細, 因為"
 
-#: ContractBOM.php:291 PO_Items.php:990
+#: ContractBOM.php:291 PO_Items.php:994
 msgid "The SQL used to retrieve the category details but failed was"
 msgstr "用作提取種類明細失敗的 SQL 是"
 
-#: ContractBOM.php:294 PO_Items.php:993
+#: ContractBOM.php:294 PO_Items.php:997
 msgid "Search For Stock Items"
 msgstr "查找物料"
 
 #: ContractBOM.php:299 CounterSales.php:2113 CounterSales.php:2116
 #: DailySalesInquiry.php:44 DailySalesInquiry.php:46 FixedAssetRegister.php:56
 #: FixedAssetRegister.php:65 InventoryQuantities.php:155
-#: InventoryQuantities.php:176 InventoryQuantities.php:178 MRP.php:565
+#: InventoryQuantities.php:176 InventoryQuantities.php:178 MRP.php:564
 #: MRPReport.php:544 MRPReport.php:546 MRPReschedules.php:161
-#: PDFPriceList.php:194 PDFPrintLabel.php:240 PO_Items.php:997
+#: PDFPriceList.php:194 PDFPrintLabel.php:240 PO_Items.php:1001
 #: POReport.php:1486 ReorderLevel.php:187 ReorderLevel.php:189
 #: ReorderLevel.php:217 ReorderLevel.php:219 SalesGraph.php:91
 #: SalesGraph.php:93 SalesGraph.php:111 SalesGraph.php:113 SalesGraph.php:134
@@ -4140,18 +4140,18 @@ msgstr "查找物料"
 msgid "All"
 msgstr "全部"
 
-#: ContractBOM.php:320 PO_Items.php:1018 SelectCompletedOrder.php:515
+#: ContractBOM.php:320 PO_Items.php:1022 SelectCompletedOrder.php:515
 #: SelectCreditItems.php:939
 msgid "Enter text extracts in the description"
 msgstr "輸入物料描述"
 
-#: ContractBOM.php:323 CounterSales.php:2138 PO_Items.php:1021
+#: ContractBOM.php:323 CounterSales.php:2138 PO_Items.php:1025
 #: SelectCompletedOrder.php:518 SelectCreditItems.php:942
 #: SelectOrderItems.php:1589 SelectSalesOrder.php:485 SelectWorkOrder.php:173
 msgid "Enter extract of the Stock Code"
 msgstr "輸入物料編號"
 
-#: ContractBOM.php:329 PO_Items.php:1027
+#: ContractBOM.php:329 PO_Items.php:1031
 msgid "Create a New Stock Item"
 msgstr "創建新的庫存物料"
 
@@ -4161,22 +4161,22 @@ msgid "Image"
 msgstr "圖像"
 
 #: ContractBOM.php:368 CounterSales.php:2001 FixedAssetItems.php:465
-#: FixedAssetItems.php:469 PO_Items.php:1068 SelectCreditItems.php:969
+#: FixedAssetItems.php:469 PO_Items.php:1073 SelectCreditItems.php:969
 #: SelectOrderItems.php:1449 SelectOrderItems.php:1628 SelectProduct.php:408
 #: Stocks.php:709 Stocks.php:713 SupplierTenders.php:517
 #: WorkOrderEntry.php:616 WorkOrderIssue.php:676
 msgid "No Image"
 msgstr "沒有圖像"
 
-#: ContractBOM.php:390 PO_Items.php:1094 SupplierTenders.php:561
+#: ContractBOM.php:390 PO_Items.php:1102 SupplierTenders.php:561
 msgid "Only the first"
 msgstr "只有第一項"
 
-#: ContractBOM.php:390 PO_Items.php:1094 SupplierTenders.php:561
+#: ContractBOM.php:390 PO_Items.php:1102 SupplierTenders.php:561
 msgid "can be displayed"
 msgstr "可以被顯示"
 
-#: ContractBOM.php:391 PO_Items.php:1095 SupplierTenders.php:562
+#: ContractBOM.php:391 PO_Items.php:1103 SupplierTenders.php:562
 msgid "Please restrict your search to only the parts required"
 msgstr "請限制搜索條件並選擇需要的物料"
 
@@ -4230,7 +4230,7 @@ msgstr "要求庫存"
 
 #: ContractCosting.php:75 ContractCosting.php:81 Contracts.php:933
 #: CounterSales.php:703 DeliveryDetails.php:786 DeliveryDetails.php:851
-#: OrderDetails.php:156 PO_Items.php:814 PrintCustTrans.php:651
+#: OrderDetails.php:156 PO_Items.php:812 PrintCustTrans.php:651
 #: PrintCustTrans.php:714 PrintCustTrans.php:752
 #: PrintCustTransPortrait.php:830 PrintCustTransPortrait.php:913
 #: PrintCustTransPortrait.php:957 RecurringSalesOrders.php:323
@@ -4323,7 +4323,7 @@ msgstr "未能更新工作單到關閉, 因為"
 msgid "The SQL used to close the work order was:"
 msgstr "用於關閉工作單的SQL是"
 
-#: ContractCosting.php:305 GoodsReceived.php:451
+#: ContractCosting.php:305 GoodsReceived.php:453
 #: PDFStockCheckComparison.php:130 ReverseGRN.php:219 StockAdjustments.php:239
 #: StockLocTransferReceive.php:297 StockLocTransferReceive.php:306
 #: StockTransfers.php:381 StockTransfers.php:391 WorkOrderIssue.php:162
@@ -4951,7 +4951,7 @@ msgstr "設置"
 msgid "Quote"
 msgstr "報價"
 
-#: Contracts.php:908 PO_Header.php:795 POReport.php:1487
+#: Contracts.php:908 PO_Header.php:793 POReport.php:1487
 #: PO_SelectPurchOrder.php:140 PO_SelectPurchOrder.php:142
 #: SalesInquiry.php:1104 SelectContract.php:52 SelectContract.php:58
 #: SelectContract.php:64 SelectContract.php:70 SelectContract.php:76
@@ -5823,7 +5823,7 @@ msgstr "總賬憑證的運費行未能插入,因為"
 msgid "Credit Note number"
 msgstr "紅字發票編號"
 
-#: Credit_Invoice.php:1447 GoodsReceived.php:685 SupplierCredit.php:1297
+#: Credit_Invoice.php:1447 GoodsReceived.php:687 SupplierCredit.php:1297
 #: SupplierInvoice.php:1288 WorkOrderIssue.php:354 WorkOrderReceive.php:674
 #: Z_BottomUpCosts.php:33
 msgid "has been processed"
@@ -6234,7 +6234,7 @@ msgstr "採購"
 #: CustLoginSetup.php:16 index.php:17 InventoryQuantities.php:147
 #: InventoryValuation.php:202 Locations.php:353 Locations.php:412
 #: MRPCalendar.php:22 MRPCreateDemands.php:187 MRPDemands.php:28
-#: MRPDemandTypes.php:19 MRP.php:518 MRPPlannedPurchaseOrders.php:267
+#: MRPDemandTypes.php:19 MRP.php:517 MRPPlannedPurchaseOrders.php:267
 #: MRPPlannedWorkOrders.php:249 MRPPlannedWorkOrders.php:330
 #: PricesByCost.php:9 ReorderLevelLocation.php:13 ReorderLevel.php:173
 #: SelectProduct.php:71 StockDispatch.php:220 StockMovements.php:26
@@ -7426,7 +7426,7 @@ msgstr "存入"
 msgid "Banked into the"
 msgstr "帳號"
 
-#: CustomerReceipt.php:841 Payments.php:719 PO_Items.php:258
+#: CustomerReceipt.php:841 Payments.php:719 PO_Items.php:256
 #: SelectSalesOrder.php:135 SelectSalesOrder.php:300 SpecialOrder.php:400
 msgid "on"
 msgstr "日期"
@@ -7640,14 +7640,14 @@ msgid ""
 "type/price list"
 msgstr "要創建一個新顧客，您必須首先設置至少一個銷售種類/價格表"
 
-#: Customers.php:436 Customers.php:445 includes/ConnectDB_mysqli.inc:35
+#: Customers.php:436 Customers.php:445 includes/ConnectDB_mysqli.inc:29
 #: includes/ConnectDB_mysql.inc:29
 msgid "Click"
 msgstr "點擊"
 
 #: Customers.php:436 Customers.php:445 MRPPlannedPurchaseOrders.php:18
 #: MRPPlannedWorkOrders.php:15 MRPReschedules.php:18 MRPShortages.php:17
-#: OffersReceived.php:229 PO_Header.php:437 includes/ConnectDB_mysqli.inc:35
+#: OffersReceived.php:229 PO_Header.php:437 includes/ConnectDB_mysqli.inc:29
 #: includes/ConnectDB_mysql.inc:29
 msgid "here"
 msgstr "這裏"
@@ -7742,7 +7742,7 @@ msgid ""
 msgstr "還沒有定義付款條款，到主目錄的設置頁面設置至少一個付款條款"
 
 #: Customers.php:550 Customers.php:799 Customers.php:802 index.php:1059
-#: PaymentTerms.php:13 PO_Header.php:1034 PrintCustTrans.php:324
+#: PaymentTerms.php:13 PO_Header.php:1032 PrintCustTrans.php:324
 #: PrintCustTransPortrait.php:437 Suppliers.php:680 Suppliers.php:833
 #: includes/PO_PDFOrderPageHeader.inc:62 includes/PO_PDFOrderPageHeader.inc:64
 msgid "Payment Terms"
@@ -7909,7 +7909,7 @@ msgstr "顧客類型"
 
 #: CustomerTypes.php:95 PcAssignCashToTab.php:97 PcClaimExpensesFromTab.php:88
 #: PcExpenses.php:96 PcExpensesTypeTab.php:61 PcTabs.php:97 PcTypeTabs.php:87
-#: PO_Items.php:259 SalesTypes.php:88 SelectSalesOrder.php:135
+#: PO_Items.php:257 SalesTypes.php:88 SelectSalesOrder.php:135
 #: SelectSalesOrder.php:300 SpecialOrder.php:400 SupplierTypes.php:93
 msgid "has been created"
 msgstr "已創建"
@@ -8587,7 +8587,7 @@ msgstr "物料主記錄已更新為無折扣類別"
 msgid "Discount Category Code"
 msgstr "折扣類別編碼"
 
-#: DiscountCategories.php:90 DiscountCategories.php:231 PO_Header.php:848
+#: DiscountCategories.php:90 DiscountCategories.php:231 PO_Header.php:846
 #: SalesCategories.php:262 SuppInvGRNs.php:276 SupplierTenders.php:57
 #, php-format
 msgid "Select"
@@ -10123,7 +10123,7 @@ msgid "Disposal Value"
 msgstr "殘值"
 
 #: FixedAssetRegister.php:199 FixedAssetRegister.php:223
-#: PDFBankingSummary.php:169 PDFChequeListing.php:176 PO_Items.php:770
+#: PDFBankingSummary.php:169 PDFChequeListing.php:176 PO_Items.php:768
 #: includes/PDFSalesAnalysis.inc:71 includes/PDFSalesAnalysis.inc:125
 #: includes/PDFSalesAnalysis.inc:178 includes/PDFSalesAnalysis.inc:312
 #: includes/PDFSalesAnalysis.inc:364 includes/PDFSalesAnalysis.inc:414
@@ -10484,7 +10484,7 @@ msgstr "訂單日期"
 msgid "Req Del Date"
 msgstr "要求交貨日期"
 
-#: FTP_RadioBeacon.php:57 PO_Header.php:824 PO_Header.php:1050
+#: FTP_RadioBeacon.php:57 PO_Header.php:822 PO_Header.php:1050
 #: SelectCompletedOrder.php:590 SelectSalesOrder.php:752
 #: SelectSalesOrder.php:768 includes/PDFQuotationPageHeader.inc:31
 #: includes/PDFQuotationPortraitPageHeader.inc:30
@@ -11753,17 +11753,17 @@ msgstr "收貨日期"
 msgid "Supplier Units"
 msgstr "供應商計量單位"
 
-#: GoodsReceived.php:86 PO_Items.php:1043
+#: GoodsReceived.php:86
 #, fuzzy
-msgid "Our Units"
+msgid "Our Receiving Units"
 msgstr "單位"
 
-#: GoodsReceived.php:93
+#: GoodsReceived.php:93 PO_Items.php:1048
 #, fuzzy
 msgid "Conversion"
 msgstr "轉化"
 
-#: GoodsReceived.php:93
+#: GoodsReceived.php:93 PO_Items.php:1048
 #, fuzzy
 msgid "Factor"
 msgstr "是為"
@@ -11788,7 +11788,7 @@ msgstr "輸入批次"
 msgid "Total value of goods received"
 msgstr "收貨總金額"
 
-#: GoodsReceived.php:219
+#: GoodsReceived.php:221
 msgid ""
 "Receiving a negative quantity that results in negative stock is prohibited "
 "by the parameter settings. This delivery of stock cannot be processed until "
@@ -11797,15 +11797,15 @@ msgstr ""
 "系統參數設置禁止接受負數數量導致負數庫存。此庫存發貨無法執行，直到此物料庫存"
 "更正為止。"
 
-#: GoodsReceived.php:227
+#: GoodsReceived.php:229
 msgid "There is nothing to process"
 msgstr "沒有需要保存的資料"
 
-#: GoodsReceived.php:227
+#: GoodsReceived.php:229
 msgid "Please enter valid quantities greater than zero"
 msgstr "請輸入大於0的有效數量"
 
-#: GoodsReceived.php:232
+#: GoodsReceived.php:234
 msgid ""
 "Negative stocks would result by processing a negative delivery - quantities "
 "must be changed or the stock quantity of the item going negative corrected "
@@ -11814,193 +11814,193 @@ msgstr ""
 "處理負數的發貨會導致負數存貨-要執行此發貨，必須修改數量或者此物料的庫存變為負"
 "數的問題得到修正。"
 
-#: GoodsReceived.php:238
+#: GoodsReceived.php:240
 msgid ""
 "Entered quantities cannot be greater than the quantity entered on the "
 "purchase invoice including the allowed over-receive percentage"
 msgstr "輸入數量不能大於採購發票及其允許超收百份比的數量"
 
-#: GoodsReceived.php:240
+#: GoodsReceived.php:242
 msgid ""
 "Modify the ordered items on the purchase invoice if you wish to increase the "
 "quantities"
 msgstr "如你要增加數量, 請修改採購發票中的訂單數量"
 
-#: GoodsReceived.php:270
+#: GoodsReceived.php:272
 msgid ""
 "Could not check that the details of the purchase order had not been changed "
 "by another user because"
 msgstr "未能檢查其他使用者所更改的採購訂單資訊,因為"
 
-#: GoodsReceived.php:271
+#: GoodsReceived.php:273
 msgid "The following SQL to retrieve the purchase order details was used"
 msgstr "用於查詢採購訂單資訊的SQL是"
 
-#: GoodsReceived.php:288
+#: GoodsReceived.php:290
 msgid ""
 "This order has been changed or invoiced since this delivery was started to "
 "be actioned"
 msgstr "輸入此交貨單的同時訂單已被修改或開發票"
 
-#: GoodsReceived.php:288
+#: GoodsReceived.php:290
 msgid "To enter a delivery against this purchase order"
 msgstr "要輸入這採購訂單的交貨"
 
-#: GoodsReceived.php:288
+#: GoodsReceived.php:290
 msgid ""
 "it must be re-selected and re-read again to update the changes made by the "
 "other user"
 msgstr "必須重新選擇訂單讀取其他用戶所修改的內容"
 
-#: GoodsReceived.php:292
+#: GoodsReceived.php:294
 msgid "GL Code of the Line Item"
 msgstr "對應會計科目"
 
-#: GoodsReceived.php:295
+#: GoodsReceived.php:297
 msgid "ShiptRef of the Line Item"
 msgstr "運單號"
 
-#: GoodsReceived.php:298
+#: GoodsReceived.php:300
 msgid "Contract Reference of the Line Item"
 msgstr "供應商合同號"
 
-#: GoodsReceived.php:302
+#: GoodsReceived.php:304
 msgid "Quantity Invoiced of the Line Item"
 msgstr "已開發票數量"
 
-#: GoodsReceived.php:305
+#: GoodsReceived.php:307
 msgid "Stock Code of the Line Item"
 msgstr "物料編號"
 
-#: GoodsReceived.php:308
+#: GoodsReceived.php:310
 msgid "Order Quantity of the Line Item"
 msgstr "訂單數量"
 
-#: GoodsReceived.php:311
+#: GoodsReceived.php:313
 msgid "Quantity of the Line Item Already Received"
 msgstr "已收數量"
 
-#: GoodsReceived.php:317 GoodsReceived.php:688
+#: GoodsReceived.php:319 GoodsReceived.php:690
 msgid "Select a different purchase order for receiving goods against"
 msgstr "請選取其他要進行收貨的採購訂單"
 
-#: GoodsReceived.php:319
+#: GoodsReceived.php:321
 msgid "Re-read the updated purchase order for receiving goods against"
 msgstr "重新讀取採購訂單資訊並收貨"
 
-#: GoodsReceived.php:351
+#: GoodsReceived.php:353
 msgid ""
 "The standard cost of the item being received cannot be retrieved because"
 msgstr "找不到物料的標準成本,因為"
 
-#: GoodsReceived.php:352
+#: GoodsReceived.php:354
 msgid "The following SQL to retrieve the standard cost was used"
 msgstr "用於查找物料標準成本的SQL是"
 
-#: GoodsReceived.php:393
+#: GoodsReceived.php:395
 msgid ""
 "The purchase order detail record could not be updated with the quantity "
 "received because"
 msgstr "未能更新採購訂單行的已收數量,因為"
 
-#: GoodsReceived.php:394 ReverseGRN.php:128
+#: GoodsReceived.php:396 ReverseGRN.php:128
 msgid "The following SQL to update the purchase order detail record was used"
 msgstr "用於更新採購訂單行的SQL是"
 
-#: GoodsReceived.php:423
+#: GoodsReceived.php:425
 msgid "A GRN record could not be inserted"
 msgstr "收貨單未能插入"
 
-#: GoodsReceived.php:423
+#: GoodsReceived.php:425
 msgid "This receipt of goods has not been processed because"
 msgstr "採購收貨失敗,因為"
 
-#: GoodsReceived.php:424 ReverseGRN.php:156
+#: GoodsReceived.php:426 ReverseGRN.php:156
 msgid "The following SQL to insert the GRN record was used"
 msgstr "用於插入收貨單記錄的SQL是"
 
-#: GoodsReceived.php:482
+#: GoodsReceived.php:484
 msgid "stock movement records could not be inserted because"
 msgstr "未能插入物料移動記錄,因為"
 
-#: GoodsReceived.php:500
+#: GoodsReceived.php:502
 msgid "Could not check if a batch or lot stock item already exists because"
 msgstr "未能檢查是否已存在該批次的物料,因為"
 
-#: GoodsReceived.php:501
+#: GoodsReceived.php:503
 msgid ""
 "The following SQL to test for an already existing controlled but not "
 "serialised stock item was used"
 msgstr "用於測試受控但未編序列號的庫存物料的SQL是"
 
-#: GoodsReceived.php:529 WorkOrderIssue.php:215 WorkOrderReceive.php:492
+#: GoodsReceived.php:531 WorkOrderIssue.php:215 WorkOrderReceive.php:492
 #: WorkOrderReceive.php:563
 msgid "The serial stock item record could not be inserted because"
 msgstr "未能插入序列號存貨物料記錄, 因為"
 
-#: GoodsReceived.php:530 WorkOrderIssue.php:216 WorkOrderReceive.php:493
+#: GoodsReceived.php:532 WorkOrderIssue.php:216 WorkOrderReceive.php:493
 #: WorkOrderReceive.php:564
 msgid "The following SQL to insert the serial stock item records was used"
 msgstr "用於插入序列號存貨物料記錄的SQL是"
 
-#: GoodsReceived.php:583 ReverseGRN.php:175 SupplierCredit.php:1194
+#: GoodsReceived.php:585 ReverseGRN.php:175 SupplierCredit.php:1194
 #: SupplierCredit.php:1282 SupplierInvoice.php:1181 SupplierInvoice.php:1266
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset "
 "transaction could not be inserted because"
 msgstr "致命錯誤！請記錄下此錯誤並尋求幫助。此固定資產交易無法完成因為"
 
-#: GoodsReceived.php:603 SupplierInvoice.php:1281
+#: GoodsReceived.php:605 SupplierInvoice.php:1281
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset "
 "cost and date purchased was not able to be updated because:"
 msgstr ""
 "致命錯誤！記錄下此錯誤並尋求幫助。此固定資產成本和採購日期無法更新，因為"
 
-#: GoodsReceived.php:604 SupplierInvoice.php:1282
+#: GoodsReceived.php:606 SupplierInvoice.php:1282
 msgid ""
 "The following SQL was used to attempt the update of the cost and the date "
 "the asset was purchased"
 msgstr "用於更新成本和資產採購日期的SQL是"
 
-#: GoodsReceived.php:634
+#: GoodsReceived.php:636
 msgid "The purchase GL posting could not be inserted because"
 msgstr "未能插入總賬憑證應付行,因為"
 
-#: GoodsReceived.php:635 ReverseGRN.php:303
+#: GoodsReceived.php:637 ReverseGRN.php:303
 msgid "The following SQL to insert the purchase GLTrans record was used"
 msgstr "用於插入總賬憑證應付行的SQL是"
 
-#: GoodsReceived.php:653 SelectSalesOrder.php:896
+#: GoodsReceived.php:655 SelectSalesOrder.php:896
 msgid "PO"
 msgstr "採購訂單"
 
-#: GoodsReceived.php:659 ReverseGRN.php:324
+#: GoodsReceived.php:661 ReverseGRN.php:324
 msgid "The GRN suspense side of the GL posting could not be inserted because"
 msgstr "未能插入總賬憑證材料採購行,因為"
 
-#: GoodsReceived.php:660 ReverseGRN.php:325
+#: GoodsReceived.php:662 ReverseGRN.php:325
 msgid "The following SQL to insert the GRN Suspense GLTrans record was used"
 msgstr "用於插入總賬憑證材料採購行的SQL是"
 
-#: GoodsReceived.php:670
+#: GoodsReceived.php:672
 #, fuzzy
 msgid "Order Completed"
 msgstr "完成"
 
-#: GoodsReceived.php:685 ReverseGRN.php:332
+#: GoodsReceived.php:687 ReverseGRN.php:332
 msgid "GRN number"
 msgstr "收貨單編號"
 
-#: GoodsReceived.php:686
+#: GoodsReceived.php:688
 msgid "Print this Goods Received Note (GRN)"
 msgstr "列印此貨品接收單 (收貨單)"
 
-#: GoodsReceived.php:695
+#: GoodsReceived.php:697
 msgid "Modify Order Items"
 msgstr "修改訂單物料"
 
-#: GoodsReceived.php:698
+#: GoodsReceived.php:700
 msgid "Process Goods Received"
 msgstr "執行收貨"
 
@@ -13748,103 +13748,103 @@ msgstr "創建物料需求計畫需求（mrprequirements）失敗，因為"
 msgid "Loading requirements from sales orders"
 msgstr "正在上載來自銷售訂單的需求"
 
-#: MRP.php:255
+#: MRP.php:254
 msgid "Loading requirements from work orders"
 msgstr "正在上傳來自工作單的需求"
 
-#: MRP.php:297
+#: MRP.php:296
 msgid "Loading requirements based on mrpdemands"
 msgstr "根據mrpdemands(物料需求計畫需求）上傳需求"
 
-#: MRP.php:317
+#: MRP.php:316
 msgid "Loading requirements based on reorder level"
 msgstr "根據重新訂購水準上傳需求"
 
-#: MRP.php:324
+#: MRP.php:323
 msgid "Creating supplies table"
 msgstr "正在創建供應表"
 
-#: MRP.php:338
+#: MRP.php:337
 msgid "Create of mrpsupplies failed because"
 msgstr "創建物料需求計畫供應（mrpsupplies）失敗，因為"
 
-#: MRP.php:340
+#: MRP.php:339
 msgid "Loading supplies from purchase orders"
 msgstr "正在從採購訂單上載供應"
 
-#: MRP.php:366
+#: MRP.php:365
 msgid "Loading supplies from inventory on hand"
 msgstr "從手上庫存上傳物料供應"
 
-#: MRP.php:407
+#: MRP.php:406
 msgid "Loading supplies from work orders"
 msgstr "正在上傳來自工作單的供應"
 
-#: MRP.php:436
+#: MRP.php:435
 msgid "Creating planned orders table"
 msgstr "正在創建計畫訂單表"
 
-#: MRP.php:448
+#: MRP.php:447
 msgid "Create of mrpplannedorders failed because"
 msgstr "創建物料計畫訂單(mrpplannedorders)失敗，因為"
 
-#: MRP.php:467
+#: MRP.php:466
 msgid "Processing level"
 msgstr "Processing level"
 
-#: MRP.php:474
+#: MRP.php:473
 msgid "End time"
 msgstr "結束日期"
 
-#: MRP.php:546
+#: MRP.php:545
 msgid "Last Run Details"
 msgstr "上次運行細節"
 
-#: MRP.php:548
+#: MRP.php:547
 msgid "Last Run Time"
 msgstr "上次執行日期"
 
-#: MRP.php:550 MRP.php:579
+#: MRP.php:549 MRP.php:578
 msgid "Days Leeway"
 msgstr "餘裕天數"
 
-#: MRP.php:551
+#: MRP.php:550
 msgid "Use MRP Demands"
 msgstr "使用 MRP 需求"
 
-#: MRP.php:552
+#: MRP.php:551
 msgid "Use EOQ"
 msgstr "使用 EOQ"
 
-#: MRP.php:553
+#: MRP.php:552
 msgid "Use Pan Size"
 msgstr "使用Pan size"
 
-#: MRP.php:554
+#: MRP.php:553
 msgid "Use Shrinkage"
 msgstr "啟用報廢"
 
-#: MRP.php:561
+#: MRP.php:560
 msgid "This Run Details"
 msgstr "此次運行細節"
 
-#: MRP.php:580
+#: MRP.php:579
 msgid "Use MRP Demands?"
 msgstr "是否用MRP需求？"
 
-#: MRP.php:582
+#: MRP.php:581
 msgid "Use EOQ?"
 msgstr "是否用EOQ？"
 
-#: MRP.php:584
+#: MRP.php:583
 msgid "Use Pan Size?"
 msgstr "使用Pan Size?"
 
-#: MRP.php:586
+#: MRP.php:585
 msgid "Use Shrinkage?"
 msgstr "使用報廢？"
 
-#: MRP.php:588
+#: MRP.php:587
 msgid "Run MRP"
 msgstr "運行MRP"
 
@@ -14314,8 +14314,8 @@ msgstr "下列報盤已經接受"
 msgid "An official order will be sent to you in due course"
 msgstr "正式訂單會在規定日期內送達"
 
-#: OffersReceived.php:180 PO_AuthoriseMyOrders.php:89 PO_Header.php:782
-#: PO_Header.php:787 PO_Header.php:791 PO_Header.php:799 PO_Header.php:805
+#: OffersReceived.php:180 PO_AuthoriseMyOrders.php:89 PO_Header.php:778
+#: PO_Header.php:783 PO_Header.php:788 PO_Header.php:797 PO_Header.php:803
 #: PO_SelectOSPurchOrder.php:161 PO_SelectOSPurchOrder.php:163
 #: PO_SelectPurchOrder.php:130 PO_SelectPurchOrder.php:132
 msgid "Pending"
@@ -15015,8 +15015,8 @@ msgstr "最近小額現金標籤變化細節 "
 msgid "Expense Code"
 msgstr "費用代碼"
 
-#: PcAssignCashToTab.php:215 PO_AuthoriseMyOrders.php:90 PO_Header.php:783
-#: PO_Header.php:788 PO_Header.php:800 PO_Header.php:804
+#: PcAssignCashToTab.php:215 PO_AuthoriseMyOrders.php:90 PO_Header.php:779
+#: PO_Header.php:784 PO_Header.php:798 PO_Header.php:802
 #: PO_SelectOSPurchOrder.php:166 PO_SelectOSPurchOrder.php:168
 #: PO_SelectPurchOrder.php:135 PO_SelectPurchOrder.php:137
 msgid "Authorised"
@@ -15279,7 +15279,7 @@ msgstr "取得訂單資訊時發生錯誤"
 
 #: PcReportTab.php:97 PcReportTab.php:99 PcReportTab.php:107
 #: PDFOrdersInvoiced.php:263 PDFOrdersInvoiced.php:265
-#: PDFOrdersInvoiced.php:273 includes/ConnectDB_mysqli.inc:93
+#: PDFOrdersInvoiced.php:273 includes/ConnectDB_mysqli.inc:86
 #: includes/ConnectDB_mysql.inc:75
 msgid "Database Error"
 msgstr "資料庫錯誤"
@@ -16022,7 +16022,7 @@ msgstr "顯示全部訂單"
 msgid "Order Status Report - No Data"
 msgstr "訂單狀態報告-無數據"
 
-#: PDFOrderStatus.php:273 PO_AuthoriseMyOrders.php:60 PO_Header.php:778
+#: PDFOrderStatus.php:273 PO_AuthoriseMyOrders.php:60 PO_Header.php:774
 #: PO_OrderDetails.php:123 PO_SelectOSPurchOrder.php:449
 #: PO_SelectPurchOrder.php:370 SelectWorkOrder.php:298 SelectWorkOrder.php:333
 #: WorkOrderCosting.php:88 WorkOrderCosting.php:100
@@ -16031,7 +16031,7 @@ msgstr "訂單狀態報告-無數據"
 msgid "Status"
 msgstr "狀況"
 
-#: PDFOrderStatus.php:301 PO_Header.php:746 PO_OrderDetails.php:115
+#: PDFOrderStatus.php:301 PO_Header.php:742 PO_OrderDetails.php:115
 msgid "Not yet printed"
 msgstr "未列印"
 
@@ -16806,18 +16806,19 @@ msgstr "訂購日期"
 msgid "Initiator"
 msgstr "採購員"
 
-#: PO_AuthoriseMyOrders.php:59 PO_Header.php:722 PO_Items.php:816
+#: PO_AuthoriseMyOrders.php:59 PO_Header.php:722 PO_Items.php:814
 #: POReport.php:1429 includes/PDFPickingListHeader.inc:46
 msgid "Delivery Date"
 msgstr "付運日期"
 
-#: PO_AuthoriseMyOrders.php:91 PO_Header.php:784 PO_Header.php:798
+#: PO_AuthoriseMyOrders.php:91 PO_Header.php:780 PO_Header.php:796
 #: PO_SelectOSPurchOrder.php:176 PO_SelectOSPurchOrder.php:178
 #: PO_SelectPurchOrder.php:150 PO_SelectPurchOrder.php:152
 msgid "Rejected"
 msgstr "否決"
 
-#: PO_AuthoriseMyOrders.php:92 PO_Header.php:803 PO_SelectOSPurchOrder.php:171
+#: PO_AuthoriseMyOrders.php:92 PO_Header.php:785 PO_Header.php:790
+#: PO_Header.php:801 PO_SelectOSPurchOrder.php:171
 #: PO_SelectOSPurchOrder.php:173 PO_SelectPurchOrder.php:145
 #: PO_SelectPurchOrder.php:147
 msgid "Cancelled"
@@ -16874,22 +16875,22 @@ msgid ""
 "This is a new order. It must be created before you can change the status"
 msgstr "這是一張新訂單。在您能修改它之前，必須先創建"
 
-#: PO_Header.php:93 PO_Items.php:109 SelectSalesOrder.php:126
+#: PO_Header.php:93 PO_Items.php:107 SelectSalesOrder.php:126
 #: SelectSalesOrder.php:294
 msgid "You do not have permission to authorise this purchase order"
 msgstr "您無權授權此採購訂單"
 
-#: PO_Header.php:93 PO_Header.php:117 PO_Header.php:138 PO_Items.php:109
+#: PO_Header.php:93 PO_Header.php:117 PO_Header.php:138 PO_Items.php:107
 #: SelectSalesOrder.php:126 SelectSalesOrder.php:294
 msgid "This order is for"
 msgstr "此訂單為"
 
-#: PO_Header.php:95 PO_Items.php:106 SelectSalesOrder.php:123
+#: PO_Header.php:95 PO_Items.php:104 SelectSalesOrder.php:123
 #: SelectSalesOrder.php:291
 msgid "You can only authorise up to"
 msgstr "您只可授權不多於"
 
-#: PO_Header.php:96 PO_Header.php:120 PO_Header.php:138 PO_Items.php:112
+#: PO_Header.php:96 PO_Header.php:120 PO_Header.php:138 PO_Items.php:110
 #: SelectSalesOrder.php:128 SelectSalesOrder.php:294
 msgid "If you think this is a mistake please contact the systems administrator"
 msgstr "如果您認為這是一個錯誤，請聯絡系統管理員"
@@ -17012,8 +17013,8 @@ msgstr "請聯繫您系統管理員，以取得更多資訊"
 msgid "You can setup authorisations"
 msgstr "您可在這裏設置授權"
 
-#: PO_Header.php:508 PO_Header.php:579 PO_Items.php:258 PO_Items.php:413
-#: PO_Items.php:706 PO_Items.php:709 PO_OrderDetails.php:86
+#: PO_Header.php:508 PO_Header.php:579 PO_Items.php:256 PO_Items.php:411
+#: PO_Items.php:704 PO_Items.php:707 PO_OrderDetails.php:86
 #: PO_PDFPurchOrder.php:185 PO_PDFPurchOrder.php:299 SelectSalesOrder.php:135
 #: SelectSalesOrder.php:300 SpecialOrder.php:400
 msgid "Purchase Order"
@@ -17040,9 +17041,9 @@ msgstr "輸入供應商編號"
 msgid "Supplier Name"
 msgstr "供應商名稱"
 
-#: PO_Header.php:533 PO_Header.php:940 PO_Header.php:943 PO_Header.php:946
-#: PO_Header.php:949 PO_Header.php:952 PO_Header.php:955 PO_Header.php:1013
-#: PO_Header.php:1016 PO_Header.php:1019 PO_Header.php:1022 PO_Header.php:1025
+#: PO_Header.php:533 PO_Header.php:938 PO_Header.php:941 PO_Header.php:944
+#: PO_Header.php:947 PO_Header.php:950 PO_Header.php:953 PO_Header.php:1011
+#: PO_Header.php:1014 PO_Header.php:1017 PO_Header.php:1020 PO_Header.php:1023
 msgid "Address"
 msgstr "地址"
 
@@ -17082,73 +17083,73 @@ msgstr "簽訂人"
 msgid "Requisition Ref"
 msgstr "調撥單號"
 
-#: PO_Header.php:740
+#: PO_Header.php:736
 msgid "Date Printed"
 msgstr "列印日期"
 
-#: PO_Header.php:755
+#: PO_Header.php:751
 msgid "Allow Reprint"
 msgstr "可以重新列印"
 
-#: PO_Header.php:762
+#: PO_Header.php:758
 msgid "Reprint Now"
 msgstr "現在重新列印"
 
-#: PO_Header.php:772
+#: PO_Header.php:768
 msgid "Receive this order"
 msgstr "收到此訂單"
 
-#: PO_Header.php:776
+#: PO_Header.php:772
 msgid "New Purchase Order"
 msgstr "新採購訂單"
 
-#: PO_Header.php:811
+#: PO_Header.php:809
 msgid "Status Comment"
 msgstr "狀態備註"
 
-#: PO_Header.php:816
+#: PO_Header.php:814
 msgid "Status Update"
 msgstr "狀態更新"
 
-#: PO_Header.php:823
+#: PO_Header.php:821
 msgid "Warehouse Info"
 msgstr "倉庫資訊"
 
-#: PO_Header.php:825
+#: PO_Header.php:823
 msgid "Supplier Info"
 msgstr "供應商資訊"
 
-#: PO_Header.php:830 includes/PDFPickingListHeader.inc:13
+#: PO_Header.php:828 includes/PDFPickingListHeader.inc:13
 msgid "Warehouse"
 msgstr "倉庫"
 
-#: PO_Header.php:894
+#: PO_Header.php:892
 msgid ""
 "The default stock location set up for this user is not a currently defined "
 "stock location"
 msgstr "當前用戶的默認倉庫設置有誤"
 
-#: PO_Header.php:895
+#: PO_Header.php:893
 msgid "Your system administrator needs to amend your user record"
 msgstr "請管理員修改您的用戶設置"
 
-#: PO_Header.php:937
+#: PO_Header.php:935
 msgid "Delivery Contact"
 msgstr "付運聯繫人"
 
-#: PO_Header.php:962
+#: PO_Header.php:960
 msgid "Delivery By"
 msgstr "付運由"
 
-#: PO_Header.php:978
+#: PO_Header.php:976
 msgid "Supplier Selection"
 msgstr "選擇供應商"
 
-#: PO_Header.php:992
+#: PO_Header.php:990
 msgid "Select Now"
 msgstr "請選擇"
 
-#: PO_Header.php:994
+#: PO_Header.php:992
 msgid "Supplier Contact"
 msgstr "供應商聯繫人"
 
@@ -17156,15 +17157,15 @@ msgstr "供應商聯繫人"
 msgid "Enter Line Items"
 msgstr "輸入採購訂單行"
 
-#: PO_Items.php:14
+#: PO_Items.php:12
 msgid "Purchase Order Items"
 msgstr "採購訂單物料"
 
-#: PO_Items.php:32
+#: PO_Items.php:30
 msgid "Back To Purchase Order Header"
 msgstr "返回採購訂單抬頭"
 
-#: PO_Items.php:39
+#: PO_Items.php:37
 msgid ""
 "The conversion factor is expected to be numeric - the figure which converts "
 "from our units to the supplier units. e.g. if the supplier units is a tonne "
@@ -17172,190 +17173,190 @@ msgid ""
 "to the suppliers unit is 1000"
 msgstr ""
 
-#: PO_Items.php:45
+#: PO_Items.php:43
 #, fuzzy
 msgid ""
 "The quantity in the supplier units is expected to be numeric. Please re-"
 "enter as a number"
 msgstr "需要輸入數量"
 
-#: PO_Items.php:50
+#: PO_Items.php:48
 #, fuzzy
 msgid ""
 "The supplier price is expected to be numeric. Please re-enter as a number"
 msgstr "累計折舊必須是0或者正數"
 
-#: PO_Items.php:67
+#: PO_Items.php:65
 #, fuzzy
 msgid ""
 "The purchase order cannot be committed to the database because there is no "
 "delivery street address specified"
 msgstr "採購訂單未能提交到資料庫, 因為沒有指定付運街道地址"
 
-#: PO_Items.php:70
+#: PO_Items.php:68
 msgid ""
 "The purchase order can not be committed to the database because there is no "
 "location specified to book any stock items into"
 msgstr "採購訂單未能提交到資料庫, 因為沒有指定收貨的倉庫"
 
-#: PO_Items.php:73 SpecialOrder.php:249
+#: PO_Items.php:71 SpecialOrder.php:249
 msgid ""
 "The purchase order can not be committed to the database because there are no "
 "lines entered on this order"
 msgstr "採購訂單未能提交到資料庫, 因為沒有輸入訂單行"
 
-#: PO_Items.php:99 SelectSalesOrder.php:111 SelectSalesOrder.php:279
+#: PO_Items.php:97 SelectSalesOrder.php:111 SelectSalesOrder.php:279
 #, fuzzy
 msgid "Order Created and Authorised by"
 msgstr "訂單創建於"
 
-#: PO_Items.php:104 SelectSalesOrder.php:121 SelectSalesOrder.php:289
+#: PO_Items.php:102 SelectSalesOrder.php:121 SelectSalesOrder.php:289
 #, fuzzy
 msgid "Your authority to approve purchase orders in"
 msgstr "您沒有授權創建採購訂單發往"
 
-#: PO_Items.php:104 SelectSalesOrder.php:121 SelectSalesOrder.php:289
+#: PO_Items.php:102 SelectSalesOrder.php:121 SelectSalesOrder.php:289
 #, fuzzy
 msgid "has not yet been set up"
 msgstr "公司記錄還沒有設定"
 
-#: PO_Items.php:113
+#: PO_Items.php:111
 msgid ""
 "The order will be created with a status of pending and will require "
 "authorisation"
 msgstr ""
 
-#: PO_Items.php:116 PO_Items.php:121 SelectSalesOrder.php:165
+#: PO_Items.php:114 PO_Items.php:119 SelectSalesOrder.php:165
 msgid "Order Created by"
 msgstr "訂單創建於"
 
-#: PO_Items.php:199 SelectSalesOrder.php:224 SpecialOrder.php:309
+#: PO_Items.php:197 SelectSalesOrder.php:224 SpecialOrder.php:309
 msgid ""
 "The purchase order header record could not be inserted into the database "
 "because"
 msgstr "未能插入採購訂單抬頭記錄到資料庫, 因為"
 
-#: PO_Items.php:200 SelectSalesOrder.php:225 SpecialOrder.php:310
+#: PO_Items.php:198 SelectSalesOrder.php:225 SpecialOrder.php:310
 msgid ""
 "The SQL statement used to insert the purchase order header record and failed "
 "was"
 msgstr "用作插入採購訂單抬頭記錄失敗的 SQL 是"
 
-#: PO_Items.php:251 SelectSalesOrder.php:255 SpecialOrder.php:394
+#: PO_Items.php:249 SelectSalesOrder.php:255 SpecialOrder.php:394
 msgid ""
 "One of the purchase order detail records could not be inserted into the "
 "database because"
 msgstr "某個採購訂單行未能插入到資料庫, 因為"
 
-#: PO_Items.php:252 SelectSalesOrder.php:256 SpecialOrder.php:395
+#: PO_Items.php:250 SelectSalesOrder.php:256 SpecialOrder.php:395
 msgid ""
 "The SQL statement used to insert the purchase order detail record and failed "
 "was"
 msgstr "用作插入採購訂單行記錄失敗的 SQL是"
 
-#: PO_Items.php:295
+#: PO_Items.php:293
 msgid "The purchase order could not be updated because"
 msgstr "未能更新採購訂單, 因為"
 
-#: PO_Items.php:296
+#: PO_Items.php:294
 msgid ""
 "The SQL statement used to update the purchase order header record, that "
 "failed was"
 msgstr "用作更新採購訂單抬頭失敗的 SQL 是"
 
-#: PO_Items.php:305
+#: PO_Items.php:303
 msgid "The purchase order could not be deleted because"
 msgstr "此採購訂單無法刪除因為"
 
-#: PO_Items.php:306
+#: PO_Items.php:304
 msgid ""
 "The SQL statement used to delete the purchase order header record, that "
 "failed was"
 msgstr "用作刪除採購訂單抬頭記錄失敗的 SQL 是"
 
-#: PO_Items.php:408
+#: PO_Items.php:406
 msgid "One of the purchase order detail records could not be updated because"
 msgstr "其中一個採購訂單行未能更新, 因為"
 
-#: PO_Items.php:409
+#: PO_Items.php:407
 msgid ""
 "The SQL statement used to update the purchase order detail record that "
 "failed was"
 msgstr "用作更新採購訂單行失敗的 SQL 是"
 
-#: PO_Items.php:417 SpecialOrder.php:401
+#: PO_Items.php:415 SpecialOrder.php:401
 msgid "Print Purchase Order"
 msgstr "列印採購訂單"
 
-#: PO_Items.php:424
+#: PO_Items.php:422
 msgid "Return To PO List"
 msgstr "返回至採購訂單表"
 
-#: PO_Items.php:438
+#: PO_Items.php:437
 msgid ""
 "This item cannot be deleted because some of it has already been received"
 msgstr "採購訂單行不能刪除, 因為已收貨"
 
-#: PO_Items.php:448 PO_Items.php:452 PO_Items.php:456 PO_Items.php:460
+#: PO_Items.php:446 PO_Items.php:450 PO_Items.php:454 PO_Items.php:458
 #: SpecialOrder.php:192 SpecialOrder.php:197 SpecialOrder.php:202
 #: SpecialOrder.php:207 SpecialOrder.php:212 SpecialOrder.php:217
 msgid "Cannot Enter this order line"
 msgstr "不能插入此訂單行"
 
-#: PO_Items.php:448 SpecialOrder.php:192
+#: PO_Items.php:446 SpecialOrder.php:192
 msgid "The quantity of the order item must be numeric"
 msgstr "訂單行數量必須是數值"
 
-#: PO_Items.php:452 SpecialOrder.php:197
+#: PO_Items.php:450 SpecialOrder.php:197
 msgid "The quantity of the ordered item entered must be a positive amount"
 msgstr "輸入的訂單行數量必須是正數"
 
-#: PO_Items.php:456 Prices_Customer.php:81 Prices.php:74 SpecialOrder.php:202
+#: PO_Items.php:454 Prices_Customer.php:81 Prices.php:74 SpecialOrder.php:202
 msgid "The price entered must be numeric"
 msgstr "輸入的價格必須是數值"
 
-#: PO_Items.php:460 SpecialOrder.php:217
+#: PO_Items.php:458 SpecialOrder.php:217
 msgid "The date entered must be in the format"
 msgstr "輸入的日期格式應為"
 
-#: PO_Items.php:473
+#: PO_Items.php:471
 msgid "The account details for"
 msgstr "帳戶明細"
 
-#: PO_Items.php:474
+#: PO_Items.php:472
 msgid "The SQL used to retrieve the details of the account, but failed was"
 msgstr "用於提取帳戶明細失敗的 SQL 是"
 
-#: PO_Items.php:478
+#: PO_Items.php:476
 msgid ""
 "The validation process for the GL Code entered could not be executed because"
 msgstr "驗證會計科目失敗, 因為"
 
-#: PO_Items.php:480
+#: PO_Items.php:478
 msgid "The SQL used to validate the code entered was"
 msgstr "用於驗證會計科目的 SQL 是"
 
-#: PO_Items.php:487 PO_Items.php:520
+#: PO_Items.php:485 PO_Items.php:518
 msgid "Cannot enter this order line"
 msgstr "未能輸入訂單行"
 
-#: PO_Items.php:487
+#: PO_Items.php:485
 msgid "The general ledger code"
 msgstr "會計科目"
 
-#: PO_Items.php:487
+#: PO_Items.php:485
 msgid "is not a general ledger code that is defined in the chart of accounts"
 msgstr "並非定義在會計科目表中的總帳代碼"
 
-#: PO_Items.php:487
+#: PO_Items.php:485
 msgid "Please use a code that is already defined"
 msgstr "請使用存在的會計科目"
 
-#: PO_Items.php:487
+#: PO_Items.php:485
 msgid "See the Chart list from the link below"
 msgstr "用以下的鏈結來查看科目表"
 
-#: PO_Items.php:506
+#: PO_Items.php:504
 msgid ""
 "An asset code was entered but it does not yet exist. Only pre-existing asset "
 "ids can be entered when ordering a fixed asset"
@@ -17363,141 +17364,146 @@ msgstr ""
 "輸入了一個還不存在的資產代碼。當訂購一項固定資產時，僅可以輸入已經存在的資產"
 "ID."
 
-#: PO_Items.php:520
+#: PO_Items.php:518
 msgid ""
 "The description of the item being purchased is required where a non-stock "
 "item is being ordered"
 msgstr "當採購非庫存商品時, 必須輸入商品的描述"
 
-#: PO_Items.php:587
+#: PO_Items.php:585
 msgid "is already on this order"
 msgstr "已在這訂單內"
 
-#: PO_Items.php:587
+#: PO_Items.php:585
 msgid "The system will not allow the same item on the order more than once"
 msgstr "系統不允許物料在同一訂單中多次出現"
 
-#: PO_Items.php:587
+#: PO_Items.php:585
 msgid ""
 "However you can change the quantity ordered of the existing line if necessary"
 msgstr "但你可以按需要更改現有訂單行數量"
 
-#: PO_Items.php:607
+#: PO_Items.php:605
 #, fuzzy
 msgid "The item details for"
 msgstr "明細資料"
 
-#: PO_Items.php:634
+#: PO_Items.php:632
 #, fuzzy
 msgid "The purchasing data for"
 msgstr "採購數據"
 
-#: PO_Items.php:635
+#: PO_Items.php:633
 #, fuzzy
 msgid "The SQL used to retrieve the purchasing data but failed was"
 msgstr "用於查找供應商供貨資訊失敗的 SQL 是"
 
-#: PO_Items.php:685
+#: PO_Items.php:683
 msgid ""
 "does not exist in the database and therefore cannot be added to the order"
 msgstr "在資料庫中不存在, 所以不能新增到訂單"
 
-#: PO_Items.php:711
+#: PO_Items.php:709
 msgid " Order Summary"
 msgstr " 訂單總覽"
 
-#: PO_Items.php:716 SelectProduct.php:110
+#: PO_Items.php:714 SelectProduct.php:110
 msgid "Weight"
 msgstr "重量"
 
-#: PO_Items.php:717
+#: PO_Items.php:715
 #, fuzzy
 msgid "Quantity Our Units"
 msgstr "在手數量"
 
-#: PO_Items.php:718
+#: PO_Items.php:716
 #, fuzzy
 msgid "Our Unit"
 msgstr "單位"
 
-#: PO_Items.php:719
+#: PO_Items.php:717
 #, fuzzy
 msgid "Price Our Units"
 msgstr "每種物料價格"
 
-#: PO_Items.php:720
+#: PO_Items.php:718
 #, fuzzy
 msgid "Unit Conversion Factor"
 msgstr "不正確的轉換因數"
 
-#: PO_Items.php:721
+#: PO_Items.php:719
 #, fuzzy
 msgid "Quantity Supplier Units"
 msgstr "供應商計量單位"
 
-#: PO_Items.php:722 PurchData.php:169
+#: PO_Items.php:720 PurchData.php:169
 msgid "Supplier Unit"
 msgstr "供應商計量單位"
 
-#: PO_Items.php:723
+#: PO_Items.php:721
 #, fuzzy
 msgid "Price Supp Units"
 msgstr "每種物料價格"
 
-#: PO_Items.php:724
+#: PO_Items.php:722
 msgid "Subtotal"
 msgstr "小計"
 
-#: PO_Items.php:725
+#: PO_Items.php:723
 msgid "Deliver By"
 msgstr "付運 由"
 
-#: PO_Items.php:770
+#: PO_Items.php:768
 msgid " excluding Tax"
 msgstr " 不含稅"
 
-#: PO_Items.php:784
+#: PO_Items.php:782
 msgid "General Ledger Code"
 msgstr "總賬代碼"
 
-#: PO_Items.php:796
+#: PO_Items.php:794
 msgid "OR Asset ID"
 msgstr "或資產 ID"
 
-#: PO_Items.php:799
+#: PO_Items.php:797
 msgid "Not an Asset"
 msgstr "不是資產"
 
-#: PO_Items.php:802
+#: PO_Items.php:800
 msgid "Not yet purchased"
 msgstr "尚未採購"
 
-#: PO_Items.php:809 SuppFixedAssetChgs.php:112
+#: PO_Items.php:807 SuppFixedAssetChgs.php:112
 msgid "New Fixed Asset"
 msgstr "新固定資產"
 
-#: PO_Items.php:810
+#: PO_Items.php:808
 msgid "Quantity to purchase"
 msgstr "採購數量"
 
-#: PO_Items.php:812
+#: PO_Items.php:810
 msgid "Price per item"
 msgstr "每種物料價格"
 
-#: PO_Items.php:815 Stocks.php:787 includes/PO_ReadInOrder.inc:184
+#: PO_Items.php:813 Stocks.php:787 includes/PO_ReadInOrder.inc:184
 msgid "each"
 msgstr "每件"
 
-#: PO_Items.php:1030
+#: PO_Items.php:1034
 msgid "Order a non stock item"
 msgstr "訂購一個非庫存物料"
 
-#: PO_Items.php:1044
+#: PO_Items.php:1047
+#, fuzzy
+msgid "Our Units"
+msgstr "單位"
+
+#: PO_Items.php:1049
 #, fuzzy
 msgid "Supplier/Order"
 msgstr "供應商訂單"
 
-#: PO_Items.php:1045
+#: PO_Items.php:1050
 msgid "Go to end of list"
 msgstr "到列表尾"
 
@@ -32873,13 +32879,13 @@ msgid ""
 "directory defined. See your system administrator"
 msgstr "在登入時輸入的公司名稱縮寫必須已經定義了公司目錄。請向系統管理員求助。"
 
-#: includes/ConnectDB_mysqli.inc:35 includes/ConnectDB_mysql.inc:29
+#: includes/ConnectDB_mysqli.inc:29 includes/ConnectDB_mysql.inc:29
 msgid ""
 "to try logging in\n"
 "again"
 msgstr "試著重新登錄"
 
-#: includes/ConnectDB_mysqli.inc:41 includes/ConnectDB_mysql.inc:26
+#: includes/ConnectDB_mysqli.inc:35 includes/ConnectDB_mysql.inc:26
 msgid ""
 "The configuration in the file config.php for the database user name and "
 "password do not provide the information required to connect to the database "
@@ -32888,7 +32894,7 @@ msgstr ""
 "在 config.php 檔案中的資料庫使用者名稱和密碼設定不能提取連總到資料庫伺服器要"
 "求的資訊"
 
-#: includes/ConnectDB_mysqli.inc:48 includes/ConnectDB_mysqli.inc:55
+#: includes/ConnectDB_mysqli.inc:42 includes/ConnectDB_mysqli.inc:49
 #: includes/ConnectDB_mysql.inc:38 includes/ConnectDB_mysql.inc:44
 msgid ""
 "The company name entered does not correspond to a database on the database "
@@ -32898,26 +32904,26 @@ msgstr ""
 "輸入的公司名稱跟 config.php 設置檔內指定的資料庫伺服器的資料庫不同, 請使用其"
 "他公司名再試登入"
 
-#: includes/ConnectDB_mysqli.inc:48 includes/ConnectDB_mysqli.inc:49
-#: includes/ConnectDB_mysqli.inc:55 includes/ConnectDB_mysqli.inc:56
+#: includes/ConnectDB_mysqli.inc:42 includes/ConnectDB_mysqli.inc:43
+#: includes/ConnectDB_mysqli.inc:49 includes/ConnectDB_mysqli.inc:50
 #: includes/ConnectDB_mysql.inc:38 includes/ConnectDB_mysql.inc:44
 #: includes/ConnectDB_postgres.inc:29
 msgid "Back to login page"
 msgstr "返回登入頁"
 
-#: includes/ConnectDB_mysqli.inc:95 includes/ConnectDB_mysql.inc:77
+#: includes/ConnectDB_mysqli.inc:88 includes/ConnectDB_mysql.inc:77
 msgid "Database SQL Failure"
 msgstr "資料庫SQL敗"
 
-#: includes/ConnectDB_mysqli.inc:101 includes/ConnectDB_mysql.inc:83
+#: includes/ConnectDB_mysqli.inc:94 includes/ConnectDB_mysql.inc:83
 msgid "Error Rolling Back Transaction"
 msgstr "交易返回錯誤"
 
-#: includes/ConnectDB_mysqli.inc:101 includes/ConnectDB_mysql.inc:83
+#: includes/ConnectDB_mysqli.inc:94 includes/ConnectDB_mysql.inc:83
 msgid "Database Rollback Error"
 msgstr "資料庫返回技術錯誤"
 
-#: includes/ConnectDB_mysqli.inc:210 includes/ConnectDB_mysql.inc:189
+#: includes/ConnectDB_mysqli.inc:203 includes/ConnectDB_mysql.inc:189
 msgid ""
 "The system has just run the regular database administration and optimisation "
 "routine."
