@@ -260,6 +260,7 @@ if (isset($_POST['CommitBatch'])){
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo _('Has the cheque been printed') . '?<br><br>';
 		echo '<input type="hidden" name="CommitBatch" value="' . $_POST['CommitBatch'] . '">';
+		echo '<input type="hidden" name="BankAccount" value="' . $_POST['BankAccount'] . '">';
 		echo '<input type="submit" name="ChequePrinted" value="' . _('Yes / Continue') . '">&nbsp;&nbsp;';
 		echo '<input type="submit" name="PaymentCancelled" value="' . _('No / Cancel Payment') . '">';
 	} else {
