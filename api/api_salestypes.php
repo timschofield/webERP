@@ -38,7 +38,7 @@
 		}
 		$Errors = VerifySalesType($salestype, sizeof($Errors), $Errors, $db);
 		if (sizeof($Errors)==0) {
-			$sql = 'SELECT * FROM salestypes WHERE typeabbrev="'.$salestype.'"';
+			$sql = "SELECT * FROM salestypes WHERE typeabbrev='".$salestype."'";
 			$result = DB_query($sql, $db);
 			$Errors[0]=0;
 			$Errors[1]=DB_fetch_array($result);

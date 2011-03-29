@@ -20,10 +20,10 @@
 		if ((strlen($BranchNumber)<1) or (strlen($BranchNumber)>10)) {
 			$Errors[$i] = IncorrectBranchNumberLength;
 		}
-		$Searchsql = 'SELECT count(debtorno)
-				FROM custbranch
-				WHERE debtorno="'.$DebtorNumber.'" AND
-				branchcode="'.$BranchNumber.'"';
+		$Searchsql = "SELECT count(debtorno)
+				     FROM custbranch
+           			 WHERE debtorno='".$DebtorNumber."' AND
+				           branchcode='".$BranchNumber."'";
 		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] != 0) {
@@ -37,10 +37,10 @@
 		if ((strlen($BranchNumber)<1) or (strlen($BranchNumber)>10)) {
 			$Errors[$i] = IncorrectBranchNumberLength;
 		}
-		$Searchsql = 'SELECT count(debtorno)
-				FROM custbranch
-				WHERE debtorno="'.$DebtorNumber.'" AND
-				branchcode="'.$BranchNumber.'"';
+		$Searchsql = "SELECT count(debtorno)
+				     FROM custbranch
+				     WHERE debtorno='".$DebtorNumber."' 
+                     AND branchcode='".$BranchNumber."'";
 		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
@@ -92,9 +92,9 @@
 
 /* Check that the area code is set up in the weberp database */
 	function VerifyAreaCode($AreaCode , $i, $Errors, $db) {
-		$Searchsql = 'SELECT COUNT(areacode)
-					 FROM areas
-					  WHERE areacode="'.$AreaCode.'"';
+		$Searchsql = "SELECT COUNT(areacode)
+					  FROM areas
+					  WHERE areacode='".$AreaCode."'";
 		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
@@ -105,9 +105,9 @@
 
 /* Check that the salesman is set up in the weberp database */
 	function VerifySalesmanCode($SalesmanCode , $i, $Errors, $db) {
-		$Searchsql = 'SELECT COUNT(salesmancode)
-					 FROM salesman
-					  WHERE salesmancode="'.$SalesmanCode.'"';
+		$Searchsql = "SELECT COUNT(salesmancode)
+					  FROM salesman
+					  WHERE salesmancode='".$SalesmanCode."'";
 		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
@@ -166,9 +166,9 @@
 
 /* Check that the default location is set up in the weberp database */
 	function VerifyDefaultLocation($DefaultLocation , $i, $Errors, $db) {
-		$Searchsql = 'SELECT COUNT(loccode)
-					 FROM locations
-					  WHERE loccode="'.$DefaultLocation.'"';
+		$Searchsql = "SELECT COUNT(loccode)
+					  FROM locations
+					  WHERE loccode='".$DefaultLocation."'";
 		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
@@ -179,9 +179,9 @@
 
 /* Check that the tax group id is set up in the weberp database */
 	function VerifyTaxGroupId($TaxGroupId , $i, $Errors, $db) {
-		$Searchsql = 'SELECT COUNT(taxgroupid)
-					 FROM taxgroups
-					  WHERE taxgroupid="'.$TaxGroupId.'"';
+		$Searchsql = "SELECT COUNT(taxgroupid)
+					  FROM taxgroups
+					  WHERE taxgroupid='".$TaxGroupId."'";
 		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
@@ -192,9 +192,9 @@
 
 /* Check that the default shipper is set up in the weberp database */
 	function VerifyDefaultShipVia($DefaultShipVia , $i, $Errors, $db) {
-		$Searchsql = 'SELECT COUNT(shipper_id)
+		$Searchsql = "SELECT COUNT(shipper_id)
 					 FROM shippers
-					  WHERE shipper_id="'.$DefaultShipVia.'"';
+					  WHERE shipper_id='".$DefaultShipVia."'";
 		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
@@ -468,8 +468,8 @@
 		foreach ($BranchDetails as $key => $value) {
 			$sql .= $key.'="'.$value.'", ';
 		}
-		$sql = substr($sql,0,-2).' WHERE debtorno="'.$BranchDetails['debtorno'].'" and
-				 branchcode="'.$BranchDetails['branchcode'].'"';
+		$sql = substr($sql,0,-2)." WHERE debtorno='".$BranchDetails['debtorno']."' 
+                                   AND branchcode='".$BranchDetails['branchcode']."'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
@@ -495,8 +495,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT branchcode FROM custbranch WHERE debtorno = "' .
-				$DebtorNumber . '";';
+		$sql = "SELECT branchcode FROM custbranch 
+                WHERE debtorno = '" . $DebtorNumber . "'";
 		$result = api_DB_query($sql, $db);
 		if (DB_error_no($db) != 0)
 			$Errors[0] = DatabaseUpdateFailed;
@@ -524,7 +524,9 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql='SELECT * FROM custbranch WHERE debtorno="'.$DebtorNumber.'" and branchcode="'.$BranchCode.'"';
+		$sql="SELECT * FROM custbranch 
+                     WHERE debtorno='".$DebtorNumber."' 
+                     AND branchcode='".$BranchCode."'";
 		$result = api_DB_Query($sql, $db);
 		if (DB_error_no($db) != 0 ) {
 			$Errors[0] = DatabaseUpdateFailed;
@@ -535,6 +537,4 @@
 		}
 		return  $Errors;
 	}
-
-
 ?>

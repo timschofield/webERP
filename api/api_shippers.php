@@ -5,9 +5,9 @@
  * currently setup on webERP
  */
 
-	function GetShipperList($user, $password) {
+	function GetShipperList($User, $Password) {
 		$Errors = array();
-		$db = db($user, $password);
+		$db = db($User, $Password);
 		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
@@ -27,14 +27,14 @@
  * shipper.
  */
 
-	function GetShipperDetails($shipper, $user, $password) {
+	function GetShipperDetails($Shipper, $User, $Password) {
 		$Errors = array();
-		$db = db($user, $password);
+		$db = db($User, $Password);
 		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT * FROM shippers WHERE shipper_id="'.$shipper.'"';
+		$sql = "SELECT * FROM shippers WHERE shipper_id='" . $Shipper."'";
 		$result = DB_query($sql, $db);
 		return DB_fetch_array($result);
 	}

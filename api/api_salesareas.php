@@ -3,9 +3,9 @@
 
 /* Check that the area code is set up in the weberp database */
 	function VerifyAreaCodeDoesntExist($AreaCode , $i, $Errors, $db) {
-		$Searchsql = 'SELECT COUNT(areacode)
+		$Searchsql = "SELECT COUNT(areacode)
 					 FROM areas
-					  WHERE areacode="'.$AreaCode.'"';
+					  WHERE areacode='".$AreaCode."'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] > 0) {
@@ -18,9 +18,9 @@
  * currently setup on webERP
  */
 
-	function GetSalesAreasList($user, $password) {
+	function GetSalesAreasList($User, $Password) {
 		$Errors = array();
-		$db = db($user, $password);
+		$db = db($User, $Password);
 		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
@@ -40,9 +40,9 @@
  * areas.
  */
 
-	function GetSalesAreaDetails($area, $user, $password) {
+	function GetSalesAreaDetails($area, $User, $Password) {
 		$Errors = array();
-		$db = db($user, $password);
+		$db = db($User, $Password);
 		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
@@ -63,9 +63,9 @@
  * to be inserted into webERP.
  */
 
-	function InsertSalesArea($AreaDetails, $user, $password) {
+	function InsertSalesArea($AreaDetails, $User, $Password) {
 		$Errors = array();
-		$db = db($user, $password);
+		$db = db($User, $Password);
 		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
@@ -80,8 +80,8 @@
 			$FieldNames.=$key.', ';
 			$FieldValues.='"'.$value.'", ';
 		}
-		$sql = 'INSERT INTO areas ('.substr($FieldNames,0,-2).') '.
-		  'VALUES ('.substr($FieldValues,0,-2).') ';
+		$sql = 'INSERT INTO areas ('.substr($FieldNames,0,-2) . ") 
+				VALUES ('" .substr($FieldValues,0,-2) . "') ";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
@@ -98,14 +98,14 @@
  * areas.
  */
 
-	function GetSalesAreaDetailsFromName($areaname, $user, $password) {
+	function GetSalesAreaDetailsFromName($AreaName, $User, $Password) {
 		$Errors = array();
-		$db = db($user, $password);
+		$db = db($User, $Password);
 		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT * FROM areas WHERE areadescription="'.$areaname.'"';
+		$sql = "SELECT * FROM areas WHERE areadescription='" . $AreaName . "'";
 		$result = DB_query($sql, $db);
 		if (DB_num_rows($result)==0) {
 			$Errors[0]=NoSuchArea;

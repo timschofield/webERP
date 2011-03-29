@@ -34,7 +34,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT * FROM holdreasons WHERE reasoncode="'.$holdreason.'"';
+		$sql = "SELECT * FROM holdreasons WHERE reasoncode='".$holdreason."'";
 		$result = DB_query($sql, $db);
 		return DB_fetch_array($result);
 	}

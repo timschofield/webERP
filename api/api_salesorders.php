@@ -1,16 +1,15 @@
 <?php
 /* $Id$*/
 
-/*State the Current Revision
-//revision 1.14
-*/
 
 // InsertSalesOrderHeader and ModifySalesOrderHeader have date fields
 // which need to be converted to the appropriate format.  This is
 // a list of such fields used to detect date values and format appropriately.
-$SOH_DateFields = array ('orddate', 'deliverydate',
-				    'datepackingslipprinted',
-				    'quotedate', 'confirmeddate' );
+$SOH_DateFields = array ('orddate', 
+						'deliverydate',
+						'datepackingslipprinted',
+						'quotedate', 
+						'confirmeddate' );
 
 /* Check that the custmerref field is 50 characters or less long */
 	function VerifyCustomerRef($customerref, $i, $Errors) {
@@ -40,7 +39,7 @@ $SOH_DateFields = array ('orddate', 'deliverydate',
  * must be in the same format as the date format specified in the
  * target webERP company */
 	function VerifyOrderDate($orddate, $i, $Errors, $db) {
-		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
+		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
 		$result=api_DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
@@ -74,9 +73,9 @@ $SOH_DateFields = array ('orddate', 'deliverydate',
 
 /* Check that the order type is set up in the weberp database */
 	function VerifyOrderType($ordertype, $i, $Errors, $db) {
-		$Searchsql = 'SELECT COUNT(typeabbrev)
+		$Searchsql = "SELECT COUNT(typeabbrev)
 					 FROM salestypes
-					  WHERE typeabbrev="'.$ordertype.'"';
+					 WHERE typeabbrev='" . $ordertype."'";
 		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
@@ -102,10 +101,10 @@ $SOH_DateFields = array ('orddate', 'deliverydate',
 	}
 
 /* Check that the from stock location is set up in the weberp database */
-	function VerifyFromStockLocation($fromstkloc, $i, $Errors, $db) {
-		$Searchsql = 'SELECT COUNT(loccode)
+	function VerifyFromStockLocation($FromStockLocn, $i, $Errors, $db) {
+		$Searchsql = "SELECT COUNT(loccode)
 					 FROM locations
-					  WHERE loccode="'.$fromstkloc.'"';
+					  WHERE loccode='". $FromStockLocn."'";
 		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
@@ -118,7 +117,7 @@ $SOH_DateFields = array ('orddate', 'deliverydate',
  * must be in the same format as the date format specified in the
  * target webERP company */
 	function VerifyDeliveryDate($deliverydate, $i, $Errors, $db) {
-		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
+		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
 		$result=api_DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
@@ -159,10 +158,10 @@ $SOH_DateFields = array ('orddate', 'deliverydate',
 	}
 
 /* Fetch the next line number */
-	function GetOrderLineNumber($orderno, $i, $Errors, $db) {
-		$linesql = 'SELECT MAX(orderlineno)
+	function GetOrderLineNumber($OrderNo, $i, $Errors, $db) {
+		$linesql = "SELECT MAX(orderlineno)
 					FROM salesorderdetails
-					 WHERE orderno='.$orderno;
+					 WHERE orderno='" . $OrderNo . "'";
 		$lineresult = api_DB_query($linesql, $db);
 		if ($myrow=DB_fetch_row($lineresult)) {
 			return $myrow[0] + 1;
@@ -172,10 +171,10 @@ $SOH_DateFields = array ('orddate', 'deliverydate',
 	}
 
 /* Check that the order header already exists */
-	function VerifyOrderHeaderExists($orderno, $i, $Errors, $db) {
-		$Searchsql = 'SELECT COUNT(orderno)
+	function VerifyOrderHeaderExists($OrderNo, $i, $Errors, $db) {
+		$Searchsql = "SELECT COUNT(orderno)
 					 FROM salesorders
-					  WHERE orderno="'.$orderno.'"';
+					  WHERE orderno='".$OrderNo."'";
 		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
@@ -228,7 +227,7 @@ $SOH_DateFields = array ('orddate', 'deliverydate',
  * must be in the same format as the date format specified in the
  * target webERP company */
 	function VerifyItemDueDate($itemdue, $i, $Errors, $db) {
-		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
+		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
 		$result=api_DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
@@ -345,8 +344,8 @@ $SOH_DateFields = array ('orddate', 'deliverydate',
 			    $value = FormatDateforSQL($value);	// Fix dates
 			$FieldValues.='"'.$value.'", ';
 		}
-		$sql = 'INSERT INTO salesorders ('.substr($FieldNames,0,-2).') '.
-		  'VALUES ('.substr($FieldValues,0,-2).') ';
+		$sql = 'INSERT INTO salesorders ('.substr($FieldNames,0,-2).") 
+					VALUES ('" . substr($FieldValues,0,-2). "')";
 		if (sizeof($Errors)==0) {
 			$result = api_DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
@@ -441,7 +440,7 @@ $SOH_DateFields = array ('orddate', 'deliverydate',
 			    $value = FormatDateforSQL($value);	// Fix dates
 			$sql .= $key.'="'.$value.'", ';
 		}
-		$sql = substr($sql,0,-2).' WHERE orderno="'.$OrderHeader['orderno'].'"';
+		$sql = substr($sql,0,-2). " WHERE orderno='" . $OrderHeader['orderno']. "'";
 		if (sizeof($Errors)==0) {
 			$result = api_DB_Query($sql, $db);
 			echo DB_error_no($db);
@@ -500,8 +499,8 @@ $SOH_DateFields = array ('orddate', 'deliverydate',
 			    $value = FormatDateForSQL($value);
 			$FieldValues.='"'.$value.'", ';
 		}
-		$sql = 'INSERT INTO salesorderdetails ('.substr($FieldNames,0,-2).') '.
-		  'VALUES ('.substr($FieldValues,0,-2).') ';
+		$sql = 'INSERT INTO salesorderdetails (' . substr($FieldNames,0,-2) . ") 
+			VALUES ('" . substr($FieldValues,0,-2) . "')";
 		if (sizeof($Errors)==0) {
 			$result = api_DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
@@ -559,7 +558,7 @@ $SOH_DateFields = array ('orddate', 'deliverydate',
 		}
 		//$sql = substr($sql,0,-2).' WHERE orderno="'.$OrderLine['orderno'].'" and
 			//	" orderlineno='.$OrderLine['orderlineno'];
-		$sql = substr($sql,0,-2).' WHERE orderno="'.$OrderLine['orderno'].'" and stkcode="'.$OrderLine['stkcode'].'"';
+		$sql = substr($sql,0,-2)." WHERE orderno='" . $OrderLine['orderno']."' AND stkcode='" . $OrderLine['stkcode']."'";
 				//echo $sql;
 				//exit;
 		if (sizeof($Errors)==0) {
@@ -589,7 +588,7 @@ $SOH_DateFields = array ('orddate', 'deliverydate',
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql='SELECT * FROM salesorders WHERE orderno="'.$OrderNo.'"';
+		$sql="SELECT * FROM salesorders WHERE orderno='".$OrderNo."'";
 		$result = api_DB_Query($sql, $db);
 		if (sizeof($Errors)==0) {
 			return DB_fetch_array($result);
@@ -613,7 +612,7 @@ $SOH_DateFields = array ('orddate', 'deliverydate',
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql='SELECT * FROM salesorderdetails WHERE orderno="'.$OrderNo.'"';
+		$sql="SELECT * FROM salesorderdetails WHERE orderno='" . $OrderNo . "'";
 		$result = api_DB_Query($sql, $db);
 		if (sizeof($Errors)==0) {
 			return DB_fetch_array($result);

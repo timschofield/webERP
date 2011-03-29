@@ -2,8 +2,6 @@
 
 /* $Id$*/
 
-/* $Revision: 1.8 $ */
-
 // BOMExtendedQty.php - Quantiy Extended Bill of Materials
 //$PageSecurity = 2;
 include('includes/session.inc');
@@ -30,7 +28,7 @@ if (isset($_POST['PrintPDF'])) {
 	$sql = 'CREATE TEMPORARY TABLE passbom (
 				part char(20),
 				extendedqpa double,
-				sortpart text)';
+				sortpart text) DEFAULT CHARSET=utf8';
 	$ErrMsg = _('The SQL to to create passbom failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
@@ -43,7 +41,7 @@ if (isset($_POST['PrintPDF'])) {
 				loccode char(5),
 				effectiveafter date,
 				effectiveto date,
-				quantity double)';
+				quantity double) DEFAULT CHARSET=utf8';
 	$result = DB_query($sql,$db,_('Create of tempbom failed because'));
 	// First, find first level of components below requested assembly
 	// Put those first level parts in passbom, use COMPONENT in passbom
@@ -56,8 +54,9 @@ if (isset($_POST['PrintPDF'])) {
 					  (" . $_POST['Quantity'] . " * bom.quantity) as extendedqpa,
 					   CONCAT(bom.parent,bom.component) AS sortpart
 					  FROM bom
-			  WHERE bom.parent =" . "'" . $_POST['Part'] . "'
-			  AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()";
+			  WHERE bom.parent ='" . $_POST['Part'] . "'
+			  AND bom.effectiveto >= NOW() 
+			  AND bom.effectiveafter <= NOW()";
 	$result = DB_query($sql,$db);
 
 	$levelctr = 2;
@@ -82,8 +81,9 @@ if (isset($_POST['PrintPDF'])) {
 					 bom.effectiveto,
 					 (" . $_POST['Quantity'] . " * bom.quantity) as extendedqpa
 					 FROM bom
-			  WHERE bom.parent =" . "'" . $_POST['Part'] . "'
-			  AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()";
+			  WHERE bom.parent ='" . $_POST['Part'] . "'
+			  AND bom.effectiveto >= NOW() 
+			  AND bom.effectiveafter <= NOW()";
 	$result = DB_query($sql,$db);
 	//echo "</br>sql is $sql</br>";
 	// This while routine finds the other levels as long as $componentctr - the
@@ -114,7 +114,8 @@ if (isset($_POST['PrintPDF'])) {
 					 (bom.quantity * passbom.extendedqpa)
 			 FROM bom,passbom
 			 WHERE bom.parent = passbom.part
-			  AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()";
+			  AND bom.effectiveto >= NOW() 
+			  AND bom.effectiveafter <= NOW()";
 		$result = DB_query($sql,$db);
 
 		$sql = 'DROP TABLE IF EXISTS passbom2';
@@ -129,7 +130,7 @@ if (isset($_POST['PrintPDF'])) {
 		$sql = 'CREATE TEMPORARY TABLE passbom (
 			part char(20),
 			extendedqpa decimal(10,3),
-			sortpart text)';
+			sortpart text) DEFAULT CHARSET=utf8';
 		$result = DB_query($sql,$db);
 
 
@@ -138,13 +139,15 @@ if (isset($_POST['PrintPDF'])) {
 				   (bom.quantity * passbom2.extendedqpa),
 						  CONCAT(passbom2.sortpart,bom.component) AS sortpart
 						  FROM bom,passbom2
-				   WHERE bom.parent = passbom2.part
-					AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()";
+				WHERE bom.parent = passbom2.part
+				AND bom.effectiveto >= NOW() 
+				AND bom.effectiveafter <= NOW()";
 		$result = DB_query($sql,$db);
 
 
-		$sql = 'SELECT COUNT(*) FROM bom,passbom WHERE bom.parent = passbom.part
-		          GROUP BY passbom.part';
+		$sql = 'SELECT COUNT(*) FROM bom, passbom 
+				WHERE bom.parent = passbom.part
+				GROUP BY passbom.part';
 		$result = DB_query($sql,$db);
 
 		$myrow = DB_fetch_row($result);
@@ -156,9 +159,9 @@ if (isset($_POST['PrintPDF'])) {
 	  $title = _('Quantity Extended BOM Listing') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The Quantiy Extended BOM Listing could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<br>$sql";
+	      echo '<br />' . $sql;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -168,11 +171,11 @@ if (isset($_POST['PrintPDF'])) {
 	                   $Right_Margin);
     $sql = "SELECT stockmaster.stockid,stockmaster.description
               FROM stockmaster
-              WHERE stockid = " . "'" . $_POST['Part'] . "'";
+              WHERE stockid = '" . $_POST['Part'] . "'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_array($result,$db);
-	$assembly = $_POST['Part'];
-	$assemblydesc = $myrow['description'];
+	$Assembly = $_POST['Part'];
+	$AssemblyDescription = $myrow['description'];
     $FontSize=8;
 
     $Tot_Val=0;
@@ -209,14 +212,12 @@ if (isset($_POST['PrintPDF'])) {
   	$ListCount = DB_num_rows($result); // UldisN
 	While ($myrow = DB_fetch_array($result,$db)){
 
-
-
 		// Parameters for addTextWrap are defined in /includes/class.pdf.php
 		// 1) X position 2) Y position 3) Width
 		// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
 		// and False to set to transparent
-		$difference = $myrow['quantity'] - ($myrow['qoh'] + $myrow['poqty'] + $myrow['woqty']);
-		if (($_POST['Select'] == 'All') or ($difference > 0)) {
+		$Difference = $myrow['quantity'] - ($myrow['qoh'] + $myrow['poqty'] + $myrow['woqty']);
+		if (($_POST['Select'] == 'All') or ($Difference > 0)) {
 			$YPos -=$line_height;
 			$FontSize=8;
 			// Use to alternate between lines with transparent and painted background
@@ -234,7 +235,7 @@ if (isset($_POST['PrintPDF'])) {
 											  $myrow['decimalplaces']),'right',0,$fill);
 			$pdf->addTextWrap(440,$YPos,40,$FontSize,number_format($myrow['woqty'],
 											  $myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(480,$YPos,50,$FontSize,number_format($difference,
+			$pdf->addTextWrap(480,$YPos,50,$FontSize,number_format($Difference,
 											  $myrow['decimalplaces']),'right',0,$fill);
         }
 		if ($YPos < $Bottom_Margin + $line_height){
@@ -251,32 +252,17 @@ if (isset($_POST['PrintPDF'])) {
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 	                   $Right_Margin);
 	}
-/*  Uldisn:This actually would produce the output
-	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
-*/
-//	if ($len<=20){
-	if ($ListCount == 0) {  //UldisN
-			$title = _('Print Indented BOM Listing Error');
-			include('includes/header.inc');
-			prnMsg(_('There were no items for the selected assembly'),'error');
-			echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
-			include('includes/footer.inc');
-			exit;
+	if ($ListCount == 0) {
+		$title = _('Print Indented BOM Listing Error');
+		include('includes/header.inc');
+		prnMsg(_('There were no items for the selected assembly'),'error');
+		echo "<br /><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		include('includes/footer.inc');
+		exit;
 	} else {
-/*  UldisN
-			header('Content-type: application/pdf');
-			header("Content-Length: " . $len);
-			header('Content-Disposition: inline; filename=Customer_trans.pdf');
-			header('Expires: 0');
-			header('Cache-Control: private, post-check=0, pre-check=0');
-			header('Pragma: public');
-
-			$pdf->Output('BOMExtendedQty', 'I');
-*/
-        $pdf->OutputD($_SESSION['DatabaseName'] . '_Customer_trans_' . date('Y-m-d').'.pdf');//UldisN
-	    $pdf-> __destruct();
-    }
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_BOM_Extended_Qty_' . date('Y-m-d').'.pdf');
+		$pdf->__destruct();
+	}
 
 } else { /*The option to print PDF was not hit so display form */
 
@@ -297,7 +283,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo "<option selected value='yes'>" . _('Print With Alternating Highlighted Lines');
 	echo "<option value='no'>" . _('Plain Print');
 	echo '</select></td></tr>';
-	echo "</table></br></br><div class='centre'><br><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
+	echo "</table></br></br><div class='centre'><br /><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
 
@@ -348,6 +334,4 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$YPos =$YPos - (2*$line_height);
 	$PageNumber++;
 } // End of PrintHeader function
-
-
 ?>

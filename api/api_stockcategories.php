@@ -11,8 +11,8 @@
 /* Verify the category doesnt exist */
 	function VerifyStockCategoryAlreadyExists($StockCategory, $i, $Errors, $db) {
 		$Searchsql = "SELECT count(categoryid)
-				FROM stockcategory
-				WHERE categoryid='".$StockCategory."'";
+				      FROM stockcategory
+				      WHERE categoryid='".$StockCategory."'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]>0) {
@@ -105,7 +105,7 @@
 		foreach ($CategoryDetails as $key => $value) {
 			$sql .= $key.'="'.$value.'", ';
 		}
-		$sql = substr($sql,0,-2).' WHERE categoryid="'.$CategoryDetails['categoryid'].'"';
+		$sql = substr($sql,0,-2)." WHERE categoryid='".$CategoryDetails['categoryid']."'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
 			echo DB_error_no($db);
@@ -133,7 +133,7 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql='SELECT * FROM stockcategory WHERE categoryid="'.$Categoryid.'"';
+		$sql="SELECT * FROM stockcategory WHERE categoryid='".$Categoryid."'";
 		$result = DB_Query($sql, $db);
 		if (sizeof($Errors)==0) {
 			return DB_fetch_array($result);
@@ -154,7 +154,7 @@
 		}
 		$sql='SELECT categoryid, categorydescription
 			FROM stockcategory
-			WHERE '.$Field.' LIKE "%'.$Criteria.'%"';
+			WHERE '.$Field." LIKE '%".$Criteria."%'";
 		$result = DB_Query($sql, $db);
 		$i=0;
 		$CategoryList = array();
@@ -165,7 +165,7 @@
 		}
 		return $CategoryList;
 	}
-	
+
 	function StockCatPropertyList($Label, $Category, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
@@ -173,13 +173,15 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql='select stockitemproperties.stockid, description from stockitemproperties
-		 inner join stockcatproperties 
-		 on stockitemproperties.stkcatpropid=stockcatproperties.stkcatpropid
-		 inner join stockmaster 
-		 on stockitemproperties.stockid=stockmaster.stockid 
-		 where stockitemproperties.value like "'.$Label.'" and 
-		 stockcatproperties.categoryid="'.$Category.'"';
+		$sql="SELECT stockitemproperties.stockid,
+                     description
+              FROM stockitemproperties
+		      INNER JOIN stockcatproperties
+		      ON stockitemproperties.stkcatpropid=stockcatproperties.stkcatpropid
+		      INNER JOIN stockmaster
+		      ON stockitemproperties.stockid=stockmaster.stockid
+		      WHERE stockitemproperties.value like '".$Label."'
+              AND stockcatproperties.categoryid='".$Category."'";
 		$result = DB_Query($sql, $db);
 		$i=0;
 		$ItemList = array();
@@ -190,8 +192,8 @@
 			$i++;
 		}
 		return $ItemList;
-	}				
-	
+	}
+
 	function GetStockCatProperty($Property, $StockID, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
@@ -199,15 +201,16 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql='SELECT value FROM stockitemproperties WHERE
-			stockid="'.$StockID.'" AND stkcatpropid='.$Property;
+		$sql="SELECT value FROM stockitemproperties 
+               WHERE stockid='".$StockID."' 
+               AND stkcatpropid='".$Property . "'";
 		$result = DB_Query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$Errors[0]=0;
 		$Errors[1]=$myrow[0];
 		return $Errors;
-	}				
-	
+	}
+
 	/* This function returns a list of the stock categories setup on webERP  */
 
 	function GetStockCategoryList($user, $password) {

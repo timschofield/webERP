@@ -34,7 +34,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT * FROM taxgroups WHERE taxgroupid="'.$taxgroup.'"';
+		$sql = "SELECT * FROM taxgroups WHERE taxgroupid='".$taxgroup."'";
 		$result = DB_query($sql, $db);
 		return DB_fetch_array($result);
 	}

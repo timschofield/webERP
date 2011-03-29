@@ -71,7 +71,7 @@
 		}
 		if (sizeof($Errors)==0) {
 			$sql = 'INSERT INTO chartmaster ('.substr($FieldNames,0,-2).') '.
-		  		'VALUES ('.substr($FieldValues,0,-2).') ';
+		  		"VALUES ('".substr($FieldValues,0,-2)."') ";
 			$result = DB_Query($sql, $db);
 			$sql='INSERT INTO chartdetails (accountcode,
 							period)
@@ -99,9 +99,12 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'select chartmaster.accountcode,chartmaster.accountname,accountgroups.pandl ' .
-				'from chartmaster left join accountgroups on ' .
-				'chartmaster.group_=accountgroups.groupname ORDER BY accountcode';
+		$sql = 'SELECT chartmaster.accountcode,
+					chartmaster.accountname,
+					accountgroups.pandl 
+				FROM chartmaster INNER JOIN accountgroups 
+				ON chartmaster.group_=accountgroups.groupname 
+				ORDER BY accountcode';
 		$result = DB_query($sql, $db);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
@@ -118,14 +121,14 @@
  * general ledger code.
  */
 
-	function GetGLAccountDetails($accountcode, $user, $password) {
+	function GetGLAccountDetails($AccountCode, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT * FROM chartmaster WHERE accountcode="'.$accountcode.'"';
+		$sql = "SELECT * FROM chartmaster WHERE accountcode='".$AccountCode."'";
 		$result = DB_query($sql, $db);
 		return DB_fetch_array($result);
 	}

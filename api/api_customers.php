@@ -7,9 +7,9 @@
 		if ((strlen($DebtorNumber)<1) or (strlen($DebtorNumber)>10)) {
 			$Errors[$i] = IncorrectDebtorNumberLength;
 		}
-		$Searchsql = 'SELECT count(debtorno)
-				FROM debtorsmaster
-				WHERE debtorno="'.$DebtorNumber.'"';
+		$Searchsql = "SELECT count(debtorno)
+  				     FROM debtorsmaster
+				     WHERE debtorno='".$DebtorNumber."'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] != 0) {
@@ -21,8 +21,8 @@
 /* Check that the debtor number exists*/
 	function VerifyDebtorExists($DebtorNumber, $i, $Errors, $db) {
 		$Searchsql = "SELECT count(debtorno)
-				FROM debtorsmaster
-				WHERE debtorno='".$DebtorNumber."'";
+				     FROM debtorsmaster
+				     WHERE debtorno='".$DebtorNumber."'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]==0) {
@@ -49,9 +49,9 @@
 
 /* Check that the currency code is set up in the weberp database */
 	function VerifyCurrencyCode($CurrCode, $i, $Errors, $db) {
-		$Searchsql = 'SELECT COUNT(currabrev)
+		$Searchsql = "SELECT COUNT(currabrev)
 					  FROM currencies
-					  WHERE currabrev="'.$CurrCode.'"';
+					  WHERE currabrev='".$CurrCode."'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
@@ -83,9 +83,9 @@
 
 /* Check that the hold reason is set up in the weberp database */
 	function VerifyHoldReason($HoldReason , $i, $Errors, $db) {
-		$Searchsql = 'SELECT COUNT(reasoncode)
+		$Searchsql = "SELECT COUNT(reasoncode)
 					 FROM holdreasons
-					  WHERE reasoncode="'.$HoldReason.'"';
+					  WHERE reasoncode='".$HoldReason."'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
@@ -96,9 +96,9 @@
 
 /* Check that the payment terms are set up in the weberp database */
 	function VerifyPaymentTerms($PaymentTerms , $i, $Errors, $db) {
-		$Searchsql = 'SELECT COUNT(termsindicator)
+		$Searchsql = "SELECT COUNT(termsindicator)
 					 FROM paymentterms
-					  WHERE termsindicator="'.$PaymentTerms.'"';
+					  WHERE termsindicator='".$PaymentTerms."'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
@@ -230,9 +230,9 @@
 
 /* Check that the customer type is set up in the weberp database */
 	function VerifyCustomerType($debtortype , $i, $Errors, $db) {
-		$Searchsql = 'SELECT COUNT(typeid)
+		$Searchsql = "SELECT COUNT(typeid)
 					 FROM debtortype
-					  WHERE typeid="'.$debtortype.'"';
+					  WHERE typeid='".$debtortype."'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
@@ -261,8 +261,8 @@
 		foreach ($CustomerDetails as $key => $value) {
 			$CustomerDetails[$key] = DB_escape_string($value);
 		}
-		$autonumbersql='SELECT confvalue FROM config
-						 WHERE confname="AutoDebtorNo"';
+		$autonumbersql="SELECT confvalue FROM config
+						 WHERE confname='AutoDebtorNo'";
 		$autonumberresult=DB_query($autonumbersql, $db);
 		$autonumber=DB_fetch_row($autonumberresult);
 		if ($autonumber[0]==0) {
@@ -485,7 +485,7 @@
 		foreach ($CustomerDetails as $key => $value) {
 			$sql .= $key.'="'.$value.'", ';
 		}
-		$sql = substr($sql,0,-2).' WHERE debtorno="'.$CustomerDetails['debtorno'].'"';
+		$sql = substr($sql,0,-2)." WHERE debtorno='".$CustomerDetails['debtorno']."'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
@@ -512,7 +512,7 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql='SELECT * FROM debtorsmaster WHERE debtorno="'.$DebtorNumber.'"';
+		$sql="SELECT * FROM debtorsmaster WHERE debtorno='".$DebtorNumber."'";
 		$result = DB_Query($sql, $db);
 		$Errors[0] = 0; // None found.
 		$Errors[1] = DB_fetch_array($result);
@@ -532,7 +532,7 @@
 		}
 		$sql='SELECT debtorno
 			FROM debtorsmaster
-			WHERE '.$Field.' LIKE "%'.$Criteria.'%"';
+			WHERE '.$Field." LIKE '%".$Criteria."%'";
 		$result = DB_Query($sql, $db);
 		$DebtorList = array(0);	    // First element: no errors
 		while ($myrow=DB_fetch_array($result)) {

@@ -34,7 +34,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT * FROM debtortype WHERE typeid="'.$typeid.'"';
+		$sql = "SELECT * FROM debtortype WHERE typeid='".$typeid."'";
 		$result = DB_query($sql, $db);
 		return DB_fetch_array($result);
 	}

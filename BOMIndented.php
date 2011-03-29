@@ -2,10 +2,8 @@
 
 /* $Id$*/
 
-/* $Revision: 1.5 $ */
-
 // BOMIndented.php - Indented Bill of Materials
-//$PageSecurity = 2;
+
 include('includes/session.inc');
 
 if (isset($_POST['PrintPDF'])) {
@@ -25,7 +23,7 @@ if (isset($_POST['PrintPDF'])) {
 	$result = DB_query($sql,$db);
 	$sql = 'CREATE TEMPORARY TABLE passbom (
 				part char(20),
-				sortpart text)';
+				sortpart text) DEFAULT CHARSET=utf8';
 	$ErrMsg = _('The SQL to create passbom failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
@@ -38,7 +36,7 @@ if (isset($_POST['PrintPDF'])) {
 				loccode char(5),
 				effectiveafter date,
 				effectiveto date,
-				quantity double)';
+				quantity double) DEFAULT CHARSET=utf8';
 	$result = DB_query($sql,$db,_('Create of tempbom failed because'));
 	// First, find first level of components below requested assembly
 	// Put those first level parts in passbom, use COMPONENT in passbom
@@ -50,8 +48,9 @@ if (isset($_POST['PrintPDF'])) {
 			   SELECT bom.component AS part,
 					  CONCAT(bom.parent,bom.component) AS sortpart
 			  FROM bom
-			  WHERE bom.parent =" . "'" . $_POST['Part'] . "'
-			  AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()";
+			  WHERE bom.parent ='" . $_POST['Part'] . "'
+			  AND bom.effectiveto >= NOW() 
+			  AND bom.effectiveafter <= NOW()";
 	$result = DB_query($sql,$db);
 
 	$levelctr = 2;
@@ -77,7 +76,8 @@ if (isset($_POST['PrintPDF'])) {
 					 bom.quantity
 			  FROM bom
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
-			  AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()";
+			  AND bom.effectiveto >= NOW() 
+			  AND bom.effectiveafter <= NOW()";
 	$result = DB_query($sql,$db);
 	//echo "</br>sql is $sql</br>";
 	// This while routine finds the other levels as long as $componentctr - the
@@ -107,7 +107,7 @@ if (isset($_POST['PrintPDF'])) {
 						 bom.effectiveafter,
 						 bom.effectiveto,
 						 bom.quantity
-				 FROM bom,passbom
+				 FROM bom, passbom
 				 WHERE bom.parent = passbom.part
 				  AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()";
 			$result = DB_query($sql,$db);
@@ -123,16 +123,17 @@ if (isset($_POST['PrintPDF'])) {
 
 			$sql = 'CREATE TEMPORARY TABLE passbom (
 				part char(20),
-				sortpart text)';
+				sortpart text) DEFAULT CHARSET=utf8';
 			$result = DB_query($sql,$db);
 
 
-			$sql = "INSERT INTO passbom (part, sortpart)
+			$sql = 'INSERT INTO passbom (part, sortpart)
 					   SELECT bom.component AS part,
 							  CONCAT(passbom2.sortpart,bom.component) AS sortpart
 					   FROM bom,passbom2
 					   WHERE bom.parent = passbom2.part
-						AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()";
+						AND bom.effectiveto >= NOW() 
+						AND bom.effectiveafter <= NOW()';
 			$result = DB_query($sql,$db);
 
 
@@ -181,9 +182,9 @@ if (isset($_POST['PrintPDF'])) {
 
 	// $fill is used to alternate between lines with transparent and painted background
 	$fill = false;
-    $pdf->SetFillColor(224,235,255);
+	$pdf->SetFillColor(224,235,255);
 
-    $ListCount = DB_num_rows($result); // UldisN
+	$ListCount = DB_num_rows($result); 
 
 	while ($myrow = DB_fetch_array($result,$db)){
 
@@ -239,19 +240,8 @@ if (isset($_POST['PrintPDF'])) {
 			include('includes/footer.inc');
 			exit;
 	} else {
-	        /* UldisN
-			header('Content-type: application/pdf');
-			header("Content-Length: " . $len);
-			header('Content-Disposition: inline; filename=Customer_trans.pdf');
-			header('Expires: 0');
-			header('Cache-Control: private, post-check=0, pre-check=0');
-			header('Pragma: public');
-
-			$pdf->Output('BOMIndented.pdf', 'I');
-            */
-            $pdf->OutputD($_SESSION['DatabaseName'] . '_Customer_trans_' . date('Y-m-d').'.pdf');//UldisN
-          	$pdf-> __destruct();
-
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_Customer_trans_' . date('Y-m-d').'.pdf');//UldisN
+		$pdf->__destruct();
 	}
 
 } else { /*The option to print PDF was not hit so display form */
@@ -332,6 +322,5 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$PageNumber++;
 
 } // End of PrintHeader function
-
 
 ?>

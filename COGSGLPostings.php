@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
 
 	$result = DB_query($sql,$db);
 	prnMsg ($msg,'info');
-	echo '<br>';
+	echo '<br />';
 	unset ($SelectedCOGSPostingID);
 
 } elseif (isset($_GET['delete'])) {
@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
 	$sql="DELETE FROM cogsglpostings WHERE id='".$SelectedCOGSPostingID."'";
 	$result = DB_query($sql,$db);
 	prnMsg( _('The cost of sales posting code record has been deleted'),'info');
-	echo '<br>';
+	echo '<br />';
 	unset ($SelectedCOGSPostingID);
 
 }
@@ -90,11 +90,11 @@ if (!isset($SelectedCOGSPostingID)) {
 		$ShowLivePostingRecords = false;
 		prnMsg (_('The following cost of sales posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
 		echo '<table class=selection>';
-		echo "<tr><th>" . _('Area') . "</th>
-				<th>" . _('Stock Category') . "</th>
-				<th>" . _('Sales Type') . "</th>
-				<th>" . _('COGS Account') . "</th>
-			</tr>";
+		echo '<tr><th>' . _('Area') . '</th>
+				<th>' . _('Stock Category') . '</th>
+				<th>' . _('Sales Type') . '</th>
+				<th>' . _('COGS Account') . '</th>
+			</tr>';
 		$k=0; //row colour counter
 
 		while ($myrow = DB_fetch_row($result)) {
@@ -116,9 +116,9 @@ if (!isset($SelectedCOGSPostingID)) {
 				$myrow[2],
 				$myrow[3],
 				$myrow[4],
-				$_SERVER['PHP_SELF'] . '?' . SID . '&',
+				$_SERVER['PHP_SELF'] . '?',
 				$myrow[0],
-				$_SERVER['PHP_SELF']. '?' . SID . '&',
+				$_SERVER['PHP_SELF']. '?',
 				$myrow[0]);
 		}//end while
 		echo '</table>';
@@ -146,13 +146,13 @@ if (!isset($SelectedCOGSPostingID)) {
 					sequenceintb
 				) VALUES (
 					'Sales',
-					1,
-					1,
-					10)";
+					'1',
+					'1',
+					'10')";
 
 			$result = DB_query($sql,$db);
 		}
-		$sql = 'SELECT accountcode FROM chartmaster WHERE accountcode =1';
+		$sql = "SELECT accountcode FROM chartmaster WHERE accountcode ='1' ";
 		$result = DB_query($sql,$db);
 		if (DB_num_rows($result)==0){
 		/* account number 1 is not used, so insert a new account */
@@ -162,7 +162,7 @@ if (!isset($SelectedCOGSPostingID)) {
 							group_
 							)
 					VALUES (
-							1,
+							'1',
 							'Default Sales/Discounts',
 							'Sales'
 							)";
@@ -177,7 +177,7 @@ if (!isset($SelectedCOGSPostingID)) {
 				VALUES ('AN',
 						'ANY',
 						'AN',
-						1)";
+						'1')";
 		$result = DB_query($sql,$db);
 	}
 
@@ -194,14 +194,11 @@ if (!isset($SelectedCOGSPostingID)) {
 		$result = DB_query($sql,$db);
 
 		echo '<table class=selection>';
-		echo '<tr><th>' . _('Area') .
-			'</th><th>' . _('Stock Category') .
-			'</th><th>' . _('Sales Type') .
-			'</th><th>' . _('GL Account') .
-			'</th></tr>';
-
+		echo '<tr><th>' . _('Area') . '</th>
+				<th>' . _('Stock Category') . '</th>
+				<th>' . _('Sales Type') . '</th>
+				<th>' . _('GL Account') . '</th></tr>';
 		$k = 0;
-
 		while ($myrow = DB_fetch_row($result)) {
 			if ($k==1){
 				echo '<tr class="EvenTableRows">';
@@ -222,9 +219,9 @@ if (!isset($SelectedCOGSPostingID)) {
 			$myrow[2],
 			$myrow[3],
 			$myrow[4],
-			$_SERVER['PHP_SELF'] . '?' . SID . '&',
+			$_SERVER['PHP_SELF'] . '?',
 			$myrow[0],
-			$_SERVER['PHP_SELF'] . '?' . SID . '&',
+			$_SERVER['PHP_SELF'] . '?',
 			$myrow[0]);
 
 		}//END WHILE LIST LOOP
@@ -234,12 +231,12 @@ if (!isset($SelectedCOGSPostingID)) {
 //end of ifs and buts!
 
 if (isset($SelectedCOGSPostingID)) {
-	echo "<div class='centre'><a href=" . $_SERVER['PHP_SELF'] .">" . _('Show all cost of sales posting records') . "</a></div>";
+	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] .'">' . _('Show all cost of sales posting records') . '</a></div>';
 }
 
-echo "<p>";
+echo '<p />';
 
-echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . ">";
+echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedCOGSPostingID)) {
@@ -265,20 +262,23 @@ if (isset($SelectedCOGSPostingID)) {
 }  //end of if $SelectedCOGSPostingID only do the else when a new record is being entered
 
 
-$sql = "SELECT areacode,
+$sql = 'SELECT areacode,
 		areadescription
-	FROM areas";
+	FROM areas';
 $result = DB_query($sql,$db);
 
-echo "<table class=selection><tr><td>" . _('Area') . ":</td><td><select tabindex=1 name='Area'><option value='AN'>" . _('Any Other');
+echo '<table class=selection>
+		<tr><td>' . _('Area') . ':</td>
+			<td><select tabindex=1 name="Area">
+				<option value="AN">' . _('Any Other') . '</option>';
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['Area']) and $myrow['areacode']==$_POST['Area']) {
-		echo "<option selected VALUE='";
+		echo '<option selected VALUE="';
 	} else {
-		echo "<option VALUE='";
+		echo '<option VALUE="';
 	}
-	echo $myrow['areacode'] . "'>" . $myrow['areadescription'];
+	echo $myrow['areacode'] . '">' . $myrow['areadescription'] . '</option>';
 
 } //end while loop
 DB_free_result($result);
@@ -286,16 +286,18 @@ DB_free_result($result);
 $sql = 'SELECT categoryid, categorydescription FROM stockcategory';
 $result = DB_query($sql,$db);
 
-echo "</select></td></tr><tr><td>" . _('Stock Category') . ":</td><td><select tabindex=2 name='StkCat'>
-		<option VALUE='ANY'>" . _('Any Other');
+echo '</select></td></tr>
+		<tr><td>' . _('Stock Category') . ':</td>
+			<td><select tabindex=2 name="StkCat">
+				<option VALUE="ANY">' . _('Any Other') . '</option>';
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['StkCat']) and $myrow["categoryid"]==$_POST['StkCat']) {
-		echo "<option selected VALUE='";
+		echo '<option selected VALUE="';
 	} else {
-		echo "<option VALUE='";
+		echo '<option VALUE="';
 	}
-	echo $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
+	echo $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 
 } //end while loop
 
@@ -304,23 +306,27 @@ DB_free_result($result);
 $sql = 'SELECT typeabbrev, sales_type FROM salestypes';
 $result = DB_query($sql,$db);
 
-echo "</select></td></tr><tr><td>" . _('Sales Type') . " / " . _('Price List') . ":</td>
-	<td><select tabindex=3 name='SalesType'><option VALUE='AN'>" . _('Any Other');
+echo '</select></td></tr>
+		<tr><td>' . _('Sales Type') . ' / ' . _('Price List') . ':</td>
+		<td><select tabindex=3 name="SalesType">
+			<option VALUE="AN">' . _('Any Other') . '</option>';
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['SalesType']) and $myrow['typeabbrev']==$_POST['SalesType']) {
-		echo "<option selected VALUE='";
+		echo '<option selected VALUE="';
 	} else {
-		echo "<option VALUE='";
+		echo '<option VALUE="';
 	}
-	echo $myrow["typeabbrev"] . "'>" . $myrow['sales_type'];
+	echo $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 
 } //end while loop
 
-echo "</select></td></tr><tr><td>" . _('Post to GL account') . ":</td><td><select tabindex=4 name='GLCode'>";
+echo '</select></td></tr>
+		<tr><td>' . _('Post to GL account') . ':</td>
+			<td><select tabindex="4" name="GLCode">';
 
 DB_free_result($result);
-$sql = "SELECT chartmaster.accountcode,
+$sql = 'SELECT chartmaster.accountcode,
 		chartmaster.accountname
 	FROM chartmaster,
 		accountgroups
@@ -328,23 +334,23 @@ $sql = "SELECT chartmaster.accountcode,
 	AND accountgroups.pandl=1
 	ORDER BY accountgroups.sequenceintb,
 		chartmaster.accountcode,
-		chartmaster.accountname";
+		chartmaster.accountname';
 $result = DB_query($sql,$db);
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['GLCode']) and $myrow['accountcode']==$_POST['GLCode']) {
-		echo "<option selected VALUE='";
+		echo '<option selected VALUE="';
 	} else {
-		echo "<option VALUE='";
+		echo '<option VALUE="';
 	}
-	echo $myrow['accountcode'] . "'>" . $myrow['accountcode']  . ' - '  . $myrow['accountname'];
+	echo $myrow['accountcode'] . '">' . $myrow['accountcode']  . ' - '  . $myrow['accountname'] . '</option>';
 
 } //end while loop
 
 DB_free_result($result);
 
-echo "</select></td></tr></table>";
-echo "<br><div class='centre'><input tabindex=5 type='Submit' name='submit' value=" . _('Enter Information') . "></form></div>";
+echo '</select></td></tr></table>';
+echo '<br /><div class="centre"><input tabindex="5" type="Submit" name="submit" value="' . _('Enter Information') . '"></form></div>';
 
 include('includes/footer.inc');
 ?>

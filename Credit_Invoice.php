@@ -257,28 +257,28 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/c
 
 if (!isset($_POST['ProcessCredit'])) {
 
-	echo "<form action='" . $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
+	echo '<form action="' . $_SERVER['PHP_SELF'] .'" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
-	echo "<table cellpadding=2 colspan=7 class=selection><tr>";
-	echo "<tr><th colspan=13>";
+	echo '<table cellpadding="2" colspan="7" class="selection"><tr>';
+	echo '<tr><th colspan="13">';
 	echo '<div class="centre"><font color=blue size=4><b>' . _('Credit Invoice') . ' ' . $_SESSION['ProcessingCredit'] . '</b>
 		<b>'.' - ' . $_SESSION['CreditItems']->CustomerName . '</b></font>
-		<font size=3 color=blue> - ' . _('Credit Note amounts stated in') . ' ' . $_SESSION['CreditItems']->DefaultCurrency . "</div></font>";
-	echo "</th></tr>";
-	echo "<th>" . _('Item Code') . "</th>
-		<th>" . _('Item Description') . "</th>
-		<th>" . _('Invoiced') . "</th>
-		<th>" . _('Units') . "</th>
-		<th>" . _('Credit') . '<br>' . _('Quantity') . "</th>
-		<th>" . _('Price') . "</th>
-		<th>" . _('Discount') . ' %' . "</th>
-		<th>" . _('Total') . '<br>' . _('Excl Tax') . "</th>
-		<th>" . _('Tax Authority') . "</th>
-		<th>" . _('Tax') . ' %' . "</th>
-		<th>" . _('Tax') . '<br>' . _('Amount') . "</th>
-		<th>" . _('Total') . '<br>' . _('Incl Tax') . "</th></tr>";
+		<font size=3 color=blue> - ' . _('Credit Note amounts stated in') . ' ' . $_SESSION['CreditItems']->DefaultCurrency . '</div></font>';
+	echo '</th></tr>';
+	echo '<th>' . _('Item Code') . '</th>
+			<th>' . _('Item Description') . '</th>
+			<th>' . _('Invoiced') . '</th>
+			<th>' . _('Units') . '</th>
+			<th>' . _('Credit') . '<br />' . _('Quantity') . '</th>
+			<th>' . _('Price') . '</th>
+			<th>' . _('Discount') . ' %' . '</th>
+			<th>' . _('Total') . '<br />' . _('Excl Tax') . '</th>
+			<th>' . _('Tax Authority') . '</th>
+			<th>' . _('Tax') . ' %' . '</th>
+			<th>' . _('Tax') . '<br />' . _('Amount') . '</th>
+			<th>' . _('Total') . '<br />' . _('Incl Tax') . '</th></tr>';
 
 	$_SESSION['CreditItems']->total = 0;
 	$_SESSION['CreditItems']->totalVolume = 0;

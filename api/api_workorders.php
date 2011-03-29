@@ -16,9 +16,9 @@
 
 /* Check that the stock location is set up in the weberp database */
 	function VerifyStockLocation($location, $i, $Errors, $db) {
-		$Searchsql = 'SELECT COUNT(loccode)
+		$Searchsql = "SELECT COUNT(loccode)
 					 FROM locations
-					  WHERE loccode="'.$location.'"';
+					  WHERE loccode='" . $location . "'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
@@ -44,7 +44,7 @@
 	}
 
 	function VerifyRequiredByDate($RequiredByDate, $i, $Errors, $db) {
-		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
+		$sql="select confvalue from config where confname='DefaultDateFormat'";
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
@@ -77,7 +77,7 @@
 	}
 
 	function VerifyStartDate($StartDate, $i, $Errors, $db) {
-		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
+		$sql="select confvalue from config where confname='DefaultDateFormat'";
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
@@ -145,7 +145,7 @@
 	}
 
 	function VerifyBatch($batch, $stockid, $location, $i, $Errors, $db) {
-		$sql='SELECT controlled, serialised FROM stockmaster WHERE stockid="'.$stockid.'"';
+		$sql="SELECT controlled, serialised FROM stockmaster WHERE stockid='".$stockid."'";
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_row($result);
 		if ($myrow[0]!=1) {
@@ -155,8 +155,10 @@
 			$Errors[$i] = ItemSerialised;
 			return $Errors;
 		}
-		$sql='SELECT quantity FROM stockserialitems WHERE stockid="'.$stockid.
-			'" and loccode="'.$location.'" and serialno="'.$batch.'"';
+		$sql="SELECT quantity FROM stockserialitems 
+              WHERE stockid='".$stockid. "' 
+              AND loccode='".$location."' 
+              AND serialno='".$batch."'";
 		$result=DB_query($sql, $db);
 		if (DB_num_rows($result)==0) {
 			$Errors[$i] = BatchNumberDoesntExist;
@@ -286,27 +288,64 @@
 			$cost=$itemdetails[1]['materialcost']+$itemdetails[1]['labourcost']+$itemdetails[1]['overheadcost'];
 			$TransactionNo=GetNextTransactionNo(28, $db);
 
-			$stockmovesql='INSERT INTO stockmoves (stockid, type, transno, loccode, trandate, prd, reference, qty, newqoh,
-				price, standardcost)
-				VALUES ("'.$StockID.'", 28,'.$TransactionNo.',"'.$Location.'","'.$TranDate.
-				'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
-				',"'.$WONumber.'",'.$Quantity.','.$newqoh.','.$cost.','.$cost.')';
-			$locstocksql='UPDATE locstock SET quantity = quantity + '.$Quantity.' WHERE loccode="'.
-				$Location.'" AND stockid="'.$StockID.'"';
-			$glupdatesql1='INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
-						VALUES (28,'.$TransactionNo.',"'.$TranDate.
-						'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
-						','.$wipglact.','.$cost*-$Quantity.
-						',"'.$StockID.' x '.$Quantity.' @ '.$cost.'")';
-			$glupdatesql2='INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
-						VALUES (28,'.$TransactionNo.',"'.$TranDate.
-						'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
-						','.$stockact.','.$cost*$Quantity.
-						',"'.$StockID.' x '.$Quantity.' @ '.$cost.'")';
-			$systypessql = 'UPDATE systypes set typeno='.$TransactionNo.' where typeid=28';
-			$batchsql='UPDATE stockserialitems SET quantity=quantity-'.$Quantity.
-				' WHERE stockid="'.$StockID.'" AND loccode="'.$Location.'" AND serialno="'.$Batch.'"';
-			$costsql = 'UPDATE workorders SET costissued=costissued+'.$cost.' WHERE wo='.$WONumber;
+			$stockmovesql="INSERT INTO stockmoves (stockid,
+                                                   type,
+                                                   transno,
+                                                   loccode,
+                                                   trandate,
+                                                   prd,
+                                                   reference,
+                                                   qty,
+                                                   newqoh,
+				                                   price,
+                                                   standardcost)
+                                   		VALUES ('".$StockID."', 
+                                                28,
+                                                '" .$TransactionNo. "',
+                                                '".$Location."',
+                                                '" .$TranDate."',
+                                                '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db). "',
+                                                '".$WONumber."',
+                                                '".$Quantity."',
+                                                '".$newqoh."',
+                                                '".$cost."',
+                                                '".$cost."')";
+			$locstocksql='UPDATE locstock SET quantity = quantity + '.$Quantity."
+                           WHERE loccode='". $Location."' 
+                           AND stockid='".$StockID."'";
+			$glupdatesql1="INSERT INTO gltrans (type,
+                                               typeno,
+                                               trandate,
+                                               periodno,
+                                               account,
+                                               amount,
+                                               narrative)
+						               VALUES (28,
+                                              '".$TransactionNo. "',
+                                              '".$TranDate."',
+                                              '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db)."',
+                                              '".$wipglact."',
+                                              '".$cost*-$Quantity."',
+                                              '".$StockID.' x '.$Quantity.' @ '.$cost."')";
+			$glupdatesql2="INSERT INTO gltrans (type,
+                                                typeno,
+                                                trandate,
+                                                periodno,
+                                                account,
+                                                amount,
+                                                narrative)
+                                        VALUES (28,
+                                        '".$TransactionNo."',
+                                        '".$TranDate."',
+                                        '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db)."',
+                                        '".$stockact."',
+                                        '".$cost*$Quantity."',
+                                        '".$StockID.' x '.$Quantity.' @ '.$cost."')";
+			$systypessql = "UPDATE systypes set typeno='".$TransactionNo."' where typeid=28";
+			$batchsql="UPDATE stockserialitems SET quantity=quantity-" . $Quantity.
+				              " WHERE stockid='".$StockID."' 
+                              AND loccode='".$Location."' AND serialno='".$Batch."'";
+			$costsql = "UPDATE workorders SET costissued=costissued+".$cost." WHERE wo='".$WONumber . "'";
 
 			DB_Txn_Begin($db);
 			DB_query($stockmovesql, $db);
@@ -352,29 +391,64 @@
 			$newqoh = $Quantity + $balance;
 			$wipglact=GetCategoryGLCode($itemdetails['categoryid'], 'wipact', $db);
 			$stockact=GetCategoryGLCode($itemdetails['categoryid'], 'stockact', $db);
-			$costsql='SELECT costissued FROM workorders WHERE wo='.$WONumber;
+			$costsql="SELECT costissued FROM workorders WHERE wo='".$WONumber . "'";
 			$costresult=DB_query($costsql);
 			$myrow=DB_fetch_row($costresult);
 			$cost=$myrow[0];
 			$TransactionNo=GetNextTransactionNo(26, $db);
-			$stockmovesql='INSERT INTO stockmoves (stockid, type, transno, loccode, trandate, prd, reference, qty, newqoh,
-				price, standardcost)
-				VALUES ("'.$StockID.'", 26,'.$TransactionNo.',"'.$Location.'","'.$TranDate.
-				'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
-				',"'.$WONumber.'",'.$Quantity.','.$newqoh.','.$cost.','.$cost.')';
-			$locstocksql='UPDATE locstock SET quantity = quantity + '.$Quantity.' WHERE loccode="'.
-				$Location.'" AND stockid="'.$StockID.'"';
-			$glupdatesql1='INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
-						VALUES (26,'.$TransactionNo.',"'.$TranDate.
-						'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
-						','.$wipglact.','.$cost*$Quantity.
-						',"'.$StockID.' x '.$Quantity.' @ '.$cost.'")';
-			$glupdatesql2='INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
-						VALUES (26,'.$TransactionNo.',"'.$TranDate.
-						'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
-						','.$stockact.','.$cost*-$Quantity.
-						',"'.$StockID.' x '.$Quantity.' @ '.$cost.'")';
-			$systypessql = 'UPDATE systypes set typeno='.$TransactionNo.' where typeid=26';
+			$stockmovesql="INSERT INTO stockmoves (stockid,
+                                                   type,
+                                                   transno,
+                                                   loccode,
+                                                   trandate,
+                                                   prd,
+                                                   reference,
+                                                   qty,
+                                                   newqoh,
+                                                   price,
+                                                   standardcost)
+                                      	VALUES ('".$StockID."',
+                                                 '26',
+                                                '".$TransactionNo."',
+                                                '".$Location."',
+                                                '".$TranDate."',
+                                                '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db)."',
+                                                '".$WONumber."',
+                                                '".$Quantity."',
+                                                '".$newqoh."',
+                                                '".$cost."',
+                                                '".$cost."')";
+			$locstocksql="UPDATE locstock SET quantity = quantity + ".$Quantity."
+                                 WHERE loccode='". $Location."'
+                                 AND stockid='".$StockID."'";
+			$glupdatesql1="INSERT INTO gltrans (type,
+                                               typeno,
+                                               trandate,
+                                               periodno,
+                                               account,
+                                               amount,
+                                               narrative)
+                                		VALUES (26,
+                                               '".$TransactionNo."',
+                                               '".$TranDate. "',
+                                               '" .GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db)."',
+                                               '".$wipglact."',
+                                               '".$cost*$Quantity. "',
+                                               '".$StockID.' x '.$Quantity.' @ '.$cost."')";
+			$glupdatesql2="INSERT INTO gltrans (type, 
+                                                typeno, 
+                                                trandate, 
+                                                periodno, 
+                                                account, 
+                                                amount, 
+                                                narrative)
+                                    	VALUES (26,
+                                               '".$TransactionNo."',
+                                               '".$TranDate."',
+                                               '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db)."',
+                                               '".$stockact.','.$cost*-$Quantity. "',
+                                               '".$StockID.' x '.$Quantity.' @ '.$cost."')";
+			$systypessql = "UPDATE systypes set typeno='".$TransactionNo."' where typeid=26";
 			DB_Txn_Begin($db);
 			DB_query($stockmovesql, $db);
 			DB_query($locstocksql, $db);
@@ -398,9 +472,9 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql='SELECT wo
-			FROM woitems
-			WHERE '.$Field.' LIKE "%'.$Criteria.'%"';
+		$sql="SELECT wo
+			  FROM woitems
+			  WHERE ".$Field." LIKE '%".$Criteria."%'";
 		$result = DB_Query($sql, $db);
 		$i=0;
 		$WOList = array();

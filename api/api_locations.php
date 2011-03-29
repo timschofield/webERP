@@ -12,9 +12,9 @@
 		if ((strlen($LocationCode)<1) or (strlen($LocationCode)>5)) {
 			$Errors[$i] = IncorrectLocationCodeLength;
 		}
-		$Searchsql = 'SELECT count(loccode)
+		$Searchsql = "SELECT count(loccode)
 				FROM locations
-				WHERE loccode="'.$LocationCode.'"';
+				WHERE loccode='".$LocationCode."'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] != 0) {
@@ -46,7 +46,9 @@
 
 /* Check that the tax province id is set up in the weberp database */
 	function VerifyTaxProvinceId($TaxProvinceId , $i, $Errors, $db) {
-		$Searchsql = 'SELECT COUNT(taxprovinceid) FROM taxprovinces WHERE taxprovinceid="'.$TaxProvinceId.'"';
+		$Searchsql = "SELECT COUNT(taxprovinceid) 
+					FROM taxprovinces 
+					WHERE taxprovinceid='".$TaxProvinceId."'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
@@ -89,7 +91,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT * FROM locations WHERE loccode="'.$location.'"';
+		$sql = "SELECT * FROM locations WHERE loccode='".$location."'";
 		$result = DB_query($sql, $db);
 		return DB_fetch_array($result);
 	}
@@ -211,7 +213,7 @@
 		foreach ($Location as $key => $value) {
 			$sql .= $key.'="'.$value.'", ';
 		}
-		$sql = substr($sql,0,-2).' WHERE loccode="'.$Location['loccode'].'"';
+		$sql = substr($sql,0,-2)." WHERE loccode='".$Location['loccode']."'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {

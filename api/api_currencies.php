@@ -34,7 +34,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT * FROM currencies WHERE currabrev="'.$currency.'"';
+		$sql = "SELECT * FROM currencies WHERE currabrev='".$currency."'";
 		$result = DB_query($sql, $db);
 		return DB_fetch_array($result);
 	}

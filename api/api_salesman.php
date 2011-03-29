@@ -34,7 +34,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT * FROM salesman WHERE salesmancode="'.$salesman.'"';
+		$sql = "SELECT * FROM salesman WHERE salesmancode='".$salesman."'";
 		$result = DB_query($sql, $db);
 		if (DB_num_rows($result)==0) {
 			$Errors[0]=NoSuchSalesMan;
@@ -82,14 +82,14 @@
  * salesman.
  */
 
-	function GetSalesmanDetailsFromName($salesmanname, $user, $password) {
+	function GetSalesmanDetailsFromName($SalesmanName, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT * FROM salesman WHERE salesmanname="'.$salesmanname.'"';
+		$sql = "SELECT * FROM salesman WHERE salesmanname='".$SalesmanName."'";
 		$result = DB_query($sql, $db);
 		if (DB_num_rows($result)==0) {
 			$Errors[0]=NoSuchSalesMan;
