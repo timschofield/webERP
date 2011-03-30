@@ -1,11 +1,9 @@
 <?php
 
 /* $Id$*/
-/* $Revision: 1.27 $ */
 
 include('includes/DefineJournalClass.php');
 
-//$PageSecurity = 10;
 include('includes/session.inc');
 $title = _('Journal Entry');
 
@@ -24,7 +22,7 @@ if (!isset($_SESSION['JournalDetail'])){
 	Journals cannot be entered against bank accounts GL postings involving bank accounts must be done using
 	a receipt or a payment transaction to ensure a bank trans is available for matching off vs statements */
 
-	$SQL = "SELECT accountcode FROM bankaccounts";
+	$SQL = 'SELECT accountcode FROM bankaccounts';
 	$result = DB_query($SQL,$db);
 	$i=0;
 	while ($Act = DB_fetch_row($result)){
@@ -68,8 +66,8 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 						account,
 						narrative,
 						amount,
-						tag) ";
-		$SQL= $SQL . "VALUES (0,
+						tag)
+				VALUES ('0',
 					'" . $TransNo . "',
 					'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
 					'" . $PeriodNo . "',
@@ -90,8 +88,8 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 							account,
 							narrative,
 							amount,
-							tag) ";
-			$SQL= $SQL . "VALUES (0,
+							tag) 
+					VALUES ('0',
 						'" . $TransNo . "',
 						'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
 						'" . ($PeriodNo + 1) . "',
@@ -104,7 +102,6 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 			$ErrMsg =_('Cannot insert a GL entry for the reversing journal because');
 			$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-
 		}
 	}
 
@@ -120,7 +117,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 	unset($_SESSION['JournalDetail']);
 
 	/*Set up a newy in case user wishes to enter another */
-	echo "<br /><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "&amp;NewJournal=Yes'>"._('Enter Another General Ledger Journal').'</a>';
+	echo '<br /><a href="' . $_SERVER['PHP_SELF'] . '?NewJournal=Yes">'._('Enter Another General Ledger Journal').'</a>';
 	/*And post the journal too */
 	include ('includes/GLPostings.inc');
 	include ('includes/footer.inc');
@@ -132,21 +129,17 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 	$_SESSION['JournalDetail']->Remove_GLEntry($_GET['Delete']);
 
 } elseif (isset($_POST['Process']) and $_POST['Process']==_('Accept')){ //user hit submit a new GL Analysis line into the journal
-	if($_POST['GLCode']!='')
-	{
+	if ($_POST['GLCode']!='') {
 		$extract = explode(' - ',$_POST['GLCode']);
 		$_POST['GLCode'] = $extract[0];
 	}
-	if($_POST['Debit']>0)
-	{
+	if ($_POST['Debit']>0) {
 		$_POST['GLAmount'] = $_POST['Debit'];
-	}
-	elseif($_POST['Credit']>0)
-	{
+	} elseif ($_POST['Credit']>0) {
 		$_POST['GLAmount'] = '-' . $_POST['Credit'];
 	}
 	if ($_POST['GLManualCode'] != '' AND is_numeric($_POST['GLManualCode'])){
-				// If a manual code was entered need to check it exists and isnt a bank account
+		// If a manual code was entered need to check it exists and isnt a bank account
 		$AllowThisPosting = true; //by default
 		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1){
 			if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' AND $_POST['GLManualCode'] == $_SESSION['CompanyRecord']['debtorsact']){
@@ -228,17 +221,9 @@ if (isset($Cancel)){
 	unset($_POST['GLManualCode']);
 }
 
-// set up the form whatever
-/*
-if (!isset($_SESSION['JournalDetail']->JnlDate)){
-	 $_POST['JournalProcessDate']= Date($_SESSION['DefaultDateFormat']);
-	 $_SESSION['JournalDetail']->JnlDate = $_POST['JournalProcessDate'];
-}
-*/
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="post" name="form">';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post" name="form">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>';
 
@@ -287,8 +272,8 @@ echo '<tr><td><select name="tag">';
 
 $SQL = 'SELECT tagref,
 			tagdescription
-	FROM tags
-	ORDER BY tagref';
+		FROM tags
+		ORDER BY tagref';
 
 $result=DB_query($SQL,$db);
 echo '<option value="0">0 - None</option>';
@@ -309,10 +294,10 @@ echo '<td><input class="number" type="text" Name="GLManualCode" Maxlength="12" s
 	"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' .
 		' value="'. $_POST['GLManualCode'] .'"  /></td>';
 
-$sql="SELECT accountcode,
+$sql='SELECT accountcode,
 			accountname
 		FROM chartmaster
-		ORDER BY accountcode";
+		ORDER BY accountcode';
 
 $result=DB_query($sql, $db);
 echo '<td><select name="GLCode" onChange="return assignComboToInput(this,'.'GLManualCode'.')">';
@@ -336,15 +321,14 @@ if (!isset($_POST['Debit'])) {
 	$_POST['Debit'] = '';
 }
 
-
 echo '</tr><tr><th>' . _('Debit') . '</th>'.'<td><input type="text" class="number" Name = "Debit" ' .
 			'onChange="eitherOr(this, '.'Credit'.')"'.
 			' Maxlength="12" size="10" value="' . $_POST['Debit'] . '" /></td>';
-echo '</tr><tr><th>' . _('Credit') . "</th>".'<td><input type="text" class="number" Name = "Credit" ' .
+echo '</tr><tr><th>' . _('Credit') . '</th><td><input type="text" class="number" Name = "Credit" ' .
 			'onChange="eitherOr(this, '.'Debit'.')"'.
 			' Maxlength="12" size="10" value="' . $_POST['Credit'] . '" /></td>';
 echo '</tr><tr><td></td><td></td><th>'. _('Narrative'). '</th>';
-echo '</tr><tr><th></th><th>' . _('GL Narrative') . "</th>";
+echo '</tr><tr><th></th><th>' . _('GL Narrative') . '</th>';
 
 echo '<td><input type="text" name="GLNarrative" maxlength="100" size="100" value="' . $_POST['GLNarrative'] . '" /></td>';
 
@@ -398,22 +382,22 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 	}
 
 	echo '<td>' . $JournalItem->Narrative  . "</td>
-			<td><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . '&amp;Delete=' . $JournalItem->ID . "'>"._('Delete').'</a></td>
+			<td><a href='" . $_SERVER['PHP_SELF'] . '?Delete=' . $JournalItem->ID . "'>"._('Delete').'</a></td>
 	</tr>';
 }
 
 echo '<tr class="EvenTableRows"><td></td>
-		<td class="number"><b> Total </b></td>
+		<td class="number"><b>' . _('Total') .  '</b></td>
 		<td class="number"><b>' . number_format($debittotal,2) . '</b></td>
 		<td class="number"><b>' . number_format($credittotal,2) . '</b></td></tr>';
 if ($debittotal!=$credittotal) {
-	echo '<td align="center" style="background-color: #fddbdb"><b>Required to balance - </b>' .
+	echo '<td align="center" style="background-color: #fddbdb"><b>' . _('Required to balance') .' - </b>' .
 		number_format(abs($debittotal-$credittotal),2);
 }
 if ($debittotal>$credittotal) {
-	echo ' Credit</td></tr>';
+	echo ' ' . _('Credit') . '</td></tr>';
 } else if ($debittotal<$credittotal) {
-	echo ' Debit</td></tr>';
+	echo ' ' . _('Debit') . '</td></tr>';
 }
 echo '</table>';
 

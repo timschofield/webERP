@@ -1,9 +1,8 @@
 <?php
 
-/* $Id: $*/
-/* $Revision: 1.00 $ */
 
-//$PageSecurity = 8;
+/* $Id: GLAccountCSV.php 4492 2011-02-18 09:56:52Z daintree $ */
+
 include ('includes/session.inc');
 $title = _('General Ledger Account Report');
 include('includes/header.inc');
@@ -19,7 +18,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/t
 
 echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br>';
 
-echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?'  . SID . '>';
+echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*Dates in SQL format for the last day of last month*/
@@ -35,10 +34,10 @@ $AccountsResult = DB_query($sql,$db);
 $i=0;
 while ($myrow=DB_fetch_array($AccountsResult,$db)){
 	if(isset($_POST['Account'][$i]) AND $myrow['accountcode'] == $_POST['Account'][$i]){
-		echo '<option selected VALUE=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' ' . $myrow['accountname'];
+		echo '<option selected VALUE=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' ' . $myrow['accountname'] . '</option>';
 		$i++;
 	} else {
-		echo '<option VALUE=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' ' . $myrow['accountname'];
+		echo '<option VALUE=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' ' . $myrow['accountname'] . '</option>';
 	}
 }
 echo '</select></td>';
@@ -51,10 +50,10 @@ $id=0;
 
 while ($myrow=DB_fetch_array($Periods,$db)){
 	if (isset($SelectedPeriod[$id]) and $myrow['periodno'] == $SelectedPeriod[$id]){
-		echo '<option selected VALUE=' . $myrow['periodno'] . '>' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period']));
+		echo '<option selected VALUE=' . $myrow['periodno'] . '>' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
 		$id++;
 	} else {
-		echo '<option VALUE=' . $myrow['periodno'] . '>' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period']));
+		echo '<option VALUE=' . $myrow['periodno'] . '>' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
 	}
 }
 echo '</select></td></tr>';
@@ -71,9 +70,9 @@ $result=DB_query($SQL,$db);
 echo '<option value=0>0 - '._('All tags');
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
-	   echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+	   echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 	} else {
-	   echo '<option value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+	   echo '<option value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 	}
 }
 echo '</select></td></tr>';
@@ -95,7 +94,6 @@ if (isset($_POST['MakeCSV'])){
 		prnMsg(_('An account or range of accounts must be selected from the list box'),'info');
 		include('includes/footer.inc');
 		exit;
-
 	}
 
 	if (!file_exists($_SESSION['reports_dir'])){
@@ -115,10 +113,10 @@ if (isset($_POST['MakeCSV'])){
 	foreach ($_POST['Account'] as $SelectedAccount){
 		/*Is the account a balance sheet or a profit and loss account */
 		$result = DB_query("SELECT chartmaster.accountname,
-					accountgroups.pandl
-     				    FROM accountgroups
-				    INNER JOIN chartmaster ON accountgroups.groupname=chartmaster.group_
-				    WHERE chartmaster.accountcode=$SelectedAccount",$db);
+								accountgroups.pandl
+							    FROM accountgroups
+							    INNER JOIN chartmaster ON accountgroups.groupname=chartmaster.group_
+							    WHERE chartmaster.accountcode=$SelectedAccount",$db);
 		$AccountDetailRow = DB_fetch_row($result);
 		$AccountName = $AccountDetailRow[1];
 		if ($AccountDetailRow[1]==1){
@@ -140,11 +138,11 @@ if (isset($_POST['MakeCSV'])){
 				      gltrans.periodno,
 				      gltrans.tag
 				FROM gltrans, systypes
-				WHERE gltrans.account = $SelectedAccount
+				WHERE gltrans.account = '$SelectedAccount'
 				AND systypes.typeid=gltrans.type
 				AND posted=1
-				AND periodno>=$FirstPeriodSelected
-				AND periodno<=$LastPeriodSelected
+				AND periodno>='$FirstPeriodSelected'
+				AND periodno<='$LastPeriodSelected'
 				ORDER BY periodno, gltrans.trandate, counterindex";
 
 		} else {
@@ -157,11 +155,11 @@ if (isset($_POST['MakeCSV'])){
 				      gltrans.periodno,
 				      gltrans.tag
 				FROM gltrans, systypes
-				WHERE gltrans.account = $SelectedAccount
+				WHERE gltrans.account = '$SelectedAccount'
 				AND systypes.typeid=gltrans.type
 				AND posted=1
-				AND periodno>=$FirstPeriodSelected
-				AND periodno<=$LastPeriodSelected
+				AND periodno>='$FirstPeriodSelected'
+				AND periodno<='$LastPeriodSelected'
                                 AND tag='".$_POST['tag']."'
                                 ORDER BY periodno, gltrans.trandate, counterindex";
 		}
@@ -177,8 +175,8 @@ if (isset($_POST['MakeCSV'])){
 					actual,
 					period
 				FROM chartdetails
-				WHERE chartdetails.accountcode= $SelectedAccount
-				AND chartdetails.period=" . $FirstPeriodSelected;
+				WHERE chartdetails.accountcode= '$SelectedAccount'
+				AND chartdetails.period='" . $FirstPeriodSelected . "'";
 
 			$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
 			$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
@@ -206,8 +204,8 @@ if (isset($_POST['MakeCSV'])){
 							actual,
 							period
 						FROM chartdetails
-						WHERE chartdetails.accountcode= $SelectedAccount
-						AND chartdetails.period=" . $PeriodNo;
+						WHERE chartdetails.accountcode= '$SelectedAccount'
+						AND chartdetails.period='" . $PeriodNo . "'";
 
 					$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
 					$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
@@ -224,7 +222,6 @@ if (isset($_POST['MakeCSV'])){
 
 			$RunningTotal += $myrow['amount'];
 			$PeriodTotal += $myrow['amount'];
-
 
 			$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
 

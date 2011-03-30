@@ -1,16 +1,13 @@
 <?php
 
 /* $Id$ */
-/* $Revision: 1.3 $ */
-
-//$PageSecurity = 11;
 
 include('includes/session.inc');
 $title = _('Fixed Assets');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<a href="' . $rootpath . '/SelectAsset.php?' . SID . '">' . _('Back to Select') . '</a><br>' . "\n";
+echo '<a href="' . $rootpath . '/SelectAsset.php">' . _('Back to Select') . '</a><br />' . "\n";
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
 		_('Fixed Asset Items') . '" alt="" />' . ' ' . $title . '</p>';
@@ -132,7 +129,10 @@ if (isset($_POST['submit'])) {
 
 				$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
 				/* Get the new account codes for the new asset category */
-				$result = DB_query("SELECT costact, accumdepnact FROM fixedassetcategories WHERE categoryid='" . $_POST['AssetCategoryID'] . "'",$db);
+				$result = DB_query("SELECT costact, 
+										accumdepnact 
+									FROM fixedassetcategories 
+									WHERE categoryid='" . $_POST['AssetCategoryID'] . "'",$db);
 				$NewAccounts = DB_fetch_array($result);
 
 				$TransNo = GetNextTransNo( 42, $db); /* transaction type is asset category change */
@@ -144,75 +144,75 @@ if (isset($_POST['submit'])) {
 								periodno,
 								account,
 								narrative,
-								amount) ";
-				$SQL= $SQL . "VALUES (42,
-							'" . $TransNo . "',
-							'" . Date('Y-m-d') . "',
-							'" . $PeriodNo . "',
-							'" . $OldDetails['costact'] . "',
-							'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
-							'" . -$OldDetails['cost']. "'
-							)";
+								amount) 
+						VALUES ('42',
+								'" . $TransNo . "',
+								'" . Date('Y-m-d') . "',
+								'" . $PeriodNo . "',
+								'" . $OldDetails['costact'] . "',
+								'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
+								'" . -$OldDetails['cost']. "'
+								)";
 				$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
 				$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
 				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 				//debit cost for the new category
 				$SQL = "INSERT INTO gltrans (type,
-																	typeno,
-																	trandate,
-																	periodno,
-																	account,
-																	narrative,
-																	amount) ";
-				$SQL= $SQL . "VALUES (42,
-							'" . $TransNo . "',
-							'" . Date('Y-m-d') . "',
-							'" . $PeriodNo . "',
-							'" . $NewAccounts['costact'] . "',
-							'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
-							'" . $OldDetails['cost']. "'
-							)";
+										typeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount) 
+							VALUES ('42',
+									'" . $TransNo . "',
+									'" . Date('Y-m-d') . "',
+									'" . $PeriodNo . "',
+									'" . $NewAccounts['costact'] . "',
+									'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
+									'" . $OldDetails['cost']. "'
+									)";
 				$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
 				$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
 				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 				if ($OldDetails['accumdepn']!=0) {
 					//debit accumdepn for the old category
 					$SQL = "INSERT INTO gltrans (type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									narrative,
-									amount) ";
-					$SQL= $SQL . "VALUES (42,
-								'" . $TransNo . "',
-								'" . Date('Y-m-d') . "',
-								'" . $PeriodNo . "',
-								'" . $OldDetails['accumdepnact'] . "',
-								'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
-								'" . $OldDetails['accumdepn']. "'
-								)";
+												typeno,
+												trandate,
+												periodno,
+												account,
+												narrative,
+												amount)
+									VALUES ('42',
+											'" . $TransNo . "',
+											'" . Date('Y-m-d') . "',
+											'" . $PeriodNo . "',
+											'" . $OldDetails['accumdepnact'] . "',
+											'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
+											'" . $OldDetails['accumdepn']. "'
+											)";
 					$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
 					$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
 					$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 					//credit accum depn for the new category
 					$SQL = "INSERT INTO gltrans (type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									narrative,
-									amount) ";
-					$SQL= $SQL . "VALUES (42,
-								'" . $TransNo . "',
-								'" . Date('Y-m-d') . "',
-								'" . $PeriodNo . "',
-								'" . $NewAccounts['accumdepnact'] . "',
-								'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
-								'" . $OldDetails['accumdepn']. "'
-								)";
+												typeno,
+												trandate,
+												periodno,
+												account,
+												narrative,
+												amount) 
+									VALUES ('42',
+											'" . $TransNo . "',
+											'" . Date('Y-m-d') . "',
+											'" . $PeriodNo . "',
+											'" . $NewAccounts['accumdepnact'] . "',
+											'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
+											'" . $OldDetails['accumdepn']. "'
+											)";
 					$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
 					$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
 					$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -234,25 +234,25 @@ if (isset($_POST['submit'])) {
 			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 			prnMsg( _('Asset') . ' ' . $AssetID . ' ' . _('has been updated'), 'success');
-			echo '<br>';
+			echo '<br />';
 		} else { //it is a NEW part
 			$sql = "INSERT INTO fixedassets (description,
-																		longdescription,
-																		assetcategoryid,
-																		assetlocation,
-																		depntype,
-																		depnrate,
-																		barcode,
-																		serialno)
-																	VALUES (
-																		'" . $_POST['Description'] . "',
-																		'" . $_POST['LongDescription'] . "',
-																		'" . $_POST['AssetCategoryID'] . "',
-																		'" . $_POST['AssetLocation'] . "',
-																		'" . $_POST['DepnType'] . "',
-																		'" . $_POST['DepnRate']. "',
-																		'" . $_POST['BarCode'] . "',
-																		'" . $_POST['SerialNo'] . "' )";
+											longdescription,
+											assetcategoryid,
+											assetlocation,
+											depntype,
+											depnrate,
+											barcode,
+											serialno)
+										VALUES (
+											'" . $_POST['Description'] . "',
+											'" . $_POST['LongDescription'] . "',
+											'" . $_POST['AssetCategoryID'] . "',
+											'" . $_POST['AssetLocation'] . "',
+											'" . $_POST['DepnType'] . "',
+											'" . $_POST['DepnRate']. "',
+											'" . $_POST['BarCode'] . "',
+											'" . $_POST['SerialNo'] . "' )";
 			$ErrMsg =  _('The asset could not be added because');
 			$DbgMsg = _('The SQL that was used to add the asset failed was');
 			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
@@ -272,7 +272,7 @@ if (isset($_POST['submit'])) {
 			$result = DB_Txn_Commit($db);
 		}
 	} else {
-		echo '<br>'. "\n";
+		echo '<br />'. "\n";
 		prnMsg( _('Validation failed, no updates or deletes took place'), 'error');
 	}
 
@@ -282,12 +282,12 @@ if (isset($_POST['submit'])) {
 	$CancelDelete = 0;
 	//what validation is required before allowing deletion of assets ....  maybe there should be no deletion option?
 	$result = DB_query("SELECT cost,
-														accumdepn,
-														accumdepnact,
-														costact
-											FROM fixedassets INNER JOIN fixedassetcategories
-											ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-											WHERE assetid='" . $AssetID . "'", $db);
+								accumdepn,
+								accumdepnact,
+								costact
+						FROM fixedassets INNER JOIN fixedassetcategories
+						ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
+						WHERE assetid='" . $AssetID . "'", $db);
 	$AssetRow = DB_fetch_array($result);
 	$NBV = $AssetRow['cost'] -$AssetRow['accumdepn'];
 	if ($NBV!=0) {
@@ -313,40 +313,40 @@ if (isset($_POST['submit'])) {
 		if ($AssetRow['cost'] > 0){
 			//credit cost for the asset deleted
 			$SQL = "INSERT INTO gltrans (type,
-																typeno,
-																trandate,
-																periodno,
-																account,
-																narrative,
-																amount) ";
-												$SQL= $SQL . "VALUES (43,
-															'" . $TransNo . "',
-															'" . Date('Y-m-d') . "',
-															'" . $PeriodNo . "',
-															'" . $AssetRow['costact'] . "',
-															'" . _('Delete asset') . ' ' . $AssetID . "',
-															'" . -$AssetRow['cost']. "'
-															)";
+										typeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount) 
+							VALUES ('43',
+									'" . $TransNo . "',
+									'" . Date('Y-m-d') . "',
+									'" . $PeriodNo . "',
+									'" . $AssetRow['costact'] . "',
+									'" . _('Delete asset') . ' ' . $AssetID . "',
+									'" . -$AssetRow['cost']. "'
+									)";
 			$ErrMsg = _('Cannot insert a GL entry for the deletion of the asset because');
 			$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 			//debit accumdepn for the depreciation removed on deletion of this asset
 			$SQL = "INSERT INTO gltrans (type,
-																typeno,
-																trandate,
-																periodno,
-																account,
-																narrative,
-																amount) ";
-												$SQL= $SQL . "VALUES (43,
-															'" . $TransNo . "',
-															'" . Date('Y-m-d') . "',
-															'" . $PeriodNo . "',
-															'" . $AssetRow['accumdepnact'] . "',
-															'" . _('Delete asset') . ' ' . $AssetID . "',
-															'" . $Asset['accumdepn']. "'
-															)";
+										typeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount) 
+								VALUES ('43',
+									'" . $TransNo . "',
+									'" . Date('Y-m-d') . "',
+									'" . $PeriodNo . "',
+									'" . $AssetRow['accumdepnact'] . "',
+									'" . _('Delete asset') . ' ' . $AssetID . "',
+									'" . $Asset['accumdepn']. "'
+									)";
 			$ErrMsg = _('Cannot insert a GL entry for the reversal of accumulated depreciation on deletion of the asset because');
 			$DbgMsg = _('The SQL that failed to insert the cost GL Trans record was');
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -467,7 +467,7 @@ if (!isset($New) ) { //ie not new at all!
 	}
 
 	if ($AssetImgLink!=_('No Image')) {
-		echo '<td>' . _('Image') . '<br>'.$AssetImgLink . '</td></tr>';
+		echo '<td>' . _('Image') . '<br />'.$AssetImgLink . '</td></tr>';
 	} else {
 		echo '</td></tr>';
 	}
@@ -484,13 +484,13 @@ $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
 	if (!isset($_POST['AssetCategoryID']) or $myrow['categoryid']==$_POST['AssetCategoryID']){
-		echo '<option selected VALUE="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'];
+		echo '<option selected VALUE="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 	} else {
-		echo '<option VALUE="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'];
+		echo '<option VALUE="'. $myrow['categoryid'] . '">' . $myrow['categorydescription']. '</option>';
 	}
 	$category=$myrow['categoryid'];
 }
-echo '</select><a target="_blank" href="'. $rootpath . '/FixedAssetCategories.php?' . SID . '">'.' ' . _('Add or Modify Asset Categories') . '</a></td></tr>';
+echo '</select><a target="_blank" href="'. $rootpath . '/FixedAssetCategories.php">'.' ' . _('Add or Modify Asset Categories') . '</a></td></tr>';
 if (!isset($_POST['AssetCategoryID'])) {
 	$_POST['AssetCategoryID']=$category;
 }
@@ -545,12 +545,12 @@ echo '<tr><td>' . _('Accumulated Depreciation') . ':</td><td class="number">' . 
 echo '<tr><td>' . _('Net Book Value') . ':</td><td class="number">' . number_format($AssetRow['cost']-$AssetRow['accumdepn'],2) . '</td></tr>';
 
 $result = DB_query('SELECT periods.lastdate_in_period, 
-												max(fixedassettrans.periodno) 
-									FROM fixedassettrans INNER JOIN periods 
-									ON fixedassettrans.periodno=periods.periodno 
-									WHERE transtype=44 
-									GROUP BY periods.lastdate_in_period
-									ORDER BY periods.lastdate_in_period DESC',$db);
+								max(fixedassettrans.periodno) 
+					FROM fixedassettrans INNER JOIN periods 
+					ON fixedassettrans.periodno=periods.periodno 
+					WHERE transtype=44 
+					GROUP BY periods.lastdate_in_period
+					ORDER BY periods.lastdate_in_period DESC',$db);
 									
 $LastDepnRun = DB_fetch_row($result);
 if(DB_num_rows($result)==0){
@@ -563,13 +563,13 @@ echo '<tr><td>' . _('Depreciation last run') . ':</td><td>' . $LastRunDate . '</
 
 
 if (isset($New)) {
-	echo '<div class=centre><br><input type="Submit" name="submit" value="' . _('Insert New Fixed Asset') . '">';
+	echo '<div class=centre><br /><input type="Submit" name="submit" value="' . _('Insert New Fixed Asset') . '">';
 
 } else {
 
-	echo '<br><div class=centre><input type="submit" name="submit" value="' . _('Update') . '"></div>';
+	echo '<br /><div class=centre><input type="submit" name="submit" value="' . _('Update') . '"></div>';
 	prnMsg( _('Only click the Delete button if you are sure you wish to delete the asset. Only assets with a zero book value can be deleted'), 'warn', _('WARNING'));
-	echo '<br><div class=centre><input type="Submit" name="delete" value="' . _('Delete This Asset') . '" onclick="return confirm(\'' . _('Are You Sure? Only assets with a zero book value can be deleted.') . '\');"></div>';
+	echo '<br /><div class=centre><input type="Submit" name="delete" value="' . _('Delete This Asset') . '" onclick="return confirm(\'' . _('Are You Sure? Only assets with a zero book value can be deleted.') . '\');"></div>';
 }
 
 echo '</form></div>';

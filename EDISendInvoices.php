@@ -1,9 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
 /* $Id$*/
-
-//$PageSecurity =15;
 
 include ('includes/session.inc');
 include ('includes/header.inc');
@@ -100,7 +97,11 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 			then replace variable names with data
 			write the output to a file one line at a time */
 
-		$sql = "SELECT section, linetext FROM edimessageformat WHERE partnercode='" . $CustDetails['debtorno'] . "' AND messagetype='INVOIC' ORDER BY sequenceno";
+		$sql = "SELECT section, 
+                       linetext 
+                FROM edimessageformat 
+                WHERE partnercode='" . $CustDetails['debtorno'] . "' 
+                AND messagetype='INVOIC' ORDER BY sequenceno";
 		$ErrMsg =  _('An error occurred in getting the EDI format template for') . ' ' . $CustDetails['debtorno'] . ' ' . _('because');
 		$MessageLinesResult = DB_query($sql, $db,$ErrMsg);
 
@@ -145,7 +146,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 								stockmaster
 							WHERE stockmoves.stockid = stockmaster.stockid
 							AND stockmoves.type=10
-							AND stockmoves.transno=" . $TransNo . "
+							AND stockmoves.transno='" . $TransNo . "'
 							AND stockmoves.show_on_inv_crds=1";
 					} else {
 					/* credit note */
@@ -160,7 +161,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 							FROM stockmoves,
 								stockmaster
 							WHERE stockmoves.stockid = stockmaster.stockid
-							AND stockmoves.type=11 and stockmoves.transno=" . $TransNo . "
+							AND stockmoves.type=11 and stockmoves.transno='" . $TransNo . "'
 							AND stockmoves.show_on_inv_crds=1";
 					}
 					$TransLinesResult = DB_query($sql,$db);
@@ -218,10 +219,10 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 				$MessageSent = $mail->send(array($CustDetails['ediaddress']));
 
 				if ($MessageSent==True){
-					echo '<br><br>';
+					echo '<br /><br />';
 					prnMsg(_('EDI Message') . ' ' . $EDITransNo . ' ' . _('was successfully emailed'),'success');
 				} else {
-					echo '<br><br>';
+					echo '<br /><br />';
 					prnMsg(_('EDI Message') . ' ' . $EDITransNo . _('could not be emailed to') . ' ' . $CustDetails['ediaddress'],'error');
 				}
 			} else { /*it must be ftp transport */
@@ -230,16 +231,16 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 				$conn_id = ftp_connect($CustDetails['ediaddress']); // login with username and password
 				$login_result = ftp_login($conn_id, $CustDetails['ediserveruser'], $CustDetails['ediserverpwd']); // check connection
 				if ((!$conn_id) || (!$login_result)) {
-					prnMsg( _('Ftp connection has failed'). '<br>' . _('Attempted to connect to') . ' ' . $CustDetails['ediaddress'] . ' ' ._('for user') . ' ' . $CustDetails['ediserveruser'],'error');
+					prnMsg( _('Ftp connection has failed'). '<br />' . _('Attempted to connect to') . ' ' . $CustDetails['ediaddress'] . ' ' ._('for user') . ' ' . $CustDetails['ediserveruser'],'error');
 					include('includes/footer.inc');
 					exit;
 				}
 				$MessageSent = ftp_put($conn_id, $_SESSION['EDI_MsgPending'] . '/EDI_INV_' . $EDITransNo, 'EDI_INV_' . $EDITransNo, FTP_ASCII); // check upload status
 				if (!$MessageSent) {
-					echo '<br><br>';
+					echo '<br /><br />';
 					prnMsg(_('EDI Message') . ' ' . $EDITransNo . ' ' . _('could not be sent via ftp to') .' ' . $CustDetails['ediaddress'],'error');
 		 		} else {
-					echo '<br><br>';
+					echo '<br /><br />';
 					prnMsg( _('Successfully uploaded EDI_INV_') . $EDITransNo . ' ' . _('via ftp to') . ' ' . $CustDetails['ediaddress'],'success');
 				} // close the FTP stream
 				ftp_quit($conn_id);

@@ -2,7 +2,6 @@
 
 /* $Id$*/
 
-//$PageSecurity = 2; Now comes from DB - read in from session
 include('includes/session.inc');
 
 if (isset($_GET['GRNNo'])) {

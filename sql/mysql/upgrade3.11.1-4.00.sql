@@ -836,3 +836,5 @@ ALTER TABLE `locations` CHANGE `cashsalecustomer` `cashsalecustomer` VARCHAR( 10
 UPDATE config SET confvalue='4.03.3' WHERE confname='VersionNumber';
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('Z_ChangeSupplierCode.php', '15', 'Script to change a supplier code accross all tables necessary');
 UPDATE config SET confvalue='4.03.5' WHERE confname='VersionNumber';
+INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ( 'ReprintGRN.php', '11', 'Allows selection of a goods received batch for reprinting the goods received note given a purchase order number');
+UPDATE config SET confvalue='4.03.6' WHERE confname='VersionNumber';

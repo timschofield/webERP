@@ -1,7 +1,6 @@
 <?php
-/* $Revision: 1.1 $ */
 
-//$PageSecurity = 11;
+/* $Id$*/
 
 include('includes/session.inc');
 
@@ -93,18 +92,18 @@ if (isset($_POST['submit'])) {
 	} elseif ($InputError !=1) {
 
 		$sql = "INSERT INTO fixedassetcategories (categoryid,
-																					categorydescription,
-																					costact,
-																					depnact,
-																					disposalact,
-																					accumdepnact)
-																					VALUES (
-																					'" . $_POST['CategoryID'] . "',
-																					'" . $_POST['CategoryDescription'] . "',
-																					'" . $_POST['CostAct'] . "',
-																					'" . $_POST['DepnAct'] . "',
-																					'" . $_POST['DisposalAct'] . "',
-																					'" . $_POST['AccumDepnAct'] . "')";
+											categorydescription,
+											costact,
+											depnact,
+											disposalact,
+											accumdepnact)
+											VALUES (
+											'" . $_POST['CategoryID'] . "',
+											'" . $_POST['CategoryDescription'] . "',
+											'" . $_POST['CostAct'] . "',
+											'" . $_POST['DepnAct'] . "',
+											'" . $_POST['DisposalAct'] . "',
+											'" . $_POST['AccumDepnAct'] . "')";
 		$ErrMsg = _('Could not insert the new fixed asset category') . $_POST['CategoryDescription'] . _('because');
 		$result = DB_query($sql,$db,$ErrMsg);
 		prnMsg(_('A new fixed asset category record has been added for') . ' ' . $_POST['CategoryDescription'],'success');
@@ -129,7 +128,7 @@ if (isset($_POST['submit'])) {
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg(_('Cannot delete this fixed asset category because fixed assets have been created using this category') .
-			'<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('fixed assets referring to this category code'),'warn');
+			'<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('fixed assets referring to this category code'),'warn');
 
 	} else {
 		$sql="DELETE FROM fixedassetcategories WHERE categoryid='" . $SelectedCategory . "'";
@@ -147,15 +146,15 @@ links to delete or edit each. These will call the same page again and allow upda
 or deletion of the records*/
 
 	$sql = 'SELECT categoryid,
-								categorydescription,
-								costact,
-								depnact,
-								disposalact,
-								accumdepnact
-								FROM fixedassetcategories';
+				categorydescription,
+				costact,
+				depnact,
+				disposalact,
+				accumdepnact
+				FROM fixedassetcategories';
 	$result = DB_query($sql,$db);
 
-	echo "<br><table class=selection>\n";
+	echo "<br /><table class=selection>\n";
 	echo '<tr><th>' . _('Cat Code') . '</th>
 			<th>' . _('Description') . '</th>
 			<th>' . _('Cost GL') . '</th>
@@ -200,7 +199,7 @@ or deletion of the records*/
 //end of ifs and buts!
 
 if (isset($SelectedCategory)) {
-	echo "<br><div class='centre'><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . ">" ._('Show All Fixed Asset Categories') . "</a></div>";
+	echo "<br /><div class='centre'><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . ">" ._('Show All Fixed Asset Categories') . "</a></div>";
 }
 
 echo '<form name="CategoryForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
@@ -240,23 +239,23 @@ if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 }
 
 //SQL to poulate account selection boxes
-$sql = "SELECT accountcode,
+$sql = 'SELECT accountcode,
 				 accountname
 				 FROM chartmaster,
 					  accountgroups
 				 WHERE chartmaster.group_=accountgroups.groupname and
 					   accountgroups.pandl=0
-				 ORDER BY accountcode";
+				 ORDER BY accountcode';
 
 $BSAccountsResult = DB_query($sql,$db);
 
-$sql = "SELECT accountcode,
+$sql = 'SELECT accountcode,
 				 accountname
 				 FROM chartmaster,
 					  accountgroups
 				 WHERE chartmaster.group_=accountgroups.groupname and
 					   accountgroups.pandl!=0
-				 ORDER BY accountcode";
+				 ORDER BY accountcode';
 
 $PnLAccountsResult = DB_query($sql,$db);
 
@@ -323,7 +322,7 @@ while ($myrow = DB_fetch_array($BSAccountsResult)) {
 } //end while loop
 
 
-echo '</select></td></tr></table><br>';
+echo '</select></td></tr></table><br />';
 
 echo '<div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';
 

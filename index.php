@@ -605,17 +605,17 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . "/StockSerialItemResearch.php?" . SID . '">' . _('Serial Item Research Tool') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/StockSerialItemResearch.php">' . _('Serial Item Research Tool') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . "/PDFPrintLabel.php?" . SID . '">' . _('Print Price Labels') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PDFPrintLabel.php">' . _('Print Price Labels') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . "/StockMovements.php?" . SID . '">' . _('Inventory Item Movements') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/StockMovements.php">' . _('Inventory Item Movements') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -701,6 +701,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/PDFStockTransfer.php">' . _('Stock Transfer Note') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/ReprintGRN.php">' . _('Reprint GRN') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>

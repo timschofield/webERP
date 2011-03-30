@@ -1,8 +1,6 @@
 <?php
-/* $Revision: 1.10 $ */
-/* $Id$*/
 
-//$PageSecurity = 10;
+/* $Id$*/
 
 include('includes/session.inc');
 $title = _('EDI Message Format');
@@ -92,7 +90,7 @@ if ($InputError !=1 and isset($_POST['update'])) {
 
 	$sql="DELETE FROM edimessageformat WHERE id='" . $_GET['delete']."'";
 	$result = DB_query($sql,$db);
-	$msg='The selected message line has been deleted';
+	$msg=_('The selected message line has been deleted');
 
 }
 if (isset($msg)) {
@@ -174,13 +172,13 @@ or deletion of the records*/
 if (isset($SelectedMessageLine)) {
 	//editing an existing message line
 
-	$sql = 'SELECT messagetype,
+	$sql = "SELECT messagetype,
 			partnercode,
 			section,
 			sequenceno,
 			linetext
 		FROM edimessageformat
-		WHERE id=' . $SelectedMessageLine;
+		WHERE id='" . $SelectedMessageLine . "'";
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
@@ -206,25 +204,25 @@ if ($myrow['messagetype']!='') {
 	echo '<tr><th colspan=2><font size=3>' . _('Definition of') . ' ' . $myrow['messagetype'] . ' ' . _('for') . ' ' . $myrow['partnercode'].'</font></th></tr>';
 }
 
-echo '<tr><td>Section:</td>';
+echo '<tr><td>' . _('Section') . ':</td>';
 echo '<td>';
 echo '<select tabindex=2 name="Section">';
 
 if ($_POST['Section']=='Heading') {
-	echo "<option selected VALUE='Heading'>" . _('Heading');
+	echo "<option selected VALUE='Heading'>" . _('Heading') . '</option>';
 } else {
-	echo "<option value='Heading'>" . _('Heading');
+	echo "<option value='Heading'>" . _('Heading') . '</option>';
 }
 
 if (isset($_POST['Section']) and $_POST['Section']=='Detail') {
-	echo "<option selected VALUE='Detail'>" . _('Detail');
+	echo "<option selected VALUE='Detail'>" . _('Detail') . '</option>';
 } else {
-	echo "<option value='Detail'>" . _('Detail');
+	echo "<option value='Detail'>" . _('Detail') . '</option>';
 }
 if (isset($_POST['Section']) and $_POST['Section']=='Summary') {
-	echo "<option selected VALUE='Summary'>" . _('Summary');
+	echo "<option selected VALUE='Summary'>" . _('Summary') . '</option>';
 } else {
-	echo "<option value='Summary'>" . _('Summary');
+	echo "<option value='Summary'>" . _('Summary') . '</option>';
 }
 
 echo '</select>';
