@@ -23,7 +23,6 @@ ini_set('max_execution_time',$MaximumExecutionTime);
 
 session_start();
 
-include($PathPrefix . 'includes/LanguageSetup.php');
 include($PathPrefix . 'includes/ConnectDB.inc');
 include($PathPrefix . 'includes/DateFunctions.inc');
 
@@ -111,6 +110,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 	}
 } /* only do security checks if AllowAnyone is not true */
 
+include($PathPrefix . 'includes/LanguageSetup.php');
 
 /*User is logged in so get configuration parameters  - save in session*/
 include($PathPrefix . 'includes/GetConfig.php');

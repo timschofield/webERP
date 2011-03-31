@@ -247,7 +247,7 @@ CREATE TABLE `cogsglpostings` (
   KEY `StkCat` (`stkcat`),
   KEY `GLCode` (`glcode`),
   KEY `SalesType` (`salestype`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -430,7 +430,7 @@ CREATE TABLE `custallocns` (
   KEY `TransID_AllocTo` (`transid_allocto`),
   CONSTRAINT `custallocns_ibfk_1` FOREIGN KEY (`transid_allocfrom`) REFERENCES `debtortrans` (`id`),
   CONSTRAINT `custallocns_ibfk_2` FOREIGN KEY (`transid_allocto`) REFERENCES `debtortrans` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -621,7 +621,7 @@ CREATE TABLE `debtortrans` (
   CONSTRAINT `debtortrans_ibfk_1` FOREIGN KEY (`debtorno`) REFERENCES `custbranch` (`debtorno`),
   CONSTRAINT `debtortrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `debtortrans_ibfk_3` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -798,7 +798,7 @@ CREATE TABLE `emailsettings` (
   `companyname` varchar(50) DEFAULT NULL,
   `auth` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -982,7 +982,7 @@ CREATE TABLE `gltrans` (
   CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=237 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=245 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1917,7 +1917,7 @@ CREATE TABLE `salesanalysis` (
   KEY `BudgetOrActual` (`budgetoractual`),
   KEY `Salesperson` (`salesperson`),
   CONSTRAINT `salesanalysis_ibfk_1` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2388,7 +2388,7 @@ CREATE TABLE `stockmoves` (
   CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `stockmoves_ibfk_4` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2893,7 +2893,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-03-27 19:35:01
+-- Dump completed on 2011-03-31 20:14:19
 -- MySQL dump 10.13  Distrib 5.1.47-MariaDB, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -3220,6 +3220,54 @@ INSERT INTO `audittrail` VALUES ('2011-03-27 02:40:35','admin','UPDATE purchorde
 INSERT INTO `audittrail` VALUES ('2011-03-27 02:51:19','admin','UPDATE purchorders SET supplierno = \'BINGO\' ,\n										comments=\'\',\n										rate=\'0.85\',\n										initiator=\'admin\',\n										requisitionno= \'\',\n										version= \'5\',\n										deliveryby=\'1\',\n										deliverydate=\'2011-03-27\',\n										revised= \'2011-03-27\',\n										intostocklocation=\'MEL\',\n										deladd1=\'1234 Collins Street\',\n										deladd2=\'Melbourne\',\n										deladd3=\'Victoria 2345\',\n										deladd4=\'\',\n										deladd5=\'\',\n										deladd6=\'+61 3 56789012\',\n										deladd6=\'+61 3 56789012\',\n										suppdeladdress1=\'Box 3499\',\n										suppdeladdress2=\'Gardenier\',\n										suppdeladdress3=\'San Fransisco\',\n										suppdeladdress4=\'California 54424\',\n										suppdeladdress5=\'\',\n										suppdeladdress6=\'\',\n										suppliercontact=\'\',\n										supptel=\'\',\n										contact=\'Jack Roberts\',\n										paymentterms=\'30\',\n										allowprint=\'1\',\n										status = \'Authorised\'\n										WHERE orderno = \'12\'');
 INSERT INTO `audittrail` VALUES ('2011-03-27 02:51:19','admin','UPDATE purchorders SET supplierno = \'BINGO\' ,\n										comments=\'\',\n										rate=\'0.85\',\n										initiator=\'admin\',\n										requisitionno= \'\',\n										version= \'5\',\n										deliveryby=\'1\',\n										deliverydate=\'2011-03-27\',\n										revised= \'2011-03-27\',\n										intostocklocation=\'MEL\',\n										deladd1=\'1234 Collins Street\',\n										deladd2=\'Melbourne\',\n										deladd3=\'Victoria 2345\',\n										deladd4=\'\',\n										deladd5=\'\',\n										deladd6=\'+61 3 56789012\',\n										deladd6=\'+61 3 56789012\',\n										suppdeladdress1=\'Box 3499\',\n										suppdeladdress2=\'Gardenier\',\n										suppdeladdress3=\'San Fransisco\',\n										suppdeladdress4=\'California 54424\',\n										suppdeladdress5=\'\',\n										suppdeladdress6=\'\',\n										suppliercontact=\'\',\n										supptel=\'\',\n										contact=\'Jack Roberts\',\n										paymentterms=\'30\',\n										allowprint=\'1\',\n										status = \'Authorised\'\n										WHERE orderno = \'12\'');
 INSERT INTO `audittrail` VALUES ('2011-03-27 02:51:19','admin','UPDATE purchorderdetails SET itemcode=\'DVD-CASE\',\n															deliverydate =\'2011-03-27\',\n															itemdescription=\' - \',\n															glcode=\'1460\',\n															unitprice=\'9.25\',\n															quantityord=\'50\',\n															shiptref=\'0\',\n															jobref=\'0\',\n															itemno=\'DVD-CASE\',\n															suppliersunit=\'each\',\n															suppliers_partno=\'1\',\n															subtotal_amount=\'\',\n															package=\'\',\n															pcunit=\'0\',\n															netweight=\'0.0000\',\n															kgs=\'0.0000\',\n															cuft=\'\',\n															total_quantity=\'2351\',\n															total_amount=\'145122528\',\n															assetid=\'0\',\n															conversionfactor = \'2\'\n								WHERE podetailitem=\'18\'');
+INSERT INTO `audittrail` VALUES ('2011-03-28 10:04:39','admin','UPDATE unitsofmeasure\n					SET unitname=\'meters\'\n					WHERE unitname LIKE \'metres\'');
+INSERT INTO `audittrail` VALUES ('2011-03-28 10:04:39','admin','UPDATE stockmaster\n					SET units=\'meters\'\n					WHERE units LIKE \'metres\'');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:22:21','admin','INSERT INTO cogsglpostings (\n						glcode,\n						area,\n						stkcat,\n						salestype)\n				VALUES (\n					\'5100\',\n					\'AN\',\n					\'ANY\',\n					\'DE\'\n					)');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:22:24','admin','DELETE FROM cogsglpostings WHERE id=\'4\'');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:22:26','admin','DELETE FROM cogsglpostings WHERE id=\'3\'');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:22:26','admin','INSERT INTO cogsglpostings (\n						area,\n						stkcat,\n						salestype,\n						glcode)\n				VALUES (\'AN\',\n						\'ANY\',\n						\'AN\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:22:37','admin','UPDATE cogsglpostings SET\n						glcode = 5000,\n						area = \'AN\',\n						stkcat = \'ANY\',\n						salestype=\'AN\'\n				WHERE id =\'5\'');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:23:05','admin','INSERT INTO passbom (part, sortpart)\n			   SELECT bom.component AS part,\n					  CONCAT(bom.parent,bom.component) AS sortpart\n			  FROM bom\n			  WHERE bom.parent =\'DVD-CASE\'\n			  AND bom.effectiveto &gt;= NOW() \n			  AND bom.effectiveafter &lt;= NOW()');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:23:05','admin','INSERT INTO tempbom (\n				parent,\n				component,\n				sortpart,\n				level,\n				workcentreadded,\n				loccode,\n				effectiveafter,\n				effectiveto,\n				quantity)\n			  SELECT bom.parent,\n					 bom.component,\n					 CONCAT(bom.parent,bom.component) AS sortpart,\n					 \'2\' as level,\n					 bom.workcentreadded,\n					 bom.loccode,\n					 bom.effectiveafter,\n					 bom.effectiveto,\n					 bom.quantity\n			  FROM bom\n			  WHERE bom.parent =\'DVD-CASE\'\n			  AND bom.effectiveto &gt;= NOW() \n			  AND bom.effectiveafter &lt;= NOW()');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:23:05','admin','INSERT INTO tempbom (\n					parent,\n					component,\n					sortpart,\n					level,\n					workcentreadded,\n					loccode,\n					effectiveafter,\n					effectiveto,\n					quantity)\n				  SELECT bom.parent,\n						 bom.component,\n						 CONCAT(passbom.sortpart,bom.component) AS sortpart,\n						 3 as level,\n						 bom.workcentreadded,\n						 bom.loccode,\n						 bom.effectiveafter,\n						 bom.effectiveto,\n						 bom.quantity\n				 FROM bom, passbom\n				 WHERE bom.parent = passbom.part\n				  AND bom.effectiveto &gt;= NOW() AND bom.effectiveafter &lt;= NOW()');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:23:05','admin','INSERT INTO passbom (part, sortpart)\n					   SELECT bom.component AS part,\n							  CONCAT(passbom2.sortpart,bom.component) AS sortpart\n					   FROM bom,passbom2\n					   WHERE bom.parent = passbom2.part\n						AND bom.effectiveto &gt;= NOW() \n						AND bom.effectiveafter &lt;= NOW()');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:23:19','admin','INSERT INTO passbom (part, sortpart)\n			   SELECT bom.component AS part,\n					  CONCAT(bom.parent,bom.component) AS sortpart\n			  FROM bom\n			  WHERE bom.parent =\'BREAD\'\n			  AND bom.effectiveto &gt;= NOW() \n			  AND bom.effectiveafter &lt;= NOW()');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:23:19','admin','INSERT INTO tempbom (\n				parent,\n				component,\n				sortpart,\n				level,\n				workcentreadded,\n				loccode,\n				effectiveafter,\n				effectiveto,\n				quantity)\n			  SELECT bom.parent,\n					 bom.component,\n					 CONCAT(bom.parent,bom.component) AS sortpart,\n					 \'2\' as level,\n					 bom.workcentreadded,\n					 bom.loccode,\n					 bom.effectiveafter,\n					 bom.effectiveto,\n					 bom.quantity\n			  FROM bom\n			  WHERE bom.parent =\'BREAD\'\n			  AND bom.effectiveto &gt;= NOW() \n			  AND bom.effectiveafter &lt;= NOW()');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:23:19','admin','INSERT INTO tempbom (\n					parent,\n					component,\n					sortpart,\n					level,\n					workcentreadded,\n					loccode,\n					effectiveafter,\n					effectiveto,\n					quantity)\n				  SELECT bom.parent,\n						 bom.component,\n						 CONCAT(passbom.sortpart,bom.component) AS sortpart,\n						 3 as level,\n						 bom.workcentreadded,\n						 bom.loccode,\n						 bom.effectiveafter,\n						 bom.effectiveto,\n						 bom.quantity\n				 FROM bom, passbom\n				 WHERE bom.parent = passbom.part\n				  AND bom.effectiveto &gt;= NOW() AND bom.effectiveafter &lt;= NOW()');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:23:19','admin','INSERT INTO passbom (part, sortpart)\n					   SELECT bom.component AS part,\n							  CONCAT(passbom2.sortpart,bom.component) AS sortpart\n					   FROM bom,passbom2\n					   WHERE bom.parent = passbom2.part\n						AND bom.effectiveto &gt;= NOW() \n						AND bom.effectiveafter &lt;= NOW()');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:24:00','admin','INSERT INTO passbom (part, extendedqpa, sortpart)\n			   SELECT bom.component AS part,\n					  (20 * bom.quantity) as extendedqpa,\n					   CONCAT(bom.parent,bom.component) AS sortpart\n					  FROM bom\n			  WHERE bom.parent =\'BREAD\'\n			  AND bom.effectiveto &gt;= NOW() \n			  AND bom.effectiveafter &lt;= NOW()');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:24:00','admin','INSERT INTO tempbom (\n				parent,\n				component,\n				sortpart,\n				level,\n				workcentreadded,\n				loccode,\n				effectiveafter,\n				effectiveto,\n				quantity)\n			  SELECT bom.parent,\n					 bom.component,\n					 CONCAT(bom.parent,bom.component) AS sortpart,2 as level,\n					 bom.workcentreadded,\n					 bom.loccode,\n					 bom.effectiveafter,\n					 bom.effectiveto,\n					 (20 * bom.quantity) as extendedqpa\n					 FROM bom\n			  WHERE bom.parent =\'BREAD\'\n			  AND bom.effectiveto &gt;= NOW() \n			  AND bom.effectiveafter &lt;= NOW()');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:24:00','admin','INSERT INTO tempbom (\n				parent,\n				component,\n				sortpart,\n				level,\n				workcentreadded,\n				loccode,\n				effectiveafter,\n				effectiveto,\n				quantity)\n			  SELECT bom.parent,\n					 bom.component,\n					 CONCAT(passbom.sortpart,bom.component) AS sortpart,\n					 3 as level,\n					 bom.workcentreadded,\n					 bom.loccode,\n					 bom.effectiveafter,\n					 bom.effectiveto,\n					 (bom.quantity * passbom.extendedqpa)\n			 FROM bom,passbom\n			 WHERE bom.parent = passbom.part\n			  AND bom.effectiveto &gt;= NOW() \n			  AND bom.effectiveafter &lt;= NOW()');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:24:00','admin','INSERT INTO passbom (part, extendedqpa, sortpart)\n				   SELECT bom.component AS part,\n				   (bom.quantity * passbom2.extendedqpa),\n						  CONCAT(passbom2.sortpart,bom.component) AS sortpart\n						  FROM bom,passbom2\n				WHERE bom.parent = passbom2.part\n				AND bom.effectiveto &gt;= NOW() \n				AND bom.effectiveafter &lt;= NOW()');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:40:08','admin','UPDATE companies SET\n				coyname=\'weberpdemo\',\n				companynumber = \'\',\n				gstno=\'not entered yet\',\n				regoffice1=\'123 Web Way\',\n				regoffice2=\'PO Box 123\',\n				regoffice3=\'Queen Street\',\n				regoffice4=\'Melbourne\',\n				regoffice5=\'Victoria 3043\',\n				regoffice6=\'Australia\',\n				telephone=\'+61 3 4567 8901\',\n				fax=\'+61 3 4567 8902\',\n				email=\'weberp@weberpdemo.com\',\n				currencydefault=\'AUD\',\n				debtorsact=\'1100\',\n				pytdiscountact=\'4900\',\n				creditorsact=\'2100\',\n				payrollact=\'2400\',\n				grnact=\'2150\',\n				exchangediffact=\'4200\',\n				purchasesexchangediffact=\'5200\',\n				retainedearnings=\'3500\',\n				gllink_debtors=\'1\',\n				gllink_creditors=\'1\',\n				gllink_stock=\'1\',\n				freightact=\'5600\'\n			WHERE coycode=1');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:40:08','admin','UPDATE currencies SET rate=rate/\'1\'');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','UPDATE debtortrans\n			SET alloc = alloc + 28.38,\n			settled=\'1\'\n			WHERE transno = \'4\'\n			AND type=10');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','INSERT INTO debtortrans (transno,\n					type,\n					debtorno,\n					branchcode,\n					trandate,\n					inputdate,\n					prd,\n					reference,\n					tpe,\n					order_,\n					ovamount,\n					ovgst,\n					ovfreight,\n					rate,\n					invtext,\n					alloc,\n					settled)\n		VALUES (7,\n			11,\n			\'ANGRY\',\n			\'ANGRY\',\n			\'2011-03-29\',\n			\'2011-03-29 08-47-23\',\n			\'7\',\n			\'Inv-4\',\n			\'DE\',\n			\'8\',\n			\'-28.38\',\n			\'0\',\n			\'0\',\n			\'1\',\n			\'\',\n			\'-28.38\',\n			\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','INSERT INTO debtortranstaxes (\n							debtortransid,\n							taxauthid,\n							taxamount)\n				VALUES (\'24\',\n					\'13\',\n					\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','INSERT INTO custallocns (amt,\n						transid_allocfrom,\n						transid_allocto,\n						datealloc)\n			VALUES (\'28.38\',\n				\'24\',\n				\'5\',\n				\'2011-03-29\')');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','UPDATE salesorderdetails\n							SET qtyinvoiced = qtyinvoiced - 3,\n								completed=0\n						WHERE orderno = \'8\'\n						AND stkcode = \'BREAD\'\n						AND orderlineno=\'0\'');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','UPDATE locstock\n						SET locstock.quantity = locstock.quantity + 3\n						WHERE locstock.stockid = \'BREAD\'\n						AND loccode = \'MEL\'');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','INSERT INTO stockmoves (\n							stockid,\n							type,\n							transno,\n							loccode,\n							trandate,\n							debtorno,\n							branchcode,\n							price,\n							prd,\n							reference,\n							qty,\n							discountpercent,\n							standardcost,\n							newqoh,\n							narrative)\n						VALUES (\'BREAD\',\n							11,\n							\'7\',\n							\'MEL\',\n							\'2011-03-29\',\n							\'ANGRY\',\n							\'ANGRY\',\n							\'6.9\',\n							\'7\',\n							\'Ex Inv - 4\',\n							\'3\',\n							\'0.1\',\n							\'6.0085\',\n							\'67\',\n							\'\')');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','INSERT INTO stockmovestaxes (stkmoveno,\n								taxauthid,\n								taxrate,\n								taxcalculationorder,\n								taxontax)\n					VALUES (\'64\',\n						\'13\',\n						\'0\',\n						\'0\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','INSERT INTO salesanalysis (typeabbrev,\n								periodno,\n								amt,\n								cost,\n								cust,\n								custbranch,\n								qty,\n								disc,\n								stockid,\n								area,\n								budgetoractual,\n								salesperson,\n								stkcategory)\n						SELECT \'DE\',\n							\'7\',\n							\'-20.7\',\n							\'-18.0255\',\n							\'ANGRY\',\n							\'ANGRY\',\n							\'-3\',\n							\'-2.07\',\n							\'BREAD\',\n							custbranch.area,\n							1,\n							custbranch.salesman,\n							stockmaster.categoryid\n						FROM stockmaster,\n							custbranch\n						WHERE stockmaster.stockid = \'BREAD\'\n						AND custbranch.debtorno = \'ANGRY\'\n						AND custbranch.branchcode=\'ANGRY\'');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','INSERT INTO gltrans (type,\n							typeno,\n							trandate,\n							periodno,\n							account,\n							narrative,\n							amount)\n					VALUES (11,\n						\'7\',\n						\'2011-03-29\',\n						\'7\',\n						\'5000\',\n						\'ANGRY - BREAD x 3 @ 6.0085\',\n						\'-18.03\'\n						)');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','INSERT INTO gltrans (type,\n								typeno,\n								trandate,\n								periodno,\n								account,\n								narrative,\n								amount)\n						VALUES (11,\n							\'7\',\n							\'2011-03-29\',\n							\'7\',\n							\'1460\',\n							\'ANGRY - BREAD x 3 @ 6.0085\',\n							\'18.03\')');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','INSERT INTO gltrans (type,\n							typeno,\n							trandate,\n							periodno,\n							account,\n							narrative,\n							amount)\n					VALUES (11,\n						\'7\',\n						\'2011-03-29\',\n						\'7\',\n						\'4100\',\n						\'ANGRY - BREAD x 3 @ 6.9000\',\n						\'20.7\'\n						)');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','INSERT INTO gltrans (type,\n								typeno,\n								trandate,\n								periodno,\n								account,\n								narrative,\n								amount)\n						VALUES (11,\n							\'7\',\n							\'2011-03-29\',\n							\'7\',\n							\'4900\',\n							\'ANGRY - BREAD @ 10%\',\n							\'-2.07\'\n							)');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','UPDATE salesorderdetails\n							SET qtyinvoiced = qtyinvoiced - 3,\n								completed=0\n						WHERE orderno = \'8\'\n						AND stkcode = \'SALT\'\n						AND orderlineno=\'1\'');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','UPDATE locstock\n						SET locstock.quantity = locstock.quantity + 3\n						WHERE locstock.stockid = \'SALT\'\n						AND loccode = \'MEL\'');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','INSERT INTO stockmoves (\n							stockid,\n							type,\n							transno,\n							loccode,\n							trandate,\n							debtorno,\n							branchcode,\n							price,\n							prd,\n							reference,\n							qty,\n							discountpercent,\n							standardcost,\n							newqoh,\n							narrative)\n						VALUES (\'SALT\',\n							11,\n							\'7\',\n							\'MEL\',\n							\'2011-03-29\',\n							\'ANGRY\',\n							\'ANGRY\',\n							\'3.25\',\n							\'7\',\n							\'Ex Inv - 4\',\n							\'3\',\n							\'0\',\n							\'2.5000\',\n							\'3\',\n							\'\')');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','INSERT INTO stockmovestaxes (stkmoveno,\n								taxauthid,\n								taxrate,\n								taxcalculationorder,\n								taxontax)\n					VALUES (\'65\',\n						\'13\',\n						\'0\',\n						\'0\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','INSERT INTO salesanalysis (typeabbrev,\n								periodno,\n								amt,\n								cost,\n								cust,\n								custbranch,\n								qty,\n								disc,\n								stockid,\n								area,\n								budgetoractual,\n								salesperson,\n								stkcategory)\n						SELECT \'DE\',\n							\'7\',\n							\'-9.75\',\n							\'-7.5\',\n							\'ANGRY\',\n							\'ANGRY\',\n							\'-3\',\n							\'0\',\n							\'SALT\',\n							custbranch.area,\n							1,\n							custbranch.salesman,\n							stockmaster.categoryid\n						FROM stockmaster,\n							custbranch\n						WHERE stockmaster.stockid = \'SALT\'\n						AND custbranch.debtorno = \'ANGRY\'\n						AND custbranch.branchcode=\'ANGRY\'');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','INSERT INTO gltrans (type,\n							typeno,\n							trandate,\n							periodno,\n							account,\n							narrative,\n							amount)\n					VALUES (11,\n						\'7\',\n						\'2011-03-29\',\n						\'7\',\n						\'5000\',\n						\'ANGRY - SALT x 3 @ 2.5000\',\n						\'-7.5\'\n						)');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','INSERT INTO gltrans (type,\n								typeno,\n								trandate,\n								periodno,\n								account,\n								narrative,\n								amount)\n						VALUES (11,\n							\'7\',\n							\'2011-03-29\',\n							\'7\',\n							\'1460\',\n							\'ANGRY - SALT x 3 @ 2.5000\',\n							\'7.5\')');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','INSERT INTO gltrans (type,\n							typeno,\n							trandate,\n							periodno,\n							account,\n							narrative,\n							amount)\n					VALUES (11,\n						\'7\',\n						\'2011-03-29\',\n						\'7\',\n						\'4100\',\n						\'ANGRY - SALT x 3 @ 3.2500\',\n						\'9.75\'\n						)');
+INSERT INTO `audittrail` VALUES ('2011-03-29 08:47:23','admin','INSERT INTO gltrans (type,\n							typeno,\n							trandate,\n							periodno,\n							account,\n							narrative,\n							amount)\n					VALUES (11,\n						\'7\',\n						\'2011-03-29\',\n						\'7\',\n						\'1100\',\n						\'ANGRY\',\n						\'-28.38\'\n					)');
+INSERT INTO `audittrail` VALUES ('2011-03-29 10:24:58','admin','UPDATE www_users\n				SET displayrecordsmax=\'50\',\n					theme=\'jelly\',\n					language=\'zh_HK.utf8\',\n					email=\'info@weberp.org\',\n					pdflanguage=\'0\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2011-03-29 10:25:12','admin','UPDATE www_users\n				SET displayrecordsmax=\'50\',\n					theme=\'jelly\',\n					language=\'zh_CN.utf8\',\n					email=\'info@weberp.org\',\n					pdflanguage=\'0\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2011-03-29 10:25:26','admin','UPDATE www_users\n				SET displayrecordsmax=\'50\',\n					theme=\'jelly\',\n					language=\'et_EE.utf8\',\n					email=\'info@weberp.org\',\n					pdflanguage=\'0\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2011-03-29 10:25:37','admin','UPDATE www_users\n				SET displayrecordsmax=\'50\',\n					theme=\'jelly\',\n					language=\'fa_IR.utf8\',\n					email=\'info@weberp.org\',\n					pdflanguage=\'0\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2011-03-29 10:25:47','admin','UPDATE www_users\n				SET displayrecordsmax=\'50\',\n					theme=\'jelly\',\n					language=\'sq_AL.utf8\',\n					email=\'info@weberp.org\',\n					pdflanguage=\'0\'\n				WHERE userid = \'admin\'');
 
 --
 -- Dumping data for table `bankaccounts`
@@ -10632,7 +10680,7 @@ INSERT INTO `chartmaster` VALUES (9100,'Income Tax Provision','Income Tax');
 -- Dumping data for table `cogsglpostings`
 --
 
-INSERT INTO `cogsglpostings` VALUES (3,'AN','ANY',5000,'AN');
+INSERT INTO `cogsglpostings` VALUES (5,'AN','ANY',5000,'AN');
 
 --
 -- Dumping data for table `companies`
@@ -10719,7 +10767,7 @@ INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','Tax Ref');
 INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','0');
-INSERT INTO `config` VALUES ('VersionNumber','4.03.5');
+INSERT INTO `config` VALUES ('VersionNumber','4.03.6');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
 INSERT INTO `config` VALUES ('WikiApp','Disabled');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
@@ -10769,6 +10817,7 @@ INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',2,0.
 INSERT INTO `custallocns` VALUES (1,'15.9500','2007-08-02',2,1);
 INSERT INTO `custallocns` VALUES (2,'117.5000','2010-05-31',18,17);
 INSERT INTO `custallocns` VALUES (3,'24.0000','2011-02-16',21,7);
+INSERT INTO `custallocns` VALUES (4,'28.3800','2011-03-29',24,5);
 
 --
 -- Dumping data for table `custbranch`
@@ -10813,7 +10862,7 @@ INSERT INTO `debtorsmaster` VALUES ('QUICK','Quick Brown PLC','Fox Street','Jump
 INSERT INTO `debtortrans` VALUES (1,1,10,'QUARTER','QUARTER','2007-06-26 00:00:00','0000-00-00 00:00:00',2,0,'','DE',1,1,46.4,0,0,0,0,15.95,'Some narrative for testing the output on the printed invoice',1,0,'');
 INSERT INTO `debtortrans` VALUES (2,1,11,'QUARTER','QUARTER','2007-08-02 00:00:00','0000-00-00 00:00:00',3,1,'Inv-1','DE',1,1,-15.95,0,0,0,0,-15.95,'',0,0,'');
 INSERT INTO `debtortrans` VALUES (3,2,12,'ANGRY','','2009-02-04 00:00:00','0000-00-00 00:00:00',21,0,'Cash ','',0,1,-99,0,0,0,0,0,'',0,0,'');
-INSERT INTO `debtortrans` VALUES (5,4,10,'ANGRY','ANGRY','2010-05-31 00:00:00','2010-05-31 12:02:42',-11,0,'','DE',8,1,28.38,0,0,0,0,0,'Testing comments',1,0,'');
+INSERT INTO `debtortrans` VALUES (5,4,10,'ANGRY','ANGRY','2010-05-31 00:00:00','2010-05-31 12:02:42',-11,1,'','DE',8,1,28.38,0,0,0,0,28.38,'Testing comments',1,0,'');
 INSERT INTO `debtortrans` VALUES (6,5,10,'ANGRY','ANGRY','2010-05-31 00:00:00','2010-05-31 12:09:46',-11,0,'211547','DE',9,1,26.40515,0,0,0,0,0,'',1,0,'');
 INSERT INTO `debtortrans` VALUES (7,6,10,'ANGRY','ANGRY','2010-05-31 00:00:00','2010-05-31 12:14:47',-11,1,'','DE',10,1,24,0,0,0,0,24,'',1,0,'');
 INSERT INTO `debtortrans` VALUES (8,7,10,'ANGRY','ANGRY','2010-05-31 00:00:00','2010-05-31 12:53:46',-11,0,'','DE',11,1,0,0,0,0,0,0,'',1,0,'');
@@ -10831,6 +10880,7 @@ INSERT INTO `debtortrans` VALUES (20,4,11,'DUMBLE','DUMBLE','2011-02-16 00:00:00
 INSERT INTO `debtortrans` VALUES (21,5,11,'ANGRY','ANGRY','2011-02-16 00:00:00','2011-02-16 23:33:44',6,1,'Inv-6','DE',10,1,-24,0,0,0,0,-24,'',0,0,'');
 INSERT INTO `debtortrans` VALUES (22,10,12,'ANGRY','','2011-03-23 00:00:00','2011-03-23 21:28:01',7,0,'Cheque ','',0,0.85,-10,0,0,0,0,0,'',0,0,'');
 INSERT INTO `debtortrans` VALUES (23,6,11,'DUMBLE','DUMBLE','2011-03-26 00:00:00','2011-03-26 22:36:46',7,0,'','DE',0,0.8,-5.75,0,0,0,0,0,'test',0,0,'');
+INSERT INTO `debtortrans` VALUES (24,7,11,'ANGRY','ANGRY','2011-03-29 00:00:00','2011-03-29 08:47:23',7,1,'Inv-4','DE',8,1,-28.38,0,0,0,0,-28.38,'',0,0,'');
 
 --
 -- Dumping data for table `debtortranstaxes`
@@ -10848,6 +10898,7 @@ INSERT INTO `debtortranstaxes` VALUES (19,13,0);
 INSERT INTO `debtortranstaxes` VALUES (20,13,0);
 INSERT INTO `debtortranstaxes` VALUES (21,13,0);
 INSERT INTO `debtortranstaxes` VALUES (23,13,0);
+INSERT INTO `debtortranstaxes` VALUES (24,13,0);
 
 --
 -- Dumping data for table `debtortype`
@@ -11059,6 +11110,7 @@ INSERT INTO `emailsettings` VALUES (29,'localhost','25','helo','','',5,'',0);
 INSERT INTO `emailsettings` VALUES (30,'localhost','25','helo','','',5,'',0);
 INSERT INTO `emailsettings` VALUES (31,'localhost','25','helo','','',5,'',0);
 INSERT INTO `emailsettings` VALUES (32,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (33,'localhost','25','helo','','',5,'',0);
 
 --
 -- Dumping data for table `factorcompanies`
@@ -11318,6 +11370,14 @@ INSERT INTO `gltrans` VALUES (233,11,6,0,'2011-03-26',7,5000,'DUMBLE - DVD-LTWP 
 INSERT INTO `gltrans` VALUES (234,11,6,0,'2011-03-26',7,1460,'DUMBLE - DVD-LTWP x 1 @ 2.7000',2.7,0,'',0);
 INSERT INTO `gltrans` VALUES (235,11,6,0,'2011-03-26',7,4100,'DUMBLE - DVD-LTWP x 1 @ 5.75',7.1875,0,'',0);
 INSERT INTO `gltrans` VALUES (236,11,6,0,'2011-03-26',7,1100,'DUMBLE',-7.1875,0,'',0);
+INSERT INTO `gltrans` VALUES (237,11,7,0,'2011-03-29',7,5000,'ANGRY - BREAD x 3 @ 6.0085',-18.03,0,'',0);
+INSERT INTO `gltrans` VALUES (238,11,7,0,'2011-03-29',7,1460,'ANGRY - BREAD x 3 @ 6.0085',18.03,0,'',0);
+INSERT INTO `gltrans` VALUES (239,11,7,0,'2011-03-29',7,4100,'ANGRY - BREAD x 3 @ 6.9000',20.7,0,'',0);
+INSERT INTO `gltrans` VALUES (240,11,7,0,'2011-03-29',7,4900,'ANGRY - BREAD @ 10%',-2.07,0,'',0);
+INSERT INTO `gltrans` VALUES (241,11,7,0,'2011-03-29',7,5000,'ANGRY - SALT x 3 @ 2.5000',-7.5,0,'',0);
+INSERT INTO `gltrans` VALUES (242,11,7,0,'2011-03-29',7,1460,'ANGRY - SALT x 3 @ 2.5000',7.5,0,'',0);
+INSERT INTO `gltrans` VALUES (243,11,7,0,'2011-03-29',7,4100,'ANGRY - SALT x 3 @ 3.2500',9.75,0,'',0);
+INSERT INTO `gltrans` VALUES (244,11,7,0,'2011-03-29',7,1100,'ANGRY',-28.38,0,'',0);
 
 --
 -- Dumping data for table `grns`
@@ -11392,7 +11452,7 @@ INSERT INTO `locations` VALUES ('TOR','Toronto','Level 100 ','CN Tower','Toronto
 
 INSERT INTO `locstock` VALUES ('MEL','BIGEARS12',0,0);
 INSERT INTO `locstock` VALUES ('MEL','BirthdayCakeConstruc',0,0);
-INSERT INTO `locstock` VALUES ('MEL','BREAD',64,0);
+INSERT INTO `locstock` VALUES ('MEL','BREAD',67,0);
 INSERT INTO `locstock` VALUES ('MEL','DR_TUMMY',0,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-CASE',45,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-DHWV',-12,0);
@@ -11409,7 +11469,7 @@ INSERT INTO `locstock` VALUES ('MEL','FUJI990102',0,0);
 INSERT INTO `locstock` VALUES ('MEL','FUJI9901ASS',0,0);
 INSERT INTO `locstock` VALUES ('MEL','HIT3042-4',0,0);
 INSERT INTO `locstock` VALUES ('MEL','HIT3043-5',0,0);
-INSERT INTO `locstock` VALUES ('MEL','SALT',2.22044604925031e-16,0);
+INSERT INTO `locstock` VALUES ('MEL','SALT',3,0);
 INSERT INTO `locstock` VALUES ('MEL','SLICE',0,0);
 INSERT INTO `locstock` VALUES ('MEL','YEAST',0,0);
 INSERT INTO `locstock` VALUES ('TOR','BIGEARS12',0,0);
@@ -12217,6 +12277,8 @@ INSERT INTO `salesanalysis` VALUES ('DE',6,0,-0.6,'DUMBLE','DUMBLE',-2,0,'DVD-CA
 INSERT INTO `salesanalysis` VALUES ('DE',6,-21,-46.68,'DUMBLE','DUMBLE',-12,0,'FLOUR','TR',1,'ERI','AIRCON',9);
 INSERT INTO `salesanalysis` VALUES ('DE',6,-24,-12.017,'ANGRY','ANGRY',-2,0,'BREAD','TR',1,'ERI','FOOD',10);
 INSERT INTO `salesanalysis` VALUES ('DE',7,-7.1875,-2.7,'DUMBLE','DUMBLE',-1,0,'DVD-LTWP','TR',1,'ERI','AIRCON',11);
+INSERT INTO `salesanalysis` VALUES ('DE',7,-20.7,-18.0255,'ANGRY','ANGRY',-3,-2.07,'BREAD','TR',1,'ERI','FOOD',12);
+INSERT INTO `salesanalysis` VALUES ('DE',7,-9.75,-7.5,'ANGRY','ANGRY',-3,0,'SALT','TR',1,'ERI','BAKE',13);
 
 --
 -- Dumping data for table `salescat`
@@ -12250,7 +12312,7 @@ INSERT INTO `salesman` VALUES ('PHO','Phone Contact','','',0,'0',0);
 
 INSERT INTO `salesorderdetails` VALUES (0,6,'BREAD',3,6.9,3,0,0.1,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (0,7,'BREAD',3,6.9,3,0,0.1,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
-INSERT INTO `salesorderdetails` VALUES (0,8,'BREAD',3,6.9,3,0,0.1,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
+INSERT INTO `salesorderdetails` VALUES (0,8,'BREAD',0,6.9,3,0,0.1,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (0,9,'BREAD',4,6.9,4,0,0.15,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (0,10,'BREAD',0,12,2,0,0,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (0,11,'BREAD',0,5.98,5,0,0,'2010-05-31 00:00:00',0,'','2010-05-31','',0,0);
@@ -12266,7 +12328,7 @@ INSERT INTO `salesorderdetails` VALUES (0,25,'FROAYLANDO',0,41.603614285714,1,0,
 INSERT INTO `salesorderdetails` VALUES (0,26,'DVD-CASE',0,52.25,1,0,0,'0000-00-00 00:00:00',0,'','2011-03-26','',0,0);
 INSERT INTO `salesorderdetails` VALUES (1,6,'SALT',3,3.25,3,0,0,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,7,'SALT',3,3.25,3,0,0,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
-INSERT INTO `salesorderdetails` VALUES (1,8,'SALT',3,3.25,3,0,0,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
+INSERT INTO `salesorderdetails` VALUES (1,8,'SALT',0,3.25,3,0,0,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,9,'SALT',1,2.99,1,0,0.015,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,14,'BREAD',2,5.25,2,0,0,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,18,'SALT',0.7,5,0.7,0,0,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
@@ -12482,6 +12544,7 @@ INSERT INTO `scripts` VALUES ('ReportBug.php',15,'');
 INSERT INTO `scripts` VALUES ('ReportCreator.php',13,'Report Writer and Form Creator script that creates templates for user defined reports and forms');
 INSERT INTO `scripts` VALUES ('ReportletContainer.php',1,'');
 INSERT INTO `scripts` VALUES ('ReportMaker.php',1,'Produces reports from the report writer templates created');
+INSERT INTO `scripts` VALUES ('ReprintGRN.php',11,'Allows selection of a goods received batch for reprinting the goods received note given a purchase order number');
 INSERT INTO `scripts` VALUES ('ReverseGRN.php',11,'Reverses the entry of goods received - creating stock movements back out and necessary general ledger journals to effect the reversal');
 INSERT INTO `scripts` VALUES ('SalesAnalReptCols.php',2,'Entry of the definition of a sales analysis report\'s columns.');
 INSERT INTO `scripts` VALUES ('SalesAnalRepts.php',2,'Entry of the definition of a sales analysis report headers');
@@ -12864,6 +12927,8 @@ INSERT INTO `stockmoves` VALUES (60,'FLOUR',11,4,'TOR','2011-02-16','DUMBLE','DU
 INSERT INTO `stockmoves` VALUES (61,'BREAD',11,5,'MEL','2011-02-16','ANGRY','ANGRY','12.0000',6,'Ex Inv - 6',2,0,6.0085,1,64,0,'');
 INSERT INTO `stockmoves` VALUES (62,'DVD-CASE',25,32,'MEL','2011-03-10','','','0.2300',7,'CAMPBELL (Campbell Roberts Inc) - 1',45,0,0.3,1,45,0,NULL);
 INSERT INTO `stockmoves` VALUES (63,'DVD-LTWP',11,6,'TOR','2011-03-26','DUMBLE','DUMBLE','7.1875',7,'test',1,0,2.7,1,0,0,'');
+INSERT INTO `stockmoves` VALUES (64,'BREAD',11,7,'MEL','2011-03-29','ANGRY','ANGRY','6.9000',7,'Ex Inv - 4',3,0.1,6.0085,1,67,0,'');
+INSERT INTO `stockmoves` VALUES (65,'SALT',11,7,'MEL','2011-03-29','ANGRY','ANGRY','3.2500',7,'Ex Inv - 4',3,0,2.5,1,3,0,'');
 
 --
 -- Dumping data for table `stockmovestaxes`
@@ -12884,6 +12949,8 @@ INSERT INTO `stockmovestaxes` VALUES (59,13,0,0,0);
 INSERT INTO `stockmovestaxes` VALUES (60,13,0,0,0);
 INSERT INTO `stockmovestaxes` VALUES (61,13,0,0,0);
 INSERT INTO `stockmovestaxes` VALUES (63,13,0,0,0);
+INSERT INTO `stockmovestaxes` VALUES (64,13,0,0,0);
+INSERT INTO `stockmovestaxes` VALUES (65,13,0,0,0);
 
 --
 -- Dumping data for table `stockserialitems`
@@ -12961,7 +13028,7 @@ INSERT INTO `systypes` VALUES (1,'Payment - GL',2);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
 INSERT INTO `systypes` VALUES (10,'Sales Invoice',14);
-INSERT INTO `systypes` VALUES (11,'Credit Note',6);
+INSERT INTO `systypes` VALUES (11,'Credit Note',7);
 INSERT INTO `systypes` VALUES (12,'Receipt',10);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',22);
@@ -13063,7 +13130,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 --
 
 INSERT INTO `unitsofmeasure` VALUES (1,'each');
-INSERT INTO `unitsofmeasure` VALUES (2,'metres');
+INSERT INTO `unitsofmeasure` VALUES (2,'meters');
 INSERT INTO `unitsofmeasure` VALUES (3,'kgs');
 INSERT INTO `unitsofmeasure` VALUES (4,'litres');
 INSERT INTO `unitsofmeasure` VALUES (5,'length');
@@ -13128,7 +13195,7 @@ INSERT INTO `workorders` VALUES (13,'TOR','2010-10-15','2010-08-14',0,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','info@weberp.org','MEL',8,'2011-03-27 01:37:20','','A4','1,1,1,1,1,1,1,1,1,1',0,50,'jelly','en_US.utf8',0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','info@weberp.org','MEL',8,'2011-03-30 09:00:21','','A4','1,1,1,1,1,1,1,1,1,1',0,50,'jelly','sq_AL.utf8',0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -13136,6 +13203,6 @@ INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-03-27 19:35:02
+-- Dump completed on 2011-03-31 20:14:20
 TRUNCATE TABLE audittrail;
 SET FOREIGN_KEY_CHECKS = 1;
