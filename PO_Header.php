@@ -46,8 +46,8 @@ if (isset($_GET['NewOrder']) and isset($_SESSION['PO'.$identifier])){
 
 if (isset($_POST['Select']) and empty($_POST['SupplierContact'])) {
 	$sql = "SELECT contact
-					FROM suppliercontacts
-					WHERE supplierid='". $_POST['Select'] ."'";
+				FROM suppliercontacts
+				WHERE supplierid='". $_POST['Select'] ."'";
 		
 	$SuppCoResult = DB_query($sql,$db);
 	if (DB_num_rows($SuppCoResult)>0) {
@@ -158,8 +158,8 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus']!='') ) {
 	} //end if there is actually a status change the class Status != the POST['Status']
 }
 
-
-if (isset($_GET['NewOrder']) and isset($_GET['StockID']) and isset($_GET['SelectedSupplier'])) {
+/*New order initiated by user clicking on supplier purchasing data from items page */
+if (isset($_GET['NewOrder']) AND isset($_GET['StockID']) AND isset($_GET['SelectedSupplier'])) {
 		/*
 		* initialise a new order
 		*/
@@ -312,7 +312,7 @@ if (isset($_POST['SearchSuppliers'])){
 							suppliers.address6,
 							suppliers.currcode
 						FROM suppliers
-						WHERE suppliers.suppname LIKE '". $SearchString ."'
+						WHERE suppliers.suppname " . LIKE . " '". $SearchString ."'
 						ORDER BY suppliers.suppname";
 
 		} elseif (strlen($_POST['SuppCode'])>0){
@@ -326,7 +326,7 @@ if (isset($_POST['SearchSuppliers'])){
 							suppliers.address6,
 							suppliers.currcode
 						FROM suppliers
-						WHERE suppliers.supplierid LIKE '%" . $_POST['SuppCode'] . "%'
+						WHERE suppliers.supplierid " . LIKE . " '%" . $_POST['SuppCode'] . "%'
 						ORDER BY suppliers.supplierid";
 		}
 
@@ -371,7 +371,7 @@ if((!isset($_POST['SearchSuppliers']) or $_POST['SearchSuppliers']=='' ) AND
 
 if (isset($_POST['Select'])) {
 
-/* will only be true if page called from supplier selection form
+/* will only be true if page called from supplier selection form or item purchasing data order link
  * or set because only one supplier record returned from a search
  */
 
@@ -501,8 +501,9 @@ if (isset($_POST['Select'])) {
 }
 
 // part of step 1
-if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifier]->SupplierID) OR
-		$_SESSION['PO'.$identifier]->SupplierID=='' ) {
+if ($_SESSION['RequireSupplierSelection'] ==1 
+	OR !isset($_SESSION['PO'.$identifier]->SupplierID) 
+	OR $_SESSION['PO'.$identifier]->SupplierID=='' ) {
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
 		_('Purchase Order') . '" alt="">' . ' ' . _('Purchase Order: Select Supplier') . '';
@@ -586,13 +587,14 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 	}
 
 	if (isset($Purch_Item)) {
+		/*This is set if the user hits the link from the supplier purchasing info shown on SelectProduct.php */
 		prnMsg(_('Purchase Item(s) with this code') . ': ' .  $Purch_Item,'info');
 
 		echo '<div class="centre">';
 		echo '<br><table class="table_index"><tr><td class="menu_group_item">';
 
 		/* the link */
-		echo '<li><a href="'.$rootpath.'/PO_Items.php?' . SID . 'NewItem=' . $Purch_Item . '&identifier=' . $identifier . '">' . 	_('Enter Line Item to this purchase order') . '</a></li>';
+		echo '<li><a href="'.$rootpath.'/PO_Items.php?NewItem=' . $Purch_Item . '&identifier=' . $identifier . '">' . 	_('Enter Line Item to this purchase order') . '</a></li>';
 
 		echo '</td></tr></table></div><br>';
 
@@ -629,9 +631,9 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO'.$identifi
 												$Purch_Item,
 												$PurchItemRow['serialised'],
 												$PurchItemRow['controlled'],
-												$Qty,
+												$Qty*$PurchItemRow['conversionfactor'],
 												$PurchItemRow['description'],
-												$PurchItemRow['price'],
+												$PurchItemRow['price']/$PurchItemRow['conversionfactor'],
 												$PurchItemRow['units'],
 												$PurchItemRow['stockact'],
 												date($_SESSION['DefaultDateFormat']),

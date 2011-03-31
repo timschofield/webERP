@@ -2,9 +2,9 @@
 
 /* $Id$*/
 
-/********************************************/
+/*  ******************************************  */
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
-/********************************************/
+/*  ******************************************  */
 
 function prnMsg($Msg,$Type='info', $Prefix=''){
 
@@ -230,20 +230,6 @@ function wikiLink($type, $id) {
 	}
 
 }//wikiLink
-
-function DecimalPlaces($currcode, $db) {
-	$sql='SELECT decimalplaces FROM currencies WHERE currabrev="'.$currcode.'"';
-	$result=DB_query($sql, $db);
-	$myrow=DB_fetch_array($result);
-	return $myrow['decimalplaces'];
-}
-
-function StockDecimalPlaces($StockID, $db) {
-	$sql='SELECT decimalplaces FROM stockmaster WHERE stockid="'.$StockID.'"';
-	$result=DB_query($sql, $db);
-	$myrow=DB_fetch_array($result);
-	return $myrow['decimalplaces'];
-}
 
 
 //  Lindsay debug stuff

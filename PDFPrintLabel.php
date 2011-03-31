@@ -1,9 +1,8 @@
 <?php
-/* $Revision: 1.2 $ */
 
-//$PageSecurity = 10;
+/* $Id: PDFPrintLabel.php 4285 2010-12-22 16:01:51Z tim_schofield $*/
 
-$Version_adds= "1.2";
+$Version_adds= '1.2';
 
 include('includes/session.inc');
 require_once('includes/DefineLabelClass.php');
@@ -19,7 +18,7 @@ $pdf= null;
 // If there is no label templates, the user could select to set up a new one
 if ($AllLabels==null) {
 	echo '<br/><br/>';
-	abortMsg( _("There isn't any label template to select for printing. Click") .
+	abortMsg( _('There isn\'t any label template to select for printing. Click') .
 		' <a href="Labels.php"><b>' . _('HERE'). '</b></a> '. _('to set up a new one') );
 }
 
@@ -189,15 +188,15 @@ function selLabels($type) {
 }
 
 function selSalesType($type) {
-	return selectTable("SELECT typeabbrev, sales_type FROM salestypes ORDER BY sales_type", $type);
+	return selectTable('SELECT typeabbrev, sales_type FROM salestypes ORDER BY sales_type', $type);
 }
 
 function selCurrency($curr) {
-	return selectTable("SELECT currabrev, currency FROM currencies", $curr);
+	return selectTable('SELECT currabrev, currency FROM currencies', $curr);
 }
 
 function selCategory(&$categ) {
-	return selectTable("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription", $categ);
+	return selectTable('SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription', $categ);
 }
 
 function selectTable($sql, &$currentKey) {

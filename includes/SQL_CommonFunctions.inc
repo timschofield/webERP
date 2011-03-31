@@ -18,7 +18,7 @@ Also updates the transaction number
 
 	DB_query('LOCK TABLES systypes WRITE',$db);
 
-	$SQL = 'SELECT typeno FROM systypes WHERE typeid = ' . $TransType;
+	$SQL = "SELECT typeno FROM systypes WHERE typeid = '" . $TransType . "'";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>' . _('The next transaction number could not be retrieved from the database because');
 	$DbgMsg =  _('The following SQL to retrieve the transaction number was used');
@@ -26,12 +26,12 @@ Also updates the transaction number
 
 	$myrow = DB_fetch_row($GetTransNoResult);
 
-	$SQL = 'UPDATE systypes SET typeno = ' . ($myrow[0] + 1) . ' WHERE typeid = ' . $TransType;
+	$SQL = "UPDATE systypes SET typeno = '" . ($myrow[0] + 1) . "' WHERE typeid = '" . $TransType . "'";
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The transaction number could not be incremented');
 	$DbgMsg =  _('The following SQL to increment the transaction number was used');
 	$UpdTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
-	DB_query("UNLOCK TABLES",$db);
+	DB_query('UNLOCK TABLES',$db);
 
 	return $myrow[0] + 1;
 }
@@ -41,14 +41,13 @@ Function GetStockGLCode ($StockID, &$db){
 
 /*Gets the GL Codes relevant to the stock item account from the stock category record */
 	$QuerySQL = "SELECT stockact,
-											adjglact,
-											purchpricevaract,
-											materialuseagevarac,
-											wipact
-							FROM stockmaster,
-											stockcategory
-							WHERE stockmaster.categoryid=stockcategory.categoryid
-							AND stockmaster.stockid = '" . $StockID . "'";
+						adjglact,
+						purchpricevaract,
+						materialuseagevarac,
+						wipact
+				FROM stockmaster INNER JOIN stockcategory
+				ON stockmaster.categoryid=stockcategory.categoryid
+				WHERE stockmaster.stockid = '" . $StockID . "'";
 
 	$ErrMsg =  _('The stock GL codes could not be retrieved because');
 	$GetStkGLResult = DB_query($QuerySQL, $db, $ErrMsg);
@@ -62,10 +61,10 @@ Function GetTaxRate ($TaxAuthority, $DispatchTaxProvince, $TaxCategory, &$db){
 /*Gets the Tax rate applicable to an item from the TaxAuthority of the branch and TaxLevel of the item */
 
 	$QuerySQL = "SELECT taxrate
-			FROM taxauthrates
-			WHERE taxauthority='" . $TaxAuthority . "'
-			AND dispatchtaxprovince='" . $DispatchTaxProvince . "'
-			AND taxcatid = '" . $TaxCategory . "'";
+				FROM taxauthrates
+				WHERE taxauthority='" . $TaxAuthority . "'
+				AND dispatchtaxprovince='" . $DispatchTaxProvince . "'
+				AND taxcatid = '" . $TaxCategory . "'";
 
 	$ErrMsg = _('The tax rate for this item could not be retrieved because');
 	$GetTaxRateResult = DB_query($QuerySQL,$db,$ErrMsg);
@@ -168,19 +167,19 @@ function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 			$ValueOfChange = $QOH * ($NewCost - $OldCost);
 
 			$SQL = "INSERT INTO gltrans (type,
-																typeno,
-																trandate,
-																periodno,
-																account,
-																narrative,
-																amount)
-							VALUES (35,
-							" . $CostUpdateNo . ",
+										typeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount)
+							VALUES ('35',
+							'" . $CostUpdateNo . "',
 							'" . Date('Y-m-d') . "',
-							" . $PeriodNo . ",
-							" . $StockGLCode['adjglact'] . ",
+							'" . $PeriodNo . "',
+							'" . $StockGLCode['adjglact'] . "',
 							'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
-							" . (-$ValueOfChange) . ")";
+							'" . (-$ValueOfChange) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL credit for the stock cost adjustment posting could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -193,13 +192,13 @@ function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 							account,
 							narrative,
 							amount)
-						VALUES (35,
-							" . $CostUpdateNo . ",
+						VALUES ('35',
+							'" . $CostUpdateNo . "',
 							'" . Date('Y-m-d') . "',
-							" . $PeriodNo . ",
-							" . $StockGLCode['stockact'] . ",
+							'" . $PeriodNo . "',
+							'" . $StockGLCode['stockact'] . "',
 							'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') .' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
-							" . $ValueOfChange . ")";
+							'" . $ValueOfChange . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -231,10 +230,10 @@ function BomMaterialCost($Parent, $db) {
 }
 
 /*Iterates through the levels of the bom, recalculating each bom it meets*/
-function UpdateCost($db, $item) {
-	$SQL = "SELECT parent FROM bom where component = '" . $item . "'";
-	$result = DB_query($SQL, $db);
-	while ($MyRow=DB_fetch_array($result)){
+function UpdateCost($db, $Item) {
+	$SQL = "SELECT parent FROM bom where component = '" . $Item . "'";
+	$Result = DB_query($SQL, $db);
+	while ($MyRow=DB_fetch_array($Result)){
 		$NewParent = $MyRow['parent'];
 		$MaterialCost = BomMaterialCost($NewParent, $db);
 		$SQL = 'UPDATE stockmaster SET materialcost=' . $MaterialCost . " WHERE stockid='" . $NewParent . "'";
@@ -264,7 +263,7 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID="") 
 				qtypu,
 				stdcost,
 				autoissue)
-			SELECT " . $WO . ",
+			SELECT '" . $WO . "',
 				'" . $ParentID . "',
 				bom.component,
 				bom.quantity*" . $Qty . ",
@@ -278,7 +277,7 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID="") 
 			AND bom.component NOT IN (
 				SELECT stockid
 				FROM worequirements
-				WHERE wo = " . $WO . "
+				WHERE wo = '" . $WO . "'
 				AND parentstockid = '" . $ParentID . "'
 			)";
 	$result = DB_query($sql, $db);
@@ -304,7 +303,7 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID="") 
 						AND bom.component IN (
 							SELECT stockid
 							FROM worequirements
-							WHERE wo = " . $WO . "
+							WHERE wo = '" . $WO . "'
 							AND parentstockid = '". $ParentID . "'
 						)
 					) AS g ON g.wo=worequirements.wo
