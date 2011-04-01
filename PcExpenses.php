@@ -1,7 +1,6 @@
 <?php
-/* $Revision: 1.0$ */
 
-//$PageSecurity = 15;
+/* $Id$*/
 
 include('includes/session.inc');
 $title = _('Maintenance Of Petty Cash Of Expenses');
@@ -95,7 +94,7 @@ if (isset($_POST['submit'])) {
 
 			$msg = _('Expense ') . ' ' . $_POST['codeexpense'] .  ' ' . _('has been created');
 			$checkSql = "SELECT count(codeexpense)
-			     FROM pcexpenses";
+						FROM pcexpenses";
 			$result = DB_query($checkSql, $db);
 			$row = DB_fetch_row($result);
 
@@ -154,12 +153,12 @@ or deletion of the records*/
 	$result = DB_query($sql,$db);
 
 	echo '<table class=selection>';
-	echo "<tr>
-		<th>" . _('Code Of Expense') . "</th>
-		<th>" . _('Description') . "</th>
-		<th>" . _('Account Code') . "</th>
-		<th>" . _('Account Description') . "</th>
-	</tr>";
+	echo '<tr>
+		<th>' . _('Code Of Expense') . '</th>
+		<th>' . _('Description') . '</th>
+		<th>' . _('Account Code') . '</th>
+		<th>' . _('Account Description') . '</th>
+	</tr>';
 
 	$k=0; //row colour counter
 
@@ -190,8 +189,8 @@ or deletion of the records*/
 			$myrow[1],
 			$myrow[2],
 			$Description[0],
-			$_SERVER['PHP_SELF'] . '?' . SID, $myrow[0],
-		$_SERVER['PHP_SELF'] . '?' . SID, $myrow[0]);
+			$_SERVER['PHP_SELF'] . '?', $myrow[0],
+		$_SERVER['PHP_SELF'] . '?', $myrow[0]);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -200,11 +199,11 @@ or deletion of the records*/
 //end of ifs and buts!
 if (isset($SelectedExpense)) {
 
-	echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Show All Petty Cash Expenses Defined') . '</a></div><p>';
+	echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show All Petty Cash Expenses Defined') . '</a></div><p>';
 }
 if (! isset($_GET['delete'])) {
 
-	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p><table class=selection>'; //Main table
 
@@ -216,7 +215,7 @@ if (! isset($_GET['delete'])) {
 			       description,
 				   glaccount
 		        FROM pcexpenses
-		        WHERE codeexpense='$SelectedExpense'";
+		        WHERE codeexpense='" . $SelectedExpense . "'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -225,9 +224,9 @@ if (! isset($_GET['delete'])) {
 		$_POST['description']  = $myrow['description'];
 		$_POST['glaccount']  = $myrow['glaccount'];
 
-		echo "<input type=hidden name='SelectedExpense' VALUE=" . $SelectedExpense . ">";
-		echo "<input type=hidden name='codeexpense' VALUE=" . $_POST['codeexpense']. ">";
-		echo "<table class=selection> <tr><td>" . _('Code Of Expense') . ":</td><td>";
+		echo '<input type=hidden name="SelectedExpense" value="' . $SelectedExpense . '">';
+		echo '<input type=hidden name="codeexpense" VALUE="' . $_POST['codeexpense']. '">';
+		echo '<table class="selection"> <tr><td>' . _('Code Of Expense') . ':</td><td>';
 
 		// We dont allow the user to change an existing type code
 
@@ -237,32 +236,33 @@ if (! isset($_GET['delete'])) {
 
 		// This is a new type so the user may volunteer a type code
 
-		echo "<table class=selection><tr><td>" . _('Code Of Expense') . ":</td><td><input type='Text'
-				" . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) ." name='codeexpense'></td></tr>";
+		echo '<table class=selection>
+				<tr><td>' . _('Code Of Expense') . ':</td>
+					<td><input type="Text"' . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) .' name="codeexpense"></td></tr>';
 
 	}
 
 	if (!isset($_POST['description'])) {
 		$_POST['description']='';
 	}
-	echo "<tr><td>" . _('Description') . ":</td><td><input type='Text' name='description' size=50 maxlength=49 value='" . $_POST['description'] . "'></td></tr>";
+	echo '<tr><td>' . _('Description') . ':</td><td><input type="Text" name="description" size=50 maxlength=49 value="' . $_POST['description'] . '"></td></tr>';
 
-	echo '<tr><td>' . _('Account Code') . ":</td><td><select name='glaccount'>";
+	echo '<tr><td>' . _('Account Code') . ':</td><td><select name="glaccount">';
 
 	DB_free_result($result);
-	$SQL = "SELECT accountcode,
+	$SQL = 'SELECT accountcode,
 				accountname
 			FROM chartmaster
-			ORDER BY accountcode";
+			ORDER BY accountcode';
 	$result = DB_query($SQL,$db);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['glaccount']) and $myrow['accountcode']==$_POST['glaccount']) {
-			echo "<option selected VALUE='";
+			echo '<option selected VALUE="';
 		} else {
-			echo "<option VALUE='";
+			echo '<option VALUE="';
 		}
-		echo $myrow['accountcode'] . "'>" . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
+		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
 
 	} //end while loop
 

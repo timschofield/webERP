@@ -1,9 +1,7 @@
 <?php
-/* $Revision: 1.13 $ */
 
 /* $Id$*/
 
-//$PageSecurity = 2;
 include('includes/session.inc');
 
 if (isset($_POST['PrintPDF'])){
@@ -359,8 +357,8 @@ if (isset($_POST['PrintPDF'])){
 		} /*end if $PrintThisCustomer == true */
 	} /*end while loop */
 
-    $pdf->OutputD($_SESSION['DatabaseName'] . '_CustomerList_' . date('Y-m-d').'.pdf');//UldisN
-    $pdf->__destruct(); //UldisN
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_CustomerList_' . date('Y-m-d').'.pdf');//UldisN
+	$pdf->__destruct();
 	exit;
 
 } else {
@@ -377,10 +375,10 @@ if (isset($_POST['PrintPDF'])){
 	$sql='SELECT areacode, areadescription FROM areas';
 	$AreasResult= DB_query($sql,$db);
 
-	echo '<option selected value="All">' . _('All Areas');
+	echo '<option selected value="All">' . _('All Areas') . '</option>';
 
 	While ($myrow = DB_fetch_array($AreasResult)){
-		echo '<option value="' . $myrow['areacode'] . '">' . $myrow['areadescription'];
+		echo '<option value="' . $myrow['areacode'] . '">' . $myrow['areadescription'] . '</option>';
 	}
 	echo '</select></td></tr>';
 
@@ -398,16 +396,16 @@ if (isset($_POST['PrintPDF'])){
 
 	echo '<tr><td>' . _('Level Of Activity'). ':</td><td><select name="Activity">';
 
-	echo '<option selected value="All">'. _('All customers');
-	echo '<option value="GreaterThan">'. _('Sales Greater Than');
-	echo '<option value="LessThan">'. _('Sales Less Than');
+	echo '<option selected value="All">'. _('All customers') . '</option>';
+	echo '<option value="GreaterThan">'. _('Sales Greater Than') . '</option>';
+	echo '<option value="LessThan">'. _('Sales Less Than') . '</option>';
 	echo '</select></td><td>';
 
 	echo '<input type="text" class=number name="ActivityAmount" size=8 maxlength=8 value=0></td></tr>';
 
 	$DefaultActivitySince = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-6,0,Date('y')));
-	echo '<tr><td>' . _('Activity Since'). ':</td><td><input type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'"  name="ActivitySince" size=10 maxlength=10
-		VALUE="' . $DefaultActivitySince . '"></td></tr>';
+	echo '<tr><td>' . _('Activity Since'). ':</td>
+			<td><input type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'"  name="ActivitySince" size=10 maxlength=10 value="' . $DefaultActivitySince . '"></td></tr>';
 
 	echo '</table><br><div class="centre"><input type=Submit Name="PrintPDF" Value="'. _('Print PDF'). '"></div>';
 

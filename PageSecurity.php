@@ -1,5 +1,7 @@
 <?php
 
+/*$Id: PageSecurity.php 4500 2011-02-27 09:18:42Z daintree $ */
+
 include('includes/session.inc');
 
 $title = _('Page Security Levels');
@@ -19,20 +21,20 @@ if (isset($_POST['Update'])) {
 }
 
 $sql='SELECT script,
-							pagesecurity,
-							description
-			FROM scripts';
+			pagesecurity,
+			description
+		FROM scripts';
 
 $result=DB_query($sql, $db);
 
-echo '<br /><form method="post" id="PageSecurity" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+echo '<br /><form method="post" id="PageSecurity" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table class="selection">';
 
-$TokenSql="SELECT tokenid,
+$TokenSql='SELECT tokenid,
 					tokenname
-				FROM securitytokens";
+				FROM securitytokens';
 $TokenResult=DB_query($TokenSql, $db);
 
 while ($myrow=DB_fetch_array($result)) {

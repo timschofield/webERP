@@ -6,13 +6,13 @@
 include('includes/session.inc');
 
 //ANSI SQL???
-$sql='show tables where Tables_in_'.$_SESSION['DatabaseName'].'="mrprequirements"';
+$sql='SHOW TABLES WHERE Tables_in_'.$_SESSION['DatabaseName']."='mrprequirements'";
 
 $result=DB_query($sql,$db);
 if (DB_num_rows($result)==0) {
 	$title=_('MRP error');
 	include('includes/header.inc');
-	echo '<br>';
+	echo '<br />';
 	prnMsg( _('The MRP calculation must be run before you can run this report').'<br />'.
 			_('To run the MRP calculation click').' '.'<a href="'.$rootpath .'/MRP.php">'._('here').'</a>', 'error');
 	include('includes/footer.inc');
@@ -159,7 +159,7 @@ if (isset($_POST['PrintPDF'])) {
 	   prnMsg( _('No MRP shortages retrieved'), 'warn');
 	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-		  echo "<br />$sql";
+		  echo '<br />' . $sql;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -225,8 +225,8 @@ if (isset($_POST['PrintPDF'])) {
 	$DisplayTotalVal = number_format($Total_Shortage,2);
 	$pdf->addTextWrap(510,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_MRPShortages_' . date('Y-m-d').'.pdf');//UldisN
-	$pdf->__destruct(); //UldisN
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_MRPShortages_' . date('Y-m-d').'.pdf');
+	$pdf->__destruct(); 
 } else { /*The option to print PDF was not hit so display form */
 
 	$title=_('MRP Shortages Reporting');
@@ -256,7 +256,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo "<option selected value='yes'>" . _('Print With Alternating Highlighted Lines').'</option>';
 	echo "<option value='no'>" . _('Plain Print').'</option>';
 	echo '</select></td></tr>';
-	echo "</table><br><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
+	echo "</table><br /><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
 
 	include('includes/footer.inc');
 
