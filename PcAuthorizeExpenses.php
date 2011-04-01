@@ -94,7 +94,7 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 	while ($myrow=DB_fetch_array($result))	{
 
 		//update database if update pressed
-		if ((isset($_POST['submit']) and $_POST['submit']=='Update') AND isset($_POST[$myrow['counterindex']])){
+		if ((isset($_POST['submit']) and $_POST['submit']==_('Update')) AND isset($_POST[$myrow['counterindex']])){
 
 			$PeriodNo = GetPeriod(ConvertSQLDate($myrow['date']), $db);
 
