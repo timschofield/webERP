@@ -1,13 +1,13 @@
 <?php
-/* $Revision: 1.5 $ */
+
 /* $Id$*/
 // MRPPlannedPurchaseOrders.php - Report of purchase parts that MRP has determined should have
 // purchase orders created for them
 
 include('includes/session.inc');
 
-//maybe not ansi sql ??
-$sql='SHOW TABLES WHERE Tables_in_'.$_SESSION['DatabaseName'].'="mrprequirements"';
+//Maybe not ANSI SQL??
+$sql="SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrprequirements'";
 
 $result=DB_query($sql,$db);
 if (DB_num_rows($result)==0) {
@@ -29,15 +29,15 @@ if (isset($_POST['PrintPDF'])) {
 	$line_height=12;
 
 	$Xpos = $Left_Margin+1;
-	$wheredate = " ";
-	$reportdate = " ";
+	$WhereDate = ' ';
+	$ReportDate = ' ';
 	if (Is_Date($_POST['cutoffdate'])) {
-			   $formatdate = FormatDateForSQL($_POST['cutoffdate']);
-			   $wheredate = ' AND duedate <= "' . $formatdate . '" ';
-			   $reportdate = _(' Through  ') . Format_Date($_POST['cutoffdate']);
+			   $FormatDate = FormatDateForSQL($_POST['cutoffdate']);
+			   $WhereDate = " AND duedate <= '" . $FormatDate . "' ";
+			   $ReportDate = _(' Through  ') . Format_Date($_POST['cutoffdate']);
 	}
 	if ($_POST['Consolidation'] == 'None') {
-		$sql = 'SELECT mrpplannedorders.*,
+		$sql = "SELECT mrpplannedorders.*,
 					   stockmaster.stockid,
 					   stockmaster.description,
 					   stockmaster.mbflag,
@@ -46,11 +46,11 @@ if (isset($_POST['PrintPDF'])) {
 					   (stockmaster.materialcost + stockmaster.labourcost +
 						stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
-				WHERE mrpplannedorders.part = stockmaster.stockid '  . "$wheredate" .
-				  ' AND stockmaster.mbflag IN ("B","P")
-				ORDER BY mrpplannedorders.part,mrpplannedorders.duedate';
+				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . "  
+				 AND stockmaster.mbflag IN ('B','P')
+				ORDER BY mrpplannedorders.part,mrpplannedorders.duedate";
 	} elseif ($_POST['Consolidation'] == 'Weekly') {
-		$sql = 'SELECT mrpplannedorders.part,
+		$sql = "SELECT mrpplannedorders.part,
 					   SUM(mrpplannedorders.supplyquantity) as supplyquantity,
 					   TRUNCATE(((TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE)) / 7),0) AS weekindex,
 					   MIN(mrpplannedorders.duedate) as duedate,
@@ -64,8 +64,8 @@ if (isset($_POST['PrintPDF'])) {
 					   (stockmaster.materialcost + stockmaster.labourcost +
 						stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
-				WHERE mrpplannedorders.part = stockmaster.stockid '  . "$wheredate" .
-				  ' AND stockmaster.mbflag IN ("B","P")
+				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . " 
+				AND stockmaster.mbflag IN ('B','P')
 				GROUP BY mrpplannedorders.part,
 						 weekindex,
 						 stockmaster.stockid,
@@ -77,9 +77,9 @@ if (isset($_POST['PrintPDF'])) {
 					   stockmaster.labourcost,
 					   stockmaster.overheadcost,
 					   computedcost
-				ORDER BY mrpplannedorders.part,weekindex';
+				ORDER BY mrpplannedorders.part,weekindex";
 	} else {  // This else consolidates by month
-		$sql = 'SELECT mrpplannedorders.part,
+		$sql = "SELECT mrpplannedorders.part,
 					   SUM(mrpplannedorders.supplyquantity) as supplyquantity,
 					   EXTRACT(YEAR_MONTH from duedate) AS yearmonth,
 					   MIN(mrpplannedorders.duedate) as duedate,
@@ -93,8 +93,8 @@ if (isset($_POST['PrintPDF'])) {
 					   (stockmaster.materialcost + stockmaster.labourcost +
 						stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
-				WHERE mrpplannedorders.part = stockmaster.stockid  '  . "$wheredate" .
-				  ' AND stockmaster.mbflag IN ("B","P")
+				WHERE mrpplannedorders.part = stockmaster.stockid  " . $WhereDate . " 
+				AND stockmaster.mbflag IN ('B','P')
 				GROUP BY mrpplannedorders.part,
 						 yearmonth,
 						 stockmaster.stockid,
@@ -106,15 +106,15 @@ if (isset($_POST['PrintPDF'])) {
 					   stockmaster.labourcost,
 					   stockmaster.overheadcost,
 					   computedcost
-				ORDER BY mrpplannedorders.part,yearmonth ';
-	};
+				ORDER BY mrpplannedorders.part,yearmonth ";
+	}
 	$result = DB_query($sql,$db,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
 	  $title = _('MRP Planned Purchase Orders') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The MRP planned purchase orders could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo '<br><a href="' .$rootpath .'/index.php?">' . _('Back to the menu') . '</a>';
+	   echo '<br><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		  echo '<br />' . $sql;
 	   }
@@ -125,23 +125,23 @@ if (isset($_POST['PrintPDF'])) {
 		$title = _('Print MRP Planned Purchase Orders Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no items with planned purchase orders'),'info');
-		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
 
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-				$Page_Width,$Right_Margin,$_POST['Consolidation'],$reportdate);
+				$Page_Width,$Right_Margin,$_POST['Consolidation'],$ReportDate);
 
 	$Total_Shortage=0;
 	$Partctr = 0;
 	$fill = false;
 	$pdf->SetFillColor(224,235,255);  // Defines color to make alternating lines highlighted
 	$FontSize=8;
-	$holdpart = " ";
-	$holddescription = " ";
-	$holdmbflag = " ";
-	$holdcost = " ";
+	$holdpart = ' ';
+	$holddescription = ' ';
+	$holdmbflag = ' ';
+	$holdcost = ' ';
 	$holddecimalplaces = 0;
 	$totalpartqty = 0;
 	$totalpartcost = 0;
@@ -169,7 +169,7 @@ if (isset($_POST['PrintPDF'])) {
 				list($lastdate,$lastsupplier,$preferredsupplier) = GetPartInfo($db,$holdpart);
 				$displaydate = $lastdate;
 				if (!Is_Date($lastdate)) {
-					$displaydate = " ";
+					$displaydate = ' ';
 				}
 				$YPos -= $line_height;
 				$pdf->addTextWrap(50,$YPos,80,$FontSize,_('Last Purchase Date: '),'left',0,$fill);
@@ -215,7 +215,7 @@ if (isset($_POST['PrintPDF'])) {
 
 			if ($YPos < $Bottom_Margin + $line_height){
 			   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-						   $Right_Margin,$_POST['Consolidation'],$reportdate);
+						   $Right_Margin,$_POST['Consolidation'],$ReportDate);
 			}
 
 	} /*end while loop */
@@ -232,7 +232,7 @@ if (isset($_POST['PrintPDF'])) {
 	list($lastdate,$lastsupplier,$preferredsupplier) = GetPartInfo($db,$holdpart);
 	$displaydate = $lastdate;
 	if (!Is_Date($lastdate)) {
-		$displaydate = " ";
+		$displaydate = ' ';
 	}
 	$YPos -= $line_height;
 	$pdf->addTextWrap(50,$YPos,80,$FontSize,_('Last Purchase Date: '),'left',0,$fill);
@@ -246,7 +246,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	if ($YPos < $Bottom_Margin + $line_height){
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-					   $Right_Margin,$_POST['Consolidation'],$reportdate);
+					   $Right_Margin,$_POST['Consolidation'],$ReportDate);
 		  // include('includes/MRPPlannedPurchaseOrdersPageHeader.inc');
 	}
 /*Print out the grand totals */
@@ -266,7 +266,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
 		_('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
 
-	echo '<form action=' . $_SERVER['PHP_SELF'] . ' method="post"><table class=selection>';
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post"><table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<tr><td>' . _('Consolidation') . ':</td><td><select name="Consolidation">';
 	echo '<option selected value="None">' . _('None') . '</option>';
@@ -286,7 +286,7 @@ if (isset($_POST['PrintPDF'])) {
 } /*end of else not PrintPDF */
 
 function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-					 $Page_Width,$Right_Margin,$consolidation,$reportdate) {
+					 $Page_Width,$Right_Margin,$consolidation,$ReportDate) {
 
 	/*PDF page header for MRP Planned Work Orders report */
 	if ($PageNumber>1){
@@ -301,7 +301,7 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$YPos -=$line_height;
 
 	$pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize,_('MRP Planned Purchase Orders Report'));
-	$pdf->addTextWrap(190,$YPos,100,$FontSize,$reportdate);
+	$pdf->addTextWrap(190,$YPos,100,$FontSize,$ReportDate);
 	$pdf->addTextWrap($Page_Width-$Right_Margin-150,$YPos,160,$FontSize,_('Printed') . ': ' .
 		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
 	$YPos -= $line_height;
@@ -340,32 +340,32 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 function GetPartInfo(&$db,$part) {
 	// Get last purchase order date and supplier for part, and also preferred supplier
 	// Printed when there is a part break
-	$sql = 'SELECT orddate as maxdate,
+	$sql = "SELECT orddate as maxdate,
 				   purchorders.orderno
 			FROM purchorders,
 				 purchorderdetails
 			WHERE purchorders.orderno = purchorderdetails.orderno
-			  AND purchorderdetails.itemcode = "'.$part .'"
-			  ORDER BY orddate DESC LIMIT 1';
+			  AND purchorderdetails.itemcode = '" . $part ."'
+			  ORDER BY orddate DESC LIMIT 1";
 	$result = DB_query($sql,$db);
 	if (DB_num_rows($result)>0) {
 		$myrow = DB_fetch_array($result,$db);
-		$partinfo[] = ConvertSQLDate($myrow['maxdate']);
-		$orderno = $myrow['orderno'];
-		$sql = 'SELECT supplierno
-			FROM purchorders
-			WHERE purchorders.orderno = "'.$orderno . '"';
+		$PartInfo[] = ConvertSQLDate($myrow['maxdate']);
+		$OrderNo= $myrow['orderno'];
+		$sql = "SELECT supplierno
+				FROM purchorders
+				WHERE purchorders.orderno = '" .$OrderNo. "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_array($result,$db);
-		$partinfo[] = $myrow['supplierno'];
-		$sql = 'SELECT supplierno
+		$PartInfo[] = $myrow['supplierno'];
+		$sql = "SELECT supplierno
 			FROM purchdata
-			WHERE stockid = "' . $part . '"
-				AND preferred="1"';
+			WHERE stockid = '" . $part . "'
+				AND preferred='1'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_array($result,$db);
-		$partinfo[] = $myrow['supplierno'];
-		return $partinfo;
+		$PartInfo[] = $myrow['supplierno'];
+		return $PartInfo;
 	} else {
 		return array('','','');
 	}

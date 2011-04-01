@@ -56,7 +56,7 @@ $pdf->addText($FormDesign->Initiator->x+70,$Page_Height - $FormDesign->Initiator
 /*Find the description of the payment terms and display.
  * If it is a preview then just insert dummy data */
 if ($OrderNo != 'Preview') {
-	$sql='SELECT terms FROM paymentterms where termsindicator="'.$POHeader['paymentterms'].'"';
+	$sql="SELECT terms FROM paymentterms where termsindicator='".$POHeader['paymentterms']."'";
 	$termsresult=DB_query($sql, $db);
 	$myrow=DB_fetch_array($termsresult);
 	$pdf->addText($FormDesign->PaymentTerms->x,$Page_Height - $FormDesign->PaymentTerms->y, $FormDesign->PaymentTerms->FontSize, _('Payment Terms').' :  '.$myrow['terms']);

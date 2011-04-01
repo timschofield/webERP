@@ -1,14 +1,12 @@
 <?php
-/* $Revision: 1.3 $ */
-/* $Id$*/
 
-//$PageSecurity=9;
+/* $Id$*/
 
 include('includes/session.inc');
 $title = _('MRP Demand Types');
 include('includes/header.inc');
 
-//SelectedDT is the Selected mrpdemandtype
+//SelectedDT is the Selected MRPDemandType
 if (isset($_POST['SelectedDT'])){
 	$SelectedDT = trim(strtoupper($_POST['SelectedDT']));
 } elseif (isset($_GET['SelectedDT'])){
@@ -28,13 +26,13 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if (trim(strtoupper($_POST['mrpdemandtype']) == "WO") or
-	   trim(strtoupper($_POST['mrpdemandtype']) == "SO")) {
+	if (trim(strtoupper($_POST['MRPDemandType']) == 'WO') or
+	   trim(strtoupper($_POST['MRPDemandType']) == 'SO')) {
 		$InputError = 1;
 		prnMsg(_('The Demand Type is reserved for the system'),'error');
 	}
 
-	if (strlen($_POST['mrpdemandtype']) < 1) {
+	if (strlen($_POST['MRPDemandType']) < 1) {
 		$InputError = 1;
 		prnMsg(_('The Demand Type code must be at least 1 character long'),'error');
 	}
@@ -59,7 +57,7 @@ if (isset($_POST['submit'])) {
 
 		$sql = "INSERT INTO mrpdemandtypes (mrpdemandtype,
 						description)
-					VALUES ('" . trim(strtoupper($_POST['mrpdemandtype'])) . "',
+					VALUES ('" . trim(strtoupper($_POST['MRPDemandType'])) . "',
 						'" . $_POST['Description'] . "'
 						)";
 		$msg = _('The new demand type has been added to the database');
@@ -69,9 +67,9 @@ if (isset($_POST['submit'])) {
 	if ($InputError !=1){
 		$result = DB_query($sql,$db,_('The update/addition of the demand type failed because'));
 		prnMsg($msg,'success');
-		echo '<br>';
+		echo '<br />';
 		unset ($_POST['Description']);
-		unset ($_POST['mrpdemandtype']);
+		unset ($_POST['MRPDemandType']);
 		unset ($SelectedDT);
 	}
 
@@ -81,17 +79,17 @@ if (isset($_POST['submit'])) {
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'MRPDemands'
 
 	$sql= "SELECT COUNT(*) FROM mrpdemands
-	         WHERE mrpdemands.mrpdemandtype='$SelectedDT'
+	         WHERE mrpdemands.mrpdemandtype='" . $SelectedDT . "'
 	         GROUP BY mrpdemandtype";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg(_('Cannot delete this demand type because MRP Demand records exist for this type') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' ._('MRP Demands referring to this type'),'warn');
     } else {
-			$sql="DELETE FROM mrpdemandtypes WHERE mrpdemandtype='$SelectedDT'";
+			$sql="DELETE FROM mrpdemandtypes WHERE mrpdemandtype='" . $SelectedDT . "'";
 			$result = DB_query($sql,$db);
 			prnMsg(_('The selected demand type record has been deleted'),'succes');
-			echo '<br>';
+			echo '<br />';
 	} // end of MRPDemands test
 }
 
@@ -110,22 +108,22 @@ if (!isset($SelectedDT) or isset($_GET['delete'])) {
 
 	$result = DB_query($sql,$db);
 
-	echo "<table class=selection>
-		<tr BGCOLOR =#800000><th>" . _('Demand Type') . "</th>
-				<th>" . _('Description') . "</th>
-		</tr></font>";
+	echo '<table class=selection>
+		<tr BGCOLOR =#800000><th>' . _('Demand Type') . '</th>
+				<th>' . _('Description') . '</th>
+		</tr></font>';
 
 	while ($myrow = DB_fetch_row($result)) {
 
 		printf("<tr><td>%s</td>
 				<td>%s</td>
-				<td><a href=\"%s&SelectedDT=%s\">" . _('Edit') . "</td>
-				<td><a href=\"%s&SelectedDT=%s&delete=yes\">" . _('Delete') ."</td>
+				<td><a href=\"%sSelectedDT=%s\">" . _('Edit') . "</td>
+				<td><a href=\"%sSelectedDT=%s&delete=yes\">" . _('Delete') ."</td>
 				</tr>",
 				$myrow[0],
 				$myrow[1],
-				$_SERVER['PHP_SELF'] . '?' . SID,
-				$myrow[0], $_SERVER['PHP_SELF'] . '?' . SID,
+				$_SERVER['PHP_SELF'] . '?',
+				$myrow[0], $_SERVER['PHP_SELF'] . '?',
 				$myrow[0]);
 	}
 
@@ -136,10 +134,10 @@ if (!isset($SelectedDT) or isset($_GET['delete'])) {
 //end of ifs and buts!
 
 if (isset($SelectedDT) and !isset($_GET['delete'])) {
-	echo "<div class='centre'><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Show all Demand Types') . '</a></div>';
+	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show all Demand Types') . '</a></div>';
 }
 
-echo "<p><form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+echo '<p><form method="post" action="' . $_SERVER['PHP_SELF'] .'">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedDT) and !isset($_GET['delete'])) {
@@ -148,25 +146,25 @@ if (isset($SelectedDT) and !isset($_GET['delete'])) {
 	$sql = "SELECT mrpdemandtype,
 	        description
 		FROM mrpdemandtypes
-		WHERE mrpdemandtype='$SelectedDT'";
+		WHERE mrpdemandtype='" . $SelectedDT . "'";
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 
-	$_POST['mrpdemandtype'] = $myrow['mrpdemandtype'];
+	$_POST['MRPDemandType'] = $myrow['mrpdemandtype'];
 	$_POST['Description'] = $myrow['description'];
 
 	echo '<input type=hidden name=SelectedDT value=' . $SelectedDT . '>';
-	echo "<input type=hidden name=mrpdemandtype value='" . $_POST['mrpdemandtype'] . "'>";
-	echo '<table class=selection><tr><td>' ._('Demand Type') . ':</td><td>' . $_POST['mrpdemandtype'] . '</td></tr>';
+	echo "<input type=hidden name=MRPDemandType value='" . $_POST['MRPDemandType'] . "'>";
+	echo '<table class=selection><tr><td>' ._('Demand Type') . ':</td><td>' . $_POST['MRPDemandType'] . '</td></tr>';
 
 } else { //end of if $SelectedDT only do the else when a new record is being entered
-	if (!isset($_POST['mrpdemandtype'])) {
-		$_POST['mrpdemandtype'] = '';
+	if (!isset($_POST['MRPDemandType'])) {
+		$_POST['MRPDemandType'] = '';
 	}
 	echo '<table class=selection><tr>
 			<td>' . _('Demand Type') . ":</td>
-			<td><input type='Text' name='mrpdemandtype' size=6 maxlength=5 value='" . $_POST['mrpdemandtype'] . "'></td>
+			<td><input type='Text' name='MRPDemandType' size=6 maxlength=5 value='" . $_POST['MRPDemandType'] . "'></td>
 			</tr>" ;
 }
 

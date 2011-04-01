@@ -1,9 +1,7 @@
 <?php
-/* $Revision: 1.17 $ */
 
 /* $Id$ */
 
-//$PageSecurity = 2;
 include('includes/session.inc');
 
 if (isset($_POST['PrintPDF'])
@@ -76,9 +74,9 @@ if (isset($_POST['PrintPDF'])
 	  $title = _('Inventory Valuation') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The inventory valuation could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-		  echo "<br>$SQL";
+		  echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -87,7 +85,7 @@ if (isset($_POST['PrintPDF'])
 		$title = _('Print Inventory Valuation Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no items with any value to print out for the location specified'),'info');
-		echo "<br><a href='" . $rootpath . "/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -116,9 +114,9 @@ if (isset($_POST['PrintPDF'])
 
 				$DisplayCatTotVal = number_format($CatTot_Val,2);
 				$DisplayCatTotQty = number_format($CatTot_Qty,0);
-								$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
-							$LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
-								$YPos -=$line_height;
+				$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
+				$LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
+				$YPos -=$line_height;
 
 				If ($_POST['DetailedReport']=='Yes'){
 				/*draw a line under the CATEGORY TOTAL*/
@@ -206,10 +204,10 @@ if (isset($_POST['PrintPDF'])
 
 		echo '<tr><td>' . _('From Inventory Category Code') . ':</font></td><td><select name=FromCriteria>';
 
-		$sql='SELECT categoryid, categorydescription FROM stockcategory WHERE stocktype<>"A" ORDER BY categoryid';
+		$sql="SELECT categoryid, categorydescription FROM stockcategory WHERE stocktype<>'A' ORDER BY categoryid";
 		$CatResult= DB_query($sql,$db);
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo "<option value='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 		}
 		echo '</select></td></tr>';
 
@@ -219,27 +217,27 @@ if (isset($_POST['PrintPDF'])
 		DB_data_seek($CatResult,0);
 
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo "<option value='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('For Inventory in Location') . ":</td><td><select name='Location'>";
+		echo '<tr><td>' . _('For Inventory in Location') . ':</td><td><select name="Location">';
 		$sql = 'SELECT loccode, locationname FROM locations';
 		$LocnResult=DB_query($sql,$db);
 
-		echo "<option value='All'>" . _('All Locations');
+		echo '<option value="All">' . _('All Locations') . '</option>';
 
 		while ($myrow=DB_fetch_array($LocnResult)){
-				  echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
-			  		}
+			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('Summary or Detailed Report') . ":</td><td><select name='DetailedReport'>";
-		echo "<option selected Value='No'>" . _('Summary Report');
-		echo "<option Value='Yes'>" . _('Detailed Report');
+		echo '<tr><td>' . _('Summary or Detailed Report') . ':</td><td><select name="DetailedReport">';
+		echo '<option selected Value="No">' . _('Summary Report') . '</option>';
+		echo '<option Value="Yes">' . _('Detailed Report') . '</option>';
 		echo '</select></td></tr>';
 
-		echo "</table><br><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
+		echo '</table><br /><div class="centre"><input type="Submit" name="PrintPDF" value="' . _('Print PDF') . '"></div>';
 	}
 	include('includes/footer.inc');
 
