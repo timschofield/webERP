@@ -2,8 +2,6 @@
 
 /* $Id$*/
 
-//$PageSecurity = 2;
-
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -13,7 +11,7 @@ include('includes/SQL_CommonFunctions.inc');
 if ($_SESSION['RequirePickingNote']==0) {
 	$title = _('Picking Lists Not Enabled');
 	include('includes/header.inc');
-	echo '<br>';
+	echo '<br />';
 	prnMsg( _('The system is not configured for picking lists. Please consult your system administrator.'), 'info');
 	include('includes/footer.inc');
 	exit;
@@ -28,18 +26,19 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo']=="") and !isset($_POST['TransD
 			FROM locations';
 	$result=DB_query($sql, $db);
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
-	echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post name="form">';
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post" name="form">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection"><tr>';
 	echo '<td>'._('Create picking lists for all deliveries to be made on').' : '.'</td>';
 	echo '<td><input type=text class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="TransDate" maxlength=10 size=11 value='.date($_SESSION['DefaultDateFormat'], mktime(date('m'),date('Y'),date('d')+1)).'></td></tr>';
-	echo '<tr><td>'._('From Warehouse').' : '.'</td><td><select name="loccode">';
+	echo '<tr><td>'._('From Warehouse').' : '.'</td>
+			<td><select name="loccode">';
 	while ($myrow=DB_fetch_array($result)) {
 		echo '<option value='.$myrow['loccode'].'>'.$myrow['locationname'].'</option>';
 	}
 	echo '</select></td></tr>';
 	echo '</table>';
-	echo "<br><div class='centre'><input type=submit name=Process value='" . _('Print Picking Lists') . "'></div></form>";
+	echo '<br /><div class="centre"><input type="submit" name="Process" value="' . _('Print Picking Lists') . '"></div></form>';
 	include('includes/footer.inc');
 	exit();
 }
@@ -82,7 +81,8 @@ if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
 	AND salesorders.shipvia=shippers.shipper_id
 	AND salesorders.fromstkloc=locations.loccode
 	AND salesorders.orderno='" . $_GET['TransNo']."'";
-} else if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
+} else if (isset($_POST['TransDate']) 
+		OR (isset($_GET['TransNo']) AND $_GET['TransNo'] != 'Preview')) {
 /* We are printing picking lists for all orders on a day */
 	$sql = "SELECT salesorders.debtorno,
 		salesorders.orderno,
@@ -120,18 +120,19 @@ if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
 	AND salesorders.deliverydate='" . FormatDateForSQL($_POST['TransDate'])."'";
 }
 
-if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
+if (isset($_POST['TransDate']) 
+	OR (isset($_GET['TransNo']) AND $_GET['TransNo'] != 'Preview')) {
 	$result=DB_query($sql,$db, $ErrMsg);
 
 	/*if there are no rows, there's a problem. */
 	if (DB_num_rows($result)==0){
 		$title = _('Print Picking List Error');
 		include('includes/header.inc');
-		echo '<br>';
+		echo '<br />';
 		prnMsg( _('Unable to Locate any orders for this criteria '), 'info');
-		echo '<br><table class="selection"><tr><td>
-				<a href="'. $rootpath . '/PDFPickingList.php?'. SID .'">' . _('Enter Another Date') . '</a>
-				</td></tr></table><br>';
+		echo '<br /><table class="selection"><tr><td>
+				<a href="'. $rootpath . '/PDFPickingList.php">' . _('Enter Another Date') . '</a>
+				</td></tr></table><br />';
 		include('includes/footer.inc');
 		exit();
 	}
@@ -184,7 +185,7 @@ include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Picking List') );
 $pdf->addInfo('Subject', _('Laser Picking List') );
 $FontSize=12;
-$ListCount = 0; // UldisN
+$ListCount = 0; 
 $Copy='';
 
 $line_height=$FormDesign->LineHeight;
@@ -204,9 +205,9 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 			$OrdersToPick[$i]['orderno'] . ' ' . _('from the database');
 
 		/* Are there any picking lists for this order already */
-		$sql='SELECT COUNT(orderno)
+		$sql="SELECT COUNT(orderno)
 				FROM pickinglists
-				WHERE orderno='.$OrdersToPick[$i]['orderno'];
+				WHERE orderno='" . $OrdersToPick[$i]['orderno'] . "'";
 		$countresult=DB_query($sql, $db);
 		$count=DB_fetch_row($countresult);
 		if ($count[0]==0) {
@@ -325,7 +326,7 @@ if ($ListCount == 0){
 	include('includes/footer.inc');
 	exit;
 } else {
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_PickingLists_' . date('Y-m-d') . '.pdf');//UldisN
-		$pdf->__destruct(); //UldisN
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_PickingLists_' . date('Y-m-d') . '.pdf');
+	$pdf->__destruct(); 
 }
 ?>

@@ -2,9 +2,6 @@
 
 /* $Id$*/
 
-/* $Revision: 1.13 $ */
-
-//$PageSecurity = 3;
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/session.inc');
 
@@ -27,7 +24,7 @@ if (!isset($_POST['Date'])){
 		prnMsg($msg,'error');
 	}
 
-	 echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
+	 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	 echo '<table class=selection>
 	 			<tr>
@@ -39,14 +36,15 @@ if (!isset($_POST['Date'])){
 
 	echo "<select name='TransType'>";
 
-	echo '<option value=20>' . _('Invoices').'</option>';
-	echo '<option value=21>' . _('Credit Notes').'</option>';
-	echo '<option value=22>' . _('Payments').'</option>';
+	echo '<option value=20>' . _('Invoices') . '</option>';
+	echo '<option value=21>' . _('Credit Notes') . '</option>';
+	echo '<option value=22>' . _('Payments') . '</option>';
 
 	 echo '</select></td></tr>';
 
-	 echo "</select></td></tr></table><br><div class='centre'><input type=submit name='Go' value='" . _('Create PDF') . "'></div>";
-
+	 echo '</select></td></tr>
+			</table>
+			<br /><div class="centre"><input type="submit" name="Go" value="' . _('Create PDF') . '"></div>';
 
 	 include('includes/footer.inc');
 	 exit;
@@ -73,7 +71,7 @@ if (DB_error_no($db)!=0){
 	include('includes/header.inc');
 	prnMsg(_('An error occurred getting the payments'),'error');
 	if ($Debug==1){
-			prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br>' . $SQL,'error');
+			prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br />' . $SQL,'error');
 	}
 	include('includes/footer.inc');
   	exit;
@@ -100,7 +98,7 @@ include ('includes/PDFSuppTransListingPageHeader.inc');
 
 while ($myrow=DB_fetch_array($result)){
 
-	$sql='SELECT suppname FROM suppliers WHERE supplierid="'.$myrow['supplierno'].'"';
+	$sql="SELECT suppname FROM suppliers WHERE supplierid='" . $myrow['supplierno']."'";
 	$supplierresult=DB_query($sql, $db);
 	$supplierrow=DB_fetch_array($supplierresult);
 
@@ -115,9 +113,9 @@ while ($myrow=DB_fetch_array($result)){
 	  $TotalCheques = $TotalCheques - $myrow['ovamount'];
 
 	  if ($YPos - (2 *$line_height) < $Bottom_Margin){
-		  /*Then set up a new page */
-			  $PageNumber++;
-		  include ('includes/PDFChequeListingPageHeader.inc');
+		/*Then set up a new page */
+		$PageNumber++;
+		include ('includes/PDFChequeListingPageHeader.inc');
 	  } /*end of new page header  */
 } /* end of while there are customer receipts in the batch to print */
 
@@ -126,20 +124,7 @@ $YPos-=$line_height;
 $LeftOvers = $pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,number_format(-$TotalCheques,2), 'right');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+265,$YPos,300,$FontSize,_('Total') . '  ' . _('Transactions'), 'left');
 
-/* UldisN
-$pdfcode = $pdf->output();
-$len = strlen($pdfcode);
-header('Content-type: application/pdf');
-header('Content-Length: ' . $len);
-header('Content-Disposition: inline; filename=ChequeListing.pdf');
-header('Expires: 0');
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
-
-$pdf->stream();
-*/
 $ReportFileName = $_SESSION['DatabaseName'] . '_SuppTransListing_' . date('Y-m-d').'.pdf';
-$pdf->OutputD($ReportFileName);//UldisN
-$pdf->__destruct(); //UldisN
-
+$pdf->OutputD($ReportFileName);
+$pdf->__destruct(); 
 ?>
