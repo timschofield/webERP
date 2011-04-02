@@ -694,7 +694,7 @@ if (isset($_POST['NewItem'])){
 
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
-echo '<form name="form1" action="' . $_SERVER['PHP_SELF'] . '?' . SID . 'identifier=' . $identifier . '" method=post>';
+echo '<form name="form1" action="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*need to set up entry for item description where not a stock item and GL Codes */
@@ -777,12 +777,12 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 
 if (isset($_POST['NonStockOrder'])) {
 
-	echo '<br /><table class=selection><tr><td>'._('Item Description').'</td>';
+	echo '<br /><table class=selection><tr><td>' . _('Item Description') . '</td>';
 	echo '<td><input type=text name=ItemDescription size=40></td></tr>';
-	echo '<tr><td>'._('General Ledger Code').'</td>';
+	echo '<tr><td>' . _('General Ledger Code') . '</td>';
 	echo '<td><select name="GLCode">';
 	$sql='SELECT accountcode,
-							accountname
+				  accountname
 				FROM chartmaster
 				ORDER BY accountcode ASC';
 
@@ -848,7 +848,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 				AND (purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID."' 
 							OR purchdata.supplierno IS NULL)
 				ORDER BY stockmaster.stockid
-				LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+				LIMIT " .$_SESSION['DefaultDisplayRecordsMax'];
 		} else {
 			$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
@@ -985,7 +985,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 if (!isset($_GET['Edit'])) {
 	$sql="SELECT categoryid,
-					categorydescription
+				categorydescription
 		FROM stockcategory
 		WHERE stocktype<>'L'
 		AND stocktype<>'D'
@@ -1027,12 +1027,11 @@ if (!isset($_GET['Edit'])) {
 		<td><input type='text' name='StockCode' size=15 maxlength=18 value='" . $_POST['StockCode'] . "'></td>
 		</tr>
 		<tr><td></td>
-		<td><font size=3><b>" . _('OR') . ' </b></font><a target="_blank" href="'.$rootpath.'/Stocks.php?"' . SID .
-			 '">' . _('Create a New Stock Item') . "</a></td></tr>
+		<td><font size=3><b>" . _('OR') . ' </b></font><a target="_blank" href="'.$rootpath.'/Stocks.php?">' . _('Create a New Stock Item') . '</a></td></tr>
 		</table><br />
-		<div class='centre'><input type=submit name='Search' value='" . _('Search Now') . "'>
-		<input type=submit name='NonStockOrder' value='" . _('Order a non stock item') . "'>
-		</div><br />";
+		<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '">
+		<input type="submit" name="NonStockOrder" value="' . _('Order a non stock item') . '">
+		</div><br />';
 
 	$PartsDisplayed =0;
 }
@@ -1066,9 +1065,7 @@ if (isset($SearchResult)) {
 
 		$FileName = $myrow['stockid'] . '.jpg';
 		if (file_exists( $_SESSION['part_pics_dir'] . '/' . $FileName) ) {
-			$ImageSource = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] .
-				'.jpg" width="50" height="50">';
-
+			$ImageSource = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" width="50" height="50">';
 		} else {
 			$ImageSource = '<i>'._('No Image').'</i>';
 		}

@@ -1,7 +1,7 @@
 <?php
 
 /* $Id$*/
-//$PageSecurity = 6;
+
  include('includes/session.inc');
  include('includes/phplot/phplot.php');
  $title=_('Sales Report Graph');
@@ -131,15 +131,15 @@
 	echo '<tr><td>' . _('For Sales Person:') .'</td><td><select Name="SalesmanCode">';
 
 	if($_POST['SalesmanCode']=='All'){
-		echo '<option selected VALUE="All">' . _('All');
+		echo '<option selected VALUE="All">' . _('All') . '</option>';
 	} else {
-		echo '<option VALUE="All">' . _('All');
+		echo '<option VALUE="All">' . _('All') . '</option>';
 	}
 	while ($myrow=DB_fetch_array($SalesFolkResult)){
 		if ($myrow['salesmancode']== $_POST['SalesmanCode']){
-			echo '<option selected VALUE="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'];
+			echo '<option selected VALUE="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
 		} else {
-			echo '<option VALUE="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'];
+			echo '<option VALUE="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>'; 
 		}
 	}
 	echo '</select></td><td>' . $_POST['SalesmanCode'] . '</td></tr>';
@@ -227,11 +227,11 @@
 	}
 	if ($_POST['GraphOn']=='Customer'){
 		$GraphTitle .= ' ' . _('For Customers from') . ' ' . $_POST['ValueFrom'] . ' ' . _('to') . ' ' . $_POST['ValueTo'];
-		$WhereClause .= "  cust>='" . $_POST['ValueFrom'] . "' AND cust<='" . $_POST['ValueTo'] . "' AND";
+		$WhereClause .= "  cust >='" . $_POST['ValueFrom'] . "' AND cust <='" . $_POST['ValueTo'] . "' AND";
 	}
 	if ($_POST['GraphOn']=='StockID'){
 		$GraphTitle .= ' ' . _('For Items from') . ' ' . $_POST['ValueFrom'] . ' ' . _('to') . ' ' . $_POST['ValueTo'];
-		$WhereClause .= "  stockid>='" . $_POST['ValueFrom'] . "' AND stockid<='" . $_POST['ValueTo'] . "' AND";
+		$WhereClause .= "  stockid >='" . $_POST['ValueFrom'] . "' AND stockid <='" . $_POST['ValueTo'] . "' AND";
 	}
 
 	$WhereClause = 'WHERE ' . $WhereClause . ' salesanalysis.periodno>=' . $_POST['FromPeriod'] . ' AND salesanalysis.periodno <= ' . $_POST['ToPeriod'];

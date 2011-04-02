@@ -1,7 +1,6 @@
 <?php
 /* $Id$ */
 
-//$PageSecurity = 11; Now from DB
 include ('includes/session.inc');
 $title = _('Update of Prices By A Multiple Of Cost');
 include ('includes/header.inc');
@@ -46,48 +45,48 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 		$PriceCounter =0;
 		while ($myrow = DB_fetch_array($result)) {
 
-            $SQLTestExists = "SELECT price FROM prices
-        							WHERE stockid = '" . $_POST['StockID_' . $PriceCounter] . "'
-               			      		AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
-			                    	AND prices.currabrev ='" . $_POST['CurrCode'] . "'
-                        			AND prices.debtorno ='" . $_POST['DebtorNo_' . $PriceCounter] . "'
-						        	AND prices.branchcode ='" . $_POST['BranchCode_' . $PriceCounter] . "'
-							        AND prices.startdate ='" . date('Y-m-d') . "'";
-             $TestExistsResult = DB_query($SQLTestExists,$db);
-             if (DB_num_rows($TestExistsResult)==1){
+			$SQLTestExists = "SELECT price FROM prices
+	        							WHERE stockid = '" . $_POST['StockID_' . $PriceCounter] . "'
+	               			      		AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
+				                    	AND prices.currabrev ='" . $_POST['CurrCode'] . "'
+	                        			AND prices.debtorno ='" . $_POST['DebtorNo_' . $PriceCounter] . "'
+							AND prices.branchcode ='" . $_POST['BranchCode_' . $PriceCounter] . "'
+							AND prices.startdate ='" . date('Y-m-d') . "'";
+			$TestExistsResult = DB_query($SQLTestExists,$db);
+			if (DB_num_rows($TestExistsResult)==1){
                  //then we are updating
-                $SQLUpdate = "UPDATE prices	SET price = '" . $_POST['Price_' . $PriceCounter] . "'
-				             WHERE stockid = '" . $_POST['StockID_' . $PriceCounter] . "'
-				      		AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
+	                $SQLUpdate = "UPDATE prices	SET price = '" . $_POST['Price_' . $PriceCounter] . "'
+					             WHERE stockid = '" . $_POST['StockID_' . $PriceCounter] . "'
+					      		AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
 							AND prices.currabrev ='" . $_POST['CurrCode'] . "'
 							AND prices.debtorno ='" . $_POST['DebtorNo_' . $PriceCounter] . "'
 							AND prices.branchcode ='" . $_POST['BranchCode_' . $PriceCounter] . "'
 							AND prices.startdate ='" . date('Y-m-d') . "'
 							AND prices.enddate ='" . $_POST['EndDate_' . $PriceCounter] . "'";
-			    $ResultUpdate = DB_query($SQLUpdate, $db);
-             } else {
-                 //we need to add a new price from today
-                 $SQLInsert = "INSERT INTO prices (
-							stockid,
-							price,
-							typeabbrev,
-							currabrev,
-							debtorno,
-							branchcode,
-							startdate
-						) VALUES (
-							'" . $_POST['StockID_' . $PriceCounter] . "',
-							'" . $_POST['Price_' . $PriceCounter] . "',
-							'" . $_POST['SalesType'] . "',
-							'" . $_POST['CurrCode'] . "',
-							'" . $_POST['DebtorNo_' . $PriceCounter] . "',
-							'" . $_POST['BranchCode_' . $PriceCounter] . "',
-							'" . date('Y-m-d') . "'
-						)";
-			      $ResultInsert = DB_query($SQLInsert, $db);
-             }
+			$ResultUpdate = DB_query($SQLUpdate, $db);
+			} else {
+	                 //we need to add a new price from today
+	                 $SQLInsert = "INSERT INTO prices (
+								stockid,
+								price,
+								typeabbrev,
+								currabrev,
+								debtorno,
+								branchcode,
+								startdate
+							) VALUES (
+								'" . $_POST['StockID_' . $PriceCounter] . "',
+								'" . $_POST['Price_' . $PriceCounter] . "',
+								'" . $_POST['SalesType'] . "',
+								'" . $_POST['CurrCode'] . "',
+								'" . $_POST['DebtorNo_' . $PriceCounter] . "',
+								'" . $_POST['BranchCode_' . $PriceCounter] . "',
+								'" . date('Y-m-d') . "'
+							)";
+				      $ResultInsert = DB_query($SQLInsert, $db);
+			}
 			$PriceCounter++;
-		}
+		}//end while loop
 		DB_free_result($result); //clear the old result
 		$result = DB_query($sql, $db); //re-run the query with the updated prices
 		$numrow = DB_num_rows($result); // get the new number - should be the same!!
@@ -116,24 +115,24 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	if ($numrow > 0) { //the number of prices returned from the main prices query is
 		echo '<table class=selection>';
 		echo '<tr><th>' . _('Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('Customer') . '</th>
-						<th>' . _('Branch') . '</th>
-						<th>' . _('Start Date') . '</th>
-						<th>' . _('End Date') . '</th>
-						<th>' . _('Cost') . '</th>
-						<th>' . _('GP %') . '</th>
-						<th>' . _('Price Proposed') . '</th>
-						<th>' . _('List Price') . '</th>
-					<tr>';
+				<th>' . _('Description') . '</th>
+				<th>' . _('Customer') . '</th>
+				<th>' . _('Branch') . '</th>
+				<th>' . _('Start Date') . '</th>
+				<th>' . _('End Date') . '</th>
+				<th>' . _('Cost') . '</th>
+				<th>' . _('GP %') . '</th>
+				<th>' . _('Price Proposed') . '</th>
+				<th>' . _('List Price') . '</th>
+			<tr>';
 		$k = 0; //row colour counter
 		echo '<form action="' .$_SERVER['PHP_SELF'] .'" method="POST" name="update">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo'<input type="hidden" value=' . $_POST['StockCat'] . ' name="StockCat">
-					<input type="hidden" value=' . $_POST['Margin'] . ' name="Margin">
-					<input type="hidden" value=' . $_POST['CurrCode'] . ' name="CurrCode">
-					<input type="hidden" value=' . $_POST['Comparator'] . ' name="Comparator">
-					<input type="hidden" value=' . $_POST['SalesType'] . ' name="SalesType">';
+			<input type="hidden" value=' . $_POST['Margin'] . ' name="Margin">
+			<input type="hidden" value=' . $_POST['CurrCode'] . ' name="CurrCode">
+			<input type="hidden" value=' . $_POST['Comparator'] . ' name="Comparator">
+			<input type="hidden" value=' . $_POST['SalesType'] . ' name="SalesType">';
 
 		$PriceCounter =0;
 		while ($myrow = DB_fetch_array($result)) {
@@ -154,10 +153,10 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 
 			//variables for update
 			echo '<input type="hidden" value=' . $myrow['stockid'] . ' name="StockID_' . $PriceCounter .'">
-					<input type="hidden" value=' . $myrow['debtorno'] . ' name="DebtorNo_' . $PriceCounter .'">
-					<input type="hidden" value=' . $myrow['branchcode'] . ' name="BranchCode_' . $PriceCounter .'">
-					<input type="hidden" value=' . $myrow['startdate'] . ' name="StartDate_' . $PriceCounter .'">
-					<input type="hidden" value=' . $myrow['enddate'] . ' name="EndDate_' . $PriceCounter .'">';
+				<input type="hidden" value=' . $myrow['debtorno'] . ' name="DebtorNo_' . $PriceCounter .'">
+				<input type="hidden" value=' . $myrow['branchcode'] . ' name="BranchCode_' . $PriceCounter .'">
+				<input type="hidden" value=' . $myrow['startdate'] . ' name="StartDate_' . $PriceCounter .'">
+				<input type="hidden" value=' . $myrow['enddate'] . ' name="EndDate_' . $PriceCounter .'">';
 			//variable for current margin
 			if ($myrow['price'] != 0){
 				$CurrentGP = ($myrow['price']-$Cost)*100 / $myrow['price'];
@@ -172,25 +171,25 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 				$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 			}
 			echo '   <td>' . $myrow['stockid'] . '</td>
-						<td>' . $myrow['description'] . '</td>
-						<td>' . $myrow['customer'] . '</td>
-						<td>' . $myrow['branch'] . '</td>
-						<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
-						<td>' . $EndDateDisplay . '</td>
-						<td class="number">' . number_format($Cost, 2) . '</td>
-						<td class="number">' . number_format($CurrentGP, 1) . '%</td>
-						<td class="number">' . number_format($Proposed, 2) . '</td>
-						<td><input type="text" class="number" name="Price_' . $PriceCounter . '" maxlength=14 size=10 value="' . $myrow['price'] . '"></td>
-					</tr> ';
+					<td>' . $myrow['description'] . '</td>
+					<td>' . $myrow['customer'] . '</td>
+					<td>' . $myrow['branch'] . '</td>
+					<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
+					<td>' . $EndDateDisplay . '</td>
+					<td class="number">' . number_format($Cost, 2) . '</td>
+					<td class="number">' . number_format($CurrentGP, 1) . '%</td>
+					<td class="number">' . number_format($Proposed, 2) . '</td>
+					<td><input type="text" class="number" name="Price_' . $PriceCounter . '" maxlength=14 size=10 value="' . $myrow['price'] . '"></td>
+				</tr> ';
 			$PriceCounter++;
 		} //end of looping
 		echo '<tr>
 			<td style="text-align:right" colspan=4><input type=submit name=submit value=' . _('Update') . '></td>
-			<td style="text-align:left" colspan=3><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><input type=submit  value=' . _('Back') . '><a/></td>
+			<td style="text-align:left" colspan=3><a href="' . $_SERVER['PHP_SELF'] . '"><input type=submit  value=' . _('Back') . '><a/></td>
 			 </tr></form>';
 	} else {
 		prnMsg(_('There were no prices meeting the criteria specified to review'),'info');
-		echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Back') . '<a/></div><p>';
+		echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Back') . '<a/></div><p>';
 	}
 } else { /*The option to submit was not hit so display form */
 	echo '<div class="page_help_text">' . _('Use this report to display price list with the cost.') . '</div><br>';
@@ -206,13 +205,13 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 			<td><select name="StockCat">';
 	echo '<option value="all">' . _('All Categories') . '';
 	while ($myrow1 = DB_fetch_array($result1)) {
-		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
+		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	}
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Price') . '
 				<select name="Comparator">';
-	echo '<option value="1">' . _('Less than or equal to') . '';
-	echo '<option value="2">' . _('Greater than or equal to') . '';
+	echo '<option value="1">' . _('Less than or equal to') . '</option>';
+	echo '<option value="2">' . _('Greater than or equal to') . '</option>';
 	if ($_SESSION['WeightedAverageCosting']==1) {
 		echo '</select>'.' '. _('Average Cost') . ' x </td>';
 	} else {
@@ -221,23 +220,22 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	if (!isset($_POST['Margin'])){
 		$_POST['Margin']=1;
 	}
-	echo '<td>
-				<input type="text" class="number" name="Margin" MAXLENGTH =8 size=8 value=' .$_POST['Margin'] . '></td></tr>';
+	echo '<td><input type="text" class="number" name="Margin" MAXLENGTH =8 size=8 value=' .$_POST['Margin'] . '></td></tr>';
 	$result = DB_query('SELECT typeabbrev, sales_type FROM salestypes ', $db);
-	echo '<tr><td>' . _('Sales Type') . '/' . _('Price List') . ":</td>
-		<td><select name='SalesType'>";
+	echo '<tr><td>' . _('Sales Type') . '/' . _('Price List') . ':</td>
+		<td><select name="SalesType">';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['SalesType'] == $myrow['typeabbrev']) {
-			echo "<option selected value='" . $myrow['typeabbrev'] . "'>" . $myrow['sales_type'] . '</option>';
+			echo '<option selected value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 		} else {
-			echo "<option value='" . $myrow['typeabbrev'] . "'>" . $myrow['sales_type'] . '</option>';
+			echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
 	$result = DB_query('SELECT currency, currabrev FROM currencies', $db);
 	echo '</select></td></tr>
-		<tr><td>' . _('Currency') . ":</td>
-		<td><select name='CurrCode'>";
+		<tr><td>' . _('Currency') . ':</td>
+		<td><select name="CurrCode">';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['CurrCode']) and $_POST['CurrCode'] == $myrow['currabrev']) {
 			echo '<option selected value=' . $myrow['currabrev'] . '>' . $myrow['currency'] . '</option>';
@@ -247,7 +245,8 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	} //end while loop
 	DB_data_seek($result, 0);
 	echo '</select></td></tr>';
-	echo "</table></br><p><div class='centre'><input type=submit name='submit' value='" . _('Submit') . "'></div></p>";
+	echo '</table>
+		</br><p><div class="centre"><input type="submit" name="submit" value="' . _('Submit') . '"></div></p>';
 } /*end of else not submit */
 include ('includes/footer.inc');
 ?>

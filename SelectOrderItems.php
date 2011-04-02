@@ -1563,11 +1563,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		} else {
 			echo '<option value="All">' . _('All');
 		}
-		$SQL='SELECT categoryid,
-									categorydescription
-						FROM stockcategory
-						WHERE stocktype="F" OR stocktype="D"
-						ORDER BY categorydescription';
+		$SQL="SELECT categoryid,
+						categorydescription
+				FROM stockcategory
+				WHERE stocktype='F' OR stocktype='D'
+				ORDER BY categorydescription";
 						
 		$result1 = DB_query($SQL,$db);
 		while ($myrow1 = DB_fetch_array($result1)) {
@@ -1617,13 +1617,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<td style="text-align:center" colspan=6><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+9).' type="submit" value="'._('Add to Sales Order').'"></td>';
 			echo '<td colspan=><input type="hidden" name="nextlist" value='.number_format($Offset+1).'><input tabindex='.number_format($j+10).' type="submit" name="Next" value="'._('Next').'"></td></tr>';
 			$TableHeader = '<tr><th>' . _('Code') . '</th>
-										   			<th>' . _('Description') . '</th>
-										   			<th>' . _('Units') . '</th>
-										   			<th>' . _('On Hand') . '</th>
-										   			<th>' . _('On Demand') . '</th>
-										   			<th>' . _('On Order') . '</th>
-										   			<th>' . _('Available') . '</th>
-										   			<th>' . _('Quantity') . '</th></tr>';
+					   			<th>' . _('Description') . '</th>
+					   			<th>' . _('Units') . '</th>
+					   			<th>' . _('On Hand') . '</th>
+					   			<th>' . _('On Demand') . '</th>
+					   			<th>' . _('On Order') . '</th>
+					   			<th>' . _('Available') . '</th>
+					   			<th>' . _('Quantity') . '</th></tr>';
 			echo $TableHeader;
 			$ImageSource = _('No Image');
 			
@@ -1633,11 +1633,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				// Find the quantity in stock at location
 				$QOHSQL = "SELECT quantity AS qoh,
-													stockmaster.decimalplaces
-									   FROM locstock INNER JOIN stockmaster
-									   ON locstock.stockid = stockmaster.stockid
-									   WHERE locstock.stockid='" .$myrow['stockid'] . "' AND
-									   loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
+									stockmaster.decimalplaces
+							   FROM locstock INNER JOIN stockmaster
+							   ON locstock.stockid = stockmaster.stockid
+							   WHERE locstock.stockid='" .$myrow['stockid'] . "' AND
+							   loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
 				$QOHResult =  DB_query($QOHSQL,$db);
 				$QOHRow = DB_fetch_array($QOHResult);
 				$QOH = $QOHRow['qoh'];
@@ -1706,26 +1706,23 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$Available = $QOH - $DemandQty + $OnOrder;
 
 				printf('<td>%s</font></td>
-							<td>%s</td>
-							<td>%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td><font size=1><input class="number"  tabindex='.number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
-							</td>
-							</tr>',
-							$myrow['stockid'],
-							$myrow['description'],
-							$myrow['units'],
-							number_format($QOH,$QOHRow['decimalplaces']),
-							number_format($DemandQty,$QOHRow['decimalplaces']),
-							number_format($OnOrder,$QOHRow['decimalplaces']),
-							number_format($Available,$QOHRow['decimalplaces']),
-							$ImageSource,
-							$rootpath,
-							SID,
-							$myrow['stockid']);
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td><font size=1><input class="number"  tabindex='.number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
+						</td>
+						</tr>',
+						$myrow['stockid'],
+						$myrow['description'],
+						$myrow['units'],
+						number_format($QOH,$QOHRow['decimalplaces']),
+						number_format($DemandQty,$QOHRow['decimalplaces']),
+						number_format($OnOrder,$QOHRow['decimalplaces']),
+						number_format($Available,$QOHRow['decimalplaces'])
+						);
 				if ($j==1) {
 					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';
 				}
@@ -1783,7 +1780,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 			echo '<tr><td>' . _('Asset to Dispose Of') . ':</td>
 						<td><select name="AssetToDisposeOf">';
-			$AssetsResult = DB_query('SELECT assetid, description FROM fixedassets WHERE disposaldate="0000-00-00"',$db);
+			$AssetsResult = DB_query("SELECT assetid, description FROM fixedassets WHERE disposaldate='0000-00-00'",$db);
 			echo '<option selected value="NoAssetSelected">' . _('Select Asset To Dispose of From the List Below') . '</option>';
 			while ($AssetRow = DB_fetch_array($AssetsResult)){
 				echo '<option value="' . $AssetRow['assetid'] . '">' . $AssetRow['assetid'] . ' - ' . $AssetRow['description'] . '</option>';

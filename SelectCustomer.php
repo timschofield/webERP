@@ -1,4 +1,5 @@
 <?php
+
 /* $Id$*/
 
 include ('includes/session.inc');
@@ -26,7 +27,7 @@ if (!isset($_SESSION['CustomerType'])) { //initialise if not already done
 }
 // only run geocode if integration is turned on and customer has been selected
 if ($_SESSION['geocode_integration'] == 1 AND $_SESSION['CustomerID'] != "") {
-	$sql = "SELECT * FROM geocode_param WHERE 1";
+	$sql = 'SELECT * FROM geocode_param WHERE 1';
 	$ErrMsg = _('An error occurred in retrieving the information');
 	$result = DB_query($sql, $db, $ErrMsg);
 	$myrow = DB_fetch_array($result);
@@ -119,9 +120,9 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 				custbranch.phoneno,
 				custbranch.faxno
 			FROM debtorsmaster LEFT JOIN custbranch
-				ON debtorsmaster.debtorno = custbranch.debtorno
-				INNER JOIN debtortype
-				ON debtorsmaster.typeid = debtortype.typeid";
+			ON debtorsmaster.debtorno = custbranch.debtorno
+			INNER JOIN debtortype
+			ON debtorsmaster.typeid = debtortype.typeid";
 	} else {
 		if (strlen($_POST['Keywords']) > 0) {
 			//using the customer name
@@ -129,78 +130,78 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 			//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 			$SQL = "SELECT debtorsmaster.debtorno,
-				debtorsmaster.name,
-				debtorsmaster.address1,
-				debtorsmaster.address2,
-				debtorsmaster.address3,
-				debtorsmaster.address4,
-				custbranch.branchcode,
-				custbranch.brname,
-				custbranch.contactname,
-				debtortype.typename,
-				custbranch.phoneno,
-				custbranch.faxno
-			FROM debtorsmaster LEFT JOIN custbranch
-				ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
-			WHERE debtorsmaster.name " . LIKE . " '$SearchString'
-			AND debtorsmaster.typeid = debtortype.typeid";
+						debtorsmaster.name,
+						debtorsmaster.address1,
+						debtorsmaster.address2,
+						debtorsmaster.address3,
+						debtorsmaster.address4,
+						custbranch.branchcode,
+						custbranch.brname,
+						custbranch.contactname,
+						debtortype.typename,
+						custbranch.phoneno,
+						custbranch.faxno
+					FROM debtorsmaster LEFT JOIN custbranch
+						ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
+					WHERE debtorsmaster.name " . LIKE . " '" . $SearchString . "'
+					AND debtorsmaster.typeid = debtortype.typeid";
 		} elseif (strlen($_POST['CustCode']) > 0) {
 			$_POST['CustCode'] = strtoupper(trim($_POST['CustCode']));
 			$SQL = "SELECT debtorsmaster.debtorno,
-				debtorsmaster.name,
-				debtorsmaster.address1,
-				debtorsmaster.address2,
-				debtorsmaster.address3,
-				debtorsmaster.address4,
-				custbranch.branchcode,
-				custbranch.brname,
-				custbranch.contactname,
-				debtortype.typename,
-				custbranch.phoneno,
-				custbranch.faxno
-			FROM debtorsmaster LEFT JOIN custbranch
-				ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
-			WHERE debtorsmaster.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%'
-			AND debtorsmaster.typeid = debtortype.typeid";
+						debtorsmaster.name,
+						debtorsmaster.address1,
+						debtorsmaster.address2,
+						debtorsmaster.address3,
+						debtorsmaster.address4,
+						custbranch.branchcode,
+						custbranch.brname,
+						custbranch.contactname,
+						debtortype.typename,
+						custbranch.phoneno,
+						custbranch.faxno
+					FROM debtorsmaster LEFT JOIN custbranch
+						ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
+					WHERE debtorsmaster.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%'
+					AND debtorsmaster.typeid = debtortype.typeid";
 		} elseif (strlen($_POST['CustPhone']) > 0) {
 			$SQL = "SELECT debtorsmaster.debtorno,
-				debtorsmaster.name,
-				debtorsmaster.address1,
-								debtorsmaster.address2,
-								debtorsmaster.address3,
-								debtorsmaster.address4,
-				custbranch.branchcode,
-				custbranch.brname,
-				custbranch.contactname,
-				debtortype.typename,
-				custbranch.phoneno,
-				custbranch.faxno
-			FROM debtorsmaster LEFT JOIN custbranch
-				ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
-			WHERE custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'
-			AND debtorsmaster.typeid = debtortype.typeid";
+						debtorsmaster.name,
+						debtorsmaster.address1,
+						debtorsmaster.address2,
+						debtorsmaster.address3,
+						debtorsmaster.address4,
+						custbranch.branchcode,
+						custbranch.brname,
+						custbranch.contactname,
+						debtortype.typename,
+						custbranch.phoneno,
+						custbranch.faxno
+					FROM debtorsmaster LEFT JOIN custbranch
+						ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
+					WHERE custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'
+					AND debtorsmaster.typeid = debtortype.typeid";
 			// Added an option to search by address. I tried having it search address1, address2, address3, and address4, but my knowledge of MYSQL is limited.  This will work okay if you select the CSV Format then you can search though the address1 field. I would like to extend this to all 4 address fields. Gilles Deacur
 
 		} elseif (strlen($_POST['CustAdd']) > 0) {
 			$SQL = "SELECT debtorsmaster.debtorno,
-				debtorsmaster.name,
-				debtorsmaster.address1,
-								debtorsmaster.address2,
-								debtorsmaster.address3,
-								debtorsmaster.address4,
-				custbranch.branchcode,
-				custbranch.brname,
-				custbranch.contactname,
-				debtortype.typename,
-				custbranch.phoneno,
-				custbranch.faxno
-			FROM debtorsmaster LEFT JOIN custbranch
-				ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
-			WHERE debtorsmaster.address1 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
-			OR debtorsmaster.address2 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
-			OR debtorsmaster.address3 "  . LIKE . " '%" . $_POST['CustAdd'] . "%'
-			OR debtorsmaster.address4 "  . LIKE . " '%" . $_POST['CustAdd'] . "%'
-			AND debtorsmaster.typeid = debtortype.typeid";
+							debtorsmaster.name,
+							debtorsmaster.address1,
+							debtorsmaster.address2,
+							debtorsmaster.address3,
+							debtorsmaster.address4,
+							custbranch.branchcode,
+							custbranch.brname,
+							custbranch.contactname,
+							debtortype.typename,
+							custbranch.phoneno,
+							custbranch.faxno
+						FROM debtorsmaster LEFT JOIN custbranch
+							ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
+						WHERE debtorsmaster.address1 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
+						OR debtorsmaster.address2 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
+						OR debtorsmaster.address3 "  . LIKE . " '%" . $_POST['CustAdd'] . "%'
+						OR debtorsmaster.address4 "  . LIKE . " '%" . $_POST['CustAdd'] . "%'
+						AND debtorsmaster.typeid = debtortype.typeid";
 			// End added search feature. Gilles Deacur
 
 		} elseif (strlen($_POST['CustType']) > 0 AND $_POST['CustType']!='ALL') {
@@ -265,10 +266,11 @@ if ($_POST['Select'] != '' OR ($_SESSION['CustomerID'] != '' AND !isset($_POST['
 		$SQL = "SELECT brname, phoneno FROM custbranch WHERE debtorno='" . $Debtor[0] . "'";
 		$_SESSION['CustomerID'] = $Debtor[0];
 	} else {
-		$SQL = "SELECT debtorsmaster.name, custbranch.phoneno FROM
-		debtorsmaster, custbranch WHERE
-		custbranch.debtorno='" . $_SESSION['CustomerID'] . "' AND
-		debtorsmaster.debtorno = custbranch.debtorno";
+		$SQL = "SELECT debtorsmaster.name, 
+						custbranch.phoneno 
+				FROM debtorsmaster, custbranch 
+				WHERE custbranch.debtorno='" . $_SESSION['CustomerID'] . "' 
+				AND debtorsmaster.debtorno = custbranch.debtorno";
 	}
 	$ErrMsg = _('The customer name requested cannot be retrieved because');
 	$result = DB_query($SQL, $db, $ErrMsg);
@@ -304,9 +306,9 @@ if ($_POST['Select'] != '' OR ($_SESSION['CustomerID'] != '' AND !isset($_POST['
 	echo '</td>';
 	echo '</tr></table><br />';
 } else {
-	echo "<table width=90%><tr><th width=33%>" . _('Customer Inquiries') . "</th>
-			<th width=33%>" . _('Customer Transactions') . "</th>
-			<th width=33%>" . _('Customer Maintenance') . "</th></tr>";
+	echo '<table width=90%><tr><th width=33%>' . _('Customer Inquiries') . '</th>
+			<th width=33%>' . _('Customer Transactions') . '</th>
+			<th width=33%>' . _('Customer Maintenance') . '</th></tr>';
 	echo '<tr><td class="select">';
 	echo '</td><td class="select">';
 	echo '</td><td class="select">';
@@ -315,30 +317,30 @@ if ($_POST['Select'] != '' OR ($_SESSION['CustomerID'] != '' AND !isset($_POST['
 	}
 	echo '</td></tr></table>';
 }
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if (strlen($msg)>1){
 	prnMsg($msg,'info');
 }
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Customers').'</p>';
-echo "<table cellpadding=3 colspan=4 class=selection>";
-echo "<tr><td colspan=2>" . _('Enter a partial Name') . ":</td><td>";
+echo '<table cellpadding="3" colspan="4" class="selection">';
+echo '<tr><td colspan="2">' . _('Enter a partial Name') . ':</td><td>';
 if (isset($_POST['Keywords'])) {
-	echo '<input type="Text" name="Keywords" value="' . $_POST['Keywords'] . '" size=20 maxlength=25>';
+	echo '<input type="Text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25">';
 } else {
-	echo '<input type="Text" name="Keywords" size=20 maxlength=25>';
+	echo '<input type="Text" name="Keywords" size="20" maxlength="25">';
 }
 echo '</td><td><font size=3><b>' . _('OR') . '</b></font></td><td>' . _('Enter a partial Code') . ':</td><td>';
 if (isset($_POST['CustCode'])) {
-	echo '<input type="Text" name="CustCode" value="' . $_POST['CustCode'] . '" size=15 maxlength=18>';
+	echo '<input type="Text" name="CustCode" value="' . $_POST['CustCode'] . '" size="15" maxlength="18">';
 } else {
-	echo '<input type="Text" name="CustCode" size=15 maxlength=18>';
+	echo '<input type="Text" name="CustCode" size="15" maxlength="18">';
 }
 echo '</td></tr><tr><td><font size=3><b>' . _('OR') . '</b></font></td><td>' . _('Enter a partial Phone Number') . ':</td><td>';
 if (isset($_POST['CustPhone'])) {
-	echo '<input type="Text" name="CustPhone" value="' . $_POST['CustPhone'] . '" size=15 maxlength=18>';
+	echo '<input type="Text" name="CustPhone" value="' . $_POST['CustPhone'] . '" size="15" maxlength="18">';
 } else {
-	echo '<input type="Text" name="CustPhone" size=15 maxlength=18>';
+	echo '<input type="Text" name="CustPhone" size="15" maxlength="18">';
 }
 echo '</td>';
 echo '<td><font size=3><b>' . _('OR') . '</b></font></td><td>' . _('Enter part of the Address') . ':</td><td>';
@@ -352,7 +354,7 @@ echo '</td></tr>';
 echo '<tr><td><font size=3><b>' . _('OR') . '</b></font></td><td>' . _('Choose a Type') . ':</td><td>';
 if (isset($_POST['CustType'])) {
 	// Show Customer Type drop down list
-	$result2 = DB_query('SELECT typeid, typename FROM debtortype ', $db);
+	$result2 = DB_query('SELECT typeid, typename FROM debtortype', $db);
 	// Error if no customer types setup
 	if (DB_num_rows($result2) == 0) {
 		$DataError = 1;
@@ -374,7 +376,7 @@ if (isset($_POST['CustType'])) {
 	}
 } else {
 	// No option selected yet, so show Customer Type drop down list
-	$result2 = DB_query('SELECT typeid, typename FROM debtortype ', $db);
+	$result2 = DB_query('SELECT typeid, typename FROM debtortype', $db);
 	// Error if no customer types setup
 	if (DB_num_rows($result2) == 0) {
 		$DataError = 1;
@@ -394,11 +396,11 @@ if (isset($_POST['CustType'])) {
 
 /* Option to select a sales area */
 echo '<td><font size=3><b>' . _('OR') . '</b></font></td><td>' . _('Choose an Area') . ':</td><td>';
-$result2 = DB_query('SELECT areacode, areadescription FROM areas ', $db);
+$result2 = DB_query('SELECT areacode, areadescription FROM areas', $db);
 // Error if no sales areas setup
 if (DB_num_rows($result2) == 0) {
 	$DataError = 1;
-	echo '<a href="Areas.php?" target="_parent">Setup Types</a>';
+	echo '<a href="Areas.php?" target="_parent">' . _('Setup Types') . '</a>';
 	echo '<tr><td colspan=2>' . prnMsg(_('No Sales Areas defined'), 'error') . '</td></tr>';
 } else {
 	// if OK show select box with available options to choose
@@ -541,11 +543,11 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != "") {
 		} else {
 			echo '<tr><td colspan=2>';
 			echo '<table width=45% colspan=2 cellpadding=4>';
-			echo "<tr><th width=33%>" . _('Customer Mapping') . "</th></tr>";
+			echo '<tr><th width=33%>' . _('Customer Mapping') . '</th></tr>';
 			echo '</td><td valign=TOp>'; /* Mapping */
 			echo '<div class="centre"' . _('Mapping is enabled, Map will display below.') . '</div>';
 			echo '<div align="center" id="map" style="width: ' . $map_width . 'px; height: ' . $map_height . 'px"></div><br />';
-			echo "</th></tr></table>";
+			echo '</th></tr></table>';
 		}
 	}
 	// Extended Customer Info only if selected in Configuration
@@ -553,8 +555,8 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != "") {
 		if ($_SESSION['CustomerID'] != "") {
 			$sql = "SELECT debtortype.typeid, debtortype.typename
 						FROM debtorsmaster, debtortype
-			WHERE debtorsmaster.typeid = debtortype.typeid
-			AND debtorsmaster.debtorno = '" . $_SESSION['CustomerID'] . "'";
+					WHERE debtorsmaster.typeid = debtortype.typeid
+					AND debtorsmaster.debtorno = '" . $_SESSION['CustomerID'] . "'";
 			$ErrMsg = _('An error occurred in retrieving the information');
 			$result = DB_query($sql, $db, $ErrMsg);
 			$myrow = DB_fetch_array($result);
@@ -564,22 +566,24 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != "") {
 			echo '<br />';
 			// Select some basic data about the Customer
 			$SQL = "SELECT debtorsmaster.clientsince,
-				(TO_DAYS(date(now())) - TO_DAYS(date(debtorsmaster.clientsince))) as customersincedays,
-				(TO_DAYS(date(now())) - TO_DAYS(date(debtorsmaster.lastpaiddate))) as lastpaiddays,
-				debtorsmaster.paymentterms, debtorsmaster.lastpaid, debtorsmaster.lastpaiddate
+						(TO_DAYS(date(now())) - TO_DAYS(date(debtorsmaster.clientsince))) as customersincedays,
+						(TO_DAYS(date(now())) - TO_DAYS(date(debtorsmaster.lastpaiddate))) as lastpaiddays,
+						debtorsmaster.paymentterms, debtorsmaster.lastpaid, debtorsmaster.lastpaiddate
 					FROM debtorsmaster
 					WHERE debtorsmaster.debtorno ='" . $_SESSION['CustomerID'] . "'";
 			$DataResult = DB_query($SQL, $db);
 			$myrow = DB_fetch_array($DataResult);
 			// Select some more data about the customer
-			$SQL = "select sum(ovamount+ovgst) as total from debtortrans where debtorno = '" . $_SESSION['CustomerID'] . "' and type !=12";
+			$SQL = "SELECT sum(ovamount+ovgst) as total 
+					FROM debtortrans 
+					WHERE debtorno = '" . $_SESSION['CustomerID'] . "' 
+					AND type !=12";
 			$Total1Result = DB_query($SQL, $db);
 			$row = DB_fetch_array($Total1Result);
 			echo '<tr><td colspan=2>';
 			echo '<table width=45% colspan=2 cellpadding=4>';
-			echo "<tr><th width=33% colspan=3>" . _('Customer Data') . "</th></tr>";
+			echo '<tr><th width=33% colspan=3>' . _('Customer Data') . '</th></tr>';
 			echo '<tr><td valign=top class=select>'; /* Customer Data */
-			//echo _('Distance to this customer:') . '<b>TBA</b><br />';
 			if ($myrow['lastpaiddate'] == 0) {
 				echo _('No receipts from this customer.') . '</td><td class=select></td><td class=select></td></tr>';
 			} else {
@@ -597,19 +601,22 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != "") {
 		}
 		// Customer Contacts
 		echo '<tr><td colspan=2>';
-		$sql = 'SELECT * FROM custcontacts where debtorno="' . $_SESSION['CustomerID'] . '" ORDER BY contid';
+		$sql = "SELECT * FROM custcontacts 
+				WHERE debtorno='" . $_SESSION['CustomerID'] . "' 
+				ORDER BY contid";
 		$result = DB_query($sql, $db);
 		if (DB_num_rows($result) <> 0) {
 			echo '<table width=45%>';
 			echo '<br /><th colspan=7><img src="' . $rootpath . '/css/' . $theme . '/images/group_add.png" title="' . _('Customer Contacts') . '" alt="">' . ' ' . _('Customer Contacts') . '</th>';
 			echo '<tr>
-						<th>' . _('Name') . '</th>
-						<th>' . _('Role') . '</th>
-						<th>' . _('Phone Number') . '</th>
-						<th>' . _('Notes') . '</th>
-						<th>' . _('Edit') . '</th>
-						<th>' . _('Delete') . '</th>
-				<th> <a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add New Contact') . '</a> </th></tr>';
+					<th>' . _('Name') . '</th>
+					<th>' . _('Role') . '</th>
+					<th>' . _('Phone Number') . '</th>
+					<th>' . _('Notes') . '</th>
+					<th>' . _('Edit') . '</th>
+					<th>' . _('Delete') . '</th>
+					<th> <a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add New Contact') . '</a> </th>
+				</tr>';
 			$k = 0; //row colour counter
 			while ($myrow = DB_fetch_array($result)) {
 				if ($k == 1) {
@@ -620,12 +627,12 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != "") {
 					$k = 1;
 				}
 				echo '<td>' . $myrow[2] . '</td>
-								<td>' . $myrow[3] . '</td>
-								<td>' . $myrow[4] . '</td>
-								<td>' . $myrow[5] . '</td>
-								<td><a href="AddCustomerContacts.php?Id=' . $myrow[0] . '&DebtorNo=' . $myrow[1] . '">' . _('Edit') . '</a></td>
-								<td><a href="AddCustomerContacts.php?Id=' . $myrow[0] . '&DebtorNo=' . $myrow[1] . '&delete=1">' . _('Delete') . '</a></td>
-								</tr>';
+					<td>' . $myrow[3] . '</td>
+					<td>' . $myrow[4] . '</td>
+					<td>' . $myrow[5] . '</td>
+					<td><a href="AddCustomerContacts.php?Id=' . $myrow[0] . '&DebtorNo=' . $myrow[1] . '">' . _('Edit') . '</a></td>
+					<td><a href="AddCustomerContacts.php?Id=' . $myrow[0] . '&DebtorNo=' . $myrow[1] . '&delete=1">' . _('Delete') . '</a></td>
+					</tr>';
 			} //END WHILE LIST LOOP
 			echo '</table>';
 		} else {
@@ -635,7 +642,9 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != "") {
 		}
 		// Customer Notes
 		echo '<tr><td colspan=2>';
-		$sql = 'SELECT * FROM custnotes where debtorno="' . $_SESSION['CustomerID'] . '" ORDER BY date DESC';
+		$sql = "SELECT * FROM custnotes 
+				WHERE debtorno='" . $_SESSION['CustomerID'] . "' 
+				ORDER BY date DESC";
 		$result = DB_query($sql, $db);
 		if (DB_num_rows($result) <> 0) {
 			echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/note_add.png" title="' . _('Customer Notes') . '" alt="">' . ' ' . _('Customer Notes') . '</div><br />';
@@ -647,7 +656,8 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != "") {
 					<th>' . _('priority') . '</th>
 					<th>' . _('Edit') . '</th>
 					<th>' . _('Delete') . '</th>
-					<th> <a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Note') . '</a> </th></tr>';
+					<th> <a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Note') . '</a> </th>
+				</tr>';
 			$k = 0; //row colour counter
 			while ($myrow = DB_fetch_array($result)) {
 				if ($k == 1) {
@@ -658,12 +668,12 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != "") {
 					$k = 1;
 				}
 				echo '<td>' . $myrow[4] . '</td>
-							<td>' . $myrow[3] . '</td>
-							<td>' . $myrow[2] . '</td>
-							<td>' . $myrow[5] . '</td>
-							<td><a href="AddCustomerNotes.php?Id=' . $myrow[0] . '&DebtorNo=' . $myrow[1] . '">' . _('Edit') . '</a></td>
-							<td><a href="AddCustomerNotes.php?Id=' . $myrow[0] . '&DebtorNo=' . $myrow[1] . '&delete=1">' . _('Delete') . '</a></td>
-							</tr>';
+					<td>' . $myrow[3] . '</td>
+					<td>' . $myrow[2] . '</td>
+					<td>' . $myrow[5] . '</td>
+					<td><a href="AddCustomerNotes.php?Id=' . $myrow[0] . '&DebtorNo=' . $myrow[1] . '">' . _('Edit') . '</a></td>
+					<td><a href="AddCustomerNotes.php?Id=' . $myrow[0] . '&DebtorNo=' . $myrow[1] . '&delete=1">' . _('Delete') . '</a></td>
+					</tr>';
 			} //END WHILE LIST LOOP
 			echo '</table>';
 		} else {
@@ -673,19 +683,20 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != "") {
 		}
 		// Custome Type Notes
 		echo '<tr><td colspan=2>';
-		$sql = 'SELECT * FROM debtortypenotes where typeid="' . $CustomerType . '" ORDER BY date DESC';
+		$sql = "SELECT * FROM debtortypenotes where typeid='" . $CustomerType . "' 
+				ORDER BY date DESC";
 		$result = DB_query($sql, $db);
 		if (DB_num_rows($result) <> 0) {
 			echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/folder_add.png" title="' . _('Customer Type (Group) Notes') . '" alt="">' . ' ' . _('Customer Type (Group) Notes for:' . '<b> ' . $CustomerTypeName . '</b>') . '</div><br />';
 			echo '<table width=45%>';
 			echo '<tr>
-					 	<th>' . _('date') . '</th>
-					  	<th>' . _('note') . '</th>
-					   	<th>' . _('file link / reference / URL') . '</th>
-					   	<th>' . _('priority') . '</th>
-					   	<th>' . _('Edit') . '</th>
-					   	<th>' . _('Delete') . '</th>
-					   	<th><a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType . '">' . _('Add New Group Note') . '</a></th></tr>';
+			 	<th>' . _('date') . '</th>
+			  	<th>' . _('note') . '</th>
+			   	<th>' . _('file link / reference / URL') . '</th>
+			   	<th>' . _('priority') . '</th>
+			   	<th>' . _('Edit') . '</th>
+			   	<th>' . _('Delete') . '</th>
+			   	<th><a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType . '">' . _('Add New Group Note') . '</a></th></tr>';
 			$k = 0; //row colour counter
 			while ($myrow = DB_fetch_array($result)) {
 				if ($k == 1) {
@@ -696,12 +707,12 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != "") {
 					$k = 1;
 				}
 				echo '<td>' . $myrow[4] . '</td>
-								<td>' . $myrow[3] . '</td>
-								<td>' . $myrow[2] . '</td>
-								<td>' . $myrow[5] . '</td>
-								<td><a href="AddCustomerTypeNotes.php?Id=' . $myrow[0] . '&DebtorType=' . $myrow[1] . '">' . _('Edit') . '</a></td>
-								<td><a href="AddCustomerTypeNotes.php?Id=' . $myrow[0] . '&DebtorType=' . $myrow[1] . '&delete=1">' . _('Delete') . '</a></td>
-								</tr>';
+					<td>' . $myrow[3] . '</td>
+					<td>' . $myrow[2] . '</td>
+					<td>' . $myrow[5] . '</td>
+					<td><a href="AddCustomerTypeNotes.php?Id=' . $myrow[0] . '&DebtorType=' . $myrow[1] . '">' . _('Edit') . '</a></td>
+					<td><a href="AddCustomerTypeNotes.php?Id=' . $myrow[0] . '&DebtorType=' . $myrow[1] . '&delete=1">' . _('Delete') . '</a></td>
+					</tr>';
 			} //END WHILE LIST LOOP
 			echo '</table>';
 		} else {
