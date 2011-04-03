@@ -19,9 +19,6 @@
 */
 
 include('includes/DefineSuppAllocsClass.php');
-
-//$PageSecurity = 5;
-
 include('includes/session.inc');
 
 $title = _('Supplier Payment') . '/' . _('Credit Note Allocations');
@@ -90,10 +87,10 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 	recalc diff on exchange and add up total allocations */
 
 	if ($TotalAllocated + $_SESSION['Alloc']->TransAmt > 0.005){
-		echo '<br>';
+		echo '<br />';
 		prnMsg(_('These allocations cannot be processed because the amount allocated is more than the amount of the') .
-			  ' ' . $_SESSION['Alloc']->TransTypeName  . ' ' . _('being allocated') . '<br>' . _('Total allocated') . ' = ' . 			$TotalAllocated . ' ' . _('and the total amount of the Credit/payment was') . ' ' . -$_SESSION['Alloc']->TransAmt,'error');
-		echo '<br>';
+			  ' ' . $_SESSION['Alloc']->TransTypeName  . ' ' . _('being allocated') . '<br />' . _('Total allocated') . ' = ' . 			$TotalAllocated . ' ' . _('and the total amount of the Credit/payment was') . ' ' . -$_SESSION['Alloc']->TransAmt,'error');
+		echo '<br />';
 		$InputError = 1;
 	}
 
@@ -203,19 +200,19 @@ if (isset($_POST['UpdateDatabase'])){
 		      $_SESSION['Alloc']->TransDate = FormatDateForSQL($_SESSION['Alloc']->TransDate);
 
 		      $SQL = "INSERT INTO gltrans (type,
-											      					typeno,
-																trandate,
-																periodno,
-																account,
-																narrative,
-																amount)
-														VALUES ('" . $_SESSION['Alloc']->TransType . "',
-															'" . $_SESSION['Alloc']->TransNo . "',
-															'" . $_SESSION['Alloc']->TransDate . "',
-															'" . $PeriodNo . "',
-															'" . $_SESSION['CompanyRecord']['purchasesexchangediffact'] . "',
-															'". _('Exch diff') . "',
-															'" . $MovtInDiffOnExch . "')";
+				      					typeno,
+									trandate,
+									periodno,
+									account,
+									narrative,
+									amount)
+							VALUES ('" . $_SESSION['Alloc']->TransType . "',
+								'" . $_SESSION['Alloc']->TransNo . "',
+								'" . $_SESSION['Alloc']->TransDate . "',
+								'" . $PeriodNo . "',
+								'" . $_SESSION['CompanyRecord']['purchasesexchangediffact'] . "',
+								'". _('Exch diff') . "',
+								'" . $MovtInDiffOnExch . "')";
 
 		      $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
 		      			 _('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
@@ -225,19 +222,19 @@ if (isset($_POST['UpdateDatabase'])){
 
 
 		      $SQL = "INSERT INTO gltrans (type,
-											      					typeno,
-																trandate,
-																periodno,
-																account,
-																narrative,
-																amount)
-														VALUES ('" . $_SESSION['Alloc']->TransType . "',
-															'" . $_SESSION['Alloc']->TransNo . "',
-															'" . $_SESSION['Alloc']->TransDate . "',
-															'" . $PeriodNo . "',
-															'" . $_SESSION['CompanyRecord']['creditorsact'] . "',
-															'" . _('Exch Diff') . "',
-															'" . -$MovtInDiffOnExch . "')";
+				      					typeno,
+									trandate,
+									periodno,
+									account,
+									narrative,
+									amount)
+							VALUES ('" . $_SESSION['Alloc']->TransType . "',
+								'" . $_SESSION['Alloc']->TransNo . "',
+								'" . $_SESSION['Alloc']->TransDate . "',
+								'" . $PeriodNo . "',
+								'" . $_SESSION['CompanyRecord']['creditorsact'] . "',
+								'" . _('Exch Diff') . "',
+								'" . -$MovtInDiffOnExch . "')";
 
 		      $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ' : ' .
 		      			 _('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
@@ -276,12 +273,12 @@ If with a supplier code show just that supplier's payments and credits for alloc
 If with a specific payment or credit show the invoices and credits available
 for allocating to  */
 
-echo "<form action='" . $_SERVER['PHP_SELF'] . "?" . SID . "' method=post>";
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($_POST['SupplierID'])){
  	$_GET['SupplierID'] = $_POST['SupplierID'];
-	echo "<input type='hidden' name='SupplierID' VALUE='" . $_POST["SupplierID"] . "'>";
+	echo '<input type="hidden" name="SupplierID" value="' . $_POST['SupplierID'] . '">';
 }
 
 If (isset($_GET['AllocTrans'])){
@@ -309,27 +306,27 @@ If (isset($_GET['AllocTrans'])){
 
 
 	$SQL= "SELECT systypes.typename,
-								supptrans.type,
-								supptrans.transno,
-								supptrans.trandate,
-								supptrans.supplierno,
-								suppliers.suppname,
-								rate,
-								(supptrans.ovamount+supptrans.ovgst) AS total,
-								supptrans.diffonexch,
-								supptrans.alloc
-							    FROM supptrans,
-							    	systypes,
-								suppliers
-							    WHERE supptrans.type = systypes.typeid
-							    AND supptrans.supplierno = suppliers.supplierid
-							    AND supptrans.id='" . $_SESSION['AllocTrans'] . "'";
+					supptrans.type,
+					supptrans.transno,
+					supptrans.trandate,
+					supptrans.supplierno,
+					suppliers.suppname,
+					rate,
+					(supptrans.ovamount+supptrans.ovgst) AS total,
+					supptrans.diffonexch,
+					supptrans.alloc
+				    FROM supptrans,
+				    	systypes,
+					suppliers
+				    WHERE supptrans.type = systypes.typeid
+				    AND supptrans.supplierno = suppliers.supplierid
+				    AND supptrans.id='" . $_SESSION['AllocTrans'] . "'";
 
 	$Result = DB_query($SQL, $db);
 	if (DB_num_rows($Result) != 1){
 	echo _('There was a problem retrieving the information relating the transaction selected') . '. ' . _('Allocations are unable to proceed');
 	if ($debug == 1){
-		echo '<br>' . _('The SQL that was used to retrieve the transaction information was') . " :<br>$SQL";
+		echo '<br />' . _('The SQL that was used to retrieve the transaction information was') . ' :<br />'  . $SQL;
 	}
 	exit;
 	}
@@ -351,21 +348,21 @@ If (isset($_GET['AllocTrans'])){
 	/*First get the transactions that have outstanding balances ie Total-Alloc >0 */
 
 	$SQL= "SELECT supptrans.id,
-								typename,
-								transno,
-								trandate,
-								suppreference,
-								rate,
-								ovamount+ovgst AS total,
-								diffonexch,
-								alloc
-							FROM supptrans,
-								systypes
-							WHERE supptrans.type = systypes.typeid
-							AND supptrans.settled=0
-							AND abs(ovamount+ovgst-alloc)>0.009
-							AND supplierno='" . $_SESSION['Alloc']->SupplierID . "'";
-
+					typename,
+					transno,
+					trandate,
+					suppreference,
+					rate,
+					ovamount+ovgst AS total,
+					diffonexch,
+					alloc
+				FROM supptrans,
+					systypes
+				WHERE supptrans.type = systypes.typeid
+				AND supptrans.settled=0
+				AND abs(ovamount+ovgst-alloc)>0.009
+				AND supplierno='" . $_SESSION['Alloc']->SupplierID . "'";
+	
 	$ErrMsg = _('There was a problem retrieving the transactions available to allocate to');
 
 	$DbgMsg = _('The SQL that was used to retrieve the transaction information was');
@@ -374,17 +371,17 @@ If (isset($_GET['AllocTrans'])){
 
 	while ($myrow=DB_fetch_array($Result)){
 		$_SESSION['Alloc']->add_to_AllocsAllocn ($myrow['id'],
-							$myrow['typename'],
-							$myrow['transno'],
-							ConvertSQLDate($myrow['trandate']),
-							$myrow['suppreference'],
-							0,
-							$myrow['total'],
-							$myrow['rate'],
-							$myrow['diffonexch'],
-							$myrow['diffonexch'],
-							$myrow['alloc'],
-							'NA');
+										$myrow['typename'],
+										$myrow['transno'],
+										ConvertSQLDate($myrow['trandate']),
+										$myrow['suppreference'],
+										0,
+										$myrow['total'],
+										$myrow['rate'],
+										$myrow['diffonexch'],
+										$myrow['diffonexch'],
+										$myrow['alloc'],
+										'NA');
 	}
 
 	/* Now get trans that might have previously been allocated to by this trans
@@ -392,23 +389,23 @@ If (isset($_GET['AllocTrans'])){
 	above logic will be overwritten with the prev alloc detail below */
 
 	$SQL = "SELECT supptrans.id,
-									typename,
-									transno,
-									trandate,
-									suppreference,
-									rate,
-									ovamount+ovgst AS total,
-									diffonexch,
-									supptrans.alloc-suppallocs.amt AS prevallocs,
-									amt,
-									suppallocs.id AS allocid
-									  FROM supptrans,
-									  	systypes,
-										suppallocs
-									  WHERE supptrans.type = systypes.typeid
-									  AND supptrans.id=suppallocs.transid_allocto
-									  AND suppallocs.transid_allocfrom='" . $_SESSION['AllocTrans'] .
-									  "' AND supplierno='" . $_SESSION['Alloc']->SupplierID . "'";
+					typename,
+					transno,
+					trandate,
+					suppreference,
+					rate,
+					ovamount+ovgst AS total,
+					diffonexch,
+					supptrans.alloc-suppallocs.amt AS prevallocs,
+					amt,
+					suppallocs.id AS allocid
+					  FROM supptrans,
+					  	systypes,
+						suppallocs
+					  WHERE supptrans.type = systypes.typeid
+					  AND supptrans.id=suppallocs.transid_allocto
+					  AND suppallocs.transid_allocfrom='" . $_SESSION['AllocTrans'] .
+					  "' AND supplierno='" . $_SESSION['Alloc']->SupplierID . "'";
 
 	$ErrMsg = _('There was a problem retrieving the previously allocated transactions for modification');
 
@@ -421,19 +418,19 @@ If (isset($_GET['AllocTrans'])){
 		$DiffOnExchThisOne = ($myrow['amt']/$myrow['rate']) - ($myrow['amt']/$_SESSION['Alloc']->TransExRate);
 
 		$_SESSION['Alloc']->add_to_AllocsAllocn ($myrow['id'], $myrow['typename'], $myrow['transno'],
-								ConvertSQLDate($myrow['trandate']), $myrow['suppreference'], $myrow['amt'],
-								$myrow['total'],
-								$myrow['rate'],
-								$DiffOnExchThisOne,
-								($myrow['diffonexch'] - $DiffOnExchThisOne),
-								$myrow['prevallocs'],
-								$myrow['allocid']);
+											ConvertSQLDate($myrow['trandate']), $myrow['suppreference'], $myrow['amt'],
+											$myrow['total'],
+											$myrow['rate'],
+											$DiffOnExchThisOne,
+											($myrow['diffonexch'] - $DiffOnExchThisOne),
+											$myrow['prevallocs'],
+											$myrow['allocid']);
 	}
 }
 
 if (isset($_POST['AllocTrans'])){
 
-	echo "<input type='hidden' name='AllocTrans' VALUE='" . $_POST["AllocTrans"] . "'>";
+	echo '<input type="hidden" name="AllocTrans" value="' . $_POST['AllocTrans'] . '">';
 
 	/*Show the transaction being allocated and the potential trans it could be allocated to
         and those where there is already an existing allocation */
@@ -446,26 +443,25 @@ if (isset($_POST['AllocTrans'])){
         		 $_SESSION['Alloc']->TransDate;
 
         if ($_SESSION['Alloc']->TransExRate != 1){
-	     	  echo '<br>' . _("Amount in supplier currency"). ' <b>' .
+	     	  echo '<br />' . _('Amount in supplier currency'). ' <b>' .
 	     	  		 number_format(-$_SESSION['Alloc']->TransAmt,2) . '</b><i> (' .
 	     	  		 _('converted into local currency at an exchange rate of') . ' ' .
 	     	  		 $_SESSION['Alloc']->TransExRate . ')</i><p>';
 
         } else {
-
-		     echo '<br>' . _('Transaction total') . ': <b>' . -$_SESSION['Alloc']->TransAmt . '</b></div>';
+		     echo '<br />' . _('Transaction total') . ': <b>' . -$_SESSION['Alloc']->TransAmt . '</b></div>';
         }
 
     /*Now display the potential and existing allocations put into the array above */
 
         echo '<table cellpadding=2 colspan=7 class=selection>';
-	  	  $TableHeader = "<tr><th>" . _('Type') . "</th>
-		 			<th>" . _('Trans') . '<br>' . _('Number') . "</th>
-					<th>" . _('Trans') .'<br>' . _('Date') . "</th>
-					<th>" . _('Supp') . '<br>' . _('Ref') . "</th>
-					<th>" . _('Total') . '<br>' . _('Amount') .	"</th>
-					<th>" . _('Yet to') . '<br>' . _('Allocate') . "</th>
-					<th>" . _('This') . '<br>' . _('Allocation') . '</th></tr>';
+	  	  $TableHeader = '<tr><th>' . _('Type') . '</th>
+		 			<th>' . _('Trans') . '<br />' . _('Number') . '</th>
+					<th>' . _('Trans') .'<br />' . _('Date') . '</th>
+					<th>' . _('Supp') . '<br />' . _('Ref') . '</th>
+					<th>' . _('Total') . '<br />' . _('Amount') .'</th>
+					<th>' . _('Yet to') . '<br />' . _('Allocate') . '</th>
+					<th>' . _('This') . '<br />' . _('Allocation') . '</th></tr>';
         $k = 0;
 	$Counter = 0;
 	$RowCounter = 0;
@@ -496,18 +492,18 @@ if (isset($_POST['AllocTrans'])){
 
 	    $YetToAlloc = ($AllocnItem->TransAmount - $AllocnItem->PrevAlloc);
 
-	    echo "<td>$AllocnItem->TransType</td>
-	    		<td>$AllocnItem->TypeNo</td>
-			<td>$AllocnItem->TransDate</td>
-	    		<td>$AllocnItem->SuppRef</td>
-			<td class=number>" . number_format($AllocnItem->TransAmount,2) . '</td>
-	    		<td class=number>' . number_format($YetToAlloc,2) . "<input type=hidden name='YetToAlloc" .
-	    		 $Counter . "' VALUE=" . $YetToAlloc . '></td>';
+	    echo '<td>' . $AllocnItem->TransType . '</td>
+	    		<td>' . $AllocnItem->TypeNo . '</td>
+			<td>' . $AllocnItem->TransDate . '</td>
+	    		<td>' . $AllocnItem->SuppRef . '</td>
+			<td class="number">' . number_format($AllocnItem->TransAmount,2) . '</td>
+	    		<td class="number">' . number_format($YetToAlloc,2) . '<input type="hidden" name="YetToAlloc' .
+	    		 $Counter . '" VALUE=' . $YetToAlloc . '></td>';
 
-	    echo "<td class=number><input type='checkbox' name='All" .  $Counter . "'";
+	    echo '<td class="number"><input type="checkbox" name="All' .  $Counter . '"';
 
 	    if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01){
-			echo ' VALUE=' . True . '>';
+			echo ' value=' . True . '>';
 	    } else {
 	    	echo '>';
 	    }
@@ -570,12 +566,13 @@ if (isset($_POST['AllocTrans'])){
   }
   echo '<table class=selection>';
 
-  $TableHeader = "<tr><th>" . _('Trans Type') .
-		"</th><th>" . _('Supplier') .
-		"</th><th>" . _('Number') .
-		"</th><th>" . _('Date') .
-		"</th><th>" . _('Total') .
-		"</th><th>" . _('To Alloc') . "</th></tr>\n";
+  $TableHeader = '<tr><th>' . _('Trans Type') .'</th>
+					<th>' . _('Supplier') . '</th>
+					<th>' . _('Number') . '</th>
+					<th>' . _('Date') .  '</th>
+					<th>' . _('Total') . '</th>
+					<th>' . _('To Alloc') . '</th>
+				</tr>\n';
 
   echo $TableHeader;
 
@@ -640,13 +637,14 @@ if (isset($_POST['AllocTrans'])){
   $result = DB_query($sql, $db);
 
   echo '<table class=selection>';
-  $TableHeader = "<tr><th>" . _('Trans Type') . "</th>
-  		<th>" . _('Supplier') . "</th>
-  		<th>" . _('Number') . "</th>
-  		<th>" . _('Date') . "</th>
-  		<th>" . _('Total') . "</th>
-  		<th>" . _('To Alloc') . "</th>
-		<th>" . _('More Info') . "</th></tr>\n";
+  $TableHeader = '<tr><th>' . _('Trans Type') . '</th>
+			  		<th>' . _('Supplier') . '</th>
+			  		<th>' . _('Number') . '</th>
+			  		<th>' . _('Date') . '</th>
+			  		<th>' . _('Total') . '</th>
+			  		<th>' . _('To Alloc') . '</th>
+					<th>' . _('More Info') . '</th>
+				</tr>' ;
 
   echo $TableHeader;
 
@@ -677,13 +675,13 @@ if (isset($_POST['AllocTrans'])){
 		ConvertSQLDate($myrow['trandate']),
 		$myrow['total'],
 		$myrow['total']-$myrow['alloc'],
-		$_SERVER['PHP_SELF'] . "?" . SID,
+		$_SERVER['PHP_SELF'] . '?',
 		$myrow['id']);
 
 
   }  //END WHILE LIST LOOP
 
-  echo "</table>";
+  echo '</table>';
 
   if (DB_num_rows($result) == 0) {
 	prnMsg(_('There are no allocations to be done'),'info');

@@ -1,7 +1,5 @@
 <?php
-
-//$PageSecurity =15;
-
+/* $Id: SMTPServer.php 4469 2011-01-15 02:28:37Z daintree $*/
 include('includes/session.inc');
 
 $title = _('SMTP Server details');
@@ -25,17 +23,20 @@ if (isset($_POST['submit'])) {
 }
 
 $sql='SELECT id,
-				host,
-				port,
-				heloaddress,
-				username,
-				password,
-				timeout,
-				auth
-			FROM emailsettings';
+			host,
+			port,
+			heloaddress,
+			username,
+			password,
+			timeout,
+			auth
+		FROM emailsettings';
+
 $result=DB_query($sql, $db);
+
 $myrow=DB_fetch_array($result);
-echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+
+echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class=selection>';
 echo '<tr><td>'._('Server Host Name').'</td>

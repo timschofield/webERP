@@ -1,11 +1,10 @@
 <?php
 /* $Id$*/
+
 // StockDispatch.php - Report of parts with overstock at one location that can be transferred
 // to another location to cover shortage based on reorder level. Creates loctransfer records
 // that can be processed using Bulk Inventory Transfer - Receive.
 
-
-//$PageSecurity = 2;
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 If (isset($_POST['PrintPDF'])) {
@@ -49,9 +48,9 @@ If (isset($_POST['PrintPDF'])) {
 
 	// Creates WHERE clause for stock categories. StockCat is defined as an array so can choose
 	// more than one category
-	$wherecategory = " ";
+	$WhereCategory = " ";
 	if ($_POST['StockCat'] != 'All') {
-		$wherecategory = " AND stockmaster.categoryid ='" . $_POST['StockCat'] . "' ";
+		$WhereCategory = " AND stockmaster.categoryid ='" . $_POST['StockCat'] . "' ";
 	}
 
 
@@ -82,7 +81,7 @@ If (isset($_POST['PrintPDF'])) {
 			AND (fromlocstock.quantity - fromlocstock.reorderlevel) > 0
 			AND stockcategory.stocktype<>'A'
 			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
-			$wherecategory . " ORDER BY locstock.loccode,locstock.stockid";
+			$WhereCategory . " ORDER BY locstock.loccode,locstock.stockid";
 
 	$result = DB_query($sql,$db,'','',false,true);
 
@@ -236,13 +235,13 @@ If (isset($_POST['PrintPDF'])) {
 	if (!isset($_POST['FromLocation'])) {
 		$_POST['FromLocation']=$DefaultLocation;
 	}
-	echo '<table class=selection><tr><td>' . _('Dispatch Percent') . ":</td><td><input type ='text' name='Percent' class=number size='8' value=0>";
+	echo '<table class=selection><tr><td>' . _('Dispatch Percent') . ':</td><td><input type ="text" name="Percent" class="number" size="8" value=0>';
 	echo '<tr><td>' . _('From Stock Location') . ':</td><td><select name="FromLocation"> ';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if ($myrow['loccode'] == $_POST['FromLocation']){
-			 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-			 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -253,60 +252,60 @@ If (isset($_POST['PrintPDF'])) {
 	echo '<tr><td>' . _('To Stock Location') . ':</td><td><select name="ToLocation"> ';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if ($myrow['loccode'] == $_POST['ToLocation']){
-			 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-			 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
 
-	$SQL='SELECT categoryid, categorydescription FROM stockcategory WHERE stocktype<>"A" ORDER BY categorydescription';
+	$SQL='SELECT categoryid, categorydescription FROM stockcategory  ORDER BY categorydescription';
 	$result1 = DB_query($SQL,$db);
 	if (DB_num_rows($result1)==0){
 		echo '</table></td></tr>
 			</table>
 			<p>';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
-		echo '<br><a href="' . $rootpath . '/StockCategories.php?' . SID .'">' . _('Define Stock Categories') . '</a>';
+		echo '<br><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		include ('includes/footer.inc');
 		exit;
 	}
 
 	// Define StockCat with 'name="StockCat[ ]" multiple' so can select more than one
-	// Also have to change way define $wherecategory for WHERE clause
+	// Also have to change way define $WhereCategory for WHERE clause
 
 	echo '<tr><td>' . _('In Stock Category') . ':</td><td><select name="StockCat">';
 	if (!isset($_POST['StockCat'])){
 		$_POST['StockCat']='All';
 	}
 	if ($_POST['StockCat']=='All'){
-		echo '<option selected value="All">' . _('All');
+		echo '<option selected value="All">' . _('All') . '</option>';
 	} else {
-		echo '<option value="All">' . _('All');
+		echo '<option value="All">' . _('All') . '</option>';
 	}
 	while ($myrow1 = DB_fetch_array($result1)) {
 		if ($myrow1['categoryid']==$_POST['StockCat']){
-			echo '<option selected value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
+			echo '<option selected value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
+			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
 
 	echo '<tr></tr><tr></tr><tr><td>' . _('Report Type') . ':</td>';
-	echo "<td><select name='ReportType'>";
-	echo "<option selected value='Batch'>" . _('Create Batch');
-	echo "<option value='Report'>" . _('Report Only');
+	echo '<td><select name="ReportType">';
+	echo '<option selected value="Batch">' . _('Create Batch') . '</option>';
+	echo '<option value="Report">' . _('Report Only') . '</option>';
 	echo '</select></td><td>&nbsp</td></tr>';
 
 
 	echo '<tr><td>' . _('Template') . ':</td>';
-	echo "<td><select name='template'>";
-	echo "<option selected value='standard'>" . _('Standard');
-	echo "<option value='simple'>" . _('Simple');
+	echo '<td><select name="template">';
+	echo '<option selected value="standard">' . _('Standard') . '</option>';
+	echo '<option value="simple">' . _('Simple') . '</option>';
 	echo '</select></td><td>&nbsp</td></tr>';
 
-	echo "</table><br/><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
+	echo '</table><br/><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '"></div>';
 
 	include('includes/footer.inc');
 

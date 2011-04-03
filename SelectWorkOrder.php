@@ -2,14 +2,12 @@
 
 /* $Id$*/
 
-//$PageSecurity = 2;
-
 include('includes/session.inc');
 $title = _('Search Work Orders');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
-echo '<form action=' . $_SERVER['PHP_SELF'] .'?' .SID . ' method=post>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -117,14 +115,14 @@ if (!isset($StockID)) {
 		while ($myrow=DB_fetch_array($resultStkLocs)){
 			if (isset($_POST['StockLocation'])){
 				if ($myrow['loccode'] == $_POST['StockLocation']){
-					 echo "<option selected Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+					 echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 				} else {
-					 echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+					 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 				}
 			} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-				 echo "<option selected Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+				 echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			} else {
-				 echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+				 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			}
 		}
 
@@ -162,30 +160,30 @@ if (!isset($StockID)) {
 	  			<select name='StockCat'>";
 
 	while ($myrow1 = DB_fetch_array($result1)) {
-		echo "<option value='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
+		echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	}
 
 	  echo '</select>
-	  		<td><font size=1>' . _('Enter text extract(s) in the description') . ":</font></td>
-	  		<td><input type='Text' name='Keywords' size=20 maxlength=25></td>
+	  		<td><font size=1>' . _('Enter text extract(s) in the description') . ':</font></td>
+	  		<td><input type="Text" name="Keywords" size="20" maxlength="25" /></td>
 	</tr>
 	  	<tr><td></td>
-	  		<td><font size=3><b>" . _('OR') . ' </b></font><font size=1>' . _('Enter extract of the Stock Code') . "</b>:</font></td>
-	  		<td><input type='Text' name='StockCode' size=15 maxlength=18></td>
+	  		<td><font size="3"><b>' . _('OR') . ' </b></font><font size=1>' . _('Enter extract of the Stock Code') . '</b>:</font></td>
+	  		<td><input type="Text" name="StockCode" size="15" maxlength="18"></td>
 	  	</tr>
-	  </table><br />";
-	echo "<div class=centre><input type=submit name='SearchParts' value='" . _('Search Items Now') . "'>
-		<input type=submit name='ResetPart' value='" . _('Show All') . "'></div>";
+	  </table><br />';
+	echo '<div class=centre><input type=submit name="SearchParts" value="' . _('Search Items Now') . '">
+		<input type=submit name="ResetPart" value="' . _('Show All') . '"></div>';
 
 if (isset($StockItemsResult)) {
 
 	echo '<br /><table cellpadding=2 colspan=7 class=selection>';
-	$TableHeader = "<tr>
-				<th>" . _('Code') . "</th>
-				<th>" . _('Description') . "</th>
-				<th>" . _('On Hand') . "</th>
-				<th>" . _('Units') . "</th>
-			</tr>";
+	$TableHeader = '<tr>
+				<th>' . _('Code') . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('On Hand') . '</th>
+				<th>' . _('Units') . '</th>
+			</tr>';
 	echo $TableHeader;
 
 	$j = 1;
@@ -249,7 +247,7 @@ if (isset($StockItemsResult)) {
 					WHERE workorders.closed='" . $ClosedOrOpen . "'
 					AND workorders.wo='". $_REQUEST['WO'] ."'
 					ORDER BY workorders.wo,
-							 woitems.stockid";
+							woitems.stockid";
 	} else {
 		  /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
 
@@ -293,18 +291,18 @@ if (isset($StockItemsResult)) {
 		echo '<br /><table cellpadding=2 colspan=7 width=95% class=selection>';
 
 
-		$tableheader = "<tr>
-				<th>" . _('Modify') . "</th>
-				<th>" . _('Status') . "</th>
-				<th>" . _('Receive') . "</th>
-				<th>" . _('Issue To') . "</th>
-				<th>" . _('Costing') . "</th>
-				<th>" . _('Item') . "</th>
-				<th>" . _('Quantity Required') . "</th>
-				<th>" . _('Quantity Received') . "</th>
-				<th>" . _('Quantity Outstanding') . "</th>
-				<th>" . _('Required Date') . "</th>
-				</tr>";
+		$tableheader = '<tr>
+				<th>' . _('Modify') . '</th>
+				<th>' . _('Status') . '</th>
+				<th>' . _('Receive') . '</th>
+				<th>' . _('Issue To') . '</th>
+				<th>' . _('Costing') . '</th>
+				<th>' . _('Item') . '</th>
+				<th>' . _('Quantity Required') . '</th>
+				<th>' . _('Quantity Received') . '</th>
+				<th>' . _('Quantity Outstanding') . '</th>
+				<th>' . _('Required Date') . '</th>
+				</tr>';
 
 		echo $tableheader;
 	}
@@ -320,11 +318,11 @@ if (isset($StockItemsResult)) {
 			$k++;
 		}
 
-		$ModifyPage = $rootpath . "/WorkOrderEntry.php?" . SID . '&WO=' . $myrow['wo'];
-		$Status_WO = $rootpath . '/WorkOrderStatus.php?' . SID . '&WO=' .$myrow['wo'] . '&StockID=' . $myrow['stockid'];
-		$Receive_WO = $rootpath . '/WorkOrderReceive.php?' . SID . '&WO=' .$myrow['wo'] . '&StockID=' . $myrow['stockid'];
-		$Issue_WO = $rootpath . '/WorkOrderIssue.php?' . SID . '&WO=' .$myrow['wo'] . '&StockID=' . $myrow['stockid'];
-		$Costing_WO =$rootpath . '/WorkOrderCosting.php?' . SID . '&WO=' .$myrow['wo'];
+		$ModifyPage = $rootpath . '/WorkOrderEntry.php?WO=' . $myrow['wo'];
+		$Status_WO = $rootpath . '/WorkOrderStatus.php?WO=' .$myrow['wo'] . '&StockID=' . $myrow['stockid'];
+		$Receive_WO = $rootpath . '/WorkOrderReceive.php?WO=' .$myrow['wo'] . '&StockID=' . $myrow['stockid'];
+		$Issue_WO = $rootpath . '/WorkOrderIssue.php?WO=' .$myrow['wo'] . '&StockID=' . $myrow['stockid'];
+		$Costing_WO =$rootpath . '/WorkOrderCosting.php?WO=' .$myrow['wo'];
 
 		$FormatedRequiredByDate = ConvertSQLDate($myrow['requiredby']);
 

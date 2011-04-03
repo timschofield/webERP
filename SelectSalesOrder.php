@@ -14,9 +14,9 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 	for ($i=1;$i<count($_POST);$i++){
 		if (isset($_POST['PlacePO_' . $i])) { //checkboxes only set if they are checked
 			if ($OrdersToPlacePOFor==''){
-				$OrdersToPlacePOFor .= ' orderno=' . $_POST['OrderNo_PO_'.$i];
+				$OrdersToPlacePOFor .= " orderno='" . $_POST['OrderNo_PO_'.$i] . "'";
 			} else {
-				$OrdersToPlacePOFor .= ' OR orderno=' . $_POST['OrderNo_PO_'.$i];
+				$OrdersToPlacePOFor .= " OR orderno='" . $_POST['OrderNo_PO_'.$i] . "'";
 			}
 		}
 	}
@@ -97,9 +97,9 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 						/* if an order is/has been created already and the supplier of this item has changed - so need to finish off the order */
 						//if the user has authority to authorise the PO then it should be created as authorised
 						$AuthSQL ="SELECT authlevel
-			 				   FROM purchorderauth
-						           WHERE userid='".$_SESSION['UserID']."'
-							   AND currabrev='".$SuppRow['currcode']."'";
+					 				   FROM purchorderauth
+								           WHERE userid='".$_SESSION['UserID']."'
+									   AND currabrev='".$SuppRow['currcode']."'";
 
 						$AuthResult=DB_query($AuthSQL,$db);
 						$AuthRow=DB_fetch_array($AuthResult);
@@ -280,8 +280,8 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 					$ErrMsg = _('Could not update purchase order status to Authorised');
 					$Debug = _('The SQL that failed was');
 					$result = DB_query("UPDATE purchorders SET allowprint=1,
-						           		          				   status='Authorised',
-								                      			   stat_comment='" . $StatusComment . "'
+															status='Authorised',
+															stat_comment='" . $StatusComment . "'
 									                      WHERE orderno='" . $PO_OrderNo . "'",
 												$db,$ErrMsg,$DbgMsg,true);
 				} else { // no authority to authorise this order
