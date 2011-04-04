@@ -1,7 +1,6 @@
 <?php
 
-
-/* $Id: SuppFixedAssetChgs.php 4391 2010-12-22 16:21:35Z tim_schofield $*/
+/* $Id: SuppFixedAssetChgs.php 4473 2011-01-23 04:08:53Z daintree $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of Asset objects called Assets- containing details of all asset additions on a supplier invoice
@@ -28,7 +27,12 @@ if (isset($_POST['AddAssetToInvoice'])){
 
 	$InputError = False;
 	if ($_POST['AssetID'] == ''){
-		$_POST['AssetID'] = $_POST['AssetSelection'];
+		if ($_POST['AssetSelection']==''){
+			$InputError = True;
+			prnMsg(_('A valid asset must be either selected from the list or entered'),'error');
+		} else {
+			$_POST['AssetID'] = $_POST['AssetSelection'];
+		}
 	} else {
 		$result = DB_query("SELECT assetid FROM fixedassets WHERE assetid='" . $_POST['AssetID'] . "'",$db);
 		if (DB_num_rows($result)==0) {
@@ -96,7 +100,7 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 }
 
 /*Set up a form to allow input of new Shipment charges */
-echo '<br /><form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="post">';
+echo '<br /><form action="' . $_SERVER['PHP_SELF'] . '" method="post" />';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['AssetID'])) {
@@ -134,10 +138,10 @@ if (!isset($_POST['Amount'])) {
 	$_POST['Amount']=0;
 }
 echo '<tr><td>' . _('Amount') . ':</td>
-	<td><input type="text" class="number" name="Amount" size="12" maxlength="11" VALUE="' .  $_POST['Amount'] . '"></td></tr>';
+	<td><input type="text" class="number" name="Amount" size="12" maxlength="11" value="' .  $_POST['Amount'] . '"></td></tr>';
 echo '</table>';
 
-echo '<br /><div class=centre><input type="submit" name="AddAssetToInvoice" VALUE="' . _('Enter Fixed Asset') . '"></div>';
+echo '<br /><div class=centre><input type="submit" name="AddAssetToInvoice" value="' . _('Enter Fixed Asset') . '"></div>';
 
 echo '</form>';
 include('includes/footer.inc');
