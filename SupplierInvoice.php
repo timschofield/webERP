@@ -562,7 +562,7 @@ then do the updates and inserts to process the invoice entered */
 		$InputError = True;
 		prnMsg(_('The invoice as entered cannot be processed because the there is no suppliers invoice number or reference entered') . '. ' . _('The supplier invoice number must be entered'),'error');
 
-	} elseif (!is_date( $_SESSION['SuppTrans']->TranDate)){
+	} elseif (!Is_date( $_SESSION['SuppTrans']->TranDate)){
 	
 		$InputError = True;
 		prnMsg( _('The invoice as entered cannot be processed because the invoice date entered is not in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');

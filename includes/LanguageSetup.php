@@ -26,7 +26,11 @@ if (function_exists('gettext')){
   
   //This maybe required in some stubborn installations
 	$Locale = setlocale (LC_ALL, $_SESSION['Language']);
-		
+	
+	//Turkish seems to be a special case
+	if ($_SESSION['Language']=='tr_TR.utf8') {
+		$Locale = setlocale(LC_CTYPE, 'C');
+	}
 	//$Locale = setlocale (LC_CTYPE, $_SESSION['Language']);
 	//$Locale = setlocale (LC_MESSAGES, $_SESSION['Language']);
 	$Locale = setlocale (LC_NUMERIC, 'en_US'); //currently need all decimal points etc to be as expected on webserver
@@ -37,7 +41,7 @@ if (function_exists('gettext')){
   //putenv('LANG=$Language_Country');
 	bindtextdomain ('messages', $PathPrefix . 'locale');
 	textdomain ('messages');
-    bind_textdomain_codeset('messages', 'UTF-8'); 
+	bind_textdomain_codeset('messages', 'UTF-8'); 
 	$locale_info = localeconv();
 	
 } else {

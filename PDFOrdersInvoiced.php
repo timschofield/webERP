@@ -2,20 +2,17 @@
 
 /* $Id$*/
 
-/* $Revision: 1.10 $ */
-
-//$PageSecurity = 3;
 include ('includes/session.inc');
 $title = _('Orders Invoiced Report');
 
 $InputError=0;
 
-if (isset($_POST['FromDate']) AND !is_date($_POST['FromDate'])){
+if (isset($_POST['FromDate']) AND !Is_date($_POST['FromDate'])){
 	$msg = _('The date from must be specified in the format') . ' ' . $DefaultDateFormat;
 	$InputError=1;
 	unset($_POST['FromDate']);
 }
-if (isset($_POST['ToDate']) AND !is_date($_POST['ToDate'])){
+if (isset($_POST['ToDate']) AND !Is_date($_POST['ToDate'])){
 	$msg = _('The date to must be specified in the format') . ' ' . $DefaultDateFormat;
 	$InputError=1;
 	unset($_POST['ToDate']);
@@ -36,9 +33,9 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' '
 		. _('Orders Invoiced Report') . '</p>';
 
-	echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . sid . "'>";
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class=selection><tr><td>' . _('Enter the date from which orders are to be listed') . ":</td><td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='FromDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . "'></td></tr>";
+	echo '<table class=selection><tr><td>' . _('Enter the date from which orders are to be listed') . ':</td><td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . '"></td></tr>';
 	echo '<tr><td>' . _('Enter the date to which orders are to be listed') . ":</td>
 			<td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='ToDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td></tr>";
 	echo '<tr><td>' . _('Inventory Category') . '</td><td>';
@@ -47,24 +44,24 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	$result = DB_query($sql,$db);
 
 
-	echo "<select name='CategoryID'>";
-	echo "<option selected value='All'>" . _('Over All Categories');
+	echo '<select name="CategoryID">';
+	echo '<option selected value="All">' . _('Over All Categories') . '</option>';
 
 	while ($myrow=DB_fetch_array($result)){
-	echo '<option VALUE=' . $myrow['categoryid'] . '>' . $myrow['categorydescription'];
+	echo '<option value=' . $myrow['categoryid'] . '>' . $myrow['categorydescription'] . '</option>';
 	}
 	echo '</select></td></tr>';
 
-	echo '<tr><td>' . _('Inventory Location') . ":</td><td><select name='Location'>";
-	echo "<option selected VALUE='All'>" . _('All Locations');
+	echo '<tr><td>' . _('Inventory Location') . ':</td><td><select name="Location">';
+	echo '<option selected value="All">' . _('All Locations') . '</option>';
 
 	$result= DB_query('SELECT loccode, locationname FROM locations',$db);
 	while ($myrow=DB_fetch_array($result)){
-	echo "<option VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
 	echo '</select></td></tr>';
 
-	echo "</table><br><div class='centre'><input type=submit name='Go' VALUE='" . _('Create PDF') . "'></div>";
+	echo '</table><br /><div class="centre"><input type="submit" name="Go" value="' . _('Create PDF') . '"></div>';
 
 	include('includes/footer.inc');
 	exit;
@@ -262,7 +259,7 @@ if (DB_error_no($db)!=0){
 	include('includes/header.inc');
 	prnMsg(_('An error occurred getting the orders details'),'',_('Database Error'));
 	if ($debug==1){
-		prnMsg( _('The SQL used to get the orders that failed was') . '<br>' . $sql, '',_('Database Error'));
+		prnMsg( _('The SQL used to get the orders that failed was') . '<br />' . $sql, '',_('Database Error'));
 	}
 	include ('includes/footer.inc');
 	exit;
@@ -270,7 +267,7 @@ if (DB_error_no($db)!=0){
   	include('includes/header.inc');
 	prnMsg(_('There were no orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' '. $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'), 'warn');
 	if ($debug==1) {
-		prnMsg(_('The SQL that returned no rows was') . '<br>' . $sql,'',_('Database Error'));
+		prnMsg(_('The SQL that returned no rows was') . '<br />' . $sql,'',_('Database Error'));
 	}
 	include('includes/footer.inc');
 	exit;
@@ -424,18 +421,7 @@ $YPos -= ($line_height);
 $LeftOvers = $pdf->addTextWrap($Left_Margin+260,$YPos,100,$FontSize,_('GRAND TOTAL INVOICED'), 'right');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+360,$YPos,80,$FontSize,number_format($AccumTotalInv,2), 'right');
 $YPos -= ($line_height);
-/* UldisN
-$pdfcode = $pdf->output();
-$len = strlen($pdfcode);
-header('Content-type: application/pdf');
-header('Content-Length: ' . $len);
-header('Content-Disposition: inline; filename=OrdersInvoiced.pdf');
-header('Expires: 0');
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
 
-$pdf->stream();
-*/
-$pdf->OutputD($_SESSION['DatabaseName'] . '_OrdersInvoiced_' . date('Y-m-d') . '.pdf');//UldisN
-$pdf->__destruct(); //UldisN
+$pdf->OutputD($_SESSION['DatabaseName'] . '_OrdersInvoiced_' . date('Y-m-d') . '.pdf');
+$pdf->__destruct();
 ?>
