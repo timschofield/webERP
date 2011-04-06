@@ -1,12 +1,12 @@
 <?php
+
 /* $Id$*/
+
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice or credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing/crediting and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
 
 include('includes/DefineSuppTransClass.php');
-
-//$PageSecurity = 5;
 
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');
@@ -17,7 +17,7 @@ include('includes/header.inc');
 
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('To enter a supplier invoice or credit note the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice or supplier credit note must be clicked on'),'info');
-	echo "<br><a href='$rootpath/SelectSupplier.php?" . SID ."'>" . _('Select A Supplier') . '</a>';
+	echo '<br><a href="' . $rootpath . '/SelectSupplier.php">' . _('Select A Supplier') . '</a>';
 	include('includes/footer.inc');
 	exit;
 	/*It all stops here if there aint no supplier selected and transaction initiated ie $_SESSION['SuppTrans'] started off*/
@@ -63,10 +63,10 @@ if (isset($_POST['AddGLCodeToTrans']) and $_POST['AddGLCodeToTrans'] == _('Enter
 
 	if ($InputError == False){
 		$_SESSION['SuppTrans']->Add_GLCodes_To_Trans($_POST['GLCode'],
-								$GLActName,
-								$_POST['Amount'],
-								$_POST['JobRef'],
-								$_POST['Narrative']);
+													$GLActName,
+													$_POST['Amount'],
+													$_POST['JobRef'],
+													$_POST['Narrative']);
 		unset($_POST['GLCode']);
 		unset($_POST['Amount']);
 		unset($_POST['JobRef']);
@@ -92,11 +92,11 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 echo '</p><table cellpadding=2 class=selection>';
 
 $TableHeader = '<tr>
-							<th>' . _('Account') . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . _('Amount') . '<br>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-							<th>' . _('Narrative') . '</th>
-							</tr>';
+				<th>' . _('Account') . '</th>
+				<th>' . _('Name') . '</th>
+				<th>' . _('Amount') . '<br>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+				<th>' . _('Narrative') . '</th>
+				</tr>';
 echo $TableHeader;
 $TotalGLValue=0;
 $i=0;
@@ -107,8 +107,8 @@ foreach ( $_SESSION['SuppTrans']->GLCodes as $EnteredGLCode){
 		<td>' . $EnteredGLCode->GLCode . '</td>
 		<td>' . $EnteredGLCode->GLActName . '</td>
 		<td class=number>' . number_format($EnteredGLCode->Amount,2) . '</td>
-		<td>' . $EnteredGLCode->Narrative . "</td>
-		<td><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $EnteredGLCode->Counter . "'>" . _('Delete') . '</a></td>
+		<td>' . $EnteredGLCode->Narrative . '</td>
+		<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $EnteredGLCode->Counter . '">' . _('Delete') . '</a></td>
 		</tr>';
 
 	$TotalGLValue += $EnteredGLCode->Amount;
@@ -128,13 +128,13 @@ echo '<tr>
 
 
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
-	echo '<br /><a href="' . $rootpath . '/SupplierInvoice.php?' . SID . '">' . _('Back to Invoice Entry') . '</a>';
+	echo '<br /><a href="' . $rootpath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a>';
 } else {
-	echo '<br /><a href="' . $rootpath . '/SupplierCredit.php?' . SID . '">' . _('Back to Credit Note Entry') . '</a>';
+	echo '<br /><a href="' . $rootpath . '/SupplierCredit.php">' . _('Back to Credit Note Entry') . '</a>';
 }
 
 /*Set up a form to allow input of new GL entries */
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="post">';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<br /><table class=selection>';
@@ -150,7 +150,7 @@ echo '<tr>
 	<td>' . _('Account Selection') . ':<br>(' . _('If you know the code enter it above') . '<br>' . _('otherwise select the account from the list') . ')</td>
 	<td><select name="AcctSelection">';
 
-$sql = 'SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode';
+$sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 
 $result = DB_query($sql, $db);
 echo '<option value=""></option>';
