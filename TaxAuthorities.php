@@ -2,7 +2,6 @@
 
 /* $Id$*/
 
-//$PageSecurity=15;
 include('includes/session.inc');
 $title = _('Tax Authorities');
 include('includes/header.inc');
@@ -126,7 +125,7 @@ if (!isset($SelectedTaxAuthID)) {
 
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedTaxAuthID will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true and the list of tax authorities will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
-	$sql = 'SELECT taxid,
+	$sql = "SELECT taxid,
 			description,
 			taxglcode,
 			purchtaxglaccount,
@@ -134,23 +133,23 @@ if (!isset($SelectedTaxAuthID)) {
 			bankacc,
 			bankacctype,
 			bankswift
-		FROM taxauthorities';
+		FROM taxauthorities";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The defined tax authorities could not be retrieved because');
 	$DbgMsg = _('The following SQL to retrieve the tax authorities was used');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	echo '<table class=selection>';
-	echo "<tr>
-		<th>" . _('ID') . "</th>
-		<th>" . _('Description') . "</th>
-		<th>" . _('Input Tax') . '<br>' . _('GL Account') . "</th>
-		<th>" . _('Output Tax') . '<br>' . _('GL Account') . "</th>
-		<th>" . _('Bank') . "</th>
-		<th>" . _('Bank Account') . "</th>
-		<th>" . _('Bank Act Type') . "</th>
-		<th>" . _('Bank Swift') . "</th>
-		</tr></font>";
+	echo '<tr>
+		<th>' . _('ID') . '</th>
+		<th>' . _('Description') . '</th>
+		<th>' . _('Input Tax') . '<br>' . _('GL Account') . '</th>
+		<th>' . _('Output Tax') . '<br>' . _('GL Account') . '</th>
+		<th>' . _('Bank') . '</th>
+		<th>' . _('Bank Account') . '</th>
+		<th>' . _('Bank Act Type') . '</th>
+		<th>' . _('Bank Swift') . '</th>
+		</tr></font>';
 	$k=0;
 	while ($myrow = DB_fetch_row($result)) {
 
@@ -182,11 +181,11 @@ if (!isset($SelectedTaxAuthID)) {
 			$myrow[5],
 			$myrow[6],
 			$myrow[7],
-			$_SERVER['PHP_SELF'] . '?' . SID,
+			$_SERVER['PHP_SELF'] . '?',
 			$myrow[0],
-			$_SERVER['PHP_SELF'] . '?' . SID,
+			$_SERVER['PHP_SELF'] . '?',
 			$myrow[0],
-			$rootpath . '/TaxAuthorityRates.php?' . SID,
+			$rootpath . '/TaxAuthorityRates.php?',
 			$myrow[0]);
 
 	}
@@ -200,11 +199,11 @@ if (!isset($SelectedTaxAuthID)) {
 
 
 if (isset($SelectedTaxAuthID)) {
-	echo "<div class='centre'><a href='" .  $_SERVER['PHP_SELF'] . '?' . SID ."'>" . _('Review all defined tax authority records') . '</a></div>';
+	echo '<div class="centre"><a href="' .  $_SERVER['PHP_SELF'] .'">' . _('Review all defined tax authority records') . '</a></div>';
  }
 
 
-echo "<p><form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID .'>';
+echo '<p><form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedTaxAuthID)) {
@@ -237,13 +236,13 @@ if (isset($SelectedTaxAuthID)) {
 }  //end of if $SelectedTaxAuthID only do the else when a new record is being entered
 
 
-$SQL = 'SELECT accountcode,
+$SQL = "SELECT accountcode,
 		accountname
 	FROM chartmaster,
 		accountgroups
 	WHERE chartmaster.group_=accountgroups.groupname
 	AND accountgroups.pandl=0
-	ORDER BY accountcode';
+	ORDER BY accountcode";
 $result = DB_query($SQL,$db);
 
 if (!isset($_POST['Description'])) {
@@ -255,7 +254,7 @@ echo '<table class=selection>
 
 
 echo '<tr><td>' . _('Input tax GL Account') . ':</td>
-	<td><select name=PurchTaxGLCode>';
+	<td><select name="PurchTaxGLCode">';
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['PurchTaxGLCode']) and $myrow['accountcode']==$_POST['PurchTaxGLCode']) {
@@ -263,7 +262,7 @@ while ($myrow = DB_fetch_array($result)) {
 	} else {
 		echo '<option VALUE=';
 	}
-	echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
+	echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')' . '</option>';
 
 } //end while loop
 
@@ -272,7 +271,7 @@ echo '</select></td></tr>';
 DB_data_seek($result,0);
 
 echo '<tr><td>' . _('Output tax GL Account') . ':</td>
-	<td><select name=TaxGLCode>';
+	<td><select name="TaxGLCode">';
 
 
 while ($myrow = DB_fetch_array($result)) {
@@ -281,7 +280,7 @@ while ($myrow = DB_fetch_array($result)) {
 	} else {
 		echo "<option VALUE='";
 	}
-	echo $myrow['accountcode'] . "'>" . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
+	echo $myrow['accountcode'] . "'>" . $myrow['accountname'] . ' ('.$myrow['accountcode'].')' . '</option>';
 
 } //end while loop
 

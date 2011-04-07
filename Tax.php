@@ -2,7 +2,6 @@
 
 /* $Id$*/
 
-//$PageSecurity = 2;
 include('includes/session.inc');
 
 if (isset($_POST['TaxAuthority']) AND
@@ -12,15 +11,15 @@ if (isset($_POST['TaxAuthority']) AND
 
 	include('includes/PDFStarter.php');
 
-	$sql = 'SELECT lastdate_in_period
-		FROM periods
-		WHERE periodno=' . $_POST['ToPeriod'];
+	$sql = "SELECT lastdate_in_period
+			FROM periods
+			WHERE periodno='" . $_POST['ToPeriod'] . "'";
 	$ErrMsg = _('Could not determine the last date of the period selected') . '. ' . _('The sql returned the following error');
 	$PeriodEndResult = DB_query($sql,$db,$ErrMsg);
 	$PeriodEndRow = DB_fetch_row($PeriodEndResult);
 	$PeriodEnd = ConvertSQLDate($PeriodEndRow[0]);
 
-	$result = DB_query('SELECT description FROM taxauthorities WHERE taxid=' . $_POST['TaxAuthority'],$db);
+	$result = DB_query("SELECT description FROM taxauthorities WHERE taxid='" . $_POST['TaxAuthority'] . "'",$db);
 	$TaxAuthDescription = DB_fetch_row($result);
 	$TaxAuthorityName =  $TaxAuthDescription[0];
 
@@ -61,22 +60,14 @@ if (isset($_POST['TaxAuthority']) AND
 		$title = _('Taxation Reporting Error');
 		include('includes/header.inc');
 		prnMsg(_('The accounts receivable transaction details could not be retrieved because') . ' ' . DB_error_msg($db),'error');
-		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
-			echo "<br>$SQL";
+			echo '<br />' . $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
 	}
-//	if (DB_num_rows($DebtorTransResult)==0){
-//		$title = _('Taxation Reporting Error');
-//		include('includes/header.inc');
-//		prnMsg (_('There are no tax entries to list'),'info');
-//		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
-//		include('includes/footer.inc');
-//		exit;
-//	}
-//
+
 	if ($_POST['DetailOrSummary']=='Detail'){
 		include ('includes/PDFTaxPageHeader.inc');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize+2, _('Tax On Sales'),'left');
@@ -174,9 +165,9 @@ if (isset($_POST['TaxAuthority']) AND
 		$title = _('Taxation Reporting Error');
 		include('includes/header.inc');
 		echo _('The accounts payable transaction details could not be retrieved because') . ' ' . DB_error_msg($db);
-		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/index.php?">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
-			echo "<br>$SQL";
+			echo '<br />' . $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -283,7 +274,7 @@ if (isset($_POST['TaxAuthority']) AND
 		$title = _('Taxation Reporting Error');
 		include('includes/header.inc');
 		prnMsg (_('There are no tax entries to list'),'info');
-		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
     } else {
@@ -298,60 +289,61 @@ if (isset($_POST['TaxAuthority']) AND
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
 	. '" alt="" />' . $title. '</p>';
 
-	echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table class=selection>";
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="POST">
+			<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<tr><td>' . _('Tax Authority To Report On:') . ':</font></td>
-			<td><select name=TaxAuthority>';
+			<td><select name="TaxAuthority">';
 
-	$result = DB_query('SELECT taxid, description FROM taxauthorities',$db);
+	$result = DB_query("SELECT taxid, description FROM taxauthorities",$db);
 	while ($myrow = DB_fetch_array($result)){
-		echo '<option Value=' . $myrow['taxid'] . '>' . $myrow['description'];
+		echo '<option Value=' . $myrow['taxid'] . '>' . $myrow['description'] . '</option>';
 	}
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Return Covering') . ':</font></td>
-			<td><select name=NoOfPeriods>
-			<option Value=1>' . _('One Month') .
-			'<option selected Value=2>' ._('Two Months') .
-			'<option VALUE=3>' . _('Quarter') .
-			'<option VALUE=6>' . _('Six Months') .
+			<td><select name="NoOfPeriods">
+			<option value=1>' . _('One Month') . '</option>' .
+			'<option selected value=2>' ._('Two Months')  . '</option>' .
+			'<option value=3>' . _('Quarter') . '</option>' .
+			'<option value=6>' . _('Six Months')  . '</option>' .
 			'</select></td></tr>';
 
 
-	echo '<tr><td>' . _('Return To') . ":</td>
-			<td><select Name='ToPeriod'>";
+	echo '<tr><td>' . _('Return To') . ':</td>
+			<td><select name="ToPeriod">';
 
 
 	$DefaultPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),0,Date('Y'))),$db);
 
-	$sql = 'SELECT periodno,
+	$sql = "SELECT periodno,
 			lastdate_in_period
-		FROM periods';
+		FROM periods";
 
 	$ErrMsg = _('Could not retrieve the period data because');
 	$Periods = DB_query($sql,$db,$ErrMsg);
 
 	while ($myrow = DB_fetch_array($Periods,$db)){
 		if ($myrow['periodno']==$DefaultPeriod){
-			echo '<option selected VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']);
+			echo '<option selected VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']) . '</option>';
 		} else {
-			echo '<option VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']);
+			echo '<option VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']) . '</option>';
 		}
 	}
 
 	echo '</select></td></tr>';
 
-	echo '<tr><td>' . _('Detail Or Summary Only') . ":</font></td>
-			<td><select name='DetailOrSummary'>
-			<option Value='Detail'>" . _('Detail and Summary') .
-			"<option selected Value='Summary'>" . _('Summary Only') .
-			"</select></td></tr>";
+	echo '<tr><td>' . _('Detail Or Summary Only') . ':</font></td>
+			<td><select name="DetailOrSummary">
+			<option Value="Detail">' . _('Detail and Summary') . '</option> 
+			<option selected value="Summary">' . _('Summary Only') . '</option>
+			</select></td></tr>';
 
 
-	echo "</table>
-		<br /><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'>
+	echo '</table>
+		<br /><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '">
 		</div>
-		</form>";
+		</form>';
 
 	include('includes/footer.inc');
 } /*end of else not PrintPDF */

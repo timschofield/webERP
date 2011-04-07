@@ -1,6 +1,7 @@
 <?php
-/* $Revision: 1.3 $ */
-//$PageSecurity = 2; Now from db
+
+/* $Id$*/
+
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
 include ('includes/session.inc');
@@ -15,24 +16,26 @@ if (!(isset($_POST['Search']))) {
 	echo '<table cellpadding=3 colspan=4 class=selection>';
 	//to view store location
 	echo '<tr><td width="150">' . _('Select Location') . '  </td><td>:</td><td><select name=Location>';
-	$sql = 'SELECT loccode,
+	$sql = "SELECT loccode,
 					locationname
-				FROM `locations`';
+				FROM `locations`";
 	$result = DB_query($sql, $db);
 	echo '<option value="All">' . _('All') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
-		echo "<option VALUE='" . $myrow['loccode'] . "'>" . $myrow['loccode'] . " - " . $myrow['locationname'] . '</option>';
+		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['loccode'] . ' - ' . $myrow['locationname'] . '</option>';
 	}
 	echo '</select></td></tr>';
 	//to view list of customer
-	echo '<tr><td width="150">' . _('Select Customer Type') . '   </td><td>:</td><td><select name=Customers>';
-	$sql = 'SELECT typename,
+	echo '<tr><td width="150">' . _('Select Customer Type') . '</td>
+				<td>:</td>
+				<td><select name="Customers">';
+	$sql = "SELECT typename,
 					typeid
-				FROM debtortype';
+				FROM debtortype";
 	$result = DB_query($sql, $db);
-	echo "<option value='All'>" . _('All') . '</option>';
+	echo '<option value="All">' . _('All') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
-		echo "<option VALUE='" . $myrow['typeid'] . "'>" . $myrow['typename'] . '</option>';
+		echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 	}
 	echo '</select></td>
 			</tr>';
@@ -40,18 +43,18 @@ if (!(isset($_POST['Search']))) {
 	echo '<tr>	<td width="150">' . _('Select Order By ') . ' </td>
 				<td>:</td>
 				<td><select name="Sequence">';
-	echo '	<option value="TotalInvoiced">' . _('Total Pieces') . '';
-	echo '	<option value="ValueSales">' . _('Value of Sales') . '';
+	echo '	<option value="TotalInvoiced">' . _('Total Pieces') . '</option>';
+	echo '	<option value="ValueSales">' . _('Value of Sales') . '</option>';
 	echo '	</select></td>
 				</tr>';
 	//View number of days
 	echo '<tr><td>' . _('Number Of Days') . ' </td><td>:</td>
-			<td><input class="number" tabindex="3" type="Text" name=NumberOfDays size="8"	maxlength="8" value=0></td>
+			<td><input class="number" tabindex="3" type="Text" name="NumberOfDays" size="8"	maxlength="8" value=0></td>
 		 </tr>';
 	//view number of NumberOfTopItems items
 	echo '<tr>
 			<td>' . _('Number Of Top Items') . ' </td><td>:</td>
-			<td><input class="number" tabindex="4" type="Text" name=NumberOfTopItems size="8"	maxlength="8" value=1></td>
+			<td><input class="number" tabindex="4" type="Text" name="NumberOfTopItems" size="8"	maxlength="8" value=1></td>
 		 </tr>
 		 <tr>
 			<td></td>
@@ -82,7 +85,7 @@ if (!(isset($_POST['Search']))) {
 						AND debtorsmaster.currcode = currencies.currabrev
 						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "' 
 				GROUP BY salesorderdetails.stkcode
-				ORDER BY " . $_POST['Sequence'] . " DESC
+				ORDER BY '" . $_POST['Sequence'] . "' DESC
 				LIMIT " . $_POST['NumberOfTopItems'] . "";
 	} else { //the situation if only location type selected "All"
 		if ($_POST['Location'] == 'All') {
@@ -103,11 +106,11 @@ if (!(isset($_POST['Search']))) {
 						AND debtorsmaster.typeid = '" . $_POST['Customers'] . "'
 						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "'
 				GROUP BY salesorderdetails.stkcode
-				ORDER BY " . $_POST['Sequence'] . " DESC
+				ORDER BY '" . $_POST['Sequence'] . "' DESC
 				LIMIT " . $_POST[NumberOfTopItems] . "";
 		} else {
 			//the situation if the customer type selected "All"
-			if ($_POST['Customers'] == "All") {
+			if ($_POST['Customers'] == 'All') {
 				$SQL = "SELECT 	salesorderdetails.stkcode,
 						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
 						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
@@ -145,7 +148,7 @@ if (!(isset($_POST['Search']))) {
 						AND debtorsmaster.typeid = '" . $_POST['Customers'] . "'
 						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "'
 					GROUP BY salesorderdetails.stkcode
-					ORDER BY " . $_POST['Sequence'] . " DESC
+					ORDER BY '" . $_POST['Sequence'] . "' DESC
 					LIMIT " . $_POST['NumberOfTopItems'] . "";
 			}
 		}
@@ -163,13 +166,11 @@ if (!(isset($_POST['Search']))) {
 								<th>' . _('Value Sales') . '</th>
 								<th>' . _('On Hand') . '</th>';
 	echo $TableHeader;
-	echo '
-			<input type="hidden" value=' . $_POST['Location'] . ' name="Location" />
+	echo '<input type="hidden" value=' . $_POST['Location'] . ' name="Location" />
 			<input type="hidden" value=' . $_POST['Sequence'] . ' name="Sequence" />
 			<input type="hidden" value=' . $_POST['NumberOfDays'] . ' name="NumberOfDays" />
 			<input type="hidden" value=' . $_POST['Customers'] . ' name="Customers" />
-			<input type="hidden" value=' . $_POST['NumberOfTopItems'] . ' name="NumberOfTopItems" />
-			';
+			<input type="hidden" value=' . $_POST['NumberOfTopItems'] . ' name="NumberOfTopItems" />';
 	$k = 0; //row colour counter
 	$i = 1;
 	while ($myrow = DB_fetch_array($result)) {
