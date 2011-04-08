@@ -1,25 +1,23 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity = 11;
-
 include('includes/session.inc');
 $title = _('Receive Work Order');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<a href="'. $rootpath . '/SelectWorkOrder.php?' . SID . '">' . _('Back to Work Orders'). '</a><br>';
-echo '<a href="'. $rootpath . '/WorkOrderCosting.php?' . SID . '&WO=' .  $_REQUEST['WO'] . '">' . _('Back to Costing'). '</a><br>';
+echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a><br>';
+echo '<a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $_REQUEST['WO'] . '">' . _('Back to Costing'). '</a><br>';
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' .
 	_('Search') . '" alt="" />' . ' ' . $title.'</p';
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_REQUEST['WO']) OR !isset($_REQUEST['StockID'])) {
 	/* This page can only be called with a purchase order number for invoicing*/
-	echo '<div class="centre"><a href="' . $rootpath . '/SelectWorkOrder.php?' . SID . '">'.
+	echo '<div class="centre"><a href="' . $rootpath . '/SelectWorkOrder.php">'.
 		_('Select a work order to receive').'</a></div>';
 	prnMsg(_('This page can only be opened if a work order has been selected. Please select a work order to receive first'),'info');
 	include ('includes/footer.inc');
@@ -299,10 +297,10 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 			if ($AutoIssueCompRow['stocktype']!='L'){
 				//Need to get the previous locstock quantity for the component at the location where the WO manuafactured
 				$CompQOHResult = DB_query("SELECT locstock.quantity
-										FROM locstock
-										WHERE locstock.stockid='" . $AutoIssueCompRow['stockid'] . "'
-										AND loccode= '" . $WORow['loccode'] . "'",
-										$db);
+											FROM locstock
+											WHERE locstock.stockid='" . $AutoIssueCompRow['stockid'] . "'
+											AND loccode= '" . $WORow['loccode'] . "'",
+											$db);
 				if (DB_num_rows($CompQOHResult)==1){
 							$LocQtyRow = DB_fetch_row($CompQOHResult);
 							$NewQtyOnHand = $LocQtyRow[0] - ($AutoIssueCompRow['qtypu'] * $QuantityReceived);
@@ -672,7 +670,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		$Result = DB_Txn_Commit($db);
 
 		prnMsg(_('The receipt of') . ' ' . $QuantityReceived . ' ' . $WORow['units'] . ' ' . _('of')  . ' ' . $_POST['StockID'] . ' - ' . $WORow['description'] . ' ' . _('against work order') . ' '. $_POST['WO'] . ' ' . _('has been processed'),'info');
-		echo "<a href='$rootpath/SelectWorkOrder.php?" . SID . "'>" . _('Select a different work order for receiving finished stock against'). '</a>';
+		echo '<a href="' . $rootpath . '/SelectWorkOrder.php">' . _('Select a different work order for receiving finished stock against'). '</a>';
 		unset($_POST['WO']);
 		unset($_POST['StockID']);
 		unset($_POST['IntoLocation']);
@@ -714,7 +712,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 					ON workorders.wo=woitems.wo
 					INNER JOIN stockmaster
 					ON woitems.stockid=stockmaster.stockid
-					WHERE woitems.stockid='" . $_POST['StockID'] . "' and workorders.wo='".$_POST['WO'] . "'",
+					WHERE woitems.stockid='" . $_POST['StockID'] . "' AND workorders.wo='".$_POST['WO'] . "'",
 					$db,
 					$ErrMsg);
 
@@ -757,19 +755,19 @@ echo '<table cellpadding=2 class=selection>
 if (!isset($_POST['IntoLocation'])){
 		$_POST['IntoLocation']=$WORow['loccode'];
 }
-$LocResult = DB_query('SELECT loccode, locationname FROM locations',$db);
+$LocResult = DB_query("SELECT loccode, locationname FROM locations",$db);
 while ($LocRow = DB_fetch_array($LocResult)){
 	if ($_POST['IntoLocation'] ==$LocRow['loccode']){
-		echo '<option selected value="' . $LocRow['loccode'] .'">' . $LocRow['locationname'];
+		echo '<option selected value="' . $LocRow['loccode'] .'">' . $LocRow['locationname'] . '</option>';
 	} else {
-		echo '<option value="' . $LocRow['loccode'] .'">' . $LocRow['locationname'];
+		echo '<option value="' . $LocRow['loccode'] .'">' . $LocRow['locationname'] . '</option>';
 	}
 }
 echo '</select></td></tr>
 	</table><br />';
 
 //Now Setup the form for entering quantities received
-echo '<table class=selection>';
+echo '<table class="selection">';
 
 if($WORow['controlled']==1){ //controlled
 	$LotSNRefLength =strlen($WORow['nextlotsnref']);

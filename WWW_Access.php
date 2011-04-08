@@ -2,8 +2,6 @@
 
 /* $Id$*/
 
-//$PageSecurity=15;
-
 include('includes/session.inc');
 
 $title = _('Access Permission Maintenance');
@@ -41,7 +39,7 @@ if (isset($_POST['submit']) || isset($_GET['remove']) || isset($_GET['add']) ) {
 			$ErrMsg = _('The update of the security role description failed because');
 			$ResMsg = _('The Security role description was updated.');
 		} else { // Add Security Heading
-			$sql = "INSERT INTO securityroles (secrolename) VALUES ('".$_POST['SecRoleName']."')";
+			$sql = "INSERT INTO securityroles (secrolename) valueS ('".$_POST['SecRoleName']."')";
 			$ErrMsg = _('The update of the security role failed because');
 			$ResMsg = _('The Security role was created.');
 		}
@@ -52,7 +50,7 @@ if (isset($_POST['submit']) || isset($_GET['remove']) || isset($_GET['add']) ) {
 		if( isset($_GET['add']) ) { // updating Security Groups add a page token
 			$sql = "INSERT INTO securitygroups (
 					secroleid, tokenid
-					) VALUES (
+					) valueS (
 					'".$SelectedRole."',
 					'".$PageTokenId."'
 					)";
@@ -70,7 +68,7 @@ if (isset($_POST['submit']) || isset($_GET['remove']) || isset($_GET['add']) ) {
 		unset($_GET['PageToken']);
 	}
 	// Need to exec the query
-	if (isset($sql) && $InputError != 1 ) {
+	if (isset($sql) AND $InputError != 1 ) {
 		$result = DB_query($sql,$db,$ErrMsg);
 		if( $result ) {
 			prnMsg( $ResMsg,'success');
@@ -84,7 +82,7 @@ if (isset($_POST['submit']) || isset($_GET['remove']) || isset($_GET['add']) ) {
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg( _('Cannot delete this role because user accounts are setup using it'),'warn');
-		echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('user accounts that have this security role setting') . '</font>';
+		echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('user accounts that have this security role setting') . '</font>';
 	} else {
 		$sql="DELETE FROM securitygroups WHERE secroleid='" . $_GET['SelectedRole'] . "'";
 		$result = DB_query($sql,$db);
@@ -108,7 +106,7 @@ if (!isset($SelectedRole)) {
 	$result = DB_query($sql,$db);
 
 	echo '<table class=selection>';
-	echo "<tr><th>" . _('Role') . "</th></tr>";
+	echo '<tr><th>' . _('Role') . '</th></tr>';
 
 	$k=0; //row colour counter
 
@@ -128,9 +126,9 @@ if (!isset($SelectedRole)) {
 			<td><a href=\"%s&SelectedRole=%s&delete=1&SecRoleName=%s\">" . _('Delete') . "</a></td>
 			</tr>",
 			$myrow['secrolename'],
-			$_SERVER['PHP_SELF']  . "?" . SID,
+			$_SERVER['PHP_SELF']  . '?',
 			$myrow['secroleid'],
-			$_SERVER['PHP_SELF'] . "?" . SID,
+			$_SERVER['PHP_SELF'] . '?',
 			$myrow['secroleid'],
 			urlencode($myrow['secrolename']));
 
@@ -140,7 +138,7 @@ if (!isset($SelectedRole)) {
 
 
 if (isset($SelectedRole)) {
-	echo "<br /><div class='centre'><a href='" . $_SERVER['PHP_SELF'] ."?" . SID . "'>" . _('Review Existing Roles') . '</a></div>';
+	echo '<br /><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Existing Roles') . '</a></div>';
 }
 
 if (isset($SelectedRole)) {
@@ -159,24 +157,24 @@ if (isset($SelectedRole)) {
 		$_POST['SecRoleName'] = $myrow['secrolename'];
 	}
 }
-echo '<br>';
-echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+echo '<br />';
+echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if( isset($_POST['SelectedRole'])) {
-	echo "<input type=hidden name='SelectedRole' VALUE='" . $_POST['SelectedRole'] . "'>";
+	echo '<input type="hidden" name="SelectedRole" value="' . $_POST['SelectedRole'] . '">';
 }
-echo '<table class=selection>';
+echo '<table class="selection">';
 if (!isset($_POST['SecRoleName'])) {
 	$_POST['SecRoleName']='';
 }
 echo '<tr><td>' . _('Role') . ":</td>
-	<td><input type='text' name='SecRoleName' size=40 maxlength=40 VALUE='" . $_POST['SecRoleName'] . "'></tr>";
+	<td><input type='text' name='SecRoleName' size=40 maxlength=40 value='" . $_POST['SecRoleName'] . "'></tr>";
 echo "</table><br />
 	<div class='centre'><input type='Submit' name='submit' value='" . _('Enter Role') . "'></div></form>";
 
 if (isset($SelectedRole)) {
-	$sql = 'SELECT tokenid, tokenname
-			FROM securitytokens';
+	$sql = "SELECT tokenid, tokenname
+			FROM securitytokens";
 
 	$sqlUsed = "SELECT tokenid FROM securitygroups WHERE secroleid='". $SelectedRole . "'";
 
@@ -194,8 +192,8 @@ if (isset($SelectedRole)) {
 	echo '<br /><table class=selection><tr>';
 
 	if (DB_num_rows($Result)>0 ) {
-		echo "<th colspan=3><div class='centre'>"._('Assigned Security Tokens')."</div></th>";
-		echo "<th colspan=3><div class='centre'>"._('Available Security Tokens')."</div></th>";
+		echo '<th colspan="3"><div class="centre">'._('Assigned Security Tokens').'</div></th>';
+		echo '<th colspan=3><div class="centre">'._('Available Security Tokens').'</div></th>';
 	}
 	echo '</tr>';
 
@@ -215,7 +213,7 @@ if (isset($SelectedRole)) {
 				<td><a href=\"%s&SelectedRole=%s&remove=1&PageToken=%s\">" . _('Remove') . "</a></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>",
 				$AvailRow['tokenid'],
 				$AvailRow['tokenname'],
-				$_SERVER['PHP_SELF']  . "?" . SID,
+				$_SERVER['PHP_SELF']  . '?',
 				$SelectedRole,
 				$AvailRow['tokenid']
 				);
@@ -228,7 +226,7 @@ if (isset($SelectedRole)) {
 				<td><a href=\"%s&SelectedRole=%s&add=1&PageToken=%s\">" . _('Add') . "</a></td>",
 				$AvailRow['tokenid'],
 				$AvailRow['tokenname'],
-				$_SERVER['PHP_SELF']  . "?" . SID,
+				$_SERVER['PHP_SELF']  . '?',
 				$SelectedRole,
 				$AvailRow['tokenid']
 				);

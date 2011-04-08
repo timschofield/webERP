@@ -207,10 +207,10 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 
 	  if ($InputError==false){
 		$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
-														FROM stockmaster INNER JOIN bom
-														ON stockmaster.stockid=bom.component
-														WHERE bom.parent='" . $NewItem . "'
-														AND bom.loccode='" . $_POST['StockLocation'] . "'",
+									FROM stockmaster INNER JOIN bom
+									ON stockmaster.stockid=bom.component
+									WHERE bom.parent='" . $NewItem . "'
+									AND bom.loccode='" . $_POST['StockLocation'] . "'",
 							 $db);
 			$CostRow = DB_fetch_row($CostResult);
 		if (is_null($CostRow[0]) OR $CostRow[0]==0){
@@ -299,10 +299,10 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 			if ($_POST['RecdQty'.$i]==0 AND (!isset($_POST['HasWOSerialNos'.$i]) or $_POST['HasWOSerialNos'.$i]==false)){
 				/* can only change location cost if QtyRecd=0 */
 				$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
-														FROM stockmaster INNER JOIN bom
-														ON stockmaster.stockid=bom.component
-														WHERE bom.parent='" . $_POST['OutputItem'.$i] . "'
-														AND bom.loccode='" . $_POST['StockLocation'] . "'",
+											FROM stockmaster INNER JOIN bom
+											ON stockmaster.stockid=bom.component
+											WHERE bom.parent='" . $_POST['OutputItem'.$i] . "'
+											AND bom.loccode='" . $_POST['StockLocation'] . "'",
 									 $db);
 				$CostRow = DB_fetch_row($CostResult);
 				if (is_null($CostRow[0])){
@@ -350,7 +350,7 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 	// can't delete it there are open work issues
 	$HasTransResult = DB_query("SELECT * FROM stockmoves
 									WHERE (stockmoves.type= 26 OR stockmoves.type=28)
-										  AND reference LIKE '%" . $_POST['WO'] . "%'",$db);
+									AND reference " . LIKE  . " '%" . $_POST['WO'] . "%'",$db);
 	if (DB_num_rows($HasTransResult)>0){
 		prnMsg(_('This work order cannot be deleted because it has issues or receipts related to it'),'error');
 		$CancelDelete=true;
@@ -377,7 +377,7 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 		prnMsg(_('The work order has been deleted'),'success');
 
 
-		echo "<p><a href='" . $rootpath . "/SelectWorkOrder.php?" . SID . "'>" . _('Select an existing outstanding work order') . "</a>";
+		echo '<p><a href="' . $rootpath . '/SelectWorkOrder.php">' . _('Select an existing outstanding work order') . '</a>';
 		unset($_POST['WO']);
 		for ($i=1;$i<=$_POST['NumberOfOutputs'];$i++){
 		  		 unset($_POST['OutputItem'.$i]);
@@ -394,7 +394,7 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="form">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<br><table class=selection>';
+echo '<br /><table class="selection">';
 
 $sql="SELECT workorders.loccode,
 				 requiredby,
@@ -441,7 +441,7 @@ if (DB_num_rows($WOResult)==1){
 				}
 		  		$_POST['Controlled'.$i] =$WOItem['controlled'];
 		  		$_POST['Serialised'.$i] =$WOItem['serialised'];
-		  		$HasWOSerialNosResult = DB_query('SELECT * FROM woserialnos WHERE wo=' . $_POST['WO'],$db);
+		  		$HasWOSerialNosResult = DB_query("SELECT * FROM woserialnos WHERE wo='" . $_POST['WO'] . "'",$db);
 		  		if (DB_num_rows($HasWOSerialNosResult)>0){
 		  		   $_POST['HasWOSerialNos']=true;
 		  		} else {
@@ -455,7 +455,7 @@ echo '<input type=hidden name="WO" value=' .$_POST['WO'] . '>';
 echo '<tr><td class="label">' . _('Work Order Reference') . ':</td><td>' . $_POST['WO'] . '</td></tr>';
 echo '<tr><td class="label">' . _('Factory Location') .':</td>
 	<td><select name="StockLocation">';
-$LocResult = DB_query('SELECT loccode,locationname FROM locations',$db);
+$LocResult = DB_query("SELECT loccode,locationname FROM locations",$db);
 while ($LocRow = DB_fetch_array($LocResult)){
 	if ($_POST['StockLocation']==$LocRow['loccode']){
 		echo '<option selected value="' . $LocRow['loccode'] .'">' . $LocRow['locationname'] . '</option>';
@@ -521,7 +521,7 @@ if (isset($NumberOfOutputs)){
 				} else {
 					$LotOrSN = _('Batches');
 				}
-				echo '<td><a href="' . $rootpath . '/WOSerialNos.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $_POST['OutputItem' .$i] . '&Description=' . $_POST['OutputItemDesc' .$i] . '&Serialised=' . $_POST['Serialised' .$i] . '&NextSerialNo=' . $_POST['NextLotSNRef' .$i] . '">' . $LotOrSN . '</a></td>';
+				echo '<td><a href="' . $rootpath . '/WOSerialNos.php?WO=' . $_POST['WO'] . '&StockID=' . $_POST['OutputItem' .$i] . '&Description=' . $_POST['OutputItemDesc' .$i] . '&Serialised=' . $_POST['Serialised' .$i] . '&NextSerialNo=' . $_POST['NextLotSNRef' .$i] . '">' . $LotOrSN . '</a></td>';
 			}
 		}
 		echo '<td>';
@@ -558,31 +558,31 @@ $SQL="SELECT categoryid,
 echo '<table class=selection><tr><td>' . _('Select a stock category') . ':<select name="StockCat">';
 
 if (!isset($_POST['StockCat'])){
-	echo '<option selected VALUE="All">' . _('All');
+	echo '<option selected VALUE="All">' . _('All') . '</option>';
 	$_POST['StockCat'] ='All';
 } else {
-	echo '<option VALUE="All">' . _('All');
+	echo '<option VALUE="All">' . _('All') . '</option>';
 }
 
 while ($myrow1 = DB_fetch_array($result1)) {
 
 	if ($_POST['StockCat']==$myrow1['categoryid']){
-		echo '<option selected VALUE=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
+		echo '<option selected value=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
 	} else {
-		echo '<option VALUE='. $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
+		echo '<option value='. $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
 	}
 }
 ?>
 
 </select>
 <td><?php echo _('Enter text extracts in the'); ?> <b><?php echo _('description'); ?></b>:</td>
-<td><input type="Text" name="Keywords" size=20 maxlength=25 VALUE="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>"></td></tr>
+<td><input type="Text" name="Keywords" size=20 maxlength=25 value="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>"></td></tr>
 <tr><td></td>
 		<td><font SIZE 3><b><?php echo _('OR'); ?> </b></font><?php echo _('Enter extract of the'); ?> <b><?php echo _('Stock Code'); ?></b>:</td>
-		<td><input type="Text" name="StockCode" size=15 maxlength=18 VALUE="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></td>
+		<td><input type="Text" name="StockCode" size=15 maxlength=18 value="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></td>
 		</tr>
 		</table>
-		<br /><div class="centre"><input type=submit name="Search" VALUE="<?php echo _('Search Now'); ?>">
+		<br /><div class="centre"><input type=submit name="Search" value="<?php echo _('Search Now'); ?>">
 
 <?php
 
@@ -636,7 +636,7 @@ if (isset($SearchResult)) {
 						$myrow['description'],
 						$myrow['units'],
 						$ImageSource,
-						$_SERVER['PHP_SELF'] . '?' . SID . 'WO=' . $_POST['WO'] . '&NewItem=' . $myrow['stockid'].'&Line='.$i);
+						$_SERVER['PHP_SELF'] . '?WO=' . $_POST['WO'] . '&NewItem=' . $myrow['stockid'].'&Line='.$i);
 
 				$j++;
 				If ($j == 25){

@@ -1,6 +1,5 @@
 <?php
 /* $Id$*/
-//$PageSecurity=15;
 
 include('includes/session.inc');
 $title=_('Debtors Control Integrity');
@@ -13,7 +12,7 @@ include('includes/header.inc');
 
 	// Page Border
 	echo '<table border=1 width=100%><tr><td bgcolor="#FFFFFF">';
-	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] .  '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	// Context Navigation and Title
@@ -29,7 +28,7 @@ include('includes/header.inc');
 
 	if ( !isset($_POST['ToPeriod']) OR $_POST['ToPeriod']=='' )
 	{
-			$SQL = 'SELECT Max(periodno) FROM periods';
+			$SQL = "SELECT Max(periodno) FROM periods";
 			$prdResult = DB_query($SQL,$db);
 			$MaxPrdrow = DB_fetch_row($prdResult);
 			DB_free_result($prdResult);
@@ -41,16 +40,16 @@ include('includes/header.inc');
 	echo '<tr><td>' . _('Start Period:') . '</td><td><select name="FromPeriod">';
 	$toSelect = '<tr><td>' . _('End Period:') .'</td><td><select name="ToPeriod">';
 
-	$SQL = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno';
+	$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno";
 	$perResult = DB_query($SQL,$db);
 
 	while ( $perRow=DB_fetch_array($perResult) )
 	{
 		$fromSelected = ( $perRow['periodno'] == $DefaultFromPeriod ) ? 'selected' : '';
-		echo '<option ' . $fromSelected . ' value="' . $perRow['periodno'] . '">' .MonthAndYearFromSQLDate($perRow['lastdate_in_period']);
+		echo '<option ' . $fromSelected . ' value="' . $perRow['periodno'] . '">' .MonthAndYearFromSQLDate($perRow['lastdate_in_period']) .'</option>';
 
 		$toSelected = ( $perRow['periodno'] == $DefaultToPeriod ) ? 'selected' : '';
-		$toSelect .= '<option ' . $toSelected . ' value="' . $perRow['periodno'] . '">' . MonthAndYearFromSQLDate($perRow['lastdate_in_period']);
+		$toSelect .= '<option ' . $toSelected . ' value="' . $perRow['periodno'] . '">' . MonthAndYearFromSQLDate($perRow['lastdate_in_period']) .'</option>';
 	}
 	DB_free_result($perResult);
 	echo '</select></td></tr>';
@@ -63,12 +62,11 @@ include('includes/header.inc');
 	echo '</table></td>'; // End Second column
 	echo '</table>'; //End the main table
 
-	echo "<p><input type=submit name='Show' value='"._('Accept')."'>";
+	echo '<p><input type=submit name="Show" value="'._('Accept').'">';
 	echo '<input type=submit action=reset value="' . _('Cancel') .'">';
 
 
-	if ( isset($_POST['Show']) )
-	{
+	if ( isset($_POST['Show']) )	{
 		//
 		//========[ SHOW SYNOPSYS ]===========
 		//
@@ -108,12 +106,12 @@ include('includes/header.inc');
 				echo '<tr class="EvenTableRows">';
 				$j++;
 			}
-			echo "<td>" . $curPeriod . "</td>
-					<td class=number>" . number_format($dtRow['bfwd'],2) . "</td>";
+			echo '<td>' . $curPeriod . '</td>
+					<td class="number">' . number_format($dtRow['bfwd'],2) . '</td>';
 
 			$SQL = "SELECT SUM((ovamount+ovgst)/rate) AS totinvnetcrds
 					FROM debtortrans
-					WHERE prd = " . $curPeriod . "
+					WHERE prd = '" . $curPeriod . "'
 					AND (type=10 OR type=11)";
 			$invResult = DB_query($SQL,$db);
 			$invRow = DB_fetch_array($invResult);
@@ -125,7 +123,7 @@ include('includes/header.inc');
 
 			$SQL = "SELECT SUM((ovamount+ovgst)/rate) AS totreceipts
 					FROM debtortrans
-					WHERE prd = " . $curPeriod . "
+					WHERE prd = '" . $curPeriod . "'
 					AND type=12";
 			$recResult = DB_query($SQL,$db);
 			$recRow = DB_fetch_array($recResult);

@@ -1,7 +1,6 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity=9;
 
 include('includes/session.inc');
 $title = _('Work Centres');
@@ -31,7 +30,7 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The Work Centre description must be at least 3 characters long'),'error');
 	}
-	if (strstr($_POST['Code'],' ') OR strstr($_POST['Code'],"'") OR strstr($_POST['Code'],'+') OR strstr($_POST['Code'],"\\") OR strstr($_POST['Code'],"\"") OR strstr($_POST['Code'],'&') OR strstr($_POST['Code'],'.') OR strstr($_POST['Code'],'"')) {
+	if (strstr($_POST['Code'],' ') OR ContainsIllegalCharacters($_POST['Code']) ) {
 		$InputError = 1;
 		prnMsg(_('The work centre code cannot contain any of the following characters') . " - ' & + \" \\ " . _('or a space'),'error');
 	}
@@ -110,23 +109,23 @@ links to delete or edit each. These will call the same page again and allow upda
 or deletion of the records*/
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
 
-	$sql = 'SELECT workcentres.code,
-			workcentres.description,
-			locations.locationname,
-			workcentres.overheadrecoveryact,
-			workcentres.overheadperhour
-		FROM workcentres,
-			locations
-		WHERE workcentres.location = locations.loccode';
+	$sql = "SELECT workcentres.code,
+				workcentres.description,
+				locations.locationname,
+				workcentres.overheadrecoveryact,
+				workcentres.overheadperhour
+			FROM workcentres,
+				locations
+			WHERE workcentres.location = locations.loccode";
 
 	$result = DB_query($sql,$db);
-	echo "<table class=selection>
-		<tr bgcolor =#800000><th>" . _('WC Code') . "</th>
-				<th>" . _('Description') . "</th>
-				<th>" . _('Location') . "</th>
-				<th>" . _('Overhead GL Account') . "</th>
-				<th>" . _('Overhead Per Hour') . "</th>
-		</tr></font>";
+	echo '<table class="selection">
+			<tr bgcolor ="#800000"><th>' . _('WC Code') . '</th>
+					<th>' . _('Description') . '</th>
+					<th>' . _('Location') . '</th>
+					<th>' . _('Overhead GL Account') . '</th>
+					<th>' . _('Overhead Per Hour') . '</th>
+			</tr>';
 
 	while ($myrow = DB_fetch_row($result)) {
 
@@ -143,8 +142,8 @@ or deletion of the records*/
 				$myrow[2],
 				$myrow[3],
 				$myrow[4],
-				$_SERVER['PHP_SELF'] . '?' . SID,
-				$myrow[0], $_SERVER['PHP_SELF'] . '?' . SID,
+				$_SERVER['PHP_SELF'] . '?',
+				$myrow[0], $_SERVER['PHP_SELF'] . '?',
 				$myrow[0]);
 	}
 
@@ -156,10 +155,10 @@ or deletion of the records*/
 
 if (isset($SelectedWC)) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
-	echo "<div class='centre'><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Show all Work Centres') . '</a></div>';
+	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show all Work Centres') . '</a></div>';
 }
 
-echo "<p><form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+echo '<p><form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedWC)) {
@@ -182,41 +181,42 @@ if (isset($SelectedWC)) {
 	$_POST['OverheadRecoveryAct']  = $myrow['overheadrecoveryact'];
 	$_POST['OverheadPerHour']  = $myrow['overheadperhour'];
 
-	echo '<input type=hidden name="SelectedWC" value=' . $SelectedWC . '>';
-	echo '<input type=hidden name="Code" value="' . $_POST['Code'] . '">';
-	echo '<table class=selection><tr><td>' ._('Work Centre Code') . ':</td><td>' . $_POST['Code'] . '</td></tr>';
+	echo '<input type="hidden" name="SelectedWC" value=' . $SelectedWC . '>';
+	echo '<input type="hidden" name="Code" value="' . $_POST['Code'] . '">';
+	echo '<table class="selection"><tr><td>' ._('Work Centre Code') . ':</td>
+										<td>' . $_POST['Code'] . '</td></tr>';
 
 } else { //end of if $SelectedWC only do the else when a new record is being entered
 	if (!isset($_POST['Code'])) {
 		$_POST['Code'] = '';
 	}
-	echo '<table class=selection><tr>
-			<td>' . _('Work Centre Code') . ":</td>
-			<td><input type='Text' name='Code' size=6 maxlength=5 value='" . $_POST['Code'] . "'></td>
-			</tr>";
+	echo '<table class="selection"><tr>
+			<td>' . _('Work Centre Code') . ':</td>
+			<td><input type="Text" name="Code" size="6" maxlength="5" value="' . $_POST['Code'] . '"></td>
+			</tr>';
 }
 
-$SQL = 'SELECT locationname,
+$SQL = "SELECT locationname,
 		loccode
-		FROM locations';
+		FROM locations";
 $result = DB_query($SQL,$db);
 
 if (!isset($_POST['Description'])) {
 	$_POST['Description'] = '';
 }
-echo '<tr><td>' . _('Work Centre Description') . ":</td>
-	<td><input type='Text' name='Description' size=21 maxlength=20 value='" . $_POST['Description'] . "'></td>
+echo '<tr><td>' . _('Work Centre Description') . ':</td>
+	<td><input type="Text" name="Description" size="21" maxlength="20" value="' . $_POST['Description'] . '"></td>
 	</tr>
-	<tr><td>" . _('Location') . ":</td>
-		<td><select name='Location'>";
+	<tr><td>' . _('Location') . ':</td>
+		<td><select name="Location">';
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['Location']) and $myrow['loccode']==$_POST['Location']) {
-		echo "<option selected VALUE='";
+		echo '<option selected value="';
 	} else {
-		echo "<option VALUE='";
+		echo '<option VALUE="';
 	}
-	echo $myrow['loccode'] . "'>" . $myrow['locationname'];
+	echo $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 
 } //end while loop
 
@@ -224,26 +224,26 @@ DB_free_result($result);
 
 
 echo '</select></td></tr>
-	<tr><td>' . _('Overhead Recovery GL Account') . ":</td>
-		<td><select name='OverheadRecoveryAct'>";
+	<tr><td>' . _('Overhead Recovery GL Account') . ':</td>
+		<td><select name="OverheadRecoveryAct">';
 
 //SQL to poulate account selection boxes
-$SQL = 'SELECT accountcode,
-		accountname
-	FROM chartmaster INNER JOIN accountgroups
-		ON chartmaster.group_=accountgroups.groupname
-	WHERE accountgroups.pandl!=0
-	ORDER BY accountcode';
+$SQL = "SELECT accountcode,
+			accountname
+		FROM chartmaster INNER JOIN accountgroups
+			ON chartmaster.group_=accountgroups.groupname
+		WHERE accountgroups.pandl!=0
+		ORDER BY accountcode";
 
 $result = DB_query($SQL,$db);
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['OverheadRecoveryAct']) and $myrow['accountcode']==$_POST['OverheadRecoveryAct']) {
-		echo '<option selected VALUE=';
+		echo '<option selected value=';
 	} else {
-		echo '<option VALUE=';
+		echo '<option value=';
 	}
-	echo $myrow['accountcode'] . '>' . $myrow['accountname'];
+	echo $myrow['accountcode'] . '>' . $myrow['accountname'] . '</option>';
 
 } //end while loop
 DB_free_result($result);

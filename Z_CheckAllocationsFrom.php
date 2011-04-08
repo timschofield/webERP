@@ -1,12 +1,11 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity = 15;
 include ('includes/session.inc');
 $title = _('Identify Allocation Stuff Ups');
 include ('includes/header.inc');
 
-$sql = 'SELECT debtortrans.type,
+$sql = "SELECT debtortrans.type,
 		debtortrans.transno,
 		debtortrans.ovamount,
 		debtortrans.alloc,
@@ -18,7 +17,7 @@ $sql = 'SELECT debtortrans.type,
 		debtortrans.transno,
 		debtortrans.ovamount,
 		debtortrans.alloc
-	HAVING SUM(custallocns.amt) < -alloc';
+	HAVING SUM(custallocns.amt) < -alloc";
 
 $result =DB_query($sql,$db);
 
