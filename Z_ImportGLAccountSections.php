@@ -1,21 +1,19 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity = 11;
-
 include('includes/session.inc');
 $title = _('Import Chart of Accounts');
 include('includes/header.inc');
 include('xmlrpc/lib/xmlrpc.inc');
 include('api/api_errorcodes.php');
 
-$weberpuser = $_SESSION['UserID'];
-$sql='SELECT password FROM www_users WHERE userid="'.$weberpuser.'"';
+$webERPUser = $_SESSION['UserID'];
+$sql="SELECT password FROM www_users WHERE userid='" . $webERPUser ."'";
 $result=DB_query($sql, $db);
 $myrow=DB_fetch_array($result);
 $weberppassword = $myrow[0];
 
-$ServerURL = "http://". $_SERVER['HTTP_HOST'].$rootpath."/api/api_xml-rpc.php";
+$ServerURL = 'http://'. $_SERVER['HTTP_HOST'] . $rootpath . '/api/api_xml-rpc.php';
 $DebugLevel = 0; //Set to 0,1, or 2 with 2 being the highest level of debug info
 
 
@@ -25,7 +23,11 @@ if (isset($_POST['update'])) {
    	$FieldNames = explode(',', $buffer);
    	$SuccessStyle='style="color:green; font-weight:bold"';
    	$FailureStyle='style="color:red; font-weight:bold"';
-   	echo '<table><tr><th>'. _('Account Section') .'</th><th>'. _('Result') . '</th><th>'. _('Comments') .'</th></tr>';
+   	echo '<table>
+			<tr><th>'. _('Account Section') .'</th>
+				<th>'. _('Result') . '</th>
+				<th>'. _('Comments') .'</th>
+			</tr>';
    	$successes=0;
    	$failures=0;
  	while (!feof ($fp)) {
@@ -36,7 +38,7 @@ if (isset($_POST['update'])) {
     			$AccountSectionDetails[$FieldNames[$i]]=$FieldValues[$i];
     		}
 			$accountsection = php_xmlrpc_encode($AccountSectionDetails);
-			$user = new xmlrpcval($weberpuser);
+			$user = new xmlrpcval($webERPUser);
 			$password = new xmlrpcval($weberppassword);
 
 			$msg = new xmlrpcmsg("weberp.xmlrpc_InsertGLAccountSection", array($accountsection, $user, $password));
@@ -75,7 +77,5 @@ if (isset($_POST['update'])) {
 	echo '<div class= "centre"><input type="submit" name="update" value="Process"></div>';
 	echo '</form>';
 }
-
 include('includes/footer.inc');
-
 ?>

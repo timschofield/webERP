@@ -5,11 +5,12 @@
 /* Script to delete a credit note - it expects and credit note number to delete
 not included on any menu for obvious reasons
 
+STRONGLY RECOMMEND NOT USING THIS -  RE INVOICE INSTEAD
+
 must be called directly with path/DeleteCreditnote.php?CreditNoteNo=???????
 
 !! */
 
-//$PageSecurity=15;
 
 include ('includes/session.inc');
 $title = _('Delete Credit Note');
@@ -21,7 +22,7 @@ if (!isset($_GET['CreditNoteNo'])){
 }
 /*get the order number that was credited */
 
-$SQL = 'SELECT order_ FROM debtortrans WHERE transno=' . $_GET['CreditNoteNo'] . ' AND type=11';
+$SQL = "SELECT order_ FROM debtortrans WHERE transno='" . $_GET['CreditNoteNo'] . "' AND type='11'";
 $Result = DB_query($SQL, $db);
 
 $myrow = DB_fetch_row($Result);
@@ -29,14 +30,14 @@ $OrderNo = $myrow[0];
 
 /*Now get the stock movements that were credited into an array */
 
-$SQL = 'SELECT stockid,
-               loccode,
-               debtorno,
-               branchcode,
-               prd,
-               qty
-        FROM stockmoves
-        WHERE transno =' .$_GET['CreditNoteNo'] . ' AND type=11';
+$SQL = "SELECT stockid,
+				loccode,
+				debtorno,
+				branchcode,
+				prd,
+				qty
+			FROM stockmoves
+			WHERE transno ='" .$_GET['CreditNoteNo'] . "' AND type='11'";
 $Result = DB_query($SQL,$db);
 
 $i=0;
@@ -72,8 +73,8 @@ foreach ($StockMovement as $CreditLine) {
 /*reverse the update to LocStock */
 
 	$SQL = "UPDATE locstock SET locstock.quantity = locstock.quantity + " . $CreditLine['qty'] . "
-             WHERE  locstock.stockid = '" . $CreditLine['stockid'] . "'
-             AND loccode = '" . $CreditLine['loccode'] . "'";
+			             WHERE  locstock.stockid = '" . $CreditLine['stockid'] . "'
+			             AND loccode = '" . $CreditLine['loccode'] . "'";
 
 	$ErrMsg = _('SQL to reverse update to the location stock records failed with the error');
 
@@ -100,7 +101,7 @@ $SQL = "DELETE FROM stockmoves
 $ErrMsg = _('SQL to delete the stock movement record failed with the message');
 $Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
 prnMsg(_('Deleted the credit note stock movements').'info');
-echo '<br><br>';
+echo '<br /><br />';
 
 $result = DB_Txn_Commit($db);
 prnMsg(_('Credit note number') . ' ' . $_GET['CreditNoteNo'] . ' ' . _('has been completely deleted') . '. ' . _('To ensure the integrity of the general ledger transactions must be reposted from the period the credit note was created'),'info');

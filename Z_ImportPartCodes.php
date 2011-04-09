@@ -1,7 +1,6 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity = 11;
 
 include('includes/session.inc');
 $title = _('Import Stock Items');
@@ -9,13 +8,13 @@ include('includes/header.inc');
 include('xmlrpc/lib/xmlrpc.inc');
 include('api/api_errorcodes.php');
 
-$weberpuser = $_SESSION['UserID'];
-$sql='SELECT password FROM www_users WHERE userid="'.$weberpuser.'"';
+$webERPUser = $_SESSION['UserID'];
+$sql="SELECT password FROM www_users WHERE userid='" . $webERPUser."'";
 $result=DB_query($sql, $db);
 $myrow=DB_fetch_array($result);
 $weberppassword = $myrow[0];
 
-$ServerURL = "http://". $_SERVER['HTTP_HOST'].$rootpath."/api/api_xml-rpc.php";
+$ServerURL = 'http://'. $_SERVER['HTTP_HOST'] . $rootpath . '/api/api_xml-rpc.php';
 $DebugLevel = 0; //Set to 0,1, or 2 with 2 being the highest level of debug info
 
 
@@ -25,7 +24,12 @@ if (isset($_POST['update'])) {
    	$FieldNames = explode(',', $buffer);
    	$SuccessStyle='style="color:green; font-weight:bold"';
    	$FailureStyle='style="color:red; font-weight:bold"';
-   	echo '<table><tr><th>'. _('Part Code') .'</th><th>'. _('Result') . '</th><th>'. _('Comments') .'</th></tr>';
+   	echo '<table>
+			<tr>
+				<th>'. _('Part Code') .'</th>
+				<th>'. _('Result') . '</th>
+				<th>'. _('Comments') .'</th>
+			</tr>';
    	$successes=0;
    	$failures=0;
  	while (!feof ($fp)) {
@@ -36,7 +40,7 @@ if (isset($_POST['update'])) {
     			$ItemDetails[$FieldNames[$i]]=$FieldValues[$i];
     		}
 			$stockitem = php_xmlrpc_encode($ItemDetails);
-			$user = new xmlrpcval($weberpuser);
+			$user = new xmlrpcval($webERPUser);
 			$password = new xmlrpcval($weberppassword);
 
 			$msg = new xmlrpcmsg("weberp.xmlrpc_InsertStockItem", array($stockitem, $user, $password));
@@ -65,7 +69,7 @@ if (isset($_POST['update'])) {
 	echo '</table>';
 	fclose ($fp);
 } else {
-	$sql = 'select * from locations';
+	$sql = "select * from locations";
 	$result = DB_query($sql,$db);
 	if (DB_num_rows($result)==0) {
 		prnMsg( _('No locations have been set up. At least one location should be set up first'), "error");

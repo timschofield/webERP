@@ -63,8 +63,8 @@
 			$FieldNames.=$key.', ';
 			$FieldValues.='"'.$value.'", ';
 		}
-		$sql = 'INSERT INTO stockcategory ('.substr($FieldNames,0,-2).') '.
-		  'VALUES ('.substr($FieldValues,0,-2).') ';
+		$sql = "INSERT INTO stockcategory ('" . substr($FieldNames,0,-2) . "') 
+				VALUES ('" . substr($FieldValues,0,-2) . "') ";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
@@ -101,11 +101,11 @@
 			$FieldNames.=$key.', ';
 			$FieldValues.='"'.$value.'", ';
 		}
-		$sql='UPDATE stockcategory SET ';
+		$sql="UPDATE stockcategory SET ";
 		foreach ($CategoryDetails as $key => $value) {
-			$sql .= $key.'="'.$value.'", ';
+			$sql .= $key . "='" .$value. "', ";
 		}
-		$sql = substr($sql,0,-2)." WHERE categoryid='".$CategoryDetails['categoryid']."'";
+		$sql = substr($sql,0,-2)." WHERE categoryid='" . $CategoryDetails['categoryid'] . "'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
 			echo DB_error_no($db);
@@ -152,9 +152,10 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql='SELECT categoryid, categorydescription
+		$sql="SELECT categoryid, 
+					categorydescription
 			FROM stockcategory
-			WHERE '.$Field." LIKE '%".$Criteria."%'";
+			WHERE " . $Field ." " . LIKE  . " '%".$Criteria."%'";
 		$result = DB_Query($sql, $db);
 		$i=0;
 		$CategoryList = array();
@@ -174,14 +175,14 @@
 			return $Errors;
 		}
 		$sql="SELECT stockitemproperties.stockid,
-                     description
-              FROM stockitemproperties
-		      INNER JOIN stockcatproperties
-		      ON stockitemproperties.stkcatpropid=stockcatproperties.stkcatpropid
-		      INNER JOIN stockmaster
-		      ON stockitemproperties.stockid=stockmaster.stockid
-		      WHERE stockitemproperties.value like '".$Label."'
-              AND stockcatproperties.categoryid='".$Category."'";
+					description
+			FROM stockitemproperties
+			      INNER JOIN stockcatproperties
+			      ON stockitemproperties.stkcatpropid=stockcatproperties.stkcatpropid
+			      INNER JOIN stockmaster
+			      ON stockitemproperties.stockid=stockmaster.stockid
+			      WHERE stockitemproperties.value like '".$Label."'
+				AND stockcatproperties.categoryid='".$Category."'";
 		$result = DB_Query($sql, $db);
 		$i=0;
 		$ItemList = array();
@@ -202,8 +203,8 @@
 			return $Errors;
 		}
 		$sql="SELECT value FROM stockitemproperties 
-               WHERE stockid='".$StockID."' 
-               AND stkcatpropid='".$Property . "'";
+		               WHERE stockid='".$StockID."' 
+		               AND stkcatpropid='".$Property . "'";
 		$result = DB_Query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$Errors[0]=0;
@@ -220,7 +221,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT categoryid FROM stockcategory';
+		$sql = "SELECT categoryid FROM stockcategory";
 		$result = DB_query($sql, $db);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {

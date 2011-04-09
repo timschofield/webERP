@@ -2,8 +2,6 @@
 
 /* $Id$*/
 
-//$PageSecurity=15;
-
 include('includes/session.inc');
 $title=_('Apply Current Cost to Sales Analysis');
 include('includes/header.inc');
@@ -13,33 +11,33 @@ $Period = 42;
 echo "<form method='POST' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-$SQL = 'SELECT MonthName(lastdate_in_period) AS mnth,
+$SQL = "SELECT MonthName(lastdate_in_period) AS mnth,
 		YEAR(lastdate_in_period) AS yr,
 		periodno
-	FROM periods';
-echo '<p><div class="centre">' . _('Select the Period to update the costs for') . ":<select name='PeriodNo'>";
+		FROM periods";
+echo '<p><div class="centre">' . _('Select the Period to update the costs for') . ':<select name="PeriodNo">';
 $result = DB_query($SQL,$db);
 
-echo '<option selected VALUE=0>' . _('No Period Selected');
+echo '<option selected value=0>' . _('No Period Selected') . '</option>';
 
 while ($PeriodInfo=DB_fetch_array($result)){
 
-	echo '<option VALUE=' . $PeriodInfo['periodno'] . '>' . $PeriodInfo['mnth'] . ' ' . $PeriodInfo['Yr'];
+	echo '<option value=' . $PeriodInfo['periodno'] . '>' . $PeriodInfo['mnth'] . ' ' . $PeriodInfo['Yr'] . '</option>';
 
 }
 
 echo '</select>';
 
-echo "<p><input type=submit name='UpdateSalesAnalysis' VALUE='" . _('Update Sales Analysis Costs') ."'></div>";
+echo '<p><input type=submit name="UpdateSalesAnalysis" value="' . _('Update Sales Analysis Costs') .'"></div>';
 echo '</form>';
 
 if (isset($_POST['UpdateSalesAnalysis']) AND $_POST['PeriodNo']!=0){
-	$sql = 'SELECT stockmaster.stockid,
+	$sql = "SELECT stockmaster.stockid,
 			materialcost+overheadcost+labourcost AS standardcost,
 			stockmaster.mbflag
 		FROM salesanalysis INNER JOIN stockmaster
 			ON salesanalysis.stockid=stockmaster.stockid
-		WHERE periodno=' . $_POST['PeriodNo']  . "
+		WHERE periodno='" . $_POST['PeriodNo']  . "'
 		AND stockmaster.mbflag<>'D'
 		GROUP BY stockmaster.stockid,
 			stockmaster.materialcost,

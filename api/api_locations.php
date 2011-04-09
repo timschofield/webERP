@@ -13,8 +13,8 @@
 			$Errors[$i] = IncorrectLocationCodeLength;
 		}
 		$Searchsql = "SELECT count(loccode)
-				FROM locations
-				WHERE loccode='".$LocationCode."'";
+						FROM locations
+						WHERE loccode='".$LocationCode."'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] != 0) {
@@ -26,8 +26,8 @@
 /* Check that the Location Code exists*/
 	function VerifyLocationExists($LocationCode, $i, $Errors, $db) {
 		$Searchsql = "SELECT count(loccode)
-				FROM locations
-				WHERE loccode='".$LocationCode."'";
+						FROM locations
+						WHERE loccode='".$LocationCode."'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]==0) {
@@ -47,8 +47,8 @@
 /* Check that the tax province id is set up in the weberp database */
 	function VerifyTaxProvinceId($TaxProvinceId , $i, $Errors, $db) {
 		$Searchsql = "SELECT COUNT(taxprovinceid) 
-					FROM taxprovinces 
-					WHERE taxprovinceid='".$TaxProvinceId."'";
+						FROM taxprovinces 
+						WHERE taxprovinceid='".$TaxProvinceId."'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
 		if ($answer[0] == 0) {
@@ -69,7 +69,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT loccode FROM locations';
+		$sql = "SELECT loccode FROM locations";
 		$result = DB_query($sql, $db);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
@@ -149,10 +149,9 @@
 			$FieldValues.='"'.$value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$sql = 'INSERT INTO locations ('.substr($FieldNames,0,-2).') '.
-		  		'VALUES ('.substr($FieldValues,0,-2).') ';
-				//echo $sql;
-				//exit;
+			$sql = "INSERT INTO locations (" . substr($FieldNames,0,-2) . ") 
+						VALUES ('" . substr($FieldValues,0,-2) . "') ";
+				
 			$result = DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -209,9 +208,9 @@
 		if (isset($Location['contact'])){
 			$Errors=VerifyContactName($Location['contact'], sizeof($Errors), $Errors);
 		}
-		$sql='UPDATE locations SET ';
+		$sql="UPDATE locations SET ";
 		foreach ($Location as $key => $value) {
-			$sql .= $key.'="'.$value.'", ';
+			$sql .= $key."='" . $value."', ";
 		}
 		$sql = substr($sql,0,-2)." WHERE loccode='".$Location['loccode']."'";
 		if (sizeof($Errors)==0) {

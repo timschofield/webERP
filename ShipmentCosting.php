@@ -321,8 +321,9 @@ if (db_num_rows($LineItemsResult) > 0) {
 				if ($TotalQuantityOnHand>0) {
 
 									$CostIncrement = ($myrow['totqtyinvoiced'] *($ItemShipmentCost - $StdCostUnit) - $WriteOffToVariances) / $TotalQuantityOnHand;
-									$sql = 'UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
-																   materialcost=materialcost+' . $CostIncrement . " WHERE stockid='" . $myrow['itemcode'] . "'";
+									$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
+																   materialcost=materialcost+" . $CostIncrement . " 
+											WHERE stockid='" . $myrow['itemcode'] . "'";
 					$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg,'',TRUE);
 				} else {
 					$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
@@ -385,7 +386,7 @@ if (db_num_rows($LineItemsResult) > 0) {
 
 					if ($_SESSION['CompanyRecord']['gllink_stock']==1){
 						$CostUpdateNo = GetNextTransNo(35, $db);
-						$PeriodNo = GetPeriod(Date("d/m/Y"), $db);
+						$PeriodNo = GetPeriod(Date('d/m/Y'), $db);
 
 						$ValueOfChange = $QOH * ($ItemShipmentCost - $StdCostUnit);
 

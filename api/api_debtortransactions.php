@@ -6,7 +6,7 @@
 	function VerifyTransNo($TransNo, $Type, $i, $Errors, $db) {
 		$Searchsql = "SELECT count(transno)
 				FROM debtortrans
-				WHERE type=".$Type." and transno=".$TransNo;
+				WHERE type='".$Type."' and transno='".$TransNo . "'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]>0) {
@@ -49,7 +49,7 @@ function ConvertToSQLDate($DateEntry) {
  * must be in the same format as the date format specified in the
  * target webERP company */
 	function VerifyTransactionDate($TranDate, $i, $Errors, $db) {
-		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
+		$sql="SELECT confvalue FROM config WHERE confname='" . DefaultDateFormat ."'";
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
@@ -83,7 +83,7 @@ function ConvertToSQLDate($DateEntry) {
 
 /* Find the period number from the transaction date */
 	function GetPeriodFromTransactionDate($TranDate, $i, $Errors, $db) {
-		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
+		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
@@ -114,7 +114,7 @@ function ConvertToSQLDate($DateEntry) {
 		$Month=$DateArray[1];
 		$Year=$DateArray[0];
 		$Date=$Year.'-'.$Month.'-'.$Day;
-		$sql='select max(periodno) from periods where lastdate_in_period<="'.$Date.'"';
+		$sql="SELECT MAX(periodno) FROM periods WHERE lastdate_in_period<='" . $Date . "'";
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		return $myrow[0];
@@ -243,8 +243,8 @@ function ConvertToSQLDate($DateEntry) {
 
 /* Retrieves the default sales GL code for a given part code and sales area */
 	function GetSalesGLCode($salesarea, $partnumber, $db) {
-		$sql='select salesglcode from salesglpostings
-			where stkcat="any"';
+		$sql="SELECT salesglcode FROM salesglpostings
+			WHERE stkcat='any'";
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		return $myrow[0];
@@ -252,7 +252,7 @@ function ConvertToSQLDate($DateEntry) {
 
 /* Retrieves the default debtors code for webERP */
 	function GetDebtorsGLCode($db) {
-		$sql='select debtorsact from companies';
+		$sql="SELECT debtorsact FROM companies";
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		return $myrow[0];
@@ -260,7 +260,7 @@ function ConvertToSQLDate($DateEntry) {
 
 /* Retrieves the next transaction number for the given type */
 	function GetNextTransactionNo($type, $db) {
-		$sql='select typeno from systypes where typeid='.$type;
+		$sql="SELECT typeno FROM systypes WHERE typeid='" . $type . "'";
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$NextTransaction=$myrow[0]+1;
@@ -347,22 +347,38 @@ function ConvertToSQLDate($DateEntry) {
 		}
 		if (sizeof($Errors)==0) {
 			$result = DB_Txn_Begin($db);
-			$sql = 'INSERT INTO debtortrans ('.substr($FieldNames,0,-2).') '.
-		  		'VALUES ('.substr($FieldValues,0,-2).') ';
+			$sql = "INSERT INTO debtortrans (" . substr($FieldNames,0,-2) .") 
+									VALUES ('" . substr($FieldValues,0,-2) ."') ";
 			$result = DB_Query($sql, $db);
-			$sql = 'UPDATE systypes set typeno='.GetNextTransactionNo(10, $db).' where typeid=10';
+			$sql = "UPDATE systypes SET typeno='" . GetNextTransactionNo(10, $db) . "' WHERE typeid=10";
 			$result = DB_Query($sql, $db);
 			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode, $db);
 			$DebtorsGLCode=GetDebtorsGLCode($db);
-			$sql='insert into gltrans Values(null, 10,'.GetNextTransactionNo(10, $db).
-				',0,"'.$InvoiceDetails['trandate'].'",'.$InvoiceDetails['prd'].', '.$DebtorsGLCode.
-				',"'.'Invoice for -'.$InvoiceDetails['debtorno'].' Total - '.$InvoiceDetails['ovamount'].
-				'", '.$InvoiceDetails['ovamount'].', 0,"'.$InvoiceDetails['jobref'].'",1)';
+			$sql="INSERT INTO gltrans VALUES(null, 
+											10,
+											'" . GetNextTransactionNo(10, $db) . "',
+											0,
+											'" . $InvoiceDetails['trandate'] ."',
+											'" . $InvoiceDetails['prd'] . "', 
+											'" . $DebtorsGLCode. "',
+											'". _('Invoice for') .' -' . $InvoiceDetails['debtorno'] .' ' . _('Total') . ' - '. $InvoiceDetails['ovamount'] . "', 
+											'" . $InvoiceDetails['ovamount'] . "', 
+											0,
+											'" . $InvoiceDetails['jobref'] . "',
+											1)";
 			$result = DB_Query($sql, $db);
-			$sql='insert into gltrans Values(null, 10,'.GetNextTransactionNo(10, $db).
-				',0,"'.$InvoiceDetails['trandate'].'",'.$InvoiceDetails['prd'].', '.$SalesGLCode.
-				',"'.'Invoice for -'.$InvoiceDetails['debtorno'].' Total - '.$InvoiceDetails['ovamount'].
-				'", '.-intval($InvoiceDetails['ovamount']).', 0,"'.$InvoiceDetails['jobref'].'",1)';
+			$sql="INSERT INTO gltrans VALUES(null, 
+											10,
+											'" . GetNextTransactionNo(10, $db) . "',
+											0,
+											'" . $InvoiceDetails['trandate'] ."',
+											'" . $InvoiceDetails['prd'] . "', 
+											'" . $SalesGLCode . "',
+											'" . _('Invoice for') . ' -' . $InvoiceDetails['debtorno'] . ' ' . _('Total') .' - '. $InvoiceDetails['ovamount'] ."', 
+											'" . (-intval($InvoiceDetails['ovamount'])) ."', 
+											0,
+											'" . $InvoiceDetails['jobref'] . "',
+											1)";
 			$result = DB_Query($sql, $db);
 			$result= DB_Txn_Commit($db);
 			if (DB_error_no($db) != 0) {
@@ -458,22 +474,36 @@ function ConvertToSQLDate($DateEntry) {
 		}
 		if (sizeof($Errors)==0) {
 			$result = DB_Txn_Begin($db);
-			$sql = 'INSERT INTO debtortrans ('.substr($FieldNames,0,-2).') '.
-		  		'VALUES ('.substr($FieldValues,0,-2).') ';
+			$sql = "INSERT INTO debtortrans (" . substr($FieldNames,0,-2) . ") 
+						VALUES ('".substr($FieldValues,0,-2) ."') ";
 			$result = DB_Query($sql, $db);
-			$sql = 'UPDATE systypes set typeno='.GetNextTransactionNo(11, $db).' where typeid=10';
+			$sql = "UPDATE systypes SET typeno='" . GetNextTransactionNo(11, $db) ."' WHERE typeid=10";
 			$result = DB_Query($sql, $db);
 			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode, $db);
 			$DebtorsGLCode=GetDebtorsGLCode($db);
-			$sql='insert into gltrans Values("null", 10,'.GetNextTransactionNo(11, $db).
-				',0,"'.$CreditDetails['trandate'].'",'.$CreditDetails['prd'].', '.$DebtorsGLCode.
-				',"'.'Invoice for -'.$CreditDetails['debtorno'].' Total - '.$CreditDetails['ovamount'].
-				'", '.$CreditDetails['ovamount'].', 0,"'.$CreditDetails['jobref'].'")';
+			$sql="INSERT INTO gltrans VALUES(null, 
+											10,
+											'" . GetNextTransactionNo(11, $db). "',
+											0,
+											'" . $CreditDetails['trandate'] . "',
+											'" . $CreditDetails['prd'] . "', 
+											'" .$DebtorsGLCode . "',
+											'". _('Invoice for') .  ' - '.$CreditDetails['debtorno'].' ' . -('Total') .' - '.$CreditDetails['ovamount']. "', 
+											'" . $CreditDetails['ovamount'] . "', 
+											0,
+											'" . $CreditDetails['jobref'] ."')";
 			$result = DB_Query($sql, $db);
-			$sql='insert into gltrans Values("null", 10,'.GetNextTransactionNo(11, $db).
-				',0,"'.$CreditDetails['trandate'].'",'.$CreditDetails['prd'].', '.$SalesGLCode.
-				',"'.'Invoice for -'.$CreditDetails['debtorno'].' Total - '.$CreditDetails['ovamount'].
-				'", '.-intval($CreditDetails['ovamount']).', 0,"'.$CreditDetails['jobref'].'")';
+			$sql="INSERT INTO gltrans VALUES(null,
+											10,
+											'" . GetNextTransactionNo(11, $db) . "',
+											0,
+											'" . $CreditDetails['trandate'] ."',
+											'" . $CreditDetails['prd'] . "', 
+											'" . $SalesGLCode ."',
+											'". _('Invoice for') . ' - ' . $CreditDetails['debtorno'] .' ' . _('Total') . ' - '. $CreditDetails['ovamount'] ."', 
+											'" .(-intval($CreditDetails['ovamount'])) . "', 
+											0,
+											'" . $CreditDetails['jobref'] ."')";
 			$result = DB_Query($sql, $db);
 			$result= DB_Txn_Commit($db);
 			if (DB_error_no($db) != 0) {

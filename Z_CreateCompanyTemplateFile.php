@@ -1,8 +1,6 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity =15;
-
 include ('includes/session.inc');
 $title = _('Create Database Template File');
 include ('includes/header.inc');
@@ -15,20 +13,20 @@ if (isset($_POST['CreateTemplate'])){
       }
 
       if ($InputError==false){
-          $CurrResult = DB_query( 'SELECT currabrev,
-                                          currency,
-                                          country,
-                                          debtorsact,
-                                          creditorsact,
-                                          payrollact,
-                                          grnact,
-                                          exchangediffact,
-                                          purchasesexchangediffact,
-                                          retainedearnings,
-                                          freightact
-                                  FROM currencies INNER JOIN companies
-                                  ON companies.currencydefault=currencies.currabrev
-                                  WHERE coycode=1',$db);
+          $CurrResult = DB_query( "SELECT currabrev,
+								  currency,
+								  country,
+								  debtorsact,
+								  creditorsact,
+								  payrollact,
+								  grnact,
+								  exchangediffact,
+								  purchasesexchangediffact,
+								  retainedearnings,
+								  freightact
+								FROM currencies INNER JOIN companies
+								ON companies.currencydefault=currencies.currabrev
+								WHERE coycode='1'",$db);
           $CurrRow = DB_fetch_array($CurrResult);
 
 
@@ -46,7 +44,7 @@ if (isset($_POST['CreateTemplate'])){
                                               purchasesexchangediffact=" . $CurrRow['purchasesexchangediffact'] . ",
                                               retainedearnings=" . $CurrRow['retainedearnings'] . ",
                                               freightact=" . $CurrRow['freightact'] . "
-                          WHERE coycode=1;\n";
+                          WHERE coycode='1';\n";
 
           /*empty out any existing records in
            chartmaster,
@@ -67,12 +65,12 @@ if (isset($_POST['CreateTemplate'])){
           $SQLScript .= "TRUNCATE TABLE taxcategories;\n";
           $SQLScript .= "TRUNCATE TABLE taxprovinces;\n";
 
-		  $GroupsResult = DB_query('SELECT groupname,
-                                           sectioninaccounts,
-                                           pandl,
-                                           sequenceintb,
-                                           parentgroupname
-                                    FROM accountgroups',$db);
+		  $GroupsResult = DB_query("SELECT groupname,
+									sectioninaccounts,
+									pandl,
+									sequenceintb,
+									parentgroupname
+									FROM accountgroups",$db);
 
           while ($GroupRow = DB_fetch_array($GroupsResult)){
               $SQLScript .= "INSERT INTO accountgroups (groupname,sectioninaccounts,pandl, sequenceintb, parentgroupname)
@@ -83,13 +81,15 @@ if (isset($_POST['CreateTemplate'])){
                                           '" . $GroupRow['parentgroupname'] . "');\n";
           }
 
-		  $ChartResult = DB_query('SELECT accountcode, accountname, group_ FROM chartmaster',$db);
+		  $ChartResult = DB_query("SELECT accountcode, accountname, group_ FROM chartmaster",$db);
           $i=0;
           while ($ChartRow = DB_fetch_array($ChartResult)){
                 if ($_POST['IncludeAccount_' .$i]=='on'){
 
                          $SQLScript .= "INSERT INTO chartmaster (accountcode,accountname,group_)
-                                               VALUES (" . $ChartRow['accountcode'] . ", '" . $ChartRow['accountname'] . "', '" . $ChartRow['group_'] . "');\n";
+                                               VALUES ('" . $ChartRow['accountcode'] . "', 
+								'" . $ChartRow['accountname'] . "', 
+								'" . $ChartRow['group_'] . "');\n";
                 }
                 $i++;
           }
@@ -98,14 +98,14 @@ if (isset($_POST['CreateTemplate'])){
 
           /*Tax Authorities table */
           $TaxAuthoritiesResult = DB_query("SELECT taxid,
-                                                   description,
-                                                   taxglcode,
-                                                   purchtaxglaccount,
-                                                   bank,
-                                                   bankacctype,
-                                                   bankacc,
-                                                   bankswift
-                                            FROM taxauthorities",$db);
+										description,
+										taxglcode,
+										purchtaxglaccount,
+										bank,
+										bankacctype,
+										bankacc,
+										bankswift
+										FROM taxauthorities",$db);
 
           while ($TaxAuthoritiesRow = DB_fetch_array($TaxAuthoritiesResult)){
               $SQLScript .= "INSERT INTO taxauthorities (taxid,
@@ -127,11 +127,11 @@ if (isset($_POST['CreateTemplate'])){
           }
 
           /*taxauthrates table */
-          $TaxAuthRatesResult = DB_query('SELECT taxauthority,
-                                                 dispatchtaxprovince,
-                                                 taxcatid,
-                                                 taxrate
-                                            FROM taxauthrates',$db);
+          $TaxAuthRatesResult = DB_query("SELECT taxauthority,
+									 dispatchtaxprovince,
+									 taxcatid,
+									 taxrate
+									FROM taxauthrates",$db);
 
           while ($TaxAuthRatesRow = DB_fetch_array($TaxAuthRatesResult)){
               $SQLScript .= "INSERT INTO taxauthrates (taxauthority,
@@ -145,20 +145,20 @@ if (isset($_POST['CreateTemplate'])){
           }
 
           /*taxgroups table */
-          $TaxGroupsResult = DB_query('SELECT taxgroupid,
-                                              taxgroupdescription
-                                            FROM taxgroups',$db);
+          $TaxGroupsResult = DB_query("SELECT taxgroupid,
+										taxgroupdescription
+										FROM taxgroups",$db);
 
           while ($TaxGroupsRow = DB_fetch_array($TaxGroupsResult)){
               $SQLScript .= "INSERT INTO taxgroups (taxgroupid,
                                                     taxgroupdescription)
-                                   VALUES (" . $TaxGroupsRow['taxgroupid'] . ",
+                                   VALUES ('" . $TaxGroupsRow['taxgroupid'] . "',
                                           '" . $TaxGroupsRow['taxgroupdescription'] . "');\n";
           }
           /*tax categories table */
-          $TaxCategoriesResult = DB_query('SELECT taxcatid,
-                                              taxcatname
-                                            FROM taxcategories',$db);
+          $TaxCategoriesResult = DB_query("SELECT taxcatid,
+				                                              taxcatname
+				                                            FROM taxcategories",$db);
 
           while ($TaxCategoriesRow = DB_fetch_array($TaxCategoriesResult)){
               $SQLScript .= "INSERT INTO taxcategories (taxcatid,
@@ -167,9 +167,9 @@ if (isset($_POST['CreateTemplate'])){
                                           '" . $TaxCategoriesRow['taxcatname'] . "');\n";
           }
           /*tax provinces table */
-          $TaxProvincesResult = DB_query('SELECT taxprovinceid,
-                                              taxprovincename
-                                            FROM taxprovinces',$db);
+          $TaxProvincesResult = DB_query("SELECT taxprovinceid,
+				                                              taxprovincename
+				                                            FROM taxprovinces",$db);
 
           while ($TaxProvincesRow = DB_fetch_array($TaxProvincesResult)){
               $SQLScript .= "INSERT INTO taxprovinces (taxprovinceid,
@@ -178,11 +178,11 @@ if (isset($_POST['CreateTemplate'])){
                                           '" . $TaxProvincesRow['taxprovincename'] . "');\n";
           }
           /*taxgroup taxes table */
-          $TaxGroupTaxesResult = DB_query('SELECT taxgroupid,
-                                                 taxauthid,
-                                                 calculationorder,
-                                                 taxontax
-                                            FROM taxgrouptaxes',$db);
+          $TaxGroupTaxesResult = DB_query("SELECT taxgroupid,
+					                                                 taxauthid,
+					                                                 calculationorder,
+					                                                 taxontax
+					                                            FROM taxgrouptaxes",$db);
 
           while ($TaxGroupTaxesRow = DB_fetch_array($TaxGroupTaxesResult)){
               $SQLScript .= "INSERT INTO taxgrouptaxes (taxgroupid,
@@ -194,7 +194,7 @@ if (isset($_POST['CreateTemplate'])){
                                            " . $TaxGroupTaxesRow['calculationorder'] . ",
                                            " . $TaxGroupTaxesRow['taxontax'] . ");\n";
           }
-		  $SQLScript .= 'SET FOREIGN_KEY_CHECKS=1;';
+		  $SQLScript .= "SET FOREIGN_KEY_CHECKS=1;";
           /*Now write $SQLScript to a file */
           $FileHandle = fopen("./companies/" . $_SESSION['DatabaseName'] . "/reports/" . $_POST['TemplateName'] .".sql","w");
            fwrite ($FileHandle, $SQLScript);
@@ -225,10 +225,10 @@ prnMsg(_('Warning: All selected accounts will be exported - please de-select the
 echo '<table>';
  /*Show the chart of accounts to be exported for deslection of company specific ones */
 
-$ChartResult = DB_query('SELECT accountcode, accountname, group_ FROM chartmaster',$db);
+$ChartResult = DB_query("SELECT accountcode, accountname, group_ FROM chartmaster",$db);
 
 $TableHeadings = '<tr><th>' . _('Account Code') . '</th>
-                      <th>' . _('Account Name') . '</th></tr>';
+					<th>' . _('Account Name') . '</th></tr>';
 $i = 0;
 while ($ChartRow = DB_fetch_array($ChartResult)){
      echo '<tr><td>' . $ChartRow['accountcode'] . '</td>

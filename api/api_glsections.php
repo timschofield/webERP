@@ -43,8 +43,8 @@
 			$FieldValues.='"'.$value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$sql = 'INSERT INTO accountsection ('.substr($FieldNames,0,-2).') '.
-		  		'VALUES ('.substr($FieldValues,0,-2).') ';
+			$sql = "INSERT INTO accountsection ('" . substr($FieldNames,0,-2) . "') 
+					VALUES ('" . substr($FieldValues,0,-2) . "')";
 			$result = DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;

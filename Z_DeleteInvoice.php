@@ -4,9 +4,12 @@
 
 /* Script to delete an invoice expects and invoice number to delete
 not included on any menu for obvious reasons
+* 
+* STRONGLY RECOMMEND NOT USING THIS -CREDIT THE INVOICE AND RE INVOICE
+* * 
+* 
 This page must be called directly using path/Z_DeleteInvoice.php?InvoiceNo=?????    !! */
 
-//$PageSecurity=15;
 
 include ('includes/session.inc');
 $title = _('Delete Invoice');
@@ -19,9 +22,10 @@ if (!isset($_GET['InvoiceNo'])){
 }
 /*Get the order number that was invoiced */
 
-$SQL = 'SELECT order_
-               FROM debtortrans
-        WHERE debtortrans.type = 10	and transno = ' . $_GET['InvoiceNo'];
+$SQL = "SELECT order_
+		FROM debtortrans
+		WHERE debtortrans.type = 10	
+		AND transno = '" . $_GET['InvoiceNo'] . "'";
 
 $Result = DB_query($SQL,$db);
 $myrow = DB_fetch_row($Result);
@@ -40,7 +44,7 @@ $ProcessingOrder = $myrow[0];
 //               mbflag
 
 // We now use fully qualified column names
-$SQL = 'SELECT stockmoves.stockid,
+$SQL = "SELECT stockmoves.stockid,
                stockmoves.loccode,
                stockmoves.debtorno,
                stockmoves.branchcode,
@@ -49,7 +53,7 @@ $SQL = 'SELECT stockmoves.stockid,
                stockmaster.mbflag
         FROM stockmoves INNER JOIN stockmaster
              ON stockmoves.stockid = stockmaster.stockid
-        WHERE transno =' .$_GET['InvoiceNo'] . ' AND type=10';
+        WHERE transno ='" .$_GET['InvoiceNo'] . "' AND type=10";
 
 $Result = DB_query($SQL,$db);
 
@@ -77,9 +81,9 @@ prnMsg(_('Any order delivery differences records have been deleted'),'info');
 
 /*Now delete the DebtorTrans */
 
-$SQL = 'DELETE FROM debtortrans
-               WHERE transno =' . $_GET['InvoiceNo'] . '
-               AND debtortrans.type=10';
+$SQL = "DELETE FROM debtortrans
+               WHERE transno ='" . $_GET['InvoiceNo'] . "'
+               AND debtortrans.type=10";
 $DbgMsg = _('The SQL that failed was');
 $ErrMsg = _('The debtorTrans record could not be deleted') . ' - ' . _('the sql server returned the following error');
 $Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);

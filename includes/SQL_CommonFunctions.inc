@@ -16,7 +16,7 @@ Also updates the transaction number
 
 */
 
-	DB_query('LOCK TABLES systypes WRITE',$db);
+	DB_query("LOCK TABLES systypes WRITE",$db);
 
 	$SQL = "SELECT typeno FROM systypes WHERE typeid = '" . $TransType . "'";
 
@@ -31,7 +31,7 @@ Also updates the transaction number
 	$DbgMsg =  _('The following SQL to increment the transaction number was used');
 	$UpdTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
-	DB_query('UNLOCK TABLES',$db);
+	DB_query("UNLOCK TABLES",$db);
 
 	return $myrow[0] + 1;
 }
@@ -236,7 +236,7 @@ function UpdateCost($db, $Item) {
 	while ($MyRow=DB_fetch_array($Result)){
 		$NewParent = $MyRow['parent'];
 		$MaterialCost = BomMaterialCost($NewParent, $db);
-		$SQL = 'UPDATE stockmaster SET materialcost=' . $MaterialCost . " WHERE stockid='" . $NewParent . "'";
+		$SQL = "UPDATE stockmaster SET materialcost=" . $MaterialCost . " WHERE stockid='" . $NewParent . "'";
 		$result1 = DB_query($SQL,$db);
 		if (DB_error_no($db)!=0) {
 			return 1;
