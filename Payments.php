@@ -246,11 +246,16 @@ if (isset($_POST['CommitBatch'])){
 
 	$PeriodNo = GetPeriod($_SESSION['PaymentDetail']->DatePaid,$db);
 
+	$sql="SELECT usepreprintedstationery
+			FROM paymentmethods
+			WHERE paymentname='" . $_SESSION['PaymentDetail']->Paymenttype ."'";
+	$result=DB_query($sql, $db);
+	$myrow=DB_fetch_row($result);
 
 	// first time through commit if supplier cheque then print it first
 	if ((!isset($_POST['ChequePrinted']))
 		AND (!isset($_POST['PaymentCancelled']))
-		AND ($_SESSION['PaymentDetail']->Paymenttype == 'Cheque')) {
+		AND ($myrow[0] == 1)) {
 	// it is a supplier payment by cheque and haven't printed yet so print cheque
 
 		echo '<br /><a href="' . $rootpath . '/PrintCheque.php?' . SID . '&ChequeNum=' . $_POST['ChequeNum'] . '">' . _('Print Cheque using pre-printed stationery') . '</a><br /><br />';
@@ -607,14 +612,14 @@ if (isset($_POST['CommitBatch'])){
 	$_SESSION['PaymentDetail']->Remove_GLItem($_GET['Delete']);
 } elseif (isset($_POST['Process']) and !$BankAccountEmpty){ //user hit submit a new GL Analysis line into the payment
 
-	$ChequeNoSQL='select account from gltrans where chequeno="'.$_POST['cheque'].'"';
+	$ChequeNoSQL="SELECT account FROM gltrans WHERE chequeno='" . $_POST['cheque'] ."'";
 	$ChequeNoResult=DB_query($ChequeNoSQL, $db);
 
 	if (is_numeric($_POST['GLManualCode'])){
 
-		$SQL = "select accountname
-			FROM chartmaster
-			WHERE accountcode='" . $_POST['GLManualCode'] . "'";
+		$SQL = "SELECT accountname
+				FROM chartmaster
+				WHERE accountcode='" . $_POST['GLManualCode'] . "'";
 
 		$Result=DB_query($SQL,$db);
 

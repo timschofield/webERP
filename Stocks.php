@@ -22,12 +22,15 @@ if (isset($StockID) and !isset($_POST['UpdateCategories'])) {
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]==0) {
 		$New=1;
+	} else {
+		$New=0;
 	}
 }
 
-?>
+if (isset($_POST['New'])) {
+	$New=$_POST['New'];
+}
 
-<?php
 echo '<a href="' . $rootpath . '/SelectProduct.php?' . SID . '">' . _('Back to Items') . '</a><br>' . "\n";
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="'
@@ -62,7 +65,6 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 		$result  =  move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $filename);
 		$message = ($result)?_('File url') ."<a href='". $filename ."'>" .  $filename . '</a>' : _('Something is wrong with uploading a file');
 	}
- /* EOR Add Image upload for New Item  - by Ori */
 }
 
 if (isset($Errors)) {
@@ -202,7 +204,7 @@ if (isset($_POST['submit'])) {
 		if ($_POST['Serialised']==1){ /*Not appropriate to have several dp on serial items */
 			$_POST['DecimalPlaces']=0;
 		}
-		if (!isset($_POST['New']) and !isset($New)) { /*so its an existing one */
+		if ($New==0) { /*so its an existing one */
 
 			/*first check on the changes being made we must disallow:
 			- changes from manufactured or purchased to Service, Assembly or Kitset if there is stock			- changes from manufactured, kitset or assembly where a BOM exists
@@ -447,6 +449,7 @@ if (isset($_POST['submit'])) {
 				}//THE INSERT OF THE NEW CODE WORKED SO BANG IN THE STOCK LOCATION RECORDS TOO
 			}//END CHECK FOR ALREADY EXISTING ITEM OF THE SAME CODE
 		}
+		$New=1;
 
 	} else {
 		echo '<br>'. "\n";
@@ -563,7 +566,7 @@ if (isset($_POST['submit'])) {
 		unset($StockID);
 		//echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/SelectProduct.php?' . SID  ."'>";
 
-
+		$New=1;
 	} //end if Delete Part
 }
 
@@ -572,17 +575,20 @@ echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="
 	<tr><td>'. "\n"; // Nested table
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
+echo '<input type="hidden" name="New" value="'.$New.'">'. "\n";
+
 if (!isset($StockID) or $StockID=='' or isset($_POST['UpdateCategories'])) {
 
 /*If the page was called without $StockID passed to page then assume a new stock item is to be entered show a form with a part Code field other wise the form showing the fields with the existing entries against the part will show for editing with only a hidden StockID field. New is set to flag that the page may have called itself and still be entering a new part, in which case the page needs to know not to go looking up details for an existing part*/
-
-	$New = true;
-	echo '<input type="hidden" name="New" value="1">'. "\n";
 	if (!isset($StockID)) {
-		echo '<tr><td>'. _('Item Code'). ':</td><td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="StockID" size=21 maxlength=20 /></td></tr>'. "\n";
+		$StockID='';
+	}
+	if ($New==1) {
+		echo '<tr><td>'. _('Item Code'). ':</td><td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  type="text"
+			value="'.$StockID.'" name="StockID" size=21 maxlength=20 /></td></tr>'. "\n";
 	} else {
-		echo '<tr><td>'. _('Item Code'). ':</td><td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="StockID" size=21 maxlength=20
-			value="'.$StockID.'" /></td></tr>'. "\n";
+		echo '<tr><td>'. _('Item Code'). ':</td><td>'.$StockID.'</td></tr>'. "\n";
+		echo '<input type="hidden" name ="StockID" value="'.$StockID.'" />';
 	}
 
 } elseif (!isset($_POST['UpdateCategories']) and $InputError!=1) { // Must be modifying an existing item and no changes made yet
@@ -1016,7 +1022,7 @@ while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 echo '</table><br>';
 echo '<input type="hidden" name="PropertyCounter" value=' . $PropertyCounter . '>';
 
-if (isset($New)) {
+if ($New==1) {
 	echo '<input type="Submit" name="submit" value="' . _('Insert New Item') . '">';
 	echo '<input type="submit" name="UpdateCategories" style="visibility:hidden;width:1px" value="' . _('Categories') . '">';
 

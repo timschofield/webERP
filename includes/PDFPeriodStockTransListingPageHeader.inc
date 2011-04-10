@@ -1,5 +1,6 @@
 <?php
-/* $Id$*/
+/* $Id: PDFPeriodStockTransListingPageHeader.inc 4307 2010-12-22 16:06:03Z tim_schofield $*/
+
 if ($PageNumber>1){
 	$pdf->newPage();
 }
@@ -10,35 +11,14 @@ $pdf->addJpegFromFile($_SESSION['LogoFile'],$Left_Margin,$YPos,0,50);
 
 $FontSize=15;
 
-Switch ($_POST['TransType']) {
-	case 10:
-		$TransType=_('Customer Invoices');
-		break;
-	case 11:
-		$TransType=_('Customer Credit Notes');
-		break;
-	case 16:
-		$TransType=_('Location Transfers');
-		break;
-	case 17:
-		$TransType=_('Stock Adjustments');
-		break;
-	case 25:
-		$TransType=_('Purchase Order Deliveries');
-		break;
-	case 26:
-		$TransType=_('Work Order Receipts');
-		break;
-	case 28:
-		$TransType=_('Work Order Issues');
-		break;
-}
 
 $XPos = $Page_Width/2;
 $YPos += 30;
 $pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 $FontSize=12;
-$pdf->addText($XPos, $YPos-20,$FontSize, $TransType . ' ' ._('dated') . ' ' . $_POST['Date']);
+$YPos -=30;
+$pdf->addText($XPos, $YPos,$FontSize, $TransType . ' ' ._('dated from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
+
 
 $XPos = $Page_Width-$Right_Margin-50;
 $YPos -=30;
