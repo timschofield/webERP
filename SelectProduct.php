@@ -28,10 +28,10 @@ if (isset($_POST['StockCode'])) {
 	$_POST['StockCode'] = trim(strtoupper($_POST['StockCode']));
 }
 // Always show the search facilities
-$SQL = 'SELECT categoryid,
+$SQL = "SELECT categoryid,
 				categorydescription
 		FROM stockcategory
-		ORDER BY categorydescription';
+		ORDER BY categorydescription";
 $result1 = DB_query($SQL, $db);
 if (DB_num_rows($result1) == 0) {
 	echo '<p><font size=4 color=red>' . _('Problem Report') . ':</font><br />' . _('There are no stock categories currently defined please use the link below to set them up').'</p>';
@@ -671,7 +671,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			$_POST['PageOffset'] = $ListPageMax;
 		}
 		if ($ListPageMax > 1) {
-			echo "<div class='centre'><p>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+			echo '<div class="centre"><p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 			echo '<select name="PageOffset">';
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {

@@ -1,25 +1,25 @@
 <?php
 define('MAX_LINES_PER_LABEL', 5);
-define('LABELS_FILE', $_SESSION['reports_dir'] . "/labels.xml");
+define('LABELS_FILE', $_SESSION['reports_dir'] . '/labels.xml');
 
 /**
  *  These tags contains the more general data of the labels
  */
 $GlobalTags = array('id'=>array('desc'=> _('Label id'), 
-															'type'=>'t', 
-															'sz'=>8, 
-															'maxsz'=>12),  // text
-									'description'=>array('desc'=>_('Description'),
-																			'type'=>'t',
-																			'sz'=>15,
-																			'maxsz'=>30)  // text
-);
+							'type'=>'t', 
+							'sz'=>8, 
+							'maxsz'=>12),  // text
+							'description'=>array('desc'=>_('Description'),
+							'type'=>'t',
+							'sz'=>15,
+							'maxsz'=>30)  // text
+					);
 /**
  *  These tags specifies the dimension of individual label
  */
 $DimensionTags = array(
     'Unit'=>array('desc'=>_('Units'),'type'=>'s',
-        'values'=>array('pt'=>'pt', 'in'=>'in', 'mm'=>'mm', 'cm'=>'cm' ) ), // select
+    'values'=>array('pt'=>'pt', 'in'=>'in', 'mm'=>'mm', 'cm'=>'cm' ) ), // select
     'Rows'=>array('desc'=>_('Rows per sheet'),'type'=>'i','sz'=>2,'maxsz'=>3), // integer numeric
     'Cols'=>array('desc'=>_('Cols per sheet'),'type'=>'i','sz'=>2,'maxsz'=>3),
     'Sh'=>array('desc'=>_('Sheet height'),'type'=>'n','sz'=>5,'maxsz'=>8),  // float numeric
@@ -164,8 +164,10 @@ class LabelList extends SimpleXMLElement {
  *  @return nothing
  */
 function abortMsg($msg) {
-    global $rootpath, $DefaultClock, $Version;
+    global $rootpath, $DefaultClock, $Version, $theme;
+    $title=_('No label templates exist');
     include ('includes/header.inc');
+    echo '<br />';
     prnMsg( $msg, 'error');
     include ('includes/footer.inc');
     exit;

@@ -268,7 +268,9 @@ if (isset($_POST['Show'])){
 		$tagsql="SELECT tagdescription FROM tags WHERE tagref='".$myrow['tag'] . "'";
 		$tagresult=DB_query($tagsql,$db);
 		$tagrow = DB_fetch_array($tagresult);
-
+		if ($tagrow['tagdescription']=='') {
+			$tagrow['tagdescription']=_('None');
+		}
 		printf("<td>%s</td>
 			<td class=number><a href='%s'>%s</a></td>
 			<td>%s</td>

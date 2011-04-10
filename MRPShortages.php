@@ -6,7 +6,7 @@
 include('includes/session.inc');
 
 //ANSI SQL???
-$sql='SHOW TABLES WHERE Tables_in_'.$_SESSION['DatabaseName']."='mrprequirements'";
+$sql="SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrprequirements'";
 
 $result=DB_query($sql,$db);
 if (DB_num_rows($result)==0) {
@@ -32,48 +32,47 @@ if (isset($_POST['PrintPDF'])) {
 // total for either supply or demand. Did this to simplify main sql where used
 // several subqueries.
 
-	$sql = 'CREATE TEMPORARY TABLE demandtotal (
+	$sql = "CREATE TEMPORARY TABLE demandtotal (
 				part char(20),
 				demand double,
-				KEY `PART` (`part`)) DEFAULT CHARSET=utf8';
+				KEY `PART` (`part`)) DEFAULT CHARSET=utf8";
 	$result = DB_query($sql,$db,_('Create of demandtotal failed because'));
 
-	$sql = 'INSERT INTO demandtotal
+	$sql = "INSERT INTO demandtotal
 						(part,
 						 demand)
 			   SELECT part,
 					  SUM(quantity) as demand
 				FROM mrprequirements
-				GROUP BY part';
+				GROUP BY part";
 	$result = DB_query($sql,$db);
 
-	$sql = 'CREATE TEMPORARY TABLE supplytotal (
+	$sql = "CREATE TEMPORARY TABLE supplytotal (
 				part char(20),
 				supply double,
-				KEY `PART` (`part`)) DEFAULT CHARSET=utf8';
+				KEY `PART` (`part`)) DEFAULT CHARSET=utf8";
 	$result = DB_query($sql,$db,_('Create of supplytotal failed because'));
 
 /* 21/03/2010: Ricard modification to allow items with total supply = 0 be included in the report */
 
-	$sql = 'INSERT INTO supplytotal
+	$sql = "INSERT INTO supplytotal
 						(part,
 						 supply)
 			SELECT stockid,
 				  0
-			FROM stockmaster';
+			FROM stockmaster";
 	$result = DB_query($sql,$db);
 
-	$sql = 'UPDATE supplytotal
+	$sql = "UPDATE supplytotal
 			SET supply = (SELECT SUM(mrpsupplies.supplyquantity)
 							FROM mrpsupplies
 							WHERE supplytotal.part = mrpsupplies.part
-								AND mrpsupplies.supplyquantity > 0)';
+								AND mrpsupplies.supplyquantity > 0)";
 	$result = DB_query($sql,$db);
 
-	$sql = 'UPDATE supplytotal SET supply = 0 WHERE supply IS NULL	';
+	$sql = "UPDATE supplytotal SET supply = 0 WHERE supply IS NULL";
 	$result = DB_query($sql,$db);
 
-/* End Ricard modification */
 
 	// Only include directdemand mrprequirements so don't have demand for top level parts and also
 	// show demand for the lower level parts that the upper level part generates. See MRP.php for

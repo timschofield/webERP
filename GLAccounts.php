@@ -1,8 +1,6 @@
 <?php
-/* $Revision: 1.21 $ */
 /* $Id$*/
 
-//$PageSecurity = 10;
 include('includes/session.inc');
 $title = _('Chart of Accounts Maintenance');
 
@@ -58,19 +56,6 @@ if (isset($_POST['submit'])) {
 						)";
 		$result = DB_query($sql,$db,$ErrMsg);
 
-		/*Add the new chart details records for existing periods first */
-/*Maybe not required since these will be created from GLPostings.inc with correct B/fwd balances
-		$ErrMsg = _('Could not add the chart details for the new account');
-
-		$sql = 'INSERT INTO chartdetails (accountcode, period)
-				SELECT chartmaster.accountcode, periods.periodno
-					FROM chartmaster
-						CROSS  JOIN periods
-				WHERE ( chartmaster.accountcode, periods.periodno ) NOT
-					IN ( SELECT chartdetails.accountcode, chartdetails.period FROM chartdetails )';
-
-		$result = DB_query($sql,$db,$ErrMsg);
-*/
 		prnMsg(_('The new general ledger account has been added'),'success');
 	}
 
@@ -218,7 +203,7 @@ if (isset($_POST['submit'])) {
 
 if (!isset($_GET['delete'])) {
 
-	echo "<form method='post' name='GLAccounts' action='" . $_SERVER['PHP_SELF'] .  '?' . SID . "'>";
+	echo '<form method="post" name="GLAccounts" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedAccount)) {
@@ -233,12 +218,16 @@ if (!isset($_GET['delete'])) {
 		$_POST['AccountName']	= $myrow['accountname'];
 		$_POST['Group'] = $myrow['group_'];
 
-		echo "<input type=hidden name='SelectedAccount' VALUE=$SelectedAccount>";
-		echo "<input type=hidden name='AccountCode' VALUE=" . $_POST['AccountCode'] .">";
-		echo "<table class=selection><tr><td>" . _('Account Code') . ":</td><td>" . $_POST['AccountCode'] . "</td></tr>";
+		echo '<input type="hidden" name="SelectedAccount" value="' . $SelectedAccount . '">';
+		echo '<input type="hidden" name="AccountCode" VALUE="' . $_POST['AccountCode'] .'">';
+		echo '<table class=selection>
+				<tr><td>' . _('Account Code') . ':</td>
+					<td>' . $_POST['AccountCode'] . '</td></tr>';
 	} else {
 		echo "<table class=selection>";
-		echo "<tr><td>" . _('Account Code') . ":</td><td><input type=TEXT name='AccountCode' size=11 class=number maxlength=10></td></tr>";
+		echo '<tr><td>' . _('Account Code') . ':</td>
+					<td><input type="text" name="AccountCode" size="11" class="number" maxlength="10" /></td>
+				</tr>';
 	}
 
 	if (!isset($_POST['AccountName'])) {$_POST['AccountName']='';}
@@ -251,17 +240,17 @@ if (!isset($_GET['delete'])) {
 
 	while ($myrow = DB_fetch_array($result)){
 		if (isset($_POST['Group']) and $myrow[0]==$_POST['Group']){
-			echo "<option selected VALUE='";
+			echo '<option selected value="';
 		} else {
-			echo "<option VALUE='";
+			echo '<option VALUE="';
 		}
-		echo $myrow[0] . "'>" . $myrow[0];
+		echo $myrow[0] . '">' . $myrow[0] . '</option>';
 	}
 
 	if (!isset($_GET['SelectedAccount']) or $_GET['SelectedAccount']=='') {
-		echo "<script>defaultControl(document.GLAccounts.AccountCode);</script>";
+		echo '<script>defaultControl(document.GLAccounts.AccountCode);</script>';
 	} else {
-		echo "<script>defaultControl(document.GLAccounts.AccountName);</script>";
+		echo '<script>defaultControl(document.GLAccounts.AccountName);</script>';
 	}
 
 	echo '</select></td></tr></table>';
@@ -293,12 +282,12 @@ or deletion of the records*/
 	$result = DB_query($sql,$db,$ErrMsg);
 
 	echo '<br><table class=selection>';
-	echo "<tr>
-		<th>" . _('Account Code') . "</th>
-		<th>" . _('Account Name') . "</th>
-		<th>" . _('Account Group') . "</th>
-		<th>" . _('P/L or B/S') . "</th>
-	</tr>";
+	echo '<tr>
+		<th>' . _('Account Code') . '</th>
+		<th>' . _('Account Name') . '</th>
+		<th>' . _('Account Group') . '</th>
+		<th>' . _('P/L or B/S') . '</th>
+	</tr>';
 
 	$k=0; //row colour counter
 
@@ -323,9 +312,9 @@ or deletion of the records*/
 		$myrow[1],
 		$myrow[2],
 		$myrow[3],
-		$_SERVER['PHP_SELF'] . '?' . SID,
+		$_SERVER['PHP_SELF'] . '?',
 		$myrow[0],
-		$_SERVER['PHP_SELF'] . '?' . SID,
+		$_SERVER['PHP_SELF'] . '?',
 		$myrow[0]);
 
 	}
@@ -338,10 +327,10 @@ or deletion of the records*/
 echo '<p>';
 
 if (isset($SelectedAccount)) {
-	echo "<div class='centre'><a href='" . $_SERVER['PHP_SELF'] . '?' . SID ."'>" .  _('Show All Accounts') . '</a></div>';
+	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' .  _('Show All Accounts') . '</a></div>';
 }
 
-echo '<p>';
+echo '<p />';
 
 include('includes/footer.inc');
 ?>

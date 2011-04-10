@@ -33,13 +33,14 @@ class StockTransfer {
 class LineItem {
 	var $StockID;
 	var $ItemDescription;
-	Var $ShipQty;
-	Var $PrevRecvQty;
-	Var $Quantity;
-	Var $PartUnit;
+	var $ShipQty;
+	var $PrevRecvQty;
+	var $Quantity;
+	var $PartUnit;
 	var $Controlled;
 	var $Serialised;
-	Var $DecimalPlaces;
+	var $DecimalPlaces;
+	var $Perishable;
 	var $SerialItems; /*array to hold controlled items*/
 //Constructor
 	function LineItem($StockID,
@@ -48,6 +49,7 @@ class LineItem {
 			$PartUnit,
 			$Controlled,
 			$Serialised,
+			$Perishable,
 			$DecimalPlaces){
 
 		$this->StockID = $StockID;
@@ -56,6 +58,7 @@ class LineItem {
 		$this->Controlled = $Controlled;
 		$this->Serialised = $Serialised;
 		$this->DecimalPlaces = $DecimalPlaces;
+		$this->Perishable = $Perishable;
 		$this->ShipQty = $Quantity;
 		if ($this->Controlled==1){
 			$this->Quantity = 0;

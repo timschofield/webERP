@@ -17,9 +17,9 @@ include ('includes/Add_SerialItemsOut.php');
 
 global $tableheader;
 /* Link to clear the list and start from scratch */
-$EditLink =  '<br><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&EditControlled=true&StockID=' . $LineItem->StockID .
+$EditLink =  '<br><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?EditControlled=true&StockID=' . $LineItem->StockID .
 	'&LineNo=' . $LineNo .'">'. _('Edit'). '</a> | ';
-$RemoveLink = '<a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&DELETEALL=YES&StockID=' . $LineItem->StockID .
+$RemoveLink = '<a href="' . $_SERVER['PHP_SELF'] . '?DELETEALL=YES&StockID=' . $LineItem->StockID .
 	'&LineNo=' . $LineNo .'">'. _('Remove All'). '</a><br></div>';
 $sql="SELECT perishable
 		FROM stockmaster
@@ -95,8 +95,9 @@ foreach ($LineItem->SerialItems as $Bundle){
 		echo '<td class=number>' . $Bundle->ExpiryDate . '</td>';
 	}
 
-	echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . 'Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'">'. _('Delete'). '</a></td></tr>';
-
+	echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'">'. _('Delete'). '</a></td></tr>';
+	
+	$LineItem->SerialItems[]=$Bundle;
 	$TotalQuantity += $Bundle->BundleQty;
 }
 
@@ -114,13 +115,13 @@ echo '</table></td><td valign=top>';
 /*Start a new table for the Serial/Batch ref input  in one column (as a sub table
 then the multi select box for selection of existing bundle/serial nos for dispatch if applicable*/
 //echo '<TABLE><TR><TD valign=TOP>';
-
+$TransferQuantity=$TotalQuantity;
 /*in the first column add a table for the input of newies */
 echo '<table class=selection>';
 echo $tableheader;
 
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?=' . SID . '" name="Ga6uF5Wa" method="post">
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" name="Ga6uF5Wa" method="post">
       <input type=hidden name=LineNo value="' . $LineNo . '">
       <input type=hidden name=StockID value="' . $StockID . '">
       <input type=hidden name=EntryType value="KEYED">';
@@ -161,12 +162,18 @@ if ($EditControlled){
 	}
 }
 
+if (isset($_SESSION['Transfer']->StockLocationFrom)) {
+	$Location=$_SESSION['Transfer']->StockLocationFrom;
+} else if (isset($_SESSION['Items']->Location)) {
+	$Location=$_SESSION['Items']->Location;
+}
+
 $sql="SELECT serialno,
 			quantity,
 			expirationdate
 		FROM stockserialitems
 		WHERE stockid='".$StockID."'
-			AND loccode='".$_SESSION['Items']->Location."'";
+		AND loccode='" . $Location . "'";
 $result=DB_query($sql, $db);
 
 $RowNumber=0;

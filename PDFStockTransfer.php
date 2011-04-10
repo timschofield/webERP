@@ -74,7 +74,7 @@ $Date=$myrow['trandate'];
 //get the next row which will be the quantity received in the receiving location
 $myNextRow=DB_fetch_array($result);
 $ToCode=$myNextRow['loccode'];
-$To = $myrow['locationname'];
+$To = $myNextRow['locationname'];
 $Quantity=$myNextRow['qty'];
 $Description=$myNextRow['description'];
 

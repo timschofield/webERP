@@ -1,8 +1,6 @@
 <?php
-/* $Revision: 1.7 $ */
-/* $Id$*/
 
-//$PageSecurity=9;
+/* $Id$*/
 
 include('includes/session.inc');
 $title = _('Run MRP Calculation');
@@ -18,21 +16,21 @@ if (isset($_POST['submit'])) {
 	echo '</br>'  ._('Start time') . ': ' . date('h:i:s') . '</br>';
 	echo '</br>' . _('Initialising tables .....') . '</br>';
 	flush();
-	$result = DB_query('DROP TABLE IF EXISTS tempbom',$db);
-	$result = DB_query('DROP TABLE IF EXISTS passbom',$db);
-	$result = DB_query('DROP TABLE IF EXISTS passbom2',$db);
-	$result = DB_query('DROP TABLE IF EXISTS bomlevels',$db);
-	$result = DB_query('DROP TABLE IF EXISTS levels',$db);
+	$result = DB_query("DROP TABLE IF EXISTS tempbom",$db);
+	$result = DB_query("DROP TABLE IF EXISTS passbom",$db);
+	$result = DB_query("DROP TABLE IF EXISTS passbom2",$db);
+	$result = DB_query("DROP TABLE IF EXISTS bomlevels",$db);
+	$result = DB_query("DROP TABLE IF EXISTS levels",$db);
 
-	$sql = 'CREATE TEMPORARY TABLE passbom (part char(20),
-											sortpart text) DEFAULT CHARSET=utf8';
+	$sql = "CREATE TEMPORARY TABLE passbom (part char(20),
+											sortpart text) DEFAULT CHARSET=utf8";
 	$ErrMsg = _('The SQL to to create passbom failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	$sql = 'CREATE TEMPORARY TABLE tempbom (parent char(20),
+	$sql = "CREATE TEMPORARY TABLE tempbom (parent char(20),
 											component char(20),
 											sortpart text,
-											level int) DEFAULT CHARSET=utf8';
+											level int) DEFAULT CHARSET=utf8";
 	$result = DB_query($sql,$db,_('Create of tempbom failed because'));
 	// To create levels, first, find parts in bom that are top level assemblies.
 	// Do this by doing a LEFT JOIN from bom to bom (as bom2), linking
@@ -45,10 +43,10 @@ if (isset($_POST['submit'])) {
 	flush();
 	// This finds the top level
 	$sql = "INSERT INTO passbom (part, sortpart)
-								   SELECT bom.component AS part,
-										  CONCAT(bom.parent,'%',bom.component) AS sortpart
-										  FROM bom LEFT JOIN bom as bom2 ON bom.parent = bom2.component
-								  WHERE bom2.component IS NULL";
+					   SELECT bom.component AS part,
+							  CONCAT(bom.parent,'%',bom.component) AS sortpart
+							  FROM bom LEFT JOIN bom as bom2 ON bom.parent = bom2.component
+					  WHERE bom2.component IS NULL";
 	$result = DB_query($sql,$db);
 
 	$lctr = 2;
@@ -76,12 +74,12 @@ if (isset($_POST['submit'])) {
 			 FROM bom,passbom WHERE bom.parent = passbom.part";
 		$result = DB_query($sql,$db);
 
-		$result = DB_query('DROP TABLE IF EXISTS passbom2',$db);
-		$result = DB_query('ALTER TABLE passbom RENAME AS passbom2',$db);
-		$result = DB_query('DROP TABLE IF EXISTS passbom',$db);
+		$result = DB_query("DROP TABLE IF EXISTS passbom2",$db);
+		$result = DB_query("ALTER TABLE passbom RENAME AS passbom2",$db);
+		$result = DB_query("DROP TABLE IF EXISTS passbom",$db);
 
-		$sql = 'CREATE TEMPORARY TABLE passbom (part char(20),
-																							sortpart text) DEFAULT CHARSET=utf8';
+		$sql = "CREATE TEMPORARY TABLE passbom (part char(20),
+												sortpart text) DEFAULT CHARSET=utf8";
 		$result = DB_query($sql,$db);
 
 		$sql = "INSERT INTO passbom (part, sortpart)
@@ -92,9 +90,9 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db);
 
 
-		$sql = 'SELECT COUNT(*) FROM bom
+		$sql = "SELECT COUNT(*) FROM bom
 						INNER JOIN passbom ON bom.parent = passbom.part
-						GROUP BY bom.parent';
+						GROUP BY bom.parent";
 		$result = DB_query($sql,$db);
 
 		$myrow = DB_fetch_row($result);
@@ -104,9 +102,9 @@ if (isset($_POST['submit'])) {
 
 	prnMsg(_('Creating bomlevels table'),'info');
 	flush();
-	$sql = 'CREATE TEMPORARY TABLE bomlevels (
+	$sql = "CREATE TEMPORARY TABLE bomlevels (
 									part char(20),
-									level int) DEFAULT CHARSET=utf8';
+									level int) DEFAULT CHARSET=utf8";
 	$result = DB_query($sql,$db);
 
 	// Read tempbom and split sortpart into separate parts. For each separate part, calculate level as
@@ -114,7 +112,7 @@ if (isset($_POST['submit'])) {
 	// part in the array for a level 4 sortpart would be created as a level 3 in levels, the fourth
 	// and last part in sortpart would have a level code of zero, meaning it has no components
 
-	$sql = 'SELECT * FROM tempbom';
+	$sql = "SELECT * FROM tempbom";
 	$result = DB_query($sql,$db);
 	while ($myrow=DB_fetch_array($result)) {
 			$parts = explode('%',$myrow['sortpart']);
@@ -140,7 +138,7 @@ if (isset($_POST['submit'])) {
 							shrinkfactor double NOT NULL default '0',
 							eoq double NOT NULL default '0') DEFAULT CHARSET=utf8";
 	$result = DB_query($sql,$db);
-	$sql = 'INSERT INTO levels (part,
+	$sql = "INSERT INTO levels (part,
 							level,
 							leadtime,
 							pansize,
@@ -157,15 +155,15 @@ if (isset($_POST['submit'])) {
 			 GROUP BY bomlevels.part,
 					  pansize,
 					  shrinkfactor,
-					  stockmaster.eoq';
+					  stockmaster.eoq";
 	$result = DB_query($sql,$db);
-	$sql = 'ALTER TABLE levels ADD INDEX part(part)';
+	$sql = "ALTER TABLE levels ADD INDEX part(part)";
 	$result = DB_query($sql,$db);
 
 	// Create levels records with level of zero for all parts in stockmaster that
 	// are not in bom
 
-	$sql = 'INSERT INTO levels (part,
+	$sql = "INSERT INTO levels (part,
 							level,
 							leadtime,
 							pansize,
@@ -179,53 +177,53 @@ if (isset($_POST['submit'])) {
 					stockmaster.eoq
 			FROM stockmaster
 			LEFT JOIN levels ON stockmaster.stockid = levels.part
-			WHERE levels.part IS NULL';
+			WHERE levels.part IS NULL";
 	$result = DB_query($sql,$db);
 
 	// Update leadtime in levels from purchdata. Do it twice so can make sure leadtime from preferred
 	// vendor is used
-	$sql = 'UPDATE levels,purchdata
+	$sql = "UPDATE levels,purchdata
 					SET levels.leadtime = purchdata.leadtime
 					WHERE levels.part = purchdata.stockid
-					AND purchdata.leadtime > 0';
+					AND purchdata.leadtime > 0";
 	$result = DB_query($sql,$db);
-	$sql = 'UPDATE levels,purchdata
+	$sql = "UPDATE levels,purchdata
 						SET levels.leadtime = purchdata.leadtime
 					WHERE levels.part = purchdata.stockid
 					AND purchdata.preferred = 1
-					AND purchdata.leadtime > 0';
+					AND purchdata.leadtime > 0";
 	$result = DB_query($sql,$db);
 
 	prnMsg(_('Levels table has been created'),'info');
 	flush();
 
 	// Get rid if temporary tables
-	$sql = 'DROP TABLE IF EXISTS tempbom';
+	$sql = "DROP TABLE IF EXISTS tempbom";
 	//$result = DB_query($sql,$db);
-	$sql = 'DROP TABLE IF EXISTS passbom';
+	$sql = "DROP TABLE IF EXISTS passbom";
 	//$result = DB_query($sql,$db);
-	$sql = 'DROP TABLE IF EXISTS passbom2';
+	$sql = "DROP TABLE IF EXISTS passbom2";
 	//$result = DB_query($sql,$db);
-	$sql = 'DROP TABLE IF EXISTS bomlevels';
+	$sql = "DROP TABLE IF EXISTS bomlevels";
 	//$result = DB_query($sql,$db);
 
 	// In the following section, create mrprequirements from open sales orders and
 	// mrpdemands
 	prnMsg(_('Creating requirements table'),'info');
 	flush();
-	$result = DB_query('DROP TABLE IF EXISTS mrprequirements',$db);
+	$result = DB_query("DROP TABLE IF EXISTS mrprequirements",$db);
 	// directdemand is 1 if demand is directly for this part, is 0 if created because have netted
 	// out supply and demands for a top level part and determined there is still a net
 	// requirement left and have to pass that down to the BOM parts using the
 	// CreateLowerLevelRequirement() function. Mostly do this so can distinguish the type
 	// of requirements for the MRPShortageReport so don't show double requirements.
-	$sql = 'CREATE TABLE mrprequirements (	part char(20),
+	$sql = "CREATE TABLE mrprequirements (	part char(20),
 											daterequired date,
 											quantity double,
 											mrpdemandtype varchar(6),
 											orderno int(11),
 											directdemand smallint,
-											whererequired char(20)) DEFAULT CHARSET=utf8';
+											whererequired char(20)) DEFAULT CHARSET=utf8";
 	$result = DB_query($sql,$db,_('Create of mrprequirements failed because'));
 
 	prnMsg(_('Loading requirements from sales orders'),'info');

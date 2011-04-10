@@ -510,7 +510,7 @@ if (!isset($_POST['PostInvoice'])){
 	echo '<br /><table class=selection>
 			<tr>
 				<td>' . _('Comments') . '</td>
-				<td><TEXTAREA name=Comments COLS=40 ROWS=2>' . $_SESSION['SuppTrans']->Comments . '</textarea></td>
+				<td><textarea name="Comments" cols="40" rows="2">' . $_SESSION['SuppTrans']->Comments . '</textarea></td>
 			</tr>
 		</table>';
 
@@ -550,8 +550,8 @@ then do the updates and inserts to process the invoice entered */
 	
 		$InputError = True;
 		prnMsg(_('The invoice as entered cannot be processed because the total amount of the invoice is less than  0') . '. ' . _('Invoices are expected to have a positive charge'),'error');
-		echo '<p> The tax total is : ' . $TaxTotal;
-		echo '<p> The ovamount is : ' . $_SESSION['SuppTrans']->OvAmount;
+		echo '<p>' . _('The tax total is') . ' : ' . $TaxTotal;
+		echo '<p>' . _('The ovamount is') . ' : ' . $_SESSION['SuppTrans']->OvAmount;
 	
 	} elseif ( $TaxTotal + $_SESSION['SuppTrans']->OvAmount == 0){
 	

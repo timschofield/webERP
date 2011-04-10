@@ -118,15 +118,15 @@ function showLabelOptions() {
 		<input type="submit" name="PDFTest" value="'. _('Print labels with borders') .'"></div>';
 	$iTxt=0;
 
-	echo '<script type="text/javascript">
-	function setAll(all) {
-		var x=document.getElementById("form1");
-		for (var i=0;i<x.length;i++) {
-			if (x.elements[i].id==\'item\');
-				x.elements[i].checked=all.checked;
-		}
-	}
-	</script>';
+	echo "<script type=\"text/javascript\">
+			function setAll(all) {
+				var x=document.getElementById('form1');
+				for (var i=0;i<x.length;i++) {
+					if (x.elements[i].id=='item');
+						x.elements[i].checked=all.checked;
+				}
+			}
+		</script>";
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' .$txt[$iTxt++].'</p>';
 	echo '<form name ="form1" action="'.$_SERVER['PHP_SELF'].'" method="POST" id="form1">';

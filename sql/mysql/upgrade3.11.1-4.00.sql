@@ -841,4 +841,4 @@ UPDATE config SET confvalue='4.03.6' WHERE confname='VersionNumber';
 ALTER TABLE `paymentmethods` ADD `usepreprintedstationery` TINYINT NOT NULL DEFAULT '0';
 DELETE FROM scripts WHERE script='PDFStockTransListing.php';
 INSERT INTO scripts (`script` ,`pagesecurity` ,`description`) VALUES('PDFPeriodStockTransListing.php','3','Allows stock transactions of a specific transaction type to be listed over a single day or period range');
-IUPDATE config SET confvalue='4.03.7' WHERE confname='VersionNumber';
+UPDATE config SET confvalue='4.03.7' WHERE confname='VersionNumber';
