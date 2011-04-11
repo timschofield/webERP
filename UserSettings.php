@@ -97,7 +97,7 @@ if (isset($_POST['Modify'])) {
 	}
 }
 
-echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 If (!isset($_POST['DisplayRecordsMax']) OR $_POST['DisplayRecordsMax']=='') {
@@ -114,20 +114,19 @@ echo $_SESSION['UsersRealName'] . '</td>
 		<input type="hidden" name="RealName" VALUE="'.$_SESSION['UsersRealName'].'"<td></tr>';
 
 echo '<tr>
-	<td>' . _('Maximum Number of Records to Display') . ":</td>
-	<td><input type='Text' class='number' name='DisplayRecordsMax' size=3 maxlength=3 VALUE=" . $_POST['DisplayRecordsMax'] . " ></td>
-	</tr>";
+	<td>' . _('Maximum Number of Records to Display') . ':</td>
+	<td><input type="text" class="number" name="DisplayRecordsMax" size="3" maxlength="3" value="' . $_POST['DisplayRecordsMax'] . '" ></td>
+	</tr>';
 
 
 echo '<tr>
-	<td>' . _('Language') . ":</td>
-	<td><select name='Language'>";
+	<td>' . _('Language') . ':</td>
+	<td><select name="Language">';
 
-	$LangDirHandle = dir('locale/');
+	$Languages = scandir('locale/', 0);
 
-
-	while (false != ($LanguageEntry = $LangDirHandle->read())){
-
+	foreach ($Languages as $LanguageEntry){
+		
 		if (is_dir('locale/' . $LanguageEntry)
 				AND $LanguageEntry != '..'
 				AND $LanguageEntry != '.svn'

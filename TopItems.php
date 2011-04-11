@@ -11,9 +11,9 @@ include ('includes/header.inc');
 if (!(isset($_POST['Search']))) {
 			
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '</p>';
-	echo "<form action=" . $_SERVER['PHP_SELF'] . '?' . SID . ' name="SelectCustomer" method=POST>';
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '?name="SelectCustomer" method="POST">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table cellpadding=3 colspan=4 class=selection>';
+	echo '<table cellpadding="3" colspan="4" class="selection">';
 	//to view store location
 	echo '<tr><td width="150">' . _('Select Location') . '  </td><td>:</td><td><select name=Location>';
 	$sql = "SELECT loccode,
@@ -83,7 +83,7 @@ if (!(isset($_POST['Search']))) {
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
 						AND debtorsmaster.currcode = currencies.currabrev
-						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "' 
+						AND salesorderdetails.actualdispatchdate >= '" . $FromDate . "' 
 				GROUP BY salesorderdetails.stkcode
 				ORDER BY '" . $_POST['Sequence'] . "' DESC
 				LIMIT " . $_POST['NumberOfTopItems'] . "";
@@ -104,7 +104,7 @@ if (!(isset($_POST['Search']))) {
 						AND salesorders.debtorno = debtorsmaster.debtorno
 						AND debtorsmaster.currcode = currencies.currabrev
 						AND debtorsmaster.typeid = '" . $_POST['Customers'] . "'
-						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "'
+						AND salesorderdetails.actualdispatchdate >= '" . $FromDate . "'
 				GROUP BY salesorderdetails.stkcode
 				ORDER BY '" . $_POST['Sequence'] . "' DESC
 				LIMIT " . $_POST[NumberOfTopItems] . "";
@@ -112,44 +112,44 @@ if (!(isset($_POST['Search']))) {
 			//the situation if the customer type selected "All"
 			if ($_POST['Customers'] == 'All') {
 				$SQL = "SELECT 	salesorderdetails.stkcode,
-						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
-						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
-						stockmaster.description,
-						stockmaster.units,
-						currencies.rate,
-						debtorsmaster.currcode,
-						stockmaster.decimalplaces
-					FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster, currencies
-					WHERE 	salesorderdetails.orderno = salesorders.orderno
-						AND salesorderdetails.stkcode = stockmaster.stockid
-						AND salesorders.debtorno = debtorsmaster.debtorno
-						AND debtorsmaster.currcode = currencies.currabrev
-						AND salesorders.fromstkloc = '" . $_POST['Location'] . "'
-						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "'
-					GROUP BY salesorderdetails.stkcode
-					ORDER BY " . $_POST['Sequence'] . " DESC
-					LIMIT " . $_POST['NumberOfTopItems'] . "";
+							SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
+							SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
+							stockmaster.description,
+							stockmaster.units,
+							currencies.rate,
+							debtorsmaster.currcode,
+							stockmaster.decimalplaces
+						FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster, currencies
+						WHERE 	salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.stkcode = stockmaster.stockid
+							AND salesorders.debtorno = debtorsmaster.debtorno
+							AND debtorsmaster.currcode = currencies.currabrev
+							AND salesorders.fromstkloc = '" . $_POST['Location'] . "'
+							AND salesorderdetails.actualdispatchdate >= '" . $FromDate . "'
+						GROUP BY salesorderdetails.stkcode
+						ORDER BY " . $_POST['Sequence'] . " DESC
+						LIMIT " . $_POST['NumberOfTopItems'] . "";
 			} else {
 				//the situation if the location and customer type not selected "All"
 				$SQL = "SELECT 	salesorderdetails.stkcode,
-						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
-						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
-						stockmaster.description,
-						stockmaster.units,
-						currencies.rate,
-						debtorsmaster.currcode,
-						stockmaster.decimalplaces
-					FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster, currencies
-					WHERE 	salesorderdetails.orderno = salesorders.orderno
-						AND salesorderdetails.stkcode = stockmaster.stockid
-						AND salesorders.debtorno = debtorsmaster.debtorno
-						AND debtorsmaster.currcode = currencies.currabrev
-						AND salesorders.fromstkloc = '" . $_POST['Location'] . "'
-						AND debtorsmaster.typeid = '" . $_POST['Customers'] . "'
-						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "'
-					GROUP BY salesorderdetails.stkcode
-					ORDER BY '" . $_POST['Sequence'] . "' DESC
-					LIMIT " . $_POST['NumberOfTopItems'] . "";
+							SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
+							SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
+							stockmaster.description,
+							stockmaster.units,
+							currencies.rate,
+							debtorsmaster.currcode,
+							stockmaster.decimalplaces
+						FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster, currencies
+						WHERE 	salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.stkcode = stockmaster.stockid
+							AND salesorders.debtorno = debtorsmaster.debtorno
+							AND debtorsmaster.currcode = currencies.currabrev
+							AND salesorders.fromstkloc = '" . $_POST['Location'] . "'
+							AND debtorsmaster.typeid = '" . $_POST['Customers'] . "'
+							AND salesorderdetails.actualdispatchdate >= '" . $FromDate . "'
+						GROUP BY salesorderdetails.stkcode
+						ORDER BY '" . $_POST['Sequence'] . "' DESC
+						LIMIT " . $_POST['NumberOfTopItems'] . "";
 			}
 		}
 	}

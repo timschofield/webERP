@@ -2,8 +2,6 @@
 
 /* $Id$ */
 
-//$PageSecurity=15;
-
 include('includes/session.inc');
 
 $title = _('Audit Trail');
@@ -25,12 +23,12 @@ if ((!(Is_Date($_POST['FromDate'])) OR (!Is_Date($_POST['ToDate']))) AND (isset(
 }
 
 // Get list of tables
-$tableresult = DB_show_tables($db);
+$TableResult = DB_show_tables($db);
 
 // Get list of users
-$userresult = DB_query('SELECT userid FROM www_users',$db);
+$UserResult = DB_query("SELECT userid FROM www_users",$db);
 
-echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class=selection>';
 
@@ -43,29 +41,29 @@ echo '<tr><td>'. _('To Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</td>
 echo '<tr><td>'. _('User ID'). '</td>
 		<td><select tabindex="3" name="SelectedUser">';
 echo '<option value=ALL>ALL';
-while ($users = DB_fetch_row($userresult)) {
+while ($users = DB_fetch_row($UserResult)) {
 	if (isset($_POST['SelectedUser']) and $users[0]==$_POST['SelectedUser']) {
-		echo '<option selected value=' . $users[0] . '>' . $users[0];
+		echo '<option selected value=' . $users[0] . '>' . $users[0] . '</option>';
 	} else {
-		echo '<option value=' . $users[0] . '>' . $users[0];
+		echo '<option value=' . $users[0] . '>' . $users[0] . '</option>';
 	}
 }
 echo '</select></td></tr>';
 
 // Show table selections
 echo '<tr><td>'. _('Table '). '</td><td><select tabindex="4" name="SelectedTable">';
-echo '<option value=ALL>ALL';
-while ($tables = DB_fetch_row($tableresult)) {
+echo '<option value="ALL">' . _('ALL') . '</option>';
+while ($tables = DB_fetch_row($TableResult)) {
 	if (isset($_POST['SelectedTable']) and $tables[0]==$_POST['SelectedTable']) {
-		echo '<option selected value=' . $tables[0] . '>' . $tables[0];
+		echo '<option selected value=' . $tables[0] . '>' . $tables[0] . '</option>';
 	} else {
-		echo '<option value=' . $tables[0] . '>' . $tables[0];
+		echo '<option value=' . $tables[0] . '>' . $tables[0] . '</option>';
 	}
 }
 echo '</select></td></tr>';
 
 echo '</table><br />';
-echo "<div class=centre><input tabindex='5' type=submit name=View value='" . _('View') . "'></div>";
+echo '<div class="centre"><input tabindex="5" type="submit" name="View" value="' . _('View') . '"></div>';
 echo '</form>';
 
 // View the audit trail
@@ -112,12 +110,12 @@ if (isset($_POST['View'])) {
 	}
 
 	function DeleteQueryInfo($SQLString) {
-		$SQLArray = explode('WHERE', $SQLString);
+		$SQLArray = explode("WHERE", $SQLString);
 		$_SESSION['SQLString']['table'] = $SQLArray[0];
 		$SQLString = trim(str_replace($SQLArray[0], '', $SQLString));
-		$SQLString = trim(str_replace('DELETE', '', $SQLString));
-		$SQLString = trim(str_replace('FROM', '', $SQLString));
-		$SQLString = trim(str_replace('WHERE', '', $SQLString));
+		$SQLString = trim(str_replace("DELETE", '', $SQLString));
+		$SQLString = trim(str_replace("FROM", '', $SQLString));
+		$SQLString = trim(str_replace("WHERE", '', $SQLString));
 		$Assigment = explode('=', $SQLString);
 		$_SESSION['SQLString']['fields'][0] = $Assigment[0];
 		$_SESSION['SQLString']['values'][0] = $Assigment[1];
@@ -148,16 +146,16 @@ if (isset($_POST['View'])) {
 				<th>' . _('Field Name') . '</th>
 				<th>' . _('Value') . '</th></tr>';
 	while ($myrow = DB_fetch_row($result)) {
-		if (Query_Type($myrow[2]) == 'INSERT') {
+		if (Query_Type($myrow[2]) == "INSERT") {
 			InsertQueryInfo(str_replace("INSERT INTO",'',$myrow[2]));
 			$RowColour = '#a8ff90';
 		}
-		if (Query_Type($myrow[2]) == 'UPDATE') {
-			UpdateQueryInfo(str_replace('UPDATE','',$myrow[2]));
+		if (Query_Type($myrow[2]) == "UPDATE") {
+			UpdateQueryInfo(str_replace("UPDATE",'',$myrow[2]));
 			$RowColour = '#feff90';
 		}
-		if (Query_Type($myrow[2]) == 'DELETE') {
-			DeleteQueryInfo(str_replace('DELETE FROM','',$myrow[2]));
+		if (Query_Type($myrow[2]) == "DELETE") {
+			DeleteQueryInfo(str_replace("DELETE FROM",'',$myrow[2]));
 			$RowColour = '#fe90bf';
 		}
 

@@ -1,8 +1,6 @@
 <?php
 /* $Id$ */
 
-//$PageSecurity = 15;
-
 include('includes/session.inc');
 $title = _('Maintenance Of Petty Cash Type of Tabs');
 include('includes/header.inc');
@@ -125,7 +123,7 @@ if (isset($_POST['submit'])) {
 		echo '<br>';
 		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<p><div class="centre"><input type=submit name=return VALUE="' . _('Return to list of tab types') . '"></div>';
+		echo '<p><div class="centre"><input type=submit name=return value="' . _('Return to list of tab types') . '"></div>';
 		echo '</form>';
 		include('includes/footer.inc');
 		exit;
@@ -190,7 +188,7 @@ if (isset($SelectedTab)) {
 }
 if (! isset($_GET['delete'])) {
 
-	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p><table class=selection>'; //Main table
 
@@ -220,19 +218,19 @@ if (! isset($_GET['delete'])) {
 
 		// This is a new type so the user may volunteer a type code
 
-		echo "<table class=selection><tr><td>" . _('Code Of Type Of Tab') . ":</td><td><input type='Text'
-				" . (in_array('TypeTabCode',$Errors) ? 'class="inputerror"' : '' ) ." name='TypeTabCode'></td></tr>";
+		echo '<table class="selection"><tr><td>' . _('Code Of Type Of Tab') . ':</td><td><input type="text"
+				' . (in_array('TypeTabCode',$Errors) ? 'class="inputerror"' : '' ) .' name="TypeTabCode"></td></tr>';
 
 	}
 
 	if (!isset($_POST['TypeTabDescription'])) {
 		$_POST['TypeTabDescription']='';
 	}
-	echo "<tr><td>" . _('Description Of Type of Tab') . ":</td><td><input type='Text' name='TypeTabDescription' size=50 maxlength=49 value='" . $_POST['TypeTabDescription'] . "'></td></tr>";
+	echo '<tr><td>' . _('Description Of Type of Tab') . ':</td><td><input type="text" name="TypeTabDescription" size="50" maxlength="49" value="' . $_POST['TypeTabDescription'] . '"></td></tr>';
 
 	echo '</td></tr></table>'; // close main table
 
-	echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
+	echo '<p><div class="centre"><input type=submit name=submit value="' . _('Accept') . '"><input type=submit name="Cancel" VALUE="' . _('Cancel') . '"></div>';
 
 	echo '</form>';
 

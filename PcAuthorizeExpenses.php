@@ -1,7 +1,6 @@
 <?php
-/* $Revision: 1.0 $ */
 
-//$PageSecurity = 6;
+/* $Id$ */
 
 include('includes/session.inc');
 $title = _('Authorization of Petty Cash Expenses');
@@ -41,16 +40,16 @@ if (isset($SelectedTabs)) {
 }
 if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR isset ($_POST['GO'])) {
 
-	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if(!isset ($Days)){
 		$Days=30;
 	}
-	echo "<input type=hidden name='SelectedTabs' VALUE=" . $SelectedTabs . ">";
+	echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '">';
 	echo '<br><table class=selection>';
-	echo "<tr><th colspan=7>" . _('Detail Of Movement For Last ') .': ';
-	echo "<input type=text class=number name='Days' VALUE=" . $Days . " MAXLENGTH =3 size=4> Days ";
+	echo '<tr><th colspan="7">' . _('Detail Of Movement For Last ') .': ';
+	echo '<input type="text" class="number" name="Days" value="' . $Days . '" maxlength ="3" size="4"> ' ._('Days');
 	echo '<input type=submit name="Go" value="' . _('Go') . '"></tr></th>';
 	echo '</form>';
 
@@ -77,15 +76,15 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 
 	$result = DB_query($sql,$db);
 
-	echo "<tr>
-		<th>" . _('Date') . "</th>
-		<th>" . _('Expense Code') . "</th>
-		<th>" . _('Amount') . "</th>
-		<th>" . _('Posted') . "</th>
-		<th>" . _('Notes') . "</th>
-		<th>" . _('Receipt') . "</th>
-		<th>" . _('Authorized') . "</th>
-	</tr>";
+	echo '<tr>
+			<th>' . _('Date') . '</th>
+			<th>' . _('Expense Code') . '</th>
+			<th>' . _('Amount') . '</th>
+			<th>' . _('Posted') . '</th>
+			<th>' . _('Notes') . '</th>
+			<th>' . _('Receipt') . '</th>
+			<th>' . _('Authorized') . '</th>
+		</tr>';
 
 	$k=0; //row colour counter
 	echo'<form action="PcAuthorizeExpenses.php" method="POST" name="'._('update').'">';
@@ -94,7 +93,7 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 	while ($myrow=DB_fetch_array($result))	{
 
 		//update database if update pressed
-		if ((isset($_POST['submit']) and $_POST['submit']==_('Update')) AND isset($_POST[$myrow['counterindex']])){
+		if ((isset($_POST['submit']) AND $_POST['submit']==_('Update')) AND isset($_POST[$myrow['counterindex']])){
 
 			$PeriodNo = GetPeriod(ConvertSQLDate($myrow['date']), $db);
 
@@ -124,7 +123,7 @@ if (isset($_POST['submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 			$typeno = GetNextTransNo($type,$db);
 
 			//build narrative
-			$narrative= "PettyCash - ".$myrow['tabcode']." - ".$myrow['codeexpense']." - ".$myrow['notes']." - ".$myrow['receipt']."";
+			$narrative= _('PettyCash') . ' - ' . $myrow['tabcode'] . ' - ' . $myrow['codeexpense'] . ' - ' . DB_escape_string($myrow['notes']) . ' - '.$myrow['receipt'];
 			//insert to gltrans
 			DB_Txn_Begin($db);
 

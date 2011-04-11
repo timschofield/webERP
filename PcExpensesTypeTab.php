@@ -1,7 +1,6 @@
 <?php
-/* $Revision: 1.0 $ */
 
-//$PageSecurity = 15;
+/* $Id$ */
 
 include('includes/session.inc');
 $title = _('Maintenance Of Petty Cash Expenses For a Type Tab');
@@ -14,6 +13,8 @@ if (isset($_POST['SelectedType'])){
 	$SelectedType = strtoupper($_POST['SelectedType']);
 } elseif (isset($_GET['SelectedType'])){
 	$SelectedType = strtoupper($_GET['SelectedType']);
+} else {
+	$SelectedType='';
 }
 if (ContainsIllegalCharacters($SelectedType) OR strpos($SelectedType,' ')>0){
 	$InputError = 1;
@@ -58,7 +59,7 @@ if (isset($_POST['submit'])) {
 				VALUES ('" . $_POST['SelectedTabs'] . "',
 						'" . $_POST['SelectedExpense'] . "')";
 
-			$msg = _('Expense code:') . ' ' . $_POST["SelectedExpense"].' '._('for Type of Tab:') .' '. $_POST["SelectedTabs"] .  ' ' . _('has been created');
+			$msg = _('Expense code:') . ' ' . $_POST['SelectedExpense'].' '._('for Type of Tab:') .' '. $_POST['SelectedTabs'] .  ' ' . _('has been created');
 			$checkSql = "SELECT count(typetabcode)
 			     FROM pctypetabs";
 			$result = DB_query($checkSql, $db);
@@ -96,25 +97,26 @@ if (!isset($SelectedTabs)){
 then none of the above are true and the list of sales types will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
-echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table class=selection>'; //Main table
-
-echo '<tr><td>' . _('Select Type of Tab') . ":</td><td><select name='SelectedTabs'>";
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<table class=selection>'; //Main table
+	
+	echo '<tr><td>' . _('Select Type of Tab') . ':</td><td><select name="SelectedTabs">';
 
 	DB_free_result($result);
-	$SQL = "SELECT typetabcode,typetabdescription
-		FROM pctypetabs";
+	$SQL = "SELECT typetabcode,
+					typetabdescription
+			FROM pctypetabs";
 
 	$result = DB_query($SQL,$db);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectedTabs']) and $myrow['typetabcode']==$_POST['SelectedTabs']) {
-			echo "<option selected VALUE='";
+			echo '<option selected value="';
 		} else {
-			echo "<option VALUE='";
+			echo '<option VALUE="';
 		}
-		echo $myrow['typetabcode'] . "'>" . $myrow['typetabcode'] . ' - ' . $myrow['typetabdescription'];
+		echo $myrow['typetabcode'] . '">' . $myrow['typetabcode'] . ' - ' . $myrow['typetabdescription'] . '</option>';
 
 	} //end while loop
 
@@ -142,11 +144,11 @@ if (isset($_POST['process'])OR isset($SelectedTabs)) {
 
 	$result = DB_query($sql,$db);
 
-	echo '<table class=selection>';
-	echo "<tr>
-		<th>" . _('Expense Code') . "</th>
-		<th>" . _('Description') . "</th>
-	</tr>";
+	echo '<table class="selection">';
+	echo '<tr>
+			<th>' . _('Expense Code') . '</th>
+			<th>' . _('Description') . '</th>
+		</tr>';
 
 $k=0; //row colour counter
 
@@ -176,47 +178,44 @@ while ($myrow = DB_fetch_row($result)) {
 
 	if (! isset($_GET['delete'])) {
 
-	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<br /><table  class=selection>'; //Main table
-
-
-
-	echo '<tr><td>' . _('Select Expense Code') . ":</td><td><select name='SelectedExpense'>";
-
-	DB_free_result($result);
-	$SQL = "SELECT codeexpense,description
-		FROM pcexpenses";
-
-	$result = DB_query($SQL,$db);
-
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['SelectedExpense']) and $myrow['codeexpense']==$_POST['SelectedExpense']) {
-			echo "<option selected VALUE='";
-		} else {
-			echo "<option VALUE='";
-		}
-		echo $myrow['codeexpense'] . "'>" . $myrow['codeexpense'] . ' - ' . $myrow['description'];
-
-	} //end while loop
-
-	echo '</select></td></tr>';
-
-
-	echo "<input type=hidden name='SelectedTabs' VALUE=" . $SelectedTabs . ">";
-
-   	echo '</td></tr></table>'; // close main table
-
-	echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
-
-	echo '</form>';
-
-} // end if user wish to delete
-
-
+		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<br /><table  class="selection">'; //Main table
+	
+	
+	
+		echo '<tr><td>' . _('Select Expense Code') . ':</td><td><select name="SelectedExpense">';
+	
+		DB_free_result($result);
+		$SQL = "SELECT codeexpense,
+						description
+				FROM pcexpenses";
+	
+		$result = DB_query($SQL,$db);
+	
+		while ($myrow = DB_fetch_array($result)) {
+			if (isset($_POST['SelectedExpense']) and $myrow['codeexpense']==$_POST['SelectedExpense']) {
+				echo '<option selected value="';
+			} else {
+				echo '<option value="';
+			}
+			echo $myrow['codeexpense'] . '">' . $myrow['codeexpense'] . ' - ' . $myrow['description'] . '</option>';
+	
+		} //end while loop
+	
+		echo '</select></td></tr>';
+	
+	
+		echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '">';
+	
+	   	echo '</td></tr></table>'; // close main table
+	
+		echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
+	
+		echo '</form>';
+	
+	} // end if user wish to delete
 }
-
-
 
 include('includes/footer.inc');
 ?>

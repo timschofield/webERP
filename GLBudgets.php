@@ -33,10 +33,10 @@ echo '<table>';
 echo '</br><tr><td>'.  _('Select GL Account').  ":</td><td><select name='SelectedAccount'
 		onChange='ReloadForm(selectaccount.Select)'>";
 
-$SQL = 'SELECT accountcode,
+$SQL = "SELECT accountcode,
 				accountname
 			FROM chartmaster
-			ORDER BY accountcode';
+			ORDER BY accountcode";
 
 $result=DB_query($SQL,$db);
 if (DB_num_rows($result)==0){
@@ -215,12 +215,12 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 	echo '<script>defaultControl(document.form.1next);</script>';
 	echo '</br><div class="centre"><input type="submit" name=update value="' . _('Update') . '"></div></form>';
 
-	$SQL='SELECT MIN(periodno) FROM periods';
+	$SQL="SELECT MIN(periodno) FROM periods";
 	$result=DB_query($SQL,$db);
 	$MyRow=DB_fetch_array($result);
 	$FirstPeriod=$MyRow[0];
 
-	$SQL='SELECT MAX(periodno) FROM periods';
+	$SQL="SELECT MAX(periodno) FROM periods";
 	$result=DB_query($SQL,$db);
 	$MyRow=DB_fetch_array($result);
 	$LastPeriod=$MyRow[0];

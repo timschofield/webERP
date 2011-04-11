@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+
 /* $Id$*/
 
 include('includes/session.inc');
@@ -17,8 +17,8 @@ if (isset($_POST['DebtorNo'])){
 } elseif (isset($_GET['DebtorNo'])){
 	$DebtorNo = $_GET['DebtorNo'];
 }
-echo "<a href='" . $rootpath . '/Customers.php?' . SID .'&DebtorNo='.$DebtorNo."'>" . _('Back to Customers') . '</a><br>';
-$SQLname="SELECT * from debtorsmaster where debtorno='" .$DebtorNo."'";
+echo "<a href='" . $rootpath . '/Customers.php?' . SID .'&DebtorNo='.$DebtorNo."'>" . _('Back to Customers') . '</a><br />';
+$SQLname="SELECT name FROM debtorsmaster where debtorno='" .$DebtorNo."'";
 $Result = DB_query($SQLname,$db);
 $row = DB_fetch_array($Result);
 if (!isset($_GET['Id'])) {
@@ -38,13 +38,13 @@ if ( isset($_POST['submit']) ) {
 	//first off validate inputs sensible
 	if (isset($_POST['Con_ID']) and !is_long((integer)$_POST['Con_ID'])) {
 		$InputError = 1;
-		prnMsg( _('The Contact must be an integer.'), 'error');
+		prnMsg( _('The Contact ID must be an integer.'), 'error');
 	} elseif (strlen($_POST['conName']) >40) {
 		$InputError = 1;
-		prnMsg( _("The contact's name must be forty characters or less long"), 'error');
+		prnMsg( _('The contact name must be forty characters or less long'), 'error');
 	} elseif( trim($_POST['conName']) == '' ) {
 		$InputError = 1;
-		prnMsg( _("The contact's name may not be empty"), 'error');
+		prnMsg( _('The contact name may not be empty'), 'error');
 	}
 
 	if (isset($Id) and ($Id and $InputError !=1)) {
@@ -72,11 +72,11 @@ if ( isset($_POST['submit']) ) {
 
 	if ($InputError !=1) {
 		$result = DB_query($sql,$db);
-				//echo '<br>'.$sql;
+				//echo '<br />'.$sql;
 
-		echo '<br>';
+		echo '<br />';
 		prnMsg($msg, 'success');
-		echo '<br>';
+		echo '<br />';
 		unset($Id);
 		unset($_POST['conName']);
 		unset($_POST['conRole']);
@@ -92,9 +92,9 @@ if ( isset($_POST['submit']) ) {
 	$sql="DELETE FROM custcontacts WHERE contid=".$Id."
 			and debtorno='".$DebtorNo."'";
 				$result = DB_query($sql,$db);
-						//echo '<br>'.$sql;
+						//echo '<br />'.$sql;
 
-				echo '<br>';
+				echo '<br />';
 				prnMsg( _('The contact record has been deleted'), 'success');
 				unset($Id);
 				unset($_GET['delete']);
@@ -105,7 +105,7 @@ if (!isset($Id)) {
 
 	$sql = "SELECT * FROM custcontacts where debtorno='".$DebtorNo."' ORDER BY contid";
 	$result = DB_query($sql,$db);
-			//echo '<br>'.$sql;
+			//echo '<br />'.$sql;
 
 	echo '<table class=selection>';
 	echo '<tr>
@@ -153,7 +153,7 @@ if (isset($Id)) {  ?>
 <?php
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '&DebtorNo='.$DebtorNo.'">';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?DebtorNo='.$DebtorNo.'">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($Id)) {
@@ -163,7 +163,7 @@ if (!isset($_GET['delete'])) {
 					and debtorno='".$DebtorNo."'";
 
 		$result = DB_query($sql, $db);
-				//echo '<br>'.$sql;
+				//echo '<br />'.$sql;
 
 		$myrow = DB_fetch_array($result);
 

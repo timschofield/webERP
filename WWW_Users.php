@@ -574,12 +574,14 @@ echo '<tr>
 	<td>' . _('Language') . ':</td>
 	<td><select name="UserLanguage">';
 
- $LangDirHandle = dir('locale/');
+$Languages = scandir('locale/', 0);
 
-
-while (false != ($LanguageEntry = $LangDirHandle->read())){
-
-	if (is_dir('locale/' . $LanguageEntry) AND $LanguageEntry != '..' AND $LanguageEntry != 'CVS' AND $LanguageEntry!='.'){
+foreach ($Languages as $LanguageEntry){
+	
+	if (is_dir('locale/' . $LanguageEntry)
+			AND $LanguageEntry != '..'
+			AND $LanguageEntry != '.svn'
+			AND $LanguageEntry!='.'){
 
 		if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry){
 			echo '<option selected value="' . $LanguageEntry . '">' . $LanguageEntry .'</option>';
@@ -590,6 +592,8 @@ while (false != ($LanguageEntry = $LangDirHandle->read())){
 		}
 	}
 }
+
+
 
 echo '</select></td></tr>';
 

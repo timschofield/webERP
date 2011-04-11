@@ -1,8 +1,6 @@
 <?php
 /* $Id$*/
-/* contributed by Chris Bice */
 
-//$PageSecurity = 11;
 include('includes/session.inc');
 $title = _('Inventory Location Transfer Shipment');
 include('includes/header.inc');
@@ -17,7 +15,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 	$result = DB_query("SELECT * FROM loctransfers WHERE reference='" . $_POST['Trf_ID'] . "'",$db);
 	if (DB_num_rows($result)!=0){
 		$InputError = true;
-		$ErrorMessage = _('This transaction has already been entered') . '. ' . _('Please start over now').'<br>';
+		$ErrorMessage = _('This transaction has already been entered') . '. ' . _('Please start over now').'<br />';
 		unset($_POST['submit']);
 		unset($_POST['EnterMoreItems']);
 		for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
@@ -33,19 +31,19 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]==0){
 				$InputError = True;
-				$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('is not set up in the database') . '. ' . _('Only valid parts can be entered for transfers'). '<br>';
+				$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('is not set up in the database') . '. ' . _('Only valid parts can be entered for transfers'). '<br />';
 				$_POST['LinesCounter'] -= 10;
 			}
 			DB_free_result( $result );
 			if (!is_numeric($_POST['StockQTY' . $i])){
 				$InputError = True;
-				$ErrorMessage .= _('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. _('for part code'). ' ' . $_POST['StockID' . $i] . ' '. _('is not numeric') . '. ' . _('The quantity entered for transfers is expected to be numeric').'<br>';
+				$ErrorMessage .= _('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. _('for part code'). ' ' . $_POST['StockID' . $i] . ' '. _('is not numeric') . '. ' . _('The quantity entered for transfers is expected to be numeric').'<br />';
 				$_POST['LinesCounter'] -= 10;
 			}
 			if ($_POST['StockQTY' . $i] <= 0){
 				$InputError = True;
-				$ErrorMessage .= _('The quantity entered for').' '. $_POST['StockID' . $i] . ' ' . _('is less than or equal to 0') . '. ' . _('Please correct this or remove the item').'<br>';
-
+				$ErrorMessage .= _('The quantity entered for').' '. $_POST['StockID' . $i] . ' ' . _('is less than or equal to 0') . '. ' . _('Please correct this or remove the item').'<br />';
+				$_POST['LinesCounter'] -= 10;
 			}
 			// Only if stock exists at this location
 			$result = DB_query("SELECT quantity FROM locstock WHERE stockid='" . $_POST['StockID' . $i] . "' and loccode='".$_POST['FromStockLocation']."'",$db);
@@ -61,7 +59,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 	}//for all LinesCounter
 	if ($TotalItems == 0){
 		$InputError = True;
-		$ErrorMessage .= _('You must enter at least 1 Stock Item to transfer').'<br>';
+		$ErrorMessage .= _('You must enter at least 1 Stock Item to transfer').'<br />';
 	}
 
 /*Ship location and Receive location are different */
@@ -122,10 +120,10 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	}
 
 	if (isset($InputError) and $InputError==true){
-		echo '<br>';
+		echo '<br />';
 
 		prnMsg($ErrorMessage, 'error');
-		echo '<br>';
+		echo '<br />';
 
 	}
 
@@ -215,8 +213,8 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		$i++;
 	}
 
-	echo '</table><br><div class="centre">
-		<input type=hidden name="LinesCounter" value='. $i .'><input type=submit name="EnterMoreItems" value="'. _('Add More Items'). '"><input type=submit name="Submit" value="'. _('Create Transfer Shipment'). '"><br>';
+	echo '</table><br /><div class="centre">
+		<input type=hidden name="LinesCounter" value='. $i .'><input type=submit name="EnterMoreItems" value="'. _('Add More Items'). '"><input type=submit name="Submit" value="'. _('Create Transfer Shipment'). '"><br />';
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].StockID0);</script>';
 	echo '</form></div>';
 	include('includes/footer.inc');
