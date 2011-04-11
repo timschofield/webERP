@@ -1,8 +1,6 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity = 11;
-
 include('includes/session.inc');
 $title = _('Work Order Status Inquiry');
 include('includes/header.inc');
@@ -36,13 +34,13 @@ include('includes/header.inc');
 	}
 	$WORow = DB_fetch_array($WOResult);
 
-	echo '<a href="'. $rootpath . '/SelectWorkOrder.php?' . SID . '">' . _('Back to Work Orders'). '</a><br>';
-    echo '<a href="'. $rootpath . '/WorkOrderCosting.php?' . SID . '&WO=' .  $_REQUEST['WO'] . '">' . _('Back to Costing'). '</a><br>';
+	echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a><br>';
+    echo '<a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $_REQUEST['WO'] . '">' . _('Back to Costing'). '</a><br>';
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' .
-		_('Search') . '" alt="" />' . ' ' . $title.'</p';
+		_('Search') . '" alt="" />' . ' ' . $title.'</p>';
 
-	echo '<table cellpadding=2 class=selection>
+	echo '<table cellpadding="2" class="selection">
 		<tr><td class="label">' . _('Issue to work order') . ':</td><td>' . $_REQUEST['WO'] .'</td><td class="label">' . _('Item') . ':</td><td>' . $_REQUEST['StockID'] . ' - ' . $WORow['description'] . '</td></tr>
 	 	<tr><td class="label">' . _('Manufactured at') . ':</td><td>' . $WORow['locationname'] . '</td><td class="label">' . _('Required By') . ':</td><td>' . ConvertSQLDate($WORow['requiredby']) . '</td></tr>
 	 	<tr><td class="label">' . _('Quantity Ordered') . ':</td><td class=number>' . number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td><td colspan=2>' . $WORow['units'] . '</td></tr>
