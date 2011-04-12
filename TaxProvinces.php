@@ -1,8 +1,6 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity = 15;
-
 include('includes/session.inc');
 
 $title = _('Dispatch Tax Provinces');
@@ -185,14 +183,14 @@ if (isset($_POST['submit'])) {
 
 
 if (isset($SelectedTaxProvince)) {
-	echo '<div class="centre"><a href=' . $_SERVER['PHP_SELF'] . '?' . SID .'>' . _('Review Tax Provinces') . '</a></div>';
+	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Tax Provinces') . '</a></div>';
 }
 
 echo '<p>';
 
 if (! isset($_GET['delete'])) {
 
-	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] .  '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedTaxProvince)) {
@@ -212,18 +210,18 @@ if (! isset($_GET['delete'])) {
 
 			$_POST['TaxProvinceName']  = $myrow['taxprovincename'];
 
-			echo "<input type=hidden name='SelectedTaxProvince' VALUE='" . $myrow['taxprovinceid'] . "'>";
-			echo "<table class=selection>";
+			echo '<input type=hidden name="SelectedTaxProvince" value="' . $myrow['taxprovinceid'] . '">';
+			echo '<table class="selection">';
 		}
 
 	}  else {
 		$_POST['TaxProvinceName']='';
-		echo "<table class=selection>";
+		echo '<table class="selection">';
 	}
-	echo "<tr>
-		<td>" . _('Tax Province Name') . ':' . "</td>
-		<td><input type='Text' name='TaxProvinceName' size=30 maxlength=30 value='" . $_POST['TaxProvinceName'] . "'></td>
-		</tr>";
+	echo '<tr>
+		<td>' . _('Tax Province Name') . ':' . '</td>
+		<td><input type="text" name="TaxProvinceName" size="30" maxlength="30" value="' . $_POST['TaxProvinceName'] . '"></td>
+		</tr>';
 	echo '</table>';
 
 	echo '<br /><div class="centre"><input type=Submit name=submit value=' . _('Enter Information') . '></div>';
@@ -232,10 +230,10 @@ if (! isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-echo '<div class="centre"';
-echo '<br><a href="' . $rootpath . '/TaxAuthorities.php?' . SID . '">' . _('Edit/Review Tax Authorities') .  '</a>';
-echo '<br><a href="' . $rootpath . '/TaxGroups.php?' . SID . '">' . _('Edit/Review Tax Groupings') .  '</a>';
-echo '<br><a href="' . $rootpath . '/TaxCategories.php?' . SID . '">' . _('Edit/Review Tax Categories') .  '</a>';
+echo '<div class="centre">';
+echo '<br><a href="' . $rootpath . '/TaxAuthorities.php">' . _('Edit/Review Tax Authorities') .  '</a>';
+echo '<br><a href="' . $rootpath . '/TaxGroups.php">' . _('Edit/Review Tax Groupings') .  '</a>';
+echo '<br><a href="' . $rootpath . '/TaxCategories.php">' . _('Edit/Review Tax Categories') .  '</a>';
 echo '</div>';
 
 include('includes/footer.inc');

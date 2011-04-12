@@ -9,8 +9,8 @@ include('includes/header.inc');
 
 if (!isset($_POST['DoUpgrade'])){
 	
-	prnMsg(_('This script will run perform any modifications to the database required to allow the additional functionality in later scripts'),'info');	
-	echo '<p><form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	prnMsg(_('This script will perform any modifications to the database required to allow the additional functionality in later scripts'),'info');	
+	echo '<p><form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	
 	if (!isset($_SESSION['VersionNumber'])){
@@ -97,7 +97,7 @@ if (isset($_POST['DoUpgrade'])){
 					$SQLScripts[] = './sql/mysql/upgrade3.11.1-4.00.sql';
 					break;
 			} //end switch
-			if(isset($_SESSION['VersionNumber']) AND strcmp($_SESSION['VersionNumber'],'4.04')<0) { /* VersionNumber is set to '4.04' when upgrade3.11.1-4.00.sql is run */
+			if(isset($_SESSION['VersionNumber']) AND strcmp($_SESSION['VersionNumber'],'4.04')<0) { /* VersionNumber is set to less than '4.04' when upgrade3.11.1-4.00.sql is run */
 				$SQLScripts[] = './sql/mysql/upgrade3.11.1-4.00.sql';
 			}
 		}	

@@ -1,7 +1,6 @@
 <?php
 
 /* $Id$ */
-/* $Revision: 1.76 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -81,13 +80,13 @@ if (isset($_POST['Update'])
 
 /*	If (strlen($_POST['BrAdd3'])==0 OR !isset($_POST['BrAdd3'])){
 		$InputErrors =1;
-		echo "<br>A region or city must be entered.<br>";
+		echo "<br />A region or city must be entered.<br />";
 	}
 
 	Maybe appropriate in some installations but not here
 	If (strlen($_POST['BrAdd2'])<=1){
 		$InputErrors =1;
-		echo "<br>You should enter the suburb in the box provided. Orders cannot be accepted without a valid suburb being entered.<br>";
+		echo "<br />You should enter the suburb in the box provided. Orders cannot be accepted without a valid suburb being entered.<br />";
 	}
 
 */
@@ -111,7 +110,7 @@ if (isset($_POST['Update'])
 
 	 elseif (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat'],$EarliestDispatch), $_POST['DeliveryDate'])){
 		$InputErrors =1;
-		echo '<br><b>' . _('The delivery details cannot be updated because you are attempting to set the date the order is to be dispatched earlier than is possible. No dispatches are made on Saturday and Sunday. Also, the dispatch cut off time is') .  $_SESSION['DispatchCutOffTime']  . _(':00 hrs. Orders placed after this time will be dispatched the following working day.');
+		echo '<br /><b>' . _('The delivery details cannot be updated because you are attempting to set the date the order is to be dispatched earlier than is possible. No dispatches are made on Saturday and Sunday. Also, the dispatch cut off time is') .  $_SESSION['DispatchCutOffTime']  . _(':00 hrs. Orders placed after this time will be dispatched the following working day.');
 	}
 
 	*/
@@ -153,7 +152,7 @@ if (isset($_POST['Update'])
 			prnMsg(_('The branch details for branch code') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('against customer code') . ': ' . $_POST['Select'] . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
 
 			if ($debug==1){
-				echo '<br>' . _('The SQL that failed to get the branch details was') . ':<br>' . $sql;
+				echo '<br />' . _('The SQL that failed to get the branch details was') . ':<br />' . $sql;
 			}
 			include('includes/footer.inc');
 			exit;
@@ -280,7 +279,7 @@ If (isset($_POST['ProcessOrder'])) {
 	}
 	If ($_POST['FreightCost'] != $OldFreightCost && $_SESSION['DoFreightCalc']==True){
 		$OK_to_PROCESS = 0;
-		prnMsg(_('The freight charge has been updated') . '. ' . _('Please reconfirm that the order and the freight charges are acceptable and then confirm the order again if OK') .' <br> '. _('The new freight cost is') .' ' . $_POST['FreightCost'] . ' ' . _('and the previously calculated freight cost was') .' '. $OldFreightCost,'warn');
+		prnMsg(_('The freight charge has been updated') . '. ' . _('Please reconfirm that the order and the freight charges are acceptable and then confirm the order again if OK') .' <br /> '. _('The new freight cost is') .' ' . $_POST['FreightCost'] . ' ' . _('and the previously calculated freight cost was') .' '. $OldFreightCost,'warn');
 	} else {
 
 /*check the customer's payment terms */
@@ -417,7 +416,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 			AND $_SESSION['AutoCreateWOs']==1
 			AND $_SESSION['Items'.$identifier]->Quotation!=1){ //oh yeah its all on!
 
-			echo '<br>';
+			echo '<br />';
 
 			//now get the data required to test to see if we need to make a new WO
 			$QOHResult = DB_query("SELECT SUM(quantity) FROM locstock WHERE stockid='" . $StockItem->StockID . "'",$db);
@@ -559,7 +558,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 	} /* end inserted line items into sales order details */
 
 	$result = DB_Txn_Commit($db);
-	echo '<br>';
+	echo '<br />';
 	if ($_SESSION['Items'.$identifier]->Quotation==1){
 		prnMsg(_('Quotation Number') . ' ' . $OrderNo . ' ' . _('has been entered'),'success');
 	} else {
@@ -571,19 +570,44 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 		if ($_POST['Quotation']==0) { /*then its not a quotation its a real order */
 
-			echo '<br><table class=selection><tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt=""></td><td>' . ' ' . '<a target="_blank" href="' . $rootpath . '/PrintCustOrder.php?identifier='.$identifier . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' .'</a></td></tr>';
-			echo '<tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt=""></td><td>' . ' ' . '<a  target="_blank" href="' . $rootpath . '/PrintCustOrder_generic.php?identifier='.$identifier . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Laser') . ')' .'</a></td></tr>';
+			echo '<br /><table class=selection>
+					<tr>
+						<td><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt=""></td>
+						<td>' . ' ' . '<a target="_blank" href="' . $rootpath . '/PrintCustOrder.php?identifier='.$identifier . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' .'</a></td>
+					</tr>';
+			echo '<tr>
+					<td><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt=""></td>
+					<td>' . ' ' . '<a  target="_blank" href="' . $rootpath . '/PrintCustOrder_generic.php?identifier='.$identifier . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Laser') . ')' .'</a></td>
+				</tr>';
 
-			echo '<tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Invoice') . '" alt=""></td><td>' . ' ' . '<a href="' . $rootpath . '/ConfirmDispatch_Invoice.php?identifier='.$identifier . '&OrderNumber=' . $OrderNo .'">'. _('Confirm Dispatch and Produce Invoice') .'</a></td></tr>';
-			//Add option to Print Sales Orders or Proforma invoice
-			echo '<tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/pdf.png" title="' . _('Sales Order') . '" alt=""></td><td>' . ' ' . '<a href="' . $rootpath . '/PrintSalesOrder_generic.php?identifier='.$identifier . '&TransNo=' . $OrderNo .'">'. _('Print Sales Order / Pro-forma Invoice') .'</a></td></tr></table>';
+			echo '<tr>
+					<td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Invoice') . '" alt=""></td>
+					<td>' . ' ' . '<a href="' . $rootpath . '/ConfirmDispatch_Invoice.php?identifier='.$identifier . '&OrderNumber=' . $OrderNo .'">'. _('Confirm Dispatch and Produce Invoice') .'</a></td>
+				</tr>';
+			
+			echo '</table>';
 
 		} else {
 			/*link to print the quotation */
-			echo '<br><table class=selection><tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Order') . '" alt=""></td><td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotation.php?' . SID .'identifier='.$identifier . '&QuotationNo=' . $OrderNo . '">'. _('Print Quotation (Landscape)') .'</a></td></tr></table>';
-			echo '<br><table class=selection><tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Order') . '" alt=""></td><td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotationPortrait.php?' . SID .'identifier='.$identifier . '&QuotationNo=' . $OrderNo . '">'. _('Print Quotation (Portrait)') .'</a></td></tr></table>';
+			echo '<br /><table class=selection>
+					<tr>
+						<td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Order') . '" alt=""></td>
+						<td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotation.php?' . SID .'identifier='.$identifier . '&QuotationNo=' . $OrderNo . '">'. _('Print Quotation (Landscape)') .'</a></td>
+					</tr>
+					</table>';
+			echo '<br /><table class=selection>
+					<tr>
+						<td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Order') . '" alt=""></td>
+						<td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotationPortrait.php?' . SID .'identifier='.$identifier . '&QuotationNo=' . $OrderNo . '">'. _('Print Quotation (Portrait)') .'</a></td>
+					</tr>
+					</table>';
 		}
-		echo '<br><table class=selection><tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Order') . '" alt=""></td><td>' . ' ' . '<a href="'. $rootpath .'/SelectOrderItems.php?identifier='.$identifier . '&NewOrder=Yes">'. _('Add Another Sales Order') .'</a></td></tr></table>';
+		echo '<br /><table class=selection>
+				<tr>
+					<td><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Order') . '" alt=""></td>
+					<td>' . ' ' . '<a href="'. $rootpath .'/SelectOrderItems.php?identifier='.$identifier . '&NewOrder=Yes">'. _('Add Another Sales Order') .'</a></td>
+				</tr>
+				</table>';
 	} else {
 		/*its a customer logon so thank them */
 		prnMsg(_('Thank you for your business'),'success');
@@ -747,7 +771,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 	prnMsg(_('Order Number') .' ' . $_SESSION['ExistingOrder'] . ' ' . _('has been updated'),'success');
 
-	echo '<br><table class=selection><tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt=""></td><td><a href="' . $rootpath . '/PrintCustOrder.php?identifier='.$identifier  . '&TransNo=' . $_SESSION['ExistingOrder'] . '">'. _('Print packing slip - pre-printed stationery') .'</a></td></tr>';
+	echo '<br /><table class=selection><tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt=""></td><td><a href="' . $rootpath . '/PrintCustOrder.php?identifier='.$identifier  . '&TransNo=' . $_SESSION['ExistingOrder'] . '">'. _('Print packing slip - pre-printed stationery') .'</a></td></tr>';
 	echo '<tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt=""></td><td><a  target="_blank" href="' . $rootpath . '/PrintCustOrder_generic.php?identifier='.$identifier  . '&TransNo=' . $_SESSION['ExistingOrder'] . '">'. _('Print packing slip') . ' (' . _('Laser') . ')' .'</a></td></tr>';
 	echo '<tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Invoice') . '" alt=""></td><td><a href="' . $rootpath .'/ConfirmDispatch_Invoice.php?identifier='.$identifier  . '&OrderNumber=' . $_SESSION['ExistingOrder'] . '">'. _('Confirm Order Delivery Quantities and Produce Invoice') .'</a></td></tr>';
 	echo '<tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Order') . '" alt=""></td><td><a href="' . $rootpath .'/SelectSalesOrder.php?identifier='.$identifier   . '">'. _('Select A Different Order') .'</a></td></tr></table>';
@@ -833,7 +857,7 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 	$DisplayVolume = number_format($_SESSION['Items'.$identifier]->totalVolume,2);
 	$DisplayWeight = number_format($_SESSION['Items'.$identifier]->totalWeight,2);
-	echo '<br><table><tr class="EvenTableRows">
+	echo '<br /><table><tr class="EvenTableRows">
 		<td>'. _('Total Weight') .':</td>
 		<td>'.$DisplayWeight.'</td>
 		<td>'. _('Total Volume') .':</td>
@@ -903,7 +927,7 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 }
 
-echo '<br><table  class=selection><tr>
+echo '<br /><table  class=selection><tr>
 	<td>'. _('Deliver To') .':</td>
 	<td><input type=text size=42 maxlength=40 name="DeliverTo" value="' . $_SESSION['Items'.$identifier]->DeliverTo . '"></td>
 </tr>';
@@ -1082,13 +1106,13 @@ echo '</select></td></tr>';
 
 echo '</table>';
 
-echo '<br><div class="centre"><input type=submit name="BackToLineDetails" value="' . _('Modify Order Lines') . '"><br>';
+echo '<br /><div class="centre"><input type=submit name="BackToLineDetails" value="' . _('Modify Order Lines') . '"><br />';
 
 if ($_SESSION['ExistingOrder']==0){
-	echo '<br><br><input type=submit name="ProcessOrder" value="' . _('Place Order') . '">';
-	echo '<br><br><input type=submit name="MakeRecurringOrder" VALUE="' . _('Create Recurring Order') . '">';
+	echo '<br /><br /><input type=submit name="ProcessOrder" value="' . _('Place Order') . '">';
+	echo '<br /><br /><input type=submit name="MakeRecurringOrder" VALUE="' . _('Create Recurring Order') . '">';
 } else {
-	echo '<br><input type=submit name="ProcessOrder" VALUE="' . _('Commit Order Changes') . '">';
+	echo '<br /><input type=submit name="ProcessOrder" VALUE="' . _('Commit Order Changes') . '">';
 }
 
 echo '</div></form>';

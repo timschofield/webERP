@@ -1,6 +1,7 @@
 <?php
 
 /* $Id$*/
+
 /*This page shows the serial numbers created for a works order
  * - creating automatically from the last serial number counter in the stockmaster or by manual entry
  * - If the item is lot controlled then the lot reference and the quantity in the lot can be entered
@@ -10,7 +11,7 @@
  * Need to allow adding serial numbers/batches and deleting batches/serial numbers
  */
 
-//$PageSecurity = 10;
+
 
 include('includes/session.inc');
 if ($_REQUEST['Serialised']==1){
@@ -50,6 +51,9 @@ if (isset($_POST['AddControlledItems'])){
 		} else {
 			DB_Txn_Begin($db);
 			/*Process the additional controlled items into woserialnos and update the quantity on the work order order in woitems*/
+			
+			$InputError = false;
+			
 			$sql = "INSERT INTO woserialnos (stockid,
 												wo,
 												qualitytext,
@@ -229,7 +233,7 @@ echo '<input type="hidden" name="WO" value="' . $WO . '">';
 echo '<input type="hidden" name="Serialised" value="' . $Serialised . '">';
 echo '<input type="hidden" name="NextSerialNo" value="' . $NextSerialNo . '">';
 
-echo '<table>';
+echo '<table class="selection">';
 
 if ($Serialised==1 AND $NextSerialNo>0){
 	echo '<tr><td>' . _('Add A Number of New Serial Numbers');
@@ -256,8 +260,8 @@ if ($Serialised==1 AND $NextSerialNo>0){
 }
 
 echo '<td><input type="submit" name="AddControlledItems" value="' . _('Add') . '"></td></tr>
-	</table>';
-echo '<hr>';
+	</table>
+	<br />';
 
 $sql = "SELECT serialno,
 				quantity,
@@ -272,7 +276,7 @@ $WOSerialNoResult = DB_query($sql,$db,$ErrMsg);
 if (DB_num_rows($WOSerialNoResult)==0){
 	prnMsg(_('There are no serial items or batches yet defined for this work order item. Create new items first'),'info');
 } else {
-	echo '<table>';
+	echo '<br /><table class="selection">';
 	if ($Serialised==1){
 		$Header = '<tr><th>' . _('Serial No') . '</th><th>' . _('Notes') . '</th></tr>';
 	} else {
@@ -288,16 +292,16 @@ if (DB_num_rows($WOSerialNoResult)==0){
 			$j=0;
 		}
 
-		echo '<tr><td><input type="text" name="Reference' . $i .'" value="' . $WOSNRow['serialno'] . '"></td>';
-		echo '<input type="hidden" name="OldReference' . $i . '" value="' . $WOSNRow['serialno'] . '">';
+		echo '<tr><td><input type="text" name="Reference' . $i .'" value="' . $WOSNRow['serialno'] . '"/></td>';
+		echo '<input type="hidden" name="OldReference' . $i . '" value="' . $WOSNRow['serialno'] . '"/>';
 		if ($Serialised==0){
-			echo '<td><input type="text" name="Quantity' . $i .'" value="' . $WOSNRow['quantity'] . '"</td>';
-			echo '<input type="hidden" name="OldQuantity' . $i . '" value="' . $WOSNRow['quantity'] . '">';
+			echo '<td><input type="text" name="Quantity' . $i .'" value="' . $WOSNRow['quantity'] . '"/></td>';
+			echo '<input type="hidden" name="OldQuantity' . $i . '" value="' . $WOSNRow['quantity'] . '"/>';
 		} else {
 			echo '<input type="hidden" name="Quantity' . $i . '" value="1">';
 		}
 		echo '<td><textarea name="Notes' . $i .'" cols=60 rows=3>' . $WOSNRow['qualitytext'] .'</textarea></td>';
-		echo '<td><a href="' . $_SESSION['PHP_SELF'] . '?' . SID . '&Delete=1&Reference=' . $WOSNRow['serialno'] . '&Quantity=' . $WOSNRow['quantity'] . '&WO=' . $WO . '&StockID=' . $StockID . '&Description=' . $Description . '&Serialised=' . $Serialised . '&NextSerialNo=' . $NextSerialNo . '">' . _('Delete') . '</td></tr>';
+		echo '<td><a href="' . $_SESSION['PHP_SELF'] . '?Delete=1&Reference=' . $WOSNRow['serialno'] . '&Quantity=' . $WOSNRow['quantity'] . '&WO=' . $WO . '&StockID=' . $StockID . '&Description=' . $Description . '&Serialised=' . $Serialised . '&NextSerialNo=' . $NextSerialNo . '">' . _('Delete') . '</td></tr>';
 		$i++;
 		$j++;
 	}
@@ -305,16 +309,16 @@ if (DB_num_rows($WOSerialNoResult)==0){
 	echo '<input type="hidden" name="CountOfItems" value=' . $i . '>';
 
 	if ($Serialised==0){
-		echo '<tr><td align="center" colspan=3>';
+		echo '<tr><td style="text-align: center" colspan=3>';
 	} else {
-		echo '<tr><td align="center" colspan=2>';
+		echo '<tr><td style="text-align: center" colspan=2>';
 	}
 	echo '<input type="submit" name="UpdateItems" value="' . _('Update') . '"></td></tr>';
 	echo '</table>';
 
 } //end of if there are woserialno items defined
 
-echo '<p/><a href="' . $rootpath . '/WorkOrderEntry.php?' . SID . '&WO=' . $WO . '">' . _('Back To Work Order') . ' ' . $WO .'</a>';
+echo '<p/><a href="' . $rootpath . '/WorkOrderEntry.php?WO=' . $WO . '">' . _('Back To Work Order') . ' ' . $WO .'</a>';
 echo '</form>';
 
 include('includes/footer.inc');

@@ -1017,8 +1017,9 @@ while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 	echo '<input type="hidden" name="PropType' . $PropertyCounter .'" value=' . $PropertyRow['controltype'] . '>';
 	echo '</td></tr>';
 	$PropertyCounter++;
-	unset($StockID);
+	
 } //end loop round properties for the item category
+unset($StockID);
 echo '</table><br>';
 echo '<input type="hidden" name="PropertyCounter" value=' . $PropertyCounter . '>';
 
