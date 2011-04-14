@@ -1,6 +1,6 @@
 <?php
 
-//$PageSecurity = 11;
+/* $Id$*/
 
 include('includes/session.inc');
 
@@ -26,7 +26,7 @@ if (isset($_GET['AssetID'])) {
 } else {
 	$sql='SELECT categoryid, categorydescription FROM fixedassetcategories';
 	$result=DB_query($sql, $db);
-	echo '<form action="'. $_SERVER['PHP_SELF'] . '?' . SID .'" method=post>';
+	echo '<form action="'. $_SERVER['PHP_SELF'] . '" method=post>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $title . '</p>';
@@ -121,11 +121,11 @@ if (isset($_POST['Search'])) {
 	while ($myrow=DB_fetch_array($Result)) {
 
 		echo '<tr><td>'.$myrow['assetid'].'</td>
-						<td>'.$myrow['description'].'</td>
-						<td>'.$myrow['serialno'].'</td>
-						<td class=number>'.number_format($myrow['cost'],2).'</td>
-						<td class=number>'.number_format($myrow['accumdepn'],2).'</td>
-						<td>'.$myrow['locationdescription'].'</td>';
+				<td>'.$myrow['description'].'</td>
+				<td>'.$myrow['serialno'].'</td>
+				<td class=number>'.number_format($myrow['cost'],2).'</td>
+				<td class=number>'.number_format($myrow['accumdepn'],2).'</td>
+				<td>'.$myrow['locationdescription'].'</td>';
 		echo '<td><select name="Location'.$myrow['assetid'].'" onChange="ReloadForm(Move'.$myrow['assetid'].')">';
 		echo '<option></option>';
 		while ($LocationRow=DB_fetch_array($LocationResult)) {
@@ -137,11 +137,11 @@ if (isset($_POST['Search'])) {
 		}
 		DB_data_seek($LocationResult,0);
 		echo '</select></td>';
-		echo '<input type=hidden name=AssetCat value="' . $_POST['AssetCat'].'"';
-		echo '<input type=hidden name=Keywords value="' . $_POST['Keywords'].'"';
-		echo '<input type=hidden name=AssetID value="' . $_POST['AssetID'].'"';
-		echo '<input type=hidden name=Search value="' . $_POST['Search'].'"';
-		echo '<td><input type=submit name="Move'.$myrow['assetid'].'" value=Move></td>';
+		echo '<input type="hidden" name="AssetCat" value="' . $_POST['AssetCat'].'"';
+		echo '<input type="hidden" name="Keywords" value="' . $_POST['Keywords'].'"';
+		echo '<input type="hidden" name="AssetID" value="' . $_POST['AssetID'].'"';
+		echo '<input type="hidden" name="Search" value="' . $_POST['Search'].'"';
+		echo '<td><input type="submit" name="Move'.$myrow['assetid'].'" value=Move></td>';
 		echo '</tr>';
 	}
 	echo '</table></form>';
