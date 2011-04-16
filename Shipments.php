@@ -2,7 +2,6 @@
 
 /* $Id$*/
 
-//$PageSecurity = 11;
 include('includes/DefineShiptClass.php');
 include('includes/session.inc');
 $title = _('Shipments');
@@ -42,15 +41,15 @@ if (isset($_GET['SelectedShipment'])){
 /*read in all the guff from the selected shipment into the Shipment Class variable - the class code is included in the main script before this script is included  */
 
        $ShipmentHeaderSQL = "SELECT shipments.supplierid,
-       				suppliers.suppname,
-				shipments.eta,
-				suppliers.currcode,
-				shipments.vessel,
-				shipments.voyageref,
-				shipments.closed
-				FROM shipments INNER JOIN suppliers
-					ON shipments.supplierid = suppliers.supplierid
-				WHERE shipments.shiptref = '" . $_GET['SelectedShipment'] . "'";
+				       				suppliers.suppname,
+								shipments.eta,
+								suppliers.currcode,
+								shipments.vessel,
+								shipments.voyageref,
+								shipments.closed
+							FROM shipments INNER JOIN suppliers
+								ON shipments.supplierid = suppliers.supplierid
+							WHERE shipments.shiptref = '" . $_GET['SelectedShipment'] . "'";
 
        $ErrMsg = _('Shipment').' '. $_GET['SelectedShipment'] . ' ' . _('cannot be retrieved because a database error occurred');
        $GetShiptHdrResult = DB_query($ShipmentHeaderSQL,$db, $ErrMsg);
@@ -84,24 +83,24 @@ if (isset($_GET['SelectedShipment'])){
 /*now populate the shipment details records */
 
               $LineItemsSQL = "SELECT purchorderdetails.podetailitem,
-	      				purchorders.orderno,
-					purchorderdetails.itemcode,
-					purchorderdetails.itemdescription,
-					purchorderdetails.deliverydate,
-					purchorderdetails.glcode,
-					purchorderdetails.qtyinvoiced,
-					purchorderdetails.unitprice,
-					stockmaster.units,
-					purchorderdetails.quantityord,
-					purchorderdetails.quantityrecd,
-					purchorderdetails.stdcostunit,
-					stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost as stdcost,
-					purchorders.intostocklocation
-				FROM purchorderdetails INNER JOIN stockmaster
-					ON purchorderdetails.itemcode=stockmaster.stockid
-				INNER JOIN purchorders
-					ON purchorderdetails.orderno=purchorders.orderno
-				WHERE purchorderdetails.shiptref='" . $_GET['SelectedShipment'] . "'";
+				      				purchorders.orderno,
+								purchorderdetails.itemcode,
+								purchorderdetails.itemdescription,
+								purchorderdetails.deliverydate,
+								purchorderdetails.glcode,
+								purchorderdetails.qtyinvoiced,
+								purchorderdetails.unitprice,
+								stockmaster.units,
+								purchorderdetails.quantityord,
+								purchorderdetails.quantityrecd,
+								purchorderdetails.stdcostunit,
+								stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost as stdcost,
+								purchorders.intostocklocation
+							FROM purchorderdetails INNER JOIN stockmaster
+								ON purchorderdetails.itemcode=stockmaster.stockid
+							INNER JOIN purchorders
+								ON purchorderdetails.orderno=purchorders.orderno
+							WHERE purchorderdetails.shiptref='" . $_GET['SelectedShipment'] . "'";
 	      $ErrMsg = _('The lines on the shipment cannot be retrieved because'). ' - ' . DB_error_msg($db);
               $LineItemsResult = db_query($LineItemsSQL,$db, $ErrMsg);
 
@@ -347,14 +346,14 @@ if (!isset($_SESSION['Shipment']->StockLocation)){
 
 		if (isset($_POST['StockLocation'])){
 			if ($myrow['loccode'] == $_POST['StockLocation']){
-				echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+				echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>'; 
 			} else {
-				echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+				echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			}
 		} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
 
@@ -421,7 +420,7 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 			<td class=number>' . number_format($LnItm->QtyInvoiced,2) . '</td>
 			<td class=number>' . number_format($LnItm->UnitPrice,2) . '</td>
 			<td class=number>' . number_format($LnItm->StdCostUnit,2) . '</td>
-			<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . 'Delete=' . $LnItm->PODetailItem . '">'. _('Delete'). '</a></td>
+			<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $LnItm->PODetailItem . '">'. _('Delete'). '</a></td>
 			</tr>';
 	}//for each line on the shipment
 echo '</table>';

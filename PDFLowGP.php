@@ -2,9 +2,6 @@
 
 /* $Id$*/
 
-/* $Revision: 1.15 $ */
-
-//$PageSecurity = 2;
 include('includes/session.inc');
 
 if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=='') {
@@ -60,9 +57,9 @@ if (isset($_POST['PrintPDF'])) {
 
 	  include('includes/header.inc');
 		prnMsg(_('The low GP items could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-		echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
-		  echo "<br>$SQL";
+		  echo '<br />' . $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -72,9 +69,9 @@ if (isset($_POST['PrintPDF'])) {
 
 		include('includes/header.inc');
 		prnMsg(_('No low GP items retrieved'), 'warn');
-		echo "<br><a href='"  . $rootpath . "/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		echo '<br /><a href="'  . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
-		  echo "<br>$SQL";
+		  echo '<br />' .  $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -112,30 +109,8 @@ if (isset($_POST['PrintPDF'])) {
 	$FontSize =10;
 
 	$YPos -= (2*$line_height);
-/*&nbsp;UldisN
-	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
-
-	  if ($len<=20){
-		$title = _('Print Low GP Items Error');
-		include('includes/header.inc');
-		prnMsg (_('There were no items below print out for the location specified'),'error');
-		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
-		exit;
-	  } else {
-		header('Content-type: application/pdf');
-		header('Content-Length: ' . $len);
-		header('Content-Disposition: inline; filename=LowGPSales.pdf');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Pragma: public');
-
-		$pdf->Output('PDFLowGP.pdf', 'I');
-	}
-*/
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_LowGPSales_' . date('Y-m-d') . '.pdf');//UldisN
-	$pdf->__destruct(); //UldisN
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_LowGPSales_' . date('Y-m-d') . '.pdf');
+	$pdf->__destruct();
 
 } else { /*The option to print PDF was not hit */
 
@@ -150,22 +125,24 @@ if (isset($_POST['PrintPDF'])) {
 		$_POST['FromDate']=Date($_SESSION['DefaultDateFormat']);
 		$_POST['ToDate']=Date($_SESSION['DefaultDateFormat']);
 		$_POST['GPMin']=0;
-		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table class=selection>";
+		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">
+			<table class="selection">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<tr><td>' . _('Sales Made From') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . "):</td>
-								<td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='FromDate' size=10 maxlength=10 VALUE='" . $_POST['FromDate'] . "'></td>
-						</tr>";
+		echo '<tr><td>' . _('Sales Made From') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</td>
+				<td><input type=text class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size=10 maxlength="10" value="' . $_POST['FromDate'] . '"></td>
+			</tr>';
 
-		echo '<tr><td>' . _('Sales Made To') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . "):</td>
-								<td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='ToDate' size=10 maxlength=10 VALUE='" . $_POST['ToDate'] . "'></td>
-						</tr>";
+		echo '<tr><td>' . _('Sales Made To') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</td>
+					<td><input type=text class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '"></td>
+			</tr>';
 
-		echo '<tr><td>' . _('Show sales with GP') . '%' . _('below') . ":</td>
-								<td><input type=text class='number' name='GPMin' maxlength=3 size=3 value=" . $_POST['GPMin'] . "></td>
-						</tr>";
+		echo '<tr><td>' . _('Show sales with GP') . '%' . _('below') . ':</td>
+								<td><input type=text class="number" name="GPMin" maxlength="3" size="3" value="' . $_POST['GPMin'] . '"></td>
+						</tr>';
 
-		echo "</table><br><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
+		echo '</table>
+				<br /><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '"></div>';
 	}
 	include('includes/footer.inc');
 

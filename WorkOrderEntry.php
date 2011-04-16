@@ -156,7 +156,7 @@ if (isset($_POST['Search'])){
 		prnMsg (_('There are no products available meeting the criteria specified'),'info');
 
 		if ($debug==1){
-			prnMsg(_('The SQL statement used was') . ':<br>' . $SQL,'info');
+			prnMsg(_('The SQL statement used was') . ':<br />' . $SQL,'info');
 		}
 	}
 	if (DB_num_rows($SearchResult)==1){
@@ -251,8 +251,8 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 if (isset($_POST['submit'])) { //The update button has been clicked
 
 	echo '<div class=centre><a href="' . $_SERVER['PHP_SELF'] .'">' . _('Enter a new work order') . '</a>';
-	echo '<br><a href="' . $rootpath . '/SelectWorkOrder.php">' . _('Select an existing work order') . '</a>';
-	echo '<br><a href="'. $rootpath . '/WorkOrderCosting.php&WO=' .  $_REQUEST['WO'] . '">' . _('Go to Costing'). '</a></div>';
+	echo '<br /><a href="' . $rootpath . '/SelectWorkOrder.php">' . _('Select an existing work order') . '</a>';
+	echo '<br /><a href="'. $rootpath . '/WorkOrderCosting.php&WO=' .  $_REQUEST['WO'] . '">' . _('Go to Costing'). '</a></div>';
 
 	$Input_Error = false; //hope for the best
 	 for ($i=1;$i<=$_POST['NumberOfOutputs'];$i++){
@@ -281,11 +281,13 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 
 		if ($QtyRecd==0){ //can only change factory location if Qty Recd is 0
 				$sql[] = "UPDATE workorders SET requiredby='" . $SQL_ReqDate . "',
+												startdate='" . FormatDateForSQL($_POST['StartDate']) . "',
 												loccode='" . $_POST['StockLocation'] . "'
 							WHERE wo='" . $_POST['WO'] . "'";
 		} else {
 				prnMsg(_('The factory where this work order is made can only be updated if the quantity received on all output items is 0'),'warn');
-				$sql[] = "UPDATE workorders SET requiredby='" . $SQL_ReqDate . "'
+				$sql[] = "UPDATE workorders SET requiredby='" . $SQL_ReqDate . "',
+												startdate='" . FormatDateForSQL($_POST['StartDate']) . "'
 							WHERE wo='" . $_POST['WO'] . "'";
 		}
 
@@ -327,7 +329,7 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 		//run the SQL from either of the above possibilites
 		$ErrMsg = _('The work order could not be added/updated');
 		foreach ($sql as $sql_stmt){
-		//	echo '<br>' . $sql_stmt;
+		//	echo '<br />' . $sql_stmt;
 			$result = DB_query($sql_stmt,$db,$ErrMsg);
 
 		}
@@ -468,9 +470,8 @@ if (!isset($_POST['StartDate'])){
 	$_POST['StartDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 
-echo '<input type="hidden" name="StartDate" value="' . $_POST['StartDate'] . '">';
-
-echo '<tr><td class="label">' . _('Start Date') . ':</td><td>' . $_POST['StartDate'] . '</td></tr>';
+echo '<tr><td class="label">' . _('Start Date') . ':</td><td><input type="text" name="StartDate" size=12 maxlength=12 value="' . $_POST['StartDate'] .
+			'" class="date" alt="'.$_SESSION['DefaultDateFormat'].'"></td></tr>';
 
 if (!isset($_POST['RequiredBy'])){
 	$_POST['RequiredBy'] = Date($_SESSION['DefaultDateFormat']);
@@ -544,7 +545,7 @@ echo '</table>';
 
 echo '<div class="centre"><br /><input type=submit name="submit" value="' . _('Update') . '">';
 
-echo '<br><p><input type=submit name="delete" VALUE="' . _('Delete This Work Order') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';
+echo '<br /><p><input type=submit name="delete" VALUE="' . _('Delete This Work Order') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';
 
 echo '<br /></div>';
 
@@ -625,11 +626,11 @@ if (isset($SearchResult)) {
 					$k=1;
 				}
 
-				printf("<td><font size=1>%s</font></td>
+				printf('<td><font size=1>%s</font></td>
 						<td><font size=1>%s</font></td>
 						<td><font size=1>%s</font></td>
 						<td>%s</td>
-						<td><font size=1><a href='%s'>"
+						<td><font size=1><a href="%s">'
 						. _('Add to Work Order') . '</a></font></td>
 						</tr>',
 						$myrow['stockid'],
@@ -652,9 +653,9 @@ if (isset($SearchResult)) {
 
 
 if (!isset($_GET['NewItem']) or $_GET['NewItem']=='') {
-	echo "<script>defaultControl(document.forms[0].StockCode);</script>";
+	echo '<script>defaultControl(document.forms[0].StockCode);</script>';
 } else {
-	echo "<script>defaultControl(document.forms[0].OutputQty".$_GET['Line'].");</script>";
+	echo '<script>defaultControl(document.forms[0].OutputQty"'.$_GET['Line'].'");</script>';
 }
 
 echo '</form>';

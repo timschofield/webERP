@@ -27,7 +27,7 @@ if (!isset($_SESSION['CustomerType'])) { //initialise if not already done
 }
 // only run geocode if integration is turned on and customer has been selected
 if ($_SESSION['geocode_integration'] == 1 AND $_SESSION['CustomerID'] != "") {
-	$sql = 'SELECT * FROM geocode_param WHERE 1';
+	$sql = "SELECT * FROM geocode_param WHERE 1";
 	$ErrMsg = _('An error occurred in retrieving the information');
 	$result = DB_query($sql, $db, $ErrMsg);
 	$myrow = DB_fetch_array($result);
@@ -55,7 +55,6 @@ if ($_SESSION['geocode_integration'] == 1 AND $_SESSION['CustomerID'] != "") {
 	echo '<script src="http://maps.google.com/maps?file=api&v=2&key=' . $api_key . '"';
 	echo ' type="text/javascript"></script>';
 	echo ' <script type="text/javascript">';
-	echo '	//<![CDATA[ ';
 	echo 'function load() {
 		if (GBrowserIsCompatible()) {
 			var map = new GMap2(document.getElementById("map"));
@@ -70,7 +69,6 @@ if ($_SESSION['geocode_integration'] == 1 AND $_SESSION['CustomerID'] != "") {
 		marker.openInfoWindowHtml(WINDOW_HTML);
 		}
 		}
-		//]]>
 		</script>';
 	echo '<body onload="load()" onunload="GUnload()">';
 }
@@ -243,7 +241,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 	if ($_SESSION['SalesmanLogin'] != '') {
 		$SQL.= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 	}
-	$SQL.= ' ORDER BY debtorsmaster.name';
+	$SQL.= " ORDER BY debtorsmaster.name";
 	$ErrMsg = _('The searched customer records requested cannot be retrieved because');
 	
 	
@@ -350,7 +348,6 @@ if (isset($_POST['CustAdd'])) {
 	echo '<input type="Text" name="CustAdd" size=20 maxlength=25>';
 }
 echo '</td></tr>';
-/* End addded search feature. Gilles Deacur */
 echo '<tr><td><font size=3><b>' . _('OR') . '</b></font></td><td>' . _('Choose a Type') . ':</td><td>';
 if (isset($_POST['CustType'])) {
 	// Show Customer Type drop down list
@@ -437,9 +434,9 @@ if (isset($result)) {
 				$_POST['PageOffset'] = $_POST['PageOffset'] - 1;
 			}
 		}
-		echo "<input type=\"hidden\" name=\"PageOffset\" value=\"" . $_POST['PageOffset'] . "\"/>";
+		echo '<input type="hidden" name="PageOffset" value="' . $_POST['PageOffset'] . '" />';
 		if ($ListPageMax > 1) {
-			echo "<p><div class=centre>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+			echo '<p><div class=centre>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 			echo '<select name="PageOffset1">';
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {
@@ -492,13 +489,13 @@ if (isset($result)) {
 				echo '<tr class="OddTableRows">';
 				$k = 1;
 			}
-			echo "<td><font size=1><input type=submit name='Select' value='" . $myrow['debtorno'].' '.$myrow['branchcode'] . "'></font></td>
-				<td><font size=1>" . $myrow['name'] . "</font></td>
-				<td><font size=1>" . $myrow['brname'] . "</font></td>
-				<td><font size=1>" . $myrow['contactname'] . "</font></td>
-				<td><font size=1>" . $myrow['typename'] . "</font></td>
-				<td><font size=1>" . $myrow['phoneno'] . "</font></td>
-				<td><font size=1>" . $myrow['faxno'] . "</font></td></tr>";
+			echo '<td><font size=1><input type=submit name="Select" value="' . $myrow['debtorno'].' '.$myrow['branchcode'] . '"></font></td>
+				<td><font size=1>' . $myrow['name'] . '</font></td>
+				<td><font size=1>' . $myrow['brname'] . '</font></td>
+				<td><font size=1>' . $myrow['contactname'] . '</font></td>
+				<td><font size=1>' . $myrow['typename'] . '</font></td>
+				<td><font size=1>' . $myrow['phoneno'] . '</font></td>
+				<td><font size=1>' . $myrow['faxno'] . '</font></td></tr>';
 			$j++;
 			if ($j == 11 AND ($RowIndex + 1 != $_SESSION['DisplayRecordsMax'])) {
 				$j = 1;
@@ -515,7 +512,7 @@ if (isset($result)) {
 //end if results to show
 if (!isset($_POST['CSV'])) {
 	if (isset($ListPageMax) and $ListPageMax > 1) {
-		echo "<p><div class=centre>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+		echo '<p><div class=centre>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 		echo '<select name="PageOffset2">';
 		$ListPage = 1;
 		while ($ListPage <= $ListPageMax) {
@@ -722,6 +719,6 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != "") {
 		}
 	}
 }
-echo "<script>defaultControl(document.forms[0].CustCode);</script>";
+echo '<script>defaultControl(document.forms[0].CustCode);</script>';
 include ('includes/footer.inc');
 ?>

@@ -50,7 +50,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 
 	echo'<p class="page_title_text" align="center"><strong>' . _('Location : ') . '' . $Location['0'] . ' </strong></p>';
 	echo'<p class="page_title_text" align="center"><strong>' . _('Number Of Days Sales : ') . '' . $_POST['NumberOfDays'] . '' . _(' Days ') . ' </strong></p>';
-	echo "<table>";
+	echo '<table>';
 	echo '<tr><th>' . _('Code') . '</th>
 						<th>' . _('Description') . '</th>
 						<th>' . _('Total Invoiced').'<br>'._('At All Locations') . '</th>
@@ -110,15 +110,15 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 		$InvoiceAll=DB_fetch_array($ResultInv);
 
 
-		if($InvoiceAll['0']==""){
-			$QtyInvoiceAll="0";
+		if($InvoiceAll['0']==''){
+			$QtyInvoiceAll='0';
 		}else{
 			$QtyInvoiceAll=$InvoiceAll['0'];
 		}
 
 		//get qty invoice
-		if($myrow['qtyinvoice']==""){
-			$QtyInvoice="0";
+		if($myrow['qtyinvoice']==''){
+			$QtyInvoice='0';
 		}else{
 			$QtyInvoice=$myrow['qtyinvoice'];
 		}
@@ -153,7 +153,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 
 	} //end of looping
 	echo'<tr>
-			<td style="text-align:center" colspan=7><input type=submit name=submit value=' . _("Update") . '></td>
+			<td style="text-align:center" colspan=7><input type=submit name=submit value=' . _('Update') . '></td>
 			 </tr></form>';
 
 
@@ -162,7 +162,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 
 	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div><br>';
 
-	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
+	echo '</br></br><form action="' . $_SERVER['PHP_SELF'] . '" method="post"><table>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT loccode,
 				   locationname
@@ -175,7 +175,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 
-		echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 
 	}
 	echo '</select></td></tr>';
@@ -190,7 +190,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 				<td><select name="StockCat">';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
-		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
+		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	}
 
 	echo '</select></td></tr>';
@@ -199,11 +199,11 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 				<td><input type="text" class="number" name="NumberOfDays" MAXLENGTH =3 size=4 value=0></td>';
 	echo '<tr><td>' . _('Order By') . ':</td>
 				<td><select name="order">';
-	echo '<option value="1">'. _('Total Invoiced'). '';
-	echo '<option value="2">'. _('Code'). '';
+	echo '<option value="1">'. _('Total Invoiced') . '</option>';
+	echo '<option value="2">'. _('Code') . '</option>';
 
 	echo '</select></td></tr>';
-	echo "</table></br><p><div class='centre'><input type=submit name='submit' value='" . _('Submit') . "'></div></p>";
+	echo '</table></br><p><div class="centre"><input type=submit name="submit" value="' . _('Submit') . '"></div></p>';
 
 } /*end of else not submit */
 include('includes/footer.inc');

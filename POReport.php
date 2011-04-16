@@ -6,7 +6,6 @@
 // Inquiry on Purchase Orders
 // If Date Type is Order, the main file is purchorderdetails
 // If Date Type is Delivery, the main file is grns
-//$PageSecurity=2;
 
 include('includes/session.inc');
 $title = _('Purchase Order Report');
@@ -1421,49 +1420,48 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table class=selection>';
+	echo '<table class="selection">';
 
 	echo '<tr><td>' . _('Report Type') . ':</td>';
-	echo "<td><select name='ReportType'>";
-	echo "<option selected value='Detail'>" . _('Detail');
-	echo "<option value='Summary'>" . _('Summary');
+	echo '<td><select name="ReportType">';
+	echo '<option selected value="Detail">' . _('Detail') . '</option>';
+	echo '<option value="Summary">' . _('Summary') . '</option>';
 	echo '</select></td><td>&nbsp</td></tr>';
 
 	echo '<tr><td>' . _('Date Type') . ':</td>';
-	echo "<td><select name='DateType'>";
-	echo "<option selected value='Order'>" . _('Order Date');
-	echo "<option value='Delivery'>" . _('Delivery Date');
+	echo '<td><select name="DateType">';
+	echo '<option selected value="Order">' . _('Order Date') . '</option>';
+	echo '<option value="Delivery">' . _('Delivery Date') . '</option>';
 	echo '</select></td><td>&nbsp</td></tr>';
 
 	echo '<tr>
-		<td>' . _('Date Range') . ":</td>
-		<td><input type='Text' class=date alt='".$_SESSION['DefaultDateFormat']."' name='FromDate' size=10 maxlength=10 value=" . $_POST['FromDate'] .
-		'> ' . _('To') . ":&nbsp&nbsp
-		<input type='Text' class=date alt='".$_SESSION['DefaultDateFormat']."' name='ToDate' size=10 maxlength=10 value=" . $_POST['ToDate'] . "></td>
-	</tr>";
+		<td>' . _('Date Range') . ':</td>
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] .'"> ' . _('To') . ':&nbsp&nbsp
+		<input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '"></td>
+		</tr>';
 
 	echo '<tr><td>' . _('Part Number') . ':</td>';
-	echo "<td><select name='PartNumberOp'>";
-	echo "<option selected value='Equals'>" . _('Equals');
-	echo "<option value='LIKE'>" . _('Begins With');
+	echo '<td><select name="PartNumberOp">';
+	echo '<option selected value="Equals">' . _('Equals') . '</option>';
+	echo '<option value="LIKE">' . _('Begins With') . '</option>';
 	echo '</select>';
-	echo "&nbsp&nbsp<input type='Text' name='PartNumber' size=20 maxlength=20 value=";
+	echo '&nbsp&nbsp<input type="text" name="PartNumber" size="20" maxlength="20" value="';
 	if (isset($_POST['PartNumber'])) {
-		echo $_POST['PartNumber'] . "></td></tr>";
+		echo $_POST['PartNumber'] . '"></td></tr>';
 	} else {
-		echo "></td></tr>";
+		echo '"></td></tr>';
 	}
 
 	echo '<tr><td>' . _('Supplier Number') . ':</td>';
-	echo "<td><select name='SupplierIdOp'>";
-	echo "<option selected value='Equals'>" . _('Equals');
-	echo "<option value='LIKE'>" . _('Begins With');
+	echo '<td><select name="SupplierIdOp">';
+	echo '<option selected value="Equals">' . _('Equals') . '</option>';
+	echo '<option value="LIKE">' . _('Begins With') . '</option>';
 	echo '</select>';
-	echo "&nbsp&nbsp<input type='Text' name='SupplierId' size=10 maxlength=10 value=";
+	echo '&nbsp&nbsp<input type="text" name="SupplierId" size=10 maxlength=10 value="';
 	if (isset($_POST['SupplierId'])) {
-		echo $_POST['SupplierId'] . "></td></tr>";
+		echo $_POST['SupplierId'] . '"></td></tr>';
 	} else {
-		echo  "></td></tr>";
+		echo  '"></td></tr>';
 	}
 
 	echo '<tr><td>' . _('Supplier Name') . ':</td>';
@@ -1480,11 +1478,11 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 
 	echo '<tr><td>' . _('Order Number') . ':</td>';
 	echo '<td>'._('Equals').':&nbsp&nbsp';
-	echo "<input type='Text' name='OrderNo' size=10 maxlength=10 value=";
+	echo '<input type="text" name="OrderNo" size="10" maxlength="10" value="';
 	if (isset($_POST['OrderNo'])) {
-		echo $_POST['OrderNo'] . "></td></tr>";
+		echo $_POST['OrderNo'] . '"></td></tr>';
 	} else {
-		echo  "></td></tr>";
+		echo  '"></td></tr>';
 	}
 
 	echo '<tr><td>' . _('Line Item Status') . ':</td>';

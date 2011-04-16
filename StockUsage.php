@@ -2,7 +2,6 @@
 
 /* $Id$*/
 
-
 include('includes/session.inc');
 
 $title = _('Stock Usage');
@@ -16,11 +15,11 @@ if (isset($_GET['StockID'])){
 }
 
 if (isset($_POST['ShowGraphUsage'])) {
-	echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . "/SuppInvGRNs.php?" . SID . "'>";
-	echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . "/StockUsageGraph.php?" . SID . "&StockLocation=" . $_POST['StockLocation']  . "&StockID=" . $StockID . "'>";
+	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/SuppInvGRNs.php">';
+	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/StockUsageGraph.php?StockLocation=' . $_POST['StockLocation']  . '&StockID=' . $StockID . '">';
 	echo '<p>' . _('You should automatically be forwarded to the usage graph') .
 			'. ' . _('If this does not happen') .' (' . _('if the browser does not support META Refresh') . ') ' .
-			"<a href='" . $rootpath . "/StockUsageGraph.php?" . SID . '&StockLocation=' . $_POST['StockLocation'] .'&StockID=' . $StockID . '">' . _('click here') . '</a> ' . _('to continue') . '.<br>';
+			'<a href="' . $rootpath . '/StockUsageGraph.php?StockLocation=' . $_POST['StockLocation'] .'&StockID=' . $StockID . '">' . _('click here') . '</a> ' . _('to continue') . '<br />';
 	exit;
 }
 
@@ -30,11 +29,11 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 		'" alt="" />' . ' ' . $title . '</p>';
 
 $result = DB_query("SELECT description,
-				units,
-				mbflag,
-				decimalplaces
-			FROM stockmaster
-			WHERE stockid='".$StockID."'",$db);
+						units,
+						mbflag,
+						decimalplaces
+					FROM stockmaster
+					WHERE stockid='".$StockID."'",$db);
 $myrow = DB_fetch_row($result);
 
 $DecimalPlaces = $myrow[3];
@@ -44,48 +43,52 @@ echo '<table class=selection>';
 $Its_A_KitSet_Assembly_Or_Dummy =False;
 if (($myrow[2]=='K') OR ($myrow[2]=='A') OR ($myrow[2]=='D')) {
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
-	echo "<font color=navy size=3><b>$StockID - $myrow[0] </b></font>";
+	echo '<font color=navy size=3><b>' . $StockID . ' - ' . $myrow[0] . '</b></font>';
 
-	echo '<br>' . _('The selected item is a dummy or assembly or kit-set item and cannot have a stock holding') . '. ' . _('Please select a different item');
+	echo '<br />' . _('The selected item is a dummy or assembly or kit-set item and cannot have a stock holding') . '. ' . _('Please select a different item');
 
 	$StockID = '';
 } else {
 	echo '<tr><th><font size=3 color=navy>' . _('Item') . ' :<b> ' . $StockID . ' - ' . $myrow[0] . ' </b>  (' . _('in units of') . ' :<b> ' . $myrow[1] . ')</b></font></th></tr>';
 }
 
-echo "<form action='" . $_SERVER['PHP_SELF'] . '?'. SID ."' method=post><tr><td>";
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
+		
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Stock Code') . ":<input type=text name='StockID' size=21 maxlength=20 value='$StockID' >";
+echo '<tr><td>' . _('Stock Code') . ':<input type=text name="StockID" size="21" maxlength="20" value="' . $StockID . '" />';
 
-echo _('From Stock Location') . ":<select name='StockLocation'>";
+echo _('From Stock Location') . ':<select name="StockLocation">';
 
-$sql = 'SELECT loccode, locationname FROM locations';
+$sql = "SELECT loccode, locationname FROM locations";
 $resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation'])){
 		if ($myrow['loccode'] == $_POST['StockLocation']){
-		     echo "<option selected Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+		     echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-		     echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+		     echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-		 echo "<option selected Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+		 echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		 $_POST['StockLocation']=$myrow['loccode'];
 	} else {
-		 echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
 }
 if (isset($_POST['StockLocation'])){
 	if ('All'== $_POST['StockLocation']){
-	     echo "<option selected Value='All'>" . _('All Locations');
+	     echo '<option selected value="All">' . _('All Locations') . '</option>';
 	} else {
-	     echo "<option Value='All'>" . _('All Locations');
+	     echo '<option value="All">' . _('All Locations') . '</option>';
 	}
 }
 echo '</select>';
 
-echo " <input type=submit name='ShowUsage' VALUE='" . _('Show Stock Usage') . "'>";
-echo " <input type=submit name='ShowGraphUsage' VALUE='" . _('Show Graph Of Stock Usage') . "'></td></tr></table><br />";
+echo ' <input type=submit name="ShowUsage" value="' . _('Show Stock Usage') . '">';
+echo ' <input type=submit name="ShowGraphUsage" value="' . _('Show Graph Of Stock Usage') . '"></td>
+		</tr>
+		</table>
+		<br />';
 
 /* $_SESSION['NumberOfPeriodsOfStockUsage']  is defined in config.php as a user definable variable
 config.php is loaded by header.inc */
@@ -100,9 +103,9 @@ if (isset($_POST['ShowUsage'])){
 		$sql = "SELECT periods.periodno,
 				periods.lastdate_in_period,
 				SUM(CASE WHEN (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28) 
-												AND stockmoves.hidemovt=0 
-												AND stockmoves.stockid = '" . $StockID . "' 
-									THEN -stockmoves.qty ELSE 0 END) AS qtyused
+							AND stockmoves.hidemovt=0 
+							AND stockmoves.stockid = '" . $StockID . "' 
+						THEN -stockmoves.qty ELSE 0 END) AS qtyused
 			FROM periods LEFT JOIN stockmoves 
 				ON periods.periodno=stockmoves.prd
 			WHERE periods.periodno <='" . $CurrentPeriod . "'
@@ -113,10 +116,10 @@ if (isset($_POST['ShowUsage'])){
 		$sql = "SELECT periods.periodno,
 				periods.lastdate_in_period,
 				SUM(CASE WHEN (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28) 
-												AND stockmoves.hidemovt=0 
-												AND stockmoves.stockid = '" . $StockID . "'
-												AND stockmoves.loccode='" . $_POST['StockLocation'] . "'
-									THEN -stockmoves.qty ELSE 0 END) AS qtyused
+								AND stockmoves.hidemovt=0 
+								AND stockmoves.stockid = '" . $StockID . "'
+								AND stockmoves.loccode='" . $_POST['StockLocation'] . "'
+							THEN -stockmoves.qty ELSE 0 END) AS qtyused
 			FROM periods LEFT JOIN stockmoves 
 				ON periods.periodno=stockmoves.prd
 			WHERE periods.periodno <='" . $CurrentPeriod . "'
@@ -129,13 +132,16 @@ if (isset($_POST['ShowUsage'])){
 	if (DB_error_no($db) !=0) {
 		echo _('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
 		if ($debug==1){
-		echo '<br>' . _('The SQL that failed was') . $sql;
+		echo '<br />' . _('The SQL that failed was') . $sql;
 		}
 		exit;
 	}
 
 	echo '</div><table cellpadding=2 class=selection>';
-	$tableheader = "<tr><th>" . _('Month') . "</th><th>" . _('Usage') . '</th></tr>';
+	$tableheader = '<tr>
+					<th>' . _('Month') . '</th>
+					<th>' . _('Usage') . '</th>
+				</tr>';
 	echo $tableheader;
 
 	$j = 1;
@@ -172,11 +178,11 @@ if (isset($_POST['ShowUsage'])){
 } /* end if Show Usage is clicked */
 
 echo '<br /><div class="centre">';
-echo "<a href='$rootpath/StockStatus.php?". SID . "&StockID=$StockID'>" . _('Show Stock Status') .'</a>';
-echo "<br><a href='$rootpath/StockMovements.php?". SID . "&StockID=$StockID&StockLocation=" . $_POST['StockLocation'] . "'>" . _('Show Stock Movements') . '</a>';
-echo "<br><a href='$rootpath/SelectSalesOrder.php?". SID . "&SelectedStockItem=$StockID&StockLocation=" . $_POST['StockLocation'] . "'>" . _('Search Outstanding Sales Orders') . '</a>';
-echo "<br><a href='$rootpath/SelectCompletedOrder.php?". SID . "&SelectedStockItem=$StockID'>" . _('Search Completed Sales Orders') . '</a>';
-echo "<br><a href='$rootpath/PO_SelectOSPurchOrder.php?" .SID . "&SelectedStockItem=$StockID'>" . _('Search Outstanding Purchase Orders') . '</a>';
+echo '<a href="' . $rootpath . '/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status') .'</a>';
+echo '<br /><a href="' . $rootpath . '/StockMovements.php?StockID=' . $StockID . '&StockLocation=' . $_POST['StockLocation'] . '">' . _('Show Stock Movements') . '</a>';
+echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&StockLocation=' . $_POST['StockLocation'] . '">' . _('Search Outstanding Sales Orders') . '</a>';
+echo '<br /><a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
+echo '<br /><a href="' . $rootpath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</a>';
 
 echo '</form></div>';
 include('includes/footer.inc');

@@ -2,9 +2,6 @@
 
 /* $Id$*/
 
-/* $Revision: 1.13 $ */
-
-//$PageSecurity = 3;
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/session.inc');
 
@@ -33,36 +30,39 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	prnMsg($msg,'error');
 	 }
 
-	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '>';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class=selection>
 	 			<tr>
-				<td>' . _('Enter the date from which cheques are to be listed') . ":</td>
-				<td><input type=text name='FromDate' maxlength=10 size=10 class=date alt='".$_SESSION['DefaultDateFormat']."'  VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td>
-			</tr>";
-	 echo '<tr><td>' . _('Enter the date to which cheques are to be listed') . ":</td>
-	 		<td><input type=text name='ToDate' maxlength=10 size=10  class=date alt='".$_SESSION['DefaultDateFormat']."'  VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td>
-	</tr>";
+				<td>' . _('Enter the date from which cheques are to be listed') . ':</td>
+				<td><input type="text" name="FromDate" maxlength="10" size="10" class=date alt="' . $_SESSION['DefaultDateFormat'] . '"  value="' . Date($_SESSION['DefaultDateFormat']) . '"></td>
+			</tr>';
+	 echo '<tr><td>' . _('Enter the date to which cheques are to be listed') . ':</td>
+	 		<td><input type=text name="ToDate" maxlength="10" size="10"  class=date alt="' . $_SESSION['DefaultDateFormat'] . '"  value="' . Date($_SESSION['DefaultDateFormat']) . '"></td>
+	</tr>';
 	 echo '<tr><td>' . _('Bank Account') . '</td><td>';
 
-	 $sql = 'SELECT bankaccountname, accountcode FROM bankaccounts';
+	 $sql = "SELECT bankaccountname, accountcode FROM bankaccounts";
 	 $result = DB_query($sql,$db);
 
 
-	 echo "<select name='BankAccount'>";
+	 echo '<select name="BankAccount">';
 
 	 while ($myrow=DB_fetch_array($result)){
-	echo '<option VALUE=' . $myrow['accountcode'] . '>' . $myrow['bankaccountname'];
+		echo '<option VALUE=' . $myrow['accountcode'] . '>' . $myrow['bankaccountname'] . '</option>';
 	 }
 
 
 	 echo '</select></td></tr>';
 
-	 echo '<tr><td>' . _('Email the report off') . ":</td><td><select name='Email'>";
-	 echo "<option selected VALUE='No'>" . _('No');
-	 echo "<option VALUE='Yes'>" . _('Yes');
-	 echo "</select></td></tr></table><br><div class='centre'><input type=submit name='Go' VALUE='" . _('Create PDF') . "'></div>";
-
+	 echo '<tr><td>' . _('Email the report off') . ':</td>
+			<td><select name="Email">';
+	 echo '<option selected value="No">' . _('No') . '</option>';
+	 echo '<option value="Yes">' . _('Yes') . '</option>';
+	 echo '</select></td>
+			</tr>
+			</table>
+			<br /><div class="centre"><input type=submit name="Go" value="' . _('Create PDF') . '"></div>';
 
 	 include('includes/footer.inc');
 	 exit;
@@ -70,7 +70,6 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 
 	include('includes/ConnectDB.inc');
 }
-
 
 $SQL = "SELECT bankaccountname
 	FROM bankaccounts
@@ -91,14 +90,13 @@ $SQL= "SELECT amount,
 	AND transdate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 	AND transdate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 
-
 $Result=DB_query($SQL,$db,'','',false,false);
 if (DB_error_no($db)!=0){
 	$title = _('Payment Listing');
 	include('includes/header.inc');
 	prnMsg(_('An error occurred getting the payments'),'error');
 	if ($Debug==1){
-			prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br>' . $SQL,'error');
+		prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br />' . $SQL,'error');
 	}
 	include('includes/footer.inc');
   	exit;
@@ -124,7 +122,7 @@ include ('includes/PDFChequeListingPageHeader.inc');
 
 while ($myrow=DB_fetch_array($Result)){
 
-	  	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format(-$myrow['amount'],2), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format(-$myrow['amount'],2), 'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,90,$FontSize,$myrow['ref'], 'left');
 
 	$sql = "SELECT accountname,
@@ -160,12 +158,12 @@ while ($myrow=DB_fetch_array($Result)){
 	}
 	DB_free_result($GLTransResult);
 
-	  $YPos -= ($line_height);
-	  $TotalCheques = $TotalCheques - $myrow['amount'];
+	$YPos -= ($line_height);
+	$TotalCheques = $TotalCheques - $myrow['amount'];
 
-	  if ($YPos - (2 *$line_height) < $Bottom_Margin){
+	if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		  /*Then set up a new page */
-			  $PageNumber++;
+		  $PageNumber++;
 		  include ('includes/PDFChequeListingPageHeader.inc');
 	  } /*end of new page header  */
 } /* end of while there are customer receipts in the batch to print */
@@ -175,21 +173,9 @@ $YPos-=$line_height;
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format($TotalCheques,2), 'right');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,_('TOTAL') . ' ' . $Currency . ' ' . _('CHEQUES'), 'left');
 
-/* UldisN
-$pdfcode = $pdf->output();
-$len = strlen($pdfcode);
-header('Content-type: application/pdf');
-header('Content-Length: ' . $len);
-header('Content-Disposition: inline; filename=ChequeListing.pdf');
-header('Expires: 0');
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
-
-$pdf->stream();
-*/
 $ReportFileName = $_SESSION['DatabaseName'] . '_ChequeListing_' . date('Y-m-d').'.pdf';
-$pdf->OutputD($ReportFileName);//UldisN
-$pdf->__destruct(); //UldisN
+$pdf->OutputD($ReportFileName);
+$pdf->__destruct(); 
 if ($_POST['Email']=='Yes'){
 	if (file_exists($_SESSION['reports_dir'] . '/'.$ReportFileName)){
 		unlink($_SESSION['reports_dir'] . '/'.$ReportFileName);

@@ -72,7 +72,7 @@ $sql = "SELECT serialno,
 $ErrMsg = _('The serial numbers/batches held cannot be retrieved because');
 $LocStockResult = DB_query($sql, $db, $ErrMsg);
 
-echo '<table cellpadding=2 class=selection>';
+echo '<table cellpadding=2 class="selection">';
 
 if ($Serialised==1){
 	echo '<tr><th colspan="5"><font color=navy size=2>' . _('Serialised items in') . ' ';
@@ -81,7 +81,7 @@ if ($Serialised==1){
 }
 echo $myrow[0]. '</font></th></tr>';
 
-echo "<tr><th colspan=11><font color=navy size=2>".$StockID ."-". $Description ."</b>  (" . _('In units of') . ' ' . $UOM . ')</font></th></tr>';
+echo '<tr><th colspan="11"><font color=navy size=2>' . $StockID .'-'. $Description .'</b>  (' . _('In units of') . ' ' . $UOM . ')</font></th></tr>';
 
 if ($Serialised == 1){
 	$tableheader = '<tr>
@@ -101,8 +101,7 @@ if ($Serialised == 1){
 			<th></th>
    			<th>' . _('Batch/Bundle Ref') . '</th>
 			<th>' . _('Quantity On Hand') . '</th>
-
-   			</tr>";
+   			</tr>';
 } else if ($Serialised == 0 and $Perishable==1){
 	$tableheader = '<tr>
 			<th>' . _('Batch/Bundle Ref') . '</th>
@@ -163,7 +162,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 //end of while loop
 
 echo '</table><br />';
-echo '<div class="centre"><br><b>' . _('Total quantity') . ': ' . number_format($TotalQuantity, $DecimalPlaces) . '<br></div>';
+echo '<div class="centre"><br /><b>' . _('Total quantity') . ': ' . number_format($TotalQuantity, $DecimalPlaces) . '<br /></div>';
 
 echo '</form>';
 include('includes/footer.inc');

@@ -720,11 +720,11 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			} else {
 				$qoh = number_format($myrow['qoh'], $myrow['decimalplaces']);
 			}
-			echo "<td><input type='submit' name='Select' value='".$myrow['stockid']."' /></td>
-				<td>".$myrow['description']."</td>
-				<td class='number'>".$qoh."</td>
-				<td>".$myrow['units']."</td>
-				<td><a target='_blank' href='" . $rootpath . '/StockStatus.php?StockID=' . $myrow['stockid']."'>" . _('View') . '</a></td>
+			echo '<td><input type="submit" name="Select" value="' . $myrow['stockid'] . '" /></td>
+				<td>'.$myrow['description'].'</td>
+				<td class="number">' . $qoh . '</td>
+				<td>' . $myrow['units'] . '</td>
+				<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?StockID=' . $myrow['stockid'].'">' . _('View') . '</a></td>
 				</tr>';
 			$j++;
 			if ($j == 20 AND ($RowIndex + 1 != $_SESSION['DisplayRecordsMax'])) {

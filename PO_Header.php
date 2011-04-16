@@ -331,7 +331,7 @@ if (isset($_POST['SearchSuppliers'])){
 
 		$ErrMsg = _('The searched supplier records requested cannot be retrieved because');
 		$result_SuppSelect = DB_query($SQL,$db,$ErrMsg);
-
+		$SuppliersReturned=DB_num_rows($result_SuppSelect);
 		if (DB_num_rows($result_SuppSelect)==1){
 			$myrow=DB_fetch_array($result_SuppSelect);
 			$_POST['Select'] = $myrow['supplierid'];
@@ -508,6 +508,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		_('Purchase Order') . '" alt="">' . ' ' . _('Purchase Order: Select Supplier') . '';
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '" method="post" name="choosesupplier">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<input type="hidden" name="SuppliersReturned" value="' . $SuppliersReturned .'" />';
 
 	echo '<table cellpadding=3 colspan=4 class=selection>
 	<tr>

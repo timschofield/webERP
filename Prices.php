@@ -1,8 +1,6 @@
 <?php
-/* $Revision: 1.14 $ */
-/* $Id$*/
 
-//$PageSecurity = 9;
+/* $Id$*/
 
 include('includes/session.inc');
 
@@ -21,7 +19,7 @@ if (isset($_GET['Item'])){
 	$Item = trim(strtoupper($_POST['Item']));
 }
 
-if (!isset($_POST['TypeAbbrev']) OR $_POST['TypeAbbrev']==""){
+if (!isset($_POST['TypeAbbrev']) OR $_POST['TypeAbbrev']==''){
 	$_POST['TypeAbbrev'] = $_SESSION['DefaultPriceList'];
 }
 
@@ -32,7 +30,7 @@ if (!isset($_POST['CurrAbrev'])){
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Search') .
 		'" alt="" />' . '</img>' . $title.'</p>';
 
-echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><br>';
+echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />';
 
 
 $result = DB_query("SELECT stockmaster.description,
@@ -69,7 +67,7 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 	// This gives some date in 1999?? $ZeroDate = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,0,0,0));
 
-	if (!is_double((double) trim($_POST['Price'])) OR $_POST['Price']=="") {
+	if (!is_double((double) trim($_POST['Price'])) OR $_POST['Price']=='') {
 		$InputError = 1;
 		prnMsg( _('The price entered must be numeric'),'error');
 	}
@@ -195,11 +193,12 @@ if ($InputError ==0){
 		echo _('Pricing for part') . ':<input type=text name="Item" MAXSIZEe=22 VALUE="' . $Item . '" maxlength=20><input type=submit name=NewPart Value="' . _('Review Prices') . '">';
 		echo '</th></tr></form>';
 
-		echo '<tr><th>' . _('Currency') .
-			'</th><th>' . _('Sales Type') .
-			 '</th><th>' . _('Price') .
-			 '</th><th>' . _('Start Date') . ' </th>
-			 <th>' . _('End Date') . '</th></tr>';
+		echo '<tr><th>' . _('Currency') . '</th>
+					<th>' . _('Sales Type') . '</th>
+					<th>' . _('Price') . '</th>
+					<th>' . _('Start Date') . ' </th>
+					<th>' . _('End Date') . '</th>
+				</tr>';
 
 		$k=0; //row colour counter
 
@@ -224,15 +223,14 @@ if ($InputError ==0){
 						<td class=number>%0.2f</td>
 						<td>%s</td>
 						<td>%s</td>
-						<td><a href='%s?%s&Item=%s&TypeAbbrev=%s&CurrAbrev=%s&Price=%s&StartDate=%s&EndDate=%s&Edit=1'>" . _('Edit') . "</td>
-						<td><a href='%s?%s&Item=%s&TypeAbbrev=%s&CurrAbrev=%s&StartDate=%s&EndDate=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this price?') . "');\">" . _('Delete') . '</td></tr>',
+						<td><a href='%s?Item=%s&TypeAbbrev=%s&CurrAbrev=%s&Price=%s&StartDate=%s&EndDate=%s&Edit=1'>" . _('Edit') . "</td>
+						<td><a href='%s?Item=%s&TypeAbbrev=%s&CurrAbrev=%s&StartDate=%s&EndDate=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this price?') . "');\">" . _('Delete') . '</td></tr>',
 						$myrow['currency'],
 						$myrow['sales_type'],
 						$myrow['price'],
 						ConvertSQLDate($myrow['startdate']),
 						$EndDateDisplay,
 						$_SERVER['PHP_SELF'],
-						SID,
 						$myrow['stockid'],
 						$myrow['typeabbrev'],
 						$myrow['currabrev'],
@@ -240,7 +238,6 @@ if ($InputError ==0){
 						$myrow['startdate'],
 						$myrow['enddate'],
 						$_SERVER['PHP_SELF'],
-						SID,
 						$myrow['stockid'],
 						$myrow['typeabbrev'],
 						$myrow['currabrev'],
@@ -267,7 +264,7 @@ if ($InputError ==0){
 		prnMsg(_('There are no prices set up for this part'),'warn');
 	}
 
-	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (isset($_GET['Edit'])){
 		echo '<input type=hidden name="OldTypeAbbrev" VALUE="' . $_GET['TypeAbbrev'] .'">';
@@ -285,10 +282,10 @@ if ($InputError ==0){
 		}
 	}
 
-	$SQL = 'SELECT currabrev, currency FROM currencies';
+	$SQL = "SELECT currabrev, currency FROM currencies";
 	$result = DB_query($SQL,$db);
 
-	echo '<br><table class=selection>';
+	echo '<br /><table class=selection>';
 	echo '<tr><th colspan=5><font color=BLUE size=3><b>' . $Item . ' - ' . $PartDescription . '</b></font></th></tr>';
 	echo '<tr><td>' . _('Currency') . ':</td><td><select name="CurrAbrev">';
 	while ($myrow = DB_fetch_array($result)) {
@@ -297,14 +294,16 @@ if ($InputError ==0){
 		} else {
 			echo '<option VALUE="';
 		}
-		echo $myrow['currabrev'] . '">' . $myrow['currency'];
+		echo $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 	} //end while loop
 
 	DB_free_result($result);
 
-	echo '</select>	</td></tr><tr><td>' . _('Sales Type Price List') . ':</td><td><select name="TypeAbbrev">';
+	echo '</select>	</td></tr>
+			<tr><td>' . _('Sales Type Price List') . ':</td>
+					<td><select name="TypeAbbrev">';
 
-	$SQL = 'SELECT typeabbrev, sales_type FROM salestypes';
+	$SQL = "SELECT typeabbrev, sales_type FROM salestypes";
 	$result = DB_query($SQL,$db);
 
 	while ($myrow = DB_fetch_array($result)) {
@@ -313,28 +312,24 @@ if ($InputError ==0){
 		} else {
 			echo '<option VALUE="';
 		}
-		echo $myrow['typeabbrev'] . '">' . $myrow['sales_type'];
+		echo $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 
 	} //end while loop
-
+	echo '</select></td></tr>';
+	
 	DB_free_result($result);
 
 	if (!isset($_POST['StartDate'])){
 		$_POST['StartDate'] = Date($_SESSION['DefaultDateFormat']);
 	}
 
-	if (!isset($_POST['EndDate'])){
-		$_POST['EndDate'] = DateAdd(date($_SESSION['DefaultDateFormat']),'y',3);
-	}
 	echo '<tr><td>' . _('Price Effective From Date')  . ':</td>
-				<td><input type="Text" class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" size=10 maxlength=10 value="' . $_POST['StartDate'] . '"></td></tr>';
+				<td><input type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" size=10 maxlength=10 value="' . $_POST['StartDate'] . '"></td></tr>';
 	echo '<tr><td>' . _('Price Effective To Date')  . ':</td>
-				<td><input type="Text" class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="EndDate" size=10 maxlength=10 value="' . $_POST['EndDate'] . '"></td></tr>';
-	echo '<input type=hidden name=Item value='.$Item.'>';
+				<td><input type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="EndDate" size=10 maxlength=10 value="' . $_POST['EndDate'] . '"></td></tr>';
+	echo '<input type="hidden" name="Item" value="' . $Item.'" />';
 	?>
 
-	</select>
-	</td></tr>
 
 	<tr><td><?php echo _('Price'); ?>:</td>
 	<td>
@@ -346,7 +341,7 @@ if ($InputError ==0){
 	</td></tr>
 
 	</table>
-	<br><div class="centre">
+	<br /><div class="centre">
 	<input type="Submit" name="submit" value="<?php echo _('Enter') . '/' . _('Amend Price'); ?>">
 	</div>
 
@@ -366,13 +361,13 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 		$SQL = "SELECT price,
 						startdate,
 						enddate
-						FROM prices
-						WHERE debtorno=''
-						AND stockid='" . $Item . "'
-						AND currabrev='" . $CurrAbbrev . "'
-						AND typeabbrev='" . $PriceList . "'
-						AND enddate <>'0000-00-00'
-						ORDER BY startdate, enddate";
+					FROM prices
+					WHERE debtorno=''
+					AND stockid='" . $Item . "'
+					AND currabrev='" . $CurrAbbrev . "'
+					AND typeabbrev='" . $PriceList . "'
+					AND enddate <>'0000-00-00'
+					ORDER BY startdate, enddate";
 		$result = DB_query($SQL,$db);
 		$NextStartDate = Date($_SESSION['DefaultDateFormat']);
 		unset($EndDate);

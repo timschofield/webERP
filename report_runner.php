@@ -78,7 +78,7 @@ if ($WEBERPHOME!="") {
 }
 
 if ($weberp_home=="") {
- 	echo "weberp home is not set in this file or -H isn't set";
+ 	echo "weberp home is not set in this file or -H is not set";
 }
 // change directory to the weberp home to get all the includes to work nicely
 chdir($weberp_home);

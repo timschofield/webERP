@@ -28,9 +28,9 @@ if (!isset($_POST['Date'])){
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	 echo '<table class=selection>
 	 			<tr>
-				<td>' . _('Enter the date for which the transactions are to be listed') . ":</td>
-				<td><input type=text name='Date' maxlength=10 size=10 class=date alt='" . $_SESSION['DefaultDateFormat'] . "' value='" . Date($_SESSION['DefaultDateFormat']) . "'></td>
-			</tr>";
+				<td>' . _('Enter the date for which the transactions are to be listed') . ':</td>
+				<td><input type=text name="Date" maxlength="10" size="10" class=date alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '"></td>
+			</tr>';
 
 	echo '<tr><td>' . _('Transaction type') . '</td><td>';
 

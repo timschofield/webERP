@@ -94,7 +94,6 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 
 	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-
 	$myrow = DB_fetch_array($result);
 
 	$_SESSION['SuppTrans']->SupplierName = $myrow['suppname'];
@@ -848,7 +847,7 @@ then do the updates and inserts to process the credit note entered */
 
 
 								/*The cost adjustment is the price variance / the total quantity in stock
-								But that's only provided that the total quantity in stock is > the quantity charged on this invoice
+								But thats only provided that the total quantity in stock is greater than the quantity charged on this invoice
 
 								If the quantity on hand is less the amount charged on this invoice then some must have been sold and the price variance on these must be written off to price variances*/
 
@@ -1011,14 +1010,15 @@ then do the updates and inserts to process the credit note entered */
 									account,
 									narrative,
 									amount)
-							 VALUES (21,
-							 	'" . $CreditNoteNo . "',
-								'" . $SQLCreditNoteDate . "',
-								'" . $PeriodNo . "',
-								'" . $_SESSION['SuppTrans']->GRNAct . "',
-								'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') .' ' . $EnteredGRN->GRNNo . ' - ' . $EnteredGRN->ItemCode . ' x ' .
-										$EnteredGRN->This_QuantityInv . ' @ ' . $_SESSION['SuppTrans']->CurrCode . $EnteredGRN->ChgPrice . ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate . "',
-								'" . round(-$EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,2) / $_SESSION['SuppTrans']->ExRate . "'
+								VALUES (
+									21,
+									'" . $CreditNoteNo . "',
+									'" . $SQLCreditNoteDate . "',
+									'" . $PeriodNo . "',
+									'" . $_SESSION['SuppTrans']->GRNAct . "',
+									'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') .' ' . $EnteredGRN->GRNNo . ' - ' . $EnteredGRN->ItemCode . ' x ' .
+											$EnteredGRN->This_QuantityInv . ' @ ' . $_SESSION['SuppTrans']->CurrCode . $EnteredGRN->ChgPrice . ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate . "',
+									'" . round(-$EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,2) / $_SESSION['SuppTrans']->ExRate . "'
 								)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
@@ -1219,10 +1219,10 @@ then do the updates and inserts to process the credit note entered */
 								value)
 							VALUES (
 								'" . $ShiptChg->ShiptRef . "',
-								21,
+								'21',
 								'" . $CreditNoteNo . "',
 								'" . (-$ShiptChg->Amount/$_SESSION['SuppTrans']->ExRate) . "'
-								)";
+							)";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment charge record for the shipment') . ' ' . $ShiptChg->ShiptRef . ' ' . _('could not be added because');
 			$DbgMsg = _('The following SQL to insert the Shipment charge record was used');

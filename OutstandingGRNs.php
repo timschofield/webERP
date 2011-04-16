@@ -51,9 +51,9 @@ If (isset($_POST['PrintPDF'])
 	  $title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	  prnMsg(_('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+	   echo '<br><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-		  echo "<br>".$SQL;
+		  echo '<br>'.$SQL;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -63,9 +63,9 @@ If (isset($_POST['PrintPDF'])
 	  $title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	  prnMsg(_('No outstanding GRNs valuation details retrieved'), 'warn');
-	   echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+	   echo '<br><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-		  echo "<br>$SQL";
+		  echo '<br>'.$SQL;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -142,28 +142,7 @@ If (isset($_POST['PrintPDF'])
 	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 	$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
 	$YPos -=(2*$line_height);
-/* UldisN
-	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
 
-	  if ($len<=20){
-		$title = _('Outstanding GRNs Valuation Error');
-		include('includes/header.inc');
-		prnMsg(_('There were no GRNs with any value to print out for the specified supplier range'),'info');
-		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
-		exit;
-	  } else {
-		header('Content-type: application/pdf');
-		header('Content-Length: ' . $len);
-		header('Content-Disposition: inline; filename=OSGRNsValuation.pdf');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Pragma: public');
-
-		$pdf->Output('OutstandingGRNs.pdf','I');
-	}
-*/
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_OSGRNsValuation_' . date('Y-m-d').'.pdf');//UldisN
 	$pdf->__destruct(); //UldisN
 } else { /*The option to print PDF was not hit */
@@ -174,15 +153,15 @@ If (isset($_POST['PrintPDF'])
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $title . '</p>';
 
-	echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table class=selection>";
+	echo '<form action=' . $_SERVER['PHP_SELF'] . ' method="POST"><table class=selection>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<tr><td>' . _('From Supplier Code') . ":</td>
-		<td><input type=text name='FromCriteria' value='0'></td></tr>";
-	echo '<tr><td>' . _('To Supplier Code'). ":</td>
-		<td><input type=text name='ToCriteria' value='zzzzzzz'></td></tr>";
+	echo '<tr><td>' . _('From Supplier Code') . ':</td>
+		<td><input type=text name="FromCriteria" value="0"></td></tr>';
+	echo '<tr><td>' . _('To Supplier Code'). ':</td>
+		<td><input type=text name="ToCriteria" value="zzzzzzz"></td></tr>';
 
-	echo "</table><br><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
+	echo '</table><br><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print PDF') . '"></div>';
 
 	include('includes/footer.inc');
 

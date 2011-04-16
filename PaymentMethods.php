@@ -34,9 +34,9 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if (strpos($_POST['MethodName'],'&')>0 OR strpos($_POST['MethodName'],"'")>0) {
+	if (ContainsIllegalCharacters($_POST['MethodName'])) {
 		$InputError = 1;
-		prnMsg( _('The payment method cannot contain the character') . " '&' " . _('or the character') ." '",'error');
+		prnMsg( _('The payment method cannot contain illegal characters'),'error');
 		$Errors[$i] = 'MethodName';
 		$i++;
 	}

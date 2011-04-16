@@ -462,7 +462,7 @@ if (isset($_POST['Search'])){
 		  }
 	}
 
-	$SQL = $SQL . ' LIMIT ' . $_SESSION['DisplayRecordsMax'];
+	$SQL = $SQL . " LIMIT " . $_SESSION['DisplayRecordsMax'];
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
 	$DbgMsg = _('The SQL used to get the part selection was');

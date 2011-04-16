@@ -1,9 +1,6 @@
 <?php
 
 /* $Id$*/
-/* $Revision: 1.25 $ */
-
-//$PageSecurity = 11;
 
 include('includes/session.inc');
 
@@ -374,18 +371,19 @@ while ($myrow = DB_fetch_array($result)) {
 		$myrow['managed'] = _('No');
 	}
 */
-	printf("<td>%s</td>
+	printf('<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
-		<td><a href='%sSelectedLocation=%s'>" . _('Edit') . "</td>
-		<td><a href='%sSelectedLocation=%s&delete=1'>" . _('Delete') . '</td>
+		<td>%s</td>
+		<td><a href="%sSelectedLocation=%s">' . _('Edit') . '</td>
+		<td><a href="%sSelectedLocation=%s&delete=1">' . _('Delete') . '</td>
 		</tr>',
 		$myrow['loccode'],
 		$myrow['locationname'],
 		$myrow['description'],
-		$_SERVER['PHP_SELF'] . '?' . SID . '&',
+		$_SERVER['PHP_SELF'] . '?',
 		$myrow['loccode'],
-		$_SERVER['PHP_SELF'] . '?' . SID . '&',
+		$_SERVER['PHP_SELF'] . '?',
 		$myrow['loccode']);
 
 	}
@@ -399,11 +397,11 @@ echo "<p>";
 if (isset($SelectedLocation)) {
 	echo '<a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Records') . '</a>';
 }
-echo "<p>";
+echo '<br />';
 
 if (!isset($_GET['delete'])) {
 
-	echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedLocation)) {
@@ -451,8 +449,8 @@ if (!isset($_GET['delete'])) {
 		$_POST['Managed'] = $myrow['managed'];
 
 
-		echo "<input type=hidden name=SelectedLocation VALUE=" . $SelectedLocation . '>';
-		echo "<input type=hidden name=LocCode VALUE=" . $_POST['LocCode'] . '>';
+		echo '<input type=hidden name=SelectedLocation VALUE="' . $SelectedLocation . '>';
+		echo '<input type=hidden name=LocCode VALUE="' . $_POST['LocCode'] . '>';
 		echo '<table class=selection>';
 		echo '<tr><th colspan=2><font size=3 color=blue>'._('Amend Location details').'</font></th></tr>';
 		echo '<tr><td>' . _('Location Code') . ':</td><td>';

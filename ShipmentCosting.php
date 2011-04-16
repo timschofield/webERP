@@ -66,7 +66,10 @@ echo '</table>';
 
 /*Get the total non-stock item shipment charges */
 
-$sql = "SELECT SUM(value) FROM shipmentcharges WHERE stockid='' AND shiptref ='" . $_GET['SelectedShipment']. "'";
+$sql = "SELECT SUM(value) 
+		FROM shipmentcharges 
+		WHERE stockid='' 
+		AND shiptref ='" . $_GET['SelectedShipment']. "'";
 
 $ErrMsg = _('Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('general costs cannot be retrieved from the database');
 $GetShiptCostsResult = DB_query($sql,$db, $ErrMsg);
@@ -83,7 +86,10 @@ $TotalCostsToApportion = $myrow[0];
 
 /*Now Get the total of stock items invoiced against the shipment */
 
-$sql = "SELECT SUM(value) FROM shipmentcharges WHERE stockid<>'' AND shiptref ='" . $_GET['SelectedShipment'] . "'";
+$sql = "SELECT SUM(value) 
+		FROM shipmentcharges 
+		WHERE stockid<>'' 
+		AND shiptref ='" . $_GET['SelectedShipment'] . "'";
 
 $ErrMsg = _('Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('Item costs cannot be retrieved from the database');
 $GetShiptCostsResult = DB_query($sql,$db);
@@ -101,13 +107,13 @@ $TotalInvoiceValueOfShipment = $myrow[0];
 /*Now get the lines on the shipment */
 
 $LineItemsSQL = "SELECT purchorderdetails.itemcode,
-			purchorderdetails.itemdescription,
-			SUM(purchorderdetails.qtyinvoiced) as totqtyinvoiced,
-			SUM(purchorderdetails.quantityrecd) as totqtyrecd
-			FROM purchorderdetails
-		WHERE purchorderdetails.shiptref='" . $_GET['SelectedShipment'] . "'
-		GROUP BY purchorderdetails.itemcode,
-			  purchorderdetails.itemdescription";
+					purchorderdetails.itemdescription,
+					SUM(purchorderdetails.qtyinvoiced) as totqtyinvoiced,
+					SUM(purchorderdetails.quantityrecd) as totqtyrecd
+					FROM purchorderdetails
+				WHERE purchorderdetails.shiptref='" . $_GET['SelectedShipment'] . "'
+				GROUP BY purchorderdetails.itemcode,
+					  purchorderdetails.itemdescription";
 
 $ErrMsg = _('The lines on the shipment could not be retrieved from the database');
 $LineItemsResult = db_query($LineItemsSQL,$db, $ErrMsg);

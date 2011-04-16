@@ -90,7 +90,7 @@ if (isset($_POST['submit'])) {
 					VALUES ('" . $_POST['typename'] . "')";
 
 
-			$msg = _('Supplier type') . ' ' . $_POST["typename"] .  ' ' . _('has been created');
+			$msg = _('Supplier type') . ' ' . $_POST['typename'] .  ' ' . _('has been created');
 			$checkSql = "SELECT count(typeid)
 			     FROM suppliertype";
 			$result = DB_query($checkSql, $db);
@@ -170,10 +170,10 @@ if (!isset($SelectedType)){
 	$result = DB_query($sql,$db);
 
 	echo '<table class=selection>';
-	echo "<tr>
-		<th>" . _('Type ID') . "</th>
-		<th>" . _('Type Name') . "</th>
-		</tr>";
+	echo '<tr>
+		<th>' . _('Type ID') . '</th>
+		<th>' . _('Type Name') . '</th>
+		</tr>';
 
 $k=0; //row colour counter
 

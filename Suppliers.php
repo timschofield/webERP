@@ -342,7 +342,7 @@ if (isset($_POST['submit'])) {
 	}
 	if (ContainsIllegalCharacters($SupplierID)) {
 		$InputError = 1;
-		prnMsg(_('The supplier code cannot contain any of the following characters') . " - . ' & + \" \\" . ' ' ._('or a space'),'error');
+		prnMsg(_('The supplier code cannot contain any of the illegal characters') ,'error');
 		$Errors[$i]='ID';
 		$i++;
 	}
@@ -405,22 +405,22 @@ if (isset($_POST['submit'])) {
 			$row = DB_fetch_array($resultgeo);
 			$api_key = $row['geocode_key'];
 			$map_host = $row['map_host'];
-			define("MAPS_HOST", $map_host);
-			define("KEY", $api_key);
+			define('MAPS_HOST', $map_host);
+			define('KEY', $api_key);
 			// check that some sane values are setup already in geocode tables, if not skip the geocoding but add the record anyway.
 			if ($map_host=="") {
 			echo '<div class="warn">' . _('Warning - Geocode Integration is enabled, but no hosts are setup.  Go to Geocode Setup') . '</div>';
 			} else {
-			$address = $_POST["Address1"] . ", " . $_POST["Address2"] . ", " . $_POST["Address3"] . ", " . $_POST["Address4"];
+			$address = $_POST['Address1'] . ', ' . $_POST['Address2'] . ', ' . $_POST['Address3'] . ', ' . $_POST['Address4'];
 
-			$base_url = "http://" . MAPS_HOST . "/maps/geo?output=xml" . "&key=" . KEY;
-			$request_url = $base_url . "&q=" . urlencode($address);
+			$base_url = 'http://' . MAPS_HOST . '/maps/geo?output=xml' . '&key=' . KEY;
+			$request_url = $base_url . '&q=' . urlencode($address);
 
-			$xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die("url not loading");
+			$xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die('url not loading');
 //			$xml = simplexml_load_file($request_url) or die("url not loading");
 
 			$coordinates = $xml->Response->Placemark->Point->coordinates;
-			$coordinatesSplit = explode(",", $coordinates);
+			$coordinatesSplit = explode(',', $coordinates);
 			// Format: Longitude, Latitude, Altitude
 			$latitude = $coordinatesSplit[1];
 			$longitude = $coordinatesSplit[0];
@@ -437,8 +437,8 @@ if (isset($_POST['submit'])) {
 			} else {
 			// failure to geocode
 				$geocode_pending = false;
-				echo "<p>Address: " . $address . " failed to geocode.\n";
-				echo "Received status " . $status . "\n</p>";
+				echo '<p>Address: ' . $address . ' failed to geocode'."\n";
+				echo 'Received status ' . $status . "\n" . '</p>';
 			}
 			}
 		}
@@ -698,7 +698,7 @@ if (!isset($SupplierID)) {
 	} //end while loop
 	DB_data_seek($result, 0);
 	echo '</select></td></tr>';
-	echo '<tr><td>' . _('Tax Reference') . ":</td><td><input type='text' name='TaxRef' size=21 maxlength=20></td></tr>";
+	echo '<tr><td>' . _('Tax Reference') . ':</td><td><input type="text" name=2TaxRef" size=21 maxlength=20></td></tr>';
 
 	$result=DB_query('SELECT currency, currabrev FROM currencies', $db);
 	if (!isset($_POST['CurrCode'])){
@@ -707,23 +707,23 @@ if (!isset($SupplierID)) {
 		$_POST['CurrCode'] = $myrow[0];
 	}
 
-	echo '<tr><td>' . _("Supplier Currency") . ":</td><td><select name='CurrCode'>";
+	echo '<tr><td>' . _('Supplier Currency') . ':</td><td><select name="CurrCode">';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['CurrCode'] == $myrow['currabrev']){
-			echo '<option selected VALUE=' . $myrow['currabrev'] . '>' . $myrow['currency'];
+			echo '<option selected VALUE=' . $myrow['currabrev'] . '>' . $myrow['currency'] . '</option>';
 		} else {
-			echo '<option VALUE=' . $myrow['currabrev'] . '>' . $myrow['currency'];
+			echo '<option VALUE=' . $myrow['currabrev'] . '>' . $myrow['currency'] . '</option>';
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
 
-	echo '</select></td></tr><tr><td>' . _('Remittance Advice') . ":</td><td><select name='Remittance'>";
-	echo '<option VALUE=0>' . _('Not Required');
-	echo '<option VALUE=1>' . _('Required');
+	echo '</select></td></tr><tr><td>' . _('Remittance Advice') . ':</td><td><select name="Remittance">';
+	echo '<option VALUE=0>' . _('Not Required') . '</option>';
+	echo '<option VALUE=1>' . _('Required') . '</option>';
 
 	echo '</select></td></tr>';
 
-	echo '<tr><td>' . _('Tax Group') . ":</td><td><select name='TaxGroup'>";
+	echo '<tr><td>' . _('Tax Group') . ':</td><td><select name="TaxGroup">';
 
 	DB_data_seek($result, 0);
 
@@ -732,13 +732,13 @@ if (!isset($SupplierID)) {
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['TaxGroup']) and $_POST['TaxGroup'] == $myrow['taxgroupid']){
-			echo '<option selected VALUE=' . $myrow['taxgroupid'] . '>' . $myrow['taxgroupdescription'];
+			echo '<option selected VALUE=' . $myrow['taxgroupid'] . '>' . $myrow['taxgroupdescription'] . '</option>';
 		} else {
-			echo '<option VALUE=' . $myrow['taxgroupid'] . '>' . $myrow['taxgroupdescription'];
+			echo '<option VALUE=' . $myrow['taxgroupid'] . '>' . $myrow['taxgroupdescription'] . '</option>';
 		}
 	} //end while loop
 
-	echo "</select></td></tr></table><p><div class='centre'><input type='Submit' name='submit' VALUE='" . _('Insert New Supplier') . "'>";
+	echo '</select></td></tr></table><p><div class="centre"><input type="Submit" name="submit" VALUE="' . _('Insert New Supplier') . '">';
 	echo '</div></form>';
 
 } else {
@@ -796,11 +796,11 @@ if (!isset($SupplierID)) {
 		$_POST['FactorID'] = $myrow['factorcompanyid'];
 		$_POST['TaxRef'] = $myrow['taxref'];
 
-		echo "<input type=hidden name='SupplierID' VALUE='$SupplierID'>";
+		echo '<input type=hidden name="SupplierID" VALUE="' . $SupplierID . '">';
 
 	} else {
 	// its a new supplier being added
-		echo "<input type=hidden name='New' VALUE='Yes'>";
+		echo '<input type=hidden name="New" VALUE="Yes">';
 		echo '<tr><td>' . _('Supplier Code') . ':</td><td><input '.(in_array('ID',$Errors) ? 'class="inputerror"' : '').' type="text" name="SupplierID" VALUE="' . $SupplierID . '" size=12 maxlength=10></td></tr>';
 	}
 
@@ -889,24 +889,23 @@ if (!isset($SupplierID)) {
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['taxgroupid'] == $_POST['TaxGroup']) {
-			echo '<option selected VALUE=';
+			echo '<option selected VALUE="'.$myrow['taxgroupid'] . '">' . $myrow['taxgroupdescription'] . '</option>';
 		} else {
-			echo '<option VALUE=';
+			echo '<option VALUE="' . $myrow['taxgroupid'] . '">' . $myrow['taxgroupdescription'] . '</option>';
 		}
-		echo $myrow['taxgroupid'] . '>' . $myrow['taxgroupdescription'];
 
 	} //end while loop
 
 	echo '</select></td></tr></table>';
 
 	if (isset($_POST['New'])) {
-		echo "<p><div class='centre'>><input type='Submit' name='submit' VALUE='" . _('Add These New Supplier Details') . "'></form>";
+		echo '<p><div class="centre"><input type="Submit" name="submit" VALUE="' . _('Add These New Supplier Details') . '"></form>';
 	} else {
-		echo "<br><p><div class='centre'><input type='Submit' name='submit' VALUE='" . _('Update Supplier') . "'></div><br>";
+		echo '<br><p><div class="centre"><input type="Submit" name="submit" VALUE="' . _('Update Supplier') . '"></div><br>';
 //		echo '<p><font color=red><b>' . _('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed') . '<br></font></b>';
 		prnMsg(_('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed'), 'Warn');
-		echo "<br><div class=centre><input type='Submit' name='delete' VALUE='" . _('Delete Supplier') . "' onclick=\"return confirm('" . _('Are you sure you wish to delete this supplier?') . "');\"></form>";
-		echo "<br><a href='$rootpath/SupplierContacts.php?" . SID . "SupplierID=$SupplierID'>" . _('Review Contact Details') . '</a></div>';
+		echo '<br><div class=centre><input type="submit" name="delete" VALUE="' . _('Delete Supplier') . '" onclick=\"return confirm(\'' . _('Are you sure you wish to delete this supplier?') . '\');\"></form>';
+		echo '<br><a href="' . $rootpath . '/SupplierContacts.php?SupplierID=' . $SupplierID . '">' . _('Review Contact Details') . '</a></div>';
 	}
 	echo '</div>';
 } // end of main ifs

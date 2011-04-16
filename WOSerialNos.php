@@ -55,14 +55,13 @@ if (isset($_POST['AddControlledItems'])){
 			$InputError = false;
 			
 			$sql = "INSERT INTO woserialnos (stockid,
-												wo,
-												qualitytext,
-												serialno)
-										VALUES ";
-			$ValueLine = " ('" . $StockID . "',
-							'" . $WO . "',
-							'' ,
-							";
+											wo,
+											qualitytext,
+											serialno)
+										VALUES ('" . $StockID . "',
+												'" . $WO . "',
+												'',
+												'' ";
 			for ($i=0;$i<$_POST['NumberToAdd'];$i++){
 				$NextItemNumber = $NextSerialNo + $i;
 				$result = DB_query("SELECT serialno FROM woserialnos
@@ -295,8 +294,8 @@ if (DB_num_rows($WOSerialNoResult)==0){
 		echo '<tr><td><input type="text" name="Reference' . $i .'" value="' . $WOSNRow['serialno'] . '"/></td>';
 		echo '<input type="hidden" name="OldReference' . $i . '" value="' . $WOSNRow['serialno'] . '"/>';
 		if ($Serialised==0){
-			echo '<td><input type="text" name="Quantity' . $i .'" value="' . $WOSNRow['quantity'] . '"/></td>';
-			echo '<input type="hidden" name="OldQuantity' . $i . '" value="' . $WOSNRow['quantity'] . '"/>';
+			echo '<td><input type="text" name="Quantity' . $i .'" value="' . $WOSNRow['quantity'] . '" /></td>';
+			echo '<input type="hidden" name="OldQuantity' . $i . '" value="' . $WOSNRow['quantity'] . '" />';
 		} else {
 			echo '<input type="hidden" name="Quantity' . $i . '" value="1">';
 		}
@@ -309,9 +308,9 @@ if (DB_num_rows($WOSerialNoResult)==0){
 	echo '<input type="hidden" name="CountOfItems" value=' . $i . '>';
 
 	if ($Serialised==0){
-		echo '<tr><td style="text-align: center" colspan=3>';
+		echo '<tr><td style="text-align: center" colspan="3">';
 	} else {
-		echo '<tr><td style="text-align: center" colspan=2>';
+		echo '<tr><td style="text-align: center" colspan="2">';
 	}
 	echo '<input type="submit" name="UpdateItems" value="' . _('Update') . '"></td></tr>';
 	echo '</table>';

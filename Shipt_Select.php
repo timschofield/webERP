@@ -2,8 +2,6 @@
 
 /* $Id$*/
 
-//$PageSecurity = 11;
-
 include('includes/session.inc');
 $title = _('Search Shipments');
 include('includes/header.inc');
@@ -28,7 +26,7 @@ if (isset($_GET['SelectedSupplier'])){
 	$SelectedSupplier=$_POST['SelectedSupplier'];
 }
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -103,7 +101,6 @@ if (isset($_POST['SearchParts'])) {
 
 }
 
-
 if (!isset($ShiptRef) or $ShiptRef==""){
 	echo '<table class=selection><tr><td>';
 	echo _('Shipment Number'). ': <input type=text name="ShiptRef" MAXLENGTH =10 size=10> '.
@@ -113,27 +110,27 @@ if (!isset($ShiptRef) or $ShiptRef==""){
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['StockLocation'])){
 			if ($myrow['loccode'] == $_POST['StockLocation']){
-			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			} else {
-			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			}
 		} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
 			$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
-			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
 		} else {
-			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
 		}
 	}
 
 	echo '</select>';
 	echo ' <select name="OpenOrClosed">';
 	if ($_POST['OpenOrClosed']==1){
-		echo '<option selected VALUE=1>'. _('Closed Shipments Only');
-		echo '<option VALUE=0>'. _('Open Shipments Only');
+		echo '<option selected VALUE=1>'. _('Closed Shipments Only')  . '</option>';
+		echo '<option VALUE=0>'. _('Open Shipments Only')  . '</option>';
 	} else {
 		$_POST['OpenOrClosed']=0;
-		echo '<option VALUE=1>'. _('Closed Shipments Only');
-		echo '<option selected VALUE=0>'. _('Open Shipments Only');
+		echo '<option VALUE=1>'. _('Closed Shipments Only')  . '</option>';
+		echo '<option selected VALUE=0>'. _('Open Shipments Only')  . '</option>';
 	}
 	echo '</select></td></tr></table>';
 
@@ -147,7 +144,6 @@ $SQL="SELECT categoryid,
 	ORDER BY categorydescription";
 $result1 = DB_query($SQL,$db);
 
-
 echo '<table class=selection>';
 echo '<tr><th colspan=5><font size=3 color=navy>'._('To search for shipments for a specific part use the part selection facilities below') . '</font></th></tr>';
 ?>
@@ -157,9 +153,9 @@ echo '<tr><th colspan=5><font size=3 color=navy>'._('To search for shipments for
 <?php
 while ($myrow1 = DB_fetch_array($result1)) {
 	if (isset($_POST['StockCat']) and $myrow1['categoryid']==$_POST['StockCat']){
-		echo '<option selected VALUE="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
+		echo '<option selected value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription']  . '</option>';
 	} else {
-		echo '<option VALUE="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
+		echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription']  . '</option>';
 	}
 }
 ?>
@@ -174,11 +170,11 @@ while ($myrow1 = DB_fetch_array($result1)) {
 
 <?php
 echo '<div class=centre><input type=submit name="SearchParts" value="'._('Search Parts Now').'">';
-echo '<input type=submit name="ResetPart" VALUE="'. _('Show All') .'"></div><br />';
+echo '<input type=submit name="ResetPart" value="'. _('Show All') .'"></div><br />';
 
 if (isset($StockItemsResult)) {
 
-	echo "<table cellpadding=2 colspan=7 class=selection>";
+	echo '<table cellpadding=2 colspan=7 class="selection">';
 	$TableHeader = '<tr>
 			<th>'. _('Code').'</th>
 			<th>'. _('Description').'</th>
@@ -203,7 +199,7 @@ if (isset($StockItemsResult)) {
 		}
 /*
 Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand     Orders Ostdg	Units	 */
-		printf('<td><input type=submit name="SelectedStockItem" VALUE="%s"</td>
+		printf('<td><input type=submit name="SelectedStockItem" VALUE="%s" /></td>
 			<td>%s</td>
 			<td class=number>%s</td>
 			<td class=number>%s</td>
@@ -244,8 +240,7 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 			INNER JOIN purchorderdetails
 				ON purchorderdetails.shiptref=shipments.shiptref
 			INNER JOIN purchorders
-				ON purchorderdetails.orderno=purchorders.orderno
-			";
+				ON purchorderdetails.orderno=purchorders.orderno";
 
 		if (isset($SelectedSupplier)) {
 
@@ -303,8 +298,8 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 				$k++;
 			}
 
-			$URL_Modify_Shipment = $rootpath . '/Shipments.php?' . SID . 'SelectedShipment=' . $myrow['shiptref'];
-			$URL_View_Shipment = $rootpath . '/ShipmentCosting.php?' . SID . 'SelectedShipment=' . $myrow['shiptref'];
+			$URL_Modify_Shipment = $rootpath . '/Shipments.php?SelectedShipment=' . $myrow['shiptref'];
+			$URL_View_Shipment = $rootpath . '/ShipmentCosting.php?SelectedShipment=' . $myrow['shiptref'];
 
 			$FormatedETA = ConvertSQLDate($myrow['eta']);
 			/* ShiptRef   Supplier  Vessel  Voyage  ETA */

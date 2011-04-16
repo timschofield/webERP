@@ -2,8 +2,6 @@
 
 /* $Id$*/
 
-//$PageSecurity = 9; /*viewing possible with inquiries but not mods */
-
 $UpdateSecurity =10;
 
 include('includes/session.inc');

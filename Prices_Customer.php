@@ -29,7 +29,7 @@ if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']=
 	prnMsg( _('A customer must be selected from the customer selection screen') . ', '
 		. _('then an item must be selected before this page is called') . '. '
 			. _('The product selection page should call this page with a valid product code'),'info');
-	echo '<hr>';
+	echo '<br />';
 	include('includes/footer.inc');
 	exit;
 }

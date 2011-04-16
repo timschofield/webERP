@@ -1,8 +1,6 @@
 <?php
 
-/* $Revision: 1.0 $ */
-
-//$PageSecurity = 6;
+/* $Id$ */
 
 include ('includes/session.inc');
 include ('includes/SQL_CommonFunctions.inc');
@@ -22,7 +20,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
 	. '" alt="" />' . ' ' . $title . '</p>';
 
-	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['FromDate'])){
@@ -35,7 +33,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 	/*Show a form to allow input of criteria for Tabs to show */
 	echo '<table class=selection>';
-	echo '<tr><td>' . _('Code Of Petty Cash Tab') . ":</td><td><select name='SelectedTabs'>";
+	echo '<tr><td>' . _('Code Of Petty Cash Tab') . ':</td><td><select name="SelectedTabs">';
 
 	if ($_SESSION['AccessLevel'] >= 15){ // superuser can supervise the supervisors
 		$SQL = "SELECT tabcode
@@ -51,11 +49,11 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectTabs']) and $myrow['tabcode']==$_POST['SelectTabs']) {
-			echo "<option selected VALUE='";
+			echo '<option selected value="';
 		} else {
-			echo "<option VALUE='";
+			echo '<option value="';
 		}
-		echo $myrow['tabcode'] . "'>" . $myrow['tabcode'];
+		echo $myrow['tabcode'] . '">' . $myrow['tabcode'] . '</option>';
 
 	} //end while loop get type of tab
 
@@ -64,16 +62,15 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 	echo '</select></td></tr>';
 	echo'<tr><td>' . _('From Date :') . '</td><td>';
-	echo '<input tabindex="2" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="TEXT" name="FromDate" maxlength="10" size="11" VALUE="' . $_POST['FromDate'] . '">';
+	echo '<input tabindex="2" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '">';
 	echo '</td></tr>';
 	echo '<tr><td>' . _('To Date:') .'</td><td>';
-	echo '<input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="TEXT" name="ToDate" maxlength="10" size="11" VALUE="' . $_POST['ToDate'] . '">';
-	echo '</td></tr></table><br>';
+	echo '<input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '">';
+	echo '</td></tr></table><br />';
 	echo '<div class="centre"><input type=submit Name="ShowTB" Value="' . _('Show HTML') .'">';
-	echo "<input type=submit Name='PrintPDF' Value='"._('PrintPDF')."'></div>";
+	echo '<input type="submit" name="PrintPDF" value="' . _('PrintPDF') . '"></div>';
 
 } else if (isset($_POST['PrintPDF'])) {
-
 
 	include('includes/PDFStarter.php');
 	$PageNumber = 0;
@@ -92,23 +89,23 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 	$TabDetail = DB_query($SQL,$db);
 
-if (DB_error_no($db)!=0){
-	include('includes/header.inc');
-	prnMsg(_('An error occurred getting the orders details'),'',_('Database Error'));
-	if ($debug==1){
-		prnMsg( _('The SQL used to get the orders that failed was') . '<br>' . $SQL, '',_('Database Error'));
+	if (DB_error_no($db)!=0){
+		include('includes/header.inc');
+		prnMsg(_('An error occurred getting the orders details'),'',_('Database Error'));
+		if ($debug==1){
+			prnMsg( _('The SQL used to get the orders that failed was') . '<br />' . $SQL, '',_('Database Error'));
+		}
+		include ('includes/footer.inc');
+		exit;
+	} elseif (DB_num_rows($TabDetail)==0){
+	  	include('includes/header.inc');
+		prnMsg(_('There were no expenses found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' '. $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'),'warn');
+		if ($debug==1) {
+			prnMsg(_('The SQL that returned no rows was') . '<br />' . $SQL,'',_('Database Error'));
+		}
+		include('includes/footer.inc');
+		exit;
 	}
-	include ('includes/footer.inc');
-	exit;
-} elseif (DB_num_rows($TabDetail)==0){
-  	include('includes/header.inc');
-	prnMsg(_('There were no expenses found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' '. $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'),'warn');
-	if ($debug==1) {
-		prnMsg(_('The SQL that returned no rows was') . '<br>' . $SQL,'',_('Database Error'));
-	}
-	include('includes/footer.inc');
-	exit;
-}
 
 	include('includes/PDFTabReportHeader.inc');
 
@@ -214,8 +211,6 @@ if (DB_error_no($db)!=0){
 		$Amount[0]=0;
 	}
 
-
-
 	$YPos -= (2 * $line_height);
 	$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+70,$YPos,100,$FontSize,_('Balance at'));
@@ -225,28 +220,8 @@ if (DB_error_no($db)!=0){
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,70,$FontSize,$Tabs['currency']);
 	$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Left_Margin, $YPos+$line_height);
 
-	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
-
-	if ($len<=20){
-		$title = _('Print Report Tab Error');
-		include('includes/header.inc');
-		echo '<p>';
-		prnMsg( _('There were no entries to print out for the selections specified') );
-		echo '<br><a href="'. $rootpath.'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
-		include('includes/footer.inc');
-		exit;
-	} else {
-		header('Content-type: application/pdf');
-		header('Content-Length: ' . $len);
-		header('Content-Disposition: inline; filename=TabReports.pdf');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Pragma: public');
-
-		$pdf->Output('PcReportTabs.pdf','I');
-
-	}
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_PettyCash_Tab_Report_' . date('Y-m-d') . '.pdf');
+	$pdf->__destruct();
 	exit;
 } else {
 
@@ -258,9 +233,10 @@ if (DB_error_no($db)!=0){
 	$SQL_FromDate = FormatDateForSQL($_POST['FromDate']);
 	$SQL_ToDate = FormatDateForSQL($_POST['ToDate']);
 
-	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<input type=hidden name="FromDate" VALUE="' . $_POST['FromDate'] . '"><input type=hidden name="ToDate" VALUE="' . $_POST['ToDate'] . '">';
+	echo '<input type="hidden" name="FromDate" VALUE="' . $_POST['FromDate'] . '">
+			<input type=hidden name="ToDate" value="' . $_POST['ToDate'] . '">';
 
 	$SqlTabs = "SELECT * FROM pctabs
 			WHERE tabcode='".$SelectedTabs."'";
@@ -272,7 +248,7 @@ if (DB_error_no($db)!=0){
 
 	$Tabs=DB_fetch_array($TabResult);
 
-	echo "<br><table class=selection>";
+	echo '<br /><table class="selection">';
 
 	echo '<tr><td>' . _('Tab Code') . '</td>
 				<td>:</td>
@@ -304,7 +280,10 @@ if (DB_error_no($db)!=0){
 		$Balance['0']=0;
 	}
 
-	echo '<tr><td>' . _('Balance before ') . ''.$_POST['FromDate'].'</td><td>:</td><td>' . ''.$Balance['0'].' '.$Tabs['currency'].'</td></tr>';
+	echo '<tr><td>' . _('Balance before ') . ''.$_POST['FromDate'].'</td>
+				<td>:</td>
+				<td>' . ''.$Balance['0'].' '.$Tabs['currency'].'</td>
+			</tr>';
 
 	$SqlBalanceNotAut = "SELECT SUM(amount)
 			FROM pcashdetails
@@ -340,15 +319,15 @@ if (DB_error_no($db)!=0){
 				 _('No Petty Cash movements for this tab were returned by the SQL because'),
 				 _('The SQL that failed was:'));
 
-	echo '<br><table class=selection>';
-	echo "<tr>
-		<th>" . _('Date Of Expense') . "</th>
-		<th>" . _('Expense Description') . "</th>
-		<th>" . _('Amount') . "</th>
-		<th>" . _('Notes') . "</th>
-		<th>" . _('Receipt') . "</th>
-		<th>" . _('Date Authorized') . "</th>
-	</tr>";
+	echo '<br /><table class=selection>';
+	echo '<tr>
+		<th>' . _('Date Of Expense') . '</th>
+		<th>' . _('Expense Description') . '</th>
+		<th>' . _('Amount') . '</th>
+		<th>' . _('Notes') . '</th>
+		<th>' . _('Receipt') . '</th>
+		<th>' . _('Date Authorized') . '</th>
+	</tr>';
 
 	$j = 1;
 	$k=0; //row colour counter
@@ -421,7 +400,7 @@ if (DB_error_no($db)!=0){
 				<td>'.number_format($Amount[0],2).' </td><td>'.$Tabs['currency'].'</td></tr>';
 
 	echo '</table>';
-	echo '<br><div class="centre"><input type=submit Name="SelectDifferentDate" Value="' . _('Select A Different Date') . '"></div>';
+	echo '<br /><div class="centre"><input type="submit" name="SelectDifferentDate" value="' . _('Select A Different Date') . '"></div>';
 }
 echo '</form>';
 include('includes/footer.inc');

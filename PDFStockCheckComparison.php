@@ -168,7 +168,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 								'" . $SQLAdjustmentDate . "',
 								'" . $PeriodNo . "',
 								'" .  $StockGLCodes['stockact'] . "',
-								'" . $myrow['standardcost'] * $StockQtyDifference . ", '" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
+								'" . $myrow['standardcost'] * $StockQtyDifference . "', '" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
 					$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 
 				} //END INSERT GL TRANS
@@ -222,7 +222,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 		if ($Location!=$CheckItemRow['loccode']){
 			$FontSize=14;
-			if ($Location!=''){ /*Then it's NOT the first time round */
+			if ($Location!=''){ /*Then it is NOT the first time round */
 				/*draw a line under the Location*/
 				$pdf->line($Left_Margin, $YPos-2,$Page_Width-$Right_Margin, $YPos-2);
 				$YPos -=$line_height;
@@ -236,7 +236,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 		if ($Category!=$CheckItemRow['categoryid']){
 			$FontSize=12;
-			if ($Category!=''){ /*Then it's NOT the first time round */
+			if ($Category!=''){ /*Then it is NOT the first time round */
 				/*draw a line under the CATEGORY TOTAL*/
 				$pdf->line($Left_Margin, $YPos-2,$Page_Width-$Right_Margin, $YPos-2);
 				$YPos -=$line_height;
@@ -335,10 +335,10 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 	if ($_POST['ReportOrClose']=='ReportAndClose'){
 		//need to print the report first before this but don't risk re-adjusting all the stock!!
-		$sql = 'TRUNCATE TABLE stockcheckfreeze';
+		$sql = "TRUNCATE TABLE stockcheckfreeze";
 		$result = DB_query($sql,$db);
 
-		$sql = 'TRUNCATE TABLE stockcounts';
+		$sql = "TRUNCATE TABLE stockcounts";
 		$result = DB_query($sql,$db);
 	}
 
@@ -356,11 +356,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	echo '<tr><td>' . _('Choose Option'). ':</font></td><td><select name="ReportOrClose">';
 
 	if ($_POST['ReportOrClose']=='ReportAndClose'){
-		echo '<option selected VALUE="ReportAndClose">'. _('Report and Close the Inventory Comparison Processing Adjustments As Necessary');
-		echo '<option VALUE="ReportOnly">'. _('Report The Inventory Comparison Differences Only - No Adjustments');
+		echo '<option selected VALUE="ReportAndClose">'. _('Report and Close the Inventory Comparison Processing Adjustments As Necessary') . '</option>';
+		echo '<option VALUE="ReportOnly">'. _('Report The Inventory Comparison Differences Only - No Adjustments') . '</option>';
 	} else {
-		echo '<option selected VALUE="ReportOnly">' . _('Report The Inventory Comparison Differences Only - No Adjustments');
-		echo '<option VALUE="ReportAndClose">' . _('Report and Close the Inventory Comparison Processing Adjustments As Necessary');
+		echo '<option selected VALUE="ReportOnly">' . _('Report The Inventory Comparison Differences Only - No Adjustments') . '</option>';
+		echo '<option VALUE="ReportAndClose">' . _('Report and Close the Inventory Comparison Processing Adjustments As Necessary') . '</option>';
 	}
 
 	echo '</select></td></tr>';
@@ -369,11 +369,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	echo '<tr><td>'. _('Action for Zero Counts') . ':</td><td><select name="ZeroCounts">';
 
 	if ($_POST['ZeroCounts'] =='Adjust'){
-		echo '<option selected VALUE="Adjust">'. _('Adjust System stock to Nil');
-		echo '<option VALUE="Leave">' . _("Don't Adjust System stock to Nil");
+		echo '<option selected VALUE="Adjust">'. _('Adjust System stock to Nil') . '</option>';
+		echo '<option VALUE="Leave">' . _('Do not Adjust System stock to Nil') . '</option>';
 	} else {
-		echo '<option VALUE="Adjust">'. _('Adjust System stock to Nil');
-		echo '<option selected VALUE="Leave">' . _("Don't Adjust System stock to Nil");
+		echo '<option VALUE="Adjust">'. _('Adjust System stock to Nil') . '</option>';
+		echo '<option selected VALUE="Leave">' . _('Do not Adjust System stock to Nil') . '</option>';
 	}
 
 	echo '</table><br><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print PDF'). '"></div>';

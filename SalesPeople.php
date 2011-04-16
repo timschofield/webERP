@@ -181,13 +181,13 @@ or deletion of the records*/
 	$result = DB_query($sql,$db);
 
 	echo '<table class=selection>';
-	echo "<tr><th>" . _('Code') . "</th>
-		<th>" . _('Name') . "</th>
-		<th>" . _('Telephone') . "</th>
-		<th>" . _('Facsimile') . "</th>
-		<th>" . _('Comm Rate 1') . "</th>
-		<th>" . _('Break') . "</th>
-		<th>" . _('Comm Rate 2') . "</th></tr>";
+	echo '<tr><th>' . _('Code') . '</th>
+		<th>' . _('Name') . '</th>
+		<th>' . _('Telephone') . '</th>
+		<th>' . _('Facsimile') . '</th>
+		<th>' . _('Comm Rate 1') . '</th>
+		<th>' . _('Break') . '</th>
+		<th>' . _('Comm Rate 2') . '</th></tr>';
 	$k=0;
 	while ($myrow=DB_fetch_row($result)) {
 
@@ -199,7 +199,7 @@ or deletion of the records*/
 		$k++;
 	}
 
-	printf("
+	printf('
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
@@ -207,9 +207,9 @@ or deletion of the records*/
 		<td class=number>%s</td>
 		<td class=number>%s</td>
 		<td class=number>%s</td>
-		<td><a href=\"%sSelectedSaleperson=%s\">". _('Edit') . "</a></td>
-		<td><a href=\"%sSelectedSaleperson=%s&delete=1\">" . _('Delete') . "</a></td>
-		</tr>",
+		<td><a href="%sSelectedSaleperson=%s">'. _('Edit') . '</a></td>
+		<td><a href="%sSelectedSaleperson=%s&delete=1">' . _('Delete') . '</a></td>
+		</tr>',
 		$myrow[0],
 		$myrow[1],
 		$myrow[2],
@@ -227,12 +227,12 @@ or deletion of the records*/
 } //end of ifs and buts!
 
 if (isset($SelectedSaleperson)) {
-	echo "<div class='centre'><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Show All Sales People') . "</a></div>";
+	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show All Sales People') . '</a></div>';
 }
 
 if (! isset($_GET['delete'])) {
 
-	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedSaleperson)) {
@@ -260,15 +260,15 @@ if (! isset($_GET['delete'])) {
 		$_POST['CommissionRate2']  = $myrow['commissionrate2'];
 
 
-		echo "<input type=hidden name='SelectedSaleperson' VALUE='" . $SelectedSaleperson . "'>";
-		echo "<input type=hidden name='SalesmanCode' VALUE='" . $_POST['SalesmanCode'] . "'>";
+		echo '<input type=hidden name="SelectedSaleperson" VALUE="' . $SelectedSaleperson . '">';
+		echo '<input type=hidden name="SalesmanCode" VALUE="' . $_POST['SalesmanCode'] . '">';
 		echo '<table class=selection> <tr><td>' . _('Salesperson code') . ':</td><td>';
 		echo $_POST['SalesmanCode'] . '</td></tr>';
 
 	} else { //end of if $SelectedSaleperson only do the else when a new record is being entered
 
-		echo '<table class=selection><tr><td>' . _('Salesperson code') . ":</td>
-			<td><input type='Text' ". (in_array('SalesmanCode',$Errors) ? 'class="inputerror"' : '' ) ." name='SalesmanCode' size=3 maxlength=3></td></tr>";
+		echo '<table class=selection><tr><td>' . _('Salesperson code') . ':</td>
+			<td><input type="text" '. (in_array('SalesmanCode',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanCode" size=3 maxlength=3></td></tr>';
 	}
 	if (!isset($_POST['SalesmanName'])){
 	  $_POST['SalesmanName']='';
@@ -290,16 +290,16 @@ if (! isset($_GET['delete'])) {
 	}
 
 
-	echo '<tr><td>' . _('Salesperson Name') . ":</td><td><input type='text' ". (in_array('SalesmanName',$Errors) ? 'class="inputerror"' : '' ) ." name='SalesmanName'  size=30 maxlength=30 VALUE='" . $_POST['SalesmanName'] . "'></td></tr>";
-	echo '<tr><td>' . _('Telephone No') . ":</td><td><input type='Text' name='SManTel' size=20 maxlength=20 VALUE='" . $_POST['SManTel'] . "'></td></tr>";
-	echo '<tr><td>' . _('Facsimile No') . ":</td><td><input type='Text' name='SManFax' size=20 maxlength=20 VALUE='" . $_POST['SManFax'] . "'></td></tr>";
-	echo '<tr><td>' . _('Commission Rate 1') . ":</td><td><input type='Text' class=number name='CommissionRate1' size=5 maxlength=5 VALUE=" . $_POST['CommissionRate1'] . '></td></tr>';
-	echo '<tr><td>' . _('Breakpoint') . ":</td><td><input type='Text' class=number name='Breakpoint' size=6 maxlength=6 VALUE=" . $_POST['Breakpoint'] . '></td></tr>';
-	echo '<tr><td>' . _('Commission Rate 2') . ":</td><td><input type='Text' class=number name='CommissionRate2' size=5 maxlength=5 VALUE=" . $_POST['CommissionRate2']. '></td></tr>';
+	echo '<tr><td>' . _('Salesperson Name') . ':</td><td><input type="text" '. (in_array('SalesmanName',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanName"  size=30 maxlength=30 VALUE="' . $_POST['SalesmanName'] . '"></td></tr>';
+	echo '<tr><td>' . _('Telephone No') . ':</td><td><input type="text" name="SManTel" size=20 maxlength=20 VALUE="' . $_POST['SManTel'] . '"></td></tr>';
+	echo '<tr><td>' . _('Facsimile No') . ':</td><td><input type="text" name="SManFax" size=20 maxlength=20 VALUE="' . $_POST['SManFax'] . '"></td></tr>';
+	echo '<tr><td>' . _('Commission Rate 1') . ':</td><td><input type="text" class=number name="CommissionRate1" size=5 maxlength=5 VALUE="' . $_POST['CommissionRate1'] . '"></td></tr>';
+	echo '<tr><td>' . _('Breakpoint') . ':</td><td><input type="text" class=number name="Breakpoint" size=6 maxlength=6 VALUE="' . $_POST['Breakpoint'] . '"></td></tr>';
+	echo '<tr><td>' . _('Commission Rate 2') . ':</td><td><input type="text" class=number name="CommissionRate2" size=5 maxlength=5 VALUE="' . $_POST['CommissionRate2']. '"></td></tr>';
 
 	echo '</table>';
 
-	echo "<br /><div class='centre'><input type='Submit' name='submit' value='" . _('Enter Information') . "'></div>";
+	echo '<br /><div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';
 
 	echo '</form>';
 

@@ -4,8 +4,6 @@
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
-//$PageSecurity = 11;
-
 include('includes/session.inc');
 $title = _('Transfer Controlled Items');
 
@@ -18,7 +16,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/i
 
 if (!isset($_SESSION['Transfer'])) {
 	/* This page can only be called when a stock Transfer is pending */
-	echo '<div class="centre"><a href="' . $rootpath . '/StockTransfers.php?' . SID . '&NewTransfer=Yes">'._('Enter A Stock Transfer').'</a><br>';
+	echo '<div class="centre"><a href="' . $rootpath . '/StockTransfers.php?NewTransfer=Yes">'._('Enter A Stock Transfer').'</a><br>';
 	prnMsg( _('This page can only be opened if a Stock Transfer for a Controlled Item has been initiated').'<br>','error');
 	echo '</div>';
 	include('includes/footer.inc');
@@ -44,9 +42,9 @@ if (isset($TransferItem)){ /*we are in a bulk transfer */
 //Make sure this item is really controlled
 if ($LineItem->Controlled != 1 ){
 	if (isset($TransferItem)){
-		echo '<div class="centre"><a href="' . $rootpath . '/StockLocTransferReceive.php?' . SID . '>'._('Receive A Stock Transfer').'</a></div>';
+		echo '<div class="centre"><a href="' . $rootpath . '/StockLocTransferReceive.php>'._('Receive A Stock Transfer').'</a></div>';
 	} else {
-		echo '<div class="centre"><a href="' . $rootpath . '/StockTransfers.php?' . SID . '&NewTransfer=Yes">'._('Enter A Stock Transfer').'</a></div>';
+		echo '<div class="centre"><a href="' . $rootpath . '/StockTransfers.php?NewTransfer=Yes">'._('Enter A Stock Transfer').'</a></div>';
 	}
 	prnMsg('<br>'. _('Notice') . ' - ' . _('The transferred item must be defined as controlled to require input of the batch numbers or serial numbers being transferred'),'error');
 	include('includes/footer.inc');

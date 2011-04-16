@@ -1,12 +1,11 @@
 <?php
 
-/* $Revision: 1.4 $ */
 
 /* $Id$ */
 
 // InventoryQuantities.php - Report of parts with quantity. Sorts by part and shows
 // all locations where there are quantities of the part
-//$PageSecurity = 2;
+
 include('includes/session.inc');
 If (isset($_POST['PrintPDF'])) {
 
@@ -83,9 +82,9 @@ If (isset($_POST['PrintPDF'])) {
 	  $title = _('Inventory Quantities') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The Inventory Quantity report could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+	   echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<br>$sql";
+	      echo '<br>' . $sql;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -94,7 +93,7 @@ If (isset($_POST['PrintPDF'])) {
 			$title = _('Print Inventory Quantities Report');
 			include('includes/header.inc');
 			prnMsg(_('There were no items with inventory quantities'),'error');
-			echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+			echo '<br><a href="'.$rootpath.'/index.php?">' . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
 	}
@@ -148,12 +147,12 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/i
 echo '<div class="page_help_text">' . _('Use this report to display the quantity of Inventory items in different categories.') . '</div><br>';
 
 
-	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
+	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . ' method="post"><table>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class=selection><tr><td>';
-	echo '<tr><td>' . _('Selection') . ":</td><td><select name='Selection'>";
-	echo "<option selected value='All'>" . _('All');
-	echo "<option value='Multiple'>" . _('Only Parts With Multiple Locations');
+	echo '<tr><td>' . _('Selection') . ':</td><td><select name="Selection">';
+	echo '<option selected value="All">' . _('All') . '</option>';
+	echo '<option value="Multiple">' . _('Only Parts With Multiple Locations') . '</option>';
 	echo '</select></td></tr>';
 
 	$SQL="SELECT categoryid, categorydescription FROM stockcategory where stocktype<>'A' ORDER BY categorydescription";
@@ -185,7 +184,7 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 		}
 	}
 	echo '</select></td></tr>';
-	echo "</table><p><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
+	echo '</table><p><div class="centre"><input type=submit name="PrintPDF" value="' . _('Print PDF') . '"></div>';
 
 	include('includes/footer.inc');
 

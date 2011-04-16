@@ -2,7 +2,6 @@
 
 /* $Id$*/
 
-//$PageSecurity = 2;
 include('includes/session.inc');
 
 If (isset($_POST['PrintPDF'])
@@ -54,9 +53,9 @@ If (isset($_POST['PrintPDF'])
 		$title = _('Supplier Balances - Problem Report');
 		include('includes/header.inc');
 		prnMsg(_('The Supplier details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db),'error');
-		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
-			echo "<br>$SQL";
+			echo '<br />' . $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -65,7 +64,7 @@ If (isset($_POST['PrintPDF'])
 		$title = _('Supplier Balances - Problem Report');
 		include('includes/header.inc');
 		prnMsg(_('There are no supplier balances to list'),'error');
-		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -126,33 +125,29 @@ If (isset($_POST['PrintPDF'])
 	}
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-	echo '<form action=' . $_SERVER['PHP_SELF'] . " method='post'><table class=selection>";
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post"><table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<tr><td>' . _('From Supplier Code') . ":</font></td>
-			<td><input Type=text maxlength=6 size=7 name=FromCriteria value=".$_POST['FromCriteria']."></td></tr>";
-	echo '<tr><td>' . _('To Supplier Code') . ":</td>
-			<td><input Type=text maxlength=6 size=7 name=ToCriteria value=".$_POST['ToCriteria']."></td></tr>";
+	echo '<tr><td>' . _('From Supplier Code') . ':</font></td>
+			<td><input Type=text maxlength=6 size=7 name=FromCriteria value="'.$_POST['FromCriteria'].'"></td></tr>';
+	echo '<tr><td>' . _('To Supplier Code') . ':</td>
+			<td><input Type=text maxlength=6 size=7 name=ToCriteria value="'.$_POST['ToCriteria'].'"></td></tr>';
 
-	echo '<tr><td>' . _('Balances As At') . ":</td>
-			<td><select Name='PeriodEnd'>";
+	echo '<tr><td>' . _('Balances As At') . ':</td>
+			<td><select Name="PeriodEnd">';
 
-	$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
+	$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 
 	$ErrMsg = _('Could not retrieve period data because');
 	$Periods = DB_query($sql,$db,$ErrMsg);
 
 	while ($myrow = DB_fetch_array($Periods,$db)){
-
-		echo '<option VALUE=' . $myrow['lastdate_in_period'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
-
+		echo '<option value="' . $myrow['lastdate_in_period'] . '" selected="TRUE">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period'],'M',-1).'</option>';
 	}
-
-
 	echo '</select></td></tr>';
 
-
-	echo "</table><br /><div class='centre'><input type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
+	echo '</table>
+			<br /><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print PDF') . '"></div>';
 
 	include('includes/footer.inc');
 }/*end of else not PrintPDF */

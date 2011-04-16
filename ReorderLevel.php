@@ -2,13 +2,11 @@
 
 /* $Id$*/
 
-/* $Revision: 1.6 $ */
-
 // ReorderLevel.php - Report of parts with quantity below reorder level
 // Shows if there are other locations that have quantities for the parts that are short
-//$PageSecurity = 2;
+
 include('includes/session.inc');
-If (isset($_POST['PrintPDF'])) {
+if (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',_('Reorder Level Report'));
@@ -59,9 +57,9 @@ If (isset($_POST['PrintPDF'])) {
 	  $title = _('Reorder Level') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The Reorder Level report could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+	   echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<br>$sql";
+	      echo '<br>' . $sql;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -148,20 +146,10 @@ If (isset($_POST['PrintPDF'])) {
 			$title = _('Print Reorder Level Report');
 			include('includes/header.inc');
 			prnMsg(_('There were no items with demand greater than supply'),'error');
-			echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+			echo '<br><a href="' . $rootpath . '/index.php?">' . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
 	} else {
-/*
-			header('Content-type: application/pdf');
-			header("Content-Length: " . $len);
-			header('Content-Disposition: inline; filename=ReorderLevel.pdf');
-			header('Expires: 0');
-			header('Cache-Control: private, post-check=0, pre-check=0');
-			header('Pragma: public');
-
-    		$pdf->Output('ReOrderLevel.pdf', 'I');
-*/
             $pdf->OutputI($_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf');//UldisN
             $pdf->__destruct(); //UldisN
 	}
@@ -173,7 +161,7 @@ If (isset($_POST['PrintPDF'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Reorder Level Report') . '</p>';
 	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div><br>';
 
-	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
+	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . ' method="post"><table>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT loccode,
 			locationname
@@ -184,15 +172,15 @@ If (isset($_POST['PrintPDF'])) {
 		$_POST['StockLocation']='All';
 	}
 	if ($_POST['StockLocation']=='All'){
-		echo '<option selected value="All">' . _('All');
+		echo '<option selected value="All">' . _('All') . '</option>';
 	} else {
-		echo '<option value="All">' . _('All');
+		echo '<option value="All">' . _('All') . '</option>';
 	}
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if ($myrow['loccode'] == $_POST['StockLocation']){
-			 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-			 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -214,19 +202,19 @@ If (isset($_POST['PrintPDF'])) {
 		$_POST['StockCat']='All';
 	}
 	if ($_POST['StockCat']=='All'){
-		echo '<option selected value="All">' . _('All');
+		echo '<option selected value="All">' . _('All') . '</option>';
 	} else {
-		echo '<option value="All">' . _('All');
+		echo '<option value="All">' . _('All') . '</option>';
 	}
 	while ($myrow1 = DB_fetch_array($result1)) {
 		if ($myrow1['categoryid']==$_POST['StockCat']){
-			echo '<option selected value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
+			echo '<option selected value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
+			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
-	echo "</table><br /><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
+	echo '</table><br /><div class="centre"><input type=submit name="PrintPDF" value="' . _('Print PDF') . '"></div>';
 
 	include('includes/footer.inc');
 

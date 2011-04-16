@@ -104,12 +104,7 @@ if (isset($_POST['UpdateDatabase'])){
 	/* actions to take having checked that the input is sensible
 	1st set up a transaction on this thread*/
 
-		$SQL = 'BEGIN';
-
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('The transaction BEGIN failed with error');
-		$DbgMsg = _('The SQL that was used but failed was');
-
-		$Result=DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+		DB_Txn_Begin($db);
 
 		foreach ($_SESSION['Alloc']->Allocs as $AllocnItem) {
 
@@ -118,12 +113,12 @@ if (isset($_POST['UpdateDatabase'])){
 			  /*Orignial allocation was not 0 and it has now changed
 			    need to delete the old allocation record */
 
-				     $SQL = "DELETE FROM suppallocs WHERE id = '" . $AllocnItem->PrevAllocRecordID . "'";
-
-					  $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The existing allocation for') . ' ' . $AllocnItem->TransType .' ' . $AllocnItem->TypeNo . ' ' . _('could not be deleted because');
-					  $DbgMsg = _('The following SQL to delete the allocation record was used');
-
-				     $Result=DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+				$SQL = "DELETE FROM suppallocs WHERE id = '" . $AllocnItem->PrevAllocRecordID . "'";
+				
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The existing allocation for') . ' ' . $AllocnItem->TransType .' ' . $AllocnItem->TypeNo . ' ' . _('could not be deleted because');
+				$DbgMsg = _('The following SQL to delete the allocation record was used');
+				
+				$Result=DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 			 }
 
 			 if ($AllocnItem->OrigAlloc != $AllocnItem->AllocAmt){
@@ -249,14 +244,7 @@ if (isset($_POST['UpdateDatabase'])){
 
 	 /* OK Commit the transaction */
 
-		$SQL = 'COMMIT';
-
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
-					 _('The updates and insertions arising from this allocation could not be committed to the database');
-
-		$DbgMsg = _('The COMMIT SQL failed');
-
-		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+		DB_Txn_Commit($db);
 
 	/*finally delete the session variables holding all the previous data */
 
@@ -324,11 +312,11 @@ If (isset($_GET['AllocTrans'])){
 
 	$Result = DB_query($SQL, $db);
 	if (DB_num_rows($Result) != 1){
-	echo _('There was a problem retrieving the information relating the transaction selected') . '. ' . _('Allocations are unable to proceed');
-	if ($debug == 1){
-		echo '<br />' . _('The SQL that was used to retrieve the transaction information was') . ' :<br />'  . $SQL;
-	}
-	exit;
+		prnMsg(_('There was a problem retrieving the information relating the transaction selected') . '. ' . _('Allocations are unable to proceed'), 'error');
+		if ($debug == 1){
+			echo '<br />' . _('The SQL that was used to retrieve the transaction information was') . ' :<br />'  . $SQL;
+		}
+		exit;
 	}
 
 	$myrow = DB_fetch_array($Result);
@@ -430,7 +418,7 @@ If (isset($_GET['AllocTrans'])){
 
 if (isset($_POST['AllocTrans'])){
 
-	echo '<input type="hidden" name="AllocTrans" value="' . $_POST['AllocTrans'] . '">';
+	echo '<input type="hidden" name="AllocTrans" value="' . $_POST['AllocTrans'] . '" />';
 
 	/*Show the transaction being allocated and the potential trans it could be allocated to
         and those where there is already an existing allocation */
@@ -507,14 +495,10 @@ if (isset($_POST['AllocTrans'])){
 	    } else {
 	    	echo '>';
 	    }
-       echo "<input type=text class='number' name='Amt" . $Counter ."' maxlength=12 size=13 VALUE=" .
-       		$AllocnItem->AllocAmt . "><input type=hidden name='AllocID" . $Counter .
-       		"' VALUE=" . $AllocnItem->ID . '></td></tr>';
+echo '<input type="text" class="number" name="Amt' . $Counter .'" maxlength="12" size="13" value="' . $AllocnItem->AllocAmt . '"><input type="hidden" name="AllocID' . $Counter .'" value="' . $AllocnItem->ID . '"></td></tr>';
 
 	    $TotalAllocated = $TotalAllocated + $AllocnItem->AllocAmt;
-
 	    $Counter++;
-
    }
 
    echo '<tr><td colspan=5 class=number><b><U>' . _('Total Allocated') . ':</U></b></td>
@@ -523,17 +507,17 @@ if (isset($_POST['AllocTrans'])){
    echo '<tr><td colspan=5 class=number><b>' . _('Left to allocate') . '</b></td><td class=number><b>' .
      		number_format(-$_SESSION['Alloc']->TransAmt - $TotalAllocated,2) . '</b></td></tr></table>';
 
-   echo "<div class='centre'><input type=hidden name='TotalNumberOfAllocs' VALUE=$Counter>";
+   echo '<div class="centre"><input type="hidden" name="TotalNumberOfAllocs" value="' . $Counter . '" />';
 
-   echo "<br /><input type=submit name='RefreshAllocTotal' VALUE='" . _('Recalculate Total To Allocate') . "'>";
-   echo "<input type=submit name=UpdateDatabase VALUE='" . _('Process Allocations') . "'></div>";
+   echo '<br /><input type="submit" name="RefreshAllocTotal" value="' . _('Recalculate Total To Allocate') . '" />';
+   echo '<input type="submit" name="UpdateDatabase" value="' . _('Process Allocations') . '"></div>';
 
 } elseif(isset($_GET['SupplierID'])){
 
   /*page called with a supplier code  so show the transactions to allocate
   specific to the supplier selected */
 
-  echo "<input type=hidden name=SupplierID VALUE='" . $_GET['SupplierID'] . "'>";
+  echo '<input type="hidden" name="SupplierID" value="' . $_GET['SupplierID'] . '">';
 
   /*Clear any previous allocation records */
 
@@ -615,24 +599,24 @@ if (isset($_POST['AllocTrans'])){
   unset($_SESSION['Alloc']->Allocs);
   unset($_SESSION['Alloc']);
 
-  $sql = 'SELECT id,
-  		transno,
-		typename,
-		type,
-		suppliers.supplierid,
-		suppname,
-		trandate,
-  		suppreference,
-		rate,
-		ovamount+ovgst AS total,
-		alloc
-  	FROM supptrans,
-		suppliers,
-		systypes
-  	WHERE supptrans.type=systypes.typeid
-  	AND supptrans.supplierno=suppliers.supplierid
-  	AND (type=21 or type=22)
-  	AND settled=0 ORDER BY id';
+  $sql = "SELECT id,
+	  		transno,
+			typename,
+			type,
+			suppliers.supplierid,
+			suppname,
+			trandate,
+	  		suppreference,
+			rate,
+			ovamount+ovgst AS total,
+			alloc
+	  	FROM supptrans,
+			suppliers,
+			systypes
+	  	WHERE supptrans.type=systypes.typeid
+	  	AND supptrans.supplierno=suppliers.supplierid
+	  	AND (type=21 or type=22)
+	  	AND settled=0 ORDER BY id";
 
   $result = DB_query($sql, $db);
 

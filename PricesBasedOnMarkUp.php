@@ -13,7 +13,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 
 echo '<br /><div class="page_help_text">' . _('This page adds new prices or updates already existing prices for a specified sales type (price list) and currency for the stock category selected - based on a percentage mark up from cost prices or from preferred supplier cost data or from another price list. The rounding factor ensures that prices are at least this amount or a multiple of it. A rounding factor of 5 would mean that prices would be a minimum of 5 and other prices would be expressed as multiples of 5.') . '</div><br /><div class="centre">';
 
-echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $SQL = 'SELECT sales_type, typeabbrev FROM salestypes';
@@ -91,7 +91,7 @@ if (isset($_POST['CostType']) and $_POST['CostType']=='OtherPriceList'){
                             <td><select name="BasePriceList">';
 
 	if (!isset($_POST['BasePriceList']) OR $_POST['BasePriceList']=='0'){
-		echo '<option selected VALUE=0>' . _('No Price List Selected');
+		echo '<option selected VALUE=0>' . _('No Price List Selected') . '</option>';
 	}
 	while ($PriceLists=DB_fetch_array($PricesResult)){
 		if (isset($_POST['BasePriceList']) and $_POST['BasePriceList']==$PriceLists['typeabbrev']){
@@ -114,9 +114,9 @@ $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['StkCatFrom']) and $myrow['categoryid']==$_POST['StkCatFrom']){
-		echo '<option selected value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+		echo '<option selected value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['categoryid'] . '">'  . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+		echo '<option value="' . $myrow['categoryid'] . '">'  . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 	}
 }
 echo '</select></td></tr>';
@@ -128,9 +128,9 @@ echo '<tr><td>' . _('Stock Category To') . ':</td>
 
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['StkCatFrom']) and $myrow['categoryid']==$_POST['StkCatTo']){
-		echo '<option selected value="'. $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+		echo '<option selected value="'. $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 	} else {
-		echo '<option  value="'. $myrow['categoryid'] . '">'  . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+		echo '<option  value="'. $myrow['categoryid'] . '">'  . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 	}
 }
 echo '</select></td></tr>';
@@ -160,11 +160,11 @@ if (!isset($_POST['IncreasePercent'])){
 	$_POST['IncreasePercent']=0;
 }
 
-echo '<tr><td>' . _('Percentage Increase (positive) or decrease (negative)') . "</td>
-                <td><input type=text name='IncreasePercent' class=number size=4 maxlength=4 VALUE=" . $_POST['IncreasePercent'] . "></td></tr></table>";
+echo '<tr><td>' . _('Percentage Increase (positive) or decrease (negative)') . '</td>
+                <td><input type=text name="IncreasePercent" class=number size=4 maxlength=4 VALUE="' . $_POST['IncreasePercent'] . '"></td></tr></table>';
 
 
-echo "<p><div class='centre'><input type=submit name='UpdatePrices' VALUE='" . _('Update Prices') . '\'  onclick="return confirm(\'' . _('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');"></div>';
+echo '<p><div class="centre"><input type=submit name="UpdatePrices" VALUE="' . _('Update Prices') . '\'  onclick="return confirm(\'' . _('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');"></div>';
 
 echo '</form>';
 

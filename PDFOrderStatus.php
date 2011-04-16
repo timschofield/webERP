@@ -2,9 +2,6 @@
 
 /* $Id$*/
 
-/* $Revision: 1.10 $ */
-
-//$PageSecurity = 3;
 include ('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -33,38 +30,45 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' '
 		. _('Order Status Report') . '</p>';
 
-	echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class=selection><tr><td>' . _('Enter the date from which orders are to be listed') . ":</td><td><input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='FromDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . "'></td></tr>";
-	echo '<tr><td>' . _('Enter the date to which orders are to be listed') . ":</td><td>";
-	echo "<input type=text class='date' alt='".$_SESSION['DefaultDateFormat']."' name='ToDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td></tr>";
+	echo '<table class=selection>
+			<tr>
+				<td>' . _('Enter the date from which orders are to be listed') . ':</td>
+				<td><input type=text class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength=10 size=10 value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . '"></td>
+			</tr>';
+	echo '<tr><td>' . _('Enter the date to which orders are to be listed') . ':</td><td>';
+	echo '<input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength=10 size=10 value="' . Date($_SESSION['DefaultDateFormat']) . '"></td></tr>';
 	echo '<tr><td>' . _('Inventory Category') . '</td><td>';
 
 	$sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
 	$result = DB_query($sql,$db);
 
 
-	echo "<select name='CategoryID'>";
-	echo "<option selected VALUE='All'>" . _('Over All Categories');
+	echo '<select name="CategoryID">';
+	echo '<option selected value="All">' . _('Over All Categories') . '</option>';
 
 	while ($myrow=DB_fetch_array($result)){
-		echo '<option value=' . $myrow['categoryid'] . '>' . $myrow['categorydescription'];
+		echo '<option value=' . $myrow['categoryid'] . '>' . $myrow['categorydescription'] . '</option>';
 	}
 	echo '</select></td></tr>';
 
 	echo '<tr><td>' . _('Inventory Location') . ':</td><td><select name="Location">';
 	echo '<option selected value="All">' . _('All Locations');
 
-	$result= DB_query('SELECT loccode, locationname FROM locations',$db);
+	$result= DB_query("SELECT loccode, locationname FROM locations",$db);
 	while ($myrow=DB_fetch_array($result)){
-		echo "<option VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
 	echo '</select></td></tr>';
 
-	echo '<tr><td>' . _('Back Order Only') . ":</td><td><select name='BackOrders'>";
-	echo "<option selected VALUE='Yes'>" . _('Only Show Back Orders');
-	echo "<option VALUE='No'>" . _('Show All Orders');
-	echo "</select></td></tr></table><br><div class='centre'><input type=submit name='Go' value='" . _('Create PDF') . "'></div>";
+	echo '<tr><td>' . _('Back Order Only') . ':</td><td><select name="BackOrders">';
+	echo '<option selected value="Yes">' . _('Only Show Back Orders') . '</option>';
+	echo '<option value="No">' . _('Show All Orders') . '</option>';
+	echo '</select></td>
+		</tr>
+		</table>
+		<br /><div class="centre"><input type=submit name="Go" value="' . _('Create PDF') . '"></div>';
 
 	include('includes/footer.inc');
 	exit;
@@ -229,10 +233,10 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 }
 
 if ($_POST['BackOrders']=='Yes'){
-		$sql .= ' AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced >0';
+		$sql .= " AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced >0";
 }
 
-$sql .= ' ORDER BY salesorders.orderno';
+$sql .= " ORDER BY salesorders.orderno";
 
 $Result=DB_query($sql,$db,'','',false,false); //dont trap errors here
 
@@ -332,23 +336,11 @@ while ($myrow=DB_fetch_array($Result)){
 	 $YPos -= ($line_height);
 	 if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		/*Then set up a new page */
-			$PageNumber++;
-		 include ('includes/PDFOrderStatusPageHeader.inc');
+		$PageNumber++;
+		include ('includes/PDFOrderStatusPageHeader.inc');
 		$OrderNo=0;
 	 } /*end of new page header  */
 } /* end of while there are delivery differences to print */
-/* UldisN
-$pdfcode = $pdf->output();
-$len = strlen($pdfcode);
-header('Content-type: application/pdf');
-header('Content-Length: ' . $len);
-header('Content-Disposition: inline; filename=OrderStatus.pdf');
-header('Expires: 0');
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
-
-$pdf->stream();
-*/
 $pdf->OutputD($_SESSION['DatabaseName'] . '_OrderStatus_' . date('Y-m-d') . '.pdf');//UldisN
 $pdf->__destruct(); //UldisN
 ?>

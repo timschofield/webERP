@@ -100,7 +100,7 @@ if (DB_num_rows($result)==0){
 		exit;
    	}//packing slip has been printed.
 }
-/* Then there's an order to print and it's not been printed already (or its been flagged for reprinting)
+/* Then there's an order to print and it has not been printed already (or its been flagged for reprinting)
 LETS GO */
 
 

@@ -704,7 +704,7 @@ then do the updates and inserts to process the invoice entered */
 			}
 
 			foreach ($_SESSION['SuppTrans']->Assets as $AssetAddition){
-				/* only the GL entries if the creditors->GL integration is enabled */
+				/* only the GL entries if the creditors/GL integration is enabled */
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
 											trandate,
@@ -728,7 +728,7 @@ then do the updates and inserts to process the invoice entered */
 
 			foreach ($_SESSION['SuppTrans']->Contracts as $Contract){
 
-	/*contract postings need to get the WIP from the contract item's stock category record
+	/*contract postings need to get the WIP from the contract items stock category record
 	*  debit postings to this WIP account
 	* the WIP account is tidied up when the contract is closed*/
 				$result = DB_query("SELECT wipact FROM stockcategory
@@ -822,7 +822,7 @@ then do the updates and inserts to process the invoice entered */
 								echo '<br /> ' . _('Total Qty On hand') . ' = ' . $TotalQuantityOnHand;
 
 								/*The cost adjustment is the price variance / the total quantity in stock
-								But that's only provided that the total quantity in stock is > the quantity charged on this invoice
+								But that is only provided that the total quantity in stock is greater than the quantity charged on this invoice
 
 								If the quantity on hand is less the amount charged on this invoice then some must have been sold and the price variance on these must be written off to price variances*/
 

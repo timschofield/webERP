@@ -31,9 +31,9 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 	$i=1;
 
-	if ($_POST['TypeTabCode']=='' OR $_POST['TypeTabCode']==' ' OR $_POST['TypeTabCode']=='  ') {
+	if ($_POST['TypeTabCode']=='') {
 		$InputError = 1;
-		prnMsg('<br>' . _('The Tabs type code cannot be an empty string or spaces'),'error');
+		prnMsg('<br />' . _('The Tabs type code cannot be an empty string'),'error');
 		$Errors[$i] = 'TypeTabCode';
 		$i++;
 	} elseif (strlen($_POST['TypeTabCode']) >20) {
@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}elseif (ContainsIllegalCharacters($_POST['TypeTabCode']) OR strpos($_POST['TypeTabCode'],' ')>0){
 		$InputError = 1;
-		prnMsg(_('The petty cash tab type code cannot contain any of the following characters " \' - & or a space'),'error');
+		prnMsg(_('The petty cash tab type code cannot contain any of the illegal characters'),'error');
 	} elseif (strlen($_POST['TypeTabDescription']) >50) {
 		$InputError = 1;
 		echo prnMsg(_('The tab code must be Fifty characters or less long'),'error');
@@ -120,7 +120,7 @@ if (isset($_POST['submit'])) {
 	$myrowPcTabs = DB_fetch_row($ResultPcTabs);
 	if ($myrowPcTabExpenses[0]>0 or $myrowPcTabs[0]>0) {
 		prnMsg(_('Cannot delete this tab type because tabs have been created using this tab type'),'error');
-		echo '<br>';
+		echo '<br />';
 		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<p><div class="centre"><input type=submit name=return value="' . _('Return to list of tab types') . '"></div>';
@@ -206,9 +206,9 @@ if (! isset($_GET['delete'])) {
 		$_POST['TypeTabCode'] = $myrow['typetabcode'];
 		$_POST['TypeTabDescription']  = $myrow['typetabdescription'];
 
-		echo "<input type=hidden name='SelectedTab' VALUE=" . $SelectedTab . ">";
-		echo "<input type=hidden name='TypeTabCode' VALUE=" . $_POST['TypeTabCode']. ">";
-		echo "<table> <tr><td>" . _('Code Of Type Of Tab') . ":</td><td>";
+		echo '<input type="hidden" name="SelectedTab" value="' . $SelectedTab . '">';
+		echo '<input type="hidden" name="TypeTabCode" value="' . $_POST['TypeTabCode']. '">';
+		echo '<table><tr><td>' . _('Code Of Type Of Tab') . ':</td><td>';
 
 		// We dont allow the user to change an existing type code
 

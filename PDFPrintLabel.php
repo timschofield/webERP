@@ -17,7 +17,7 @@ $pdf= null;
 
 // If there is no label templates, the user could select to set up a new one
 if ($AllLabels==null) {
-	echo '<br/><br/>';
+
 	abortMsg( _('There isn\'t any label template to select for printing. Click') .
 		' <a href="Labels.php"><b>' . _('HERE'). '</b></a> '. _('to set up a new one') );
 }
@@ -49,9 +49,9 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['PDFTest']) ) {
 			$DocumentPaper='LETTER';
 			$DocumentOrientation='P';   // Correccion para la version trunk :(
 			include('includes/PDFStarter.php');
-			if ($Version>="3.12")
+			if ($Version>='3.12')
 				$pdf->setPageFormat($formatPage);
-			$ok = printLabels(
+				$ok = printLabels(
 					$dimensions,
 					$lines,
 					intval($_POST['QtyByItem']),
