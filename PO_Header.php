@@ -766,7 +766,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 	
 	if($_SESSION['ExistingOrder'] != 0 AND $_SESSION['PO'.$identifier]->Status == 'Printed'){
 	
-		echo '<tr><td><a href="' . $rootpath . '/GoodsReceived.php?' . SID . '&PONumber=' .
+		echo '<tr><td><a href="' . $rootpath . '/GoodsReceived.php?PONumber=' .
 			$_SESSION['PO'.$identifier]->OrderNo . '&identifier=' . $identifier . '">'._('Receive this order').'</a></td></tr>';
 	}
 	if ($_SESSION['PO'.$identifier]->Status==''){ //then its a new order
@@ -959,9 +959,9 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		<td><input type="text" name="Tel" size="31" maxlength="30" value="' . $_SESSION['PO'.$identifier]->Tel . '"></td>
 		</tr>';
 
-	echo '<tr><td>' . _('Delivery By') . ':</td><td><select name=DeliveryBy>';
+	echo '<tr><td>' . _('Delivery By') . ':</td><td><select name="DeliveryBy">';
 
-	$ShipperResult = DB_query('SELECT shipper_id, shippername FROM shippers',$db);
+	$ShipperResult = DB_query("SELECT shipper_id, shippername FROM shippers",$db);
 
 	while ($ShipperRow=DB_fetch_array($ShipperResult)){
 		if (isset($_POST['DeliveryBy']) and ($_POST['DeliveryBy'] == $ShipperRow['shipper_id'])) {
@@ -978,7 +978,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 	echo '<table class=selection width=100%><tr><td>' . _('Supplier Selection') . ':</td><td>
 		<select name=Keywords onChange="ReloadForm(form1.SearchSuppliers)">';
 
-	$SuppCoResult = DB_query('SELECT supplierid, suppname FROM suppliers ORDER BY suppname',$db);
+	$SuppCoResult = DB_query("SELECT supplierid, suppname FROM suppliers ORDER BY suppname",$db);
 
 	while ( $SuppCoRow=DB_fetch_array($SuppCoResult)){
 		if ($SuppCoRow['suppname'] == $_SESSION['PO'.$identifier]->SupplierName) {
@@ -1029,9 +1029,10 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		</td><td><input type="text" name="SuppTel" size="31" maxlength="30" value="' . $_SESSION['PO'.$identifier]->SuppTel  . '"></td>
 		</tr>';
 
-	$result=DB_query('SELECT terms, termsindicator FROM paymentterms', $db);
+	$result=DB_query("SELECT terms, termsindicator FROM paymentterms", $db);
 
-	echo '<tr><td>' . _('Payment Terms') . ':</td><td><select name="PaymentTerms">';
+	echo '<tr><td>' . _('Payment Terms') . ':</td>
+			<td><select name="PaymentTerms">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['termsindicator']==$_SESSION['PO'.$identifier]->PaymentTerms) {
@@ -1054,8 +1055,9 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		</tr>';
 
 	if ($_SESSION['PO'.$identifier]->CurrCode != $_SESSION['CompanyRecord']['currencydefault']) {
-		echo '<tr><td>'. _('Exchange Rate').':'.'</td><td><input type=text name="ExRate"
-		value='.$_POST['ExRate'].' class=number size=11></td></tr>';
+		echo '<tr><td>'. _('Exchange Rate').':'.'</td>
+				<td><input type=text name="ExRate" value='.$_POST['ExRate'].' class="number" size=11></td>
+			</tr>';
 	} else {
 		echo '<input type=hidden name="ExRate" value="1">';
 	}

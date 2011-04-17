@@ -1,8 +1,6 @@
 <?php
-/* $Revision: 1.6 $ */
-/* $Id$*/
 
-//$PageSecurity = 4;
+/* $Id SupplierTypes.php 4183 2010-12-14 09:30:20Z daintree $ */
 
 include('includes/session.inc');
 $title = _('Supplier Types') . ' / ' . _('Maintenance');

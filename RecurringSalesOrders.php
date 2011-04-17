@@ -6,7 +6,6 @@ include('includes/DefineCartClass.php');
 
 /* Session started in header.inc for password checking the session will contain the details of the order from the Cart class object. The details of the order come from SelectOrderItems.php */
 
-//$PageSecurity=1;
 include('includes/session.inc');
 $title = _('Recurring Orders');
 include('includes/header.inc');
@@ -494,13 +493,13 @@ echo '</table>';
 
 echo '<br><div class="centre">';
 if ($NewRecurringOrder=='Yes'){
-	echo '<input type=hidden name="NewRecurringOrder" value="Yes">';
-	echo "<input type=submit name='Process' value='" . _('Create Recurring Order') . "'>";
+	echo '<input type="hidden" name="NewRecurringOrder" value="Yes">';
+	echo '<input type="submit" name="Process" value="' . _('Create Recurring Order') . '">';
 } else {
 	echo '<input type=hidden name="NewRecurringOrder" value="No">';
 	echo '<input type=hidden name="ExistingRecurrOrderNo" value=' . $_POST['ExistingRecurrOrderNo'] . '>';
 
-	echo "<input type=submit name='Process' value='" . _('Update Recurring Order Details') . "'>";
+	echo '<input type="submit" name="Process" value="' . _('Update Recurring Order Details') . '">';
 	echo '<hr>';
 	echo '<br><br><input type=submit name="DeleteRecurringOrder" value="' . _('Delete Recurring Order') . ' ' . $_POST['ExistingRecurrOrderNo'] . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this recurring order template?') . '\');">';
 }

@@ -34,21 +34,21 @@ if ($LineItem->Serialised==1){
 	$listtableheader=$tableheader;
 } else if ($LineItem->Serialised==0 and $Perishable==1){
 	$tableheader = '<tr>
-			<th>'. _('Batch/Roll/Bundle'). ' #</th>
-			<th>'. _('Available'). '</th>
-			<th>'. _('Quantity'). '</th>
-			<th>'. _('Expiry Date'). '</th>
-		</tr>';
+				<th>'. _('Batch/Roll/Bundle'). ' #</th>
+				<th>'. _('Available'). '</th>
+				<th>'. _('Quantity'). '</th>
+				<th>'. _('Expiry Date'). '</th>
+				</tr>';
 	$listtableheader = '<tr>
-			<th>'. _('Batch/Roll/Bundle'). ' #</th>
-			<th>'. _('Quantity'). '</th>
-			<th>'. _('Expiry Date'). '</th>
-		</tr>';
+					<th>'. _('Batch/Roll/Bundle'). ' #</th>
+					<th>'. _('Quantity'). '</th>
+					<th>'. _('Expiry Date'). '</th>
+					</tr>';
 } else {
 	$tableheader = '<tr>
-			<th>'. _('Batch/Roll/Bundle'). ' #</th>
-			<th>'. _('Quantity'). '</th>
-		</tr>';
+				<th>'. _('Batch/Roll/Bundle'). ' #</th>
+				<th>'. _('Quantity'). '</th>
+				</tr>';
 	$listtableheader=$tableheader;
 }
 
@@ -97,7 +97,6 @@ foreach ($LineItem->SerialItems as $Bundle){
 
 	echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'">'. _('Delete'). '</a></td></tr>';
 	
-	$LineItem->SerialItems[]=$Bundle;
 	$TotalQuantity += $Bundle->BundleQty;
 }
 
