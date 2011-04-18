@@ -73,19 +73,10 @@ Class PurchOrder {
 						$QtyRecd=0,
 						$GLActName='',
 						$DecimalPlaces=2,
-						$ItemNo,
 						$SuppliersUnit,
 						$ConversionFactor=1,
 						$LeadTime=1,
 						$Suppliers_PartNo='',
-						$SubTotal_Amount=0,
-						$Package=0,
-						$PcUnit=0,
-						$NetWeight=0,
-						$KGs=0,
-						$CuFt=0,
-						$Total_Quantity=0,
-						$Total_Amount=0,
 						$AssetID=0){
 							
 		if ($Qty!=0 && isset($Qty)){
@@ -107,19 +98,10 @@ Class PurchOrder {
 													$QtyRecd,
 													$GLActName,
 													$DecimalPlaces,
-													$ItemNo,
 													$SuppliersUnit,
 													$ConversionFactor,
 													$LeadTime,
 													$Suppliers_PartNo,
-													$SubTotal_Amount,
-													$Package,
-													$PcUnit,
-													$NetWeight,
-													$KGs,
-													$CuFt,
-													$Total_Quantity,
-													$Total_Amount,
 													$AssetID);
 			$this->LinesOnOrder++;
 			Return 1;
@@ -136,19 +118,9 @@ Class PurchOrder {
 								$ReqDelDate,
 								$ShiptRef,
 								$JobRef ,
-								$ItemNo,
 								$SuppliersUnit,
 								$ConversionFactor,
-								$Suppliers_PartNo,
-								$SubTotal_Amount,
-								$Package,
-								$PcUnit,
-								$NetWeight,
-								$KGs,
-								$CuFt,
-								$Total_Quantity,
-								$Total_Amount,
-								$SuppUOM){
+								$Suppliers_PartNo){
 
 			$this->LineItems[$LineNo]->ItemDescription = $ItemDescription;
 			$this->LineItems[$LineNo]->Quantity = $Qty;
@@ -158,19 +130,9 @@ Class PurchOrder {
 			$this->LineItems[$LineNo]->ReqDelDate = $ReqDelDate;
 			$this->LineItems[$LineNo]->ShiptRef = $ShiptRef;
 			$this->LineItems[$LineNo]->JobRef = $JobRef;
-			$this->LineItems[$LineNo]->ItemNo = $ItemNo;
 			$this->LineItems[$LineNo]->SuppliersUnit = $SuppliersUnit;
 			$this->LineItems[$LineNo]->ConversionFactor = $ConversionFactor;
 			$this->LineItems[$LineNo]->Suppliers_PartNo = $Suppliers_PartNo;
-			$this->LineItems[$LineNo]->Subtotal_Amount = $SubTotal_Amount;
-			$this->LineItems[$LineNo]->Package = $Package;
-			$this->LineItems[$LineNo]->PcUnit = $PcUnit;
-			$this->LineItems[$LineNo]->NetWeight = $NetWeight;
-			$this->LineItems[$LineNo]->KGs = $KGs;
-			$this->LineItems[$LineNo]->CuFt = $CuFt;
-			$this->LineItems[$LineNo]->Total_Quantity = $Total_Quantity;
-			$this->LineItems[$LineNo]->Total_Amount = $Total_Amount;
-			$this->LineItems[$LineNo]->SuppUOM = $SuppUOM;
 	}
 
 	function remove_from_order(&$LineNo){
@@ -248,19 +210,10 @@ Class LineDetails {
 	var $ShiptRef;
 	var $Completed;
 	Var $JobRef;
-	Var $ItemNo;
 	var $ConversionFactor;
 	var $SuppliersUnit;
 	Var $Suppliers_PartNo;
-	Var $SubTotal_Amount;
 	Var $LeadTime;
-	Var $Package;
-	Var $PcUnit;
-	Var $NetWeight;
-	Var $KGs;
-	Var $CuFt;
-	Var $Total_Quantity;
-	Var $Total_Amount;
 	Var $ReceiveQty; //this receipt of stock
 	Var $Deleted;
 	Var $Controlled;
@@ -285,19 +238,10 @@ Class LineDetails {
 						$QtyRecd,
 						$GLActName,
 						$DecimalPlaces,
-						$ItemNo,
 						$SuppliersUnit,
 						$ConversionFactor,
-						$Suppliers_PartNo,
-						$SubTotal_Amount,
 						$LeadTime,
-						$Package,
-						$PcUnit,
-						$NetWeight,
-						$KGs,
-						$CuFt,
-						$Total_Quantity,
-						$Total_Amount,
+						$Suppliers_PartNo,
 						$AssetID)	{
 
 	/* Constructor function to add a new LineDetail object with passed params */
@@ -315,18 +259,10 @@ Class LineDetails {
 		$this->QtyInv = $QtyInv;
 		$this->GLCode = $GLCode;
 		$this->JobRef = $JobRef;
-		$this->ItemNo = $ItemNo;
 		$this->SuppliersUnit = $SuppliersUnit;
 		$this->ConversionFactor = $ConversionFactor;
 		$this->Suppliers_PartNo = $Suppliers_PartNo;
-		$this->Subtotal_Amount = $SubTotal_Amount;
 		$this->LeadTime = $LeadTime;
-		$this->PcUnit = $PcUnit;
-		$this->NetWeight = $NetWeight;
-		$this->KGs = $KGs;
-		$this->CuFt = $CuFt;
-		$this->Total_Quantity = $Total_Quantity;
-		$this->Total_Amount = $Total_Amount;
 		if (is_numeric($ShiptRef)){
 			$this->ShiptRef = $ShiptRef;
 		} else {

@@ -1,6 +1,7 @@
 <?php
+
 /* $Id$*/
-//$PageSecurity = 2;
+
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/DefinePOClass.php');
@@ -69,31 +70,31 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 	$ErrMsg = _('There was a problem retrieving the purchase order header details for Order Number'). ' ' . $OrderNo .
 			' ' . _('from the database');
 	$sql = "SELECT	purchorders.supplierno,
-									suppliers.suppname,
-									suppliers.address1,
-									suppliers.address2,
-									suppliers.address3,
-									suppliers.address4,
-									purchorders.comments,
-									purchorders.orddate,
-									purchorders.rate,
-									purchorders.dateprinted,
-									purchorders.deladd1,
-									purchorders.deladd2,
-									purchorders.deladd3,
-									purchorders.deladd4,
-									purchorders.deladd5,
-									purchorders.deladd6,
-									purchorders.allowprint,
-									purchorders.requisitionno,
-									purchorders.initiator,
-									purchorders.paymentterms,
-									suppliers.currcode,
-									purchorders.status,
-									purchorders.stat_comment
-								FROM purchorders INNER JOIN suppliers
-									ON purchorders.supplierno = suppliers.supplierid
-								WHERE purchorders.orderno='" . $OrderNo ."'";
+					suppliers.suppname,
+					suppliers.address1,
+					suppliers.address2,
+					suppliers.address3,
+					suppliers.address4,
+					purchorders.comments,
+					purchorders.orddate,
+					purchorders.rate,
+					purchorders.dateprinted,
+					purchorders.deladd1,
+					purchorders.deladd2,
+					purchorders.deladd3,
+					purchorders.deladd4,
+					purchorders.deladd5,
+					purchorders.deladd6,
+					purchorders.allowprint,
+					purchorders.requisitionno,
+					purchorders.initiator,
+					purchorders.paymentterms,
+					suppliers.currcode,
+					purchorders.status,
+					purchorders.stat_comment
+				FROM purchorders INNER JOIN suppliers
+					ON purchorders.supplierno = suppliers.supplierid
+				WHERE purchorders.orderno='" . $OrderNo ."'";
 	$result=DB_query($sql,$db, $ErrMsg);
 	if (DB_num_rows($result)==0){ /*There is no order header returned */
 		$title = _('Print Purchase Order Error');
@@ -101,16 +102,16 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 		echo '<div class="centre"><br /><br /><br />';
 		prnMsg( _('Unable to Locate Purchase Order Number') . ' : ' . $OrderNo . ' ', 'error');
 		echo '<br />
-					<br />
-					<br />
-					<table class="table_index">
-						<tr><td class="menu_group_item">
-						<li><a href="'. $rootpath . '/PO_SelectOSPurchOrder.php?'.SID .'">' . _('Outstanding Purchase Orders') . '</a></li>
-						<li><a href="'. $rootpath . '/PO_SelectPurchOrder.php?'. SID .'">' . _('Purchase Order Inquiry') . '</a></li>
-						</td>
-						</tr>
-					</table>
-					</div><br /><br /><br />';
+			<br />
+			<br />
+			<table class="table_index">
+				<tr><td class="menu_group_item">
+				<li><a href="'. $rootpath . '/PO_SelectOSPurchOrder.php?'.SID .'">' . _('Outstanding Purchase Orders') . '</a></li>
+				<li><a href="'. $rootpath . '/PO_SelectPurchOrder.php?'. SID .'">' . _('Purchase Order Inquiry') . '</a></li>
+				</td>
+				</tr>
+			</table>
+			</div><br /><br /><br />';
 		include('includes/footer.inc');
 		exit();
 	} elseif (DB_num_rows($result)==1){ /*There is only one order header returned  (as it should be!)*/
@@ -192,17 +193,17 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$ErrMsg = _('There was a problem retrieving the line details for order number') . ' ' . $OrderNo . ' ' .
 			_('from the database');
 		$sql = "SELECT itemcode,
-									deliverydate,
-									itemdescription,
-									unitprice,
-									suppliersunit,
-									quantityord,
-									decimalplaces,
-									conversionfactor,
-									suppliers_partno
-							FROM purchorderdetails LEFT JOIN stockmaster
-								ON purchorderdetails.itemcode=stockmaster.stockid
-							WHERE orderno ='" . $OrderNo ."'";
+						deliverydate,
+						itemdescription,
+						unitprice,
+						suppliersunit,
+						quantityord,
+						decimalplaces,
+						conversionfactor,
+						suppliers_partno
+				FROM purchorderdetails LEFT JOIN stockmaster
+					ON purchorderdetails.itemcode=stockmaster.stockid
+				WHERE orderno ='" . $OrderNo ."'";
 		$result=DB_query($sql,$db);
 	}
 	if ($OrderNo=='Preview' or DB_num_rows($result)>0){
@@ -210,7 +211,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		include('includes/PO_PDFOrderPageHeader.inc');
 		$YPos=$Page_Height - $FormDesign->Data->y;
 		$OrderTotal = 0;
-		while ((isset($OrderNo) and $OrderNo=='Preview') or (isset($result) and $POLine=DB_fetch_array($result))) {
+		while ((isset($OrderNo) and $OrderNo=='Preview') 
+				OR (isset($result) and $POLine=DB_fetch_array($result))) {
 			/* If we are previewing the order then fill the
 			 * order line with dummy data */
 			if ($OrderNo=='Preview') {
@@ -306,33 +308,33 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$StatusComment =  date($_SESSION['DefaultDateFormat']) .' - ' . _('Printed by') . '<a href="mailto:'.$_SESSION['UserEmail'] .'">'.$_SESSION['UsersRealName']. '</a><br />' . $POHeader['stat_comment'];
 		
 		$sql = "UPDATE purchorders	SET	allowprint =  0,
-																	dateprinted  = '" . Date('Y-m-d') . "',
-																	status = 'Printed',
-																	stat_comment = '" . $StatusComment . "'
-																WHERE purchorders.orderno = '" .  $OrderNo."'";
+										dateprinted  = '" . Date('Y-m-d') . "',
+										status = 'Printed',
+										stat_comment = '" . $StatusComment . "'
+				WHERE purchorders.orderno = '" .  $OrderNo."'";
 		$result = DB_query($sql,$db);
 	}
 } /* There was enough info to either print or email the purchase order */
  else { /*the user has just gone into the page need to ask the question whether to print the order or email it to the supplier */
 	include ('includes/header.inc');
-	echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if ($ViewingOnly==1){
-		echo '<input type=hidden name="ViewingOnly" VALUE=1>';
+		echo '<input type=hidden name="ViewingOnly" value=1>';
 	}
 	echo '<br /><br />';
-	echo '<input type=hidden name="OrderNo" VALUE="'. $OrderNo. '">';
+	echo '<input type=hidden name="OrderNo" value="'. $OrderNo. '">';
 	echo '<table><tr><td>'. _('Print or Email the Order'). '</td><td>
 		<select name="PrintOrEmail">';
 	if (!isset($_POST['PrintOrEmail'])){
 		$_POST['PrintOrEmail'] = 'Print';
 	}
 	if ($_POST['PrintOrEmail']=='Print'){
-		echo '<option selected VALUE="Print">'. _('Print');
-		echo '<option VALUE="Email">' . _('Email');
+		echo '<option selected value="Print">'. _('Print');
+		echo '<option value="Email">' . _('Email');
 	} else {
-		echo '<option VALUE="Print">'. _('Print');
-		echo '<option selected VALUE="Email">'. _('Email');
+		echo '<option value="Print">'. _('Print');
+		echo '<option selected value="Email">'. _('Email');
 	}
 	echo '</select></td></tr>';
 	echo '<tr><td>'. _('Show Amounts on the Order'). '</td><td>
@@ -341,29 +343,29 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$_POST['ShowAmounts'] = 'Yes';
 	}
 	if ($_POST['ShowAmounts']=='Yes'){
-		echo '<option selected VALUE="Yes">'. _('Yes');
-		echo '<option VALUE="No">' . _('No');
+		echo '<option selected value="Yes">'. _('Yes');
+		echo '<option value="No">' . _('No');
 	} else {
-		echo '<option VALUE="Yes">'. _('Yes');
-		echo '<option selected VALUE="No">'. _('No');
+		echo '<option value="Yes">'. _('Yes');
+		echo '<option selected value="No">'. _('No');
 	}
 	echo '</select></td></tr>';
 	if ($_POST['PrintOrEmail']=='Email'){
 		$ErrMsg = _('There was a problem retrieving the contact details for the supplier');
 		$SQL = "SELECT suppliercontacts.contact,
-										suppliercontacts.email
-							FROM suppliercontacts INNER JOIN purchorders
-							ON suppliercontacts.supplierid=purchorders.supplierno
-							WHERE purchorders.orderno='".$OrderNo."'";
+						suppliercontacts.email
+				FROM suppliercontacts INNER JOIN purchorders
+				ON suppliercontacts.supplierid=purchorders.supplierno
+				WHERE purchorders.orderno='".$OrderNo."'";
 		$ContactsResult=DB_query($SQL,$db, $ErrMsg);
 		if (DB_num_rows($ContactsResult)>0){
 			echo '<tr><td>'. _('Email to') .':</td><td><select name="EmailTo">';
 			while ($ContactDetails = DB_fetch_array($ContactsResult)){
 				if (strlen($ContactDetails['email'])>2 AND strpos($ContactDetails['email'],'@')>0){
 					if ($_POST['EmailTo']==$ContactDetails['email']){
-						echo '<option selected VALUE="' . $ContactDetails['email'] . '">' . $ContactDetails['Contact'] . ' - ' . $ContactDetails['email'] . '</option>';
+						echo '<option selected value="' . $ContactDetails['email'] . '">' . $ContactDetails['Contact'] . ' - ' . $ContactDetails['email'] . '</option>';
 					} else {
-						echo '<option VALUE="' . $ContactDetails['email'] . '">' . $ContactDetails['contact'] . ' - ' . $ContactDetails['email'] . '</option>';
+						echo '<option value="' . $ContactDetails['email'] . '">' . $ContactDetails['contact'] . ' - ' . $ContactDetails['email'] . '</option>';
 					}
 				}
 			}
@@ -377,7 +379,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	} else {
 		echo '</table>';
 	}
-	echo '<br /><div class="centre"><input type=submit name="DoIt" VALUE="' . _('OK') . '"></div>';
+	echo '<br /><div class="centre"><input type=submit name="DoIt" value="' . _('OK') . '"></div>';
 	echo '</form>';
 	include('includes/footer.inc');
 }

@@ -621,7 +621,7 @@ CREATE TABLE `debtortrans` (
   CONSTRAINT `debtortrans_ibfk_1` FOREIGN KEY (`debtorno`) REFERENCES `custbranch` (`debtorno`),
   CONSTRAINT `debtortrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `debtortrans_ibfk_3` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -798,7 +798,7 @@ CREATE TABLE `emailsettings` (
   `companyname` varchar(50) DEFAULT NULL,
   `auth` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -982,7 +982,7 @@ CREATE TABLE `gltrans` (
   CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=245 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=257 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1149,7 +1149,7 @@ CREATE TABLE `mrpcalendar` (
   `manufacturingflag` smallint(6) NOT NULL DEFAULT '1',
   PRIMARY KEY (`calendardate`),
   KEY `daynumber` (`daynumber`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1169,7 +1169,7 @@ CREATE TABLE `mrpdemands` (
   KEY `mrpdemands_ibfk_1` (`mrpdemandtype`),
   CONSTRAINT `mrpdemands_ibfk_1` FOREIGN KEY (`mrpdemandtype`) REFERENCES `mrpdemandtypes` (`mrpdemandtype`),
   CONSTRAINT `mrpdemands_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1319,6 +1319,7 @@ CREATE TABLE `paymentmethods` (
   `paymentname` varchar(15) NOT NULL DEFAULT '',
   `paymenttype` int(11) NOT NULL DEFAULT '1',
   `receipttype` int(11) NOT NULL DEFAULT '1',
+  `usepreprintedstationery` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`paymentid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1574,17 +1575,8 @@ CREATE TABLE `purchorderdetails` (
   `shiptref` int(11) NOT NULL DEFAULT '0',
   `jobref` varchar(20) NOT NULL DEFAULT '',
   `completed` tinyint(4) NOT NULL DEFAULT '0',
-  `itemno` varchar(50) NOT NULL DEFAULT '',
   `suppliersunit` varchar(50) DEFAULT NULL,
-  `subtotal_amount` varchar(50) NOT NULL DEFAULT '',
-  `package` varchar(100) NOT NULL DEFAULT '',
-  `pcunit` varchar(50) NOT NULL DEFAULT '',
-  `netweight` varchar(50) DEFAULT '',
   `suppliers_partno` varchar(50) NOT NULL DEFAULT '',
-  `kgs` varchar(50) DEFAULT '',
-  `cuft` varchar(50) NOT NULL DEFAULT '',
-  `total_quantity` varchar(50) NOT NULL DEFAULT '',
-  `total_amount` varchar(50) NOT NULL DEFAULT '',
   `assetid` int(11) NOT NULL DEFAULT '0',
   `conversionfactor` double NOT NULL DEFAULT '1',
   PRIMARY KEY (`podetailitem`),
@@ -1596,7 +1588,7 @@ CREATE TABLE `purchorderdetails` (
   KEY `ShiptRef` (`shiptref`),
   KEY `Completed` (`completed`),
   CONSTRAINT `purchorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `purchorders` (`orderno`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1648,7 +1640,7 @@ CREATE TABLE `purchorders` (
   KEY `AllowPrintPO` (`allowprint`),
   CONSTRAINT `purchorders_ibfk_1` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`),
   CONSTRAINT `purchorders_ibfk_2` FOREIGN KEY (`intostocklocation`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1917,7 +1909,7 @@ CREATE TABLE `salesanalysis` (
   KEY `BudgetOrActual` (`budgetoractual`),
   KEY `Salesperson` (`salesperson`),
   CONSTRAINT `salesanalysis_ibfk_1` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2388,7 +2380,7 @@ CREATE TABLE `stockmoves` (
   CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `stockmoves_ibfk_4` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2552,7 +2544,7 @@ CREATE TABLE `suppliertype` (
   `typeid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `typename` varchar(100) NOT NULL,
   PRIMARY KEY (`typeid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2591,7 +2583,7 @@ CREATE TABLE `supptrans` (
   KEY `Type` (`type`),
   CONSTRAINT `supptrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `supptrans_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2893,7 +2885,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-03-31 20:14:19
+-- Dump completed on 2011-04-18 19:35:26
 -- MySQL dump 10.13  Distrib 5.1.47-MariaDB, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -3268,6 +3260,843 @@ INSERT INTO `audittrail` VALUES ('2011-03-29 10:25:12','admin','UPDATE www_users
 INSERT INTO `audittrail` VALUES ('2011-03-29 10:25:26','admin','UPDATE www_users\n				SET displayrecordsmax=\'50\',\n					theme=\'jelly\',\n					language=\'et_EE.utf8\',\n					email=\'info@weberp.org\',\n					pdflanguage=\'0\'\n				WHERE userid = \'admin\'');
 INSERT INTO `audittrail` VALUES ('2011-03-29 10:25:37','admin','UPDATE www_users\n				SET displayrecordsmax=\'50\',\n					theme=\'jelly\',\n					language=\'fa_IR.utf8\',\n					email=\'info@weberp.org\',\n					pdflanguage=\'0\'\n				WHERE userid = \'admin\'');
 INSERT INTO `audittrail` VALUES ('2011-03-29 10:25:47','admin','UPDATE www_users\n				SET displayrecordsmax=\'50\',\n					theme=\'jelly\',\n					language=\'sq_AL.utf8\',\n					email=\'info@weberp.org\',\n					pdflanguage=\'0\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2011-04-01 06:52:43','admin','INSERT INTO suppliers (supplierid,\n							suppname,\n							address1,\n							address2,\n							address3,\n							address4,\n							telephone,\n							fax,\n							email,\n							supptype,\n							currcode,\n							suppliersince,\n							paymentterms,\n							bankpartics,\n							bankref,\n							bankact,\n							remittance,\n							taxgroupid,\n							factorcompanyid,\n							lat,\n							lng,\n							taxref)\n					 VALUES (\'WHYNOT\',\n					 	\'Why not add a new supplier\',\n						\'Well I will \',\n						\'If I\',\n						\'Want \',\n						\'To\',\n						\'12323\',\n						\'\',\n						\'\',\n						\'1\',\n						\'AUD\',\n						\'2011-04-01\',\n						\'20\',\n						\'\',\n						\'0\',\n						\'\',\n                       	\'0\',\n                       	\'1\',\n                       	\'0\',\n                       	\'0\',\n                       	\'0\',\n                       	\'\')');
+INSERT INTO `audittrail` VALUES ('2011-04-01 06:53:29','admin','INSERT INTO suppliertype\n						(typename)\n					VALUES (\'Others\')');
+INSERT INTO `audittrail` VALUES ('2011-04-01 06:53:53','admin','INSERT INTO suppliers (supplierid,\n							suppname,\n							address1,\n							address2,\n							address3,\n							address4,\n							telephone,\n							fax,\n							email,\n							supptype,\n							currcode,\n							suppliersince,\n							paymentterms,\n							bankpartics,\n							bankref,\n							bankact,\n							remittance,\n							taxgroupid,\n							factorcompanyid,\n							lat,\n							lng,\n							taxref)\n					 VALUES (\'OTHER\',\n					 	\'Another \',\n						\'Supplier\',\n						\'\',\n						\'\',\n						\'\',\n						\'\',\n						\'\',\n						\'\',\n						\'2\',\n						\'AUD\',\n						\'2011-04-01\',\n						\'20\',\n						\'\',\n						\'0\',\n						\'\',\n                       	\'0\',\n                       	\'1\',\n                       	\'0\',\n                       	\'0\',\n                       	\'0\',\n                       	\'\')');
+INSERT INTO `audittrail` VALUES ('2011-04-01 09:57:50','admin','INSERT INTO mrpdemands (stockid,\n								mrpdemandtype,\n								quantity,\n								duedate)\n							VALUES (\'BIGEARS12\',\n								\'FOR\',\n								\' \',\n								\'2011-04-01\')');
+INSERT INTO `audittrail` VALUES ('2011-04-01 09:57:50','admin','INSERT INTO mrpdemands (stockid,\n								mrpdemandtype,\n								quantity,\n								duedate)\n							VALUES (\'BIRTHDAYCAKECONSTRUC\',\n								\'FOR\',\n								\' \',\n								\'2011-04-01\')');
+INSERT INTO `audittrail` VALUES ('2011-04-01 09:57:50','admin','INSERT INTO mrpdemands (stockid,\n								mrpdemandtype,\n								quantity,\n								duedate)\n							VALUES (\'BREAD\',\n								\'FOR\',\n								\'27\',\n								\'2011-04-01\')');
+INSERT INTO `audittrail` VALUES ('2011-04-01 09:57:50','admin','INSERT INTO mrpdemands (stockid,\n								mrpdemandtype,\n								quantity,\n								duedate)\n							VALUES (\'DVD-CASE\',\n								\'FOR\',\n								\' \',\n								\'2011-04-01\')');
+INSERT INTO `audittrail` VALUES ('2011-04-01 09:57:50','admin','INSERT INTO mrpdemands (stockid,\n								mrpdemandtype,\n								quantity,\n								duedate)\n							VALUES (\'FLOUR\',\n								\'FOR\',\n								\' \',\n								\'2011-04-01\')');
+INSERT INTO `audittrail` VALUES ('2011-04-01 09:57:50','admin','INSERT INTO mrpdemands (stockid,\n								mrpdemandtype,\n								quantity,\n								duedate)\n							VALUES (\'FROAYLANDO\',\n								\'FOR\',\n								\' \',\n								\'2011-04-01\')');
+INSERT INTO `audittrail` VALUES ('2011-04-01 09:57:50','admin','INSERT INTO mrpdemands (stockid,\n								mrpdemandtype,\n								quantity,\n								duedate)\n							VALUES (\'SALT\',\n								\'FOR\',\n								\'11\',\n								\'2011-04-01\')');
+INSERT INTO `audittrail` VALUES ('2011-04-01 21:10:36','admin','INSERT INTO pctypetabs\n						(typetabcode,\n			 			 typetabdescription)\n				VALUES (\'Default\',\n					\'Default\')');
+INSERT INTO `audittrail` VALUES ('2011-04-01 21:11:17','admin','INSERT INTO pctabs\r\n						(tabcode,\r\n			 			 usercode,\r\n						 typetabcode,\r\n						 currency,\r\n						 tablimit,\r\n						 authorizer,\r\n						 glaccountassignment,\r\n						 glaccountpcash)\r\n				VALUES (\'One WIth Space\',\r\n					\'admin\',\r\n					\'Default\',\r\n					\'AUD\',\r\n					\'500\',\r\n					\'admin\',\r\n					\'1030\',\r\n					\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-01 21:11:37','admin','DELETE FROM pctabs WHERE tabcode=\'ONE WITH SPACE\'');
+INSERT INTO `audittrail` VALUES ('2011-04-01 22:50:12','admin','UPDATE purchorderauth SET\n			cancreate=\'0\',\n			offhold=\'0\',\n			authlevel=\'9999999\'\n		WHERE userid=\'admin\'\n		AND currabrev=\'\'');
+INSERT INTO `audittrail` VALUES ('2011-04-01 22:50:30','admin','DELETE FROM purchorderauth\n		WHERE userid=\'admin\'\n		AND currabrev=\'AUD\'');
+INSERT INTO `audittrail` VALUES ('2011-04-01 22:50:38','admin','INSERT INTO purchorderauth ( userid,\n										currabrev,\n										cancreate,\n										offhold,\n										authlevel)\n										VALUES(\n										\'admin\',\n										\'AUD\',\n										\'0\',\n										\'0\',\n										\'50000\')');
+INSERT INTO `audittrail` VALUES ('2011-04-04 08:48:05','admin','UPDATE supptrans SET hold=1 \n				WHERE type=\'20\' \n				AND transno=\'22\'');
+INSERT INTO `audittrail` VALUES ('2011-04-04 08:48:08','admin','UPDATE supptrans SET hold=0 \n				WHERE type=\'20\' \n				AND transno=\'22\'');
+INSERT INTO `audittrail` VALUES ('2011-04-04 08:48:23','admin','UPDATE supptrans SET hold=0 \n				WHERE type=\'20\' \n				AND transno=\'22\'');
+INSERT INTO `audittrail` VALUES ('2011-04-04 09:55:36','admin','INSERT INTO periods (periodno,\n													lastdate_in_period)\n												VALUES (\n													\'9\',\n													\'2011-05-31\')');
+INSERT INTO `audittrail` VALUES ('2011-04-04 09:55:36','admin','INSERT INTO gltrans (type,\n											typeno,\n											trandate,\n											periodno,\n											account,\n											narrative,\n											amount,\n											jobref)\n									VALUES (20,\n										\'23\',\n										\'2011-04-03\',\n										\'8\',\n										\'4600\',\n										\'CRUISE \',\n										\'62.5\',\n										\'\')');
+INSERT INTO `audittrail` VALUES ('2011-04-04 09:55:36','admin','INSERT INTO gltrans (type,\n											typeno,\n											trandate,\n											periodno,\n											account,\n											narrative,\n											amount,\n											jobref)\n									VALUES (20,\n										\'23\',\n										\'2011-04-03\',\n										\'8\',\n										\'7400\',\n										\'CRUISE \',\n										\'119.94\',\n										\'\')');
+INSERT INTO `audittrail` VALUES ('2011-04-04 09:55:36','admin','INSERT INTO gltrans (type,\n										typeno,\n										trandate,\n										periodno,\n										account,\n										narrative,\n										amount)\n								VALUES (20,\n									\'23\',\n									\'2011-04-03\',\n									\'8\',\n									\'2100\',\n									\'CRUISE - Inv 389100 GBP145.95 @ a rate of 0.8\',\n									\'-182.44\')');
+INSERT INTO `audittrail` VALUES ('2011-04-04 09:55:36','admin','INSERT INTO supptrans (transno,\n										type,\n										supplierno,\n										suppreference,\n										trandate,\n										duedate,\n										ovamount,\n										ovgst,\n										rate,\n										transtext,\n										inputdate)\n							VALUES (\n								\'23\',\n								20 ,\n								\'CRUISE\',\n								\'389100\',\n								\'2011-04-03\',\n								\'2011-05-31\',\n								\'145.95\',\n								\'0\',\n								\'0.8\',\n								\'test again\',\n								\'2011-04-04\')');
+INSERT INTO `audittrail` VALUES ('2011-04-04 09:55:36','admin','INSERT INTO supptranstaxes (supptransid,\n												taxauthid,\n												taxamount)\n									VALUES (\n										\'9\',\n										\'13\',\n										\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-06 10:01:16','admin','UPDATE config SET confvalue = \'companies/weberpdemo/part_pics\' WHERE confname = \'part_pics_dir\'');
+INSERT INTO `audittrail` VALUES ('2011-04-06 10:01:16','admin','UPDATE config SET confvalue = \'companies/weberpdemo/reportwriter\' WHERE confname = \'reports_dir\'');
+INSERT INTO `audittrail` VALUES ('2011-04-06 10:01:16','admin','UPDATE config SET confvalue=\'4\' WHERE confname=\'LogSeverity\'');
+INSERT INTO `audittrail` VALUES ('2011-04-06 10:01:16','admin','UPDATE config SET confvalue=\'test@company.com\' WHERE confname=\'PurchasingManagerEmail\'');
+INSERT INTO `audittrail` VALUES ('2011-04-07 10:30:18','admin','DELETE FROM taxgrouptaxes\n					WHERE taxgroupid = \'1\'\n					AND taxauthid = \'5\'');
+INSERT INTO `audittrail` VALUES ('2011-04-07 10:30:25','admin','UPDATE taxgrouptaxes\n				SET calculationorder=\'1\',\n					taxontax=\'1\'\n				WHERE taxgroupid=\'1\'\n				AND taxauthid=\'1\'');
+INSERT INTO `audittrail` VALUES ('2011-04-07 10:30:25','admin','UPDATE taxgrouptaxes SET taxontax=0 WHERE taxgroupid=\'1\' AND taxauthid=\'1\'');
+INSERT INTO `audittrail` VALUES ('2011-04-07 10:30:34','admin','UPDATE taxgroups SET taxgroupdescription = \'Default\'\n					WHERE taxgroupid = \'1\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:11:06','admin','INSERT INTO stockmoves (stockid,\n					type,\n					transno,\n					loccode,\n					trandate,\n					prd,\n					reference,\n					qty,\n					newqoh)\n			VALUES (\n					\'DVD-CASE\',\n					16,\n					\'23\',\n					\'MEL\',\n					\'2011-04-10\',\n					\'8\',\n					\'To TOR\',\n					\'-10\',\n					\'35\'\n					)');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:11:06','admin','INSERT INTO stockmoves (stockid,\n						type,\n						transno,\n						loccode,\n						trandate,\n						prd,\n						reference,\n						qty,\n						newqoh)\n			VALUES (\'DVD-CASE\',\n					16,\n					\'23\',\n					\'TOR\',\n					\'2011-04-10\',\n					\'8\',\n					\'From MEL\',\n					\'10\',\n					\'191\'\n					)');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:11:06','admin','UPDATE locstock SET quantity = quantity - \'10\'\n				WHERE stockid=\'DVD-CASE\'\n				AND loccode=\'MEL\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:11:06','admin','UPDATE locstock\n				SET quantity = quantity + \'10\'\n				WHERE stockid=\'DVD-CASE\'\n				AND loccode=\'TOR\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-10\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-11\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-12\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-13\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-14\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-15\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-16\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-17\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-18\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-19\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-20\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-21\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-22\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-23\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-24\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-25\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-26\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-27\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-28\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-29\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-04-30\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-01\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-02\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-03\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-04\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-05\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-06\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-07\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-08\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-09\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-10\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-11\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-12\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-13\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-14\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-15\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-16\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-17\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-18\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-19\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-20\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-21\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-22\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-23\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-24\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-25\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-26\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-27\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-28\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-29\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-30\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-05-31\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-01\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-02\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-03\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-04\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-05\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-06\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-07\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-08\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-09\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-10\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-11\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-12\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-13\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-14\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-15\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-16\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-17\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-18\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-19\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-20\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-21\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-22\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-23\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-24\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-25\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-26\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-27\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-28\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-29\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-06-30\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-01\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-02\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-03\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-04\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-05\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-06\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-07\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-08\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-09\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-10\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-11\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-12\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-13\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-14\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-15\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-16\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-17\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-18\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-19\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-20\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-21\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-22\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-23\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-24\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-25\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-26\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-27\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-28\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-29\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-30\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-07-31\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-01\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-02\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-03\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-04\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-05\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-06\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-07\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-08\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-09\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-10\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-11\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-12\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-13\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-14\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-15\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-16\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-17\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-18\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-19\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-20\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-21\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-22\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-23\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-24\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-25\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-26\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-27\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-28\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-29\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-30\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-08-31\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-01\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-02\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-03\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-04\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-05\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-06\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-07\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-08\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-09\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-10\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-11\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-12\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-13\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-14\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-15\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-16\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-17\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-18\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-19\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-20\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-21\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-22\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-23\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-24\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-25\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-26\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-27\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-28\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-29\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-09-30\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-01\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-02\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-03\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-04\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-05\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-06\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-07\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-08\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-09\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-10\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-11\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-12\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-13\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-14\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-15\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-16\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-17\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-18\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-19\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-20\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-21\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-22\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-23\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-24\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-25\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-26\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-27\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-28\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-29\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-30\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-10-31\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-01\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-02\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-03\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-04\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-05\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-06\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-07\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-08\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-09\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-10\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-11\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-12\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-13\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-14\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-15\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-16\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-17\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-18\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-19\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-20\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-21\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-22\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-23\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-24\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-25\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-26\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-27\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-28\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-29\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-11-30\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-01\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-02\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-03\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-04\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-05\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-06\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-07\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-08\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-09\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-10\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-11\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-12\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-13\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-14\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-15\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-16\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-17\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-18\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-19\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-20\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-21\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-22\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-23\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-24\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-25\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-26\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-27\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-28\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-29\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-30\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2010-12-31\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-01\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-02\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-03\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-04\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-05\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-06\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-07\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-08\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-09\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-10\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-11\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-12\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-13\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-14\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-15\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-16\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-17\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-18\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-19\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-20\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-21\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-22\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-23\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-24\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-25\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-26\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-27\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-28\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-29\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-30\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-01-31\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-01\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-02\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-03\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-04\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-05\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-06\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-07\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-08\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-09\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-10\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-11\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-12\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-13\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-14\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-15\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-16\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-17\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-18\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-19\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-20\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-21\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-22\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-23\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-24\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-25\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-26\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-27\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-02-28\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-01\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-02\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-03\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-04\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-05\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-06\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-07\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-08\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-09\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-10\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-11\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-12\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-13\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-14\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-15\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-16\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-17\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-18\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-19\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-20\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-21\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-22\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-23\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-24\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-25\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-26\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-27\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-28\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-29\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-30\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-03-31\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-04-01\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-04-02\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-04-03\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-04-04\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-04-05\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-04-06\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-04-07\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-04-08\',\n						\'1\',\n						\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-04-09\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','INSERT INTO mrpcalendar (\n					calendardate,\n					daynumber,\n					manufacturingflag)\n				 VALUES (\'2011-04-10\',\n						\'1\',\n						\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'1\'\n					WHERE calendardate = \'2010-04-10\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'1\'\n					WHERE calendardate = \'2010-04-11\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'2\'\n					WHERE calendardate = \'2010-04-12\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'3\'\n					WHERE calendardate = \'2010-04-13\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'4\'\n					WHERE calendardate = \'2010-04-14\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'5\'\n					WHERE calendardate = \'2010-04-15\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'6\'\n					WHERE calendardate = \'2010-04-16\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'6\'\n					WHERE calendardate = \'2010-04-17\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'6\'\n					WHERE calendardate = \'2010-04-18\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'7\'\n					WHERE calendardate = \'2010-04-19\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'8\'\n					WHERE calendardate = \'2010-04-20\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'9\'\n					WHERE calendardate = \'2010-04-21\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'10\'\n					WHERE calendardate = \'2010-04-22\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'11\'\n					WHERE calendardate = \'2010-04-23\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'11\'\n					WHERE calendardate = \'2010-04-24\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'11\'\n					WHERE calendardate = \'2010-04-25\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'12\'\n					WHERE calendardate = \'2010-04-26\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'13\'\n					WHERE calendardate = \'2010-04-27\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'14\'\n					WHERE calendardate = \'2010-04-28\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'15\'\n					WHERE calendardate = \'2010-04-29\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'16\'\n					WHERE calendardate = \'2010-04-30\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'16\'\n					WHERE calendardate = \'2010-05-01\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'16\'\n					WHERE calendardate = \'2010-05-02\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'17\'\n					WHERE calendardate = \'2010-05-03\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'18\'\n					WHERE calendardate = \'2010-05-04\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'19\'\n					WHERE calendardate = \'2010-05-05\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'20\'\n					WHERE calendardate = \'2010-05-06\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'21\'\n					WHERE calendardate = \'2010-05-07\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'21\'\n					WHERE calendardate = \'2010-05-08\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'21\'\n					WHERE calendardate = \'2010-05-09\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'22\'\n					WHERE calendardate = \'2010-05-10\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'23\'\n					WHERE calendardate = \'2010-05-11\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'24\'\n					WHERE calendardate = \'2010-05-12\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'25\'\n					WHERE calendardate = \'2010-05-13\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'26\'\n					WHERE calendardate = \'2010-05-14\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'26\'\n					WHERE calendardate = \'2010-05-15\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'26\'\n					WHERE calendardate = \'2010-05-16\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'27\'\n					WHERE calendardate = \'2010-05-17\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'28\'\n					WHERE calendardate = \'2010-05-18\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'29\'\n					WHERE calendardate = \'2010-05-19\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'30\'\n					WHERE calendardate = \'2010-05-20\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'31\'\n					WHERE calendardate = \'2010-05-21\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'31\'\n					WHERE calendardate = \'2010-05-22\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'31\'\n					WHERE calendardate = \'2010-05-23\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'32\'\n					WHERE calendardate = \'2010-05-24\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'33\'\n					WHERE calendardate = \'2010-05-25\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'34\'\n					WHERE calendardate = \'2010-05-26\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'35\'\n					WHERE calendardate = \'2010-05-27\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'36\'\n					WHERE calendardate = \'2010-05-28\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'36\'\n					WHERE calendardate = \'2010-05-29\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'36\'\n					WHERE calendardate = \'2010-05-30\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'37\'\n					WHERE calendardate = \'2010-05-31\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'38\'\n					WHERE calendardate = \'2010-06-01\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'39\'\n					WHERE calendardate = \'2010-06-02\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'40\'\n					WHERE calendardate = \'2010-06-03\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'41\'\n					WHERE calendardate = \'2010-06-04\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'41\'\n					WHERE calendardate = \'2010-06-05\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'41\'\n					WHERE calendardate = \'2010-06-06\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'42\'\n					WHERE calendardate = \'2010-06-07\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'43\'\n					WHERE calendardate = \'2010-06-08\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'44\'\n					WHERE calendardate = \'2010-06-09\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'45\'\n					WHERE calendardate = \'2010-06-10\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'46\'\n					WHERE calendardate = \'2010-06-11\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'46\'\n					WHERE calendardate = \'2010-06-12\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'46\'\n					WHERE calendardate = \'2010-06-13\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'47\'\n					WHERE calendardate = \'2010-06-14\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'48\'\n					WHERE calendardate = \'2010-06-15\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'49\'\n					WHERE calendardate = \'2010-06-16\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'50\'\n					WHERE calendardate = \'2010-06-17\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'51\'\n					WHERE calendardate = \'2010-06-18\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'51\'\n					WHERE calendardate = \'2010-06-19\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'51\'\n					WHERE calendardate = \'2010-06-20\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'52\'\n					WHERE calendardate = \'2010-06-21\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'53\'\n					WHERE calendardate = \'2010-06-22\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'54\'\n					WHERE calendardate = \'2010-06-23\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'55\'\n					WHERE calendardate = \'2010-06-24\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'56\'\n					WHERE calendardate = \'2010-06-25\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'56\'\n					WHERE calendardate = \'2010-06-26\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'56\'\n					WHERE calendardate = \'2010-06-27\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'57\'\n					WHERE calendardate = \'2010-06-28\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'58\'\n					WHERE calendardate = \'2010-06-29\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'59\'\n					WHERE calendardate = \'2010-06-30\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'60\'\n					WHERE calendardate = \'2010-07-01\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'61\'\n					WHERE calendardate = \'2010-07-02\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'61\'\n					WHERE calendardate = \'2010-07-03\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'61\'\n					WHERE calendardate = \'2010-07-04\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'62\'\n					WHERE calendardate = \'2010-07-05\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'63\'\n					WHERE calendardate = \'2010-07-06\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'64\'\n					WHERE calendardate = \'2010-07-07\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'65\'\n					WHERE calendardate = \'2010-07-08\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'66\'\n					WHERE calendardate = \'2010-07-09\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'66\'\n					WHERE calendardate = \'2010-07-10\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'66\'\n					WHERE calendardate = \'2010-07-11\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'67\'\n					WHERE calendardate = \'2010-07-12\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'68\'\n					WHERE calendardate = \'2010-07-13\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'69\'\n					WHERE calendardate = \'2010-07-14\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'70\'\n					WHERE calendardate = \'2010-07-15\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'71\'\n					WHERE calendardate = \'2010-07-16\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'71\'\n					WHERE calendardate = \'2010-07-17\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'71\'\n					WHERE calendardate = \'2010-07-18\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'72\'\n					WHERE calendardate = \'2010-07-19\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'73\'\n					WHERE calendardate = \'2010-07-20\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'74\'\n					WHERE calendardate = \'2010-07-21\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'75\'\n					WHERE calendardate = \'2010-07-22\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'76\'\n					WHERE calendardate = \'2010-07-23\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'76\'\n					WHERE calendardate = \'2010-07-24\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'76\'\n					WHERE calendardate = \'2010-07-25\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'77\'\n					WHERE calendardate = \'2010-07-26\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'78\'\n					WHERE calendardate = \'2010-07-27\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'79\'\n					WHERE calendardate = \'2010-07-28\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'80\'\n					WHERE calendardate = \'2010-07-29\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'81\'\n					WHERE calendardate = \'2010-07-30\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'81\'\n					WHERE calendardate = \'2010-07-31\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'81\'\n					WHERE calendardate = \'2010-08-01\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'82\'\n					WHERE calendardate = \'2010-08-02\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'83\'\n					WHERE calendardate = \'2010-08-03\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'84\'\n					WHERE calendardate = \'2010-08-04\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'85\'\n					WHERE calendardate = \'2010-08-05\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'86\'\n					WHERE calendardate = \'2010-08-06\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'86\'\n					WHERE calendardate = \'2010-08-07\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'86\'\n					WHERE calendardate = \'2010-08-08\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'87\'\n					WHERE calendardate = \'2010-08-09\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'88\'\n					WHERE calendardate = \'2010-08-10\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'89\'\n					WHERE calendardate = \'2010-08-11\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'90\'\n					WHERE calendardate = \'2010-08-12\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'91\'\n					WHERE calendardate = \'2010-08-13\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'91\'\n					WHERE calendardate = \'2010-08-14\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'91\'\n					WHERE calendardate = \'2010-08-15\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'92\'\n					WHERE calendardate = \'2010-08-16\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'93\'\n					WHERE calendardate = \'2010-08-17\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'94\'\n					WHERE calendardate = \'2010-08-18\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'95\'\n					WHERE calendardate = \'2010-08-19\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'96\'\n					WHERE calendardate = \'2010-08-20\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'96\'\n					WHERE calendardate = \'2010-08-21\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'96\'\n					WHERE calendardate = \'2010-08-22\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'97\'\n					WHERE calendardate = \'2010-08-23\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'98\'\n					WHERE calendardate = \'2010-08-24\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'99\'\n					WHERE calendardate = \'2010-08-25\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'100\'\n					WHERE calendardate = \'2010-08-26\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'101\'\n					WHERE calendardate = \'2010-08-27\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'101\'\n					WHERE calendardate = \'2010-08-28\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'101\'\n					WHERE calendardate = \'2010-08-29\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'102\'\n					WHERE calendardate = \'2010-08-30\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'103\'\n					WHERE calendardate = \'2010-08-31\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'104\'\n					WHERE calendardate = \'2010-09-01\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'105\'\n					WHERE calendardate = \'2010-09-02\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'106\'\n					WHERE calendardate = \'2010-09-03\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'106\'\n					WHERE calendardate = \'2010-09-04\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'106\'\n					WHERE calendardate = \'2010-09-05\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'107\'\n					WHERE calendardate = \'2010-09-06\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'108\'\n					WHERE calendardate = \'2010-09-07\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'109\'\n					WHERE calendardate = \'2010-09-08\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'110\'\n					WHERE calendardate = \'2010-09-09\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'111\'\n					WHERE calendardate = \'2010-09-10\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'111\'\n					WHERE calendardate = \'2010-09-11\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'111\'\n					WHERE calendardate = \'2010-09-12\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'112\'\n					WHERE calendardate = \'2010-09-13\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'113\'\n					WHERE calendardate = \'2010-09-14\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'114\'\n					WHERE calendardate = \'2010-09-15\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'115\'\n					WHERE calendardate = \'2010-09-16\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'116\'\n					WHERE calendardate = \'2010-09-17\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'116\'\n					WHERE calendardate = \'2010-09-18\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'116\'\n					WHERE calendardate = \'2010-09-19\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'117\'\n					WHERE calendardate = \'2010-09-20\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'118\'\n					WHERE calendardate = \'2010-09-21\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'119\'\n					WHERE calendardate = \'2010-09-22\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'120\'\n					WHERE calendardate = \'2010-09-23\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'121\'\n					WHERE calendardate = \'2010-09-24\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'121\'\n					WHERE calendardate = \'2010-09-25\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'121\'\n					WHERE calendardate = \'2010-09-26\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'122\'\n					WHERE calendardate = \'2010-09-27\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'123\'\n					WHERE calendardate = \'2010-09-28\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'124\'\n					WHERE calendardate = \'2010-09-29\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'125\'\n					WHERE calendardate = \'2010-09-30\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'126\'\n					WHERE calendardate = \'2010-10-01\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'126\'\n					WHERE calendardate = \'2010-10-02\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'126\'\n					WHERE calendardate = \'2010-10-03\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'127\'\n					WHERE calendardate = \'2010-10-04\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'128\'\n					WHERE calendardate = \'2010-10-05\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'129\'\n					WHERE calendardate = \'2010-10-06\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'130\'\n					WHERE calendardate = \'2010-10-07\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'131\'\n					WHERE calendardate = \'2010-10-08\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'131\'\n					WHERE calendardate = \'2010-10-09\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'131\'\n					WHERE calendardate = \'2010-10-10\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'132\'\n					WHERE calendardate = \'2010-10-11\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'133\'\n					WHERE calendardate = \'2010-10-12\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'134\'\n					WHERE calendardate = \'2010-10-13\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'135\'\n					WHERE calendardate = \'2010-10-14\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'136\'\n					WHERE calendardate = \'2010-10-15\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'136\'\n					WHERE calendardate = \'2010-10-16\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'136\'\n					WHERE calendardate = \'2010-10-17\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'137\'\n					WHERE calendardate = \'2010-10-18\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'138\'\n					WHERE calendardate = \'2010-10-19\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'139\'\n					WHERE calendardate = \'2010-10-20\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'140\'\n					WHERE calendardate = \'2010-10-21\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'141\'\n					WHERE calendardate = \'2010-10-22\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'141\'\n					WHERE calendardate = \'2010-10-23\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'141\'\n					WHERE calendardate = \'2010-10-24\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'142\'\n					WHERE calendardate = \'2010-10-25\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'143\'\n					WHERE calendardate = \'2010-10-26\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'144\'\n					WHERE calendardate = \'2010-10-27\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'145\'\n					WHERE calendardate = \'2010-10-28\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'146\'\n					WHERE calendardate = \'2010-10-29\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'146\'\n					WHERE calendardate = \'2010-10-30\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'146\'\n					WHERE calendardate = \'2010-10-31\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'147\'\n					WHERE calendardate = \'2010-11-01\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'148\'\n					WHERE calendardate = \'2010-11-02\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'149\'\n					WHERE calendardate = \'2010-11-03\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'150\'\n					WHERE calendardate = \'2010-11-04\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'151\'\n					WHERE calendardate = \'2010-11-05\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'151\'\n					WHERE calendardate = \'2010-11-06\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'151\'\n					WHERE calendardate = \'2010-11-07\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'152\'\n					WHERE calendardate = \'2010-11-08\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'153\'\n					WHERE calendardate = \'2010-11-09\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'154\'\n					WHERE calendardate = \'2010-11-10\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'155\'\n					WHERE calendardate = \'2010-11-11\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'156\'\n					WHERE calendardate = \'2010-11-12\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'156\'\n					WHERE calendardate = \'2010-11-13\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'156\'\n					WHERE calendardate = \'2010-11-14\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'157\'\n					WHERE calendardate = \'2010-11-15\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'158\'\n					WHERE calendardate = \'2010-11-16\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'159\'\n					WHERE calendardate = \'2010-11-17\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'160\'\n					WHERE calendardate = \'2010-11-18\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'161\'\n					WHERE calendardate = \'2010-11-19\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'161\'\n					WHERE calendardate = \'2010-11-20\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'161\'\n					WHERE calendardate = \'2010-11-21\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'162\'\n					WHERE calendardate = \'2010-11-22\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'163\'\n					WHERE calendardate = \'2010-11-23\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'164\'\n					WHERE calendardate = \'2010-11-24\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'165\'\n					WHERE calendardate = \'2010-11-25\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'166\'\n					WHERE calendardate = \'2010-11-26\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'166\'\n					WHERE calendardate = \'2010-11-27\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'166\'\n					WHERE calendardate = \'2010-11-28\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'167\'\n					WHERE calendardate = \'2010-11-29\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'168\'\n					WHERE calendardate = \'2010-11-30\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'169\'\n					WHERE calendardate = \'2010-12-01\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'170\'\n					WHERE calendardate = \'2010-12-02\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'171\'\n					WHERE calendardate = \'2010-12-03\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'171\'\n					WHERE calendardate = \'2010-12-04\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'171\'\n					WHERE calendardate = \'2010-12-05\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'172\'\n					WHERE calendardate = \'2010-12-06\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'173\'\n					WHERE calendardate = \'2010-12-07\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'174\'\n					WHERE calendardate = \'2010-12-08\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'175\'\n					WHERE calendardate = \'2010-12-09\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'176\'\n					WHERE calendardate = \'2010-12-10\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'176\'\n					WHERE calendardate = \'2010-12-11\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'176\'\n					WHERE calendardate = \'2010-12-12\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'177\'\n					WHERE calendardate = \'2010-12-13\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'178\'\n					WHERE calendardate = \'2010-12-14\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'179\'\n					WHERE calendardate = \'2010-12-15\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'180\'\n					WHERE calendardate = \'2010-12-16\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'181\'\n					WHERE calendardate = \'2010-12-17\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'181\'\n					WHERE calendardate = \'2010-12-18\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:35','admin','UPDATE mrpcalendar SET daynumber = \'181\'\n					WHERE calendardate = \'2010-12-19\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'182\'\n					WHERE calendardate = \'2010-12-20\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'183\'\n					WHERE calendardate = \'2010-12-21\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'184\'\n					WHERE calendardate = \'2010-12-22\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'185\'\n					WHERE calendardate = \'2010-12-23\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'186\'\n					WHERE calendardate = \'2010-12-24\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'186\'\n					WHERE calendardate = \'2010-12-25\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'186\'\n					WHERE calendardate = \'2010-12-26\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'187\'\n					WHERE calendardate = \'2010-12-27\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'188\'\n					WHERE calendardate = \'2010-12-28\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'189\'\n					WHERE calendardate = \'2010-12-29\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'190\'\n					WHERE calendardate = \'2010-12-30\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'191\'\n					WHERE calendardate = \'2010-12-31\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'191\'\n					WHERE calendardate = \'2011-01-01\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'191\'\n					WHERE calendardate = \'2011-01-02\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'192\'\n					WHERE calendardate = \'2011-01-03\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'193\'\n					WHERE calendardate = \'2011-01-04\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'194\'\n					WHERE calendardate = \'2011-01-05\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'195\'\n					WHERE calendardate = \'2011-01-06\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'196\'\n					WHERE calendardate = \'2011-01-07\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'196\'\n					WHERE calendardate = \'2011-01-08\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'196\'\n					WHERE calendardate = \'2011-01-09\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'197\'\n					WHERE calendardate = \'2011-01-10\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'198\'\n					WHERE calendardate = \'2011-01-11\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'199\'\n					WHERE calendardate = \'2011-01-12\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'200\'\n					WHERE calendardate = \'2011-01-13\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'201\'\n					WHERE calendardate = \'2011-01-14\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'201\'\n					WHERE calendardate = \'2011-01-15\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'201\'\n					WHERE calendardate = \'2011-01-16\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'202\'\n					WHERE calendardate = \'2011-01-17\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'203\'\n					WHERE calendardate = \'2011-01-18\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'204\'\n					WHERE calendardate = \'2011-01-19\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'205\'\n					WHERE calendardate = \'2011-01-20\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'206\'\n					WHERE calendardate = \'2011-01-21\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'206\'\n					WHERE calendardate = \'2011-01-22\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'206\'\n					WHERE calendardate = \'2011-01-23\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'207\'\n					WHERE calendardate = \'2011-01-24\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'208\'\n					WHERE calendardate = \'2011-01-25\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'209\'\n					WHERE calendardate = \'2011-01-26\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'210\'\n					WHERE calendardate = \'2011-01-27\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'211\'\n					WHERE calendardate = \'2011-01-28\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'211\'\n					WHERE calendardate = \'2011-01-29\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'211\'\n					WHERE calendardate = \'2011-01-30\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'212\'\n					WHERE calendardate = \'2011-01-31\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'213\'\n					WHERE calendardate = \'2011-02-01\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'214\'\n					WHERE calendardate = \'2011-02-02\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'215\'\n					WHERE calendardate = \'2011-02-03\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'216\'\n					WHERE calendardate = \'2011-02-04\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'216\'\n					WHERE calendardate = \'2011-02-05\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'216\'\n					WHERE calendardate = \'2011-02-06\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'217\'\n					WHERE calendardate = \'2011-02-07\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'218\'\n					WHERE calendardate = \'2011-02-08\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'219\'\n					WHERE calendardate = \'2011-02-09\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'220\'\n					WHERE calendardate = \'2011-02-10\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'221\'\n					WHERE calendardate = \'2011-02-11\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'221\'\n					WHERE calendardate = \'2011-02-12\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'221\'\n					WHERE calendardate = \'2011-02-13\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'222\'\n					WHERE calendardate = \'2011-02-14\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'223\'\n					WHERE calendardate = \'2011-02-15\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'224\'\n					WHERE calendardate = \'2011-02-16\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'225\'\n					WHERE calendardate = \'2011-02-17\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'226\'\n					WHERE calendardate = \'2011-02-18\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'226\'\n					WHERE calendardate = \'2011-02-19\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'226\'\n					WHERE calendardate = \'2011-02-20\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'227\'\n					WHERE calendardate = \'2011-02-21\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'228\'\n					WHERE calendardate = \'2011-02-22\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'229\'\n					WHERE calendardate = \'2011-02-23\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'230\'\n					WHERE calendardate = \'2011-02-24\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'231\'\n					WHERE calendardate = \'2011-02-25\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'231\'\n					WHERE calendardate = \'2011-02-26\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'231\'\n					WHERE calendardate = \'2011-02-27\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'232\'\n					WHERE calendardate = \'2011-02-28\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'233\'\n					WHERE calendardate = \'2011-03-01\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'234\'\n					WHERE calendardate = \'2011-03-02\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'235\'\n					WHERE calendardate = \'2011-03-03\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'236\'\n					WHERE calendardate = \'2011-03-04\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'236\'\n					WHERE calendardate = \'2011-03-05\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'236\'\n					WHERE calendardate = \'2011-03-06\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'237\'\n					WHERE calendardate = \'2011-03-07\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'238\'\n					WHERE calendardate = \'2011-03-08\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'239\'\n					WHERE calendardate = \'2011-03-09\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'240\'\n					WHERE calendardate = \'2011-03-10\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'241\'\n					WHERE calendardate = \'2011-03-11\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'241\'\n					WHERE calendardate = \'2011-03-12\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'241\'\n					WHERE calendardate = \'2011-03-13\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'242\'\n					WHERE calendardate = \'2011-03-14\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'243\'\n					WHERE calendardate = \'2011-03-15\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'244\'\n					WHERE calendardate = \'2011-03-16\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'245\'\n					WHERE calendardate = \'2011-03-17\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'246\'\n					WHERE calendardate = \'2011-03-18\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'246\'\n					WHERE calendardate = \'2011-03-19\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'246\'\n					WHERE calendardate = \'2011-03-20\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'247\'\n					WHERE calendardate = \'2011-03-21\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'248\'\n					WHERE calendardate = \'2011-03-22\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'249\'\n					WHERE calendardate = \'2011-03-23\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'250\'\n					WHERE calendardate = \'2011-03-24\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'251\'\n					WHERE calendardate = \'2011-03-25\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'251\'\n					WHERE calendardate = \'2011-03-26\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'251\'\n					WHERE calendardate = \'2011-03-27\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'252\'\n					WHERE calendardate = \'2011-03-28\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'253\'\n					WHERE calendardate = \'2011-03-29\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'254\'\n					WHERE calendardate = \'2011-03-30\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'255\'\n					WHERE calendardate = \'2011-03-31\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'256\'\n					WHERE calendardate = \'2011-04-01\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'256\'\n					WHERE calendardate = \'2011-04-02\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'256\'\n					WHERE calendardate = \'2011-04-03\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'257\'\n					WHERE calendardate = \'2011-04-04\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'258\'\n					WHERE calendardate = \'2011-04-05\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'259\'\n					WHERE calendardate = \'2011-04-06\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'260\'\n					WHERE calendardate = \'2011-04-07\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'261\'\n					WHERE calendardate = \'2011-04-08\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'261\'\n					WHERE calendardate = \'2011-04-09\'');
+INSERT INTO `audittrail` VALUES ('2011-04-10 10:27:36','admin','UPDATE mrpcalendar SET daynumber = \'261\'\n					WHERE calendardate = \'2011-04-10\'');
+INSERT INTO `audittrail` VALUES ('2011-04-11 09:09:57','admin','UPDATE purchorders SET supplierno = \'BINGO\' ,\n										comments=\'\',\n										rate=\'0.85\',\n										initiator=\'admin\',\n										requisitionno= \'\',\n										version= \'6\',\n										deliveryby=\'1\',\n										deliverydate=\'2011-03-27\',\n										revised= \'2011-04-11\',\n										intostocklocation=\'MEL\',\n										deladd1=\'1234 Collins Street\',\n										deladd2=\'Melbourne\',\n										deladd3=\'Victoria 2345\',\n										deladd4=\'\',\n										deladd5=\'\',\n										deladd6=\'+61 3 56789012\',\n										deladd6=\'+61 3 56789012\',\n										suppdeladdress1=\'Box 3499\',\n										suppdeladdress2=\'Gardenier\',\n										suppdeladdress3=\'San Fransisco\',\n										suppdeladdress4=\'California 54424\',\n										suppdeladdress5=\'\',\n										suppdeladdress6=\'\',\n										suppliercontact=\'\',\n										supptel=\'\',\n										contact=\'Jack Roberts\',\n										paymentterms=\'30\',\n										allowprint=\'0\',\n										status = \'Pending\'\n										WHERE orderno = \'12\'');
+INSERT INTO `audittrail` VALUES ('2011-04-11 09:09:58','admin','UPDATE purchorders SET supplierno = \'BINGO\' ,\n										comments=\'\',\n										rate=\'0.85\',\n										initiator=\'admin\',\n										requisitionno= \'\',\n										version= \'6\',\n										deliveryby=\'1\',\n										deliverydate=\'2011-03-27\',\n										revised= \'2011-04-11\',\n										intostocklocation=\'MEL\',\n										deladd1=\'1234 Collins Street\',\n										deladd2=\'Melbourne\',\n										deladd3=\'Victoria 2345\',\n										deladd4=\'\',\n										deladd5=\'\',\n										deladd6=\'+61 3 56789012\',\n										deladd6=\'+61 3 56789012\',\n										suppdeladdress1=\'Box 3499\',\n										suppdeladdress2=\'Gardenier\',\n										suppdeladdress3=\'San Fransisco\',\n										suppdeladdress4=\'California 54424\',\n										suppdeladdress5=\'\',\n										suppdeladdress6=\'\',\n										suppliercontact=\'\',\n										supptel=\'\',\n										contact=\'Jack Roberts\',\n										paymentterms=\'30\',\n										allowprint=\'0\',\n										status = \'Pending\'\n										WHERE orderno = \'12\'');
+INSERT INTO `audittrail` VALUES ('2011-04-11 09:09:58','admin','UPDATE purchorderdetails SET itemcode=\'DVD-CASE\',\n															deliverydate =\'2011-03-27\',\n															itemdescription=\' - \',\n															glcode=\'1460\',\n															unitprice=\'622\',\n															quantityord=\'104000\',\n															shiptref=\'0\',\n															jobref=\'0\',\n															itemno=\'DVD-CASE\',\n															suppliersunit=\'each\',\n															suppliers_partno=\'1\',\n															subtotal_amount=\'\',\n															package=\'\',\n															pcunit=\'0\',\n															netweight=\'0.0000\',\n															kgs=\'0.0000\',\n															cuft=\'\',\n															total_quantity=\'2351\',\n															total_amount=\'145122528\',\n															assetid=\'0\',\n															conversionfactor = \'2\'\n								WHERE podetailitem=\'18\'');
+INSERT INTO `audittrail` VALUES ('2011-04-11 09:59:35','admin','UPDATE www_users\n				SET displayrecordsmax=\'50\',\n					theme=\'jelly\',\n					language=\'en_GB.utf8\',\n					email=\'info@weberp.org\',\n					pdflanguage=\'0\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2011-04-12 08:15:46','admin','INSERT INTO purchorders (	orderno,\n											supplierno,\n											comments,\n											orddate,\n											rate,\n											initiator,\n											requisitionno,\n											intostocklocation,\n											deladd1,\n											deladd2,\n											deladd3,\n											deladd4,\n											deladd5,\n											deladd6,\n											tel,\n											suppdeladdress1,\n											suppdeladdress2,\n											suppdeladdress3,\n											suppdeladdress4,\n											suppdeladdress5,\n											suppdeladdress6,\n											suppliercontact,\n											supptel,\n											contact,\n											version,\n											revised,\n											deliveryby,\n											status,\n											stat_comment,\n											deliverydate,\n											paymentterms,\n											allowprint)\n										VALUES(	\'13\',\n												\'WHYNOT\',\n												\'\',\n												\'2011-04-12\',\n												\'1\',\n												\'admin\',\n												\'\',\n												\'MEL\',\n												\'1234 Collins Street\',\n												\'Melbourne\',\n												\'Victoria 2345\',\n												\'\',\n												\'\',\n												\'Australia\',\n												\'+61 3 56789012\',\n												\'Well I will \',\n												\'If I\',\n												\'Want \',\n												\'To\',\n												\'\',\n												\'\',\n												\'\',\n												\'12323\',\n												\'Jack Roberts\',\n												\'1\',\n												\'2011-04-12\',\n												\'1\',\n												\'Pending\',\n												\'12/04/2011 - Order Created by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;Demonstration user&lt;/a&gt; - &lt;br /&gt;\',\n												\'2011-04-12\',\n												\'20\',\n												\'0\'\n											)');
+INSERT INTO `audittrail` VALUES ('2011-04-12 08:15:46','admin','INSERT INTO purchorderdetails ( orderno,\n															itemcode,\n															deliverydate,\n															itemdescription,\n															glcode,\n															unitprice,\n															quantityord,\n															shiptref,\n															jobref,\n															itemno,\n															suppliersunit,\n															suppliers_partno,\n															subtotal_amount,\n															package,\n															pcunit,\n															netweight,\n															kgs,\n															cuft,\n															total_quantity,\n															total_amount,\n															assetid,\n															conversionfactor )\n													VALUES (\n															\'13\',\n															\'DVD-DHWV\',\n															\'2011-04-12\',\n															\'Die Hard With A Vengeance Linked\',\n															\'1460\',\n															\'1240\',\n															\'5000\',\n															\'0\',\n															\'0\',\n															\'DVD-DHWV\',\n															\'each\',\n															\'1\',\n															\'\',\n															\'\',\n															\'0\',\n															\'0.0000\',\n															\'7.0000\',\n															\'\',\n															\'5\',\n															\'0\',\n															\'0\',\n															\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-12 08:15:46','admin','INSERT INTO purchorderdetails ( orderno,\n															itemcode,\n															deliverydate,\n															itemdescription,\n															glcode,\n															unitprice,\n															quantityord,\n															shiptref,\n															jobref,\n															itemno,\n															suppliersunit,\n															suppliers_partno,\n															subtotal_amount,\n															package,\n															pcunit,\n															netweight,\n															kgs,\n															cuft,\n															total_quantity,\n															total_amount,\n															assetid,\n															conversionfactor )\n													VALUES (\n															\'13\',\n															\'SALT\',\n															\'2011-04-12\',\n															\'Salt\',\n															\'1460\',\n															\'3650\',\n															\'5\',\n															\'0\',\n															\'0\',\n															\'SALT\',\n															\'kgs\',\n															\'1\',\n															\'\',\n															\'\',\n															\'0\',\n															\'0.0000\',\n															\'0.0000\',\n															\'\',\n															\'5\',\n															\'0\',\n															\'0\',\n															\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-12 08:16:37','admin','UPDATE www_users\n				SET displayrecordsmax=\'50\',\n					theme=\'jelly\',\n					language=\'lv_LV.utf8\',\n					email=\'info@weberp.org\',\n					pdflanguage=\'0\'\n				WHERE userid = \'admin\'');
+INSERT INTO `audittrail` VALUES ('2011-04-12 08:53:38','admin','UPDATE salesorderdetails SET quantity=2,\n																										unitprice=2,\n																										discountpercent=0,\n																										narrative =\'\',\n																										itemdue = \'2011-04-12\',\n																										poline = \'\'\n														WHERE orderno=0\n														AND orderlineno=0');
+INSERT INTO `audittrail` VALUES ('2011-04-12 08:53:38','admin','UPDATE salesorderdetails SET quantity=2,\n																										unitprice=5,\n																										discountpercent=0,\n																										narrative =\'\',\n																										itemdue = \'2011-04-12\',\n																										poline = \'\'\n														WHERE orderno=0\n														AND orderlineno=1');
+INSERT INTO `audittrail` VALUES ('2011-04-12 08:53:42','admin','INSERT INTO salesorders (\n								orderno,\n								debtorno,\n								branchcode,\n								customerref,\n								comments,\n								orddate,\n								ordertype,\n								shipvia,\n								deliverto,\n								deladd1,\n								deladd2,\n								deladd3,\n								deladd4,\n								deladd5,\n								deladd6,\n								contactphone,\n								contactemail,\n								freightcost,\n								fromstkloc,\n								deliverydate,\n								quotedate,\n								confirmeddate,\n								quotation,\n								deliverblind)\n							VALUES (\n								\'27\',\n								\'JOLOMU\',\n								\'JOLOMU\',\n								\'\',\n								\'\',\n								\'2011-04-12 08:53\',\n								\'DE\',\n								\'1\',\n								\'Lorrima Productions Inc\',\n								\'3215 Great Western Highway\',\n								\'Blubberhouses\',\n								\'Yorkshire\',\n								\'England\',\n								\'\',\n								\'\',\n								\'+44 812 211456\',\n								\'jolomu@lorrima.co.uk\',\n								\'0\',\n								\'TOR\',\n								\'2011-04-12\',\n								\'2011-04-12\',\n								\'2011-04-12\',\n								\'0\',\n								\'1\'\n								)');
+INSERT INTO `audittrail` VALUES ('2011-04-12 08:53:42','admin','INSERT INTO salesorderdetails (\n											orderlineno,\n											orderno,\n											stkcode,\n											unitprice,\n											quantity,\n											discountpercent,\n											narrative,\n											poline,\n											itemdue)\n										VALUES (\n					\'0\',\n					\'27\',\n					\'BIGEARS12\',\n					\'2\',\n					\'2\',\n					\'0\',\n					\'\',\n					\'\',\n					\'2011-04-12\'\n				)');
+INSERT INTO `audittrail` VALUES ('2011-04-12 08:53:42','admin','INSERT INTO salesorderdetails (\n											orderlineno,\n											orderno,\n											stkcode,\n											unitprice,\n											quantity,\n											discountpercent,\n											narrative,\n											poline,\n											itemdue)\n										VALUES (\n					\'1\',\n					\'27\',\n					\'BREAD\',\n					\'5\',\n					\'2\',\n					\'0\',\n					\'\',\n					\'\',\n					\'2011-04-12\'\n				)');
+INSERT INTO `audittrail` VALUES ('2011-04-12 08:58:23','admin','UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted=\'2011-04-12\' WHERE salesorders.orderno=\'8\'');
+INSERT INTO `audittrail` VALUES ('2011-04-15 10:48:42','admin','INSERT INTO prices (stockid,\n									typeabbrev,\n									currabrev,\n									startdate,\n									enddate,\n									price)\n							VALUES (\'DVD-CASE\',\n								\'DE\',\n								\'AUD\',\n								\'2011-04-15\',\n								\'0000-00-00\',\n								\'124.5\')');
+INSERT INTO `audittrail` VALUES ('2011-04-15 10:57:13','admin','DELETE FROM prices\n				WHERE prices.stockid = \'DVD-CASE\'\n				AND prices.typeabbrev=\'DE\'\n				AND prices.currabrev =\'AUD\'\n				AND  prices.startdate = \'1999-01-01\'\n				AND  prices.enddate = \'0000-00-00\'\n				AND prices.debtorno=\'\'');
+INSERT INTO `audittrail` VALUES ('2011-04-16 00:09:49','admin','INSERT INTO stockmaster (\n							stockid,\n							description,\n							longdescription,\n							categoryid,\n							units,\n							mbflag,\n							eoq,\n							discontinued,\n							controlled,\n							serialised,\n							perishable,\n							volume,\n							kgs,\n							barcode,\n							discountcategory,\n							taxcatid,\n							decimalplaces,\n							appendfile,\n							shrinkfactor,\n							pansize)\n						VALUES (\'TEST\',\n							\'Test 123\',\n							\'tresd\',\n							\'PLANT\',\n							\'each\',\n							\'B\',\n							\'0\',\n							\'0\',\n							\'0\',\n							\'0\',\n							\'0\',\n							\'0\',\n							\'0\',\n							\'\',\n							\'\',\n							\'1\',\n							\'0\',\n							\'0\',\n							\'0\',\n							\'0\'\n							)');
+INSERT INTO `audittrail` VALUES ('2011-04-16 00:09:49','admin','INSERT INTO locstock (loccode,\n													stockid)\n										SELECT locations.loccode,\n										\'TEST\'\n										FROM locations');
+INSERT INTO `audittrail` VALUES ('2011-04-16 00:11:19','admin','DELETE FROM locstock WHERE stockid=\'TEST\'');
+INSERT INTO `audittrail` VALUES ('2011-04-16 00:11:19','admin','DELETE FROM prices WHERE stockid=\'TEST\'');
+INSERT INTO `audittrail` VALUES ('2011-04-16 00:11:19','admin','DELETE FROM purchdata WHERE stockid=\'TEST\'');
+INSERT INTO `audittrail` VALUES ('2011-04-16 00:11:19','admin','DELETE FROM bom WHERE parent=\'TEST\'');
+INSERT INTO `audittrail` VALUES ('2011-04-16 00:11:19','admin','DELETE FROM stockmaster WHERE stockid=\'TEST\'');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:18','admin','UPDATE salesorderdetails SET quantity=5,\n																										unitprice=16.5,\n																										discountpercent=0.05,\n																										narrative =\'Testing one two three\',\n																										itemdue = \'2011-04-17\',\n																										poline = \'\'\n														WHERE orderno=0\n														AND orderlineno=0');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:18','admin','UPDATE salesorderdetails SET quantity=4,\n																										unitprice=3.5,\n																										discountpercent=0.025,\n																										narrative =\'ass\',\n																										itemdue = \'2011-04-16\',\n																										poline = \'\'\n														WHERE orderno=0\n														AND orderlineno=1');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:23','admin','INSERT INTO salesorders (\n								orderno,\n								debtorno,\n								branchcode,\n								customerref,\n								comments,\n								orddate,\n								ordertype,\n								shipvia,\n								deliverto,\n								deladd1,\n								deladd2,\n								deladd3,\n								deladd4,\n								deladd5,\n								deladd6,\n								contactphone,\n								contactemail,\n								freightcost,\n								fromstkloc,\n								deliverydate,\n								quotedate,\n								confirmeddate,\n								quotation,\n								deliverblind)\n							VALUES (\n								\'28\',\n								\'QUICK\',\n								\'SLOW\',\n								\'\',\n								\'\',\n								\'2011-04-16 05:42\',\n								\'DE\',\n								\'1\',\n								\'Slow Dog\',\n								\'Hunstman Road\',\n								\'Woofton\',\n								\'\',\n								\'\',\n								\'\',\n								\'\',\n								\'\',\n								\'\',\n								\'0\',\n								\'TOR\',\n								\'2011-04-18\',\n								\'2011-04-18\',\n								\'2011-04-18\',\n								\'0\',\n								\'1\'\n								)');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:23','admin','INSERT INTO salesorderdetails (\n											orderlineno,\n											orderno,\n											stkcode,\n											unitprice,\n											quantity,\n											discountpercent,\n											narrative,\n											poline,\n											itemdue)\n										VALUES (\n					\'0\',\n					\'28\',\n					\'DVD-CASE\',\n					\'16.5\',\n					\'5\',\n					\'0.05\',\n					\'Testing one two three\',\n					\'\',\n					\'2011-04-17\'\n				)');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:23','admin','INSERT INTO salesorderdetails (\n											orderlineno,\n											orderno,\n											stkcode,\n											unitprice,\n											quantity,\n											discountpercent,\n											narrative,\n											poline,\n											itemdue)\n										VALUES (\n					\'1\',\n					\'28\',\n					\'SALT\',\n					\'3.5\',\n					\'4\',\n					\'0.025\',\n					\'ass\',\n					\'\',\n					\'2011-04-16\'\n				)');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','UPDATE salesorders\n							SET comments = CONCAT(comments,\' Inv \',\'15\')\n							WHERE orderno= \'28\'');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','INSERT INTO debtortrans (	transno,\n																	type,\n																	debtorno,\n																	branchcode,\n																	trandate,\n																	inputdate,\n																	prd,\n																	reference,\n																	tpe,\n																	order_,\n																	ovamount,\n																	ovgst,\n																	ovfreight,\n																	rate,\n																	invtext,\n																	shipvia,\n																	consignment )\n																VALUES (\n																	\'15\',\n																	10,\n																	\'QUICK\',\n																	\'SLOW\',\n																	\'2011-04-18\',\n																	\'2011-04-16 05-42-39\',\n																	\'8\',\n																	\'\',\n																	\'DE\',\n																	\'28\',\n																	\'92.03\',\n																	\'0\',\n																	\'0\',\n																	\'0.85\',\n																	\'test inbvoice narrative\',\n																	\'1\',\n																	\'\'	)');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','INSERT INTO debtortranstaxes (debtortransid,\n																				taxauthid,\n																				taxamount)\n																	VALUES (\'25\',\n																		\'13\',\n																		\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','UPDATE salesorderdetails	SET qtyinvoiced = qtyinvoiced + 5,\n																						actualdispatchdate = \'2011-04-18\',\n																						completed=1\n								WHERE orderno = \'28\'\n								AND orderlineno = \'0\'');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','UPDATE locstock	SET quantity = locstock.quantity - 5\n					WHERE locstock.stockid = \'DVD-CASE\'\n					AND loccode = \'TOR\'');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','INSERT INTO stockmoves (	stockid,\n																						type,\n																						transno,\n																						loccode,\n																						trandate,\n																						debtorno,\n																						branchcode,\n																						price,\n																						prd,\n																						reference,\n																						qty,\n																						discountpercent,\n																						standardcost,\n																						newqoh,\n																						narrative )\n																					VALUES (\'DVD-CASE\',\n																						10,\n																						\'15\',\n																						\'TOR\',\n																						\'2011-04-18\',\n																						\'QUICK\',\n																						\'SLOW\',\n																						\'19.411764705882\',\n																						\'8\',\n																						\'28\',\n																						\'-5\',\n																						\'0.05\',\n																						\'0.3000\',\n																						\'186\',\n																						\'Testing one two three\' )');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','INSERT INTO stockmovestaxes (stkmoveno,\n																						taxauthid,\n																						taxrate,\n																						taxcalculationorder,\n																						taxontax)\n																			VALUES (\'68\',\n																				\'13\',\n																				\'0\',\n																				\'0\',\n																				\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','INSERT INTO salesanalysis (typeabbrev,\n																				periodno,\n																				amt,\n																				cost,\n																				cust,\n																				custbranch,\n																				qty,\n																				disc,\n																				stockid,\n																				area,\n																				budgetoractual,\n																				salesperson,\n																				stkcategory )\n								SELECT \'DE\',\n												\'8\',\n												\'97.058823529412\',\n												\'1.5\',\n												\'QUICK\',\n												\'SLOW\',\n												\'5\',\n												\'4.8529411764706\',\n												\'DVD-CASE\',\n												custbranch.area,\n												1,\n												custbranch.salesman,\n												stockmaster.categoryid\n								FROM stockmaster,\n									custbranch\n								WHERE stockmaster.stockid = \'DVD-CASE\'\n								AND custbranch.debtorno = \'QUICK\'\n								AND custbranch.branchcode=\'SLOW\'');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','INSERT INTO gltrans (  type,\n																		typeno,\n																		trandate,\n																		periodno,\n																		account,\n																		narrative,\n																		amount)\n																VALUES (\n																	10,\n																	\'15\',\n																	\'2011-04-18\',\n																	\'8\',\n																	\'5000\',\n																	\'QUICK - DVD-CASE x 5 @ 0.3000\',\n																	\'1.5\')');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','INSERT INTO gltrans (	type,\n																		typeno,\n																		trandate,\n																		periodno,\n																		account,\n																		narrative,\n																		amount)\n																VALUES (\n																	10,\n																	\'15\',\n																	\'2011-04-18\',\n																	\'8\',\n																	\'1460\',\n																	\'QUICK - DVD-CASE x 5 @ 0.3000\',\n																	\'-1.5\')');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','INSERT INTO gltrans (  type,\n																			typeno,\n																			trandate,\n																			periodno,\n																			account,\n																			narrative,\n																			amount )\n																	VALUES (\n																		10,\n																		\'15\',\n																		\'2011-04-18\',\n																		\'8\',\n																		\'4100\',\n																		\'QUICK - DVD-CASE x 5 @ 16.5\',\n																		\'-97.058823529412\')');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','INSERT INTO gltrans ( type,\n																				typeno,\n																				trandate,\n																				periodno,\n																				account,\n																				narrative,\n																				amount)\n																			VALUES (\n																				10,\n																				\'15\',\n																				\'2011-04-18\',\n																				\'8\',\n																				\'4900\',\n																				\'QUICK - DVD-CASE @ 5%\',\n																				\'4.8529411764706\')');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','UPDATE salesorderdetails	SET qtyinvoiced = qtyinvoiced + 4,\n																						actualdispatchdate = \'2011-04-18\',\n																						completed=1\n								WHERE orderno = \'28\'\n								AND orderlineno = \'1\'');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','UPDATE locstock	SET quantity = locstock.quantity - 4\n					WHERE locstock.stockid = \'SALT\'\n					AND loccode = \'TOR\'');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','INSERT INTO stockmoves (	stockid,\n																						type,\n																						transno,\n																						loccode,\n																						trandate,\n																						debtorno,\n																						branchcode,\n																						price,\n																						prd,\n																						reference,\n																						qty,\n																						discountpercent,\n																						standardcost,\n																						newqoh,\n																						narrative )\n																					VALUES (\'SALT\',\n																						10,\n																						\'15\',\n																						\'TOR\',\n																						\'2011-04-18\',\n																						\'QUICK\',\n																						\'SLOW\',\n																						\'4.1176470588235\',\n																						\'8\',\n																						\'28\',\n																						\'-4\',\n																						\'0.025\',\n																						\'2.5000\',\n																						\'19.7\',\n																						\'ass\' )');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','INSERT INTO stockmovestaxes (stkmoveno,\n																						taxauthid,\n																						taxrate,\n																						taxcalculationorder,\n																						taxontax)\n																			VALUES (\'69\',\n																				\'13\',\n																				\'0\',\n																				\'0\',\n																				\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','INSERT INTO salesanalysis (typeabbrev,\n																				periodno,\n																				amt,\n																				cost,\n																				cust,\n																				custbranch,\n																				qty,\n																				disc,\n																				stockid,\n																				area,\n																				budgetoractual,\n																				salesperson,\n																				stkcategory )\n								SELECT \'DE\',\n												\'8\',\n												\'16.470588235294\',\n												\'10\',\n												\'QUICK\',\n												\'SLOW\',\n												\'4\',\n												\'0.41176470588235\',\n												\'SALT\',\n												custbranch.area,\n												1,\n												custbranch.salesman,\n												stockmaster.categoryid\n								FROM stockmaster,\n									custbranch\n								WHERE stockmaster.stockid = \'SALT\'\n								AND custbranch.debtorno = \'QUICK\'\n								AND custbranch.branchcode=\'SLOW\'');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','INSERT INTO gltrans (  type,\n																		typeno,\n																		trandate,\n																		periodno,\n																		account,\n																		narrative,\n																		amount)\n																VALUES (\n																	10,\n																	\'15\',\n																	\'2011-04-18\',\n																	\'8\',\n																	\'5000\',\n																	\'QUICK - SALT x 4 @ 2.5000\',\n																	\'10\')');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','INSERT INTO gltrans (	type,\n																		typeno,\n																		trandate,\n																		periodno,\n																		account,\n																		narrative,\n																		amount)\n																VALUES (\n																	10,\n																	\'15\',\n																	\'2011-04-18\',\n																	\'8\',\n																	\'1460\',\n																	\'QUICK - SALT x 4 @ 2.5000\',\n																	\'-10\')');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','INSERT INTO gltrans (  type,\n																			typeno,\n																			trandate,\n																			periodno,\n																			account,\n																			narrative,\n																			amount )\n																	VALUES (\n																		10,\n																		\'15\',\n																		\'2011-04-18\',\n																		\'8\',\n																		\'4100\',\n																		\'QUICK - SALT x 4 @ 3.5\',\n																		\'-16.470588235294\')');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','INSERT INTO gltrans ( type,\n																				typeno,\n																				trandate,\n																				periodno,\n																				account,\n																				narrative,\n																				amount)\n																			VALUES (\n																				10,\n																				\'15\',\n																				\'2011-04-18\',\n																				\'8\',\n																				\'4900\',\n																				\'QUICK - SALT @ 2.5%\',\n																				\'0.41176470588235\')');
+INSERT INTO `audittrail` VALUES ('2011-04-16 05:42:39','admin','INSERT INTO gltrans (	type,\n																	typeno,\n																	trandate,\n																	periodno,\n																	account,\n																	narrative,\n																	amount)\n																VALUES (\n																	10,\n																	\'15\',\n																	\'2011-04-18\',\n																	\'8\',\n																	\'1100\',\n																	\'QUICK\',\n																	\'108.27058823529\')');
+INSERT INTO `audittrail` VALUES ('2011-04-17 08:02:25','admin','INSERT INTO prices (stockid,\n		                            typeabbrev,\n									currabrev,\n									debtorno,\n									price,\n									branchcode,\n									startdate,\n									enddate)\n							VALUES (\'DVD-CASE\',\n								\'DE\',\n								\'GBP\',\n								\'DUMBLE\',\n								\'52.95\',\n								\'DUMBLE\',\n								\'2011-04-17\',\n								\'--\'\n							)');
+INSERT INTO `audittrail` VALUES ('2011-04-17 08:02:37','admin','UPDATE prices SET typeabbrev=\'DE\',\n		                          currabrev=\'GBP\',\n								  price=\'52.65\',\n								  branchcode=\'DUMBLE\',\n								  startdate=\'2011-04-17\',\n								  enddate=\'--\'\n				WHERE prices.stockid=\'DVD-CASE\'\n				AND prices.typeabbrev=\'DE\'\n				AND prices.currabrev=\'GBP\'\n				AND prices.startdate=\'2011-04-17\'\n				AND prices.enddate=\'0000-00-00\'\n				AND prices.debtorno=\'DUMBLE\'');
+INSERT INTO `audittrail` VALUES ('2011-04-18 05:55:48','admin','INSERT INTO purchorders (	orderno,\n											supplierno,\n											comments,\n											orddate,\n											rate,\n											initiator,\n											requisitionno,\n											intostocklocation,\n											deladd1,\n											deladd2,\n											deladd3,\n											deladd4,\n											deladd5,\n											deladd6,\n											tel,\n											suppdeladdress1,\n											suppdeladdress2,\n											suppdeladdress3,\n											suppdeladdress4,\n											suppdeladdress5,\n											suppdeladdress6,\n											suppliercontact,\n											supptel,\n											contact,\n											version,\n											revised,\n											deliveryby,\n											status,\n											stat_comment,\n											deliverydate,\n											paymentterms,\n											allowprint)\n										VALUES(	\'14\',\n												\'WHYNOT\',\n												\'\',\n												\'2011-04-18\',\n												\'1\',\n												\'admin\',\n												\'\',\n												\'MEL\',\n												\'1234 Collins Street\',\n												\'Melbourne\',\n												\'Victoria 2345\',\n												\'\',\n												\'\',\n												\'Australia\',\n												\'+61 3 56789012\',\n												\'Well I will \',\n												\'If I\',\n												\'Want \',\n												\'To\',\n												\'\',\n												\'\',\n												\'\',\n												\'12323\',\n												\'Jack Roberts\',\n												\'1\',\n												\'2011-04-18\',\n												\'1\',\n												\'Authorised\',\n												\'18/04/2011 - Order Created and Authorised by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;Demonstration user&lt;/a&gt; - &lt;br /&gt;\',\n												\'2011-04-18\',\n												\'20\',\n												\'1\'\n											)');
+INSERT INTO `audittrail` VALUES ('2011-04-18 05:55:48','admin','INSERT INTO purchorderdetails ( orderno,\n															itemcode,\n															deliverydate,\n															itemdescription,\n															glcode,\n															unitprice,\n															quantityord,\n															shiptref,\n															jobref,\n															suppliersunit,\n															suppliers_partno,\n															assetid,\n															conversionfactor )\n													VALUES (\n															\'14\',\n															\'DVD-CASE\',\n															\'2011-04-18\',\n															\'webERP Demo DVD Case\',\n															\'1460\',\n															\'12.5\',\n															\'3\',\n															\'0\',\n															\'0\',\n															\'each\',\n															\'1\',\n															\'0\',\n															\'1\')');
+INSERT INTO `audittrail` VALUES ('2011-04-18 06:13:17','admin','UPDATE purchdata SET price=\'123456.00\',\n								effectivefrom=\'2011-03-26\',\n								suppliersuom=\'1\',\n								conversionfactor=\'2\',\n								supplierdescription=\'\',\n								suppliers_partno=\'\',\n								leadtime=\'1\',\n								minorderqty=\'1\',\n								preferred=\'1\'\n							WHERE purchdata.stockid=\'DVD-CASE\'\n							AND purchdata.supplierno=\'BINGO\'\n							AND purchdata.effectivefrom=\'2011-03-26\'');
+INSERT INTO `audittrail` VALUES ('2011-04-18 06:14:23','admin','UPDATE purchdata SET price=\'123456.00\',\n								effectivefrom=\'2011-03-26\',\n								suppliersuom=\'pair\',\n								conversionfactor=\'2\',\n								supplierdescription=\'\',\n								suppliers_partno=\'\',\n								leadtime=\'1\',\n								minorderqty=\'1\',\n								preferred=\'1\'\n							WHERE purchdata.stockid=\'DVD-CASE\'\n							AND purchdata.supplierno=\'BINGO\'\n							AND purchdata.effectivefrom=\'2011-03-26\'');
+INSERT INTO `audittrail` VALUES ('2011-04-18 06:14:33','admin','UPDATE purchdata SET price=\'123456.00\',\n								effectivefrom=\'2011-03-26\',\n								suppliersuom=\'pair\',\n								conversionfactor=\'2\',\n								supplierdescription=\'\',\n								suppliers_partno=\'\',\n								leadtime=\'1\',\n								minorderqty=\'1\',\n								preferred=\'1\'\n							WHERE purchdata.stockid=\'DVD-CASE\'\n							AND purchdata.supplierno=\'BINGO\'\n							AND purchdata.effectivefrom=\'2011-03-26\'');
+INSERT INTO `audittrail` VALUES ('2011-04-18 06:16:43','admin','UPDATE purchdata SET price=\'123456.00\',\n								effectivefrom=\'2011-03-26\',\n								suppliersuom=\'pair\',\n								conversionfactor=\'2\',\n								supplierdescription=\'\',\n								suppliers_partno=\'\',\n								leadtime=\'1\',\n								minorderqty=\'1\',\n								preferred=\'1\'\n							WHERE purchdata.stockid=\'DVD-CASE\'\n							AND purchdata.supplierno=\'BINGO\'\n							AND purchdata.effectivefrom=\'2011-03-26\'');
+INSERT INTO `audittrail` VALUES ('2011-04-18 06:18:04','admin','INSERT INTO purchdata (supplierno,\n								stockid,\n								price,\n								effectivefrom,\n								suppliersuom,\n								conversionfactor,\n								supplierdescription,\n								suppliers_partno,\n								leadtime,\n								minorderqty,\n								preferred)\n						VALUES (\'WHYNOT\',\n							\'DVD-CASE\',\n							\'1500\',\n							\'2011-04-18\',\n							\'50 pack\',\n							\'50\',\n							\'Crystal Cases 50 Pack\',\n							\'CrystalCase50\',\n							\'25\',\n			                            \'1\',\n							\'0\')');
+INSERT INTO `audittrail` VALUES ('2011-04-18 06:19:52','admin','UPDATE purchdata SET price=\'1500.00\',\n								effectivefrom=\'2011-04-18\',\n								suppliersuom=\'50 pack\',\n								conversionfactor=\'50\',\n								supplierdescription=\'Crystal Cases 50 Pack\',\n								suppliers_partno=\'CrystalCase50\',\n								leadtime=\'25\',\n								minorderqty=\'1\',\n								preferred=\'0\'\n							WHERE purchdata.stockid=\'DVD-CASE\'\n							AND purchdata.supplierno=\'WHYNOT\'\n							AND purchdata.effectivefrom=\'2011-04-18\'');
+INSERT INTO `audittrail` VALUES ('2011-04-18 06:27:30','admin','UPDATE purchdata SET price=\'123456\',\n								effectivefrom=\'2011-03-26\',\n								suppliersuom=\'pair\',\n								conversionfactor=\'200000\',\n								supplierdescription=\'\',\n								suppliers_partno=\'\',\n								leadtime=\'1\',\n								minorderqty=\'1\',\n								preferred=\'1\'\n							WHERE purchdata.stockid=\'DVD-CASE\'\n							AND purchdata.supplierno=\'BINGO\'\n							AND purchdata.effectivefrom=\'2011-03-26\'');
+INSERT INTO `audittrail` VALUES ('2011-04-18 06:58:10','admin','INSERT INTO purchorders (	orderno,\n											supplierno,\n											comments,\n											orddate,\n											rate,\n											initiator,\n											requisitionno,\n											intostocklocation,\n											deladd1,\n											deladd2,\n											deladd3,\n											deladd4,\n											deladd5,\n											deladd6,\n											tel,\n											suppdeladdress1,\n											suppdeladdress2,\n											suppdeladdress3,\n											suppdeladdress4,\n											suppdeladdress5,\n											suppdeladdress6,\n											suppliercontact,\n											supptel,\n											contact,\n											version,\n											revised,\n											deliveryby,\n											status,\n											stat_comment,\n											deliverydate,\n											paymentterms,\n											allowprint)\n										VALUES(	\'15\',\n												\'WHYNOT\',\n												\'\',\n												\'2011-04-18\',\n												\'1\',\n												\'admin\',\n												\'\',\n												\'MEL\',\n												\'1234 Collins Street\',\n												\'Melbourne\',\n												\'Victoria 2345\',\n												\'\',\n												\'\',\n												\'Australia\',\n												\'+61 3 56789012\',\n												\'Well I will \',\n												\'If I\',\n												\'Want \',\n												\'To\',\n												\'\',\n												\'\',\n												\'\',\n												\'12323\',\n												\'Jack Roberts\',\n												\'1\',\n												\'2011-04-18\',\n												\'1\',\n												\'Authorised\',\n												\'18/04/2011 - Order Created and Authorised by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;Demonstration user&lt;/a&gt; - &lt;br /&gt;\',\n												\'2011-04-18\',\n												\'20\',\n												\'1\'\n											)');
+INSERT INTO `audittrail` VALUES ('2011-04-18 06:58:10','admin','INSERT INTO purchorderdetails ( orderno,\n														itemcode,\n														deliverydate,\n														itemdescription,\n														glcode,\n														unitprice,\n														quantityord,\n														shiptref,\n														jobref,\n														suppliersunit,\n														suppliers_partno,\n														assetid,\n														conversionfactor )\n												VALUES (\n														\'15\',\n														\'DVD-CASE\',\n														\'2011-04-18\',\n														\'CrystalCase50 - Crystal Cases 50 Pack\',\n														\'1460\',\n														\'30\',\n														\'150\',\n														\'0\',\n														\'0\',\n														\'\',\n														\'CrystalCase50\',\n														\'0\',\n														\'50\')');
+INSERT INTO `audittrail` VALUES ('2011-04-18 07:10:46','admin','INSERT INTO purchorders (	orderno,\n											supplierno,\n											comments,\n											orddate,\n											rate,\n											initiator,\n											requisitionno,\n											intostocklocation,\n											deladd1,\n											deladd2,\n											deladd3,\n											deladd4,\n											deladd5,\n											deladd6,\n											tel,\n											suppdeladdress1,\n											suppdeladdress2,\n											suppdeladdress3,\n											suppdeladdress4,\n											suppdeladdress5,\n											suppdeladdress6,\n											suppliercontact,\n											supptel,\n											contact,\n											version,\n											revised,\n											deliveryby,\n											status,\n											stat_comment,\n											deliverydate,\n											paymentterms,\n											allowprint)\n										VALUES(	\'16\',\n												\'WHYNOT\',\n												\'\',\n												\'2011-04-18\',\n												\'1\',\n												\'admin\',\n												\'\',\n												\'MEL\',\n												\'1234 Collins Street\',\n												\'Melbourne\',\n												\'Victoria 2345\',\n												\'\',\n												\'\',\n												\'Australia\',\n												\'+61 3 56789012\',\n												\'Well I will \',\n												\'If I\',\n												\'Want \',\n												\'To\',\n												\'\',\n												\'\',\n												\'\',\n												\'12323\',\n												\'Jack Roberts\',\n												\'1\',\n												\'2011-04-18\',\n												\'1\',\n												\'Authorised\',\n												\'18/04/2011 - Order Created and Authorised by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;Demonstration user&lt;/a&gt; - &lt;br /&gt;\',\n												\'2011-04-18\',\n												\'20\',\n												\'1\'\n											)');
+INSERT INTO `audittrail` VALUES ('2011-04-18 07:10:46','admin','INSERT INTO purchorderdetails ( orderno,\n														itemcode,\n														deliverydate,\n														itemdescription,\n														glcode,\n														unitprice,\n														quantityord,\n														shiptref,\n														jobref,\n														suppliersunit,\n														suppliers_partno,\n														assetid,\n														conversionfactor )\n												VALUES (\n														\'16\',\n														\'DVD-CASE\',\n														\'2011-04-18\',\n														\'CrystalCase50 - Crystal Cases 50 Pack\',\n														\'1460\',\n														\'30\',\n														\'100\',\n														\'0\',\n														\'0\',\n														\'50 pack\',\n														\'CrystalCase50\',\n														\'0\',\n														\'50\')');
+INSERT INTO `audittrail` VALUES ('2011-04-18 07:12:39','admin','UPDATE purchorders	SET	allowprint =  0,\n																	dateprinted  = \'2011-04-18\',\n																	status = \'Printed\',\n																	stat_comment = \'18/04/2011 - Printed by&lt;a href=&quot;mailto:info@weberp.org&quot;&gt;Demonstration user&lt;/a&gt;&lt;br /&gt;18/04/2011 - Order Created and Authorised by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;Demonstration user&lt;/a&gt; - &lt;br /&gt;\'\n																WHERE purchorders.orderno = \'15\'');
+INSERT INTO `audittrail` VALUES ('2011-04-18 07:18:24','admin','UPDATE purchorders	SET	allowprint =  0,\n										dateprinted  = \'2011-04-18\',\n										status = \'Printed\',\n										stat_comment = \'18/04/2011 - Printed by&lt;a href=&quot;mailto:info@weberp.org&quot;&gt;Demonstration user&lt;/a&gt;&lt;br /&gt;18/04/2011 - Order Created and Authorised by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;Demonstration user&lt;/a&gt; - &lt;br /&gt;\'\n				WHERE purchorders.orderno = \'16\'');
+INSERT INTO `audittrail` VALUES ('2011-04-18 07:20:48','admin','UPDATE purchorders\n				SET status=\'Authorised\',\n				stat_comment=\'18/04/2011 - Authorised by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;admin&lt;/a&gt;&lt;br&gt;27/03/2011 - Order Created by &amp;lt;a href=&amp;quot;mailto:info@weberp.org&amp;quot;&amp;gt;Demonstration user&amp;lt;/a&amp;gt; - &amp;lt;br /&amp;gt;\',\n				allowprint=1\n				WHERE orderno=\'11\'');
 
 --
 -- Dumping data for table `bankaccounts`
@@ -10734,7 +11563,7 @@ INSERT INTO `config` VALUES ('geocode_integration','0');
 INSERT INTO `config` VALUES ('HTTPS_Only','0');
 INSERT INTO `config` VALUES ('InvoicePortraitFormat','1');
 INSERT INTO `config` VALUES ('LogPath','');
-INSERT INTO `config` VALUES ('LogSeverity','0');
+INSERT INTO `config` VALUES ('LogSeverity','4');
 INSERT INTO `config` VALUES ('MaxImageSize','300');
 INSERT INTO `config` VALUES ('MonthsAuditTrail','1');
 INSERT INTO `config` VALUES ('NumberOfMonthMustBeShown','6');
@@ -10750,7 +11579,7 @@ INSERT INTO `config` VALUES ('PO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('ProhibitJournalsToControlAccounts','1');
 INSERT INTO `config` VALUES ('ProhibitNegativeStock','1');
 INSERT INTO `config` VALUES ('ProhibitPostingsBefore','2010-09-30');
-INSERT INTO `config` VALUES ('PurchasingManagerEmail','');
+INSERT INTO `config` VALUES ('PurchasingManagerEmail','test@company.com');
 INSERT INTO `config` VALUES ('QuickEntries','10');
 INSERT INTO `config` VALUES ('RadioBeaconFileCounter','/home/RadioBeacon/FileCounter');
 INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server user name');
@@ -10767,7 +11596,7 @@ INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','Tax Ref');
 INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','0');
-INSERT INTO `config` VALUES ('VersionNumber','4.03.6');
+INSERT INTO `config` VALUES ('VersionNumber','4.03.8');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
 INSERT INTO `config` VALUES ('WikiApp','Disabled');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
@@ -10881,6 +11710,7 @@ INSERT INTO `debtortrans` VALUES (21,5,11,'ANGRY','ANGRY','2011-02-16 00:00:00',
 INSERT INTO `debtortrans` VALUES (22,10,12,'ANGRY','','2011-03-23 00:00:00','2011-03-23 21:28:01',7,0,'Cheque ','',0,0.85,-10,0,0,0,0,0,'',0,0,'');
 INSERT INTO `debtortrans` VALUES (23,6,11,'DUMBLE','DUMBLE','2011-03-26 00:00:00','2011-03-26 22:36:46',7,0,'','DE',0,0.8,-5.75,0,0,0,0,0,'test',0,0,'');
 INSERT INTO `debtortrans` VALUES (24,7,11,'ANGRY','ANGRY','2011-03-29 00:00:00','2011-03-29 08:47:23',7,1,'Inv-4','DE',8,1,-28.38,0,0,0,0,-28.38,'',0,0,'');
+INSERT INTO `debtortrans` VALUES (25,15,10,'QUICK','SLOW','2011-04-18 00:00:00','2011-04-16 05:42:39',8,0,'','DE',28,0.85,92.03,0,0,0,0,0,'test inbvoice narrative',1,0,'');
 
 --
 -- Dumping data for table `debtortranstaxes`
@@ -10899,6 +11729,7 @@ INSERT INTO `debtortranstaxes` VALUES (20,13,0);
 INSERT INTO `debtortranstaxes` VALUES (21,13,0);
 INSERT INTO `debtortranstaxes` VALUES (23,13,0);
 INSERT INTO `debtortranstaxes` VALUES (24,13,0);
+INSERT INTO `debtortranstaxes` VALUES (25,13,0);
 
 --
 -- Dumping data for table `debtortype`
@@ -11111,6 +11942,9 @@ INSERT INTO `emailsettings` VALUES (30,'localhost','25','helo','','',5,'',0);
 INSERT INTO `emailsettings` VALUES (31,'localhost','25','helo','','',5,'',0);
 INSERT INTO `emailsettings` VALUES (32,'localhost','25','helo','','',5,'',0);
 INSERT INTO `emailsettings` VALUES (33,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (34,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (35,'localhost','25','helo','','',5,'',0);
+INSERT INTO `emailsettings` VALUES (36,'localhost','25','helo','','',5,'',0);
 
 --
 -- Dumping data for table `factorcompanies`
@@ -11378,6 +12212,18 @@ INSERT INTO `gltrans` VALUES (241,11,7,0,'2011-03-29',7,5000,'ANGRY - SALT x 3 @
 INSERT INTO `gltrans` VALUES (242,11,7,0,'2011-03-29',7,1460,'ANGRY - SALT x 3 @ 2.5000',7.5,0,'',0);
 INSERT INTO `gltrans` VALUES (243,11,7,0,'2011-03-29',7,4100,'ANGRY - SALT x 3 @ 3.2500',9.75,0,'',0);
 INSERT INTO `gltrans` VALUES (244,11,7,0,'2011-03-29',7,1100,'ANGRY',-28.38,0,'',0);
+INSERT INTO `gltrans` VALUES (245,20,23,0,'2011-04-03',8,4600,'CRUISE ',62.5,0,'',0);
+INSERT INTO `gltrans` VALUES (246,20,23,0,'2011-04-03',8,7400,'CRUISE ',119.94,0,'',0);
+INSERT INTO `gltrans` VALUES (247,20,23,0,'2011-04-03',8,2100,'CRUISE - Inv 389100 GBP145.95 @ a rate of 0.8',-182.44,0,'',0);
+INSERT INTO `gltrans` VALUES (248,10,15,0,'2011-04-18',8,5000,'QUICK - DVD-CASE x 5 @ 0.3000',1.5,0,'',0);
+INSERT INTO `gltrans` VALUES (249,10,15,0,'2011-04-18',8,1460,'QUICK - DVD-CASE x 5 @ 0.3000',-1.5,0,'',0);
+INSERT INTO `gltrans` VALUES (250,10,15,0,'2011-04-18',8,4100,'QUICK - DVD-CASE x 5 @ 16.5',-97.058823529412,0,'',0);
+INSERT INTO `gltrans` VALUES (251,10,15,0,'2011-04-18',8,4900,'QUICK - DVD-CASE @ 5%',4.8529411764706,0,'',0);
+INSERT INTO `gltrans` VALUES (252,10,15,0,'2011-04-18',8,5000,'QUICK - SALT x 4 @ 2.5000',10,0,'',0);
+INSERT INTO `gltrans` VALUES (253,10,15,0,'2011-04-18',8,1460,'QUICK - SALT x 4 @ 2.5000',-10,0,'',0);
+INSERT INTO `gltrans` VALUES (254,10,15,0,'2011-04-18',8,4100,'QUICK - SALT x 4 @ 3.5',-16.470588235294,0,'',0);
+INSERT INTO `gltrans` VALUES (255,10,15,0,'2011-04-18',8,4900,'QUICK - SALT @ 2.5%',0.41176470588235,0,'',0);
+INSERT INTO `gltrans` VALUES (256,10,15,0,'2011-04-18',8,1100,'QUICK',108.27058823529,0,'',0);
 
 --
 -- Dumping data for table `grns`
@@ -11454,7 +12300,7 @@ INSERT INTO `locstock` VALUES ('MEL','BIGEARS12',0,0);
 INSERT INTO `locstock` VALUES ('MEL','BirthdayCakeConstruc',0,0);
 INSERT INTO `locstock` VALUES ('MEL','BREAD',67,0);
 INSERT INTO `locstock` VALUES ('MEL','DR_TUMMY',0,0);
-INSERT INTO `locstock` VALUES ('MEL','DVD-CASE',45,0);
+INSERT INTO `locstock` VALUES ('MEL','DVD-CASE',35,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-DHWV',-12,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-LTWP',-3,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-TOPGUN',-1,0);
@@ -11476,7 +12322,7 @@ INSERT INTO `locstock` VALUES ('TOR','BIGEARS12',0,0);
 INSERT INTO `locstock` VALUES ('TOR','BirthdayCakeConstruc',0,0);
 INSERT INTO `locstock` VALUES ('TOR','BREAD',6.5,0);
 INSERT INTO `locstock` VALUES ('TOR','DR_TUMMY',0,0);
-INSERT INTO `locstock` VALUES ('TOR','DVD-CASE',181,0);
+INSERT INTO `locstock` VALUES ('TOR','DVD-CASE',186,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-DHWV',-1,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-LTWP',0,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-TOPGUN',0,0);
@@ -11491,7 +12337,7 @@ INSERT INTO `locstock` VALUES ('TOR','FUJI990102',0,0);
 INSERT INTO `locstock` VALUES ('TOR','FUJI9901ASS',0,0);
 INSERT INTO `locstock` VALUES ('TOR','HIT3042-4',0,0);
 INSERT INTO `locstock` VALUES ('TOR','HIT3043-5',0,0);
-INSERT INTO `locstock` VALUES ('TOR','SALT',23.7,0);
+INSERT INTO `locstock` VALUES ('TOR','SALT',19.7,0);
 INSERT INTO `locstock` VALUES ('TOR','SLICE',0,0);
 INSERT INTO `locstock` VALUES ('TOR','YEAST',9.2,0);
 
@@ -11510,11 +12356,384 @@ INSERT INTO `loctransfers` VALUES (22,'BREAD',1,0,'2009-02-05','0000-00-00','MEL
 -- Dumping data for table `mrpcalendar`
 --
 
+INSERT INTO `mrpcalendar` VALUES ('2010-04-10',1,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-11',1,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-12',2,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-13',3,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-14',4,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-15',5,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-16',6,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-17',6,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-18',6,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-19',7,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-20',8,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-21',9,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-22',10,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-23',11,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-24',11,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-25',11,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-26',12,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-27',13,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-28',14,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-29',15,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-04-30',16,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-01',16,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-02',16,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-03',17,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-04',18,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-05',19,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-06',20,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-07',21,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-08',21,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-09',21,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-10',22,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-11',23,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-12',24,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-13',25,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-14',26,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-15',26,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-16',26,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-17',27,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-18',28,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-19',29,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-20',30,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-21',31,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-22',31,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-23',31,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-24',32,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-25',33,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-26',34,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-27',35,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-28',36,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-29',36,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-30',36,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-05-31',37,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-01',38,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-02',39,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-03',40,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-04',41,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-05',41,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-06',41,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-07',42,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-08',43,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-09',44,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-10',45,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-11',46,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-12',46,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-13',46,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-14',47,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-15',48,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-16',49,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-17',50,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-18',51,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-19',51,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-20',51,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-21',52,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-22',53,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-23',54,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-24',55,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-25',56,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-26',56,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-27',56,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-28',57,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-29',58,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-06-30',59,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-01',60,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-02',61,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-03',61,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-04',61,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-05',62,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-06',63,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-07',64,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-08',65,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-09',66,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-10',66,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-11',66,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-12',67,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-13',68,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-14',69,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-15',70,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-16',71,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-17',71,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-18',71,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-19',72,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-20',73,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-21',74,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-22',75,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-23',76,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-24',76,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-25',76,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-26',77,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-27',78,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-28',79,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-29',80,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-30',81,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-07-31',81,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-01',81,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-02',82,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-03',83,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-04',84,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-05',85,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-06',86,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-07',86,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-08',86,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-09',87,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-10',88,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-11',89,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-12',90,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-13',91,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-14',91,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-15',91,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-16',92,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-17',93,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-18',94,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-19',95,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-20',96,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-21',96,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-22',96,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-23',97,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-24',98,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-25',99,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-26',100,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-27',101,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-28',101,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-29',101,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-30',102,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-08-31',103,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-01',104,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-02',105,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-03',106,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-04',106,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-05',106,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-06',107,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-07',108,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-08',109,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-09',110,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-10',111,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-11',111,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-12',111,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-13',112,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-14',113,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-15',114,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-16',115,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-17',116,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-18',116,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-19',116,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-20',117,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-21',118,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-22',119,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-23',120,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-24',121,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-25',121,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-26',121,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-27',122,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-28',123,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-29',124,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-09-30',125,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-01',126,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-02',126,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-03',126,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-04',127,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-05',128,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-06',129,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-07',130,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-08',131,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-09',131,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-10',131,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-11',132,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-12',133,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-13',134,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-14',135,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-15',136,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-16',136,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-17',136,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-18',137,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-19',138,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-20',139,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-21',140,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-22',141,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-23',141,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-24',141,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-25',142,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-26',143,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-27',144,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-28',145,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-29',146,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-30',146,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-10-31',146,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-01',147,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-02',148,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-03',149,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-04',150,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-05',151,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-06',151,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-07',151,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-08',152,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-09',153,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-10',154,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-11',155,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-12',156,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-13',156,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-14',156,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-15',157,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-16',158,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-17',159,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-18',160,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-19',161,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-20',161,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-21',161,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-22',162,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-23',163,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-24',164,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-25',165,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-26',166,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-27',166,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-28',166,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-29',167,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-11-30',168,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-01',169,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-02',170,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-03',171,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-04',171,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-05',171,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-06',172,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-07',173,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-08',174,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-09',175,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-10',176,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-11',176,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-12',176,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-13',177,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-14',178,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-15',179,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-16',180,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-17',181,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-18',181,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-19',181,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-20',182,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-21',183,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-22',184,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-23',185,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-24',186,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-25',186,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-26',186,0);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-27',187,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-28',188,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-29',189,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-30',190,1);
+INSERT INTO `mrpcalendar` VALUES ('2010-12-31',191,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-01',191,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-02',191,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-03',192,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-04',193,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-05',194,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-06',195,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-07',196,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-08',196,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-09',196,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-10',197,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-11',198,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-12',199,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-13',200,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-14',201,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-15',201,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-16',201,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-17',202,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-18',203,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-19',204,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-20',205,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-21',206,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-22',206,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-23',206,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-24',207,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-25',208,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-26',209,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-27',210,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-28',211,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-29',211,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-30',211,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-01-31',212,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-01',213,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-02',214,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-03',215,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-04',216,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-05',216,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-06',216,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-07',217,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-08',218,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-09',219,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-10',220,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-11',221,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-12',221,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-13',221,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-14',222,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-15',223,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-16',224,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-17',225,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-18',226,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-19',226,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-20',226,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-21',227,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-22',228,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-23',229,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-24',230,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-25',231,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-26',231,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-27',231,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-02-28',232,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-01',233,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-02',234,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-03',235,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-04',236,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-05',236,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-06',236,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-07',237,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-08',238,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-09',239,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-10',240,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-11',241,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-12',241,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-13',241,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-14',242,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-15',243,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-16',244,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-17',245,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-18',246,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-19',246,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-20',246,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-21',247,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-22',248,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-23',249,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-24',250,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-25',251,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-26',251,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-27',251,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-28',252,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-29',253,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-30',254,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-03-31',255,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-04-01',256,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-04-02',256,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-04-03',256,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-04-04',257,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-04-05',258,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-04-06',259,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-04-07',260,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-04-08',261,1);
+INSERT INTO `mrpcalendar` VALUES ('2011-04-09',261,0);
+INSERT INTO `mrpcalendar` VALUES ('2011-04-10',261,0);
 
 --
 -- Dumping data for table `mrpdemands`
 --
 
+INSERT INTO `mrpdemands` VALUES (1,'BIGEARS12','FOR',0,'2011-04-01');
+INSERT INTO `mrpdemands` VALUES (2,'BIRTHDAYCAKECONSTRUC','FOR',0,'2011-04-01');
+INSERT INTO `mrpdemands` VALUES (3,'BREAD','FOR',27,'2011-04-01');
+INSERT INTO `mrpdemands` VALUES (4,'DVD-CASE','FOR',0,'2011-04-01');
+INSERT INTO `mrpdemands` VALUES (5,'FLOUR','FOR',0,'2011-04-01');
+INSERT INTO `mrpdemands` VALUES (6,'FROAYLANDO','FOR',0,'2011-04-01');
+INSERT INTO `mrpdemands` VALUES (7,'SALT','FOR',11,'2011-04-01');
 
 --
 -- Dumping data for table `mrpdemandtypes`
@@ -11612,9 +12831,9 @@ INSERT INTO `mrpsupplies` VALUES (20,'BIGEARS12','2010-10-15',1,'WO',13,'2010-10
 -- Dumping data for table `paymentmethods`
 --
 
-INSERT INTO `paymentmethods` VALUES (1,'Cheque',1,1);
-INSERT INTO `paymentmethods` VALUES (2,'Cash',1,1);
-INSERT INTO `paymentmethods` VALUES (3,'Direct Credit',1,1);
+INSERT INTO `paymentmethods` VALUES (1,'Cheque',1,1,0);
+INSERT INTO `paymentmethods` VALUES (2,'Cash',1,1,0);
+INSERT INTO `paymentmethods` VALUES (3,'Direct Credit',1,1,0);
 
 --
 -- Dumping data for table `paymentterms`
@@ -11649,6 +12868,7 @@ INSERT INTO `paymentterms` VALUES ('CA','Cash Only',2,0);
 -- Dumping data for table `pctypetabs`
 --
 
+INSERT INTO `pctypetabs` VALUES ('Default','Default');
 
 --
 -- Dumping data for table `periods`
@@ -11663,6 +12883,7 @@ INSERT INTO `periods` VALUES (5,'2011-01-31');
 INSERT INTO `periods` VALUES (6,'2011-02-28');
 INSERT INTO `periods` VALUES (7,'2011-03-31');
 INSERT INTO `periods` VALUES (8,'2011-04-30');
+INSERT INTO `periods` VALUES (9,'2011-05-31');
 
 --
 -- Dumping data for table `pickinglistdetails`
@@ -11682,7 +12903,8 @@ INSERT INTO `prices` VALUES ('BIGEARS12','DE','AUD','','4428.0000','','1999-01-0
 INSERT INTO `prices` VALUES ('BirthdayCakeConstruc','DE','AUD','','1476.0000','','1999-01-01','0000-00-00');
 INSERT INTO `prices` VALUES ('BREAD','DE','AUD','','123.0000','','1999-01-01','0000-00-00');
 INSERT INTO `prices` VALUES ('DR_TUMMY','DE','AUD','','246.0000','','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('DVD-CASE','DE','AUD','','123.0000','','1999-01-01','0000-00-00');
+INSERT INTO `prices` VALUES ('DVD-CASE','DE','AUD','','124.5000','','1999-01-01','0000-00-00');
+INSERT INTO `prices` VALUES ('DVD-CASE','DE','GBP','DUMBLE','52.6500','DUMBLE','1999-01-01','0000-00-00');
 INSERT INTO `prices` VALUES ('DVD-DHWV','DE','AUD','','123.0000','','1999-01-01','0000-00-00');
 INSERT INTO `prices` VALUES ('DVD-LTWP','DE','AUD','','123.0000','','1999-01-01','0000-00-00');
 INSERT INTO `prices` VALUES ('DVD-TOPGUN','DE','AUD','','123.0000','','1999-01-01','0000-00-00');
@@ -11703,15 +12925,16 @@ INSERT INTO `prices` VALUES ('YEAST','DE','AUD','','123.0000','','1999-01-01','0
 -- Dumping data for table `purchdata`
 --
 
-INSERT INTO `purchdata` VALUES ('BINGO','DVD-CASE','123456.0000','1',2,'',1,1,'2011-03-26','',1);
+INSERT INTO `purchdata` VALUES ('BINGO','DVD-CASE','123456.0000','pair',200000,'',1,1,'2011-03-26','',1);
 INSERT INTO `purchdata` VALUES ('BINGO','HIT3043-5','1235.0000','',1,'',5,1,'2009-09-18','',1);
 INSERT INTO `purchdata` VALUES ('CRUISE','DVD-UNSG2','200.0000','10 Pack',10,'',5,1,'2009-09-18','',1);
+INSERT INTO `purchdata` VALUES ('WHYNOT','DVD-CASE','1500.0000','50 pack',50,'Crystal Cases 50 Pack',25,0,'2011-04-18','CrystalCase50',1);
 
 --
 -- Dumping data for table `purchorderauth`
 --
 
-INSERT INTO `purchorderauth` VALUES ('admin','AUD',1,999999999,1);
+INSERT INTO `purchorderauth` VALUES ('admin','AUD',0,50000,0);
 INSERT INTO `purchorderauth` VALUES ('admin','EUR',0,999999999,0);
 INSERT INTO `purchorderauth` VALUES ('admin','GBP',0,9999999,0);
 INSERT INTO `purchorderauth` VALUES ('admin','USD',0,9999999,0);
@@ -11720,19 +12943,24 @@ INSERT INTO `purchorderauth` VALUES ('admin','USD',0,9999999,0);
 -- Dumping data for table `purchorderdetails`
 --
 
-INSERT INTO `purchorderdetails` VALUES (1,1,'DVD-CASE','2007-06-25','webERP Demo DVD Case',1460,0,0.23,0,0.3,45,45,0,'',1,'','','','','','','','','','','',0,1);
-INSERT INTO `purchorderdetails` VALUES (2,1,'DVD-LTWP','2007-06-25','Lethal Weapon Linked',1460,0,2.98,0,2.7,7,7,0,'',1,'','','','','','','','','','','',0,1);
-INSERT INTO `purchorderdetails` VALUES (3,2,'SALT','2009-02-05','Salt',1460,0,100,0,2.5,20,7,0,'',0,'','','','','','','','','','','',0,1);
-INSERT INTO `purchorderdetails` VALUES (4,3,'BREAD','2010-08-14','Bread',1460,0,0.25,0,0,12,0,0,'0',0,'BREAD','each','0','','0','0','','0','0','0','0',0,1);
-INSERT INTO `purchorderdetails` VALUES (5,4,'','2011-02-18','Test items with no stock code',1,0,0.19925,0,0,50000000,0,0,'',0,'','each','','','','','','','','5','9962.5',0,10000);
-INSERT INTO `purchorderdetails` VALUES (6,4,'FUJI9901ASS','2011-02-18','Fujitsu 990101 Split type A/C 3.5kw complete',1460,0,2100,0,0,2,0,0,'0',0,'FUJI9901ASS','each','','','0','0.0000','1','0.0000','','2','0',0,1);
-INSERT INTO `purchorderdetails` VALUES (8,6,'','2011-03-08','Fish or ships',1,0,75,0,0,1,0,0,'',0,'','each','','','','','','','','1','75',0,1);
-INSERT INTO `purchorderdetails` VALUES (9,6,'BIGEARS12','2011-03-08','Big Ears and Noddy episodes on DVD',1460,0,0,0,0,2,0,0,'0',0,'BIGEARS12','each','','','0','0.0000','1','0.0000','','2','0',0,1);
-INSERT INTO `purchorderdetails` VALUES (10,7,'','2011-03-08','fddsasd',1090,0,2.5,0,0,1,0,0,'',0,'','each','','','','','','','','1','2.5',0,1);
-INSERT INTO `purchorderdetails` VALUES (11,7,'BREAD','2011-03-08','Bread',1460,0,0,0,0,2,0,0,'0',0,'BREAD','each','','','0','0.0000','1','0.0000','','2','0',0,1);
-INSERT INTO `purchorderdetails` VALUES (12,8,'','2011-03-08','fddfdf',1400,0,95.5,0,0,10,0,0,'',0,'','each','','','','','','','','10','955',0,1);
-INSERT INTO `purchorderdetails` VALUES (13,8,'DVD-TOPGUN','2011-03-08','Top Gun DVD',1460,0,7.99,0,0,2,0,0,'0',0,'DVD-TOPGUN','each','','','0','0.0000','1','0.0000','','2','0',0,1);
-INSERT INTO `purchorderdetails` VALUES (18,12,'DVD-CASE','2011-03-27',' - ',1460,0,9.25,0,0,50,0,0,'0',0,'DVD-CASE','each','','','0','0.0000','1','0.0000','','2351','145122528',0,2);
+INSERT INTO `purchorderdetails` VALUES (1,1,'DVD-CASE','2007-06-25','webERP Demo DVD Case',1460,0,0.23,0,0.3,45,45,0,'',1,'','',0,1);
+INSERT INTO `purchorderdetails` VALUES (2,1,'DVD-LTWP','2007-06-25','Lethal Weapon Linked',1460,0,2.98,0,2.7,7,7,0,'',1,'','',0,1);
+INSERT INTO `purchorderdetails` VALUES (3,2,'SALT','2009-02-05','Salt',1460,0,100,0,2.5,20,7,0,'',0,'','',0,1);
+INSERT INTO `purchorderdetails` VALUES (4,3,'BREAD','2010-08-14','Bread',1460,0,0.25,0,0,12,0,0,'0',0,'each','',0,1);
+INSERT INTO `purchorderdetails` VALUES (5,4,'','2011-02-18','Test items with no stock code',1,0,0.19925,0,0,50000000,0,0,'',0,'each','',0,10000);
+INSERT INTO `purchorderdetails` VALUES (6,4,'FUJI9901ASS','2011-02-18','Fujitsu 990101 Split type A/C 3.5kw complete',1460,0,2100,0,0,2,0,0,'0',0,'each','1',0,1);
+INSERT INTO `purchorderdetails` VALUES (8,6,'','2011-03-08','Fish or ships',1,0,75,0,0,1,0,0,'',0,'each','',0,1);
+INSERT INTO `purchorderdetails` VALUES (9,6,'BIGEARS12','2011-03-08','Big Ears and Noddy episodes on DVD',1460,0,0,0,0,2,0,0,'0',0,'each','1',0,1);
+INSERT INTO `purchorderdetails` VALUES (10,7,'','2011-03-08','fddsasd',1090,0,2.5,0,0,1,0,0,'',0,'each','',0,1);
+INSERT INTO `purchorderdetails` VALUES (11,7,'BREAD','2011-03-08','Bread',1460,0,0,0,0,2,0,0,'0',0,'each','1',0,1);
+INSERT INTO `purchorderdetails` VALUES (12,8,'','2011-03-08','fddfdf',1400,0,95.5,0,0,10,0,0,'',0,'each','',0,1);
+INSERT INTO `purchorderdetails` VALUES (13,8,'DVD-TOPGUN','2011-03-08','Top Gun DVD',1460,0,7.99,0,0,2,0,0,'0',0,'each','1',0,1);
+INSERT INTO `purchorderdetails` VALUES (18,12,'DVD-CASE','2011-03-27',' - ',1460,0,622,0,0,104000,0,0,'0',0,'each','1',0,2);
+INSERT INTO `purchorderdetails` VALUES (19,13,'DVD-DHWV','2011-04-12','Die Hard With A Vengeance Linked',1460,0,1240,0,0,5000,0,0,'0',0,'each','1',0,1);
+INSERT INTO `purchorderdetails` VALUES (20,13,'SALT','2011-04-12','Salt',1460,0,3650,0,0,5,0,0,'0',0,'kgs','1',0,1);
+INSERT INTO `purchorderdetails` VALUES (21,14,'DVD-CASE','2011-04-18','webERP Demo DVD Case',1460,0,12.5,0,0,3,0,0,'0',0,'each','1',0,1);
+INSERT INTO `purchorderdetails` VALUES (22,15,'DVD-CASE','2011-04-18','CrystalCase50 - Crystal Cases 50 Pack',1460,0,30,0,0,150,0,0,'0',0,'','CrystalCase50',0,50);
+INSERT INTO `purchorderdetails` VALUES (23,16,'DVD-CASE','2011-04-18','CrystalCase50 - Crystal Cases 50 Pack',1460,0,30,0,0,100,0,0,'0',0,'50 pack','CrystalCase50',0,50);
 
 --
 -- Dumping data for table `purchorders`
@@ -11747,8 +12975,12 @@ INSERT INTO `purchorders` VALUES (7,'BINGO','','2011-03-08 00:00:00',0.85,NULL,1
 INSERT INTO `purchorders` VALUES (8,'CRUISE','','2011-03-08 00:00:00',0.8,'2011-03-26 00:00:00',0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Box 2001','Ft Lauderdale, Florida','','','','','Barry Toad','','Jack Roberts','1.00','2011-03-08','','1','2011-03-08','Rejected','27/03/2011 - Rejected by <a href=\"mailto:info@weberp.org\">Demonstration user</a><br>27/03/2011 - Order set to pending status by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;Demonstration user&lt;/a&gt;&lt;br&gt;26/03/2011 - Printed by&lt;a href=&quot;mailto:info@weberp.org&quot;&gt;Demonstration user&lt;/a&gt;&lt;br /&gt;08/03/2011 - Order Created and Authorised by &lt;a href=&quot;mailto:phil@logicworks.co.nz&quot;&gt;Demonstration user&lt;/a&gt; - &lt;br /&gt;','30','');
 INSERT INTO `purchorders` VALUES (9,'BINGO','','2011-03-26 00:00:00',0.85,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','+61 3 56789012','+61 3 56789012','Box 3499','Gardenier','San Fransisco','California 54424','','','','','Jack Roberts','2.00','2011-03-26','','1','2011-03-26','Authorised','26/03/2011 - Order Created and Authorised by <a href=\"mailto:info@weberp.org\">Demonstration user</a> - <br />','30','');
 INSERT INTO `purchorders` VALUES (10,'BINGO','','2011-03-26 00:00:00',0.85,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','+61 3 56789012','+61 3 56789012','Box 3499','Gardenier','San Fransisco','California 54424','','','','','Jack Roberts','2.00','2011-03-26','','1','2011-03-26','Authorised','26/03/2011 - Order Created and Authorised by <a href=\"mailto:info@weberp.org\">Demonstration user</a> - <br />','30','');
-INSERT INTO `purchorders` VALUES (11,'BINGO','','2011-03-27 00:00:00',0.85,NULL,0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','+61 3 56789012','+61 3 56789012','Box 3499','Gardenier','San Fransisco','California 54424','','','','','Jack Roberts','2.00','2011-03-27','','1','2011-03-27','Pending','27/03/2011 - Order Created by <a href=\"mailto:info@weberp.org\">Demonstration user</a> - <br />','30','');
-INSERT INTO `purchorders` VALUES (12,'BINGO','','2011-03-27 00:00:00',0.85,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','+61 3 56789012','+61 3 56789012','Box 3499','Gardenier','San Fransisco','California 54424','','','','','Jack Roberts','5.00','2011-03-27','','1','2011-03-27','Authorised','27/03/2011 - Authorised by <a href=\"mailto:info@weberp.org\">Demonstration user</a><br>27/03/2011 - Order Created by <a href=\"mailto:info@weberp.org\">Demonstration user</a> - <br />','30','');
+INSERT INTO `purchorders` VALUES (11,'BINGO','','2011-03-27 00:00:00',0.85,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','+61 3 56789012','+61 3 56789012','Box 3499','Gardenier','San Fransisco','California 54424','','','','','Jack Roberts','2.00','2011-03-27','','1','2011-03-27','Authorised','18/04/2011 - Authorised by <a href=\"mailto:info@weberp.org\">admin</a><br>27/03/2011 - Order Created by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;Demonstration user&lt;/a&gt; - &lt;br /&gt;','30','');
+INSERT INTO `purchorders` VALUES (12,'BINGO','','2011-03-27 00:00:00',0.85,NULL,0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','+61 3 56789012','+61 3 56789012','Box 3499','Gardenier','San Fransisco','California 54424','','','','','Jack Roberts','6.00','2011-04-11','','1','2011-03-27','Pending','27/03/2011 - Authorised by <a href=\"mailto:info@weberp.org\">Demonstration user</a><br>27/03/2011 - Order Created by <a href=\"mailto:info@weberp.org\">Demonstration user</a> - <br />','30','');
+INSERT INTO `purchorders` VALUES (13,'WHYNOT','','2011-04-12 00:00:00',1,NULL,0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Well I will ','If I','Want ','To','','','','12323','Jack Roberts','1.00','2011-04-12','','1','2011-04-12','Pending','12/04/2011 - Order Created by <a href=\"mailto:info@weberp.org\">Demonstration user</a> - <br />','20','');
+INSERT INTO `purchorders` VALUES (14,'WHYNOT','','2011-04-18 00:00:00',1,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Well I will ','If I','Want ','To','','','','12323','Jack Roberts','1.00','2011-04-18','','1','2011-04-18','Authorised','18/04/2011 - Order Created and Authorised by <a href=\"mailto:info@weberp.org\">Demonstration user</a> - <br />','20','');
+INSERT INTO `purchorders` VALUES (15,'WHYNOT','','2011-04-18 00:00:00',1,'2011-04-18 00:00:00',0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Well I will ','If I','Want ','To','','','','12323','Jack Roberts','1.00','2011-04-18','','1','2011-04-18','Printed','18/04/2011 - Printed by<a href=\"mailto:info@weberp.org\">Demonstration user</a><br />18/04/2011 - Order Created and Authorised by <a href=\"mailto:info@weberp.org\">Demonstration user</a> - <br />','20','');
+INSERT INTO `purchorders` VALUES (16,'WHYNOT','','2011-04-18 00:00:00',1,'2011-04-18 00:00:00',0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Well I will ','If I','Want ','To','','','','12323','Jack Roberts','1.00','2011-04-18','','1','2011-04-18','Printed','18/04/2011 - Printed by<a href=\"mailto:info@weberp.org\">Demonstration user</a><br />18/04/2011 - Order Created and Authorised by <a href=\"mailto:info@weberp.org\">Demonstration user</a> - <br />','20','');
 
 --
 -- Dumping data for table `recurringsalesorders`
@@ -12279,6 +13511,8 @@ INSERT INTO `salesanalysis` VALUES ('DE',6,-24,-12.017,'ANGRY','ANGRY',-2,0,'BRE
 INSERT INTO `salesanalysis` VALUES ('DE',7,-7.1875,-2.7,'DUMBLE','DUMBLE',-1,0,'DVD-LTWP','TR',1,'ERI','AIRCON',11);
 INSERT INTO `salesanalysis` VALUES ('DE',7,-20.7,-18.0255,'ANGRY','ANGRY',-3,-2.07,'BREAD','TR',1,'ERI','FOOD',12);
 INSERT INTO `salesanalysis` VALUES ('DE',7,-9.75,-7.5,'ANGRY','ANGRY',-3,0,'SALT','TR',1,'ERI','BAKE',13);
+INSERT INTO `salesanalysis` VALUES ('DE',8,97.058823529412,1.5,'QUICK','SLOW',5,4.8529411764706,'DVD-CASE','TR',1,'ERI','DVD',14);
+INSERT INTO `salesanalysis` VALUES ('DE',8,16.470588235294,10,'QUICK','SLOW',4,0.41176470588235,'SALT','TR',1,'ERI','BAKE',15);
 
 --
 -- Dumping data for table `salescat`
@@ -12326,6 +13560,8 @@ INSERT INTO `salesorderdetails` VALUES (0,22,'BIGEARS12',0,5369.2307692308,1,0,0
 INSERT INTO `salesorderdetails` VALUES (0,23,'BIRTHDAYCAKECONSTRUC',0,2500,1,0,0,'0000-00-00 00:00:00',0,'','2010-08-15','',0,0);
 INSERT INTO `salesorderdetails` VALUES (0,25,'FROAYLANDO',0,41.603614285714,1,0,0,'0000-00-00 00:00:00',0,NULL,'2011-03-25','87755',0,0);
 INSERT INTO `salesorderdetails` VALUES (0,26,'DVD-CASE',0,52.25,1,0,0,'0000-00-00 00:00:00',0,'','2011-03-26','',0,0);
+INSERT INTO `salesorderdetails` VALUES (0,27,'BIGEARS12',0,2,2,0,0,'0000-00-00 00:00:00',0,'','2011-04-12','',0,0);
+INSERT INTO `salesorderdetails` VALUES (0,28,'DVD-CASE',5,16.5,5,0,0.05,'2011-04-18 00:00:00',1,'Testing one two three','2011-04-17','',0,0);
 INSERT INTO `salesorderdetails` VALUES (1,6,'SALT',3,3.25,3,0,0,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,7,'SALT',3,3.25,3,0,0,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,8,'SALT',0,3.25,3,0,0,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
@@ -12333,6 +13569,8 @@ INSERT INTO `salesorderdetails` VALUES (1,9,'SALT',1,2.99,1,0,0.015,'2010-05-31 
 INSERT INTO `salesorderdetails` VALUES (1,14,'BREAD',2,5.25,2,0,0,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,18,'SALT',0.7,5,0.7,0,0,'2010-05-31 00:00:00',1,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,26,'FLOUR',0,6.95,2,0,0,'0000-00-00 00:00:00',0,'test','2011-03-26','',0,0);
+INSERT INTO `salesorderdetails` VALUES (1,27,'BREAD',0,5,2,0,0,'0000-00-00 00:00:00',0,'','2011-04-12','',0,0);
+INSERT INTO `salesorderdetails` VALUES (1,28,'SALT',4,3.5,4,0,0.025,'2011-04-18 00:00:00',1,'ass','2011-04-16','',0,0);
 
 --
 -- Dumping data for table `salesorders`
@@ -12340,7 +13578,7 @@ INSERT INTO `salesorderdetails` VALUES (1,26,'FLOUR',0,6.95,2,0,0,'0000-00-00 00
 
 INSERT INTO `salesorders` VALUES (6,'ANGRY','ANGRY','',NULL,'Testing comments','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','0422 2245 2213','graville@angry.com','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
 INSERT INTO `salesorders` VALUES (7,'ANGRY','ANGRY','',NULL,'Testing comments','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','0422 2245 2213','graville@angry.com','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (8,'ANGRY','ANGRY','',NULL,'Testing comments Invoice: 4','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','0422 2245 2213','graville@angry.com','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (8,'ANGRY','ANGRY','',NULL,'Testing comments Invoice: 4','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','0422 2245 2213','graville@angry.com','',0,0,'MEL','2010-05-31','2010-05-31',1,'2011-04-12',0,'0000-00-00',0);
 INSERT INTO `salesorders` VALUES (9,'ANGRY','ANGRY','211547',NULL,' Invoice: 5','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','0422 2245 2213','graville@angry.com','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
 INSERT INTO `salesorders` VALUES (10,'ANGRY','ANGRY','',NULL,' Invoice: 6','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
 INSERT INTO `salesorders` VALUES (11,'ANGRY','ANGRY','',NULL,' Invoice: 7','2010-05-31','DE',1,'Counter Sale','','','','','','','','Ferdinand',1,0,'MEL','2010-05-31','2011-03-09',0,'0000-00-00',0,'2011-03-09',0);
@@ -12356,6 +13594,8 @@ INSERT INTO `salesorders` VALUES (22,'QUARTER','QUARTER','89-OOPDS',NULL,'','201
 INSERT INTO `salesorders` VALUES (23,'DUMBLE','DUMBLE','',NULL,'','2010-08-08','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal &amp;amp;amp; Co',1,0,'TOR','2010-12-20','2010-08-16',0,'0000-00-00',0,'2010-08-16',0);
 INSERT INTO `salesorders` VALUES (25,'QUICK','SLOW','87755',NULL,NULL,'2011-02-25','DE',1,'Hunstman Road','Woofton','','','','','','','Slow Dog',1,0,'TOR','2011-03-25','0000-00-00',0,'0000-00-00',1,'2011-02-25',0);
 INSERT INTO `salesorders` VALUES (26,'DUMBLE','DUMBLE','',NULL,'','2011-03-26','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal &amp;amp; Co',1,0,'TOR','2011-03-28','2011-03-28',1,'2011-03-26',0,'2011-03-28',0);
+INSERT INTO `salesorders` VALUES (27,'JOLOMU','JOLOMU','',NULL,'','2011-04-12','DE',1,'3215 Great Western Highway','Blubberhouses','Yorkshire','England','','','+44 812 211456','jolomu@lorrima.co.uk','Lorrima Productions Inc',1,0,'TOR','2011-04-12','2011-04-12',0,'0000-00-00',0,'2011-04-12',0);
+INSERT INTO `salesorders` VALUES (28,'QUICK','SLOW','',NULL,' Inv 15','2011-04-16','DE',1,'Hunstman Road','Woofton','','','','','','','Slow Dog',1,0,'TOR','2011-04-18','2011-04-18',0,'0000-00-00',0,'2011-04-18',0);
 
 --
 -- Dumping data for table `salestypes`
@@ -12502,6 +13742,7 @@ INSERT INTO `scripts` VALUES ('PDFGrn.php',2,'Produces a GRN report on the recei
 INSERT INTO `scripts` VALUES ('PDFLowGP.php',2,'Creates a pdf report showing the low gross profit sales made in the selected date range. The percentage of gp deemed acceptable can also be entered');
 INSERT INTO `scripts` VALUES ('PDFOrdersInvoiced.php',3,'Produces a pdf of orders invoiced based on selected criteria');
 INSERT INTO `scripts` VALUES ('PDFOrderStatus.php',3,'Reports on sales order status by date range, by stock location and stock category - producing a pdf showing each line items and any quantites delivered');
+INSERT INTO `scripts` VALUES ('PDFPeriodStockTransListing.php',3,'Allows stock transactions of a specific transaction type to be listed over a single day or period range');
 INSERT INTO `scripts` VALUES ('PDFPickingList.php',2,'');
 INSERT INTO `scripts` VALUES ('PDFPriceList.php',2,'Creates a pdf of the price list applicable to a given sales type and customer. Also allows the listing of prices specific to a customer');
 INSERT INTO `scripts` VALUES ('PDFPrintLabel.php',10,'');
@@ -12512,7 +13753,6 @@ INSERT INTO `scripts` VALUES ('PDFStockCheckComparison.php',2,'Creates a pdf com
 INSERT INTO `scripts` VALUES ('PDFStockLocTransfer.php',1,'Creates a stock location transfer docket for the selected location transfer reference number');
 INSERT INTO `scripts` VALUES ('PDFStockNegatives.php',1,'Produces a pdf of the negative stocks by location');
 INSERT INTO `scripts` VALUES ('PDFStockTransfer.php',2,'Produces a report for stock transfers');
-INSERT INTO `scripts` VALUES ('PDFStockTransListing.php',3,'');
 INSERT INTO `scripts` VALUES ('PDFSuppTransListing.php',3,'');
 INSERT INTO `scripts` VALUES ('PDFTopItems.php',2,'Produces a pdf report of the top items sold');
 INSERT INTO `scripts` VALUES ('PeriodsInquiry.php',2,'Shows a list of all the system defined periods');
@@ -12929,6 +14169,10 @@ INSERT INTO `stockmoves` VALUES (62,'DVD-CASE',25,32,'MEL','2011-03-10','','','0
 INSERT INTO `stockmoves` VALUES (63,'DVD-LTWP',11,6,'TOR','2011-03-26','DUMBLE','DUMBLE','7.1875',7,'test',1,0,2.7,1,0,0,'');
 INSERT INTO `stockmoves` VALUES (64,'BREAD',11,7,'MEL','2011-03-29','ANGRY','ANGRY','6.9000',7,'Ex Inv - 4',3,0.1,6.0085,1,67,0,'');
 INSERT INTO `stockmoves` VALUES (65,'SALT',11,7,'MEL','2011-03-29','ANGRY','ANGRY','3.2500',7,'Ex Inv - 4',3,0,2.5,1,3,0,'');
+INSERT INTO `stockmoves` VALUES (66,'DVD-CASE',16,23,'MEL','2011-04-10','','','0.0000',8,'To TOR',-10,0,0,1,35,0,NULL);
+INSERT INTO `stockmoves` VALUES (67,'DVD-CASE',16,23,'TOR','2011-04-10','','','0.0000',8,'From MEL',10,0,0,1,191,0,NULL);
+INSERT INTO `stockmoves` VALUES (68,'DVD-CASE',10,15,'TOR','2011-04-18','QUICK','SLOW','19.4118',8,'28',-5,0.05,0.3,1,186,0,'Testing one two three');
+INSERT INTO `stockmoves` VALUES (69,'SALT',10,15,'TOR','2011-04-18','QUICK','SLOW','4.1176',8,'28',-4,0.025,2.5,1,19.7,0,'ass');
 
 --
 -- Dumping data for table `stockmovestaxes`
@@ -12951,6 +14195,8 @@ INSERT INTO `stockmovestaxes` VALUES (61,13,0,0,0);
 INSERT INTO `stockmovestaxes` VALUES (63,13,0,0,0);
 INSERT INTO `stockmovestaxes` VALUES (64,13,0,0,0);
 INSERT INTO `stockmovestaxes` VALUES (65,13,0,0,0);
+INSERT INTO `stockmovestaxes` VALUES (68,13,0,0,0);
+INSERT INTO `stockmovestaxes` VALUES (69,13,0,0,0);
 
 --
 -- Dumping data for table `stockserialitems`
@@ -12987,13 +14233,16 @@ INSERT INTO `suppliers` VALUES ('BINGO','Binary Green Ocean Inc','Box 3499','Gar
 INSERT INTO `suppliers` VALUES ('CAMPBELL','Campbell Roberts Inc','Box 9882','Ottowa Rise','','','','',1,0.000000,0.000000,'USD','2005-06-23','30',0,NULL,'','0','',0,2,0,'','','',NULL,NULL,NULL);
 INSERT INTO `suppliers` VALUES ('CRUISE','Cruise Company Inc','Box 2001','Ft Lauderdale, Florida','','','','',1,0.000000,0.000000,'GBP','2005-06-23','30',0,NULL,'123456789012345678901234567890','0','',0,3,0,'','','',NULL,NULL,NULL);
 INSERT INTO `suppliers` VALUES ('GOTSTUFF','We Got the Stuff Inc','Test line 1','Test line 2','Test line 3','Test line 4 - editing','','',1,0.000000,0.000000,'USD','2005-10-29','20',0,NULL,'','ok then','tell me abou',0,1,0,'','','',NULL,NULL,NULL);
+INSERT INTO `suppliers` VALUES ('OTHER','Another ','Supplier','','','','','',2,0.000000,0.000000,'AUD','2011-04-01','20',0,NULL,'','0','',0,1,0,'','','','','','');
 INSERT INTO `suppliers` VALUES ('REGNEW','Reg Newall Inc','P O 5432','Wichita','Wyoming','','','',1,0.000000,0.000000,'USD','2005-04-30','30',0,NULL,'','0','',0,1,0,'','','',NULL,NULL,NULL);
+INSERT INTO `suppliers` VALUES ('WHYNOT','Why not add a new supplier','Well I will ','If I','Want ','To','','',1,0.000000,0.000000,'AUD','2011-04-01','20',0,NULL,'','0','',0,1,0,'','','','','','12323');
 
 --
 -- Dumping data for table `suppliertype`
 --
 
 INSERT INTO `suppliertype` VALUES (1,'Default');
+INSERT INTO `suppliertype` VALUES (2,'Others');
 
 --
 -- Dumping data for table `supptrans`
@@ -13006,6 +14255,7 @@ INSERT INTO `supptrans` VALUES (22,20,'CRUISE','9877-877','2010-08-13','2010-09-
 INSERT INTO `supptrans` VALUES (5,21,'CRUISE','30299','2010-08-13','2010-09-30','2010-08-14 07:16:10',0,0.8,-90,0,0,0,'',0,6);
 INSERT INTO `supptrans` VALUES (6,21,'CRUISE','57748-OPP','2010-08-13','2010-09-30','2010-08-14 07:35:46',0,0.8,-100,0,0,0,'',0,7);
 INSERT INTO `supptrans` VALUES (7,21,'CRUISE','9sjkja_099','2010-08-13','2010-09-30','2010-08-14 07:39:38',0,0.8,-104.41,0,0,0,'',0,8);
+INSERT INTO `supptrans` VALUES (23,20,'CRUISE','389100','2011-04-03','2011-05-31','2011-04-04 00:00:00',0,0.8,145.95,0,0,0,'test again',0,9);
 
 --
 -- Dumping data for table `supptranstaxes`
@@ -13018,6 +14268,7 @@ INSERT INTO `supptranstaxes` VALUES (5,13,0);
 INSERT INTO `supptranstaxes` VALUES (6,13,0);
 INSERT INTO `supptranstaxes` VALUES (7,13,0);
 INSERT INTO `supptranstaxes` VALUES (8,13,0);
+INSERT INTO `supptranstaxes` VALUES (9,13,0);
 
 --
 -- Dumping data for table `systypes`
@@ -13027,15 +14278,15 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',3);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',2);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',14);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',15);
 INSERT INTO `systypes` VALUES (11,'Credit Note',7);
 INSERT INTO `systypes` VALUES (12,'Receipt',10);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
-INSERT INTO `systypes` VALUES (16,'Location Transfer',22);
+INSERT INTO `systypes` VALUES (16,'Location Transfer',23);
 INSERT INTO `systypes` VALUES (17,'Stock Adjustment',20);
-INSERT INTO `systypes` VALUES (18,'Purchase Order',12);
+INSERT INTO `systypes` VALUES (18,'Purchase Order',16);
 INSERT INTO `systypes` VALUES (19,'Picking List',0);
-INSERT INTO `systypes` VALUES (20,'Purchase Invoice',22);
+INSERT INTO `systypes` VALUES (20,'Purchase Invoice',23);
 INSERT INTO `systypes` VALUES (21,'Debit Note',7);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',4);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
@@ -13043,7 +14294,7 @@ INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',32);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',4);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',10);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
-INSERT INTO `systypes` VALUES (30,'Sales Order',26);
+INSERT INTO `systypes` VALUES (30,'Sales Order',28);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (32,'Contract Close',6);
 INSERT INTO `systypes` VALUES (35,'Cost Update',17);
@@ -13105,7 +14356,7 @@ INSERT INTO `taxcategories` VALUES (5,'Freight');
 -- Dumping data for table `taxgroups`
 --
 
-INSERT INTO `taxgroups` VALUES (1,'Default tax group');
+INSERT INTO `taxgroups` VALUES (1,'Default');
 INSERT INTO `taxgroups` VALUES (2,'Ontario');
 INSERT INTO `taxgroups` VALUES (3,'UK Inland Revenue');
 
@@ -13113,8 +14364,7 @@ INSERT INTO `taxgroups` VALUES (3,'UK Inland Revenue');
 -- Dumping data for table `taxgrouptaxes`
 --
 
-INSERT INTO `taxgrouptaxes` VALUES (1,1,0,0);
-INSERT INTO `taxgrouptaxes` VALUES (1,5,1,1);
+INSERT INTO `taxgrouptaxes` VALUES (1,1,1,0);
 INSERT INTO `taxgrouptaxes` VALUES (2,11,0,0);
 INSERT INTO `taxgrouptaxes` VALUES (2,13,0,0);
 INSERT INTO `taxgrouptaxes` VALUES (3,13,0,0);
@@ -13195,7 +14445,7 @@ INSERT INTO `workorders` VALUES (13,'TOR','2010-10-15','2010-08-14',0,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','info@weberp.org','MEL',8,'2011-03-30 09:00:21','','A4','1,1,1,1,1,1,1,1,1,1',0,50,'jelly','sq_AL.utf8',0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','info@weberp.org','MEL',8,'2011-04-18 04:31:21','','A4','1,1,1,1,1,1,1,1,1,1',0,50,'jelly','lv_LV.utf8',0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -13203,6 +14453,6 @@ INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-03-31 20:14:20
+-- Dump completed on 2011-04-18 19:35:26
 TRUNCATE TABLE audittrail;
 SET FOREIGN_KEY_CHECKS = 1;

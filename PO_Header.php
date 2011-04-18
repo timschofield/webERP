@@ -228,7 +228,7 @@ if (isset($_POST['EnterLines'])){
 		$_POST['RePrint'] = 0;
 	}
 
-	echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/PO_Items.php?identifier='.$identifier. "'>";
+	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/PO_Items.php?identifier='.$identifier. '">';
 	echo '<p>';
 	prnMsg(_('You should automatically be forwarded to the entry of the purchase order line items page') . '. ' .
 		_('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
@@ -613,6 +613,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 						purchdata.suppliersuom,
 						purchdata.suppliers_partno,
 						purchdata.conversionfactor,
+						purchdata.leadtime,
 						stockcategory.stockact
 				FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
@@ -625,6 +626,9 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 
 		if (!isset($PurchItemRow['conversionfactor'])) {
 			$PurchItemRow['conversionfactor']=1;
+		}
+		if (!isset($PurchItemRow['leadtime'])) {
+			$PurchItemRow['leadtime']=1;
 		}
 
 		$_SESSION['PO'.$identifier]->add_to_order(	1,
@@ -644,18 +648,10 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 												0,
 												'',
 												$PurchItemRow['decimalplaces'],
-												$Purch_Item,
 												$PurchItemRow['suppliersuom'],
 												$PurchItemRow['conversionfactor'],
-												$PurchItemRow['suppliers_partno'],
-												$Qty*$PurchItemRow['price'],
-												'',
-												0,
-												0,
-												0,
-												0,
-												$Qty,
-												$Qty*$PurchItemRow['price']);
+												$PurchItemRow['leadtime'],
+												$PurchItemRow['suppliers_partno'] );
 																						
 		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/PO_Items.php?identifier='.$identifier. "'>";
 	}

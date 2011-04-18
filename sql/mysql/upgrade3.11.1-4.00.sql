@@ -842,3 +842,15 @@ ALTER TABLE `paymentmethods` ADD `usepreprintedstationery` TINYINT NOT NULL DEFA
 DELETE FROM scripts WHERE script='PDFStockTransListing.php';
 INSERT INTO scripts (`script` ,`pagesecurity` ,`description`) VALUES('PDFPeriodStockTransListing.php','3','Allows stock transactions of a specific transaction type to be listed over a single day or period range');
 UPDATE config SET confvalue='4.03.7' WHERE confname='VersionNumber';
+ALTER TABLE `purchorderdetails`
+  DROP `itemno`,
+  DROP `subtotal_amount`,
+  DROP `package`,
+  DROP `pcunit`,
+  DROP `kgs`,
+  DROP `cuft`,
+  DROP `total_quantity`,
+  DROP `netweight`,
+  DROP `total_amount`;
+  UPDATE purchdata INNER JOIN unitsofmeasure  ON purchdata.suppliersuom=unitsofmeasure.unitid SET suppliersuom = unitsofmeasure.unitname
+UPDATE config SET confvalue='4.03.8' WHERE confname='VersionNumber';

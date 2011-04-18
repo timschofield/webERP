@@ -32,34 +32,42 @@ if (isset($_POST['SupplierDescription'])) {
 }
 
 if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($SupplierID)) { /*Validate Inputs */
-    $InputError = 0; /*Start assuming the best */
-    if ($StockID == '' OR !isset($StockID)) {
-        $InputError = 1;
-        prnMsg(_('There is no stock item set up enter the stock code or select a stock item using the search page'), 'error');
-    }
-    if (!is_numeric($_POST['Price'])) {
-        $InputError = 1;
-        unset($_POST['Price']);
-        prnMsg(_('The price entered was not numeric and a number is expected. No changes have been made to the database'), 'error');
-    }
-    if ($_POST['Price'] == 0) {
-        prnMsg(_('The price entered is zero') . '   ' . _('Is this intentional?'), 'warn');
-    }
-    if (!is_numeric($_POST['LeadTime'])) {
-        $InputError = 1;
-        unset($_POST['LeadTime']);
-        prnMsg(_('The lead time entered was not numeric a number of days is expected no changes have been made to the database'), 'error');
-    }
-    if (!is_numeric($_POST['MinOrderQty'])) {
-        $InputError = 1;
-        unset($_POST['MinOrderQty']);
-        prnMsg(_('The minimum order quantity was not numeric and a number is expected no changes have been made to the database'), 'error');
-    }
-    if (!is_numeric($_POST['ConversionFactor'])) {
-        $InputError = 1;
-        unset($_POST['ConversionFactor']);
-        prnMsg(_('The conversion factor entered was not numeric') . ' (' . _('a number is expected') . '). ' . _('The conversion factor is the number which the price must be divided by to get the unit price in our unit of measure') . '. <br />' . _('E.g.') . ' ' . _('The supplier sells an item by the tonne and we hold stock by the kg') . '. ' . _('The suppliers price must be divided by 1000 to get to our cost per kg') . '. ' . _('The conversion factor to enter is 1000') . '. <br /><br />' . _('No changes will be made to the database'), 'error');
-    }
+	$InputError = 0; /*Start assuming the best */
+	if ($StockID == '' OR !isset($StockID)) {
+		$InputError = 1;
+		prnMsg(_('There is no stock item set up enter the stock code or select a stock item using the search page'), 'error');
+	}
+	if (!is_numeric(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['Price'])))) {
+		$InputError = 1;
+		unset($_POST['Price']);
+		prnMsg(_('The price entered was not numeric and a number is expected. No changes have been made to the database'), 'error');
+	} else {
+		$_POST['Price'] = doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['Price']));
+	}
+	if ($_POST['Price'] == 0) {
+		prnMsg(_('The price entered is zero') . '   ' . _('Is this intentional?'), 'warn');
+	}
+	if (!is_numeric(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['LeadTime'])))) {
+		$InputError = 1;
+		unset($_POST['LeadTime']);
+		prnMsg(_('The lead time entered was not numeric a number of days is expected no changes have been made to the database'), 'error');
+	} else {
+		$_POST['LeadTime'] = doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['LeadTime']));
+	}
+	if (!is_numeric(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['MinOrderQty'])))) {
+		$InputError = 1;
+		unset($_POST['MinOrderQty']);
+		prnMsg(_('The minimum order quantity was not numeric and a number is expected no changes have been made to the database'), 'error');
+	} else {
+		$_POST['MinOrderQty'] =doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['MinOrderQty']));
+	}
+	if (!is_numeric(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['ConversionFactor'])))) {
+		$InputError = 1;
+		unset($_POST['ConversionFactor']);
+		prnMsg(_('The conversion factor entered was not numeric') . ' (' . _('a number is expected') . '). ' . _('The conversion factor is the number which the price must be divided by to get the unit price in our unit of measure') . '. <br />' . _('E.g.') . ' ' . _('The supplier sells an item by the tonne and we hold stock by the kg') . '. ' . _('The suppliers price must be divided by 1000 to get to our cost per kg') . '. ' . _('The conversion factor to enter is 1000') . '. <br /><br />' . _('No changes will be made to the database'), 'error');
+	} else {
+		$_POST['ConversionFactor'] =doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['ConversionFactor']));
+	}
     if ($InputError == 0 AND isset($_POST['AddRecord'])) {
         $sql = "INSERT INTO purchdata (supplierno,
 								stockid,
@@ -137,23 +145,21 @@ if (isset($_GET['Delete'])) {
 if (!isset($_GET['Edit'])) {
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . ' ' . _('For Stock Code') . ' - ' . $StockID . '</p><br />';
     $sql = "SELECT  purchdata.supplierno,
-								suppliers.suppname,
-								purchdata.price,
-								suppliers.currcode,
-								purchdata.effectivefrom,
-								unitsofmeasure.unitname,
-								purchdata.supplierdescription,
-								purchdata.leadtime,
-								purchdata.suppliers_partno,
-								purchdata.minorderqty,
-								purchdata.preferred,
-								purchdata.conversionfactor
-						FROM purchdata INNER JOIN suppliers
-							ON purchdata.supplierno=suppliers.supplierid
-						LEFT JOIN unitsofmeasure
-							ON purchdata.suppliersuom=unitsofmeasure.unitid
-						WHERE purchdata.stockid = '" . $StockID . "'
-						ORDER BY purchdata.effectivefrom DESC";
+					suppliers.suppname,
+					purchdata.price,
+					suppliers.currcode,
+					purchdata.effectivefrom,
+					purchdata.suppliersuom,
+					purchdata.supplierdescription,
+					purchdata.leadtime,
+					purchdata.suppliers_partno,
+					purchdata.minorderqty,
+					purchdata.preferred,
+					purchdata.conversionfactor
+			FROM purchdata INNER JOIN suppliers
+				ON purchdata.supplierno=suppliers.supplierid
+			WHERE purchdata.stockid = '" . $StockID . "'
+			ORDER BY purchdata.effectivefrom DESC";
     $ErrMsg = _('The supplier purchasing details for the selected part could not be retrieved because');
     $PurchDataResult = DB_query($sql, $db, $ErrMsg);
     if (DB_num_rows($PurchDataResult) == 0 and $StockID != '') {
@@ -206,7 +212,7 @@ if (!isset($_GET['Edit'])) {
 			</tr>", 
 			$myrow['suppname'], 
 			number_format($myrow['price'], 3), 
-			$myrow['unitname'],
+			$myrow['suppliersuom'],
 			$myrow['conversionfactor'],
 			number_format($myrow['price']/$myrow['conversionfactor'],2),
 			$myrow['currcode'], 
@@ -260,7 +266,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
         echo '<td>' . _('Text in Supplier') . ' <b>' . _('CODE') . '</b>:</font></td>';
         echo '<td><input type="Text" name="SupplierCode" size=15 maxlength=18></td>';
         echo '</tr></table><br />';
-        echo '<div class="centre"><input type=submit name="SearchSupplier" VALUE="' . _('Find Suppliers Now') . '"></div></form>';
+        echo '<div class="centre"><input type=submit name="SearchSupplier" value="' . _('Find Suppliers Now') . '"></div></form>';
         include ('includes/footer.inc');
         exit;
     };
@@ -347,13 +353,20 @@ if (isset($SuppliersResult)) {
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
-       printf("<td><font size=1><input type=submit name='SupplierID' VALUE='%s'</font></td>
-				<td><font size=1>%s</font></td>
-				<td><font size=1>%s</font></td>
-				<td><font size=1>%s</font></td>
-				<td><font size=1>%s</font></td>
-				<td><font size=1>%s</font></td>
-			</tr>", $myrow['supplierid'], $myrow['suppname'], $myrow['currcode'], $myrow['address1'], $myrow['address2'], $myrow['address3']);
+       printf('<td><font size=1><input type="submit" name="SupplierID" value="%s"</font></td>
+			<td><font size=1>%s</font></td>
+			<td><font size=1>%s</font></td>
+			<td><font size=1>%s</font></td>
+			<td><font size=1>%s</font></td>
+			<td><font size=1>%s</font></td>
+			</tr>', 
+			$myrow['supplierid'], 
+			$myrow['suppname'], 
+			$myrow['currcode'], 
+			$myrow['address1'], 
+			$myrow['address2'], 
+			$myrow['address3']);
+        
         echo '<input type=hidden name=StockID value="' . $StockID . '">';
         echo '<input type=hidden name=StockUOM value="' . $StockUOM . '">';
 
@@ -405,17 +418,18 @@ if (!isset($SuppliersResult)) {
         $_POST['SupplierCode'] = $myrow['suppliers_partno'];
 	$StockUOM=$myrow['units'];
     }
-    echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post"><table class=selection>';
+    echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">
+		<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
     if (!isset($SupplierID)) {
         $SupplierID = '';
     }
 	if (isset($_GET['Edit'])) {
         echo '<tr><td>' . _('Supplier Name') . ':</td>
-    	<td><input type=hidden name="SupplierID" VALUE="' . $SupplierID . '">' . $SupplierID . ' - ' . $SuppName . '<input type=hidden name="WasEffectiveFrom" VALUE="' . $myrow['effectivefrom'] . '"></td></tr>';
+    	<td><input type=hidden name="SupplierID" value="' . $SupplierID . '">' . $SupplierID . ' - ' . $SuppName . '<input type=hidden name="WasEffectiveFrom" value="' . $myrow['effectivefrom'] . '"></td></tr>';
     } else {
         echo '<tr><td>' . _('Supplier Name') . ':</td>
-    	<input type=hidden name="SupplierID" maxlength=10 size=11 VALUE="' . $SupplierID . '">';
+    	<input type=hidden name="SupplierID" maxlength=10 size=11 value="' . $SupplierID . '">';
 		if ($SupplierID!='') {
 			echo '<td>'.$SuppName;
 		}
@@ -426,7 +440,7 @@ if (!isset($SuppliersResult)) {
         }
         echo '</td></tr>';
     }
-   	echo '<td><input type=hidden name="StockID" maxlength=10 size=11 VALUE="' . $StockID . '">';
+   	echo '<td><input type=hidden name="StockID" maxlength=10 size=11 value="' . $StockID . '">';
     if (!isset($CurrCode)) {
         $CurrCode = '';
     }
@@ -449,57 +463,48 @@ if (!isset($SuppliersResult)) {
         $_POST['MinOrderQty'] = '1';
     }
     echo '<tr><td>' . _('Currency') . ':</td>
-	<td><input type=hidden name="CurrCode" . VALUE="' . $CurrCode . '">' . $CurrCode . '</td></tr>';
+	<td><input type=hidden name="CurrCode" . value="' . $CurrCode . '">' . $CurrCode . '</td></tr>';
     echo '<tr><td>' . _('Price') . ' (' . _('in Supplier Currency') . '):</td>
-	<td><input type="text" class="number" name="Price" maxlength=12 size=12 VALUE=' . number_format($_POST['Price'], $myrow['decimalplaces'] ,'.','') . '></td></tr>';
+	<td><input type="text" class="number" name="Price" maxlength=12 size=12 value=' . number_format($_POST['Price'], $myrow['decimalplaces']) . '></td></tr>';
     echo '<tr><td>' . _('Date Updated') . ':</td>
-	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveFrom" maxlength=10 size=11 VALUE="' . $_POST['EffectiveFrom'] . '"></td></tr>';
+	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveFrom" maxlength=10 size=11 value="' . $_POST['EffectiveFrom'] . '"></td></tr>';
     echo '<tr><td>' . _('Our Unit of Measure') . ':</td>';
 	if (isset($SupplierID)) {
 		echo '<td>' . $StockUOM . '</td></tr>';
 	}
     echo '<tr><td>' . _('Suppliers Unit of Measure') . ':</td>';
-    echo '<td><select name="SuppliersUOM">';
-    $sql = 'SELECT * FROM unitsofmeasure';
-    $result = DB_query($sql, $db);
-    while ($myrow = DB_fetch_array($result)) {
-        if ($_POST['SuppliersUOM'] == $myrow['unitid']) {
-            echo '<option selected value="' . $myrow['unitid'] . '">' . $myrow['unitname'] . '</option>';
-        } else {
-            echo '<option value="' . $myrow['unitid'] . '">' . $myrow['unitname'] . '</option>';
-        }
-    }
-    echo '</td></tr>';
+    echo '<td><input type="text" name="SuppliersUOM" size="20" maxlength="20" value ="' . $_POST['SuppliersUOM'] . '"/>';
+     echo '</td></tr>';
     if (!isset($_POST['ConversionFactor']) OR $_POST['ConversionFactor'] == "") {
         $_POST['ConversionFactor'] = 1;
     }
     echo '<tr><td>' . _('Conversion Factor (to our UOM)') . ':</td>
-	<td><input type=text class=number name="ConversionFactor" maxlength=12 size=12 VALUE=' . $_POST['ConversionFactor'] . '></td></tr>';
+	<td><input type=text class=number name="ConversionFactor" maxlength=12 size=12 value=' . $_POST['ConversionFactor'] . '></td></tr>';
     echo '<tr><td>' . _('Supplier Stock Code') . ':</td>
-	<td><input type=text name="SupplierCode" maxlength=15 size=15 VALUE="' . $_POST['SupplierCode'] . '"></td></tr>';
+	<td><input type=text name="SupplierCode" maxlength=15 size=15 value="' . $_POST['SupplierCode'] . '"></td></tr>';
     echo '<tr><td>' . _('MinOrderQty') . ':</td>
-	<td><input type=text class=number name="MinOrderQty" maxlength=15 size=15 VALUE="' . $_POST['MinOrderQty'] . '"></td></tr>';
+	<td><input type=text class=number name="MinOrderQty" maxlength=15 size=15 value="' . $_POST['MinOrderQty'] . '"></td></tr>';
     echo '<tr><td>' . _('Supplier Stock Description') . ':</td>
-	<td><input type=text name="SupplierDescription" maxlength=50 size=51 VALUE="' . $_POST['SupplierDescription'] . '"></td></tr>';
+	<td><input type=text name="SupplierDescription" maxlength=50 size=51 value="' . $_POST['SupplierDescription'] . '"></td></tr>';
     if (!isset($_POST['LeadTime']) OR $_POST['LeadTime'] == "") {
         $_POST['LeadTime'] = 1;
     }
     echo '<tr><td>' . _('Lead Time') . ' (' . _('in days from date of order') . '):</td>
-	<td><input type=text class=number name="LeadTime" maxlength=4 size=5 VALUE=' . $_POST['LeadTime'] . '></td></tr>';
+	<td><input type=text class=number name="LeadTime" maxlength=4 size=5 value=' . $_POST['LeadTime'] . '></td></tr>';
     echo '<tr><td>' . _('Preferred Supplier') . ':</td>
 	<td><select name="Preferred">';
     if ($_POST['Preferred'] == 1) {
-        echo '<option selected VALUE=1>' . _('Yes') . '</option>';
-        echo '<option VALUE=0>' . _('No')  . '</option>';
+        echo '<option selected value=1>' . _('Yes') . '</option>';
+        echo '<option value=0>' . _('No')  . '</option>';
     } else {
-        echo '<option VALUE=1>' . _('Yes')  . '</option>';
-        echo '<option selected VALUE=0>' . _('No')  . '</option>';
+        echo '<option value=1>' . _('Yes')  . '</option>';
+        echo '<option selected value=0>' . _('No')  . '</option>';
     }
     echo '</select></td></tr></table><br /><div class="centre">';
     if (isset($_GET['Edit'])) {
-        echo '<input type=submit name="UpdateRecord" VALUE="' . _('Update') . '">';
+        echo '<input type=submit name="UpdateRecord" value="' . _('Update') . '">';
     } else {
-        echo '<input type=submit name="AddRecord" VALUE="' . _('Add') . '">';
+        echo '<input type=submit name="AddRecord" value="' . _('Add') . '">';
     }
     echo '</div>';
     echo '<div class="centre">';

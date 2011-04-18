@@ -49,7 +49,6 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['Commit'])) {
 			} else { //ok to update the PO object variables
 				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Price=(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['SuppPrice'.$POLine->LineNo]))/$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor);
 			}
-			$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->NetWeight=$_POST['NetWeight'.$POLine->LineNo];
 			$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ReqDelDate=$_POST['ReqDelDate'.$POLine->LineNo];
 		}
 	}
@@ -202,57 +201,39 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
 				if ($POLine->Deleted==False) {
 					$sql = "INSERT INTO purchorderdetails ( orderno,
-															itemcode,
-															deliverydate,
-															itemdescription,
-															glcode,
-															unitprice,
-															quantityord,
-															shiptref,
-															jobref,
-															itemno,
-															suppliersunit,
-															suppliers_partno,
-															subtotal_amount,
-															package,
-															pcunit,
-															netweight,
-															kgs,
-															cuft,
-															total_quantity,
-															total_amount,
-															assetid,
-															conversionfactor )
-													VALUES (
-															'" . $_SESSION['PO'.$identifier]->OrderNo . "',
-															'" . $POLine->StockID . "',
-															'" . FormatDateForSQL($POLine->ReqDelDate) . "',
-															'" . $POLine->ItemDescription . "',
-															'" . $POLine->GLCode . "',
-															'" . $POLine->Price . "',
-															'" . $POLine->Quantity . "',
-															'" . $POLine->ShiptRef . "',
-															'" . $POLine->JobRef . "',
-															'" . $POLine->ItemNo . "',
-															'" . $POLine->SuppliersUnit . "',
-															'" . $POLine->Suppliers_PartNo . "',
-															'" . $POLine->SubTotal_Amount . "',
-															'" . $POLine->Package . "',
-															'" . $POLine->PcUnit . "',
-															'" . $POLine->NetWeight . "',
-															'" . $POLine->KGs . "',
-															'" . $POLine->CuFt . "',
-															'" . $POLine->Total_Quantity . "',
-															'" . $POLine->Total_Amount . "',
-															'" . $POLine->AssetID . "',
-															'" . $POLine->ConversionFactor . "')";
+														itemcode,
+														deliverydate,
+														itemdescription,
+														glcode,
+														unitprice,
+														quantityord,
+														shiptref,
+														jobref,
+														suppliersunit,
+														suppliers_partno,
+														assetid,
+														conversionfactor )
+												VALUES (
+														'" . $_SESSION['PO'.$identifier]->OrderNo . "',
+														'" . $POLine->StockID . "',
+														'" . FormatDateForSQL($POLine->ReqDelDate) . "',
+														'" . $POLine->ItemDescription . "',
+														'" . $POLine->GLCode . "',
+														'" . $POLine->Price . "',
+														'" . $POLine->Quantity . "',
+														'" . $POLine->ShiptRef . "',
+														'" . $POLine->JobRef . "',
+														'" . $POLine->SuppliersUnit . "',
+														'" . $POLine->Suppliers_PartNo . "',
+														'" . $POLine->AssetID . "',
+														'" . $POLine->ConversionFactor . "')";
 					$ErrMsg =_('One of the purchase order detail records could not be inserted into the database because');
 					$DbgMsg =_('The SQL statement used to insert the purchase order detail record and failed was');
 					
 					$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 				}
 			} /* end of the loop round the detail line items on the order */
-			echo '<p>';
+			echo '<p />';
 			prnMsg(_('Purchase Order') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . _('on') . ' ' .
 		     	$_SESSION['PO'.$identifier]->SupplierName . ' ' . _('has been created'),'success');
 		} else { /*its an existing order need to update the old order info */
@@ -315,17 +296,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 														quantityord,
 														shiptref,
 														jobref,
-														itemno,
 														suppliersunit,
 														suppliers_partno,
-														subtotal_amount,
-														package,
-														pcunit,
-														netweight,
-														kgs,
-														cuft,
-														total_quantity,
-														total_amount,
 														assetid,
 														conversionfactor)
 													VALUES (
@@ -338,17 +310,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 														'" . $POLine->Quantity . "',
 														'" . $POLine->ShiptRef . "',
 														'" . $POLine->JobRef . "',
-														'" . $POLine->ItemNo . "',
 														'" . $POLine->SuppliersUnit . "',
 														'" . $POLine->Suppliers_PartNo . "',
-														'" . $POLine->SubTotal_Amount . "',
-														'" . $POLine->Package . "',
-														'" . $POLine->PcUnit . "',
-														'" . $POLine->NetWeight . "',
-														'" . $POLine->KGs . "',
-														'" . $POLine->CuFt . "',
-														'" . $POLine->Total_Quantity . "',
-														'" . $POLine->Total_Amount . "',
 														'" . $POLine->AssetID . "',
 														'" . $POLine->ConversionFactor . "')";
 
@@ -362,17 +325,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 															quantityord='" . $POLine->Quantity . "',
 															shiptref='" . $POLine->ShiptRef . "',
 															jobref='" . $POLine->JobRef . "',
-															itemno='" . $POLine->ItemNo . "',
 															suppliersunit='" . $POLine->SuppliersUnit . "',
 															suppliers_partno='" . $POLine->Suppliers_PartNo . "',
-															subtotal_amount='" . $POLine->SubTotal_Amount . "',
-															package='" . $POLine->Package . "',
-															pcunit='" . $POLine->PcUnit . "',
-															netweight='" . $POLine->NetWeight . "',
-															kgs='" . $POLine->KGs . "',
-															cuft='" . $POLine->CuFt . "',
-															total_quantity='" . $POLine->Total_Quantity . "',
-															total_amount='" . $POLine->Total_Amount . "',
 															completed=1,
 															assetid='" . $POLine->AssetID . "',
 															conversionfactor = '" . $POLine->ConversionFactor . "' 
@@ -386,17 +340,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 															quantityord='" . $POLine->Quantity . "',
 															shiptref='" . $POLine->ShiptRef . "',
 															jobref='" . $POLine->JobRef . "',
-															itemno='" . $POLine->ItemNo . "',
 															suppliersunit='" . $POLine->SuppliersUnit . "',
 															suppliers_partno='" . $POLine->Suppliers_PartNo . "',
-															subtotal_amount='" . $POLine->SubTotal_Amount . "',
-															package='" . $POLine->Package . "',
-															pcunit='" . $POLine->PcUnit . "',
-															netweight='" . $POLine->NetWeight . "',
-															kgs='" . $POLine->KGs . "',
-															cuft='" . $POLine->CuFt . "',
-															total_quantity='" . $POLine->Total_Quantity . "',
-															total_amount='" . $POLine->Total_Amount . "',
 															assetid='" . $POLine->AssetID . "',
 															conversionfactor = '" . $POLine->ConversionFactor . "'
 								WHERE podetailitem='" . $POLine->PODetailRec . "'";
@@ -540,19 +485,9 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 												0,
 												$GLAccountName,
 												2,
-												'',
 												$_POST['SuppliersUnit'],
 												1,
 												'',
-												'',
-												($_POST['Qty']*$_POST['Price']),
-												'',
-												'',
-												'',
-												'',
-												'',
-												$_POST['Qty'],
-												($_POST['Qty']*$_POST['Price']),
 												$_POST['AssetID']);
 	   include ('includes/PO_UnsetFormVbls.php');
 	}
@@ -592,8 +527,6 @@ if (isset($_POST['NewItem'])){
 							stockid,
 							units,
 							decimalplaces,
-							kgs,
-							netweight,
 							stockact,
 							accountname
 					FROM 	stockmaster INNER JOIN stockcategory
@@ -612,12 +545,10 @@ if (isset($_POST['NewItem'])){
 								conversionfactor,
 								supplierdescription,
 								suppliersuom,
-								unitname,
 								suppliers_partno,
 								leadtime,
 								MAX(purchdata.effectivefrom) AS latesteffectivefrom
-					FROM purchdata LEFT JOIN unitsofmeasure
-					ON purchdata.suppliersuom=unitsofmeasure.unitid
+					FROM purchdata 
 					WHERE purchdata.supplierno = '" . $_SESSION['PO'.$identifier]->SupplierID . "'
 					AND purchdata.effectivefrom <='" . Date('Y-m-d') . "'
 					AND purchdata.stockid = '". $ItemCode . "'
@@ -625,7 +556,6 @@ if (isset($_POST['NewItem'])){
 								purchdata.conversionfactor,
 								purchdata.supplierdescription,
 								purchdata.suppliersuom,
-								unitsofmeasure.unitname,
 								purchdata.suppliers_partno,
 								purchdata.leadtime";
 												
@@ -637,14 +567,14 @@ if (isset($_POST['NewItem'])){
 						$PurchPrice = $PurchRow['price']/$PurchRow['conversionfactor'];
 						$ConversionFactor = $PurchRow['conversionfactor'];
 						$SupplierDescription = 	$PurchRow['suppliers_partno'] .' - ' . $PurchRow['supplierdescription'];
-						$SuppliersUnitOfMeasure = $PurchRow['unitname'];
+						$SuppliersUnitOfMeasure = $PurchRow['suppliersuom'];
 						$SuppliersPartNo = $PurchRow['suppliers_partno'];
 						$LeadTime = $PurchRow['leadtime'];
 					} else { // no purchasing data setup
 						$PurchPrice = 0; 
 						$ConversionFactor = 1;
 						$SupplierDescription = 	$ItemRow['description'];
-						$SuppliersUnitOfMeasure = $ItemRow['units'];
+						$SuppliersUnitOfMeasure = $ItemRow['unitname'];
 						$SuppliersPartNo = '';
 						$LeadTime = 1;
 					}
@@ -666,19 +596,11 @@ if (isset($_POST['NewItem'])){
 															0,
 															$Itemrow['accountname'],
 															$ItemRow['decimalplaces'],
-															$ItemCode,
 															$SuppliersUnitOfMeasure,
 															$ConversionFactor,
 															$LeadTime,
-															$SuppliersPartNo,
-															$Quantity*$PurchPrice,
-															'',
-															0,
-															$ItemRow['netweight'],
-															$ItemRow['kgs'],
-															'',
-															$Quantity,
-															$Quantity*$PurchPrice );
+															$SuppliersPartNo
+															);
 				} else { //no rows returned by the SQL to get the item
 					prnMsg (_('The item code') . ' ' . $ItemCode . ' ' . _('does not exist in the database and therefore cannot be added to the order'),'error');
 					if ($debug==1){
@@ -711,15 +633,14 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 	echo '<tr>
 			<th>' . _('Item Code') . '</th>
 			<th>' . _('Description') . '</th>
-			<th>' . _('Weight') . '</th>
 			<th>' . _('Quantity Our Units') . '</th>
 			<th>' . _('Our Unit') .'</th>
 			<th>' . _('Price Our Units') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
 			<th>' . _('Unit Conversion Factor') . '</th>
-			<th>' . _('Quantity Supplier Units') . '</th>
+			<th>' . _('Order Quantity') . '<br />' . _('Supplier Units') . '</th>
 			<th>' .  _('Supplier Unit') . '</th>
-			<th>' . _('Price Supp Units') . ' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
-			<th>' . _('Subtotal') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
+			<th>' . _('Order Price') . '<br />' . _('Supp Units') . ' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
+			<th>' . _('Sub-Total') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
 			<th>' . _('Deliver By') .'</th>
 			</tr>';
 	
@@ -749,7 +670,6 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 
 			echo '<td>' . $POLine->StockID  . '</td>
 				<td>' . $POLine->ItemDescription . '</td>
-				<td><input type="text" class="number" name="NetWeight' . $POLine->LineNo . '" size="8" value="' . $POLine->NetWeight . '"></td>
 				<td class="number">' . number_format($POLine->Quantity,$POLine->DecimalPlaces) . '</td>
 				<td>' . $POLine->Units . '</td>
 				<td class="number">' . $DisplayPrice . '</td>
@@ -759,7 +679,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' .number_format(($POLine->Price *$POLine->ConversionFactor),2) .'"></td>
 				<td class="number">' . $DisplayLineTotal . '</td>
 				<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'].'" name="ReqDelDate' . $POLine->LineNo.'" size="10" value="' .$POLine->ReqDelDate .'"></td>
-				<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . 'identifier='.$identifier. '&Delete=' . $POLine->LineNo . '">' . _('Delete') . '</a></td></tr>';
+				<td><a href="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier. '&Delete=' . $POLine->LineNo . '">' . _('Delete') . '</a></td></tr>';
 			$_SESSION['PO'.$identifier]->Total = $_SESSION['PO'.$identifier]->Total + $LineTotal;
 		}
 	}
@@ -777,14 +697,15 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 
 if (isset($_POST['NonStockOrder'])) {
 
-	echo '<br /><table class=selection><tr><td>' . _('Item Description') . '</td>';
+	echo '<br /><table class="selection"><tr>
+				<td>' . _('Item Description') . '</td>';
 	echo '<td><input type=text name=ItemDescription size=40></td></tr>';
 	echo '<tr><td>' . _('General Ledger Code') . '</td>';
 	echo '<td><select name="GLCode">';
-	$sql='SELECT accountcode,
+	$sql="SELECT accountcode,
 				  accountname
 				FROM chartmaster
-				ORDER BY accountcode ASC';
+				ORDER BY accountcode ASC";
 
 	$result=DB_query($sql, $db);
 	while ($myrow=DB_fetch_array($result)) {
@@ -793,7 +714,7 @@ if (isset($_POST['NonStockOrder'])) {
 	echo '</select></td></tr>';
 	echo '<tr><td>'._('OR Asset ID'). '</td>
 						<td><select name="AssetID">';
-	$AssetsResult = DB_query('SELECT assetid, description, datepurchased FROM fixedassets ORDER BY assetid DESC',$db);
+	$AssetsResult = DB_query("SELECT assetid, description, datepurchased FROM fixedassets ORDER BY assetid DESC",$db);
 	echo '<option selected value="Not an Asset">' . _('Not an Asset') . '</option>';
 	while ($AssetRow = DB_fetch_array($AssetsResult)){
 		if ($AssetRow['datepurchased']=='0000-00-00'){
@@ -831,42 +752,26 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 			$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
-							stockmaster.units,
-							purchdata.conversionfactor,
-							unitsofmeasure.unitname
+							stockmaster.units
 				FROM stockmaster INNER JOIN stockcategory
 				ON stockmaster.categoryid=stockcategory.categoryid
-				LEFT JOIN purchdata
-				ON stockmaster.stockid=purchdata.stockid
-				LEFT JOIN unitsofmeasure 
-				ON unitsofmeasure.unitid=purchdata.suppliersuom
 				WHERE stockmaster.mbflag<>'D'
 				AND stockmaster.mbflag<>'K'
 				AND stockmaster.mbflag<>'G'
 				AND stockmaster.discontinued<>1
 				AND stockmaster.description " . LIKE . " '" . $SearchString ."'
-				AND (purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID."' 
-							OR purchdata.supplierno IS NULL)
 				ORDER BY stockmaster.stockid
 				LIMIT " .$_SESSION['DefaultDisplayRecordsMax'];
 		} else {
 			$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
-							stockmaster.units,
-							purchdata.conversionfactor,
-							unitsofmeasure.unitname
+							stockmaster.units
 				FROM stockmaster INNER JOIN stockcategory
 				ON stockmaster.categoryid=stockcategory.categoryid
-				LEFT JOIN purchdata
-				ON stockmaster.stockid=purchdata.stockid
-				LEFT JOIN unitsofmeasure 
-				ON unitsofmeasure.unitid=purchdata.suppliersuom
 				WHERE stockmaster.mbflag<>'D'
 				AND stockmaster.mbflag<>'K'
 				AND stockmaster.mbflag<>'G'
 				AND stockmaster.discontinued<>1
-				AND (purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID."' 
-							OR purchdata.supplierno IS NULL)
 				AND stockmaster.description " . LIKE . " '". $SearchString ."'
 				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 				ORDER BY stockmaster.stockid
@@ -880,42 +785,26 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 		if ($_POST['StockCat']=='All'){
 			$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
-							stockmaster.units,
-							purchdata.conversionfactor,
-							unitsofmeasure.unitname
+							stockmaster.units
 				FROM stockmaster INNER JOIN stockcategory
 				ON stockmaster.categoryid=stockcategory.categoryid
-				LEFT JOIN purchdata
-				ON stockmaster.stockid=purchdata.stockid
-				LEFT JOIN unitsofmeasure 
-				ON unitsofmeasure.unitid=purchdata.suppliersuom
 				WHERE stockmaster.mbflag<>'D'
 				AND stockmaster.mbflag<>'K'
 				AND stockmaster.mbflag<>'G'
 				AND stockmaster.discontinued<>1
-				AND (purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID."' 
-							OR purchdata.supplierno IS NULL)
 				AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
 				ORDER BY stockmaster.stockid
 				LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
 		} else {
 			$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
-							stockmaster.units,
-							purchdata.conversionfactor,
-							unitsofmeasure.unitname
+							stockmaster.units
 				FROM stockmaster INNER JOIN stockcategory
 				ON stockmaster.categoryid=stockcategory.categoryid
-				LEFT JOIN purchdata
-				ON stockmaster.stockid=purchdata.stockid
-				LEFT JOIN unitsofmeasure 
-				ON unitsofmeasure.unitid=purchdata.suppliersuom
 				WHERE stockmaster.mbflag<>'D'
 				AND stockmaster.mbflag<>'K'
 				AND stockmaster.mbflag<>'G'
 				and stockmaster.discontinued<>1
-				AND (purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID."' 
-							OR purchdata.supplierno IS NULL)
 				AND stockmaster.stockid " . LIKE  . " '" . $_POST['StockCode'] . "'
 				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 				ORDER BY stockmaster.stockid
@@ -926,41 +815,25 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 		if ($_POST['StockCat']=='All'){
 			$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
-							stockmaster.units,
-							purchdata.conversionfactor,
-							unitsofmeasure.unitname
+							stockmaster.units
 				FROM stockmaster INNER JOIN stockcategory
 				ON stockmaster.categoryid=stockcategory.categoryid
-				LEFT JOIN purchdata
-				ON stockmaster.stockid=purchdata.stockid
-				LEFT JOIN unitsofmeasure 
-				ON unitsofmeasure.unitid=purchdata.suppliersuom
 				WHERE stockmaster.mbflag<>'D'
 				AND stockmaster.mbflag<>'K'
 				AND stockmaster.mbflag<>'G'
 				AND stockmaster.discontinued<>1
-				AND (purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID."' 
-							OR purchdata.supplierno IS NULL)
 				ORDER BY stockmaster.stockid
 				LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
 		} else {
 			$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
-							stockmaster.units,
-							purchdata.conversionfactor,
-							unitsofmeasure.unitname
+							stockmaster.units
 				FROM stockmaster INNER JOIN stockcategory
 				ON stockmaster.categoryid=stockcategory.categoryid
-				LEFT JOIN purchdata
-				ON stockmaster.stockid=purchdata.stockid
-				LEFT JOIN unitsofmeasure 
-				ON unitsofmeasure.unitid=purchdata.suppliersuom
 				WHERE stockmaster.mbflag<>'D'
 				AND stockmaster.mbflag<>'K'
 				AND stockmaster.mbflag<>'G'
 				AND stockmaster.discontinued<>1
-				AND (purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID."' 
-							OR purchdata.supplierno IS NULL)
 				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 				ORDER BY stockmaster.stockid
 				LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
@@ -994,11 +867,16 @@ if (!isset($_GET['Edit'])) {
 	$DbgMsg = _('The SQL used to retrieve the category details but failed was');
 	$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-	echo '<table class=selection><tr><th colspan=3><font size=3 color=blue>'. _('Search For Stock Items') . '</th>';
+	echo '<table class=selection>
+			<tr>
+				<th colspan=3><font size=3 color=blue>'. _('Search For Stock Items') . '</th>';
 
-	echo ':</font></tr><tr><td><select name="StockCat">';
+	echo ':</font>
+			</tr>
+			<tr><td><select name="StockCat">';
 
-	echo '<option selected value="All">' . _('All');
+	echo '<option selected value="All">' . _('All') . '</option>';
+	
 	while ($myrow1 = DB_fetch_array($result1)) {
 		if (isset($_POST['StockCat']) and $_POST['StockCat']==$myrow1['categoryid']){
 			echo '<option selected value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
@@ -1019,16 +897,17 @@ if (!isset($_GET['Edit'])) {
 	}
 
 	echo '</select></td>
-		<td>' . _('Enter text extracts in the description') . ":</td>
-		<td><input type='text' name='Keywords' size=20 maxlength=25 value='" . $_POST['Keywords'] . "'></td></tr>
+		<td>' . _('Enter text extracts in the description') . ':</td>
+		<td><input type="text" name="Keywords" size=20 maxlength=25 value="' . $_POST['Keywords'] . '"></td></tr>
 		<tr><td></td>
-		<td><font size=3><b>" . _('OR') . ' </b></font>' . _('Enter extract of the Stock Code') .
-			":</td>
-		<td><input type='text' name='StockCode' size=15 maxlength=18 value='" . $_POST['StockCode'] . "'></td>
+		<td><font size=3><b>' . _('OR') . ' </b></font>' . _('Enter extract of the Stock Code') . ':</td>
+		<td><input type="text" name="StockCode" size=15 maxlength=18 value="' . $_POST['StockCode'] . '"></td>
 		</tr>
 		<tr><td></td>
-		<td><font size=3><b>" . _('OR') . ' </b></font><a target="_blank" href="'.$rootpath.'/Stocks.php?">' . _('Create a New Stock Item') . '</a></td></tr>
-		</table><br />
+		<td><font size=3><b>' . _('OR') . ' </b></font><a target="_blank" href="'.$rootpath.'/Stocks.php">' . _('Create a New Stock Item') . '</a></td></tr>
+		</table>
+		<br />
+		
 		<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '">
 		<input type="submit" name="NonStockOrder" value="' . _('Order a non stock item') . '">
 		</div><br />';
@@ -1070,9 +949,19 @@ if (isset($SearchResult)) {
 			$ImageSource = '<i>'._('No Image').'</i>';
 		}
 
-		if (strlen($myrow['unitname'])>0) {
-			$OrderUnits=$myrow['unitname'];
-			$ConversionFactor =$myrow['conversionfactor'];
+		/*Get conversion factor and supplier units if any */
+		$sql =  "SELECT purchdata.conversionfactor,
+						purchdata.suppliersuom
+					FROM purchdata
+					WHERE purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "' 
+					AND purchdata.stockid='" . $myrow['stockid'] . "'";
+		$ErrMsg = _('Could not retrieve the purchasing data for the item');
+		$PurchDataResult = DB_query($sql,$db,$ErrMsg);
+		
+		if (DB_num_rows($PurchDataResult)>0) {
+			$PurchDataRow = DB_fetch_array($PurchDataResult);
+			$OrderUnits=$PurchDataRow['suppliersuom'];
+			$ConversionFactor =$PurchDataRow['conversionfactor'];
 		} else {
 			$OrderUnits=$myrow['units'];
 			$ConversionFactor =1;
