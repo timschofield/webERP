@@ -541,8 +541,8 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != "") {
 			echo '<tr><td colspan=2>';
 			echo '<table width=45% colspan=2 cellpadding=4>';
 			echo '<tr><th width=33%>' . _('Customer Mapping') . '</th></tr>';
-			echo '</td><td valign=TOp>'; /* Mapping */
-			echo '<div class="centre"' . _('Mapping is enabled, Map will display below.') . '</div>';
+			echo '</td><td valign="top">'; /* Mapping */
+			echo '<div class="centre">' . _('Mapping is enabled, Map will display below.') . '</div>';
 			echo '<div align="center" id="map" style="width: ' . $map_width . 'px; height: ' . $map_height . 'px"></div><br />';
 			echo '</th></tr></table>';
 		}

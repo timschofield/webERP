@@ -330,7 +330,7 @@ $sql = "SELECT
 $result = DB_query($sql, $db);
 echo '<table class=selection>';
 echo '<tr><td>' . _('Branch') . ':</td>';
-echo '<td><select name="Branch"';
+echo '<td><select name="Branch">';
 while ($myrow=DB_fetch_array($result)) {
 	if ($myrow['branchcode']==$_POST['branch']) {
 		echo '<option selected value='.$myrow['branchcode'].'>'.$myrow['brname'].'</option>';
@@ -338,13 +338,13 @@ while ($myrow=DB_fetch_array($result)) {
 		echo '<option value='.$myrow['branchcode'].'>'.$myrow['brname'].'</option>';
 	}
 }
-echo '></td></tr>';
+echo '</select></td></tr>';
 echo '<tr><td>' . _('Start Date') . ':</td>
                          <td><input type="Text" name="StartDate" class=date alt='.$_SESSION['DefaultDateFormat'].
-                         ' size=11 maxlength=10 value=' . $_POST['StartDate'] . '></td></tr>';
+                         ' size=11 maxlength=10 value="' . $_POST['StartDate'] . '"></td></tr>';
 echo '<tr><td>' . _('End Date') . ':</td>
                          <td><input type="Text" name="EndDate" class=date alt='.$_SESSION['DefaultDateFormat'].
-                         ' size=11 maxlength=10 value=' . $_POST['EndDate'] . '></td></tr>';
+                         ' size=11 maxlength=10 value="' . $_POST['EndDate'] . '"></td></tr>';
 
 echo '<tr><td>' . _('Price') . ':</td>
           <td><input type="Text" class=number name="Price" size=11 maxlength=10 value=' . $_POST['Price'] . '></td>
