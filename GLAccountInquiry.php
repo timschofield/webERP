@@ -25,14 +25,14 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/t
 
 echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple periods') . '</div><br>';
 
-echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*Dates in SQL format for the last day of last month*/
 $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 
 /*Show a form to allow input of criteria for TB to show */
-echo '<table class=selection><tr><td>'._('Account').":</td><td><select Name='Account'>";
+echo '<table class=selection><tr><td>'._('Account').':</td><td><select Name="Account">';
 $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 $Account = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($Account,$db)){
@@ -55,7 +55,7 @@ $SQL = "SELECT tagref,
 $result=DB_query($SQL,$db);
 echo '<option value=0>0 - '._('All tags');
 while ($myrow=DB_fetch_array($result)){
-	if (isset($_POST['tag']) and $_POST['tag']==$myrow["tagref"]){
+	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
 		echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
 	} else {
 		echo '<option value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
@@ -75,8 +75,8 @@ while ($myrow=DB_fetch_array($Periods,$db)){
 		echo '<option value=' . $myrow['periodno'] . '>' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period']));
 	}
 }
-echo "</select></td></tr><table>";
-echo "<p><div class='centre'><input type=submit name='Show' value='"._('Show Account Transactions')."'></div></form>";
+echo '</select></td></tr><table>';
+echo '<p><div class="centre"><input type=submit name="Show" value="'._('Show Account Transactions').'"></div></form>';
 
 /* End of the Form  rest of script is what happens if the show button is hit*/
 
@@ -148,16 +148,16 @@ if (isset($_POST['Show'])){
 	echo '<br><table class=selection>';
 
 	echo '<tr><th colspan=8><b>' ._('Transactions for account').' '.$SelectedAccount. ' - '. $SelectedAccountName.'</b></th></tr>';
-	$TableHeader = "<tr>
-			<th>" . _('Type') . "</th>
-			<th>" . _('Number') . "</th>
-			<th>" . _('Date') . "</th>
-			<th>" . _('Debit') . "</th>
-			<th>" . _('Credit') . "</th>
-			<th>" . _('Narrative') . "</th>
-			<th>" . _('Balance') . "</th>
-			<th>" . _('Tag') . "</th>
-			</tr>";
+	$TableHeader = '<tr>
+			<th>' . _('Type') . '</th>
+			<th>' . _('Number') . '</th>
+			<th>' . _('Date') . '</th>
+			<th>' . _('Debit') . '</th>
+			<th>' . _('Credit') . '</th>
+			<th>' . _('Narrative') . '</th>
+			<th>' . _('Balance') . '</th>
+			<th>' . _('Tag') . '</th>
+			</tr>';
 
 	echo $TableHeader;
 
@@ -179,15 +179,15 @@ if (isset($_POST['Show'])){
 
 		$RunningTotal =$ChartDetailRow['bfwd'];
 		if ($RunningTotal < 0 ){ //its a credit balance b/fwd
-			echo "<tr bgcolor='#FDFEEF'>
-				<td colspan=3><b>" . _('Brought Forward Balance') . '</b><td>
+			echo '<tr bgcolor="#FDFEEF">
+				<td colspan=3><b>' . _('Brought Forward Balance') . '</b><td>
 				</td></td>
 				<td class=number><b>' . number_format(-$RunningTotal,2) . '</b></td>
 				<td></td>
 				</tr>';
 		} else { //its a debit balance b/fwd
-			echo "<tr bgcolor='#FDFEEF'>
-				<td colspan=3><b>" . _('Brought Forward Balance') . '</b></td>
+			echo '<tr bgcolor="#FDFEEF">
+				<td colspan=3><b>' . _('Brought Forward Balance') . '</b></td>
 				<td class=number><b>' . number_format($RunningTotal,2) . '</b></td>
 				<td colspan=2></td>
 				</tr>';
@@ -215,8 +215,8 @@ if (isset($_POST['Show'])){
 				$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
 				$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
-				echo "<tr bgcolor='#FDFEEF'>
-					<td colspan=3><b>" . _('Total for period') . ' ' . $PeriodNo . '</b></td>';
+				echo '<tr bgcolor="#FDFEEF">
+					<td colspan=3><b>' . _('Total for period') . ' ' . $PeriodNo . '</b></td>';
 				if ($PeriodTotal < 0 ){ //its a credit balance b/fwd
 					if ($PandLAccount==True) {
 						$RunningTotal = 0;
@@ -271,15 +271,15 @@ if (isset($_POST['Show'])){
 		if ($tagrow['tagdescription']=='') {
 			$tagrow['tagdescription']=_('None');
 		}
-		printf("<td>%s</td>
-			<td class=number><a href='%s'>%s</a></td>
+		printf('<td>%s</td>
+			<td class=number><a href="%s">%s</a></td>
 			<td>%s</td>
 			<td class=number>%s</td>
 			<td class=number>%s</td>
 			<td>%s</td>
 			<td class=number><b>%s</b></td>
 			<td>%s</td>
-			</tr>",
+			</tr>',
 			$myrow['typename'],
 			$URL_to_TransDetail,
 			$myrow['typeno'],
@@ -292,7 +292,7 @@ if (isset($_POST['Show'])){
 
 	}
 
-	echo "<tr bgcolor='#FDFEEF'><td colspan=3><b>";
+	echo '<tr bgcolor="#FDFEEF"><td colspan=3><b>';
 	if ($PandLAccount==True){
 		echo _('Total Period Movement');
 	} else { /*its a balance sheet account*/

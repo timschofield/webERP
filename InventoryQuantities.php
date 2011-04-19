@@ -1,6 +1,5 @@
 <?php
 
-
 /* $Id$ */
 
 // InventoryQuantities.php - Report of parts with quantity. Sorts by part and shows
@@ -82,9 +81,9 @@ If (isset($_POST['PrintPDF'])) {
 	  $title = _('Inventory Quantities') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The Inventory Quantity report could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo '<br>' . $sql;
+	      echo '<br />' . $sql;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -93,7 +92,7 @@ If (isset($_POST['PrintPDF'])) {
 			$title = _('Print Inventory Quantities Report');
 			include('includes/header.inc');
 			prnMsg(_('There were no items with inventory quantities'),'error');
-			echo '<br><a href="'.$rootpath.'/index.php?">' . _('Back to the menu') . '</a>';
+			echo '<br /><a href="'.$rootpath.'/index.php">' . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
 	}
@@ -144,43 +143,44 @@ If (isset($_POST['PrintPDF'])) {
 	$title=_('Inventory Quantities Reporting');
 	include('includes/header.inc');
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Quantities Report') . '</p>';
-echo '<div class="page_help_text">' . _('Use this report to display the quantity of Inventory items in different categories.') . '</div><br>';
+echo '<div class="page_help_text">' . _('Use this report to display the quantity of Inventory items in different categories.') . '</div><br />';
 
 
-	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . ' method="post"><table>';
+	echo '</br></br><form action="' . $_SERVER['PHP_SELF'] . '" method="post"><table>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class=selection><tr><td>';
+	echo '<table class="selection"><tr><td>';
 	echo '<tr><td>' . _('Selection') . ':</td><td><select name="Selection">';
 	echo '<option selected value="All">' . _('All') . '</option>';
 	echo '<option value="Multiple">' . _('Only Parts With Multiple Locations') . '</option>';
 	echo '</select></td></tr>';
 
-	$SQL="SELECT categoryid, categorydescription FROM stockcategory where stocktype<>'A' ORDER BY categorydescription";
+	$SQL="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
 	$result1 = DB_query($SQL,$db);
 	if (DB_num_rows($result1)==0){
 		echo '</table></td></tr>
 			</table>
 			<p>';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
-		echo '<br><a href="' . $rootpath . '/StockCategories.php?' . SID .'">' . _('Define Stock Categories') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		include ('includes/footer.inc');
 		exit;
 	}
 
-	echo '<tr><td>' . _('In Stock Category') . ':</td><td><select name="StockCat">';
+	echo '<tr><td>' . _('In Stock Category') . ':</td>
+				<td><select name="StockCat">';
 	if (!isset($_POST['StockCat'])){
 		$_POST['StockCat']='All';
 	}
 	if ($_POST['StockCat']=='All'){
-		echo '<option selected value="All">' . _('All');
+		echo '<option selected value="All">' . _('All') . '</option>';
 	} else {
-		echo '<option value="All">' . _('All');
+		echo '<option value="All">' . _('All') . '</option>';
 	}
 	while ($myrow1 = DB_fetch_array($result1)) {
 		if ($myrow1['categoryid']==$_POST['StockCat']){
-			echo '<option selected value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
+			echo '<option selected value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
+			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
 	}
 	echo '</select></td></tr>';

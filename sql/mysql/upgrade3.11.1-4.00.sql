@@ -852,5 +852,5 @@ ALTER TABLE `purchorderdetails`
   DROP `total_quantity`,
   DROP `netweight`,
   DROP `total_amount`;
-  UPDATE purchdata INNER JOIN unitsofmeasure  ON purchdata.suppliersuom=unitsofmeasure.unitid SET suppliersuom = unitsofmeasure.unitname
+  UPDATE purchdata INNER JOIN unitsofmeasure  ON purchdata.suppliersuom=unitsofmeasure.unitid SET suppliersuom = unitsofmeasure.unitname;
 UPDATE config SET confvalue='4.03.8' WHERE confname='VersionNumber';

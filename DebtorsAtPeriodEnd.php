@@ -1,9 +1,7 @@
 <?php
-//$PageSecurity = 2;
 
 /* $Id$*/
 
-/* $Revision: 1.16 $ */
 include('includes/session.inc');
 
 if (isset($_POST['PrintPDF'])
@@ -58,9 +56,9 @@ if (isset($_POST['PrintPDF'])
 		$title = _('Customer Balances') . ' - ' . _('Problem Report');
 		include('includes/header.inc');
 		prnMsg(_('The customer details could not be retrieved by the SQL because') . DB_error_msg($db),'error');
-		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
-			echo "<br>$SQL";
+			echo '<br />' . $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -70,7 +68,7 @@ if (isset($_POST['PrintPDF'])
 		$title = _('Customer Balances') . ' - ' . _('Problem Report');
 		include('includes/header.inc');
 		prnMsg(_('The customer details listing has no clients to report on'),'warn');
-		echo "<br><a href='".$rootpath."'/index.php?.'" . SID . "'>" . _('Back to the menu') . "</a>";
+		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -115,21 +113,9 @@ if (isset($_POST['PrintPDF'])
 
 	$LeftOvers = $pdf->addTextWrap(50,$YPos,160,$FontSize,_('Total balances'),'left');
 	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
-	/* UldisN
-	$buf = $pdf->output();
-	$len = strlen($buf);
-
-	header('Content-type: application/pdf');
-	header("Content-Length: ".$len);
-	header('Content-Disposition: inline; filename=DebtorBals.pdf');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
-
-	$pdf->stream();
-	*/
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_DebtorBals_' . date('Y-m-d').'.pdf');//UldisN
-	$pdf->__destruct(); //UldisN
+	
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_DebtorBals_' . date('Y-m-d').'.pdf');
+	$pdf->__destruct(); 
 
 } else { /*The option to print PDF was not hit */
 
@@ -142,28 +128,32 @@ if (isset($_POST['PrintPDF'])
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table class=selection>";
+		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">
+				<table class="selection">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<tr><td>' . _('From Customer Code') .":</font></td><td><input tabindex=1 Type=text maxlength=6 size=7 name=FromCriteria value='1'></td></tr>";
-		echo '<tr><td>' . _('To Customer Code') . ":</td><td><input tabindex=2 Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></td></tr>";
+		echo '<tr><td>' . _('From Customer Code') .':</font></td>
+				<td><input tabindex=1 Type=text maxlength=6 size=7 name="FromCriteria" value="1"></td>
+				</tr>';
+		echo '<tr><td>' . _('To Customer Code') . ':</td>
+				<td><input tabindex=2 type="text" maxlength=6 size=7 name="ToCriteria" value="zzzzzz"></td></tr>';
 
-		echo '<tr><td>' . _('Balances As At') . ":</td><td><select tabindex=3 Name='PeriodEnd'>";
+		echo '<tr><td>' . _('Balances As At') . ':</td>
+				<td><select tabindex=3 name="PeriodEnd">';
 
-		$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
+		$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 		$Periods = DB_query($sql,$db,_('Could not retrieve period data because'),_('The SQL that failed to get the period data was'));
 
 		while ($myrow = DB_fetch_array($Periods,$db)){
 
-			echo '<option VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
+			echo '<option value=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 
 		}
 	}
 
 	echo '</select></td></tr>';
-
-
-	echo "</table><br><div class='centre'><input tabindex=5 type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
+	echo '</table>
+			<br /><div class="centre"><input tabindex=5 type=submit name="PrintPDF" value="' . _('Print PDF') . '"></div>';
 
 	include('includes/footer.inc');
 } /*end of else not PrintPDF */

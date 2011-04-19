@@ -10,7 +10,6 @@ include('includes/DefineCartClass.php');
 
 /* Session started in header.inc for password checking the session will contain the details of the order from the Cart class object. The details of the order come from SelectOrderItems.php 			*/
 
-//$PageSecurity=1;
 include('includes/session.inc');
 $title = _('Order Delivery Details');
 include('includes/header.inc');
@@ -644,35 +643,35 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 										WHERE orderno='" .$_SESSION['ExistingOrder'] . "'", $db,$ErrMsg,$DbgMsg,true);
 			$ErrMsg = _('Could not insert the contract bill of materials');
 			$InsContractBOM = DB_query("INSERT INTO bom (parent,
-																									 component,
-																									 workcentreadded,
-																									 loccode,
-																									 effectiveafter,
-																									 effectiveto)
-																						SELECT contractref,
-																								stockid,
-																								workcentreadded,
-																							'" . $_SESSION['Items'.$identifier]->Location ."',
-																							'" . Date('Y-m-d') . "',
-																							'2037-12-31'
-																						FROM contractbom
-																						WHERE contractref='" . $ContractRow['contractref'] . "'",$db,$ErrMsg,$DbgMsg);
+														 component,
+														 workcentreadded,
+														 loccode,
+														 effectiveafter,
+														 effectiveto)
+											SELECT contractref,
+													stockid,
+													workcentreadded,
+												'" . $_SESSION['Items'.$identifier]->Location ."',
+												'" . Date('Y-m-d') . "',
+												'2037-12-31'
+											FROM contractbom
+											WHERE contractref='" . $ContractRow['contractref'] . "'",$db,$ErrMsg,$DbgMsg);
 
 			$ErrMsg = _('Unable to insert a new work order for the sales order item');
 			$InsWOResult = DB_query("INSERT INTO workorders (wo,
-																											 loccode,
-																											 requiredby,
-																											 startdate)
-																							 VALUES ('" . $WONo . "',
-																									'" . $_SESSION['Items'.$identifier]->Location ."',
-																									'" . $ContractRow['requireddate'] . "',
-																									'" . Date('Y-m-d'). "')",
-																									$db,$ErrMsg,$DbgMsg);
+															 loccode,
+															 requiredby,
+															 startdate)
+											 VALUES ('" . $WONo . "',
+													'" . $_SESSION['Items'.$identifier]->Location ."',
+													'" . $ContractRow['requireddate'] . "',
+													'" . Date('Y-m-d'). "')",
+													$db,$ErrMsg,$DbgMsg);
 			//Need to get the latest BOM to roll up cost but also add the contract other requirements
 			$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*contractbom.quantity) AS cost
-															FROM stockmaster INNER JOIN contractbom
-															ON stockmaster.stockid=contractbom.stockid
-															WHERE contractbom.contractref='" .  $ContractRow['contractref'] . "'",
+									FROM stockmaster INNER JOIN contractbom
+									ON stockmaster.stockid=contractbom.stockid
+									WHERE contractbom.contractref='" .  $ContractRow['contractref'] . "'",
 									$db);
 			$CostRow = DB_fetch_row($CostResult);
 			if (is_null($CostRow[0]) OR $CostRow[0]==0){
@@ -682,8 +681,8 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 				$Cost = $CostRow[0]; //cost of contract BOM
 			}
 			$CostResult = DB_query("SELECT SUM(costperunit*quantity) AS cost
-												FROM contractreqts
-												WHERE contractreqts.contractref='" .  $ContractRow['contractref'] . "'",
+									FROM contractreqts
+									WHERE contractreqts.contractref='" .  $ContractRow['contractref'] . "'",
 									$db);
 			$CostRow = DB_fetch_row($CostResult);
 			//add other requirements cost to cost of contract BOM
@@ -750,13 +749,13 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 		}
 
 		$LineItemsSQL = "UPDATE salesorderdetails SET unitprice='"  . $StockItem->Price . "',
-								quantity='" . $StockItem->Quantity . "',
-								discountpercent='" . floatval($StockItem->DiscountPercent) . "',
-								completed='" . $Completed . "',
-								poline='" . $StockItem->POLine . "',
-								itemdue='" . FormatDateForSQL($StockItem->ItemDue) . "'
-					WHERE salesorderdetails.orderno='" . $_SESSION['ExistingOrder'] . "'
-					AND salesorderdetails.orderlineno='" . $StockItem->LineNumber . "'";
+													quantity='" . $StockItem->Quantity . "',
+													discountpercent='" . floatval($StockItem->DiscountPercent) . "',
+													completed='" . $Completed . "',
+													poline='" . $StockItem->POLine . "',
+													itemdue='" . FormatDateForSQL($StockItem->ItemDue) . "'
+						WHERE salesorderdetails.orderno='" . $_SESSION['ExistingOrder'] . "'
+						AND salesorderdetails.orderlineno='" . $StockItem->LineNumber . "'";
 
 		$DbgMsg = _('The SQL that was used to modify the order line and failed was');
 		$ErrMsg = _('The updated order line cannot be modified because');
@@ -771,10 +770,24 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 	prnMsg(_('Order Number') .' ' . $_SESSION['ExistingOrder'] . ' ' . _('has been updated'),'success');
 
-	echo '<br /><table class=selection><tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt=""></td><td><a href="' . $rootpath . '/PrintCustOrder.php?identifier='.$identifier  . '&TransNo=' . $_SESSION['ExistingOrder'] . '">'. _('Print packing slip - pre-printed stationery') .'</a></td></tr>';
-	echo '<tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt=""></td><td><a  target="_blank" href="' . $rootpath . '/PrintCustOrder_generic.php?identifier='.$identifier  . '&TransNo=' . $_SESSION['ExistingOrder'] . '">'. _('Print packing slip') . ' (' . _('Laser') . ')' .'</a></td></tr>';
-	echo '<tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Invoice') . '" alt=""></td><td><a href="' . $rootpath .'/ConfirmDispatch_Invoice.php?identifier='.$identifier  . '&OrderNumber=' . $_SESSION['ExistingOrder'] . '">'. _('Confirm Order Delivery Quantities and Produce Invoice') .'</a></td></tr>';
-	echo '<tr><td><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Order') . '" alt=""></td><td><a href="' . $rootpath .'/SelectSalesOrder.php?identifier='.$identifier   . '">'. _('Select A Different Order') .'</a></td></tr></table>';
+	echo '<br />
+			<table class="selection">
+			<tr>
+				<td><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt=""></td><td><a href="' . $rootpath . '/PrintCustOrder.php?identifier='.$identifier  . '&TransNo=' . $_SESSION['ExistingOrder'] . '">'. _('Print packing slip - pre-printed stationery') .'</a></td>
+			</tr>';
+	echo '<tr>
+			<td><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt=""></td>
+			<td><a  target="_blank" href="' . $rootpath . '/PrintCustOrder_generic.php?identifier='.$identifier  . '&TransNo=' . $_SESSION['ExistingOrder'] . '">'. _('Print packing slip') . ' (' . _('Laser') . ')' .'</a></td>
+		</tr>';
+	echo '<tr>
+			<td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Invoice') . '" alt=""></td>
+			<td><a href="' . $rootpath .'/ConfirmDispatch_Invoice.php?identifier='.$identifier  . '&OrderNumber=' . $_SESSION['ExistingOrder'] . '">'. _('Confirm Order Delivery Quantities and Produce Invoice') .'</a></td>
+		</tr>';
+	echo '<tr>
+			<td><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Order') . '" alt=""></td>
+			<td><a href="' . $rootpath .'/SelectSalesOrder.php?identifier='.$identifier   . '">'. _('Select A Different Order') .'</a></td>
+		</tr>
+		</table>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -786,7 +799,7 @@ if (isset($_SESSION['Items'.$identifier]->SpecialInstructions) and strlen($_SESS
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Delivery') . '" alt="" />' . ' ' . _('Delivery Details');
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer Code') . ' :<b> ' . $_SESSION['Items'.$identifier]->DebtorNo;
 echo '</b>&nbsp;' . _('Customer Name') . ' :<b> ' . $_SESSION['Items'.$identifier]->CustomerName . '</p>';
-//echo '<font size=4><b>'. _('Customer') .' : ' . $_SESSION['Items'.$identifier]->CustomerName . '</b></font>';
+
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier  . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -942,14 +955,14 @@ if ($_SESSION['Items'.$identifier]->Location=='' OR !isset($_SESSION['Items'.$id
 
 $ErrMsg = _('The stock locations could not be retrieved');
 $DbgMsg = _('SQL used to retrieve the stock locations was') . ':';
-$StkLocsResult = DB_query('SELECT locationname,loccode
-					FROM locations',$db, $ErrMsg, $DbgMsg);
+$StkLocsResult = DB_query("SELECT locationname,loccode
+							FROM locations",$db, $ErrMsg, $DbgMsg);
 
 while ($myrow=DB_fetch_row($StkLocsResult)){
 	if ($_SESSION['Items'.$identifier]->Location==$myrow[1]){
-		echo '<option selected value="'.$myrow[1].'">'.$myrow[0];
+		echo '<option selected value="' . $myrow[1] . '">' . $myrow[0] . '</option>';
 	} else {
-		echo '<option value="'.$myrow[1].'">'.$myrow[0];
+		echo '<option value="'.$myrow[1].'">'.$myrow[0] . '</option>';
 	}
 }
 
@@ -1031,75 +1044,68 @@ echo '<tr>
 	/* This field will control whether or not to display the company logo and
 	address on the packlist */
 
-	echo '<tr><td>' . _('Packlist Type') . ':</td><td><select name="DeliverBlind">';
-		for ($p = 1; $p <= 2; $p++) {
-			echo '<option value=' . $p;
-			if ($p == $_SESSION['Items'.$identifier]->DeliverBlind) {
-				echo ' selected>';
-			} else {
-				echo '>';
-			}
-			switch ($p) {
-				case 2:
-					echo _('Hide Company Details/Logo');
-			break;
-				default:
-					echo _('Show Company Details/Logo');
-			break;
-			}
-		}
+	echo '<tr><td>' . _('Packlist Type') . ':</td>
+			<td><select name="DeliverBlind">';
+			
+	if ($_SESSION['Items'.$identifier]->DeliverBlind ==2){
+		echo '<option value="1">' . _('Show Company Details/Logo') . '</option>';
+		echo '<option selected value="2">' . _('Hide Company Details/Logo') . '</option>';
+	} else {
+		echo '<option selected value="1">' . _('Show Company Details/Logo') . '</option>';
+		echo '<option value="2">' . _('Hide Company Details/Logo') . '</option>';
+	}
 	echo '</select></td></tr>';
 
 if (isset($_SESSION['PrintedPackingSlip']) and $_SESSION['PrintedPackingSlip']==1){
 
 	echo '<tr>
 		<td>'. _('Reprint packing slip') .':</td>
-	<td><select name="ReprintPackingSlip">';
-	echo '<option value=0>' . _('Yes');
-	echo '<option selected value=1>' . _('No');
+		<td><select name="ReprintPackingSlip">';
+	echo '<option value=0>' . _('Yes') . '</option>';
+	echo '<option selected value=1>' . _('No') . '</option>';
 	echo '</select>	'. _('Last printed') .': ' . ConvertSQLDate($_SESSION['DatePackingSlipPrinted']) . '</td></tr>';
-
 } else {
-
 	echo '<input type=hidden name="ReprintPackingSlip" value=0>';
-
 }
 
 echo '<tr><td>'. _('Charge Freight Cost inc tax') .':</td>';
-echo '<td><input type=text class=number size=10 maxlength=12 name="FreightCost" VALUE=' . $_SESSION['Items'.$identifier]->FreightCost . '></td>';
+echo '<td><input type=text class="number" size=10 maxlength=12 name="FreightCost" value="' . $_SESSION['Items'.$identifier]->FreightCost . '"></td>';
 
 if ($_SESSION['DoFreightCalc']==true){
-	echo '<td><input type=submit name="Update" VALUE="' . _('Recalc Freight Cost') . '"></td></tr>';
+	echo '<td><input type=submit name="Update" value="' . _('Recalc Freight Cost') . '"></td></tr>';
 }
 
 if ((!isset($_POST['ShipVia']) OR $_POST['ShipVia']=='') AND isset($_SESSION['Items'.$identifier]->ShipVia)){
 	$_POST['ShipVia'] = $_SESSION['Items'.$identifier]->ShipVia;
 }
 
-echo '<tr><td>'. _('Freight/Shipper Method') .':</td><td><select name="ShipVia">';
+echo '<tr><td>'. _('Freight/Shipper Method') .':</td>
+			<td><select name="ShipVia">';
+
 $ErrMsg = _('The shipper details could not be retrieved');
 $DbgMsg = _('SQL used to retrieve the shipper details was') . ':';
-$sql = 'SELECT shipper_id, shippername
-		FROM shippers';
+
+$sql = "SELECT shipper_id, shippername FROM shippers";
 $ShipperResults = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 while ($myrow=DB_fetch_array($ShipperResults)){
 	if ($myrow['shipper_id']==$_POST['ShipVia']){
-			echo '<option selected value=' . $myrow['shipper_id'] . '>' . $myrow['shippername'];
+			echo '<option selected value=' . $myrow['shipper_id'] . '>' . $myrow['shippername'] . '</option>';
 	}else {
-		echo '<option value=' . $myrow['shipper_id'] . '>' . $myrow['shippername'];
+		echo '<option value=' . $myrow['shipper_id'] . '>' . $myrow['shippername'] . '</option>';
 	}
 }
 
 echo '</select></td></tr>';
 
 
-echo '<tr><td>'. _('Quotation Only') .':</td><td><select name="Quotation">';
+echo '<tr><td>'. _('Quotation Only') .':</td>
+		<td><select name="Quotation">';
 if ($_SESSION['Items'.$identifier]->Quotation==1){
-	echo '<option selected value=1>' . _('Yes');
-	echo '<option value=0>' . _('No');
+	echo '<option selected value=1>' . _('Yes') . '</option>';
+	echo '<option value=0>' . _('No') . '</option>';
 } else {
-	echo '<option VALUE=1>' . _('Yes');
-	echo '<option selected VALUE=0>' . _('No');
+	echo '<option value=1>' . _('Yes') . '</option>';
+	echo '<option selected value=0>' . _('No') . '</option>';
 }
 echo '</select></td></tr>';
 
@@ -1110,9 +1116,9 @@ echo '<br /><div class="centre"><input type=submit name="BackToLineDetails" valu
 
 if ($_SESSION['ExistingOrder']==0){
 	echo '<br /><br /><input type=submit name="ProcessOrder" value="' . _('Place Order') . '">';
-	echo '<br /><br /><input type=submit name="MakeRecurringOrder" VALUE="' . _('Create Recurring Order') . '">';
+	echo '<br /><br /><input type=submit name="MakeRecurringOrder" value="' . _('Create Recurring Order') . '">';
 } else {
-	echo '<br /><input type=submit name="ProcessOrder" VALUE="' . _('Commit Order Changes') . '">';
+	echo '<br /><input type=submit name="ProcessOrder" value="' . _('Commit Order Changes') . '">';
 }
 
 echo '</div></form>';

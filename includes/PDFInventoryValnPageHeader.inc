@@ -29,13 +29,13 @@ $Xpos = $Left_Margin+1;
 
 if ($_POST['DetailedReport']=='Yes'){
 	
-	$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,300-$Left_Margin,$FontSize,_('Category') . '/' . _('Item'), 'centre');
-	$LeftOvers = $pdf->addTextWrap(390,$YPos,60,$FontSize,_('Quantity'), 'centre');
-	$LeftOvers = $pdf->addTextWrap(450,$YPos,60,$FontSize,_('Unit Cost'), 'centre');
-	$LeftOvers = $pdf->addTextWrap(510,$YPos,60,$FontSize,_('Item Value'), 'centre');
+	$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,300-$Left_Margin,$FontSize,_('Category') . '/' . _('Item'), 'left');
+	$LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,_('Quantity'), 'right');
+	$LeftOvers = $pdf->addTextWrap(420,$YPos,60,$FontSize,_('Units'), 'right');
+	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,_('Item Value'), 'right');
 } else {
-	$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,320-$Left_Margin,$FontSize,_('Category'), 'centre');
-	$LeftOvers = $pdf->addTextWrap(510,$YPos,60,$FontSize,_('Value'), 'centre');
+	$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,320-$Left_Margin,$FontSize,_('Category'), 'right');
+	$LeftOvers = $pdf->addTextWrap(510,$YPos,60,$FontSize,_('Value'), 'right');
 }
 
 $FontSize=8;

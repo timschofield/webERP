@@ -23,7 +23,7 @@ $map_host = $myrow['map_host'];
 echo '<script src="http://' . $map_host . '/maps?file=api&v=2&key=' . $api_key . '"';
 echo ' type="text/javascript"></script>';
 echo ' <script type="text/javascript">';
-echo '    //<![CDATA[ '; ?>
+echo "    //<![CDATA[ "; ?>
 
  var iconBlue = new GIcon();
     iconBlue.image = 'http://labs.google.com/ridefinder/images/mm_20_blue.png';

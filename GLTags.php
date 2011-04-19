@@ -31,7 +31,7 @@ if (isset($_POST['update'])) {
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
 		_('Print') . '" alt="" />' . ' ' . $title . '</p>';
 
-echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . ' name="form">';
+echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . ' name="form">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<br><table><tr>';
 

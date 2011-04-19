@@ -1,12 +1,10 @@
 <?php
-/* $Revision: 1.9 $ */
+
 /* $Id$*/
 
-//$PageSecurity = 11;
 include('includes/session.inc');
 $title = _('Discount Matrix Maintenance');
 include('includes/header.inc');
-
 
 if (isset($Errors)) {
 	unset($Errors);
@@ -64,7 +62,7 @@ if (isset($_POST['submit'])) {
 
 		$result = DB_query($sql,$db);
 		prnMsg( _('The discount matrix record has been added'),'success');
-		echo '<br>';
+		echo '<br />';
 		unset($_POST['DiscountCategory']);
 		unset($_POST['SalesType']);
 		unset($_POST['QuantityBreak']);
@@ -80,30 +78,30 @@ if (isset($_POST['submit'])) {
 
 	$result = DB_query($sql,$db);
 	prnMsg( _('The discount matrix record has been deleted'),'success');
-	echo '<br>';
+	echo '<br />';
 }
 
-echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
-echo '<table class=selection>';
+echo '<table class="selection">';
 
-$sql = 'SELECT typeabbrev,
+$sql = "SELECT typeabbrev,
 		sales_type
-	FROM salestypes';
+		FROM salestypes";
 
 $result = DB_query($sql, $db);
 
 echo '<tr><td>' . _('Customer Price List') . ' (' . _('Sales Type') . '):</td><td>';
 
-echo "<select tabindex=1 name='SalesType'>";
+echo '<select tabindex=1 name="SalesType">';
 
 while ($myrow = DB_fetch_array($result)){
 	if (isset($_POST['SalesType']) and $myrow['typeabbrev']==$_POST['SalesType']){
-		echo "<option selected value='" . $myrow['typeabbrev'] . "'>" . $myrow['sales_type'];
+		echo '<option selected value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 	} else {
-		echo "<option value='" . $myrow['typeabbrev'] . "'>" . $myrow['sales_type'];
+		echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 	}
 }
 
@@ -118,29 +116,26 @@ if (DB_num_rows($result) > 0) {
 
 	while ($myrow = DB_fetch_array($result)){
 		if ($myrow['discountcategory']==$_POST['DiscCat']){
-			echo "<option selected value='" . $myrow['discountcategory'] . "'>" . $myrow['discountcategory'];
+			echo '<option selected value="' . $myrow['discountcategory'] . '">' . $myrow['discountcategory'] . '</option>';
 		} else {
-			echo "<option value='" . $myrow['discountcategory'] . "'>" . $myrow['discountcategory'];
+			echo '<option value="' . $myrow['discountcategory'] . '">' . $myrow['discountcategory'] . '</option>';
 		}
-		echo '</option>';
 	}
 	echo '</select></td>';
 } else {
 	echo '<input type="hidden" name="DiscountCategory" value="">';
 }
 
-echo '<tr><td>' . _('Quantity Break') . ":</td><td><input class='number' tabindex=3 "
-	 . (in_array('QuantityBreak',$Errors) ? "class='inputerror'" : "")
-	 ." type='text' name='QuantityBreak' size=10 maxlength=10></td></tr>";
+echo '<tr><td>' . _('Quantity Break') . '</td>
+		<td><input class="number" tabindex=3 ' . (in_array('QuantityBreak',$Errors) ? 'class="inputerror"' : '') .' type="text" name="QuantityBreak" size=10 maxlength=10></td></tr>';
 
-echo '<tr><td>' . _('Discount Rate') . " (%):</td><td><input class='number' tabindex=4 "
-	. (in_array('DiscountRate',$Errors) ? "class='inputerror'" : "") .
-		"type='text' name='DiscountRate' size=11 maxlength=14></td></tr>";
-echo '</table><br>';
+echo '<tr><td>' . _('Discount Rate') . ' (%):</td>
+		<td><input class="number" tabindex=4 ' . (in_array('DiscountRate',$Errors) ? 'class="inputerror"' : '') . 'type="text" name="DiscountRate" size=11 maxlength=14></td></tr>';
+echo '</table><br />';
 
-echo "<div class='centre'><input tabindex=5 type='submit' name='submit' value='" . _('Enter Information') . "'></div><br>";
+echo '<div class="centre"><input tabindex=5 type="submit" name="submit" value="' . _('Enter Information') . '"></div><br />';
 
-$sql = 'SELECT sales_type,
+$sql = "SELECT sales_type,
 		salestype,
 		discountcategory,
 		quantitybreak,
@@ -149,15 +144,15 @@ $sql = 'SELECT sales_type,
 		ON discountmatrix.salestype=salestypes.typeabbrev
 	ORDER BY salestype,
 		discountcategory,
-		quantitybreak';
+		quantitybreak";
 
 $result = DB_query($sql,$db);
 
 echo '<table class=selection>';
-echo "<tr><th>" . _('Sales Type') . "</th>
-	<th>" . _('Discount Category') . "</th>
-	<th>" . _('Quantity Break') . "</th>
-	<th>" . _('Discount Rate') . ' %' . "</th></tr>";
+echo '<tr><th>' . _('Sales Type') . '</th>
+		<th>' . _('Discount Category') . '</th>
+		<th>' . _('Quantity Break') . '</th>
+		<th>' . _('Discount Rate') . ' %' . '</th></tr>';
 
 $k=0; //row colour counter
 
@@ -169,13 +164,13 @@ while ($myrow = DB_fetch_array($result)) {
 		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
-	$DeleteURL = $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=yes&SalesType=' . $myrow['salestype'] . '&DiscountCategory=' . $myrow['discountcategory'] . '&QuantityBreak=' . $myrow['quantitybreak'];
+	$DeleteURL = $_SERVER['PHP_SELF'] . '?Delete=yes&SalesType=' . $myrow['salestype'] . '&DiscountCategory=' . $myrow['discountcategory'] . '&QuantityBreak=' . $myrow['quantitybreak'];
 
-	printf("<td>%s</td>
+	printf('<td>%s</td>
 		<td>%s</td>
-		<td class='number'>%s</td>
-		<td class='number'>%s</td>
-		<td><a href='%s'>" . _('Delete') . '</td>
+		<td class="number">%s</td>
+		<td class="number">%s</td>
+		<td><a href="%s">' . _('Delete') . '</td>
 		</tr>',
 		$myrow['sales_type'],
 		$myrow['discountcategory'],

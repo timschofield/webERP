@@ -23,7 +23,7 @@ if ( isset($_GET['CurrencyToShow']) ){
 // SHOW OUR MAIN INPUT FORM
 // ************************
 
-	echo "<form method='post' name=update action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<form method="post" name=update action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
 		_('View Currency Trend') . '" alt="" />' . ' ' . _('View Currency Trend') . '</p>';
@@ -40,9 +40,9 @@ if ( isset($_GET['CurrencyToShow']) ){
 		while ($myrow=DB_fetch_array($result)) {
 			if ($myrow['currabrev']!=$_SESSION['CompanyRecord']['currencydefault']){
 				if ( $CurrencyToShow==$myrow['currabrev'] )	{
-					echo '<option selected value=' . $myrow['currabrev'] . '>' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')';
+					echo '<option selected value=' . $myrow['currabrev'] . '>' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')'. '</option>';
 				} else {
-					echo '<option value=' . $myrow['currabrev'] . '>' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')';
+					echo '<option value=' . $myrow['currabrev'] . '>' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')'. '</option>';
 				}
 			}
 		}

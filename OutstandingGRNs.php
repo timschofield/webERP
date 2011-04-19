@@ -2,9 +2,6 @@
 
 /*$Id$ */
 
-/* $Revision: 1.11 $ */
-
-//$PageSecurity = 2;
 include('includes/session.inc');
 
 If (isset($_POST['PrintPDF'])
@@ -24,26 +21,26 @@ If (isset($_POST['PrintPDF'])
 	  /*Now figure out the data to report for the criteria under review */
 
 	$SQL = "SELECT grnno,
-									orderno,
-									grns.supplierid,
-									suppliers.suppname,
-									grns.itemcode,
-									grns.itemdescription,
-									qtyrecd,
-									quantityinv,
-									grns.stdcostunit,
-									actprice,
-									unitprice
-								FROM grns,
-									purchorderdetails,
-									suppliers
-								WHERE grns.supplierid=suppliers.supplierid
-								AND grns.podetailitem = purchorderdetails.podetailitem
-								AND qtyrecd-quantityinv>0
-								AND grns.supplierid >='" . $_POST['FromCriteria'] . "'
-								AND grns.supplierid <='" . $_POST['ToCriteria'] . "'
-								ORDER BY supplierid,
-									grnno";
+					orderno,
+					grns.supplierid,
+					suppliers.suppname,
+					grns.itemcode,
+					grns.itemdescription,
+					qtyrecd,
+					quantityinv,
+					grns.stdcostunit,
+					actprice,
+					unitprice
+				FROM grns,
+					purchorderdetails,
+					suppliers
+				WHERE grns.supplierid=suppliers.supplierid
+				AND grns.podetailitem = purchorderdetails.podetailitem
+				AND qtyrecd-quantityinv>0
+				AND grns.supplierid >='" . $_POST['FromCriteria'] . "'
+				AND grns.supplierid <='" . $_POST['ToCriteria'] . "'
+				ORDER BY supplierid,
+					grnno";
 
 	$GRNsResult = DB_query($SQL,$db,'','',false,false);
 
@@ -51,9 +48,9 @@ If (isset($_POST['PrintPDF'])
 	  $title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	  prnMsg(_('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   echo '<br><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-		  echo '<br>'.$SQL;
+		  echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -63,9 +60,9 @@ If (isset($_POST['PrintPDF'])
 	  $title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	  prnMsg(_('No outstanding GRNs valuation details retrieved'), 'warn');
-	   echo '<br><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-		  echo '<br>'.$SQL;
+		  echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -143,8 +140,8 @@ If (isset($_POST['PrintPDF'])
 	$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
 	$YPos -=(2*$line_height);
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_OSGRNsValuation_' . date('Y-m-d').'.pdf');//UldisN
-	$pdf->__destruct(); //UldisN
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_OSGRNsValuation_' . date('Y-m-d').'.pdf');
+	$pdf->__destruct(); 
 } else { /*The option to print PDF was not hit */
 
 	$title=_('Outstanding GRNs Report');
@@ -153,7 +150,8 @@ If (isset($_POST['PrintPDF'])
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $title . '</p>';
 
-	echo '<form action=' . $_SERVER['PHP_SELF'] . ' method="POST"><table class=selection>';
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="POST">
+			<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<tr><td>' . _('From Supplier Code') . ':</td>
@@ -161,7 +159,7 @@ If (isset($_POST['PrintPDF'])
 	echo '<tr><td>' . _('To Supplier Code'). ':</td>
 		<td><input type=text name="ToCriteria" value="zzzzzzz"></td></tr>';
 
-	echo '</table><br><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print PDF') . '"></div>';
+	echo '</table><br /><div class="centre"><input type=Submit Name="PrintPDF" value="' . _('Print PDF') . '"></div>';
 
 	include('includes/footer.inc');
 

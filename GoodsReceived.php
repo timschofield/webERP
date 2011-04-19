@@ -2,8 +2,6 @@
 
 /* $Id$*/
 
-/* $Revision: 1.44 $ */
-
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
@@ -178,15 +176,16 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 		}
 		echo '</tr>';
 	}//foreach(LineItem)
-	echo "<script>defaultControl(document.forms[0].RecvQty_$LnItm->LineNo);</script>";
-$DisplayTotal = number_format($_SESSION['PO'.$identifier]->Total,2);
-if ($_SESSION['ShowValueOnGRN']==1) {
-	echo '<tr><td colspan="11" class=number><b>' . _('Total value of goods received'). '</b></td>
-						<td class=number><b>'. $DisplayTotal. '</b></td>
-				</tr></table>';
-} else {
-	echo '</table>';
-}
+	echo '<script>defaultControl(document.forms[0].RecvQty_'.$LnItm->LineNo.');</script>';
+	
+	$DisplayTotal = number_format($_SESSION['PO'.$identifier]->Total,2);
+	if ($_SESSION['ShowValueOnGRN']==1) {
+		echo '<tr><td colspan="11" class=number><b>' . _('Total value of goods received'). '</b></td>
+							<td class=number><b>'. $DisplayTotal. '</b></td>
+					</tr></table>';
+	} else {
+		echo '</table>';
+	}
 }//If count(LineItems) > 0
 
 
@@ -255,7 +254,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 		exit;
 	}
 
-/*Now need to check that the order details are the same as they were when they were read into the Items array. If they've changed then someone else must have altered them */
+/*Now need to check that the order details are the same as they were when they were read into the Items array. If they have changed then someone else must have altered them */
 // Otherwise if you try to fullfill item quantities separately will give error.
 	$SQL = "SELECT itemcode,
 					glcode,
@@ -345,7 +344,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 			$LocalCurrencyPrice = ($OrderLine->Price / $_SESSION['PO'.$identifier]->ExRate);
 
-			if ($OrderLine->StockID!='') { /*Its a stock item line */
+			if ($OrderLine->StockID!='') { //Its a stock item line
 				/*Need to get the current standard cost as it is now so we can process GL jorunals later*/
 				$SQL = "SELECT materialcost + labourcost + overheadcost as stdcost
 										FROM stockmaster

@@ -2885,7 +2885,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-04-18 19:35:26
+-- Dump completed on 2011-04-19 19:18:57
 -- MySQL dump 10.13  Distrib 5.1.47-MariaDB, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -4097,6 +4097,9 @@ INSERT INTO `audittrail` VALUES ('2011-04-18 07:10:46','admin','INSERT INTO purc
 INSERT INTO `audittrail` VALUES ('2011-04-18 07:12:39','admin','UPDATE purchorders	SET	allowprint =  0,\n																	dateprinted  = \'2011-04-18\',\n																	status = \'Printed\',\n																	stat_comment = \'18/04/2011 - Printed by&lt;a href=&quot;mailto:info@weberp.org&quot;&gt;Demonstration user&lt;/a&gt;&lt;br /&gt;18/04/2011 - Order Created and Authorised by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;Demonstration user&lt;/a&gt; - &lt;br /&gt;\'\n																WHERE purchorders.orderno = \'15\'');
 INSERT INTO `audittrail` VALUES ('2011-04-18 07:18:24','admin','UPDATE purchorders	SET	allowprint =  0,\n										dateprinted  = \'2011-04-18\',\n										status = \'Printed\',\n										stat_comment = \'18/04/2011 - Printed by&lt;a href=&quot;mailto:info@weberp.org&quot;&gt;Demonstration user&lt;/a&gt;&lt;br /&gt;18/04/2011 - Order Created and Authorised by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;Demonstration user&lt;/a&gt; - &lt;br /&gt;\'\n				WHERE purchorders.orderno = \'16\'');
 INSERT INTO `audittrail` VALUES ('2011-04-18 07:20:48','admin','UPDATE purchorders\n				SET status=\'Authorised\',\n				stat_comment=\'18/04/2011 - Authorised by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;admin&lt;/a&gt;&lt;br&gt;27/03/2011 - Order Created by &amp;lt;a href=&amp;quot;mailto:info@weberp.org&amp;quot;&amp;gt;Demonstration user&amp;lt;/a&amp;gt; - &amp;lt;br /&amp;gt;\',\n				allowprint=1\n				WHERE orderno=\'11\'');
+INSERT INTO `audittrail` VALUES ('2011-04-19 07:13:25','admin','UPDATE config\n				SET confvalue=\'2011-04-19\'\n				WHERE confname=\'DB_Maintenance_LastRun\'');
+INSERT INTO `audittrail` VALUES ('2011-04-19 07:13:25','admin','DELETE FROM audittrail\n						WHERE  transactiondate &lt;= \'2011-03-19\'');
+INSERT INTO `audittrail` VALUES ('2011-04-19 07:13:43','admin','UPDATE www_users SET realname=\'Demonstration user\',\n						customerid=\'\',\n						phone=\'\',\n						email=\'\',\n						\n						branchcode=\'\',\n						supplierid=\'\',\n						salesman=\'\',\n						pagesize=\'A4\',\n						fullaccess=\'8\',\n						theme=\'jelly\',\n						language =\'lv_LV.utf8\',\n						defaultlocation=\'MEL\',\n						modulesallowed=\'1,1,1,1,1,1,1,1,1,1,\',\n						blocked=\'0\',\n						pdflanguage=\'0\'\n					WHERE userid = \'admin\'');
 
 --
 -- Dumping data for table `bankaccounts`
@@ -11533,7 +11536,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','AUD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','30');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2011-03-20');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2011-04-19');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultCustomerType','1');
@@ -14445,7 +14448,7 @@ INSERT INTO `workorders` VALUES (13,'TOR','2010-10-15','2010-08-14',0,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','info@weberp.org','MEL',8,'2011-04-18 04:31:21','','A4','1,1,1,1,1,1,1,1,1,1',0,50,'jelly','lv_LV.utf8',0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','','MEL',8,'2011-04-19 07:13:22','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'jelly','lv_LV.utf8',0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -14453,6 +14456,6 @@ INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-04-18 19:35:26
+-- Dump completed on 2011-04-19 19:18:58
 TRUNCATE TABLE audittrail;
 SET FOREIGN_KEY_CHECKS = 1;
