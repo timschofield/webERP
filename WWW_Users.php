@@ -446,16 +446,11 @@ $sql = "SELECT loccode, locationname FROM locations";
 $result = DB_query($sql,$db);
 
 while ($myrow=DB_fetch_array($result)){
-
 	if (isset($_POST['DefaultLocation']) and $myrow['loccode'] == $_POST['DefaultLocation']){
-
 		echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] .'</option>';
-
 	} else {
 		echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] .'</option>';
-
 	}
-
 }
 
 echo '</select></td></tr>';

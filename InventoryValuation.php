@@ -18,12 +18,14 @@ if (isset($_POST['PrintPDF'])
 	$PageNumber=1;
 	$line_height=12;
 
+
 	/*Now figure out the inventory data to report for the category range under review */
 	if ($_POST['Location']=='All'){
 		$SQL = "SELECT stockmaster.categoryid,
 				stockcategory.categorydescription,
 				stockmaster.stockid,
 				stockmaster.description,
+				stockmaster.decimalplaces,
 				SUM(locstock.quantity) AS qtyonhand,
 				stockmaster.units,
 				stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
@@ -37,6 +39,7 @@ if (isset($_POST['PrintPDF'])
 				stockcategory.categorydescription,
 				unitcost,
 				stockmaster.units,
+				stockmaster.decimalplaces,
 				stockmaster.materialcost,
 				stockmaster.labourcost,
 				stockmaster.overheadcost,
@@ -53,6 +56,7 @@ if (isset($_POST['PrintPDF'])
 				stockmaster.stockid,
 				stockmaster.description,
 				stockmaster.units,
+				stockmaster.decimalplaces,
 				locstock.quantity AS qtyonhand,
 				stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
 				locstock.quantity *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
@@ -112,10 +116,10 @@ if (isset($_POST['PrintPDF'])
 					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Category . ' - ' . $CategoryName);
 				}
 
-				$DisplayCatTotVal = number_format($CatTot_Val,2);
-				$DisplayCatTotQty = number_format($CatTot_Qty,0);
-				$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
-				$LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
+				$DisplayCatTotVal = number_format($CatTot_Val,$_SESSION['CompanyRecord']['decimalplaces']);
+				$DisplayCatTotQty = number_format($CatTot_Qty,2);
+				$LeftOvers = $pdf->addTextWrap(480,$YPos,80,$FontSize,$DisplayCatTotVal, 'right');
+				$LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
 				$YPos -=$line_height;
 
 				If ($_POST['DetailedReport']=='Yes'){
@@ -124,7 +128,7 @@ if (isset($_POST['PrintPDF'])
 					$YPos -=(2*$line_height);
 				}
 				$CatTot_Val=0;
-								$CatTot_Qty=0;
+				$CatTot_Qty=0;
 			}
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$InventoryValn['categoryid'] . ' - ' . $InventoryValn['categorydescription']);
 			$Category = $InventoryValn['categoryid'];
@@ -137,15 +141,16 @@ if (isset($_POST['PrintPDF'])
 
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,100,$FontSize,$InventoryValn['stockid']);
 			$LeftOvers = $pdf->addTextWrap(170,$YPos,220,$FontSize,$InventoryValn['description']);
-			$DisplayUnitCost = number_format($InventoryValn['unitcost'],2);
-			$DisplayQtyOnHand = number_format($InventoryValn['qtyonhand'],0);
+			$DisplayUnitCost = number_format($InventoryValn['unitcost'],$_SESSION['CompanyRecord']['decimalplaces']);
+			$DisplayQtyOnHand = number_format($InventoryValn['qtyonhand'],$InventoryValn['decimalplaces']);
 			$DisplayItemTotal = number_format($InventoryValn['itemtotal'],2);
 
 			$LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,$DisplayQtyOnHand,'right');
-			$LeftOvers = $pdf->addTextWrap(420,$YPos,80,$FontSize,$DisplayUnitCost, 'left');
+			$LeftOvers = $pdf->addTextWrap(423,$YPos,15,$FontSize,$InventoryValn['units'],'left');
+			$LeftOvers = $pdf->addTextWrap(438,$YPos,60,$FontSize,$DisplayUnitCost, 'right');
 			
 			$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayItemTotal, 'right');
-			$LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,$InventoryValn['units'],'right');
+			
 
 		}
 		$Tot_Val += $InventoryValn['itemtotal'];
@@ -162,13 +167,12 @@ if (isset($_POST['PrintPDF'])
 /*Print out the category totals */
 	if ($_POST['DetailedReport']=='Yes'){
 		$YPos -= (2*$line_height);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize, _('Total for') . ' ' . $Category . ' - ' . $CategoryName, 'left');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200-$Left_Margin,$FontSize, _('Total for') . ' ' . $Category . ' - ' . $CategoryName, 'left');
 	}
-	$DisplayCatTotVal = number_format($CatTot_Val,2);
+	$DisplayCatTotVal = number_format($CatTot_Val,$_SESSION['CompanyRecord']['decimalplaces']);
 	
-	
-	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
-	$DisplayCatTotQty = number_format($CatTot_Qty,0);
+	$LeftOvers = $pdf->addTextWrap(480,$YPos,80,$FontSize,$DisplayCatTotVal, 'right');
+	$DisplayCatTotQty = number_format($CatTot_Qty,2);
 	$LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
 
 	if ($_POST['DetailedReport']=='Yes'){
@@ -202,19 +206,21 @@ if (isset($_POST['PrintPDF'])
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
 			_('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
 
-		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table class=selection>";
+		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="POST"><table class="selection">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<tr><td>' . _('From Inventory Category Code') . ':</font></td><td><select name=FromCriteria>';
+		echo '<tr><td>' . _('From Inventory Category Code') . ':</font></td>
+				<td><select name="FromCriteria">';
 
-		$sql="SELECT categoryid, categorydescription FROM stockcategory WHERE stocktype<>'A' ORDER BY categoryid";
+		$sql="SELECT categoryid, categorydescription FROM stockcategory  ORDER BY categoryid";
 		$CatResult= DB_query($sql,$db);
 		While ($myrow = DB_fetch_array($CatResult)){
 			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('To Inventory Category Code') . ':</td><td><select name=ToCriteria>';
+		echo '<tr><td>' . _('To Inventory Category Code') . ':</td>
+					<td><select name="ToCriteria">';
 
 		/*Set the index for the categories result set back to 0 */
 		DB_data_seek($CatResult,0);
@@ -224,8 +230,9 @@ if (isset($_POST['PrintPDF'])
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('For Inventory in Location') . ':</td><td><select name="Location">';
-		$sql = 'SELECT loccode, locationname FROM locations';
+		echo '<tr><td>' . _('For Inventory in Location') . ':</td>
+				<td><select name="Location">';
+		$sql = "SELECT loccode, locationname FROM locations";
 		$LocnResult=DB_query($sql,$db);
 
 		echo '<option value="All">' . _('All Locations') . '</option>';
@@ -235,7 +242,8 @@ if (isset($_POST['PrintPDF'])
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('Summary or Detailed Report') . ':</td><td><select name="DetailedReport">';
+		echo '<tr><td>' . _('Summary or Detailed Report') . ':</td>
+					<td><select name="DetailedReport">';
 		echo '<option selected Value="No">' . _('Summary Report') . '</option>';
 		echo '<option Value="Yes">' . _('Detailed Report') . '</option>';
 		echo '</select></td></tr>';
@@ -245,5 +253,4 @@ if (isset($_POST['PrintPDF'])
 	include('includes/footer.inc');
 
 } /*end of else not PrintPDF */
-
 ?>

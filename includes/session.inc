@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.67 $ */
+/* $Id$*/
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -66,6 +66,8 @@ if (isset($_SESSION['DatabaseName'])){
 	$_SESSION['FormID'] = sha1(uniqid(mt_rand(), true));
 }
 
+include($PathPrefix . 'includes/LanguageSetup.php');
+
 if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
 
 	include $PathPrefix . 'includes/UserLogin.php';	/* Login checking and setup */
@@ -82,6 +84,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 	$theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'silverwolf';
 	switch ($rc) {
 	case  UL_OK;
+		include($PathPrefix . 'includes/LanguageSetup.php');
 		break;
 
 	case UL_SHOWLOGIN:
@@ -110,7 +113,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 	}
 } /* only do security checks if AllowAnyone is not true */
 
-include($PathPrefix . 'includes/LanguageSetup.php');
+
 
 /*User is logged in so get configuration parameters  - save in session*/
 include($PathPrefix . 'includes/GetConfig.php');

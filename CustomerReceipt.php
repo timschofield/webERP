@@ -231,10 +231,10 @@ if (isset($_POST['CommitBatch'])){
 	echo '<br /><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Allocate') . '" alt="" />' . ' ' . _('Summary of Receipt Batch').'</p><br />';
 
 	echo '<table class=selection><tr><th>'._('Batch Number').'</th>
-				<th>'._('Date Banked').'</th>
-				<th>'._('Customer Name').'</th
-				<th>'._('GL Code').'</th
-				<th>'._('Amount of Receipt').'</th></tr>';
+				<th>' . _('Date Banked') . '</th>
+				<th>' . _('Customer Name') . '</th>
+				<th>' . _('GL Code') . '</th>
+				<th>' . _('Amount of Receipt').'</th></tr>';
 
 	foreach ($_SESSION['ReceiptBatch']->Items as $ReceiptItem) {
 
@@ -859,8 +859,8 @@ if (isset($_SESSION['ReceiptBatch'])){
 				<td class=number>' . number_format($ReceiptItem->Discount,2) . '</td>
 				<td>' . stripslashes($ReceiptItem->CustomerName) . '</td>
 				<td>'.$ReceiptItem->GLCode.' - '.$myrow['accountname'].'</td>
-				<td>'.$ReceiptItem->Narrative . "</td>
-				<td><a href='" . $_SERVER['PHP_SELF'] . '?Delete=' . $ReceiptItem->ID . "&Type=".$_GET['Type']."'>" . _('Delete') . '</a></td>
+				<td>'.$ReceiptItem->Narrative . '</td>
+				<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $ReceiptItem->ID . '&Type=' . $_GET['Type']. '">' . _('Delete') . '</a></td>
 			</tr>';
 		$BatchTotal= $BatchTotal + $ReceiptItem->Amount;
 	}
@@ -918,7 +918,7 @@ if (isset($_SESSION['CustomerRecord'])
 
 	echo '<table  class=selection>';
 
-	$DisplayDiscountPercent = number_format($_SESSION['CustomerRecord']['pymtdiscount']*100,2) . "%";
+	$DisplayDiscountPercent = number_format($_SESSION['CustomerRecord']['pymtdiscount']*100,2) . '%';
 
 	echo '<input type="hidden" name="CustomerID" value="' . $_POST['CustomerID'] . '">';
 	echo '<input type="hidden" name="CustomerName" value="' . $_SESSION['CustomerRecord']['name'] . '">';
@@ -1050,9 +1050,9 @@ if (((isset($_SESSION['CustomerRecord'])
 				echo '<tr class="EvenTableRows">';
 				$k=1;
 			}
-
-			printf("<td><font size=1><input tabindex=".number_format(12+$j)." type=submit name='Select' value='%s'</font></td>
-					<td>%s</td></tr>",
+			printf('<td><font size=1>
+					<input tabindex='.number_format(12+$j).' type=submit name="Select" value="%s"></font></td>
+					<td>%s</td></tr>',
 					$myrow['debtorno'],
 					$myrow['name']);
 

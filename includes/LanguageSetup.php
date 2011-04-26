@@ -24,7 +24,6 @@ If (isset($_POST['Language'])) {
 
 if (function_exists('gettext')){
   
-  //This maybe required in some stubborn installations
 	$Locale = setlocale (LC_ALL, $_SESSION['Language']);
 	
 	//Turkish seems to be a special case

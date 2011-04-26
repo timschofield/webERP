@@ -1,8 +1,6 @@
 <?php
-/* $Revision: 1.6 $ */
-/* $Id$*/
 
-//$PageSecurity = 15;
+/* $Id$*/
 
 include('includes/session.inc');
 $title = _('Customer Types') . ' / ' . _('Maintenance');
@@ -43,7 +41,7 @@ if (isset($_POST['submit'])) {
 
 	if (strlen($_POST['typename'])==0) {
 		$InputError = 1;
-		echo '<br>';
+		echo '<br />';
 		prnMsg(_('The customer type name description must contain at least one character'),'error');
 		$Errors[$i] = 'CustomerType';
 		$i++;
@@ -56,7 +54,7 @@ if (isset($_POST['submit'])) {
 	$checkrow=DB_fetch_row($checkresult);
 	if ($checkrow[0]>0 and !isset($SelectedType)) {
 		$InputError = 1;
-		echo '<br>';
+		echo '<br />';
 		prnMsg(_('You already have a customer type called').' '.$_POST['typename'],'error');
 		$Errors[$i] = 'CustomerName';
 		$i++;
@@ -124,7 +122,7 @@ if (isset($_POST['submit'])) {
 			$result = DB_query($sql,$db);
 			$_SESSION['DefaultCustomerType'] = $_POST['typeid'];
 		}
-		echo '<br>';
+		echo '<br />';
 		prnMsg($msg,'success');
 
 		unset($SelectedType);
@@ -146,7 +144,7 @@ if (isset($_POST['submit'])) {
 
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
-		prnMsg(_('Cannot delete this type because customer transactions have been created using this type') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('transactions using this type'),'error');
+		prnMsg(_('Cannot delete this type because customer transactions have been created using this type') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('transactions using this type'),'error');
 
 	} else {
 
@@ -156,13 +154,13 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db,$ErrMsg);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
-			prnMsg (_('Cannot delete this type because customers are currently set up to use this type') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('customers with this type code'));
+			prnMsg (_('Cannot delete this type because customers are currently set up to use this type') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('customers with this type code'));
 		} else {
 
 			$sql="DELETE FROM debtortype WHERE typeid='".$SelectedType."'";
 			$ErrMsg = _('The Type record could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
-			echo '<br>';
+			echo '<br />';
 			prnMsg(_('Customer type') . $SelectedType  . ' ' . _('has been deleted') ,'success');
 
 			unset ($SelectedType);
@@ -182,11 +180,11 @@ or deletion of the records*/
 	$sql = 'SELECT typeid, typename FROM debtortype';
 	$result = DB_query($sql,$db);
 
-	echo '<br><table class=selection>';
-	echo "<tr>
-		<th>" . _('Type ID') . "</th>
-		<th>" . _('Type Name') . "</th>
-		</tr>";
+	echo '<br /><table class=selection>';
+	echo '<tr>
+		<th>' . _('Type ID') . '</th>
+		<th>' . _('Type Name') . '</th>
+		</tr>';
 
 $k=0; //row colour counter
 
@@ -199,16 +197,17 @@ while ($myrow = DB_fetch_row($result)) {
 		$k=1;
 	}
 
-	printf("
+printf('<td>%s</td>
 		<td>%s</td>
-		<td>%s</td>
-		<td><a href='%sSelectedType=%s'>" . _('Edit') . "</td>
-		<td><a href='%sSelectedType=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this Customer Type?') . "');\">" . _('Delete') . "</td>
-		</tr>",
+		<td><a href="%sSelectedType=%s">' . _('Edit') . '</td>
+		<td><a href="%sSelectedType=%s&delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this Customer Type?') . '");\'>' . _('Delete') . '</td>
+		</tr>',
 		$myrow[0],
 		$myrow[1],
-		$_SERVER['PHP_SELF'] . '?' . SID, $myrow[0],
-		$_SERVER['PHP_SELF'] . '?' . SID, $myrow[0]);
+		$_SERVER['PHP_SELF'] . '?', 
+		$myrow[0],
+		$_SERVER['PHP_SELF'] . '?', 
+		$myrow[0]);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -217,18 +216,17 @@ while ($myrow = DB_fetch_row($result)) {
 //end of ifs and buts!
 if (isset($SelectedType)) {
 
-	echo '<div class="centre"><p><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Show All Types Defined') . '</a></div><p>';
+	echo '<div class="centre"><p><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show All Types Defined') . '</a></div><p>';
 }
 if (! isset($_GET['delete'])) {
 
-	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] .  '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p><table class=selection>'; //Main table
 
 
 	// The user wish to EDIT an existing type
-	if ( isset($SelectedType) AND $SelectedType!='' )
-	{
+	if ( isset($SelectedType) AND $SelectedType!='' ) {
 
 		$sql = "SELECT typeid,
 			       typename
@@ -241,26 +239,23 @@ if (! isset($_GET['delete'])) {
 		$_POST['typeid'] = $myrow['typeid'];
 		$_POST['typename']  = $myrow['typename'];
 
-		echo "<input type=hidden name='SelectedType' VALUE=" . $SelectedType . ">";
-		echo "<input type=hidden name='typeid' VALUE=" . $_POST['typeid'] . ">";
-		echo "<table class=selection> <tr><td>";
+		echo '<input type=hidden name="SelectedType" value="' . $SelectedType . '">';
+		echo '<input type=hidden name="typeid" value=' . $_POST['typeid'] . '">';
+		echo '<table class="selection">'; 
 
 		// We dont allow the user to change an existing type code
 
-		echo 'Type ID: ' . $_POST['typeid'] . '</td></tr>';
+		echo '<tr><td>' . _('Type ID') . ': ' . $_POST['typeid'] . '</td></tr>';
 
 	} else 	{
-
 		// This is a new type so the user may volunteer a type code
-
-		echo "<table class=selection>";
-
+		echo '<table class="selection">';
 	}
 
 	if (!isset($_POST['typename'])) {
 		$_POST['typename']='';
 	}
-	echo "<tr><td>" . _('Type Name') . ":</td><td><input type='Text' name='typename' value='" . $_POST['typename'] . "'></td></tr>";
+	echo '<tr><td>' . _('Type Name') . ':</td><td><input type="Text" name="typename" value="' . $_POST['typename'] . '"></td></tr>';
 
    	echo '</td></tr></table>'; // close main table
 

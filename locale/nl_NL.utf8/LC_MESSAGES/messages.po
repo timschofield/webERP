@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Nederlands\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-18 19:21+1200\n"
+"POT-Creation-Date: 2011-04-26 20:00+1200\n"
 "PO-Revision-Date: 2011-01-26 21:30+0000\n"
 "Last-Translator: Tim Schofield <Unknown>\n"
 "Language-Team: Nederland <info@totamin.nl>\n"
@@ -197,15 +197,15 @@ msgstr "Kon geen rekening groep ophalen omdat"
 #: BOMIndentedReverse.php:246 BOMInquiry.php:165 BOMListing.php:128
 #: BOMs.php:214 BOMs.php:793 COGSGLPostings.php:20 CompanyPreferences.php:155
 #: CounterSales.php:1983 CounterSales.php:2107 Credit_Invoice.php:256
-#: CreditStatus.php:21 Currencies.php:29 CustEDISetup.php:19
-#: DailyBankTransactions.php:9 DebtorsAtPeriodEnd.php:138
-#: DiscountCategories.php:12 DiscountCategories.php:122 DiscountMatrix.php:18
+#: CreditStatus.php:21 Currencies.php:29 CustEDISetup.php:17
+#: DailyBankTransactions.php:9 DebtorsAtPeriodEnd.php:124
+#: DiscountCategories.php:10 DiscountCategories.php:128 DiscountMatrix.php:16
 #: EDIMessageFormat.php:104 FixedAssetLocations.php:9
 #: FixedAssetRegister.php:13 FixedAssetRegister.php:238
 #: FixedAssetTransfer.php:31 FormDesigner.php:132 GLBalanceSheet.php:351
 #: GLBudgets.php:28 GLJournal.php:228 InventoryPlanning.php:374
 #: InventoryPlanningPrefSupplier.php:474 Labels.php:117 Labels.php:273
-#: MRPReport.php:515 OutstandingGRNs.php:153 PcAssignCashToTab.php:37
+#: MRPReport.php:515 OutstandingGRNs.php:150 PcAssignCashToTab.php:37
 #: PcAssignCashToTab.php:111 PcAssignCashToTab.php:127
 #: PcAssignCashToTab.php:164 PDFPickingList.php:28 PDFPrintLabel.php:131
 #: PDFStockLocTransfer.php:21 PO_AuthorisationLevels.php:10 POReport.php:60
@@ -260,10 +260,10 @@ msgstr "moeder groep"
 #: BOMs.php:715 CompanyPreferences.php:439 CompanyPreferences.php:441
 #: CompanyPreferences.php:452 CompanyPreferences.php:454
 #: CompanyPreferences.php:465 CompanyPreferences.php:467
-#: ContractCosting.php:174 CustLoginSetup.php:590 CustLoginSetup.php:592
+#: ContractCosting.php:174 CustLoginSetup.php:578 CustLoginSetup.php:580
 #: CustomerBranches.php:420 Customers.php:590 Customers.php:847
-#: Customers.php:854 Customers.php:857 DeliveryDetails.php:1058
-#: DeliveryDetails.php:1098 DeliveryDetails.php:1101 GLTransInquiry.php:73
+#: Customers.php:854 Customers.php:857 DeliveryDetails.php:1064
+#: DeliveryDetails.php:1104 DeliveryDetails.php:1107 GLTransInquiry.php:73
 #: MRPCalendar.php:220 MRP.php:527 MRP.php:531 MRP.php:535 MRP.php:539
 #: PaymentMethods.php:207 PaymentMethods.php:208 PaymentMethods.php:209
 #: PaymentMethods.php:272 PaymentMethods.php:278 PaymentMethods.php:284
@@ -285,7 +285,7 @@ msgstr "moeder groep"
 #: SystemParameters.php:889 SystemParameters.php:891 SystemParameters.php:901
 #: SystemParameters.php:903 SystemParameters.php:957 SystemParameters.php:969
 #: SystemParameters.php:971 TaxGroups.php:291 TaxGroups.php:294
-#: TaxGroups.php:343 WWW_Users.php:610 WWW_Users.php:612
+#: TaxGroups.php:343 WWW_Users.php:605 WWW_Users.php:607
 msgid "Yes"
 msgstr "Ja"
 
@@ -295,10 +295,10 @@ msgstr "Ja"
 #: CompanyPreferences.php:438 CompanyPreferences.php:442
 #: CompanyPreferences.php:451 CompanyPreferences.php:455
 #: CompanyPreferences.php:464 CompanyPreferences.php:468
-#: ContractCosting.php:172 CustLoginSetup.php:589 CustLoginSetup.php:593
+#: ContractCosting.php:172 CustLoginSetup.php:577 CustLoginSetup.php:581
 #: CustomerBranches.php:420 Customers.php:589 Customers.php:845
-#: Customers.php:853 Customers.php:856 DeliveryDetails.php:1059
-#: DeliveryDetails.php:1099 DeliveryDetails.php:1102 GLTransInquiry.php:127
+#: Customers.php:853 Customers.php:856 DeliveryDetails.php:1065
+#: DeliveryDetails.php:1105 DeliveryDetails.php:1108 GLTransInquiry.php:127
 #: MRPCalendar.php:222 MRP.php:525 MRP.php:529 MRP.php:533 MRP.php:537
 #: PaymentMethods.php:207 PaymentMethods.php:208 PaymentMethods.php:209
 #: PaymentMethods.php:273 PaymentMethods.php:279 PaymentMethods.php:285
@@ -320,7 +320,7 @@ msgstr "Ja"
 #: SystemParameters.php:888 SystemParameters.php:892 SystemParameters.php:900
 #: SystemParameters.php:904 SystemParameters.php:958 SystemParameters.php:968
 #: SystemParameters.php:972 TaxGroups.php:292 TaxGroups.php:295
-#: TaxGroups.php:345 WWW_Users.php:609 WWW_Users.php:613
+#: TaxGroups.php:345 WWW_Users.php:604 WWW_Users.php:608
 #: includes/PDFLowGPPageHeader.inc:44 includes/PDFTaxPageHeader.inc:35
 msgid "No"
 msgstr "Nee"
@@ -329,7 +329,7 @@ msgstr "Nee"
 #: AddCustomerNotes.php:125 AddCustomerTypeNotes.php:123 Areas.php:165
 #: BankAccounts.php:226 BOMs.php:150 COGSGLPostings.php:113
 #: COGSGLPostings.php:215 CreditStatus.php:175 Currencies.php:239
-#: CustLoginSetup.php:312 CustomerBranches.php:424 Customers.php:899
+#: CustLoginSetup.php:307 CustomerBranches.php:424 Customers.php:899
 #: Customers.php:931 CustomerTypes.php:205 EDIMessageFormat.php:150
 #: Factors.php:208 FixedAssetCategories.php:181 FixedAssetLocations.php:102
 #: FreightCosts.php:243 GeocodeSetup.php:170 GLAccounts.php:308 GLTags.php:62
@@ -356,9 +356,9 @@ msgstr "Wijzigen"
 #: BankAccounts.php:227 BOMs.php:152 COGSGLPostings.php:114
 #: COGSGLPostings.php:216 ContractBOM.php:272 ContractOtherReqts.php:121
 #: CounterSales.php:781 Credit_Invoice.php:385 CreditStatus.php:176
-#: Currencies.php:242 CustLoginSetup.php:313 CustomerReceipt.php:863
-#: Customers.php:932 CustomerTypes.php:206 DiscountCategories.php:204
-#: DiscountMatrix.php:178 EDIMessageFormat.php:151
+#: Currencies.php:242 CustLoginSetup.php:308 CustomerReceipt.php:863
+#: Customers.php:932 CustomerTypes.php:206 DiscountCategories.php:215
+#: DiscountMatrix.php:173 EDIMessageFormat.php:151
 #: FixedAssetCategories.php:182 FreightCosts.php:244 GeocodeSetup.php:171
 #: GLAccounts.php:309 GLJournal.php:385 Labels.php:414 Locations.php:379
 #: MRPDemands.php:303 MRPDemandTypes.php:121 PaymentMethods.php:211
@@ -425,18 +425,18 @@ msgstr "Sectie In Rekeningen"
 #: AccountGroups.php:401 AccountSections.php:262 AddCustomerContacts.php:208
 #: AddCustomerNotes.php:201 AddCustomerTypeNotes.php:192 Areas.php:222
 #: BankAccounts.php:373 BOMs.php:725 COGSGLPostings.php:353
-#: CreditStatus.php:247 Currencies.php:339 CustLoginSetup.php:611
-#: DiscountMatrix.php:141 EDIMessageFormat.php:247
-#: FixedAssetCategories.php:327 FixedAssetLocations.php:148
+#: CreditStatus.php:247 Currencies.php:339 CustLoginSetup.php:599
+#: DiscountMatrix.php:136 EDIMessageFormat.php:247
+#: FixedAssetCategories.php:323 FixedAssetLocations.php:148
 #: FreightCosts.php:342 GeocodeSetup.php:267 GLAccounts.php:258
-#: Locations.php:556 MRPDemands.php:401 MRPDemandTypes.php:180
+#: Locations.php:562 MRPDemands.php:401 MRPDemandTypes.php:180
 #: OffersReceived.php:52 OffersReceived.php:128 PaymentMethods.php:290
 #: PaymentTerms.php:282 PO_AuthorisationLevels.php:216 Prices_Customer.php:354
 #: SalesAnalReptCols.php:510 SalesAnalRepts.php:494 SalesGLPostings.php:415
 #: SalesPeople.php:302 Shippers.php:196 StockCategories.php:557
 #: SupplierContacts.php:250 SuppLoginSetup.php:529 TaxAuthorities.php:312
 #: TaxCategories.php:235 TaxProvinces.php:227 UnitsOfMeasure.php:239
-#: WorkCentres.php:261 WWW_Users.php:643
+#: WorkCentres.php:261 WWW_Users.php:638
 msgid "Enter Information"
 msgstr "Enter informatie"
 
@@ -505,7 +505,7 @@ msgstr "Kon de gevraagde sectie niet ophalen probeer het nog eens"
 msgid "Customer Contacts"
 msgstr "Klant contacten"
 
-#: AddCustomerContacts.php:20 CustEDISetup.php:11 CustLoginSetup.php:24
+#: AddCustomerContacts.php:20 CustEDISetup.php:9 CustLoginSetup.php:22
 #: Z_CheckDebtorsControl.php:20
 msgid "Back to Customers"
 msgstr "terug naar klanten"
@@ -535,7 +535,7 @@ msgstr "Kontact naam mag niet leeg zijn"
 
 #: AddCustomerContacts.php:59 AddCustomerNotes.php:49
 #: AddCustomerTypeNotes.php:49 Areas.php:74 CustomerTypes.php:71
-#: DeliveryDetails.php:772 Factors.php:117 FixedAssetItems.php:236
+#: DeliveryDetails.php:771 Factors.php:117 FixedAssetItems.php:236
 #: PcAssignCashToTab.php:71 PcClaimExpensesFromTab.php:60 PcExpenses.php:69
 #: PcTabs.php:58 PcTypeTabs.php:60 PO_Items.php:356 SalesAnalReptCols.php:129
 #: SalesPeople.php:94 SalesTypes.php:63 Stocks.php:355 Suppliers.php:514
@@ -744,18 +744,18 @@ msgstr "Oude Open Posten Rekeningen Analyse"
 #: AgedDebtors.php:267 AgedDebtors.php:365 AgedDebtors.php:436
 #: AgedSuppliers.php:105 BOMExtendedQty.php:159 BOMIndented.php:150
 #: BOMIndentedReverse.php:151 BOMListing.php:48 BOMListing.php:59
-#: DebtorsAtPeriodEnd.php:58 DebtorsAtPeriodEnd.php:70 GLBalanceSheet.php:90
+#: DebtorsAtPeriodEnd.php:56 DebtorsAtPeriodEnd.php:68 GLBalanceSheet.php:90
 #: GLBalanceSheet.php:128 GLProfit_Loss.php:157 GLTagProfit_Loss.php:172
 #: GLTrialBalance.php:151 InventoryPlanning.php:99 InventoryPlanning.php:174
 #: InventoryPlanning.php:209 InventoryPlanning.php:257
 #: InventoryPlanning.php:295 InventoryPlanningPrefSupplier.php:208
 #: InventoryPlanningPrefSupplier.php:276 InventoryPlanningPrefSupplier.php:310
 #: InventoryPlanningPrefSupplier.php:355 InventoryPlanningPrefSupplier.php:401
-#: InventoryQuantities.php:82 InventoryValuation.php:74
+#: InventoryQuantities.php:81 InventoryValuation.php:78
 #: MailInventoryValuation.php:115 MRPPlannedPurchaseOrders.php:114
 #: MRPPlannedWorkOrders.php:105 MRPReport.php:147 MRPReport.php:508
-#: MRPReschedules.php:46 MRPReschedules.php:58 MRPShortages.php:144
-#: MRPShortages.php:156 OutstandingGRNs.php:51 OutstandingGRNs.php:63
+#: MRPReschedules.php:45 MRPReschedules.php:57 MRPShortages.php:144
+#: MRPShortages.php:156 OutstandingGRNs.php:48 OutstandingGRNs.php:60
 #: PDFCustomerList.php:18 PDFCustomerList.php:230 PDFCustomerList.php:242
 #: PDFLowGP.php:20 PDFStockCheckComparison.php:35
 #: PDFStockCheckComparison.php:61 PDFStockCheckComparison.php:262
@@ -766,7 +766,7 @@ msgid "Problem Report"
 msgstr "Probleem Rapport"
 
 #: AgedDebtors.php:269 CustomerInquiry.php:87 CustomerInquiry.php:108
-#: DebtorsAtPeriodEnd.php:60
+#: DebtorsAtPeriodEnd.php:58
 msgid "The customer details could not be retrieved by the SQL because"
 msgstr "De klant details konden niet opgehaald worden met SQL omdat"
 
@@ -774,7 +774,7 @@ msgstr "De klant details konden niet opgehaald worden met SQL omdat"
 #: AgedSuppliers.php:108 AgedSuppliers.php:190 BOMExtendedQty.php:162
 #: BOMExtendedQty.php:259 BOMIndented.php:153 BOMIndented.php:239
 #: BOMIndentedReverse.php:154 BOMIndentedReverse.php:232 BOMListing.php:51
-#: Credit_Invoice.php:185 DebtorsAtPeriodEnd.php:61 DebtorsAtPeriodEnd.php:73
+#: Credit_Invoice.php:185 DebtorsAtPeriodEnd.php:59 DebtorsAtPeriodEnd.php:71
 #: FTP_RadioBeacon.php:188 GetStockImage.php:154 GLBalanceSheet.php:93
 #: GLBalanceSheet.php:131 GLBalanceSheet.php:294 GLProfit_Loss.php:160
 #: GLProfit_Loss.php:172 GLTagProfit_Loss.php:175 GLTagProfit_Loss.php:187
@@ -784,15 +784,15 @@ msgstr "De klant details konden niet opgehaald worden met SQL omdat"
 #: InventoryPlanning.php:361 InventoryPlanningPrefSupplier.php:211
 #: InventoryPlanningPrefSupplier.php:279 InventoryPlanningPrefSupplier.php:313
 #: InventoryPlanningPrefSupplier.php:358 InventoryPlanningPrefSupplier.php:404
-#: InventoryPlanningPrefSupplier.php:460 InventoryQuantities.php:85
-#: InventoryQuantities.php:96 InventoryValuation.php:77
-#: InventoryValuation.php:88 MailInventoryValuation.php:118
+#: InventoryPlanningPrefSupplier.php:460 InventoryQuantities.php:84
+#: InventoryQuantities.php:95 InventoryValuation.php:81
+#: InventoryValuation.php:92 MailInventoryValuation.php:118
 #: MailInventoryValuation.php:214 MRPPlannedPurchaseOrders.php:117
 #: MRPPlannedPurchaseOrders.php:128 MRPPlannedWorkOrders.php:108
 #: MRPPlannedWorkOrders.php:119 MRPPlannedWorkOrders.php:316 MRPReport.php:39
-#: MRPReport.php:50 MRPReport.php:150 MRPReschedules.php:49
-#: MRPReschedules.php:61 MRPShortages.php:147 MRPShortages.php:159
-#: OutstandingGRNs.php:54 OutstandingGRNs.php:66 PDFCustomerList.php:233
+#: MRPReport.php:50 MRPReport.php:150 MRPReschedules.php:48
+#: MRPReschedules.php:60 MRPShortages.php:147 MRPShortages.php:159
+#: OutstandingGRNs.php:51 OutstandingGRNs.php:63 PDFCustomerList.php:233
 #: PDFCustomerList.php:245 PDFGrn.php:123 PDFLowGP.php:60 PDFLowGP.php:72
 #: PDFPriceList.php:124 PDFQuotation.php:234 PDFQuotationPortrait.php:235
 #: PDFRemittanceAdvice.php:84 PDFStockCheckComparison.php:39
@@ -838,7 +838,7 @@ msgstr "kon niet ophalen omdat"
 #: ConfirmDispatch_Invoice.php:983 Contracts.php:581 CounterSales.php:1323
 #: CounterSales.php:1337 Credit_Invoice.php:706 Credit_Invoice.php:728
 #: CustomerReceipt.php:523 CustomerReceipt.php:655 CustomerReceipt.php:683
-#: CustomerTransInquiry.php:79 DeliveryDetails.php:394 GLProfit_Loss.php:579
+#: CustomerTransInquiry.php:79 DeliveryDetails.php:393 GLProfit_Loss.php:579
 #: GLTagProfit_Loss.php:488 Payments.php:312 PDFRemittanceAdvice.php:86
 #: PurchData.php:95 PurchData.php:113 PurchData.php:245 ReverseGRN.php:191
 #: ReverseGRN.php:205 ReverseGRN.php:366 SelectCreditItems.php:1372
@@ -869,11 +869,11 @@ msgstr "Er zijn geen klanten die aan de criteria omschreven naar de lijst"
 msgid "Aged Debtor Analysis"
 msgstr "Verouderde Open Posten Analyse"
 
-#: AgedDebtors.php:477 DebtorsAtPeriodEnd.php:148
+#: AgedDebtors.php:477 DebtorsAtPeriodEnd.php:135
 msgid "From Customer Code"
 msgstr "Van Klanten Code"
 
-#: AgedDebtors.php:478 DebtorsAtPeriodEnd.php:149
+#: AgedDebtors.php:478 DebtorsAtPeriodEnd.php:138
 msgid "To Customer Code"
 msgstr "Tot Klanten Code"
 
@@ -905,21 +905,21 @@ msgstr "Alleen klanten die betalen met"
 msgid "Summary or detailed report"
 msgstr "Totalen of gedetailieerd rapport"
 
-#: AgedDebtors.php:516 AgedSuppliers.php:316 InventoryValuation.php:236
+#: AgedDebtors.php:516 AgedSuppliers.php:316 InventoryValuation.php:247
 msgid "Summary Report"
 msgstr "Totalen Rapport"
 
-#: AgedDebtors.php:517 AgedSuppliers.php:317 InventoryValuation.php:237
+#: AgedDebtors.php:517 AgedSuppliers.php:317 InventoryValuation.php:248
 msgid "Detailed Report"
 msgstr "Gedetailieerd rapport"
 
 #: AgedDebtors.php:520 AgedSuppliers.php:320 BOMExtendedQty.php:286
 #: BOMIndented.php:268 BOMIndentedReverse.php:255 BOMListing.php:142
-#: DebtorsAtPeriodEnd.php:166 InventoryPlanning.php:442
+#: DebtorsAtPeriodEnd.php:156 InventoryPlanning.php:442
 #: InventoryPlanningPrefSupplier.php:518 InventoryQuantities.php:187
-#: InventoryValuation.php:240 MRPPlannedPurchaseOrders.php:282
-#: MRPPlannedWorkOrders.php:343 MRPReschedules.php:141 MRPShortages.php:258
-#: OutstandingGRNs.php:164 PDFCustomerList.php:410 PDFLowGP.php:145
+#: InventoryValuation.php:251 MRPPlannedPurchaseOrders.php:282
+#: MRPPlannedWorkOrders.php:343 MRPReschedules.php:140 MRPShortages.php:258
+#: OutstandingGRNs.php:162 PDFCustomerList.php:410 PDFLowGP.php:145
 #: PDFPriceList.php:301 PDFRemittanceAdvice.php:152
 #: PDFStockCheckComparison.php:379 PrintCustTrans.php:415
 #: PrintCustTransPortrait.php:561 ReorderLevel.php:217 StockDispatch.php:308
@@ -955,12 +955,12 @@ msgstr "De details van openstaande posten voor Leverancier"
 msgid "Aged Supplier Analysis"
 msgstr "Leveranciers Open Posten Analyse"
 
-#: AgedSuppliers.php:286 OutstandingGRNs.php:159 PDFRemittanceAdvice.php:138
+#: AgedSuppliers.php:286 OutstandingGRNs.php:157 PDFRemittanceAdvice.php:138
 #: SupplierBalsAtPeriodEnd.php:131 SuppPaymentRun.php:259
 msgid "From Supplier Code"
 msgstr "Van Leveranciers Code"
 
-#: AgedSuppliers.php:289 OutstandingGRNs.php:161 PDFRemittanceAdvice.php:140
+#: AgedSuppliers.php:289 OutstandingGRNs.php:159 PDFRemittanceAdvice.php:140
 #: SupplierBalsAtPeriodEnd.php:133 SuppPaymentRun.php:261
 msgid "To Supplier Code"
 msgstr "Tot Leveranciers Code"
@@ -973,7 +973,7 @@ msgstr "Alle leveranciers met open posten"
 msgid "For suppliers trading in"
 msgstr "Voor leveranciers die handelen in"
 
-#: AgedSuppliers.php:314 InventoryValuation.php:235
+#: AgedSuppliers.php:314 InventoryValuation.php:245
 msgid "Summary or Detailed Report"
 msgstr "Totaal of Gedetailieerd Rapport"
 
@@ -1117,7 +1117,7 @@ msgstr "Gebruiker"
 #: CustomerTransInquiry.php:21 CustomerTransInquiry.php:85
 #: CustWhereAlloc.php:18 CustWhereAlloc.php:87 DailyBankTransactions.php:99
 #: GLAccountInquiry.php:152 GLAccountReport.php:367 GLJournal.php:241
-#: MRPReschedules.php:179 SelectCustomer.php:462 ShipmentCosting.php:506
+#: MRPReschedules.php:178 SelectCustomer.php:462 ShipmentCosting.php:506
 #: ShipmentCosting.php:577 StockCategories.php:215 StockLocMovements.php:83
 #: StockMovements.php:97 SupplierAllocations.php:446 SupplierInquiry.php:199
 #: SupplierTransInquiry.php:19 SupplierTransInquiry.php:86
@@ -1138,7 +1138,6 @@ msgid "Field Name"
 msgstr "Veld naam"
 
 #: AuditTrail.php:147 SystemParameters.php:314
-#: includes/PDFInventoryValnPageHeader.inc:38
 #: includes/PDFOstdgGRNsPageHeader.inc:43
 msgid "Value"
 msgstr "Waarde"
@@ -1356,7 +1355,7 @@ msgid "Show"
 msgstr "Zien"
 
 #: BankMatching.php:102 CreditItemsControlled.php:78 FreightCosts.php:270
-#: GoodsReceivedControlled.php:65 GoodsReceived.php:67
+#: GoodsReceivedControlled.php:65 GoodsReceived.php:65
 #: StockLocTransferReceive.php:426 SupplierAllocations.php:428
 #: SuppShiptChgs.php:129
 msgid "from"
@@ -1762,12 +1761,12 @@ msgstr "Deel"
 #: ContractCosting.php:80 ContractCosting.php:131 ContractOtherReqts.php:95
 #: Contracts.php:932 Contracts.php:956 CounterSales.php:701
 #: CounterSales.php:1994 CounterSales.php:2174 CounterSales.php:2302
-#: Credit_Invoice.php:274 DeliveryDetails.php:809 DeliveryDetails.php:874
-#: GoodsReceived.php:90 GoodsReceived.php:94 GoodsReceived.php:97
+#: Credit_Invoice.php:274 DeliveryDetails.php:822 DeliveryDetails.php:887
+#: GoodsReceived.php:88 GoodsReceived.php:92 GoodsReceived.php:95
 #: InventoryPlanningPrefSupplier.php:83 InventoryQuantities.php:223
 #: MRPDemands.php:290 MRPDemands.php:380 MRPPlannedPurchaseOrders.php:326
 #: MRPPlannedWorkOrders.php:259 MRPPlannedWorkOrders.php:387 MRPReport.php:413
-#: MRPReport.php:419 MRPReschedules.php:180 OffersReceived.php:94
+#: MRPReport.php:419 MRPReschedules.php:179 OffersReceived.php:94
 #: OffersReceived.php:196 OffersReceived.php:245 OrderDetails.php:155
 #: PDFOrdersInvoiced.php:384 POReport.php:698 POReport.php:1370
 #: PrintCustTrans.php:650 PrintCustTrans.php:713 PrintCustTrans.php:751
@@ -1819,19 +1818,19 @@ msgstr "Toon alleen Tekorten"
 
 #: BOMExtendedQty.php:282 BOMIndented.php:264 BOMIndentedReverse.php:251
 #: MRPPlannedPurchaseOrders.php:276 MRPPlannedWorkOrders.php:337
-#: MRPReschedules.php:131 MRPShortages.php:254
+#: MRPReschedules.php:130 MRPShortages.php:254
 msgid "Print Option"
 msgstr "Afdrukoptie"
 
 #: BOMExtendedQty.php:283 BOMIndented.php:265 BOMIndentedReverse.php:252
 #: MRPPlannedPurchaseOrders.php:277 MRPPlannedWorkOrders.php:338
-#: MRPReschedules.php:132 MRPShortages.php:255
+#: MRPReschedules.php:131 MRPShortages.php:255
 msgid "Print With Alternating Highlighted Lines"
 msgstr "Print Met Afwisselend Opvallende Lines"
 
 #: BOMExtendedQty.php:284 BOMIndented.php:266 BOMIndentedReverse.php:253
 #: MRPPlannedPurchaseOrders.php:278 MRPPlannedWorkOrders.php:339
-#: MRPReschedules.php:133 MRPShortages.php:256
+#: MRPReschedules.php:132 MRPShortages.php:256
 msgid "Plain Print"
 msgstr "Gewoon Print"
 
@@ -1842,7 +1841,7 @@ msgstr "Uitgebreid Hoeveelheid BOM aanbieding       "
 #: BOMExtendedQty.php:310 BOMIndented.php:293 BOMIndentedReverse.php:280
 #: GLAccountReport.php:353 InventoryPlanningPrefSupplier.php:63
 #: InventoryQuantities.php:209 MRPPlannedPurchaseOrders.php:305
-#: MRPPlannedWorkOrders.php:366 MRPReport.php:805 MRPReschedules.php:165
+#: MRPPlannedWorkOrders.php:366 MRPReport.php:805 MRPReschedules.php:164
 #: MRPShortages.php:282 PDFOrderStatus.php:303 PDFPriceList.php:331
 #: PDFReceipt.php:32 PO_Header.php:787 PO_PDFPurchOrder.php:60
 #: PO_SelectOSPurchOrder.php:476 ReorderLevel.php:239 StockDispatch.php:336
@@ -1879,7 +1878,7 @@ msgstr "Afgedrukt"
 #: FixedAssetRegister.php:334 GLAccountReport.php:353
 #: InventoryPlanningPrefSupplier.php:63 InventoryQuantities.php:210
 #: MRPPlannedPurchaseOrders.php:306 MRPPlannedWorkOrders.php:367
-#: MRPReport.php:806 MRPReschedules.php:166 MRPShortages.php:283
+#: MRPReport.php:806 MRPReschedules.php:165 MRPShortages.php:283
 #: PDFPriceList.php:331 PDFReceipt.php:32 PDFRemittanceAdvice.php:218
 #: PrintCustTrans.php:560 PrintCustTrans.php:709 PrintCustTrans.php:747
 #: PrintCustTransPortrait.php:735 PrintCustTransPortrait.php:939
@@ -1959,7 +1958,7 @@ msgstr "WO"
 #: BOMExtendedQty.php:325 BOMIndented.php:301 BOMIndentedReverse.php:288
 #: InventoryQuantities.php:220 MRPDemands.php:287 MRPDemands.php:360
 #: MRPDemands.php:367 MRPPlannedPurchaseOrders.php:323
-#: MRPPlannedWorkOrders.php:384 MRPReschedules.php:176 MRPShortages.php:252
+#: MRPPlannedWorkOrders.php:384 MRPReschedules.php:175 MRPShortages.php:252
 #: MRPShortages.php:297 POReport.php:491 POReport.php:500 POReport.php:516
 #: POReport.php:532 POReport.php:593 POReport.php:668 POReport.php:1188
 #: POReport.php:1197 POReport.php:1211 POReport.php:1226 POReport.php:1277
@@ -2020,10 +2019,10 @@ msgstr "Een niveau"
 #: FixedAssetCategories.php:159 FixedAssetDepreciation.php:84
 #: FixedAssetRegister.php:81 FixedAssetRegister.php:355
 #: FixedAssetTransfer.php:50 FixedAssetTransfer.php:110 GLTags.php:39
-#: GLTags.php:55 GLTransInquiry.php:50 GoodsReceived.php:89
+#: GLTags.php:55 GLTransInquiry.php:50 GoodsReceived.php:87
 #: InventoryQuantities.php:221 Labels.php:413 MRPDemands.php:90
 #: MRPDemands.php:288 MRPDemandTypes.php:113 MRPPlannedWorkOrders.php:256
-#: MRPReport.php:535 MRPReport.php:739 MRPReschedules.php:177
+#: MRPReport.php:535 MRPReport.php:739 MRPReschedules.php:176
 #: MRPShortages.php:298 PaymentTerms.php:180 PcExpenses.php:158
 #: PcExpenses.php:248 PcExpensesTypeTab.php:150 PcReportTab.php:171
 #: PcTypeTabs.php:156 PDFOrdersInvoiced.php:342 PDFOrderStatus.php:317
@@ -2132,7 +2131,8 @@ msgstr "omschrijving"
 #: BOMInquiry.php:24 BOMs.php:801 ContractBOM.php:323 ContractBOM.php:328
 #: Contracts.php:758 Contracts.php:761 CounterSales.php:2138
 #: CustomerReceipt.php:1024 CustomerReceipt.php:1027
-#: DiscountCategories.php:103 DiscountCategories.php:106
+#: DiscountCategories.php:101 DiscountCategories.php:103
+#: DiscountCategories.php:107 DiscountCategories.php:109
 #: FixedAssetTransfer.php:61 MRPDemands.php:329 MRPDemands.php:332
 #: MRPReport.php:542 PO_Header.php:517 PO_Items.php:903 PO_Items.php:907
 #: PO_SelectOSPurchOrder.php:202 PO_SelectPurchOrder.php:170 PurchData.php:265
@@ -2223,7 +2223,7 @@ msgstr "Code"
 
 #: BOMInquiry.php:95 BOMs.php:812 ConfirmDispatch_Invoice.php:271
 #: ContractBOM.php:345 CounterSales.php:1989 CounterSales.php:2169
-#: Credit_Invoice.php:273 GoodsReceived.php:91 GoodsReceived.php:95
+#: Credit_Invoice.php:273 GoodsReceived.php:89 GoodsReceived.php:93
 #: MRPReport.php:741 OffersReceived.php:95 PO_Items.php:927
 #: PO_SelectOSPurchOrder.php:216 PO_SelectPurchOrder.php:181
 #: SelectCompletedOrder.php:540 SelectCreditItems.php:958
@@ -2233,6 +2233,7 @@ msgstr "Code"
 #: StockLocTransferReceive.php:435 SupplierTenders.php:491 TopItems.php:165
 #: WorkOrderCosting.php:86 WorkOrderEntry.php:599 WorkOrderIssue.php:669
 #: WorkOrderIssue.php:737 includes/DefineLabelClass.php:21
+#: includes/PDFInventoryValnPageHeader.inc:34
 msgid "Units"
 msgstr "Maateenh"
 
@@ -2265,7 +2266,6 @@ msgstr "Onderdeel"
 #: ContractCosting.php:82 ContractCosting.php:132 ContractOtherReqts.php:96
 #: Contracts.php:934 Contracts.php:957 MRPPlannedWorkOrders.php:260
 #: MRPShortages.php:300 SpecialOrder.php:637 StockAdjustments.php:340
-#: includes/PDFInventoryValnPageHeader.inc:34
 msgid "Unit Cost"
 msgstr "Stuks Prijs"
 
@@ -2682,8 +2682,8 @@ msgid "Stock Category"
 msgstr "Voorraad categorie"
 
 #: COGSGLPostings.php:95 COGSGLPostings.php:199 COGSGLPostings.php:310
-#: Customers.php:728 Customers.php:731 DiscountMatrix.php:98
-#: DiscountMatrix.php:157 PricesByCost.php:225 Prices.php:197
+#: Customers.php:728 Customers.php:731 DiscountMatrix.php:96
+#: DiscountMatrix.php:152 PricesByCost.php:225 Prices.php:197
 #: SalesAnalRepts.php:32 SalesAnalRepts.php:34 SalesGLPostings.php:112
 #: SalesGLPostings.php:223 SalesGLPostings.php:353 SelectOrderItems.php:742
 #: api/api_xml-rpc.php:931 api/api_xml-rpc.php:974
@@ -2841,7 +2841,7 @@ msgstr "Telefoon Nummer"
 msgid "Facsimile Number"
 msgstr "Fax Nummer"
 
-#: CompanyPreferences.php:268 CustLoginSetup.php:424 Customers.php:470
+#: CompanyPreferences.php:268 CustLoginSetup.php:418 Customers.php:470
 #: Customers.php:693 Customers.php:708 Suppliers.php:664 Suppliers.php:814
 #: SuppLoginSetup.php:368 WWW_Users.php:428
 msgid "Email Address"
@@ -2902,8 +2902,8 @@ msgstr "Creeer Grootboek posities voor voorraad transacties"
 #: CompanyPreferences.php:474 ConfirmDispatch_Invoice.php:626
 #: ConfirmDispatch_Invoice.php:1658 Credit_Invoice.php:1529
 #: FixedAssetItems.php:120 FixedAssetItems.php:570 GLBudgets.php:216
-#: GLTags.php:44 GoodsReceived.php:230 GoodsReceived.php:236
-#: GoodsReceived.php:243 GoodsReceived.php:699 Labels.php:262
+#: GLTags.php:44 GoodsReceived.php:229 GoodsReceived.php:235
+#: GoodsReceived.php:242 GoodsReceived.php:698 Labels.php:262
 #: MRPCalendar.php:307 Payments.php:857 PcAuthorizeExpenses.php:272
 #: PO_AuthoriseMyOrders.php:125 PricesByCost.php:187 PurchData.php:505
 #: ReorderLevelLocation.php:156 SelectCreditItems.php:898 SMTPServer.php:64
@@ -2964,7 +2964,7 @@ msgid "Back to Confirmation of Dispatch"
 msgstr "Ga terug naar de bevestiging van verzending"
 
 #: ConfirmDispatchControlled_Invoice.php:57 CounterSales.php:1207
-#: DeliveryDetails.php:584 DeliveryDetails.php:776 EmailCustTrans.php:11
+#: DeliveryDetails.php:583 DeliveryDetails.php:783 EmailCustTrans.php:11
 #: PaymentAllocations.php:33 SelectSalesOrder.php:746 SelectSalesOrder.php:815
 #: SelectSalesOrder.php:842 Z_SalesIntegrityCheck.php:46
 #: includes/PDFDeliveryDifferencesPageHeader.inc:40
@@ -3032,12 +3032,12 @@ msgstr "Bevestig factuur"
 msgid "Confirm Dispatch and Invoice"
 msgstr "Bevestig verzending en factureer"
 
-#: ConfirmDispatch_Invoice.php:251 Contracts.php:774 CustLoginSetup.php:34
-#: CustLoginSetup.php:35 CustomerAllocations.php:328 CustomerBranches.php:373
+#: ConfirmDispatch_Invoice.php:251 Contracts.php:774 CustLoginSetup.php:32
+#: CustLoginSetup.php:33 CustomerAllocations.php:328 CustomerBranches.php:373
 #: CustomerBranches.php:538 CustomerBranches.php:578 CustomerInquiry.php:125
 #: CustomerReceipt.php:844 CustomerReceipt.php:895 CustomerReceipt.php:1020
 #: Customers.php:12 Customers.php:347 CustomerTransInquiry.php:88
-#: DeliveryDetails.php:787 FTP_RadioBeacon.php:52 PDFOrdersInvoiced.php:299
+#: DeliveryDetails.php:800 FTP_RadioBeacon.php:52 PDFOrdersInvoiced.php:299
 #: PDFOrderStatus.php:273 PricesByCost.php:119 SalesGraph.php:169
 #: SelectCompletedOrder.php:586 SelectContract.php:157 SelectCustomer.php:24
 #: SelectCustomer.php:281 SelectOrderItems.php:633
@@ -3054,20 +3054,20 @@ msgstr "Bevestig verzending en factureer"
 msgid "Customer"
 msgstr "Klant"
 
-#: ConfirmDispatch_Invoice.php:251 CustEDISetup.php:99 CustLoginSetup.php:277
-#: CustLoginSetup.php:460 Customers.php:461 Customers.php:649
-#: Customers.php:685 DeliveryDetails.php:787 OrderDetails.php:65
+#: ConfirmDispatch_Invoice.php:251 CustEDISetup.php:94 CustLoginSetup.php:272
+#: CustLoginSetup.php:448 Customers.php:461 Customers.php:649
+#: Customers.php:685 DeliveryDetails.php:800 OrderDetails.php:65
 #: SalesAnalRepts.php:27 SalesAnalRepts.php:29 WWW_Users.php:262
-#: WWW_Users.php:471 Z_ChangeBranchCode.php:202
+#: WWW_Users.php:466 Z_ChangeBranchCode.php:202
 #: includes/PDFStatementPageHeader.inc:112 includes/PDFTransPageHeader.inc:82
 #: includes/PDFTransPageHeaderPortrait.inc:55
 msgid "Customer Code"
 msgstr "Klant Code"
 
-#: ConfirmDispatch_Invoice.php:252 CustEDISetup.php:101
-#: CustomerReceipt.php:235 CustomerReceipt.php:1039 Customers.php:464
-#: Customers.php:690 Customers.php:702 DeliveryDetails.php:788
-#: OrderDetails.php:67 POReport.php:494 POReport.php:1191 SalesInquiry.php:740
+#: ConfirmDispatch_Invoice.php:252 CustEDISetup.php:96 CustomerReceipt.php:235
+#: CustomerReceipt.php:1039 Customers.php:464 Customers.php:690
+#: Customers.php:702 DeliveryDetails.php:801 OrderDetails.php:67
+#: POReport.php:494 POReport.php:1191 SalesInquiry.php:740
 #: SalesInquiry.php:750 SalesInquiry.php:774 SalesInquiry.php:918
 #: SalesInquiry.php:929 SalesInquiry.php:935 SalesInquiry.php:941
 #: SalesInquiry.php:1080 SalesInquiry.php:1131 SalesInquiry.php:1147
@@ -3081,8 +3081,8 @@ msgstr "Factuur bedragen zijn in"
 
 #: ConfirmDispatch_Invoice.php:268 ContractBOM.php:241 ContractCosting.php:72
 #: ContractCosting.php:78 Contracts.php:930 CounterSales.php:699
-#: CounterSales.php:2301 Credit_Invoice.php:270 DeliveryDetails.php:807
-#: GoodsReceived.php:88 OrderDetails.php:153 PO_Items.php:634
+#: CounterSales.php:2301 Credit_Invoice.php:270 DeliveryDetails.php:820
+#: GoodsReceived.php:86 OrderDetails.php:153 PO_Items.php:634
 #: PO_OrderDetails.php:142 PrintCustTrans.php:648 PrintCustTrans.php:711
 #: PrintCustTrans.php:749 PrintCustTransPortrait.php:858
 #: PrintCustTransPortrait.php:941 PrintCustTransPortrait.php:985
@@ -3106,7 +3106,7 @@ msgstr "Artikel Code"
 
 #: ConfirmDispatch_Invoice.php:269 ContractCosting.php:73
 #: ContractCosting.php:79 Contracts.php:931 CounterSales.php:700
-#: Credit_Invoice.php:271 DeliveryDetails.php:808 DeliveryDetails.php:873
+#: Credit_Invoice.php:271 DeliveryDetails.php:821 DeliveryDetails.php:886
 #: OrderDetails.php:154 PO_Items.php:701 PO_OrderDetails.php:143
 #: PrintCustTrans.php:649 PrintCustTrans.php:712 PrintCustTrans.php:750
 #: PrintCustTransPortrait.php:859 PrintCustTransPortrait.php:942
@@ -3123,14 +3123,14 @@ msgstr "Artikel Code"
 msgid "Item Description"
 msgstr "Artikel Omschrijving"
 
-#: ConfirmDispatch_Invoice.php:270 GoodsReceived.php:90 GoodsReceived.php:94
+#: ConfirmDispatch_Invoice.php:270 GoodsReceived.php:88 GoodsReceived.php:92
 #: PDFOrdersInvoiced.php:343 PDFOrderStatus.php:318 Shipments.php:385
 #: Shipments.php:463
 msgid "Ordered"
 msgstr "Besteld"
 
-#: ConfirmDispatch_Invoice.php:272 FTP_RadioBeacon.php:84 GoodsReceived.php:92
-#: GoodsReceived.php:96
+#: ConfirmDispatch_Invoice.php:272 FTP_RadioBeacon.php:84 GoodsReceived.php:90
+#: GoodsReceived.php:94
 #, php-format
 msgid "Already"
 msgstr "Al"
@@ -3145,7 +3145,7 @@ msgid "This Dispatch"
 msgstr "Deze Zending"
 
 #: ConfirmDispatch_Invoice.php:274 CounterSales.php:704 Credit_Invoice.php:275
-#: DeliveryDetails.php:811 DeliveryDetails.php:876 GoodsReceived.php:100
+#: DeliveryDetails.php:824 DeliveryDetails.php:889 GoodsReceived.php:98
 #: OffersReceived.php:96 OffersReceived.php:196 OffersReceived.php:245
 #: OrderDetails.php:157 PDFOrdersInvoiced.php:385 PDFPriceList.php:359
 #: PDFPrintLabel.php:238 PO_AuthoriseMyOrders.php:108 PricesByCost.php:211
@@ -3166,7 +3166,7 @@ msgid "Price"
 msgstr "Prijs"
 
 #: ConfirmDispatch_Invoice.php:275 CounterSales.php:705 Credit_Invoice.php:276
-#: CustomerReceipt.php:843 DeliveryDetails.php:812 OrderDetails.php:158
+#: CustomerReceipt.php:843 DeliveryDetails.php:825 OrderDetails.php:158
 #: PrintCustTrans.php:653 PrintCustTrans.php:716 PrintCustTrans.php:754
 #: PrintCustTransPortrait.php:863 PrintCustTransPortrait.php:946
 #: PrintCustTransPortrait.php:990 RecurringSalesOrders.php:324
@@ -3181,8 +3181,8 @@ msgstr "Korting"
 #: ConfirmDispatch_Invoice.php:276 ConfirmDispatch_Invoice.php:280
 #: CounterSales.php:709 CounterSales.php:796 Credit_Invoice.php:277
 #: Credit_Invoice.php:281 CustomerAllocations.php:332
-#: CustomerAllocations.php:358 CustomerInquiry.php:196 DeliveryDetails.php:813
-#: DeliveryDetails.php:877 GLBalanceSheet.php:172 GLBalanceSheet.php:181
+#: CustomerAllocations.php:358 CustomerInquiry.php:196 DeliveryDetails.php:826
+#: DeliveryDetails.php:890 GLBalanceSheet.php:172 GLBalanceSheet.php:181
 #: GLBalanceSheet.php:258 GLBalanceSheet.php:267 GLBudgets.php:195
 #: GLJournal.php:390 GLTransInquiry.php:189 GLTrialBalance.php:209
 #: GLTrialBalance.php:229 GLTrialBalance.php:250 GLTrialBalance.php:346
@@ -3263,7 +3263,7 @@ msgstr ""
 "verwacht dat een transporteur wordt geselecteerd of dat een default "
 "transporteur wordt gebruikt"
 
-#: ConfirmDispatch_Invoice.php:444 DeliveryDetails.php:245 Prices.php:345
+#: ConfirmDispatch_Invoice.php:444 DeliveryDetails.php:244 Prices.php:345
 #: includes/InputSerialItemsExisting.php:58
 #: includes/InputSerialItemsKeyed.php:139
 #: includes/InputSerialItemsSequential.php:48
@@ -3271,7 +3271,7 @@ msgstr ""
 msgid "Enter"
 msgstr "Voer in"
 
-#: ConfirmDispatch_Invoice.php:444 DeliveryDetails.php:245
+#: ConfirmDispatch_Invoice.php:444 DeliveryDetails.php:244
 msgid "Amend Freight Companies"
 msgstr "Wijzig vervoerder"
 
@@ -3357,12 +3357,12 @@ msgid "Please remedy this"
 msgstr "Verhelp dit"
 
 #: ConfirmDispatch_Invoice.php:653 Credit_Invoice.php:484
-#: GoodsReceived.php:253
+#: GoodsReceived.php:252
 msgid "The company information and preferences could not be retrieved"
 msgstr "De bedrijfsinformatie en voorkeuren konden niet worden opgevraagd"
 
 #: ConfirmDispatch_Invoice.php:653 Credit_Invoice.php:484
-#: GoodsReceived.php:253
+#: GoodsReceived.php:252
 msgid "see your system administrator"
 msgstr "Raadpleeg de systeem beheerder"
 
@@ -3382,7 +3382,7 @@ msgstr ""
 "De order is veranderd of gefactureerd nadat de levering was geactiveerd om "
 "te worden bevestigd"
 
-#: ConfirmDispatch_Invoice.php:681 GoodsReceived.php:290
+#: ConfirmDispatch_Invoice.php:681 GoodsReceived.php:289
 msgid "Processing halted"
 msgstr "Verwerking gestopt"
 
@@ -3473,10 +3473,10 @@ msgstr "De gebruikte SQL om de branch default vervoerder te updaten was"
 #: Credit_Invoice.php:1070 Credit_Invoice.php:1093 Credit_Invoice.php:1264
 #: Credit_Invoice.php:1304 Credit_Invoice.php:1331 Credit_Invoice.php:1352
 #: Credit_Invoice.php:1381 Credit_Invoice.php:1407 Credit_Invoice.php:1433
-#: GoodsReceived.php:272 GoodsReceived.php:353 GoodsReceived.php:395
-#: GoodsReceived.php:425 GoodsReceived.php:453 GoodsReceived.php:484
-#: GoodsReceived.php:502 GoodsReceived.php:531 GoodsReceived.php:548
-#: GoodsReceived.php:636 GoodsReceived.php:661 PDFStockCheckComparison.php:122
+#: GoodsReceived.php:271 GoodsReceived.php:352 GoodsReceived.php:394
+#: GoodsReceived.php:424 GoodsReceived.php:452 GoodsReceived.php:483
+#: GoodsReceived.php:501 GoodsReceived.php:530 GoodsReceived.php:547
+#: GoodsReceived.php:635 GoodsReceived.php:660 PDFStockCheckComparison.php:122
 #: PDFStockCheckComparison.php:130 PDFStockCheckComparison.php:137
 #: PDFStockCheckComparison.php:156 PDFStockCheckComparison.php:175
 #: RecurringSalesOrdersProcess.php:321 RecurringSalesOrdersProcess.php:361
@@ -3581,11 +3581,11 @@ msgstr "ERNSTIGE FOUT"
 #: Credit_Invoice.php:990 Credit_Invoice.php:1029 Credit_Invoice.php:1070
 #: Credit_Invoice.php:1093 Credit_Invoice.php:1264 Credit_Invoice.php:1304
 #: Credit_Invoice.php:1331 Credit_Invoice.php:1352 Credit_Invoice.php:1381
-#: Credit_Invoice.php:1407 Credit_Invoice.php:1433 GoodsReceived.php:272
-#: GoodsReceived.php:353 GoodsReceived.php:395 GoodsReceived.php:425
-#: GoodsReceived.php:453 GoodsReceived.php:484 GoodsReceived.php:502
-#: GoodsReceived.php:531 GoodsReceived.php:548 GoodsReceived.php:636
-#: GoodsReceived.php:661 PDFStockCheckComparison.php:122
+#: Credit_Invoice.php:1407 Credit_Invoice.php:1433 GoodsReceived.php:271
+#: GoodsReceived.php:352 GoodsReceived.php:394 GoodsReceived.php:424
+#: GoodsReceived.php:452 GoodsReceived.php:483 GoodsReceived.php:501
+#: GoodsReceived.php:530 GoodsReceived.php:547 GoodsReceived.php:635
+#: GoodsReceived.php:660 PDFStockCheckComparison.php:122
 #: PDFStockCheckComparison.php:130 PDFStockCheckComparison.php:137
 #: PDFStockCheckComparison.php:156 PDFStockCheckComparison.php:175
 #: RecurringSalesOrdersProcess.php:321 RecurringSalesOrdersProcess.php:361
@@ -3742,7 +3742,7 @@ msgid "Location stock record could not be updated because"
 msgstr "De voorraadrecord van de lokatie kon niet worden geupdate omdat"
 
 #: ConfirmDispatch_Invoice.php:950 ContractCosting.php:306
-#: CounterSales.php:1304 Credit_Invoice.php:684 GoodsReceived.php:454
+#: CounterSales.php:1304 Credit_Invoice.php:684 GoodsReceived.php:453
 #: ReverseGRN.php:220 SelectCreditItems.php:1351 StockTransfers.php:398
 #: StockTransfers.php:408 WorkOrderIssue.php:161 WorkOrderReceive.php:318
 #: WorkOrderReceive.php:424
@@ -3770,8 +3770,8 @@ msgid "Can not retrieve assembly components location stock quantities because "
 msgstr "Kon de assemblage componenten hoeveelheid niet opvragen omdat "
 
 #: ConfirmDispatch_Invoice.php:1018 CounterSales.php:1372
-#: CustomerInquiry.php:195 CustomerTransInquiry.php:92 DeliveryDetails.php:594
-#: DeliveryDetails.php:600 DeliveryDetails.php:607 DeliveryDetails.php:777
+#: CustomerInquiry.php:195 CustomerTransInquiry.php:92 DeliveryDetails.php:593
+#: DeliveryDetails.php:599 DeliveryDetails.php:606 DeliveryDetails.php:787
 #: MRPReport.php:412 PDFOrdersInvoiced.php:298 PDFOrderStatus.php:272
 #: SelectCompletedOrder.php:585 SelectContract.php:152
 #: SelectOrderItems.php:731 SelectProduct.php:356 Shipments.php:383
@@ -3831,7 +3831,7 @@ msgstr "Voorraadverplaatsingsrecords konden niet worden toegevoegd omdat"
 
 #: ConfirmDispatch_Invoice.php:1119 ContractCosting.php:335
 #: CounterSales.php:1474 Credit_Invoice.php:892 Credit_Invoice.php:991
-#: Credit_Invoice.php:1030 GoodsReceived.php:485
+#: Credit_Invoice.php:1030 GoodsReceived.php:484
 #: RecurringSalesOrdersProcess.php:362 ReverseGRN.php:249
 #: SelectCreditItems.php:1249 WorkOrderIssue.php:192 WorkOrderReceive.php:347
 #: WorkOrderReceive.php:454
@@ -3874,7 +3874,7 @@ msgid "The following SQL to update the serial stock item record was used"
 msgstr "De gebruikte SQL om reeksmatig vooraad item te vernieuwen was"
 
 #: ConfirmDispatch_Invoice.php:1172 Credit_Invoice.php:946
-#: GoodsReceived.php:548 SelectCreditItems.php:1330 StockAdjustments.php:224
+#: GoodsReceived.php:547 SelectCreditItems.php:1330 StockAdjustments.php:224
 #: StockLocTransferReceive.php:172 StockLocTransferReceive.php:285
 #: StockTransfers.php:274 StockTransfers.php:385 WorkOrderIssue.php:228
 #: WorkOrderIssue.php:283 WorkOrderReceive.php:505 WorkOrderReceive.php:576
@@ -3884,7 +3884,7 @@ msgstr ""
 "omdat"
 
 #: ConfirmDispatch_Invoice.php:1173 Credit_Invoice.php:947
-#: GoodsReceived.php:549 StockAdjustments.php:225
+#: GoodsReceived.php:548 StockAdjustments.php:225
 #: StockLocTransferReceive.php:173 StockLocTransferReceive.php:286
 #: StockTransfers.php:275 StockTransfers.php:386 WorkOrderIssue.php:229
 #: WorkOrderIssue.php:284 WorkOrderReceive.php:506 WorkOrderReceive.php:577
@@ -4010,7 +4010,7 @@ msgstr ""
 msgid "The fixed asset transaction could not be inserted because"
 msgstr "De vaste activa / passiva transactie kan niet worden geplaatst omdat"
 
-#: ConfirmDispatch_Invoice.php:1509 GoodsReceived.php:586 ReverseGRN.php:176
+#: ConfirmDispatch_Invoice.php:1509 GoodsReceived.php:585 ReverseGRN.php:176
 #: SupplierCredit.php:1199 SupplierCredit.php:1287 SupplierInvoice.php:1165
 #: SupplierInvoice.php:1251
 msgid "The following SQL to insert the fixed asset transaction record was used"
@@ -4063,8 +4063,8 @@ msgstr "Verwerkt"
 
 #: ConfirmDispatch_Invoice.php:1614 ConfirmDispatch_Invoice.php:1616
 #: ContractBOM.php:294 CounterSales.php:1941 CounterSales.php:1943
-#: CustomerReceipt.php:528 DeliveryDetails.php:575 DeliveryDetails.php:579
-#: DeliveryDetails.php:774 DeliveryDetails.php:775 GLBalanceSheet.php:21
+#: CustomerReceipt.php:528 DeliveryDetails.php:574 DeliveryDetails.php:578
+#: DeliveryDetails.php:776 DeliveryDetails.php:779 GLBalanceSheet.php:21
 #: GLProfit_Loss.php:19 GLTagProfit_Loss.php:22 GLTagProfit_Loss.php:496
 #: GLTags.php:32 GLTransInquiry.php:41 PDFStockLocTransfer.php:27
 #: PO_OrderDetails.php:116 PO_PDFPurchOrder.php:333 PO_PDFPurchOrder.php:336
@@ -4139,7 +4139,7 @@ msgstr ""
 "gebeurt misschien wel de browser ondersteunt geen META-refresh"
 
 #: ContractBOM.php:43 ContractOtherReqts.php:45 Contracts.php:88
-#: Contracts.php:97 DeliveryDetails.php:260 DeliveryDetails.php:269
+#: Contracts.php:97 DeliveryDetails.php:259 DeliveryDetails.php:268
 #: EmailCustTrans.php:24 EmailCustTrans.php:28 GLAccountCSV.php:260
 #: PO_Header.php:235 POReport.php:1409 SalesAnalysis_UserDefined.php:46
 #: SelectOrderItems.php:1148 StockQties_csv.php:43 StockUsage.php:22
@@ -4152,7 +4152,7 @@ msgid "click here"
 msgstr "klik hier"
 
 #: ContractBOM.php:43 ContractOtherReqts.php:45 Contracts.php:88
-#: Contracts.php:97 DeliveryDetails.php:260 DeliveryDetails.php:269
+#: Contracts.php:97 DeliveryDetails.php:259 DeliveryDetails.php:268
 #: PO_Header.php:235 SalesAnalysis_UserDefined.php:46
 #: SelectOrderItems.php:1148 StockUsage.php:22 SupplierCredit.php:216
 #: SupplierCredit.php:228 SupplierCredit.php:240 SupplierCredit.php:249
@@ -4264,9 +4264,9 @@ msgstr "Zoek Naar Voorraad Artikelen"
 
 #: ContractBOM.php:299 CounterSales.php:2113 CounterSales.php:2116
 #: DailySalesInquiry.php:44 DailySalesInquiry.php:46 FixedAssetRegister.php:56
-#: FixedAssetRegister.php:65 InventoryQuantities.php:154
+#: FixedAssetRegister.php:65 InventoryQuantities.php:153
 #: InventoryQuantities.php:175 InventoryQuantities.php:177 MRP.php:562
-#: MRPReport.php:523 MRPReport.php:525 MRPReschedules.php:136
+#: MRPReport.php:523 MRPReport.php:525 MRPReschedules.php:135
 #: PDFPeriodStockTransListing.php:58 PDFPriceList.php:194
 #: PDFPrintLabel.php:239 PO_Items.php:878 POReport.php:1490
 #: ReorderLevel.php:175 ReorderLevel.php:177 ReorderLevel.php:205
@@ -4376,7 +4376,7 @@ msgid "Inventory Required"
 msgstr "Inventaris Vereist"
 
 #: ContractCosting.php:75 ContractCosting.php:81 Contracts.php:933
-#: CounterSales.php:703 DeliveryDetails.php:810 DeliveryDetails.php:875
+#: CounterSales.php:703 DeliveryDetails.php:823 DeliveryDetails.php:888
 #: OrderDetails.php:156 PO_Items.php:733 PrintCustTrans.php:651
 #: PrintCustTrans.php:714 PrintCustTrans.php:752
 #: PrintCustTransPortrait.php:861 PrintCustTransPortrait.php:944
@@ -4474,7 +4474,7 @@ msgstr "Kon de werkorder die moest worden afgesloten niet actualiseren omdat:"
 msgid "The SQL used to close the work order was:"
 msgstr "De SQL gebruikt om de werkorder af te sluiten was:"
 
-#: ContractCosting.php:305 GoodsReceived.php:453
+#: ContractCosting.php:305 GoodsReceived.php:452
 #: PDFStockCheckComparison.php:130 ReverseGRN.php:219 StockAdjustments.php:237
 #: StockLocTransferReceive.php:297 StockLocTransferReceive.php:306
 #: StockTransfers.php:397 StockTransfers.php:407 WorkOrderIssue.php:160
@@ -4626,8 +4626,8 @@ msgstr ""
 "U wordt automatisch doorgestuurd naar de ingang van het Contract posten "
 "pagina"
 
-#: Contracts.php:87 Contracts.php:96 Customers.php:287 DeliveryDetails.php:260
-#: DeliveryDetails.php:269 EmailCustTrans.php:24 PO_Header.php:234
+#: Contracts.php:87 Contracts.php:96 Customers.php:287 DeliveryDetails.php:259
+#: DeliveryDetails.php:268 EmailCustTrans.php:24 PO_Header.php:234
 #: SalesAnalysis_UserDefined.php:46 StockUsage.php:21 SupplierCredit.php:214
 #: SupplierCredit.php:226 SupplierCredit.php:238 SupplierCredit.php:248
 #: SupplierCredit.php:256 SupplierInvoice.php:188 SupplierInvoice.php:196
@@ -4636,8 +4636,8 @@ msgstr ""
 msgid "If this does not happen"
 msgstr "Als dit niet gebeurd"
 
-#: Contracts.php:87 Contracts.php:96 Customers.php:287 DeliveryDetails.php:260
-#: DeliveryDetails.php:269 EmailCustTrans.php:24 PO_Header.php:234
+#: Contracts.php:87 Contracts.php:96 Customers.php:287 DeliveryDetails.php:259
+#: DeliveryDetails.php:268 EmailCustTrans.php:24 PO_Header.php:234
 #: SelectOrderItems.php:1147 StockUsage.php:21 SupplierCredit.php:214
 #: SupplierCredit.php:226 SupplierCredit.php:238 SupplierCredit.php:248
 #: SupplierCredit.php:256 SupplierInvoice.php:188 SupplierInvoice.php:196
@@ -4965,7 +4965,7 @@ msgid "The customer record selected"
 msgstr "De geselecteerde klant record"
 
 #: Contracts.php:716 CounterSales.php:111 CounterSales.php:145
-#: CounterSales.php:2022 CounterSales.php:2200 DeliveryDetails.php:147
+#: CounterSales.php:2022 CounterSales.php:2200 DeliveryDetails.php:146
 #: PO_Header.php:394 PO_Header.php:461 SelectCreditItems.php:134
 #: SelectCreditItems.php:172 SelectOrderItems.php:418 SelectOrderItems.php:464
 #: SelectOrderItems.php:537 SelectOrderItems.php:577 SelectOrderItems.php:1474
@@ -5082,7 +5082,7 @@ msgstr "Referentie van het contract"
 #: ReorderLevel.php:242 SpecialOrder.php:613 StockDispatch.php:344
 #: Stocks.php:728 SuppPriceList.php:211 SuppPriceList.php:261
 #: includes/PDFInventoryValnPageHeader.inc:32
-#: includes/PDFInventoryValnPageHeader.inc:37
+#: includes/PDFInventoryValnPageHeader.inc:38
 msgid "Category"
 msgstr "Categorie"
 
@@ -5124,7 +5124,7 @@ msgstr "Alleen indeling"
 msgid "Required Date"
 msgstr "Vereiste datum"
 
-#: Contracts.php:890 CounterSales.php:816 DeliveryDetails.php:1022
+#: Contracts.php:890 CounterSales.php:816 DeliveryDetails.php:1035
 #: OrderDetails.php:70 RecurringSalesOrders.php:404
 msgid "Customer Reference"
 msgstr "Klant Referentie"
@@ -5149,7 +5149,7 @@ msgstr "Wissel Koers"
 msgid "Contract Status"
 msgstr "Status contract"
 
-#: Contracts.php:906 CustLoginSetup.php:22 index.php:20 SuppLoginSetup.php:19
+#: Contracts.php:906 CustLoginSetup.php:20 index.php:20 SuppLoginSetup.php:19
 #: WWW_Users.php:21
 msgid "Setup"
 msgstr "Instellingen"
@@ -5279,35 +5279,35 @@ msgstr ""
 "locatie. De account is momenteel gemarkeerd als een rekening die moet worden "
 "bekeken. Neem contact op met de credit control personeel te bespreken"
 
-#: CounterSales.php:145 DeliveryDetails.php:147 SelectCreditItems.php:172
+#: CounterSales.php:145 DeliveryDetails.php:146 SelectCreditItems.php:172
 #: SelectOrderItems.php:464 SelectOrderItems.php:577
 msgid "The customer branch record of the customer selected"
 msgstr "De klantbranch voor de geselecteerde klant"
 
-#: CounterSales.php:146 DeliveryDetails.php:148 SelectCreditItems.php:173
+#: CounterSales.php:146 DeliveryDetails.php:147 SelectCreditItems.php:173
 #: SelectOrderItems.php:465 SelectOrderItems.php:578
 msgid "SQL used to retrieve the branch details was"
 msgstr "De gebruikte SQL om de branch details op te vragen was"
 
-#: CounterSales.php:151 DeliveryDetails.php:152 SelectOrderItems.php:470
+#: CounterSales.php:151 DeliveryDetails.php:151 SelectOrderItems.php:470
 msgid "The branch details for branch code"
 msgstr "De branchdetials voor branchcode"
 
-#: CounterSales.php:151 DeliveryDetails.php:152 SelectOrderItems.php:470
+#: CounterSales.php:151 DeliveryDetails.php:151 SelectOrderItems.php:470
 msgid "against customer code"
 msgstr "Tegen klantcode"
 
-#: CounterSales.php:151 DeliveryDetails.php:152 GLAccountCSV.php:181
+#: CounterSales.php:151 DeliveryDetails.php:151 GLAccountCSV.php:181
 #: GLAccountCSV.php:210 GLAccountInquiry.php:175 GLAccountInquiry.php:214
 #: GLAccountReport.php:114 GLAccountReport.php:146 SelectOrderItems.php:470
 msgid "could not be retrieved"
 msgstr "Kon niet worden opgevraagd"
 
-#: CounterSales.php:151 DeliveryDetails.php:152 SelectOrderItems.php:470
+#: CounterSales.php:151 DeliveryDetails.php:151 SelectOrderItems.php:470
 msgid "Check the set up of the customer and branch"
 msgstr "Controleer klant en branch set up"
 
-#: CounterSales.php:154 DeliveryDetails.php:155 SelectOrderItems.php:473
+#: CounterSales.php:154 DeliveryDetails.php:154 SelectOrderItems.php:473
 msgid "The SQL that failed to get the branch details was"
 msgstr "Het mislukt om de branch details op te vragen van de SQL"
 
@@ -5463,16 +5463,16 @@ msgstr "Omschrijving - Opmerking"
 msgid "Picked Up By"
 msgstr "Opgepikt door"
 
-#: CounterSales.php:810 DeliveryDetails.php:1016 RecurringSalesOrders.php:398
+#: CounterSales.php:810 DeliveryDetails.php:1029 RecurringSalesOrders.php:398
 msgid "Contact Phone Number"
 msgstr "Kontakt Telefoon Nummer"
 
-#: CounterSales.php:814 DeliveryDetails.php:1020 RecurringSalesOrders.php:401
+#: CounterSales.php:814 DeliveryDetails.php:1033 RecurringSalesOrders.php:401
 msgid "Contact Email"
 msgstr "Kontakt E-mail"
 
 #: CounterSales.php:821 CustomerInquiry.php:194 CustomerTransInquiry.php:91
-#: DeliveryDetails.php:1027 OrderDetails.php:114 PO_Header.php:1062
+#: DeliveryDetails.php:1040 OrderDetails.php:114 PO_Header.php:1062
 #: PO_OrderDetails.php:125 RecurringSalesOrders.php:408 SpecialOrder.php:531
 #: SupplierCredit.php:558 SupplierInquiry.php:205 SupplierInvoice.php:512
 #: SupplierTransInquiry.php:91 Z_ImportChartOfAccounts.php:28
@@ -5544,7 +5544,7 @@ msgstr ""
 "Het bedrijf informatie en voorkeuren kunnen niet worden opgehaald. Raadpleeg "
 "uw systeembeheerder"
 
-#: CounterSales.php:1005 DeliveryDetails.php:379
+#: CounterSales.php:1005 DeliveryDetails.php:378
 #: RecurringSalesOrdersProcess.php:144
 msgid "The order cannot be added because"
 msgstr "De order kan niet woren toegevoegd omdat"
@@ -5555,19 +5555,19 @@ msgstr ""
 "Problemen het invoegen van een lijn van een klantorder. De SQL die mislukt "
 "was"
 
-#: CounterSales.php:1037 DeliveryDetails.php:408
+#: CounterSales.php:1037 DeliveryDetails.php:407
 msgid "Unable to add the sales order line"
 msgstr "Niet in staat om de klantorder lijn toe te voegen"
 
-#: CounterSales.php:1107 DeliveryDetails.php:480 DeliveryDetails.php:661
+#: CounterSales.php:1107 DeliveryDetails.php:479 DeliveryDetails.php:660
 msgid "Unable to insert a new work order for the sales order item"
 msgstr "Niet in staat om een nieuwe werkorder voor de klantorder item"
 
-#: CounterSales.php:1127 DeliveryDetails.php:500 DeliveryDetails.php:680
+#: CounterSales.php:1127 DeliveryDetails.php:499 DeliveryDetails.php:679
 msgid "In automatically creating a work order for"
 msgstr "Automatisch in het creëren van een werkorder voor de"
 
-#: CounterSales.php:1127 DeliveryDetails.php:500 DeliveryDetails.php:680
+#: CounterSales.php:1127 DeliveryDetails.php:499 DeliveryDetails.php:679
 msgid ""
 "an item on this sales order, the cost of this item as accumulated from the "
 "sum of the component costs is nil. This could be because there is no bill of "
@@ -5577,32 +5577,32 @@ msgstr ""
 "van de kosten van de onderdelen is nihil. Dit zou kunnen worden omdat er "
 "geen bill of material opgezet ... Misschien wilt u het dubbele te controleren"
 
-#: CounterSales.php:1141 DeliveryDetails.php:514 DeliveryDetails.php:701
+#: CounterSales.php:1141 DeliveryDetails.php:513 DeliveryDetails.php:700
 #: WorkOrderEntry.php:238
 msgid "The work order item could not be added"
 msgstr "Werkorder item kon niet worden toegevoegd"
 
-#: CounterSales.php:1147 DeliveryDetails.php:520
+#: CounterSales.php:1147 DeliveryDetails.php:519
 msgid "A new work order has been created for"
 msgstr "Een nieuwe werkorder is gemaakt voor"
 
-#: CounterSales.php:1149 DeliveryDetails.php:522
+#: CounterSales.php:1149 DeliveryDetails.php:521
 msgid "These are for"
 msgstr "Deze zijn voor"
 
-#: CounterSales.php:1149 DeliveryDetails.php:522
+#: CounterSales.php:1149 DeliveryDetails.php:521
 msgid "there order ref"
 msgstr "er om ref"
 
-#: CounterSales.php:1149 DeliveryDetails.php:522
+#: CounterSales.php:1149 DeliveryDetails.php:521
 msgid "our order number"
 msgstr "ons ordernummer"
 
-#: CounterSales.php:1153 DeliveryDetails.php:526
+#: CounterSales.php:1153 DeliveryDetails.php:525
 msgid "The following serial numbers have been reserved for this work order"
 msgstr "De volgende serienummers zijn gereserveerd voor dit werk om"
 
-#: CounterSales.php:1162 DeliveryDetails.php:535
+#: CounterSales.php:1162 DeliveryDetails.php:534
 msgid ""
 "This automatically generated serial number already exists - it cannot be "
 "added to the work order"
@@ -5610,26 +5610,26 @@ msgstr ""
 "Deze automatisch gegenereerde serienummer bestaat al - het kan niet worden "
 "toegevoegd aan de werkorder"
 
-#: CounterSales.php:1170 DeliveryDetails.php:543
+#: CounterSales.php:1170 DeliveryDetails.php:542
 msgid "The serial number for the work order item could not be added"
 msgstr "Het serienummer van de werkorder item kon niet worden toegevoegd"
 
-#: CounterSales.php:1176 DeliveryDetails.php:549
+#: CounterSales.php:1176 DeliveryDetails.php:548
 msgid "Could not update the new next serial number for the item"
 msgstr "Kan geen update van de nieuwe next serienummer voor het item"
 
-#: CounterSales.php:1181 DeliveryDetails.php:553
+#: CounterSales.php:1181 DeliveryDetails.php:552
 msgid "New Work Order Number"
 msgstr "Nieuwe werkordernummer"
 
-#: CounterSales.php:1181 DeliveryDetails.php:553 EDIMessageFormat.php:127
+#: CounterSales.php:1181 DeliveryDetails.php:552 EDIMessageFormat.php:127
 #: EDIMessageFormat.php:204 Prices_Customer.php:45
 #: RecurringSalesOrdersProcess.php:88 ReverseGRN.php:332 SpecialOrder.php:113
 #: SpecialOrder.php:115
 msgid "for"
 msgstr "voor"
 
-#: CounterSales.php:1190 DeliveryDetails.php:565 DeliveryDetails.php:772
+#: CounterSales.php:1190 DeliveryDetails.php:564 DeliveryDetails.php:771
 #: FTP_RadioBeacon.php:186 FTP_RadioBeacon.php:289 PO_AuthoriseMyOrders.php:55
 #: PO_OrderDetails.php:31 POReport.php:490 POReport.php:499 POReport.php:678
 #: POReport.php:1187 POReport.php:1196 POReport.php:1350 POReport.php:1479
@@ -5642,7 +5642,7 @@ msgstr "voor"
 msgid "Order Number"
 msgstr "Opdracht Nummer"
 
-#: CounterSales.php:1190 DeliveryDetails.php:563 DeliveryDetails.php:565
+#: CounterSales.php:1190 DeliveryDetails.php:562 DeliveryDetails.php:564
 #: SpecialOrder.php:489
 msgid "has been entered"
 msgstr "is ingevoerd"
@@ -6111,7 +6111,7 @@ msgstr ""
 msgid "Credit Note number"
 msgstr "Credit Nota nummer"
 
-#: Credit_Invoice.php:1447 GoodsReceived.php:687 SupplierCredit.php:1300
+#: Credit_Invoice.php:1447 GoodsReceived.php:686 SupplierCredit.php:1300
 #: SupplierInvoice.php:1272 WorkOrderIssue.php:352 WorkOrderReceive.php:672
 #: Z_BottomUpCosts.php:33
 msgid "has been processed"
@@ -6310,7 +6310,7 @@ msgstr "De functionele valuta kan niet worden veranderd of worden verwijderd"
 msgid "The currency code cannot contain any of the following characters"
 msgstr "In de valuta code mogen de volgende karakters niet worden gebruikt"
 
-#: Currencies.php:89 CustEDISetup.php:36 CustLoginSetup.php:93
+#: Currencies.php:89 CustEDISetup.php:31 CustLoginSetup.php:87
 #: Customers.php:53 Stocks.php:107 SuppLoginSetup.php:79 WorkCentres.php:35
 #: WWW_Users.php:65 Z_ChangeBranchCode.php:30 Z_ImportStocks.php:125
 msgid "or a space"
@@ -6417,17 +6417,17 @@ msgstr "ISO 4217 Valuta Code"
 msgid "Currency Abbreviation"
 msgstr "Valuta code"
 
-#: CustEDISetup.php:8
+#: CustEDISetup.php:6
 msgid "Customer EDI Set Up"
 msgstr "Customer EDI Set Up"
 
-#: CustEDISetup.php:36
+#: CustEDISetup.php:31
 msgid ""
 "The customers EDI reference code cannot contain any of the following "
 "characters"
 msgstr "De volgende karakters kunnen niet in de EDI klant code worden gebruikt"
 
-#: CustEDISetup.php:40
+#: CustEDISetup.php:35
 msgid ""
 "The customers EDI reference code must be set when EDI Invoices or EDI orders "
 "are activated"
@@ -6435,7 +6435,7 @@ msgstr ""
 "De EDI klanten code moet zijn gedefinieerd indien EDI facturatie en EDI  "
 "bestellingen zijn geactiveerd"
 
-#: CustEDISetup.php:46
+#: CustEDISetup.php:41
 msgid ""
 "The customers EDI email address or FTP server address must be entered if EDI "
 "Invoices are to be sent"
@@ -6443,105 +6443,105 @@ msgstr ""
 "Om EDI facturen te versturen moet e-mail adres of FTP server voor de klant "
 "zijn opgevoerd"
 
-#: CustEDISetup.php:69
+#: CustEDISetup.php:64
 msgid "The customer EDI setup data could not be updated because"
 msgstr "De EDI gegevens voor de klant kon niet worden vernieuwd omdat"
 
-#: CustEDISetup.php:71
+#: CustEDISetup.php:66
 msgid "Customer EDI configuration updated"
 msgstr "De EDI configuratie voor de klant is vernieuwd"
 
-#: CustEDISetup.php:74
+#: CustEDISetup.php:69
 msgid "Customer EDI configuration failed"
 msgstr "Het is mislukt om de EDI configuratie voor de klant te vernieuwen"
 
-#: CustEDISetup.php:94
+#: CustEDISetup.php:89
 msgid "The customer EDI configuration details could not be retrieved because"
 msgstr "De klanten EDI configuratie details kunnen niet opgehaald worden omdat"
 
-#: CustEDISetup.php:103
+#: CustEDISetup.php:98
 msgid "Enable Sending of EDI Invoices"
 msgstr "Toestaan Zenden van EDI facturen"
 
-#: CustEDISetup.php:108 CustEDISetup.php:111 CustEDISetup.php:122
-#: CustEDISetup.php:125 CustomerBranches.php:738 CustomerBranches.php:740
+#: CustEDISetup.php:103 CustEDISetup.php:106 CustEDISetup.php:117
+#: CustEDISetup.php:120 CustomerBranches.php:738 CustomerBranches.php:740
 #: SystemParameters.php:792
 msgid "Disabled"
 msgstr "Uit"
 
-#: CustEDISetup.php:109 CustEDISetup.php:112 CustEDISetup.php:123
-#: CustEDISetup.php:126 CustomerBranches.php:737 CustomerBranches.php:741
+#: CustEDISetup.php:104 CustEDISetup.php:107 CustEDISetup.php:118
+#: CustEDISetup.php:121 CustomerBranches.php:737 CustomerBranches.php:741
 msgid "Enabled"
 msgstr "Aan"
 
-#: CustEDISetup.php:115
+#: CustEDISetup.php:110
 msgid "Create"
 msgstr "Creeer"
 
-#: CustEDISetup.php:115
+#: CustEDISetup.php:110
 msgid "Edit Invoice Message Format"
 msgstr "Bewerk Factuur Boodschappen Formaat"
 
-#: CustEDISetup.php:117
+#: CustEDISetup.php:112
 msgid "Enable Receiving of EDI Orders"
 msgstr "Ontvangst van EDI orders activeren"
 
-#: CustEDISetup.php:131
+#: CustEDISetup.php:126
 msgid "Customer EDI Reference"
 msgstr "Klanten EDI Referentie"
 
-#: CustEDISetup.php:135
+#: CustEDISetup.php:130
 msgid "EDI Communication Method"
 msgstr "EDI Communicatie Methode"
 
-#: CustEDISetup.php:139 CustEDISetup.php:142
+#: CustEDISetup.php:134 CustEDISetup.php:137
 msgid "Email Attachments"
 msgstr "E-mail bijlage"
 
-#: CustEDISetup.php:140 CustEDISetup.php:143
+#: CustEDISetup.php:135 CustEDISetup.php:138
 msgid "File Transfer Protocol (FTP)"
 msgstr "File Transfer Protocol (FTP)"
 
-#: CustEDISetup.php:148
+#: CustEDISetup.php:143
 msgid "FTP Server or Email Address"
 msgstr "FTP Server or Email Address"
 
-#: CustEDISetup.php:154
+#: CustEDISetup.php:149
 msgid "FTP Server User Name"
 msgstr "FTP Server User Name"
 
-#: CustEDISetup.php:156
+#: CustEDISetup.php:151
 msgid "FTP Server Password"
 msgstr "FTP Server Password"
 
-#: CustEDISetup.php:160
+#: CustEDISetup.php:155
 msgid "Update EDI Configuration"
 msgstr "Update EDI Configuration"
 
-#: CustLoginSetup.php:8 SelectCustomer.php:303
+#: CustLoginSetup.php:6 SelectCustomer.php:303
 msgid "Customer Login Configuration"
 msgstr "Klant Login Configuratie"
 
-#: CustLoginSetup.php:12 PO_SelectOSPurchOrder.php:215
+#: CustLoginSetup.php:10 PO_SelectOSPurchOrder.php:215
 #: PO_SelectPurchOrder.php:180 Shipt_Select.php:182 SuppLoginSetup.php:10
 #: WWW_Users.php:12
 msgid "Orders"
 msgstr "Orders"
 
-#: CustLoginSetup.php:13 index.php:12 SuppLoginSetup.php:11 WWW_Users.php:13
+#: CustLoginSetup.php:11 index.php:12 SuppLoginSetup.php:11 WWW_Users.php:13
 msgid "Receivables"
 msgstr "Factureren"
 
-#: CustLoginSetup.php:14 index.php:13 SuppLoginSetup.php:12 WWW_Users.php:14
+#: CustLoginSetup.php:12 index.php:13 SuppLoginSetup.php:12 WWW_Users.php:14
 msgid "Payables"
 msgstr "Crediteuren"
 
-#: CustLoginSetup.php:15 SuppLoginSetup.php:13 WWW_Users.php:15
+#: CustLoginSetup.php:13 SuppLoginSetup.php:13 WWW_Users.php:15
 msgid "Purchasing"
 msgstr "Inkoop"
 
-#: CustLoginSetup.php:16 index.php:15 InventoryQuantities.php:146
-#: InventoryValuation.php:200 Locations.php:350 Locations.php:410
+#: CustLoginSetup.php:14 index.php:15 InventoryQuantities.php:145
+#: InventoryValuation.php:207 Locations.php:350 Locations.php:410
 #: MRPCalendar.php:20 MRPCreateDemands.php:183 MRPDemands.php:26
 #: MRPDemandTypes.php:17 MRP.php:515 MRPPlannedPurchaseOrders.php:267
 #: MRPPlannedWorkOrders.php:247 MRPPlannedWorkOrders.php:326
@@ -6553,52 +6553,52 @@ msgstr "Inkoop"
 msgid "Inventory"
 msgstr "Voorraad"
 
-#: CustLoginSetup.php:17 index.php:16 SuppLoginSetup.php:15 WWW_Users.php:17
+#: CustLoginSetup.php:15 index.php:16 SuppLoginSetup.php:15 WWW_Users.php:17
 msgid "Manufacturing"
 msgstr "Produktie"
 
-#: CustLoginSetup.php:18 SelectContract.php:11 SupplierCredit.php:244
+#: CustLoginSetup.php:16 SelectContract.php:11 SupplierCredit.php:244
 #: SupplierCredit.php:296 SupplierInvoice.php:208 SupplierInvoice.php:261
 msgid "Contracts"
 msgstr "Contracten"
 
-#: CustLoginSetup.php:19 index.php:17 SupplierCredit.php:232
+#: CustLoginSetup.php:17 index.php:17 SupplierCredit.php:232
 #: SupplierCredit.php:298 SupplierInvoice.php:200 SupplierInvoice.php:264
 #: SuppLoginSetup.php:16 SuppTransGLAnalysis.php:86 SuppTransGLAnalysis.php:89
 #: WWW_Users.php:18
 msgid "General Ledger"
 msgstr "Financieel Grootboek"
 
-#: CustLoginSetup.php:20 index.php:18 SuppLoginSetup.php:17 WWW_Users.php:19
+#: CustLoginSetup.php:18 index.php:18 SuppLoginSetup.php:17 WWW_Users.php:19
 msgid "Asset Manager"
 msgstr "Asset Manager"
 
-#: CustLoginSetup.php:21 index.php:19 PcAuthorizeExpenses.php:34
+#: CustLoginSetup.php:19 index.php:19 PcAuthorizeExpenses.php:34
 #: PcAuthorizeExpenses.php:37 SuppLoginSetup.php:18 WWW_Users.php:20
 msgid "Petty Cash"
 msgstr "Kleine uitgaven"
 
-#: CustLoginSetup.php:35 SelectCustomer.php:281 SuppLoginSetup.php:23
+#: CustLoginSetup.php:33 SelectCustomer.php:281 SuppLoginSetup.php:23
 msgid " has been selected"
 msgstr " is geselecteerd"
 
-#: CustLoginSetup.php:90 SuppLoginSetup.php:76 WWW_Users.php:62
+#: CustLoginSetup.php:84 SuppLoginSetup.php:76 WWW_Users.php:62
 msgid "The user ID entered must be at least 4 characters long"
 msgstr "Gerbuiker ID moet minimaal 4 tekens lang zijn"
 
-#: CustLoginSetup.php:93 SuppLoginSetup.php:79 WWW_Users.php:65
+#: CustLoginSetup.php:87 SuppLoginSetup.php:79 WWW_Users.php:65
 msgid "User names cannot contain any of the following characters"
 msgstr "Gebruiker naam mag geen van de volgende tekens bevatten"
 
-#: CustLoginSetup.php:97 SuppLoginSetup.php:83 WWW_Users.php:69
+#: CustLoginSetup.php:91 SuppLoginSetup.php:83 WWW_Users.php:69
 msgid "The password entered must be at least 5 characters long"
 msgstr "Passwoord moet minimaal 5 tekens lang zijn"
 
-#: CustLoginSetup.php:101 SuppLoginSetup.php:87 WWW_Users.php:73
+#: CustLoginSetup.php:95 SuppLoginSetup.php:87 WWW_Users.php:73
 msgid "The password cannot contain the user id"
 msgstr "Passwaard mag niet de gerbuikers ID bevatten"
 
-#: CustLoginSetup.php:104 WWW_Users.php:76
+#: CustLoginSetup.php:98 WWW_Users.php:76
 msgid ""
 "If you enter a Customer Code you must also enter a Branch Code valid for "
 "this Customer"
@@ -6606,60 +6606,60 @@ msgstr ""
 "Bij het invoeren van een klancode dient ook een geldige branch code voor die "
 "klant worden igevoerd"
 
-#: CustLoginSetup.php:121 WWW_Users.php:93
+#: CustLoginSetup.php:115 WWW_Users.php:93
 msgid "The check on validity of the customer code and branch failed because"
 msgstr ""
 "De controle op de geldigheid van de klantcode en branche is mislukt omdat"
 
-#: CustLoginSetup.php:122 WWW_Users.php:94
+#: CustLoginSetup.php:116 WWW_Users.php:94
 msgid "The SQL that was used to check the customer code and branch was"
 msgstr "SQL gebruikt om de klancode / branch te controleren was"
 
-#: CustLoginSetup.php:126 WWW_Users.php:98
+#: CustLoginSetup.php:120 WWW_Users.php:98
 msgid "The entered Branch Code is not valid for the entered Customer Code"
 msgstr "Ingevoerde branch niet geldig voor de ingevoerde klant code"
 
-#: CustLoginSetup.php:170 SuppLoginSetup.php:134 WWW_Users.php:145
+#: CustLoginSetup.php:164 SuppLoginSetup.php:134 WWW_Users.php:145
 msgid "The selected user record has been updated"
 msgstr "Geselecteerde gebruiker is gewijzigd"
 
-#: CustLoginSetup.php:203 SuppLoginSetup.php:165 WWW_Users.php:182
+#: CustLoginSetup.php:197 SuppLoginSetup.php:165 WWW_Users.php:182
 msgid "A new user record has been inserted"
 msgstr "Nieuwe gebruiker is toegevoegd"
 
-#: CustLoginSetup.php:208 SuppLoginSetup.php:170 UserSettings.php:66
+#: CustLoginSetup.php:202 SuppLoginSetup.php:170 UserSettings.php:66
 #: UserSettings.php:82 WWW_Users.php:187
 msgid "The user alterations could not be processed because"
 msgstr "De wijziging van de gebruiker kon niet worden verwerkt omdat"
 
-#: CustLoginSetup.php:209 SuppLoginSetup.php:171 UserSettings.php:67
+#: CustLoginSetup.php:203 SuppLoginSetup.php:171 UserSettings.php:67
 #: UserSettings.php:83 WWW_Users.php:188
 msgid "The SQL that was used to update the user and failed was"
 msgstr "De SQL die gebruikt is om de gebruiker te wijzigen en faalde was"
 
-#: CustLoginSetup.php:241 SuppLoginSetup.php:203 WWW_Users.php:223
+#: CustLoginSetup.php:235 SuppLoginSetup.php:203 WWW_Users.php:223
 msgid "Cannot delete user as entries already exist in the audit trail"
 msgstr "Gebruiker kan niet worden verwijderd als die al een historie heeft"
 
-#: CustLoginSetup.php:245 SuppLoginSetup.php:207 WWW_Users.php:227
+#: CustLoginSetup.php:239 SuppLoginSetup.php:207 WWW_Users.php:227
 msgid "The User could not be deleted because"
 msgstr "Gebruiker kon niet worden verwijderd omdat"
 
-#: CustLoginSetup.php:247 SuppLoginSetup.php:209 WWW_Users.php:229
+#: CustLoginSetup.php:241 SuppLoginSetup.php:209 WWW_Users.php:229
 msgid "User Deleted"
 msgstr "Gebruiker verwijderd"
 
-#: CustLoginSetup.php:273 CustLoginSetup.php:389 SuppLoginSetup.php:234
+#: CustLoginSetup.php:268 CustLoginSetup.php:382 SuppLoginSetup.php:234
 #: SuppLoginSetup.php:333 WWW_Users.php:258 WWW_Users.php:392
 msgid "User Login"
 msgstr "Gebruiker log-in"
 
-#: CustLoginSetup.php:274 CustLoginSetup.php:420 SuppLoginSetup.php:235
+#: CustLoginSetup.php:269 CustLoginSetup.php:414 SuppLoginSetup.php:235
 #: SuppLoginSetup.php:364 WWW_Users.php:259 WWW_Users.php:424
 msgid "Full Name"
 msgstr "Complete naam"
 
-#: CustLoginSetup.php:275 Customers.php:466 Customers.php:691
+#: CustLoginSetup.php:270 Customers.php:466 Customers.php:691
 #: Customers.php:704 Factors.php:170 Factors.php:280 OrderDetails.php:99
 #: PrintCustTrans.php:551 PrintCustTrans.php:706 PrintCustTrans.php:744
 #: PrintCustTransPortrait.php:716 PrintCustTransPortrait.php:936
@@ -6668,9 +6668,9 @@ msgstr "Complete naam"
 msgid "Telephone"
 msgstr "Telefoon"
 
-#: CustLoginSetup.php:276 CustomerBranches.php:383 CustomerBranches.php:712
+#: CustLoginSetup.php:271 CustomerBranches.php:383 CustomerBranches.php:712
 #: CustomerInquiry.php:246 EmailCustTrans.php:17 EmailCustTrans.php:65
-#: Factors.php:172 Factors.php:282 Locations.php:528 OrderDetails.php:105
+#: Factors.php:172 Factors.php:282 Locations.php:534 OrderDetails.php:105
 #: PDFRemittanceAdvice.php:251 PO_PDFPurchOrder.php:334
 #: PO_PDFPurchOrder.php:337 PrintCustTrans.php:553 PrintCustTrans.php:708
 #: PrintCustTrans.php:746 PrintCustTransPortrait.php:718
@@ -6683,120 +6683,120 @@ msgstr "Telefoon"
 msgid "Email"
 msgstr "E-mail"
 
-#: CustLoginSetup.php:278 CustLoginSetup.php:463 CustomerBranches.php:545
-#: CustomerBranches.php:579 WWW_Users.php:263 WWW_Users.php:474
+#: CustLoginSetup.php:273 CustLoginSetup.php:451 CustomerBranches.php:545
+#: CustomerBranches.php:579 WWW_Users.php:263 WWW_Users.php:469
 #: includes/PDFCustomerListPageHeader.inc:84 api/api_xml-rpc.php:244
 msgid "Branch Code"
 msgstr "Filiaal Code"
 
-#: CustLoginSetup.php:279 SuppLoginSetup.php:239 WWW_Users.php:266
+#: CustLoginSetup.php:274 SuppLoginSetup.php:239 WWW_Users.php:266
 msgid "Last Visit"
 msgstr "Laatste bezoek"
 
-#: CustLoginSetup.php:280 CustLoginSetup.php:426 SuppLoginSetup.php:240
+#: CustLoginSetup.php:275 CustLoginSetup.php:420 SuppLoginSetup.php:240
 #: SuppLoginSetup.php:370 WWW_Users.php:267 WWW_Users.php:430
 msgid "Security Role"
 msgstr "Authorisatie rol"
 
-#: CustLoginSetup.php:281 SuppLoginSetup.php:241 WWW_Users.php:268
+#: CustLoginSetup.php:276 SuppLoginSetup.php:241 WWW_Users.php:268
 msgid "Report Size"
 msgstr "Rapportage omvang"
 
-#: CustLoginSetup.php:282 CustLoginSetup.php:534 SuppLoginSetup.php:242
+#: CustLoginSetup.php:277 CustLoginSetup.php:518 SuppLoginSetup.php:242
 #: SuppLoginSetup.php:454 UserSettings.php:147 WWW_Users.php:269
-#: WWW_Users.php:550
+#: WWW_Users.php:545
 msgid "Theme"
 msgstr "Thema"
 
-#: CustLoginSetup.php:283 CustLoginSetup.php:558 SuppLoginSetup.php:243
+#: CustLoginSetup.php:278 CustLoginSetup.php:542 SuppLoginSetup.php:243
 #: SuppLoginSetup.php:478 UserSettings.php:123 WWW_Users.php:270
-#: WWW_Users.php:574
+#: WWW_Users.php:569
 msgid "Language"
 msgstr "Taal"
 
-#: CustLoginSetup.php:337 SuppLoginSetup.php:281 WWW_Users.php:332
+#: CustLoginSetup.php:332 SuppLoginSetup.php:281 WWW_Users.php:332
 msgid "Review Existing Users"
 msgstr "Bekijk bestaande gebruikers"
 
-#: CustLoginSetup.php:384 SuppLoginSetup.php:328 WWW_Users.php:385
+#: CustLoginSetup.php:378 SuppLoginSetup.php:328 WWW_Users.php:385
 msgid "User code"
 msgstr "Gebruiker code"
 
-#: CustLoginSetup.php:418 SMTPServer.php:60 SuppLoginSetup.php:362
+#: CustLoginSetup.php:412 SMTPServer.php:60 SuppLoginSetup.php:362
 #: WWW_Users.php:422 includes/Login.php:57
 msgid "Password"
 msgstr "Passwoord"
 
-#: CustLoginSetup.php:422 Locations.php:524 SalesPeople.php:294
+#: CustLoginSetup.php:416 Locations.php:530 SalesPeople.php:294
 #: SupplierContacts.php:240 SuppLoginSetup.php:366 WWW_Users.php:426
 msgid "Telephone No"
 msgstr "Telefoon Nr"
 
-#: CustLoginSetup.php:438 SuppLoginSetup.php:382 WWW_Users.php:442
+#: CustLoginSetup.php:430 SuppLoginSetup.php:382 WWW_Users.php:442
 msgid "Default Location"
 msgstr "Default lokatie"
 
-#: CustLoginSetup.php:487 SuppLoginSetup.php:407 WWW_Users.php:503
+#: CustLoginSetup.php:471 SuppLoginSetup.php:407 WWW_Users.php:498
 msgid "Reports Page Size"
 msgstr "Rapportage pagina lengte"
 
-#: CustLoginSetup.php:491 EmailConfirmation.php:92
+#: CustLoginSetup.php:475 CustLoginSetup.php:477 EmailConfirmation.php:92
 #: PrintCustOrder_generic.php:89 PrintCustOrder.php:90 SuppLoginSetup.php:411
-#: SuppLoginSetup.php:413 WWW_Users.php:507 WWW_Users.php:509
+#: SuppLoginSetup.php:413 WWW_Users.php:502 WWW_Users.php:504
 msgid "A4"
 msgstr "A4"
 
-#: CustLoginSetup.php:497 CustLoginSetup.php:503 CustLoginSetup.php:505
-#: SuppLoginSetup.php:417 SuppLoginSetup.php:419 SuppLoginSetup.php:423
-#: SuppLoginSetup.php:425 WWW_Users.php:513 WWW_Users.php:515
-#: WWW_Users.php:519 WWW_Users.php:521
+#: CustLoginSetup.php:481 CustLoginSetup.php:483 CustLoginSetup.php:487
+#: CustLoginSetup.php:489 SuppLoginSetup.php:417 SuppLoginSetup.php:419
+#: SuppLoginSetup.php:423 SuppLoginSetup.php:425 WWW_Users.php:508
+#: WWW_Users.php:510 WWW_Users.php:514 WWW_Users.php:516
 msgid "A3"
 msgstr "A3"
 
-#: CustLoginSetup.php:503 CustLoginSetup.php:505 CustLoginSetup.php:515
-#: CustLoginSetup.php:517 CustLoginSetup.php:526 CustLoginSetup.php:528
+#: CustLoginSetup.php:487 CustLoginSetup.php:489 CustLoginSetup.php:499
+#: CustLoginSetup.php:501 CustLoginSetup.php:510 CustLoginSetup.php:512
 #: EmailConfirmation.php:92 PrintCustOrder_generic.php:89
 #: PrintCustOrder.php:90 SuppLoginSetup.php:423 SuppLoginSetup.php:425
 #: SuppLoginSetup.php:435 SuppLoginSetup.php:437 SuppLoginSetup.php:446
-#: SuppLoginSetup.php:448 WWW_Users.php:519 WWW_Users.php:521
-#: WWW_Users.php:531 WWW_Users.php:533 WWW_Users.php:542 WWW_Users.php:544
+#: SuppLoginSetup.php:448 WWW_Users.php:514 WWW_Users.php:516
+#: WWW_Users.php:526 WWW_Users.php:528 WWW_Users.php:537 WWW_Users.php:539
 msgid "landscape"
 msgstr "Liggend"
 
-#: CustLoginSetup.php:509 CustLoginSetup.php:511 CustLoginSetup.php:515
-#: CustLoginSetup.php:517 SuppLoginSetup.php:429 SuppLoginSetup.php:431
-#: SuppLoginSetup.php:435 SuppLoginSetup.php:437 WWW_Users.php:525
-#: WWW_Users.php:527 WWW_Users.php:531 WWW_Users.php:533
+#: CustLoginSetup.php:493 CustLoginSetup.php:495 CustLoginSetup.php:499
+#: CustLoginSetup.php:501 SuppLoginSetup.php:429 SuppLoginSetup.php:431
+#: SuppLoginSetup.php:435 SuppLoginSetup.php:437 WWW_Users.php:520
+#: WWW_Users.php:522 WWW_Users.php:526 WWW_Users.php:528
 msgid "Letter"
 msgstr "Brief"
 
-#: CustLoginSetup.php:521 CustLoginSetup.php:523 CustLoginSetup.php:526
-#: CustLoginSetup.php:528 SuppLoginSetup.php:441 SuppLoginSetup.php:443
-#: SuppLoginSetup.php:446 SuppLoginSetup.php:448 WWW_Users.php:537
-#: WWW_Users.php:539 WWW_Users.php:542 WWW_Users.php:544
+#: CustLoginSetup.php:505 CustLoginSetup.php:507 CustLoginSetup.php:510
+#: CustLoginSetup.php:512 SuppLoginSetup.php:441 SuppLoginSetup.php:443
+#: SuppLoginSetup.php:446 SuppLoginSetup.php:448 WWW_Users.php:532
+#: WWW_Users.php:534 WWW_Users.php:537 WWW_Users.php:539
 msgid "Legal"
 msgstr "Legaal"
 
-#: CustLoginSetup.php:587 SuppLoginSetup.php:505 WWW_Users.php:607
+#: CustLoginSetup.php:574 SuppLoginSetup.php:505 WWW_Users.php:602
 msgid "Display"
 msgstr "Toon"
 
-#: CustLoginSetup.php:587 SuppLoginSetup.php:505 WWW_Users.php:607
+#: CustLoginSetup.php:574 SuppLoginSetup.php:505 WWW_Users.php:602
 msgid "options"
 msgstr "Opties"
 
-#: CustLoginSetup.php:599 index.php:40 SuppLoginSetup.php:517
-#: WWW_Users.php:632
+#: CustLoginSetup.php:587 index.php:40 SuppLoginSetup.php:517
+#: WWW_Users.php:627
 msgid "Account Status"
 msgstr "Rekening Status"
 
-#: CustLoginSetup.php:601 CustLoginSetup.php:605 SuppLoginSetup.php:519
-#: SuppLoginSetup.php:523 WWW_Users.php:634 WWW_Users.php:638
+#: CustLoginSetup.php:590 CustLoginSetup.php:594 SuppLoginSetup.php:519
+#: SuppLoginSetup.php:523 WWW_Users.php:629 WWW_Users.php:633
 msgid "Open"
 msgstr "Open"
 
-#: CustLoginSetup.php:602 CustLoginSetup.php:604 SuppLoginSetup.php:520
-#: SuppLoginSetup.php:522 WWW_Users.php:635 WWW_Users.php:637
+#: CustLoginSetup.php:591 CustLoginSetup.php:593 SuppLoginSetup.php:520
+#: SuppLoginSetup.php:522 WWW_Users.php:630 WWW_Users.php:632
 msgid "Blocked"
 msgstr "Geblokkeerd"
 
@@ -7786,8 +7786,8 @@ msgstr "Geboekt op"
 msgid "on"
 msgstr "op"
 
-#: CustomerReceipt.php:842 GoodsReceived.php:92 GoodsReceived.php:96
-#: GoodsReceived.php:100 POReport.php:597 POReport.php:1281 ReverseGRN.php:378
+#: CustomerReceipt.php:842 GoodsReceived.php:90 GoodsReceived.php:94
+#: GoodsReceived.php:98 POReport.php:597 POReport.php:1281 ReverseGRN.php:378
 #: ReverseGRN.php:379 ShipmentCosting.php:145 Shipments.php:387
 #: Shipments.php:465 StockDispatch.php:360 StockDispatch.php:367
 #: SuppCreditGRNs.php:155
@@ -8012,7 +8012,7 @@ msgid "Click"
 msgstr "Klik"
 
 #: Customers.php:430 Customers.php:439 MRPPlannedPurchaseOrders.php:18
-#: MRPPlannedWorkOrders.php:16 MRPReschedules.php:18 MRPShortages.php:17
+#: MRPPlannedWorkOrders.php:16 MRPReschedules.php:17 MRPShortages.php:17
 #: OffersReceived.php:229 PO_Header.php:436 includes/ConnectDB_mysqli.inc:29
 #: includes/ConnectDB_mysql.inc:25
 msgid "here"
@@ -8541,115 +8541,115 @@ msgstr "GP%"
 msgid "Avg Daily Sales"
 msgstr "Gem dagelijkse verkopen"
 
-#: DebtorsAtPeriodEnd.php:16
+#: DebtorsAtPeriodEnd.php:14
 msgid "Customer Balance Listing"
 msgstr "Lijst van klant balans"
 
-#: DebtorsAtPeriodEnd.php:17 DebtorsAtPeriodEnd.php:58
-#: DebtorsAtPeriodEnd.php:70
+#: DebtorsAtPeriodEnd.php:15 DebtorsAtPeriodEnd.php:56
+#: DebtorsAtPeriodEnd.php:68
 msgid "Customer Balances"
 msgstr "Balans voor de klant"
 
-#: DebtorsAtPeriodEnd.php:25
+#: DebtorsAtPeriodEnd.php:23
 msgid "Could not get the date of the last day in the period selected"
 msgstr "Kon de laatste dag van de geselecteerde periode niet opvragen"
 
-#: DebtorsAtPeriodEnd.php:72
+#: DebtorsAtPeriodEnd.php:70
 msgid "The customer details listing has no clients to report on"
 msgstr "De klant details notering heeft geen klanten te rapporteren over"
 
-#: DebtorsAtPeriodEnd.php:116
+#: DebtorsAtPeriodEnd.php:114
 msgid "Total balances"
 msgstr "Totaal saldi"
 
-#: DebtorsAtPeriodEnd.php:136
+#: DebtorsAtPeriodEnd.php:122
 msgid "Debtor Balances"
 msgstr "Debiteuren balans"
 
-#: DebtorsAtPeriodEnd.php:151 SupplierBalsAtPeriodEnd.php:136
+#: DebtorsAtPeriodEnd.php:141 SupplierBalsAtPeriodEnd.php:136
 msgid "Balances As At"
 msgstr "Balans op"
 
-#: DebtorsAtPeriodEnd.php:154 SupplierBalsAtPeriodEnd.php:141
+#: DebtorsAtPeriodEnd.php:145 SupplierBalsAtPeriodEnd.php:141
 msgid "Could not retrieve period data because"
 msgstr "Kon de datum van de periode niet opvragen omdat"
 
-#: DebtorsAtPeriodEnd.php:154
+#: DebtorsAtPeriodEnd.php:145
 msgid "The SQL that failed to get the period data was"
 msgstr "De SQL waar het opvragen van de datum van de periode mislukte was"
 
-#: DeliveryDetails.php:15
+#: DeliveryDetails.php:14
 msgid "Order Delivery Details"
 msgstr "Leveringsdetails van de order"
 
-#: DeliveryDetails.php:26
+#: DeliveryDetails.php:25
 msgid "This page can only be read if an order has been entered"
 msgstr "Deze pagina kan alleen worden gelezen indien een order is ingevoerd"
 
-#: DeliveryDetails.php:26 DeliveryDetails.php:32
+#: DeliveryDetails.php:25 DeliveryDetails.php:31
 msgid "To enter an order select customer transactions then sales order entry"
 msgstr ""
 "Om een order in te voeren selcteer de klant transactie en vervolgens invoer "
 "van een verkoopsorder"
 
-#: DeliveryDetails.php:32
+#: DeliveryDetails.php:31
 msgid "This page can only be read if an there are items on the order"
 msgstr "Deze pagina kan alleen worden getoond indien de order items bevat"
 
-#: DeliveryDetails.php:59
+#: DeliveryDetails.php:58
 msgid "You must enter the person or company to whom delivery should be made"
 msgstr ""
 "U moet een persoon of bedrijf invoeren aan wie de levering moet geschieden"
 
-#: DeliveryDetails.php:63
+#: DeliveryDetails.php:62
 msgid "You should enter the street address in the box provided"
 msgstr "U moet een adres invoeren op de plaatsen hier aangegeven"
 
-#: DeliveryDetails.php:63
+#: DeliveryDetails.php:62
 msgid "Orders cannot be accepted without a valid street address"
 msgstr "Orders kunnen niet geaccepteerd worden zonder een geldig adres"
 
-#: DeliveryDetails.php:70
+#: DeliveryDetails.php:69
 msgid "The freight cost entered is expected to be numeric"
 msgstr "De vrachtkosten moeten nummeriek zijn"
 
-#: DeliveryDetails.php:74 RecurringSalesOrders.php:197
+#: DeliveryDetails.php:73 RecurringSalesOrders.php:197
 msgid "A recurring order cannot be made from a quotation"
 msgstr "Een repeterende order kan niet op basis van een offerte worden gemaakt"
 
-#: DeliveryDetails.php:78
+#: DeliveryDetails.php:77
 msgid "You must select the type of packlist to print"
 msgstr "Type paklijst dat geprint moet worden dient te worden geselecteerd"
 
-#: DeliveryDetails.php:96 DeliveryDetails.php:101 DeliveryDetails.php:106
+#: DeliveryDetails.php:95 DeliveryDetails.php:100 DeliveryDetails.php:105
 msgid "An invalid date entry was made"
 msgstr "De datum invoer was incorrect"
 
-#: DeliveryDetails.php:96 DeliveryDetails.php:101 DeliveryDetails.php:106
+#: DeliveryDetails.php:95 DeliveryDetails.php:100 DeliveryDetails.php:105
 msgid "The date entry must be in the format"
 msgstr "De datum inzending moet in het formaat"
 
-#: DeliveryDetails.php:226
+#: DeliveryDetails.php:225
 msgid "There was a problem testing for the default shipper"
 msgstr "Er was een probleem met het testen van de default vervoerder"
 
-#: DeliveryDetails.php:227
+#: DeliveryDetails.php:226
 msgid "SQL used to test for the default shipper"
 msgstr "Gebruikte SQL om te testen voor de default tranporteur"
 
-#: DeliveryDetails.php:244
+#: DeliveryDetails.php:243
 msgid "We have a problem"
 msgstr "Er is een probleem"
 
-#: DeliveryDetails.php:244
+#: DeliveryDetails.php:243
 msgid "there are no shippers defined"
 msgstr "Er zijn geen vervoerders gedefinieerd"
 
-#: DeliveryDetails.php:244
+#: DeliveryDetails.php:243
 msgid "Please use the link below to set up shipping or freight companies"
 msgstr "Selecteer de onderstaande link om de vervoerders op te zetten"
 
-#: DeliveryDetails.php:244
+#: DeliveryDetails.php:243
 msgid ""
 "the system expects the shipping company to be selected or a default freight "
 "company to be used"
@@ -8657,7 +8657,7 @@ msgstr ""
 "Systeem verwacht dat er een vervoerder wordt geselecteerd of dat de default "
 "vervoerder wordt gebruikt"
 
-#: DeliveryDetails.php:260
+#: DeliveryDetails.php:259
 msgid ""
 "You should automatically be forwarded to the entry of recurring order "
 "details page"
@@ -8665,11 +8665,11 @@ msgstr ""
 "U zou automatisch doorverwezen moeten worden naar de invoer van herhalende "
 "order detail pagina"
 
-#: DeliveryDetails.php:266 DeliveryDetails.php:1109
+#: DeliveryDetails.php:265 DeliveryDetails.php:1115
 msgid "Modify Order Lines"
 msgstr "Wijzig Order Regels"
 
-#: DeliveryDetails.php:269
+#: DeliveryDetails.php:268
 msgid ""
 "You should automatically be forwarded to the entry of the order line details "
 "page"
@@ -8677,271 +8677,271 @@ msgstr ""
 "U zou automatisch doorverwezen moeten worden naar de invoer van de order "
 "regel detail pagina"
 
-#: DeliveryDetails.php:282
+#: DeliveryDetails.php:281
 msgid "The freight charge has been updated"
 msgstr "De vrachtkosten zijn vernieuwd"
 
-#: DeliveryDetails.php:282
+#: DeliveryDetails.php:281
 msgid ""
 "Please reconfirm that the order and the freight charges are acceptable and "
 "then confirm the order again if OK"
 msgstr "Herbevestig dat de orer en de vrachtkosten correct zijn"
 
-#: DeliveryDetails.php:282
+#: DeliveryDetails.php:281
 msgid "The new freight cost is"
 msgstr "De nieuwe vrachtkosten zijn"
 
-#: DeliveryDetails.php:282
+#: DeliveryDetails.php:281
 msgid "and the previously calculated freight cost was"
 msgstr "de vorige  berekende vrachtkosten waren"
 
-#: DeliveryDetails.php:293
+#: DeliveryDetails.php:292
 msgid "The customer terms cannot be determined"
 msgstr "De condities voor de klant kunnen niet worden vastgesteld"
 
-#: DeliveryDetails.php:293
+#: DeliveryDetails.php:292
 msgid "This order cannot be processed because"
 msgstr "Deze order kan niet worden verwerkt omdat"
 
-#: DeliveryDetails.php:294
+#: DeliveryDetails.php:293
 msgid "SQL used to find the customer terms"
 msgstr "SQL die gebruikt is om klant voorwaarden te vinden"
 
-#: DeliveryDetails.php:563
+#: DeliveryDetails.php:562
 msgid "Quotation Number"
 msgstr "Nummer van de offerte"
 
-#: DeliveryDetails.php:576 DeliveryDetails.php:580 DeliveryDetails.php:775
+#: DeliveryDetails.php:575 DeliveryDetails.php:579 DeliveryDetails.php:780
 #: SpecialOrder.php:494 SpecialOrder.php:495
 msgid "Print packing slip"
 msgstr "Afdrukken Picking List"
 
-#: DeliveryDetails.php:576 SpecialOrder.php:494
+#: DeliveryDetails.php:575 SpecialOrder.php:494
 msgid "Preprinted stationery"
 msgstr "Voorbedrukt papier"
 
-#: DeliveryDetails.php:580 DeliveryDetails.php:775 SpecialOrder.php:495
+#: DeliveryDetails.php:579 DeliveryDetails.php:780 SpecialOrder.php:495
 msgid "Laser"
 msgstr "Laser"
 
-#: DeliveryDetails.php:585
+#: DeliveryDetails.php:584
 msgid "Confirm Dispatch and Produce Invoice"
 msgstr "Bevestig levering en maak factuur"
 
-#: DeliveryDetails.php:595
+#: DeliveryDetails.php:594
 #, fuzzy
 msgid "Print Quotation (Landscape)"
 msgstr "Print offerte"
 
-#: DeliveryDetails.php:601
+#: DeliveryDetails.php:600
 #, fuzzy
 msgid "Print Quotation (Portrait)"
 msgstr "Afdruk Citaat Fout"
 
-#: DeliveryDetails.php:608
+#: DeliveryDetails.php:607
 msgid "Add Another Sales Order"
 msgstr "Nog een klantorder"
 
-#: DeliveryDetails.php:613
+#: DeliveryDetails.php:612
 msgid "Thank you for your business"
 msgstr "Bedrankt voor uw opdracht"
 
-#: DeliveryDetails.php:640
+#: DeliveryDetails.php:639
 msgid "Could not update the contract status"
 msgstr "Kunnen niet bijwerken van het contract status"
 
-#: DeliveryDetails.php:641
+#: DeliveryDetails.php:640
 msgid "The SQL that failed to update the contract status was"
 msgstr "De SQL die niet aan het contract status update is"
 
-#: DeliveryDetails.php:645
+#: DeliveryDetails.php:644
 msgid "Could not insert the contract bill of materials"
 msgstr "Niet kon invoegen van het contract stuklijst"
 
-#: DeliveryDetails.php:737
+#: DeliveryDetails.php:736
 msgid "The SQL that was used to update the order and failed was"
 msgstr ""
 "De SQL die is gebruikt om de wijziging van de order door te voeren en is "
 "mislukt is"
 
-#: DeliveryDetails.php:738
+#: DeliveryDetails.php:737
 msgid "The order cannot be updated because"
 msgstr "De opdracht kan niet worden gewijzigd omdat"
 
-#: DeliveryDetails.php:761
+#: DeliveryDetails.php:760
 msgid "The SQL that was used to modify the order line and failed was"
 msgstr ""
 "De gebruikte SQL waar de wijziging van de order niet kon worden doorgevoerd "
 "was"
 
-#: DeliveryDetails.php:762
+#: DeliveryDetails.php:761
 msgid "The updated order line cannot be modified because"
 msgstr "De gewijzigde opdracht regel kan niet worden aangepast omdat"
 
-#: DeliveryDetails.php:774
+#: DeliveryDetails.php:776
 msgid "Print packing slip - pre-printed stationery"
 msgstr "Druk pricking list - voorbedrukt papier"
 
-#: DeliveryDetails.php:776
+#: DeliveryDetails.php:784
 msgid "Confirm Order Delivery Quantities and Produce Invoice"
 msgstr "Bevestig Opdracht Leverings Hoeveelheid en Produceer Factuur"
 
-#: DeliveryDetails.php:777
+#: DeliveryDetails.php:788
 msgid "Select A Different Order"
 msgstr "Selecteer een Andere Opdracht"
 
-#: DeliveryDetails.php:786 Shipments.php:466 SpecialOrder.php:550
+#: DeliveryDetails.php:799 Shipments.php:466 SpecialOrder.php:550
 msgid "Delivery"
 msgstr "Leveren"
 
-#: DeliveryDetails.php:786
+#: DeliveryDetails.php:799
 msgid "Delivery Details"
 msgstr "Leveringsdetails"
 
-#: DeliveryDetails.php:800
+#: DeliveryDetails.php:813
 msgid "Quotation Summary"
 msgstr "Offerte samenvatting"
 
-#: DeliveryDetails.php:802 DeliveryDetails.php:871
+#: DeliveryDetails.php:815 DeliveryDetails.php:884
 msgid "Order Summary"
 msgstr "Opdracht Totaal"
 
-#: DeliveryDetails.php:854 OrderDetails.php:201 RecurringSalesOrders.php:366
+#: DeliveryDetails.php:867 OrderDetails.php:201 RecurringSalesOrders.php:366
 #: SelectOrderItems.php:1392
 msgid "TOTAL Excl Tax/Freight"
 msgstr "Totaal Excl BTW/Vracht"
 
-#: DeliveryDetails.php:861 DeliveryDetails.php:913 DeliveryDetails.php:922
+#: DeliveryDetails.php:874 DeliveryDetails.php:926 DeliveryDetails.php:935
 #: OrderDetails.php:208 SelectOrderItems.php:1397
 msgid "Total Weight"
 msgstr "Totaal Gewicht"
 
-#: DeliveryDetails.php:863 DeliveryDetails.php:915 DeliveryDetails.php:924
+#: DeliveryDetails.php:876 DeliveryDetails.php:928 DeliveryDetails.php:937
 #: OrderDetails.php:210 SelectOrderItems.php:1399
 msgid "Total Volume"
 msgstr "Totaal Volume"
 
-#: DeliveryDetails.php:931 OrderDetails.php:72 RecurringSalesOrders.php:374
+#: DeliveryDetails.php:944 OrderDetails.php:72 RecurringSalesOrders.php:374
 #: SelectOrderItems.php:740 includes/PDFPickingListHeader.inc:28
 #: includes/PO_PDFOrderPageHeader.inc:31
 msgid "Deliver To"
 msgstr "Leveren Aan"
 
-#: DeliveryDetails.php:936 RecurringSalesOrders.php:378
+#: DeliveryDetails.php:949 RecurringSalesOrders.php:378
 msgid "Deliver from the warehouse at"
 msgstr "Leveren vanaf het depot in"
 
-#: DeliveryDetails.php:943
+#: DeliveryDetails.php:956
 msgid "The stock locations could not be retrieved"
 msgstr "De voorraad lokaties konden niet worden gevonden"
 
-#: DeliveryDetails.php:944
+#: DeliveryDetails.php:957
 msgid "SQL used to retrieve the stock locations was"
 msgstr "SQL die gebruikt is om de voorraadlokaties te vinden was"
 
-#: DeliveryDetails.php:971
+#: DeliveryDetails.php:984
 msgid "Estimated Delivery Date"
 msgstr "Verwachte leverdatum"
 
-#: DeliveryDetails.php:976 SelectSalesOrder.php:767
+#: DeliveryDetails.php:989 SelectSalesOrder.php:767
 msgid "Quote Date"
 msgstr "Quote Datum"
 
-#: DeliveryDetails.php:981
+#: DeliveryDetails.php:994
 msgid "Confirmed Order Date"
 msgstr "Bevestigd Orderdatum"
 
-#: DeliveryDetails.php:986 Locations.php:512 OrderDetails.php:77
+#: DeliveryDetails.php:999 Locations.php:518 OrderDetails.php:77
 #: PO_OrderDetails.php:94
 msgid "Delivery Address 1"
 msgstr "Leverings Adres 1"
 
-#: DeliveryDetails.php:991 Locations.php:514 OrderDetails.php:83
+#: DeliveryDetails.php:1004 Locations.php:520 OrderDetails.php:83
 #: PO_OrderDetails.php:97
 msgid "Delivery Address 2"
 msgstr "Leverings Adres 2"
 
-#: DeliveryDetails.php:996 Locations.php:516 OrderDetails.php:89
+#: DeliveryDetails.php:1009 Locations.php:522 OrderDetails.php:89
 #: PO_OrderDetails.php:100
 msgid "Delivery Address 3"
 msgstr "Leverings Adres 3"
 
-#: DeliveryDetails.php:1001 Locations.php:518 OrderDetails.php:95
+#: DeliveryDetails.php:1014 Locations.php:524 OrderDetails.php:95
 #: PO_OrderDetails.php:103
 msgid "Delivery Address 4"
 msgstr "Leverings Adres 4"
 
-#: DeliveryDetails.php:1006 Locations.php:520 OrderDetails.php:101
+#: DeliveryDetails.php:1019 Locations.php:526 OrderDetails.php:101
 #: PO_OrderDetails.php:106
 msgid "Delivery Address 5"
 msgstr "Leverings Adres 5"
 
-#: DeliveryDetails.php:1011 Locations.php:522 OrderDetails.php:107
+#: DeliveryDetails.php:1024 Locations.php:528 OrderDetails.php:107
 #: PO_OrderDetails.php:109
 msgid "Delivery Address 6"
 msgstr "Leverings Adres 6"
 
-#: DeliveryDetails.php:1034
+#: DeliveryDetails.php:1047
 msgid "Packlist Type"
 msgstr "Picklist Soort"
 
-#: DeliveryDetails.php:1044
-msgid "Hide Company Details/Logo"
-msgstr "Verberg Bedrijfs Details/Logo"
-
-#: DeliveryDetails.php:1047
+#: DeliveryDetails.php:1051 DeliveryDetails.php:1054
 msgid "Show Company Details/Logo"
 msgstr "Laat Bedrijfs Details/Logo zien"
 
-#: DeliveryDetails.php:1056
+#: DeliveryDetails.php:1052 DeliveryDetails.php:1055
+msgid "Hide Company Details/Logo"
+msgstr "Verberg Bedrijfs Details/Logo"
+
+#: DeliveryDetails.php:1062
 msgid "Reprint packing slip"
 msgstr "Herdruk picking list"
 
-#: DeliveryDetails.php:1060
+#: DeliveryDetails.php:1066
 msgid "Last printed"
 msgstr "Laatste afdruk datum"
 
-#: DeliveryDetails.php:1068
+#: DeliveryDetails.php:1071
 msgid "Charge Freight Cost inc tax"
 msgstr "Tarief vrachtkosten inclusief belasting"
 
-#: DeliveryDetails.php:1072
+#: DeliveryDetails.php:1075
 msgid "Recalc Freight Cost"
 msgstr "Ber Vracht Kosten"
 
-#: DeliveryDetails.php:1079
+#: DeliveryDetails.php:1082
 msgid "Freight/Shipper Method"
 msgstr "Vracht methode"
 
-#: DeliveryDetails.php:1080
+#: DeliveryDetails.php:1085
 msgid "The shipper details could not be retrieved"
 msgstr "De details van de vervoerder kon niet worden opgevraagd"
 
-#: DeliveryDetails.php:1081
+#: DeliveryDetails.php:1086
 msgid "SQL used to retrieve the shipper details was"
 msgstr "SQL die gebruikt is om details van de vervoerder op te vragen"
 
-#: DeliveryDetails.php:1096
+#: DeliveryDetails.php:1101
 msgid "Quotation Only"
 msgstr "Slechts een offerte"
 
-#: DeliveryDetails.php:1112
+#: DeliveryDetails.php:1118
 msgid "Place Order"
 msgstr "Plaats Opdracht"
 
-#: DeliveryDetails.php:1113 RecurringSalesOrders.php:497
+#: DeliveryDetails.php:1119 RecurringSalesOrders.php:497
 msgid "Create Recurring Order"
 msgstr "Maak terugkerende Bestel"
 
-#: DeliveryDetails.php:1115
+#: DeliveryDetails.php:1121
 msgid "Commit Order Changes"
 msgstr "Voer orderverandering door"
 
-#: DiscountCategories.php:9
+#: DiscountCategories.php:7
 msgid "Discount Categories Maintenance"
 msgstr "Onderhoud van kortingscategoerien"
 
-#: DiscountCategories.php:39
+#: DiscountCategories.php:37
 msgid ""
 "The stock item entered must be set up as either a manufactured or purchased "
 "or assembly item"
@@ -8949,73 +8949,73 @@ msgstr ""
 "Het voorraadiitem moet worden opgezet als een geproduceerd of een gekocht of "
 "een geassembleerd item"
 
-#: DiscountCategories.php:47
+#: DiscountCategories.php:45
 msgid "The discount category"
 msgstr "De kortingscategorie"
 
-#: DiscountCategories.php:47
+#: DiscountCategories.php:45
 msgid "record for"
 msgstr "record voor"
 
-#: DiscountCategories.php:47
+#: DiscountCategories.php:45
 msgid "could not be updated because"
 msgstr "kon niet worden vernieuwd omdat"
 
-#: DiscountCategories.php:49
+#: DiscountCategories.php:47
 msgid "The stock master has been updated with this discount category"
 msgstr "De voorraad master is vernieuwd met de kortingscategorie"
 
-#: DiscountCategories.php:60
+#: DiscountCategories.php:58
 msgid "The stock master record has been updated to no discount category"
 msgstr "De voorraad master is vernieuwd zonder discount categorie"
 
-#: DiscountCategories.php:76 DiscountCategories.php:99 DiscountMatrix.php:116
+#: DiscountCategories.php:74 DiscountCategories.php:97 DiscountMatrix.php:114
 msgid "Discount Category Code"
 msgstr "Kortings Categorie Code"
 
-#: DiscountCategories.php:90 DiscountCategories.php:231 PO_Header.php:844
+#: DiscountCategories.php:88 DiscountCategories.php:244 PO_Header.php:844
 #: SalesCategories.php:262 SuppInvGRNs.php:272 SupplierTenders.php:55
 #, php-format
 msgid "Select"
 msgstr "Selecteer"
 
-#: DiscountCategories.php:118
+#: DiscountCategories.php:122
 msgid "Enter Stock Code"
 msgstr "Voer Stock Code"
 
-#: DiscountCategories.php:120
+#: DiscountCategories.php:124
 msgid "Partial code"
 msgstr "Gedeeltelijke code"
 
-#: DiscountCategories.php:121
+#: DiscountCategories.php:126
 msgid "Partial description"
 msgstr "Gedeeltelijke omschrijving"
 
-#: DiscountCategories.php:126
+#: DiscountCategories.php:132
 msgid "Update Item"
 msgstr "Update Post"
 
-#: DiscountCategories.php:138
+#: DiscountCategories.php:147
 msgid "Select a part code"
 msgstr "Selecteer een deel code"
 
-#: DiscountCategories.php:145
+#: DiscountCategories.php:156
 msgid "Assign discount category"
 msgstr "Toewijzen korting categorie"
 
-#: DiscountCategories.php:147
+#: DiscountCategories.php:158
 msgid "to all items in stock category"
 msgstr "om alle items in voorraad categorie"
 
-#: DiscountCategories.php:157
+#: DiscountCategories.php:168
 msgid "Update Items"
 msgstr "Update Items"
 
-#: DiscountCategories.php:187 DiscountMatrix.php:158 Stocks.php:918
+#: DiscountCategories.php:198 DiscountMatrix.php:153 Stocks.php:918
 msgid "Discount Category"
 msgstr "Kortings Categorie"
 
-#: DiscountCategories.php:188 InventoryPlanningPrefSupplier.php:77
+#: DiscountCategories.php:199 InventoryPlanningPrefSupplier.php:77
 #: PDFPriceList.php:352 SelectWorkOrder.php:300 ShipmentCosting.php:143
 #: ShipmentCosting.php:509 Shipments.php:384 Shipments.php:462
 #: StockUsage.php:52 SuppCreditGRNs.php:226 SuppInvGRNs.php:228
@@ -9029,11 +9029,11 @@ msgstr "Kortings Categorie"
 msgid "Item"
 msgstr "Artikel"
 
-#: DiscountCategories.php:218
+#: DiscountCategories.php:229
 msgid "There are currently no discount categories defined"
 msgstr "Er zijn op dit moment geen korting categorieen gedefinieerd"
 
-#: DiscountCategories.php:218
+#: DiscountCategories.php:229
 msgid ""
 "Enter a two character abbreviation for the discount category and the stock "
 "code to which this category will apply to. Discount rules can then be "
@@ -9043,71 +9043,71 @@ msgstr ""
 "voor wie deze categorie op van toepassing is. Korting regels kunnen dan "
 "toegepast worden op deze kortings categorie"
 
-#: DiscountCategories.php:226
+#: DiscountCategories.php:237
 msgid "Update discount category for"
 msgstr "Update korting categorie voor"
 
-#: DiscountCategories.php:228
+#: DiscountCategories.php:239
 msgid "a single stock item"
 msgstr "een voorraad artikel"
 
-#: DiscountCategories.php:229
+#: DiscountCategories.php:240
 msgid "a complete stock category"
 msgstr "een volledige voorraad categorie"
 
-#: DiscountMatrix.php:7
+#: DiscountMatrix.php:6
 msgid "Discount Matrix Maintenance"
 msgstr "Kortings Matrix Onderhoud"
 
-#: DiscountMatrix.php:26
+#: DiscountMatrix.php:24
 msgid "The quantity break must be entered as a positive number"
 msgstr "De hoeveelheids grens moet een positief getal zijn"
 
-#: DiscountMatrix.php:33
+#: DiscountMatrix.php:31
 msgid "The quantity of all items on an order in the discount category"
 msgstr ""
 "De hoeveelheid van alle artikelen op een opdracht in de kortings categorie"
 
-#: DiscountMatrix.php:33
+#: DiscountMatrix.php:31
 msgid "at which the discount will apply is 0 or less than 0"
 msgstr "de toegepaste korting is 0 of minder dan 0"
 
-#: DiscountMatrix.php:33
+#: DiscountMatrix.php:31
 msgid "Positive numbers are expected for this entry"
 msgstr "Een positief getal is hier verwacht"
 
-#: DiscountMatrix.php:39
+#: DiscountMatrix.php:37
 msgid "The discount rate must be entered as a positive number"
 msgstr ""
 "Het kortingspercentage dient als een positief getal te worden ingevoerd"
 
-#: DiscountMatrix.php:45
+#: DiscountMatrix.php:43
 msgid ""
 "The discount rate applicable for this record is either less than 0% or "
 "greater than 70%"
 msgstr "Het toegepaste  kortingspercentage is kleiner dan 0% of groter dan 70%"
 
-#: DiscountMatrix.php:45
+#: DiscountMatrix.php:43
 msgid "Numbers between 1 and 69 are expected"
 msgstr "Een getal tussen 0 en 69 is verwacht"
 
-#: DiscountMatrix.php:66
+#: DiscountMatrix.php:64
 msgid "The discount matrix record has been added"
 msgstr "De korting matrix record is toegevoegd"
 
-#: DiscountMatrix.php:82
+#: DiscountMatrix.php:80
 msgid "The discount matrix record has been deleted"
 msgstr "De korting matrix record is verwijderd"
 
-#: DiscountMatrix.php:98
+#: DiscountMatrix.php:96
 msgid "Customer Price List"
 msgstr "Klant Prijs Lijst"
 
-#: DiscountMatrix.php:132 DiscountMatrix.php:159
+#: DiscountMatrix.php:129 DiscountMatrix.php:154
 msgid "Quantity Break"
 msgstr "Aantallen Grens"
 
-#: DiscountMatrix.php:136 DiscountMatrix.php:160
+#: DiscountMatrix.php:132 DiscountMatrix.php:155
 msgid "Discount Rate"
 msgstr "Kortings Percentage"
 
@@ -10082,15 +10082,15 @@ msgstr "Categorie Omschrijving"
 msgid "Fixed Asset Cost GL Code"
 msgstr "Vaste activa Kosten GL Code"
 
-#: FixedAssetCategories.php:284
+#: FixedAssetCategories.php:283
 msgid "Profit and Loss Depreciation GL Code"
 msgstr "Winst-en verliesrekening Afschrijvingen GL Code"
 
-#: FixedAssetCategories.php:298
+#: FixedAssetCategories.php:296
 msgid "Profit or Loss on Disposal GL Code:"
 msgstr "Winst of verlies op de verkoop GL Code:"
 
-#: FixedAssetCategories.php:311
+#: FixedAssetCategories.php:308
 msgid "Balance Sheet Accumulated Depreciation GL Code"
 msgstr "Balans Cumulatieve afschrijvingen GL Code"
 
@@ -10125,6 +10125,8 @@ msgstr "Datum van aankoop"
 #: FixedAssetDepreciation.php:86 PricesByCost.php:123 SalesAnalReptCols.php:38
 #: SalesAnalReptCols.php:40 SelectProduct.php:173 SelectProduct.php:323
 #: ShipmentCosting.php:148 ShipmentCosting.php:149 StockCostUpdate.php:150
+#: includes/PDFInventoryValnPageHeader.inc:35
+#: includes/PDFInventoryValnPageHeader.inc:39
 #: includes/PDFLowGPPageHeader.inc:48
 msgid "Cost"
 msgstr "Kosten"
@@ -10150,9 +10152,9 @@ msgid "New Depn"
 msgstr "Nieuwe Depn"
 
 #: FixedAssetDepreciation.php:106 FixedAssetDepreciation.php:229
-#: InventoryValuation.php:112 InventoryValuation.php:164
+#: InventoryValuation.php:116 InventoryValuation.php:170
 #: MailInventoryValuation.php:141 MailInventoryValuation.php:187
-#: OutstandingGRNs.php:86 OutstandingGRNs.php:128
+#: OutstandingGRNs.php:83 OutstandingGRNs.php:125
 #: PDFStockCheckComparison.php:294
 msgid "Total for"
 msgstr "Totaal voor"
@@ -10935,7 +10937,7 @@ msgstr "Peil Zender"
 msgid "Cust Order"
 msgstr "Klant Opdr"
 
-#: FTP_RadioBeacon.php:55 MRPReschedules.php:181 POReport.php:533
+#: FTP_RadioBeacon.php:55 MRPReschedules.php:180 POReport.php:533
 #: POReport.php:594 POReport.php:1227 POReport.php:1278 POReport.php:1433
 #: PO_SelectOSPurchOrder.php:441 PO_SelectPurchOrder.php:367
 #: PrintCustTrans.php:578 PrintCustTransPortrait.php:771 SalesInquiry.php:795
@@ -12220,7 +12222,7 @@ msgstr "Maand Budget"
 msgid "Receive Controlled Items"
 msgstr "Presenteer controlled items"
 
-#: GoodsReceivedControlled.php:27 GoodsReceived.php:32
+#: GoodsReceivedControlled.php:27 GoodsReceived.php:30
 msgid "Select a purchase order to receive"
 msgstr "Selecteer de inkooporder om de ontvangst voor te boeken"
 
@@ -12261,15 +12263,15 @@ msgstr "Terug nar de inkooporder"
 msgid "Receive controlled item"
 msgstr "Ontvangst van een gecontrolleerd item"
 
-#: GoodsReceived.php:24 index.php:567
+#: GoodsReceived.php:22 index.php:567
 msgid "Receive Purchase Orders"
 msgstr "Ontvangst van inkooporders"
 
-#: GoodsReceived.php:27 PO_Header.php:240
+#: GoodsReceived.php:25 PO_Header.php:240
 msgid "Back to Purchase Orders"
 msgstr "Terug naar inkoop order"
 
-#: GoodsReceived.php:33
+#: GoodsReceived.php:31
 msgid ""
 "This page can only be opened if a purchase order has been selected. Please "
 "select a purchase order first"
@@ -12277,21 +12279,21 @@ msgstr ""
 "Deze pagina kan alleen geopend worden als er een bestelling is geselecteerd. "
 "Selecteer een bestelling eerste"
 
-#: GoodsReceived.php:56
+#: GoodsReceived.php:54
 msgid ""
 "Purchase orders must have a status of Printed before they can be received"
 msgstr ""
 "Inkooporders moet een status van Printed voordat ze kunnen worden ontvangen"
 
-#: GoodsReceived.php:57 SelectSalesOrder.php:420
+#: GoodsReceived.php:55 SelectSalesOrder.php:420
 msgid "Order number"
 msgstr "Opdracht Nummer"
 
-#: GoodsReceived.php:57
+#: GoodsReceived.php:55
 msgid "has a status of"
 msgstr "heeft een status van"
 
-#: GoodsReceived.php:65 index.php:577 PO_SelectOSPurchOrder.php:452
+#: GoodsReceived.php:63 index.php:577 PO_SelectOSPurchOrder.php:452
 #: PO_SelectOSPurchOrder.php:469 PO_SelectOSPurchOrder.php:471
 #: SelectWorkOrder.php:297 SelectWorkOrder.php:332
 #: StockLocTransferReceive.php:554 WorkOrderCosting.php:89
@@ -12300,55 +12302,55 @@ msgstr "heeft een status van"
 msgid "Receive"
 msgstr "Ontvangen"
 
-#: GoodsReceived.php:65
+#: GoodsReceived.php:63
 msgid "Receive Purchase Order"
 msgstr "Ontvang Bestelling"
 
-#: GoodsReceived.php:77
+#: GoodsReceived.php:75
 msgid "Date Goods/Service Received"
 msgstr "Datum van goederen  / service ontvangst"
 
-#: GoodsReceived.php:84 PO_Items.php:640
+#: GoodsReceived.php:82 PO_Items.php:640
 #, fuzzy
 msgid "Supplier Units"
 msgstr "Leveranciers eenheid"
 
-#: GoodsReceived.php:86
+#: GoodsReceived.php:84
 #, fuzzy
 msgid "Our Receiving Units"
 msgstr "Ontvangen"
 
-#: GoodsReceived.php:93 PO_Items.php:926
+#: GoodsReceived.php:91 PO_Items.php:926
 #, fuzzy
 msgid "Conversion"
 msgstr "Zet"
 
-#: GoodsReceived.php:93 PO_Items.php:926
+#: GoodsReceived.php:91 PO_Items.php:926
 #, fuzzy
 msgid "Factor"
 msgstr "Voor"
 
-#: GoodsReceived.php:97
+#: GoodsReceived.php:95
 msgid "This Delivery"
 msgstr "Deze Levering"
 
-#: GoodsReceived.php:100
+#: GoodsReceived.php:98
 msgid "Total Value"
 msgstr "Totaal Waarde"
 
-#: GoodsReceived.php:173
+#: GoodsReceived.php:171
 msgid "Enter Serial Nos"
 msgstr "Invoeren Serie Nrs"
 
-#: GoodsReceived.php:176
+#: GoodsReceived.php:174
 msgid "Enter Batches"
 msgstr "Voer Batches in"
 
-#: GoodsReceived.php:184
+#: GoodsReceived.php:183
 msgid "Total value of goods received"
 msgstr "Totale waarde van ontvangen goederen"
 
-#: GoodsReceived.php:221
+#: GoodsReceived.php:220
 msgid ""
 "Receiving a negative quantity that results in negative stock is prohibited "
 "by the parameter settings. This delivery of stock cannot be processed until "
@@ -12358,15 +12360,15 @@ msgstr ""
 "voorraad is voor dit item verboden. De levering van dit voorraaditem kan "
 "alleen worden verwerkt indien de voorraad van het item is gecorrigeerd"
 
-#: GoodsReceived.php:229
+#: GoodsReceived.php:228
 msgid "There is nothing to process"
 msgstr "Er is niets om te verwerken"
 
-#: GoodsReceived.php:229
+#: GoodsReceived.php:228
 msgid "Please enter valid quantities greater than zero"
 msgstr "Alleen hoeveelheden groter dan 0 zijn geoorloofd"
 
-#: GoodsReceived.php:234
+#: GoodsReceived.php:233
 msgid ""
 "Negative stocks would result by processing a negative delivery - quantities "
 "must be changed or the stock quantity of the item going negative corrected "
@@ -12375,7 +12377,7 @@ msgstr ""
 "Een negatieve voorraad zal bij verwerking resulteren in een negatieve "
 "levering - hoeveelheid of voorraad aanpassen voor de levering te verwerken"
 
-#: GoodsReceived.php:240
+#: GoodsReceived.php:239
 msgid ""
 "Entered quantities cannot be greater than the quantity entered on the "
 "purchase invoice including the allowed over-receive percentage"
@@ -12383,14 +12385,14 @@ msgstr ""
 "Ingevoerde hoeveelheid mag niet groter zijn dan de hoeveelheid (+ toegestane "
 "overleveringspercentage) op de rekening"
 
-#: GoodsReceived.php:242
+#: GoodsReceived.php:241
 msgid ""
 "Modify the ordered items on the purchase invoice if you wish to increase the "
 "quantities"
 msgstr ""
 "Pas de orderitems op de rekening aan indien u de hoeveelheden wilt vergroten"
 
-#: GoodsReceived.php:272
+#: GoodsReceived.php:271
 msgid ""
 "Could not check that the details of the purchase order had not been changed "
 "by another user because"
@@ -12398,11 +12400,11 @@ msgstr ""
 "Kon niet controleren of de inkooporder was veranderd door een andere "
 "gebruiker omdat"
 
-#: GoodsReceived.php:273
+#: GoodsReceived.php:272
 msgid "The following SQL to retrieve the purchase order details was used"
 msgstr "De SQL om de details van de inkooporder op te vragen was"
 
-#: GoodsReceived.php:290
+#: GoodsReceived.php:289
 msgid ""
 "This order has been changed or invoiced since this delivery was started to "
 "be actioned"
@@ -12410,11 +12412,11 @@ msgstr ""
 "De order is veranderd of gefactureerd nadat deze levering was aangezet om te "
 "worden uitgevoerd"
 
-#: GoodsReceived.php:290
+#: GoodsReceived.php:289
 msgid "To enter a delivery against this purchase order"
 msgstr "Om een levering te boeken tegen deze inkoop order"
 
-#: GoodsReceived.php:290
+#: GoodsReceived.php:289
 msgid ""
 "it must be re-selected and re-read again to update the changes made by the "
 "other user"
@@ -12422,55 +12424,55 @@ msgstr ""
 "moet opnieuw worden geopend en bekeken om de wijzigingen te verwerken die "
 "door een andere gebruiker zijn gemaakt"
 
-#: GoodsReceived.php:294
+#: GoodsReceived.php:293
 msgid "GL Code of the Line Item"
 msgstr "Grootboekrekening voor het regel item"
 
-#: GoodsReceived.php:297
+#: GoodsReceived.php:296
 msgid "ShiptRef of the Line Item"
 msgstr "Vestuur naar ref. van het regel item"
 
-#: GoodsReceived.php:300
+#: GoodsReceived.php:299
 msgid "Contract Reference of the Line Item"
 msgstr "Contract ref. voor het regel item"
 
-#: GoodsReceived.php:304
+#: GoodsReceived.php:303
 msgid "Quantity Invoiced of the Line Item"
 msgstr "Aantal Gefactureerd op Artikel Regel"
 
-#: GoodsReceived.php:307
+#: GoodsReceived.php:306
 msgid "Stock Code of the Line Item"
 msgstr "Voorraad code voor het regel item"
 
-#: GoodsReceived.php:310
+#: GoodsReceived.php:309
 msgid "Order Quantity of the Line Item"
 msgstr "Opdracht Aantal op Artikel Regel"
 
-#: GoodsReceived.php:313
+#: GoodsReceived.php:312
 msgid "Quantity of the Line Item Already Received"
 msgstr "Aantal van Artikel Regel Reeds Ontvangen"
 
-#: GoodsReceived.php:319 GoodsReceived.php:690
+#: GoodsReceived.php:318 GoodsReceived.php:689
 msgid "Select a different purchase order for receiving goods against"
 msgstr "Selecteer een andere inkoop opdracht voor de ontvangst van goederen"
 
-#: GoodsReceived.php:321
+#: GoodsReceived.php:320
 msgid "Re-read the updated purchase order for receiving goods against"
 msgstr ""
 "Bekijk de vernieuwde inkooporder waartegen de goederen worden ontvangen"
 
-#: GoodsReceived.php:353
+#: GoodsReceived.php:352
 msgid ""
 "The standard cost of the item being received cannot be retrieved because"
 msgstr ""
 "De standaard kostprijs voor het ontvangen item kon niet worden opgevraagd "
 "omdat"
 
-#: GoodsReceived.php:354
+#: GoodsReceived.php:353
 msgid "The following SQL to retrieve the standard cost was used"
 msgstr "De standaard kostprijs werd opgevraagd in de volgende SQL"
 
-#: GoodsReceived.php:395
+#: GoodsReceived.php:394
 msgid ""
 "The purchase order detail record could not be updated with the quantity "
 "received because"
@@ -12478,31 +12480,31 @@ msgstr ""
 "De inkooporder record kon niet worden vernieuwd met de ontvangen hoeveelheid "
 "omdat"
 
-#: GoodsReceived.php:396 ReverseGRN.php:128
+#: GoodsReceived.php:395 ReverseGRN.php:128
 msgid "The following SQL to update the purchase order detail record was used"
 msgstr "De SQL die werd gebruikt om de inkooporder details te boeken was"
 
-#: GoodsReceived.php:425
+#: GoodsReceived.php:424
 msgid "A GRN record could not be inserted"
 msgstr "Goederen ontvangst bon kon niet worden toegevoegd"
 
-#: GoodsReceived.php:425
+#: GoodsReceived.php:424
 msgid "This receipt of goods has not been processed because"
 msgstr "Goederenontvangst kon niet worden verwerkt omdat"
 
-#: GoodsReceived.php:426 ReverseGRN.php:156
+#: GoodsReceived.php:425 ReverseGRN.php:156
 msgid "The following SQL to insert the GRN record was used"
 msgstr "De SQL die werd gebruikt om de goederen ontvangst te boeken was"
 
-#: GoodsReceived.php:484
+#: GoodsReceived.php:483
 msgid "stock movement records could not be inserted because"
 msgstr "Voorraad beweging kon niet worden ingevoerd omdat"
 
-#: GoodsReceived.php:502
+#: GoodsReceived.php:501
 msgid "Could not check if a batch or lot stock item already exists because"
 msgstr "Kon niet controleren of de batch of lot voorraad item al bestaat omdat"
 
-#: GoodsReceived.php:503
+#: GoodsReceived.php:502
 msgid ""
 "The following SQL to test for an already existing controlled but not "
 "serialised stock item was used"
@@ -12510,18 +12512,18 @@ msgstr ""
 "De SQL die werd gebruikt om te testen of het controlled maar niet "
 "seriematige voorraad item al bestaat was"
 
-#: GoodsReceived.php:531 WorkOrderIssue.php:213 WorkOrderReceive.php:490
+#: GoodsReceived.php:530 WorkOrderIssue.php:213 WorkOrderReceive.php:490
 #: WorkOrderReceive.php:561
 msgid "The serial stock item record could not be inserted because"
 msgstr "Het seriematige voorraad item kon niet worden toegevoegd omdat"
 
-#: GoodsReceived.php:532 WorkOrderIssue.php:214 WorkOrderReceive.php:491
+#: GoodsReceived.php:531 WorkOrderIssue.php:214 WorkOrderReceive.php:491
 #: WorkOrderReceive.php:562
 msgid "The following SQL to insert the serial stock item records was used"
 msgstr ""
 "De volgende SQL was gebruikt om het seriematige voorraad item toe te voegen"
 
-#: GoodsReceived.php:585 ReverseGRN.php:175 SupplierCredit.php:1198
+#: GoodsReceived.php:584 ReverseGRN.php:175 SupplierCredit.php:1198
 #: SupplierCredit.php:1286 SupplierInvoice.php:1164 SupplierInvoice.php:1250
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset "
@@ -12530,7 +12532,7 @@ msgstr ""
 "KRITISCHE FOUT! Noteer deze fout en de hulp inroepen De vaste activa / "
 "passiva transactie kan niet worden geplaatst omdat"
 
-#: GoodsReceived.php:605 SupplierInvoice.php:1265
+#: GoodsReceived.php:604 SupplierInvoice.php:1265
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset "
 "cost and date purchased was not able to be updated because:"
@@ -12538,7 +12540,7 @@ msgstr ""
 "KRITISCHE FOUT! Noteer deze fout en hulp zoeken. De vaste activa kosten en "
 "gekocht datum was niet in staat te worden bijgewerkt, omdat:"
 
-#: GoodsReceived.php:606 SupplierInvoice.php:1266
+#: GoodsReceived.php:605 SupplierInvoice.php:1266
 msgid ""
 "The following SQL was used to attempt the update of the cost and the date "
 "the asset was purchased"
@@ -12546,47 +12548,47 @@ msgstr ""
 "De volgende SQL werd gebruikt om de update van de kosten en de datum waarop "
 "het actief werd gekocht poging"
 
-#: GoodsReceived.php:636
+#: GoodsReceived.php:635
 msgid "The purchase GL posting could not be inserted because"
 msgstr "De inkoop groootboekboeking kon niet worden toegevoegd omdat"
 
-#: GoodsReceived.php:637 ReverseGRN.php:303
+#: GoodsReceived.php:636 ReverseGRN.php:303
 msgid "The following SQL to insert the purchase GLTrans record was used"
 msgstr ""
 "De SQL die werd gebruikt om de inkoop grootboekboeking uit te voeren was"
 
-#: GoodsReceived.php:655 SelectSalesOrder.php:897
+#: GoodsReceived.php:654 SelectSalesOrder.php:897
 msgid "PO"
 msgstr "Inkooporder"
 
-#: GoodsReceived.php:661 ReverseGRN.php:324
+#: GoodsReceived.php:660 ReverseGRN.php:324
 msgid "The GRN suspense side of the GL posting could not be inserted because"
 msgstr ""
 "De boeking van de ontvangst kon niet worden uitgevoerd op de ontvangst "
 "tussenrekening"
 
-#: GoodsReceived.php:662 ReverseGRN.php:325
+#: GoodsReceived.php:661 ReverseGRN.php:325
 msgid "The following SQL to insert the GRN Suspense GLTrans record was used"
 msgstr "De gebruikte SQL om de ontvangst te boeken op de tussenrekening was"
 
-#: GoodsReceived.php:672
+#: GoodsReceived.php:671
 #, fuzzy
 msgid "Order Completed"
 msgstr "Afgerond"
 
-#: GoodsReceived.php:687 ReverseGRN.php:332
+#: GoodsReceived.php:686 ReverseGRN.php:332
 msgid "GRN number"
 msgstr "Goederen ontvangst nummer"
 
-#: GoodsReceived.php:688
+#: GoodsReceived.php:687
 msgid "Print this Goods Received Note (GRN)"
 msgstr "Druk goederen ontvangst bon"
 
-#: GoodsReceived.php:697
+#: GoodsReceived.php:696
 msgid "Modify Order Items"
 msgstr "Wijzig order items"
 
-#: GoodsReceived.php:700
+#: GoodsReceived.php:699
 msgid "Process Goods Received"
 msgstr "Verwerk de goederen ontvangst"
 
@@ -12778,7 +12780,7 @@ msgstr "Betalings run rapportage"
 msgid "Remittance Advices"
 msgstr "Afdracht Adviezen"
 
-#: index.php:426 OutstandingGRNs.php:17 OutstandingGRNs.php:150
+#: index.php:426 OutstandingGRNs.php:14 OutstandingGRNs.php:147
 msgid "Outstanding GRNs Report"
 msgstr "Rapportage openstaande goederen ontvangsen"
 
@@ -12879,7 +12881,7 @@ msgstr "Status van voorraad item"
 msgid "Inventory Item Usage"
 msgstr "Gebruik van voorraad item"
 
-#: index.php:631 InventoryQuantities.php:82
+#: index.php:631 InventoryQuantities.php:81
 msgid "Inventory Quantities"
 msgstr "Voorraadhoeveelheden"
 
@@ -13386,23 +13388,23 @@ msgstr "Er waren geen items in de gespecificeerde range / lokatie"
 msgid "Inventory Planning Reporting"
 msgstr "Rapportage van de voorraad planning"
 
-#: InventoryPlanning.php:384 InventoryValuation.php:205 PDFPriceList.php:260
+#: InventoryPlanning.php:384 InventoryValuation.php:212 PDFPriceList.php:260
 #: StockCheck.php:271
 msgid "From Inventory Category Code"
 msgstr "van voorraad categorie code"
 
-#: InventoryPlanning.php:397 InventoryValuation.php:214 PDFPriceList.php:269
+#: InventoryPlanning.php:397 InventoryValuation.php:222 PDFPriceList.php:269
 #: StockCheck.php:281
 msgid "To Inventory Category Code"
 msgstr "tot voorraad categorie code"
 
 #: InventoryPlanning.php:410 InventoryPlanningPrefSupplier.php:479
-#: InventoryValuation.php:224 StockCheck.php:291
+#: InventoryValuation.php:233 StockCheck.php:291
 msgid "For Inventory in Location"
 msgstr "voorraad op lokatie"
 
 #: InventoryPlanning.php:414 InventoryPlanningPrefSupplier.php:483
-#: InventoryValuation.php:228 MRPCreateDemands.php:209
+#: InventoryValuation.php:238 MRPCreateDemands.php:209
 #: PDFDeliveryDifferences.php:54 PDFDIFOT.php:57 PDFOrdersInvoiced.php:56
 #: PDFOrderStatus.php:57 StockUsage.php:80 StockUsage.php:82
 msgid "All Locations"
@@ -13565,34 +13567,34 @@ msgstr "Zes Weken"
 msgid "Two Months"
 msgstr "Twee Maanden"
 
-#: InventoryQuantities.php:13 InventoryQuantities.php:146
+#: InventoryQuantities.php:12 InventoryQuantities.php:145
 #: InventoryQuantities.php:208
 msgid "Inventory Quantities Report"
 msgstr "Voorraadhoeveelheden Verslag"
 
-#: InventoryQuantities.php:14
+#: InventoryQuantities.php:13
 msgid "Parts With Quantities"
 msgstr "Delen met hoeveelheden"
 
-#: InventoryQuantities.php:84
+#: InventoryQuantities.php:83
 msgid "The Inventory Quantity report could not be retrieved by the SQL because"
 msgstr ""
 "De inventaris Hoeveelheid verslag kon niet worden opgehaald door de SQL, "
 "omdat"
 
-#: InventoryQuantities.php:93
+#: InventoryQuantities.php:92
 msgid "Print Inventory Quantities Report"
 msgstr "Print voorraadhoeveelheden Verslag"
 
-#: InventoryQuantities.php:95
+#: InventoryQuantities.php:94
 msgid "There were no items with inventory quantities"
 msgstr "Er waren geen items met voorraden,"
 
-#: InventoryQuantities.php:144
+#: InventoryQuantities.php:143
 msgid "Inventory Quantities Reporting"
 msgstr "Voorraadhoeveelheden Reporting"
 
-#: InventoryQuantities.php:147
+#: InventoryQuantities.php:146
 msgid ""
 "Use this report to display the quantity of Inventory items in different "
 "categories."
@@ -13600,15 +13602,15 @@ msgstr ""
 "Gebruik dit rapport om de voorraad items weer te geven in verschillende "
 "categorieën."
 
-#: InventoryQuantities.php:153 MRPReschedules.php:135
+#: InventoryQuantities.php:152 MRPReschedules.php:134
 msgid "Selection"
 msgstr "Selectie"
 
-#: InventoryQuantities.php:155
+#: InventoryQuantities.php:154
 msgid "Only Parts With Multiple Locations"
 msgstr "Enkel de delen met meerdere locaties"
 
-#: InventoryQuantities.php:164 MRPReport.php:508 ReorderLevel.php:194
+#: InventoryQuantities.php:163 MRPReport.php:508 ReorderLevel.php:194
 #: SelectProduct.php:37 StockDispatch.php:268 StockLocStatus.php:51
 #: SupplierTenders.php:327
 msgid ""
@@ -13618,13 +13620,13 @@ msgstr ""
 "Er zijn nog geen voorraad categories gedefinieerd gebruik onderstaande link "
 "om ze aan te maken"
 
-#: InventoryQuantities.php:165 MRPReport.php:509 ReorderLevel.php:195
+#: InventoryQuantities.php:164 MRPReport.php:509 ReorderLevel.php:195
 #: SelectProduct.php:38 StockDispatch.php:269 StockLocStatus.php:52
 #: SupplierTenders.php:328
 msgid "Define Stock Categories"
 msgstr "Definieer Voorraad Categories"
 
-#: InventoryQuantities.php:170 MRPReport.php:517 ReorderLevel.php:200
+#: InventoryQuantities.php:169 MRPReport.php:517 ReorderLevel.php:200
 #: SelectProduct.php:475 StockDispatch.php:277 StockLocStatus.php:57
 #: SupplierTenders.php:332
 msgid "In Stock Category"
@@ -13634,30 +13636,30 @@ msgstr "Voorraad Categorie"
 msgid "Reorder"
 msgstr "Herschikken"
 
-#: InventoryValuation.php:16 InventoryValuation.php:74
+#: InventoryValuation.php:16 InventoryValuation.php:78
 #: MailInventoryValuation.php:48 MailInventoryValuation.php:115
 msgid "Inventory Valuation"
 msgstr "Voorraad waardering"
 
-#: InventoryValuation.php:76 MailInventoryValuation.php:117
+#: InventoryValuation.php:80 MailInventoryValuation.php:117
 msgid "The inventory valuation could not be retrieved by the SQL because"
 msgstr "Voorraad waardering kon niet worden opgevraagd omdat"
 
-#: InventoryValuation.php:85 MailInventoryValuation.php:211
+#: InventoryValuation.php:89 MailInventoryValuation.php:211
 msgid "Print Inventory Valuation Error"
 msgstr "Print Voorraad waarderings fouten"
 
-#: InventoryValuation.php:87 MailInventoryValuation.php:213
+#: InventoryValuation.php:91 MailInventoryValuation.php:213
 msgid ""
 "There were no items with any value to print out for the location specified"
 msgstr "Op betreffende lokatie geen items met een waardering om af te drukken"
 
-#: InventoryValuation.php:183 MailInventoryValuation.php:202
-#: OutstandingGRNs.php:140
+#: InventoryValuation.php:190 MailInventoryValuation.php:202
+#: OutstandingGRNs.php:137
 msgid "Grand Total Value"
 msgstr "Generaal Totaal Waarde"
 
-#: InventoryValuation.php:192
+#: InventoryValuation.php:199
 msgid "Inventory Valuation Reporting"
 msgstr "Rapportage Voorraad Waardering"
 
@@ -13967,16 +13969,16 @@ msgstr ""
 "worden getoond. Controleer de belasting regios die zijn gedefinieerd als "
 "leveringsregio's"
 
-#: Locations.php:353 Locations.php:456 Locations.php:463
+#: Locations.php:353 Locations.php:456 Locations.php:467
 #: api/api_xml-rpc.php:828
 msgid "Location Code"
 msgstr "Lokatie Code"
 
-#: Locations.php:354 Locations.php:508
+#: Locations.php:354 Locations.php:514
 msgid "Location Name"
 msgstr "Lokatie Naam"
 
-#: Locations.php:355 Locations.php:531 TaxAuthorityRates.php:83
+#: Locations.php:355 Locations.php:537 TaxAuthorityRates.php:83
 msgid "Tax Province"
 msgstr "Belasting regiio"
 
@@ -13988,24 +13990,24 @@ msgstr "Review Records"
 msgid "Amend Location details"
 msgstr "Locatie wijzigen details"
 
-#: Locations.php:462
+#: Locations.php:464
 msgid "New Location details"
 msgstr "Nieuwe locatie details"
 
-#: Locations.php:510
+#: Locations.php:516
 msgid "Contact for deliveries"
 msgstr "Contact voor de leveringen"
 
-#: Locations.php:526 SalesPeople.php:295 SupplierContacts.php:242
+#: Locations.php:532 SalesPeople.php:295 SupplierContacts.php:242
 msgid "Facsimile No"
 msgstr "Fax Nr"
 
-#: Locations.php:543
+#: Locations.php:549
 #, fuzzy
 msgid "Default Counter Sales Customer Code"
 msgstr "Verander een klant code"
 
-#: Locations.php:546
+#: Locations.php:552
 #, fuzzy
 msgid "Counter Sales Branch Code"
 msgstr "Klant branch code"
@@ -14483,14 +14485,14 @@ msgid "MRP error"
 msgstr "MRP Verslag"
 
 #: MRPPlannedPurchaseOrders.php:17 MRPPlannedWorkOrders.php:15
-#: MRPReschedules.php:17 MRPShortages.php:16
+#: MRPReschedules.php:16 MRPShortages.php:16
 msgid "The MRP calculation must be run before you can run this report"
 msgstr ""
 "De MRP-berekening moet worden uitgevoerd voordat u kunt dit rapport uit te "
 "voeren"
 
 #: MRPPlannedPurchaseOrders.php:18 MRPPlannedWorkOrders.php:16
-#: MRPReschedules.php:18 MRPShortages.php:17
+#: MRPReschedules.php:17 MRPShortages.php:17
 msgid "To run the MRP calculation click"
 msgstr "Het uitvoeren van de MRP-berekening klik"
 
@@ -14568,7 +14570,7 @@ msgid "Consolidation:"
 msgstr "Consolidatie:"
 
 #: MRPPlannedPurchaseOrders.php:325 MRPPlannedWorkOrders.php:257
-#: MRPPlannedWorkOrders.php:386 MRPReport.php:421 MRPReschedules.php:182
+#: MRPPlannedWorkOrders.php:386 MRPReport.php:421 MRPReschedules.php:181
 msgid "MRP Date"
 msgstr "MRP Datum"
 
@@ -14744,7 +14746,7 @@ msgstr "Dem Type"
 msgid "Where Required"
 msgstr "Waar nodig"
 
-#: MRPReport.php:416 MRPReschedules.php:178
+#: MRPReport.php:416 MRPReschedules.php:177
 msgid "Order No."
 msgstr "Bestelnummer"
 
@@ -14828,39 +14830,39 @@ msgstr "Totaal Antaal beschikbaar"
 msgid "Stock Status"
 msgstr "Voorraad status"
 
-#: MRPReschedules.php:25 MRPReschedules.php:164
+#: MRPReschedules.php:24 MRPReschedules.php:163
 msgid "MRP Reschedule Report"
 msgstr "MRP opnieuw plannen Verslag"
 
-#: MRPReschedules.php:26 MRPReschedules.php:46 MRPReschedules.php:58
+#: MRPReschedules.php:25 MRPReschedules.php:45 MRPReschedules.php:57
 msgid "MRP Reschedules"
 msgstr "MRP herschikt"
 
-#: MRPReschedules.php:48
+#: MRPReschedules.php:47
 msgid "The MRP reschedules could not be retrieved by the SQL because"
 msgstr "De MRP herschikt, kon niet worden opgehaald door de SQL, omdat"
 
-#: MRPReschedules.php:60
+#: MRPReschedules.php:59
 msgid "No MRP reschedule retrieved"
 msgstr "Geen MRP herschikken teruggevonden"
 
-#: MRPReschedules.php:123
+#: MRPReschedules.php:121
 msgid "MRP Reschedule Reporting"
 msgstr "MRP opnieuw plannen Reporting"
 
-#: MRPReschedules.php:127 MRPShortages.php:235 Stocks.php:37
+#: MRPReschedules.php:125 MRPShortages.php:235 Stocks.php:37
 msgid "Stock"
 msgstr "Voorraad"
 
-#: MRPReschedules.php:137
+#: MRPReschedules.php:136
 msgid "Work Orders Only"
 msgstr "Het werk alleen orders"
 
-#: MRPReschedules.php:138
+#: MRPReschedules.php:137
 msgid "Purchase Orders Only"
 msgstr "Bestellingen Alleen"
 
-#: MRPReschedules.php:168
+#: MRPReschedules.php:167
 msgid "Selection:"
 msgstr "Selectie:"
 
@@ -15077,15 +15079,15 @@ msgstr "Ant Gel"
 msgid "Last Del"
 msgstr "Laatst Gel"
 
-#: OutstandingGRNs.php:18
+#: OutstandingGRNs.php:15
 msgid "Outstanding GRNs Valuation"
 msgstr "Openstaande waardering van goederen ontvangsten"
 
-#: OutstandingGRNs.php:51 OutstandingGRNs.php:63
+#: OutstandingGRNs.php:48 OutstandingGRNs.php:60
 msgid "Outstanding GRN Valuation"
 msgstr "Openstaande waardering van goederen ontvangst"
 
-#: OutstandingGRNs.php:53
+#: OutstandingGRNs.php:50
 msgid ""
 "The outstanding GRNs valuation details could not be retrieved by the SQL "
 "because"
@@ -15093,7 +15095,7 @@ msgstr ""
 "De openstaande waardering van goederen ontvangsten kon niet worden "
 "opgevraagd omdat"
 
-#: OutstandingGRNs.php:65
+#: OutstandingGRNs.php:62
 msgid "No outstanding GRNs valuation details retrieved"
 msgstr "Geen uitstaande Kabe waardering details teruggevonden"
 
@@ -18433,7 +18435,7 @@ msgstr "Om Header Details"
 
 #: PO_OrderDetails.php:90 Suppliers.php:656 Suppliers.php:804
 #: SuppLoginSetup.php:238 SuppLoginSetup.php:404 WWW_Users.php:264
-#: WWW_Users.php:477
+#: WWW_Users.php:472
 msgid "Supplier Code"
 msgstr "Leverancier Code"
 
@@ -18703,6 +18705,7 @@ msgstr "Order hoeveelheid"
 #: POReport.php:537 POReport.php:598 POReport.php:699 POReport.php:1231
 #: POReport.php:1282 POReport.php:1371 SalesInquiry.php:800
 #: SalesInquiry.php:819 SalesInquiry.php:967
+#: includes/PDFInventoryValnPageHeader.inc:36
 msgid "Extended Cost"
 msgstr "Uitgebreide kosten"
 
@@ -21291,7 +21294,7 @@ msgstr "Groepeer bij 3"
 msgid "Group By 4"
 msgstr "Groepeer bij 4"
 
-#: SalesAnalysis_UserDefined.php:9 includes/session.inc:286
+#: SalesAnalysis_UserDefined.php:9 includes/session.inc:289
 msgid ""
 "The security settings on your account do not permit you to access this "
 "function"
@@ -30499,7 +30502,7 @@ msgid "If you leave the password boxes empty your password will not change"
 msgstr ""
 "Als u de wachtwoord velden leeg laat zal het wachtwoord niet worden gewijzigd"
 
-#: UserSettings.php:192 WWW_Users.php:622
+#: UserSettings.php:192 WWW_Users.php:617
 msgid "PDF Language Support"
 msgstr "PDF Taalondersteuning"
 
@@ -31613,11 +31616,11 @@ msgstr "Beschikbare authorisaties"
 msgid "Eastern European Russian Japanese Korean Vietnamese Hebrew Arabic Thai"
 msgstr "Oost-Europese Russisch Japans Koreaans Hebreeuws Arabisch Thais"
 
-#: WWW_Users.php:480
+#: WWW_Users.php:475
 msgid "Restrict to Sales Person"
 msgstr "Te beperken tot Sales Person"
 
-#: WWW_Users.php:486 WWW_Users.php:488
+#: WWW_Users.php:481 WWW_Users.php:483
 msgid "Not a salesperson only login"
 msgstr "Niet een verkoper slechts login"
 
@@ -34508,16 +34511,16 @@ msgstr ""
 msgid "Could not get the configuration parameters from the database because"
 msgstr "Kon niet de configuratieparameters uit de database, omdat"
 
-#: includes/GetConfig.php:69
+#: includes/GetConfig.php:71
 msgid ""
 "An error occurred accessing the database to retrieve the company information"
 msgstr "Fout opgetreden bij het opvragen van de bedrijfs informatie"
 
-#: includes/GetConfig.php:74
+#: includes/GetConfig.php:76
 msgid "The company record has not yet been set up"
 msgstr "Het bedrijf record is nog niet opgericht"
 
-#: includes/GetConfig.php:74
+#: includes/GetConfig.php:76
 msgid ""
 "From the system setup tab select company maintenance to enter the company "
 "information and system preferences"
@@ -34525,7 +34528,7 @@ msgstr ""
 "Uit het systeem setup tabblad select gezelschap onderhoud aan het bedrijf "
 "informatie-en systeem-voorkeuren in te voeren"
 
-#: includes/GetConfig.php:74
+#: includes/GetConfig.php:76
 msgid "CRITICAL PROBLEM"
 msgstr "KRITIEK PROBLEEM"
 
@@ -35358,10 +35361,6 @@ msgstr "op"
 msgid "location"
 msgstr "lokatie"
 
-#: includes/PDFInventoryValnPageHeader.inc:35
-msgid "Item Value"
-msgstr "Item Waarde"
-
 #: includes/PDFLowGPPageHeader.inc:15
 msgid "Low GP Sales Between"
 msgstr "Lage GP Verkopen tussen"
@@ -35724,11 +35723,11 @@ msgstr ""
 "Kosten zijn niet opgezet en bij de huidige opzet is het niet mogelijk om "
 "items zonder kost gegevens te verkopen"
 
-#: includes/session.inc:95 includes/session.inc:259
+#: includes/session.inc:98 includes/session.inc:262
 msgid "Account Error Report"
 msgstr "Account Foutrapport"
 
-#: includes/session.inc:98
+#: includes/session.inc:101
 msgid ""
 "Your user role does not have any access defined for webERP. There is an "
 "error in the security setup for this user account"
@@ -35736,36 +35735,36 @@ msgstr ""
 "Uw gerbuiker heeft geen toegang tot het systeem. Er is een fout in de "
 "authorisatie voor deze gebuiker"
 
-#: includes/session.inc:103
+#: includes/session.inc:106
 msgid "incorrect password"
 msgstr "incorrect passwoord"
 
-#: includes/session.inc:103
+#: includes/session.inc:106
 msgid "The user/password combination"
 msgstr "De gerbuiker / passwoord combinatie"
 
-#: includes/session.inc:103
+#: includes/session.inc:106
 msgid "is not a valid user of the system"
 msgstr "is geen geldige gebruiker voor het systeem"
 
-#: includes/session.inc:107
+#: includes/session.inc:110
 msgid "system maintenance"
 msgstr "onderhoud van het systeem"
 
-#: includes/session.inc:107
+#: includes/session.inc:110
 msgid "webERP is not available right now"
 msgstr "webERP is momenteel niet beschikbaar"
 
-#: includes/session.inc:107
+#: includes/session.inc:110
 msgid "during maintenance of the system"
 msgstr "tijdens het onderhoud van het systeem"
 
-#: includes/session.inc:143 api/api_login.php:122
+#: includes/session.inc:146 api/api_login.php:122
 msgid "There was a problem deleting expired audit-trail history"
 msgstr ""
 "Er is een probleem bij het verwijderen van de verlopen gerbuikershistorie"
 
-#: includes/session.inc:246
+#: includes/session.inc:249
 msgid ""
 "webERP is configured to allow only secure socket connections. Pages must be "
 "called with https://"
@@ -35773,7 +35772,7 @@ msgstr ""
 "webERP is zo opgezet dat er alleen een secure verbinding kan worden opgezet. "
 "Pagina's moeten worden opgeroepen met https://"
 
-#: includes/session.inc:262
+#: includes/session.inc:265
 msgid ""
 "Security settings have not been defined for your user account. Please advise "
 "your system administrator. It could also be that there is a session problem "
@@ -35783,15 +35782,15 @@ msgstr ""
 "uw systeem beherder. Het is ook mogelijk dat er een probleem is met uw PHP "
 "web server"
 
-#: includes/session.inc:280
+#: includes/session.inc:283
 msgid "Security Permissions Problem"
 msgstr "Beveiligingsmachtigingen Probleem"
 
-#: includes/session.inc:324
+#: includes/session.inc:327
 msgid "Error in form verificationm"
 msgstr "Fout in de vorm verificationm"
 
-#: includes/session.inc:326
+#: includes/session.inc:329
 msgid "This form was not submitted with a correct ID"
 msgstr "Dit formulier is niet bij een juiste ID"
 
@@ -38050,6 +38049,9 @@ msgstr "Parameters"
 #: api/api_xml-rpc.php:3027
 msgid "Return Value"
 msgstr "Return waarde"
+
+#~ msgid "Item Value"
+#~ msgstr "Item Waarde"
 
 #~ msgid "Print Sales Order / Pro-forma Invoice"
 #~ msgstr "Print Order / Pro-forma-factuur"

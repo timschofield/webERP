@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web-erp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-18 19:21+1200\n"
+"POT-Creation-Date: 2011-04-26 20:00+1200\n"
 "PO-Revision-Date: 2011-01-17 17:01+0000\n"
 "Last-Translator: Tim Schofield <Unknown>\n"
 "Language-Team: Swahili <sw@li.org>\n"
@@ -194,15 +194,15 @@ msgstr "खाता क्योंकि समूहों प्राप्
 #: BOMIndentedReverse.php:246 BOMInquiry.php:165 BOMListing.php:128
 #: BOMs.php:214 BOMs.php:793 COGSGLPostings.php:20 CompanyPreferences.php:155
 #: CounterSales.php:1983 CounterSales.php:2107 Credit_Invoice.php:256
-#: CreditStatus.php:21 Currencies.php:29 CustEDISetup.php:19
-#: DailyBankTransactions.php:9 DebtorsAtPeriodEnd.php:138
-#: DiscountCategories.php:12 DiscountCategories.php:122 DiscountMatrix.php:18
+#: CreditStatus.php:21 Currencies.php:29 CustEDISetup.php:17
+#: DailyBankTransactions.php:9 DebtorsAtPeriodEnd.php:124
+#: DiscountCategories.php:10 DiscountCategories.php:128 DiscountMatrix.php:16
 #: EDIMessageFormat.php:104 FixedAssetLocations.php:9
 #: FixedAssetRegister.php:13 FixedAssetRegister.php:238
 #: FixedAssetTransfer.php:31 FormDesigner.php:132 GLBalanceSheet.php:351
 #: GLBudgets.php:28 GLJournal.php:228 InventoryPlanning.php:374
 #: InventoryPlanningPrefSupplier.php:474 Labels.php:117 Labels.php:273
-#: MRPReport.php:515 OutstandingGRNs.php:153 PcAssignCashToTab.php:37
+#: MRPReport.php:515 OutstandingGRNs.php:150 PcAssignCashToTab.php:37
 #: PcAssignCashToTab.php:111 PcAssignCashToTab.php:127
 #: PcAssignCashToTab.php:164 PDFPickingList.php:28 PDFPrintLabel.php:131
 #: PDFStockLocTransfer.php:21 PO_AuthorisationLevels.php:10 POReport.php:60
@@ -257,10 +257,10 @@ msgstr "माता पिता के समूह"
 #: BOMs.php:715 CompanyPreferences.php:439 CompanyPreferences.php:441
 #: CompanyPreferences.php:452 CompanyPreferences.php:454
 #: CompanyPreferences.php:465 CompanyPreferences.php:467
-#: ContractCosting.php:174 CustLoginSetup.php:590 CustLoginSetup.php:592
+#: ContractCosting.php:174 CustLoginSetup.php:578 CustLoginSetup.php:580
 #: CustomerBranches.php:420 Customers.php:590 Customers.php:847
-#: Customers.php:854 Customers.php:857 DeliveryDetails.php:1058
-#: DeliveryDetails.php:1098 DeliveryDetails.php:1101 GLTransInquiry.php:73
+#: Customers.php:854 Customers.php:857 DeliveryDetails.php:1064
+#: DeliveryDetails.php:1104 DeliveryDetails.php:1107 GLTransInquiry.php:73
 #: MRPCalendar.php:220 MRP.php:527 MRP.php:531 MRP.php:535 MRP.php:539
 #: PaymentMethods.php:207 PaymentMethods.php:208 PaymentMethods.php:209
 #: PaymentMethods.php:272 PaymentMethods.php:278 PaymentMethods.php:284
@@ -282,7 +282,7 @@ msgstr "माता पिता के समूह"
 #: SystemParameters.php:889 SystemParameters.php:891 SystemParameters.php:901
 #: SystemParameters.php:903 SystemParameters.php:957 SystemParameters.php:969
 #: SystemParameters.php:971 TaxGroups.php:291 TaxGroups.php:294
-#: TaxGroups.php:343 WWW_Users.php:610 WWW_Users.php:612
+#: TaxGroups.php:343 WWW_Users.php:605 WWW_Users.php:607
 msgid "Yes"
 msgstr "हां"
 
@@ -292,10 +292,10 @@ msgstr "हां"
 #: CompanyPreferences.php:438 CompanyPreferences.php:442
 #: CompanyPreferences.php:451 CompanyPreferences.php:455
 #: CompanyPreferences.php:464 CompanyPreferences.php:468
-#: ContractCosting.php:172 CustLoginSetup.php:589 CustLoginSetup.php:593
+#: ContractCosting.php:172 CustLoginSetup.php:577 CustLoginSetup.php:581
 #: CustomerBranches.php:420 Customers.php:589 Customers.php:845
-#: Customers.php:853 Customers.php:856 DeliveryDetails.php:1059
-#: DeliveryDetails.php:1099 DeliveryDetails.php:1102 GLTransInquiry.php:127
+#: Customers.php:853 Customers.php:856 DeliveryDetails.php:1065
+#: DeliveryDetails.php:1105 DeliveryDetails.php:1108 GLTransInquiry.php:127
 #: MRPCalendar.php:222 MRP.php:525 MRP.php:529 MRP.php:533 MRP.php:537
 #: PaymentMethods.php:207 PaymentMethods.php:208 PaymentMethods.php:209
 #: PaymentMethods.php:273 PaymentMethods.php:279 PaymentMethods.php:285
@@ -317,7 +317,7 @@ msgstr "हां"
 #: SystemParameters.php:888 SystemParameters.php:892 SystemParameters.php:900
 #: SystemParameters.php:904 SystemParameters.php:958 SystemParameters.php:968
 #: SystemParameters.php:972 TaxGroups.php:292 TaxGroups.php:295
-#: TaxGroups.php:345 WWW_Users.php:609 WWW_Users.php:613
+#: TaxGroups.php:345 WWW_Users.php:604 WWW_Users.php:608
 #: includes/PDFLowGPPageHeader.inc:44 includes/PDFTaxPageHeader.inc:35
 msgid "No"
 msgstr "नहीं"
@@ -326,7 +326,7 @@ msgstr "नहीं"
 #: AddCustomerNotes.php:125 AddCustomerTypeNotes.php:123 Areas.php:165
 #: BankAccounts.php:226 BOMs.php:150 COGSGLPostings.php:113
 #: COGSGLPostings.php:215 CreditStatus.php:175 Currencies.php:239
-#: CustLoginSetup.php:312 CustomerBranches.php:424 Customers.php:899
+#: CustLoginSetup.php:307 CustomerBranches.php:424 Customers.php:899
 #: Customers.php:931 CustomerTypes.php:205 EDIMessageFormat.php:150
 #: Factors.php:208 FixedAssetCategories.php:181 FixedAssetLocations.php:102
 #: FreightCosts.php:243 GeocodeSetup.php:170 GLAccounts.php:308 GLTags.php:62
@@ -353,9 +353,9 @@ msgstr "संपादित करें"
 #: BankAccounts.php:227 BOMs.php:152 COGSGLPostings.php:114
 #: COGSGLPostings.php:216 ContractBOM.php:272 ContractOtherReqts.php:121
 #: CounterSales.php:781 Credit_Invoice.php:385 CreditStatus.php:176
-#: Currencies.php:242 CustLoginSetup.php:313 CustomerReceipt.php:863
-#: Customers.php:932 CustomerTypes.php:206 DiscountCategories.php:204
-#: DiscountMatrix.php:178 EDIMessageFormat.php:151
+#: Currencies.php:242 CustLoginSetup.php:308 CustomerReceipt.php:863
+#: Customers.php:932 CustomerTypes.php:206 DiscountCategories.php:215
+#: DiscountMatrix.php:173 EDIMessageFormat.php:151
 #: FixedAssetCategories.php:182 FreightCosts.php:244 GeocodeSetup.php:171
 #: GLAccounts.php:309 GLJournal.php:385 Labels.php:414 Locations.php:379
 #: MRPDemands.php:303 MRPDemandTypes.php:121 PaymentMethods.php:211
@@ -419,18 +419,18 @@ msgstr "खातों में धारा"
 #: AccountGroups.php:401 AccountSections.php:262 AddCustomerContacts.php:208
 #: AddCustomerNotes.php:201 AddCustomerTypeNotes.php:192 Areas.php:222
 #: BankAccounts.php:373 BOMs.php:725 COGSGLPostings.php:353
-#: CreditStatus.php:247 Currencies.php:339 CustLoginSetup.php:611
-#: DiscountMatrix.php:141 EDIMessageFormat.php:247
-#: FixedAssetCategories.php:327 FixedAssetLocations.php:148
+#: CreditStatus.php:247 Currencies.php:339 CustLoginSetup.php:599
+#: DiscountMatrix.php:136 EDIMessageFormat.php:247
+#: FixedAssetCategories.php:323 FixedAssetLocations.php:148
 #: FreightCosts.php:342 GeocodeSetup.php:267 GLAccounts.php:258
-#: Locations.php:556 MRPDemands.php:401 MRPDemandTypes.php:180
+#: Locations.php:562 MRPDemands.php:401 MRPDemandTypes.php:180
 #: OffersReceived.php:52 OffersReceived.php:128 PaymentMethods.php:290
 #: PaymentTerms.php:282 PO_AuthorisationLevels.php:216 Prices_Customer.php:354
 #: SalesAnalReptCols.php:510 SalesAnalRepts.php:494 SalesGLPostings.php:415
 #: SalesPeople.php:302 Shippers.php:196 StockCategories.php:557
 #: SupplierContacts.php:250 SuppLoginSetup.php:529 TaxAuthorities.php:312
 #: TaxCategories.php:235 TaxProvinces.php:227 UnitsOfMeasure.php:239
-#: WorkCentres.php:261 WWW_Users.php:643
+#: WorkCentres.php:261 WWW_Users.php:638
 msgid "Enter Information"
 msgstr "जानकारी दर्ज करें"
 
@@ -499,7 +499,7 @@ msgstr "पुनः प्राप्त नहीं किया जा स�
 msgid "Customer Contacts"
 msgstr "ग्राहक संपर्कों"
 
-#: AddCustomerContacts.php:20 CustEDISetup.php:11 CustLoginSetup.php:24
+#: AddCustomerContacts.php:20 CustEDISetup.php:9 CustLoginSetup.php:22
 #: Z_CheckDebtorsControl.php:20
 msgid "Back to Customers"
 msgstr "वापस ग्राहक को"
@@ -529,7 +529,7 @@ msgstr "संपर्क का नाम खाली नहीं हो स
 
 #: AddCustomerContacts.php:59 AddCustomerNotes.php:49
 #: AddCustomerTypeNotes.php:49 Areas.php:74 CustomerTypes.php:71
-#: DeliveryDetails.php:772 Factors.php:117 FixedAssetItems.php:236
+#: DeliveryDetails.php:771 Factors.php:117 FixedAssetItems.php:236
 #: PcAssignCashToTab.php:71 PcClaimExpensesFromTab.php:60 PcExpenses.php:69
 #: PcTabs.php:58 PcTypeTabs.php:60 PO_Items.php:356 SalesAnalReptCols.php:129
 #: SalesPeople.php:94 SalesTypes.php:63 Stocks.php:355 Suppliers.php:514
@@ -738,18 +738,18 @@ msgstr "वृद्ध ग्राहक खाता विश्लेषण
 #: AgedDebtors.php:267 AgedDebtors.php:365 AgedDebtors.php:436
 #: AgedSuppliers.php:105 BOMExtendedQty.php:159 BOMIndented.php:150
 #: BOMIndentedReverse.php:151 BOMListing.php:48 BOMListing.php:59
-#: DebtorsAtPeriodEnd.php:58 DebtorsAtPeriodEnd.php:70 GLBalanceSheet.php:90
+#: DebtorsAtPeriodEnd.php:56 DebtorsAtPeriodEnd.php:68 GLBalanceSheet.php:90
 #: GLBalanceSheet.php:128 GLProfit_Loss.php:157 GLTagProfit_Loss.php:172
 #: GLTrialBalance.php:151 InventoryPlanning.php:99 InventoryPlanning.php:174
 #: InventoryPlanning.php:209 InventoryPlanning.php:257
 #: InventoryPlanning.php:295 InventoryPlanningPrefSupplier.php:208
 #: InventoryPlanningPrefSupplier.php:276 InventoryPlanningPrefSupplier.php:310
 #: InventoryPlanningPrefSupplier.php:355 InventoryPlanningPrefSupplier.php:401
-#: InventoryQuantities.php:82 InventoryValuation.php:74
+#: InventoryQuantities.php:81 InventoryValuation.php:78
 #: MailInventoryValuation.php:115 MRPPlannedPurchaseOrders.php:114
 #: MRPPlannedWorkOrders.php:105 MRPReport.php:147 MRPReport.php:508
-#: MRPReschedules.php:46 MRPReschedules.php:58 MRPShortages.php:144
-#: MRPShortages.php:156 OutstandingGRNs.php:51 OutstandingGRNs.php:63
+#: MRPReschedules.php:45 MRPReschedules.php:57 MRPShortages.php:144
+#: MRPShortages.php:156 OutstandingGRNs.php:48 OutstandingGRNs.php:60
 #: PDFCustomerList.php:18 PDFCustomerList.php:230 PDFCustomerList.php:242
 #: PDFLowGP.php:20 PDFStockCheckComparison.php:35
 #: PDFStockCheckComparison.php:61 PDFStockCheckComparison.php:262
@@ -760,7 +760,7 @@ msgid "Problem Report"
 msgstr "समस्या रिपोर्ट करें"
 
 #: AgedDebtors.php:269 CustomerInquiry.php:87 CustomerInquiry.php:108
-#: DebtorsAtPeriodEnd.php:60
+#: DebtorsAtPeriodEnd.php:58
 msgid "The customer details could not be retrieved by the SQL because"
 msgstr "The customer details could not be retrieved by the SQL because"
 
@@ -768,7 +768,7 @@ msgstr "The customer details could not be retrieved by the SQL because"
 #: AgedSuppliers.php:108 AgedSuppliers.php:190 BOMExtendedQty.php:162
 #: BOMExtendedQty.php:259 BOMIndented.php:153 BOMIndented.php:239
 #: BOMIndentedReverse.php:154 BOMIndentedReverse.php:232 BOMListing.php:51
-#: Credit_Invoice.php:185 DebtorsAtPeriodEnd.php:61 DebtorsAtPeriodEnd.php:73
+#: Credit_Invoice.php:185 DebtorsAtPeriodEnd.php:59 DebtorsAtPeriodEnd.php:71
 #: FTP_RadioBeacon.php:188 GetStockImage.php:154 GLBalanceSheet.php:93
 #: GLBalanceSheet.php:131 GLBalanceSheet.php:294 GLProfit_Loss.php:160
 #: GLProfit_Loss.php:172 GLTagProfit_Loss.php:175 GLTagProfit_Loss.php:187
@@ -778,15 +778,15 @@ msgstr "The customer details could not be retrieved by the SQL because"
 #: InventoryPlanning.php:361 InventoryPlanningPrefSupplier.php:211
 #: InventoryPlanningPrefSupplier.php:279 InventoryPlanningPrefSupplier.php:313
 #: InventoryPlanningPrefSupplier.php:358 InventoryPlanningPrefSupplier.php:404
-#: InventoryPlanningPrefSupplier.php:460 InventoryQuantities.php:85
-#: InventoryQuantities.php:96 InventoryValuation.php:77
-#: InventoryValuation.php:88 MailInventoryValuation.php:118
+#: InventoryPlanningPrefSupplier.php:460 InventoryQuantities.php:84
+#: InventoryQuantities.php:95 InventoryValuation.php:81
+#: InventoryValuation.php:92 MailInventoryValuation.php:118
 #: MailInventoryValuation.php:214 MRPPlannedPurchaseOrders.php:117
 #: MRPPlannedPurchaseOrders.php:128 MRPPlannedWorkOrders.php:108
 #: MRPPlannedWorkOrders.php:119 MRPPlannedWorkOrders.php:316 MRPReport.php:39
-#: MRPReport.php:50 MRPReport.php:150 MRPReschedules.php:49
-#: MRPReschedules.php:61 MRPShortages.php:147 MRPShortages.php:159
-#: OutstandingGRNs.php:54 OutstandingGRNs.php:66 PDFCustomerList.php:233
+#: MRPReport.php:50 MRPReport.php:150 MRPReschedules.php:48
+#: MRPReschedules.php:60 MRPShortages.php:147 MRPShortages.php:159
+#: OutstandingGRNs.php:51 OutstandingGRNs.php:63 PDFCustomerList.php:233
 #: PDFCustomerList.php:245 PDFGrn.php:123 PDFLowGP.php:60 PDFLowGP.php:72
 #: PDFPriceList.php:124 PDFQuotation.php:234 PDFQuotationPortrait.php:235
 #: PDFRemittanceAdvice.php:84 PDFStockCheckComparison.php:39
@@ -832,7 +832,7 @@ msgstr "हो पुनः प्राप्त नहीं किया ज�
 #: ConfirmDispatch_Invoice.php:983 Contracts.php:581 CounterSales.php:1323
 #: CounterSales.php:1337 Credit_Invoice.php:706 Credit_Invoice.php:728
 #: CustomerReceipt.php:523 CustomerReceipt.php:655 CustomerReceipt.php:683
-#: CustomerTransInquiry.php:79 DeliveryDetails.php:394 GLProfit_Loss.php:579
+#: CustomerTransInquiry.php:79 DeliveryDetails.php:393 GLProfit_Loss.php:579
 #: GLTagProfit_Loss.php:488 Payments.php:312 PDFRemittanceAdvice.php:86
 #: PurchData.php:95 PurchData.php:113 PurchData.php:245 ReverseGRN.php:191
 #: ReverseGRN.php:205 ReverseGRN.php:366 SelectCreditItems.php:1372
@@ -863,11 +863,11 @@ msgstr "कोई सूची निर्दिष्ट मापदंड �
 msgid "Aged Debtor Analysis"
 msgstr "वृद्ध देनदार विश्लेषण"
 
-#: AgedDebtors.php:477 DebtorsAtPeriodEnd.php:148
+#: AgedDebtors.php:477 DebtorsAtPeriodEnd.php:135
 msgid "From Customer Code"
 msgstr "ग्राहक कोड से"
 
-#: AgedDebtors.php:478 DebtorsAtPeriodEnd.php:149
+#: AgedDebtors.php:478 DebtorsAtPeriodEnd.php:138
 msgid "To Customer Code"
 msgstr "ग्राहक कोड करने के लिए"
 
@@ -899,21 +899,21 @@ msgstr "केवल ग्राहकों के कारोबार म�
 msgid "Summary or detailed report"
 msgstr "सारांश या विस्तृत रिपोर्ट"
 
-#: AgedDebtors.php:516 AgedSuppliers.php:316 InventoryValuation.php:236
+#: AgedDebtors.php:516 AgedSuppliers.php:316 InventoryValuation.php:247
 msgid "Summary Report"
 msgstr "सारांश रिपोर्ट"
 
-#: AgedDebtors.php:517 AgedSuppliers.php:317 InventoryValuation.php:237
+#: AgedDebtors.php:517 AgedSuppliers.php:317 InventoryValuation.php:248
 msgid "Detailed Report"
 msgstr "चिट्ठा"
 
 #: AgedDebtors.php:520 AgedSuppliers.php:320 BOMExtendedQty.php:286
 #: BOMIndented.php:268 BOMIndentedReverse.php:255 BOMListing.php:142
-#: DebtorsAtPeriodEnd.php:166 InventoryPlanning.php:442
+#: DebtorsAtPeriodEnd.php:156 InventoryPlanning.php:442
 #: InventoryPlanningPrefSupplier.php:518 InventoryQuantities.php:187
-#: InventoryValuation.php:240 MRPPlannedPurchaseOrders.php:282
-#: MRPPlannedWorkOrders.php:343 MRPReschedules.php:141 MRPShortages.php:258
-#: OutstandingGRNs.php:164 PDFCustomerList.php:410 PDFLowGP.php:145
+#: InventoryValuation.php:251 MRPPlannedPurchaseOrders.php:282
+#: MRPPlannedWorkOrders.php:343 MRPReschedules.php:140 MRPShortages.php:258
+#: OutstandingGRNs.php:162 PDFCustomerList.php:410 PDFLowGP.php:145
 #: PDFPriceList.php:301 PDFRemittanceAdvice.php:152
 #: PDFStockCheckComparison.php:379 PrintCustTrans.php:415
 #: PrintCustTransPortrait.php:561 ReorderLevel.php:217 StockDispatch.php:308
@@ -949,12 +949,12 @@ msgstr "आपूर्तिकर्ता के लिए बकाया �
 msgid "Aged Supplier Analysis"
 msgstr "वृद्ध प्रदायक विश्लेषण"
 
-#: AgedSuppliers.php:286 OutstandingGRNs.php:159 PDFRemittanceAdvice.php:138
+#: AgedSuppliers.php:286 OutstandingGRNs.php:157 PDFRemittanceAdvice.php:138
 #: SupplierBalsAtPeriodEnd.php:131 SuppPaymentRun.php:259
 msgid "From Supplier Code"
 msgstr "आपूर्तिकर्ता कोड से"
 
-#: AgedSuppliers.php:289 OutstandingGRNs.php:161 PDFRemittanceAdvice.php:140
+#: AgedSuppliers.php:289 OutstandingGRNs.php:159 PDFRemittanceAdvice.php:140
 #: SupplierBalsAtPeriodEnd.php:133 SuppPaymentRun.php:261
 msgid "To Supplier Code"
 msgstr "आपूर्तिकर्ता कोड करने के लिए"
@@ -967,7 +967,7 @@ msgstr "शेष राशि के साथ सभी आपूर्ति�
 msgid "For suppliers trading in"
 msgstr "आपूर्तिकर्ताओं के लिए व्यापार में"
 
-#: AgedSuppliers.php:314 InventoryValuation.php:235
+#: AgedSuppliers.php:314 InventoryValuation.php:245
 msgid "Summary or Detailed Report"
 msgstr "सारांश या विस्तृत रिपोर्ट"
 
@@ -1111,7 +1111,7 @@ msgstr "उपयोगकर्ता"
 #: CustomerTransInquiry.php:21 CustomerTransInquiry.php:85
 #: CustWhereAlloc.php:18 CustWhereAlloc.php:87 DailyBankTransactions.php:99
 #: GLAccountInquiry.php:152 GLAccountReport.php:367 GLJournal.php:241
-#: MRPReschedules.php:179 SelectCustomer.php:462 ShipmentCosting.php:506
+#: MRPReschedules.php:178 SelectCustomer.php:462 ShipmentCosting.php:506
 #: ShipmentCosting.php:577 StockCategories.php:215 StockLocMovements.php:83
 #: StockMovements.php:97 SupplierAllocations.php:446 SupplierInquiry.php:199
 #: SupplierTransInquiry.php:19 SupplierTransInquiry.php:86
@@ -1132,7 +1132,6 @@ msgid "Field Name"
 msgstr "फ़ील्ड का नाम"
 
 #: AuditTrail.php:147 SystemParameters.php:314
-#: includes/PDFInventoryValnPageHeader.inc:38
 #: includes/PDFOstdgGRNsPageHeader.inc:43
 msgid "Value"
 msgstr "मूल्य"
@@ -1344,7 +1343,7 @@ msgid "Show"
 msgstr "दिखाएँ"
 
 #: BankMatching.php:102 CreditItemsControlled.php:78 FreightCosts.php:270
-#: GoodsReceivedControlled.php:65 GoodsReceived.php:67
+#: GoodsReceivedControlled.php:65 GoodsReceived.php:65
 #: StockLocTransferReceive.php:426 SupplierAllocations.php:428
 #: SuppShiptChgs.php:129
 msgid "from"
@@ -1741,12 +1740,12 @@ msgstr "हिस्सा"
 #: ContractCosting.php:80 ContractCosting.php:131 ContractOtherReqts.php:95
 #: Contracts.php:932 Contracts.php:956 CounterSales.php:701
 #: CounterSales.php:1994 CounterSales.php:2174 CounterSales.php:2302
-#: Credit_Invoice.php:274 DeliveryDetails.php:809 DeliveryDetails.php:874
-#: GoodsReceived.php:90 GoodsReceived.php:94 GoodsReceived.php:97
+#: Credit_Invoice.php:274 DeliveryDetails.php:822 DeliveryDetails.php:887
+#: GoodsReceived.php:88 GoodsReceived.php:92 GoodsReceived.php:95
 #: InventoryPlanningPrefSupplier.php:83 InventoryQuantities.php:223
 #: MRPDemands.php:290 MRPDemands.php:380 MRPPlannedPurchaseOrders.php:326
 #: MRPPlannedWorkOrders.php:259 MRPPlannedWorkOrders.php:387 MRPReport.php:413
-#: MRPReport.php:419 MRPReschedules.php:180 OffersReceived.php:94
+#: MRPReport.php:419 MRPReschedules.php:179 OffersReceived.php:94
 #: OffersReceived.php:196 OffersReceived.php:245 OrderDetails.php:155
 #: PDFOrdersInvoiced.php:384 POReport.php:698 POReport.php:1370
 #: PrintCustTrans.php:650 PrintCustTrans.php:713 PrintCustTrans.php:751
@@ -1798,19 +1797,19 @@ msgstr "केवल कमी दिखाएँ"
 
 #: BOMExtendedQty.php:282 BOMIndented.php:264 BOMIndentedReverse.php:251
 #: MRPPlannedPurchaseOrders.php:276 MRPPlannedWorkOrders.php:337
-#: MRPReschedules.php:131 MRPShortages.php:254
+#: MRPReschedules.php:130 MRPShortages.php:254
 msgid "Print Option"
 msgstr "प्रिंट विकल्प"
 
 #: BOMExtendedQty.php:283 BOMIndented.php:265 BOMIndentedReverse.php:252
 #: MRPPlannedPurchaseOrders.php:277 MRPPlannedWorkOrders.php:338
-#: MRPReschedules.php:132 MRPShortages.php:255
+#: MRPReschedules.php:131 MRPShortages.php:255
 msgid "Print With Alternating Highlighted Lines"
 msgstr "प्रकाश डाला लाइन्स बारी के साथ प्रिंट"
 
 #: BOMExtendedQty.php:284 BOMIndented.php:266 BOMIndentedReverse.php:253
 #: MRPPlannedPurchaseOrders.php:278 MRPPlannedWorkOrders.php:339
-#: MRPReschedules.php:133 MRPShortages.php:256
+#: MRPReschedules.php:132 MRPShortages.php:256
 msgid "Plain Print"
 msgstr "सादा प्रिंट"
 
@@ -1821,7 +1820,7 @@ msgstr "विस्तारित मात्रा BOM लिस्टिं
 #: BOMExtendedQty.php:310 BOMIndented.php:293 BOMIndentedReverse.php:280
 #: GLAccountReport.php:353 InventoryPlanningPrefSupplier.php:63
 #: InventoryQuantities.php:209 MRPPlannedPurchaseOrders.php:305
-#: MRPPlannedWorkOrders.php:366 MRPReport.php:805 MRPReschedules.php:165
+#: MRPPlannedWorkOrders.php:366 MRPReport.php:805 MRPReschedules.php:164
 #: MRPShortages.php:282 PDFOrderStatus.php:303 PDFPriceList.php:331
 #: PDFReceipt.php:32 PO_Header.php:787 PO_PDFPurchOrder.php:60
 #: PO_SelectOSPurchOrder.php:476 ReorderLevel.php:239 StockDispatch.php:336
@@ -1858,7 +1857,7 @@ msgstr "मुद्रित"
 #: FixedAssetRegister.php:334 GLAccountReport.php:353
 #: InventoryPlanningPrefSupplier.php:63 InventoryQuantities.php:210
 #: MRPPlannedPurchaseOrders.php:306 MRPPlannedWorkOrders.php:367
-#: MRPReport.php:806 MRPReschedules.php:166 MRPShortages.php:283
+#: MRPReport.php:806 MRPReschedules.php:165 MRPShortages.php:283
 #: PDFPriceList.php:331 PDFReceipt.php:32 PDFRemittanceAdvice.php:218
 #: PrintCustTrans.php:560 PrintCustTrans.php:709 PrintCustTrans.php:747
 #: PrintCustTransPortrait.php:735 PrintCustTransPortrait.php:939
@@ -1938,7 +1937,7 @@ msgstr "WO"
 #: BOMExtendedQty.php:325 BOMIndented.php:301 BOMIndentedReverse.php:288
 #: InventoryQuantities.php:220 MRPDemands.php:287 MRPDemands.php:360
 #: MRPDemands.php:367 MRPPlannedPurchaseOrders.php:323
-#: MRPPlannedWorkOrders.php:384 MRPReschedules.php:176 MRPShortages.php:252
+#: MRPPlannedWorkOrders.php:384 MRPReschedules.php:175 MRPShortages.php:252
 #: MRPShortages.php:297 POReport.php:491 POReport.php:500 POReport.php:516
 #: POReport.php:532 POReport.php:593 POReport.php:668 POReport.php:1188
 #: POReport.php:1197 POReport.php:1211 POReport.php:1226 POReport.php:1277
@@ -1998,10 +1997,10 @@ msgstr "एक स्तर"
 #: FixedAssetCategories.php:159 FixedAssetDepreciation.php:84
 #: FixedAssetRegister.php:81 FixedAssetRegister.php:355
 #: FixedAssetTransfer.php:50 FixedAssetTransfer.php:110 GLTags.php:39
-#: GLTags.php:55 GLTransInquiry.php:50 GoodsReceived.php:89
+#: GLTags.php:55 GLTransInquiry.php:50 GoodsReceived.php:87
 #: InventoryQuantities.php:221 Labels.php:413 MRPDemands.php:90
 #: MRPDemands.php:288 MRPDemandTypes.php:113 MRPPlannedWorkOrders.php:256
-#: MRPReport.php:535 MRPReport.php:739 MRPReschedules.php:177
+#: MRPReport.php:535 MRPReport.php:739 MRPReschedules.php:176
 #: MRPShortages.php:298 PaymentTerms.php:180 PcExpenses.php:158
 #: PcExpenses.php:248 PcExpensesTypeTab.php:150 PcReportTab.php:171
 #: PcTypeTabs.php:156 PDFOrdersInvoiced.php:342 PDFOrderStatus.php:317
@@ -2109,7 +2108,8 @@ msgstr "विवरण"
 #: BOMInquiry.php:24 BOMs.php:801 ContractBOM.php:323 ContractBOM.php:328
 #: Contracts.php:758 Contracts.php:761 CounterSales.php:2138
 #: CustomerReceipt.php:1024 CustomerReceipt.php:1027
-#: DiscountCategories.php:103 DiscountCategories.php:106
+#: DiscountCategories.php:101 DiscountCategories.php:103
+#: DiscountCategories.php:107 DiscountCategories.php:109
 #: FixedAssetTransfer.php:61 MRPDemands.php:329 MRPDemands.php:332
 #: MRPReport.php:542 PO_Header.php:517 PO_Items.php:903 PO_Items.php:907
 #: PO_SelectOSPurchOrder.php:202 PO_SelectPurchOrder.php:170 PurchData.php:265
@@ -2200,7 +2200,7 @@ msgstr "कोड"
 
 #: BOMInquiry.php:95 BOMs.php:812 ConfirmDispatch_Invoice.php:271
 #: ContractBOM.php:345 CounterSales.php:1989 CounterSales.php:2169
-#: Credit_Invoice.php:273 GoodsReceived.php:91 GoodsReceived.php:95
+#: Credit_Invoice.php:273 GoodsReceived.php:89 GoodsReceived.php:93
 #: MRPReport.php:741 OffersReceived.php:95 PO_Items.php:927
 #: PO_SelectOSPurchOrder.php:216 PO_SelectPurchOrder.php:181
 #: SelectCompletedOrder.php:540 SelectCreditItems.php:958
@@ -2210,6 +2210,7 @@ msgstr "कोड"
 #: StockLocTransferReceive.php:435 SupplierTenders.php:491 TopItems.php:165
 #: WorkOrderCosting.php:86 WorkOrderEntry.php:599 WorkOrderIssue.php:669
 #: WorkOrderIssue.php:737 includes/DefineLabelClass.php:21
+#: includes/PDFInventoryValnPageHeader.inc:34
 msgid "Units"
 msgstr "इकाइयों"
 
@@ -2242,7 +2243,6 @@ msgstr "अवयव"
 #: ContractCosting.php:82 ContractCosting.php:132 ContractOtherReqts.php:96
 #: Contracts.php:934 Contracts.php:957 MRPPlannedWorkOrders.php:260
 #: MRPShortages.php:300 SpecialOrder.php:637 StockAdjustments.php:340
-#: includes/PDFInventoryValnPageHeader.inc:34
 msgid "Unit Cost"
 msgstr "इकाई लागत"
 
@@ -2650,8 +2650,8 @@ msgid "Stock Category"
 msgstr "शेयर श्रेणी"
 
 #: COGSGLPostings.php:95 COGSGLPostings.php:199 COGSGLPostings.php:310
-#: Customers.php:728 Customers.php:731 DiscountMatrix.php:98
-#: DiscountMatrix.php:157 PricesByCost.php:225 Prices.php:197
+#: Customers.php:728 Customers.php:731 DiscountMatrix.php:96
+#: DiscountMatrix.php:152 PricesByCost.php:225 Prices.php:197
 #: SalesAnalRepts.php:32 SalesAnalRepts.php:34 SalesGLPostings.php:112
 #: SalesGLPostings.php:223 SalesGLPostings.php:353 SelectOrderItems.php:742
 #: api/api_xml-rpc.php:931 api/api_xml-rpc.php:974
@@ -2809,7 +2809,7 @@ msgstr "दूरभाष संख्या"
 msgid "Facsimile Number"
 msgstr "प्रतिकृति संख्या"
 
-#: CompanyPreferences.php:268 CustLoginSetup.php:424 Customers.php:470
+#: CompanyPreferences.php:268 CustLoginSetup.php:418 Customers.php:470
 #: Customers.php:693 Customers.php:708 Suppliers.php:664 Suppliers.php:814
 #: SuppLoginSetup.php:368 WWW_Users.php:428
 msgid "Email Address"
@@ -2870,8 +2870,8 @@ msgstr "शेयर लेनदेन के लिए जीएल प्र�
 #: CompanyPreferences.php:474 ConfirmDispatch_Invoice.php:626
 #: ConfirmDispatch_Invoice.php:1658 Credit_Invoice.php:1529
 #: FixedAssetItems.php:120 FixedAssetItems.php:570 GLBudgets.php:216
-#: GLTags.php:44 GoodsReceived.php:230 GoodsReceived.php:236
-#: GoodsReceived.php:243 GoodsReceived.php:699 Labels.php:262
+#: GLTags.php:44 GoodsReceived.php:229 GoodsReceived.php:235
+#: GoodsReceived.php:242 GoodsReceived.php:698 Labels.php:262
 #: MRPCalendar.php:307 Payments.php:857 PcAuthorizeExpenses.php:272
 #: PO_AuthoriseMyOrders.php:125 PricesByCost.php:187 PurchData.php:505
 #: ReorderLevelLocation.php:156 SelectCreditItems.php:898 SMTPServer.php:64
@@ -2932,7 +2932,7 @@ msgid "Back to Confirmation of Dispatch"
 msgstr "वापस डिस्पैच के लिए पुष्टि"
 
 #: ConfirmDispatchControlled_Invoice.php:57 CounterSales.php:1207
-#: DeliveryDetails.php:584 DeliveryDetails.php:776 EmailCustTrans.php:11
+#: DeliveryDetails.php:583 DeliveryDetails.php:783 EmailCustTrans.php:11
 #: PaymentAllocations.php:33 SelectSalesOrder.php:746 SelectSalesOrder.php:815
 #: SelectSalesOrder.php:842 Z_SalesIntegrityCheck.php:46
 #: includes/PDFDeliveryDifferencesPageHeader.inc:40
@@ -2999,12 +2999,12 @@ msgstr "चालान की पुष्टि"
 msgid "Confirm Dispatch and Invoice"
 msgstr "प्रेषण और चालान की पुष्टि"
 
-#: ConfirmDispatch_Invoice.php:251 Contracts.php:774 CustLoginSetup.php:34
-#: CustLoginSetup.php:35 CustomerAllocations.php:328 CustomerBranches.php:373
+#: ConfirmDispatch_Invoice.php:251 Contracts.php:774 CustLoginSetup.php:32
+#: CustLoginSetup.php:33 CustomerAllocations.php:328 CustomerBranches.php:373
 #: CustomerBranches.php:538 CustomerBranches.php:578 CustomerInquiry.php:125
 #: CustomerReceipt.php:844 CustomerReceipt.php:895 CustomerReceipt.php:1020
 #: Customers.php:12 Customers.php:347 CustomerTransInquiry.php:88
-#: DeliveryDetails.php:787 FTP_RadioBeacon.php:52 PDFOrdersInvoiced.php:299
+#: DeliveryDetails.php:800 FTP_RadioBeacon.php:52 PDFOrdersInvoiced.php:299
 #: PDFOrderStatus.php:273 PricesByCost.php:119 SalesGraph.php:169
 #: SelectCompletedOrder.php:586 SelectContract.php:157 SelectCustomer.php:24
 #: SelectCustomer.php:281 SelectOrderItems.php:633
@@ -3021,20 +3021,20 @@ msgstr "प्रेषण और चालान की पुष्टि"
 msgid "Customer"
 msgstr "ग्राहक"
 
-#: ConfirmDispatch_Invoice.php:251 CustEDISetup.php:99 CustLoginSetup.php:277
-#: CustLoginSetup.php:460 Customers.php:461 Customers.php:649
-#: Customers.php:685 DeliveryDetails.php:787 OrderDetails.php:65
+#: ConfirmDispatch_Invoice.php:251 CustEDISetup.php:94 CustLoginSetup.php:272
+#: CustLoginSetup.php:448 Customers.php:461 Customers.php:649
+#: Customers.php:685 DeliveryDetails.php:800 OrderDetails.php:65
 #: SalesAnalRepts.php:27 SalesAnalRepts.php:29 WWW_Users.php:262
-#: WWW_Users.php:471 Z_ChangeBranchCode.php:202
+#: WWW_Users.php:466 Z_ChangeBranchCode.php:202
 #: includes/PDFStatementPageHeader.inc:112 includes/PDFTransPageHeader.inc:82
 #: includes/PDFTransPageHeaderPortrait.inc:55
 msgid "Customer Code"
 msgstr "ग्राहक कोड"
 
-#: ConfirmDispatch_Invoice.php:252 CustEDISetup.php:101
-#: CustomerReceipt.php:235 CustomerReceipt.php:1039 Customers.php:464
-#: Customers.php:690 Customers.php:702 DeliveryDetails.php:788
-#: OrderDetails.php:67 POReport.php:494 POReport.php:1191 SalesInquiry.php:740
+#: ConfirmDispatch_Invoice.php:252 CustEDISetup.php:96 CustomerReceipt.php:235
+#: CustomerReceipt.php:1039 Customers.php:464 Customers.php:690
+#: Customers.php:702 DeliveryDetails.php:801 OrderDetails.php:67
+#: POReport.php:494 POReport.php:1191 SalesInquiry.php:740
 #: SalesInquiry.php:750 SalesInquiry.php:774 SalesInquiry.php:918
 #: SalesInquiry.php:929 SalesInquiry.php:935 SalesInquiry.php:941
 #: SalesInquiry.php:1080 SalesInquiry.php:1131 SalesInquiry.php:1147
@@ -3048,8 +3048,8 @@ msgstr "चालान में कहा गया है मात्रा"
 
 #: ConfirmDispatch_Invoice.php:268 ContractBOM.php:241 ContractCosting.php:72
 #: ContractCosting.php:78 Contracts.php:930 CounterSales.php:699
-#: CounterSales.php:2301 Credit_Invoice.php:270 DeliveryDetails.php:807
-#: GoodsReceived.php:88 OrderDetails.php:153 PO_Items.php:634
+#: CounterSales.php:2301 Credit_Invoice.php:270 DeliveryDetails.php:820
+#: GoodsReceived.php:86 OrderDetails.php:153 PO_Items.php:634
 #: PO_OrderDetails.php:142 PrintCustTrans.php:648 PrintCustTrans.php:711
 #: PrintCustTrans.php:749 PrintCustTransPortrait.php:858
 #: PrintCustTransPortrait.php:941 PrintCustTransPortrait.php:985
@@ -3073,7 +3073,7 @@ msgstr "मद कोड"
 
 #: ConfirmDispatch_Invoice.php:269 ContractCosting.php:73
 #: ContractCosting.php:79 Contracts.php:931 CounterSales.php:700
-#: Credit_Invoice.php:271 DeliveryDetails.php:808 DeliveryDetails.php:873
+#: Credit_Invoice.php:271 DeliveryDetails.php:821 DeliveryDetails.php:886
 #: OrderDetails.php:154 PO_Items.php:701 PO_OrderDetails.php:143
 #: PrintCustTrans.php:649 PrintCustTrans.php:712 PrintCustTrans.php:750
 #: PrintCustTransPortrait.php:859 PrintCustTransPortrait.php:942
@@ -3090,14 +3090,14 @@ msgstr "मद कोड"
 msgid "Item Description"
 msgstr "आइटम विवरण"
 
-#: ConfirmDispatch_Invoice.php:270 GoodsReceived.php:90 GoodsReceived.php:94
+#: ConfirmDispatch_Invoice.php:270 GoodsReceived.php:88 GoodsReceived.php:92
 #: PDFOrdersInvoiced.php:343 PDFOrderStatus.php:318 Shipments.php:385
 #: Shipments.php:463
 msgid "Ordered"
 msgstr "का आदेश दिया"
 
-#: ConfirmDispatch_Invoice.php:272 FTP_RadioBeacon.php:84 GoodsReceived.php:92
-#: GoodsReceived.php:96
+#: ConfirmDispatch_Invoice.php:272 FTP_RadioBeacon.php:84 GoodsReceived.php:90
+#: GoodsReceived.php:94
 #, php-format
 msgid "Already"
 msgstr "पहले से ही"
@@ -3112,7 +3112,7 @@ msgid "This Dispatch"
 msgstr "इस डिस्पैच"
 
 #: ConfirmDispatch_Invoice.php:274 CounterSales.php:704 Credit_Invoice.php:275
-#: DeliveryDetails.php:811 DeliveryDetails.php:876 GoodsReceived.php:100
+#: DeliveryDetails.php:824 DeliveryDetails.php:889 GoodsReceived.php:98
 #: OffersReceived.php:96 OffersReceived.php:196 OffersReceived.php:245
 #: OrderDetails.php:157 PDFOrdersInvoiced.php:385 PDFPriceList.php:359
 #: PDFPrintLabel.php:238 PO_AuthoriseMyOrders.php:108 PricesByCost.php:211
@@ -3133,7 +3133,7 @@ msgid "Price"
 msgstr "मूल्य"
 
 #: ConfirmDispatch_Invoice.php:275 CounterSales.php:705 Credit_Invoice.php:276
-#: CustomerReceipt.php:843 DeliveryDetails.php:812 OrderDetails.php:158
+#: CustomerReceipt.php:843 DeliveryDetails.php:825 OrderDetails.php:158
 #: PrintCustTrans.php:653 PrintCustTrans.php:716 PrintCustTrans.php:754
 #: PrintCustTransPortrait.php:863 PrintCustTransPortrait.php:946
 #: PrintCustTransPortrait.php:990 RecurringSalesOrders.php:324
@@ -3148,8 +3148,8 @@ msgstr "छूट"
 #: ConfirmDispatch_Invoice.php:276 ConfirmDispatch_Invoice.php:280
 #: CounterSales.php:709 CounterSales.php:796 Credit_Invoice.php:277
 #: Credit_Invoice.php:281 CustomerAllocations.php:332
-#: CustomerAllocations.php:358 CustomerInquiry.php:196 DeliveryDetails.php:813
-#: DeliveryDetails.php:877 GLBalanceSheet.php:172 GLBalanceSheet.php:181
+#: CustomerAllocations.php:358 CustomerInquiry.php:196 DeliveryDetails.php:826
+#: DeliveryDetails.php:890 GLBalanceSheet.php:172 GLBalanceSheet.php:181
 #: GLBalanceSheet.php:258 GLBalanceSheet.php:267 GLBudgets.php:195
 #: GLJournal.php:390 GLTransInquiry.php:189 GLTrialBalance.php:209
 #: GLTrialBalance.php:229 GLTrialBalance.php:250 GLTrialBalance.php:346
@@ -3230,7 +3230,7 @@ msgstr ""
 "कंपनी का चयन किया जाना करने के लिए या एक डिफ़ॉल्ट माल के लिए इस्तेमाल किया जा कंपनी "
 "की उम्मीद"
 
-#: ConfirmDispatch_Invoice.php:444 DeliveryDetails.php:245 Prices.php:345
+#: ConfirmDispatch_Invoice.php:444 DeliveryDetails.php:244 Prices.php:345
 #: includes/InputSerialItemsExisting.php:58
 #: includes/InputSerialItemsKeyed.php:139
 #: includes/InputSerialItemsSequential.php:48
@@ -3238,7 +3238,7 @@ msgstr ""
 msgid "Enter"
 msgstr "दर्ज"
 
-#: ConfirmDispatch_Invoice.php:444 DeliveryDetails.php:245
+#: ConfirmDispatch_Invoice.php:444 DeliveryDetails.php:244
 msgid "Amend Freight Companies"
 msgstr "संशोधन फ्रेट कंपनियों"
 
@@ -3321,12 +3321,12 @@ msgid "Please remedy this"
 msgstr "इस उपाय करें"
 
 #: ConfirmDispatch_Invoice.php:653 Credit_Invoice.php:484
-#: GoodsReceived.php:253
+#: GoodsReceived.php:252
 msgid "The company information and preferences could not be retrieved"
 msgstr "कंपनी की जानकारी और वरीयताओं को पुनः प्राप्त नहीं किया जा सका"
 
 #: ConfirmDispatch_Invoice.php:653 Credit_Invoice.php:484
-#: GoodsReceived.php:253
+#: GoodsReceived.php:252
 msgid "see your system administrator"
 msgstr "अपने सिस्टम व्यवस्थापक से संपर्क करें"
 
@@ -3345,7 +3345,7 @@ msgid ""
 msgstr ""
 "इस क्रम बदल दिया गया है या चालान के बाद से इस वितरण की पुष्टि होना शुरू कर दिया था"
 
-#: ConfirmDispatch_Invoice.php:681 GoodsReceived.php:290
+#: ConfirmDispatch_Invoice.php:681 GoodsReceived.php:289
 msgid "Processing halted"
 msgstr "प्रसंस्करण रुका"
 
@@ -3436,10 +3436,10 @@ msgstr "एसक्यूएल अद्यतन करने के लि�
 #: Credit_Invoice.php:1070 Credit_Invoice.php:1093 Credit_Invoice.php:1264
 #: Credit_Invoice.php:1304 Credit_Invoice.php:1331 Credit_Invoice.php:1352
 #: Credit_Invoice.php:1381 Credit_Invoice.php:1407 Credit_Invoice.php:1433
-#: GoodsReceived.php:272 GoodsReceived.php:353 GoodsReceived.php:395
-#: GoodsReceived.php:425 GoodsReceived.php:453 GoodsReceived.php:484
-#: GoodsReceived.php:502 GoodsReceived.php:531 GoodsReceived.php:548
-#: GoodsReceived.php:636 GoodsReceived.php:661 PDFStockCheckComparison.php:122
+#: GoodsReceived.php:271 GoodsReceived.php:352 GoodsReceived.php:394
+#: GoodsReceived.php:424 GoodsReceived.php:452 GoodsReceived.php:483
+#: GoodsReceived.php:501 GoodsReceived.php:530 GoodsReceived.php:547
+#: GoodsReceived.php:635 GoodsReceived.php:660 PDFStockCheckComparison.php:122
 #: PDFStockCheckComparison.php:130 PDFStockCheckComparison.php:137
 #: PDFStockCheckComparison.php:156 PDFStockCheckComparison.php:175
 #: RecurringSalesOrdersProcess.php:321 RecurringSalesOrdersProcess.php:361
@@ -3544,11 +3544,11 @@ msgstr "गंभीर त्रुटि"
 #: Credit_Invoice.php:990 Credit_Invoice.php:1029 Credit_Invoice.php:1070
 #: Credit_Invoice.php:1093 Credit_Invoice.php:1264 Credit_Invoice.php:1304
 #: Credit_Invoice.php:1331 Credit_Invoice.php:1352 Credit_Invoice.php:1381
-#: Credit_Invoice.php:1407 Credit_Invoice.php:1433 GoodsReceived.php:272
-#: GoodsReceived.php:353 GoodsReceived.php:395 GoodsReceived.php:425
-#: GoodsReceived.php:453 GoodsReceived.php:484 GoodsReceived.php:502
-#: GoodsReceived.php:531 GoodsReceived.php:548 GoodsReceived.php:636
-#: GoodsReceived.php:661 PDFStockCheckComparison.php:122
+#: Credit_Invoice.php:1407 Credit_Invoice.php:1433 GoodsReceived.php:271
+#: GoodsReceived.php:352 GoodsReceived.php:394 GoodsReceived.php:424
+#: GoodsReceived.php:452 GoodsReceived.php:483 GoodsReceived.php:501
+#: GoodsReceived.php:530 GoodsReceived.php:547 GoodsReceived.php:635
+#: GoodsReceived.php:660 PDFStockCheckComparison.php:122
 #: PDFStockCheckComparison.php:130 PDFStockCheckComparison.php:137
 #: PDFStockCheckComparison.php:156 PDFStockCheckComparison.php:175
 #: RecurringSalesOrdersProcess.php:321 RecurringSalesOrdersProcess.php:361
@@ -3699,7 +3699,7 @@ msgid "Location stock record could not be updated because"
 msgstr "स्थान स्टॉक रिकॉर्ड क्योंकि अद्यतन नहीं किया जा सकता है"
 
 #: ConfirmDispatch_Invoice.php:950 ContractCosting.php:306
-#: CounterSales.php:1304 Credit_Invoice.php:684 GoodsReceived.php:454
+#: CounterSales.php:1304 Credit_Invoice.php:684 GoodsReceived.php:453
 #: ReverseGRN.php:220 SelectCreditItems.php:1351 StockTransfers.php:398
 #: StockTransfers.php:408 WorkOrderIssue.php:161 WorkOrderReceive.php:318
 #: WorkOrderReceive.php:424
@@ -3726,8 +3726,8 @@ msgid "Can not retrieve assembly components location stock quantities because "
 msgstr "विधानसभा घटकों स्थान स्टॉक मात्रा में प्राप्त नहीं कर सकता क्योंकि "
 
 #: ConfirmDispatch_Invoice.php:1018 CounterSales.php:1372
-#: CustomerInquiry.php:195 CustomerTransInquiry.php:92 DeliveryDetails.php:594
-#: DeliveryDetails.php:600 DeliveryDetails.php:607 DeliveryDetails.php:777
+#: CustomerInquiry.php:195 CustomerTransInquiry.php:92 DeliveryDetails.php:593
+#: DeliveryDetails.php:599 DeliveryDetails.php:606 DeliveryDetails.php:787
 #: MRPReport.php:412 PDFOrdersInvoiced.php:298 PDFOrderStatus.php:272
 #: SelectCompletedOrder.php:585 SelectContract.php:152
 #: SelectOrderItems.php:731 SelectProduct.php:356 Shipments.php:383
@@ -3786,7 +3786,7 @@ msgstr "शेयर आंदोलन रिकॉर्ड वजह से �
 
 #: ConfirmDispatch_Invoice.php:1119 ContractCosting.php:335
 #: CounterSales.php:1474 Credit_Invoice.php:892 Credit_Invoice.php:991
-#: Credit_Invoice.php:1030 GoodsReceived.php:485
+#: Credit_Invoice.php:1030 GoodsReceived.php:484
 #: RecurringSalesOrdersProcess.php:362 ReverseGRN.php:249
 #: SelectCreditItems.php:1249 WorkOrderIssue.php:192 WorkOrderReceive.php:347
 #: WorkOrderReceive.php:454
@@ -3829,7 +3829,7 @@ msgstr ""
 "निम्नलिखित एसक्यूएल धारावाहिक भंडार वस्तु रिकॉर्ड इस्तेमाल किया गया था अद्यतन करने के लिए"
 
 #: ConfirmDispatch_Invoice.php:1172 Credit_Invoice.php:946
-#: GoodsReceived.php:548 SelectCreditItems.php:1330 StockAdjustments.php:224
+#: GoodsReceived.php:547 SelectCreditItems.php:1330 StockAdjustments.php:224
 #: StockLocTransferReceive.php:172 StockLocTransferReceive.php:285
 #: StockTransfers.php:274 StockTransfers.php:385 WorkOrderIssue.php:228
 #: WorkOrderIssue.php:283 WorkOrderReceive.php:505 WorkOrderReceive.php:576
@@ -3837,7 +3837,7 @@ msgid "The serial stock movement record could not be inserted because"
 msgstr "धारावाहिक स्टॉक आंदोलन रिकॉर्ड वजह से हो सकता है नहीं डाला"
 
 #: ConfirmDispatch_Invoice.php:1173 Credit_Invoice.php:947
-#: GoodsReceived.php:549 StockAdjustments.php:225
+#: GoodsReceived.php:548 StockAdjustments.php:225
 #: StockLocTransferReceive.php:173 StockLocTransferReceive.php:286
 #: StockTransfers.php:275 StockTransfers.php:386 WorkOrderIssue.php:229
 #: WorkOrderIssue.php:284 WorkOrderReceive.php:506 WorkOrderReceive.php:577
@@ -3950,7 +3950,7 @@ msgstr "निपटान आय जीएल नहीं डाला जा 
 msgid "The fixed asset transaction could not be inserted because"
 msgstr "अचल संपत्ति लेनदेन के कारण हो सकता है नहीं डाला"
 
-#: ConfirmDispatch_Invoice.php:1509 GoodsReceived.php:586 ReverseGRN.php:176
+#: ConfirmDispatch_Invoice.php:1509 GoodsReceived.php:585 ReverseGRN.php:176
 #: SupplierCredit.php:1199 SupplierCredit.php:1287 SupplierInvoice.php:1165
 #: SupplierInvoice.php:1251
 msgid "The following SQL to insert the fixed asset transaction record was used"
@@ -4000,8 +4000,8 @@ msgstr "संसाधित"
 
 #: ConfirmDispatch_Invoice.php:1614 ConfirmDispatch_Invoice.php:1616
 #: ContractBOM.php:294 CounterSales.php:1941 CounterSales.php:1943
-#: CustomerReceipt.php:528 DeliveryDetails.php:575 DeliveryDetails.php:579
-#: DeliveryDetails.php:774 DeliveryDetails.php:775 GLBalanceSheet.php:21
+#: CustomerReceipt.php:528 DeliveryDetails.php:574 DeliveryDetails.php:578
+#: DeliveryDetails.php:776 DeliveryDetails.php:779 GLBalanceSheet.php:21
 #: GLProfit_Loss.php:19 GLTagProfit_Loss.php:22 GLTagProfit_Loss.php:496
 #: GLTags.php:32 GLTransInquiry.php:41 PDFStockLocTransfer.php:27
 #: PO_OrderDetails.php:116 PO_PDFPurchOrder.php:333 PO_PDFPurchOrder.php:336
@@ -4076,7 +4076,7 @@ msgstr ""
 "मेटा ताज़ा का समर्थन नहीं करता"
 
 #: ContractBOM.php:43 ContractOtherReqts.php:45 Contracts.php:88
-#: Contracts.php:97 DeliveryDetails.php:260 DeliveryDetails.php:269
+#: Contracts.php:97 DeliveryDetails.php:259 DeliveryDetails.php:268
 #: EmailCustTrans.php:24 EmailCustTrans.php:28 GLAccountCSV.php:260
 #: PO_Header.php:235 POReport.php:1409 SalesAnalysis_UserDefined.php:46
 #: SelectOrderItems.php:1148 StockQties_csv.php:43 StockUsage.php:22
@@ -4089,7 +4089,7 @@ msgid "click here"
 msgstr "यहाँ क्लिक करें"
 
 #: ContractBOM.php:43 ContractOtherReqts.php:45 Contracts.php:88
-#: Contracts.php:97 DeliveryDetails.php:260 DeliveryDetails.php:269
+#: Contracts.php:97 DeliveryDetails.php:259 DeliveryDetails.php:268
 #: PO_Header.php:235 SalesAnalysis_UserDefined.php:46
 #: SelectOrderItems.php:1148 StockUsage.php:22 SupplierCredit.php:216
 #: SupplierCredit.php:228 SupplierCredit.php:240 SupplierCredit.php:249
@@ -4195,9 +4195,9 @@ msgstr "शेयर आइटम्स के लिए खोज"
 
 #: ContractBOM.php:299 CounterSales.php:2113 CounterSales.php:2116
 #: DailySalesInquiry.php:44 DailySalesInquiry.php:46 FixedAssetRegister.php:56
-#: FixedAssetRegister.php:65 InventoryQuantities.php:154
+#: FixedAssetRegister.php:65 InventoryQuantities.php:153
 #: InventoryQuantities.php:175 InventoryQuantities.php:177 MRP.php:562
-#: MRPReport.php:523 MRPReport.php:525 MRPReschedules.php:136
+#: MRPReport.php:523 MRPReport.php:525 MRPReschedules.php:135
 #: PDFPeriodStockTransListing.php:58 PDFPriceList.php:194
 #: PDFPrintLabel.php:239 PO_Items.php:878 POReport.php:1490
 #: ReorderLevel.php:175 ReorderLevel.php:177 ReorderLevel.php:205
@@ -4305,7 +4305,7 @@ msgid "Inventory Required"
 msgstr "सूची आवश्यक"
 
 #: ContractCosting.php:75 ContractCosting.php:81 Contracts.php:933
-#: CounterSales.php:703 DeliveryDetails.php:810 DeliveryDetails.php:875
+#: CounterSales.php:703 DeliveryDetails.php:823 DeliveryDetails.php:888
 #: OrderDetails.php:156 PO_Items.php:733 PrintCustTrans.php:651
 #: PrintCustTrans.php:714 PrintCustTrans.php:752
 #: PrintCustTransPortrait.php:861 PrintCustTransPortrait.php:944
@@ -4399,7 +4399,7 @@ msgstr "कार्य आदेश अद्यतन नहीं किय�
 msgid "The SQL used to close the work order was:"
 msgstr "SQL के पास काम करने गया था प्रयोग किया है:"
 
-#: ContractCosting.php:305 GoodsReceived.php:453
+#: ContractCosting.php:305 GoodsReceived.php:452
 #: PDFStockCheckComparison.php:130 ReverseGRN.php:219 StockAdjustments.php:237
 #: StockLocTransferReceive.php:297 StockLocTransferReceive.php:306
 #: StockTransfers.php:397 StockTransfers.php:407 WorkOrderIssue.php:160
@@ -4538,8 +4538,8 @@ msgid ""
 "items page"
 msgstr "आप स्वचालित रूप से अनुबंध लाइन आइटम पृष्ठ की प्रविष्टि को भेजा जाना चाहिए"
 
-#: Contracts.php:87 Contracts.php:96 Customers.php:287 DeliveryDetails.php:260
-#: DeliveryDetails.php:269 EmailCustTrans.php:24 PO_Header.php:234
+#: Contracts.php:87 Contracts.php:96 Customers.php:287 DeliveryDetails.php:259
+#: DeliveryDetails.php:268 EmailCustTrans.php:24 PO_Header.php:234
 #: SalesAnalysis_UserDefined.php:46 StockUsage.php:21 SupplierCredit.php:214
 #: SupplierCredit.php:226 SupplierCredit.php:238 SupplierCredit.php:248
 #: SupplierCredit.php:256 SupplierInvoice.php:188 SupplierInvoice.php:196
@@ -4548,8 +4548,8 @@ msgstr "आप स्वचालित रूप से अनुबंध ल�
 msgid "If this does not happen"
 msgstr "अगर ऐसा नहीं होता है"
 
-#: Contracts.php:87 Contracts.php:96 Customers.php:287 DeliveryDetails.php:260
-#: DeliveryDetails.php:269 EmailCustTrans.php:24 PO_Header.php:234
+#: Contracts.php:87 Contracts.php:96 Customers.php:287 DeliveryDetails.php:259
+#: DeliveryDetails.php:268 EmailCustTrans.php:24 PO_Header.php:234
 #: SelectOrderItems.php:1147 StockUsage.php:21 SupplierCredit.php:214
 #: SupplierCredit.php:226 SupplierCredit.php:238 SupplierCredit.php:248
 #: SupplierCredit.php:256 SupplierInvoice.php:188 SupplierInvoice.php:196
@@ -4856,7 +4856,7 @@ msgid "The customer record selected"
 msgstr "ग्राहक चयनित रिकॉर्ड"
 
 #: Contracts.php:716 CounterSales.php:111 CounterSales.php:145
-#: CounterSales.php:2022 CounterSales.php:2200 DeliveryDetails.php:147
+#: CounterSales.php:2022 CounterSales.php:2200 DeliveryDetails.php:146
 #: PO_Header.php:394 PO_Header.php:461 SelectCreditItems.php:134
 #: SelectCreditItems.php:172 SelectOrderItems.php:418 SelectOrderItems.php:464
 #: SelectOrderItems.php:537 SelectOrderItems.php:577 SelectOrderItems.php:1474
@@ -4973,7 +4973,7 @@ msgstr "अनुबंध संदर्भ"
 #: ReorderLevel.php:242 SpecialOrder.php:613 StockDispatch.php:344
 #: Stocks.php:728 SuppPriceList.php:211 SuppPriceList.php:261
 #: includes/PDFInventoryValnPageHeader.inc:32
-#: includes/PDFInventoryValnPageHeader.inc:37
+#: includes/PDFInventoryValnPageHeader.inc:38
 msgid "Category"
 msgstr "श्रेणी"
 
@@ -5015,7 +5015,7 @@ msgstr "केवल प्रारूप"
 msgid "Required Date"
 msgstr "आवश्यक दिनांक"
 
-#: Contracts.php:890 CounterSales.php:816 DeliveryDetails.php:1022
+#: Contracts.php:890 CounterSales.php:816 DeliveryDetails.php:1035
 #: OrderDetails.php:70 RecurringSalesOrders.php:404
 msgid "Customer Reference"
 msgstr "ग्राहक संदर्भ"
@@ -5040,7 +5040,7 @@ msgstr "विनिमय दर"
 msgid "Contract Status"
 msgstr "अनुबंध स्तर"
 
-#: Contracts.php:906 CustLoginSetup.php:22 index.php:20 SuppLoginSetup.php:19
+#: Contracts.php:906 CustLoginSetup.php:20 index.php:20 SuppLoginSetup.php:19
 #: WWW_Users.php:21
 msgid "Setup"
 msgstr "सेटअप"
@@ -5169,35 +5169,35 @@ msgstr ""
 "वर्तमान में एक खाते में है कि करने के लिए देखा जाना चाहिए के रूप में ध्वजांकित है. संपर्क ऋण "
 "नियंत्रण कर्मियों पर चर्चा के लिए कृपया"
 
-#: CounterSales.php:145 DeliveryDetails.php:147 SelectCreditItems.php:172
+#: CounterSales.php:145 DeliveryDetails.php:146 SelectCreditItems.php:172
 #: SelectOrderItems.php:464 SelectOrderItems.php:577
 msgid "The customer branch record of the customer selected"
 msgstr "चयनित ग्राहकों के ग्राहक शाखा रिकॉर्ड"
 
-#: CounterSales.php:146 DeliveryDetails.php:148 SelectCreditItems.php:173
+#: CounterSales.php:146 DeliveryDetails.php:147 SelectCreditItems.php:173
 #: SelectOrderItems.php:465 SelectOrderItems.php:578
 msgid "SQL used to retrieve the branch details was"
 msgstr "एसक्यूएल को शाखा जानकारी पाने के लिये प्रयुक्त किया गया था"
 
-#: CounterSales.php:151 DeliveryDetails.php:152 SelectOrderItems.php:470
+#: CounterSales.php:151 DeliveryDetails.php:151 SelectOrderItems.php:470
 msgid "The branch details for branch code"
 msgstr "शाखा कोड के लिए शाखा विवरण"
 
-#: CounterSales.php:151 DeliveryDetails.php:152 SelectOrderItems.php:470
+#: CounterSales.php:151 DeliveryDetails.php:151 SelectOrderItems.php:470
 msgid "against customer code"
 msgstr "ग्राहक कोड के खिलाफ"
 
-#: CounterSales.php:151 DeliveryDetails.php:152 GLAccountCSV.php:181
+#: CounterSales.php:151 DeliveryDetails.php:151 GLAccountCSV.php:181
 #: GLAccountCSV.php:210 GLAccountInquiry.php:175 GLAccountInquiry.php:214
 #: GLAccountReport.php:114 GLAccountReport.php:146 SelectOrderItems.php:470
 msgid "could not be retrieved"
 msgstr "नहीं किया जा सकता है लिया गया"
 
-#: CounterSales.php:151 DeliveryDetails.php:152 SelectOrderItems.php:470
+#: CounterSales.php:151 DeliveryDetails.php:151 SelectOrderItems.php:470
 msgid "Check the set up of the customer and branch"
 msgstr "चेक ग्राहक और शाखा की स्थापना"
 
-#: CounterSales.php:154 DeliveryDetails.php:155 SelectOrderItems.php:473
+#: CounterSales.php:154 DeliveryDetails.php:154 SelectOrderItems.php:473
 msgid "The SQL that failed to get the branch details was"
 msgstr "SQL कि शाखा जानकारी पाने में विफल रहा था"
 
@@ -5347,16 +5347,16 @@ msgstr "कथा"
 msgid "Picked Up By"
 msgstr "द्वारा उठाया"
 
-#: CounterSales.php:810 DeliveryDetails.php:1016 RecurringSalesOrders.php:398
+#: CounterSales.php:810 DeliveryDetails.php:1029 RecurringSalesOrders.php:398
 msgid "Contact Phone Number"
 msgstr "संपर्क फ़ोन नंबर"
 
-#: CounterSales.php:814 DeliveryDetails.php:1020 RecurringSalesOrders.php:401
+#: CounterSales.php:814 DeliveryDetails.php:1033 RecurringSalesOrders.php:401
 msgid "Contact Email"
 msgstr "संपर्क ईमेल"
 
 #: CounterSales.php:821 CustomerInquiry.php:194 CustomerTransInquiry.php:91
-#: DeliveryDetails.php:1027 OrderDetails.php:114 PO_Header.php:1062
+#: DeliveryDetails.php:1040 OrderDetails.php:114 PO_Header.php:1062
 #: PO_OrderDetails.php:125 RecurringSalesOrders.php:408 SpecialOrder.php:531
 #: SupplierCredit.php:558 SupplierInquiry.php:205 SupplierInvoice.php:512
 #: SupplierTransInquiry.php:91 Z_ImportChartOfAccounts.php:28
@@ -5423,7 +5423,7 @@ msgstr ""
 "कंपनी की जानकारी और वरीयताओं को पुनः प्राप्त नहीं किया जा सका. अपने सिस्टम व्यवस्थापक "
 "देखें"
 
-#: CounterSales.php:1005 DeliveryDetails.php:379
+#: CounterSales.php:1005 DeliveryDetails.php:378
 #: RecurringSalesOrdersProcess.php:144
 msgid "The order cannot be added because"
 msgstr "आदेश क्योंकि जोड़ा नहीं जा सकता"
@@ -5432,19 +5432,19 @@ msgstr "आदेश क्योंकि जोड़ा नहीं जा �
 msgid "Trouble inserting a line of a sales order. The SQL that failed was"
 msgstr "मुसीबत एक बिक्री आदेश की एक लाइन डालने. एसक्यूएल है कि विफल रही थी"
 
-#: CounterSales.php:1037 DeliveryDetails.php:408
+#: CounterSales.php:1037 DeliveryDetails.php:407
 msgid "Unable to add the sales order line"
 msgstr "के लिए बिक्री के आदेश पंक्ति जोड़ने में असमर्थ"
 
-#: CounterSales.php:1107 DeliveryDetails.php:480 DeliveryDetails.php:661
+#: CounterSales.php:1107 DeliveryDetails.php:479 DeliveryDetails.php:660
 msgid "Unable to insert a new work order for the sales order item"
 msgstr "सम्मिलित करने के लिए बिक्री के आदेश आइटम के लिए कोई नया काम करने में असमर्थ"
 
-#: CounterSales.php:1127 DeliveryDetails.php:500 DeliveryDetails.php:680
+#: CounterSales.php:1127 DeliveryDetails.php:499 DeliveryDetails.php:679
 msgid "In automatically creating a work order for"
 msgstr "स्वचालित रूप से एक काम बनाने के लिए आदेश में"
 
-#: CounterSales.php:1127 DeliveryDetails.php:500 DeliveryDetails.php:680
+#: CounterSales.php:1127 DeliveryDetails.php:499 DeliveryDetails.php:679
 msgid ""
 "an item on this sales order, the cost of this item as accumulated from the "
 "sum of the component costs is nil. This could be because there is no bill of "
@@ -5454,57 +5454,57 @@ msgstr ""
 "बराबर है. इस वजह से वहाँ सामग्री का कोई बिल की स्थापना की है हो सकता है ... तुम डबल "
 "करने के लिए इस चेक करना चाह सकते हैं"
 
-#: CounterSales.php:1141 DeliveryDetails.php:514 DeliveryDetails.php:701
+#: CounterSales.php:1141 DeliveryDetails.php:513 DeliveryDetails.php:700
 #: WorkOrderEntry.php:238
 msgid "The work order item could not be added"
 msgstr "कार्य आदेश आइटम जोड़ा नहीं जा सका"
 
-#: CounterSales.php:1147 DeliveryDetails.php:520
+#: CounterSales.php:1147 DeliveryDetails.php:519
 msgid "A new work order has been created for"
 msgstr "एक नया काम करने के लिए बनाया गया है"
 
-#: CounterSales.php:1149 DeliveryDetails.php:522
+#: CounterSales.php:1149 DeliveryDetails.php:521
 msgid "These are for"
 msgstr "इन के लिए कर रहे हैं"
 
-#: CounterSales.php:1149 DeliveryDetails.php:522
+#: CounterSales.php:1149 DeliveryDetails.php:521
 msgid "there order ref"
 msgstr "आदेश रेफरी वहाँ"
 
-#: CounterSales.php:1149 DeliveryDetails.php:522
+#: CounterSales.php:1149 DeliveryDetails.php:521
 msgid "our order number"
 msgstr "हमारे आदेश संख्या"
 
-#: CounterSales.php:1153 DeliveryDetails.php:526
+#: CounterSales.php:1153 DeliveryDetails.php:525
 msgid "The following serial numbers have been reserved for this work order"
 msgstr "निम्नलिखित सीरियल नंबर इस काम के आदेश के लिए आरक्षित किया गया है"
 
-#: CounterSales.php:1162 DeliveryDetails.php:535
+#: CounterSales.php:1162 DeliveryDetails.php:534
 msgid ""
 "This automatically generated serial number already exists - it cannot be "
 "added to the work order"
 msgstr "यह स्वतः उत्पन्न क्रम संख्या पहले से मौजूद है - यह काम करने को जोड़ा नहीं जा सकता"
 
-#: CounterSales.php:1170 DeliveryDetails.php:543
+#: CounterSales.php:1170 DeliveryDetails.php:542
 msgid "The serial number for the work order item could not be added"
 msgstr "काम करने के आइटम के लिए सीरियल नंबर जोड़ा नहीं जा सका"
 
-#: CounterSales.php:1176 DeliveryDetails.php:549
+#: CounterSales.php:1176 DeliveryDetails.php:548
 msgid "Could not update the new next serial number for the item"
 msgstr "आइटम के लिए नया अगले क्रम संख्या अद्यतन नहीं किया जा सका"
 
-#: CounterSales.php:1181 DeliveryDetails.php:553
+#: CounterSales.php:1181 DeliveryDetails.php:552
 msgid "New Work Order Number"
 msgstr "नई कार्य आदेश संख्या"
 
-#: CounterSales.php:1181 DeliveryDetails.php:553 EDIMessageFormat.php:127
+#: CounterSales.php:1181 DeliveryDetails.php:552 EDIMessageFormat.php:127
 #: EDIMessageFormat.php:204 Prices_Customer.php:45
 #: RecurringSalesOrdersProcess.php:88 ReverseGRN.php:332 SpecialOrder.php:113
 #: SpecialOrder.php:115
 msgid "for"
 msgstr "के लिए"
 
-#: CounterSales.php:1190 DeliveryDetails.php:565 DeliveryDetails.php:772
+#: CounterSales.php:1190 DeliveryDetails.php:564 DeliveryDetails.php:771
 #: FTP_RadioBeacon.php:186 FTP_RadioBeacon.php:289 PO_AuthoriseMyOrders.php:55
 #: PO_OrderDetails.php:31 POReport.php:490 POReport.php:499 POReport.php:678
 #: POReport.php:1187 POReport.php:1196 POReport.php:1350 POReport.php:1479
@@ -5517,7 +5517,7 @@ msgstr "के लिए"
 msgid "Order Number"
 msgstr "क्रम संख्या"
 
-#: CounterSales.php:1190 DeliveryDetails.php:563 DeliveryDetails.php:565
+#: CounterSales.php:1190 DeliveryDetails.php:562 DeliveryDetails.php:564
 #: SpecialOrder.php:489
 msgid "has been entered"
 msgstr "दर्ज किया गया है"
@@ -5952,7 +5952,7 @@ msgstr "माल इस क्रेडिट नोट के लिए पो
 msgid "Credit Note number"
 msgstr "क्रेडिट नोट संख्या"
 
-#: Credit_Invoice.php:1447 GoodsReceived.php:687 SupplierCredit.php:1300
+#: Credit_Invoice.php:1447 GoodsReceived.php:686 SupplierCredit.php:1300
 #: SupplierInvoice.php:1272 WorkOrderIssue.php:352 WorkOrderReceive.php:672
 #: Z_BottomUpCosts.php:33
 msgid "has been processed"
@@ -6147,7 +6147,7 @@ msgstr "कार्यात्मक मुद्रा या संशोध
 msgid "The currency code cannot contain any of the following characters"
 msgstr "मुद्रा कोड निम्न वर्णों के किसी भी शामिल नहीं हो सकता"
 
-#: Currencies.php:89 CustEDISetup.php:36 CustLoginSetup.php:93
+#: Currencies.php:89 CustEDISetup.php:31 CustLoginSetup.php:87
 #: Customers.php:53 Stocks.php:107 SuppLoginSetup.php:79 WorkCentres.php:35
 #: WWW_Users.php:65 Z_ChangeBranchCode.php:30 Z_ImportStocks.php:125
 msgid "or a space"
@@ -6251,17 +6251,17 @@ msgstr "आईएसओ 4217 मुद्रा कोड"
 msgid "Currency Abbreviation"
 msgstr "संक्षिप्त मुद्रा"
 
-#: CustEDISetup.php:8
+#: CustEDISetup.php:6
 msgid "Customer EDI Set Up"
 msgstr "ग्राहक ईडीआई सेट अप"
 
-#: CustEDISetup.php:36
+#: CustEDISetup.php:31
 msgid ""
 "The customers EDI reference code cannot contain any of the following "
 "characters"
 msgstr "ग्राहकों ईडीआई संदर्भ कोड निम्न वर्णों के किसी भी शामिल नहीं हो सकता"
 
-#: CustEDISetup.php:40
+#: CustEDISetup.php:35
 msgid ""
 "The customers EDI reference code must be set when EDI Invoices or EDI orders "
 "are activated"
@@ -6269,7 +6269,7 @@ msgstr ""
 "ग्राहकों ईडीआई संदर्भ कोड सेट हो सकता है जब ईडीआई चालान या ईडीआई आदेश सक्रिय कर रहे हैं "
 "चाहिए"
 
-#: CustEDISetup.php:46
+#: CustEDISetup.php:41
 msgid ""
 "The customers EDI email address or FTP server address must be entered if EDI "
 "Invoices are to be sent"
@@ -6277,105 +6277,105 @@ msgstr ""
 "ग्राहकों ईडीआई ईमेल पते या FTP सर्वर पता अगर ईडीआई चालान को प्रेषित किया जाएगा दर्ज "
 "होना चाहिए"
 
-#: CustEDISetup.php:69
+#: CustEDISetup.php:64
 msgid "The customer EDI setup data could not be updated because"
 msgstr "ग्राहक ईडीआई सेटअप डेटा क्योंकि अद्यतन नहीं किया जा सकता है"
 
-#: CustEDISetup.php:71
+#: CustEDISetup.php:66
 msgid "Customer EDI configuration updated"
 msgstr "ग्राहक ईडीआई अद्यतन विन्यास"
 
-#: CustEDISetup.php:74
+#: CustEDISetup.php:69
 msgid "Customer EDI configuration failed"
 msgstr "ग्राहक ईडीआई विन्यास विफल"
 
-#: CustEDISetup.php:94
+#: CustEDISetup.php:89
 msgid "The customer EDI configuration details could not be retrieved because"
 msgstr "ग्राहक ईडीआई विन्यास विवरण वजह से पुनः प्राप्त नहीं कर सकता"
 
-#: CustEDISetup.php:103
+#: CustEDISetup.php:98
 msgid "Enable Sending of EDI Invoices"
 msgstr "ईडीआई चालान में भेजा सक्षम करें"
 
-#: CustEDISetup.php:108 CustEDISetup.php:111 CustEDISetup.php:122
-#: CustEDISetup.php:125 CustomerBranches.php:738 CustomerBranches.php:740
+#: CustEDISetup.php:103 CustEDISetup.php:106 CustEDISetup.php:117
+#: CustEDISetup.php:120 CustomerBranches.php:738 CustomerBranches.php:740
 #: SystemParameters.php:792
 msgid "Disabled"
 msgstr "विकलांग"
 
-#: CustEDISetup.php:109 CustEDISetup.php:112 CustEDISetup.php:123
-#: CustEDISetup.php:126 CustomerBranches.php:737 CustomerBranches.php:741
+#: CustEDISetup.php:104 CustEDISetup.php:107 CustEDISetup.php:118
+#: CustEDISetup.php:121 CustomerBranches.php:737 CustomerBranches.php:741
 msgid "Enabled"
 msgstr "सक्षम"
 
-#: CustEDISetup.php:115
+#: CustEDISetup.php:110
 msgid "Create"
 msgstr "बनाएँ"
 
-#: CustEDISetup.php:115
+#: CustEDISetup.php:110
 msgid "Edit Invoice Message Format"
 msgstr "चालान संदेश स्वरूप संपादित करें"
 
-#: CustEDISetup.php:117
+#: CustEDISetup.php:112
 msgid "Enable Receiving of EDI Orders"
 msgstr "ईडीआई के आदेश की प्राप्ति सक्षम करें"
 
-#: CustEDISetup.php:131
+#: CustEDISetup.php:126
 msgid "Customer EDI Reference"
 msgstr "ग्राहक ईडीआई संदर्भ"
 
-#: CustEDISetup.php:135
+#: CustEDISetup.php:130
 msgid "EDI Communication Method"
 msgstr "ईडीआई संचार विधि"
 
-#: CustEDISetup.php:139 CustEDISetup.php:142
+#: CustEDISetup.php:134 CustEDISetup.php:137
 msgid "Email Attachments"
 msgstr "अनुलग्नकों ईमेल"
 
-#: CustEDISetup.php:140 CustEDISetup.php:143
+#: CustEDISetup.php:135 CustEDISetup.php:138
 msgid "File Transfer Protocol (FTP)"
 msgstr "फ़ाइल स्थानांतरण प्रोटोकॉल (FTP)"
 
-#: CustEDISetup.php:148
+#: CustEDISetup.php:143
 msgid "FTP Server or Email Address"
 msgstr "FTP सर्वर या ईमेल पता"
 
-#: CustEDISetup.php:154
+#: CustEDISetup.php:149
 msgid "FTP Server User Name"
 msgstr "FTP सर्वर उपयोगकर्ता नाम"
 
-#: CustEDISetup.php:156
+#: CustEDISetup.php:151
 msgid "FTP Server Password"
 msgstr "FTP सर्वर पासवर्ड"
 
-#: CustEDISetup.php:160
+#: CustEDISetup.php:155
 msgid "Update EDI Configuration"
 msgstr "अद्यतन विन्यास ईडीआई"
 
-#: CustLoginSetup.php:8 SelectCustomer.php:303
+#: CustLoginSetup.php:6 SelectCustomer.php:303
 msgid "Customer Login Configuration"
 msgstr "ग्राहक लॉगिन विन्यास"
 
-#: CustLoginSetup.php:12 PO_SelectOSPurchOrder.php:215
+#: CustLoginSetup.php:10 PO_SelectOSPurchOrder.php:215
 #: PO_SelectPurchOrder.php:180 Shipt_Select.php:182 SuppLoginSetup.php:10
 #: WWW_Users.php:12
 msgid "Orders"
 msgstr "आदेश"
 
-#: CustLoginSetup.php:13 index.php:12 SuppLoginSetup.php:11 WWW_Users.php:13
+#: CustLoginSetup.php:11 index.php:12 SuppLoginSetup.php:11 WWW_Users.php:13
 msgid "Receivables"
 msgstr "प्राप्य"
 
-#: CustLoginSetup.php:14 index.php:13 SuppLoginSetup.php:12 WWW_Users.php:14
+#: CustLoginSetup.php:12 index.php:13 SuppLoginSetup.php:12 WWW_Users.php:14
 msgid "Payables"
 msgstr "Payables"
 
-#: CustLoginSetup.php:15 SuppLoginSetup.php:13 WWW_Users.php:15
+#: CustLoginSetup.php:13 SuppLoginSetup.php:13 WWW_Users.php:15
 msgid "Purchasing"
 msgstr "क्रय"
 
-#: CustLoginSetup.php:16 index.php:15 InventoryQuantities.php:146
-#: InventoryValuation.php:200 Locations.php:350 Locations.php:410
+#: CustLoginSetup.php:14 index.php:15 InventoryQuantities.php:145
+#: InventoryValuation.php:207 Locations.php:350 Locations.php:410
 #: MRPCalendar.php:20 MRPCreateDemands.php:183 MRPDemands.php:26
 #: MRPDemandTypes.php:17 MRP.php:515 MRPPlannedPurchaseOrders.php:267
 #: MRPPlannedWorkOrders.php:247 MRPPlannedWorkOrders.php:326
@@ -6387,52 +6387,52 @@ msgstr "क्रय"
 msgid "Inventory"
 msgstr "सूची"
 
-#: CustLoginSetup.php:17 index.php:16 SuppLoginSetup.php:15 WWW_Users.php:17
+#: CustLoginSetup.php:15 index.php:16 SuppLoginSetup.php:15 WWW_Users.php:17
 msgid "Manufacturing"
 msgstr "निर्माण"
 
-#: CustLoginSetup.php:18 SelectContract.php:11 SupplierCredit.php:244
+#: CustLoginSetup.php:16 SelectContract.php:11 SupplierCredit.php:244
 #: SupplierCredit.php:296 SupplierInvoice.php:208 SupplierInvoice.php:261
 msgid "Contracts"
 msgstr "ठेके"
 
-#: CustLoginSetup.php:19 index.php:17 SupplierCredit.php:232
+#: CustLoginSetup.php:17 index.php:17 SupplierCredit.php:232
 #: SupplierCredit.php:298 SupplierInvoice.php:200 SupplierInvoice.php:264
 #: SuppLoginSetup.php:16 SuppTransGLAnalysis.php:86 SuppTransGLAnalysis.php:89
 #: WWW_Users.php:18
 msgid "General Ledger"
 msgstr "सामान्य खाता बही"
 
-#: CustLoginSetup.php:20 index.php:18 SuppLoginSetup.php:17 WWW_Users.php:19
+#: CustLoginSetup.php:18 index.php:18 SuppLoginSetup.php:17 WWW_Users.php:19
 msgid "Asset Manager"
 msgstr "संपत्ति प्रबंधक"
 
-#: CustLoginSetup.php:21 index.php:19 PcAuthorizeExpenses.php:34
+#: CustLoginSetup.php:19 index.php:19 PcAuthorizeExpenses.php:34
 #: PcAuthorizeExpenses.php:37 SuppLoginSetup.php:18 WWW_Users.php:20
 msgid "Petty Cash"
 msgstr "फुटकर अदायगी"
 
-#: CustLoginSetup.php:35 SelectCustomer.php:281 SuppLoginSetup.php:23
+#: CustLoginSetup.php:33 SelectCustomer.php:281 SuppLoginSetup.php:23
 msgid " has been selected"
 msgstr " चुना गया"
 
-#: CustLoginSetup.php:90 SuppLoginSetup.php:76 WWW_Users.php:62
+#: CustLoginSetup.php:84 SuppLoginSetup.php:76 WWW_Users.php:62
 msgid "The user ID entered must be at least 4 characters long"
 msgstr "प्रयोक्ता आईडी कम से कम 4 वर्ण लंबा होना चाहिए में प्रवेश किया"
 
-#: CustLoginSetup.php:93 SuppLoginSetup.php:79 WWW_Users.php:65
+#: CustLoginSetup.php:87 SuppLoginSetup.php:79 WWW_Users.php:65
 msgid "User names cannot contain any of the following characters"
 msgstr "उपयोगकर्ता नाम में निम्न वर्णों के किसी भी शामिल नहीं हो सकता"
 
-#: CustLoginSetup.php:97 SuppLoginSetup.php:83 WWW_Users.php:69
+#: CustLoginSetup.php:91 SuppLoginSetup.php:83 WWW_Users.php:69
 msgid "The password entered must be at least 5 characters long"
 msgstr "पासवर्ड कम से कम 5 अक्षर का होना चाहिए में प्रवेश किया"
 
-#: CustLoginSetup.php:101 SuppLoginSetup.php:87 WWW_Users.php:73
+#: CustLoginSetup.php:95 SuppLoginSetup.php:87 WWW_Users.php:73
 msgid "The password cannot contain the user id"
 msgstr "पासवर्ड नहीं हो सकते हैं उपयोगकर्ता आईडी"
 
-#: CustLoginSetup.php:104 WWW_Users.php:76
+#: CustLoginSetup.php:98 WWW_Users.php:76
 msgid ""
 "If you enter a Customer Code you must also enter a Branch Code valid for "
 "this Customer"
@@ -6440,59 +6440,59 @@ msgstr ""
 "यदि आप एक ग्राहक कोड दर्ज करें आप भी एक शाखा कोड इस ग्राहक के लिए मान्य दर्ज करना "
 "होगा"
 
-#: CustLoginSetup.php:121 WWW_Users.php:93
+#: CustLoginSetup.php:115 WWW_Users.php:93
 msgid "The check on validity of the customer code and branch failed because"
 msgstr "ग्राहक कोड और शाखा की वैधता पर जांच क्योंकि विफल"
 
-#: CustLoginSetup.php:122 WWW_Users.php:94
+#: CustLoginSetup.php:116 WWW_Users.php:94
 msgid "The SQL that was used to check the customer code and branch was"
 msgstr "SQL कि ग्राहक कोड और शाखा की जांच इस्तेमाल किया गया था"
 
-#: CustLoginSetup.php:126 WWW_Users.php:98
+#: CustLoginSetup.php:120 WWW_Users.php:98
 msgid "The entered Branch Code is not valid for the entered Customer Code"
 msgstr "प्रवेश शाखा कोड दर्ज ग्राहक कोड के लिए मान्य नहीं है"
 
-#: CustLoginSetup.php:170 SuppLoginSetup.php:134 WWW_Users.php:145
+#: CustLoginSetup.php:164 SuppLoginSetup.php:134 WWW_Users.php:145
 msgid "The selected user record has been updated"
 msgstr "चयनित उपयोगकर्ता रिकॉर्ड अद्यतन किया गया है"
 
-#: CustLoginSetup.php:203 SuppLoginSetup.php:165 WWW_Users.php:182
+#: CustLoginSetup.php:197 SuppLoginSetup.php:165 WWW_Users.php:182
 msgid "A new user record has been inserted"
 msgstr "नया उपभोक्ता रिकॉर्ड डाला गया है"
 
-#: CustLoginSetup.php:208 SuppLoginSetup.php:170 UserSettings.php:66
+#: CustLoginSetup.php:202 SuppLoginSetup.php:170 UserSettings.php:66
 #: UserSettings.php:82 WWW_Users.php:187
 msgid "The user alterations could not be processed because"
 msgstr "उपयोगकर्ता परिवर्तन क्योंकि संसाधित नहीं किया जा सकता है"
 
-#: CustLoginSetup.php:209 SuppLoginSetup.php:171 UserSettings.php:67
+#: CustLoginSetup.php:203 SuppLoginSetup.php:171 UserSettings.php:67
 #: UserSettings.php:83 WWW_Users.php:188
 msgid "The SQL that was used to update the user and failed was"
 msgstr "SQL कि उपयोगकर्ता अद्यतन इस्तेमाल किया गया था और असफल था"
 
-#: CustLoginSetup.php:241 SuppLoginSetup.php:203 WWW_Users.php:223
+#: CustLoginSetup.php:235 SuppLoginSetup.php:203 WWW_Users.php:223
 msgid "Cannot delete user as entries already exist in the audit trail"
 msgstr "उपयोक्ता मिटाने के रूप में प्रविष्टि पहले से लेखापरीक्षा निशान में मौजूद नहीं कर सकते"
 
-#: CustLoginSetup.php:245 SuppLoginSetup.php:207 WWW_Users.php:227
+#: CustLoginSetup.php:239 SuppLoginSetup.php:207 WWW_Users.php:227
 msgid "The User could not be deleted because"
 msgstr "प्रयोक्ता क्योंकि मिटाया नहीं जा सकता"
 
-#: CustLoginSetup.php:247 SuppLoginSetup.php:209 WWW_Users.php:229
+#: CustLoginSetup.php:241 SuppLoginSetup.php:209 WWW_Users.php:229
 msgid "User Deleted"
 msgstr "उपयोगकर्ता हटाए गए"
 
-#: CustLoginSetup.php:273 CustLoginSetup.php:389 SuppLoginSetup.php:234
+#: CustLoginSetup.php:268 CustLoginSetup.php:382 SuppLoginSetup.php:234
 #: SuppLoginSetup.php:333 WWW_Users.php:258 WWW_Users.php:392
 msgid "User Login"
 msgstr "प्रयोक्ता लॉगिन"
 
-#: CustLoginSetup.php:274 CustLoginSetup.php:420 SuppLoginSetup.php:235
+#: CustLoginSetup.php:269 CustLoginSetup.php:414 SuppLoginSetup.php:235
 #: SuppLoginSetup.php:364 WWW_Users.php:259 WWW_Users.php:424
 msgid "Full Name"
 msgstr "पूरा नाम"
 
-#: CustLoginSetup.php:275 Customers.php:466 Customers.php:691
+#: CustLoginSetup.php:270 Customers.php:466 Customers.php:691
 #: Customers.php:704 Factors.php:170 Factors.php:280 OrderDetails.php:99
 #: PrintCustTrans.php:551 PrintCustTrans.php:706 PrintCustTrans.php:744
 #: PrintCustTransPortrait.php:716 PrintCustTransPortrait.php:936
@@ -6501,9 +6501,9 @@ msgstr "पूरा नाम"
 msgid "Telephone"
 msgstr "टेलीफ़ोन"
 
-#: CustLoginSetup.php:276 CustomerBranches.php:383 CustomerBranches.php:712
+#: CustLoginSetup.php:271 CustomerBranches.php:383 CustomerBranches.php:712
 #: CustomerInquiry.php:246 EmailCustTrans.php:17 EmailCustTrans.php:65
-#: Factors.php:172 Factors.php:282 Locations.php:528 OrderDetails.php:105
+#: Factors.php:172 Factors.php:282 Locations.php:534 OrderDetails.php:105
 #: PDFRemittanceAdvice.php:251 PO_PDFPurchOrder.php:334
 #: PO_PDFPurchOrder.php:337 PrintCustTrans.php:553 PrintCustTrans.php:708
 #: PrintCustTrans.php:746 PrintCustTransPortrait.php:718
@@ -6516,120 +6516,120 @@ msgstr "टेलीफ़ोन"
 msgid "Email"
 msgstr "ईमेल"
 
-#: CustLoginSetup.php:278 CustLoginSetup.php:463 CustomerBranches.php:545
-#: CustomerBranches.php:579 WWW_Users.php:263 WWW_Users.php:474
+#: CustLoginSetup.php:273 CustLoginSetup.php:451 CustomerBranches.php:545
+#: CustomerBranches.php:579 WWW_Users.php:263 WWW_Users.php:469
 #: includes/PDFCustomerListPageHeader.inc:84 api/api_xml-rpc.php:244
 msgid "Branch Code"
 msgstr "शाखा कोड"
 
-#: CustLoginSetup.php:279 SuppLoginSetup.php:239 WWW_Users.php:266
+#: CustLoginSetup.php:274 SuppLoginSetup.php:239 WWW_Users.php:266
 msgid "Last Visit"
 msgstr "यात्रा पिछले"
 
-#: CustLoginSetup.php:280 CustLoginSetup.php:426 SuppLoginSetup.php:240
+#: CustLoginSetup.php:275 CustLoginSetup.php:420 SuppLoginSetup.php:240
 #: SuppLoginSetup.php:370 WWW_Users.php:267 WWW_Users.php:430
 msgid "Security Role"
 msgstr "सुरक्षा की भूमिका"
 
-#: CustLoginSetup.php:281 SuppLoginSetup.php:241 WWW_Users.php:268
+#: CustLoginSetup.php:276 SuppLoginSetup.php:241 WWW_Users.php:268
 msgid "Report Size"
 msgstr "रिपोर्ट का आकार"
 
-#: CustLoginSetup.php:282 CustLoginSetup.php:534 SuppLoginSetup.php:242
+#: CustLoginSetup.php:277 CustLoginSetup.php:518 SuppLoginSetup.php:242
 #: SuppLoginSetup.php:454 UserSettings.php:147 WWW_Users.php:269
-#: WWW_Users.php:550
+#: WWW_Users.php:545
 msgid "Theme"
 msgstr "विषय"
 
-#: CustLoginSetup.php:283 CustLoginSetup.php:558 SuppLoginSetup.php:243
+#: CustLoginSetup.php:278 CustLoginSetup.php:542 SuppLoginSetup.php:243
 #: SuppLoginSetup.php:478 UserSettings.php:123 WWW_Users.php:270
-#: WWW_Users.php:574
+#: WWW_Users.php:569
 msgid "Language"
 msgstr "भाषा"
 
-#: CustLoginSetup.php:337 SuppLoginSetup.php:281 WWW_Users.php:332
+#: CustLoginSetup.php:332 SuppLoginSetup.php:281 WWW_Users.php:332
 msgid "Review Existing Users"
 msgstr "समीक्षा मौजूदा उपयोगकर्ता"
 
-#: CustLoginSetup.php:384 SuppLoginSetup.php:328 WWW_Users.php:385
+#: CustLoginSetup.php:378 SuppLoginSetup.php:328 WWW_Users.php:385
 msgid "User code"
 msgstr "उपयोगकर्ता कोड"
 
-#: CustLoginSetup.php:418 SMTPServer.php:60 SuppLoginSetup.php:362
+#: CustLoginSetup.php:412 SMTPServer.php:60 SuppLoginSetup.php:362
 #: WWW_Users.php:422 includes/Login.php:57
 msgid "Password"
 msgstr "पासवर्ड"
 
-#: CustLoginSetup.php:422 Locations.php:524 SalesPeople.php:294
+#: CustLoginSetup.php:416 Locations.php:530 SalesPeople.php:294
 #: SupplierContacts.php:240 SuppLoginSetup.php:366 WWW_Users.php:426
 msgid "Telephone No"
 msgstr "टेलीफोन नहीं"
 
-#: CustLoginSetup.php:438 SuppLoginSetup.php:382 WWW_Users.php:442
+#: CustLoginSetup.php:430 SuppLoginSetup.php:382 WWW_Users.php:442
 msgid "Default Location"
 msgstr "डिफ़ॉल्ट स्थान"
 
-#: CustLoginSetup.php:487 SuppLoginSetup.php:407 WWW_Users.php:503
+#: CustLoginSetup.php:471 SuppLoginSetup.php:407 WWW_Users.php:498
 msgid "Reports Page Size"
 msgstr "रिपोर्ट पृष्ठ आकार"
 
-#: CustLoginSetup.php:491 EmailConfirmation.php:92
+#: CustLoginSetup.php:475 CustLoginSetup.php:477 EmailConfirmation.php:92
 #: PrintCustOrder_generic.php:89 PrintCustOrder.php:90 SuppLoginSetup.php:411
-#: SuppLoginSetup.php:413 WWW_Users.php:507 WWW_Users.php:509
+#: SuppLoginSetup.php:413 WWW_Users.php:502 WWW_Users.php:504
 msgid "A4"
 msgstr "ए 4"
 
-#: CustLoginSetup.php:497 CustLoginSetup.php:503 CustLoginSetup.php:505
-#: SuppLoginSetup.php:417 SuppLoginSetup.php:419 SuppLoginSetup.php:423
-#: SuppLoginSetup.php:425 WWW_Users.php:513 WWW_Users.php:515
-#: WWW_Users.php:519 WWW_Users.php:521
+#: CustLoginSetup.php:481 CustLoginSetup.php:483 CustLoginSetup.php:487
+#: CustLoginSetup.php:489 SuppLoginSetup.php:417 SuppLoginSetup.php:419
+#: SuppLoginSetup.php:423 SuppLoginSetup.php:425 WWW_Users.php:508
+#: WWW_Users.php:510 WWW_Users.php:514 WWW_Users.php:516
 msgid "A3"
 msgstr "A3"
 
-#: CustLoginSetup.php:503 CustLoginSetup.php:505 CustLoginSetup.php:515
-#: CustLoginSetup.php:517 CustLoginSetup.php:526 CustLoginSetup.php:528
+#: CustLoginSetup.php:487 CustLoginSetup.php:489 CustLoginSetup.php:499
+#: CustLoginSetup.php:501 CustLoginSetup.php:510 CustLoginSetup.php:512
 #: EmailConfirmation.php:92 PrintCustOrder_generic.php:89
 #: PrintCustOrder.php:90 SuppLoginSetup.php:423 SuppLoginSetup.php:425
 #: SuppLoginSetup.php:435 SuppLoginSetup.php:437 SuppLoginSetup.php:446
-#: SuppLoginSetup.php:448 WWW_Users.php:519 WWW_Users.php:521
-#: WWW_Users.php:531 WWW_Users.php:533 WWW_Users.php:542 WWW_Users.php:544
+#: SuppLoginSetup.php:448 WWW_Users.php:514 WWW_Users.php:516
+#: WWW_Users.php:526 WWW_Users.php:528 WWW_Users.php:537 WWW_Users.php:539
 msgid "landscape"
 msgstr "परिदृश्य"
 
-#: CustLoginSetup.php:509 CustLoginSetup.php:511 CustLoginSetup.php:515
-#: CustLoginSetup.php:517 SuppLoginSetup.php:429 SuppLoginSetup.php:431
-#: SuppLoginSetup.php:435 SuppLoginSetup.php:437 WWW_Users.php:525
-#: WWW_Users.php:527 WWW_Users.php:531 WWW_Users.php:533
+#: CustLoginSetup.php:493 CustLoginSetup.php:495 CustLoginSetup.php:499
+#: CustLoginSetup.php:501 SuppLoginSetup.php:429 SuppLoginSetup.php:431
+#: SuppLoginSetup.php:435 SuppLoginSetup.php:437 WWW_Users.php:520
+#: WWW_Users.php:522 WWW_Users.php:526 WWW_Users.php:528
 msgid "Letter"
 msgstr "पत्र"
 
-#: CustLoginSetup.php:521 CustLoginSetup.php:523 CustLoginSetup.php:526
-#: CustLoginSetup.php:528 SuppLoginSetup.php:441 SuppLoginSetup.php:443
-#: SuppLoginSetup.php:446 SuppLoginSetup.php:448 WWW_Users.php:537
-#: WWW_Users.php:539 WWW_Users.php:542 WWW_Users.php:544
+#: CustLoginSetup.php:505 CustLoginSetup.php:507 CustLoginSetup.php:510
+#: CustLoginSetup.php:512 SuppLoginSetup.php:441 SuppLoginSetup.php:443
+#: SuppLoginSetup.php:446 SuppLoginSetup.php:448 WWW_Users.php:532
+#: WWW_Users.php:534 WWW_Users.php:537 WWW_Users.php:539
 msgid "Legal"
 msgstr "कानूनी"
 
-#: CustLoginSetup.php:587 SuppLoginSetup.php:505 WWW_Users.php:607
+#: CustLoginSetup.php:574 SuppLoginSetup.php:505 WWW_Users.php:602
 msgid "Display"
 msgstr "प्रदर्शन"
 
-#: CustLoginSetup.php:587 SuppLoginSetup.php:505 WWW_Users.php:607
+#: CustLoginSetup.php:574 SuppLoginSetup.php:505 WWW_Users.php:602
 msgid "options"
 msgstr "विकल्प"
 
-#: CustLoginSetup.php:599 index.php:40 SuppLoginSetup.php:517
-#: WWW_Users.php:632
+#: CustLoginSetup.php:587 index.php:40 SuppLoginSetup.php:517
+#: WWW_Users.php:627
 msgid "Account Status"
 msgstr "खाता स्थिति"
 
-#: CustLoginSetup.php:601 CustLoginSetup.php:605 SuppLoginSetup.php:519
-#: SuppLoginSetup.php:523 WWW_Users.php:634 WWW_Users.php:638
+#: CustLoginSetup.php:590 CustLoginSetup.php:594 SuppLoginSetup.php:519
+#: SuppLoginSetup.php:523 WWW_Users.php:629 WWW_Users.php:633
 msgid "Open"
 msgstr "खुला"
 
-#: CustLoginSetup.php:602 CustLoginSetup.php:604 SuppLoginSetup.php:520
-#: SuppLoginSetup.php:522 WWW_Users.php:635 WWW_Users.php:637
+#: CustLoginSetup.php:591 CustLoginSetup.php:593 SuppLoginSetup.php:520
+#: SuppLoginSetup.php:522 WWW_Users.php:630 WWW_Users.php:632
 msgid "Blocked"
 msgstr "अवरुद्ध"
 
@@ -7601,8 +7601,8 @@ msgstr "बैंकिंग में"
 msgid "on"
 msgstr "पर"
 
-#: CustomerReceipt.php:842 GoodsReceived.php:92 GoodsReceived.php:96
-#: GoodsReceived.php:100 POReport.php:597 POReport.php:1281 ReverseGRN.php:378
+#: CustomerReceipt.php:842 GoodsReceived.php:90 GoodsReceived.php:94
+#: GoodsReceived.php:98 POReport.php:597 POReport.php:1281 ReverseGRN.php:378
 #: ReverseGRN.php:379 ShipmentCosting.php:145 Shipments.php:387
 #: Shipments.php:465 StockDispatch.php:360 StockDispatch.php:367
 #: SuppCreditGRNs.php:155
@@ -7823,7 +7823,7 @@ msgid "Click"
 msgstr "क्लिक करें"
 
 #: Customers.php:430 Customers.php:439 MRPPlannedPurchaseOrders.php:18
-#: MRPPlannedWorkOrders.php:16 MRPReschedules.php:18 MRPShortages.php:17
+#: MRPPlannedWorkOrders.php:16 MRPReschedules.php:17 MRPShortages.php:17
 #: OffersReceived.php:229 PO_Header.php:436 includes/ConnectDB_mysqli.inc:29
 #: includes/ConnectDB_mysql.inc:25
 msgid "here"
@@ -8353,112 +8353,112 @@ msgstr "जीपी%"
 msgid "Avg Daily Sales"
 msgstr "दैनिक बिक्री औसत"
 
-#: DebtorsAtPeriodEnd.php:16
+#: DebtorsAtPeriodEnd.php:14
 msgid "Customer Balance Listing"
 msgstr "ग्राहक शेष लिस्ट"
 
-#: DebtorsAtPeriodEnd.php:17 DebtorsAtPeriodEnd.php:58
-#: DebtorsAtPeriodEnd.php:70
+#: DebtorsAtPeriodEnd.php:15 DebtorsAtPeriodEnd.php:56
+#: DebtorsAtPeriodEnd.php:68
 msgid "Customer Balances"
 msgstr "ग्राहक शेष"
 
-#: DebtorsAtPeriodEnd.php:25
+#: DebtorsAtPeriodEnd.php:23
 msgid "Could not get the date of the last day in the period selected"
 msgstr "चयनित अवधि में पिछले दिन की तिथि प्राप्त नहीं कर सका"
 
-#: DebtorsAtPeriodEnd.php:72
+#: DebtorsAtPeriodEnd.php:70
 msgid "The customer details listing has no clients to report on"
 msgstr "ग्राहक विवरण लिस्टिंग कोई ग्राहक है पर रिपोर्ट"
 
-#: DebtorsAtPeriodEnd.php:116
+#: DebtorsAtPeriodEnd.php:114
 msgid "Total balances"
 msgstr "कुल शेष"
 
-#: DebtorsAtPeriodEnd.php:136
+#: DebtorsAtPeriodEnd.php:122
 msgid "Debtor Balances"
 msgstr "देनदार शेष"
 
-#: DebtorsAtPeriodEnd.php:151 SupplierBalsAtPeriodEnd.php:136
+#: DebtorsAtPeriodEnd.php:141 SupplierBalsAtPeriodEnd.php:136
 msgid "Balances As At"
 msgstr "शेष राशि के रूप में"
 
-#: DebtorsAtPeriodEnd.php:154 SupplierBalsAtPeriodEnd.php:141
+#: DebtorsAtPeriodEnd.php:145 SupplierBalsAtPeriodEnd.php:141
 msgid "Could not retrieve period data because"
 msgstr "अवधि क्योंकि डेटा पुनः प्राप्त नहीं किया जा सका"
 
-#: DebtorsAtPeriodEnd.php:154
+#: DebtorsAtPeriodEnd.php:145
 msgid "The SQL that failed to get the period data was"
 msgstr "SQL कि अवधि डेटा प्राप्त करने में विफल रहा था"
 
-#: DeliveryDetails.php:15
+#: DeliveryDetails.php:14
 msgid "Order Delivery Details"
 msgstr "आदेश वितरण विवरण"
 
-#: DeliveryDetails.php:26
+#: DeliveryDetails.php:25
 msgid "This page can only be read if an order has been entered"
 msgstr "यह पृष्ठ केवल तभी एक आदेश में प्रवेश किया गया है पढ़ा जा सकता है"
 
-#: DeliveryDetails.php:26 DeliveryDetails.php:32
+#: DeliveryDetails.php:25 DeliveryDetails.php:31
 msgid "To enter an order select customer transactions then sales order entry"
 msgstr "एक आदेश का चयन ग्राहक तो बिक्री आदेश प्रवेश लेनदेन दर्ज करें"
 
-#: DeliveryDetails.php:32
+#: DeliveryDetails.php:31
 msgid "This page can only be read if an there are items on the order"
 msgstr "यह पृष्ठ केवल तभी वहाँ एक आदेश पर आइटम हैं पढ़ा जा सकता है"
 
-#: DeliveryDetails.php:59
+#: DeliveryDetails.php:58
 msgid "You must enter the person or company to whom delivery should be made"
 msgstr "आप वितरण किसे बनाया जाना चाहिए ताकि व्यक्ति या कंपनी दर्ज करना होगा"
 
-#: DeliveryDetails.php:63
+#: DeliveryDetails.php:62
 msgid "You should enter the street address in the box provided"
 msgstr "तुम दर्ज करना चाहिए बॉक्स में सड़क का पता प्रदान"
 
-#: DeliveryDetails.php:63
+#: DeliveryDetails.php:62
 msgid "Orders cannot be accepted without a valid street address"
 msgstr "आदेश एक मान्य सड़क पते के बिना स्वीकार नहीं किया जा सकता है"
 
-#: DeliveryDetails.php:70
+#: DeliveryDetails.php:69
 msgid "The freight cost entered is expected to be numeric"
 msgstr "माल में प्रवेश की लागत से सांख्यिक होने की उम्मीद है"
 
-#: DeliveryDetails.php:74 RecurringSalesOrders.php:197
+#: DeliveryDetails.php:73 RecurringSalesOrders.php:197
 msgid "A recurring order cannot be made from a quotation"
 msgstr "एक आवर्ती क्रम एक उद्धरण से नहीं किया जा सकता"
 
-#: DeliveryDetails.php:78
+#: DeliveryDetails.php:77
 msgid "You must select the type of packlist to print"
 msgstr "आप packlist के प्रकार का चयन करने के लिए प्रिंट करना होगा"
 
-#: DeliveryDetails.php:96 DeliveryDetails.php:101 DeliveryDetails.php:106
+#: DeliveryDetails.php:95 DeliveryDetails.php:100 DeliveryDetails.php:105
 msgid "An invalid date entry was made"
 msgstr "एक अवैध तिथि प्रवेश किया था"
 
-#: DeliveryDetails.php:96 DeliveryDetails.php:101 DeliveryDetails.php:106
+#: DeliveryDetails.php:95 DeliveryDetails.php:100 DeliveryDetails.php:105
 msgid "The date entry must be in the format"
 msgstr "तिथि प्रविष्टि प्रारूप में होना चाहिए"
 
-#: DeliveryDetails.php:226
+#: DeliveryDetails.php:225
 msgid "There was a problem testing for the default shipper"
 msgstr "वहाँ डिफ़ॉल्ट shipper के लिए एक समस्या परीक्षण किया गया"
 
-#: DeliveryDetails.php:227
+#: DeliveryDetails.php:226
 msgid "SQL used to test for the default shipper"
 msgstr "एसक्यूएल को डिफ़ॉल्ट shipper के लिए परीक्षण किया"
 
-#: DeliveryDetails.php:244
+#: DeliveryDetails.php:243
 msgid "We have a problem"
 msgstr "हम एक समस्या है"
 
-#: DeliveryDetails.php:244
+#: DeliveryDetails.php:243
 msgid "there are no shippers defined"
 msgstr "वहाँ कोई परिभाषित shippers कर रहे हैं"
 
-#: DeliveryDetails.php:244
+#: DeliveryDetails.php:243
 msgid "Please use the link below to set up shipping or freight companies"
 msgstr "नीचे दिए गए लिंक का उपयोग करने के लिए शिपिंग या माल भाड़ा कंपनियों सेट करें"
 
-#: DeliveryDetails.php:244
+#: DeliveryDetails.php:243
 msgid ""
 "the system expects the shipping company to be selected or a default freight "
 "company to be used"
@@ -8466,27 +8466,27 @@ msgstr ""
 "प्रणाली शिपिंग कंपनी का चयन किया जाना करने के लिए या एक डिफ़ॉल्ट माल के लिए इस्तेमाल "
 "किया जा कंपनी की उम्मीद"
 
-#: DeliveryDetails.php:260
+#: DeliveryDetails.php:259
 msgid ""
 "You should automatically be forwarded to the entry of recurring order "
 "details page"
 msgstr "आप स्वचालित रूप से आवर्ती आदेश विवरण पृष्ठ की प्रविष्टि के लिए भेजा जाना चाहिए"
 
-#: DeliveryDetails.php:266 DeliveryDetails.php:1109
+#: DeliveryDetails.php:265 DeliveryDetails.php:1115
 msgid "Modify Order Lines"
 msgstr "संशोधित आदेश लाइन्स"
 
-#: DeliveryDetails.php:269
+#: DeliveryDetails.php:268
 msgid ""
 "You should automatically be forwarded to the entry of the order line details "
 "page"
 msgstr "आप स्वचालित रूप से आदेश पंक्ति विवरण पृष्ठ के प्रवेश को भेजा जाना चाहिए"
 
-#: DeliveryDetails.php:282
+#: DeliveryDetails.php:281
 msgid "The freight charge has been updated"
 msgstr "माल ढुलाई प्रभार अद्यतन किया गया है"
 
-#: DeliveryDetails.php:282
+#: DeliveryDetails.php:281
 msgid ""
 "Please reconfirm that the order and the freight charges are acceptable and "
 "then confirm the order again if OK"
@@ -8494,257 +8494,257 @@ msgstr ""
 "reconfirm कि आदेश और माल ढुलाई प्रभार स्वीकार्य हैं और तब आदेश फिर से पुष्टि करें ठीक है "
 "अगर"
 
-#: DeliveryDetails.php:282
+#: DeliveryDetails.php:281
 msgid "The new freight cost is"
 msgstr "नए माल की लागत है"
 
-#: DeliveryDetails.php:282
+#: DeliveryDetails.php:281
 msgid "and the previously calculated freight cost was"
 msgstr "और पहले से गणना की माल ढुलाई लागत था"
 
-#: DeliveryDetails.php:293
+#: DeliveryDetails.php:292
 msgid "The customer terms cannot be determined"
 msgstr "ग्राहक नियम निर्धारित नहीं किया जा सकता"
 
-#: DeliveryDetails.php:293
+#: DeliveryDetails.php:292
 msgid "This order cannot be processed because"
 msgstr "इस क्रम क्योंकि संसाधित नहीं किया जा सकता है"
 
-#: DeliveryDetails.php:294
+#: DeliveryDetails.php:293
 msgid "SQL used to find the customer terms"
 msgstr "एसक्यूएल को ग्राहक शब्दों खोजने के लिए इस्तेमाल"
 
-#: DeliveryDetails.php:563
+#: DeliveryDetails.php:562
 msgid "Quotation Number"
 msgstr "उद्धरण संख्या"
 
-#: DeliveryDetails.php:576 DeliveryDetails.php:580 DeliveryDetails.php:775
+#: DeliveryDetails.php:575 DeliveryDetails.php:579 DeliveryDetails.php:780
 #: SpecialOrder.php:494 SpecialOrder.php:495
 msgid "Print packing slip"
 msgstr "प्रिंट पैकिंग पर्ची"
 
-#: DeliveryDetails.php:576 SpecialOrder.php:494
+#: DeliveryDetails.php:575 SpecialOrder.php:494
 msgid "Preprinted stationery"
 msgstr "स्टेशनरी preprinted"
 
-#: DeliveryDetails.php:580 DeliveryDetails.php:775 SpecialOrder.php:495
+#: DeliveryDetails.php:579 DeliveryDetails.php:780 SpecialOrder.php:495
 msgid "Laser"
 msgstr "लेज़र"
 
-#: DeliveryDetails.php:585
+#: DeliveryDetails.php:584
 msgid "Confirm Dispatch and Produce Invoice"
 msgstr "की पुष्टि डिस्पैच और चालान निर्माण"
 
-#: DeliveryDetails.php:595
+#: DeliveryDetails.php:594
 #, fuzzy
 msgid "Print Quotation (Landscape)"
 msgstr "प्रिंट उद्धरण"
 
-#: DeliveryDetails.php:601
+#: DeliveryDetails.php:600
 #, fuzzy
 msgid "Print Quotation (Portrait)"
 msgstr "प्रिंट उद्धरण में त्रुटि"
 
-#: DeliveryDetails.php:608
+#: DeliveryDetails.php:607
 msgid "Add Another Sales Order"
 msgstr "एक और बिक्री आदेश जोड़ें"
 
-#: DeliveryDetails.php:613
+#: DeliveryDetails.php:612
 msgid "Thank you for your business"
 msgstr "आप अपने व्यापार के लिए धन्यवाद"
 
-#: DeliveryDetails.php:640
+#: DeliveryDetails.php:639
 msgid "Could not update the contract status"
 msgstr "अनुबंध स्थिति अद्यतन नहीं किया जा सका"
 
-#: DeliveryDetails.php:641
+#: DeliveryDetails.php:640
 msgid "The SQL that failed to update the contract status was"
 msgstr "SQL कि अनुबंध स्थिति अद्यतन विफल रहा था"
 
-#: DeliveryDetails.php:645
+#: DeliveryDetails.php:644
 msgid "Could not insert the contract bill of materials"
 msgstr "सम्मिलित सामग्री का अनुबंध बिल नहीं किया जा सका"
 
-#: DeliveryDetails.php:737
+#: DeliveryDetails.php:736
 msgid "The SQL that was used to update the order and failed was"
 msgstr "SQL कि आदेश अद्यतन इस्तेमाल किया गया था और असफल था"
 
-#: DeliveryDetails.php:738
+#: DeliveryDetails.php:737
 msgid "The order cannot be updated because"
 msgstr "क्योंकि आदेश अद्यतन नहीं हो सकता"
 
-#: DeliveryDetails.php:761
+#: DeliveryDetails.php:760
 msgid "The SQL that was used to modify the order line and failed was"
 msgstr "SQL कि आदेश पंक्ति को संशोधित किया था और असफल था"
 
-#: DeliveryDetails.php:762
+#: DeliveryDetails.php:761
 msgid "The updated order line cannot be modified because"
 msgstr "अद्यतन आदेश पंक्ति वजह से संशोधित नहीं कर सकते"
 
-#: DeliveryDetails.php:774
+#: DeliveryDetails.php:776
 msgid "Print packing slip - pre-printed stationery"
 msgstr "प्रिंट पैकिंग पर्ची - पूर्व मुद्रित स्टेशनरी"
 
-#: DeliveryDetails.php:776
+#: DeliveryDetails.php:784
 msgid "Confirm Order Delivery Quantities and Produce Invoice"
 msgstr "पुष्टि करने के आदेश डिलिवरी मात्रा और चालान निर्माण"
 
-#: DeliveryDetails.php:777
+#: DeliveryDetails.php:788
 msgid "Select A Different Order"
 msgstr "एक अलग आदेश का चयन करें"
 
-#: DeliveryDetails.php:786 Shipments.php:466 SpecialOrder.php:550
+#: DeliveryDetails.php:799 Shipments.php:466 SpecialOrder.php:550
 msgid "Delivery"
 msgstr "प्रसव"
 
-#: DeliveryDetails.php:786
+#: DeliveryDetails.php:799
 msgid "Delivery Details"
 msgstr "वितरण का विवरण"
 
-#: DeliveryDetails.php:800
+#: DeliveryDetails.php:813
 msgid "Quotation Summary"
 msgstr "उद्धरण सारांश"
 
-#: DeliveryDetails.php:802 DeliveryDetails.php:871
+#: DeliveryDetails.php:815 DeliveryDetails.php:884
 msgid "Order Summary"
 msgstr "आदेश सारांश"
 
-#: DeliveryDetails.php:854 OrderDetails.php:201 RecurringSalesOrders.php:366
+#: DeliveryDetails.php:867 OrderDetails.php:201 RecurringSalesOrders.php:366
 #: SelectOrderItems.php:1392
 msgid "TOTAL Excl Tax/Freight"
 msgstr "कुल Excl कर / भाड़ा"
 
-#: DeliveryDetails.php:861 DeliveryDetails.php:913 DeliveryDetails.php:922
+#: DeliveryDetails.php:874 DeliveryDetails.php:926 DeliveryDetails.php:935
 #: OrderDetails.php:208 SelectOrderItems.php:1397
 msgid "Total Weight"
 msgstr "कुल वजन"
 
-#: DeliveryDetails.php:863 DeliveryDetails.php:915 DeliveryDetails.php:924
+#: DeliveryDetails.php:876 DeliveryDetails.php:928 DeliveryDetails.php:937
 #: OrderDetails.php:210 SelectOrderItems.php:1399
 msgid "Total Volume"
 msgstr "कुल मात्रा"
 
-#: DeliveryDetails.php:931 OrderDetails.php:72 RecurringSalesOrders.php:374
+#: DeliveryDetails.php:944 OrderDetails.php:72 RecurringSalesOrders.php:374
 #: SelectOrderItems.php:740 includes/PDFPickingListHeader.inc:28
 #: includes/PO_PDFOrderPageHeader.inc:31
 msgid "Deliver To"
 msgstr "को उद्धार"
 
-#: DeliveryDetails.php:936 RecurringSalesOrders.php:378
+#: DeliveryDetails.php:949 RecurringSalesOrders.php:378
 msgid "Deliver from the warehouse at"
 msgstr "गोदाम में से उद्धार"
 
-#: DeliveryDetails.php:943
+#: DeliveryDetails.php:956
 msgid "The stock locations could not be retrieved"
 msgstr "शेयर स्थानों को पुनः प्राप्त नहीं किया जा सका"
 
-#: DeliveryDetails.php:944
+#: DeliveryDetails.php:957
 msgid "SQL used to retrieve the stock locations was"
 msgstr "एसक्यूएल को शेयर स्थानों पाने के लिये प्रयुक्त किया गया था"
 
-#: DeliveryDetails.php:971
+#: DeliveryDetails.php:984
 msgid "Estimated Delivery Date"
 msgstr "अनुमानित प्रसव तिथि"
 
-#: DeliveryDetails.php:976 SelectSalesOrder.php:767
+#: DeliveryDetails.php:989 SelectSalesOrder.php:767
 msgid "Quote Date"
 msgstr "तिथि उद्धरण"
 
-#: DeliveryDetails.php:981
+#: DeliveryDetails.php:994
 msgid "Confirmed Order Date"
 msgstr "पुष्टि आदेश दिनांक"
 
-#: DeliveryDetails.php:986 Locations.php:512 OrderDetails.php:77
+#: DeliveryDetails.php:999 Locations.php:518 OrderDetails.php:77
 #: PO_OrderDetails.php:94
 msgid "Delivery Address 1"
 msgstr "वितरण पता 1"
 
-#: DeliveryDetails.php:991 Locations.php:514 OrderDetails.php:83
+#: DeliveryDetails.php:1004 Locations.php:520 OrderDetails.php:83
 #: PO_OrderDetails.php:97
 msgid "Delivery Address 2"
 msgstr "वितरण पता 2"
 
-#: DeliveryDetails.php:996 Locations.php:516 OrderDetails.php:89
+#: DeliveryDetails.php:1009 Locations.php:522 OrderDetails.php:89
 #: PO_OrderDetails.php:100
 msgid "Delivery Address 3"
 msgstr "वितरण 3 पता"
 
-#: DeliveryDetails.php:1001 Locations.php:518 OrderDetails.php:95
+#: DeliveryDetails.php:1014 Locations.php:524 OrderDetails.php:95
 #: PO_OrderDetails.php:103
 msgid "Delivery Address 4"
 msgstr "प्रसव 4 पता"
 
-#: DeliveryDetails.php:1006 Locations.php:520 OrderDetails.php:101
+#: DeliveryDetails.php:1019 Locations.php:526 OrderDetails.php:101
 #: PO_OrderDetails.php:106
 msgid "Delivery Address 5"
 msgstr "प्रसव 5 पता"
 
-#: DeliveryDetails.php:1011 Locations.php:522 OrderDetails.php:107
+#: DeliveryDetails.php:1024 Locations.php:528 OrderDetails.php:107
 #: PO_OrderDetails.php:109
 msgid "Delivery Address 6"
 msgstr "प्रसव छह पता"
 
-#: DeliveryDetails.php:1034
+#: DeliveryDetails.php:1047
 msgid "Packlist Type"
 msgstr "Packlist लिखें"
 
-#: DeliveryDetails.php:1044
-msgid "Hide Company Details/Logo"
-msgstr "कंपनी विवरण छिपाएँ / लोगो"
-
-#: DeliveryDetails.php:1047
+#: DeliveryDetails.php:1051 DeliveryDetails.php:1054
 msgid "Show Company Details/Logo"
 msgstr "दिखाएँ कंपनी विवरण / लोगो"
 
-#: DeliveryDetails.php:1056
+#: DeliveryDetails.php:1052 DeliveryDetails.php:1055
+msgid "Hide Company Details/Logo"
+msgstr "कंपनी विवरण छिपाएँ / लोगो"
+
+#: DeliveryDetails.php:1062
 msgid "Reprint packing slip"
 msgstr "पुनर्मुद्रण पैकिंग पर्ची"
 
-#: DeliveryDetails.php:1060
+#: DeliveryDetails.php:1066
 msgid "Last printed"
 msgstr "मुद्रित पिछले"
 
-#: DeliveryDetails.php:1068
+#: DeliveryDetails.php:1071
 msgid "Charge Freight Cost inc tax"
 msgstr "प्रभारी फ्रेट लागत कर कांग्रेस"
 
-#: DeliveryDetails.php:1072
+#: DeliveryDetails.php:1075
 msgid "Recalc Freight Cost"
 msgstr "Recalc फ्रेट मूल्य"
 
-#: DeliveryDetails.php:1079
+#: DeliveryDetails.php:1082
 msgid "Freight/Shipper Method"
 msgstr "भाड़ा / Shipper विधि"
 
-#: DeliveryDetails.php:1080
+#: DeliveryDetails.php:1085
 msgid "The shipper details could not be retrieved"
 msgstr "Shipper विवरण को पुनः प्राप्त नहीं किया जा सका"
 
-#: DeliveryDetails.php:1081
+#: DeliveryDetails.php:1086
 msgid "SQL used to retrieve the shipper details was"
 msgstr "एसक्यूएल को shipper के विवरण पाने के लिये प्रयुक्त किया गया था"
 
-#: DeliveryDetails.php:1096
+#: DeliveryDetails.php:1101
 msgid "Quotation Only"
 msgstr "केवल उद्धरण"
 
-#: DeliveryDetails.php:1112
+#: DeliveryDetails.php:1118
 msgid "Place Order"
 msgstr "जगह आदेश"
 
-#: DeliveryDetails.php:1113 RecurringSalesOrders.php:497
+#: DeliveryDetails.php:1119 RecurringSalesOrders.php:497
 msgid "Create Recurring Order"
 msgstr "बनाएँ आदेश पुनरावृत्ति"
 
-#: DeliveryDetails.php:1115
+#: DeliveryDetails.php:1121
 msgid "Commit Order Changes"
 msgstr "कमेटी के आदेश परिवर्तन"
 
-#: DiscountCategories.php:9
+#: DiscountCategories.php:7
 msgid "Discount Categories Maintenance"
 msgstr "डिस्काउंट चैनल रखरखाव"
 
-#: DiscountCategories.php:39
+#: DiscountCategories.php:37
 msgid ""
 "The stock item entered must be set up as either a manufactured or purchased "
 "or assembly item"
@@ -8752,73 +8752,73 @@ msgstr ""
 "शेयर मद में दर्ज किया जाना चाहिए ऊपर के रूप में भी सेट एक निर्मित या खरीदा या विधानसभा "
 "मद"
 
-#: DiscountCategories.php:47
+#: DiscountCategories.php:45
 msgid "The discount category"
 msgstr "छूट श्रेणी"
 
-#: DiscountCategories.php:47
+#: DiscountCategories.php:45
 msgid "record for"
 msgstr "के लिए रिकॉर्ड"
 
-#: DiscountCategories.php:47
+#: DiscountCategories.php:45
 msgid "could not be updated because"
 msgstr "अद्यतन नहीं किया जा सकता है क्योंकि"
 
-#: DiscountCategories.php:49
+#: DiscountCategories.php:47
 msgid "The stock master has been updated with this discount category"
 msgstr "शेयर गुरु इस छूट श्रेणी के साथ अद्यतन किया गया है"
 
-#: DiscountCategories.php:60
+#: DiscountCategories.php:58
 msgid "The stock master record has been updated to no discount category"
 msgstr "शेयर गुरु रिकॉर्ड कोई छूट श्रेणी में अद्यतन किया गया है"
 
-#: DiscountCategories.php:76 DiscountCategories.php:99 DiscountMatrix.php:116
+#: DiscountCategories.php:74 DiscountCategories.php:97 DiscountMatrix.php:114
 msgid "Discount Category Code"
 msgstr "छूट श्रेणी कोड"
 
-#: DiscountCategories.php:90 DiscountCategories.php:231 PO_Header.php:844
+#: DiscountCategories.php:88 DiscountCategories.php:244 PO_Header.php:844
 #: SalesCategories.php:262 SuppInvGRNs.php:272 SupplierTenders.php:55
 #, php-format
 msgid "Select"
 msgstr "चयन"
 
-#: DiscountCategories.php:118
+#: DiscountCategories.php:122
 msgid "Enter Stock Code"
 msgstr "स्टॉक कोड दर्ज करें"
 
-#: DiscountCategories.php:120
+#: DiscountCategories.php:124
 msgid "Partial code"
 msgstr "आंशिक कोड"
 
-#: DiscountCategories.php:121
+#: DiscountCategories.php:126
 msgid "Partial description"
 msgstr "आंशिक विवरण"
 
-#: DiscountCategories.php:126
+#: DiscountCategories.php:132
 msgid "Update Item"
 msgstr "अद्यतन आइटम"
 
-#: DiscountCategories.php:138
+#: DiscountCategories.php:147
 msgid "Select a part code"
 msgstr "एक भाग के कोड का चयन करें"
 
-#: DiscountCategories.php:145
+#: DiscountCategories.php:156
 msgid "Assign discount category"
 msgstr "असाइन छूट श्रेणी"
 
-#: DiscountCategories.php:147
+#: DiscountCategories.php:158
 msgid "to all items in stock category"
 msgstr "शेयर श्रेणी के सभी आइटम्स के लिए"
 
-#: DiscountCategories.php:157
+#: DiscountCategories.php:168
 msgid "Update Items"
 msgstr "अद्यतन आइटम"
 
-#: DiscountCategories.php:187 DiscountMatrix.php:158 Stocks.php:918
+#: DiscountCategories.php:198 DiscountMatrix.php:153 Stocks.php:918
 msgid "Discount Category"
 msgstr "छूट श्रेणी"
 
-#: DiscountCategories.php:188 InventoryPlanningPrefSupplier.php:77
+#: DiscountCategories.php:199 InventoryPlanningPrefSupplier.php:77
 #: PDFPriceList.php:352 SelectWorkOrder.php:300 ShipmentCosting.php:143
 #: ShipmentCosting.php:509 Shipments.php:384 Shipments.php:462
 #: StockUsage.php:52 SuppCreditGRNs.php:226 SuppInvGRNs.php:228
@@ -8832,11 +8832,11 @@ msgstr "छूट श्रेणी"
 msgid "Item"
 msgstr "मद"
 
-#: DiscountCategories.php:218
+#: DiscountCategories.php:229
 msgid "There are currently no discount categories defined"
 msgstr "वर्तमान में कोई छूट परिभाषित श्रेणियों"
 
-#: DiscountCategories.php:218
+#: DiscountCategories.php:229
 msgid ""
 "Enter a two character abbreviation for the discount category and the stock "
 "code to which this category will apply to. Discount rules can then be "
@@ -8845,69 +8845,69 @@ msgstr ""
 "एक दो छूट श्रेणी के लिए चरित्र और संक्षिप्त नाम स्टॉक कोड है जो इस श्रेणी के लिए लागू होगी "
 "दर्ज करें. डिस्काउंट नियम तो यह छूट श्रेणी के लिए लागू किया जा सकता है"
 
-#: DiscountCategories.php:226
+#: DiscountCategories.php:237
 msgid "Update discount category for"
 msgstr "अद्यतन छूट श्रेणी के लिए"
 
-#: DiscountCategories.php:228
+#: DiscountCategories.php:239
 msgid "a single stock item"
 msgstr "एक शेयर मद"
 
-#: DiscountCategories.php:229
+#: DiscountCategories.php:240
 msgid "a complete stock category"
 msgstr "एक पूरा स्टॉक वर्ग"
 
-#: DiscountMatrix.php:7
+#: DiscountMatrix.php:6
 msgid "Discount Matrix Maintenance"
 msgstr "डिस्काउंट मैट्रिक्स रखरखाव"
 
-#: DiscountMatrix.php:26
+#: DiscountMatrix.php:24
 msgid "The quantity break must be entered as a positive number"
 msgstr "मात्रा तोड़ एक सकारात्मक संख्या के रूप में दर्ज होना चाहिए"
 
-#: DiscountMatrix.php:33
+#: DiscountMatrix.php:31
 msgid "The quantity of all items on an order in the discount category"
 msgstr "एक आदेश पर सभी वस्तुओं के वर्ग में छूट मात्रा"
 
-#: DiscountMatrix.php:33
+#: DiscountMatrix.php:31
 msgid "at which the discount will apply is 0 or less than 0"
 msgstr "जिस पर छूट लागू होगी 0 या 0 से कम है"
 
-#: DiscountMatrix.php:33
+#: DiscountMatrix.php:31
 msgid "Positive numbers are expected for this entry"
 msgstr "धनात्मक संख्याएँ इस प्रविष्टि के लिए उम्मीद कर रहे हैं"
 
-#: DiscountMatrix.php:39
+#: DiscountMatrix.php:37
 msgid "The discount rate must be entered as a positive number"
 msgstr "छूट की दर एक सकारात्मक संख्या के रूप में दर्ज होना चाहिए"
 
-#: DiscountMatrix.php:45
+#: DiscountMatrix.php:43
 msgid ""
 "The discount rate applicable for this record is either less than 0% or "
 "greater than 70%"
 msgstr "छूट इस रिकॉर्ड के लिए लागू ब्याज दर भी 0% से कम या 70% से अधिक है"
 
-#: DiscountMatrix.php:45
+#: DiscountMatrix.php:43
 msgid "Numbers between 1 and 69 are expected"
 msgstr "1 और 69 के बीच संख्या उम्मीद कर रहे हैं"
 
-#: DiscountMatrix.php:66
+#: DiscountMatrix.php:64
 msgid "The discount matrix record has been added"
 msgstr "छूट मैट्रिक्स रिकॉर्ड जोड़ दिया गया है"
 
-#: DiscountMatrix.php:82
+#: DiscountMatrix.php:80
 msgid "The discount matrix record has been deleted"
 msgstr "छूट मैट्रिक्स रिकॉर्ड हटा दिया गया है"
 
-#: DiscountMatrix.php:98
+#: DiscountMatrix.php:96
 msgid "Customer Price List"
 msgstr "ग्राहक मूल्य सूची"
 
-#: DiscountMatrix.php:132 DiscountMatrix.php:159
+#: DiscountMatrix.php:129 DiscountMatrix.php:154
 msgid "Quantity Break"
 msgstr "मात्रा तोड़"
 
-#: DiscountMatrix.php:136 DiscountMatrix.php:160
+#: DiscountMatrix.php:132 DiscountMatrix.php:155
 msgid "Discount Rate"
 msgstr "छूट दर"
 
@@ -9856,15 +9856,15 @@ msgstr "श्रेणी विवरण"
 msgid "Fixed Asset Cost GL Code"
 msgstr "फिक्स्ड आस्ति मूल्य जीएल कोड"
 
-#: FixedAssetCategories.php:284
+#: FixedAssetCategories.php:283
 msgid "Profit and Loss Depreciation GL Code"
 msgstr "लाभ और हानि मूल्यह्रास जीएल कोड"
 
-#: FixedAssetCategories.php:298
+#: FixedAssetCategories.php:296
 msgid "Profit or Loss on Disposal GL Code:"
 msgstr "या निपटान जीएल कोड पर लाभ घाटाः"
 
-#: FixedAssetCategories.php:311
+#: FixedAssetCategories.php:308
 msgid "Balance Sheet Accumulated Depreciation GL Code"
 msgstr "बैलेंस शीट मूल्यह्रास जीएल कोड संचित"
 
@@ -9898,6 +9898,8 @@ msgstr "तिथि खरीदा"
 #: FixedAssetDepreciation.php:86 PricesByCost.php:123 SalesAnalReptCols.php:38
 #: SalesAnalReptCols.php:40 SelectProduct.php:173 SelectProduct.php:323
 #: ShipmentCosting.php:148 ShipmentCosting.php:149 StockCostUpdate.php:150
+#: includes/PDFInventoryValnPageHeader.inc:35
+#: includes/PDFInventoryValnPageHeader.inc:39
 #: includes/PDFLowGPPageHeader.inc:48
 msgid "Cost"
 msgstr "लागत"
@@ -9923,9 +9925,9 @@ msgid "New Depn"
 msgstr "नई Depn"
 
 #: FixedAssetDepreciation.php:106 FixedAssetDepreciation.php:229
-#: InventoryValuation.php:112 InventoryValuation.php:164
+#: InventoryValuation.php:116 InventoryValuation.php:170
 #: MailInventoryValuation.php:141 MailInventoryValuation.php:187
-#: OutstandingGRNs.php:86 OutstandingGRNs.php:128
+#: OutstandingGRNs.php:83 OutstandingGRNs.php:125
 #: PDFStockCheckComparison.php:294
 msgid "Total for"
 msgstr "के लिए कुल"
@@ -10691,7 +10693,7 @@ msgstr "रेडियो बीकन"
 msgid "Cust Order"
 msgstr "ग्राहक आदेश"
 
-#: FTP_RadioBeacon.php:55 MRPReschedules.php:181 POReport.php:533
+#: FTP_RadioBeacon.php:55 MRPReschedules.php:180 POReport.php:533
 #: POReport.php:594 POReport.php:1227 POReport.php:1278 POReport.php:1433
 #: PO_SelectOSPurchOrder.php:441 PO_SelectPurchOrder.php:367
 #: PrintCustTrans.php:578 PrintCustTransPortrait.php:771 SalesInquiry.php:795
@@ -11945,7 +11947,7 @@ msgstr "महीने के बजट"
 msgid "Receive Controlled Items"
 msgstr "नियंत्रित आइटम प्राप्त करें"
 
-#: GoodsReceivedControlled.php:27 GoodsReceived.php:32
+#: GoodsReceivedControlled.php:27 GoodsReceived.php:30
 msgid "Select a purchase order to receive"
 msgstr "एक खरीद आदेश का चयन करने के लिए प्राप्त"
 
@@ -11982,15 +11984,15 @@ msgstr "वापस आदेश खरीद करने के लिए"
 msgid "Receive controlled item"
 msgstr "नियंत्रित वस्तु प्राप्त करें"
 
-#: GoodsReceived.php:24 index.php:567
+#: GoodsReceived.php:22 index.php:567
 msgid "Receive Purchase Orders"
 msgstr "खरीद आदेश प्राप्त"
 
-#: GoodsReceived.php:27 PO_Header.php:240
+#: GoodsReceived.php:25 PO_Header.php:240
 msgid "Back to Purchase Orders"
 msgstr "वापस खरीद के लिए आदेश"
 
-#: GoodsReceived.php:33
+#: GoodsReceived.php:31
 msgid ""
 "This page can only be opened if a purchase order has been selected. Please "
 "select a purchase order first"
@@ -11998,20 +12000,20 @@ msgstr ""
 "इस पृष्ठ तभी एक खरीद आदेश चयनित किया गया है खोला जा सकता है. एक खरीद आदेश पहले का "
 "चयन करें"
 
-#: GoodsReceived.php:56
+#: GoodsReceived.php:54
 msgid ""
 "Purchase orders must have a status of Printed before they can be received"
 msgstr "खरीद आदेश मुद्रित करने से पहले वे प्राप्त किया जा सकता है की एक स्थिति होनी चाहिए"
 
-#: GoodsReceived.php:57 SelectSalesOrder.php:420
+#: GoodsReceived.php:55 SelectSalesOrder.php:420
 msgid "Order number"
 msgstr "क्रम संख्या"
 
-#: GoodsReceived.php:57
+#: GoodsReceived.php:55
 msgid "has a status of"
 msgstr "एक स्थिति में से एक है"
 
-#: GoodsReceived.php:65 index.php:577 PO_SelectOSPurchOrder.php:452
+#: GoodsReceived.php:63 index.php:577 PO_SelectOSPurchOrder.php:452
 #: PO_SelectOSPurchOrder.php:469 PO_SelectOSPurchOrder.php:471
 #: SelectWorkOrder.php:297 SelectWorkOrder.php:332
 #: StockLocTransferReceive.php:554 WorkOrderCosting.php:89
@@ -12020,55 +12022,55 @@ msgstr "एक स्थिति में से एक है"
 msgid "Receive"
 msgstr "प्राप्त"
 
-#: GoodsReceived.php:65
+#: GoodsReceived.php:63
 msgid "Receive Purchase Order"
 msgstr "खरीद आदेश प्राप्त"
 
-#: GoodsReceived.php:77
+#: GoodsReceived.php:75
 msgid "Date Goods/Service Received"
 msgstr "तिथि का सामान / सेवा प्राप्त"
 
-#: GoodsReceived.php:84 PO_Items.php:640
+#: GoodsReceived.php:82 PO_Items.php:640
 #, fuzzy
 msgid "Supplier Units"
 msgstr "आपूर्तिकर्ता यूनिट"
 
-#: GoodsReceived.php:86
+#: GoodsReceived.php:84
 #, fuzzy
 msgid "Our Receiving Units"
 msgstr "प्राप्त"
 
-#: GoodsReceived.php:93 PO_Items.php:926
+#: GoodsReceived.php:91 PO_Items.php:926
 #, fuzzy
 msgid "Conversion"
 msgstr "कन्वर्ट"
 
-#: GoodsReceived.php:93 PO_Items.php:926
+#: GoodsReceived.php:91 PO_Items.php:926
 #, fuzzy
 msgid "Factor"
 msgstr "के लिए"
 
-#: GoodsReceived.php:97
+#: GoodsReceived.php:95
 msgid "This Delivery"
 msgstr "इस डिलिवरी"
 
-#: GoodsReceived.php:100
+#: GoodsReceived.php:98
 msgid "Total Value"
 msgstr "कुल मूल्य"
 
-#: GoodsReceived.php:173
+#: GoodsReceived.php:171
 msgid "Enter Serial Nos"
 msgstr "सीरियल नंबर दर्ज करें"
 
-#: GoodsReceived.php:176
+#: GoodsReceived.php:174
 msgid "Enter Batches"
 msgstr "बैचों दर्ज"
 
-#: GoodsReceived.php:184
+#: GoodsReceived.php:183
 msgid "Total value of goods received"
 msgstr "माल का कुल मूल्य प्राप्त"
 
-#: GoodsReceived.php:221
+#: GoodsReceived.php:220
 msgid ""
 "Receiving a negative quantity that results in negative stock is prohibited "
 "by the parameter settings. This delivery of stock cannot be processed until "
@@ -12077,15 +12079,15 @@ msgstr ""
 "एक नकारात्मक मात्रा में है कि नकारात्मक स्टॉक में परिणाम पैरामीटर सेटिंग द्वारा निषिद्ध है "
 "प्राप्त करना. स्टॉक का यह वितरण जब तक इस मद के शेयर सुधारे नहीं जा सकती."
 
-#: GoodsReceived.php:229
+#: GoodsReceived.php:228
 msgid "There is nothing to process"
 msgstr "वहाँ कुछ भी नहीं है के लिए प्रक्रिया"
 
-#: GoodsReceived.php:229
+#: GoodsReceived.php:228
 msgid "Please enter valid quantities greater than zero"
 msgstr "कृपया शून्य से अधिक मान्य मात्रा दर्ज"
 
-#: GoodsReceived.php:234
+#: GoodsReceived.php:233
 msgid ""
 "Negative stocks would result by processing a negative delivery - quantities "
 "must be changed or the stock quantity of the item going negative corrected "
@@ -12095,7 +12097,7 @@ msgstr ""
 "परिवर्तित किया जाना चाहिए आइटम के स्टॉक मात्रा इस से पहले प्रसव कार्रवाई की जाएगी "
 "सही नकारात्मक जा रहा है."
 
-#: GoodsReceived.php:240
+#: GoodsReceived.php:239
 msgid ""
 "Entered quantities cannot be greater than the quantity entered on the "
 "purchase invoice including the allowed over-receive percentage"
@@ -12103,24 +12105,24 @@ msgstr ""
 "प्रवेश मात्रा से अधिक नहीं हो मात्रा खरीद सहित चालान पर दर्ज किया जा सकता से अधिक "
 "प्रतिशत प्राप्त की अनुमति दी"
 
-#: GoodsReceived.php:242
+#: GoodsReceived.php:241
 msgid ""
 "Modify the ordered items on the purchase invoice if you wish to increase the "
 "quantities"
 msgstr "संशोधित खरीद चालान पर आदेश दिया मदों यदि आप मात्रा में वृद्धि करना चाहते हैं"
 
-#: GoodsReceived.php:272
+#: GoodsReceived.php:271
 msgid ""
 "Could not check that the details of the purchase order had not been changed "
 "by another user because"
 msgstr ""
 "जाँच करें कि खरीद आदेश की जानकारी किसी अन्य उपयोगकर्ता वजह से नहीं बदला था नहीं कर सका"
 
-#: GoodsReceived.php:273
+#: GoodsReceived.php:272
 msgid "The following SQL to retrieve the purchase order details was used"
 msgstr "निम्नलिखित एसक्यूएल खरीद आदेश विवरण इस्तेमाल किया गया था प्राप्त करने के लिए"
 
-#: GoodsReceived.php:290
+#: GoodsReceived.php:289
 msgid ""
 "This order has been changed or invoiced since this delivery was started to "
 "be actioned"
@@ -12128,11 +12130,11 @@ msgstr ""
 "इस क्रम बदल दिया गया है या चालान के बाद से इस प्रसव के लिए actioned होना शुरू कर "
 "दिया था"
 
-#: GoodsReceived.php:290
+#: GoodsReceived.php:289
 msgid "To enter a delivery against this purchase order"
 msgstr "इस खरीद के आदेश के खिलाफ एक प्रसव दर्ज करें"
 
-#: GoodsReceived.php:290
+#: GoodsReceived.php:289
 msgid ""
 "it must be re-selected and re-read again to update the changes made by the "
 "other user"
@@ -12140,84 +12142,84 @@ msgstr ""
 "यह होना चाहिए फिर से चुने और फिर से फिर से पढ़ने के लिए अन्य उपयोगकर्ता द्वारा किए गए "
 "परिवर्तनों को अद्यतन"
 
-#: GoodsReceived.php:294
+#: GoodsReceived.php:293
 msgid "GL Code of the Line Item"
 msgstr "पंक्ति वस्तु जी एल कोड"
 
-#: GoodsReceived.php:297
+#: GoodsReceived.php:296
 msgid "ShiptRef of the Line Item"
 msgstr "पंक्ति वस्तु की ShiptRef"
 
-#: GoodsReceived.php:300
+#: GoodsReceived.php:299
 msgid "Contract Reference of the Line Item"
 msgstr "पंक्ति वस्तु के अनुबंध संदर्भ"
 
-#: GoodsReceived.php:304
+#: GoodsReceived.php:303
 msgid "Quantity Invoiced of the Line Item"
 msgstr "मात्रा पंक्ति वस्तु का चालान"
 
-#: GoodsReceived.php:307
+#: GoodsReceived.php:306
 msgid "Stock Code of the Line Item"
 msgstr "पंक्ति वस्तु का स्टॉक कोड"
 
-#: GoodsReceived.php:310
+#: GoodsReceived.php:309
 msgid "Order Quantity of the Line Item"
 msgstr "पंक्ति वस्तु का आदेश मात्रा"
 
-#: GoodsReceived.php:313
+#: GoodsReceived.php:312
 msgid "Quantity of the Line Item Already Received"
 msgstr "पंक्ति वस्तु की मात्रा पहले से ही प्राप्त"
 
-#: GoodsReceived.php:319 GoodsReceived.php:690
+#: GoodsReceived.php:318 GoodsReceived.php:689
 msgid "Select a different purchase order for receiving goods against"
 msgstr "के खिलाफ माल प्राप्त करने के लिए एक अलग खरीद आदेश का चयन करें"
 
-#: GoodsReceived.php:321
+#: GoodsReceived.php:320
 msgid "Re-read the updated purchase order for receiving goods against"
 msgstr "पुनः के खिलाफ माल प्राप्त करने के लिए अद्यतन खरीद आदेश पढ़ा"
 
-#: GoodsReceived.php:353
+#: GoodsReceived.php:352
 msgid ""
 "The standard cost of the item being received cannot be retrieved because"
 msgstr "आइटम के मानक लागत को नहीं पाया जा सकता है क्योंकि प्राप्त किया जा रहा है"
 
-#: GoodsReceived.php:354
+#: GoodsReceived.php:353
 msgid "The following SQL to retrieve the standard cost was used"
 msgstr "निम्नलिखित SQL मानक लागत इस्तेमाल किया गया था प्राप्त करने के लिए"
 
-#: GoodsReceived.php:395
+#: GoodsReceived.php:394
 msgid ""
 "The purchase order detail record could not be updated with the quantity "
 "received because"
 msgstr ""
 "खरीद आदेश विस्तार रिकॉर्ड के साथ मात्रा क्योंकि प्राप्त अद्यतन नहीं किया जा सकता है"
 
-#: GoodsReceived.php:396 ReverseGRN.php:128
+#: GoodsReceived.php:395 ReverseGRN.php:128
 msgid "The following SQL to update the purchase order detail record was used"
 msgstr ""
 "निम्नलिखित एसक्यूएल क्रय आदेश विस्तार रिकॉर्ड इस्तेमाल किया गया था अद्यतन करने के लिए"
 
-#: GoodsReceived.php:425
+#: GoodsReceived.php:424
 msgid "A GRN record could not be inserted"
 msgstr "एक GRN रिकॉर्ड डाला नहीं जा सका"
 
-#: GoodsReceived.php:425
+#: GoodsReceived.php:424
 msgid "This receipt of goods has not been processed because"
 msgstr "माल की यह रसीद वजह से संसाधित नहीं किया"
 
-#: GoodsReceived.php:426 ReverseGRN.php:156
+#: GoodsReceived.php:425 ReverseGRN.php:156
 msgid "The following SQL to insert the GRN record was used"
 msgstr "निम्नलिखित सम्मिलित करने के लिए SQL GRN रिकॉर्ड इस्तेमाल किया गया था"
 
-#: GoodsReceived.php:484
+#: GoodsReceived.php:483
 msgid "stock movement records could not be inserted because"
 msgstr "शेयर आंदोलन रिकॉर्ड वजह से हो सकता है नहीं डाला"
 
-#: GoodsReceived.php:502
+#: GoodsReceived.php:501
 msgid "Could not check if a batch or lot stock item already exists because"
 msgstr "अगर जांच एक बैच या बहुत भंडार वस्तु पहले से ही मौजूद नहीं किया जा सका क्योंकि"
 
-#: GoodsReceived.php:503
+#: GoodsReceived.php:502
 msgid ""
 "The following SQL to test for an already existing controlled but not "
 "serialised stock item was used"
@@ -12225,19 +12227,19 @@ msgstr ""
 "निम्नलिखित एसक्यूएल के लिए परीक्षण करने के लिए एक पहले से ही नियंत्रित लेकिन मौजूदा स्टॉक "
 "नहीं आइटम serialized इस्तेमाल किया गया था"
 
-#: GoodsReceived.php:531 WorkOrderIssue.php:213 WorkOrderReceive.php:490
+#: GoodsReceived.php:530 WorkOrderIssue.php:213 WorkOrderReceive.php:490
 #: WorkOrderReceive.php:561
 msgid "The serial stock item record could not be inserted because"
 msgstr "धारावाहिक भंडार वस्तु रिकॉर्ड वजह से हो सकता है नहीं डाला"
 
-#: GoodsReceived.php:532 WorkOrderIssue.php:214 WorkOrderReceive.php:491
+#: GoodsReceived.php:531 WorkOrderIssue.php:214 WorkOrderReceive.php:491
 #: WorkOrderReceive.php:562
 msgid "The following SQL to insert the serial stock item records was used"
 msgstr ""
 "निम्नलिखित सम्मिलित करने के लिए धारावाहिक भंडार वस्तु रिकॉर्ड एसक्यूएल इस्तेमाल किया गया "
 "था"
 
-#: GoodsReceived.php:585 ReverseGRN.php:175 SupplierCredit.php:1198
+#: GoodsReceived.php:584 ReverseGRN.php:175 SupplierCredit.php:1198
 #: SupplierCredit.php:1286 SupplierInvoice.php:1164 SupplierInvoice.php:1250
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset "
@@ -12246,7 +12248,7 @@ msgstr ""
 "त्रुटि गंभीर! नोट नीचे इस त्रुटि और ढूंढ़ना सहायता अचल संपत्ति लेनदेन के कारण हो सकता है "
 "नहीं डाला"
 
-#: GoodsReceived.php:605 SupplierInvoice.php:1265
+#: GoodsReceived.php:604 SupplierInvoice.php:1265
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset "
 "cost and date purchased was not able to be updated because:"
@@ -12254,7 +12256,7 @@ msgstr ""
 "त्रुटि गंभीर! नीचे इस त्रुटि ध्यान दें और सहायता चाहते हैं. अचल संपत्ति की लागत और खरीदी "
 "तारीख के लिए है क्योंकि अद्यतन किया जा करने में सक्षम नहीं था:"
 
-#: GoodsReceived.php:606 SupplierInvoice.php:1266
+#: GoodsReceived.php:605 SupplierInvoice.php:1266
 msgid ""
 "The following SQL was used to attempt the update of the cost and the date "
 "the asset was purchased"
@@ -12262,45 +12264,45 @@ msgstr ""
 "निम्नलिखित एसक्यूएल को लागत का अद्यतन करें और तिथि संपत्ति खरीदा गया था करने का प्रयास "
 "किया गया"
 
-#: GoodsReceived.php:636
+#: GoodsReceived.php:635
 msgid "The purchase GL posting could not be inserted because"
 msgstr "खरीद पोस्टिंग जीएल वजह से हो सकता है नहीं डाला"
 
-#: GoodsReceived.php:637 ReverseGRN.php:303
+#: GoodsReceived.php:636 ReverseGRN.php:303
 msgid "The following SQL to insert the purchase GLTrans record was used"
 msgstr "निम्नलिखित सम्मिलित करने के लिए SQL खरीद GLTrans रिकॉर्ड इस्तेमाल किया गया था"
 
-#: GoodsReceived.php:655 SelectSalesOrder.php:897
+#: GoodsReceived.php:654 SelectSalesOrder.php:897
 msgid "PO"
 msgstr "पीओ"
 
-#: GoodsReceived.php:661 ReverseGRN.php:324
+#: GoodsReceived.php:660 ReverseGRN.php:324
 msgid "The GRN suspense side of the GL posting could not be inserted because"
 msgstr "पोस्टिंग जीएल की GRN रहस्य पक्ष वजह से हो सकता है नहीं डाला"
 
-#: GoodsReceived.php:662 ReverseGRN.php:325
+#: GoodsReceived.php:661 ReverseGRN.php:325
 msgid "The following SQL to insert the GRN Suspense GLTrans record was used"
 msgstr ""
 "निम्नलिखित सम्मिलित करने के लिए SQL GRN सस्पेंस GLTrans रिकॉर्ड इस्तेमाल किया गया था"
 
-#: GoodsReceived.php:672
+#: GoodsReceived.php:671
 #, fuzzy
 msgid "Order Completed"
 msgstr "पूरा"
 
-#: GoodsReceived.php:687 ReverseGRN.php:332
+#: GoodsReceived.php:686 ReverseGRN.php:332
 msgid "GRN number"
 msgstr "GRN संख्या"
 
-#: GoodsReceived.php:688
+#: GoodsReceived.php:687
 msgid "Print this Goods Received Note (GRN)"
 msgstr "प्रिंट इस सामग्री प्राप्त करें (GRN)"
 
-#: GoodsReceived.php:697
+#: GoodsReceived.php:696
 msgid "Modify Order Items"
 msgstr "संशोधित आदेश आइटम"
 
-#: GoodsReceived.php:700
+#: GoodsReceived.php:699
 msgid "Process Goods Received"
 msgstr "प्रक्रिया का सामान मिला"
 
@@ -12492,7 +12494,7 @@ msgstr "भुगतान रिपोर्ट चलाएँ"
 msgid "Remittance Advices"
 msgstr "प्रेषण सलाह"
 
-#: index.php:426 OutstandingGRNs.php:17 OutstandingGRNs.php:150
+#: index.php:426 OutstandingGRNs.php:14 OutstandingGRNs.php:147
 msgid "Outstanding GRNs Report"
 msgstr "बकाया GRNs रिपोर्ट"
 
@@ -12593,7 +12595,7 @@ msgstr "सूची आइटम की स्थिति"
 msgid "Inventory Item Usage"
 msgstr "सूची आइटम उपयोग"
 
-#: index.php:631 InventoryQuantities.php:82
+#: index.php:631 InventoryQuantities.php:81
 msgid "Inventory Quantities"
 msgstr "सूची मात्रा"
 
@@ -13098,23 +13100,23 @@ msgstr "वहाँ सीमा और स्थान में कोई आ
 msgid "Inventory Planning Reporting"
 msgstr "सूची रिपोर्टिंग योजना"
 
-#: InventoryPlanning.php:384 InventoryValuation.php:205 PDFPriceList.php:260
+#: InventoryPlanning.php:384 InventoryValuation.php:212 PDFPriceList.php:260
 #: StockCheck.php:271
 msgid "From Inventory Category Code"
 msgstr "श्रेणी सूची से कोड"
 
-#: InventoryPlanning.php:397 InventoryValuation.php:214 PDFPriceList.php:269
+#: InventoryPlanning.php:397 InventoryValuation.php:222 PDFPriceList.php:269
 #: StockCheck.php:281
 msgid "To Inventory Category Code"
 msgstr "श्रेणी सूची कोड करने के लिए"
 
 #: InventoryPlanning.php:410 InventoryPlanningPrefSupplier.php:479
-#: InventoryValuation.php:224 StockCheck.php:291
+#: InventoryValuation.php:233 StockCheck.php:291
 msgid "For Inventory in Location"
 msgstr "स्थान में सूची के लिए"
 
 #: InventoryPlanning.php:414 InventoryPlanningPrefSupplier.php:483
-#: InventoryValuation.php:228 MRPCreateDemands.php:209
+#: InventoryValuation.php:238 MRPCreateDemands.php:209
 #: PDFDeliveryDifferences.php:54 PDFDIFOT.php:57 PDFOrdersInvoiced.php:56
 #: PDFOrderStatus.php:57 StockUsage.php:80 StockUsage.php:82
 msgid "All Locations"
@@ -13276,47 +13278,47 @@ msgstr "छह सप्ताह"
 msgid "Two Months"
 msgstr "दो महीने"
 
-#: InventoryQuantities.php:13 InventoryQuantities.php:146
+#: InventoryQuantities.php:12 InventoryQuantities.php:145
 #: InventoryQuantities.php:208
 msgid "Inventory Quantities Report"
 msgstr "सूची मात्रा रिपोर्ट"
 
-#: InventoryQuantities.php:14
+#: InventoryQuantities.php:13
 msgid "Parts With Quantities"
 msgstr "मात्रा के साथ पार्ट्स"
 
-#: InventoryQuantities.php:84
+#: InventoryQuantities.php:83
 msgid "The Inventory Quantity report could not be retrieved by the SQL because"
 msgstr "इन्वेंटरी मात्रा रिपोर्ट क्योंकि SQL से नहीं लिया सकता है"
 
-#: InventoryQuantities.php:93
+#: InventoryQuantities.php:92
 msgid "Print Inventory Quantities Report"
 msgstr "प्रिंट इन्वेंटरी मात्रा रिपोर्ट"
 
-#: InventoryQuantities.php:95
+#: InventoryQuantities.php:94
 msgid "There were no items with inventory quantities"
 msgstr "वहाँ सूची मात्रा के साथ कोई आइटम नहीं थे"
 
-#: InventoryQuantities.php:144
+#: InventoryQuantities.php:143
 msgid "Inventory Quantities Reporting"
 msgstr "सूची रिपोर्टिंग मात्रा"
 
-#: InventoryQuantities.php:147
+#: InventoryQuantities.php:146
 msgid ""
 "Use this report to display the quantity of Inventory items in different "
 "categories."
 msgstr ""
 "इस के लिए विभिन्न श्रेणियों में इन्वेंट्री मदों की मात्रा प्रदर्शन रिपोर्ट का उपयोग करें."
 
-#: InventoryQuantities.php:153 MRPReschedules.php:135
+#: InventoryQuantities.php:152 MRPReschedules.php:134
 msgid "Selection"
 msgstr "चयन"
 
-#: InventoryQuantities.php:155
+#: InventoryQuantities.php:154
 msgid "Only Parts With Multiple Locations"
 msgstr "कई स्थानों के साथ ही पार्ट्स"
 
-#: InventoryQuantities.php:164 MRPReport.php:508 ReorderLevel.php:194
+#: InventoryQuantities.php:163 MRPReport.php:508 ReorderLevel.php:194
 #: SelectProduct.php:37 StockDispatch.php:268 StockLocStatus.php:51
 #: SupplierTenders.php:327
 msgid ""
@@ -13326,13 +13328,13 @@ msgstr ""
 "कोई स्टॉक वर्तमान में उल्लिखित कृपया नीचे दिए गए लिंक का उपयोग करने के लिए उन्हें स्थापित "
 "श्रेणियां हैं"
 
-#: InventoryQuantities.php:165 MRPReport.php:509 ReorderLevel.php:195
+#: InventoryQuantities.php:164 MRPReport.php:509 ReorderLevel.php:195
 #: SelectProduct.php:38 StockDispatch.php:269 StockLocStatus.php:52
 #: SupplierTenders.php:328
 msgid "Define Stock Categories"
 msgstr "स्टॉक चैनल परिभाषित"
 
-#: InventoryQuantities.php:170 MRPReport.php:517 ReorderLevel.php:200
+#: InventoryQuantities.php:169 MRPReport.php:517 ReorderLevel.php:200
 #: SelectProduct.php:475 StockDispatch.php:277 StockLocStatus.php:57
 #: SupplierTenders.php:332
 msgid "In Stock Category"
@@ -13342,30 +13344,30 @@ msgstr "स्टॉक श्रेणी में"
 msgid "Reorder"
 msgstr "Reorder"
 
-#: InventoryValuation.php:16 InventoryValuation.php:74
+#: InventoryValuation.php:16 InventoryValuation.php:78
 #: MailInventoryValuation.php:48 MailInventoryValuation.php:115
 msgid "Inventory Valuation"
 msgstr "सूची मूल्यांकन"
 
-#: InventoryValuation.php:76 MailInventoryValuation.php:117
+#: InventoryValuation.php:80 MailInventoryValuation.php:117
 msgid "The inventory valuation could not be retrieved by the SQL because"
 msgstr "सूची मूल्यांकन क्योंकि SQL से नहीं लिया सकता है"
 
-#: InventoryValuation.php:85 MailInventoryValuation.php:211
+#: InventoryValuation.php:89 MailInventoryValuation.php:211
 msgid "Print Inventory Valuation Error"
 msgstr "प्रिंट सूची मूल्यांकन में त्रुटि"
 
-#: InventoryValuation.php:87 MailInventoryValuation.php:213
+#: InventoryValuation.php:91 MailInventoryValuation.php:213
 msgid ""
 "There were no items with any value to print out for the location specified"
 msgstr "वहाँ किसी भी मूल्य के साथ कोई आइटम के लिए निर्दिष्ट स्थान के लिए बाहर प्रिंट थे"
 
-#: InventoryValuation.php:183 MailInventoryValuation.php:202
-#: OutstandingGRNs.php:140
+#: InventoryValuation.php:190 MailInventoryValuation.php:202
+#: OutstandingGRNs.php:137
 msgid "Grand Total Value"
 msgstr "भव्य कुल मूल्य"
 
-#: InventoryValuation.php:192
+#: InventoryValuation.php:199
 msgid "Inventory Valuation Reporting"
 msgstr "सूची मूल्यांकन रिपोर्ट"
 
@@ -13669,16 +13671,16 @@ msgstr ""
 "कोई स्थानों है कि एक कर प्रांत प्रदर्शित करने के रिकॉर्ड के साथ मैच कर रहे हैं. जाँच करें कि "
 "कर प्रांतों स्थापित कर रहे हैं सभी स्थानों तक भेजने के लिए"
 
-#: Locations.php:353 Locations.php:456 Locations.php:463
+#: Locations.php:353 Locations.php:456 Locations.php:467
 #: api/api_xml-rpc.php:828
 msgid "Location Code"
 msgstr "स्थान कोड"
 
-#: Locations.php:354 Locations.php:508
+#: Locations.php:354 Locations.php:514
 msgid "Location Name"
 msgstr "स्थान का नाम"
 
-#: Locations.php:355 Locations.php:531 TaxAuthorityRates.php:83
+#: Locations.php:355 Locations.php:537 TaxAuthorityRates.php:83
 msgid "Tax Province"
 msgstr "टैक्स प्रांत"
 
@@ -13690,24 +13692,24 @@ msgstr "समीक्षा रिकार्ड"
 msgid "Amend Location details"
 msgstr "संशोधन स्थान के विवरण"
 
-#: Locations.php:462
+#: Locations.php:464
 msgid "New Location details"
 msgstr "नए स्थान के विवरण"
 
-#: Locations.php:510
+#: Locations.php:516
 msgid "Contact for deliveries"
 msgstr "प्रसव के लिए संपर्क करें"
 
-#: Locations.php:526 SalesPeople.php:295 SupplierContacts.php:242
+#: Locations.php:532 SalesPeople.php:295 SupplierContacts.php:242
 msgid "Facsimile No"
 msgstr "प्रतिकृति नहीं"
 
-#: Locations.php:543
+#: Locations.php:549
 #, fuzzy
 msgid "Default Counter Sales Customer Code"
 msgstr "डिफ़ॉल्ट काउंटर सेल्स ग्राहक"
 
-#: Locations.php:546
+#: Locations.php:552
 #, fuzzy
 msgid "Counter Sales Branch Code"
 msgstr "ग्राहक शाखा कोड:"
@@ -14183,13 +14185,13 @@ msgid "MRP error"
 msgstr "एमआरपी रिपोर्ट"
 
 #: MRPPlannedPurchaseOrders.php:17 MRPPlannedWorkOrders.php:15
-#: MRPReschedules.php:17 MRPShortages.php:16
+#: MRPReschedules.php:16 MRPShortages.php:16
 msgid "The MRP calculation must be run before you can run this report"
 msgstr ""
 "एमआरपी गणना इससे पहले कि आप इस रिपोर्ट को चला सकते हैं चलाने के लिए किया जाना चाहिए"
 
 #: MRPPlannedPurchaseOrders.php:18 MRPPlannedWorkOrders.php:16
-#: MRPReschedules.php:18 MRPShortages.php:17
+#: MRPReschedules.php:17 MRPShortages.php:17
 msgid "To run the MRP calculation click"
 msgstr "एमआरपी गणना क्लिक करें चलाने के लिए"
 
@@ -14266,7 +14268,7 @@ msgid "Consolidation:"
 msgstr "समेकन:"
 
 #: MRPPlannedPurchaseOrders.php:325 MRPPlannedWorkOrders.php:257
-#: MRPPlannedWorkOrders.php:386 MRPReport.php:421 MRPReschedules.php:182
+#: MRPPlannedWorkOrders.php:386 MRPReport.php:421 MRPReschedules.php:181
 msgid "MRP Date"
 msgstr "एमआरपी दिनांक"
 
@@ -14439,7 +14441,7 @@ msgstr "Dem लिखें"
 msgid "Where Required"
 msgstr "कहाँ आवश्यक"
 
-#: MRPReport.php:416 MRPReschedules.php:178
+#: MRPReport.php:416 MRPReschedules.php:177
 msgid "Order No."
 msgstr "आदेश नहीं."
 
@@ -14523,39 +14525,39 @@ msgstr "ओर कुल मात्रा"
 msgid "Stock Status"
 msgstr "स्टॉक स्तर"
 
-#: MRPReschedules.php:25 MRPReschedules.php:164
+#: MRPReschedules.php:24 MRPReschedules.php:163
 msgid "MRP Reschedule Report"
 msgstr "एमआरपी रिपोर्ट Reschedule"
 
-#: MRPReschedules.php:26 MRPReschedules.php:46 MRPReschedules.php:58
+#: MRPReschedules.php:25 MRPReschedules.php:45 MRPReschedules.php:57
 msgid "MRP Reschedules"
 msgstr "एमआरपी Reschedules"
 
-#: MRPReschedules.php:48
+#: MRPReschedules.php:47
 msgid "The MRP reschedules could not be retrieved by the SQL because"
 msgstr "एमआरपी reschedules क्योंकि SQL से नहीं लिया सकता है"
 
-#: MRPReschedules.php:60
+#: MRPReschedules.php:59
 msgid "No MRP reschedule retrieved"
 msgstr "कोई एमआरपी लिया पुनर्निर्धारित"
 
-#: MRPReschedules.php:123
+#: MRPReschedules.php:121
 msgid "MRP Reschedule Reporting"
 msgstr "एमआरपी रिपोर्टिंग Reschedule"
 
-#: MRPReschedules.php:127 MRPShortages.php:235 Stocks.php:37
+#: MRPReschedules.php:125 MRPShortages.php:235 Stocks.php:37
 msgid "Stock"
 msgstr "स्टॉक"
 
-#: MRPReschedules.php:137
+#: MRPReschedules.php:136
 msgid "Work Orders Only"
 msgstr "केवल कार्य आदेश"
 
-#: MRPReschedules.php:138
+#: MRPReschedules.php:137
 msgid "Purchase Orders Only"
 msgstr "केवल खरीद आदेश"
 
-#: MRPReschedules.php:168
+#: MRPReschedules.php:167
 msgid "Selection:"
 msgstr "चयन:"
 
@@ -14769,21 +14771,21 @@ msgstr "मात्रा डेल"
 msgid "Last Del"
 msgstr "पिछले डेल"
 
-#: OutstandingGRNs.php:18
+#: OutstandingGRNs.php:15
 msgid "Outstanding GRNs Valuation"
 msgstr "बकाया GRNs मूल्यांकन"
 
-#: OutstandingGRNs.php:51 OutstandingGRNs.php:63
+#: OutstandingGRNs.php:48 OutstandingGRNs.php:60
 msgid "Outstanding GRN Valuation"
 msgstr "बकाया GRN मूल्यांकन"
 
-#: OutstandingGRNs.php:53
+#: OutstandingGRNs.php:50
 msgid ""
 "The outstanding GRNs valuation details could not be retrieved by the SQL "
 "because"
 msgstr "बकाया GRNs मूल्यांकन विवरण क्योंकि SQL से नहीं लिया सकता है"
 
-#: OutstandingGRNs.php:65
+#: OutstandingGRNs.php:62
 msgid "No outstanding GRNs valuation details retrieved"
 msgstr "कोई बकाया GRNs मूल्यांकन विवरण को पुनः प्राप्त"
 
@@ -18032,7 +18034,7 @@ msgstr "आदेश हैडर विवरण"
 
 #: PO_OrderDetails.php:90 Suppliers.php:656 Suppliers.php:804
 #: SuppLoginSetup.php:238 SuppLoginSetup.php:404 WWW_Users.php:264
-#: WWW_Users.php:477
+#: WWW_Users.php:472
 msgid "Supplier Code"
 msgstr "आपूर्तिकर्ता कोड"
 
@@ -18294,6 +18296,7 @@ msgstr "आदेश मात्रा"
 #: POReport.php:537 POReport.php:598 POReport.php:699 POReport.php:1231
 #: POReport.php:1282 POReport.php:1371 SalesInquiry.php:800
 #: SalesInquiry.php:819 SalesInquiry.php:967
+#: includes/PDFInventoryValnPageHeader.inc:36
 msgid "Extended Cost"
 msgstr "विस्तारित मूल्य"
 
@@ -20789,7 +20792,7 @@ msgstr "3 से समूह"
 msgid "Group By 4"
 msgstr "4 से समूह"
 
-#: SalesAnalysis_UserDefined.php:9 includes/session.inc:286
+#: SalesAnalysis_UserDefined.php:9 includes/session.inc:289
 msgid ""
 "The security settings on your account do not permit you to access this "
 "function"
@@ -29749,7 +29752,7 @@ msgstr "पासवर्ड की पुष्टि"
 msgid "If you leave the password boxes empty your password will not change"
 msgstr "अगर आप को छोड़ पासवर्ड बक्से खाली अपना पासवर्ड नहीं बदल जाएगा"
 
-#: UserSettings.php:192 WWW_Users.php:622
+#: UserSettings.php:192 WWW_Users.php:617
 msgid "PDF Language Support"
 msgstr "पीडीएफ भाषा समर्थन"
 
@@ -30815,11 +30818,11 @@ msgstr "उपलब्ध सुरक्षा टोकन"
 msgid "Eastern European Russian Japanese Korean Vietnamese Hebrew Arabic Thai"
 msgstr "पूर्वी यूरोपीय रूसी जापानी कोरियाई अरबी हिब्रू थाई"
 
-#: WWW_Users.php:480
+#: WWW_Users.php:475
 msgid "Restrict to Sales Person"
 msgstr "बिक्री व्यक्ति को प्रतिबंधित करें"
 
-#: WWW_Users.php:486 WWW_Users.php:488
+#: WWW_Users.php:481 WWW_Users.php:483
 msgid "Not a salesperson only login"
 msgstr "नहीं एक विक्रेता केवल लॉगिन"
 
@@ -33604,16 +33607,16 @@ msgstr ""
 msgid "Could not get the configuration parameters from the database because"
 msgstr "क्योंकि डेटाबेस से विन्यास पैरामीटर प्राप्त नहीं कर सका"
 
-#: includes/GetConfig.php:69
+#: includes/GetConfig.php:71
 msgid ""
 "An error occurred accessing the database to retrieve the company information"
 msgstr "एक त्रुटि डेटाबेस तक पहुँचने हुई कंपनी की जानकारी प्राप्त"
 
-#: includes/GetConfig.php:74
+#: includes/GetConfig.php:76
 msgid "The company record has not yet been set up"
 msgstr "कंपनी रिकॉर्ड अभी तक नहीं गठन किया गया है"
 
-#: includes/GetConfig.php:74
+#: includes/GetConfig.php:76
 msgid ""
 "From the system setup tab select company maintenance to enter the company "
 "information and system preferences"
@@ -33621,7 +33624,7 @@ msgstr ""
 "प्रणाली सेटअप टैब से चयन कंपनी रखरखाव कंपनी की जानकारी और सिस्टम वरीयताएँ में प्रवेश के "
 "लिए"
 
-#: includes/GetConfig.php:74
+#: includes/GetConfig.php:76
 msgid "CRITICAL PROBLEM"
 msgstr "गंभीर समस्या"
 
@@ -34430,10 +34433,6 @@ msgstr "पर"
 msgid "location"
 msgstr "स्थान"
 
-#: includes/PDFInventoryValnPageHeader.inc:35
-msgid "Item Value"
-msgstr "वस्तु का मूल्य"
-
 #: includes/PDFLowGPPageHeader.inc:15
 msgid "Low GP Sales Between"
 msgstr "Low GP Sales Between"
@@ -34791,11 +34790,11 @@ msgstr ""
 "करता है एक लागत की स्थापना और व्यवस्था प्रविष्टि के लिए सेट है कोई भी कीमत डेटा के साथ "
 "आइटम की बिक्री निषेध दर्ज नहीं किया गया"
 
-#: includes/session.inc:95 includes/session.inc:259
+#: includes/session.inc:98 includes/session.inc:262
 msgid "Account Error Report"
 msgstr "खाता त्रुटि रिपोर्ट"
 
-#: includes/session.inc:98
+#: includes/session.inc:101
 msgid ""
 "Your user role does not have any access defined for webERP. There is an "
 "error in the security setup for this user account"
@@ -34803,35 +34802,35 @@ msgstr ""
 "आपके उपयोगकर्ता किसी भी भूमिका webERP के लिए परिभाषित पहुँच नहीं है. इस उपयोगकर्ता "
 "खाते के लिए सुरक्षा व्यवस्था में एक त्रुटि है"
 
-#: includes/session.inc:103
+#: includes/session.inc:106
 msgid "incorrect password"
 msgstr "गलत पासवर्ड"
 
-#: includes/session.inc:103
+#: includes/session.inc:106
 msgid "The user/password combination"
 msgstr "उपयोगकर्ता / कूटशब्द संयोजन"
 
-#: includes/session.inc:103
+#: includes/session.inc:106
 msgid "is not a valid user of the system"
 msgstr "प्रणाली की एक वैध उपयोगकर्ता नहीं है"
 
-#: includes/session.inc:107
+#: includes/session.inc:110
 msgid "system maintenance"
 msgstr "सिस्टम अनुरक्षण"
 
-#: includes/session.inc:107
+#: includes/session.inc:110
 msgid "webERP is not available right now"
 msgstr "webERP अभी उपलब्ध नहीं है"
 
-#: includes/session.inc:107
+#: includes/session.inc:110
 msgid "during maintenance of the system"
 msgstr "सिस्टम के रखरखाव के दौरान"
 
-#: includes/session.inc:143 api/api_login.php:122
+#: includes/session.inc:146 api/api_login.php:122
 msgid "There was a problem deleting expired audit-trail history"
 msgstr "वहाँ एक समय सीमा समाप्त लेखा परीक्षा निशान इतिहास हटाने में कोई समस्या थी"
 
-#: includes/session.inc:246
+#: includes/session.inc:249
 msgid ""
 "webERP is configured to allow only secure socket connections. Pages must be "
 "called with https://"
@@ -34839,7 +34838,7 @@ msgstr ""
 "webERP करने के लिए केवल सुरक्षित गर्तिका कनेक्शन की अनुमति कॉन्फ़िगर किया गया है. पृष्ठों "
 "https के साथ बुलाया जाना चाहिए: / /"
 
-#: includes/session.inc:262
+#: includes/session.inc:265
 msgid ""
 "Security settings have not been defined for your user account. Please advise "
 "your system administrator. It could also be that there is a session problem "
@@ -34849,15 +34848,15 @@ msgstr ""
 "व्यवस्थापक से सलाह. यह भी हो सकता है कि वहाँ आपके PHP वेब सर्वर के साथ एक सत्र समस्या है "
 "हो सकता है"
 
-#: includes/session.inc:280
+#: includes/session.inc:283
 msgid "Security Permissions Problem"
 msgstr "सुरक्षा अनुमतियाँ समस्या"
 
-#: includes/session.inc:324
+#: includes/session.inc:327
 msgid "Error in form verificationm"
 msgstr "प्रपत्र verificationm में त्रुटि"
 
-#: includes/session.inc:326
+#: includes/session.inc:329
 msgid "This form was not submitted with a correct ID"
 msgstr "यह फार्म एक सही पहचान पत्र के साथ प्रस्तुत नहीं किया गया"
 
@@ -36984,6 +36983,9 @@ msgstr "पैरामीटर्स"
 #: api/api_xml-rpc.php:3027
 msgid "Return Value"
 msgstr "वापसी का मूल्य"
+
+#~ msgid "Item Value"
+#~ msgstr "वस्तु का मूल्य"
 
 #~ msgid "Print Sales Order / Pro-forma Invoice"
 #~ msgstr "प्रिंट बिक्री आदेश / समर्थक forma चालान"

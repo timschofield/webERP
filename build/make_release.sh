@@ -125,4 +125,4 @@ rm $OUTPUT_DIR/webERP.zip
 
 cd ..
 
-zip -r $OUTPUT_DIR/webERP webERP -x \*.svn*
+zip -r $OUTPUT_DIR/webERP webERP -x \*.svn* \*/config.php
