@@ -47,12 +47,12 @@ if (isset($_POST['DoUpgrade'])){
 	
 	if ($dbType=='mysql' OR $dbType =='mysqli'){
 		
-		/* First do a backup */
+		/* First do a backup 
 		$BackupFile =  $PathPrefix . './companies/' . $_SESSION['DatabaseName']  .'/' . _('Backup') . '_' . Date('Y-m-d-H-i-s') . '.sql.gz';
 		$Command = 'mysqldump --opt -h' . $host . ' -u' . $dbuser . ' -p' . $dbpassword  . '  ' . $_SESSION['DatabaseName'] . '| gzip > ' . $BackupFile;
 		system($Command);
 		
-		/*this could be a weighty file attachment!! */
+		//this could be a weighty file attachment!! 
 		include('includes/htmlMimeMail.php');
 		$mail = new htmlMimeMail();
 		$attachment = $mail->getFile( $BackupFile);
@@ -64,6 +64,8 @@ if (isset($_POST['DoUpgrade'])){
 		
 		prnMsg(_('A backup of the database has been taken and emailed to you'), 'info');
 		unlink($BackupFile); // would be a security issue to leave it there for all to download/see
+		
+		*/
 		
 		if ($_POST['OldVersion']=='Manual') {
 			prnMsg(_('No datbase updates have been done as you selected to apply these manually - upgrade SQL scripts are under sql/mysql/ directory in the distribution'),'info');
@@ -94,12 +96,18 @@ if (isset($_POST['DoUpgrade'])){
 				case '3.10':
 					$SQLScripts[] = './sql/mysql/upgrade3.10-3.11.sql';
 				case '3.11':
+				case '4.0RC1':
+				case '4.01':
+				case '4.02':
+				case '4.03RC1':
+				case '4.03RC2':
+				case '4.03':
+				case '4.03.5':
 					$SQLScripts[] = './sql/mysql/upgrade3.11.1-4.00.sql';
+				case '4.03.8':
+					$SQLScripts[] = './sql/mysql/upgrade4.03-4.04.sql';
 					break;
 			} //end switch
-			if(isset($_SESSION['VersionNumber']) AND strcmp($_SESSION['VersionNumber'],'4.04')<0) { /* VersionNumber is set to less than '4.04' when upgrade3.11.1-4.00.sql is run */
-				$SQLScripts[] = './sql/mysql/upgrade3.11.1-4.00.sql';
-			}
 		}	
 	} else { //dbType is not mysql or mysqli
 		prnMsg(_('Only mysql upgrades are performed seamlessly at this time. Your database will need to be manually updated'),'info');

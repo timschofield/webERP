@@ -13,13 +13,14 @@ if (!isset($mysqlport)){
 	$mysqlport = 3306;
 }
 global $db;	// Make sure it IS global, regardless of our context
+
 $db = mysqli_connect($host , $dbuser, $dbpassword,$_SESSION['DatabaseName'], $mysqlport);
 //$result=DB_query('SET sql_mode = ANSI', $db);
 
 
 //this statement sets the charset to be used for sending data to and from the db server
 //if not set, both mysqli server and mysqli client/library may assume otherwise
-mysqli_set_charset($db, "utf8");
+mysqli_set_charset($db, 'utf8');
 
 /* check connection */
 if (mysqli_connect_errno()) {
@@ -32,24 +33,25 @@ again') . '</p>';
 }
 
 if ( !$db ) {
-	echo '<BR>' . _('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');
+	echo '<br />' . _('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');
 	exit;
 }
 
 /* Update to allow RecurringSalesOrdersProcess.php to run via cron */
 if (isset($DatabaseName)) {
-        if (!mysqli_select_db($db,$DatabaseName)) {
-            echo '<BR>' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');  echo '<BR><A HREF="index.php">' . _('Back to login page') . '</A>';
-                echo '<BR><A HREF="index.php">' . _('Back to login page') . '</A>';
-                unset ($DatabaseName);
-                exit;
-        }
+	if (!mysqli_select_db($db,$DatabaseName)) {
+		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');  
+		echo '<br /><a href="index.php">' . _('Back to login page') . '</A>';
+		unset ($DatabaseName);
+		exit;
+	}
 } else {
-        if (!mysqli_select_db($db,$_SESSION['DatabaseName'])) {
-            echo '<BR>' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');  echo '<BR><A HREF="index.php">' . _('Back to login page') . '</A>';
-                echo '<BR><A HREF="index.php">' . _('Back to login page') . '</A>';
-                unset ($_SESSION['DatabaseName']);
-                exit;
+	if (!mysqli_select_db($db,$_SESSION['DatabaseName'])) {
+		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');  
+		echo '<br /><a href="index.php">' . _('Back to login page') . '</A>';
+		
+		unset ($_SESSION['DatabaseName']);
+		exit;
         }
 }
 

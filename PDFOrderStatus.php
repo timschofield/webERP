@@ -27,12 +27,11 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 		prnMsg($msg,'error');
 	}
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' '
-		. _('Order Status Report') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' ' . _('Order Status Report') . '</p>';
 
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class=selection>
+	echo '<table class="selection">
 			<tr>
 				<td>' . _('Enter the date from which orders are to be listed') . ':</td>
 				<td><input type=text class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength=10 size=10 value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . '"></td>
@@ -54,7 +53,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	echo '</select></td></tr>';
 
 	echo '<tr><td>' . _('Inventory Location') . ':</td><td><select name="Location">';
-	echo '<option selected value="All">' . _('All Locations');
+	echo '<option selected value="All">' . _('All Locations') . '</option>';
 
 	$result= DB_query("SELECT loccode, locationname FROM locations",$db);
 	while ($myrow=DB_fetch_array($result)){
@@ -242,9 +241,9 @@ $Result=DB_query($sql,$db,'','',false,false); //dont trap errors here
 
 if (DB_error_no($db)!=0){
 	include('includes/header.inc');
-	echo '<br>' . _('An error occurred getting the orders details');
+	echo '<br />' . _('An error occurred getting the orders details');
 	if ($debug==1){
-		echo '<br>' . _('The SQL used to get the orders that failed was') . '<br>' . $sql;
+		echo '<br />' . _('The SQL used to get the orders that failed was') . '<br />' . $sql;
 	}
 	include ('includes/footer.inc');
 	exit;
@@ -341,6 +340,6 @@ while ($myrow=DB_fetch_array($Result)){
 		$OrderNo=0;
 	 } /*end of new page header  */
 } /* end of while there are delivery differences to print */
-$pdf->OutputD($_SESSION['DatabaseName'] . '_OrderStatus_' . date('Y-m-d') . '.pdf');//UldisN
-$pdf->__destruct(); //UldisN
+$pdf->OutputD($_SESSION['DatabaseName'] . '_OrderStatus_' . date('Y-m-d') . '.pdf');
+$pdf->__destruct();
 ?>

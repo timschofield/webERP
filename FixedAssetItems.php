@@ -50,7 +50,7 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 
 	if ($UploadTheFile=='Yes'){
 		$result  =  move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $filename);
-		$message = ($result)?_('File url') ."<a href='". $filename ."'>" .  $filename . '</a>' : _('Something is wrong with uploading a file');
+		$message = ($result)?_('File url') .'<a href="' . $filename .'">' .  $filename . '</a>' : _('Something is wrong with uploading a file');
 	}
  /* EOR Add Image upload for New Item  - by Ori */
 }
@@ -262,10 +262,6 @@ if (isset($_POST['submit'])) {
 				prnMsg( _('The new asset has been added to the database with an asset code of:') . ' ' . $NewAssetID,'success');
 				unset($_POST['LongDescription']);
 				unset($_POST['Description']);
-//				unset($_POST['AssetCategoryID']);
-//				unset($_POST['AssetLocation']);
-//				unset($_POST['DepnType']);
-//				unset($_POST['DepnRate']);
 				unset($_POST['BarCode']);
 				unset($_POST['SerialNo']);
 			}//ALL WORKED SO RESET THE FORM VARIABLES
@@ -374,8 +370,8 @@ if (isset($_POST['submit'])) {
 } /* end if delete asset */
 $result = DB_Txn_Commit($db);
 
-echo '<form name="AssetForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '?' .SID .
-	'"><table class=selection>';
+echo '<form name="AssetForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '">
+	<table class=selection>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -452,7 +448,7 @@ if (!isset($New) ) { //ie not new at all!
 	echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="ItemPicture" name="ItemPicture"></td>';
 
 	if (function_exists('imagecreatefromjpg')){
-		$StockImgLink = '<img src="GetStockImage.php?SID&automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
+		$StockImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
 			'&AssetID='.urlencode($AssetID).
 			'&text='.
 			'&width=64'.

@@ -36,13 +36,14 @@ if (get_magic_quotes_gpc()){
 	<?php
 		if ($AllowCompanySelectionBox == true){
 			echo '<select name="CompanyNameField">';
-			$DirHandle = dir('companies/');
-			while (false != ($CompanyEntry = $DirHandle->read())){
+			
+			$Companies = scandir('companies/', 0);
+			foreach ($Companies as $CompanyEntry){
 				if (is_dir('companies/' . $CompanyEntry) AND $CompanyEntry != '..' AND $CompanyEntry != '' AND $CompanyEntry!='.svn' AND $CompanyEntry!='.'){
 					if ($CompanyEntry==$DefaultCompany) {
-						echo "<option selected value='$CompanyEntry'>$CompanyEntry</option>";
+						echo '<option selected value="' . $CompanyEntry . '">' . $CompanyEntry . '</option>';
 					} else {
-						echo "<option  value='$CompanyEntry'>$CompanyEntry</option>";
+						echo '<option  value="' . $CompanyEntry . '">' . $CompanyEntry . '</option>';
 					}
 				}
 			}
@@ -53,9 +54,9 @@ if (get_magic_quotes_gpc()){
 	?>
 	<br />
 	<label><?php echo _('User name'); ?>:</label><br />
-	<input type="TEXT" name="UserNameEntryField"/><br />
+	<input type="text" name="UserNameEntryField"/><br />
 	<label><?php echo _('Password'); ?>:</label><br />
-	<input type="PASSWORD" name="Password"><br />
+	<input type="password" name="Password"><br />
 	<div id="demo_text"><?php echo $demo_text;?></div>
 	<input class="button" type="submit" value="<?php echo _('Login'); ?>" name="SubmitUser" />
 	</form>

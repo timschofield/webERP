@@ -39,7 +39,7 @@ if (isset($_POST['submit']) || isset($_GET['remove']) || isset($_GET['add']) ) {
 			$ErrMsg = _('The update of the security role description failed because');
 			$ResMsg = _('The Security role description was updated.');
 		} else { // Add Security Heading
-			$sql = "INSERT INTO securityroles (secrolename) valueS ('".$_POST['SecRoleName']."')";
+			$sql = "INSERT INTO securityroles (secrolename) VALUES ('".$_POST['SecRoleName']."')";
 			$ErrMsg = _('The update of the security role failed because');
 			$ResMsg = _('The Security role was created.');
 		}
@@ -48,12 +48,10 @@ if (isset($_POST['submit']) || isset($_GET['remove']) || isset($_GET['add']) ) {
 	} elseif (isset($SelectedRole) ) {
 		$PageTokenId = $_GET['PageToken'];
 		if( isset($_GET['add']) ) { // updating Security Groups add a page token
-			$sql = "INSERT INTO securitygroups (
-					secroleid, tokenid
-					) valueS (
-					'".$SelectedRole."',
-					'".$PageTokenId."'
-					)";
+			$sql = "INSERT INTO securitygroups (secroleid, 
+											tokenid) 
+									VALUES ('".$SelectedRole."',
+											'".$PageTokenId."' )";
 			$ErrMsg = _('The addition of the page group access failed because');
 			$ResMsg = _('The page group access was added.');
 		} elseif ( isset($_GET['remove']) ) { // updating Security Groups remove a page token
@@ -121,10 +119,10 @@ if (!isset($SelectedRole)) {
 
 		/*The SecurityHeadings array is defined in config.php */
 
-		printf("<td>%s</td>
-			<td><a href=\"%s&SelectedRole=%s\">" . _('Edit') . "</a></td>
-			<td><a href=\"%s&SelectedRole=%s&delete=1&SecRoleName=%s\">" . _('Delete') . "</a></td>
-			</tr>",
+		printf('<td>%s</td>
+			<td><a href="%s&SelectedRole=%s">' . _('Edit') . '</a></td>
+			<td><a href="%s&SelectedRole=%s&delete=1&SecRoleName=%s">' . _('Delete') . '</a></td>
+			</tr>',
 			$myrow['secrolename'],
 			$_SERVER['PHP_SELF']  . '?',
 			$myrow['secroleid'],
@@ -167,10 +165,10 @@ echo '<table class="selection">';
 if (!isset($_POST['SecRoleName'])) {
 	$_POST['SecRoleName']='';
 }
-echo '<tr><td>' . _('Role') . ":</td>
-	<td><input type='text' name='SecRoleName' size=40 maxlength=40 value='" . $_POST['SecRoleName'] . "'></tr>";
-echo "</table><br />
-	<div class='centre'><input type='Submit' name='submit' value='" . _('Enter Role') . "'></div></form>";
+echo '<tr><td>' . _('Role') . ':</td>
+	<td><input type="text" name="SecRoleName" size=40 maxlength=40 value="' . $_POST['SecRoleName'] . '"></tr>';
+echo '</table><br />
+	<div class="centre"><input type="submit" name="submit" value="' . _('Enter Role') . '"></div></form>';
 
 if (isset($SelectedRole)) {
 	$sql = "SELECT tokenid, tokenname
@@ -189,7 +187,7 @@ if (isset($SelectedRole)) {
 		$i++;
 	}
 
-	echo '<br /><table class=selection><tr>';
+	echo '<br /><table class="selection"><tr>';
 
 	if (DB_num_rows($Result)>0 ) {
 		echo '<th colspan="3"><div class="centre">'._('Assigned Security Tokens').'</div></th>';
@@ -209,27 +207,29 @@ if (isset($SelectedRole)) {
 		}
 
 		if (in_array($AvailRow['tokenid'],$TokensUsed)){
-			printf("<td>%s</td><td>%s</td>
-				<td><a href=\"%s&SelectedRole=%s&remove=1&PageToken=%s\">" . _('Remove') . "</a></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>",
-				$AvailRow['tokenid'],
-				$AvailRow['tokenname'],
-				$_SERVER['PHP_SELF']  . '?',
-				$SelectedRole,
-				$AvailRow['tokenid']
-				);
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td><a href="%sSelectedRole=%s&remove=1&PageToken=%s">' . _('Remove') . '</a></td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>',
+					$AvailRow['tokenid'],
+					$AvailRow['tokenname'],
+					$_SERVER['PHP_SELF']  . '?',
+					$SelectedRole,
+					$AvailRow['tokenid'] );
 		} else {
-			printf("<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href=\"%s&SelectedRole=%s&add=1&PageToken=%s\">" . _('Add') . "</a></td>",
-				$AvailRow['tokenid'],
-				$AvailRow['tokenname'],
-				$_SERVER['PHP_SELF']  . '?',
-				$SelectedRole,
-				$AvailRow['tokenid']
-				);
+			printf('<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td><a href="%sSelectedRole=%s&add=1&PageToken=%s">' . _('Add') . '</a></td>',
+					$AvailRow['tokenid'],
+					$AvailRow['tokenname'],
+					$_SERVER['PHP_SELF']  . '?',
+					$SelectedRole,
+					$AvailRow['tokenid'] );
 		}
 		echo '</tr>';
 	}

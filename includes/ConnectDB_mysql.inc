@@ -12,14 +12,14 @@ $db = mysql_connect($host.':'.$mysqlport , $dbuser, $dbpassword);
 
 //this statement sets the charset to be used for sending data to and from the db server
 //if not set, both mysql server and mysql client/library may assume otherwise
-mysql_set_charset("utf8", $db);
+mysql_set_charset('utf8', $db);
 
 //$varabc =  mysql_client_encoding($db);
 //printf("client encoding is %s\n", $varabc);
 
 
 if ( !$db ) {
-	echo '<BR>' . _('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');
+	echo '<br />' . _('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');
 	session_unset();
 	session_destroy();
 	echo '<p>' . _('Click') . '<a href="index.php">' . _('here') . '</a>' ._('to try logging in
@@ -30,14 +30,17 @@ again') . '</p>';
 
 /* Update to allow RecurringSalesOrdersProcess.php to run via cron */
 if (isset($DatabaseName)) {
-        if (! mysql_select_db($_SESSION['DatabaseName'],$db)) {
-            echo '<BR>' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');  echo '<BR><A HREF="index.php">' . _('Back to login page') . '</A>';
-                unset ($_SESSION['DatabaseName']);
-                exit;
-        }
+	
+	if (! mysql_select_db($_SESSION['DatabaseName'],$db)) {
+		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');  
+		echo '<br /><a href="index.php">' . _('Back to login page') . '</A>';
+		unset ($_SESSION['DatabaseName']);
+		exit;
+	}
 } else {
 	if (! mysql_select_db($_SESSION['DatabaseName'],$db)) {
-	    echo '<BR>' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');	echo '<BR><A HREF="index.php">' . _('Back to login page') . '</A>';
+		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');	
+		echo '<br /><a href="index.php">' . _('Back to login page') . '</A>';
 		unset ($_SESSION['DatabaseName']);
 		exit;
 	}
@@ -197,24 +200,24 @@ function DB_Maintenance($Conn){
 
 
 function DB_Txn_Begin($Conn){
-	mysql_query('SET autocommit=0;',$Conn);
-	mysql_query('START TRANSACTION',$Conn);
+	mysql_query("SET autocommit=0",$Conn);
+	mysql_query("START TRANSACTION",$Conn);
 }
 
 function DB_Txn_Commit($Conn){
-	mysql_query('COMMIT',$Conn );
-	mysql_query('SET autocommit=1;',$Conn);
+	mysql_query("COMMIT",$Conn );
+	mysql_query("SET autocommit=1",$Conn);
 }
 
 function DB_Txn_Rollback($Conn){
-    mysql_query('ROLLBACK', $Conn );
+    mysql_query("ROLLBACK", $Conn );
 }
 
 function DB_IgnoreForeignKeys($Conn){
-	msql_query('SET FOREIGN_KEY_CHECKS=0',$Conn);
+	msql_query("SET FOREIGN_KEY_CHECKS=0",$Conn);
 }
 function DB_ReinstateForeignKeys($Conn){
-	msql_query('SET FOREIGN_KEY_CHECKS=1',$Conn);
+	msql_query("SET FOREIGN_KEY_CHECKS=1",$Conn);
 }
 
 ?>

@@ -1,8 +1,6 @@
 <?php
-/* $Revision: 1.23 $ */
-/* $Id$*/
 
-//$PageSecurity = 10;
+/* $Id$*/
 
 include('includes/session.inc');
 
@@ -227,12 +225,12 @@ or deletion of the records*/
 
 	echo '<table class="selection">
 		<tr>
-		<th>' . _('Group Name') . "</th>
-		<th>" . _('Section') . "</th>
-		<th>" . _('Sequence In TB') . "</th>
-		<th>" . _('Profit and Loss') . "</th>
-		<th>" . _('Parent Group') . "</th>
-		</tr>";
+		<th>' . _('Group Name') . '</th>
+		<th>' . _('Section') . '</th>
+		<th>' . _('Sequence In TB') . '</th>
+		<th>' . _('Profit and Loss') . '</th>
+		<th>' . _('Parent Group') . '</th>
+		</tr>';
 
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
@@ -262,8 +260,8 @@ or deletion of the records*/
 			<td>' . $myrow[2] . '</td>
 			<td>' . $PandLText . '</td>
 			<td>' . $myrow[4] . '</td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&amp;SelectedAccountGroup=' . htmlentities($myrow[0], ENT_QUOTES,'UTF-8') . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&amp;SelectedAccountGroup=' . htmlentities($myrow[0], ENT_QUOTES,'UTF-8') . '&amp;delete=1">' . _('Delete') .'</a></td></tr>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . htmlentities($myrow[0], ENT_QUOTES,'UTF-8') . '">' . _('Edit') . '</a></td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . htmlentities($myrow[0], ENT_QUOTES,'UTF-8') . '&amp;delete=1">' . _('Delete') .'</a></td></tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table>';
@@ -271,12 +269,12 @@ or deletion of the records*/
 
 
 if (isset($_POST['SelectedAccountGroup']) OR isset($_GET['SelectedAccountGroup'])) {
-	echo '<br /><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID .'">' . _('Review Account Groups') . '</a></div>';
+	echo '<br /><div class="centre"><a href="' . $_SERVER['PHP_SELF'] .'">' . _('Review Account Groups') . '</a></div>';
 }
 
 if (! isset($_GET['delete'])) {
 
-	echo '<br /><form method="post" id="AccountGroups" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	echo '<br /><form method="post" id="AccountGroups" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -339,13 +337,12 @@ if (! isset($_GET['delete'])) {
 		<input tabindex="1" ' . (in_array('GroupName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="GroupName" size="50" maxlength="50" value="' . $_POST['GroupName'] . '" /></td></tr>';
 	}
 	echo '<tr><td>' . _('Parent Group') . ':' . '</td>
-	<td><select tabindex="2" ' . (in_array('ParentGroupName',$Errors) ?  'class="selecterror"' : '' ) .
-		'  name="ParentGroupName">';
+			<td><select tabindex="2" ' . (in_array('ParentGroupName',$Errors) ?  'class="selecterror"' : '' ) . '  name="ParentGroupName">';
 
-	$sql = 'SELECT groupname FROM accountgroups';
+	$sql = "SELECT groupname FROM accountgroups";
 	$groupresult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
 	if (!isset($_POST['ParentGroupName'])){
-		echo '<option selected="selected" value="">' ._('Top Level Group').'</option>';
+		echo '<option selected value="">' ._('Top Level Group').'</option>';
 	} else {
 		echo '<option value="">' ._('Top Level Group').'</option>';
 	}

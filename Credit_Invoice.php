@@ -1,7 +1,5 @@
 <?php
 /* $Id$*/
-//$PageSecurity =3;
-
 
 /*Functions to get the GL codes to post the transaction to */
 include('includes/GetSalesTransGLCodes.inc');
@@ -398,8 +396,8 @@ if (!isset($_POST['ProcessCredit'])) {
 		<td colspan=3 class=number>' . _('Freight cost charged on invoice') . '</td>
 		<td class=number>' . number_format($_SESSION['Old_FreightCost'],2) . '</td>
 		<td></td>
-		<td colspan=2 class=number>' . _('Credit Freight Cost') . "</td>
-		<td><input tabindex=".$j." type=text class=number size=6 maxlength=6 name='ChargeFreightCost' value=" . $_SESSION['CreditItems']->FreightCost . "></td>";
+		<td colspan=2 class=number>' . _('Credit Freight Cost') . '</td>
+		<td><input tabindex='.$j.' type=text class="number" size=6 maxlength=6 name="ChargeFreightCost" value="' . $_SESSION['CreditItems']->FreightCost . '"></td>';
 
 	echo '<td>';
 	echo '</td><td>';
@@ -422,7 +420,7 @@ foreach ($_SESSION['CreditItems']->FreightTaxes as $FreightTaxLine) {
 	}
 
 	if (!isset($_POST['ProcessCredit'])) {
-		echo  '<input type=text class=number name=FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . ' maxlength=4 size=4 VALUE=' . $FreightTaxLine->TaxRate * 100 . '>';
+		echo  '<input type=text class=number name=FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . ' maxlength=4 size=4 value=' . $FreightTaxLine->TaxRate * 100 . '>';
 	}
 	if ($FreightTaxLine->TaxOnTax ==1){
 		$TaxTotals[$FreightTaxLine->TaxAuthID] += ($FreightTaxLine->TaxRate * ($_SESSION['CreditItems']->FreightCost + $FreightTaxTotal));
@@ -437,8 +435,8 @@ foreach ($_SESSION['CreditItems']->FreightTaxes as $FreightTaxLine) {
 if (!isset($_POST['ProcessCredit'])) {
 	echo '</td>';
 
-	echo '<td class=number>' . number_format($FreightTaxTotal,2) . '</td>
-		<td class=number>' . number_format($FreightTaxTotal+ $_SESSION['CreditItems']->FreightCost,2) . '</td>
+	echo '<td class="number">' . number_format($FreightTaxTotal,2) . '</td>
+		<td class="number">' . number_format($FreightTaxTotal+ $_SESSION['CreditItems']->FreightCost,2) . '</td>
 		</tr>';
 }
 
@@ -447,12 +445,12 @@ $DisplayTotal = number_format($_SESSION['CreditItems']->total + $_SESSION['Credi
 
 if (!isset($_POST['ProcessCredit'])) {
 	echo '<tr>
-		<td colspan=7 class=number>' . _('Credit Totals') . "</td>
-		<td class=number><hr><b>$DisplayTotal</b><hr></td>
+		<td colspan=7 class=number>' . _('Credit Totals') . '</td>
+		<td class=number><hr><b>' . $DisplayTotal . '</b><hr></td>
 		<td colspan=2></td>
-		<td class=number><hr><b>" . number_format($TaxTotal,2) . "<hr></td>
-		<td class=number><hr><b>" . number_format($TaxTotal+($_SESSION['CreditItems']->total + $_SESSION['CreditItems']->FreightCost),2) . "</b><hr></td>
-		</tr></table>";
+		<td class=number><hr><b>' . number_format($TaxTotal,2) . '<hr></td>
+		<td class=number><hr><b>' . number_format($TaxTotal+($_SESSION['CreditItems']->total + $_SESSION['CreditItems']->FreightCost),2) . '</b><hr></td>
+		</tr></table>';
 }
 $DefaultDispatchDate = Date($_SESSION['DefaultDateFormat']);
 
@@ -493,11 +491,10 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 /*Start an SQL transaction */
 
-	$SQL = 'BEGIN';
-	$Result = DB_query($SQL,$db);
+	
+	$Result = DB_Txn_Begin($db);
 
 	$DefaultDispatchDate= FormatDateForSQL($DefaultDispatchDate);
-
 
 	/*Calculate the allocation and see if it is possible to allocate to the invoice being credited */
 
@@ -822,7 +819,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 /* Insert stock movements for the stock coming back in - with unit cost */
 
-				if ($MBFlag=="M" OR $MBFlag=="B"){
+				if ($MBFlag=='M' OR $MBFlag=='B'){
 					$SQL = "INSERT INTO stockmoves (
 							stockid,
 							type,
@@ -1437,8 +1434,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 		}
 	} /*end of if Sales and GL integrated */
 
-	$SQL='COMMIT';
-	$Result = DB_query($SQL,$db);
+	$Result = DB_Txn_Commit($db);
 
 	unset($_SESSION['CreditItems']->LineItems);
 	unset($_SESSION['CreditItems']);

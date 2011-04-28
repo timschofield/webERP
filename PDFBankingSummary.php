@@ -16,15 +16,16 @@ if (!isset($_POST['BatchNo'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' .
 		 $title . '" alt="" />' . ' ' . $title . '</p>';
 
-	$sql='SELECT DISTINCT
+	$sql="SELECT DISTINCT
 			transno,
 			transdate
 		FROM banktrans
 		WHERE type=12
-		ORDER BY transno DESC';
+		ORDER BY transno DESC";
 	$result=DB_query($sql, $db);
 
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '"><table class=selection>';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">
+		<table class=selection>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<tr><td>' . _('Select the batch number of receipts to be printed') . ':</td>';
 	echo '<td><select name="BatchNo">';
@@ -165,7 +166,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format($TotalBanked,2), 'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,_('TOTAL') . ' ' . $Currency . ' ' . _('BANKED'), 'left');
 	
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_BankingSummary_' . date('Y-m-d').'.pdf');//UldisN
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_BankingSummary_' . date('Y-m-d').'.pdf');
 	$pdf->__destruct(); 
 }
 

@@ -4,12 +4,17 @@
  * this value is saved in the $_SESSION['Versionumber'] when includes/GetConfig.php is run
  * if  VersionNumber is < $Version  then the DB update script is run */
 
-$Version='4.03.8'; //must update manually every time there is a DB change
+$Version='4.04'; //must update manually every time there is a DB change
 
 require_once ($PathPrefix .'includes/MiscFunctions.php');
 
 if (!isset($_SESSION['DatabaseName'])){ //need to get the database name from the file structure 
 	if (isset($_POST['CompanyNameField'])){
+		if (ContainsIllegalCharacters($_POST['CompanyNameField'])){
+			prnMsg(_('The company database being logged into cannot contain any of the illegal characters'),'error');
+			echo '<br /><a href="index.php">' . _('Back to login page') . '</a>';
+			exit;
+		}
 		if (is_dir('companies/' . $_POST['CompanyNameField']) AND $_POST['CompanyNameField'] != '..'){
 			$_SESSION['DatabaseName'] = $_POST['CompanyNameField'];
 			include_once ($PathPrefix . 'includes/ConnectDB_' . $dbType . '.inc');
