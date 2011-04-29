@@ -26,7 +26,7 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	}
 	
 	/*Load the pagesecurity settings from the database */
-	$sql='SELECT script, pagesecurity FROM scripts';
+	$sql="SELECT script, pagesecurity FROM scripts";
 	$result=DB_query($sql, $db,'','',false,false);
 	if (DB_error_no($db)!=0){ // the table may not exist with the pagesecurity field in it if it is an older webERP database
 		header('Location: UpgradeDatabase.php'); //divert to the db upgrade if the VersionNumber is not in the config table
@@ -39,7 +39,7 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 
 /* Also reads all the company data set up in the company record and returns an array */
 
-	$sql=	'SELECT	coyname,
+	$sql=	"SELECT	coyname,
 					gstno,
 					regoffice1,
 					regoffice2,
@@ -66,7 +66,7 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 					decimalplaces 
 				FROM companies
 				INNER JOIN currencies ON companies.currencydefault=currencies.currabrev
-				WHERE coycode=1';
+				WHERE coycode=1";
 
 	$ErrMsg = _('An error occurred accessing the database to retrieve the company information');
 	$ReadCoyResult = DB_query($sql,$db,$ErrMsg);

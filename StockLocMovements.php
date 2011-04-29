@@ -1,15 +1,13 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity = 2;
-
 include('includes/session.inc');
 
 $title = _('All Stock Movements By Location');
 
 include('includes/header.inc');
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') .
@@ -18,20 +16,20 @@ echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/
 echo '<table class=selection><tr><td>';
 echo '  ' . _('From Stock Location') . ':<select name="StockLocation"> ';
 
-$sql = 'SELECT loccode, locationname FROM locations';
+$sql = "SELECT loccode, locationname FROM locations";
 $resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All'){
 		if ($myrow['loccode'] == $_POST['StockLocation']){
-		     echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		     echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-		     echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		     echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-		 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		 $_POST['StockLocation']=$myrow['loccode'];
 	} else {
-		 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
 }
 
@@ -43,7 +41,7 @@ if (!isset($_POST['BeforeDate']) OR !Is_Date($_POST['BeforeDate'])){
 if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
    $_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,Date('d'),Date('y')));
 }
-echo ' ' . _('Show Movements before') . ': <input type=TEXT name="BeforeDate" size=12 maxlength=12 Value="' . $_POST['BeforeDate'] . '">';
+echo ' ' . _('Show Movements before') . ': <input type="text" name="BeforeDate" size=12 maxlength=12 Value="' . $_POST['BeforeDate'] . '">';
 echo ' ' . _('But after') . ': <input type=TEXT name="AfterDate" size=12 maxlength=12 Value="' . $_POST['AfterDate'] . '">';
 echo '</td></tr></table><br>';
 echo '<div class=centre><input type=submit name="ShowMoves" VALUE="' . _('Show Stock Movements') . '"></div><br>';
@@ -77,7 +75,7 @@ $sql = "SELECT stockmoves.stockid,
 $ErrMsg = _('The stock movements for the selected criteria could not be retrieved because');
 $MovtsResult = DB_query($sql, $db,$ErrMsg);
 
-echo '<table cellpadding=5 CELLSPACING=4 class=selection>';
+echo '<table cellpadding=5 cellspacing="4 "class="selection">';
 $tableheader = '<tr>
 		<th>' . _('Item Code') . '</th>
 		<th>' . _('Type') . '</th>
@@ -108,29 +106,29 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 	$DisplayTranDate = ConvertSQLDate($myrow['trandate']);
 
 
-		printf("<td><a target='_blank' href='StockStatus.php?" . SID . "&StockID=%s'>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td class=number>%s</td>
-			<td>%s</td>
-			<td class=number>%s</td>
-			<td class=number>%s</td>
-			<td class=number>%s</td>
-			</tr>",
-			strtoupper($myrow['stockid']),
-			strtoupper($myrow['stockid']),
-			$myrow['typename'],
-			$myrow['transno'],
-			$DisplayTranDate,
-			$myrow['debtorno'],
-			number_format($myrow['qty'],
-			$myrow['decimalplaces']),
-			$myrow['reference'],
-			number_format($myrow['price'],2),
-			number_format($myrow['discountpercent']*100,2),
-			number_format($myrow['newqoh'],$myrow['decimalplaces']));
+		printf('<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?StockID=%s">%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class=number>%s</td>
+				<td>%s</td>
+				<td class=number>%s</td>
+				<td class=number>%s</td>
+				<td class=number>%s</td>
+				</tr>',
+				strtoupper($myrow['stockid']),
+				strtoupper($myrow['stockid']),
+				$myrow['typename'],
+				$myrow['transno'],
+				$DisplayTranDate,
+				$myrow['debtorno'],
+				number_format($myrow['qty'],
+				$myrow['decimalplaces']),
+				$myrow['reference'],
+				number_format($myrow['price'],$_SESSION['CompanyRecord']['decimalplaces']),
+				number_format($myrow['discountpercent']*100,2),
+				number_format($myrow['newqoh'],$myrow['decimalplaces']));
 	$j++;
 	If ($j == 16){
 		$j=1;

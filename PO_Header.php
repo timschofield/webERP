@@ -805,7 +805,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		echo '</select></td></tr>';
 	
 		echo '<tr><td>' . _('Status Comment') . ':</td>
-						<td><input type=text name="StatusComments" size=50></td></tr>
+					<td><input type=text name="StatusComments" size=50></td></tr>
 					<tr><td colspan=2><b>' . $_SESSION['PO'.$identifier]->StatusComments .'</b></td></tr>';
 		//need to use single quotes as double quotes inside the string of StatusComments
 		echo '<input type="hidden" name="StatusCommentsComplete" value="' . $_SESSION['PO'.$identifier]->StatusComments .'">';
