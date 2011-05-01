@@ -38,14 +38,14 @@ $myrow = DB_fetch_row($result);
 
 $DecimalPlaces = $myrow[3];
 
-echo '<table class=selection>';
+echo '<table class="selection">';
 
 $Its_A_KitSet_Assembly_Or_Dummy =False;
 if (($myrow[2]=='K') OR ($myrow[2]=='A') OR ($myrow[2]=='D')) {
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
 	echo '<font color=navy size=3><b>' . $StockID . ' - ' . $myrow[0] . '</b></font>';
 
-	echo '<br />' . _('The selected item is a dummy or assembly or kit-set item and cannot have a stock holding') . '. ' . _('Please select a different item');
+	prnMsg( _('The selected item is a dummy or assembly or kit-set item and cannot have a stock holding') . '. ' . _('Please select a different item'),'warn');
 
 	$StockID = '';
 } else {

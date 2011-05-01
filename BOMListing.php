@@ -2,11 +2,7 @@
 
 /* $Id$*/
 
-/* $Revision: 1.14 $ */
-
-//$PageSecurity = 2;
 include('includes/session.inc');
-
 
 If (isset($_POST['PrintPDF'])
 	AND isset($_POST['FromCriteria'])
@@ -48,9 +44,9 @@ If (isset($_POST['PrintPDF'])
 	   $title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
 	   include('includes/header.inc');
 	   prnMsg(_('The Bill of Material listing could not be retrieved by the SQL because'),'error');
-	   echo "<br><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<br>$SQL";
+	      echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -105,21 +101,9 @@ If (isset($_POST['PrintPDF'])
 
 	$YPos -=$line_height;
 	$pdf->line($Page_Width-$Right_Margin, $YPos,$Left_Margin, $YPos);
-    /*
-	$buf = $pdf->output();
-	$len = strlen($buf);
-
-	header('Content-type: application/pdf');
-	header('Content-Length: '.$len);
-	header('Content-Disposition: inline; filename=BOMListing.pdf');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
-
-	$pdf->stream();
-    */
-    $pdf->OutputD($_SESSION['DatabaseName'] . '_BOMListing_' . date('Y-m-d').'.pdf');//UldisN
-    $pdf->__destruct(); //UldisN
+  
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_BOMListing_' . date('Y-m-d').'.pdf');
+    $pdf->__destruct(); 
 
 } else { /*The option to print PDF was not hit */
 
@@ -131,16 +115,22 @@ If (isset($_POST['PrintPDF'])
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='POST'><table class=selection>";
+		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="POST">
+			<table class="selection">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<tr><td>' . _('From Inventory Part Code') . ':' . "</font></td><td><input tabindex='1' type=text name=FromCriteria size=20 maxlength=20 VALUE='1'></td></tr>";
+		echo '<tr><td>' . _('From Inventory Part Code') . ':' . '</font></td>
+				<td><input tabindex="1" type="text" name="FromCriteria" size="20" maxlength="20" value="1"></td>
+			</tr>';
 
-		echo '<tr><td>' . _('To Inventory Part Code') . ':' . "</td><td><input tabindex='2' type=text name=ToCriteria size=20 maxlength=20 VALUE='zzzzzzz'></td></tr>";
+		echo '<tr><td>' . _('To Inventory Part Code') . ':' . '</td>
+				<td><input tabindex="2" type="text" name="ToCriteria" size="20" maxlength="20" value="zzzzzzz" /></td>
+			</tr>';
 
 
-		echo "</table><br><div class='centre'><input tabindex='3' type=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></div>";
-		echo "<script>defaultControl(document.forms[0].FromCriteria);</script>";
+		echo '</table>
+				<br /><div class="centre"><input tabindex="3" type="submit" name="PrintPDF" value="' . _('Print PDF') . '"></div>';
+		echo '<script>defaultControl(document.forms[0].FromCriteria);</script>';
 	}
 	include('includes/footer.inc');;
 

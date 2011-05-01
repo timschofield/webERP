@@ -10,7 +10,7 @@ body {
 
 #container {
 	text-align: left;
-	margin: 70px auto 0 auto;
+	margin: 70px auto 0px auto;
 	padding: 40px 0 36px 0;
      /*	position: relative; only makes sense to absolute position a child */
 	z-index: 1000;
@@ -63,7 +63,7 @@ input.button:hover {
 	background: url(images/menu_bg_dblue.png) 0px -8px repeat-x; /* works in FF3 but not in IE8 */
 }
 
-label {
+span {
      /*	width: 200px;       not needed, works for IE8 but not for FF3 */
      /*	padding-top: 7px;   not needed, works for IE8 but not for FF3 */
      /*	padding-left: 50px; now using margin instead */

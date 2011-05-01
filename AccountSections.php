@@ -1,8 +1,6 @@
 <?php
-/* $Revision: 1.7 $ */
-/* $Id$*/
 
-//$PageSecurity = 10;
+/* $Id$*/
 
 include('includes/session.inc');
 
@@ -136,7 +134,7 @@ if (isset($_POST['submit'])) {
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg( _('Cannot delete this account section because general ledger accounts groups have been created using this section'),'warn');
-		echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('general ledger accounts groups that refer to this account section') . '</font>';
+		echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('general ledger accounts groups that refer to this account section') . '</font>';
 
 	} else {
 		//Fetch section name
@@ -176,11 +174,11 @@ if (!isset($_GET['SelectedSectionID']) and !isset($_POST['SelectedSectionID'])) 
 	$result = DB_query($sql,$db,$ErrMsg);
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
-	echo "<table name='SectionList' class='selection'>
+	echo '<table name="SectionList" class="selection">
 		<tr>
-		<th>" . _('Section Number') . "</th>
-		<th>" . _('Section Description') . "</th>
-		</tr>";
+			<th>' . _('Section Number') . '</th>
+			<th>' . _('Section Description') . '</th>
+		</tr>';
 
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
@@ -194,11 +192,11 @@ if (!isset($_GET['SelectedSectionID']) and !isset($_POST['SelectedSectionID'])) 
 		}
 
 		echo '<td>' . $myrow[0] . '</td><td>' . $myrow[1] . '</td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&amp;SelectedSectionID=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedSectionID=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
 		if ( $myrow[0] == '1' || $myrow[0] == '2' ) {
 			echo '<td><b>'._('Restricted').'</b></td>';
 		} else {
-			echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&amp;SelectedSectionID=' . $myrow[0] . '&amp;delete=1">' . _('Delete') .'</a></td>';
+			echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedSectionID=' . $myrow[0] . '&amp;delete=1">' . _('Delete') .'</a></td>';
 		}
 		echo '</tr>';
 	} //END WHILE LIST LOOP
@@ -207,12 +205,12 @@ if (!isset($_GET['SelectedSectionID']) and !isset($_POST['SelectedSectionID'])) 
 
 
 if (isset($_POST['SelectedSectionID']) or isset($_GET['SelectedSectionID'])) {
-	echo '<div class="centre"><a href=' . $_SERVER['PHP_SELF'] . '?' . SID .'>' . _('Review Account Sections') . '</a></div>';
+	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Account Sections') . '</a></div>';
 }
 
 if (! isset($_GET['delete'])) {
 
-	echo "<form method='post' name='AccountSections' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
+	echo '<form method="post" name="AccountSections" action="' . $_SERVER['PHP_SELF'] .  '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($_GET['SelectedSectionID'])) {
@@ -233,10 +231,12 @@ if (! isset($_GET['delete'])) {
 			$_POST['SectionID'] = $myrow['sectionid'];
 			$_POST['SectionName']  = $myrow['sectionname'];
 
-			echo "<input type=hidden name='SelectedSectionID' value='" . $_POST['SectionID'] . "'>";
-			echo "<table class=selection>
-			<td>" . _('Section Number') . ':' . "</td>
-			<td>" . $_POST['SectionID'] . "</td>";
+			echo '<input type=hidden name="SelectedSectionID" value="' . $_POST['SectionID'] . '" />';
+			echo '<table class="selection">
+					<tr>
+						<td>' . _('Section Number') . ':' . '</td>
+						<td>' . $_POST['SectionID'] . '</td>
+					</tr>';
 		}
 
 	}  else {
@@ -250,22 +250,23 @@ if (! isset($_GET['delete'])) {
 		if (!isset($_POST['SectionName'])) {
 			$_POST['SectionName']='';
 		}
-		echo "<table class='selection'>
+		echo '<table class="selection">
 			<tr>
-			<td>" . _('Section Number') . ':' . '</td>
-			<td><input tabindex="1" ' . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) ." type='text' name='SectionID' class='number' size='4' maxlength='4' value='" . $_POST['SectionID'] . "' /></td></tr>";
+				<td>' . _('Section Number') . ':' . '</td>
+				<td><input tabindex="1" ' . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="SectionID" class="number" size="4" maxlength="4" value="' . $_POST['SectionID'] . '" /></td>
+			</tr>';
 	}
-	echo "<tr><td>" . _('Section Description') . ':' . '</td>
-		<td><input tabindex="2" ' . (in_array('SectionName',$Errors) ?  'class="inputerror"' : '' ) ." type='text' name='SectionName' size='30' maxlength='30' value='" . $_POST['SectionName'] . "' /></td>
-		</tr>";
+	echo '<tr><td>' . _('Section Description') . ':' . '</td>
+		<td><input tabindex="2" ' . (in_array('SectionName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="SectionName" size="30" maxlength="30" value="' . $_POST['SectionName'] . '" /></td>
+		</tr>';
 
 	echo '<tr><td colspan="2"><div class="centre"><input tabindex="3" type="submit" name="submit" value="' . _('Enter Information') . '" /></div></td></tr>';
 	echo '</table><br />';
 
 	if (!isset($_GET['SelectedSectionID']) or $_GET['SelectedSectionID']=='') {
-		echo "<script>defaultControl(document.AccountSections.SectionID);</script>";
+		echo '<script>defaultControl(document.AccountSections.SectionID);</script>';
 	} else {
-		echo "<script>defaultControl(document.AccountSections.SectionName);</script>";
+		echo '<script>defaultControl(document.AccountSections.SectionName);</script>';
 	}
 
 	echo '</form>';

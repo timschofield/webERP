@@ -17,7 +17,7 @@ include('includes/header.inc');
 
 	// Context Navigation and Title
 	echo '<table width=100%>
-			<td width=37% align=left><a href="'. $rootpath . '/index.php?&Application=AR'. SID .'">' . _('Back to Customers') . '</a></td>
+			<td width=37% align=left><a href="'. $rootpath . '/index.php?&Application=AR">' . _('Back to Customers') . '</a></td>
 			<td align=left><font size=4 color=blue><u><b>' . _('Debtors Control Integrity') . '</b></u></font></td>
 	      </table><p>';
 
@@ -37,19 +37,22 @@ include('includes/header.inc');
 			$DefaultToPeriod = $_POST['ToPeriod'];
 	}
 
-	echo '<tr><td>' . _('Start Period:') . '</td><td><select name="FromPeriod">';
-	$toSelect = '<tr><td>' . _('End Period:') .'</td><td><select name="ToPeriod">';
+	echo '<tr>
+			<td>' . _('Start Period:') . '</td>
+			<td><select name="FromPeriod">';
+	
+	$ToSelect = '<tr><td>' . _('End Period:') .'</td>
+					<td><select name="ToPeriod">';
 
 	$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno";
 	$perResult = DB_query($SQL,$db);
 
-	while ( $perRow=DB_fetch_array($perResult) )
-	{
-		$fromSelected = ( $perRow['periodno'] == $DefaultFromPeriod ) ? 'selected' : '';
-		echo '<option ' . $fromSelected . ' value="' . $perRow['periodno'] . '">' .MonthAndYearFromSQLDate($perRow['lastdate_in_period']) .'</option>';
+	while ( $perRow=DB_fetch_array($perResult) ) {
+		$FromSelected = ( $perRow['periodno'] == $DefaultFromPeriod ) ? 'selected' : '';
+		echo '<option ' . $FromSelected . ' value="' . $perRow['periodno'] . '">' .MonthAndYearFromSQLDate($perRow['lastdate_in_period']) .'</option>';
 
-		$toSelected = ( $perRow['periodno'] == $DefaultToPeriod ) ? 'selected' : '';
-		$toSelect .= '<option ' . $toSelected . ' value="' . $perRow['periodno'] . '">' . MonthAndYearFromSQLDate($perRow['lastdate_in_period']) .'</option>';
+		$ToSelected = ( $perRow['periodno'] == $DefaultToPeriod ) ? 'selected' : '';
+		$ToSelect .= '<option ' . $ToSelected . ' value="' . $perRow['periodno'] . '">' . MonthAndYearFromSQLDate($perRow['lastdate_in_period']) .'</option>';
 	}
 	DB_free_result($perResult);
 	echo '</select></td></tr>';
@@ -57,7 +60,7 @@ include('includes/header.inc');
 	echo '</table></td>'; // End First column
 	echo '<td><table>'; // Start Second column
 
-	echo $toSelect . '</select></td></tr>';
+	echo $ToSelect . '</select></td></tr>';
 
 	echo '</table></td>'; // End Second column
 	echo '</table>'; //End the main table
@@ -81,22 +84,22 @@ include('includes/header.inc');
 				<th>' . _('Difference') . '</th>
 			</tr>';
 
-		$curPeriod = $_POST['FromPeriod'];
-		$glOpening = $invTotal = $recTotal = $glClosing = $calcTotal = $difTotal = 0;
+		$CurPeriod = $_POST['FromPeriod'];
+		$GLOpening = $invTotal = $RecTotal = $GLClosing = $CalcTotal = $DiffTotal = 0;
 		$j=0;
 
-		while ( $curPeriod <= $_POST['ToPeriod'] )
+		while ( $CurPeriod <= $_POST['ToPeriod'] )
 		{
 			$SQL = "SELECT bfwd,
 						actual
 					FROM chartdetails
-					WHERE period = " . $curPeriod . "
+					WHERE period = " . $CurPeriod . "
 					AND accountcode=" . $_SESSION['CompanyRecord']['debtorsact'];
 			$dtResult = DB_query($SQL,$db);
 			$dtRow = DB_fetch_array($dtResult);
 			DB_free_result($dtResult);
 
-			$glOpening += $dtRow['bfwd'];
+			$GLOpening += $dtRow['bfwd'];
 			$glMovement = $dtRow['bfwd'] + $dtRow['actual'];
 
 			if ($j==1) {
@@ -106,12 +109,12 @@ include('includes/header.inc');
 				echo '<tr class="EvenTableRows">';
 				$j++;
 			}
-			echo '<td>' . $curPeriod . '</td>
+			echo '<td>' . $CurPeriod . '</td>
 					<td class="number">' . number_format($dtRow['bfwd'],2) . '</td>';
 
 			$SQL = "SELECT SUM((ovamount+ovgst)/rate) AS totinvnetcrds
 					FROM debtortrans
-					WHERE prd = '" . $curPeriod . "'
+					WHERE prd = '" . $CurPeriod . "'
 					AND (type=10 OR type=11)";
 			$invResult = DB_query($SQL,$db);
 			$invRow = DB_fetch_array($invResult);
@@ -123,41 +126,41 @@ include('includes/header.inc');
 
 			$SQL = "SELECT SUM((ovamount+ovgst)/rate) AS totreceipts
 					FROM debtortrans
-					WHERE prd = '" . $curPeriod . "'
+					WHERE prd = '" . $CurPeriod . "'
 					AND type=12";
 			$recResult = DB_query($SQL,$db);
 			$recRow = DB_fetch_array($recResult);
 			DB_free_result($recResult);
 
-			$recTotal += $recRow['totreceipts'];
-			$calcMovement = $dtRow['bfwd'] + $invRow['totinvnetcrds'] + $recRow['totreceipts'];
+			$RecTotal += $recRow['totreceipts'];
+			$CalcMovement = $dtRow['bfwd'] + $invRow['totinvnetcrds'] + $recRow['totreceipts'];
 
 			echo '<td class=number>' . number_format($recRow['totreceipts'],2) . '</td>';
 
-			$glClosing += $glMovement;
-			$calcTotal += $calcMovement;
-			$difTotal += $diff;
+			$GLClosing += $glMovement;
+			$CalcTotal += $CalcMovement;
+			$DiffTotal += $diff;
 
-			$diff = ( $dtRow['bfwd'] == 0 ) ? 0 : round($glMovement,2) - round($calcMovement,2);
+			$diff = ( $dtRow['bfwd'] == 0 ) ? 0 : round($glMovement,2) - round($CalcMovement,2);
 			$color = ( $diff == 0 OR $dtRow['bfwd'] == 0 ) ? 'green' : 'red';
 
-			echo '<td class=number>' . number_format($glMovement,2) . '</td>
-					<td class=number>' . number_format(($calcMovement),2) . '</td>
-					<td class=number bgcolor=white><font color="' . $color . '">' . number_format($diff,2) . '</font></td>
+			echo '<td class=number>' . number_format($glMovement,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class=number>' . number_format(($CalcMovement),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class=number bgcolor=white><font color="' . $color . '">' . number_format($diff,$_SESSION['CompanyRecord']['decimalplaces']) . '</font></td>
 			</tr>';
-			$curPeriod++;
+			$CurPeriod++;
 		}
 
-		$difColor = ( $difTotal == 0 ) ? 'green' : 'red';
+		$difColor = ( $DiffTotal == 0 ) ? 'green' : 'red';
 
 		echo '<tr bgcolor=white>
 				<td>' . _('Total') . '</td>
-				<td class=number>' . number_format($glOpening,2) . '</td>
-				<td class=number>' . number_format($invTotal,2) . '</td>
-				<td class=number>' . number_format($recTotal,2) . '</td>
-				<td class=number>' . number_format($glClosing,2) . '</td>
-				<td class=number>' . number_format($calcTotal,2) . '</td>
-				<td class=number><font color="' . $difColor . '">' . number_format($difTotal,2) . '</font></td>
+				<td class=number>' . number_format($GLOpening,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class=number>' . number_format($invTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class=number>' . number_format($RecTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class=number>' . number_format($GLClosing,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class=number>' . number_format($CalcTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class=number><font color="' . $difColor . '">' . number_format($DiffTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</font></td>
 			</tr>';
 		echo '</table></form>';
 	}

@@ -801,6 +801,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/BOMListing.php">' . _('Bill Of Material Listing') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/BOMIndented.php">' . _('Indented Bill Of Material Listing') . '</a></p>'; ?>
 							</td>
 							</tr>
@@ -960,6 +965,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/PageSecurity.php">' . _('Page Security Settings') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/SecurityTokens.php">' . _('Define Security Tokens') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>

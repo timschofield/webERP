@@ -8,14 +8,12 @@ include('includes/session.inc');
 $title = _('Supplier Inquiry');
 include('includes/header.inc');
 
-// This is already linked from the menu
-//echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><br />';
-
 // always figure out the SQL required from the inputs available
 
 if(!isset($_GET['SupplierID']) AND !isset($_SESSION['SupplierID'])){
 	echo '<br />' . _('To display the enquiry a Supplier must first be selected from the Supplier selection screen') .
 		  '<br /><div class="centre"><a href="' . $rootpath . '/SelectSupplier.php">' . _('Select a Supplier to Inquire On') . '</a></div>';
+	include('includes/footer.inc');
 	exit;
 } else {
 	if (isset($_GET['SupplierID'])){
@@ -28,8 +26,7 @@ if (isset($_GET['FromDate'])){
 	$_POST['TransAfterDate']=$_GET['FromDate'];
 }
 if (!isset($_POST['TransAfterDate']) OR !Is_Date($_POST['TransAfterDate'])) {
-
-	$_POST['TransAfterDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date("m")-12,Date("d"),Date("Y")));
+	$_POST['TransAfterDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m')-12,Date('d'),Date('Y')));
 }
 
 
@@ -143,11 +140,14 @@ echo '<table width=90% class="selection">
 			<th>' . _('Over') . ' ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</th>
 		</tr>';
 
-echo '<tr><td class=number>' . number_format($SupplierRecord['balance'],2) .
-	  '</td><td class=number>' . number_format(($SupplierRecord['balance'] - $SupplierRecord['due']),2) .
-	  '</td><td class=number>' . number_format(($SupplierRecord['due']-$SupplierRecord['overdue1']),2) .
-	  '</td><td class=number>' . number_format(($SupplierRecord['overdue1']-$SupplierRecord['overdue2']) ,2) .
-	  '</td><td class=number>' . number_format($SupplierRecord['overdue2'],2) . '</td></tr></table>';
+echo '<tr>
+		  <td class=number>' . number_format($SupplierRecord['balance'],2) . '</td>
+		  <td class=number>' . number_format(($SupplierRecord['balance'] - $SupplierRecord['due']),2) . '</td>
+		  <td class=number>' . number_format(($SupplierRecord['due']-$SupplierRecord['overdue1']),2) . '</td>
+		  <td class=number>' . number_format(($SupplierRecord['overdue1']-$SupplierRecord['overdue2']) ,2) . '</td>
+		  <td class=number>' . number_format($SupplierRecord['overdue2'],2) . '</td>
+	  </tr>
+	</table>';
 
 echo '<br /><div class="centre"><form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

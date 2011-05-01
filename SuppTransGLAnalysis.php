@@ -17,7 +17,7 @@ include('includes/header.inc');
 
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('To enter a supplier invoice or credit note the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice or supplier credit note must be clicked on'),'info');
-	echo '<br><a href="' . $rootpath . '/SelectSupplier.php">' . _('Select A Supplier') . '</a>';
+	echo '<br /><a href="' . $rootpath . '/SelectSupplier.php">' . _('Select A Supplier') . '</a>';
 	include('includes/footer.inc');
 	exit;
 	/*It all stops here if there aint no supplier selected and transaction initiated ie $_SESSION['SuppTrans'] started off*/
@@ -43,7 +43,7 @@ if (isset($_POST['AddGLCodeToTrans']) and $_POST['AddGLCodeToTrans'] == _('Enter
 		WHERE accountcode='" . $_POST['GLCode'] . "'";
 	$result = DB_query($sql, $db);
 	if (DB_num_rows($result) == 0 and $_POST['GLCode'] != ''){
-		prnMsg(_('The account code entered is not a valid code') . '. ' . _('This line cannot be added to the transaction') . '.<br>' . _('You can use the selection box to select the account you want'),'error');
+		prnMsg(_('The account code entered is not a valid code') . '. ' . _('This line cannot be added to the transaction') . '.<br />' . _('You can use the selection box to select the account you want'),'error');
 		$InputError = True;
 	} else if ($_POST['GLCode'] != '') {
 		$myrow = DB_fetch_row($result);
@@ -94,7 +94,7 @@ echo '</p><table cellpadding=2 class=selection>';
 $TableHeader = '<tr>
 				<th>' . _('Account') . '</th>
 				<th>' . _('Name') . '</th>
-				<th>' . _('Amount') . '<br>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+				<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 				<th>' . _('Narrative') . '</th>
 				</tr>';
 echo $TableHeader;
@@ -121,8 +121,8 @@ foreach ( $_SESSION['SuppTrans']->GLCodes as $EnteredGLCode){
 }
 
 echo '<tr>
-	<td colspan=2 class=number><font size=4 color=BLUE>' . _('Total') . ':</font></td>
-	<td class=number><font size=2 color=navy><U>' . number_format($TotalGLValue,2) . '</U></font></td>
+	<td colspan=2 class=number><font size=4 color=blue>' . _('Total') . ':</font></td>
+	<td class=number><font size=2 color=navy><u>' . number_format($TotalGLValue,2) . '</u></font></td>
 	</tr>
 	</table>';
 
@@ -137,7 +137,7 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<br /><table class=selection>';
+echo '<br /><table class="selection">';
 if (!isset($_POST['GLCode'])) {
 	$_POST['GLCode']='';
 }
@@ -147,7 +147,7 @@ echo '<tr>
 	<input type="hidden" name="JobRef" value="">
 	</tr>';
 echo '<tr>
-	<td>' . _('Account Selection') . ':<br>(' . _('If you know the code enter it above') . '<br>' . _('otherwise select the account from the list') . ')</td>
+	<td>' . _('Account Selection') . ':<br />(' . _('If you know the code enter it above') . '<br />' . _('otherwise select the account from the list') . ')</td>
 	<td><select name="AcctSelection">';
 
 $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
@@ -156,12 +156,11 @@ $result = DB_query($sql, $db);
 echo '<option value=""></option>';
 while ($myrow = DB_fetch_array($result)) {
 	if ($myrow['accountcode'] == $_POST['AcctSelection']) {
-		echo '<option selected VALUE=';
+		echo '<option selected value="';
 	} else {
-		echo '<option VALUE=';
+		echo '<option value="';
 	}
-	echo $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
-	echo '</option>';
+	echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
 }
 
 echo '</select>
@@ -172,7 +171,7 @@ if (!isset($_POST['Amount'])) {
 }
 echo '<tr>
 	<td>' . _('Amount') . ':</td>
-	<td><input type="text" class="number" name="Amount" size="12" maxlength="11" VALUE="' .  $_POST['Amount'] . '"></td>
+	<td><input type="text" class="number" name="Amount" size="12" maxlength="11" value="' .  $_POST['Amount'] . '"></td>
 	</tr>';
 
 if (!isset($_POST['Narrative'])) {

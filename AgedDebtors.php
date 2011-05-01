@@ -2,9 +2,6 @@
 
  /* $Id$ */
 
-/* $Revision: 1.20 $ */
-
-//$PageSecurity = 2;
 include('includes/session.inc');
 
 if (isset($_POST['PrintPDF'])
@@ -22,7 +19,7 @@ if (isset($_POST['PrintPDF'])
 
       /*Now figure out the aged analysis for the customer range under review */
 	if (trim($_POST['Salesman'])!=''){
-		$SalesLimit = " and debtorsmaster.debtorno in (SELECT DISTINCT debtorno FROM custbranch where salesman = '".$_POST['Salesman']."') ";
+		$SalesLimit = " AND debtorsmaster.debtorno IN (SELECT DISTINCT debtorno FROM custbranch where salesman = '".$_POST['Salesman']."') ";
 	} else {
 		$SalesLimit = "";
 	}
@@ -30,6 +27,7 @@ if (isset($_POST['PrintPDF'])
 		$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
 				currencies.currency,
+				currencies.decimalplaces,
 				paymentterms.terms,
 				debtorsmaster.creditlimit,
 				holdreasons.dissallowinvoices,
@@ -86,6 +84,7 @@ if (isset($_POST['PrintPDF'])
 				GROUP BY debtorsmaster.debtorno,
 					debtorsmaster.name,
 					currencies.currency,
+					currencies.decimalplaces,
 					paymentterms.terms,
 					paymentterms.daysbeforedue,
 					paymentterms.dayinfollowingmonth,
@@ -100,6 +99,7 @@ if (isset($_POST['PrintPDF'])
 	      $SQL = "SELECT debtorsmaster.debtorno,
 	      		debtorsmaster.name,
 	      		currencies.currency,
+	      		currencies.decimalplaces,
 	      		paymentterms.terms,
 			debtorsmaster.creditlimit,
 	      		holdreasons.dissallowinvoices,
@@ -158,6 +158,7 @@ if (isset($_POST['PrintPDF'])
 			GROUP BY debtorsmaster.debtorno,
 	      			debtorsmaster.name,
 	      			currencies.currency,
+	      			currencies.decimalplaces,
 	      			paymentterms.terms,
 	      			paymentterms.daysbeforedue,
 	      			paymentterms.dayinfollowingmonth,
@@ -182,6 +183,7 @@ if (isset($_POST['PrintPDF'])
 		$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
 					currencies.currency,
+					currencies.decimalplaces,
 					paymentterms.terms,
 					debtorsmaster.creditlimit,
 					holdreasons.dissallowinvoices,
@@ -245,6 +247,7 @@ if (isset($_POST['PrintPDF'])
 		GROUP BY debtorsmaster.debtorno,
 		debtorsmaster.name,
 		currencies.currency,
+		currencies.decimalplaces,
 		paymentterms.terms,
 		paymentterms.daysbeforedue,
 		paymentterms.dayinfollowingmonth,
@@ -267,9 +270,9 @@ if (isset($_POST['PrintPDF'])
 		$title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '.... ';
 		include('includes/header.inc');
 		echo '<p>' . _('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db);
-		echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
-			echo "<br>$SQL";
+			echo '<br />' . $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -283,15 +286,16 @@ if (isset($_POST['PrintPDF'])
 	$TotOD1=0;
 	$TotOD2=0;
 
- 	$ListCount = DB_num_rows($CustomerResult); //UldisN
-
+ 	$ListCount = DB_num_rows($CustomerResult); 
+	$DecimalPlaces =2; //by default
+	
 	while ($AgedAnalysis = DB_fetch_array($CustomerResult,$db)){
-
-		$DisplayDue = number_format($AgedAnalysis['due']-$AgedAnalysis['overdue1'],2);
-		$DisplayCurrent = number_format($AgedAnalysis['balance']-$AgedAnalysis['due'],2);
-		$DisplayBalance = number_format($AgedAnalysis['balance'],2);
-		$DisplayOverdue1 = number_format($AgedAnalysis['overdue1']-$AgedAnalysis['overdue2'],2);
-		$DisplayOverdue2 = number_format($AgedAnalysis['overdue2'],2);
+		$DecimalPlaces = $AgedAnalysis['decimalplaces'];
+		$DisplayDue = number_format($AgedAnalysis['due']-$AgedAnalysis['overdue1'],$DecimalPlaces);
+		$DisplayCurrent = number_format($AgedAnalysis['balance']-$AgedAnalysis['due'],$DecimalPlaces);
+		$DisplayBalance = number_format($AgedAnalysis['balance'],$DecimalPlaces);
+		$DisplayOverdue1 = number_format($AgedAnalysis['overdue1']-$AgedAnalysis['overdue2'],$DecimalPlaces);
+		$DisplayOverdue2 = number_format($AgedAnalysis['overdue2'],$DecimalPlaces);
 
 		$TotBal += $AgedAnalysis['balance'];
 		$TotDue += ($AgedAnalysis['due']-$AgedAnalysis['overdue1']);
@@ -364,10 +368,10 @@ if (isset($_POST['PrintPDF'])
 		    if (DB_error_no($db) !=0) {
 			$title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
 			include('includes/header.inc');
-			echo '<br><br>' . _('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db);
-			echo "<br><a href='$rootpath/index.php'>" . _('Back to the menu') . '</a>';
+			echo '<br /><br />' . _('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db);
+			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
-				echo '<br>' . _('The SQL that failed was') . '<p>' . $sql;
+				echo '<br />' . _('The SQL that failed was') . '<p>' . $sql;
 			}
 			include('includes/footer.inc');
 			exit;
@@ -380,11 +384,11 @@ if (isset($_POST['PrintPDF'])
 			    $DisplayTranDate = ConvertSQLDate($DetailTrans['trandate']);
 			    $LeftOvers = $pdf->addTextWrap($Left_Margin+125,$YPos,75,$FontSize,$DisplayTranDate,'left');
 
-			    $DisplayDue = number_format($DetailTrans['due']-$DetailTrans['overdue1'],2);
-			    $DisplayCurrent = number_format($DetailTrans['balance']-$DetailTrans['due'],2);
-			    $DisplayBalance = number_format($DetailTrans['balance'],2);
-			    $DisplayOverdue1 = number_format($DetailTrans['overdue1']-$DetailTrans['overdue2'],2);
-			    $DisplayOverdue2 = number_format($DetailTrans['overdue2'],2);
+			    $DisplayDue = number_format($DetailTrans['due']-$DetailTrans['overdue1'],$DecimalPlaces);
+			    $DisplayCurrent = number_format($DetailTrans['balance']-$DetailTrans['due'],$DecimalPlaces);
+			    $DisplayBalance = number_format($DetailTrans['balance'],$DecimalPlaces);
+			    $DisplayOverdue1 = number_format($DetailTrans['overdue1']-$DetailTrans['overdue2'],$DecimalPlaces);
+			    $DisplayOverdue2 = number_format($DetailTrans['overdue2'],$DecimalPlaces);
 
 			    $LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayBalance,'right');
 			    $LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayCurrent,'right');
@@ -414,11 +418,11 @@ if (isset($_POST['PrintPDF'])
 		$pdf->line($Page_Width-$Right_Margin, $YPos+10 ,220, $YPos+10);
 	}
 
-	$DisplayTotBalance = number_format($TotBal,2);
-	$DisplayTotDue = number_format($TotDue,2);
-	$DisplayTotCurrent = number_format($TotCurr,2);
-	$DisplayTotOverdue1 = number_format($TotOD1,2);
-	$DisplayTotOverdue2 = number_format($TotOD2,2);
+	$DisplayTotBalance = number_format($TotBal,$DecimalPlaces);
+	$DisplayTotDue = number_format($TotDue,$DecimalPlaces);
+	$DisplayTotCurrent = number_format($TotCurr,$DecimalPlaces);
+	$DisplayTotOverdue1 = number_format($TotOD1,$DecimalPlaces);
+	$DisplayTotOverdue2 = number_format($TotOD2,$DecimalPlaces);
 
 	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
 	$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayTotCurrent,'right');
@@ -426,12 +430,6 @@ if (isset($_POST['PrintPDF'])
 	$LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,$DisplayTotOverdue1,'right');
 	$LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,$DisplayTotOverdue2,'right');
 
-/* Javier: This actually would produce the output
-	$buf = $pdf->output();
-	$len = strlen($buf);
-*/
-
-//	if ($len < 1000) {
 	if ($ListCount == 0) {
 		$title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
@@ -439,24 +437,12 @@ if (isset($_POST['PrintPDF'])
 		if ($debug==1){
 			prnMsg($SQL,'info');
 		}
-		echo "<br><a href='$rootpath/index.php'>" . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
-	}
-
-/* Javier: TCPDF sends its own http header, would be an error to send it twice.
-	header('Content-type: application/pdf');
-	header("Content-Length: $len");
-	header('Content-Disposition: inline; filename=AgedDebtors.pdf');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
-	$pdf->stream(); */
-
-// This else was missed
-    else {
-	    $pdf->OutputD($_SESSION['DatabaseName'] . '_' . 'AgedDebtors_' . date('Y-m-d') . '.pdf');
-	    $pdf-> __destruct();
+	} else {
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_' . 'AgedDebtors_' . date('Y-m-d') . '.pdf');
+		$pdf-> __destruct();
 	}
 
 } else { /*The option to print PDF was not hit */
@@ -471,56 +457,64 @@ if (isset($_POST['PrintPDF'])
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
+		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">
+			<table>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<tr><td>' . _('From Customer Code') . ':' . "</font></td><td><input tabindex='1' Type=text maxlength=6 size=7 name=FromCriteria value='0'></td></tr>";
-		echo '<tr><td>' . _('To Customer Code') . ':' . "</td><td><input tabindex='2' Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></td></tr>";
+		echo '<tr><td>' . _('From Customer Code') . ':' . '</font></td>
+				<td><input tabindex="1" type="text" maxlength="6" size="7" name="FromCriteria" value="0"></td>
+			</tr>';
+		echo '<tr><td>' . _('To Customer Code') . ':' . '</td>
+				<td><input tabindex="2" type="text" maxlength="6" size="7" name="ToCriteria" value="zzzzzz" /></td>
+			</tr>';
 
-		echo '<tr><td>' . _('All balances or overdues only') . ':' . "</td><td><select tabindex='3' name='All_Or_Overdues'>";
-		echo "<option selected Value='All'>" . _('All customers with balances');
-		echo "<option Value='OverduesOnly'>" . _('Overdue accounts only');
-		echo "<option Value='HeldOnly'>" . _('Held accounts only');
-		echo '</select></td></tr>';
+		echo '<tr><td>' . _('All balances or overdues only') . ':' . '</td>
+				<td><select tabindex="3" name="All_Or_Overdues">
+					<option selected value="All">' . _('All customers with balances') . '</option>
+					<option value="OverduesOnly">' . _('Overdue accounts only') . '</option>
+					<option value="HeldOnly">' . _('Held accounts only') . '</option>
+					</select>
+				</td>
+			</tr>';
 
-		echo '<tr><td>' . _('Only Show Customers Of') . ':' . "</td><td><select tabindex='4' name='Salesman'>";
+		echo '<tr><td>' . _('Only Show Customers Of') . ':' . '</td>
+				<td><select tabindex="4" name="Salesman">';
 
-		$sql = 'SELECT salesmancode, salesmanname FROM salesman';
+		$sql = "SELECT salesmancode, salesmanname FROM salesman";
 
 		$result=DB_query($sql,$db);
-		echo "<option value=''></option>";
+		echo '<option value=""></option>';
 		while ($myrow=DB_fetch_array($result)){
-				echo "<option value='" . $myrow['salesmancode'] . "'>" . $myrow['salesmanname'];
+				echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
 		}
 		echo '</select></td></tr>';
 
 
-		echo '<tr><td>' . _('Only show customers trading in') . ':' . "</td><td><select tabindex='5' name='Currency'>";
+		echo '<tr><td>' . _('Only show customers trading in') . ':' . '</td>
+				<td><select tabindex="5" name="Currency">';
 
-		$sql = 'SELECT currency, currabrev FROM currencies';
+		$sql = "SELECT currency, currabrev FROM currencies";
 
 		$result=DB_query($sql,$db);
-
-
 		while ($myrow=DB_fetch_array($result)){
 		      if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
-				echo "<option selected value='" . $myrow['currabrev'] . "'>" . $myrow['currency'];
+				echo '<option selected value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 		      } else {
-			      echo "<option value='" . $myrow['currabrev'] . "'>" . $myrow['currency'];
+			      echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 		      }
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('Summary or detailed report') . ':' . "</td>
-			<td><select tabindex='6' name='DetailedReport'>";
-		echo "<option selected value='No'>" . _('Summary Report');
-		echo "<option value='Yes'>" . _('Detailed Report');
-		echo '</select></td></tr>';
+		echo '<tr><td>' . _('Summary or detailed report') . ':' . '</td>
+				<td><select tabindex="6" name="DetailedReport">
+					<option selected value="No">' . _('Summary Report') . '</option>
+					<option value="Yes">' . _('Detailed Report') . '</option>
+					</select>
+				</td>
+			</tr>';
 
-		echo '</table><br><div class="centre"><input tabindex="7" type=submit name="PrintPDF" value="' . _('Print PDF') , '"></div>';
+		echo '</table><br /><div class="centre"><input tabindex="7" type=submit name="PrintPDF" value="' . _('Print PDF') , '"></div>';
 	}
 	include('includes/footer.inc');
-
 } /*end of else not PrintPDF */
-
 ?>

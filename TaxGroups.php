@@ -173,11 +173,11 @@ if (!isset($SelectedGroup)) {
 				$k=1;
 			}
 
-			printf("<td>%s</td>
+			printf('<td>%s</td>
 				<td>%s</td>
-				<td><a href=\"%s&SelectedGroup=%s\">" . _('Edit') . "</a></td>
-				<td><a href=\"%s&SelectedGroup=%s&Delete=1&GroupID=%s\">" . _('Delete') . "</a></td>
-				</tr>",
+				<td><a href="%s&SelectedGroup=%s">' . _('Edit') . '</a></td>
+				<td><a href="%s&SelectedGroup=%s&Delete=1&GroupID=%s">' . _('Delete') . '</a></td>
+				</tr>',
 				$myrow['taxgroupid'],
 				$myrow['taxgroupdescription'],
 				$_SERVER['PHP_SELF']  . '?',
@@ -213,28 +213,28 @@ if (isset($SelectedGroup)) {
 	}
 }
 echo '<br />';
-echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if( isset($_POST['SelectedGroup'])) {
-	echo "<input type=hidden name='SelectedGroup' value='" . $_POST['SelectedGroup'] . "'>";
+	echo '<input type="hidden" name="SelectedGroup" value="' . $_POST['SelectedGroup'] . '">';
 }
-echo '<table class=selection>';
+echo '<table class="selection">';
 
 if (!isset($_POST['GroupName'])) {
 	$_POST['GroupName']='';
 }
-echo '<tr><td>' . _('Tax Group') . ":</td>
-		<td><input type='text' name='GroupName' size=40 maxlength=40 value='" . $_POST['GroupName'] . "'></td>";
+echo '<tr><td>' . _('Tax Group') . ':</td>
+		<td><input type="text" name="GroupName" size=40 maxlength=40 value="' . $_POST['GroupName'] . '"></td>';
 echo '<td><input type="submit" name="submit" value="' . _('Enter Group') . '"></td></tr></form>';
 
 
 if (isset($SelectedGroup)) {
 	echo '</table><br />';
 
-	$sql = 'SELECT taxid,
+	$sql = "SELECT taxid,
 			description as taxname
 			FROM taxauthorities
-		ORDER BY taxid';
+			ORDER BY taxid";
 
 	$sqlUsed = "SELECT taxauthid,
 				description AS taxname,
@@ -263,12 +263,14 @@ if (isset($SelectedGroup)) {
 		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID .'">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<input type=hidden name="SelectedGroup" value="' . $SelectedGroup .'">';
-		echo '<table class=selection>';
+		echo '<table class="selection">';
 		echo '<tr><th colspan=3><font size=3 color=navy>'._('Calculation Order').'</font></th></tr>';
 
-		echo '<tr><th>'._('Tax Authority').'</th>
-			<th>'._('Order').'</th>
-			<th>'._('Tax on Prior Taxes').'</th></tr>';
+		echo '<tr>
+				<th>'._('Tax Authority').'</th>
+				<th>'._('Order').'</th>
+				<th>'._('Tax on Prior Taxes').'</th>
+			</tr>';
 		$k=0; //row colour counter
 		for ($i=1;$i < count($TaxAuthRow)+1;$i++) {
 			if ($k==1){
@@ -288,11 +290,11 @@ if (isset($SelectedGroup)) {
 					$TaxAuthRow[$i]['calculationorder'] . '" size=2 maxlength=2 style="width: 100%"></td>';
 			echo '<td><select name="TaxOnTax_' . $TaxAuthRow[$i]['taxauthid'] . '" style="width: 100%">';
 			if ($TaxAuthRow[$i]['taxontax']==1){
-				echo '<option selected value=1>' . _('Yes');
-				echo '<option value=0>' . _('No');
+				echo '<option selected value=1>' . _('Yes') . '</option>';
+				echo '<option value=0>' . _('No') . '</option>';
 			} else {
-				echo '<option value=1>' . _('Yes');
-				echo '<option selected value=0>' . _('No');
+				echo '<option value=1>' . _('Yes') . '</option>';
+				echo '<option selected value=0>' . _('No') . '</option>';
 			}
 			echo '</select></td></tr>';
 
@@ -345,13 +347,13 @@ if (isset($SelectedGroup)) {
 				$TaxOnTax = _('No');
 			}
 
-			printf("<td>%s</td>
+			printf('<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href=\"%s&SelectedGroup=%s&remove=1&TaxAuthority=%s\">" . _('Remove') . "</a></td>
+				<td><a href="%s&SelectedGroup=%s&remove=1&TaxAuthority=%s">' . _('Remove') . '</a></td>
 				<td>&nbsp;</td>
-				<td>&nbsp;</td>",
+				<td>&nbsp;</td>',
 				$AvailRow['taxid'],
 				$AvailRow['taxname'],
 				$TaxAuthRow[$TaxAuthUsedPointer]['calculationorder'],
@@ -362,20 +364,19 @@ if (isset($SelectedGroup)) {
 				);
 
 		} else {
-			printf("<td>&nbsp;</td>
+			printf('<td>&nbsp;</td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href=\"%s&SelectedGroup=%s&add=1&TaxAuthority=%s\">" . _('Add') . "</a></td>",
+				<td><a href="%s&SelectedGroup=%s&add=1&TaxAuthority=%s">' . _('Add') . '</a></td>',
 				$AvailRow['taxid'],
 				$AvailRow['taxname'],
 				$_SERVER['PHP_SELF']  . '?',
 				$SelectedGroup,
-				$AvailRow['taxid']
-				);
+				$AvailRow['taxid']	);
 		}
 		echo '</tr>';
 	}

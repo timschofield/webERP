@@ -59,7 +59,7 @@ input.button:hover {
 	background:url(images/menu_bg_dblue.png) 0px -8px repeat-x;
 }
 
-label{
+span{
 	width:200px;
 	padding-top:7px;
 	padding-left:50px;

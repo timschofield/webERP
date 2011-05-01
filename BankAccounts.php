@@ -1,8 +1,6 @@
 <?php
-/* $Revision: 1.21 $ */
-/* $Id$*/
 
-//$PageSecurity = 10;
+/* $Id$*/
 
 include('includes/session.inc');
 
@@ -11,7 +9,7 @@ $title = _('Bank Accounts Maintenance');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Bank') . '" alt="" />' . ' ' . $title . '</p>';
-        echo '<div class="page_help_text">' . _('Update Bank Account details.  Account Code is for SWIFT or BSB type Bank Codes.  Set Default for Invoices to "yes" to print Account details on Invoices (only one account can be set to "yes").') . '.</div><br>';
+echo '<div class="page_help_text">' . _('Update Bank Account details.  Account Code is for SWIFT or BSB type Bank Codes.  Set Default for Invoices to "yes" to print Account details on Invoices (only one account can be set to "yes").') . '.</div><br />';
 
 if (isset($_GET['SelectedBankAccount'])) {
 	$SelectedBankAccount=$_GET['SelectedBankAccount'];
@@ -85,23 +83,21 @@ if (isset($_POST['submit'])) {
 		$sql = "SELECT * FROM banktrans WHERE bankact='" . $SelectedBankAccount . "'";
 		$BankTransResult = DB_query($sql,$db);
 		if (DB_num_rows($BankTransResult)>0) {
-			$sql = "UPDATE bankaccounts
-				SET bankaccountname='" . $_POST['BankAccountName'] . "',
-				bankaccountcode='" . $_POST['BankAccountCode'] . "',
-				bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
-				bankaddress='" . $_POST['BankAddress'] . "',
-				invoice ='" . $_POST['DefAccount'] . "'
-			WHERE accountcode = '" . $SelectedBankAccount . "'";
+			$sql = "UPDATE bankaccounts SET bankaccountname='" . $_POST['BankAccountName'] . "',
+											bankaccountcode='" . $_POST['BankAccountCode'] . "',
+											bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
+											bankaddress='" . $_POST['BankAddress'] . "',
+											invoice ='" . $_POST['DefAccount'] . "'
+					WHERE accountcode = '" . $SelectedBankAccount . "'";
 			prnMsg(_('Note that it is not possible to change the currency of the account once there are transactions against it'),'warn');
-	echo '<br>';
+	echo '<br />';
 		} else {
-			$sql = "UPDATE bankaccounts
-				SET bankaccountname='" . $_POST['BankAccountName'] . "',
-				bankaccountcode='" . $_POST['BankAccountCode'] . "',
-				bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
-				bankaddress='" . $_POST['BankAddress'] . "',
-				currcode ='" . $_POST['CurrCode'] . "',
-				invoice ='" . $_POST['DefAccount'] . "'
+			$sql = "UPDATE bankaccounts SET bankaccountname='" . $_POST['BankAccountName'] . "',
+											bankaccountcode='" . $_POST['BankAccountCode'] . "',
+											bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
+											bankaddress='" . $_POST['BankAddress'] . "',
+											currcode ='" . $_POST['CurrCode'] . "',
+											invoice ='" . $_POST['DefAccount'] . "'
 				WHERE accountcode = '" . $SelectedBankAccount . "'";
 		}
 
@@ -110,22 +106,20 @@ if (isset($_POST['submit'])) {
 
 	/*Selectedbank account is null cos no item selected on first time round so must be adding a    record must be submitting new entries in the new bank account form */
 
-		$sql = "INSERT INTO bankaccounts (
-						accountcode,
-						bankaccountname,
-						bankaccountcode,
-						bankaccountnumber,
-						bankaddress,
-						currcode,
-						invoice)
-				VALUES ('" . $_POST['AccountCode'] . "',
-					'" . $_POST['BankAccountName'] . "',
-					'" . $_POST['BankAccountCode'] . "',
-					'" . $_POST['BankAccountNumber'] . "',
-					'" . $_POST['BankAddress'] . "',
-					'" . $_POST['CurrCode'] . "',
-					'" . $_POST['DefAccount'] . "'
-					)";
+		$sql = "INSERT INTO bankaccounts (accountcode,
+										bankaccountname,
+										bankaccountcode,
+										bankaccountnumber,
+										bankaddress,
+										currcode,
+										invoice)
+								VALUES ('" . $_POST['AccountCode'] . "',
+									'" . $_POST['BankAccountName'] . "',
+									'" . $_POST['BankAccountCode'] . "',
+									'" . $_POST['BankAccountNumber'] . "',
+									'" . $_POST['BankAddress'] . "',
+									'" . $_POST['CurrCode'] . "',
+									'" . $_POST['DefAccount'] . "' )";
 		$msg = _('The new bank account has been entered');
 	}
 
@@ -136,7 +130,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 		prnMsg($msg,'success');
-		echo '<br>';
+		echo '<br />';
 		unset($_POST['AccountCode']);
 		unset($_POST['BankAccountName']);
 		unset($_POST['BankAccountNumber']);
@@ -160,7 +154,7 @@ if (isset($_POST['submit'])) {
 	if ($myrow[0]>0) {
 		$CancelDelete = 1;
 		prnMsg(_('Cannot delete this bank account because transactions have been created using this account'),'warn');
-		echo '<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('transactions with this bank account code');
+		echo '<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('transactions with this bank account code');
 
 	}
 	if (!$CancelDelete) {
@@ -188,19 +182,20 @@ If (!isset($SelectedBankAccount)) {
 		WHERE bankaccounts.accountcode = chartmaster.accountcode";
 
 	$ErrMsg = _('The bank accounts set up could not be retrieved because');
-	$DbgMsg = _('The SQL used to retrieve the bank account details was') . '<br>' . $sql;
+	$DbgMsg = _('The SQL used to retrieve the bank account details was') . '<br />' . $sql;
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	echo '<table class="selection">';
 
-	echo "<tr><th>" . _('GL Account Code') . "</th>
-		<th>" . _('Bank Account Name') . "</th>
-		<th>" . _('Bank Account Code') . "</th>
-		<th>" . _('Bank Account Number') . "</th>
-		<th>" . _('Bank Address') . "</th>
-		<th>" . _('Currency') . "</th>
-		<th>" . _('Default for Invoices') . "</th>
-	</tr>";
+	echo '<tr>
+			<th>' . _('GL Account Code') . '</th>
+			<th>' . _('Bank Account Name') . '</th>
+			<th>' . _('Bank Account Code') . '</th>
+			<th>' . _('Bank Account Number') . '</th>
+			<th>' . _('Bank Address') . '</th>
+			<th>' . _('Currency') . '</th>
+			<th>' . _('Default for Invoices') . '</th>
+		</tr>';
 
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
@@ -216,16 +211,16 @@ If (!isset($SelectedBankAccount)) {
 	} else {
 		$defacc=_('Yes');
 	}
-	printf("<td>%s<br><font size=2>%s</font></td>
+	printf('<td>%s<br /><font size=2>%s</font></td>
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
-		<td><a href=\"%s?SelectedBankAccount=%s\">" . _('Edit') . "</td>
-		<td><a href=\"%s?SelectedBankAccount=%s&delete=1\">" . _('Delete') . "</td>
-		</tr>",
+		<td><a href="%s?SelectedBankAccount=%s">' . _('Edit') . '</td>
+		<td><a href="%s?SelectedBankAccount=%s&delete=1">' . _('Delete') . '</td>
+		</tr>',
 		$myrow[0],
 		$myrow[2],
 		$myrow[3],
@@ -364,12 +359,13 @@ if (isset($SelectedBankAccount)) {
 		}
 	}//end while loop
 } else {
-	echo '<option VALUE=1>'._('Yes').'</option><option value=0>'._('No').'</option>';
+	echo '<option value="1">'._('Yes').'</option>
+			<option value="0">'._('No').'</option>';
 }
 
 echo '</select></td>';
 
-echo '</tr></table><br>
+echo '</tr></table><br />
 		<div class="centre"><input tabindex="7" type="Submit" name="submit" value="'. _('Enter Information') .'"></div>';
 
 echo '</form>';

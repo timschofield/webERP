@@ -62,7 +62,7 @@ input.button:hover {
 	background:url(images/inputh.png) 0px -1px repeat-x;
 }
 
-label{
+span{
 	width:200px;
 	padding-top:7px;
 	padding-left:50px;
