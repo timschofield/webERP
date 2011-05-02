@@ -16,8 +16,8 @@ if(!isset($_GET['OrderNo']) && !isset($_POST['OrderNo'])){
 				<br />
 				<table class="table_index">
 					<tr><td class="menu_group_item">
-						<li><a href="'. $rootpath . '/PO_SelectOSPurchOrder.php?'.SID .'">' . _('Outstanding Purchase Orders') . '</a></li>
-						<li><a href="'. $rootpath . '/PO_SelectPurchOrder.php?'. SID .'">' . _('Purchase Order Inquiry') . '</a></li>
+						<li><a href="'. $rootpath . '/PO_SelectOSPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
+						<li><a href="'. $rootpath . '/PO_SelectPurchOrder.php">' . _('Purchase Order Inquiry') . '</a></li>
 						</td>
 					</tr></table>
 				</div>
@@ -28,7 +28,7 @@ if(!isset($_GET['OrderNo']) && !isset($_POST['OrderNo'])){
 	exit();
 
 	echo '<div class="centre"><br /><br /><br />' . _('This page must be called with a purchase order number to print');
-	echo '<br /><a href="'. $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a></div>';
+	echo '<br /><a href="'. $rootpath . '/index.php">' . _('Back to the menu') . '</a></div>';
 	exit;
 }
 if (isset($_GET['OrderNo'])){
@@ -38,7 +38,7 @@ if (isset($_GET['OrderNo'])){
 }
 $title = _('Print Purchase Order Number').' '. $OrderNo;
 
-if (isset($_POST['PrintOrEmail']) ){
+if (isset($_POST['PrintOrEmail']) AND isset($_POST['EmailTo']) ){
 	if ($_POST['PrintOrEmail'] =='Email' AND ! IsEmailAddress($_POST['EmailTo'])){
 		include('includes/header.inc');
 		prnMsg( _('The email address entered does not appear to be valid. No emails have been sent.'),'warn');
@@ -47,6 +47,7 @@ if (isset($_POST['PrintOrEmail']) ){
 	}
 }
 $ViewingOnly = 0;
+
 if (isset($_GET['ViewingOnly']) AND $_GET['ViewingOnly']!='') {
 	$ViewingOnly = $_GET['ViewingOnly'];
 } elseif (isset($_POST['ViewingOnly']) AND $_POST['ViewingOnly']!='') {
@@ -60,10 +61,13 @@ if ($OrderNo == 'Preview') { //OrderNo is set to 'Preview' when just looking at 
 	$OrderStatus = _('Printed');
 	$MakePDFThenDisplayIt = True;
 }
+
 if (isset($_POST['DoIt'])  AND ($_POST['PrintOrEmail']=='Print' OR $ViewingOnly==1) ){
 	$MakePDFThenDisplayIt = True;
-} elseif (isset($_POST['DoIt']) AND $_POST['PrintOrEmail']=='Email'){
+	$MakePDFThenEmailIt = False;
+} elseif (isset($_POST['DoIt']) AND $_POST['PrintOrEmail']=='Email' AND isset($_POST['EmailTo'])){
 	$MakePDFThenEmailIt = True;
+	$MakePDFThenDisplayIt = False;
 }
 if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview'){
 	/*retrieve the order details from the database to print */
@@ -106,8 +110,8 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 			<br />
 			<table class="table_index">
 				<tr><td class="menu_group_item">
-				<li><a href="'. $rootpath . '/PO_SelectOSPurchOrder.php?'.SID .'">' . _('Outstanding Purchase Orders') . '</a></li>
-				<li><a href="'. $rootpath . '/PO_SelectPurchOrder.php?'. SID .'">' . _('Purchase Order Inquiry') . '</a></li>
+				<li><a href="'. $rootpath . '/PO_SelectOSPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
+				<li><a href="'. $rootpath . '/PO_SelectPurchOrder.php">' . _('Purchase Order Inquiry') . '</a></li>
 				</td>
 				</tr>
 			</table>
@@ -136,13 +140,13 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 					_('This check is there to ensure that duplicate purchase orders are not sent to the supplier resulting in several deliveries of the same supplies'), 'warn');
 				echo '<br /><table class="table_index">
 					<tr><td class="menu_group_item">
- 					<li><a href="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . 'OrderNo=' . $OrderNo . '&ViewingOnly=1">'.
+ 					<li><a href="' . $rootpath . '/PO_PDFPurchOrder.php?OrderNo=' . $OrderNo . '&ViewingOnly=1">'.
 				_('Print This Order as a Copy'). '</a>
- 				<li><a href="' . $rootpath . '/PO_Header.php?' . SID . 'ModifyOrderNumber=' . $OrderNo . '">'.
+ 				<li><a href="' . $rootpath . '/PO_Header.php?ModifyOrderNumber=' . $OrderNo . '">'.
 				_('Modify the order to allow a real reprint'). '</a>' .
-				'<li><a href="'. $rootpath .'/PO_SelectPurchOrder.php?' . SID . '">'.
+				'<li><a href="'. $rootpath .'/PO_SelectPurchOrder.php">'.
 				_('Select another order'). '</a>'.
-				'<li><a href="' . $rootpath . '/index.php?' . SID . '">'. _('Back to the menu').'</a>';
+				'<li><a href="' . $rootpath . '/index.php">'. _('Back to the menu').'</a>';
 				include('includes/footer.inc');
 				exit;
 			}//AllowedToPrint
@@ -281,7 +285,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	
 	$Success = 1; //assume the best and email goes - has to be set to 1 to allow update status
 	if ($MakePDFThenDisplayIt){
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_PurchaseOrder_' . $OrderNo . '_' . date('Y-m-d') . '.pdf');//UldisN
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_PurchaseOrder_' . $OrderNo . '_' . date('Y-m-d') . '.pdf');
 		$pdf->__destruct(); //UldisN
 	} else { /* must be MakingPDF to email it */
 		
@@ -297,10 +301,15 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] .">");
 		$Success = $mail->send(array($_POST['EmailTo']));
 		if ($Success==1){
-			echo '<p />';
+			$title = _('Email a Purchase Order');
+			include('includes/header.inc');
+			echo '<div class="centre"><br /><br /><br />';
 			prnMsg( _('Purchase Order'). ' ' . $OrderNo.' ' . _('has been emailed to') .' ' . $_POST['EmailTo'] . ' ' . _('as directed'), 'success');
+			
 		} else { //email failed
-			echo '<p />';
+			$title = _('Email a Purchase Order');
+			include('includes/header.inc');
+			echo '<div class="centre"><br /><br /><br />';
 			prnMsg( _('Emailing Purchase order'). ' ' . $OrderNo.' ' . _('to') .' ' . $_POST['EmailTo'] . ' ' . _('failed'), 'error');
 		}
 	}
@@ -314,6 +323,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				WHERE purchorders.orderno = '" .  $OrderNo."'";
 		$result = DB_query($sql,$db);
 	}
+	include('includes/footer.inc');
 } /* There was enough info to either print or email the purchase order */
  else { /*the user has just gone into the page need to ask the question whether to print the order or email it to the supplier */
 	include ('includes/header.inc');
@@ -329,12 +339,16 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	if (!isset($_POST['PrintOrEmail'])){
 		$_POST['PrintOrEmail'] = 'Print';
 	}
-	if ($_POST['PrintOrEmail']=='Print'){
+	if ($ViewingOnly!=0){
 		echo '<option selected value="Print">'. _('Print');
-		echo '<option value="Email">' . _('Email');
 	} else {
-		echo '<option value="Print">'. _('Print');
-		echo '<option selected value="Email">'. _('Email');
+		if ($_POST['PrintOrEmail']=='Print'){
+			echo '<option selected value="Print">'. _('Print');
+			echo '<option value="Email">' . _('Email');
+		} else {
+			echo '<option value="Print">'. _('Print');
+			echo '<option selected value="Email">'. _('Email');
+		}
 	}
 	echo '</select></td></tr>';
 	echo '<tr><td>'. _('Show Amounts on the Order'). '</td><td>

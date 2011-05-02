@@ -1,8 +1,6 @@
 <?php
 
-/* $Id: $ */
-
-//$PageSecurity = 6;
+/* $Id: ContractBOM.php 4553 2011-04-18 00:09:23Z daintree $*/
 
 include('includes/DefineContractClass.php');
 
@@ -38,9 +36,9 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
 
 
 if (isset($_POST['BackToHeader'])){
-	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/Contracts.php?' . SID . 'identifier='.$identifier. '" />';
+	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/Contracts.php?identifier='.$identifier. '" />';
 	echo '<br />';
-	prnMsg(_('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') .	'<a href="' . $rootpath . '/Contracts.php?' . SID. 'identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
+	prnMsg(_('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') .	'<a href="' . $rootpath . '/Contracts.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
 	include('includes/footer.inc');
 	exit;
 }
@@ -204,15 +202,15 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 				if ($myrow = DB_fetch_array($result1)){
 
 					$_SESSION['Contract'.$identifier]->Add_To_ContractBOM ($ItemCode,
-																			$myrow['description'],
-																			$DefaultWorkCentre,
-																			$Quantity, /* Qty */
-																			$myrow['unitcost'],
-																			$myrow['units']);
+																		$myrow['description'],
+																		$DefaultWorkCentre,
+																		$Quantity, /* Qty */
+																		$myrow['unitcost'],
+																		$myrow['units']);
 				} else {
 					prnMsg (_('The item code') . ' ' . $ItemCode . ' ' . _('does not exist in the database and therefore cannot be added to the contract BOM'),'error');
 					if ($debug==1){
-						echo "<br />".$sql;
+						echo '<br />' . $sql;
 					}
 					include('includes/footer.inc');
 					exit;
@@ -224,7 +222,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
-echo '<form name="ContractBOMForm" action="' . $_SERVER['PHP_SELF'] . '?' . SID . 'identifier='.$identifier. '" method="post">';
+echo '<form name="ContractBOMForm" action="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier. '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
@@ -269,7 +267,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 			  <td>' . $ContractComponent->UOM . '</td>
 			  <td class="number">' . $ContractComponent->ItemCost . '</td>
 			  <td class="number">' . $DisplayLineTotal . '</td>
-			  <td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . 'identifier='.$identifier. '&amp;Delete=' . $ContractComponent->ComponentID . '">' . _('Delete') . '</a></td></tr>';
+			  <td><a href="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier. '&amp;Delete=' . $ContractComponent->ComponentID . '">' . _('Delete') . '</a></td></tr>';
 		$TotalCost += $LineTotal;
 	}
 
@@ -294,9 +292,9 @@ if (!isset($_GET['Edit'])) {
 		_('Print') . '" alt="" />' . ' ' . _('Search For Stock Items') . '</p>';
 	echo '<table class="selection"><tr>';
 
-	echo ":</tr><tr><td><select name='StockCat'>";
+	echo ':</tr><tr><td><select name="StockCat">';
 
-	echo "<option selected='True' value='All'>" . _('All').'</option>';
+	echo '<option selected="True" value="All">' . _('All').'</option>';
 	while ($myrow1 = DB_fetch_array($result1)) {
 		if (isset($_POST['StockCat']) and $_POST['StockCat']==$myrow1['categoryid']){
 			echo '<option selected value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'].'</option>';

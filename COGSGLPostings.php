@@ -1,8 +1,6 @@
 <?php
-/* $Revision: 1.15 $ */
-/* $Id$*/
 
-//$PageSecurity = 10;
+/* $Id$*/
 
 include('includes/session.inc');
 
@@ -58,7 +56,6 @@ if (isset($_POST['submit'])) {
 
 	$result = DB_query($sql,$db);
 	prnMsg ($msg,'info');
-	echo '<br />';
 	unset ($SelectedCOGSPostingID);
 
 } elseif (isset($_GET['delete'])) {
@@ -67,23 +64,21 @@ if (isset($_POST['submit'])) {
 	$sql="DELETE FROM cogsglpostings WHERE id='".$SelectedCOGSPostingID."'";
 	$result = DB_query($sql,$db);
 	prnMsg( _('The cost of sales posting code record has been deleted'),'info');
-	echo '<br />';
 	unset ($SelectedCOGSPostingID);
-
 }
 
 if (!isset($SelectedCOGSPostingID)) {
 
 	$ShowLivePostingRecords = true;
 
-	$sql = 'SELECT cogsglpostings.id,
-			cogsglpostings.area,
-			cogsglpostings.stkcat,
-			cogsglpostings.salestype,
-			chartmaster.accountname
-		FROM cogsglpostings LEFT JOIN chartmaster
+	$sql = "SELECT cogsglpostings.id,
+				cogsglpostings.area,
+				cogsglpostings.stkcat,
+				cogsglpostings.salestype,
+				chartmaster.accountname
+			FROM cogsglpostings LEFT JOIN chartmaster
 			ON cogsglpostings.glcode = chartmaster.accountcode
-				WHERE chartmaster.accountcode IS NULL';
+			WHERE chartmaster.accountcode IS NULL";
 
 	$result = DB_query($sql,$db);
 	if (DB_num_rows($result)>0){
@@ -106,12 +101,12 @@ if (!isset($SelectedCOGSPostingID)) {
 				$k=1;
 			}
 
-			printf("<td>%s</td>
+			printf('<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href=\"%sSelectedCOGSPostingID=%s\">" . _('Edit') . "</td>
-				<td><a href=\"%sSelectedCOGSPostingID=%s&delete=yes\">". _('Delete') . "</td></tr>",
+				<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</td>
+				<td><a href="%sSelectedCOGSPostingID=%s&delete=yes">'. _('Delete') . '</td></tr>',
 				$myrow[1],
 				$myrow[2],
 				$myrow[3],
@@ -124,11 +119,11 @@ if (!isset($SelectedCOGSPostingID)) {
 		echo '</table>';
 	}
 
-	$sql = 'SELECT cogsglpostings.id,
+	$sql = "SELECT cogsglpostings.id,
 			cogsglpostings.area,
 			cogsglpostings.stkcat,
 			cogsglpostings.salestype
-		FROM cogsglpostings';
+		FROM cogsglpostings";
 
 	$result = DB_query($sql,$db);
 
@@ -182,14 +177,14 @@ if (!isset($SelectedCOGSPostingID)) {
 	}
 
 	if ($ShowLivePostingRecords){
-		$sql = 'SELECT cogsglpostings.id,
-				cogsglpostings.area,
-				cogsglpostings.stkcat,
-				cogsglpostings.salestype,
-				chartmaster.accountname
-			FROM cogsglpostings,
-				chartmaster
-			WHERE cogsglpostings.glcode = chartmaster.accountcode';
+		$sql = "SELECT cogsglpostings.id,
+					cogsglpostings.area,
+					cogsglpostings.stkcat,
+					cogsglpostings.salestype,
+					chartmaster.accountname
+				FROM cogsglpostings,
+					chartmaster
+				WHERE cogsglpostings.glcode = chartmaster.accountcode";
 
 		$result = DB_query($sql,$db);
 
@@ -197,7 +192,8 @@ if (!isset($SelectedCOGSPostingID)) {
 		echo '<tr><th>' . _('Area') . '</th>
 				<th>' . _('Stock Category') . '</th>
 				<th>' . _('Sales Type') . '</th>
-				<th>' . _('GL Account') . '</th></tr>';
+				<th>' . _('GL Account') . '</th>
+			</tr>';
 		$k = 0;
 		while ($myrow = DB_fetch_row($result)) {
 			if ($k==1){
@@ -208,13 +204,13 @@ if (!isset($SelectedCOGSPostingID)) {
 				$k++;
 			}
 
-		printf("<td>%s</td>
+		printf('<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
-			<td><a href=\"%sSelectedCOGSPostingID=%s\">" . _('Edit') . "</td>
-			<td><a href=\"%sSelectedCOGSPostingID=%s&delete=yes\">" . _('Delete') . "</td>
-			</tr>",
+			<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</td>
+			<td><a href="%sSelectedCOGSPostingID=%s&delete=yes">' . _('Delete') . '</td>
+			</tr>',
 			$myrow[1],
 			$myrow[2],
 			$myrow[3],
@@ -257,14 +253,14 @@ if (isset($SelectedCOGSPostingID)) {
 	$_POST['StkCat']  = $myrow['stkcat'];
 	$_POST['SalesType'] = $myrow['salestype'];
 
-	echo '<input type=hidden name="SelectedCOGSPostingID" VALUE="' . $SelectedCOGSPostingID . '">';
+	echo '<input type=hidden name="SelectedCOGSPostingID" value="' . $SelectedCOGSPostingID . '">';
 
 }  //end of if $SelectedCOGSPostingID only do the else when a new record is being entered
 
 
-$sql = 'SELECT areacode,
+$sql = "SELECT areacode,
 		areadescription
-	FROM areas';
+		FROM areas";
 $result = DB_query($sql,$db);
 
 echo '<table class=selection>
@@ -274,16 +270,16 @@ echo '<table class=selection>
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['Area']) and $myrow['areacode']==$_POST['Area']) {
-		echo '<option selected VALUE="';
+		echo '<option selected value="';
 	} else {
-		echo '<option VALUE="';
+		echo '<option value="';
 	}
 	echo $myrow['areacode'] . '">' . $myrow['areadescription'] . '</option>';
 
 } //end while loop
 DB_free_result($result);
 
-$sql = 'SELECT categoryid, categorydescription FROM stockcategory';
+$sql = "SELECT categoryid, categorydescription FROM stockcategory";
 $result = DB_query($sql,$db);
 
 echo '</select></td></tr>
@@ -292,10 +288,10 @@ echo '</select></td></tr>
 				<option VALUE="ANY">' . _('Any Other') . '</option>';
 
 while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['StkCat']) and $myrow["categoryid"]==$_POST['StkCat']) {
-		echo '<option selected VALUE="';
+	if (isset($_POST['StkCat']) and $myrow['categoryid']==$_POST['StkCat']) {
+		echo '<option selected value="';
 	} else {
-		echo '<option VALUE="';
+		echo '<option value="';
 	}
 	echo $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 
@@ -303,7 +299,7 @@ while ($myrow = DB_fetch_array($result)) {
 
 DB_free_result($result);
 
-$sql = 'SELECT typeabbrev, sales_type FROM salestypes';
+$sql = "SELECT typeabbrev, sales_type FROM salestypes";
 $result = DB_query($sql,$db);
 
 echo '</select></td></tr>
@@ -313,9 +309,9 @@ echo '</select></td></tr>
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['SalesType']) and $myrow['typeabbrev']==$_POST['SalesType']) {
-		echo '<option selected VALUE="';
+		echo '<option selected value="';
 	} else {
-		echo '<option VALUE="';
+		echo '<option value="';
 	}
 	echo $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 
@@ -326,22 +322,22 @@ echo '</select></td></tr>
 			<td><select tabindex="4" name="GLCode">';
 
 DB_free_result($result);
-$sql = 'SELECT chartmaster.accountcode,
-		chartmaster.accountname
-	FROM chartmaster,
-		accountgroups
-	WHERE chartmaster.group_=accountgroups.groupname
-	AND accountgroups.pandl=1
-	ORDER BY accountgroups.sequenceintb,
-		chartmaster.accountcode,
-		chartmaster.accountname';
+$sql = "SELECT chartmaster.accountcode,
+			chartmaster.accountname
+		FROM chartmaster,
+			accountgroups
+		WHERE chartmaster.group_=accountgroups.groupname
+		AND accountgroups.pandl=1
+		ORDER BY accountgroups.sequenceintb,
+			chartmaster.accountcode,
+			chartmaster.accountname";
 $result = DB_query($sql,$db);
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['GLCode']) and $myrow['accountcode']==$_POST['GLCode']) {
-		echo '<option selected VALUE="';
+		echo '<option selected value="';
 	} else {
-		echo '<option VALUE="';
+		echo '<option value="';
 	}
 	echo $myrow['accountcode'] . '">' . $myrow['accountcode']  . ' - '  . $myrow['accountname'] . '</option>';
 

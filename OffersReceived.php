@@ -204,7 +204,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 					actprice,
 					quantityord,
 					itemno,
-					uom)
+					suppliersunit)
 				VALUES (
 					'".$OrderNo."',
 					'".$myrow['stockid']."',

@@ -99,6 +99,7 @@ if (isset($_GET['ModifyOrderNumber'])
 				  salesorders.freightcost,
 				  salesorders.deliverydate,
 				  debtorsmaster.currcode,
+				  currencies.decimalplaces,
 				  paymentterms.terms,
 				  salesorders.fromstkloc,
 				  salesorders.printedpackingslip,
@@ -109,19 +110,21 @@ if (isset($_GET['ModifyOrderNumber'])
 				  locations.locationname,
 				  custbranch.estdeliverydays,
 				  custbranch.salesman
-				FROM salesorders,
-				     debtorsmaster,
-				     salestypes,
-				     custbranch,
-				     paymentterms,
-				     locations
-				WHERE salesorders.ordertype=salestypes.typeabbrev
-				AND salesorders.debtorno = debtorsmaster.debtorno
-				AND salesorders.debtorno = custbranch.debtorno
-				AND salesorders.branchcode = custbranch.branchcode
-				AND debtorsmaster.paymentterms=paymentterms.termsindicator
-				AND locations.loccode=salesorders.fromstkloc
-				AND salesorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
+				FROM salesorders 
+				INNER JOIN debtorsmaster 
+				ON salesorders.debtorno = debtorsmaster.debtorno
+				 INNER JOIN salestypes 
+				 ON salesorders.ordertype=salestypes.typeabbrev
+				 INNER JOIN custbranch 
+				 ON salesorders.debtorno = custbranch.debtorno 
+				 AND salesorders.branchcode = custbranch.branchcode
+				 INNER JOIN paymentterms
+				 ON debtorsmaster.paymentterms=paymentterms.termsindicator 
+				 INNER JOIN locations  
+				 ON locations.loccode=salesorders.fromstkloc 
+				 INNER JOIN currencies
+				 ON debtorsmaster.currcode=currencies.currabrev 
+				WHERE salesorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
 
 	$ErrMsg =  _('The order cannot be retrieved because');
 	$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg);
@@ -145,6 +148,7 @@ if (isset($_GET['ModifyOrderNumber'])
 		$_SESSION['Items'.$identifier]->DefaultSalesType =$myrow['ordertype'];
 		$_SESSION['Items'.$identifier]->SalesTypeName =$myrow['sales_type'];
 		$_SESSION['Items'.$identifier]->DefaultCurrency = $myrow['currcode'];
+		$_SESSION['Items'.$identifier]->CurrDecimalPlaces = $myrow['decimalplaces'];
 		$_SESSION['Items'.$identifier]->ShipVia = $myrow['shipvia'];
 		$BestShipper = $myrow['shipvia'];
 		$_SESSION['Items'.$identifier]->DeliverTo = $myrow['deliverto'];
@@ -319,8 +323,8 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 			if ($_SESSION['SalesmanLogin']!=''){
 				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 			}
-			$SQL .=	' AND custbranch.disabletrans=0
-						ORDER BY custbranch.debtorno, custbranch.branchcode';
+			$SQL .=	" AND custbranch.disabletrans=0
+						ORDER BY custbranch.debtorno, custbranch.branchcode";
 
 		} elseif (strlen($_POST['CustCode'])>0){
 
@@ -405,15 +409,17 @@ if (isset($SelectedCustomer)) {
 					salestypes.sales_type,
 					debtorsmaster.currcode,
 					debtorsmaster.customerpoline,
-					paymentterms.terms
-			FROM debtorsmaster,
-				holdreasons,
-				salestypes,
-				paymentterms
-			WHERE debtorsmaster.salestype=salestypes.typeabbrev
-			AND debtorsmaster.holdreason=holdreasons.reasoncode
-			AND debtorsmaster.paymentterms=paymentterms.termsindicator
-			AND debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo. "'";
+					paymentterms.terms,
+					currencies.decimalplaces
+			FROM debtorsmaster INNER JOIN holdreasons
+			ON debtorsmaster.holdreason=holdreasons.reasoncode
+			INNER JOIN salestypes 
+			ON debtorsmaster.salestype=salestypes.typeabbrev
+			INNER JOIN paymentterms 
+			ON debtorsmaster.paymentterms=paymentterms.termsindicator
+			INNER JOIN currencies 
+			ON debtorsmaster.currcode=currencies.currabrev
+			WHERE debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo. "'";
 
 	$ErrMsg = _('The details of the customer selected') . ': ' .  $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the customer details and failed was') . ':';
@@ -436,6 +442,7 @@ if (isset($SelectedCustomer)) {
 		$_SESSION['Items'.$identifier]->DefaultCurrency = $myrow['currcode'];
 		$_SESSION['Items'.$identifier]->DefaultPOLine = $myrow['customerpoline'];
 		$_SESSION['Items'.$identifier]->PaymentTerms = $myrow['terms'];
+		$_SESSION['Items'.$identifier]->CurrDecimalPlaces = $myrow['decimalplaces'];
 
 # the branch was also selected from the customer selection so default the delivery details from the customer branches table CustBranch. The order process will ask for branch details later anyway
 
@@ -529,16 +536,20 @@ if (isset($SelectedCustomer)) {
 					holdreasons.dissallowinvoices,
 					debtorsmaster.salestype,
 					debtorsmaster.currcode,
+					currencies.decimalplaces,
 					debtorsmaster.customerpoline
-			FROM debtorsmaster, holdreasons
-			WHERE debtorsmaster.holdreason=holdreasons.reasoncode
+			FROM debtorsmaster 
+			INNER JOIN holdreasons
+			ON debtorsmaster.holdreason=holdreasons.reasoncode
+			INNER JOIN currencies 
+			ON debtorsmaster.currcode=currencies.currabrev
 			AND debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
 	$ErrMsg = _('The details for the customer selected') . ': ' .$_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
 	$DbgMsg = _('SQL used to retrieve the customer details was') . ':<br />' . $sql;
 	$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-	$myrow = DB_fetch_row($result);
+	$myrow = DB_fetch_array($result);
 	if ($myrow[1] == 0){
 
 		$_SESSION['Items'.$identifier]->CustomerName = $myrow[0];
@@ -546,11 +557,11 @@ if (isset($SelectedCustomer)) {
 # the sales type determines the price list to be used by default the customer of the user is
 # defaulted from the entry of the userid and password.
 
-		$_SESSION['Items'.$identifier]->DefaultSalesType = $myrow[2];
-		$_SESSION['Items'.$identifier]->DefaultCurrency = $myrow[3];
+		$_SESSION['Items'.$identifier]->DefaultSalesType = $myrow['salestype'];
+		$_SESSION['Items'.$identifier]->DefaultCurrency = $myrow['currcode'];
+		$_SESSION['Items'.$identifier]->CurrDecimalPlaces = $myrow['decimalplaces'];
 		$_SESSION['Items'.$identifier]->Branch = $_SESSION['UserBranch'];
-		$_SESSION['Items'.$identifier]->DefaultPOLine = $myrow[4];
-
+		$_SESSION['Items'.$identifier]->DefaultPOLine = $myrow['customerpoline'];
 
 	// the branch would be set in the user data so default delivery details as necessary. However,
 	// the order process will ask for branch details later anyway
@@ -602,7 +613,6 @@ if (isset($SelectedCustomer)) {
 if ($_SESSION['RequireCustomerSelection'] ==1
 	OR !isset($_SESSION['Items'.$identifier]->DebtorNo)
 	OR $_SESSION['Items'.$identifier]->DebtorNo=='') {
-
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' .
 	' ' . _('Enter an Order or Quotation') . ' : ' . _('Search for the Customer Branch.') . '</p>';
@@ -1311,7 +1321,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
 			$LineTotal = $OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
-			$DisplayLineTotal = number_format($LineTotal,2);
+			$DisplayLineTotal = number_format($LineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 			$DisplayDiscount = number_format(($OrderLine->DiscountPercent * 100),2);
 			$QtyOrdered = $OrderLine->Quantity;
 			$QtyRemain = $QtyOrdered - $OrderLine->QtyInv;
@@ -1334,7 +1344,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				echo '<input type="hidden" name="POLine_' .	 $OrderLine->LineNumber . '" value="">';
 			}
 
-			echo '<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?' . SID .'identifier='.$identifier . '&StockID=' . $OrderLine->StockID . '&DebtorNo=' . $_SESSION['Items'.$identifier]->DebtorNo . '">' . $OrderLine->StockID . '</a></td>
+			echo '<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?identifier='.$identifier . '&StockID=' . $OrderLine->StockID . '&DebtorNo=' . $_SESSION['Items'.$identifier]->DebtorNo . '">' . $OrderLine->StockID . '</a></td>
 				<td>' . $OrderLine->ItemDescription . '</td>';
 
 			echo '<td><input class="number" tabindex=2 type=tect name="Quantity_' . $OrderLine->LineNumber . '" size=6 maxlength=6 value=' . $OrderLine->Quantity . '>';
@@ -1383,7 +1393,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		} /* end of loop around items */
 
-		$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,2);
+		$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 			$ColSpanNumber = 3;
 		} else {
@@ -1481,7 +1491,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				  $DemandQty = 0;
 				}
 				// Find the quantity on purchase orders
-				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS dem
+				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo
 						FROM purchorderdetails INNER JOIN purchorders
 						WHERE purchorderdetails.completed=0
 						AND purchorders.status<> 'Completed'
@@ -1499,7 +1509,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				}
 
 				// Find the quantity on works orders
-				$sql = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) AS dedm
+				$sql = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) AS qwo
 						   FROM woitems
 						   WHERE stockid='" . $myrow['stockid'] ."'";
 				$ErrMsg = _('The order details for this product cannot be retrieved because');
@@ -1523,26 +1533,22 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$Available = $QOH - $DemandQty + $OnOrder;
 
 				printf('<td>%s</font></td>
-							<td>%s</td>
-							<td>%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td><font size=1><input class="number"  tabindex='.number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
-							</td>
-							</tr>',
-							$myrow['stockid'],
-							$myrow['description'],
-							$myrow['units'],
-							number_format($QOH, $QOHRow['decimalplaces']),
-							number_format($DemandQty, $QOHRow['decimalplaces']),
-							number_format($OnOrder, $QOHRow['decimalplaces']),
-							number_format($Available, $QOHRow['decimalplaces']),
-							$ImageSource,
-							$rootpath,
-							SID,
-							$myrow['stockid']);
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td><font size=1><input class="number"  tabindex='.number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
+						</td>
+						</tr>',
+						$myrow['stockid'],
+						$myrow['description'],
+						$myrow['units'],
+						number_format($QOH, $QOHRow['decimalplaces']),
+						number_format($DemandQty, $QOHRow['decimalplaces']),
+						number_format($OnOrder, $QOHRow['decimalplaces']),
+						number_format($Available, $QOHRow['decimalplaces']) );
 				if ($j==1) {
 					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';
 				}
@@ -1574,14 +1580,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$result1 = DB_query($SQL,$db);
 		while ($myrow1 = DB_fetch_array($result1)) {
 			if ($_POST['StockCat']==$myrow1['categoryid']){
-				echo '<option selected value=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
+				echo '<option selected value=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
 			} else {
-				echo '<option value='. $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
+				echo '<option value='. $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
 			}
 		}
 
 		echo '</select></td>
-					<td><b>' . _('Enter partial Description') . ':</b><input tabindex=2 type="Text" name="Keywords" size=20 maxlength=25 value="' ;
+			<td><b>' . _('Enter partial Description') . ':</b><input tabindex=2 type="Text" name="Keywords" size=20 maxlength=25 value="' ;
 
 		if (isset($_POST['Keywords'])) {
 			 echo$_POST['Keywords'] ;
@@ -1595,16 +1601,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '"></td></tr>';
 		
 		echo '<tr>
-					<td style="text-align:center" colspan=1><input tabindex=4 type=submit name="Search" value="' . _('Search Now') . '"></td>
-					<td style="text-align:center" colspan=1><input tabindex=5 type=submit name="QuickEntry" value="' .  _('Use Quick Entry') . '"></td>';
+			<td style="text-align:center" colspan=1><input tabindex=4 type=submit name="Search" value="' . _('Search Now') . '"></td>
+			<td style="text-align:center" colspan=1><input tabindex=5 type=submit name="QuickEntry" value="' .  _('Use Quick Entry') . '"></td>';
 		
 		if (!isset($_POST['PartSearch'])) {
 			echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.Keywords);}</script>';
 		}
 		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){ //not a customer entry of own order
 			echo '<td style="text-align:center" colspan=1><input tabindex=6 type="submit" name="ChangeCustomer" value="' . _('Change Customer') . '"></td>
-						<td style="text-align:center" colspan=1><input tabindex=7 type="submit" name="SelectAsset" value="' . _('Fixed Asset Disposal') . '"></td>
-							</tr></table><br />';
+			<td style="text-align:center" colspan=1><input tabindex=7 type="submit" name="SelectAsset" value="' . _('Fixed Asset Disposal') . '"></td>
+			</tr></table><br />';
 		}
 
 		if (isset($SearchResult)) {
@@ -1612,7 +1618,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
 			echo '<br />';
 			$j = 1;
-			echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'identifier='.$identifier . '" method=post name="orderform">';
+			echo '<form action="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier . '" method=post name="orderform">';
 			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 			echo '<table class="table1">';
 			echo '<tr><td colspan=><input type="hidden" name="previous" value='.number_format($Offset-1).'><input tabindex='.number_format($j+8).' type="submit" name="Prev" value="'._('Prev').'"></td>';
@@ -1646,41 +1652,41 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				// Find the quantity on outstanding sales orders
 				$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-									 FROM salesorderdetails,
-							  			salesorders
-								 WHERE salesorders.orderno = salesorderdetails.orderno AND
-								 salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "' AND
-	 							salesorderdetails.completed=0 AND
-			 					salesorders.quotation=0 AND
-					 			salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
+						FROM salesorderdetails,
+								salesorders
+						 WHERE salesorders.orderno = salesorderdetails.orderno 
+						 AND salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "' 
+						 AND salesorderdetails.completed=0 
+						 AND salesorders.quotation=0 
+						 AND salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
 
 				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' . _('cannot be retrieved because');
 				$DemandResult = DB_query($sql,$db,$ErrMsg);
 
 				$DemandRow = DB_fetch_row($DemandResult);
 				if ($DemandRow[0] != null){
-				  $DemandQty =  $DemandRow[0];
+					$DemandQty =  $DemandRow[0];
 				} else {
-				  $DemandQty = 0;
+					$DemandQty = 0;
 				}
 
 				// Find the quantity on purchase orders
 				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo
-							 FROM purchorderdetails INNER JOIN purchorders
-							 WHERE purchorderdetails.completed=0 
-							 AND purchorders.status<>'Cancelled'
-							 AND purchorders.status<>'Rejected'
-							 AND purchorders.status<>'Pending'
-							AND purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
+						 FROM purchorderdetails INNER JOIN purchorders
+						 WHERE purchorderdetails.completed=0 
+						 AND purchorders.status<>'Cancelled'
+						 AND purchorders.status<>'Rejected'
+						 AND purchorders.status<>'Pending'
+						AND purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
 
 				$ErrMsg = _('The order details for this product cannot be retrieved because');
 				$PurchResult = db_query($sql,$db,$ErrMsg);
 
 				$PurchRow = db_fetch_row($PurchResult);
 				if ($PurchRow[0]!=null){
-				  $PurchQty =  $PurchRow[0];
+					$PurchQty =  $PurchRow[0];
 				} else {
-				  $PurchQty = 0;
+					$PurchQty = 0;
 				}
 
 				// Find the quantity on works orders
@@ -1692,9 +1698,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				$WoRow = db_fetch_row($WoResult);
 				if ($WoRow[0]!=null){
-				  $WoQty =  $WoRow[0];
+					$WoQty =  $WoRow[0];
 				} else {
-				  $WoQty = 0;
+					$WoQty = 0;
 				}
 
 				if ($k==1){
@@ -1707,7 +1713,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$OnOrder = $PurchQty + $WoQty;
 				$Available = $QOH - $DemandQty + $OnOrder;
 
-				printf('<td>%s</font></td>
+				printf('<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -1723,8 +1729,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						number_format($QOH,$QOHRow['decimalplaces']),
 						number_format($DemandQty,$QOHRow['decimalplaces']),
 						number_format($OnOrder,$QOHRow['decimalplaces']),
-						number_format($Available,$QOHRow['decimalplaces'])
-						);
+						number_format($Available,$QOHRow['decimalplaces']) );
 				if ($j==1) {
 					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';
 				}

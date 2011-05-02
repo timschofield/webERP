@@ -24,6 +24,7 @@ Class Cart {
 	var $DefaultSalesType;
 	var $SalesTypeName;
 	var $DefaultCurrency;
+	var $CurrDecimalPlaces;
 	var $PaymentTerms;
 	var $DeliverTo;
 	var $DelAdd1;
@@ -68,6 +69,7 @@ Class Cart {
 		$this->DefaultSalesType="";
 		$this->FreightCost =0;
 		$this->FreightTaxes = array();
+		$this->CurrDecimalPlaces=2; //default
 	}
 
 	function add_to_cart($StockID,
