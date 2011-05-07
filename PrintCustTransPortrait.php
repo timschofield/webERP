@@ -61,13 +61,10 @@ If (isset($PrintPDF)
 		$pdf->addInfo('Subject',_('Credit Notes from') . ' ' . $FromTransNo . ' ' . _('to') . ' ' . $_POST['ToTransNo']);
 	}
 
-/* Javier: I have brought this piece from the pdf class constructor to get it closer to the admin/user,
-	I corrected it to match TCPDF, but it still needs some check, after which,
-	I think it should be moved to each report to provide flexible Document Header and Margins in a per-report basis. */
-	$pdf->setAutoPageBreak(0);	// Javier: needs check.
-	$pdf->setPrintHeader(false);	// Javier: I added this must be called before Add Page
+	$pdf->setAutoPageBreak(0);
+	$pdf->setPrintHeader(false);
 	$pdf->AddPage();
-	$pdf->cMargin = 0;		// Javier: needs check.
+	$pdf->cMargin = 0;
 
 	$FirstPage = true;
 	$line_height=16;

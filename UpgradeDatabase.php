@@ -67,6 +67,8 @@ if (isset($_POST['DoUpgrade'])){
 		
 		*/
 		
+		$SQLScripts = array();
+		
 		if ($_POST['OldVersion']=='Manual') {
 			prnMsg(_('No datbase updates have been done as you selected to apply these manually - upgrade SQL scripts are under sql/mysql/ directory in the distribution'),'info');
 		} else { //we are into automatically applying database upgrades
@@ -102,6 +104,7 @@ if (isset($_POST['DoUpgrade'])){
 				case '4.03RC1':
 				case '4.03RC2':
 				case '4.03':
+				case '4.03.2':
 				case '4.03.5':
 					$SQLScripts[] = './sql/mysql/upgrade3.11.1-4.00.sql';
 				case '4.03.8':
@@ -121,7 +124,7 @@ if (isset($_POST['DoUpgrade'])){
 		$ScriptFileEntries = sizeof($SQLEntries);
 		$sql ='';
 		$InAFunction = false;
-		echo '<br><table>
+		echo '<br /><table>
 					<tr><th colspan=2>' . _('Applying') . ' ' . $SQLScriptFile . '</th></tr>';
 
 		for ($i=0; $i<=$ScriptFileEntries; $i++) {

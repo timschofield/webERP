@@ -223,7 +223,7 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 
 	//figure out the SQL required from the inputs available
 
-	if (isset($ShiptRef) && $ShiptRef !="") {
+	if (isset($ShiptRef) AND $ShiptRef !='') {
 		$SQL = "SELECT shipments.shiptref,
 				vessel,
 				voyageref,
@@ -231,7 +231,7 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 				shipments.eta,
 				shipments.closed
 			FROM shipments INNER JOIN suppliers
-				ON shipments.supplierid = suppliers.supplierid
+				ON shipments.supplierid = suppliers.supplierid 
 			WHERE shipments.shiptref='". $ShiptRef . "'";
 	} else {
 		$SQL = "SELECT DISTINCT shipments.shiptref, vessel, voyageref, suppliers.suppname, shipments.eta, shipments.closed
@@ -250,17 +250,17 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 						AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
 						AND shipments.closed='" . $_POST['OpenOrClosed'] . "'";
 			} else {
-				$SQL .= "WHERE shipments.supplierid='" . $SelectedSupplier ."'
+				$SQL .= " WHERE shipments.supplierid='" . $SelectedSupplier ."'
 					AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
 					AND shipments.closed='" . $_POST['OpenOrClosed'] ."'";
 			}
 		} else { //no supplier selected
 			if (isset($SelectedStockItem)) {
-				$SQL .= "WHERE purchorderdetails.itemcode='". $SelectedStockItem ."'
+				$SQL .= " WHERE purchorderdetails.itemcode='". $SelectedStockItem ."'
 					AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
 					AND shipments.closed='" . $_POST['OpenOrClosed'] . "'";
 			} else {
-				$SQL .= "WHERE purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
+				$SQL .= " WHERE purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
 					AND shipments.closed='" . $_POST['OpenOrClosed'] . "'";
 			}
 
