@@ -28,28 +28,27 @@ if (isset($_POST['Submit'])) {
 		$_POST['AuthLevel']=0;
 	}
 	$sql="SELECT COUNT(*)
-			FROM purchorderauth
-			WHERE userid='" . $_POST['UserID'] . "'
-			AND currabrev='" . $_POST['CurrCode'] . "'";
+		FROM purchorderauth
+		WHERE userid='" . $_POST['UserID'] . "'
+		AND currabrev='" . $_POST['CurrCode'] . "'";
 	$result=DB_query($sql, $db);
 	$myrow=DB_fetch_array($result);
 	if ($myrow[0]==0) {
 		$sql="INSERT INTO purchorderauth ( userid,
-										currabrev,
-										cancreate,
-										offhold,
-										authlevel)
-										VALUES(
-										'".$_POST['UserID']."',
-										'".$_POST['CurrCode']."',
-										'".$CanCreate."',
-										'".$OffHold."',
-										'".$_POST['AuthLevel']."')";
-		$ErrMsg = _('The authentication details cannot be inserted because');
-		$Result=DB_query($sql,$db,$ErrMsg);
+						currabrev,
+						cancreate,
+						offhold,
+						authlevel)
+					VALUES( '".$_POST['UserID']."',
+						'".$_POST['CurrCode']."',
+						'".$CanCreate."',
+						'".$OffHold."',
+						'".$_POST['AuthLevel']."')";
+	$ErrMsg = _('The authentication details cannot be inserted because');
+	$Result=DB_query($sql,$db,$ErrMsg);
 	} else {
 		prnMsg(_('There already exists an entry for this user/currency combination'), 'error');
-		echo '<br />';
+			echo '<br />';
 	}
 }
 
@@ -136,16 +135,16 @@ while ($myrow=DB_fetch_array($Result)) {
 		$OffHold=_('No');
 	}
 	echo '<tr><td>' . $myrow['userid'] . '</td>
-				<td>' . $myrow['realname'] . '</td>
-				<td>' . $myrow['currency'] . '</td>
-				<td>' . $CanCreate . '</td>
-				<td>' . $OffHold . '</td>
-				<td class="number">'.number_format($myrow['authlevel'],2).'</td>
-				<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Edit=Yes&UserID=' . $myrow['userid'] .
-	 '&Currency='.$myrow['currabrev'].'">'._('Edit').'</td>
-				<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Delete=Yes&UserID=' . $myrow['userid'] .
-	 '&Currency='.$myrow['currabrev'].'">'._('Delete').'</td>
-		</tr>';
+		<td>' . $myrow['realname'] . '</td>
+		<td>' . $myrow['currency'] . '</td>
+		<td>' . $CanCreate . '</td>
+		<td>' . $OffHold . '</td>
+		<td class="number">'.number_format($myrow['authlevel'],2).'</td>
+		<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Edit=Yes&UserID=' . $myrow['userid'] .
+'&Currency='.$myrow['currabrev'].'">'._('Edit').'</td>
+		<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Delete=Yes&UserID=' . $myrow['userid'] .
+'&Currency='.$myrow['currabrev'].'">'._('Delete').'</td>
+	</tr>';
 }
 
 echo '</table><br><br>';
@@ -176,7 +175,7 @@ if (isset($_GET['Edit'])) {
 	$CurrencyResult=DB_query($CurrencySQL,$db);
 	$myrow=DB_fetch_array($CurrencyResult);
 	echo '<tr><td>'._('Currency').'</td>
-			<td>' . $myrow['currency'] . '</td></tr>';
+		<td>' . $myrow['currency'] . '</td></tr>';
 	echo '<input type=hidden name="currabrev" value="'.$Currency.'"';
 } else {
 	echo '<tr><td>'._('Currency').'</td><td><select name="CurrCode">';

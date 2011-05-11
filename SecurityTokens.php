@@ -80,7 +80,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 
 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="form">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<br><table><tr>';
+echo '<br /><table><tr>';
 
 if (isset($_GET['Action']) and $_GET['Action']=='edit') {
 	echo '<td>'. _('Description') . '</td>
@@ -99,7 +99,7 @@ echo '</form>';
 
 echo '<table class="selection">';
 echo '<tr><th>'. _('Token ID') .'</th>
-			<th>'. _('Description'). '</th>';
+	<th>'. _('Description'). '</th>';
 
 $sql="SELECT tokenid, tokenname FROM securitytokens ORDER BY tokenid";
 $Result= DB_query($sql,$db);

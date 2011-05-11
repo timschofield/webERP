@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_ImportStocks.php 4043 2010-09-30 16:17:53Z tim_schofield $*/
+/* $Id$*/
 /* Script to make stock locations for all parts that do not have stock location records set up*/
 
 //$PageSecurity = 15;

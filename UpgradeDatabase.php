@@ -98,6 +98,7 @@ if (isset($_POST['DoUpgrade'])){
 				case '3.10':
 					$SQLScripts[] = './sql/mysql/upgrade3.10-3.11.sql';
 				case '3.11':
+				case '3.12.32':
 				case '4.0RC1':
 				case '4.01':
 				case '4.02':

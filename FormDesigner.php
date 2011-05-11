@@ -1,6 +1,6 @@
 <?php
 /* $Id$ */
-//$PageSecurity = 14;
+
 include('includes/session.inc');
 $title = _('Form Designer');
 include('includes/header.inc');
@@ -107,9 +107,6 @@ if (isset($_POST['preview']) or isset($_POST['save'])) {
 				break;
 			case 'GoodsReceived.xml':
 				echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/PDFGrn.php?' . SID .'GRNNo=Preview&PONo=1">';
-				break;
-			case 'SalesInvoice.xml':
-				echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/PrintCustTrans.php?' . SID .'FromTransNo=Preview&InvOrCredit=Invoice&PrintPDF=True">';
 				break;
 			case 'PickingList.xml':
 				echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/PDFPickingList.php?' . SID .'TransNo=Preview">';

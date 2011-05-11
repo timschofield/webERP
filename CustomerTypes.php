@@ -177,7 +177,7 @@ then none of the above are true and the list of sales types will be displayed wi
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = 'SELECT typeid, typename FROM debtortype';
+	$sql = "SELECT typeid, typename FROM debtortype";
 	$result = DB_query($sql,$db);
 
 	echo '<br /><table class=selection>';
@@ -255,16 +255,17 @@ if (! isset($_GET['delete'])) {
 	if (!isset($_POST['typename'])) {
 		$_POST['typename']='';
 	}
-	echo '<tr><td>' . _('Type Name') . ':</td><td><input type="Text" name="typename" value="' . $_POST['typename'] . '"></td></tr>';
+	echo '<tr><td>' . _('Type Name') . ':</td>
+		<td><input type="Text" name="typename" value="' . $_POST['typename'] . '"></td></tr>';
 
-   	echo '</td></tr></table>'; // close main table
+   	echo '</td></tr>
+   		</table>'; // close main table
 
 	echo '<p><div class="centre"><input type=submit name=submit value="' . _('Accept') . '"></div>';
 
 	echo '</form>';
 
 } // end if user wish to delete
-
 
 include('includes/footer.inc');
 ?>

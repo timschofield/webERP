@@ -22,7 +22,7 @@ if (!isset($_SESSION['JournalDetail'])){
 	Journals cannot be entered against bank accounts GL postings involving bank accounts must be done using
 	a receipt or a payment transaction to ensure a bank trans is available for matching off vs statements */
 
-	$SQL = 'SELECT accountcode FROM bankaccounts';
+	$SQL = "SELECT accountcode FROM bankaccounts";
 	$result = DB_query($SQL,$db);
 	$i=0;
 	while ($Act = DB_fetch_row($result)){
@@ -158,8 +158,8 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 
 		if ($AllowThisPosting) {
 			$SQL = "SELECT accountname
-							FROM chartmaster
-							WHERE accountcode='" . $_POST['GLManualCode'] . "'";
+				FROM chartmaster
+				WHERE accountcode='" . $_POST['GLManualCode'] . "'";
 			$Result=DB_query($SQL,$db);
 
 			if (DB_num_rows($Result)==0){
@@ -270,13 +270,13 @@ echo '<th>' . _('Select GL Account') . '</th></tr>';
 //Select the tag
 echo '<tr><td><select name="tag">';
 
-$SQL = 'SELECT tagref,
-			tagdescription
+$SQL = "SELECT tagref,
+		tagdescription
 		FROM tags
-		ORDER BY tagref';
+		ORDER BY tagref";
 
 $result=DB_query($SQL,$db);
-echo '<option value="0">0 - None</option>';
+echo '<option value="0">0 - ' . _('None') . '</option>';
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
 		echo '<option selected value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'].'</option>';
@@ -294,10 +294,10 @@ echo '<td><input class="number" type="text" Name="GLManualCode" Maxlength="12" s
 	"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' .
 		' value="'. $_POST['GLManualCode'] .'"  /></td>';
 
-$sql='SELECT accountcode,
-			accountname
-		FROM chartmaster
-		ORDER BY accountcode';
+$sql="SELECT accountcode,
+		accountname
+	FROM chartmaster
+	ORDER BY accountcode";
 
 $result=DB_query($sql, $db);
 echo '<td><select name="GLCode" onChange="return assignComboToInput(this,'.'GLManualCode'.')">';
@@ -321,7 +321,7 @@ if (!isset($_POST['Debit'])) {
 	$_POST['Debit'] = '';
 }
 
-echo '</tr><tr><th>' . _('Debit') . '</th>'.'<td><input type="text" class="number" Name = "Debit" ' .
+echo '</tr><tr><th>' . _('Debit') . '</th><td><input type="text" class="number" name = "Debit" ' .
 			'onChange="eitherOr(this, '.'Credit'.')"'.
 			' Maxlength="12" size="10" value="' . $_POST['Debit'] . '" /></td>';
 echo '</tr><tr><th>' . _('Credit') . '</th><td><input type="text" class="number" Name = "Credit" ' .
@@ -333,21 +333,22 @@ echo '</tr><tr><th></th><th>' . _('GL Narrative') . '</th>';
 echo '<td><input type="text" name="GLNarrative" maxlength="100" size="100" value="' . $_POST['GLNarrative'] . '" /></td>';
 
 echo '</tr></table><br />'; /*Close the main table */
-echo "<div class='centre'><input type='submit' name='Process' value='" . _('Accept') . "' /></div><br /><br />";
+echo '<div class="centre"><input type="submi2t" name="Process" value="' . _('Accept') . '" /></div><br /><br />';
 
 
 echo '<table class="selection" width="85%">';
 
 echo '<tr><th colspan="6"><div class="centre"><font size="3" color="blue"><b>' . _('Journal Summary') . '</b></font></div></th></tr>';
 echo '<tr>
-		<th>'._('GL Tag').'</th>
-		<th>'._('GL Account').'</th>
-		<th>'._('Debit').'</th>
-		<th>'._('Credit').'</th>
-		<th>'._('Narrative').'</th></tr>';
+	<th>'._('GL Tag').'</th>
+	<th>'._('GL Account').'</th>
+	<th>'._('Debit').'</th>
+	<th>'._('Credit').'</th>
+	<th>'._('Narrative').'</th>
+	</tr>';
 
-$debittotal=0;
-$credittotal=0;
+$DebitTotal=0;
+$CreditTotal=0;
 $j=0;
 
 foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
@@ -364,39 +365,38 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 	$result=DB_query($sql, $db);
 	$myrow=DB_fetch_row($result);
 	if ($JournalItem->tag==0) {
-		$tagdescription='None';
+		$TagDescription=_('None');
 	} else {
-		$tagdescription=$myrow[0];
+		$TagDescription=$myrow[0];
 	}
-	echo '<td>' . $JournalItem->tag . ' - ' . $tagdescription . '</td>';
+	echo '<td>' . $JournalItem->tag . ' - ' . $TagDescription . '</td>';
 	echo '<td>' . $JournalItem->GLCode . ' - ' . $JournalItem->GLActName . '</td>';
 	if ($JournalItem->Amount>0) {
-		echo '<td class="number">' . number_format($JournalItem->Amount,2) . '</td><td></td>';
-		$debittotal=$debittotal+$JournalItem->Amount;
-	
+		echo '<td class="number">' . number_format($JournalItem->Amount,$_SESSION['CompanyRecord']['decimalplaces']) . '</td><td></td>';
+		$DebitTotal=$DebitTotal+$JournalItem->Amount;
 	} elseif($JournalItem->Amount<0) {
-		$credit=(-1 * $JournalItem->Amount);
+		$Credit=(-1 * $JournalItem->Amount);
 		echo '<td></td>
-			<td class="number">' . number_format($credit,2) . '</td>';
-		$credittotal=$credittotal+$credit;
+			<td class="number">' . number_format($Credit,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
+		$CreditTotal=$CreditTotal+$Credit;
 	}
 
-	echo '<td>' . $JournalItem->Narrative  . "</td>
-			<td><a href='" . $_SERVER['PHP_SELF'] . '?Delete=' . $JournalItem->ID . "'>"._('Delete').'</a></td>
+	echo '<td>' . $JournalItem->Narrative  . '</td>
+		<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $JournalItem->ID . '">' . _('Delete').'</a></td>
 	</tr>';
 }
 
 echo '<tr class="EvenTableRows"><td></td>
-		<td class="number"><b>' . _('Total') .  '</b></td>
-		<td class="number"><b>' . number_format($debittotal,2) . '</b></td>
-		<td class="number"><b>' . number_format($credittotal,2) . '</b></td></tr>';
-if ($debittotal!=$credittotal) {
+	<td class="number"><b>' . _('Total') .  '</b></td>
+	<td class="number"><b>' . number_format($DebitTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+	<td class="number"><b>' . number_format($CreditTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
+if ($DebitTotal!=$CreditTotal) {
 	echo '<td align="center" style="background-color: #fddbdb"><b>' . _('Required to balance') .' - </b>' .
-		number_format(abs($debittotal-$credittotal),2);
+		number_format(abs($DebitTotal-$CreditTotal),$_SESSION['CompanyRecord']['decimalplaces']);
 }
-if ($debittotal>$credittotal) {
+if ($DebitTotal>$CreditTotal) {
 	echo ' ' . _('Credit') . '</td></tr>';
-} else if ($debittotal<$credittotal) {
+} else if ($DebitTotal<$CreditTotal) {
 	echo ' ' . _('Debit') . '</td></tr>';
 }
 echo '</table>';
@@ -409,9 +409,9 @@ if (ABS($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDe
 }
 
 if (!isset($_GET['NewJournal']) or $_GET['NewJournal']=='') {
-	echo "<script>defaultControl(document.form.GLManualCode);</script>";
+	echo '<script>defaultControl(document.form.GLManualCode);</script>';
 } else {
-	echo "<script>defaultControl(document.form.JournalProcessDate);</script>";
+	echo '<script>defaultControl(document.form.JournalProcessDate);</script>';
 }
 
 echo '</form>';

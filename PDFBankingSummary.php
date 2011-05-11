@@ -25,7 +25,7 @@ if (!isset($_POST['BatchNo'])){
 	$result=DB_query($sql, $db);
 
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">
-		<table class=selection>';
+		<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<tr><td>' . _('Select the batch number of receipts to be printed') . ':</td>';
 	echo '<td><select name="BatchNo">';
@@ -41,19 +41,19 @@ if (!isset($_POST['BatchNo'])){
 
 if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 	$SQL= "SELECT bankaccountname,
-					bankaccountnumber,
-					ref,
-					transdate,
-					banktranstype,
-					bankact,
-					banktrans.exrate,
-					banktrans.functionalexrate,
-					banktrans.currcode
-				FROM bankaccounts,
-					banktrans
-				WHERE bankaccounts.accountcode=banktrans.bankact
-				AND banktrans.transno='" . $_POST['BatchNo'] . "'
-				AND banktrans.type=12";
+			bankaccountnumber,
+			ref,
+			transdate,
+			banktranstype,
+			bankact,
+			banktrans.exrate,
+			banktrans.functionalexrate,
+			banktrans.currcode
+		FROM bankaccounts,
+			banktrans
+		WHERE bankaccounts.accountcode=banktrans.bankact
+		AND banktrans.transno='" . $_POST['BatchNo'] . "'
+		AND banktrans.type=12";
 
 	$ErrMsg = _('An error occurred getting the header information about the receipt batch number') . ' ' . $_POST['BatchNo'];
 	$DbgMsg = _('The SQL used to get the receipt header information that failed was');
@@ -79,14 +79,14 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 	
 	
 	$SQL = "SELECT debtorsmaster.name,
-					ovamount,
-					invtext,
-					reference
-				FROM debtorsmaster INNER JOIN debtortrans
-				ON debtorsmaster.debtorno=debtortrans.debtorno
-				WHERE debtortrans.transno='" . $_POST['BatchNo'] . "'
-				AND debtortrans.type=12";
-	
+			ovamount,
+			invtext,
+			reference
+		FROM debtorsmaster INNER JOIN debtortrans
+		ON debtorsmaster.debtorno=debtortrans.debtorno
+		WHERE debtortrans.transno='" . $_POST['BatchNo'] . "'
+		AND debtortrans.type=12";
+
 	$CustRecs=DB_query($SQL,$db,'','',false,false);
 	if (DB_error_no($db)!=0){
 		$title = _('Create PDF Print-out For A Batch Of Receipts');
@@ -99,13 +99,13 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 	  	exit;
 	}
 	$SQL = "SELECT narrative,
-					amount
-				FROM gltrans
-				WHERE gltrans.typeno='" . $_POST['BatchNo'] . "'
-				AND gltrans.type=12 and gltrans.amount <0
-				AND gltrans.account !='" . $myrow['bankact'] . "'
-				AND gltrans.account !='" . $_SESSION['CompanyRecord']['debtorsact'] . "'";
-	
+			amount
+		FROM gltrans
+		WHERE gltrans.typeno='" . $_POST['BatchNo'] . "'
+		AND gltrans.type=12 and gltrans.amount <0
+		AND gltrans.account !='" . $myrow['bankact'] . "'
+		AND gltrans.account !='" . $_SESSION['CompanyRecord']['debtorsact'] . "'";
+
 	$GLRecs=DB_query($SQL,$db,'','',false,false);
 	if (DB_error_no($db)!=0){
 		$title = _('Create PDF Print-out For A Batch Of Receipts');

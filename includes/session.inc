@@ -18,7 +18,7 @@ if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
 }
 
-ini_set('session.gc_maxlifetime',$SessionLifeTime);
+ini_set('session.gc_Maxlifetime',$SessionLifeTime);
 ini_set('max_execution_time',$MaximumExecutionTime);
 
 session_start();

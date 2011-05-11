@@ -138,16 +138,17 @@ if (isset($_POST['submit'])) {
 
 if (!isset($SelectedArea)) {
 
-	$sql = 'SELECT * FROM areas';
+	$sql = "SELECT * FROM areas";
 	$result = DB_query($sql,$db);
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
 		_('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
-	echo '<table>';
-	echo "<tr>
-		<th>" . _('Area Code') . "</th>
-		<th>" . _('Area Name') . '</th>';
+	echo '<table>
+		<tr>
+		<th>' . _('Area Code') . '</th>
+		<th>' . _('Area Name') . '</th>
+		</tr>';
 
 	$k=0; //row colour counter
 
@@ -159,13 +160,11 @@ if (!isset($SelectedArea)) {
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
-
-		echo '<td>' . $myrow[0] . '</td>';
-		echo '<td>' . $myrow[1] . '</td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedArea=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedArea=' . $myrow[0] . '&delete=yes">' . _('Delete') . '</a></td>';
-		echo '<td><a href="SelectCustomer.php'. '?' . SID . '&Area=' . $myrow[0] . '">' . _('View Customers from this Area') . '</a></td>';
-
+		echo '<td>' . $myrow[0] . '</td>
+			<td>' . $myrow[1] . '</td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedArea=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedArea=' . $myrow[0] . '&delete=yes">' . _('Delete') . '</a></td>';
+		echo '<td><a href="SelectCustomer.php'. '?Area=' . $myrow[0] . '">' . _('View Customers from this Area') . '</a></td>';
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';

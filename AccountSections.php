@@ -28,7 +28,7 @@ include('includes/header.inc');
 	$myrow = DB_fetch_row($result);
 	if( $myrow[0] == 0 ) {
 		$sql = "INSERT INTO accountsection (
-					sectionid,
+					sectionid,21
 					sectionname
 				) VALUES (
 					2,
@@ -68,9 +68,9 @@ if (isset($_POST['submit'])) {
 			$i++;
 		}
 	}
-	if (strpos($_POST['SectionName'],'&')>0 OR strpos($_POST['SectionName'],"'")>0) {
+	if (ContainsIllegalCharacters($_POST['SectionName'])>0) {
 		$InputError = 1;
-		prnMsg( _('The account section name cannot contain the character') . " '&' " . _('or the character') ." '",'error');
+		prnMsg( _('The account section name cannot contain any of the illegal characters') ." '",'error');
 		$Errors[$i] = 'SectionName';
 		$i++;
 	}

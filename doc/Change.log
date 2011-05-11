@@ -1,7 +1,5 @@
 webERP Change Log
 
-7/5/11 Exson: Ship_Select.php fixed SQL that choked because no space before WHERE clause
-7/5/11 Stocks.php took out GROUP BY statements in delete item tests
 3/5/11 Locations.php fix table hidden POST variable quotes mismatch - also mismatch between number of parameters in printf output
 2/5/11 Make order entry show the currency decimal places for amounts and totals also in invoicing SelectOrderItems.php and ConfirmDispatch_Invoice.php
 2/5/11 Fix PO_PDFPurchOrder.php to allow emailing but email option not to appear on printed/emailed orders
