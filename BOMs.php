@@ -131,20 +131,20 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 			} else {
 				$QuantityOnHand = number_format($myrow[10],$myrow[11]);
 			}
-			printf("<td>%s</td>
+			printf('<td>%s</td>
 				<td>%s</td>
-			    <td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class=number>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td class=number>%s</td>
-				<td><a href=\"%s&Select=%s&SelectedComponent=%s\">" . _('Edit') . "</a></td>
-				<td>".$DrillText."</a></td>
-				 <td><a href=\"%s&Select=%s&SelectedComponent=%s&delete=1&ReSelect=%s\">" . _('Delete') . "</a></td>
-				 </tr>",
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class=number>%s</td>
+				<td><a href="%s&Select=%s&SelectedComponent=%s">' . _('Edit') . '</a></td>
+				<td>'.$DrillText.'</a></td>
+				 <td><a href="%s&Select=%s&SelectedComponent=%s&delete=1&ReSelect=%s">' . _('Delete') . '</a></td>
+				 </tr>',
 				$Level1,
 				$myrow[0],
 				$myrow[1],
@@ -789,7 +789,7 @@ if (!isset($SelectedParent)) {
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">' .
-	'<div class="page_help_text">'. _('Select a manufactured part') . " (" . _('or Assembly or Kit part') . ") " .
+	'<div class="page_help_text">'. _('Select a manufactured part') . ' (' . _('or Assembly or Kit part') . ') ' .
 		 _('to maintain the bill of material for using the options below') .  '<br /><font size=1>' .
 	 _('Parts must be defined in the stock item entry') . '/' . _('modification screen as manufactured') .
      ', ' . _('kits or assemblies to be available for construction of a bill of material') .'</div>'.
@@ -806,7 +806,7 @@ if (!isset($SelectedParent)) {
 	<br /><div class="centre"><input tabindex="3" type="submit" name="Search" value="' . _('Search Now') . '"></div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-if (isset($_POST['Search']) and isset($result) AND !isset($SelectedParent)) {
+if (isset($_POST['Search']) AND isset($result) AND !isset($SelectedParent)) {
 
 	echo '<br /><table cellpadding=2 colspan=7 class=selection>';
 	$TableHeader = '<tr><th>' . _('Code') . '</th>

@@ -231,10 +231,10 @@ if (isset($_POST['CommitBatch'])){
 	}
 
 	/*Make an array of the defined bank accounts */
-	$SQL = 'SELECT bankaccounts.accountcode
+	$SQL = "SELECT bankaccounts.accountcode
 			FROM bankaccounts,
 				chartmaster
-			WHERE bankaccounts.accountcode=chartmaster.accountcode';
+			WHERE bankaccounts.accountcode=chartmaster.accountcode";
 	$result = DB_query($SQL,$db);
 	$BankAccounts = array();
 	$i=0;
@@ -270,8 +270,8 @@ if (isset($_POST['CommitBatch'])){
 	} else {
 
 		//Start a transaction to do the whole lot inside
-		$SQL = 'BEGIN';
-		$result = DB_query($SQL,$db);
+		
+		$result = DB_Txn_Begin($db);
 
 
 		if ($_SESSION['PaymentDetail']->SupplierID=='') {
@@ -643,7 +643,7 @@ if (isset($_POST['CommitBatch'])){
 	} else if ($_POST['GLCode'] == '') {
 			prnMsg( _('No General Ledger code has been chosen') . ' - ' . _('so this GL analysis item could not be added'),'warn');
 	} else {
-		$SQL = "select accountname FROM chartmaster WHERE accountcode='" . $_POST['GLCode'] . "'";
+		$SQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $_POST['GLCode'] . "'";
 		$Result=DB_query($SQL,$db);
 		$myrow=DB_fetch_array($Result);
 		$_SESSION['PaymentDetail']->add_to_glanalysis($_POST['GLAmount'],
@@ -702,7 +702,7 @@ if (isset($_POST['BankAccount']) AND $_POST['BankAccount']!='') {
 }
 
 
-echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 

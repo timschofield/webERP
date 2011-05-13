@@ -1,6 +1,6 @@
 <?php
 /* $Id$*/
-//$PageSecurity = 2;
+
 include ('includes/session.inc');
 $title = _('Search Purchase Orders');
 include ('includes/header.inc');
@@ -110,14 +110,14 @@ if (!isset($OrderNumber) or $OrderNumber == "") {
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
 		if (isset($_POST['StockLocation'])) {
 			if ($myrow['loccode'] == $_POST['StockLocation']) {
-				echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+				echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			} else {
-				echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+				echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			}
 		} elseif ($myrow['loccode'] == $_SESSION['UserStockLocation']) {
-			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
 	echo '</select> ' . _('Order Status:') .' <select name="Status">';
@@ -160,9 +160,9 @@ echo '<font size=1>' . _('To search for purchase orders for a specific part use 
 echo '<tr><td><font size=1>' . _('Select a stock category') . ':</font><select name="StockCat">';
 while ($myrow1 = DB_fetch_array($result1)) {
 	if (isset($_POST['StockCat']) and $myrow1['categoryid'] == $_POST['StockCat']) {
-		echo "<option selected value='" . $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
+		echo '<option selected value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	} else {
-		echo "<option value='" . $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
+		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	}
 }
 echo '</select><td><font size=1>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</font></td>';
@@ -191,12 +191,12 @@ if (isset($StockItemsResult)) {
 			echo '<tr bgcolor="#EEEEEE">';
 			$k = 1;
 		}
-		echo "<td><input type=submit name='SelectedStockItem' value='" . $myrow['stockid'] . "'</td>
-				<td>" . $myrow['description'] . "</td>
-			<td class=number>" . $myrow['qoh'] . "</td>
-			<td class=number>" . $myrow['qord'] . "</td>
-			<td>" . $myrow['units'] . "</td>
-			</tr>";
+		echo '<td><input type="submit" name="SelectedStockItem" value="' . $myrow['stockid'] . '"</td>
+			<td>' . $myrow['description'] . '</td>
+			<td class=number>' . $myrow['qoh'] . '</td>
+			<td class=number>' . $myrow['qord'] . '</td>
+			<td>' . $myrow['units'] . '</td>
+			</tr>';
 		$j++;
 		if ($j == 12) {
 			$j = 1;
@@ -234,14 +234,25 @@ else {
 						purchorders.allowprint,
 						purchorders.status,
 						suppliers.currcode,
+						currencies.decimalplaces,
 						SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
-					FROM purchorders,
-						purchorderdetails,
-						suppliers
-					WHERE purchorders.orderno = purchorderdetails.orderno
-					AND purchorders.supplierno = suppliers.supplierid
-					AND purchorders.orderno='" . $OrderNumber . "'
-					GROUP BY purchorders.orderno";
+					FROM purchorders 
+					INNER JOIN purchorderdetails 
+					ON purchorders.orderno = purchorderdetails.orderno
+					INNER JOIN suppliers
+					ON purchorders.supplierno = suppliers.supplierid
+					INNER JOIN currencies 
+					ON suppliers.currcode=currencies.currabrev
+					WHERE purchorders.orderno='" . $OrderNumber . "'
+					GROUP BY purchorders.orderno,
+						suppliers.suppname,
+						purchorders.orddate,
+						purchorders.initiator,
+						purchorders.requisitionno,
+						purchorders.allowprint,
+						purchorders.status,
+						suppliers.currcode,
+						currencies.decimalplaces";
 	} else {
 		/* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
 		if (empty($_POST['StockLocation'])) {
@@ -257,13 +268,16 @@ else {
 								purchorders.allowprint,
 								purchorders.status,
 								suppliers.currcode,
+								currencies.decimalplaces,
 								SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
-							FROM purchorders,
-								purchorderdetails,
-								suppliers
-							WHERE purchorders.orderno = purchorderdetails.orderno
-							AND purchorders.supplierno = suppliers.supplierid
-							AND  purchorderdetails.itemcode='" . $SelectedStockItem . "'
+							FROM purchorders 
+							INNER JOIN purchorderdetails 
+							ON purchorders.orderno = purchorderdetails.orderno
+							INNER JOIN suppliers
+							ON purchorders.supplierno = suppliers.supplierid
+							INNER JOIN currencies 
+							ON suppliers.currcode=currencies.currabrev
+							WHERE  purchorderdetails.itemcode='" . $SelectedStockItem . "'
 							AND purchorders.supplierno='" . $SelectedSupplier . "'
 							AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
 							" . $StatusCriteria . "
@@ -273,7 +287,8 @@ else {
 								purchorders.initiator,
 								purchorders.requisitionno,
 								purchorders.allowprint,
-								suppliers.currcode";
+								suppliers.currcode,
+								currencies.decimalplaces";
 			} else {
 				$SQL = "SELECT purchorders.orderno,
 								suppliers.suppname,
@@ -283,13 +298,16 @@ else {
 								purchorders.allowprint,
 								purchorders.status,
 								suppliers.currcode,
+								currencies.decimalplaces,
 								SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
-							FROM purchorders,
-								purchorderdetails,
-								suppliers
-							WHERE purchorders.orderno = purchorderdetails.orderno
-							AND purchorders.supplierno = suppliers.supplierid
-							AND purchorders.supplierno='" . $SelectedSupplier . "'
+							FROM purchorders 
+							INNER JOIN purchorderdetails 
+							ON purchorders.orderno = purchorderdetails.orderno
+							INNER JOIN suppliers
+							ON purchorders.supplierno = suppliers.supplierid
+							INNER JOIN currencies 
+							ON suppliers.currcode=currencies.currabrev
+							WHERE purchorders.supplierno='" . $SelectedSupplier . "'
 							AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
 							" . $StatusCriteria . "
 							GROUP BY purchorders.orderno,
@@ -298,7 +316,8 @@ else {
 								purchorders.initiator,
 								purchorders.requisitionno,
 								purchorders.allowprint,
-								suppliers.currcode";
+								suppliers.currcode,
+								currencies.decimalplaces";
 			}
 		} else { //no supplier selected
 			if (isset($SelectedStockItem)) {
@@ -310,13 +329,16 @@ else {
 								purchorders.allowprint,
 								purchorders.status,
 								suppliers.currcode,
+								currencies.decimalplaces,
 								SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
-							FROM purchorders,
-								purchorderdetails,
-								suppliers
-							WHERE purchorders.orderno = purchorderdetails.orderno
-							AND purchorders.supplierno = suppliers.supplierid
-							AND purchorderdetails.itemcode='" . $SelectedStockItem . "'
+							FROM purchorders 
+							INNER JOIN purchorderdetails 
+							ON purchorders.orderno = purchorderdetails.orderno
+							INNER JOIN suppliers
+							ON purchorders.supplierno = suppliers.supplierid
+							INNER JOIN currencies 
+							ON suppliers.currcode=currencies.currabrev
+							WHERE purchorderdetails.itemcode='" . $SelectedStockItem . "'
 							AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
 							" . $StatusCriteria . "
 							GROUP BY purchorders.orderno,
@@ -325,7 +347,8 @@ else {
 								purchorders.initiator,
 								purchorders.requisitionno,
 								purchorders.allowprint,
-								suppliers.currcode";
+								suppliers.currcode,
+								currencies.decimalplaces";
 			} else {
 				$SQL = "SELECT purchorders.orderno,
 								suppliers.suppname,
@@ -335,13 +358,16 @@ else {
 								purchorders.allowprint,
 								purchorders.status,
 								suppliers.currcode,
+								currencies.decimalplaces,
 								sum(purchorderdetails.unitprice*purchorderdetails.quantityord) as ordervalue
-							FROM purchorders,
-								purchorderdetails,
-								suppliers
-							WHERE purchorders.orderno = purchorderdetails.orderno
-							AND purchorders.supplierno = suppliers.supplierid
-							AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
+							FROM purchorders 
+							INNER JOIN purchorderdetails 
+							ON purchorders.orderno = purchorderdetails.orderno
+							INNER JOIN suppliers
+							ON purchorders.supplierno = suppliers.supplierid
+							INNER JOIN currencies 
+							ON suppliers.currcode=currencies.currabrev
+							WHERE purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
 							" . $StatusCriteria . "
 							GROUP BY purchorders.orderno,
 								suppliers.suppname,
@@ -349,7 +375,8 @@ else {
 								purchorders.initiator,
 								purchorders.requisitionno,
 								purchorders.allowprint,
-								suppliers.currcode";
+								suppliers.currcode,
+								currencies.decimalplaces";
 			}
 		} //end selected supplier
 
@@ -360,15 +387,16 @@ else {
 	if (DB_num_rows($PurchOrdersResult) > 0) {
 		/*show a table of the orders returned by the SQL */
 		echo '<table cellpadding=2 colspan=7 width=90% class=selection>';
-		$TableHeader = '<tr><th>' . _('View') . '</th>
-				<th>' . _('Supplier') . '</th>
-				<th>' . _('Currency') . '</th>
-				<th>' . _('Requisition') . '</th>
-				<th>' . _('Order Date') . '</th>
-				<th>' . _('Initiator') . '</th>
-				<th>' . _('Order Total') . '</th>
-				<th>' . _('Status') . '</th>
-				</tr>';
+		$TableHeader = '<tr>
+						<th>' . _('View') . '</th>
+						<th>' . _('Supplier') . '</th>
+						<th>' . _('Currency') . '</th>
+						<th>' . _('Requisition') . '</th>
+						<th>' . _('Order Date') . '</th>
+						<th>' . _('Initiator') . '</th>
+						<th>' . _('Order Total') . '</th>
+						<th>' . _('Status') . '</th>
+					</tr>';
 		echo $TableHeader;
 		$j = 1;
 		$k = 0; //row colour counter
@@ -380,9 +408,9 @@ else {
 				echo '<tr bgcolor="#EEEEEE">';
 				$k++;
 			}
-			$ViewPurchOrder = $rootpath . '/PO_OrderDetails.php?' . SID . 'OrderNo=' . $myrow['orderno'];
+			$ViewPurchOrder = $rootpath . '/PO_OrderDetails.php?OrderNo=' . $myrow['orderno'];
 			$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
-			$FormatedOrderValue = number_format($myrow['ordervalue'], 2);
+			$FormatedOrderValue = number_format($myrow['ordervalue'], $myrow['decimalplaces']);
 			/*  View	   Supplier	Currency	Requisition	 Order Date		 Initiator	Order Total
 			ModifyPage, $myrow["orderno"],		  $myrow["suppname"],			$myrow["currcode"],		 $myrow["requisitionno"]		$FormatedOrderDate,			 $myrow["initiator"]			 $FormatedOrderValue 			Order Status*/
 			echo '<td><a href="' . $ViewPurchOrder . '">' . $myrow['orderno'] . '</a></td>

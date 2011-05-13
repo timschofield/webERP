@@ -67,8 +67,8 @@ if (isset($_POST['Update'])) {
 			cancreate='".$CanCreate."',
 			offhold='".$OffHold."',
 			authlevel='".$_POST['AuthLevel']."'
-		WHERE userid='".$_POST['UserID']."'
-		AND currabrev='".$_POST['CurrCode']."'";
+			WHERE userid='".$_POST['UserID']."'
+			AND currabrev='".$_POST['CurrCode']."'";
 
 	$ErrMsg = _('The authentication details cannot be updated because');
 	$Result=DB_query($sql,$db,$ErrMsg);
@@ -88,8 +88,8 @@ if (isset($_GET['Edit'])) {
 				offhold,
 				authlevel
 			FROM purchorderauth
-		WHERE userid='".$_GET['UserID']."'
-		AND currabrev='".$_GET['Currency']."'";
+			WHERE userid='".$_GET['UserID']."'
+			AND currabrev='".$_GET['Currency']."'";
 	$ErrMsg = _('The authentication details cannot be retrieved because');
 	$result=DB_query($sql,$db,$ErrMsg);
 	$myrow=DB_fetch_array($result);
@@ -100,7 +100,7 @@ if (isset($_GET['Edit'])) {
 	$AuthLevel=$myrow['authlevel'];
 }
 
-$sql='SELECT purchorderauth.userid,
+$sql="SELECT purchorderauth.userid,
 			www_users.realname,
 			currencies.currabrev,
 			currencies.currency,
@@ -110,7 +110,7 @@ $sql='SELECT purchorderauth.userid,
 	FROM purchorderauth INNER JOIN www_users 
 		ON purchorderauth.userid=www_users.userid
 	INNER JOIN currencies 
-		ON purchorderauth.currabrev=currencies.currabrev';
+		ON purchorderauth.currabrev=currencies.currabrev";
 
 $ErrMsg = _('The authentication details cannot be retrieved because');
 $Result=DB_query($sql,$db,$ErrMsg);
@@ -134,17 +134,18 @@ while ($myrow=DB_fetch_array($Result)) {
 	} else {
 		$OffHold=_('No');
 	}
-	echo '<tr><td>' . $myrow['userid'] . '</td>
-		<td>' . $myrow['realname'] . '</td>
-		<td>' . $myrow['currency'] . '</td>
-		<td>' . $CanCreate . '</td>
-		<td>' . $OffHold . '</td>
-		<td class="number">'.number_format($myrow['authlevel'],2).'</td>
-		<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Edit=Yes&UserID=' . $myrow['userid'] .
-'&Currency='.$myrow['currabrev'].'">'._('Edit').'</td>
-		<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Delete=Yes&UserID=' . $myrow['userid'] .
-'&Currency='.$myrow['currabrev'].'">'._('Delete').'</td>
-	</tr>';
+	echo '<tr>
+			<td>' . $myrow['userid'] . '</td>
+			<td>' . $myrow['realname'] . '</td>
+			<td>' . $myrow['currency'] . '</td>
+			<td>' . $CanCreate . '</td>
+			<td>' . $OffHold . '</td>
+			<td class="number">'.number_format($myrow['authlevel'],2).'</td>
+			<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Edit=Yes&UserID=' . $myrow['userid'] .
+	'&Currency='.$myrow['currabrev'].'">'._('Edit').'</td>
+			<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Delete=Yes&UserID=' . $myrow['userid'] .
+	'&Currency='.$myrow['currabrev'].'" onclick="return confirm(\'' . _('Are you sure you wish to delete this authorisation level?') . '\');">'._('Delete').'</td>
+		</tr>';
 }
 
 echo '</table><br><br>';
@@ -158,7 +159,7 @@ if (isset($_GET['Edit'])) {
 	echo '<input type=hidden name=UserID value="'.$UserID.'"';
 } else {
 	echo '<tr><td>'._('User ID').'</td><td><select name=UserID>';
-	$usersql='SELECT userid FROM www_users';
+	$usersql="SELECT userid FROM www_users";
 	$userresult=DB_query($usersql,$db);
 	while ($myrow=DB_fetch_array($userresult)) {
 		if ($myrow['userid']==$UserID) {
@@ -174,12 +175,14 @@ if (isset($_GET['Edit'])) {
 	$CurrencySQL="SELECT currency FROM currencies WHERE currabrev='".$Currency."'";
 	$CurrencyResult=DB_query($CurrencySQL,$db);
 	$myrow=DB_fetch_array($CurrencyResult);
-	echo '<tr><td>'._('Currency').'</td>
-		<td>' . $myrow['currency'] . '</td></tr>';
+	echo '<tr>
+			<td>'._('Currency').'</td>
+			<td>' . $myrow['currency'] . '</td>
+		</tr>';
 	echo '<input type=hidden name="currabrev" value="'.$Currency.'"';
 } else {
 	echo '<tr><td>'._('Currency').'</td><td><select name="CurrCode">';
-	$currencysql='SELECT currabrev,currency FROM currencies';
+	$currencysql="SELECT currabrev,currency FROM currencies";
 	$currencyresult=DB_query($currencysql,$db);
 	while ($myrow=DB_fetch_array($currencyresult)) {
 		if ($myrow['currabrev']==$Currency) {

@@ -235,9 +235,8 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 }
 
 echo '<table><tr>
-		<td colspan="5"><table class="selection"><tr><td>'._('Date to Process Journal').":</td>
-		<td><input type='text' class='date' alt='".$_SESSION['DefaultDateFormat']."' name='JournalProcessDate' maxlength='10' size='11' value='" .
-					 $_SESSION['JournalDetail']->JnlDate . "' /></td>";
+		<td colspan="5"><table class="selection"><tr><td>'._('Date to Process Journal') . ':</td>
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>';
 echo '<td>' . _('Type') . ':</td>
 		<td><select name="JournalType">';
 
@@ -261,9 +260,9 @@ echo '<table class="selection" width="70%">';
 echo '<tr><th colspan="3"><div class="centre"><font size="3" color="blue"><b>' . _('Journal Line Entry') . '</b></font></div></th></tr>';
 
 /*now set up a GLCode field to select from avaialble GL accounts */
-echo '<tr><th>' . _('GL Tag') . '</th>';
-echo '<th>' . _('GL Account Code') . '</th>';
-echo '<th>' . _('Select GL Account') . '</th></tr>';
+echo '<tr><th>' . _('GL Tag') . '</th>
+		<th>' . _('GL Account Code') . '</th>
+		<th>' . _('Select GL Account') . '</th></tr>';
 
 /* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
@@ -321,19 +320,17 @@ if (!isset($_POST['Debit'])) {
 	$_POST['Debit'] = '';
 }
 
-echo '</tr><tr><th>' . _('Debit') . '</th><td><input type="text" class="number" name = "Debit" ' .
-			'onChange="eitherOr(this, '.'Credit'.')"'.
-			' Maxlength="12" size="10" value="' . $_POST['Debit'] . '" /></td>';
-echo '</tr><tr><th>' . _('Credit') . '</th><td><input type="text" class="number" Name = "Credit" ' .
-			'onChange="eitherOr(this, '.'Debit'.')"'.
-			' Maxlength="12" size="10" value="' . $_POST['Credit'] . '" /></td>';
+echo '</tr><tr><th>' . _('Debit') . '</th>
+				<td><input type="text" class="number" name = "Debit" onChange="eitherOr(this, '.'Credit'.')" maxlength="12" size="10" value="' . $_POST['Debit'] . '" /></td>';
+echo '</tr><tr><th>' . _('Credit') . '</th>
+				<td><input type="text" class="number" Name = "Credit" onChange="eitherOr(this, '.'Debit'.')" maxlength="12" size="10" value="' . $_POST['Credit'] . '" /></td>';
 echo '</tr><tr><td></td><td></td><th>'. _('Narrative'). '</th>';
 echo '</tr><tr><th></th><th>' . _('GL Narrative') . '</th>';
 
 echo '<td><input type="text" name="GLNarrative" maxlength="100" size="100" value="' . $_POST['GLNarrative'] . '" /></td>';
 
 echo '</tr></table><br />'; /*Close the main table */
-echo '<div class="centre"><input type="submi2t" name="Process" value="' . _('Accept') . '" /></div><br /><br />';
+echo '<div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '" /></div><br /><br />';
 
 
 echo '<table class="selection" width="85%">';
@@ -369,8 +366,8 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 	} else {
 		$TagDescription=$myrow[0];
 	}
-	echo '<td>' . $JournalItem->tag . ' - ' . $TagDescription . '</td>';
-	echo '<td>' . $JournalItem->GLCode . ' - ' . $JournalItem->GLActName . '</td>';
+	echo '<td>' . $JournalItem->tag . ' - ' . $TagDescription . '</td>
+		<td>' . $JournalItem->GLCode . ' - ' . $JournalItem->GLActName . '</td>';
 	if ($JournalItem->Amount>0) {
 		echo '<td class="number">' . number_format($JournalItem->Amount,$_SESSION['CompanyRecord']['decimalplaces']) . '</td><td></td>';
 		$DebitTotal=$DebitTotal+$JournalItem->Amount;
@@ -402,7 +399,7 @@ if ($DebitTotal>$CreditTotal) {
 echo '</table>';
 
 if (ABS($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDetail']->GLItemCounter > 0){
-	echo "<br /><br /><div class='centre'><input type='submit' name='CommitBatch' value='"._('Accept and Process Journal')."' /></div>";
+	echo '<br /><br /><div class="centre"><input type="submit" name="CommitBatch" value="' ._('Accept and Process Journal').'" /></div>';
 } elseif(count($_SESSION['JournalDetail']->GLEntries)>0) {
 	echo '<br /><br />';
 	prnMsg(_('The journal must balance ie debits equal to credits before it can be processed'),'warn');

@@ -80,7 +80,7 @@ while ($myrow = DB_fetch_array($result,$db)){
 	echo '<tr><td>' . $myrow['tagref'].'</td>
 		<td>' . $myrow['tagdescription'].'</td>
 		<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedTag=' . $myrow['tagref'] . '&Action=edit">' . _('Edit') . '</a></td>
-		<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedTag=' . $myrow['tagref'] . '&Action=delete">' . _('Delete') . '</a></td>
+		<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedTag=' . $myrow['tagref'] . '&Action=delete" onclick="return confirm(\'' . _('Are you sure you wish to delete this GL tag?') . '\');">' . _('Delete') . '</a></td>
 		</tr>';
 }
 

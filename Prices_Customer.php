@@ -6,10 +6,8 @@ include('includes/session.inc');
 $result = DB_query("SELECT debtorsmaster.name,
 							debtorsmaster.currcode,
 							debtorsmaster.salestype
-						 FROM
-							debtorsmaster
-						 WHERE
-							debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
+					 FROM debtorsmaster
+					 WHERE debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
 $myrow = DB_fetch_row($result);
 
 $title = _('Special Prices for') . ' '. $myrow[0];
@@ -35,10 +33,8 @@ if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']=
 $result = DB_query("SELECT debtorsmaster.name,
 							debtorsmaster.currcode,
 							debtorsmaster.salestype
-						 FROM
-							debtorsmaster
-						 WHERE
-							debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
+						 FROM debtorsmaster
+						 WHERE debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
 $myrow = DB_fetch_row($result);
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . _('Special Customer Prices').'</p><br />';
@@ -81,9 +77,9 @@ if (isset($_POST['submit'])) {
 
 	if ($_POST['Branch'] !=''){
 		$sql = "SELECT custbranch.branchcode
-						FROM custbranch
-						WHERE custbranch.debtorno='" . $_SESSION['CustomerID'] . "'
-						AND custbranch.branchcode='" . $_POST['Branch'] . "'";
+				FROM custbranch
+				WHERE custbranch.debtorno='" . $_SESSION['CustomerID'] . "'
+				AND custbranch.branchcode='" . $_POST['Branch'] . "'";
 
 		$result = DB_query($sql,$db);
 		if (DB_num_rows($result) ==0){
@@ -114,11 +110,11 @@ if (isset($_POST['submit'])) {
 		//editing an existing price
 
 		$sql = "UPDATE prices SET typeabbrev='" . $SalesType . "',
-		                          currabrev='" . $CurrCode . "',
-								  price='" . $_POST['Price'] . "',
-								  branchcode='" . $_POST['Branch'] . "',
-								  startdate='" . FormatDateForSQL($_POST['StartDate']) . "',
-								  enddate='" . FormatDateForSQL($_POST['EndDate']) . "'
+								currabrev='" . $CurrCode . "',
+								price='" . $_POST['Price'] . "',
+								branchcode='" . $_POST['Branch'] . "',
+								startdate='" . FormatDateForSQL($_POST['StartDate']) . "',
+								enddate='" . FormatDateForSQL($_POST['EndDate']) . "'
 				WHERE prices.stockid='" . $Item . "'
 				AND prices.typeabbrev='" . $SalesType . "'
 				AND prices.currabrev='" . $CurrCode . "'
@@ -131,13 +127,13 @@ if (isset($_POST['submit'])) {
 
 	/*Selected price is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new price form */
 		$sql = "INSERT INTO prices (stockid,
-		                            typeabbrev,
-									currabrev,
-									debtorno,
-									price,
-									branchcode,
-									startdate,
-									enddate)
+								typeabbrev,
+								currabrev,
+								debtorno,
+								price,
+								branchcode,
+								startdate,
+								enddate)
 							VALUES ('".$Item."',
 								'".$SalesType."',
 								'".$CurrCode."',
@@ -220,12 +216,12 @@ if (DB_num_rows($result) == 0) {
 			$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 		}
 		printf('<tr class="EvenTableRows">
-						<td class=number>%0.2f</td>
-						<td class=date>%s</td>
-						<td class=date>%s</td></tr>',
-						$myrow['price'],
-						ConvertSQLDate($myrow['startdate']),
-						$EndDateDisplay);
+				<td class=number>%0.2f</td>
+				<td class=date>%s</td>
+				<td class=date>%s</td></tr>',
+				$myrow['price'],
+				ConvertSQLDate($myrow['startdate']),
+				$EndDateDisplay);
 	}
 }
 
@@ -282,7 +278,7 @@ if (DB_num_rows($result) == 0) {
 		<td>'.$EndDateDisplay.'</td>
  		<td><a href="'.$_SERVER['PHP_SELF'].'?Item='.$Item.'&Price='.$myrow['price'].'&Branch='.$myrow['branchcode'].
 			'&StartDate='.$myrow['startdate'].'&EndDate='.$myrow['enddate'].'&Edit=1">' . _('Edit') . '</td>
-		<td><a href="'.$_SERVER['PHP_SELF'].'?Item='.$Item.'&Branch='.$myrow['branchcode'].'&StartDate='.$myrow['startdate'] .'&EndDate='.$myrow['enddate'].'&delete=yes">' . _('Delete') . '</td></tr>';
+		<td><a href="'.$_SERVER['PHP_SELF'].'?Item='.$Item.'&Branch='.$myrow['branchcode'].'&StartDate='.$myrow['startdate'] .'&EndDate='.$myrow['enddate'].'&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</td></tr>';
 	
 	}
 //END WHILE LIST LOOP
@@ -290,14 +286,14 @@ if (DB_num_rows($result) == 0) {
 
 echo '</table></tr></table><p />';
 
-echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<input type=hidden name="Item" VALUE="' . $Item . '">';
+echo '<input type=hidden name="Item" value="' . $Item . '">';
 
 if (isset($_GET['Edit']) and $_GET['Edit']==1){
-	echo '<input type=hidden name="Editing" VALUE="Yes">';
-	echo '<input type=hidden name="OldStartDate" VALUE="' . $_GET['StartDate'] .'">';
-	echo '<input type=hidden name="OldEndDate" VALUE="' .  $_GET['EndDate'] . '">';
+	echo '<input type=hidden name="Editing" value="Yes">';
+	echo '<input type=hidden name="OldStartDate" value="' . $_GET['StartDate'] .'">';
+	echo '<input type=hidden name="OldEndDate" value="' .  $_GET['EndDate'] . '">';
 	$_POST['Price']=$_GET['Price'];
 	$_POST['Branch']=$_GET['Branch'];
 	$_POST['StartDate'] = ConvertSQLDate($_GET['StartDate']);
@@ -351,7 +347,7 @@ echo '<tr><td>' . _('Price') . ':</td>
 			</tr></table>';
 
 
-echo '<br><div class="centre"><input type="Submit" name="submit" VALUE="' . _('Enter Information') . '"></div>';
+echo '<br><div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';
 
 echo '</form>';
 include('includes/footer.inc');

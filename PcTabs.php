@@ -137,15 +137,15 @@ or deletion of the records*/
 
 	echo '<br><table class=selection>';
 	echo '<tr>
-		<th>' . _('Tab Code') . '</th>
-		<th>' . _('User Name') . '</th>
-		<th>' . _('Type Of Tab') . '</th>
-		<th>' . _('Currency') . '</th>
-		<th>' . _('Limit') . '</th>
-		<th>' . _('Authorizer') . '</th>
-		<th>' . _('GL Account For Cash Assignment') . '</th>
-		<th>' . _('GL Account Petty Cash Tab') . '</th>
-	</tr>';
+			<th>' . _('Tab Code') . '</th>
+			<th>' . _('User Name') . '</th>
+			<th>' . _('Type Of Tab') . '</th>
+			<th>' . _('Currency') . '</th>
+			<th>' . _('Limit') . '</th>
+			<th>' . _('Authorizer') . '</th>
+			<th>' . _('GL Account For Cash Assignment') . '</th>
+			<th>' . _('GL Account Petty Cash Tab') . '</th>
+		</tr>';
 
 $k=0; //row colour counter
 
@@ -173,7 +173,7 @@ while ($myrow = DB_fetch_row($result)) {
 	$DescriptionName=DB_fetch_array($ResultName);
 
 
-	printf("<td>%s</td>
+	printf('<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
@@ -181,9 +181,9 @@ while ($myrow = DB_fetch_row($result)) {
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
-		<td><a href='%sSelectedTab=%s'>" . _('Edit') . "</td>
-		<td><a href='%sSelectedTab=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this code and all the description it may have set up?') . "');\">" . _('Delete') . "</td>
-		</tr>",
+		<td><a href="%sSelectedTab=%s">' . _('Edit') . '</td>
+		<td><a href="%sSelectedTab=%s&delete=yes" onclick=\' return confirm("' . _('Are you sure you wish to delete this tab code?') . '");\'>' . _('Delete') . '</td>
+		</tr>',
 		$myrow[0],
 		$myrow[1],
 		$myrow[2],
@@ -250,19 +250,20 @@ if (!isset($_GET['delete'])) {
 		$_POST['typetabdescription']='';
 	}
 
-	echo '<tr><td>' . _('User Name') . ':</td><td><select name="SelectUser">';
+	echo '<tr><td>' . _('User Name') . ':</td>
+			<td><select name="SelectUser">';
 
 	DB_free_result($result);
-	$SQL = 'SELECT userid
-			FROM www_users ORDER BY userid';
+	$SQL = "SELECT userid
+			FROM www_users ORDER BY userid";
 
 	$result = DB_query($SQL,$db);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectUser']) and $myrow['userid']==$_POST['SelectUser']) {
-			echo '<option selected VALUE="';
+			echo '<option selected value="';
 		} else {
-			echo '<option VALUE="';
+			echo '<option value="';
 		}
 		echo $myrow['userid'] . '">' . $myrow['userid'] . '</option>';
 
@@ -270,18 +271,19 @@ if (!isset($_GET['delete'])) {
 
 	echo '</select></td></tr>';
 
-	echo '<tr><td>' . _('Type Of Tab') . ':</td><td><select name="SelectTabs">';
+	echo '<tr><td>' . _('Type Of Tab') . ':</td>
+			<td><select name="SelectTabs">';
 
 	DB_free_result($result);
-	$SQL = 'SELECT typetabcode FROM pctypetabs ORDER BY typetabcode';
+	$SQL = "SELECT typetabcode FROM pctypetabs ORDER BY typetabcode";
 
 	$result = DB_query($SQL,$db);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectTabs']) and $myrow['typetabcode']==$_POST['SelectTabs']) {
-			echo '<option selected VALUE="';
+			echo '<option selected value="';
 		} else {
-			echo '<option VALUE="';
+			echo '<option value="';
 		}
 		echo $myrow['typetabcode'] . '">' . $myrow['typetabcode'] . '</option>';
 
@@ -289,19 +291,19 @@ if (!isset($_GET['delete'])) {
 
 	echo '</select></td></tr>';
 
-	echo '<tr><td>' . _('Currency') . ':</td><td><select name="SelectCurrency">';
+	echo '<tr><td>' . _('Currency') . ':</td>
+			<td><select name="SelectCurrency">';
 
 	DB_free_result($result);
-	$SQL = 'SELECT currency,currabrev
-		FROM currencies';
+	$SQL = "SELECT currency, currabrev FROM currencies";
 
 	$result = DB_query($SQL,$db);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectCurrency']) and $myrow['currabrev']==$_POST['SelectCurrency']) {
-			echo '<option selected VALUE="';
+			echo '<option selected value="';
 		} else {
-			echo '<option VALUE="';
+			echo '<option value="';
 		}
 		echo $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 
@@ -320,9 +322,9 @@ if (!isset($_GET['delete'])) {
 			<td><select name="SelectAuthorizer">';
 
 	DB_free_result($result);
-	$SQL = 'SELECT userid
+	$SQL = "SELECT userid
 			FROM www_users
-			ORDER BY userid';
+			ORDER BY userid";
 
 	$result = DB_query($SQL,$db);
 
@@ -338,14 +340,15 @@ if (!isset($_GET['delete'])) {
 
 	echo '</select></td></tr>';
 
-	echo '<tr><td>' . _('GL Account Cash Assignment') . ':</td><td><select name="glaccountcash">';
+	echo '<tr><td>' . _('GL Account Cash Assignment') . ':</td>
+			<td><select name="glaccountcash">';
 
 	DB_free_result($result);
-	$SQL = 'SELECT chartmaster.accountcode, 
+	$SQL = "SELECT chartmaster.accountcode, 
 					chartmaster.accountname
 			FROM chartmaster INNER JOIN bankaccounts
 			ON chartmaster.accountcode = bankaccounts.accountcode
-			ORDER BY chartmaster.accountcode';
+			ORDER BY chartmaster.accountcode";
 
 	$result = DB_query($SQL,$db);
 
@@ -365,9 +368,9 @@ if (!isset($_GET['delete'])) {
 			<td><select name="GLAccountPcashTab">';
 
 	DB_free_result($result);
-	$SQL = 'SELECT accountcode, accountname
+	$SQL = "SELECT accountcode, accountname
 			FROM chartmaster
-			ORDER BY accountcode';
+			ORDER BY accountcode";
 
 	$result = DB_query($SQL,$db);
 

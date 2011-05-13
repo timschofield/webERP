@@ -49,8 +49,8 @@ if (isset($_POST['submit'])) {
 	}
 
 	$sqlLimit = "SELECT tablimit
-		FROM pctabs
-		WHERE tabcode='" . $SelectedTabs . "'";
+				FROM pctabs
+				WHERE tabcode='" . $SelectedTabs . "'";
 
 	$ResultLimit = DB_query($sqlLimit,$db);
 	$Limit=DB_fetch_array($ResultLimit);
@@ -63,10 +63,10 @@ if (isset($_POST['submit'])) {
 
 		$sql = "UPDATE pcashdetails
 				SET date = '".FormatDateForSQL($_POST['Date'])."',
-				amount = '" . $_POST['Amount'] . "',
-				authorized = '0000-00-00',
-				notes = '" . $_POST['Notes'] . "',
-				receipt = '" . $_POST['Receipt'] . "'
+					amount = '" . $_POST['Amount'] . "',
+					authorized = '0000-00-00',
+					notes = '" . $_POST['Notes'] . "',
+					receipt = '" . $_POST['Receipt'] . "'
 				WHERE counterindex = '" . $SelectedIndex . "'";
 		$msg = _('Assignment of cash to PC Tab ') . ' ' . $SelectedTabs . ' ' .  _('has been updated');
 
@@ -163,7 +163,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
 			_('Search') . '" alt="" />' . ' ' . $title. '</p>';
 	}
-	echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Details Of Petty Cash Tab ') . '' .$SelectedTabs. '<a/></div>';
+	echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Details Of Petty Cash Tab ') . '' .$SelectedTabs. '<a/></div>';
 
 	if (! isset($_GET['edit']) OR isset ($_POST['GO'])){
 
@@ -263,7 +263,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		}
 
 		echo '<tr><td colspan="2" style="text-align:right"><b>' . _('Current balance') . ':</b></td>
-			<td>' . number_format($Amount['0'],2) . '</td></tr>';
+				<td>' . number_format($Amount['0'],2) . '</td></tr>';
 
 		echo '</table>';
 
@@ -277,7 +277,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 
 		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] .'">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<p><table class=selection>'; //Main table
+		echo '<p><table class="selection">'; //Main table
 		if (isset($_GET['SelectedIndex'])) {
 			echo '<tr><th colspan="2"><font color=blue size=3>'._('Update Cash Assignment').'</font></th></tr>';
 		} else {

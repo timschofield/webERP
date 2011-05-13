@@ -1,8 +1,6 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity = 15;
-
 include('includes/session.inc');
 $title = _('Sales Types') . ' / ' . _('Price List Maintenance');
 include('includes/header.inc');
@@ -39,7 +37,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	} elseif ($_POST['TypeAbbrev']=='' OR $_POST['TypeAbbrev']==' ' OR $_POST['TypeAbbrev']=='  ') {
 		$InputError = 1;
-		prnMsg('<br>' . _('The sales type (price list) code cannot be an empty string or spaces'),'error');
+		prnMsg( _('The sales type (price list) code cannot be an empty string or spaces'),'error');
 		$Errors[$i] = 'SalesType';
 		$i++;
 	} elseif (strlen($_POST['Sales_Type']) >40) {
@@ -85,7 +83,7 @@ if (isset($_POST['submit'])) {
 				VALUES ('" . str_replace(' ', '', $_POST['TypeAbbrev']) . "',
 					'" . $_POST['Sales_Type'] . "')";
 
-			$msg = _('Customer/sales/pricelist type') . ' ' . $_POST["Sales_Type"] .  ' ' . _('has been created');
+			$msg = _('Customer/sales/pricelist type') . ' ' . $_POST['Sales_Type'] .  ' ' . _('has been created');
 			$checkSql = "SELECT count(typeabbrev)
 			     FROM salestypes";
 			$result = DB_query($checkSql, $db);
@@ -188,7 +186,7 @@ or deletion of the records*/
 	echo '<tr>
 		<th>' . _('Type Code') . '</th>
 		<th>' . _('Type Name') . '</th>
-	</tr>';
+		</tr>';
 
 $k=0; //row colour counter
 
@@ -204,12 +202,12 @@ while ($myrow = DB_fetch_row($result)) {
 	printf('<td>%s</td>
 		<td>%s</td>
 		<td><a href="%sSelectedType=%s">' . _('Edit') . '</td>
-		<td><a href="%sSelectedType=%s&delete=yes onclick=\'return confirm("' . _('Are you sure you wish to delete this price list and all the prices it may have set up?') . '");\'>' . _('Delete') . '</td>
+		<td><a href="%sSelectedType=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price list and all the prices it may have set up?') . '\');">' . _('Delete') . '</td>
 		</tr>',
 		$myrow[0],
 		$myrow[1],
-		$_SERVER['PHP_SELF'] . '?' . SID, $myrow[0],
-		$_SERVER['PHP_SELF'] . '?' . SID, $myrow[0]);
+		$_SERVER['PHP_SELF'] . '?', $myrow[0],
+		$_SERVER['PHP_SELF'] . '?', $myrow[0]);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -242,8 +240,8 @@ if (! isset($_GET['delete'])) {
 		$_POST['TypeAbbrev'] = $myrow['typeabbrev'];
 		$_POST['Sales_Type']  = $myrow['sales_type'];
 
-		echo '<input type=hidden name="SelectedType" VALUE="' . $SelectedType . '">';
-		echo '<input type=hidden name="TypeAbbrev" VALUE="' . $_POST['TypeAbbrev'] . '">';
+		echo '<input type=hidden name="SelectedType" value="' . $SelectedType . '">';
+		echo '<input type=hidden name="TypeAbbrev" value="' . $_POST['TypeAbbrev'] . '">';
 		echo '<table class=selection>';
 		echo '<tr><th colspan=4><font size=2 color=blue><b>' . _('Sales Type/Price List Setup') . '</b></font></th></tr>';
 		echo '<tr><td>' . _('Type Code') . ':</td><td>';
@@ -258,24 +256,23 @@ if (! isset($_GET['delete'])) {
 
 		echo '<table class=selection>';
 		echo '<tr><th colspan=4><font size=2 color=blue><b>' . _('Sales Type/Price List Setup') . '</b></font></th></tr>';
-		echo '<tr><td>' . _('Type Code') . ':</td><td><input type="text"
-				' . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) .' size=3 maxlength=2 name="TypeAbbrev"></td></tr>';
-
+		echo '<tr><td>' . _('Type Code') . ':</td>
+				<td><input type="text" ' . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) .' size=3 maxlength=2 name="TypeAbbrev"></td></tr>';
 	}
 
 	if (!isset($_POST['Sales_Type'])) {
 		$_POST['Sales_Type']='';
 	}
-	echo '<tr><td>' . _('Sales Type Name') . ':</td><td><input type="Text" name="Sales_Type" value="' . $_POST['Sales_Type'] . '"></td></tr>';
+	echo '<tr><td>' . _('Sales Type Name') . ':</td>
+			<td><input type="Text" name="Sales_Type" value="' . $_POST['Sales_Type'] . '"></td></tr>';
 
    	echo '</td></tr></table>'; // close main table
 
-	echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
+	echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"><input type=submit name="Cancel" value="' . _('Cancel') . '"></div>';
 
 	echo '</form>';
 
 } // end if user wish to delete
-
 
 include('includes/footer.inc');
 ?>

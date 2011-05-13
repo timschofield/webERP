@@ -96,7 +96,6 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 
 }
 
-
 if (isset($_POST['UpdateDatabase'])){
 
 	if ($InputError == 0){ /* ie all the traps were passed */
@@ -128,10 +127,14 @@ if (isset($_POST['UpdateDatabase'])){
 			 the transaction with the new alloc amount and diff on exch */
 
 				     if ($AllocnItem->AllocAmt > 0){
-					     $SQL = "INSERT INTO suppallocs (datealloc, amt, transid_allocfrom, transid_allocto) VALUES ('" . FormatDateForSQL(date($_SESSION['DefaultDateFormat'])) . "',
-					     		'" . $AllocnItem->AllocAmt . "',
-							'" . $_SESSION['Alloc']->AllocTrans . "',
-							'" . $AllocnItem->ID . "')";
+					     $SQL = "INSERT INTO suppallocs (datealloc, 
+													amt, 
+													transid_allocfrom, 
+													transid_allocto) 
+										VALUES ('" . FormatDateForSQL(date($_SESSION['DefaultDateFormat'])) . "',
+										     		'" . $AllocnItem->AllocAmt . "',
+												'" . $_SESSION['Alloc']->AllocTrans . "',
+												'" . $AllocnItem->ID . "')";
 
 						  $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .  _('The supplier allocation record for') . ' ' . $AllocnItem->TransType . ' ' .  $AllocnItem->TypeNo . ' ' ._('could not be inserted because');
 						  $DbgMsg = _('The following SQL to insert the allocation record was used');
@@ -487,8 +490,7 @@ if (isset($_POST['AllocTrans'])){
 		<td>' . $AllocnItem->TransDate . '</td>
 		<td>' . $AllocnItem->SuppRef . '</td>
 		<td class="number">' . number_format($AllocnItem->TransAmount,2) . '</td>
-		<td class="number">' . number_format($YetToAlloc,2) . '<input type="hidden" name="YetToAlloc' .
-	    		 $Counter . '" VALUE=' . $YetToAlloc . '></td>';
+		<td class="number">' . number_format($YetToAlloc,2) . '<input type="hidden" name="YetToAlloc' . $Counter . '" value=' . $YetToAlloc . '></td>';
 
 	    echo '<td class="number"><input type="checkbox" name="All' .  $Counter . '"';
 
@@ -575,13 +577,13 @@ echo '<input type="text" class="number" name="Amt' . $Counter .'" maxlength="12"
 		$k = 1;
 	}
 
-	printf("<td>%s</td>
+	printf('<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
 		<td class=number>%0.2f</td>
 		<td class=number>%0.2f</td>
-		<td><a href='%sAllocTrans=%s'>" . _('Allocate') .'</td>
+		<td><a href="%sAllocTrans=%s">' . _('Allocate') .'</td>
 		</tr>',
 		$myrow['typename'],
 		$myrow['suppname'],

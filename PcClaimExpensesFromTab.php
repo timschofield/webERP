@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
 
 	if ($_POST['amount']==0) {
 		$InputError = 1;
-		prnMsg('<br>' . _('The Amount must be greater than 0'),'error');
+		prnMsg( _('The Amount must be greater than 0'),'error');
 		$Errors[$i] = 'TabCode';
 		$i++;
 	}
@@ -83,7 +83,7 @@ if (isset($_POST['submit'])) {
 										'" . $_POST['Receipt'] . "'
 										)";
 
-		$msg = _('The Expense Claim on Tab') . ' ' . $_POST["SelectedTabs"] .  ' ' . _('has been created');
+		$msg = _('The Expense Claim on Tab') . ' ' . $_POST['SelectedTabs'] .  ' ' . _('has been created');
 	}
 
 	if ( $InputError !=1) {
@@ -154,7 +154,7 @@ if (!isset($SelectedTabs)){
 //end of ifs and buts!
 if (isset($_POST['process'])OR isset($SelectedTabs)) {
 
-	echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Petty Cash Tab ') . '' .$SelectedTabs. '<a/></div><p>';
+	echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Petty Cash Tab ') . '' .$SelectedTabs. '<a/></div><p>';
 /* RICARD */
 	if (! isset($_GET['edit']) OR isset ($_POST['GO'])){
 		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
@@ -186,13 +186,13 @@ if (isset($_POST['process'])OR isset($SelectedTabs)) {
 
 		echo '<br><table border=1>';
 		echo '<tr>
-			<th>' . _('Date Of Expense') . '</th>
-			<th>' . _('Expense Description') . '</th>
-			<th>' . _('Amount') . '</th>
-			<th>' . _('Authorized') . '</th>
-			<th>' . _('Notes') . '</th>
-			<th>' . _('Receipt') . '</th>
-		</tr>';
+				<th>' . _('Date Of Expense') . '</th>
+				<th>' . _('Expense Description') . '</th>
+				<th>' . _('Amount') . '</th>
+				<th>' . _('Authorized') . '</th>
+				<th>' . _('Notes') . '</th>
+				<th>' . _('Receipt') . '</th>
+			</tr>';
 
 		$k=0; //row colour counter
 
@@ -216,17 +216,17 @@ if (isset($_POST['process'])OR isset($SelectedTabs)) {
 				$Description['0']='ASSIGNCASH';
 			}
 
-			if (($myrow['5'] == "0000-00-00") and ($Description['0'] != 'ASSIGNCASH')){
+			if (($myrow['5'] == '0000-00-00') and ($Description['0'] != 'ASSIGNCASH')){
 				// only movements NOT authorized can be modified or deleted
-				printf("<td>%s</td>
+				printf('<td>%s</td>
 					<td>%s</td>
 					<td class=number>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td><a href='%sSelectedIndex=%s&SelectedTabs=$SelectedTabs&Days=$Days&edit=yes'>" . _('Edit') . "</td>
-					<td><a href='%sSelectedIndex=%s&SelectedTabs=$SelectedTabs&Days=$Days&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this code and the expense it may have set up?') . "');\">" . _('Delete') . "</td>
-					</tr>",
+					<td><a href="%sSelectedIndex=%s&SelectedTabs=' . $SelectedTabs . '&Days=' . $Days . '&edit=yes">' . _('Edit') . '</td>
+					<td><a href="%sSelectedIndex=%s&SelectedTabs=' . $SelectedTabs . '&Days=' . $Days . '&delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this code and the expenses it may have set up?') . '");\'>' . _('Delete') . '</td>
+					</tr>',
 					ConvertSQLDate($myrow['2']),
 					$Description['0'],
 					number_format($myrow['4'],2),
@@ -236,13 +236,13 @@ if (isset($_POST['process'])OR isset($SelectedTabs)) {
 					$_SERVER['PHP_SELF'] . '?', $myrow['0'],
 					$_SERVER['PHP_SELF'] . '?', $myrow['0']);
 			} else {
-				printf("<td>%s</td>
+				printf('<td>%s</td>
 					<td>%s</td>
 					<td class=number>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					</tr>",
+					</tr>',
 					ConvertSQLDate($myrow['2']),
 					$Description['0'],
 					number_format($myrow['4'],2),
@@ -325,7 +325,7 @@ if (isset($_POST['process'])OR isset($SelectedTabs)) {
 			if (isset($_POST['SelectedExpense']) and $myrow['codeexpense']==$_POST['SelectedExpense']) {
 				echo '<option selected value="';
 			} else {
-				echo '<option VALUE="';
+				echo '<option value="';
 			}
 			echo $myrow['codeexpense'] . '">' . $myrow['codeexpense'] . ' - ' . $myrow['description'] . '</option>';
 
@@ -357,7 +357,7 @@ if (isset($_POST['process'])OR isset($SelectedTabs)) {
 		echo '<input type="hidden" name="Days" value="' .$Days. '">';
 		echo '</table>'; // close table in first column
 		echo '</td></tr></table>'; // close main table
-		echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
+		echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '"><input type=submit name="Cancel" value="' . _('Cancel') . '"></div>';
 		echo '</form>';
 
 	} // end if user wish to delete

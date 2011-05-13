@@ -172,13 +172,14 @@ if ($InputError ==0){
 			prices.typeabbrev,
 			prices.currabrev,
 			prices.startdate,
-			prices.enddate
-		FROM prices,
-			salestypes,
-			currencies
-		WHERE prices.currabrev=currencies.currabrev
-		AND prices.typeabbrev = salestypes.typeabbrev
-		AND prices.stockid='".$Item."'
+			prices.enddate,
+			currencies.decimalplaces
+		FROM prices 
+		INNER JOIN salestypes 
+			ON prices.typeabbrev = salestypes.typeabbrev
+		INNER JOIN currencies
+			ON prices.currabrev=currencies.currabrev
+		WHERE prices.stockid='".$Item."'
 		AND prices.debtorno=''
 		ORDER BY prices.currabrev,
 			prices.typeabbrev,
@@ -188,9 +189,9 @@ if ($InputError ==0){
 
 	if (DB_num_rows($result) > 0) {
 		echo '<table class=selection>';
-		echo '<tr><th colspan=7><form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+		echo '<tr><th colspan=7><form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo _('Pricing for part') . ':<input type=text name="Item" MAXSIZEe=22 VALUE="' . $Item . '" maxlength=20><input type=submit name=NewPart Value="' . _('Review Prices') . '">';
+		echo _('Pricing for part') . ':<input type=text name="Item" maxsizee=22 value="' . $Item . '" maxlength=20><input type=submit name="NewPart" value="' . _('Review Prices') . '">';
 		echo '</th></tr></form>';
 
 		echo '<tr><th>' . _('Currency') . '</th>
@@ -217,44 +218,20 @@ if ($InputError ==0){
 			}
 			/*Only allow access to modify prices if securiy token 5 is allowed */
 			if (in_array(5,$_SESSION['AllowedPageSecurityTokens'])) {
-
-				printf("<td>%s</td>
-						<td>%s</td>
-						<td class=number>%0.2f</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td><a href='%s?Item=%s&TypeAbbrev=%s&CurrAbrev=%s&Price=%s&StartDate=%s&EndDate=%s&Edit=1'>" . _('Edit') . "</td>
-						<td><a href='%s?Item=%s&TypeAbbrev=%s&CurrAbrev=%s&StartDate=%s&EndDate=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this price?') . "');\">" . _('Delete') . '</td></tr>',
-						$myrow['currency'],
-						$myrow['sales_type'],
-						$myrow['price'],
-						ConvertSQLDate($myrow['startdate']),
-						$EndDateDisplay,
-						$_SERVER['PHP_SELF'],
-						$myrow['stockid'],
-						$myrow['typeabbrev'],
-						$myrow['currabrev'],
-						$myrow['price'],
-						$myrow['startdate'],
-						$myrow['enddate'],
-						$_SERVER['PHP_SELF'],
-						$myrow['stockid'],
-						$myrow['typeabbrev'],
-						$myrow['currabrev'],
-						$myrow['startdate'],
-						$myrow['enddate']);
+				echo '<td>' . $myrow['currency'] . '</td>
+					<td>' .  $myrow['sales_type'] . '</td>
+					<td class=number>' . number_format($myrow['price'],$myrow['decimalplaces']) . '</td>
+					<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
+					<td>' . $EndDateDisplay . '</td>
+					<td><a href="' . $_SERVER['PHP_SELF'] . '?Item=' . $myrow['stockid'] . '&TypeAbbrev=' .$myrow['typeabbrev'] . '&CurrAbrev=' . $myrow['currabrev'] . '&Price=' . $myrow['price'] . '&StartDate=' . $myrow['startdate'] . '&EndDate=' . $myrow['enddate'] . '&Edit=1">' . _('Edit') . '</td>
+					<td><a href="' . $_SERVER['PHP_SELF'] . '?Item=' . $myrow['stockid'] . '&TypeAbbrev=' .$myrow['typeabbrev'] . '&CurrAbrev=' . $myrow['currabrev'] . '&StartDate=' . $myrow['startdate'] . '&EndDate=' . $myrow['enddate'] . '&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</td></tr>';
+					
 			} else {
-				printf("<td>%s</td>
-						<td>%s</td>
-						<td class=number>%0.2f</td>
-						<td>%s</td>
-						<td>%s</td>
-						</tr>",
-						$myrow['currency'],
-						$myrow['sales_type'],
-						$myrow['price'],
-						ConvertSQLDate($myrow['startdate']),
-						$EndDateDisplay);
+				echo '<td>' . $myrow['currency'] . '</td>
+					<td>' .  $myrow['sales_type'] . '</td>
+					<td class=number>' . number_format($myrow['price'],$myrow['decimalplaces']) . '</td>
+					<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
+					<td>' . $EndDateDisplay . '</td></tr>';
 			}
 
 		}
@@ -267,10 +244,10 @@ if ($InputError ==0){
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (isset($_GET['Edit'])){
-		echo '<input type=hidden name="OldTypeAbbrev" VALUE="' . $_GET['TypeAbbrev'] .'">';
-		echo '<input type=hidden name="OldCurrAbrev" VALUE="' . $_GET['CurrAbrev'] . '">';
-		echo '<input type=hidden name="OldStartDate" VALUE="' . $_GET['StartDate'] . '">';
-		echo '<input type=hidden name="OldEndDate" VALUE="' . $_GET['EndDate'] . '">';
+		echo '<input type=hidden name="OldTypeAbbrev" value="' . $_GET['TypeAbbrev'] .'">';
+		echo '<input type=hidden name="OldCurrAbrev" value="' . $_GET['CurrAbrev'] . '">';
+		echo '<input type=hidden name="OldStartDate" value="' . $_GET['StartDate'] . '">';
+		echo '<input type=hidden name="OldEndDate" value="' . $_GET['EndDate'] . '">';
 		$_POST['CurrAbrev'] = $_GET['CurrAbrev'];
 		$_POST['TypeAbbrev'] = $_GET['TypeAbbrev'];
 		$_POST['Price'] = $_GET['Price'];

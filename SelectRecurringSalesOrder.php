@@ -1,40 +1,39 @@
 <?php
 /* $Id$*/
-//$PageSecurity = 2;
 
 include('includes/session.inc');
 $title = _('Search Recurring Sales Orders');
 include('includes/header.inc');
 
-echo '<form action=' . $_SERVER['PHP_SELF'] .'?' .SID . ' method=post>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' .
 	_('Inventory Items') . '" alt="" />' . ' ' . $title . '</p>';
 
-echo '<table class=selection><tr><td>';
+echo '<table class="selection"><tr><td>';
 echo _('Select recurring order templates for delivery from:') . ' </td><td>' . '<select name="StockLocation">';
 
-$sql = 'SELECT loccode, locationname FROM locations';
+$sql = "SELECT loccode, locationname FROM locations";
 
 $resultStkLocs = DB_query($sql,$db);
 
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation'])){
 		if ($myrow['loccode'] == $_POST['StockLocation']){
-			echo "<option selected Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+			echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-			echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-			echo "<option selected Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+			echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	} else {
-			echo "<option Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
 }
 
 echo '</select></td></tr></table>';
 
-echo "<br /><div class=centre><input type=submit name='SearchRecurringOrders' VALUE='" . _('Search Recurring Orders') . "'></div>";
+echo '<br /><div class=centre><input type="submit" name="SearchRecurringOrders" value="' . _('Search Recurring Orders') . '"></div>';
 
 if (isset($_POST['SearchRecurringOrders'])){
 
@@ -74,17 +73,17 @@ if (isset($_POST['SearchRecurringOrders'])){
 
 	echo '<br /><table cellpadding=2 colspan=7 width=90% class=selection>';
 
-	$tableheader = "<tr>
-			<th>" . _('Modify') . "</th>
-			<th>" . _('Customer') . "</th>
-			<th>" . _('Branch') . "</th>
-			<th>" . _('Cust Order') . " #</th>
-			<th>" . _('Last Recurrence') . "</th>
-			<th>" . _('End Date') . "</th>
-			<th>" . _('Times p.a.') . "</th>
-			<th>" . _('Order Total') . "</th>
-			</tr>";
-
+	$tableheader = '<tr>
+					<th>' . _('Modify') . '</th>
+					<th>' . _('Customer') . '</th>
+					<th>' . _('Branch') . '</th>
+					<th>' . _('Cust Order') . ' #</th>
+					<th>' . _('Last Recurrence') . '</th>
+					<th>' . _('End Date') . '</th>
+					<th>' . _('Times p.a.') . '</th>
+					<th>' . _('Order Total') . '</th>
+				</tr>';
+		
 	echo $tableheader;
 
 	$j = 1;
@@ -100,12 +99,12 @@ if (isset($_POST['SearchRecurringOrders'])){
 			$k++;
 		}
 
-		$ModifyPage = $rootpath . "/RecurringSalesOrders.php?" . SID . '&ModifyRecurringSalesOrder=' . $myrow['recurrorderno'];
+		$ModifyPage = $rootpath . '/RecurringSalesOrders.php?ModifyRecurringSalesOrder=' . $myrow['recurrorderno'];
 		$FormatedLastRecurrence = ConvertSQLDate($myrow['lastrecurrence']);
 		$FormatedStopDate = ConvertSQLDate($myrow['stopdate']);
 		$FormatedOrderValue = number_format($myrow['ordervalue'],2);
 
-		printf("<td><a href='%s'>%s</a></td>
+		printf('<td><a href="%s">%s</a></td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
@@ -113,7 +112,7 @@ if (isset($_POST['SearchRecurringOrders'])){
 			<td>%s</td>
 			<td>%s</td>
 			<td class=number>%s</td>
-			</tr>",
+			</tr>',
 			$ModifyPage,
 			$myrow['recurrorderno'],
 			$myrow['name'],

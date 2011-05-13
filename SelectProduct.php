@@ -62,16 +62,18 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 								stockmaster.kgs
 								FROM stockmaster INNER JOIN stockcategory
 								ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE stockid='" . $StockID . "'", $db);
+						WHERE stockid='" . $StockID . "'", $db);
 	$myrow = DB_fetch_array($result);
 	$Its_A_Kitset_Assembly_Or_Dummy = false;
 	$Its_A_Dummy = false;
 	$Its_A_Kitset = false;
 	$Its_A_Labour_Item = false;
 	echo '<table width="90%"><tr><th colspan="3"><img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . '</b></th></tr>';
+	
 	echo '<tr><td width="40%" valign="top">
 			<table align="left">'; //nested table
-	echo '<tr><th class="number">' . _('Item Type:') . '</th><td colspan="2" class="select">';
+	echo '<tr><th class="number">' . _('Item Type:') . '</th>
+			<td colspan="2" class="select">';
 	switch ($myrow['mbflag']) {
 		case 'A':
 			echo _('Assembly Item');
@@ -105,12 +107,17 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	} else {
 		echo _('N/A');
 	}
-	echo '</td><th class="number">' . _('Units') . ':</th><td class="select">' . $myrow['units'] . '</td></tr>';
-	echo '<tr><th class="number">' . _('Volume') . ':</th><td class="select" colspan="2">' . number_format($myrow['volume'], 3) . '</td>
-			<th class="number">' . _('Weight') . ':</th><td class="select">' . number_format($myrow['kgs'], 3) . '</td>
-			<th class="number">' . _('EOQ') . ':</th><td class="select">' . number_format($myrow['eoq'], $myrow['decimalplaces']) . '</td></tr>';
+	echo '</td><th class="number">' . _('Units') . ':</th>
+			<td class="select">' . $myrow['units'] . '</td></tr>';
+	echo '<tr><th class="number">' . _('Volume') . ':</th>
+			<td class="select" colspan="2">' . number_format($myrow['volume'], 3) . '</td>
+			<th class="number">' . _('Weight') . ':</th>
+			<td class="select">' . number_format($myrow['kgs'], 3) . '</td>
+			<th class="number">' . _('EOQ') . ':</th>
+			<td class="select">' . number_format($myrow['eoq'], $myrow['decimalplaces']) . '</td></tr>';
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
-		echo '<tr><th colspan="2">' . _('Sell Price') . ':</th><td class="select">';
+		echo '<tr><th colspan="2">' . _('Sell Price') . ':</th>
+				<td class="select">';
 		$PriceResult = DB_query("SELECT typeabbrev, price FROM prices
 								WHERE currabrev ='" . $_SESSION['CompanyRecord']['currencydefault'] . "'
 								AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
@@ -136,20 +143,24 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		} else {
 			$PriceRow = DB_fetch_row($PriceResult);
 			$Price = $PriceRow[1];
-			echo $PriceRow[0] . '</td><td class="select">' . number_format($Price, 2) . '</td>
-				<th class="number">' . _('Gross Profit') . '</th><td class="select">';
+			echo $PriceRow[0] . '</td><td class="select">' . number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<th class="number">' . _('Gross Profit') . '</th>
+				<td class="select">';
 			if ($Price > 0) {
-				$GP = number_format(($Price - $Cost) * 100 / $Price, 2);
+				$GP = number_format(($Price - $Cost) * 100 / $Price, 1);
 			} else {
 				$GP = _('N/A');
 			}
 			echo $GP . '%' . '</td></tr>';
 			while ($PriceRow = DB_fetch_row($PriceResult)) {
 				$Price = $PriceRow[1];
-				echo '<tr><td></td><th>' . $PriceRow[0] . '</th><td class="select">' . number_format($Price, 2) . '</td>
-				<th class="number">' . _('Gross Profit') . '</th><td class="select">';
+				echo '<tr><td></td>
+						<th>' . $PriceRow[0] . '</th>
+						<td class="select">' . number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<th class="number">' . _('Gross Profit') . '</th>
+						<td class="select">';
 				if ($Price > 0) {
-					$GP = number_format(($Price - $Cost) * 100 / $Price, 2);
+					$GP = number_format(($Price - $Cost) * 100 / $Price, 1);
 				} else {
 					$GP = _('N/A');
 				}
@@ -170,7 +181,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		} else {
 			$Cost = $myrow['cost'];
 		}
-		echo '<th class="number">' . _('Cost') . '</th><td class="select">' . number_format($Cost, 3) . '</td>';
+		echo '<th class="number">' . _('Cost') . '</th>
+			<td class="select">' . number_format($Cost, 3) . '</td>';
 	} //end of if PricesSecuirty allows viewing of prices
 	echo '</table>'; //end of first nested table
 	// Item Category Property mod: display the item properties
@@ -312,9 +324,12 @@ if (DB_num_rows($DemandResult) == 1) {
 	$DemandRow = DB_fetch_row($DemandResult);
 	$Demand+= $DemandRow[0];
 }
-echo '<tr><th class="number" width="15%">' . _('Quantity On Hand') . ':</th><td width="17%" class="select">' . $QOH . '</td></tr>';
-echo '<tr><th class="number" width="15%">' . _('Quantity Demand') . ':</th><td width="17%" class="select">' . number_format($Demand, $myrow['decimalplaces']) . '</td></tr>';
-echo '<tr><th class="number" width="15%">' . _('Quantity On Order') . ':</th><td width="17%" class="select">' . $QOO . '</td></tr>
+echo '<tr><th class="number" width="15%">' . _('Quantity On Hand') . ':</th>
+		<td width="17%" class="select">' . $QOH . '</td></tr>';
+echo '<tr><th class="number" width="15%">' . _('Quantity Demand') . ':</th>
+		<td width="17%" class="select">' . number_format($Demand, $myrow['decimalplaces']) . '</td></tr>';
+echo '<tr><th class="number" width="15%">' . _('Quantity On Order') . ':</th>
+		<td width="17%" class="select">' . $QOO . '</td></tr>
 				</table>'; //end of nested table
 echo '</td>'; //end cell of master table
 if ($myrow['mbflag'] == 'B' or ($myrow['mbflag'] == 'M')) {
@@ -334,14 +349,17 @@ if ($myrow['mbflag'] == 'B' or ($myrow['mbflag'] == 'M')) {
 									purchdata.leadtime,
 									purchdata.conversionfactor,
 									purchdata.minorderqty,
-									purchdata.preferred
+									purchdata.preferred,
+									currencies.decimalplaces
 								FROM purchdata INNER JOIN suppliers
-								ON purchdata.supplierno=suppliers.supplierid
+								ON purchdata.supplierno=suppliers.supplierid 
+								INNER JOIN currencies
+								ON suppliers.currcode=currencies.currabrev
 								WHERE purchdata.stockid = '" . $StockID . "'
 							ORDER BY purchdata.preferred DESC, purchdata.effectivefrom DESC", $db);
 	while ($SuppRow = DB_fetch_array($SuppResult)) {
 		echo '<tr><td class="select">' . $SuppRow['suppname'] . '</td>
-					<td class="select">' . number_format($SuppRow['price'] / $SuppRow['conversionfactor'], 2) . '</td>
+					<td class="select">' . number_format($SuppRow['price'] / $SuppRow['conversionfactor'], $SuppRow['decimalplaces']) . '</td>
 					<td class="select">' . $SuppRow['currcode'] . '</td>
 					<td class="select">' . ConvertSQLDate($SuppRow['effectivefrom']) . '</td>
 					<td class="select">' . $SuppRow['leadtime'] . '</td>
@@ -352,8 +370,8 @@ if ($myrow['mbflag'] == 'B' or ($myrow['mbflag'] == 'M')) {
 		} else {
 			echo '<td class="select">' . _('No') . '</td>';
 		}
-		echo '<td class="select"><a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes' . '&amp;SelectedSupplier=' .
-			$SuppRow['supplierid'] . '&amp;StockID=' . $StockID . '&amp;Quantity='.$SuppRow['minorderqty'].'">' . _('Order') . ' </a></td>';
+		echo '<td class="select"><a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes&SelectedSupplier=' .
+			$SuppRow['supplierid'] . '&StockID=' . $StockID . '&Quantity='.$SuppRow['minorderqty'].'">' . _('Order') . ' </a></td>';
 		echo '</tr>';
 	}
 	echo '</table></td>';
