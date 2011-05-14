@@ -13,7 +13,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/s
 if (isset($_POST['Update'])) {
 	foreach ($_POST as $ScriptName => $PageSecurityValue) {
 		if ($ScriptName!='Update' and $ScriptName!='FormID') {
-			$ScriptName=substr($ScriptName, 0, strlen($ScriptName)-4).'.php';
+			$ScriptName = substr($ScriptName, 0, strlen($ScriptName)-4).'.php';
 			$sql="UPDATE scripts SET pagesecurity='".$PageSecurityValue."' WHERE script='".$ScriptName."'";
 			$UpdateResult=DB_query($sql, $db,_('Could not update the page security value for the script because'));
 		}

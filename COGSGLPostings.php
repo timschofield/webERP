@@ -92,7 +92,7 @@ if (!isset($SelectedCOGSPostingID)) {
 			</tr>';
 		$k=0; //row colour counter
 
-		while ($myrow = DB_fetch_row($result)) {
+		while ($myrow = DB_fetch_array($result)) {
 			if ($k==1){
 				echo '<tr class="EvenTableRows">';
 				$k=0;
@@ -106,24 +106,24 @@ if (!isset($SelectedCOGSPostingID)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</td>
-				<td><a href="%sSelectedCOGSPostingID=%s&delete=yes">'. _('Delete') . '</td></tr>',
-				$myrow[1],
-				$myrow[2],
-				$myrow[3],
-				$myrow[4],
+				<td><a href="%sSelectedCOGSPostingID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">'. _('Delete') . '</td></tr>',
+				$myrow['area'],
+				$myrow['stkcat'],
+				$myrow['salestype'],
+				$myrow['accountname'],
 				$_SERVER['PHP_SELF'] . '?',
-				$myrow[0],
+				$myrow['id'],
 				$_SERVER['PHP_SELF']. '?',
-				$myrow[0]);
+				$myrow['id']);
 		}//end while
 		echo '</table>';
 	}
 
 	$sql = "SELECT cogsglpostings.id,
-			cogsglpostings.area,
-			cogsglpostings.stkcat,
-			cogsglpostings.salestype
-		FROM cogsglpostings";
+				cogsglpostings.area,
+				cogsglpostings.stkcat,
+				cogsglpostings.salestype
+			FROM cogsglpostings";
 
 	$result = DB_query($sql,$db);
 
@@ -147,7 +147,7 @@ if (!isset($SelectedCOGSPostingID)) {
 
 			$result = DB_query($sql,$db);
 		}
-		$sql = "SELECT accountcode FROM chartmaster WHERE accountcode ='1' ";
+		$sql = "SELECT accountcode FROM chartmaster WHERE accountcode ='1'";
 		$result = DB_query($sql,$db);
 		if (DB_num_rows($result)==0){
 		/* account number 1 is not used, so insert a new account */
@@ -195,7 +195,7 @@ if (!isset($SelectedCOGSPostingID)) {
 				<th>' . _('GL Account') . '</th>
 			</tr>';
 		$k = 0;
-		while ($myrow = DB_fetch_row($result)) {
+		while ($myrow = DB_fetch_array($result)) {
 			if ($k==1){
 				echo '<tr class="EvenTableRows">';
 				$k=0;
@@ -211,14 +211,14 @@ if (!isset($SelectedCOGSPostingID)) {
 			<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</td>
 			<td><a href="%sSelectedCOGSPostingID=%s&delete=yes">' . _('Delete') . '</td>
 			</tr>',
-			$myrow[1],
-			$myrow[2],
-			$myrow[3],
-			$myrow[4],
+			$myrow['area'],
+			$myrow['stkcat'],
+			$myrow['salestype'],
+			$myrow['salestype'],
 			$_SERVER['PHP_SELF'] . '?',
-			$myrow[0],
+			$myrow['id'],
 			$_SERVER['PHP_SELF'] . '?',
-			$myrow[0]);
+			$myrow['id']);
 
 		}//END WHILE LIST LOOP
 		echo '</table>';
@@ -305,7 +305,7 @@ $result = DB_query($sql,$db);
 echo '</select></td></tr>
 		<tr><td>' . _('Sales Type') . ' / ' . _('Price List') . ':</td>
 		<td><select tabindex=3 name="SalesType">
-			<option VALUE="AN">' . _('Any Other') . '</option>';
+			<option value="AN">' . _('Any Other') . '</option>';
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['SalesType']) and $myrow['typeabbrev']==$_POST['SalesType']) {

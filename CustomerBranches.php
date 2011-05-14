@@ -97,8 +97,8 @@ if (isset($_POST['submit'])) {
 		$row = DB_fetch_array($resultgeo);
 		$api_key = $row['geocode_key'];
 		$map_host = $row['map_host'];
-		define("MAPS_HOST", $map_host);
-		define("KEY", $api_key);
+		define('MAPS_HOST', $map_host);
+		define('KEY', $api_key);
 		if ($map_host=="") {
 		// check that some sane values are setup already in geocode tables, if not skip the geocoding but add the record anyway.
 			echo '<div class="warn">' . _('Warning - Geocode Integration is enabled, but no hosts are setup.  Go to Geocode Setup') . '</div>';
@@ -417,8 +417,12 @@ if (!isset($SelectedBranch)){
 				$DebtorNo,
 				urlencode($myrow[1]),
 				_('Delete Branch'));
-			if ($myrow[11]){ $TotalDisable++; }
-			else { $TotalEnable++; }
+			
+			if ($myrow[11]){ 
+				$TotalDisable++; 
+			}else { 
+				$TotalEnable++; 
+			}
 
 		} while ($myrow = DB_fetch_row($result));
 		//END WHILE LIST LOOP
@@ -628,9 +632,9 @@ if (!isset($_GET['delete'])) {
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['Salesman']) and $myrow['salesmancode']==$_POST['Salesman']) {
-			echo '<option selected VALUE=';
+			echo '<option selected value=';
 		} else {
-			echo '<option VALUE=';
+			echo '<option value=';
 		}
 		echo $myrow['salesmancode'] . '>' . $myrow['salesmanname'];
 
@@ -654,11 +658,11 @@ if (!isset($_GET['delete'])) {
 	echo '<td><select tabindex=14 name="Area">';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['Area']) and $myrow['areacode']==$_POST['Area']) {
-			echo '<option selected VALUE=';
+			echo '<option selected value="';
 		} else {
-			echo '<option VALUE=';
+			echo '<option value="';
 		}
-		echo $myrow['areacode'] . '>' . $myrow['areadescription'];
+		echo $myrow['areacode'] . '">' . $myrow['areadescription'];
 
 	} //end while loop
 
@@ -666,7 +670,7 @@ if (!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 	DB_data_seek($result,0);
 
-	$sql = 'SELECT loccode, locationname FROM locations';
+	$sql = "SELECT loccode, locationname FROM locations";
 	$result = DB_query($sql,$db);
 
 	if (DB_num_rows($result)==0){
@@ -682,11 +686,11 @@ if (!isset($_GET['delete'])) {
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['DefaultLocation']) and $myrow['loccode']==$_POST['DefaultLocation']) {
-			echo '<option selected value=';
+			echo '<option selected value="';
 		} else {
-			echo '<option value=';
+			echo '<option value="';
 		}
-		echo $myrow['loccode'] . '>' . $myrow['locationname'] . '</option>';
+		echo $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 
 	} //end while loop
 
@@ -714,11 +718,11 @@ if (!isset($_GET['delete'])) {
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['TaxGroup']) and $myrow['taxgroupid']==$_POST['TaxGroup']) {
-			echo '<option selected VALUE=';
+			echo '<option selected value="';
 		} else {
-			echo '<option VALUE=';
+			echo '<option value="';
 		}
-		echo $myrow['taxgroupid'] . '>' . $myrow['taxgroupdescription'] . '</option>';
+		echo $myrow['taxgroupid'] . '">' . $myrow['taxgroupdescription'] . '</option>';
 
 	} //end while loop
 
@@ -779,7 +783,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['CustBranchCode'])) {$_POST['CustBranchCode']='';}
 	echo '<td><input tabindex=27 type="Text" name="CustBranchCode" size=31 maxlength=30 value="'. $_POST['CustBranchCode'].'"></td></tr>';
 	echo '</table>';
-	echo '<br /><div class="centre"><input tabindex=28 type="Submit" name="submit" value="' . _('Enter Branch') . '"></div>';
+	echo '<br /><div class="centre"><input tabindex=28 type="submit" name="submit" value="' . _('Enter Branch') . '"></div>';
 	echo '</form>';
 
 } //end if record deleted no point displaying form to add record

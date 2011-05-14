@@ -95,10 +95,30 @@ if (isset($_POST['submit'])) {
 	} else {
 		$SQLEndDate = '0000-00-00';
 	}
+	
+	$sql = "SELECT COUNT(typeabbrev)
+				FROM prices
+			WHERE prices.stockid='".$Item."'
+			AND startdate='" .FormatDateForSQL($_POST['StartDate']) . "'
+			AND enddate ='" . FormatDateForSQL($_POST['EndDate']) . "'
+			AND prices.typeabbrev='" . $_POST['TypeAbbrev'] . "'
+			AND prices.currabrev='" . $_POST['CurrAbrev'] . "'
+			AND prices.price='" . $_POST['Price'] . "'
+			";
+
+	$result = DB_query($sql, $db);
+	$myrow = DB_fetch_row($result);
+	echo $myrow[0];
+	if ($myrow[0]!=0) {
+		prnMsg( _('This price has already been entered. To change it you should edit it') , 'warn');
+		$InputError =1;
+	}
+	
+	
+	
 	if (isset($_POST['OldTypeAbbrev']) AND isset($_POST['OldCurrAbrev']) AND strlen($Item)>1 AND $InputError !=1) {
 
 		/* Need to see if there is also a price entered that has an end date after the start date of this price and if so we will need to update it so there is no ambiguity as to which price will be used*/
-
 
 		//editing an existing price
 		$sql = "UPDATE prices SET
@@ -131,7 +151,7 @@ if (isset($_POST['submit'])) {
 									startdate,
 									enddate,
 									price)
-							VALUES ('$Item',
+							VALUES ('" . $Item . "',
 								'" . $_POST['TypeAbbrev'] . "',
 								'" . $_POST['CurrAbrev'] . "',
 								'" . FormatDateForSQL($_POST['StartDate']) . "',
@@ -151,12 +171,12 @@ if (isset($_POST['submit'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 	$sql="DELETE FROM prices
-				WHERE prices.stockid = '". $Item ."'
-				AND prices.typeabbrev='". $_GET['TypeAbbrev'] ."'
-				AND prices.currabrev ='". $_GET['CurrAbrev'] ."'
-				AND  prices.startdate = '" .$_GET['StartDate'] . "'
-				AND  prices.enddate = '" . $_GET['EndDate'] . "'
-				AND prices.debtorno=''";
+			WHERE prices.stockid = '". $Item ."'
+			AND prices.typeabbrev='". $_GET['TypeAbbrev'] ."'
+			AND prices.currabrev ='". $_GET['CurrAbrev'] ."'
+			AND  prices.startdate = '" .$_GET['StartDate'] . "'
+			AND  prices.enddate = '" . $_GET['EndDate'] . "'
+			AND prices.debtorno=''";
 	$ErrMsg = _('Could not delete this price');
 	$result = DB_query($sql,$db,$ErrMsg);
 	prnMsg( _('The selected price has been deleted'),'success');

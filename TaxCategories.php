@@ -1,8 +1,6 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity = 15;
-
 include('includes/session.inc');
 
 $title = _('Tax Categories');
@@ -53,15 +51,15 @@ if (isset($_POST['submit'])) {
 			// Get the old name and check that the record still exists
 
 			$sql = "SELECT taxcatname FROM taxcategories
-				WHERE taxcatid = '" . $SelectedTaxCategory . "'";
+					WHERE taxcatid = '" . $SelectedTaxCategory . "'";
 			$result = DB_query($sql,$db);
 			if ( DB_num_rows($result) != 0 ) {
 				// This is probably the safest way there is
 				$myrow = DB_fetch_row($result);
 				$OldTaxCategoryName = $myrow[0];
 				$sql = "UPDATE taxcategories
-					SET taxcatname='" . $_POST['TaxCategoryName'] . "'
-					WHERE taxcatname ".LIKE." '".$OldTaxCategoryName."'";
+						SET taxcatname='" . $_POST['TaxCategoryName'] . "'
+						WHERE taxcatname ".LIKE." '".$OldTaxCategoryName."'";
 				$ErrMsg = _('The tax category could not be updated');
 				$result = DB_query($sql,$db,$ErrMsg);
 			} else {
@@ -83,9 +81,9 @@ if (isset($_POST['submit'])) {
 			$result = DB_Txn_Begin($db);
 			$sql = "INSERT INTO taxcategories (
 						taxcatname )
-				VALUES (
-					'" . $_POST['TaxCategoryName'] ."'
-					)";
+					VALUES (
+						'" . $_POST['TaxCategoryName'] ."'
+						)";
 			$ErrMsg = _('The new tax category could not be added');
 			$result = DB_query($sql,$db,$ErrMsg,true);
 
@@ -164,10 +162,10 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = _('Could not get tax categories because');
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	echo "<table class=selection>
+	echo '<table class=selection>
 		<tr>
-		<th>" . _('Tax Categories') . "</th>
-		</tr>";
+		<th>' . _('Tax Categories') . '</th>
+		</tr>';
 
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
@@ -181,8 +179,8 @@ if (isset($_POST['submit'])) {
 		}
 
 		echo '<td>' . $myrow[1] . '</td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedTaxCategory=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedTaxCategory=' . $myrow[0] . '&delete=1">' . _('Delete') .'</a></td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedTaxCategory=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedTaxCategory=' . $myrow[0] . '&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax category?') . '\');">' . _('Delete') .'</a></td>';
 		echo '</tr>';
 
 	} //END WHILE LIST LOOP
@@ -191,14 +189,14 @@ if (isset($_POST['submit'])) {
 
 
 if (isset($SelectedTaxCategory)) {
-	echo '<div class="centre"><a href=' . $_SERVER['PHP_SELF'] . '?' . SID .'>' . _('Review Tax Categories') . '</a></div>';
+	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Tax Categories') . '</a></div>';
 }
 
 echo '<p>';
 
 if (! isset($_GET['delete'])) {
 
-	echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedTaxCategory)) {
@@ -218,18 +216,18 @@ if (! isset($_GET['delete'])) {
 
 			$_POST['TaxCategoryName']  = $myrow['taxcatname'];
 
-			echo "<input type=hidden name='SelectedTaxCategory' VALUE='" . $myrow['taxcatid'] . "'>";
-			echo "<table class=selection>";
+			echo '<input type="hidden" name="SelectedTaxCategory" value="' . $myrow['taxcatid'] . '">';
+			echo '<table class=selection>';
 		}
 
 	}  else {
 		$_POST['TaxCategoryName']='';
-		echo "<table class=selection>";
+		echo '<table class=selection>';
 	}
-	echo "<tr>
-		<td>" . _('Tax Category Name') . ':' . "</td>
-		<td><input type='Text' name='TaxCategoryName' size=30 maxlength=30 value='" . $_POST['TaxCategoryName'] . "'></td>
-		</tr>";
+	echo '<tr>
+		<td>' . _('Tax Category Name') . ':' . '</td>
+		<td><input type="text" name="TaxCategoryName" size=30 maxlength=30 value="' . $_POST['TaxCategoryName'] . '"></td>
+		</tr>';
 	echo '</table>';
 
 	echo '<br /><div class="centre"><input type=Submit name=submit value=' . _('Enter Information') . '></div>';

@@ -485,19 +485,21 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 
 	echo '<table class=selection><tr><td><font color=red>' . _('Credit Amount in Supplier Currency') . ':</font></td>
 			<td colspan=2 class=number>' . number_format($_SESSION['SuppTrans']->OvAmount,2) . '</td></tr>';
+	echo '<input type="hidden" name="OvAmount" value="' . $_SESSION['SuppTrans']->OvAmount . '">';
 } else {
 	echo '<table class=selection><tr><td><font color=red>' . _('Credit Amount in Supplier Currency') .
 		  ':</font></td>
-		  	<td colspan=2 class=number><input type=TEXT size="12" maxlength="10" name="OvAmount" value=' . number_format($_SESSION['SuppTrans']->OvAmount,2) . '></td></tr>';
+		  	<td colspan=2 class=number><input type="text" size="12" maxlength="10" name="OvAmount" value=' . $_SESSION['SuppTrans']->OvAmount . '></td></tr>';
 }
 
-echo "<tr><td colspan=2><input type=Submit name='ToggleTaxMethod'value='" . _('Change Tax Calculation Method') .
-	  "'></td><td><select name='OverRideTax' onChange='ReloadForm(form1.ToggleTaxMethod)'>";
+echo '<tr><td colspan=2><input type="submit" name="ToggleTaxMethod" value="' . _('Change Tax Calculation Method') .  '"></td><td><select name="OverRideTax" onChange="ReloadForm(form1.ToggleTaxMethod)">';
 
 if ($_POST['OverRideTax']=='Man'){
-	echo "<option value='Auto'>" . _('Automatic') . "<option selected value='Man'>" . _('Manual Entry');
+	echo '<option value="Auto">' . _('Automatic') . '</option>
+			<option selected value="Man">' . _('Manual Entry') . '</option>';
 } else {
-	echo "<option selected value='Auto'>" . _('Automatic') . "<option value='Man'>" . _('Manual Entry');
+	echo '<option selected value="Auto">' . _('Automatic') . '</option>
+			<option value="Man">' . _('Manual Entry') . '</option>';
 }
 
 echo '</select></td></tr>';
@@ -811,7 +813,7 @@ then do the updates and inserts to process the credit note entered */
 
 						$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
-						$Result = DB_query($SQL, $db, $ErrMsg, $Dbg, True);
+						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
 					}
 

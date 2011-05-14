@@ -15,6 +15,12 @@ if (isset($_GET['New'])) {
 	unset($_SESSION['Transfer']);
 }
 
+if (isset($_GET['From'])) {
+	$_POST['StockLocationFrom']=$_GET['From'];
+	$_POST['StockLocationTo']=$_GET['To'];
+	$_POST['Quantity']=$_GET['Quantity'];
+}
+
 if (isset($_POST['CheckCode'])) {
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') .
@@ -28,14 +34,17 @@ if (isset($_POST['CheckCode'])) {
 	$ErrMsg=_('The stock information cannot be retrieved because');
 	$DbgMsg=_('The SQL to get the stock description was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-	echo '<table class=selection><tr><th>'._('Stock Code').'</th>
-									<th>'._('Stock Description').'</th>
-								</tr>';
-	while ($myrow = DB_fetch_row($result)) {
-		echo '<tr><td>'.$myrow[0].'</td>
-				<td>'.$myrow[1].'</td>
-				<td><a href="StockTransfers.php?StockID='.$myrow[0].'&Description='.$myrow[1].'">' . _('Transfer') . '</a></td>
+	echo '<table class=selection>
+			<tr><th>'._('Stock Code').'</th>
+				<th>'._('Stock Description').'</th>
 			</tr>';
+	while ($myrow = DB_fetch_array($result)) {
+		echo '<tr><td>'.$myrow['stockid'].'</td>
+				<td>'.$myrow['description'].'</td>
+				<td><a href="' . $rootpath . '/StockTransfers.php?StockID='.$myrow['stockid'].'&Description='.$myrow['description'].'&NewTransfer=Yes&Quantity='.$_POST['Quantity'].'&From='.$_POST['StockLocationFrom'].'&To='.$_POST['StockLocationTo'].'">'
++				._('Transfer').'</a></td>
+			</tr>';
+				
 	}
 	echo '</table>';
 	include('includes/footer.inc');
@@ -117,9 +126,9 @@ if (isset($_POST['Quantity']) and isset($_SESSION['Transfer']->TransferItem[0]->
 }
 if ( isset($_POST['StockLocationFrom']) && $_POST['StockLocationFrom']!= $_SESSION['Transfer']->StockLocationFrom ){
 	$_SESSION['Transfer']->StockLocationFrom = $_POST['StockLocationFrom'];
-	$_SESSION['Transfer']->TransferItem[0]->Quantity=0;
+	$_SESSION['Transfer']->StockLocationTo = $_POST['StockLocationTo'];
+	$_SESSION['Transfer']->TransferItem[0]->Quantity=$_POST['Quantity'];
 	$_SESSION['Transfer']->TransferItem[0]->SerialItems=array();
-	prnMsg( _('You have set or changed the From location') . '. ' . _('You must re-enter the quantity and any Controlled Items now') );
 }
 if ( isset($_POST['StockLocationTo']) ){
 	$_SESSION['Transfer']->StockLocationTo = $_POST['StockLocationTo'];
@@ -162,9 +171,9 @@ if ( isset($_POST['EnterTransfer']) ){
 
 		// Need to get the current location quantity will need it later for the stock movement
 		$SQL="SELECT locstock.quantity
-			FROM locstock
-			WHERE locstock.stockid='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'
-			AND loccode= '" . $_SESSION['Transfer']->StockLocationFrom . "'";
+				FROM locstock
+				WHERE locstock.stockid='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'
+				AND loccode= '" . $_SESSION['Transfer']->StockLocationFrom . "'";
 
 		$ErrMsg =  _('Could not retrieve the QOH at the sending location because');
 		$DbgMsg =  _('The SQL that failed was');
@@ -177,7 +186,11 @@ if ( isset($_POST['EnterTransfer']) ){
 			// There must actually be some error this should never happen
 			$QtyOnHandPrior = 0;
 		}
-
+		if ($_SESSION['ProhibitNegativeStock']==1 AND $QtyOnHandPrior<$_SESSION['Transfer']->TransferItem[0]->Quantity) {
+			prnMsg( _('There is insufficient stock to make this transfer and webERP is setup to prevent negative stock'), 'warn');
+			include('includes/footer.inc');
+			exit;
+		}
 		// Insert the stock movement for the stock going out of the from location
 		$SQL = "INSERT INTO stockmoves (stockid,
 					type,

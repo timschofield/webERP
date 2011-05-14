@@ -1,8 +1,7 @@
 <?php
-/* $Revision: 1.16 $ */
+
 /* $Id$*/
 
-//$PageSecurity = 3;
 include('includes/session.inc');
 $title = _('Credit Status Code Maintenance');
 include('includes/header.inc');
@@ -127,7 +126,7 @@ if (isset($_POST['submit'])) {
 	}  else {
 		//only delete if used in neither customer or supplier accounts
 
-		$sql="DELETE FROM holdreasons WHERE reasoncode=$SelectedReason";
+		$sql="DELETE FROM holdreasons WHERE reasoncode='" . $SelectedReason . "'";
 		$result = DB_query($sql,$db);
 		prnMsg(_('This credit status code has been deleted'),'success');
 	}
@@ -154,9 +153,9 @@ or deletion of the records*/
 		<th>'. _('Disallow Invoices') .'</th>';
 
 	$k=0; //row colour counter
-	while ($myrow=DB_fetch_row($result)) {
+	while ($myrow=DB_fetch_array($result)) {
 
-		if ($myrow[2]==0) {
+		if ($myrow['dissallowinvoices']==0) {
 			$DissallowText = _('Invoice OK');
 		} else {
 			$DissallowText = '<b>'. _('NO INVOICING') .'</b>';
@@ -169,20 +168,20 @@ or deletion of the records*/
 			$k=1;
 		}
 
-	printf("<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td><a href=\"%s?SelectedReason=%s\">" . _('Edit') . "</a></td>
-		<td><a href=\"%s?SelectedReason=%s&delete=1\">". _('Delete') .'</a></td>
-		</tr>',
-		$myrow[0],
-		$myrow[1],
-		$DissallowText,
-		$_SERVER['PHP_SELF'],
-		$myrow[0],
-		$_SERVER['PHP_SELF'],
-		$myrow[0]);
-
+	printf('<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td><a href="%s?SelectedReason=%s">' . _('Edit') . '</a></td>
+			<td><a href="%s?SelectedReason=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this credit stuatus record?') . '\');">'. _('Delete') .'</a></td>
+			</tr>',
+			$myrow['reasoncode'],
+			$myrow['reasondescription'],
+			$DissallowText,
+			$_SERVER['PHP_SELF'],
+			$myrow['reasoncode'],
+			$_SERVER['PHP_SELF'],
+			$myrow['reasoncode']);
+	
 	} //END WHILE LIST LOOP
 	echo '</table>';
 
@@ -213,9 +212,9 @@ if (!isset($_GET['delete'])) {
 		$_POST['ReasonDescription']  = $myrow['reasondescription'];
 		$_POST['DisallowInvoices']  = $myrow['dissallowinvoices'];
 
-		echo "<input type=hidden name='SelectedReason' VALUE='" . $SelectedReason . "'>";
-		echo "<input type=hidden name='ReasonCode' VALUE='" . $_POST['ReasonCode'] . "'>";
-		echo "<table class=selection><tr><td>". _('Status Code') .':</td><td>';
+		echo '<input type="hidden" name="SelectedReason" value="' . $SelectedReason . '">';
+		echo '<input type="hidden" name="ReasonCode" value="' . $_POST['ReasonCode'] . '">';
+		echo '<table class="selection"><tr><td>'. _('Status Code') .':</td><td>';
 		echo $_POST['ReasonCode'] . '</td></tr>';
 
 	} else { //end of if $SelectedReason only do the else when a new record is being entered
@@ -224,10 +223,9 @@ if (!isset($_GET['delete'])) {
 		}
 		echo '<br><table class=selection>
 			<tr>
-				<td>'. _('Status Code') .":</td>
-				<td><input " . (in_array('ReasonCode',$Errors) ? 'class="inputerror"' : '' ) .
-					" tabindex=1 type='Text' name='ReasonCode' VALUE='". $_POST['ReasonCode'] ."' size=3 maxlength=2></td>
-			</tr>";
+				<td>'. _('Status Code') .':</td>
+				<td><input ' . (in_array('ReasonCode',$Errors) ? 'class="inputerror"' : '' ) . ' tabindex=1 type="text" name="ReasonCode" value="'. $_POST['ReasonCode'] .'" size=3 maxlength=2></td>
+			</tr>';
 	}
 
 	if (!isset($_POST['ReasonDescription'])) {

@@ -40,8 +40,7 @@ While ($myrow = DB_fetch_row($result)){
 
 fclose($fp);
 
-echo '<br /><a href="' . $rootpath . '/' . $_SESSION['reports_dir'] . '/StockQties.csv">' . _('click here') . '</a> ' . _('to view the file') . '</div>';
-
+echo '<br /><div class="centre"><a href="' . $rootpath . '/' . $_SESSION['reports_dir'] . '/StockQties.csv ">' . _('click here') . '</a> ' . _('to view the file') . '</div>';
 include('includes/footer.inc');
 
 ?>
