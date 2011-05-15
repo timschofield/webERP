@@ -23,11 +23,30 @@ if (isset($_POST['Days'])){
 	$Days = $_GET['Days'];
 }
 
-if (isset($Errors)) {
-	unset($Errors);
+if (isset($_POST['Cancel'])) {
+	unset($SelectedTabs);
+	unset($SelectedIndex);
+	unset($Days);
+	unset($_POST['Amount']);
+	unset($_POST['Notes']);
+	unset($_POST['Receipt']);
 }
 
-$Errors = array();
+if (isset($_POST['process'])) {
+	if ($SelectedTabs=='') {
+		prnMsg(_('You Must First Select a Petty Cash Tab To Assign Cash'),'error'); 
+		unset($SelectedTabs);
+	}
+}
+
+if (isset($_POST['Go'])) {
+	$InputError = 0;
+	if ($Days<=0) {
+		$InputError = 1;
+		prnMsg(_('The number of days must be a positive number'),'error');
+		$Days=30;
+	}
+}
 
 if (isset($_POST['submit'])) {
 	//initialise no input errors assumed initially before we test
@@ -43,9 +62,7 @@ if (isset($_POST['submit'])) {
 
 	if ($_POST['Amount']==0) {
 		$InputError = 1;
-		prnMsg('<br />' . _('The Amount must be inputed'),'error');
-		$Errors[$i] = 'TabCode';
-		$i++;
+		prnMsg('<br />' . _('The Amount must be input'),'error');
 	}
 
 	$sqlLimit = "SELECT tablimit
@@ -56,7 +73,7 @@ if (isset($_POST['submit'])) {
 	$Limit=DB_fetch_array($ResultLimit);
 
 	if (($_POST['CurrentAmount']+$_POST['Amount'])>$Limit['tablimit']){
-		prnMsg('<br />' . _('The balance after this assignment would be greater than the specified limit for this PC tab'),'warning');
+		prnMsg(_('The balance after this assignment would be greater than the specified limit for this PC tab'),'warning');
 	}
 
 	if ($InputError !=1 AND isset($SelectedIndex) ) {
@@ -92,7 +109,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['Notes'] . "',
 					'" . $_POST['Receipt'] . "'
 					)";
-		$msg = _('Assignment of cash to PC Tab ') . ' ' . $_POST["SelectedTabs"] .  ' ' . _('has been created');
+		$msg = _('Assignment of cash to PC Tab ') . ' ' . $_POST['SelectedTabs'] .  ' ' . _('has been created');
 	}
 
 	if ( $InputError !=1) {
@@ -103,6 +120,8 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Amount']);
 		unset($_POST['Notes']);
 		unset($_POST['Receipt']);
+		unset($_POST['SelectedTabs']);
+		unset($_POST['Date']);
 	}
 
 } elseif ( isset($_GET['delete']) ) {
@@ -128,16 +147,16 @@ if (!isset($SelectedTabs)){
 
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p><table class=selection>'; //Main table
+	echo '<p><table class="selection">'; //Main table
 
 	echo '<tr><td>' . _('Petty Cash Tab To Assign Cash') . ':</td>
 			<td><select name="SelectedTabs">';
 
 	DB_free_result($result);
 	$SQL = "SELECT tabcode
-		FROM pctabs
-		WHERE authorizer='" . $_SESSION['UserID'] . "'
-		ORDER BY tabcode";
+			FROM pctabs
+			WHERE authorizer='" . $_SESSION['UserID'] . "'
+			ORDER BY tabcode";
 
 	$result = DB_query($SQL,$db);
 
@@ -179,7 +198,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		 }
 		$sql = "SELECT * FROM pcashdetails
 				WHERE tabcode='" . $SelectedTabs . "'
-				AND date >=DATE_SUB(CURDATE(), INTERVAL '".$Days."' DAY)
+				AND date >=DATE_SUB(CURDATE(), INTERVAL , '".$Days."' DAY)
 				ORDER BY date, counterindex ASC";
 
 
@@ -188,7 +207,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		echo '<table class=selection>';
 		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<tr><th colspan="8">' . _('Detail Of PC Tab Movements For Last ') .': ';
+		echo '<tr><th colspan="8">' . _('Detail Of PC Tab Movements For Last') .': ';
 		echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '">';
 		echo '<input type="text" class="number" name="Days" value="' . $Days  . '" maxlength="3" size="4" /> ' . _('Days');
 		echo '<input type=submit name="Go" value="' . _('Go') . '">';
@@ -228,7 +247,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 			// only cash assignations NOT authorized can be modified or deleted
 			echo '<td>' . ConvertSQLDate($myrow['date']) . '</td>
 				<td>' . $Description['0'] . '</td>
-				<td class=number>' . number_format($myrow['amount'],2) . '</td>
+				<td class=number>' . number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td>' . ConvertSQLDate($myrow['authorized']) . '</td>
 				<td>' . $myrow['notes'] . '</td>
 				<td>' . $myrow['receipt'] . '</td>
@@ -242,7 +261,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		}else{
 			echo '<td>' . ConvertSQLDate($myrow['date']) . '</td>
 				<td>' . $Description['0'] . '</td>
-				<td class=number>' . number_format($myrow['amount'],2).'</td>
+				<td class=number>' . number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
 				<td>' . ConvertSQLDate($myrow['authorized']) . '</td>
 				<td>' . $myrow['notes'] . '</td>
 				<td>' . $myrow['receipt'] . '</td>
@@ -263,7 +282,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		}
 
 		echo '<tr><td colspan="2" style="text-align:right"><b>' . _('Current balance') . ':</b></td>
-				<td>' . number_format($Amount['0'],2) . '</td></tr>';
+				<td>' . number_format($Amount['0'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
 
 		echo '</table>';
 
@@ -286,7 +305,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		if ( isset($_GET['edit'])) {
 
 		$sql = "SELECT * FROM pcashdetails
-					WHERE counterindex='".$SelectedIndex."'";
+				WHERE counterindex='".$SelectedIndex."'";
 
 			$result = DB_query($sql, $db);
 			$myrow = DB_fetch_array($result);
@@ -340,13 +359,12 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 
 		echo '</td></tr></table>'; // close main table
 
-		echo '<p><div class="centre"><input type=submit name=submit value="' . _('Accept') . '"><input type=submit name=Cancel value="' . _('Cancel') . '"></div>';
+		echo '<p><div class="centre"><input type=submit name=submit value="' . _('Accept') . '">
+									<input type=submit name=Cancel value="' . _('Cancel') . '"></div>';
 
 		echo '</form>';
 
 	} // end if user wish to delete
-
 }
-
 include('includes/footer.inc');
 ?>

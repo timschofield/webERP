@@ -8,18 +8,21 @@ $title = _('Purchase Order Authorisation Maintenance');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
-$User='';
-$Currency='';
-$CanCreate=1;
-$OffHold=1;
-$AuthLevel=0;
+
+
+/*Note: If CanCreate==0 then this means the user can create orders
+ *     Also if OffHold==0 then the user can release purchase invocies 
+ *     This logic confused me a bit to start with
+ */
+
+
 if (isset($_POST['Submit'])) {
-	if (isset($_POST['CanCreate']) and $_POST['CanCreate']=='on') {
+	if (isset($_POST['CanCreate']) AND $_POST['CanCreate']=='on') {
 		$CanCreate=0;
 	} else {
 		$CanCreate=1;
 	}
-	if (isset($_POST['OffHold']) and $_POST['OffHold']=='on') {
+	if (isset($_POST['OffHold']) AND $_POST['OffHold']=='on') {
 		$OffHold=0;
 	} else {
 		$OffHold=1;
@@ -48,17 +51,17 @@ if (isset($_POST['Submit'])) {
 	$Result=DB_query($sql,$db,$ErrMsg);
 	} else {
 		prnMsg(_('There already exists an entry for this user/currency combination'), 'error');
-			echo '<br />';
+		echo '<br />';
 	}
 }
 
 if (isset($_POST['Update'])) {
-	if (isset($_POST['CanCreate']) and $_POST['CanCreate']=='on') {
+	if (isset($_POST['CanCreate']) AND $_POST['CanCreate']=='on') {
 		$CanCreate=0;
 	} else {
 		$CanCreate=1;
 	}
-	if (isset($_POST['OffHold']) and $_POST['OffHold']=='on') {
+	if (isset($_POST['OffHold']) AND $_POST['OffHold']=='on') {
 		$OffHold=0;
 	} else {
 		$OffHold=1;
@@ -69,7 +72,7 @@ if (isset($_POST['Update'])) {
 			authlevel='".$_POST['AuthLevel']."'
 			WHERE userid='".$_POST['UserID']."'
 			AND currabrev='".$_POST['CurrCode']."'";
-
+	
 	$ErrMsg = _('The authentication details cannot be updated because');
 	$Result=DB_query($sql,$db,$ErrMsg);
 }
@@ -104,6 +107,7 @@ $sql="SELECT purchorderauth.userid,
 			www_users.realname,
 			currencies.currabrev,
 			currencies.currency,
+			currencies.decimalplaces,
 			purchorderauth.cancreate,
 			purchorderauth.offhold,
 			purchorderauth.authlevel
@@ -125,22 +129,22 @@ echo '<table class="selection"><tr>
 
 while ($myrow=DB_fetch_array($Result)) {
 	if ($myrow['cancreate']==0) {
-		$CanCreate=_('Yes');
+		$DisplayCanCreate=_('Yes');
 	} else {
-		$CanCreate=_('No');
+		$DisplayCanCreate=_('No');
 	}
 	if ($myrow['offhold']==0) {
-		$OffHold=_('Yes');
+		$DisplayOffHold=_('Yes');
 	} else {
-		$OffHold=_('No');
+		$DisplayOffHold=_('No');
 	}
 	echo '<tr>
 			<td>' . $myrow['userid'] . '</td>
 			<td>' . $myrow['realname'] . '</td>
 			<td>' . $myrow['currency'] . '</td>
-			<td>' . $CanCreate . '</td>
-			<td>' . $OffHold . '</td>
-			<td class="number">'.number_format($myrow['authlevel'],2).'</td>
+			<td>' . $DisplayCanCreate . '</td>
+			<td>' . $DisplayOffHold . '</td>
+			<td class="number">'.number_format($myrow['authlevel'],$myrow['decimalplaces']).'</td>
 			<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Edit=Yes&UserID=' . $myrow['userid'] .
 	'&Currency='.$myrow['currabrev'].'">'._('Edit').'</td>
 			<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Delete=Yes&UserID=' . $myrow['userid'] .
@@ -150,15 +154,23 @@ while ($myrow=DB_fetch_array($Result)) {
 
 echo '</table><br><br>';
 
+if (!isset($_GET['Edit'])) {
+	$UserID=$_SESSION['UserID'];
+	$Currency=$_SESSION['CompanyRecord']['currencydefault'];
+	$CanCreate=0;
+	$OffHold=0;
+	$AuthLevel=0;
+}
+
 echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post" name="form1">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class=selection>';
 
 if (isset($_GET['Edit'])) {
-	echo '<tr><td>'._('User ID').'</td><td>'.$UserID.'</td></tr>';
-	echo '<input type=hidden name=UserID value="'.$UserID.'"';
+	echo '<tr><td>'._('User ID').'</td><td>'.$_GET['UserID'].'</td></tr>';
+	echo '<input type="hidden" name="UserID" value="'.$_GET['UserID'].'" />';
 } else {
-	echo '<tr><td>'._('User ID').'</td><td><select name=UserID>';
+	echo '<tr><td>'._('User ID').'</td><td><select name="UserID">';
 	$usersql="SELECT userid FROM www_users";
 	$userresult=DB_query($usersql,$db);
 	while ($myrow=DB_fetch_array($userresult)) {
@@ -172,14 +184,28 @@ if (isset($_GET['Edit'])) {
 }
 
 if (isset($_GET['Edit'])) {
-	$CurrencySQL="SELECT currency FROM currencies WHERE currabrev='".$Currency."'";
-	$CurrencyResult=DB_query($CurrencySQL,$db);
-	$myrow=DB_fetch_array($CurrencyResult);
+	$sql="SELECT cancreate,
+				offhold,
+				authlevel,
+				currency
+			FROM purchorderauth INNER JOIN currencies
+			ON purchorderauth.currabrev=currencies.currabrev
+			WHERE userid='".$_GET['UserID']."'
+			AND purchorderauth.currabrev='".$_GET['Currency']."'";
+	$ErrMsg = _('The authentication details cannot be retrieved because');
+	$result=DB_query($sql,$db,$ErrMsg);
+	$myrow=DB_fetch_array($result);
+	$UserID=$_GET['UserID'];
+	$Currency=$_GET['Currency'];
+	$CanCreate=$myrow['cancreate'];
+	$OffHold=$myrow['offhold'];
+	$AuthLevel=$myrow['authlevel'];
+	
 	echo '<tr>
 			<td>'._('Currency').'</td>
 			<td>' . $myrow['currency'] . '</td>
 		</tr>';
-	echo '<input type=hidden name="currabrev" value="'.$Currency.'"';
+	echo '<input type=hidden name="CurrCode" value="'.$Currency.'"';
 } else {
 	echo '<tr><td>'._('Currency').'</td><td><select name="CurrCode">';
 	$currencysql="SELECT currabrev,currency FROM currencies";

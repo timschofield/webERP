@@ -48,7 +48,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$result = DB_query($SQL,$db);
 
 	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['SelectTabs']) and $myrow['tabcode']==$_POST['SelectTabs']) {
+		if (isset($_POST['SelectedTabs']) and $myrow['tabcode']==$_POST['SelectedTabs']) {
 			echo '<option selected value="';
 		} else {
 			echo '<option value="';
@@ -117,11 +117,11 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$Tabs=DB_fetch_array($TabResult);
 
 	$SqlBalance = "SELECT SUM(amount) FROM pcashdetails
-			WHERE tabcode='".$SelectedTabs."'
-			AND date<'".$SQL_FromDate."'";
+					WHERE tabcode='".$SelectedTabs."'
+					AND date<'".$SQL_FromDate."'";
 
 	$TabBalance = DB_query($SqlBalance,
-				$db);
+							$db);
 
 	$Balance=DB_fetch_array($TabBalance);
 
@@ -177,16 +177,16 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 	while ($myrow=DB_fetch_array($TabDetail)) {
 
-	$sqldes="SELECT description
-				FROM pcexpenses
-				WHERE codeexpense='". $myrow[3] . "'";
-
-	$ResultDes = DB_query($sqldes,$db);
-	$Description=DB_fetch_array($ResultDes);
-
-	if (!isset($Description[0])){
-		$Description[0]='ASSIGNCASH';
-	}
+		$sqldes="SELECT description
+					FROM pcexpenses
+					WHERE codeexpense='". $myrow[3] . "'";
+	
+		$ResultDes = DB_query($sqldes,$db);
+		$Description=DB_fetch_array($ResultDes);
+	
+		if (!isset($Description[0])){
+			$Description[0]='ASSIGNCASH';
+		}
 
 		// Print total for each account
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,70,$FontSize,ConvertSQLDate($myrow['date']));

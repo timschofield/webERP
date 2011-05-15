@@ -14,7 +14,7 @@ if ( isset($_GET['SelectedMeasureID']) )
 elseif (isset($_POST['SelectedMeasureID']))
 	$SelectedMeasureID = $_POST['SelectedMeasureID'];
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['Submit'])) {
 
 	//initialise no input errors assumed initially before we test
 
@@ -34,7 +34,8 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('The unit of measure may not be empty'), 'error');
 	}
 
-	if ($_POST['SelectedMeasureID']!='' AND $InputError !=1) {
+	if (isset($_POST['SelectedMeasureID']) AND $_POST['SelectedMeasureID']!='' AND $InputError !=1) {
+ 
 
 		/*SelectedMeasureID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 		// Check the name does not clash
@@ -167,10 +168,10 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = _('Could not get unit of measures because');
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	echo '<table class=selection>
-		<tr>
-		<th>' . _('Units of Measure') . '</th>
-		</tr>';
+	echo '<table class="selection">
+			<tr>
+				<th>' . _('Units of Measure') . '</th>
+			</tr>';
 
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
@@ -223,7 +224,7 @@ if (! isset($_GET['delete'])) {
 			$_POST['MeasureName']  = $myrow['unitname'];
 
 			echo '<input type="hidden" name="SelectedMeasureID" value="' . $_POST['MeasureID'] . '">';
-			echo '<table>';
+			echo '<table class="selection">';
 		}
 
 	}  else {
@@ -236,7 +237,7 @@ if (! isset($_GET['delete'])) {
 		</tr>';
 	echo '</table>';
 
-	echo '<div class="centre"><input type=Submit name=submit value=' . _('Enter Information') . '></div>';
+	echo '<div class="centre"><input type="submit" name="Submit" value=' . _('Enter Information') . '></div>';
 
 	echo '</form>';
 

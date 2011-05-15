@@ -50,10 +50,9 @@ if (isset($_POST['submit'])) {
 		$InputError =1;
 	}
 	/*Make an array of the defined bank accounts */
-	$SQL = 'SELECT bankaccounts.accountcode
-			FROM bankaccounts,
-				chartmaster
-		WHERE bankaccounts.accountcode=chartmaster.accountcode';
+	$SQL = "SELECT bankaccounts.accountcode
+			FROM bankaccounts INNER JOIN chartmaster
+			ON bankaccounts.accountcode=chartmaster.accountcode";
 	$result = DB_query($SQL,$db);
 	$BankAccounts = array();
 	$i=0;
@@ -123,7 +122,7 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'fixedassets'
 
-	$sql= "SELECT COUNT(*) FROM fixedasset WHERE fixedassets.assetcategoryid='" . $SelectedCategory . "'";
+	$sql= "SELECT COUNT(*) FROM fixedassets WHERE fixedassets.assetcategoryid='" . $SelectedCategory . "'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {

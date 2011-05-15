@@ -653,7 +653,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 												$PurchItemRow['leadtime'],
 												$PurchItemRow['suppliers_partno'] );
 																						
-		echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/PO_Items.php?identifier='.$identifier. "'>";
+		echo '<meta http-equiv="refresh" content="0; url=' . $rootpath . '/PO_Items.php?identifier='.$identifier. '">';
 	}
 
 	/*Set up form for entry of order header stuff */
