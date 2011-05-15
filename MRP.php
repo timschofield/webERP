@@ -314,16 +314,16 @@ if (isset($_POST['submit'])) {
 	prnMsg(_('Loading requirements based on reorder level'),'info');
 	flush();
 
-	$result = DB_query('ALTER TABLE mrprequirements ADD INDEX part(part)',$db);
+	$result = DB_query("ALTER TABLE mrprequirements ADD INDEX part(part)",$db);
 
 	// In the following section, create mrpsupplies from open purchase orders,
 	// open work orders, and current quantity onhand from locstock
 	prnMsg(_('Creating supplies table'),'info');
 	flush();
-	$result = DB_query('DROP TABLE IF EXISTS mrpsupplies',$db);
+	$result = DB_query("DROP TABLE IF EXISTS mrpsupplies",$db);
 	// updateflag is set to 1 in UpdateSupplies if change date when matching requirements to
 	// supplies. Actually only change update flag in the array created from mrpsupplies
-	$sql = 'CREATE TABLE mrpsupplies (	id int(11) NOT NULL auto_increment,
+	$sql = "CREATE TABLE mrpsupplies (	id int(11) NOT NULL auto_increment,
 										part char(20),
 										duedate date,
 										supplyquantity double,
@@ -331,7 +331,7 @@ if (isset($_POST['submit'])) {
 										orderno int(11),
 										mrpdate date,
 										updateflag smallint(6),
-										PRIMARY KEY (id)) DEFAULT CHARSET=utf8';
+										PRIMARY KEY (id)) DEFAULT CHARSET=utf8";
 	$result = DB_query($sql,$db,_('Create of mrpsupplies failed because'));
 
 	prnMsg(_('Loading supplies from purchase orders'),'info');
@@ -424,7 +424,7 @@ if (isset($_POST['submit'])) {
 								WHERE workorders.closed=0";
 	$result = DB_query($sql,$db);
 
-	$sql = 'ALTER TABLE mrpsupplies ADD INDEX part(part)';
+	$sql = "ALTER TABLE mrpsupplies ADD INDEX part(part)";
 	$result = DB_query($sql,$db);
 
 	// Create mrpplannedorders table to create a record for any unmet requirments
@@ -432,8 +432,8 @@ if (isset($_POST['submit'])) {
 	// open work orders, and current quantity onhand from locstock
 	prnMsg(_('Creating planned orders table'),'info');
 	flush();
-	$result = DB_query('DROP TABLE IF EXISTS mrpplannedorders',$db);
-	$sql = 'CREATE TABLE mrpplannedorders (id int(11) NOT NULL auto_increment, 
+	$result = DB_query("DROP TABLE IF EXISTS mrpplannedorders",$db);
+	$sql = "CREATE TABLE mrpplannedorders (id int(11) NOT NULL auto_increment, 
                                               part char(20),
 					      duedate date,
 					      supplyquantity double,
@@ -441,11 +441,11 @@ if (isset($_POST['submit'])) {
 					      orderno int(11),
 					      mrpdate date,
                                               updateflag smallint(6),
-                                              PRIMARY KEY (id)) DEFAULT CHARSET=utf8';
+                                              PRIMARY KEY (id)) DEFAULT CHARSET=utf8";
 	$result = DB_query($sql,$db,_('Create of mrpplannedorders failed because'));
 
 	// Find the highest and lowest level number
-	$sql = 'SELECT MAX(level),MIN(level) from levels';
+	$sql = "SELECT MAX(level),MIN(level) from levels";
 	$result = DB_query($sql,$db);
 
 	$myrow = DB_fetch_row($result);
@@ -471,16 +471,16 @@ if (isset($_POST['submit'])) {
 	echo '</br>' . _('End time') . ': ' . date('h:i:s') . '</br>';
 
 	// Create mrpparameters table
-	$sql = 'DROP TABLE IF EXISTS mrpparameters';
+	$sql = "DROP TABLE IF EXISTS mrpparameters";
 	$result = DB_query($sql,$db);
-	$sql = 'CREATE TABLE mrpparameters  (
+	$sql = "CREATE TABLE mrpparameters  (
 						runtime datetime,
 						location varchar(50),
 						pansizeflag varchar(5),
 						shrinkageflag varchar(5),
 						eoqflag varchar(5),
 						usemrpdemands varchar(5),
-						leeway smallint) DEFAULT CHARSET=utf8';
+						leeway smallint) DEFAULT CHARSET=utf8";
 	$result = DB_query($sql,$db);
 	// Create entry for location field from $_POST['location'], which is an array
 	// since multiple locations can be selected
@@ -515,7 +515,7 @@ if (isset($_POST['submit'])) {
 			_('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
 
 	// Display parameters from last run
-	$sql = 'SELECT * FROM mrpparameters';
+	$sql = "SELECT * FROM mrpparameters";
 	$result = DB_query($sql,$db,'','',false,false);
 	if (DB_error_no($db)==0){
 
@@ -551,7 +551,7 @@ if (isset($_POST['submit'])) {
 		echo '<td>' . _('Use Shrinkage') . ':&nbsp&nbsp</td><td>' . $useshrinkage . '</td></tr>';
 		echo '</table></td>';
 	}
-	echo "<p><form method='post' action='" . $_SERVER['PHP_SELF']  . "'>";
+	echo '<p><form method="post" action="' . $_SERVER['PHP_SELF']  . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class=selection>';
 	// Generate selections for Location
@@ -560,9 +560,9 @@ if (isset($_POST['submit'])) {
 	 <td>' . _('Location') . '</td>
 	 <td><select name="location[]" multiple>
 	 <option value="All" selected>' . _('All') . '</option>';
-	 $sql = 'SELECT loccode,
+	 $sql = "SELECT loccode,
 				locationname
-			   FROM locations';
+			   FROM locations";
 	$result = DB_query($sql,$db);
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="';

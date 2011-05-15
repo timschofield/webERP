@@ -1,6 +1,6 @@
 webERP Change Log
 
-
+15/5/11 Z_ChangeStockCode.php modified to test if MRP tables exist before doing the updates
 15/5/11 Tim: FixedAssetCategories prior to deletion of a category check for existing assets in the category failed due to typo in SQL - fixed
 14/5/11 Tim: StockTransfer now checks for negative stock before allowing transfer - launchpad changes to 4691
 14/5/11 CustomerInquiry.php now shows the currency decimal places
