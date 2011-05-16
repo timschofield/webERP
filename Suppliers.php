@@ -936,7 +936,7 @@ if (!isset($SupplierID)) {
 
 	DB_data_seek($result, 0);
 
-	$sql = 'SELECT taxgroupid, taxgroupdescription FROM taxgroups';
+	$sql = "SELECT taxgroupid, taxgroupdescription FROM taxgroups";
 	$result = DB_query($sql, $db);
 
 	while ($myrow = DB_fetch_array($result)) {

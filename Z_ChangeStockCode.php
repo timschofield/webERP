@@ -1,4 +1,5 @@
 <?php
+
 /* $Id$*/
 
 /*Script to Delete all sales transactions*/
@@ -124,7 +125,7 @@ if (isset($_POST['ProcessStockChange'])){
 	
 		//check if MRP tables exist before assuming 
 		
-		$result = DB_query("SELECT COUNT(*) FROM mrpplannedorders",$db);
+		$result = DB_query("SELECT COUNT(*) FROM mrpplannedorders",$db,'','',false,false);
 		if ($DB_error_no==0) {
 			echo '<br />' . _('Changing MRP planned orders information');
 			$sql = "UPDATE mrpplannedorders SET part='" . $_POST['NewStockID'] . "' WHERE part='" . $_POST['OldStockID'] . "'";
@@ -133,7 +134,7 @@ if (isset($_POST['ProcessStockChange'])){
 			echo ' ... ' . _('completed');
 		}
 	
-		$result = DB_query("SELECT * FROM mrprequirements" , $db);
+		$result = DB_query("SELECT * FROM mrprequirements" , $db,'','',false,false);
 		if (DB_error_no($db)==0){
 			echo '<br />' . _('Changing MRP requirements information');
 			$sql = "UPDATE mrprequirements SET part='" . $_POST['NewStockID'] . "' WHERE part='" . $_POST['OldStockID'] . "'";
@@ -141,7 +142,7 @@ if (isset($_POST['ProcessStockChange'])){
 			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 			echo ' ... ' . _('completed');
 		}
-		$result = DB_query("SELECT * FROM mrpsupplies" , $db);
+		$result = DB_query("SELECT * FROM mrpsupplies" , $db,'','',false,false);
 		if (DB_error_no($db)==0){
 			echo '<br />' . _('Changing MRP supplies information');
 			$sql = "UPDATE mrpsupplies SET part='" . $_POST['NewStockID'] . "' WHERE part='" . $_POST['OldStockID'] . "'";
