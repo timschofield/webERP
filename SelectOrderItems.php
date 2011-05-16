@@ -1652,10 +1652,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				// Find the quantity on outstanding sales orders
 				$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-						FROM salesorderdetails,
-								salesorders
-						 WHERE salesorders.orderno = salesorderdetails.orderno 
-						 AND salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "' 
+						FROM salesorderdetails INNER JOIN salesorders 
+						ON salesorders.orderno = salesorderdetails.orderno 
+						 WHERE  salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "' 
 						 AND salesorderdetails.completed=0 
 						 AND salesorders.quotation=0 
 						 AND salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
@@ -1672,7 +1671,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				// Find the quantity on purchase orders
 				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo
-						 FROM purchorderdetails INNER JOIN purchorders
+						 FROM purchorderdetails INNER JOIN purchorders 
+						 ON purchorderdetails.orderno=purchorders.orderno
 						 WHERE purchorderdetails.completed=0 
 						 AND purchorders.status<>'Cancelled'
 						 AND purchorders.status<>'Rejected'

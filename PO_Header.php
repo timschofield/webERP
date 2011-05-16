@@ -84,7 +84,7 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus']!='') ) {
 		
 		if ($_POST['Status'] == 'Authorised') {
 			if ($AuthorityLevel > $OrderTotal) {
-				$_SESSION['PO'.$identifier]->StatusComments = date($_SESSION['DefaultDateFormat']) . ' - ' . _('Authorised by') . $UserChangedStatus . $_POST['StatusComments'] . '<br />' . html_entity_decode($_POST['StatusCommentsComplete']);
+				$_SESSION['PO'.$identifier]->StatusComments = date($_SESSION['DefaultDateFormat']) . ' - ' . _('Authorised by') . $UserChangedStatus . $_POST['StatusComments'] . '<br />' . html_entity_decode($_POST['StatusCommentsComplete'],ENT_QUOTES,'UTF-8');
 				$_SESSION['PO'.$identifier]->AllowPrintPO=1;
 			} else {
 				$OKToUpdateStatus=0;
@@ -109,7 +109,7 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus']!='') ) {
 			}
 			if ($OKToUpdateStatus==1){ // none of the order has been received
 				if ($AuthorityLevel>$OrderTotal) {
-					$_SESSION['PO'.$identifier]->StatusComments = date($_SESSION['DefaultDateFormat']).' - ' . $_POST['Status'] . ' ' . _('by') . $UserChangedStatus  . $_POST['StatusComments'].'<br />' . $_POST['StatusCommentsComplete'];	
+					$_SESSION['PO'.$identifier]->StatusComments = date($_SESSION['DefaultDateFormat']).' - ' . $_POST['Status'] . ' ' . _('by') . $UserChangedStatus  . $_POST['StatusComments'].'<br />' . html_entity_decode($_POST['StatusCommentsComplete'], ENT_QUOTES,'UTF-8');	
 				} else {
 					$OKToUpdateStatus=0;
 					prnMsg( _('You do not have permission to reject this purchase order').'.<br />'. _('This order is for').' '.
@@ -129,7 +129,7 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus']!='') ) {
 			
 			if (($AuthorityLevel>$OrderTotal OR $_SESSION['UserID']==$_SESSION['PO'.$identifier]->Initiator ) AND $OKToUpdateStatus==1) {
 				
-				$_SESSION['PO'.$identifier]->StatusComments = date($_SESSION['DefaultDateFormat']).' - ' . _('Order set to pending status by') . $UserChangedStatus  . $_POST['StatusComments']. '<br />' .$_POST['StatusCommentsComplete'];
+				$_SESSION['PO'.$identifier]->StatusComments = date($_SESSION['DefaultDateFormat']).' - ' . _('Order set to pending status by') . $UserChangedStatus  . $_POST['StatusComments']. '<br />' .html_entity_decode($_POST['StatusCommentsComplete'],ENT_QUOTES,'UTF-8');
 				
 			} elseif ($AuthorityLevel<$OrderTotal AND $_SESSION['UserID']!=$_SESSION['PO'.$identifier]->Initiator) {
 				$OKToUpdateStatus=0;
@@ -281,7 +281,7 @@ if (isset($_POST['ChangeSupplier'])) {
 		if ($_SESSION['PO'.$identifier]->Any_Already_Received()==0){
 			$_SESSION['RequireSupplierSelection']=1;
 			$_SESSION['PO'.$identifier]->Status = 'Pending';
-			$_SESSION['PO'.$identifier]->StatusComments==date($_SESSION['DefaultDateFormat']).' - ' . _('Supplier changed by') . ' <a href="mailto:'. $_SESSION['UserEmail'] .'">'.$_SESSION['UserID']. '</a> - '.$_POST['StatusComments'].'<br />'.$_POST['StatusCommentsComplete'];
+			$_SESSION['PO'.$identifier]->StatusComments==date($_SESSION['DefaultDateFormat']).' - ' . _('Supplier changed by') . ' <a href="mailto:'. $_SESSION['UserEmail'] .'">'.$_SESSION['UserID']. '</a> - '.$_POST['StatusComments'].'<br />'.html_entity_decode($_POST['StatusCommentsComplete'], ENT_QUOTES,'UTF-8');
 		} else {
 			echo '<br /><br />';
 			prnMsg(_('Cannot modify the supplier of the order once some of the order has been received'),'warn');
@@ -583,7 +583,6 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 
 	if ($_SESSION['ExistingOrder']) {
 		echo  _(' Modify Purchase Order Number') . ' ' . $_SESSION['PO'.$identifier]->OrderNo;
-		echo '</p>';
 	}
 
 	if (isset($Purch_Item)) {
@@ -689,7 +688,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		</tr>		
 		<tr><td style="width:50%">';
 //sub table starts
-	echo '<table class=selection width=100%>';
+	echo '<table class="selection" width="100%">';
 	echo '<tr><td>' . _('PO Date') . ':</td><td>';
 	if ($_SESSION['ExistingOrder']!=0){
 		echo ConvertSQLDate($_SESSION['PO'.$identifier]->Orig_OrderDate);
@@ -757,8 +756,9 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 	}
 
 	echo '</table>';
-
-	echo '<td style="width:50%" valign=top><table class=selection width=100%>';
+	//Set up the next column with a sub-table in it too
+	echo '<td style="width:50%" valign=top>
+			<table class="selection" width="100%">';
 	
 	if($_SESSION['ExistingOrder'] != 0 AND $_SESSION['PO'.$identifier]->Status == 'Printed'){
 	
@@ -769,7 +769,8 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		echo '<input type="hidden" name="Status" value="NewOrder">';
 		echo '<tr><td>' . _('New Purchase Order') . '</td></tr>';
 	} else {
-		echo '<tr><td>' . _('Status') . ' :  </td><td><select name="Status" onChange="ReloadForm(form1.UpdateStatus)">';
+		echo '<tr><td>' . _('Status') . ' :  </td>
+				<td><select name="Status" onChange="ReloadForm(form1.UpdateStatus)">';
 	
 		switch ($_SESSION['PO'.$identifier]->Status) {
 			case 'Pending':
@@ -807,8 +808,8 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		echo '<tr><td>' . _('Status Comment') . ':</td>
 					<td><input type=text name="StatusComments" size=50></td></tr>
 					<tr><td colspan=2><b>' . $_SESSION['PO'.$identifier]->StatusComments .'</b></td></tr>';
-		//need to use single quotes as double quotes inside the string of StatusComments
-		echo '<input type="hidden" name="StatusCommentsComplete" value="' . $_SESSION['PO'.$identifier]->StatusComments .'">';
+		
+		echo '<input type="hidden" name="StatusCommentsComplete" value="' . htmlentities($_SESSION['PO'.$identifier]->StatusComments, ENT_QUOTES,'UTF-8') .'" />';
 		echo '<tr><td><input type="submit" name="UpdateStatus" value="' . _('Status Update') .'"></td>';
 	} //end its not a new order
 	

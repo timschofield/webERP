@@ -1,6 +1,7 @@
 webERP Change Log
 
-15/5/11 Added upgrade from 4.03.7 to UpgradeDatabase.php
+16/5/11 Bug in quantity on purchase order in SelectOrderItems.php added correct join syntax
+16/5/11 Added upgrade from 4.03.7 to UpgradeDatabase.php
 15/5/11 Z_ChangeStockCode.php modified to test if MRP tables exist before doing the updates - turned off error trapping on these queries as the error trapping is done in the script
 15/5/11 Tim: FixedAssetCategories prior to deletion of a category check for existing assets in the category failed due to typo in SQL - fixed
 14/5/11 Tim: StockTransfer now checks for negative stock before allowing transfer - launchpad changes to 4691
