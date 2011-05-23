@@ -1,6 +1,7 @@
 <?php
 
 /* $Id$*/
+
 	echo '</td>';
 	echo '</tr>';
 	echo '</table>';
@@ -9,10 +10,14 @@
 /*Do the borders */
 
 	echo '</table>';
+	/* The locale is set in includes/LanguageSetup.php
+	 * config.php is included from include/session.inc already
+	 * 
 	setlocale(LC_ALL,$_SESSION['Language']);
 	if (!isset($DefaultClock)) {
 		include('config.php');
 	}
+	* */
 	echo '<p style="text-align:right">'.(strftime('%A')).', '.(date($_SESSION['DefaultDateFormat']).' | '.(strftime(($DefaultClock==12) ? '%I:%M %p' : '%H:%M'))).'</p>';
 
 

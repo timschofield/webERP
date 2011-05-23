@@ -20,6 +20,7 @@ Class SuppTrans {
 	var $CreditorsAct;
 	var $InvoiceOrCredit;
 	var $ExRate;
+	var $CurrDecimalPlaces;
 	var $Comments;
 	var $TranDate;
 	var $DueDate;
@@ -74,85 +75,87 @@ Class SuppTrans {
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
 			$this->Taxes[$myrow['calculationorder']] = new Tax($myrow['calculationorder'],
-																											$myrow['taxauthid'],
-																											$myrow['description'],
-																											$myrow['taxrate'],
-																											$myrow['taxontax'],
-																											$myrow['purchtaxglaccount']);
+																$myrow['taxauthid'],
+																$myrow['description'],
+																$myrow['taxrate'],
+																$myrow['taxontax'],
+																$myrow['purchtaxglaccount']);
 		}
 	} //end method GetTaxes()
 
 
 	function Add_GRN_To_Trans($GRNNo,
-														$PODetailItem,
-														$ItemCode,
-														$ItemDescription,
-														$QtyRecd,
-														$Prev_QuantityInv,
-														$This_QuantityInv,
-														$OrderPrice,
-														$ChgPrice,
-														$Complete,
-														$StdCostUnit=0,
-														$ShiptRef,
-														$JobRef,
-														$GLCode,
-														$PONo,
-														$AssetID=0){
+								$PODetailItem,
+								$ItemCode,
+								$ItemDescription,
+								$QtyRecd,
+								$Prev_QuantityInv,
+								$This_QuantityInv,
+								$OrderPrice,
+								$ChgPrice,
+								$Complete,
+								$StdCostUnit=0,
+								$ShiptRef,
+								$JobRef,
+								$GLCode,
+								$PONo,
+								$AssetID=0,
+								$DecimalPlaces=2){
 
 		if ($This_QuantityInv!=0 AND isset($This_QuantityInv)){
 			$this->GRNs[$GRNNo] = new GRNs($GRNNo,
-																			$PODetailItem,
-																			$ItemCode,
-																			$ItemDescription,
-																			$QtyRecd,
-																			$Prev_QuantityInv,
-																			$This_QuantityInv,
-																			$OrderPrice,
-																			$ChgPrice,
-																			$Complete,
-																			$StdCostUnit,
-																			$ShiptRef,
-																			$JobRef,
-																			$GLCode,
-																			$PONo,
-																			$AssetID);
+											$PODetailItem,
+											$ItemCode,
+											$ItemDescription,
+											$QtyRecd,
+											$Prev_QuantityInv,
+											$This_QuantityInv,
+											$OrderPrice,
+											$ChgPrice,
+											$Complete,
+											$StdCostUnit,
+											$ShiptRef,
+											$JobRef,
+											$GLCode,
+											$PONo,
+											$AssetID,
+											$DecimalPlaces);
 			Return 1;
 		}
 		Return 0;
 	}
 
 	function Modify_GRN_To_Trans($GRNNo,
-															$PODetailItem,
-															$ItemCode,
-															$ItemDescription,
-															$QtyRecd,
-															$Prev_QuantityInv,
-															$This_QuantityInv,
-															$OrderPrice,
-															$ChgPrice,
-															$Complete,
-															$StdCostUnit,
-															$ShiptRef,
-															$JobRef,
-															$GLCode,
-															$Hold){
+									$PODetailItem,
+									$ItemCode,
+									$ItemDescription,
+									$QtyRecd,
+									$Prev_QuantityInv,
+									$This_QuantityInv,
+									$OrderPrice,
+									$ChgPrice,
+									$Complete,
+									$StdCostUnit,
+									$ShiptRef,
+									$JobRef,
+									$GLCode,
+									$Hold){
 
 		if ($This_QuantityInv!=0 && isset($This_QuantityInv)){
 			$this->GRNs[$GRNNo]->Modify($PODetailItem,
-																	$ItemCode,
-																	$ItemDescription,
-																	$QtyRecd,
-																	$Prev_QuantityInv,
-																	$This_QuantityInv,
-																	$OrderPrice,
-																	$ChgPrice,
-																	$Complete,
-																	$StdCostUnit,
-																	$ShiptRef,
-																	$JobRef,
-																	$GLCode,
-																	$Hold );
+										$ItemCode,
+										$ItemDescription,
+										$QtyRecd,
+										$Prev_QuantityInv,
+										$This_QuantityInv,
+										$OrderPrice,
+										$ChgPrice,
+										$Complete,
+										$StdCostUnit,
+										$ShiptRef,
+										$JobRef,
+										$GLCode,
+										$Hold );
 			Return 1;
 		}
 		Return 0;
@@ -162,34 +165,39 @@ Class SuppTrans {
 		if ($GRNSrc->This_QuantityInv!=0 && isset($GRNSrc->This_QuantityInv)){
 
 			$this->GRNs[$GRNSrc->GRNNo] = new GRNs($GRNSrc->GRNNo,
-																								$GRNSrc->PODetailItem,
-																								$GRNSrc->ItemCode,
-																								$GRNSrc->ItemDescription,
-																								$GRNSrc->QtyRecd,
-																								$GRNSrc->Prev_QuantityInv,
-																								$GRNSrc->This_QuantityInv,
-																								$GRNSrc->OrderPrice,
-																								$GRNSrc->ChgPrice,
-																								$GRNSrc->Complete,
-																								$GRNSrc->StdCostUnit,
-																								$GRNSrc->ShiptRef,
-																								$GRNSrc->JobRef,
-																								$GRNSrc->GLCode,
-																								$GRNSrc->PONo,
-																								$GRNSrc->AssetID,
-																								$GRNSrc->Hold);
+													$GRNSrc->PODetailItem,
+													$GRNSrc->ItemCode,
+													$GRNSrc->ItemDescription,
+													$GRNSrc->QtyRecd,
+													$GRNSrc->Prev_QuantityInv,
+													$GRNSrc->This_QuantityInv,
+													$GRNSrc->OrderPrice,
+													$GRNSrc->ChgPrice,
+													$GRNSrc->Complete,
+													$GRNSrc->StdCostUnit,
+													$GRNSrc->ShiptRef,
+													$GRNSrc->JobRef,
+													$GRNSrc->GLCode,
+													$GRNSrc->PONo,
+													$GRNSrc->AssetID,
+													$GRNSrc->Hold,
+													$GRNSrc->DecimalPlaces);
 			Return 1;
 		}
 		Return 0;
 	}
 
-	function Add_GLCodes_To_Trans($GLCode, $GLActName, $Amount,  $Narrative){
+	function Add_GLCodes_To_Trans($GLCode,
+									$GLActName,
+									$Amount,
+									$Narrative){
+		
 		if ($Amount!=0 AND isset($Amount)){
 			$this->GLCodes[$this->GLCodesCounter] = new GLCodes($this->GLCodesCounter,
-																														$GLCode,
-																														$GLActName,
-																														$Amount,
-																														$Narrative);
+																$GLCode,
+																$GLActName,
+																$Amount,
+																$Narrative);
 			$this->GLCodesCounter++;
 			Return 1;
 		}
@@ -199,8 +207,8 @@ Class SuppTrans {
 	function Add_Shipt_To_Trans($ShiptRef, $Amount){
 		if ($Amount!=0){
 			$this->Shipts[$this->ShiptCounter] = new Shipment($this->ShiptCounter,
-																												$ShiptRef,
-																												$Amount);
+																$ShiptRef,
+																$Amount);
 			$this->ShiptCounter++;
 			Return 1;
 		}
@@ -210,8 +218,8 @@ Class SuppTrans {
 	function Add_Asset_To_Trans($AssetID, $Amount){
 		if ($Amount!=0){
 			$this->Assets[$this->AssetCounter] = new Asset($this->AssetCounter,
-																										$AssetID,
-																										$Amount);
+															$AssetID,
+															$Amount);
 			$this->AssetCounter++;
 			Return 1;
 		}
@@ -221,10 +229,10 @@ Class SuppTrans {
 	function Add_Contract_To_Trans($ContractRef, $Amount,$Narrative, $AnticipatedCost){
 		if ($Amount!=0){
 			$this->Contracts[$this->ContractsCounter] = new Contract($this->ContractsCounter,
-																																$ContractRef,
-																																$Amount,
-																																$Narrative,
-																																$AnticipatedCost);
+																	$ContractRef,
+																	$Amount,
+																	$Narrative,
+																	$AnticipatedCost);
 			$this->ContractsCounter++;
 			Return 1;
 		}
@@ -272,24 +280,26 @@ all the info to do the necessary entries without looking up ie additional querie
 	var $PONo;
 	var $Hold;
 	var $AssetID;
+	var $DecimalPlaces;
 
 	function GRNs ($GRNNo,
-								$PODetailItem,
-								$ItemCode,
-								$ItemDescription,
-								$QtyRecd,
-								$Prev_QuantityInv,
-								$This_QuantityInv,
-								$OrderPrice,
-								$ChgPrice,
-								$Complete,
-								$StdCostUnit=0,
-								$ShiptRef,
-								$JobRef,
-								$GLCode,
-								$PONo,
-								$AssetID,
-								$Hold=0){
+					$PODetailItem,
+					$ItemCode,
+					$ItemDescription,
+					$QtyRecd,
+					$Prev_QuantityInv,
+					$This_QuantityInv,
+					$OrderPrice,
+					$ChgPrice,
+					$Complete,
+					$StdCostUnit=0,
+					$ShiptRef,
+					$JobRef,
+					$GLCode,
+					$PONo,
+					$AssetID,
+					$Hold=0,
+					$DecimalPlaces=2){
 
 
 	/* Constructor function to add a new GRNs object with passed params */
@@ -310,6 +320,7 @@ all the info to do the necessary entries without looking up ie additional querie
 		$this->PONo = $PONo;
 		$this->AssetID = $AssetID;
 		$this->Hold = $Hold;
+		$this->DecimalPlaces = $DecimalPlaces;
 	}
 
 	function Modify ($PODetailItem,
@@ -353,14 +364,14 @@ Class GLCodes {
 	Var $Amount;
 	Var $Narrative;
 
-	function GLCodes ($Counter, $GLCode, $GLActName, $Amount,  $Narrative){
+	function GLCodes ($Counter, $GLCode, $GLActName, $Amount, $Narrative){
 
 	/* Constructor function to add a new GLCodes object with passed params */
 		$this->Counter = $Counter;
 		$this->GLCode = $GLCode;
 		$this->GLActName = $GLActName;
 		$this->Amount = $Amount;
-		$this->Narrative= $Narrative;
+		$this->Narrative = $Narrative;
 	}
 }
 
@@ -392,10 +403,10 @@ Class Asset {
 		$this->Amount = $Amount;
 
 		$result = DB_query("SELECT fixedassets.description,
-															fixedassetcategories.costact
-											FROM fixedassets INNER JOIN fixedassetcategories
-											ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-											WHERE assetid='" . $AssetID . "'",$db);
+									fixedassetcategories.costact
+							FROM fixedassets INNER JOIN fixedassetcategories
+							ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
+							WHERE assetid='" . $AssetID . "'",$db);
 		$AssetRow = DB_fetch_array($result);
 		$this->Description = $AssetRow['description'];
 		$this->CostAct = $AssetRow['costact'];
@@ -430,11 +441,11 @@ Class Tax {
 	Var $TaxOvAmount;
 
 	function Tax ($TaxCalculationOrder,
-			$TaxAuthID,
-			$TaxAuthDescription,
-			$TaxRate,
-			$TaxOnTax,
-			$TaxGLCode){
+					$TaxAuthID,
+					$TaxAuthDescription,
+					$TaxRate,
+					$TaxOnTax,
+					$TaxGLCode){
 
 		$this->TaxCalculationOrder = $TaxCalculationOrder;
 		$this->TaxAuthID = $TaxAuthID;
@@ -444,4 +455,5 @@ Class Tax {
 		$this->TaxGLCode = $TaxGLCode;
 	}
 }
+
 ?>

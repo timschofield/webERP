@@ -14,30 +14,30 @@ include('includes/SQL_CommonFunctions.inc');
 some details of the order for confirming before producing the file for ftp */
 
 $SQL = "SELECT salesorders.orderno,
-		debtorsmaster.name,
-		custbranch.brname,
-		salesorders.customerref,
-		salesorders.orddate,
-		salesorders.deliverto,
-		salesorders.deliverydate,
-		sum(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) as ordervalue,
-		datepackingslipprinted,
-		printedpackingslip
-	FROM salesorders,
-		salesorderdetails,
-		debtorsmaster,
-		custbranch
-	WHERE salesorders.orderno = salesorderdetails.orderno
-	AND salesorders.debtorno = debtorsmaster.debtorno
-	AND debtorsmaster.debtorno = custbranch.debtorno
-	AND salesorderdetails.completed=0
-	AND salesorders.fromstkloc = '". $_SESSION['RadioBeaconStockLocation'] . "'
-	GROUP BY salesorders.orderno,
-		salesorders.debtorno,
-		salesorders.branchcode,
-		salesorders.customerref,
-		salesorders.orddate,
-		salesorders.deliverto";
+				debtorsmaster.name,
+				custbranch.brname,
+				salesorders.customerref,
+				salesorders.orddate,
+				salesorders.deliverto,
+				salesorders.deliverydate,
+				sum(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) as ordervalue,
+				datepackingslipprinted,
+				printedpackingslip
+			FROM salesorders,
+				salesorderdetails,
+				debtorsmaster,
+				custbranch
+			WHERE salesorders.orderno = salesorderdetails.orderno
+			AND salesorders.debtorno = debtorsmaster.debtorno
+			AND debtorsmaster.debtorno = custbranch.debtorno
+			AND salesorderdetails.completed=0
+			AND salesorders.fromstkloc = '". $_SESSION['RadioBeaconStockLocation'] . "'
+			GROUP BY salesorders.orderno,
+				salesorders.debtorno,
+				salesorders.branchcode,
+				salesorders.customerref,
+				salesorders.orddate,
+				salesorders.deliverto";
 
 $ErrMsg = _('No orders were returned because');
 $SalesOrdersResult = DB_query($SQL,$db,$ErrMsg);
@@ -146,33 +146,33 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 	/*Now get the order header info */
 
 	$sql = "SELECT salesorders.debtorno,
-			customerref,
-			comments,
-			orddate,
-			deliverydate,
-			deliverto,
-			deladd1,
-			deladd2,
-			deladd3,
-			deladd4,
-			deladd5,
-			deladd6,
-			contactphone,
-			contactemail,
-			name,
-			address1,
-			address2,
-			address3,
-			address4,
-			address5,
-			address6,
-			printedpackingslip,
-			datepackingslipprinted
-		FROM salesorders,
-			debtorsmaster
-		WHERE salesorders.debtorno=debtorsmaster.debtorno
-		AND salesorders.fromstkloc = '". $_SESSION['RadioBeaconStockLocation'] . "'
-		AND salesorders.orderno='" . $_GET['OrderNo'] . "'";
+					customerref,
+					comments,
+					orddate,
+					deliverydate,
+					deliverto,
+					deladd1,
+					deladd2,
+					deladd3,
+					deladd4,
+					deladd5,
+					deladd6,
+					contactphone,
+					contactemail,
+					name,
+					address1,
+					address2,
+					address3,
+					address4,
+					address5,
+					address6,
+					printedpackingslip,
+					datepackingslipprinted
+				FROM salesorders,
+					debtorsmaster
+				WHERE salesorders.debtorno=debtorsmaster.debtorno
+				AND salesorders.fromstkloc = '". $_SESSION['RadioBeaconStockLocation'] . "'
+				AND salesorders.orderno='" . $_GET['OrderNo'] . "'";
 
 
 	$ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['OrderNo'] . ' ' . _('from the database');

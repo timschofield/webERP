@@ -29,7 +29,7 @@ if (!isset($_POST['DoUpgrade'])){
 		echo '<option value="3.08">' . _('Version 3.08') . '</option>';
 		echo '<option value="3.09">' . _('Version 3.09') . '</option>';
 		echo '<option value="3.10">' . _('Version 3.10') . '</option>';
-		echo '<option value="3.11">' . _('Version 3.11 or 4.01 - 4.02') . '</option>';
+		echo '<option value="3.11.x">' . _('Version 3.11 or 4.01 - 4.02') . '</option>';
 		echo '</select></td></tr></table>';
 	} else {
 		if ($_SESSION['VersionNumber']=='4.00RC1'){
@@ -98,6 +98,9 @@ if (isset($_POST['DoUpgrade'])){
 				case '3.10':
 					$SQLScripts[] = './sql/mysql/upgrade3.10-3.11.sql';
 				case '3.11':
+				case '3.11.1':
+				case '3.11.2':
+				case '3.11.3':
 				case '3.12.32':
 				case '4.0RC1':
 				case '4.01':

@@ -30,7 +30,7 @@ $UserResult = DB_query("SELECT userid FROM www_users",$db);
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table class=selection>';
+echo '<table class="selection">';
 
 echo '<tr><td>'. _('From Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</td>
 	<td><input tabindex="1" type=text class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="11" maxlength="10" value=' .$_POST['FromDate'].'></td></tr>';
@@ -40,7 +40,7 @@ echo '<tr><td>'. _('To Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</td>
 // Show user selections
 echo '<tr><td>'. _('User ID'). '</td>
 		<td><select tabindex="3" name="SelectedUser">';
-echo '<option value="ALL">' . _('ALL') . '</option>';
+echo '<option value="ALL">' . _('All') . '</option>';
 while ($users = DB_fetch_row($UserResult)) {
 	if (isset($_POST['SelectedUser']) and $users[0]==$_POST['SelectedUser']) {
 		echo '<option selected value="' . $users[0] . '">' . $users[0] . '</option>';
@@ -53,7 +53,7 @@ echo '</select></td></tr>';
 // Show table selections
 echo '<tr><td>'. _('Table '). '</td>
 		<td><select tabindex="4" name="SelectedTable">';
-echo '<option value="ALL">' . _('ALL') . '</option>';
+echo '<option value="ALL">' . _('All') . '</option>';
 while ($tables = DB_fetch_row($TableResult)) {
 	if (isset($_POST['SelectedTable']) and $tables[0]==$_POST['SelectedTable']) {
 		echo '<option selected value=' . $tables[0] . '>' . $tables[0] . '</option>';
@@ -176,7 +176,7 @@ if (isset($_POST['View'])) {
 			for ($i=1; $i<sizeof($_SESSION['SQLString']['fields']); $i++) {
 				if (isset($_SESSION['SQLString']['values'][$i]) and (trim(str_replace("'","",$_SESSION['SQLString']['values'][$i])) != "") &
 				(trim($_SESSION['SQLString']['fields'][$i]) != 'password') &
-				(trim($_SESSION['SQLString']['fields'][$i]) != "www_users.password")) {
+				(trim($_SESSION['SQLString']['fields'][$i]) != 'www_users.password')) {
 					echo '<tr bgcolor="' . $RowColour . '">';
 					echo '<td></td>
 						<td></td>

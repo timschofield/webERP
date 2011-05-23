@@ -74,14 +74,6 @@ if (isset($_POST['submit'])) {
 						usepreprintedstationery = '" . $_POST['UsePrePrintedStationery']. "'
 					WHERE paymentname " . LIKE . " '".$OldName."'";
 
-				/* lets leave well alone existing entries
-				if ($_POST['MethodName'] != $OldMeasureName ) {
-					// Less work if not required this could take a while.
-					$sql = "UPDATE banktrans
-						SET banktranstype='" . $_POST['MethodName'] . "'
-						WHERE banktranstype ".LIKE." '" . $OldMeasureName . "'";
-				}
-				*/
 			} else {
 				$InputError = 1;
 				prnMsg( _('The payment method no longer exists.'),'error');
@@ -107,7 +99,7 @@ if (isset($_POST['submit'])) {
 				VALUES (
 					'" . $_POST['MethodName'] ."',
 					'" . $_POST['ForPayment'] ."',
-					'" . $_POST['ForReceipt'] ."'
+					'" . $_POST['ForReceipt'] ."',
 					'" . $_POST['UsePrePrintedStationery'] ."'
 					)";
 		}
@@ -203,13 +195,13 @@ if (isset($_POST['submit'])) {
 			$k++;
 		}
 
-		echo '<td>' . $myrow['paymentname'] . '</td>';
-		echo '<td>' . ($myrow['paymenttype'] ? _('Yes') : _('No')) . '</td>';
-		echo '<td>' . ($myrow['receipttype'] ? _('Yes') : _('No')) . '</td>';
-		echo '<td>' . ($myrow['usepreprintedstationery'] ? _('Yes') : _('No')) . '</td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedPaymentID=' . $myrow['paymentid'] . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedPaymentID=' . $myrow['paymentid'] . '&delete=1">' . _('Delete') .'</a></td>';
-		echo '</tr>';
+		echo '<td>' . $myrow['paymentname'] . '</td>
+				<td>' . ($myrow['paymenttype'] ? _('Yes') : _('No')) . '</td>
+				<td>' . ($myrow['receipttype'] ? _('Yes') : _('No')) . '</td>
+				<td>' . ($myrow['usepreprintedstationery'] ? _('Yes') : _('No')) . '</td>
+				<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedPaymentID=' . $myrow['paymentid'] . '">' . _('Edit') . '</a></td>
+				<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedPaymentID=' . $myrow['paymentid'] . '&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment method?') . '\');">' . _('Delete') .'</a></td>
+			</tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table><p>';

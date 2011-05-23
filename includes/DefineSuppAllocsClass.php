@@ -16,6 +16,7 @@ Class Allocation {
 	var $TransExRate; /*Exchange rate of the transaction being allocated */
 	var $TransAmt; /*Total amount of the transaction in FX */
 	var $PrevDiffOnExch; /*The difference on exchange before this allocation */
+	var $CurrDecimalPlaces; /*The number of decimal places to display for the currency being allocated */
 
 	function Allocation(){
 	/*Constructor function initialises a new supplier allocation*/

@@ -700,7 +700,7 @@ customer record returned by the search - this record is then auto selected */
 /*set up the form whatever */
 
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?Type='.$_GET['Type'] . '" method=post name=form1>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '?Type='.$_GET['Type'] . '" method="post" name="form1">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*show the batch header details and the entries in the batch so far */

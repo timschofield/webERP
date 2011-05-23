@@ -32,13 +32,13 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 	$sql = "SELECT shippername, shipper_id FROM shippers";
 	$ShipperResults = DB_query($sql,$db);
 
-	echo '<table class=selection>
+	echo '<table class="selection">
 		<tr>
 			<td>' . _('Select A Freight Company to set up costs for') . '</td>
 			<td><select name="ShipperID">';
 
 	while ($myrow = DB_fetch_array($ShipperResults)){
-		echo '<option value=' . $myrow['shipper_id'] . '>' . $myrow['shippername'] . '</option>';
+		echo '<option value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
 	}
 	echo '</select></td></tr>
 			<tr>
@@ -51,12 +51,12 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 	$LocationResults = DB_query($sql,$db);
 
 	while ($myrow = DB_fetch_array($LocationResults)){
-		echo '<option value=' . $myrow['loccode'] . '>' . $myrow['locationname'];
+		echo '<option value=' . $myrow['loccode'] . '>' . $myrow['locationname'] . '</option>';
 	}
 
 	echo '</select></td></tr>
 			</table>
-			<br><div class="centre"><input type="submit" value="' . _('Accept') . '" name="Accept"></div>
+			<br /><div class="centre"><input type="submit" value="' . _('Accept') . '" name="Accept"></div>
 			</form>';
 
 } else {
@@ -198,7 +198,7 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 		
 	$result = DB_query($sql,$db);
 
-	echo '<br><table class=selection>';
+	echo '<br /><table class=selection>';
 	$TableHeader = '<tr>
 					<th>' . _('Destination') . '</th>
 					<th>' . _('Cubic Rate') . '</th>
@@ -307,8 +307,8 @@ if (isset($LocationFrom) AND isset($ShipperID)) {
 		$_POST['MinimumChg'] = 0;
 
 	}
-	echo '<input type="hidden" name="LocationFrom" value="' . $LocationFrom . '">';
-	echo '<input type="hidden" name="ShipperID" value="' . $ShipperID . '">';
+	echo '<input type="hidden" name="LocationFrom" value="' . $LocationFrom . '" />';
+	echo '<input type="hidden" name="ShipperID" value="' . $ShipperID . '" />';
 
 	if (!isset($_POST['Destination'])) {$_POST['Destination']='';}
 	if (!isset($_POST['CubRate'])) {$_POST['CubRate']='';}
@@ -316,7 +316,7 @@ if (isset($LocationFrom) AND isset($ShipperID)) {
 	if (!isset($_POST['MAXKGs'])) {$_POST['MAXKGs']='';}
 	if (!isset($_POST['MAXCub'])) {$_POST['MAXCub']='';}
 
-	echo '<br><table class=selection>';
+	echo '<br /><table class=selection>';
 	echo '<tr><th colspan=2><font size=4 color=blue>' . _('For Deliveries From') . ' ' . $LocationName . ' ' . _('using') . ' ' .
 		$ShipperName . '</font></th></tr>';
 	echo'<tr><td>' . _('Destination') . ':</td>
@@ -334,7 +334,7 @@ if (isset($LocationFrom) AND isset($ShipperID)) {
 	echo '<tr><td>' . _('Minimum Charge (0 is N/A)') . ':</a></td>
 		<td><input type="text" name="MinimumChg" class="number" size=6 maxlength=5 value="' . $_POST['MinimumChg'] . '"></td></tr>';
 
-	echo '</table><br>';
+	echo '</table><br />';
 
 	echo '<div class="centre"><input type="submit" name="submit" value="' . _('Enter Information') . '"></div>';
 

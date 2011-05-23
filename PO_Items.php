@@ -127,7 +127,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			$_SESSION['PO'.$identifier]->OrderNo =  GetNextTransNo(18, $db);
 
 			/*Insert to purchase order header record */
-			$sql = "INSERT INTO purchorders (	orderno,
+			$sql = "INSERT INTO purchorders ( orderno,
 											supplierno,
 											comments,
 											orddate,
@@ -651,11 +651,11 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 
 		if ($POLine->Deleted==False) {
 			$LineTotal = $POLine->Quantity * $POLine->Price;
-			$DisplayLineTotal = number_format($LineTotal,2);
+			$DisplayLineTotal = number_format($LineTotal,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 			// Note if the price is greater than 1 use 2 decimal place, if the price is a fraction of 1, use 4 decimal places
 			// This should help display where item-price is a fraction
 			if ($POLine->Price > 1) {
-				$DisplayPrice = number_format($POLine->Price,2,'.','');
+				$DisplayPrice = number_format($POLine->Price,$_SESSION['PO'.$identifier]->CurrDecimalPlaces,'.','');
 			} else {
 				$DisplayPrice = number_format($POLine->Price,4,'.','');
 			}
@@ -676,7 +676,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				<td><input type="text" class="number" name="ConversionFactor' . $POLine->LineNo .'" size="8" value="' . $POLine->ConversionFactor . '"></td>
 				<td><input type="text" class="number" name="SuppQty' . $POLine->LineNo .'" size="10" value="' . number_format($POLine->Quantity/$POLine->ConversionFactor,$POLine->DecimalPlaces) . '"></td>
 				<td>' . $POLine->SuppliersUnit . '</td>
-				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' .number_format(($POLine->Price *$POLine->ConversionFactor),2) .'"></td>
+				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' .number_format(($POLine->Price *$POLine->ConversionFactor),$_SESSION['PO'.$identifier]->CurrDecimalPlaces) .'"></td>
 				<td class="number">' . $DisplayLineTotal . '</td>
 				<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'].'" name="ReqDelDate' . $POLine->LineNo.'" size="10" value="' .$POLine->ReqDelDate .'"></td>
 				<td><a href="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier. '&Delete=' . $POLine->LineNo . '">' . _('Delete') . '</a></td></tr>';
@@ -684,7 +684,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 		}
 	}
 
-	$DisplayTotal = number_format($_SESSION['PO'.$identifier]->Total,2);
+	$DisplayTotal = number_format($_SESSION['PO'.$identifier]->Total,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 	echo '<tr><td colspan="10" class=number>' . _('TOTAL') . _(' excluding Tax') . '</td>
 						<td class=number><b>' . $DisplayTotal . '</b></td>
 			</tr></table>';

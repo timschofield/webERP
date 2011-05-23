@@ -16,7 +16,7 @@ if (isset($_GET['SelectedRole'])){
 	$SelectedRole = $_POST['SelectedRole'];
 }
 
-if (isset($_POST['submit']) || isset($_GET['remove']) || isset($_GET['add']) ) {
+if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -121,7 +121,7 @@ if (!isset($SelectedRole)) {
 
 		printf('<td>%s</td>
 			<td><a href="%s&SelectedRole=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s&SelectedRole=%s&delete=1&SecRoleName=%s">' . _('Delete') . '</a></td>
+			<td><a href="%s&SelectedRole=%s&delete=1&SecRoleName=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this role?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['secrolename'],
 			$_SERVER['PHP_SELF']  . '?',
@@ -209,7 +209,7 @@ if (isset($SelectedRole)) {
 		if (in_array($AvailRow['tokenid'],$TokensUsed)){
 			printf('<td>%s</td>
 					<td>%s</td>
-					<td><a href="%sSelectedRole=%s&remove=1&PageToken=%s">' . _('Remove') . '</a></td>
+					<td><a href="%sSelectedRole=%s&remove=1&PageToken=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this security token from this role?') . '\');">' . _('Remove') . '</a></td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>',

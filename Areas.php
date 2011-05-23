@@ -1,7 +1,6 @@
 <?php
-/* $Revision: 1.22 $ */
+
 /* $Id$*/
-//$PageSecurity = 3;
 
 include('includes/session.inc');
 
@@ -163,7 +162,7 @@ if (!isset($SelectedArea)) {
 		echo '<td>' . $myrow[0] . '</td>
 			<td>' . $myrow[1] . '</td>';
 		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedArea=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedArea=' . $myrow[0] . '&delete=yes">' . _('Delete') . '</a></td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedArea=' . $myrow[0] . '&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales area?') . '\');">' . _('Delete') . '</a></td>';
 		echo '<td><a href="SelectCustomer.php'. '?Area=' . $myrow[0] . '">' . _('View Customers from this Area') . '</a></td>';
 	}
 	//END WHILE LIST LOOP

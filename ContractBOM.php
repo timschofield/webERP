@@ -290,11 +290,11 @@ if (!isset($_GET['Edit'])) {
 	$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' .
 		_('Print') . '" alt="" />' . ' ' . _('Search For Stock Items') . '</p>';
-	echo '<table class="selection"><tr>';
+	echo '<table class="selection">
+			<tr></tr>
+			<tr><td><select name="StockCat">';
 
-	echo ':</tr><tr><td><select name="StockCat">';
-
-	echo '<option selected="True" value="All">' . _('All').'</option>';
+	echo '<option selected="true" value="All">' . _('All').'</option>';
 	while ($myrow1 = DB_fetch_array($result1)) {
 		if (isset($_POST['StockCat']) and $_POST['StockCat']==$myrow1['categoryid']){
 			echo '<option selected value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'].'</option>';

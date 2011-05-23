@@ -131,7 +131,7 @@ if ($CustomerRecord['dissallowinvoices']!=0){
 	echo '<br /><font color=RED size=4><b>' . _('ACCOUNT ON HOLD') . '</font></b><br />';
 }
 
-echo '<table class=selection width=70%>
+echo '<table class="selection" width="70%">
 	<tr>
 		<th width=20%>' . _('Total Balance') . '</th>
 		<th width=20%>' . _('Current') . '</th>
@@ -149,10 +149,11 @@ echo '<tr><td class=number>' . number_format($CustomerRecord['balance'],$Custome
 
 echo '<br /><div class="centre"><form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Show all transactions after') . ': <input tabindex=1 type=text class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" name="TransAfterDate" Value="' . $_POST['TransAfterDate'] . '" maxlength =10 size=12>' . '<input tabindex=2 type="submit" name="Refresh Inquiry" value="' . _('Refresh Inquiry') . '"></div></form><br />';
+echo _('Show all transactions after') . ': <input tabindex=1 type="text" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" name="TransAfterDate" Value="' . $_POST['TransAfterDate'] . '" maxlength =10 size=12>' . '<input tabindex=2 type="submit" name="Refresh Inquiry" value="' . _('Refresh Inquiry') . '"></div>
+</form>
+<br />';
 
 $DateAfterCriteria = FormatDateForSQL($_POST['TransAfterDate']);
-
 
 $SQL = "SELECT systypes.typename,
 		debtortrans.id,

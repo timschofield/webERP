@@ -8,6 +8,7 @@ Class PurchOrder {
 
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
 	var $CurrCode;
+	var $CurrDecimalPlaces;
 	var $ExRate;
 	var $Initiator;
 	var $DeliveryDate;

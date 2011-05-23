@@ -2,9 +2,6 @@
 
 /* $Id$*/
 
-/* $Revision: 1.21 $ */
-
-//$PageSecurity = 2;
 $PricesSecurity = 12;
 
 include('includes/session.inc');
@@ -32,7 +29,7 @@ if (isset($_GET['SelectedSupplier'])){
 	$SelectedSupplier=trim($_POST['SelectedSupplier']);
 }
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -40,7 +37,7 @@ if (isset($_POST['ResetPart'])){
 	 unset($SelectedStockItem);
 }
 
-if (isset($OrderNumber) && $OrderNumber!='') {
+if (isset($OrderNumber) AND $OrderNumber!='') {
 	if (!is_numeric($OrderNumber)){
 		echo '<br><b>' . _('The Order Number entered') . ' <U>' . _('MUST') . '</U> ' . _('be numeric') . '.</b><br>';
 		unset ($OrderNumber);
@@ -68,35 +65,35 @@ if (isset($_POST['SearchParts'])) {
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
 		$SQL = "SELECT stockmaster.stockid,
-										stockmaster.description,
-										SUM(locstock.quantity) AS qoh,
-										stockmaster.units,
-										SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qord
-									FROM stockmaster INNER JOIN locstock
-										ON stockmaster.stockid = locstock.stockid
-										INNER JOIN purchorderdetails
-											ON stockmaster.stockid=purchorderdetails.itemcode
-									WHERE purchorderdetails.completed=0
-									AND stockmaster.description LIKE " . $SearchString ."
-									AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-									GROUP BY stockmaster.stockid,
-										stockmaster.description,
-										stockmaster.units
-									ORDER BY stockmaster.stockid";
-
-
-	 } elseif ($_POST['StockCode']){
-		$SQL = "SELECT stockmaster.stockid,
 				stockmaster.description,
 				SUM(locstock.quantity) AS qoh,
-				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qord,
-				stockmaster.units
+				stockmaster.units,
+				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qord
 			FROM stockmaster INNER JOIN locstock
 				ON stockmaster.stockid = locstock.stockid
 				INNER JOIN purchorderdetails
 					ON stockmaster.stockid=purchorderdetails.itemcode
 			WHERE purchorderdetails.completed=0
-			AND stockmaster.stockid LIKE '%" . $_POST['StockCode'] . "%'
+			AND stockmaster.description " . LIKE . " '" . $SearchString ."'
+			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+			GROUP BY stockmaster.stockid,
+				stockmaster.description,
+				stockmaster.units
+			ORDER BY stockmaster.stockid";
+
+
+} elseif ($_POST['StockCode']){
+	$SQL = "SELECT stockmaster.stockid,
+			stockmaster.description,
+			SUM(locstock.quantity) AS qoh,
+			SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qord,
+			stockmaster.units
+			FROM stockmaster INNER JOIN locstock
+				ON stockmaster.stockid = locstock.stockid
+				INNER JOIN purchorderdetails
+					ON stockmaster.stockid=purchorderdetails.itemcode
+			WHERE purchorderdetails.completed=0
+			AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "' 
 			GROUP BY stockmaster.stockid,
 				stockmaster.description,
@@ -140,14 +137,14 @@ if (!isset($OrderNumber) or $OrderNumber=='' ){
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['StockLocation'])){
 			if ($myrow['loccode'] == $_POST['StockLocation']){
-				echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+				echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			} else {
-				echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+				echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '<option>';
 			}
 		} elseif ($myrow['loccode']== $_SESSION['UserStockLocation']){
-			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
 		}
 	}
 
@@ -191,9 +188,9 @@ echo "<td><font size=1>" . _('Select a stock category') . ":</font><select name=
 
 while ($myrow1 = DB_fetch_array($result1)) {
 	if (isset($_POST['StockCat']) and $myrow1['categoryid']==$_POST['StockCat']){
-		echo "<option selected value='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
+		echo "<option selected value='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription']  . '</option>';
 	} else {
-		echo "<option value='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
+		echo "<option value='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription']  . '</option>';
 	}
 }
 echo "</select>";
@@ -204,7 +201,7 @@ echo '<td><input type="Text" name="StockCode" size=15 maxlength=18></td></tr></t
 echo '<table><tr><td><input type=submit name="SearchParts" value="' . _('Search Parts Now') . '">';
 echo '<input type=submit name="ResetPart" value="' . _('Show All') . '"></td></tr></table>';
 
-echo "<br>";
+echo '<br />';
 
 if (isset($StockItemsResult)) {
 
@@ -229,11 +226,11 @@ if (isset($StockItemsResult)) {
 			$k=1;
 		}
 
-		printf("<td><input type=submit name='SelectedStockItem' VALUE='%s'</td>
-				<td>%s</td>
+		printf('<td><input type="submit" name="SelectedStockItem" value="%s"</td>
+			<td>%s</td>
 			<td class=number>%s</td>
 			<td class=number>%s</td>
-			<td>%s</td></tr>",
+			<td>%s</td></tr>',
 			$myrow['stockid'],
 			$myrow['description'],
 			$myrow['qoh'],
@@ -271,29 +268,28 @@ else {
 
 	if (isset($OrderNumber) && $OrderNumber !='') {
 		$SQL = "SELECT purchorders.orderno,
-										suppliers.suppname,
-										purchorders.orddate,
-										purchorders.initiator,
-										purchorders.status,
-										purchorders.requisitionno,
-										purchorders.allowprint,
-										suppliers.currcode,
-										SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
-						FROM purchorders,
-							purchorderdetails,
-							suppliers
-						WHERE purchorders.orderno = purchorderdetails.orderno
-						AND purchorders.supplierno = suppliers.supplierid
-						AND purchorderdetails.completed=0
-						AND purchorders.orderno='". $OrderNumber ."'
-						GROUP BY purchorders.orderno ASC,
-										suppliers.suppname,
-										purchorders.orddate,
-										purchorders.status,
-										purchorders.initiator,
-										purchorders.requisitionno,
-										purchorders.allowprint,
-										suppliers.currcode";
+				suppliers.suppname,
+				purchorders.orddate,
+				purchorders.initiator,
+				purchorders.status,
+				purchorders.requisitionno,
+				purchorders.allowprint,
+				suppliers.currcode,
+				SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
+			FROM purchorders INNER JOIN purchorderdetails
+			ON purchorders.orderno=purchorderdetails.orderno
+			INNER JOIN suppliers
+			ON purchorders.supplierno = suppliers.supplierid
+			WHERE purchorderdetails.completed=0
+			AND purchorders.orderno='". $OrderNumber ."'
+			GROUP BY purchorders.orderno ASC,
+				suppliers.suppname,
+				purchorders.orddate,
+				purchorders.status,
+				purchorders.initiator,
+				purchorders.requisitionno,
+				purchorders.allowprint,
+				suppliers.currcode";
 	} else {
 
 		  /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
@@ -306,123 +302,119 @@ else {
 
 			if (isset($SelectedStockItem)) {
 				$SQL = "SELECT purchorders.realorderno,
-												purchorders.orderno,
-												suppliers.suppname,
-												purchorders.orddate,
-												purchorders.status,
-												purchorders.initiator,
-												purchorders.requisitionno,
-												purchorders.allowprint,
-												suppliers.currcode,
-												SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
-								FROM purchorders,
-									purchorderdetails,
-									suppliers
-								WHERE purchorders.orderno = purchorderdetails.orderno
-								AND purchorders.supplierno = suppliers.supplierid
-								AND purchorderdetails.completed=0
-								AND purchorderdetails.itemcode='". $SelectedStockItem ."'
-								AND purchorders.supplierno='" . $SelectedSupplier ."'
-								AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "' 
-								" . $StatusCriteria . "
-								GROUP BY purchorders.orderno ASC,
-												purchorders.realorderno,
-												suppliers.suppname,
-												purchorders.orddate,
-												purchorders.status,
-												purchorders.initiator,
-												purchorders.requisitionno,
-												purchorders.allowprint,
-												suppliers.currcode";
+						purchorders.orderno,
+						suppliers.suppname,
+						purchorders.orddate,
+						purchorders.status,
+						purchorders.initiator,
+						purchorders.requisitionno,
+						purchorders.allowprint,
+						suppliers.currcode,
+						SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
+					FROM purchorders INNER JOIN purchorderdetails
+					ON purchorders.orderno = purchorderdetails.orderno
+					INNER JOIN suppliers 
+					ON  purchorders.supplierno = suppliers.supplierid
+					WHERE purchorderdetails.completed=0
+					AND purchorderdetails.itemcode='". $SelectedStockItem ."'
+					AND purchorders.supplierno='" . $SelectedSupplier ."'
+					AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "' 
+					" . $StatusCriteria . "
+					GROUP BY purchorders.orderno ASC,
+						purchorders.realorderno,
+						suppliers.suppname,
+						purchorders.orddate,
+						purchorders.status,
+						purchorders.initiator,
+						purchorders.requisitionno,
+						purchorders.allowprint,
+						suppliers.currcode";
 			} else {
 				$SQL = "SELECT purchorders.realorderno,
-												purchorders.orderno,
-												suppliers.suppname,
-												purchorders.orddate,
-												purchorders.status,
-												purchorders.initiator,
-												purchorders.requisitionno,
-												purchorders.allowprint,
-												suppliers.currcode,
-												SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
-								FROM purchorders,
-									purchorderdetails,
-									suppliers
-								WHERE purchorders.orderno = purchorderdetails.orderno
-								AND purchorders.supplierno = suppliers.supplierid
-								AND purchorderdetails.completed=0
-								AND purchorders.supplierno='" . $SelectedSupplier ."'
-								AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "' 
-								" . $StatusCriteria . "
-								GROUP BY purchorders.orderno ASC,
-												purchorders.realorderno,
-												suppliers.suppname,
-												purchorders.orddate,
-												purchorders.status,
-												purchorders.initiator,
-												purchorders.requisitionno,
-												purchorders.allowprint,
-												suppliers.currcode";
+						purchorders.orderno,
+						suppliers.suppname,
+						purchorders.orddate,
+						purchorders.status,
+						purchorders.initiator,
+						purchorders.requisitionno,
+						purchorders.allowprint,
+						suppliers.currcode,
+						SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
+					FROM purchorders INNER JOIN purchorderdetails
+					ON purchorders.orderno = purchorderdetails.orderno
+					INNER JOIN suppliers 
+					ON  purchorders.supplierno = suppliers.supplierid
+					WHERE purchorderdetails.completed=0
+					AND purchorders.supplierno='" . $SelectedSupplier ."'
+					AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "' 
+					" . $StatusCriteria . "
+					GROUP BY purchorders.orderno ASC,
+						purchorders.realorderno,
+						suppliers.suppname,
+						purchorders.orddate,
+						purchorders.status,
+						purchorders.initiator,
+						purchorders.requisitionno,
+						purchorders.allowprint,
+						suppliers.currcode";
 			}
 		} else { //no supplier selected
 			if (!isset($_POST['StockLocation'])) {$_POST['StockLocation']='';}
 			if (isset($SelectedStockItem) and isset($_POST['StockLocation'])) {
 				$SQL = "SELECT purchorders.realorderno,
-												purchorders.orderno,
-												suppliers.suppname,
-												purchorders.orddate,
-												purchorders.status,
-												purchorders.initiator,
-												purchorders.requisitionno,
-												purchorders.allowprint,
-												suppliers.currcode,
-												SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
-								FROM purchorders,
-									purchorderdetails,
-									suppliers
-								WHERE purchorders.orderno = purchorderdetails.orderno
-								AND purchorders.supplierno = suppliers.supplierid
-								AND purchorderdetails.completed=0
-								AND purchorderdetails.itemcode='". $SelectedStockItem ."'
-								AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "' 
-								" . $StatusCriteria . "
-								GROUP BY purchorders.orderno ASC,
-												purchorders.realorderno,
-												suppliers.suppname,
-												purchorders.orddate,
-												purchorders.status,
-												purchorders.initiator,
-												purchorders.requisitionno,
-												purchorders.allowprint,
-												suppliers.currcode";
+						purchorders.orderno,
+						suppliers.suppname,
+						purchorders.orddate,
+						purchorders.status,
+						purchorders.initiator,
+						purchorders.requisitionno,
+						purchorders.allowprint,
+						suppliers.currcode,
+						SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
+					FROM purchorders INNER JOIN purchorderdetails
+					ON purchorders.orderno = purchorderdetails.orderno
+					INNER JOIN suppliers 
+					ON  purchorders.supplierno = suppliers.supplierid
+					WHERE purchorderdetails.completed=0
+					AND purchorderdetails.itemcode='". $SelectedStockItem ."'
+					AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "' 
+					" . $StatusCriteria . "
+					GROUP BY purchorders.orderno ASC,
+						purchorders.realorderno,
+						suppliers.suppname,
+						purchorders.orddate,
+						purchorders.status,
+						purchorders.initiator,
+						purchorders.requisitionno,
+						purchorders.allowprint,
+						suppliers.currcode";
 			} else {
 				$SQL = "SELECT purchorders.realorderno,
-												purchorders.orderno,
-												suppliers.suppname,
-												purchorders.orddate,
-												purchorders.status,
-												purchorders.initiator,
-												purchorders.requisitionno,
-												purchorders.allowprint,
-												suppliers.currcode,
-												SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
-								FROM purchorders,
-									purchorderdetails,
-									suppliers
-								WHERE purchorders.orderno = purchorderdetails.orderno
-								AND purchorders.supplierno = suppliers.supplierid
-								AND purchorderdetails.completed=0
-								AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "' 
-								" . $StatusCriteria . "
-								GROUP BY purchorders.orderno ASC,
-												purchorders.realorderno,
-												suppliers.suppname,
-												purchorders.orddate,
-												purchorders.status,
-												purchorders.initiator,
-												purchorders.requisitionno,
-												purchorders.allowprint,
-												suppliers.currcode";
+						purchorders.orderno,
+						suppliers.suppname,
+						purchorders.orddate,
+						purchorders.status,
+						purchorders.initiator,
+						purchorders.requisitionno,
+						purchorders.allowprint,
+						suppliers.currcode,
+						SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
+					FROM purchorders INNER JOIN purchorderdetails
+					ON purchorders.orderno = purchorderdetails.orderno
+					INNER JOIN suppliers 
+					ON  purchorders.supplierno = suppliers.supplierid
+					WHERE purchorderdetails.completed=0
+					AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "' 
+					" . $StatusCriteria . "
+					GROUP BY purchorders.orderno ASC,
+						purchorders.realorderno,
+						suppliers.suppname,
+						purchorders.orddate,
+						purchorders.status,
+						purchorders.initiator,
+						purchorders.requisitionno,
+						purchorders.allowprint,
+						suppliers.currcode";
 			}
 
 		} //end selected supplier

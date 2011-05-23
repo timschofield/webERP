@@ -297,21 +297,23 @@ If (isset($_GET['AllocTrans'])){
 
 
 	$SQL= "SELECT systypes.typename,
-			supptrans.type,
-			supptrans.transno,
-			supptrans.trandate,
-			supptrans.supplierno,
-			suppliers.suppname,
-			rate,
-			(supptrans.ovamount+supptrans.ovgst) AS total,
-			supptrans.diffonexch,
-			supptrans.alloc
-		    FROM supptrans,
-		    	systypes,
-			suppliers
-		    WHERE supptrans.type = systypes.typeid
-		    AND supptrans.supplierno = suppliers.supplierid
-		    AND supptrans.id='" . $_SESSION['AllocTrans'] . "'";
+				supptrans.type,
+				supptrans.transno,
+				supptrans.trandate,
+				supptrans.supplierno,
+				suppliers.suppname,
+				supptrans.rate,
+				(supptrans.ovamount+supptrans.ovgst) AS total,
+				supptrans.diffonexch,
+				supptrans.alloc,
+				currencies.decimalplaces
+		    FROM supptrans INNER JOIN systypes
+			ON supptrans.type = systypes.typeid
+			INNER JOIN suppliers
+			ON supptrans.supplierno = suppliers.supplierid 
+			INNER JOIN currencies 
+			ON suppliers.currcode=currencies.currabrev 
+		    WHERE supptrans.id='" . $_SESSION['AllocTrans'] . "'";
 
 	$Result = DB_query($SQL, $db);
 	if (DB_num_rows($Result) != 1){
@@ -334,6 +336,7 @@ If (isset($_GET['AllocTrans'])){
 	$_SESSION['Alloc']->TransAmt = $myrow['total'];
 	$_SESSION['Alloc']->PrevDiffOnExch = $myrow['diffonexch'];
 	$_SESSION['Alloc']->TransDate = ConvertSQLDate($myrow['trandate']);
+	$_SESSION['Alloc']->CurrDecimalPlaces = $myrow['decimalplaces'];
 
 	/* Now populate the array of possible (and previous actual) allocations for this supplier */
 	/*First get the transactions that have outstanding balances ie Total-Alloc >0 */
@@ -347,10 +350,9 @@ If (isset($_GET['AllocTrans'])){
 			ovamount+ovgst AS total,
 			diffonexch,
 			alloc
-		FROM supptrans,
-			systypes
-		WHERE supptrans.type = systypes.typeid
-		AND supptrans.settled=0
+		FROM supptrans INNER JOIN systypes
+		ON supptrans.type = systypes.typeid
+		WHERE supptrans.settled=0
 		AND abs(ovamount+ovgst-alloc)>0.009
 		AND supplierno='" . $_SESSION['Alloc']->SupplierID . "'";
 
@@ -380,23 +382,22 @@ If (isset($_GET['AllocTrans'])){
 	above logic will be overwritten with the prev alloc detail below */
 
 	$SQL = "SELECT supptrans.id,
-			typename,
-			transno,
-			trandate,
-			suppreference,
-			rate,
-			ovamount+ovgst AS total,
-			diffonexch,
-			supptrans.alloc-suppallocs.amt AS prevallocs,
-			amt,
-			suppallocs.id AS allocid
-			  FROM supptrans,
-			  	systypes,
-				suppallocs
-			  WHERE supptrans.type = systypes.typeid
-			  AND supptrans.id=suppallocs.transid_allocto
-			  AND suppallocs.transid_allocfrom='" . $_SESSION['AllocTrans'] .
-			  "' AND supplierno='" . $_SESSION['Alloc']->SupplierID . "'";
+				typename,
+				transno,
+				trandate,
+				suppreference,
+				rate,
+				ovamount+ovgst AS total,
+				diffonexch,
+				supptrans.alloc-suppallocs.amt AS prevallocs,
+				amt,
+				suppallocs.id AS allocid
+			FROM supptrans INNER JOIN systypes
+			ON supptrans.type = systypes.typeid 
+			INNER JOIN suppallocs
+			ON supptrans.id=suppallocs.transid_allocto
+			WHERE suppallocs.transid_allocfrom='" . $_SESSION['AllocTrans'] .
+			"' AND supplierno='" . $_SESSION['Alloc']->SupplierID . "'";
 
 	$ErrMsg = _('There was a problem retrieving the previously allocated transactions for modification');
 
@@ -437,7 +438,7 @@ if (isset($_POST['AllocTrans'])){
 
         if ($_SESSION['Alloc']->TransExRate != 1){
 	     	  echo '<br />' . _('Amount in supplier currency'). ' <b>' .
-	     	  		 number_format(-$_SESSION['Alloc']->TransAmt,2) . '</b><i> (' .
+	     	  		 number_format(-$_SESSION['Alloc']->TransAmt,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b><i> (' .
 	     	  		 _('converted into local currency at an exchange rate of') . ' ' .
 	     	  		 $_SESSION['Alloc']->TransExRate . ')</i><p>';
 
@@ -489,27 +490,24 @@ if (isset($_POST['AllocTrans'])){
 		<td>' . $AllocnItem->TypeNo . '</td>
 		<td>' . $AllocnItem->TransDate . '</td>
 		<td>' . $AllocnItem->SuppRef . '</td>
-		<td class="number">' . number_format($AllocnItem->TransAmount,2) . '</td>
-		<td class="number">' . number_format($YetToAlloc,2) . '<input type="hidden" name="YetToAlloc' . $Counter . '" value=' . $YetToAlloc . '></td>';
-
-	    echo '<td class="number"><input type="checkbox" name="All' .  $Counter . '"';
-
-	    if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01){
-			echo ' value=' . True . '>';
+		<td class="number">' . number_format($AllocnItem->TransAmount,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
+		<td class="number">' . number_format($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '<input type="hidden" name="YetToAlloc' . $Counter . '" value=' . $YetToAlloc . '></td>';
+		 if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01){
+			echo '<td class="number"><input type="checkbox" name="All' .  $Counter . '" value=' . true . ' />';
 	    } else {
-	    	echo '>';
+	    	echo '<td class="number"><input type="checkbox" name="All' .  $Counter . '" />';
 	    }
-echo '<input type="text" class="number" name="Amt' . $Counter .'" maxlength="12" size="13" value="' . $AllocnItem->AllocAmt . '"><input type="hidden" name="AllocID' . $Counter .'" value="' . $AllocnItem->ID . '"></td></tr>';
+		echo '<input type="text" class="number" name="Amt' . $Counter .'" maxlength="12" size="13" value="' . $AllocnItem->AllocAmt . '"><input type="hidden" name="AllocID' . $Counter .'" value="' . $AllocnItem->ID . '"></td></tr>';
 
 	    $TotalAllocated = $TotalAllocated + $AllocnItem->AllocAmt;
 	    $Counter++;
    }
 
    echo '<tr><td colspan=5 class=number><b><U>' . _('Total Allocated') . ':</U></b></td>
-   		<td class=number><b><U>' .  number_format($TotalAllocated,2) . '</U></b></td></tr>';
+   		<td class=number><b><U>' .  number_format($TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</U></b></td></tr>';
 
    echo '<tr><td colspan=5 class=number><b>' . _('Left to allocate') . '</b></td><td class=number><b>' .
-     		number_format(-$_SESSION['Alloc']->TransAmt - $TotalAllocated,2) . '</b></td></tr></table>';
+     		number_format(-$_SESSION['Alloc']->TransAmt - $TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b></td></tr></table>';
 
    echo '<div class="centre"><input type="hidden" name="TotalNumberOfAllocs" value="' . $Counter . '" />';
 
@@ -528,23 +526,24 @@ echo '<input type="text" class="number" name="Amt' . $Counter .'" maxlength="12"
   unset($_SESSION['Alloc']);
 
   $sql = "SELECT id,
-  		transno,
-		typename,
-		type,
-		suppliers.supplierid,
-		suppname,
-		trandate,
-  		suppreference,
-		rate,
-		ovamount+ovgst AS total,
-		alloc
-  	FROM supptrans,
-		suppliers,
-		systypes
-  	WHERE supptrans.type=systypes.typeid
-  	AND supptrans.supplierno=suppliers.supplierid
-  	AND suppliers.supplierid='" . $_GET['SupplierID'] ."'
-	AND (type=21 or type=22) AND settled=0 ORDER BY id";
+		  		transno,
+				typename,
+				type,
+				suppliers.supplierid,
+				suppname,
+				trandate,
+		  		suppreference,
+				supptrans.rate,
+				ovamount+ovgst AS total,
+				alloc
+		  	FROM supptrans INNER JOIN suppliers
+		  	ON supptrans.supplierno=suppliers.supplierid
+		  	INNER JOIN systypes  
+		  	ON supptrans.type=systypes.typeid 
+		  	WHERE suppliers.supplierid='" . $_GET['SupplierID'] ."'
+			AND (supptrans.type=21 OR supptrans.type=22) 
+			AND settled=0 
+			ORDER BY id";
 
   $result = DB_query($sql, $db);
   if (DB_num_rows($result) == 0){
@@ -604,23 +603,23 @@ echo '<input type="text" class="number" name="Amt' . $Counter .'" maxlength="12"
   unset($_SESSION['Alloc']);
 
   $sql = "SELECT id,
-  		transno,
-		typename,
-		type,
-		suppliers.supplierid,
-		suppname,
-		trandate,
-  		suppreference,
-		rate,
-		ovamount+ovgst AS total,
-		alloc
-  	FROM supptrans,
-		suppliers,
-		systypes
-  	WHERE supptrans.type=systypes.typeid
-  	AND supptrans.supplierno=suppliers.supplierid
-  	AND (type=21 or type=22)
-  	AND settled=0 ORDER BY id";
+		  		transno,
+				typename,
+				type,
+				suppliers.supplierid,
+				suppname,
+				trandate,
+		  		suppreference,
+				rate,
+				ovamount+ovgst AS total,
+				alloc
+		  	FROM supptrans INNER JOIN suppliers
+			ON supptrans.supplierno=suppliers.supplierid
+			INNER JOIN systypes
+			ON supptrans.type=systypes.typeid 
+			WHERE (supptrans.type=21 OR supptrans.type=22)
+			AND settled=0 
+			ORDER BY id";
 
   $result = DB_query($sql, $db);
 

@@ -146,8 +146,8 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus']!='') ) {
 				$AllowPrint=0;
 			}
 			$SQL = "UPDATE purchorders SET status='" . $_POST['Status']. "',
-											stat_comment='" . $_SESSION['PO'.$identifier]->StatusComments ."',
-											allowprint='".$AllowPrint."'
+							stat_comment='" . $_SESSION['PO'.$identifier]->StatusComments ."',
+							allowprint='".$AllowPrint."'
 					WHERE purchorders.orderno ='" . $_SESSION['ExistingOrder'] ."'";
 		
 			$ErrMsg = _('The order status could not be updated because');
@@ -172,8 +172,10 @@ if (isset($_GET['NewOrder']) AND isset($_GET['StockID']) AND isset($_GET['Select
 		$_SESSION['PO'.$identifier]->GLLink = $_SESSION['CompanyRecord']['gllink_stock'];
 		/* set the SupplierID we got */
 		$_SESSION['PO'.$identifier]->SupplierID = $_GET['SelectedSupplier'];
+		$_SESSION['PO'.$identifier]->DeliveryDate = DateAdd(date($_SESSION['DefaultDateFormat']), 'd', $_GET['LeadTime']);
 		$_SESSION['RequireSupplierSelection'] = 0;
 		$_POST['Select'] = $_GET['SelectedSupplier'];
+		
 
 		/*
 		* the item (it's item code) that should be purchased
@@ -219,8 +221,8 @@ if (isset($_POST['EnterLines'])){
 		$_SESSION['PO'.$identifier]->AllowPrintPO=1;
 
 		$sql = "UPDATE purchorders
-						SET purchorders.allowprint='1'
-						WHERE purchorders.orderno='" . $_SESSION['PO'.$identifier]->OrderNo ."'";
+				SET purchorders.allowprint='1'
+				WHERE purchorders.orderno='" . $_SESSION['PO'.$identifier]->OrderNo ."'";
 
 		$ErrMsg = _('An error occurred updating the purchase order to allow reprints') . '. ' . _('The error says');
 		$UpdateResult = DB_query($sql,$db,$ErrMsg);
@@ -365,6 +367,7 @@ if((!isset($_POST['SearchSuppliers']) or $_POST['SearchSuppliers']=='' ) AND
 	$_POST['SuppDelAdd4']=$_SESSION['PO'.$identifier]->SuppDelAdd4;
 	$_POST['SuppDelAdd5']=$_SESSION['PO'.$identifier]->SuppDelAdd5;
 	$_POST['SuppDelAdd6']=$_SESSION['PO'.$identifier]->SuppDelAdd6;
+	$_POST['DeliveryDate']=$_SESSION['PO'.$identifier]->DeliveryDate;
 
 }
 
@@ -377,6 +380,7 @@ if (isset($_POST['Select'])) {
 	$sql = "SELECT suppliers.suppname,
 					suppliers.currcode,
 					currencies.rate,
+					currencies.decimalplaces,
 					suppliers.paymentterms,
 					suppliers.address1,
 					suppliers.address2,
@@ -407,6 +411,7 @@ if (isset($_POST['Select'])) {
 	if (($AuthRow=DB_fetch_array($AuthResult) and $AuthRow['cancreate']==0 ) ) {
 		$_POST['SupplierName'] = $myrow['suppname'];
 		$_POST['CurrCode'] = $myrow['currcode'];
+		$_POST['CurrDecimalPlaces'] = $myrow['decimalplaces'];
 		$_POST['ExRate'] = $myrow['rate'];
 		$_POST['PaymentTerms']=	$myrow['paymentterms'];
 		$_POST['SuppDelAdd1'] = $myrow['address1'];
@@ -422,6 +427,7 @@ if (isset($_POST['Select'])) {
 		$_SESSION['RequireSupplierSelection'] = 0;
 		$_SESSION['PO'.$identifier]->SupplierName = $_POST['SupplierName'];
 		$_SESSION['PO'.$identifier]->CurrCode = $_POST['CurrCode'];
+		$_SESSION['PO'.$identifier]->CurrDecimalPlaces = $_POST['CurrDecimalPlaces'];
 		$_SESSION['PO'.$identifier]->ExRate = $_POST['ExRate'];
 		$_SESSION['PO'.$identifier]->PaymentTerms = $_POST['PaymentTerms'];
 		$_SESSION['PO'.$identifier]->SuppDelAdd1 = $_POST['SuppDelAdd1'];
@@ -432,6 +438,7 @@ if (isset($_POST['Select'])) {
 		$_SESSION['PO'.$identifier]->SuppDelAdd6 = $_POST['SuppDelAdd6'];
 		$_SESSION['PO'.$identifier]->SuppTel = $_POST['SuppTel'];
 		$_SESSION['PO'.$identifier]->Port = $_POST['Port'];
+		
 	} else {
 		prnMsg( _('You do not have the authority to raise Purchase Orders for') . ' ' . $myrow['suppname'] .'. ' . _('Please Consult your system administrator for more information.') . '<br />' . _('You can setup authorisations'). ' ' . '<a href="PO_AuthorisationLevels.php">' . _('here') . '</a>', 'warn');
 		include('includes/footer.inc');
@@ -444,6 +451,7 @@ if (isset($_POST['Select'])) {
 	$_POST['Select'] = $_SESSION['PO'.$identifier]->SupplierID;
 	$sql = "SELECT suppliers.suppname,
 					suppliers.currcode,
+					currencies.decimalplaces,
 					suppliers.paymentterms,
 					suppliers.address1,
 					suppliers.address2,
@@ -469,6 +477,7 @@ if (isset($_POST['Select'])) {
 		
 		$_POST['SupplierName'] = $myrow['suppname'];
 		$_POST['CurrCode'] = 	$myrow['currcode'];
+		$_POST['CurrDecimalPlaces'] = $myrow['decimalplaces'];
 		$_POST['ExRate'] = 	$myrow['rate'];
 		$_POST['PaymentTerms']=	$myrow['paymentterms'];
 		$_POST['SuppDelAdd1'] = $myrow['address1'];
@@ -485,6 +494,7 @@ if (isset($_POST['Select'])) {
 		$_SESSION['RequireSupplierSelection'] = 0;
 		$_SESSION['PO'.$identifier]->SupplierName = $_POST['SupplierName'];
 		$_SESSION['PO'.$identifier]->CurrCode = $_POST['CurrCode'];
+		$_SESSION['PO'.$identifier]->CurrDecimalPlaces = $_POST['CurrDecimalPlaces'];
 		$_SESSION['PO'.$identifier]->ExRate = $_POST['ExRate'];
 		$_SESSION['PO'.$identifier]->PaymentTerms = $_POST['PaymentTerms'];
 		$_SESSION['PO'.$identifier]->SuppDelAdd1 = $_POST['SuppDelAdd1'];
@@ -639,7 +649,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 												$PurchItemRow['price']/$PurchItemRow['conversionfactor'],
 												$PurchItemRow['units'],
 												$PurchItemRow['stockact'],
-												date($_SESSION['DefaultDateFormat']),
+												$_SESSION['PO'.$identifier]->DeliveryDate,
 												0,
 												0,
 												'',
@@ -827,9 +837,9 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 	echo '<table class=selection width=100%><tr><td>' . _('Warehouse') . ':</td>
 			<td><select name=StkLocation onChange="ReloadForm(form1.LookupDeliveryAddress)">';
 
-	$sql = 'SELECT loccode,
+	$sql = "SELECT loccode,
 					locationname
-					FROM locations';
+			FROM locations";
 	$LocnResult = DB_query($sql,$db);
 
 	while ($LocnRow=DB_fetch_array($LocnResult)){

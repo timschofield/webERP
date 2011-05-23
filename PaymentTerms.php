@@ -267,11 +267,13 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr><td>'. _('Terms Description'). ':</td>
 	<td>
-	<input type="text"' . (in_array('Terms',$Errors) ? 'class="inputerror"' : '' ) .' name="Terms" VALUE="'.$_POST['Terms']. '" size=35 maxlength=40>
+	<input type="text"' . (in_array('Terms',$Errors) ? 'class="inputerror"' : '' ) .' name="Terms" value="'.$_POST['Terms']. '" size=35 maxlength=40>
 	</td></tr>
 	<tr><td>'._('Due After A Given No. Of Days').':</td>
 	<td><input type="checkbox" name="DaysOrFoll"';
-	if ( isset($DayInFollowingMonth) && !$DayInFollowingMonth) { echo "checked"; }
+	if ( isset($DayInFollowingMonth) && !$DayInFollowingMonth) {
+		 echo 'checked'; 
+	}
 	echo ' ></td></tr><tr><td>'._('Days (Or Day In Following Month)').':</td><td>
 		<input type="Text"' . (in_array('DayNumber',$Errors) ? 'class="inputerror"' : '' ) .' name="DayNumber" class=number  size=4 maxlength=3 VALUE=';
 	if ($DaysBeforeDue !=0) {

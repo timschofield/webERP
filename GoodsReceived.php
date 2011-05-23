@@ -135,8 +135,8 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 		$DisplaySupplierQtyRec = number_format($LnItm->QtyReceived/$LnItm->ConversionFactor,$LnItm->DecimalPlaces);
 		$DisplayQtyOrd = number_format($LnItm->Quantity,$LnItm->DecimalPlaces);
 		$DisplayQtyRec = number_format($LnItm->QtyReceived,$LnItm->DecimalPlaces);
-		$DisplayLineTotal = number_format($LineTotal,2);
-		$DisplayPrice = number_format($LnItm->Price,2);
+		$DisplayLineTotal = number_format($LineTotal,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
+		$DisplayPrice = number_format($LnItm->Price,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 
 
 		//Now Display LineItem
@@ -178,7 +178,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 	}//foreach(LineItem)
 	echo '<script>defaultControl(document.forms[0].RecvQty_'.$LnItm->LineNo.');</script>';
 	
-	$DisplayTotal = number_format($_SESSION['PO'.$identifier]->Total,2);
+	$DisplayTotal = number_format($_SESSION['PO'.$identifier]->Total,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 	if ($_SESSION['ShowValueOnGRN']==1) {
 		echo '<tr><td colspan="11" class=number><b>' . _('Total value of goods received'). '</b></td>
 							<td class=number><b>'. $DisplayTotal. '</b></td>
@@ -316,8 +316,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 			}
 			echo '<div class="centre"><a href="' . $rootpath . '/PO_SelectOSPurchOrder.php">'.
 				_('Select a different purchase order for receiving goods against').'</a></div>';
-			echo '<div class="centre"><a href="' . $rootpath . '/GoodsReceived.php?PONumber=' .
-				$_SESSION['PO'.$identifier]->OrderNumber . '">'. _('Re-read the updated purchase order for receiving goods against'). '</a></div>';
+			echo '<div class="centre"><a href="' . $rootpath . '/GoodsReceived.php?PONumber=' . $_SESSION['PO'.$identifier]->OrderNumber . '">'. _('Re-read the updated purchase order for receiving goods against'). '</a></div>';
 			unset($_SESSION['PO'.$identifier]->LineItems);
 			unset($_SESSION['PO'.$identifier]);
 			unset($_POST['ProcessGoodsReceived']);
@@ -514,17 +513,17 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 											 AND serialno = '" . $Item->BundleRef . "'";
 								} else {
 									$SQL = "INSERT INTO stockserialitems (stockid,
-																											loccode,
-																											serialno,
-																											qualitytext,
-																											expirationdate,
-																											quantity)
-																										VALUES ('" . $OrderLine->StockID . "',
-																											'" . $_SESSION['PO'.$identifier]->Location . "',
-																											'" . $Item->BundleRef . "',
-																											'',
-																											'" . FormatDateForSQL($Item->ExpiryDate) . "',
-																											'" . $Item->BundleQty . "')";
+																			loccode,
+																			serialno,
+																			qualitytext,
+																			expirationdate,
+																			quantity)
+																		VALUES ('" . $OrderLine->StockID . "',
+																			'" . $_SESSION['PO'.$identifier]->Location . "',
+																			'" . $Item->BundleRef . "',
+																			'',
+																			'" . FormatDateForSQL($Item->ExpiryDate) . "',
+																			'" . $Item->BundleQty . "')";
 								}
 
 								$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
@@ -535,15 +534,15 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 							/** now insert the serial stock movement **/
 							$SQL = "INSERT INTO stockserialmoves (stockmoveno,
-																										stockid,
-																										serialno,
-																										moveqty)
-																								VALUES (
-																									'" . $StkMoveNo . "',
-																									'" . $OrderLine->StockID . "',
-																									'" . $Item->BundleRef . "',
-																									'" . $Item->BundleQty . "'
-																									)";
+																	stockid,
+																	serialno,
+																	moveqty)
+															VALUES (
+																'" . $StkMoveNo . "',
+																'" . $OrderLine->StockID . "',
+																'" . $Item->BundleRef . "',
+																'" . $Item->BundleQty . "'
+																)";
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 							$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -557,30 +556,31 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 				/*first validate the AssetID and if it doesn't exist treat it like a normal nominal item  */
 				$CheckAssetExistsResult = DB_query("SELECT assetid,
-																									datepurchased,
-																									costact
-																						FROM fixedassets INNER JOIN fixedassetcategories
-																						ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-																						WHERE assetid='" . $OrderLine->AssetID . "'",$db);
+															datepurchased,
+															costact
+													FROM fixedassets 
+													INNER JOIN fixedassetcategories
+													ON fixedassets.assetcategoryid=fixedassetcategories.categoryid 
+													WHERE assetid='" . $OrderLine->AssetID . "'",$db);
 				if (DB_num_rows($CheckAssetExistsResult)==1){ //then work with the assetid provided
 
 					/*Need to add a fixedassettrans for the cost of the asset being received */
 					$SQL = "INSERT INTO fixedassettrans (assetid,
-																						transtype,
-																						transno,
-																						transdate,
-																						periodno,
-																						inputdate,
-																						fixedassettranstype,
-																						amount)
-																	VALUES ('" . $OrderLine->AssetID . "',
-																					25,
-																					'" . $GRN . "',
-																					'" . $_POST['DefaultReceivedDate'] . "',
-																					'" . $PeriodNo . "',
-																					'" . Date('Y-m-d') . "',
-																					'cost',
-																					'" . $CurrentStandardCost * $OrderLine->ReceiveQty . "')";
+														transtype,
+														transno,
+														transdate,
+														periodno,
+														inputdate,
+														fixedassettranstype,
+														amount)
+									VALUES ('" . $OrderLine->AssetID . "',
+													25,
+													'" . $GRN . "',
+													'" . $_POST['DefaultReceivedDate'] . "',
+													'" . $PeriodNo . "',
+													'" . Date('Y-m-d') . "',
+													'cost',
+													'" . $CurrentStandardCost * $OrderLine->ReceiveQty . "')";
 					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
 					$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
@@ -594,12 +594,13 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 						/* it is a new addition as the date is set to 0000-00-00 when the asset record is created
 						 * before any cost is added to the asset
 						 */
-						$SQL = "UPDATE fixedassets SET datepurchased='" . $_POST['DefaultReceivedDate'] . "',
-																					cost = cost + " . ($CurrentStandardCost * $OrderLine->ReceiveQty)  . "
-												WHERE assetid = '" . $OrderLine->AssetID . "'";
+						$SQL = "UPDATE fixedassets 
+									SET datepurchased='" . $_POST['DefaultReceivedDate'] . "',
+										cost = cost + " . ($CurrentStandardCost * $OrderLine->ReceiveQty)  . "
+									WHERE assetid = '" . $OrderLine->AssetID . "'";
 					} else {
 							$SQL = "UPDATE fixedassets SET cost = cost + " . ($CurrentStandardCost * $OrderLine->ReceiveQty)  . "
-												WHERE assetid = '" . $OrderLine->AssetID . "'";
+									WHERE assetid = '" . $OrderLine->AssetID . "'";
 					}
 					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost and date purchased was not able to be updated because:');
 					$DbgMsg = _('The following SQL was used to attempt the update of the cost and the date the asset was purchased');
@@ -614,23 +615,23 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 				/*first the debit using the GLCode in the PO detail record entry*/
 				$SQL = "INSERT INTO gltrans (type,
-																	typeno,
-																	trandate,
-																	periodno,
-																	account,
-																	narrative,
-																	amount)
-															VALUES (
-																25,
-																'" . $GRN . "',
-																'" . $_POST['DefaultReceivedDate'] . "',
-																'" . $PeriodNo . "',
-																'" . $OrderLine->GLCode . "',
-																'PO: " . $_SESSION['PO'.$identifier]->OrderNo . " " . $_SESSION['PO'.$identifier]->SupplierID . " - " . $OrderLine->StockID
-																		. " - " . $OrderLine->ItemDescription . " x " . $OrderLine->ReceiveQty . " @ " .
-																			number_format($CurrentStandardCost,2) . "',
-																'" . $CurrentStandardCost * $OrderLine->ReceiveQty . "'
-																)";
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount)
+									VALUES (
+										25,
+										'" . $GRN . "',
+										'" . $_POST['DefaultReceivedDate'] . "',
+										'" . $PeriodNo . "',
+										'" . $OrderLine->GLCode . "',
+										'PO: " . $_SESSION['PO'.$identifier]->OrderNo . " " . $_SESSION['PO'.$identifier]->SupplierID . " - " . $OrderLine->StockID
+												. " - " . $OrderLine->ItemDescription . " x " . $OrderLine->ReceiveQty . " @ " .
+													number_format($CurrentStandardCost,2) . "',
+										'" . $CurrentStandardCost * $OrderLine->ReceiveQty . "'
+										)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The purchase GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the purchase GLTrans record was used');
@@ -640,22 +641,22 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 				/*now the GRN suspense entry*/
 				$SQL = "INSERT INTO gltrans (type,
-																	typeno,
-																	trandate,
-																	periodno,
-																	account,
-																	narrative,
-																	amount)
-															VALUES (25,
-																'" . $GRN . "',
-																'" . $_POST['DefaultReceivedDate'] . "',
-																'" . $PeriodNo . "',
-																'" . $_SESSION['CompanyRecord']['grnact'] . "',
-																'" . _('PO'.$identifier) . ': ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' .
-																			$OrderLine->StockID . ' - ' . $OrderLine->ItemDescription . ' x ' .
-																				$OrderLine->ReceiveQty . ' @ ' . number_format($UnitCost,2) . "',
-																'" . -$UnitCost * $OrderLine->ReceiveQty . "'
-																)";
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount)
+									VALUES (25,
+										'" . $GRN . "',
+										'" . $_POST['DefaultReceivedDate'] . "',
+										'" . $PeriodNo . "',
+										'" . $_SESSION['CompanyRecord']['grnact'] . "',
+										'" . _('PO'.$identifier) . ': ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' .
+													$OrderLine->StockID . ' - ' . $OrderLine->ItemDescription . ' x ' .
+														$OrderLine->ReceiveQty . ' @ ' . number_format($UnitCost,2) . "',
+										'" . -$UnitCost * $OrderLine->ReceiveQty . "'
+										)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GRN suspense side of the GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GRN Suspense GLTrans record was used');

@@ -56,6 +56,7 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 					paymentterms.dayinfollowingmonth,
 					suppliers.currcode,
 					currencies.rate AS exrate,
+					currencies.decimalplaces,
 					suppliers.taxgroupid,
 					taxgroups.taxgroupdescription
 				FROM suppliers,
@@ -79,6 +80,7 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 	$_SESSION['SuppTrans']->TermsDescription = $myrow['terms'];
 	$_SESSION['SuppTrans']->CurrCode = $myrow['currcode'];
 	$_SESSION['SuppTrans']->ExRate = $myrow['exrate'];
+	$_SESSION['SuppTrans']->CurrDecimalPlaces = $myrow['decimalplaces'];
 	$_SESSION['SuppTrans']->TaxGroup = $myrow['taxgroupid'];
 	$_SESSION['SuppTrans']->TaxGroupDescription = $myrow['taxgroupdescription'];
 	$_SESSION['SuppTrans']->SupplierID = $myrow['supplierid'];
@@ -171,10 +173,10 @@ if the link is not active then OvAmount must be entered manually. */
 				$_SESSION['SuppTrans']->OvAmount +=  $FixedAsset->Amount;
 			}
 		}
-		$_SESSION['SuppTrans']->OvAmount = round($_SESSION['SuppTrans']->OvAmount,2);
+		$_SESSION['SuppTrans']->OvAmount = round($_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces);
 	}else {
 /*OvAmount must be entered manually */
-		 $_SESSION['SuppTrans']->OvAmount = round($_POST['OvAmount'],2);
+		 $_SESSION['SuppTrans']->OvAmount = round($_POST['OvAmount'],$_SESSION['SuppTrans']->CurrDecimalPlaces);
 	}
 }
 
@@ -224,10 +226,11 @@ if (!isset($_POST['PostInvoice'])){
 	/* everything below here only do if a Supplier is selected
 	fisrt add a header to show who we are making an invoice for */
 
-	echo '<br /><table class=selection colspan=4><tr><th>' . _('Supplier') . '</th>
-													<th>' . _('Currency') .  '</th>
-													<th>' . _('Terms') .		'</th>
-													<th>' . _('Tax Authority') . '</th></tr>';
+	echo '<br /><table class=selection colspan=4>
+			<tr><th>' . _('Supplier') . '</th>
+				<th>' . _('Currency') .  '</th>
+				<th>' . _('Terms') .		'</th>
+				<th>' . _('Tax Authority') . '</th></tr>';
 
 	echo '<tr><td><font color=blue><b>' . $_SESSION['SuppTrans']->SupplierID . ' - ' .
 		$_SESSION['SuppTrans']->SupplierName . '</b></font></td>
@@ -285,9 +288,9 @@ if (!isset($_POST['PostInvoice'])){
 			echo '<tr><td>' . $EnteredGRN->GRNNo . '</td>
 						<td>' . $EnteredGRN->ItemCode .	'</td>
 						<td>' . $EnteredGRN->ItemDescription . '</td>
-						<td class=number>' . number_format($EnteredGRN->This_QuantityInv,2) . '</td>
-						<td class=number>' . number_format($EnteredGRN->ChgPrice,2) . '</td>
-						<td class=number>' . number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,2) . '</td>
+						<td class=number>' . number_format($EnteredGRN->This_QuantityInv,$EnteredGRN->DecimalPlaces) . '</td>
+						<td class=number>' . number_format($EnteredGRN->ChgPrice,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+						<td class=number>' . number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 					</tr>';
 
 			$TotalGRNValue = $TotalGRNValue + ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv);
@@ -295,7 +298,7 @@ if (!isset($_POST['PostInvoice'])){
 		}
 
 		echo '<tr><td colspan=5 class=number><font color=blue>' . _('Total Value of Goods Charged') . ':</font></td>
-			<td class=number><font color=blue><U>' . number_format($TotalGRNValue,2) . '</U></font></td></tr>';
+			<td class=number><font color=blue><U>' . number_format($TotalGRNValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</U></font></td></tr>';
 		echo '</table>';
 	}
 
@@ -314,7 +317,7 @@ if (!isset($_POST['PostInvoice'])){
 		foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef){
 
 			echo '<tr><td>' . $EnteredShiptRef->ShiptRef . '</td>
-						<td class=number>' . number_format($EnteredShiptRef->Amount,2) . '</td>
+						<td class=number>' . number_format($EnteredShiptRef->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 					</tr>';
 
 			$TotalShiptValue = $TotalShiptValue + $EnteredShiptRef->Amount;
@@ -327,7 +330,7 @@ if (!isset($_POST['PostInvoice'])){
 		}
 
 		echo '<tr><td colspan=2 class=number><font size=4 color=blue>' . _('Total') . ':</font></td>
-			<td class=number><font size=4 color=BLUE><U>' .  number_format($TotalShiptValue,2) . '</U></font></td></tr></table>';
+			<td class=number><font size=4 color=BLUE><U>' .  number_format($TotalShiptValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</U></font></td></tr></table>';
 	}
 
 	$TotalAssetValue = 0;
@@ -345,7 +348,7 @@ if (!isset($_POST['PostInvoice'])){
 
 			echo '<tr><td>' . $EnteredAsset->AssetID . '</td>
 					<td>' . $EnteredAsset->Description . '</td>
-					<td class=number>' .	number_format($EnteredAsset->Amount,2) . '</td></tr>';
+					<td class=number>' .	number_format($EnteredAsset->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td></tr>';
 
 			$TotalAssetValue += $EnteredAsset->Amount;
 
@@ -357,7 +360,7 @@ if (!isset($_POST['PostInvoice'])){
 		}
 
 		echo '<tr><td colspan=2 class=number><font size=4 color=blue>' . _('Total') . ':</font></td>
-			<td class=number><font size=4 color=BLUE><U>' .  number_format($TotalAssetValue,2) . '</U></font></td></tr></table>';
+			<td class=number><font size=4 color=BLUE><U>' .  number_format($TotalAssetValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</U></font></td></tr></table>';
 	} //end loop around assets added to invocie
 
 	$TotalContractsValue = 0;
@@ -376,7 +379,7 @@ if (!isset($_POST['PostInvoice'])){
 		foreach ($_SESSION['SuppTrans']->Contracts as $Contract){
 
 			echo '<tr><td>' . $Contract->ContractRef . '</td>
-					<td class=number>' .    number_format($Contract->Amount,2) . '</td>
+					<td class=number>' .    number_format($Contract->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 					<td>' . $Contract->Narrative . '</td>
 					</tr>';
 
@@ -390,7 +393,7 @@ if (!isset($_POST['PostInvoice'])){
 		}
 
 		echo '<tr><td class="number">' . _('Total') . ':</font></td>
-				<td class="number">' .  number_format($TotalContractsValue,2) . '</td>
+				<td class="number">' .  number_format($TotalContractsValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 				</tr></table>';
 	}
 
@@ -411,7 +414,7 @@ if (!isset($_POST['PostInvoice'])){
 
 				echo '<tr><td>' . $EnteredGLCode->GLCode . '</td>
 						<td>' . $EnteredGLCode->GLActName . '</td>
-						<td class=number>' . number_format($EnteredGLCode->Amount,2) .  '</td>
+						<td class=number>' . number_format($EnteredGLCode->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces) .  '</td>
 						<td>' . $EnteredGLCode->Narrative . '</td></tr>';
 
 				$TotalGLValue += $EnteredGLCode->Amount;
@@ -419,7 +422,7 @@ if (!isset($_POST['PostInvoice'])){
 			}
 
 			echo '<tr><td colspan=2 class="number">' . _('Total') .  ':</td>
-					<td class=number>' .  number_format($TotalGLValue,2) . '</td>
+					<td class=number>' .  number_format($TotalGLValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 					</tr></table>';
 		}
 
@@ -428,13 +431,13 @@ if (!isset($_POST['PostInvoice'])){
 		echo '<br /><table class=selection>
 				<tr>
 					<td>' . _('Amount in supplier currency') . ':</td>
-					<td colspan=2 class=number>' . number_format( $_SESSION['SuppTrans']->OvAmount,2) . '</td>
+					<td colspan=2 class=number>' . number_format( $_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 				</tr>';
 	} else {
 		echo '<br /><table class=selection>
 				<tr>
 					<td>' . _('Amount in supplier currency') . ':</td>
-					<td colspan=2 class=number><input type="text" size="12" maxlength="10" name="OvAmount" value=' . number_format( $_SESSION['SuppTrans']->OvAmount,2) . '></td>
+					<td colspan=2 class=number><input type="text" size="12" maxlength="10" name="OvAmount" value=' . number_format( $_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '></td>
 				</tr>';
 	}
 
@@ -465,7 +468,7 @@ if (!isset($_POST['PostInvoice'])){
 
 		if (!isset($_POST['OverRideTax']) or $_POST['OverRideTax']=='Auto'){
 
-			echo  ' <input type="text" class="number" name=TaxRate' . $Tax->TaxCalculationOrder . ' maxlength=4 size=4 VALUE=' . $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100 . '>%';
+			echo  ' <input type="text" class="number" name=TaxRate' . $Tax->TaxCalculationOrder . ' maxlength=4 size=4 value=' . $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100 . '>%';
 
 			/*Now recaluclate the tax depending on the method */
 			if ($Tax->TaxOnTax ==1){
@@ -479,9 +482,9 @@ if (!isset($_POST['PostInvoice'])){
 			}
 
 
-			echo '<input type=hidden name="TaxAmount'  . $Tax->TaxCalculationOrder . '"  value=' . round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2) . '>';
+			echo '<input type=hidden name="TaxAmount'  . $Tax->TaxCalculationOrder . '"  value=' . round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '>';
 
-			echo '</td><td class=number>' . number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2);
+			echo '</td><td class=number>' . number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces);
 
 		} else { /*Tax being entered manually accept the taxamount entered as is*/
 //			if (!isset($_POST['TaxAmount'  . $Tax->TaxCalculationOrder])) {
@@ -491,16 +494,16 @@ if (!isset($_POST['PostInvoice'])){
 
 			echo  ' <input type="hidden" name="TaxRate"' . $Tax->TaxCalculationOrder . ' value="' . $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100 . '">';
 
-			echo '</td><td><input type="text" class="number" size="12" maxlength="12" name="TaxAmount'  . $Tax->TaxCalculationOrder . '"  VALUE=' . round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2) . '>';
+			echo '</td><td><input type="text" class="number" size="12" maxlength="12" name="TaxAmount'  . $Tax->TaxCalculationOrder . '"  value=' . round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '>';
 		}
 
 		$TaxTotal += $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount;
 		echo '</td></tr>';
 	}
 
-	$_SESSION['SuppTrans']->OvAmount = round($_SESSION['SuppTrans']->OvAmount,2);
+	$_SESSION['SuppTrans']->OvAmount = round($_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces);
 
-	$DisplayTotal = number_format(( $_SESSION['SuppTrans']->OvAmount + $TaxTotal), 2);
+	$DisplayTotal = number_format(( $_SESSION['SuppTrans']->OvAmount + $TaxTotal), $_SESSION['SuppTrans']->CurrDecimalPlaces);
 
 	echo '<tr><td>' . _('Invoice Total') . ':</td>
 				<td colspan="2" class="number"><b>' . $DisplayTotal . '</b></td>
@@ -514,7 +517,7 @@ if (!isset($_POST['PostInvoice'])){
 			</tr>
 		</table>';
 
-	echo '<p><div class="centre"><input type="submit" name="PostInvoice" VALUE="' . _('Enter Invoice') . '"></div>';
+	echo '<p><div class="centre"><input type="submit" name="PostInvoice" value="' . _('Enter Invoice') . '"></div>';
 
 } else { //do the postings -and dont show the button to process
 
@@ -577,7 +580,7 @@ then do the updates and inserts to process the invoice entered */
 		$InputError = True;
 		prnMsg( _('The invoice as entered cannot be processed because the exchange rate for the invoice has been entered as a negative or zero number') . '. ' . _('The exchange rate is expected to show how many of the suppliers currency there are in 1 of the local currency'),'error');
 	
-	} elseif ( $_SESSION['SuppTrans']->OvAmount < round($TotalShiptValue + $TotalGLValue + $TotalContractsValue+ $TotalAssetValue+$TotalGRNValue,2)){
+	} elseif ( $_SESSION['SuppTrans']->OvAmount < round($TotalShiptValue + $TotalGLValue + $TotalContractsValue+ $TotalAssetValue+$TotalGRNValue,$_SESSION['SuppTrans']->CurrDecimalPlaces)){
 	
 		prnMsg( _('The invoice total as entered is less than the sum of the shipment charges, the general ledger entries (if any), the charges for goods received, contract charges and fixed asset charges. There must be a mistake somewhere, the invoice as entered will not be processed'),'error');
 		$InputError = True;
@@ -661,7 +664,7 @@ then do the updates and inserts to process the invoice entered */
 										'" . $PeriodNo . "',
 										'" . $EnteredGLCode->GLCode . "',
 										'" . $_SESSION['SuppTrans']->SupplierID . ' ' . $EnteredGLCode->Narrative . "',
-										'" . round($EnteredGLCode->Amount/ $_SESSION['SuppTrans']->ExRate,2) . "',
+										'" . round($EnteredGLCode->Amount/ $_SESSION['SuppTrans']->ExRate,$_SESSION['CompanyRecord']['decimalplaces']) . "',
 										'" . $EnteredGLCode->JobRef . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
@@ -669,7 +672,7 @@ then do the updates and inserts to process the invoice entered */
 
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
-				$LocalTotal += round($EnteredGLCode->Amount/ $_SESSION['SuppTrans']->ExRate,2);
+				$LocalTotal += round($EnteredGLCode->Amount/ $_SESSION['SuppTrans']->ExRate,$_SESSION['CompanyRecord']['decimalplaces']);
 			}
 
 			foreach ($_SESSION['SuppTrans']->Shipts as $ShiptChg){
@@ -690,7 +693,7 @@ then do the updates and inserts to process the invoice entered */
 									'" . $PeriodNo . "',
 									'" . $_SESSION['SuppTrans']->GRNAct . "',
 									'" . $_SESSION['SuppTrans']->SupplierID . ' ' . _('Shipment charge against') . ' ' . $ShiptChg->ShiptRef . "',
-									'" . round($ShiptChg->Amount/ $_SESSION['SuppTrans']->ExRate,2) . "')";
+									'" . round($ShiptChg->Amount/ $_SESSION['SuppTrans']->ExRate,$_SESSION['SuppTrans']->CurrDecimalPlaces) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the shipment') .
 							' ' . $ShiptChg->ShiptRef . ' ' . _('could not be added because');
@@ -699,7 +702,7 @@ then do the updates and inserts to process the invoice entered */
 
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
-				$LocalTotal += round($ShiptChg->Amount/ $_SESSION['SuppTrans']->ExRate,2);
+				$LocalTotal += round($ShiptChg->Amount/ $_SESSION['SuppTrans']->ExRate,$_SESSION['CompanyRecord']['decimalplaces']);
 
 			}
 
@@ -723,7 +726,7 @@ then do the updates and inserts to process the invoice entered */
  				$DbgMsg = _('The following SQL to insert the GL transaction was used');
  				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
- 				$LocalTotal += round($AssetAddition->Amount/ $_SESSION['SuppTrans']->ExRate,2);
+ 				$LocalTotal += round($AssetAddition->Amount/ $_SESSION['SuppTrans']->ExRate,$_SESSION['CompanyRecord']['decimalplaces']);
 			}
 
 			foreach ($_SESSION['SuppTrans']->Contracts as $Contract){
@@ -781,7 +784,7 @@ then do the updates and inserts to process the invoice entered */
 									'" . $_SESSION['SuppTrans']->GRNAct . "',
 									'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' @  ' .
 								 _('std cost of') . ' ' . $EnteredGRN->StdCostUnit  . "',
-								 	'" . round($EnteredGRN->StdCostUnit * $EnteredGRN->This_QuantityInv ,2) . "')";
+								 	'" . round($EnteredGRN->StdCostUnit * $EnteredGRN->This_QuantityInv ,$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
 						$DbgMsg = _('The following SQL to insert the GL transaction was used');
@@ -1041,9 +1044,9 @@ then do the updates and inserts to process the invoice entered */
 									'" . $_SESSION['SuppTrans']->CreditorsAct .  "',
 									'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Inv') . ' ' .
 								 $_SESSION['SuppTrans']->SuppReference . ' ' . $_SESSION['SuppTrans']->CurrCode .
-								 number_format( $_SESSION['SuppTrans']->OvAmount + $TaxTotal,2)  .
+								 number_format( $_SESSION['SuppTrans']->OvAmount + $TaxTotal,$_SESSION['SuppTrans']->CurrDecimalPlaces)  .
 								 ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate . "',
-									'" .  -round(($LocalTotal + ( $TaxTotal / $_SESSION['SuppTrans']->ExRate)),2) . "')";
+									'" .  -round(($LocalTotal + ( $TaxTotal / $_SESSION['SuppTrans']->ExRate)),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the control total could not be added because');
 			$DbgMsg = _('The following SQL to insert the GL transaction was used');

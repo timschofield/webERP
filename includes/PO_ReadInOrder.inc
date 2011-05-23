@@ -47,13 +47,14 @@
 								purchorders.deliverydate,
 								purchorders.port,
 								suppliers.currcode,
-								locations.managed ,
-								purchorders.paymentterms
+								locations.managed,
+								purchorders.paymentterms,
+								currencies.decimalplaces
 							FROM purchorders
-								INNER JOIN locations ON purchorders.intostocklocation=locations.loccode,
-								suppliers
-							WHERE purchorders.supplierno = suppliers.supplierid
-							AND purchorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
+							INNER JOIN locations ON purchorders.intostocklocation=locations.loccode
+							INNER JOIN suppliers ON purchorders.supplierno = suppliers.supplierid 
+							INNER JOIN currencies ON suppliers.currcode=currencies.currabrev
+							WHERE purchorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
 										
 	   $ErrMsg =  _('The order cannot be retrieved because');
 	   $DbgMsg =  _('The SQL statement that was used and failed was');
@@ -66,6 +67,7 @@
 			$_SESSION['PO'.$identifier]->SupplierID = $myrow['supplierno'];
 			$_SESSION['PO'.$identifier]->SupplierName = $myrow['suppname'];
 			$_SESSION['PO'.$identifier]->CurrCode = $myrow['currcode'];
+			$_SESSION['PO'.$identifier]->CurrDecimalPlaces = $myrow['decimalplaces'];
 			$_SESSION['PO'.$identifier]->Orig_OrderDate = $myrow['orddate'];
 			$_SESSION['PO'.$identifier]->AllowPrintPO = $myrow['allowprint'];
 			$_SESSION['PO'.$identifier]->DatePurchaseOrderPrinted = $myrow['dateprinted'];

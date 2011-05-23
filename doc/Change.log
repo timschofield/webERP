@@ -1,5 +1,11 @@
 webERP Change Log
 
+23/5/11 Tim: Remove SystemCheck.php and code standards changes(launchpad 4711-4718)
+23/5/11 Tim: Make link from SelectProduct.php to place purchase orders factor in the lead time into the delivery date in the purchase order (launchpad 4710)
+23/5/11 Exson: fix PaymentMethods could not add new - comma missing in INSERT SQL
+20/5/11 SuppAllocs.php DefineSuppAllocClass.php made display appropriate decimal places to currency of supplier
+19/5/11 SuppInvGRNs.php made display appropriate decimal places to currency of supplier invoice
+19/5/11 SuppTransGLAnalysis.php made display appropriate decimal places to currency of supplier invoice also added an edit option and fixed narrative that was not coming through into GLtrans - also modified DefineSuppTransClass.php to hold the CurrDecimalPlaces variable
 16/5/11 Bug in quantity on purchase order in SelectOrderItems.php added correct join syntax
 16/5/11 Added upgrade from 4.03.7 to UpgradeDatabase.php
 15/5/11 Z_ChangeStockCode.php modified to test if MRP tables exist before doing the updates - turned off error trapping on these queries as the error trapping is done in the script

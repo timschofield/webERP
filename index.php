@@ -1019,11 +1019,6 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/SystemCheck.php">' . _('View System Check') . '</a></p>'; ?>
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/GeocodeSetup.php">' . _('Geocode Setup') . '</a></p>'; ?>
 							</td>
 							</tr>

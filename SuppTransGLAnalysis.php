@@ -25,7 +25,7 @@ if (!isset($_SESSION['SuppTrans'])){
 
 /*If the user hit the Add to transaction button then process this first before showing  all GL codes on the transaction otherwise it wouldnt show the latest addition*/
 
-if (isset($_POST['AddGLCodeToTrans']) and $_POST['AddGLCodeToTrans'] == _('Enter GL Line')){
+if (isset($_POST['AddGLCodeToTrans']) AND $_POST['AddGLCodeToTrans'] == _('Enter GL Line')){
 
 	$InputError = False;
 	if ($_POST['GLCode'] == ''){
@@ -62,10 +62,10 @@ if (isset($_POST['AddGLCodeToTrans']) and $_POST['AddGLCodeToTrans'] == _('Enter
 	}
 
 	if ($InputError == False){
+		
 		$_SESSION['SuppTrans']->Add_GLCodes_To_Trans($_POST['GLCode'],
 													$GLActName,
 													$_POST['Amount'],
-													$_POST['JobRef'],
 													$_POST['Narrative']);
 		unset($_POST['GLCode']);
 		unset($_POST['Amount']);
@@ -76,9 +76,16 @@ if (isset($_POST['AddGLCodeToTrans']) and $_POST['AddGLCodeToTrans'] == _('Enter
 }
 
 if (isset($_GET['Delete'])){
-
 	$_SESSION['SuppTrans']->Remove_GLCodes_From_Trans($_GET['Delete']);
+}
 
+if (isset($_GET['Edit'])){
+	$_POST['GLCode'] = $_SESSION['SuppTrans']->GLCodes[$_GET['Edit']]->GLCode;
+	$_POST['AcctSelection']= $_SESSION['SuppTrans']->GLCodes[$_GET['Edit']]->GLCode;
+	$_POST['Amount'] = $_SESSION['SuppTrans']->GLCodes[$_GET['Edit']]->Amount;
+	$_POST['JobRef'] = $_SESSION['SuppTrans']->GLCodes[$_GET['Edit']]->JobRef;
+	$_POST['Narrative'] = $_SESSION['SuppTrans']->GLCodes[$_GET['Edit']]->Narrative;
+	$_SESSION['SuppTrans']->Remove_GLCodes_From_Trans($_GET['Edit']);
 }
 
 /*Show all the selected GLCodes so far from the SESSION['SuppInv']->GLCodes array */
@@ -101,13 +108,14 @@ echo $TableHeader;
 $TotalGLValue=0;
 $i=0;
 
-foreach ( $_SESSION['SuppTrans']->GLCodes as $EnteredGLCode){
+foreach ( $_SESSION['SuppTrans']->GLCodes AS $EnteredGLCode){
 
 	echo '<tr>
 		<td>' . $EnteredGLCode->GLCode . '</td>
 		<td>' . $EnteredGLCode->GLActName . '</td>
-		<td class=number>' . number_format($EnteredGLCode->Amount,2) . '</td>
+		<td class=number>' . number_format($EnteredGLCode->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 		<td>' . $EnteredGLCode->Narrative . '</td>
+		<td><a href="' . $_SERVER['PHP_SELF'] . '?Edit=' . $EnteredGLCode->Counter . '">' . _('Edit') . '</a></td>
 		<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $EnteredGLCode->Counter . '">' . _('Delete') . '</a></td>
 		</tr>';
 
@@ -122,7 +130,7 @@ foreach ( $_SESSION['SuppTrans']->GLCodes as $EnteredGLCode){
 
 echo '<tr>
 	<td colspan=2 class=number><font size=4 color=blue>' . _('Total') . ':</font></td>
-	<td class=number><font size=2 color=navy><u>' . number_format($TotalGLValue,2) . '</u></font></td>
+	<td class=number><font size=2 color=navy><u>' . number_format($TotalGLValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</u></font></td>
 	</tr>
 	</table>';
 
@@ -183,7 +191,7 @@ echo '<tr>
 	</tr>
 	</table><br />';
 
-echo '<input type="submit" name="AddGLCodeToTrans" VALUE="' . _('Enter GL Line') . '">';
+echo '<input type="submit" name="AddGLCodeToTrans" value="' . _('Enter GL Line') . '">';
 
 echo '</form>';
 include('includes/footer.inc');

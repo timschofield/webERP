@@ -429,21 +429,23 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
 
 	if ($myrow['mbflag'] == 'B') {
 		echo '<br />';
-		$SuppResult = DB_query("SELECT  suppliers.suppname,
+		$SuppResult = DB_query("SELECT suppliers.suppname,
 										suppliers.supplierid,
 										purchdata.preferred,
-										purchdata.minorderqty
+										purchdata.minorderqty,
+										purchdata.leadtime
 									FROM purchdata INNER JOIN suppliers
 									ON purchdata.supplierno=suppliers.supplierid
 									WHERE purchdata.stockid = '" . $StockID . "'", $db);
 		while ($SuppRow = DB_fetch_array($SuppResult)) {
-			if ($myrow['eoq'] == 0) {
+			if (($myrow['eoq'] < $SuppRow['minorderqty'])) {
 				$EOQ = $SuppRow['minorderqty'];
 			} else {
 				$EOQ = $myrow['eoq'];
 			}
-			echo '<a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes' . '&amp;SelectedSupplier=' . $SuppRow['supplierid'] .
-				'&amp;StockID=' . $StockID . '&amp;Quantity=' . $EOQ . '">' . _('Purchase this Item from') . ' ' . $SuppRow['suppname'] . ' (' . _('default') . ')</a><br />';
+			echo '<a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes' . '&SelectedSupplier=' . $SuppRow['supplierid'] . '&StockID=' . $StockID . '&Quantity='.$EOQ.'&LeadTime='.$SuppRow['leadtime'].'">'. _('Purchase this Item from') . ' ' . $SuppRow['suppname'] . '</a>
+			<br />';
+			
 			/**/
 		} /* end of while */
 	} /* end of $myrow['mbflag'] == 'B' */

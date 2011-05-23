@@ -1,16 +1,12 @@
 <?php
 
 /* $Id$*/
-/* $Revision: 1.16 $ */
-
-//$PageSecurity = 8;
 
 include ('includes/session.inc');
 $title = _('General Ledger Transaction Inquiry');
 include('includes/header.inc');
 
-// Page Border
-$menuUrl = '<a href="'. $rootpath . '/index.php?&Application=GL'. SID .'">' . _('General Ledger Menu') . '</a></div>';
+$menuUrl = '<a href="'. $rootpath . '/index.php?&Application=GL">' . _('General Ledger Menu') . '</a></div>';
 
 if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 {
@@ -52,22 +48,22 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 					</tr>';
 
 				$SQL = "SELECT gltrans.type,
-												gltrans.trandate,
-												gltrans.periodno,
-												gltrans.account,
-												gltrans.narrative,
-												gltrans.amount,
-												gltrans.posted,
-												chartmaster.accountname,
-												periods.lastdate_in_period
-											FROM gltrans,
-												chartmaster,
-												periods
-											WHERE gltrans.account = chartmaster.accountcode
-											AND periods.periodno=gltrans.periodno
-											AND gltrans.type= '" . $_GET['TypeID'] . "'
-											AND gltrans.typeno = '" . $_GET['TransNo'] . "'
-											ORDER BY gltrans.counterindex";
+								gltrans.trandate,
+								gltrans.periodno,
+								gltrans.account,
+								gltrans.narrative,
+								gltrans.amount,
+								gltrans.posted,
+								chartmaster.accountname,
+								periods.lastdate_in_period
+							FROM gltrans,
+								chartmaster,
+								periods
+							WHERE gltrans.account = chartmaster.accountcode
+							AND periods.periodno=gltrans.periodno
+							AND gltrans.type= '" . $_GET['TypeID'] . "'
+							AND gltrans.typeno = '" . $_GET['TransNo'] . "'
+							ORDER BY gltrans.counterindex";
 				$TransResult = DB_query($SQL,$db);
 
 				$Posted = _('Yes');
@@ -78,17 +74,17 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 					$DetailResult = false;
 
 					if ( $TransRow['amount'] > 0) {
-							$DebitAmount = number_format($TransRow['amount'],2);
+							$DebitAmount = number_format($TransRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
 							$DebitTotal += $TransRow['amount'];
 							$CreditAmount = '&nbsp';
 					} else {
-							$CreditAmount = number_format(-$TransRow['amount'],2);
+							$CreditAmount = number_format(-$TransRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
 							$CreditTotal += $TransRow['amount'];
 							$DebitAmount = '&nbsp';
 					}
 
 					if ( $TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact'] )	{
-							$URL = $rootpath . '/CustomerInquiry.php?' . SID . '&CustomerID=';
+							$URL = $rootpath . '/CustomerInquiry.php?CustomerID=';
 							$date = '&TransAfterDate=' . $TranDate;
 
 							$DetailSQL = "SELECT debtortrans.debtorno,
@@ -103,7 +99,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 											AND debtortrans.transno = '" . $_GET['TransNo']. "'";
 							$DetailResult = DB_query($DetailSQL,$db);
 					} elseif ( $TransRow['account'] == $_SESSION['CompanyRecord']['creditorsact'] )	{
-							$URL = $rootpath . '/SupplierInquiry.php?' . SID . '&SupplierID=';
+							$URL = $rootpath . '/SupplierInquiry.php?SupplierID=';
 							$date = '&FromDate=' . $TranDate;
 
 							$DetailSQL = "SELECT supptrans.supplierno,
@@ -118,7 +114,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 											AND supptrans.transno = '" . $_GET['TransNo'] . "'";
 							$DetailResult = DB_query($DetailSQL,$db);
 					} else {
-							$URL = $rootpath . '/GLAccountInquiry.php?' . SID . '&Account=' . $TransRow['account'];
+							$URL = $rootpath . '/GLAccountInquiry.php?Account=' . $TransRow['account'];
 
 							if( strlen($TransRow['narrative'])==0 ) {
 								$TransRow['narrative'] = '&nbsp';
@@ -156,10 +152,10 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 									}
 							} else {
 									if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
-										$Credit = number_format(-($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],2);
+										$Credit = number_format(-($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
 										$Debit = '&nbsp';
 									} else {
-										$Credit = number_format(($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],2);
+										$Credit = number_format(($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
 										$Debit = '&nbsp';
 									}
 							}
@@ -187,8 +183,8 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 
 				echo '<tr bgcolor="#FFFFFF">
 						<td class=number colspan=3><b>' . _('Total') . '</b></td>
-						<td class=number>' . number_format(($DebitTotal),2) . '</td>
-						<td class=number>' . number_format((-$CreditTotal),2) . '</td>
+						<td class=number>' . number_format(($DebitTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class=number>' . number_format((-$CreditTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						<td colspan=2>&nbsp</td>
 					</tr>';
 				echo '</table><p>';
@@ -196,7 +192,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 
 }
 
-echo '</td></tr></table>'; // end Page Border
+echo '</td></tr></table>';
 include('includes/footer.inc');
 
 ?>
