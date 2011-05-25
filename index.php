@@ -188,6 +188,22 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/SalesByTypePeriodInquiry.php">' . _('Sales By Sales Type Inquiry') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/SalesCategoryPeriodInquiry.php">' . _('Sales By Category Inquiry') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/SalesTopItemsInquiry.php">' . _('Top Sellers Inquiry') . '</a></p>'; ?>
+							</td>
+							</tr>
+							
+							<tr>
+							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/PDFDeliveryDifferences.php">' . _('Order Delivery Differences Report') . '</a></p>'; ?>
 							</td>
 							</tr>

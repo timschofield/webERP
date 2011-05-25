@@ -18,7 +18,7 @@ $allow_demo_mode = True;
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
 // this is not necessary if you have your own server locally
-// putenv('TZ=Europe/London');
+putenv('TZ=Europe/London');
 // putenv('TZ=Australia/Melbourne');
 // putenv('TZ=Australia/Sydney');
 // putenv('TZ=Pacific/Auckland');
@@ -86,7 +86,7 @@ if (isset($DirectoryLevelsDeep)){
 if ($rootpath == "/" OR $rootpath == "\\") {
 	$rootpath = "";
 }
-//$rootpath = '/web-erp';
+
 
 /* Report all errors except E_NOTICE
 This is the default value set in php.ini for most installations but just to be sure it is forced here

@@ -84,7 +84,7 @@ if (!isset($SelectedCOGSPostingID)) {
 	if (DB_num_rows($result)>0){
 		$ShowLivePostingRecords = false;
 		prnMsg (_('The following cost of sales posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
-		echo '<table class=selection>';
+		echo '<table class="selection">';
 		echo '<tr><th>' . _('Area') . '</th>
 				<th>' . _('Stock Category') . '</th>
 				<th>' . _('Sales Type') . '</th>
@@ -209,7 +209,7 @@ if (!isset($SelectedCOGSPostingID)) {
 			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</td>
-			<td><a href="%sSelectedCOGSPostingID=%s&delete=yes">' . _('Delete') . '</td>
+			<td><a href="%sSelectedCOGSPostingID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">' . _('Delete') . '</td>
 			</tr>',
 			$myrow['area'],
 			$myrow['stkcat'],

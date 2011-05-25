@@ -1,5 +1,7 @@
 webERP Change Log
 
+25/5/11 New Sales Inquiry scripts by sales type/price list by category and top sellers
+24/5/11 Updated from launchpad translations those that had changed from 18/4/11 including Viatnamese, Albanian, Russian, Spanish
 23/5/11 Tim: Remove SystemCheck.php and code standards changes(launchpad 4711-4718)
 23/5/11 Tim: Make link from SelectProduct.php to place purchase orders factor in the lead time into the delivery date in the purchase order (launchpad 4710)
 23/5/11 Exson: fix PaymentMethods could not add new - comma missing in INSERT SQL

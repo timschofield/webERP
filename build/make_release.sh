@@ -67,6 +67,8 @@ msgfmt -o locale/zh_CN.utf8/LC_MESSAGES/messages.mo locale/zh_CN.utf8/LC_MESSAGE
 msgfmt -o locale/zh_HK.utf8/LC_MESSAGES/messages.mo locale/zh_HK.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/vi_VN.utf8/LC_MESSAGES/messages.mo locale/vi_VN.utf8/LC_MESSAGES/messages.po
 
+mysql -u$MYSQL_USER  -p$MYSQL_PWD < $BASE_DIR/build/TruncateAuditTrail.sql
+
 echo "SET FOREIGN_KEY_CHECKS = 0;" > $BASE_DIR/sql/mysql/weberp-new.sql
 
 mysqldump -u$MYSQL_USER  -p$MYSQL_PWD  --skip-opt --create-options --skip-set-charset --ignore-table=weberpdemo.mrpsupplies  --ignore-table=weberpdemo.mrpplanedorders --ignore-table=weberpdemo.mrpparameters --ignore-table=weberpdemo.levels --ignore-table=weberpdemo.mrprequirements --ignore-table=weberpdemo.audittrail --no-data weberpdemo >> $BASE_DIR/sql/mysql/weberp-new.sql
@@ -118,7 +120,6 @@ echo "SET FOREIGN_KEY_CHECKS = 1;" >> $BASE_DIR/sql/mysql/weberp-new.sql
 echo "UPDATE systypes SET typeno=0;" >> $BASE_DIR/sql/mysql/weberp-new.sql
 echo "INSERT INTO shippers VALUES (1,'Default Shipper',0);" >> $BASE_DIR/sql/mysql/weberp-new.sql
 echo "UPDATE config SET confvalue='1' WHERE confname='Default_Shipper';" >> $BASE_DIR/sql/mysql/weberp-new.sql
-echo "TRUNCATE TABLE audittrail;" >> $BASE_DIR/sql/mysql/weberp-demo.sql
 echo "SET FOREIGN_KEY_CHECKS = 1;" >> $BASE_DIR/sql/mysql/weberp-demo.sql
 
 rm $OUTPUT_DIR/webERP.zip

@@ -92,7 +92,7 @@ if (!isset($SelectedSalesPostingID)) {
 
 	$ShowLivePostingRecords = true;
 
-	$SQL = 'SELECT salesglpostings.id,
+	$SQL = "SELECT salesglpostings.id,
 				salesglpostings.area,
 				salesglpostings.stkcat,
 				salesglpostings.salestype,
@@ -100,7 +100,7 @@ if (!isset($SelectedSalesPostingID)) {
 				salesglpostings.discountglcode
 				FROM salesglpostings LEFT JOIN chartmaster
 					ON salesglpostings.salesglcode = chartmaster.accountcode
-				WHERE chartmaster.accountcode IS NULL';
+				WHERE chartmaster.accountcode IS NULL";
 
 	$result = DB_query($SQL,$db);
 	if (DB_num_rows($result)>0){
@@ -124,13 +124,13 @@ if (!isset($SelectedSalesPostingID)) {
 				$k=1;
 			}
 
-			printf("<td>%s</td>
+			printf('<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href=\"%sSelectedSalesPostingID=%s\">" . _('Edit') . "</td>
-				<td><a href=\"%sSelectedSalesPostingID=%s&delete=yes\">". _('Delete') . "</td></tr>",
+				<td><a href="%sSelectedSalesPostingID=%s">' . _('Edit') . '</td>
+				<td><a href="%sSelectedSalesPostingID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales GL posting record?') . '\');">'. _('Delete') . '</td></tr>',
 				$myrow[1],
 				$myrow[2],
 				$myrow[3],
@@ -143,11 +143,11 @@ if (!isset($SelectedSalesPostingID)) {
 		}
 	}
 
-	$SQL = 'SELECT salesglpostings.id,
+	$SQL = "SELECT salesglpostings.id,
 			salesglpostings.area,
 			salesglpostings.stkcat,
 			salesglpostings.salestype
-		FROM salesglpostings';
+			FROM salesglpostings";
 
 	$result = DB_query($SQL,$db);
 
@@ -203,7 +203,7 @@ if (!isset($SelectedSalesPostingID)) {
 	}
 	if ($ShowLivePostingRecords){
 
-		$SQL = 'SELECT salesglpostings.id,
+		$SQL = "SELECT salesglpostings.id,
 				salesglpostings.area,
 				salesglpostings.stkcat,
 				salesglpostings.salestype,
@@ -213,12 +213,13 @@ if (!isset($SelectedSalesPostingID)) {
 				chartmaster as chart1,
 				chartmaster as chart2
 			WHERE salesglpostings.salesglcode = chart1.accountcode
-			AND salesglpostings.discountglcode = chart2.accountcode';
+			AND salesglpostings.discountglcode = chart2.accountcode";
 
 		$result = DB_query($SQL,$db);
 
-		echo '<table class=selection>';
-		echo '<tr><th>' . _('Area') . '</th>
+		echo '<table class=selection>
+			<tr>
+			<th>' . _('Area') . '</th>
 			<th>' . _('Stock Category') . '</th>
 			<th>' . _('Sales Type') . '</th>
 			<th>' . _('Sales Account') . '</th>
@@ -236,13 +237,13 @@ if (!isset($SelectedSalesPostingID)) {
 				$k=1;
 			}
 
-			printf("<td>%s</td>
+			printf('<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href=\"%sSelectedSalesPostingID=%s\">" . _('Edit') . "</td>
-				<td><a href=\"%sSelectedSalesPostingID=%s&delete=yes\">". _('Delete') . "</td></tr>",
+				<td><a href="%sSelectedSalesPostingID=%s">' . _('Edit') . '</td>
+				<td><a href="%sSelectedSalesPostingID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales GL posting record?') . '\');">'. _('Delete') . '</td></tr>',
 				$myrow[1],
 				$myrow[2],
 				$myrow[3],
@@ -296,21 +297,21 @@ if (!isset($_GET['delete'])) {
 	}
 /*end of if $SelectedSalesPostingID only do the else when a new record is being entered */
 
-	$SQL = 'SELECT areacode,
-			areadescription FROM areas';
+	$SQL = "SELECT areacode,
+			areadescription FROM areas";
 	$result = DB_query($SQL,$db);
 
-	echo '<br /><table class=selection>
+	echo '<br /><table class="selection">
 		<tr>
 		<td>' . _('Area') . ':</td>
 		<td><select name="Area">
-			<option VALUE="AN">' . _('Any Other') . '</option>';
+			<option value="AN">' . _('Any Other') . '</option>';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['Area']) and $myrow['areacode']==$_POST['Area']) {
 			echo '<option selected value="';
 		} else {
-			echo '<option VALUE="';
+			echo '<option value="';
 		}
 		echo $myrow['areacode'] . '">'. $myrow['areadescription'] . '</option>';
 
@@ -318,7 +319,7 @@ if (!isset($_GET['delete'])) {
 
 	DB_free_result($result);
 
-	$SQL = 'SELECT categoryid, categorydescription FROM stockcategory';
+	$SQL = "SELECT categoryid, categorydescription FROM stockcategory";
 	$result = DB_query($SQL,$db);
 
 	echo '</select></td></tr>';
@@ -326,7 +327,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr><td>' . _('Stock Category') . ':</td>
 		<td><select name="StkCat">
-			<option VALUE="ANY">' . _('Any Other') . '</option>';
+			<option value="ANY">' . _('Any Other') . '</option>';
 
 	while ($myrow = DB_fetch_array($result)) {
 
@@ -344,21 +345,21 @@ if (!isset($_GET['delete'])) {
 
 	DB_free_result($result);
 
-	$SQL = 'SELECT typeabbrev,
+	$SQL = "SELECT typeabbrev,
 					sales_type
-			FROM salestypes';
+			FROM salestypes";
 	$result = DB_query($SQL,$db);
 
 
 	echo '<tr><td>' . _('Sales Type') . ' / ' . _('Price List') . ':</td>
 		<td><select name="SalesType">';
-	echo '<option VALUE="AN">' . _('Any Other') . '</option>';
+	echo '<option value="AN">' . _('Any Other') . '</option>';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SalesType']) and $myrow['typeabbrev']==$_POST['SalesType']) {
-			echo '<option selected VALUE="';
+			echo '<option selected value="';
 		} else {
-			echo '<option VALUE="';
+			echo '<option value="';
 		}
 		echo $myrow['typeabbrev'] . '">' . $myrow['sales_type']  . '</option>';
 
@@ -386,7 +387,7 @@ if (!isset($_GET['delete'])) {
 		if (isset($_POST['SalesGLCode']) and $myrow['accountcode']==$_POST['SalesGLCode']) {
 			echo '<option selected value="';
 		} else {
-			echo '<option VALUE="';
+			echo '<option value="';
 		}
 		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname']  . '</option>';
 
@@ -404,7 +405,7 @@ if (!isset($_GET['delete'])) {
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['accountcode'] . "'>" . $myrow['accountcode'] . ' - ' . $myrow['accountname']  . '</option>';
+		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname']  . '</option>';
 
 	} //end while loop
 
