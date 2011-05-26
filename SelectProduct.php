@@ -1,7 +1,9 @@
 <?php
 /* $Id$*/
 
-$PricesSecurity = 12;
+$PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
+$SuppliersSecurity = 9; //don't show supplier purchasing info unless security token 9 available to user
+
 include ('includes/session.inc');
 $title = _('Search Inventory Items');
 include ('includes/header.inc');
@@ -332,7 +334,10 @@ echo '<tr><th class="number" width="15%">' . _('Quantity On Order') . ':</th>
 		<td width="17%" class="select">' . $QOO . '</td></tr>
 				</table>'; //end of nested table
 echo '</td>'; //end cell of master table
-if ($myrow['mbflag'] == 'B' or ($myrow['mbflag'] == 'M')) {
+
+if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M')) 
+	AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))){
+
 	echo '<td width="50%" valign="top"><table>
 			<tr><th width="50%">' . _('Supplier') . '</th>
 				<th width="15%">' . _('Cost') . '</th>
@@ -410,21 +415,9 @@ echo '</td><td valign="top" class="select">';
 if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
 	echo '<a href="' . $rootpath . '/StockAdjustments.php?StockID=' . $StockID . '">' . _('Quantity Adjustments') . '</a><br />';
 	echo '<a href="' . $rootpath . '/StockTransfers.php?StockID=' . $StockID . '">' . _('Location Transfers') . '</a><br />';
-	
-	if (function_exists('imagecreatefrompng')){
-		$StockImgLink = '
-	GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
-	                '&StockID='.urlencode($StockID).
-	                '&text='.
-	                '&width=200'.
-	                '&height=200'.
-	                ' ';
-	} else {
-		if( isset($StockID) and file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
-			$StockImgLink = ' ' . $_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg ';
-		} else {
-			$StockImgLink = _('No Image');
-		}
+	//show the item image if it has been uploaded
+	if( isset($StockID) and file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
+		echo '<div class="centre"><img src="' . $_SERVER['HTTP_SCHEME'] .'://'. $_SERVER['HTTP_HOST'] . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg ' . '" ></div>';
 	}
 
 	if ($myrow['mbflag'] == 'B') {

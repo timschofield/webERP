@@ -1,5 +1,9 @@
 webERP Change Log
 
+26/5/11 Version 4.04 Release
+
+26/5/11 Ricard: require securitytoken 9 to allow user to see purchasing data in SelectProduct.php
+26/5/11 SelectProduct.php fix item image display in centre under item transactions
 25/5/11 New Sales Inquiry scripts by sales type/price list by category and top sellers
 24/5/11 Updated from launchpad translations those that had changed from 18/4/11 including Viatnamese, Albanian, Russian, Spanish
 23/5/11 Tim: Remove SystemCheck.php and code standards changes(launchpad 4711-4718)

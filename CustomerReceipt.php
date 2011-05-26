@@ -209,7 +209,7 @@ if (isset($_POST['CommitBatch'])){
 	}
 
 	/*Make an array of the defined bank accounts */
-	$SQL = 'SELECT accountcode FROM bankaccounts';
+	$SQL = "SELECT accountcode FROM bankaccounts";
 	$result = DB_query($SQL,$db);
 	$BankAccounts = array();
 	$i=0;
@@ -819,7 +819,7 @@ foreach ($ReceiptTypes as $RcptType) {
 	if (isset($_POST['ReceiptType']) and $_POST['ReceiptType']==$RcptType){
 		echo '<option selected value="' . $RcptType . '">' . $RcptType .'</option>';
 	} else {
-		echo '<option Value="' .$RcptType . '">' . $RcptType .'</option>';
+		echo '<option value="' .$RcptType . '">' . $RcptType .'</option>';
 	}
 }
 echo '</select></td></tr>';
@@ -916,7 +916,7 @@ if (isset($_SESSION['CustomerRecord'])
 		</tr>
 		</table><br>';
 
-	echo '<table  class=selection>';
+	echo '<table class="selection">';
 
 	$DisplayDiscountPercent = number_format($_SESSION['CustomerRecord']['pymtdiscount']*100,2) . '%';
 
@@ -933,10 +933,10 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 	//Select the tag
 	echo '<tr><td>' . _('Select Tag') . ':</td><td><select name="tag">';
 
-	$SQL = 'SELECT tagref,
+	$SQL = "SELECT tagref,
 					tagdescription
 					FROM tags
-					ORDER BY tagref';
+					ORDER BY tagref";
 
 	$result=DB_query($SQL,$db);
 	echo '<option value=0></option>';
@@ -1069,11 +1069,11 @@ if (((isset($_SESSION['CustomerRecord'])
 		echo '</table>';
 
 	}	//end if results to show
-	if (isset($_SESSION['ReceiptBatch']->Items) and count($_SESSION['ReceiptBatch']->Items) > 0){
-		echo '<div class="centre"><br/><input tabindex="13" type="submit" name="CommitBatch" VALUE="' . _('Accept and Process Batch') . '"></div>';
-	}
+	
 }
-
+if (isset($_SESSION['ReceiptBatch']->Items) and count($_SESSION['ReceiptBatch']->Items) > 0){
+	echo '<div class="centre"><br/><input tabindex="13" type="submit" name="CommitBatch" value="' . _('Accept and Process Batch') . '"></div>';
+}
 echo '</form>';
 include('includes/footer.inc');
 ?>
