@@ -566,7 +566,12 @@ if (isset($_POST['NewItem'])){
 						$PurchRow = DB_fetch_array($PurchDataResult);
 						$PurchPrice = $PurchRow['price']/$PurchRow['conversionfactor'];
 						$ConversionFactor = $PurchRow['conversionfactor'];
-						$SupplierDescription = 	$PurchRow['suppliers_partno'] .' - ' . $PurchRow['supplierdescription'];
+						$SupplierDescription = $PurchRow['suppliers_partno'] .' - ';
+						if (strlen($PurchRow['supplierdescription'])>2){
+							$SupplierDescription .= $PurchRow['supplierdescription'];
+						} else {
+							$SupplierDescription .= $ItemRow['description'];
+						}
 						$SuppliersUnitOfMeasure = $PurchRow['suppliersuom'];
 						$SuppliersPartNo = $PurchRow['suppliers_partno'];
 						$LeadTime = $PurchRow['leadtime'];

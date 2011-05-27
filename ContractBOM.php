@@ -167,7 +167,7 @@ if(isset($_GET['Delete'])){
 if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as the part code selected */
 /* take the form entries and enter the data from the form into the PurchOrder class variable */
 	foreach ($_POST as $key => $value) {
-		if (substr($key, 0, 3)=='qty') {
+		if (substr($key, 0, 3)=='Qty') {
 			$ItemCode=substr($key, 3, strlen($key)-3);
 			$Quantity=$value;
 			$AlreadyOnThisBOM = 0;

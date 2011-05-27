@@ -250,17 +250,17 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 						AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
 						AND shipments.closed='" . $_POST['OpenOrClosed'] . "'";
 			} else {
-				$SQL .= "WHERE shipments.supplierid='" . $SelectedSupplier ."'
+				$SQL .= " WHERE shipments.supplierid='" . $SelectedSupplier ."'
 					AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
 					AND shipments.closed='" . $_POST['OpenOrClosed'] ."'";
 			}
 		} else { //no supplier selected
 			if (isset($SelectedStockItem)) {
-				$SQL .= "WHERE purchorderdetails.itemcode='". $SelectedStockItem ."'
+				$SQL .= " WHERE purchorderdetails.itemcode='". $SelectedStockItem ."'
 					AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
 					AND shipments.closed='" . $_POST['OpenOrClosed'] . "'";
 			} else {
-				$SQL .= "WHERE purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
+				$SQL .= " WHERE purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
 					AND shipments.closed='" . $_POST['OpenOrClosed'] . "'";
 			}
 

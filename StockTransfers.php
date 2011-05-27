@@ -42,7 +42,7 @@ if (isset($_POST['CheckCode'])) {
 		echo '<tr><td>'.$myrow['stockid'].'</td>
 				<td>'.$myrow['description'].'</td>
 				<td><a href="' . $rootpath . '/StockTransfers.php?StockID='.$myrow['stockid'].'&Description='.$myrow['description'].'&NewTransfer=Yes&Quantity='.$_POST['Quantity'].'&From='.$_POST['StockLocationFrom'].'&To='.$_POST['StockLocationTo'].'">'
-+				._('Transfer').'</a></td>
+				._('Transfer').'</a></td>
 			</tr>';
 				
 	}
@@ -66,7 +66,7 @@ if (isset($_GET['StockID'])){	/*carry the stockid through to the form for additi
 
 } elseif (isset($_POST['StockID'])){	/* initiate a new transfer only if the StockID is different to the previous entry */
 
-	if (isset($_SESSION['Transfer']) and $_POST['StockID'] != $_SESSION['Transfer']->TransferItem[0]->StockID){
+	if (isset($_SESSION['Transfer']) AND $_POST['StockID'] != $_SESSION['Transfer']->TransferItem[0]->StockID){
 		unset($_SESSION['Transfer']);
 		$NewTransfer = true;
 	}
@@ -121,10 +121,10 @@ if ($NewTransfer){
 
 }
 
-if (isset($_POST['Quantity']) and isset($_SESSION['Transfer']->TransferItem[0]->Controlled) and $_SESSION['Transfer']->TransferItem[0]->Controlled==0){
+if (isset($_POST['Quantity']) AND isset($_SESSION['Transfer']->TransferItem[0]->Controlled) AND $_SESSION['Transfer']->TransferItem[0]->Controlled==0){
 	$_SESSION['Transfer']->TransferItem[0]->Quantity = $_POST['Quantity'];
 }
-if ( isset($_POST['StockLocationFrom']) && $_POST['StockLocationFrom']!= $_SESSION['Transfer']->StockLocationFrom ){
+if ( isset($_POST['StockLocationFrom']) AND $_POST['StockLocationFrom']!= $_SESSION['Transfer']->StockLocationFrom ){
 	$_SESSION['Transfer']->StockLocationFrom = $_POST['StockLocationFrom'];
 	$_SESSION['Transfer']->StockLocationTo = $_POST['StockLocationTo'];
 	$_SESSION['Transfer']->TransferItem[0]->Quantity=$_POST['Quantity'];
@@ -149,7 +149,7 @@ if ( isset($_POST['EnterTransfer']) ){
 		echo '<p>';
 		prnMsg( _('The quantity entered must be numeric'), 'error' );
 		$InputError = true;
-	} elseif ($_SESSION['Transfer']->TransferItem[0]->Quantity<=0){
+	} elseif ($_SESSION['Transfer']->TransferItem[0]->Quantity <= 0){
 		echo '<p>';
 		prnMsg( _('The quantity entered must be a positive number greater than zero'), 'error');
 		$InputError = true;
@@ -455,7 +455,7 @@ if (isset($_POST['StockID'])) {
 } else {
 	echo '<input type=text name="StockCode" size=21 value="" maxlength=20>';
 }
-echo '</td><td><input type=submit name="CheckCode" VALUE="'._('Check Part').'"></td></tr>';
+echo '</td><td><input type=submit name="CheckCode" value="'._('Check Part').'"></td></tr>';
 
 if (isset($_SESSION['Transfer']->TransferItem[0]->ItemDescription) and strlen($_SESSION['Transfer']->TransferItem[0]->ItemDescription)>1){
 	echo '<tr><td colspan=3><font color=BLUE size=3>' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Transfer']->TransferItem[0]->PartUnit . ' )</font></td></tr>';
@@ -491,13 +491,13 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 		if ($myrow['loccode'] == $_SESSION['Transfer']->StockLocationTo){
 			 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-			 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation'] AND isset($_SESSION['Transfer'])){
 		 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		 $_SESSION['Transfer']->StockLocationTo=$myrow['loccode'] . '</option>';
 	} else {
-		 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
 }
 
@@ -506,10 +506,10 @@ echo '</select></td></tr>';
 
 echo '<tr><td>'._('Transfer Quantity').':</td>';
 
-if (isset($_SESSION['Transfer']->TransferItem[0]->Controlled) and $_SESSION['Transfer']->TransferItem[0]->Controlled==1){
+if (isset($_SESSION['Transfer']->TransferItem[0]->Controlled) AND $_SESSION['Transfer']->TransferItem[0]->Controlled==1){
 	echo '<td class=number><input type=hidden name="Quantity" value=' . $_SESSION['Transfer']->TransferItem[0]->Quantity .
 		'><a href="' . $rootpath .'/StockTransferControlled.php?StockLocationFrom='.$_SESSION['Transfer']->StockLocationFrom.'">' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '</a></td></tr>';
-} else if (isset($_SESSION['Transfer']->TransferItem[0]->Controlled)){
+} elseif (isset($_SESSION['Transfer']->TransferItem[0]->Controlled)){
 	echo '<td><input type=text class="number" name="Quantity" size=12 maxlength=12 value=' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '></td></tr>';
 } else {
 	echo '<td><input type=text class="number" name="Quantity" size=12 maxlength=12 Value="0"></td></tr>';
