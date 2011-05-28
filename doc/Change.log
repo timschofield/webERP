@@ -1,5 +1,10 @@
 webERP Change Log
 
+28/5/11 Ricard PcAssignCashToTab.php quoted the $Days integer parameter to the INTERVAL function incorrectly now fixed
+28/5/11 Ricard reported bug on deletion of PcExpensesTypeTab - incorrectly formed URL and parameters added ?
+28/5/11 Ricard reported mismatch of fields scripts pagesecurity changed to int(11) from tinyint as other tables all refer to as int(11)
+28/5/11 R2-G reported alignment issue with link and button on SuppTransGLAnalysis now fixed
+28/5/11 Ricard: MRPShortages now has an option to report excesses too
 28/5/11 Ricard: Fix sql to take quotes out of literals in upgrade script. PDFPrintLabels fix sql to get current price.
 28/5/11 Reported by Daniel Brewer Fix SelectSalesOrder.php creation of PO with excluding redundant fields in purchorderdetails that were taken out.
 28/5/11 Exson: UpdateCurrencyRateDaily was set to 1 when the option to enable it was clicked - should have been set to today's date in SystemParameters - fixed. Now no error reported bu ConvertSQLDate function when user enables update currencies daily.

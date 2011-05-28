@@ -136,9 +136,9 @@ echo '<tr>
 
 
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
-	echo '<br /><a href="' . $rootpath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a>';
+	echo '<br /><div class="centre"><a href="' . $rootpath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a></div>';
 } else {
-	echo '<br /><a href="' . $rootpath . '/SupplierCredit.php">' . _('Back to Credit Note Entry') . '</a>';
+	echo '<br /><div class="centre"><a href="' . $rootpath . '/SupplierCredit.php">' . _('Back to Credit Note Entry') . '</a></div>';
 }
 
 /*Set up a form to allow input of new GL entries */
@@ -191,7 +191,7 @@ echo '<tr>
 	</tr>
 	</table><br />';
 
-echo '<input type="submit" name="AddGLCodeToTrans" value="' . _('Enter GL Line') . '">';
+echo '<div class="centre"><input type="submit" name="AddGLCodeToTrans" value="' . _('Enter GL Line') . '"></div>';
 
 echo '</form>';
 include('includes/footer.inc');
