@@ -299,14 +299,18 @@ function getStockItems($CategoryID, $CurrCode, $SalesType, $StockID=false) {
 	}
 
 	$sql="SELECT stockmaster.stockid, 
-							stockmaster.description, stockmaster.longdescription, stockmaster.barcode, prices.price 
-				FROM stockmaster LEFT JOIN prices ON stockmaster.stockid=prices.stockid 
-				AND prices.currabrev = '" . $CurrCode . "' 
-				AND prices.typeabbrev= '" . $SalesType . "'
-				AND prices.startdate >= '" . Date('Y-m-d') . "'
-				AND (prices.enddate <= '" . Date('Y-m-d') . "' OR prices.enddate='0000-00-00') 
-				AND prices.debtorno=''
-				WHERE " . $WhereClause;
+				stockmaster.description, 
+				stockmaster.longdescription, 
+				stockmaster.barcode, 
+				prices.price 
+			FROM stockmaster LEFT JOIN prices 
+			ON stockmaster.stockid=prices.stockid 
+			AND prices.currabrev = '" . $CurrCode . "' 
+			AND prices.typeabbrev= '" . $SalesType . "'
+			AND prices.startdate <= '" . Date('Y-m-d') . "'
+			AND (prices.enddate >= '" . Date('Y-m-d') . "' OR prices.enddate='0000-00-00') 
+			AND prices.debtorno=''
+			WHERE " . $WhereClause;
 
 // if current prices are those with enddate = 0000-00-00 the following line was wrong			
 //			"AND ('$Today' BETWEEN pr.startdate AND prices.enddate) " .

@@ -161,7 +161,7 @@ if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
 			$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
 			/*Loop around the defined currencies and get the rate from ECB */
 			if ($CurrencyRates!=false) {
-				$CurrenciesResult = DB_query('SELECT currabrev FROM currencies',$db);
+				$CurrenciesResult = DB_query("SELECT currabrev FROM currencies",$db);
 				while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
 					if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
 

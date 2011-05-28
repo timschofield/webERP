@@ -237,8 +237,6 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
                     									quantityord,
                     									suppliersunit,
                     									suppliers_partno,
-                    									kgs,
-                    									cuft,
                     									conversionfactor )
                                          VALUES ('" . $PO_OrderNo . "',
                     						     '" . $ItemRow['stockid'] . "',
@@ -249,8 +247,6 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
                     						     '" . $ItemRow['orderqty'] . "',
                     						     '" . $ItemRow['suppliersuom'] . "',
                     						     '" . $ItemRow['suppliers_partno'] . "',
-                    						     '" . $ItemRow['kgs'] . "',
-                    						     '" . $ItemRow['volume'] . "',
                     						     '" . $ItemRow['conversionfactor']  . "')";
 				$ErrMsg =_('One of the purchase order detail records could not be inserted into the database because');
 				$DbgMsg =_('The SQL statement used to insert the purchase order detail record and failed was');
