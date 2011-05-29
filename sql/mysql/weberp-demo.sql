@@ -1318,6 +1318,7 @@ CREATE TABLE `pctabs` (
   `typetabcode` varchar(20) NOT NULL,
   `currency` char(3) NOT NULL,
   `tablimit` double NOT NULL,
+  `assigner` varchar(20) NOT NULL COMMENT 'Cash assigner for the tab',
   `authorizer` varchar(20) NOT NULL COMMENT 'code of user from www_users',
   `glaccountassignment` int(11) NOT NULL COMMENT 'gl account where the money comes from',
   `glaccountpcash` int(11) NOT NULL,
@@ -1998,7 +1999,7 @@ CREATE TABLE `salestypes` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `scripts` (
   `script` varchar(78) NOT NULL DEFAULT '',
-  `pagesecurity` tinyint(11) NOT NULL DEFAULT '1',
+  `pagesecurity` int(11) NOT NULL DEFAULT '1',
   `description` text NOT NULL,
   PRIMARY KEY (`script`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -2293,7 +2294,7 @@ CREATE TABLE `stockmoves` (
   CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `stockmoves_ibfk_4` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2798,7 +2799,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-05-26 22:39:24
+-- Dump completed on 2011-05-29 21:56:20
 -- MySQL dump 10.13  Distrib 5.1.47-MariaDB, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -10360,7 +10361,7 @@ INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
 INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','0');
-INSERT INTO `config` VALUES ('VersionNumber','4.04');
+INSERT INTO `config` VALUES ('VersionNumber','4.04.1');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
 INSERT INTO `config` VALUES ('WikiApp','Disabled');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
@@ -11067,7 +11068,7 @@ INSERT INTO `locstock` VALUES ('MEL','BIGEARS12',0,0);
 INSERT INTO `locstock` VALUES ('MEL','BirthdayCakeConstruc',0,0);
 INSERT INTO `locstock` VALUES ('MEL','BREAD',67,0);
 INSERT INTO `locstock` VALUES ('MEL','DR_TUMMY',0,0);
-INSERT INTO `locstock` VALUES ('MEL','DVD-CASE',35,0);
+INSERT INTO `locstock` VALUES ('MEL','DVD-CASE',34,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-DHWV',-12,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-LTWP',-3,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-TOPGUN',-1,0);
@@ -11089,7 +11090,7 @@ INSERT INTO `locstock` VALUES ('TOR','BIGEARS12',0,0);
 INSERT INTO `locstock` VALUES ('TOR','BirthdayCakeConstruc',0,0);
 INSERT INTO `locstock` VALUES ('TOR','BREAD',6.5,0);
 INSERT INTO `locstock` VALUES ('TOR','DR_TUMMY',0,0);
-INSERT INTO `locstock` VALUES ('TOR','DVD-CASE',186,0);
+INSERT INTO `locstock` VALUES ('TOR','DVD-CASE',187,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-DHWV',-1,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-LTWP',0,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-TOPGUN',0,0);
@@ -13360,6 +13361,8 @@ INSERT INTO `stockmoves` VALUES (68,'DVD-CASE',10,15,'TOR','2011-04-18','QUICK',
 INSERT INTO `stockmoves` VALUES (69,'SALT',10,15,'TOR','2011-04-18','QUICK','SLOW','4.1176',8,'28',-4,0.025,2.5,1,19.7,0,'ass');
 INSERT INTO `stockmoves` VALUES (70,'FLOUR',10,16,'TOR','2011-05-03','QUICK','SLOW','287.3224',9,'29',-4,0.025,3.89,1,8,0,'');
 INSERT INTO `stockmoves` VALUES (71,'SALT',25,34,'MEL','2011-05-19','','','100.0000',9,'GOTSTUFF (We Got the Stuff Inc) - 2',2,0,3.3654888888889,1,5,0,NULL);
+INSERT INTO `stockmoves` VALUES (72,'DVD-CASE',16,24,'MEL','2011-05-29','','','0.0000',9,'To TOR',-1,0,0,1,34,0,NULL);
+INSERT INTO `stockmoves` VALUES (73,'DVD-CASE',16,24,'TOR','2011-05-29','','','0.0000',9,'From MEL',1,0,0,1,187,0,NULL);
 
 --
 -- Dumping data for table `stockmovestaxes`
@@ -13477,7 +13480,7 @@ INSERT INTO `systypes` VALUES (10,'Sales Invoice',16);
 INSERT INTO `systypes` VALUES (11,'Credit Note',7);
 INSERT INTO `systypes` VALUES (12,'Receipt',11);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
-INSERT INTO `systypes` VALUES (16,'Location Transfer',23);
+INSERT INTO `systypes` VALUES (16,'Location Transfer',24);
 INSERT INTO `systypes` VALUES (17,'Stock Adjustment',20);
 INSERT INTO `systypes` VALUES (18,'Purchase Order',17);
 INSERT INTO `systypes` VALUES (19,'Picking List',0);
@@ -13640,7 +13643,7 @@ INSERT INTO `workorders` VALUES (13,'TOR','2010-10-15','2010-08-14',0,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','','MEL',8,'2011-05-26 21:47:57','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'gel','en_GB.utf8',0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','','MEL',8,'2011-05-29 18:50:37','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'gel','en_GB.utf8',0);
 INSERT INTO `www_users` VALUES ('test','7c4a8d09ca3762af61e59520943dc26494f8941b','test','','','','','','MEL',6,'2011-05-19 19:05:46','','A4','1,1,1,0,0,0,0,0,0,0,',0,50,'silverwolf','en_GB.utf8',0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -13649,5 +13652,5 @@ INSERT INTO `www_users` VALUES ('test','7c4a8d09ca3762af61e59520943dc26494f8941b
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-05-26 22:39:24
+-- Dump completed on 2011-05-29 21:56:20
 SET FOREIGN_KEY_CHECKS = 1;

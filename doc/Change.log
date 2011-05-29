@@ -1,14 +1,16 @@
 webERP Change Log
 
+29/5/11 Version 4.04.1 Release
+
 29/5/11 PricesByCost.php made it so the existing prices had end dates set as yesterday and new prices created from today
-29/5/11 TopItems.php fixed sequence and birthday to script
+29/5/11 TopItems.php fixed sequence and birthday to script and PDFTopItems.php script
 28/5/11 Could not set controlled item batches/serial numbers on ConfirmDispatch_Invoice.php
-28/5/11 Ricard PO_SelectOSPurchOrder.php was showing select location with gaps between locations - no slash before <option> fixed
-28/5/11 Ricard added new field assigner to petty cash module and changes to PcTabs.php and PcAssignCashToTab.php
-28/5/11 Ricard PcAssignCashToTab.php quoted the $Days integer parameter to the INTERVAL function incorrectly now fixed
-28/5/11 Ricard reported bug on deletion of PcExpensesTypeTab - incorrectly formed URL and parameters added ?
-28/5/11 Ricard reported mismatch of fields scripts pagesecurity changed to int(11) from tinyint as other tables all refer to as int(11)
-28/5/11 R2-G reported alignment issue with link and button on SuppTransGLAnalysis now fixed
+28/5/11 Ricard: PO_SelectOSPurchOrder.php was showing select location with gaps between locations - no slash before <option> fixed
+28/5/11 Ricard: added new field assigner to petty cash module and changes to PcTabs.php and PcAssignCashToTab.php
+28/5/11 Ricard: PcAssignCashToTab.php quoted the $Days integer parameter to the INTERVAL function incorrectly now fixed
+28/5/11 Ricard: reported bug on deletion of PcExpensesTypeTab - incorrectly formed URL and parameters added ?
+28/5/11 Ricard: reported mismatch of fields scripts pagesecurity changed to int(11) from tinyint as other tables all refer to as int(11)
+28/5/11 R2-G: reported alignment issue with link and button on SuppTransGLAnalysis now fixed
 28/5/11 Ricard: MRPShortages now has an option to report excesses too
 28/5/11 Ricard: Fix sql to take quotes out of literals in upgrade script. PDFPrintLabels fix sql to get current price.
 28/5/11 Reported by Daniel Brewer Fix SelectSalesOrder.php creation of PO with excluding redundant fields in purchorderdetails that were taken out.
