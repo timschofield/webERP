@@ -115,7 +115,9 @@ function ContainsIllegalCharacters ($CheckVariable) {
 		OR strstr($CheckVariable,"\"")
 		OR strstr($CheckVariable,'&')
 		OR strstr($CheckVariable,"\\")
-		OR strstr($CheckVariable,'"')){
+		OR strstr($CheckVariable,'"')
+		OR strstr($CheckVariable,'>') 
+		OR strstr($CheckVariable,'<')){
 
 		return true;
 	} else {
