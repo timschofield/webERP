@@ -17610,7 +17610,7 @@ msgstr ""
 #: PO_Header.php:153
 #, fuzzy
 msgid "The order status could not be updated because"
-msgstr "The territory could not be added or updated because"
+msgstr ""
 
 #: PO_Header.php:227
 msgid "An error occurred updating the purchase order to allow reprints"
@@ -17713,7 +17713,7 @@ msgstr "Enter text extract in the vendor code"
 #: SelectSupplier.php:246 Suppliers.php:655 Suppliers.php:839
 msgid "Supplier Name"
 msgstr "Vendor Name"
-
+Vendor Orde
 #: PO_Header.php:595
 msgid " Modify Purchase Order Number"
 msgstr ""
@@ -17900,7 +17900,7 @@ msgstr ""
 #: PO_Items.php:113 PO_Items.php:118 SelectSalesOrder.php:165
 #, fuzzy
 msgid "Order Created by"
-msgstr "Sales Order Inquiry"
+msgstr ""
 
 #: PO_Items.php:196 SelectSalesOrder.php:224 SpecialOrder.php:312
 msgid ""
@@ -17939,14 +17939,14 @@ msgstr ""
 #: PO_Items.php:284
 #, fuzzy
 msgid "The purchase order could not be deleted because"
-msgstr "The Shipping cost record could not be updated because"
+msgstr ""
 
 #: PO_Items.php:285
 #, fuzzy
 msgid ""
 "The SQL statement used to delete the purchase order header record, that "
 "failed was"
-msgstr "The SQL used to retrieve the vendor details and failed was"
+msgstr ""
 
 #: PO_Items.php:351
 msgid "One of the purchase order detail records could not be updated because"
@@ -18000,7 +18000,7 @@ msgstr ""
 #: PO_Items.php:417
 #, fuzzy
 msgid "The SQL used to retrieve the details of the account, but failed was"
-msgstr "The SQL used to retrieve the vendor details and failed was"
+msgstr ""
 
 #: PO_Items.php:421
 msgid ""
@@ -18079,7 +18079,7 @@ msgstr ""
 #: PO_Items.php:636
 #, fuzzy
 msgid " Order Summary"
-msgstr "Sales Order Inquiry"
+msgstr ""
 
 #: PO_Items.php:641
 msgid "Quantity Our Units"
@@ -18145,7 +18145,7 @@ msgstr ""
 #: PO_Items.php:733 SuppFixedAssetChgs.php:115
 #, fuzzy
 msgid "New Fixed Asset"
-msgstr "Sales Territory Maintenance"
+msgstr ""
 
 #: PO_Items.php:734
 msgid "Quantity to purchase"
@@ -18170,7 +18170,7 @@ msgstr ""
 #: PO_Items.php:932
 #, fuzzy
 msgid "Supplier/Order"
-msgstr "Vendor Order"
+msgstr "Vendor/Order"
 
 #: PO_Items.php:933
 msgid "Go to end of list"
@@ -18380,7 +18380,7 @@ msgstr ""
 #: PO_PDFPurchOrder.php:304 PO_PDFPurchOrder.php:310
 #, fuzzy
 msgid "Email a Purchase Order"
-msgstr "Vendor Order"
+msgstr ""
 
 #: PO_PDFPurchOrder.php:307 PrintCustTrans.php:452
 #: PrintCustTransPortrait.php:504
@@ -18402,7 +18402,7 @@ msgstr ""
 #: PO_PDFPurchOrder.php:317
 #, fuzzy
 msgid "Printed by"
-msgstr "Vendor Balance Listing"
+msgstr ""
 
 #: PO_PDFPurchOrder.php:337
 msgid "Print or Email the Order"
@@ -18446,7 +18446,7 @@ msgstr ""
 #: SalesInquiry.php:1130 SalesInquiry.php:1146
 #, fuzzy
 msgid "Customer Number"
-msgstr "Vendor Number"
+msgstr ""
 
 #: POReport.php:495 POReport.php:737 POReport.php:738 POReport.php:1250
 #: POReport.php:1422 POReport.php:1423 POReport.php:1579 SalesGraph.php:252
@@ -18458,7 +18458,7 @@ msgstr ""
 #: POReport.php:511
 #, fuzzy
 msgid "Header Details"
-msgstr "Credit Shipping"
+msgstr ""
 
 #: POReport.php:513 POReport.php:1265
 msgid "By"
@@ -18871,7 +18871,7 @@ msgstr ""
 #: PricesBasedOnMarkUp.php:269
 #, fuzzy
 msgid "There is no preferred supplier data for the item"
-msgstr "there is no purchasing data set up for this vendor"
+msgstr "There is no preferred vendor for this item"
 
 #: PricesBasedOnMarkUp.php:269 PricesBasedOnMarkUp.php:272
 #: PricesBasedOnMarkUp.php:291
@@ -19272,7 +19272,7 @@ msgstr ""
 #: PrintCustStatements.php:89 PrintCustStatements.php:431
 #, fuzzy
 msgid "Print Customer Account Statements"
-msgstr "Vendor Contacts"
+msgstr ""
 
 #: PrintCustStatements.php:90
 msgid "There were no Customers matching your selection of "
@@ -19662,7 +19662,7 @@ msgstr ""
 #: PurchData.php:141
 #, fuzzy
 msgid "This purchasing data record has been successfully deleted"
-msgstr "The shipping-method record has been deleted"
+msgstr ""
 
 #: PurchData.php:146 PurchData.php:257 PurchData.php:276
 msgid "For Stock Code"
@@ -19677,7 +19677,7 @@ msgstr ""
 #: PurchData.php:166
 #, fuzzy
 msgid "There is no purchasing data set up for the part selected"
-msgstr "there is no purchasing data set up for this vendor"
+msgstr "There is no purchasing data set up for this vendor"
 
 #: PurchData.php:173
 msgid "Conversion Factor"
@@ -19840,7 +19840,7 @@ msgstr "Vendor Code"
 #: PurchData.php:485
 #, fuzzy
 msgid "MinOrderQty"
-msgstr "Sales Order Inquiry"
+msgstr "Min Order Qty"
 
 #: PurchData.php:487
 #, fuzzy
@@ -20109,7 +20109,7 @@ msgstr ""
 #: includes/DefineSuppTransClass.php:72
 #, fuzzy
 msgid "The taxes and rates for this item could not be retrieved because"
-msgstr "The Vendor details could not be retrieved by the SQL because"
+msgstr ""
 
 #: RecurringSalesOrdersProcess.php:576
 msgid "The following SQL to insert the tax GLTrans record was used"
@@ -20159,7 +20159,7 @@ msgstr ""
 #: ReorderLevelLocation.php:56 ReorderLevelLocation.php:58
 #, fuzzy
 msgid "At All Locations"
-msgstr "Vendor Selection"
+msgstr ""
 
 #: ReorderLevelLocation.php:57 ReorderLevelLocation.php:59
 msgid "At Location"
@@ -20198,7 +20198,7 @@ msgstr ""
 #: ReorderLevelLocation.php:200 includes/PDFTopItemsHeader.inc:30
 #, fuzzy
 msgid "Order By"
-msgstr "Sales Order Inquiry"
+msgstr ""
 
 #: ReorderLevel.php:12 ReorderLevel.php:238
 msgid "Reorder Level Report"
@@ -20211,7 +20211,7 @@ msgstr ""
 #: ReorderLevel.php:59
 #, fuzzy
 msgid "The Reorder Level report could not be retrieved by the SQL because"
-msgstr "The Vendor details could not be retrieved by the SQL because"
+msgstr ""
 
 #: ReorderLevel.php:146
 msgid "Print Reorder Level Report"
@@ -20246,17 +20246,17 @@ msgstr ""
 #: ReprintGRN.php:18
 #, fuzzy
 msgid "Select a purchase order"
-msgstr "Select Vendor"
+msgstr "Select vendor order"
 
 #: ReprintGRN.php:19
 #, fuzzy
 msgid "Enter a Purchase Order Number"
-msgstr "there is no purchasing data set up for this vendor"
+msgstr ""
 
 #: ReprintGRN.php:29
 #, fuzzy
 msgid "You must enter a purchase order number in the box above"
-msgstr "You should enter the shipping address in the box provided"
+msgstr ""
 
 #: ReprintGRN.php:40
 msgid "This purchase order does not exist on the system. Please try again."
@@ -20265,22 +20265,22 @@ msgstr ""
 #: ReprintGRN.php:63
 #, fuzzy
 msgid "There are no GRNs for this purchase order that can be reprinted."
-msgstr "The Shipping cost record could not be updated because"
+msgstr ""
 
 #: ReprintGRN.php:69
 #, fuzzy
 msgid "GRNs for Purchase Order No"
-msgstr "Vendor Order"
+msgstr ""
 
 #: ReprintGRN.php:71
 #, fuzzy
 msgid "PO Order line"
-msgstr "Sales Order Inquiry"
+msgstr ""
 
 #: ReprintGRN.php:72
 #, fuzzy
 msgid "GRN Number"
-msgstr "Vendor Number"
+msgstr ""
 
 #: ReprintGRN.php:76 SelectWorkOrder.php:302 StockLocTransferReceive.php:433
 #: WorkOrderCosting.php:85 WorkOrderReceive.php:867
@@ -20372,22 +20372,22 @@ msgstr ""
 #, fuzzy
 msgid ""
 "The purchase order statusand status comment could not be changed because"
-msgstr "The Shipping cost record could not be updated because"
+msgstr ""
 
 #: ReverseGRN.php:139
 #, fuzzy
 msgid "The following SQL to update the purchase order header record was used"
-msgstr "The SQL used to retrieve the vendor details and failed was"
+msgstr ""
 
 #: ReverseGRN.php:147
 #, fuzzy
 msgid "The GRN record could not be deleted because"
-msgstr "The Shipping cost record could not be updated because"
+msgstr ""
 
 #: ReverseGRN.php:148
 #, fuzzy
 msgid "The following SQL to delete the GRN record was used"
-msgstr "The SQL used to retrieve the vendor details and failed was"
+msgstr "s"
 
 #: ReverseGRN.php:155
 msgid "The GRN record could not be updated"
@@ -20407,7 +20407,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "The following SQL was used to attempt the reduce the cost of the asset was:"
-msgstr "The SQL used to retrieve the vendor details and failed was"
+msgstr ""
 
 #: ReverseGRN.php:191
 msgid "Could not determine if the item exists because"
