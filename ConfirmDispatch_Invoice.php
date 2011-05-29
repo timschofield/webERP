@@ -139,9 +139,7 @@ if (!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 								salesorderdetails.orderlineno,
 								salesorderdetails.poline,
 								salesorderdetails.itemdue,
-								stockmaster.materialcost +
-									stockmaster.labourcost +
-									stockmaster.overheadcost AS standardcost
+								stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS standardcost
 							FROM salesorderdetails INNER JOIN stockmaster
 							 	ON salesorderdetails.stkcode = stockmaster.stockid
 							WHERE salesorderdetails.orderno ='" . $_GET['OrderNumber'] . "'
@@ -316,8 +314,7 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 			echo '<td class="number">' . $LnItm->QtyDispatched . '</td>';
 		} else {
 			echo '<td class="number"><input type=hidden name="' . $LnItm->LineNumber . '_QtyDispatched"  value="' .
-				$LnItm->QtyDispatched . '"><a href="' . $rootpath .'/ConfirmDispatchControlled_Invoice.php?' . SID .
-					'&LineNo='. $LnItm->LineNumber.'">' .$LnItm->QtyDispatched . '</a></td>';
+				$LnItm->QtyDispatched . '"><a href="' . $rootpath .'/ConfirmDispatchControlled_Invoice.php?LineNo='. $LnItm->LineNumber.'">' .$LnItm->QtyDispatched . '</a></td>';
 		}
 	} else {
 		if (isset($_POST['ProcessInvoice'])) {
@@ -1139,8 +1136,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 			if ($OrderLine->Controlled ==1){
 				foreach($OrderLine->SerialItems as $Item){
-                                /*We need to add the StockSerialItem record and
-				The StockSerialMoves as well */
+                   /*We need to add the StockSerialItem record and the StockSerialMoves as well */
 
 					$SQL = "UPDATE stockserialitems	SET quantity= quantity - " . $Item->BundleQty . "
 							WHERE stockid='" . $OrderLine->StockID . "'

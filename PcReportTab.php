@@ -146,7 +146,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+340,$YPos,70,$FontSize,$_POST['ToDate']);
 
 	$YPos -= $line_height;
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Authorizer '));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Authoriser '));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,_(': '));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$Tabs['authorizer']);
 
@@ -172,7 +172,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+200,$YPos,100,$FontSize,_('Amount'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,_('Note'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,_('Receipt'));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+420,$YPos,100,$FontSize,_('Date Authorizer'));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+420,$YPos,100,$FontSize,_('Date Authoriser'));
 	$YPos -= (2 * $line_height);
 
 	while ($myrow=DB_fetch_array($TabDetail)) {
@@ -262,7 +262,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 				'<td>' . _('To') . '</td><td>:</td><td>' .
 			''.$_POST['ToDate'].'</td></tr>';
 
-	echo '<tr><td>' . _('Authorizer') . '</td><td>:</td><td>' . ''.$Tabs['authorizer'].'</td>
+	echo '<tr><td>' . _('Authoriser') . '</td><td>:</td><td>' . ''.$Tabs['authorizer'].'</td>
 			</tr>';
 	echo '<tr><td>' . _('Currency') . '</td><td>:</td><td>' . ''.$Tabs['currency'].'</td>
 			</tr>';
@@ -299,7 +299,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$BalanceNotAut['0']=0;
 	}
 
-	echo '<tr><td>' . _('Total not authorized before ') . ''.$_POST['FromDate'].'</td><td>:</td><td>' . ''.$BalanceNotAut['0'].' '.$Tabs['currency'].'</td></tr>';
+	echo '<tr><td>' . _('Total not authorised before ') . ''.$_POST['FromDate'].'</td><td>:</td><td>' . ''.$BalanceNotAut['0'].' '.$Tabs['currency'].'</td></tr>';
 
 
 	echo '</table>';
@@ -326,7 +326,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		<th>' . _('Amount') . '</th>
 		<th>' . _('Notes') . '</th>
 		<th>' . _('Receipt') . '</th>
-		<th>' . _('Date Authorized') . '</th>
+		<th>' . _('Date Authorised') . '</th>
 	</tr>';
 
 	$j = 1;

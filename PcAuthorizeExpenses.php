@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Authorization of Petty Cash Expenses');
+$title = _('Authorisation of Petty Cash Expenses');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -40,10 +40,10 @@ if (isset($_POST['Go'])) {
 
 if (isset($SelectedTabs)) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Petty Cash') .
-		'" alt="" />' . _('Authorization Of Petty Cash Expenses ') . ''.$SelectedTabs.'</p>';
+		'" alt="" />' . _('Authorisation Of Petty Cash Expenses ') . ''.$SelectedTabs.'</p>';
 } else {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Petty Cash') .
-		'" alt="" />' . _('Authorization Of Petty Cash Expenses ') . '</p>';
+		'" alt="" />' . _('Authorisation Of Petty Cash Expenses ') . '</p>';
 }
 if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR isset ($_POST['GO'])) {
 
@@ -248,8 +248,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 		if (isset($_POST[$myrow['counterindex']])){
 			echo'<td>'.ConvertSQLDate(Date('Y-m-d')).'</td>';
 		}else{
-			$Authorizer=ConvertSQLDate($myrow['authorized']);
-			if(($Authorizer!='00/00/0000')){
+			$Authoriser=ConvertSQLDate($myrow['authorized']);
+			if(($Authoriser!='00/00/0000')){
 				echo'<td>'.ConvertSQLDate($myrow['authorized']).'</td>';
 			}else{
 				echo '<td align=right><input type="checkbox" name="'.$myrow['counterindex'].'">';

@@ -417,7 +417,7 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
 	echo '<a href="' . $rootpath . '/StockTransfers.php?StockID=' . $StockID . '">' . _('Location Transfers') . '</a><br />';
 	//show the item image if it has been uploaded
 	if( isset($StockID) and file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
-		echo '<div class="centre"><img src="' . $_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg ' . '" ></div>';
+		echo '<div class="centre"><img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . $StockID . '&text=&width=120&height=120">';
 	}
 	if (($myrow['mbflag'] == 'B') AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))){
 		echo '<br />';

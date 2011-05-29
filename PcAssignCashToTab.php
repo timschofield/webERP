@@ -155,7 +155,7 @@ if (!isset($SelectedTabs)){
 	DB_free_result($result);
 	$SQL = "SELECT tabcode
 			FROM pctabs
-			WHERE authorizer='" . $_SESSION['UserID'] . "'
+			WHERE assigner='" . $_SESSION['UserID'] . "'
 			ORDER BY tabcode";
 
 	$result = DB_query($SQL,$db);
@@ -198,7 +198,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		 }
 		$sql = "SELECT * FROM pcashdetails
 				WHERE tabcode='" . $SelectedTabs . "'
-				AND date >=DATE_SUB(CURDATE(), INTERVAL , ".$Days." DAY)
+				AND date >=DATE_SUB(CURDATE(), INTERVAL , " . $Days . " DAY)
 				ORDER BY date, counterindex ASC";
 
 

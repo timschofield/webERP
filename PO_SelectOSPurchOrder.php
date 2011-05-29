@@ -131,20 +131,21 @@ if (isset($_POST['SearchParts'])) {
 if (!isset($OrderNumber) or $OrderNumber=='' ){
 	echo '<a href="' . $rootpath . '/PO_Header.php?' .SID . '&NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'</p>';
-	echo '<table class=selection><tr><td>'._('Order Number') . ': <input type=text name="OrderNumber" MAXLENGTH =8 size=9>  ' . _('Into Stock Location') . ':<select name="StockLocation"> ';
-	$sql = 'SELECT loccode, locationname FROM locations';
+	echo '<table class=selection><tr><td>'._('Order Number') . ': <input type="text" name="OrderNumber" maxlength="8" size="9" />  ' . _('Into Stock Location') . ':<select name="StockLocation">';
+	
+	$sql = "SELECT loccode, locationname FROM locations";
 	$resultStkLocs = DB_query($sql,$db);
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['StockLocation'])){
 			if ($myrow['loccode'] == $_POST['StockLocation']){
-				echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			} else {
-				echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '<option>';
+				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			}
 		} elseif ($myrow['loccode']== $_SESSION['UserStockLocation']){
-			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
+			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
 		}
 	}
 
@@ -180,23 +181,23 @@ if (!isset($OrderNumber) or $OrderNumber=='' ){
 $SQL="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
 $result1 = DB_query($SQL,$db);
 
-echo "<br><font size=1><div class='page_help_text'>" ._('To search for purchase orders for a specific part use the part selection facilities below')
-		."</div> </font>";
-echo "<br><table class=selection><tr>";
+echo '<br /><font size=1><div class="page_help_text">' ._('To search for purchase orders for a specific part use the part selection facilities below')
+		.'</div> </font>';
+echo '<br /><table class="selection"><tr>';
 
-echo "<td><font size=1>" . _('Select a stock category') . ":</font><select name='StockCat'>";
+echo '<td><font size="1">' . _('Select a stock category') . ':</font><select name="StockCat">';
 
 while ($myrow1 = DB_fetch_array($result1)) {
 	if (isset($_POST['StockCat']) and $myrow1['categoryid']==$_POST['StockCat']){
-		echo "<option selected value='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription']  . '</option>';
+		echo '<option selected value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription']  . '</option>';
 	} else {
-		echo "<option value='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription']  . '</option>';
+		echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription']  . '</option>';
 	}
 }
-echo "</select>";
-echo "<td><font size=1>" . _('Enter text extracts in the') . "<b>" . _('description') . "</b>:</font></td>";
+echo '</select>';
+echo '<td><font size=1>' . _('Enter text extracts in the') . '<b>' . _('description') . '</b>:</font></td>';
 echo '<td><input type="Text" name="Keywords" size=20 maxlength=25></td></tr><tr><td></td>';
-echo "<td><font size<b>" . _('OR') . "</b></font><font size=1>" .  _('Enter extract of the') .  "<b>" .  _('Stock Code') . "</b>:</font></td>";
+echo '<td><font size<b>' . _('OR') . '</b></font><font size=1>' .  _('Enter extract of the') .  '<b>' .  _('Stock Code') . '</b>:</font></td>';
 echo '<td><input type="Text" name="StockCode" size=15 maxlength=18></td></tr></table><br>';
 echo '<table><tr><td><input type=submit name="SearchParts" value="' . _('Search Parts Now') . '">';
 echo '<input type=submit name="ResetPart" value="' . _('Show All') . '"></td></tr></table>';

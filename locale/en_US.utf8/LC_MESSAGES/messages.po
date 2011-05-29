@@ -15517,16 +15517,16 @@ msgid "Cash Assignation Date"
 msgstr ""
 
 #: PcAuthorizeExpenses.php:5
-msgid "Authorization of Petty Cash Expenses"
-msgstr ""
+msgid "Authorisation of Petty Cash Expenses"
+msgstr "Authorization of Petty Cash Expenses"
 
 #: PcAuthorizeExpenses.php:29
 msgid "You Must First Select a Petty Cash Tab To Authorise"
-msgstr ""
+msgstr "You Must First Select a Petty Cash Tab To Authorize"
 
 #: PcAuthorizeExpenses.php:43 PcAuthorizeExpenses.php:46
-msgid "Authorization Of Petty Cash Expenses "
-msgstr ""
+msgid "Authorisation Of Petty Cash Expenses "
+msgstr "Authorization Of Petty Cash Expenses"
 
 #: PcAuthorizeExpenses.php:58
 msgid "Detail Of Movement For Last "
@@ -15543,7 +15543,7 @@ msgstr ""
 #: PcAuthorizeExpenses.php:293
 #, fuzzy
 msgid "Authorise expenses to Petty Cash Tab"
-msgstr "Shipping Re-charged GL Account"
+msgstr "Authorize expenses to Petty Cash Tab"
 
 #: PcClaimExpensesFromTab.php:6
 msgid "Claim Petty Cash Expenses From Tab"
@@ -15560,7 +15560,7 @@ msgstr ""
 #: PcClaimExpensesFromTab.php:67
 #, fuzzy
 msgid "The Amount must be greater than 0"
-msgstr "The shipping-method ID must be an integer"
+msgstr "The Amount must be greater than 0"
 
 #: PcClaimExpensesFromTab.php:79 PcClaimExpensesFromTab.php:105
 msgid "The Expense Claim on Tab"
@@ -15569,7 +15569,7 @@ msgstr ""
 #: PcClaimExpensesFromTab.php:124
 #, fuzzy
 msgid "Petty Cash Expense record could not be deleted because"
-msgstr "The Shipping cost record could not be updated because"
+msgstr "Petty Cash Expense record could not be deleted because"
 
 #: PcClaimExpensesFromTab.php:126
 msgid "Petty cash Expense record"
@@ -15592,12 +15592,12 @@ msgstr ""
 #: PcClaimExpensesFromTab.php:176
 #, fuzzy
 msgid "Select another tab"
-msgstr "Select the Vendor"
+msgstr "Select another tab"
 
 #: PcClaimExpensesFromTab.php:182
 #, fuzzy
 msgid "Petty Cash Tab"
-msgstr "Shipping Re-charged GL Account"
+msgstr "Petty Cash Tab"
 
 #: PcClaimExpensesFromTab.php:183
 msgid "Detail Of Movements For Last "
@@ -15611,15 +15611,15 @@ msgstr ""
 #: PcClaimExpensesFromTab.php:211 PcReportTab.php:325
 #, fuzzy
 msgid "Expense Description"
-msgstr "Vendor Code or Description"
+msgstr ""
 
 #: PcClaimExpensesFromTab.php:213
-msgid "Authorized"
-msgstr ""
+msgid "Authorised"
+msgstr "Authorized"
 
 #: PcClaimExpensesFromTab.php:240
 msgid "Unauthorised"
-msgstr ""
+msgstr "Unauthorized"
 
 #: PcClaimExpensesFromTab.php:253
 #, php-format
@@ -15644,7 +15644,7 @@ msgstr ""
 #: PcExpenses.php:51
 #, fuzzy
 msgid "The Expense code must be twenty characters or less long"
-msgstr "The territory code must be three characters or less long"
+msgstr ""
 
 #: PcExpenses.php:57
 msgid ""
@@ -15656,22 +15656,22 @@ msgstr ""
 msgid ""
 "The Expense description cannot contain any of the following characters \" ' "
 "- &"
-msgstr "The terrirory desscription must be twenty five characters or less long"
+msgstr ""
 
 #: PcExpenses.php:69 PcTypeTabs.php:49
 #, fuzzy
 msgid "The tab code must be Fifty characters or less long"
-msgstr "The territory code must be three characters or less long"
+msgstr ""
 
 #: PcExpenses.php:76
 #, fuzzy
 msgid "The tab code description must be entered"
-msgstr "The territory description may not be left blank"
+msgstr ""
 
 #: PcExpenses.php:82
 #, fuzzy
 msgid "A general ledger code must be selected for this expense"
-msgstr "Shipping Re-charged GL Account"
+msgstr ""
 
 #: PcExpenses.php:93
 msgid "The Expenses type"
@@ -15707,12 +15707,12 @@ msgstr ""
 #: PcExpenses.php:152
 #, fuzzy
 msgid "tab types using this expense code"
-msgstr "branches using this territory code"
+msgstr ""
 
 #: PcExpenses.php:158
 #, fuzzy
 msgid "The expense type record could not be deleted because"
-msgstr "The Shipping cost record could not be updated because"
+msgstr ""
 
 #: PcExpenses.php:160
 msgid "Expense type"
@@ -15721,7 +15721,7 @@ msgstr ""
 #: PcExpenses.php:183
 #, fuzzy
 msgid "Account Description"
-msgstr "Vendor Code or Description"
+msgstr ""
 
 #: PcExpenses.php:209
 #, php-format
@@ -15794,7 +15794,7 @@ msgstr ""
 #: PcExpensesTypeTab.php:198
 #, fuzzy
 msgid "Select Expense Code"
-msgstr "Select Vendor"
+msgstr ""
 
 #: PcReportTab.php:8
 msgid "Petty Cash Management Report"
@@ -15807,12 +15807,12 @@ msgstr ""
 #: PcReportTab.php:64
 #, fuzzy
 msgid "From Date :"
-msgstr "Vendor Order"
+msgstr ""
 
 #: PcReportTab.php:67
 #, fuzzy
 msgid "To Date:"
-msgstr "Vendor Order"
+msgstr ""
 
 #: PcReportTab.php:70
 msgid "Show HTML"
@@ -15854,12 +15854,12 @@ msgstr ""
 #: PcReportTab.php:115
 #, fuzzy
 msgid "No Petty Cash tabs were returned by the SQL because"
-msgstr "The Vendor details could not be retrieved by the SQL because"
+msgstr ""
 
 #: PcReportTab.php:133
 #, fuzzy
 msgid "Tab Code :"
-msgstr "Territory Code"
+msgstr ""
 
 #: PcReportTab.php:134 PcReportTab.php:137 PcReportTab.php:142
 #: PcReportTab.php:145 PcReportTab.php:150 PcReportTab.php:155
@@ -15881,8 +15881,8 @@ msgid "To "
 msgstr ""
 
 #: PcReportTab.php:149
-msgid "Authorizer "
-msgstr ""
+msgid "Authoriser "
+msgstr "Authorizer"
 
 #: PcReportTab.php:154
 msgid "Currency "
@@ -15903,12 +15903,12 @@ msgstr ""
 #: PcReportTab.php:246
 #, fuzzy
 msgid "No Petty Cash Tabs were returned by the SQL because"
-msgstr "The Vendor details could not be retrieved by the SQL because"
+msgstr ""
 
 #: PcReportTab.php:253 PcTabs.php:192 PcTabs.php:274 PcTabs.php:280
 #, fuzzy
 msgid "Tab Code"
-msgstr "Territory Code"
+msgstr ""
 
 #: PcReportTab.php:265 PcTabs.php:197
 msgid "Authorizer"
@@ -15921,11 +15921,11 @@ msgstr ""
 #: PcReportTab.php:319
 #, fuzzy
 msgid "No Petty Cash movements for this tab were returned by the SQL because"
-msgstr "The Vendor details could not be retrieved by the SQL because"
+msgstr ""
 
 #: PcReportTab.php:329
-msgid "Date Authorized"
-msgstr ""
+msgid "Date Authorised"
+msgstr "Date Authorized"
 
 #: PcReportTab.php:399
 msgid "Balance At"
@@ -15947,7 +15947,7 @@ msgstr "The territory code may not be left blank"
 #: PcTabs.php:54
 #, fuzzy
 msgid "The Tab code must be twenty characters or less long"
-msgstr "The territory code must be three characters or less long"
+msgstr ""
 
 #: PcTabs.php:59
 msgid "You must select a User for this tab"
@@ -15960,7 +15960,7 @@ msgstr ""
 #: PcTabs.php:69
 #, fuzzy
 msgid "You must select a User to authorise this tab"
-msgstr "Vendor Code or Description"
+msgstr ""
 
 #: PcTabs.php:74
 msgid "You must select a General ledger code for the cash to be assigned from"
@@ -15981,7 +15981,7 @@ msgstr ""
 #: PcTabs.php:109
 #, fuzzy
 msgid " already exists"
-msgstr "The territory code entered already exists"
+msgstr ""
 
 #: PcTabs.php:131
 msgid "Tab with Code "
@@ -15990,7 +15990,7 @@ msgstr ""
 #: PcTabs.php:154
 #, fuzzy
 msgid "The Tab record could not be deleted because"
-msgstr "The Shipping cost record could not be updated because"
+msgstr ""
 
 #: PcTabs.php:156 PcTypeTabs.php:135
 msgid "Tab type"
@@ -16016,7 +16016,7 @@ msgstr ""
 #: PcTabs.php:199 PcTabs.php:408
 #, fuzzy
 msgid "GL Account Petty Cash Tab"
-msgstr "Shipping Re-charged GL Account"
+msgstr ""
 
 #: PcTabs.php:222
 #, php-format
@@ -16026,7 +16026,7 @@ msgstr ""
 #: PcTabs.php:243
 #, fuzzy
 msgid "Show All Tabs Defined"
-msgstr "Review Territories Defined"
+msgstr ""
 
 #: PcTabs.php:358
 msgid "Limit Of Tab"
@@ -16034,12 +16034,12 @@ msgstr ""
 
 #: PcTabs.php:361
 msgid "Authoriser"
-msgstr ""
+msgstr "Authorizer"
 
 #: PcTabs.php:384
 #, fuzzy
 msgid "GL Account Cash Assignment"
-msgstr "Shipping Re-charged GL Account"
+msgstr ""
 
 #: PcTypeTabs.php:5
 msgid "Maintenance Of Petty Cash Type of Tabs"
@@ -16048,18 +16048,18 @@ msgstr ""
 #: PcTypeTabs.php:36
 #, fuzzy
 msgid "The Tabs type code cannot be an empty string"
-msgstr "The territory code may not be left blank"
+msgstr ""
 
 #: PcTypeTabs.php:41
 #, fuzzy
 msgid "The tab code must be twenty characters or less long"
-msgstr "The territory code must be three characters or less long"
+msgstr ""
 
 #: PcTypeTabs.php:46
 #, fuzzy
 msgid ""
 "The petty cash tab type code cannot contain any of the illegal characters"
-msgstr "The terrirory desscription must be twenty five characters or less long"
+msgstr ""
 
 #: PcTypeTabs.php:60
 msgid "The Tabs type"
@@ -16077,7 +16077,6 @@ msgstr ""
 #, fuzzy
 msgid "The number of tabs using this Tab type could not be retrieved"
 msgstr ""
-"The vendors matching the criteria entered could not be retrieved because"
 
 #: PcTypeTabs.php:122
 #, fuzzy
@@ -16085,8 +16084,6 @@ msgid ""
 "Cannot delete this tab type because tabs have been created using this tab "
 "type"
 msgstr ""
-"Cannot delete this territory because customer branches have been created "
-"using this area"
 
 #: PcTypeTabs.php:126
 msgid "Return to list of tab types"
@@ -16102,7 +16099,7 @@ msgstr ""
 #: PcTypeTabs.php:187
 #, fuzzy
 msgid "Show All Types Tabs Defined"
-msgstr "Review Territories Defined"
+msgstr ""
 
 #: PcTypeTabs.php:212 PcTypeTabs.php:224
 msgid "Code Of Type Of Tab"
@@ -16336,7 +16333,7 @@ msgstr ""
 #: PDFCustTransListing.php:91
 #, fuzzy
 msgid "Customer Transaction Listing"
-msgstr "Vendor Contacts"
+msgstr ""
 
 #: PDFCustTransListing.php:31 PDFStockTransListing.php:34
 #: PDFSuppTransListing.php:31
@@ -16364,7 +16361,7 @@ msgstr ""
 #: PDFCustTransListing.php:74
 #, fuzzy
 msgid "The SQL used to get the transaction information that failed was"
-msgstr "The SQL used to retrieve the vendor details and failed was"
+msgstr ""
 
 #: PDFCustTransListing.php:82 PDFStockTransListing.php:92
 #: PDFSuppTransListing.php:82
@@ -16499,7 +16496,7 @@ msgstr ""
 #: PDFGrn.php:73
 #, fuzzy
 msgid "Could not get the supplier of the selected GRN"
-msgstr "Could not load shipping-method"
+msgstr "Could not get the vendor of the selected GRN"
 
 #: PDFGrn.php:115
 msgid "Date of Receipt: "
@@ -16516,7 +16513,7 @@ msgstr ""
 #: PDFGrn.php:122
 #, fuzzy
 msgid "There were no GRNs to print"
-msgstr "There are no shipping-methods defined"
+msgstr ""
 
 #: PDFLowGP.php:8 PDFLowGP.php:14 PDFLowGP.php:15
 msgid "Low Gross Profit Sales"
@@ -16632,7 +16629,7 @@ msgstr ""
 #: PDFStockTransListing.php:24 PDFStockTransListing.php:101
 #, fuzzy
 msgid "Stock Transaction Listing"
-msgstr "Vendor Contacts"
+msgstr ""
 
 #: PDFPeriodStockTransListing.php:31
 msgid "Enter the date from which the transactions are to be listed"
@@ -16641,7 +16638,7 @@ msgstr ""
 #: PDFPeriodStockTransListing.php:35
 #, fuzzy
 msgid "Enter the date to which the transactions are to be listed"
-msgstr "The SQL used to retrieve the vendor details and failed was"
+msgstr ""
 
 #: PDFPeriodStockTransListing.php:43 PDFStockTransListing.php:42
 #: PrintCustTrans.php:59 PrintCustTransPortrait.php:57 SalesInquiry.php:1055
@@ -16656,7 +16653,7 @@ msgstr ""
 #: PDFPeriodStockTransListing.php:45 PDFStockTransListing.php:44
 #, fuzzy
 msgid "Location Transfer"
-msgstr "Select Vendor"
+msgstr ""
 
 #: PDFPeriodStockTransListing.php:46 PDFStockTransListing.php:45
 msgid "Stock Adjustment"
@@ -16665,7 +16662,7 @@ msgstr ""
 #: PDFPeriodStockTransListing.php:47 PDFStockTransListing.php:46
 #, fuzzy
 msgid "Purchase Order Delivery"
-msgstr "Select Vendor"
+msgstr ""
 
 #: PDFPeriodStockTransListing.php:48 PDFStockTransListing.php:47
 msgid "Work Order Receipt"
@@ -16674,7 +16671,7 @@ msgstr ""
 #: PDFPeriodStockTransListing.php:49 PDFStockTransListing.php:48
 #, fuzzy
 msgid "Work Order Issue"
-msgstr "Sales Order Inquiry"
+msgstr ""
 
 #: PDFPeriodStockTransListing.php:56 StockQuantityByDate.php:39
 msgid "For Stock Location"
@@ -16684,31 +16681,31 @@ msgstr ""
 #: PDFStockTransListing.php:83 PDFStockTransListing.php:89
 #, fuzzy
 msgid "Transaction Listing"
-msgstr "Vendor Contacts"
+msgstr ""
 
 #: PDFPeriodStockTransListing.php:137
 #, fuzzy
 msgid "There were no transactions found in the database between the dates"
-msgstr "The Shipping cost record could not be updated because"
+msgstr ""
 
 #: PDFPeriodStockTransListing.php:147 PDFStockTransListing.php:102
 #, fuzzy
 msgid "Stock transaction listing from"
-msgstr "Vendor Balance Listing"
+msgstr "Inventory transaction listing from"
 
 #: PDFPeriodStockTransListing.php:154
 #: includes/PDFCustTransListingPageHeader.inc:15
 #: includes/PDFStockTransListingPageHeader.inc:15
 #, fuzzy
 msgid "Customer Invoices"
-msgstr "Vendor Contacts"
+msgstr ""
 
 #: PDFPeriodStockTransListing.php:157
 #: includes/PDFCustTransListingPageHeader.inc:18
 #: includes/PDFStockTransListingPageHeader.inc:18
 #, fuzzy
 msgid "Customer Credit Notes"
-msgstr "Vendor Contacts"
+msgstr ""
 
 #: PDFPeriodStockTransListing.php:160 SelectProduct.php:417
 #: includes/PDFStockTransListingPageHeader.inc:21
@@ -16749,7 +16746,7 @@ msgstr ""
 #: PDFPickingList.php:22
 #, fuzzy
 msgid "Select Picking Lists"
-msgstr "Vendor Balance Listing"
+msgstr ""
 
 #: PDFPickingList.php:32
 msgid "Create picking lists for all deliveries to be made on"
@@ -16758,13 +16755,13 @@ msgstr ""
 #: PDFPickingList.php:34
 #, fuzzy
 msgid "From Warehouse"
-msgstr "Vendor Order"
+msgstr ""
 
 #: PDFPickingList.php:47
 #, fuzzy
 msgid ""
 "There was a problem retrieving the order header details from the database"
-msgstr "There was a problem testing for a default shipping-method because"
+msgstr ""
 
 #: PDFPickingList.php:129 PDFPickingList.php:324
 msgid "Print Picking List Error"
@@ -16789,7 +16786,7 @@ msgstr ""
 #: PDFPickingList.php:204
 #, fuzzy
 msgid "There was a problem retrieving the order line details for Order Number"
-msgstr "There was a problem testing for a default shipping-method because"
+msgstr ""
 
 #: PDFPriceList.php:16
 msgid "Price Listing Report"
@@ -16894,7 +16891,7 @@ msgstr ""
 #: PDFPriceList.php:296
 #, fuzzy
 msgid "Full Description"
-msgstr "Vendor Code or Description"
+msgstr ""
 
 #: PDFPriceList.php:299 PDFPriceList.php:336 PDFPriceList.php:338
 msgid "Effective As At"
@@ -16948,7 +16945,7 @@ msgstr ""
 #: PDFPrintLabel.php:91
 #, fuzzy
 msgid "Select label type"
-msgstr "Select the Vendor"
+msgstr ""
 
 #: PDFPrintLabel.php:92
 msgid "Number of labels per item"
@@ -16961,12 +16958,12 @@ msgstr ""
 #: PDFPrintLabel.php:94
 #, fuzzy
 msgid "Update values"
-msgstr "Sales Order Inquiry"
+msgstr ""
 
 #: PDFPrintLabel.php:117
 #, fuzzy
 msgid "Print labels"
-msgstr "Vendor Balance Listing"
+msgstr ""
 
 #: PDFPrintLabel.php:118
 msgid "Print labels with borders"
@@ -16988,7 +16985,7 @@ msgstr ""
 #: PDFPrintLabel.php:500
 #, fuzzy
 msgid "Couldnt get the currency data"
-msgstr "Could not load shipping-method"
+msgstr ""
 
 #: PDFQuotation.php:10 PDFQuotationPortrait.php:11
 msgid "Select Quotation To Print"
@@ -17124,7 +17121,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "The details of the payment to the supplier could not be retrieved because"
-msgstr "The Vendor details could not be retrieved by the SQL because"
+msgstr "The details of the payment to the vendor could not be retrieved because"
 
 #: PDFRemittanceAdvice.php:114
 msgid "Remittance_Advices"
@@ -17145,7 +17142,7 @@ msgstr ""
 #: PDFRemittanceAdvice.php:269
 #, fuzzy
 msgid "Our Code:"
-msgstr "Territory Code"
+msgstr ""
 
 #: PDFRemittanceAdvice.php:311
 msgid "This Payment"
@@ -17166,7 +17163,7 @@ msgstr ""
 #: PDFStockCheckComparison.php:38
 #, fuzzy
 msgid "The inventory check file could not be retrieved because"
-msgstr "The Vendor details could not be retrieved by the SQL because"
+msgstr ""
 
 #: PDFStockCheckComparison.php:61
 msgid "Stock Count Comparison"
@@ -17175,7 +17172,7 @@ msgstr ""
 #: PDFStockCheckComparison.php:64
 #, fuzzy
 msgid "The inventory counts file could not be retrieved because"
-msgstr "The Vendor details could not be retrieved by the SQL because"
+msgstr ""
 
 #: PDFStockCheckComparison.php:117 PDFStockCheckComparison.php:153
 #: PDFStockCheckComparison.php:171
@@ -17335,7 +17332,7 @@ msgstr ""
 #: PDFStockNegatives.php:20
 #, fuzzy
 msgid "The sql that failed to retrieve the negative quantities was"
-msgstr "The SQL used to retrieve the vendor details and failed was"
+msgstr ""
 
 #: PDFStockNegatives.php:37
 msgid "There are no negative stocks to list"
@@ -17344,7 +17341,7 @@ msgstr ""
 #: PDFStockTransfer.php:12
 #, fuzzy
 msgid "The entered transfer reference is expected to be numeric"
-msgstr "The Shipping cost entered is expected to be numeric"
+msgstr ""
 
 #: PDFStockTransfer.php:18
 #, fuzzy
@@ -17371,7 +17368,7 @@ msgstr ""
 #: PDFStockTransfer.php:63
 #, fuzzy
 msgid "There was no transfer found with number"
-msgstr "there is no purchasing data set up for this vendor"
+msgstr ""
 
 #: PDFStockTransfer.php:64
 msgid "Try Again"
@@ -17385,12 +17382,12 @@ msgstr ""
 #: PDFSuppTransListing.php:91
 #, fuzzy
 msgid "Supplier Transaction Listing"
-msgstr "Vendor Balance Listing"
+msgstr "Vendor Transaction Listing"
 
 #: PDFSuppTransListing.php:92
 #, fuzzy
 msgid "Supplier transaction listing from"
-msgstr "Vendor Balance Listing"
+msgstr "Vendor transaction listing from"
 
 #: PDFTopItems.php:8
 msgid "Top Items Search Result"
@@ -17399,7 +17396,7 @@ msgstr ""
 #: PDFTopItems.php:117
 #, fuzzy
 msgid "There were no records returned "
-msgstr "There are no shipping-methods defined"
+msgstr ""
 
 #: PeriodsInquiry.php:7
 msgid "Periods Inquiry"
@@ -17424,7 +17421,7 @@ msgstr ""
 #: PO_AuthorisationLevels.php:50
 #, fuzzy
 msgid "The authentication details cannot be inserted because"
-msgstr "The shipping GL posting could not be inserted because"
+msgstr ""
 
 #: PO_AuthorisationLevels.php:53
 msgid "There already exists an entry for this user/currency combination"
@@ -17433,18 +17430,18 @@ msgstr ""
 #: PO_AuthorisationLevels.php:76
 #, fuzzy
 msgid "The authentication details cannot be updated because"
-msgstr "The Shipping cost record could not be updated because"
+msgstr ""
 
 #: PO_AuthorisationLevels.php:85
 #, fuzzy
 msgid "The authentication details cannot be deleted because"
-msgstr "The Vendor details could not be retrieved by the SQL because"
+msgstr ""
 
 #: PO_AuthorisationLevels.php:96 PO_AuthorisationLevels.php:119
 #: PO_AuthorisationLevels.php:195
 #, fuzzy
 msgid "The authentication details cannot be retrieved because"
-msgstr "The Vendor details could not be retrieved by the SQL because"
+msgstr ""
 
 #: PO_AuthorisationLevels.php:126
 #, fuzzy
@@ -17486,7 +17483,7 @@ msgstr ""
 #: PO_AuthoriseMyOrders.php:60
 #, fuzzy
 msgid "Date Ordered"
-msgstr "Vendor Order"
+msgstr ""
 
 #: PO_AuthoriseMyOrders.php:61 PO_OrderDetails.php:105
 #: PO_SelectPurchOrder.php:396 includes/PO_PDFOrderPageHeader.inc:54
@@ -17497,7 +17494,7 @@ msgstr ""
 #: POReport.php:1492 ReprintGRN.php:75 includes/PDFPickingListHeader.inc:46
 #, fuzzy
 msgid "Delivery Date"
-msgstr "City-State-zip"
+msgstr ""
 
 #: PO_AuthoriseMyOrders.php:94 PO_Header.php:789 PO_Header.php:805
 #: PO_SelectOSPurchOrder.php:173 PO_SelectOSPurchOrder.php:175
@@ -17652,7 +17649,7 @@ msgstr ""
 #: PO_Header.php:286
 #, fuzzy
 msgid "Supplier changed by"
-msgstr "Vendor Purchasing Data"
+msgstr "Vendor changed by"
 
 #: PO_Header.php:289
 msgid ""
@@ -17809,7 +17806,7 @@ msgstr ""
 #: PO_Header.php:832
 #, fuzzy
 msgid "Supplier Info"
-msgstr "Vendor Code"
+msgstr "Vendor Info"
 
 #: PO_Header.php:837 includes/PDFPickingListHeader.inc:13
 msgid "Warehouse"
@@ -17873,13 +17870,13 @@ msgstr ""
 msgid ""
 "The quantity in the supplier units is expected to be numeric. Please re-"
 "enter as a number"
-msgstr "The Shipping cost entered is expected to be numeric"
+msgstr ""
 
 #: PO_Items.php:48
 #, fuzzy
 msgid ""
 "The supplier price is expected to be numeric. Please re-enter as a number"
-msgstr "The Shipping cost entered is expected to be numeric"
+msgstr "The vendor price is expected to be numeric. Please re-enter as a number"
 
 #: PO_Items.php:64
 #, fuzzy
@@ -17905,7 +17902,7 @@ msgstr ""
 #: PO_Items.php:96 SelectSalesOrder.php:111 SelectSalesOrder.php:279
 #, fuzzy
 msgid "Order Created and Authorised by"
-msgstr "Sales Order Inquiry"
+msgstr ""
 
 #: PO_Items.php:101 SelectSalesOrder.php:121 SelectSalesOrder.php:289
 msgid "Your authority to approve purchase orders in"
@@ -18020,7 +18017,7 @@ msgstr ""
 #: PO_Items.php:416
 #, fuzzy
 msgid "The account details for"
-msgstr "The vendor pricing details for"
+msgstr ""
 
 #: PO_Items.php:417
 #, fuzzy
@@ -18113,7 +18110,7 @@ msgstr ""
 #: PO_Items.php:637
 #, fuzzy
 msgid "Our Unit"
-msgstr "Vendor Unit"
+msgstr ""
 
 #: PO_Items.php:638
 msgid "Price Our Units"
@@ -18163,7 +18160,7 @@ msgstr ""
 #: PO_Items.php:718
 #, fuzzy
 msgid "Not an Asset"
-msgstr "Select the Vendor"
+msgstr ""
 
 #: PO_Items.php:721
 msgid "Not yet purchased"
@@ -18193,7 +18190,7 @@ msgstr ""
 #: PO_Items.php:925
 #, fuzzy
 msgid "Our Units"
-msgstr "Vendor Unit"
+msgstr ""
 
 #: PO_Items.php:927
 #, fuzzy
@@ -18207,7 +18204,7 @@ msgstr ""
 #: PO_Items.php:958
 #, fuzzy
 msgid "Could not retrieve the purchasing data for the item"
-msgstr "The shipping-method record has been added"
+msgstr ""
 
 #: PO_OrderDetails.php:11
 msgid "Reviewing Purchase Order Number"
@@ -18260,7 +18257,7 @@ msgstr ""
 #: PO_OrderDetails.php:89 RecurringSalesOrders.php:371
 #, fuzzy
 msgid "Order Header Details"
-msgstr "Credit Shipping"
+msgstr ""
 
 #: PO_OrderDetails.php:90 Suppliers.php:652 Suppliers.php:835
 #: SuppLoginSetup.php:238 SuppLoginSetup.php:404 WWW_Users.php:264
@@ -18521,12 +18518,12 @@ msgstr ""
 #: POReport.php:541 POReport.php:626 POReport.php:1286 POReport.php:1337
 #, fuzzy
 msgid "Supplier No"
-msgstr "Vendor Name"
+msgstr "Vendor No"
 
 #: POReport.php:543 POReport.php:1288 SalesInquiry.php:799
 #, fuzzy
 msgid "Order Qty"
-msgstr "Sales Order Inquiry"
+msgstr "S"
 
 #: POReport.php:544 POReport.php:629 POReport.php:744 POReport.php:1289
 #: POReport.php:1340 POReport.php:1429 SalesInquiry.php:800
@@ -18576,7 +18573,7 @@ msgstr ""
 #: POReport.php:1466
 #, fuzzy
 msgid "The report has been exported as a csv file."
-msgstr "The shipping-method record has been deleted"
+msgstr ""
 
 #: POReport.php:1483 SalesInquiry.php:1033 StockDispatch.php:295
 msgid "Report Type"
@@ -18615,7 +18612,7 @@ msgstr ""
 #: POReport.php:1585 SalesInquiry.php:1159
 #, fuzzy
 msgid "Run Inquiry"
-msgstr "Sales Order Inquiry"
+msgstr ""
 
 #: PO_SelectOSPurchOrder.php:9 SelectProduct.php:401 StockStatus.php:360
 #: StockUsage.php:185
@@ -18652,7 +18649,7 @@ msgstr ""
 #: PO_SelectOSPurchOrder.php:151 PO_SelectPurchOrder.php:123
 #, fuzzy
 msgid "Order Status:"
-msgstr "Credit Shipping"
+msgstr ""
 
 #: PO_SelectOSPurchOrder.php:153 PO_SelectOSPurchOrder.php:155
 msgid "Pending and Authorised"
@@ -18695,7 +18692,7 @@ msgstr ""
 #: PO_SelectOSPurchOrder.php:432
 #, fuzzy
 msgid "Order #"
-msgstr "Sales Order Inquiry"
+msgstr ""
 
 #: PO_SelectOSPurchOrder.php:434
 msgid "Initiated by"
@@ -18764,7 +18761,7 @@ msgstr ""
 #: PricesBasedOnMarkUp.php:81 PricesBasedOnMarkUp.php:221
 #, fuzzy
 msgid "Preferred Supplier Cost Data"
-msgstr "Vendor Contacts"
+msgstr "Preferred Vendor Cost Data"
 
 #: PricesBasedOnMarkUp.php:75 PricesBasedOnMarkUp.php:79
 #: PricesBasedOnMarkUp.php:83
@@ -18847,7 +18844,7 @@ msgstr ""
 #: PricesBasedOnMarkUp.php:203
 #, fuzzy
 msgid "Base price list selected"
-msgstr "The shipping-method record has been deleted"
+msgstr ""
 
 #: PricesBasedOnMarkUp.php:204
 msgid ""
@@ -18928,7 +18925,7 @@ msgstr ""
 #: PricesBasedOnMarkUp.php:291
 #, fuzzy
 msgid "There is no default price defined in the base price list for the item"
-msgstr "there is no purchasing data set up for this vendor"
+msgstr ""
 
 #: PricesBasedOnMarkUp.php:300
 msgid ""
@@ -18980,7 +18977,7 @@ msgstr ""
 #: PricesByCost.php:113
 #, fuzzy
 msgid "Cost in Price List"
-msgstr "Vendor Balance Listing"
+msgstr ""
 
 #: PricesByCost.php:121 Prices_Customer.php:338 Prices.php:220
 #: RecurringSalesOrders.php:417 WorkOrderEntry.php:473
@@ -19115,7 +19112,7 @@ msgstr ""
 #: Prices_Customer.php:202 Prices_Customer.php:248
 #, fuzzy
 msgid "The SQL used to retrieve these records was"
-msgstr "The SQL used to retrieve the vendor details and failed was"
+msgstr ""
 
 #: Prices_Customer.php:209
 msgid "There are no default prices set up for this part"
@@ -19169,22 +19166,22 @@ msgstr ""
 #: Prices.php:142
 #, fuzzy
 msgid "The price has been updated"
-msgstr "The shipping charge has been updated"
+msgstr ""
 
 #: Prices.php:160
 #, fuzzy
 msgid "The new price could not be added"
-msgstr "The Shipping cost record could not be updated because"
+msgstr ""
 
 #: Prices.php:164
 #, fuzzy
 msgid "The new price has been inserted"
-msgstr "The shipping-method record has been deleted"
+msgstr ""
 
 #: Prices.php:180
 #, fuzzy
 msgid "Could not delete this price"
-msgstr "Could not load shipping-method"
+msgstr ""
 
 #: Prices.php:182
 msgid "The selected price has been deleted"
@@ -19587,7 +19584,7 @@ msgstr ""
 #: PrintCustTransPortrait.php:89
 #, fuzzy
 msgid "Bank Code:"
-msgstr "Territory Code"
+msgstr ""
 
 #: PrintCustTransPortrait.php:525
 msgid "Print Invoices or Credit Notes (Portrait Mode)"

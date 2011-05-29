@@ -1,5 +1,8 @@
 webERP Change Log
 
+28/5/11 Could not set controlled item batches/serial numbers on ConfirmDispatch_Invoice.php
+28/5/11 Ricard PO_SelectOSPurchOrder.php was showing select location with gaps between locations - no slash before <option> fixed
+28/5/11 Ricard added new field assigner to petty cash module and changes to PcTabs.php and PcAssignCashToTab.php
 28/5/11 Ricard PcAssignCashToTab.php quoted the $Days integer parameter to the INTERVAL function incorrectly now fixed
 28/5/11 Ricard reported bug on deletion of PcExpensesTypeTab - incorrectly formed URL and parameters added ?
 28/5/11 Ricard reported mismatch of fields scripts pagesecurity changed to int(11) from tinyint as other tables all refer to as int(11)
