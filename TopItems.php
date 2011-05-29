@@ -15,7 +15,7 @@ if (!(isset($_POST['Search']))) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table cellpadding="3" colspan="4" class="selection">';
 	//to view store location
-	echo '<tr><td width="150">' . _('Select Location') . '  </td><td>:</td><td><select name=Location>';
+	echo '<tr><td width="150">' . _('Select Location') . '  </td><td>:</td><td><select name="Location">';
 	$sql = "SELECT loccode,
 					locationname
 				FROM `locations`";
@@ -43,8 +43,8 @@ if (!(isset($_POST['Search']))) {
 	echo '<tr>	<td width="150">' . _('Select Order By ') . ' </td>
 				<td>:</td>
 				<td><select name="Sequence">';
-	echo '	<option value="TotalInvoiced">' . _('Total Pieces') . '</option>';
-	echo '	<option value="ValueSales">' . _('Value of Sales') . '</option>';
+	echo '	<option value="totalinvoiced">' . _('Total Pieces') . '</option>';
+	echo '	<option value="valuesales">' . _('Value of Sales') . '</option>';
 	echo '	</select></td>
 				</tr>';
 	//View number of days
@@ -71,8 +71,8 @@ if (!(isset($_POST['Search']))) {
 	if (($_POST['Location'] == 'All') and ($_POST['Customers'] == 'All')) {
 		
 		$SQL = "SELECT 	salesorderdetails.stkcode,
-						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
-						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
+						SUM(salesorderdetails.qtyinvoiced) AS totalinvoiced,
+						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice/currencies.rate ) AS valuesales,
 						stockmaster.description,
 						stockmaster.units,
 						currencies.rate,
@@ -85,42 +85,41 @@ if (!(isset($_POST['Search']))) {
 						AND debtorsmaster.currcode = currencies.currabrev
 						AND salesorderdetails.actualdispatchdate >= '" . $FromDate . "' 
 				GROUP BY salesorderdetails.stkcode
-				ORDER BY '" . $_POST['Sequence'] . "' DESC
-				LIMIT " . $_POST['NumberOfTopItems'] . "";
+				ORDER BY " . $_POST['Sequence'] . " DESC
+				LIMIT " . $_POST['NumberOfTopItems'];
 	} else { //the situation if only location type selected "All"
 		if ($_POST['Location'] == 'All') {
-			$SQL = "
-				SELECT 	salesorderdetails.stkcode,
-						SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
-						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
+			$SQL = "SELECT 	salesorderdetails.stkcode,
+						SUM(salesorderdetails.qtyinvoiced) AS totalinvoiced,
+						SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice/currencies.rate ) AS valuesales,
 						stockmaster.description,
 						stockmaster.units,
 						currencies.rate,
 						debtorsmaster.currcode,
 						stockmaster.decimalplaces
-				FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster, currencies
-				WHERE 	salesorderdetails.orderno = salesorders.orderno
+					FROM salesorderdetails, salesorders, debtorsmaster,stockmaster, currencies
+					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
 						AND debtorsmaster.currcode = currencies.currabrev
 						AND debtorsmaster.typeid = '" . $_POST['Customers'] . "'
 						AND salesorderdetails.actualdispatchdate >= '" . $FromDate . "'
 				GROUP BY salesorderdetails.stkcode
-				ORDER BY '" . $_POST['Sequence'] . "' DESC
-				LIMIT " . $_POST[NumberOfTopItems] . "";
+				ORDER BY " . $_POST['Sequence'] . " DESC
+				LIMIT " . $_POST[NumberOfTopItems];
 		} else {
 			//the situation if the customer type selected "All"
 			if ($_POST['Customers'] == 'All') {
 				$SQL = "SELECT 	salesorderdetails.stkcode,
-							SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
-							SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
+							SUM(salesorderdetails.qtyinvoiced) AS totalinvoiced,
+							SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice/currencies.rate ) AS valuesales,
 							stockmaster.description,
 							stockmaster.units,
 							currencies.rate,
 							debtorsmaster.currcode,
 							stockmaster.decimalplaces
-						FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster, currencies
-						WHERE 	salesorderdetails.orderno = salesorders.orderno
+						FROM salesorderdetails, salesorders, debtorsmaster,stockmaster, currencies
+						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.stkcode = stockmaster.stockid
 							AND salesorders.debtorno = debtorsmaster.debtorno
 							AND debtorsmaster.currcode = currencies.currabrev
@@ -128,19 +127,19 @@ if (!(isset($_POST['Search']))) {
 							AND salesorderdetails.actualdispatchdate >= '" . $FromDate . "'
 						GROUP BY salesorderdetails.stkcode
 						ORDER BY " . $_POST['Sequence'] . " DESC
-						LIMIT " . $_POST['NumberOfTopItems'] . "";
+						LIMIT " . $_POST['NumberOfTopItems'];
 			} else {
 				//the situation if the location and customer type not selected "All"
 				$SQL = "SELECT 	salesorderdetails.stkcode,
-							SUM(salesorderdetails.qtyinvoiced) TotalInvoiced,
-							SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS ValueSales,
+							SUM(salesorderdetails.qtyinvoiced) AS totalinvoiced,
+							SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice/currencies.rate ) AS valuesales,
 							stockmaster.description,
 							stockmaster.units,
 							currencies.rate,
 							debtorsmaster.currcode,
 							stockmaster.decimalplaces
-						FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster, currencies
-						WHERE 	salesorderdetails.orderno = salesorders.orderno
+						FROM salesorderdetails, salesorders, debtorsmaster,stockmaster, currencies
+						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.stkcode = stockmaster.stockid
 							AND salesorders.debtorno = debtorsmaster.debtorno
 							AND debtorsmaster.currcode = currencies.currabrev
@@ -148,23 +147,25 @@ if (!(isset($_POST['Search']))) {
 							AND debtorsmaster.typeid = '" . $_POST['Customers'] . "'
 							AND salesorderdetails.actualdispatchdate >= '" . $FromDate . "'
 						GROUP BY salesorderdetails.stkcode
-						ORDER BY '" . $_POST['Sequence'] . "' DESC
-						LIMIT " . $_POST['NumberOfTopItems'] . "";
+						ORDER BY " . $_POST['Sequence'] . " DESC
+						LIMIT " . $_POST['NumberOfTopItems'];
 			}
 		}
 	}
+	
 	$result = DB_query($SQL, $db);
 	
 	echo '<p class="page_title_text" align="center"><strong>' . _('Top Sales Items List') . '</strong></p>';
 	echo '<form action="PDFTopItems.php"  method="GET"><table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$TableHeader = '<tr><th>' . _('#') . '</th>
-								<th>' . _('Code') . '</th>
-								<th>' . _('Description') . '</th>
-								<th>' . _('Total Invoiced') . '</th>
-								<th>' . _('Units') . '</th>
-								<th>' . _('Value Sales') . '</th>
-								<th>' . _('On Hand') . '</th>';
+						<th>' . _('Code') . '</th>
+						<th>' . _('Description') . '</th>
+						<th>' . _('Total Invoiced') . '</th>
+						<th>' . _('Units') . '</th>
+						<th>' . _('Value Sales') . '</th>
+						<th>' . _('On Hand') . '</th>
+					</tr>';
 	echo $TableHeader;
 	echo '<input type="hidden" value=' . $_POST['Location'] . ' name="Location" />
 			<input type="hidden" value=' . $_POST['Sequence'] . ' name="Sequence" />
@@ -175,11 +176,12 @@ if (!(isset($_POST['Search']))) {
 	$i = 1;
 	while ($myrow = DB_fetch_array($result)) {
 		//find the quantity onhand item
-		$sqloh = "SELECT   sum(quantity)as qty
-							FROM `locstock`
-							WHERE stockid='" . $myrow['0'] . "'";
-		$oh = db_query($sqloh, $db);
-		$ohRow = db_fetch_row($oh);
+		$sqloh = "SELECT sum(quantity) AS qty
+					FROM locstock
+					WHERE stockid='" . $myrow['stkcode'] . "'";
+		
+		$oh = DB_query($sqloh, $db);
+		$ohRow = DB_fetch_row($oh);
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
 			$k = 0;
@@ -188,25 +190,25 @@ if (!(isset($_POST['Search']))) {
 			$k = 1;
 		}
 		printf('<td class="number">%s</td>
-						<td>%s</font></td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$i, 
-						$myrow['0'], 
-						$myrow['3'], 
-						$myrow['1'], //total invoice here
-						$myrow['4'], //unit
-						number_format($myrow['2']/$myrow['5'],2), //value sales here
-						number_format($ohRow[0], $myrow['7']) //on hand
-					);
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				$i, 
+				$myrow['stkcode'], 
+				$myrow['description'], 
+				number_format($myrow['totalinvoiced'],$myrow['decimalplaces']), //total invoice here
+				$myrow['units'], //unit
+				number_format($myrow['valuesales'],$_SESSION['CompanyRecord']['decimalplaces']), //value sales here
+				number_format($ohRow[0], $myrow['decimalplaces']) //on hand 
+				);
 		$i++;
 	}
 	echo '</table>';
-	echo '<br /><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print To PDF') . '"></div>';
+	echo '<br /><div class="centre"><input type=Submit Name="PrintPDF" value="' . _('Print To PDF') . '"></div>';
 	echo '</form>';
 }
 include ('includes/footer.inc');

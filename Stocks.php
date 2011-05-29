@@ -692,7 +692,7 @@ function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '
 				$teller++;
 			}
 		}
-		$mydir .= "";
+		$mydir .= '';
 	}
 	return $mydir;
 }
@@ -713,7 +713,7 @@ echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="Item
 		'" >';
 } else {
 	if( isset($StockID) and file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
-		$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg" >';
+		$StockImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . $StockID . '&text=&width=120&height=120">';
 	} else {
 		$StockImgLink = _('No Image');
 	}
