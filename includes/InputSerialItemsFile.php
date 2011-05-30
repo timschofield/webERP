@@ -20,8 +20,8 @@ if (isset($_GET['LineNo'])){
 	$LineNo = $_POST['LineNo'];
 }
 
-echo '<DIV Align=Center>';
-echo '<TABLE>';
+echo '<div class="centre">';
+echo '<table>';
 echo $tableheader;
 
 $TotalQuantity = 0; /*Variable to accumulate total quantity received */
@@ -57,7 +57,7 @@ if ($LineItem->Serialised==1){
 	echo '<tr><td align=right><b>'.  _('Total Quantity'). ': ' . number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
 	echo '<tr><td><hr></td></tr>';
 } else {
-	echo '<tr><td align=right><b>'. _('Total Quantity'). ':</B></TD><TD ALIGN=RIGHT><B>' . number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
+	echo '<tr><td align=right><b>'. _('Total Quantity'). ':</b></td><td align=right><b>' . number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
 	echo '<tr><td colspan=2><hr></td></tr>';
 }
 
@@ -96,7 +96,7 @@ if ($_FILES['ImportFile']['error'] != '' && !isset($_SESSION['CurImportFile'])){
 	$LineItem->SerialItemsValid=false;
 	$_SESSION['CurImportFile']['Processed']=false;
 	$_SESSION['CurImportFile'] = $_FILES['ImportFile'];
-	$_SESSION['CurImportFile']['tmp_name'] = './reports/'.$LineItem->StockID.'_'.$LineNo.'_'.uniqid(4);
+	$_SESSION['CurImportFile']['tmp_name'] = $_SESSION['reports_dir'] . '/' . $LineItem->StockID.'_'.$LineNo.'_'.uniqid(4);
 	if (!move_uploaded_file($_FILES['ImportFile']['tmp_name'],$_SESSION['CurImportFile']['tmp_name'])){
 		prnMsg(_('Error moving temporary file') . '. ' . _('Please check your configuration'),'error' );
 		$LineItem->SerialItemsValid=false;

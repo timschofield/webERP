@@ -36,7 +36,14 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 		$_SESSION['PageSecurityArray'][$myrow['script']]=$myrow['pagesecurity'];
 	}
 
-
+	/*
+	 check the decimalplaces field exists in currencies - this was added in 4.0 but is required in 4.04 as it is used everywhere as the default decimal places to show on all home currency amounts
+	*/
+	$result = DB_query("SELECT decimalplaces FROM currencies",$db,'','',false,false);
+	if (DB_error_no($db)!=0) { //then decimalplaces not already a field in currencies
+		$result = DB_query("ALTER TABLE `currencies` 
+							ADD COLUMN `decimalplaces` tinyint(3) NOT NULL DEFAULT 2 AFTER `hundredsname`",$db);
+	}
 /* Also reads all the company data set up in the company record and returns an array */
 
 	$sql=	"SELECT	coyname,
@@ -80,7 +87,7 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	}
 	
 	/*Now read in smtp email settings - not needed in a properly set up server environment - but helps for those who can't control their server .. I think! */
-	$sql='SELECT id,
+	$sql="SELECT id,
 				host,
 				port,
 				heloaddress,
@@ -88,7 +95,7 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 				password,
 				timeout,
 				auth
-			FROM emailsettings';
+			FROM emailsettings";
 	$result=DB_query($sql, $db);
 	$myrow=DB_fetch_array($result);
 

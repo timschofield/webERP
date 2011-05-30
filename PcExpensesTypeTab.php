@@ -88,7 +88,6 @@ if (isset($_POST['submit'])) {
 	//run the SQL from either of the above possibilites
 		$result = DB_query($sql,$db);
 		prnMsg($msg,'success');
-
 		unset($_POST['SelectedExpense']);
 	}
 
@@ -96,10 +95,10 @@ if (isset($_POST['submit'])) {
 	$sql="DELETE FROM pctabexpenses
 		WHERE typetabcode='".$SelectedTab."'
 		AND codeexpense='".$SelectedType."'";
+
 	$ErrMsg = _('The Tab Type record could not be deleted because');
 	$result = DB_query($sql,$db,$ErrMsg);
 	prnMsg(_('Expense code').' '. $SelectedType .' '. _('for type of tab').' '. $SelectedTab .' '. _('has been deleted') ,'success');
-	unset ($SelectedType);
 	unset($_GET['delete']);
 }
 
@@ -111,7 +110,7 @@ links to delete or edit each. These will call the same page again and allow upda
 or deletion of the records*/
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class=selection>'; //Main table
+	echo '<table class="selection">'; //Main table
 	
 	echo '<tr><td>' . _('Select Type of Tab') . ':</td><td><select name="SelectedTab">';
 
@@ -148,6 +147,10 @@ or deletion of the records*/
 if (isset($_POST['process'])OR isset($SelectedTab)) {
 
 	echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Expense Codes for Type of Tab ') . ' ' .$SelectedTab. '</a></div><p>';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	
+	echo '<input type="hidden" name="SelectedTab" value="' . $SelectedTab . '">';
 
 	$sql = "SELECT pctabexpenses.codeexpense, 
 					pcexpenses.description
@@ -179,7 +182,7 @@ while ($myrow = DB_fetch_array($result)) {
 
 	printf('<td>%s</td>
 			<td>%s</td>
-			<td><a href="%s?SelectedType=%s&delete=yes&SelectedTab=' . $_POST['SelectedTab'] . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this code and the expense it may have set up?') . '\');">' . _('Delete') . '</td>
+			<td><a href="%s?SelectedType=%s&delete=yes&SelectedTab=' . $SelectedTab . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this code and the expense it may have set up?') . '\');">' . _('Delete') . '</td>
 			</tr>',
 			$myrow['codeexpense'],
 			$myrow['description'],
@@ -193,8 +196,7 @@ while ($myrow = DB_fetch_array($result)) {
 
 	if (! isset($_GET['delete'])) {
 
-		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		
 		echo '<br /><table  class="selection">'; //Main table
 	
 		echo '<tr><td>' . _('Select Expense Code') . ':</td><td><select name="SelectedExpense">';
@@ -220,11 +222,8 @@ while ($myrow = DB_fetch_array($result)) {
 	
 		echo '</select></td></tr>';
 	
-	
-		echo '<input type="hidden" name="SelectedTab" value="' . $SelectedTab . '">';
-	
 	   	echo '</td></tr></table>'; // close main table
-	
+			
 		echo '<p><div class="centre"><input type=submit name=submit value="' . _('Accept') . '">
 									<input type=submit name="Cancel" value="' . _('Cancel') . '"></div>';
 	

@@ -1,5 +1,12 @@
 webERP Change Log
 
+30/5/11 Invoicing of serial items was not happening using includes/OutputSerialItems.php script not includes/InputSerialItems.php script
+30/5/11 StockSerialItems.php closing td> tag was missing /
+30/5/11 InputSerialItemsFile.php was looking for a hard coded reports dir now used $_SESSION['reports_dir']
+30/5/11 GetConfig.php checks for existence of the decimalplaces field in currencies and inserts it before attemtpting to run the company SQL...
+30/5/11 PcExpensesTypeTab.php could not delete Expenses lost TabType value fixed
+30/5/11 PriceByCost.php now only makes a new price if the price is actually changed!!
+
 29/5/11 Version 4.04.1 Release
 
 29/5/11 PricesByCost.php made it so the existing prices had end dates set as yesterday and new prices created from today

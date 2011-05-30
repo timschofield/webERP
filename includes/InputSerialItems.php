@@ -98,7 +98,7 @@ if ($LineItem->Serialised==1){
 	$tableheader .= '<tr>
 			<th>'. _('Serial No').'</th>
 			</tr>';
-} else if ($LineItem->Serialised==0 and $Perishable==1){
+} else if ($LineItem->Serialised==0 AND $Perishable==1){
 	$tableheader = '<tr>
 			<th>'. _('Batch/Roll/Bundle'). ' #</th>
 			<th>'. _('Quantity'). '</th>

@@ -1,8 +1,6 @@
 <?php
 /* $Id$*/
 
-
-
 include('includes/session.inc');
 $title = _('Stock Of Controlled Items');
 include('includes/header.inc');
@@ -24,16 +22,16 @@ if (isset($_GET['StockID'])){
 }
 
 $result = DB_query("SELECT description,
-			units,
-			mbflag,
-			decimalplaces,
-			serialised,
-			controlled,
-			perishable
-		FROM stockmaster
-		WHERE stockid='".$StockID."'",
-		$db,
-		_('Could not retrieve the requested item because'));
+							units,
+							mbflag,
+							decimalplaces,
+							serialised,
+							controlled,
+							perishable
+						FROM stockmaster
+						WHERE stockid='".$StockID."'",
+						$db,
+						_('Could not retrieve the requested item because'));
 
 $myrow = DB_fetch_array($result);
 
@@ -52,21 +50,21 @@ if ($myrow['mbflag']=='K' OR $myrow['mbflag']=='A' OR $myrow['mbflag']=='D'){
 }
 
 $result = DB_query("SELECT locationname
-			FROM locations
-			WHERE loccode='" . $_GET['Location'] . "'",
-			$db,
-			_('Could not retrieve the stock location of the item because'),
-			_('The SQL used to lookup the location was'));
+						FROM locations
+						WHERE loccode='" . $_GET['Location'] . "'",
+						$db,
+						_('Could not retrieve the stock location of the item because'),
+						_('The SQL used to lookup the location was'));
 
 $myrow = DB_fetch_row($result);
 
 $sql = "SELECT serialno,
-		quantity,
-		expirationdate
-	FROM stockserialitems
-	WHERE loccode='" . $_GET['Location'] . "'
-	AND stockid = '" . $StockID . "'
-	AND quantity <>0";
+				quantity,
+				expirationdate
+			FROM stockserialitems
+			WHERE loccode='" . $_GET['Location'] . "'
+			AND stockid = '" . $StockID . "'
+			AND quantity <>0";
 
 
 $ErrMsg = _('The serial numbers/batches held cannot be retrieved because');
@@ -135,7 +133,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 	$TotalQuantity += $myrow['quantity'];
 
 	if ($Serialised == 1){
-		echo '<td>'.$myrow['serialno'].'/td>';
+		echo '<td>'.$myrow['serialno'].'</td>';
 		echo '<th></th>';
 	} else if ($Serialised == 0 and $Perishable==0) {
 		echo '<td>'.$myrow['serialno'].'</td>

@@ -198,7 +198,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		 }
 		$sql = "SELECT * FROM pcashdetails
 				WHERE tabcode='" . $SelectedTabs . "'
-				AND date >=DATE_SUB(CURDATE(), INTERVAL , " . $Days . " DAY)
+				AND date >=DATE_SUB(CURDATE(), INTERVAL " . $Days . " DAY)
 				ORDER BY date, counterindex ASC";
 
 
